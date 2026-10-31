@@ -34,6 +34,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("move '%s': unknown status '%s'" % [name, m.get("status", "")])
 		if int(m.get("energy", -1)) < 0:
 			errors.append("move '%s': missing or negative energy cost" % name)
+		if m.has("effect") and not EffectRegistry.has_effect(StringName(str(m.effect))):
+			errors.append("move '%s': unknown effect '%s'" % [name, m.effect])
 
 	var species_names: Dictionary[String, bool] = {}
 	var dex_ids: Dictionary[int, bool] = {}
@@ -64,6 +66,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 		if evo != null and int(s.get("evolve_level", 0)) <= 0:
 			errors.append("spirling '%s': evolves but has no evolve_level" % sname)
 		var learnset: Variant = s.get("learnset", {})
+		if learnset is Dictionary and (learnset as Dictionary).is_empty():
+			errors.append("spirling '%s': empty learnset" % sname)
 		if learnset is Dictionary:
 			for lvl: Variant in learnset:
 				if not str(lvl).is_valid_int():

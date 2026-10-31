@@ -1,0 +1,50 @@
+[
+ {
+  "id": "tonic",
+  "name": "Tonic",
+  "description": "Restores 20 HP.",
+  "battle": true,
+  "heal": 20,
+  "price": 200
+ },
+ {
+  "id": "strong_tonic",
+  "name": "Strong Tonic",
+  "description": "Restores 60 HP.",
+  "battle": true,
+  "heal": 60,
+  "price": 600
+ },
+ {
+  "id": "remedy",
+  "name": "Remedy",
+  "description": "Cures any status.",
+  "battle": true,
+  "cure": true,
+  "price": 250
+ },
+ {
+  "id": "spark_drop",
+  "name": "Spark Drop",
+  "description": "Restores 5 Energy to the active Spirling.",
+  "battle": true,
+  "energy": 5,
+  "price": 300
+ },
+ {
+  "id": "revival_leaf",
+  "name": "Revival Leaf",
+  "description": "Revives a Spirling outside battle with half HP.",
+  "battle": false,
+  "revive": 0.5,
+  "price": 1500
+ },
+ {
+  "id": "kin_charm",
+  "name": "Kin Charm",
+  "description": "Hold it out during a bond to steady the link (+10%).",
+  "battle": false,
+  "bond_bonus": 0.1,
+  "price": 400
+ }
+]
