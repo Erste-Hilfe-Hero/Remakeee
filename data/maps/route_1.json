@@ -3,7 +3,7 @@
  "region": "veydal",
  "encounters": "route_1",
  "rows": [
-  "TTTTTTTTTTTTTT",
+  "TTTTTT__TTTTTT",
   "T,,,,.__.,,,,T",
   "T,,,,.__.,,,,T",
   "T.....__.....T",
@@ -36,6 +36,22 @@
    "tx": 9,
    "ty": 1,
    "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "route_2",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 7,
+   "y": 0,
+   "to": "route_2",
+   "tx": 7,
+   "ty": 18,
+   "facing": "up"
   }
  ],
  "npcs": [

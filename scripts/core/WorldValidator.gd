@@ -32,9 +32,21 @@ static func validate() -> PackedStringArray:
 			_check_dialogue(errors, id, str(n.get("dialogue", "")))
 			if not m.is_walkable(Vector2i(int(n.x), int(n.y))) and m.kind_at(Vector2i(int(n.x), int(n.y))) != TilesetFactory.Kind.FLOOR:
 				errors.append("map '%s': npc '%s' stands on a blocked cell" % [id, n.get("id", "")])
-			for entry: Variant in n.get("team", []):
-				if Database.species(str((entry as Dictionary).get("species", ""))) == null:
-					errors.append("map '%s': npc '%s' has unknown team species %s" % [id, n.get("id", ""), entry])
+			if TrainerData.is_trainer(n):
+				_check_dialogue(errors, id, str(n.get("intro", "")))
+				_check_dialogue(errors, id, str(n.get("defeat", "")))
+				var teams: Array = [n.get("team", [])]
+				if n.has("team_by_starter"):
+					teams = (n.team_by_starter as Dictionary).values()
+					for st: String in Database.STARTERS:
+						if not (n.team_by_starter as Dictionary).has(st):
+							errors.append("map '%s': rival '%s' has no team for starter %s" % [id, n.get("id", ""), st])
+				for t: Variant in teams:
+					if (t as Array).is_empty():
+						errors.append("map '%s': tamer '%s' has an empty team" % [id, n.get("id", "")])
+					for entry: Variant in t:
+						if Database.species(str((entry as Dictionary).get("species", ""))) == null:
+							errors.append("map '%s': npc '%s' has unknown team species %s" % [id, n.get("id", ""), entry])
 		for s: Dictionary in m.signs:
 			_check_dialogue(errors, id, str(s.get("dialogue", "")))
 		if not m.encounter_table.is_empty():

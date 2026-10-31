@@ -1,0 +1,99 @@
+{
+ "name": "Thornridge",
+ "region": "veydal",
+ "rows": [
+  "TTTTTTTTT_TTTTTTTT",
+  "T.......T_.......T",
+  "T.TTT...__...TTT.T",
+  "T.TXT...__.......T",
+  "T.T.T...__..ooo..T",
+  "T.......__..ooo..T",
+  "T._______________T",
+  "T.......__.......T",
+  "T.S.....__.....*.T",
+  "T..***..__.......T",
+  "T.......__..#####T",
+  "T.......__.......T",
+  "TTTTTTTT__TTTTTTTT"
+ ],
+ "heal_point": [
+  14,
+  6
+ ],
+ "warps": [
+  {
+   "x": 8,
+   "y": 12,
+   "to": "route_2",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 9,
+   "y": 12,
+   "to": "route_2",
+   "tx": 7,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 3,
+   "y": 3,
+   "to": "cinder_rift",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 0,
+   "to": "tide_rift",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "keeper",
+   "x": 14,
+   "y": 3,
+   "facing": "down",
+   "color": "4a8ab0",
+   "dialogue": "thornridge/keeper"
+  },
+  {
+   "id": "trader",
+   "x": 5,
+   "y": 7,
+   "facing": "right",
+   "color": "b08a3a",
+   "dialogue": "thornridge/trader"
+  },
+  {
+   "id": "guard",
+   "x": 9,
+   "y": 1,
+   "facing": "down",
+   "color": "5a5a7a",
+   "dialogue": "thornridge/guard",
+   "hide_flag": "rift_cinder_sealed"
+  },
+  {
+   "id": "elder",
+   "x": 12,
+   "y": 9,
+   "facing": "left",
+   "color": "8a7a9a",
+   "dialogue": "thornridge/elder"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 8,
+   "dialogue": "thornridge/sign"
+  }
+ ]
+}

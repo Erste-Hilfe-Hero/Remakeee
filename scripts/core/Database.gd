@@ -5,6 +5,8 @@ extends RefCounted
 const SPIRLINGS_PATH: String = "res://data/spirlings.json"
 const MOVES_PATH: String = "res://data/moves.json"
 const ITEMS_PATH: String = "res://data/items.json"
+## The three partners offered at the start of a new game.
+const STARTERS: Array[String] = ["Kindlop", "Puddlet", "Mossling"]
 
 static var spirlings: Dictionary[String, SpirlingData] = {}
 static var moves: Dictionary[String, MoveData] = {}

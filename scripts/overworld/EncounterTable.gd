@@ -14,6 +14,14 @@ static func table(id: String) -> Dictionary:
 			_tables = raw
 	return _tables.get(id, {})
 
+## All table ids in data/encounters.json.
+static func table_ids() -> Array[String]:
+	table("")
+	var out: Array[String] = []
+	for k: Variant in _tables.keys():
+		out.append(str(k))
+	return out
+
 ## Chance per step in tall grass.
 static func rate(id: String) -> float:
 	return float(table(id).get("rate", 0.0))

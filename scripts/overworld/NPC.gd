@@ -13,6 +13,20 @@ func setup(def: Dictionary) -> void:
 	body_color = Color(str(def.get("color", "b04a4a")))
 	place(Vector2i(int(def.x), int(def.y)), str(def.get("facing", "down")))
 
+## Shows a "!" above the head when a Tamer spots the player.
+var alert: bool = false:
+	set(v):
+		alert = v
+		queue_redraw()
+
+func _draw() -> void:
+	super._draw()
+	if alert:
+		draw_rect(Rect2(6, -9, 4, 8), UITheme.BG)
+		draw_rect(Rect2(6, -9, 4, 8), UITheme.INK, false, 1.0)
+		draw_rect(Rect2(7, -8, 2, 4), UITheme.INK)
+		draw_rect(Rect2(7, -3, 2, 1), UITheme.INK)
+
 ## Turns toward [param who_cell].
 func face_toward(who_cell: Vector2i) -> void:
 	var d: Vector2i = who_cell - cell

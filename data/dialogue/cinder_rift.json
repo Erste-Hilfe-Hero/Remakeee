@@ -1,0 +1,39 @@
+{
+ "acolyte_a": [
+  "Pell: The heat in here makes Spirlings restless."
+ ],
+ "acolyte_a_intro": [
+  "Pell: Only those who pass us may face the Warden!"
+ ],
+ "acolyte_a_defeat": [
+  "Pell: Go on, then. Orrin waits at the core."
+ ],
+ "acolyte_b": [
+  "Suri: Orrin has guarded this Rift for years."
+ ],
+ "acolyte_b_intro": [
+  "Suri: My Kindlop runs hot. Ready?"
+ ],
+ "acolyte_b_defeat": [
+  "Suri: Cooled off... just like that."
+ ],
+ "orrin": {
+  "lines": [
+   "Orrin: ..."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Orrin: The Cinder Rift is calm. The way north from Thornridge is open to you."
+   ]
+  }
+ },
+ "orrin_intro": [
+  "Warden Orrin: You came all this way through the heat.",
+  "Then show me the bond you share with your team!"
+ ],
+ "orrin_defeat": [
+  "Warden Orrin: That's a real bond.",
+  "I'll let the Rift close. Take that strength north."
+ ]
+}
