@@ -13,6 +13,24 @@ const STRONG := {
 	E.UMBRA: [E.LUMEN, E.GALE],
 }
 
+## Placeholder colours per element (Era I maps them to greens by brightness).
+const COLORS := {
+	E.EMBER: Color("e0603a"),
+	E.TIDE:  Color("3a7be0"),
+	E.BLOOM: Color("4caf50"),
+	E.VOLT:  Color("f2d03b"),
+	E.STONE: Color("9a7b55"),
+	E.GALE:  Color("9fd8e8"),
+	E.LUMEN: Color("fff4c2"),
+	E.UMBRA: Color("4b3a66"),
+}
+
+static func element_name(e: int) -> String:
+	return String(E.keys()[e]).capitalize()
+
+static func color(e: int) -> Color:
+	return COLORS.get(e, Color.GRAY)
+
 ## Multiplier for one attacking element into one defending element.
 static func single(atk: int, def: int) -> float:
 	var atk_strong: bool = def in STRONG[atk]
