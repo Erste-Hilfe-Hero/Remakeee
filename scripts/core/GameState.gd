@@ -11,12 +11,28 @@ enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 
 var party: Array[Spirling] = []
+## Storage box for Spirlings beyond the party of 6.
+var storage: Array[Spirling] = []
+## Spirlog: species name -> {"seen": bool, "bonded": bool}.
+var spirlog: Dictionary = {}
 var region: String = "veydal"
 var rifts_sealed: Array[String] = []
 var difficulty: Difficulty = Difficulty.TAMER
 ## Item id -> count.
 var inventory: Dictionary = {}
 var money: int = 0
+
+## Overworld position.
+var current_map: String = "home"
+var player_cell: Vector2i = Vector2i(4, 4)
+var facing: String = "down"
+## Where the team wakes up after a loss (last Rest Spring used).
+var heal_map: String = "home"
+var heal_cell: Vector2i = Vector2i(4, 4)
+## Story and world flags, e.g. "got_starter", "rift_1_sealed".
+var flags: Dictionary = {}
+## Seeded RNG for overworld rolls (encounters); battles get their own seed from it.
+var rng := RandomNumberGenerator.new()
 
 ## Settings (also saved).
 var text_speed: TextSpeed = TextSpeed.NORMAL
@@ -43,3 +59,41 @@ func add_item(id: String, count: int = 1) -> void:
 
 func item_count(id: String) -> int:
 	return int(inventory.get(id, 0))
+
+func _ready() -> void:
+	rng.randomize()
+
+func has_flag(flag: String) -> bool:
+	return bool(flags.get(flag, false))
+
+func set_flag(flag: String, value: bool = true) -> void:
+	flags[flag] = value
+
+## Fully restores the party (Rest Springs, after a loss).
+func heal_party() -> void:
+	for s: Spirling in party:
+		s.restore()
+
+func first_healthy_index() -> int:
+	for i: int in party.size():
+		if not party[i].is_fainted():
+			return i
+	return -1
+
+## Adds a newly bonded Spirling to the party, or to storage if the party is full.
+## Returns true if it joined the party.
+func receive_spirling(s: Spirling) -> bool:
+	mark_seen(s.data.species_name, true)
+	s.restore()
+	if party.size() < MAX_PARTY:
+		party.append(s)
+		return true
+	storage.append(s)
+	return false
+
+func mark_seen(species: String, bonded: bool = false) -> void:
+	var e: Dictionary = spirlog.get(species, {"seen": false, "bonded": false})
+	e["seen"] = true
+	if bonded:
+		e["bonded"] = true
+	spirlog[species] = e

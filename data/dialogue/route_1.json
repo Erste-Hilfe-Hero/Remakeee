@@ -1,0 +1,26 @@
+{
+ "sign": [
+  "ROUTE 1",
+  "North: Thornridge (path closed for now)",
+  "South: Brindlewick"
+ ],
+ "hiker": [
+  "Your partner gets Energy back every turn.",
+  "If it runs dry, let it rest a turn. No shame in that!"
+ ],
+ "gift_girl": {
+  "lines": [
+   "You look new at this. Take these!"
+  ],
+  "after_flag": {
+   "flag": "route1_gift",
+   "lines": [
+    "Bonding works best when a Spirling is worn down.",
+    "Tap with the pulse and it may trust you."
+   ]
+  },
+  "action": "give_item kin_charm 2",
+  "flag": "route1_gift",
+  "once": true
+ }
+}

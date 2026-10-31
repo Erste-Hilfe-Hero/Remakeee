@@ -1,0 +1,9 @@
+{
+ "keeper": {
+  "lines": [
+   "Welcome to the Rest Spring.",
+   "Let your team soak for a moment..."
+  ],
+  "action": "heal"
+ }
+}
