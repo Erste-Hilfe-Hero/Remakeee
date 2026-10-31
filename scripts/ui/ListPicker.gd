@@ -18,6 +18,8 @@ func _ready() -> void:
 	root.add_theme_constant_override("separation", 2)
 	add_child(root)
 	_title = Label.new()
+	_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_title.custom_minimum_size = Vector2(1, 0)
 	root.add_child(_title)
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL

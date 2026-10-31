@@ -5,5 +5,12 @@
    "Let your team soak for a moment..."
   ],
   "action": "heal"
+ },
+ "archivist": {
+  "lines": [
+   "I keep the Spirling storage box.",
+   "Want to swap who travels with you?"
+  ],
+  "action": "storage"
  }
 }

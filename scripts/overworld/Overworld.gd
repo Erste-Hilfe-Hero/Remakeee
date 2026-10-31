@@ -31,14 +31,17 @@ var _actions: Dictionary[String, Callable] = {}
 func _ready() -> void:
 	Database.load_all()
 	_actions = {
+		"storage": _action_storage,
 		"heal": _action_heal,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
 	}
 	_build()
 	if GameState.party.is_empty():
-		# Temporary until the new-game flow (M4) lets the player pick a starter.
-		GameState.party.append(Spirling.new(Database.species("Kindlop"), 5, GameState.rng))
+		# Running this scene directly from the editor: start a quick test game.
+		GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+	GameState.in_game = true
+	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
 	VirtualPad.set_wanted(true)
 
@@ -66,13 +69,13 @@ func _build() -> void:
 	_ui.layer = UI_LAYER
 	add_child(_ui)
 	var ui_root := Control.new()
-	ui_root.set_anchors_preset(Control.PRESET_FULL_RECT)
+	ui_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.theme = UITheme.get_theme()
 	_ui.add_child(ui_root)
 	_fade = ColorRect.new()
 	_fade.color = Color(UITheme.INK, 0.0)
-	_fade.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.add_child(_fade)
 	_banner = Label.new()
@@ -174,6 +177,7 @@ func _warp(warp: Dictionary) -> void:
 	player.frozen = true
 	await _fade_to(1.0)
 	load_map(str(warp.to), Vector2i(int(warp.tx), int(warp.ty)), str(warp.get("facing", player.facing)))
+	SaveManager.save_game()
 	await _fade_to(0.0)
 	player.frozen = false
 	busy = false
@@ -235,6 +239,34 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.heal_map = map.id
 		GameState.heal_cell = map.heal_point
 	await say(["Your team is fully rested."] as Array[String])
+
+func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := PauseMenu.new()
+	_ui.add_child(menu)
+	await menu.run_storage()
+	menu.queue_free()
+
+## Opens the pause menu (Team, Spirlog, Bag, Save, Settings).
+func open_menu() -> void:
+	if busy:
+		return
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var menu := PauseMenu.new()
+	menu.encounter_table = map.encounter_table
+	_ui.add_child(menu)
+	await menu.run()
+	menu.queue_free()
+	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(GameState.MENU_ACTION) and not busy and not player.moving:
+		get_viewport().set_input_as_handled()
+		open_menu()
 
 func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.is_empty():

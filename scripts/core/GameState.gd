@@ -10,6 +10,15 @@ const MAX_PARTY: int = 6
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 
+## Tamer customisation (placeholder until real sprites exist).
+var tamer_name: String = "Rowan"
+var tamer_color: int = 0
+const TAMER_COLORS: Array[Color] = [Color("3a5a9a"), Color("9a3a4a"), Color("3a8a5a"), Color("8a6a2a")]
+## Seconds played (shown on the save card).
+var play_time: float = 0.0
+## True while a game is running (the title screen sets it); saving on pause needs it.
+var in_game: bool = false
+
 var party: Array[Spirling] = []
 ## Storage box for Spirlings beyond the party of 6.
 var storage: Array[Spirling] = []
@@ -60,8 +69,128 @@ func add_item(id: String, count: int = 1) -> void:
 func item_count(id: String) -> int:
 	return int(inventory.get(id, 0))
 
+const MENU_ACTION: StringName = &"menu"
+
 func _ready() -> void:
 	rng.randomize()
+	_register_actions()
+
+func _process(delta: float) -> void:
+	if in_game:
+		play_time += delta
+
+## Adds the "menu" action (Esc / Tab / gamepad Start) next to the built-in ui_* actions.
+func _register_actions() -> void:
+	if InputMap.has_action(MENU_ACTION):
+		return
+	InputMap.add_action(MENU_ACTION)
+	for key: Key in [KEY_ESCAPE, KEY_TAB, KEY_M]:
+		var ev := InputEventKey.new()
+		ev.physical_keycode = key
+		InputMap.action_add_event(MENU_ACTION, ev)
+	var pad := InputEventJoypadButton.new()
+	pad.button_index = JOY_BUTTON_START
+	InputMap.action_add_event(MENU_ACTION, pad)
+
+## Clears everything for a new game.
+func reset() -> void:
+	party.clear()
+	storage.clear()
+	spirlog.clear()
+	region = "veydal"
+	rifts_sealed.clear()
+	difficulty = Difficulty.TAMER
+	inventory = {}
+	money = 0
+	current_map = "home"
+	player_cell = Vector2i(4, 4)
+	facing = "down"
+	heal_map = "home"
+	heal_cell = Vector2i(4, 4)
+	flags = {}
+	play_time = 0.0
+
+## Starts a new game with the choices from the new-game flow.
+func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, starter: String) -> void:
+	reset()
+	difficulty = p_difficulty
+	tamer_name = p_name if not p_name.strip_edges().is_empty() else "Rowan"
+	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
+	var s := Spirling.new(Database.species(starter), 5, rng)
+	receive_spirling(s)
+	money = 500
+	set_flag("got_starter")
+	in_game = true
+
+## Save data (see SaveManager for versioning and atomic writes).
+func to_dict() -> Dictionary:
+	var party_d: Array = []
+	for s: Spirling in party:
+		party_d.append(s.to_dict())
+	var storage_d: Array = []
+	for s: Spirling in storage:
+		storage_d.append(s.to_dict())
+	return {
+		"tamer": {"name": tamer_name, "color": tamer_color},
+		"difficulty": difficulty,
+		"region": region,
+		"rifts": rifts_sealed.duplicate(),
+		"party": party_d,
+		"storage": storage_d,
+		"spirlog": spirlog.duplicate(true),
+		"inventory": inventory.duplicate(),
+		"money": money,
+		"map": current_map,
+		"cell": [player_cell.x, player_cell.y],
+		"facing": facing,
+		"heal_map": heal_map,
+		"heal_cell": [heal_cell.x, heal_cell.y],
+		"flags": flags.duplicate(),
+		"play_time": play_time,
+	}
+
+func from_dict(d: Dictionary) -> void:
+	reset()
+	var tamer: Dictionary = d.get("tamer", {})
+	tamer_name = str(tamer.get("name", "Rowan"))
+	tamer_color = int(tamer.get("color", 0))
+	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
+	region = str(d.get("region", "veydal"))
+	rifts_sealed.assign(d.get("rifts", []))
+	for sd: Variant in d.get("party", []):
+		var s: Spirling = Spirling.from_dict(sd)
+		if s != null:
+			party.append(s)
+	for sd: Variant in d.get("storage", []):
+		var s: Spirling = Spirling.from_dict(sd)
+		if s != null:
+			storage.append(s)
+	spirlog = (d.get("spirlog", {}) as Dictionary).duplicate(true)
+	for k: Variant in (d.get("inventory", {}) as Dictionary):
+		inventory[str(k)] = int(d.inventory[k])
+	money = int(d.get("money", 0))
+	current_map = str(d.get("map", "home"))
+	var c: Array = d.get("cell", [4, 4])
+	player_cell = Vector2i(int(c[0]), int(c[1]))
+	facing = str(d.get("facing", "down"))
+	heal_map = str(d.get("heal_map", "home"))
+	var hc: Array = d.get("heal_cell", [4, 4])
+	heal_cell = Vector2i(int(hc[0]), int(hc[1]))
+	flags = (d.get("flags", {}) as Dictionary).duplicate()
+	play_time = float(d.get("play_time", 0.0))
+	in_game = true
+
+func settings_to_dict() -> Dictionary:
+	return {"text_speed": text_speed, "fast_forward": fast_forward, "volume": volume}
+
+func settings_from_dict(d: Dictionary) -> void:
+	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
+	fast_forward = bool(d.get("fast_forward", false))
+	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
+	apply_volume()
+
+func apply_volume() -> void:
+	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.0001)))
 
 func has_flag(flag: String) -> bool:
 	return bool(flags.get(flag, false))
@@ -97,3 +226,58 @@ func mark_seen(species: String, bonded: bool = false) -> void:
 	if bonded:
 		e["bonded"] = true
 	spirlog[species] = e
+
+## Uses a bag item on [param s] outside battle. Returns the message to show, or "" if it had no effect.
+func use_item_outside_battle(id: String, s: Spirling) -> String:
+	if item_count(id) <= 0:
+		return ""
+	var it: Dictionary = Database.item(id)
+	var msg: String = ""
+	if float(it.get("revive", 0.0)) > 0.0:
+		if not s.is_fainted():
+			return ""
+		s.hp = maxi(1, int(s.max_hp() * float(it.revive)))
+		msg = "%s is back on its feet!" % s.display_name()
+	elif int(it.get("heal", 0)) > 0:
+		if s.is_fainted() or s.hp >= s.max_hp():
+			return ""
+		var healed: int = mini(int(it.heal), s.max_hp() - s.hp)
+		s.hp += healed
+		msg = "%s recovered %d HP." % [s.display_name(), healed]
+	else:
+		return ""
+	inventory[id] = item_count(id) - 1
+	if inventory[id] <= 0:
+		inventory.erase(id)
+	return msg
+
+## Moves party member [param index] into storage. Keeps at least one healthy Spirling.
+func deposit(index: int) -> bool:
+	if index < 0 or index >= party.size() or party.size() <= 1:
+		return false
+	var s: Spirling = party[index]
+	var healthy_left: int = 0
+	for i: int in party.size():
+		if i != index and not party[i].is_fainted():
+			healthy_left += 1
+	if healthy_left == 0:
+		return false
+	party.remove_at(index)
+	s.restore()
+	storage.append(s)
+	return true
+
+func withdraw(index: int) -> bool:
+	if index < 0 or index >= storage.size() or party.size() >= MAX_PARTY:
+		return false
+	party.append(storage[index])
+	storage.remove_at(index)
+	return true
+
+## Swaps two party slots (reordering; slot 0 leads in battle).
+func swap_party(a: int, b: int) -> void:
+	if a < 0 or b < 0 or a >= party.size() or b >= party.size():
+		return
+	var tmp: Spirling = party[a]
+	party[a] = party[b]
+	party[b] = tmp

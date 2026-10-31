@@ -8,6 +8,7 @@ const LAYER: int = 50
 ## Button sizes in viewport pixels (about 9-10 mm on a typical phone at integer scale 7).
 const DPAD_BUTTON: int = 20
 const AB_BUTTON: int = 22
+const MENU_BUTTON: int = 14
 const EDGE: int = 4
 const ALPHA: float = 0.55
 
@@ -28,6 +29,7 @@ func _ready() -> void:
 	_add_button("ui_right", Vector2(DPAD_BUTTON * 2, DPAD_BUTTON), DPAD_BUTTON, false, ">")
 	_add_button("ui_accept", Vector2.ZERO, AB_BUTTON, true, "A")
 	_add_button("ui_cancel", Vector2.ZERO, AB_BUTTON, true, "B")
+	_add_button("menu", Vector2.ZERO, MENU_BUTTON, false, "=")
 	Input.joy_connection_changed.connect(func(_d: int, _c: bool) -> void: _refresh())
 	get_viewport().size_changed.connect(_layout)
 	_layout()
@@ -84,6 +86,7 @@ func _draw_glyph(img: Image, glyph: String, col: Color) -> void:
 		"^": ["010", "111", "000", "000", "000"], "v": ["000", "000", "000", "111", "010"],
 		"<": ["001", "011", "001", "000", "000"], ">": ["100", "110", "100", "000", "000"],
 		"A": ["010", "101", "111", "101", "101"], "B": ["110", "101", "110", "101", "110"],
+		"=": ["000", "111", "000", "111", "000"],
 	}
 	var rows: Array = glyphs.get(glyph, [])
 	var scale: int = 2
@@ -108,6 +111,8 @@ func _layout() -> void:
 				b.position = Vector2(safe.end.x - EDGE - AB_BUTTON, safe.end.y - EDGE - AB_BUTTON * 2 - 4)
 			"ui_cancel":
 				b.position = Vector2(safe.end.x - EDGE - AB_BUTTON * 2 - 4, safe.end.y - EDGE - AB_BUTTON)
+			"menu":
+				b.position = Vector2((safe.position.x + safe.end.x) / 2.0 - MENU_BUTTON / 2.0, safe.end.y - EDGE - MENU_BUTTON)
 			_:
 				b.position = dpad_origin + off
 

@@ -33,6 +33,14 @@
    "facing": "down",
    "dialogue": "rest_spring/keeper",
    "color": "4a9a8a"
+  },
+  {
+   "id": "archivist",
+   "x": 7,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "rest_spring/archivist",
+   "color": "6a6ab0"
   }
  ],
  "signs": []

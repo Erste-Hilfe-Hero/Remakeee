@@ -138,10 +138,10 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 - [x] NPCs with dialogue from `data/dialogue/*.json`.
 
 ### M4 — Meta systems
-- [ ] Party (max 6), storage box, a Spirlog that tracks seen/bonded and route spawns (Spirlog Tracker).
-- [ ] SaveManager: versioned, atomic, saves on pause.
-- [ ] New-game flow: difficulty pick → Tamer customization (placeholder) → starter pick (Kindlop / Puddlet / Mossling).
-- [ ] Settings: text speed, Retro filter (Era I only for now), volume.
+- [x] Party (max 6), storage box, a Spirlog that tracks seen/bonded and route spawns (Spirlog Tracker).
+- [x] SaveManager: versioned, atomic, saves on pause.
+- [x] New-game flow: difficulty pick → Tamer customization (placeholder) → starter pick (Kindlop / Puddlet / Mossling).
+- [x] Settings: text speed, Retro filter (Era I only for now), volume.
 
 ### M5 — Vertical slice content
 - [ ] 2 Rifts with Wardens, 1 rival fight (Kestra), unlimited bag, PC access from the menu after Rift 2.
