@@ -127,9 +127,9 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 - [x] Learnsets: add `learnset` (level → move name) to `spirlings.json` for all 15 Spirlings, using only moves in `moves.json`. Add moves until every element has at least 3.
 
 ### M2 — Battle presenter
-- [ ] `scenes/battle/Battle.tscn`: player Spirling bottom-left, foe top-right, HP bars, Energy pips, a text box, and a 4-move menu plus Swap / Item / Bond / Run. Use an **original layout** (Rule 1).
-- [ ] Play back the event list with short tweens; tap to advance text; a fast-forward toggle.
-- [ ] Bond minigame scene: rings pulse inward and the player taps on the beat; it returns a timing score from 0 to 1.
+- [x] `scenes/battle/Battle.tscn`: player Spirling bottom-left, foe top-right, HP bars, Energy pips, a text box, and a 4-move menu plus Swap / Item / Bond / Run. Use an **original layout** (Rule 1).
+- [x] Play back the event list with short tweens; tap to advance text; a fast-forward toggle.
+- [x] Bond minigame scene: rings pulse inward and the player taps on the beat; it returns a timing score from 0 to 1.
 
 ### M3 — Overworld slice
 - [ ] Player grid movement (16 px tiles), 4-direction facing, hold-to-run, integer-rounded camera.
