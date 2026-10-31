@@ -4,7 +4,7 @@ extends PanelContainer
 
 signal chosen(kind: BattleAction.Kind, index: int)
 
-const MOVE_BUTTON_HEIGHT: int = 20
+const MOVE_BUTTON_HEIGHT: int = 22
 const SMALL_BUTTON_HEIGHT: int = 16
 ## Fixed height so the field above never jumps when the buttons hide.
 const PANEL_HEIGHT: int = 2 * MOVE_BUTTON_HEIGHT + SMALL_BUTTON_HEIGHT + 2 * 2 + 6
@@ -62,7 +62,7 @@ func refresh(model: BattleModel) -> void:
 		var b: Button = _move_buttons[i]
 		if i < me.moves.size():
 			var mv: MoveData = me.moves[i]
-			b.text = "%s %d" % [mv.move_name, mv.energy_cost]
+			b.text = "%s\n%d Energy" % [mv.move_name, mv.energy_cost]
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv)
 		else:

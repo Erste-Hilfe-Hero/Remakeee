@@ -29,14 +29,7 @@ static func panel_style(bg: Color = BG, border: Color = INK) -> StyleBoxFlat:
 static func _build() -> Theme:
 	var t := Theme.new()
 	t.default_font_size = FONT_SIZE
-	var font := SystemFont.new()
-	font.antialiasing = TextServer.FONT_ANTIALIASING_NONE
-	font.hinting = TextServer.HINTING_NORMAL
-	font.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
-	font.font_names = PackedStringArray(["monospace"])
-	var fallback: Font = ThemeDB.fallback_font
-	font.fallbacks = [fallback]
-	t.default_font = font
+	t.default_font = PixelFont.get_font()
 	t.set_color("font_color", "Label", INK)
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		var bg: Color = BG
