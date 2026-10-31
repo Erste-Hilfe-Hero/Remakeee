@@ -1,0 +1,25 @@
+class_name EffectRegistry
+extends RefCounted
+## Maps effect ids from moves.json to effect scripts. Add a new effect by writing a
+## MoveEffect subclass and registering it here.
+
+const SCRIPTS: Dictionary[StringName, Script] = {
+	&"inflict_status": preload("res://scripts/battle/effects/InflictStatusEffect.gd"),
+	&"drain": preload("res://scripts/battle/effects/DrainEffect.gd"),
+	&"recoil": preload("res://scripts/battle/effects/RecoilEffect.gd"),
+	&"heal_self": preload("res://scripts/battle/effects/HealSelfEffect.gd"),
+	&"energy_drain": preload("res://scripts/battle/effects/EnergyDrainEffect.gd"),
+}
+
+static var _cache: Dictionary[StringName, MoveEffect] = {}
+
+static func has_effect(id: StringName) -> bool:
+	return SCRIPTS.has(id)
+
+static func get_effect(id: StringName) -> MoveEffect:
+	if not _cache.has(id):
+		if not SCRIPTS.has(id):
+			push_error("EffectRegistry: unknown effect '%s'" % id)
+			return null
+		_cache[id] = SCRIPTS[id].new()
+	return _cache[id]

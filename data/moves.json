@@ -107,5 +107,231 @@
   "power": 35,
   "accuracy": 1.0,
   "energy": 1
+ },
+ {
+  "name": "Flare Lash",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.9,
+  "energy": 5
+ },
+ {
+  "name": "Blaze Coil",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 90,
+  "accuracy": 0.85,
+  "energy": 6,
+  "status": "scorch",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Heat Haze",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "daze",
+  "status_chance": 1.0
+ },
+ {
+  "name": "Brine Jet",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Tidal Crash",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.85,
+  "energy": 6,
+  "effect": "recoil",
+  "effect_amount": 0.25
+ },
+ {
+  "name": "Drench",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "soak",
+  "status_chance": 1.0
+ },
+ {
+  "name": "Thorn Volley",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Sap Draw",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "drain",
+  "effect_amount": 0.5
+ },
+ {
+  "name": "Bloom Burst",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 90,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
+  "name": "Arc Bolt",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 65,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "jolt",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Surge Fang",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.9,
+  "energy": 5
+ },
+ {
+  "name": "Static Field",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.85,
+  "energy": 3,
+  "status": "jolt",
+  "status_chance": 1.0
+ },
+ {
+  "name": "Siphon Spark",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "energy_drain",
+  "effect_amount": 1
+ },
+ {
+  "name": "Quake Stomp",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 5
+ },
+ {
+  "name": "Boulder Slam",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 100,
+  "accuracy": 0.8,
+  "energy": 7,
+  "effect": "recoil",
+  "effect_amount": 0.25
+ },
+ {
+  "name": "Updraft",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Cyclone Edge",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 5
+ },
+ {
+  "name": "Squall",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 90,
+  "accuracy": 0.85,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Prism Ray",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Dawn Mend",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 5,
+  "effect": "heal_self",
+  "effect_amount": 0.5
+ },
+ {
+  "name": "Radiant Lance",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 85,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
+  "name": "Shade Claw",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Gloom Pulse",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "daze",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Eclipse Fang",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.85,
+  "energy": 6
+ },
+ {
+  "name": "Night Siphon",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "drain",
+  "effect_amount": 0.5
  }
 ]

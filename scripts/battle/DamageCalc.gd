@@ -1,20 +1,53 @@
 class_name DamageCalc
-## Damage = ((2L/5+2) * P * A/D / 50 + 2) * STAB * E * C * R
-const STAB := 1.25
-const CRIT_MULT := 1.5
-const CRIT_CHANCE := 0.0625
+extends RefCounted
+## Chimora's own damage curve (deliberately not the classic handheld formula):
+##   dmg = (P * (A / D)^0.8 * (L / 5 + 3) / 12 + 1) * STAB * E * Crit * R
+## Tuned so a same-level, neutral, 40-power move takes 15-25% of a balanced foe's HP
+## (pinned by tests/unit/test_damage.gd).
 
-static func compute(user: Spirling, target: Spirling, move: MoveData, rng := RandomNumberGenerator.new()) -> Dictionary:
-	if move.kind == MoveData.Kind.STATUS or move.power <= 0:
+const STAB: float = 1.25
+const CRIT_MULT: float = 1.5
+const CRIT_CHANCE: float = 1.0 / 16.0
+const RATIO_EXP: float = 0.8
+const LEVEL_DIV: float = 5.0
+const LEVEL_OFFSET: float = 3.0
+const SCALE_DIV: float = 12.0
+const FLAT: float = 1.0
+const ROLL_MIN: float = 0.90
+const ROLL_MAX: float = 1.00
+const ROLL_MEAN: float = (ROLL_MIN + ROLL_MAX) / 2.0
+
+## Attack and defense stats used for [param move] (PHYSICAL: ATK vs DEF, FOCUS: FOC vs FOC).
+static func stats_for(user: Spirling, target: Spirling, move: MoveData) -> Vector2:
+	if move.kind == MoveData.Kind.PHYSICAL:
+		return Vector2(user.effective_atk(), target.def())
+	return Vector2(user.foc(), target.foc())
+
+static func stab_for(user: Spirling, move: MoveData) -> float:
+	return STAB if move.element in user.elements() else 1.0
+
+static func effectiveness(target: Spirling, move: MoveData) -> float:
+	return Elements.multiplier(move.element, target.elements())
+
+## Deterministic core of the formula, exposed for tests and the AI.
+static func raw(user: Spirling, target: Spirling, move: MoveData, roll: float, crit: bool) -> float:
+	if not move.is_damaging():
+		return 0.0
+	var ad: Vector2 = stats_for(user, target, move)
+	var ratio: float = ad.x / maxf(ad.y, 1.0)
+	var base: float = float(move.power) * pow(ratio, RATIO_EXP) * (float(user.level) / LEVEL_DIV + LEVEL_OFFSET) / SCALE_DIV + FLAT
+	return base * stab_for(user, move) * effectiveness(target, move) * (CRIT_MULT if crit else 1.0) * roll
+
+## Rolls crit and the random factor. Returns {"damage": int, "eff": float, "crit": bool}.
+static func compute(user: Spirling, target: Spirling, move: MoveData, rng: RandomNumberGenerator) -> Dictionary:
+	if not move.is_damaging():
 		return {"damage": 0, "eff": 1.0, "crit": false}
-	var a := user.atk() if move.kind == MoveData.Kind.PHYSICAL else user.foc()
-	var d := target.def() if move.kind == MoveData.Kind.PHYSICAL else target.foc()
-	if user.status == "scorch" and move.kind == MoveData.Kind.PHYSICAL:
-		a = int(a * 0.75)
-	var base: float = ((2.0 * user.level / 5.0 + 2.0) * move.power * float(a) / max(d, 1)) / 50.0 + 2.0
-	var stab := STAB if move.element in user.data.elements else 1.0
-	var eff := Elements.multiplier(move.element, target.data.elements)
-	var crit := rng.randf() < CRIT_CHANCE
-	var roll := rng.randf_range(0.90, 1.00)
-	var dmg := int(base * stab * eff * (CRIT_MULT if crit else 1.0) * roll)
-	return {"damage": max(dmg, 1) if eff > 0 else 0, "eff": eff, "crit": crit}
+	var crit: bool = rng.randf() < CRIT_CHANCE
+	var roll: float = rng.randf_range(ROLL_MIN, ROLL_MAX)
+	var eff: float = effectiveness(target, move)
+	var dmg: int = int(raw(user, target, move, roll, crit))
+	return {"damage": maxi(dmg, 1) if eff > 0.0 else 0, "eff": eff, "crit": crit}
+
+## Expected damage with the mean roll and no crit. Used by the AI.
+static func estimate(user: Spirling, target: Spirling, move: MoveData) -> float:
+	return raw(user, target, move, ROLL_MEAN, false)

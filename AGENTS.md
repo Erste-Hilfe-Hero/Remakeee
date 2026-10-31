@@ -87,9 +87,9 @@ tests/           GUT tests
 
 **Statuses:** Scorch (−1/16 HP per turn, ATK ×0.75), Soak (SPD ×0.5, 3 turns), Root (can't swap, −1/16 HP per turn), Jolt (25% chance to skip the turn), Daze (accuracy ×0.7, 3 turns), Drowse (sleep 1–3 turns).
 
-**Damage — TODO:** the current formula in `DamageCalc.gd` is too close to the classic handheld formula. Replace it with our own curve, for example:
+**Damage:** `DamageCalc.gd` uses Chimora's own curve (replaced the classic-style formula in M1):
 `dmg = (P × (A / D)^0.8 × (L / 5 + 3) / 12 + 1) × STAB(1.25) × E × Crit(1.5, 1/16) × R(0.9–1.0)`.
-Tune it so a same-level, neutral, 40-power move takes 15–25% of a foe's HP. Write GUT tests that pin this.
+A same-level, neutral, 40-power move takes 15–25% of a balanced foe's HP; `tests/unit/test_damage.gd` pins this.
 
 **Bonding:** chance = bond_rate × max(1 − HP%, 0.1) × timing_score × (1.5 if statused) + charm bonus, capped at 0.95. The timing score comes from a 5-second tap-the-pulse minigame. A failed bond gives the wild Spirling one free action.
 
@@ -121,10 +121,10 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 - [x] Add a headless data-validation script: every move and evolution ID in the JSON resolves, and every element name is valid.
 
 ### M1 — Battle model (no visuals)
-- [ ] `BattleModel.gd`: state machine, action queue and ordering, Energy, the 6 statuses, faint and swap, victory. It emits battle events.
-- [ ] Replace the damage formula (see Game rules) and add tests: effectiveness table, STAB, crit, a determinism test with a fixed seed.
-- [ ] AI tiers 0–2.
-- [ ] Learnsets: add `learnset` (level → move name) to `spirlings.json` for all 15 Spirlings, using only moves in `moves.json`. Add moves until every element has at least 3.
+- [x] `BattleModel.gd`: state machine, action queue and ordering, Energy, the 6 statuses, faint and swap, victory. It emits battle events.
+- [x] Replace the damage formula (see Game rules) and add tests: effectiveness table, STAB, crit, a determinism test with a fixed seed.
+- [x] AI tiers 0–2.
+- [x] Learnsets: add `learnset` (level → move name) to `spirlings.json` for all 15 Spirlings, using only moves in `moves.json`. Add moves until every element has at least 3.
 
 ### M2 — Battle presenter
 - [ ] `scenes/battle/Battle.tscn`: player Spirling bottom-left, foe top-right, HP bars, Energy pips, a text box, and a 4-move menu plus Swap / Item / Bond / Run. Use an **original layout** (Rule 1).

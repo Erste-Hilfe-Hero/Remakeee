@@ -1,0 +1,90 @@
+class_name BattleEvent
+extends RefCounted
+## One thing that happened in a battle. The model emits a list of these per step;
+## the presenter plays them back in order. Data keys depend on the type (see describe()).
+
+enum Type {
+	BATTLE_START, SEND_OUT, MOVE_USED, MISSED, NO_TARGET, DAMAGE, HEAL,
+	STATUS_APPLIED, STATUS_FAILED, STATUS_TICK, STATUS_CURED, STATUS_PREVENTED,
+	ENERGY_CHANGED, NOT_ENOUGH_ENERGY, REST, FAINTED, SWAP_OUT, SWAP_IN, SWAP_BLOCKED,
+	ITEM_USED, BOND_ATTEMPT, BOND_RESULT, FREE_ACTION, FLEE_RESULT,
+	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
+}
+
+var type: Type
+var data: Dictionary
+
+func _init(t: Type = Type.BATTLE_START, d: Dictionary = {}) -> void:
+	type = t
+	data = d
+
+func type_name() -> String:
+	return Type.keys()[type]
+
+## Plain-text line for logs, tests and the text box.
+func describe() -> String:
+	var who: String = str(data.get("name", ""))
+	match type:
+		Type.BATTLE_START:
+			return "A wild %s appeared!" % data.get("foe_name", "") if data.get("wild", false) else "%s wants to battle!" % data.get("trainer", "A Tamer")
+		Type.SEND_OUT, Type.SWAP_IN:
+			return "%s steps out!" % who
+		Type.SWAP_OUT:
+			return "%s, come back!" % who
+		Type.SWAP_BLOCKED:
+			return "%s is rooted and can't swap!" % who
+		Type.MOVE_USED:
+			return "%s used %s!" % [who, data.get("move", "")]
+		Type.MISSED:
+			return "%s missed!" % who
+		Type.NO_TARGET:
+			return "But there was no target..."
+		Type.DAMAGE:
+			var eff: float = float(data.get("eff", 1.0))
+			var tail: String = ""
+			if bool(data.get("crit", false)):
+				tail += " A keen hit!"
+			if eff > 1.0:
+				tail += " It's overwhelming!"
+			elif eff < 1.0 and eff > 0.0:
+				tail += " It barely landed..."
+			return ("%s took %d damage." % [who, data.get("amount", 0)]) + tail
+		Type.HEAL:
+			return "%s recovered %d HP." % [who, data.get("amount", 0)]
+		Type.STATUS_APPLIED:
+			return "%s is afflicted with %s!" % [who, StatusRules.label(str(data.get("status", "")))]
+		Type.STATUS_FAILED:
+			return "It had no effect on %s." % who
+		Type.STATUS_TICK:
+			return "%s is hurt by %s." % [who, StatusRules.label(str(data.get("status", "")))]
+		Type.STATUS_CURED:
+			return "%s shook off %s." % [who, StatusRules.label(str(data.get("status", "")))]
+		Type.STATUS_PREVENTED:
+			return "%s can't move (%s)!" % [who, StatusRules.label(str(data.get("status", "")))]
+		Type.ENERGY_CHANGED:
+			return ""
+		Type.NOT_ENOUGH_ENERGY:
+			return "%s doesn't have enough Energy!" % who
+		Type.REST:
+			return "%s catches its breath." % who
+		Type.FAINTED:
+			return "%s is out of the fight!" % who
+		Type.ITEM_USED:
+			return "Used %s on %s." % [data.get("item_name", ""), who]
+		Type.BOND_ATTEMPT:
+			return "You reach out to %s..." % who
+		Type.BOND_RESULT:
+			return "%s bonded with you!" % who if data.get("success", false) else "%s broke the bond!" % who
+		Type.FREE_ACTION:
+			return "%s seizes the moment!" % who
+		Type.FLEE_RESULT:
+			return "Got away safely!" if data.get("success", false) else "Couldn't get away!"
+		Type.XP_GAINED:
+			return "%s gained %d XP." % [who, data.get("amount", 0)]
+		Type.LEVEL_UP:
+			return "%s grew to level %d!" % [who, data.get("level", 0)]
+		Type.MOVE_LEARNED:
+			return "%s learned %s!" % [who, data.get("move", "")]
+		Type.BATTLE_END:
+			return ""
+	return ""
