@@ -1,0 +1,22 @@
+# Chimora
+
+Retro pixel monster-taming RPG for iOS + Android, built in Godot 4.7.2.
+100% original creatures, world and art — inspired by the feel of 2000s handheld monster RPGs.
+
+## Core idea
+- 8 elements (Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra), each beats 2 and loses to 2
+- Bond minigame instead of capture items
+- **Every region = a visual generation jump**: Veydal (Era I Mono) → Corvane (Era II Color) → Ashmere (Era III Advanced) → Solenne (Era IV Dual). See `scripts/core/EraManager.gd`.
+
+- Unbound-style depth: 4 difficulty modes with level caps (`GameState.gd`), Contracts, Rift Surges, Spirlog Tracker, The Spire
+
+See LEGAL.md before adding any content. Coding agents: start with AGENTS.md.
+
+## Run
+Open `project.godot` in Godot 4.7.2, press F5 — `BattleTest` prints a damage + bond check.
+
+## Layout
+- `data/` roster (15 Spirlings) + moves as JSON
+- `scripts/core` Elements, GameState, EraManager, Database
+- `scripts/battle` Spirling, DamageCalc, BondCalc
+- `art/era1..era4` one sprite set per era

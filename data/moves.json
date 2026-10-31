@@ -1,0 +1,111 @@
+[
+ {
+  "name": "Ember Snap",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Cinder Breath",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 65,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "scorch",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Bubble Pop",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Undertow",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 0.9,
+  "energy": 4,
+  "status": "soak",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Moss Whip",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Spore Cloud",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.85,
+  "energy": 3,
+  "status": "root",
+  "status_chance": 1.0
+ },
+ {
+  "name": "Static Nip",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "status": "jolt",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Pebble Toss",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 0.95,
+  "energy": 2
+ },
+ {
+  "name": "Gust Slice",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "priority": 1
+ },
+ {
+  "name": "Glint",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "status": "daze",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Hush",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.75,
+  "energy": 4,
+  "status": "drowse",
+  "status_chance": 1.0
+ },
+ {
+  "name": "Tackle Rush",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 35,
+  "accuracy": 1.0,
+  "energy": 1
+ }
+]

@@ -1,0 +1,248 @@
+[
+ {
+  "dex_id": 1,
+  "name": "Kindlop",
+  "elements": [
+   "EMBER"
+  ],
+  "base": {
+   "hp": 58,
+   "atk": 66,
+   "foc": 70,
+   "spd": 58,
+   "def": 48
+  },
+  "evolves_to": "Smoldrake",
+  "evolve_level": 16
+ },
+ {
+  "dex_id": 2,
+  "name": "Smoldrake",
+  "elements": [
+   "EMBER"
+  ],
+  "base": {
+   "hp": 74,
+   "atk": 88,
+   "foc": 92,
+   "spd": 82,
+   "def": 64
+  },
+  "evolves_to": "Calderox",
+  "evolve_level": 34
+ },
+ {
+  "dex_id": 3,
+  "name": "Calderox",
+  "elements": [
+   "EMBER",
+   "STONE"
+  ],
+  "base": {
+   "hp": 92,
+   "atk": 112,
+   "foc": 108,
+   "spd": 92,
+   "def": 96
+  },
+  "evolves_to": null,
+  "evolve_level": 0
+ },
+ {
+  "dex_id": 4,
+  "name": "Puddlet",
+  "elements": [
+   "TIDE"
+  ],
+  "base": {
+   "hp": 66,
+   "atk": 54,
+   "foc": 62,
+   "spd": 54,
+   "def": 64
+  },
+  "evolves_to": "Riptail",
+  "evolve_level": 16
+ },
+ {
+  "dex_id": 5,
+  "name": "Riptail",
+  "elements": [
+   "TIDE"
+  ],
+  "base": {
+   "hp": 86,
+   "atk": 72,
+   "foc": 84,
+   "spd": 76,
+   "def": 82
+  },
+  "evolves_to": "Leviarch",
+  "evolve_level": 34
+ },
+ {
+  "dex_id": 6,
+  "name": "Leviarch",
+  "elements": [
+   "TIDE",
+   "LUMEN"
+  ],
+  "base": {
+   "hp": 108,
+   "atk": 90,
+   "foc": 112,
+   "spd": 86,
+   "def": 104
+  },
+  "evolves_to": null,
+  "evolve_level": 0
+ },
+ {
+  "dex_id": 7,
+  "name": "Mossling",
+  "elements": [
+   "BLOOM"
+  ],
+  "base": {
+   "hp": 64,
+   "atk": 60,
+   "foc": 56,
+   "spd": 50,
+   "def": 70
+  },
+  "evolves_to": "Thornback",
+  "evolve_level": 16
+ },
+ {
+  "dex_id": 8,
+  "name": "Thornback",
+  "elements": [
+   "BLOOM"
+  ],
+  "base": {
+   "hp": 84,
+   "atk": 82,
+   "foc": 72,
+   "spd": 70,
+   "def": 92
+  },
+  "evolves_to": "Verdantusk",
+  "evolve_level": 34
+ },
+ {
+  "dex_id": 9,
+  "name": "Verdantusk",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "base": {
+   "hp": 104,
+   "atk": 106,
+   "foc": 88,
+   "spd": 86,
+   "def": 116
+  },
+  "evolves_to": null,
+  "evolve_level": 0
+ },
+ {
+  "dex_id": 10,
+  "name": "Zippit",
+  "elements": [
+   "VOLT"
+  ],
+  "base": {
+   "hp": 48,
+   "atk": 64,
+   "foc": 70,
+   "spd": 94,
+   "def": 44
+  },
+  "evolves_to": "Glimmerax",
+  "evolve_level": 24
+ },
+ {
+  "dex_id": 11,
+  "name": "Glimmerax",
+  "elements": [
+   "VOLT",
+   "LUMEN"
+  ],
+  "base": {
+   "hp": 68,
+   "atk": 84,
+   "foc": 104,
+   "spd": 130,
+   "def": 64
+  },
+  "evolves_to": null,
+  "evolve_level": 0
+ },
+ {
+  "dex_id": 12,
+  "name": "Shalebat",
+  "elements": [
+   "STONE",
+   "UMBRA"
+  ],
+  "base": {
+   "hp": 60,
+   "atk": 70,
+   "foc": 52,
+   "spd": 54,
+   "def": 84
+  },
+  "evolves_to": "Obsidroth",
+  "evolve_level": 26
+ },
+ {
+  "dex_id": 13,
+  "name": "Obsidroth",
+  "elements": [
+   "STONE",
+   "UMBRA"
+  ],
+  "base": {
+   "hp": 92,
+   "atk": 106,
+   "foc": 70,
+   "spd": 60,
+   "def": 122
+  },
+  "evolves_to": null,
+  "evolve_level": 0
+ },
+ {
+  "dex_id": 14,
+  "name": "Breezel",
+  "elements": [
+   "GALE"
+  ],
+  "base": {
+   "hp": 54,
+   "atk": 62,
+   "foc": 66,
+   "spd": 88,
+   "def": 50
+  },
+  "evolves_to": "Tempestrel",
+  "evolve_level": 28
+ },
+ {
+  "dex_id": 15,
+  "name": "Tempestrel",
+  "elements": [
+   "GALE"
+  ],
+  "base": {
+   "hp": 76,
+   "atk": 94,
+   "foc": 92,
+   "spd": 118,
+   "def": 70
+  },
+  "evolves_to": null,
+  "evolve_level": 0
+ }
+]

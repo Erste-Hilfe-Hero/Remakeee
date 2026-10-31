@@ -1,0 +1,156 @@
+# AGENTS.md — Chimora
+
+Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read this whole file before changing anything. Also read `LEGAL.md`; its rules override everything else.
+
+## What we're building
+
+**Chimora** is a retro pixel-art, turn-based monster-taming RPG for **iOS and Android**, built in **Godot 4.7.2 (GDScript)**. It has the feel of 2000s handheld monster RPGs and takes the depth of the fan game Pokémon Unbound as its benchmark. It uses **zero Nintendo / Game Freak / The Pokémon Company IP**.
+
+- The player is a Tamer in the region **Veydal**, who bonds with original creatures called **Spirlings** and seals **Rifts** (Rifts replace gyms).
+- **Every region upgrades the art style** (Era I → IV). See "Era system" below.
+- The full design doc (GDD) is the source of truth for design questions. Ali owns it; ask him for the link if you need it.
+
+## Hard rules (never break these)
+
+1. **No Pokémon IP, anywhere.** That covers code, comments, asset names, strings, commit messages and store text. Banned: Pokémon, Poké-, "-mon" creature names, Pokédex, Poké Ball, Gym, Poké Center, HM, TM, red/white split-sphere shapes, and copies of Pokémon battle-screen layouts or fonts.
+2. **Patent-safe mechanics** (Nintendo sued Palworld over these):
+   - NO throwing or aiming an item to capture. Bonding is a **menu-triggered rhythm minigame** inside the battle.
+   - NO live capture-probability gauge. Show the result only after the minigame.
+   - NO riding a creature to fly or glide. Traversal uses **Tamer Gear** items (glider, grapple, lantern).
+   - NO throwing out a creature to summon it, and no flick-to-throw on the touchscreen. Spirlings step out beside the Tamer.
+   - Battles start from overworld encounters and **cut to a separate battle screen**. No real-time shared-field fights.
+3. **Original assets only.** Never add ripped sprites, tiles, music or fonts. Use colored placeholder rectangles until real art exists.
+4. Don't add analytics, ads or network SDKs without Ali's explicit OK (they affect privacy forms and 16 KB compliance).
+5. Never commit secrets (keystores, .p12 files, passwords). CI reads them from GitHub secrets.
+
+## Tech stack and settings
+
+| Item | Value |
+| --- | --- |
+| Engine | Godot **4.7.2-stable**. Don't use the 4.8 beta. |
+| Language | GDScript with static typing everywhere (`var x: int`, typed arrays and dictionaries) |
+| Renderer | `gl_compatibility` |
+| Internal resolution | 144×256 portrait (Era I/II). Later eras raise it via `EraManager`. |
+| Stretch | mode `viewport`, aspect `expand`, scale_mode `integer` |
+| Pixel snapping | `rendering/2d/snap/snap_2d_transforms_to_pixel=true`, default texture filter Nearest |
+| Maps | Tiled 1.12 + YATI importer → **TileMapLayer** nodes (never the deprecated `TileMap`) |
+| Android | target SDK 36, arm64-v8a, AAB via Gradle build, Play App Signing |
+| iOS | Xcode 26 / iOS 26 SDK; build on a macOS runner |
+| Tests | GUT (Godot Unit Test) for the pure battle model |
+
+Commit the `.uid` sidecar files that Godot generates.
+
+## Architecture
+
+```
+data/            JSON = editable source of truth (spirlings.json, moves.json, later: elements.json, trainers/, maps/)
+scripts/core/    Elements, Database (JSON → typed Resources), GameState, EraManager, SaveManager
+scripts/battle/  Pure battle MODEL (no Nodes): Spirling instance, DamageCalc, BondCalc, BattleModel, AI
+scripts/battle/presenter/  BattleScene nodes that play back battle events (sprites, text box, HP bars)
+scripts/overworld/ Player grid movement, NPCs, encounters, warps
+scripts/ui/      Menus, party, Spirlog, virtual D-pad
+scenes/          .tscn files mirroring scripts/
+art/era1..era4/  One sprite set per era
+tests/           GUT tests
+```
+
+**Key principles**
+
+- **JSON is authored; Resources are used at runtime.** `Database.gd` loads the JSON into `SpirlingData` and `MoveData`. Never mutate species data at runtime. Runtime creatures are `Spirling` (RefCounted) instances.
+- **The battle model is separate from the presenter.** `BattleModel` is pure GDScript. Each turn it takes actions and returns a list of **battle events** (`MoveUsed`, `Damage`, `StatusApplied`, `Fainted`, `BondResult`, …). The presenter animates them in order. This keeps the model unit-testable and replayable.
+- **Battle flow is a state machine:** Intro → ChooseActions → ResolveOrder → ExecuteAction (loop) → EndOfTurn → FaintCheck/SwitchIn → VictoryCheck → (next turn | Rewards/Bond → Exit).
+- **Turn order sort keys:** action class (swap/item before moves) → move priority → effective SPD → seeded RNG tiebreak. Re-check validity when each action runs.
+- **One seeded `RandomNumberGenerator` per battle**, so bugs are reproducible.
+- **Move effects are data-driven.** `effect_id` maps to an effect script with `apply(ctx)`. No giant `match` statement.
+- **Input:** gameplay reads only input actions (`ui_up`, `ui_accept`, …). The virtual D-pad sits on its own `CanvasLayer` and calls `Input.action_press`.
+- **Camera:** grid movement tweened in `_process`, camera position rounded to integers, no `position_smoothing`.
+- **Saves:** a versioned JSON Dictionary (`save_version`) in `user://`. Write to a temp file and rename it, keep a backup, and save on `NOTIFICATION_APPLICATION_PAUSED`. Never load `.tres` files as player saves.
+
+## Game rules (implement exactly)
+
+**Elements (8).** Each beats 2 and loses to 2. Attacker strong → ×2; reverse direction → ×0.5; otherwise ×1. Lumen and Umbra beat each other, so that pair is ×1. Dual elements multiply. The chart lives in `scripts/core/Elements.gd`.
+
+| Element | Strong vs |
+| --- | --- |
+| Ember | Bloom, Umbra |
+| Tide | Ember, Stone |
+| Bloom | Tide, Stone |
+| Volt | Tide, Gale |
+| Stone | Ember, Volt |
+| Gale | Bloom, Lumen |
+| Lumen | Umbra, Volt |
+| Umbra | Lumen, Gale |
+
+**Stats:** HP, ATK, DEF, FOC (element/special), SPD. Each Spirling has hidden **Spark** values (0–15 per stat).
+
+**Energy instead of PP:** 10 Energy at battle start, +1 per turn. Each move has an energy cost.
+
+**Statuses:** Scorch (−1/16 HP per turn, ATK ×0.75), Soak (SPD ×0.5, 3 turns), Root (can't swap, −1/16 HP per turn), Jolt (25% chance to skip the turn), Daze (accuracy ×0.7, 3 turns), Drowse (sleep 1–3 turns).
+
+**Damage — TODO:** the current formula in `DamageCalc.gd` is too close to the classic handheld formula. Replace it with our own curve, for example:
+`dmg = (P × (A / D)^0.8 × (L / 5 + 3) / 12 + 1) × STAB(1.25) × E × Crit(1.5, 1/16) × R(0.9–1.0)`.
+Tune it so a same-level, neutral, 40-power move takes 15–25% of a foe's HP. Write GUT tests that pin this.
+
+**Bonding:** chance = bond_rate × max(1 − HP%, 0.1) × timing_score × (1.5 if statused) + charm bonus, capped at 0.95. The timing score comes from a 5-second tap-the-pulse minigame. A failed bond gives the wild Spirling one free action.
+
+**Difficulty (Unbound-style):** Story / Tamer / Veteran / Rift-Born. Veteran and Rift-Born use level caps; Rift-Born bans items in battle. AI levels are 0 / 1 / 2 / 2. See `GameState.gd`.
+
+**AI tiers:** 0 = random legal move (wild); 1 = greedy (expected damage × accuracy × effectiveness, plus KO and status bonus); 2 = 1-ply lookahead plus switching on bad matchups plus items under HP thresholds.
+
+## Era system (region design updates)
+
+Each region is a visual generation jump. `EraManager` (autoload) owns the active era. It swaps the palette shader, sprite set (`art/eraN/`), UI theme and internal resolution, and stores the player's **Retro filter** choice (keep any unlocked older era).
+
+| Era | Region | Resolution | Battle sprite | Palette |
+| --- | --- | --- | --- | --- |
+| I Mono | Veydal | 144×256 | 56×56 | 4 fixed greens |
+| II Color | Corvane | 144×256 | 56×56 | 4 per sprite, day/night |
+| III Advanced | Ashmere | 180×320 | 64×64 | 16 per sprite |
+| IV Dual | Solenne | 270×480 | 96×96, 6-frame idle | 32 per sprite, 2.5D via SubViewport |
+
+Until Era II+ art exists, sprite lookups must fall back to `art/era1/`.
+
+## Task list (do these in order; one PR per milestone)
+
+Each milestone must run headless (`godot --headless --quit` with no errors) and pass the GUT tests before you move on.
+
+### M0 — Upgrade and clean up
+- [x] Move `project.godot` to 4.7 (`config/features` "4.7", "GL Compatibility"). Add `stretch/aspect="expand"` and `snap_2d_transforms_to_pixel=true`. (Done; verify it opens cleanly in 4.7.2.)
+- [ ] Update `.github/workflows/export.yml` to `barichello/godot-ci:4.7.2` and templates `4.7.2.stable`. The Android job exports an AAB with `GODOT_ANDROID_KEYSTORE_RELEASE_*` env vars from base64 secrets (set no debug keystore vars) and adds a `zipalign -c -P 16` check. Add a separate `macos` job stub for iOS.
+- [ ] Add GUT under `addons/gut` and a `tests/` folder. Add a CI job that runs the tests headless.
+- [ ] Add a headless data-validation script: every move and evolution ID in the JSON resolves, and every element name is valid.
+
+### M1 — Battle model (no visuals)
+- [ ] `BattleModel.gd`: state machine, action queue and ordering, Energy, the 6 statuses, faint and swap, victory. It emits battle events.
+- [ ] Replace the damage formula (see Game rules) and add tests: effectiveness table, STAB, crit, a determinism test with a fixed seed.
+- [ ] AI tiers 0–2.
+- [ ] Learnsets: add `learnset` (level → move name) to `spirlings.json` for all 15 Spirlings, using only moves in `moves.json`. Add moves until every element has at least 3.
+
+### M2 — Battle presenter
+- [ ] `scenes/battle/Battle.tscn`: player Spirling bottom-left, foe top-right, HP bars, Energy pips, a text box, and a 4-move menu plus Swap / Item / Bond / Run. Use an **original layout** (Rule 1).
+- [ ] Play back the event list with short tweens; tap to advance text; a fast-forward toggle.
+- [ ] Bond minigame scene: rings pulse inward and the player taps on the beat; it returns a timing score from 0 to 1.
+
+### M3 — Overworld slice
+- [ ] Player grid movement (16 px tiles), 4-direction facing, hold-to-run, integer-rounded camera.
+- [ ] Virtual D-pad plus A/B on a CanvasLayer, respecting `DisplayServer.get_display_safe_area()`. Hide it when a gamepad is connected.
+- [ ] Start town + Route 1 built with TileMapLayer (placeholder tiles), tall-grass encounters using a per-route spawn table (`data/encounters.json`), and warps.
+- [ ] NPCs with dialogue from `data/dialogue/*.json`.
+
+### M4 — Meta systems
+- [ ] Party (max 6), storage box, a Spirlog that tracks seen/bonded and route spawns (Spirlog Tracker).
+- [ ] SaveManager: versioned, atomic, saves on pause.
+- [ ] New-game flow: difficulty pick → Tamer customization (placeholder) → starter pick (Kindlop / Puddlet / Mossling).
+- [ ] Settings: text speed, Retro filter (Era I only for now), volume.
+
+### M5 — Vertical slice content
+- [ ] 2 Rifts with Wardens, 1 rival fight (Kestra), unlimited bag, PC access from the menu after Rift 2.
+- [ ] Android internal-testing build, plus an iOS TestFlight build once the macOS signing secrets exist.
+
+## Conventions
+
+- GDScript style: `snake_case` for variables and functions, `PascalCase` for classes and nodes, typed everything, `##` doc comments on public functions.
+- No magic numbers in the battle code. Put them in `const` values or JSON.
+- Keep PRs small. Commit message format: `area: what changed` (e.g. `battle: add status ticks`).
+- If a task conflicts with LEGAL.md, stop and leave a note in the PR instead of guessing.
+- If something is underspecified, pick the simplest option that fits this file and note the assumption in the PR description.

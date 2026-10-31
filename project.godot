@@ -1,0 +1,26 @@
+config_version=5
+
+[application]
+config/name="Chimora"
+run/main_scene="res://scenes/battle/BattleTest.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[autoload]
+GameState="*res://scripts/core/GameState.gd"
+EraManager="*res://scripts/core/EraManager.gd"
+
+[display]
+window/size/viewport_width=144
+window/size/viewport_height=256
+window/size/window_width_override=432
+window/size/window_height_override=768
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
+window/stretch/scale_mode="integer"
+window/handheld/orientation=1
+
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
