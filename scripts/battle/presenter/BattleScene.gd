@@ -33,7 +33,7 @@ var _ff_button: Button
 
 func _ready() -> void:
 	theme = UITheme.get_theme()
-	set_anchors_preset(Control.PRESET_FULL_RECT)
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_build()
 	if model == null:
 		model = _demo_model()
@@ -49,10 +49,10 @@ func setup(p_model: BattleModel) -> void:
 func _build() -> void:
 	var bg := ColorRect.new()
 	bg.color = FIELD_COLOR
-	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
+	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 	var col := VBoxContainer.new()
-	col.set_anchors_preset(Control.PRESET_FULL_RECT)
+	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	col.add_theme_constant_override("separation", 0)
 	add_child(col)
 	_field = Control.new()
@@ -94,10 +94,10 @@ func _build() -> void:
 	_field.add_child(_ff_button)
 
 	_bond_game = BondMinigame.new()
-	_bond_game.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_bond_game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(_bond_game)
 	_picker = ListPicker.new()
-	_picker.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_picker.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_picker.offset_left = MARGIN * 2
 	_picker.offset_right = -MARGIN * 2
 	_picker.offset_top = MARGIN * 6

@@ -24,7 +24,7 @@ func _ready() -> void:
 	_filter_layer.layer = FILTER_LAYER
 	add_child(_filter_layer)
 	_filter_rect = ColorRect.new()
-	_filter_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_filter_rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_filter_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var mat := ShaderMaterial.new()
 	mat.shader = PALETTE_SHADER

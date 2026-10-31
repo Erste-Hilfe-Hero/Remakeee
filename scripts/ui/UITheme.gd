@@ -33,16 +33,17 @@ static func _build() -> Theme:
 	t.set_color("font_color", "Label", INK)
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		var bg: Color = BG
+		# Focus must survive the 4-shade Retro filter, so it uses a clearly darker shade.
 		if state == "hover" or state == "focus":
-			bg = ACCENT
-		elif state == "pressed":
 			bg = MID
+		elif state == "pressed":
+			bg = INK
 		var sb: StyleBoxFlat = panel_style(bg, INK if state != "disabled" else DISABLED)
 		sb.set_content_margin_all(2)
 		t.set_stylebox(state, "Button", sb)
 	t.set_color("font_color", "Button", INK)
-	t.set_color("font_hover_color", "Button", INK)
-	t.set_color("font_focus_color", "Button", INK)
+	t.set_color("font_hover_color", "Button", BG)
+	t.set_color("font_focus_color", "Button", BG)
 	t.set_color("font_pressed_color", "Button", BG)
 	t.set_color("font_disabled_color", "Button", DISABLED)
 	t.set_stylebox("panel", "PanelContainer", panel_style())
