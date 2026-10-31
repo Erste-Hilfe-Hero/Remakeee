@@ -116,9 +116,9 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 
 ### M0 — Upgrade and clean up
 - [x] Move `project.godot` to 4.7 (`config/features` "4.7", "GL Compatibility"). Add `stretch/aspect="expand"` and `snap_2d_transforms_to_pixel=true`. (Done; verify it opens cleanly in 4.7.2.)
-- [ ] Update `.github/workflows/export.yml` to `barichello/godot-ci:4.7.2` and templates `4.7.2.stable`. The Android job exports an AAB with `GODOT_ANDROID_KEYSTORE_RELEASE_*` env vars from base64 secrets (set no debug keystore vars) and adds a `zipalign -c -P 16` check. Add a separate `macos` job stub for iOS.
-- [ ] Add GUT under `addons/gut` and a `tests/` folder. Add a CI job that runs the tests headless.
-- [ ] Add a headless data-validation script: every move and evolution ID in the JSON resolves, and every element name is valid.
+- [x] Update `.github/workflows/export.yml` to `barichello/godot-ci:4.7.2` and templates `4.7.2.stable`. The Android job exports an AAB with `GODOT_ANDROID_KEYSTORE_RELEASE_*` env vars from base64 secrets (set no debug keystore vars) and adds a `zipalign -c -P 16` check. Add a separate `macos` job stub for iOS.
+- [x] Add GUT under `addons/gut` and a `tests/` folder. Add a CI job that runs the tests headless.
+- [x] Add a headless data-validation script: every move and evolution ID in the JSON resolves, and every element name is valid.
 
 ### M1 — Battle model (no visuals)
 - [ ] `BattleModel.gd`: state machine, action queue and ordering, Energy, the 6 statuses, faint and swap, victory. It emits battle events.
