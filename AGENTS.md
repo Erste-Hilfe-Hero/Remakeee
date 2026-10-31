@@ -132,10 +132,10 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 - [x] Bond minigame scene: rings pulse inward and the player taps on the beat; it returns a timing score from 0 to 1.
 
 ### M3 — Overworld slice
-- [ ] Player grid movement (16 px tiles), 4-direction facing, hold-to-run, integer-rounded camera.
-- [ ] Virtual D-pad plus A/B on a CanvasLayer, respecting `DisplayServer.get_display_safe_area()`. Hide it when a gamepad is connected.
-- [ ] Start town + Route 1 built with TileMapLayer (placeholder tiles), tall-grass encounters using a per-route spawn table (`data/encounters.json`), and warps.
-- [ ] NPCs with dialogue from `data/dialogue/*.json`.
+- [x] Player grid movement (16 px tiles), 4-direction facing, hold-to-run, integer-rounded camera.
+- [x] Virtual D-pad plus A/B on a CanvasLayer, respecting `DisplayServer.get_display_safe_area()`. Hide it when a gamepad is connected.
+- [x] Start town + Route 1 built with TileMapLayer (placeholder tiles), tall-grass encounters using a per-route spawn table (`data/encounters.json`), and warps.
+- [x] NPCs with dialogue from `data/dialogue/*.json`.
 
 ### M4 — Meta systems
 - [ ] Party (max 6), storage box, a Spirlog that tracks seen/bonded and route spawns (Spirlog Tracker).

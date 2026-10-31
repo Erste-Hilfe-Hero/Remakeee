@@ -1,0 +1,90 @@
+{
+ "name": "Brindlewick",
+ "region": "veydal",
+ "rows": [
+  "TTTTTTTT__TTTTTTTT",
+  "T.......__.......T",
+  "T.RRRR..__..RRRR.T",
+  "T.HHHH..__..HHHH.T",
+  "T.HDHH..__..HHDH.T",
+  "T.._____________.T",
+  "T.S.....__.......T",
+  "T.......__.....*.T",
+  "T.*....RRRRR.....T",
+  "T......HHHHH.....T",
+  "T......HHDHH.....T",
+  "T........__......T",
+  "T..###...__..###.T",
+  "T........__......T",
+  "T~~~~....__.....TT",
+  "T~~~~...........TT",
+  "TTTTTTTTTTTTTTTTTT"
+ ],
+ "warps": [
+  {
+   "x": 8,
+   "y": 0,
+   "to": "route_1",
+   "tx": 6,
+   "ty": 14,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 0,
+   "to": "route_1",
+   "tx": 7,
+   "ty": 14,
+   "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 4,
+   "to": "home",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 14,
+   "y": 4,
+   "to": "kestra_home",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 10,
+   "to": "rest_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "kid",
+   "x": 12,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "start_town/kid",
+   "color": "d9a03b"
+  },
+  {
+   "id": "elder",
+   "x": 5,
+   "y": 13,
+   "facing": "up",
+   "dialogue": "start_town/elder",
+   "color": "8a8a8a"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 6,
+   "dialogue": "start_town/sign"
+  }
+ ]
+}

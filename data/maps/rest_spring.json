@@ -1,0 +1,39 @@
+{
+ "name": "Rest Spring",
+ "region": "veydal",
+ "heal_point": [
+  4,
+  5
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "start_town",
+   "tx": 9,
+   "ty": 11,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "keeper",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rest_spring/keeper",
+   "color": "4a9a8a"
+  }
+ ],
+ "signs": []
+}

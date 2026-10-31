@@ -2,12 +2,13 @@ config_version=5
 
 [application]
 config/name="Chimora"
-run/main_scene="res://scenes/battle/Battle.tscn"
+run/main_scene="res://scenes/overworld/Overworld.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [autoload]
 GameState="*res://scripts/core/GameState.gd"
 EraManager="*res://scripts/core/EraManager.gd"
+VirtualPad="*res://scripts/ui/VirtualPad.gd"
 
 [display]
 window/size/viewport_width=144

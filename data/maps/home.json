@@ -1,0 +1,35 @@
+{
+ "name": "Your Home",
+ "region": "veydal",
+ "rows": [
+  "WWWWWWWWWW",
+  "WffffffffW",
+  "WfCCffffCW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "start_town",
+   "tx": 3,
+   "ty": 5,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "mom",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "home/mom",
+   "color": "c26a8a"
+  }
+ ],
+ "signs": []
+}
