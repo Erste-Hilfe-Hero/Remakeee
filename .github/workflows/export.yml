@@ -28,6 +28,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: tools/ip_check.sh
+      - name: Every player-facing text has a German translation
+        run: python3 tools/i18n_extract.py de --check
 
   # Headless boot, data validation and GUT tests on every push and PR.
   test:

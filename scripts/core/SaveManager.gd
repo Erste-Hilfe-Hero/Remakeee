@@ -218,6 +218,7 @@ func save_settings() -> void:
 func load_settings() -> void:
 	if not FileAccess.file_exists(settings_path):
 		GameState.apply_volume()
+		GameState.apply_display()
 		return
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(settings_path))
 	if raw is Dictionary:
