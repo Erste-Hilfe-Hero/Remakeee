@@ -8,9 +8,21 @@
   "The water runs uphill toward the hollow since the storm.",
   "Spirlings hide in the reeds. Wade through and one may come out."
  ],
- "neve": [
-  "Neve: The Warden down there, Maelis, used to sing to the tide. Now she just stares at it."
- ],
+ "neve": {
+  "lines": [
+   "Neve: Good fight. Here, a diver's Grapple Line. Hook it on a far post and pull yourself over the water.",
+   "Neve: Try the reed islet by the Brindlewick pier. Divers stash things there."
+  ],
+  "action": "give_item grapple_line 1",
+  "flag": "got_grapple",
+  "once": true,
+  "after_flag": {
+   "flag": "got_grapple",
+   "lines": [
+    "Neve: The Warden down there, Maelis, used to sing to the tide. Now she just stares at it."
+   ]
+  }
+ },
  "neve_intro": [
   "Neve: Heading for the hollow? Let's see if you're ready!"
  ],

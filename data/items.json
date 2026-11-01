@@ -46,5 +46,29 @@
   "battle": false,
   "bond_bonus": 0.1,
   "price": 400
+ },
+ {
+  "id": "grapple_line",
+  "name": "Grapple Line",
+  "description": "Tamer Gear. Face a far post across narrow water and press A to pull yourself over.",
+  "battle": false,
+  "gear": true,
+  "hint": "The far side is just out of reach. A grapple line could bridge it."
+ },
+ {
+  "id": "glide_cloak",
+  "name": "Glide Cloak",
+  "description": "Tamer Gear. Face a low ledge and press A to glide down it.",
+  "battle": false,
+  "gear": true,
+  "hint": "A long drop. Something to catch the wind would help."
+ },
+ {
+  "id": "storm_lantern",
+  "name": "Storm Lantern",
+  "description": "Tamer Gear. Lights pitch-dark places so you can walk through them.",
+  "battle": false,
+  "gear": true,
+  "hint": "It's pitch dark ahead. A lantern would help."
  }
 ]

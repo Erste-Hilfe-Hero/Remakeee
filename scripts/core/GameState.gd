@@ -123,6 +123,10 @@ func add_item(id: String, count: int = 1) -> void:
 func item_count(id: String) -> int:
 	return int(inventory.get(id, 0))
 
+## Tamer Gear (grapple_line, glide_cloak, storm_lantern) is a key item in the bag.
+func has_gear(id: String) -> bool:
+	return item_count(id) > 0
+
 const MENU_ACTION: StringName = &"menu"
 
 func _ready() -> void:

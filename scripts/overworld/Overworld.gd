@@ -13,6 +13,8 @@ const BANNER_TIME: float = 1.2
 const FADE_TIME: float = 0.18
 ## Pause between a Tamer spotting the player and walking over.
 const SPOT_TIME: float = 0.5
+## Seconds for a grapple or glide hop.
+const GEAR_MOVE_TIME: float = 0.4
 
 var map: MapData
 var player: Player
@@ -149,7 +151,58 @@ func npc_at(cell: Vector2i) -> NPC:
 	return null
 
 func _can_enter(cell: Vector2i) -> bool:
-	return not busy and map.is_walkable(cell) and npc_at(cell) == null
+	if busy or not map.is_walkable(cell) or npc_at(cell) != null:
+		return false
+	var gear: String = map.gear_needed_at(cell)
+	if not gear.is_empty() and not GameState.has_gear(gear):
+		_gear_hint.call_deferred(gear)
+		return false
+	return true
+
+var _hinted_cell: Vector2i = Vector2i(-1, -1)
+
+## Says once per approach what a dark spot needs (holding a direction would repeat it).
+func _gear_hint(gear: String) -> void:
+	var facing: Vector2i = player.facing_cell()
+	if busy or facing == _hinted_cell:
+		return
+	_hinted_cell = facing
+	Sound.sfx("bump")
+	await _locked_say([str(Database.item(gear).get("hint", "You can't go that way yet."))] as Array[String])
+
+func _locked_say(lines: Array[String]) -> void:
+	busy = true
+	player.frozen = true
+	await say(lines)
+	player.frozen = false
+	busy = false
+
+## Grapple across water or glide down a ledge. Returns true if a gear spot handled the interaction.
+func _try_gear(target: Vector2i) -> bool:
+	var spot: Dictionary = map.gear_spot(player.cell, target)
+	if spot.is_empty():
+		return false
+	var gear: String = str(spot.gear)
+	if not GameState.has_gear(gear):
+		await _locked_say([str(Database.item(gear).get("hint", "You can't cross here yet."))] as Array[String])
+		return true
+	var to: Array = spot.to
+	busy = true
+	player.frozen = true
+	var dest := Vector2i(int(to[0]), int(to[1]))
+	Sound.sfx("warp" if gear == "glide_cloak" else "confirm")
+	var from_pos: Vector2 = player.position
+	var to_pos: Vector2 = GridWalker.cell_to_pos(dest)
+	var tw: Tween = create_tween()
+	tw.tween_method(func(k: float) -> void:
+		var arc: float = -10.0 * sin(k * PI)
+		player.position = from_pos.lerp(to_pos, k).round() + Vector2(0, round(arc)), 0.0, 1.0, GEAR_MOVE_TIME)
+	await tw.finished
+	player.place(dest, player.facing)
+	GameState.player_cell = dest
+	player.frozen = false
+	busy = false
+	return true
 
 func _show_banner(text: String) -> void:
 	_banner.text = " %s " % text
@@ -165,6 +218,7 @@ func _fade_to(alpha: float) -> void:
 # --- Player events -------------------------------------------------------------------
 
 func _on_player_stepped(cell: Vector2i) -> void:
+	_hinted_cell = Vector2i(-1, -1)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	var warp: Dictionary = map.warp_at(cell)
@@ -194,6 +248,8 @@ func _warp(warp: Dictionary) -> void:
 
 func _on_interact(cell: Vector2i) -> void:
 	if busy:
+		return
+	if await _try_gear(cell):
 		return
 	var n: NPC = npc_at(cell)
 	if n != null:
@@ -304,6 +360,14 @@ func tap_cell(cell: Vector2i) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
 	var passable: Callable = func(c: Vector2i) -> bool: return map.is_walkable(c) and npc_at(c) == null
+	# Tapping across water or a ledge: walk to the gear spot and use it.
+	for g: Dictionary in map.gear_spots:
+		if g.has("to") and int(g.x) == cell.x and int(g.y) == cell.y:
+			var f := Vector2i(int(g.from[0]), int(g.from[1]))
+			var route: Array[Vector2i] = PathFinder.find(player.cell, f, passable)
+			if f == player.cell or not route.is_empty():
+				player.follow(route, cell)
+				return
 	var talk: bool = npc_at(cell) != null or not map.sign_at(cell).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
 	if talk:
 		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)

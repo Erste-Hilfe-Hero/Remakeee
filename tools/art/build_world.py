@@ -89,17 +89,26 @@ WORLD["brindlewick"] = {
     "npcs": [npc("fisher", 8, 18, "left", "brindlewick/fisher", "villager"),
              npc("child", 8, 9, "left", "brindlewick/child", "villager"),
              npc("kestra_dock", 4, 18, "down", "brindlewick/kestra_dock", "ranger", show_flag="pc_unlocked")],
-    "signs": [{"x": 2, "y": 7, "dialogue": "brindlewick/sign"}, {"x": 9, "y": 18, "dialogue": "brindlewick/ferry"}],
+    "signs": [{"x": 2, "y": 7, "dialogue": "brindlewick/sign"}, {"x": 9, "y": 18, "dialogue": "brindlewick/ferry"},
+              {"x": 2, "y": 16, "dialogue": "brindlewick/islet"}],
+    # Tamer Gear: hook across the narrow water between the pier and the reed islet, both ways.
+    "gear_spots": [{"from": [5, 16], "x": 4, "y": 16, "gear": "grapple_line", "to": [3, 16]},
+                   {"from": [3, 16], "x": 4, "y": 16, "gear": "grapple_line", "to": [5, 16]}],
 }
 TEXT["brindlewick"] = {
     "sign": ["BRINDLEWICK", "Lake village of Veydal.", "North: Fernstair   East: Saltmarsh"],
     "ferry": ["FERRY TO CORVANE", "No crossings while the lake is restless."],
-    "fisher": ["The fish stopped jumping the night the Rift opened.", "Even the reeds sound quieter. That's the Hush, they say."],
+    "fisher": ["The fish stopped jumping the night the Rift opened.", "Even the reeds sound quieter. That's the Hush, they say.",
+               "Something glints on the reed islet west of the pier. Too far to wade, though."],
+    "islet": {"lines": ["Tangled in the reeds: a Revival Leaf!"], "action": "give_item revival_leaf 1",
+              "flag": "islet_find", "once": True,
+              "after_flag": {"flag": "islet_find", "lines": ["Only reeds now, rustling in the wind."]}},
     "child": ["My Puddlet won't answer when I call it anymore.", "Grandpa Aldo says a Tamer with a strong bond can wake it up again."],
     "kestra_dock": {
         "lines": ["Kestra: Two Rifts mended. The valley is calmer... and smaller.",
                   "Kestra: There's a third one, up north past the crest. Bigger than both.",
                   "Kestra: I still think something lives on the other side. When the ferry runs again, we find out together."],
+        "flag": "kestra_dock_talk",
     },
 }
 
@@ -126,6 +135,7 @@ TEXT["map_house"] = {
                   "Kestra: Go and see for yourself. Fernstair goes north, Saltmarsh east. Pick either."],
         "after_flag": {"flag": "kestra_spar",
                        "lines": ["Kestra: Still mending Rifts? Fine. Just look closely at what comes through before you do."]},
+        "flag": "met_kestra",
     },
     "maps": ["Old maps of Veydal, crossed out and redrawn in three colours of ink."],
 }
@@ -187,6 +197,7 @@ WORLD["fernstair"] = {
     "npcs": [npc("gatherer", 9, 18, "left", "fernstair/gatherer", "villager"),
              npc("hiker", 3, 9, "right", "fernstair/hiker", "villager")],
     "signs": [{"x": 6, "y": 23, "dialogue": "fernstair/sign"}, {"x": 2, "y": 5, "dialogue": "fernstair/sign_top"}],
+    "gear_spots": [{"from": [8, 6], "x": 8, "y": 7, "gear": "glide_cloak", "to": [8, 8]}],
 }
 TEXT["fernstair"] = {
     "sign": ["FERNSTAIR", "Up: Crowcrest and Thornridge", "Down: Brindlewick"],
@@ -245,10 +256,16 @@ WORLD["crowcrest"] = {
             team=team(("Shalebat", 7), ("Shalebat", 8))),
     ],
     "signs": [{"x": 5, "y": 20, "dialogue": "crowcrest/sign"}],
+    # Tamer Gear: glide down the lower cliff (one way).
+    "gear_spots": [{"from": [8, 13], "x": 8, "y": 14, "gear": "glide_cloak", "to": [8, 15]}],
 }
 TEXT["crowcrest"] = {
     "sign": ["CROWCREST", "Mind the loose stones.", "Up: Thornridge   Down: Fernstair"],
-    "kestra": ["Kestra: Go on ahead. I want to sketch the tarn before it freezes."],
+    "kestra": {"lines": ["Kestra: You fight like you draw maps: careful, then all at once.",
+                         "Kestra: Take this Glide Cloak. Step off a ledge and it catches the wind. No Spirling has to carry you."],
+               "action": "give_item glide_cloak 1", "flag": "got_glider", "once": True,
+               "after_flag": {"flag": "got_glider",
+                              "lines": ["Kestra: Go on ahead. I want to sketch the tarn before it freezes."]}},
     "kestra_intro": ["Kestra: You're really going to close the Cinder Rift?",
                      "Kestra: Then show me you understand what you'd be shutting out. Talk is cheap up here!"],
     "kestra_defeat": ["Kestra: ...Alright. Your Spirlings trust you. That counts for something.",
@@ -335,7 +352,11 @@ WORLD["saltmarsh"] = {
 TEXT["saltmarsh"] = {
     "sign": ["SALTMARSH", "Boardwalk to the Tidewater hollow.", "Wild Spirlings here are strong. Travel with care."],
     "reedcutter": ["The water runs uphill toward the hollow since the storm.", "Spirlings hide in the reeds. Wade through and one may come out."],
-    "neve": ["Neve: The Warden down there, Maelis, used to sing to the tide. Now she just stares at it."],
+    "neve": {"lines": ["Neve: Good fight. Here, a diver's Grapple Line. Hook it on a far post and pull yourself over the water.",
+                       "Neve: Try the reed islet by the Brindlewick pier. Divers stash things there."],
+             "action": "give_item grapple_line 1", "flag": "got_grapple", "once": True,
+             "after_flag": {"flag": "got_grapple",
+                            "lines": ["Neve: The Warden down there, Maelis, used to sing to the tide. Now she just stares at it."]}},
     "neve_intro": ["Neve: Heading for the hollow? Let's see if you're ready!"],
     "neve_defeat": ["Neve: Washed out... You're ready."],
 }
@@ -404,7 +425,7 @@ for old in ["home", "start_town", "kestra_home", "route_1", "route_2"]:
         if os.path.exists(p):
             os.remove(p)
 
-ORDER = ["name", "region", "backdrop", "encounters", "heal_point", "rows", "warps", "npcs", "signs"]
+ORDER = ["name", "region", "backdrop", "encounters", "heal_point", "rows", "warps", "npcs", "signs", "gear_spots"]
 for mid, m in WORLD.items():
     out = {k: m[k] for k in ORDER if k in m}
     with open(os.path.join(MAPS, mid + ".json"), "w") as f:

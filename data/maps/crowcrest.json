@@ -140,5 +140,20 @@
    "y": 20,
    "dialogue": "crowcrest/sign"
   }
+ ],
+ "gear_spots": [
+  {
+   "from": [
+    8,
+    13
+   ],
+   "x": 8,
+   "y": 14,
+   "gear": "glide_cloak",
+   "to": [
+    8,
+    15
+   ]
+  }
  ]
 }
