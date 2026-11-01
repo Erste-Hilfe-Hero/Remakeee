@@ -26,6 +26,8 @@ var _ground: TileMapLayer
 var _shade: Node2D
 var _entities: Node2D
 var _camera: Camera2D
+var _photo: PhotoMode
+var _daylight: CanvasModulate
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
@@ -127,6 +129,8 @@ func _build() -> void:
 func _process(_delta: float) -> void:
 	# Integer-rounded camera (no smoothing) keeps pixels on the grid.
 	_camera.global_position = (player.global_position + Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0)).round()
+	if _photo != null:
+		_camera.global_position += _photo.pan
 
 # --- Maps --------------------------------------------------------------------------
 
@@ -135,6 +139,12 @@ func _tip_after_load(id: String) -> void:
 	while busy:
 		await get_tree().process_frame
 	await show_tip(id)
+
+func _era_line_after_load(line: String) -> void:
+	while busy:
+		await get_tree().process_frame
+	await get_tree().create_timer(EraManager.TRANSITION_TIME).timeout
+	await _locked_say([line] as Array[String])
 
 ## Shows a first-time tip (if any) while the player waits.
 func show_tip(id: String) -> void:
@@ -165,15 +175,31 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.current_map = map_id
 	GameState.player_cell = cell
 	GameState.facing = face
+	var era_before: int = EraManager.unlocked_era
 	EraManager.unlock_region(map.region)
+	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
+		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era])
 	_camera.limit_left = 0
 	_camera.limit_top = 0
 	_camera.limit_right = map.width * GridWalker.TILE
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	_show_banner(map.display_name)
+	refresh_daylight()
 	Sound.music(Sound.track_for_map(map_id))
 	if not map.encounter_table.is_empty():
 		_tip_after_load.call_deferred("wild_area")
+
+## Tints the world for the time of day (UI layers are not affected). Checked once a minute.
+func refresh_daylight() -> void:
+	if _daylight == null:
+		_daylight = CanvasModulate.new()
+		add_child(_daylight)
+		var t := Timer.new()
+		t.wait_time = 60.0
+		t.autostart = true
+		t.timeout.connect(refresh_daylight)
+		add_child(t)
+	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -283,7 +309,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 			if wild != null:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, Season.boosted(Season.current()))
+				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost)
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
@@ -308,7 +335,7 @@ func _on_interact(cell: Vector2i) -> void:
 		n.face_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		else:
+		elif not await offer_rematch(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell)
@@ -347,13 +374,12 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 
 ## Shows newly earned achievements (item 90).
 func announce_achievements() -> void:
-	var fresh: Array[String] = Achievements.check()
-	if fresh.is_empty():
+	var lines: Array[String] = Collection.claim()
+	for t: String in Achievements.check():
+		lines.append("Achievement: %s" % t)
+	if lines.is_empty():
 		return
 	Sound.sfx("level_up")
-	var lines: Array[String] = []
-	for t: String in fresh:
-		lines.append("Achievement: %s" % t)
 	await say(lines)
 	_text.visible = false
 
@@ -407,7 +433,13 @@ func open_menu() -> void:
 	_ui.add_child(menu)
 	await menu.run()
 	var target: String = menu.travel_to
+	var photo: bool = menu.photo
+	var watch: bool = menu.watch_replay
 	menu.queue_free()
+	if photo:
+		await photo_mode()
+	if watch:
+		await watch_replay(GameState.records.get("last_battle", {}))
 	if not target.is_empty() and GameState.visited_rests.has(target):
 		var c: Array = GameState.visited_rests[target]
 		Sound.sfx("warp")
@@ -416,11 +448,44 @@ func open_menu() -> void:
 		Sound.music(Sound.track_for_map(target))
 		await _fade_to(0.0)
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
+	refresh_daylight()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
 
+## Plays a recorded battle (item 14). The replay uses copies, so nothing in the save changes.
+func watch_replay(snap: Dictionary) -> void:
+	var model: BattleModel = BattleReplay.build_model(snap)
+	if model == null:
+		await say(["That replay can't be shown any more."] as Array[String])
+		return
+	await _fade_to(1.0)
+	var scene: BattleScene = BATTLE_SCENE.instantiate()
+	scene.setup(model)
+	scene.backdrop = str(snap.get("backdrop", map.backdrop))
+	scene.music_track = str(snap.get("music", "battle"))
+	scene.replay_inputs = (snap.get("inputs", []) as Array).duplicate(true)
+	_battle_layer.add_child(scene)
+	_fade.color.a = 0.0
+	await scene.battle_finished
+	await _fade_to(1.0)
+	scene.queue_free()
+	Sound.music(Sound.track_for_map(map.id))
+	await _fade_to(0.0)
+
+## Photo mode (item 94): pan, frame and save pictures until the player backs out.
+func photo_mode() -> void:
+	_photo = PhotoMode.new()
+	_photo.place = map.display_name if not map.display_name.is_empty() else map.id.capitalize()
+	add_child(_photo)
+	VirtualPad.set_wanted(true)
+	await _photo.finished
+	_photo.queue_free()
+	_photo = null
+
 func _unhandled_input(event: InputEvent) -> void:
+	if _photo != null:
+		return
 	if event.is_action_pressed(GameState.MENU_ACTION) and not busy and not player.moving:
 		get_viewport().set_input_as_handled()
 		open_menu()
@@ -680,6 +745,7 @@ func after_tamer_win(n: NPC) -> void:
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	GameState.set_flag(TrainerData.beaten_flag(def, map.id))
+	_mark_rematch(def)
 	if def.has("defeat"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
@@ -699,6 +765,71 @@ func after_tamer_win(n: NPC) -> void:
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
+
+## Iron Oath messages for [param retired], refilling or ending the oath if the party is empty.
+static func oath_lines(retired: Array[String]) -> Array[String]:
+	var lines: Array[String] = []
+	for n: String in retired:
+		lines.append("%s retires to the Sanctuary to rest." % n)
+	if retired.is_empty() or not GameState.party.is_empty():
+		return lines
+	if GameState.fill_party_from_storage() > 0:
+		lines.append("Spirlings from your storage step up to travel with you.")
+	else:
+		GameState.break_oath()
+		lines.append("No Spirling is left to travel with you. The Iron Oath is broken.")
+		lines.append("Your friends come back from the Sanctuary.")
+	return lines
+
+static func _today() -> String:
+	return Time.get_date_string_from_system()
+
+func _mark_rematch(def: Dictionary) -> void:
+	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()
+	rec[TrainerData.beaten_flag(def, map.id)] = _today()
+	GameState.records["rematch"] = rec
+
+## Offers a beaten Tamer's daily rematch. Returns false if there is none or the player declines.
+func offer_rematch(n: NPC) -> bool:
+	var def: Dictionary = n.definition
+	if GameState.first_healthy_index() < 0 or not TrainerData.can_rematch(def, map.id, GameState.flags, GameState.records, _today()):
+		return false
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var who: String = str(def.get("trainer", def.get("id", "Tamer")))
+	var go: bool = await menu.confirm("%s wants a rematch. Battle?" % who)
+	menu.queue_free()
+	if not go:
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return false
+	var top: int = 1
+	for s: Spirling in GameState.party:
+		top = maxi(top, s.level)
+	var team: Array[Spirling] = TrainerData.rematch_team(def, GameState.starter, GameState.rng, top, GameState.level_cap())
+	if team.is_empty():
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return false
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	info["money"] = TrainerData.MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
+	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
+	if outcome == BattleModel.Outcome.WIN:
+		_mark_rematch(def)
+		GameState.records["rematch_wins"] = int(GameState.records.get("rematch_wins", 0)) + 1
+		busy = true
+		player.frozen = true
+		await say(["Good battle! Come back tomorrow for another."] as Array[String])
+		await announce_achievements()
+		SaveManager.save_game()
+		player.frozen = false
+		busy = false
+	return true
 
 static func _dir_name(d: Vector2i) -> String:
 	for k: String in GridWalker.DIRS:
@@ -732,10 +863,13 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	scene.setup(model)
 	scene.backdrop = map.backdrop
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
+	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	var result: Array = await scene.battle_finished
 	var outcome: BattleModel.Outcome = result[0]
+	replay["inputs"] = scene.inputs
+	GameState.records["last_battle"] = replay
 	await _fade_to(1.0)
 	scene.queue_free()
 	await _after_battle(model, outcome)
@@ -753,13 +887,19 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if outcome == BattleModel.Outcome.BONDED and model.bonded != null:
 		GameState.receive_spirling(model.bonded)
 		SaveManager.save_game()
+	var oath: Array[String] = oath_lines(GameState.retire_fainted())
 	if outcome == BattleModel.Outcome.LOSS:
 		GameState.heal_party()
 		GameState.money = GameState.money / 2
 		load_map(GameState.heal_map, GameState.heal_cell, "down")
 		await _fade_to(0.0)
 		await say(["You hurried back to rest...", "Your team is rested again."] as Array[String])
+		if not oath.is_empty():
+			await say(oath)
 		return
+	if not oath.is_empty():
+		await _fade_to(0.0)
+		await say(oath)
 	for s: Spirling in GameState.party:
 		if s.can_evolve(map.id) and not s.is_fainted():
 			var old_name: String = s.display_name()

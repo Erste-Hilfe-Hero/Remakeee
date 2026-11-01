@@ -2,6 +2,7 @@
  "name": "Crowcrest",
  "region": "veydal",
  "backdrop": "ridge",
+ "outdoor": true,
  "encounters": "crowcrest",
  "rows": [
   "@@@@@__@@@@@",

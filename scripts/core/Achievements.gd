@@ -20,6 +20,8 @@ const LIST: Array[Dictionary] = [
 	{"id": "weekly", "title": "Week by Week", "text": "Win a weekly challenge."},
 	{"id": "prism", "title": "Odd Colours", "text": "Bond with a shimmering Spirling."},
 	{"id": "rich", "title": "Full Purse", "text": "Hold 10000 coins."},
+	{"id": "oath", "title": "Oathkeeper", "text": "Mend both Rifts of Veydal under the Iron Oath."},
+	{"id": "rematch", "title": "Old Rivals", "text": "Win 5 rematches against Tamers."},
 ]
 
 static func all_spirlings() -> Array[Spirling]:
@@ -71,6 +73,10 @@ static func earned(id: String) -> bool:
 			return all_spirlings().any(func(s: Spirling) -> bool: return s.prism)
 		"rich":
 			return GameState.money >= 10000
+		"oath":
+			return GameState.iron_oath and GameState.has_flag("rift_cinder_sealed") and GameState.has_flag("rift_tide_sealed")
+		"rematch":
+			return int(GameState.records.get("rematch_wins", 0)) >= 5
 	return false
 
 static func unlocked() -> Dictionary:

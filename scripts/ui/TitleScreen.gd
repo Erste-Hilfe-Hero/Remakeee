@@ -140,6 +140,9 @@ func _new_game() -> bool:
 	var diff: int = await _menu.pick_strings("Difficulty", DIFFICULTY_TEXT)
 	if diff < 0:
 		return false
+	# "Normal" comes first so mashing accept never takes the oath by accident.
+	var oath: bool = await _menu.pick_strings("Iron Oath: Spirlings that faint retire to the Sanctuary for good. Only for a new game.",
+		["Normal journey", "Take the Iron Oath"] as Array[String]) == 1
 	_name_edit.text = GameState.tamer_name
 	_name_box.visible = true
 	_name_edit.grab_focus()
@@ -159,6 +162,7 @@ func _new_game() -> bool:
 		var sd: SpirlingData = Database.species(STARTERS[pick])
 		if await _menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
 			GameState.new_game(diff as GameState.Difficulty, name, color, sd.species_name)
+			GameState.iron_oath = oath
 			EraManager.from_dict({})
 			return true
 	return false

@@ -129,6 +129,9 @@ func _layout() -> void:
 	var left: bool = GameState.left_handed
 	var dpad_x: float = safe.end.x - EDGE - _dpad * 3 if left else safe.position.x + EDGE
 	var dpad_origin := Vector2(dpad_x, safe.end.y - EDGE - _dpad * 3)
+	if GameState.one_hand:
+		_layout_one_hand(safe, left)
+		return
 	for b: TouchScreenButton in _buttons:
 		var off: Vector2 = b.get_meta("offset")
 		match b.action:
@@ -144,6 +147,26 @@ func _layout() -> void:
 				b.position = Vector2(bx2 + (_ab - MENU_BUTTON) / 2.0, safe.end.y - EDGE - _ab - MENU_BUTTON - 6)
 			_:
 				b.position = dpad_origin + off
+
+## One-hand layout (item 79): the D-pad sits in the bottom corner on the thumb's side, with
+## A and B in a row just above it and the menu button above B. Left-handed mirrors it.
+func _layout_one_hand(safe: Rect2, left: bool) -> void:
+	var dpad_x: float = safe.position.x + EDGE if left else safe.end.x - EDGE - _dpad * 3
+	var dpad_origin := Vector2(dpad_x, safe.end.y - EDGE - _dpad * 3)
+	var row_y: float = dpad_origin.y - 4 - _ab
+	# A is the button nearest the screen edge, B sits next to it toward the middle.
+	var a_x: float = safe.position.x + EDGE if left else safe.end.x - EDGE - _ab
+	var b_x: float = a_x + _ab + 4 if left else a_x - _ab - 4
+	for b: TouchScreenButton in _buttons:
+		match b.action:
+			"ui_accept":
+				b.position = Vector2(a_x, row_y)
+			"ui_cancel":
+				b.position = Vector2(b_x, row_y)
+			"menu":
+				b.position = Vector2(b_x + (_ab - MENU_BUTTON) / 2.0, row_y - MENU_BUTTON - 4)
+			_:
+				b.position = dpad_origin + (b.get_meta("offset") as Vector2)
 
 ## Converts DisplayServer's safe area (screen pixels) into viewport units.
 func _safe_rect_in_viewport(vp: Vector2) -> Rect2:

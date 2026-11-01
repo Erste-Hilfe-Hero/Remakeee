@@ -22,6 +22,9 @@ var in_game: bool = false
 var party: Array[Spirling] = []
 ## Storage box for Spirlings beyond the party of 6.
 var storage: Array[Spirling] = []
+## Iron Oath (item 15, opt-in at new game): Spirlings that faint retire to the Sanctuary.
+var iron_oath: bool = false
+var sanctuary: Array[Spirling] = []
 ## Spirlog: species name -> {"seen": bool, "bonded": bool}.
 var spirlog: Dictionary = {}
 var region: String = "veydal"
@@ -69,12 +72,18 @@ var pad_size: int = 1
 var pad_opacity: int = 1
 var left_handed: bool = false
 var tap_to_move: bool = true
+## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
+var one_hand: bool = false
+## Gamepad rumble on hits (item 63).
+var rumble: bool = true
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
 ## Display and accessibility (items 59, 76, 78).
 var battery_saver: bool = false
 var reduce_motion: bool = false
 var high_contrast: bool = false
+## Day and night tint and encounters on outdoor maps (item 43).
+var day_night: bool = true
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
 const FPS_NORMAL: int = 60
@@ -169,23 +178,59 @@ func _process(delta: float) -> void:
 	if in_game:
 		play_time += delta
 
-## Adds the "menu" action (Esc / Tab / gamepad Start) next to the built-in ui_* actions.
-func _register_actions() -> void:
-	if InputMap.has_action(MENU_ACTION):
+## Gamepad and keyboard bindings (item 63) added next to Godot's built-in ui_* actions:
+## A/B confirm and cancel (the built-in ui_accept/ui_cancel have no pad buttons), Start or
+## Select opens the menu, RB cycles battle speed and Y toggles auto battle.
+const SPEED_ACTION: StringName = &"battle_speed"
+const AUTO_ACTION: StringName = &"battle_auto"
+const PAD_BINDINGS: Dictionary[StringName, Array] = {
+	&"ui_accept": [JOY_BUTTON_A],
+	&"ui_cancel": [JOY_BUTTON_B],
+	MENU_ACTION: [JOY_BUTTON_START, JOY_BUTTON_BACK],
+	SPEED_ACTION: [JOY_BUTTON_RIGHT_SHOULDER],
+	AUTO_ACTION: [JOY_BUTTON_Y],
+}
+const KEY_BINDINGS: Dictionary[StringName, Array] = {
+	MENU_ACTION: [KEY_ESCAPE, KEY_TAB, KEY_M],
+	SPEED_ACTION: [KEY_F],
+	AUTO_ACTION: [KEY_R],
+}
+
+static func _register_actions() -> void:
+	for action: StringName in PAD_BINDINGS:
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+		for b: Variant in PAD_BINDINGS[action]:
+			if not _has_pad_button(action, int(b)):
+				var pad := InputEventJoypadButton.new()
+				pad.button_index = int(b) as JoyButton
+				InputMap.action_add_event(action, pad)
+	for action: StringName in KEY_BINDINGS:
+		for k: Variant in KEY_BINDINGS[action]:
+			var ev := InputEventKey.new()
+			ev.physical_keycode = int(k) as Key
+			if not InputMap.action_has_event(action, ev):
+				InputMap.action_add_event(action, ev)
+
+static func _has_pad_button(action: StringName, button: int) -> bool:
+	for e: InputEvent in InputMap.action_get_events(action):
+		if e is InputEventJoypadButton and (e as InputEventJoypadButton).button_index == button:
+			return true
+	return false
+
+## A short rumble on every connected gamepad, if rumble is on.
+func rumble_pads(strength: float, seconds: float) -> void:
+	if not rumble or reduce_motion:
 		return
-	InputMap.add_action(MENU_ACTION)
-	for key: Key in [KEY_ESCAPE, KEY_TAB, KEY_M]:
-		var ev := InputEventKey.new()
-		ev.physical_keycode = key
-		InputMap.action_add_event(MENU_ACTION, ev)
-	var pad := InputEventJoypadButton.new()
-	pad.button_index = JOY_BUTTON_START
-	InputMap.action_add_event(MENU_ACTION, pad)
+	for d: int in Input.get_connected_joypads():
+		Input.start_joy_vibration(d, strength * 0.5, strength, seconds)
 
 ## Clears everything for a new game.
 func reset() -> void:
 	party.clear()
 	storage.clear()
+	iron_oath = false
+	sanctuary.clear()
 	spirlog.clear()
 	region = "veydal"
 	rifts_sealed.clear()
@@ -248,6 +293,8 @@ func to_dict() -> Dictionary:
 		"rests": visited_rests.duplicate(true),
 		"records": records.duplicate(),
 		"switches": switch_progress.duplicate(),
+		"iron_oath": iron_oath,
+		"sanctuary": sanctuary.map(func(s: Spirling) -> Dictionary: return s.to_dict()),
 	}
 
 func from_dict(d: Dictionary) -> void:
@@ -288,14 +335,20 @@ func from_dict(d: Dictionary) -> void:
 		visit_rest(heal_map, heal_cell)
 	records = (d.get("records", {}) as Dictionary).duplicate()
 	switch_progress = (d.get("switches", {}) as Dictionary).duplicate()
+	iron_oath = bool(d.get("iron_oath", false))
+	for sd: Variant in d.get("sanctuary", []):
+		var s: Spirling = Spirling.from_dict(sd)
+		if s != null:
+			sanctuary.append(s)
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "language": language}
+		"high_contrast": high_contrast, "day_night": day_night, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -307,10 +360,13 @@ func settings_from_dict(d: Dictionary) -> void:
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
+	one_hand = bool(d.get("one_hand", false))
+	rumble = bool(d.get("rumble", true))
 	tips_enabled = bool(d.get("tips", true))
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))
+	day_night = bool(d.get("day_night", true))
 	language = str(d.get("language", ""))
 	apply_display()
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
@@ -350,6 +406,39 @@ func set_flag(flag: String, value: bool = true) -> void:
 func heal_party() -> void:
 	for s: Spirling in party:
 		s.restore()
+
+## Iron Oath: moves every fainted party member to the Sanctuary. Returns their names.
+func retire_fainted() -> Array[String]:
+	var names: Array[String] = []
+	if not iron_oath:
+		return names
+	for s: Spirling in party.duplicate():
+		if s.is_fainted():
+			party.erase(s)
+			s.restore()
+			sanctuary.append(s)
+			names.append(s.display_name())
+	return names
+
+## Fills an empty party from storage. Returns how many joined.
+func fill_party_from_storage() -> int:
+	var n: int = 0
+	while party.size() < MAX_PARTY and not storage.is_empty():
+		party.append(storage.pop_front())
+		n += 1
+	return n
+
+## Ends the Iron Oath when no Spirling is left: everyone comes back from the Sanctuary.
+func break_oath() -> void:
+	iron_oath = false
+	for s: Spirling in sanctuary:
+		s.restore()
+		if party.size() < MAX_PARTY:
+			party.append(s)
+		else:
+			storage.append(s)
+	sanctuary.clear()
+	set_flag("oath_broken")
 
 func first_healthy_index() -> int:
 	for i: int in party.size():

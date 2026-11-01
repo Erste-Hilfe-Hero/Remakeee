@@ -40,3 +40,7 @@ world that does not follow the classic monster-RPG template. Check new content a
 Starting house with a parent, a professor handing out starters, a rival who picks the
 counter-starter, numbered routes, a fixed badge/leader sequence, a villain organisation,
 identical healing buildings in every town, line-of-sight trainer ambushes, oval battle platforms.
+
+## Day and night
+
+Maps with `"outdoor": true` (set in `tools/art/build_world.py`) follow the device clock through `DayCycle`: dawn 5:00, day 7:00, dusk 18:00 and night 20:00. Outdoors the world gets a soft tint, and Umbra and Lumen Spirlings are met more often at night (Lumen at dusk, Gale at dawn), using the same weighting as festivals. Rooms, Murk Hollow and the Rifts never change. Players can switch it off under Display and access.

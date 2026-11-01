@@ -209,6 +209,47 @@ T = {
 "Tip: Wild Spirlings hide in ferns, reeds and loose scree. Walk through them to meet one.": "Tipp: Wilde Spirlings verstecken sich in Farn, Schilf und losem Geröll. Lauf hindurch, um einen zu treffen.",
 "Tip: Open the menu (=) and pick Goals to see where to go next.": "Tipp: Öffne das Menü (=) und wähle Ziele, um zu sehen, wohin es als Nächstes geht.",
 "Tip: Tamer Gear works where you can't walk. Face the spot and press A, or tap it.": "Tipp: Zähmer-Ausrüstung hilft, wo du nicht laufen kannst. Stell dich davor und drück A oder tippe darauf.",
+# P3 extras: controls, temperament, Iron Oath, collection, rematches, photo mode, replays, eras
+"Controls...": "Steuerung...", "Controls": "Steuerung",
+"One-hand layout: %s": "Einhand-Layout: %s", "Gamepad rumble: %s": "Gamepad-Vibration: %s",
+"Gamepad buttons...": "Gamepad-Tasten...",
+"Gamepad\nD-pad or left stick: move\nA: talk, confirm\nB: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles":
+	"Gamepad\nSteuerkreuz oder linker Stick: laufen\nA: sprechen, bestätigen\nB: zurück, halten zum Rennen\nStart oder Select: Menü\nRB: Kampftempo\nY: wilde Kämpfe automatisch",
+"Temperament: %s. %s": "Temperament: %s. %s",
+"Fierce": "Wild", "Hits a little harder.": "Schlägt etwas härter zu.",
+"Stalwart": "Standhaft", "Shrugs off blows a little better.": "Steckt Treffer etwas besser weg.",
+"Keen": "Scharfsinnig", "Focuses a little sharper.": "Konzentriert sich etwas besser.",
+"Brisk": "Flink", "Moves a little quicker.": "Bewegt sich etwas schneller.",
+"Hearty": "Zäh", "Has a little more stamina.": "Hat etwas mehr Ausdauer.",
+"Even": "Ausgeglichen", "Calm and balanced.": "Ruhig und ausgeglichen.",
+"Iron Oath: Spirlings that faint retire to the Sanctuary for good. Only for a new game.":
+	"Eiserner Schwur: Spirlings, die besiegt werden, ziehen sich für immer ins Refugium zurück. Nur bei neuem Spiel.",
+"Normal journey": "Normale Reise", "Take the Iron Oath": "Eisernen Schwur leisten",
+"%s retires to the Sanctuary to rest.": "%s zieht sich zur Ruhe ins Refugium zurück.",
+"Spirlings from your storage step up to travel with you.": "Spirlings aus deiner Box reisen jetzt mit dir.",
+"No Spirling is left to travel with you. The Iron Oath is broken.": "Kein Spirling kann mehr mit dir reisen. Der Eiserne Schwur ist gebrochen.",
+"Your friends come back from the Sanctuary.": "Deine Freunde kehren aus dem Refugium zurück.",
+"Iron Oath kept. In the Sanctuary: %d": "Eiserner Schwur gehalten. Im Refugium: %d",
+"Iron Oath broken.": "Eiserner Schwur gebrochen.",
+"Oathkeeper": "Schwurtreu", "Mend both Rifts of Veydal under the Iron Oath.": "Heile beide Risse von Veydal unter dem Eisernen Schwur.",
+"Old Rivals": "Alte Rivalen", "Win 5 rematches against Tamers.": "Gewinne 5 Revanchen gegen Zähmer.",
+"Spirlog goal: %d kinds bonded! You received %s x%d.": "Spirlog-Ziel: %d Arten gebunden! Du erhältst %s x%d.",
+"Spirlog complete! Every kind bonded. You received %d coins.": "Spirlog vollständig! Alle Arten gebunden. Du erhältst %d Münzen.",
+"Bonded %d of %d kinds.": "%d von %d Arten gebunden.",
+"Bonded %d of %d kinds. Next gift at %d.": "%d von %d Arten gebunden. Nächstes Geschenk bei %d.",
+"Rematches won: %d": "Gewonnene Revanchen: %d",
+"%s wants a rematch. Battle?": "%s will eine Revanche. Kämpfen?",
+"Good battle! Come back tomorrow for another.": "Guter Kampf! Komm morgen wieder für den nächsten.",
+"Photo": "Foto", "No frame": "Kein Rahmen", "Film": "Film", "Postcard": "Postkarte",
+"A: photo  B: done  Menu: frame": "A: Foto  B: fertig  Menü: Rahmen",
+"Photo saved.": "Foto gespeichert.", "Could not save the photo.": "Das Foto konnte nicht gespeichert werden.",
+"Watch last battle": "Letzten Kampf ansehen", "Watch the replay? %s": "Wiederholung ansehen? %s",
+"That replay can't be shown any more.": "Diese Wiederholung kann nicht mehr gezeigt werden.",
+"wild %s": "wilder %s", "%s, seed %08x": "%s, Seed %08x",
+"The grey of Veydal falls away. The world blooms into colour!": "Das Grau von Veydal fällt ab. Die Welt erblüht in Farbe!",
+"The air grows sharper. Every leaf and stone shows more detail!": "Die Luft wird klarer. Jedes Blatt und jeder Stein zeigt mehr Details!",
+"Day and night: %s": "Tag und Nacht: %s",
+"The sky splits wide open. Two horizons stretch before you!": "Der Himmel öffnet sich weit. Zwei Horizonte liegen vor dir!",
 }
 
 # Strings the extractor finds that stay the same in every language (names, node and theme ids, debug text).
@@ -216,4 +257,4 @@ KEEP = ["Label", "Button", "PanelContainer", "Panel", "LineEdit", "Ground", "Ent
 	"Rowan", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dx", "Lv%d", "%s Lv%d", "%s Lv%d %d/%d",
 	"%s Lv%d %d/%d%s", "%s_sealed", "%s_era%d", "cannot open %s (%s)", "rename failed: %s", "Battle log\n\n", "\n\n(tap to close)",
 	" sharply!", "%s's %s won't go any %s!", "Item", "Auto", "Log", "Team", "Spirlog", "Normal", "Level", "Name",
-	"%s: %s.", "%s   Lv %d"]
+	"%s: %s.", "%s   Lv %d", "  %s Lv%d"]

@@ -10,10 +10,14 @@ var encounter_table: String = ""
 var current_map: String = ""
 ## Set when the player picks a fast-travel target; the overworld moves them after the menu closes.
 var travel_to: String = ""
+## Set when the player picks Photo; the overworld opens photo mode after the menu closes.
+var photo: bool = false
+## Set when the player picks "Watch last battle" in Records.
+var watch_replay: bool = false
 
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Bag", "Save", "Settings"]
+		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Bag", "Save", "Photo", "Settings"]
 		if GameState.has_flag(STORAGE_FLAG):
 			labels.insert(5, "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
@@ -27,7 +31,10 @@ func run() -> void:
 				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
 			"Team": await run_team()
 			"Spirlog": await run_spirlog()
-			"Records": await run_records()
+			"Records":
+				await run_records()
+				if watch_replay:
+					return
 			"Bag": await run_bag()
 			"Storage": await run_storage()
 			"Save":
@@ -35,6 +42,9 @@ func run() -> void:
 				Sound.sfx("save" if ok else "cancel")
 				await info("Game saved." if ok else "Saving failed.")
 			"Settings": await run_settings()
+			"Photo":
+				photo = true
+				return
 			"Travel":
 				if await run_travel():
 					return
@@ -45,11 +55,18 @@ func run_records() -> void:
 	while true:
 		var lines: Array[String] = Achievements.lines()
 		lines.append("Personal bests")
+		var last: Dictionary = GameState.records.get("last_battle", {})
+		if not last.is_empty():
+			lines.append("Watch last battle")
 		var have: int = Achievements.unlocked().size()
 		var idx: int = await pick_strings("Achievements %d/%d" % [have, Achievements.LIST.size()], lines)
 		if idx < 0:
 			return
-		if idx == lines.size() - 1:
+		if lines[idx] == "Watch last battle":
+			if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
+				watch_replay = true
+				return
+		elif idx == Achievements.LIST.size():
 			await info(records_text())
 		else:
 			var a: Dictionary = Achievements.LIST[idx]
@@ -65,6 +82,14 @@ static func records_text() -> String:
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
 	lines.append("This week: %d of %d" % [best, WeeklyChallenge.ROUNDS])
 	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
+	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
+	lines.append(Collection.progress_text(GameState.spirlog, Database.spirlings.size()))
+	if GameState.iron_oath:
+		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
+		for s: Spirling in GameState.sanctuary:
+			lines.append("  %s Lv%d" % [s.display_name(), s.level])
+	elif GameState.has_flag("oath_broken"):
+		lines.append("Iron Oath broken.")
 	var f: Dictionary = Season.current()
 	if not f.is_empty():
 		lines.append("Festival: %s" % f.name)

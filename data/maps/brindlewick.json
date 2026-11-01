@@ -2,6 +2,7 @@
  "name": "Brindlewick",
  "region": "veydal",
  "backdrop": "lake",
+ "outdoor": true,
  "rows": [
   "TTTTT__TTTTT",
   "T*...__...*T",

@@ -22,6 +22,29 @@ static func beaten_flag(def: Dictionary, map_id: String) -> String:
 static func is_beaten(def: Dictionary, map_id: String, flags: Dictionary) -> bool:
 	return bool(flags.get(beaten_flag(def, map_id), false))
 
+## Rematches (item 13): a beaten Tamer fights again once per day, scaled up to the party.
+## The last rematch day per Tamer lives in GameState.records["rematch"] (beaten flag -> date).
+static func can_rematch(def: Dictionary, map_id: String, flags: Dictionary, records: Dictionary, today: String) -> bool:
+	if not is_trainer(def) or not is_beaten(def, map_id, flags):
+		return false
+	if bool(def.get("leaves", false)) or bool(def.get("no_rematch", false)):
+		return false
+	var last: Dictionary = records.get("rematch", {})
+	return str(last.get(beaten_flag(def, map_id), "")) != today
+
+## The rematch team: the same Spirlings, all raised by the same amount so the strongest one
+## matches the party's best level (never above the level cap, never below the first fight).
+static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, party_top: int, cap: int) -> Array[Spirling]:
+	var team: Array[Spirling] = build_team(def, starter, rng)
+	var top: int = 0
+	for s: Spirling in team:
+		top = maxi(top, s.level)
+	var shift: int = maxi(0, mini(party_top, cap) - top)
+	var out: Array[Spirling] = []
+	for s: Spirling in team:
+		out.append(Spirling.new(s.data, s.level + shift, rng) if shift > 0 else s)
+	return out
+
 ## The team entries for this Tamer ("team_by_starter" picks one from the player's starter).
 static func team_entries(def: Dictionary, starter: String) -> Array:
 	if def.has("team_by_starter"):

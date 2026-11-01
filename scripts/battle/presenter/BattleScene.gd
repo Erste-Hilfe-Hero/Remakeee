@@ -24,6 +24,11 @@ var backdrop: String = "field"
 var music_track: String = "battle"
 ## Set to true to quit the app when the battle ends (standalone demo).
 var quit_on_finish: bool = false
+## Every player input, in order, for BattleReplay (item 14).
+var inputs: Array = []
+## Set to a recorded input list to watch a replay instead of playing.
+var replay_inputs: Array = []
+var _replaying: bool = false
 
 var _field: Control
 var _backdrop: BattleBackdrop
@@ -49,6 +54,17 @@ var _last_player_element: int = -1
 var _last_element: Array[int] = [-1, -1]
 ## HP ratio at or below which the pinch music takes over (item 69).
 const PINCH_RATIO: float = 0.25
+
+## Gamepad / keyboard shortcuts for the speed and auto buttons (item 63).
+func _unhandled_input(event: InputEvent) -> void:
+	if _ff_button == null:
+		return
+	if event.is_action_pressed(GameState.SPEED_ACTION) and _ff_button.visible:
+		get_viewport().set_input_as_handled()
+		_ff_button.pressed.emit()
+	elif event.is_action_pressed(GameState.AUTO_ACTION) and _auto_button.visible:
+		get_viewport().set_input_as_handled()
+		_auto_button.button_pressed = not _auto_button.button_pressed
 
 func _ready() -> void:
 	theme = UITheme.get_theme()
@@ -196,14 +212,27 @@ func _run() -> void:
 	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
+	_replaying = not replay_inputs.is_empty()
 	while not model.is_finished():
+		if _replaying:
+			if replay_inputs.is_empty():
+				break
+			var rec: Dictionary = replay_inputs.pop_front()
+			await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
+			if str(rec.get("t", "")) == "switch":
+				await _play(model.submit_switch(int(rec.get("i", 0))))
+			else:
+				await _play(model.submit_turn(BattleReplay.action_from_dict(rec)))
+			continue
 		if model.needs_player_switch():
 			var idx: int = await _pick_party("Who steps out?", false)
+			inputs.append(BattleReplay.switch_to_dict(idx))
 			await _play(model.submit_switch(idx))
 			continue
 		var action: BattleAction = await _choose_action()
 		if action == null:
 			continue
+		inputs.append(BattleReplay.action_to_dict(action))
 		await _play(model.submit_turn(action))
 	battle_finished.emit(model.outcome, model)
 	if quit_on_finish:
@@ -353,6 +382,8 @@ func _play_event(e: BattleEvent) -> void:
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
 				GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
 			if not bool(e.data.get("status_tick", false)):
+				if side == BattleModel.Side.PLAYER:
+					GameState.rumble_pads(0.8 if hit == "hit_strong" else 0.4, 0.15)
 				await _sprite(side).hit_flash()
 			await _strip(side).animate_hp(int(e.data.hp), int(e.data.max_hp))
 			_update_pinch()

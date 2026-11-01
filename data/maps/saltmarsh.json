@@ -2,6 +2,7 @@
  "name": "Saltmarsh",
  "region": "veydal",
  "backdrop": "lake",
+ "outdoor": true,
  "encounters": "saltmarsh",
  "rows": [
   "~~~~~++~~~~~",

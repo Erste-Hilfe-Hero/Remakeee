@@ -9,6 +9,8 @@ const DIR: String = "res://data/maps/"
 
 var id: String
 var display_name: String
+## Follows the real clock (DayCycle); false for rooms, caves and Rifts.
+var outdoor: bool = false
 var region: String = "veydal"
 var rows: PackedStringArray = []
 var width: int = 0
@@ -39,6 +41,7 @@ static func load_map(map_id: String) -> MapData:
 	var m := MapData.new()
 	m.id = map_id
 	m.display_name = str(raw.get("name", map_id))
+	m.outdoor = bool(raw.get("outdoor", false))
 	m.region = str(raw.get("region", "veydal"))
 	for r: Variant in raw.get("rows", []):
 		m.rows.append(str(r))
