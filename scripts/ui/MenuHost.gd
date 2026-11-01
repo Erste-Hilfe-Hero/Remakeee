@@ -36,6 +36,8 @@ func _fill(c: Control) -> void:
 	c.offset_top = PANEL_MARGIN
 	c.offset_right = -PANEL_MARGIN
 	c.offset_bottom = -PANEL_MARGIN
+	# Keep menus clear of notches and the gesture bar once the viewport is known.
+	c.ready.connect(func() -> void: SafeArea.apply(c, PANEL_MARGIN), CONNECT_ONE_SHOT)
 
 ## Shows a list; returns the index or -1 (Back / cancel).
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -> int:
@@ -90,6 +92,7 @@ func run_settings() -> void:
 			"Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0)),
 			"Tips: %s" % ("On" if GameState.tips_enabled else "Off"),
 			"Touch controls...",
+			"Display and access...",
 		]
 		var idx: int = await pick_strings("Settings", entries)
 		match idx:
@@ -121,6 +124,30 @@ func run_settings() -> void:
 				GameState.tips_enabled = not GameState.tips_enabled
 			8:
 				await run_controls()
+			9:
+				await run_display()
+
+## Display and accessibility: battery saver, reduced motion, high contrast.
+func run_display() -> void:
+	while true:
+		var entries: Array[String] = [
+			"Battery saver (30 FPS): %s" % ("On" if GameState.battery_saver else "Off"),
+			"Reduce motion and flashes: %s" % ("On" if GameState.reduce_motion else "Off"),
+			"High contrast menus: %s" % ("On" if GameState.high_contrast else "Off"),
+		]
+		var idx: int = await pick_strings("Display and access", entries)
+		match idx:
+			-1:
+				return
+			0:
+				GameState.battery_saver = not GameState.battery_saver
+			1:
+				GameState.reduce_motion = not GameState.reduce_motion
+			2:
+				GameState.high_contrast = not GameState.high_contrast
+		GameState.apply_display()
+		if idx == 2:
+			await info("High contrast applies to menus and text from the next screen on.")
 
 ## Volume steps of 20%, wrapping from 100% to 0%.
 static func _step_volume(v: float) -> float:

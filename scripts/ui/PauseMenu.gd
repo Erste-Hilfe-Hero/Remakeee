@@ -66,12 +66,19 @@ func run_team() -> void:
 		if idx < 0:
 			return
 		var s: Spirling = GameState.party[idx]
-		var opt: int = await pick_strings(s.display_name(), ["Summary", "Lead the team", "Use item", "Held item"] as Array[String])
+		var opt: int = await pick_strings(s.display_name(), ["Summary", "Lead the team", "Move to slot...", "Use item", "Held item"] as Array[String])
 		match opt:
 			0: await info(MenuHost.summary(s))
 			1: GameState.swap_party(0, idx)
-			2: await _use_item_on(s)
-			3: await _held_item(s)
+			2:
+				var slots: Array[String] = []
+				for i: int in GameState.party.size():
+					slots.append("%d. %s" % [i + 1, GameState.party[i].display_name()])
+				var to: int = await pick_strings("Move %s to..." % s.display_name(), slots)
+				if to >= 0:
+					GameState.move_party(idx, to)
+			3: await _use_item_on(s)
+			4: await _held_item(s)
 
 ## Give, swap or take off a held item.
 func _held_item(s: Spirling) -> void:
@@ -263,6 +270,34 @@ func _tracker_text() -> String:
 		lines.append("%s: %s" % [sp if bool(e.get("seen", false)) else "???", mark])
 	return "\n".join(lines)
 
+var _storage_sort: int = 0
+var _storage_element: int = -1
+
+## Withdraw list with sort and element filter rows on top (item 57).
+func _withdraw() -> void:
+	while true:
+		var view: Array[int] = GameState.storage_view(_storage_sort, _storage_element)
+		var names: Array[String] = [
+			"Sort: %s" % GameState.STORAGE_SORTS[_storage_sort],
+			"Show: %s" % ("all" if _storage_element < 0 else Elements.element_name(_storage_element)),
+		]
+		for i: int in view:
+			var s: Spirling = GameState.storage[i]
+			names.append("%s Lv%d" % [s.display_name(), s.level])
+		var w: int = await pick_strings("Withdraw (%d)" % view.size(), names)
+		if w < 0:
+			return
+		if w == 0:
+			_storage_sort = (_storage_sort + 1) % GameState.STORAGE_SORTS.size()
+		elif w == 1:
+			_storage_element += 1
+			if _storage_element >= Elements.E.size():
+				_storage_element = -1
+		elif not GameState.withdraw(view[w - 2]):
+			await info("Your team is full.")
+		else:
+			return
+
 ## Storage box: deposit and withdraw.
 func run_storage() -> void:
 	while true:
@@ -273,12 +308,7 @@ func run_storage() -> void:
 			if GameState.storage.is_empty():
 				await info("The box is empty.")
 				continue
-			var names: Array[String] = []
-			for s: Spirling in GameState.storage:
-				names.append("%s Lv%d" % [s.display_name(), s.level])
-			var w: int = await pick_strings("Withdraw", names)
-			if w >= 0 and not GameState.withdraw(w):
-				await info("Your team is full.")
+			await _withdraw()
 		else:
 			var names2: Array[String] = []
 			for s: Spirling in GameState.party:

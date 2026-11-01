@@ -5,11 +5,30 @@ extends RefCounted
 ## cartographer's chart. Square, flat, no rounded "battle box" shapes.
 
 const FONT_SIZE: int = 8
-const BG: Color = Color("f4f1e6")
-const INK: Color = Color("20241c")
-const MID: Color = Color("7d8a6a")
-const ACCENT: Color = Color("c7d6a4")
-const DISABLED: Color = Color("a6a89c")
+## Palette. Static (not const) so the high-contrast option can swap it (item 78).
+static var BG: Color = Color("f4f1e6")
+static var INK: Color = Color("20241c")
+static var MID: Color = Color("7d8a6a")
+static var ACCENT: Color = Color("c7d6a4")
+static var DISABLED: Color = Color("a6a89c")
+
+const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("20241c"), Color("7d8a6a"), Color("c7d6a4"), Color("a6a89c")]
+## Pure paper and ink, a darker mid tone and a stronger accent: text stays above 15:1.
+const HIGH_CONTRAST_PALETTE: Array[Color] = [Color("ffffff"), Color("000000"), Color("3a3a3a"), Color("ffe680"), Color("6a6a6a")]
+
+static var high_contrast: bool = false
+
+## Switches the UI palette. Screens built afterwards use it; the theme is rebuilt on demand.
+static func set_high_contrast(on: bool) -> void:
+	high_contrast = on
+	var p: Array[Color] = HIGH_CONTRAST_PALETTE if on else NORMAL_PALETTE
+	BG = p[0]
+	INK = p[1]
+	MID = p[2]
+	ACCENT = p[3]
+	DISABLED = p[4]
+	_theme = null
+	_frames.clear()
 
 ## Frame slice size and how much of it is border.
 const FRAME_SIZE: int = 9

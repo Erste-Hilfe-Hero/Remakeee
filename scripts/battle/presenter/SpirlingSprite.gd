@@ -51,12 +51,20 @@ func step_back(to_left: bool) -> void:
 	position = _home
 
 func lunge(toward: Vector2) -> void:
+	if GameState.reduce_motion:
+		return
 	var tw: Tween = create_tween()
 	tw.tween_property(self, "position", _home + toward, 0.08 / speed_scale)
 	tw.tween_property(self, "position", _home, 0.12 / speed_scale)
 	await tw.finished
 
 func hit_flash() -> void:
+	if GameState.reduce_motion:
+		# One soft dim instead of blinking (no flashes).
+		modulate.a = 0.6
+		await get_tree().create_timer(0.12 / speed_scale).timeout
+		modulate.a = 1.0
+		return
 	for i: int in HIT_FLASHES:
 		visible = false
 		await get_tree().create_timer(0.05 / speed_scale).timeout

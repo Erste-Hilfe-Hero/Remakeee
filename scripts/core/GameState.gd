@@ -71,6 +71,12 @@ var left_handed: bool = false
 var tap_to_move: bool = true
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
+## Display and accessibility (items 59, 76, 78).
+var battery_saver: bool = false
+var reduce_motion: bool = false
+var high_contrast: bool = false
+const FPS_NORMAL: int = 60
+const FPS_BATTERY: int = 30
 const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large"]
 const PAD_ALPHAS: Array[float] = [0.3, 0.55, 0.85]
 
@@ -283,7 +289,8 @@ func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
-		"tips": tips_enabled}
+		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
+		"high_contrast": high_contrast}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -296,10 +303,20 @@ func settings_from_dict(d: Dictionary) -> void:
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
 	tips_enabled = bool(d.get("tips", true))
+	battery_saver = bool(d.get("battery_saver", false))
+	reduce_motion = bool(d.get("reduce_motion", false))
+	high_contrast = bool(d.get("high_contrast", false))
+	apply_display()
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
 	music_volume = clampf(float(d.get("music_volume", 0.7)), 0.0, 1.0)
 	sfx_volume = clampf(float(d.get("sfx_volume", 0.8)), 0.0, 1.0)
 	apply_volume()
+
+## Frame cap (battery saver) and UI palette (high contrast).
+func apply_display() -> void:
+	Engine.max_fps = FPS_BATTERY if battery_saver else FPS_NORMAL
+	if UITheme.high_contrast != high_contrast:
+		UITheme.set_high_contrast(high_contrast)
 
 func apply_volume() -> void:
 	ensure_buses()
@@ -463,6 +480,34 @@ func withdraw(index: int) -> bool:
 	party.append(storage[index])
 	storage.remove_at(index)
 	return true
+
+## Moves party member [param from] to slot [param to], shifting the others (item 56).
+func move_party(from: int, to: int) -> void:
+	if from < 0 or to < 0 or from >= party.size() or to >= party.size() or from == to:
+		return
+	var s: Spirling = party[from]
+	party.remove_at(from)
+	party.insert(to, s)
+
+const STORAGE_SORTS: Array[String] = ["Caught", "Level", "Name", "Spirlog no."]
+
+## Storage indices in display order (item 57): sorted by [param sort] (STORAGE_SORTS index) and
+## filtered to [param element] (-1 = all) and a name fragment [param search] (case-insensitive).
+func storage_view(sort: int, element: int = -1, search: String = "") -> Array[int]:
+	var idx: Array[int] = []
+	for i: int in storage.size():
+		var s: Spirling = storage[i]
+		if element >= 0 and not element in s.elements():
+			continue
+		if not search.is_empty() and s.display_name().to_lower().find(search.to_lower()) < 0 \
+				and s.data.species_name.to_lower().find(search.to_lower()) < 0:
+			continue
+		idx.append(i)
+	match sort:
+		1: idx.sort_custom(func(a: int, b: int) -> bool: return storage[a].level > storage[b].level)
+		2: idx.sort_custom(func(a: int, b: int) -> bool: return storage[a].display_name() < storage[b].display_name())
+		3: idx.sort_custom(func(a: int, b: int) -> bool: return storage[a].data.dex_id < storage[b].data.dex_id)
+	return idx
 
 ## Swaps two party slots (reordering; slot 0 leads in battle).
 func swap_party(a: int, b: int) -> void:

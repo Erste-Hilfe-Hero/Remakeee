@@ -147,11 +147,4 @@ func _layout() -> void:
 
 ## Converts DisplayServer's safe area (screen pixels) into viewport units.
 func _safe_rect_in_viewport(vp: Vector2) -> Rect2:
-	var full := Rect2(Vector2.ZERO, vp)
-	var screen_size: Vector2 = Vector2(DisplayServer.window_get_size())
-	var safe_px: Rect2 = Rect2(DisplayServer.get_display_safe_area())
-	if screen_size.x <= 0.0 or safe_px.size.x <= 0.0:
-		return full
-	var scale: Vector2 = vp / screen_size
-	var r := Rect2(safe_px.position * scale, safe_px.size * scale)
-	return full.intersection(r) if full.intersects(r) else full
+	return SafeArea.rect(vp)
