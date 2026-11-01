@@ -5,7 +5,7 @@ extends RefCounted
 
 const TITLE_SCENE: String = "res://scenes/ui/Title.tscn"
 
-const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Frankfurt, Germany, so they are safe if your phone breaks. We store your Tamer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account."
+const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Tamer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account."
 const ONLINE_RULES: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Tamer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
 
 static func run(menu: MenuHost) -> void:

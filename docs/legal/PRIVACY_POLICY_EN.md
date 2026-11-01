@@ -35,10 +35,10 @@ advertising identifiers (IDFA / Android Advertising ID).
 
 ## 5. Recipients
 
-- Hosting and database: Supabase Inc., [SUPABASE ADDRESS as in the data processing agreement]; servers in
-  Frankfurt am Main, Germany (region eu-central-1); processing on our behalf under an Art. 28 GDPR agreement.
-  Supabase is a US company, so access from the US (for example by support staff) cannot be fully ruled out.
-  The EU Standard Contractual Clauses (Art. 46(2)(c) GDPR) in that agreement cover this.
+- Hosting: Contabo GmbH, Aschauer Straße 32a, 81549 Munich, Germany <!-- check against the DPA -->. The
+  server is in a data centre in Germany. Contabo only provides the machine; we run the database on it
+  ourselves. Contabo processes the data on our behalf under an Art. 28 GDPR agreement. No data is transferred
+  outside the EU.
 - Apple and Google process data as independent controllers when you download the app or buy something.
 - Authorities only where required by law.
 

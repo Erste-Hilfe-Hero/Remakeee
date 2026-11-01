@@ -52,12 +52,13 @@ In diesen Dateien `[NAME]`, `[ADRESSE]`, `[E-MAIL]`, `[TELEFON]`, `[DOMAIN]` (en
 `TERMS_EN.md`. Im Spiel `scripts/core/LegalInfo.gd` (Domain und E-Mail). Oder schick mir die Angaben, dann
 mache ich das.
 
-## 4. Online-Betrieb (sobald das Backend gebaut wird)
+## 4. Online-Betrieb
 
-- [ ] Konto bei **Supabase** anlegen und ein Projekt in der Region **Frankfurt (eu-central-1)** erstellen.
-      Die Schritte stehen in [docs/ONLINE.md](../ONLINE.md).
-- [ ] Dort den **Auftragsverarbeitungsvertrag (DPA)** abschließen (Organization Settings, Legal Documents)
-      und die Adresse von Supabase in `DATENSCHUTZ.md` und `PRIVACY_POLICY_EN.md` eintragen.
+- [ ] Bei **Contabo** einen **Cloud VPS 10** mit Ubuntu 24.04 in Deutschland bestellen (ca. 5 € im Monat).
+- [ ] Im Contabo-Kundenbereich den **Auftragsverarbeitungsvertrag (AV-Vertrag)** abschließen und die Adresse
+      in `DATENSCHUTZ.md` und `PRIVACY_POLICY_EN.md` damit vergleichen.
+- [ ] In GitHub drei Secrets eintragen (IP, Root-Passwort, Server-Adresse) und den Workflow **Game server**
+      starten. Die Schritte stehen in [docs/ONLINE.md](../ONLINE.md). Den Rest erledigt das Skript.
 - [ ] **Website** mit vier Seiten veröffentlichen: Impressum, Datenschutz, Nutzungsbedingungen,
       Konto löschen (plus `/lizenzen`). Die Texte liegen fertig in diesem Ordner.
 

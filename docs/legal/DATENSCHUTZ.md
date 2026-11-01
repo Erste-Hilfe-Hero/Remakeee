@@ -84,11 +84,10 @@ Einwilligung. Wir lesen keine Werbe-IDs (IDFA / Android-Werbe-ID) aus.
 
 ## 5. Empfänger
 
-- **Hosting und Datenbank:** Supabase Inc., [ADRESSE SUPABASE laut Auftragsverarbeitungsvertrag].
-  Serverstandort Frankfurt am Main, Deutschland (Region eu-central-1). Supabase verarbeitet die Daten in
-  unserem Auftrag auf Grundlage eines Vertrags nach Art. 28 DSGVO. Weil Supabase ein Unternehmen mit Sitz in
-  den USA ist, ist ein Zugriff aus den USA nicht ganz auszuschließen (etwa im Support). Dafür gelten die
-  EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO), die Teil des Vertrags sind.
+- **Hosting:** Contabo GmbH, Aschauer Straße 32a, 81549 München, Deutschland <!-- Adresse beim Abschluss des AV-Vertrags prüfen -->.
+  Der Server steht in einem Rechenzentrum in Deutschland. Contabo stellt nur den Rechner bereit; die
+  Datenbank betreiben wir selbst darauf. Contabo verarbeitet die Daten in unserem Auftrag auf Grundlage
+  eines Vertrags nach Art. 28 DSGVO. Eine Übermittlung in Länder außerhalb der EU findet nicht statt.
 - **App-Stores:** Apple und Google verarbeiten beim Download und bei Käufen eigene Daten in eigener
   Verantwortung; es gelten deren Datenschutzerklärungen.
 - **Behörden** nur, wenn wir gesetzlich dazu verpflichtet sind.

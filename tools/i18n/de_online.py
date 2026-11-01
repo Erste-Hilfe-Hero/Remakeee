@@ -1,8 +1,8 @@
 # German texts for the online parts (scripts/online, account, friends, mail, echoes, world goal).
 T = {
 # Account and connection
-"Chimora is online only. Your journeys are stored on our server in Frankfurt, Germany, so they are safe if your phone breaks. We store your Tamer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account.":
-	"Chimora läuft nur online. Deine Reisen liegen auf unserem Server in Frankfurt, damit sie sicher sind, wenn dein Handy kaputtgeht. Gespeichert werden nur Tamer-Name, Freundescode und Spielstände. Keine Werbung, kein Tracking. Unter Einstellungen, Konto kannst du alles löschen.",
+"Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Tamer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account.":
+	"Chimora läuft nur online. Deine Reisen liegen auf unserem Server in Deutschland, damit sie sicher sind, wenn dein Handy kaputtgeht. Gespeichert werden nur Tamer-Name, Freundescode und Spielstände. Keine Werbung, kein Tracking. Unter Einstellungen, Konto kannst du alles löschen.",
 "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Tamer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset.":
 	"Online-Regeln:\n- Sei freundlich. Grüße sind feste Sätze, es gibt keinen freien Chat.\n- Teile nie deinen echten Namen, deine Adresse oder Passwörter.\n- Spirlings bleiben bei dem Tamer, der sie verbunden hat. Man kann sie nicht tauschen oder verschenken.\n- Melde Namen, die nicht okay sind. Blockieren wirkt sofort.\n- Wer schummelt, dessen Konto wird zurückgesetzt.",
 "Account  Code %s": "Konto  Code %s",

@@ -2,7 +2,7 @@
 
 > Erstellt von einer KI ohne anwaltliche Prüfung. Die Antworten gelten für das Modell aus
 > [DATENSCHUTZ.md](DATENSCHUTZ.md): automatisches Konto mit zufälliger Spieler-ID, Übertragungscode statt
-> E-Mail, Tamer-Name nur für dich sichtbar, Server bei Supabase in Frankfurt, keine Werbung, keine Analytics,
+> E-Mail, Tamer-Name nur für dich sichtbar, eigener Server bei Contabo in Deutschland, keine Werbung, keine Analytics,
 > keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
 > ändern sich die Antworten. Store-Formulare ändern sich oft: im Zweifel die Hilfe in der Konsole lesen.
 

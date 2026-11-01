@@ -1,0 +1,79 @@
+name: Game server
+
+on:
+  pull_request:
+    paths: ["server/**", "supabase/**", ".github/workflows/server.yml"]
+  push:
+    branches: [main]
+    paths: ["server/**", "supabase/**"]
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: "Own domain for the server (empty = <ip>.sslip.io)"
+        type: string
+        default: ""
+
+jobs:
+  # Starts the whole server on the runner and plays a short session against it.
+  test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start server
+        run: LOCAL_TEST=1 bash server/setup.sh
+      - name: Run setup again (updates must keep data and keys)
+        run: LOCAL_TEST=1 bash server/setup.sh
+      - name: Smoke test
+        run: bash server/smoke_test.sh
+      - name: Backup
+        run: bash server/backup.sh && ls -la server/backups
+      - name: Logs
+        if: failure()
+        run: cd server && docker compose logs --tail 80
+
+  # Installs or updates the server on the VPS (Contabo). Needs the secrets CHIMORA_SERVER_IP and
+  # CHIMORA_SERVER_PASSWORD (root password from Contabo's email). Skipped while they are missing.
+  deploy:
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    env:
+      IP: ${{ secrets.CHIMORA_SERVER_IP }}
+      SSHPASS: ${{ secrets.CHIMORA_SERVER_PASSWORD }}
+      DOMAIN: ${{ inputs.domain }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check secrets
+        id: have
+        run: |
+          if [ -z "$IP" ] || [ -z "$SSHPASS" ]; then
+            echo "::notice::CHIMORA_SERVER_IP / CHIMORA_SERVER_PASSWORD not set, nothing to deploy (docs/ONLINE.md)."
+            echo "go=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "go=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Copy files
+        if: steps.have.outputs.go == 'true'
+        run: |
+          sudo apt-get install -yq sshpass >/dev/null
+          opts="-o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
+          sshpass -e ssh $opts root@"$IP" "mkdir -p /opt/chimora/server /opt/chimora/supabase/migrations"
+          sshpass -e rsync -az --delete -e "ssh $opts" --exclude .env --exclude public --exclude backups \
+            server/ root@"$IP":/opt/chimora/server/
+          sshpass -e rsync -az --delete -e "ssh $opts" supabase/migrations/ root@"$IP":/opt/chimora/supabase/migrations/
+      - name: Install or update
+        if: steps.have.outputs.go == 'true'
+        run: |
+          opts="-o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
+          sshpass -e ssh $opts root@"$IP" "DOMAIN='$DOMAIN' bash /opt/chimora/server/setup.sh"
+      - name: Check it answers
+        if: steps.have.outputs.go == 'true'
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS "https://${IP//./-}.sslip.io/chimora.json" || { [ -n "$DOMAIN" ] && curl -fsS "https://$DOMAIN/chimora.json"; }; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::Server does not answer over HTTPS yet."
+          exit 1

@@ -1,12 +1,14 @@
 # Online (Chimora is online only)
 
 Chimora only runs with an internet connection. The server keeps every journey, the phone keeps a cache copy.
-The server is [Supabase](https://supabase.com) in Frankfurt (region `eu-central-1`). The ideas list behind
-this is the "Chimora online: 200 ideas" artifact in the project.
+The server is our own machine at **Contabo** in Germany (Cloud VPS), running the same open-source programs
+as Supabase (Postgres, GoTrue for sign-in, PostgREST for the API) behind Caddy for HTTPS. Everything for it
+is in `server/`. The game would also work with a Supabase Cloud project, see the end of this page. The
+ideas list behind this is the "Chimora online: 200 ideas" artifact in the project.
 
 ## How it works
 
-- **Account:** the first start makes an account without email (Supabase anonymous sign-in). The game never
+- **Account:** the first start makes an account without email (anonymous sign-in). The game never
   asks for an email. Moving to a new phone works with a one-time **transfer code** (Settings, Account),
   valid for 7 days. Only its hash is stored.
 - **Saves:** `SaveManager.save_game()` writes the local cache, then `Online.note_saved()` sends it to the server
@@ -49,6 +51,7 @@ All under Menu, Friends. Spirlings are never traded or gifted, and there is no f
 | Part | Where |
 | --- | --- |
 | Database tables and functions | `supabase/migrations/*.sql` |
+| The server itself (Docker, HTTPS, backups, install script) | `server/` |
 | Tests for the SQL (throwaway Postgres) | `tools/online/test_sql.sh`, `tools/online/sql_test/` |
 | Autoload: sign-in, saves, heartbeat, reconnect | `scripts/online/Online.gd` |
 | Real server client (HTTPS) | `scripts/online/SupabaseBackend.gd` |
@@ -67,24 +70,53 @@ then says "test server on this phone". The debug APK from CI works like this unt
 
 ## Setting up the server (Ali, once)
 
-1. Create a Supabase account and a project. Region: **Frankfurt (eu-central-1)**. Plan: Free is enough for
-   testing, Pro (about 25 USD a month) for launch because Free projects pause after a week without use.
-2. Sign the data processing agreement: Organization settings, Legal documents, DPA. Put Supabase's address
-   into `docs/legal/DATENSCHUTZ.md` and `PRIVACY_POLICY_EN.md` (the placeholders say where).
-3. Authentication, Sign In / Providers: switch on **Allow anonymous sign-ins**. Switch off email sign-up
-   (Chimora does not use it).
-4. SQL Editor: run every file in `supabase/migrations/` in name order. (Or with the Supabase CLI:
-   `supabase link` then `supabase db push`.)
-5. Project settings, API: copy the **Project URL** and the **anon public** key.
-6. GitHub, repository settings, Secrets and variables, Actions: add `SUPABASE_URL` and `SUPABASE_ANON_KEY`.
-   The anon key is meant to be public; the database functions protect everything.
+1. At [contabo.com](https://contabo.com) order a **Cloud VPS 10** (about 5 EUR a month is enough to start).
+   Region: **European Union (Germany)**. Image: **Ubuntu 24.04**. Choose a root password.
+2. Sign the data processing agreement (AV-Vertrag) in the Contabo customer panel and check the address in
+   `docs/legal/DATENSCHUTZ.md` and `PRIVACY_POLICY_EN.md` against it.
+3. GitHub, repository settings, Secrets and variables, Actions: add
+   - `CHIMORA_SERVER_IP`: the server's IP address (from Contabo's email),
+   - `CHIMORA_SERVER_PASSWORD`: the root password,
+   - `CHIMORA_SERVER`: `https://<ip with dashes>.sslip.io`, for example `https://203-0-113-7.sslip.io`.
+4. GitHub, Actions, **Game server**, Run workflow. It copies `server/` and the migrations to the machine and
+   runs `server/setup.sh`: Docker, firewall (only ports 22, 80, 443), keys, database, HTTPS certificate,
+   nightly backups (kept 14 days in `/opt/chimora/server/backups`) and automatic security updates.
 
-From then on every CI build talks to the real server. Store builds (release AAB, iOS) fail without the two
-secrets, because an online-only game cannot ship without its server.
+From then on every CI build reads the address and the public anon key from `<CHIMORA_SERVER>/chimora.json`
+and talks to the real server. Store builds (release AAB, iOS) fail without it, because an online-only game
+cannot ship without its server. Every push to `main` that changes `server/` or `supabase/` updates the
+machine again; data and keys stay.
+
+No domain is needed: `sslip.io` turns the IP into a name, so Let's Encrypt can issue the certificate. With an
+own domain later, point an A record at the IP, run the workflow with that domain and change `CHIMORA_SERVER`.
+Note that changing the address needs a new app build, so pick the domain before the store launch.
+
+Without GitHub: `ssh root@<ip>`, copy the repository there, run `sudo bash server/setup.sh`.
+
+`server/smoke_test.sh` plays a short session (sign-in, save, load, friend request) against a server; CI runs
+it on every pull request that touches `server/` or `supabase/` (workflow **Game server**).
+
+### Looking into the database
+
+There is no web dashboard (it would be one more thing open to the internet). Log in with
+`ssh root@<ip>`, then `cd /opt/chimora/server && docker compose exec db psql -U postgres -h localhost`.
+
+### Backups
+
+`server/backup.sh` runs every night at 3:30. To copy them off the machine as well, download
+`/opt/chimora/server/backups` now and then, or add Contabo Object Storage later. Restore:
+`docker compose exec -T db pg_restore -U postgres -h localhost -d postgres --clean < backups/<file>.dump`.
+
+### Alternative: Supabase Cloud
+
+Create a project in Frankfurt (eu-central-1), switch on anonymous sign-ins, run the files in
+`supabase/migrations/` in the SQL editor, and set the secrets `SUPABASE_URL` and `SUPABASE_ANON_KEY` instead
+of `CHIMORA_SERVER`. Supabase is a US company, so the privacy texts would need the transfer clause again.
 
 ## Changing things without an app update
 
-In the Supabase table editor, table `server_config`:
+In the database (see "Looking into the database"), table `server_config`, for example
+`update server_config set value = '1004' where key = 'min_version';`:
 
 | key | value | effect |
 | --- | --- | --- |
@@ -98,7 +130,7 @@ Table `banned_words`: words a Tamer name may not contain.
 
 ## Reports (Ali, about once a week)
 
-Table `reports` lists open reports (`handled = false`). To reset a name, run in the SQL editor:
+Table `reports` lists open reports (`handled = false`). To reset a name, run in the database:
 
 ```sql
 update public.profiles set name = 'Tamer ' || right(code, 4) where id = '<target>';

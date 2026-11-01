@@ -1,7 +1,7 @@
 class_name OnlineBackend
 extends RefCounted
 ## The server Chimora talks to. Two implementations:
-## - SupabaseBackend: the real server (Supabase in Frankfurt), used when data/online.json has a URL.
+## - SupabaseBackend: the real server (our server in server/, or Supabase Cloud), used when data/online.json has a URL.
 ## - LocalBackend: an in-memory stand-in with the same rules, used in tests and in builds
 ##   without a server address (debug APKs before the server exists).
 ## Every call is a coroutine and returns {"ok": bool, "data": Variant, "error": String,

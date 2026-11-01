@@ -16,7 +16,7 @@
 
 ## Festgelegtes Modell (darauf beruhen alle Texte)
 
-- Online-only, Spielstand auf einem Server von Supabase in Frankfurt (docs/ONLINE.md).
+- Online-only, Spielstand auf unserem eigenen Server bei Contabo in Deutschland (docs/ONLINE.md).
 - Konto wird beim ersten Start automatisch angelegt (zufällige Spieler-ID), Gerätewechsel per
   Übertragungscode. Keine E-Mail, kein Login über Apple/Google/Facebook.
 - Tamer-Name nur für bestätigte Freunde sichtbar. Kein freier Chat: Grüße sind feste Sätze. Wochen-Rangliste
