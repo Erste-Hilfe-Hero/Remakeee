@@ -1,79 +1,81 @@
 # Checkliste: Was Ali selbst erledigen muss
 
-> **Keine Rechtsberatung.** Diese Liste ordnet die Schritte, die nur du als Person/Unternehmer erledigen
-> kannst. Sie ersetzt nicht das Gespräch mit Anwalt und Steuerberater. Kosten sind grobe Richtwerte.
+Alles, was sich im Code und in Texten lösen ließ, ist erledigt. Diese Punkte brauchen dich als Person, weil es
+um deine Identität, deine Unterschrift oder deine Konten geht. Reihenfolge = empfohlene Reihenfolge.
 
-## Phase 1: Jetzt (bevor viel Geld in Grafik, Logo und Marketing fließt)
+## Ohne Anwalt: was das bedeutet (einmal ehrlich)
 
-- [ ] **Markenrecherche „Chimora“ durch einen Markenanwalt** (DPMA, EUIPO, WIPO, USPTO; Klassen 9, 41, 42,
-      ggf. 28 für Merch). Besonders prüfen lassen: Ähnlichkeit zu **Chimera Entertainment GmbH** (Games-Studio
-      München). Richtwert Recherche: ca. 300–800 €.
-- [ ] Wenn frei: **Marke anmelden**. Unionsmarke beim EUIPO (online ab 850 € für 1 Klasse, +50 € für die
-      2., +150 € ab der 3.) oder deutsche Marke beim DPMA (ab 290 € für bis zu 3 Klassen). Optional später
-      USA (USPTO) per Madrid-System. Vor Anmeldung nichts groß veröffentlichen, was den Namen festlegt.
-- [ ] **Domain sichern** (z. B. `chimora.de` / `.com` / `.game`) und gleichnamige Social-Media-Handles.
-      Danach `package/unique_name` und `bundle_identifier` in `export_presets.cfg` auf die eigene Domain
-      umstellen (lässt sich nach dem ersten Upload **nie** mehr ändern).
-- [ ] **Games-Anwalt beauftragen** (IT-/Urheber-/Medienrecht, idealerweise mit Games-Erfahrung) für:
-      Review von `IP_PATENT_AUDIT.md`, Datenschutzerklärung, Nutzungsbedingungen, Impressum, Store-Texte.
-      Richtwert Paket für ein Indie-Spiel: ca. 1.500–4.000 €.
-- [ ] **Patentanwalt** (kann über den Games-Anwalt laufen): kurze Freedom-to-Operate-Einschätzung für
-      Bonding-Minispiel, Fang-/Rekrutier-Mechanik und Touch-Bedienung, besonders mit Blick auf Nintendos
-      JP/US-Patente. Richtwert: ca. 1.000–3.000 € für eine fokussierte Prüfung.
-- [ ] **Ergebnis im Palworld-Verfahren** um den 9. November 2026 verfolgen und mit dem Anwalt besprechen.
-- [ ] Entscheiden: **Bonding-Minispiel umbauen** (Vorschlag „Echo-Melodie“ im Audit). Empfohlen.
+Die Texte und das Audit hat eine KI erstellt. Niemand hat geprüft, ob jede Klausel vor einem deutschen Gericht
+hält oder ob es ein Patent gibt, das die Websuche nicht gefunden hat. Restrisiken:
+- **Abmahnung wegen eines Fehlers in Impressum, Datenschutzerklärung oder AGB.** Kosten meist einige hundert
+  bis wenige tausend Euro. Wahrscheinlichkeit gering, wenn du die Platzhalter korrekt füllst und nichts
+  einbaust, was nicht in den Texten steht.
+- **Markenkonflikt um den Namen.** Bestenfalls Umbenennung, schlimmstenfalls Abmahnung. Darum Schritt 1
+  und 2 unten vor allem anderen.
+- **Patent.** Gering, weil Chimora die bekannten strittigen Mechaniken vermeidet, aber ohne
+  Patentrecherche nicht ausgeschlossen.
+- **Wenn ein Anwaltsschreiben kommt:** nichts unterschreiben, nichts zahlen, Frist notieren und dann doch
+  einen Anwalt fragen. Eine Erstberatung kostet laut Gesetz höchstens 190 € netto für Verbraucher, bei der
+  Verbraucherzentrale oft weniger.
 
-## Phase 2: Unternehmen und Steuern
+## 1. Name absichern (vor Logo, Domain und Store-Eintrag)
 
-- [ ] **Gewerbe anmelden** beim Gewerbeamt deiner Stadt (ca. 20–60 €). Alternativ später UG/GmbH für
-      Haftungsbeschränkung, mit Anwalt/Steuerberater abwägen (bei Online-Spiel mit Servern und Kundendaten
-      sinnvoll zu überlegen).
-- [ ] **Fragebogen zur steuerlichen Erfassung** beim Finanzamt (ELSTER). Kleinunternehmerregelung ja/nein
-      klären. Apple und Google führen die Umsatzsteuer für EU-Verbraucherverkäufe in der Regel selbst ab,
-      die Auszahlungen an dich sind trotzdem zu versteuern.
-- [ ] **Steuerberater** für das erste Jahr (Store-Auszahlungen aus dem Ausland, Umsatzsteuer, Gewinnermittlung).
-- [ ] **Geschäftsadresse** festlegen, die öffentlich sein darf (Impressum + DSA). Wenn nicht die
-      Privatadresse: Coworking/Geschäftsadresse mit echter Postzustellung (kein Postfach).
-- [ ] **Eigene E-Mail-Adressen** auf der Domain: `kontakt@`, `support@`, `privacy@`.
-- [ ] Optional: **Betriebshaftpflicht/Vermögensschadenhaftpflicht** für IT/Medien (deckt z. B.
-      Abmahnungen teilweise ab), Angebote vergleichen.
+- [ ] **Selbst im Register suchen** (kostenlos, 15 Minuten): [TMview](https://www.tmdn.org/tmview/) (deckt
+      DPMA, EUIPO und viele Länder ab) und [WIPO Brand Database](https://branddb.wipo.int/). Suchbegriffe:
+      `chimora`, `chimor*`, `chimera`, `kimora`. Filter: Klassen 9 und 41, Status „eingetragen“ oder
+      „angemeldet“.
+      - Kein Treffer „Chimora“ oder fast gleich in Klasse 9/41 → Name behalten.
+      - Treffer → auf Plan B **„Spirlings of Veydal“** wechseln (sag Bescheid, ich stelle den Code um).
+- [ ] **Marke anmelden.** Deutsche Marke beim [DPMA](https://www.dpma.de/marken/anmeldung/) (online 290 €,
+      bis 3 Klassen) oder Unionsmarke beim [EUIPO](https://euipo.europa.eu/) (online 850 € für 1 Klasse,
+      +50 € für die 2.). Klassen: **9** (herunterladbare Spiele/Apps) und **41** (Online-Spiele/Unterhaltung).
+      Wortmarke reicht.
+- [ ] **Domain** kaufen (z. B. `chimora.de` und/oder `chimora.game`) und die passenden Social-Media-Namen
+      sichern.
 
-## Phase 3: Online-Betrieb und Datenschutz (sobald das Backend geplant wird)
+## 2. Unternehmen
 
-- [ ] **Hoster in der EU wählen** (Serverstandort Deutschland/EU) und den **Auftragsverarbeitungsvertrag
-      (AVV)** nach Art. 28 DSGVO abschließen (bei großen Hostern online im Kundenkonto).
-- [ ] Login-Methode entscheiden (Empfehlung: anonymes Konto + optional „Mit Apple/Google anmelden“).
-- [ ] **Verzeichnis von Verarbeitungstätigkeiten** anlegen (Art. 30 DSGVO; einfache Tabelle reicht, der
-      Anwalt kann eine Vorlage geben).
-- [ ] Platzhalter in `DATENSCHUTZ.md` / `PRIVACY_POLICY_EN.md` ersetzen (Hoster, Speicherfristen,
-      zuständige Landesdatenschutzbehörde, Login-Dienste) und vom Anwalt freigeben lassen.
-- [ ] **Website** mit Impressum, Datenschutz, Nutzungsbedingungen und Konto-Löschseite veröffentlichen.
-- [ ] Im Spiel: Menü „Rechtliches“ (Links + Godot-Lizenztexte), Zustimmung zu den Nutzungsbedingungen beim
-      ersten Start, „Konto löschen“ in den Einstellungen. (Kann Claude bauen, sobald das Backend steht.)
+- [ ] **Gewerbe anmelden** beim Gewerbeamt deiner Stadt (online möglich, ca. 20–60 €). Tätigkeit z. B.
+      „Entwicklung und Vertrieb von Computerspielen und Apps“.
+- [ ] **Fragebogen zur steuerlichen Erfassung** in [ELSTER](https://www.elster.de/) ausfüllen. Bei
+      erwartetem Umsatz unter 25.000 € im ersten Jahr kannst du die Kleinunternehmerregelung wählen.
+      Apple und Google führen die Umsatzsteuer für Verkäufe an EU-Verbraucher in der Regel selbst ab.
+- [ ] **Öffentliche Geschäftsadresse** festlegen. Sie steht im Impressum und wegen des DSA in beiden Stores.
+      Wenn nicht die Wohnadresse: Geschäftsadresse mit echter Postannahme (kein Postfach).
+- [ ] **E-Mail auf der eigenen Domain** (z. B. `kontakt@…`) und eine Telefonnummer, die du fürs Impressum
+      nutzen willst (eine günstige zweite Nummer reicht).
 
-## Phase 4: Store-Konten
+## 3. Platzhalter füllen (10 Minuten)
 
-- [ ] **Google Play Console** (25 $ einmalig) mit Identitätsprüfung; Android-Entwicklerverifizierung
-      abschließen.
-- [ ] **Apple Developer Program** (99 $/Jahr). Als Einzelperson oder als Organisation (braucht D-U-N-S-Nummer,
-      nur bei UG/GmbH sinnvoll).
-- [ ] **DSA-Händlererklärung** in beiden Stores abgeben (Name, Adresse, Telefon, E-Mail werden in der EU
-      öffentlich angezeigt). Bei Google Pflicht ab November 2026.
-- [ ] **Steuer- und Bankdaten** in beiden Konsolen hinterlegen (inkl. Steuerformulare, z. B. W-8BEN bei Apple).
-- [ ] **Data-Safety-Formular** und **App-Privacy-Angaben** nach `STORE_COMPLIANCE.md` ausfüllen.
-- [ ] **Altersfreigabe:** IARC-Fragebogen (Google) und Apple-Fragebogen ehrlich ausfüllen.
-- [ ] **Closed Test mit mind. 12 Testern über 14 Tage** (Pflicht für neue private Google-Konten), Tester
-      früh suchen (Freunde, Discord, Reddit-Testergruppen).
-- [ ] Signing-Secrets in GitHub (`prod`-Environment) anlegen, siehe `docs/RELEASE.md`.
+In diesen Dateien `[NAME]`, `[ADRESSE]`, `[E-MAIL]`, `[TELEFON]`, `[DOMAIN]` (englisch `[ADDRESS]`, `[EMAIL]`,
+`[PHONE]`) ersetzen: `IMPRESSUM.md`, `DATENSCHUTZ.md`, `PRIVACY_POLICY_EN.md`, `NUTZUNGSBEDINGUNGEN.md`,
+`TERMS_EN.md`. Im Spiel `scripts/core/LegalInfo.gd` (Domain und E-Mail). Oder schick mir die Angaben, dann
+mache ich das.
 
-## Phase 5: Laufend
+## 4. Online-Betrieb (sobald das Backend gebaut wird)
 
-- [ ] Für jede beauftragte Grafik/Musik: **schriftlicher Vertrag** mit ausschließlichem Nutzungsrecht inkl.
-      Bearbeitung und kommerzieller Nutzung weltweit; Vertrag außerhalb des Repos ablegen, Eintrag in
-      `docs/ASSET_LOG.md`.
-- [ ] Keine Werbung, Analytics, Lootboxen oder Chat einbauen, ohne vorher Datenschutzerklärung,
-      Store-Formulare und Altersfreigabe anzupassen.
-- [ ] Repo **privat** halten; Formulierungen mit Bezug zum Vorbild in `AGENTS.md`/`README.md` neutralisieren.
-- [ ] Vor jedem Release: `docs/IP_HYGIENE.md` Abschnitt 6 durchgehen.
-- [ ] Abmahnung oder Anwaltsschreiben erhalten? **Nichts unterschreiben und nicht zahlen**, sofort zum Anwalt
-      (Fristen beachten, meist 1–2 Wochen).
+- [ ] Konto bei **Hetzner** anlegen (oder anderen Hoster in Deutschland wählen; dann sag Bescheid, der Name
+      steht in der Datenschutzerklärung).
+- [ ] Dort im Kundenkonto den **Auftragsverarbeitungsvertrag (AVV)** abschließen (ein Klick).
+- [ ] **Website** mit vier Seiten veröffentlichen: Impressum, Datenschutz, Nutzungsbedingungen,
+      Konto löschen (plus `/lizenzen`). Die Texte liegen fertig in diesem Ordner.
+
+## 5. Store-Konten
+
+- [ ] **Google Play Console** (25 $ einmalig) mit Identitätsprüfung.
+- [ ] **Apple Developer Program** (99 $/Jahr) als Einzelperson.
+- [ ] **DSA-Händlererklärung** in beiden Konsolen abgeben (Name, Adresse, Telefon, E-Mail; Google verlangt
+      sie ab November 2026, ohne sie keine EU-Verfügbarkeit).
+- [ ] Steuer- und Bankdaten in beiden Konsolen hinterlegen.
+- [ ] **Data Safety / App Privacy / Altersfreigabe** mit den Antworten aus `STORE_COMPLIANCE.md` ausfüllen.
+- [ ] **12 Tester für 14 Tage** im geschlossenen Test (Pflicht für neue private Google-Konten).
+- [ ] Bundle-ID in `export_presets.cfg` auf deine Domain umstellen (z. B. `de.chimora.game`), **vor** dem
+      ersten Upload; danach nie mehr änderbar. Oder sag mir die Domain.
+- [ ] Signing-Secrets in GitHub anlegen (`docs/RELEASE.md`).
+
+## 6. Laufend
+
+- [ ] Ergebnis im Palworld-Verfahren (um den 9. 11. 2026) im Blick behalten.
+- [ ] Keine Werbung, Analytics, Lootboxen, Chat oder Drittanbieter-Login einbauen, ohne vorher
+      Datenschutzerklärung, Store-Formulare und Altersfreigabe anzupassen (ich mache das mit, wenn es so weit ist).
+- [ ] Repo privat halten.

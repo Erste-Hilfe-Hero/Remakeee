@@ -1,28 +1,27 @@
 <!--
-ENTWURF – KEINE RECHTSBERATUNG. AGB unterliegen der Inhaltskontrolle (§§ 305 ff. BGB); unwirksame Klauseln
-können abgemahnt werden. Unbedingt anwaltlich prüfen lassen, vor allem Abschnitte 5 (Änderungen/Einstellung),
-6 (Käufe) und 8 (Haftung). Für iOS kann zusätzlich Apples Standard-EULA gelten; dieser Text regelt den
-Online-Dienst und das Konto. Eine englische Fassung wird für Nutzer außerhalb Deutschlands benötigt.
+Fertige Fassung. Vor Veröffentlichung nur [NAME], [ADRESSE], [E-MAIL] ersetzen.
+Erstellt von einer KI ohne anwaltliche Prüfung. Für iOS gilt zusätzlich Apples Standard-EULA.
 -->
 
 # Nutzungsbedingungen für Chimora
 
-Stand: [DATUM]
+Stand: November 2026
 
 ## 1. Geltungsbereich und Anbieter
 
 1.1 Diese Bedingungen gelten für die Nutzung des Spiels „Chimora“ (iOS und Android) und der dazugehörigen
 Online-Dienste (Spielkonto, Server-Spielstand).
-1.2 Anbieter ist [VORNAME NACHNAME], [ADRESSE], Deutschland, E-Mail [support@DOMAIN] („wir“).
+1.2 Anbieter ist [NAME], [ADRESSE], Deutschland, E-Mail [E-MAIL] („wir“).
 Vollständige Angaben im [Impressum](IMPRESSUM.md).
 1.3 Für den Download und Käufe gelten zusätzlich die Bedingungen des jeweiligen App-Stores (Apple, Google).
 
 ## 2. Vertragsschluss und Konto
 
-2.1 Der Nutzungsvertrag kommt zustande, wenn du beim ersten Start diesen Bedingungen zustimmst und ein Konto
-angelegt wird.
+2.1 Der Nutzungsvertrag kommt zustande, wenn du beim ersten Start diesen Bedingungen zustimmst. Dabei wird
+automatisch ein Spielkonto angelegt; eine E-Mail-Adresse ist nicht nötig.
 2.2 Das Spiel ist **nur online spielbar**. Du brauchst eine Internetverbindung; Kosten dafür trägst du.
-2.3 Pro Person ist ein Konto vorgesehen. Halte deine Zugangsdaten geheim. Konten sind nicht übertragbar.
+2.3 Pro Person ist ein Konto vorgesehen. Halte deinen Übertragungscode geheim; wer ihn kennt, kann deinen
+Spielstand auf ein anderes Gerät holen. Konten sind nicht übertragbar.
 2.4 Minderjährige brauchen für Käufe die Zustimmung ihrer Erziehungsberechtigten.
 
 ## 3. Nutzungsrecht
@@ -39,11 +38,11 @@ Nicht erlaubt sind insbesondere:
 - Cheats, Bots, Manipulation des Spielstands oder der Server-Kommunikation, Ausnutzen von Fehlern;
 - Reverse Engineering, soweit nicht gesetzlich erlaubt (§ 69e UrhG);
 - Verkauf oder Handel von Konten oder Spielinhalten gegen Geld;
-- [falls Spielernamen sichtbar sind] beleidigende, rechtswidrige oder fremde Rechte verletzende Namen.
+- beleidigende, rechtswidrige oder fremde Rechte verletzende Tamer-Namen.
 
 Bei Verstößen können wir nach Abwägung der Umstände verwarnen, Spielstände zurücksetzen oder das Konto
 vorübergehend oder dauerhaft sperren. Bei einer Sperre informieren wir dich mit Begründung; du kannst
-widersprechen unter [support@DOMAIN].
+widersprechen unter [E-MAIL].
 
 ## 5. Verfügbarkeit, Updates, Änderungen und Einstellung
 
@@ -55,12 +54,13 @@ garantieren (z. B. Wartung, Störungen beim Hoster, höhere Gewalt).
 Anpassungen oder geänderte Rechtslage, wenn dir dadurch keine zusätzlichen Kosten entstehen. Beeinträchtigt
 eine Änderung deinen Zugang oder die Nutzbarkeit mehr als nur unerheblich, informieren wir dich vorher klar
 und verständlich; du kannst den Vertrag dann innerhalb von 30 Tagen unentgeltlich beenden (§ 327r BGB).
-5.4 Wir können den Online-Betrieb mit einer Frist von mindestens [3] Monaten einstellen und kündigen das im
-Spiel an. [Optional: Wir werden uns bemühen, vor der Einstellung eine Offline-Version bereitzustellen.]
-Für bezahlte Inhalte, die du weniger als [12] Monate vor der Ankündigung gekauft hast und danach nicht mehr
-nutzen kannst, erstatten wir [anteilig/vollständig] den Kaufpreis. [Anwalt: Regelung für Kauf-App klären.]
+5.4 Wir können den Online-Betrieb mit einer Frist von mindestens 3 Monaten einstellen und kündigen das im
+Spiel an. Wir bemühen uns, vor der Einstellung eine Offline-Version bereitzustellen. Für bezahlte Inhalte,
+die du weniger als 12 Monate vor der Ankündigung gekauft hast und danach nicht mehr nutzen kannst, erstatten
+wir den Kaufpreis anteilig nach der verbleibenden Zeit bis zum Ablauf dieser 12 Monate. Gesetzliche Rechte
+bleiben unberührt.
 
-## 6. Käufe [nur falls angeboten]
+## 6. Käufe
 
 6.1 Käufe (App-Kauf oder In-App-Käufe) werden ausschließlich über Apple bzw. Google abgewickelt; Preis,
 Zahlung, Widerrufsbelehrung und Erstattung richten sich nach deren Bedingungen.
@@ -73,7 +73,7 @@ verlierst (§ 356 Abs. 5 BGB). Die Stores holen diese Zustimmung beim Kauf ein.
 
 7.1 Der Vertrag läuft auf unbestimmte Zeit. Du kannst ihn jederzeit beenden, indem du dein Konto löschst
 (Einstellungen → Konto → „Konto löschen“).
-7.2 Wir können mit einer Frist von [4] Wochen ordentlich kündigen; das Recht zur außerordentlichen
+7.2 Wir können mit einer Frist von 4 Wochen ordentlich kündigen; das Recht zur außerordentlichen
 Kündigung aus wichtigem Grund (z. B. schwere Verstöße nach Ziffer 4) bleibt unberührt. Bezahlte, noch nicht
 genutzte Leistungen erstatten wir bei einer ordentlichen Kündigung durch uns anteilig.
 

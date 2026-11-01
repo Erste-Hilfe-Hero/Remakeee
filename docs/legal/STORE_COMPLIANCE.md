@@ -1,9 +1,10 @@
 # Store-Compliance: Ausfüllhilfen für Google Play und App Store
 
-> **Keine Rechtsberatung.** Formulare und Richtlinien der Stores ändern sich häufig. Vor dem Ausfüllen die
-> aktuelle Hilfe in Play Console bzw. App Store Connect lesen. Die Antworten unten gelten für das **geplante
-> Online-Modell** aus [DATENSCHUTZ.md](DATENSCHUTZ.md): Konto + Server-Spielstand, keine Werbung, keine
-> Analytics, kein Chat, keine Lootboxen. Jede Abweichung ändert die Antworten.
+> Erstellt von einer KI ohne anwaltliche Prüfung. Die Antworten gelten für das Modell aus
+> [DATENSCHUTZ.md](DATENSCHUTZ.md): automatisches Konto mit zufälliger Spieler-ID, Übertragungscode statt
+> E-Mail, Tamer-Name nur für dich sichtbar, Server bei Hetzner in Deutschland, keine Werbung, keine Analytics,
+> keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
+> ändern sich die Antworten. Store-Formulare ändern sich oft: im Zweifel die Hilfe in der Konsole lesen.
 
 ## 1. Google Play: Data Safety (Datensicherheit)
 
@@ -18,19 +19,17 @@ nicht flüchtig, nicht geteilt):
 
 | Kategorie → Typ | Wann |
 | --- | --- |
-| Personenbezogene Daten → **Nutzer-IDs** | immer (Spieler-ID, ggf. Apple/Google-Konto-ID) |
-| Personenbezogene Daten → **E-Mail-Adresse** | nur wenn Login per E-Mail |
-| Personenbezogene Daten → **Name** | nur wenn ein Spielername erfasst wird (auch ein Fantasiename gilt als Angabe) |
-| App-Aktivitäten → **Sonstige Aktionen** | immer (Spielstand/Fortschritt) |
-| App-Informationen und -Leistung → **Absturzprotokolle**, **Diagnose** | nur wenn Absturzberichte eingebaut werden |
-| Geräte- oder andere IDs | nur wenn eine Geräte-ID gespeichert wird (besser vermeiden, eigene zufällige ID nutzen) |
-| Standort → Ungefährer Standort | **Nein**, solange IP-Adressen nur in Server-Logs zur Sicherheit liegen und nicht zur Standortbestimmung genutzt werden. Mit dem Anwalt/der Play-Hilfe gegenprüfen |
+| Personenbezogene Daten → **Nutzer-IDs** | **Ja** (zufällige Spieler-ID) |
+| Personenbezogene Daten → **Name** | **Ja** (Tamer-Name; Google zählt auch Spitznamen dazu) |
+| App-Aktivitäten → **Sonstige Aktionen** | **Ja** (Spielstand/Fortschritt) |
+| E-Mail-Adresse, Geräte-IDs, Absturzprotokolle, Diagnose | **Nein** |
+| Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
 
 Weitere Play-Console-Punkte:
 - **Datenschutzerklärung:** öffentliche URL (kein PDF, keine Store-Seite), z. B. `https://DOMAIN/datenschutz`.
-- **Zielgruppe und Inhalte:** Ein Kreaturen-Spiel spricht Kinder an. Entweder Zielgruppe ab 13 wählen und
-  nicht an Kinder vermarkten, oder Kinder einschließen und die **Families-Richtlinie** einhalten (ohne
-  Werbe-/Analytics-SDKs ist das gut machbar). Entscheidung mit dem Anwalt treffen, Google prüft das selbst.
+- **Zielgruppe und Inhalte:** Zielgruppe **13 Jahre und älter** wählen und nicht gezielt an Kinder
+  vermarkten. Falls Google das Spiel trotzdem als „für Kinder ansprechend“ einstuft: Chimora erfüllt die
+  Families-Richtlinie bereits (keine Werbe-/Analytics-SDKs, keine Werbe-ID), dann einfach zustimmen.
 - **Werbung:** „Enthält keine Werbung“.
 - **App-Zugriff:** Weil ein Konto nötig ist, Google einen Test-Zugang oder eine Anleitung geben.
 - **Konto-Löschung:** Web-Formular/Seite, die ohne Neuinstallation funktioniert, ist Pflicht.
@@ -42,10 +41,11 @@ Weitere Play-Console-Punkte:
 | Datentyp | Mit Identität verknüpft? | Tracking? | Zweck |
 | --- | --- | --- | --- |
 | Identifiers → **User ID** | Ja | Nein | App Functionality |
-| User Content → **Gameplay Content** | Ja | Nein | App Functionality |
-| Contact Info → **Email Address** | Ja | Nein | App Functionality (nur bei E-Mail-Login) |
-| Contact Info → **Name** | Ja | Nein | App Functionality (nur bei Spielername) |
-| Diagnostics → **Crash Data** | Nein | Nein | App Functionality (nur wenn eingebaut) |
+| User Content → **Gameplay Content** (Spielstand inkl. Tamer-Name) | Ja | Nein | App Functionality |
+
+Alles andere (Kontaktdaten, Standort, Diagnose, Nutzungsdaten, Kaufdaten) nicht ankreuzen. Käufe wickelt Apple
+ab; die Kaufbestätigung gilt nicht als von dir erhobene „Purchase History“, solange du sie nur zum
+Freischalten nutzt.
 
 - „Used for tracking“: **Nein** bei allem. Keine App-Tracking-Transparency-Abfrage nötig, solange kein
   Tracking-SDK drin ist.
@@ -54,10 +54,8 @@ Weitere Play-Console-Punkte:
   Nach dem ersten Export prüfen und für jedes zusätzliche SDK (Login, Crash-Reporter) dessen Manifest
   mitliefern. In App Store Connect müssen die Angaben mit dem Manifest übereinstimmen.
 - **Konto-Löschung in der App** ist Pflicht, sobald man in der App ein Konto anlegen kann (Guideline 5.1.1(v)).
-- **Login:** Wird ein Drittanbieter-Login (z. B. Google) angeboten, muss es zusätzlich eine
-  datenschutzfreundliche Login-Option geben, in der Praxis „Mit Apple anmelden“ (Guideline 4.8).
-  Einfachste Lösung: anonymes Gerätekonto + optional „Mit Apple anmelden“ / „Mit Google anmelden“ zur
-  Wiederherstellung.
+- **Login:** Kein Drittanbieter-Login, daher ist „Mit Apple anmelden“ nicht vorgeschrieben (Guideline 4.8
+  greift erst, wenn z. B. Google-Login angeboten wird).
 - **Exportkontrolle Verschlüsselung:** Nur Standard-HTTPS → `ITSAppUsesNonExemptEncryption = NO` in der
   Info.plist, dann entfällt die Frage bei jedem Upload.
 - **Online-only:** In der Beschreibung klar sagen, dass eine Internetverbindung nötig ist. Apple-Prüfer
@@ -81,7 +79,8 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
 
 ## 4. DSA: Händlerstatus (Trader)
 
-- Ali verkauft als Unternehmer aus Deutschland → **Trader** in beiden Stores. Name, Anschrift, Telefon und
+- Ali verkauft als Unternehmer aus Deutschland → **Trader** in beiden Stores (auch bei einem
+  kostenlosen Spiel mit Käufen oder mit Gewinnabsicht). Name, Anschrift, Telefon und
   E-Mail werden auf der EU-Store-Seite öffentlich angezeigt. Das muss zu den Angaben im
   [Impressum](IMPRESSUM.md) passen (gleiche ladungsfähige Adresse).
 - **Google Play:** Erklärung in der Play Console (laut Google-Mail vom 29.10.2026 Pflicht ab November 2026).
@@ -89,8 +88,9 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
 - **Sobald Spieler Inhalte sehen, die andere erstellt haben** (Spielernamen in Kämpfen/Bestenlisten,
   Chat), ist Chimora selbst ein Hosting-Dienst im Sinne des DSA. Dann zusätzlich: Kontaktstelle für Nutzer
   und Behörden (Art. 11, 12), Moderationsregeln in den AGB (Art. 14), Meldeweg für rechtswidrige Inhalte
-  (Art. 16) und Begründung bei Sperren (Art. 17). Einfachste Lösung zum Launch: keine frei wählbaren
-  sichtbaren Namen (z. B. Namen aus einer vorgegebenen Liste).
+  (Art. 16) und Begründung bei Sperren (Art. 17). Chimora zeigt Tamer-Namen anderen Spielern
+  nicht an; so bleibt es zum Launch einfach. Kommen sichtbare Namen, Bestenlisten oder Chat dazu, vorher diese
+  Pflichten umsetzen.
 
 ## 5. Store-Texte
 
@@ -104,7 +104,7 @@ Online-Pflicht offen nennen.
 **Short description (EN):**
 > Bond with Spirlings and seal the Rifts in a retro pixel monster-taming RPG.
 
-**Beschreibung (DE, Entwurf):**
+**Beschreibung (DE):**
 > Chimora ist ein rundenbasiertes Monster-Zähmungs-RPG im Retro-Pixel-Stil.
 > Als Tamer erkundest du die Region Veydal, triffst über 15 einzigartige Spirlings und gewinnst ihr
 > Vertrauen in einem Minispiel. Acht Elemente, Energie statt Attackenpunkte und vier
@@ -117,14 +117,17 @@ Online-Pflicht offen nennen.
 > **Hinweis: Chimora benötigt eine Internetverbindung.**
 > [Falls zutreffend: Enthält optionale In-App-Käufe. Keine Werbung.]
 
-**Keywords (Apple, 100 Zeichen, Entwurf):**
+**Keywords (Apple, 100 Zeichen):**
 `monster,rpg,pixel,retro,turn based,creature,tamer,adventure,bond,elements,strategy,rift`
 
 ## 6. Sonstiges vor dem Launch
 
-- **Barrierefreiheit (BFSG, seit 28.06.2025):** gilt für bestimmte Dienstleistungen im elektronischen
-  Geschäftsverkehr; Kleinstunternehmen sind bei Dienstleistungen ausgenommen. Mit dem Anwalt klären, falls
-  ein eigener Shop außerhalb der Stores geplant ist.
-- **Links im Spiel:** Einstellungen → „Rechtliches“ mit Impressum, Datenschutz, Nutzungsbedingungen,
-  Lizenzen (Godot ist MIT-lizenziert; der Lizenztext von Godot und von FreeType/ENet usw. muss in der App
-  einsehbar sein, siehe Godots „Complying with licenses“).
+- **Barrierefreiheit (BFSG, seit 28.06.2025):** Kleinstunternehmen (unter 10 Beschäftigte, höchstens 2 Mio. €
+  Umsatz) sind bei Dienstleistungen ausgenommen; Käufe laufen ohnehin über die Stores. Kein eigener Web-Shop
+  ohne neue Prüfung.
+- **Links im Spiel:** Einstellungen → Legal zeigt Impressum-, Datenschutz- und AGB-Links sowie den
+  Godot-Lizenztext (`scripts/core/LegalInfo.gd`). Die Domain dort ersetzen, sobald die Website steht. Die
+  Lizenztexte der in Godot enthaltenen Drittbibliotheken (FreeType, ENet, mbedTLS usw.) auf der Seite
+  `/lizenzen` der Website veröffentlichen (Text aus `Engine.get_license_info()` oder Godots `COPYRIGHT.txt`).
+- **Noch zu bauen, sobald das Backend kommt:** Zustimmung zu den Nutzungsbedingungen beim ersten Start,
+  Einstellungen → Konto (Spieler-ID, Übertragungscode, „Konto löschen“) und die Web-Seite zur Kontolöschung.

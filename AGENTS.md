@@ -4,7 +4,7 @@ Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read 
 
 ## What we're building
 
-**Chimora** is a retro pixel-art, turn-based monster-taming RPG for **iOS and Android**, built in **Godot 4.7.2 (GDScript)**. It has the feel of 2000s handheld monster RPGs and takes the depth of the fan game Pokémon Unbound as its benchmark. It uses **zero Nintendo / Game Freak / The Pokémon Company IP**.
+**Chimora** is a retro pixel-art, turn-based monster-taming RPG for **iOS and Android**, built in **Godot 4.7.2 (GDScript)**. It has the feel of 2000s handheld monster RPGs. It aims for deep, replayable systems (difficulty modes with level caps, smart AI, post-game challenges). It uses **zero Nintendo / Game Freak / The Pokémon Company IP**.
 
 - The player is a Tamer in the region **Veydal**, who bonds with original creatures called **Spirlings** and seals **Rifts** (Rifts replace gyms).
 - **Every region upgrades the art style** (Era I → IV). See "Era system" below.
@@ -14,7 +14,7 @@ Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read 
 
 1. **No Pokémon IP, anywhere.** That covers code, comments, asset names, strings, commit messages and store text. Banned: Pokémon, Poké-, "-mon" creature names, Pokédex, Poké Ball, Gym, Poké Center, HM, TM, red/white split-sphere shapes, and copies of Pokémon battle-screen layouts or fonts.
 2. **Patent-safe mechanics** (Nintendo sued Palworld over these):
-   - NO throwing or aiming an item to capture. Bonding is a **menu-triggered rhythm minigame** inside the battle.
+   - NO throwing or aiming an item to capture. Bonding is a **menu-triggered echo minigame** inside the battle (repeat the Spirling's call; no shrinking rings or timing circles, see `docs/legal/IP_PATENT_AUDIT.md`).
    - NO live capture-probability gauge. Show the result only after the minigame.
    - NO riding a creature to fly or glide. Traversal uses **Tamer Gear** items (glider, grapple, lantern).
    - NO throwing out a creature to summon it, and no flick-to-throw on the touchscreen. Spirlings step out beside the Tamer.
@@ -91,9 +91,9 @@ tests/           GUT tests
 `dmg = (P × (A / D)^0.8 × (L / 5 + 3) / 12 + 1) × STAB(1.25) × E × Crit(1.5, 1/16) × R(0.9–1.0)`.
 A same-level, neutral, 40-power move takes 15–25% of a balanced foe's HP; `tests/unit/test_damage.gd` pins this.
 
-**Bonding:** chance = bond_rate × max(1 − HP%, 0.1) × timing_score × (1.5 if statused) + charm bonus, capped at 0.95. The timing score comes from a 5-second tap-the-pulse minigame. A failed bond gives the wild Spirling one free action.
+**Bonding:** chance = bond_rate × max(1 − HP%, 0.1) × timing_score × (1.5 if statused) + charm bonus, capped at 0.95. The score comes from the "Echo call" minigame (`BondEcho.gd`): the wild Spirling calls 4 marks, the player repeats them; score = correct prefix / length. A failed bond gives the wild Spirling one free action.
 
-**Difficulty (Unbound-style):** Story / Tamer / Veteran / Rift-Born. Veteran and Rift-Born use level caps; Rift-Born bans items in battle. AI levels are 0 / 1 / 2 / 2. See `GameState.gd`.
+**Difficulty:** Story / Tamer / Veteran / Rift-Born. Veteran and Rift-Born use level caps; Rift-Born bans items in battle. AI levels are 0 / 1 / 2 / 2. See `GameState.gd`.
 
 **AI tiers:** 0 = random legal move (wild); 1 = greedy (expected damage × accuracy × effectiveness, plus KO and status bonus); 2 = 1-ply lookahead plus switching on bad matchups plus items under HP thresholds.
 
@@ -129,7 +129,7 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 ### M2 — Battle presenter
 - [x] `scenes/battle/Battle.tscn`: player Spirling bottom-left, foe top-right, HP bars, Energy pips, a text box, and a 4-move menu plus Swap / Item / Bond / Run. Use an **original layout** (Rule 1).
 - [x] Play back the event list with short tweens; tap to advance text; a fast-forward toggle.
-- [x] Bond minigame scene: rings pulse inward and the player taps on the beat; it returns a timing score from 0 to 1.
+- [x] Bond minigame scene "Echo call": the Spirling calls a sequence on three marks, the player repeats it; it returns a score from 0 to 1.
 
 ### M3 — Overworld slice
 - [x] Player grid movement (16 px tiles), 4-direction facing, hold-to-run, integer-rounded camera.

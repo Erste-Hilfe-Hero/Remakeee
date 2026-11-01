@@ -3,7 +3,8 @@
 Not legal advice — get a games lawyer to review before store launch.
 
 ## Patent-safe (Nintendo sued Palworld over these, Sept 2024)
-- NO throw-to-capture. Bonding = turn-based rhythm minigame in the battle menu.
+- NO throw-to-capture. Bonding = turn-based "Echo call" minigame in the battle menu.
+  No shrinking rings, timing circles or "tap when it's smallest" mechanics.
 - NO live capture-odds meter while aiming. Show bond result only afterwards.
 - NO riding a creature to fly/glide. Use Tamer Gear (glider, grapple).
 - NO thrown capsule/ball to summon. Spirlings step out beside the Tamer.

@@ -9,6 +9,8 @@ const HIT_FLASHES: int = 3
 
 var spirling: Spirling
 var facing: String = "front"
+## Draws the sprite flipped horizontally (art faces left; the battle layout needs it facing right).
+var mirrored: bool = false
 var speed_scale: float = 1.0
 var _texture: Texture2D
 var _home: Vector2
@@ -74,7 +76,10 @@ func _draw() -> void:
 		return
 	var r := Rect2(Vector2.ZERO, size)
 	if _texture != null:
+		if mirrored:
+			draw_set_transform(Vector2(size.x, 0), 0.0, Vector2(-1, 1))
 		draw_texture_rect(_texture, r, false)
+		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 	var els: Array[int] = spirling.elements()
 	draw_rect(r, Elements.color(els[0]))
@@ -87,4 +92,4 @@ func _draw() -> void:
 	draw_string(font, Vector2(0, size.y / 2 + fs / 3.0), spirling.data.species_name.substr(0, 1), HORIZONTAL_ALIGNMENT_CENTER, size.x, fs, UITheme.INK)
 	# Back sprites get a small notch so the two sides read differently.
 	if facing == "back":
-		draw_rect(Rect2(size.x - 8, 0, 8, 8), UITheme.BG)
+		draw_rect(Rect2(0 if mirrored else size.x - 8, 0, 8, 8), UITheme.BG)

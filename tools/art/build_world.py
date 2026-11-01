@@ -236,11 +236,11 @@ WORLD["crowcrest"] = {
         npc("kestra", 7, 17, "left", "crowcrest/kestra", "ranger", trainer="Cartographer Kestra",
             beaten_flag="kestra_spar", money=400, intro="crowcrest/kestra_intro",
             defeat="crowcrest/kestra_defeat",
-            team=team(("Zippit", 7), ("Breezel", 8), ("Shalebat", 9))),
+            team=team(("Zippit", 7), ("Zephlet", 8), ("Shalebat", 9))),
         npc("lio", 2, 4, "right", "crowcrest/lio", "villager", trainer="Wanderer Lio",
             intro="crowcrest/lio_intro", defeat="crowcrest/lio_defeat",
-            team=team(("Breezel", 7), ("Zippit", 8))),
-        npc("bram", 9, 9, "left", "crowcrest/bram", "villager", trainer="Hiker Bram",
+            team=team(("Zephlet", 7), ("Zippit", 8))),
+        npc("bram", 9, 9, "left", "crowcrest/bram", "villager", trainer="Ridgewalker Bram",
             intro="crowcrest/bram_intro", defeat="crowcrest/bram_defeat",
             team=team(("Shalebat", 7), ("Shalebat", 8))),
     ],
@@ -329,7 +329,7 @@ WORLD["saltmarsh"] = {
     "npcs": [npc("reedcutter", 8, 9, "left", "saltmarsh/reedcutter", "villager"),
              npc("neve", 3, 4, "right", "saltmarsh/neve", "ranger", trainer="Diver Neve",
                  intro="saltmarsh/neve_intro", defeat="saltmarsh/neve_defeat",
-                 team=team(("Puddlet", 12), ("Breezel", 13)))],
+                 team=team(("Puddlet", 12), ("Zephlet", 13)))],
     "signs": [{"x": 1, "y": 13, "dialogue": "saltmarsh/sign"}],
 }
 TEXT["saltmarsh"] = {

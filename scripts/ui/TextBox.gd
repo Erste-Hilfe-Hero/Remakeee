@@ -57,7 +57,7 @@ func show_text(text: String) -> void:
 	await advanced
 	_arrow.visible = false
 
-## Shows text without waiting (prompts such as "What will Kindlop do?").
+## Shows text without waiting (prompts such as "Orders for Kindlop?").
 func show_prompt(text: String) -> void:
 	_label.text = text
 	_label.visible_characters = -1

@@ -2,7 +2,7 @@
 
 Draft working rules that keep Chimora clear of third-party intellectual property. AGENTS.md and LEGAL.md
 hold the binding rules; this file explains how the project follows them day to day. It is not legal advice.
-Have a lawyer review the game, the store listings and this document before the first public release.
+There is no lawyer review (Ali's decision); residual risks are listed in `docs/legal/CHECKLISTE_ALI.md`.
 
 ## 1. Names and words
 
@@ -23,7 +23,7 @@ These follow AGENTS.md rule 2 and are enforced in code review:
 
 | Avoid | Chimora instead |
 | --- | --- |
-| Throwing or aiming an item to capture | Bonding is a menu action that starts a rhythm minigame inside the battle |
+| Throwing or aiming an item to capture | Bonding is a menu action that starts the "Echo call" minigame (repeat a sequence; no shrinking rings or timing circles) |
 | A live capture-probability gauge | The result is shown only after the minigame ends |
 | Riding a creature to fly, surf or glide | Traversal uses Tamer Gear items (glider, grapple, lantern) |
 | Throwing out a creature to summon it, flick-to-throw on touch | Spirlings step out beside the Tamer |
@@ -63,10 +63,10 @@ the right to modify) outside the repo.
 1. CI green, including `tools/ip_check.sh`.
 2. Skim new strings in `data/` and the store text for borrowed names.
 3. Check `docs/ASSET_LOG.md` covers every new asset.
-4. Ali's own items stay open until done: lawyer review, trademark search for "Chimora", Impressum,
+4. Ali's own items stay open until done: trademark search and filing for "Chimora", Impressum,
    DSA trader details, age ratings (IARC and Apple). See `docs/legal/CHECKLISTE_ALI.md`.
 
 ## 7. Legal drafts
 
 `docs/legal/` holds the IP and patent audit, draft privacy policy (DE/EN), terms, Impressum template and
-store-compliance answers. All of it is a draft for lawyer review, not legal advice.
+store-compliance answers. Written by an AI without lawyer review; only Ali's personal details are left as placeholders.

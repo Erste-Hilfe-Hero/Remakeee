@@ -83,7 +83,7 @@ func test_items_outside_battle_and_storage_rules() -> void:
 	assert_ne(GameState.use_item_outside_battle("tonic", s), "")
 	assert_eq(GameState.item_count("tonic"), 0)
 	assert_false(GameState.deposit(0), "cannot deposit the last Spirling")
-	GameState.receive_spirling(Spirling.new(Database.species("Breezel"), 3))
+	GameState.receive_spirling(Spirling.new(Database.species("Zephlet"), 3))
 	assert_true(GameState.deposit(0))
 	assert_eq(GameState.storage.size(), 1)
 	assert_true(GameState.withdraw(0))

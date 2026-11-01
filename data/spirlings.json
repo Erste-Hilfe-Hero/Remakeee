@@ -16,14 +16,14 @@
   "evolve_level": 16,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Ember Snap"
+    "Headlong Charge",
+    "Cinder Nip"
    ],
    "5": [
     "Heat Haze"
    ],
    "9": [
-    "Shade Claw"
+    "Dusk Rake"
    ],
    "13": [
     "Cinder Breath"
@@ -51,8 +51,8 @@
   "evolve_level": 34,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Ember Snap",
+    "Headlong Charge",
+    "Cinder Nip",
     "Heat Haze"
    ],
    "13": [
@@ -62,7 +62,7 @@
     "Flare Lash"
    ],
    "26": [
-    "Shade Claw"
+    "Dusk Rake"
    ],
    "30": [
     "Blaze Coil"
@@ -88,7 +88,7 @@
   "evolve_level": 0,
   "learnset": {
    "1": [
-    "Ember Snap",
+    "Cinder Nip",
     "Cinder Breath",
     "Pebble Toss"
    ],
@@ -124,8 +124,8 @@
   "evolve_level": 16,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Bubble Pop"
+    "Headlong Charge",
+    "Fizz Pop"
    ],
    "5": [
     "Drench"
@@ -159,8 +159,8 @@
   "evolve_level": 34,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Bubble Pop",
+    "Headlong Charge",
+    "Fizz Pop",
     "Drench"
    ],
    "13": [
@@ -196,7 +196,7 @@
   "evolve_level": 0,
   "learnset": {
    "1": [
-    "Bubble Pop",
+    "Fizz Pop",
     "Brine Jet",
     "Glint"
    ],
@@ -232,11 +232,11 @@
   "evolve_level": 16,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Moss Whip"
+    "Headlong Charge",
+    "Lichen Lash"
    ],
    "5": [
-    "Spore Cloud"
+    "Puffcap Haze"
    ],
    "9": [
     "Pebble Toss"
@@ -267,9 +267,9 @@
   "evolve_level": 34,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Moss Whip",
-    "Spore Cloud"
+    "Headlong Charge",
+    "Lichen Lash",
+    "Puffcap Haze"
    ],
    "13": [
     "Sap Draw"
@@ -304,7 +304,7 @@
   "evolve_level": 0,
   "learnset": {
    "1": [
-    "Moss Whip",
+    "Lichen Lash",
     "Sap Draw",
     "Pebble Toss"
    ],
@@ -340,14 +340,14 @@
   "evolve_level": 24,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Static Nip"
+    "Headlong Charge",
+    "Crackle Bite"
    ],
    "4": [
     "Siphon Spark"
    ],
    "8": [
-    "Static Field"
+    "Charged Mist"
    ],
    "12": [
     "Arc Bolt"
@@ -376,7 +376,7 @@
   "evolve_level": 0,
   "learnset": {
    "1": [
-    "Static Nip",
+    "Crackle Bite",
     "Arc Bolt",
     "Glint"
    ],
@@ -387,7 +387,7 @@
     "Surge Fang"
    ],
    "34": [
-    "Static Field"
+    "Charged Mist"
    ],
    "40": [
     "Radiant Lance"
@@ -413,8 +413,8 @@
   "evolve_level": 26,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Shade Claw"
+    "Headlong Charge",
+    "Dusk Rake"
    ],
    "5": [
     "Hush"
@@ -449,7 +449,7 @@
   "evolve_level": 0,
   "learnset": {
    "1": [
-    "Shade Claw",
+    "Dusk Rake",
     "Pebble Toss",
     "Hush"
    ],
@@ -470,7 +470,7 @@
  },
  {
   "dex_id": 14,
-  "name": "Breezel",
+  "name": "Zephlet",
   "elements": [
    "GALE"
   ],
@@ -485,14 +485,14 @@
   "evolve_level": 28,
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Gust Slice"
+    "Headlong Charge",
+    "Breeze Slice"
    ],
    "5": [
     "Updraft"
    ],
    "10": [
-    "Static Nip"
+    "Crackle Bite"
    ],
    "16": [
     "Cyclone Edge"
@@ -520,9 +520,9 @@
   "evolve_level": 0,
   "learnset": {
    "1": [
-    "Gust Slice",
+    "Breeze Slice",
     "Updraft",
-    "Static Nip"
+    "Crackle Bite"
    ],
    "28": [
     "Cyclone Edge"

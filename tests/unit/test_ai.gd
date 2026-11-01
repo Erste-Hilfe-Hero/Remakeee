@@ -23,10 +23,10 @@ func test_ai_rests_when_out_of_energy() -> void:
 
 func test_tier1_prefers_super_effective() -> void:
 	# Kindlop knows a Stone move and an Ember move; Ember is x2 into Mossling.
-	var foe: Array[Spirling] = [BattleFixtures.make("Kindlop", 20, ["Tackle Rush", "Ember Snap"])]
+	var foe: Array[Spirling] = [BattleFixtures.make("Kindlop", 20, ["Headlong Charge", "Cinder Nip"])]
 	var m: BattleModel = BattleFixtures.model([BattleFixtures.make("Mossling", 20)] as Array[Spirling], foe)
 	var a: BattleAction = BattleAI.new(1).choose(m, Side.FOE)
-	assert_eq(foe[0].moves[a.move_index].move_name, "Ember Snap")
+	assert_eq(foe[0].moves[a.move_index].move_name, "Cinder Nip")
 
 func test_tier1_values_status_on_unstatused_target() -> void:
 	var foe: Array[Spirling] = [BattleFixtures.make("Shalebat", 20, ["Hush"])]
@@ -38,7 +38,7 @@ func test_tier1_values_status_on_unstatused_target() -> void:
 
 func test_tier2_swaps_out_of_bad_matchup() -> void:
 	# Foe Mossling faces an Ember attacker; its teammate Puddlet resists Ember.
-	var player: Array[Spirling] = [BattleFixtures.make("Kindlop", 20, ["Ember Snap"])]
+	var player: Array[Spirling] = [BattleFixtures.make("Kindlop", 20, ["Cinder Nip"])]
 	var foe: Array[Spirling] = [BattleFixtures.make("Mossling", 20), BattleFixtures.make("Puddlet", 20)]
 	var m: BattleModel = BattleFixtures.model(player, foe, false)
 	var a: BattleAction = BattleAI.new(2).choose(m, Side.FOE)
@@ -55,7 +55,7 @@ func test_tier2_heals_when_low() -> void:
 	assert_eq(a.kind, BattleAction.Kind.ITEM)
 
 func test_replacement_prefers_good_matchup() -> void:
-	var player: Array[Spirling] = [BattleFixtures.make("Mossling", 20, ["Moss Whip"])]
+	var player: Array[Spirling] = [BattleFixtures.make("Mossling", 20, ["Lichen Lash"])]
 	var foe: Array[Spirling] = [BattleFixtures.make("Zippit", 20), BattleFixtures.make("Puddlet", 20), BattleFixtures.make("Kindlop", 20)]
 	var m: BattleModel = BattleFixtures.model(player, foe, false)
 	foe[0].hp = 0
