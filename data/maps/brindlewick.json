@@ -77,8 +77,8 @@
  "npcs": [
   {
    "id": "fisher",
-   "x": 8,
-   "y": 18,
+   "x": 6,
+   "y": 16,
    "facing": "left",
    "dialogue": "brindlewick/fisher",
    "sprite": "villager"

@@ -1,0 +1,23 @@
+{
+ "save_version": 1,
+ "tamer": {"name": "Ali", "color": 2},
+ "starter": "Puddlet",
+ "difficulty": 1,
+ "region": "veydal",
+ "rifts": [],
+ "party": [
+  {"species": "Puddlet", "nickname": "", "level": 9, "xp": 600, "spark": {"hp": 3, "atk": 12}, "hp": 20, "moves": ["Bubble Shot", "Hush"]},
+  {"species": "Zippit", "level": 6, "hp": 0, "moves": []}
+ ],
+ "storage": [],
+ "spirlog": {"Puddlet": {"seen": true, "bonded": true}, "Zippit": {"seen": true, "bonded": true}},
+ "inventory": {"tonic": 3, "kin_charm": 1},
+ "money": 420,
+ "map": "route_1",
+ "cell": [2, 9],
+ "facing": "up",
+ "heal_map": "start_town",
+ "heal_cell": [3, 3],
+ "flags": {"got_starter": true, "mom_gift": true, "route1_gift": true},
+ "play_time": 1800.5
+}

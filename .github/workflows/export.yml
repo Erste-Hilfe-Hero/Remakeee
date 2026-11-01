@@ -74,6 +74,8 @@ jobs:
           godot --headless --path . --import
           godot --headless --path . --export-debug "Android APK (debug)" build/android/Chimora-debug.apk
           "$(tools/find_zipalign.sh)" -c -P 16 -v 4 build/android/Chimora-debug.apk
+      - name: APK size budget
+        run: tools/apk_budget.sh build/android/Chimora-debug.apk 80
       - uses: actions/upload-artifact@v4
         with:
           name: android-debug-apk

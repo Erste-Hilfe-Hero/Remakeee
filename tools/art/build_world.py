@@ -86,7 +86,7 @@ WORLD["brindlewick"] = {
               warp(3, 11, "lighthouse", 4, 6, "up"),
               warp(2, 4, "map_house", 4, 6, "up"),
               warp(9, 4, "rest_spring", 4, 6, "up")],
-    "npcs": [npc("fisher", 8, 18, "left", "brindlewick/fisher", "villager"),
+    "npcs": [npc("fisher", 6, 16, "left", "brindlewick/fisher", "villager"),
              npc("child", 8, 9, "left", "brindlewick/child", "villager"),
              npc("kestra_dock", 4, 18, "down", "brindlewick/kestra_dock", "ranger", show_flag="pc_unlocked"),
              npc("ines", 10, 12, "left", "brindlewick/ines", "warden", show_flag="kestra_dock_talk"),

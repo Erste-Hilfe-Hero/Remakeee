@@ -1,0 +1,24 @@
+{
+ "save_version": 2,
+ "tamer": {"name": "Rowan", "color": 0},
+ "starter": "Kindlop",
+ "difficulty": 2,
+ "region": "veydal",
+ "rifts": ["rift_cinder"],
+ "party": [
+  {"species": "Kindlop", "nickname": "Ember", "level": 21, "xp": 9261, "spark": {"hp": 5, "atk": 9, "def": 2, "foc": 14, "spd": 7}, "hp": 55, "moves": ["Ember Snap"], "uid": 7},
+  {"species": "Mossling", "level": 18, "hp": 40, "moves": [], "uid": 8}
+ ],
+ "storage": [{"species": "Breezel", "level": 12, "hp": 30, "moves": [], "uid": 9}],
+ "spirlog": {"Kindlop": {"seen": true, "bonded": true}, "Mossling": {"seen": true, "bonded": true}, "Breezel": {"seen": true, "bonded": true}, "Shalebat": {"seen": true, "bonded": false}},
+ "inventory": {"tonic": 5, "grapple_line": 1},
+ "money": 3100,
+ "map": "thornridge",
+ "cell": [6, 9],
+ "facing": "down",
+ "heal_map": "thornridge",
+ "heal_cell": [9, 4],
+ "flags": {"got_starter": true, "aldo_gift": true, "met_kestra": true, "rift_cinder_sealed": true, "pc_unlocked": true},
+ "matchups": {"0:Mossling": 2.0},
+ "play_time": 7200.0
+}
