@@ -5,12 +5,11 @@ extends CanvasLayer
 ## itself when a gamepad is connected or the device has no touchscreen.
 
 const LAYER: int = 50
-## Button sizes in viewport pixels (about 9-10 mm on a typical phone at integer scale 7).
-const DPAD_BUTTON: int = 20
-const AB_BUTTON: int = 22
+## Button sizes in viewport pixels per size setting (Medium is about 9-10 mm at integer scale 7).
+const DPAD_SIZES: Array[int] = [16, 20, 24]
+const AB_SIZES: Array[int] = [18, 22, 26]
 const MENU_BUTTON: int = 14
 const EDGE: int = 4
-const ALPHA: float = 0.55
 
 ## Force the pad on (desktop testing) regardless of touchscreen detection.
 var force_visible: bool = false
@@ -18,22 +17,46 @@ var _wanted: bool = false
 var _root: Node2D
 var _buttons: Array[TouchScreenButton] = []
 
+var _dpad: int = DPAD_SIZES[1]
+var _ab: int = AB_SIZES[1]
+
 func _ready() -> void:
 	layer = LAYER
 	_root = Node2D.new()
-	_root.modulate.a = ALPHA
 	add_child(_root)
-	_add_button("ui_up", Vector2(DPAD_BUTTON, 0), DPAD_BUTTON, false, "^")
-	_add_button("ui_down", Vector2(DPAD_BUTTON, DPAD_BUTTON * 2), DPAD_BUTTON, false, "v")
-	_add_button("ui_left", Vector2(0, DPAD_BUTTON), DPAD_BUTTON, false, "<")
-	_add_button("ui_right", Vector2(DPAD_BUTTON * 2, DPAD_BUTTON), DPAD_BUTTON, false, ">")
-	_add_button("ui_accept", Vector2.ZERO, AB_BUTTON, true, "A")
-	_add_button("ui_cancel", Vector2.ZERO, AB_BUTTON, true, "B")
-	_add_button("menu", Vector2.ZERO, MENU_BUTTON, false, "=")
+	apply_settings()
 	Input.joy_connection_changed.connect(func(_d: int, _c: bool) -> void: _refresh())
 	get_viewport().size_changed.connect(_layout)
+
+## Rebuilds the buttons from the size / opacity / handedness settings in GameState.
+func apply_settings() -> void:
+	for b: TouchScreenButton in _buttons:
+		if Input.is_action_pressed(b.action):
+			Input.action_release(b.action)
+		b.queue_free()
+	_buttons.clear()
+	_dpad = DPAD_SIZES[clampi(GameState.pad_size, 0, DPAD_SIZES.size() - 1)]
+	_ab = AB_SIZES[clampi(GameState.pad_size, 0, AB_SIZES.size() - 1)]
+	_root.modulate.a = GameState.PAD_ALPHAS[clampi(GameState.pad_opacity, 0, GameState.PAD_ALPHAS.size() - 1)]
+	_add_button("ui_up", Vector2(_dpad, 0), _dpad, false, "^")
+	_add_button("ui_down", Vector2(_dpad, _dpad * 2), _dpad, false, "v")
+	_add_button("ui_left", Vector2(0, _dpad), _dpad, false, "<")
+	_add_button("ui_right", Vector2(_dpad * 2, _dpad), _dpad, false, ">")
+	_add_button("ui_accept", Vector2.ZERO, _ab, true, "A")
+	_add_button("ui_cancel", Vector2.ZERO, _ab, true, "B")
+	_add_button("menu", Vector2.ZERO, MENU_BUTTON, false, "=")
 	_layout()
 	_refresh()
+
+## True if [param pos] (viewport pixels) is on a visible pad button, so taps there don't also walk.
+func covers(pos: Vector2) -> bool:
+	if not visible:
+		return false
+	for b: TouchScreenButton in _buttons:
+		var s: Vector2 = (b.shape as RectangleShape2D).size
+		if Rect2(b.position, s).grow(2).has_point(pos):
+			return true
+	return false
 
 ## Show the pad in gameplay screens; hide it in menus and battles (they have their own buttons).
 func set_wanted(on: bool) -> void:
@@ -103,16 +126,22 @@ func _draw_glyph(img: Image, glyph: String, col: Color) -> void:
 func _layout() -> void:
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var safe: Rect2 = _safe_rect_in_viewport(vp)
-	var dpad_origin := Vector2(safe.position.x + EDGE, safe.end.y - EDGE - DPAD_BUTTON * 3)
+	var left: bool = GameState.left_handed
+	var dpad_x: float = safe.end.x - EDGE - _dpad * 3 if left else safe.position.x + EDGE
+	var dpad_origin := Vector2(dpad_x, safe.end.y - EDGE - _dpad * 3)
 	for b: TouchScreenButton in _buttons:
 		var off: Vector2 = b.get_meta("offset")
 		match b.action:
 			"ui_accept":
-				b.position = Vector2(safe.end.x - EDGE - AB_BUTTON, safe.end.y - EDGE - AB_BUTTON * 2 - 4)
+				var ax: float = safe.position.x + EDGE + _ab + 4 if left else safe.end.x - EDGE - _ab
+				b.position = Vector2(ax, safe.end.y - EDGE - _ab * 2 - 4)
 			"ui_cancel":
-				b.position = Vector2(safe.end.x - EDGE - AB_BUTTON * 2 - 4, safe.end.y - EDGE - AB_BUTTON)
+				var bx: float = safe.position.x + EDGE if left else safe.end.x - EDGE - _ab * 2 - 4
+				b.position = Vector2(bx, safe.end.y - EDGE - _ab)
 			"menu":
-				b.position = Vector2((safe.position.x + safe.end.x) / 2.0 - MENU_BUTTON / 2.0, safe.end.y - EDGE - MENU_BUTTON)
+				# Sits above B, clear of the D-pad at every size and handedness.
+				var bx2: float = safe.position.x + EDGE if left else safe.end.x - EDGE - _ab * 2 - 4
+				b.position = Vector2(bx2 + (_ab - MENU_BUTTON) / 2.0, safe.end.y - EDGE - _ab - MENU_BUTTON - 6)
 			_:
 				b.position = dpad_origin + off
 

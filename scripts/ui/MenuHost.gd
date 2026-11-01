@@ -86,6 +86,7 @@ func run_settings() -> void:
 			"Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off"),
 			"Retro filter: %s" % retro,
 			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
+			"Touch controls...",
 		]
 		var idx: int = await pick_strings("Settings", entries)
 		match idx:
@@ -106,6 +107,31 @@ func run_settings() -> void:
 				var v: float = GameState.volume + 0.2
 				GameState.volume = 0.0 if v > 1.01 else v
 				GameState.apply_volume()
+			5:
+				await run_controls()
+
+## Touch controls: pad size, opacity, left-handed layout, tap-to-move.
+func run_controls() -> void:
+	while true:
+		var entries: Array[String] = [
+			"Pad size: %s" % GameState.PAD_SIZE_NAMES[GameState.pad_size],
+			"Pad opacity: %d%%" % int(round(GameState.PAD_ALPHAS[GameState.pad_opacity] * 100.0)),
+			"Left-handed: %s" % ("On" if GameState.left_handed else "Off"),
+			"Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off"),
+		]
+		var idx: int = await pick_strings("Touch controls", entries)
+		match idx:
+			-1:
+				return
+			0:
+				GameState.pad_size = (GameState.pad_size + 1) % GameState.PAD_SIZE_NAMES.size()
+			1:
+				GameState.pad_opacity = (GameState.pad_opacity + 1) % GameState.PAD_ALPHAS.size()
+			2:
+				GameState.left_handed = not GameState.left_handed
+			3:
+				GameState.tap_to_move = not GameState.tap_to_move
+		VirtualPad.apply_settings()
 
 ## Multi-line summary of a Spirling.
 static func summary(s: Spirling) -> String:

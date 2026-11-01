@@ -73,11 +73,13 @@ func _run() -> void:
 	while true:
 		var items: Array[String] = []
 		var has_save: bool = SaveManager.has_save()
+		var summary: String = SaveManager.save_summary() if has_save else ""
 		if has_save:
-			items.append("Continue")
+			items.append("Continue" if summary.is_empty() else "Continue  %s" % summary)
 		items.append_array(["New Game", "Settings"] as Array[String])
 		var idx: int = await _menu.pick_strings("", items, false)
-		match items[idx]:
+		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]
+		match choice:
 			"Continue":
 				if SaveManager.load_game():
 					get_tree().change_scene_to_file(OVERWORLD)
