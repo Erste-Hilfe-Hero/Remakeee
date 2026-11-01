@@ -59,3 +59,7 @@ is "Data Not Collected".
 
 Bump `version/code` and `version/name` (Android) and `application/version` / `application/short_version` (iOS)
 in `export_presets.cfg`, then push a tag such as `v0.1.0`.
+
+## APK size budget
+
+CI fails the Android debug job when the APK is larger than 80 MB (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
