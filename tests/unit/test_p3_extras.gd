@@ -242,3 +242,32 @@ func test_replay_of_missing_species_is_refused() -> void:
 func test_every_new_era_has_a_line() -> void:
 	for e: int in [EraManager.Era.COLOR, EraManager.Era.ADVANCED, EraManager.Era.DUAL]:
 		assert_true(EraManager.ERA_LINES.has(e))
+
+# --- Day and night -------------------------------------------------------------------
+
+func test_day_phases_follow_the_clock() -> void:
+	assert_eq(DayCycle.phase_for_hour(4), DayCycle.Phase.NIGHT)
+	assert_eq(DayCycle.phase_for_hour(5), DayCycle.Phase.DAWN)
+	assert_eq(DayCycle.phase_for_hour(7), DayCycle.Phase.DAY)
+	assert_eq(DayCycle.phase_for_hour(17), DayCycle.Phase.DAY)
+	assert_eq(DayCycle.phase_for_hour(18), DayCycle.Phase.DUSK)
+	assert_eq(DayCycle.phase_for_hour(20), DayCycle.Phase.NIGHT)
+	assert_eq(DayCycle.phase_for_hour(23), DayCycle.Phase.NIGHT)
+	assert_eq(DayCycle.phase_for_hour(0), DayCycle.Phase.NIGHT)
+
+func test_day_night_only_outdoors_and_when_on() -> void:
+	var white := Color(1, 1, 1)
+	assert_eq(DayCycle.tint(false, DayCycle.Phase.NIGHT, true), white, "rooms stay lit")
+	assert_eq(DayCycle.tint(true, DayCycle.Phase.NIGHT, false), white, "option off")
+	assert_ne(DayCycle.tint(true, DayCycle.Phase.NIGHT, true), white)
+	assert_eq(DayCycle.tint(true, DayCycle.Phase.DAY, true), white)
+	var fest: Array[int] = [Elements.E.UMBRA, Elements.E.BLOOM]
+	var night: Array[int] = DayCycle.encounter_boost(fest, true, DayCycle.Phase.NIGHT, true)
+	assert_eq(night, [Elements.E.UMBRA, Elements.E.BLOOM, Elements.E.LUMEN] as Array[int], "union, no duplicates")
+	assert_eq(DayCycle.encounter_boost(fest, false, DayCycle.Phase.NIGHT, true), fest, "indoors: festival only")
+	assert_eq(fest.size(), 2, "festival list not changed")
+
+func test_outdoor_maps_are_marked() -> void:
+	assert_true(MapData.load_map("fernstair").outdoor)
+	assert_false(MapData.load_map("lighthouse").outdoor)
+	assert_false(MapData.load_map("murk_hollow").outdoor)

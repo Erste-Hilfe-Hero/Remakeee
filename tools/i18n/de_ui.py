@@ -248,6 +248,7 @@ T = {
 "wild %s": "wilder %s", "%s, seed %08x": "%s, Seed %08x",
 "The grey of Veydal falls away. The world blooms into colour!": "Das Grau von Veydal fällt ab. Die Welt erblüht in Farbe!",
 "The air grows sharper. Every leaf and stone shows more detail!": "Die Luft wird klarer. Jedes Blatt und jeder Stein zeigt mehr Details!",
+"Day and night: %s": "Tag und Nacht: %s",
 "The sky splits wide open. Two horizons stretch before you!": "Der Himmel öffnet sich weit. Zwei Horizonte liegen vor dir!",
 }
 

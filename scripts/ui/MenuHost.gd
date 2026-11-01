@@ -184,6 +184,7 @@ func run_display() -> void:
 			"Reduce motion and flashes: %s" % ("On" if GameState.reduce_motion else "Off"),
 			"High contrast menus: %s" % ("On" if GameState.high_contrast else "Off"),
 			"Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()],
+			"Day and night: %s" % ("On" if GameState.day_night else "Off"),
 		]
 		var idx: int = await pick_strings("Display and access", entries)
 		match idx:
@@ -197,6 +198,8 @@ func run_display() -> void:
 				GameState.high_contrast = not GameState.high_contrast
 			3:
 				GameState.language = Loc.next_language()
+			4:
+				GameState.day_night = not GameState.day_night
 		GameState.apply_display()
 		if idx == 2:
 			await info("High contrast applies to menus and text from the next screen on.")

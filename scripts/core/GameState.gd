@@ -82,6 +82,8 @@ var tips_enabled: bool = true
 var battery_saver: bool = false
 var reduce_motion: bool = false
 var high_contrast: bool = false
+## Day and night tint and encounters on outdoor maps (item 43).
+var day_night: bool = true
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
 const FPS_NORMAL: int = 60
@@ -346,7 +348,7 @@ func settings_to_dict() -> Dictionary:
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "language": language}
+		"high_contrast": high_contrast, "day_night": day_night, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -364,6 +366,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))
+	day_night = bool(d.get("day_night", true))
 	language = str(d.get("language", ""))
 	apply_display()
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)

@@ -27,6 +27,7 @@ var _shade: Node2D
 var _entities: Node2D
 var _camera: Camera2D
 var _photo: PhotoMode
+var _daylight: CanvasModulate
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
@@ -183,9 +184,22 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_right = map.width * GridWalker.TILE
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	_show_banner(map.display_name)
+	refresh_daylight()
 	Sound.music(Sound.track_for_map(map_id))
 	if not map.encounter_table.is_empty():
 		_tip_after_load.call_deferred("wild_area")
+
+## Tints the world for the time of day (UI layers are not affected). Checked once a minute.
+func refresh_daylight() -> void:
+	if _daylight == null:
+		_daylight = CanvasModulate.new()
+		add_child(_daylight)
+		var t := Timer.new()
+		t.wait_time = 60.0
+		t.autostart = true
+		t.timeout.connect(refresh_daylight)
+		add_child(t)
+	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night)
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -295,7 +309,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 			if wild != null:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, Season.boosted(Season.current()))
+				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost)
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
@@ -433,6 +448,7 @@ func open_menu() -> void:
 		Sound.music(Sound.track_for_map(target))
 		await _fade_to(0.0)
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
+	refresh_daylight()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false

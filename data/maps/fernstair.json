@@ -2,6 +2,7 @@
  "name": "Fernstair",
  "region": "veydal",
  "backdrop": "field",
+ "outdoor": true,
  "encounters": "fernstair",
  "rows": [
   "TTTT__TTTTTT",

@@ -507,6 +507,11 @@ BACKDROPS = {"saltmarsh": "lake", "tide_rift": "lake", "brindlewick": "lake", "c
 for mid, m in WORLD.items():
     m["backdrop"] = BACKDROPS.get(mid, "field")
 
+# Outdoor maps follow the real clock (day, dusk, night, dawn); rooms, caves and Rifts do not.
+OUTDOOR = ["brindlewick", "crowcrest", "fernstair", "saltmarsh", "thornridge"]
+for mid in OUTDOOR:
+    WORLD[mid]["outdoor"] = True
+
 # Rift resonance: battles in these maps use a field, and each Warden has a house rule.
 FIELDS = {"cinder_rift": "ash_storm", "tide_rift": "high_tide", "murk_hollow": "deep_murk"}
 for mid, f in FIELDS.items():
@@ -531,7 +536,7 @@ for old in ["home", "start_town", "kestra_home", "route_1", "route_2"]:
         if os.path.exists(p):
             os.remove(p)
 
-ORDER = ["name", "region", "backdrop", "field", "encounters", "heal_point", "rows", "warps", "npcs", "signs", "gear_spots", "blocks"]
+ORDER = ["name", "region", "backdrop", "outdoor", "field", "encounters", "heal_point", "rows", "warps", "npcs", "signs", "gear_spots", "blocks"]
 for mid, m in WORLD.items():
     out = {k: m[k] for k in ORDER if k in m}
     with open(os.path.join(MAPS, mid + ".json"), "w") as f:
