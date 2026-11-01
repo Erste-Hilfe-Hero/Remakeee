@@ -135,7 +135,7 @@ func test_info_strip_speaks() -> void:
 	var s := Spirling.new(Database.species("Kindlop"), 9)
 	s.status = "scorch"
 	strip.set_spirling(s)
-	var t: String = strip.spoken_text()
+	var t: String = strip.screen_reader_text()
 	assert_string_contains(t, "Kindlop Lv9, HP")
 	assert_string_contains(t, StatusRules.label("scorch"))
 
