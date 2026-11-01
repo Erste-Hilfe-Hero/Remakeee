@@ -16,7 +16,9 @@ func run() -> void:
 		if idx < 0:
 			return
 		match labels[idx]:
-			"Goals": await info(QuestLog.summary(GameState.flags))
+			"Goals":
+				var daily: String = DailyFind.hint(GameState.flags)
+				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
 			"Team": await run_team()
 			"Spirlog": await run_spirlog()
 			"Bag": await run_bag()

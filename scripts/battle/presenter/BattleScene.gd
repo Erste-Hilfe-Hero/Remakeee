@@ -157,6 +157,9 @@ func _run() -> void:
 	_apply_speed()
 	Sound.music(music_track)
 	await _play(model.start())
+	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
+		for line: String in Tips.take(id):
+			await _text.show_text(line)
 	while not model.is_finished():
 		if model.needs_player_switch():
 			var idx: int = await _pick_party("Who steps out?", false)

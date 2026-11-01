@@ -88,6 +88,7 @@ func run_settings() -> void:
 			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
 			"Music: %d%%" % int(round(GameState.music_volume * 100.0)),
 			"Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0)),
+			"Tips: %s" % ("On" if GameState.tips_enabled else "Off"),
 			"Touch controls...",
 		]
 		var idx: int = await pick_strings("Settings", entries)
@@ -117,6 +118,8 @@ func run_settings() -> void:
 				GameState.apply_volume()
 				Sound.sfx("confirm")
 			7:
+				GameState.tips_enabled = not GameState.tips_enabled
+			8:
 				await run_controls()
 
 ## Volume steps of 20%, wrapping from 100% to 0%.
