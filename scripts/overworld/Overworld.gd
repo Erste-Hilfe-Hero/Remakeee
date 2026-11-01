@@ -646,7 +646,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
 func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
-	var d: Dictionary = Time.get_date_dict_from_system()
+	var d: Dictionary = Online.date_now()
 	var f: Dictionary = Season.for_month(int(d.month))
 	if f.is_empty():
 		var nxt: Dictionary = Season.next_after(int(d.month))

@@ -10,9 +10,9 @@ const LEVEL_BONUS: int = 2
 ## Minimum Spark per stat for the visitor (normal Spirlings roll 0..SPARK_MAX).
 const SPARK_FLOOR: int = 10
 
-## "YYYY-MM-DD" in local time.
+## "YYYY-MM-DD" in local time by the server clock (item 10).
 static func today_key() -> String:
-	var d: Dictionary = Time.get_date_dict_from_system()
+	var d: Dictionary = Online.date_now()
 	return "%04d-%02d-%02d" % [d.year, d.month, d.day]
 
 static func flag_for(day: String) -> String:

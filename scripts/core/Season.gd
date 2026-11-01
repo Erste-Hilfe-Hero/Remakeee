@@ -28,7 +28,7 @@ static func for_month(month: int) -> Dictionary:
 	return {}
 
 static func current() -> Dictionary:
-	return for_month(int(Time.get_date_dict_from_system().month))
+	return for_month(int(Online.date_now().month))
 
 ## Elements boosted by [param festival] (empty outside festivals).
 static func boosted(festival: Dictionary) -> Array[int]:

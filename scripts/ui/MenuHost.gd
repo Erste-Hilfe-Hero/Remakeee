@@ -95,6 +95,7 @@ func run_settings() -> void:
 			"Display and access...",
 			"Sound test...",
 			"Legal",
+			"Account...",
 		]
 		var idx: int = await pick_strings("Settings", entries)
 		match idx:
@@ -132,6 +133,10 @@ func run_settings() -> void:
 				await run_sound_test()
 			11:
 				await run_legal()
+			12:
+				await AccountMenu.run(self)
+				if not is_inside_tree():
+					return
 
 ## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.
 func run_sound_test() -> void:

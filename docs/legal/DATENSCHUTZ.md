@@ -22,7 +22,7 @@ Bei Fragen zum Datenschutz schreib an die oben genannte E-Mail-Adresse.
 ## 2. Kurz gesagt
 
 Chimora ist ein Online-Spiel für iOS und Android. Damit du spielen kannst, wird dein Spielstand auf unserem
-Server in Deutschland gespeichert. Wir erheben nur, was dafür nötig ist. **Keine Werbung, kein Verkauf von
+Server in Frankfurt gespeichert. Wir erheben nur, was dafür nötig ist. **Keine Werbung, kein Verkauf von
 Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, keine E-Mail-Adresse nötig.**
 
 ## 3. Welche Daten wir verarbeiten, wofür und auf welcher Rechtsgrundlage
@@ -69,14 +69,17 @@ Einwilligung. Wir lesen keine Werbe-IDs (IDFA / Android-Werbe-ID) aus.
 
 ## 5. Empfänger
 
-- **Hosting:** Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, Deutschland. Serverstandort
-  Deutschland. Hetzner verarbeitet die Daten in unserem Auftrag auf Grundlage eines Vertrags nach
-  Art. 28 DSGVO.
+- **Hosting und Datenbank:** Supabase Inc., [ADRESSE SUPABASE laut Auftragsverarbeitungsvertrag].
+  Serverstandort Frankfurt am Main, Deutschland (Region eu-central-1). Supabase verarbeitet die Daten in
+  unserem Auftrag auf Grundlage eines Vertrags nach Art. 28 DSGVO. Weil Supabase ein Unternehmen mit Sitz in
+  den USA ist, ist ein Zugriff aus den USA nicht ganz auszuschließen (etwa im Support). Dafür gelten die
+  EU-Standardvertragsklauseln (Art. 46 Abs. 2 lit. c DSGVO), die Teil des Vertrags sind.
 - **App-Stores:** Apple und Google verarbeiten beim Download und bei Käufen eigene Daten in eigener
   Verantwortung; es gelten deren Datenschutzerklärungen.
 - **Behörden** nur, wenn wir gesetzlich dazu verpflichtet sind.
 
-Wir übermitteln keine Daten in Länder außerhalb der EU bzw. des EWR.
+Darüber hinaus übermitteln wir keine Daten in Länder außerhalb der EU bzw. des EWR. Die Spieldaten selbst
+liegen ausschließlich in Frankfurt.
 
 ## 6. Kinder und Jugendliche
 

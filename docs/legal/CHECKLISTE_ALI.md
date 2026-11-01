@@ -54,9 +54,10 @@ mache ich das.
 
 ## 4. Online-Betrieb (sobald das Backend gebaut wird)
 
-- [ ] Konto bei **Hetzner** anlegen (oder anderen Hoster in Deutschland wählen; dann sag Bescheid, der Name
-      steht in der Datenschutzerklärung).
-- [ ] Dort im Kundenkonto den **Auftragsverarbeitungsvertrag (AVV)** abschließen (ein Klick).
+- [ ] Konto bei **Supabase** anlegen und ein Projekt in der Region **Frankfurt (eu-central-1)** erstellen.
+      Die Schritte stehen in [docs/ONLINE.md](../ONLINE.md).
+- [ ] Dort den **Auftragsverarbeitungsvertrag (DPA)** abschließen (Organization Settings, Legal Documents)
+      und die Adresse von Supabase in `DATENSCHUTZ.md` und `PRIVACY_POLICY_EN.md` eintragen.
 - [ ] **Website** mit vier Seiten veröffentlichen: Impressum, Datenschutz, Nutzungsbedingungen,
       Konto löschen (plus `/lizenzen`). Die Texte liegen fertig in diesem Ordner.
 

@@ -14,6 +14,8 @@ const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
 
 var _menu: MenuHost
+## Connection state, server notice and how many Tamers are online.
+var _status: Label
 var _name_box: PanelContainer
 var _name_edit: LineEdit
 signal _name_done(text: String)
@@ -33,6 +35,13 @@ func _ready() -> void:
 	_menu = MenuHost.new()
 	add_child(_menu)
 	_menu.offset_top = ART_HEIGHT + 4
+	_status = Label.new()
+	_status.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	_status.offset_top = ART_HEIGHT - 24
+	_status.offset_bottom = ART_HEIGHT
+	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	add_child(_status)
 	_build_name_box()
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
@@ -70,8 +79,53 @@ func _build_name_box() -> void:
 	ok.pressed.connect(func() -> void: _name_done.emit(_name_edit.text))
 	v.add_child(ok)
 
-func _run() -> void:
+## Chimora is online only: nothing past the title works without the server (item 1).
+func _go_online() -> void:
 	while true:
+		_status.text = "Connecting..."
+		var st: Online.State = await Online.connect_now()
+		if st == Online.State.ONLINE:
+			if not Online.privacy_seen:
+				await _menu.info(AccountMenu.PRIVACY_NOTE)
+				Online.mark_privacy_seen()
+			if await Online.sync_down():
+				await _resolve_conflicts()
+				_show_status()
+				return
+			continue
+		if st == Online.State.UPDATE_REQUIRED:
+			_status.text = ""
+			await _menu.info("A new version of Chimora is out. Please update it in the store to keep playing.")
+			continue
+		_status.text = "No connection"
+		var idx: int = await _menu.pick_strings("Chimora needs the internet. Your journeys are safe on the server.",
+			["Try again", "Settings"] as Array[String], false)
+		if idx == 1:
+			await _menu.run_settings()
+
+func _show_status() -> void:
+	var lines: Array[String] = []
+	if not Online.motd.is_empty():
+		lines.append(Online.motd)
+	if Online.online_now > 1:
+		lines.append("%d Tamers are in Veydal" % Online.online_now)
+	_status.text = "\n".join(lines)
+
+## A slot changed on this phone and on another device: the player picks which to keep (item 8).
+func _resolve_conflicts() -> void:
+	for slot: int in Online.conflicts.duplicate():
+		var idx: int = await _menu.pick_strings("Slot %d was played on this phone and on another device. Which journey do you keep?" % slot,
+			["The other device's", "This phone's"] as Array[String], false)
+		if idx == 1:
+			await Online.resolve_conflict_keep_local(slot)
+		else:
+			await Online.resolve_conflict_take_server(slot)
+
+func _run() -> void:
+	await _go_online()
+	while true:
+		if not Online.is_online():
+			await _go_online()
 		var items: Array[String] = []
 		# "Continue" is always the newest save, one tap from launch.
 		var latest: int = SaveManager.latest_slot()
@@ -89,7 +143,7 @@ func _run() -> void:
 				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
 					SaveManager.save_settings()
-					get_tree().change_scene_to_file(OVERWORLD)
+					_enter_game()
 					return
 				await _menu.info("The save could not be read.")
 			"Load...":
@@ -98,7 +152,7 @@ func _run() -> void:
 					SaveManager.set_slot(n)
 					if SaveManager.load_game():
 						SaveManager.save_settings()
-						get_tree().change_scene_to_file(OVERWORLD)
+						_enter_game()
 						return
 					await _menu.info("The save could not be read.")
 			"New Game":
@@ -110,10 +164,14 @@ func _run() -> void:
 				SaveManager.set_slot(slot)
 				if await _new_game():
 					SaveManager.save_settings()
-					get_tree().change_scene_to_file(OVERWORLD)
+					_enter_game()
 					return
 			"Settings":
 				await _menu.run_settings()
+
+func _enter_game() -> void:
+	Online.push_profile()
+	get_tree().change_scene_to_file(OVERWORLD)
 
 func _used_slots() -> int:
 	var n: int = 0
