@@ -179,5 +179,28 @@
     "weight": 15
    }
   ]
+ },
+ "murk_hollow": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Mirkmole",
+    "min": 11,
+    "max": 13,
+    "weight": 45
+   },
+   {
+    "species": "Shalebat",
+    "min": 11,
+    "max": 13,
+    "weight": 35
+   },
+   {
+    "species": "Wickit",
+    "min": 11,
+    "max": 12,
+    "weight": 20
+   }
+  ]
  }
 }

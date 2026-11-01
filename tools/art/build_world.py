@@ -232,7 +232,7 @@ WORLD["crowcrest"] = {
              "@~~~++++_..@",
              "@~~~%..:_..@",
              "@......::..@",
-             "@^^^=^^^^^^@",
+             "@^^^=^^^^D^@",
              "@:::_:::...@",
              "@:::_::....@",
              "@...______.@",
@@ -243,7 +243,8 @@ WORLD["crowcrest"] = {
              "@@...__...@@",
              "@@@@@__@@@@@"],
     "warps": [warp(5, 23, "fernstair", 4, 1, "down"), warp(6, 23, "fernstair", 5, 1, "down"),
-              warp(5, 0, "thornridge", 5, 18, "up"), warp(6, 0, "thornridge", 6, 18, "up")],
+              warp(5, 0, "thornridge", 5, 18, "up"), warp(6, 0, "thornridge", 6, 18, "up"),
+              warp(9, 14, "murk_hollow", 5, 11, "up")],
     "npcs": [
         npc("kestra", 7, 17, "left", "crowcrest/kestra", "ranger", trainer="Cartographer Kestra",
             beaten_flag="kestra_spar", money=400, intro="crowcrest/kestra_intro",
@@ -262,7 +263,7 @@ WORLD["crowcrest"] = {
                    {"from": [8, 15], "x": 8, "y": 14, "gear": "climbing_pick", "to": [8, 13]}],
 }
 TEXT["crowcrest"] = {
-    "sign": ["CROWCREST", "Mind the loose stones.", "Up: Thornridge   Down: Fernstair"],
+    "sign": ["CROWCREST", "Mind the loose stones.", "Up: Thornridge   Down: Fernstair", "East cliff door: the old Murk Hollow mine"],
     "kestra": {"lines": ["Kestra: You fight like you draw maps: careful, then all at once.",
                          "Kestra: Take this Climbing Pick. Hook it into a low cliff and climb, up or down. Your own hands, your own feet."],
                "action": "give_item climbing_pick 1", "flag": "got_pick", "once": True,
@@ -363,6 +364,48 @@ TEXT["saltmarsh"] = {
     "neve_defeat": ["Neve: Washed out... You're ready."],
 }
 
+# --- Murk Hollow: an old mine behind the Crowcrest cliff, with a pitch-dark gallery ----------
+WORLD["murk_hollow"] = {
+    "name": "Murk Hollow",
+    "encounters": "murk_hollow",
+    "rows": ["@@@@@@@@@@@@",
+             "@@::.S...:@@",
+             "@::@....@::@",
+             "@::..__..::@",
+             "@@@@@__@@@@@",
+             "@:...__...:@",
+             "@::..__..::@",
+             "@@@..__..@@@",
+             "@::......::@",
+             "@::.____.::@",
+             "@...____...@",
+             "@@...__...@@",
+             "@@@@@__@@@@@"],
+    "warps": [warp(5, 12, "crowcrest", 9, 15, "down"), warp(6, 12, "crowcrest", 9, 15, "down")],
+    "npcs": [npc("tamsin", 3, 10, "right", "murk_hollow/tamsin", "elder"),
+             npc("delve", 9, 5, "left", "murk_hollow/delve", "villager", trainer="Delver Ros",
+                 intro="murk_hollow/delve_intro", defeat="murk_hollow/delve_defeat",
+                 team=team(("Mirkmole", 12), ("Shalebat", 13)))],
+    "signs": [{"x": 5, "y": 1, "dialogue": "murk_hollow/sign_old"},
+              {"x": 6, "y": 2, "dialogue": "murk_hollow/gallery_find"}],
+    # The old gallery is pitch dark: the Storm Lantern lights the way through.
+    "gear_spots": [{"x": 5, "y": 4, "gear": "storm_lantern"}, {"x": 6, "y": 4, "gear": "storm_lantern"}],
+}
+TEXT["murk_hollow"] = {
+    "tamsin": {"lines": ["Tamsin: Nobody's dug here since my knees gave out. The upper gallery's black as ink.",
+                         "Tamsin: Take my Storm Lantern. It burns in any wind, and in the dark."],
+               "action": "give_item storm_lantern 1", "flag": "got_lantern", "once": True,
+               "after_flag": {"flag": "got_lantern",
+                              "lines": ["Tamsin: Mirkmoles dug half these tunnels. They like the quiet, not the dark."]}},
+    "delve": ["Ros: The Mirkmoles here hate bright light. Keep that lantern low."],
+    "delve_intro": ["Ros: A cartographer in my mine? Show me what you've got!"],
+    "delve_defeat": ["Ros: Dug myself into that one."],
+    "sign_old": ["MURK HOLLOW GALLERY", "Closed after the storm.", "Mind your head."],
+    "gallery_find": {"lines": ["Wedged between two rocks: a Strong Tonic!"],
+                     "action": "give_item strong_tonic 1", "flag": "hollow_find", "once": True,
+                     "after_flag": {"flag": "hollow_find", "lines": ["Only dust and old pick marks now."]}},
+}
+
 # --- The two Rifts -----------------------------------------------------------------------------
 cinder = json.load(open(os.path.join(MAPS, "cinder_rift.json")))
 # Rift hollows are open-air craters, not dungeons: cliff walls, scree, the tear itself.
@@ -409,7 +452,7 @@ TEXT["tide_rift"] = {
 }
 
 BACKDROPS = {"saltmarsh": "lake", "tide_rift": "lake", "brindlewick": "lake", "crowcrest": "ridge",
-             "thornridge": "ridge", "cinder_rift": "ember"}
+             "thornridge": "ridge", "cinder_rift": "ember", "murk_hollow": "ridge"}
 for mid, m in WORLD.items():
     m["backdrop"] = BACKDROPS.get(mid, "field")
 

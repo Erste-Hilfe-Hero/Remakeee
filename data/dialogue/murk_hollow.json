@@ -1,0 +1,45 @@
+{
+ "tamsin": {
+  "lines": [
+   "Tamsin: Nobody's dug here since my knees gave out. The upper gallery's black as ink.",
+   "Tamsin: Take my Storm Lantern. It burns in any wind, and in the dark."
+  ],
+  "action": "give_item storm_lantern 1",
+  "flag": "got_lantern",
+  "once": true,
+  "after_flag": {
+   "flag": "got_lantern",
+   "lines": [
+    "Tamsin: Mirkmoles dug half these tunnels. They like the quiet, not the dark."
+   ]
+  }
+ },
+ "delve": [
+  "Ros: The Mirkmoles here hate bright light. Keep that lantern low."
+ ],
+ "delve_intro": [
+  "Ros: A cartographer in my mine? Show me what you've got!"
+ ],
+ "delve_defeat": [
+  "Ros: Dug myself into that one."
+ ],
+ "sign_old": [
+  "MURK HOLLOW GALLERY",
+  "Closed after the storm.",
+  "Mind your head."
+ ],
+ "gallery_find": {
+  "lines": [
+   "Wedged between two rocks: a Strong Tonic!"
+  ],
+  "action": "give_item strong_tonic 1",
+  "flag": "hollow_find",
+  "once": true,
+  "after_flag": {
+   "flag": "hollow_find",
+   "lines": [
+    "Only dust and old pick marks now."
+   ]
+  }
+ }
+}
