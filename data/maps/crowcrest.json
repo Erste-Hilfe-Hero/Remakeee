@@ -91,7 +91,7 @@
      "level": 7
     },
     {
-     "species": "Breezel",
+     "species": "Zephlet",
      "level": 8
     },
     {
@@ -112,7 +112,7 @@
    "defeat": "crowcrest/lio_defeat",
    "team": [
     {
-     "species": "Breezel",
+     "species": "Zephlet",
      "level": 7
     },
     {
@@ -128,7 +128,7 @@
    "facing": "left",
    "dialogue": "crowcrest/bram",
    "sprite": "villager",
-   "trainer": "Hiker Bram",
+   "trainer": "Ridgewalker Bram",
    "intro": "crowcrest/bram_intro",
    "defeat": "crowcrest/bram_defeat",
    "team": [

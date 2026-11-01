@@ -55,7 +55,7 @@ func test_stab_is_1_25() -> void:
 
 func test_crit_is_1_5() -> void:
 	var a: Spirling = BattleFixtures.make("Zippit", 20)
-	var d: Spirling = BattleFixtures.make("Breezel", 20)
+	var d: Spirling = BattleFixtures.make("Zephlet", 20)
 	var mv: MoveData = BattleFixtures.move(E.STONE, 40)
 	var normal: float = DamageCalc.raw(a, d, mv, 1.0, false)
 	var crit: float = DamageCalc.raw(a, d, mv, 1.0, true)
@@ -63,7 +63,7 @@ func test_crit_is_1_5() -> void:
 
 func test_crit_rate_is_about_one_in_sixteen() -> void:
 	var a: Spirling = BattleFixtures.make("Zippit", 20)
-	var d: Spirling = BattleFixtures.make("Breezel", 20)
+	var d: Spirling = BattleFixtures.make("Zephlet", 20)
 	var mv: MoveData = BattleFixtures.move(E.STONE, 40)
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 99

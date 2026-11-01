@@ -8,7 +8,7 @@ Retro pixel monster-taming RPG for iOS + Android, built in Godot 4.7.2.
 - Bond minigame instead of capture items
 - **Every region = a visual generation jump**: Veydal (Era I Mono) → Corvane (Era II Color) → Ashmere (Era III Advanced) → Solenne (Era IV Dual). See `scripts/core/EraManager.gd`.
 
-- Unbound-style depth: 4 difficulty modes with level caps (`GameState.gd`), Contracts, Rift Surges, Spirlog Tracker, The Spire
+- Deep systems: 4 difficulty modes with level caps (`GameState.gd`), Contracts, Rift Surges, Spirlog Tracker, The Spire
 
 See LEGAL.md before adding any content. Coding agents: start with AGENTS.md.
 

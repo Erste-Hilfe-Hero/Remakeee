@@ -45,7 +45,7 @@ func _count(events: Array[BattleEvent], t: BattleEvent.Type) -> int:
 
 func test_uneven_formats_fill_their_slots() -> void:
 	for f: Array in [[3, 3], [4, 1], [4, 2], [2, 4], [1, 3]]:
-		var m := _model(_p(["Kindlop", "Puddlet", "Mossling", "Zippit", "Breezel"]), _p(["Shalebat", "Wickit", "Kelpup", "Mirkmole", "Breezel"]), [int(f[0]), int(f[1])])
+		var m := _model(_p(["Kindlop", "Puddlet", "Mossling", "Zippit", "Zephlet"]), _p(["Shalebat", "Wickit", "Kelpup", "Mirkmole", "Zephlet"]), [int(f[0]), int(f[1])])
 		var events: Array[BattleEvent] = m.start()
 		assert_eq(m.slot_count(Side.PLAYER), int(f[0]), "player slots for %s" % [f])
 		assert_eq(m.slot_count(Side.FOE), int(f[1]), "foe slots for %s" % [f])
@@ -53,7 +53,7 @@ func test_uneven_formats_fill_their_slots() -> void:
 		assert_true(m.is_multi())
 
 func test_front_never_exceeds_the_party_or_the_cap() -> void:
-	var m := _model(_p(["Kindlop", "Puddlet"]), _p(["Shalebat", "Wickit", "Kelpup", "Mirkmole", "Breezel", "Zippit"]), [4, 6])
+	var m := _model(_p(["Kindlop", "Puddlet"]), _p(["Shalebat", "Wickit", "Kelpup", "Mirkmole", "Zephlet", "Zippit"]), [4, 6])
 	m.start()
 	assert_eq(m.slot_count(Side.PLAYER), 2, "a party of two fields two")
 	assert_eq(m.slot_count(Side.FOE), BattleRules.MAX_FRONT, "never more than four per side")
@@ -93,7 +93,7 @@ func _with_move(species: String, level: int, mv: MoveData) -> Spirling:
 	return s
 
 func test_single_target_move_hits_the_chosen_foe() -> void:
-	var m := _model([BattleFixtures.make("Kindlop", 20, ["Ember Snap"])], _p(["Mossling", "Breezel"]), [1, 2])
+	var m := _model([BattleFixtures.make("Kindlop", 20, ["Cinder Nip"])], _p(["Mossling", "Zephlet"]), [1, 2])
 	m.start()
 	var events: Array[BattleEvent] = m.submit_actions([BattleAction.make_move(Side.PLAYER, 0, 0, 1),
 		BattleAction.make_rest(Side.FOE, 0), BattleAction.make_rest(Side.FOE, 1)] as Array[BattleAction])
@@ -102,18 +102,18 @@ func test_single_target_move_hits_the_chosen_foe() -> void:
 	assert_eq(int(hits[0].data.slot), 1, "the aimed slot takes the hit")
 
 func test_aim_at_a_fallen_foe_moves_to_the_next() -> void:
-	var m := _model([BattleFixtures.make("Kindlop", 20, ["Ember Snap"])], _p(["Mossling", "Breezel"]), [1, 2])
+	var m := _model([BattleFixtures.make("Kindlop", 20, ["Cinder Nip"])], _p(["Mossling", "Zephlet"]), [1, 2])
 	m.start()
 	(m.party(Side.FOE)[1] as Spirling).hp = 0
-	assert_eq(m.move_targets(Side.PLAYER, Database.move("Ember Snap"), 1), [0] as Array[int])
+	assert_eq(m.move_targets(Side.PLAYER, Database.move("Cinder Nip"), 1), [0] as Array[int])
 
 func test_sweep_hits_every_foe_for_less() -> void:
 	var quake: MoveData = Database.move("Quake Stomp")
 	assert_true(quake.is_area(), "Quake Stomp sweeps the field")
-	var solo := _model([_with_move("Calderox", 15, _sweep())], _p(["Breezel"], 30), [1, 1], false, 5)
+	var solo := _model([_with_move("Calderox", 15, _sweep())], _p(["Zephlet"], 30), [1, 1], false, 5)
 	solo.start()
 	var one: Array[BattleEvent] = solo.submit_actions([BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE)] as Array[BattleAction])
-	var crowd := _model([_with_move("Calderox", 15, _sweep())], _p(["Breezel", "Breezel", "Breezel"], 30), [1, 3], false, 5)
+	var crowd := _model([_with_move("Calderox", 15, _sweep())], _p(["Zephlet", "Zephlet", "Zephlet"], 30), [1, 3], false, 5)
 	crowd.start()
 	var acts: Array[BattleAction] = [BattleAction.make_move(Side.PLAYER, 0)]
 	for slot: int in 3:
@@ -138,16 +138,16 @@ func test_sweep_self_effects_apply_once() -> void:
 	assert_false(BattleModel._is_self_effect({"id": &"drain"}))
 
 func test_status_sweep_reaches_all_foes() -> void:
-	var m := _model([BattleFixtures.make("Zippit", 25, ["Static Field"])], _p(["Mossling", "Puddlet"]), [1, 2], false, 3)
+	var m := _model([BattleFixtures.make("Zippit", 25, ["Charged Mist"])], _p(["Mossling", "Puddlet"]), [1, 2], false, 3)
 	m.start()
 	(m.party(Side.PLAYER)[0] as Spirling).energy = 10
-	var mv: MoveData = Database.move("Static Field")
+	var mv: MoveData = Database.move("Charged Mist")
 	assert_true(mv.is_area())
 	assert_eq(m.move_targets(Side.PLAYER, mv), [0, 1] as Array[int])
 
 func test_ai_aims_at_the_weaker_matchup() -> void:
 	# Kindlop's Ember move is strong into Mossling (Bloom) and weak into Puddlet (Tide).
-	var m := _model(_p(["Puddlet", "Mossling"]), [BattleFixtures.make("Kindlop", 15, ["Ember Snap"])], [2, 1])
+	var m := _model(_p(["Puddlet", "Mossling"]), [BattleFixtures.make("Kindlop", 15, ["Cinder Nip"])], [2, 1])
 	m.start()
 	var a: BattleAction = BattleAI.new(1).choose(m, Side.FOE, 0)
 	assert_eq(a.kind, BattleAction.Kind.MOVE)
@@ -201,7 +201,7 @@ func test_two_slots_cannot_swap_to_the_same_bench_spirling() -> void:
 
 func _tag_model(seed_value: int = 21) -> BattleModel:
 	var m := _model(_p(["Kindlop", "Puddlet"], 13), _p(["Shalebat", "Kelpup", "Mirkmole"], 13), [1, 2], false, seed_value)
-	m.set_partner("Cartographer Kestra", _p(["Breezel", "Zippit"], 13), 1)
+	m.set_partner("Cartographer Kestra", _p(["Zephlet", "Zippit"], 13), 1)
 	return m
 
 func test_partner_fights_beside_the_player() -> void:
@@ -261,7 +261,7 @@ func test_boss_scales_with_the_players_field() -> void:
 func test_boss_acts_twice_against_four() -> void:
 	var boss: Spirling = BattleFixtures.make("Smoldrake", 14)
 	var base_hp: int = boss.max_hp()
-	var m := _model(_p(["Kindlop", "Puddlet", "Breezel", "Zippit"], 14), [boss], [4, 1], false, 6)
+	var m := _model(_p(["Kindlop", "Puddlet", "Zephlet", "Zippit"], 14), [boss], [4, 1], false, 6)
 	m.foe_boss = "ashen_heart"
 	var intro: Array[BattleEvent] = m.start()
 	assert_gt(boss.max_hp(), base_hp * 3, "the boss swells against four")
@@ -292,7 +292,7 @@ func test_boss_acts_twice_against_four() -> void:
 func test_boss_battles_play_to_the_end() -> void:
 	for f: Array in [[4, 1], [4, 2], [1, 1]]:
 		var foes: Array[Spirling] = _p(["Riptail", "Kelpup"], 16)
-		var m := _model(_p(["Kindlop", "Puddlet", "Breezel", "Zippit"], 16), foes, [int(f[0]), int(f[1])], false, 13)
+		var m := _model(_p(["Kindlop", "Puddlet", "Zephlet", "Zippit"], 16), foes, [int(f[0]), int(f[1])], false, 13)
 		m.foe_boss = "drowned_heart"
 		var log: Array[BattleEvent] = _auto(m)
 		assert_eq(log[log.size() - 1].type, T.BATTLE_END)
@@ -348,7 +348,7 @@ func test_horde_intro_text() -> void:
 	assert_eq(start.describe(), "A hushed swarm of 4 Spirlings closes in!")
 
 func test_running_from_a_horde_checks_the_fastest() -> void:
-	var m := _model(_p(["Kindlop", "Puddlet"]), _p(["Mirkmole", "Breezel"]), [2, 2], true)
+	var m := _model(_p(["Kindlop", "Puddlet"]), _p(["Mirkmole", "Zephlet"]), [2, 2], true)
 	m.start()
 	assert_true(m.is_legal(BattleAction.make_run(Side.PLAYER, 1)))
 
@@ -381,7 +381,7 @@ func test_multi_battle_replay_reproduces_the_outcome() -> void:
 	assert_eq(BattleReplay.simulate(snap), m.outcome, "the replay ends the same way")
 
 func test_boss_replay_keeps_the_boss() -> void:
-	var m := _model(_p(["Kindlop", "Puddlet", "Breezel"], 14), _p(["Smoldrake"], 14), [3, 1], false, 17)
+	var m := _model(_p(["Kindlop", "Puddlet", "Zephlet"], 14), _p(["Smoldrake"], 14), [3, 1], false, 17)
 	m.foe_boss = "ashen_heart"
 	var snap: Dictionary = BattleReplay.snapshot(m, "warden", "ember")
 	var rebuilt: BattleModel = BattleReplay.build_model(JSON.parse_string(JSON.stringify(snap)))

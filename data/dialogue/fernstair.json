@@ -26,13 +26,13 @@
   "lines": [
    "Your partner gets Energy back every turn.",
    "If it runs dry, let it rest a turn. No shame in that!",
-   "I'd love to see a Breezel up close. They tumble past too fast on the ridge."
+   "I'd love to see a Zephlet up close. They tumble past too fast on the ridge."
   ],
-  "action": "quest_show hiker Breezel swift_feather 1",
+  "action": "quest_show hiker Zephlet swift_feather 1",
   "after_flag": {
    "flag": "q_hiker_done",
    "lines": [
-    "Your Breezel nearly blew my hat off. Worth it!"
+    "Your Zephlet nearly blew my hat off. Worth it!"
    ]
   }
  },
@@ -44,7 +44,7 @@
    "flag": "fern_gift",
    "lines": [
     "Bonding works best when a Spirling is worn down.",
-    "Tap with the pulse and it may trust you."
+    "Listen to its call and echo it back, and it may trust you."
    ]
   },
   "action": "give_item kin_charm 2",

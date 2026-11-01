@@ -203,20 +203,24 @@ func _layout_field() -> void:
 	var w: float = _field.size.x
 	var h: float = _field.size.y
 	var sprite: float = float(EraManager.battle_sprite_size())
-	_foe_strip.position = Vector2(MARGIN, MARGIN)
+	# Chimora's own arrangement: foe on the upper left, the player's Spirling on the lower right,
+	# info strips on the opposite sides (docs/legal/IP_PATENT_AUDIT.md, item 4).
 	_foe_strip.size = Vector2(w * 0.55, STRIP_HEIGHT)
-	_ff_button.position = Vector2(w - 26 - MARGIN, MARGIN)
+	_foe_strip.position = Vector2(w - _foe_strip.size.x - MARGIN, MARGIN)
+	_ff_button.position = Vector2(MARGIN, MARGIN)
 	_ff_button.size = Vector2(26, 12)
-	_auto_button.position = Vector2(w - 26 - MARGIN, MARGIN + 14)
+	_auto_button.position = Vector2(MARGIN, MARGIN + 14)
 	_auto_button.size = Vector2(26, 12)
-	_log_button.position = Vector2(w - 26 - MARGIN, MARGIN + 28)
+	_log_button.position = Vector2(MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
-	_foe_sprite.position = Vector2(w - sprite - MARGIN * 2, MARGIN + STRIP_HEIGHT - 6)
+	_foe_sprite.position = Vector2(MARGIN * 2 + 28, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
+	_foe_sprite.mirrored = true
 	_player_strip.size = Vector2(w - sprite - MARGIN * 5, STRIP_HEIGHT + 8)
-	_player_strip.position = Vector2(w - _player_strip.size.x - MARGIN, h - _player_strip.size.y - MARGIN)
-	_player_sprite.position = Vector2(MARGIN * 2, h - sprite - MARGIN * 2)
+	_player_strip.position = Vector2(MARGIN, h - _player_strip.size.y - MARGIN)
+	_player_sprite.position = Vector2(w - sprite - MARGIN * 2, h - sprite - MARGIN * 2)
 	_player_sprite.size = Vector2(sprite, sprite)
+	_player_sprite.mirrored = true
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 
 ## Creates the compact sprites and tags for every field slot (formation layout only).
@@ -383,7 +387,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
-	_text.show_prompt("What will %s do? (%d Energy)" % [me.display_name(), me.energy])
+	_text.show_prompt("Orders for %s? (%d Energy)" % [me.display_name(), me.energy])
 	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
 	var choice: Array = await _menu.chosen
@@ -501,7 +505,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	if aim == -2:
 		return null
 	var target_slot: int = maxi(aim, 0)
-	await _text.show_text("Reach out to %s... Tap with the pulse!" % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
+	await _text.show_text("Reach out to %s... Listen, then echo its call!" % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
 	var score: float = await _bond_game.run()
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
@@ -571,7 +575,7 @@ func _play_event(e: BattleEvent) -> void:
 			if model.is_wild:
 				_foe_strip.visible = true
 				Sound.cry(foe.data)
-				await _foe_sprite.step_out(false)
+				await _foe_sprite.step_out(true)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]
@@ -580,12 +584,12 @@ func _play_event(e: BattleEvent) -> void:
 			_strip(side, slot).visible = true
 			_focus(side, slot)
 			Sound.cry(s.data)
-			await _sprite(side, slot).step_out(side == BattleModel.Side.PLAYER)
+			await _sprite(side, slot).step_out(side != BattleModel.Side.PLAYER)
 			_update_pinch()
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SWAP_OUT:
 			await _text.show_text(e.describe())
-			await _sprite(side, slot).step_back(side == BattleModel.Side.PLAYER)
+			await _sprite(side, slot).step_back(side != BattleModel.Side.PLAYER)
 		BattleEvent.Type.BOSS:
 			_focus(side, slot)
 			_point_pin(side, slot, true)
@@ -598,7 +602,7 @@ func _play_event(e: BattleEvent) -> void:
 			_focus(side, slot)
 			_point_pin(side, slot, false)
 			await _text.show_text(e.describe())
-			var dir: Vector2 = Vector2(8, -4) if side == BattleModel.Side.PLAYER else Vector2(-8, 4)
+			var dir: Vector2 = Vector2(-8, -4) if side == BattleModel.Side.PLAYER else Vector2(8, 4)
 			if _multi:
 				dir = Vector2(0, -6) if side == BattleModel.Side.PLAYER else Vector2(0, 6)
 			await _sprite(side, slot).lunge(dir)
@@ -738,7 +742,7 @@ func _demo_model() -> BattleModel:
 	var theirs: Array[Spirling] = [Spirling.new(Database.species("Zippit"), 7, rng)]
 	match demo:
 		"boss":
-			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Breezel", "Zippit"], 14)
+			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Zephlet", "Zippit"], 14)
 			theirs = _demo_team(rng, ["Smoldrake"], 14)
 		"duel3":
 			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Mossling"], 14)
@@ -747,7 +751,7 @@ func _demo_model() -> BattleModel:
 			mine = _demo_team(rng, ["Kindlop", "Puddlet"], 13)
 			theirs = _demo_team(rng, ["Shalebat", "Kelpup", "Mirkmole"], 13)
 		"horde":
-			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Breezel"], 12)
+			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Zephlet"], 12)
 			theirs = _demo_team(rng, ["Mirkmole", "Shalebat", "Wickit", "Mirkmole", "Shalebat"], 11)
 	var m := BattleModel.new(mine, theirs, demo == "" or demo == "horde", DEMO_SEED, 0 if demo == "" else 1)
 	m.inventory = {"tonic": 3, "remedy": 1, "kin_charm": 2}
@@ -762,7 +766,7 @@ func _demo_model() -> BattleModel:
 		"tag":
 			m.front_size = [1, 2]
 			m.trainer_name = "Hauler Tobin"
-			m.set_partner("Cartographer Kestra", _demo_team(rng, ["Breezel", "Zippit"], 13), 1)
+			m.set_partner("Cartographer Kestra", _demo_team(rng, ["Zephlet", "Zippit"], 13), 1)
 		"horde":
 			m.front_size = [2, 4]
 	return m

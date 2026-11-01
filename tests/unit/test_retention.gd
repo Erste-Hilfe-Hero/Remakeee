@@ -110,7 +110,7 @@ func test_every_achievement_has_a_check() -> void:
 	GameState.party.clear()
 	for sd: SpirlingData in Database.spirlings.values():
 		GameState.mark_seen(sd.species_name, true)
-	for n: String in ["Calderox", "Puddlet", "Mossling", "Zippit", "Breezel", "Kelpup"]:
+	for n: String in ["Calderox", "Puddlet", "Mossling", "Zippit", "Zephlet", "Kelpup"]:
 		var s := Spirling.new(Database.species(n), 30)
 		GameState.party.append(s)
 	GameState.party[1].prism = true

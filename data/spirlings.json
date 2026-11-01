@@ -17,8 +17,8 @@
   "trait": "kindling",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Ember Snap"
+    "Headlong Charge",
+    "Cinder Nip"
    ],
    "5": [
     "Heat Haze"
@@ -27,7 +27,7 @@
     "Kindle Up"
    ],
    "9": [
-    "Shade Claw"
+    "Dusk Rake"
    ],
    "13": [
     "Cinder Breath"
@@ -59,8 +59,8 @@
   "trait": "kindling",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Ember Snap",
+    "Headlong Charge",
+    "Cinder Nip",
     "Heat Haze"
    ],
    "13": [
@@ -73,7 +73,7 @@
     "Kindle Up"
    ],
    "26": [
-    "Shade Claw"
+    "Dusk Rake"
    ],
    "30": [
     "Blaze Coil"
@@ -103,7 +103,7 @@
   "trait": "kindling",
   "learnset": {
    "1": [
-    "Ember Snap",
+    "Cinder Nip",
     "Cinder Breath",
     "Pebble Toss"
    ],
@@ -144,8 +144,8 @@
   "trait": "slick",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Bubble Pop"
+    "Headlong Charge",
+    "Fizz Pop"
    ],
    "5": [
     "Drench"
@@ -184,8 +184,8 @@
   "trait": "slick",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Bubble Pop",
+    "Headlong Charge",
+    "Fizz Pop",
     "Drench"
    ],
    "13": [
@@ -228,7 +228,7 @@
   "trait": "slick",
   "learnset": {
    "1": [
-    "Bubble Pop",
+    "Fizz Pop",
     "Brine Jet",
     "Glint"
    ],
@@ -268,11 +268,11 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Moss Whip"
+    "Headlong Charge",
+    "Lichen Lash"
    ],
    "5": [
-    "Spore Cloud"
+    "Puffcap Haze"
    ],
    "9": [
     "Pebble Toss"
@@ -307,9 +307,9 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Moss Whip",
-    "Spore Cloud"
+    "Headlong Charge",
+    "Lichen Lash",
+    "Puffcap Haze"
    ],
    "13": [
     "Sap Draw"
@@ -351,7 +351,7 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Moss Whip",
+    "Lichen Lash",
     "Sap Draw",
     "Pebble Toss"
    ],
@@ -391,14 +391,14 @@
   "trait": "surge",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Static Nip"
+    "Headlong Charge",
+    "Crackle Bite"
    ],
    "4": [
     "Siphon Spark"
    ],
    "8": [
-    "Static Field"
+    "Charged Mist"
    ],
    "12": [
     "Arc Bolt"
@@ -434,7 +434,7 @@
   "trait": "surge",
   "learnset": {
    "1": [
-    "Static Nip",
+    "Crackle Bite",
     "Arc Bolt",
     "Glint"
    ],
@@ -448,7 +448,7 @@
     "Overcharge"
    ],
    "34": [
-    "Static Field"
+    "Charged Mist"
    ],
    "40": [
     "Radiant Lance"
@@ -478,8 +478,8 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Shade Claw"
+    "Headlong Charge",
+    "Dusk Rake"
    ],
    "5": [
     "Hush"
@@ -521,7 +521,7 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
-    "Shade Claw",
+    "Dusk Rake",
     "Pebble Toss",
     "Hush"
    ],
@@ -546,7 +546,7 @@
  },
  {
   "dex_id": 14,
-  "name": "Breezel",
+  "name": "Zephlet",
   "elements": [
    "GALE"
   ],
@@ -562,8 +562,8 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Gust Slice"
+    "Headlong Charge",
+    "Breeze Slice"
    ],
    "5": [
     "Updraft"
@@ -572,7 +572,7 @@
     "Tailwind Step"
    ],
    "10": [
-    "Static Nip"
+    "Crackle Bite"
    ],
    "16": [
     "Cyclone Edge"
@@ -604,9 +604,9 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
-    "Gust Slice",
+    "Breeze Slice",
     "Updraft",
-    "Static Nip"
+    "Crackle Bite"
    ],
    "28": [
     "Cyclone Edge"
@@ -645,11 +645,11 @@
   "trait": "light_sleeper",
   "learnset": {
    "1": [
-    "Tackle Rush",
+    "Headlong Charge",
     "Wick Flicker"
    ],
    "5": [
-    "Bubble Pop"
+    "Fizz Pop"
    ],
    "9": [
     "Glint"
@@ -690,7 +690,7 @@
    "1": [
     "Wick Flicker",
     "Glint",
-    "Bubble Pop"
+    "Fizz Pop"
    ],
    "22": [
     "Brine Jet"
@@ -734,7 +734,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
-    "Tackle Rush",
+    "Headlong Charge",
     "Mirk Nip"
    ],
    "5": [
@@ -747,7 +747,7 @@
     "Cower Shade"
    ],
    "13": [
-    "Shade Claw"
+    "Dusk Rake"
    ],
    "18": [
     "Tunnel Strike"
@@ -782,7 +782,7 @@
   "learnset": {
    "1": [
     "Mirk Nip",
-    "Shade Claw",
+    "Dusk Rake",
     "Tunnel Strike"
    ],
    "25": [
@@ -825,11 +825,11 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Tackle Rush",
-    "Bubble Pop"
+    "Headlong Charge",
+    "Fizz Pop"
    ],
    "4": [
-    "Moss Whip"
+    "Lichen Lash"
    ],
    "8": [
     "Brine Fang"
@@ -874,7 +874,7 @@
    "1": [
     "Brine Fang",
     "Kelp Lash",
-    "Moss Whip"
+    "Lichen Lash"
    ],
    "27": [
     "Undertow"
