@@ -60,4 +60,4 @@ static func week_key(unix: int) -> String:
 	return "%04d-W%02d" % [td.year, day_of_year / 7 + 1]
 
 static func this_week() -> String:
-	return week_key(int(Time.get_unix_time_from_system()))
+	return week_key(Online.unix_now())

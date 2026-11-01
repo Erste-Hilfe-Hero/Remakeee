@@ -16,7 +16,7 @@
 
 ## Festgelegtes Modell (darauf beruhen alle Texte)
 
-- Online-only, Spielstand auf einem Server von Hetzner in Deutschland.
+- Online-only, Spielstand auf einem Server von Supabase in Frankfurt (docs/ONLINE.md).
 - Konto wird beim ersten Start automatisch angelegt (zufällige Spieler-ID), Gerätewechsel per
   Übertragungscode. Keine E-Mail, kein Login über Apple/Google/Facebook.
 - Tamer-Name nur für den Spieler selbst sichtbar. Kein Chat, keine Bestenlisten.

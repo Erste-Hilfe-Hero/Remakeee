@@ -4,16 +4,16 @@ Run after editing a table: python3 tools/i18n/build.py"""
 import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import de_world, de_data, de_ui
+import de_world, de_data, de_ui, de_online
 
 strings = {}
-for mod in (de_world, de_data, de_ui):
+for mod in (de_world, de_data, de_ui, de_online):
     for k, v in mod.T.items():
         if k in strings and strings[k] != v:
             sys.exit("conflicting German text for %r" % k)
         strings[k] = v
 out = {"_comment": "German texts. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py.",
-       "keep": sorted(set(de_ui.KEEP)), "strings": dict(sorted(strings.items()))}
+       "keep": sorted(set(de_ui.KEEP + de_online.KEEP)), "strings": dict(sorted(strings.items()))}
 path = os.path.join(os.path.dirname(os.path.dirname(HERE)), "data/i18n/de.json")
 with open(path, "w", encoding="utf-8") as f:
     json.dump(out, f, ensure_ascii=False, indent=1)

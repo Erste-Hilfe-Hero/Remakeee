@@ -34,12 +34,14 @@ advertising identifiers (IDFA / Android Advertising ID).
 
 ## 5. Recipients
 
-- Hosting: Hetzner Online GmbH, Industriestr. 25, 91710 Gunzenhausen, Germany; servers in Germany;
-  processing on our behalf under an Art. 28 GDPR agreement.
+- Hosting and database: Supabase Inc., [SUPABASE ADDRESS as in the data processing agreement]; servers in
+  Frankfurt am Main, Germany (region eu-central-1); processing on our behalf under an Art. 28 GDPR agreement.
+  Supabase is a US company, so access from the US (for example by support staff) cannot be fully ruled out.
+  The EU Standard Contractual Clauses (Art. 46(2)(c) GDPR) in that agreement cover this.
 - Apple and Google process data as independent controllers when you download the app or buy something.
 - Authorities only where required by law.
 
-We do not transfer data outside the EU/EEA.
+Apart from this we do not transfer data outside the EU/EEA. The game data itself is stored only in Frankfurt.
 
 ## 6. Children
 

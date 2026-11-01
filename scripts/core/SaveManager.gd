@@ -89,8 +89,13 @@ func build_save() -> Dictionary:
 	d["saved_at"] = Time.get_datetime_string_from_system(true)
 	return d
 
+## Saves the active slot to the local cache and sends it to the server (Online).
 func save_game() -> bool:
-	return write_atomic(slot_path, JSON.stringify(build_save(), "\t"))
+	var ok: bool = write_atomic(slot_path, JSON.stringify(build_save(), "\t"))
+	# Only the real slot files go online (tests point slot_path somewhere else).
+	if ok and slot_path == path_for_slot(slot):
+		Online.note_saved(slot)
+	return ok
 
 ## Writes [param text] to [param path] via temp file + backup + rename.
 func write_atomic(path: String, text: String) -> bool:
