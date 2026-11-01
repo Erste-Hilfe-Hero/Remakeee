@@ -75,7 +75,7 @@ func test_crit_rate_is_about_one_in_sixteen() -> void:
 	assert_between(float(crits) / n, 0.05, 0.075)
 
 func test_scorch_cuts_physical_attack() -> void:
-	var a: Spirling = BattleFixtures.make("Kindlop", 20)
+	var a: Spirling = BattleFixtures.make("Mossling", 20)
 	var d: Spirling = BattleFixtures.make("Zippit", 20)
 	var mv: MoveData = BattleFixtures.move(E.STONE, 40)
 	var before: float = DamageCalc.raw(a, d, mv, 1.0, false)

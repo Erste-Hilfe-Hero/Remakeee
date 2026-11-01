@@ -70,5 +70,55 @@
   "battle": false,
   "gear": true,
   "hint": "It's pitch dark ahead. A lantern would help."
+ },
+ {
+  "id": "spark_coil",
+  "name": "Spark Coil",
+  "description": "Held. The holder gains 1 extra Energy every turn.",
+  "battle": false,
+  "held": {
+   "energy_per_turn": 1
+  },
+  "price": 1200
+ },
+ {
+  "id": "bark_wrap",
+  "name": "Bark Wrap",
+  "description": "Held. The holder recovers a little HP at the end of each turn.",
+  "battle": false,
+  "held": {
+   "regen_div": 16
+  },
+  "price": 1200
+ },
+ {
+  "id": "iron_burr",
+  "name": "Iron Burr",
+  "description": "Held. Physical hits on the holder deal 15% less damage.",
+  "battle": false,
+  "held": {
+   "phys_taken": 0.85
+  },
+  "price": 1000
+ },
+ {
+  "id": "swift_feather",
+  "name": "Swift Feather",
+  "description": "Held. Raises the holder's SPD by 15%.",
+  "battle": false,
+  "held": {
+   "spd_mult": 1.15
+  },
+  "price": 1000
+ },
+ {
+  "id": "keen_lens",
+  "name": "Keen Lens",
+  "description": "Held. The holder lands keen hits twice as often.",
+  "battle": false,
+  "held": {
+   "crit_mult": 2.0
+  },
+  "price": 900
  }
 ]

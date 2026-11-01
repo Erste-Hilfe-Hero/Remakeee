@@ -38,11 +38,33 @@ func run_team() -> void:
 		if idx < 0:
 			return
 		var s: Spirling = GameState.party[idx]
-		var opt: int = await pick_strings(s.display_name(), ["Summary", "Lead the team", "Use item"] as Array[String])
+		var opt: int = await pick_strings(s.display_name(), ["Summary", "Lead the team", "Use item", "Held item"] as Array[String])
 		match opt:
 			0: await info(MenuHost.summary(s))
 			1: GameState.swap_party(0, idx)
 			2: await _use_item_on(s)
+			3: await _held_item(s)
+
+## Give, swap or take off a held item.
+func _held_item(s: Spirling) -> void:
+	var ids: Array[String] = []
+	var entries: Array[String] = []
+	if not s.held.is_empty():
+		ids.append("")
+		entries.append("Take off %s" % Database.item(s.held).get("name", s.held))
+	for id: Variant in GameState.inventory:
+		if GameState.item_count(str(id)) > 0 and BattleRules.is_holdable(str(id)):
+			ids.append(str(id))
+			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
+	if ids.is_empty():
+		await info("You have nothing a Spirling can hold.\nHeld items are sold in Thornridge.")
+		return
+	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
+	var idx: int = await pick_strings(now, entries)
+	if idx < 0:
+		return
+	GameState.set_held(s, ids[idx])
+	Sound.sfx("confirm")
 
 func _use_item_on(s: Spirling) -> void:
 	var ids: Array[String] = _usable_items()

@@ -14,6 +14,7 @@
   },
   "evolves_to": "Smoldrake",
   "evolve_level": 16,
+  "trait": "kindling",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -21,6 +22,9 @@
    ],
    "5": [
     "Heat Haze"
+   ],
+   "7": [
+    "Kindle Up"
    ],
    "9": [
     "Shade Claw"
@@ -49,6 +53,7 @@
   },
   "evolves_to": "Calderox",
   "evolve_level": 34,
+  "trait": "kindling",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -60,6 +65,9 @@
    ],
    "20": [
     "Flare Lash"
+   ],
+   "23": [
+    "Kindle Up"
    ],
    "26": [
     "Shade Claw"
@@ -86,6 +94,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "kindling",
   "learnset": {
    "1": [
     "Ember Snap",
@@ -96,7 +105,8 @@
     "Quake Stomp"
    ],
    "38": [
-    "Flare Lash"
+    "Flare Lash",
+    "Shell Up"
    ],
    "42": [
     "Blaze Coil"
@@ -122,6 +132,7 @@
   },
   "evolves_to": "Riptail",
   "evolve_level": 16,
+  "trait": "slick",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -131,7 +142,8 @@
     "Drench"
    ],
    "9": [
-    "Glint"
+    "Glint",
+    "Chill Mist"
    ],
    "13": [
     "Brine Jet"
@@ -157,6 +169,7 @@
   },
   "evolves_to": "Leviarch",
   "evolve_level": 34,
+  "trait": "slick",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -168,6 +181,9 @@
    ],
    "20": [
     "Undertow"
+   ],
+   "22": [
+    "Chill Mist"
    ],
    "26": [
     "Prism Ray"
@@ -194,6 +210,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "slick",
   "learnset": {
    "1": [
     "Bubble Pop",
@@ -230,6 +247,7 @@
   },
   "evolves_to": "Thornback",
   "evolve_level": 16,
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -265,6 +283,7 @@
   },
   "evolves_to": "Verdantusk",
   "evolve_level": 34,
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -273,6 +292,9 @@
    ],
    "13": [
     "Sap Draw"
+   ],
+   "18": [
+    "Shell Up"
    ],
    "20": [
     "Thorn Volley"
@@ -302,6 +324,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Moss Whip",
@@ -338,6 +361,7 @@
   },
   "evolves_to": "Glimmerax",
   "evolve_level": 24,
+  "trait": "surge",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -351,6 +375,9 @@
    ],
    "12": [
     "Arc Bolt"
+   ],
+   "15": [
+    "Overcharge"
    ],
    "18": [
     "Surge Fang"
@@ -374,6 +401,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "surge",
   "learnset": {
    "1": [
     "Static Nip",
@@ -385,6 +413,9 @@
    ],
    "28": [
     "Surge Fang"
+   ],
+   "30": [
+    "Overcharge"
    ],
    "34": [
     "Static Field"
@@ -411,6 +442,7 @@
   },
   "evolves_to": "Obsidroth",
   "evolve_level": 26,
+  "trait": "thick_hide",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -421,6 +453,9 @@
    ],
    "10": [
     "Pebble Toss"
+   ],
+   "14": [
+    "Cower Shade"
    ],
    "15": [
     "Night Siphon"
@@ -447,6 +482,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "thick_hide",
   "learnset": {
    "1": [
     "Shade Claw",
@@ -457,7 +493,8 @@
     "Gloom Pulse"
    ],
    "30": [
-    "Quake Stomp"
+    "Quake Stomp",
+    "All-In Crash"
    ],
    "36": [
     "Eclipse Fang"
@@ -483,6 +520,7 @@
   },
   "evolves_to": "Tempestrel",
   "evolve_level": 28,
+  "trait": "last_stand",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -490,6 +528,9 @@
    ],
    "5": [
     "Updraft"
+   ],
+   "8": [
+    "Tailwind Step"
    ],
    "10": [
     "Static Nip"
@@ -518,6 +559,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "last_stand",
   "learnset": {
    "1": [
     "Gust Slice",
@@ -528,7 +570,8 @@
     "Cyclone Edge"
    ],
    "32": [
-    "Arc Bolt"
+    "Arc Bolt",
+    "Tailwind Step"
    ],
    "38": [
     "Squall"
@@ -548,12 +591,13 @@
   "base": {
    "hp": 52,
    "atk": 50,
-   "foc": 72,
-   "spd": 70,
+   "foc": 64,
+   "spd": 66,
    "def": 52
   },
   "evolves_to": "Lumenewt",
   "evolve_level": 22,
+  "trait": "light_sleeper",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -564,6 +608,9 @@
    ],
    "9": [
     "Glint"
+   ],
+   "11": [
+    "Clear Mind"
    ],
    "13": [
     "Candle Ward"
@@ -590,6 +637,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "light_sleeper",
   "learnset": {
    "1": [
     "Wick Flicker",
@@ -601,6 +649,9 @@
    ],
    "26": [
     "Prism Ray"
+   ],
+   "28": [
+    "Clear Mind"
    ],
    "32": [
     "Candle Ward"
@@ -629,6 +680,7 @@
   },
   "evolves_to": "Duskdigger",
   "evolve_level": 25,
+  "trait": "steady",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -639,6 +691,9 @@
    ],
    "9": [
     "Hush"
+   ],
+   "11": [
+    "Cower Shade"
    ],
    "13": [
     "Shade Claw"
@@ -668,6 +723,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "steady",
   "learnset": {
    "1": [
     "Mirk Nip",
@@ -676,6 +732,9 @@
    ],
    "25": [
     "Quake Stomp"
+   ],
+   "28": [
+    "All-In Crash"
    ],
    "30": [
     "Murk Veil"
@@ -697,14 +756,15 @@
    "BLOOM"
   ],
   "base": {
-   "hp": 56,
-   "atk": 64,
+   "hp": 62,
+   "atk": 66,
    "foc": 58,
-   "spd": 66,
+   "spd": 70,
    "def": 56
   },
   "evolves_to": "Kelphound",
   "evolve_level": 27,
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Tackle Rush",
@@ -718,6 +778,9 @@
    ],
    "12": [
     "Kelp Lash"
+   ],
+   "14": [
+    "Chill Mist"
    ],
    "17": [
     "Drench"
@@ -744,6 +807,7 @@
   },
   "evolves_to": null,
   "evolve_level": 0,
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Brine Fang",

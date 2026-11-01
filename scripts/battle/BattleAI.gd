@@ -7,6 +7,7 @@ extends RefCounted
 
 const KO_BONUS: float = 1.0
 const STATUS_BONUS: float = 0.3
+const STAGE_BONUS: float = 0.25
 ## Weight of the opponent's best reply in the tier-2 lookahead.
 const REPLY_WEIGHT: float = 0.5
 ## Tier 2 swaps when the opponent's best hit is at least this effective and a resisting ally exists.
@@ -56,6 +57,14 @@ func score_move(model: BattleModel, side: int, move_index: int) -> float:
 	var score: float = minf(expected, float(target.hp)) / float(maxi(target.max_hp(), 1)) * acc
 	if mv.is_damaging() and expected >= float(target.hp):
 		score += KO_BONUS * acc
+	for fx: Dictionary in mv.effects:
+		if StringName(fx.get("id", "")) == &"stat_change":
+			var who: Spirling = me if bool(fx.get("self", true)) else target
+			var stage: int = who.stage(str(fx.get("stat", "")))
+			var amt: int = int(fx.get("amount", 1))
+			# Worth it only while the stage still has room and early-ish in the fight.
+			if (amt > 0 and stage < 2) or (amt < 0 and stage > -2):
+				score += STAGE_BONUS * float(fx.get("chance", 1.0)) * acc * me.hp_fraction()
 	if target.status.is_empty():
 		for fx: Dictionary in mv.effects:
 			if StringName(fx.get("id", "")) == &"inflict_status":

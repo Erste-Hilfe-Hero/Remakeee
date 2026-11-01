@@ -15,6 +15,8 @@ const DEFAULT_BOND_RATE: float = 0.45
 @export var evolves_to: SpirlingData
 @export var evolve_level: int = 0
 @export var bond_rate: float = DEFAULT_BOND_RATE
+## Passive trait id (see BattleRules.TRAITS), or "".
+@export var trait_id: String = ""
 ## XP granted when defeated, before the level factor.
 @export var xp_yield: int = 50
 ## Learnset as two parallel arrays (level, move), sorted by level.

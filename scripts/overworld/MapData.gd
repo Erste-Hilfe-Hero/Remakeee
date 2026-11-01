@@ -20,6 +20,8 @@ var gear_spots: Array[Dictionary] = []
 var encounter_table: String = ""
 ## Battle backdrop for fights that start here (BattleBackdrop.KINDS).
 var backdrop: String = "field"
+## Rift field for battles here (BattleRules.FIELDS), or "".
+var field: String = ""
 ## Tall grass may only roll encounters if a table exists.
 var heal_point: Vector2i = Vector2i(-1, -1)
 
@@ -50,6 +52,7 @@ static func load_map(map_id: String) -> MapData:
 		m.gear_spots.append(g)
 	m.encounter_table = str(raw.get("encounters", ""))
 	m.backdrop = str(raw.get("backdrop", "field"))
+	m.field = str(raw.get("field", ""))
 	var hp: Array = raw.get("heal_point", [-1, -1])
 	m.heal_point = Vector2i(int(hp[0]), int(hp[1]))
 	return m

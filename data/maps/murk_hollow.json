@@ -2,6 +2,7 @@
  "name": "Murk Hollow",
  "region": "veydal",
  "backdrop": "ridge",
+ "field": "deep_murk",
  "encounters": "murk_hollow",
  "rows": [
   "@@@@@@@@@@@@",

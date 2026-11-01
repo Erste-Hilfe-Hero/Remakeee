@@ -160,8 +160,13 @@ static func summary(s: Spirling) -> String:
 		"%s   Lv %d" % ["/".join(els), s.level],
 		"HP %d/%d   XP to next %d" % [s.hp, s.max_hp(), s.xp_to_next()],
 		"ATK %d  DEF %d  FOC %d  SPD %d" % [s.atk(), s.def(), s.foc(), s.spd()],
-		"",
 	]
+	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	if not tr.is_empty():
+		lines.append("Trait: %s. %s" % [tr.label, tr.text])
+	if not s.held.is_empty():
+		lines.append("Holds: %s" % Database.item(s.held).get("name", s.held))
+	lines.append("")
 	for mv: MoveData in s.moves:
 		var power: String = "-" if mv.power <= 0 else str(mv.power)
 		lines.append("%s  %s  P%s  E%d" % [mv.move_name, Elements.element_name(mv.element).substr(0, 3), power, mv.energy_cost])

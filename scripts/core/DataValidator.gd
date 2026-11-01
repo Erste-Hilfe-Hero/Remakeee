@@ -36,6 +36,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("move '%s': missing or negative energy cost" % name)
 		if m.has("effect") and not EffectRegistry.has_effect(StringName(str(m.effect))):
 			errors.append("move '%s': unknown effect '%s'" % [name, m.effect])
+		if m.has("stat") and not str(m.stat) in BattleRules.STAGE_STATS:
+			errors.append("move '%s': unknown stat '%s'" % [name, m.stat])
 
 	var species_names: Dictionary[String, bool] = {}
 	var dex_ids: Dictionary[int, bool] = {}
@@ -53,6 +55,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 		if not s is Dictionary:
 			continue
 		var sname: String = str(s.get("name", ""))
+		if s.has("trait") and not BattleRules.TRAITS.has(str(s.trait)):
+			errors.append("spirling '%s': unknown trait '%s'" % [sname, s.trait])
 		var elements: Variant = s.get("elements", [])
 		if not elements is Array or (elements as Array).is_empty() or (elements as Array).size() > 2:
 			errors.append("spirling '%s': needs 1 or 2 elements" % sname)

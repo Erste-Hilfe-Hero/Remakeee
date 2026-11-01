@@ -14,6 +14,8 @@ const MARGIN: int = 4
 ## Pause before an auto-battle move, so the player can still tap Auto off.
 const AUTO_DELAY: float = 0.35
 const DEMO_SEED: int = 2024
+## Lines kept for the battle log (shown newest last).
+const LOG_KEEP: int = 14
 
 var model: BattleModel
 ## Backdrop for where the battle started (field, lake, ridge, ember). Set before adding.
@@ -36,6 +38,11 @@ var _bond_game: BondMinigame
 var _ff_button: Button
 var _auto_button: Button
 var _auto_ai := BattleAI.new(1)
+var _log_button: Button
+var _log_panel: PanelContainer
+var _log_label: Label
+## Plain-text lines of what happened so far (item 11: re-read the last turns).
+var log_lines: Array[String] = []
 ## Element of the player's last move, so the hit that follows teaches the matchup.
 var _last_player_element: int = -1
 
@@ -104,6 +111,11 @@ func _build() -> void:
 		_apply_speed())
 	_auto_button.visible = false
 	_field.add_child(_auto_button)
+	_log_button = Button.new()
+	_log_button.text = "Log"
+	_log_button.focus_mode = Control.FOCUS_NONE
+	_log_button.pressed.connect(_toggle_log)
+	_field.add_child(_log_button)
 
 	_bond_game = BondMinigame.new()
 	_bond_game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -115,6 +127,23 @@ func _build() -> void:
 	_picker.offset_top = MARGIN * 6
 	_picker.offset_bottom = -MARGIN * 6
 	add_child(_picker)
+	_log_panel = PanelContainer.new()
+	_log_panel.add_theme_stylebox_override("panel", UITheme.panel_style())
+	_log_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_log_panel.offset_left = MARGIN
+	_log_panel.offset_right = -MARGIN
+	_log_panel.offset_top = MARGIN
+	_log_panel.offset_bottom = -MARGIN
+	_log_panel.visible = false
+	_log_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	_log_panel.gui_input.connect(func(ev: InputEvent) -> void:
+		if (ev is InputEventMouseButton and ev.pressed) or (ev is InputEventScreenTouch and ev.pressed):
+			_log_panel.visible = false)
+	add_child(_log_panel)
+	_log_label = Label.new()
+	_log_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_log_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	_log_panel.add_child(_log_label)
 	_apply_speed()
 
 func _layout_field() -> void:
@@ -127,6 +156,8 @@ func _layout_field() -> void:
 	_ff_button.size = Vector2(26, 12)
 	_auto_button.position = Vector2(w - 26 - MARGIN, MARGIN + 14)
 	_auto_button.size = Vector2(26, 12)
+	_log_button.position = Vector2(w - 26 - MARGIN, MARGIN + 28)
+	_log_button.size = Vector2(26, 12)
 	_foe_sprite.position = Vector2(w - sprite - MARGIN * 2, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
 	_player_strip.size = Vector2(w - sprite - MARGIN * 5, STRIP_HEIGHT + 8)
@@ -262,8 +293,23 @@ func _sprite(side: int) -> SpirlingSprite:
 func _strip(side: int) -> InfoStrip:
 	return _player_strip if side == BattleModel.Side.PLAYER else _foe_strip
 
+## Remembers an event for the log. Damage gets its amount (the text box only shows the bar).
+func record(e: BattleEvent) -> void:
+	var line: String = e.describe()
+	if line.is_empty():
+		return
+	log_lines.append(line)
+	while log_lines.size() > LOG_KEEP:
+		log_lines.pop_front()
+
+func _toggle_log() -> void:
+	Sound.sfx("confirm")
+	_log_label.text = "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
+	_log_panel.visible = not _log_panel.visible
+
 func _play_event(e: BattleEvent) -> void:
 	var side: int = int(e.data.get("side", 0))
+	record(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
@@ -309,6 +355,12 @@ func _play_event(e: BattleEvent) -> void:
 		BattleEvent.Type.STATUS_APPLIED:
 			Sound.sfx("status")
 			_strip(side).set_status(str(e.data.status))
+			await _text.show_text(e.describe())
+		BattleEvent.Type.STAT_CHANGED:
+			var who: Spirling = model.active_spirling(side)
+			_strip(side).set_stages(who.stages)
+			if int(e.data.get("delta", 0)) != 0:
+				Sound.sfx("level_up" if int(e.data.delta) > 0 else "status")
 			await _text.show_text(e.describe())
 		BattleEvent.Type.STATUS_CURED:
 			_strip(side).set_status("")

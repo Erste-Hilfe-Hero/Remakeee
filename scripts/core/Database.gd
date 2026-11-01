@@ -63,6 +63,9 @@ static func _load_moves() -> void:
 		md.status_chance = float(m.get("status_chance", 0.0))
 		if not md.status_effect.is_empty():
 			md.effects.append({"id": &"inflict_status", "status": md.status_effect, "chance": md.status_chance})
+		if m.has("stat"):
+			md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stat_chance", 1.0))})
+		md.overcharge = bool(m.get("overcharge", false))
 		if m.has("effect"):
 			md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
 		moves[md.move_name] = md
@@ -86,6 +89,7 @@ static func _load_spirlings() -> void:
 		sd.base_spd = int(base.spd)
 		sd.evolve_level = int(s.get("evolve_level", 0))
 		sd.bond_rate = float(s.get("bond_rate", SpirlingData.DEFAULT_BOND_RATE))
+		sd.trait_id = str(s.get("trait", ""))
 		var total: int = sd.base_hp + sd.base_atk + sd.base_def + sd.base_foc + sd.base_spd
 		sd.xp_yield = int(s.get("xp_yield", total / 5))
 		var learnset: Dictionary = s.get("learnset", {})
