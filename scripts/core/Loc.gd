@@ -31,6 +31,15 @@ static func set_language(code: String) -> void:
 	_current = code
 	TranslationServer.set_locale(code)
 
+## Removes the installed translations (on quit: the script-backed translations must go
+## before the scripts are unloaded, or the engine crashes on exit).
+static func uninstall() -> void:
+	for t: PatternTranslation in _installed.values():
+		TranslationServer.remove_translation(t)
+	_installed.clear()
+	_current = "en"
+	TranslationServer.set_locale("en")
+
 ## Reads data/i18n/[param code].json into a PatternTranslation (null if missing).
 static func load_translation(code: String) -> PatternTranslation:
 	var f := FileAccess.open(PATH % code, FileAccess.READ)

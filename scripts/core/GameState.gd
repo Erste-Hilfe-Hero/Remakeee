@@ -162,6 +162,9 @@ func _ready() -> void:
 	rng.randomize()
 	_register_actions()
 
+func _exit_tree() -> void:
+	Loc.uninstall()
+
 func _process(delta: float) -> void:
 	if in_game:
 		play_time += delta
