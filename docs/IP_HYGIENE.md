@@ -64,4 +64,9 @@ the right to modify) outside the repo.
 2. Skim new strings in `data/` and the store text for borrowed names.
 3. Check `docs/ASSET_LOG.md` covers every new asset.
 4. Ali's own items stay open until done: lawyer review, trademark search for "Chimora", Impressum,
-   DSA trader details, age ratings (IARC and Apple).
+   DSA trader details, age ratings (IARC and Apple). See `docs/legal/CHECKLISTE_ALI.md`.
+
+## 7. Legal drafts
+
+`docs/legal/` holds the IP and patent audit, draft privacy policy (DE/EN), terms, Impressum template and
+store-compliance answers. All of it is a draft for lawyer review, not legal advice.
