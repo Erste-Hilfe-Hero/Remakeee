@@ -13,7 +13,7 @@ const BANNER_TIME: float = 1.2
 const FADE_TIME: float = 0.18
 ## Pause between a Tamer spotting the player and walking over.
 const SPOT_TIME: float = 0.5
-## Seconds for a grapple or glide hop.
+## Seconds for a grapple swing or cliff climb.
 const GEAR_MOVE_TIME: float = 0.4
 
 var map: MapData
@@ -177,7 +177,7 @@ func _locked_say(lines: Array[String]) -> void:
 	player.frozen = false
 	busy = false
 
-## Grapple across water or glide down a ledge. Returns true if a gear spot handled the interaction.
+## Grapple across water or climb a low cliff. Returns true if a gear spot handled the interaction.
 func _try_gear(target: Vector2i) -> bool:
 	var spot: Dictionary = map.gear_spot(player.cell, target)
 	if spot.is_empty():
@@ -190,7 +190,7 @@ func _try_gear(target: Vector2i) -> bool:
 	busy = true
 	player.frozen = true
 	var dest := Vector2i(int(to[0]), int(to[1]))
-	Sound.sfx("warp" if gear == "glide_cloak" else "confirm")
+	Sound.sfx("confirm")
 	var from_pos: Vector2 = player.position
 	var to_pos: Vector2 = GridWalker.cell_to_pos(dest)
 	var tw: Tween = create_tween()

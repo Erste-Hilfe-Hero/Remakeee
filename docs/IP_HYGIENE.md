@@ -25,7 +25,7 @@ These follow AGENTS.md rule 2 and are enforced in code review:
 | --- | --- |
 | Throwing or aiming an item to capture | Bonding is a menu action that starts a rhythm minigame inside the battle |
 | A live capture-probability gauge | The result is shown only after the minigame ends |
-| Riding a creature to fly, surf or glide | Traversal uses Tamer Gear items (glider, grapple, lantern) |
+| Riding a creature to fly, surf or glide | Traversal uses Tamer Gear items on foot (grapple, climbing pick, lantern); no gliding or flying at all |
 | Throwing out a creature to summon it, flick-to-throw on touch | Spirlings step out beside the Tamer |
 | Seamless overworld battles | Battles start from overworld encounters and cut to a separate battle screen |
 

@@ -7,13 +7,13 @@
  "kestra": {
   "lines": [
    "Kestra: You fight like you draw maps: careful, then all at once.",
-   "Kestra: Take this Glide Cloak. Step off a ledge and it catches the wind. No Spirling has to carry you."
+   "Kestra: Take this Climbing Pick. Hook it into a low cliff and climb, up or down. Your own hands, your own feet."
   ],
-  "action": "give_item glide_cloak 1",
-  "flag": "got_glider",
+  "action": "give_item climbing_pick 1",
+  "flag": "got_pick",
   "once": true,
   "after_flag": {
-   "flag": "got_glider",
+   "flag": "got_pick",
    "lines": [
     "Kestra: Go on ahead. I want to sketch the tarn before it freezes."
    ]

@@ -44,3 +44,13 @@ func test_has_gear() -> void:
 	assert_false(GameState.has_gear("grapple_line"))
 	GameState.add_item("grapple_line")
 	assert_true(GameState.has_gear("grapple_line"))
+
+## LEGAL.md: traversal stays on foot. No gear may glide, fly or use wings.
+func test_no_gliding_or_flying_gear() -> void:
+	var banned := RegEx.create_from_string("(?i)glid|fly|flight|wing|soar|parachute")
+	var text: String = FileAccess.get_file_as_string("res://data/items.json")
+	var items: Variant = JSON.parse_string(text)
+	for it: Dictionary in items:
+		if bool(it.get("gear", false)):
+			var blob: String = "%s %s %s %s" % [it.id, it.name, it.get("description", ""), it.get("hint", "")]
+			assert_null(banned.search(blob), "gear '%s' must not glide or fly" % it.id)
