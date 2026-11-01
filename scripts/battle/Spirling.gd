@@ -24,6 +24,17 @@ const SPARK_WEIGHT: float = 0.5
 ## Total XP needed to reach level L = floor(XP_MULT * L ^ XP_EXP).
 const XP_MULT: float = 1.2
 const XP_EXP: float = 2.6
+## Temperament (item 37): a small, penalty-free lean toward one stat, read from the uid so it
+## needs no extra RNG roll and old saves keep a stable temperament.
+const TEMPERAMENTS: Array[Dictionary] = [
+	{"id": "fierce", "label": "Fierce", "stat": "atk", "text": "Hits a little harder."},
+	{"id": "stalwart", "label": "Stalwart", "stat": "def", "text": "Shrugs off blows a little better."},
+	{"id": "keen", "label": "Keen", "stat": "foc", "text": "Focuses a little sharper."},
+	{"id": "brisk", "label": "Brisk", "stat": "spd", "text": "Moves a little quicker."},
+	{"id": "hearty", "label": "Hearty", "stat": "hp", "text": "Has a little more stamina."},
+	{"id": "even", "label": "Even", "stat": "", "text": "Calm and balanced."},
+]
+const TEMPER_BONUS: float = 1.05
 
 var data: SpirlingData
 var nickname: String = ""
@@ -72,10 +83,22 @@ func _curve(base: int, key: String, offset: float, div: float) -> int:
 	return int(floor(s * (float(level) + offset) / div))
 
 func max_hp() -> int:
-	return maxi(1, _curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV))
+	return maxi(1, int(_curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV) * _temper_mult("hp")))
 
 func _stat(key: String) -> int:
-	return _curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT
+	return int((_curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT) * _temper_mult(key))
+
+## Index into TEMPERAMENTS, derived from the uid (a fixed index for uid-less test Spirlings).
+static func temperament_index(p_uid: String) -> int:
+	if p_uid.is_empty():
+		return TEMPERAMENTS.size() - 1
+	return absi(p_uid.hash()) % TEMPERAMENTS.size()
+
+func temperament() -> Dictionary:
+	return TEMPERAMENTS[temperament_index(uid)]
+
+func _temper_mult(key: String) -> float:
+	return TEMPER_BONUS if str(temperament().stat) == key else 1.0
 
 ## Raw stats (no status modifiers). Battle code uses the effective_* versions.
 func atk() -> int: return _stat("atk")

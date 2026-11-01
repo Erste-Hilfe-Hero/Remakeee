@@ -91,7 +91,7 @@ func run_settings() -> void:
 			"Music: %d%%" % int(round(GameState.music_volume * 100.0)),
 			"Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0)),
 			"Tips: %s" % ("On" if GameState.tips_enabled else "Off"),
-			"Touch controls...",
+			"Controls...",
 			"Display and access...",
 			"Sound test...",
 		]
@@ -206,7 +206,9 @@ static func _step_volume(v: float) -> float:
 	var n: float = v + 0.2
 	return 0.0 if n > 1.01 else n
 
-## Touch controls: pad size, opacity, left-handed layout, tap-to-move.
+const PAD_HELP: String = "Gamepad\nD-pad or left stick: move\nA: talk, confirm\nB: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles"
+
+## Controls: pad size, opacity, left-handed layout, tap-to-move.
 func run_controls() -> void:
 	while true:
 		var entries: Array[String] = [
@@ -214,8 +216,11 @@ func run_controls() -> void:
 			"Pad opacity: %d%%" % int(round(GameState.PAD_ALPHAS[GameState.pad_opacity] * 100.0)),
 			"Left-handed: %s" % ("On" if GameState.left_handed else "Off"),
 			"Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off"),
+			"One-hand layout: %s" % ("On" if GameState.one_hand else "Off"),
+			"Gamepad rumble: %s" % ("On" if GameState.rumble else "Off"),
+			"Gamepad buttons...",
 		]
-		var idx: int = await pick_strings("Touch controls", entries)
+		var idx: int = await pick_strings("Controls", entries)
 		match idx:
 			-1:
 				return
@@ -227,6 +232,13 @@ func run_controls() -> void:
 				GameState.left_handed = not GameState.left_handed
 			3:
 				GameState.tap_to_move = not GameState.tap_to_move
+			4:
+				GameState.one_hand = not GameState.one_hand
+			5:
+				GameState.rumble = not GameState.rumble
+				GameState.rumble_pads(0.6, 0.2)
+			6:
+				await info(PAD_HELP)
 		VirtualPad.apply_settings()
 
 ## Multi-line summary of a Spirling.
@@ -240,6 +252,8 @@ static func summary(s: Spirling) -> String:
 		"HP %d/%d   XP to next %d" % [s.hp, s.max_hp(), s.xp_to_next()],
 		"ATK %d  DEF %d  FOC %d  SPD %d" % [s.atk(), s.def(), s.foc(), s.spd()],
 	]
+	var tm: Dictionary = s.temperament()
+	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
 	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
 	if not tr.is_empty():
 		lines.append("Trait: %s. %s" % [tr.label, tr.text])

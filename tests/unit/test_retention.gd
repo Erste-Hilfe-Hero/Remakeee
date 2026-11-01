@@ -104,6 +104,8 @@ func test_every_achievement_has_a_check() -> void:
 	for f: String in ["rift_cinder_sealed", "rift_tide_sealed", "hollow_lamps", "gauntlet_clear"]:
 		GameState.set_flag(f)
 	GameState.records["weekly_wins"] = 1
+	GameState.records["rematch_wins"] = 5
+	GameState.iron_oath = true
 	GameState.money = 10000
 	GameState.party.clear()
 	for sd: SpirlingData in Database.spirlings.values():

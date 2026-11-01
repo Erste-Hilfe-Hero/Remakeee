@@ -3,6 +3,8 @@ extends Node
 ## Owns the active era: internal resolution, palette filter, sprite set and the Retro filter choice.
 
 signal era_changed(era: int)
+## Emitted when a new region unlocks a newer era (item 48); the overworld shows a line for it.
+signal era_unlocked(era: int)
 
 enum Era { MONO = 1, COLOR = 2, ADVANCED = 3, DUAL = 4 }
 const REGION_ERA: Dictionary[String, int] = {"veydal": Era.MONO, "corvane": Era.COLOR, "ashmere": Era.ADVANCED, "solenne": Era.DUAL}
@@ -37,11 +39,48 @@ func _ready() -> void:
 func active_era() -> int:
 	return retro_filter if retro_filter > 0 else unlocked_era
 
+## Lines shown when an era opens up for the first time.
+const ERA_LINES: Dictionary[int, String] = {
+	Era.COLOR: "The grey of Veydal falls away. The world blooms into colour!",
+	Era.ADVANCED: "The air grows sharper. Every leaf and stone shows more detail!",
+	Era.DUAL: "The sky splits wide open. Two horizons stretch before you!",
+}
+const TRANSITION_TIME: float = 0.9
+var _wipe: ColorRect
+
 func unlock_region(region: String) -> void:
 	var e: int = REGION_ERA.get(region, Era.MONO)
 	if e > unlocked_era:
 		unlocked_era = e
-		_apply()
+		if retro_filter == 0 and is_inside_tree():
+			play_transition()
+		else:
+			_apply()
+		era_unlocked.emit(e)
+
+## Era transition (item 48): a light sweep down the screen, the era switches while the
+## screen is covered, then the light fades. With reduced motion it is a plain fade.
+func play_transition() -> void:
+	if _wipe == null:
+		_wipe = ColorRect.new()
+		_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_wipe.color = Color(1, 1, 0.92)
+		_filter_layer.add_child(_wipe)
+	var size: Vector2 = get_viewport().get_visible_rect().size
+	_wipe.position = Vector2.ZERO
+	_wipe.size = Vector2(size.x, 0.0 if not GameState.reduce_motion else size.y)
+	_wipe.modulate.a = 1.0 if not GameState.reduce_motion else 0.0
+	_wipe.visible = true
+	Sound.sfx("warp")
+	var tw: Tween = create_tween()
+	var half: float = TRANSITION_TIME / 2.0
+	if GameState.reduce_motion:
+		tw.tween_property(_wipe, "modulate:a", 1.0, half)
+	else:
+		tw.tween_property(_wipe, "size:y", size.y, half)
+	tw.tween_callback(_apply)
+	tw.tween_property(_wipe, "modulate:a", 0.0, half)
+	tw.tween_callback(func() -> void: _wipe.visible = false)
 
 func set_retro_filter(e: int) -> void:
 	retro_filter = clampi(e, 0, unlocked_era)
