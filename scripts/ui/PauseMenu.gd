@@ -1,6 +1,6 @@
 class_name PauseMenu
 extends MenuHost
-## In-game menu: Team, Spirlog, Bag, Save, Settings, and Storage once the box is unlocked.
+## In-game menu: Goals, Team, Spirlog, Bag, Save, Settings, and Storage once the box is unlocked.
 
 const STORAGE_FLAG: String = "pc_unlocked"
 
@@ -9,13 +9,14 @@ var encounter_table: String = ""
 
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Team", "Spirlog", "Bag", "Save", "Settings"]
+		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Bag", "Save", "Settings"]
 		if GameState.has_flag(STORAGE_FLAG):
-			labels.insert(3, "Storage")
+			labels.insert(4, "Storage")
 		var idx: int = await pick_strings("%s   %d coins" % [GameState.tamer_name, GameState.money], labels)
 		if idx < 0:
 			return
 		match labels[idx]:
+			"Goals": await info(QuestLog.summary(GameState.flags))
 			"Team": await run_team()
 			"Spirlog": await run_spirlog()
 			"Bag": await run_bag()

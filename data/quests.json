@@ -1,0 +1,14 @@
+{
+  "_comment": "Main story goals in order. A goal is done when all its 'done' flags are set (or any later goal is done). 'where' names the place to go. Side goals show in the Goals list while their 'show' flag is set and their 'done' flag is not.",
+  "main": [
+    {"id": "wake", "text": "Talk to Aldo downstairs in the lighthouse.", "where": "Brindlewick Lighthouse", "done": ["aldo_gift"]},
+    {"id": "maps", "text": "Visit Kestra at the Map House in Brindlewick.", "where": "Brindlewick", "done": ["met_kestra"]},
+    {"id": "rifts", "text": "Mend both Rifts: the Cinder Rift past Thornridge and the Tidewater Rift under the Saltmarsh.", "where": "Thornridge / Saltmarsh", "done": ["rift_cinder_sealed", "rift_tide_sealed"]},
+    {"id": "dock", "text": "Kestra is waiting at the Brindlewick dock.", "where": "Brindlewick", "done": ["kestra_dock_talk"]},
+    {"id": "act1_end", "text": "The ferry to Corvane is closed for now. Train your team and fill your Spirlog.", "where": "", "done": []}
+  ],
+  "side": [
+    {"id": "spar", "text": "Kestra wants to test you on the Crowcrest path.", "show": "met_kestra", "done": "kestra_spar"},
+    {"id": "fern", "text": "Someone in Fernstair has something for you.", "show": "met_kestra", "done": "fern_gift"}
+  ]
+}

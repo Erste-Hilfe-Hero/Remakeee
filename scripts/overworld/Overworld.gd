@@ -214,6 +214,7 @@ func _on_interact(cell: Vector2i) -> void:
 
 ## Shows a dialogue entry, then runs its action and flag. Freezes the player meanwhile.
 func run_dialogue(ref: String, speaker: NPC = null) -> void:
+	var goal_before: int = QuestLog.current_index(GameState.flags)
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
@@ -227,9 +228,16 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 		await _run_action(str(entry.action), speaker)
 	if entry.has("flag"):
 		GameState.set_flag(str(entry.flag))
+	await announce_goal_if_changed(goal_before)
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
+
+## Shows "New goal: ..." when the story goal moved on since [param before].
+func announce_goal_if_changed(before: int) -> void:
+	if QuestLog.current_index(GameState.flags) == before:
+		return
+	await say(["New goal: " + QuestLog.goal_text(QuestLog.current(GameState.flags), GameState.flags)] as Array[String])
 
 func say(lines: Array[String]) -> void:
 	_text.visible = true
@@ -382,6 +390,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 
 ## Win aftermath: beaten flag, defeat lines, Rift seal for Wardens, win flags, autosave.
 func after_tamer_win(n: NPC) -> void:
+	var goal_before: int = QuestLog.current_index(GameState.flags)
 	var def: Dictionary = n.definition
 	busy = true
 	player.frozen = true
@@ -401,6 +410,7 @@ func after_tamer_win(n: NPC) -> void:
 	if bool(def.get("leaves", false)):
 		_npcs.erase(n)
 		n.queue_free()
+	await announce_goal_if_changed(goal_before)
 	SaveManager.save_game()
 	VirtualPad.set_wanted(true)
 	player.frozen = false

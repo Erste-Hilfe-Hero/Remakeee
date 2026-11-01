@@ -11,7 +11,8 @@
    "lines": [
     "Kestra: Still mending Rifts? Fine. Just look closely at what comes through before you do."
    ]
-  }
+  },
+  "flag": "met_kestra"
  },
  "maps": [
   "Old maps of Veydal, crossed out and redrawn in three colours of ink."
