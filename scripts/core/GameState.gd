@@ -62,6 +62,8 @@ var pad_size: int = 1
 var pad_opacity: int = 1
 var left_handed: bool = false
 var tap_to_move: bool = true
+## First-time tips (see Tips.gd).
+var tips_enabled: bool = true
 const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large"]
 const PAD_ALPHAS: Array[float] = [0.3, 0.55, 0.85]
 
@@ -249,7 +251,8 @@ func from_dict(d: Dictionary) -> void:
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
-		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move}
+		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"tips": tips_enabled}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -261,6 +264,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
+	tips_enabled = bool(d.get("tips", true))
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
 	music_volume = clampf(float(d.get("music_volume", 0.7)), 0.0, 1.0)
 	sfx_volume = clampf(float(d.get("sfx_volume", 0.8)), 0.0, 1.0)

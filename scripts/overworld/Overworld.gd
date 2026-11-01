@@ -115,6 +115,18 @@ func _process(_delta: float) -> void:
 
 # --- Maps --------------------------------------------------------------------------
 
+func _tip_after_load(id: String) -> void:
+	# Wait for the warp fade to finish so the tip doesn't cut into it.
+	while busy:
+		await get_tree().process_frame
+	await show_tip(id)
+
+## Shows a first-time tip (if any) while the player waits.
+func show_tip(id: String) -> void:
+	var lines: Array[String] = Tips.take(id)
+	if not lines.is_empty():
+		await _locked_say(lines)
+
 func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map = MapData.load_map(map_id)
 	if map == null:
@@ -143,6 +155,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	_show_banner(map.display_name)
 	Sound.music(Sound.track_for_map(map_id))
+	if not map.encounter_table.is_empty():
+		_tip_after_load.call_deferred("wild_area")
 
 func npc_at(cell: Vector2i) -> NPC:
 	for n: NPC in _npcs:
@@ -231,7 +245,11 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		return
 	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty():
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < EncounterTable.rate(map.encounter_table):
-			var wild: Spirling = EncounterTable.roll(map.encounter_table, GameState.rng)
+			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
+			if wild != null:
+				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
+			else:
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng)
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
@@ -296,6 +314,9 @@ func announce_goal_if_changed(before: int) -> void:
 	if QuestLog.current_index(GameState.flags) == before:
 		return
 	await say(["New goal: " + QuestLog.goal_text(QuestLog.current(GameState.flags), GameState.flags)] as Array[String])
+	var tip: Array[String] = Tips.take("goals")
+	if not tip.is_empty():
+		await say(tip)
 
 func say(lines: Array[String]) -> void:
 	_text.visible = true
@@ -381,6 +402,10 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.add_item(args[0], count)
 	var item_name: String = str(Database.item(args[0]).get("name", args[0]))
 	await say(["You got %s x%d!" % [item_name, count]] as Array[String])
+	if bool(Database.item(args[0]).get("gear", false)):
+		var tip: Array[String] = Tips.take("gear")
+		if not tip.is_empty():
+			await say(tip)
 
 func _action_set_flag(args: PackedStringArray, _speaker: NPC) -> void:
 	for f: String in args:
