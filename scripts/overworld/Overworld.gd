@@ -10,7 +10,8 @@ const UI_LAYER: int = 20
 const BATTLE_LAYER: int = 30
 const TEXT_BOX_HEIGHT: int = 44
 const BANNER_TIME: float = 1.2
-const FADE_TIME: float = 0.18
+## Map changes stay under 300 ms in total (item 61): two fades plus the load.
+const FADE_TIME: float = 0.11
 ## Pause between a Tamer spotting the player and walking over.
 const SPOT_TIME: float = 0.5
 ## Seconds for a grapple swing or cliff climb.
@@ -88,11 +89,14 @@ func _build() -> void:
 	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.theme = UITheme.get_theme()
 	_ui.add_child(ui_root)
+	SafeArea.apply(ui_root)
 	_fade = ColorRect.new()
 	_fade.color = Color(UITheme.INK, 0.0)
 	_fade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	ui_root.add_child(_fade)
+	# The fade covers the whole screen, cut-outs included, under the (safe-area) UI.
+	_ui.add_child(_fade)
+	_ui.move_child(_fade, 0)
 	_banner = Label.new()
 	_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	_banner.offset_top = 4

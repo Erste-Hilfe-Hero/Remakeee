@@ -8,6 +8,8 @@ extends Node
 
 const SAVE_VERSION: int = 2
 const SLOT_PATH: String = "user://save_1.json"
+## Three save slots (item 58). Slot 1 keeps the old file name, so existing saves stay in it.
+const SLOTS: int = 3
 const SETTINGS_PATH: String = "user://settings.json"
 
 signal saved
@@ -29,6 +31,36 @@ const MAP_RENAMES_V2: Dictionary[String, Array] = {
 }
 ## Overridable for tests.
 var slot_path: String = SLOT_PATH
+## Active slot (1..SLOTS); remembered in the settings file.
+var slot: int = 1
+
+static func path_for_slot(n: int) -> String:
+	return "user://save_%d.json" % clampi(n, 1, SLOTS)
+
+func set_slot(n: int) -> void:
+	slot = clampi(n, 1, SLOTS)
+	slot_path = path_for_slot(slot)
+
+## Summary for a slot without switching to it ("" = empty or unreadable).
+func slot_summary(n: int) -> String:
+	var old: String = slot_path
+	slot_path = path_for_slot(n)
+	var s: String = save_summary() if has_save() else ""
+	slot_path = old
+	return s
+
+## The slot whose save was written most recently, or 0 if none has a save.
+func latest_slot() -> int:
+	var best: int = 0
+	var best_time: int = -1
+	for n: int in range(1, SLOTS + 1):
+		var p: String = path_for_slot(n)
+		if FileAccess.file_exists(p):
+			var t: int = FileAccess.get_modified_time(p)
+			if t > best_time:
+				best_time = t
+				best = n
+	return best
 var settings_path: String = SETTINGS_PATH
 
 func _ready() -> void:
@@ -180,6 +212,7 @@ func delete_save() -> void:
 func save_settings() -> void:
 	var d: Dictionary = GameState.settings_to_dict()
 	d["era"] = {"retro_filter": EraManager.retro_filter}
+	d["slot"] = slot
 	write_atomic(settings_path, JSON.stringify(d))
 
 func load_settings() -> void:
@@ -189,4 +222,6 @@ func load_settings() -> void:
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(settings_path))
 	if raw is Dictionary:
 		GameState.settings_from_dict(raw)
+		if slot_path == SLOT_PATH:
+			set_slot(int(raw.get("slot", 1)))
 		VirtualPad.apply_settings()

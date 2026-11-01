@@ -73,27 +73,68 @@ func _build_name_box() -> void:
 func _run() -> void:
 	while true:
 		var items: Array[String] = []
-		var has_save: bool = SaveManager.has_save()
-		var summary: String = SaveManager.save_summary() if has_save else ""
-		if has_save:
+		# "Continue" is always the newest save, one tap from launch.
+		var latest: int = SaveManager.latest_slot()
+		var summary: String = SaveManager.slot_summary(latest) if latest > 0 else ""
+		if latest > 0:
 			items.append("Continue" if summary.is_empty() else "Continue  %s" % summary)
-		items.append_array(["New Game", "Settings"] as Array[String])
+		items.append("New Game")
+		if _used_slots() > 1:
+			items.append("Load...")
+		items.append("Settings")
 		var idx: int = await _menu.pick_strings("", items, false)
 		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]
 		match choice:
 			"Continue":
+				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
+					SaveManager.save_settings()
 					get_tree().change_scene_to_file(OVERWORLD)
 					return
 				await _menu.info("The save could not be read.")
+			"Load...":
+				var n: int = await _pick_slot("Load which save?", false)
+				if n > 0:
+					SaveManager.set_slot(n)
+					if SaveManager.load_game():
+						SaveManager.save_settings()
+						get_tree().change_scene_to_file(OVERWORLD)
+						return
+					await _menu.info("The save could not be read.")
 			"New Game":
-				if has_save and not await _menu.confirm("Start over? Your save will be replaced when you save."):
+				var slot: int = await _pick_slot("Save the new journey in...", true)
+				if slot <= 0:
 					continue
+				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm("Start over in slot %d? That save will be replaced when you save." % slot):
+					continue
+				SaveManager.set_slot(slot)
 				if await _new_game():
+					SaveManager.save_settings()
 					get_tree().change_scene_to_file(OVERWORLD)
 					return
 			"Settings":
 				await _menu.run_settings()
+
+func _used_slots() -> int:
+	var n: int = 0
+	for i: int in range(1, SaveManager.SLOTS + 1):
+		if not SaveManager.slot_summary(i).is_empty():
+			n += 1
+	return n
+
+## Lists the three slots. [param allow_empty]: empty slots can be picked (new game). Returns 0 on cancel.
+func _pick_slot(title: String, allow_empty: bool) -> int:
+	var labels: Array[String] = []
+	for i: int in range(1, SaveManager.SLOTS + 1):
+		var s: String = SaveManager.slot_summary(i)
+		labels.append("Slot %d: %s" % [i, s if not s.is_empty() else "empty"])
+	while true:
+		var idx: int = await _menu.pick_strings(title, labels)
+		if idx < 0:
+			return 0
+		if allow_empty or not SaveManager.slot_summary(idx + 1).is_empty():
+			return idx + 1
+	return 0
 
 func _new_game() -> bool:
 	var diff: int = await _menu.pick_strings("Difficulty", DIFFICULTY_TEXT)

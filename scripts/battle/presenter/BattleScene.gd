@@ -70,6 +70,7 @@ func _build() -> void:
 	col.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	col.add_theme_constant_override("separation", 0)
 	add_child(col)
+	SafeArea.apply(col)
 	_field = Control.new()
 	_field.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_field.clip_contents = true
