@@ -16,16 +16,23 @@ func _npc(map_id: String, npc_id: String) -> Dictionary:
 			return n
 	return {}
 
-func test_rival_counter_picks_the_starter() -> void:
-	var kestra: Dictionary = _npc("route_2", "kestra")
+func test_kestra_has_her_own_team_not_a_counter_pick() -> void:
+	var kestra: Dictionary = _npc("crowcrest", "kestra")
 	assert_true(TrainerData.is_trainer(kestra))
-	var expect: Dictionary = {"Kindlop": "Puddlet", "Puddlet": "Mossling", "Mossling": "Kindlop"}
-	for starter: String in expect:
-		var team: Array[Spirling] = TrainerData.build_team(kestra, starter, _rng)
-		assert_eq(team.back().data.species_name, expect[starter], "rival ace vs %s" % starter)
+	assert_false(kestra.has("team_by_starter"), "Kestra is a counterpart, not a starter rival")
+	var a: Array[Spirling] = TrainerData.build_team(kestra, "Kindlop", _rng)
+	var b: Array[Spirling] = TrainerData.build_team(kestra, "Mossling", _rng)
+	assert_eq(a.size(), b.size())
+	for i: int in a.size():
+		assert_eq(a[i].data.species_name, b[i].data.species_name)
+
+func test_tamers_only_duel_when_talked_to() -> void:
+	for map_id: String in ["crowcrest", "saltmarsh", "cinder_rift", "tide_rift"]:
+		for n: Dictionary in MapData.load_map(map_id).npcs:
+			assert_eq(int(n.get("sight", 0)), 0, "%s/%s should not ambush" % [map_id, n.get("id", "")])
 
 func test_trainer_battle_info() -> void:
-	var bram: Dictionary = _npc("route_2", "bram")
+	var bram: Dictionary = _npc("crowcrest", "bram")
 	var team: Array[Spirling] = TrainerData.build_team(bram, "Kindlop", _rng)
 	assert_eq(team.size(), 2)
 	var info: Dictionary = TrainerData.battle_info(bram, team, 0)
@@ -48,12 +55,12 @@ func test_line_of_sight() -> void:
 	assert_false(TrainerData.sees(Vector2i.ZERO, Vector2i.RIGHT, 0, Vector2i(1, 0), open), "talk-only")
 
 func test_beaten_flag() -> void:
-	var lio: Dictionary = _npc("route_2", "lio")
-	assert_false(TrainerData.is_beaten(lio, "route_2", GameState.flags))
-	GameState.set_flag(TrainerData.beaten_flag(lio, "route_2"))
-	assert_true(TrainerData.is_beaten(lio, "route_2", GameState.flags))
-	var kestra: Dictionary = _npc("route_2", "kestra")
-	assert_eq(TrainerData.beaten_flag(kestra, "route_2"), "rival_kestra_1")
+	var lio: Dictionary = _npc("crowcrest", "lio")
+	assert_false(TrainerData.is_beaten(lio, "crowcrest", GameState.flags))
+	GameState.set_flag(TrainerData.beaten_flag(lio, "crowcrest"))
+	assert_true(TrainerData.is_beaten(lio, "crowcrest", GameState.flags))
+	var kestra: Dictionary = _npc("crowcrest", "kestra")
+	assert_eq(TrainerData.beaten_flag(kestra, "crowcrest"), "kestra_spar")
 
 func test_sealing_rifts_raises_veteran_cap_and_unlocks_pc() -> void:
 	GameState.difficulty = GameState.Difficulty.VETERAN
@@ -61,14 +68,17 @@ func test_sealing_rifts_raises_veteran_cap_and_unlocks_pc() -> void:
 	assert_true(GameState.seal_rift("cinder"))
 	assert_false(GameState.seal_rift("cinder"), "only once")
 	assert_gt(GameState.level_cap(), cap0)
-	assert_true(GameState.has_flag("rift_cinder_sealed"), "opens the guard path")
+	assert_true(GameState.has_flag("rift_cinder_sealed"))
+	assert_false(GameState.has_flag("pc_unlocked"), "one Rift is not enough")
 	var maelis: Dictionary = _npc("tide_rift", "warden_maelis")
 	assert_eq(str(maelis.warden), "tide")
-	assert_true("pc_unlocked" in maelis.win_flags, "PC access from the menu after Rift 2")
+	assert_true(GameState.seal_rift("tide"))
+	assert_true(GameState.has_flag("pc_unlocked"), "PC access from the menu after the second Rift")
 
-func test_guard_hides_after_rift_one() -> void:
-	var guard: Dictionary = _npc("thornridge", "guard")
-	assert_eq(str(guard.hide_flag), "rift_cinder_sealed")
+func test_rifts_open_in_any_order() -> void:
+	assert_true(GameState.seal_rift("tide"))
+	assert_true(GameState.seal_rift("cinder"))
+	assert_true(GameState.has_flag("pc_unlocked"))
 
 func test_bag_is_unlimited() -> void:
 	GameState.add_item("tonic", 5000)

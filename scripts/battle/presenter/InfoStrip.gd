@@ -11,6 +11,9 @@ const HP_MID: Color = Color("d9b13b")
 const HP_LOW: Color = Color("c8513a")
 const ENERGY_ON: Color = Color("3b6fd9")
 const TWEEN_TIME: float = 0.4
+const TICK_STEP: int = 8
+## Paper tag drawn behind the strip so it stays readable on any backdrop.
+const PLATE_PAD: Vector2 = Vector2(3, 2)
 
 ## Show the numeric HP (player side only).
 @export var show_numbers: bool = false
@@ -61,6 +64,7 @@ func _draw() -> void:
 	var fs: int = get_theme_default_font_size()
 	var w: float = size.x
 	var y_text: float = float(fs)
+	_draw_plate()
 	draw_string(font, Vector2(0, y_text), spirling_name, HORIZONTAL_ALIGNMENT_LEFT, w * 0.6, fs, UITheme.INK)
 	var right: String = "Lv%d" % level
 	if not status.is_empty():
@@ -72,6 +76,9 @@ func _draw() -> void:
 	draw_rect(Rect2(0, bar_y, w, BAR_HEIGHT + 2), UITheme.INK)
 	draw_rect(Rect2(1, bar_y + 1, w - 2, BAR_HEIGHT), UITheme.BG)
 	draw_rect(Rect2(1, bar_y + 1, floorf((w - 2) * frac), BAR_HEIGHT), col)
+	# Notches every few pixels make the bar read as a measured scale, like a map ruler.
+	for x: int in range(TICK_STEP, int(w) - 1, TICK_STEP):
+		draw_rect(Rect2(x, bar_y + 1, 1, 1), UITheme.INK)
 	var pip_y: float = bar_y + BAR_HEIGHT + 4.0
 	for i: int in Spirling.MAX_ENERGY:
 		var r := Rect2(i * (PIP_SIZE + PIP_GAP), pip_y, PIP_SIZE, PIP_SIZE)
@@ -81,3 +88,11 @@ func _draw() -> void:
 			draw_rect(r, UITheme.MID, false, 1.0)
 	if show_numbers:
 		draw_string(font, Vector2(0, pip_y + PIP_SIZE + fs - 1), "%d/%d" % [int(round(display_hp)), max_hp], HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
+
+func _draw_plate() -> void:
+	var r := Rect2(-PLATE_PAD, size + PLATE_PAD * 2.0)
+	draw_rect(r, UITheme.BG)
+	draw_rect(r, UITheme.INK, false, 1.0)
+	# Notched corners, same language as the map-sheet frames.
+	for c: Vector2 in [r.position, Vector2(r.end.x - 1, r.position.y), Vector2(r.position.x, r.end.y - 1), r.end - Vector2.ONE]:
+		draw_rect(Rect2(c, Vector2.ONE), UITheme.BG)

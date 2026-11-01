@@ -6,7 +6,7 @@ extends Node
 ## - Saves when the app is paused / backgrounded (mobile OSes kill background apps).
 ## - Never loads .tres files as saves (loading resources can run embedded scripts).
 
-const SAVE_VERSION: int = 1
+const SAVE_VERSION: int = 2
 const SLOT_PATH: String = "user://save_1.json"
 const SETTINGS_PATH: String = "user://settings.json"
 
@@ -16,6 +16,16 @@ signal save_failed(reason: String)
 ## save_version -> Callable(Dictionary) -> Dictionary that upgrades to save_version + 1.
 var _migrations: Dictionary[int, Callable] = {
 	0: _migrate_0_to_1,
+	1: _migrate_1_to_2,
+}
+## Act I world rebuild (save version 2): old map id -> [new map id, safe cell].
+const MAP_RENAMES_V2: Dictionary[String, Array] = {
+	"home": ["lighthouse", [4, 4]],
+	"start_town": ["brindlewick", [5, 5]],
+	"kestra_home": ["map_house", [4, 5]],
+	"route_1": ["fernstair", [5, 23]],
+	"route_2": ["crowcrest", [5, 21]],
+	"thornridge": ["thornridge", [6, 13]],
 }
 ## Overridable for tests.
 var slot_path: String = SLOT_PATH
@@ -113,12 +123,36 @@ func _migrate_0_to_1(d: Dictionary) -> Dictionary:
 	if not out.has("party"):
 		out["party"] = []
 	if not out.has("map"):
-		out["map"] = "home"
+		out["map"] = "lighthouse"
 	if out.has("rifts") and not out.has("flags"):
 		var flags: Dictionary = {}
 		for r: Variant in out.rifts:
 			flags["%s_sealed" % r] = true
 		out["flags"] = flags
+	return out
+
+## Version 1 -> 2: the world was rebuilt (lighthouse start, named paths instead of routes).
+## Players on a renamed or reshaped map are moved to a safe cell on its replacement.
+func _migrate_1_to_2(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	var m: String = str(out.get("map", "lighthouse"))
+	if MAP_RENAMES_V2.has(m):
+		out["map"] = MAP_RENAMES_V2[m][0]
+		out["cell"] = MAP_RENAMES_V2[m][1]
+	var hm: String = str(out.get("heal_map", "lighthouse"))
+	if hm == "thornridge":
+		out["heal_cell"] = [9, 4]
+	elif MAP_RENAMES_V2.has(hm):
+		out["heal_map"] = MAP_RENAMES_V2[hm][0]
+		out["heal_cell"] = MAP_RENAMES_V2[hm][1]
+	var flags: Dictionary = out.get("flags", {})
+	if flags.has("rival_kestra_1"):
+		flags["kestra_spar"] = true
+	if flags.has("mom_gift"):
+		flags["aldo_gift"] = true
+	if flags.has("route1_gift"):
+		flags["fern_gift"] = true
+	out["flags"] = flags
 	return out
 
 func delete_save() -> void:

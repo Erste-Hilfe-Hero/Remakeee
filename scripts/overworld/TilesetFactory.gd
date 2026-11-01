@@ -1,22 +1,27 @@
 class_name TilesetFactory
 extends RefCounted
-## Builds the placeholder overworld TileSet in code (coloured 16 px squares with simple
-## marks), so no third-party tiles are needed. Real Tiled/YATI tilesets replace this later.
+## Builds the overworld TileSet. Uses the original Era I atlas (art/era1/tiles/overworld.png,
+## made by tools/art/gen_tiles.py) and falls back to coloured squares if it is missing.
+## Atlas layout: column = Kind, row = variant (neighbour mask or cosmetic variant).
 
 const TILE: int = 16
 
 ## Tile kinds. The atlas column equals the enum value.
-enum Kind { GRASS, TALL_GRASS, PATH, WATER, TREE, WALL, ROOF, DOOR, FLOOR, FENCE, SIGN, FLOWER, COUNTER, INNER_WALL, SPRING, RIFT }
+enum Kind { GRASS, TALL_GRASS, PATH, WATER, TREE, WALL, ROOF, DOOR, FLOOR, FENCE, SIGN, FLOWER, COUNTER, INNER_WALL, SPRING, RIFT, CLIFF, STAIRS, REEDS, SCREE, PIER, TOWER, LAMP, ROCK }
 
 ## Map character -> tile kind.
 const LEGEND: Dictionary[String, int] = {
 	".": Kind.GRASS, ",": Kind.TALL_GRASS, "_": Kind.PATH, "~": Kind.WATER, "T": Kind.TREE,
 	"H": Kind.WALL, "R": Kind.ROOF, "D": Kind.DOOR, "f": Kind.FLOOR, "#": Kind.FENCE,
 	"S": Kind.SIGN, "*": Kind.FLOWER, "C": Kind.COUNTER, "W": Kind.INNER_WALL, "o": Kind.SPRING,
-	"X": Kind.RIFT,
+	"X": Kind.RIFT, "^": Kind.CLIFF, "=": Kind.STAIRS, "%": Kind.REEDS, ":": Kind.SCREE,
+	"+": Kind.PIER, "|": Kind.TOWER, "L": Kind.LAMP, "@": Kind.ROCK,
 }
 
-const SOLID: Array[int] = [Kind.WATER, Kind.TREE, Kind.WALL, Kind.ROOF, Kind.FENCE, Kind.SIGN, Kind.COUNTER, Kind.INNER_WALL, Kind.SPRING]
+## Wild Spirlings hide in ferns (tall grass), reeds and scree, not only in grass.
+const ENCOUNTER_KINDS: Array[int] = [Kind.TALL_GRASS, Kind.REEDS, Kind.SCREE]
+
+const SOLID: Array[int] = [Kind.WATER, Kind.TREE, Kind.WALL, Kind.ROOF, Kind.FENCE, Kind.SIGN, Kind.COUNTER, Kind.INNER_WALL, Kind.SPRING, Kind.CLIFF, Kind.TOWER, Kind.LAMP, Kind.ROCK]
 
 const COLORS: Dictionary[int, Color] = {
 	Kind.GRASS: Color("9cc46a"), Kind.TALL_GRASS: Color("5f9a3e"), Kind.PATH: Color("d8c08a"),
@@ -24,10 +29,21 @@ const COLORS: Dictionary[int, Color] = {
 	Kind.ROOF: Color("a9533c"), Kind.DOOR: Color("5a3a28"), Kind.FLOOR: Color("c9a26e"),
 	Kind.FENCE: Color("8a6440"), Kind.SIGN: Color("b88a52"), Kind.FLOWER: Color("9cc46a"),
 	Kind.COUNTER: Color("7a5a3a"), Kind.INNER_WALL: Color("6b5a4a"), Kind.SPRING: Color("7fc6e0"),
-	Kind.RIFT: Color("3a2a55"),
+	Kind.RIFT: Color("3a2a55"), Kind.CLIFF: Color("8a7a5a"), Kind.STAIRS: Color("b0a080"),
+	Kind.REEDS: Color("5a8a6a"), Kind.SCREE: Color("a09a8a"), Kind.PIER: Color("c09a6a"),
+	Kind.TOWER: Color("e8e0d0"), Kind.LAMP: Color("f0d070"), Kind.ROCK: Color("7a7a6a"),
 }
 
+const ATLAS_PATH: String = "res://art/era1/tiles/overworld.png"
+const VARIANT_ROWS: int = 16
+## Kinds whose variant row is a neighbour mask (1 up, 2 right, 4 down, 8 left).
+const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FENCE, Kind.CLIFF, Kind.PIER]
+## Kinds with cosmetic variants 0..3 picked from the cell position.
+const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOWER, Kind.REEDS, Kind.SCREE, Kind.ROCK]
+const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
+
 static var _tileset: TileSet
+static var _has_atlas: bool = false
 
 static func kind_for(ch: String) -> int:
 	return LEGEND.get(ch, Kind.GRASS)
@@ -40,17 +56,60 @@ static func get_tileset() -> TileSet:
 		_tileset = _build()
 	return _tileset
 
+## Neighbours that count as "the same" when picking a masked variant.
+static func joins(kind: int, other: int) -> bool:
+	if kind == other:
+		return true
+	match kind:
+		Kind.PATH:
+			return other == Kind.DOOR or other == Kind.SIGN
+		Kind.WALL:
+			return other == Kind.DOOR
+		Kind.FENCE:
+			return other == Kind.SIGN
+		Kind.WATER:
+			return other == Kind.REEDS or other == Kind.PIER
+		Kind.PIER:
+			return other == Kind.PATH or other == Kind.STAIRS
+		Kind.CLIFF:
+			return other == Kind.STAIRS
+	return false
+
+## Atlas coordinates for [param kind] at [param cell]; [param kind_at] returns the kind of
+## any cell (out-of-bounds cells should return the same kind so map edges stay seamless).
+static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable) -> Vector2i:
+	if not _has_atlas:
+		return Vector2i(kind, 0)
+	if kind in MASKED:
+		var mask: int = 0
+		for i: int in MASK_DIRS.size():
+			if joins(kind, int(kind_at.call(cell + MASK_DIRS[i]))):
+				mask |= 1 << i
+		return Vector2i(kind, mask)
+	if kind in SCATTERED:
+		var h: int = absi(cell.x * 7 + cell.y * 13 + (cell.x * cell.y) % 5)
+		return Vector2i(kind, h % 4)
+	return Vector2i(kind, 0)
+
 static func _build() -> TileSet:
 	var count: int = Kind.size()
-	var img := Image.create(TILE * count, TILE, false, Image.FORMAT_RGBA8)
-	for k: int in count:
-		_paint(img, k)
-	var tex := ImageTexture.create_from_image(img)
+	var tex: Texture2D
+	var rows: int = 1
+	_has_atlas = ResourceLoader.exists(ATLAS_PATH)
+	if _has_atlas:
+		tex = load(ATLAS_PATH)
+		rows = VARIANT_ROWS
+	else:
+		var img := Image.create(TILE * count, TILE, false, Image.FORMAT_RGBA8)
+		for k: int in count:
+			_paint(img, k)
+		tex = ImageTexture.create_from_image(img)
 	var src := TileSetAtlasSource.new()
 	src.texture = tex
 	src.texture_region_size = Vector2i(TILE, TILE)
-	for k: int in count:
-		src.create_tile(Vector2i(k, 0))
+	for r: int in rows:
+		for k: int in count:
+			src.create_tile(Vector2i(k, r))
 	var ts := TileSet.new()
 	ts.tile_size = Vector2i(TILE, TILE)
 	ts.add_source(src, 0)

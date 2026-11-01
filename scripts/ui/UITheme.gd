@@ -1,7 +1,8 @@
 class_name UITheme
 extends RefCounted
-## Builds the shared UI Theme in code. Original look: flat panels with a 1 px inner rule,
-## square corners, no rounded "battle box" shapes.
+## Builds the shared UI Theme in code. Original Chimora look: "map-sheet" frames with notched
+## corners and a double rule (ink line, paper gap, pencil line), like the edge of a hand-drawn
+## cartographer's chart. Square, flat, no rounded "battle box" shapes.
 
 const FONT_SIZE: int = 8
 const BG: Color = Color("f4f1e6")
@@ -10,21 +11,65 @@ const MID: Color = Color("7d8a6a")
 const ACCENT: Color = Color("c7d6a4")
 const DISABLED: Color = Color("a6a89c")
 
+## Frame slice size and how much of it is border.
+const FRAME_SIZE: int = 9
+const FRAME_MARGIN: int = 3
+
 static var _theme: Theme
+static var _frames: Dictionary[Color, ImageTexture] = {}
 
 static func get_theme() -> Theme:
 	if _theme == null:
 		_theme = _build()
 	return _theme
 
-static func panel_style(bg: Color = BG, border: Color = INK) -> StyleBoxFlat:
+## The notched double-rule frame, filled with [param bg].
+static func panel_style(bg: Color = BG, _border: Color = INK) -> StyleBox:
+	var sb := StyleBoxTexture.new()
+	sb.texture = _frame_texture(bg)
+	sb.texture_margin_left = FRAME_MARGIN
+	sb.texture_margin_top = FRAME_MARGIN
+	sb.texture_margin_right = FRAME_MARGIN
+	sb.texture_margin_bottom = FRAME_MARGIN
+	sb.set_content_margin_all(FRAME_MARGIN + 2)
+	return sb
+
+## A plain flat box (buttons, bars): 1 px border, square corners.
+static func flat_style(bg: Color, border: Color) -> StyleBoxFlat:
 	var sb := StyleBoxFlat.new()
 	sb.bg_color = bg
 	sb.border_color = border
 	sb.set_border_width_all(1)
-	sb.set_content_margin_all(3)
+	sb.set_content_margin_all(2)
 	sb.anti_aliasing = false
 	return sb
+
+static func _frame_texture(bg: Color) -> ImageTexture:
+	if _frames.has(bg):
+		return _frames[bg]
+	var img := Image.create(FRAME_SIZE, FRAME_SIZE, false, Image.FORMAT_RGBA8)
+	img.fill(bg)
+	var last: int = FRAME_SIZE - 1
+	for i: int in FRAME_SIZE:
+		for ring: int in 2:
+			var c: Color = INK if ring == 0 else BG
+			img.set_pixel(i, ring, c)
+			img.set_pixel(i, last - ring, c)
+			img.set_pixel(ring, i, c)
+			img.set_pixel(last - ring, i, c)
+	for i: int in range(2, FRAME_SIZE - 2):
+		img.set_pixel(i, 2, MID)
+		img.set_pixel(i, last - 2, MID)
+		img.set_pixel(2, i, MID)
+		img.set_pixel(last - 2, i, MID)
+	# Notched corners with an ink rivet inside each notch.
+	for p: Vector2i in [Vector2i(0, 0), Vector2i(last, 0), Vector2i(0, last), Vector2i(last, last)]:
+		img.set_pixel(p.x, p.y, Color(0, 0, 0, 0))
+		var inner := Vector2i(1 if p.x == 0 else last - 1, 1 if p.y == 0 else last - 1)
+		img.set_pixel(inner.x, inner.y, INK)
+	var tex := ImageTexture.create_from_image(img)
+	_frames[bg] = tex
+	return tex
 
 static func _build() -> Theme:
 	var t := Theme.new()
@@ -33,19 +78,27 @@ static func _build() -> Theme:
 	t.set_color("font_color", "Label", INK)
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		var bg: Color = BG
-		# Focus must survive the 4-shade Retro filter, so it uses a clearly darker shade.
+		var border: Color = MID
+		# Focus must survive the 4-shade Retro filter, so it inverts to ink on paper.
 		if state == "hover" or state == "focus":
-			bg = MID
-		elif state == "pressed":
 			bg = INK
-		var sb: StyleBoxFlat = panel_style(bg, INK if state != "disabled" else DISABLED)
-		sb.set_content_margin_all(2)
-		t.set_stylebox(state, "Button", sb)
+			border = INK
+		elif state == "pressed":
+			bg = MID
+			border = INK
+		elif state == "disabled":
+			border = DISABLED
+		t.set_stylebox(state, "Button", flat_style(bg, border))
 	t.set_color("font_color", "Button", INK)
 	t.set_color("font_hover_color", "Button", BG)
 	t.set_color("font_focus_color", "Button", BG)
 	t.set_color("font_pressed_color", "Button", BG)
+	t.set_color("font_hover_pressed_color", "Button", BG)
 	t.set_color("font_disabled_color", "Button", DISABLED)
 	t.set_stylebox("panel", "PanelContainer", panel_style())
 	t.set_stylebox("panel", "Panel", panel_style())
+	t.set_stylebox("normal", "LineEdit", flat_style(ACCENT, INK))
+	t.set_stylebox("focus", "LineEdit", flat_style(ACCENT, INK))
+	t.set_color("font_color", "LineEdit", INK)
+	t.set_color("caret_color", "LineEdit", INK)
 	return t

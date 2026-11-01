@@ -1,37 +1,38 @@
 {
  "name": "Cinder Rift",
  "region": "veydal",
+ "backdrop": "ember",
  "encounters": "cinder_rift",
  "rows": [
-  "WWWWWWWWWWWW",
-  "WWWWfXXfWWWW",
-  "WWffffffffWW",
-  "Wf,,ffff,,fW",
-  "Wf,,ffff,,fW",
-  "WWWWWffWWWWW",
-  "Wf,,ffff,,fW",
-  "Wf,,ffff,,fW",
-  "WffffffffffW",
-  "WffWWffWWffW",
-  "Wf,,ffff,,fW",
-  "WffffffffffW",
-  "WWWWWffWWWWW"
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^........^^",
+  "^.::....::.^",
+  "^.::....::.^",
+  "^^^^^..^^^^^",
+  "^.::....::.^",
+  "^.::....::.^",
+  "^..........^",
+  "^..^^..^^..^",
+  "^.::....::.^",
+  "^..........^",
+  "^^^^^..^^^^^"
  ],
  "warps": [
   {
    "x": 5,
    "y": 12,
    "to": "thornridge",
-   "tx": 3,
-   "ty": 4,
+   "tx": 2,
+   "ty": 2,
    "facing": "down"
   },
   {
    "x": 6,
    "y": 12,
    "to": "thornridge",
-   "tx": 3,
-   "ty": 4,
+   "tx": 2,
+   "ty": 2,
    "facing": "down"
   }
  ],
@@ -41,10 +42,8 @@
    "x": 1,
    "y": 8,
    "facing": "right",
-   "color": "a04a3a",
    "dialogue": "cinder_rift/acolyte_a",
    "trainer": "Rift Acolyte Pell",
-   "sight": 4,
    "intro": "cinder_rift/acolyte_a_intro",
    "defeat": "cinder_rift/acolyte_a_defeat",
    "team": [
@@ -56,17 +55,16 @@
      "species": "Zippit",
      "level": 9
     }
-   ]
+   ],
+   "sprite": "warden"
   },
   {
    "id": "acolyte_b",
    "x": 10,
    "y": 6,
    "facing": "left",
-   "color": "a04a3a",
    "dialogue": "cinder_rift/acolyte_b",
    "trainer": "Rift Acolyte Suri",
-   "sight": 3,
    "intro": "cinder_rift/acolyte_b_intro",
    "defeat": "cinder_rift/acolyte_b_defeat",
    "team": [
@@ -74,14 +72,14 @@
      "species": "Kindlop",
      "level": 10
     }
-   ]
+   ],
+   "sprite": "warden"
   },
   {
    "id": "warden_orrin",
    "x": 5,
    "y": 1,
    "facing": "down",
-   "color": "d0602a",
    "dialogue": "cinder_rift/orrin",
    "trainer": "Warden Orrin",
    "warden": "cinder",
@@ -104,7 +102,9 @@
      "species": "Smoldrake",
      "level": 12
     }
-   ]
+   ],
+   "sprite": "warden"
   }
- ]
+ ],
+ "signs": []
 }

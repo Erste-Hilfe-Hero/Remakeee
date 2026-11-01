@@ -1,0 +1,20 @@
+{
+ "sign": [
+  "SALTMARSH",
+  "Boardwalk to the Tidewater hollow.",
+  "Wild Spirlings here are strong. Travel with care."
+ ],
+ "reedcutter": [
+  "The water runs uphill toward the hollow since the storm.",
+  "Spirlings hide in the reeds. Wade through and one may come out."
+ ],
+ "neve": [
+  "Neve: The Warden down there, Maelis, used to sing to the tide. Now she just stares at it."
+ ],
+ "neve_intro": [
+  "Neve: Heading for the hollow? Let's see if you're ready!"
+ ],
+ "neve_defeat": [
+  "Neve: Washed out... You're ready."
+ ]
+}
