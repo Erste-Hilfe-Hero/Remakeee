@@ -48,7 +48,12 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -
 		b.custom_minimum_size = Vector2(0, ROW_HEIGHT)
 		b.clip_text = true
 		var result: int = -1 if bool(rows[i].get("cancel", false)) else i
-		b.pressed.connect(func() -> void: picked.emit(result))
+		b.pressed.connect(func() -> void:
+			Sound.sfx("cancel" if result < 0 else "confirm")
+			picked.emit(result))
+		b.focus_entered.connect(func() -> void:
+			if visible:
+				Sound.sfx("select"))
 		_box.add_child(b)
 		_buttons.append(b)
 	visible = true
@@ -63,4 +68,5 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -
 func _unhandled_input(event: InputEvent) -> void:
 	if visible and _cancellable and event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
+		Sound.sfx("cancel")
 		picked.emit(-1)

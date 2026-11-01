@@ -53,6 +53,10 @@ const BATTLE_SPEEDS: Array[float] = [1.0, 2.0, 4.0]
 ## Wild battles pick moves on their own (greedy AI) until the player turns it off.
 var auto_battle: bool = false
 var volume: float = 0.8
+var music_volume: float = 0.7
+var sfx_volume: float = 0.8
+const BUS_MUSIC: StringName = &"Music"
+const BUS_SFX: StringName = &"SFX"
 ## Touch controls: pad size and opacity (index into PAD_SIZES / PAD_ALPHAS), left-handed layout, tap-to-move.
 var pad_size: int = 1
 var pad_opacity: int = 1
@@ -240,6 +244,7 @@ func from_dict(d: Dictionary) -> void:
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume,
+		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -253,10 +258,24 @@ func settings_from_dict(d: Dictionary) -> void:
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
+	music_volume = clampf(float(d.get("music_volume", 0.7)), 0.0, 1.0)
+	sfx_volume = clampf(float(d.get("sfx_volume", 0.8)), 0.0, 1.0)
 	apply_volume()
 
 func apply_volume() -> void:
+	ensure_buses()
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.0001)))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_MUSIC), linear_to_db(maxf(music_volume, 0.0001)))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_SFX), linear_to_db(maxf(sfx_volume, 0.0001)))
+
+## Adds the Music and SFX buses (both feed Master) if the project has none yet.
+static func ensure_buses() -> void:
+	for bus: StringName in [BUS_MUSIC, BUS_SFX]:
+		if AudioServer.get_bus_index(bus) < 0:
+			AudioServer.add_bus()
+			var idx: int = AudioServer.bus_count - 1
+			AudioServer.set_bus_name(idx, bus)
+			AudioServer.set_bus_send(idx, &"Master")
 
 func has_flag(flag: String) -> bool:
 	return bool(flags.get(flag, false))

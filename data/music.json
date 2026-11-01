@@ -1,0 +1,16 @@
+{
+  "_comment": "Which track (audio/music/<name>.ogg) plays on each map. Maps not listed play 'default'.",
+  "default": "route",
+  "maps": {
+    "lighthouse": "town",
+    "brindlewick": "town",
+    "map_house": "town",
+    "rest_spring": "town",
+    "thornridge": "town",
+    "fernstair": "route",
+    "crowcrest": "route",
+    "saltmarsh": "route",
+    "cinder_rift": "rift",
+    "tide_rift": "rift"
+  }
+}

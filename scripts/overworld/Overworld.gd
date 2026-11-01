@@ -140,6 +140,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_right = map.width * GridWalker.TILE
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	_show_banner(map.display_name)
+	Sound.music(Sound.track_for_map(map_id))
 
 func npc_at(cell: Vector2i) -> NPC:
 	for n: NPC in _npcs:
@@ -183,6 +184,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 func _warp(warp: Dictionary) -> void:
 	busy = true
 	player.frozen = true
+	Sound.sfx("warp")
 	await _fade_to(1.0)
 	load_map(str(warp.to), Vector2i(int(warp.tx), int(warp.ty)), str(warp.get("facing", player.facing)))
 	SaveManager.save_game()
@@ -254,6 +256,7 @@ func _run_action(action: String, speaker: NPC) -> void:
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.heal_party()
+	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
 		GameState.heal_map = map.id
 		GameState.heal_cell = map.heal_point
@@ -338,6 +341,7 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 			continue
 		GameState.money -= price
 		GameState.add_item(args[idx])
+		Sound.sfx("coin")
 		await menu.info("Bought %s. You have %d." % [item.get("name", ""), GameState.item_count(args[idx])])
 	menu.queue_free()
 
@@ -431,6 +435,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	VirtualPad.set_wanted(false)
 	for f: Spirling in foes:
 		GameState.mark_seen(f.data.species_name)
+	Sound.sfx("encounter")
 	await _fade_to(1.0)
 	var ai_level: int = 0 if wild else int(trainer.get("ai", GameState.ai_level()))
 	var model := BattleModel.new(GameState.party, foes, wild, GameState.rng.randi(), ai_level)
@@ -444,6 +449,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	scene.backdrop = map.backdrop
+	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	var result: Array = await scene.battle_finished
@@ -451,6 +457,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	await _fade_to(1.0)
 	scene.queue_free()
 	await _after_battle(model, outcome)
+	Sound.music(Sound.track_for_map(map.id))
 	await _fade_to(0.0)
 	VirtualPad.set_wanted(true)
 	player.frozen = false
