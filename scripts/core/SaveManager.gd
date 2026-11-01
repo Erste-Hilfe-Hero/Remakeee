@@ -155,6 +155,23 @@ func _migrate_1_to_2(d: Dictionary) -> Dictionary:
 	out["flags"] = flags
 	return out
 
+## Short "where and how long" line for the title screen's Continue button, or "" if unreadable.
+func save_summary() -> String:
+	for path: String in [slot_path, backup_path()]:
+		var d: Variant = read_save(path)
+		if d is Dictionary:
+			return summary_line(d)
+	return ""
+
+static func summary_line(d: Dictionary) -> String:
+	var map_id: String = str(d.get("map", ""))
+	var place: String = map_id.replace("_", " ").capitalize()
+	var m: MapData = MapData.load_map(map_id) if MapData.exists(map_id) else null
+	if m != null and not m.display_name.is_empty():
+		place = m.display_name
+	var secs: int = int(float(d.get("play_time", 0.0)))
+	return "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+
 func delete_save() -> void:
 	for p: String in [slot_path, backup_path(), temp_path()]:
 		if FileAccess.file_exists(p):
@@ -172,3 +189,4 @@ func load_settings() -> void:
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(settings_path))
 	if raw is Dictionary:
 		GameState.settings_from_dict(raw)
+		VirtualPad.apply_settings()

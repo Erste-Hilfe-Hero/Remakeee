@@ -278,6 +278,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(GameState.MENU_ACTION) and not busy and not player.moving:
 		get_viewport().set_input_as_handled()
 		open_menu()
+		return
+	# Tap-to-move (touch arrives here as an emulated left click).
+	var mb := event as InputEventMouseButton
+	if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT and GameState.tap_to_move:
+		if busy or player.frozen or VirtualPad.covers(mb.position):
+			return
+		get_viewport().set_input_as_handled()
+		var world: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * mb.position
+		tap_cell(Vector2i(floori(world.x / GridWalker.TILE), floori(world.y / GridWalker.TILE)))
+
+## Walks toward [param cell]; NPCs, signs and counters get walked up to and talked to.
+func tap_cell(cell: Vector2i) -> void:
+	if not map.in_bounds(cell) or cell == player.cell:
+		return
+	var passable: Callable = func(c: Vector2i) -> bool: return map.is_walkable(c) and npc_at(c) == null
+	var talk: bool = npc_at(cell) != null or not map.sign_at(cell).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
+	if talk:
+		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)
+	else:
+		player.follow(PathFinder.find(player.cell, cell, passable))
 
 func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.is_empty():
@@ -347,6 +367,9 @@ func challenge(n: NPC, spotted: bool) -> void:
 	player.face(_dir_name(n.cell - player.cell))
 	if def.has("intro"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.intro)), GameState.flags))
+	if def.has("warden"):
+		# Warden fights are long; never lose progress to a crash or the OS closing the app.
+		SaveManager.save_game()
 	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng)
 	if team.is_empty():
 		push_warning("Overworld: Tamer '%s' has no valid team" % n.npc_id)
@@ -429,6 +452,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
 	if outcome == BattleModel.Outcome.BONDED and model.bonded != null:
 		GameState.receive_spirling(model.bonded)
+		SaveManager.save_game()
 	if outcome == BattleModel.Outcome.LOSS:
 		GameState.heal_party()
 		GameState.money = GameState.money / 2

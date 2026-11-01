@@ -53,6 +53,13 @@ const BATTLE_SPEEDS: Array[float] = [1.0, 2.0, 4.0]
 ## Wild battles pick moves on their own (greedy AI) until the player turns it off.
 var auto_battle: bool = false
 var volume: float = 0.8
+## Touch controls: pad size and opacity (index into PAD_SIZES / PAD_ALPHAS), left-handed layout, tap-to-move.
+var pad_size: int = 1
+var pad_opacity: int = 1
+var left_handed: bool = false
+var tap_to_move: bool = true
+const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large"]
+const PAD_ALPHAS: Array[float] = [0.3, 0.55, 0.85]
 
 ## What the Tamer has learned about matchups: "element:species" -> multiplier seen on a hit.
 ## Story difficulty shows every matchup from the start.
@@ -232,7 +239,8 @@ func from_dict(d: Dictionary) -> void:
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
-	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume}
+	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume,
+		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -240,6 +248,10 @@ func settings_from_dict(d: Dictionary) -> void:
 	var legacy: int = 1 if bool(d.get("fast_forward", false)) else 0
 	battle_speed = clampi(int(d.get("battle_speed", legacy)), 0, BATTLE_SPEEDS.size() - 1)
 	auto_battle = bool(d.get("auto_battle", false))
+	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
+	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
+	left_handed = bool(d.get("left_handed", false))
+	tap_to_move = bool(d.get("tap_to_move", true))
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
 	apply_volume()
 
