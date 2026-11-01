@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4rijxkxhtur3"
-path="res://.godot/imported/breezel_back.png-dfeba688a20dc0568e9d71c6a97fbcb3.ctex"
+uid="uid://dwxieds0gfnq3"
+path="res://.godot/imported/zephlet_front.png-9c76e5d2ab18ec71376c4453ec2611be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/era1/spirlings/breezel_back.png"
-dest_files=["res://.godot/imported/breezel_back.png-dfeba688a20dc0568e9d71c6a97fbcb3.ctex"]
+source_file="res://art/era1/spirlings/zephlet_front.png"
+dest_files=["res://.godot/imported/zephlet_front.png-9c76e5d2ab18ec71376c4453ec2611be.ctex"]
 
 [params]
 

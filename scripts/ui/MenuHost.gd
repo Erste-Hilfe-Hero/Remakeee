@@ -85,6 +85,7 @@ func run_settings() -> void:
 			"Fast battles: %s" % ("On" if GameState.fast_forward else "Off"),
 			"Retro filter: %s" % retro,
 			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
+			"Legal",
 		]
 		var idx: int = await pick_strings("Settings", entries)
 		match idx:
@@ -103,6 +104,21 @@ func run_settings() -> void:
 				var v: float = GameState.volume + 0.2
 				GameState.volume = 0.0 if v > 1.01 else v
 				GameState.apply_volume()
+			4:
+				await run_legal()
+
+## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
+func run_legal() -> void:
+	while true:
+		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences"] as Array[String])
+		match idx:
+			-1:
+				return
+			0:
+				await info(LegalInfo.links_text())
+			1:
+				for page: String in LegalInfo.pages(LegalInfo.licence_text()):
+					await info(page)
 
 ## Multi-line summary of a Spirling.
 static func summary(s: Spirling) -> String:

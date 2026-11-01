@@ -32,7 +32,7 @@
     "weight": 35
    },
    {
-    "species": "Breezel",
+    "species": "Zephlet",
     "min": 13,
     "max": 15,
     "weight": 30
@@ -61,7 +61,7 @@
     "weight": 35
    },
    {
-    "species": "Breezel",
+    "species": "Zephlet",
     "min": 2,
     "max": 4,
     "weight": 35
@@ -90,7 +90,7 @@
     "weight": 30
    },
    {
-    "species": "Breezel",
+    "species": "Zephlet",
     "min": 5,
     "max": 7,
     "weight": 30
@@ -137,7 +137,7 @@
     "weight": 20
    },
    {
-    "species": "Breezel",
+    "species": "Zephlet",
     "min": 11,
     "max": 12,
     "weight": 20

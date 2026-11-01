@@ -20,7 +20,7 @@
    "flag": "fern_gift",
    "lines": [
     "Bonding works best when a Spirling is worn down.",
-    "Tap with the pulse and it may trust you."
+    "Listen to its call and echo it back, and it may trust you."
    ]
   },
   "action": "give_item kin_charm 2",

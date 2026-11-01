@@ -105,16 +105,20 @@ func _layout_field() -> void:
 	var w: float = _field.size.x
 	var h: float = _field.size.y
 	var sprite: float = float(EraManager.battle_sprite_size())
-	_foe_strip.position = Vector2(MARGIN, MARGIN)
+	# Chimora's own arrangement: foe on the upper left, the player's Spirling on the lower right,
+	# info strips on the opposite sides (docs/legal/IP_PATENT_AUDIT.md, item 4).
 	_foe_strip.size = Vector2(w * 0.55, STRIP_HEIGHT)
-	_ff_button.position = Vector2(w - 18 - MARGIN, MARGIN)
+	_foe_strip.position = Vector2(w - _foe_strip.size.x - MARGIN, MARGIN)
+	_ff_button.position = Vector2(MARGIN, MARGIN)
 	_ff_button.size = Vector2(18, 12)
-	_foe_sprite.position = Vector2(w - sprite - MARGIN * 2, MARGIN + STRIP_HEIGHT - 6)
+	_foe_sprite.position = Vector2(MARGIN * 2, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
+	_foe_sprite.mirrored = true
 	_player_strip.size = Vector2(w - sprite - MARGIN * 5, STRIP_HEIGHT + 8)
-	_player_strip.position = Vector2(w - _player_strip.size.x - MARGIN, h - _player_strip.size.y - MARGIN)
-	_player_sprite.position = Vector2(MARGIN * 2, h - sprite - MARGIN * 2)
+	_player_strip.position = Vector2(MARGIN, h - _player_strip.size.y - MARGIN)
+	_player_sprite.position = Vector2(w - sprite - MARGIN * 2, h - sprite - MARGIN * 2)
 	_player_sprite.size = Vector2(sprite, sprite)
+	_player_sprite.mirrored = true
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 
 func _set_fast_forward(on: bool) -> void:
@@ -147,7 +151,7 @@ func _run() -> void:
 
 func _choose_action() -> BattleAction:
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER)
-	_text.show_prompt("What will %s do?" % me.display_name())
+	_text.show_prompt("Orders for %s?" % me.display_name())
 	_menu.refresh(model)
 	_menu.set_enabled(true)
 	var choice: Array = await _menu.chosen
@@ -212,7 +216,7 @@ func _bond() -> BattleAction:
 			return null
 		if use == 0:
 			charm = "kin_charm"
-	await _text.show_text("Reach out to %s... Tap with the pulse!" % model.active_spirling(BattleModel.Side.FOE).display_name())
+	await _text.show_text("Reach out to %s... Listen, then echo its call!" % model.active_spirling(BattleModel.Side.FOE).display_name())
 	_bond_game.target = _foe_sprite.texture()
 	var score: float = await _bond_game.run()
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm)
@@ -238,21 +242,21 @@ func _play_event(e: BattleEvent) -> void:
 			_foe_strip.set_spirling(foe)
 			if model.is_wild:
 				_foe_strip.visible = true
-				await _foe_sprite.step_out(false)
+				await _foe_sprite.step_out(true)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]
 			_sprite(side).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
 			_strip(side).set_spirling(s)
 			_strip(side).visible = true
-			await _sprite(side).step_out(side == BattleModel.Side.PLAYER)
+			await _sprite(side).step_out(side != BattleModel.Side.PLAYER)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SWAP_OUT:
 			await _text.show_text(e.describe())
-			await _sprite(side).step_back(side == BattleModel.Side.PLAYER)
+			await _sprite(side).step_back(side != BattleModel.Side.PLAYER)
 		BattleEvent.Type.MOVE_USED:
 			await _text.show_text(e.describe())
-			var dir: Vector2 = Vector2(8, -4) if side == BattleModel.Side.PLAYER else Vector2(-8, 4)
+			var dir: Vector2 = Vector2(-8, -4) if side == BattleModel.Side.PLAYER else Vector2(8, 4)
 			await _sprite(side).lunge(dir)
 		BattleEvent.Type.DAMAGE:
 			if not bool(e.data.get("status_tick", false)):

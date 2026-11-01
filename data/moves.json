@@ -1,6 +1,6 @@
 [
  {
-  "name": "Ember Snap",
+  "name": "Cinder Nip",
   "element": "EMBER",
   "kind": "PHYSICAL",
   "power": 40,
@@ -18,7 +18,7 @@
   "status_chance": 0.1
  },
  {
-  "name": "Bubble Pop",
+  "name": "Fizz Pop",
   "element": "TIDE",
   "kind": "FOCUS",
   "power": 40,
@@ -36,7 +36,7 @@
   "status_chance": 0.2
  },
  {
-  "name": "Moss Whip",
+  "name": "Lichen Lash",
   "element": "BLOOM",
   "kind": "PHYSICAL",
   "power": 40,
@@ -44,7 +44,7 @@
   "energy": 2
  },
  {
-  "name": "Spore Cloud",
+  "name": "Puffcap Haze",
   "element": "BLOOM",
   "kind": "STATUS",
   "power": 0,
@@ -54,7 +54,7 @@
   "status_chance": 1.0
  },
  {
-  "name": "Static Nip",
+  "name": "Crackle Bite",
   "element": "VOLT",
   "kind": "PHYSICAL",
   "power": 40,
@@ -72,7 +72,7 @@
   "energy": 2
  },
  {
-  "name": "Gust Slice",
+  "name": "Breeze Slice",
   "element": "GALE",
   "kind": "PHYSICAL",
   "power": 40,
@@ -101,7 +101,7 @@
   "status_chance": 1.0
  },
  {
-  "name": "Tackle Rush",
+  "name": "Headlong Charge",
   "element": "STONE",
   "kind": "PHYSICAL",
   "power": 35,
@@ -209,7 +209,7 @@
   "energy": 5
  },
  {
-  "name": "Static Field",
+  "name": "Charged Mist",
   "element": "VOLT",
   "kind": "STATUS",
   "power": 0,
@@ -299,7 +299,7 @@
   "energy": 6
  },
  {
-  "name": "Shade Claw",
+  "name": "Dusk Rake",
   "element": "UMBRA",
   "kind": "PHYSICAL",
   "power": 50,

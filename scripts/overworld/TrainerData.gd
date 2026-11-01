@@ -2,7 +2,7 @@ class_name TrainerData
 extends RefCounted
 ## Helpers for Tamer NPCs defined in map JSON. A Tamer is an NPC with a "team" or
 ## "team_by_starter" field:
-##   {"id": "bram", "trainer": "Hiker Bram", "team": [{"species": "Shalebat", "level": 7}],
+##   {"id": "bram", "trainer": "Ridgewalker Bram", "team": [{"species": "Shalebat", "level": 7}],
 ##    "money": 140, "sight": 3, "intro": "crowcrest/bram_intro", "defeat": "crowcrest/bram_defeat",
 ##    "warden": "cinder", "win_flags": ["some_flag"], "leaves": true, "ai": 2}
 ## Battles always start from the overworld and cut to the separate battle screen.
