@@ -1,0 +1,87 @@
+{
+ "name": "Saltmarsh",
+ "region": "veydal",
+ "backdrop": "lake",
+ "encounters": "saltmarsh",
+ "rows": [
+  "~~~~~++~~~~~",
+  "~%%~~++~~%%~",
+  "~%%%.++.%%%~",
+  "~~%..__..%~~",
+  "~~~.____.~~~",
+  "~%%%%+%%%%%~",
+  "~%~~~+~~~%%~",
+  "~%~~~++++++~",
+  "~%%%~~~~~+%~",
+  "~~%%%%%%.+.~",
+  "~~~~~~~..__~",
+  "~~%%%%.____~",
+  "_______._%%~",
+  "~S%%%~~~%%%~",
+  "~~~~~~~~~~~~"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 12,
+   "to": "brindlewick",
+   "tx": 10,
+   "ty": 6,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "tide_rift",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "tide_rift",
+   "tx": 6,
+   "ty": 11,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "reedcutter",
+   "x": 8,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "saltmarsh/reedcutter",
+   "sprite": "villager"
+  },
+  {
+   "id": "neve",
+   "x": 3,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "saltmarsh/neve",
+   "sprite": "ranger",
+   "trainer": "Diver Neve",
+   "intro": "saltmarsh/neve_intro",
+   "defeat": "saltmarsh/neve_defeat",
+   "team": [
+    {
+     "species": "Puddlet",
+     "level": 12
+    },
+    {
+     "species": "Breezel",
+     "level": 13
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 1,
+   "y": 13,
+   "dialogue": "saltmarsh/sign"
+  }
+ ]
+}

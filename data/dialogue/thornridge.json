@@ -1,12 +1,12 @@
 {
  "sign": [
   "THORNRIDGE",
-  "West: Cinder Rift",
-  "North: Tidewater Rift"
+  "Gorge village.",
+  "Upper terrace: Rest Pool and the Cinder hollow"
  ],
  "keeper": {
   "lines": [
-   "Keeper: Rest by the spring a while."
+   "Keeper: Rest by the pool a while."
   ],
   "action": "heal"
  },
@@ -16,20 +16,16 @@
   ],
   "action": "shop tonic strong_tonic remedy spark_drop revival_leaf kin_charm"
  },
- "guard": [
-  "Guard: The Tidewater Rift is too wild right now.",
-  "Seal the Cinder Rift first, then I'll let you through."
- ],
  "elder": {
   "lines": [
-   "Elder: Rifts are tears where wild energy leaks into Veydal.",
-   "A Warden guards each one. Prove yourself to a Warden and the Rift closes."
+   "Elder: The Cinder hollow is up the stairs. Its Warden, Orrin, hasn't said a word in weeks.",
+   "Elder: A Warden whose bond breaks becomes part of the Hush. Wake him, and he can help you mend the tear."
   ],
   "after_flag": {
-   "flag": "rift_tide_sealed",
+   "flag": "rift_cinder_sealed",
    "lines": [
-    "Elder: Both Rifts near Thornridge are quiet again.",
-    "Veydal owes you, young Tamer."
+    "Elder: Orrin laughed today. First time since the storm.",
+    "Elder: Veydal owes you, young cartographer."
    ]
   }
  }

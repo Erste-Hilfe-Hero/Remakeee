@@ -89,7 +89,7 @@ func run_bag() -> void:
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
 
-## Spirlog: every species with seen/bonded marks, plus the Tracker for the current route.
+## Spirlog: every species with seen/bonded marks, plus the Tracker for the current area.
 func run_spirlog() -> void:
 	while true:
 		var all: Array[SpirlingData] = []
@@ -100,7 +100,7 @@ func run_spirlog() -> void:
 		var bonded: int = 0
 		var entries: Array[Dictionary] = []
 		if not encounter_table.is_empty():
-			entries.append({"text": "Tracker: this route"})
+			entries.append({"text": "Tracker: this area"})
 		for sd: SpirlingData in all:
 			var e: Dictionary = GameState.spirlog.get(sd.species_name, {})
 			var is_seen: bool = bool(e.get("seen", false))

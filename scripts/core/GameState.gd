@@ -34,11 +34,11 @@ var inventory: Dictionary = {}
 var money: int = 0
 
 ## Overworld position.
-var current_map: String = "home"
+var current_map: String = "lighthouse"
 var player_cell: Vector2i = Vector2i(4, 4)
 var facing: String = "down"
 ## Where the team wakes up after a loss (last Rest Spring used).
-var heal_map: String = "home"
+var heal_map: String = "lighthouse"
 var heal_cell: Vector2i = Vector2i(4, 4)
 ## Story and world flags, e.g. "got_starter", "rift_1_sealed".
 var flags: Dictionary = {}
@@ -49,6 +49,9 @@ var rng := RandomNumberGenerator.new()
 var text_speed: TextSpeed = TextSpeed.NORMAL
 var fast_forward: bool = false
 var volume: float = 0.8
+
+## Mended Rifts needed before the storage box opens from the menu (end of Act I).
+const RIFTS_FOR_STORAGE: int = 2
 
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
@@ -61,6 +64,9 @@ func seal_rift(rift_id: String) -> bool:
 		return false
 	rifts_sealed.append(rift_id)
 	set_flag("rift_%s_sealed" % rift_id)
+	# Rifts can be mended in any order; the second one opens storage from the menu.
+	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
+		set_flag("pc_unlocked")
 	return true
 
 func items_allowed_in_battle() -> bool:
@@ -113,10 +119,10 @@ func reset() -> void:
 	difficulty = Difficulty.TAMER
 	inventory = {}
 	money = 0
-	current_map = "home"
+	current_map = "lighthouse"
 	player_cell = Vector2i(4, 4)
 	facing = "down"
-	heal_map = "home"
+	heal_map = "lighthouse"
 	heal_cell = Vector2i(4, 4)
 	flags = {}
 	play_time = 0.0
@@ -183,11 +189,11 @@ func from_dict(d: Dictionary) -> void:
 	for k: Variant in (d.get("inventory", {}) as Dictionary):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
-	current_map = str(d.get("map", "home"))
+	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))
 	facing = str(d.get("facing", "down"))
-	heal_map = str(d.get("heal_map", "home"))
+	heal_map = str(d.get("heal_map", "lighthouse"))
 	var hc: Array = d.get("heal_cell", [4, 4])
 	heal_cell = Vector2i(int(hc[0]), int(hc[1]))
 	flags = (d.get("flags", {}) as Dictionary).duplicate()

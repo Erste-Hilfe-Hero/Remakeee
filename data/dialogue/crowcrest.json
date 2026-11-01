@@ -1,0 +1,36 @@
+{
+ "sign": [
+  "CROWCREST",
+  "Mind the loose stones.",
+  "Up: Thornridge   Down: Fernstair"
+ ],
+ "kestra": [
+  "Kestra: Go on ahead. I want to sketch the tarn before it freezes."
+ ],
+ "kestra_intro": [
+  "Kestra: You're really going to close the Cinder Rift?",
+  "Kestra: Then show me you understand what you'd be shutting out. Talk is cheap up here!"
+ ],
+ "kestra_defeat": [
+  "Kestra: ...Alright. Your Spirlings trust you. That counts for something.",
+  "Kestra: Mend it if you must. But draw what you see in there first."
+ ],
+ "lio": [
+  "Lio: Gale Spirlings ride the wind, but they can't carry you. Nobody rides a Spirling here."
+ ],
+ "lio_intro": [
+  "Lio: You want a practice duel? Sure!"
+ ],
+ "lio_defeat": [
+  "Lio: Wow, okay. You earned that."
+ ],
+ "bram": [
+  "Bram: Stone types shrug off hits. Try Tide or Bloom moves on them."
+ ],
+ "bram_intro": [
+  "Bram: My Shalebats are tougher than these hills. Want to test them?"
+ ],
+ "bram_defeat": [
+  "Bram: Crumbled like gravel..."
+ ]
+}

@@ -1,0 +1,26 @@
+{
+ "sign": [
+  "BRINDLEWICK",
+  "Lake village of Veydal.",
+  "North: Fernstair   East: Saltmarsh"
+ ],
+ "ferry": [
+  "FERRY TO CORVANE",
+  "No crossings while the lake is restless."
+ ],
+ "fisher": [
+  "The fish stopped jumping the night the Rift opened.",
+  "Even the reeds sound quieter. That's the Hush, they say."
+ ],
+ "child": [
+  "My Puddlet won't answer when I call it anymore.",
+  "Grandpa Aldo says a Tamer with a strong bond can wake it up again."
+ ],
+ "kestra_dock": {
+  "lines": [
+   "Kestra: Two Rifts mended. The valley is calmer... and smaller.",
+   "Kestra: There's a third one, up north past the crest. Bigger than both.",
+   "Kestra: I still think something lives on the other side. When the ferry runs again, we find out together."
+  ]
+ }
+}

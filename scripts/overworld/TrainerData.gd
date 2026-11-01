@@ -3,8 +3,8 @@ extends RefCounted
 ## Helpers for Tamer NPCs defined in map JSON. A Tamer is an NPC with a "team" or
 ## "team_by_starter" field:
 ##   {"id": "bram", "trainer": "Hiker Bram", "team": [{"species": "Shalebat", "level": 7}],
-##    "money": 140, "sight": 3, "intro": "route_2/bram_intro", "defeat": "route_2/bram_defeat",
-##    "warden": "cinder", "win_flags": ["pc_unlocked"], "leaves": true, "ai": 2}
+##    "money": 140, "sight": 3, "intro": "crowcrest/bram_intro", "defeat": "crowcrest/bram_defeat",
+##    "warden": "cinder", "win_flags": ["some_flag"], "leaves": true, "ai": 2}
 ## Battles always start from the overworld and cut to the separate battle screen.
 
 ## Default money per foe level when the map gives none.
@@ -22,7 +22,7 @@ static func beaten_flag(def: Dictionary, map_id: String) -> String:
 static func is_beaten(def: Dictionary, map_id: String, flags: Dictionary) -> bool:
 	return bool(flags.get(beaten_flag(def, map_id), false))
 
-## The team entries for this Tamer; the rival picks hers from the player's starter.
+## The team entries for this Tamer ("team_by_starter" picks one from the player's starter).
 static func team_entries(def: Dictionary, starter: String) -> Array:
 	if def.has("team_by_starter"):
 		var by: Dictionary = def.team_by_starter

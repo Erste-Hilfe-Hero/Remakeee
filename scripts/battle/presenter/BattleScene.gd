@@ -13,14 +13,15 @@ const STRIP_HEIGHT: int = 22
 const MARGIN: int = 4
 const FAST_SPEED: float = 3.0
 const DEMO_SEED: int = 2024
-const FIELD_COLOR: Color = Color("e6ecd6")
-const GROUND_COLOR: Color = Color("c9d5ad")
 
 var model: BattleModel
+## Backdrop for where the battle started (field, lake, ridge, ember). Set before adding.
+var backdrop: String = "field"
 ## Set to true to quit the app when the battle ends (standalone demo).
 var quit_on_finish: bool = false
 
 var _field: Control
+var _backdrop: BattleBackdrop
 var _foe_sprite: SpirlingSprite
 var _player_sprite: SpirlingSprite
 var _foe_strip: InfoStrip
@@ -48,7 +49,7 @@ func setup(p_model: BattleModel) -> void:
 
 func _build() -> void:
 	var bg := ColorRect.new()
-	bg.color = FIELD_COLOR
+	bg.color = UITheme.BG
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
 	var col := VBoxContainer.new()
@@ -66,14 +67,9 @@ func _build() -> void:
 	_menu = CommandMenu.new()
 	col.add_child(_menu)
 
-	var ground_foe := ColorRect.new()
-	ground_foe.name = "GroundFoe"
-	ground_foe.color = GROUND_COLOR
-	_field.add_child(ground_foe)
-	var ground_player := ColorRect.new()
-	ground_player.name = "GroundPlayer"
-	ground_player.color = GROUND_COLOR
-	_field.add_child(ground_player)
+	_backdrop = BattleBackdrop.new()
+	_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_field.add_child(_backdrop)
 
 	_foe_sprite = SpirlingSprite.new()
 	_player_sprite = SpirlingSprite.new()
@@ -119,12 +115,7 @@ func _layout_field() -> void:
 	_player_strip.position = Vector2(w - _player_strip.size.x - MARGIN, h - _player_strip.size.y - MARGIN)
 	_player_sprite.position = Vector2(MARGIN * 2, h - sprite - MARGIN * 2)
 	_player_sprite.size = Vector2(sprite, sprite)
-	var gf: ColorRect = _field.get_node("GroundFoe")
-	gf.position = _foe_sprite.position + Vector2(-6, sprite - 8)
-	gf.size = Vector2(sprite + 12, 10)
-	var gp: ColorRect = _field.get_node("GroundPlayer")
-	gp.position = _player_sprite.position + Vector2(-6, sprite - 8)
-	gp.size = Vector2(sprite + 12, 10)
+	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 
 func _set_fast_forward(on: bool) -> void:
 	GameState.fast_forward = on
@@ -222,6 +213,7 @@ func _bond() -> BattleAction:
 		if use == 0:
 			charm = "kin_charm"
 	await _text.show_text("Reach out to %s... Tap with the pulse!" % model.active_spirling(BattleModel.Side.FOE).display_name())
+	_bond_game.target = _foe_sprite.texture()
 	var score: float = await _bond_game.run()
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm)
 

@@ -1,7 +1,7 @@
 class_name EncounterTable
 extends RefCounted
-## Per-route spawn tables from data/encounters.json:
-##   {"route_1": {"rate": 0.12, "spawns": [{"species": "Zippit", "min": 2, "max": 4, "weight": 30}]}}
+## Per-map spawn tables from data/encounters.json:
+##   {"fernstair": {"rate": 0.12, "spawns": [{"species": "Zippit", "min": 2, "max": 4, "weight": 30}]}}
 
 const PATH: String = "res://data/encounters.json"
 

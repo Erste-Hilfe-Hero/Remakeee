@@ -1,0 +1,42 @@
+{
+ "name": "Map House",
+ "region": "veydal",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "brindlewick",
+   "tx": 2,
+   "ty": 5,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "kestra",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "map_house/kestra",
+   "sprite": "ranger"
+  }
+ ],
+ "signs": [
+  {
+   "x": 1,
+   "y": 1,
+   "dialogue": "map_house/maps"
+  }
+ ]
+}
