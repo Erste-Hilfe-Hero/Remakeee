@@ -13,7 +13,8 @@ summary="${GITHUB_STEP_SUMMARY:-/dev/stdout}"
   echo
   echo '| Size (KB) | Entry |'
   echo '| ---: | --- |'
-  command -v unzip >/dev/null && unzip -l "$apk" | awk 'NR>3 && $4 != "" { printf "| %d | %s |\n", $1 / 1024, $4 }' | sort -t'|' -k2 -nr | head -12
+  # awk instead of head: head closing the pipe early kills sort with SIGPIPE (exit 141) under pipefail.
+  command -v unzip >/dev/null && unzip -l "$apk" | awk 'NR>3 && $4 != "" { printf "| %d | %s |\n", $1 / 1024, $4 }' | sort -t'|' -k2 -nr | awk 'NR <= 12'
 } >> "$summary"
 if awk "BEGIN { exit !($bytes > $budget_mb * 1048576) }"; then
   echo "::error::APK is ${mb} MB, over the ${budget_mb} MB budget. See docs/RELEASE.md (APK size budget) or raise the budget on purpose."
