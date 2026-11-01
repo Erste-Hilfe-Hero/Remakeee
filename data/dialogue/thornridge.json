@@ -14,7 +14,27 @@
   "lines": [
    "Trader: Supplies for the road! Your bag holds as much as you like."
   ],
-  "action": "shop tonic strong_tonic remedy spark_drop revival_leaf kin_charm bark_wrap iron_burr swift_feather keen_lens"
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel dry_towel wake_bell spark_drop revival_leaf kin_charm"
+ },
+ "sparkseer": {
+  "lines": [
+   "Sparkseer: Every Spirling carries a spark of the Rift. Let me look at yours."
+  ],
+  "action": "spark_read",
+  "after_flag": {
+   "flag": "spark_hint",
+   "lines": [
+    "Sparkseer: A Spark Charm brightens a spark that runs faint. The crystal stall sells them."
+   ]
+  },
+  "flag": "spark_hint"
+ },
+ "crystals": {
+  "lines": [
+   "Crystal seller: Echo Crystals keep a move's echo. Teach it as often as you like!",
+   "Crystal seller: And things for Spirlings to hold, brews, pearls..."
+  ],
+  "action": "shop echo_ember echo_tide echo_bloom echo_volt echo_stone echo_gale echo_lumen echo_umbra spark_charm tide_pearl bark_wrap iron_burr swift_feather keen_lens power_brew guard_brew focus_brew dash_brew"
  },
  "elder": {
   "lines": [

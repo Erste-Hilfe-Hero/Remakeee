@@ -24,11 +24,20 @@ static func stage(sd: SpirlingData) -> int:
 		cur = prev
 	return st
 
+## Item evolutions have no level; the sim treats them as evolving around this level.
+const ITEM_EVOLVE_LEVEL: int = 25
+
+## Level at which [param sd] evolves for the sim (its evolve level, or ITEM_EVOLVE_LEVEL), 0 if never.
+static func evolve_at(sd: SpirlingData) -> int:
+	if sd.evolves_to == null:
+		return 0
+	return sd.evolve_level if sd.evolve_level > 0 else ITEM_EVOLVE_LEVEL
+
 ## Lowest level this form can have: the evolve level of the form before it (1 for base forms).
 static func min_level(sd: SpirlingData) -> int:
 	for other: SpirlingData in Database.spirlings.values():
 		if other.evolves_to != null and other.evolves_to.species_name == sd.species_name:
-			return other.evolve_level
+			return evolve_at(other)
 	return 1
 
 ## Runs [param rounds] battles per ordered species pair of the same evolution stage at
@@ -51,12 +60,17 @@ static func run(level: int, rounds: int, seed_value: int, only: Array[String] = 
 	var battles: int = 0
 	var draws: int = 0
 	var total_turns: int = 0
-	# Skip forms that can't exist yet at this level (e.g. a stage-3 form at Lv8).
 	# Skip forms that can't exist yet, and forms a player would already have evolved.
 	names = names.filter(func(n: String) -> bool:
 		var sd: SpirlingData = Database.species(n)
-		var evolved: bool = sd.evolves_to != null and sd.evolve_level > 0 and level >= sd.evolve_level
+		var evolved: bool = evolve_at(sd) > 0 and level >= evolve_at(sd)
 		return level >= min_level(sd) and not evolved)
+	# A form alone in its stage has nobody to fight; leave it out of the report.
+	var per_stage: Dictionary = {}
+	for n: String in names:
+		var st: int = stage(Database.species(n))
+		per_stage[st] = int(per_stage.get(st, 0)) + 1
+	names = names.filter(func(n: String) -> bool: return int(per_stage[stage(Database.species(n))]) > 1)
 	for n: String in species.keys():
 		if not n in names:
 			species.erase(n)

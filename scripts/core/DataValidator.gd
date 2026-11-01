@@ -67,8 +67,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 		var evo: Variant = s.get("evolves_to")
 		if evo != null and not species_names.has(str(evo)):
 			errors.append("spirling '%s': evolves_to '%s' does not exist" % [sname, evo])
-		if evo != null and int(s.get("evolve_level", 0)) <= 0:
-			errors.append("spirling '%s': evolves but has no evolve_level" % sname)
+		if evo != null and int(s.get("evolve_level", 0)) <= 0 and str(s.get("evolve_item", "")).is_empty():
+			errors.append("spirling '%s': evolves but has no evolve_level or evolve_item" % sname)
 		var learnset: Variant = s.get("learnset", {})
 		if learnset is Dictionary and (learnset as Dictionary).is_empty():
 			errors.append("spirling '%s': empty learnset" % sname)

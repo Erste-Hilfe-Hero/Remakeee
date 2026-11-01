@@ -120,5 +120,157 @@
    "crit_mult": 2.0
   },
   "price": 900
+ },
+ {
+  "id": "max_tonic",
+  "name": "Max Tonic",
+  "description": "Restores all HP.",
+  "battle": true,
+  "heal": 999,
+  "price": 1500
+ },
+ {
+  "id": "cooling_gel",
+  "name": "Cooling Gel",
+  "description": "Cures Scorch.",
+  "battle": true,
+  "cure": "scorch",
+  "price": 120
+ },
+ {
+  "id": "dry_towel",
+  "name": "Dry Towel",
+  "description": "Cures Soak.",
+  "battle": true,
+  "cure": "soak",
+  "price": 120
+ },
+ {
+  "id": "wake_bell",
+  "name": "Wake Bell",
+  "description": "Cures Drowse.",
+  "battle": true,
+  "cure": "drowse",
+  "price": 120
+ },
+ {
+  "id": "power_brew",
+  "name": "Power Brew",
+  "description": "Raises the active Spirling's ATK in battle.",
+  "battle": true,
+  "stage": {
+   "atk": 1
+  },
+  "price": 500
+ },
+ {
+  "id": "guard_brew",
+  "name": "Guard Brew",
+  "description": "Raises the active Spirling's DEF in battle.",
+  "battle": true,
+  "stage": {
+   "def": 1
+  },
+  "price": 500
+ },
+ {
+  "id": "focus_brew",
+  "name": "Focus Brew",
+  "description": "Raises the active Spirling's FOC in battle.",
+  "battle": true,
+  "stage": {
+   "foc": 1
+  },
+  "price": 500
+ },
+ {
+  "id": "dash_brew",
+  "name": "Dash Brew",
+  "description": "Raises the active Spirling's SPD in battle.",
+  "battle": true,
+  "stage": {
+   "spd": 1
+  },
+  "price": 500
+ },
+ {
+  "id": "tide_pearl",
+  "name": "Tide Pearl",
+  "description": "A pearl that hums with the sea. Some Spirlings change when they hold it close.",
+  "battle": false,
+  "evolves": true,
+  "price": 2500
+ },
+ {
+  "id": "spark_charm",
+  "name": "Spark Charm",
+  "description": "Brightens one Spark value of a Spirling (+3).",
+  "battle": false,
+  "spark": 3,
+  "price": 2000
+ },
+ {
+  "id": "echo_ember",
+  "name": "Echo Crystal: Flare Lash",
+  "description": "Teaches Flare Lash to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Flare Lash",
+  "price": 3000
+ },
+ {
+  "id": "echo_tide",
+  "name": "Echo Crystal: Brine Jet",
+  "description": "Teaches Brine Jet to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Brine Jet",
+  "price": 3000
+ },
+ {
+  "id": "echo_bloom",
+  "name": "Echo Crystal: Sap Draw",
+  "description": "Teaches Sap Draw to a Bloom Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sap Draw",
+  "price": 3000
+ },
+ {
+  "id": "echo_volt",
+  "name": "Echo Crystal: Surge Fang",
+  "description": "Teaches Surge Fang to a Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Surge Fang",
+  "price": 3000
+ },
+ {
+  "id": "echo_stone",
+  "name": "Echo Crystal: Quake Stomp",
+  "description": "Teaches Quake Stomp to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Quake Stomp",
+  "price": 3000
+ },
+ {
+  "id": "echo_gale",
+  "name": "Echo Crystal: Cyclone Edge",
+  "description": "Teaches Cyclone Edge to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Cyclone Edge",
+  "price": 3000
+ },
+ {
+  "id": "echo_lumen",
+  "name": "Echo Crystal: Prism Ray",
+  "description": "Teaches Prism Ray to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Prism Ray",
+  "price": 3000
+ },
+ {
+  "id": "echo_umbra",
+  "name": "Echo Crystal: Gloom Pulse",
+  "description": "Teaches Gloom Pulse to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gloom Pulse",
+  "price": 3000
  }
 ]

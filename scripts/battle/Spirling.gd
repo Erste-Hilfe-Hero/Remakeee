@@ -9,6 +9,8 @@ const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
 const MAX_LEVEL: int = 100
+## Chance that a wild Spirling is a rare Prism colour variant (cosmetic only).
+const PRISM_CHANCE: float = 1.0 / 256.0
 
 ## Chimora's own stat curve:
 ##   HP    = floor((base + spark/2) * (L + 18) / 20)
@@ -37,6 +39,8 @@ var moves: Array[MoveData] = []
 var uid: String = ""
 ## Held item id ("" for none). Only items with a "held" block can be held.
 var held: String = ""
+## Rare colour variant. Cosmetic only, never stronger.
+var prism: bool = false
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
 
@@ -146,9 +150,15 @@ func level_up() -> Array[MoveData]:
 			learned.append(mv)
 	return learned
 
-## True if this Spirling has reached its evolution level.
-func can_evolve() -> bool:
-	return data.evolves_to != null and data.evolve_level > 0 and level >= data.evolve_level
+## True if this Spirling has reached its evolution level ([param map_id]: where the battle was,
+## for species that only evolve in one place). Item evolutions use can_evolve_with().
+func can_evolve(map_id: String = "") -> bool:
+	if data.evolves_to == null or data.evolve_level <= 0 or level < data.evolve_level:
+		return false
+	return data.evolve_map.is_empty() or data.evolve_map == map_id
+
+func can_evolve_with(item_id: String) -> bool:
+	return data.evolves_to != null and not data.evolve_item.is_empty() and data.evolve_item == item_id
 
 ## Evolves in place (new species, same Spark, level, moves and HP fraction).
 func evolve() -> void:
@@ -172,6 +182,7 @@ func to_dict() -> Dictionary:
 		"moves": move_names,
 		"uid": uid,
 		"held": held,
+		"prism": prism,
 	}
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -195,5 +206,6 @@ static func from_dict(d: Dictionary) -> Spirling:
 		s.moves = sd.default_moves(s.level, MAX_MOVES)
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
+	s.prism = bool(d.get("prism", false))
 	s.hp = clampi(int(d.get("hp", s.max_hp())), 0, s.max_hp())
 	return s

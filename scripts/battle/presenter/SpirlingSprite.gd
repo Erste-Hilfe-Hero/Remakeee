@@ -6,6 +6,8 @@ extends Control
 const STEP_OUT_DISTANCE: float = 40.0
 const STEP_TIME: float = 0.3
 const HIT_FLASHES: int = 3
+## Prism variants are drawn with a warm tint over the era palette.
+const PRISM_TINT: Color = Color(1.0, 0.78, 0.5)
 
 var spirling: Spirling
 var facing: String = "front"
@@ -74,7 +76,7 @@ func _draw() -> void:
 		return
 	var r := Rect2(Vector2.ZERO, size)
 	if _texture != null:
-		draw_texture_rect(_texture, r, false)
+		draw_texture_rect(_texture, r, false, PRISM_TINT if spirling.prism else Color.WHITE)
 		return
 	var els: Array[int] = spirling.elements()
 	draw_rect(r, Elements.color(els[0]))

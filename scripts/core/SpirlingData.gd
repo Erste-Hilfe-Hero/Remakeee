@@ -17,6 +17,14 @@ const DEFAULT_BOND_RATE: float = 0.45
 @export var bond_rate: float = DEFAULT_BOND_RATE
 ## Passive trait id (see BattleRules.TRAITS), or "".
 @export var trait_id: String = ""
+## Item that makes it evolve when used on it (Bag), or "". Works at any level.
+@export var evolve_item: String = ""
+## If set, the level evolution only happens after a battle in this map.
+@export var evolve_map: String = ""
+## Spirlog entry.
+@export var lore: String = ""
+@export var height: String = ""
+@export var habitat: String = ""
 ## XP granted when defeated, before the level factor.
 @export var xp_yield: int = 50
 ## Learnset as two parallel arrays (level, move), sorted by level.

@@ -42,6 +42,7 @@ func _ready() -> void:
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
+		"spark_read": _action_spark_read,
 	}
 	_build()
 	if GameState.party.is_empty():
@@ -435,6 +436,13 @@ func _action_set_flag(args: PackedStringArray, _speaker: NPC) -> void:
 	for f: String in args:
 		GameState.set_flag(f)
 
+## The Sparkseer reads each party member's hidden Spark values in words.
+func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:
+	var lines: Array[String] = []
+	for s: Spirling in GameState.party:
+		lines.append(GameState.spark_reading(s))
+	await say(lines)
+
 ## Shop: "shop item_a item_b ..." sells those items for their JSON price. The bag has no limit.
 func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
@@ -593,7 +601,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		await say(["You hurried back to rest...", "Your team is rested again."] as Array[String])
 		return
 	for s: Spirling in GameState.party:
-		if s.can_evolve() and not s.is_fainted():
+		if s.can_evolve(map.id) and not s.is_fainted():
 			var old_name: String = s.display_name()
 			await _fade_to(0.0)
 			s.evolve()
