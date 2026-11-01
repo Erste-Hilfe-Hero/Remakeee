@@ -22,12 +22,15 @@ var display_hp: float = 1.0
 var max_hp: int = 1
 var energy: int = 0
 var spirling_name: String = ""
+## Element symbols drawn after the name (shape, not colour, tells them apart).
+var elements: Array[int] = []
 var level: int = 1
 var status: String = ""
 var speed_scale: float = 1.0
 
 func set_spirling(s: Spirling) -> void:
 	spirling_name = s.display_name()
+	elements = s.elements()
 	level = s.level
 	max_hp = s.max_hp()
 	display_hp = s.hp
@@ -66,6 +69,8 @@ func _draw() -> void:
 	var y_text: float = float(fs)
 	_draw_plate()
 	draw_string(font, Vector2(0, y_text), spirling_name, HORIZONTAL_ALIGNMENT_LEFT, w * 0.6, fs, UITheme.INK)
+	var name_w: float = minf(font.get_string_size(spirling_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x, w * 0.6)
+	ElementIcons.draw_row(self, elements, Vector2(name_w + 2.0, y_text - ElementIcons.SIZE), UITheme.INK)
 	var right: String = "Lv%d" % level
 	if not status.is_empty():
 		right = StatusRules.label(status).substr(0, 3).to_upper() + " " + right

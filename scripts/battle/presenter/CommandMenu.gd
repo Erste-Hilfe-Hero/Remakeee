@@ -12,6 +12,8 @@ const PANEL_HEIGHT: int = 2 * MOVE_BUTTON_HEIGHT + SMALL_BUTTON_HEIGHT + 2 * 2 +
 var _content: VBoxContainer
 
 var _move_buttons: Array[Button] = []
+## Element symbol in each move button's bottom-left corner (keeps the full width for the name).
+var _move_icons: Array[TextureRect] = []
 var _swap: Button
 var _item: Button
 var _bond: Button
@@ -38,6 +40,11 @@ func _ready() -> void:
 		b.pressed.connect(func() -> void: chosen.emit(BattleAction.Kind.MOVE, idx))
 		grid.add_child(b)
 		_move_buttons.append(b)
+		var icon := TextureRect.new()
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon.position = Vector2(2, MOVE_BUTTON_HEIGHT - ElementIcons.SIZE - 4)
+		b.add_child(icon)
+		_move_icons.append(icon)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 2)
 	v.add_child(row)
@@ -84,10 +91,12 @@ func refresh(model: BattleModel) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			b.text = "%s\n%s" % [mv.move_name, move_line(mv, me.energy, mult)]
+			_move_icons[i].texture = ElementIcons.outlined(mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv)
 		else:
 			b.text = "-"
+			_move_icons[i].texture = null
 			b.disabled = true
 	var kinds: Array[int] = []
 	for a: BattleAction in model.legal_actions(BattleModel.Side.PLAYER):
@@ -99,6 +108,7 @@ func refresh(model: BattleModel) -> void:
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
 		_move_buttons[0].text = "Rest (+%d)" % BattleModel.REST_ENERGY
+		_move_icons[0].texture = null
 		_move_buttons[0].disabled = false
 	for b: Button in _move_buttons + [_swap, _item, _bond, _run]:
 		if not b.disabled:
