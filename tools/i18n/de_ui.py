@@ -26,7 +26,8 @@ T = {
 "Pad opacity: %d%%": "Steuerkreuz-Deckkraft: %d%%",
 "Left-handed: %s": "Linkshändig: %s", "Tap to walk: %s": "Tippen zum Laufen: %s",
 "Language: %s": "Sprache: %s", "Language": "Sprache",
-"Music": "Musik",
+"Music": "Musik", "Sound effects": "Soundeffekte", "Cries": "Rufe",
+"Sound test...": "Soundtest...", "Sound test": "Soundtest", "Meet a Spirling to hear its cry.": "Triff einen Spirling, um seinen Ruf zu hören.",
 # Pause menu
 "Goals": "Ziele", "Team": "Team", "Spirlog": "Spirlog", "Bag": "Tasche", "Save": "Speichern",
 "Storage": "Box", "Travel": "Reisen",
@@ -180,6 +181,6 @@ T = {
 # Strings the extractor finds that stay the same in every language (names, node and theme ids, debug text).
 KEEP = ["Label", "Button", "PanelContainer", "Panel", "LineEdit", "Ground", "Entities", "Shade", "Player",
 	"Rowan", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dx", "Lv%d", "%s Lv%d", "%s Lv%d %d/%d",
-	"%s Lv%d %d/%d%s", "%s_sealed", "cannot open %s (%s)", "rename failed: %s", "Battle log\n\n", "\n\n(tap to close)",
+	"%s Lv%d %d/%d%s", "%s_sealed", "%s_era%d", "cannot open %s (%s)", "rename failed: %s", "Battle log\n\n", "\n\n(tap to close)",
 	" sharply!", "%s's %s won't go any %s!", "Item", "Auto", "Log", "Team", "Spirlog", "Normal", "Level", "Name",
 	"%s: %s.", "%s   Lv %d"]
