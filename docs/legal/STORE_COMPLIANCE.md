@@ -96,7 +96,8 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
 
 Regeln (siehe auch `docs/IP_HYGIENE.md` Abschnitt 5): keine fremden Spiele- oder Markennamen im Titel, in
 der Beschreibung, in Keywords, Screenshots oder Anzeigen; keine Vergleiche („wie X“, „X-Remake“).
-Online-Pflicht offen nennen.
+Online-Pflicht offen nennen. Apple lehnt Metadaten mit fremden Marken oder Vergleichen ab (Guideline
+2.3.7); in Deutschland wäre es zusätzlich unlautere Anlehnung (UWG).
 
 **Kurzbeschreibung (DE, max. 80 Zeichen):**
 > Verbünde dich mit Spirlings und versiegle die Risse – ein Retro-Pixel-Abenteuer.

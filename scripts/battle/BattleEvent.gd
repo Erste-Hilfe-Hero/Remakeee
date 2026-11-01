@@ -38,7 +38,7 @@ func describe() -> String:
 		Type.MISSED:
 			return "%s missed!" % who
 		Type.NO_TARGET:
-			return "But there was no target..."
+			return "The move found nothing to strike."
 		Type.DAMAGE:
 			var eff: float = float(data.get("eff", 1.0))
 			var tail: String = ""
