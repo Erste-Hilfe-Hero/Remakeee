@@ -4,10 +4,34 @@
   "Boardwalk to the Tidewater hollow.",
   "Wild Spirlings here are strong. Travel with care."
  ],
- "reedcutter": [
-  "The water runs uphill toward the hollow since the storm.",
-  "Spirlings hide in the reeds. Wade through and one may come out."
- ],
+ "reed_find": {
+  "lines": [
+   "Bobbing in the reeds: a Power Brew, still sealed!"
+  ],
+  "action": "give_item power_brew 1",
+  "flag": "marsh_reed_find",
+  "once": true,
+  "after_flag": {
+   "flag": "marsh_reed_find",
+   "lines": [
+    "Only reeds and a curious frog."
+   ]
+  }
+ },
+ "reedcutter": {
+  "lines": [
+   "The water runs uphill toward the hollow since the storm.",
+   "Spirlings hide in the reeds. Wade through and one may come out.",
+   "My lamp drowned in the flood. A Wickit's light would see me home. Know one?"
+  ],
+  "action": "quest_show reedcutter Wickit echo_lumen 1",
+  "after_flag": {
+   "flag": "q_reedcutter_done",
+   "lines": [
+    "I still see that little light when I close my eyes. Thank you."
+   ]
+  }
+ },
  "neve": {
   "lines": [
    "Neve: Good fight. Here, a diver's Grapple Line. Hook it on a far post and pull yourself over the water.",

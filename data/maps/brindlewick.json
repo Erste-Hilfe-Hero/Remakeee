@@ -99,6 +99,15 @@
    "dialogue": "brindlewick/kestra_dock",
    "sprite": "ranger",
    "show_flag": "pc_unlocked"
+  },
+  {
+   "id": "ines",
+   "x": 10,
+   "y": 12,
+   "facing": "left",
+   "dialogue": "brindlewick/ines",
+   "sprite": "warden",
+   "show_flag": "kestra_dock_talk"
   }
  ],
  "signs": [

@@ -101,6 +101,11 @@
    "x": 2,
    "y": 11,
    "dialogue": "thornridge/sign"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "dialogue": "thornridge/rock_find"
   }
  ]
 }

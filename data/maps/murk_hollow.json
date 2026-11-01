@@ -6,9 +6,9 @@
  "encounters": "murk_hollow",
  "rows": [
   "@@@@@@@@@@@@",
-  "@@::.S...:@@",
-  "@::@....@::@",
-  "@::..__..::@",
+  "@L..S.L@.:.@",
+  "@:..._....:@",
+  "@L..__..@@@@",
   "@@@@@__@@@@@",
   "@:...__...:@",
   "@::..__..::@",
@@ -70,14 +70,34 @@
  ],
  "signs": [
   {
-   "x": 5,
+   "x": 4,
    "y": 1,
    "dialogue": "murk_hollow/sign_old"
   },
   {
-   "x": 6,
+   "x": 2,
    "y": 2,
    "dialogue": "murk_hollow/gallery_find"
+  },
+  {
+   "x": 6,
+   "y": 1,
+   "dialogue": "murk_hollow/lamp_1"
+  },
+  {
+   "x": 1,
+   "y": 1,
+   "dialogue": "murk_hollow/lamp_2"
+  },
+  {
+   "x": 1,
+   "y": 3,
+   "dialogue": "murk_hollow/lamp_3"
+  },
+  {
+   "x": 10,
+   "y": 1,
+   "dialogue": "murk_hollow/nook_find"
   }
  ],
  "gear_spots": [
@@ -90,6 +110,13 @@
    "x": 6,
    "y": 4,
    "gear": "storm_lantern"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 7,
+   "y": 2,
+   "open_flag": "hollow_lamps"
   }
  ]
 }

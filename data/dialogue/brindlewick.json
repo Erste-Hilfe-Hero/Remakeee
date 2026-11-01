@@ -8,11 +8,21 @@
   "FERRY TO CORVANE",
   "No crossings while the lake is restless."
  ],
- "fisher": [
-  "The fish stopped jumping the night the Rift opened.",
-  "Even the reeds sound quieter. That's the Hush, they say.",
-  "Something glints on the reed islet west of the pier. Too far to wade, though."
- ],
+ "fisher": {
+  "lines": [
+   "The fish stopped jumping the night the Rift opened.",
+   "Even the reeds sound quieter. That's the Hush, they say.",
+   "Something glints on the reed islet west of the pier. Too far to wade, though.",
+   "Say, have you seen a Kelpup? The pups used to bark at my boat. Bring one by, would you?"
+  ],
+  "action": "quest_show fisher Kelpup max_tonic 2",
+  "after_flag": {
+   "flag": "q_fisher_done",
+   "lines": [
+    "That Kelpup of yours barked at my boat. Just like old times."
+   ]
+  }
+ },
  "islet": {
   "lines": [
    "Tangled in the reeds: a Revival Leaf!"
@@ -31,6 +41,13 @@
   "My Puddlet won't answer when I call it anymore.",
   "Grandpa Aldo says a Tamer with a strong bond can wake it up again."
  ],
+ "ines": {
+  "lines": [
+   "Ines: The lighthouse keeps old Rift echoes. I can wake them for you.",
+   "Ines: Five Tamers' echoes in a row, no rest in between. They grow with you."
+  ],
+  "action": "gauntlet"
+ },
  "kestra_dock": {
   "lines": [
    "Kestra: Two Rifts mended. The valley is calmer... and smaller.",
