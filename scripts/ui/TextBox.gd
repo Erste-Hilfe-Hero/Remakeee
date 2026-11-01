@@ -26,6 +26,8 @@ func _ready() -> void:
 	_label = Label.new()
 	# Text is translated once in show_text() so the typewriter counts the shown characters.
 	_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	# Screen readers announce each new line as it appears (item 77).
+	_label.accessibility_live = AccessibilityServer.LIVE_POLITE
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	_label.size_flags_vertical = Control.SIZE_EXPAND_FILL

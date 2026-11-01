@@ -108,6 +108,22 @@
    "dialogue": "brindlewick/ines",
    "sprite": "warden",
    "show_flag": "kestra_dock_talk"
+  },
+  {
+   "id": "crier",
+   "x": 4,
+   "y": 8,
+   "facing": "down",
+   "dialogue": "brindlewick/crier",
+   "sprite": "villager"
+  },
+  {
+   "id": "wynn",
+   "x": 7,
+   "y": 12,
+   "facing": "down",
+   "dialogue": "brindlewick/wynn",
+   "sprite": "ranger"
   }
  ],
  "signs": [

@@ -47,6 +47,8 @@ func _ready() -> void:
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
 		"gauntlet": _action_gauntlet,
+		"weekly": _action_weekly,
+		"season": _action_season,
 	}
 	_build()
 	if GameState.party.is_empty():
@@ -281,7 +283,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 			if wild != null:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng)
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, Season.boosted(Season.current()))
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
@@ -337,10 +339,23 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	if entry.has("flag"):
 		GameState.set_flag(str(entry.flag))
 	refresh_shade()
+	await announce_achievements()
 	await announce_goal_if_changed(goal_before)
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
+
+## Shows newly earned achievements (item 90).
+func announce_achievements() -> void:
+	var fresh: Array[String] = Achievements.check()
+	if fresh.is_empty():
+		return
+	Sound.sfx("level_up")
+	var lines: Array[String] = []
+	for t: String in fresh:
+		lines.append("Achievement: %s" % t)
+	await say(lines)
+	_text.visible = false
 
 ## Shows "New goal: ..." when the story goal moved on since [param before].
 func announce_goal_if_changed(before: int) -> void:
@@ -523,6 +538,63 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	elif wins > best:
 		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
 
+## Weekly challenge (item 88): three echo Tamers that are the same for everyone this week.
+func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
+	var week: String = WeeklyChallenge.this_week()
+	var top: int = 1
+	for s: Spirling in GameState.party:
+		top = maxi(top, s.level)
+	var ch := WeeklyChallenge.new(week, top)
+	var rec: Dictionary = GameState.records.get("weekly", {})
+	if str(rec.get("week", "")) != week:
+		rec = {"week": week, "best": 0, "claimed": false}
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var go: bool = await menu.confirm("This week: %s, rule %s. Three echoes at Lv%d. Best this week: %d of %d. Try?" % [
+		BattleRules.FIELDS[ch.field].label, BattleRules.RULES[ch.rule].label, ch.level, int(rec.best), WeeklyChallenge.ROUNDS])
+	menu.queue_free()
+	if not go:
+		return
+	GameState.heal_party()
+	await say(["Your team is fully rested."] as Array[String])
+	var wins: int = 0
+	while wins < WeeklyChallenge.ROUNDS:
+		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 2, "rule": ch.rule, "field": ch.field}
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		wins += 1
+	rec.best = maxi(int(rec.best), wins)
+	if wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
+		rec.claimed = true
+		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1
+		GameState.money += WeeklyChallenge.PRIZE
+		await say(["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE] as Array[String])
+		await _action_give_item([ch.reward_item(), "1"] as PackedStringArray, null)
+	elif wins >= WeeklyChallenge.ROUNDS:
+		await say(["Cleared again! The prize comes back next week."] as Array[String])
+	GameState.records["weekly"] = rec
+	await announce_achievements()
+
+## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
+func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
+	var d: Dictionary = Time.get_date_dict_from_system()
+	var f: Dictionary = Season.for_month(int(d.month))
+	if f.is_empty():
+		var nxt: Dictionary = Season.next_after(int(d.month))
+		await say(["No festival right now. Next up: the %s." % str(nxt.get("name", ""))] as Array[String])
+		return
+	await say([str(f.text)] as Array[String])
+	var flag: String = Season.gift_flag(f, Season.festival_year(int(d.month), int(d.year)))
+	if GameState.has_flag(flag):
+		await say(["Enjoy the festival!"] as Array[String])
+		return
+	GameState.set_flag(flag)
+	await _action_give_item([str(f.gift), "1"] as PackedStringArray, null)
+
 ## The Sparkseer reads each party member's hidden Spark values in words.
 func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:
 	var lines: Array[String] = []
@@ -651,7 +723,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	model.items_allowed = GameState.items_allowed_in_battle()
 	model.level_cap = GameState.level_cap()
 	model.trainer_name = str(trainer.get("name", ""))
-	model.field = map.field
+	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.prize_money = int(trainer.get("money", 0))
 	var items: Variant = trainer.get("items", {})
@@ -669,6 +741,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	await _after_battle(model, outcome)
 	Sound.music(Sound.track_for_map(map.id))
 	await _fade_to(0.0)
+	await announce_achievements()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false

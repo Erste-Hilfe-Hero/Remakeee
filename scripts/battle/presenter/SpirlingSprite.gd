@@ -18,6 +18,7 @@ var _home: Vector2
 func setup(s: Spirling, p_facing: String) -> void:
 	spirling = s
 	facing = p_facing
+	accessibility_name = s.display_name()
 	_texture = null
 	var path: String = EraManager.sprite_path(s.data.species_name, facing)
 	if not path.is_empty():

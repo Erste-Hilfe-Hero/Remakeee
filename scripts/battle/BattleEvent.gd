@@ -102,5 +102,5 @@ func describe() -> String:
 		Type.FIELD:
 			return str(data.get("text", ""))
 		Type.RULE:
-			return "Warden rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
+			return "Rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
 	return ""

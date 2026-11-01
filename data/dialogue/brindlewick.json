@@ -41,6 +41,19 @@
   "My Puddlet won't answer when I call it anymore.",
   "Grandpa Aldo says a Tamer with a strong bond can wake it up again."
  ],
+ "crier": {
+  "lines": [
+   "Crier: Hear ye! Veydal keeps its festivals, storm or no storm."
+  ],
+  "action": "season"
+ },
+ "wynn": {
+  "lines": [
+   "Wynn: Every week the lake throws up three new echoes. Same ones for every Tamer in Veydal.",
+   "Wynn: Beat all three and I'll pay out. Once a week, mind."
+  ],
+  "action": "weekly"
+ },
  "ines": {
   "lines": [
    "Ines: The lighthouse keeps old Rift echoes. I can wake them for you.",

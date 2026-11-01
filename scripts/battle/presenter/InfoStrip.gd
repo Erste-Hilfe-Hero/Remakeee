@@ -69,7 +69,15 @@ func _set_display_hp(v: float) -> void:
 	display_hp = v
 	queue_redraw()
 
+## What a screen reader says for this strip (item 77): the strip itself is drawn by hand.
+func screen_reader_text() -> String:
+	var t: String = Loc.t("%s Lv%d, HP %d of %d, Energy %d" % [spirling_name, level, int(round(display_hp)), max_hp, energy])
+	if not status.is_empty():
+		t += ", " + Loc.t(StatusRules.label(status))
+	return t
+
 func _draw() -> void:
+	accessibility_name = screen_reader_text()
 	var font: Font = get_theme_default_font()
 	var fs: int = get_theme_default_font_size()
 	var w: float = size.x
