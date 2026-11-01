@@ -18,6 +18,8 @@ const DEMO_SEED: int = 2024
 var model: BattleModel
 ## Backdrop for where the battle started (field, lake, ridge, ember). Set before adding.
 var backdrop: String = "field"
+## Music for this fight ("battle" or "warden"); the overworld sets it before adding the scene.
+var music_track: String = "battle"
 ## Set to true to quit the app when the battle ends (standalone demo).
 var quit_on_finish: bool = false
 
@@ -153,6 +155,7 @@ func _run() -> void:
 	_player_strip.visible = false
 	_auto_button.visible = model.is_wild
 	_apply_speed()
+	Sound.music(music_track)
 	await _play(model.start())
 	while not model.is_finished():
 		if model.needs_player_switch():
@@ -283,6 +286,7 @@ func _play_event(e: BattleEvent) -> void:
 			var dir: Vector2 = Vector2(8, -4) if side == BattleModel.Side.PLAYER else Vector2(-8, 4)
 			await _sprite(side).lunge(dir)
 		BattleEvent.Type.DAMAGE:
+			Sound.sfx(_hit_sound(e))
 			if side == BattleModel.Side.FOE and _last_player_element >= 0 and e.data.has("eff"):
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
 				GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
@@ -293,22 +297,26 @@ func _play_event(e: BattleEvent) -> void:
 			if not line.is_empty():
 				await _text.show_text(line)
 		BattleEvent.Type.HEAL:
+			Sound.sfx("heal")
 			if int(e.data.get("index", -1)) == model.active[side]:
 				await _strip(side).animate_hp(int(e.data.hp), int(e.data.max_hp))
 			await _text.show_text(e.describe())
 		BattleEvent.Type.ENERGY_CHANGED:
 			_strip(side).set_energy(int(e.data.energy))
 		BattleEvent.Type.STATUS_APPLIED:
+			Sound.sfx("status")
 			_strip(side).set_status(str(e.data.status))
 			await _text.show_text(e.describe())
 		BattleEvent.Type.STATUS_CURED:
 			_strip(side).set_status("")
 			await _text.show_text(e.describe())
 		BattleEvent.Type.FAINTED:
+			Sound.sfx("faint")
 			await _sprite(side).faint()
 			await _text.show_text(e.describe())
 			_strip(side).visible = false
 		BattleEvent.Type.LEVEL_UP:
+			Sound.sfx("level_up")
 			if int(e.data.get("index", -1)) == model.active[BattleModel.Side.PLAYER]:
 				_player_strip.set_level(int(e.data.level))
 				await _player_strip.animate_hp(int(e.data.hp), int(e.data.max_hp))
@@ -318,6 +326,11 @@ func _play_event(e: BattleEvent) -> void:
 				await _foe_sprite.step_back(false)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BATTLE_END:
+			var outcome: int = int(e.data.get("outcome", 0))
+			if outcome == BattleModel.Outcome.WIN or outcome == BattleModel.Outcome.BONDED:
+				Sound.jingle("victory", "")
+			elif outcome == BattleModel.Outcome.FLED:
+				Sound.sfx("run")
 			var money: int = int(e.data.get("money", 0))
 			if money > 0:
 				await _text.show_text("You received %d coins." % money)
@@ -327,6 +340,14 @@ func _play_event(e: BattleEvent) -> void:
 			var text: String = e.describe()
 			if not text.is_empty():
 				await _text.show_text(text)
+
+static func _hit_sound(e: BattleEvent) -> String:
+	if bool(e.data.get("status_tick", false)) or not e.data.has("eff"):
+		return "hit_weak"
+	var eff: float = float(e.data.get("eff", 1.0))
+	if eff > 1.0 or bool(e.data.get("crit", false)):
+		return "hit_strong"
+	return "hit_weak" if eff < 1.0 else "hit"
 
 ## Only the interesting part of a damage event (the bar already shows the amount).
 func _damage_line(e: BattleEvent) -> String:

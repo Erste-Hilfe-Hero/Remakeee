@@ -64,6 +64,7 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 		"ai": ai_tier(def, difficulty_ai),
 		"money": prize_money(def, team),
 		"items": def.get("items", {}),
+		"warden": def.has("warden"),
 	}
 
 ## True if a Tamer at [param from] facing [param dir] with [param sight] cells sees [param target].

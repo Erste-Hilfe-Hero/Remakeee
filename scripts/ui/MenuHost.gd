@@ -86,6 +86,8 @@ func run_settings() -> void:
 			"Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off"),
 			"Retro filter: %s" % retro,
 			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
+			"Music: %d%%" % int(round(GameState.music_volume * 100.0)),
+			"Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0)),
 			"Touch controls...",
 		]
 		var idx: int = await pick_strings("Settings", entries)
@@ -108,7 +110,19 @@ func run_settings() -> void:
 				GameState.volume = 0.0 if v > 1.01 else v
 				GameState.apply_volume()
 			5:
+				GameState.music_volume = _step_volume(GameState.music_volume)
+				GameState.apply_volume()
+			6:
+				GameState.sfx_volume = _step_volume(GameState.sfx_volume)
+				GameState.apply_volume()
+				Sound.sfx("confirm")
+			7:
 				await run_controls()
+
+## Volume steps of 20%, wrapping from 100% to 0%.
+static func _step_volume(v: float) -> float:
+	var n: float = v + 0.2
+	return 0.0 if n > 1.01 else n
 
 ## Touch controls: pad size, opacity, left-handed layout, tap-to-move.
 func run_controls() -> void:

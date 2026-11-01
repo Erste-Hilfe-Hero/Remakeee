@@ -37,7 +37,9 @@ func _ready() -> void:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.clip_text = true
 		var idx: int = i
-		b.pressed.connect(func() -> void: chosen.emit(BattleAction.Kind.MOVE, idx))
+		b.pressed.connect(func() -> void:
+			Sound.sfx("confirm")
+			chosen.emit(BattleAction.Kind.MOVE, idx))
 		grid.add_child(b)
 		_move_buttons.append(b)
 		var icon := TextureRect.new()
@@ -58,7 +60,9 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.text = text
 	b.custom_minimum_size = Vector2(0, SMALL_BUTTON_HEIGHT)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	b.pressed.connect(func() -> void: chosen.emit(kind, -1))
+	b.pressed.connect(func() -> void:
+		Sound.sfx("confirm")
+		chosen.emit(kind, -1))
 	parent.add_child(b)
 	return b
 

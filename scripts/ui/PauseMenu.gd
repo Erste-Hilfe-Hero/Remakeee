@@ -23,6 +23,7 @@ func run() -> void:
 			"Storage": await run_storage()
 			"Save":
 				var ok: bool = SaveManager.save_game()
+				Sound.sfx("save" if ok else "cancel")
 				await info("Game saved." if ok else "Saving failed.")
 			"Settings": await run_settings()
 

@@ -36,6 +36,7 @@ func _ready() -> void:
 	_build_name_box()
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
+	Sound.music("title")
 	_run.call_deferred()
 
 func _build_name_box() -> void:
