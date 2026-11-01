@@ -105,6 +105,6 @@ func _draw_logo(center: Vector2) -> void:
 	for o: Vector2 in [Vector2(-1, 0), Vector2(1, 0), Vector2(0, -1), Vector2(0, 1)]:
 		draw_string(font, pos + o, LOGO, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
 	draw_string(font, pos, LOGO, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.BG)
-	var sub: String = "The Hush of Veydal"
+	var sub: String = Loc.t("The Hush of Veydal")
 	var sw: float = font.get_string_size(sub, HORIZONTAL_ALIGNMENT_LEFT, -1, PixelFont.BASE_SIZE).x
 	draw_string(font, Vector2(roundf(center.x - sw / 2.0), center.y + PixelFont.ASCENT * LOGO_SCALE + 14), sub, HORIZONTAL_ALIGNMENT_LEFT, -1, PixelFont.BASE_SIZE, UITheme.ACCENT)

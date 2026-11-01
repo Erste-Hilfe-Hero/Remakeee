@@ -24,6 +24,8 @@ func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_label = Label.new()
+	# Text is translated once in show_text() so the typewriter counts the shown characters.
+	_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -41,7 +43,7 @@ func _ready() -> void:
 
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String) -> void:
-	_label.text = text
+	_label.text = Loc.t(text)
 	_label.visible_characters = 0
 	_visible_chars = 0.0
 	_typing = true
@@ -59,7 +61,7 @@ func show_text(text: String) -> void:
 
 ## Shows text without waiting (prompts such as "What will Kindlop do?").
 func show_prompt(text: String) -> void:
-	_label.text = text
+	_label.text = Loc.t(text)
 	_label.visible_characters = -1
 	_typing = false
 	_waiting = false

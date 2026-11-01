@@ -127,13 +127,14 @@ func run_settings() -> void:
 			9:
 				await run_display()
 
-## Display and accessibility: battery saver, reduced motion, high contrast.
+## Display and accessibility: battery saver, reduced motion, high contrast, language.
 func run_display() -> void:
 	while true:
 		var entries: Array[String] = [
 			"Battery saver (30 FPS): %s" % ("On" if GameState.battery_saver else "Off"),
 			"Reduce motion and flashes: %s" % ("On" if GameState.reduce_motion else "Off"),
 			"High contrast menus: %s" % ("On" if GameState.high_contrast else "Off"),
+			"Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()],
 		]
 		var idx: int = await pick_strings("Display and access", entries)
 		match idx:
@@ -145,6 +146,8 @@ func run_display() -> void:
 				GameState.reduce_motion = not GameState.reduce_motion
 			2:
 				GameState.high_contrast = not GameState.high_contrast
+			3:
+				GameState.language = Loc.next_language()
 		GameState.apply_display()
 		if idx == 2:
 			await info("High contrast applies to menus and text from the next screen on.")
