@@ -11,7 +11,7 @@ func before_all() -> void:
 func before_each() -> void:
 	_saved = GameState.to_dict()
 	_settings = GameState.settings_to_dict()
-	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+	GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 
 func after_each() -> void:
 	GameState.from_dict(_saved)

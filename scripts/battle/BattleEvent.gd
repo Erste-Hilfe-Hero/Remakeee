@@ -68,11 +68,11 @@ func describe() -> String:
 		Type.STATUS_FAILED:
 			return "It had no effect on %s." % who
 		Type.STATUS_TICK:
-			return "%s is hurt by %s." % [who, StatusRules.label(str(data.get("status", "")))]
+			return "%s suffers from %s." % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_CURED:
 			return "%s shook off %s." % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_PREVENTED:
-			return "%s can't move (%s)!" % [who, StatusRules.label(str(data.get("status", "")))]
+			return "%s is held back by %s!" % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.ENERGY_CHANGED:
 			return ""
 		Type.NOT_ENOUGH_ENERGY:
@@ -103,8 +103,8 @@ func describe() -> String:
 			var stat: String = STAT_NAMES.get(str(data.get("stat", "")), "")
 			var delta: int = int(data.get("delta", 0))
 			if delta == 0:
-				return "%s's %s won't go any %s!" % [who, stat, "higher" if int(data.get("tried", 0)) > 0 else "lower"]
-			return "%s's %s %s%s" % [who, stat, "rose" if delta > 0 else "fell", "!" if absi(delta) == 1 else " sharply!"]
+				return "%s's %s is already at its %s." % [who, stat, "peak" if int(data.get("tried", 0)) > 0 else "lowest"]
+			return "%s's %s %s%s" % [who, stat, "goes up" if delta > 0 else "drops", "." if absi(delta) == 1 else " a lot."]
 		Type.FIELD:
 			return str(data.get("text", ""))
 		Type.RULE:

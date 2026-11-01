@@ -1,19 +1,24 @@
 class_name CommandMenu
 extends PanelContainer
-## Bottom command panel: four move buttons (name + Energy cost) and Swap / Item / Bond / Run.
+## Bottom command panel: the moves as a one-column list (element symbol, name, Energy cost on the
+## right) and a row with Swap / Item / Bond / Leave. Deliberately not a 2x2 move grid.
 
 signal chosen(kind: BattleAction.Kind, index: int)
 
-const MOVE_BUTTON_HEIGHT: int = 22
+const MOVE_BUTTON_HEIGHT: int = 13
+## Room on the left of a move row for its element symbol.
+const ICON_PAD: int = 11
 const SMALL_BUTTON_HEIGHT: int = 16
 ## Fixed height so the field above never jumps when the buttons hide.
-const PANEL_HEIGHT: int = 2 * MOVE_BUTTON_HEIGHT + SMALL_BUTTON_HEIGHT + 2 * 2 + 6
+const PANEL_HEIGHT: int = Spirling.MAX_MOVES * MOVE_BUTTON_HEIGHT + (Spirling.MAX_MOVES - 1) + SMALL_BUTTON_HEIGHT + 2 + 6
 
 var _content: VBoxContainer
 
 var _move_buttons: Array[Button] = []
-## Element symbol in each move button's bottom-left corner (keeps the full width for the name).
+## Element symbol at the left of each move row.
 var _move_icons: Array[TextureRect] = []
+## Energy cost and matchup, right-aligned in each move row.
+var _move_costs: Array[Label] = []
 var _swap: Button
 var _item: Button
 var _bond: Button
@@ -26,16 +31,21 @@ func _ready() -> void:
 	_content = v
 	v.add_theme_constant_override("separation", 2)
 	add_child(v)
-	var grid := GridContainer.new()
-	grid.columns = 2
-	grid.add_theme_constant_override("h_separation", 2)
-	grid.add_theme_constant_override("v_separation", 2)
+	var grid := VBoxContainer.new()
+	grid.add_theme_constant_override("separation", 1)
 	v.add_child(grid)
 	for i: int in Spirling.MAX_MOVES:
 		var b := Button.new()
 		b.custom_minimum_size = Vector2(0, MOVE_BUTTON_HEIGHT)
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.clip_text = true
+		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
+			var sb: StyleBox = b.get_theme_stylebox(state)
+			if sb != null:
+				sb = sb.duplicate()
+				sb.content_margin_left = ICON_PAD
+				b.add_theme_stylebox_override(state, sb)
 		var idx: int = i
 		b.pressed.connect(func() -> void:
 			Sound.sfx("confirm")
@@ -44,16 +54,24 @@ func _ready() -> void:
 		_move_buttons.append(b)
 		var icon := TextureRect.new()
 		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		icon.position = Vector2(2, MOVE_BUTTON_HEIGHT - ElementIcons.SIZE - 4)
+		icon.position = Vector2(2, (MOVE_BUTTON_HEIGHT - ElementIcons.SIZE) / 2)
 		b.add_child(icon)
 		_move_icons.append(icon)
+		var cost := Label.new()
+		cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		cost.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		cost.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		cost.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		cost.offset_right = -3
+		b.add_child(cost)
+		_move_costs.append(cost)
 	var row := HBoxContainer.new()
 	row.add_theme_constant_override("separation", 2)
 	v.add_child(row)
 	_swap = _small(row, "Swap", BattleAction.Kind.SWAP)
 	_item = _small(row, "Item", BattleAction.Kind.ITEM)
 	_bond = _small(row, "Bond", BattleAction.Kind.BOND)
-	_run = _small(row, "Run", BattleAction.Kind.RUN)
+	_run = _small(row, "Leave", BattleAction.Kind.RUN)
 
 func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	var b := Button.new()
@@ -100,12 +118,14 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		if i < me.moves.size():
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
-			b.text = "%s\n%s" % [mv.move_name, move_line(mv, me.energy, mult, multi)]
+			b.text = mv.move_name
+			_move_costs[i].text = move_line(mv, me.energy, mult, multi)
 			_move_icons[i].texture = ElementIcons.outlined(mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv)
 		else:
 			b.text = "-"
+			_move_costs[i].text = ""
 			_move_icons[i].texture = null
 			b.disabled = true
 	var kinds: Array[int] = []
@@ -118,6 +138,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
 		_move_buttons[0].text = "Rest (+%d)" % BattleModel.REST_ENERGY
+		_move_costs[0].text = ""
 		_move_icons[0].texture = null
 		_move_buttons[0].disabled = false
 	for b: Button in _move_buttons + [_swap, _item, _bond, _run]:

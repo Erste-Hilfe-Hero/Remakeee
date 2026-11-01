@@ -49,7 +49,7 @@
  },
  "nook_find": {
   "lines": [
-   "In the miners' store: an Echo Crystal (Gloom Pulse)!"
+   "In the miners' store: an Echo Crystal (Gloom Ripple)!"
   ],
   "action": "give_item echo_umbra 1",
   "flag": "hollow_nook_find",

@@ -6,14 +6,15 @@ enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
 ## Level cap per Rift sealed (Veteran + Rift-Born only).
 const LEVEL_CAPS: Array[int] = [12, 18, 23, 28, 32, 36, 40, 44, 50]
 const AI_LEVELS: Array[int] = [0, 1, 2, 2]
-const MAX_PARTY: int = 6
+const MAX_PARTY: int = 5
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 
 ## Tamer customisation (placeholder until real sprites exist).
-var tamer_name: String = "Rowan"
+var tamer_name: String = "Juno"
 var tamer_color: int = 0
-const TAMER_COLORS: Array[Color] = [Color("3a5a9a"), Color("9a3a4a"), Color("3a8a5a"), Color("8a6a2a")]
+## Coat colours on the title screen: teal, rust, ochre, plum (TitleScreen.COAT_NAMES).
+const TAMER_COLORS: Array[Color] = [Color("2f7f7a"), Color("a2502e"), Color("b08a2e"), Color("6a3f6e")]
 ## Seconds played (shown on the save card).
 var play_time: float = 0.0
 ## True while a game is running (the title screen sets it); saving on pause needs it.
@@ -111,7 +112,7 @@ func seal_rift(rift_id: String) -> bool:
 	set_flag("rift_%s_sealed" % rift_id)
 	# Rifts can be mended in any order; the second one opens storage from the menu.
 	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
-		set_flag("pc_unlocked")
+		set_flag("storage_remote")
 	return true
 
 func items_allowed_in_battle() -> bool:
@@ -254,7 +255,7 @@ func reset() -> void:
 func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String) -> void:
 	reset()
 	difficulty = p_difficulty
-	tamer_name = p_name if not p_name.strip_edges().is_empty() else "Rowan"
+	tamer_name = p_name if not p_name.strip_edges().is_empty() else "Juno"
 	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
 	starter = p_starter
 	var s := Spirling.new(Database.species(p_starter), 5, rng)
@@ -300,7 +301,7 @@ func to_dict() -> Dictionary:
 func from_dict(d: Dictionary) -> void:
 	reset()
 	var tamer: Dictionary = d.get("tamer", {})
-	tamer_name = str(tamer.get("name", "Rowan"))
+	tamer_name = str(tamer.get("name", "Juno"))
 	tamer_color = int(tamer.get("color", 0))
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))

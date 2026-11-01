@@ -1,8 +1,8 @@
 class_name PauseMenu
 extends MenuHost
-## In-game menu: Goals, Team, Spirlog, Bag, Save, Settings, and Storage once the box is unlocked.
+## In-game menu: Goals, Team, Spirlog, Satchel, Save, Settings, and Storage once the box is unlocked.
 
-const STORAGE_FLAG: String = "pc_unlocked"
+const STORAGE_FLAG: String = "storage_remote"
 
 ## The map the player is on (for the Spirlog Tracker).
 var encounter_table: String = ""
@@ -17,7 +17,7 @@ var watch_replay: bool = false
 
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Bag", "Save", "Photo", "Settings"]
+		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Satchel", "Save", "Photo", "Settings"]
 		if GameState.has_flag(STORAGE_FLAG):
 			labels.insert(5, "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
@@ -35,7 +35,7 @@ func run() -> void:
 				await run_records()
 				if watch_replay:
 					return
-			"Bag": await run_bag()
+			"Satchel": await run_bag()
 			"Storage": await run_storage()
 			"Save":
 				var ok: bool = SaveManager.save_game()
@@ -76,7 +76,7 @@ func run_records() -> void:
 ## Tower best, weekly challenge and the current festival.
 static func records_text() -> String:
 	var lines: PackedStringArray = []
-	lines.append("Tower best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
+	lines.append("Lighthouse climb best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
@@ -161,7 +161,7 @@ func _held_item(s: Spirling) -> void:
 func _use_item_on(s: Spirling) -> void:
 	var ids: Array[String] = _usable_items()
 	if ids.is_empty():
-		await info("Nothing in the bag can be used here.")
+		await info("Nothing in the satchel can be used here.")
 		return
 	var entries: Array[String] = []
 	for id: String in ids:
@@ -170,7 +170,7 @@ func _use_item_on(s: Spirling) -> void:
 	if idx < 0:
 		return
 	var msg: String = GameState.use_item_outside_battle(ids[idx], s)
-	await info(msg if not msg.is_empty() else "It won't have any effect.")
+	await info(msg if not msg.is_empty() else "That would do nothing right now.")
 
 func _usable_items() -> Array[String]:
 	var out: Array[String] = []
@@ -190,9 +190,9 @@ func run_bag() -> void:
 			ids.append(str(id))
 			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
 		if ids.is_empty():
-			await info("The bag is empty.")
+			await info("The satchel is empty.")
 			return
-		var idx: int = await pick_strings("Bag", entries)
+		var idx: int = await pick_strings("Satchel", entries)
 		if idx < 0:
 			return
 		var it: Dictionary = Database.item(ids[idx])
@@ -207,7 +207,7 @@ func run_bag() -> void:
 			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
 			if who >= 0:
 				var msg: String = GameState.use_item_outside_battle(ids[idx], GameState.party[who])
-				await info(msg if not msg.is_empty() else "It won't have any effect.")
+				await info(msg if not msg.is_empty() else "That would do nothing right now.")
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
 
@@ -341,7 +341,7 @@ func _withdraw() -> void:
 		for i: int in view:
 			var s: Spirling = GameState.storage[i]
 			names.append("%s Lv%d" % [s.display_name(), s.level])
-		var w: int = await pick_strings("Withdraw (%d)" % view.size(), names)
+		var w: int = await pick_strings("Call back (%d)" % view.size(), names)
 		if w < 0:
 			return
 		if w == 0:
@@ -358,7 +358,7 @@ func _withdraw() -> void:
 ## Storage box: deposit and withdraw.
 func run_storage() -> void:
 	while true:
-		var idx: int = await pick_strings("Storage (%d stored)" % GameState.storage.size(), ["Withdraw", "Deposit"] as Array[String])
+		var idx: int = await pick_strings("Storage (%d resting)" % GameState.storage.size(), ["Call back", "Send to rest"] as Array[String])
 		if idx < 0:
 			return
 		if idx == 0:
@@ -370,6 +370,6 @@ func run_storage() -> void:
 			var names2: Array[String] = []
 			for s: Spirling in GameState.party:
 				names2.append(MenuHost.party_line(s))
-			var d: int = await pick_strings("Deposit", names2)
+			var d: int = await pick_strings("Send to rest", names2)
 			if d >= 0 and not GameState.deposit(d):
 				await info("You need at least one healthy Spirling with you.")

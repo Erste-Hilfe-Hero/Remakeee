@@ -31,7 +31,7 @@ const FLEE_SPEED_WEIGHT: float = 0.5
 ## XP for a defeated foe = xp_yield * foe level / XP_LEVEL_DIV (x TRAINER_XP_MULT vs Tamers).
 const XP_LEVEL_DIV: float = 20.0
 const TRAINER_XP_MULT: float = 1.5
-const MAX_PARTY: int = 6
+const MAX_PARTY: int = 5
 
 signal event_emitted(event: BattleEvent)
 

@@ -108,8 +108,8 @@ func test_aim_at_a_fallen_foe_moves_to_the_next() -> void:
 	assert_eq(m.move_targets(Side.PLAYER, Database.move("Cinder Nip"), 1), [0] as Array[int])
 
 func test_sweep_hits_every_foe_for_less() -> void:
-	var quake: MoveData = Database.move("Quake Stomp")
-	assert_true(quake.is_area(), "Quake Stomp sweeps the field")
+	var quake: MoveData = Database.move("Tremor Thud")
+	assert_true(quake.is_area(), "Tremor Thud sweeps the field")
 	var solo := _model([_with_move("Calderox", 15, _sweep())], _p(["Zephlet"], 30), [1, 1], false, 5)
 	solo.start()
 	var one: Array[BattleEvent] = solo.submit_actions([BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE)] as Array[BattleAction])

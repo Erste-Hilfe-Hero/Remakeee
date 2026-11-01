@@ -25,7 +25,7 @@
  },
  "islet": {
   "lines": [
-   "Tangled in the reeds: a Revival Leaf!"
+   "Tangled in the reeds: a Waking Moss!"
   ],
   "action": "give_item revival_leaf 1",
   "flag": "islet_find",

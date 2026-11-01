@@ -6,7 +6,7 @@ extends RefCounted
 
 const LIST: Array[Dictionary] = [
 	{"id": "first_bond", "title": "First Bond", "text": "Bond with a wild Spirling."},
-	{"id": "full_team", "title": "Full Team", "text": "Travel with six Spirlings."},
+	{"id": "full_team", "title": "Full Team", "text": "Travel with a full team of five Spirlings."},
 	{"id": "seen_10", "title": "Field Notes", "text": "See 10 kinds of Spirling."},
 	{"id": "bonded_10", "title": "Kindred", "text": "Bond with 10 kinds of Spirling."},
 	{"id": "seen_all", "title": "Complete Spirlog", "text": "See every kind of Spirling in Veydal."},
@@ -46,7 +46,7 @@ static func earned(id: String) -> bool:
 					return true
 			return false
 		"full_team":
-			return GameState.party.size() >= 6
+			return GameState.party.size() >= GameState.MAX_PARTY
 		"seen_10":
 			return seen >= 10
 		"bonded_10":

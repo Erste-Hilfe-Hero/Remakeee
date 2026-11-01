@@ -55,7 +55,7 @@ func _ready() -> void:
 	_build()
 	if GameState.party.is_empty():
 		# Running this scene directly from the editor: start a quick test game.
-		GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+		GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 	GameState.in_game = true
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
@@ -420,7 +420,7 @@ func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	await menu.run_storage()
 	menu.queue_free()
 
-## Opens the pause menu (Team, Spirlog, Bag, Save, Settings).
+## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings).
 func open_menu() -> void:
 	if busy:
 		return
@@ -578,7 +578,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var best: int = int(GameState.records.get("gauntlet_best", 0))
-	var go: bool = await menu.confirm("Climb the tower? Best so far: %d of %d." % [best, Gauntlet.ROUNDS])
+	var go: bool = await menu.confirm("Climb the lighthouse stair? Best so far: %d of %d." % [best, Gauntlet.ROUNDS])
 	menu.queue_free()
 	if not go:
 		return
@@ -599,7 +599,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	if wins >= Gauntlet.ROUNDS:
 		GameState.set_flag("gauntlet_clear")
 		await _action_give_item([run.reward_item(), "1"] as PackedStringArray, null)
-		await say(["The echoes bow and fade. You climbed the whole tower!"] as Array[String])
+		await say(["The echoes bow and fade. You reached the lamp room!"] as Array[String])
 	elif wins > best:
 		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
 
@@ -752,8 +752,8 @@ func after_tamer_win(n: NPC) -> void:
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
-		if GameState.has_flag("pc_unlocked"):
-			lines.append("Your storage box now opens from the menu, wherever you are.")
+		if GameState.has_flag("storage_remote"):
+			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
 		if GameState.level_cap() < Spirling.MAX_LEVEL:
 			lines.append("Your Spirlings can now grow to Lv%d." % GameState.level_cap())
 		await say(lines)
@@ -899,11 +899,11 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		SaveManager.save_game()
 	var oath: Array[String] = oath_lines(GameState.retire_fainted())
 	if outcome == BattleModel.Outcome.LOSS:
+		# No coin penalty: a spring keeper simply brings the player back.
 		GameState.heal_party()
-		GameState.money = GameState.money / 2
 		load_map(GameState.heal_map, GameState.heal_cell, "down")
 		await _fade_to(0.0)
-		await say(["You hurried back to rest...", "Your team is rested again."] as Array[String])
+		await say(["Everything goes quiet... A spring keeper finds you and helps you back.", "Your team is rested again."] as Array[String])
 		if not oath.is_empty():
 			await say(oath)
 		return

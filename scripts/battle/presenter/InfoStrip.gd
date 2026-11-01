@@ -6,9 +6,10 @@ extends Control
 const BAR_HEIGHT: int = 3
 const PIP_SIZE: int = 3
 const PIP_GAP: int = 1
-const HP_HIGH: Color = Color("5aa65a")
-const HP_MID: Color = Color("d9b13b")
-const HP_LOW: Color = Color("c8513a")
+## One steady colour that only turns when HP is truly low (no three-step traffic light).
+const HP_HIGH: Color = Color("2f7f7a")
+const HP_LOW: Color = Color("a2502e")
+const HP_LOW_AT: float = 0.25
 const ENERGY_ON: Color = Color("3b6fd9")
 const TWEEN_TIME: float = 0.4
 const TICK_STEP: int = 8
@@ -92,7 +93,7 @@ func _draw() -> void:
 	draw_string(font, Vector2(0, y_text), right, HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
 	var bar_y: float = y_text + 3.0
 	var frac: float = clampf(display_hp / float(maxi(max_hp, 1)), 0.0, 1.0)
-	var col: Color = HP_HIGH if frac > 0.5 else (HP_MID if frac > 0.2 else HP_LOW)
+	var col: Color = HP_HIGH if frac > HP_LOW_AT else HP_LOW
 	draw_rect(Rect2(0, bar_y, w, BAR_HEIGHT + 2), UITheme.INK)
 	draw_rect(Rect2(1, bar_y + 1, w - 2, BAR_HEIGHT), UITheme.BG)
 	draw_rect(Rect2(1, bar_y + 1, floorf((w - 2) * frac), BAR_HEIGHT), col)

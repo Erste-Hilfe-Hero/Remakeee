@@ -8,7 +8,7 @@ func before_all() -> void:
 
 func before_each() -> void:
 	_saved = GameState.to_dict()
-	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+	GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 
 func after_each() -> void:
 	GameState.from_dict(_saved)
@@ -128,7 +128,7 @@ func test_records_text() -> void:
 	GameState.records["gauntlet_best"] = 3
 	GameState.records["weekly"] = {"week": WeeklyChallenge.this_week(), "best": 2, "claimed": false}
 	var t: String = PauseMenu.records_text()
-	assert_string_contains(t, "Tower best: 3 of 5")
+	assert_string_contains(t, "Lighthouse climb best: 3 of 5")
 	assert_string_contains(t, "This week: 2 of 3")
 
 func test_info_strip_speaks() -> void:

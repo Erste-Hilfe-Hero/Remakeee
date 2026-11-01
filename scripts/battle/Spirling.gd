@@ -4,11 +4,11 @@ extends RefCounted
 ## Holds all mutable state; the SpirlingData it points to is never changed.
 
 const STAT_KEYS: Array[String] = ["hp", "atk", "def", "foc", "spd"]
-const SPARK_MAX: int = 15
+const SPARK_MAX: int = 12
 const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
-const MAX_LEVEL: int = 100
+const MAX_LEVEL: int = 60
 ## Chance that a wild Spirling is a rare Prism colour variant (cosmetic only).
 const PRISM_CHANCE: float = 1.0 / 256.0
 

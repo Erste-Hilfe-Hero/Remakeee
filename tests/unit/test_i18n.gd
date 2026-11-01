@@ -96,12 +96,12 @@ func test_patterns_carry_values() -> void:
 	assert_eq(de.lookup("Used Tonic on Kindlop."), "Tonikum bei Kindlop benutzt.")
 
 func test_reordered_values() -> void:
-	assert_eq(de.lookup("Kindlop's ATK rose sharply!"), "ANG von Kindlop steigt stark!")
+	assert_eq(de.lookup("Kindlop's ATK goes up a lot."), "ANG von Kindlop legt kräftig zu.")
 
 func test_sentences_and_lines_combine() -> void:
 	assert_eq(de.lookup("Kindlop took 9 damage. A keen hit! It's overwhelming!"),
-		"Kindlop erleidet 9 Schaden. Ein Volltreffer! Das ist überwältigend!")
-	assert_eq(de.lookup("Tonic\nRestores 20 HP."), "Tonikum\nStellt 20 LP wieder her.")
+		"Kindlop erleidet 9 Schaden. Ein scharfer Treffer! Das ist überwältigend!")
+	assert_eq(de.lookup("Tonic\nRestores 25 HP."), "Tonikum\nStellt 25 LP wieder her.")
 
 func test_unknown_text_is_left_alone() -> void:
 	assert_eq(de.lookup("Kindlop"), "")

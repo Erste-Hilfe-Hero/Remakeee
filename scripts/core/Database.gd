@@ -6,7 +6,9 @@ const SPIRLINGS_PATH: String = "res://data/spirlings.json"
 const MOVES_PATH: String = "res://data/moves.json"
 const ITEMS_PATH: String = "res://data/items.json"
 ## The three partners offered at the start of a new game.
-const STARTERS: Array[String] = ["Kindlop", "Puddlet", "Mossling"]
+## The three that fly to the lighthouse lamp on the storm night: ember, spark and wick light.
+## Deliberately not an element triangle (none of them beats the next in a ring).
+const STARTERS: Array[String] = ["Kindlop", "Zippit", "Wickit"]
 
 static var spirlings: Dictionary[String, SpirlingData] = {}
 static var moves: Dictionary[String, MoveData] = {}

@@ -99,7 +99,7 @@
    "facing": "down",
    "dialogue": "brindlewick/kestra_dock",
    "sprite": "ranger",
-   "show_flag": "pc_unlocked"
+   "show_flag": "storage_remote"
   },
   {
    "id": "ines",
