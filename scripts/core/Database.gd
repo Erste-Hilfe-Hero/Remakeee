@@ -90,6 +90,11 @@ static func _load_spirlings() -> void:
 		sd.evolve_level = int(s.get("evolve_level", 0))
 		sd.bond_rate = float(s.get("bond_rate", SpirlingData.DEFAULT_BOND_RATE))
 		sd.trait_id = str(s.get("trait", ""))
+		sd.evolve_item = str(s.get("evolve_item", ""))
+		sd.evolve_map = str(s.get("evolve_map", ""))
+		sd.lore = str(s.get("lore", ""))
+		sd.height = str(s.get("height", ""))
+		sd.habitat = str(s.get("habitat", ""))
 		var total: int = sd.base_hp + sd.base_atk + sd.base_def + sd.base_foc + sd.base_spd
 		sd.xp_yield = int(s.get("xp_yield", total / 5))
 		var learnset: Dictionary = s.get("learnset", {})

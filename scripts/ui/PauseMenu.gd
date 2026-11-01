@@ -84,7 +84,7 @@ func _usable_items() -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
-		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0):
+		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))):
 			out.append(str(id))
 	return out
 
@@ -104,7 +104,11 @@ func run_bag() -> void:
 		if idx < 0:
 			return
 		var it: Dictionary = Database.item(ids[idx])
-		if ids[idx] in _usable_items():
+		if it.has("teaches"):
+			await _teach_echo(ids[idx])
+		elif int(it.get("spark", 0)) > 0:
+			await _use_spark_charm(ids[idx])
+		elif ids[idx] in _usable_items():
 			var names: Array[String] = []
 			for s: Spirling in GameState.party:
 				names.append(MenuHost.party_line(s))
@@ -114,6 +118,57 @@ func run_bag() -> void:
 				await info(msg if not msg.is_empty() else "It won't have any effect.")
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
+
+## Echo Crystal: pick a Spirling of the right element, then (if it knows 4 moves) one to forget.
+func _teach_echo(id: String) -> void:
+	var it: Dictionary = Database.item(id)
+	var mv: MoveData = Database.move(str(it.teaches))
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append("%s%s" % [MenuHost.party_line(s), "" if GameState.can_learn_echo(s, id) else "  (can't)"])
+	var who: int = await pick_strings("Teach %s to?" % mv.move_name, names)
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	if not GameState.can_learn_echo(s, id):
+		await info("%s can't learn %s." % [s.display_name(), mv.move_name])
+		return
+	if s.moves.size() < Spirling.MAX_MOVES:
+		s.moves.append(mv)
+	else:
+		var known: Array[String] = []
+		for m: MoveData in s.moves:
+			known.append(m.move_name)
+		var forget: int = await pick_strings("Forget which move for %s?" % mv.move_name, known)
+		if forget < 0:
+			return
+		s.moves[forget] = mv
+	Sound.sfx("level_up")
+	await info("%s learned %s!" % [s.display_name(), mv.move_name])
+
+## Spark Charm: pick a Spirling, then the stat to brighten.
+func _use_spark_charm(id: String) -> void:
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var who: int = await pick_strings("Use the Spark Charm on?", names)
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for key: String in Spirling.STAT_KEYS:
+		stats.append("%s: %s" % [key.to_upper(), GameState.spark_word(int(s.spark.get(key, 0)))])
+	var pick: int = await pick_strings("Brighten which spark?", stats)
+	if pick < 0:
+		return
+	if not GameState.train_spark(s, Spirling.STAT_KEYS[pick], int(Database.item(id).spark)):
+		await info("That spark is already as bright as it gets.")
+		return
+	GameState.inventory[id] = GameState.item_count(id) - 1
+	if GameState.item_count(id) <= 0:
+		GameState.inventory.erase(id)
+	Sound.sfx("level_up")
+	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
 
 ## Spirlog: every species with seen/bonded marks, plus the Tracker for the current area.
 func run_spirlog() -> void:
@@ -153,7 +208,24 @@ func run_spirlog() -> void:
 		for table: String in EncounterTable.table_ids():
 			if sd.species_name in EncounterTable.species_on(table):
 				where.append(table.replace("_", " ").capitalize())
-		await info("%s\n%s\nFound on: %s\n\n* bonded  + seen" % [sd.species_name, "/".join(els), ", ".join(where) if not where.is_empty() else "unknown"])
+		var lines: PackedStringArray = ["#%02d %s   %s" % [sd.dex_id, sd.species_name, "/".join(els)]]
+		if not sd.height.is_empty():
+			lines.append("Height %s" % sd.height)
+		if not sd.habitat.is_empty():
+			lines.append("Lives in: %s" % sd.habitat)
+		lines.append("Found on: %s" % (", ".join(where) if not where.is_empty() else "unknown"))
+		var log_entry: Dictionary = GameState.spirlog.get(sd.species_name, {})
+		if bool(log_entry.get("bonded", false)):
+			var tr: Dictionary = BattleRules.trait_info(sd.trait_id)
+			if not tr.is_empty():
+				lines.append("Trait: %s" % tr.label)
+			if not sd.lore.is_empty():
+				lines.append("")
+				lines.append(sd.lore)
+		else:
+			lines.append("")
+			lines.append("Bond with one to learn more.")
+		await info("\n".join(lines))
 
 func _tracker_text() -> String:
 	var lines: PackedStringArray = ["Spirlog Tracker", ""]

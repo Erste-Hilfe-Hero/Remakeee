@@ -167,7 +167,7 @@ func start() -> Array[BattleEvent]:
 			s.energy = Spirling.START_ENERGY
 		active[side] = _first_alive(side)
 	var foe: Spirling = active_spirling(Side.FOE)
-	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name()})
+	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(), "prism": foe.prism})
 	if not is_wild:
 		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE))
 	emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER))
@@ -466,7 +466,9 @@ func _do_item(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.ITEM_USED, d)
 	if int(it.get("heal", 0)) > 0:
 		_heal_spirling(a.side, a.item_target, int(it.heal))
-	if bool(it.get("cure", false)) and not target.status.is_empty():
+	var cure: Variant = it.get("cure", false)
+	var cures: bool = (cure is bool and cure) or (cure is String and cure == target.status)
+	if cures and not target.status.is_empty():
 		var was_active: bool = a.item_target == active[a.side]
 		if was_active:
 			_cure(a.side)
@@ -475,6 +477,10 @@ func _do_item(a: BattleAction) -> void:
 			target.status_turns = 0
 	if int(it.get("energy", 0)) > 0 and a.item_target == active[a.side]:
 		change_energy(a.side, int(it.energy))
+	var st: Variant = it.get("stage", {})
+	if st is Dictionary and a.item_target == active[a.side]:
+		for stat: String in st:
+			change_stage(a.side, stat, int(st[stat]))
 
 func _do_bond(a: BattleAction) -> void:
 	var target: Spirling = active_spirling(Side.FOE)

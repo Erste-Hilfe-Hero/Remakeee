@@ -29,7 +29,10 @@ func describe() -> String:
 	var who: String = str(data.get("name", ""))
 	match type:
 		Type.BATTLE_START:
-			return "A hushed %s blocks your way." % data.get("foe_name", "") if data.get("wild", false) else "%s calls for a duel!" % data.get("trainer", "A Tamer")
+			if data.get("wild", false):
+				var shimmer: String = " It shimmers with odd colours!" if bool(data.get("prism", false)) else ""
+				return "A hushed %s blocks your way.%s" % [data.get("foe_name", ""), shimmer]
+			return "%s calls for a duel!" % data.get("trainer", "A Tamer")
 		Type.SEND_OUT, Type.SWAP_IN:
 			return "%s steps out!" % who
 		Type.SWAP_OUT:

@@ -78,6 +78,22 @@
    "facing": "left",
    "dialogue": "thornridge/elder",
    "sprite": "elder"
+  },
+  {
+   "id": "sparkseer",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "thornridge/sparkseer",
+   "sprite": "elder"
+  },
+  {
+   "id": "crystals",
+   "x": 9,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "thornridge/crystals",
+   "sprite": "villager"
   }
  ],
  "signs": [

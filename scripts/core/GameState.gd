@@ -338,7 +338,17 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		return ""
 	var it: Dictionary = Database.item(id)
 	var msg: String = ""
-	if float(it.get("revive", 0.0)) > 0.0:
+	if bool(it.get("evolves", false)):
+		if not s.can_evolve_with(id):
+			return ""
+		var old_name: String = s.display_name()
+		s.evolve()
+		mark_seen(s.data.species_name, true)
+		msg = "%s glows with Rift light... and grew into %s!" % [old_name, s.data.species_name]
+	elif it.has("teaches"):
+		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
+		return ""
+	elif float(it.get("revive", 0.0)) > 0.0:
 		if not s.is_fainted():
 			return ""
 		s.hp = maxi(1, int(s.max_hp() * float(it.revive)))
@@ -355,6 +365,36 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	if inventory[id] <= 0:
 		inventory.erase(id)
 	return msg
+
+## Spark values in words, for the Sparkseer: "Kindlop: HP strong, ATK faint, ...".
+const SPARK_WORDS: Array[String] = ["faint", "fair", "strong", "brilliant"]
+
+static func spark_word(v: int) -> String:
+	return SPARK_WORDS[clampi(v * SPARK_WORDS.size() / (Spirling.SPARK_MAX + 1), 0, SPARK_WORDS.size() - 1)]
+
+func spark_reading(s: Spirling) -> String:
+	var parts: PackedStringArray = []
+	for key: String in Spirling.STAT_KEYS:
+		parts.append("%s %s" % [key.to_upper(), spark_word(int(s.spark.get(key, 0)))])
+	return "%s: %s." % [s.display_name(), ", ".join(parts)]
+
+## Raises one Spark value (Spark Charm). Returns false if it's already at the top.
+func train_spark(s: Spirling, key: String, amount: int) -> bool:
+	var v: int = int(s.spark.get(key, 0))
+	if v >= Spirling.SPARK_MAX:
+		return false
+	var old_max: int = s.max_hp()
+	s.spark[key] = mini(Spirling.SPARK_MAX, v + amount)
+	if key == "hp":
+		s.hp = mini(s.max_hp(), s.hp + s.max_hp() - old_max)
+	return true
+
+## True if [param s] can learn the move an Echo Crystal holds (same element, not known yet).
+static func can_learn_echo(s: Spirling, item_id: String) -> bool:
+	var mv: MoveData = Database.move(str(Database.item(item_id).get("teaches", "")))
+	if mv == null:
+		return false
+	return mv.element in s.elements() and not s.moves.has(mv)
 
 ## Moves party member [param index] into storage. Keeps at least one healthy Spirling.
 func deposit(index: int) -> bool:

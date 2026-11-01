@@ -41,7 +41,9 @@ static func roll(id: String, rng: RandomNumberGenerator) -> Spirling:
 			var sd: SpirlingData = Database.species(str(s.species))
 			if sd == null:
 				return null
-			return Spirling.new(sd, rng.randi_range(int(s.get("min", 2)), int(s.get("max", 4))), rng)
+			var wild := Spirling.new(sd, rng.randi_range(int(s.get("min", 2)), int(s.get("max", 4))), rng)
+			wild.prism = rng.randf() < Spirling.PRISM_CHANCE
+			return wild
 	return null
 
 ## Species names that can appear on [param id] (Spirlog Tracker).
