@@ -23,6 +23,10 @@ func setup(s: Spirling, p_facing: String) -> void:
 	modulate.a = 1.0
 	queue_redraw()
 
+## The era sprite in use, or null while the placeholder rectangle is drawn.
+func texture() -> Texture2D:
+	return _texture
+
 func _ready() -> void:
 	_home = position
 

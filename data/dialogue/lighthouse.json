@@ -1,0 +1,23 @@
+{
+ "aldo": {
+  "lines": [
+   "Aldo: You slept through the whole storm? The sky split open over the lake last night.",
+   "Aldo: That little one hasn't left your side since it came in from the rain.",
+   "Aldo: Every Rift that opens spreads the Hush. Spirlings near it go quiet and forget their Tamers.",
+   "Aldo: The cartographers will need fresh maps. Take this, and go see Kestra at the map house."
+  ],
+  "after_flag": {
+   "flag": "aldo_gift",
+   "lines": [
+    "Aldo: The lamp stays lit for you. If your team is worn out, the Rest Spring is just up the pier."
+   ]
+  },
+  "action": "give_item tonic 2",
+  "flag": "aldo_gift",
+  "once": true
+ },
+ "stairs": [
+  "The spiral stairs lead up to the lamp room.",
+  "Aldo keeps it lit every night."
+ ]
+}

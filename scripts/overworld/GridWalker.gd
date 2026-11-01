@@ -11,6 +11,13 @@ const RUN_TIME: float = 0.11
 const DIRS: Dictionary[String, Vector2i] = {"up": Vector2i.UP, "down": Vector2i.DOWN, "left": Vector2i.LEFT, "right": Vector2i.RIGHT}
 
 @export var body_color: Color = Color("3a5a9a")
+## Sprite sheet style in art/era1/chars/ (tamer, villager, ranger, elder, warden).
+@export var sprite_style: String = "villager"
+
+const CHAR_DIR: String = "res://art/era1/chars/%s.png"
+const SHEET_COLUMNS: Dictionary[String, int] = {"down": 0, "up": 1, "left": 2, "right": 3}
+static var _sheets: Dictionary[String, Texture2D] = {}
+var _step_frame: int = 0
 
 var cell: Vector2i = Vector2i.ZERO
 var facing: String = "down"
@@ -55,13 +62,28 @@ func _process(delta: float) -> void:
 	_t += delta
 	var k: float = clampf(_t / _duration, 0.0, 1.0)
 	position = _from.lerp(_to, k).round()
+	var frame: int = 1 if k > 0.25 and k < 0.75 else 0
+	if frame != _step_frame:
+		_step_frame = frame
+		queue_redraw()
 	if k >= 1.0:
 		moving = false
 		position = _to
 		step_finished.emit(cell)
 
+static func sheet_for(style: String) -> Texture2D:
+	if not _sheets.has(style):
+		var path: String = CHAR_DIR % style
+		_sheets[style] = load(path) if ResourceLoader.exists(path) else null
+	return _sheets[style]
+
 func _draw() -> void:
-	# Placeholder body: coloured rectangle with a facing marker.
+	var sheet: Texture2D = sheet_for(sprite_style)
+	if sheet != null:
+		var src := Rect2(SHEET_COLUMNS[facing] * TILE, _step_frame * TILE, TILE, TILE)
+		draw_texture_rect_region(sheet, Rect2(0, 0, TILE, TILE), src)
+		return
+	# Fallback body: coloured rectangle with a facing marker.
 	draw_rect(Rect2(2, 1, 12, 14), body_color)
 	draw_rect(Rect2(2, 1, 12, 14), UITheme.INK, false, 1.0)
 	var d: Vector2i = DIRS[facing]

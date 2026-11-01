@@ -10,3 +10,4 @@ android/
 *.mobileprovision
 *.p8
 .env
+__pycache__/

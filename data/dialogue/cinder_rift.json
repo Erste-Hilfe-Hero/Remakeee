@@ -3,13 +3,13 @@
   "Pell: The heat in here makes Spirlings restless."
  ],
  "acolyte_a_intro": [
-  "Pell: Only those who pass us may face the Warden!"
+  "Pell: We tend the Warden while he's lost in the Hush. Prove you can help him!"
  ],
  "acolyte_a_defeat": [
-  "Pell: Go on, then. Orrin waits at the core."
+  "Pell: Go on, then. Orrin is at the tear."
  ],
  "acolyte_b": [
-  "Suri: Orrin has guarded this Rift for years."
+  "Suri: Orrin has guarded this hollow for years. He hasn't said a word since the storm."
  ],
  "acolyte_b_intro": [
   "Suri: My Kindlop runs hot. Ready?"
@@ -24,16 +24,17 @@
   "after_flag": {
    "flag": "rift_cinder_sealed",
    "lines": [
-    "Orrin: The Cinder Rift is calm. The way north from Thornridge is open to you."
+    "Orrin: I'd forgotten my own Spirlings' names. Thank you for reminding me.",
+    "Orrin: The tear is stitched. Mark it on your map, cartographer."
    ]
   }
  },
  "orrin_intro": [
-  "Warden Orrin: You came all this way through the heat.",
-  "Then show me the bond you share with your team!"
+  "Warden Orrin: ...",
+  "His Spirlings step forward on their own. They want him back."
  ],
  "orrin_defeat": [
-  "Warden Orrin: That's a real bond.",
-  "I'll let the Rift close. Take that strength north."
+  "Warden Orrin: ...Ember? Is that you?",
+  "Warden Orrin: I can hear them again. Quickly, help me close the tear!"
  ]
 }

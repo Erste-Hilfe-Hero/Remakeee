@@ -17,6 +17,8 @@ var warps: Array[Dictionary] = []
 var npcs: Array[Dictionary] = []
 var signs: Array[Dictionary] = []
 var encounter_table: String = ""
+## Battle backdrop for fights that start here (BattleBackdrop.KINDS).
+var backdrop: String = "field"
 ## Tall grass may only roll encounters if a table exists.
 var heal_point: Vector2i = Vector2i(-1, -1)
 
@@ -44,6 +46,7 @@ static func load_map(map_id: String) -> MapData:
 	for s: Variant in raw.get("signs", []):
 		m.signs.append(s)
 	m.encounter_table = str(raw.get("encounters", ""))
+	m.backdrop = str(raw.get("backdrop", "field"))
 	var hp: Array = raw.get("heal_point", [-1, -1])
 	m.heal_point = Vector2i(int(hp[0]), int(hp[1]))
 	return m
@@ -77,4 +80,7 @@ func paint(layer: TileMapLayer) -> void:
 	layer.clear()
 	for y: int in height:
 		for x: int in rows[y].length():
-			layer.set_cell(Vector2i(x, y), 0, Vector2i(TilesetFactory.kind_for(rows[y][x]), 0))
+			var c := Vector2i(x, y)
+			var k: int = kind_at(c)
+			var neighbour: Callable = func(n: Vector2i) -> int: return kind_at(n) if in_bounds(n) else k
+			layer.set_cell(c, 0, TilesetFactory.atlas_coords(k, c, neighbour))

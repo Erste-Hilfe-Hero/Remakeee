@@ -1,0 +1,98 @@
+{
+ "name": "Fernstair",
+ "region": "veydal",
+ "backdrop": "field",
+ "encounters": "fernstair",
+ "rows": [
+  "TTTT__TTTTTT",
+  "T,,,__,,,..T",
+  "T,,,____...T",
+  "T^^^^^^^=^^T",
+  "T*..,,,,_..T",
+  "T.S.,,,,_.@T",
+  "T________..T",
+  "T_^^^^^^^^^T",
+  "T=..,,,,,..T",
+  "T_..,,,,,.@T",
+  "T_________.T",
+  "T^^^^^^^^=^T",
+  "T.,,,,....:T",
+  "T.,,,,..._:T",
+  "T@..______:T",
+  "T..._,,,,::T",
+  "T^^^=^^^^^^T",
+  "T,,,_,,,,..T",
+  "T,,,_,,,,..T",
+  "T...____...T",
+  "TT.....__..T",
+  "T.....,__,.T",
+  "T*....,__,,T",
+  "T.....S__..T",
+  "TTT..___..TT",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 25,
+   "to": "brindlewick",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "brindlewick",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 4,
+   "y": 0,
+   "to": "crowcrest",
+   "tx": 5,
+   "ty": 22,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "crowcrest",
+   "tx": 6,
+   "ty": 22,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "gatherer",
+   "x": 9,
+   "y": 18,
+   "facing": "left",
+   "dialogue": "fernstair/gatherer",
+   "sprite": "villager"
+  },
+  {
+   "id": "hiker",
+   "x": 3,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "fernstair/hiker",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 6,
+   "y": 23,
+   "dialogue": "fernstair/sign"
+  },
+  {
+   "x": 2,
+   "y": 5,
+   "dialogue": "fernstair/sign_top"
+  }
+ ]
+}

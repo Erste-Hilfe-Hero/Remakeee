@@ -59,6 +59,7 @@ func _build() -> void:
 	player = Player.new()
 	player.name = "Player"
 	player.body_color = Color("3a5a9a")
+	player.sprite_style = "tamer"
 	player.can_move = _can_enter
 	player.stepped.connect(_on_player_stepped)
 	player.interact.connect(_on_interact)
@@ -173,7 +174,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if spotter != null:
 		await challenge(spotter, true)
 		return
-	if map.kind_at(cell) == TilesetFactory.Kind.TALL_GRASS and not map.encounter_table.is_empty():
+	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty():
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < EncounterTable.rate(map.encounter_table):
 			var wild: Spirling = EncounterTable.roll(map.encounter_table, GameState.rng)
 			if wild != null:
@@ -366,7 +367,9 @@ func after_tamer_win(n: NPC) -> void:
 	if def.has("defeat"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
-		var lines: Array[String] = ["The Rift's glow fades. It is sealed!"]
+		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
+		if GameState.has_flag("pc_unlocked"):
+			lines.append("Your storage box now opens from the menu, wherever you are.")
 		if GameState.level_cap() < Spirling.MAX_LEVEL:
 			lines.append("Your Spirlings can now grow to Lv%d." % GameState.level_cap())
 		await say(lines)
@@ -407,6 +410,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
+	scene.backdrop = map.backdrop
 	_battle_layer.add_child(scene)
 	_fade.color.a = 0.0
 	var result: Array = await scene.battle_finished
@@ -437,5 +441,5 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 			var old_name: String = s.display_name()
 			await _fade_to(0.0)
 			s.evolve()
-			await say(["%s is changing...!" % old_name, "%s became %s!" % [old_name, s.data.species_name]] as Array[String])
+			await say(["%s glows with Rift light..." % old_name, "%s grew into %s!" % [old_name, s.data.species_name]] as Array[String])
 			GameState.mark_seen(s.data.species_name, true)

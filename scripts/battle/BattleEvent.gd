@@ -26,15 +26,15 @@ func describe() -> String:
 	var who: String = str(data.get("name", ""))
 	match type:
 		Type.BATTLE_START:
-			return "A wild %s appeared!" % data.get("foe_name", "") if data.get("wild", false) else "%s wants to battle!" % data.get("trainer", "A Tamer")
+			return "A hushed %s blocks your way." % data.get("foe_name", "") if data.get("wild", false) else "%s calls for a duel!" % data.get("trainer", "A Tamer")
 		Type.SEND_OUT, Type.SWAP_IN:
 			return "%s steps out!" % who
 		Type.SWAP_OUT:
-			return "%s, come back!" % who
+			return "%s steps back to your side." % who
 		Type.SWAP_BLOCKED:
 			return "%s is rooted and can't swap!" % who
 		Type.MOVE_USED:
-			return "%s used %s!" % [who, data.get("move", "")]
+			return "%s: %s!" % [who, data.get("move", "")]
 		Type.MISSED:
 			return "%s missed!" % who
 		Type.NO_TARGET:
@@ -78,13 +78,13 @@ func describe() -> String:
 		Type.FREE_ACTION:
 			return "%s seizes the moment!" % who
 		Type.FLEE_RESULT:
-			return "Got away safely!" if data.get("success", false) else "Couldn't get away!"
+			return "You slipped away." if data.get("success", false) else "No way out!"
 		Type.XP_GAINED:
 			return "%s gained %d XP." % [who, data.get("amount", 0)]
 		Type.LEVEL_UP:
-			return "%s grew to level %d!" % [who, data.get("level", 0)]
+			return "%s reached Lv%d!" % [who, data.get("level", 0)]
 		Type.MOVE_LEARNED:
-			return "%s learned %s!" % [who, data.get("move", "")]
+			return "%s picked up %s!" % [who, data.get("move", "")]
 		Type.BATTLE_END:
 			return ""
 	return ""

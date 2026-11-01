@@ -11,6 +11,7 @@ func setup(def: Dictionary) -> void:
 	npc_id = str(def.get("id", ""))
 	dialogue_ref = str(def.get("dialogue", ""))
 	body_color = Color(str(def.get("color", "b04a4a")))
+	sprite_style = str(def.get("sprite", "villager"))
 	place(Vector2i(int(def.x), int(def.y)), str(def.get("facing", "down")))
 
 ## Shows a "!" above the head when a Tamer spots the player.

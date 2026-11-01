@@ -1,6 +1,7 @@
 {
  "name": "Rest Spring",
  "region": "veydal",
+ "backdrop": "field",
  "heal_point": [
   4,
   5
@@ -19,9 +20,9 @@
   {
    "x": 4,
    "y": 7,
-   "to": "start_town",
+   "to": "brindlewick",
    "tx": 9,
-   "ty": 11,
+   "ty": 5,
    "facing": "down"
   }
  ],
@@ -32,7 +33,7 @@
    "y": 2,
    "facing": "down",
    "dialogue": "rest_spring/keeper",
-   "color": "4a9a8a"
+   "sprite": "elder"
   },
   {
    "id": "archivist",
@@ -40,7 +41,7 @@
    "y": 4,
    "facing": "left",
    "dialogue": "rest_spring/archivist",
-   "color": "6a6ab0"
+   "sprite": "villager"
   }
  ],
  "signs": []

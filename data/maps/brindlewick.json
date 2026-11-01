@@ -1,0 +1,116 @@
+{
+ "name": "Brindlewick",
+ "region": "veydal",
+ "backdrop": "lake",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T*...__...*T",
+  "TRRR.__.RRRT",
+  "TRRR.__.RRRT",
+  "THDH.__.HDHT",
+  "T._.____._.T",
+  "T.__________",
+  "T.S.._.....T",
+  "T*...__..,,T",
+  "T..L.__.,,,T",
+  "T@.|.__....T",
+  "T@.D.__..*.T",
+  "T..___.....T",
+  "~~~~.++.~~~~",
+  "~~~~~++~~~~~",
+  "~~%~~++~~%%~",
+  "~~%%~++~~~%~",
+  "~~~~~++~~~~~",
+  "~~~++++++S~~",
+  "~~~~~~~~~~~~"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "fernstair",
+   "tx": 5,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "fernstair",
+   "tx": 6,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 6,
+   "to": "saltmarsh",
+   "tx": 1,
+   "ty": 12,
+   "facing": "right"
+  },
+  {
+   "x": 3,
+   "y": 11,
+   "to": "lighthouse",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 4,
+   "to": "map_house",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 4,
+   "to": "rest_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "fisher",
+   "x": 8,
+   "y": 18,
+   "facing": "left",
+   "dialogue": "brindlewick/fisher",
+   "sprite": "villager"
+  },
+  {
+   "id": "child",
+   "x": 8,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "brindlewick/child",
+   "sprite": "villager"
+  },
+  {
+   "id": "kestra_dock",
+   "x": 4,
+   "y": 18,
+   "facing": "down",
+   "dialogue": "brindlewick/kestra_dock",
+   "sprite": "ranger",
+   "show_flag": "pc_unlocked"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 7,
+   "dialogue": "brindlewick/sign"
+  },
+  {
+   "x": 9,
+   "y": 18,
+   "dialogue": "brindlewick/ferry"
+  }
+ ]
+}

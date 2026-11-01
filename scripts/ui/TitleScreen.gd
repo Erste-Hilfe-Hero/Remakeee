@@ -11,7 +11,7 @@ const DIFFICULTY_TEXT: Array[String] = [
 	"Rift-Born (no battle items)",
 ]
 const NAME_MAX: int = 10
-const TITLE_SIZE: int = 24
+const ART_HEIGHT: int = 148
 
 var _menu: MenuHost
 var _name_box: PanelContainer
@@ -26,22 +26,13 @@ func _ready() -> void:
 	bg.color = UITheme.BG
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
-	var title := Label.new()
-	title.text = "CHIMORA"
-	title.add_theme_font_size_override("font_size", TITLE_SIZE)
-	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	title.offset_top = 36
-	add_child(title)
-	var sub := Label.new()
-	sub.text = "A Spirling bonding tale"
-	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	sub.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	sub.offset_top = 66
-	add_child(sub)
+	var art := TitleArt.new()
+	art.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	art.offset_bottom = ART_HEIGHT
+	add_child(art)
 	_menu = MenuHost.new()
 	add_child(_menu)
-	_menu.offset_top = 96
+	_menu.offset_top = ART_HEIGHT + 4
 	_build_name_box()
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
@@ -65,7 +56,7 @@ func _build_name_box() -> void:
 	v.add_child(l)
 	_name_edit = LineEdit.new()
 	_name_edit.max_length = NAME_MAX
-	_name_edit.add_theme_stylebox_override("normal", UITheme.panel_style(UITheme.ACCENT))
+	_name_edit.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
 	_name_edit.add_theme_color_override("font_color", UITheme.INK)
 	_name_edit.text_submitted.connect(func(t: String) -> void: _name_done.emit(t))
 	# Gamepad / virtual pad confirm also submits the name.
@@ -118,11 +109,11 @@ func _new_game() -> bool:
 		var entries: Array[String] = []
 		for sp: String in STARTERS:
 			entries.append("%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])])
-		var pick: int = await _menu.pick_strings("Choose your partner", entries)
+		var pick: int = await _menu.pick_strings("Three Spirlings sheltered in the lighthouse from the storm. Which one stays with you?", entries)
 		if pick < 0:
 			return false
 		var sd: SpirlingData = Database.species(STARTERS[pick])
-		if await _menu.confirm("%s, the %s Spirling. Bond with it?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
+		if await _menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
 			GameState.new_game(diff as GameState.Difficulty, name, color, sd.species_name)
 			EraManager.from_dict({})
 			return true

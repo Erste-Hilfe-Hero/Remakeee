@@ -1,0 +1,144 @@
+{
+ "name": "Crowcrest",
+ "region": "veydal",
+ "backdrop": "ridge",
+ "encounters": "crowcrest",
+ "rows": [
+  "@@@@@__@@@@@",
+  "@::..__..::@",
+  "@:...__...:@",
+  "@^^^^==^^^^@",
+  "@...____...@",
+  "@.::_..:::.@",
+  "@.::_..:::@@",
+  "@...____...@",
+  "@@^^^^^^=^^@",
+  "@~~~...:_..@",
+  "@~~~%..:_..@",
+  "@~~~++++_..@",
+  "@~~~%..:_..@",
+  "@......::..@",
+  "@^^^=^^^^^^@",
+  "@:::_:::...@",
+  "@:::_::....@",
+  "@...______.@",
+  "@@........@@",
+  "@.::....::.@",
+  "@.::.S..::.@",
+  "@....__....@",
+  "@@...__...@@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "fernstair",
+   "tx": 4,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "fernstair",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "thornridge",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "thornridge",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "kestra",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "crowcrest/kestra",
+   "sprite": "ranger",
+   "trainer": "Cartographer Kestra",
+   "beaten_flag": "kestra_spar",
+   "money": 400,
+   "intro": "crowcrest/kestra_intro",
+   "defeat": "crowcrest/kestra_defeat",
+   "team": [
+    {
+     "species": "Zippit",
+     "level": 7
+    },
+    {
+     "species": "Breezel",
+     "level": 8
+    },
+    {
+     "species": "Shalebat",
+     "level": 9
+    }
+   ]
+  },
+  {
+   "id": "lio",
+   "x": 2,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "crowcrest/lio",
+   "sprite": "villager",
+   "trainer": "Wanderer Lio",
+   "intro": "crowcrest/lio_intro",
+   "defeat": "crowcrest/lio_defeat",
+   "team": [
+    {
+     "species": "Breezel",
+     "level": 7
+    },
+    {
+     "species": "Zippit",
+     "level": 8
+    }
+   ]
+  },
+  {
+   "id": "bram",
+   "x": 9,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "crowcrest/bram",
+   "sprite": "villager",
+   "trainer": "Hiker Bram",
+   "intro": "crowcrest/bram_intro",
+   "defeat": "crowcrest/bram_defeat",
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 7
+    },
+    {
+     "species": "Shalebat",
+     "level": 8
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 20,
+   "dialogue": "crowcrest/sign"
+  }
+ ]
+}

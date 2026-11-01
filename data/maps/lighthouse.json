@@ -1,0 +1,42 @@
+{
+ "name": "Brindlewick Lighthouse",
+ "region": "veydal",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWWWW",
+  "WfCCffff=W",
+  "WffffffffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCfffffffW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "brindlewick",
+   "tx": 3,
+   "ty": 12,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "aldo",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "lighthouse/aldo",
+   "sprite": "elder"
+  }
+ ],
+ "signs": [
+  {
+   "x": 8,
+   "y": 1,
+   "dialogue": "lighthouse/stairs"
+  }
+ ]
+}

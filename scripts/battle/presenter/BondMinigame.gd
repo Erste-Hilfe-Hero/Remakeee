@@ -20,6 +20,9 @@ var _hits: Array[float] = []
 var _strays: int = 0
 var _pulse_count: int = 0
 var _hint: Label
+## The wild Spirling being reached out to, drawn in the centre of the rings.
+var target: Texture2D
+const TARGET_SIZE: float = 40.0
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -99,7 +102,16 @@ func _unhandled_input(event: InputEvent) -> void:
 func _draw() -> void:
 	var c: Vector2 = size / 2.0
 	draw_rect(Rect2(Vector2.ZERO, size), Color(UITheme.BG, 0.85))
+	if target != null:
+		# The wild Spirling watches from above the rings; the rings are its pulse.
+		var half := Vector2(TARGET_SIZE, TARGET_SIZE) / 2.0
+		var at := c - Vector2(0, BondTiming.START_RADIUS + half.y + 6)
+		draw_texture_rect(target, Rect2((at - half).round(), half * 2.0), false)
+		draw_line(at + Vector2(0, half.y + 2), c - Vector2(0, BondTiming.START_RADIUS + 2), UITheme.MID, 1.0)
 	draw_arc(c, BondTiming.TARGET_RADIUS, 0.0, TAU, 32, TARGET_COLOR, 2.0)
+	# A small heart-knot mark in the middle: the bond being tied.
+	draw_rect(Rect2(c - Vector2(1, 3), Vector2(2, 6)), RING_COLOR)
+	draw_rect(Rect2(c - Vector2(3, 1), Vector2(6, 2)), RING_COLOR)
 	for spawn: float in _rings:
 		draw_arc(c, maxf(BondTiming.radius_at(_time - spawn), 1.0), 0.0, TAU, 40, RING_COLOR, 1.0)
 	for p: Vector2 in _pops:

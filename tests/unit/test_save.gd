@@ -21,7 +21,7 @@ func before_each() -> void:
 func test_round_trip_restores_state() -> void:
 	GameState.add_item("tonic", 4)
 	GameState.money = 1234
-	GameState.current_map = "route_1"
+	GameState.current_map = "fernstair"
 	GameState.player_cell = Vector2i(6, 9)
 	GameState.set_flag("route1_gift")
 	GameState.storage.append(Spirling.new(Database.species("Zippit"), 3))
@@ -60,6 +60,16 @@ func test_migrates_scaffold_v0_save() -> void:
 	assert_true(bool(d.flags.rift_1_sealed))
 	SaveManager.apply_save(d)
 	assert_eq(GameState.difficulty, GameState.Difficulty.RIFT_BORN)
+
+func test_migrates_v1_save_to_the_rebuilt_world() -> void:
+	var v1: Dictionary = {"save_version": 1, "map": "route_2", "cell": [3, 3], "heal_map": "home",
+		"heal_cell": [4, 4], "flags": {"rival_kestra_1": true}}
+	var d: Variant = SaveManager.migrate(v1)
+	assert_eq(str(d.map), "crowcrest")
+	assert_eq(str(d.heal_map), "lighthouse")
+	assert_true(bool(d.flags.kestra_spar))
+	var m: MapData = MapData.load_map(str(d.map))
+	assert_true(m.is_walkable(Vector2i(int(d.cell[0]), int(d.cell[1]))), "lands on an open cell")
 
 func test_rejects_newer_save() -> void:
 	assert_null(SaveManager.migrate({"save_version": SaveManager.SAVE_VERSION + 1}))
