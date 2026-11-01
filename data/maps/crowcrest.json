@@ -140,5 +140,33 @@
    "y": 20,
    "dialogue": "crowcrest/sign"
   }
+ ],
+ "gear_spots": [
+  {
+   "from": [
+    8,
+    13
+   ],
+   "x": 8,
+   "y": 14,
+   "gear": "climbing_pick",
+   "to": [
+    8,
+    15
+   ]
+  },
+  {
+   "from": [
+    8,
+    15
+   ],
+   "x": 8,
+   "y": 14,
+   "gear": "climbing_pick",
+   "to": [
+    8,
+    13
+   ]
+  }
  ]
 }

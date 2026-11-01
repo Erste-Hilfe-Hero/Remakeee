@@ -16,6 +16,7 @@ var height: int = 0
 var warps: Array[Dictionary] = []
 var npcs: Array[Dictionary] = []
 var signs: Array[Dictionary] = []
+var gear_spots: Array[Dictionary] = []
 var encounter_table: String = ""
 ## Battle backdrop for fights that start here (BattleBackdrop.KINDS).
 var backdrop: String = "field"
@@ -45,6 +46,8 @@ static func load_map(map_id: String) -> MapData:
 		m.npcs.append(n)
 	for s: Variant in raw.get("signs", []):
 		m.signs.append(s)
+	for g: Variant in raw.get("gear_spots", []):
+		m.gear_spots.append(g)
 	m.encounter_table = str(raw.get("encounters", ""))
 	m.backdrop = str(raw.get("backdrop", "field"))
 	var hp: Array = raw.get("heal_point", [-1, -1])
@@ -67,6 +70,25 @@ func warp_at(cell: Vector2i) -> Dictionary:
 		if int(w.x) == cell.x and int(w.y) == cell.y:
 			return w
 	return {}
+
+## Tamer Gear spot used by standing on [param from] and facing [param target], or {}.
+## {"from": [x, y], "x", "y", "gear": item id, "to": [x, y]}; a spot without "to" is a dark cell
+## that needs the gear to walk into.
+func gear_spot(from: Vector2i, target: Vector2i) -> Dictionary:
+	for g: Dictionary in gear_spots:
+		if int(g.x) != target.x or int(g.y) != target.y or not g.has("to"):
+			continue
+		var f: Array = g.get("from", [])
+		if f.size() == 2 and Vector2i(int(f[0]), int(f[1])) == from:
+			return g
+	return {}
+
+## Gear needed to walk into [param cell] (a dark spot), or "".
+func gear_needed_at(cell: Vector2i) -> String:
+	for g: Dictionary in gear_spots:
+		if not g.has("to") and int(g.x) == cell.x and int(g.y) == cell.y:
+			return str(g.gear)
+	return ""
 
 func sign_at(cell: Vector2i) -> Dictionary:
 	for s: Dictionary in signs:

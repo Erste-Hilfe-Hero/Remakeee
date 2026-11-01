@@ -16,7 +16,7 @@ Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read 
 2. **Patent-safe mechanics** (Nintendo sued Palworld over these):
    - NO throwing or aiming an item to capture. Bonding is a **menu-triggered rhythm minigame** inside the battle.
    - NO live capture-probability gauge. Show the result only after the minigame.
-   - NO riding a creature to fly or glide. Traversal uses **Tamer Gear** items (glider, grapple, lantern).
+   - NO riding a creature to fly or glide. Traversal uses **Tamer Gear** items on foot (grapple, climbing pick, lantern). No gliders, wings or any gliding/flying traversal (patent risk zone).
    - NO throwing out a creature to summon it, and no flick-to-throw on the touchscreen. Spirlings step out beside the Tamer.
    - Battles start from overworld encounters and **cut to a separate battle screen**. No real-time shared-field fights.
 3. **Original assets only.** Never add ripped sprites, tiles, music or fonts. Use colored placeholder rectangles until real art exists.

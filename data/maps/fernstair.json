@@ -94,5 +94,33 @@
    "y": 5,
    "dialogue": "fernstair/sign_top"
   }
+ ],
+ "gear_spots": [
+  {
+   "from": [
+    8,
+    6
+   ],
+   "x": 8,
+   "y": 7,
+   "gear": "climbing_pick",
+   "to": [
+    8,
+    8
+   ]
+  },
+  {
+   "from": [
+    8,
+    8
+   ],
+   "x": 8,
+   "y": 7,
+   "gear": "climbing_pick",
+   "to": [
+    8,
+    6
+   ]
+  }
  ]
 }

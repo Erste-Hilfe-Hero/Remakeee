@@ -10,8 +10,23 @@
  ],
  "fisher": [
   "The fish stopped jumping the night the Rift opened.",
-  "Even the reeds sound quieter. That's the Hush, they say."
+  "Even the reeds sound quieter. That's the Hush, they say.",
+  "Something glints on the reed islet west of the pier. Too far to wade, though."
  ],
+ "islet": {
+  "lines": [
+   "Tangled in the reeds: a Revival Leaf!"
+  ],
+  "action": "give_item revival_leaf 1",
+  "flag": "islet_find",
+  "once": true,
+  "after_flag": {
+   "flag": "islet_find",
+   "lines": [
+    "Only reeds now, rustling in the wind."
+   ]
+  }
+ },
  "child": [
   "My Puddlet won't answer when I call it anymore.",
   "Grandpa Aldo says a Tamer with a strong bond can wake it up again."

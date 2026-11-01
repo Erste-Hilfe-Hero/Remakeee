@@ -5,7 +5,7 @@ Not legal advice — get a games lawyer to review before store launch.
 ## Patent-safe (Nintendo sued Palworld over these, Sept 2024)
 - NO throw-to-capture. Bonding = turn-based rhythm minigame in the battle menu.
 - NO live capture-odds meter while aiming. Show bond result only afterwards.
-- NO riding a creature to fly/glide. Use Tamer Gear (glider, grapple).
+- NO riding a creature to fly/glide. Use Tamer Gear (grapple, climbing pick). No gliding or flying while exploring at all (patent risk zone).
 - NO thrown capsule/ball to summon. Spirlings step out beside the Tamer.
 
 ## Copyright / trademark
