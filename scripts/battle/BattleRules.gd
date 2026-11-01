@@ -45,7 +45,7 @@ const FIELDS: Dictionary[String, Dictionary] = {
 ## Warden rules (npc "rule"). foe_energy: extra Energy per turn for the Warden's side;
 ## player_stage: stat stages every player Spirling starts with.
 const RULES: Dictionary[String, Dictionary] = {
-	"ember_pulse": {"label": "Ember Pulse", "text": "Orrin's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1},
+	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1},
 	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with lower SPD.", "player_stage": {"spd": -1}},
 }
 

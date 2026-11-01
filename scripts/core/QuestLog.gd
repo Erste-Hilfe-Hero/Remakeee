@@ -57,6 +57,16 @@ static func open_side_goals(flags: Dictionary) -> Array[Dictionary]:
 			out.append(d)
 	return out
 
+## True once every side goal is done (achievement "helper").
+static func side_goals_done(flags: Dictionary) -> bool:
+	var side: Array = data().get("side", [])
+	if side.is_empty():
+		return false
+	for g: Variant in side:
+		if not bool(flags.get(str((g as Dictionary).get("done", "")), false)):
+			return false
+	return true
+
 ## Every flag the quest file depends on (the data test checks each one can be set in game).
 static func all_flags() -> Array[String]:
 	var out: Array[String] = []

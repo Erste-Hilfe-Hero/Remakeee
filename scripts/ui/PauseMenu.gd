@@ -13,9 +13,9 @@ var travel_to: String = ""
 
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Bag", "Save", "Settings"]
+		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Bag", "Save", "Settings"]
 		if GameState.has_flag(STORAGE_FLAG):
-			labels.insert(4, "Storage")
+			labels.insert(5, "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
 			labels.insert(1, "Travel")
 		var idx: int = await pick_strings(menu_title(), labels)
@@ -27,6 +27,7 @@ func run() -> void:
 				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
 			"Team": await run_team()
 			"Spirlog": await run_spirlog()
+			"Records": await run_records()
 			"Bag": await run_bag()
 			"Storage": await run_storage()
 			"Save":
@@ -37,6 +38,37 @@ func run() -> void:
 			"Travel":
 				if await run_travel():
 					return
+
+## Achievements and personal bests (items 88-90).
+func run_records() -> void:
+	Achievements.check()
+	while true:
+		var lines: Array[String] = Achievements.lines()
+		lines.append("Personal bests")
+		var have: int = Achievements.unlocked().size()
+		var idx: int = await pick_strings("Achievements %d/%d" % [have, Achievements.LIST.size()], lines)
+		if idx < 0:
+			return
+		if idx == lines.size() - 1:
+			await info(records_text())
+		else:
+			var a: Dictionary = Achievements.LIST[idx]
+			var when: String = str(Achievements.unlocked().get(a.id, ""))
+			await info("%s\n%s%s" % [a.title, a.text, ("\n\n" + ("Earned %s" % when)) if when != "" else ""])
+
+## Tower best, weekly challenge and the current festival.
+static func records_text() -> String:
+	var lines: PackedStringArray = []
+	lines.append("Tower best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
+	var rec: Dictionary = GameState.records.get("weekly", {})
+	var week: String = WeeklyChallenge.this_week()
+	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
+	lines.append("This week: %d of %d" % [best, WeeklyChallenge.ROUNDS])
+	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
+	var f: Dictionary = Season.current()
+	if not f.is_empty():
+		lines.append("Festival: %s" % f.name)
+	return "\n".join(lines)
 
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:

@@ -26,17 +26,28 @@ static func table_ids() -> Array[String]:
 static func rate(id: String) -> float:
 	return float(table(id).get("rate", 0.0))
 
+## Weight of a spawn entry; species with an element in [param boost] count half again as much
+## (seasonal festivals, Season.gd).
+static func weight_of(spawn: Dictionary, boost: Array[int]) -> int:
+	var w: int = int(spawn.get("weight", 1))
+	if boost.is_empty():
+		return w
+	var sd: SpirlingData = Database.species(str(spawn.get("species", "")))
+	if sd != null and sd.elements.any(func(e: int) -> bool: return e in boost):
+		return w * Season.BOOST_NUM
+	return w * Season.BOOST_DEN
+
 ## Rolls a wild Spirling, or returns null if the table is empty.
-static func roll(id: String, rng: RandomNumberGenerator) -> Spirling:
+static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = []) -> Spirling:
 	var spawns: Array = table(id).get("spawns", [])
 	var total: int = 0
 	for s: Dictionary in spawns:
-		total += int(s.get("weight", 1))
+		total += weight_of(s, boost)
 	if total <= 0:
 		return null
 	var pick: int = rng.randi_range(1, total)
 	for s: Dictionary in spawns:
-		pick -= int(s.get("weight", 1))
+		pick -= weight_of(s, boost)
 		if pick <= 0:
 			var sd: SpirlingData = Database.species(str(s.species))
 			if sd == null:

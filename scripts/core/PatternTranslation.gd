@@ -60,10 +60,14 @@ func _lookup_line(s: String) -> String:
 		return ""
 	if exact.has(s):
 		return exact[s]
-	var lead: String = s.substr(0, s.length() - s.lstrip(" ").length())
-	var body: String = s.strip_edges(true, false)
-	if lead != "" and exact.has(body):
-		return lead + exact[body]
+	# Leading spaces or a list dash ("- ") stay as they are; the rest is looked up.
+	var body: String = s.lstrip(" -")
+	var lead: String = s.substr(0, s.length() - body.length())
+	if lead != "" and body != "":
+		var inner: String = _lookup_line(body)
+		if inner != "":
+			return lead + inner
+		return ""
 	var p: String = _match_pattern(s)
 	if p != "":
 		return p
