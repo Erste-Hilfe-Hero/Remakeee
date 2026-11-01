@@ -227,7 +227,7 @@ static func _mail_text(m: Dictionary) -> String:
 			return "%s: %s" % [n, Phrases.text(int(m.get("phrase", 0)))]
 
 static func item_name(id: String) -> String:
-	return str(Database.item(id).get("name", id))
+	return Loc.t(str(Database.item(id).get("name", id)))
 
 static func run_mail(menu: MenuHost, mail: Array) -> void:
 	while true:

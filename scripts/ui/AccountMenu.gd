@@ -10,10 +10,10 @@ const ONLINE_RULES: String = "Online rules:\n- Be kind. Greetings use set phrase
 
 static func run(menu: MenuHost) -> void:
 	while true:
-		var title: String = "Account  Code %s" % Online.pretty_code(Online.friend_code())
+		var title: String = Loc.t("Account  Code %s") % Online.pretty_code(Online.friend_code())
 		if Online.is_local():
-			title += "\n(test server on this phone)"
-		var entries: Array[String] = ["New phone? Get a transfer code", "Enter a transfer code...", "Online rules", "Privacy", "Delete account...",
+			title += "\n" + Loc.t("(test server on this phone)")
+		var entries: Array[String] = ["Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
 			"Friends and greetings: %s" % ("On" if Online.social_on() else "Off")]
 		var idx: int = await menu.pick_strings(title, entries)
 		match idx:
@@ -40,7 +40,7 @@ static func _show_transfer(menu: MenuHost) -> void:
 		await menu.info("No connection right now. Try again in a moment.")
 		return
 	var c: String = str(r.data.code)
-	await menu.info("Your transfer code:\n\n%s-%s-%s\n\nOn the new phone open Settings, Account, Enter a transfer code. It works once and for 7 days. Keep it secret: anyone with it gets your journeys." % [c.left(4), c.substr(4, 4), c.substr(8)])
+	await menu.info("Your transfer code:\n\n%s-%s-%s\n\nOn the new phone open Settings, Account, Enter a code. It works once and for 7 days. Keep it secret: anyone with it gets your journeys." % [c.left(4), c.substr(4, 4), c.substr(8)])
 
 static func _claim_transfer(menu: MenuHost) -> bool:
 	if GameState.in_game:
