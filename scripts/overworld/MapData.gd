@@ -24,6 +24,9 @@ var backdrop: String = "field"
 var field: String = ""
 ## Tall grass may only roll encounters if a table exists.
 var heal_point: Vector2i = Vector2i(-1, -1)
+## Puzzle blocks: {"x", "y", "open_flag"}. A closed block is drawn and treated as rock.
+var blocks: Array[Dictionary] = []
+var _base_rows: PackedStringArray = []
 
 static func exists(map_id: String) -> bool:
 	return FileAccess.file_exists(DIR + map_id + ".json")
@@ -50,6 +53,9 @@ static func load_map(map_id: String) -> MapData:
 		m.signs.append(s)
 	for g: Variant in raw.get("gear_spots", []):
 		m.gear_spots.append(g)
+	for b: Variant in raw.get("blocks", []):
+		m.blocks.append(b)
+	m._base_rows = m.rows.duplicate()
 	m.encounter_table = str(raw.get("encounters", ""))
 	m.backdrop = str(raw.get("backdrop", "field"))
 	m.field = str(raw.get("field", ""))
@@ -98,6 +104,20 @@ func sign_at(cell: Vector2i) -> Dictionary:
 		if int(s.x) == cell.x and int(s.y) == cell.y:
 			return s
 	return {}
+
+## Closes (rock) or opens each puzzle block from [param flags]. Returns true if anything changed.
+func apply_blocks(flags: Dictionary) -> bool:
+	var changed: bool = false
+	for b: Dictionary in blocks:
+		var x: int = int(b.x)
+		var y: int = int(b.y)
+		var open: bool = bool(flags.get(str(b.get("open_flag", "")), false))
+		var ch: String = _base_rows[y][x] if open else "@"
+		if rows[y][x] != ch:
+			var r: String = rows[y]
+			rows[y] = r.substr(0, x) + ch + r.substr(x + 1)
+			changed = true
+	return changed
 
 ## Fills [param layer] with this map's tiles.
 func paint(layer: TileMapLayer) -> void:

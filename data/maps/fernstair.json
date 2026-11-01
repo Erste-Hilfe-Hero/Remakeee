@@ -93,6 +93,11 @@
    "x": 2,
    "y": 5,
    "dialogue": "fernstair/sign_top"
+  },
+  {
+   "x": 10,
+   "y": 5,
+   "dialogue": "fernstair/rock_find"
   }
  ],
  "gear_spots": [

@@ -42,6 +42,13 @@ var heal_map: String = "lighthouse"
 var heal_cell: Vector2i = Vector2i(4, 4)
 ## Story and world flags, e.g. "got_starter", "rift_1_sealed".
 var flags: Dictionary = {}
+## Rest spots the player has used: map id -> [x, y] (fast travel between them).
+var visited_rests: Dictionary = {}
+## Personal bests, e.g. "gauntlet_best".
+var records: Dictionary = {}
+## Puzzle progress: puzzle id -> number of switches pressed in the right order so far.
+var switch_progress: Dictionary = {}
+enum SwitchResult { WRONG, STEP, SOLVED }
 ## Seeded RNG for overworld rolls (encounters); battles get their own seed from it.
 var rng := RandomNumberGenerator.new()
 
@@ -181,6 +188,9 @@ func reset() -> void:
 	heal_map = "lighthouse"
 	heal_cell = Vector2i(4, 4)
 	flags = {}
+	visited_rests = {}
+	records = {}
+	switch_progress = {}
 	known_matchups = {}
 	play_time = 0.0
 
@@ -224,6 +234,9 @@ func to_dict() -> Dictionary:
 		"flags": flags.duplicate(),
 		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
+		"rests": visited_rests.duplicate(true),
+		"records": records.duplicate(),
+		"switches": switch_progress.duplicate(),
 	}
 
 func from_dict(d: Dictionary) -> void:
@@ -258,6 +271,12 @@ func from_dict(d: Dictionary) -> void:
 	for k: Variant in (d.get("matchups", {}) as Dictionary):
 		known_matchups[str(k)] = float(d.matchups[k])
 	play_time = float(d.get("play_time", 0.0))
+	visited_rests = (d.get("rests", {}) as Dictionary).duplicate(true)
+	# Saves from before fast travel: the last rest spot used still counts as visited.
+	if visited_rests.is_empty() and heal_map != "lighthouse":
+		visit_rest(heal_map, heal_cell)
+	records = (d.get("records", {}) as Dictionary).duplicate()
+	switch_progress = (d.get("switches", {}) as Dictionary).duplicate()
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
@@ -365,6 +384,32 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	if inventory[id] <= 0:
 		inventory.erase(id)
 	return msg
+
+func visit_rest(map_id: String, cell: Vector2i) -> void:
+	visited_rests[map_id] = [cell.x, cell.y]
+
+## Rest spots other than the one on [param here] (fast travel targets), sorted by map id.
+func travel_targets(here: String) -> Array[String]:
+	var out: Array[String] = []
+	for k: Variant in visited_rests:
+		if str(k) != here:
+			out.append(str(k))
+	out.sort()
+	return out
+
+## Presses switch [param n] (1-based) of a puzzle that needs 1..[param total] in order.
+func press_switch(puzzle: String, n: int, total: int) -> SwitchResult:
+	var done: int = int(switch_progress.get(puzzle, 0))
+	if n != done + 1:
+		switch_progress[puzzle] = 0
+		return SwitchResult.WRONG
+	done += 1
+	if done >= total:
+		switch_progress.erase(puzzle)
+		set_flag(puzzle)
+		return SwitchResult.SOLVED
+	switch_progress[puzzle] = done
+	return SwitchResult.STEP
 
 ## Spark values in words, for the Sparkseer: "Kindlop: HP strong, ATK faint, ...".
 const SPARK_WORDS: Array[String] = ["faint", "fair", "strong", "brilliant"]

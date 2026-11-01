@@ -6,13 +6,19 @@ const STORAGE_FLAG: String = "pc_unlocked"
 
 ## The map the player is on (for the Spirlog Tracker).
 var encounter_table: String = ""
+## The map the menu was opened on (fast travel lists the other rest spots).
+var current_map: String = ""
+## Set when the player picks a fast-travel target; the overworld moves them after the menu closes.
+var travel_to: String = ""
 
 func run() -> void:
 	while true:
 		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Bag", "Save", "Settings"]
 		if GameState.has_flag(STORAGE_FLAG):
 			labels.insert(4, "Storage")
-		var idx: int = await pick_strings("%s   %d coins" % [GameState.tamer_name, GameState.money], labels)
+		if not GameState.travel_targets(current_map).is_empty():
+			labels.insert(1, "Travel")
+		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
 		match labels[idx]:
@@ -28,6 +34,28 @@ func run() -> void:
 				Sound.sfx("save" if ok else "cancel")
 				await info("Game saved." if ok else "Saving failed.")
 			"Settings": await run_settings()
+			"Travel":
+				if await run_travel():
+					return
+
+## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
+static func menu_title() -> String:
+	var t: String = "%s   %d coins" % [GameState.tamer_name, GameState.money]
+	if GameState.level_cap() < Spirling.MAX_LEVEL:
+		t += "   Cap Lv%d" % GameState.level_cap()
+	return t
+
+## Fast travel between rest spots already used (item 41). Returns true if a target was picked.
+func run_travel() -> bool:
+	var ids: Array[String] = GameState.travel_targets(current_map)
+	var names: Array[String] = []
+	for id: String in ids:
+		names.append(MapData.load_map(id).display_name if MapData.exists(id) else id)
+	var idx: int = await pick_strings("Travel to a rest spot", names)
+	if idx < 0:
+		return false
+	travel_to = ids[idx]
+	return true
 
 func run_team() -> void:
 	while true:

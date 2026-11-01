@@ -10,6 +10,10 @@
   "side": [
     {"id": "spar", "text": "Kestra wants to test you on the Crowcrest path.", "show": "met_kestra", "done": "kestra_spar"},
     {"id": "fern", "text": "Someone in Fernstair has something for you.", "show": "met_kestra", "done": "fern_gift"},
-    {"id": "hollow", "text": "Light up the dark gallery in Murk Hollow, behind the Crowcrest cliff.", "show": "got_lantern", "done": "hollow_find"}
+    {"id": "hollow", "text": "Light up the dark gallery in Murk Hollow, behind the Crowcrest cliff.", "show": "got_lantern", "done": "hollow_find"},
+    {"id": "lamps", "text": "Light the old miners' lamps in Murk Hollow in the chalked order.", "show": "hollow_find", "done": "hollow_lamps"},
+    {"id": "fisher", "text": "Show the Brindlewick fisher a Kelpup.", "show": "q_fisher_asked", "done": "q_fisher_done"},
+    {"id": "hiker", "text": "Show the Fernstair hiker a Breezel.", "show": "q_hiker_asked", "done": "q_hiker_done"},
+    {"id": "reedcutter", "text": "Bring a Wickit to the Saltmarsh reedcutter.", "show": "q_reedcutter_asked", "done": "q_reedcutter_done"}
   ]
 }

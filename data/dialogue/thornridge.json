@@ -4,6 +4,20 @@
   "Gorge village.",
   "Upper terrace: Rest Pool and the Cinder hollow"
  ],
+ "rock_find": {
+  "lines": [
+   "Someone stashed two Dash Brews under this rock!"
+  ],
+  "action": "give_item dash_brew 2",
+  "flag": "thorn_rock_find",
+  "once": true,
+  "after_flag": {
+   "flag": "thorn_rock_find",
+   "lines": [
+    "Nothing under the rock now."
+   ]
+  }
+ },
  "keeper": {
   "lines": [
    "Keeper: Rest by the pool a while."

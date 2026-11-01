@@ -8,10 +8,34 @@
   "Wild Spirlings nest in the ferns.",
   "Walk through them and one may step out."
  ],
- "hiker": [
-  "Your partner gets Energy back every turn.",
-  "If it runs dry, let it rest a turn. No shame in that!"
- ],
+ "rock_find": {
+  "lines": [
+   "Wedged behind the rock: two Kin Charms!"
+  ],
+  "action": "give_item kin_charm 2",
+  "flag": "fern_rock_find",
+  "once": true,
+  "after_flag": {
+   "flag": "fern_rock_find",
+   "lines": [
+    "Just moss behind the rock now."
+   ]
+  }
+ },
+ "hiker": {
+  "lines": [
+   "Your partner gets Energy back every turn.",
+   "If it runs dry, let it rest a turn. No shame in that!",
+   "I'd love to see a Breezel up close. They tumble past too fast on the ridge."
+  ],
+  "action": "quest_show hiker Breezel swift_feather 1",
+  "after_flag": {
+   "flag": "q_hiker_done",
+   "lines": [
+    "Your Breezel nearly blew my hat off. Worth it!"
+   ]
+  }
+ },
  "gatherer": {
   "lines": [
    "You look new at this. Take these!"

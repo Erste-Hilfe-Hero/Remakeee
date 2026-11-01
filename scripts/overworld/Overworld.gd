@@ -43,6 +43,9 @@ func _ready() -> void:
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
 		"spark_read": _action_spark_read,
+		"quest_show": _action_quest_show,
+		"switch": _action_switch,
+		"gauntlet": _action_gauntlet,
 	}
 	_build()
 	if GameState.party.is_empty():
@@ -137,6 +140,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map = MapData.load_map(map_id)
 	if map == null:
 		return
+	map.apply_blocks(GameState.flags)
 	map.paint(_ground)
 	refresh_shade()
 	for n: NPC in _npcs:
@@ -362,6 +366,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	if map.heal_point.x >= 0:
 		GameState.heal_map = map.id
 		GameState.heal_cell = map.heal_point
+		GameState.visit_rest(map.id, map.heal_point)
 	await say(["Your team is fully rested."] as Array[String])
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -379,9 +384,18 @@ func open_menu() -> void:
 	VirtualPad.set_wanted(false)
 	var menu := PauseMenu.new()
 	menu.encounter_table = map.encounter_table
+	menu.current_map = map.id
 	_ui.add_child(menu)
 	await menu.run()
+	var target: String = menu.travel_to
 	menu.queue_free()
+	if not target.is_empty() and GameState.visited_rests.has(target):
+		var c: Array = GameState.visited_rests[target]
+		Sound.sfx("warp")
+		await _fade_to(1.0)
+		load_map(target, Vector2i(int(c[0]), int(c[1])), "down")
+		Sound.music(Sound.track_for_map(target))
+		await _fade_to(0.0)
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
 	VirtualPad.set_wanted(true)
 	player.frozen = false
@@ -435,6 +449,75 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 func _action_set_flag(args: PackedStringArray, _speaker: NPC) -> void:
 	for f: String in args:
 		GameState.set_flag(f)
+
+## "quest_show <id> <Species> <item> [count]": show the NPC a Spirling of that species in your team.
+## Flags: q_<id>_asked once asked, q_<id>_done once rewarded.
+func _action_quest_show(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 3:
+		return
+	var id: String = args[0]
+	if GameState.has_flag("q_%s_done" % id):
+		return
+	GameState.set_flag("q_%s_asked" % id)
+	for s: Spirling in GameState.party:
+		if s.data.species_name == args[1]:
+			await say(["Oh! Is that a %s? Wonderful. Here, take this!" % args[1]] as Array[String])
+			GameState.set_flag("q_%s_done" % id)
+			await _action_give_item([args[2], args[3] if args.size() > 3 else "1"] as PackedStringArray, null)
+			return
+
+## "switch <puzzle> <n> <total>": lamps/levers that must be used in order 1..total.
+## Wrong order resets the puzzle; finishing sets the flag <puzzle> and opens its blocks.
+func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 3:
+		return
+	var puzzle: String = args[0]
+	if GameState.has_flag(puzzle):
+		await say(["The lamp still burns."] as Array[String])
+		return
+	var result: int = GameState.press_switch(puzzle, int(args[1]), int(args[2]))
+	match result:
+		GameState.SwitchResult.WRONG:
+			Sound.sfx("cancel")
+			await say(["The lamp flares... and every lamp gutters out. Wrong order."] as Array[String])
+		GameState.SwitchResult.STEP:
+			Sound.sfx("confirm")
+			await say(["The lamp flickers to life."] as Array[String])
+		GameState.SwitchResult.SOLVED:
+			Sound.sfx("warp")
+			if map.apply_blocks(GameState.flags):
+				map.paint(_ground)
+			await say(["The last lamp catches. Somewhere, rock grinds against rock!"] as Array[String])
+
+## Post-game gauntlet: five echo Tamers in a row, scaled to your strongest Spirling, no rest.
+func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var best: int = int(GameState.records.get("gauntlet_best", 0))
+	var go: bool = await menu.confirm("Climb the tower? Best so far: %d of %d." % [best, Gauntlet.ROUNDS])
+	menu.queue_free()
+	if not go:
+		return
+	var run: Gauntlet = Gauntlet.new(GameState.rng.randi(), GameState.party)
+	var wins: int = 0
+	while wins < Gauntlet.ROUNDS:
+		await say(["Echo %d of %d steps out of the light..." % [wins + 1, Gauntlet.ROUNDS]] as Array[String])
+		var team: Array[Spirling] = run.team(wins)
+		var info: Dictionary = {"name": "Echo Tamer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(team, false, info)
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		wins += 1
+	GameState.records["gauntlet_best"] = maxi(best, wins)
+	if wins >= Gauntlet.ROUNDS:
+		GameState.set_flag("gauntlet_clear")
+		await _action_give_item([run.reward_item(), "1"] as PackedStringArray, null)
+		await say(["The echoes bow and fade. You climbed the whole tower!"] as Array[String])
+	elif wins > best:
+		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
 
 ## The Sparkseer reads each party member's hidden Spark values in words.
 func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:

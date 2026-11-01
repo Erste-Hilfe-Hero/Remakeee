@@ -26,8 +26,41 @@
  "sign_old": [
   "MURK HOLLOW GALLERY",
   "Closed after the storm.",
-  "Mind your head."
+  "Mind your head.",
+  "Chalked below: 'Lamps for the store: by the sign, then the high corner, then the low one.'"
  ],
+ "lamp_1": {
+  "lines": [
+   "An old miner's lamp."
+  ],
+  "action": "switch hollow_lamps 1 3"
+ },
+ "lamp_2": {
+  "lines": [
+   "An old miner's lamp."
+  ],
+  "action": "switch hollow_lamps 2 3"
+ },
+ "lamp_3": {
+  "lines": [
+   "An old miner's lamp."
+  ],
+  "action": "switch hollow_lamps 3 3"
+ },
+ "nook_find": {
+  "lines": [
+   "In the miners' store: an Echo Crystal (Gloom Pulse)!"
+  ],
+  "action": "give_item echo_umbra 1",
+  "flag": "hollow_nook_find",
+  "once": true,
+  "after_flag": {
+   "flag": "hollow_nook_find",
+   "lines": [
+    "Empty shelves and old pick handles."
+   ]
+  }
+ },
  "gallery_find": {
   "lines": [
    "Wedged between two rocks: a Spark Coil! A Spirling holding it gains extra Energy each turn."

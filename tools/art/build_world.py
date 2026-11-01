@@ -88,7 +88,8 @@ WORLD["brindlewick"] = {
               warp(9, 4, "rest_spring", 4, 6, "up")],
     "npcs": [npc("fisher", 8, 18, "left", "brindlewick/fisher", "villager"),
              npc("child", 8, 9, "left", "brindlewick/child", "villager"),
-             npc("kestra_dock", 4, 18, "down", "brindlewick/kestra_dock", "ranger", show_flag="pc_unlocked")],
+             npc("kestra_dock", 4, 18, "down", "brindlewick/kestra_dock", "ranger", show_flag="pc_unlocked"),
+             npc("ines", 10, 12, "left", "brindlewick/ines", "warden", show_flag="kestra_dock_talk")],
     "signs": [{"x": 2, "y": 7, "dialogue": "brindlewick/sign"}, {"x": 9, "y": 18, "dialogue": "brindlewick/ferry"},
               {"x": 2, "y": 16, "dialogue": "brindlewick/islet"}],
     # Tamer Gear: hook across the narrow water between the pier and the reed islet, both ways.
@@ -98,12 +99,18 @@ WORLD["brindlewick"] = {
 TEXT["brindlewick"] = {
     "sign": ["BRINDLEWICK", "Lake village of Veydal.", "North: Fernstair   East: Saltmarsh"],
     "ferry": ["FERRY TO CORVANE", "No crossings while the lake is restless."],
-    "fisher": ["The fish stopped jumping the night the Rift opened.", "Even the reeds sound quieter. That's the Hush, they say.",
-               "Something glints on the reed islet west of the pier. Too far to wade, though."],
+    "fisher": {"lines": ["The fish stopped jumping the night the Rift opened.", "Even the reeds sound quieter. That's the Hush, they say.",
+                         "Something glints on the reed islet west of the pier. Too far to wade, though.",
+                         "Say, have you seen a Kelpup? The pups used to bark at my boat. Bring one by, would you?"],
+               "action": "quest_show fisher Kelpup max_tonic 2",
+               "after_flag": {"flag": "q_fisher_done", "lines": ["That Kelpup of yours barked at my boat. Just like old times."]}},
     "islet": {"lines": ["Tangled in the reeds: a Revival Leaf!"], "action": "give_item revival_leaf 1",
               "flag": "islet_find", "once": True,
               "after_flag": {"flag": "islet_find", "lines": ["Only reeds now, rustling in the wind."]}},
     "child": ["My Puddlet won't answer when I call it anymore.", "Grandpa Aldo says a Tamer with a strong bond can wake it up again."],
+    "ines": {"lines": ["Ines: The lighthouse keeps old Rift echoes. I can wake them for you.",
+                       "Ines: Five Tamers' echoes in a row, no rest in between. They grow with you."],
+             "action": "gauntlet"},
     "kestra_dock": {
         "lines": ["Kestra: Two Rifts mended. The valley is calmer... and smaller.",
                   "Kestra: There's a third one, up north past the crest. Bigger than both.",
@@ -196,14 +203,21 @@ WORLD["fernstair"] = {
               warp(4, 0, "crowcrest", 5, 22, "up"), warp(5, 0, "crowcrest", 6, 22, "up")],
     "npcs": [npc("gatherer", 9, 18, "left", "fernstair/gatherer", "villager"),
              npc("hiker", 3, 9, "right", "fernstair/hiker", "villager")],
-    "signs": [{"x": 6, "y": 23, "dialogue": "fernstair/sign"}, {"x": 2, "y": 5, "dialogue": "fernstair/sign_top"}],
+    "signs": [{"x": 6, "y": 23, "dialogue": "fernstair/sign"}, {"x": 2, "y": 5, "dialogue": "fernstair/sign_top"},
+              {"x": 10, "y": 5, "dialogue": "fernstair/rock_find"}],
     "gear_spots": [{"from": [8, 6], "x": 8, "y": 7, "gear": "climbing_pick", "to": [8, 8]},
                    {"from": [8, 8], "x": 8, "y": 7, "gear": "climbing_pick", "to": [8, 6]}],
 }
 TEXT["fernstair"] = {
     "sign": ["FERNSTAIR", "Up: Crowcrest and Thornridge", "Down: Brindlewick"],
     "sign_top": ["Wild Spirlings nest in the ferns.", "Walk through them and one may step out."],
-    "hiker": ["Your partner gets Energy back every turn.", "If it runs dry, let it rest a turn. No shame in that!"],
+    "rock_find": {"lines": ["Wedged behind the rock: two Kin Charms!"], "action": "give_item kin_charm 2",
+                  "flag": "fern_rock_find", "once": True,
+                  "after_flag": {"flag": "fern_rock_find", "lines": ["Just moss behind the rock now."]}},
+    "hiker": {"lines": ["Your partner gets Energy back every turn.", "If it runs dry, let it rest a turn. No shame in that!",
+                        "I'd love to see a Breezel up close. They tumble past too fast on the ridge."],
+              "action": "quest_show hiker Breezel swift_feather 1",
+              "after_flag": {"flag": "q_hiker_done", "lines": ["Your Breezel nearly blew my hat off. Worth it!"]}},
     "gatherer": {
         "lines": ["You look new at this. Take these!"],
         "after_flag": {"flag": "fern_gift",
@@ -312,10 +326,13 @@ WORLD["thornridge"] = {
              npc("elder", 9, 11, "left", "thornridge/elder", "elder"),
              npc("sparkseer", 2, 13, "right", "thornridge/sparkseer", "elder"),
              npc("crystals", 9, 13, "left", "thornridge/crystals", "villager")],
-    "signs": [{"x": 2, "y": 11, "dialogue": "thornridge/sign"}],
+    "signs": [{"x": 2, "y": 11, "dialogue": "thornridge/sign"}, {"x": 9, "y": 3, "dialogue": "thornridge/rock_find"}],
 }
 TEXT["thornridge"] = {
     "sign": ["THORNRIDGE", "Gorge village.", "Upper terrace: Rest Pool and the Cinder hollow"],
+    "rock_find": {"lines": ["Someone stashed two Dash Brews under this rock!"], "action": "give_item dash_brew 2",
+                  "flag": "thorn_rock_find", "once": True,
+                  "after_flag": {"flag": "thorn_rock_find", "lines": ["Nothing under the rock now."]}},
     "keeper": {"lines": ["Keeper: Rest by the pool a while."], "action": "heal"},
     "trader": {"lines": ["Trader: Supplies for the road! Your bag holds as much as you like."],
                "action": "shop tonic strong_tonic max_tonic remedy cooling_gel dry_towel wake_bell spark_drop revival_leaf kin_charm"},
@@ -359,11 +376,17 @@ WORLD["saltmarsh"] = {
              npc("neve", 3, 4, "right", "saltmarsh/neve", "ranger", trainer="Diver Neve",
                  intro="saltmarsh/neve_intro", defeat="saltmarsh/neve_defeat",
                  team=team(("Puddlet", 12), ("Breezel", 13)))],
-    "signs": [{"x": 1, "y": 13, "dialogue": "saltmarsh/sign"}],
+    "signs": [{"x": 1, "y": 13, "dialogue": "saltmarsh/sign"}, {"x": 10, "y": 8, "dialogue": "saltmarsh/reed_find"}],
 }
 TEXT["saltmarsh"] = {
     "sign": ["SALTMARSH", "Boardwalk to the Tidewater hollow.", "Wild Spirlings here are strong. Travel with care."],
-    "reedcutter": ["The water runs uphill toward the hollow since the storm.", "Spirlings hide in the reeds. Wade through and one may come out."],
+    "reed_find": {"lines": ["Bobbing in the reeds: a Power Brew, still sealed!"], "action": "give_item power_brew 1",
+                  "flag": "marsh_reed_find", "once": True,
+                  "after_flag": {"flag": "marsh_reed_find", "lines": ["Only reeds and a curious frog."]}},
+    "reedcutter": {"lines": ["The water runs uphill toward the hollow since the storm.", "Spirlings hide in the reeds. Wade through and one may come out.",
+                             "My lamp drowned in the flood. A Wickit's light would see me home. Know one?"],
+                   "action": "quest_show reedcutter Wickit echo_lumen 1",
+                   "after_flag": {"flag": "q_reedcutter_done", "lines": ["I still see that little light when I close my eyes. Thank you."]}},
     "neve": {"lines": ["Neve: Good fight. Here, a diver's Grapple Line. Hook it on a far post and pull yourself over the water.",
                        "Neve: Try the reed islet by the Brindlewick pier. Divers stash things there."],
              "action": "give_item grapple_line 1", "flag": "got_grapple", "once": True,
@@ -378,9 +401,9 @@ WORLD["murk_hollow"] = {
     "name": "Murk Hollow",
     "encounters": "murk_hollow",
     "rows": ["@@@@@@@@@@@@",
-             "@@::.S...:@@",
-             "@::@....@::@",
-             "@::..__..::@",
+             "@L..S.L@.:.@",
+             "@:..._....:@",
+             "@L..__..@@@@",
              "@@@@@__@@@@@",
              "@:...__...:@",
              "@::..__..::@",
@@ -395,8 +418,14 @@ WORLD["murk_hollow"] = {
              npc("delve", 9, 5, "left", "murk_hollow/delve", "villager", trainer="Delver Ros",
                  intro="murk_hollow/delve_intro", defeat="murk_hollow/delve_defeat",
                  team=team(("Mirkmole", 12), ("Shalebat", 13)))],
-    "signs": [{"x": 5, "y": 1, "dialogue": "murk_hollow/sign_old"},
-              {"x": 6, "y": 2, "dialogue": "murk_hollow/gallery_find"}],
+    "signs": [{"x": 4, "y": 1, "dialogue": "murk_hollow/sign_old"},
+              {"x": 2, "y": 2, "dialogue": "murk_hollow/gallery_find"},
+              {"x": 6, "y": 1, "dialogue": "murk_hollow/lamp_1"},
+              {"x": 1, "y": 1, "dialogue": "murk_hollow/lamp_2"},
+              {"x": 1, "y": 3, "dialogue": "murk_hollow/lamp_3"},
+              {"x": 10, "y": 1, "dialogue": "murk_hollow/nook_find"}],
+    # Lamp puzzle: light the lamps in the chalked order to open the rock at (7,2).
+    "blocks": [{"x": 7, "y": 2, "open_flag": "hollow_lamps"}],
     # The old gallery is pitch dark: the Storm Lantern lights the way through.
     "gear_spots": [{"x": 5, "y": 4, "gear": "storm_lantern"}, {"x": 6, "y": 4, "gear": "storm_lantern"}],
 }
@@ -409,7 +438,14 @@ TEXT["murk_hollow"] = {
     "delve": ["Ros: The Mirkmoles here hate bright light. Keep that lantern low."],
     "delve_intro": ["Ros: A cartographer in my mine? Show me what you've got!"],
     "delve_defeat": ["Ros: Dug myself into that one."],
-    "sign_old": ["MURK HOLLOW GALLERY", "Closed after the storm.", "Mind your head."],
+    "sign_old": ["MURK HOLLOW GALLERY", "Closed after the storm.", "Mind your head.",
+                 "Chalked below: 'Lamps for the store: by the sign, then the high corner, then the low one.'"],
+    "lamp_1": {"lines": ["An old miner's lamp."], "action": "switch hollow_lamps 1 3"},
+    "lamp_2": {"lines": ["An old miner's lamp."], "action": "switch hollow_lamps 2 3"},
+    "lamp_3": {"lines": ["An old miner's lamp."], "action": "switch hollow_lamps 3 3"},
+    "nook_find": {"lines": ["In the miners' store: an Echo Crystal (Gloom Pulse)!"], "action": "give_item echo_umbra 1",
+                  "flag": "hollow_nook_find", "once": True,
+                  "after_flag": {"flag": "hollow_nook_find", "lines": ["Empty shelves and old pick handles."]}},
     "gallery_find": {"lines": ["Wedged between two rocks: a Spark Coil! A Spirling holding it gains extra Energy each turn."],
                      "action": "give_item spark_coil 1", "flag": "hollow_find", "once": True,
                      "after_flag": {"flag": "hollow_find", "lines": ["Only dust and old pick marks now."]}},
@@ -489,7 +525,7 @@ for old in ["home", "start_town", "kestra_home", "route_1", "route_2"]:
         if os.path.exists(p):
             os.remove(p)
 
-ORDER = ["name", "region", "backdrop", "field", "encounters", "heal_point", "rows", "warps", "npcs", "signs", "gear_spots"]
+ORDER = ["name", "region", "backdrop", "field", "encounters", "heal_point", "rows", "warps", "npcs", "signs", "gear_spots", "blocks"]
 for mid, m in WORLD.items():
     out = {k: m[k] for k in ORDER if k in m}
     with open(os.path.join(MAPS, mid + ".json"), "w") as f:

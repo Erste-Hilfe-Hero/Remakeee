@@ -37,6 +37,13 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 		for k: Variant in d:
 			if d[k] is Dictionary and d[k].has("flag"):
 				settable[str(d[k].flag)] = true
+			# Actions that set flags themselves: quest_show <id> ..., switch <puzzle> ...
+			var act: PackedStringArray = str(d[k].get("action", "")).split(" ") if d[k] is Dictionary else PackedStringArray()
+			if act.size() > 1 and act[0] == "quest_show":
+				settable["q_%s_asked" % act[1]] = true
+				settable["q_%s_done" % act[1]] = true
+			if act.size() > 1 and act[0] == "switch":
+				settable[act[1]] = true
 	for f: String in DirAccess.get_files_at("res://data/maps"):
 		var m: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/maps/" + f))
 		for n: Variant in m.get("npcs", []):
