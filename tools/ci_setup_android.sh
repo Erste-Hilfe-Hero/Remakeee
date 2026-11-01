@@ -29,3 +29,18 @@ unzip -q "$SRC" -d android/build
 touch android/build/.gdignore
 echo "$TEMPLATES" > android/.build_version
 echo "Android build template $TEMPLATES installed"
+
+# 3. zipalign -P 16 needs build-tools 35+, and the Gradle build targets SDK 36.
+#    Install them if the image's SDK is older.
+SDK="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-}}"
+SDKMANAGER="$(command -v sdkmanager || true)"
+if [ -z "$SDKMANAGER" ] && [ -n "$SDK" ]; then
+  SDKMANAGER="$(find "$SDK" -path '*cmdline-tools*' -name sdkmanager -type f 2>/dev/null | sort -V | tail -1)"
+fi
+if [ -n "$SDKMANAGER" ]; then
+  yes | "$SDKMANAGER" --licenses >/dev/null 2>&1 || true
+  "$SDKMANAGER" "build-tools;35.0.0" "platforms;android-36" >/dev/null
+  echo "Installed build-tools 35.0.0 and platform 36"
+else
+  echo "::warning::sdkmanager not found; using the image's build-tools"
+fi

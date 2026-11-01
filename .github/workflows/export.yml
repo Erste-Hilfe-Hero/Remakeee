@@ -44,10 +44,9 @@ jobs:
       - name: GUT tests
         run: godot --headless --path . -s res://addons/gut/gut_cmdln.gd
 
-  # Debug APK for sideload testing. Uses a throwaway debug keystore that is
-  # created in the job, so no secrets are needed.
-  # Installable test APK (debug-signed) on every push and PR: download the
-  # "android-debug-apk" artifact and install it on the phone.
+  # Installable test APK on every push and PR: download the "android-debug-apk"
+  # artifact and install it on the phone. Signed with a throwaway debug keystore
+  # made in the job, so no secrets are needed.
   android-debug:
     needs: test
     runs-on: ubuntu-latest
