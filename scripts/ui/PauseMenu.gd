@@ -14,10 +14,12 @@ var travel_to: String = ""
 var photo: bool = false
 ## Set when the player picks "Watch last battle" in Records.
 var watch_replay: bool = false
+## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
+var echo_duel: Dictionary = {}
 
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Bag", "Save", "Photo", "Settings"]
+		var labels: Array[String] = ["Goals", "Team", "Friends", "Spirlog", "Records", "Bag", "Save", "Photo", "Settings"]
 		if GameState.has_flag(STORAGE_FLAG):
 			labels.insert(5, "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
@@ -30,6 +32,10 @@ func run() -> void:
 				var daily: String = DailyFind.hint(GameState.flags)
 				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
 			"Team": await run_team()
+			"Friends":
+				await FriendsMenu.run(self)
+				if not echo_duel.is_empty():
+					return
 			"Spirlog": await run_spirlog()
 			"Records":
 				await run_records()

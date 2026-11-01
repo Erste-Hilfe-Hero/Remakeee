@@ -412,6 +412,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.heal_map = map.id
 		GameState.heal_cell = map.heal_point
 		GameState.visit_rest(map.id, map.heal_point)
+	Online.contribute("rests")
 	await say(["Your team is fully rested."] as Array[String])
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -435,7 +436,10 @@ func open_menu() -> void:
 	var target: String = menu.travel_to
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
+	var duel: Dictionary = menu.echo_duel
 	menu.queue_free()
+	if not duel.is_empty():
+		await echo_duel(duel)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -584,10 +588,15 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var run: Gauntlet = Gauntlet.new(GameState.rng.randi(), GameState.party)
 	var wins: int = 0
+	var helper: Dictionary = await pick_echo_partner("Climb with a friend's echo beside you?")
 	while wins < Gauntlet.ROUNDS:
 		await say(["Echo %d of %d steps out of the light..." % [wins + 1, Gauntlet.ROUNDS]] as Array[String])
 		var team: Array[Spirling] = run.team(wins)
 		var info: Dictionary = {"name": "Echo Tamer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
+		if not helper.is_empty():
+			for s: Spirling in helper.partner.echo:
+				s.restore()
+			info["partner"] = helper.partner
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 		busy = true
@@ -596,6 +605,8 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			break
 		wins += 1
 	GameState.records["gauntlet_best"] = maxi(best, wins)
+	if not helper.is_empty():
+		await thank_echo(helper, wins >= Gauntlet.ROUNDS)
 	if wins >= Gauntlet.ROUNDS:
 		GameState.set_flag("gauntlet_clear")
 		await _action_give_item([run.reward_item(), "1"] as PackedStringArray, null)
@@ -633,6 +644,8 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 			break
 		wins += 1
 	rec.best = maxi(int(rec.best), wins)
+	# Weekly board (item 125): rounds won and health left; the server keeps the best.
+	Online.call_fn("weekly_submit", {"p_week": week, "p_score": EchoTeam.weekly_score(wins, GameState.party)})
 	if wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
 		rec.claimed = true
 		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1
@@ -734,7 +747,20 @@ func challenge(n: NPC, spotted: bool) -> void:
 		player.frozen = false
 		return
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	# Helper call (item 46): after losing to a Warden once, a friend's echo can fight beside you.
+	var losses: Dictionary = GameState.records.get("warden_losses", {})
+	var lost_key: String = TrainerData.beaten_flag(def, map.id)
+	var helper: Dictionary = {}
+	if def.has("warden") and int(losses.get(lost_key, 0)) >= 1 and not info.has("partner"):
+		helper = await pick_echo_partner("This Warden is tough. Call a friend's echo to fight beside you?")
+		if not helper.is_empty():
+			info["partner"] = helper.partner
 	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
+	if def.has("warden") and outcome == BattleModel.Outcome.LOSS:
+		losses[lost_key] = int(losses.get(lost_key, 0)) + 1
+		GameState.records["warden_losses"] = losses
+	if not helper.is_empty():
+		await thank_echo(helper, outcome == BattleModel.Outcome.WIN)
 	# A wild horde also counts as cleared when its last Spirling bonded with you.
 	if outcome == BattleModel.Outcome.WIN or (bool(info.wild) and outcome == BattleModel.Outcome.BONDED):
 		await after_tamer_win(n)
@@ -839,6 +865,65 @@ static func _dir_name(d: Vector2i) -> String:
 			return k
 	return "down"
 
+# --- Playing with friends (items 46-48, 61, 121-124) ------------------------------------
+
+## Asks whether to bring a friend's echo, lets the player pick one and builds the team.
+## Returns {"code", "name", "partner": {...}} or {} (no friends with teams, offline, or no).
+func pick_echo_partner(question: String) -> Dictionary:
+	if not Online.is_online() or not Online.social_on():
+		return {}
+	var r: Dictionary = await Online.call_fn("friends_list")
+	if not r.ok or not r.data is Dictionary:
+		return {}
+	var with_team: Array = (r.data.get("friends", []) as Array).filter(func(f: Dictionary) -> bool: return bool(f.get("has_team", false)))
+	if with_team.is_empty():
+		return {}
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var out: Dictionary = {}
+	if await menu.confirm(question):
+		var names: Array[String] = []
+		for f: Dictionary in with_team:
+			names.append(FriendsMenu.friend_line(f))
+		var idx: int = await menu.pick_strings("Whose echo?", names)
+		if idx >= 0:
+			var t: Dictionary = await Online.call_fn("friend_team", {"p_code": with_team[idx].code})
+			if t.ok and t.data is Dictionary and bool(t.data.get("ok", false)):
+				var team: Array[Spirling] = EchoTeam.build(t.data.team, GameState.level_cap())
+				if not team.is_empty():
+					var label: String = "%s's echo" % str(t.data.name)
+					out = {"code": str(with_team[idx].code), "name": str(t.data.name),
+						"partner": {"name": label, "echo": team, "front": 1, "ai": EchoTeam.PARTNER_AI}}
+	menu.queue_free()
+	return out
+
+## Tells the friend their echo helped, and adds friendship points (once a day).
+func thank_echo(helper: Dictionary, won: bool) -> void:
+	var r: Dictionary = await Online.call_fn("echo_report", {"p_code": helper.code, "p_kind": "echo", "p_won": won})
+	var pts: int = int(r.data.get("points", 0)) if r.ok and r.data is Dictionary else 0
+	if pts > 0:
+		await say(["%s's echo fades with a smile. Your friendship grew!" % str(helper.name)] as Array[String])
+
+## Echo duel (items 121-124): a friend's team, run by the AI, everyone on the same level.
+## Nothing is lost and the real team does not change.
+func echo_duel(d: Dictionary) -> void:
+	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, EchoTeam.DUEL_LEVEL)
+	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party)
+	if foes.is_empty() or mine.is_empty():
+		await say(["The echo flickers and fades. Try again later."] as Array[String])
+		return
+	await say(["%s's echo steps out of the light. Everyone fights at Lv%d." % [str(d.name), EchoTeam.DUEL_LEVEL]] as Array[String])
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false,
+		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
+	busy = true
+	player.frozen = true
+	var won: bool = outcome == BattleModel.Outcome.WIN
+	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
+	await say(["You won the echo duel against %s!" % str(d.name) if won else "%s's echo won this time. Your team is fine." % str(d.name)] as Array[String])
+	busy = false
+	player.frozen = false
+
 # --- Battles --------------------------------------------------------------------------
 
 ## Cuts to the battle screen and waits for it to end. [param trainer] holds Tamer info (M5).
@@ -851,7 +936,13 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
 	var ai_level: int = 0 if wild else int(trainer.get("ai", GameState.ai_level()))
-	var model := BattleModel.new(GameState.party, foes, wild, GameState.rng.randi(), ai_level)
+	# Echo duels fight with level-matched copies, so the real team never changes (item 123).
+	var own: Variant = trainer.get("player_team")
+	var mine: Array[Spirling] = GameState.party
+	if own is Array and not (own as Array).is_empty():
+		mine = []
+		mine.assign(own)
+	var model := BattleModel.new(mine, foes, wild, GameState.rng.randi(), ai_level)
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
 	model.level_cap = GameState.level_cap()
@@ -866,8 +957,14 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	model.foe_boss = str(trainer.get("boss", ""))
 	var partner: Variant = trainer.get("partner", {})
 	if partner is Dictionary and not (partner as Dictionary).is_empty():
-		var ally: Array[Spirling] = TrainerData.build_team(partner, GameState.starter, GameState.rng)
-		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)), TrainerData.PARTNER_AI)
+		var ally: Array[Spirling] = []
+		# A friend's echo comes as ready Spirlings; story partners as a team definition.
+		if partner.get("echo") is Array:
+			ally.assign(partner.echo)
+		else:
+			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
+		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
+			int(partner.get("ai", TrainerData.PARTNER_AI)))
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	scene.backdrop = map.backdrop
@@ -881,7 +978,10 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	GameState.records["last_battle"] = replay
 	await _fade_to(1.0)
 	scene.queue_free()
-	await _after_battle(model, outcome)
+	if bool(trainer.get("friendly", false)):
+		await _fade_to(0.0)
+	else:
+		await _after_battle(model, outcome)
 	Sound.music(Sound.track_for_map(map.id))
 	await _fade_to(0.0)
 	await announce_achievements()
@@ -893,6 +993,11 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
+	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
+	if outcome == BattleModel.Outcome.WIN:
+		Online.contribute("battles")
+	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
+		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		GameState.receive_spirling(model.bonded)

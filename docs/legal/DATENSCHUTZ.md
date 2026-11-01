@@ -33,13 +33,28 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   für den Gerätewechsel, dein Tamer-Name, dein Spielstand (Fortschritt, Spirlings, Gegenstände,
   Einstellungen), Zeitpunkt der letzten Synchronisierung, App-Version, Gerätetyp und Betriebssystemversion.
 - **Zweck:** Spiel bereitstellen, Fortschritt speichern und wiederherstellen, auch auf einem neuen Gerät.
-  Dein Tamer-Name ist für andere Spieler nicht sichtbar.
+  Dein Tamer-Name ist nur für Spieler sichtbar, mit denen du befreundet bist (siehe 3.2).
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags).
 - **Speicherdauer:** solange dein Konto besteht. Nach dem Löschen des Kontos löschen wir die Daten innerhalb
   von 30 Tagen; Sicherungskopien werden spätestens nach weiteren 30 Tagen überschrieben. Konten, die
   24 Monate nicht genutzt wurden, löschen wir nach einer Ankündigung im Spiel.
 
-### 3.2 Server-Protokolle und Sicherheit
+### 3.2 Freunde, Leuchtpost und Meldungen
+
+- **Daten:** dein Freundescode, deine Freundesliste und Anfragen, Blockierungen, Grüße (nur feste Sätze als
+  Nummer, kein freier Text), Geschenke, die Tamer-Karte (Zahlen wie versiegelte Rifts und Spielzeit, dein
+  Lieblings-Spirling), dein aktueller Ort im Spiel (nie ein echter Standort), dein Echo-Team (Art und Stufe
+  deiner Spirlings, keine Spitznamen), dein Beitrag zum Weltziel der Woche und deine Punkte in der
+  Wochen-Rangliste. Meldest du jemanden, speichern wir die Meldung mit Grund.
+- **Wer sieht was:** Namen, Karte, Ort und Echo-Team sehen nur deine bestätigten Freunde. In der
+  Wochen-Rangliste sehen Fremde nur Punkte, keinen Namen.
+- **Zweck:** gemeinsames Spielen und Schutz vor Missbrauch (Blockieren, Meldungen prüfen).
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO; für Meldungen Art. 6 Abs. 1 lit. c DSGVO (Art. 16 DSA) und f.
+- **Speicherdauer:** Grüße und Geschenke 30 Tage, Wochenwerte bis zum Ende der Folgewoche, Meldungen bis
+  zur Bearbeitung, höchstens 6 Monate. Freunde und Blockierungen, solange dein Konto besteht.
+- Eltern können Freunde, Grüße und Geschenke unter Einstellungen, Konto ausschalten.
+
+### 3.3 Server-Protokolle und Sicherheit
 
 - **Daten:** IP-Adresse, Datum und Uhrzeit, aufgerufener Endpunkt, Statuscode, App-Version.
 - **Zweck:** Betrieb, Stabilität und Sicherheit des Servers, Abwehr von Angriffen und Manipulation von
@@ -48,14 +63,14 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   Spielbetrieb.
 - **Speicherdauer:** 7 Tage. Länger nur, solange ein konkreter Sicherheitsvorfall aufgeklärt wird.
 
-### 3.3 Käufe im Spiel
+### 3.4 Käufe im Spiel
 
 Falls du im Spiel etwas kaufst, läuft der Kauf ausschließlich über den Apple App Store bzw. Google Play.
 Zahlungsdaten erhalten wir nicht. Wir erhalten vom Store eine Kaufbestätigung (Transaktions-ID, Produkt,
 Zeitpunkt), um den Inhalt freizuschalten. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO; für gesetzliche
 Aufbewahrungspflichten Art. 6 Abs. 1 lit. c DSGVO (bis zu 10 Jahre nach Handels- und Steuerrecht).
 
-### 3.4 Kontakt und Support
+### 3.5 Kontakt und Support
 
 Wenn du uns schreibst, verarbeiten wir deine Nachricht, deine E-Mail-Adresse und ggf. deine Spieler-ID, um
 dein Anliegen zu bearbeiten (Art. 6 Abs. 1 lit. b oder f DSGVO). Wir löschen die Korrespondenz nach
@@ -84,7 +99,8 @@ liegen ausschließlich in Frankfurt.
 ## 6. Kinder und Jugendliche
 
 Chimora ist für alle Altersgruppen gedacht. Wir verarbeiten nur die für das Spiel nötigen Daten, zeigen
-keine Werbung, erstellen keine Profile und bieten keinen Chat. Käufe lassen sich mit den
+keine Werbung, erstellen keine Profile und bieten keinen freien Chat: Grüße unter Freunden sind feste,
+übersetzte Sätze. Käufe lassen sich mit den
 Jugendschutzfunktionen der Stores steuern.
 
 ## 7. Deine Rechte

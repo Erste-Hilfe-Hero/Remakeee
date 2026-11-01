@@ -40,6 +40,13 @@ Nicht erlaubt sind insbesondere:
 - Verkauf oder Handel von Konten oder Spielinhalten gegen Geld;
 - beleidigende, rechtswidrige oder fremde Rechte verletzende Tamer-Namen.
 
+### Freunde und Grüße
+
+Freunde fügst du über den Freundescode hinzu. Grüße sind feste Sätze aus einer Liste, freier Text ist nicht
+möglich. Spirlings lassen sich nicht tauschen oder verschenken. Du kannst jeden Spieler blockieren und im
+Spiel melden (Freund, Melden). Wir prüfen Meldungen und setzen unpassende Namen auf „Tamer“ mit Nummer
+zurück. Eltern können Freunde, Grüße und Geschenke unter Einstellungen, Konto ausschalten.
+
 Bei Verstößen können wir nach Abwägung der Umstände verwarnen, Spielstände zurücksetzen oder das Konto
 vorübergehend oder dauerhaft sperren. Bei einer Sperre informieren wir dich mit Begründung; du kannst
 widersprechen unter [E-MAIL].

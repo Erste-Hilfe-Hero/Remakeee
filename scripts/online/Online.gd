@@ -41,6 +41,7 @@ var privacy_seen: bool = false
 var conflicts: Array[int] = []
 
 var _beat: float = 0.0
+var _beats: int = 0
 var _retry: float = 0.0
 var _busy: bool = false
 var _overlay: ReconnectOverlay
@@ -297,6 +298,27 @@ func push_profile() -> void:
 		"p_favorite": favorite_species(), "p_card": card_numbers()})
 	if r.ok and r.data is Dictionary:
 		profile = r.data
+	await push_team()
+
+## Sends the team as this player's echo for friends (species, level and moves only).
+func push_team() -> void:
+	if state == State.ONLINE and not GameState.party.is_empty():
+		await call_fn("team_set", {"p_team": EchoTeam.snapshot(GameState.party)})
+
+## Adds to the world goal of the week (items 81-85). The server only counts this week's kind.
+func contribute(kind: String, amount: int = 1) -> void:
+	if state == State.ONLINE:
+		await call_fn("community_add", {"p_kind": kind, "p_amount": amount})
+
+## Friends, mail and greetings are on (parents can switch them off, item 147).
+func social_on() -> bool:
+	return bool(profile.get("social", true))
+
+func set_social(on: bool) -> bool:
+	var r: Dictionary = await call_fn("set_social", {"p_on": on})
+	if r.ok:
+		profile["social"] = on
+	return r.ok
 
 func favorite_species() -> String:
 	var fav: String = str(GameState.records.get("favorite", ""))
@@ -341,6 +363,9 @@ func _reconnect() -> void:
 		await push_dirty()
 
 func _heartbeat() -> void:
+	_beats += 1
+	if _beats % 4 == 0:
+		push_team()
 	var r: Dictionary = await call_fn("presence", {"p_place": current_place()})
 	if r.ok and r.data is Dictionary:
 		online_now = int(r.data.get("online_now", online_now))
