@@ -197,7 +197,8 @@ WORLD["fernstair"] = {
     "npcs": [npc("gatherer", 9, 18, "left", "fernstair/gatherer", "villager"),
              npc("hiker", 3, 9, "right", "fernstair/hiker", "villager")],
     "signs": [{"x": 6, "y": 23, "dialogue": "fernstair/sign"}, {"x": 2, "y": 5, "dialogue": "fernstair/sign_top"}],
-    "gear_spots": [{"from": [8, 6], "x": 8, "y": 7, "gear": "glide_cloak", "to": [8, 8]}],
+    "gear_spots": [{"from": [8, 6], "x": 8, "y": 7, "gear": "climbing_pick", "to": [8, 8]},
+                   {"from": [8, 8], "x": 8, "y": 7, "gear": "climbing_pick", "to": [8, 6]}],
 }
 TEXT["fernstair"] = {
     "sign": ["FERNSTAIR", "Up: Crowcrest and Thornridge", "Down: Brindlewick"],
@@ -256,15 +257,16 @@ WORLD["crowcrest"] = {
             team=team(("Shalebat", 7), ("Shalebat", 8))),
     ],
     "signs": [{"x": 5, "y": 20, "dialogue": "crowcrest/sign"}],
-    # Tamer Gear: glide down the lower cliff (one way).
-    "gear_spots": [{"from": [8, 13], "x": 8, "y": 14, "gear": "glide_cloak", "to": [8, 15]}],
+    # Tamer Gear: climb the lower cliff (both ways, on foot).
+    "gear_spots": [{"from": [8, 13], "x": 8, "y": 14, "gear": "climbing_pick", "to": [8, 15]},
+                   {"from": [8, 15], "x": 8, "y": 14, "gear": "climbing_pick", "to": [8, 13]}],
 }
 TEXT["crowcrest"] = {
     "sign": ["CROWCREST", "Mind the loose stones.", "Up: Thornridge   Down: Fernstair"],
     "kestra": {"lines": ["Kestra: You fight like you draw maps: careful, then all at once.",
-                         "Kestra: Take this Glide Cloak. Step off a ledge and it catches the wind. No Spirling has to carry you."],
-               "action": "give_item glide_cloak 1", "flag": "got_glider", "once": True,
-               "after_flag": {"flag": "got_glider",
+                         "Kestra: Take this Climbing Pick. Hook it into a low cliff and climb, up or down. Your own hands, your own feet."],
+               "action": "give_item climbing_pick 1", "flag": "got_pick", "once": True,
+               "after_flag": {"flag": "got_pick",
                               "lines": ["Kestra: Go on ahead. I want to sketch the tarn before it freezes."]}},
     "kestra_intro": ["Kestra: You're really going to close the Cinder Rift?",
                      "Kestra: Then show me you understand what you'd be shutting out. Talk is cheap up here!"],

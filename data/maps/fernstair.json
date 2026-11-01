@@ -103,10 +103,23 @@
    ],
    "x": 8,
    "y": 7,
-   "gear": "glide_cloak",
+   "gear": "climbing_pick",
    "to": [
     8,
     8
+   ]
+  },
+  {
+   "from": [
+    8,
+    8
+   ],
+   "x": 8,
+   "y": 7,
+   "gear": "climbing_pick",
+   "to": [
+    8,
+    6
    ]
   }
  ]
