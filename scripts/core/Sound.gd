@@ -4,6 +4,8 @@ extends Node
 ##   Sound.sfx("hit")            one-shot effect from audio/sfx/<name>.wav
 ##   Sound.music("town")         loops audio/music/<name>.ogg (crossfades; same track keeps playing)
 ##   Sound.jingle("victory")     plays a music file once, then resumes the previous track
+##   Sound.cry(species_data)     the Spirling's own call (synthesized by Cry.gd)
+##   Sound.element_hit(element)  hit sound for a move of that element
 ## Missing files are ignored, so code can name sounds before they exist.
 
 const SFX_DIR: String = "res://audio/sfx/%s.wav"
@@ -65,15 +67,53 @@ func sfx(sound_name: String) -> void:
 	if now - float(_last_play.get(sound_name, -1.0)) < SFX_MIN_GAP:
 		return
 	_last_play[sound_name] = now
+	_play_voice(stream)
+
+func _play_voice(stream: AudioStream) -> void:
 	var p: AudioStreamPlayer = _voices[_next_voice]
 	_next_voice = (_next_voice + 1) % _voices.size()
 	p.stream = stream
 	p.play()
 
-## Track for [param map_id] from data/music.json.
+## Plays the cry of [param sd] (item 70).
+func cry(sd: SpirlingData) -> void:
+	if enabled and sd != null:
+		_play_voice(Cry.stream_for(sd))
+
+## Sound effect name for a hit by a move of [param element] (Elements.E), "hit" if unknown.
+static func element_hit_name(element: int) -> String:
+	if element < 0 or element >= Elements.E.size():
+		return "hit"
+	return "hit_" + String(Elements.E.keys()[element]).to_lower()
+
+func element_hit(element: int) -> void:
+	sfx(element_hit_name(element))
+
+## Track for [param map_id] from data/music.json, in the variant for the active era.
 func track_for_map(map_id: String) -> String:
 	var maps: Dictionary = _map_music.get("maps", {})
-	return str(maps.get(map_id, _map_music.get("default", "")))
+	var track: String = str(maps.get(map_id, _map_music.get("default", "")))
+	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
+
+## Era music (item 66): "<track>_era<N>" for the newest era N that has its own version, so a
+## region can rearrange a theme for its hardware generation. Falls back to the plain track.
+static func era_track(track: String, era: int, exists: Callable) -> String:
+	if track.is_empty():
+		return track
+	for e: int in range(era, 1, -1):
+		var t: String = "%s_era%d" % [track, e]
+		if exists.call(t):
+			return t
+	return track
+
+## Every music track and sound effect, for the sound test (item 71).
+static func list_sounds(dir: String) -> Array[String]:
+	var out: Array[String] = []
+	for f: String in ResourceLoader.list_directory(dir):
+		if f.ends_with(".ogg") or f.ends_with(".wav"):
+			out.append(f.get_basename())
+	out.sort()
+	return out
 
 func music(track: String) -> void:
 	if track == current_track and _music.playing:

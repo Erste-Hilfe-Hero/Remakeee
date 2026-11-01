@@ -45,6 +45,10 @@ var _log_label: Label
 var log_lines: Array[String] = []
 ## Element of the player's last move, so the hit that follows teaches the matchup.
 var _last_player_element: int = -1
+## Element of the last move each side used, for the hit sound.
+var _last_element: Array[int] = [-1, -1]
+## HP ratio at or below which the pinch music takes over (item 69).
+const PINCH_RATIO: float = 0.25
 
 func _ready() -> void:
 	theme = UITheme.get_theme()
@@ -318,6 +322,7 @@ func _play_event(e: BattleEvent) -> void:
 			_foe_strip.set_spirling(foe)
 			if model.is_wild:
 				_foe_strip.visible = true
+				Sound.cry(foe.data)
 				await _foe_sprite.step_out(false)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
@@ -325,24 +330,32 @@ func _play_event(e: BattleEvent) -> void:
 			_sprite(side).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
 			_strip(side).set_spirling(s)
 			_strip(side).visible = true
+			Sound.cry(s.data)
 			await _sprite(side).step_out(side == BattleModel.Side.PLAYER)
+			_update_pinch()
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SWAP_OUT:
 			await _text.show_text(e.describe())
 			await _sprite(side).step_back(side == BattleModel.Side.PLAYER)
 		BattleEvent.Type.MOVE_USED:
 			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER else -1
+			_last_element[side] = int(e.data.get("element", -1))
 			await _text.show_text(e.describe())
 			var dir: Vector2 = Vector2(8, -4) if side == BattleModel.Side.PLAYER else Vector2(-8, 4)
 			await _sprite(side).lunge(dir)
 		BattleEvent.Type.DAMAGE:
-			Sound.sfx(_hit_sound(e))
+			var hit: String = _hit_sound(e)
+			if hit == "hit" or hit == "hit_strong":
+				Sound.element_hit(_last_element[BattleModel.other(side)])
+			if hit != "hit":
+				Sound.sfx(hit)
 			if side == BattleModel.Side.FOE and _last_player_element >= 0 and e.data.has("eff"):
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
 				GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
 			if not bool(e.data.get("status_tick", false)):
 				await _sprite(side).hit_flash()
 			await _strip(side).animate_hp(int(e.data.hp), int(e.data.max_hp))
+			_update_pinch()
 			var line: String = _damage_line(e)
 			if not line.is_empty():
 				await _text.show_text(line)
@@ -350,6 +363,7 @@ func _play_event(e: BattleEvent) -> void:
 			Sound.sfx("heal")
 			if int(e.data.get("index", -1)) == model.active[side]:
 				await _strip(side).animate_hp(int(e.data.hp), int(e.data.max_hp))
+			_update_pinch()
 			await _text.show_text(e.describe())
 		BattleEvent.Type.ENERGY_CHANGED:
 			_strip(side).set_energy(int(e.data.energy))
@@ -396,6 +410,20 @@ func _play_event(e: BattleEvent) -> void:
 			var text: String = e.describe()
 			if not text.is_empty():
 				await _text.show_text(text)
+
+## Switches to the pinch music while the player's active Spirling is low, and back once it recovers.
+func _update_pinch() -> void:
+	if model.is_finished():
+		return
+	var track: String = pinch_track(model.active_spirling(BattleModel.Side.PLAYER), music_track)
+	if Sound.current_track != track:
+		Sound.music(track)
+
+## "battle_pinch" when [param s] is at or below PINCH_RATIO of its HP (and still standing), else [param normal].
+static func pinch_track(s: Spirling, normal: String) -> String:
+	if s != null and s.hp > 0 and float(s.hp) / s.max_hp() <= PINCH_RATIO:
+		return "battle_pinch"
+	return normal
 
 static func _hit_sound(e: BattleEvent) -> String:
 	if bool(e.data.get("status_tick", false)) or not e.data.has("eff"):

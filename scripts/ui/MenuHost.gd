@@ -93,6 +93,7 @@ func run_settings() -> void:
 			"Tips: %s" % ("On" if GameState.tips_enabled else "Off"),
 			"Touch controls...",
 			"Display and access...",
+			"Sound test...",
 		]
 		var idx: int = await pick_strings("Settings", entries)
 		match idx:
@@ -126,6 +127,54 @@ func run_settings() -> void:
 				await run_controls()
 			9:
 				await run_display()
+			10:
+				await run_sound_test()
+
+## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.
+func run_sound_test() -> void:
+	var back_to: String = Sound.current_track
+	while true:
+		var idx: int = await pick_strings("Sound test", ["Music", "Sound effects", "Cries"])
+		match idx:
+			-1:
+				Sound.music(back_to)
+				return
+			0:
+				var tracks: Array[String] = Sound.list_sounds("res://audio/music/")
+				while true:
+					var t: int = await pick_strings("Music", tracks)
+					if t < 0:
+						break
+					Sound.music(tracks[t])
+			1:
+				var fx: Array[String] = Sound.list_sounds("res://audio/sfx/")
+				while true:
+					var f: int = await pick_strings("Sound effects", fx)
+					if f < 0:
+						break
+					Sound.sfx(fx[f])
+			2:
+				var seen: Array[SpirlingData] = sound_test_cries()
+				if seen.is_empty():
+					await info("Meet a Spirling to hear its cry.")
+					continue
+				var names: Array[String] = []
+				for sd: SpirlingData in seen:
+					names.append(sd.species_name)
+				while true:
+					var c: int = await pick_strings("Cries", names)
+					if c < 0:
+						break
+					Sound.cry(seen[c])
+
+## Species whose cry the sound test offers: every one the Spirlog has seen, in dex order.
+static func sound_test_cries() -> Array[SpirlingData]:
+	var out: Array[SpirlingData] = []
+	for sd: SpirlingData in Database.spirlings.values():
+		if bool((GameState.spirlog.get(sd.species_name, {}) as Dictionary).get("seen", false)):
+			out.append(sd)
+	out.sort_custom(func(a: SpirlingData, b: SpirlingData) -> bool: return a.dex_id < b.dex_id)
+	return out
 
 ## Display and accessibility: battery saver, reduced motion, high contrast, language.
 func run_display() -> void:

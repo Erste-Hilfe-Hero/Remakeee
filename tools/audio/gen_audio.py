@@ -132,6 +132,39 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out["encounter"] = (rise * 0.4 + noise(n, 4) * np.linspace(0, 0.35, n)) * 0.9
     n = secs(0.25)
     out["run"] = noise(n, 1) * np.linspace(0.4, 0, n) * 0.6
+    out.update(element_hits())
+    return out
+
+
+def element_hits() -> dict[str, np.ndarray]:
+    """One hit sound per element (item 67), each with its own timbre."""
+    out: dict[str, np.ndarray] = {}
+    t = lambda n: np.arange(n) / RATE
+    n = secs(0.2)  # Ember: crackling burst over a rising buzz
+    crackle = noise(n, 2) * (np.random.default_rng(5).random(n) > 0.55)
+    out["hit_ember"] = (crackle * 0.6 + sweep(220, 520, n, "pulse", 0.25) * 0.35) * env(n, decay=0.08, sustain=0.3) * 0.8
+    n = secs(0.24)  # Tide: falling splash with a wobble
+    wob = 1 + 0.5 * np.sin(t(n) * 2 * np.pi * 22)
+    out["hit_tide"] = (noise(n, 5) * 0.45 * np.linspace(1, 0.2, n) + sweep(420, 140, n, "tri") * 0.5 * wob / 1.5) * env(n, decay=0.1, sustain=0.35) * 0.85
+    n = secs(0.18)  # Bloom: soft leafy rustle and chirp
+    out["hit_bloom"] = (noise(n, 9) * 0.35 + sweep(700, 950, n, "pulse", 0.125) * 0.3 * (0.6 + 0.4 * np.sin(t(n) * 2 * np.pi * 30))) * env(n, decay=0.06, sustain=0.3) * 0.75
+    n = secs(0.2)  # Volt: buzzing zap that flips between two pitches
+    flip = (np.floor(t(n) * 60) % 2).astype(float)
+    zap = pulse(880, n, 0.5) * flip + pulse(1320, n, 0.5) * (1 - flip)
+    out["hit_volt"] = (zap * 0.45 + noise(n, 1) * 0.2) * env(n, decay=0.05, sustain=0.4) * 0.7
+    n = secs(0.2)  # Stone: heavy thud with grit
+    out["hit_stone"] = (sweep(160, 50, n, "tri") * 0.8 + noise(n, 10) * 0.35) * env(n, decay=0.09, sustain=0.25) * 0.95
+    n = secs(0.26)  # Gale: whoosh that swells and fades
+    swell = np.sin(np.linspace(0, np.pi, n))
+    out["hit_gale"] = (noise(n, 1) * 0.55 + sweep(300, 600, n, "tri") * 0.15) * swell * 0.8
+    parts = []
+    for nm in ["E6", "B6", "E7"]:  # Lumen: bright sparkle
+        k = secs(0.05)
+        parts.append(pulse(freq(midi(nm)), k, 0.125) * env(k, sustain=0.5, release=0.01))
+    sp = np.concatenate(parts)
+    out["hit_lumen"] = (sp * 0.4 + noise(len(sp), 1) * 0.1) * 0.8
+    n = secs(0.24)  # Umbra: low, detuned and falling
+    out["hit_umbra"] = (sweep(260, 90, n, "pulse", 0.5) * 0.35 + sweep(266, 92, n, "pulse", 0.25) * 0.35 + noise(n, 12) * 0.15) * env(n, decay=0.1, sustain=0.4) * 0.85
     return out
 
 
@@ -306,6 +339,9 @@ SONGS = {
                    bass_style="pulse8", drums="battle", seed=53, motifs=["E5:2 E5:2 G5:2 E5:2 B5:4 A5:4", "G5:2 F#5:2 E5:4 B4:8", "C5:2 E5:2 G5:4 C6:4 B5:4", "A5:4 F#5:4 D5:8"]),
     "warden": dict(bpm=164, chords=["Cm", "Ab", "Bb", "G7", "Cm", "Ab", "Fm", "G7", "Ab", "Bb", "Gm", "Cm", "Ab", "Bb", "G7", "G7"], arp_style="rolling",
                    bass_style="pulse8", drums="battle", seed=67, motifs=["C5:2 Eb5:2 G5:4 C6:4 Bb5:4", "Ab5:4 G5:2 Eb5:2 C5:8", "D5:2 F5:2 Bb5:4 Ab5:4 G5:4", "G5:4 B5:4 D6:8"]),
+    # Battle music once your Spirling is low on HP (item 69): faster, tenser, same key as "battle".
+    "battle_pinch": dict(bpm=176, chords=["Em", "F", "Em", "F", "C", "B7", "Em", "B7"], arp_style="rolling",
+                         bass_style="pulse8", drums="battle", seed=59, motifs=["B5:2 C6:2 B5:2 G5:2 E5:4 F5:4", "E5:2 G5:2 B5:4 D#5:8", "C6:2 B5:2 A5:2 G5:2 E5:8", "D#5:4 F#5:4 B5:8"]),
     "victory": dict(bpm=140, chords=["C", "F", "G", "C"], arp_style="stab", bass_style="root-fifth", drums="march", seed=71, variation=False,
                     motifs=["C5:2 E5:2 G5:2 C6:6 -:4", "A5:2 C6:2 A5:2 F5:6 -:4", "G5:2 B5:2 D6:2 B5:2 G5:4 F5:4", "E5:8 C5:8"]),
 }
