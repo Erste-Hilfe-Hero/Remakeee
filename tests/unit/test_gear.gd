@@ -54,3 +54,12 @@ func test_no_gliding_or_flying_gear() -> void:
 		if bool(it.get("gear", false)):
 			var blob: String = "%s %s %s %s" % [it.id, it.name, it.get("description", ""), it.get("hint", "")]
 			assert_null(banned.search(blob), "gear '%s' must not glide or fly" % it.id)
+
+func test_murk_hollow_gallery_needs_the_lantern() -> void:
+	var m: MapData = MapData.load_map("murk_hollow")
+	assert_eq(m.gear_needed_at(Vector2i(5, 4)), "storm_lantern")
+	assert_eq(m.gear_needed_at(Vector2i(6, 4)), "storm_lantern")
+	# Row 4 is solid apart from the two dark cells, so the find really sits behind them.
+	for x: int in m.rows[4].length():
+		if x != 5 and x != 6:
+			assert_false(m.is_walkable(Vector2i(x, 4)), "gallery wall open at x=%d" % x)

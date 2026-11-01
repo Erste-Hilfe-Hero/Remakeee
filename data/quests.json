@@ -9,6 +9,7 @@
   ],
   "side": [
     {"id": "spar", "text": "Kestra wants to test you on the Crowcrest path.", "show": "met_kestra", "done": "kestra_spar"},
-    {"id": "fern", "text": "Someone in Fernstair has something for you.", "show": "met_kestra", "done": "fern_gift"}
+    {"id": "fern", "text": "Someone in Fernstair has something for you.", "show": "met_kestra", "done": "fern_gift"},
+    {"id": "hollow", "text": "Light up the dark gallery in Murk Hollow, behind the Crowcrest cliff.", "show": "got_lantern", "done": "hollow_find"}
   ]
 }

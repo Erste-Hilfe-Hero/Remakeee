@@ -1,0 +1,94 @@
+{
+ "name": "Murk Hollow",
+ "region": "veydal",
+ "backdrop": "ridge",
+ "encounters": "murk_hollow",
+ "rows": [
+  "@@@@@@@@@@@@",
+  "@@::.S...:@@",
+  "@::@....@::@",
+  "@::..__..::@",
+  "@@@@@__@@@@@",
+  "@:...__...:@",
+  "@::..__..::@",
+  "@@@..__..@@@",
+  "@::......::@",
+  "@::.____.::@",
+  "@...____...@",
+  "@@...__...@@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 12,
+   "to": "crowcrest",
+   "tx": 9,
+   "ty": 15,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 12,
+   "to": "crowcrest",
+   "tx": 9,
+   "ty": 15,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "tamsin",
+   "x": 3,
+   "y": 10,
+   "facing": "right",
+   "dialogue": "murk_hollow/tamsin",
+   "sprite": "elder"
+  },
+  {
+   "id": "delve",
+   "x": 9,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "murk_hollow/delve",
+   "sprite": "villager",
+   "trainer": "Delver Ros",
+   "intro": "murk_hollow/delve_intro",
+   "defeat": "murk_hollow/delve_defeat",
+   "team": [
+    {
+     "species": "Mirkmole",
+     "level": 12
+    },
+    {
+     "species": "Shalebat",
+     "level": 13
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 1,
+   "dialogue": "murk_hollow/sign_old"
+  },
+  {
+   "x": 6,
+   "y": 2,
+   "dialogue": "murk_hollow/gallery_find"
+  }
+ ],
+ "gear_spots": [
+  {
+   "x": 5,
+   "y": 4,
+   "gear": "storm_lantern"
+  },
+  {
+   "x": 6,
+   "y": 4,
+   "gear": "storm_lantern"
+  }
+ ]
+}

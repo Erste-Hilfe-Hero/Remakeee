@@ -21,6 +21,8 @@ var player: Player
 var busy: bool = false
 
 var _ground: TileMapLayer
+## Shade over dark gear cells (thick without the gear, a faint dusk with it).
+var _shade: Node2D
 var _entities: Node2D
 var _camera: Camera2D
 var _npcs: Array[NPC] = []
@@ -58,6 +60,9 @@ func _build() -> void:
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
 	add_child(_entities)
+	_shade = Node2D.new()
+	_shade.name = "Shade"
+	add_child(_shade)
 	player = Player.new()
 	player.name = "Player"
 	player.body_color = Color("3a5a9a")
@@ -132,6 +137,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	if map == null:
 		return
 	map.paint(_ground)
+	refresh_shade()
 	for n: NPC in _npcs:
 		n.queue_free()
 	_npcs.clear()
@@ -157,6 +163,23 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	Sound.music(Sound.track_for_map(map_id))
 	if not map.encounter_table.is_empty():
 		_tip_after_load.call_deferred("wild_area")
+
+const SHADE_DARK: float = 0.9
+const SHADE_LIT: float = 0.3
+
+## Redraws the shade over dark cells; the needed gear thins it to dusk.
+func refresh_shade() -> void:
+	for c: Node in _shade.get_children():
+		c.queue_free()
+	for g: Dictionary in map.gear_spots:
+		if g.has("to"):
+			continue
+		var r := ColorRect.new()
+		r.color = Color(UITheme.INK, SHADE_LIT if GameState.has_gear(str(g.gear)) else SHADE_DARK)
+		r.position = Vector2(int(g.x), int(g.y)) * TilesetFactory.TILE
+		r.size = Vector2.ONE * TilesetFactory.TILE
+		r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_shade.add_child(r)
 
 func npc_at(cell: Vector2i) -> NPC:
 	for n: NPC in _npcs:
@@ -304,6 +327,7 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 		await _run_action(str(entry.action), speaker)
 	if entry.has("flag"):
 		GameState.set_flag(str(entry.flag))
+	refresh_shade()
 	await announce_goal_if_changed(goal_before)
 	VirtualPad.set_wanted(true)
 	player.frozen = false
