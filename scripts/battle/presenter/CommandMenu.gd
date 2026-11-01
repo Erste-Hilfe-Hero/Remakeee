@@ -55,14 +55,35 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	parent.add_child(b)
 	return b
 
+## Short matchup tag for a known multiplier ("" when unknown or neutral).
+static func matchup_tag(mult: float) -> String:
+	if mult < 0.0 or is_equal_approx(mult, 1.0):
+		return ""
+	if mult >= 4.0:
+		return "x4"
+	if mult > 1.0:
+		return "x2"
+	if mult <= 0.25:
+		return "x.25"
+	return "x.5"
+
+## Second line of a move button: cost, or what is missing, plus the known matchup.
+static func move_line(mv: MoveData, energy: int, mult: float) -> String:
+	if energy < mv.energy_cost:
+		return "need %dE" % mv.energy_cost
+	var tag: String = "" if mv.power <= 0 else matchup_tag(mult)
+	return "%dE %s" % [mv.energy_cost, tag] if not tag.is_empty() else "%dE" % mv.energy_cost
+
 ## Fills the buttons from the model's current legal actions.
 func refresh(model: BattleModel) -> void:
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER)
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
 	for i: int in _move_buttons.size():
 		var b: Button = _move_buttons[i]
 		if i < me.moves.size():
 			var mv: MoveData = me.moves[i]
-			b.text = "%s\n%d Energy" % [mv.move_name, mv.energy_cost]
+			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
+			b.text = "%s\n%s" % [mv.move_name, move_line(mv, me.energy, mult)]
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv)
 		else:

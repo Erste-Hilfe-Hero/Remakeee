@@ -76,13 +76,14 @@ func _unhandled_input(event: InputEvent) -> void:
 
 # --- Shared screens --------------------------------------------------------------
 
-## Settings: text speed, fast-forward, Retro filter, volume. Saved immediately.
+## Settings: text speed, battle speed, auto wild battles, Retro filter, volume. Saved immediately.
 func run_settings() -> void:
 	while true:
 		var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
 		var entries: Array[String] = [
 			"Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize(),
-			"Fast battles: %s" % ("On" if GameState.fast_forward else "Off"),
+			"Battle speed: %dx" % int(GameState.battle_speed_scale()),
+			"Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off"),
 			"Retro filter: %s" % retro,
 			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
 		]
@@ -94,12 +95,14 @@ func run_settings() -> void:
 			0:
 				GameState.text_speed = ((GameState.text_speed + 1) % GameState.TextSpeed.size()) as GameState.TextSpeed
 			1:
-				GameState.fast_forward = not GameState.fast_forward
+				GameState.cycle_battle_speed()
 			2:
+				GameState.auto_battle = not GameState.auto_battle
+			3:
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
 				EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
-			3:
+			4:
 				var v: float = GameState.volume + 0.2
 				GameState.volume = 0.0 if v > 1.01 else v
 				GameState.apply_volume()

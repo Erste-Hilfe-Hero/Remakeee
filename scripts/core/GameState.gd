@@ -47,8 +47,16 @@ var rng := RandomNumberGenerator.new()
 
 ## Settings (also saved).
 var text_speed: TextSpeed = TextSpeed.NORMAL
-var fast_forward: bool = false
+## Battle playback speed: index into BATTLE_SPEEDS (1x / 2x / 4x).
+var battle_speed: int = 0
+const BATTLE_SPEEDS: Array[float] = [1.0, 2.0, 4.0]
+## Wild battles pick moves on their own (greedy AI) until the player turns it off.
+var auto_battle: bool = false
 var volume: float = 0.8
+
+## What the Tamer has learned about matchups: "element:species" -> multiplier seen on a hit.
+## Story difficulty shows every matchup from the start.
+var known_matchups: Dictionary = {}
 
 ## Mended Rifts needed before the storage box opens from the menu (end of Act I).
 const RIFTS_FOR_STORAGE: int = 2
@@ -78,6 +86,25 @@ func ai_level() -> int:
 
 func text_cps() -> float:
 	return TEXT_CPS[text_speed]
+
+func battle_speed_scale() -> float:
+	return BATTLE_SPEEDS[clampi(battle_speed, 0, BATTLE_SPEEDS.size() - 1)]
+
+func cycle_battle_speed() -> void:
+	battle_speed = (battle_speed + 1) % BATTLE_SPEEDS.size()
+
+static func _matchup_key(element: int, species: String) -> String:
+	return "%d:%s" % [element, species]
+
+## Remembers how well [param element] hit [param species] (called after a hit lands).
+func learn_matchup(element: int, species: String, mult: float) -> void:
+	known_matchups[_matchup_key(element, species)] = mult
+
+## The multiplier the Tamer knows for [param element] into [param foe], or -1.0 if unknown.
+func known_multiplier(element: int, foe: Spirling) -> float:
+	if difficulty == Difficulty.STORY:
+		return Elements.multiplier(element, foe.elements())
+	return float(known_matchups.get(_matchup_key(element, foe.data.species_name), -1.0))
 
 func add_item(id: String, count: int = 1) -> void:
 	inventory[id] = int(inventory.get(id, 0)) + count
@@ -125,6 +152,7 @@ func reset() -> void:
 	heal_map = "lighthouse"
 	heal_cell = Vector2i(4, 4)
 	flags = {}
+	known_matchups = {}
 	play_time = 0.0
 
 ## Starts a new game with the choices from the new-game flow.
@@ -165,6 +193,7 @@ func to_dict() -> Dictionary:
 		"heal_map": heal_map,
 		"heal_cell": [heal_cell.x, heal_cell.y],
 		"flags": flags.duplicate(),
+		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
 	}
 
@@ -197,15 +226,20 @@ func from_dict(d: Dictionary) -> void:
 	var hc: Array = d.get("heal_cell", [4, 4])
 	heal_cell = Vector2i(int(hc[0]), int(hc[1]))
 	flags = (d.get("flags", {}) as Dictionary).duplicate()
+	for k: Variant in (d.get("matchups", {}) as Dictionary):
+		known_matchups[str(k)] = float(d.matchups[k])
 	play_time = float(d.get("play_time", 0.0))
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
-	return {"text_speed": text_speed, "fast_forward": fast_forward, "volume": volume}
+	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
-	fast_forward = bool(d.get("fast_forward", false))
+	# Older settings files only had an on/off fast-forward; map "on" to 2x.
+	var legacy: int = 1 if bool(d.get("fast_forward", false)) else 0
+	battle_speed = clampi(int(d.get("battle_speed", legacy)), 0, BATTLE_SPEEDS.size() - 1)
+	auto_battle = bool(d.get("auto_battle", false))
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
 	apply_volume()
 
