@@ -13,7 +13,8 @@ static func run(menu: MenuHost) -> void:
 		var title: String = "Account  Code %s" % Online.pretty_code(Online.friend_code())
 		if Online.is_local():
 			title += "\n(test server on this phone)"
-		var entries: Array[String] = ["New phone? Get a transfer code", "Enter a transfer code...", "Online rules", "Privacy", "Delete account..."]
+		var entries: Array[String] = ["New phone? Get a transfer code", "Enter a transfer code...", "Online rules", "Privacy", "Delete account...",
+			"Friends and greetings: %s" % ("On" if Online.social_on() else "Off")]
 		var idx: int = await menu.pick_strings(title, entries)
 		match idx:
 			-1:
@@ -30,6 +31,8 @@ static func run(menu: MenuHost) -> void:
 			4:
 				if await _delete(menu):
 					return
+			5:
+				await _toggle_social(menu)
 
 static func _show_transfer(menu: MenuHost) -> void:
 	var r: Dictionary = await Online.transfer_create()
@@ -59,6 +62,14 @@ static func _claim_transfer(menu: MenuHost) -> bool:
 	else:
 		await menu.info("That code does not work. Codes work once and for 7 days.")
 	return false
+
+## For parents (item 147): switches friends, mail and greetings off. Saves stay online.
+static func _toggle_social(menu: MenuHost) -> void:
+	var on: bool = not Online.social_on()
+	if not on and not await menu.confirm("Switch off friends, greetings and gifts? Nobody can send you anything, and you cannot add friends. Your journeys stay online."):
+		return
+	if not await Online.set_social(on):
+		await menu.info("No connection right now. Try again in a moment.")
 
 static func _delete(menu: MenuHost) -> bool:
 	if not await menu.confirm("Delete your account? All journeys and friends are removed for good."):

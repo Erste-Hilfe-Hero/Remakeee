@@ -21,6 +21,29 @@ this is the "Chimora online: 200 ideas" artifact in the project.
   stamped by CI together with the version code.
 - **Notice:** `server_config.motd` shows a short text on the title screen (for example planned maintenance).
 
+## Playing together
+
+All under Menu, Friends. Spirlings are never traded or gifted, and there is no free text anywhere.
+
+- **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Tamer card,
+  friendship level 1-5 (points from gifts, echo help and duels). 100 friends at most. 20 requests per hour.
+- **Lantern Mail:** one gift per friend per day; the item is rolled on the server when it is opened, from the
+  open table in `server_config.gift_table` (the game shows the chances). Ten opens per day. Greetings are
+  set phrases (`scripts/online/Phrases.gd`, the server only stores the number), plus waves and thanks.
+  Mail is deleted after 30 days.
+- **Echo partner:** after losing to a Warden once, and before climbing the echo tower, the game offers a
+  friend's echo team to fight beside you. The AI steers it, the friend does not need to be online, and its
+  levels are capped to your level cap.
+- **Echo duel:** fight a friend's echo team. Everyone is on Lv30, nothing is lost, and the friend gets a note.
+- **World goal of the week:** everyone adds to one goal (battles won, bonds or rests, taking turns by week).
+  Each player can add 5 per call and 500 per week. Everyone who helped can claim the rewards at 25, 50, 75
+  and 100 percent.
+- **Weekly board:** the weekly challenge sends rounds won * 100 + health left. Friends board by default;
+  the world board shows strangers without names.
+- **Safety:** blocking ends the friendship and removes their mail at once and makes your code look unknown
+  to them. Reports go to table `reports`. Parents can switch friends, greetings and gifts off under
+  Settings, Account (the journey stays online).
+
 ## Code
 
 | Part | Where |
@@ -31,6 +54,9 @@ this is the "Chimora online: 200 ideas" artifact in the project.
 | Real server client (HTTPS) | `scripts/online/SupabaseBackend.gd` |
 | Local stand-in with the same rules (tests, builds without a server) | `scripts/online/LocalBackend.gd` |
 | Account menu | `scripts/ui/AccountMenu.gd` |
+| Friends, mail, world goal, board | `scripts/ui/FriendsMenu.gd` |
+| Echo teams (snapshot, build, duel copies, board score) | `scripts/online/EchoTeam.gd` |
+| Echo partner and echo duel in the world | `scripts/overworld/Overworld.gd` (`pick_echo_partner`, `echo_duel`) |
 
 Security model: every table has row level security on and no policies, and players have no table rights. The
 game only calls the `security definer` functions, which check `auth.uid()` and every rule themselves.
@@ -65,4 +91,19 @@ In the Supabase table editor, table `server_config`:
 | `min_version` | `1004` | builds with a lower version code must update |
 | `motd` | `"Maintenance today 3-4 am"` | notice on the title screen (`""` = none) |
 
+Also `gift_table`, `gift_open_limit`, `friend_limit`, `goal_rotation` (list of `{"kind", "target"}`;
+kinds `battles`, `bonds`, `rests`), `goal_rewards` (four item ids) and `goal_user_cap`.
+
 Table `banned_words`: words a Tamer name may not contain.
+
+## Reports (Ali, about once a week)
+
+Table `reports` lists open reports (`handled = false`). To reset a name, run in the SQL editor:
+
+```sql
+update public.profiles set name = 'Tamer ' || right(code, 4) where id = '<target>';
+update public.reports set handled = true where target = '<target>';
+```
+
+The DSA asks for a short reason to the player. Until there is an in-game notice, answer by email if they
+write in, for example: "Your Tamer name was reset because it broke the rules in section 4 of the terms."

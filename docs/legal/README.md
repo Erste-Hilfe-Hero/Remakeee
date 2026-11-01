@@ -19,7 +19,8 @@
 - Online-only, Spielstand auf einem Server von Supabase in Frankfurt (docs/ONLINE.md).
 - Konto wird beim ersten Start automatisch angelegt (zufällige Spieler-ID), Gerätewechsel per
   Übertragungscode. Keine E-Mail, kein Login über Apple/Google/Facebook.
-- Tamer-Name nur für den Spieler selbst sichtbar. Kein Chat, keine Bestenlisten.
+- Tamer-Name nur für bestätigte Freunde sichtbar. Kein freier Chat: Grüße sind feste Sätze. Wochen-Rangliste
+  zeigt Fremden nur Punkte. Blockieren und Melden im Spiel (docs/ONLINE.md).
 - Keine Werbung, keine Analytics, keine Absturzberichte, keine Werbe-ID.
 - Käufe (falls es welche gibt) nur über Apple/Google, keine Lootboxen.
 

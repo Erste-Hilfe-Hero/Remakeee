@@ -88,9 +88,11 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
 - **Sobald Spieler Inhalte sehen, die andere erstellt haben** (Spielernamen in Kämpfen/Bestenlisten,
   Chat), ist Chimora selbst ein Hosting-Dienst im Sinne des DSA. Dann zusätzlich: Kontaktstelle für Nutzer
   und Behörden (Art. 11, 12), Moderationsregeln in den AGB (Art. 14), Meldeweg für rechtswidrige Inhalte
-  (Art. 16) und Begründung bei Sperren (Art. 17). Chimora zeigt Tamer-Namen anderen Spielern
-  nicht an; so bleibt es zum Launch einfach. Kommen sichtbare Namen, Bestenlisten oder Chat dazu, vorher diese
-  Pflichten umsetzen.
+  (Art. 16) und Begründung bei Sperren (Art. 17). Seit den Online-Funktionen sehen
+  Freunde Tamer-Namen. Umgesetzt: Meldeweg im Spiel (Freund, Melden; Tabelle `reports`), Blockieren,
+  Namensfilter, nur feste Grüße, Regeln in den Nutzungsbedingungen (Abschnitt „Freunde und Grüße“).
+  Ali: Kontaktstelle ist die E-Mail aus dem Impressum; Meldungen wöchentlich prüfen und bei einer
+  Namens-Zurücksetzung kurz begründen (Art. 17 DSA, Vorlage in docs/ONLINE.md).
 
 ## 5. Store-Texte
 
