@@ -6,9 +6,8 @@ CI lives in `.github/workflows/export.yml` and uses Godot **4.7.2-stable**
 | Job | Runs on | What it does |
 | --- | --- | --- |
 | `test` | every push and PR | headless boot with no errors, data validation, GUT tests |
-| `android-debug` | pushes to `main`, tags, manual | debug APK (throwaway keystore made in the job) + `zipalign -c -P 16` |
+| `android-debug` | every push and PR | debug APK (throwaway keystore made in the job) + `zipalign -c -P 16` |
 | `android-release` | `v*` tags, manual | signed **AAB** for Google Play, 16 KB alignment check on every `.so`, `zipalign -c -P 16` on a universal APK |
-| `web` | every push and PR (after tests) | single-threaded **Web** build as the `web-build` artifact; serve the folder with any static server to play in a browser |
 | `android-internal` | manual (tick "play_internal") | uploads the release AAB to the Play **internal testing** track as a draft |
 | `ios` | manual (tick "ios"), or `v*` tags when the repo variable `IOS_ENABLED=true` | IPA on a `macos-26` runner with Xcode 26, upload to TestFlight |
 
