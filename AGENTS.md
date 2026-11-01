@@ -81,14 +81,14 @@ tests/           GUT tests
 | Lumen | Umbra, Volt |
 | Umbra | Lumen, Gale |
 
-**Stats:** HP, ATK, DEF, FOC (element/special), SPD. Each Spirling has hidden **Spark** values (0–15 per stat).
+**Stats:** HP, ATK, DEF, FOC (element/special), SPD. Each Spirling has hidden **Spark** values (0–12 per stat). Team of **5**, level cap **60**, up to 4 moves shown as a one-column list (never a 2x2 grid).
 
 **Energy instead of PP:** 10 Energy at battle start, +1 per turn. Each move has an energy cost.
 
-**Statuses:** Scorch (−1/16 HP per turn, ATK ×0.75), Soak (SPD ×0.5, 3 turns), Root (can't swap, −1/16 HP per turn), Jolt (25% chance to skip the turn), Daze (accuracy ×0.7, 3 turns), Drowse (sleep 1–3 turns).
+**Statuses:** Scorch (−1/12 HP per turn, ATK ×0.75), Soak (SPD ×0.5, 3 turns), Root (can't swap, −1/12 HP per turn), Jolt (20% chance to skip the turn), Daze (accuracy ×0.7, 3 turns), Drowse (sleeps 2 turns).
 
 **Damage:** `DamageCalc.gd` uses Chimora's own curve (replaced the classic-style formula in M1):
-`dmg = (P × (A / D)^0.8 × (L / 5 + 3) / 12 + 1) × STAB(1.25) × E × Crit(1.5, 1/16) × R(0.9–1.0)`.
+`dmg = (P × (A / D)^0.8 × (L / 5 + 3) / 12 + 1) × STAB(1.25) × E × Crit(1.4, 1/12) × R(0.9–1.0)`.
 A same-level, neutral, 40-power move takes 15–25% of a balanced foe's HP; `tests/unit/test_damage.gd` pins this.
 
 **Bonding:** chance = bond_rate × max(1 − HP%, 0.1) × timing_score × (1.5 if statused) + charm bonus, capped at 0.95. The score comes from the "Echo call" minigame (`BondEcho.gd`): the wild Spirling calls 4 marks, the player repeats them; score = correct prefix / length. A failed bond gives the wild Spirling one free action.
@@ -105,10 +105,10 @@ Each region is a visual generation jump. `EraManager` (autoload) owns the active
 
 | Era | Region | Resolution | Battle sprite | Palette |
 | --- | --- | --- | --- | --- |
-| I Mono | Veydal | 144×256 | 56×56 | 4 fixed greens |
-| II Color | Corvane | 144×256 | 56×56 | 4 per sprite, day/night |
-| III Advanced | Ashmere | 180×320 | 64×64 | 16 per sprite |
-| IV Dual | Solenne | 270×480 | 96×96, 6-frame idle | 32 per sprite, 2.5D via SubViewport |
+| I Ink | Veydal | 144×256 | 56×56 | 4 fixed inks on parchment (never handheld green) |
+| II Wash | Corvane | 144×256 | 56×56 | 4 per sprite, day/night |
+| III Etched | Ashmere | 180×320 | 64×64 | 16 per sprite |
+| IV Panorama | Solenne | 270×480 | 96×96, 6-frame idle | 32 per sprite, 2.5D via SubViewport |
 
 Until Era II+ art exists, sprite lookups must fall back to `art/era1/`.
 
@@ -142,7 +142,7 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 ### M4 — Meta systems
 - [x] Party (max 6), storage box, a Spirlog that tracks seen/bonded and route spawns (Spirlog Tracker).
 - [x] SaveManager: versioned, atomic, saves on pause.
-- [x] New-game flow: difficulty pick → Tamer customization (placeholder) → starter pick (Kindlop / Puddlet / Mossling).
+- [x] New-game flow: difficulty pick → Tamer customization (placeholder) → starter pick (Kindlop / Zippit / Wickit; no element triangle).
 - [x] Settings: text speed, Retro filter (Era I only for now), volume.
 
 ### M5 — Vertical slice content

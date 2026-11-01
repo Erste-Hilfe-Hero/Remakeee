@@ -257,10 +257,10 @@ T = {
 "Watch last battle": "Letzten Kampf ansehen", "Watch the replay? %s": "Wiederholung ansehen? %s",
 "That replay can't be shown any more.": "Diese Wiederholung kann nicht mehr gezeigt werden.",
 "wild %s": "wilder %s", "%s, seed %08x": "%s, Seed %08x",
-"The grey of Veydal falls away. The world blooms into colour!": "Das Grau von Veydal fällt ab. Die Welt erblüht in Farbe!",
+"The ink of Veydal runs and spreads. The world fills with colour!": "Die Tinte von Veydal verläuft. Die Welt füllt sich mit Farbe!",
 "The air grows sharper. Every leaf and stone shows more detail!": "Die Luft wird klarer. Jedes Blatt und jeder Stein zeigt mehr Details!",
 "Day and night: %s": "Tag und Nacht: %s",
-"The sky splits wide open. Two horizons stretch before you!": "Der Himmel öffnet sich weit. Zwei Horizonte liegen vor dir!",
+"The map unrolls wider than ever. The whole horizon opens before you!": "Die Karte entrollt sich weiter als je zuvor. Der ganze Horizont liegt vor dir!",
 # Battles with several Spirlings per side
 "A hushed swarm of %d Spirlings closes in!": "Ein verstummter Schwarm aus %d Spirlings rückt an!",
 "%s rises from the Rift!": "%s steigt aus dem Riss!",

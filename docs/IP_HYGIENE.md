@@ -17,6 +17,14 @@ There is no lawyer review (Ali's decision); residual risks are listed in `docs/l
   well-known monster-taming game and is not a registered trademark in games (search EUIPO and USPTO
   TESS/TSDR in class 9 and 41). Avoid the "-mon" suffix and puns that point at a specific franchise.
 
+## 1b. Overall impression
+
+Many small similarities add up even when each is harmless. Keep these as they are (pinned by
+`tests/unit/test_originality.gd`): team of 5, level cap 60, Spark 0–12, keen hits 1/12 at x1.4,
+status ticks of 1/12, no element-triangle starters, no evolution at levels 16/32/34/36, moves as a
+one-column list, a one-colour HP bar, the Era I ink palette, no coin loss after a wipe. German text
+uses "Technik" for moves and avoids the franchise's German battle words (checked by `tools/ip_check.sh`).
+
 ## 2. Mechanics (design-around)
 
 These follow AGENTS.md rule 2 and are enforced in code review:
@@ -42,7 +50,7 @@ Gale, Lumen, Umbra), Energy system and status table are original and live in `sc
 - Battle screen: our own layout (foe strip at the top, foe on the right, player on the lower left, command
   panel with Energy costs). Do not imitate another game's battle-box shapes, HP bar styling or menus.
 - No red/white split-sphere shapes anywhere, including icons, UI and store art.
-- The Retro filter uses our own four-colour palette (`EraManager.MONO_PALETTE`), not a palette sampled
+- The Retro filter uses our own four-colour palette (`EraManager.INK_PALETTE`), not a palette sampled
   from a specific handheld game.
 
 ## 4. Asset provenance

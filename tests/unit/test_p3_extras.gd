@@ -240,7 +240,7 @@ func test_replay_of_missing_species_is_refused() -> void:
 # --- Era transition ------------------------------------------------------------------
 
 func test_every_new_era_has_a_line() -> void:
-	for e: int in [EraManager.Era.COLOR, EraManager.Era.ADVANCED, EraManager.Era.DUAL]:
+	for e: int in [EraManager.Era.WASH, EraManager.Era.ETCHED, EraManager.Era.PANORAMA]:
 		assert_true(EraManager.ERA_LINES.has(e))
 
 # --- Day and night -------------------------------------------------------------------

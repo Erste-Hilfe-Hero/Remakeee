@@ -124,7 +124,7 @@
   "bond_rate": 0.06,
   "height": "1.9 m",
   "habitat": "Volcanic ridges",
-  "lore": "The crater on its back keeps a slow fire for years. Herders once cooked supper on a sleeping Calderox."
+  "lore": "The cracks in its shoulder plates glow like banked coals. Herders warm their hands on a dozing Calderox in winter."
  },
  {
   "dex_id": 4,
@@ -287,7 +287,7 @@
   "bond_rate": 0.3,
   "height": "0.4 m",
   "habitat": "Damp woods, garden beds",
-  "lore": "It sleeps under its moss cap for most of the day. Gardeners welcome it: wherever it naps, seedlings follow."
+  "lore": "It hears rain coming with its long leaf ears and sits very still until the first drop. Gardeners welcome it: wherever it naps, seedlings follow."
  },
  {
   "dex_id": 8,
@@ -371,7 +371,7 @@
   "bond_rate": 0.06,
   "height": "2.0 m",
   "habitat": "Meadows, high pasture",
-  "lore": "A small meadow grows on its back, complete with flowers and the odd beetle. It grazes for hours without moving a step."
+  "lore": "Ferns grow in its shaggy mane, and birds nest in its beard. An old one can graze for hours without moving a step."
  },
  {
   "dex_id": 10,

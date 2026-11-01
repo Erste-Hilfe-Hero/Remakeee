@@ -8,8 +8,9 @@ world that does not follow the classic monster-RPG template. Check new content a
 
 - The player is an apprentice **valley cartographer** who lives with their grandfather **Aldo**,
   the old ferryman, in the **Brindlewick lighthouse**. There is no parent at home, no professor and no lab.
-- On the first night a storm tears open a Rift over the lake. Three frightened Spirlings
-  (Kindlop, Puddlet, Mossling) shelter in the lighthouse; one of them stays with the player.
+- On the first night a storm tears open a Rift over the lake. Three frightened Spirlings that
+  live by light (Kindlop, Zippit, Wickit) follow the lighthouse lamp out of the storm; one of
+  them stays with the player. They are deliberately not a fire/water/grass triangle.
 - Open Rifts spread **the Hush**: nearby Spirlings fall silent and lose their bond with people.
   Wild Spirlings near a Rift are "hushed".
 - **Wardens** are keepers of the Rift hollows whose own bond has broken. Battling them wakes
@@ -39,7 +40,8 @@ world that does not follow the classic monster-RPG template. Check new content a
 
 Starting house with a parent, a professor handing out starters, a rival who picks the
 counter-starter, numbered routes, a fixed badge/leader sequence, a villain organisation,
-identical healing buildings in every town, line-of-sight trainer ambushes, oval battle platforms.
+identical healing buildings in every town, line-of-sight trainer ambushes, oval battle platforms,
+a fire/water/grass starter triangle, losing half your money when your team is worn out.
 
 ## Day and night
 

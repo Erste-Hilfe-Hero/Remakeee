@@ -7,12 +7,12 @@ extends RefCounted
 const FONT_SIZE: int = 8
 ## Palette. Static (not const) so the high-contrast option can swap it (item 78).
 static var BG: Color = Color("f4f1e6")
-static var INK: Color = Color("20241c")
-static var MID: Color = Color("7d8a6a")
-static var ACCENT: Color = Color("c7d6a4")
-static var DISABLED: Color = Color("a6a89c")
+static var INK: Color = Color("2a1e2c")
+static var MID: Color = Color("8a6a6a")
+static var ACCENT: Color = Color("e6c9a0")
+static var DISABLED: Color = Color("aaa096")
 
-const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("20241c"), Color("7d8a6a"), Color("c7d6a4"), Color("a6a89c")]
+const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("2a1e2c"), Color("8a6a6a"), Color("e6c9a0"), Color("aaa096")]
 ## Pure paper and ink, a darker mid tone and a stronger accent: text stays above 15:1.
 const HIGH_CONTRAST_PALETTE: Array[Color] = [Color("ffffff"), Color("000000"), Color("3a3a3a"), Color("ffe680"), Color("6a6a6a")]
 
