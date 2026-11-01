@@ -2,6 +2,7 @@
  "name": "Cinder Rift",
  "region": "veydal",
  "backdrop": "ember",
+ "field": "ash_storm",
  "encounters": "cinder_rift",
  "rows": [
   "^^^^^^^^^^^^",
@@ -103,7 +104,8 @@
      "level": 12
     }
    ],
-   "sprite": "warden"
+   "sprite": "warden",
+   "rule": "ember_pulse"
   }
  ],
  "signs": []

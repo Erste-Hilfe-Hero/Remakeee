@@ -35,6 +35,10 @@ var status: String = ""
 var status_turns: int = 0
 var moves: Array[MoveData] = []
 var uid: String = ""
+## Held item id ("" for none). Only items with a "held" block can be held.
+var held: String = ""
+## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
+var stages: Dictionary[String, int] = {}
 
 ## [param rng] rolls the hidden Spark values; pass the battle or game RNG for reproducibility.
 func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = null) -> void:
@@ -75,13 +79,25 @@ func def() -> int: return _stat("def")
 func foc() -> int: return _stat("foc")
 func spd() -> int: return _stat("spd")
 
-## ATK after status modifiers (Scorch).
-func effective_atk() -> int:
-	return int(atk() * StatusRules.atk_mult(status))
+func stage(stat: String) -> int:
+	return int(stages.get(stat, 0))
 
-## SPD after status modifiers (Soak).
+## ATK after status (Scorch, or the Kindling trait), stages and held item.
+func effective_atk() -> int:
+	var m: float = StatusRules.atk_mult(status)
+	if status == "scorch":
+		m = float(BattleRules.trait_info(data.trait_id).get("scorch_atk", m))
+	return int(atk() * m * BattleRules.stage_mult(stage("atk")) * BattleRules.mult_key(self, "atk_mult"))
+
+func effective_def() -> int:
+	return int(def() * BattleRules.stage_mult(stage("def")) * BattleRules.mult_key(self, "def_mult"))
+
+func effective_foc() -> int:
+	return int(foc() * BattleRules.stage_mult(stage("foc")) * BattleRules.mult_key(self, "foc_mult"))
+
+## SPD after status (Soak), stages and held item.
 func effective_spd() -> int:
-	return int(spd() * StatusRules.spd_mult(status))
+	return int(spd() * StatusRules.spd_mult(status) * BattleRules.stage_mult(stage("spd")) * BattleRules.mult_key(self, "spd_mult"))
 
 func is_fainted() -> bool:
 	return hp <= 0
@@ -101,6 +117,7 @@ func restore() -> void:
 
 ## Clears battle-only state when a battle ends. Statuses do not persist outside battle.
 func end_battle() -> void:
+	stages.clear()
 	status = ""
 	status_turns = 0
 	energy = START_ENERGY
@@ -154,6 +171,7 @@ func to_dict() -> Dictionary:
 		"hp": hp,
 		"moves": move_names,
 		"uid": uid,
+		"held": held,
 	}
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -176,5 +194,6 @@ static func from_dict(d: Dictionary) -> Spirling:
 	if s.moves.is_empty():
 		s.moves = sd.default_moves(s.level, MAX_MOVES)
 	s.uid = str(d.get("uid", ""))
+	s.held = str(d.get("held", ""))
 	s.hp = clampi(int(d.get("hp", s.max_hp())), 0, s.max_hp())
 	return s

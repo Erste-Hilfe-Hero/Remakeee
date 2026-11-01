@@ -20,8 +20,8 @@ const ROLL_MEAN: float = (ROLL_MIN + ROLL_MAX) / 2.0
 ## Attack and defense stats used for [param move] (PHYSICAL: ATK vs DEF, FOCUS: FOC vs FOC).
 static func stats_for(user: Spirling, target: Spirling, move: MoveData) -> Vector2:
 	if move.kind == MoveData.Kind.PHYSICAL:
-		return Vector2(user.effective_atk(), target.def())
-	return Vector2(user.foc(), target.foc())
+		return Vector2(user.effective_atk(), target.effective_def())
+	return Vector2(user.effective_foc(), target.effective_foc())
 
 static func stab_for(user: Spirling, move: MoveData) -> float:
 	return STAB if move.element in user.elements() else 1.0
@@ -39,13 +39,14 @@ static func raw(user: Spirling, target: Spirling, move: MoveData, roll: float, c
 	return base * stab_for(user, move) * effectiveness(target, move) * (CRIT_MULT if crit else 1.0) * roll
 
 ## Rolls crit and the random factor. Returns {"damage": int, "eff": float, "crit": bool}.
-static func compute(user: Spirling, target: Spirling, move: MoveData, rng: RandomNumberGenerator) -> Dictionary:
+## [param mult] carries traits, held items, field and Overcharge (see BattleRules.damage_mult).
+static func compute(user: Spirling, target: Spirling, move: MoveData, rng: RandomNumberGenerator, mult: float = 1.0, crit_mult: float = 1.0) -> Dictionary:
 	if not move.is_damaging():
 		return {"damage": 0, "eff": 1.0, "crit": false}
-	var crit: bool = rng.randf() < CRIT_CHANCE
+	var crit: bool = rng.randf() < CRIT_CHANCE * crit_mult
 	var roll: float = rng.randf_range(ROLL_MIN, ROLL_MAX)
 	var eff: float = effectiveness(target, move)
-	var dmg: int = int(raw(user, target, move, roll, crit))
+	var dmg: int = int(raw(user, target, move, roll, crit) * mult)
 	return {"damage": maxi(dmg, 1) if eff > 0.0 else 0, "eff": eff, "crit": crit}
 
 ## Expected damage with the mean roll and no crit. Used by the AI.

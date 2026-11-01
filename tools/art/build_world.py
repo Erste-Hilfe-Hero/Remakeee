@@ -316,7 +316,7 @@ TEXT["thornridge"] = {
     "sign": ["THORNRIDGE", "Gorge village.", "Upper terrace: Rest Pool and the Cinder hollow"],
     "keeper": {"lines": ["Keeper: Rest by the pool a while."], "action": "heal"},
     "trader": {"lines": ["Trader: Supplies for the road! Your bag holds as much as you like."],
-               "action": "shop tonic strong_tonic remedy spark_drop revival_leaf kin_charm"},
+               "action": "shop tonic strong_tonic remedy spark_drop revival_leaf kin_charm bark_wrap iron_burr swift_feather keen_lens"},
     "elder": {
         "lines": ["Elder: The Cinder hollow is up the stairs. Its Warden, Orrin, hasn't said a word in weeks.",
                   "Elder: A Warden whose bond breaks becomes part of the Hush. Wake him, and he can help you mend the tear."],
@@ -401,8 +401,8 @@ TEXT["murk_hollow"] = {
     "delve_intro": ["Ros: A cartographer in my mine? Show me what you've got!"],
     "delve_defeat": ["Ros: Dug myself into that one."],
     "sign_old": ["MURK HOLLOW GALLERY", "Closed after the storm.", "Mind your head."],
-    "gallery_find": {"lines": ["Wedged between two rocks: a Strong Tonic!"],
-                     "action": "give_item strong_tonic 1", "flag": "hollow_find", "once": True,
+    "gallery_find": {"lines": ["Wedged between two rocks: a Spark Coil! A Spirling holding it gains extra Energy each turn."],
+                     "action": "give_item spark_coil 1", "flag": "hollow_find", "once": True,
                      "after_flag": {"flag": "hollow_find", "lines": ["Only dust and old pick marks now."]}},
 }
 
@@ -456,6 +456,16 @@ BACKDROPS = {"saltmarsh": "lake", "tide_rift": "lake", "brindlewick": "lake", "c
 for mid, m in WORLD.items():
     m["backdrop"] = BACKDROPS.get(mid, "field")
 
+# Rift resonance: battles in these maps use a field, and each Warden has a house rule.
+FIELDS = {"cinder_rift": "ash_storm", "tide_rift": "high_tide", "murk_hollow": "deep_murk"}
+for mid, f in FIELDS.items():
+    WORLD[mid]["field"] = f
+WARDEN_RULES = {"warden_orrin": "ember_pulse", "warden_maelis": "undertow"}
+for m in WORLD.values():
+    for n in m.get("npcs", []):
+        if n["id"] in WARDEN_RULES:
+            n["rule"] = WARDEN_RULES[n["id"]]
+
 # Every map is in Veydal.
 for m in WORLD.values():
     m["region"] = "veydal"
@@ -470,7 +480,7 @@ for old in ["home", "start_town", "kestra_home", "route_1", "route_2"]:
         if os.path.exists(p):
             os.remove(p)
 
-ORDER = ["name", "region", "backdrop", "encounters", "heal_point", "rows", "warps", "npcs", "signs", "gear_spots"]
+ORDER = ["name", "region", "backdrop", "field", "encounters", "heal_point", "rows", "warps", "npcs", "signs", "gear_spots"]
 for mid, m in WORLD.items():
     out = {k: m[k] for k in ORDER if k in m}
     with open(os.path.join(MAPS, mid + ".json"), "w") as f:

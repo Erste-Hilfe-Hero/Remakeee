@@ -397,5 +397,89 @@
   "energy": 3,
   "status": "root",
   "status_chance": 0.2
+ },
+ {
+  "name": "Kindle Up",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stat": "atk",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Shell Up",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stat": "def",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Tailwind Step",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stat": "spd",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Clear Mind",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stat": "foc",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Cower Shade",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stat": "atk",
+  "stages": -1,
+  "self": false
+ },
+ {
+  "name": "Chill Mist",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stat": "spd",
+  "stages": -1,
+  "self": false
+ },
+ {
+  "name": "Overcharge",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 30,
+  "accuracy": 1.0,
+  "energy": 2,
+  "overcharge": true
+ },
+ {
+  "name": "All-In Crash",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 30,
+  "accuracy": 0.95,
+  "energy": 2,
+  "overcharge": true
  }
 ]

@@ -15,6 +15,8 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 @export var status_chance: float = 0.0
 ## Data-driven effects, each {"id": StringName, ...params}. See EffectRegistry.
 @export var effects: Array[Dictionary] = []
+## Overcharge: spends all leftover Energy after the cost; each point adds power (BattleRules).
+@export var overcharge: bool = false
 
 ## True if the move deals direct damage.
 func is_damaging() -> bool:

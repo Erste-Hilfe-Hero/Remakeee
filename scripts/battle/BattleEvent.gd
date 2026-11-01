@@ -9,7 +9,10 @@ enum Type {
 	ENERGY_CHANGED, NOT_ENOUGH_ENERGY, REST, FAINTED, SWAP_OUT, SWAP_IN, SWAP_BLOCKED,
 	ITEM_USED, BOND_ATTEMPT, BOND_RESULT, FREE_ACTION, FLEE_RESULT,
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
+	STAT_CHANGED, FIELD, RULE,
 }
+
+const STAT_NAMES: Dictionary[String, String] = {"atk": "ATK", "def": "DEF", "foc": "FOC", "spd": "SPD"}
 
 var type: Type
 var data: Dictionary
@@ -87,4 +90,14 @@ func describe() -> String:
 			return "%s picked up %s!" % [who, data.get("move", "")]
 		Type.BATTLE_END:
 			return ""
+		Type.STAT_CHANGED:
+			var stat: String = STAT_NAMES.get(str(data.get("stat", "")), "")
+			var delta: int = int(data.get("delta", 0))
+			if delta == 0:
+				return "%s's %s won't go any %s!" % [who, stat, "higher" if int(data.get("tried", 0)) > 0 else "lower"]
+			return "%s's %s %s%s" % [who, stat, "rose" if delta > 0 else "fell", "!" if absi(delta) == 1 else " sharply!"]
+		Type.FIELD:
+			return str(data.get("text", ""))
+		Type.RULE:
+			return "Warden rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
 	return ""

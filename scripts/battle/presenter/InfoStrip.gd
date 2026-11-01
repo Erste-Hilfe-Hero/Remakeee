@@ -27,6 +27,8 @@ var elements: Array[int] = []
 var level: int = 1
 var status: String = ""
 var speed_scale: float = 1.0
+## Stat stages shown as small up/down arrows after the Energy pips.
+var stages: Dictionary[String, int] = {}
 
 func set_spirling(s: Spirling) -> void:
 	spirling_name = s.display_name()
@@ -36,6 +38,11 @@ func set_spirling(s: Spirling) -> void:
 	display_hp = s.hp
 	energy = s.energy
 	status = s.status
+	stages = s.stages.duplicate()
+	queue_redraw()
+
+func set_stages(value: Dictionary[String, int]) -> void:
+	stages = value.duplicate()
 	queue_redraw()
 
 ## Tweens the bar to [param hp]. Awaitable.
@@ -91,8 +98,29 @@ func _draw() -> void:
 			draw_rect(r, ENERGY_ON)
 		else:
 			draw_rect(r, UITheme.MID, false, 1.0)
+	_draw_stages(Vector2(Spirling.MAX_ENERGY * (PIP_SIZE + PIP_GAP) + 3, pip_y - 1))
 	if show_numbers:
 		draw_string(font, Vector2(0, pip_y + PIP_SIZE + fs - 1), "%d/%d" % [int(round(display_hp)), max_hp], HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
+
+## One letter plus an arrow per changed stat ("A" with up triangles for +ATK), left to right.
+func _draw_stages(at: Vector2) -> void:
+	var x: float = at.x
+	for stat: String in BattleRules.STAGE_STATS:
+		var st: int = int(stages.get(stat, 0))
+		if st == 0:
+			continue
+		var letter: String = stat.substr(0, 1).to_upper()
+		var fs: int = get_theme_default_font_size()
+		var font: Font = get_theme_default_font()
+		draw_string(font, Vector2(x, at.y + PIP_SIZE + 2), letter, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
+		x += font.get_string_size(letter, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		for i: int in absi(st):
+			var top: float = at.y
+			var tri: PackedVector2Array = [Vector2(x, top + 4), Vector2(x + 4, top + 4), Vector2(x + 2, top)] if st > 0 \
+				else [Vector2(x, top), Vector2(x + 4, top), Vector2(x + 2, top + 4)]
+			draw_colored_polygon(tri, UITheme.INK)
+			x += 4
+		x += 2
 
 func _draw_plate() -> void:
 	var r := Rect2(-PLATE_PAD, size + PLATE_PAD * 2.0)

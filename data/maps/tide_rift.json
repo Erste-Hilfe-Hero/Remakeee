@@ -2,6 +2,7 @@
  "name": "Tidewater Rift",
  "region": "veydal",
  "backdrop": "lake",
+ "field": "high_tide",
  "encounters": "tide_rift",
  "rows": [
   "^^^^^^^^^^^^",
@@ -90,7 +91,8 @@
      "level": 17
     }
    ],
-   "sprite": "warden"
+   "sprite": "warden",
+   "rule": "undertow"
   }
  ],
  "signs": []

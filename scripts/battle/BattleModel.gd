@@ -52,6 +52,10 @@ var flee_attempts: int = 0
 var bonded: Spirling = null
 ## Player Spirlings that faced the current foe (share its XP).
 var participants: Array[Spirling] = []
+## Rift field id (BattleRules.FIELDS) active for the whole battle, or "".
+var field: String = ""
+## Warden rule id (BattleRules.RULES) for the foe side, or "".
+var foe_rule: String = ""
 
 var _queue: Array[BattleAction] = []
 var _events: Array[BattleEvent] = []
@@ -167,6 +171,15 @@ func start() -> Array[BattleEvent]:
 	if not is_wild:
 		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE))
 	emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER))
+	if BattleRules.FIELDS.has(field):
+		emit_event(BattleEvent.Type.FIELD, {"field": field, "text": str(BattleRules.FIELDS[field].intro)})
+	if BattleRules.RULES.has(foe_rule):
+		var rule: Dictionary = BattleRules.RULES[foe_rule]
+		emit_event(BattleEvent.Type.RULE, {"rule": foe_rule, "label": str(rule.label), "text": str(rule.text)})
+		var st: Dictionary = rule.get("player_stage", {})
+		for s: Spirling in parties[Side.PLAYER]:
+			for stat: String in st:
+				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	participants = [active_spirling(Side.PLAYER)]
 	phase = Phase.CHOOSE_ACTIONS
 	return _events
@@ -224,12 +237,29 @@ func apply_status(side: int, status: String) -> bool:
 	var s: Spirling = active_spirling(side)
 	if s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
+	if BattleRules.is_immune(s, status):
+		var f: Dictionary = _who(side)
+		f["status"] = status
+		emit_event(BattleEvent.Type.STATUS_FAILED, f)
+		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
 	var d: Dictionary = _who(side)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
 	return true
+
+## Moves a stat stage on the active Spirling of [param side]. Emits STAT_CHANGED (or a "won't go" note).
+func change_stage(side: int, stat: String, delta: int) -> void:
+	var s: Spirling = active_spirling(side)
+	if s.is_fainted() or delta == 0 or not stat in BattleRules.STAGE_STATS:
+		return
+	var before: int = s.stage(stat)
+	var after: int = clampi(before + delta, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
+	var d: Dictionary = _who(side)
+	d.merge({"stat": stat, "delta": after - before, "stage": after, "tried": delta})
+	s.stages[stat] = after
+	emit_event(BattleEvent.Type.STAT_CHANGED, d)
 
 func change_energy(side: int, delta: int) -> void:
 	var s: Spirling = active_spirling(side)
@@ -304,7 +334,15 @@ func _phase_end_of_turn() -> void:
 			s.status_turns -= 1
 			if s.status_turns == 0:
 				_cure(side)
-		change_energy(side, ENERGY_PER_TURN)
+		var regen: int = int(BattleRules.trait_info(s.data.trait_id).get("regen_div", 0))
+		var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
+		for rdiv: int in [regen, held_regen]:
+			if rdiv > 0 and s.hp < s.max_hp():
+				heal(side, maxi(1, s.max_hp() / rdiv))
+		var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
+		if side == Side.FOE:
+			gain += int(BattleRules.RULES.get(foe_rule, {}).get("foe_energy", 0))
+		change_energy(side, gain)
 	turn += 1
 	phase = Phase.FAINT_CHECK
 
@@ -369,6 +407,11 @@ func _do_move(a: BattleAction) -> void:
 		emit_event(BattleEvent.Type.NOT_ENOUGH_ENERGY, _who(side))
 		return
 	change_energy(side, -mv.energy_cost)
+	var power_mult: float = 1.0
+	if mv.overcharge and me.energy > 0:
+		var extra: int = me.energy
+		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
+		change_energy(side, -extra)
 	var used: Dictionary = _who(side)
 	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind})
 	emit_event(BattleEvent.Type.MOVE_USED, used)
@@ -389,7 +432,8 @@ func _do_move(a: BattleAction) -> void:
 	ctx.target = target
 	ctx.move = mv
 	if mv.is_damaging():
-		var r: Dictionary = DamageCalc.compute(me, target, mv, rng)
+		var mult: float = power_mult * BattleRules.damage_mult(me, target, mv, field)
+		var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
 		ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name})
 	for fx: Dictionary in mv.effects:
 		var effect: MoveEffect = EffectRegistry.get_effect(StringName(fx.get("id", "")))

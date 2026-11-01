@@ -30,9 +30,9 @@
  ],
  "gallery_find": {
   "lines": [
-   "Wedged between two rocks: a Strong Tonic!"
+   "Wedged between two rocks: a Spark Coil! A Spirling holding it gains extra Energy each turn."
   ],
-  "action": "give_item strong_tonic 1",
+  "action": "give_item spark_coil 1",
   "flag": "hollow_find",
   "once": true,
   "after_flag": {

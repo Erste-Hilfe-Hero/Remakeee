@@ -52,7 +52,11 @@ static func run(level: int, rounds: int, seed_value: int, only: Array[String] = 
 	var draws: int = 0
 	var total_turns: int = 0
 	# Skip forms that can't exist yet at this level (e.g. a stage-3 form at Lv8).
-	names = names.filter(func(n: String) -> bool: return level >= min_level(Database.species(n)))
+	# Skip forms that can't exist yet, and forms a player would already have evolved.
+	names = names.filter(func(n: String) -> bool:
+		var sd: SpirlingData = Database.species(n)
+		var evolved: bool = sd.evolves_to != null and sd.evolve_level > 0 and level >= sd.evolve_level
+		return level >= min_level(sd) and not evolved)
 	for n: String in species.keys():
 		if not n in names:
 			species.erase(n)
