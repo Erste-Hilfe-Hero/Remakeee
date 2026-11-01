@@ -333,5 +333,69 @@
   "energy": 4,
   "effect": "drain",
   "effect_amount": 0.5
+ },
+ {
+  "name": "Wick Flicker",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Candle Ward",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "heal_self",
+  "effect_amount": 0.3
+ },
+ {
+  "name": "Mirk Nip",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Murk Veil",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.85,
+  "energy": 3,
+  "status": "daze",
+  "status_chance": 1.0
+ },
+ {
+  "name": "Tunnel Strike",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Brine Fang",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 0.95,
+  "energy": 3,
+  "status": "soak",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Kelp Lash",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 0.95,
+  "energy": 3,
+  "status": "root",
+  "status_chance": 0.2
  }
 ]

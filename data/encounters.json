@@ -19,6 +19,12 @@
     "min": 9,
     "max": 10,
     "weight": 20
+   },
+   {
+    "species": "Mirkmole",
+    "min": 9,
+    "max": 11,
+    "weight": 25
    }
   ]
  },
@@ -48,6 +54,18 @@
     "min": 13,
     "max": 14,
     "weight": 10
+   },
+   {
+    "species": "Kelpup",
+    "min": 13,
+    "max": 15,
+    "weight": 20
+   },
+   {
+    "species": "Wickit",
+    "min": 13,
+    "max": 15,
+    "weight": 15
    }
   ]
  },
@@ -112,6 +130,12 @@
     "min": 6,
     "max": 7,
     "weight": 5
+   },
+   {
+    "species": "Mirkmole",
+    "min": 5,
+    "max": 7,
+    "weight": 12
    }
   ]
  },
@@ -141,6 +165,18 @@
     "min": 11,
     "max": 12,
     "weight": 20
+   },
+   {
+    "species": "Wickit",
+    "min": 10,
+    "max": 12,
+    "weight": 15
+   },
+   {
+    "species": "Kelpup",
+    "min": 10,
+    "max": 12,
+    "weight": 15
    }
   ]
  }

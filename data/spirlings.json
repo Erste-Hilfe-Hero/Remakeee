@@ -538,5 +538,231 @@
    ]
   },
   "bond_rate": 0.12
+ },
+ {
+  "dex_id": 16,
+  "name": "Wickit",
+  "elements": [
+   "LUMEN"
+  ],
+  "base": {
+   "hp": 52,
+   "atk": 50,
+   "foc": 72,
+   "spd": 70,
+   "def": 52
+  },
+  "evolves_to": "Lumenewt",
+  "evolve_level": 22,
+  "learnset": {
+   "1": [
+    "Tackle Rush",
+    "Wick Flicker"
+   ],
+   "5": [
+    "Bubble Pop"
+   ],
+   "9": [
+    "Glint"
+   ],
+   "13": [
+    "Candle Ward"
+   ],
+   "18": [
+    "Prism Ray"
+   ]
+  },
+  "bond_rate": 0.5
+ },
+ {
+  "dex_id": 17,
+  "name": "Lumenewt",
+  "elements": [
+   "LUMEN",
+   "TIDE"
+  ],
+  "base": {
+   "hp": 74,
+   "atk": 64,
+   "foc": 100,
+   "spd": 90,
+   "def": 78
+  },
+  "evolves_to": null,
+  "evolve_level": 0,
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Glint",
+    "Bubble Pop"
+   ],
+   "22": [
+    "Brine Jet"
+   ],
+   "26": [
+    "Prism Ray"
+   ],
+   "32": [
+    "Candle Ward"
+   ],
+   "38": [
+    "Radiant Lance"
+   ],
+   "44": [
+    "Dawn Mend"
+   ]
+  },
+  "bond_rate": 0.15
+ },
+ {
+  "dex_id": 18,
+  "name": "Mirkmole",
+  "elements": [
+   "UMBRA"
+  ],
+  "base": {
+   "hp": 62,
+   "atk": 78,
+   "foc": 48,
+   "spd": 68,
+   "def": 66
+  },
+  "evolves_to": "Duskdigger",
+  "evolve_level": 25,
+  "learnset": {
+   "1": [
+    "Tackle Rush",
+    "Mirk Nip"
+   ],
+   "5": [
+    "Pebble Toss"
+   ],
+   "9": [
+    "Hush"
+   ],
+   "13": [
+    "Shade Claw"
+   ],
+   "18": [
+    "Tunnel Strike"
+   ],
+   "22": [
+    "Murk Veil"
+   ]
+  },
+  "bond_rate": 0.5
+ },
+ {
+  "dex_id": 19,
+  "name": "Duskdigger",
+  "elements": [
+   "UMBRA",
+   "STONE"
+  ],
+  "base": {
+   "hp": 90,
+   "atk": 110,
+   "foc": 58,
+   "spd": 74,
+   "def": 96
+  },
+  "evolves_to": null,
+  "evolve_level": 0,
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Shade Claw",
+    "Tunnel Strike"
+   ],
+   "25": [
+    "Quake Stomp"
+   ],
+   "30": [
+    "Murk Veil"
+   ],
+   "36": [
+    "Eclipse Fang"
+   ],
+   "42": [
+    "Boulder Slam"
+   ]
+  },
+  "bond_rate": 0.15
+ },
+ {
+  "dex_id": 20,
+  "name": "Kelpup",
+  "elements": [
+   "TIDE",
+   "BLOOM"
+  ],
+  "base": {
+   "hp": 56,
+   "atk": 64,
+   "foc": 58,
+   "spd": 66,
+   "def": 56
+  },
+  "evolves_to": "Kelphound",
+  "evolve_level": 27,
+  "learnset": {
+   "1": [
+    "Tackle Rush",
+    "Bubble Pop"
+   ],
+   "4": [
+    "Moss Whip"
+   ],
+   "8": [
+    "Brine Fang"
+   ],
+   "12": [
+    "Kelp Lash"
+   ],
+   "17": [
+    "Drench"
+   ],
+   "22": [
+    "Thorn Volley"
+   ]
+  },
+  "bond_rate": 0.5
+ },
+ {
+  "dex_id": 21,
+  "name": "Kelphound",
+  "elements": [
+   "TIDE",
+   "BLOOM"
+  ],
+  "base": {
+   "hp": 80,
+   "atk": 96,
+   "foc": 76,
+   "spd": 90,
+   "def": 78
+  },
+  "evolves_to": null,
+  "evolve_level": 0,
+  "learnset": {
+   "1": [
+    "Brine Fang",
+    "Kelp Lash",
+    "Moss Whip"
+   ],
+   "27": [
+    "Undertow"
+   ],
+   "32": [
+    "Sap Draw"
+   ],
+   "38": [
+    "Tidal Crash"
+   ],
+   "44": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.15
  }
 ]
