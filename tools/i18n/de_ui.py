@@ -250,6 +250,16 @@ T = {
 "The air grows sharper. Every leaf and stone shows more detail!": "Die Luft wird klarer. Jedes Blatt und jeder Stein zeigt mehr Details!",
 "Day and night: %s": "Tag und Nacht: %s",
 "The sky splits wide open. Two horizons stretch before you!": "Der Himmel öffnet sich weit. Zwei Horizonte liegen vor dir!",
+# Battles with several Spirlings per side
+"A hushed swarm of %d Spirlings closes in!": "Ein verstummter Schwarm aus %d Spirlings rückt an!",
+"%s rises from the Rift!": "%s steigt aus dem Riss!",
+"%s: %s! It sweeps across the foes!": "%s: %s! Es fegt über alle Gegner!",
+"%s fights at your side!": "%s kämpft an deiner Seite!",
+"Ashen Heart": "Aschenherz", "Drowned Heart": "Ertrunkenes Herz",
+"The Hush gathers into one burning heart. It is far too strong to face alone!": "Die Stille ballt sich zu einem glühenden Herzen. Allein hast du keine Chance!",
+"The Rift's water heaves up around a drowned heart. Its guard stands beside it!": "Das Wasser des Risses türmt sich um ein ertrunkenes Herz. Seine Wache steht daneben!",
+"Aim %s at?": "%s auf wen richten?", "Reach out to which one?": "Nach wem willst du rufen?",
+"%dE all": "%dE alle", "%s, HP %d of %d, Energy %d": "%s, LP %d von %d, Energie %d",
 }
 
 # Strings the extractor finds that stay the same in every language (names, node and theme ids, debug text).
@@ -257,4 +267,5 @@ KEEP = ["Label", "Button", "PanelContainer", "Panel", "LineEdit", "Ground", "Ent
 	"Rowan", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dx", "Lv%d", "%s Lv%d", "%s Lv%d %d/%d",
 	"%s Lv%d %d/%d%s", "%s_sealed", "%s_era%d", "cannot open %s (%s)", "rename failed: %s", "Battle log\n\n", "\n\n(tap to close)",
 	" sharply!", "%s's %s won't go any %s!", "Item", "Auto", "Log", "Team", "Spirlog", "Normal", "Level", "Name",
-	"%s: %s.", "%s   Lv %d", "  %s Lv%d"]
+	"%s: %s.", "%s   Lv %d", "  %s Lv%d",
+	"Breezel", "Smoldrake", "Shalebat", "Kelpup", "Mirkmole", "Wickit", "Rift Mystic Ilka", "Hauler Tobin", "Cartographer Kestra"]

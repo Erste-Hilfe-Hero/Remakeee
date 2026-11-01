@@ -52,5 +52,29 @@
  ],
  "neve_defeat": [
   "Neve: Washed out... You're ready."
- ]
+ ],
+ "kestra_tag": [
+  "Kestra: These two are draining the pools for Rift-salt. The Spirlings here have nowhere left to go."
+ ],
+ "kestra_tag_intro": [
+  "Kestra: You're just in time. I can't hold them off alone.",
+  "Kestra: We don't agree about the Rifts, I know. But this is wrong either way.",
+  "Hauler Tobin: Two against two, then. Wren, send out ours!"
+ ],
+ "kestra_tag_defeat": [
+  "Hauler Tobin: Fine! We'll find salt somewhere else.",
+  "Kestra: Not bad, partner. Maybe we want the same thing after all.",
+  "Kestra: I'll keep mapping the marsh. See you out there."
+ ],
+ "hauler": {
+  "lines": [
+   "Hauler Wren: Rift-salt fetches a fine price in Corvane. Move along."
+  ],
+  "after_flag": {
+   "flag": "kestra_marsh_tag",
+   "lines": [
+    "Hauler Wren: We're packing up, all right?"
+   ]
+  }
+ }
 }

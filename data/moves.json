@@ -170,7 +170,8 @@
   "kind": "PHYSICAL",
   "power": 65,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "target": "foes"
  },
  {
   "name": "Sap Draw",
@@ -216,7 +217,8 @@
   "accuracy": 0.85,
   "energy": 3,
   "status": "jolt",
-  "status_chance": 1.0
+  "status_chance": 1.0,
+  "target": "foes"
  },
  {
   "name": "Siphon Spark",
@@ -234,7 +236,8 @@
   "kind": "PHYSICAL",
   "power": 80,
   "accuracy": 0.9,
-  "energy": 5
+  "energy": 5,
+  "target": "foes"
  },
  {
   "name": "Boulder Slam",
@@ -270,7 +273,8 @@
   "accuracy": 0.85,
   "energy": 6,
   "status": "daze",
-  "status_chance": 0.1
+  "status_chance": 0.1,
+  "target": "foes"
  },
  {
   "name": "Prism Ray",
@@ -314,7 +318,8 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "daze",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "target": "foes"
  },
  {
   "name": "Eclipse Fang",
@@ -462,7 +467,8 @@
   "energy": 2,
   "stat": "spd",
   "stages": -1,
-  "self": false
+  "self": false,
+  "target": "foes"
  },
  {
   "name": "Overcharge",

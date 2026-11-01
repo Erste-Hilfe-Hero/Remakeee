@@ -36,5 +36,17 @@
  "orrin_defeat": [
   "Warden Orrin: ...Ember? Is that you?",
   "Warden Orrin: I can hear them again. Quickly, help me close the tear!"
+ ],
+ "heart": [
+  "A knot of Hush smoulders in the Rift's heart."
+ ],
+ "heart_intro": [
+  "Warden Orrin: Wait. Something is still down there.",
+  "The last of the Hush pools into one burning heart.",
+  "Warden Orrin: Bring every Spirling you have. We face it together!"
+ ],
+ "heart_defeat": [
+  "The heart cools to grey stone and crumbles away.",
+  "Warden Orrin: That was the last of it. The Cinder Rift breathes again."
  ]
 }

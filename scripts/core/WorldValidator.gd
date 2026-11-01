@@ -48,6 +48,7 @@ static func validate() -> PackedStringArray:
 					for entry: Variant in t:
 						if Database.species(str((entry as Dictionary).get("species", ""))) == null:
 							errors.append("map '%s': npc '%s' has unknown team species %s" % [id, n.get("id", ""), entry])
+				errors.append_array(format_errors(n, id))
 		for s: Dictionary in m.signs:
 			_check_dialogue(errors, id, str(s.get("dialogue", "")))
 		if not m.encounter_table.is_empty():
@@ -172,3 +173,29 @@ static func _check_dialogue(errors: PackedStringArray, map_id: String, ref: Stri
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
 	if not raw is Dictionary or not (raw as Dictionary).has(parts[1]):
 		errors.append("map '%s': dialogue key '%s' missing" % [map_id, ref])
+
+## Problems with a Tamer's battle format: "front", "boss", "partner" and "wild" (see TrainerData).
+static func format_errors(def: Dictionary, map_id: String = "?") -> PackedStringArray:
+	var errors: PackedStringArray = []
+	var who: String = str(def.get("id", "?"))
+	if def.has("front"):
+		var f: Variant = def.front
+		if not (f is Array and (f as Array).size() == 2):
+			errors.append("map '%s': npc '%s' front must be [player, foe]" % [map_id, who])
+		else:
+			for v: Variant in f:
+				if int(v) < 1 or int(v) > BattleRules.MAX_FRONT:
+					errors.append("map '%s': npc '%s' front values must be 1..%d" % [map_id, who, BattleRules.MAX_FRONT])
+	if def.has("boss") and not BattleRules.BOSSES.has(str(def.boss)):
+		errors.append("map '%s': npc '%s' has unknown boss '%s'" % [map_id, who, def.boss])
+	if def.has("partner"):
+		var p: Variant = def.partner
+		if not (p is Dictionary and (p as Dictionary).has("name") and (p.get("team", []) as Array).size() > 0):
+			errors.append("map '%s': npc '%s' partner needs a name and a team" % [map_id, who])
+		else:
+			for entry: Variant in p.team:
+				if Database.species(str((entry as Dictionary).get("species", ""))) == null:
+					errors.append("map '%s': npc '%s' partner has unknown species %s" % [map_id, who, entry])
+	if TrainerData.is_wild_horde(def) and def.has("partner"):
+		errors.append("map '%s': npc '%s' is a wild horde and can't have a partner" % [map_id, who])
+	return errors

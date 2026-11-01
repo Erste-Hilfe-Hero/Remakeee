@@ -17,6 +17,15 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 @export var effects: Array[Dictionary] = []
 ## Overcharge: spends all leftover Energy after the cost; each point adds power (BattleRules).
 @export var overcharge: bool = false
+## Who the move reaches: "single" (one foe, picked by the player) or "foes" (every foe on the
+## field at once, a sweep). In 1v1 both hit the one foe the same way.
+@export var target: String = "single"
+
+const TARGETS: Array[String] = ["single", "foes"]
+
+## True for moves that sweep every foe on the field.
+func is_area() -> bool:
+	return target == "foes"
 
 ## True if the move deals direct damage.
 func is_damaging() -> bool:

@@ -13,5 +13,8 @@ Not legal advice — get a games lawyer to review before store launch.
 - Never use: Pokémon, Poké-, "-mon" names, red/white ball shapes, Gym, Pokédex,
   Poké Center, HM/TM — not in code, assets, store keywords or ads.
 - Don't copy Pokémon battle-screen layouts (HP box placement, menu shapes).
+  Battles with several Spirlings per side use our formation layout: one ledger strip at the top
+  for the Spirling in focus, two straight ranks of half-size sprites, a small tag under each
+  sprite and a map pin for targeting. Never one HP box per Spirling in the screen corners.
 - Public wording: "monster-taming RPG", never "Pokémon remake".
 - Compare every new Spirling design against the official dex before merging.

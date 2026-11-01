@@ -5,12 +5,19 @@ extends RefCounted
 ##   {"id": "bram", "trainer": "Hiker Bram", "team": [{"species": "Shalebat", "level": 7}],
 ##    "money": 140, "sight": 3, "intro": "crowcrest/bram_intro", "defeat": "crowcrest/bram_defeat",
 ##    "warden": "cinder", "win_flags": ["some_flag"], "leaves": true, "ai": 2}
+## Battles with several Spirlings per side (story set pieces) add:
+##   "front": [player, foe]   how many fight at once on each side (e.g. [4, 1], [3, 3]; max 4)
+##   "partner": {"name": "Cartographer Kestra", "team": [...], "front": 1}   an ally Tamer beside you
+##   "boss": "ashen_heart"    the foe in front is a Rift boss (BattleRules.BOSSES)
+##   "wild": true             a wild horde: no Tamer, so the Echo call (Bond) and Run work
 ## Battles always start from the overworld and cut to the separate battle screen.
 
 ## Default money per foe level when the map gives none.
 const MONEY_PER_LEVEL: int = 12
 ## Wardens never play below this AI tier (0 random, 1 greedy, 2 lookahead).
 const WARDEN_MIN_AI: int = 1
+## AI tier of an ally Tamer fighting beside the player.
+const PARTNER_AI: int = 1
 
 static func is_trainer(def: Dictionary) -> bool:
 	return def.has("team") or def.has("team_by_starter")
@@ -76,20 +83,39 @@ static func prize_money(def: Dictionary, team: Array[Spirling]) -> int:
 ## AI tier for this Tamer given the difficulty default.
 static func ai_tier(def: Dictionary, difficulty_ai: int) -> int:
 	var tier: int = int(def.get("ai", difficulty_ai))
-	if def.has("warden"):
+	if def.has("warden") or def.has("boss"):
 		tier = maxi(tier, WARDEN_MIN_AI)
 	return tier
 
 ## The battle info dictionary for Overworld.start_battle.
 static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: int) -> Dictionary:
-	return {
+	var info: Dictionary = {
 		"name": str(def.get("trainer", def.get("id", "Tamer"))),
 		"ai": ai_tier(def, difficulty_ai),
-		"money": prize_money(def, team),
+		"money": 0 if is_wild_horde(def) else prize_money(def, team),
 		"items": def.get("items", {}),
-		"warden": def.has("warden"),
+		"warden": def.has("warden") or def.has("boss"),
 		"rule": str(def.get("rule", "")),
+		"front": front(def),
+		"boss": str(def.get("boss", "")),
+		"wild": is_wild_horde(def),
 	}
+	if def.has("partner"):
+		info["partner"] = def.partner
+	return info
+
+## How many Spirlings fight at once: [player, foe] (1v1 unless the Tamer sets "front").
+static func front(def: Dictionary) -> Array[int]:
+	var f: Array = def.get("front", [1, 1])
+	var out: Array[int] = [1, 1]
+	if f.size() == 2:
+		out = [clampi(int(f[0]), 1, BattleRules.MAX_FRONT), clampi(int(f[1]), 1, BattleRules.MAX_FRONT)]
+	return out
+
+## True for a wild horde set piece: no Tamer, so bonding and running are allowed.
+static func is_wild_horde(def: Dictionary) -> bool:
+	return bool(def.get("wild", false))
+
 
 ## True if a Tamer at [param from] facing [param dir] with [param sight] cells sees [param target].
 ## [param blocked] is called for every cell between them and must return false for clear cells.

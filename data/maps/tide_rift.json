@@ -59,9 +59,17 @@
     {
      "species": "Mossling",
      "level": 13
+    },
+    {
+     "species": "Kelpup",
+     "level": 13
     }
    ],
-   "sprite": "warden"
+   "sprite": "warden",
+   "front": [
+    3,
+    3
+   ]
   },
   {
    "id": "warden_maelis",
@@ -93,6 +101,40 @@
    ],
    "sprite": "warden",
    "rule": "undertow"
+  },
+  {
+   "id": "drowned_heart",
+   "x": 6,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "tide_rift/heart",
+   "sprite": "hush",
+   "color": "2a4a6a",
+   "trainer": "Drowned Heart",
+   "boss": "drowned_heart",
+   "front": [
+    4,
+    2
+   ],
+   "money": 900,
+   "show_flag": "rift_tide_sealed",
+   "hide_flag": "tide_heart_mended",
+   "intro": "tide_rift/heart_intro",
+   "defeat": "tide_rift/heart_defeat",
+   "team": [
+    {
+     "species": "Riptail",
+     "level": 18
+    },
+    {
+     "species": "Kelpup",
+     "level": 16
+    }
+   ],
+   "win_flags": [
+    "tide_heart_mended"
+   ],
+   "leaves": true
   }
  ],
  "signs": []

@@ -30,12 +30,17 @@ func _run() -> void:
 		await _shot_scene("res://scenes/overworld/Overworld.tscn", "02_ow_%s" % entry[0], 30)
 	await _shot_scene("res://scenes/battle/Battle.tscn", "03_battle", 420, "", 40)
 	await _shot_scene("res://scenes/battle/BondMinigame.tscn", "04_bond", 70, "run")
+	# Story battles with several Spirlings per side (formation layout).
+	for d: String in ["boss", "duel3", "tag", "horde"]:
+		await _shot_scene("res://scenes/battle/Battle.tscn", "05_battle_%s" % d, 600, "", 40, {"demo": d})
 	quit()
 
 ## [param tap_every] > 0 presses ui_accept every that many frames (advances battle text).
-func _shot_scene(path: String, name: String, frames: int, start_method: String = "", tap_every: int = 0) -> void:
+func _shot_scene(path: String, name: String, frames: int, start_method: String = "", tap_every: int = 0, props: Dictionary = {}) -> void:
 	var packed: PackedScene = load(path)
 	var inst: Node = packed.instantiate()
+	for k: String in props:
+		inst.set(k, props[k])
 	root.add_child(inst)
 	current_scene = inst
 	if inst is Control:

@@ -733,8 +733,10 @@ func challenge(n: NPC, spotted: bool) -> void:
 		busy = false
 		player.frozen = false
 		return
-	var outcome: BattleModel.Outcome = await start_battle(team, false, TrainerData.battle_info(def, team, GameState.ai_level()))
-	if outcome == BattleModel.Outcome.WIN:
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
+	# A wild horde also counts as cleared when its last Spirling bonded with you.
+	if outcome == BattleModel.Outcome.WIN or (bool(info.wild) and outcome == BattleModel.Outcome.BONDED):
 		await after_tamer_win(n)
 
 ## Win aftermath: beaten flag, defeat lines, Rift seal for Wardens, win flags, autosave.
@@ -859,6 +861,13 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	model.prize_money = int(trainer.get("money", 0))
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
+	var front: Array = trainer.get("front", [1, 1])
+	model.front_size = [int(front[0]), int(front[1])]
+	model.foe_boss = str(trainer.get("boss", ""))
+	var partner: Variant = trainer.get("partner", {})
+	if partner is Dictionary and not (partner as Dictionary).is_empty():
+		var ally: Array[Spirling] = TrainerData.build_team(partner, GameState.starter, GameState.rng)
+		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)), TrainerData.PARTNER_AI)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	scene.backdrop = map.backdrop
@@ -884,7 +893,8 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
-	if outcome == BattleModel.Outcome.BONDED and model.bonded != null:
+	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
+	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		GameState.receive_spirling(model.bonded)
 		SaveManager.save_game()
 	var oath: Array[String] = oath_lines(GameState.retire_fainted())
