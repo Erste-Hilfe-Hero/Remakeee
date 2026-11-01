@@ -11,7 +11,8 @@ signal battle_finished(outcome: BattleModel.Outcome, model: BattleModel)
 const TEXT_BOX_HEIGHT: int = 44
 const STRIP_HEIGHT: int = 22
 const MARGIN: int = 4
-const FAST_SPEED: float = 3.0
+## Pause before an auto-battle move, so the player can still tap Auto off.
+const AUTO_DELAY: float = 0.35
 const DEMO_SEED: int = 2024
 
 var model: BattleModel
@@ -31,6 +32,10 @@ var _menu: CommandMenu
 var _picker: ListPicker
 var _bond_game: BondMinigame
 var _ff_button: Button
+var _auto_button: Button
+var _auto_ai := BattleAI.new(1)
+## Element of the player's last move, so the hit that follows teaches the matchup.
+var _last_player_element: int = -1
 
 func _ready() -> void:
 	theme = UITheme.get_theme()
@@ -82,12 +87,21 @@ func _build() -> void:
 	_player_sprite.visible = false
 
 	_ff_button = Button.new()
-	_ff_button.text = ">>"
-	_ff_button.toggle_mode = true
 	_ff_button.focus_mode = Control.FOCUS_NONE
-	_ff_button.button_pressed = GameState.fast_forward
-	_ff_button.toggled.connect(_set_fast_forward)
+	_ff_button.pressed.connect(func() -> void:
+		GameState.cycle_battle_speed()
+		_apply_speed())
 	_field.add_child(_ff_button)
+	_auto_button = Button.new()
+	_auto_button.text = "Auto"
+	_auto_button.toggle_mode = true
+	_auto_button.focus_mode = Control.FOCUS_NONE
+	_auto_button.button_pressed = GameState.auto_battle
+	_auto_button.toggled.connect(func(on: bool) -> void:
+		GameState.auto_battle = on
+		_apply_speed())
+	_auto_button.visible = false
+	_field.add_child(_auto_button)
 
 	_bond_game = BondMinigame.new()
 	_bond_game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -99,7 +113,7 @@ func _build() -> void:
 	_picker.offset_top = MARGIN * 6
 	_picker.offset_bottom = -MARGIN * 6
 	add_child(_picker)
-	_set_fast_forward(GameState.fast_forward)
+	_apply_speed()
 
 func _layout_field() -> void:
 	var w: float = _field.size.x
@@ -107,8 +121,10 @@ func _layout_field() -> void:
 	var sprite: float = float(EraManager.battle_sprite_size())
 	_foe_strip.position = Vector2(MARGIN, MARGIN)
 	_foe_strip.size = Vector2(w * 0.55, STRIP_HEIGHT)
-	_ff_button.position = Vector2(w - 18 - MARGIN, MARGIN)
-	_ff_button.size = Vector2(18, 12)
+	_ff_button.position = Vector2(w - 26 - MARGIN, MARGIN)
+	_ff_button.size = Vector2(26, 12)
+	_auto_button.position = Vector2(w - 26 - MARGIN, MARGIN + 14)
+	_auto_button.size = Vector2(26, 12)
 	_foe_sprite.position = Vector2(w - sprite - MARGIN * 2, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
 	_player_strip.size = Vector2(w - sprite - MARGIN * 5, STRIP_HEIGHT + 8)
@@ -117,10 +133,14 @@ func _layout_field() -> void:
 	_player_sprite.size = Vector2(sprite, sprite)
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 
-func _set_fast_forward(on: bool) -> void:
-	GameState.fast_forward = on
-	var speed: float = FAST_SPEED if on else 1.0
-	_text.auto_advance = on
+func _auto_active() -> bool:
+	return GameState.auto_battle and model != null and model.is_wild
+
+## Applies the 1x / 2x / 4x battle speed (and auto-advance while fast or on Auto).
+func _apply_speed() -> void:
+	var speed: float = GameState.battle_speed_scale()
+	_ff_button.text = "%dx" % int(speed)
+	_text.auto_advance = speed > 1.0 or _auto_active()
 	_text.chars_per_second = GameState.text_cps() * speed
 	for n: Variant in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
 		n.speed_scale = speed
@@ -131,6 +151,8 @@ func _run() -> void:
 	_menu.set_enabled(false)
 	_foe_strip.visible = false
 	_player_strip.visible = false
+	_auto_button.visible = model.is_wild
+	_apply_speed()
 	await _play(model.start())
 	while not model.is_finished():
 		if model.needs_player_switch():
@@ -147,7 +169,12 @@ func _run() -> void:
 
 func _choose_action() -> BattleAction:
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER)
-	_text.show_prompt("What will %s do?" % me.display_name())
+	if _auto_active():
+		_text.show_prompt("Auto: %s picks a move." % me.display_name())
+		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
+		if _auto_active():
+			return _auto_ai.choose(model, BattleModel.Side.PLAYER)
+	_text.show_prompt("What will %s do? (%d Energy)" % [me.display_name(), me.energy])
 	_menu.refresh(model)
 	_menu.set_enabled(true)
 	var choice: Array = await _menu.chosen
@@ -251,10 +278,14 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 			await _sprite(side).step_back(side == BattleModel.Side.PLAYER)
 		BattleEvent.Type.MOVE_USED:
+			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER else -1
 			await _text.show_text(e.describe())
 			var dir: Vector2 = Vector2(8, -4) if side == BattleModel.Side.PLAYER else Vector2(-8, 4)
 			await _sprite(side).lunge(dir)
 		BattleEvent.Type.DAMAGE:
+			if side == BattleModel.Side.FOE and _last_player_element >= 0 and e.data.has("eff"):
+				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
+				GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
 			if not bool(e.data.get("status_tick", false)):
 				await _sprite(side).hit_flash()
 			await _strip(side).animate_hp(int(e.data.hp), int(e.data.max_hp))
