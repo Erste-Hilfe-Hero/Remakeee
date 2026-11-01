@@ -1,0 +1,122 @@
+{
+ "name": "Tidewater Rift",
+ "region": "veydal",
+ "encounters": "tide_rift",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WWWWfXXfWWWW",
+  "W~~ffffff~~W",
+  "W~~f,,,,f~~W",
+  "W~~f,,,,f~~W",
+  "W~~ffffff~~W",
+  "WWWWWffWWWWW",
+  "Wff~~ff~~ffW",
+  "Wf,,ffff,,fW",
+  "Wf,,ffff,,fW",
+  "Wff~~ff~~ffW",
+  "WffffffffffW",
+  "WWWWWffWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 12,
+   "to": "thornridge",
+   "tx": 9,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 12,
+   "to": "thornridge",
+   "tx": 9,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "diver",
+   "x": 10,
+   "y": 8,
+   "facing": "left",
+   "color": "3a7ab0",
+   "dialogue": "tide_rift/diver",
+   "trainer": "Diver Neve",
+   "sight": 5,
+   "intro": "tide_rift/diver_intro",
+   "defeat": "tide_rift/diver_defeat",
+   "team": [
+    {
+     "species": "Puddlet",
+     "level": 13
+    },
+    {
+     "species": "Breezel",
+     "level": 14
+    }
+   ]
+  },
+  {
+   "id": "mystic",
+   "x": 3,
+   "y": 2,
+   "facing": "right",
+   "color": "7a5ab0",
+   "dialogue": "tide_rift/mystic",
+   "trainer": "Rift Mystic Ilka",
+   "sight": 5,
+   "intro": "tide_rift/mystic_intro",
+   "defeat": "tide_rift/mystic_defeat",
+   "team": [
+    {
+     "species": "Zippit",
+     "level": 14
+    },
+    {
+     "species": "Shalebat",
+     "level": 14
+    },
+    {
+     "species": "Mossling",
+     "level": 13
+    }
+   ]
+  },
+  {
+   "id": "warden_maelis",
+   "x": 5,
+   "y": 1,
+   "facing": "down",
+   "color": "2a8a9a",
+   "dialogue": "tide_rift/maelis",
+   "trainer": "Warden Maelis",
+   "warden": "tide",
+   "money": 1200,
+   "intro": "tide_rift/maelis_intro",
+   "defeat": "tide_rift/maelis_defeat",
+   "items": {
+    "strong_tonic": 1
+   },
+   "win_flags": [
+    "pc_unlocked",
+    "slice_complete"
+   ],
+   "team": [
+    {
+     "species": "Breezel",
+     "level": 15
+    },
+    {
+     "species": "Zippit",
+     "level": 15
+    },
+    {
+     "species": "Riptail",
+     "level": 17
+    }
+   ]
+  }
+ ]
+}

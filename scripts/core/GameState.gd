@@ -26,6 +26,8 @@ var storage: Array[Spirling] = []
 var spirlog: Dictionary = {}
 var region: String = "veydal"
 var rifts_sealed: Array[String] = []
+## Species name of the partner picked at the start (the rival counter-picks against it).
+var starter: String = ""
 var difficulty: Difficulty = Difficulty.TAMER
 ## Item id -> count.
 var inventory: Dictionary = {}
@@ -52,6 +54,14 @@ func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
 		return Spirling.MAX_LEVEL
 	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
+
+## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
+func seal_rift(rift_id: String) -> bool:
+	if rift_id in rifts_sealed:
+		return false
+	rifts_sealed.append(rift_id)
+	set_flag("rift_%s_sealed" % rift_id)
+	return true
 
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
@@ -99,6 +109,7 @@ func reset() -> void:
 	spirlog.clear()
 	region = "veydal"
 	rifts_sealed.clear()
+	starter = ""
 	difficulty = Difficulty.TAMER
 	inventory = {}
 	money = 0
@@ -111,12 +122,13 @@ func reset() -> void:
 	play_time = 0.0
 
 ## Starts a new game with the choices from the new-game flow.
-func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, starter: String) -> void:
+func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String) -> void:
 	reset()
 	difficulty = p_difficulty
 	tamer_name = p_name if not p_name.strip_edges().is_empty() else "Rowan"
 	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
-	var s := Spirling.new(Database.species(starter), 5, rng)
+	starter = p_starter
+	var s := Spirling.new(Database.species(p_starter), 5, rng)
 	receive_spirling(s)
 	money = 500
 	set_flag("got_starter")
@@ -132,6 +144,7 @@ func to_dict() -> Dictionary:
 		storage_d.append(s.to_dict())
 	return {
 		"tamer": {"name": tamer_name, "color": tamer_color},
+		"starter": starter,
 		"difficulty": difficulty,
 		"region": region,
 		"rifts": rifts_sealed.duplicate(),
@@ -157,6 +170,7 @@ func from_dict(d: Dictionary) -> void:
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))
+	starter = str(d.get("starter", ""))
 	for sd: Variant in d.get("party", []):
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:

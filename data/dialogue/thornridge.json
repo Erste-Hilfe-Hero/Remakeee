@@ -1,0 +1,36 @@
+{
+ "sign": [
+  "THORNRIDGE",
+  "West: Cinder Rift",
+  "North: Tidewater Rift"
+ ],
+ "keeper": {
+  "lines": [
+   "Keeper: Rest by the spring a while."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Trader: Supplies for the road! Your bag holds as much as you like."
+  ],
+  "action": "shop tonic strong_tonic remedy spark_drop revival_leaf kin_charm"
+ },
+ "guard": [
+  "Guard: The Tidewater Rift is too wild right now.",
+  "Seal the Cinder Rift first, then I'll let you through."
+ ],
+ "elder": {
+  "lines": [
+   "Elder: Rifts are tears where wild energy leaks into Veydal.",
+   "A Warden guards each one. Prove yourself to a Warden and the Rift closes."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Elder: Both Rifts near Thornridge are quiet again.",
+    "Veydal owes you, young Tamer."
+   ]
+  }
+ }
+}

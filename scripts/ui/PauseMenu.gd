@@ -124,7 +124,7 @@ func run_spirlog() -> void:
 		for el: int in sd.elements:
 			els.append(Elements.element_name(el))
 		var where: PackedStringArray = []
-		for table: String in ["route_1", "route_2", "rift_hollow"]:
+		for table: String in EncounterTable.table_ids():
 			if sd.species_name in EncounterTable.species_on(table):
 				where.append(table.replace("_", " ").capitalize())
 		await info("%s\n%s\nFound on: %s\n\n* bonded  + seen" % [sd.species_name, "/".join(els), ", ".join(where) if not where.is_empty() else "unknown"])

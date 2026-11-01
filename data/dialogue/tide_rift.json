@@ -1,0 +1,41 @@
+{
+ "diver": [
+  "Neve: The water in here flows uphill. Don't ask me how."
+ ],
+ "diver_intro": [
+  "Neve: You made it past the guard? Then let's battle!"
+ ],
+ "diver_defeat": [
+  "Neve: Washed out..."
+ ],
+ "mystic": [
+  "Ilka: Maelis speaks with the Rift itself."
+ ],
+ "mystic_intro": [
+  "Ilka: The currents told me you'd come."
+ ],
+ "mystic_defeat": [
+  "Ilka: The currents... were wrong."
+ ],
+ "maelis": {
+  "lines": [
+   "Maelis: ..."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Maelis: The tide is still. Thank you, Tamer.",
+    "Your storage box now opens from the menu, wherever you are."
+   ]
+  }
+ },
+ "maelis_intro": [
+  "Warden Maelis: Two Rifts in one season? Brave.",
+  "The tide tests everyone the same way. Begin!"
+ ],
+ "maelis_defeat": [
+  "Warden Maelis: You flow with your team, not against it.",
+  "From now on you can open your storage box from the menu.",
+  "Rest well. Veydal has more Rifts waiting... another day."
+ ]
+}

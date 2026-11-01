@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# IP hygiene gate (see docs/IP_HYGIENE.md).
+# 1. Fails if any tracked text file uses a banned franchise term. The pattern is stored
+#    base64-encoded so this script does not itself spell the terms out.
+# 2. Fails if a file under art/ or audio/ is missing from docs/ASSET_LOG.md.
+# AGENTS.md and LEGAL.md are skipped because they define the banned list.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+pattern="$(printf '%s' 'cG9rW2XDqV18XGJneW1cYnxcYihobXx0bSlbMC05XXsxLDN9XGJ8XGJwb2tlID8oYmFsbHxkZXh8Y2VudGVyfGNlbnRyZSlcYg==' | base64 -d)"
+fail=0
+
+if git ls-files -z -- . ':!:AGENTS.md' ':!:LEGAL.md' ':!:addons/**' \
+	| xargs -0 grep -I -n -i -P -- "$pattern" 2>/dev/null; then
+	echo "::error::Banned franchise term found (lines above). See docs/IP_HYGIENE.md."
+	fail=1
+fi
+
+while IFS= read -r f; do
+	case "$f" in
+		*.gitkeep|*.import) continue ;;
+	esac
+	if ! grep -qF -- "$f" docs/ASSET_LOG.md; then
+		echo "::error::$f is not listed in docs/ASSET_LOG.md (who made it, licence, date)."
+		fail=1
+	fi
+done < <(git ls-files -- art audio)
+
+if [ "$fail" -eq 0 ]; then
+	echo "IP check OK"
+fi
+exit "$fail"

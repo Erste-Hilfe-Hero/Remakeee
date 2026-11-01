@@ -1,0 +1,110 @@
+{
+ "name": "Cinder Rift",
+ "region": "veydal",
+ "encounters": "cinder_rift",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WWWWfXXfWWWW",
+  "WWffffffffWW",
+  "Wf,,ffff,,fW",
+  "Wf,,ffff,,fW",
+  "WWWWWffWWWWW",
+  "Wf,,ffff,,fW",
+  "Wf,,ffff,,fW",
+  "WffffffffffW",
+  "WffWWffWWffW",
+  "Wf,,ffff,,fW",
+  "WffffffffffW",
+  "WWWWWffWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 12,
+   "to": "thornridge",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 12,
+   "to": "thornridge",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte_a",
+   "x": 1,
+   "y": 8,
+   "facing": "right",
+   "color": "a04a3a",
+   "dialogue": "cinder_rift/acolyte_a",
+   "trainer": "Rift Acolyte Pell",
+   "sight": 4,
+   "intro": "cinder_rift/acolyte_a_intro",
+   "defeat": "cinder_rift/acolyte_a_defeat",
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 9
+    },
+    {
+     "species": "Zippit",
+     "level": 9
+    }
+   ]
+  },
+  {
+   "id": "acolyte_b",
+   "x": 10,
+   "y": 6,
+   "facing": "left",
+   "color": "a04a3a",
+   "dialogue": "cinder_rift/acolyte_b",
+   "trainer": "Rift Acolyte Suri",
+   "sight": 3,
+   "intro": "cinder_rift/acolyte_b_intro",
+   "defeat": "cinder_rift/acolyte_b_defeat",
+   "team": [
+    {
+     "species": "Kindlop",
+     "level": 10
+    }
+   ]
+  },
+  {
+   "id": "warden_orrin",
+   "x": 5,
+   "y": 1,
+   "facing": "down",
+   "color": "d0602a",
+   "dialogue": "cinder_rift/orrin",
+   "trainer": "Warden Orrin",
+   "warden": "cinder",
+   "money": 800,
+   "intro": "cinder_rift/orrin_intro",
+   "defeat": "cinder_rift/orrin_defeat",
+   "items": {
+    "tonic": 1
+   },
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 10
+    },
+    {
+     "species": "Kindlop",
+     "level": 11
+    },
+    {
+     "species": "Smoldrake",
+     "level": 12
+    }
+   ]
+  }
+ ]
+}

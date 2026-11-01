@@ -1,0 +1,36 @@
+{
+ "sign": [
+  "ROUTE 2",
+  "North: Thornridge",
+  "South: Route 1"
+ ],
+ "kestra": [
+  "Kestra: ..."
+ ],
+ "kestra_intro": [
+  "Kestra: There you are! I picked my partner to beat yours.",
+  "Let's see who's ready for the Rifts!"
+ ],
+ "kestra_defeat": [
+  "Kestra: Hmph. Fine, you're not bad.",
+  "The Cinder Rift is west of Thornridge. See you there... maybe."
+ ],
+ "lio": [
+  "Lio: Gale Spirlings ride the wind, but they can't carry you. Nobody rides a Spirling here."
+ ],
+ "lio_intro": [
+  "Lio: A new face! Show me what your team can do."
+ ],
+ "lio_defeat": [
+  "Lio: Wow, okay. You earned that."
+ ],
+ "bram": [
+  "Bram: Stone types shrug off hits. Try Tide or Bloom moves on them."
+ ],
+ "bram_intro": [
+  "Bram: My Shalebats are tougher than these hills!"
+ ],
+ "bram_defeat": [
+  "Bram: Crumbled like gravel..."
+ ]
+}

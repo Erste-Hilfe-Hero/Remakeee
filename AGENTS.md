@@ -144,8 +144,8 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 - [x] Settings: text speed, Retro filter (Era I only for now), volume.
 
 ### M5 — Vertical slice content
-- [ ] 2 Rifts with Wardens, 1 rival fight (Kestra), unlimited bag, PC access from the menu after Rift 2.
-- [ ] Android internal-testing build, plus an iOS TestFlight build once the macOS signing secrets exist.
+- [x] 2 Rifts with Wardens, 1 rival fight (Kestra), unlimited bag, PC access from the menu after Rift 2.
+- [ ] Android internal-testing build, plus an iOS TestFlight build once the macOS signing secrets exist. (CI jobs `android-internal` and `ios` are ready; they wait for the signing secrets, see docs/RELEASE.md.)
 
 ## Conventions
 

@@ -14,6 +14,8 @@ var chars_per_second: float = 60.0
 
 var _label: Label
 var _arrow: Label
+## Right padding reserved for the continue marker.
+const ARROW_SPACE: int = 6
 var _typing: bool = false
 var _waiting: bool = false
 var _visible_chars: float = 0.0
@@ -25,6 +27,10 @@ func _ready() -> void:
 	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	# Keep wrapped text clear of the continue marker in the corner.
+	var pad := StyleBoxEmpty.new()
+	pad.content_margin_right = ARROW_SPACE
+	_label.add_theme_stylebox_override("normal", pad)
 	add_child(_label)
 	_arrow = Label.new()
 	_arrow.text = "v"
