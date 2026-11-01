@@ -6,11 +6,11 @@
    "EMBER"
   ],
   "base": {
-   "hp": 58,
+   "hp": 62,
    "atk": 66,
-   "foc": 70,
-   "spd": 58,
-   "def": 48
+   "foc": 72,
+   "spd": 70,
+   "def": 54
   },
   "evolves_to": "Smoldrake",
   "evolve_level": 16,
@@ -44,8 +44,8 @@
    "hp": 74,
    "atk": 88,
    "foc": 92,
-   "spd": 82,
-   "def": 64
+   "spd": 94,
+   "def": 70
   },
   "evolves_to": "Calderox",
   "evolve_level": 34,
@@ -291,7 +291,7 @@
   "name": "Verdantusk",
   "elements": [
    "BLOOM",
-   "STONE"
+   "UMBRA"
   ],
   "base": {
    "hp": 104,
@@ -318,7 +318,7 @@
     "Bloom Burst"
    ],
    "48": [
-    "Boulder Slam"
+    "Eclipse Fang"
    ]
   },
   "bond_rate": 0.06
@@ -368,8 +368,8 @@
   "base": {
    "hp": 68,
    "atk": 84,
-   "foc": 104,
-   "spd": 130,
+   "foc": 100,
+   "spd": 120,
    "def": 64
   },
   "evolves_to": null,
