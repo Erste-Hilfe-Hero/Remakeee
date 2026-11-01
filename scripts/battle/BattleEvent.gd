@@ -9,7 +9,7 @@ enum Type {
 	ENERGY_CHANGED, NOT_ENOUGH_ENERGY, REST, FAINTED, SWAP_OUT, SWAP_IN, SWAP_BLOCKED,
 	ITEM_USED, BOND_ATTEMPT, BOND_RESULT, FREE_ACTION, FLEE_RESULT,
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
-	STAT_CHANGED, FIELD, RULE,
+	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "ATK", "def": "DEF", "foc": "FOC", "spd": "SPD"}
@@ -29,9 +29,13 @@ func describe() -> String:
 	var who: String = str(data.get("name", ""))
 	match type:
 		Type.BATTLE_START:
+			if data.get("wild", false) and int(data.get("count", 1)) > 1:
+				return "A hushed swarm of %d Spirlings closes in!" % int(data.get("count", 1))
 			if data.get("wild", false):
 				var shimmer: String = " It shimmers with odd colours!" if bool(data.get("prism", false)) else ""
 				return "A hushed %s blocks your way.%s" % [data.get("foe_name", ""), shimmer]
+			if bool(data.get("boss", false)):
+				return "%s rises from the Rift!" % data.get("trainer", "")
 			return "%s calls for a duel!" % data.get("trainer", "A Tamer")
 		Type.SEND_OUT, Type.SWAP_IN:
 			return "%s steps out!" % who
@@ -40,6 +44,8 @@ func describe() -> String:
 		Type.SWAP_BLOCKED:
 			return "%s is rooted and can't swap!" % who
 		Type.MOVE_USED:
+			if bool(data.get("area", false)):
+				return "%s: %s! It sweeps across the foes!" % [who, data.get("move", "")]
 			return "%s: %s!" % [who, data.get("move", "")]
 		Type.MISSED:
 			return "%s missed!" % who
@@ -103,4 +109,8 @@ func describe() -> String:
 			return str(data.get("text", ""))
 		Type.RULE:
 			return "Rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
+		Type.PARTNER:
+			return "%s fights at your side!" % data.get("partner", "")
+		Type.BOSS:
+			return "%s: %s" % [data.get("label", ""), data.get("text", "")]
 	return ""

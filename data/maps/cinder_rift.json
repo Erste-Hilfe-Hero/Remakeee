@@ -106,6 +106,36 @@
    ],
    "sprite": "warden",
    "rule": "ember_pulse"
+  },
+  {
+   "id": "ashen_heart",
+   "x": 6,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "cinder_rift/heart",
+   "sprite": "hush",
+   "color": "8a4a2a",
+   "trainer": "Ashen Heart",
+   "boss": "ashen_heart",
+   "front": [
+    4,
+    1
+   ],
+   "money": 600,
+   "show_flag": "rift_cinder_sealed",
+   "hide_flag": "cinder_heart_mended",
+   "intro": "cinder_rift/heart_intro",
+   "defeat": "cinder_rift/heart_defeat",
+   "team": [
+    {
+     "species": "Smoldrake",
+     "level": 14
+    }
+   ],
+   "win_flags": [
+    "cinder_heart_mended"
+   ],
+   "leaves": true
   }
  ],
  "signs": []

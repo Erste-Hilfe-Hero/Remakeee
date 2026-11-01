@@ -79,22 +79,28 @@ static func matchup_tag(mult: float) -> String:
 	return "x.5"
 
 ## Second line of a move button: cost, or what is missing, plus the known matchup.
-static func move_line(mv: MoveData, energy: int, mult: float) -> String:
+## [param multi] marks sweeps ("all") in battles with several foes.
+static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false) -> String:
 	if energy < mv.energy_cost:
 		return "need %dE" % mv.energy_cost
+	if multi and mv.is_area():
+		return "%dE all" % mv.energy_cost
 	var tag: String = "" if mv.power <= 0 else matchup_tag(mult)
 	return "%dE %s" % [mv.energy_cost, tag] if not tag.is_empty() else "%dE" % mv.energy_cost
 
-## Fills the buttons from the model's current legal actions.
-func refresh(model: BattleModel) -> void:
-	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER)
-	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
+## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
+## The matchup tag shows only when one foe stands (with several, the target is picked after).
+func refresh(model: BattleModel, slot: int = 0) -> void:
+	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
+	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foes[0]) if foes.size() == 1 else null
+	var multi: bool = model.is_multi()
 	for i: int in _move_buttons.size():
 		var b: Button = _move_buttons[i]
 		if i < me.moves.size():
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
-			b.text = "%s\n%s" % [mv.move_name, move_line(mv, me.energy, mult)]
+			b.text = "%s\n%s" % [mv.move_name, move_line(mv, me.energy, mult, multi)]
 			_move_icons[i].texture = ElementIcons.outlined(mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv)
@@ -103,7 +109,7 @@ func refresh(model: BattleModel) -> void:
 			_move_icons[i].texture = null
 			b.disabled = true
 	var kinds: Array[int] = []
-	for a: BattleAction in model.legal_actions(BattleModel.Side.PLAYER):
+	for a: BattleAction in model.legal_actions(BattleModel.Side.PLAYER, slot):
 		kinds.append(a.kind)
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds
 	_item.disabled = not BattleAction.Kind.ITEM in kinds

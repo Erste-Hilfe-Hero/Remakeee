@@ -93,6 +93,8 @@ A same-level, neutral, 40-power move takes 15–25% of a balanced foe's HP; `tes
 
 **Bonding:** chance = bond_rate × max(1 − HP%, 0.1) × timing_score × (1.5 if statused) + charm bonus, capped at 0.95. The timing score comes from a 5-second tap-the-pulse minigame. A failed bond gives the wild Spirling one free action.
 
+**Multi-Spirling battles (story set pieces):** a Tamer in map JSON may set `"front": [player, foe]` (up to 4 each), `"partner"` (an ally Tamer, e.g. Kestra, steered by AI), `"boss"` (a Rift boss from `BattleRules.BOSSES` whose HP and actions grow with the player's field) or `"wild": true` (a horde). Single-target moves are aimed; moves with `"target": "foes"` sweep every foe for 75% damage each. The Echo call (Bond) only works on wild foes. Random encounters and ordinary Tamers stay 1v1. See `BattleModel` (slots) and `tests/unit/test_multi_battle.gd`.
+
 **Difficulty (Unbound-style):** Story / Tamer / Veteran / Rift-Born. Veteran and Rift-Born use level caps; Rift-Born bans items in battle. AI levels are 0 / 1 / 2 / 2. See `GameState.gd`.
 
 **AI tiers:** 0 = random legal move (wild); 1 = greedy (expected damage × accuracy × effectiveness, plus KO and status bonus); 2 = 1-ply lookahead plus switching on bad matchups plus items under HP thresholds.

@@ -6,6 +6,9 @@ extends RefCounted
 var model: BattleModel
 var user_side: int
 var target_side: int
+## Field slots of the user and the target (0 in 1v1).
+var user_slot: int = 0
+var target_slot: int = 0
 var user: Spirling
 var target: Spirling
 var move: MoveData

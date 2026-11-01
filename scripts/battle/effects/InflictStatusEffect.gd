@@ -8,6 +8,6 @@ func apply(ctx: EffectContext, params: Dictionary) -> void:
 	var is_status_move: bool = not ctx.move.is_damaging()
 	if chance < 1.0 and ctx.model.rng.randf() >= chance:
 		return
-	var applied: bool = ctx.model.apply_status(ctx.target_side, str(params.get("status", "")))
+	var applied: bool = ctx.model.apply_status(ctx.target_side, str(params.get("status", "")), ctx.target_slot)
 	if not applied and is_status_move:
-		ctx.model.emit_event(BattleEvent.Type.STATUS_FAILED, {"side": ctx.target_side, "name": ctx.target.display_name()})
+		ctx.model.emit_event(BattleEvent.Type.STATUS_FAILED, {"side": ctx.target_side, "slot": ctx.target_slot, "name": ctx.target.display_name()})

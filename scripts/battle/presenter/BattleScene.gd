@@ -5,8 +5,15 @@ extends Control
 ##
 ## Layout (original): foe strip along the top edge, foe sprite top-right, player sprite
 ## bottom-left, player strip just above the text box, commands at the bottom.
+##
+## Formation layout (story battles with several Spirlings per side, up to 4 against 4): every
+## Spirling is drawn at half size (28 px, an exact 2:1 step so pixels stay crisp) in one of two
+## ranks, foes along the upper bank and the player's side along the lower one, each with a small
+## tag (HP bar, Energy ticks). One ledger strip at the top shows the details of the Spirling in
+## focus. A map pin marks whose turn it is; single-target moves are aimed by tapping a foe.
 
 signal battle_finished(outcome: BattleModel.Outcome, model: BattleModel)
+signal _target_picked(slot: int)
 
 const TEXT_BOX_HEIGHT: int = 44
 const STRIP_HEIGHT: int = 22
@@ -16,6 +23,9 @@ const AUTO_DELAY: float = 0.35
 const DEMO_SEED: int = 2024
 ## Lines kept for the battle log (shown newest last).
 const LOG_KEEP: int = 14
+## Formation layout: sprite size and the gap between neighbours in a rank.
+const SLOT_SPRITE: int = 28
+const SLOT_GAP: int = 6
 
 var model: BattleModel
 ## Backdrop for where the battle started (field, lake, ridge, ember). Set before adding.
@@ -24,6 +34,9 @@ var backdrop: String = "field"
 var music_track: String = "battle"
 ## Set to true to quit the app when the battle ends (standalone demo).
 var quit_on_finish: bool = false
+## Standalone demo format when no model is set: "" (1v1), "boss" (4v1), "duel3" (3v3),
+## "tag" (you and an ally vs 2) or "horde" (2 vs a wild swarm of 4).
+var demo: String = ""
 ## Every player input, in order, for BattleReplay (item 14).
 var inputs: Array = []
 ## Set to a recorded input list to watch a replay instead of playing.
@@ -46,6 +59,13 @@ var _auto_ai := BattleAI.new(1)
 var _log_button: Button
 var _log_panel: PanelContainer
 var _log_label: Label
+## Formation layout state (empty in 1v1).
+var _multi: bool = false
+var _slot_sprites: Array[Array] = [[], []]
+var _slot_strips: Array[Array] = [[], []]
+var _pin: TargetPin
+var _back_button: Button
+var _target_buttons: Array[Button] = []
 ## Plain-text lines of what happened so far (item 11: re-read the last turns).
 var log_lines: Array[String] = []
 ## Element of the player's last move, so the hit that follows teaches the matchup.
@@ -73,6 +93,7 @@ func _ready() -> void:
 	if model == null:
 		model = _demo_model()
 		quit_on_finish = false
+	_multi = model.is_multi()
 	_run.call_deferred()
 
 ## Call before adding to the tree.
@@ -137,6 +158,14 @@ func _build() -> void:
 	_log_button.focus_mode = Control.FOCUS_NONE
 	_log_button.pressed.connect(_toggle_log)
 	_field.add_child(_log_button)
+	_pin = TargetPin.new()
+	_field.add_child(_pin)
+	_back_button = Button.new()
+	_back_button.text = "Back"
+	_back_button.focus_mode = Control.FOCUS_NONE
+	_back_button.visible = false
+	_back_button.pressed.connect(func() -> void: _target_picked.emit(-1))
+	_field.add_child(_back_button)
 
 	_bond_game = BondMinigame.new()
 	_bond_game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -168,6 +197,9 @@ func _build() -> void:
 	_apply_speed()
 
 func _layout_field() -> void:
+	if _multi and not _slot_sprites[BattleModel.Side.FOE].is_empty():
+		_layout_formation()
+		return
 	var w: float = _field.size.x
 	var h: float = _field.size.y
 	var sprite: float = float(EraManager.battle_sprite_size())
@@ -187,6 +219,79 @@ func _layout_field() -> void:
 	_player_sprite.size = Vector2(sprite, sprite)
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 
+## Creates the compact sprites and tags for every field slot (formation layout only).
+func _build_formation() -> void:
+	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
+		for slot: int in model.slot_count(side):
+			var sp := SpirlingSprite.new()
+			sp.visible = false
+			_field.add_child(sp)
+			_slot_sprites[side].append(sp)
+			var tag := MiniStrip.new()
+			tag.show_numbers = side == BattleModel.Side.PLAYER
+			tag.ally = model.is_partner_slot(side, slot)
+			tag.visible = false
+			_field.add_child(tag)
+			_slot_strips[side].append(tag)
+	for n: Control in [_foe_sprite, _player_sprite, _player_strip]:
+		n.visible = false
+	_foe_strip.show_numbers = true
+	_field.move_child(_pin, -1)
+	_layout_field()
+	_apply_speed()
+
+## Two ranks: foes right-aligned under the ledger strip, the player's side left-aligned above
+## the text box. Four 28 px sprites with 6 px gaps fill 130 of the 144 px.
+func _layout_formation() -> void:
+	var w: float = _field.size.x
+	var h: float = _field.size.y
+	_foe_strip.position = Vector2(MARGIN, MARGIN)
+	_foe_strip.size = Vector2(w - 26 - MARGIN * 3, STRIP_HEIGHT + 8)
+	_ff_button.position = Vector2(w - 26 - MARGIN, MARGIN)
+	_ff_button.size = Vector2(26, 12)
+	_auto_button.position = Vector2(w - 26 - MARGIN, MARGIN + 14)
+	_auto_button.size = Vector2(26, 12)
+	_log_button.position = Vector2(w - 26 - MARGIN, MARGIN + 28)
+	_log_button.size = Vector2(26, 12)
+	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
+	_back_button.size = Vector2(26, 12)
+	var rects: Array[Rect2] = [Rect2(), Rect2()]
+	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
+		var n: int = _slot_sprites[side].size()
+		var total: float = n * SLOT_SPRITE + (n - 1) * SLOT_GAP
+		var x0: float = w - MARGIN - total if side == BattleModel.Side.FOE else MARGIN + 4
+		var tag_h: float = (_slot_strips[side][0] as MiniStrip).needed_height() if n > 0 else 0.0
+		var y: float = MARGIN + 44 if side == BattleModel.Side.FOE else h - MARGIN - tag_h - 2 - SLOT_SPRITE
+		for slot: int in n:
+			var sp: SpirlingSprite = _slot_sprites[side][slot]
+			sp.position = Vector2(x0 + slot * (SLOT_SPRITE + SLOT_GAP), y)
+			sp.size = Vector2(SLOT_SPRITE, SLOT_SPRITE)
+			var tag: MiniStrip = _slot_strips[side][slot]
+			tag.position = sp.position + Vector2(-1, SLOT_SPRITE + 2)
+			tag.size = Vector2(MiniStrip.WIDTH, tag_h)
+		rects[side] = Rect2(x0, y, total, SLOT_SPRITE)
+	_backdrop.set_scene(backdrop, rects[BattleModel.Side.FOE], rects[BattleModel.Side.PLAYER])
+
+## Shows [param side]/[param slot]'s details in the ledger strip (formation layout).
+func _focus(side: int, slot: int) -> void:
+	if not _multi:
+		return
+	var s: Spirling = model.active_spirling(side, slot)
+	if s == null:
+		return
+	_foe_strip.show_numbers = side == BattleModel.Side.PLAYER
+	_foe_strip.set_spirling(s)
+	_foe_strip.visible = true
+
+## Points the map pin at a slot (hollow = choosing, filled = aimed at).
+func _point_pin(side: int, slot: int, filled: bool) -> void:
+	if not _multi or slot < 0 or slot >= _slot_sprites[side].size():
+		_pin.visible = false
+		return
+	var sp: SpirlingSprite = _slot_sprites[side][slot]
+	_pin.filled = filled
+	_pin.point_at(Rect2(sp.position, sp.size))
+
 func _auto_active() -> bool:
 	return GameState.auto_battle and model != null and model.is_wild
 
@@ -198,6 +303,9 @@ func _apply_speed() -> void:
 	_text.chars_per_second = GameState.text_cps() * speed
 	for n: Variant in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
 		n.speed_scale = speed
+	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
+		for n: Variant in _slot_sprites[side] + _slot_strips[side]:
+			n.speed_scale = speed
 
 # --- Flow -------------------------------------------------------------------------
 
@@ -208,7 +316,10 @@ func _run() -> void:
 	_auto_button.visible = model.is_wild
 	_apply_speed()
 	Sound.music(music_track)
-	await _play(model.start())
+	var intro: Array[BattleEvent] = model.start()
+	if _multi:
+		_build_formation()
+	await _play(intro)
 	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
@@ -221,13 +332,22 @@ func _run() -> void:
 			await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 			if str(rec.get("t", "")) == "switch":
 				await _play(model.submit_switch(int(rec.get("i", 0))))
+			elif str(rec.get("t", "")) == "turns":
+				await _play(model.submit_actions(BattleReplay.actions_from_dict(rec)))
 			else:
 				await _play(model.submit_turn(BattleReplay.action_from_dict(rec)))
 			continue
 		if model.needs_player_switch():
-			var idx: int = await _pick_party("Who steps out?", false)
+			_point_pin(BattleModel.Side.PLAYER, model.switch_slot(), false)
+			var idx: int = await _pick_party("Who steps out?", false, model.switch_slot())
+			_pin.visible = false
 			inputs.append(BattleReplay.switch_to_dict(idx))
 			await _play(model.submit_switch(idx))
+			continue
+		if _multi:
+			var actions: Array[BattleAction] = await _choose_actions()
+			inputs.append(BattleReplay.actions_to_dict(actions))
+			await _play(model.submit_actions(actions))
 			continue
 		var action: BattleAction = await _choose_action()
 		if action == null:
@@ -238,15 +358,33 @@ func _run() -> void:
 	if quit_on_finish:
 		get_tree().quit()
 
-func _choose_action() -> BattleAction:
-	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER)
+## Formation layout: one action per player slot, left to right. Run ends the choosing early.
+func _choose_actions() -> Array[BattleAction]:
+	var out: Array[BattleAction] = []
+	var taken: Array[int] = []
+	for slot: int in model.player_slots():
+		var a: BattleAction = null
+		while a == null:
+			a = await _choose_action(slot, taken)
+		out.append(a)
+		if a.kind == BattleAction.Kind.SWAP:
+			taken.append(a.swap_index)
+		if a.kind == BattleAction.Kind.RUN:
+			break
+	_pin.visible = false
+	return out
+
+func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
+	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
+	_focus(BattleModel.Side.PLAYER, slot)
+	_point_pin(BattleModel.Side.PLAYER, slot, false)
 	if _auto_active():
 		_text.show_prompt("Auto: %s picks a move." % me.display_name())
 		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 		if _auto_active():
-			return _auto_ai.choose(model, BattleModel.Side.PLAYER)
+			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
 	_text.show_prompt("What will %s do? (%d Energy)" % [me.display_name(), me.energy])
-	_menu.refresh(model)
+	_menu.refresh(model, slot)
 	_menu.set_enabled(true)
 	var choice: Array = await _menu.chosen
 	_menu.set_enabled(false)
@@ -255,24 +393,72 @@ func _choose_action() -> BattleAction:
 	match kind:
 		BattleAction.Kind.MOVE:
 			if index < me.moves.size() and me.can_afford(me.moves[index]):
-				return BattleAction.make_move(BattleModel.Side.PLAYER, index)
-			return BattleAction.make_rest(BattleModel.Side.PLAYER)
+				var aim: int = -1
+				if not me.moves[index].is_area():
+					aim = await _pick_target("Aim %s at?" % me.moves[index].move_name)
+					if aim == -2:
+						return null
+				return BattleAction.make_move(BattleModel.Side.PLAYER, index, slot, aim)
+			return BattleAction.make_rest(BattleModel.Side.PLAYER, slot)
 		BattleAction.Kind.SWAP:
-			var idx: int = await _pick_party("Swap to?", true)
-			return null if idx < 0 else BattleAction.make_swap(BattleModel.Side.PLAYER, idx)
+			var idx: int = await _pick_party("Swap to?", true, slot, taken)
+			return null if idx < 0 else BattleAction.make_swap(BattleModel.Side.PLAYER, idx, slot)
 		BattleAction.Kind.ITEM:
-			return await _pick_item()
+			return await _pick_item(slot)
 		BattleAction.Kind.BOND:
-			return await _bond()
+			return await _bond(slot)
 		BattleAction.Kind.RUN:
-			return BattleAction.make_run(BattleModel.Side.PLAYER)
+			return BattleAction.make_run(BattleModel.Side.PLAYER, slot)
 	return null
 
-func _pick_party(title: String, cancellable: bool) -> int:
+## Lets the player tap the foe to aim at. Returns the foe slot, -1 when there is no choice
+## (1v1 or a single foe left), or -2 when the player backs out.
+func _pick_target(title: String) -> int:
+	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
+	if not _multi or foes.size() <= 1:
+		return -1 if foes.is_empty() else foes[0]
+	_text.show_prompt(title)
+	for slot: int in foes:
+		var sp: SpirlingSprite = _slot_sprites[BattleModel.Side.FOE][slot]
+		var b := Button.new()
+		b.flat = true
+		b.position = sp.position - Vector2(2, 2)
+		b.size = sp.size + Vector2(4, 14)
+		b.accessibility_name = model.active_spirling(BattleModel.Side.FOE, slot).display_name()
+		var picked: int = slot
+		b.pressed.connect(func() -> void:
+			Sound.sfx("confirm")
+			_target_picked.emit(picked))
+		b.focus_entered.connect(func() -> void:
+			_focus(BattleModel.Side.FOE, picked)
+			_point_pin(BattleModel.Side.FOE, picked, true))
+		b.mouse_entered.connect(b.grab_focus)
+		_field.add_child(b)
+		_target_buttons.append(b)
+	for i: int in _target_buttons.size():
+		var b: Button = _target_buttons[i]
+		b.focus_neighbor_left = _target_buttons[i - 1].get_path() if i > 0 else b.get_path()
+		b.focus_neighbor_right = _target_buttons[i + 1].get_path() if i < _target_buttons.size() - 1 else b.get_path()
+	_target_buttons[0].grab_focus()
+	_back_button.visible = true
+	var picked_slot: int = await _target_picked
+	for b: Button in _target_buttons:
+		b.queue_free()
+	_target_buttons.clear()
+	_back_button.visible = false
+	_pin.visible = false
+	return picked_slot if picked_slot >= 0 else -2
+
+func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[int] = []) -> int:
 	var entries: Array[Dictionary] = []
 	var party: Array = model.party(BattleModel.Side.PLAYER)
-	var candidates: Array[int] = model.swap_candidates(BattleModel.Side.PLAYER)
+	var candidates: Array[int] = []
+	for i: int in model.swap_candidates(BattleModel.Side.PLAYER, slot):
+		if not i in taken:
+			candidates.append(i)
 	for i: int in party.size():
+		if model.is_partner_index(BattleModel.Side.PLAYER, i):
+			continue
 		var s: Spirling = party[i]
 		entries.append({"text": "%s Lv%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
 	while true:
@@ -281,7 +467,7 @@ func _pick_party(title: String, cancellable: bool) -> int:
 			return idx
 	return -1
 
-func _pick_item() -> BattleAction:
+func _pick_item(slot: int = 0) -> BattleAction:
 	var ids: Array[String] = []
 	var entries: Array[Dictionary] = []
 	for id: Variant in model.inventory:
@@ -295,14 +481,15 @@ func _pick_item() -> BattleAction:
 	var idx: int = await _picker.pick("Use which item?", entries)
 	if idx < 0:
 		return null
-	var target: int = await _pick_party("Use on?", true) if model.party(BattleModel.Side.PLAYER).size() > 1 else model.active[BattleModel.Side.PLAYER]
+	var own: int = model.active_index(BattleModel.Side.PLAYER, slot)
+	var target: int = await _pick_party("Use on?", true, slot) if model.party(BattleModel.Side.PLAYER).size() > 1 else own
 	if target < 0:
 		# Party picker disables the active Spirling; offer it directly.
-		target = model.active[BattleModel.Side.PLAYER]
-	var a := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], target)
+		target = own
+	var a := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], target, slot)
 	return a if model.is_legal(a) else null
 
-func _bond() -> BattleAction:
+func _bond(slot: int = 0) -> BattleAction:
 	var charm: String = ""
 	if int(model.inventory.get("kin_charm", 0)) > 0:
 		var use: int = await _picker.pick("Hold out a Kin Charm?", [{"text": "Yes (x%d)" % model.inventory.kin_charm}, {"text": "No"}] as Array[Dictionary])
@@ -310,10 +497,14 @@ func _bond() -> BattleAction:
 			return null
 		if use == 0:
 			charm = "kin_charm"
-	await _text.show_text("Reach out to %s... Tap with the pulse!" % model.active_spirling(BattleModel.Side.FOE).display_name())
-	_bond_game.target = _foe_sprite.texture()
+	var aim: int = await _pick_target("Reach out to which one?")
+	if aim == -2:
+		return null
+	var target_slot: int = maxi(aim, 0)
+	await _text.show_text("Reach out to %s... Tap with the pulse!" % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
+	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
 	var score: float = await _bond_game.run()
-	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm)
+	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 
 # --- Event playback -----------------------------------------------------------------
 
@@ -321,11 +512,25 @@ func _play(events: Array[BattleEvent]) -> void:
 	for e: BattleEvent in events:
 		await _play_event(e)
 
-func _sprite(side: int) -> SpirlingSprite:
+func _sprite(side: int, slot: int = 0) -> SpirlingSprite:
+	if _multi and slot >= 0 and slot < _slot_sprites[side].size():
+		return _slot_sprites[side][slot]
 	return _player_sprite if side == BattleModel.Side.PLAYER else _foe_sprite
 
-func _strip(side: int) -> InfoStrip:
+## The status strip for a slot: an InfoStrip in 1v1, a MiniStrip in the formation layout.
+func _strip(side: int, slot: int = 0) -> Variant:
+	if _multi and slot >= 0 and slot < _slot_strips[side].size():
+		return _slot_strips[side][slot]
 	return _player_strip if side == BattleModel.Side.PLAYER else _foe_strip
+
+## Keeps the ledger strip in step with a slot whose numbers just changed.
+func _refresh_focus(side: int, slot: int) -> void:
+	if _multi and _foe_strip.spirling_name == _name_at(side, slot):
+		_focus(side, slot)
+
+func _name_at(side: int, slot: int) -> String:
+	var s: Spirling = model.active_spirling(side, slot)
+	return s.display_name() if s != null else ""
 
 ## Remembers an event for the log. Damage gets its amount (the text box only shows the bar).
 func record(e: BattleEvent) -> void:
@@ -343,10 +548,24 @@ func _toggle_log() -> void:
 
 func _play_event(e: BattleEvent) -> void:
 	var side: int = int(e.data.get("side", 0))
+	var slot: int = int(e.data.get("slot", 0))
 	record(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
+			if _multi:
+				for fs: int in model.slot_count(BattleModel.Side.FOE):
+					var f: Spirling = model.active_spirling(BattleModel.Side.FOE, fs)
+					_sprite(BattleModel.Side.FOE, fs).setup(f, "front")
+					_strip(BattleModel.Side.FOE, fs).set_spirling(f)
+				_focus(BattleModel.Side.FOE, 0)
+				if model.is_wild:
+					for fs: int in model.slot_count(BattleModel.Side.FOE):
+						_strip(BattleModel.Side.FOE, fs).visible = true
+						Sound.cry(model.active_spirling(BattleModel.Side.FOE, fs).data)
+						await _sprite(BattleModel.Side.FOE, fs).step_out(false)
+				await _text.show_text(e.describe())
+				return
 			_foe_sprite.setup(foe, "front")
 			_foe_strip.set_spirling(foe)
 			if model.is_wild:
@@ -356,22 +575,34 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]
-			_sprite(side).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
-			_strip(side).set_spirling(s)
-			_strip(side).visible = true
+			_sprite(side, slot).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
+			_strip(side, slot).set_spirling(s)
+			_strip(side, slot).visible = true
+			_focus(side, slot)
 			Sound.cry(s.data)
-			await _sprite(side).step_out(side == BattleModel.Side.PLAYER)
+			await _sprite(side, slot).step_out(side == BattleModel.Side.PLAYER)
 			_update_pinch()
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SWAP_OUT:
 			await _text.show_text(e.describe())
-			await _sprite(side).step_back(side == BattleModel.Side.PLAYER)
+			await _sprite(side, slot).step_back(side == BattleModel.Side.PLAYER)
+		BattleEvent.Type.BOSS:
+			_focus(side, slot)
+			_point_pin(side, slot, true)
+			Sound.sfx("status")
+			await _text.show_text(e.describe())
+			_pin.visible = false
 		BattleEvent.Type.MOVE_USED:
 			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER else -1
 			_last_element[side] = int(e.data.get("element", -1))
+			_focus(side, slot)
+			_point_pin(side, slot, false)
 			await _text.show_text(e.describe())
 			var dir: Vector2 = Vector2(8, -4) if side == BattleModel.Side.PLAYER else Vector2(-8, 4)
-			await _sprite(side).lunge(dir)
+			if _multi:
+				dir = Vector2(0, -6) if side == BattleModel.Side.PLAYER else Vector2(0, 6)
+			await _sprite(side, slot).lunge(dir)
+			_pin.visible = false
 		BattleEvent.Type.DAMAGE:
 			var hit: String = _hit_sound(e)
 			if hit == "hit" or hit == "hit_strong":
@@ -379,52 +610,66 @@ func _play_event(e: BattleEvent) -> void:
 			if hit != "hit":
 				Sound.sfx(hit)
 			if side == BattleModel.Side.FOE and _last_player_element >= 0 and e.data.has("eff"):
-				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
-				GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
+				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, slot)
+				if foe != null:
+					GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
 			if not bool(e.data.get("status_tick", false)):
 				if side == BattleModel.Side.PLAYER:
 					GameState.rumble_pads(0.8 if hit == "hit_strong" else 0.4, 0.15)
-				await _sprite(side).hit_flash()
-			await _strip(side).animate_hp(int(e.data.hp), int(e.data.max_hp))
+				await _sprite(side, slot).hit_flash()
+			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
+			_refresh_focus(side, slot)
 			_update_pinch()
 			var line: String = _damage_line(e)
 			if not line.is_empty():
 				await _text.show_text(line)
 		BattleEvent.Type.HEAL:
 			Sound.sfx("heal")
-			if int(e.data.get("index", -1)) == model.active[side]:
-				await _strip(side).animate_hp(int(e.data.hp), int(e.data.max_hp))
+			var heal_slot: int = model.slot_of(side, int(e.data.get("index", -1)))
+			if heal_slot >= 0:
+				await _strip(side, heal_slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
+				_refresh_focus(side, heal_slot)
 			_update_pinch()
 			await _text.show_text(e.describe())
 		BattleEvent.Type.ENERGY_CHANGED:
-			_strip(side).set_energy(int(e.data.energy))
+			_strip(side, slot).set_energy(int(e.data.energy))
+			_refresh_focus(side, slot)
 		BattleEvent.Type.STATUS_APPLIED:
 			Sound.sfx("status")
-			_strip(side).set_status(str(e.data.status))
+			_strip(side, slot).set_status(str(e.data.status))
+			_refresh_focus(side, slot)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.STAT_CHANGED:
-			var who: Spirling = model.active_spirling(side)
-			_strip(side).set_stages(who.stages)
+			var who: Spirling = model.active_spirling(side, slot)
+			var st: Variant = _strip(side, slot)
+			if st is InfoStrip and who != null:
+				(st as InfoStrip).set_stages(who.stages)
+			_refresh_focus(side, slot)
 			if int(e.data.get("delta", 0)) != 0:
 				Sound.sfx("level_up" if int(e.data.delta) > 0 else "status")
 			await _text.show_text(e.describe())
 		BattleEvent.Type.STATUS_CURED:
-			_strip(side).set_status("")
+			_strip(side, slot).set_status("")
+			_refresh_focus(side, slot)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.FAINTED:
 			Sound.sfx("faint")
-			await _sprite(side).faint()
+			await _sprite(side, slot).faint()
 			await _text.show_text(e.describe())
-			_strip(side).visible = false
+			_strip(side, slot).visible = false
 		BattleEvent.Type.LEVEL_UP:
 			Sound.sfx("level_up")
-			if int(e.data.get("index", -1)) == model.active[BattleModel.Side.PLAYER]:
-				_player_strip.set_level(int(e.data.level))
-				await _player_strip.animate_hp(int(e.data.hp), int(e.data.max_hp))
+			var lv_slot: int = model.slot_of(BattleModel.Side.PLAYER, int(e.data.get("index", -1)))
+			if lv_slot >= 0:
+				var lst: Variant = _strip(BattleModel.Side.PLAYER, lv_slot)
+				if lst is InfoStrip:
+					(lst as InfoStrip).set_level(int(e.data.level))
+				await lst.animate_hp(int(e.data.hp), int(e.data.max_hp))
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BOND_RESULT:
 			if bool(e.data.get("success", false)):
-				await _foe_sprite.step_back(false)
+				await _sprite(BattleModel.Side.FOE, slot).step_back(false)
+				_strip(BattleModel.Side.FOE, slot).visible = false
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BATTLE_END:
 			var outcome: int = int(e.data.get("outcome", 0))
@@ -446,7 +691,12 @@ func _play_event(e: BattleEvent) -> void:
 func _update_pinch() -> void:
 	if model.is_finished():
 		return
-	var track: String = pinch_track(model.active_spirling(BattleModel.Side.PLAYER), music_track)
+	var lowest: Spirling = model.active_spirling(BattleModel.Side.PLAYER)
+	for slot: int in model.player_slots():
+		var s: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
+		if lowest == null or lowest.is_fainted() or s.hp_fraction() < lowest.hp_fraction():
+			lowest = s
+	var track: String = pinch_track(lowest, music_track)
 	if Sound.current_track != track:
 		Sound.music(track)
 
@@ -486,6 +736,39 @@ func _demo_model() -> BattleModel:
 	rng.seed = DEMO_SEED
 	var mine: Array[Spirling] = [Spirling.new(Database.species("Kindlop"), 9, rng), Spirling.new(Database.species("Puddlet"), 8, rng)]
 	var theirs: Array[Spirling] = [Spirling.new(Database.species("Zippit"), 7, rng)]
-	var m := BattleModel.new(mine, theirs, true, DEMO_SEED, 0)
+	match demo:
+		"boss":
+			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Breezel", "Zippit"], 14)
+			theirs = _demo_team(rng, ["Smoldrake"], 14)
+		"duel3":
+			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Mossling"], 14)
+			theirs = _demo_team(rng, ["Zippit", "Shalebat", "Mossling", "Kelpup"], 14)
+		"tag":
+			mine = _demo_team(rng, ["Kindlop", "Puddlet"], 13)
+			theirs = _demo_team(rng, ["Shalebat", "Kelpup", "Mirkmole"], 13)
+		"horde":
+			mine = _demo_team(rng, ["Kindlop", "Puddlet", "Breezel"], 12)
+			theirs = _demo_team(rng, ["Mirkmole", "Shalebat", "Wickit", "Mirkmole", "Shalebat"], 11)
+	var m := BattleModel.new(mine, theirs, demo == "" or demo == "horde", DEMO_SEED, 0 if demo == "" else 1)
 	m.inventory = {"tonic": 3, "remedy": 1, "kin_charm": 2}
+	match demo:
+		"boss":
+			m.front_size = [4, 1]
+			m.foe_boss = "ashen_heart"
+			m.trainer_name = "Ashen Heart"
+		"duel3":
+			m.front_size = [3, 3]
+			m.trainer_name = "Rift Mystic Ilka"
+		"tag":
+			m.front_size = [1, 2]
+			m.trainer_name = "Hauler Tobin"
+			m.set_partner("Cartographer Kestra", _demo_team(rng, ["Breezel", "Zippit"], 13), 1)
+		"horde":
+			m.front_size = [2, 4]
 	return m
+
+static func _demo_team(rng: RandomNumberGenerator, names: Array[String], level: int) -> Array[Spirling]:
+	var out: Array[Spirling] = []
+	for n: String in names:
+		out.append(Spirling.new(Database.species(n), level, rng))
+	return out

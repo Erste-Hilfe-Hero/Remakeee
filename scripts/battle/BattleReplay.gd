@@ -18,10 +18,22 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"field": model.field,
 		"rule": model.foe_rule,
 		"foe_items": model.foe_items.duplicate(),
+		"front": [model.front_size[0], model.front_size[1]],
+		"partner": _partner(model),
+		"boss": model.foe_boss,
 		"music": music,
 		"backdrop": backdrop,
 		"inputs": [],
 	}
+
+## The ally Tamer in a tag battle: name, team, how many fight at once, AI tier ({} if none).
+static func _partner(model: BattleModel) -> Dictionary:
+	if model.partner_start < 0:
+		return {}
+	var own: Array = model.party(BattleModel.Side.PLAYER).slice(0, model.partner_start)
+	var team: Array = model.party(BattleModel.Side.PLAYER).slice(model.partner_start)
+	return {"name": model.partner_name, "team": _team(team), "front": model.partner_front,
+		"ai": model.partner_ai.level, "own": own.size()}
 
 static func _team(team: Array) -> Array:
 	var out: Array = []
@@ -49,6 +61,10 @@ static func _rebuild(team_d: Array) -> Array[Spirling]:
 ## A fresh model from [param snap], or null if a species no longer exists.
 static func build_model(snap: Dictionary) -> BattleModel:
 	var teams: Array = snap.get("teams", [[], []])
+	var partner: Dictionary = snap.get("partner", {})
+	if not partner.is_empty():
+		# The snapshot's player team already holds the ally's Spirlings after the player's own.
+		teams = [(teams[0] as Array).slice(0, int(partner.get("own", 0))), teams[1]]
 	var mine: Array[Spirling] = _rebuild(teams[0])
 	var foes: Array[Spirling] = _rebuild(teams[1])
 	if mine.size() != (teams[0] as Array).size() or foes.size() != (teams[1] as Array).size() or foes.is_empty():
@@ -61,11 +77,32 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.field = str(snap.get("field", ""))
 	m.foe_rule = str(snap.get("rule", ""))
 	m.foe_items = (snap.get("foe_items", {}) as Dictionary).duplicate()
+	var front: Array = snap.get("front", [1, 1])
+	m.front_size = [int(front[0]), int(front[1])]
+	m.foe_boss = str(snap.get("boss", ""))
+	if not partner.is_empty():
+		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
+		if ally.size() != (partner.get("team", []) as Array).size():
+			return null
+		m.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)), int(partner.get("ai", 1)))
 	return m
 
 static func action_to_dict(a: BattleAction) -> Dictionary:
 	return {"t": "turn", "k": int(a.kind), "m": a.move_index, "s": a.swap_index, "i": a.item_id,
-		"g": a.item_target, "b": a.timing_score}
+		"g": a.item_target, "b": a.timing_score, "sl": a.slot, "tg": a.target_slot}
+
+## One turn of a battle with several player slots: every action the player picked.
+static func actions_to_dict(actions: Array[BattleAction]) -> Dictionary:
+	var list: Array = []
+	for a: BattleAction in actions:
+		list.append(action_to_dict(a))
+	return {"t": "turns", "a": list}
+
+static func actions_from_dict(d: Dictionary) -> Array[BattleAction]:
+	var out: Array[BattleAction] = []
+	for v: Variant in d.get("a", []):
+		out.append(action_from_dict(v))
+	return out
 
 static func action_from_dict(d: Dictionary) -> BattleAction:
 	var a := BattleAction.new()
@@ -76,6 +113,8 @@ static func action_from_dict(d: Dictionary) -> BattleAction:
 	a.item_id = str(d.get("i", ""))
 	a.item_target = int(d.get("g", -1))
 	a.timing_score = float(d.get("b", 0.0))
+	a.slot = int(d.get("sl", 0))
+	a.target_slot = int(d.get("tg", -1))
 	return a
 
 static func switch_to_dict(index: int) -> Dictionary:
@@ -93,6 +132,8 @@ static func simulate(snap: Dictionary) -> BattleModel.Outcome:
 		var d: Dictionary = v
 		if str(d.get("t", "")) == "switch":
 			m.submit_switch(int(d.get("i", 0)))
+		elif str(d.get("t", "")) == "turns":
+			m.submit_actions(actions_from_dict(d))
 		else:
 			m.submit_turn(action_from_dict(d))
 	return m.outcome

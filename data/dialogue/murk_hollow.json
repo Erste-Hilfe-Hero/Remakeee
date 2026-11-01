@@ -74,5 +74,16 @@
     "Only dust and old pick marks now."
    ]
   }
- }
+ },
+ "swarm": [
+  "Many small eyes blink in the dark corner."
+ ],
+ "swarm_intro": [
+  "The shadows in the corner squirm. It's a whole swarm of hushed Spirlings!",
+  "They rush in all at once. Send out two to hold them off!"
+ ],
+ "swarm_defeat": [
+  "The swarm scatters into the dark galleries.",
+  "The corner is quiet now. The Hush has let go of them."
+ ]
 }

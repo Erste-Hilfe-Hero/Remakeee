@@ -3,7 +3,8 @@
   "Ilka: Maelis speaks with the tide itself. Or she did."
  ],
  "mystic_intro": [
-  "Ilka: The currents told me you'd come. Show me your bond!"
+  "Ilka: The currents told me you'd come.",
+  "Ilka: Three of mine against three of yours, all at once. Show me your bond!"
  ],
  "mystic_defeat": [
   "Ilka: The currents... were right about you."
@@ -26,5 +27,17 @@
  "maelis_defeat": [
   "Warden Maelis: I remember the song now.",
   "Warden Maelis: Hold the tear with me... there. It's mended."
+ ],
+ "heart": [
+  "Cold water churns around the Rift's drowned heart."
+ ],
+ "heart_intro": [
+  "The water heaves. Something rises from the bottom of the Rift.",
+  "Warden Maelis: The Hush left its heart behind, and a guard beside it.",
+  "Warden Maelis: Four of yours against the two of them. Go!"
+ ],
+ "heart_defeat": [
+  "The drowned heart sinks and dissolves into clear water.",
+  "Warden Maelis: Now the tide is truly still."
  ]
 }

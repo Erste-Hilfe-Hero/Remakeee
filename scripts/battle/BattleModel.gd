@@ -2,6 +2,12 @@ class_name BattleModel
 extends RefCounted
 ## Pure battle model: no Nodes, no rendering. Every call returns the BattleEvents it produced.
 ##
+## Sides field one or more Spirlings at once (N against M, set by front_size before start()).
+## Each side has field slots; slots[side][slot] is the party index standing there (-1 = empty).
+## 1v1 is simply one slot per side. A tag battle adds an ally Tamer (set_partner) whose Spirlings
+## take extra player slots and act on their own. A Rift boss (foe_boss) grows with the player's
+## field and may act more than once per turn.
+##
 ## Flow (a state machine over Phase):
 ##   INTRO -> CHOOSE_ACTIONS -> RESOLVE_ORDER -> EXECUTE_ACTION (loop) -> END_OF_TURN
 ##   -> FAINT_CHECK -> VICTORY_CHECK -> SWITCH_IN -> CHOOSE_ACTIONS | AWAIT_SWITCH
@@ -30,7 +36,27 @@ const MAX_PARTY: int = 6
 signal event_emitted(event: BattleEvent)
 
 var parties: Array[Array] = [[], []]
-var active: Array[int] = [0, 0]
+## Field slots per side: party indices of the Spirlings on the field, -1 for an emptied slot.
+var slots: Array[Array] = [[0], [0]]
+## How many Spirlings each side fields at start() (player's own, foe). Set before start().
+var front_size: Array[int] = [1, 1]
+## Party index on the field for each side's first slot (read-only view for 1v1 code).
+var active: Array[int]:
+	get:
+		var out: Array[int] = [active_index(Side.PLAYER), active_index(Side.FOE)]
+		return out
+## Ally Tamer in a tag battle. Their Spirlings sit at the end of the player party array from
+## partner_start on, fill the player slots from _partner_slot on, and are steered by partner_ai.
+var partner_name: String = ""
+var partner_start: int = -1
+var partner_front: int = 0
+var partner_ai: BattleAI
+var _partner_slot: int = -1
+## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
+var foe_boss: String = ""
+var _boss_actions: int = 1
+## Player slots still waiting for a replacement after faints (phase AWAIT_SWITCH), in order.
+var pending_switch: Array[int] = []
 var is_wild: bool = true
 var trainer_name: String = ""
 var rng := RandomNumberGenerator.new()
@@ -83,21 +109,93 @@ func _init(player_party: Array[Spirling], foe_party: Array[Spirling], wild: bool
 func party(side: int) -> Array:
 	return parties[side]
 
-func active_spirling(side: int) -> Spirling:
-	return parties[side][active[side]]
+## Party index standing in [param slot] for [param side], or -1.
+func active_index(side: int, slot: int = 0) -> int:
+	var row: Array = slots[side]
+	return int(row[slot]) if slot >= 0 and slot < row.size() else -1
+
+## The Spirling in [param slot] for [param side], or null if the slot is empty.
+func active_spirling(side: int, slot: int = 0) -> Spirling:
+	var i: int = active_index(side, slot)
+	return parties[side][i] if i >= 0 else null
+
+func slot_count(side: int) -> int:
+	return (slots[side] as Array).size()
+
+## The field slot holding party index [param index], or -1 if it is on the bench.
+func slot_of(side: int, index: int) -> int:
+	return (slots[side] as Array).find(index)
+
+## True for a battle with more than one Spirling on either side (uses the formation layout).
+func is_multi() -> bool:
+	return front_size[Side.PLAYER] + partner_front > 1 or front_size[Side.FOE] > 1
+
+## Still in the fight: not fainted and not just bonded away.
+func is_standing(s: Spirling) -> bool:
+	return s != null and not s.is_fainted() and s != bonded
+
+## Slots on [param side] whose Spirling is still standing, left to right.
+func standing_slots(side: int) -> Array[int]:
+	var out: Array[int] = []
+	for slot: int in slot_count(side):
+		if is_standing(active_spirling(side, slot)):
+			out.append(slot)
+	return out
+
+## True if party index [param index] on [param side] belongs to the ally Tamer.
+func is_partner_index(side: int, index: int) -> bool:
+	return side == Side.PLAYER and partner_start >= 0 and index >= partner_start
+
+## True if [param slot] on [param side] is steered by the ally Tamer.
+func is_partner_slot(side: int, slot: int) -> bool:
+	return side == Side.PLAYER and _partner_slot >= 0 and slot >= _partner_slot
+
+## Player slots the player picks an action for this turn (own, standing), left to right.
+func player_slots() -> Array[int]:
+	var out: Array[int] = []
+	for slot: int in standing_slots(Side.PLAYER):
+		if not is_partner_slot(Side.PLAYER, slot):
+			out.append(slot)
+	return out
 
 static func other(side: int) -> int:
 	return 1 - side
 
+## The first foe of [param side] still standing (slot 0's Spirling if none is).
 func opponent(side: int) -> Spirling:
-	return active_spirling(other(side))
+	var st: Array[int] = standing_slots(other(side))
+	return active_spirling(other(side), st[0] if not st.is_empty() else 0)
 
 func alive_count(side: int) -> int:
 	var n: int = 0
 	for s: Spirling in parties[side]:
-		if not s.is_fainted():
+		if is_standing(s):
 			n += 1
 	return n
+
+## Standing Spirlings the player owns (the ally Tamer's do not count toward a loss).
+func own_alive_count() -> int:
+	var n: int = 0
+	for i: int in parties[Side.PLAYER].size():
+		if not is_partner_index(Side.PLAYER, i) and is_standing(parties[Side.PLAYER][i]):
+			n += 1
+	return n
+
+## Adds an ally Tamer for a tag battle: [param team] fights beside the player, [param front] of
+## them at once, steered by an AI of [param ai_level]. Call before start().
+func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level: int = 1) -> void:
+	if team.is_empty():
+		return
+	var combined: Array[Spirling] = []
+	for s: Spirling in parties[Side.PLAYER]:
+		combined.append(s)
+	partner_start = combined.size()
+	for s: Spirling in team:
+		combined.append(s)
+	parties[Side.PLAYER] = combined
+	partner_name = p_name
+	partner_front = clampi(front, 1, BattleRules.MAX_FRONT)
+	partner_ai = BattleAI.new(ai_level)
 
 func is_finished() -> bool:
 	return phase == Phase.FINISHED
@@ -105,56 +203,71 @@ func is_finished() -> bool:
 func needs_player_switch() -> bool:
 	return phase == Phase.AWAIT_SWITCH
 
-## Indices of party members that could swap in for [param side].
-func swap_candidates(side: int) -> Array[int]:
+## Bench indices that could step into [param slot] for [param side] (same owner as the slot).
+func swap_candidates(side: int, slot: int = 0) -> Array[int]:
 	var out: Array[int] = []
+	var partner_slot: bool = is_partner_slot(side, slot)
+	var row: Array = slots[side]
 	for i: int in parties[side].size():
 		var s: Spirling = parties[side][i]
-		if i != active[side] and not s.is_fainted():
+		if not row.has(i) and is_standing(s) and is_partner_index(side, i) == partner_slot:
 			out.append(i)
 	return out
 
-## Every legal action for [param side] this turn. REST is always legal.
-func legal_actions(side: int) -> Array[BattleAction]:
+## Every legal action for the Spirling in [param slot] of [param side] this turn. REST is always
+## legal. Move actions carry target_slot -1 (the first foe standing); callers may aim them.
+func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 	var out: Array[BattleAction] = []
-	var me: Spirling = active_spirling(side)
+	var me: Spirling = active_spirling(side, slot)
+	if not is_standing(me):
+		return out
 	for i: int in me.moves.size():
 		if me.can_afford(me.moves[i]):
-			out.append(BattleAction.make_move(side, i))
-	out.append(BattleAction.make_rest(side))
+			out.append(BattleAction.make_move(side, i, slot))
+	out.append(BattleAction.make_rest(side, slot))
 	if not StatusRules.blocks_swap(me.status):
-		for i: int in swap_candidates(side):
-			out.append(BattleAction.make_swap(side, i))
+		for i: int in swap_candidates(side, slot):
+			out.append(BattleAction.make_swap(side, i, slot))
 	var bag: Dictionary = _bag(side)
-	if _items_allowed_for(side):
+	if _items_allowed_for(side, slot):
 		for id: Variant in bag:
 			if int(bag[id]) > 0 and _is_battle_item(str(id)):
-				out.append(BattleAction.make_item(side, str(id), active[side]))
-	if side == Side.PLAYER and is_wild:
-		out.append(BattleAction.make_bond(side, 0.0))
-		out.append(BattleAction.make_run(side))
+				out.append(BattleAction.make_item(side, str(id), active_index(side, slot), slot))
+	if side == Side.PLAYER and is_wild and not is_partner_slot(side, slot):
+		if bonded == null:
+			out.append(BattleAction.make_bond(side, 0.0, "", slot))
+		out.append(BattleAction.make_run(side, slot))
 	return out
 
 ## Checks a single action against the current state.
 func is_legal(a: BattleAction) -> bool:
-	var me: Spirling = active_spirling(a.side)
+	var me: Spirling = active_spirling(a.side, a.slot)
+	if not is_standing(me):
+		return false
 	match a.kind:
 		BattleAction.Kind.MOVE:
+			if a.target_slot >= slot_count(other(a.side)):
+				return false
 			return a.move_index >= 0 and a.move_index < me.moves.size() and me.can_afford(me.moves[a.move_index])
 		BattleAction.Kind.REST:
 			return true
 		BattleAction.Kind.SWAP:
-			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side)
+			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
 		BattleAction.Kind.ITEM:
-			if not _items_allowed_for(a.side) or int(_bag(a.side).get(a.item_id, 0)) <= 0 or not _is_battle_item(a.item_id):
+			if not _items_allowed_for(a.side, a.slot) or int(_bag(a.side).get(a.item_id, 0)) <= 0 or not _is_battle_item(a.item_id):
+				return false
+			if is_partner_index(a.side, a.item_target):
 				return false
 			return a.item_target >= 0 and a.item_target < parties[a.side].size() and not (parties[a.side][a.item_target] as Spirling).is_fainted()
 		BattleAction.Kind.BOND:
-			if a.side != Side.PLAYER or not is_wild:
+			# The Echo call reaches only wild Spirlings, never a Tamer's partner.
+			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot):
+				return false
+			if a.target_slot >= 0 and not is_standing(active_spirling(Side.FOE, a.target_slot)):
 				return false
 			return a.item_id.is_empty() or int(inventory.get(a.item_id, 0)) > 0
 		BattleAction.Kind.RUN:
-			return a.side == Side.PLAYER and is_wild
+			return a.side == Side.PLAYER and is_wild and not is_partner_slot(a.side, a.slot)
 	return false
 
 # --- Commands ----------------------------------------------------------------
@@ -165,12 +278,27 @@ func start() -> Array[BattleEvent]:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for s: Spirling in parties[side]:
 			s.energy = Spirling.START_ENERGY
-		active[side] = _first_alive(side)
+	_fill_initial_slots()
+	var fielded: int = slot_count(Side.PLAYER)
+	if BattleRules.BOSSES.has(foe_boss):
+		var boss: Spirling = active_spirling(Side.FOE)
+		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded)
+		boss.hp = boss.max_hp()
+		_boss_actions = BattleRules.boss_actions(foe_boss, fielded)
 	var foe: Spirling = active_spirling(Side.FOE)
-	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(), "prism": foe.prism})
+	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(),
+		"prism": foe.prism, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
 	if not is_wild:
-		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE))
-	emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER))
+		for slot: int in slot_count(Side.FOE):
+			emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE, slot))
+	for slot: int in slot_count(Side.PLAYER):
+		if slot == _partner_slot:
+			emit_event(BattleEvent.Type.PARTNER, {"side": Side.PLAYER, "slot": slot, "partner": partner_name})
+		emit_event(BattleEvent.Type.SEND_OUT, _who(Side.PLAYER, slot))
+	if BattleRules.BOSSES.has(foe_boss):
+		var b: Dictionary = BattleRules.BOSSES[foe_boss]
+		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
+			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
 	if BattleRules.FIELDS.has(field):
 		emit_event(BattleEvent.Type.FIELD, {"field": field, "text": str(BattleRules.FIELDS[field].intro)})
 	if BattleRules.RULES.has(foe_rule):
@@ -180,33 +308,68 @@ func start() -> Array[BattleEvent]:
 		for s: Spirling in parties[Side.PLAYER]:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
-	participants = [active_spirling(Side.PLAYER)]
+	participants = []
+	for slot: int in player_slots():
+		participants.append(active_spirling(Side.PLAYER, slot))
 	phase = Phase.CHOOSE_ACTIONS
 	return _events
 
-## Plays one turn. [param foe_action] defaults to the AI's choice.
+## Plays one turn of a 1v1 battle. [param foe_action] defaults to the AI's choice.
 func submit_turn(player_action: BattleAction, foe_action: BattleAction = null) -> Array[BattleEvent]:
+	var acts: Array[BattleAction] = []
+	if player_action != null:
+		acts.append(player_action)
+	if foe_action != null:
+		acts.append(foe_action)
+	return submit_actions(acts)
+
+## Plays one turn. [param actions] holds at most one action per (side, slot). A player slot
+## without a legal action rests; foe and ally slots without one let their AI choose.
+func submit_actions(actions: Array[BattleAction]) -> Array[BattleEvent]:
 	_events = []
 	if phase != Phase.CHOOSE_ACTIONS:
-		push_error("BattleModel.submit_turn called in phase %s" % Phase.keys()[phase])
+		push_error("BattleModel.submit_actions called in phase %s" % Phase.keys()[phase])
 		return _events
-	if player_action == null or not is_legal(player_action):
-		player_action = BattleAction.make_rest(Side.PLAYER)
-	if foe_action == null or not is_legal(foe_action):
-		foe_action = ai.choose(self, Side.FOE)
-	_queue = [player_action, foe_action]
+	_queue = []
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for slot: int in slot_count(side):
+			if not is_standing(active_spirling(side, slot)):
+				continue
+			var a: BattleAction = _given(actions, side, slot)
+			if a != null and not is_legal(a):
+				a = null
+			if a == null:
+				if side == Side.PLAYER and not is_partner_slot(side, slot):
+					a = BattleAction.make_rest(side, slot)
+				else:
+					a = (partner_ai if side == Side.PLAYER else ai).choose(self, side, slot)
+			_queue.append(a)
+			if side == Side.FOE and slot == 0 and _boss_actions > 1:
+				for i: int in _boss_actions - 1:
+					var extra: BattleAction = ai.choose(self, side, slot)
+					extra.is_bonus = true
+					_queue.append(extra)
 	phase = Phase.RESOLVE_ORDER
 	_run()
 	return _events
 
-## Picks the player's replacement after a faint (phase AWAIT_SWITCH).
+## The player slot that the next submit_switch fills (phase AWAIT_SWITCH).
+func switch_slot() -> int:
+	return pending_switch[0] if not pending_switch.is_empty() else 0
+
+## Picks the player's replacement after a faint (phase AWAIT_SWITCH). With several fainted
+## slots, call it once per slot (switch_slot() says which one is next).
 func submit_switch(index: int) -> Array[BattleEvent]:
 	_events = []
-	if phase != Phase.AWAIT_SWITCH or not index in swap_candidates(Side.PLAYER):
+	var slot: int = switch_slot()
+	if phase != Phase.AWAIT_SWITCH or not index in swap_candidates(Side.PLAYER, slot):
 		push_error("BattleModel.submit_switch: illegal switch to %d" % index)
 		return _events
-	_swap_in(Side.PLAYER, index)
-	phase = Phase.CHOOSE_ACTIONS
+	pending_switch.pop_front()
+	_swap_in(Side.PLAYER, index, slot)
+	while not pending_switch.is_empty() and swap_candidates(Side.PLAYER, pending_switch[0]).is_empty():
+		slots[Side.PLAYER][pending_switch.pop_front()] = -1
+	phase = Phase.AWAIT_SWITCH if not pending_switch.is_empty() else Phase.CHOOSE_ACTIONS
 	return _events
 
 # --- Helpers used by effects --------------------------------------------------
@@ -216,57 +379,62 @@ func emit_event(t: BattleEvent.Type, d: Dictionary = {}) -> void:
 	_events.append(e)
 	event_emitted.emit(e)
 
-## Damages the active Spirling on [param side]. Emits DAMAGE and, if it drops, FAINTED.
-func deal_damage(side: int, amount: int, extra: Dictionary = {}) -> int:
-	var s: Spirling = active_spirling(side)
+## Damages the Spirling in [param slot] of [param side]. Emits DAMAGE and, if it drops, FAINTED.
+func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) -> int:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null:
+		return 0
 	var dealt: int = mini(amount, s.hp)
 	s.hp -= dealt
-	var d: Dictionary = _who(side)
+	var d: Dictionary = _who(side, slot)
 	d.merge({"amount": dealt, "hp": s.hp, "max_hp": s.max_hp()})
 	d.merge(extra)
 	emit_event(BattleEvent.Type.DAMAGE, d)
 	if s.is_fainted():
-		emit_event(BattleEvent.Type.FAINTED, _who(side))
+		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
 	return dealt
 
-func heal(side: int, amount: int) -> int:
-	return _heal_spirling(side, active[side], amount)
+func heal(side: int, amount: int, slot: int = 0) -> int:
+	var index: int = active_index(side, slot)
+	return _heal_spirling(side, index, amount) if index >= 0 else 0
 
-## Tries to afflict the active Spirling on [param side]. Fails if it already has a status.
-func apply_status(side: int, status: String) -> bool:
-	var s: Spirling = active_spirling(side)
-	if s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
+## Tries to afflict the Spirling in [param slot] of [param side]. Fails if it already has a status.
+func apply_status(side: int, status: String, slot: int = 0) -> bool:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
 	if BattleRules.is_immune(s, status):
-		var f: Dictionary = _who(side)
+		var f: Dictionary = _who(side, slot)
 		f["status"] = status
 		emit_event(BattleEvent.Type.STATUS_FAILED, f)
 		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
-	var d: Dictionary = _who(side)
+	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
 	return true
 
-## Moves a stat stage on the active Spirling of [param side]. Emits STAT_CHANGED (or a "won't go" note).
-func change_stage(side: int, stat: String, delta: int) -> void:
-	var s: Spirling = active_spirling(side)
-	if s.is_fainted() or delta == 0 or not stat in BattleRules.STAGE_STATS:
+## Moves a stat stage on the Spirling in [param slot] of [param side]. Emits STAT_CHANGED (or a "won't go" note).
+func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.is_fainted() or delta == 0 or not stat in BattleRules.STAGE_STATS:
 		return
 	var before: int = s.stage(stat)
 	var after: int = clampi(before + delta, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
-	var d: Dictionary = _who(side)
+	var d: Dictionary = _who(side, slot)
 	d.merge({"stat": stat, "delta": after - before, "stage": after, "tried": delta})
 	s.stages[stat] = after
 	emit_event(BattleEvent.Type.STAT_CHANGED, d)
 
-func change_energy(side: int, delta: int) -> void:
-	var s: Spirling = active_spirling(side)
+func change_energy(side: int, delta: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null:
+		return
 	var before: int = s.energy
 	s.energy = clampi(s.energy + delta, 0, Spirling.MAX_ENERGY)
 	if s.energy != before:
-		var d: Dictionary = _who(side)
+		var d: Dictionary = _who(side, slot)
 		d["energy"] = s.energy
 		emit_event(BattleEvent.Type.ENERGY_CHANGED, d)
 
@@ -278,7 +446,7 @@ func _run() -> void:
 
 func _phase_resolve_order() -> void:
 	for a: BattleAction in _queue:
-		a.actor = active_spirling(a.side)
+		a.actor = active_spirling(a.side, a.slot)
 	# Shuffle first with the battle RNG so equal keys get a seeded tiebreak, then stable-sort.
 	var tiebreak: Dictionary[BattleAction, float] = {}
 	for a: BattleAction in _queue:
@@ -305,10 +473,10 @@ func _phase_execute_action() -> void:
 		return
 	var a: BattleAction = _queue.pop_front()
 	# Re-check validity: the actor may have fainted or been swapped out since choosing.
-	if a.actor == null or a.actor.is_fainted() or a.actor != active_spirling(a.side):
+	if not is_standing(a.actor) or a.actor != active_spirling(a.side, a.slot):
 		return
 	if a.is_free:
-		emit_event(BattleEvent.Type.FREE_ACTION, _who(a.side))
+		emit_event(BattleEvent.Type.FREE_ACTION, _who(a.side, a.slot))
 	match a.kind:
 		BattleAction.Kind.MOVE: _do_move(a)
 		BattleAction.Kind.REST: _do_rest(a)
@@ -319,57 +487,83 @@ func _phase_execute_action() -> void:
 
 func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
-		var s: Spirling = active_spirling(side)
-		if s.is_fainted():
-			continue
-		var div: int = StatusRules.tick_div(s.status)
-		if div > 0:
-			var d: Dictionary = _who(side)
-			d["status"] = s.status
-			emit_event(BattleEvent.Type.STATUS_TICK, d)
-			deal_damage(side, maxi(1, s.max_hp() / div), {"status_tick": true})
-		if s.is_fainted():
-			continue
-		if s.status_turns > 0 and not StatusRules.sleeps(s.status):
-			s.status_turns -= 1
-			if s.status_turns == 0:
-				_cure(side)
-		var regen: int = int(BattleRules.trait_info(s.data.trait_id).get("regen_div", 0))
-		var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
-		for rdiv: int in [regen, held_regen]:
-			if rdiv > 0 and s.hp < s.max_hp():
-				heal(side, maxi(1, s.max_hp() / rdiv))
-		var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
-		if side == Side.FOE:
-			gain += int(BattleRules.RULES.get(foe_rule, {}).get("foe_energy", 0))
-		change_energy(side, gain)
+		for slot: int in slot_count(side):
+			_end_of_turn_for(side, slot)
 	turn += 1
 	phase = Phase.FAINT_CHECK
 
+func _end_of_turn_for(side: int, slot: int) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if not is_standing(s):
+		return
+	var div: int = StatusRules.tick_div(s.status)
+	if div > 0:
+		var d: Dictionary = _who(side, slot)
+		d["status"] = s.status
+		emit_event(BattleEvent.Type.STATUS_TICK, d)
+		deal_damage(side, maxi(1, s.max_hp() / div), {"status_tick": true}, slot)
+	if s.is_fainted():
+		return
+	if s.status_turns > 0 and not StatusRules.sleeps(s.status):
+		s.status_turns -= 1
+		if s.status_turns == 0:
+			_cure(side, slot)
+	var regen: int = int(BattleRules.trait_info(s.data.trait_id).get("regen_div", 0))
+	var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
+	for rdiv: int in [regen, held_regen]:
+		if rdiv > 0 and s.hp < s.max_hp():
+			heal(side, maxi(1, s.max_hp() / rdiv), slot)
+	var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
+	if side == Side.FOE:
+		gain += int(BattleRules.RULES.get(foe_rule, {}).get("foe_energy", 0))
+	change_energy(side, gain, slot)
+
 func _phase_faint_check() -> void:
-	var foe: Spirling = active_spirling(Side.FOE)
-	if foe.is_fainted() and not foe.has_meta("xp_paid"):
-		foe.set_meta("xp_paid", true)
-		_award_xp(foe)
+	# Every foe that dropped this turn pays out once (several can drop at once in a sweep).
+	for foe: Spirling in parties[Side.FOE]:
+		if foe.is_fainted() and not foe.has_meta("xp_paid"):
+			foe.set_meta("xp_paid", true)
+			_award_xp(foe)
 	phase = Phase.VICTORY_CHECK
 
 func _phase_victory_check() -> void:
 	if alive_count(Side.FOE) == 0:
-		outcome = Outcome.WIN
+		if outcome == Outcome.NONE:
+			outcome = Outcome.WIN
 		phase = Phase.REWARDS
-	elif alive_count(Side.PLAYER) == 0:
+	elif own_alive_count() == 0:
 		outcome = Outcome.LOSS
 		phase = Phase.REWARDS
 	else:
 		phase = Phase.SWITCH_IN
 
 func _phase_switch_in() -> void:
-	if active_spirling(Side.FOE).is_fainted():
-		_swap_in(Side.FOE, ai.choose_replacement(self, Side.FOE))
-	if active_spirling(Side.PLAYER).is_fainted():
-		phase = Phase.AWAIT_SWITCH
+	for slot: int in slot_count(Side.FOE):
+		_refill_slot(Side.FOE, slot, ai)
+	if _partner_slot >= 0:
+		for slot: int in range(_partner_slot, slot_count(Side.PLAYER)):
+			_refill_slot(Side.PLAYER, slot, partner_ai)
+	pending_switch.clear()
+	for slot: int in slot_count(Side.PLAYER):
+		if is_partner_slot(Side.PLAYER, slot) or active_index(Side.PLAYER, slot) < 0:
+			continue
+		if is_standing(active_spirling(Side.PLAYER, slot)):
+			continue
+		if swap_candidates(Side.PLAYER, slot).is_empty():
+			slots[Side.PLAYER][slot] = -1
+		else:
+			pending_switch.append(slot)
+	phase = Phase.AWAIT_SWITCH if not pending_switch.is_empty() else Phase.CHOOSE_ACTIONS
+
+## An AI-steered slot whose Spirling dropped (or was bonded away) takes a bench Spirling, if any.
+func _refill_slot(side: int, slot: int, brain: BattleAI) -> void:
+	if is_standing(active_spirling(side, slot)):
+		return
+	var index: int = brain.choose_replacement(self, side, slot)
+	if index >= 0:
+		_swap_in(side, index, slot)
 	else:
-		phase = Phase.CHOOSE_ACTIONS
+		slots[side][slot] = -1
 
 func _phase_rewards() -> void:
 	for s: Spirling in parties[Side.PLAYER]:
@@ -377,6 +571,7 @@ func _phase_rewards() -> void:
 	for s: Spirling in parties[Side.FOE]:
 		if s.has_meta("xp_paid"):
 			s.remove_meta("xp_paid")
+		s.hp_mult = 1.0
 	if bonded != null:
 		bonded.end_battle()
 	var money: int = prize_money if outcome == Outcome.WIN and not is_wild else 0
@@ -385,73 +580,103 @@ func _phase_rewards() -> void:
 
 # --- Actions -------------------------------------------------------------------
 
+## Foe slots a move reaches: every standing foe for a sweep, else the aimed slot (or the first
+## foe still standing if the aimed one dropped meanwhile).
+func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
+	var standing: Array[int] = standing_slots(other(side))
+	if standing.is_empty() or mv.is_area():
+		return standing
+	var out: Array[int] = [target_slot if target_slot in standing else standing[0]]
+	return out
+
+## Effects that act on the user once per move, not once per foe a sweep reaches.
+static func _is_self_effect(fx: Dictionary) -> bool:
+	var id: StringName = StringName(fx.get("id", ""))
+	return id == &"heal_self" or (id == &"stat_change" and bool(fx.get("self", true)))
+
 func _do_move(a: BattleAction) -> void:
 	var side: int = a.side
+	var slot: int = a.slot
 	var me: Spirling = a.actor
 	var mv: MoveData = me.moves[a.move_index]
 	if StatusRules.sleeps(me.status):
 		if me.status_turns > 0:
 			me.status_turns -= 1
-			var d: Dictionary = _who(side)
+			var d: Dictionary = _who(side, slot)
 			d["status"] = me.status
 			emit_event(BattleEvent.Type.STATUS_PREVENTED, d)
 			return
-		_cure(side)
+		_cure(side, slot)
 	var skip: float = StatusRules.skip_chance(me.status)
 	if skip > 0.0 and rng.randf() < skip:
-		var d2: Dictionary = _who(side)
+		var d2: Dictionary = _who(side, slot)
 		d2["status"] = me.status
 		emit_event(BattleEvent.Type.STATUS_PREVENTED, d2)
 		return
 	if not me.can_afford(mv):
-		emit_event(BattleEvent.Type.NOT_ENOUGH_ENERGY, _who(side))
+		emit_event(BattleEvent.Type.NOT_ENOUGH_ENERGY, _who(side, slot))
 		return
-	change_energy(side, -mv.energy_cost)
+	change_energy(side, -mv.energy_cost, slot)
 	var power_mult: float = 1.0
 	if mv.overcharge and me.energy > 0:
 		var extra: int = me.energy
 		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
-		change_energy(side, -extra)
-	var used: Dictionary = _who(side)
-	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind})
-	emit_event(BattleEvent.Type.MOVE_USED, used)
+		change_energy(side, -extra, slot)
 	var target_side: int = other(side)
-	var target: Spirling = active_spirling(target_side)
-	if target.is_fainted():
+	var targets: Array[int] = move_targets(side, mv, a.target_slot)
+	var used: Dictionary = _who(side, slot)
+	used.merge({"move": mv.move_name, "element": mv.element, "kind": mv.kind, "area": mv.is_area() and targets.size() > 1, "targets": targets})
+	emit_event(BattleEvent.Type.MOVE_USED, used)
+	if targets.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})
 		return
-	var acc: float = mv.accuracy * StatusRules.acc_mult(me.status)
-	if acc < 1.0 and rng.randf() >= acc:
-		emit_event(BattleEvent.Type.MISSED, _who(side))
-		return
-	var ctx := EffectContext.new()
-	ctx.model = self
-	ctx.user_side = side
-	ctx.target_side = target_side
-	ctx.user = me
-	ctx.target = target
-	ctx.move = mv
-	if mv.is_damaging():
-		var mult: float = power_mult * BattleRules.damage_mult(me, target, mv, field)
-		var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
-		ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name})
-	for fx: Dictionary in mv.effects:
-		var effect: MoveEffect = EffectRegistry.get_effect(StringName(fx.get("id", "")))
-		if effect != null:
-			effect.apply(ctx, fx)
+	var spread: float = BattleRules.SPREAD_MULT if targets.size() > 1 else 1.0
+	var self_done: bool = false
+	for t_slot: int in targets:
+		var target: Spirling = active_spirling(target_side, t_slot)
+		if me.is_fainted():
+			break
+		if not is_standing(target):
+			continue
+		var acc: float = mv.accuracy * StatusRules.acc_mult(me.status)
+		if acc < 1.0 and rng.randf() >= acc:
+			var miss: Dictionary = _who(side, slot)
+			miss["target_slot"] = t_slot
+			emit_event(BattleEvent.Type.MISSED, miss)
+			continue
+		var ctx := EffectContext.new()
+		ctx.model = self
+		ctx.user_side = side
+		ctx.target_side = target_side
+		ctx.user_slot = slot
+		ctx.target_slot = t_slot
+		ctx.user = me
+		ctx.target = target
+		ctx.move = mv
+		if mv.is_damaging():
+			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field)
+			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
+			ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
+		for fx: Dictionary in mv.effects:
+			if self_done and _is_self_effect(fx):
+				continue
+			var effect: MoveEffect = EffectRegistry.get_effect(StringName(fx.get("id", "")))
+			if effect != null:
+				effect.apply(ctx, fx)
+		self_done = true
 
 func _do_rest(a: BattleAction) -> void:
-	emit_event(BattleEvent.Type.REST, _who(a.side))
-	change_energy(a.side, REST_ENERGY)
+	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))
+	change_energy(a.side, REST_ENERGY, a.slot)
 
 func _do_swap(a: BattleAction) -> void:
 	if StatusRules.blocks_swap(a.actor.status):
-		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side))
+		emit_event(BattleEvent.Type.SWAP_BLOCKED, _who(a.side, a.slot))
 		return
-	if not a.swap_index in swap_candidates(a.side):
+	if not a.swap_index in swap_candidates(a.side, a.slot):
 		return
-	emit_event(BattleEvent.Type.SWAP_OUT, _who(a.side))
-	_swap_in(a.side, a.swap_index)
+	emit_event(BattleEvent.Type.SWAP_OUT, _who(a.side, a.slot))
+	_swap_in(a.side, a.swap_index, a.slot)
 
 func _do_item(a: BattleAction) -> void:
 	var bag: Dictionary = _bag(a.side)
@@ -468,49 +693,56 @@ func _do_item(a: BattleAction) -> void:
 		_heal_spirling(a.side, a.item_target, int(it.heal))
 	var cure: Variant = it.get("cure", false)
 	var cures: bool = (cure is bool and cure) or (cure is String and cure == target.status)
+	var t_slot: int = slot_of(a.side, a.item_target)
 	if cures and not target.status.is_empty():
-		var was_active: bool = a.item_target == active[a.side]
-		if was_active:
-			_cure(a.side)
+		if t_slot >= 0:
+			_cure(a.side, t_slot)
 		else:
 			target.status = ""
 			target.status_turns = 0
-	if int(it.get("energy", 0)) > 0 and a.item_target == active[a.side]:
-		change_energy(a.side, int(it.energy))
+	if int(it.get("energy", 0)) > 0 and t_slot >= 0:
+		change_energy(a.side, int(it.energy), t_slot)
 	var st: Variant = it.get("stage", {})
-	if st is Dictionary and a.item_target == active[a.side]:
+	if st is Dictionary and t_slot >= 0:
 		for stat: String in st:
-			change_stage(a.side, stat, int(st[stat]))
+			change_stage(a.side, stat, int(st[stat]), t_slot)
 
 func _do_bond(a: BattleAction) -> void:
-	var target: Spirling = active_spirling(Side.FOE)
-	if target.is_fainted():
+	var standing: Array[int] = standing_slots(Side.FOE)
+	if standing.is_empty():
 		emit_event(BattleEvent.Type.NO_TARGET, {})
 		return
+	var t_slot: int = a.target_slot if a.target_slot in standing else standing[0]
+	var target: Spirling = active_spirling(Side.FOE, t_slot)
 	var bonus: float = 0.0
 	if not a.item_id.is_empty() and int(inventory.get(a.item_id, 0)) > 0:
 		inventory[a.item_id] = int(inventory[a.item_id]) - 1
 		bonus = float(Database.item(a.item_id).get("bond_bonus", 0.0))
-	var who: Dictionary = _who(Side.FOE)
+	var who: Dictionary = _who(Side.FOE, t_slot)
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
 	var success: bool = rng.randf() < BondCalc.chance(target, a.timing_score, bonus)
-	var res: Dictionary = _who(Side.FOE)
+	var res: Dictionary = _who(Side.FOE, t_slot)
 	res["success"] = success
 	emit_event(BattleEvent.Type.BOND_RESULT, res)
 	if success:
 		bonded = target
-		outcome = Outcome.BONDED
+		# In a horde the rest of the swarm fights on; the battle ends once none is left.
+		if not is_multi() or alive_count(Side.FOE) == 0:
+			outcome = Outcome.BONDED
 		return
 	# A failed bond gives the wild Spirling one free action, right now.
-	var free: BattleAction = ai.choose(self, Side.FOE)
-	free.actor = active_spirling(Side.FOE)
+	var free: BattleAction = ai.choose(self, Side.FOE, t_slot)
+	free.actor = target
 	free.is_free = true
 	_queue.push_front(free)
 
 func _do_run(a: BattleAction) -> void:
 	var mine: float = float(a.actor.effective_spd())
-	var theirs: float = maxf(float(active_spirling(Side.FOE).effective_spd()), 1.0)
+	var fastest: int = 0
+	for slot: int in standing_slots(Side.FOE):
+		fastest = maxi(fastest, active_spirling(Side.FOE, slot).effective_spd())
+	var theirs: float = maxf(float(fastest), 1.0)
 	var chance: float = clampf(FLEE_BASE + FLEE_PER_ATTEMPT * flee_attempts + (mine / theirs - 1.0) * FLEE_SPEED_WEIGHT, 0.0, 1.0)
 	flee_attempts += 1
 	var success: bool = rng.randf() < chance
@@ -520,9 +752,17 @@ func _do_run(a: BattleAction) -> void:
 
 # --- Internals ------------------------------------------------------------------
 
-func _who(side: int) -> Dictionary:
-	var s: Spirling = active_spirling(side)
-	return {"side": side, "index": active[side], "name": s.display_name(), "species": s.data.species_name}
+func _who(side: int, slot: int = 0) -> Dictionary:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null:
+		return {"side": side, "slot": slot, "index": -1, "name": "", "species": ""}
+	return {"side": side, "slot": slot, "index": active_index(side, slot), "name": s.display_name(), "species": s.data.species_name}
+
+func _given(actions: Array[BattleAction], side: int, slot: int) -> BattleAction:
+	for a: BattleAction in actions:
+		if a != null and a.side == side and a.slot == slot:
+			return a
+	return null
 
 func _first_alive(side: int) -> int:
 	for i: int in parties[side].size():
@@ -530,23 +770,49 @@ func _first_alive(side: int) -> int:
 			return i
 	return 0
 
-func _swap_in(side: int, index: int) -> void:
-	active[side] = index
-	var s: Spirling = active_spirling(side)
-	var d: Dictionary = _who(side)
+## The first [param count] standing party indices on [param side] owned by the player (or by the ally).
+func _first_standing(side: int, count: int, partner: bool) -> Array[int]:
+	var out: Array[int] = []
+	for i: int in parties[side].size():
+		if out.size() >= count:
+			break
+		if is_partner_index(side, i) == partner and is_standing(parties[side][i]):
+			out.append(i)
+	return out
+
+func _fill_initial_slots() -> void:
+	var mine: Array[int] = _first_standing(Side.PLAYER, clampi(front_size[Side.PLAYER], 1, BattleRules.MAX_FRONT), false)
+	if mine.is_empty():
+		mine = [_first_alive(Side.PLAYER)]
+	_partner_slot = -1
+	if partner_start >= 0:
+		var theirs: Array[int] = _first_standing(Side.PLAYER, partner_front, true)
+		if not theirs.is_empty():
+			_partner_slot = mine.size()
+			mine.append_array(theirs)
+	slots[Side.PLAYER] = mine
+	var foes: Array[int] = _first_standing(Side.FOE, clampi(front_size[Side.FOE], 1, BattleRules.MAX_FRONT), false)
+	if foes.is_empty():
+		foes = [_first_alive(Side.FOE)]
+	slots[Side.FOE] = foes
+
+func _swap_in(side: int, index: int, slot: int = 0) -> void:
+	slots[side][slot] = index
+	var s: Spirling = active_spirling(side, slot)
+	var d: Dictionary = _who(side, slot)
 	d.merge({"hp": s.hp, "max_hp": s.max_hp(), "level": s.level, "energy": s.energy})
 	emit_event(BattleEvent.Type.SWAP_IN, d)
 	if side == Side.PLAYER:
-		if not participants.has(s):
+		if not participants.has(s) and not is_partner_index(side, index):
 			participants.append(s)
-	else:
+	elif not is_multi():
 		participants = [active_spirling(Side.PLAYER)]
 
-func _cure(side: int) -> void:
-	var s: Spirling = active_spirling(side)
-	if s.status.is_empty():
+func _cure(side: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.status.is_empty():
 		return
-	var d: Dictionary = _who(side)
+	var d: Dictionary = _who(side, slot)
 	d["status"] = s.status
 	s.status = ""
 	s.status_turns = 0
@@ -564,7 +830,9 @@ func _heal_spirling(side: int, index: int, amount: int) -> int:
 func _bag(side: int) -> Dictionary:
 	return inventory if side == Side.PLAYER else foe_items
 
-func _items_allowed_for(side: int) -> bool:
+func _items_allowed_for(side: int, slot: int = 0) -> bool:
+	if is_partner_slot(side, slot):
+		return false
 	return items_allowed if side == Side.PLAYER else true
 
 func _is_battle_item(id: String) -> bool:
@@ -576,7 +844,8 @@ func _award_xp(foe: Spirling) -> void:
 		total *= TRAINER_XP_MULT
 	var earners: Array[Spirling] = []
 	for s: Spirling in participants:
-		if not s.is_fainted() and parties[Side.PLAYER].has(s):
+		var i: int = parties[Side.PLAYER].find(s)
+		if not s.is_fainted() and i >= 0 and not is_partner_index(Side.PLAYER, i):
 			earners.append(s)
 	if earners.is_empty():
 		return

@@ -82,8 +82,11 @@ func _curve(base: int, key: String, offset: float, div: float) -> int:
 	var s: float = float(base) + float(spark.get(key, 0)) * SPARK_WEIGHT
 	return int(floor(s * (float(level) + offset) / div))
 
+## Battle-only max HP multiplier for Rift bosses (BattleRules.BOSSES). Never saved.
+var hp_mult: float = 1.0
+
 func max_hp() -> int:
-	return maxi(1, int(_curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV) * _temper_mult("hp")))
+	return maxi(1, int(_curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV) * _temper_mult("hp") * hp_mult))
 
 func _stat(key: String) -> int:
 	return int((_curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT) * _temper_mult(key))

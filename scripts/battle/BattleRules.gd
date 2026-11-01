@@ -49,6 +49,36 @@ const RULES: Dictionary[String, Dictionary] = {
 	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with lower SPD.", "player_stage": {"spd": -1}},
 }
 
+## Multi-Spirling battles: a sweep ("foes" move) that reaches more than one foe deals this share to each.
+const SPREAD_MULT: float = 0.75
+## Most Spirlings one side can field at once. Four 28 px sprites still fit the 144 px width.
+const MAX_FRONT: int = 4
+
+## Rift bosses (npc "boss"): one swollen Spirling the whole party faces at once. Its HP and its
+## actions per turn grow with how many Spirlings the player fields, so a lone starter is not crushed:
+##   hp_per_ally:  max HP multiplier per player Spirling on the field (never below 1)
+##   max_actions:  actions per turn when the player fields 4 (1 more for every 2 fielded)
+const BOSSES: Dictionary[String, Dictionary] = {
+	"ashen_heart": {"label": "Ashen Heart", "hp_per_ally": 0.8, "max_actions": 2,
+		"text": "The Hush gathers into one burning heart. It is far too strong to face alone!"},
+	"drowned_heart": {"label": "Drowned Heart", "hp_per_ally": 0.7, "max_actions": 2,
+		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!"},
+}
+
+## Max HP multiplier for a boss facing [param fielded] player Spirlings.
+static func boss_hp_mult(boss_id: String, fielded: int) -> float:
+	var b: Dictionary = BOSSES.get(boss_id, {})
+	if b.is_empty():
+		return 1.0
+	return maxf(1.0, float(b.get("hp_per_ally", 1.0)) * fielded)
+
+## Actions per turn for a boss facing [param fielded] player Spirlings (at least 1).
+static func boss_actions(boss_id: String, fielded: int) -> int:
+	var b: Dictionary = BOSSES.get(boss_id, {})
+	if b.is_empty():
+		return 1
+	return clampi(1 + (fielded - 1) / 2, 1, int(b.get("max_actions", 1)))
+
 static func stage_mult(stage: int) -> float:
 	var s: int = clampi(stage, STAGE_MIN, STAGE_MAX)
 	return (2.0 + s) / 2.0 if s >= 0 else 2.0 / (2.0 - s)

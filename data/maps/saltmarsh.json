@@ -76,6 +76,66 @@
      "level": 13
     }
    ]
+  },
+  {
+   "id": "kestra_tag",
+   "x": 8,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "saltmarsh/kestra_tag",
+   "sprite": "ranger",
+   "trainer": "Hauler Tobin",
+   "front": [
+    1,
+    2
+   ],
+   "money": 500,
+   "partner": {
+    "name": "Cartographer Kestra",
+    "team": [
+     {
+      "species": "Breezel",
+      "level": 13
+     },
+     {
+      "species": "Zippit",
+      "level": 14
+     }
+    ],
+    "front": 1
+   },
+   "show_flag": "kestra_spar",
+   "hide_flag": "kestra_marsh_tag",
+   "intro": "saltmarsh/kestra_tag_intro",
+   "defeat": "saltmarsh/kestra_tag_defeat",
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 13
+    },
+    {
+     "species": "Kelpup",
+     "level": 13
+    },
+    {
+     "species": "Mirkmole",
+     "level": 14
+    }
+   ],
+   "win_flags": [
+    "kestra_marsh_tag"
+   ],
+   "leaves": true
+  },
+  {
+   "id": "hauler",
+   "x": 8,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "saltmarsh/hauler",
+   "sprite": "villager",
+   "show_flag": "kestra_spar",
+   "hide_flag": "kestra_marsh_tag"
   }
  ],
  "signs": [
