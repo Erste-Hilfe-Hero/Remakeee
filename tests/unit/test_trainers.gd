@@ -36,7 +36,7 @@ func test_trainer_battle_info() -> void:
 	var team: Array[Spirling] = TrainerData.build_team(bram, "Kindlop", _rng)
 	assert_eq(team.size(), 2)
 	var info: Dictionary = TrainerData.battle_info(bram, team, 0)
-	assert_eq(info.name, "Hiker Bram")
+	assert_eq(info.name, "Ridgewalker Bram")
 	assert_eq(info.money, 8 * TrainerData.MONEY_PER_LEVEL, "default money from top level")
 	assert_eq(info.ai, 0)
 

@@ -8,11 +8,29 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 pattern="$(printf '%s' 'cG9rW2XDqV18XGJneW1cYnxcYihobXx0bSlbMC05XXsxLDN9XGJ8XGJwb2tlID8oYmFsbHxkZXh8Y2VudGVyfGNlbnRyZSlcYg==' | base64 -d)"
+# Battle phrases that are verbatim from the inspiration's battle text (sum of small similarities,
+# see docs/legal/IP_PATENT_AUDIT.md). Also base64-encoded.
+phrases="$(printf '%s' 'd2hhdCB3aWxsIFxTKyBkb1w/fGEgd2lsZCBcUysgYXBwZWFyZWR8d2FudHMgdG8gYmF0dGxlfCwgY29tZSBiYWNrIXxidXQgdGhlcmUgd2FzIG5vIHRhcmdldHxnb3QgYXdheSBzYWZlbHl8Y291bGRuLnQgZ2V0IGF3YXl8Z3JldyB0byBsZXZlbHxpdC5zIHN1cGVyIGVmZmVjdGl2ZXxpdC5zIG5vdCB2ZXJ5IGVmZmVjdGl2ZXxhIGNyaXRpY2FsIGhpdCE=' | base64 -d)"
 fail=0
 
 if git ls-files -z -- . ':!:AGENTS.md' ':!:LEGAL.md' ':!:addons/**' \
 	| xargs -0 grep -I -n -i -P -- "$pattern" 2>/dev/null; then
 	echo "::error::Banned franchise term found (lines above). See docs/IP_HYGIENE.md."
+	fail=1
+fi
+
+if git ls-files -z -- . ':!:AGENTS.md' ':!:LEGAL.md' ':!:addons/**' \
+	| xargs -0 grep -I -n -i -P -- "$phrases" 2>/dev/null; then
+	echo "::error::Borrowed battle phrase found (lines above). Write our own wording. See docs/legal/IP_PATENT_AUDIT.md."
+	fail=1
+fi
+
+# Patent-risk mechanics (LEGAL.md, Palworld suit): no throwing, gliding, riding, swipe-to-throw or a
+# visible capture-odds meter in game code. Comment lines are skipped so docs can name what is banned.
+patent='(throw|toss_|glid|parachute|swipe|flick_|capture_?(rate|chance|odds)|catch_?(rate|chance|odds)|(odds|chance)_?(meter|gauge|bar|label|ring)|ride_|riding|mount_)'
+if git ls-files -z -- 'scripts/*.gd' 'scenes/*.tscn' \
+	| xargs -0 grep -n -i -P -- "^(?!\s*#).*${patent}" 2>/dev/null; then
+	echo "::error::Patent-risk mechanic in game code (lines above). See LEGAL.md."
 	fail=1
 fi
 

@@ -94,6 +94,7 @@ func run_settings() -> void:
 			"Controls...",
 			"Display and access...",
 			"Sound test...",
+			"Legal",
 		]
 		var idx: int = await pick_strings("Settings", entries)
 		match idx:
@@ -129,6 +130,8 @@ func run_settings() -> void:
 				await run_display()
 			10:
 				await run_sound_test()
+			11:
+				await run_legal()
 
 ## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.
 func run_sound_test() -> void:
@@ -271,3 +274,16 @@ static func summary(s: Spirling) -> String:
 static func party_line(s: Spirling) -> String:
 	var tag: String = " (out)" if s.is_fainted() else ""
 	return "%s Lv%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
+
+## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
+func run_legal() -> void:
+	while true:
+		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences"] as Array[String])
+		match idx:
+			-1:
+				return
+			0:
+				await info(LegalInfo.links_text())
+			1:
+				for page: String in LegalInfo.pages(LegalInfo.licence_text()):
+					await info(page)

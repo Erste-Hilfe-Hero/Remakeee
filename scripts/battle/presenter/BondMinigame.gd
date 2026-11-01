@@ -1,33 +1,34 @@
 class_name BondMinigame
 extends Control
-## Bond rhythm minigame: rings pulse inward and the player taps on the beat.
-## run() is awaitable and returns a timing score 0..1. No odds or grades are shown while it
-## runs (LEGAL.md: show the bond result only afterwards).
+## Bond minigame "Echo call": the wild Spirling calls a short sequence on three marks
+## (diamond, square, triangle), then the player taps the same marks in the same order.
+## run() is awaitable and returns a score 0..1. No odds or grades are shown while it runs
+## (LEGAL.md: show the bond result only afterwards). Rules live in BondEcho.
 
 signal finished(score: float)
 
-const RING_COLOR: Color = Color("20241c")
-const TARGET_COLOR: Color = Color("7d8a6a")
-const POP_TIME: float = 0.15
+enum Phase { IDLE, CALL, ECHO }
 
-var _time: float = 0.0
-var _running: bool = false
-var _pending: Array[float] = []
-## Active rings: spawn time.
-var _rings: Array[float] = []
-var _pops: Array[Vector2] = []  # (radius, age)
-var _hits: Array[float] = []
-var _strays: int = 0
-var _pulse_count: int = 0
-var _hint: Label
-## The wild Spirling being reached out to, drawn in the centre of the rings.
-var target: Texture2D
+const MARK_SIZE: float = 26.0
+const FLASH_TIME: float = 0.18
 const TARGET_SIZE: float = 40.0
+
+## The wild Spirling being reached out to, drawn above the marks.
+var target: Texture2D
+## Set for reproducible calls (tests, screenshots); otherwise randomized per run.
+var rng: RandomNumberGenerator
+
+var _phase: Phase = Phase.IDLE
+var _time: float = 0.0
+var _sequence: Array[int] = []
+var _taps: Array[int] = []
+var _flash_mark: int = -1
+var _flash_left: float = 0.0
+var _hint: Label
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_hint = Label.new()
-	_hint.text = "Tap when the pulse meets the ring"
 	_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint.set_anchors_preset(Control.PRESET_TOP_WIDE)
@@ -36,83 +37,120 @@ func _ready() -> void:
 	visible = false
 
 func run() -> float:
+	if rng == null:
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+	_sequence = BondEcho.make_sequence(rng)
+	_taps.clear()
+	_flash_mark = -1
 	_time = 0.0
-	_pending = BondTiming.pulse_times()
-	_pulse_count = _pending.size()
-	_rings.clear()
-	_pops.clear()
-	_hits.clear()
-	_strays = 0
-	_running = true
+	_phase = Phase.CALL
+	_hint.text = "Listen to the call..."
 	visible = true
-	var score: float = await finished
+	var result: float = await finished
 	visible = false
-	return score
+	return result
 
 func _process(delta: float) -> void:
-	if not _running:
+	if _phase == Phase.IDLE:
 		return
 	_time += delta
-	while not _pending.is_empty() and _pending[0] <= _time:
-		_rings.append(_pending.pop_front())
-	# Rings that shrank past usefulness count as misses (score 0, already in the denominator).
-	var keep: Array[float] = []
-	for spawn: float in _rings:
-		if BondTiming.radius_at(_time - spawn) > BondTiming.TARGET_RADIUS - BondTiming.TOLERANCE:
-			keep.append(spawn)
-	_rings = keep
-	var pops: Array[Vector2] = []
-	for p: Vector2 in _pops:
-		if p.y + delta < POP_TIME:
-			pops.append(Vector2(p.x, p.y + delta))
-	_pops = pops
+	_flash_left = maxf(_flash_left - delta, 0.0)
+	if _phase == Phase.CALL and _time >= BondEcho.call_duration() + BondEcho.GAP_TIME:
+		_phase = Phase.ECHO
+		_time = 0.0
+		_hint.text = "Now echo it back!"
+	elif _phase == Phase.ECHO and _time >= BondEcho.ECHO_TIME:
+		_finish()
 	queue_redraw()
-	if _time >= BondTiming.DURATION and _rings.is_empty():
-		_running = false
-		finished.emit(BondTiming.final_score(_hits, _pulse_count, _strays))
 
-func _tap() -> void:
-	if not _running:
+func _tap(mark: int) -> void:
+	if _phase != Phase.ECHO or mark < 0:
 		return
-	var best: int = -1
-	var best_err: float = INF
-	for i: int in _rings.size():
-		var err: float = absf(BondTiming.radius_at(_time - _rings[i]) - BondTiming.TARGET_RADIUS)
-		if err < best_err:
-			best_err = err
-			best = i
-	if best >= 0 and best_err <= BondTiming.TOLERANCE:
-		var r: float = BondTiming.radius_at(_time - _rings[best])
-		_hits.append(BondTiming.tap_score(r))
-		_pops.append(Vector2(r, 0.0))
-		_rings.remove_at(best)
-	else:
-		_strays += 1
+	_taps.append(mark)
+	_flash_mark = mark
+	_flash_left = FLASH_TIME
+	if not BondEcho.is_on_track(_sequence, _taps) or _taps.size() >= _sequence.size():
+		_finish()
+
+func _finish() -> void:
+	if _phase == Phase.IDLE:
+		return
+	_phase = Phase.IDLE
+	finished.emit(BondEcho.score(_sequence, _taps))
+
+## Centre of mark [param i] (three marks in a row, lower half of the screen).
+func _mark_center(i: int) -> Vector2:
+	var step: float = size.x / float(BondEcho.MARKS + 1)
+	return Vector2(step * (i + 1), size.y * 0.62)
+
+func _mark_at_point(p: Vector2) -> int:
+	for i: int in BondEcho.MARKS:
+		if p.distance_to(_mark_center(i)) <= MARK_SIZE * 0.75:
+			return i
+	return -1
 
 func _gui_input(event: InputEvent) -> void:
-	if (event is InputEventScreenTouch and event.pressed) or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
-		_tap()
+	var pos: Variant = null
+	if event is InputEventScreenTouch and event.pressed:
+		pos = (event as InputEventScreenTouch).position
+	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		pos = (event as InputEventMouseButton).position
+	if pos != null:
+		_tap(_mark_at_point(pos))
 		accept_event()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _running and event.is_action_pressed("ui_accept"):
-		_tap()
+	if _phase != Phase.ECHO:
+		return
+	var mark: int = -1
+	if event.is_action_pressed("ui_left"):
+		mark = 0
+	elif event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_up"):
+		mark = 1
+	elif event.is_action_pressed("ui_right"):
+		mark = 2
+	if mark >= 0:
+		_tap(mark)
 		get_viewport().set_input_as_handled()
 
+func _lit_mark() -> int:
+	if _phase == Phase.CALL:
+		return BondEcho.mark_at(_sequence, _time)
+	if _flash_left > 0.0:
+		return _flash_mark
+	return -1
+
 func _draw() -> void:
-	var c: Vector2 = size / 2.0
-	draw_rect(Rect2(Vector2.ZERO, size), Color(UITheme.BG, 0.85))
+	draw_rect(Rect2(Vector2.ZERO, size), Color(UITheme.BG, 0.9))
 	if target != null:
-		# The wild Spirling watches from above the rings; the rings are its pulse.
 		var half := Vector2(TARGET_SIZE, TARGET_SIZE) / 2.0
-		var at := c - Vector2(0, BondTiming.START_RADIUS + half.y + 6)
+		var at := Vector2(size.x / 2.0, size.y * 0.3)
 		draw_texture_rect(target, Rect2((at - half).round(), half * 2.0), false)
-		draw_line(at + Vector2(0, half.y + 2), c - Vector2(0, BondTiming.START_RADIUS + 2), UITheme.MID, 1.0)
-	draw_arc(c, BondTiming.TARGET_RADIUS, 0.0, TAU, 32, TARGET_COLOR, 2.0)
-	# A small heart-knot mark in the middle: the bond being tied.
-	draw_rect(Rect2(c - Vector2(1, 3), Vector2(2, 6)), RING_COLOR)
-	draw_rect(Rect2(c - Vector2(3, 1), Vector2(6, 2)), RING_COLOR)
-	for spawn: float in _rings:
-		draw_arc(c, maxf(BondTiming.radius_at(_time - spawn), 1.0), 0.0, TAU, 40, RING_COLOR, 1.0)
-	for p: Vector2 in _pops:
-		draw_arc(c, p.x + p.y * 40.0, 0.0, TAU, 40, Color(RING_COLOR, 1.0 - p.y / POP_TIME), 1.0)
+	var lit: int = _lit_mark()
+	for i: int in BondEcho.MARKS:
+		_draw_mark(i, _mark_center(i).round(), i == lit)
+	# Progress pips for the echo (how many taps so far), never odds.
+	if _phase == Phase.ECHO:
+		var y: float = size.y * 0.62 + MARK_SIZE
+		var x0: float = size.x / 2.0 - (BondEcho.SEQUENCE_LENGTH * 6) / 2.0
+		for i: int in BondEcho.SEQUENCE_LENGTH:
+			var filled: bool = i < _taps.size()
+			draw_rect(Rect2(x0 + i * 6, y, 4, 4), UITheme.INK if filled else UITheme.DISABLED, filled)
+
+func _draw_mark(i: int, c: Vector2, lit: bool) -> void:
+	var r: float = MARK_SIZE / 2.0
+	var fill: Color = UITheme.INK if lit else UITheme.ACCENT
+	var pts := PackedVector2Array()
+	match i:
+		0:  # diamond
+			pts = PackedVector2Array([c + Vector2(0, -r), c + Vector2(r, 0), c + Vector2(0, r), c + Vector2(-r, 0)])
+		1:  # square
+			var s: float = r * 0.8
+			pts = PackedVector2Array([c + Vector2(-s, -s), c + Vector2(s, -s), c + Vector2(s, s), c + Vector2(-s, s)])
+		_:  # triangle
+			pts = PackedVector2Array([c + Vector2(0, -r), c + Vector2(r, r * 0.8), c + Vector2(-r, r * 0.8)])
+	draw_colored_polygon(pts, fill)
+	var outline := pts.duplicate()
+	outline.append(pts[0])
+	draw_polyline(outline, UITheme.INK, 1.0)

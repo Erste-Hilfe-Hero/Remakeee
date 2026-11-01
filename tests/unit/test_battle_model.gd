@@ -20,7 +20,7 @@ func _event_log(events: Array[BattleEvent]) -> PackedStringArray:
 	return out
 
 func _play_auto(seed_value: int) -> PackedStringArray:
-	var m := BattleModel.new(_p(["Kindlop", "Zippit"]), _p(["Mossling", "Breezel"]), false, seed_value, 1)
+	var m := BattleModel.new(_p(["Kindlop", "Zippit"]), _p(["Mossling", "Zephlet"]), false, seed_value, 1)
 	var player_ai := BattleAI.new(1)
 	var log: PackedStringArray = _event_log(m.start())
 	var guard: int = 0
@@ -49,24 +49,24 @@ func test_swap_acts_before_moves() -> void:
 	assert_lt(types.find(T.SWAP_IN), types.find(T.MOVE_USED))
 
 func test_priority_beats_speed() -> void:
-	# Breezel's Gust Slice has priority 1; the foe Zippit is faster but uses a priority-0 move.
-	var mine: Array[Spirling] = [BattleFixtures.make("Breezel", 15, ["Gust Slice"])]
-	var theirs: Array[Spirling] = [BattleFixtures.make("Zippit", 40, ["Static Nip"])]
+	# Zephlet's Breeze Slice has priority 1; the foe Zippit is faster but uses a priority-0 move.
+	var mine: Array[Spirling] = [BattleFixtures.make("Zephlet", 15, ["Breeze Slice"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Zippit", 40, ["Crackle Bite"])]
 	var m: BattleModel = BattleFixtures.model(mine, theirs)
 	assert_gt(theirs[0].effective_spd(), mine[0].effective_spd())
 	var first: BattleEvent = BattleFixtures.first_of(m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_move(Side.FOE, 0)), T.MOVE_USED)
 	assert_eq(int(first.data.side), Side.PLAYER)
 
 func test_faster_moves_first_at_equal_priority() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Mossling", 15, ["Moss Whip"])]
-	var theirs: Array[Spirling] = [BattleFixtures.make("Zippit", 15, ["Static Nip"])]
+	var mine: Array[Spirling] = [BattleFixtures.make("Mossling", 15, ["Lichen Lash"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Zippit", 15, ["Crackle Bite"])]
 	var m: BattleModel = BattleFixtures.model(mine, theirs)
 	var first: BattleEvent = BattleFixtures.first_of(m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_move(Side.FOE, 0)), T.MOVE_USED)
 	assert_eq(int(first.data.side), Side.FOE)
 
 func test_energy_starts_at_10_costs_and_regenerates() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Cinder Breath"])]
-	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 50, ["Tackle Rush"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 50, ["Headlong Charge"])]
 	var m: BattleModel = BattleFixtures.model(mine, theirs)
 	assert_eq(mine[0].energy, 10)
 	m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE))
@@ -126,7 +126,7 @@ func test_daze_lowers_accuracy_for_3_turns() -> void:
 	assert_eq(mine[0].status_turns, 3)
 
 func test_drowse_skips_turns_then_wakes() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Ember Snap"])]
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Cinder Nip"])]
 	var m: BattleModel = BattleFixtures.model(mine, _p(["Calderox"], 50))
 	m.apply_status(Side.PLAYER, "drowse")
 	var turns: int = mine[0].status_turns
@@ -141,7 +141,7 @@ func test_jolt_skips_about_a_quarter_of_turns() -> void:
 	var skipped: int = 0
 	var n: int = 400
 	for i: int in n:
-		var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Tackle Rush"])]
+		var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 30, ["Headlong Charge"])]
 		var m: BattleModel = BattleFixtures.model(mine, _p(["Calderox"], 60), true, i)
 		m.apply_status(Side.PLAYER, "jolt")
 		if BattleFixtures.first_of(m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE)), T.STATUS_PREVENTED) != null:
@@ -155,7 +155,7 @@ func test_only_one_status_at_a_time() -> void:
 
 func test_faint_forces_player_switch_then_continues() -> void:
 	var mine: Array[Spirling] = _p(["Mossling", "Puddlet"], 5)
-	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Ember Snap"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Cinder Nip"])]
 	var m: BattleModel = BattleFixtures.model(mine, theirs, false)
 	m.submit_turn(BattleAction.make_rest(Side.PLAYER), BattleAction.make_move(Side.FOE, 0))
 	assert_true(mine[0].is_fainted())
@@ -165,7 +165,7 @@ func test_faint_forces_player_switch_then_continues() -> void:
 	assert_eq(m.phase, BattleModel.Phase.CHOOSE_ACTIONS)
 
 func test_victory_awards_xp_and_ends() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Tackle Rush"])]
+	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Headlong Charge"])]
 	var theirs: Array[Spirling] = [BattleFixtures.make("Zippit", 3)]
 	var m: BattleModel = BattleFixtures.model(mine, theirs)
 	var xp_before: int = mine[0].xp
@@ -176,8 +176,8 @@ func test_victory_awards_xp_and_ends() -> void:
 	assert_eq(ev[ev.size() - 1].type, T.BATTLE_END)
 
 func test_trainer_switches_in_next_spirling() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Tackle Rush"])]
-	var theirs: Array[Spirling] = _p(["Zippit", "Breezel"], 3)
+	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Headlong Charge"])]
+	var theirs: Array[Spirling] = _p(["Zippit", "Zephlet"], 3)
 	var m: BattleModel = BattleFixtures.model(mine, theirs, false)
 	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_move(Side.PLAYER, 0), BattleAction.make_rest(Side.FOE))
 	assert_not_null(BattleFixtures.first_of(ev, T.SWAP_IN))
@@ -185,7 +185,7 @@ func test_trainer_switches_in_next_spirling() -> void:
 	assert_false(m.is_finished())
 
 func test_level_cap_stops_xp() -> void:
-	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 12, ["Tackle Rush"])]
+	var mine: Array[Spirling] = [BattleFixtures.make("Calderox", 12, ["Headlong Charge"])]
 	var m := BattleModel.new(mine, [BattleFixtures.make("Zippit", 3)] as Array[Spirling], true, 3)
 	m.level_cap = 12
 	m.start()
@@ -196,13 +196,13 @@ func test_level_cap_stops_xp() -> void:
 
 func test_loss_when_party_wiped() -> void:
 	var mine: Array[Spirling] = [BattleFixtures.make("Mossling", 3)]
-	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Ember Snap"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Calderox", 60, ["Cinder Nip"])]
 	var m: BattleModel = BattleFixtures.model(mine, theirs)
 	m.submit_turn(BattleAction.make_rest(Side.PLAYER), BattleAction.make_move(Side.FOE, 0))
 	assert_eq(m.outcome, BattleModel.Outcome.LOSS)
 
 func test_bond_success_ends_battle() -> void:
-	var theirs: Array[Spirling] = [BattleFixtures.make("Breezel", 5)]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Zephlet", 5)]
 	theirs[0].hp = 1
 	var m: BattleModel = BattleFixtures.model(_p(["Kindlop"]), theirs, true, 11)
 	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_bond(Side.PLAYER, 1.0, ""), BattleAction.make_rest(Side.FOE))
@@ -214,7 +214,7 @@ func test_bond_success_ends_battle() -> void:
 		assert_true(m.is_finished())
 
 func test_failed_bond_gives_free_action() -> void:
-	var theirs: Array[Spirling] = [BattleFixtures.make("Breezel", 5, ["Tackle Rush"])]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Zephlet", 5, ["Headlong Charge"])]
 	var m: BattleModel = BattleFixtures.model(_p(["Kindlop"], 30), theirs, true, 5)
 	# Timing score 0 => chance 0 => guaranteed failure.
 	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_bond(Side.PLAYER, 0.0), BattleAction.make_rest(Side.FOE))

@@ -111,8 +111,8 @@ func test_prism_is_saved() -> void:
 	assert_true(Spirling.from_dict(s.to_dict()).prism)
 
 func test_status_specific_cure_in_battle() -> void:
-	var a: Spirling = BattleFixtures.make("Mossling", 15, ["Tackle Rush"] as Array[String])
-	var b: Spirling = BattleFixtures.make("Zippit", 15, ["Tackle Rush"] as Array[String])
+	var a: Spirling = BattleFixtures.make("Mossling", 15, ["Headlong Charge"] as Array[String])
+	var b: Spirling = BattleFixtures.make("Zippit", 15, ["Headlong Charge"] as Array[String])
 	var m: BattleModel = BattleFixtures.model([a] as Array[Spirling], [b] as Array[Spirling])
 	m.inventory = {"cooling_gel": 1, "dry_towel": 1}
 	m.start()

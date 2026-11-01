@@ -24,11 +24,11 @@ func test_move_party_shifts_others() -> void:
 func test_storage_view_sorts_and_filters() -> void:
 	GameState.storage.clear()
 	GameState.storage.append(Spirling.new(Database.species("Zippit"), 9))
-	GameState.storage.append(Spirling.new(Database.species("Breezel"), 20))
+	GameState.storage.append(Spirling.new(Database.species("Zephlet"), 20))
 	GameState.storage.append(Spirling.new(Database.species("Glimmerax"), 30))
 	assert_eq(GameState.storage_view(0), [0, 1, 2] as Array[int])
 	assert_eq(GameState.storage_view(1), [2, 1, 0] as Array[int], "by level, high first")
-	assert_eq(GameState.storage_view(2), [1, 2, 0] as Array[int], "by name")
+	assert_eq(GameState.storage_view(2), [2, 1, 0] as Array[int], "by name: Glimmerax, Zephlet, Zippit")
 	assert_eq(GameState.storage_view(0, Elements.E.VOLT), [0, 2] as Array[int])
 	assert_eq(GameState.storage_view(0, -1, "glim"), [2] as Array[int])
 

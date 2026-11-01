@@ -92,7 +92,7 @@ func test_iron_oath_refills_from_storage_then_breaks() -> void:
 # --- Collection goals ----------------------------------------------------------------
 
 func test_collection_goals_pay_once() -> void:
-	var names: Array[String] = ["Puddlet", "Mossling", "Zippit", "Breezel", "Kelpup"]
+	var names: Array[String] = ["Puddlet", "Mossling", "Zippit", "Zephlet", "Kelpup"]
 	for n: String in names:
 		GameState.mark_seen(n, true)
 	var before: int = GameState.item_count("strong_tonic")
@@ -117,7 +117,7 @@ func test_collection_completion_gives_money() -> void:
 # --- Rematches -----------------------------------------------------------------------
 
 func test_rematch_once_per_day_and_scaled() -> void:
-	var def: Dictionary = {"id": "bram", "trainer": "Hiker Bram", "team": [{"species": "Puddlet", "level": 7}, {"species": "Mossling", "level": 9}]}
+	var def: Dictionary = {"id": "bram", "trainer": "Ridgewalker Bram", "team": [{"species": "Puddlet", "level": 7}, {"species": "Mossling", "level": 9}]}
 	var flags: Dictionary = {}
 	assert_false(TrainerData.can_rematch(def, "crowcrest", flags, {}, "2026-11-01"), "not beaten yet")
 	flags[TrainerData.beaten_flag(def, "crowcrest")] = true

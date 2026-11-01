@@ -309,7 +309,7 @@ def obsidroth():
     ]
 
 
-def breezel():
+def zephlet():
     # Long ferret with a kite-like membrane and a spiral-curled tail.
     return [
         P([(20, 20), (40, 12), (52, 30), (34, 40)], "light"),                   # membrane
@@ -447,7 +447,7 @@ DESIGNS = {
     "Mossling": mossling, "Thornback": thornback, "Verdantusk": verdantusk,
     "Zippit": zippit, "Glimmerax": glimmerax,
     "Shalebat": shalebat, "Obsidroth": obsidroth,
-    "Breezel": breezel, "Tempestrel": tempestrel,
+    "Zephlet": zephlet, "Tempestrel": tempestrel,
     "Wickit": wickit, "Lumenewt": lumenewt,
     "Mirkmole": mirkmole, "Duskdigger": duskdigger,
     "Kelpup": kelpup, "Kelphound": kelphound,
