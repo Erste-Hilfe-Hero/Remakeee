@@ -12,9 +12,11 @@ key="${SUPABASE_ANON_KEY:-}"
 server="${CHIMORA_SERVER:-}"
 if [ -n "$server" ] && { [ -z "$url" ] || [ -z "$key" ]; }; then
 	case "$server" in https://*) ;; *) server="https://$server" ;; esac
-	conf="$(python3 -c 'import sys,urllib.request;print(urllib.request.urlopen(sys.argv[1],timeout=30).read().decode())' "${server%/}/chimora.json")" || { echo "::error::Could not read ${server%/}/chimora.json"; exit 1; }
-	url="$(printf '%s' "$conf" | python3 -c 'import json,sys;print(json.load(sys.stdin)["url"])')"
-	key="$(printf '%s' "$conf" | python3 -c 'import json,sys;print(json.load(sys.stdin)["anon_key"])')"
+	# The build image has wget but neither curl nor python.
+	conf="$(wget -qO- --tries=3 --timeout=30 "${server%/}/chimora.json" 2>/dev/null || curl -fsS --retry 3 "${server%/}/chimora.json")" || { echo "::error::Could not read ${server%/}/chimora.json"; exit 1; }
+	conf="$(printf '%s' "$conf" | tr -d '\n')"
+	url="$(printf '%s' "$conf" | sed -n 's/.*"url"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+	key="$(printf '%s' "$conf" | sed -n 's/.*"anon_key"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
 fi
 if [ -z "$url" ] || [ -z "$key" ]; then
 	if [ "${1:-}" = "--require" ]; then
@@ -25,8 +27,5 @@ if [ -z "$url" ] || [ -z "$key" ]; then
 	exit 0
 fi
 case "$url" in https://*) ;; *) echo "::error::SUPABASE_URL must start with https://"; exit 1 ;; esac
-python3 - "$url" "$key" <<'PY'
-import json, sys
-json.dump({"url": sys.argv[1].rstrip("/"), "anon_key": sys.argv[2]}, open("data/online.json", "w"))
-PY
+printf '{"url": "%s", "anon_key": "%s"}\n' "${url%/}" "$key" > data/online.json
 echo "Server address written for $url"
