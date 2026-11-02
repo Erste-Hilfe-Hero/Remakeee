@@ -250,6 +250,9 @@
    "38": [
     "Prism Ray"
    ],
+   "40": [
+    "Dawn Call"
+   ],
    "42": [
     "Breaker Plunge"
    ],
@@ -332,6 +335,9 @@
    "20": [
     "Thorn Volley"
    ],
+   "22": [
+    "Bloom Call"
+   ],
    "26": [
     "Tremor Thud"
    ],
@@ -375,6 +381,9 @@
    ],
    "42": [
     "Bloom Burst"
+   ],
+   "44": [
+    "Bloom Call"
    ],
    "48": [
     "Dusk Gnaw"
@@ -420,6 +429,9 @@
    ],
    "18": [
     "Storm Gnash"
+   ],
+   "20": [
+    "Spark Call"
    ]
   },
   "bond_rate": 0.5,
@@ -458,6 +470,9 @@
    ],
    "30": [
     "Overcharge"
+   ],
+   "32": [
+    "Spark Call"
    ],
    "34": [
     "Charged Mist"
@@ -675,6 +690,9 @@
    "13": [
     "Candle Ward"
    ],
+   "15": [
+    "Dawn Call"
+   ],
    "18": [
     "Prism Ray"
    ]
@@ -715,6 +733,9 @@
    ],
    "28": [
     "Still Thought"
+   ],
+   "30": [
+    "Dawn Call"
    ],
    "32": [
     "Candle Ward"
@@ -863,6 +884,9 @@
    ],
    "17": [
     "Drench"
+   ],
+   "19": [
+    "Bloom Call"
    ],
    "22": [
     "Thorn Volley"

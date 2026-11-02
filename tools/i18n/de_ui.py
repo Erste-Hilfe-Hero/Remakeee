@@ -150,7 +150,7 @@ T = {
 "Light Sleeper": "Leichter Schlaf", "Can't be Drowsed.": "Kann nicht schläfrig werden.",
 "Last Stand": "Letzte Kraft", "Its own element hits 30% harder below 1/3 HP.": "Unter 1/3 LP trifft sein eigenes Element 30% härter.",
 "Ash Storm": "Aschesturm", "Ash swirls through the Rift. Ember moves burn brighter, Tide moves sputter.": "Asche wirbelt durch den Riss. Ember-Techniken brennen heller, Tide-Techniken stottern.",
-"High Tide": "Springflut", "The water rises around you. Tide moves surge, Ember moves fizzle.": "Das Wasser steigt um dich herum. Tide-Techniken schwellen an, Ember-Techniken verpuffen.",
+"High Tide": "Springflut", "The water rises around you. Tide moves surge, Ember moves fizzle, and nothing catches fire.": "Das Wasser steigt um dich herum. Tide-Techniken schwellen an, Ember-Techniken verpuffen, und nichts fängt Feuer.",
 "Deep Murk": "Tiefes Dunkel", "The hollow swallows the light. Umbra moves deepen, Lumen moves dim.": "Die Senke verschluckt das Licht. Umbra-Techniken werden tiefer, Lumen-Techniken blasser.",
 "Ember Pulse": "Glutpuls",
 "Undertow": "Sog", "The current drags at you: your Spirlings start with lower SPD.": "Die Strömung zerrt an dir: Deine Spirlings starten mit weniger TEM.",
@@ -279,6 +279,12 @@ T = {
 "The Ashen Heart flares up! Its embers spin faster.": "Das Aschenherz lodert auf! Seine Glut wirbelt schneller.",
 "The Drowned Heart pulls the tide around itself!": "Das Ertrunkene Herz zieht die Flut um sich!",
 "Calm rule: %s stays awake while an ally drowses.": "Ruhe-Regel: %s bleibt wach, solange ein Verbündeter döst.",
+"The %s keeps %s safe.": "{0} schützt {1}.",
+"Static Veil": "Statikschleier", "The air crackles. Volt moves snap harder, Stone moves crumble.": "Die Luft knistert. Volt-Techniken schlagen härter zu, Stone-Techniken bröckeln.",
+"Pollen Drift": "Blütenstaub", "Pollen drifts through the Rift. Bloom moves flourish and Bloom Spirlings mend, Gale moves stall.": "Blütenstaub treibt durch den Riss. Bloom-Techniken blühen auf und Bloom-Spirlings heilen, Gale-Techniken erlahmen.",
+"Dawn Glow": "Morgenschein", "A pale dawn fills the Rift. Lumen moves shine, Umbra moves thin out.": "Ein blasser Morgen füllt den Riss. Lumen-Techniken strahlen, Umbra-Techniken verblassen.",
+"The charge races through the soaked %s!": "Die Ladung jagt durch das durchnässte %s!",
+"The water douses the embers on %s!": "Das Wasser löscht die Glut auf %s!",
 }
 
 # Strings the extractor finds that stay the same in every language (names, node and theme ids, debug text).

@@ -17,6 +17,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 - Lager-Lernen: die Bank erhält die Hälfte der XP (abschaltbar)
 - Ruhe-Regel: in Tamer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
 
+## Umgesetzt im zweiten Schritt
+
+- Drei neue Felder (Statikschleier, Blütenstaub, Morgenschein) mit Spark Call, Bloom Call, Dawn Call
+- Springflut hält Scorch fern, Blütenstaub heilt Bloom-Spirlings
+- Element-Reaktionen: Volt trifft durchnässte Ziele härter, Tide löscht Scorch
+- Meister-KI im Wochen-Echo
+- Fuzz-Test über 60 Zufallskämpfe (Mehrfach, Boss, alle Felder)
+
 
 ## Zugablauf und Grundregeln
 
@@ -120,8 +128,8 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 92. [ ] Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl
 93. [ ] Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft
 94. [ ] Neue Feld-Elemente pro Riss variieren
-95. [ ] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
-96. [ ] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden
+95. [x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status
+96. [x] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden
 97. [ ] Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch
 98. [ ] Element-Reaktionen im Lexikon erklären
 99. [ ] Matchup-Quiz als Minispiel im Leuchtturm
@@ -198,7 +206,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 164. [ ] Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf
 165. [ ] Neuer Status 'Erschöpft': halbe Energie-Regeneration
 166. [ ] Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer
-167. [ ] Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)
+167. [x] Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)
 168. [ ] Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen)
 169. [ ] Status-Kombination: Soak + Jolt = länger gelähmt
 170. [ ] Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern)
@@ -366,14 +374,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 
 321. [x] Felder per Technik für 5 Runden, danach kehrt das Feld des Ortes zurück
 322. [ ] Feld-Anzeige mit Restrunden am oberen Rand
-323. [ ] Neues Feld 'Statischer Schleier' (Volt)
-324. [ ] Neues Feld 'Blütenstaub' (Bloom)
-325. [ ] Neues Feld 'Lichtflut' (Lumen)
+323. [x] Neues Feld 'Statischer Schleier' (Volt)
+324. [x] Neues Feld 'Blütenstaub' (Bloom)
+325. [x] Neues Feld 'Morgenschein' (Lumen)
 326. [ ] Neues Feld 'Steinregen' (Stone)
 327. [ ] Neues Feld 'Sturmauge' (Gale)
-328. [ ] Feld beeinflusst Status (Hohe Flut löscht Scorch)
+328. [x] Feld beeinflusst Status (Hohe Flut löscht Scorch)
 329. [ ] Feld beeinflusst Energie (Statischer Schleier)
-330. [ ] Feld beeinflusst Heilung (Blütenstaub heilt 1/16)
+330. [x] Feld beeinflusst Heilung (Blütenstaub heilt 1/16)
 331. [ ] Feld-Hintergrund färbt sich (Backdrop-Tönung)
 332. [ ] Feld-Musik-Variation
 333. [ ] Feld-Tageszeit-Kombination
@@ -399,7 +407,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 353. [ ] Feld-Unterschiede pro Ära-Grafik
 354. [ ] Feld-Regel im Turm zufällig pro Stockwerk
 355. [ ] Feld im Replay gespeichert (bestehend über Seed prüfen)
-356. [ ] Feld-Tests pro Feld
+356. [x] Feld-Tests pro Feld
 357. [ ] Feld-Dauer pro Schwierigkeit gleich
 358. [ ] Feld-Kombination aus Ort und Technik (Technik gewinnt)
 359. [ ] Feld-Wirkung im Schadensvorschau-Wert (bestehend über damage_mult)
@@ -525,7 +533,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 470. [ ] KI erkennt eigene Feldschwäche und wechselt
 471. [ ] KI-Lernen bewusst nicht (deterministisch bleiben)
 472. [ ] KI-Stufen im Lexikon erklären
-473. [ ] KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben
+473. [x] KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben
 474. [ ] KI in Online-Echos nutzt das gespeicherte Team
 475. [ ] KI-Fairness-Test: gleiche Regeln wie der Spieler
 476. [ ] KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau
@@ -1045,9 +1053,9 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 954. [ ] Balancing: Endgame lang
 955. [ ] Balancing-Tests in CI
 956. [ ] Fuzz-Test: zufällige Aktionen 10.000 Züge ohne Fehler
-957. [ ] Fuzz-Test für Mehrfachkämpfe
-958. [ ] Fuzz-Test für Bosse
-959. [ ] Fuzz-Test für Felder
+957. [x] Fuzz-Test für Mehrfachkämpfe
+958. [x] Fuzz-Test für Bosse
+959. [x] Fuzz-Test für Felder
 960. [ ] Fuzz-Test für Online-Echos
 
 ## Originalität, Recht und Technik
@@ -1094,5 +1102,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-13 von 1000 Punkten umgesetzt.
+26 von 1000 Punkten umgesetzt.
 

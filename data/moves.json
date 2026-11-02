@@ -514,5 +514,32 @@
   "accuracy": 1.0,
   "energy": 3,
   "field": "deep_murk"
+ },
+ {
+  "name": "Spark Call",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "static_veil"
+ },
+ {
+  "name": "Bloom Call",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "pollen_drift"
+ },
+ {
+  "name": "Dawn Call",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "dawn_glow"
  }
 ]

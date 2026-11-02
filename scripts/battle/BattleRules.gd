@@ -35,15 +35,44 @@ const TRAITS: Dictionary[String, Dictionary] = {
 	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 HP.", "low_hp_boost": 1.3},
 }
 
-## Rift fields. A map sets "field"; every battle there uses it.
+## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one for a
+## few turns. Optional keys:
+##   blocks:        statuses that can't take hold while the field lasts
+##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
 		"intro": "Ash swirls through the Rift. Ember moves burn brighter, Tide moves sputter."},
-	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER",
-		"intro": "The water rises around you. Tide moves surge, Ember moves fizzle."},
+	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"],
+		"intro": "The water rises around you. Tide moves surge, Ember moves fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
 		"intro": "The hollow swallows the light. Umbra moves deepen, Lumen moves dim."},
+	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE",
+		"intro": "The air crackles. Volt moves snap harder, Stone moves crumble."},
+	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
+		"intro": "Pollen drifts through the Rift. Bloom moves flourish and Bloom Spirlings mend, Gale moves stall."},
+	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA",
+		"intro": "A pale dawn fills the Rift. Lumen moves shine, Umbra moves thin out."},
 }
+
+## Element reactions: a move of "element" that hits a foe with "status" either hits harder
+## ("mult") or washes the status away after the hit ("cure").
+const REACTIONS: Array[Dictionary] = [
+	{"element": "VOLT", "status": "soak", "mult": 1.2, "text": "The charge races through the soaked %s!"},
+	{"element": "TIDE", "status": "scorch", "cure": true, "text": "The water douses the embers on %s!"},
+]
+
+## The reaction a [param move] sets off on [param target], or {}.
+static func reaction(move: MoveData, target: Spirling) -> Dictionary:
+	if target == null or target.status.is_empty() or not move.is_damaging():
+		return {}
+	for r: Dictionary in REACTIONS:
+		if move.element == Elements.E.get(str(r.element), -1) and target.status == str(r.status):
+			return r
+	return {}
+
+## True while [param field] keeps [param status] from taking hold.
+static func field_blocks(field: String, status: String) -> bool:
+	return status in FIELDS.get(field, {}).get("blocks", [])
 
 ## Warden rules (npc "rule"). foe_energy: extra Energy per turn for the Warden's side;
 ## player_stage: stat stages every player Spirling starts with.
@@ -133,6 +162,7 @@ static func field_mult(field: String, element: int) -> float:
 ## Damage multiplier from traits, held items and the field for one hit.
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
 	var m: float = field_mult(field, move.element)
+	m *= float(reaction(move, target).get("mult", 1.0))
 	if move.kind == MoveData.Kind.PHYSICAL:
 		m *= mult_key(target, "phys_taken")
 	var boost: float = float(trait_info(user.data.trait_id).get("low_hp_boost", 1.0))
