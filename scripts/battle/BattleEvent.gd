@@ -10,7 +10,7 @@ enum Type {
 	ITEM_USED, BOND_ATTEMPT, BOND_RESULT, FREE_ACTION, FLEE_RESULT,
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
-	FIELD_END, BOSS_PHASE, REACTION,
+	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "ATK", "def": "DEF", "foc": "FOC", "spd": "SPD"}
@@ -122,6 +122,8 @@ func describe() -> String:
 			return "The %s fades away." % data.get("label", "")
 		Type.BOSS_PHASE:
 			return str(data.get("text", ""))
+		Type.TRAIT:
+			return "%s's trait, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
 		Type.REACTION:
 			return str(data.get("text", "")) % who
 	return ""

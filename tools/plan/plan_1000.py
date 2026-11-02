@@ -153,7 +153,7 @@ AREAS = [
 "Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)",
 "Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen",
 "Technik-Tausch-Vorschau: alte und neue Technik nebeneinander",
-"Technik-Beschreibung mit Effekt-Chancen im Lexikon",
+"[x] Technik-Beschreibung mit Effekt-Chancen im Lexikon",
 "Techniken mit Signatur pro Art (eine je Art, eigenständig)",
 "Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge)",
 "Status-Techniken mit Genauigkeit unter 100 % sichtbar machen",
@@ -172,7 +172,7 @@ AREAS = [
 "Technik-Animationen pro Element eigenständig",
 "Technik-Favoriten im Menü markieren",
 "Technik-Reihenfolge im Menü umsortieren",
-"Technik-Info-Bildschirm per langem Druck",
+"[x] Technik-Info-Bildschirm per langem Druck",
 ]),
 ("Status-Zustände", [
 "[x] Ruhe-Regel: Drowse trifft keinen zweiten Spirling derselben Seite in Tamer-Kämpfen",
@@ -188,7 +188,7 @@ AREAS = [
 "Status-Erklärung im Lexikon mit Zahlen",
 "Status-Animation kurz und optional (Weniger Bewegung)",
 "Status trifft Bosse nur halb so lange",
-"Status-Chance in der Technik-Info",
+"[x] Status-Chance in der Technik-Info",
 "KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI)",
 "Status-Schutz-Technik für das Team",
 "Status überträgt sich bei Kontakt (Trait 'Glimmhaut')",
@@ -260,7 +260,7 @@ AREAS = [
 ]),
 ("Traits", [
 "Trait im Info-Streifen nach der ersten Auslösung zeigen",
-"Trait-Auslösung als kurze Meldung im Log",
+"[x] Trait-Auslösung als kurze Meldung im Log",
 "Zweiter Trait für entwickelte Spirlings (wählbar)",
 "Versteckter Trait selten bei Prisma-Spirlings",
 "Trait-Lexikon mit allen Traits",
@@ -598,7 +598,7 @@ AREAS = [
 "[x] Schadensvorschau im Technik-Menü (~% HP), nur wenn das Matchup schon bekannt ist",
 "Schadensvorschau als Einstellung abschaltbar",
 "Schadensvorschau pro Ziel im Mehrfachkampf",
-"Technik-Info per langem Druck",
+"[x] Technik-Info per langem Druck",
 "Kampflog (bestehend) mit Filter",
 "Gegner-Info-Seite im Kampf (Traits, bekannte Techniken)",
 "Gegner-Techniken werden bekannt, sobald sie benutzt wurden",
@@ -611,7 +611,7 @@ AREAS = [
 "Feld-Restzüge-Anzeige",
 "Bank-Anzeige",
 "Gegenstand-Anzeige",
-"Trait-Anzeige nach Auslösung",
+"[x] Trait-Anzeige nach Auslösung",
 "XP-Vorschau nach dem Kampf",
 "Level-Cap-Anzeige",
 "Bond-Chance bewusst ohne Zahlen-Anzeige (Patent-Leitplanke: keine Fang-Quote)",
@@ -630,7 +630,7 @@ AREAS = [
 "Info: Effektivität als x2/x.5 (bestehend)",
 "Info: Mehrfachziel als 'all' (bestehend)",
 "Info: Priorität als Pfeil",
-"Info: Genauigkeit als Prozent",
+"[x] Info: Genauigkeit als Prozent",
 "Info: Kategorie-Symbol",
 "Info: Boss-Phasen-Marken",
 "Info: Regel-Banner bei Warden",
@@ -645,7 +645,7 @@ AREAS = [
 "Technik-Reihenfolge",
 "Schnell-Heilen nach dem Kampf (Gegenstand-Vorschlag)",
 "Schnell-Wechsel per Wischen bewusst nicht (Patent-Leitplanke: kein Swipe)",
-"Langer Druck für Info",
+"[x] Langer Druck für Info",
 "Gamepad-Steuerung (bestehend)",
 "Einhand-Modus (bestehend)",
 "Links-Hand-Modus (bestehend)",
@@ -1084,6 +1084,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 - Element-Reaktionen: Volt trifft durchnässte Ziele härter, Tide löscht Scorch
 - Meister-KI im Wochen-Echo
 - Fuzz-Test über 60 Zufallskämpfe (Mehrfach, Boss, alle Felder)
+
+## Umgesetzt im dritten Schritt
+
+- Technik-Info per langem Druck: Stärke, Genauigkeit, Energie, Effekte mit Chancen
+- Traits zeigen sich im Kampflog, sobald sie zum ersten Mal wirken
 """
 
 
