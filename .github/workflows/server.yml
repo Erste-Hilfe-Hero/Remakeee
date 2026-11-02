@@ -42,11 +42,12 @@ jobs:
       - name: Start a stand-in for the existing proxy
         run: |
           mkdir -p "$RUNNER_TEMP/proxy"
-          printf '%s\n' ':8080 {' '\trespond "other site"' '}' > "$RUNNER_TEMP/proxy/Caddyfile"
+          printf '%s\n' ':8080 {' '    respond "other site"' '}' > "$RUNNER_TEMP/proxy/Caddyfile"
           docker network create otherprod
           docker run -d --name other-proxy --network otherprod -p 8080:8080 -p 8443:443 \
             -v "$RUNNER_TEMP/proxy/Caddyfile:/etc/caddy/Caddyfile:ro" caddy:2.10.2
           for i in $(seq 1 20); do curl -fsS http://localhost:8080 && break; sleep 1; done
+          curl -fsS http://localhost:8080
       - name: Install Chimora in shared mode
         run: |
           sudo SHARED_HOST=1 SHARED_NETWORK=otherprod PROXY_CONTAINER=other-proxy \
