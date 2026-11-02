@@ -14,7 +14,7 @@ work="$(mktemp -d)"
 trap 'rm -rf "$work"' EXIT
 
 docker exec "$proxy" caddy adapt --config "$inner" --adapter caddyfile > "$work/disk.json" 2>/dev/null
-docker exec "$proxy" wget -qO- http://localhost:2019/config/ > "$work/live.json"
+docker exec "$proxy" wget -qO- http://127.0.0.1:2019/config/ > "$work/live.json"
 if ! python3 - "$work/disk.json" "$work/live.json" <<'PY'
 import json, sys
 a, b = (json.load(open(p)) for p in sys.argv[1:3])
