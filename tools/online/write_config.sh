@@ -12,7 +12,7 @@ key="${SUPABASE_ANON_KEY:-}"
 server="${CHIMORA_SERVER:-}"
 if [ -n "$server" ] && { [ -z "$url" ] || [ -z "$key" ]; }; then
 	case "$server" in https://*) ;; *) server="https://$server" ;; esac
-	conf="$(curl -fsS --retry 3 "${server%/}/chimora.json")" || { echo "::error::Could not read ${server%/}/chimora.json"; exit 1; }
+	conf="$(python3 -c 'import sys,urllib.request;print(urllib.request.urlopen(sys.argv[1],timeout=30).read().decode())' "${server%/}/chimora.json")" || { echo "::error::Could not read ${server%/}/chimora.json"; exit 1; }
 	url="$(printf '%s' "$conf" | python3 -c 'import json,sys;print(json.load(sys.stdin)["url"])')"
 	key="$(printf '%s' "$conf" | python3 -c 'import json,sys;print(json.load(sys.stdin)["anon_key"])')"
 fi
