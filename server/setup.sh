@@ -9,8 +9,9 @@
 #
 # On a machine where another Caddy already serves ports 80/443 (shared host):
 #   SHARED_HOST=1 SHARED_NETWORK=<its docker network> PROXY_CONTAINER=<its container> \
-#   PROXY_CADDYFILE=<its Caddyfile on the host> DOMAIN=<chimora address> bash server/setup.sh
-# Chimora then opens no ports and leaves the firewall alone; the other Caddy gets one site block.
+#   DOMAIN=<chimora address> bash server/setup.sh
+# Chimora then opens no ports and leaves the firewall alone; the other Caddy gets one route for
+# DOMAIN in its running config (proxy_site.sh), re-checked every 10 minutes in case it restarts.
 #
 # Prints the server address and the public anon key at the end; they are also served at
 # https://<address>/chimora.json, where CI picks them up for the game builds.
@@ -128,6 +129,12 @@ if [ "$local_test" != "1" ]; then
 # Nightly database backup, kept 14 days (server/backup.sh).
 30 3 * * * root bash $here/backup.sh >> /var/log/chimora-backup.log 2>&1
 CRON
+	if [ "$shared" = "1" ]; then
+		cat > /etc/cron.d/chimora-proxy <<CRON
+# Puts Chimora's route back if the shared proxy restarted from its own files (server/proxy_site.sh).
+*/10 * * * * root PROXY_CONTAINER=${PROXY_CONTAINER} DOMAIN=${DOMAIN} bash $here/proxy_site.sh >> /var/log/chimora-proxy.log 2>&1
+CRON
+	fi
 fi
 
 echo

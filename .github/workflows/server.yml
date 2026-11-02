@@ -39,32 +39,67 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Start a stand-in for the existing proxy
+      - name: Start a stand-in for the existing proxy (pinned TLS policies, drifted live config)
         run: |
           mkdir -p "$RUNNER_TEMP/proxy"
-          printf '%s\n' ':8080 {' '    respond "other site"' '}' > "$RUNNER_TEMP/proxy/Caddyfile"
+          cat > "$RUNNER_TEMP/proxy/Caddyfile" <<'EOF'
+          {
+              auto_https disable_redirects
+          }
+          https://other.localhost {
+              tls internal
+              respond "other https"
+          }
+          :80 {
+              respond "other site"
+          }
+          EOF
           docker network create otherprod
-          docker run -d --name other-proxy --network otherprod -p 8080:8080 -p 8443:443 \
+          docker run -d --name other-proxy --network otherprod -p 8080:80 -p 8443:443 \
             -v "$RUNNER_TEMP/proxy/Caddyfile:/etc/caddy/Caddyfile:ro" caddy:2.10.2
           for i in $(seq 1 20); do curl -fsS http://localhost:8080 && break; sleep 1; done
-          curl -fsS http://localhost:8080
+          # Like production: the running config has a route the file does not know about.
+          docker exec other-proxy wget -qO- http://127.0.0.1:2019/config/ > "$RUNNER_TEMP/live.json"
+          python3 - "$RUNNER_TEMP/live.json" <<'PY'
+          import json, sys
+          cfg = json.load(open(sys.argv[1]))
+          srv = next(s for s in cfg["apps"]["http"]["servers"].values() if ":443" in s["listen"])
+          srv["routes"].insert(0, {"match": [{"host": ["other.localhost"], "path": ["/drift"]}],
+                                   "handle": [{"handler": "static_response", "body": "drift"}], "terminal": True})
+          srv.setdefault("tls_connection_policies", [{"match": {"sni": ["other.localhost"]}}])
+          json.dump(cfg, open(sys.argv[1], "w"))
+          PY
+          docker exec -i other-proxy sh -c 'cat > /tmp/live.json' < "$RUNNER_TEMP/live.json"
+          docker exec other-proxy caddy reload --config /tmp/live.json
+          sha256sum "$RUNNER_TEMP/proxy/Caddyfile" > "$RUNNER_TEMP/proxy.sha"
+          curl -fsSk --resolve other.localhost:8443:127.0.0.1 https://other.localhost:8443/drift
       - name: Install Chimora in shared mode
         run: |
           sudo SHARED_HOST=1 SHARED_NETWORK=otherprod PROXY_CONTAINER=other-proxy \
-            PROXY_CADDYFILE="$RUNNER_TEMP/proxy/Caddyfile" DOMAIN=localhost bash server/setup.sh
-      - name: Run it again (block is replaced, not added twice)
+            DOMAIN=localhost bash server/setup.sh
+      - name: Run it again (route is replaced, not added twice)
         run: |
           sudo SHARED_HOST=1 SHARED_NETWORK=otherprod PROXY_CONTAINER=other-proxy \
-            PROXY_CADDYFILE="$RUNNER_TEMP/proxy/Caddyfile" DOMAIN=localhost bash server/setup.sh
-          test "$(grep -c chimora-begin "$RUNNER_TEMP/proxy/Caddyfile")" = 1
-          cat "$RUNNER_TEMP/proxy/Caddyfile"
-      - name: Other site still works, Chimora works through the proxy
+            DOMAIN=localhost bash server/setup.sh | tee "$RUNNER_TEMP/second.log"
+          grep -q "Nothing to do" "$RUNNER_TEMP/second.log"
+          docker exec other-proxy wget -qO- http://127.0.0.1:2019/config/ | python3 -c '
+          import json, sys
+          cfg = json.load(sys.stdin)
+          srv = next(s for s in cfg["apps"]["http"]["servers"].values() if ":443" in s["listen"])
+          assert sum(r.get("match") == [{"host": ["localhost"]}] for r in srv["routes"]) == 1
+          assert sum(p.get("match") == {"sni": ["localhost"]} for p in srv["tls_connection_policies"]) == 1
+          print(json.dumps(srv, indent=1))'
+      - name: Other sites untouched, Chimora works through the proxy
         run: |
+          sha256sum -c "$RUNNER_TEMP/proxy.sha"
           test "$(curl -fsS http://localhost:8080)" = "other site"
+          test "$(curl -fsSk --resolve other.localhost:8443:127.0.0.1 https://other.localhost:8443/)" = "other https"
+          test "$(curl -fsSk --resolve other.localhost:8443:127.0.0.1 https://other.localhost:8443/drift)" = "drift"
           sudo chmod -R a+r server/public
           for i in $(seq 1 20); do curl -fsSk https://localhost:8443/chimora.json && break; sleep 2; done
           SMOKE_INSECURE=1 bash server/smoke_test.sh https://localhost:8443
           ! sudo docker ps --format '{{.Names}} {{.Ports}}' | grep chimora- | grep -q -- '->'
+          test -f /etc/cron.d/chimora-proxy
       - name: Logs
         if: failure()
         run: |

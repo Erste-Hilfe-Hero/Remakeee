@@ -73,9 +73,12 @@ then says "test server on this phone". The debug APK from CI works like this unt
 On Ali's existing Contabo server (161.97.102.171), next to Nyrathen and Dranbleib, at
 `https://chimora.161-97-102-171.sslip.io`. That machine's Caddy (`nyrathen-proxy`) already owns ports 80 and
 443, so Chimora runs in shared mode: its own containers (project `chimora`, folder `/opt/chimora`) with no
-public ports, and one site block in `/srv/nyrathen/prod/Caddyfile` between `# chimora-begin` and
-`# chimora-end` that forwards to `chimora-gateway`. `server/proxy_site.sh` only changes the proxy when its
-running config equals that file, validates first, keeps a backup next to it and restores it on failure.
+public ports, and one route for its address in the proxy's running config that forwards to
+`chimora-gateway`. The proxy's own files are never edited (its running config already differs from
+them). `server/proxy_site.sh` reads the live config through Caddy's admin API, changes only Chimora's
+route and its TLS policy, loads it with a validated graceful reload, checks that everything else is
+unchanged and loads the saved copy again otherwise (copies in `/opt/chimora/server/backups/`). A cron job
+(`/etc/cron.d/chimora-proxy`) re-runs it every 10 minutes, so the route comes back if the proxy restarts.
 The firewall and the other services are not touched.
 
 Deploys run from the lifekit repository (it holds the Contabo access): workflow "Chimora on Contabo" on
