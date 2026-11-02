@@ -285,11 +285,22 @@ T = {
 "Dawn Glow": "Morgenschein", "A pale dawn fills the Rift. Lumen moves shine, Umbra moves thin out.": "Ein blasser Morgen füllt den Riss. Lumen-Techniken strahlen, Umbra-Techniken verblassen.",
 "The charge races through the soaked %s!": "Die Ladung jagt durch das durchnässte %s!",
 "The water douses the embers on %s!": "Das Wasser löscht die Glut auf %s!",
+"%s's trait, %s: %s": "Eigenschaft von {0}, {1}: {2}",
+"%s, %s, power %d": "%s, %s, Stärke %d", "Accuracy %d%%, %d Energy": "Genauigkeit %d%%, %d Energie",
+"Acts before other moves.": "Handelt vor anderen Techniken.", "Reaches every foe.": "Trifft alle Gegner.",
+"Spends all leftover Energy for more power.": "Setzt alle übrige Energie für mehr Stärke ein.",
+"Inflicts %s.": "Verursacht %s.",
+"Raises its own %s by %d.": "Hebt den eigenen %s-Wert um %d.", "Lowers its own %s by %d.": "Senkt den eigenen %s-Wert um %d.",
+"Raises the foe's %s by %d.": "Hebt den %s-Wert des Gegners um %d.", "Lowers the foe's %s by %d.": "Senkt den %s-Wert des Gegners um %d.",
+"Heals %d%% of its HP.": "Heilt %d%% der eigenen LP.", "Heals from the damage it deals.": "Heilt sich am verursachten Schaden.",
+"Hurts itself a little too.": "Verletzt sich auch selbst ein wenig.", "Takes Energy from the foe.": "Nimmt dem Gegner Energie.",
+"Lays %s for %d turns.": "Legt %s für %d Runden.", "%d%% chance: %s": "%d%% Chance: %s",
+"Physical": "Physisch", "Focus": "Fokus", "Status": "Status",
 }
 
 # Strings the extractor finds that stay the same in every language (names, node and theme ids, debug text).
 KEEP = ["Label", "Button", "PanelContainer", "Panel", "LineEdit", "Ground", "Entities", "Shade", "Player",
-	"Juno", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dE ~%d%%", "%dx", "Lv%d", "%s Lv%d", "%s Lv%d %d/%d",
+	"Juno", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dE ~%d%%", "%s, %s", "%dx", "Lv%d", "%s Lv%d", "%s Lv%d %d/%d",
 	"%s Lv%d %d/%d%s", "%s_sealed", "%s_era%d", "cannot open %s (%s)", "rename failed: %s", "Battle log\n\n", "\n\n(tap to close)",
 	" a lot.", "%s's %s is already at its %s.", "Item", "Auto", "Log", "Team", "Spirlog", "Normal", "Level", "Name",
 	"%s: %s.", "%s   Lv %d", "  %s Lv%d",

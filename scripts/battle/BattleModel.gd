@@ -409,6 +409,19 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 		_check_boss_phase(s)
 	return dealt
 
+## Shows the trait of the Spirling in [param slot] the first time it matters in a battle (TRAIT).
+func reveal_trait(side: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.has_meta("trait_shown"):
+		return
+	var t: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	if t.is_empty():
+		return
+	s.set_meta("trait_shown", true)
+	var d: Dictionary = _who(side, slot)
+	d.merge({"trait": s.data.trait_id, "label": str(t.label), "text": str(t.text)})
+	emit_event(BattleEvent.Type.TRAIT, d)
+
 ## Lays the Rift field [param id] for [param turns] turns (0 = for good). Emits FIELD.
 func set_field(id: String, turns: int = BattleRules.RESONANCE_TURNS) -> bool:
 	if not BattleRules.FIELDS.has(id):
@@ -458,6 +471,7 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
 	if BattleRules.is_immune(s, status):
+		reveal_trait(side, slot)
 		var f: Dictionary = _who(side, slot)
 		f["status"] = status
 		emit_event(BattleEvent.Type.STATUS_FAILED, f)
@@ -477,6 +491,8 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
+	if status == "scorch" and BattleRules.trait_info(s.data.trait_id).has("scorch_atk"):
+		reveal_trait(side, slot)
 	return true
 
 ## Calm rule: in Tamer battles a side may have only one Spirling sleeping (Drowse) at a time.
@@ -588,9 +604,13 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 	var field_regen: int = 0
 	if Elements.E.get(str(fdata.get("regen_element", "")), -1) in s.elements():
 		field_regen = int(fdata.get("regen_div", 0))
+	if regen > 0 and s.hp < s.max_hp():
+		reveal_trait(side, slot)
 	for rdiv: int in [regen, held_regen, field_regen]:
 		if rdiv > 0 and s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
+	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
+		reveal_trait(side, slot)
 	var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
 	if side == Side.FOE:
 		gain += int(BattleRules.RULES.get(foe_rule, {}).get("foe_energy", 0))
@@ -646,6 +666,12 @@ func _refill_slot(side: int, slot: int, brain: BattleAI) -> void:
 func _phase_rewards() -> void:
 	for s: Spirling in parties[Side.PLAYER]:
 		s.end_battle()
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for s: Spirling in parties[side]:
+			if s.has_meta("trait_shown"):
+				s.remove_meta("trait_shown")
+	if bonded != null and bonded.has_meta("trait_shown"):
+		bonded.remove_meta("trait_shown")
 	for s: Spirling in parties[Side.FOE]:
 		if s.has_meta("xp_paid"):
 			s.remove_meta("xp_paid")
@@ -737,6 +763,10 @@ func _do_move(a: BattleAction) -> void:
 			rd.merge({"text": str(react.text), "element": mv.element})
 			emit_event(BattleEvent.Type.REACTION, rd)
 		if mv.is_damaging():
+			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.data.trait_id).has("phys_taken"):
+				reveal_trait(target_side, t_slot)
+			if BattleRules.trait_info(me.data.trait_id).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
+				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field)
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
 			ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)

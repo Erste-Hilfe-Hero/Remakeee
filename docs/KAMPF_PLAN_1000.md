@@ -25,6 +25,11 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 - Meister-KI im Wochen-Echo
 - Fuzz-Test über 60 Zufallskämpfe (Mehrfach, Boss, alle Felder)
 
+## Umgesetzt im dritten Schritt
+
+- Technik-Info per langem Druck: Stärke, Genauigkeit, Energie, Effekte mit Chancen
+- Traits zeigen sich im Kampflog, sobald sie zum ersten Mal wirken
+
 
 ## Zugablauf und Grundregeln
 
@@ -177,7 +182,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 138. [ ] Technik-Lehrer im Leuchtturm (vergessene Techniken neu lernen)
 139. [ ] Echo-Kristalle (bestehend) als Quelle seltener Techniken ausbauen
 140. [ ] Technik-Tausch-Vorschau: alte und neue Technik nebeneinander
-141. [ ] Technik-Beschreibung mit Effekt-Chancen im Lexikon
+141. [x] Technik-Beschreibung mit Effekt-Chancen im Lexikon
 142. [ ] Techniken mit Signatur pro Art (eine je Art, eigenständig)
 143. [ ] Keine Technik-Namen aus anderen Spielen (Prüfliste vor jedem Merge)
 144. [ ] Status-Techniken mit Genauigkeit unter 100 % sichtbar machen
@@ -196,7 +201,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 157. [ ] Technik-Animationen pro Element eigenständig
 158. [ ] Technik-Favoriten im Menü markieren
 159. [ ] Technik-Reihenfolge im Menü umsortieren
-160. [ ] Technik-Info-Bildschirm per langem Druck
+160. [x] Technik-Info-Bildschirm per langem Druck
 
 ## Status-Zustände
 
@@ -213,7 +218,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 171. [ ] Status-Erklärung im Lexikon mit Zahlen
 172. [ ] Status-Animation kurz und optional (Weniger Bewegung)
 173. [ ] Status trifft Bosse nur halb so lange
-174. [ ] Status-Chance in der Technik-Info
+174. [x] Status-Chance in der Technik-Info
 175. [ ] KI meidet Status gegen Ziele mit Status oder Immunität (umgesetzt in Meister-KI)
 176. [ ] Status-Schutz-Technik für das Team
 177. [ ] Status überträgt sich bei Kontakt (Trait 'Glimmhaut')
@@ -287,7 +292,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 ## Traits
 
 241. [ ] Trait im Info-Streifen nach der ersten Auslösung zeigen
-242. [ ] Trait-Auslösung als kurze Meldung im Log
+242. [x] Trait-Auslösung als kurze Meldung im Log
 243. [ ] Zweiter Trait für entwickelte Spirlings (wählbar)
 244. [ ] Versteckter Trait selten bei Prisma-Spirlings
 245. [ ] Trait-Lexikon mit allen Traits
@@ -633,7 +638,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 561. [x] Schadensvorschau im Technik-Menü (~% HP), nur wenn das Matchup schon bekannt ist
 562. [ ] Schadensvorschau als Einstellung abschaltbar
 563. [ ] Schadensvorschau pro Ziel im Mehrfachkampf
-564. [ ] Technik-Info per langem Druck
+564. [x] Technik-Info per langem Druck
 565. [ ] Kampflog (bestehend) mit Filter
 566. [ ] Gegner-Info-Seite im Kampf (Traits, bekannte Techniken)
 567. [ ] Gegner-Techniken werden bekannt, sobald sie benutzt wurden
@@ -646,7 +651,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 574. [ ] Feld-Restzüge-Anzeige
 575. [ ] Bank-Anzeige
 576. [ ] Gegenstand-Anzeige
-577. [ ] Trait-Anzeige nach Auslösung
+577. [x] Trait-Anzeige nach Auslösung
 578. [ ] XP-Vorschau nach dem Kampf
 579. [ ] Level-Cap-Anzeige
 580. [ ] Bond-Chance bewusst ohne Zahlen-Anzeige (Patent-Leitplanke: keine Fang-Quote)
@@ -665,7 +670,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 593. [ ] Info: Effektivität als x2/x.5 (bestehend)
 594. [ ] Info: Mehrfachziel als 'all' (bestehend)
 595. [ ] Info: Priorität als Pfeil
-596. [ ] Info: Genauigkeit als Prozent
+596. [x] Info: Genauigkeit als Prozent
 597. [ ] Info: Kategorie-Symbol
 598. [ ] Info: Boss-Phasen-Marken
 599. [ ] Info: Regel-Banner bei Warden
@@ -681,7 +686,7 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 606. [ ] Technik-Reihenfolge
 607. [ ] Schnell-Heilen nach dem Kampf (Gegenstand-Vorschlag)
 608. [ ] Schnell-Wechsel per Wischen bewusst nicht (Patent-Leitplanke: kein Swipe)
-609. [ ] Langer Druck für Info
+609. [x] Langer Druck für Info
 610. [ ] Gamepad-Steuerung (bestehend)
 611. [ ] Einhand-Modus (bestehend)
 612. [ ] Links-Hand-Modus (bestehend)
@@ -1102,5 +1107,5 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 1000. [ ] Kampf-Plan im Projektordner gespiegelt
 
 ---
-26 von 1000 Punkten umgesetzt.
+34 von 1000 Punkten umgesetzt.
 
