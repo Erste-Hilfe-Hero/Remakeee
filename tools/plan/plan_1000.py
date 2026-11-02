@@ -105,8 +105,8 @@ AREAS = [
 "Effektivitäts-Hinweis im Mehrfachkampf pro Ziel bei der Zielwahl",
 "Element-Balance-Bericht: welches Element gewinnt im Simulator zu oft",
 "Neue Feld-Elemente pro Riss variieren",
-"Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status",
-"Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden",
+"[x] Element-Reaktion: Tide trifft Scorch-Ziel und löscht den Status",
+"[x] Element-Reaktion: Volt trifft Soak-Ziel für +20 % Schaden",
 "Element-Reaktion: Ember auf Root-Ziel befreit es, verursacht aber Scorch",
 "Element-Reaktionen im Lexikon erklären",
 "Matchup-Quiz als Minispiel im Leuchtturm",
@@ -181,7 +181,7 @@ AREAS = [
 "Neuer Status 'Verwirrt' in eigener Form: Ziel wählt zufällig das Ziel im Mehrfachkampf",
 "Neuer Status 'Erschöpft': halbe Energie-Regeneration",
 "Neuer Status 'Markiert': nächster Treffer gegen das Ziel ist ein sicherer Treffer",
-"Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)",
+"[x] Status-Immunität durch Feld (z. B. Hohe Flut verhindert Scorch)",
 "Status-Heil-Gegenstände pro Status und ein Allheiler (bestehend prüfen)",
 "Status-Kombination: Soak + Jolt = länger gelähmt",
 "Status-Ticks bleiben bei 1/12 (fixe Originalitätszahl, nicht ändern)",
@@ -345,14 +345,14 @@ AREAS = [
 ("Rift-Felder und Umgebung", [
 "[x] Felder per Technik für 5 Runden, danach kehrt das Feld des Ortes zurück",
 "Feld-Anzeige mit Restrunden am oberen Rand",
-"Neues Feld 'Statischer Schleier' (Volt)",
-"Neues Feld 'Blütenstaub' (Bloom)",
-"Neues Feld 'Lichtflut' (Lumen)",
+"[x] Neues Feld 'Statischer Schleier' (Volt)",
+"[x] Neues Feld 'Blütenstaub' (Bloom)",
+"[x] Neues Feld 'Morgenschein' (Lumen)",
 "Neues Feld 'Steinregen' (Stone)",
 "Neues Feld 'Sturmauge' (Gale)",
-"Feld beeinflusst Status (Hohe Flut löscht Scorch)",
+"[x] Feld beeinflusst Status (Hohe Flut löscht Scorch)",
 "Feld beeinflusst Energie (Statischer Schleier)",
-"Feld beeinflusst Heilung (Blütenstaub heilt 1/16)",
+"[x] Feld beeinflusst Heilung (Blütenstaub heilt 1/16)",
 "Feld-Hintergrund färbt sich (Backdrop-Tönung)",
 "Feld-Musik-Variation",
 "Feld-Tageszeit-Kombination",
@@ -378,7 +378,7 @@ AREAS = [
 "Feld-Unterschiede pro Ära-Grafik",
 "Feld-Regel im Turm zufällig pro Stockwerk",
 "Feld im Replay gespeichert (bestehend über Seed prüfen)",
-"Feld-Tests pro Feld",
+"[x] Feld-Tests pro Feld",
 "Feld-Dauer pro Schwierigkeit gleich",
 "Feld-Kombination aus Ort und Technik (Technik gewinnt)",
 "Feld-Wirkung im Schadensvorschau-Wert (bestehend über damage_mult)",
@@ -501,7 +501,7 @@ AREAS = [
 "KI erkennt eigene Feldschwäche und wechselt",
 "KI-Lernen bewusst nicht (deterministisch bleiben)",
 "KI-Stufen im Lexikon erklären",
-"KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben",
+"[x] KI-Stufe im Wochen-Echo (bestehend 2) auf 3 heben",
 "KI in Online-Echos nutzt das gespeicherte Team",
 "KI-Fairness-Test: gleiche Regeln wie der Spieler",
 "KI-Schadensschätzung nutzt dieselbe Formel wie die Vorschau",
@@ -1009,9 +1009,9 @@ AREAS = [
 "Balancing: Endgame lang",
 "Balancing-Tests in CI",
 "Fuzz-Test: zufällige Aktionen 10.000 Züge ohne Fehler",
-"Fuzz-Test für Mehrfachkämpfe",
-"Fuzz-Test für Bosse",
-"Fuzz-Test für Felder",
+"[x] Fuzz-Test für Mehrfachkämpfe",
+"[x] Fuzz-Test für Bosse",
+"[x] Fuzz-Test für Felder",
 "Fuzz-Test für Online-Echos",
 ]),
 ("Originalität, Recht und Technik", [
@@ -1076,6 +1076,14 @@ Legende: **[x]** = umgesetzt, **[ ]** = offen. Die Datei wird von `tools/plan/pl
 - Schadensvorschau im Technik-Menü (abschaltbar)
 - Lager-Lernen: die Bank erhält die Hälfte der XP (abschaltbar)
 - Ruhe-Regel: in Tamer-Kämpfen höchstens ein Spirling pro Seite mit Drowse
+
+## Umgesetzt im zweiten Schritt
+
+- Drei neue Felder (Statikschleier, Blütenstaub, Morgenschein) mit Spark Call, Bloom Call, Dawn Call
+- Springflut hält Scorch fern, Blütenstaub heilt Bloom-Spirlings
+- Element-Reaktionen: Volt trifft durchnässte Ziele härter, Tide löscht Scorch
+- Meister-KI im Wochen-Echo
+- Fuzz-Test über 60 Zufallskämpfe (Mehrfach, Boss, alle Felder)
 """
 
 

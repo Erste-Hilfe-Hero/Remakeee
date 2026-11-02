@@ -624,7 +624,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(["Your team is fully rested."] as Array[String])
 	var wins: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
-		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 2, "rule": ch.rule, "field": ch.field}
+		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
 		busy = true

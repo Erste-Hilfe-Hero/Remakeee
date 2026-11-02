@@ -10,7 +10,7 @@ enum Type {
 	ITEM_USED, BOND_ATTEMPT, BOND_RESULT, FREE_ACTION, FLEE_RESULT,
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
-	FIELD_END, BOSS_PHASE,
+	FIELD_END, BOSS_PHASE, REACTION,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "ATK", "def": "DEF", "foc": "FOC", "spd": "SPD"}
@@ -67,6 +67,8 @@ func describe() -> String:
 		Type.STATUS_APPLIED:
 			return "%s is afflicted with %s!" % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_FAILED:
+			if not str(data.get("field_label", "")).is_empty():
+				return "The %s keeps %s safe." % [data.get("field_label", ""), who]
 			if bool(data.get("clause", false)):
 				return "Calm rule: %s stays awake while an ally drowses." % who
 			return "It had no effect on %s." % who
@@ -120,4 +122,6 @@ func describe() -> String:
 			return "The %s fades away." % data.get("label", "")
 		Type.BOSS_PHASE:
 			return str(data.get("text", ""))
+		Type.REACTION:
+			return str(data.get("text", "")) % who
 	return ""

@@ -462,6 +462,11 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 		f["status"] = status
 		emit_event(BattleEvent.Type.STATUS_FAILED, f)
 		return false
+	if BattleRules.field_blocks(field, status):
+		var fb: Dictionary = _who(side, slot)
+		fb.merge({"status": status, "field_label": str(BattleRules.FIELDS[field].label)})
+		emit_event(BattleEvent.Type.STATUS_FAILED, fb)
+		return false
 	if calm_rule_blocks(side, s, status):
 		var c: Dictionary = _who(side, slot)
 		c.merge({"status": status, "clause": true})
@@ -579,7 +584,11 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 			_cure(side, slot)
 	var regen: int = int(BattleRules.trait_info(s.data.trait_id).get("regen_div", 0))
 	var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
-	for rdiv: int in [regen, held_regen]:
+	var fdata: Dictionary = BattleRules.FIELDS.get(field, {})
+	var field_regen: int = 0
+	if Elements.E.get(str(fdata.get("regen_element", "")), -1) in s.elements():
+		field_regen = int(fdata.get("regen_div", 0))
+	for rdiv: int in [regen, held_regen, field_regen]:
 		if rdiv > 0 and s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
 	var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
@@ -722,10 +731,17 @@ func _do_move(a: BattleAction) -> void:
 		ctx.user = me
 		ctx.target = target
 		ctx.move = mv
+		var react: Dictionary = BattleRules.reaction(mv, target)
+		if not react.is_empty():
+			var rd: Dictionary = _who(target_side, t_slot)
+			rd.merge({"text": str(react.text), "element": mv.element})
+			emit_event(BattleEvent.Type.REACTION, rd)
 		if mv.is_damaging():
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field)
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
 			ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
+			if bool(react.get("cure", false)) and is_standing(target):
+				_cure(target_side, t_slot)
 		for fx: Dictionary in mv.effects:
 			if self_done and _is_self_effect(fx):
 				continue
