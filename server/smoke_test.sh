@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # Plays a tiny session against a running server the way the game does: anonymous sign-in, hello,
-# save, load, a friend request between two accounts. Usage: server/smoke_test.sh [URL]
+# save, load, a friend request between two accounts, then deletes both test accounts again.
+# Usage: server/smoke_test.sh [URL]   (SMOKE_INSECURE=1 accepts a self-signed certificate)
 set -euo pipefail
 cd "$(dirname "$0")"
 url="${1:-$(python3 -c 'import json;print(json.load(open("public/chimora.json"))["url"])')}"
 anon="$(python3 -c 'import json;print(json.load(open("public/chimora.json"))["anon_key"])')"
 fail() { echo "FAIL: $*" >&2; exit 1; }
+k=""; [ "${SMOKE_INSECURE:-0}" = "1" ] && k="-k"
 post() { # path token body
-	curl -sS -X POST "$url$1" -H "apikey: $anon" -H "Authorization: Bearer $2" -H "Content-Type: application/json" -d "$3"
+	curl -sS $k -X POST "$url$1" -H "apikey: $anon" -H "Authorization: Bearer $2" -H "Content-Type: application/json" -d "$3"
 }
 field() { python3 -c "import json,sys;d=json.load(sys.stdin);print(eval('d'+sys.argv[1]))" "$1"; }
 
@@ -32,7 +34,12 @@ req="$(post /rest/v1/rpc/friend_request "$b" "{\"p_code\": \"$code_a\"}")"
 echo "$req" | grep -q '"ok": *true\|"ok":true' || fail "friend_request: $req"
 
 # Tables must not be reachable directly.
-raw="$(curl -sS "$url/rest/v1/saves?select=*" -H "apikey: $anon" -H "Authorization: Bearer $a")"
+raw="$(curl -sS $k "$url/rest/v1/saves?select=*" -H "apikey: $anon" -H "Authorization: Bearer $a")"
 echo "$raw" | grep -q '"money"' && fail "saves table is readable: $raw"
+
+for t in "$a" "$b"; do
+	del="$(post /rest/v1/rpc/delete_account "$t" '{}')"
+	echo "$del" | grep -q '"ok": *true\|"ok":true' || fail "delete_account: $del"
+done
 
 echo "Smoke test OK against $url"

@@ -68,7 +68,23 @@ New server features add a migration file, a SQL test and the same rule in `Local
 Builds without a server address use `LocalBackend`, a test server that lives on the phone. The account menu
 then says "test server on this phone". The debug APK from CI works like this until the secrets below exist.
 
-## Setting up the server (Ali, once)
+## Where it runs now
+
+On Ali's existing Contabo server (161.97.102.171), next to Nyrathen and Dranbleib, at
+`https://chimora.161-97-102-171.sslip.io`. That machine's Caddy (`nyrathen-proxy`) already owns ports 80 and
+443, so Chimora runs in shared mode: its own containers (project `chimora`, folder `/opt/chimora`) with no
+public ports, and one site block in `/srv/nyrathen/prod/Caddyfile` between `# chimora-begin` and
+`# chimora-end` that forwards to `chimora-gateway`. `server/proxy_site.sh` only changes the proxy when its
+running config equals that file, validates first, keeps a backup next to it and restores it on failure.
+The firewall and the other services are not touched.
+
+Deploys run from the lifekit repository (it holds the Contabo access): workflow "Chimora on Contabo" on
+branch `claude/chimora-contabo`. A commit whose message starts with `run:chimora-inspect` only looks at the
+machine; `run:chimora-deploy` installs or updates Chimora from this repository and runs the smoke test from
+outside (its two test accounts are deleted again). Builds use the secret
+`CHIMORA_SERVER=https://chimora.161-97-102-171.sslip.io`.
+
+## Setting up the server on a new machine
 
 1. At [contabo.com](https://contabo.com) order a **Cloud VPS 10** (about 5 EUR a month is enough to start).
    Region: **European Union (Germany)**. Image: **Ubuntu 24.04**. Choose a root password.

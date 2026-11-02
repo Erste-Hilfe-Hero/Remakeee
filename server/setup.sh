@@ -7,12 +7,18 @@
 #   sudo DOMAIN=api.example.de bash server/setup.sh
 #   LOCAL_TEST=1 bash server/setup.sh         # CI: plain http://localhost, no firewall or cron
 #
+# On a machine where another Caddy already serves ports 80/443 (shared host):
+#   SHARED_HOST=1 SHARED_NETWORK=<its docker network> PROXY_CONTAINER=<its container> \
+#   PROXY_CADDYFILE=<its Caddyfile on the host> DOMAIN=<chimora address> bash server/setup.sh
+# Chimora then opens no ports and leaves the firewall alone; the other Caddy gets one site block.
+#
 # Prints the server address and the public anon key at the end; they are also served at
 # https://<address>/chimora.json, where CI picks them up for the game builds.
 set -euo pipefail
 cd "$(dirname "$0")"
 here="$(pwd)"
 local_test="${LOCAL_TEST:-0}"
+shared="${SHARED_HOST:-0}"
 
 if [ "$local_test" != "1" ] && [ "$(id -u)" != "0" ]; then
 	echo "Please run as root (sudo)." >&2
@@ -28,9 +34,12 @@ if ! command -v docker >/dev/null 2>&1 || ! docker compose version >/dev/null 2>
 fi
 
 # --- Address -----------------------------------------------------------------------------------
-if [ "$local_test" = "1" ]; then
+if [ "$local_test" = "1" ] && [ "$shared" != "1" ]; then
 	site=":80"
 	public_url="http://localhost"
+elif [ "$shared" = "1" ]; then
+	site=":80"
+	public_url="https://${DOMAIN:?DOMAIN is needed on a shared host}"
 else
 	domain="${DOMAIN:-}"
 	if [ -z "$domain" ] && [ -f .env ]; then
@@ -62,12 +71,16 @@ ENV
 	umask 022
 fi
 # Address lines are rewritten each run (DOMAIN can change).
-grep -v '^\(DOMAIN\|SITE_ADDRESS\|PUBLIC_URL\)=' .env > .env.new || true
+grep -v '^\(DOMAIN\|SITE_ADDRESS\|PUBLIC_URL\|COMPOSE_FILE\|SHARED_NETWORK\)=' .env > .env.new || true
 {
 	cat .env.new
-	[ "$local_test" = "1" ] || echo "DOMAIN=$site"
+	[ "$local_test" = "1" ] || [ "$shared" = "1" ] || echo "DOMAIN=$site"
 	echo "SITE_ADDRESS=$site"
 	echo "PUBLIC_URL=$public_url"
+	if [ "$shared" = "1" ]; then
+		echo "COMPOSE_FILE=docker-compose.yml:docker-compose.shared.yml"
+		echo "SHARED_NETWORK=${SHARED_NETWORK:?SHARED_NETWORK is needed on a shared host}"
+	fi
 } > .env
 rm -f .env.new
 chmod 600 .env
@@ -96,8 +109,12 @@ done
 
 bash "$here/migrate.sh"
 
+if [ "$shared" = "1" ]; then
+	DOMAIN="${DOMAIN}" bash "$here/proxy_site.sh"
+fi
+
 # --- Machine care (not in CI) ------------------------------------------------------------------
-if [ "$local_test" != "1" ]; then
+if [ "$local_test" != "1" ] && [ "$shared" != "1" ]; then
 	if command -v ufw >/dev/null 2>&1; then
 		ufw allow 22/tcp >/dev/null
 		ufw allow 80/tcp >/dev/null
@@ -105,6 +122,8 @@ if [ "$local_test" != "1" ]; then
 		ufw --force enable >/dev/null
 	fi
 	DEBIAN_FRONTEND=noninteractive apt-get install -yq unattended-upgrades >/dev/null 2>&1 || true
+fi
+if [ "$local_test" != "1" ]; then
 	cat > /etc/cron.d/chimora-backup <<CRON
 # Nightly database backup, kept 14 days (server/backup.sh).
 30 3 * * * root bash $here/backup.sh >> /var/log/chimora-backup.log 2>&1
