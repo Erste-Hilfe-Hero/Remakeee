@@ -84,8 +84,9 @@ The firewall and the other services are not touched.
 Deploys run from the lifekit repository (it holds the Contabo access): workflow "Chimora on Contabo" on
 branch `claude/chimora-contabo`. A commit whose message starts with `run:chimora-inspect` only looks at the
 machine; `run:chimora-deploy` installs or updates Chimora from this repository and runs the smoke test from
-outside (its two test accounts are deleted again). Builds use the secret
-`CHIMORA_SERVER=https://chimora.161-97-102-171.sslip.io`.
+outside (its two test accounts are deleted again). Builds read address and public key from
+`https://chimora.161-97-102-171.sslip.io/chimora.json` (default in `export.yml`; the secret
+`CHIMORA_SERVER` overrides it).
 
 ## Setting up the server on a new machine
 

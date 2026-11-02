@@ -75,7 +75,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
         run: tools/online/write_config.sh
       - name: Export debug APK
         env:
@@ -132,7 +132,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
         run: tools/online/write_config.sh --require
       - name: Export release AAB
         env:
@@ -255,7 +255,7 @@ jobs:
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
         run: tools/online/write_config.sh --require
       - name: Export IPA
         env:
