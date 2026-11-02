@@ -75,6 +75,9 @@
    "26": [
     "Dusk Rake"
    ],
+   "28": [
+    "Ash Call"
+   ],
    "30": [
     "Furnace Spiral"
    ]
@@ -116,6 +119,9 @@
    ],
    "42": [
     "Furnace Spiral"
+   ],
+   "44": [
+    "Ash Call"
    ],
    "48": [
     "Cairn Crash"
@@ -197,6 +203,9 @@
    "22": [
     "Chill Mist"
    ],
+   "24": [
+    "Tide Call"
+   ],
    "26": [
     "Prism Ray"
    ],
@@ -234,6 +243,9 @@
    ],
    "34": [
     "Dawn Mend"
+   ],
+   "36": [
+    "Tide Call"
    ],
    "38": [
     "Prism Ray"
@@ -532,6 +544,9 @@
     "Tremor Thud",
     "All-In Crash"
    ],
+   "33": [
+    "Murk Call"
+   ],
    "36": [
     "Dusk Gnaw"
    ],
@@ -749,6 +764,9 @@
    "13": [
     "Dusk Rake"
    ],
+   "16": [
+    "Murk Call"
+   ],
    "18": [
     "Tunnel Strike"
    ],
@@ -793,6 +811,9 @@
    ],
    "30": [
     "Murk Veil"
+   ],
+   "33": [
+    "Murk Call"
    ],
    "36": [
     "Dusk Gnaw"

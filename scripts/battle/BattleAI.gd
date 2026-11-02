@@ -4,6 +4,9 @@ extends RefCounted
 ##   Tier 0: random legal move (wild Spirlings).
 ##   Tier 1: greedy: expected damage x accuracy (effectiveness included), plus KO and status bonuses.
 ##   Tier 2: tier 1 with a one-ply lookahead, swaps out of bad matchups, heals under an HP threshold.
+##   Tier 3 ("Master", Rift-Born): tier 2, plus it never wastes a status on a foe that can't take it,
+##          sets up stat stages only while the foe can't punish it hard, finishes weakened foes
+##          first, and calls Resonance fields that favour its own side.
 ## With several Spirlings per side the AI also picks a target: each move is scored against every
 ## foe it can aim at, and a sweep is scored as the sum over all foes it reaches.
 
@@ -18,6 +21,13 @@ const RESIST_EFF: float = 0.5
 const SWAP_MIN_HP: float = 0.5
 ## Tier 2 heals below this HP fraction if it carries a healing item.
 const HEAL_THRESHOLD: float = 0.3
+## Score for a Resonance field per side it helps (any AI tier above 0).
+const FIELD_BONUS: float = 0.35
+## Tier 3: no stage setup while the foe's best hit takes at least this share of our HP.
+const SETUP_THREAT: float = 0.4
+const SETUP_SAFE_MULT: float = 1.5
+## Tier 3: extra pull toward weakened foes (times the share of HP the target has lost).
+const FINISH_BONUS: float = 0.2
 
 var level: int = 0
 
@@ -86,19 +96,64 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 	var score: float = minf(expected, float(target.hp)) / float(maxi(target.max_hp(), 1)) * acc
 	if mv.is_damaging() and expected >= float(target.hp):
 		score += KO_BONUS * acc
+	if level >= 3 and mv.is_damaging():
+		score += FINISH_BONUS * (1.0 - target.hp_fraction()) * acc
 	for fx: Dictionary in mv.effects:
-		if StringName(fx.get("id", "")) == &"stat_change":
-			var who: Spirling = me if bool(fx.get("self", true)) else target
+		var fx_id: StringName = StringName(fx.get("id", ""))
+		if fx_id == &"stat_change":
+			var on_self: bool = bool(fx.get("self", true))
+			var who: Spirling = me if on_self else target
 			var stage: int = who.stage(str(fx.get("stat", "")))
 			var amt: int = int(fx.get("amount", 1))
 			# Worth it only while the stage still has room and early-ish in the fight.
 			if (amt > 0 and stage < 2) or (amt < 0 and stage > -2):
-				score += STAGE_BONUS * float(fx.get("chance", 1.0)) * acc * me.hp_fraction()
+				var bonus: float = STAGE_BONUS * float(fx.get("chance", 1.0)) * acc * me.hp_fraction()
+				if level >= 3 and on_self and amt > 0:
+					bonus *= 0.0 if threat_to(model, side, slot) >= SETUP_THREAT else SETUP_SAFE_MULT
+				score += bonus
+		elif fx_id == &"set_field" and level >= 1:
+			score += FIELD_BONUS * maxf(0.0, field_value(model, side, str(fx.get("field", ""))))
 	if target.status.is_empty():
 		for fx: Dictionary in mv.effects:
 			if StringName(fx.get("id", "")) == &"inflict_status":
+				var st: String = str(fx.get("status", ""))
+				if level >= 3 and (BattleRules.is_immune(target, st) or model.calm_rule_blocks(BattleModel.other(side), target, st)):
+					continue
 				score += STATUS_BONUS * float(fx.get("chance", 1.0)) * acc
 	return score
+
+## How much laying field [param id] helps [param side]: +1 if one of its standing Spirlings has a
+## move of the boosted element, -1 if a foe has one, half that for the weakened element.
+## 0 when the field is already in place.
+func field_value(model: BattleModel, side: int, id: String) -> float:
+	var f: Dictionary = BattleRules.FIELDS.get(id, {})
+	if f.is_empty() or model.field == id:
+		return 0.0
+	var boost: int = Elements.E.get(str(f.boost), -1)
+	var weaken: int = Elements.E.get(str(f.weaken), -1)
+	var v: float = 0.0
+	for s_side: int in [side, BattleModel.other(side)]:
+		var weight: float = 1.0 if s_side == side else -1.0
+		var has_boost: bool = false
+		var has_weak: bool = false
+		for slot: int in model.standing_slots(s_side):
+			for mv: MoveData in model.active_spirling(s_side, slot).moves:
+				if mv.is_damaging():
+					has_boost = has_boost or mv.element == boost
+					has_weak = has_weak or mv.element == weaken
+		v += weight * ((1.0 if has_boost else 0.0) - (0.5 if has_weak else 0.0))
+	return v
+
+## The largest share of our Spirling's current HP one standing foe can take with its best hit.
+func threat_to(model: BattleModel, side: int, slot: int) -> float:
+	var me: Spirling = model.active_spirling(side, slot)
+	var best: float = 0.0
+	for f_slot: int in model.standing_slots(BattleModel.other(side)):
+		var foe: Spirling = model.active_spirling(BattleModel.other(side), f_slot)
+		for mv: MoveData in foe.moves:
+			if mv.is_damaging() and foe.can_afford(mv):
+				best = maxf(best, DamageCalc.estimate(foe, me, mv) * mv.accuracy / float(maxi(me.hp, 1)))
+	return best
 
 ## Picks who steps into [param slot] after a faint: the healthy ally with the best matchup.
 ## Returns -1 when nobody is left on the bench.

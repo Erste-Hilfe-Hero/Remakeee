@@ -274,11 +274,16 @@ T = {
 "Lighthouse climb best: %d of %d": "Leuchtturm-Bestleistung: %d von %d",
 "Three Spirlings followed the lighthouse lamp out of the storm. Which one stays with you?": "Drei Spirlings sind im Sturm dem Licht des Leuchtturms gefolgt. Welcher bleibt bei dir?",
 "Leave": "Gehen",
+"Bench lessons: %s": "Lager-Lernen: %s", "Damage preview: %s": "Schadensvorschau: %s",
+"The %s fades away.": "%s verfliegt.",
+"The Ashen Heart flares up! Its embers spin faster.": "Das Aschenherz lodert auf! Seine Glut wirbelt schneller.",
+"The Drowned Heart pulls the tide around itself!": "Das Ertrunkene Herz zieht die Flut um sich!",
+"Calm rule: %s stays awake while an ally drowses.": "Ruhe-Regel: %s bleibt wach, solange ein Verbündeter döst.",
 }
 
 # Strings the extractor finds that stay the same in every language (names, node and theme ids, debug text).
 KEEP = ["Label", "Button", "PanelContainer", "Panel", "LineEdit", "Ground", "Entities", "Shade", "Player",
-	"Juno", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dx", "Lv%d", "%s Lv%d", "%s Lv%d %d/%d",
+	"Juno", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dE ~%d%%", "%dx", "Lv%d", "%s Lv%d", "%s Lv%d %d/%d",
 	"%s Lv%d %d/%d%s", "%s_sealed", "%s_era%d", "cannot open %s (%s)", "rename failed: %s", "Battle log\n\n", "\n\n(tap to close)",
 	" a lot.", "%s's %s is already at its %s.", "Item", "Auto", "Log", "Team", "Spirlog", "Normal", "Level", "Name",
 	"%s: %s.", "%s   Lv %d", "  %s Lv%d",

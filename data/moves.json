@@ -487,5 +487,32 @@
   "accuracy": 0.95,
   "energy": 2,
   "overcharge": true
+ },
+ {
+  "name": "Ash Call",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "ash_storm"
+ },
+ {
+  "name": "Tide Call",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "high_tide"
+ },
+ {
+  "name": "Murk Call",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "deep_murk"
  }
 ]

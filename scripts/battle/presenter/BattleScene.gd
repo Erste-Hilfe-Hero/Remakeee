@@ -590,7 +590,7 @@ func _play_event(e: BattleEvent) -> void:
 		BattleEvent.Type.SWAP_OUT:
 			await _text.show_text(e.describe())
 			await _sprite(side, slot).step_back(side != BattleModel.Side.PLAYER)
-		BattleEvent.Type.BOSS:
+		BattleEvent.Type.BOSS, BattleEvent.Type.BOSS_PHASE:
 			_focus(side, slot)
 			_point_pin(side, slot, true)
 			Sound.sfx("status")

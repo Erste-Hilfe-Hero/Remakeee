@@ -16,6 +16,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"level_cap": model.level_cap,
 		"trainer": model.trainer_name,
 		"field": model.field,
+		"bench_share": model.bench_share,
 		"rule": model.foe_rule,
 		"foe_items": model.foe_items.duplicate(),
 		"front": [model.front_size[0], model.front_size[1]],
@@ -75,6 +76,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.level_cap = int(snap.get("level_cap", Spirling.MAX_LEVEL))
 	m.trainer_name = str(snap.get("trainer", ""))
 	m.field = str(snap.get("field", ""))
+	m.bench_share = float(snap.get("bench_share", 0.0))
 	m.foe_rule = str(snap.get("rule", ""))
 	m.foe_items = (snap.get("foe_items", {}) as Dictionary).duplicate()
 	var front: Array = snap.get("front", [1, 1])

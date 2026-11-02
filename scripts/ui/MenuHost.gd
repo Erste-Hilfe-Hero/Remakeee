@@ -86,6 +86,8 @@ func run_settings() -> void:
 			"Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize(),
 			"Battle speed: %dx" % int(GameState.battle_speed_scale()),
 			"Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off"),
+			"Bench lessons: %s" % ("On" if GameState.bench_xp else "Off"),
+			"Damage preview: %s" % ("On" if GameState.damage_preview else "Off"),
 			"Retro filter: %s" % retro,
 			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
 			"Music: %d%%" % int(round(GameState.music_volume * 100.0)),
@@ -108,29 +110,33 @@ func run_settings() -> void:
 			2:
 				GameState.auto_battle = not GameState.auto_battle
 			3:
+				GameState.bench_xp = not GameState.bench_xp
+			4:
+				GameState.damage_preview = not GameState.damage_preview
+			5:
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
 				EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
-			4:
+			6:
 				var v: float = GameState.volume + 0.2
 				GameState.volume = 0.0 if v > 1.01 else v
 				GameState.apply_volume()
-			5:
+			7:
 				GameState.music_volume = _step_volume(GameState.music_volume)
 				GameState.apply_volume()
-			6:
+			8:
 				GameState.sfx_volume = _step_volume(GameState.sfx_volume)
 				GameState.apply_volume()
 				Sound.sfx("confirm")
-			7:
-				GameState.tips_enabled = not GameState.tips_enabled
-			8:
-				await run_controls()
 			9:
-				await run_display()
+				GameState.tips_enabled = not GameState.tips_enabled
 			10:
-				await run_sound_test()
+				await run_controls()
 			11:
+				await run_display()
+			12:
+				await run_sound_test()
+			13:
 				await run_legal()
 
 ## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.

@@ -1,11 +1,11 @@
 extends Node
 ## Global player state. Saving and loading go through SaveManager (M4).
 
-## Unbound-style difficulty, picked at new game.
+## Difficulty, picked at new game. Rift-Born adds the Master AI (tier 3).
 enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
 ## Level cap per Rift sealed (Veteran + Rift-Born only).
 const LEVEL_CAPS: Array[int] = [12, 18, 23, 28, 32, 36, 40, 44, 50]
-const AI_LEVELS: Array[int] = [0, 1, 2, 2]
+const AI_LEVELS: Array[int] = [0, 1, 2, 3]
 const MAX_PARTY: int = 5
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
@@ -63,6 +63,11 @@ var battle_speed: int = 0
 const BATTLE_SPEEDS: Array[float] = [1.0, 2.0, 4.0]
 ## Wild battles pick moves on their own (greedy AI) until the player turns it off.
 var auto_battle: bool = false
+## Bench lessons: healthy team members that did not fight get BENCH_XP_SHARE of a fighter's XP.
+var bench_xp: bool = true
+const BENCH_XP_SHARE: float = 0.5
+## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
+var damage_preview: bool = true
 var volume: float = 0.8
 var music_volume: float = 0.7
 var sfx_volume: float = 0.8
@@ -118,7 +123,7 @@ func seal_rift(rift_id: String) -> bool:
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
 
-## Trainer AI tier for the current difficulty: 0 random, 1 greedy, 2 lookahead.
+## Trainer AI tier for the current difficulty: 0 random, 1 greedy, 2 lookahead, 3 master.
 func ai_level() -> int:
 	return AI_LEVELS[difficulty]
 
@@ -127,6 +132,10 @@ func text_cps() -> float:
 
 func battle_speed_scale() -> float:
 	return BATTLE_SPEEDS[clampi(battle_speed, 0, BATTLE_SPEEDS.size() - 1)]
+
+## XP share for the bench in battles (0 when Bench lessons is off).
+func bench_share() -> float:
+	return BENCH_XP_SHARE if bench_xp else 0.0
 
 func cycle_battle_speed() -> void:
 	battle_speed = (battle_speed + 1) % BATTLE_SPEEDS.size()
@@ -344,7 +353,8 @@ func from_dict(d: Dictionary) -> void:
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
-	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume,
+	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
+		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"one_hand": one_hand, "rumble": rumble,
@@ -357,6 +367,8 @@ func settings_from_dict(d: Dictionary) -> void:
 	var legacy: int = 1 if bool(d.get("fast_forward", false)) else 0
 	battle_speed = clampi(int(d.get("battle_speed", legacy)), 0, BATTLE_SPEEDS.size() - 1)
 	auto_battle = bool(d.get("auto_battle", false))
+	bench_xp = bool(d.get("bench_xp", true))
+	damage_preview = bool(d.get("damage_preview", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
