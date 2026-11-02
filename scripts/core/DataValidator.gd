@@ -38,6 +38,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("move '%s': unknown effect '%s'" % [name, m.effect])
 		if m.has("stat") and not str(m.stat) in BattleRules.STAGE_STATS:
 			errors.append("move '%s': unknown stat '%s'" % [name, m.stat])
+		if m.has("field") and not BattleRules.FIELDS.has(str(m.field)):
+			errors.append("move '%s': unknown field '%s'" % [name, m.field])
 		if m.has("target") and not str(m.target) in MoveData.TARGETS:
 			errors.append("move '%s': unknown target '%s'" % [name, m.target])
 

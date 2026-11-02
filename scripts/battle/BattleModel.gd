@@ -78,8 +78,18 @@ var flee_attempts: int = 0
 var bonded: Spirling = null
 ## Player Spirlings that faced the current foe (share its XP).
 var participants: Array[Spirling] = []
-## Rift field id (BattleRules.FIELDS) active for the whole battle, or "".
+## Rift field id (BattleRules.FIELDS) active right now, or "". Set it before start() for the
+## place's own field; a Resonance move (set_field) lays another one for a few turns.
 var field: String = ""
+## The place's own field, restored when a Resonance field runs out (copied from field at start()).
+var base_field: String = ""
+## Turns left on a Resonance field (0 = the field holds for the whole battle).
+var field_turns: int = 0
+## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
+## ("Bench lessons" setting). 0 turns it off.
+var bench_share: float = 0.0
+## True once the Rift boss has entered its second phase.
+var boss_phase_done: bool = false
 ## Warden rule id (BattleRules.RULES) for the foe side, or "".
 var foe_rule: String = ""
 
@@ -279,6 +289,9 @@ func start() -> Array[BattleEvent]:
 		for s: Spirling in parties[side]:
 			s.energy = Spirling.START_ENERGY
 	_fill_initial_slots()
+	base_field = field
+	field_turns = 0
+	boss_phase_done = false
 	var fielded: int = slot_count(Side.PLAYER)
 	if BattleRules.BOSSES.has(foe_boss):
 		var boss: Spirling = active_spirling(Side.FOE)
@@ -392,7 +405,48 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 	emit_event(BattleEvent.Type.DAMAGE, d)
 	if s.is_fainted():
 		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
+	elif side == Side.FOE and slot == 0 and dealt > 0:
+		_check_boss_phase(s)
 	return dealt
+
+## Lays the Rift field [param id] for [param turns] turns (0 = for good). Emits FIELD.
+func set_field(id: String, turns: int = BattleRules.RESONANCE_TURNS) -> bool:
+	if not BattleRules.FIELDS.has(id):
+		return false
+	field = id
+	field_turns = maxi(turns, 0)
+	var f: Dictionary = BattleRules.FIELDS[id]
+	emit_event(BattleEvent.Type.FIELD, {"field": id, "label": str(f.label), "text": str(f.intro), "turns": field_turns})
+	return true
+
+## Counts a Resonance field down at the end of a turn; when it runs out the place's field returns.
+func _tick_field() -> void:
+	if field_turns <= 0:
+		return
+	field_turns -= 1
+	if field_turns > 0:
+		return
+	var gone: String = field
+	field = ""
+	emit_event(BattleEvent.Type.FIELD_END, {"field": gone, "label": str(BattleRules.FIELDS.get(gone, {}).get("label", ""))})
+	if BattleRules.FIELDS.has(base_field):
+		set_field(base_field, 0)
+
+## Second boss phase: once the boss in foe slot 0 drops to the phase threshold, it wakes up once.
+func _check_boss_phase(boss: Spirling) -> void:
+	if boss_phase_done or not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
+		return
+	var p: Dictionary = BattleRules.boss_phase(foe_boss)
+	if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * float(p.get("at", 0.5)):
+		return
+	boss_phase_done = true
+	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", ""))})
+	var st: Dictionary = p.get("stage", {})
+	for stat: String in st:
+		change_stage(Side.FOE, stat, int(st[stat]), 0)
+	if BattleRules.FIELDS.has(str(p.get("field", ""))):
+		base_field = str(p.field)
+		set_field(base_field, 0)
 
 func heal(side: int, amount: int, slot: int = 0) -> int:
 	var index: int = active_index(side, slot)
@@ -408,12 +462,26 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 		f["status"] = status
 		emit_event(BattleEvent.Type.STATUS_FAILED, f)
 		return false
+	if calm_rule_blocks(side, s, status):
+		var c: Dictionary = _who(side, slot)
+		c.merge({"status": status, "clause": true})
+		emit_event(BattleEvent.Type.STATUS_FAILED, c)
+		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
 	return true
+
+## Calm rule: in Tamer battles a side may have only one Spirling sleeping (Drowse) at a time.
+func calm_rule_blocks(side: int, s: Spirling, status: String) -> bool:
+	if is_wild or not StatusRules.sleeps(status):
+		return false
+	for other_s: Spirling in parties[side]:
+		if other_s != s and not other_s.is_fainted() and StatusRules.sleeps(other_s.status):
+			return true
+	return false
 
 ## Moves a stat stage on the Spirling in [param slot] of [param side]. Emits STAT_CHANGED (or a "won't go" note).
 func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
@@ -489,6 +557,7 @@ func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for slot: int in slot_count(side):
 			_end_of_turn_for(side, slot)
+	_tick_field()
 	turn += 1
 	phase = Phase.FAINT_CHECK
 
@@ -851,13 +920,28 @@ func _award_xp(foe: Spirling) -> void:
 		return
 	var share: int = maxi(1, int(total / earners.size()))
 	for s: Spirling in earners:
-		var index: int = parties[Side.PLAYER].find(s)
-		var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.MAX_LEVEL))
-		var gained: int = clampi(share, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
-		s.xp += gained
-		emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained})
-		while s.level < mini(level_cap, Spirling.MAX_LEVEL) and s.xp >= Spirling.xp_for_level(s.level + 1):
-			var learned: Array[MoveData] = s.level_up()
-			emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
-			for mv: MoveData in learned:
-				emit_event(BattleEvent.Type.MOVE_LEARNED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "move": mv.move_name})
+		_give_xp(s, share)
+	if bench_share <= 0.0:
+		return
+	# Bench lessons: every healthy own Spirling that did not fight still learns a part.
+	var bench_xp: int = maxi(1, int(share * bench_share))
+	for i: int in parties[Side.PLAYER].size():
+		var s: Spirling = parties[Side.PLAYER][i]
+		if s in earners or s in participants or is_partner_index(Side.PLAYER, i) or not is_standing(s):
+			continue
+		_give_xp(s, bench_xp, true)
+
+## Adds XP up to the level cap and plays out level-ups and new moves.
+func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
+	var index: int = parties[Side.PLAYER].find(s)
+	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.MAX_LEVEL))
+	var gained: int = clampi(amount, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
+	if bench and gained <= 0:
+		return
+	s.xp += gained
+	emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench})
+	while s.level < mini(level_cap, Spirling.MAX_LEVEL) and s.xp >= Spirling.xp_for_level(s.level + 1):
+		var learned: Array[MoveData] = s.level_up()
+		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
+		for mv: MoveData in learned:
+			emit_event(BattleEvent.Type.MOVE_LEARNED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "move": mv.move_name})

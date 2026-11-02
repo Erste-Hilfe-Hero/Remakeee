@@ -10,6 +10,7 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"heal_self": preload("res://scripts/battle/effects/HealSelfEffect.gd"),
 	&"energy_drain": preload("res://scripts/battle/effects/EnergyDrainEffect.gd"),
 	&"stat_change": preload("res://scripts/battle/effects/StatChangeEffect.gd"),
+	&"set_field": preload("res://scripts/battle/effects/SetFieldEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

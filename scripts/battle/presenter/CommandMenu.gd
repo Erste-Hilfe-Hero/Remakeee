@@ -97,14 +97,26 @@ static func matchup_tag(mult: float) -> String:
 	return "x.5"
 
 ## Second line of a move button: cost, or what is missing, plus the known matchup.
-## [param multi] marks sweeps ("all") in battles with several foes.
-static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false) -> String:
+## [param multi] marks sweeps ("all") in battles with several foes. [param pct] is the damage
+## preview (expected share of the foe's max HP, -1 for none).
+static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1) -> String:
 	if energy < mv.energy_cost:
 		return "need %dE" % mv.energy_cost
 	if multi and mv.is_area():
 		return "%dE all" % mv.energy_cost
+	# The preview already carries the matchup, so it replaces the x2/x.5 tag (short rows on 144 px).
+	if pct >= 0 and mv.power > 0:
+		return "%dE ~%d%%" % [mv.energy_cost, pct]
 	var tag: String = "" if mv.power <= 0 else matchup_tag(mult)
 	return "%dE %s" % [mv.energy_cost, tag] if not tag.is_empty() else "%dE" % mv.energy_cost
+
+## Damage preview: expected damage of [param mv] as a share (0-100) of [param foe]'s max HP,
+## with traits, held items and the field. Mean roll, no keen hit, same estimate the AI uses.
+static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: MoveData) -> int:
+	if not mv.is_damaging() or foe == null:
+		return -1
+	var dmg: float = DamageCalc.estimate(me, foe, mv) * BattleRules.damage_mult(me, foe, mv, model.field)
+	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
 
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
@@ -119,7 +131,8 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			b.text = mv.move_name
-			_move_costs[i].text = move_line(mv, me.energy, mult, multi)
+			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and mult >= 0.0 else -1
+			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct)
 			_move_icons[i].texture = ElementIcons.outlined(mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv)

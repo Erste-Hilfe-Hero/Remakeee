@@ -855,6 +855,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
 	model.level_cap = GameState.level_cap()
+	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))

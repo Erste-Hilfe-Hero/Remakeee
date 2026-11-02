@@ -69,6 +69,8 @@ static func _load_moves() -> void:
 			md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stat_chance", 1.0))})
 		md.overcharge = bool(m.get("overcharge", false))
 		md.target = str(m.get("target", "single"))
+		if m.has("field"):
+			md.effects.append({"id": &"set_field", "field": str(m.field)})
 		if m.has("effect"):
 			md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
 		moves[md.move_name] = md

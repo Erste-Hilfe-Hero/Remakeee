@@ -13,6 +13,9 @@ const OVERCHARGE_PER_ENERGY: float = 0.15
 ## Field (Rift resonance) multipliers for the boosted and the weakened element.
 const FIELD_BOOST: float = 1.2
 const FIELD_WEAKEN: float = 0.85
+## A Resonance move (moves.json "field") lays its field for this many turns; then the place's
+## own field (or none) comes back.
+const RESONANCE_TURNS: int = 5
 
 ## Passive traits (one per species, in spirlings.json "trait"). Keys:
 ##   scorch_atk:    ATK multiplier while Scorched (replaces the usual drop)
@@ -60,10 +63,20 @@ const MAX_FRONT: int = 4
 ##   max_actions:  actions per turn when the player fields 4 (1 more for every 2 fielded)
 const BOSSES: Dictionary[String, Dictionary] = {
 	"ashen_heart": {"label": "Ashen Heart", "hp_per_ally": 0.8, "max_actions": 2,
-		"text": "The Hush gathers into one burning heart. It is far too strong to face alone!"},
+		"text": "The Hush gathers into one burning heart. It is far too strong to face alone!",
+		"phase": {"at": 0.5, "stage": {"atk": 1, "spd": 1}, "field": "ash_storm",
+			"text": "The Ashen Heart flares up! Its embers spin faster."}},
 	"drowned_heart": {"label": "Drowned Heart", "hp_per_ally": 0.7, "max_actions": 2,
-		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!"},
+		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!",
+		"phase": {"at": 0.5, "stage": {"def": 1, "foc": 1}, "field": "high_tide",
+			"text": "The Drowned Heart pulls the tide around itself!"}},
 }
+
+## Second phase of a boss (BOSSES[id].phase), or {}. Once its HP falls to "at" of max HP the boss
+## wakes up: its "stage" changes apply and its "field" (if any) takes over for the rest of the fight.
+static func boss_phase(boss_id: String) -> Dictionary:
+	var p: Variant = BOSSES.get(boss_id, {}).get("phase", {})
+	return p if p is Dictionary else {}
 
 ## Max HP multiplier for a boss facing [param fielded] player Spirlings.
 static func boss_hp_mult(boss_id: String, fielded: int) -> float:
