@@ -12,5 +12,8 @@
 		root * /srv/public
 		file_server
 	}
+	handle / {
+		respond "Chimora server is running. The game connects here; there is nothing to open in a browser."
+	}
 	respond 404
 }

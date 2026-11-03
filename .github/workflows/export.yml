@@ -95,6 +95,30 @@ jobs:
           name: android-debug-apk
           path: build/android/Chimora-debug.apk
 
+  # Puts the latest test APK at a fixed public link that opens on a phone:
+  # https://github.com/Erste-Hilfe-Hero/Remakeee/releases/download/online-test/Chimora-online-test.apk
+  apk-link:
+    needs: android-debug
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: android-debug-apk
+      - name: Upload to the online-test release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mv Chimora-debug.apk Chimora-online-test.apk
+          sha="${{ github.event.pull_request.head.sha || github.sha }}"
+          gh release view online-test >/dev/null 2>&1 || gh release create online-test --prerelease \
+            --target "$sha" --title "Chimora online test" --notes "Latest test build (debug APK, real server)."
+          gh release edit online-test --notes "Latest test build (debug APK, real server). Commit $sha, ref ${{ github.head_ref || github.ref_name }}."
+          gh release upload online-test Chimora-online-test.apk --clobber
+
   # Signed release AAB for Google Play. Runs on version tags or manual runs.
   # Secrets live in the protected "prod" environment:
   #   ANDROID_KEYSTORE_B64      base64 of the upload keystore (Play App Signing holds the app key)
