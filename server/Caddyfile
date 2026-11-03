@@ -20,7 +20,7 @@
 		file_server
 	}
 	handle / {
-		redir /play/
+		redir * /play/
 	}
 	respond 404
 }
