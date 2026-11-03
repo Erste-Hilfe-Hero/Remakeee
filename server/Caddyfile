@@ -1,6 +1,5 @@
 # HTTPS certificate from Let's Encrypt is fetched automatically for SITE_ADDRESS.
 {$SITE_ADDRESS} {
-	encode gzip
 	handle_path /auth/v1/* {
 		reverse_proxy auth:9999
 	}
@@ -14,7 +13,10 @@
 	}
 	# Browser test build of the game (CI puts it into public/play).
 	redir /play /play/
+	# Only the game files are compressed: the web build cannot read gzip API answers
+	# (the browser unpacks them but the header stays, stream_peer_gzip.cpp:117).
 	handle /play/* {
+		encode gzip
 		header Cache-Control "no-cache"
 		root * /srv/public
 		file_server

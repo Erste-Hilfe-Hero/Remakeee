@@ -70,6 +70,8 @@ func _http(method: int, path: String, body: Dictionary, with_token: bool) -> Dic
 		return fail("no_host", true)
 	var req := HTTPRequest.new()
 	req.timeout = TIMEOUT
+	# On the web the browser already unpacks gzip; Godot unpacking again fails (stream_peer_gzip).
+	req.accept_gzip = false
 	host.add_child(req)
 	var token: String = str(session.get("access_token", "")) if with_token else anon_key
 	var headers: PackedStringArray = [
