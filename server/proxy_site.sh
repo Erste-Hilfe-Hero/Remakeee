@@ -26,7 +26,7 @@ load() {
 
 admin /config/ > "$work/live.json"
 set +e
-python3 - "$work/live.json" "$work/new.json" "$domain" "$listen" "$upstream" <<'PY'
+python3 - "$work/live.json" "$work/new.json" "$domain" "$listen" "$upstream" > "$work/summary" <<'PY'
 import json, sys
 live_path, new_path, domain, listen, upstream = sys.argv[1:6]
 cfg = json.load(open(live_path))
@@ -61,12 +61,14 @@ print(f"server {names[0]}: {len(routes) - 1} other routes kept, policies {'pinne
 sys.exit(0 if before != after else 3)
 PY
 rc=$?
+summary="$(cat "$work/summary" 2>/dev/null || true)"
 set -e
 if [ "$rc" = 3 ]; then
-	echo "Proxy already serves $domain. Nothing to do."
+	[ -n "${QUIET:-}" ] || echo "Proxy already serves $domain. Nothing to do."
 	exit 0
 fi
 [ "$rc" = 0 ] || exit "$rc"
+echo "$(date -Is) route for $domain missing or changed, adding it ($summary)"
 
 stamp="$(date +%Y%m%d-%H%M%S)"
 cp "$work/live.json" "$keep/proxy-live-before-chimora-$stamp.json"

@@ -78,7 +78,7 @@ public ports, and one route for its address in the proxy's running config that f
 them). `server/proxy_site.sh` reads the live config through Caddy's admin API, changes only Chimora's
 route and its TLS policy, loads it with a validated graceful reload, checks that everything else is
 unchanged and loads the saved copy again otherwise (copies in `/opt/chimora/server/backups/`). A cron job
-(`/etc/cron.d/chimora-proxy`) re-runs it every 10 minutes, so the route comes back if the proxy restarts.
+(`/etc/cron.d/chimora-proxy`) re-runs it every minute: Nyrathen's own deploys load a proxy config without the route, and until it is back the address fails with a TLS error.
 The firewall and the other services are not touched.
 
 Deploys run from the lifekit repository (it holds the Contabo access): workflow "Chimora on Contabo" on
