@@ -1,5 +1,12 @@
+# Godot
 .godot/
 build/
-*.import
-export_presets.cfg
+android/
+# Export presets are committed (they hold no secrets); signing comes from env vars in CI.
+# Secrets: never commit these
 *.keystore
+*.jks
+*.p12
+*.mobileprovision
+*.p8
+.env

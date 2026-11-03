@@ -15,8 +15,19 @@ See LEGAL.md before adding any content. Coding agents: start with AGENTS.md.
 ## Run
 Open `project.godot` in Godot 4.7.2, press F5 — `BattleTest` prints a damage + bond check.
 
+## Checks (same as CI)
+```
+godot --headless --path . --import
+tools/headless_check.sh godot                               # boot must print no errors
+godot --headless --path . -s res://tools/validate_data.gd   # JSON references resolve
+godot --headless --path . -s res://addons/gut/gut_cmdln.gd  # GUT tests in tests/unit
+```
+Builds and store signing: see `docs/RELEASE.md`.
+
 ## Layout
 - `data/` roster (15 Spirlings) + moves as JSON
 - `scripts/core` Elements, GameState, EraManager, Database
 - `scripts/battle` Spirling, DamageCalc, BondCalc
 - `art/era1..era4` one sprite set per era
+- `addons/gut` GUT 9.7.1 test framework, tests in `tests/unit`
+- `tools/` CI helpers (data validation, headless check, 16 KB alignment check)
