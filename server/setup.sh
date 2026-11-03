@@ -93,6 +93,8 @@ printf '{"url": "%s", "anon_key": "%s"}\n' "$public_url" "$anon" > public/chimor
 # --- Start -------------------------------------------------------------------------------------
 docker compose pull -q
 docker compose up -d --remove-orphans
+# The Caddyfile is a bind mount; an update replaces the file, so the container must restart to see it.
+docker compose restart caddy >/dev/null
 
 echo "Waiting for the sign-in service to set up its tables..."
 for i in $(seq 1 90); do
