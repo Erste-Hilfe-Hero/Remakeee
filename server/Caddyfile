@@ -12,8 +12,15 @@
 		root * /srv/public
 		file_server
 	}
+	# Browser test build of the game (CI puts it into public/play).
+	redir /play /play/
+	handle /play/* {
+		header Cache-Control "no-cache"
+		root * /srv/public
+		file_server
+	}
 	handle / {
-		respond "Chimora server is running. The game connects here; there is nothing to open in a browser."
+		redir /play/
 	}
 	respond 404
 }

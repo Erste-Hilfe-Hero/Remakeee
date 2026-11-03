@@ -95,10 +95,41 @@ jobs:
           name: android-debug-apk
           path: build/android/Chimora-debug.apk
 
+  # Browser test build (single-threaded, no special headers needed). Served by the game server at /play/.
+  web:
+    needs: test
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:4.7.2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export templates into HOME
+        run: |
+          mkdir -p "$HOME/.local/share/godot/export_templates"
+          [ -d "$HOME/.local/share/godot/export_templates/$GODOT_TEMPLATES" ] || \
+            cp -r "/root/.local/share/godot/export_templates/$GODOT_TEMPLATES" "$HOME/.local/share/godot/export_templates/"
+      - name: Server address
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
+        run: tools/online/write_config.sh
+      - name: Export web build
+        run: |
+          mkdir -p build/web
+          godot --headless --path . --import
+          godot --headless --path . --export-release "Web" build/web/index.html
+          ls -la build/web
+          test -s build/web/index.wasm
+          cd build/web && zip -qr ../chimora-web.zip .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/chimora-web.zip
+
   # Puts the latest test APK at a fixed public link that opens on a phone:
   # https://github.com/Erste-Hilfe-Hero/Remakeee/releases/download/online-test/Chimora-online-test.apk
   apk-link:
-    needs: android-debug
+    needs: [android-debug, web]
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     permissions:
@@ -107,6 +138,9 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: android-debug-apk
+      - uses: actions/download-artifact@v4
+        with:
+          name: web-build
       - name: Upload to the online-test release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -117,7 +151,7 @@ jobs:
           gh release view online-test >/dev/null 2>&1 || gh release create online-test --prerelease \
             --target "$sha" --title "Chimora online test" --notes "Latest test build (debug APK, real server)."
           gh release edit online-test --notes "Latest test build (debug APK, real server). Commit $sha, ref ${{ github.head_ref || github.ref_name }}."
-          gh release upload online-test Chimora-online-test.apk --clobber
+          gh release upload online-test Chimora-online-test.apk chimora-web.zip --clobber
 
   # Signed release AAB for Google Play. Runs on version tags or manual runs.
   # Secrets live in the protected "prod" environment:
