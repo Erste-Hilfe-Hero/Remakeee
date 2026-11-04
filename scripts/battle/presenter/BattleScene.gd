@@ -187,7 +187,7 @@ func _build() -> void:
 	_log_panel.visible = false
 	_log_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	_log_panel.gui_input.connect(func(ev: InputEvent) -> void:
-		if (ev is InputEventMouseButton and ev.pressed) or (ev is InputEventScreenTouch and ev.pressed):
+		if TapInput.is_press(ev):
 			_log_panel.visible = false)
 	add_child(_log_panel)
 	_log_label = Label.new()

@@ -88,7 +88,7 @@ func _skip_or_advance() -> void:
 		advanced.emit()
 
 func _gui_input(event: InputEvent) -> void:
-	if (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT) or (event is InputEventScreenTouch and event.pressed):
+	if TapInput.is_press(event):
 		_skip_or_advance()
 		accept_event()
 

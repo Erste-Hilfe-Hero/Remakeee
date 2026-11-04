@@ -8,7 +8,12 @@ const PANEL_MARGIN: int = 6
 var picker: ListPicker
 var _info_panel: PanelContainer
 var _info_label: Label
+var _info_scroll: ScrollContainer
 var _info_wait: bool = false
+## Where the finger went down while an info text is open (NAN = no press yet), so a drag
+## that scrolls the text does not also close it.
+var _info_press: Vector2 = Vector2(NAN, NAN)
+const TAP_SLOP: float = 6.0
 signal _info_closed
 
 func _ready() -> void:
@@ -23,12 +28,20 @@ func _ready() -> void:
 	_fill(_info_panel)
 	_info_panel.visible = false
 	_info_panel.mouse_filter = Control.MOUSE_FILTER_STOP
-	_info_panel.gui_input.connect(_on_info_input)
 	add_child(_info_panel)
+	# Long texts (privacy note, German, small title-screen panel) scroll instead of running
+	# off the bottom of the screen, where "(tap to continue)" could not be seen.
+	_info_scroll = ScrollContainer.new()
+	_info_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_info_panel.add_child(_info_scroll)
 	_info_label = Label.new()
 	_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_info_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
-	_info_panel.add_child(_info_label)
+	_info_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_info_label.custom_minimum_size = Vector2(1, 0)
+	# Translated in info(): inside the scroll box the automatic translation did not apply.
+	_info_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_info_scroll.add_child(_info_label)
 
 func _fill(c: Control) -> void:
 	c.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -56,7 +69,9 @@ func confirm(question: String) -> bool:
 
 ## Shows a block of text until the player taps or presses accept/cancel.
 func info(text: String) -> void:
-	_info_label.text = text + "\n\n(tap to continue)"
+	_info_label.text = Loc.t(text) + "\n\n" + Loc.t("(tap to continue)")
+	_info_scroll.scroll_vertical = 0
+	_info_press = Vector2(NAN, NAN)
 	_info_panel.visible = true
 	_info_wait = true
 	await _info_closed
@@ -67,9 +82,19 @@ func _close_info() -> void:
 		_info_wait = false
 		_info_closed.emit()
 
-func _on_info_input(event: InputEvent) -> void:
-	if (event is InputEventMouseButton and event.pressed) or (event is InputEventScreenTouch and event.pressed):
-		_close_info()
+## A tap (press and release without dragging) anywhere closes the info text. Handled before the
+## GUI so the scroll box under the finger cannot swallow it.
+func _input(event: InputEvent) -> void:
+	if not _info_wait or not is_visible_in_tree():
+		return
+	if TapInput.is_press(event):
+		_info_press = TapInput.position(event)
+	elif TapInput.is_release(event) and not is_nan(_info_press.x):
+		var moved: float = TapInput.position(event).distance_to(_info_press)
+		_info_press = Vector2(NAN, NAN)
+		if moved <= TAP_SLOP:
+			get_viewport().set_input_as_handled()
+			_close_info()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _info_wait and (event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel")):
