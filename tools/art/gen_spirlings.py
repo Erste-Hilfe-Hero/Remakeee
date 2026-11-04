@@ -133,19 +133,21 @@ def smoldrake():
 
 
 def calderox():
-    # Heavy ox whose back is a smoking caldera; horns curve forward.
+    # Heavy ox of the volcanic ridges: wide coal-lit horns, cracked stone plates over the
+    # shoulders and an ember tuft at the tail tip. (No crater or volcano on its back.)
     return [
+        P([(46, 34), (54, 28), (52, 38)], "dark"),                              # tail
+        P([(52, 24), (55, 20), (55, 30)], "light"),                             # ember tuft
         E(38, 49, 4, 6, "dark"), E(46, 47, 4, 6, "dark"),
-        P([(22, 22), (26, 16), (42, 16), (46, 22)], "mid"),                     # caldera rim
-        E(34, 17, 8, 2, "ink", shade=False),                                    # crater
-        P([(30, 17), (32, 12), (34, 17)], "light", outline=False),              # smoke wisp
-        P([(36, 16), (38, 8), (40, 15)], "light", outline=False),
-        E(32, 36, 19, 13, "dark"),                                              # body
-        P([(22, 23), (44, 23), (40, 28), (26, 28)], "mid", outline=False),      # lava seam
+        E(32, 38, 19, 12, "dark"),                                              # body
+        P([(20, 30), (28, 25), (33, 32), (23, 35)], "mid"),                     # shoulder plates
+        P([(31, 27), (40, 27), (42, 35), (34, 35)], "mid"),
+        P([(26, 31), (28, 29), (29, 32)], "light", outline=False),              # glowing cracks
+        P([(36, 30), (38, 29), (38, 32)], "light", outline=False),
         E(22, 50, 4, 5, "dark"), E(34, 50, 4, 5, "dark"),
         E(12, 36, 9, 9, "mid"),                                                 # head
-        P([(14, 28), (22, 22), (26, 24), (18, 30)], "light"),                   # horn back
-        P([(6, 28), (2, 20), (6, 18), (10, 28)], "light"),                      # horn front
+        P([(14, 30), (24, 22), (28, 25), (18, 32)], "light"),                   # horn back
+        P([(6, 30), (0, 22), (4, 18), (10, 29)], "light"),                      # horn front
         E(7, 42, 5, 4, "light"),                                                # muzzle
         eye(9, 33),
         Stamp(5, 42, ["0.0"]),
@@ -196,19 +198,22 @@ def leviarch():
 
 
 def mossling():
-    # Burrowing round critter wearing a moss cap with a single sprout.
+    # Round moss cub that sits upright: two round leaf ears, a twig tail and a pebble nose.
+    # (Nothing grows on its back.)
     return [
-        E(30, 42, 13, 10, "mid"),                                               # body
-        E(22, 51, 5, 3, "dark"), E(36, 51, 5, 3, "dark"),
-        E(31, 33, 15, 9, "dark"),                                               # moss cap
-        E(24, 30, 3, 2, "mid", outline=False), E(34, 28, 3, 2, "mid", outline=False),
-        E(40, 34, 2, 2, "mid", outline=False),
-        P([(30, 24), (24, 14), (30, 16)], "light"),                             # sprout leaves
-        P([(31, 24), (38, 12), (34, 20)], "light"),
-        E(17, 43, 6, 5, "light"),                                               # snout
-        Stamp(12, 42, ["00", "00"]),                                            # nose
-        Stamp(20, 37, ["000"]),                                                 # sleepy eye
-        Stamp(28, 37, ["000"]),
+        P([(40, 44), (52, 36), (54, 40), (44, 48)], "dark"),                    # twig tail
+        P([(50, 36), (54, 32), (55, 37)], "light"),                             # tail leaf
+        E(30, 41, 13, 12, "mid"),                                               # round body
+        E(31, 45, 7, 5, "light", outline=False),                                # moss belly
+        E(24, 52, 5, 3, "dark"), E(36, 52, 5, 3, "dark"),                       # feet
+        E(29, 22, 6, 5, "dark"),                                                # far round leaf ear
+        E(21, 31, 10, 9, "light"),                                              # head
+        Stamp(18, 21, [".0.", "0.0"], face=False),                              # moss tuft
+        E(13, 23, 6, 5, "mid"),                                                 # near round leaf ear
+        P([(10, 23), (16, 21), (16, 22), (10, 24)], "light", outline=False),    # leaf vein
+        eye(14, 28, big=True),
+        Stamp(10, 35, ["00", "00"]),                                            # pebble nose
+        Stamp(17, 36, ["0.0", ".0."]),                                          # mouth
     ]
 
 
@@ -230,20 +235,21 @@ def thornback():
 
 
 def verdantusk():
-    # Shaggy grazer with stone tusks and a small meadow growing on its back.
+    # Massive old boar of the high pasture: curled stone tusks, a fern-frond mane along the neck
+    # and spine, and a mossy beard. (A mane, not a garden on its back.)
     return [
         E(38, 50, 4, 5, "dark"), E(46, 49, 4, 5, "dark"),
-        E(32, 38, 18, 12, "mid"),                                               # body
-        E(34, 27, 14, 5, "dark"),                                               # meadow
-        Stamp(24, 21, [".3.", "303", ".0."], face=False),                       # flowers
-        Stamp(34, 19, [".3.", "303", ".0."], face=False),
-        Stamp(42, 22, [".3.", "303", ".0."], face=False),
+        E(32, 39, 18, 11, "mid"),                                               # body
+        P([(16, 28), (20, 22), (24, 27), (28, 21), (32, 27), (36, 22), (40, 28), (44, 25),
+           (48, 32), (40, 33), (28, 32), (18, 33)], "dark"),                    # fern mane
         E(24, 51, 4, 4, "dark"), E(36, 51, 4, 4, "dark"),
-        E(13, 36, 10, 10, "mid"),                                               # head
-        P([(6, 40), (10, 46), (8, 52), (4, 52), (3, 44)], "dark"),              # trunk
-        P([(10, 42), (2, 38), (0, 30), (4, 32), (14, 40)], "light"),            # tusk
-        E(18, 30, 4, 5, "dark"),                                                # ear
-        eye(9, 32),
+        E(14, 38, 11, 10, "mid"),                                               # head
+        P([(10, 46), (14, 54), (20, 47)], "dark"),                              # mossy beard
+        P([(2, 40), (4, 46), (12, 47), (12, 40)], "light"),                     # snout
+        P([(8, 44), (1, 36), (3, 29), (7, 33), (11, 42)], "light"),             # curled tusk
+        E(20, 31, 4, 5, "dark"),                                                # ear
+        eye(11, 35),
+        Stamp(2, 43, ["0", "0"]),                                               # nostril
     ]
 
 

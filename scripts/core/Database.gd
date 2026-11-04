@@ -6,7 +6,9 @@ const SPIRLINGS_PATH: String = "res://data/spirlings.json"
 const MOVES_PATH: String = "res://data/moves.json"
 const ITEMS_PATH: String = "res://data/items.json"
 ## The three partners offered at the start of a new game.
-const STARTERS: Array[String] = ["Kindlop", "Puddlet", "Mossling"]
+## The three that fly to the lighthouse lamp on the storm night: ember, spark and wick light.
+## Deliberately not an element triangle (none of them beats the next in a ring).
+const STARTERS: Array[String] = ["Kindlop", "Zippit", "Wickit"]
 
 static var spirlings: Dictionary[String, SpirlingData] = {}
 static var moves: Dictionary[String, MoveData] = {}
@@ -31,6 +33,16 @@ static func reload_data() -> void:
 static func species(species_name: String) -> SpirlingData:
 	load_all()
 	return spirlings.get(species_name)
+
+## The form that unfurls into [param sd], or null for a first form.
+static func earlier_form(sd: SpirlingData) -> SpirlingData:
+	load_all()
+	if sd == null:
+		return null
+	for other: SpirlingData in spirlings.values():
+		if other.evolves_to == sd:
+			return other
+	return null
 
 static func move(move_name: String) -> MoveData:
 	load_all()
@@ -67,6 +79,8 @@ static func _load_moves() -> void:
 			md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stat_chance", 1.0))})
 		md.overcharge = bool(m.get("overcharge", false))
 		md.target = str(m.get("target", "single"))
+		if m.has("field"):
+			md.effects.append({"id": &"set_field", "field": str(m.field)})
 		if m.has("effect"):
 			md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
 		moves[md.move_name] = md

@@ -1,6 +1,6 @@
 class_name Player
 extends GridWalker
-## The Tamer. Reads only input actions: ui_up/down/left/right to walk, hold ui_cancel to run,
+## The Wayfarer. Reads only input actions: ui_up/down/left/right to walk, hold ui_cancel to run,
 ## ui_accept to interact. Tapping a new direction turns in place first.
 ## Tap-to-move: follow [member path] cell by cell; any held direction cancels it.
 

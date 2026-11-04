@@ -38,7 +38,7 @@ Nicht erlaubt sind insbesondere:
 - Cheats, Bots, Manipulation des Spielstands oder der Server-Kommunikation, Ausnutzen von Fehlern;
 - Reverse Engineering, soweit nicht gesetzlich erlaubt (§ 69e UrhG);
 - Verkauf oder Handel von Konten oder Spielinhalten gegen Geld;
-- beleidigende, rechtswidrige oder fremde Rechte verletzende Tamer-Namen.
+- beleidigende, rechtswidrige oder fremde Rechte verletzende Wayfarer-Namen.
 
 Bei Verstößen können wir nach Abwägung der Umstände verwarnen, Spielstände zurücksetzen oder das Konto
 vorübergehend oder dauerhaft sperren. Bei einer Sperre informieren wir dich mit Begründung; du kannst

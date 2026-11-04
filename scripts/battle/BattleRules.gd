@@ -13,6 +13,9 @@ const OVERCHARGE_PER_ENERGY: float = 0.15
 ## Field (Rift resonance) multipliers for the boosted and the weakened element.
 const FIELD_BOOST: float = 1.2
 const FIELD_WEAKEN: float = 0.85
+## A Resonance move (moves.json "field") lays its field for this many turns; then the place's
+## own field (or none) comes back.
+const RESONANCE_TURNS: int = 5
 
 ## Passive traits (one per species, in spirlings.json "trait"). Keys:
 ##   scorch_atk:    ATK multiplier while Scorched (replaces the usual drop)
@@ -22,31 +25,60 @@ const FIELD_WEAKEN: float = 0.85
 ##   immune:        statuses that can't be applied
 ##   low_hp_boost:  damage multiplier for moves of its own element below 1/3 HP
 const TRAITS: Dictionary[String, Dictionary] = {
-	"kindling": {"label": "Kindling", "text": "Scorch raises its ATK instead of lowering it.", "scorch_atk": 1.25},
-	"thick_hide": {"label": "Thick Hide", "text": "Takes 15% less damage from physical moves.", "phys_taken": 0.85},
-	"deep_roots": {"label": "Deep Roots", "text": "Recovers a little HP at the end of each turn.", "regen_div": 16},
+	"kindling": {"label": "Kindling", "text": "Scorch raises its Might instead of lowering it.", "scorch_atk": 1.25},
+	"thick_hide": {"label": "Thick Hide", "text": "Takes 15% less damage from physical arts.", "phys_taken": 0.85},
+	"deep_roots": {"label": "Deep Roots", "text": "Recovers a little Vigor at the end of each turn.", "regen_div": 16},
 	"surge": {"label": "Surge", "text": "Gains 1 extra Energy each turn.", "energy_per_turn": 1},
 	"steady": {"label": "Steady", "text": "Can't be Dazed.", "immune": ["daze"]},
 	"slick": {"label": "Slick", "text": "Can't be Rooted.", "immune": ["root"]},
 	"light_sleeper": {"label": "Light Sleeper", "text": "Can't be Drowsed.", "immune": ["drowse"]},
-	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 HP.", "low_hp_boost": 1.3},
+	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 Vigor.", "low_hp_boost": 1.3},
 }
 
-## Rift fields. A map sets "field"; every battle there uses it.
+## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one for a
+## few turns. Optional keys:
+##   blocks:        statuses that can't take hold while the field lasts
+##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
-		"intro": "Ash swirls through the Rift. Ember moves burn brighter, Tide moves sputter."},
-	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER",
-		"intro": "The water rises around you. Tide moves surge, Ember moves fizzle."},
+		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
+	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"],
+		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
-		"intro": "The hollow swallows the light. Umbra moves deepen, Lumen moves dim."},
+		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
+	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE",
+		"intro": "The air crackles. Volt arts snap harder, Stone arts crumble."},
+	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
+		"intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."},
+	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA",
+		"intro": "A pale dawn fills the Rift. Lumen arts shine, Umbra arts thin out."},
 }
+
+## Element reactions: a move of "element" that hits a foe with "status" either hits harder
+## ("mult") or washes the status away after the hit ("cure").
+const REACTIONS: Array[Dictionary] = [
+	{"element": "VOLT", "status": "soak", "mult": 1.2, "text": "The charge races through the soaked %s!"},
+	{"element": "TIDE", "status": "scorch", "cure": true, "text": "The water douses the embers on %s!"},
+]
+
+## The reaction a [param move] sets off on [param target], or {}.
+static func reaction(move: MoveData, target: Spirling) -> Dictionary:
+	if target == null or target.status.is_empty() or not move.is_damaging():
+		return {}
+	for r: Dictionary in REACTIONS:
+		if move.element == Elements.E.get(str(r.element), -1) and target.status == str(r.status):
+			return r
+	return {}
+
+## True while [param field] keeps [param status] from taking hold.
+static func field_blocks(field: String, status: String) -> bool:
+	return status in FIELDS.get(field, {}).get("blocks", [])
 
 ## Warden rules (npc "rule"). foe_energy: extra Energy per turn for the Warden's side;
 ## player_stage: stat stages every player Spirling starts with.
 const RULES: Dictionary[String, Dictionary] = {
 	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1},
-	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with lower SPD.", "player_stage": {"spd": -1}},
+	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}},
 }
 
 ## Multi-Spirling battles: a sweep ("foes" move) that reaches more than one foe deals this share to each.
@@ -60,10 +92,20 @@ const MAX_FRONT: int = 4
 ##   max_actions:  actions per turn when the player fields 4 (1 more for every 2 fielded)
 const BOSSES: Dictionary[String, Dictionary] = {
 	"ashen_heart": {"label": "Ashen Heart", "hp_per_ally": 0.8, "max_actions": 2,
-		"text": "The Hush gathers into one burning heart. It is far too strong to face alone!"},
+		"text": "The Hush gathers into one burning heart. It is far too strong to face alone!",
+		"phase": {"at": 0.5, "stage": {"atk": 1, "spd": 1}, "field": "ash_storm",
+			"text": "The Ashen Heart flares up! Its embers spin faster."}},
 	"drowned_heart": {"label": "Drowned Heart", "hp_per_ally": 0.7, "max_actions": 2,
-		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!"},
+		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!",
+		"phase": {"at": 0.5, "stage": {"def": 1, "foc": 1}, "field": "high_tide",
+			"text": "The Drowned Heart pulls the tide around itself!"}},
 }
+
+## Second phase of a boss (BOSSES[id].phase), or {}. Once its HP falls to "at" of max HP the boss
+## wakes up: its "stage" changes apply and its "field" (if any) takes over for the rest of the fight.
+static func boss_phase(boss_id: String) -> Dictionary:
+	var p: Variant = BOSSES.get(boss_id, {}).get("phase", {})
+	return p if p is Dictionary else {}
 
 ## Max HP multiplier for a boss facing [param fielded] player Spirlings.
 static func boss_hp_mult(boss_id: String, fielded: int) -> float:
@@ -120,6 +162,7 @@ static func field_mult(field: String, element: int) -> float:
 ## Damage multiplier from traits, held items and the field for one hit.
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
 	var m: float = field_mult(field, move.element)
+	m *= float(reaction(move, target).get("mult", 1.0))
 	if move.kind == MoveData.Kind.PHYSICAL:
 		m *= mult_key(target, "phys_taken")
 	var boost: float = float(trait_info(user.data.trait_id).get("low_hp_boost", 1.0))

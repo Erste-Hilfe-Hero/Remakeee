@@ -1,8 +1,8 @@
 class_name PauseMenu
 extends MenuHost
-## In-game menu: Goals, Team, Spirlog, Bag, Save, Settings, and Storage once the box is unlocked.
+## In-game menu: Goals, Team, Spirlog, Satchel, Save, Settings, and Storage once the box is unlocked.
 
-const STORAGE_FLAG: String = "pc_unlocked"
+const STORAGE_FLAG: String = "storage_remote"
 
 ## The map the player is on (for the Spirlog Tracker).
 var encounter_table: String = ""
@@ -17,7 +17,7 @@ var watch_replay: bool = false
 
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Bag", "Save", "Photo", "Settings"]
+		var labels: Array[String] = ["Goals", "Team", "Spirlog", "Records", "Satchel", "Save", "Photo", "Settings"]
 		if GameState.has_flag(STORAGE_FLAG):
 			labels.insert(5, "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
@@ -35,7 +35,7 @@ func run() -> void:
 				await run_records()
 				if watch_replay:
 					return
-			"Bag": await run_bag()
+			"Satchel": await run_bag()
 			"Storage": await run_storage()
 			"Save":
 				var ok: bool = SaveManager.save_game()
@@ -76,7 +76,7 @@ func run_records() -> void:
 ## Tower best, weekly challenge and the current festival.
 static func records_text() -> String:
 	var lines: PackedStringArray = []
-	lines.append("Tower best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
+	lines.append("Lighthouse climb best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
@@ -87,7 +87,7 @@ static func records_text() -> String:
 	if GameState.iron_oath:
 		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
 		for s: Spirling in GameState.sanctuary:
-			lines.append("  %s Lv%d" % [s.display_name(), s.level])
+			lines.append("  %s R%d" % [s.display_name(), s.level])
 	elif GameState.has_flag("oath_broken"):
 		lines.append("Iron Oath broken.")
 	var f: Dictionary = Season.current()
@@ -99,7 +99,7 @@ static func records_text() -> String:
 static func menu_title() -> String:
 	var t: String = "%s   %d coins" % [GameState.tamer_name, GameState.money]
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
-		t += "   Cap Lv%d" % GameState.level_cap()
+		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
 ## Fast travel between rest spots already used (item 41). Returns true if a target was picked.
@@ -123,7 +123,15 @@ func run_team() -> void:
 		if idx < 0:
 			return
 		var s: Spirling = GameState.party[idx]
-		var opt: int = await pick_strings(s.display_name(), ["Summary", "Lead the team", "Move to slot...", "Use item", "Held item"] as Array[String])
+		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake"]
+		if s.can_unfurl(current_map):
+			opts.append("Unfurl")
+		if s.earlier_form() != null:
+			opts.append("Furl back")
+		var opt: int = await pick_strings(s.display_name(), opts)
+		if opt >= 5:
+			await _unfurl(s, opts[opt] == "Unfurl")
+			continue
 		match opt:
 			0: await info(MenuHost.summary(s))
 			1: GameState.swap_party(0, idx)
@@ -137,7 +145,24 @@ func run_team() -> void:
 			3: await _use_item_on(s)
 			4: await _held_item(s)
 
-## Give, swap or take off a held item.
+## Unfurl into the next form or furl back into the earlier one. Both can be undone later.
+func _unfurl(s: Spirling, forward: bool) -> void:
+	var old_name: String = s.display_name()
+	var target: SpirlingData = s.data.evolves_to if forward else s.earlier_form()
+	if target == null:
+		return
+	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
+	if not await confirm(q):
+		return
+	if forward:
+		s.evolve()
+		GameState.mark_seen(s.data.species_name, true)
+	else:
+		s.furl_back()
+	Sound.sfx("level_up")
+	await info(("%s unfurls into %s!" if forward else "%s furls back into %s.") % [old_name, s.data.species_name])
+
+## Give, swap or take off a keepsake.
 func _held_item(s: Spirling) -> void:
 	var ids: Array[String] = []
 	var entries: Array[String] = []
@@ -149,7 +174,7 @@ func _held_item(s: Spirling) -> void:
 			ids.append(str(id))
 			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
 	if ids.is_empty():
-		await info("You have nothing a Spirling can hold.\nHeld items are sold in Thornridge.")
+		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
 		return
 	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
 	var idx: int = await pick_strings(now, entries)
@@ -161,7 +186,7 @@ func _held_item(s: Spirling) -> void:
 func _use_item_on(s: Spirling) -> void:
 	var ids: Array[String] = _usable_items()
 	if ids.is_empty():
-		await info("Nothing in the bag can be used here.")
+		await info("Nothing in the satchel can be used here.")
 		return
 	var entries: Array[String] = []
 	for id: String in ids:
@@ -170,7 +195,7 @@ func _use_item_on(s: Spirling) -> void:
 	if idx < 0:
 		return
 	var msg: String = GameState.use_item_outside_battle(ids[idx], s)
-	await info(msg if not msg.is_empty() else "It won't have any effect.")
+	await info(msg if not msg.is_empty() else "That would do nothing right now.")
 
 func _usable_items() -> Array[String]:
 	var out: Array[String] = []
@@ -190,9 +215,9 @@ func run_bag() -> void:
 			ids.append(str(id))
 			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
 		if ids.is_empty():
-			await info("The bag is empty.")
+			await info("The satchel is empty.")
 			return
-		var idx: int = await pick_strings("Bag", entries)
+		var idx: int = await pick_strings("Satchel", entries)
 		if idx < 0:
 			return
 		var it: Dictionary = Database.item(ids[idx])
@@ -207,7 +232,7 @@ func run_bag() -> void:
 			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
 			if who >= 0:
 				var msg: String = GameState.use_item_outside_battle(ids[idx], GameState.party[who])
-				await info(msg if not msg.is_empty() else "It won't have any effect.")
+				await info(msg if not msg.is_empty() else "That would do nothing right now.")
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
 
@@ -231,7 +256,7 @@ func _teach_echo(id: String) -> void:
 		var known: Array[String] = []
 		for m: MoveData in s.moves:
 			known.append(m.move_name)
-		var forget: int = await pick_strings("Forget which move for %s?" % mv.move_name, known)
+		var forget: int = await pick_strings("Forget which art for %s?" % mv.move_name, known)
 		if forget < 0:
 			return
 		s.moves[forget] = mv
@@ -310,7 +335,7 @@ func run_spirlog() -> void:
 		if bool(log_entry.get("bonded", false)):
 			var tr: Dictionary = BattleRules.trait_info(sd.trait_id)
 			if not tr.is_empty():
-				lines.append("Trait: %s" % tr.label)
+				lines.append("Gift: %s" % tr.label)
 			if not sd.lore.is_empty():
 				lines.append("")
 				lines.append(sd.lore)
@@ -340,8 +365,8 @@ func _withdraw() -> void:
 		]
 		for i: int in view:
 			var s: Spirling = GameState.storage[i]
-			names.append("%s Lv%d" % [s.display_name(), s.level])
-		var w: int = await pick_strings("Withdraw (%d)" % view.size(), names)
+			names.append("%s R%d" % [s.display_name(), s.level])
+		var w: int = await pick_strings("Call back (%d)" % view.size(), names)
 		if w < 0:
 			return
 		if w == 0:
@@ -358,7 +383,7 @@ func _withdraw() -> void:
 ## Storage box: deposit and withdraw.
 func run_storage() -> void:
 	while true:
-		var idx: int = await pick_strings("Storage (%d stored)" % GameState.storage.size(), ["Withdraw", "Deposit"] as Array[String])
+		var idx: int = await pick_strings("Storage (%d resting)" % GameState.storage.size(), ["Call back", "Send to rest"] as Array[String])
 		if idx < 0:
 			return
 		if idx == 0:
@@ -370,6 +395,6 @@ func run_storage() -> void:
 			var names2: Array[String] = []
 			for s: Spirling in GameState.party:
 				names2.append(MenuHost.party_line(s))
-			var d: int = await pick_strings("Deposit", names2)
+			var d: int = await pick_strings("Send to rest", names2)
 			if d >= 0 and not GameState.deposit(d):
 				await info("You need at least one healthy Spirling with you.")

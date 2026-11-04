@@ -1,12 +1,12 @@
 class_name TitleScreen
 extends Control
-## Title and new-game flow: difficulty -> Tamer customisation (placeholder) -> starter.
+## Title and new-game flow: difficulty -> Wayfarer customisation (placeholder) -> starter.
 
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
 const STARTERS: Array[String] = Database.STARTERS
 const DIFFICULTY_TEXT: Array[String] = [
 	"Story (relaxed)",
-	"Tamer (normal)",
+	"Wayfarer (normal)",
 	"Veteran (caps, smart AI)",
 	"Rift-Born (no battle items)",
 ]
@@ -148,7 +148,7 @@ func _new_game() -> bool:
 	_name_edit.grab_focus()
 	var name: String = await _name_done
 	_name_box.visible = false
-	var colors: Array[String] = ["Blue jacket", "Red jacket", "Green jacket", "Gold jacket"]
+	var colors: Array[String] = ["Teal coat", "Rust coat", "Ochre coat", "Plum coat"]
 	var color: int = await _menu.pick_strings("Your look", colors)
 	if color < 0:
 		color = 0
@@ -156,7 +156,7 @@ func _new_game() -> bool:
 		var entries: Array[String] = []
 		for sp: String in STARTERS:
 			entries.append("%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])])
-		var pick: int = await _menu.pick_strings("Three Spirlings sheltered in the lighthouse from the storm. Which one stays with you?", entries)
+		var pick: int = await _menu.pick_strings("Three Spirlings followed the lighthouse lamp out of the storm. Which one stays with you?", entries)
 		if pick < 0:
 			return false
 		var sd: SpirlingData = Database.species(STARTERS[pick])

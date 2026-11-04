@@ -11,7 +11,7 @@ func before_all() -> void:
 func before_each() -> void:
 	_saved = GameState.to_dict()
 	_settings = GameState.settings_to_dict()
-	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+	GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 
 func after_each() -> void:
 	GameState.from_dict(_saved)
@@ -202,7 +202,7 @@ func test_replay_reproduces_the_battle() -> void:
 	var mine: Array[Spirling] = [Spirling.new(Database.species("Kindlop"), 14), Spirling.new(Database.species("Puddlet"), 12)]
 	var foes: Array[Spirling] = [Spirling.new(Database.species("Mossling"), 13), Spirling.new(Database.species("Zippit"), 13)]
 	var model := BattleModel.new(mine, foes, false, 4242, 1)
-	model.trainer_name = "Test Tamer"
+	model.trainer_name = "Test Wayfarer"
 	var snap: Dictionary = BattleReplay.snapshot(model, "battle", "field")
 	var ai := BattleAI.new(1)
 	model.start()
@@ -231,7 +231,7 @@ func test_replay_reproduces_the_battle() -> void:
 	for side: int in [0, 1]:
 		for i: int in model.party(side).size():
 			assert_eq((again.party(side)[i] as Spirling).hp, (model.party(side)[i] as Spirling).hp, "hp side %d #%d" % [side, i])
-	assert_string_contains(BattleReplay.label(stored), "Test Tamer")
+	assert_string_contains(BattleReplay.label(stored), "Test Wayfarer")
 
 func test_replay_of_missing_species_is_refused() -> void:
 	var snap: Dictionary = {"teams": [[{"species": "Nobody"}], [{"species": "Puddlet", "level": 3}]]}
@@ -240,7 +240,7 @@ func test_replay_of_missing_species_is_refused() -> void:
 # --- Era transition ------------------------------------------------------------------
 
 func test_every_new_era_has_a_line() -> void:
-	for e: int in [EraManager.Era.COLOR, EraManager.Era.ADVANCED, EraManager.Era.DUAL]:
+	for e: int in [EraManager.Era.WASH, EraManager.Era.ETCHED, EraManager.Era.PANORAMA]:
 		assert_true(EraManager.ERA_LINES.has(e))
 
 # --- Day and night -------------------------------------------------------------------
