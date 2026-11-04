@@ -12,7 +12,7 @@ const TEXT_BOX_HEIGHT: int = 44
 const BANNER_TIME: float = 1.2
 ## Map changes stay under 300 ms in total (item 61): two fades plus the load.
 const FADE_TIME: float = 0.11
-## Pause between a Tamer spotting the player and walking over.
+## Pause between a Wayfarer spotting the player and walking over.
 const SPOT_TIME: float = 0.5
 ## Seconds for a grapple swing or cliff climb.
 const GEAR_MOVE_TIME: float = 0.4
@@ -55,7 +55,7 @@ func _ready() -> void:
 	_build()
 	if GameState.party.is_empty():
 		# Running this scene directly from the editor: start a quick test game.
-		GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+		GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 	GameState.in_game = true
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
@@ -421,7 +421,7 @@ func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	await menu.run_storage()
 	menu.queue_free()
 
-## Opens the pause menu (Team, Spirlog, Bag, Save, Settings).
+## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings).
 func open_menu() -> void:
 	if busy:
 		return
@@ -577,12 +577,12 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 				map.paint(_ground)
 			await say(["The last lamp catches. Somewhere, rock grinds against rock!"] as Array[String])
 
-## Post-game gauntlet: five echo Tamers in a row, scaled to your strongest Spirling, no rest.
+## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
 func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var best: int = int(GameState.records.get("gauntlet_best", 0))
-	var go: bool = await menu.confirm("Climb the tower? Best so far: %d of %d." % [best, Gauntlet.ROUNDS])
+	var go: bool = await menu.confirm("Climb the lighthouse stair? Best so far: %d of %d." % [best, Gauntlet.ROUNDS])
 	menu.queue_free()
 	if not go:
 		return
@@ -592,7 +592,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	while wins < Gauntlet.ROUNDS:
 		await say(["Echo %d of %d steps out of the light..." % [wins + 1, Gauntlet.ROUNDS]] as Array[String])
 		var team: Array[Spirling] = run.team(wins)
-		var info: Dictionary = {"name": "Echo Tamer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
+		var info: Dictionary = {"name": "Echo Wayfarer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
 		if not helper.is_empty():
 			for s: Spirling in helper.partner.echo:
 				s.restore()
@@ -610,11 +610,11 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	if wins >= Gauntlet.ROUNDS:
 		GameState.set_flag("gauntlet_clear")
 		await _action_give_item([run.reward_item(), "1"] as PackedStringArray, null)
-		await say(["The echoes bow and fade. You climbed the whole tower!"] as Array[String])
+		await say(["The echoes bow and fade. You reached the lamp room!"] as Array[String])
 	elif wins > best:
 		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
 
-## Weekly challenge (item 88): three echo Tamers that are the same for everyone this week.
+## Weekly challenge (item 88): three echo Wayfarers that are the same for everyone this week.
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var top: int = 1
@@ -626,7 +626,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var go: bool = await menu.confirm("This week: %s, rule %s. Three echoes at Lv%d. Best this week: %d of %d. Try?" % [
+	var go: bool = await menu.confirm("This week: %s, rule %s. Three echoes at ring %d. Best this week: %d of %d. Try?" % [
 		BattleRules.FIELDS[ch.field].label, BattleRules.RULES[ch.rule].label, ch.level, int(rec.best), WeeklyChallenge.ROUNDS])
 	menu.queue_free()
 	if not go:
@@ -635,7 +635,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(["Your team is fully rested."] as Array[String])
 	var wins: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
-		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 2, "rule": ch.rule, "field": ch.field}
+		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
 		busy = true
@@ -703,12 +703,12 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		await menu.info("Bought %s. You have %d." % [item.get("name", ""), GameState.item_count(args[idx])])
 	menu.queue_free()
 
-# --- Tamers --------------------------------------------------------------------------
+# --- Wayfarers --------------------------------------------------------------------------
 
 func _is_active_trainer(n: NPC) -> bool:
 	return TrainerData.is_trainer(n.definition) and not TrainerData.is_beaten(n.definition, map.id, GameState.flags)
 
-## The first unbeaten Tamer whose line of sight reaches the player, or null.
+## The first unbeaten Wayfarer whose line of sight reaches the player, or null.
 func _spotting_trainer() -> NPC:
 	if GameState.first_healthy_index() < 0:
 		return null
@@ -720,7 +720,7 @@ func _spotting_trainer() -> NPC:
 			return n
 	return null
 
-## A Tamer challenge: optional spot + walk-over, intro lines, battle, then the win aftermath.
+## A Wayfarer challenge: optional spot + walk-over, intro lines, battle, then the win aftermath.
 func challenge(n: NPC, spotted: bool) -> void:
 	busy = true
 	player.frozen = true
@@ -742,7 +742,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 		SaveManager.save_game()
 	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng)
 	if team.is_empty():
-		push_warning("Overworld: Tamer '%s' has no valid team" % n.npc_id)
+		push_warning("Overworld: Wayfarer '%s' has no valid team" % n.npc_id)
 		busy = false
 		player.frozen = false
 		return
@@ -778,10 +778,10 @@ func after_tamer_win(n: NPC) -> void:
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
-		if GameState.has_flag("pc_unlocked"):
-			lines.append("Your storage box now opens from the menu, wherever you are.")
+		if GameState.has_flag("storage_remote"):
+			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
 		if GameState.level_cap() < Spirling.MAX_LEVEL:
-			lines.append("Your Spirlings can now grow to Lv%d." % GameState.level_cap())
+			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
 	for f: Variant in def.get("win_flags", []):
 		GameState.set_flag(str(f))
@@ -817,7 +817,7 @@ func _mark_rematch(def: Dictionary) -> void:
 	rec[TrainerData.beaten_flag(def, map.id)] = _today()
 	GameState.records["rematch"] = rec
 
-## Offers a beaten Tamer's daily rematch. Returns false if there is none or the player declines.
+## Offers a beaten Wayfarer's daily rematch. Returns false if there is none or the player declines.
 func offer_rematch(n: NPC) -> bool:
 	var def: Dictionary = n.definition
 	if GameState.first_healthy_index() < 0 or not TrainerData.can_rematch(def, map.id, GameState.flags, GameState.records, _today()):
@@ -827,7 +827,7 @@ func offer_rematch(n: NPC) -> bool:
 	VirtualPad.set_wanted(false)
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var who: String = str(def.get("trainer", def.get("id", "Tamer")))
+	var who: String = str(def.get("trainer", def.get("id", "Wayfarer")))
 	var go: bool = await menu.confirm("%s wants a rematch. Battle?" % who)
 	menu.queue_free()
 	if not go:
@@ -912,7 +912,7 @@ func echo_duel(d: Dictionary) -> void:
 	if foes.is_empty() or mine.is_empty():
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
-	await say(["%s's echo steps out of the light. Everyone fights at Lv%d." % [str(d.name), EchoTeam.DUEL_LEVEL]] as Array[String])
+	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), EchoTeam.DUEL_LEVEL]] as Array[String])
 	busy = false
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
@@ -926,7 +926,7 @@ func echo_duel(d: Dictionary) -> void:
 
 # --- Battles --------------------------------------------------------------------------
 
-## Cuts to the battle screen and waits for it to end. [param trainer] holds Tamer info (M5).
+## Cuts to the battle screen and waits for it to end. [param trainer] holds Wayfarer info (M5).
 func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -> BattleModel.Outcome:
 	busy = true
 	player.frozen = true
@@ -946,6 +946,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
 	model.level_cap = GameState.level_cap()
+	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
@@ -1004,21 +1005,21 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		SaveManager.save_game()
 	var oath: Array[String] = oath_lines(GameState.retire_fainted())
 	if outcome == BattleModel.Outcome.LOSS:
+		# No coin penalty: a spring keeper simply brings the player back.
 		GameState.heal_party()
-		GameState.money = GameState.money / 2
 		load_map(GameState.heal_map, GameState.heal_cell, "down")
 		await _fade_to(0.0)
-		await say(["You hurried back to rest...", "Your team is rested again."] as Array[String])
+		await say(["Everything goes quiet... A spring keeper finds you and helps you back.", "Your team is rested again."] as Array[String])
 		if not oath.is_empty():
 			await say(oath)
 		return
 	if not oath.is_empty():
 		await _fade_to(0.0)
 		await say(oath)
+	# Unfurling is never automatic: the first time a Spirling could unfurl, say so once.
 	for s: Spirling in GameState.party:
-		if s.can_evolve(map.id) and not s.is_fainted():
-			var old_name: String = s.display_name()
+		var hint: String = "unfurl_hint_%s_%s" % [s.uid, s.data.species_name]
+		if s.can_unfurl(map.id) and not s.is_fainted() and not GameState.has_flag(hint):
+			GameState.set_flag(hint)
 			await _fade_to(0.0)
-			s.evolve()
-			await say(["%s glows with Rift light..." % old_name, "%s grew into %s!" % [old_name, s.data.species_name]] as Array[String])
-			GameState.mark_seen(s.data.species_name, true)
+			await say(["%s feels ready to unfurl. You can choose it in the Team menu, now or later." % s.display_name()] as Array[String])

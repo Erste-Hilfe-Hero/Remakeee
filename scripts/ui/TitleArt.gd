@@ -7,7 +7,7 @@ extends Control
 const LOGO: String = "CHIMORA"
 const LOGO_SCALE: int = 3
 const BEAM_SPEED: float = 0.6
-const STARTERS: Array[String] = ["mossling", "kindlop", "puddlet"]
+const STARTERS: Array[String] = ["wickit", "kindlop", "zippit"]
 const TILE: int = 16
 
 var _t: float = 0.0

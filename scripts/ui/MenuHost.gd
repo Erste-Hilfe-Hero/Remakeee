@@ -86,6 +86,8 @@ func run_settings() -> void:
 			"Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize(),
 			"Battle speed: %dx" % int(GameState.battle_speed_scale()),
 			"Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off"),
+			"Bench lessons: %s" % ("On" if GameState.bench_xp else "Off"),
+			"Damage preview: %s" % ("On" if GameState.damage_preview else "Off"),
 			"Retro filter: %s" % retro,
 			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
 			"Music: %d%%" % int(round(GameState.music_volume * 100.0)),
@@ -109,29 +111,33 @@ func run_settings() -> void:
 			2:
 				GameState.auto_battle = not GameState.auto_battle
 			3:
+				GameState.bench_xp = not GameState.bench_xp
+			4:
+				GameState.damage_preview = not GameState.damage_preview
+			5:
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
 				EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
-			4:
+			6:
 				var v: float = GameState.volume + 0.2
 				GameState.volume = 0.0 if v > 1.01 else v
 				GameState.apply_volume()
-			5:
+			7:
 				GameState.music_volume = _step_volume(GameState.music_volume)
 				GameState.apply_volume()
-			6:
+			8:
 				GameState.sfx_volume = _step_volume(GameState.sfx_volume)
 				GameState.apply_volume()
 				Sound.sfx("confirm")
-			7:
-				GameState.tips_enabled = not GameState.tips_enabled
-			8:
-				await run_controls()
 			9:
-				await run_display()
+				GameState.tips_enabled = not GameState.tips_enabled
 			10:
-				await run_sound_test()
+				await run_controls()
 			11:
+				await run_display()
+			12:
+				await run_sound_test()
+			13:
 				await run_legal()
 			12:
 				await AccountMenu.run(self)
@@ -259,17 +265,17 @@ static func summary(s: Spirling) -> String:
 		els.append(Elements.element_name(e))
 	var lines: PackedStringArray = [
 		"%s  (%s)" % [s.display_name(), s.data.species_name],
-		"%s   Lv %d" % ["/".join(els), s.level],
-		"HP %d/%d   XP to next %d" % [s.hp, s.max_hp(), s.xp_to_next()],
-		"ATK %d  DEF %d  FOC %d  SPD %d" % [s.atk(), s.def(), s.foc(), s.spd()],
+		"%s   Ring %d" % ["/".join(els), s.level],
+		"Vigor %d/%d   Growth to next ring %d" % [s.hp, s.max_hp(), s.xp_to_next()],
+		"MGT %d  GRD %d  FOC %d  PCE %d" % [s.atk(), s.def(), s.foc(), s.spd()],
 	]
 	var tm: Dictionary = s.temperament()
 	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
 	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
 	if not tr.is_empty():
-		lines.append("Trait: %s. %s" % [tr.label, tr.text])
+		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	if not s.held.is_empty():
-		lines.append("Holds: %s" % Database.item(s.held).get("name", s.held))
+		lines.append("Keepsake: %s" % Database.item(s.held).get("name", s.held))
 	lines.append("")
 	for mv: MoveData in s.moves:
 		var power: String = "-" if mv.power <= 0 else str(mv.power)
@@ -278,7 +284,7 @@ static func summary(s: Spirling) -> String:
 
 static func party_line(s: Spirling) -> String:
 	var tag: String = " (out)" if s.is_fainted() else ""
-	return "%s Lv%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
+	return "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
 func run_legal() -> void:

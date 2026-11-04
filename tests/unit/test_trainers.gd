@@ -1,5 +1,5 @@
 extends GutTest
-## Tamers, Rift Wardens, the rival and the vertical-slice progression (M5).
+## Wayfarers, Rift Wardens, the rival and the vertical-slice progression (M5).
 
 var _rng := RandomNumberGenerator.new()
 
@@ -69,16 +69,16 @@ func test_sealing_rifts_raises_veteran_cap_and_unlocks_pc() -> void:
 	assert_false(GameState.seal_rift("cinder"), "only once")
 	assert_gt(GameState.level_cap(), cap0)
 	assert_true(GameState.has_flag("rift_cinder_sealed"))
-	assert_false(GameState.has_flag("pc_unlocked"), "one Rift is not enough")
+	assert_false(GameState.has_flag("storage_remote"), "one Rift is not enough")
 	var maelis: Dictionary = _npc("tide_rift", "warden_maelis")
 	assert_eq(str(maelis.warden), "tide")
 	assert_true(GameState.seal_rift("tide"))
-	assert_true(GameState.has_flag("pc_unlocked"), "PC access from the menu after the second Rift")
+	assert_true(GameState.has_flag("storage_remote"), "Storage from the menu after the second Rift")
 
 func test_rifts_open_in_any_order() -> void:
 	assert_true(GameState.seal_rift("tide"))
 	assert_true(GameState.seal_rift("cinder"))
-	assert_true(GameState.has_flag("pc_unlocked"))
+	assert_true(GameState.has_flag("storage_remote"))
 
 func test_bag_is_unlimited() -> void:
 	GameState.add_item("tonic", 5000)

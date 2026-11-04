@@ -38,7 +38,7 @@ Nicht erlaubt sind insbesondere:
 - Cheats, Bots, Manipulation des Spielstands oder der Server-Kommunikation, Ausnutzen von Fehlern;
 - Reverse Engineering, soweit nicht gesetzlich erlaubt (§ 69e UrhG);
 - Verkauf oder Handel von Konten oder Spielinhalten gegen Geld;
-- beleidigende, rechtswidrige oder fremde Rechte verletzende Tamer-Namen.
+- beleidigende, rechtswidrige oder fremde Rechte verletzende Wayfarer-Namen.
 
 ### Freunde und Grüße
 

@@ -86,7 +86,7 @@ func test_v2_gets_defaults_for_newer_fields() -> void:
 
 func test_every_saved_key_is_optional() -> void:
 	# A save missing any one top-level key (older or hand-edited) still loads.
-	GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
+	GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 	var full: Dictionary = GameState.to_dict()
 	for key: String in full.keys():
 		var d: Dictionary = full.duplicate(true)
@@ -95,3 +95,19 @@ func test_every_saved_key_is_optional() -> void:
 		assert_false(GameState.party.is_empty() and key != "party", "missing '%s' drops the party" % key)
 	GameState.from_dict(full)
 	assert_eq(GameState.party.size(), 1)
+
+func test_v2_to_v3_renames_moves_and_flag_and_trims_the_team() -> void:
+	var old: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FIXTURES + "v2_before_extras.json"))
+	old.party[0]["moves"] = ["Headlong Charge", "Flare Lash"]
+	for i: int in 4:
+		old.party.append({"species": "Zippit", "level": 5, "hp": 10, "moves": ["Tailwind Step"], "uid": "z%d" % i})
+	var d: Dictionary = SaveManager.migrate(old)
+	assert_eq(int(d.save_version), SaveManager.SAVE_VERSION)
+	assert_eq(d.party.size(), 5)
+	assert_eq(d.storage.size(), 2, "the sixth Spirling rests in storage")
+	assert_eq(d.party[0].moves, ["Bowl Over", "Kiln Strike"])
+	assert_true(d.flags.has("storage_remote"))
+	assert_false(d.flags.has("pc_unlocked"))
+	SaveManager.apply_save(d)
+	assert_eq(GameState.party.size(), GameState.MAX_PARTY)
+	assert_true(GameState.has_flag("storage_remote"))

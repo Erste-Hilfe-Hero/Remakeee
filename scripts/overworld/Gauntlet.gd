@@ -1,6 +1,6 @@
 class_name Gauntlet
 extends RefCounted
-## Post-game tower (item 46): ROUNDS echo Tamers in a row, scaled to the player's strongest
+## Post-game tower (item 46): ROUNDS echo Wayfarers in a row, scaled to the player's strongest
 ## Spirling. Teams are drawn from every species the run's seed picks, so each climb differs.
 
 const ROUNDS: int = 5

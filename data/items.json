@@ -2,18 +2,18 @@
  {
   "id": "tonic",
   "name": "Tonic",
-  "description": "Restores 20 HP.",
+  "description": "Restores 25 Vigor.",
   "battle": true,
-  "heal": 20,
-  "price": 200
+  "heal": 25,
+  "price": 150
  },
  {
   "id": "strong_tonic",
   "name": "Strong Tonic",
-  "description": "Restores 60 HP.",
+  "description": "Restores 70 Vigor.",
   "battle": true,
-  "heal": 60,
-  "price": 600
+  "heal": 70,
+  "price": 450
  },
  {
   "id": "remedy",
@@ -21,7 +21,7 @@
   "description": "Cures any status.",
   "battle": true,
   "cure": true,
-  "price": 250
+  "price": 300
  },
  {
   "id": "spark_drop",
@@ -33,11 +33,11 @@
  },
  {
   "id": "revival_leaf",
-  "name": "Revival Leaf",
-  "description": "Revives a Spirling outside battle with half HP.",
+  "name": "Waking Moss",
+  "description": "Wakes a fainted Spirling outside battle with a third of its Vigor.",
   "battle": false,
-  "revive": 0.5,
-  "price": 1500
+  "revive": 0.34,
+  "price": 1100
  },
  {
   "id": "kin_charm",
@@ -50,7 +50,7 @@
  {
   "id": "grapple_line",
   "name": "Grapple Line",
-  "description": "Tamer Gear. Face a far post across narrow water and press A to pull yourself over.",
+  "description": "Wayfarer Gear. Face a far post across narrow water and press A to pull yourself over.",
   "battle": false,
   "gear": true,
   "hint": "The far side is just out of reach. A grapple line could bridge it."
@@ -58,7 +58,7 @@
  {
   "id": "climbing_pick",
   "name": "Climbing Pick",
-  "description": "Tamer Gear. Face a low cliff and press A to climb up or down it.",
+  "description": "Wayfarer Gear. Face a low cliff and press A to climb up or down it.",
   "battle": false,
   "gear": true,
   "hint": "A steep rock face. With a climbing pick you could get a grip."
@@ -66,7 +66,7 @@
  {
   "id": "storm_lantern",
   "name": "Storm Lantern",
-  "description": "Tamer Gear. Lights pitch-dark places so you can walk through them.",
+  "description": "Wayfarer Gear. Lights pitch-dark places so you can walk through them.",
   "battle": false,
   "gear": true,
   "hint": "It's pitch dark ahead. A lantern would help."
@@ -74,7 +74,7 @@
  {
   "id": "spark_coil",
   "name": "Spark Coil",
-  "description": "Held. The holder gains 1 extra Energy every turn.",
+  "description": "Keepsake. The holder gains 1 extra Energy every turn.",
   "battle": false,
   "held": {
    "energy_per_turn": 1
@@ -84,17 +84,17 @@
  {
   "id": "bark_wrap",
   "name": "Bark Wrap",
-  "description": "Held. The holder recovers a little HP at the end of each turn.",
+  "description": "Keepsake. The holder recovers a little Vigor at the end of each turn.",
   "battle": false,
   "held": {
-   "regen_div": 16
+   "regen_div": 12
   },
   "price": 1200
  },
  {
   "id": "iron_burr",
   "name": "Iron Burr",
-  "description": "Held. Physical hits on the holder deal 15% less damage.",
+  "description": "Keepsake. Physical hits on the holder deal 15% less damage.",
   "battle": false,
   "held": {
    "phys_taken": 0.85
@@ -103,8 +103,8 @@
  },
  {
   "id": "swift_feather",
-  "name": "Swift Feather",
-  "description": "Held. Raises the holder's SPD by 15%.",
+  "name": "Wind Anklet",
+  "description": "Keepsake. Raises the holder's Pace by 15%.",
   "battle": false,
   "held": {
    "spd_mult": 1.15
@@ -113,8 +113,8 @@
  },
  {
   "id": "keen_lens",
-  "name": "Keen Lens",
-  "description": "Held. The holder lands keen hits twice as often.",
+  "name": "Whetstone",
+  "description": "Keepsake. A sharpened edge: the holder lands keen hits twice as often.",
   "battle": false,
   "held": {
    "crit_mult": 2.0
@@ -123,11 +123,11 @@
  },
  {
   "id": "max_tonic",
-  "name": "Max Tonic",
-  "description": "Restores all HP.",
+  "name": "Spring Flask",
+  "description": "A flask of rest-spring water. Restores all Vigor.",
   "battle": true,
   "heal": 999,
-  "price": 1500
+  "price": 1200
  },
  {
   "id": "cooling_gel",
@@ -135,7 +135,7 @@
   "description": "Cures Scorch.",
   "battle": true,
   "cure": "scorch",
-  "price": 120
+  "price": 90
  },
  {
   "id": "dry_towel",
@@ -143,7 +143,7 @@
   "description": "Cures Soak.",
   "battle": true,
   "cure": "soak",
-  "price": 120
+  "price": 90
  },
  {
   "id": "wake_bell",
@@ -151,27 +151,27 @@
   "description": "Cures Drowse.",
   "battle": true,
   "cure": "drowse",
-  "price": 120
+  "price": 90
  },
  {
   "id": "power_brew",
   "name": "Power Brew",
-  "description": "Raises the active Spirling's ATK in battle.",
+  "description": "Raises the active Spirling's Might in battle.",
   "battle": true,
   "stage": {
    "atk": 1
   },
-  "price": 500
+  "price": 350
  },
  {
   "id": "guard_brew",
   "name": "Guard Brew",
-  "description": "Raises the active Spirling's DEF in battle.",
+  "description": "Raises the active Spirling's Guard in battle.",
   "battle": true,
   "stage": {
    "def": 1
   },
-  "price": 500
+  "price": 350
  },
  {
   "id": "focus_brew",
@@ -181,21 +181,21 @@
   "stage": {
    "foc": 1
   },
-  "price": 500
+  "price": 350
  },
  {
   "id": "dash_brew",
   "name": "Dash Brew",
-  "description": "Raises the active Spirling's SPD in battle.",
+  "description": "Raises the active Spirling's Pace in battle.",
   "battle": true,
   "stage": {
    "spd": 1
   },
-  "price": 500
+  "price": 350
  },
  {
   "id": "tide_pearl",
-  "name": "Tide Pearl",
+  "name": "Tide Shell",
   "description": "A pearl that hums with the sea. Some Spirlings change when they hold it close.",
   "battle": false,
   "evolves": true,
@@ -211,18 +211,18 @@
  },
  {
   "id": "echo_ember",
-  "name": "Echo Crystal: Flare Lash",
-  "description": "Teaches Flare Lash to an Ember Spirling. Never used up.",
+  "name": "Echo Crystal: Kiln Strike",
+  "description": "Teaches Kiln Strike to an Ember Spirling. Never used up.",
   "battle": false,
-  "teaches": "Flare Lash",
+  "teaches": "Kiln Strike",
   "price": 3000
  },
  {
   "id": "echo_tide",
-  "name": "Echo Crystal: Brine Jet",
-  "description": "Teaches Brine Jet to a Tide Spirling. Never used up.",
+  "name": "Echo Crystal: Spindrift Shot",
+  "description": "Teaches Spindrift Shot to a Tide Spirling. Never used up.",
   "battle": false,
-  "teaches": "Brine Jet",
+  "teaches": "Spindrift Shot",
   "price": 3000
  },
  {
@@ -235,26 +235,26 @@
  },
  {
   "id": "echo_volt",
-  "name": "Echo Crystal: Surge Fang",
-  "description": "Teaches Surge Fang to a Volt Spirling. Never used up.",
+  "name": "Echo Crystal: Storm Gnash",
+  "description": "Teaches Storm Gnash to a Volt Spirling. Never used up.",
   "battle": false,
-  "teaches": "Surge Fang",
+  "teaches": "Storm Gnash",
   "price": 3000
  },
  {
   "id": "echo_stone",
-  "name": "Echo Crystal: Quake Stomp",
-  "description": "Teaches Quake Stomp to a Stone Spirling. Never used up.",
+  "name": "Echo Crystal: Tremor Thud",
+  "description": "Teaches Tremor Thud to a Stone Spirling. Never used up.",
   "battle": false,
-  "teaches": "Quake Stomp",
+  "teaches": "Tremor Thud",
   "price": 3000
  },
  {
   "id": "echo_gale",
-  "name": "Echo Crystal: Cyclone Edge",
-  "description": "Teaches Cyclone Edge to a Gale Spirling. Never used up.",
+  "name": "Echo Crystal: Gale Scythe",
+  "description": "Teaches Gale Scythe to a Gale Spirling. Never used up.",
   "battle": false,
-  "teaches": "Cyclone Edge",
+  "teaches": "Gale Scythe",
   "price": 3000
  },
  {
@@ -267,10 +267,10 @@
  },
  {
   "id": "echo_umbra",
-  "name": "Echo Crystal: Gloom Pulse",
-  "description": "Teaches Gloom Pulse to an Umbra Spirling. Never used up.",
+  "name": "Echo Crystal: Gloom Ripple",
+  "description": "Teaches Gloom Ripple to an Umbra Spirling. Never used up.",
   "battle": false,
-  "teaches": "Gloom Pulse",
+  "teaches": "Gloom Ripple",
   "price": 3000
  }
 ]

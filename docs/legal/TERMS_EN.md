@@ -16,7 +16,7 @@ Last updated: November 2026
    private, non-commercial purposes. All rights in the game stay with us or our licensors. In-game currency,
    Spirlings and items are not property, have no cash value and cannot be exchanged for real money.
 4. **Rules.** No cheats, bots, tampering with saves or server traffic, exploiting bugs, reverse engineering
-   (except where the law allows it), selling accounts or items for money, or offensive or unlawful Tamer
+   (except where the law allows it), selling accounts or items for money, or offensive or unlawful Wayfarer
    names. We may warn, reset progress, or suspend or close accounts, taking all circumstances into account,
    and will tell you why. You can object at [EMAIL].
    **Friends and greetings:** friends are added with a friend code. Greetings are fixed phrases from a list;

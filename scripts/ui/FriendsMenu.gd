@@ -40,7 +40,7 @@ static func run(menu: PauseMenu) -> void:
 		labels.append("Add a friend...")
 		labels.append("World goal of the week")
 		labels.append("Weekly board")
-		labels.append("Blocked Tamers")
+		labels.append("Blocked Wayfarers")
 		var title: String = "Friends %d   Your code %s" % [friends.size(), Online.pretty_code(Online.friend_code())]
 		var idx: int = await menu.pick_strings(title, labels)
 		if idx < 0:
@@ -61,7 +61,7 @@ static func run(menu: PauseMenu) -> void:
 static func friend_line(f: Dictionary) -> String:
 	var dot: String = "*" if bool(f.get("online", false)) else "-"
 	var where: String = str(f.get("place", "")) if bool(f.get("online", false)) else Loc.t(last_seen_text(int(f.get("last_seen", 0))))
-	return "%s %s  Lv%d  %s" % [dot, str(f.get("name", "")), int(f.get("level", 1)), where]
+	return "%s %s  Bond %d  %s" % [dot, str(f.get("name", "")), int(f.get("level", 1)), where]
 
 static func last_seen_text(unix: int) -> String:
 	var ago: int = maxi(0, Online.unix_now() - unix)
@@ -80,7 +80,7 @@ static func card_text(f: Dictionary) -> String:
 		"Rifts sealed: %d" % int(c.get("seals", 0)),
 		"Spirlog: %d seen, %d bonded" % [int(c.get("seen", 0)), int(c.get("bonded", 0))],
 		"Play time: %d h" % int(c.get("hours", 0)),
-		"Friendship Lv%d (%d points)" % [int(f.get("level", 1)), int(f.get("points", 0))],
+		"Friendship %d (%d points)" % [int(f.get("level", 1)), int(f.get("points", 0))],
 	]
 	return Loc.t("\n".join(lines))
 
@@ -89,7 +89,7 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 	var code: String = str(f.code)
 	while true:
 		var gift: String = "Gift sent today" if bool(f.get("gift_sent", false)) else "Send today's gift"
-		var entries: Array[String] = ["Tamer card", gift, "Send a greeting...", "Wave", "Echo duel", "Remove friend", "Block", "Report..."]
+		var entries: Array[String] = ["Wayfarer card", gift, "Send a greeting...", "Wave", "Echo duel", "Remove friend", "Block", "Report..."]
 		var idx: int = await menu.pick_strings(str(f.name), entries)
 		match idx:
 			-1:
@@ -117,7 +117,7 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 				if not bool(f.get("has_team", false)):
 					await menu.info("%s has no echo team yet." % str(f.name))
 					continue
-				if await menu.confirm("Echo duel with %s's team? Everyone fights at Lv%d. Nothing is lost, your team is rested after." % [str(f.name), EchoTeam.DUEL_LEVEL]):
+				if await menu.confirm("Echo duel with %s's team? Everyone fights at Ring %d. Nothing is lost, your team is rested after." % [str(f.name), EchoTeam.DUEL_LEVEL]):
 					var t: Dictionary = await Online.call_fn("friend_team", {"p_code": code})
 					if t.ok and t.data is Dictionary and bool(t.data.get("ok", false)):
 						menu.echo_duel = {"code": code, "name": str(t.data.name), "team": t.data.team}
@@ -292,12 +292,12 @@ static func goal_text(g: Dictionary) -> String:
 		bar += "#" if i < pct / 10 else "."
 	var lines: Array[String] = [
 		"This week: %s" % str(GOAL_TEXT.get(str(g.get("kind", "")), g.get("kind", ""))),
-		"All Tamers: %d of %d" % [total, target],
+		"All Wayfarers: %d of %d" % [total, target],
 		"[%s] %d%%" % [bar, pct],
 		"You helped: %d" % int(g.get("mine", 0)),
 	]
 	if int(g.get("online_now", 0)) > 1:
-		lines.append("%d Tamers are in Veydal" % int(g.online_now))
+		lines.append("%d Wayfarers are in Veydal" % int(g.online_now))
 	return Loc.t("\n".join(lines))
 
 ## Tiers reached and not claimed yet (1-4).
@@ -356,7 +356,7 @@ static func error_text(r: Dictionary) -> String:
 	if r.ok and r.data is Dictionary:
 		e = str(r.data.get("error", ""))
 	match e:
-		"no_such_code": return "No Tamer has that code."
+		"no_such_code": return "No Wayfarer has that code."
 		"not_friends": return "You can only do that with friends."
 		"already_today": return "Already done today. Tomorrow again!"
 		"slow_down": return "That was a lot at once. Please wait a little."

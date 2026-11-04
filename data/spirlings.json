@@ -13,11 +13,11 @@
    "def": 54
   },
   "evolves_to": "Smoldrake",
-  "evolve_level": 16,
+  "evolve_level": 14,
   "trait": "kindling",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Cinder Nip"
    ],
    "5": [
@@ -33,7 +33,7 @@
     "Cinder Breath"
    ],
    "20": [
-    "Flare Lash"
+    "Kiln Strike"
    ]
   },
   "bond_rate": 0.3,
@@ -55,11 +55,11 @@
    "def": 70
   },
   "evolves_to": "Calderox",
-  "evolve_level": 34,
+  "evolve_level": 31,
   "trait": "kindling",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Cinder Nip",
     "Heat Haze"
    ],
@@ -67,7 +67,7 @@
     "Cinder Breath"
    ],
    "20": [
-    "Flare Lash"
+    "Kiln Strike"
    ],
    "23": [
     "Kindle Up"
@@ -75,8 +75,11 @@
    "26": [
     "Dusk Rake"
    ],
+   "28": [
+    "Ash Call"
+   ],
    "30": [
-    "Blaze Coil"
+    "Furnace Spiral"
    ]
   },
   "bond_rate": 0.15,
@@ -108,23 +111,26 @@
     "Pebble Toss"
    ],
    "34": [
-    "Quake Stomp"
+    "Tremor Thud"
    ],
    "38": [
-    "Flare Lash",
-    "Shell Up"
+    "Kiln Strike",
+    "Hunker Down"
    ],
    "42": [
-    "Blaze Coil"
+    "Furnace Spiral"
+   ],
+   "44": [
+    "Ash Call"
    ],
    "48": [
-    "Boulder Slam"
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.06,
   "height": "1.9 m",
   "habitat": "Volcanic ridges",
-  "lore": "The crater on its back keeps a slow fire for years. Herders once cooked supper on a sleeping Calderox."
+  "lore": "The cracks in its shoulder plates glow like banked coals. Herders warm their hands on a dozing Calderox in winter."
  },
  {
   "dex_id": 4,
@@ -140,11 +146,11 @@
    "def": 64
   },
   "evolves_to": "Riptail",
-  "evolve_level": 16,
+  "evolve_level": 18,
   "trait": "slick",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Fizz Pop"
    ],
    "5": [
@@ -155,7 +161,7 @@
     "Chill Mist"
    ],
    "13": [
-    "Brine Jet"
+    "Spindrift Shot"
    ],
    "20": [
     "Undertow"
@@ -180,16 +186,16 @@
    "def": 82
   },
   "evolves_to": "Leviarch",
-  "evolve_level": 34,
+  "evolve_level": 33,
   "trait": "slick",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Fizz Pop",
     "Drench"
    ],
    "13": [
-    "Brine Jet"
+    "Spindrift Shot"
    ],
    "20": [
     "Undertow"
@@ -197,11 +203,14 @@
    "22": [
     "Chill Mist"
    ],
+   "24": [
+    "Tide Call"
+   ],
    "26": [
     "Prism Ray"
    ],
    "30": [
-    "Tidal Crash"
+    "Breaker Plunge"
    ]
   },
   "bond_rate": 0.15,
@@ -229,17 +238,23 @@
   "learnset": {
    "1": [
     "Fizz Pop",
-    "Brine Jet",
+    "Spindrift Shot",
     "Glint"
    ],
    "34": [
     "Dawn Mend"
    ],
+   "36": [
+    "Tide Call"
+   ],
    "38": [
     "Prism Ray"
    ],
+   "40": [
+    "Dawn Call"
+   ],
    "42": [
-    "Tidal Crash"
+    "Breaker Plunge"
    ],
    "48": [
     "Radiant Lance"
@@ -264,11 +279,11 @@
    "def": 70
   },
   "evolves_to": "Thornback",
-  "evolve_level": 16,
+  "evolve_level": 17,
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Lichen Lash"
    ],
    "5": [
@@ -287,7 +302,7 @@
   "bond_rate": 0.3,
   "height": "0.4 m",
   "habitat": "Damp woods, garden beds",
-  "lore": "It sleeps under its moss cap for most of the day. Gardeners welcome it: wherever it naps, seedlings follow."
+  "lore": "It hears rain coming with its long leaf ears and sits very still until the first drop. Gardeners welcome it: wherever it naps, seedlings follow."
  },
  {
   "dex_id": 8,
@@ -303,11 +318,11 @@
    "def": 92
   },
   "evolves_to": "Verdantusk",
-  "evolve_level": 34,
+  "evolve_level": 35,
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Lichen Lash",
     "Puffcap Haze"
    ],
@@ -315,13 +330,16 @@
     "Sap Draw"
    ],
    "18": [
-    "Shell Up"
+    "Hunker Down"
    ],
    "20": [
     "Thorn Volley"
    ],
+   "22": [
+    "Bloom Call"
+   ],
    "26": [
-    "Quake Stomp"
+    "Tremor Thud"
    ],
    "30": [
     "Bloom Burst"
@@ -356,7 +374,7 @@
     "Pebble Toss"
    ],
    "34": [
-    "Quake Stomp"
+    "Tremor Thud"
    ],
    "38": [
     "Thorn Volley"
@@ -364,14 +382,17 @@
    "42": [
     "Bloom Burst"
    ],
+   "44": [
+    "Bloom Call"
+   ],
    "48": [
-    "Eclipse Fang"
+    "Dusk Gnaw"
    ]
   },
   "bond_rate": 0.06,
   "height": "2.0 m",
   "habitat": "Meadows, high pasture",
-  "lore": "A small meadow grows on its back, complete with flowers and the odd beetle. It grazes for hours without moving a step."
+  "lore": "Ferns grow in its shaggy mane, and birds nest in its beard. An old one can graze for hours without moving a step."
  },
  {
   "dex_id": 10,
@@ -391,7 +412,7 @@
   "trait": "surge",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Crackle Bite"
    ],
    "4": [
@@ -407,7 +428,10 @@
     "Overcharge"
    ],
    "18": [
-    "Surge Fang"
+    "Storm Gnash"
+   ],
+   "20": [
+    "Spark Call"
    ]
   },
   "bond_rate": 0.5,
@@ -442,10 +466,13 @@
     "Prism Ray"
    ],
    "28": [
-    "Surge Fang"
+    "Storm Gnash"
    ],
    "30": [
     "Overcharge"
+   ],
+   "32": [
+    "Spark Call"
    ],
    "34": [
     "Charged Mist"
@@ -478,7 +505,7 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Dusk Rake"
    ],
    "5": [
@@ -494,7 +521,7 @@
     "Night Siphon"
    ],
    "21": [
-    "Quake Stomp"
+    "Tremor Thud"
    ]
   },
   "bond_rate": 0.5,
@@ -526,17 +553,20 @@
     "Hush"
    ],
    "26": [
-    "Gloom Pulse"
+    "Gloom Ripple"
    ],
    "30": [
-    "Quake Stomp",
+    "Tremor Thud",
     "All-In Crash"
    ],
+   "33": [
+    "Murk Call"
+   ],
    "36": [
-    "Eclipse Fang"
+    "Dusk Gnaw"
    ],
    "42": [
-    "Boulder Slam"
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.12,
@@ -562,20 +592,20 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Breeze Slice"
    ],
    "5": [
     "Updraft"
    ],
    "8": [
-    "Tailwind Step"
+    "Drift Step"
    ],
    "10": [
     "Crackle Bite"
    ],
    "16": [
-    "Cyclone Edge"
+    "Gale Scythe"
    ],
    "22": [
     "Glint"
@@ -609,11 +639,11 @@
     "Crackle Bite"
    ],
    "28": [
-    "Cyclone Edge"
+    "Gale Scythe"
    ],
    "32": [
     "Arc Bolt",
-    "Tailwind Step"
+    "Drift Step"
    ],
    "38": [
     "Squall"
@@ -645,7 +675,7 @@
   "trait": "light_sleeper",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Wick Flicker"
    ],
    "5": [
@@ -655,10 +685,13 @@
     "Glint"
    ],
    "11": [
-    "Clear Mind"
+    "Still Thought"
    ],
    "13": [
     "Candle Ward"
+   ],
+   "15": [
+    "Dawn Call"
    ],
    "18": [
     "Prism Ray"
@@ -693,13 +726,16 @@
     "Fizz Pop"
    ],
    "22": [
-    "Brine Jet"
+    "Spindrift Shot"
    ],
    "26": [
     "Prism Ray"
    ],
    "28": [
-    "Clear Mind"
+    "Still Thought"
+   ],
+   "30": [
+    "Dawn Call"
    ],
    "32": [
     "Candle Ward"
@@ -734,7 +770,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Mirk Nip"
    ],
    "5": [
@@ -748,6 +784,9 @@
    ],
    "13": [
     "Dusk Rake"
+   ],
+   "16": [
+    "Murk Call"
    ],
    "18": [
     "Tunnel Strike"
@@ -786,7 +825,7 @@
     "Tunnel Strike"
    ],
    "25": [
-    "Quake Stomp"
+    "Tremor Thud"
    ],
    "28": [
     "All-In Crash"
@@ -794,11 +833,14 @@
    "30": [
     "Murk Veil"
    ],
+   "33": [
+    "Murk Call"
+   ],
    "36": [
-    "Eclipse Fang"
+    "Dusk Gnaw"
    ],
    "42": [
-    "Boulder Slam"
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.15,
@@ -825,14 +867,14 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Headlong Charge",
+    "Bowl Over",
     "Fizz Pop"
    ],
    "4": [
     "Lichen Lash"
    ],
    "8": [
-    "Brine Fang"
+    "Salt Snap"
    ],
    "12": [
     "Kelp Lash"
@@ -842,6 +884,9 @@
    ],
    "17": [
     "Drench"
+   ],
+   "19": [
+    "Bloom Call"
    ],
    "22": [
     "Thorn Volley"
@@ -872,7 +917,7 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
-    "Brine Fang",
+    "Salt Snap",
     "Kelp Lash",
     "Lichen Lash"
    ],
@@ -883,7 +928,7 @@
     "Sap Draw"
    ],
    "38": [
-    "Tidal Crash"
+    "Breaker Plunge"
    ],
    "44": [
     "Bloom Burst"

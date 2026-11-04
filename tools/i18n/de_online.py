@@ -1,10 +1,10 @@
 # German texts for the online parts (scripts/online, account, friends, mail, echoes, world goal).
 T = {
 # Account and connection
-"Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Tamer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account.":
-	"Chimora läuft nur online. Deine Reisen liegen auf unserem Server in Deutschland, damit sie sicher sind, wenn dein Handy kaputtgeht. Gespeichert werden nur Tamer-Name, Freundescode und Spielstände. Keine Werbung, kein Tracking. Unter Einstellungen, Konto kannst du alles löschen.",
-"Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Tamer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset.":
-	"Online-Regeln:\n- Sei freundlich. Grüße sind feste Sätze, es gibt keinen freien Chat.\n- Teile nie deinen echten Namen, deine Adresse oder Passwörter.\n- Spirlings bleiben bei dem Tamer, der sie verbunden hat. Man kann sie nicht tauschen oder verschenken.\n- Melde Namen, die nicht okay sind. Blockieren wirkt sofort.\n- Wer schummelt, dessen Konto wird zurückgesetzt.",
+"Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account.":
+	"Chimora läuft nur online. Deine Reisen liegen auf unserem Server in Deutschland, damit sie sicher sind, wenn dein Handy kaputtgeht. Gespeichert werden nur Wanderer-Name, Freundescode und Spielstände. Keine Werbung, kein Tracking. Unter Einstellungen, Konto kannst du alles löschen.",
+"Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Wayfarer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset.":
+	"Online-Regeln:\n- Sei freundlich. Grüße sind feste Sätze, es gibt keinen freien Chat.\n- Teile nie deinen echten Namen, deine Adresse oder Passwörter.\n- Spirlings bleiben bei dem Wanderer, der sie verbunden hat. Man kann sie nicht tauschen oder verschenken.\n- Melde Namen, die nicht okay sind. Blockieren wirkt sofort.\n- Wer schummelt, dessen Konto wird zurückgesetzt.",
 "Account  Code %s": "Konto  Code %s",
 "(test server on this phone)": "(Testserver auf diesem Handy)",
 "Online rules": "Online-Regeln",
@@ -31,7 +31,7 @@ T = {
 "No connection": "Keine Verbindung",
 "Chimora needs the internet. Your journeys are safe on the server.": "Chimora braucht Internet. Deine Reisen sind sicher auf dem Server.",
 "Try again": "Nochmal versuchen",
-"%d Tamers are in Veydal": "%d Tamer sind in Veydal",
+"%d Wayfarers are in Veydal": "%d Wanderer sind in Veydal",
 "Slot %d was played on this phone and on another device. Which journey do you keep?": "Platz %d wurde auf diesem Handy und auf einem anderen Gerät gespielt. Welche Reise behältst du?",
 "The other device's": "Die vom anderen Gerät",
 "This phone's": "Die von diesem Handy",
@@ -46,21 +46,21 @@ T = {
 "Lantern Mail (%d new)": "Leuchtpost (%d neu)", "Lantern Mail": "Leuchtpost",
 "Requests (%d)": "Anfragen (%d)", "Requests": "Anfragen",
 "Add a friend...": "Freund hinzufügen...", "World goal of the week": "Weltziel der Woche", "Weekly board": "Wochen-Rangliste",
-"Blocked Tamers": "Blockierte Tamer",
+"Blocked Wayfarers": "Blockierte Wanderer",
 "Friends %d   Your code %s": "Freunde %d   Dein Code %s",
 "seen %d min ago": "vor %d Min. da", "seen %d h ago": "vor %d Std. da", "seen %d days ago": "vor %d Tagen da",
 "%s   Code %s": "%s   Code %s",
 "Favourite: %s": "Liebling: %s", "Rifts sealed: %d": "Versiegelte Rifts: %d",
 "Spirlog: %d seen, %d bonded": "Spirlog: %d gesehen, %d verbunden", "Play time: %d h": "Spielzeit: %d Std.",
-"Friendship Lv%d (%d points)": "Freundschaft Stufe %d (%d Pkt.)",
+"Friendship %d (%d points)": "Freundschaft %d (%d Pkt.)",
 "Gift sent today": "Geschenk ist raus", "Send today's gift": "Geschenk schicken",
-"Tamer card": "Tamer-Karte", "Send a greeting...": "Gruß schicken...", "Wave": "Winken", "Echo duel": "Echo-Duell",
+"Wayfarer card": "Wanderer-Karte", "Send a greeting...": "Gruß schicken...", "Wave": "Winken", "Echo duel": "Echo-Duell",
 "Remove friend": "Freund entfernen", "Block": "Blockieren", "Report...": "Melden...",
 "You already sent %s a gift today. Tomorrow you can send another.": "Du hast %s heute schon ein Geschenk geschickt. Morgen geht wieder eins.",
 "Your gift is on its way to %s.": "Dein Geschenk ist unterwegs zu %s.",
 "Greeting for %s": "Gruß an %s",
 "%s has no echo team yet.": "%s hat noch kein Echo-Team.",
-"Echo duel with %s's team? Everyone fights at Lv%d. Nothing is lost, your team is rested after.": "Echo-Duell gegen das Team von %s? Alle kämpfen auf Stufe %d. Nichts geht verloren, danach ist dein Team ausgeruht.",
+"Echo duel with %s's team? Everyone fights at Ring %d. Nothing is lost, your team is rested after.": "Echo-Duell gegen das Team von %s? Alle kämpfen auf Ring %d. Nichts geht verloren, danach ist dein Team ausgeruht.",
 "Remove %s from your friends?": "%s aus deinen Freunden entfernen?",
 "Block %s? You will not get requests, greetings or gifts from them.": "%s blockieren? Dann bekommst du keine Anfragen, Grüße oder Geschenke mehr von dort.",
 "%s is blocked.": "%s ist blockiert.", "Sent!": "Geschickt!",
@@ -85,14 +85,14 @@ T = {
 "Say thanks?": "Danke sagen?",
 "A gift holds one of these:": "Ein Geschenk enthält eins davon:",
 "You can open %d gifts a day.": "Du kannst %d Geschenke am Tag öffnen.",
-"This week: %s": "Diese Woche: %s", "All Tamers: %d of %d": "Alle Tamer: %d von %d", "You helped: %d": "Dein Beitrag: %d",
+"This week: %s": "Diese Woche: %s", "All Wayfarers: %d of %d": "Alle Wanderer: %d von %d", "You helped: %d": "Dein Beitrag: %d",
 "Help once this week to share the rewards at 25, 50, 75 and 100 percent.": "Hilf diese Woche einmal mit, dann bekommst du die Belohnungen bei 25, 50, 75 und 100 Prozent.",
 "The world reached %d%%! You received %s.": "Die Welt hat %d%% erreicht! Du bekommst %s.",
 "(you)": "(du)",
 "No runs yet this week. Try the weekly challenge!": "Diese Woche noch keine Läufe. Probier die Wochenherausforderung!",
 "Weekly board, friends": "Wochen-Rangliste, Freunde", "Weekly board, everyone": "Wochen-Rangliste, alle",
 "Show everyone": "Alle zeigen", "Show friends": "Freunde zeigen",
-"No Tamer has that code.": "Kein Tamer hat diesen Code.",
+"No Wayfarer has that code.": "Kein Wanderer hat diesen Code.",
 "You can only do that with friends.": "Das geht nur mit Freunden.",
 "Already done today. Tomorrow again!": "Heute schon erledigt. Morgen wieder!",
 "That was a lot at once. Please wait a little.": "Das war viel auf einmal. Bitte warte kurz.",
@@ -105,7 +105,7 @@ T = {
 "%s's echo": "Echo von %s",
 "%s's echo fades with a smile. Your friendship grew!": "Das Echo von %s verblasst mit einem Lächeln. Eure Freundschaft ist gewachsen!",
 "The echo flickers and fades. Try again later.": "Das Echo flackert und verblasst. Versuch es später noch einmal.",
-"%s's echo steps out of the light. Everyone fights at Lv%d.": "Das Echo von %s tritt aus dem Licht. Alle kämpfen auf Stufe %d.",
+"%s's echo steps out of the light. Everyone fights at Ring %d.": "Das Echo von %s tritt aus dem Licht. Alle kämpfen auf Ring %d.",
 "You won the echo duel against %s!": "Du hast das Echo-Duell gegen %s gewonnen!",
 "%s's echo won this time. Your team is fine.": "Diesmal hat das Echo von %s gewonnen. Deinem Team geht es gut.",
 # Set phrases
@@ -119,5 +119,5 @@ T = {
 "%s: %s": "%s: %s",
 }
 # Strings in online code that are not shown to players (server messages, HTTP headers).
-KEEP = ["%s %s  Lv%d  %s", "[%s] %d%%", "%d. %s  %d%s", "Tamer", "unknown function %s", "Tamer ", "apikey: ", "Authorization: Bearer ",
+KEEP = ["%s %s  Bond %d  %s", "[%s] %d%%", "%d. %s  %d%s", "Tamer", "unknown function %s", "Tamer ", "apikey: ", "Authorization: Bearer ",
 	"Content-Type: application/json", "Accept: application/json"]

@@ -35,7 +35,7 @@ func texture() -> Texture2D:
 func _ready() -> void:
 	_home = position
 
-## Steps out beside the Tamer (slides in from the screen edge; never thrown). Awaitable.
+## Steps out beside the Wayfarer (slides in from the screen edge; never thrown). Awaitable.
 func step_out(from_left: bool) -> void:
 	_home = position
 	position = _home + Vector2(-STEP_OUT_DISTANCE if from_left else STEP_OUT_DISTANCE, 0)
