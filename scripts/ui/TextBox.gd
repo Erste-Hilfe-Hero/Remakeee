@@ -45,7 +45,8 @@ func _ready() -> void:
 
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String) -> void:
-	_label.text = Loc.t(text)
+	# Story lines may address the player by name: "{name}" (after translation).
+	_label.text = Loc.t(text).replace("{name}", GameState.tamer_name)
 	_label.visible_characters = 0
 	_visible_chars = 0.0
 	_typing = true

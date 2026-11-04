@@ -14,6 +14,8 @@ func test_goals_advance_in_order() -> void:
 	flags["rift_cinder_sealed"] = true
 	assert_eq(QuestLog.current(flags).id, "dock")
 	flags["kestra_dock_talk"] = true
+	assert_eq(QuestLog.current(flags).id, "home")
+	flags["aldo_dock_told"] = true
 	assert_eq(QuestLog.current(flags).id, "act1_end")
 
 func test_old_save_without_new_flag_lands_on_later_goal() -> void:
@@ -38,12 +40,19 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 			if d[k] is Dictionary and d[k].has("flag"):
 				settable[str(d[k].flag)] = true
 			# Actions that set flags themselves: quest_show <id> ..., switch <puzzle> ...
-			var act: PackedStringArray = str(d[k].get("action", "")).split(" ") if d[k] is Dictionary else PackedStringArray()
-			if act.size() > 1 and act[0] == "quest_show":
-				settable["q_%s_asked" % act[1]] = true
-				settable["q_%s_done" % act[1]] = true
-			if act.size() > 1 and act[0] == "switch":
-				settable[act[1]] = true
+			for one: String in (str(d[k].get("action", "")).split(";") if d[k] is Dictionary else PackedStringArray()):
+				var act: PackedStringArray = one.strip_edges().split(" ")
+				if act.size() > 1 and act[0] == "quest_show":
+					settable["q_%s_asked" % act[1]] = true
+					settable["q_%s_done" % act[1]] = true
+				if act.size() > 1 and act[0] == "switch":
+					settable[act[1]] = true
+				# "page <n>" sets page_<n>, and the last page sets pages_all.
+				if act.size() > 1 and act[0] == "page":
+					settable["page_%s" % act[1]] = true
+					settable["pages_all"] = true
+				if act[0] == "choose_starter":
+					settable["got_starter"] = true
 	for f: String in DirAccess.get_files_at("res://data/maps"):
 		var m: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/maps/" + f))
 		for n: Variant in m.get("npcs", []):

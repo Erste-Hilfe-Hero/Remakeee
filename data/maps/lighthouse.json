@@ -29,10 +29,27 @@
    "y": 3,
    "facing": "right",
    "dialogue": "lighthouse/aldo",
-   "sprite": "elder"
+   "sprite": "elder",
+   "hide_flag": "kestra_dock_talk"
+  },
+  {
+   "id": "aldo_dock",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "lighthouse/aldo_dock",
+   "sprite": "elder",
+   "show_flag": "kestra_dock_talk"
   }
  ],
  "signs": [
+  {
+   "x": 8,
+   "y": 1,
+   "dialogue": "lighthouse/lamp_room",
+   "show_flag": "pages_all",
+   "hide_flag": "mirela_lamp"
+  },
   {
    "x": 8,
    "y": 1,

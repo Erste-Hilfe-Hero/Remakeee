@@ -99,6 +99,12 @@
    "x": 10,
    "y": 5,
    "dialogue": "fernstair/rock_find"
+  },
+  {
+   "x": 1,
+   "y": 14,
+   "dialogue": "story/find_2",
+   "hide_flag": "page_2"
   }
  ],
  "gear_spots": [

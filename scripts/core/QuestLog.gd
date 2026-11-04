@@ -49,6 +49,17 @@ static func goal_text(goal: Dictionary, flags: Dictionary) -> String:
 		text += " (%d/%d)" % [have, need.size()]
 	return text
 
+## Side-goal text with progress for goals that list "progress" flags, e.g. "... (2/6)".
+static func side_text(goal: Dictionary, flags: Dictionary) -> String:
+	var text: String = str(goal.get("text", ""))
+	var steps: Array = goal.get("progress", [])
+	if not steps.is_empty():
+		var have: int = 0
+		for f: Variant in steps:
+			have += 1 if bool(flags.get(str(f), false)) else 0
+		text += " (%d/%d)" % [have, steps.size()]
+	return text
+
 static func open_side_goals(flags: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
 	for g: Variant in data().get("side", []):
@@ -81,7 +92,11 @@ static func all_flags() -> Array[String]:
 ## Text for the Goals screen.
 static func summary(flags: Dictionary) -> String:
 	var g: Dictionary = current(flags)
-	var lines: PackedStringArray = ["Goal", goal_text(g, flags)]
+	var lines: PackedStringArray = []
+	if not str(g.get("chapter", "")).is_empty():
+		lines.append(str(g.chapter))
+	lines.append("Goal")
+	lines.append(goal_text(g, flags))
 	if not str(g.get("where", "")).is_empty():
 		lines.append("Where: %s" % g.where)
 	var side: Array[Dictionary] = open_side_goals(flags)
@@ -89,5 +104,5 @@ static func summary(flags: Dictionary) -> String:
 		lines.append("")
 		lines.append("Also")
 		for s: Dictionary in side:
-			lines.append("- " + str(s.get("text", "")))
+			lines.append("- " + side_text(s, flags))
 	return "\n".join(lines)

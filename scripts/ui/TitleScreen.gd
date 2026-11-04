@@ -1,15 +1,8 @@
 class_name TitleScreen
 extends Control
-## Title and new-game flow: difficulty -> Wayfarer customisation (placeholder) -> starter.
+## Title and new-game flow: boy or girl -> name -> the prologue starts in the overworld.
 
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
-const STARTERS: Array[String] = Database.STARTERS
-const DIFFICULTY_TEXT: Array[String] = [
-	"Story (relaxed)",
-	"Wayfarer (normal)",
-	"Veteran (caps, smart AI)",
-	"Rift-Born (no battle items)",
-]
 const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
 
@@ -194,33 +187,20 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 			return idx + 1
 	return 0
 
+## New game (Ali, 2026-11-04): boy or girl, then a name, and the journey starts. The partner
+## Spirling is picked in the story (prologue at the lighthouse). Difficulty and the Iron Oath
+## live in the settings during the game.
 func _new_game() -> bool:
-	var diff: int = await _menu.pick_strings("Difficulty", DIFFICULTY_TEXT)
-	if diff < 0:
+	var look: int = await _menu.pick_strings("Who are you?", ["Boy", "Girl"] as Array[String])
+	if look < 0:
 		return false
-	# "Normal" comes first so mashing accept never takes the oath by accident.
-	var oath: bool = await _menu.pick_strings("Iron Oath: Spirlings that faint retire to the Sanctuary for good. Only for a new game.",
-		["Normal journey", "Take the Iron Oath"] as Array[String]) == 1
-	_name_edit.text = GameState.tamer_name
+	_name_edit.text = GameState.DEFAULT_NAMES[look]
 	_name_box.visible = true
 	_name_edit.grab_focus()
+	_name_edit.select_all()
 	var name: String = await _name_done
 	_name_box.visible = false
-	var colors: Array[String] = ["Teal coat", "Rust coat", "Ochre coat", "Plum coat"]
-	var color: int = await _menu.pick_strings("Your look", colors)
-	if color < 0:
-		color = 0
-	while true:
-		var entries: Array[String] = []
-		for sp: String in STARTERS:
-			entries.append("%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])])
-		var pick: int = await _menu.pick_strings("Three Spirlings followed the lighthouse lamp out of the storm. Which one stays with you?", entries)
-		if pick < 0:
-			return false
-		var sd: SpirlingData = Database.species(STARTERS[pick])
-		if await _menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
-			GameState.new_game(diff as GameState.Difficulty, name, color, sd.species_name)
-			GameState.iron_oath = oath
-			EraManager.from_dict({})
-			return true
-	return false
+	GameState.new_game(GameState.Difficulty.TAMER, name, look, "", look)
+	GameState.iron_oath = false
+	EraManager.from_dict({})
+	return true

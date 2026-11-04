@@ -1,0 +1,63 @@
+{
+ "prologue": [
+  "Veydal. A valley of lakes and terraces, drawn and redrawn by its cartographers.",
+  "Last night a storm tore the sky open above the lake.",
+  "Where the lightning struck, Rifts opened, and the Spirlings near them fell silent.",
+  "People call it the Hush.",
+  "In the Brindlewick lighthouse, an apprentice cartographer is still asleep...",
+  "{name}! Wake up!"
+ ],
+ "find_2": {
+  "lines": [
+   "Pinned under the mossy rock: a sheet of old paper!"
+  ],
+  "action": "page 2"
+ },
+ "find_3": {
+  "lines": [
+   "Something flutters in a crack in the rock. Paper!"
+  ],
+  "action": "page 3"
+ },
+ "find_4": {
+  "lines": [
+   "A torn page is caught in the fence."
+  ],
+  "action": "page 4"
+ },
+ "find_5": {
+  "lines": [
+   "A page drifts by the bank. The ink is still readable."
+  ],
+  "action": "page 5"
+ },
+ "find_6": {
+  "lines": [
+   "Deep in the gallery, a page lies dry under a ledge."
+  ],
+  "action": "page 6"
+ },
+ "page_1": [
+  "'Day one. The sky over the lake split like old paper. I'm going in to map it.'",
+  "'Aldo says I'm mad. Aldo is usually right.'"
+ ],
+ "page_2": [
+  "'The ferns all lean toward the Rift, as if they were listening.'",
+  "'The Spirlings here have stopped calling. I'll name it the Hush.'"
+ ],
+ "page_3": [
+  "'A Warden holds a Rift shut only while their bond holds.'",
+  "'A bond is a promise heard on both sides. Break it, and the Hush gets in.'"
+ ],
+ "page_4": [
+  "'Inside, the land isn't broken. It's unfinished, like a map nobody drew to the edge.'"
+ ],
+ "page_5": [
+  "'Something on the other side answers when I call.'",
+  "'Not a voice. An echo of every Spirling that ever lost its Wayfarer.'"
+ ],
+ "page_6": [
+  "'If I don't come back: a Rift closes when someone draws it to the end.'",
+  "'Tell Aldo to keep the lamp lit. Light finds the way home.'"
+ ]
+}

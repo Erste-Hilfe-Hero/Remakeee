@@ -102,10 +102,17 @@ func gear_needed_at(cell: Vector2i) -> String:
 			return str(g.gear)
 	return ""
 
-func sign_at(cell: Vector2i) -> Dictionary:
+## The sign on [param cell]. Signs may carry "show_flag" / "hide_flag" like NPCs, so one
+## spot can read differently as the story moves on (the first matching sign wins).
+func sign_at(cell: Vector2i, flags: Dictionary = {}) -> Dictionary:
 	for s: Dictionary in signs:
-		if int(s.x) == cell.x and int(s.y) == cell.y:
-			return s
+		if int(s.x) != cell.x or int(s.y) != cell.y:
+			continue
+		if s.has("hide_flag") and bool(flags.get(str(s.hide_flag), false)):
+			continue
+		if s.has("show_flag") and not bool(flags.get(str(s.show_flag), false)):
+			continue
+		return s
 	return {}
 
 ## Closes (rock) or opens each puzzle block from [param flags]. Returns true if anything changed.
