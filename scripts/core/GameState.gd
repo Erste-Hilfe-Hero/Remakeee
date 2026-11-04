@@ -13,6 +13,10 @@ const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 ## Tamer customisation (placeholder until real sprites exist).
 var tamer_name: String = "Rowan"
 var tamer_color: int = 0
+## Boy or girl, picked first at new game. Index into TAMER_SPRITES / DEFAULT_NAMES.
+var tamer_look: int = 0
+const TAMER_SPRITES: Array[String] = ["tamer", "tamer_f"]
+const DEFAULT_NAMES: Array[String] = ["Rowan", "Liora"]
 const TAMER_COLORS: Array[Color] = [Color("3a5a9a"), Color("9a3a4a"), Color("3a8a5a"), Color("8a6a2a")]
 ## Seconds played (shown on the save card).
 var play_time: float = 0.0
@@ -250,18 +254,29 @@ func reset() -> void:
 	known_matchups = {}
 	play_time = 0.0
 
-## Starts a new game with the choices from the new-game flow.
-func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String) -> void:
+## Starts a new game with the choices from the new-game flow. With an empty [param p_starter]
+## the partner is picked later, in the prologue at the lighthouse (see choose_starter).
+func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0) -> void:
 	reset()
 	difficulty = p_difficulty
-	tamer_name = p_name if not p_name.strip_edges().is_empty() else "Rowan"
+	tamer_look = clampi(p_look, 0, TAMER_SPRITES.size() - 1)
+	tamer_name = p_name.strip_edges() if not p_name.strip_edges().is_empty() else DEFAULT_NAMES[tamer_look]
 	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
-	starter = p_starter
-	var s := Spirling.new(Database.species(p_starter), 5, rng)
-	receive_spirling(s)
 	money = 500
-	set_flag("got_starter")
 	in_game = true
+	if not p_starter.is_empty():
+		choose_starter(p_starter)
+
+## The partner Spirling joins at level 5 (prologue, or straight from new_game in tests).
+func choose_starter(species: String) -> void:
+	starter = species
+	var s := Spirling.new(Database.species(species), 5, rng)
+	receive_spirling(s)
+	set_flag("got_starter")
+
+## Overworld sprite sheet for the player.
+func tamer_sprite() -> String:
+	return TAMER_SPRITES[clampi(tamer_look, 0, TAMER_SPRITES.size() - 1)]
 
 ## Save data (see SaveManager for versioning and atomic writes).
 func to_dict() -> Dictionary:
@@ -272,7 +287,7 @@ func to_dict() -> Dictionary:
 	for s: Spirling in storage:
 		storage_d.append(s.to_dict())
 	return {
-		"tamer": {"name": tamer_name, "color": tamer_color},
+		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look},
 		"starter": starter,
 		"difficulty": difficulty,
 		"region": region,
@@ -302,6 +317,7 @@ func from_dict(d: Dictionary) -> void:
 	var tamer: Dictionary = d.get("tamer", {})
 	tamer_name = str(tamer.get("name", "Rowan"))
 	tamer_color = int(tamer.get("color", 0))
+	tamer_look = clampi(int(tamer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))

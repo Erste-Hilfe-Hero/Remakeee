@@ -107,6 +107,12 @@
    "x": 9,
    "y": 3,
    "dialogue": "thornridge/rock_find"
+  },
+  {
+   "x": 1,
+   "y": 12,
+   "dialogue": "story/find_4",
+   "hide_flag": "page_4"
   }
  ]
 }

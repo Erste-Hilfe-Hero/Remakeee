@@ -51,15 +51,23 @@ func _ready() -> void:
 		"gauntlet": _action_gauntlet,
 		"weekly": _action_weekly,
 		"season": _action_season,
+		"choose_starter": _action_choose_starter,
+		"page": _action_page,
 	}
 	_build()
-	if GameState.party.is_empty():
+	if GameState.party.is_empty() and not GameState.in_game:
 		# Running this scene directly from the editor: start a quick test game.
 		GameState.new_game(GameState.Difficulty.TAMER, "Rowan", 0, "Kindlop")
 	GameState.in_game = true
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
+	player.sprite_style = GameState.tamer_sprite()
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
 	VirtualPad.set_wanted(true)
+	if not GameState.has_flag("got_starter"):
+		busy = true
+		player.frozen = true
+		_fade.color.a = 1.0
+		prologue.call_deferred()
 
 func _build() -> void:
 	_ground = TileMapLayer.new()
@@ -111,6 +119,8 @@ func _build() -> void:
 	_text = TextBox.new()
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_text.offset_top = -TEXT_BOX_HEIGHT
+	# Long lines (and German text) grow the box upward instead of off the bottom of the screen.
+	_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_text.visible = false
 	ui_root.add_child(_text)
 	_picker = ListPicker.new()
@@ -338,7 +348,7 @@ func _on_interact(cell: Vector2i) -> void:
 		elif not await offer_rematch(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
-	var s: Dictionary = map.sign_at(cell)
+	var s: Dictionary = map.sign_at(cell, GameState.flags)
 	if not s.is_empty():
 		await run_dialogue(str(s.dialogue))
 		return
@@ -398,12 +408,14 @@ func say(lines: Array[String]) -> void:
 		await _text.show_text(line)
 	_text.visible = false
 
+## Runs one action, or several separated by ";" (e.g. "page 1; give_item tonic 2").
 func _run_action(action: String, speaker: NPC) -> void:
-	var parts: PackedStringArray = action.split(" ", false)
-	if parts.is_empty() or not _actions.has(parts[0]):
-		push_warning("Overworld: unknown dialogue action '%s'" % action)
-		return
-	await _actions[parts[0]].call(parts.slice(1), speaker)
+	for one: String in action.split(";", false):
+		var parts: PackedStringArray = one.strip_edges().split(" ", false)
+		if parts.is_empty() or not _actions.has(parts[0]):
+			push_warning("Overworld: unknown dialogue action '%s'" % one)
+			continue
+		await _actions[parts[0]].call(parts.slice(1), speaker)
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.heal_party()
@@ -516,7 +528,7 @@ func tap_cell(cell: Vector2i) -> void:
 			if f == player.cell or not route.is_empty():
 				player.follow(route, cell)
 				return
-	var talk: bool = npc_at(cell) != null or not map.sign_at(cell).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
+	var talk: bool = npc_at(cell) != null or not map.sign_at(cell, GameState.flags).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
 	if talk:
 		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)
 	else:
@@ -533,6 +545,74 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 		var tip: Array[String] = Tips.take("gear")
 		if not tip.is_empty():
 			await say(tip)
+
+# --- Story: prologue and Mirela's map book ---------------------------------------------------
+
+## The opening of a new journey (Ali, 2026-11-04): a short narration over black, then the
+## morning after the storm in the lighthouse, where the partner Spirling is picked in the story.
+func prologue() -> void:
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	_fade.color.a = 1.0
+	Sound.music("title")
+	await say(Dialogue.lines_for(Dialogue.get_entry("story/prologue"), GameState.flags))
+	Sound.music(Sound.track_for_map(map.id))
+	var tw: Tween = create_tween()
+	tw.tween_property(_fade, "color:a", 0.0, 0.6)
+	await tw.finished
+	busy = false
+	# The prologue dialogue picks the partner ("choose_starter"); Aldo then hands over the map book.
+	while not GameState.has_flag("got_starter"):
+		await run_dialogue("lighthouse/morning")
+	await run_dialogue("lighthouse/aldo")
+	SaveManager.save_game()
+
+## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
+func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
+	if GameState.has_flag("got_starter"):
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	while true:
+		var entries: Array[String] = []
+		for sp: String in Database.STARTERS:
+			entries.append("%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])])
+		var pick: int = await menu.pick_strings("Which one do you kneel down to?", entries, false)
+		var sd: SpirlingData = Database.species(Database.STARTERS[pick])
+		if await menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
+			GameState.choose_starter(sd.species_name)
+			break
+	menu.queue_free()
+	Sound.sfx("level_up")
+	await say(["%s decided to stay with you!" % GameState.starter,
+		"The other two slip out into the morning, toward the lake."] as Array[String])
+
+const PAGE_COUNT: int = 6
+
+## How many of Mirela's map-book pages the player has found.
+static func pages_found(flags: Dictionary) -> int:
+	var n: int = 0
+	for i: int in range(1, PAGE_COUNT + 1):
+		n += 1 if bool(flags.get("page_%d" % i, false)) else 0
+	return n
+
+## "page <n>": one of the six pages of Mirela's map book. Shows the page, counts it, and sets
+## "pages_all" with the last one.
+func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var flag: String = "page_%s" % args[0]
+	if GameState.has_flag(flag):
+		return
+	GameState.set_flag(flag)
+	Sound.sfx("level_up")
+	var n: int = pages_found(GameState.flags)
+	await say(["A page from Mirela's map book! (%d/%d)" % [n, PAGE_COUNT]] as Array[String])
+	await say(Dialogue.lines_for(Dialogue.get_entry("story/page_%s" % args[0]), GameState.flags))
+	if n >= PAGE_COUNT:
+		GameState.set_flag("pages_all")
+		await say(["That's all six pages. Aldo should see them."] as Array[String])
 
 func _action_set_flag(args: PackedStringArray, _speaker: NPC) -> void:
 	for f: String in args:

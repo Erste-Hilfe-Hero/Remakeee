@@ -148,6 +148,12 @@
    "x": 5,
    "y": 20,
    "dialogue": "crowcrest/sign"
+  },
+  {
+   "x": 10,
+   "y": 6,
+   "dialogue": "story/find_3",
+   "hide_flag": "page_3"
   }
  ],
  "gear_spots": [

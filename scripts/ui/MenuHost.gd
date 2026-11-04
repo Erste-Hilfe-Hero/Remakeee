@@ -97,6 +97,10 @@ func run_settings() -> void:
 			"Legal",
 			"Account...",
 		]
+		# Difficulty and the Iron Oath moved out of the new-game flow (only during a journey).
+		if GameState.in_game:
+			entries.append("Difficulty: %s" % DIFFICULTY_TEXT[GameState.difficulty])
+			entries.append("Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off"))
 		var idx: int = await pick_strings("Settings", entries)
 		match idx:
 			-1:
@@ -137,6 +141,31 @@ func run_settings() -> void:
 				await AccountMenu.run(self)
 				if not is_inside_tree():
 					return
+			13:
+				var d: int = await pick_strings("Difficulty", DIFFICULTY_TEXT)
+				if d >= 0:
+					GameState.difficulty = d as GameState.Difficulty
+			14:
+				await _iron_oath()
+
+const DIFFICULTY_TEXT: Array[String] = [
+	"Story (relaxed)",
+	"Tamer (normal)",
+	"Veteran (caps, smart AI)",
+	"Rift-Born (no battle items)",
+]
+
+## The Iron Oath (item 15) can only be sworn before the first Rift is mended, and never undone.
+func _iron_oath() -> void:
+	if GameState.iron_oath:
+		await info("You swore the Iron Oath. It holds until the journey ends.")
+		return
+	if not GameState.rifts_sealed.is_empty() or GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
+		await info("The Iron Oath can only be sworn before you mend your first Rift.")
+		return
+	if await pick_strings("Iron Oath: Spirlings that faint retire to the Sanctuary for good. This can't be undone.",
+			["Not now", "Take the Iron Oath"] as Array[String]) == 1:
+		GameState.iron_oath = true
 
 ## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.
 func run_sound_test() -> void:

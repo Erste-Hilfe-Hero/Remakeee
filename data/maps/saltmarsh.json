@@ -148,6 +148,12 @@
    "x": 10,
    "y": 8,
    "dialogue": "saltmarsh/reed_find"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "dialogue": "story/find_5",
+   "hide_flag": "page_5"
   }
  ]
 }
