@@ -34,7 +34,7 @@ world that does not follow the classic monster-RPG template. Check new content a
 - **Wild Spirlings live in several grounds:** ferns (`,`), reeds (`%`) and scree (`:`).
 - **Places have their own shape:** a lighthouse village on piers, a gorge village on two levels,
   Rift hollows as open-air craters with a visible tear (`X`). Healing is at springs and pools.
-- **Tamers do not ambush.** Duels start when the player talks to a Tamer (`sight` is 0).
+- **Wayfarers do not ambush.** Duels start when the player talks to a Wayfarer (`sight` is 0).
 
 ## Avoid
 

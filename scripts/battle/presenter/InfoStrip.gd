@@ -72,7 +72,7 @@ func _set_display_hp(v: float) -> void:
 
 ## What a screen reader says for this strip (item 77): the strip itself is drawn by hand.
 func screen_reader_text() -> String:
-	var t: String = Loc.t("%s Lv%d, HP %d of %d, Energy %d" % [spirling_name, level, int(round(display_hp)), max_hp, energy])
+	var t: String = Loc.t("%s ring %d, Vigor %d of %d, Energy %d" % [spirling_name, level, int(round(display_hp)), max_hp, energy])
 	if not status.is_empty():
 		t += ", " + Loc.t(StatusRules.label(status))
 	return t
@@ -87,7 +87,7 @@ func _draw() -> void:
 	draw_string(font, Vector2(0, y_text), spirling_name, HORIZONTAL_ALIGNMENT_LEFT, w * 0.6, fs, UITheme.INK)
 	var name_w: float = minf(font.get_string_size(spirling_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x, w * 0.6)
 	ElementIcons.draw_row(self, elements, Vector2(name_w + 2.0, y_text - ElementIcons.SIZE), UITheme.INK)
-	var right: String = "Lv%d" % level
+	var right: String = "R%d" % level
 	if not status.is_empty():
 		right = StatusRules.label(status).substr(0, 3).to_upper() + " " + right
 	draw_string(font, Vector2(0, y_text), right, HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)

@@ -12,7 +12,7 @@ const TEXT_BOX_HEIGHT: int = 44
 const BANNER_TIME: float = 1.2
 ## Map changes stay under 300 ms in total (item 61): two fades plus the load.
 const FADE_TIME: float = 0.11
-## Pause between a Tamer spotting the player and walking over.
+## Pause between a Wayfarer spotting the player and walking over.
 const SPOT_TIME: float = 0.5
 ## Seconds for a grapple swing or cliff climb.
 const GEAR_MOVE_TIME: float = 0.4
@@ -573,7 +573,7 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 				map.paint(_ground)
 			await say(["The last lamp catches. Somewhere, rock grinds against rock!"] as Array[String])
 
-## Post-game gauntlet: five echo Tamers in a row, scaled to your strongest Spirling, no rest.
+## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
 func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -587,7 +587,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	while wins < Gauntlet.ROUNDS:
 		await say(["Echo %d of %d steps out of the light..." % [wins + 1, Gauntlet.ROUNDS]] as Array[String])
 		var team: Array[Spirling] = run.team(wins)
-		var info: Dictionary = {"name": "Echo Tamer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
+		var info: Dictionary = {"name": "Echo Wayfarer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 		busy = true
@@ -603,7 +603,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	elif wins > best:
 		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
 
-## Weekly challenge (item 88): three echo Tamers that are the same for everyone this week.
+## Weekly challenge (item 88): three echo Wayfarers that are the same for everyone this week.
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var top: int = 1
@@ -615,7 +615,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var go: bool = await menu.confirm("This week: %s, rule %s. Three echoes at Lv%d. Best this week: %d of %d. Try?" % [
+	var go: bool = await menu.confirm("This week: %s, rule %s. Three echoes at ring %d. Best this week: %d of %d. Try?" % [
 		BattleRules.FIELDS[ch.field].label, BattleRules.RULES[ch.rule].label, ch.level, int(rec.best), WeeklyChallenge.ROUNDS])
 	menu.queue_free()
 	if not go:
@@ -690,12 +690,12 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		await menu.info("Bought %s. You have %d." % [item.get("name", ""), GameState.item_count(args[idx])])
 	menu.queue_free()
 
-# --- Tamers --------------------------------------------------------------------------
+# --- Wayfarers --------------------------------------------------------------------------
 
 func _is_active_trainer(n: NPC) -> bool:
 	return TrainerData.is_trainer(n.definition) and not TrainerData.is_beaten(n.definition, map.id, GameState.flags)
 
-## The first unbeaten Tamer whose line of sight reaches the player, or null.
+## The first unbeaten Wayfarer whose line of sight reaches the player, or null.
 func _spotting_trainer() -> NPC:
 	if GameState.first_healthy_index() < 0:
 		return null
@@ -707,7 +707,7 @@ func _spotting_trainer() -> NPC:
 			return n
 	return null
 
-## A Tamer challenge: optional spot + walk-over, intro lines, battle, then the win aftermath.
+## A Wayfarer challenge: optional spot + walk-over, intro lines, battle, then the win aftermath.
 func challenge(n: NPC, spotted: bool) -> void:
 	busy = true
 	player.frozen = true
@@ -729,7 +729,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 		SaveManager.save_game()
 	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng)
 	if team.is_empty():
-		push_warning("Overworld: Tamer '%s' has no valid team" % n.npc_id)
+		push_warning("Overworld: Wayfarer '%s' has no valid team" % n.npc_id)
 		busy = false
 		player.frozen = false
 		return
@@ -755,7 +755,7 @@ func after_tamer_win(n: NPC) -> void:
 		if GameState.has_flag("storage_remote"):
 			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
 		if GameState.level_cap() < Spirling.MAX_LEVEL:
-			lines.append("Your Spirlings can now grow to Lv%d." % GameState.level_cap())
+			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
 	for f: Variant in def.get("win_flags", []):
 		GameState.set_flag(str(f))
@@ -791,7 +791,7 @@ func _mark_rematch(def: Dictionary) -> void:
 	rec[TrainerData.beaten_flag(def, map.id)] = _today()
 	GameState.records["rematch"] = rec
 
-## Offers a beaten Tamer's daily rematch. Returns false if there is none or the player declines.
+## Offers a beaten Wayfarer's daily rematch. Returns false if there is none or the player declines.
 func offer_rematch(n: NPC) -> bool:
 	var def: Dictionary = n.definition
 	if GameState.first_healthy_index() < 0 or not TrainerData.can_rematch(def, map.id, GameState.flags, GameState.records, _today()):
@@ -801,7 +801,7 @@ func offer_rematch(n: NPC) -> bool:
 	VirtualPad.set_wanted(false)
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var who: String = str(def.get("trainer", def.get("id", "Tamer")))
+	var who: String = str(def.get("trainer", def.get("id", "Wayfarer")))
 	var go: bool = await menu.confirm("%s wants a rematch. Battle?" % who)
 	menu.queue_free()
 	if not go:
@@ -841,7 +841,7 @@ static func _dir_name(d: Vector2i) -> String:
 
 # --- Battles --------------------------------------------------------------------------
 
-## Cuts to the battle screen and waits for it to end. [param trainer] holds Tamer info (M5).
+## Cuts to the battle screen and waits for it to end. [param trainer] holds Wayfarer info (M5).
 func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -> BattleModel.Outcome:
 	busy = true
 	player.frozen = true

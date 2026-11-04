@@ -10,7 +10,7 @@ const MAX_PARTY: int = 5
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 
-## Tamer customisation (placeholder until real sprites exist).
+## Wayfarer customisation (placeholder until real sprites exist).
 var tamer_name: String = "Juno"
 var tamer_color: int = 0
 ## Coat colours on the title screen: teal, rust, ochre, plum (TitleScreen.COAT_NAMES).
@@ -97,7 +97,7 @@ const FPS_BATTERY: int = 30
 const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large"]
 const PAD_ALPHAS: Array[float] = [0.3, 0.55, 0.85]
 
-## What the Tamer has learned about matchups: "element:species" -> multiplier seen on a hit.
+## What the Wayfarer has learned about matchups: "element:species" -> multiplier seen on a hit.
 ## Story difficulty shows every matchup from the start.
 var known_matchups: Dictionary = {}
 
@@ -147,7 +147,7 @@ static func _matchup_key(element: int, species: String) -> String:
 func learn_matchup(element: int, species: String, mult: float) -> void:
 	known_matchups[_matchup_key(element, species)] = mult
 
-## The multiplier the Tamer knows for [param element] into [param foe], or -1.0 if unknown.
+## The multiplier the Wayfarer knows for [param element] into [param foe], or -1.0 if unknown.
 func known_multiplier(element: int, foe: Spirling) -> float:
 	if difficulty == Difficulty.STORY:
 		return Elements.multiplier(element, foe.elements())
@@ -171,7 +171,7 @@ func set_held(s: Spirling, id: String) -> bool:
 		inventory[id] = item_count(id) - 1
 	return true
 
-## Tamer Gear (grapple_line, climbing_pick, storm_lantern) is a key item in the bag.
+## Wayfarer Gear (grapple_line, climbing_pick, storm_lantern) is a key item in the bag.
 func has_gear(id: String) -> bool:
 	return item_count(id) > 0
 
@@ -309,9 +309,9 @@ func to_dict() -> Dictionary:
 
 func from_dict(d: Dictionary) -> void:
 	reset()
-	var tamer: Dictionary = d.get("tamer", {})
-	tamer_name = str(tamer.get("name", "Juno"))
-	tamer_color = int(tamer.get("color", 0))
+	var wayfarer: Dictionary = d.get("tamer", {})
+	tamer_name = str(wayfarer.get("name", "Juno"))
+	tamer_color = int(wayfarer.get("color", 0))
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))
@@ -503,7 +503,7 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 			return ""
 		var healed: int = mini(int(it.heal), s.max_hp() - s.hp)
 		s.hp += healed
-		msg = "%s recovered %d HP." % [s.display_name(), healed]
+		msg = "%s recovered %d Vigor." % [s.display_name(), healed]
 	else:
 		return ""
 	inventory[id] = item_count(id) - 1
@@ -598,7 +598,7 @@ func move_party(from: int, to: int) -> void:
 	party.remove_at(from)
 	party.insert(to, s)
 
-const STORAGE_SORTS: Array[String] = ["Caught", "Level", "Name", "Spirlog no."]
+const STORAGE_SORTS: Array[String] = ["Caught", "Ring", "Name", "Spirlog no."]
 
 ## Storage indices in display order (item 57): sorted by [param sort] (STORAGE_SORTS index) and
 ## filtered to [param element] (-1 = all) and a name fragment [param search] (case-insensitive).

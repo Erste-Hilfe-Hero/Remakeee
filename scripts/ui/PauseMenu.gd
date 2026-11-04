@@ -87,7 +87,7 @@ static func records_text() -> String:
 	if GameState.iron_oath:
 		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
 		for s: Spirling in GameState.sanctuary:
-			lines.append("  %s Lv%d" % [s.display_name(), s.level])
+			lines.append("  %s R%d" % [s.display_name(), s.level])
 	elif GameState.has_flag("oath_broken"):
 		lines.append("Iron Oath broken.")
 	var f: Dictionary = Season.current()
@@ -99,7 +99,7 @@ static func records_text() -> String:
 static func menu_title() -> String:
 	var t: String = "%s   %d coins" % [GameState.tamer_name, GameState.money]
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
-		t += "   Cap Lv%d" % GameState.level_cap()
+		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
 ## Fast travel between rest spots already used (item 41). Returns true if a target was picked.
@@ -256,7 +256,7 @@ func _teach_echo(id: String) -> void:
 		var known: Array[String] = []
 		for m: MoveData in s.moves:
 			known.append(m.move_name)
-		var forget: int = await pick_strings("Forget which move for %s?" % mv.move_name, known)
+		var forget: int = await pick_strings("Forget which art for %s?" % mv.move_name, known)
 		if forget < 0:
 			return
 		s.moves[forget] = mv
@@ -335,7 +335,7 @@ func run_spirlog() -> void:
 		if bool(log_entry.get("bonded", false)):
 			var tr: Dictionary = BattleRules.trait_info(sd.trait_id)
 			if not tr.is_empty():
-				lines.append("Trait: %s" % tr.label)
+				lines.append("Gift: %s" % tr.label)
 			if not sd.lore.is_empty():
 				lines.append("")
 				lines.append(sd.lore)
@@ -365,7 +365,7 @@ func _withdraw() -> void:
 		]
 		for i: int in view:
 			var s: Spirling = GameState.storage[i]
-			names.append("%s Lv%d" % [s.display_name(), s.level])
+			names.append("%s R%d" % [s.display_name(), s.level])
 		var w: int = await pick_strings("Call back (%d)" % view.size(), names)
 		if w < 0:
 			return

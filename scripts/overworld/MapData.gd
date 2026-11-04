@@ -83,7 +83,7 @@ func warp_at(cell: Vector2i) -> Dictionary:
 			return w
 	return {}
 
-## Tamer Gear spot used by standing on [param from] and facing [param target], or {}.
+## Wayfarer Gear spot used by standing on [param from] and facing [param target], or {}.
 ## {"from": [x, y], "x", "y", "gear": item id, "to": [x, y]}; a spot without "to" is a dark cell
 ## that needs the gear to walk into.
 func gear_spot(from: Vector2i, target: Vector2i) -> Dictionary:

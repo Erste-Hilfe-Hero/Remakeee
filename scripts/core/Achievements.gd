@@ -10,7 +10,7 @@ const LIST: Array[Dictionary] = [
 	{"id": "seen_10", "title": "Field Notes", "text": "See 10 kinds of Spirling."},
 	{"id": "bonded_10", "title": "Kindred", "text": "Bond with 10 kinds of Spirling."},
 	{"id": "seen_all", "title": "Complete Spirlog", "text": "See every kind of Spirling in Veydal."},
-	{"id": "level_30", "title": "Seasoned", "text": "Raise a Spirling to Lv30."},
+	{"id": "level_30", "title": "Seasoned", "text": "Grow a Spirling to ring 30."},
 	{"id": "evolved", "title": "Growing Up", "text": "See a Spirling unfurl into its next form."},
 	{"id": "first_rift", "title": "Mender", "text": "Mend your first Rift."},
 	{"id": "both_rifts", "title": "Quiet Valley", "text": "Mend both Rifts of Veydal."},
@@ -21,7 +21,7 @@ const LIST: Array[Dictionary] = [
 	{"id": "prism", "title": "Odd Colours", "text": "Bond with a shimmering Spirling."},
 	{"id": "rich", "title": "Full Purse", "text": "Hold 10000 coins."},
 	{"id": "oath", "title": "Oathkeeper", "text": "Mend both Rifts of Veydal under the Iron Oath."},
-	{"id": "rematch", "title": "Old Rivals", "text": "Win 5 rematches against Tamers."},
+	{"id": "rematch", "title": "Old Rivals", "text": "Win 5 rematches against Wayfarers."},
 ]
 
 static func all_spirlings() -> Array[Spirling]:

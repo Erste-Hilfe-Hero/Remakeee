@@ -4,7 +4,7 @@ extends RefCounted
 ##
 ## Sides field one or more Spirlings at once (N against M, set by front_size before start()).
 ## Each side has field slots; slots[side][slot] is the party index standing there (-1 = empty).
-## 1v1 is simply one slot per side. A tag battle adds an ally Tamer (set_partner) whose Spirlings
+## 1v1 is simply one slot per side. A tag battle adds an ally Wayfarer (set_partner) whose Spirlings
 ## take extra player slots and act on their own. A Rift boss (foe_boss) grows with the player's
 ## field and may act more than once per turn.
 ##
@@ -28,7 +28,7 @@ const REST_ENERGY: int = 2
 const FLEE_BASE: float = 0.5
 const FLEE_PER_ATTEMPT: float = 0.25
 const FLEE_SPEED_WEIGHT: float = 0.5
-## XP for a defeated foe = xp_yield * foe level / XP_LEVEL_DIV (x TRAINER_XP_MULT vs Tamers).
+## XP for a defeated foe = xp_yield * foe level / XP_LEVEL_DIV (x TRAINER_XP_MULT vs Wayfarers).
 const XP_LEVEL_DIV: float = 20.0
 const TRAINER_XP_MULT: float = 1.5
 const MAX_PARTY: int = 5
@@ -45,7 +45,7 @@ var active: Array[int]:
 	get:
 		var out: Array[int] = [active_index(Side.PLAYER), active_index(Side.FOE)]
 		return out
-## Ally Tamer in a tag battle. Their Spirlings sit at the end of the player party array from
+## Ally Wayfarer in a tag battle. Their Spirlings sit at the end of the player party array from
 ## partner_start on, fill the player slots from _partner_slot on, and are steered by partner_ai.
 var partner_name: String = ""
 var partner_start: int = -1
@@ -71,7 +71,7 @@ var inventory: Dictionary = {}
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
-## Prize money for beating a Tamer (reported in BATTLE_END).
+## Prize money for beating a Wayfarer (reported in BATTLE_END).
 var prize_money: int = 0
 var flee_attempts: int = 0
 ## The Spirling bonded this battle, if any.
@@ -152,11 +152,11 @@ func standing_slots(side: int) -> Array[int]:
 			out.append(slot)
 	return out
 
-## True if party index [param index] on [param side] belongs to the ally Tamer.
+## True if party index [param index] on [param side] belongs to the ally Wayfarer.
 func is_partner_index(side: int, index: int) -> bool:
 	return side == Side.PLAYER and partner_start >= 0 and index >= partner_start
 
-## True if [param slot] on [param side] is steered by the ally Tamer.
+## True if [param slot] on [param side] is steered by the ally Wayfarer.
 func is_partner_slot(side: int, slot: int) -> bool:
 	return side == Side.PLAYER and _partner_slot >= 0 and slot >= _partner_slot
 
@@ -183,7 +183,7 @@ func alive_count(side: int) -> int:
 			n += 1
 	return n
 
-## Standing Spirlings the player owns (the ally Tamer's do not count toward a loss).
+## Standing Spirlings the player owns (the ally Wayfarer's do not count toward a loss).
 func own_alive_count() -> int:
 	var n: int = 0
 	for i: int in parties[Side.PLAYER].size():
@@ -191,7 +191,7 @@ func own_alive_count() -> int:
 			n += 1
 	return n
 
-## Adds an ally Tamer for a tag battle: [param team] fights beside the player, [param front] of
+## Adds an ally Wayfarer for a tag battle: [param team] fights beside the player, [param front] of
 ## them at once, steered by an AI of [param ai_level]. Call before start().
 func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level: int = 1) -> void:
 	if team.is_empty():
@@ -270,7 +270,7 @@ func is_legal(a: BattleAction) -> bool:
 				return false
 			return a.item_target >= 0 and a.item_target < parties[a.side].size() and not (parties[a.side][a.item_target] as Spirling).is_fainted()
 		BattleAction.Kind.BOND:
-			# The Echo call reaches only wild Spirlings, never a Tamer's partner.
+			# The Echo call reaches only wild Spirlings, never a Wayfarer's partner.
 			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot):
 				return false
 			if a.target_slot >= 0 and not is_standing(active_spirling(Side.FOE, a.target_slot)):
@@ -495,7 +495,7 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 		reveal_trait(side, slot)
 	return true
 
-## Calm rule: in Tamer battles a side may have only one Spirling sleeping (Drowse) at a time.
+## Calm rule: in Wayfarer battles a side may have only one Spirling sleeping (Drowse) at a time.
 func calm_rule_blocks(side: int, s: Spirling, status: String) -> bool:
 	if is_wild or not StatusRules.sleeps(status):
 		return false

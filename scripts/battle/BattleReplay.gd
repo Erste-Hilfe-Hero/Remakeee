@@ -27,7 +27,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"inputs": [],
 	}
 
-## The ally Tamer in a tag battle: name, team, how many fight at once, AI tier ({} if none).
+## The ally Wayfarer in a tag battle: name, team, how many fight at once, AI tier ({} if none).
 static func _partner(model: BattleModel) -> Dictionary:
 	if model.partner_start < 0:
 		return {}

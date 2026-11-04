@@ -383,7 +383,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	_focus(BattleModel.Side.PLAYER, slot)
 	_point_pin(BattleModel.Side.PLAYER, slot, false)
 	if _auto_active():
-		_text.show_prompt("Auto: %s picks a move." % me.display_name())
+		_text.show_prompt("Auto: %s picks an art." % me.display_name())
 		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
@@ -464,7 +464,7 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s Lv%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
+		entries.append({"text": "%s R%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
 		if idx < 0 or idx in candidates:

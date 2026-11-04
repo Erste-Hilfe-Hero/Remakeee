@@ -44,7 +44,7 @@ static func validate() -> PackedStringArray:
 							errors.append("map '%s': rival '%s' has no team for starter %s" % [id, n.get("id", ""), st])
 				for t: Variant in teams:
 					if (t as Array).is_empty():
-						errors.append("map '%s': tamer '%s' has an empty team" % [id, n.get("id", "")])
+						errors.append("map '%s': wayfarer '%s' has an empty team" % [id, n.get("id", "")])
 					for entry: Variant in t:
 						if Database.species(str((entry as Dictionary).get("species", ""))) == null:
 							errors.append("map '%s': npc '%s' has unknown team species %s" % [id, n.get("id", ""), entry])
@@ -60,7 +60,7 @@ static func validate() -> PackedStringArray:
 	return errors
 
 ## Map reachability (item 99): from every cell the player can arrive on (warps into the map,
-## the new-game start), with every puzzle block open and all Tamer Gear owned, each warp, NPC,
+## the new-game start), with every puzzle block open and all Wayfarer Gear owned, each warp, NPC,
 ## sign, gear spot and rest point must be reachable. Every map must be reachable from the start,
 ## and every warp must have a way back to the map it came from.
 static func check_reachability(errors: PackedStringArray, map_ids: PackedStringArray, start_map: String = "lighthouse", start_cell: Vector2i = Vector2i(4, 4)) -> void:
@@ -174,7 +174,7 @@ static func _check_dialogue(errors: PackedStringArray, map_id: String, ref: Stri
 	if not raw is Dictionary or not (raw as Dictionary).has(parts[1]):
 		errors.append("map '%s': dialogue key '%s' missing" % [map_id, ref])
 
-## Problems with a Tamer's battle format: "front", "boss", "partner" and "wild" (see TrainerData).
+## Problems with a Wayfarer's battle format: "front", "boss", "partner" and "wild" (see TrainerData).
 static func format_errors(def: Dictionary, map_id: String = "?") -> PackedStringArray:
 	var errors: PackedStringArray = []
 	var who: String = str(def.get("id", "?"))

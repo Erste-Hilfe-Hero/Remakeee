@@ -138,7 +138,7 @@ func test_info_strip_speaks() -> void:
 	s.status = "scorch"
 	strip.set_spirling(s)
 	var t: String = strip.screen_reader_text()
-	assert_string_contains(t, "Kindlop Lv9, HP")
+	assert_string_contains(t, "Kindlop ring 9, Vigor")
 	assert_string_contains(t, StatusRules.label("scorch"))
 
 func test_new_npcs_are_placed() -> void:

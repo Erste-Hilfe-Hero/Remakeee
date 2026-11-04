@@ -1,6 +1,6 @@
 class_name Spirling
 extends RefCounted
-## A Spirling instance owned by a Tamer or met in the wild.
+## A Spirling instance owned by a Wayfarer or met in the wild.
 ## Holds all mutable state; the SpirlingData it points to is never changed.
 
 const STAT_KEYS: Array[String] = ["hp", "atk", "def", "foc", "spd"]

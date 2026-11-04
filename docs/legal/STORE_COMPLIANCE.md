@@ -2,7 +2,7 @@
 
 > Erstellt von einer KI ohne anwaltliche Prüfung. Die Antworten gelten für das Modell aus
 > [DATENSCHUTZ.md](DATENSCHUTZ.md): automatisches Konto mit zufälliger Spieler-ID, Übertragungscode statt
-> E-Mail, Tamer-Name nur für dich sichtbar, Server bei Hetzner in Deutschland, keine Werbung, keine Analytics,
+> E-Mail, Wayfarer-Name nur für dich sichtbar, Server bei Hetzner in Deutschland, keine Werbung, keine Analytics,
 > keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
 > ändern sich die Antworten. Store-Formulare ändern sich oft: im Zweifel die Hilfe in der Konsole lesen.
 
@@ -20,7 +20,7 @@ nicht flüchtig, nicht geteilt):
 | Kategorie → Typ | Wann |
 | --- | --- |
 | Personenbezogene Daten → **Nutzer-IDs** | **Ja** (zufällige Spieler-ID) |
-| Personenbezogene Daten → **Name** | **Ja** (Tamer-Name; Google zählt auch Spitznamen dazu) |
+| Personenbezogene Daten → **Name** | **Ja** (Wayfarer-Name; Google zählt auch Spitznamen dazu) |
 | App-Aktivitäten → **Sonstige Aktionen** | **Ja** (Spielstand/Fortschritt) |
 | E-Mail-Adresse, Geräte-IDs, Absturzprotokolle, Diagnose | **Nein** |
 | Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
@@ -41,7 +41,7 @@ Weitere Play-Console-Punkte:
 | Datentyp | Mit Identität verknüpft? | Tracking? | Zweck |
 | --- | --- | --- | --- |
 | Identifiers → **User ID** | Ja | Nein | App Functionality |
-| User Content → **Gameplay Content** (Spielstand inkl. Tamer-Name) | Ja | Nein | App Functionality |
+| User Content → **Gameplay Content** (Spielstand inkl. Wayfarer-Name) | Ja | Nein | App Functionality |
 
 Alles andere (Kontaktdaten, Standort, Diagnose, Nutzungsdaten, Kaufdaten) nicht ankreuzen. Käufe wickelt Apple
 ab; die Kaufbestätigung gilt nicht als von dir erhobene „Purchase History“, solange du sie nur zum
@@ -88,7 +88,7 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
 - **Sobald Spieler Inhalte sehen, die andere erstellt haben** (Spielernamen in Kämpfen/Bestenlisten,
   Chat), ist Chimora selbst ein Hosting-Dienst im Sinne des DSA. Dann zusätzlich: Kontaktstelle für Nutzer
   und Behörden (Art. 11, 12), Moderationsregeln in den AGB (Art. 14), Meldeweg für rechtswidrige Inhalte
-  (Art. 16) und Begründung bei Sperren (Art. 17). Chimora zeigt Tamer-Namen anderen Spielern
+  (Art. 16) und Begründung bei Sperren (Art. 17). Chimora zeigt Wayfarer-Namen anderen Spielern
   nicht an; so bleibt es zum Launch einfach. Kommen sichtbare Namen, Bestenlisten oder Chat dazu, vorher diese
   Pflichten umsetzen.
 
@@ -107,7 +107,7 @@ Online-Pflicht offen nennen. Apple lehnt Metadaten mit fremden Marken oder Vergl
 
 **Beschreibung (DE):**
 > Chimora ist ein rundenbasiertes Monster-Zähmungs-RPG im Retro-Pixel-Stil.
-> Als Tamer erkundest du die Region Veydal, triffst über 15 einzigartige Spirlings und gewinnst ihr
+> Als Wayfarer erkundest du die Region Veydal, triffst über 15 einzigartige Spirlings und gewinnst ihr
 > Vertrauen in einem Minispiel. Acht Elemente, Energie statt Attackenpunkte und vier
 > Schwierigkeitsgrade bis hin zu „Rift-Born“ sorgen für taktische Tiefe.
 > Mit jeder neuen Region entwickelt sich auch der Grafikstil weiter.
@@ -119,7 +119,7 @@ Online-Pflicht offen nennen. Apple lehnt Metadaten mit fremden Marken oder Vergl
 > [Falls zutreffend: Enthält optionale In-App-Käufe. Keine Werbung.]
 
 **Keywords (Apple, 100 Zeichen):**
-`monster,rpg,pixel,retro,turn based,creature,tamer,adventure,bond,elements,strategy,rift`
+`monster,rpg,pixel,retro,turn based,creature,wayfarer,adventure,bond,elements,strategy,rift`
 
 ## 6. Sonstiges vor dem Launch
 

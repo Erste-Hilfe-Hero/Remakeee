@@ -138,7 +138,7 @@ static func move_info(mv: MoveData) -> String:
 		lines.append(Loc.t("%s, %s") % [Elements.element_name(mv.element), kind])
 	lines.append(Loc.t("Accuracy %d%%, %d Energy") % [roundi(mv.accuracy * 100.0), mv.energy_cost])
 	if mv.priority > 0:
-		lines.append(Loc.t("Acts before other moves."))
+		lines.append(Loc.t("Acts before other arts."))
 	if mv.is_area():
 		lines.append(Loc.t("Reaches every foe."))
 	if mv.overcharge:
@@ -150,14 +150,14 @@ static func move_info(mv: MoveData) -> String:
 			&"inflict_status":
 				line = Loc.t("Inflicts %s.") % Loc.t(StatusRules.label(str(fx.get("status", ""))))
 			&"stat_change":
-				var stat: String = BattleEvent.STAT_NAMES.get(str(fx.get("stat", "")), "")
+				var stat: String = Loc.t(BattleEvent.STAT_NAMES.get(str(fx.get("stat", "")), ""))
 				var amt: int = int(fx.get("amount", 1))
 				if bool(fx.get("self", true)):
 					line = (Loc.t("Raises its own %s by %d.") if amt > 0 else Loc.t("Lowers its own %s by %d.")) % [stat, absi(amt)]
 				else:
 					line = (Loc.t("Raises the foe's %s by %d.") if amt > 0 else Loc.t("Lowers the foe's %s by %d.")) % [stat, absi(amt)]
 			&"heal_self":
-				line = Loc.t("Heals %d%% of its HP.") % roundi(float(fx.get("amount", 0.5)) * 100.0)
+				line = Loc.t("Heals %d%% of its Vigor.") % roundi(float(fx.get("amount", 0.5)) * 100.0)
 			&"drain":
 				line = Loc.t("Heals from the damage it deals.")
 			&"recoil":

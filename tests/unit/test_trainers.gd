@@ -1,5 +1,5 @@
 extends GutTest
-## Tamers, Rift Wardens, the rival and the vertical-slice progression (M5).
+## Wayfarers, Rift Wardens, the rival and the vertical-slice progression (M5).
 
 var _rng := RandomNumberGenerator.new()
 
