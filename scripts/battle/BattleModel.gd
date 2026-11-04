@@ -4,7 +4,7 @@ extends RefCounted
 ##
 ## Sides field one or more Spirlings at once (N against M, set by front_size before start()).
 ## Each side has field slots; slots[side][slot] is the party index standing there (-1 = empty).
-## 1v1 is simply one slot per side. A tag battle adds an ally Tamer (set_partner) whose Spirlings
+## 1v1 is simply one slot per side. A tag battle adds an ally Wayfarer (set_partner) whose Spirlings
 ## take extra player slots and act on their own. A Rift boss (foe_boss) grows with the player's
 ## field and may act more than once per turn.
 ##
@@ -28,10 +28,10 @@ const REST_ENERGY: int = 2
 const FLEE_BASE: float = 0.5
 const FLEE_PER_ATTEMPT: float = 0.25
 const FLEE_SPEED_WEIGHT: float = 0.5
-## XP for a defeated foe = xp_yield * foe level / XP_LEVEL_DIV (x TRAINER_XP_MULT vs Tamers).
+## XP for a defeated foe = xp_yield * foe level / XP_LEVEL_DIV (x TRAINER_XP_MULT vs Wayfarers).
 const XP_LEVEL_DIV: float = 20.0
 const TRAINER_XP_MULT: float = 1.5
-const MAX_PARTY: int = 6
+const MAX_PARTY: int = 5
 
 signal event_emitted(event: BattleEvent)
 
@@ -45,7 +45,7 @@ var active: Array[int]:
 	get:
 		var out: Array[int] = [active_index(Side.PLAYER), active_index(Side.FOE)]
 		return out
-## Ally Tamer in a tag battle. Their Spirlings sit at the end of the player party array from
+## Ally Wayfarer in a tag battle. Their Spirlings sit at the end of the player party array from
 ## partner_start on, fill the player slots from _partner_slot on, and are steered by partner_ai.
 var partner_name: String = ""
 var partner_start: int = -1
@@ -71,15 +71,25 @@ var inventory: Dictionary = {}
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
-## Prize money for beating a Tamer (reported in BATTLE_END).
+## Prize money for beating a Wayfarer (reported in BATTLE_END).
 var prize_money: int = 0
 var flee_attempts: int = 0
 ## The Spirling bonded this battle, if any.
 var bonded: Spirling = null
 ## Player Spirlings that faced the current foe (share its XP).
 var participants: Array[Spirling] = []
-## Rift field id (BattleRules.FIELDS) active for the whole battle, or "".
+## Rift field id (BattleRules.FIELDS) active right now, or "". Set it before start() for the
+## place's own field; a Resonance move (set_field) lays another one for a few turns.
 var field: String = ""
+## The place's own field, restored when a Resonance field runs out (copied from field at start()).
+var base_field: String = ""
+## Turns left on a Resonance field (0 = the field holds for the whole battle).
+var field_turns: int = 0
+## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
+## ("Bench lessons" setting). 0 turns it off.
+var bench_share: float = 0.0
+## True once the Rift boss has entered its second phase.
+var boss_phase_done: bool = false
 ## Warden rule id (BattleRules.RULES) for the foe side, or "".
 var foe_rule: String = ""
 
@@ -142,11 +152,11 @@ func standing_slots(side: int) -> Array[int]:
 			out.append(slot)
 	return out
 
-## True if party index [param index] on [param side] belongs to the ally Tamer.
+## True if party index [param index] on [param side] belongs to the ally Wayfarer.
 func is_partner_index(side: int, index: int) -> bool:
 	return side == Side.PLAYER and partner_start >= 0 and index >= partner_start
 
-## True if [param slot] on [param side] is steered by the ally Tamer.
+## True if [param slot] on [param side] is steered by the ally Wayfarer.
 func is_partner_slot(side: int, slot: int) -> bool:
 	return side == Side.PLAYER and _partner_slot >= 0 and slot >= _partner_slot
 
@@ -173,7 +183,7 @@ func alive_count(side: int) -> int:
 			n += 1
 	return n
 
-## Standing Spirlings the player owns (the ally Tamer's do not count toward a loss).
+## Standing Spirlings the player owns (the ally Wayfarer's do not count toward a loss).
 func own_alive_count() -> int:
 	var n: int = 0
 	for i: int in parties[Side.PLAYER].size():
@@ -181,7 +191,7 @@ func own_alive_count() -> int:
 			n += 1
 	return n
 
-## Adds an ally Tamer for a tag battle: [param team] fights beside the player, [param front] of
+## Adds an ally Wayfarer for a tag battle: [param team] fights beside the player, [param front] of
 ## them at once, steered by an AI of [param ai_level]. Call before start().
 func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level: int = 1) -> void:
 	if team.is_empty():
@@ -260,7 +270,7 @@ func is_legal(a: BattleAction) -> bool:
 				return false
 			return a.item_target >= 0 and a.item_target < parties[a.side].size() and not (parties[a.side][a.item_target] as Spirling).is_fainted()
 		BattleAction.Kind.BOND:
-			# The Echo call reaches only wild Spirlings, never a Tamer's partner.
+			# The Echo call reaches only wild Spirlings, never a Wayfarer's partner.
 			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot):
 				return false
 			if a.target_slot >= 0 and not is_standing(active_spirling(Side.FOE, a.target_slot)):
@@ -279,6 +289,9 @@ func start() -> Array[BattleEvent]:
 		for s: Spirling in parties[side]:
 			s.energy = Spirling.START_ENERGY
 	_fill_initial_slots()
+	base_field = field
+	field_turns = 0
+	boss_phase_done = false
 	var fielded: int = slot_count(Side.PLAYER)
 	if BattleRules.BOSSES.has(foe_boss):
 		var boss: Spirling = active_spirling(Side.FOE)
@@ -392,7 +405,61 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 	emit_event(BattleEvent.Type.DAMAGE, d)
 	if s.is_fainted():
 		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
+	elif side == Side.FOE and slot == 0 and dealt > 0:
+		_check_boss_phase(s)
 	return dealt
+
+## Shows the trait of the Spirling in [param slot] the first time it matters in a battle (TRAIT).
+func reveal_trait(side: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.has_meta("trait_shown"):
+		return
+	var t: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	if t.is_empty():
+		return
+	s.set_meta("trait_shown", true)
+	var d: Dictionary = _who(side, slot)
+	d.merge({"trait": s.data.trait_id, "label": str(t.label), "text": str(t.text)})
+	emit_event(BattleEvent.Type.TRAIT, d)
+
+## Lays the Rift field [param id] for [param turns] turns (0 = for good). Emits FIELD.
+func set_field(id: String, turns: int = BattleRules.RESONANCE_TURNS) -> bool:
+	if not BattleRules.FIELDS.has(id):
+		return false
+	field = id
+	field_turns = maxi(turns, 0)
+	var f: Dictionary = BattleRules.FIELDS[id]
+	emit_event(BattleEvent.Type.FIELD, {"field": id, "label": str(f.label), "text": str(f.intro), "turns": field_turns})
+	return true
+
+## Counts a Resonance field down at the end of a turn; when it runs out the place's field returns.
+func _tick_field() -> void:
+	if field_turns <= 0:
+		return
+	field_turns -= 1
+	if field_turns > 0:
+		return
+	var gone: String = field
+	field = ""
+	emit_event(BattleEvent.Type.FIELD_END, {"field": gone, "label": str(BattleRules.FIELDS.get(gone, {}).get("label", ""))})
+	if BattleRules.FIELDS.has(base_field):
+		set_field(base_field, 0)
+
+## Second boss phase: once the boss in foe slot 0 drops to the phase threshold, it wakes up once.
+func _check_boss_phase(boss: Spirling) -> void:
+	if boss_phase_done or not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
+		return
+	var p: Dictionary = BattleRules.boss_phase(foe_boss)
+	if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * float(p.get("at", 0.5)):
+		return
+	boss_phase_done = true
+	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", ""))})
+	var st: Dictionary = p.get("stage", {})
+	for stat: String in st:
+		change_stage(Side.FOE, stat, int(st[stat]), 0)
+	if BattleRules.FIELDS.has(str(p.get("field", ""))):
+		base_field = str(p.field)
+		set_field(base_field, 0)
 
 func heal(side: int, amount: int, slot: int = 0) -> int:
 	var index: int = active_index(side, slot)
@@ -404,16 +471,38 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
 	if BattleRules.is_immune(s, status):
+		reveal_trait(side, slot)
 		var f: Dictionary = _who(side, slot)
 		f["status"] = status
 		emit_event(BattleEvent.Type.STATUS_FAILED, f)
+		return false
+	if BattleRules.field_blocks(field, status):
+		var fb: Dictionary = _who(side, slot)
+		fb.merge({"status": status, "field_label": str(BattleRules.FIELDS[field].label)})
+		emit_event(BattleEvent.Type.STATUS_FAILED, fb)
+		return false
+	if calm_rule_blocks(side, s, status):
+		var c: Dictionary = _who(side, slot)
+		c.merge({"status": status, "clause": true})
+		emit_event(BattleEvent.Type.STATUS_FAILED, c)
 		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
+	if status == "scorch" and BattleRules.trait_info(s.data.trait_id).has("scorch_atk"):
+		reveal_trait(side, slot)
 	return true
+
+## Calm rule: in Wayfarer battles a side may have only one Spirling sleeping (Drowse) at a time.
+func calm_rule_blocks(side: int, s: Spirling, status: String) -> bool:
+	if is_wild or not StatusRules.sleeps(status):
+		return false
+	for other_s: Spirling in parties[side]:
+		if other_s != s and not other_s.is_fainted() and StatusRules.sleeps(other_s.status):
+			return true
+	return false
 
 ## Moves a stat stage on the Spirling in [param slot] of [param side]. Emits STAT_CHANGED (or a "won't go" note).
 func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
@@ -489,6 +578,7 @@ func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for slot: int in slot_count(side):
 			_end_of_turn_for(side, slot)
+	_tick_field()
 	turn += 1
 	phase = Phase.FAINT_CHECK
 
@@ -510,9 +600,17 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 			_cure(side, slot)
 	var regen: int = int(BattleRules.trait_info(s.data.trait_id).get("regen_div", 0))
 	var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
-	for rdiv: int in [regen, held_regen]:
+	var fdata: Dictionary = BattleRules.FIELDS.get(field, {})
+	var field_regen: int = 0
+	if Elements.E.get(str(fdata.get("regen_element", "")), -1) in s.elements():
+		field_regen = int(fdata.get("regen_div", 0))
+	if regen > 0 and s.hp < s.max_hp():
+		reveal_trait(side, slot)
+	for rdiv: int in [regen, held_regen, field_regen]:
 		if rdiv > 0 and s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
+	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
+		reveal_trait(side, slot)
 	var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
 	if side == Side.FOE:
 		gain += int(BattleRules.RULES.get(foe_rule, {}).get("foe_energy", 0))
@@ -568,6 +666,12 @@ func _refill_slot(side: int, slot: int, brain: BattleAI) -> void:
 func _phase_rewards() -> void:
 	for s: Spirling in parties[Side.PLAYER]:
 		s.end_battle()
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for s: Spirling in parties[side]:
+			if s.has_meta("trait_shown"):
+				s.remove_meta("trait_shown")
+	if bonded != null and bonded.has_meta("trait_shown"):
+		bonded.remove_meta("trait_shown")
 	for s: Spirling in parties[Side.FOE]:
 		if s.has_meta("xp_paid"):
 			s.remove_meta("xp_paid")
@@ -653,10 +757,21 @@ func _do_move(a: BattleAction) -> void:
 		ctx.user = me
 		ctx.target = target
 		ctx.move = mv
+		var react: Dictionary = BattleRules.reaction(mv, target)
+		if not react.is_empty():
+			var rd: Dictionary = _who(target_side, t_slot)
+			rd.merge({"text": str(react.text), "element": mv.element})
+			emit_event(BattleEvent.Type.REACTION, rd)
 		if mv.is_damaging():
+			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.data.trait_id).has("phys_taken"):
+				reveal_trait(target_side, t_slot)
+			if BattleRules.trait_info(me.data.trait_id).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
+				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field)
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
 			ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
+			if bool(react.get("cure", false)) and is_standing(target):
+				_cure(target_side, t_slot)
 		for fx: Dictionary in mv.effects:
 			if self_done and _is_self_effect(fx):
 				continue
@@ -851,13 +966,28 @@ func _award_xp(foe: Spirling) -> void:
 		return
 	var share: int = maxi(1, int(total / earners.size()))
 	for s: Spirling in earners:
-		var index: int = parties[Side.PLAYER].find(s)
-		var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.MAX_LEVEL))
-		var gained: int = clampi(share, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
-		s.xp += gained
-		emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained})
-		while s.level < mini(level_cap, Spirling.MAX_LEVEL) and s.xp >= Spirling.xp_for_level(s.level + 1):
-			var learned: Array[MoveData] = s.level_up()
-			emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
-			for mv: MoveData in learned:
-				emit_event(BattleEvent.Type.MOVE_LEARNED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "move": mv.move_name})
+		_give_xp(s, share)
+	if bench_share <= 0.0:
+		return
+	# Bench lessons: every healthy own Spirling that did not fight still learns a part.
+	var bench_xp: int = maxi(1, int(share * bench_share))
+	for i: int in parties[Side.PLAYER].size():
+		var s: Spirling = parties[Side.PLAYER][i]
+		if s in earners or s in participants or is_partner_index(Side.PLAYER, i) or not is_standing(s):
+			continue
+		_give_xp(s, bench_xp, true)
+
+## Adds XP up to the level cap and plays out level-ups and new moves.
+func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
+	var index: int = parties[Side.PLAYER].find(s)
+	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.MAX_LEVEL))
+	var gained: int = clampi(amount, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
+	if bench and gained <= 0:
+		return
+	s.xp += gained
+	emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench})
+	while s.level < mini(level_cap, Spirling.MAX_LEVEL) and s.xp >= Spirling.xp_for_level(s.level + 1):
+		var learned: Array[MoveData] = s.level_up()
+		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
+		for mv: MoveData in learned:
+			emit_event(BattleEvent.Type.MOVE_LEARNED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "move": mv.move_name})

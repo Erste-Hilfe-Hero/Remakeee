@@ -1,5 +1,5 @@
 # German texts for the new game start (boy/girl, name), the prologue and Mirela's map book.
-KEEP = ["Liora"]
+KEEP = ["Corin", "Liora"]
 T = {
 # New game and settings
 "Who are you?": "Wer bist du?",
@@ -48,7 +48,7 @@ T = {
 "'A bond is a promise heard on both sides. Break it, and the Hush gets in.'": "'Eine Bindung ist ein Versprechen, das beide Seiten hören. Bricht es, dringt die Stille ein.'",
 "'Inside, the land isn't broken. It's unfinished, like a map nobody drew to the edge.'": "'Drinnen ist das Land nicht zerbrochen. Es ist unfertig, wie eine Karte, die niemand bis zum Rand gezeichnet hat.'",
 "'Something on the other side answers when I call.'": "'Etwas auf der anderen Seite antwortet, wenn ich rufe.'",
-"'Not a voice. An echo of every Spirling that ever lost its Tamer.'": "'Keine Stimme. Ein Echo jedes Spirlings, das je seinen Zähmer verloren hat.'",
+"'Not a voice. An echo of every Spirling that ever lost its Wayfarer.'": "'Keine Stimme. Ein Echo jedes Spirlings, das je seinen Wanderer verloren hat.'",
 "'If I don't come back: a Rift closes when someone draws it to the end.'": "'Falls ich nicht zurückkomme: Ein Riss schließt sich, wenn jemand ihn zu Ende zeichnet.'",
 "'Tell Aldo to keep the lamp lit. Light finds the way home.'": "'Sagt Aldo, er soll die Lampe brennen lassen. Licht findet den Weg nach Hause.'",
 "Aldo: Kestra thinks something lives behind the Rifts?": "Aldo: Kestra glaubt, hinter den Rissen lebt etwas?",

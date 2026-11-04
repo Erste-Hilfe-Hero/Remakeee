@@ -6,8 +6,8 @@ extends RefCounted
 ## (pinned by tests/unit/test_damage.gd).
 
 const STAB: float = 1.25
-const CRIT_MULT: float = 1.5
-const CRIT_CHANCE: float = 1.0 / 16.0
+const CRIT_MULT: float = 1.4
+const CRIT_CHANCE: float = 1.0 / 12.0
 const RATIO_EXP: float = 0.8
 const LEVEL_DIV: float = 5.0
 const LEVEL_OFFSET: float = 3.0

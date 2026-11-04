@@ -76,4 +76,4 @@ func test_gauntlet_teams_scale_and_are_seeded() -> void:
 func test_menu_title_shows_cap_only_when_capped() -> void:
 	assert_false(PauseMenu.menu_title().contains("Cap"))
 	GameState.difficulty = GameState.Difficulty.VETERAN
-	assert_true(PauseMenu.menu_title().contains("Cap Lv"))
+	assert_true(PauseMenu.menu_title().contains("Ring limit"))

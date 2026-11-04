@@ -6,7 +6,7 @@ extends Node
 ## - Saves when the app is paused / backgrounded (mobile OSes kill background apps).
 ## - Never loads .tres files as saves (loading resources can run embedded scripts).
 
-const SAVE_VERSION: int = 2
+const SAVE_VERSION: int = 3
 const SLOT_PATH: String = "user://save_1.json"
 ## Three save slots (item 58). Slot 1 keeps the old file name, so existing saves stay in it.
 const SLOTS: int = 3
@@ -19,6 +19,7 @@ signal save_failed(reason: String)
 var _migrations: Dictionary[int, Callable] = {
 	0: _migrate_0_to_1,
 	1: _migrate_1_to_2,
+	2: _migrate_2_to_3,
 }
 ## Act I world rebuild (save version 2): old map id -> [new map id, safe cell].
 const MAP_RENAMES_V2: Dictionary[String, Array] = {
@@ -190,6 +191,39 @@ func _migrate_1_to_2(d: Dictionary) -> Dictionary:
 	if flags.has("route1_gift"):
 		flags["fern_gift"] = true
 	out["flags"] = flags
+	return out
+
+## Version 2 -> 3: originality pass. Renamed moves keep working, the storage flag got a new
+## name, and the team is five Spirlings now (extras rest in storage).
+const MOVE_RENAMES_V3: Dictionary[String, String] = {
+	"Headlong Charge": "Bowl Over", "Tailwind Step": "Drift Step", "Clear Mind": "Still Thought",
+	"Surge Fang": "Storm Gnash", "Eclipse Fang": "Dusk Gnaw", "Brine Fang": "Salt Snap",
+	"Brine Jet": "Spindrift Shot", "Gloom Pulse": "Gloom Ripple", "Quake Stomp": "Tremor Thud",
+	"Boulder Slam": "Cairn Crash", "Tidal Crash": "Breaker Plunge", "Flare Lash": "Kiln Strike",
+	"Blaze Coil": "Furnace Spiral", "Cyclone Edge": "Gale Scythe", "Shell Up": "Hunker Down",
+}
+const TEAM_SIZE_V3: int = 5
+
+func _migrate_2_to_3(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	var flags: Dictionary = out.get("flags", {})
+	if flags.has("pc_unlocked"):
+		flags.erase("pc_unlocked")
+		flags["storage_remote"] = true
+	out["flags"] = flags
+	for key: String in ["party", "storage", "sanctuary"]:
+		for s: Variant in out.get(key, []):
+			if s is Dictionary and (s as Dictionary).has("moves"):
+				var mv: Array = []
+				for m: Variant in s.moves:
+					mv.append(MOVE_RENAMES_V3.get(str(m), str(m)))
+				s["moves"] = mv
+	var party: Array = out.get("party", [])
+	if party.size() > TEAM_SIZE_V3:
+		var storage: Array = out.get("storage", [])
+		storage.append_array(party.slice(TEAM_SIZE_V3))
+		out["storage"] = storage
+		out["party"] = party.slice(0, TEAM_SIZE_V3)
 	return out
 
 ## Short "where and how long" line for the title screen's Continue button, or "" if unreadable.

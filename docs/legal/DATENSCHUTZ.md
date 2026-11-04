@@ -30,10 +30,10 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
 ### 3.1 Spielkonto und Spielstand
 
 - **Daten:** eine beim ersten Start zufällig erzeugte Spieler-ID, ein Anmelde-Token, ein Übertragungscode
-  für den Gerätewechsel, dein Tamer-Name, dein Spielstand (Fortschritt, Spirlings, Gegenstände,
+  für den Gerätewechsel, dein Wayfarer-Name, dein Spielstand (Fortschritt, Spirlings, Gegenstände,
   Einstellungen), Zeitpunkt der letzten Synchronisierung, App-Version, Gerätetyp und Betriebssystemversion.
 - **Zweck:** Spiel bereitstellen, Fortschritt speichern und wiederherstellen, auch auf einem neuen Gerät.
-  Dein Tamer-Name ist nur für Spieler sichtbar, mit denen du befreundet bist (siehe 3.2).
+  Dein Wayfarer-Name ist nur für Spieler sichtbar, mit denen du befreundet bist (siehe 3.2).
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags).
 - **Speicherdauer:** solange dein Konto besteht. Nach dem Löschen des Kontos löschen wir die Daten innerhalb
   von 30 Tagen; Sicherungskopien werden spätestens nach weiteren 30 Tagen überschrieben. Konten, die

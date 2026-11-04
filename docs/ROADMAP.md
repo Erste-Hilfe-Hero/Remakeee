@@ -5,7 +5,7 @@ Everything else on the list is built (PRs #9 to #26), apart from the Bond and On
 Item 8 (battles with several Spirlings per side) is built as story set pieces: N vs M up to 4 vs 4
 with targeting and sweeps, tag battles with Kestra, Rift bosses and a wild horde. They use their own
 formation layout (half-size sprites in two ranks), so the 144x256 screen still fits. Random wild
-encounters and ordinary Tamers stay 1v1.
+encounters and ordinary Wayfarers stay 1v1.
 
 | Item | Status | Why it waits | What unblocks it |
 | --- | --- | --- | --- |

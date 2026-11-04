@@ -1,6 +1,6 @@
 class_name WeeklyChallenge
 extends RefCounted
-## Weekly challenge (item 88): every calendar week the same three echo Tamers for everyone,
+## Weekly challenge (item 88): every calendar week the same three echo Wayfarers for everyone,
 ## drawn from a seed made from the week number, so friends can compare runs without any
 ## server. Each week has a field and a Warden-style rule. The prize can be claimed once a week.
 

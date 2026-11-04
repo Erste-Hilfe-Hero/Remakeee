@@ -1,14 +1,14 @@
 class_name Spirling
 extends RefCounted
-## A Spirling instance owned by a Tamer or met in the wild.
+## A Spirling instance owned by a Wayfarer or met in the wild.
 ## Holds all mutable state; the SpirlingData it points to is never changed.
 
 const STAT_KEYS: Array[String] = ["hp", "atk", "def", "foc", "spd"]
-const SPARK_MAX: int = 15
+const SPARK_MAX: int = 12
 const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
-const MAX_LEVEL: int = 100
+const MAX_LEVEL: int = 60
 ## Chance that a wild Spirling is a rare Prism colour variant (cosmetic only).
 const PRISM_CHANCE: float = 1.0 / 256.0
 
@@ -185,6 +185,24 @@ func can_evolve(map_id: String = "") -> bool:
 
 func can_evolve_with(item_id: String) -> bool:
 	return data.evolves_to != null and not data.evolve_item.is_empty() and data.evolve_item == item_id
+
+## Unfurling (Chimora's own form change): never automatic. Once a Spirling has enough rings
+## (or stands in its special place), the player may unfurl it from the Team menu, and may
+## furl it back to its earlier form at any time. Rings, arts and Spark stay the same.
+func can_unfurl(map_id: String = "") -> bool:
+	return can_evolve(map_id)
+
+## The earlier form this one can furl back into, or null.
+func earlier_form() -> SpirlingData:
+	return Database.earlier_form(data)
+
+func furl_back() -> void:
+	var prev: SpirlingData = earlier_form()
+	if prev == null:
+		return
+	var frac: float = hp_fraction()
+	data = prev
+	hp = maxi(1, int(round(frac * max_hp()))) if hp > 0 else 0
 
 ## Evolves in place (new species, same Spark, level, moves and HP fraction).
 func evolve() -> void:

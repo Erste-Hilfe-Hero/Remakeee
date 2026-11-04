@@ -1,23 +1,24 @@
 extends Node
 ## Global player state. Saving and loading go through SaveManager (M4).
 
-## Unbound-style difficulty, picked at new game.
+## Difficulty, picked at new game. Rift-Born adds the Master AI (tier 3).
 enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
 ## Level cap per Rift sealed (Veteran + Rift-Born only).
 const LEVEL_CAPS: Array[int] = [12, 18, 23, 28, 32, 36, 40, 44, 50]
-const AI_LEVELS: Array[int] = [0, 1, 2, 2]
-const MAX_PARTY: int = 6
+const AI_LEVELS: Array[int] = [0, 1, 2, 3]
+const MAX_PARTY: int = 5
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 
-## Tamer customisation (placeholder until real sprites exist).
-var tamer_name: String = "Rowan"
+## Wayfarer customisation (placeholder until real sprites exist).
+var tamer_name: String = "Juno"
 var tamer_color: int = 0
 ## Boy or girl, picked first at new game. Index into TAMER_SPRITES / DEFAULT_NAMES.
 var tamer_look: int = 0
 const TAMER_SPRITES: Array[String] = ["tamer", "tamer_f"]
-const DEFAULT_NAMES: Array[String] = ["Rowan", "Liora"]
-const TAMER_COLORS: Array[Color] = [Color("3a5a9a"), Color("9a3a4a"), Color("3a8a5a"), Color("8a6a2a")]
+const DEFAULT_NAMES: Array[String] = ["Corin", "Liora"]
+## Coat colours on the title screen: teal, rust, ochre, plum (boy = teal, girl = rust by default).
+const TAMER_COLORS: Array[Color] = [Color("2f7f7a"), Color("a2502e"), Color("b08a2e"), Color("6a3f6e")]
 ## Seconds played (shown on the save card).
 var play_time: float = 0.0
 ## True while a game is running (the title screen sets it); saving on pause needs it.
@@ -66,6 +67,11 @@ var battle_speed: int = 0
 const BATTLE_SPEEDS: Array[float] = [1.0, 2.0, 4.0]
 ## Wild battles pick moves on their own (greedy AI) until the player turns it off.
 var auto_battle: bool = false
+## Bench lessons: healthy team members that did not fight get BENCH_XP_SHARE of a fighter's XP.
+var bench_xp: bool = true
+const BENCH_XP_SHARE: float = 0.5
+## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
+var damage_preview: bool = true
 var volume: float = 0.8
 var music_volume: float = 0.7
 var sfx_volume: float = 0.8
@@ -95,7 +101,7 @@ const FPS_BATTERY: int = 30
 const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large"]
 const PAD_ALPHAS: Array[float] = [0.3, 0.55, 0.85]
 
-## What the Tamer has learned about matchups: "element:species" -> multiplier seen on a hit.
+## What the Wayfarer has learned about matchups: "element:species" -> multiplier seen on a hit.
 ## Story difficulty shows every matchup from the start.
 var known_matchups: Dictionary = {}
 
@@ -115,13 +121,13 @@ func seal_rift(rift_id: String) -> bool:
 	set_flag("rift_%s_sealed" % rift_id)
 	# Rifts can be mended in any order; the second one opens storage from the menu.
 	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
-		set_flag("pc_unlocked")
+		set_flag("storage_remote")
 	return true
 
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
 
-## Trainer AI tier for the current difficulty: 0 random, 1 greedy, 2 lookahead.
+## Trainer AI tier for the current difficulty: 0 random, 1 greedy, 2 lookahead, 3 master.
 func ai_level() -> int:
 	return AI_LEVELS[difficulty]
 
@@ -130,6 +136,10 @@ func text_cps() -> float:
 
 func battle_speed_scale() -> float:
 	return BATTLE_SPEEDS[clampi(battle_speed, 0, BATTLE_SPEEDS.size() - 1)]
+
+## XP share for the bench in battles (0 when Bench lessons is off).
+func bench_share() -> float:
+	return BENCH_XP_SHARE if bench_xp else 0.0
 
 func cycle_battle_speed() -> void:
 	battle_speed = (battle_speed + 1) % BATTLE_SPEEDS.size()
@@ -141,7 +151,7 @@ static func _matchup_key(element: int, species: String) -> String:
 func learn_matchup(element: int, species: String, mult: float) -> void:
 	known_matchups[_matchup_key(element, species)] = mult
 
-## The multiplier the Tamer knows for [param element] into [param foe], or -1.0 if unknown.
+## The multiplier the Wayfarer knows for [param element] into [param foe], or -1.0 if unknown.
 func known_multiplier(element: int, foe: Spirling) -> float:
 	if difficulty == Difficulty.STORY:
 		return Elements.multiplier(element, foe.elements())
@@ -165,7 +175,7 @@ func set_held(s: Spirling, id: String) -> bool:
 		inventory[id] = item_count(id) - 1
 	return true
 
-## Tamer Gear (grapple_line, climbing_pick, storm_lantern) is a key item in the bag.
+## Wayfarer Gear (grapple_line, climbing_pick, storm_lantern) is a key item in the bag.
 func has_gear(id: String) -> bool:
 	return item_count(id) > 0
 
@@ -314,10 +324,10 @@ func to_dict() -> Dictionary:
 
 func from_dict(d: Dictionary) -> void:
 	reset()
-	var tamer: Dictionary = d.get("tamer", {})
-	tamer_name = str(tamer.get("name", "Rowan"))
-	tamer_color = int(tamer.get("color", 0))
-	tamer_look = clampi(int(tamer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
+	var wayfarer: Dictionary = d.get("tamer", {})
+	tamer_name = str(wayfarer.get("name", "Juno"))
+	tamer_color = int(wayfarer.get("color", 0))
+	tamer_look = clampi(int(wayfarer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))
@@ -359,7 +369,8 @@ func from_dict(d: Dictionary) -> void:
 	in_game = true
 
 func settings_to_dict() -> Dictionary:
-	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle, "volume": volume,
+	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
+		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"one_hand": one_hand, "rumble": rumble,
@@ -372,6 +383,8 @@ func settings_from_dict(d: Dictionary) -> void:
 	var legacy: int = 1 if bool(d.get("fast_forward", false)) else 0
 	battle_speed = clampi(int(d.get("battle_speed", legacy)), 0, BATTLE_SPEEDS.size() - 1)
 	auto_battle = bool(d.get("auto_battle", false))
+	bench_xp = bool(d.get("bench_xp", true))
+	damage_preview = bool(d.get("damage_preview", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
@@ -492,7 +505,7 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		var old_name: String = s.display_name()
 		s.evolve()
 		mark_seen(s.data.species_name, true)
-		msg = "%s glows with Rift light... and grew into %s!" % [old_name, s.data.species_name]
+		msg = "%s unfurls into %s!" % [old_name, s.data.species_name]
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
@@ -506,7 +519,7 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 			return ""
 		var healed: int = mini(int(it.heal), s.max_hp() - s.hp)
 		s.hp += healed
-		msg = "%s recovered %d HP." % [s.display_name(), healed]
+		msg = "%s recovered %d Vigor." % [s.display_name(), healed]
 	else:
 		return ""
 	inventory[id] = item_count(id) - 1
@@ -601,7 +614,7 @@ func move_party(from: int, to: int) -> void:
 	party.remove_at(from)
 	party.insert(to, s)
 
-const STORAGE_SORTS: Array[String] = ["Caught", "Level", "Name", "Spirlog no."]
+const STORAGE_SORTS: Array[String] = ["Caught", "Ring", "Name", "Spirlog no."]
 
 ## Storage indices in display order (item 57): sorted by [param sort] (STORAGE_SORTS index) and
 ## filtered to [param element] (-1 = all) and a name fragment [param search] (case-insensitive).

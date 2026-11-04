@@ -10,7 +10,7 @@ cd "$(dirname "$0")/.."
 pattern="$(printf '%s' 'cG9rW2XDqV18XGJneW1cYnxcYihobXx0bSlbMC05XXsxLDN9XGJ8XGJwb2tlID8oYmFsbHxkZXh8Y2VudGVyfGNlbnRyZSlcYg==' | base64 -d)"
 # Battle phrases that are verbatim from the inspiration's battle text (sum of small similarities,
 # see docs/legal/IP_PATENT_AUDIT.md). Also base64-encoded.
-phrases="$(printf '%s' 'd2hhdCB3aWxsIFxTKyBkb1w/fGEgd2lsZCBcUysgYXBwZWFyZWR8d2FudHMgdG8gYmF0dGxlfCwgY29tZSBiYWNrIXxidXQgdGhlcmUgd2FzIG5vIHRhcmdldHxnb3QgYXdheSBzYWZlbHl8Y291bGRuLnQgZ2V0IGF3YXl8Z3JldyB0byBsZXZlbHxpdC5zIHN1cGVyIGVmZmVjdGl2ZXxpdC5zIG5vdCB2ZXJ5IGVmZmVjdGl2ZXxhIGNyaXRpY2FsIGhpdCE=' | base64 -d)"
+phrases="$(printf '%s' 'd2hhdCB3aWxsIFxTKyBkb1w/fGEgd2lsZCBcUysgYXBwZWFyZWR8d2FudHMgdG8gYmF0dGxlfCwgY29tZSBiYWNrIXxidXQgdGhlcmUgd2FzIG5vIHRhcmdldHxnb3QgYXdheSBzYWZlbHl8Y291bGRuLnQgZ2V0IGF3YXl8Z3JldyB0byBsZXZlbHxpdC5zIHN1cGVyIGVmZmVjdGl2ZXxpdC5zIG5vdCB2ZXJ5IGVmZmVjdGl2ZXxhIGNyaXRpY2FsIGhpdCF8d29uLnQgZ28gYW55IChoaWdoZXJ8bG93ZXIpfChyb3NlfGZlbGwpIHNoYXJwbHl8aXQgd29uLnQgaGF2ZSBhbnkgZWZmZWN0fHNjdXJyaWVkfGJsYWNrZWQgb3V0fGlzIGh1cnQgYnkgaXRzfGl0IGNhbi50IG1vdmU=' | base64 -d)"
 fail=0
 
 if git ls-files -z -- . ':!:AGENTS.md' ':!:LEGAL.md' ':!:addons/**' \
@@ -31,6 +31,14 @@ patent='(throw|toss_|glid|parachute|swipe|flick_|capture_?(rate|chance|odds)|cat
 if git ls-files -z -- 'scripts/*.gd' 'scenes/*.tscn' \
 	| xargs -0 grep -n -i -P -- "^(?!\s*#).*${patent}" 2>/dev/null; then
 	echo "::error::Patent-risk mechanic in game code (lines above). See LEGAL.md."
+	fail=1
+fi
+
+# German text: no terms from the franchise's German edition (move = "Attacke", critical hit,
+# fainted, the run command, the storage box). Base64 like the lists above.
+de_terms="$(printf '%s' 'QXR0YWNrZXxWb2xsdHJlZmZlcnxrYW1wZnVuZi5oaWd8IkZsdWNodCJ8IkJveCJ8Qm94IFwofFBvay4/bW9u' | base64 -d)"
+if grep -n -i -P -- "$de_terms" data/i18n/de.json tools/i18n/*.py 2>/dev/null; then
+	echo "::error::German text uses a term from the franchise's German edition (lines above). See docs/IP_HYGIENE.md."
 	fail=1
 fi
 

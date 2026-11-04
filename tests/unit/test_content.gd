@@ -91,14 +91,14 @@ func test_echo_crystals_check_element_and_known_moves() -> void:
 	var k := Spirling.new(Database.species("Kindlop"), 10)
 	assert_true(GameState.can_learn_echo(k, "echo_ember"))
 	assert_false(GameState.can_learn_echo(k, "echo_tide"))
-	k.moves.append(Database.move("Flare Lash"))
+	k.moves.append(Database.move("Kiln Strike"))
 	assert_false(GameState.can_learn_echo(k, "echo_ember"), "already knows it")
 
 func test_spark_words_and_training() -> void:
 	assert_eq(GameState.spark_word(0), "faint")
 	assert_eq(GameState.spark_word(Spirling.SPARK_MAX), "brilliant")
 	var s := Spirling.new(Database.species("Zippit"), 20)
-	s.spark["atk"] = 14
+	s.spark["atk"] = Spirling.SPARK_MAX - 2
 	var before: int = s.atk()
 	assert_true(GameState.train_spark(s, "atk", 3))
 	assert_eq(s.spark["atk"], Spirling.SPARK_MAX)
@@ -111,8 +111,8 @@ func test_prism_is_saved() -> void:
 	assert_true(Spirling.from_dict(s.to_dict()).prism)
 
 func test_status_specific_cure_in_battle() -> void:
-	var a: Spirling = BattleFixtures.make("Mossling", 15, ["Headlong Charge"] as Array[String])
-	var b: Spirling = BattleFixtures.make("Zippit", 15, ["Headlong Charge"] as Array[String])
+	var a: Spirling = BattleFixtures.make("Mossling", 15, ["Bowl Over"] as Array[String])
+	var b: Spirling = BattleFixtures.make("Zippit", 15, ["Bowl Over"] as Array[String])
 	var m: BattleModel = BattleFixtures.model([a] as Array[Spirling], [b] as Array[Spirling])
 	m.inventory = {"cooling_gel": 1, "dry_towel": 1}
 	m.start()

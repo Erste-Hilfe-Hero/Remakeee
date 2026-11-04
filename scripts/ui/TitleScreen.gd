@@ -101,7 +101,7 @@ func _show_status() -> void:
 	if not Online.motd.is_empty():
 		lines.append(Online.motd)
 	if Online.online_now > 1:
-		lines.append("%d Tamers are in Veydal" % Online.online_now)
+		lines.append("%d Wayfarers are in Veydal" % Online.online_now)
 	_status.text = "\n".join(lines)
 
 ## A slot changed on this phone and on another device: the player picks which to keep (item 8).

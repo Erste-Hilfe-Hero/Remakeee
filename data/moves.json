@@ -101,7 +101,7 @@
   "status_chance": 1.0
  },
  {
-  "name": "Headlong Charge",
+  "name": "Bowl Over",
   "element": "STONE",
   "kind": "PHYSICAL",
   "power": 35,
@@ -109,7 +109,7 @@
   "energy": 1
  },
  {
-  "name": "Flare Lash",
+  "name": "Kiln Strike",
   "element": "EMBER",
   "kind": "PHYSICAL",
   "power": 75,
@@ -117,7 +117,7 @@
   "energy": 5
  },
  {
-  "name": "Blaze Coil",
+  "name": "Furnace Spiral",
   "element": "EMBER",
   "kind": "FOCUS",
   "power": 90,
@@ -137,7 +137,7 @@
   "status_chance": 1.0
  },
  {
-  "name": "Brine Jet",
+  "name": "Spindrift Shot",
   "element": "TIDE",
   "kind": "FOCUS",
   "power": 70,
@@ -145,7 +145,7 @@
   "energy": 4
  },
  {
-  "name": "Tidal Crash",
+  "name": "Breaker Plunge",
   "element": "TIDE",
   "kind": "PHYSICAL",
   "power": 95,
@@ -202,7 +202,7 @@
   "status_chance": 0.2
  },
  {
-  "name": "Surge Fang",
+  "name": "Storm Gnash",
   "element": "VOLT",
   "kind": "PHYSICAL",
   "power": 75,
@@ -231,7 +231,7 @@
   "effect_amount": 1
  },
  {
-  "name": "Quake Stomp",
+  "name": "Tremor Thud",
   "element": "STONE",
   "kind": "PHYSICAL",
   "power": 80,
@@ -240,7 +240,7 @@
   "target": "foes"
  },
  {
-  "name": "Boulder Slam",
+  "name": "Cairn Crash",
   "element": "STONE",
   "kind": "PHYSICAL",
   "power": 100,
@@ -258,7 +258,7 @@
   "energy": 3
  },
  {
-  "name": "Cyclone Edge",
+  "name": "Gale Scythe",
   "element": "GALE",
   "kind": "PHYSICAL",
   "power": 80,
@@ -311,7 +311,7 @@
   "energy": 3
  },
  {
-  "name": "Gloom Pulse",
+  "name": "Gloom Ripple",
   "element": "UMBRA",
   "kind": "FOCUS",
   "power": 70,
@@ -322,7 +322,7 @@
   "target": "foes"
  },
  {
-  "name": "Eclipse Fang",
+  "name": "Dusk Gnaw",
   "element": "UMBRA",
   "kind": "PHYSICAL",
   "power": 90,
@@ -384,7 +384,7 @@
   "energy": 4
  },
  {
-  "name": "Brine Fang",
+  "name": "Salt Snap",
   "element": "TIDE",
   "kind": "PHYSICAL",
   "power": 55,
@@ -415,7 +415,7 @@
   "self": true
  },
  {
-  "name": "Shell Up",
+  "name": "Hunker Down",
   "element": "STONE",
   "kind": "STATUS",
   "power": 0,
@@ -426,7 +426,7 @@
   "self": true
  },
  {
-  "name": "Tailwind Step",
+  "name": "Drift Step",
   "element": "GALE",
   "kind": "STATUS",
   "power": 0,
@@ -437,7 +437,7 @@
   "self": true
  },
  {
-  "name": "Clear Mind",
+  "name": "Still Thought",
   "element": "LUMEN",
   "kind": "STATUS",
   "power": 0,
@@ -487,5 +487,59 @@
   "accuracy": 0.95,
   "energy": 2,
   "overcharge": true
+ },
+ {
+  "name": "Ash Call",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "ash_storm"
+ },
+ {
+  "name": "Tide Call",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "high_tide"
+ },
+ {
+  "name": "Murk Call",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "deep_murk"
+ },
+ {
+  "name": "Spark Call",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "static_veil"
+ },
+ {
+  "name": "Bloom Call",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "pollen_drift"
+ },
+ {
+  "name": "Dawn Call",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "dawn_glow"
  }
 ]

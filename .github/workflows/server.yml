@@ -39,15 +39,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Start a stand-in for the existing proxy (pinned TLS policies, drifted live config)
+      - name: Start a stand-in for the existing proxy (loaded certificate, pinned TLS policies, drifted live config)
         run: |
-          mkdir -p "$RUNNER_TEMP/proxy"
+          mkdir -p "$RUNNER_TEMP/proxy" "$RUNNER_TEMP/certs"
+          openssl req -x509 -newkey rsa:2048 -nodes -days 2 -subj "/CN=other.localhost" \
+            -addext "subjectAltName=DNS:other.localhost" \
+            -keyout "$RUNNER_TEMP/certs/other.key" -out "$RUNNER_TEMP/certs/other.crt" 2>/dev/null
+          chmod a+r "$RUNNER_TEMP/certs/"*
           cat > "$RUNNER_TEMP/proxy/Caddyfile" <<'EOF'
           {
               auto_https disable_redirects
           }
           https://other.localhost {
-              tls internal
+              tls /certs/other.crt /certs/other.key
               respond "other https"
           }
           :80 {
@@ -56,7 +60,7 @@ jobs:
           EOF
           docker network create otherprod
           docker run -d --name other-proxy --network otherprod -p 8080:80 -p 8443:443 \
-            -v "$RUNNER_TEMP/proxy/Caddyfile:/etc/caddy/Caddyfile:ro" caddy:2.10.2
+            -v "$RUNNER_TEMP/proxy/Caddyfile:/etc/caddy/Caddyfile:ro" -v "$RUNNER_TEMP/certs:/certs:ro" caddy:2.10.2
           for i in $(seq 1 20); do curl -fsS http://localhost:8080 && break; sleep 1; done
           # Like production: the running config has a route the file does not know about.
           docker exec other-proxy wget -qO- http://127.0.0.1:2019/config/ > "$RUNNER_TEMP/live.json"
@@ -71,27 +75,31 @@ jobs:
           PY
           docker exec -i other-proxy sh -c 'cat > /tmp/live.json' < "$RUNNER_TEMP/live.json"
           docker exec other-proxy caddy reload --config /tmp/live.json
-          sha256sum "$RUNNER_TEMP/proxy/Caddyfile" > "$RUNNER_TEMP/proxy.sha"
+          cp "$RUNNER_TEMP/proxy/Caddyfile" "$RUNNER_TEMP/Caddyfile.orig"
           curl -fsSk --resolve other.localhost:8443:127.0.0.1 https://other.localhost:8443/drift
       - name: Install Chimora in shared mode
         run: |
           sudo SHARED_HOST=1 SHARED_NETWORK=otherprod PROXY_CONTAINER=other-proxy \
-            DOMAIN=localhost bash server/setup.sh
-      - name: Run it again (route is replaced, not added twice)
+            PROXY_CADDYFILE="$RUNNER_TEMP/proxy/Caddyfile" DOMAIN=localhost bash server/setup.sh
+      - name: Run it again (nothing is added twice)
         run: |
           sudo SHARED_HOST=1 SHARED_NETWORK=otherprod PROXY_CONTAINER=other-proxy \
-            DOMAIN=localhost bash server/setup.sh | tee "$RUNNER_TEMP/second.log"
+            PROXY_CADDYFILE="$RUNNER_TEMP/proxy/Caddyfile" DOMAIN=localhost bash server/setup.sh | tee "$RUNNER_TEMP/second.log"
           grep -q "Nothing to do" "$RUNNER_TEMP/second.log"
+          grep -q "already has the localhost block" "$RUNNER_TEMP/second.log"
+          test "$(grep -c chimora-begin "$RUNNER_TEMP/proxy/Caddyfile")" = 1
+          cat "$RUNNER_TEMP/proxy/Caddyfile"
+          # Everything outside the chimora block is unchanged.
+          sed '/# chimora-begin/,/# chimora-end/d' "$RUNNER_TEMP/proxy/Caddyfile" | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' > "$RUNNER_TEMP/stripped"
+          diff <(sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$RUNNER_TEMP/Caddyfile.orig") "$RUNNER_TEMP/stripped"
           docker exec other-proxy wget -qO- http://127.0.0.1:2019/config/ | python3 -c '
           import json, sys
           cfg = json.load(sys.stdin)
           srv = next(s for s in cfg["apps"]["http"]["servers"].values() if ":443" in s["listen"])
           assert sum(r.get("match") == [{"host": ["localhost"]}] for r in srv["routes"]) == 1
-          assert sum(p.get("match") == {"sni": ["localhost"]} for p in srv["tls_connection_policies"]) == 1
-          print(json.dumps(srv, indent=1))'
+          assert sum(p.get("match") == {"sni": ["localhost"]} for p in srv["tls_connection_policies"]) == 1'
       - name: Other sites untouched, Chimora works through the proxy
         run: |
-          sha256sum -c "$RUNNER_TEMP/proxy.sha"
           test "$(curl -fsS http://localhost:8080)" = "other site"
           test "$(curl -fsSk --resolve other.localhost:8443:127.0.0.1 https://other.localhost:8443/)" = "other https"
           test "$(curl -fsSk --resolve other.localhost:8443:127.0.0.1 https://other.localhost:8443/drift)" = "drift"
@@ -100,6 +108,15 @@ jobs:
           SMOKE_INSECURE=1 bash server/smoke_test.sh https://localhost:8443
           ! sudo docker ps --format '{{.Names}} {{.Ports}}' | grep chimora- | grep -q -- '->'
           test -f /etc/cron.d/chimora-proxy
+      - name: The other service reloads its own file (like a Nyrathen deploy); Chimora keeps working
+        run: |
+          docker exec other-proxy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile
+          sleep 2
+          test "$(curl -fsS http://localhost:8080)" = "other site"
+          test "$(curl -fsSk --resolve other.localhost:8443:127.0.0.1 https://other.localhost:8443/)" = "other https"
+          echo | openssl s_client -connect 127.0.0.1:8443 -servername other.localhost 2>/dev/null | openssl x509 -noout -subject | grep -q "CN *= *other.localhost"
+          echo | openssl s_client -connect 127.0.0.1:8443 -servername localhost 2>/dev/null | openssl x509 -noout -ext subjectAltName | grep -q "DNS:localhost"
+          SMOKE_INSECURE=1 bash server/smoke_test.sh https://localhost:8443
       - name: Logs
         if: failure()
         run: |

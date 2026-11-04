@@ -287,7 +287,7 @@ func test_deleting_an_account_removes_it_from_friends() -> void:
 func test_card_and_lines_read_well() -> void:
 	var f: Dictionary = {"code": "ABCDEFGH", "name": "Ben", "favorite": "Puddlet", "card": {"seals": 2, "seen": 9, "bonded": 4, "hours": 3},
 		"level": 2, "points": 12, "online": true, "place": "Brindlewick", "last_seen": Online.unix_now()}
-	assert_eq(FriendsMenu.friend_line(f), "* Ben  Lv2  Brindlewick")
+	assert_eq(FriendsMenu.friend_line(f), "* Ben  Bond 2  Brindlewick")
 	assert_string_contains(FriendsMenu.card_text(f), "Rifts sealed: 2")
 	f.online = false
 	f.last_seen = Online.unix_now() - 7200
