@@ -11,6 +11,7 @@ var _menu: MenuHost
 var _status: Label
 var _name_box: PanelContainer
 var _name_edit: LineEdit
+var _name_keys: NameKeyboard
 signal _name_done(text: String)
 
 func _ready() -> void:
@@ -45,11 +46,11 @@ func _build_name_box() -> void:
 	_name_box = PanelContainer.new()
 	_name_box.add_theme_stylebox_override("panel", UITheme.panel_style())
 	_name_box.set_anchors_preset(Control.PRESET_CENTER)
-	_name_box.custom_minimum_size = Vector2(120, 50)
-	_name_box.offset_left = -60
-	_name_box.offset_right = 60
-	_name_box.offset_top = -25
-	_name_box.offset_bottom = 25
+	_name_box.custom_minimum_size = Vector2(136, 110)
+	_name_box.offset_left = -68
+	_name_box.offset_right = 68
+	_name_box.offset_top = -55
+	_name_box.offset_bottom = 55
 	_name_box.visible = false
 	add_child(_name_box)
 	var v := VBoxContainer.new()
@@ -67,10 +68,11 @@ func _build_name_box() -> void:
 		if ev.is_action_pressed("ui_accept") and not (ev is InputEventKey):
 			_name_done.emit(_name_edit.text))
 	v.add_child(_name_edit)
-	var ok := Button.new()
-	ok.text = "OK"
-	ok.pressed.connect(func() -> void: _name_done.emit(_name_edit.text))
-	v.add_child(ok)
+	# Own letter keys: the phone keyboard does not always open (iPhone browser, item from Ali 2026-11-04).
+	_name_keys = NameKeyboard.new()
+	_name_keys.target = _name_edit
+	_name_keys.confirmed.connect(func() -> void: _name_done.emit(_name_edit.text))
+	v.add_child(_name_keys)
 
 ## Chimora is online only: nothing past the title works without the server (item 1).
 func _go_online() -> void:
@@ -196,8 +198,8 @@ func _new_game() -> bool:
 		return false
 	_name_edit.text = GameState.DEFAULT_NAMES[look]
 	_name_box.visible = true
-	_name_edit.grab_focus()
-	_name_edit.select_all()
+	_name_keys.fresh = true
+	_name_keys.focus_first()
 	var name: String = await _name_done
 	_name_box.visible = false
 	GameState.new_game(GameState.Difficulty.TAMER, name, look, "", look)
