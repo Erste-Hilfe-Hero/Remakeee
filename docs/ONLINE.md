@@ -73,12 +73,17 @@ then says "test server on this phone". The debug APK from CI works like this unt
 On Ali's existing Contabo server (161.97.102.171), next to Nyrathen and Dranbleib, at
 `https://chimora.161-97-102-171.sslip.io`. That machine's Caddy (`nyrathen-proxy`) already owns ports 80 and
 443, so Chimora runs in shared mode: its own containers (project `chimora`, folder `/opt/chimora`) with no
-public ports, and one route for its address in the proxy's running config that forwards to
-`chimora-gateway`. The proxy's own files are never edited (its running config already differs from
-them). `server/proxy_site.sh` reads the live config through Caddy's admin API, changes only Chimora's
-route and its TLS policy, loads it with a validated graceful reload, checks that everything else is
-unchanged and loads the saved copy again otherwise (copies in `/opt/chimora/server/backups/`). A cron job
-(`/etc/cron.d/chimora-proxy`) re-runs it every minute: Nyrathen's own deploys load a proxy config without the route, and until it is back the address fails with a TLS error.
+public ports, reached through the proxy, which forwards its address to `chimora-gateway`. `server/proxy_site.sh`
+does that in two places:
+1. The proxy's running config, through Caddy's admin API: it adds only Chimora's route and TLS policy, loads
+   it with a validated graceful reload, checks that everything else is unchanged and loads the saved copy
+   otherwise (copies in `/opt/chimora/server/backups/`).
+2. The proxy's Caddyfile on the host (`/srv/nyrathen/prod/Caddyfile`, approved by Ali on 4 Nov): one site
+   block between `# chimora-begin` and `# chimora-end`, validated first and never loaded by Chimora. Nyrathen's
+   own deploys (`tools/ci/host-setup.sh`, `nyrathen-caddy-play.yml` in lifekit) load that file and keep
+   unmarked blocks, so Chimora survives them. Before this, each Nyrathen deploy dropped the route and the
+   address failed with a TLS error until it came back.
+A cron job (`/etc/cron.d/chimora-proxy`) re-runs it every 10 minutes as a fallback.
 The firewall and the other services are not touched.
 
 Deploys run from the lifekit repository (it holds the Contabo access): workflow "Chimora on Contabo" on
