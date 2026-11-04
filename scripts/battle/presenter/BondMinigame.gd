@@ -91,13 +91,8 @@ func _mark_at_point(p: Vector2) -> int:
 	return -1
 
 func _gui_input(event: InputEvent) -> void:
-	var pos: Variant = null
-	if event is InputEventScreenTouch and event.pressed:
-		pos = (event as InputEventScreenTouch).position
-	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		pos = (event as InputEventMouseButton).position
-	if pos != null:
-		_tap(_mark_at_point(pos))
+	if TapInput.is_press(event):
+		_tap(_mark_at_point(TapInput.position(event)))
 		accept_event()
 
 func _unhandled_input(event: InputEvent) -> void:

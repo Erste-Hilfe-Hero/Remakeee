@@ -31,8 +31,11 @@ func _ready() -> void:
 	_menu.offset_top = ART_HEIGHT + 4
 	_status = Label.new()
 	_status.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	_status.offset_top = ART_HEIGHT - 24
-	_status.offset_bottom = ART_HEIGHT
+	# In the night sky above the lake, in light ink: lower down it sat on the three Spirlings
+	# in dark ink and could not be read.
+	_status.offset_top = 64
+	_status.offset_bottom = 86
+	_status.add_theme_color_override("font_color", UITheme.BG)
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	add_child(_status)
@@ -80,6 +83,7 @@ func _go_online() -> void:
 		_status.text = "Connecting..."
 		var st: Online.State = await Online.connect_now()
 		if st == Online.State.ONLINE:
+			_status.text = ""
 			if not Online.privacy_seen:
 				await _menu.info(AccountMenu.PRIVACY_NOTE)
 				Online.mark_privacy_seen()

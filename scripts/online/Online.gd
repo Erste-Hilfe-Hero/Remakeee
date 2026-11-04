@@ -45,6 +45,11 @@ var _beats: int = 0
 var _retry: float = 0.0
 var _busy: bool = false
 var _overlay: ReconnectOverlay
+## Slots with an upload on its way, slots saved again meanwhile (value: force), and a counter
+## of local saves per slot (see push()).
+var _pushing: Dictionary = {}
+var _push_again: Dictionary = {}
+var _save_gen: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -246,12 +251,32 @@ func pull(slot: int) -> bool:
 ## Called by SaveManager after every local save of the active slot.
 func note_saved(slot: int) -> void:
 	dirty[slot] = true
+	_save_gen[slot] = int(_save_gen.get(slot, 0)) + 1
 	_save_session()
 	if state == State.ONLINE:
 		push(slot)
 
 ## Sends the local copy of [param slot] up. [param force] keeps this device's journey after a conflict.
+## One upload per slot at a time: two saves close together (leaving the app saves twice on
+## Android, a door warp right after a battle) used to send both with the same base revision,
+## so the second, newer one was refused as a conflict and never reached the server.
 func push(slot: int, force: bool = false) -> bool:
+	if _pushing.has(slot):
+		_push_again[slot] = bool(_push_again.get(slot, false)) or force
+		while _pushing.has(slot):
+			await get_tree().process_frame
+		return not dirty.has(slot)
+	_pushing[slot] = true
+	var ok: bool = await _push_once(slot, force)
+	while _push_again.has(slot):
+		var again_force: bool = bool(_push_again[slot])
+		_push_again.erase(slot)
+		ok = await _push_once(slot, again_force)
+	_pushing.erase(slot)
+	return ok
+
+func _push_once(slot: int, force: bool) -> bool:
+	var gen: int = int(_save_gen.get(slot, 0))
 	var path: String = SaveManager.path_for_slot(slot)
 	var d: Variant = SaveManager.read_save(path)
 	if not d is Dictionary:
@@ -262,7 +287,9 @@ func push(slot: int, force: bool = false) -> bool:
 		return false
 	if bool(r.data.get("ok", false)):
 		revs[slot] = int(r.data.rev)
-		dirty.erase(slot)
+		# A save made while this upload was on its way is still waiting to go up.
+		if int(_save_gen.get(slot, 0)) == gen:
+			dirty.erase(slot)
 		conflicts.erase(slot)
 		_save_session()
 		return true

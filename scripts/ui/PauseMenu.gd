@@ -164,7 +164,7 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 		s.evolve()
 		GameState.mark_seen(s.data.species_name, true)
 	else:
-		s.furl_back()
+		GameState.furl_back(s)
 	Sound.sfx("level_up")
 	await info(("%s unfurls into %s!" if forward else "%s furls back into %s.") % [old_name, s.data.species_name])
 

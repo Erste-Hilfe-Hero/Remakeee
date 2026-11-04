@@ -104,7 +104,7 @@ func _ready() -> void:
 	_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_info_panel.add_child(_info_label)
 	_info_panel.gui_input.connect(func(ev: InputEvent) -> void:
-		if (ev is InputEventMouseButton and not ev.pressed) or (ev is InputEventScreenTouch and not ev.pressed):
+		if TapInput.is_release(ev):
 			close_info())
 	add_child(_info_panel)
 

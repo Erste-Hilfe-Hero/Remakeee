@@ -210,7 +210,8 @@ func evolve() -> void:
 		return
 	var frac: float = hp_fraction()
 	data = data.evolves_to
-	hp = maxi(1, int(round(frac * max_hp())))
+	# A fainted Spirling stays fainted: unfurling is no free revive.
+	hp = maxi(1, int(round(frac * max_hp()))) if hp > 0 else 0
 
 func to_dict() -> Dictionary:
 	var move_names: Array[String] = []

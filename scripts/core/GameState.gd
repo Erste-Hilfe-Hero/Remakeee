@@ -493,6 +493,16 @@ func mark_seen(species: String, bonded: bool = false) -> void:
 		e["bonded"] = true
 	spirlog[species] = e
 
+## Furls [param s] back into its earlier form. A form that needed an item to unfurl (Tide
+## Pearl) gives the item back, so "you can unfurl it again later" stays true.
+func furl_back(s: Spirling) -> void:
+	var prev: SpirlingData = s.earlier_form()
+	if prev == null:
+		return
+	s.furl_back()
+	if not prev.evolve_item.is_empty():
+		add_item(prev.evolve_item)
+
 ## Uses a bag item on [param s] outside battle. Returns the message to show, or "" if it had no effect.
 func use_item_outside_battle(id: String, s: Spirling) -> String:
 	if item_count(id) <= 0:

@@ -60,7 +60,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		frame = (frame + 1) % FRAMES.size()
 		_hint.text = Loc.t(FRAMES[frame])
 		_overlay.queue_redraw()
-	elif event is InputEventScreenTouch and (event as InputEventScreenTouch).pressed and not VirtualPad.covers((event as InputEventScreenTouch).position):
+	elif TapInput.is_press(event) and not VirtualPad.covers(TapInput.position(event)):
 		get_viewport().set_input_as_handled()
 		snap()
 
