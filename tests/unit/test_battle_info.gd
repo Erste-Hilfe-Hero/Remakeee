@@ -13,11 +13,11 @@ func test_move_info_lists_numbers_and_effects() -> void:
 	assert_string_contains(t, "10% chance: Inflicts Scorch.")
 
 func test_move_info_for_special_moves() -> void:
-	assert_string_contains(CommandMenu.move_info(Database.move("Breeze Slice")), "Acts before other moves.")
+	assert_string_contains(CommandMenu.move_info(Database.move("Breeze Slice")), "Acts before other arts.")
 	assert_string_contains(CommandMenu.move_info(Database.move("Squall")), "Reaches every foe.")
 	assert_string_contains(CommandMenu.move_info(Database.move("Overcharge")), "leftover Energy")
-	assert_string_contains(CommandMenu.move_info(Database.move("Kindle Up")), "Raises its own ATK by 1.")
-	assert_string_contains(CommandMenu.move_info(Database.move("Candle Ward")), "Heals 30% of its HP.")
+	assert_string_contains(CommandMenu.move_info(Database.move("Kindle Up")), "Raises its own Might by 1.")
+	assert_string_contains(CommandMenu.move_info(Database.move("Candle Ward")), "Heals 30% of its Vigor.")
 	assert_string_contains(CommandMenu.move_info(Database.move("Ash Call")), "Lays Ash Storm for %d turns." % BattleRules.RESONANCE_TURNS)
 
 func test_every_move_has_an_info_card() -> void:

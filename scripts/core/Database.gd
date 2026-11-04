@@ -34,6 +34,16 @@ static func species(species_name: String) -> SpirlingData:
 	load_all()
 	return spirlings.get(species_name)
 
+## The form that unfurls into [param sd], or null for a first form.
+static func earlier_form(sd: SpirlingData) -> SpirlingData:
+	load_all()
+	if sd == null:
+		return null
+	for other: SpirlingData in spirlings.values():
+		if other.evolves_to == sd:
+			return other
+	return null
+
 static func move(move_name: String) -> MoveData:
 	load_all()
 	return moves.get(move_name)

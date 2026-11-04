@@ -1,6 +1,6 @@
 extends GutTest
 ## Battles with several Spirlings per side: N vs M slots, targeting, sweeps, faint refills,
-## tag battles with an ally Tamer, Rift bosses, wild hordes (Echo call only vs wild foes),
+## tag battles with an ally Wayfarer, Rift bosses, wild hordes (Echo call only vs wild foes),
 ## replays and the story set pieces in the map data.
 
 const Side := BattleModel.Side
@@ -300,12 +300,12 @@ func test_boss_battles_play_to_the_end() -> void:
 # --- Wild hordes and the Echo call -------------------------------------------------------
 
 func test_echo_call_only_against_wild_foes() -> void:
-	var tamer := _model(_p(["Kindlop", "Puddlet"]), _p(["Zippit", "Wickit"]), [2, 2], false)
-	tamer.start()
+	var wayfarer := _model(_p(["Kindlop", "Puddlet"]), _p(["Zippit", "Wickit"]), [2, 2], false)
+	wayfarer.start()
 	for slot: int in 2:
-		for a: BattleAction in tamer.legal_actions(Side.PLAYER, slot):
-			assert_ne(a.kind, BattleAction.Kind.BOND, "no Echo call against a Tamer's Spirlings")
-	assert_false(tamer.is_legal(BattleAction.make_bond(Side.PLAYER, 1.0, "", 0, 1)))
+		for a: BattleAction in wayfarer.legal_actions(Side.PLAYER, slot):
+			assert_ne(a.kind, BattleAction.Kind.BOND, "no Echo call against a Wayfarer's Spirlings")
+	assert_false(wayfarer.is_legal(BattleAction.make_bond(Side.PLAYER, 1.0, "", 0, 1)))
 	var tag := _tag_model()
 	tag.start()
 	assert_false(tag.is_legal(BattleAction.make_bond(Side.PLAYER, 1.0)), "nor in a tag battle")

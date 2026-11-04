@@ -43,3 +43,30 @@ func test_era_one_palette_is_not_green() -> void:
 
 func test_hp_bar_has_no_traffic_light() -> void:
 	assert_false("HP_MID" in (load("res://scripts/battle/presenter/InfoStrip.gd") as GDScript).get_script_constant_map())
+
+func test_unfurling_is_a_choice_and_can_be_undone() -> void:
+	var base: SpirlingData = Database.species("Kindlop")
+	var s := Spirling.new(base, base.evolve_level)
+	assert_true(s.can_unfurl(), "ready at its ring")
+	assert_null(s.earlier_form(), "a first form has nothing to furl back into")
+	s.evolve()
+	assert_eq(s.data, base.evolves_to)
+	assert_eq(s.earlier_form(), base)
+	var lvl: int = s.level
+	s.furl_back()
+	assert_eq(s.data, base, "furled back")
+	assert_eq(s.level, lvl, "rings stay the same")
+	assert_true(s.hp > 0)
+	assert_true(s.can_unfurl(), "can unfurl again later")
+
+func test_furl_back_keeps_a_resting_spirling_at_rest() -> void:
+	var base: SpirlingData = Database.species("Kindlop")
+	var s := Spirling.new(base.evolves_to, base.evolve_level)
+	s.hp = 0
+	s.furl_back()
+	assert_eq(s.data, base)
+	assert_eq(s.hp, 0)
+
+func test_overworld_never_unfurls_on_its_own() -> void:
+	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
+	assert_false(src.contains("s.evolve()"), "the overworld only hints; the player chooses in the Team menu")

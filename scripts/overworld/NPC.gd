@@ -1,6 +1,6 @@
 class_name NPC
 extends GridWalker
-## A standing character. Talks using a dialogue reference; Tamers also carry a team (M5).
+## A standing character. Talks using a dialogue reference; Wayfarers also carry a team (M5).
 
 var npc_id: String = ""
 var dialogue_ref: String = ""
@@ -14,7 +14,7 @@ func setup(def: Dictionary) -> void:
 	sprite_style = str(def.get("sprite", "villager"))
 	place(Vector2i(int(def.x), int(def.y)), str(def.get("facing", "down")))
 
-## Shows a "!" above the head when a Tamer spots the player.
+## Shows a "!" above the head when a Wayfarer spots the player.
 var alert: bool = false:
 	set(v):
 		alert = v

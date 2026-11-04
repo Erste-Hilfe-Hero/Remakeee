@@ -25,14 +25,14 @@ const RESONANCE_TURNS: int = 5
 ##   immune:        statuses that can't be applied
 ##   low_hp_boost:  damage multiplier for moves of its own element below 1/3 HP
 const TRAITS: Dictionary[String, Dictionary] = {
-	"kindling": {"label": "Kindling", "text": "Scorch raises its ATK instead of lowering it.", "scorch_atk": 1.25},
-	"thick_hide": {"label": "Thick Hide", "text": "Takes 15% less damage from physical moves.", "phys_taken": 0.85},
-	"deep_roots": {"label": "Deep Roots", "text": "Recovers a little HP at the end of each turn.", "regen_div": 16},
+	"kindling": {"label": "Kindling", "text": "Scorch raises its Might instead of lowering it.", "scorch_atk": 1.25},
+	"thick_hide": {"label": "Thick Hide", "text": "Takes 15% less damage from physical arts.", "phys_taken": 0.85},
+	"deep_roots": {"label": "Deep Roots", "text": "Recovers a little Vigor at the end of each turn.", "regen_div": 16},
 	"surge": {"label": "Surge", "text": "Gains 1 extra Energy each turn.", "energy_per_turn": 1},
 	"steady": {"label": "Steady", "text": "Can't be Dazed.", "immune": ["daze"]},
 	"slick": {"label": "Slick", "text": "Can't be Rooted.", "immune": ["root"]},
 	"light_sleeper": {"label": "Light Sleeper", "text": "Can't be Drowsed.", "immune": ["drowse"]},
-	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 HP.", "low_hp_boost": 1.3},
+	"last_stand": {"label": "Last Stand", "text": "Its own element hits 30% harder below 1/3 Vigor.", "low_hp_boost": 1.3},
 }
 
 ## Rift fields. A map sets "field"; every battle there uses it. A Resonance move lays one for a
@@ -41,17 +41,17 @@ const TRAITS: Dictionary[String, Dictionary] = {
 ##   regen_element: Spirlings of this element heal max_hp / regen_div at the end of each turn
 const FIELDS: Dictionary[String, Dictionary] = {
 	"ash_storm": {"label": "Ash Storm", "boost": "EMBER", "weaken": "TIDE",
-		"intro": "Ash swirls through the Rift. Ember moves burn brighter, Tide moves sputter."},
+		"intro": "Ash swirls through the Rift. Ember arts burn brighter, Tide arts sputter."},
 	"high_tide": {"label": "High Tide", "boost": "TIDE", "weaken": "EMBER", "blocks": ["scorch"],
-		"intro": "The water rises around you. Tide moves surge, Ember moves fizzle, and nothing catches fire."},
+		"intro": "The water rises around you. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
 	"deep_murk": {"label": "Deep Murk", "boost": "UMBRA", "weaken": "LUMEN",
-		"intro": "The hollow swallows the light. Umbra moves deepen, Lumen moves dim."},
+		"intro": "The hollow swallows the light. Umbra arts deepen, Lumen arts dim."},
 	"static_veil": {"label": "Static Veil", "boost": "VOLT", "weaken": "STONE",
-		"intro": "The air crackles. Volt moves snap harder, Stone moves crumble."},
+		"intro": "The air crackles. Volt arts snap harder, Stone arts crumble."},
 	"pollen_drift": {"label": "Pollen Drift", "boost": "BLOOM", "weaken": "GALE", "regen_element": "BLOOM", "regen_div": 16,
-		"intro": "Pollen drifts through the Rift. Bloom moves flourish and Bloom Spirlings mend, Gale moves stall."},
+		"intro": "Pollen drifts through the Rift. Bloom arts flourish and Bloom Spirlings mend, Gale arts stall."},
 	"dawn_glow": {"label": "Dawn Glow", "boost": "LUMEN", "weaken": "UMBRA",
-		"intro": "A pale dawn fills the Rift. Lumen moves shine, Umbra moves thin out."},
+		"intro": "A pale dawn fills the Rift. Lumen arts shine, Umbra arts thin out."},
 }
 
 ## Element reactions: a move of "element" that hits a foe with "status" either hits harder
@@ -78,7 +78,7 @@ static func field_blocks(field: String, status: String) -> bool:
 ## player_stage: stat stages every player Spirling starts with.
 const RULES: Dictionary[String, Dictionary] = {
 	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1},
-	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with lower SPD.", "player_stage": {"spd": -1}},
+	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}},
 }
 
 ## Multi-Spirling battles: a sweep ("foes" move) that reaches more than one foe deals this share to each.

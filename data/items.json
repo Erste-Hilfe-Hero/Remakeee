@@ -2,7 +2,7 @@
  {
   "id": "tonic",
   "name": "Tonic",
-  "description": "Restores 25 HP.",
+  "description": "Restores 25 Vigor.",
   "battle": true,
   "heal": 25,
   "price": 150
@@ -10,7 +10,7 @@
  {
   "id": "strong_tonic",
   "name": "Strong Tonic",
-  "description": "Restores 70 HP.",
+  "description": "Restores 70 Vigor.",
   "battle": true,
   "heal": 70,
   "price": 450
@@ -34,7 +34,7 @@
  {
   "id": "revival_leaf",
   "name": "Waking Moss",
-  "description": "Wakes a fainted Spirling outside battle with a third of its HP.",
+  "description": "Wakes a fainted Spirling outside battle with a third of its Vigor.",
   "battle": false,
   "revive": 0.34,
   "price": 1100
@@ -50,7 +50,7 @@
  {
   "id": "grapple_line",
   "name": "Grapple Line",
-  "description": "Tamer Gear. Face a far post across narrow water and press A to pull yourself over.",
+  "description": "Wayfarer Gear. Face a far post across narrow water and press A to pull yourself over.",
   "battle": false,
   "gear": true,
   "hint": "The far side is just out of reach. A grapple line could bridge it."
@@ -58,7 +58,7 @@
  {
   "id": "climbing_pick",
   "name": "Climbing Pick",
-  "description": "Tamer Gear. Face a low cliff and press A to climb up or down it.",
+  "description": "Wayfarer Gear. Face a low cliff and press A to climb up or down it.",
   "battle": false,
   "gear": true,
   "hint": "A steep rock face. With a climbing pick you could get a grip."
@@ -66,7 +66,7 @@
  {
   "id": "storm_lantern",
   "name": "Storm Lantern",
-  "description": "Tamer Gear. Lights pitch-dark places so you can walk through them.",
+  "description": "Wayfarer Gear. Lights pitch-dark places so you can walk through them.",
   "battle": false,
   "gear": true,
   "hint": "It's pitch dark ahead. A lantern would help."
@@ -74,7 +74,7 @@
  {
   "id": "spark_coil",
   "name": "Spark Coil",
-  "description": "Held. The holder gains 1 extra Energy every turn.",
+  "description": "Keepsake. The holder gains 1 extra Energy every turn.",
   "battle": false,
   "held": {
    "energy_per_turn": 1
@@ -84,7 +84,7 @@
  {
   "id": "bark_wrap",
   "name": "Bark Wrap",
-  "description": "Held. The holder recovers a little HP at the end of each turn.",
+  "description": "Keepsake. The holder recovers a little Vigor at the end of each turn.",
   "battle": false,
   "held": {
    "regen_div": 12
@@ -94,7 +94,7 @@
  {
   "id": "iron_burr",
   "name": "Iron Burr",
-  "description": "Held. Physical hits on the holder deal 15% less damage.",
+  "description": "Keepsake. Physical hits on the holder deal 15% less damage.",
   "battle": false,
   "held": {
    "phys_taken": 0.85
@@ -104,7 +104,7 @@
  {
   "id": "swift_feather",
   "name": "Wind Anklet",
-  "description": "Held. Raises the holder's SPD by 15%.",
+  "description": "Keepsake. Raises the holder's Pace by 15%.",
   "battle": false,
   "held": {
    "spd_mult": 1.15
@@ -114,7 +114,7 @@
  {
   "id": "keen_lens",
   "name": "Whetstone",
-  "description": "Held. A sharpened edge: the holder lands keen hits twice as often.",
+  "description": "Keepsake. A sharpened edge: the holder lands keen hits twice as often.",
   "battle": false,
   "held": {
    "crit_mult": 2.0
@@ -124,7 +124,7 @@
  {
   "id": "max_tonic",
   "name": "Spring Flask",
-  "description": "A flask of rest-spring water. Restores all HP.",
+  "description": "A flask of rest-spring water. Restores all Vigor.",
   "battle": true,
   "heal": 999,
   "price": 1200
@@ -156,7 +156,7 @@
  {
   "id": "power_brew",
   "name": "Power Brew",
-  "description": "Raises the active Spirling's ATK in battle.",
+  "description": "Raises the active Spirling's Might in battle.",
   "battle": true,
   "stage": {
    "atk": 1
@@ -166,7 +166,7 @@
  {
   "id": "guard_brew",
   "name": "Guard Brew",
-  "description": "Raises the active Spirling's DEF in battle.",
+  "description": "Raises the active Spirling's Guard in battle.",
   "battle": true,
   "stage": {
    "def": 1
@@ -186,7 +186,7 @@
  {
   "id": "dash_brew",
   "name": "Dash Brew",
-  "description": "Raises the active Spirling's SPD in battle.",
+  "description": "Raises the active Spirling's Pace in battle.",
   "battle": true,
   "stage": {
    "spd": 1

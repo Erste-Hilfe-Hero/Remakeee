@@ -39,7 +39,7 @@
  },
  "child": [
   "My Puddlet won't answer when I call it anymore.",
-  "Grandpa Aldo says a Tamer with a strong bond can wake it up again."
+  "Grandpa Aldo says a Wayfarer with a strong bond can wake it up again."
  ],
  "crier": {
   "lines": [
@@ -49,7 +49,7 @@
  },
  "wynn": {
   "lines": [
-   "Wynn: Every week the lake throws up three new echoes. Same ones for every Tamer in Veydal.",
+   "Wynn: Every week the lake throws up three new echoes. Same ones for every Wayfarer in Veydal.",
    "Wynn: Beat all three and I'll pay out. Once a week, mind."
   ],
   "action": "weekly"
@@ -57,7 +57,7 @@
  "ines": {
   "lines": [
    "Ines: The lighthouse keeps old Rift echoes. I can wake them for you.",
-   "Ines: Five Tamers' echoes in a row, no rest in between. They grow with you."
+   "Ines: Five Wayfarers' echoes in a row, no rest in between. They grow with you."
   ],
   "action": "gauntlet"
  },

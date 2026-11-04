@@ -260,17 +260,17 @@ static func summary(s: Spirling) -> String:
 		els.append(Elements.element_name(e))
 	var lines: PackedStringArray = [
 		"%s  (%s)" % [s.display_name(), s.data.species_name],
-		"%s   Lv %d" % ["/".join(els), s.level],
-		"HP %d/%d   XP to next %d" % [s.hp, s.max_hp(), s.xp_to_next()],
-		"ATK %d  DEF %d  FOC %d  SPD %d" % [s.atk(), s.def(), s.foc(), s.spd()],
+		"%s   Ring %d" % ["/".join(els), s.level],
+		"Vigor %d/%d   Growth to next ring %d" % [s.hp, s.max_hp(), s.xp_to_next()],
+		"MGT %d  GRD %d  FOC %d  PCE %d" % [s.atk(), s.def(), s.foc(), s.spd()],
 	]
 	var tm: Dictionary = s.temperament()
 	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
 	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
 	if not tr.is_empty():
-		lines.append("Trait: %s. %s" % [tr.label, tr.text])
+		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	if not s.held.is_empty():
-		lines.append("Holds: %s" % Database.item(s.held).get("name", s.held))
+		lines.append("Keepsake: %s" % Database.item(s.held).get("name", s.held))
 	lines.append("")
 	for mv: MoveData in s.moves:
 		var power: String = "-" if mv.power <= 0 else str(mv.power)
@@ -279,7 +279,7 @@ static func summary(s: Spirling) -> String:
 
 static func party_line(s: Spirling) -> String:
 	var tag: String = " (out)" if s.is_fainted() else ""
-	return "%s Lv%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
+	return "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
 func run_legal() -> void:

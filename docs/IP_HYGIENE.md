@@ -10,7 +10,7 @@ There is no lawyer review (Ali's decision); residual risks are listed in `docs/l
   asset names, file names, UI strings, commit messages, PR text, store text or marketing.
 - `tools/ip_check.sh` runs in CI on every push and PR and fails the build if a banned term shows up in a
   tracked file. AGENTS.md and LEGAL.md are skipped because they define the list.
-- Our own vocabulary, used everywhere: **Spirling** (creature), **Tamer** (player and NPC trainers),
+- Our own vocabulary, used everywhere: **Spirling** (creature), **Wayfarer** (player and NPC trainers),
   **Spirlog** (creature log), **Rift** and **Warden** (progression challenges), **Bonding** (recruiting),
   **rest spring** (healing spot), **storage box** (party overflow), **Energy** (move resource).
 - New creature, move and place names: check that the name is not a creature, move or place name in any
@@ -25,6 +25,26 @@ status ticks of 1/12, no element-triangle starters, no evolution at levels 16/32
 one-column list, a one-colour HP bar, the Era I ink palette, no coin loss after a wipe. German text
 uses "Technik" for moves and avoids the franchise's German battle words (checked by `tools/ip_check.sh`).
 
+### Our own words
+
+The game uses its own names for the genre's usual terms. Use these in all new text:
+
+| Instead of | English | German |
+| --- | --- | --- |
+| Level, Lv | Ring (R12, "ring limit") | Ring (R12, "Ringgrenze") |
+| XP, experience | Growth | Wachstum |
+| HP | Vigor | Kraft |
+| ATK / DEF / SPD | Might / Guard / Pace (MGT, GRD, PCE); Focus stays | Wucht / Schutz / Tempo (WUC, SCH, TMP); Fokus |
+| Ability, trait | Gift | Gabe |
+| Held item | Keepsake | Andenken |
+| Trainer, tamer | Wayfarer | Wanderer |
+| Move, attack | Art | Technik |
+| Evolution | Unfurling | Entfalten |
+
+Unfurling is our own mechanic, not a renamed one: a Spirling never changes form on its own.
+Once it is ready (ring, item or place), the Team menu offers "Unfurl", and an unfurled Spirling
+can "Furl back" into its earlier form at any time, keeping its rings, arts and Spark.
+
 ## 2. Mechanics (design-around)
 
 These follow AGENTS.md rule 2 and are enforced in code review:
@@ -33,8 +53,8 @@ These follow AGENTS.md rule 2 and are enforced in code review:
 | --- | --- |
 | Throwing or aiming an item to capture | Bonding is a menu action that starts the "Echo call" minigame (repeat a sequence; no shrinking rings or timing circles) |
 | A live capture-probability gauge | The result is shown only after the minigame ends |
-| Riding a creature to fly, surf or glide | Traversal uses Tamer Gear items on foot (grapple, climbing pick, lantern); no gliding or flying at all |
-| Throwing out a creature to summon it, flick-to-throw on touch | Spirlings step out beside the Tamer |
+| Riding a creature to fly, surf or glide | Traversal uses Wayfarer Gear items on foot (grapple, climbing pick, lantern); no gliding or flying at all |
+| Throwing out a creature to summon it, flick-to-throw on touch | Spirlings step out beside the Wayfarer |
 | Seamless overworld battles | Battles start from overworld encounters and cut to a separate battle screen |
 
 Our own numbers: the damage curve, stat curve, XP curve, element chart (Ember, Tide, Bloom, Volt, Stone,

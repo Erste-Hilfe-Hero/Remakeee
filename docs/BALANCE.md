@@ -93,4 +93,4 @@ Never picked at this level: Furnace Spiral, Bloom Burst, Cairn Crash, Salt Snap,
 
 - Every Spirling has a temperament (`Spirling.TEMPERAMENTS`) read from its uid, so it costs no RNG roll and old saves keep theirs. Five of the six give +5% to one stat (HP, ATK, DEF, FOC or SPD) with no penalty; "Even" gives nothing. It is a small lean, not a build choice, and it is shown in the team summary.
 - The Iron Oath is an opt-in challenge picked at new game. A Spirling that faints moves to the Sanctuary after the battle. If the party empties, storage steps in; if storage is empty too, the oath ends and everyone comes back, so the game can never lock.
-- Rematches: a beaten Tamer fights again once per calendar day. The team keeps its shape and is raised so its best Spirling matches the party's best level, never above the level cap and never below the first fight. Prize money is the level-based default.
+- Rematches: a beaten Wayfarer fights again once per calendar day. The team keeps its shape and is raised so its best Spirling matches the party's best level, never above the level cap and never below the first fight. Prize money is the level-based default.

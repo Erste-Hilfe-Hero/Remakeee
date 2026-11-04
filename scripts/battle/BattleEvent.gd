@@ -13,7 +13,7 @@ enum Type {
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 }
 
-const STAT_NAMES: Dictionary[String, String] = {"atk": "ATK", "def": "DEF", "foc": "FOC", "spd": "SPD"}
+const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
 
 var type: Type
 var data: Dictionary
@@ -37,7 +37,7 @@ func describe() -> String:
 				return "A hushed %s blocks your way.%s" % [data.get("foe_name", ""), shimmer]
 			if bool(data.get("boss", false)):
 				return "%s rises from the Rift!" % data.get("trainer", "")
-			return "%s calls for a duel!" % data.get("trainer", "A Tamer")
+			return "%s calls for a duel!" % data.get("trainer", "A Wayfarer")
 		Type.SEND_OUT, Type.SWAP_IN:
 			return "%s steps out!" % who
 		Type.SWAP_OUT:
@@ -51,7 +51,7 @@ func describe() -> String:
 		Type.MISSED:
 			return "%s missed!" % who
 		Type.NO_TARGET:
-			return "The move found nothing to strike."
+			return "The art found nothing to strike."
 		Type.DAMAGE:
 			var eff: float = float(data.get("eff", 1.0))
 			var tail: String = ""
@@ -63,7 +63,7 @@ func describe() -> String:
 				tail += " It barely landed..."
 			return ("%s took %d damage." % [who, data.get("amount", 0)]) + tail
 		Type.HEAL:
-			return "%s recovered %d HP." % [who, data.get("amount", 0)]
+			return "%s recovered %d Vigor." % [who, data.get("amount", 0)]
 		Type.STATUS_APPLIED:
 			return "%s is afflicted with %s!" % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_FAILED:
@@ -97,9 +97,9 @@ func describe() -> String:
 		Type.FLEE_RESULT:
 			return "You slipped away." if data.get("success", false) else "No way out!"
 		Type.XP_GAINED:
-			return "%s gained %d XP." % [who, data.get("amount", 0)]
+			return "%s gained %d growth." % [who, data.get("amount", 0)]
 		Type.LEVEL_UP:
-			return "%s reached Lv%d!" % [who, data.get("level", 0)]
+			return "%s grew ring %d!" % [who, data.get("level", 0)]
 		Type.MOVE_LEARNED:
 			return "%s picked up %s!" % [who, data.get("move", "")]
 		Type.BATTLE_END:
@@ -123,7 +123,7 @@ func describe() -> String:
 		Type.BOSS_PHASE:
 			return str(data.get("text", ""))
 		Type.TRAIT:
-			return "%s's trait, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
+			return "%s's gift, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
 		Type.REACTION:
 			return str(data.get("text", "")) % who
 	return ""

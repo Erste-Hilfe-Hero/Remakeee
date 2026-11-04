@@ -1,12 +1,12 @@
 class_name TitleScreen
 extends Control
-## Title and new-game flow: difficulty -> Tamer customisation (placeholder) -> starter.
+## Title and new-game flow: difficulty -> Wayfarer customisation (placeholder) -> starter.
 
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
 const STARTERS: Array[String] = Database.STARTERS
 const DIFFICULTY_TEXT: Array[String] = [
 	"Story (relaxed)",
-	"Tamer (normal)",
+	"Wayfarer (normal)",
 	"Veteran (caps, smart AI)",
 	"Rift-Born (no battle items)",
 ]
