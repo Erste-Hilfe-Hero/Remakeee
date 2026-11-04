@@ -186,6 +186,24 @@ func can_evolve(map_id: String = "") -> bool:
 func can_evolve_with(item_id: String) -> bool:
 	return data.evolves_to != null and not data.evolve_item.is_empty() and data.evolve_item == item_id
 
+## Unfurling (Chimora's own form change): never automatic. Once a Spirling has enough rings
+## (or stands in its special place), the player may unfurl it from the Team menu, and may
+## furl it back to its earlier form at any time. Rings, arts and Spark stay the same.
+func can_unfurl(map_id: String = "") -> bool:
+	return can_evolve(map_id)
+
+## The earlier form this one can furl back into, or null.
+func earlier_form() -> SpirlingData:
+	return Database.earlier_form(data)
+
+func furl_back() -> void:
+	var prev: SpirlingData = earlier_form()
+	if prev == null:
+		return
+	var frac: float = hp_fraction()
+	data = prev
+	hp = maxi(1, int(round(frac * max_hp()))) if hp > 0 else 0
+
 ## Evolves in place (new species, same Spark, level, moves and HP fraction).
 func evolve() -> void:
 	if data.evolves_to == null:

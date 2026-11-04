@@ -123,7 +123,15 @@ func run_team() -> void:
 		if idx < 0:
 			return
 		var s: Spirling = GameState.party[idx]
-		var opt: int = await pick_strings(s.display_name(), ["Summary", "Lead the team", "Move to slot...", "Use item", "Held item"] as Array[String])
+		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake"]
+		if s.can_unfurl(current_map):
+			opts.append("Unfurl")
+		if s.earlier_form() != null:
+			opts.append("Furl back")
+		var opt: int = await pick_strings(s.display_name(), opts)
+		if opt >= 5:
+			await _unfurl(s, opts[opt] == "Unfurl")
+			continue
 		match opt:
 			0: await info(MenuHost.summary(s))
 			1: GameState.swap_party(0, idx)
@@ -137,7 +145,24 @@ func run_team() -> void:
 			3: await _use_item_on(s)
 			4: await _held_item(s)
 
-## Give, swap or take off a held item.
+## Unfurl into the next form or furl back into the earlier one. Both can be undone later.
+func _unfurl(s: Spirling, forward: bool) -> void:
+	var old_name: String = s.display_name()
+	var target: SpirlingData = s.data.evolves_to if forward else s.earlier_form()
+	if target == null:
+		return
+	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
+	if not await confirm(q):
+		return
+	if forward:
+		s.evolve()
+		GameState.mark_seen(s.data.species_name, true)
+	else:
+		s.furl_back()
+	Sound.sfx("level_up")
+	await info(("%s unfurls into %s!" if forward else "%s furls back into %s.") % [old_name, s.data.species_name])
+
+## Give, swap or take off a keepsake.
 func _held_item(s: Spirling) -> void:
 	var ids: Array[String] = []
 	var entries: Array[String] = []
@@ -149,7 +174,7 @@ func _held_item(s: Spirling) -> void:
 			ids.append(str(id))
 			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
 	if ids.is_empty():
-		await info("You have nothing a Spirling can hold.\nHeld items are sold in Thornridge.")
+		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
 		return
 	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
 	var idx: int = await pick_strings(now, entries)

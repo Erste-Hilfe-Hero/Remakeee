@@ -489,7 +489,7 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		var old_name: String = s.display_name()
 		s.evolve()
 		mark_seen(s.data.species_name, true)
-		msg = "%s glows with Rift light... and grew into %s!" % [old_name, s.data.species_name]
+		msg = "%s unfurls into %s!" % [old_name, s.data.species_name]
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""

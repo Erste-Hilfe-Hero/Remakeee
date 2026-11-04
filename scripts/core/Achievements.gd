@@ -11,7 +11,7 @@ const LIST: Array[Dictionary] = [
 	{"id": "bonded_10", "title": "Kindred", "text": "Bond with 10 kinds of Spirling."},
 	{"id": "seen_all", "title": "Complete Spirlog", "text": "See every kind of Spirling in Veydal."},
 	{"id": "level_30", "title": "Seasoned", "text": "Raise a Spirling to Lv30."},
-	{"id": "evolved", "title": "Growing Up", "text": "See a Spirling grow into its next form."},
+	{"id": "evolved", "title": "Growing Up", "text": "See a Spirling unfurl into its next form."},
 	{"id": "first_rift", "title": "Mender", "text": "Mend your first Rift."},
 	{"id": "both_rifts", "title": "Quiet Valley", "text": "Mend both Rifts of Veydal."},
 	{"id": "lamps", "title": "Lamplighter", "text": "Solve the lamp puzzle in Murk Hollow."},

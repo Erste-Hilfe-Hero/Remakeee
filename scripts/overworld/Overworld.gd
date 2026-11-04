@@ -911,10 +911,10 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if not oath.is_empty():
 		await _fade_to(0.0)
 		await say(oath)
+	# Unfurling is never automatic: the first time a Spirling could unfurl, say so once.
 	for s: Spirling in GameState.party:
-		if s.can_evolve(map.id) and not s.is_fainted():
-			var old_name: String = s.display_name()
+		var hint: String = "unfurl_hint_%s_%s" % [s.uid, s.data.species_name]
+		if s.can_unfurl(map.id) and not s.is_fainted() and not GameState.has_flag(hint):
+			GameState.set_flag(hint)
 			await _fade_to(0.0)
-			s.evolve()
-			await say(["%s glows with Rift light..." % old_name, "%s grew into %s!" % [old_name, s.data.species_name]] as Array[String])
-			GameState.mark_seen(s.data.species_name, true)
+			await say(["%s feels ready to unfurl. You can choose it in the Team menu, now or later." % s.display_name()] as Array[String])
