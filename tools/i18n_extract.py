@@ -9,7 +9,7 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online"]
-SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
+SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
 def looks_like_text(s):
