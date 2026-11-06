@@ -2145,6 +2145,11 @@ func challenge(n: NPC, spotted: bool) -> void:
 		busy = false
 		player.frozen = false
 		return
+	if def.has("warden") and not await warden_card(def, team, "Face the Warden now?"):
+		busy = false
+		player.frozen = false
+		VirtualPad.set_wanted(true)
+		return
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
 	info["goal_key"] = BattleGoals.key(map.id, n.npc_id)
 	# Helper call (item 46): after losing to a Warden once, a friend's echo can fight beside you.
@@ -2276,6 +2281,16 @@ func offer_trials(n: NPC) -> bool:
 	await say([Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")])
 	return true
 
+## The card before a Warden battle (item 687): rule, team size and elements, then [param question].
+## "Not yet" leaves the player free to change their team first. Returns true to fight.
+func warden_card(def: Dictionary, team: Array[Spirling], question: String) -> bool:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	await menu.info(WardenCard.text(def, team, GameState.difficulty), WardenCard.picture(team))
+	var go: bool = await menu.confirm(question, "Fight", "Not yet")
+	menu.queue_free()
+	return go
+
 ## A Warden's Second Trial (items 682-684): offered once both Rifts are mended, until it is won.
 ## Returns false if there is none or the player declines.
 func offer_second_trial(n: NPC) -> bool:
@@ -2285,19 +2300,16 @@ func offer_second_trial(n: NPC) -> bool:
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
-	var menu := MenuHost.new()
-	_ui.add_child(menu)
 	var who: String = str(base.get("trainer", base.get("id", "")))
-	var go: bool = await menu.confirm(Loc.t("%s offers the Second Trial: two rules at once, a full team. Battle?") % who)
-	menu.queue_free()
+	var def: Dictionary = TrainerData.second_trial_def(base, map.id)
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
+	var go: bool = await warden_card(def, team, Loc.t("%s offers the Second Trial: two rules at once, a full team. Battle?") % who)
 	if not go:
 		VirtualPad.set_wanted(true)
 		player.frozen = false
 		busy = false
 		return true
-	var def: Dictionary = TrainerData.second_trial_def(base, map.id)
 	SaveManager.save_game()
-	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	busy = true
