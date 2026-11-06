@@ -72,7 +72,6 @@ T.update({
 "Mossling at half Vigor against Kindlop. Win within 5 turns.": "Mossling mit halber Kraft gegen Kindlop. Gewinne in höchstens 5 Runden.",
 "Zippit starts with 4 Energy against a soaked Riptail. Win within 3 turns through the Volt reaction.": "Zippit startet mit 4 Energie gegen ein durchnässtes Riptail. Gewinne in höchstens 3 Runden über die Volt-Reaktion.",
 "Zephlet starts with 2 Energy against Puddlet in the high tide. Win, resting exactly once.": "Zephlet startet mit 2 Energie gegen Puddlet in der Hochflut. Gewinne und raste dabei genau einmal.",
-"Kelpup against Riptail, tide against tide. Win within 4 turns.": "Kelpup gegen Riptail, Flut gegen Flut. Gewinne in höchstens 4 Runden.",
 })
 
 # Plan area 2, items 755-757: bonus goals.
@@ -235,4 +234,10 @@ T.update({
 "Elements: %s": "Elemente: %s",
 "Face the Warden now?": "Jetzt gegen den Wächter antreten?",
 "Fight": "Kämpfen",
+})
+
+# Plan area 2, items 704, 706: the tag Trial and lanterns.
+T.update({
+"Riptail and Kestra's Zephlet against Zippit and Kelpup. Win without losing a Spirling.": "Riptail und Kestras Zephlet gegen Zippit und Kelpup. Gewinne, ohne einen Spirling zu verlieren.",
+"Lanterns %d/%d": "Laternen %d/%d",
 })

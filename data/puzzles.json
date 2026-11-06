@@ -11,7 +11,8 @@
   "seed": 698,
   "ai": 2,
   "goal": {"type": "win_within", "value": 4},
-  "max_turns": 4
+  "max_turns": 4,
+  "best_turns": 3
  },
  {
   "id": "ember_trial_2",
@@ -25,7 +26,8 @@
   "seed": 701,
   "ai": 2,
   "goal": [{"type": "keep_status", "value": "scorch"}],
-  "max_turns": 6
+  "max_turns": 6,
+  "best_turns": 4
  },
  {
   "id": "ember_trial_3",
@@ -39,7 +41,8 @@
   "seed": 702,
   "ai": 2,
   "goal": {"type": "win_within", "value": 5},
-  "max_turns": 5
+  "max_turns": 5,
+  "best_turns": 3
  },
  {
   "id": "current_trial_1",
@@ -53,7 +56,8 @@
   "seed": 699,
   "ai": 2,
   "goal": {"type": "win_within", "value": 3, "reaction": "VOLT"},
-  "max_turns": 3
+  "max_turns": 3,
+  "best_turns": 3
  },
  {
   "id": "current_trial_2",
@@ -67,20 +71,24 @@
   "seed": 703,
   "ai": 2,
   "goal": [{"type": "win_within", "value": 5}, {"type": "exact_rests", "value": 1}],
-  "max_turns": 5
+  "max_turns": 5,
+  "best_turns": 4
  },
  {
   "id": "current_trial_3",
   "warden": "tide",
   "name": "Current Trial 3",
-  "text": "Kelpup against Riptail, tide against tide. Win within 4 turns.",
-  "player": [{"species": "Kelpup", "level": 16, "moves": ["Kelp Lash", "Chill Mist", "Drench", "Lichen Lash"]}],
-  "foe": [{"species": "Riptail", "level": 17, "moves": ["Rip Current", "Undertow", "Spout Jab", "Tide Call"]}],
+  "text": "Riptail and Kestra's Zephlet against Zippit and Kelpup. Win without losing a Spirling.",
+  "player": [{"species": "Riptail", "level": 17, "moves": ["Rip Current", "Undertow", "Spout Jab", "Tide Call"]}],
+  "partner": {"name": "Cartographer Kestra", "team": [{"species": "Zephlet", "level": 16, "moves": ["Kite Cut", "Draft Needle", "Crosswind", "Drift Step"]}], "front": 1, "ai": 2},
+  "foe": [{"species": "Zippit", "level": 16, "moves": ["Crackle Bite", "Siphon Spark", "Charged Mist"], "hp": 0.6}, {"species": "Kelpup", "level": 16, "moves": ["Kelp Lash", "Chill Mist", "Drench", "Lichen Lash"], "hp": 0.7}],
+  "front": [1, 2],
   "field": "",
-  "rule": "undertow",
-  "seed": 705,
+  "rule": "",
+  "seed": 704,
   "ai": 2,
-  "goal": {"type": "win_within", "value": 4},
-  "max_turns": 4
+  "goal": {"type": "no_faint"},
+  "max_turns": 4,
+  "best_turns": 3
  }
 ]
