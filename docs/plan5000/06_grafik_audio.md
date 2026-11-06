@@ -160,11 +160,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2367. [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
 2368. [x] [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
 2369. [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
-2370. [P2] Heil-Techniken (HealSelfEffect) zeigen aufsteigende Punkte in Elementform am Anwender, keine Einschlags-Phase.
-2371. [P2] Kraft-Entzug (DrainEffect) zeigt 4 Partikel, die vom Ziel zum Anwender zurückwandern, in der Elementform.
-2372. [P2] Energie-Entzug (EnergyDrainEffect) zeigt 3 kleine Rauten, die vom Ziel abgezogen werden und sich auflösen.
-2373. [P2] Rückstoß (RecoilEffect) zeigt am Anwender einen kleinen Einschlag in halber Größe nach dem eigentlichen Treffer.
-2374. [P2] Feld-Techniken (SetFieldEffect) zeigen eine Welle der Elementform, die einmal von links nach rechts über den ganzen Kampfbildschirm läuft.
+2370. [x] [P2] Heil-Techniken (HealSelfEffect) zeigen aufsteigende Punkte in Elementform am Anwender, keine Einschlags-Phase.
+2371. [x] [P2] Kraft-Entzug (DrainEffect) zeigt 4 Partikel, die vom Ziel zum Anwender zurückwandern, in der Elementform.
+2372. [x] [P2] Energie-Entzug (EnergyDrainEffect) zeigt 3 kleine Rauten, die vom Ziel abgezogen werden und sich auflösen.
+2373. [x] [P2] Rückstoß (RecoilEffect) zeigt am Anwender einen kleinen Einschlag in halber Größe nach dem eigentlichen Treffer.
+2374. [x] [P2] Feld-Techniken (SetFieldEffect) zeigen eine Welle der Elementform, die einmal von links nach rechts über den ganzen Kampfbildschirm läuft.
 2375. [x] [P2] Bei verfehlten Techniken läuft der Weg am Ziel vorbei aus dem Bild und es gibt keinen Einschlag.
 2376. [x] [P2] Bei sehr wirksamen Treffern ist der Einschlag 1,5-mal so groß, bei schwach wirksamen nur halb so groß, ohne zusätzliche Texte.
 2377. [P2] Effekte zeichnen nur mit den 4 Paletten-Farben aus EraManager.INK_PALETTE; ein GUT-Test zeichnet jeden Effekt in ein Bild und prüft die Farben.

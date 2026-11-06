@@ -48,7 +48,7 @@ func _init(week_key: String, cap_level: int) -> void:
 	var fields: Array = BattleRules.FIELDS.keys()
 	fields.sort()
 	field = str(fields[rng.randi_range(0, fields.size() - 1)])
-	var rules: Array = BattleRules.RULES.keys()
+	var rules: Array = BattleRules.RULES.keys().filter(func(r: String) -> bool: return not bool(BattleRules.RULES[r].get("warden_only", false)))
 	rules.sort()
 	rule = str(rules[rng.randi_range(0, rules.size() - 1)])
 	level = clampi(cap_level, 8, Spirling.MAX_LEVEL)

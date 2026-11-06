@@ -455,7 +455,7 @@ func run_team() -> void:
 		for i: int in GameState.party.size():
 			rows.append(MenuHost.party_entry(GameState.party[i], i == 0))
 		# Free slots up to the limit show how much room is left (item 1898).
-		for i: int in range(GameState.party.size(), GameState.MAX_PARTY):
+		for i: int in range(GameState.party.size(), GameState.party_max()):
 			rows.append(free_slot_row())
 		var idx: int = await pick("Team", rows)
 		if idx < 0 or idx >= GameState.party.size():

@@ -6,7 +6,7 @@ extends Control
 ## Shapes are the 8x8 Era I images from tools/art/gen_fx.py; everything snaps to whole pixels.
 ## No screen flashes: the brightest effect (Lumen) stays at 60 % and fades in 0.2 s.
 
-enum Phase { NONE, CHARGE, TRAVEL, IMPACT }
+enum Phase { NONE, CHARGE, TRAVEL, IMPACT, AFTER }
 
 ## Seconds per phase at 1x (item 2358); divided by the battle speed.
 const CHARGE_TIME: float = 0.15
@@ -35,6 +35,15 @@ var impact_size: float = 1.0
 var missed: bool = false
 ## Particle count factor from the art's power (item 2368): 1, 1.5 or 2.
 var amount: float = 1.0
+## What follows the hit (items 2370 to 2374): "" none, "heal" rising motes at the user
+## instead of an impact, "drain" four motes back to the user, "energy_drain" three
+## diamonds pulled off the target, "recoil" a half-size impact at the user, "field" a wave
+## across the whole battle field.
+var after: String = ""
+const AFTER_TIME: float = 0.2
+const AFTERS: Array[String] = ["heal", "drain", "energy_drain", "recoil", "field"]
+## The 8x8 shape that stands for each element (heal motes, drain motes, field wave).
+const ELEMENT_SHAPES: Array[String] = ["spark", "drop", "leaf", "zag", "rock", "streak", "glint", "shade"]
 var _rng := RandomNumberGenerator.new()
 static var _tex: Dictionary[String, Texture2D] = {}
 ## Phases played by the last play() call (tests).
@@ -55,15 +64,35 @@ static func shape(name: String, shade: int) -> Texture2D:
 	return _tex[key]
 
 ## Phases an art of [param kind] plays (physical arts have no travel phase). A miss has no
-## impact: a ranged art flies on past the target instead.
-static func phases_for(kind: int, reduced: bool, miss: bool = false) -> Array[Phase]:
+## impact: a ranged art flies on past the target instead. [param p_after] adds the AFTER
+## phase; a heal shows it in place of travel and impact.
+static func phases_for(kind: int, reduced: bool, miss: bool = false, p_after: String = "") -> Array[Phase]:
+	var out: Array[Phase] = []
+	if p_after == "heal":
+		out.assign([Phase.AFTER] if reduced else [Phase.CHARGE, Phase.AFTER])
+		return out
 	if reduced:
-		return [] as Array[Phase] if miss else [Phase.IMPACT] as Array[Phase]
-	if kind == MoveData.Kind.PHYSICAL:
-		return [Phase.CHARGE] as Array[Phase] if miss else [Phase.CHARGE, Phase.IMPACT] as Array[Phase]
-	if miss:
-		return [Phase.CHARGE, Phase.TRAVEL]
-	return [Phase.CHARGE, Phase.TRAVEL, Phase.IMPACT]
+		if not miss:
+			out.append(Phase.IMPACT)
+		return out
+	out.append(Phase.CHARGE)
+	if kind != MoveData.Kind.PHYSICAL:
+		out.append(Phase.TRAVEL)
+	if not miss:
+		out.append(Phase.IMPACT)
+		if not p_after.is_empty():
+			out.append(Phase.AFTER)
+	return out
+
+## What an art shows after its hit, from its effects (items 2370 to 2374).
+static func after_for(mv: MoveData) -> String:
+	if mv == null:
+		return ""
+	for pair: Array in [[&"set_field", "field"], [&"heal_self", "heal"], [&"drain", "drain"],
+			[&"energy_drain", "energy_drain"], [&"recoil", "recoil"]]:
+		if mv.has_effect(pair[0]):
+			return pair[1]
+	return ""
 
 ## Particle factor for an art of [param power]: up to 50 normal, up to 90 half again, above
 ## that twice as many (item 2368).
@@ -96,12 +125,14 @@ static func phase_time(p: Phase, reduced: bool) -> float:
 	match p:
 		Phase.CHARGE: return CHARGE_TIME
 		Phase.TRAVEL: return TRAVEL_TIME
+		Phase.AFTER: return AFTER_TIME
 	return IMPACT_TIME
 
 ## Plays the effect from [param from] (user) to [param to] (target), both in this node's space.
-func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false, p_impact_size: float = 1.0, p_amount: float = 1.0) -> void:
+func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false, p_impact_size: float = 1.0, p_amount: float = 1.0, p_after: String = "") -> void:
 	element = p_element
 	amount = p_amount
+	after = "" if miss and p_after != "heal" else p_after
 	missed = miss
 	impact_size = p_impact_size
 	_from = from.get_center().round()
@@ -115,7 +146,7 @@ func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false,
 	played.clear()
 	var reduced: bool = Juice.reduced()
 	var home: Vector2 = user_sprite.position if user_sprite != null else Vector2.ZERO
-	for p: Phase in phases_for(kind, reduced, miss):
+	for p: Phase in phases_for(kind, reduced, miss, after):
 		played.append(p)
 		phase = p
 		t = 0.0
@@ -169,9 +200,15 @@ func _line(a: Vector2, b: Vector2, k: int, alpha: float = 1.0) -> void:
 func _draw() -> void:
 	if phase == Phase.NONE:
 		return
+	if phase == Phase.AFTER:
+		_draw_after()
+		return
 	if phase == Phase.IMPACT and impact_size != 1.0:
 		# Scale the whole impact around the target's centre.
 		draw_set_transform(_to * (1.0 - impact_size), 0.0, Vector2.ONE * impact_size)
+	_draw_element()
+
+func _draw_element() -> void:
 	match element:
 		Elements.E.EMBER: _draw_ember()
 		Elements.E.TIDE: _draw_tide()
@@ -181,6 +218,51 @@ func _draw() -> void:
 		Elements.E.GALE: _draw_gale()
 		Elements.E.LUMEN: _draw_lumen()
 		Elements.E.UMBRA: _draw_umbra()
+
+func _element_shape() -> String:
+	return ELEMENT_SHAPES[clampi(element, 0, ELEMENT_SHAPES.size() - 1)]
+
+## The AFTER phase (items 2370 to 2374).
+func _draw_after() -> void:
+	var s: String = _element_shape()
+	match after:
+		"heal":
+			# Motes in the element's shape rise from the user's feet; no impact.
+			var motes: int = _n(4)
+			for i: int in motes:
+				var rise: float = t * (14.0 + (i % 2) * 6.0)
+				_shape(s, _ground_from + Vector2(_spread(i, motes, 6.0), -4.0 - rise), 2, 1.0 - t * 0.6)
+		"drain":
+			# Four motes wander from the target back to the user.
+			for i: int in 4:
+				var k: float = clampf(t * 1.3 - i * 0.1, 0.0, 1.0)
+				_shape(s, _to.lerp(_from, k) + Vector2(0, -6.0 * sin(k * PI) + (i - 1.5) * 3.0), 1)
+		"energy_drain":
+			# Three small diamonds are pulled up off the target and dissolve.
+			for i: int in 3:
+				var c: Vector2 = _to + Vector2((i - 1) * 7.0, -6.0 - t * 12.0)
+				var r: int = maxi(0, 3 - int(t * 4.0))
+				for d: int in r + 1:
+					for p: Vector2 in [Vector2(d - r, -d), Vector2(r - d, -d), Vector2(d - r, d), Vector2(r - d, d)]:
+						_px(c + p, 2, 1.0 - t * 0.7)
+		"recoil":
+			# A half-size impact of the same element at the user.
+			var keep_to: Vector2 = _to
+			var keep_phase: Phase = phase
+			_to = _from
+			phase = Phase.IMPACT
+			draw_set_transform(_from * 0.5, 0.0, Vector2.ONE * 0.5)
+			_draw_element()
+			draw_set_transform(Vector2.ZERO)
+			_to = keep_to
+			phase = keep_phase
+		"field":
+			# A wave of the element's shape runs once from left to right over the field.
+			var x: float = lerpf(-8.0, size.x + 8.0, t)
+			var rows: int = maxi(3, int(size.y / 12.0))
+			for i: int in rows:
+				var y: float = (i + 0.5) * size.y / rows
+				_shape(s, Vector2(x + roundf(3.0 * sin(i * 1.7)), y), 1, 0.8)
 
 ## Ember: three sparks circle the user; a spark hops in a flat arc; five embers rise.
 func _draw_ember() -> void:
