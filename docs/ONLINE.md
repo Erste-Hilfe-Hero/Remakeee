@@ -63,6 +63,8 @@ All under Menu, Friends. Spirlings are never traded or gifted, and there is no f
 | Battle referee: checks an uploaded battle (shared by server and game) | `scripts/battle/BattleReferee.gd` |
 | Battle referee service (container, loop, runner) | `server/referee/` |
 | End-to-end referee test (local Postgres + Godot) | `tools/online/test_referee.sh` |
+| League rules (fair rows, learnable moves, tiers) and Glicko-2 | `scripts/online/LeagueRules.gd`, `scripts/online/Glicko.gd` |
+| Species and learnsets for the database (`game_species`) | `tools/online/game_data_sql.py` |
 
 Security model: every table has row level security on and no policies, and players have no table rights. The
 game only calls the `security definer` functions, which check `auth.uid()` and every rule themselves.
@@ -88,6 +90,27 @@ the repository root (`server/referee/Dockerfile`, compose profile `referee`), so
 sit next to `server/` (`/opt/chimora/project.godot`); otherwise it says so and the rest runs as before.
 Look at it with `docker compose --profile referee logs referee`. The limit per player is
 `server_config.battle_submit_limit` (60 an hour).
+
+### Leagues
+
+There are two leagues with separate tables: `league_fair_entries` (the fair league, the default) and
+`league_open_entries` (the open league, every advantage allowed). `league_join(league, pick)` takes only
+species names and move choices; the server rebuilds the team from the stored team (`_league_team`). In the
+fair league every Spirling fights at `league_fair_ring` (50) with base stats only (no spark, even temper)
+and only moves it can learn by Ring 50, its own or from earlier forms, checked against `game_species`.
+`game_species` is filled from `data/spirlings.json` by `tools/online/game_data_sql.py` (`setup.sh` does it
+when `../data` exists). The open league keeps the real team and Ring. The joined team is frozen as its
+own row, so a later save change does not touch it.
+
+`league_find(league, waited)` looks for an opponent within 100 rating points, widening by 50 every
+10 seconds up to 400 (`league_search_*`); blocked players never meet. The server picks the seed and both
+teams (the opponent is an echo played by the AI) and stores them in `league_matches`. `battle_submit`
+for `league_fair` / `league_open` ignores the client's teams and seed and lets the referee replay the
+server's battle with the uploaded inputs. Only an `ok` from the referee rates the player (Glicko-2 in
+`_league_rate`, start 1500 / 350 / 0.06); players see tiers (Spark, Ember, Flame, Glow, Beacon, each I to
+III), not numbers. A season (`league_seasons`) lasts `league_season_days` (42); in the last
+`league_closing_minutes` (30) nothing is rated, `paused` stops joining, and the next season starts by itself.
+Both leagues can be switched off with the flags `league_fair` and `league_open`.
 
 Builds without a server address use `LocalBackend`, a test server that lives on the phone. The account menu
 then says "test server on this phone". The debug APK from CI works like this until the secrets below exist.

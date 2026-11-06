@@ -1,6 +1,7 @@
 {
  "name": "Brindlewick Lighthouse",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "field",
  "rows": [
   "WWWWWWWWWW",

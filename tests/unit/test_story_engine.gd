@@ -135,3 +135,33 @@ func test_scene_moves_spawned_figure() -> void:
 	assert_eq(ow.player.facing, "left")
 	assert_eq(ow.player.cell, start)
 	sp.queue_free()
+
+func test_act1_scenes_play_through_when_skipped() -> void:
+	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
+	add_child_autofree(ow)
+	await wait_frames(2)
+	for id: String in ["prologue", "mirela_lamp"]:
+		var sp := ScenePlayer.new()
+		sp.overworld = ow
+		ow.add_child(sp)
+		sp.skipping = true
+		await sp.play(id)
+		sp.queue_free()
+	assert_true(GameState.has_flag("ferry_corvane_open"), "the nested finale scene ran")
+	assert_eq(GameState.item_count("max_tonic"), 2)
+	assert_true(GameState.has_flag("scene_prologue_seen"))
+
+func test_warp_to_unbuilt_map_stops_the_scene() -> void:
+	var ow: Overworld = load("res://scenes/overworld/Overworld.tscn").instantiate()
+	add_child_autofree(ow)
+	await wait_frames(2)
+	ow.text_box().auto_advance = true
+	var sp := ScenePlayer.new()
+	sp.overworld = ow
+	ow.add_child(sp)
+	var before: String = ow.map.id
+	await sp.play("t", {"skippable": false, "steps": [{"action": "warp no_such_map 1 1"}, {"flag": "after_warp"}]})
+	assert_false(GameState.has_flag("after_warp"))
+	assert_false(GameState.has_flag("scene_t_seen"))
+	assert_eq(ow.map.id, before)
+	sp.queue_free()
