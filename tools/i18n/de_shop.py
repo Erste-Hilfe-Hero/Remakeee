@@ -526,8 +526,18 @@ T = {
 	"Dieses Angebot kommt später auf der Reise.",
 "The price has changed. Please look again.":
 	"Der Preis hat sich geändert. Schau bitte noch einmal.",
-"That did not work. Nothing was charged twice: open purchases are checked again by themselves.":
-	"Das hat nicht geklappt. Nichts wurde doppelt berechnet: Offene Käufe werden von selbst noch einmal geprüft.",
+"Something unexpected happened. Nothing was charged twice: open purchases are checked again by themselves.":
+	"Etwas Unerwartetes ist passiert. Nichts wurde doppelt berechnet: Offene Käufe werden von selbst noch einmal geprüft.",
+"The store did not answer. Nothing was charged twice: open purchases are checked again by themselves.":
+	"Der Store hat nicht geantwortet. Nichts wurde doppelt berechnet: Offene Käufe werden von selbst noch einmal geprüft.",
+"The purchase waits for approval. It arrives by itself once it is paid.":
+	"Kauf wartet auf Freigabe. Er kommt von selbst, sobald er bezahlt ist.",
+"You bought this before. It is being checked and arrives by itself.":
+	"Das hast du schon gekauft. Es wird geprüft und kommt von selbst.",
+"The payment was declined. Nothing was charged.":
+	"Die Zahlung wurde abgelehnt. Es wurde nichts berechnet.",
+"A purchase is still running. Please wait a moment.":
+	"Ein Kauf läuft noch. Warte bitte einen Moment.",
 "No purchases yet.":
 	"Noch keine Käufe.",
 "(refunded)":

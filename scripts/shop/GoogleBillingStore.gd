@@ -10,6 +10,8 @@ const SINGLETON: String = "ChimoraBilling"
 const OK: int = 0
 const USER_CANCELED: int = 1
 const ITEM_ALREADY_OWNED: int = 7
+## Other BillingResponseCode values and the shop's own words for them (item 4103).
+const CODE_ERRORS: Dictionary = {-1: "offline", 2: "offline", 12: "offline", 3: "no_store", 4: "not_available"}
 ## Purchase.PurchaseState.PURCHASED (PENDING is 2: paid later in a shop, nothing is credited yet).
 const PURCHASED: int = 1
 
@@ -85,7 +87,7 @@ func purchase(product_id: String, _account_token: String, account_hash: String) 
 		# Bought before but not finished: Billing.resume_pending() sends it to the server.
 		return {"ok": false, "cancelled": false, "error": "already_owned"}
 	if code != OK:
-		return {"ok": false, "cancelled": false, "error": "store_error"}
+		return {"ok": false, "cancelled": false, "error": str(CODE_ERRORS.get(code, "store_error"))}
 	for p: Variant in d.get("purchases", []):
 		if p is Dictionary and product_id in (p.get("products", []) as Array):
 			if int(p.get("state", 0)) != PURCHASED:

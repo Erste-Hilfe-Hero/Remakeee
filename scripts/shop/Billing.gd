@@ -22,6 +22,7 @@ var state: Dictionary = {}
 ## Store price texts by product id.
 var prices: Dictionary = {}
 var last_error: String = ""
+var _buying: bool = false
 
 func _ready() -> void:
 	store = make_store()
@@ -153,6 +154,18 @@ func buy_with_riftglass(o: Dictionary, choice: Variant = null) -> Dictionary:
 
 ## Buys [param o] directly in the store, then lets the server check and credit the receipt.
 func buy_in_store(o: Dictionary, choice: Variant = null) -> Dictionary:
+	# A second tap while a purchase runs starts nothing (item 4106).
+	if _buying:
+		return {"ok": false, "error": "busy"}
+	_buying = true
+	var r: Dictionary = await _buy_in_store(o, choice)
+	_buying = false
+	return r
+
+func busy() -> bool:
+	return _buying
+
+func _buy_in_store(o: Dictionary, choice: Variant) -> Dictionary:
 	await refresh_state()
 	var why: String = block_reason(o, false)
 	if not why.is_empty():
@@ -161,7 +174,11 @@ func buy_in_store(o: Dictionary, choice: Variant = null) -> Dictionary:
 	var p: Dictionary = await store.purchase(str(o.product_id), str(state.get("account_token", "")), str(state.get("account_hash", "")))
 	if not bool(p.get("ok", false)):
 		_set_step(Step.CANCELLED if bool(p.get("cancelled", false)) else Step.FAILED)
-		return {"ok": false, "error": "cancelled" if bool(p.get("cancelled", false)) else str(p.get("error", "store_error"))}
+		var err: String = "cancelled" if bool(p.get("cancelled", false)) else str(p.get("error", "store_error"))
+		if err == "already_owned":
+			# Paid before but never credited: send it to the server now.
+			await resume_pending()
+		return {"ok": false, "error": err}
 	var r: Dictionary = await _verify(p.receipt, choice)
 	if r.get("ok", false):
 		await claim()
