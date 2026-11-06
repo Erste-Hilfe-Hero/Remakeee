@@ -88,6 +88,9 @@ var heal_cell: Vector2i = Vector2i(4, 4)
 var flags: Dictionary = {}
 ## Rest spots the player has used: map id -> [x, y] (fast travel between them).
 var visited_rests: Dictionary = {}
+## Outdoor maps entered: map id -> [x, y] of the last entry. The shop's Signpost (plan items 4836,
+## 4837) lets fast travel reach all of them, not only rest spots.
+var visited_maps: Dictionary = {}
 ## Survey (area 3 item 1245): map id -> PackedByteArray, one bit per cell seen (Survey.gd).
 var map_cells: Dictionary = {}
 ## Own world map marks (item 1273): [{"map", "x", "y", "icon"}], at most Survey.MAX_MARKS.
@@ -422,6 +425,7 @@ func reset() -> void:
 	heal_cell = Vector2i(4, 4)
 	flags = {}
 	visited_rests = {}
+	visited_maps = {}
 	map_cells = {}
 	map_marks = []
 	records = endgame_defaults({})
@@ -509,6 +513,7 @@ func to_dict() -> Dictionary:
 		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
 		"rests": visited_rests.duplicate(true),
+		"maps_entered": visited_maps.duplicate(true),
 		"map_cells": Survey.cells_to_save(map_cells),
 		"map_marks": map_marks.duplicate(true),
 		"records": records.duplicate(true),
@@ -575,6 +580,7 @@ func from_dict(d: Dictionary) -> void:
 			known_matchups[str(k)] = float(mu[k])
 	play_time = float(d.get("play_time", 0.0))
 	visited_rests = _as_dict(d.get("rests", {}))
+	visited_maps = _as_dict(d.get("maps_entered", {}))
 	map_cells = Survey.cells_from_save(d.get("map_cells", {}))
 	map_marks = Survey.marks_from_save(d.get("map_marks", []))
 	# Saves from before fast travel: the last rest spot used still counts as visited.
@@ -944,12 +950,29 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 func visit_rest(map_id: String, cell: Vector2i) -> void:
 	visited_rests[map_id] = [cell.x, cell.y]
 
+## Remembers where the player came into outdoor map [param map_id] (Signpost targets).
+func enter_map(map_id: String, cell: Vector2i) -> void:
+	visited_maps[map_id] = [cell.x, cell.y]
+
+## Where fast travel to [param map_id] lands: its rest spot, else (with the Signpost) the last
+## entry. Empty when it is no target.
+func travel_cell(map_id: String) -> Array:
+	if visited_rests.has(map_id):
+		return visited_rests[map_id]
+	if Billing.unlocked("fast_travel") > 0 and visited_maps.has(map_id):
+		return visited_maps[map_id]
+	return []
+
 ## Rest spots other than the one on [param here] (fast travel targets), sorted by map id.
 func travel_targets(here: String) -> Array[String]:
 	var out: Array[String] = []
 	for k: Variant in visited_rests:
 		if str(k) != here:
 			out.append(str(k))
+	if Billing.unlocked("fast_travel") > 0:
+		for k: Variant in visited_maps:
+			if str(k) != here and not out.has(str(k)):
+				out.append(str(k))
 	out.sort()
 	return out
 

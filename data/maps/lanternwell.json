@@ -171,6 +171,7 @@
     ],
     "flag": "beam_room_2"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "blocks": [
     {
      "x": 5,
@@ -298,6 +299,7 @@
     ],
     "flag": "beam_room_3"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "blocks": [
     {
      "x": 5,
@@ -425,6 +427,7 @@
     ],
     "flag": "beam_room_4"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "blocks": [
     {
      "x": 5,
@@ -556,6 +559,7 @@
     ],
     "flag": "beam_room_5"
    },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
    "secrets": [
     {
      "x": 1,
@@ -589,5 +593,6 @@
    5
   ],
   "flag": "beam_room_1"
- }
+ },
+ "goal": "Goal: turn the mirrors so the light reaches the crystal."
 }

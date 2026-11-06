@@ -428,3 +428,21 @@ func test_shop_moves_are_not_in_any_learnset() -> void:
 	for sp: SpirlingData in Database.spirlings.values():
 		for mv: MoveData in sp.learnset_moves:
 			assert_false(mv.move_name.contains("glass "), "%s learns %s" % [sp.species_name, mv.move_name])
+
+func test_signpost_reaches_every_outdoor_map_entered() -> void:
+	var rests: Dictionary = GameState.visited_rests.duplicate(true)
+	var maps: Dictionary = GameState.visited_maps.duplicate(true)
+	GameState.visited_rests = {"town": [1, 2]}
+	GameState.visited_maps = {}
+	GameState.enter_map("meadow", Vector2i(3, 4))
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.travel_targets("town"), [] as Array[String], "without the Signpost only rest spots")
+	assert_eq(GameState.travel_cell("meadow"), [])
+	Billing.state = {"unlocks": {"fast_travel": 1}}
+	assert_eq(GameState.travel_targets("town"), ["meadow"] as Array[String])
+	assert_eq(GameState.travel_cell("meadow"), [3, 4])
+	assert_eq(GameState.travel_cell("town"), [1, 2], "a rest spot keeps its own cell")
+	var saved: Dictionary = GameState.to_dict()
+	assert_eq(saved.maps_entered, {"meadow": [3, 4]})
+	GameState.visited_rests = rests
+	GameState.visited_maps = maps

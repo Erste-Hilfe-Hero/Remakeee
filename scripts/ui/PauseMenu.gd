@@ -479,7 +479,7 @@ func run_travel() -> bool:
 	var names: Array[String] = []
 	for id: String in ids:
 		names.append(MapData.load_map(id).display_name if MapData.exists(id) else id)
-	var idx: int = await pick_strings("Travel to a rest spot", names)
+	var idx: int = await pick_strings("Travel to a place" if Billing.unlocked("fast_travel") > 0 else "Travel to a rest spot", names)
 	if idx < 0:
 		return false
 	# A mistap must not carry the player somewhere else (item 1878).

@@ -409,9 +409,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3484. [P2] Die Album-Aufgaben pro Monat per Seed aus einer Liste in data/events.json ziehen.
 3485. [P2] Bei 4 und 8 gefüllten Stickern je 20 Wegmarken auszahlen.
 3486. [P2] Für jeden Monat ein Stickerthema festlegen (Januar Herd, April Blüten, Oktober Laternen) und 16x16-Sticker mit tools/art zeichnen.
-3487. [P2] Das Album im Reiter „Sammlung“ des Ziele-Bildschirms zeigen.
-3488. [P2] Album-Aufgaben nie mit den Tagesaufträgen desselben Tages gleichsetzen.
-3489. [P2] Album-Aufgaben nur aus Orten ziehen, die der Spielstand schon erreicht hat.
+3487. [x] [P2] Das Album im Reiter „Sammlung“ des Ziele-Bildschirms zeigen.
+3488. [x] [P2] Album-Aufgaben nie mit den Tagesaufträgen desselben Tages gleichsetzen.
+3489. [x] [P2] Album-Aufgaben nur aus Orten ziehen, die der Spielstand schon erreicht hat.
 3490. [P3] Vergangene Alben in einem Albumregal im Wanderer-Zimmer ansehen lassen.
 3491. [P3] Monatssticker im Fotomodus als Deko auf das Bild setzen lassen.
 3492. [P3] Verpasste Sticker im selben Monat des Folgejahres nachholen lassen.

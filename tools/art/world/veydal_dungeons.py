@@ -91,6 +91,7 @@ def bellstone_ruins(world):
         check_rows(fid(mid, n), rows)
         room = {"rows": rows, "signs": signs, "warps": stair_warps(mid, n, count, ("gloamwood", 4, 1))}
         if n < count - 1:
+            room["goal"] = tr("Goal: ring the bells in the order scratched into the wall.", "Ziel: Läute die Glocken in der Reihenfolge, die in die Wand geritzt ist.")
             room["blocks"] = [{"x": 5, "y": 0, "open_flag": flag}, {"x": 6, "y": 0, "open_flag": flag}]
         else:
             room["secrets"] = [secret(5, 1, "max_tonic", "find_bell_top", 2), secret(10, 1, "kin_charm", "find_bell_corner")]
@@ -125,7 +126,8 @@ def brackwater_sluice(world):
                 "@..........@",
                 "@:........:@",
                 "@@@@@__@@@@@"]
-        room = {"rows": rows, "sluices": SLUICES, "warps": stair_warps(mid, n, count, ("brackwater_fen", 1, 13))}
+        room = {"rows": rows, "sluices": SLUICES, "warps": stair_warps(mid, n, count, ("brackwater_fen", 1, 13)),
+                "goal": tr("Goal: set the water level with the sluice wheels so the walkway is clear.", "Ziel: Stell mit den Schleusenrädern den Wasserstand so ein, dass der Steg frei wird.")}
         # The middle of the walkway is a pontoon or a low pier, open only at the right level.
         closed = "~"
         room["blocks"] = [{"x": 5, "y": 2, "open_flag": need, "closed": closed},
@@ -203,7 +205,8 @@ def lanternwell(world):
         signs.append({"x": tx, "y": ty, "dialogue": mid + "/crystal"})
         check_rows(fid(mid, n), rows)
         room = {"rows": rows, "signs": signs, "warps": stair_warps(mid, n, count, ("lighthouse", 2, 6)),
-                "beam": {"x": 0, "y": b["y"], "dir": "right", "mirrors": mirrors, "target": [tx, ty], "flag": flag}}
+                "beam": {"x": 0, "y": b["y"], "dir": "right", "mirrors": mirrors, "target": [tx, ty], "flag": flag},
+                "goal": tr("Goal: turn the mirrors so the light reaches the crystal.", "Ziel: Dreh die Spiegel so, dass das Licht den Kristall erreicht.")}
         if n < count - 1:
             room["blocks"] = [{"x": 5, "y": 0, "open_flag": flag}, {"x": 6, "y": 0, "open_flag": flag}]
         else:
@@ -243,6 +246,7 @@ def shatterfloor_mine(world):
     world.add_text(mid, {"ladder": lines(("A ladder leads back up to the mine entrance.", "Eine Leiter führt zurück hinauf zum Mineneingang."))})
     m = {"name": tr("Shatterfloor Mine", "Splitterboden-Mine"), "region": "veydal", "biome": "dungeon", "backdrop": "ridge",
          "field": "deep_murk", "encounters": mid, "rows": top, "drop_to": mid + "@1",
+         "goal": tr("Goal: cross the cracked floor without breaking through.", "Ziel: Überquere den rissigen Boden, ohne durchzubrechen."),
          "warps": [warp(5, 7, "copperfold", 6, 1, "down"), warp(6, 7, "copperfold", 6, 1, "down")],
          "secrets": [secret(10, 1, "max_tonic", "find_shatter_far", 2)],
          "floors": [{"name": tr("Shatterfloor Mine, lower gallery", "Splitterboden-Mine, untere Strecke"), "rows": low,
