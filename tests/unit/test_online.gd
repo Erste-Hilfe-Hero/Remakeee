@@ -44,6 +44,8 @@ func before_each() -> void:
 	Online.revs = {}
 	Online.dirty = {}
 	Online.conflicts.clear()
+	Online._retry_count = 0
+	Online._retry_wait = Online.RETRY_SECONDS
 	GameState.in_game = false
 	GameState.new_game(GameState.Difficulty.TAMER, "Mara", 1, "Puddlet")
 

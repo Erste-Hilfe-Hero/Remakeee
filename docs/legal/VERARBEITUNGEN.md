@@ -9,7 +9,7 @@ Betroffene sind immer Spielerinnen und Spieler von Chimora (alle Altersgruppen, 
 
 | Funktion | Zweck | Daten (Tabellen) | Speicherdauer | Rechtsgrundlage |
 | --- | --- | --- | --- | --- |
-| Konto und Anmeldung | Spiel ohne E-Mail bereitstellen, Gerätewechsel | `auth.users` (zufällige ID), `profiles` (Freundescode, Wanderer-Name, Farbe, Karte, letzter Besuch), `transfer_codes` (nur Hash), `transfer_attempts` (Zeit von Fehlversuchen) | solange das Konto besteht; Übertragungscodes 7 Tage | Art. 6 Abs. 1 lit. b |
+| Konto und Anmeldung | Spiel ohne E-Mail bereitstellen, Gerätewechsel | `auth.users` (zufällige ID), `auth.sessions`, `auth.refresh_tokens`, `profiles` (Freundescode, Wanderer-Name, Farbe, Karte, letzter Besuch, `inactive_since`), `transfer_codes` (nur Hash), `transfer_attempts` (Zeit von Fehlversuchen) | solange das Konto besteht; nach 24 Monaten ohne Besuch markiert und 30 Tage später gelöscht (`_daily_cleanup`); Übertragungscodes 7 Tage, Fehlversuche 1 Tag | Art. 6 Abs. 1 lit. b |
 | Spielstände | Fortschritt speichern und wiederherstellen | `saves` (Spielstand als JSON, Revision, Zeit) | solange das Konto besteht | Art. 6 Abs. 1 lit. b |
 | Echtheitsprüfung beim Speichern | Schutz vor manipulierten Ständen, faire Ligen | `cheat_flags` (Grund, Geld und Spielzeit vorher und nachher), `profiles.cheat_cleared_at` | 6 Monate (`_privacy_cleanup`) | Art. 6 Abs. 1 lit. f |
 | Freunde, Blockieren | gemeinsames Spielen, Schutz vor Belästigung | `friendships`, `blocks` | solange das Konto besteht | Art. 6 Abs. 1 lit. b |
@@ -20,8 +20,33 @@ Betroffene sind immer Spielerinnen und Spieler von Chimora (alle Altersgruppen, 
 | Kampfprüfung (Schiedsrichter) | Ergebnisse von Ligen, Raids und Duellen nachprüfen | `battles`, `battle_results`; `battle_queue` ohne Konto-Kennung | 30 Tage (`_privacy_cleanup`) | Art. 6 Abs. 1 lit. b und f |
 | Ligen | faire Wertung und Gegnersuche | `league_fair_entries`, `league_open_entries` (Team, Wertung, Kämpfe), `league_matches` | Einträge bis zum Ende der folgenden Saison, Paarungen 30 Tage | Art. 6 Abs. 1 lit. b |
 | Missbrauchsgrenzen | zu viele Aufrufe bremsen | `rate_events` (Art und Zeit) | 1 Stunde Wirkung, alte Zeilen werden mitgelöscht | Art. 6 Abs. 1 lit. f |
-| Server-Protokolle | Betrieb und Sicherheit | Webserver-Logs (IP, Zeit, Endpunkt, Status) | 7 Tage | Art. 6 Abs. 1 lit. f |
+| Server-Protokolle | Betrieb und Sicherheit | Container-Logs (IP, Zeit, Endpunkt, Status; Docker-Logrotation), Anmelde-Protokoll `auth.audit_log_entries` (mit IP) | 7 Tage (`_daily_cleanup` für das Anmelde-Protokoll) | Art. 6 Abs. 1 lit. f |
+| Datenbank-Sicherungen | Wiederherstellung nach Ausfall | alle obigen Tabellen (`server/backups/`, wöchentlicher Wiederherstellungstest) | 14 Tage | Art. 6 Abs. 1 lit. b und f |
+| Kaufbelege (sobald der Shop live ist, Bereich 10) | Freischalten, Aufbewahrungspflicht | Transaktions-ID, Produkt, Zeitpunkt | bis 10 Jahre (HGB, AO) | Art. 6 Abs. 1 lit. b und c |
+| Gerät des Spielers (`user://`) | Spiel offline zwischenspeichern | Spielstand-Kopie mit Sicherungen, Einstellungen, Anmelde-Token | bis zur Deinstallation oder Kontolöschung | § 25 Abs. 2 Nr. 2 TDDDG |
 | Support | Anfragen beantworten | E-Mails | bis erledigt, höchstens 2 Jahre | Art. 6 Abs. 1 lit. b oder f |
+
+## Löschläufe
+
+- **Täglich 04:15** `server/cleanup.sh` → `public._daily_cleanup()` (Migration `20261110090002_tech_privacy.sql`):
+  Leuchtpost 30 Tage, Meldungen 6 Monate, Wochenwerte und Weltziel-Beiträge nach der Folgewoche,
+  `rate_events` und `transfer_attempts` 1 Tag, Übertragungscodes 7 Tage, inaktive Konten (siehe oben),
+  Anmelde-Protokoll 7 Tage. Ruft auch `_privacy_cleanup()` auf (Ligen, Kämpfe, Echtheitsprüfung), das
+  zusätzlich ab und zu bei `hello` läuft. Das Ergebnis steht im Cron-Log.
+- Empfänger: Contabo GmbH (Hosting, Art. 28), Apple und Google (eigene Verantwortung), Behörden nur bei
+  gesetzlicher Pflicht. Kein Drittland. Kein Datenschutzbeauftragter (keine Pflicht nach § 38 BDSG).
+
+## Technische und organisatorische Maßnahmen (Art. 32)
+
+- TLS für jede Verbindung (Caddy, Let's Encrypt). Nur Caddy ist von außen erreichbar.
+- Spieler lesen keine Tabellen direkt; alles läuft über Funktionen mit `security definer`, festem
+  `search_path` und Prüfung von `auth.uid()` (geprüft von `test_security.sql`).
+- Grenzen: 512 KB pro Anfrage, 256 KB pro Spielstand, 3 s pro Abfrage, 10 neue Konten pro Stunde und IP.
+- Nächtliche Sicherung, Sicherung vor jeder Migration, wöchentlicher Wiederherstellungstest.
+- Zugriff auf den Server nur durch den Verantwortlichen (über das lifekit-Repository).
+- Keine Werbe-, Analyse- oder Absturz-SDKs von Dritten.
+- Offen: verschlüsselte Kopie der Sicherungen bei einem zweiten EU-Anbieter (Plan 3825, dann hier als
+  Empfänger mit AV-Vertrag eintragen); AV-Vertrag mit Contabo unterschreiben (Ali).
 
 ## Rechte der Betroffenen
 

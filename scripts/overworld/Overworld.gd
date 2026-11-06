@@ -71,6 +71,7 @@ func _ready() -> void:
 		"weekly": _action_weekly,
 		"master": _action_master,
 		"merchant": _action_merchant,
+		"echo_room": _action_echo_room, "echo_chest": _action_echo_chest, "echo_info": _action_echo_info,
 		"expedition": _action_expedition,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
@@ -1259,6 +1260,68 @@ func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
 	lines.append_array(Masters.win(id))
 	await say(lines)
 	await announce_achievements()
+
+## Echo Path room marker (plan 3464): wild fight, Wanderer echo, treasure, rest or riddle.
+func _action_echo_room(_args: PackedStringArray, _speaker: NPC) -> void:
+	var slot: int = EchoPath.slot_of(map.id)
+	if slot == 0:
+		return
+	if EchoPath.is_done(slot):
+		await say(["This room is already clear this week."] as Array[String])
+		return
+	var lines: Array[String] = []
+	match EchoPath.kind_of(slot):
+		"wild", "echo":
+			if GameState.first_healthy_index() < 0:
+				return
+			var wild: bool = EchoPath.kind_of(slot) == "wild"
+			var foes: Array[Spirling] = []
+			if wild:
+				var s: Spirling = EchoPath.wild_for(slot)
+				if s != null:
+					foes.append(s)
+			else:
+				foes = EchoPath.echo_team(slot)
+			if foes.is_empty():
+				return
+			SaveManager.save_game()
+			busy = false
+			var info: Dictionary = {} if wild else {"name": Loc.t("Wanderer echo"), "ai": 3}
+			var outcome: BattleModel.Outcome = await start_battle(foes, wild, info)
+			busy = true
+			player.frozen = true
+			if outcome != BattleModel.Outcome.WIN and outcome != BattleModel.Outcome.BONDED:
+				return
+			EchoPath.clear(slot)
+		"treasure":
+			lines.append_array(EchoPath.take_treasure(slot))
+		"rest":
+			# No rest point here: the rooms change every week.
+			GameState.heal_party()
+			Sound.sfx("heal")
+			DailyTasks.record("rest", {"map": map.id})
+			EchoPath.clear(slot)
+			lines.append("Your team is fully rested.")
+		"riddle":
+			EchoPath.clear(slot)
+			lines.append("The stone hums. The answer rings true.")
+	lines.append(Loc.t("Rooms cleared this week: %d of %d.") % [EchoPath.done_count(), EchoPath.ROOMS])
+	await say(lines)
+
+## The chest at the end of the Echo Path (plan 3465), then the way back to the hall.
+func _action_echo_chest(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say(EchoPath.open_chest())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var back: bool = await menu.confirm(Loc.t("Return to the entrance hall?"))
+	menu.queue_free()
+	if back:
+		Sound.sfx("warp")
+		load_map(EchoPath.FILE, EchoPath.ARRIVE_DOWN, "down")
+
+## The Echo Path guide: this week's wild kinds and progress.
+func _action_echo_info(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say([EchoPath.spirlog_hint(), EchoPath.goal_line()] as Array[String])
 
 ## The wandering merchant (plan 3423): today's three goods for coins.
 func _action_merchant(_args: PackedStringArray, speaker: NPC) -> void:

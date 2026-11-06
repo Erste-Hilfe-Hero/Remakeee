@@ -96,6 +96,14 @@ static func parse_move(m: Dictionary) -> MoveData:
 		md.effects.append({"id": &"field_element", "power_bonus": int(m.get("field_power", BattleRules.FIELD_ELEMENT_POWER))})
 	if m.has("self_stages"):
 		md.effects.append({"id": &"self_stage_after", "stages": m.self_stages})
+	if bool(m.get("cure_self", false)):
+		md.effects.append({"id": &"cure_self"})
+	if m.has("snare"):
+		md.effects.append({"id": &"side_snare", "snare": m.snare})
+	if bool(m.get("clear_snares", false)):
+		md.effects.append({"id": &"clear_snares"})
+	md.ignore_daze = bool(m.get("ignore_daze", false))
+	md.ignore_stages = bool(m.get("ignore_stages", false))
 	return md
 
 static func _load_spirlings() -> void:
