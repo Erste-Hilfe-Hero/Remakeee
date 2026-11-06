@@ -855,7 +855,8 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 		_fx_travel_sound.call_deferred(element)
 	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
 	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
-		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e))
+		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e),
+		ElementFx.after_for(Database.move(str(e.data.get("move", "")))))
 
 ## Particle factor from the art's power (item 2368).
 static func _art_amount(e: BattleEvent) -> float:

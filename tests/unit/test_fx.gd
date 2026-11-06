@@ -206,3 +206,41 @@ func test_every_art_in_the_data_plays_and_leaves_no_nodes() -> void:
 	Juice.in_battle = false
 	assert_gte(played, 58)
 	assert_eq(fx.get_child_count(), 0, "effects draw, they leave no nodes behind")
+
+# --- Follow-ups: heal, drain, energy drain, recoil, field (items 2370 to 2374) ----------
+
+func test_after_phase_per_effect() -> void:
+	var P := ElementFx.Phase
+	assert_eq(ElementFx.phases_for(MoveData.Kind.STATUS, false, false, "heal"), [P.CHARGE, P.AFTER] as Array[ElementFx.Phase], "heal: no impact")
+	assert_eq(ElementFx.phases_for(MoveData.Kind.STATUS, true, false, "heal"), [P.AFTER] as Array[ElementFx.Phase])
+	assert_eq(ElementFx.phases_for(MoveData.Kind.FOCUS, false, false, "drain"), [P.CHARGE, P.TRAVEL, P.IMPACT, P.AFTER] as Array[ElementFx.Phase])
+	assert_eq(ElementFx.phases_for(MoveData.Kind.PHYSICAL, false, false, "recoil"), [P.CHARGE, P.IMPACT, P.AFTER] as Array[ElementFx.Phase])
+	assert_eq(ElementFx.phases_for(MoveData.Kind.FOCUS, false, true, "drain"), [P.CHARGE, P.TRAVEL] as Array[ElementFx.Phase], "a miss drains nothing")
+	assert_eq(ElementFx.phases_for(MoveData.Kind.FOCUS, true, false, "drain"), [P.IMPACT] as Array[ElementFx.Phase])
+
+func test_after_comes_from_the_moves_effects() -> void:
+	Database.load_all()
+	var seen: Dictionary = {}
+	for mv: MoveData in Database.moves.values():
+		var a: String = ElementFx.after_for(mv)
+		if not a.is_empty():
+			seen[a] = true
+		if mv.has_effect(&"heal_self"):
+			assert_eq(a, "heal", mv.move_name)
+	for a: String in ["heal", "drain", "energy_drain", "recoil"]:
+		assert_true(seen.has(a), "some art shows " + a)
+	assert_eq(ElementFx.after_for(null), "")
+
+func test_every_after_plays_for_every_element() -> void:
+	var fx := ElementFx.new()
+	fx.size = Vector2(144, 120)
+	add_child_autofree(fx)
+	GameState.battle_speed = 2
+	Juice.in_battle = true
+	for a: String in ElementFx.AFTERS:
+		for e: int in Elements.E.values():
+			await fx.play(e, MoveData.Kind.FOCUS, Rect2(90, 70, 40, 40), Rect2(20, 10, 40, 40), false, 1.0, 1.0, a)
+			assert_true(fx.played.has(ElementFx.Phase.AFTER), a)
+			assert_eq(fx.phase, ElementFx.Phase.NONE)
+	Juice.in_battle = false
+	assert_eq(fx.get_child_count(), 0)
