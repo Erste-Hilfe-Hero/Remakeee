@@ -20,6 +20,12 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 ## Who the move reaches: "single" (one foe, picked by the player) or "foes" (every foe on the
 ## field at once, a sweep). In 1v1 both hit the one foe the same way.
 @export var target: String = "single"
+## Turns the move stays locked after each use (moves.json "cooldown", 0 = never locked).
+@export var cooldown: int = 0
+## The user's Daze does not lower this move's accuracy (moves.json "ignore_daze").
+@export var ignore_daze: bool = false
+## The target's raised Guard and Focus stages do not count against this move ("ignore_stages").
+@export var ignore_stages: bool = false
 
 const TARGETS: Array[String] = ["single", "foes"]
 
