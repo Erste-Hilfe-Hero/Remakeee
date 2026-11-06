@@ -316,5 +316,60 @@
    "Driver Odo: Valley Coach. Thornridge, Copperfold, Wrenhollow. Only stops you know."
   ],
   "action": "transit valley_coach"
+ },
+ "brin": {
+  "lines": [
+   "Netmender Brin: Mornings I mend nets by the north road. Evenings I tell lies about fish."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Netmender Brin: The lake sings again since the Rift went quiet. The nets feel it too."
+   ]
+  }
+ },
+ "lotte": {
+  "lines": [
+   "Baker Lotte: First loaves at dawn, last crumbs at dusk. In between, I walk off the flour."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Baker Lotte: My dough rises properly again. The Rift must have been sitting on it."
+   ]
+  }
+ },
+ "tilda": {
+  "lines": [
+   "Rower Tilda: I row the shallows at noon and sit by the lamp at dusk. Simple life."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Rower Tilda: The water's clear down to the stones again. You did that, didn't you?"
+   ]
+  }
+ },
+ "joss": {
+  "lines": [
+   "Lamplighter Joss: Dawn and dusk I trim the wick. At night I keep it company."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Lamplighter Joss: The lamp burns steady now. No more flicker from the east."
+   ]
+  }
+ },
+ "wim": {
+  "lines": [
+   "Carter Wim: Days here, evenings up in Thornridge. My cart knows the way better than I do."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Carter Wim: The road feels lighter since the Rift was sealed. Even the cart squeaks less."
+   ]
+  }
  }
 }

@@ -5,6 +5,7 @@ Every route has three Wayfarers who only duel when you talk to them (sight 0), 3
 secret passage behind a suspiciously smooth rock (A opens it) and a shortcut that needs gear or
 a lever. Every settlement has its own kind of rest spot and a trader with a fixed range.
 """
+import townsfolk
 from common import check_rows, lines, npc, secret, team, tr, warp
 
 GROUP = ["gloamwood", "quillbrook", "wrenhollow", "brackwater_fen", "reedhaven", "lantern_steps", "copperfold"]
@@ -42,6 +43,8 @@ def build(world):
     lantern_steps(world)
     copperfold(world)
     connect_act1(world)
+    for mid in ("wrenhollow", "reedhaven", "copperfold"):
+        townsfolk.apply(world, mid)
 
 
 # --- Gloamwood: a dense forest on two levels west of Fernstair (item 914) -------------------
@@ -311,11 +314,11 @@ def brackwater_fen(world):
 def reedhaven(world):
     mid = "reedhaven"
     rows = ["~~~~~++~~~~~",
-            "~~~~.++.~~~~",
+            "~~~+.++.+~~~",
             "~RRR++++RRR~",
             "~HDH+~~+HDH~",
             "~+++++++++o~",
-            "~~~~+~~++~~~",
+            "~++++~~++~~~",
             "~RRR+~~+~~%~",
             "~HDH+~~+S%%~",
             "~++++++++%%~",

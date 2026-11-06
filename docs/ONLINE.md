@@ -264,6 +264,17 @@ saves lists them with date, place and play time (`save_history_list`); `save_res
 newest version again, and the replaced one stays in the list. When the running journey is replaced,
 the game reads the slot again and returns to the title.
 
+## One device at a time
+
+After `hello` the game calls `session_claim(p_token)`: a fresh start (empty token) gets a new
+token, stored in `profiles.session_token`; a device that sends its old token keeps it, unless
+another device claimed the account meanwhile (`other_device`). Every call carries the token in
+the header `x-chimora-session`. The trigger `saves_device` refuses changed saves from a device
+whose token is not the newest one (saving, trades, restores), and `presence` returns
+`other_device`. The old device then goes to the title, which says "Signed in on another device"
+and only takes the account back when the player picks "Play on this device". Calls without the
+header (older builds) are not checked; moving the account with a transfer code claims anew.
+
 ## Set phrases and names
 
 There is no free text anywhere. Every place that shows set phrases has its own list of allowed

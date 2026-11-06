@@ -82,5 +82,60 @@
    "Driver Sela: Valley Coach, Thornridge stop. The road down is gentler than the stairs."
   ],
   "action": "transit valley_coach"
+ },
+ "ula": {
+  "lines": [
+   "Shepherd Ula: The flock grazes the scree by day. At dusk I count them twice, up top."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Shepherd Ula: My flock sleeps through the night again. No more ash on the wind."
+   ]
+  }
+ },
+ "marek": {
+  "lines": [
+   "Stonecutter Marek: Up on the terrace I split stone. Down by the crystals I split hairs."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Stonecutter Marek: The stone rings clean again. The Rift made it sound cracked."
+   ]
+  }
+ },
+ "rue": {
+  "lines": [
+   "Herbalist Rue: I pick herbs by the old door at sunrise. Dew makes them honest."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Herbalist Rue: The herbs grow sweet again. Bitter only where they should be."
+   ]
+  }
+ },
+ "ivo": {
+  "lines": [
+   "Night Watch Ivo: I start my round at dusk and finish when the birds complain."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Night Watch Ivo: Quiet nights since the Rift closed. I almost miss the trouble. Almost."
+   ]
+  }
+ },
+ "kip": {
+  "lines": [
+   "Apprentice Kip: I learn smithing in Copperfold every evening. Days, I sweep the elder's porch."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Apprentice Kip: The forge fire burns blue in Copperfold now. Smith Holt says that's luck."
+   ]
+  }
  }
 }

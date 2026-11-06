@@ -48,6 +48,9 @@ var dirty: Dictionary = {}
 var privacy_seen: bool = false
 ## Slots the player must decide about (both this phone and another device have changes).
 var conflicts: Array[int] = []
+## The account was opened on another device since this one claimed it (plan item 3010). The
+## title asks before this device takes it back.
+var kicked: bool = false
 
 var _beat: float = 0.0
 var _beats: int = 0
@@ -142,10 +145,14 @@ func connect_now() -> State:
 		r = await backend.sign_in_anonymous()
 	if r.ok:
 		r = await backend.call_fn("hello", {"p_version": CLIENT_VERSION})
+	if r.ok:
+		r = await _claim(r)
 	_busy = false
 	if not r.ok:
 		last_error = r.error
 		_set_state(State.OFFLINE)
+		if r.error == "other_device":
+			_other_device()
 		return state
 	_take_hello(r.data)
 	_save_session()
@@ -155,6 +162,29 @@ func connect_now() -> State:
 		if p.ok and p.data is Dictionary and bool(p.data.get("ok", false)):
 			profile["platform"] = platform_name()
 	return state
+
+## Claims the account for this device (plan item 3010): keeps the token it had, or gets a new
+## one on a fresh start. Fails with "other_device" when another device took over meanwhile.
+## Returns [param hello] (the hello answer) when all is well.
+func _claim(hello: Dictionary) -> Dictionary:
+	var c: Dictionary = await backend.call_fn("session_claim", {"p_token": backend.device_token})
+	if not c.ok:
+		# A server without the function yet lets every device save, as before.
+		return c if c.net else hello
+	if c.data is Dictionary and bool(c.data.get("ok", false)):
+		backend.device_token = str(c.data.get("token", ""))
+	elif c.data is Dictionary and str(c.data.get("error", "")) == "other_device":
+		return OnlineBackend.fail("other_device")
+	return hello
+
+## Another device has the account now: stop here and go to the title, which says so.
+func _other_device() -> void:
+	kicked = true
+	backend.device_token = ""
+	last_error = "other_device"
+	_set_state(State.OFFLINE)
+	if GameState.in_game:
+		_to_title()
 
 ## "web" for the browser test build, "app" for the phone apps (and desktop test runs).
 static func platform_name() -> String:
@@ -186,6 +216,8 @@ func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 		_set_state(State.OFFLINE)
 	elif not r.ok and r.error == "not_signed_in":
 		_set_state(State.OFFLINE)
+	elif not r.ok and r.error == "other_device":
+		_other_device()
 	return r
 
 ## A sentence and the next step for an online problem (item 2146). Empty: the last error.
@@ -226,7 +258,11 @@ func transfer_claim(code: String) -> Dictionary:
 	revs = {}
 	dirty = {}
 	_clear_cache()
+	# This phone takes the account over from the old one.
+	backend.device_token = ""
 	r = await call_fn("hello", {"p_version": CLIENT_VERSION})
+	if r.ok:
+		r = await _claim(r)
 	if r.ok:
 		_take_hello(r.data)
 	_save_session()
@@ -501,6 +537,9 @@ func _heartbeat() -> void:
 	if _beats % 4 == 0:
 		push_team()
 	var r: Dictionary = await call_fn("presence", {"p_place": current_place()})
+	if r.ok and r.data is Dictionary and bool(r.data.get("other_device", false)):
+		_other_device()
+		return
 	if r.ok and r.data is Dictionary:
 		online_now = int(r.data.get("online_now", online_now))
 		_take_server_time(r.data.get("server_time"))

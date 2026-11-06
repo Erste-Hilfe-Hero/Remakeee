@@ -10,11 +10,11 @@
  ],
  "rows": [
   "~~~~~++~~~~~",
-  "~~~~.++.~~~~",
+  "~~~+.++.+~~~",
   "~RRR++++RRR~",
   "~HDH+~~+HDH~",
   "~+++++++++o~",
-  "~~~~+~~++~~~",
+  "~++++~~++~~~",
   "~RRR+~~+~~%~",
   "~HDH+~~+S%%~",
   "~++++++++%%~",
@@ -62,6 +62,107 @@
    "facing": "right",
    "dialogue": "reedhaven/boatman",
    "sprite": "villager"
+  },
+  {
+   "id": "gunn",
+   "x": 2,
+   "y": 5,
+   "facing": "up",
+   "dialogue": "reedhaven/gunn",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 5,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "aart",
+   "x": 3,
+   "y": 1,
+   "facing": "right",
+   "dialogue": "reedhaven/aart",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 5,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "wenna",
+   "x": 8,
+   "y": 1,
+   "facing": "left",
+   "dialogue": "reedhaven/wenna",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dusk",
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "pip",
+   "x": 3,
+   "y": 1,
+   "facing": "right",
+   "dialogue": "reedhaven/pip",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dawn",
+      "day"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "hanne",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "reedhaven/hanne",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 9,
+     "y": 10,
+     "facing": "left",
+     "map": "brindlewick"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [
