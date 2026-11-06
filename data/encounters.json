@@ -116,25 +116,29 @@
     "species": "Paddlewisp",
     "min": 2,
     "max": 4,
-    "weight": 25
+    "weight": 25,
+    "ground": "fern"
    },
    {
     "species": "Croziel",
     "min": 2,
     "max": 4,
-    "weight": 30
+    "weight": 30,
+    "ground": "fern"
    },
    {
     "species": "Lanternel",
     "min": 3,
     "max": 4,
-    "weight": 12
+    "weight": 12,
+    "ground": "fern"
    },
    {
     "species": "Fluting",
     "min": 3,
     "max": 4,
-    "weight": 10
+    "weight": 10,
+    "ground": "fern"
    }
   ]
  },
@@ -145,13 +149,15 @@
     "species": "Zippit",
     "min": 5,
     "max": 7,
-    "weight": 30
+    "weight": 30,
+    "ground": "scree"
    },
    {
     "species": "Zephlet",
     "min": 5,
     "max": 7,
-    "weight": 30
+    "weight": 30,
+    "ground": "reeds"
    },
    {
     "species": "Shalebat",
@@ -185,19 +191,22 @@
     "species": "Talusk",
     "min": 5,
     "max": 7,
-    "weight": 30
+    "weight": 30,
+    "ground": "scree"
    },
    {
     "species": "Croziel",
     "min": 5,
     "max": 7,
-    "weight": 25
+    "weight": 25,
+    "ground": "reeds"
    },
    {
     "species": "Glasstarn",
     "min": 6,
     "max": 8,
-    "weight": 4
+    "weight": 4,
+    "ground": "scree"
    }
   ]
  },
@@ -250,25 +259,29 @@
     "species": "Paddlewisp",
     "min": 10,
     "max": 12,
-    "weight": 30
+    "weight": 30,
+    "ground": "reeds"
    },
    {
     "species": "Fluting",
     "min": 10,
     "max": 12,
-    "weight": 15
+    "weight": 15,
+    "ground": "reeds"
    },
    {
     "species": "Brinelet",
     "min": 10,
     "max": 12,
-    "weight": 15
+    "weight": 15,
+    "ground": "reeds"
    },
    {
     "species": "Blotling",
     "min": 10,
     "max": 11,
-    "weight": 10
+    "weight": 10,
+    "ground": "reeds"
    }
   ]
  },
@@ -300,19 +313,22 @@
     "species": "Hushkin",
     "min": 11,
     "max": 13,
-    "weight": 18
+    "weight": 18,
+    "ground": "cave"
    },
    {
     "species": "Blotling",
     "min": 11,
     "max": 12,
-    "weight": 12
+    "weight": 12,
+    "ground": "cave"
    },
    {
     "species": "Seamlet",
     "min": 11,
     "max": 13,
-    "weight": 12
+    "weight": 12,
+    "ground": "cave"
    }
   ]
  },
