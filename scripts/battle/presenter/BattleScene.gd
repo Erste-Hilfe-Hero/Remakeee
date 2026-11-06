@@ -532,6 +532,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	await _text.show_text("Reach out to %s... Listen, then echo its call!" % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
 	var score: float = await _bond_game.run()
+	GameState.note_echo(score)
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 
 # --- Event playback -----------------------------------------------------------------

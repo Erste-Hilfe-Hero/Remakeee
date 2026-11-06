@@ -32,3 +32,9 @@ first if the plan changes again.
 - Set the app to free in App Store Connect and the Play Console.
 - For the shop later: Paid Apps agreement (Apple) and payments profile (Google), tax and bank data.
 - Fill the privacy labels as "Data not collected" (true while this file holds).
+
+## Waymarks are never for sale (plan area 8)
+Waymarks (the endgame currency) are only earned by playing. They are never sold for money or
+for the premium currency, never traded and never sent to friends. In code `Waymarks.TRANSFERABLE`
+is false, there is no "shop", "gift" or "trade" source in `Waymarks.SOURCES`, and they are no bag
+item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).

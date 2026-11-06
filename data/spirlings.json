@@ -5,6 +5,10 @@
   "elements": [
    "EMBER"
   ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "kindlop",
   "base": {
    "hp": 62,
    "atk": 66,
@@ -12,8 +16,6 @@
    "spd": 70,
    "def": 54
   },
-  "evolves_to": "Smoldrake",
-  "evolve_level": 14,
   "trait": "kindling",
   "learnset": {
    "1": [
@@ -39,7 +41,15 @@
   "bond_rate": 0.3,
   "height": "0.4 m",
   "habitat": "Warm hollows, chimney nooks",
-  "lore": "Its ear tips glow brighter when it is happy. Families leave a lamp out so a Kindlop will stay the winter."
+  "lore": "Its ear tips glow brighter when it is happy. Families leave a lamp out so a Kindlop will stay the winter.",
+  "unfold": [
+   {
+    "to": "Smoldrake",
+    "rule": "ring",
+    "value": 14
+   }
+  ],
+  "origin": "Born in a lamp left burning through a long winter."
  },
  {
   "dex_id": 2,
@@ -47,6 +57,10 @@
   "elements": [
    "EMBER"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "kindlop",
   "base": {
    "hp": 74,
    "atk": 88,
@@ -54,8 +68,6 @@
    "spd": 94,
    "def": 70
   },
-  "evolves_to": "Calderox",
-  "evolve_level": 31,
   "trait": "kindling",
   "learnset": {
    "1": [
@@ -85,7 +97,15 @@
   "bond_rate": 0.15,
   "height": "1.1 m",
   "habitat": "Ash slopes, old kilns",
-  "lore": "It cannot fly and never tries. Its smoke mane tells its mood: grey when calm, white when it means business."
+  "lore": "It cannot fly and never tries. Its smoke mane tells its mood: grey when calm, white when it means business.",
+  "unfold": [
+   {
+    "to": "Calderox",
+    "rule": "ring",
+    "value": 31
+   }
+  ],
+  "origin": "A Kindlop that kept the lighthouse fire for a whole season."
  },
  {
   "dex_id": 3,
@@ -94,6 +114,10 @@
    "EMBER",
    "STONE"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "kindlop",
   "base": {
    "hp": 92,
    "atk": 112,
@@ -101,8 +125,6 @@
    "spd": 92,
    "def": 96
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "kindling",
   "learnset": {
    "1": [
@@ -127,10 +149,11 @@
     "Cairn Crash"
    ]
   },
-  "bond_rate": 0.06,
+  "bond_rate": 0.08,
   "height": "1.9 m",
   "habitat": "Volcanic ridges",
-  "lore": "The cracks in its shoulder plates glow like banked coals. Herders warm their hands on a dozing Calderox in winter."
+  "lore": "The cracks in its shoulder plates glow like banked coals. Herders warm their hands on a dozing Calderox in winter.",
+  "origin": "Said to sleep inside the old kilns of the Thornridge."
  },
  {
   "dex_id": 4,
@@ -138,6 +161,10 @@
   "elements": [
    "TIDE"
   ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "puddlet",
   "base": {
    "hp": 66,
    "atk": 54,
@@ -145,8 +172,6 @@
    "spd": 54,
    "def": 64
   },
-  "evolves_to": "Riptail",
-  "evolve_level": 18,
   "trait": "slick",
   "learnset": {
    "1": [
@@ -170,7 +195,15 @@
   "bond_rate": 0.3,
   "height": "0.3 m",
   "habitat": "Rain pools, harbour steps",
-  "lore": "It is mostly water and a little stubbornness. After storms, dozens bob in the gutters, blowing bubbles at each other."
+  "lore": "It is mostly water and a little stubbornness. After storms, dozens bob in the gutters, blowing bubbles at each other.",
+  "unfold": [
+   {
+    "to": "Riptail",
+    "rule": "ring",
+    "value": 18
+   }
+  ],
+  "origin": "A drop of the lighthouse lake that never wanted to sink."
  },
  {
   "dex_id": 5,
@@ -178,6 +211,10 @@
   "elements": [
    "TIDE"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "puddlet",
   "base": {
    "hp": 86,
    "atk": 72,
@@ -185,8 +222,6 @@
    "spd": 76,
    "def": 82
   },
-  "evolves_to": "Leviarch",
-  "evolve_level": 33,
   "trait": "slick",
   "learnset": {
    "1": [
@@ -216,7 +251,15 @@
   "bond_rate": 0.15,
   "height": "1.0 m",
   "habitat": "Rivers, mill races",
-  "lore": "It rides the current backwards just to show it can. Fishers say a Riptail in the weir means a good catch."
+  "lore": "It rides the current backwards just to show it can. Fishers say a Riptail in the weir means a good catch.",
+  "unfold": [
+   {
+    "to": "Leviarch",
+    "rule": "ring",
+    "value": 33
+   }
+  ],
+  "origin": "Grows in the strong currents below the Saltmarsh dikes."
  },
  {
   "dex_id": 6,
@@ -225,6 +268,10 @@
    "TIDE",
    "LUMEN"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "puddlet",
   "base": {
    "hp": 108,
    "atk": 90,
@@ -232,8 +279,6 @@
    "spd": 86,
    "def": 104
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "slick",
   "learnset": {
    "1": [
@@ -260,10 +305,11 @@
     "Radiant Lance"
    ]
   },
-  "bond_rate": 0.06,
+  "bond_rate": 0.08,
   "height": "2.4 m",
   "habitat": "Deep lakes",
-  "lore": "The ring of light above it never touches the water. Old maps mark its lake with a single drawn circle."
+  "lore": "The ring of light above it never touches the water. Old maps mark its lake with a single drawn circle.",
+  "origin": "Old tales say it carries the lake's light down to the deep."
  },
  {
   "dex_id": 7,
@@ -271,6 +317,10 @@
   "elements": [
    "BLOOM"
   ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "mossling",
   "base": {
    "hp": 64,
    "atk": 60,
@@ -278,8 +328,6 @@
    "spd": 50,
    "def": 70
   },
-  "evolves_to": "Thornback",
-  "evolve_level": 17,
   "trait": "deep_roots",
   "learnset": {
    "1": [
@@ -302,7 +350,15 @@
   "bond_rate": 0.3,
   "height": "0.4 m",
   "habitat": "Damp woods, garden beds",
-  "lore": "It hears rain coming with its long leaf ears and sits very still until the first drop. Gardeners welcome it: wherever it naps, seedlings follow."
+  "lore": "It hears rain coming with its long leaf ears and sits very still until the first drop. Gardeners welcome it: wherever it naps, seedlings follow.",
+  "unfold": [
+   {
+    "to": "Thornback",
+    "rule": "ring",
+    "value": 17
+   }
+  ],
+  "origin": "Sprouts where a Wayfarer once rested under a fern."
  },
  {
   "dex_id": 8,
@@ -310,6 +366,10 @@
   "elements": [
    "BLOOM"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "mossling",
   "base": {
    "hp": 84,
    "atk": 82,
@@ -317,8 +377,6 @@
    "spd": 70,
    "def": 92
   },
-  "evolves_to": "Verdantusk",
-  "evolve_level": 35,
   "trait": "deep_roots",
   "learnset": {
    "1": [
@@ -348,7 +406,15 @@
   "bond_rate": 0.15,
   "height": "0.9 m",
   "habitat": "Hedgerows, bramble hills",
-  "lore": "It rolls into a thorny ball when startled, then forgets why and rolls home."
+  "lore": "It rolls into a thorny ball when startled, then forgets why and rolls home.",
+  "unfold": [
+   {
+    "to": "Verdantusk",
+    "rule": "ring",
+    "value": 35
+   }
+  ],
+  "origin": "Its thorns grew to guard the young ferns of the Fernstair."
  },
  {
   "dex_id": 9,
@@ -357,6 +423,10 @@
    "BLOOM",
    "UMBRA"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "mossling",
   "base": {
    "hp": 104,
    "atk": 106,
@@ -364,8 +434,6 @@
    "spd": 86,
    "def": 116
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "deep_roots",
   "learnset": {
    "1": [
@@ -389,10 +457,11 @@
     "Dusk Gnaw"
    ]
   },
-  "bond_rate": 0.06,
+  "bond_rate": 0.08,
   "height": "2.0 m",
   "habitat": "Meadows, high pasture",
-  "lore": "Ferns grow in its shaggy mane, and birds nest in its beard. An old one can graze for hours without moving a step."
+  "lore": "Ferns grow in its shaggy mane, and birds nest in its beard. An old one can graze for hours without moving a step.",
+  "origin": "Walks the shaded edge of the forest where moss turns dark."
  },
  {
   "dex_id": 10,
@@ -400,6 +469,10 @@
   "elements": [
    "VOLT"
   ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "zippit",
   "base": {
    "hp": 48,
    "atk": 64,
@@ -407,8 +480,6 @@
    "spd": 94,
    "def": 44
   },
-  "evolves_to": "Glimmerax",
-  "evolve_level": 24,
   "trait": "surge",
   "learnset": {
    "1": [
@@ -437,7 +508,15 @@
   "bond_rate": 0.5,
   "height": "0.2 m",
   "habitat": "Fence posts, storm fields",
-  "lore": "It stores static by scuttling across dry grass. Touching one in autumn makes your hair stand on end for an hour."
+  "lore": "It stores static by scuttling across dry grass. Touching one in autumn makes your hair stand on end for an hour.",
+  "unfold": [
+   {
+    "to": "Glimmerax",
+    "rule": "ring",
+    "value": 24
+   }
+  ],
+  "origin": "A spark that jumped off the first storm over Brindlewick."
  },
  {
   "dex_id": 11,
@@ -446,6 +525,10 @@
    "VOLT",
    "LUMEN"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "zippit",
   "base": {
    "hp": 68,
    "atk": 84,
@@ -453,8 +536,6 @@
    "spd": 120,
    "def": 64
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "surge",
   "learnset": {
    "1": [
@@ -484,7 +565,8 @@
   "bond_rate": 0.12,
   "height": "0.8 m",
   "habitat": "Moonlit clearings",
-  "lore": "Its axe-shaped horn lights the way for night travellers. It is drawn to lanterns and to people humming."
+  "lore": "Its axe-shaped horn lights the way for night travellers. It is drawn to lanterns and to people humming.",
+  "origin": "A Zippit that caught the lighthouse beam and kept it."
  },
  {
   "dex_id": 12,
@@ -493,6 +575,10 @@
    "STONE",
    "UMBRA"
   ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "shalebat",
   "base": {
    "hp": 60,
    "atk": 70,
@@ -500,8 +586,6 @@
    "spd": 54,
    "def": 84
   },
-  "evolves_to": "Obsidroth",
-  "evolve_level": 26,
   "trait": "thick_hide",
   "learnset": {
    "1": [
@@ -527,7 +611,15 @@
   "bond_rate": 0.5,
   "height": "0.6 m",
   "habitat": "Cliff cracks, quarries",
-  "lore": "Its wings are thin plates of slate that clatter in flight. Colonies sound like rain on a tin roof."
+  "lore": "Its wings are thin plates of slate that clatter in flight. Colonies sound like rain on a tin roof.",
+  "unfold": [
+   {
+    "to": "Obsidroth",
+    "rule": "ring",
+    "value": 26
+   }
+  ],
+  "origin": "Chipped off the Crowcrest cliffs on a cold night."
  },
  {
   "dex_id": 13,
@@ -536,6 +628,10 @@
    "STONE",
    "UMBRA"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "shalebat",
   "base": {
    "hp": 92,
    "atk": 106,
@@ -543,8 +639,6 @@
    "spd": 60,
    "def": 122
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "thick_hide",
   "learnset": {
    "1": [
@@ -572,7 +666,8 @@
   "bond_rate": 0.12,
   "height": "2.2 m",
   "habitat": "Deep quarries, Rift edges",
-  "lore": "Slow, patient and very heavy. The glass shards on its back ring like bells when it laughs."
+  "lore": "Slow, patient and very heavy. The glass shards on its back ring like bells when it laughs.",
+  "origin": "Its stone hardened deep in the cliff, far from any light."
  },
  {
   "dex_id": 14,
@@ -580,6 +675,10 @@
   "elements": [
    "GALE"
   ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "zephlet",
   "base": {
    "hp": 54,
    "atk": 62,
@@ -587,8 +686,6 @@
    "spd": 88,
    "def": 50
   },
-  "evolves_to": "Tempestrel",
-  "evolve_level": 28,
   "trait": "last_stand",
   "learnset": {
    "1": [
@@ -614,7 +711,15 @@
   "bond_rate": 0.55,
   "height": "0.7 m",
   "habitat": "Ridges, windy passes",
-  "lore": "It spreads its kite membrane and lets the wind push it along the ground. It has never once looked where it was going."
+  "lore": "It spreads its kite membrane and lets the wind push it along the ground. It has never once looked where it was going.",
+  "unfold": [
+   {
+    "to": "Tempestrel",
+    "rule": "ring",
+    "value": 28
+   }
+  ],
+  "origin": "A gust that got lost between the hills and stayed."
  },
  {
   "dex_id": 15,
@@ -622,6 +727,10 @@
   "elements": [
    "GALE"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "zephlet",
   "base": {
    "hp": 76,
    "atk": 94,
@@ -629,8 +738,6 @@
    "spd": 118,
    "def": 70
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "last_stand",
   "learnset": {
    "1": [
@@ -655,7 +762,8 @@
   "bond_rate": 0.12,
   "height": "1.5 m",
   "habitat": "High crags",
-  "lore": "It rides storm winds over the peaks. Its crest crackles before a gale; shepherds watch it to know when to head home."
+  "lore": "It rides storm winds over the peaks. Its crest crackles before a gale; shepherds watch it to know when to head home.",
+  "origin": "Rides out every storm on the coast and returns unhurt."
  },
  {
   "dex_id": 16,
@@ -663,6 +771,10 @@
   "elements": [
    "LUMEN"
   ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "wickit",
   "base": {
    "hp": 52,
    "atk": 50,
@@ -670,8 +782,6 @@
    "spd": 66,
    "def": 52
   },
-  "evolves_to": "Lumenewt",
-  "evolve_level": 22,
   "trait": "light_sleeper",
   "learnset": {
    "1": [
@@ -697,10 +807,18 @@
     "Prism Ray"
    ]
   },
-  "bond_rate": 0.5,
+  "bond_rate": 0.35,
   "height": "0.3 m",
   "habitat": "Lamp-lit lanes, old mines",
-  "lore": "The little light on its crest never goes out, even under water. Miners once kept one in each tunnel as a friend."
+  "lore": "The little light on its crest never goes out, even under water. Miners once kept one in each tunnel as a friend.",
+  "unfold": [
+   {
+    "to": "Lumenewt",
+    "rule": "ring",
+    "value": 22
+   }
+  ],
+  "origin": "The last flicker of a candle that a child would not blow out."
  },
  {
   "dex_id": 17,
@@ -709,6 +827,10 @@
    "LUMEN",
    "TIDE"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "wickit",
   "base": {
    "hp": 74,
    "atk": 64,
@@ -716,8 +838,6 @@
    "spd": 90,
    "def": 78
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "light_sleeper",
   "learnset": {
    "1": [
@@ -750,7 +870,8 @@
   "bond_rate": 0.15,
   "height": "1.2 m",
   "habitat": "Clear streams, cave pools",
-  "lore": "Its gill stalks glow in slow waves, like breathing. Children follow the lights along the riverbank at dusk."
+  "lore": "Its gill stalks glow in slow waves, like breathing. Children follow the lights along the riverbank at dusk.",
+  "origin": "Found where lamp light falls on still water."
  },
  {
   "dex_id": 18,
@@ -758,6 +879,10 @@
   "elements": [
    "UMBRA"
   ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "mirkmole",
   "base": {
    "hp": 62,
    "atk": 78,
@@ -765,8 +890,6 @@
    "spd": 68,
    "def": 66
   },
-  "evolves_to": "Duskdigger",
-  "evolve_level": 22,
   "trait": "steady",
   "learnset": {
    "1": [
@@ -799,7 +922,15 @@
   "height": "0.5 m",
   "habitat": "Tunnels, dark cellars",
   "lore": "It wears a hood of shadow against the sun. It is not afraid of the dark, only of being disturbed.",
-  "evolve_map": "murk_hollow"
+  "unfold": [
+   {
+    "to": "Duskdigger",
+    "rule": "ring",
+    "value": 22,
+    "map": "murk_hollow"
+   }
+  ],
+  "origin": "Dug its way up from the dark under Murk Hollow."
  },
  {
   "dex_id": 19,
@@ -808,6 +939,10 @@
    "UMBRA",
    "STONE"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "mirkmole",
   "base": {
    "hp": 90,
    "atk": 110,
@@ -815,8 +950,6 @@
    "spd": 74,
    "def": 96
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "steady",
   "learnset": {
    "1": [
@@ -846,7 +979,8 @@
   "bond_rate": 0.15,
   "height": "1.6 m",
   "habitat": "Old mine galleries",
-  "lore": "It carries a slab of basalt on its back like a roof. Abandoned mines are often its doing, dug in a single night."
+  "lore": "It carries a slab of basalt on its back like a roof. Abandoned mines are often its doing, dug in a single night.",
+  "origin": "Only a Mirkmole that saw Murk Hollow's dark grows like this."
  },
  {
   "dex_id": 20,
@@ -855,6 +989,10 @@
    "TIDE",
    "BLOOM"
   ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "kelpup",
   "base": {
    "hp": 62,
    "atk": 66,
@@ -862,8 +1000,6 @@
    "spd": 70,
    "def": 56
   },
-  "evolves_to": "Kelphound",
-  "evolve_level": 0,
   "trait": "deep_roots",
   "learnset": {
    "1": [
@@ -892,11 +1028,18 @@
     "Thorn Volley"
    ]
   },
-  "bond_rate": 0.5,
+  "bond_rate": 0.35,
   "height": "0.5 m",
   "habitat": "Rocky shores, tide pools",
   "lore": "Its kelp fronds grow back when trimmed, so it loves a haircut. It barks at waves it doesn't like.",
-  "evolve_item": "tide_pearl"
+  "unfold": [
+   {
+    "to": "Kelphound",
+    "rule": "item",
+    "value": "tide_pearl"
+   }
+  ],
+  "origin": "Washed up in a knot of kelp after a high tide."
  },
  {
   "dex_id": 21,
@@ -905,6 +1048,10 @@
    "TIDE",
    "BLOOM"
   ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "kelpup",
   "base": {
    "hp": 80,
    "atk": 96,
@@ -912,8 +1059,6 @@
    "spd": 90,
    "def": 78
   },
-  "evolves_to": null,
-  "evolve_level": 0,
   "trait": "deep_roots",
   "learnset": {
    "1": [
@@ -937,6 +1082,916 @@
   "bond_rate": 0.15,
   "height": "1.4 m",
   "habitat": "Kelp forests, sea cliffs",
-  "lore": "Its mane streams out behind it when it swims, hiding it from bigger hunters. It guards fishing boats it has decided are its own."
+  "lore": "Its mane streams out behind it when it swims, hiding it from bigger hunters. It guards fishing boats it has decided are its own.",
+  "origin": "A Kelpup that found a pearl and grew around its glow."
+ },
+ {
+  "dex_id": 22,
+  "name": "Blotling",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "blotling",
+  "base": {
+   "hp": 58,
+   "atk": 44,
+   "foc": 80,
+   "spd": 72,
+   "def": 56
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Mirk Nip"
+   ],
+   "5": [
+    "Murk Veil"
+   ],
+   "9": [
+    "Chill Mist"
+   ],
+   "13": [
+    "Gloom Ripple"
+   ],
+   "17": [
+    "Spindrift Shot"
+   ],
+   "21": [
+    "Murk Call"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.3 m",
+  "habitat": "Old inkwells, damp corners",
+  "lore": "It copies any line it sees onto the nearest wall. Wipe it off and the Blotling looks hurt.",
+  "unfold": [
+   {
+    "to": "Scrivane",
+    "rule": "map_pages",
+    "value": 6
+   }
+  ],
+  "origin": "Crawled out of Mirela's old inkwells in the lighthouse."
+ },
+ {
+  "dex_id": 23,
+  "name": "Scrivane",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "blotling",
+  "base": {
+   "hp": 74,
+   "atk": 58,
+   "foc": 112,
+   "spd": 104,
+   "def": 72
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Mirk Nip",
+    "Murk Veil"
+   ],
+   "24": [
+    "Night Siphon"
+   ],
+   "28": [
+    "Spindrift Shot"
+   ],
+   "33": [
+    "Murk Call"
+   ],
+   "37": [
+    "Tide Call"
+   ],
+   "41": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.12,
+  "height": "1.3 m",
+  "habitat": "Map rooms, quiet shores",
+  "lore": "It draws maps of places it has never been. Wayfarers who followed them say the roads were right.",
+  "origin": "A Blotling that read every page of Mirela's map book."
+ },
+ {
+  "dex_id": 24,
+  "name": "Hushkin",
+  "elements": [
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "hushkin",
+  "base": {
+   "hp": 70,
+   "atk": 52,
+   "foc": 54,
+   "spd": 60,
+   "def": 80
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hush"
+   ],
+   "5": [
+    "Cower Shade"
+   ],
+   "9": [
+    "Mirk Nip"
+   ],
+   "13": [
+    "Murk Veil"
+   ],
+   "17": [
+    "Dusk Rake"
+   ],
+   "21": [
+    "Night Siphon"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.4 m",
+  "habitat": "Silent caves, empty halls",
+  "lore": "It has no voice at all. When it is glad, the sign on its brow glows a little brighter.",
+  "unfold": [
+   {
+    "to": "Silentra",
+    "rule": "echo_streak",
+    "value": 10
+   }
+  ],
+  "origin": "Born from the Hush itself, the silence that fell over Veydal."
+ },
+ {
+  "dex_id": 25,
+  "name": "Silentra",
+  "elements": [
+   "UMBRA",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "hushkin",
+  "base": {
+   "hp": 90,
+   "atk": 70,
+   "foc": 80,
+   "spd": 76,
+   "def": 96
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Hush",
+    "Dusk Rake",
+    "Murk Veil"
+   ],
+   "26": [
+    "Glint"
+   ],
+   "30": [
+    "Gloom Ripple"
+   ],
+   "35": [
+    "Candle Ward"
+   ],
+   "39": [
+    "Dusk Gnaw"
+   ],
+   "43": [
+    "Still Thought"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.6 m",
+  "habitat": "Ruins at the edge of Rifts",
+  "lore": "It speaks only in floating signs of light. Those who learn to read them never feel alone again.",
+  "origin": "A Hushkin that heard ten perfect echoes and answered in light."
+ },
+ {
+  "dex_id": 26,
+  "name": "Paddlewisp",
+  "elements": [
+   "TIDE",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "paddlewisp",
+  "base": {
+   "hp": 52,
+   "atk": 72,
+   "foc": 54,
+   "spd": 88,
+   "def": 46
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Breeze Slice"
+   ],
+   "4": [
+    "Fizz Pop"
+   ],
+   "8": [
+    "Drift Step"
+   ],
+   "12": [
+    "Salt Snap"
+   ],
+   "17": [
+    "Updraft"
+   ],
+   "21": [
+    "Undertow"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.3 m",
+  "habitat": "Jetties, windy shallows",
+  "lore": "On stormy nights it pushes small boats gently back to the jetty, then spins away before anyone can thank it.",
+  "unfold": [
+   {
+    "to": "Ferrowyn",
+    "rule": "ring",
+    "value": 25
+   }
+  ],
+  "origin": "Lives under Aldo's ferry and was born in its wake."
+ },
+ {
+  "dex_id": 27,
+  "name": "Ferrowyn",
+  "elements": [
+   "TIDE",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "paddlewisp",
+  "base": {
+   "hp": 72,
+   "atk": 100,
+   "foc": 76,
+   "spd": 118,
+   "def": 64
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Salt Snap",
+    "Drift Step"
+   ],
+   "25": [
+    "Undertow"
+   ],
+   "29": [
+    "Gale Scythe"
+   ],
+   "33": [
+    "Tide Call"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.12,
+  "height": "1.4 m",
+  "habitat": "Ferry crossings, open water",
+  "lore": "Its sails catch every gust. Ferry crews leave a seat free at the bow in case it wants to ride along.",
+  "origin": "A Paddlewisp that guided a ferry through a whole storm season."
+ },
+ {
+  "dex_id": 28,
+  "name": "Talusk",
+  "elements": [
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "talusk",
+  "base": {
+   "hp": 60,
+   "atk": 66,
+   "foc": 36,
+   "spd": 60,
+   "def": 82
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "5": [
+    "Bowl Over"
+   ],
+   "9": [
+    "Tunnel Strike"
+   ],
+   "13": [
+    "All-In Crash"
+   ],
+   "17": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.5 m",
+  "habitat": "Scree slopes, mountain paths",
+  "lore": "If you trip over a Talusk it rolls together again and blinks at you, a little offended.",
+  "unfold": [
+   {
+    "to": "Talusgard",
+    "rule": "ring",
+    "value": 19
+   }
+  ],
+  "origin": "A heap of Crowcrest scree that woke up with one grey eye."
+ },
+ {
+  "dex_id": 29,
+  "name": "Talusgard",
+  "elements": [
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "talusk",
+  "base": {
+   "hp": 80,
+   "atk": 90,
+   "foc": 44,
+   "spd": 84,
+   "def": 112
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down",
+    "Tunnel Strike"
+   ],
+   "19": [
+    "Tremor Thud"
+   ],
+   "24": [
+    "All-In Crash"
+   ],
+   "30": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.12,
+  "height": "1.1 m",
+  "habitat": "Mountain passes, old waymarks",
+  "lore": "It stacks one path stone on its back for every lost Wayfarer it has led home.",
+  "unfold": [
+   {
+    "to": "Cairnhold",
+    "rule": "ring",
+    "value": 37
+   }
+  ],
+  "origin": "A Talusk that carried its first waymark up the Crowcrest."
+ },
+ {
+  "dex_id": 30,
+  "name": "Cairnhold",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "talusk",
+  "base": {
+   "hp": 100,
+   "atk": 114,
+   "foc": 50,
+   "spd": 96,
+   "def": 140
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Tunnel Strike",
+    "Tremor Thud",
+    "Hunker Down"
+   ],
+   "37": [
+    "Kiln Strike"
+   ],
+   "41": [
+    "Cairn Crash"
+   ],
+   "45": [
+    "Ash Call"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "2.4 m",
+  "habitat": "High ridges, beacon hills",
+  "lore": "A beacon fire burns on its top stone. On dark nights it climbs the ridge so travellers can find the way.",
+  "origin": "The oldest waymark of the Crowcrest, still walking."
+ },
+ {
+  "dex_id": 31,
+  "name": "Fluting",
+  "elements": [
+   "GALE",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "fluting",
+  "base": {
+   "hp": 54,
+   "atk": 46,
+   "foc": 84,
+   "spd": 76,
+   "def": 54
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Lichen Lash"
+   ],
+   "5": [
+    "Puffcap Haze"
+   ],
+   "9": [
+    "Updraft"
+   ],
+   "13": [
+    "Sap Draw"
+   ],
+   "17": [
+    "Drift Step"
+   ],
+   "21": [
+    "Bloom Call"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.6 m",
+  "habitat": "Reed beds, marsh edges",
+  "lore": "The wind plays it like a flute. Lost walkers who follow the tune end up on the path home.",
+  "unfold": [
+   {
+    "to": "Marshfife",
+    "rule": "time",
+    "value": "dusk",
+    "map": "saltmarsh"
+   }
+  ],
+  "origin": "A hollow reed of the Saltmarsh that learned the wind's songs."
+ },
+ {
+  "dex_id": 32,
+  "name": "Marshfife",
+  "elements": [
+   "GALE",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "fluting",
+  "base": {
+   "hp": 74,
+   "atk": 56,
+   "foc": 120,
+   "spd": 110,
+   "def": 72
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Updraft",
+    "Sap Draw",
+    "Puffcap Haze"
+   ],
+   "24": [
+    "Squall"
+   ],
+   "28": [
+    "Bloom Burst"
+   ],
+   "33": [
+    "Bloom Call"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.5 m",
+  "habitat": "Saltmarsh at dusk",
+  "lore": "At dusk its song carries across the whole marsh, and the reeds bend toward it to listen.",
+  "origin": "A Fluting that played through one long Saltmarsh dusk."
+ },
+ {
+  "dex_id": 33,
+  "name": "Glasstarn",
+  "elements": [
+   "TIDE",
+   "LUMEN"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "glasstarn",
+  "base": {
+   "hp": 82,
+   "atk": 52,
+   "foc": 100,
+   "spd": 110,
+   "def": 86
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Glint"
+   ],
+   "6": [
+    "Chill Mist"
+   ],
+   "12": [
+    "Spindrift Shot"
+   ],
+   "18": [
+    "Prism Ray"
+   ],
+   "24": [
+    "Still Thought"
+   ],
+   "30": [
+    "Tide Call"
+   ],
+   "39": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "0.2 m",
+  "habitat": "Still mountain tarns",
+  "lore": "It only shows itself when there is no wind at all. Then it holds the whole sky on its back.",
+  "origin": "A piece of a Crowcrest mountain lake that mirrors the sky."
+ },
+ {
+  "dex_id": 34,
+  "name": "Lanternel",
+  "elements": [
+   "LUMEN",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "lanternel",
+  "base": {
+   "hp": 66,
+   "atk": 60,
+   "foc": 116,
+   "spd": 120,
+   "def": 62
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Breeze Slice"
+   ],
+   "6": [
+    "Candle Ward"
+   ],
+   "11": [
+    "Glint"
+   ],
+   "17": [
+    "Updraft"
+   ],
+   "22": [
+    "Prism Ray"
+   ],
+   "27": [
+    "Dawn Call"
+   ],
+   "33": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.4 m",
+  "habitat": "Lamp posts, lit windows",
+  "lore": "It follows the lighthouse beam as it sweeps the coast. Since the first storm it has never left Brindlewick.",
+  "origin": "Followed the lighthouse lights to Brindlewick on the first storm night."
+ },
+ {
+  "dex_id": 35,
+  "name": "Seamlet",
+  "elements": [
+   "VOLT",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "seamlet",
+  "base": {
+   "hp": 50,
+   "atk": 52,
+   "foc": 78,
+   "spd": 78,
+   "def": 48
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Mirk Nip"
+   ],
+   "5": [
+    "Siphon Spark"
+   ],
+   "9": [
+    "Murk Veil"
+   ],
+   "13": [
+    "Arc Bolt"
+   ],
+   "17": [
+    "Charged Mist"
+   ],
+   "21": [
+    "Night Siphon"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.2 m",
+  "habitat": "Edges of Rifts",
+  "lore": "It tries to sew the Rifts shut with threads of light. The threads never hold, so it keeps trying.",
+  "unfold": [
+   {
+    "to": "Mendlace",
+    "rule": "mended",
+    "value": "origin"
+   }
+  ],
+  "origin": "A spark that jumped from the edge of a Rift."
+ },
+ {
+  "dex_id": 36,
+  "name": "Mendlace",
+  "elements": [
+   "VOLT",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "seamlet",
+  "base": {
+   "hp": 70,
+   "atk": 66,
+   "foc": 112,
+   "spd": 110,
+   "def": 68
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Siphon Spark",
+    "Arc Bolt",
+    "Murk Veil"
+   ],
+   "24": [
+    "Gloom Ripple"
+   ],
+   "28": [
+    "Spark Call"
+   ],
+   "33": [
+    "Storm Gnash"
+   ],
+   "38": [
+    "Overcharge"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.2 m",
+  "habitat": "Mended Rifts",
+  "lore": "Where a Rift was mended, a Mendlace stays behind and checks the seam every night.",
+  "origin": "A Seamlet that saw its own Rift mended at last."
+ },
+ {
+  "dex_id": 37,
+  "name": "Croziel",
+  "elements": [
+   "BLOOM"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "croziel",
+  "base": {
+   "hp": 56,
+   "atk": 48,
+   "foc": 76,
+   "spd": 62,
+   "def": 58
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Bowl Over"
+   ],
+   "4": [
+    "Puffcap Haze"
+   ],
+   "8": [
+    "Sap Draw"
+   ],
+   "12": [
+    "Thorn Volley"
+   ],
+   "17": [
+    "Bloom Call"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.4 m",
+  "habitat": "Fern slopes, shady steps",
+  "lore": "It sleeps rolled up tight. In spring a whole slope of them uncurls at once.",
+  "unfold": [
+   {
+    "to": "Frondmere",
+    "rule": "ring",
+    "value": 21
+   }
+  ],
+  "origin": "A young fern frond of the Fernstair that never stopped curling."
+ },
+ {
+  "dex_id": 38,
+  "name": "Frondmere",
+  "elements": [
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "croziel",
+  "base": {
+   "hp": 74,
+   "atk": 62,
+   "foc": 90,
+   "spd": 92,
+   "def": 76
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Bowl Over",
+    "Puffcap Haze"
+   ],
+   "21": [
+    "Thorn Volley"
+   ],
+   "25": [
+    "Sap Draw"
+   ],
+   "29": [
+    "Bloom Call"
+   ],
+   "40": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.12,
+  "height": "1.6 m",
+  "habitat": "Old fern woods",
+  "lore": "Its antlers are open fern fronds. Each year it unrolls a new one.",
+  "origin": "A Croziel that finally unrolled, frond by frond."
+ },
+ {
+  "dex_id": 39,
+  "name": "Brinelet",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "brinelet",
+  "base": {
+   "hp": 62,
+   "atk": 72,
+   "foc": 40,
+   "spd": 74,
+   "def": 70
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Fizz Pop"
+   ],
+   "5": [
+    "Hunker Down"
+   ],
+   "9": [
+    "Salt Snap"
+   ],
+   "13": [
+    "Tunnel Strike"
+   ],
+   "18": [
+    "Undertow"
+   ],
+   "23": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.3 m",
+  "habitat": "Salt pans, dry flats",
+  "lore": "Rain makes it shrink and sulk. A dry summer makes it grow almost a hand taller.",
+  "unfold": [
+   {
+    "to": "Saltspire",
+    "rule": "ring",
+    "value": 27
+   }
+  ],
+  "origin": "A salt crystal from the pans of the Saltmarsh."
+ },
+ {
+  "dex_id": 40,
+  "name": "Saltspire",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "brinelet",
+  "base": {
+   "hp": 82,
+   "atk": 104,
+   "foc": 50,
+   "spd": 96,
+   "def": 104
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Salt Snap",
+    "Tunnel Strike",
+    "Hunker Down"
+   ],
+   "27": [
+    "Breaker Plunge"
+   ],
+   "31": [
+    "Tremor Thud"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "2.0 m",
+  "habitat": "Salt flats, coastal cliffs",
+  "lore": "After a dry summer it stands like a white pillar on the flats. Sailors use it to steer by.",
+  "origin": "A Brinelet that grew through three dry summers."
  }
 ]

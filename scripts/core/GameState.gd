@@ -30,7 +30,7 @@ var storage: Array[Spirling] = []
 ## Iron Oath (item 15, opt-in at new game): Spirlings that faint retire to the Sanctuary.
 var iron_oath: bool = false
 var sanctuary: Array[Spirling] = []
-## Spirlog: species name -> {"seen": bool, "bonded": bool}.
+## Spirlog: species name -> entry (see new_spirlog_entry()).
 var spirlog: Dictionary = {}
 var region: String = "veydal"
 var rifts_sealed: Array[String] = []
@@ -40,6 +40,12 @@ var difficulty: Difficulty = Difficulty.TAMER
 ## Item id -> count.
 var inventory: Dictionary = {}
 var money: int = 0
+## Waymarks (plan area 8): earned only by playing, never bought or traded. Change through Waymarks.earn().
+var waymarks: int = 0
+## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
+var daily_tasks: Dictionary = {}
+## Short reward notes waiting to be shown by the overworld (not saved).
+var notices: Array[String] = []
 
 ## Overworld position.
 var current_map: String = "lighthouse"
@@ -276,6 +282,9 @@ func reset() -> void:
 	difficulty = Difficulty.TAMER
 	inventory = {}
 	money = 0
+	waymarks = 0
+	daily_tasks = {}
+	notices.clear()
 	current_map = "lighthouse"
 	player_cell = Vector2i(4, 4)
 	facing = "down"
@@ -332,6 +341,8 @@ func to_dict() -> Dictionary:
 		"spirlog": spirlog.duplicate(true),
 		"inventory": inventory.duplicate(),
 		"money": money,
+		"waymarks": waymarks,
+		"daily_tasks": daily_tasks.duplicate(true),
 		"map": current_map,
 		"cell": [player_cell.x, player_cell.y],
 		"facing": facing,
@@ -366,10 +377,16 @@ func from_dict(d: Dictionary) -> void:
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			storage.append(s)
-	spirlog = (d.get("spirlog", {}) as Dictionary).duplicate(true)
+	for k: Variant in (d.get("spirlog", {}) as Dictionary):
+		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
 	for k: Variant in (d.get("inventory", {}) as Dictionary):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
+	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
+	# through the achievement reward, never here.
+	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
+	var dt: Variant = d.get("daily_tasks", {})
+	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
 	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))
@@ -377,27 +394,25 @@ func from_dict(d: Dictionary) -> void:
 	heal_map = str(d.get("heal_map", "lighthouse"))
 	var hc: Array = d.get("heal_cell", [4, 4])
 	heal_cell = Vector2i(int(hc[0]), int(hc[1]))
-	flags = (d.get("flags", {}) as Dictionary).duplicate()
-	for k: Variant in (d.get("matchups", {}) as Dictionary):
-		known_matchups[str(k)] = float(d.matchups[k])
+	flags = _as_dict(d.get("flags", {}))
+	var mu: Dictionary = _as_dict(d.get("matchups", {}))
+	for k: Variant in mu:
+		if mu[k] is float or mu[k] is int:
+			known_matchups[str(k)] = float(mu[k])
 	play_time = float(d.get("play_time", 0.0))
-	visited_rests = (d.get("rests", {}) as Dictionary).duplicate(true)
+	visited_rests = _as_dict(d.get("rests", {}))
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
-	records = _dict_or_empty(d.get("records", {})).duplicate()
-	switch_progress = _dict_or_empty(d.get("switches", {})).duplicate()
-	world_state = _dict_or_empty(d.get("world", {})).duplicate(true)
+	records = _as_dict(d.get("records", {}))
+	switch_progress = _as_dict(d.get("switches", {}))
+	world_state = _as_dict(d.get("world", {}))
 	iron_oath = bool(d.get("iron_oath", false))
 	for sd: Variant in d.get("sanctuary", []):
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			sanctuary.append(s)
 	in_game = true
-
-## [param v] if it is a Dictionary, else an empty one (damaged saves must not crash the loader).
-static func _dict_or_empty(v: Variant) -> Dictionary:
-	return v if v is Dictionary else {}
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
@@ -512,7 +527,12 @@ func first_healthy_index() -> int:
 ## Adds a newly bonded Spirling to the party, or to storage if the party is full.
 ## Returns true if it joined the party.
 func receive_spirling(s: Spirling) -> bool:
+	if s.origin_map.is_empty():
+		s.origin_map = current_map
+		s.met_ring = s.level
+		s.met_day = today()
 	mark_seen(s.data.species_name, true)
+	note_spirlog(s)
 	s.restore()
 	if party.size() < MAX_PARTY:
 		party.append(s)
@@ -520,12 +540,73 @@ func receive_spirling(s: Spirling) -> bool:
 	storage.append(s)
 	return false
 
+## A Spirlog entry: seen and bonded, where and on which day it was first seen, and the
+## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
+static func new_spirlog_entry() -> Dictionary:
+	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
+		"variants": [], "prism_seen": false, "tempers": []}
+
+## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
+static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
+	var out: Dictionary = new_spirlog_entry()
+	if e is Dictionary:
+		var src: Dictionary = (e as Dictionary).duplicate(true)
+		for k: Variant in src:
+			out[str(k)] = src[k]
+	out["seen"] = out.seen is bool and out.seen or out.bonded is bool and out.bonded
+	out["bonded"] = out.bonded is bool and out.bonded
+	out["first_day"] = int(out.first_day) if out.first_day is int or out.first_day is float else 0
+	return out
+
+## A copy of v if it is a Dictionary, else {} (saves can be damaged or edited).
+static func _as_dict(v: Variant) -> Dictionary:
+	return (v as Dictionary).duplicate(true) if v is Dictionary else {}
+
+## Damaged-save guards: a number (or bool) as int, anything else -> [param fallback].
+static func as_int(v: Variant, fallback: int = 0) -> int:
+	if v is int or v is bool:
+		return int(v)
+	if v is float:
+		return int(clampf(v, -1e15, 1e15))
+	return fallback
+
+static func as_bool(v: Variant) -> bool:
+	return bool(v) if v is bool or v is int or v is float else false
+
+static func as_dict(v: Variant) -> Dictionary:
+	return v if v is Dictionary else {}
+
+## Days since 1970 (local device date), for "met on day N".
+static func today() -> int:
+	return int(Time.get_unix_time_from_system() / 86400.0)
+
 func mark_seen(species: String, bonded: bool = false) -> void:
-	var e: Dictionary = spirlog.get(species, {"seen": false, "bonded": false})
+	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(species, {}))
+	if not bool(e.seen):
+		e["first_map"] = current_map
+		e["first_day"] = today()
 	e["seen"] = true
 	if bonded:
 		e["bonded"] = true
 	spirlog[species] = e
+
+## An Echo call ended with [param score]: a fully right call adds one to every team member's
+## streak, a miss starts them over (unfold rule "echo_streak", Hushkin to Silentra).
+func note_echo(score: float) -> void:
+	for s: Spirling in party:
+		s.echo_streak = s.echo_streak + 1 if score >= 1.0 else 0
+
+## Records what [param s] shows the Spirlog: its Prism colour, imprint and temperament.
+func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
+	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(s.data.species_name, {}))
+	if s.prism:
+		e["prism_seen"] = true
+	if not s.variant.is_empty() and not (e.variants as Array).has(s.variant):
+		(e.variants as Array).append(s.variant)
+	var t: String = str(s.temperament().id)
+	if show_temper and not (e.tempers as Array).has(t):
+		(e.tempers as Array).append(t)
+	spirlog[s.data.species_name] = e
 
 ## Furls [param s] back into its earlier form. A form that needed an item to unfurl (Tide
 ## Pearl) gives the item back, so "you can unfurl it again later" stays true.
