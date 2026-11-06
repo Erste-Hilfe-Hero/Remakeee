@@ -30,6 +30,8 @@ jobs:
       - run: tools/ip_check.sh
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n_extract.py de --check
+      - name: A save version bump brings a fixture and a migration test
+        run: python3 tools/save_version_check.py
       - name: Store web pages match docs/legal
         run: python3 tools/site/build_site.py --check
       - name: Store listing material (texts, screenshots, icons, presets)

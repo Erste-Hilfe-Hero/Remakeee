@@ -97,8 +97,10 @@
   "goes up",
   "lowest",
   "peak",
+  "read-back check failed for %s",
   "rename failed: %s",
-  "unknown function %s"
+  "unknown function %s",
+  "{\n\t\"_sha256\": \""
  ],
  "strings": {
   "\n\n(tap to continue)": "\n\n(tippen zum Fortfahren)",
@@ -898,6 +900,7 @@
   "The ring of light above it never touches the water. Old maps mark its lake with a single drawn circle.": "Der Lichtring über ihm berührt nie das Wasser. Alte Karten markieren seinen See mit einem einzigen gezeichneten Kreis.",
   "The satchel is empty.": "Die Umhängetasche ist leer.",
   "The save could not be read.": "Der Spielstand konnte nicht gelesen werden.",
+  "The save was damaged. The latest backup was loaded.": "Der Spielstand war beschädigt. Die neueste Sicherung wurde geladen.",
   "The shadows in the corner squirm. It's a whole swarm of hushed Spirlings!": "Die Schatten in der Ecke winden sich. Ein ganzer Schwarm verstummter Spirlings!",
   "The spiral stairs lead up to the lamp room.": "Die Wendeltreppe führt hinauf zum Lampenraum.",
   "The swarm scatters into the dark galleries.": "Der Schwarm zerstreut sich in die dunklen Stollen.",
