@@ -9,7 +9,7 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online"]
-SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
+SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
 def looks_like_text(s):
@@ -73,7 +73,7 @@ def strings():
     quests = json.load(open(os.path.join(ROOT, "data/quests.json")))
     for group in quests.values():
         for q in group if isinstance(group, list) else []:
-            for k in ("title", "chapter", "text", "where", "hint"):
+            for k in ("title", "act", "chapter", "text", "where", "hint"):
                 if isinstance(q.get(k), str):
                     found.append(q[k])
     items = json.load(open(os.path.join(ROOT, "data/items.json")))

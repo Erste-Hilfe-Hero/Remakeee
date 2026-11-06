@@ -89,10 +89,33 @@ static func all_flags() -> Array[String]:
 		out.append(str((g as Dictionary).get("done", "")))
 	return out
 
+## Flag that remembers a chapter card was shown.
+static func card_flag(goal: Dictionary) -> String:
+	return "card_%s" % str(goal.get("chapter", goal.get("id", ""))).to_snake_case().left(40)
+
+## The chapter card to show when the goal moves from [param before] to [param now]:
+## [chapter] or [act, chapter] when the act changes too; [] when the chapter stays the same
+## or its card was shown already.
+static func card_for(before: int, now: int, flags: Dictionary) -> Array[String]:
+	var goals: Array = main_goals()
+	if now < 0 or now >= goals.size():
+		return []
+	var g: Dictionary = goals[now]
+	var old: Dictionary = goals[before] if before >= 0 and before < goals.size() else {}
+	var chapter: String = str(g.get("chapter", ""))
+	if chapter.is_empty() or chapter == str(old.get("chapter", "")) or bool(flags.get(card_flag(g), false)):
+		return []
+	var act: String = str(g.get("act", ""))
+	if not act.is_empty() and act != str(old.get("act", "")):
+		return [act, chapter]
+	return [chapter]
+
 ## Text for the Goals screen.
 static func summary(flags: Dictionary) -> String:
 	var g: Dictionary = current(flags)
 	var lines: PackedStringArray = []
+	if not str(g.get("act", "")).is_empty():
+		lines.append(str(g.act))
 	if not str(g.get("chapter", "")).is_empty():
 		lines.append(str(g.chapter))
 	lines.append("Goal")

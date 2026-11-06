@@ -7,7 +7,7 @@ extends RefCounted
 
 const KNOWN_ACTIONS: Array[String] = ["storage", "heal", "give_item", "set_flag", "shop", "spark_read",
 	"quest_show", "switch", "gauntlet", "weekly", "season", "choose_starter", "page", "set_var",
-	"add_var", "battle", "scene"]
+	"add_var", "battle", "scene", "warp"]
 
 static func validate() -> PackedStringArray:
 	var errors: PackedStringArray = []
