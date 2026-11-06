@@ -55,6 +55,7 @@
   }
  ],
  "npcs": [
+  {"id": "tower_keeper", "x": 9, "y": 2, "facing": "down", "dialogue": "cinder_rift/tower_keeper", "sprite": "villager", "show_flag": "rift_cinder_sealed"},
   {
    "id": "acolyte_a",
    "x": 1,

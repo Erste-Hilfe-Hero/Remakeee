@@ -82,6 +82,7 @@ func _ready() -> void:
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
 		"gauntlet": _action_gauntlet,
+		"rift_tower": _action_rift_tower,
 		"weekly": _action_weekly,
 		"master": _action_master,
 		"merchant": _action_merchant,
@@ -1571,6 +1572,71 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	elif floors > best:
 		await say(["New best: floor %d of %d!" % [floors, Gauntlet.FLOORS]] as Array[String])
 
+## "rift_tower <id>": a Rift tower (plan 3266-3275). Up to three Spirlings at ring 30 or more
+## climb fifteen floors; the team rests every five floors.
+func _action_rift_tower(args: PackedStringArray, _speaker: NPC) -> void:
+	var t: Dictionary = RiftTower.find(args[0] if not args.is_empty() else "")
+	if t.is_empty() or not RiftTower.is_open(t):
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var ok: Array[Spirling] = RiftTower.eligible(GameState.party)
+	if ok.is_empty():
+		await menu.info(RiftTower.entrance_text(t) + "\n" + Loc.t("None of your Spirlings is at ring %d yet.") % RiftTower.MIN_RING)
+		menu.queue_free()
+		return
+	if not await menu.confirm(RiftTower.entrance_text(t) + "\n" + Loc.t("Enter?")):
+		menu.queue_free()
+		return
+	var team: Array[Spirling] = []
+	while team.size() < RiftTower.MAX_TEAM and team.size() < ok.size():
+		var left: Array[Spirling] = ok.filter(func(s: Spirling) -> bool: return not s in team)
+		if team.size() > 0 and left.is_empty():
+			break
+		var names: Array[String] = []
+		for s: Spirling in left:
+			names.append("%s (%s)" % [s.display_name(), Loc.t("Ring %d") % s.level])
+		if team.size() > 0:
+			names.append(Loc.t("Go with %d") % team.size())
+		var i: int = await menu.pick_strings(Loc.t("Pick Spirling %d of up to %d") % [team.size() + 1, RiftTower.MAX_TEAM], names)
+		if i < 0:
+			menu.queue_free()
+			return
+		if i >= left.size():
+			break
+		team.append(left[i])
+	menu.queue_free()
+	var run := RiftTower.new(t, GameState.rng.randi())
+	GameState.party_on_loan = GameState.party
+	GameState.party = team
+	GameState.heal_party()
+	var cleared: int = 0
+	while cleared < RiftTower.floors(t):
+		await say([RiftTower.floor_label(t, cleared)] as Array[String])
+		var info: Dictionary = {"name": Gauntlet.new(run.seed_value, 1).echo_name(cleared), "ai": RiftTower.ai_for(cleared),
+			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared)}
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(run.team(cleared), false, info)
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		cleared += 1
+		if cleared % RiftTower.SECTION == 0 and cleared < RiftTower.floors(t):
+			GameState.heal_party()
+			var m := MenuHost.new()
+			_ui.add_child(m)
+			var on: bool = await m.confirm(Loc.t("Your team rests. Go on?"))
+			m.queue_free()
+			if not on:
+				break
+	GameState.party = GameState.party_on_loan
+	GameState.party_on_loan = []
+	var lines: Array[String] = [Loc.t("%s: %d of %d floors.") % [Loc.t(str(t.name)), cleared, RiftTower.floors(t)]]
+	lines.append_array(RiftTower.finish(t, cleared))
+	await say(lines)
+	await announce_achievements()
+
 ## Endless stretch (plan 3264-3265): one fight after another, one ring stronger each floor,
 ## no healing; the run ends with the first loss or when the player stops.
 func _run_endless() -> void:
@@ -2302,6 +2368,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
+	scene.backdrop_shade = float(trainer.get("shade", 0.0))
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)

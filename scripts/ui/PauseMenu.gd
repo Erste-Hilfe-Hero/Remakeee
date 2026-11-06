@@ -252,6 +252,8 @@ func run_records() -> void:
 			lines.append("Waymark history")
 		if Masters.open():
 			lines.append("Master Wayfarers")
+		if GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
+			lines.append("Tower map")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -270,6 +272,7 @@ func run_records() -> void:
 			"Personal bests": await info(records_text())
 			"Waymark history": await info(Loc.t("Waymarks: %d") % GameState.waymarks + "\n" + "\n".join(Waymarks.history_lines()))
 			"Master Wayfarers": await run_masters()
+			"Tower map": await info("\n".join(RiftTower.card_lines()))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Watch last battle":

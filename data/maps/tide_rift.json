@@ -39,6 +39,7 @@
   }
  ],
  "npcs": [
+  {"id": "tower_keeper", "x": 8, "y": 2, "facing": "down", "dialogue": "tide_rift/tower_keeper", "sprite": "villager", "show_flag": "rift_tide_sealed"},
   {
    "id": "mystic",
    "x": 3,
