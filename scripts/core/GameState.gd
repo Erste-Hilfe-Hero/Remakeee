@@ -62,6 +62,9 @@ var visited_rests: Dictionary = {}
 var records: Dictionary = {}
 ## Puzzle progress: puzzle id -> number of switches pressed in the right order so far.
 var switch_progress: Dictionary = {}
+## World changes that must survive saving, per map id (area 3 item 905): pushed boulders,
+## broken floor, laid planks, hung ladders. See PuzzleRoom.
+var world_state: Dictionary = {}
 enum SwitchResult { WRONG, STEP, SOLVED }
 ## Seeded RNG for overworld rolls (encounters); battles get their own seed from it.
 var rng := RandomNumberGenerator.new()
@@ -193,6 +196,24 @@ func set_held(s: Spirling, id: String) -> bool:
 func has_gear(id: String) -> bool:
 	return item_count(id) > 0
 
+## Saved world changes for [param map_id] (PuzzleRoom state), or {}.
+func world_of(map_id: String) -> Dictionary:
+	return world_state.get(map_id, {})
+
+func set_world_of(map_id: String, state: Dictionary) -> void:
+	if state.is_empty():
+		world_state.erase(map_id)
+	else:
+		world_state[map_id] = state
+
+## Gear item ids the player owns (for PuzzleRoom.passable).
+func owned_gear() -> Array:
+	var out: Array = []
+	for k: int in TilesetFactory.GEAR_KINDS:
+		if has_gear(TilesetFactory.GEAR_KINDS[k]):
+			out.append(TilesetFactory.GEAR_KINDS[k])
+	return out
+
 const MENU_ACTION: StringName = &"menu"
 
 func _ready() -> void:
@@ -278,6 +299,7 @@ func reset() -> void:
 	visited_rests = {}
 	records = {}
 	switch_progress = {}
+	world_state = {}
 	known_matchups = {}
 	play_time = 0.0
 
@@ -337,6 +359,7 @@ func to_dict() -> Dictionary:
 		"rests": visited_rests.duplicate(true),
 		"records": records.duplicate(),
 		"switches": switch_progress.duplicate(),
+		"world": world_state.duplicate(true),
 		"iron_oath": iron_oath,
 		"sanctuary": sanctuary.map(func(s: Spirling) -> Dictionary: return s.to_dict()),
 	}
@@ -385,6 +408,7 @@ func from_dict(d: Dictionary) -> void:
 		visit_rest(heal_map, heal_cell)
 	records = (d.get("records", {}) as Dictionary).duplicate()
 	switch_progress = (d.get("switches", {}) as Dictionary).duplicate()
+	world_state = (d.get("world", {}) as Dictionary).duplicate(true)
 	iron_oath = bool(d.get("iron_oath", false))
 	for sd: Variant in d.get("sanctuary", []):
 		var s: Spirling = Spirling.from_dict(sd)

@@ -1,0 +1,21 @@
+{
+ "_comment": "World map grid (area 3 item 896). pos = [x, y] cell on the region's grid (y grows south). Interiors lie 'inside' a place. Every warp between two places must be listed in neighbours; 'lines' are boat and coach routes (each stop connects to the others). Edit by hand; WorldValidator checks it.",
+ "regions": {
+  "veydal": {"name": "Veydal", "origin": [0, 0], "size": [7, 7]},
+  "corvane": {"name": "Corvane", "origin": [8, 0], "size": [4, 7]}
+ },
+ "lines": {},
+ "maps": {
+  "cinder_rift": {"region": "veydal", "pos": [3, 0], "kind": "rift", "neighbours": ["thornridge"]},
+  "thornridge": {"region": "veydal", "pos": [3, 1], "kind": "town", "neighbours": ["cinder_rift", "crowcrest"]},
+  "crowcrest": {"region": "veydal", "pos": [3, 2], "kind": "route", "neighbours": ["thornridge", "fernstair", "murk_hollow"]},
+  "murk_hollow": {"region": "veydal", "pos": [4, 2], "kind": "cave", "neighbours": ["crowcrest"]},
+  "fernstair": {"region": "veydal", "pos": [3, 3], "kind": "route", "neighbours": ["crowcrest", "brindlewick"]},
+  "brindlewick": {"region": "veydal", "pos": [3, 4], "kind": "town", "neighbours": ["fernstair", "saltmarsh"]},
+  "lighthouse": {"inside": "brindlewick"},
+  "map_house": {"inside": "brindlewick"},
+  "rest_spring": {"inside": "brindlewick"},
+  "saltmarsh": {"region": "veydal", "pos": [4, 4], "kind": "route", "neighbours": ["brindlewick", "tide_rift"]},
+  "tide_rift": {"region": "veydal", "pos": [4, 3], "kind": "rift", "neighbours": ["saltmarsh"]}
+ }
+}
