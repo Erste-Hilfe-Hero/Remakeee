@@ -1,0 +1,12 @@
+{
+ "conductor": {
+  "lines": [
+   "Conductor Rhea: Mountain railway. Mind the gap, mind the clouds."
+  ],
+  "action": "transit mountain_rail"
+ },
+ "sign": [
+  "ASHMERE",
+  "Land of the gravers. Every stone here has been drawn twice."
+ ]
+}

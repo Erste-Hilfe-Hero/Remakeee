@@ -2,16 +2,18 @@ class_name Transit
 extends RefCounted
 ## Boat and coach routes (area 3 items 1187-1191, 1289): the Lake Line, the Valley Coach and the
 ## ferry to Corvane. The routes live in data/world_layout.json under "lines":
-##   {"<line>": {"name", "kind": "boat" | "coach" | "ferry", "story": bool,
-##               "stops": {"<map>": [x, y, facing]}}}
+##   {"<line>": {"name", "kind": "boat" | "coach" | "ferry" | "rail", "story": bool,
+##               "open_flag": "<flag>"?, "stops": {"<map>": [x, y, facing]}}}
 ## A stop opens once the player has reached its map on foot (item 1190): arriving there sets the
 ## flag "stop_<map>". A rest spot already used there counts as well, for saves from before the
 ## routes. Trips are short scenes (TripScene); the player sits in the boat or the coach and is
 ## never carried by a Spirling. Lines marked "story" (the Corvane ferry) are run by their own
-## dialogue and are not offered at the landing.
+## dialogue and are not offered at the landing. A line with an "open_flag" (the mountain railway
+## from the Greyreach to Ashmere, opened by act2_end) runs to all its stops once the flag is set,
+## and to none before.
 
 const LAYOUT_PATH: String = "res://data/world_layout.json"
-const KINDS: Array[String] = ["boat", "coach", "ferry"]
+const KINDS: Array[String] = ["boat", "coach", "ferry", "rail"]
 
 static var _cache: Dictionary = {}
 
@@ -56,8 +58,11 @@ static func stop_open(map_id: String, flags: Dictionary, rests: Dictionary = {})
 ## Stops of [param id] the player can travel to from [param here], in route order.
 static func open_stops(id: String, here: String, flags: Dictionary, rests: Dictionary = {}) -> Array[String]:
 	var out: Array[String] = []
+	var gate: String = str(line(id).get("open_flag", ""))
+	if not gate.is_empty() and not bool(flags.get(gate, false)):
+		return out
 	for s: String in stops(id):
-		if s != here and stop_open(s, flags, rests):
+		if s != here and (not gate.is_empty() or stop_open(s, flags, rests)):
 			out.append(s)
 	return out
 
@@ -69,10 +74,14 @@ static func trip_line(kind: String, place: String) -> String:
 			return Loc.t("The coach rattles along the valley road to %s.") % place
 		"ferry":
 			return Loc.t("The ferry crosses the grey lake to %s.") % place
+		"rail":
+			return Loc.t("The mountain railway climbs through the clouds to %s.") % place
 	return Loc.t("The boat rows across the lake to %s.") % place
 
 ## What the boatman or the driver says when no other stop is open yet.
 static func no_stops_line(kind: String) -> String:
 	if kind == "coach":
 		return "Driver: I only stop where you've been on foot first. Walk the valley, then we'll drive it."
+	if kind == "rail":
+		return "Conductor: No trains until the line is cleared. The guild will send word."
 	return "Boatman: I only row to landings you've walked to yourself. Find them first, then I know the way."

@@ -955,5 +955,165 @@
     "ground": "scree"
    }
   ]
+ },
+ "saltglass": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Talusk",
+    "min": 26,
+    "max": 28,
+    "weight": 38,
+    "ground": "scree"
+   },
+   {
+    "species": "Zephlet",
+    "min": 26,
+    "max": 28,
+    "weight": 30,
+    "ground": "fern"
+   },
+   {
+    "species": "Brinelet",
+    "min": 27,
+    "max": 29,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Lanternel",
+    "min": 27,
+    "max": 29,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Saltspire",
+    "min": 29,
+    "max": 29,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
+ },
+ "kiln_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 28,
+    "max": 30,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 28,
+    "max": 30,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Kindlop",
+    "min": 29,
+    "max": 31,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Seamlet",
+    "min": 29,
+    "max": 31,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Smoldrake",
+    "min": 31,
+    "max": 31,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
+ },
+ "glass_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Zephlet",
+    "min": 30,
+    "max": 32,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Shalebat",
+    "min": 30,
+    "max": 32,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Wickit",
+    "min": 31,
+    "max": 33,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Seamlet",
+    "min": 31,
+    "max": 33,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Glasstarn",
+    "min": 33,
+    "max": 33,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
+ },
+ "wide_rift_far": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Mirkmole",
+    "min": 32,
+    "max": 34,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Paddlewisp",
+    "min": 32,
+    "max": 34,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Hushkin",
+    "min": 33,
+    "max": 35,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Seamlet",
+    "min": 33,
+    "max": 35,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Silentra",
+    "min": 35,
+    "max": 35,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
  }
 }
