@@ -2390,7 +2390,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		for f: Spirling in model.parties[1]:
 			for e: int in f.elements():
 				foe_elements.append(Elements.E.keys()[e])
-		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements, "night": DayCycle.current() == DayCycle.Phase.NIGHT})
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements, "night": DayCycle.current() == DayCycle.Phase.NIGHT, "one_element": Achievements.one_element_team(GameState.party)})
 		var fields: Array = GameState.records.get("fields_won", [])
 		if model.field != "" and not model.field in fields:
 			fields.append(model.field)

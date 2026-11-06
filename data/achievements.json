@@ -112,8 +112,8 @@
   },
   {
    "id": "tower",
-   "title": "Echo Climber",
-   "text": "Climb the whole lighthouse tower.",
+   "title": "Tower Top",
+   "text": "Clear floor 30, the top of the lighthouse stair.",
    "cat": "challenge",
    "reward": 100,
    "stat": "gauntlet_best",
@@ -248,6 +248,15 @@
    "n": 10,
    "group": "growing",
    "tier": "gold"
+  },
+  {
+   "id": "tower_5",
+   "title": "Echo Climber",
+   "text": "Clear floor 5 of the lighthouse stair.",
+   "cat": "challenge",
+   "reward": 10,
+   "stat": "gauntlet_best",
+   "n": 5
   },
   {
    "id": "tower_10",
@@ -924,11 +933,89 @@
    "group": "masters",
    "tier": "gold"
   },
-  {"id": "night_owl", "title": "Night Owl", "text": "Win 50 battles at night.", "cat": "battle", "reward": 25, "stat": "count_win_night", "n": 50},
-  {"id": "all_fields", "title": "Every Field", "text": "Win a battle on every battle field.", "cat": "battle", "reward": 50, "stat": "all_fields", "n": 1, "secret": true},
-  {"id": "globetrotter", "title": "Globetrotter", "text": "Enter every map with wild Spirlings.", "cat": "explore", "reward": 50, "stat": "wild_maps_all", "n": 1},
-  {"id": "five_at_cap", "title": "Five at the Cap", "text": "Have five Spirlings at ring 60 in your team.", "cat": "bond", "reward": 100, "stat": "team_at_cap", "n": 5, "secret": true},
-  {"id": "host", "title": "Host", "text": "Meet the rare visitor of the day on 30 different days.", "cat": "events", "reward": 50, "stat": "count_daily_find", "n": 30},
-  {"id": "no_miss", "title": "No Missed Beat", "text": "Play the Echo melody without a missed note.", "cat": "bond", "reward": 25, "stat": "record:melody_perfect", "n": 1, "secret": true}
+  {
+   "id": "night_owl",
+   "title": "Night Owl",
+   "text": "Win 50 battles at night.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "count_win_night",
+   "n": 50
+  },
+  {
+   "id": "all_fields",
+   "title": "Every Field",
+   "text": "Win a battle on every battle field.",
+   "cat": "battle",
+   "reward": 50,
+   "stat": "all_fields",
+   "n": 1,
+   "secret": true
+  },
+  {
+   "id": "globetrotter",
+   "title": "Globetrotter",
+   "text": "Enter every map with wild Spirlings.",
+   "cat": "explore",
+   "reward": 50,
+   "stat": "wild_maps_all",
+   "n": 1
+  },
+  {
+   "id": "five_at_cap",
+   "title": "Five at the Cap",
+   "text": "Have five Spirlings at ring 60 in your team.",
+   "cat": "bond",
+   "reward": 100,
+   "stat": "team_at_cap",
+   "n": 5,
+   "secret": true
+  },
+  {
+   "id": "host",
+   "title": "Host",
+   "text": "Meet the rare visitor of the day on 30 different days.",
+   "cat": "events",
+   "reward": 50,
+   "stat": "count_daily_find",
+   "n": 30
+  },
+  {
+   "id": "no_miss",
+   "title": "No Missed Beat",
+   "text": "Play the Echo melody without a missed note.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "record:melody_perfect",
+   "n": 1,
+   "secret": true
+  },
+  {
+   "id": "one_element",
+   "title": "Same Element",
+   "text": "Win a battle with a team of five Spirlings that share one element.",
+   "cat": "battle",
+   "reward": 50,
+   "stat": "count_win_one_element",
+   "n": 1
+  },
+  {
+   "id": "keepsakes_all",
+   "title": "Keepsake Collector",
+   "text": "Own every keepsake at least once.",
+   "cat": "collect",
+   "reward": 50,
+   "stat": "keepsakes_all",
+   "n": 1
+  },
+  {
+   "id": "photos_25",
+   "title": "Photographer",
+   "text": "Save 25 photos in photo mode.",
+   "cat": "collect",
+   "reward": 25,
+   "stat": "record:photos",
+   "n": 25
+  }
  ]
 }
