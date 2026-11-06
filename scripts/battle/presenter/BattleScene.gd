@@ -61,6 +61,7 @@ var _bond_game: BondMinigame
 var _bond_plans: Dictionary[String, Dictionary] = {}
 var _ff_button: Button
 var _auto_button: Button
+var _goal_label: Label
 var _auto_ai := BattleAI.new(1)
 var _log_button: Button
 var _log_panel: PanelContainer
@@ -110,6 +111,15 @@ func _ready() -> void:
 	_run.call_deferred()
 
 ## Call before adding to the tree.
+## Shows "T3 ✓", "T3 ✗" or "T3" for the bonus goal of this battle (item 762).
+func _refresh_goal() -> void:
+	if _goal_label == null or not model.has_meta("goal_tracker") or not GameState.bonus_goals:
+		return
+	var t: BattleGoals.Tracker = model.get_meta("goal_tracker")
+	var mark: String = ["✗", "", "✓"][t.status() + 1]
+	_goal_label.text = (Loc.t("T%d") % (t.turns() + 1)) + ("" if mark.is_empty() else " " + mark)
+	_goal_label.visible = true
+
 func setup(p_model: BattleModel) -> void:
 	model = p_model
 
@@ -178,6 +188,11 @@ func _build() -> void:
 		_apply_speed())
 	_auto_button.visible = false
 	_field.add_child(_auto_button)
+	# Turn count with the bonus goal mark (plan area 2, item 762); only shown when a goal is on.
+	_goal_label = Label.new()
+	_goal_label.visible = false
+	_goal_label.add_theme_font_size_override("font_size", 8)
+	_field.add_child(_goal_label)
 	_log_button = Button.new()
 	_log_button.text = "Log"
 	_log_button.focus_mode = Control.FOCUS_NONE
@@ -238,6 +253,7 @@ func _layout_field() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
+	_goal_label.position = Vector2(MARGIN, MARGIN + 42)
 	_foe_sprite.position = Vector2(MARGIN * 2 + 28, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
 	_foe_sprite.mirrored = true
@@ -283,6 +299,7 @@ func _layout_formation() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(w - 26 - MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
+	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
@@ -352,6 +369,7 @@ func _run() -> void:
 	await _play(intro)
 	if model.has_meta("bonus_goal"):
 		await _text.show_text(str(model.get_meta("bonus_goal")))
+	_refresh_goal()
 	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
@@ -380,12 +398,15 @@ func _run() -> void:
 			var actions: Array[BattleAction] = await _choose_actions()
 			inputs.append(BattleReplay.actions_to_dict(actions))
 			await _play(model.submit_actions(actions))
+			_refresh_goal()
 			continue
 		var action: BattleAction = await _choose_action()
 		if action == null:
 			continue
 		inputs.append(BattleReplay.action_to_dict(action))
 		await _play(model.submit_turn(action))
+		_refresh_goal()
+	_refresh_goal()
 	battle_finished.emit(model.outcome, model)
 	if quit_on_finish:
 		get_tree().quit()
