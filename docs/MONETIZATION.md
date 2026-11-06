@@ -46,6 +46,7 @@ Diese Regeln gelten für jedes Angebot. Tests und `tools/ip_check.sh` prüfen si
 | Billing-Brücke (Google, Apple, lokal) | `scripts/shop/Billing.gd` (Autoload), `scripts/shop/LocalBilling.gd` |
 | Shop-Menü, Altersabfrage | `scripts/shop/ShopMenu.gd`, `scripts/shop/AgeGate.gd` |
 | Server-Tabellen und Funktionen | `supabase/migrations/20261110000020_shop.sql`, Angebote in `…21_shop_offers.sql` |
+| Belegprüfung (Apple JWS, Google Play API, Erstattungen, Pass) | `server/billing/` unter `/billing/v1/`, Datenbank-Nutzer `chimora_billing` (`…22_billing.sql`) |
 | Testserver auf dem Handy | `scripts/shop/LocalShop.gd` (gleiche Regeln wie die SQL-Funktionen) |
 | Verbotene Kaufaufforderungen | `data/shop_banned_phrases.json`, geprüft in `tools/ip_check.sh` |
 
