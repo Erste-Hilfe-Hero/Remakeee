@@ -518,3 +518,94 @@ func test_goals_are_a_list_with_main_goal_first() -> void:
 	assert_eq(str(rows[-1].text), "Today's visitor")
 	for r: Dictionary in rows:
 		assert_false(str(r.detail).is_empty(), "every row opens details")
+
+# --- 2029 a mark shows where A does something ------------------------------------------
+
+class FakeWorld extends Node:
+	var map: MapData
+	var npc_cell: Vector2i = Vector2i(-99, -99)
+	var npc: NPC = NPC.new()
+	func npc_at(c: Vector2i) -> NPC:
+		return npc if c == npc_cell else null
+	func _exit_tree() -> void:
+		npc.free()
+
+func test_interaction_mark_kinds() -> void:
+	var w := FakeWorld.new()
+	add_child_autofree(w)
+	w.map = MapData.load_map("brindlewick")
+	var s: Dictionary = w.map.signs[0]
+	var sc := Vector2i(int(s.x), int(s.y))
+	assert_eq(InteractHint.kind_at(w, sc + Vector2i.DOWN, sc), InteractHint.Kind.READ, "sign")
+	w.npc_cell = Vector2i(3, 3)
+	assert_eq(InteractHint.kind_at(w, Vector2i(3, 4), Vector2i(3, 3)), InteractHint.Kind.TALK, "person")
+	assert_eq(InteractHint.kind_at(w, Vector2i(0, 1), Vector2i(-5, -5)), InteractHint.Kind.NONE, "nothing")
+
+# --- Tips and onboarding (1982-1988) ---------------------------------------------------
+
+func test_new_tips_exist_short_and_without_battle_words() -> void:
+	for id: String in ["menu", "save", "team_order", "rest_spot", "travel", "satchel", "keepsake",
+			"unfurl", "friends", "storage", "map_page"]:
+		assert_true(Tips.LINES.has(id), id)
+		assert_true(Tips.TOPICS.has(id), id + " is in the Guide")
+		for touch: bool in [true, false]:
+			var lines: Array[String] = Tips.lines_of(id, touch)
+			assert_between(lines.size(), 1, 2, id)
+			for l: String in lines:
+				assert_false(l.is_empty(), id)
+				for w: String in ["battle", "Battle", "damage", "Energy"]:
+					assert_false(l.contains(w), id + ": " + l)
+
+func test_tips_follow_the_input_device() -> void:
+	assert_string_contains(Tips.lines_of("menu", true)[0], "Tap")
+	assert_string_contains(Tips.lines_of("menu", false)[0], "Press")
+	assert_string_contains(Tips.lines_of("gear", false)[0], "press A")
+	assert_false(Tips.lines_of("gear", true)[0].contains("press A"))
+
+func test_guide_lists_seen_tips_only() -> void:
+	var before: Dictionary = GameState.flags.duplicate()
+	var tips_on: bool = GameState.tips_enabled
+	GameState.tips_enabled = true
+	GameState.flags.clear()
+	assert_eq(Tips.seen(), [] as Array[String])
+	Tips.take("save")
+	Tips.take("menu")
+	assert_eq(Tips.seen(), ["menu", "save"] as Array[String], "in Guide order")
+	assert_eq(Tips.take("save"), [] as Array[String], "each tip shows once")
+	GameState.flags = before
+	GameState.tips_enabled = tips_on
+
+func test_menu_button_hint_until_first_menu() -> void:
+	var before: Dictionary = GameState.flags.duplicate()
+	GameState.flags.erase(VirtualPad.MENU_SEEN_FLAG)
+	assert_true(VirtualPad.menu_hinted())
+	GameState.set_flag(VirtualPad.MENU_SEEN_FLAG)
+	assert_false(VirtualPad.menu_hinted())
+	GameState.flags = before
+
+func test_walk_hint_points_at_the_pad() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	VirtualPad.apply_settings()
+	var h := WalkHint.new()
+	h.text = "Walk: D-pad or tap a tile"
+	add_child_autofree(h)
+	await wait_process_frames(2)
+	var tip: Vector2 = h.arrow_tip()
+	assert_true(VirtualPad.dpad_rect().grow(2).has_point(tip + Vector2(0, 2)), "arrow ends at the D-pad")
+	assert_lt(h._label.position.y + h._label.size.y, VirtualPad.dpad_rect().position.y, "note sits above the pad")
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_new_game_to_first_step_is_short() -> void:
+	# Fast text: every line types at TEXT_CPS[FAST], plus about 1 s to read and tap, plus the
+	# partner pick and the fades. Must stay under 90 s (item 1986).
+	var cps: float = GameState.TEXT_CPS[GameState.TextSpeed.FAST]
+	var seconds: float = 0.6 + 12.0
+	var flags: Dictionary = {}
+	for ref: String in ["story/prologue", "lighthouse/morning", "lighthouse/aldo"]:
+		for l: String in Dialogue.lines_for(Dialogue.get_entry(ref), flags):
+			seconds += l.length() / cps + 1.0
+		flags["got_starter"] = true
+	seconds += Tips.lines_of("save").size() * 2.0
+	assert_lt(seconds, 90.0, "about %d s from new game to walking" % int(seconds))

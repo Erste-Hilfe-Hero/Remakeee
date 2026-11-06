@@ -118,7 +118,7 @@ func _add_button(action: String, offset: Vector2, size_px: int, round_shape: boo
 	_root.add_child(b)
 	_buttons.append(b)
 
-func _make_texture(size_px: int, round_shape: bool, glyph: String, pressed: bool) -> ImageTexture:
+func _make_texture(size_px: int, round_shape: bool, glyph: String, pressed: bool, framed: bool = false) -> ImageTexture:
 	var img := Image.create(size_px, size_px, false, Image.FORMAT_RGBA8)
 	var fill: Color = UITheme.MID if pressed else UITheme.BG
 	var c: float = (size_px - 1) / 2.0
@@ -126,6 +126,8 @@ func _make_texture(size_px: int, round_shape: bool, glyph: String, pressed: bool
 		for x: int in size_px:
 			var inside: bool = true
 			var edge: bool = x == 0 or y == 0 or x == size_px - 1 or y == size_px - 1
+			if framed:
+				edge = edge or x == 1 or y == 1 or x == size_px - 2 or y == size_px - 2
 			if round_shape:
 				var d: float = Vector2(x - c, y - c).length()
 				inside = d <= c + 0.5
@@ -259,6 +261,31 @@ func _set_dir(d: String) -> void:
 		var own: String = str(b.get_meta("dir", ""))
 		if not own.is_empty():
 			b.texture_normal = b.get_meta("down_tex" if own == d else "up_tex")
+
+## Until the menu was opened once, the menu button pulses gently; with Reduce motion it gets
+## a firm frame instead (item 1983). The overworld sets this flag when the menu opens.
+const MENU_SEEN_FLAG: String = "menu_opened"
+const PULSE_SECONDS: float = 1.6
+
+func menu_hinted() -> bool:
+	return not GameState.has_flag(MENU_SEEN_FLAG)
+
+func _process(_delta: float) -> void:
+	if not visible:
+		return
+	var hint: bool = menu_hinted()
+	for b: TouchScreenButton in _buttons:
+		if b.action != &"menu":
+			continue
+		var framed: bool = hint and GameState.reduce_motion
+		if bool(b.get_meta("framed", false)) != framed:
+			b.set_meta("framed", framed)
+			b.texture_normal = _make_texture(MENU_BUTTON, false, "=", false, framed)
+		if hint and not GameState.reduce_motion:
+			var t: float = fmod(Time.get_ticks_msec() / 1000.0, PULSE_SECONDS) / PULSE_SECONDS
+			b.modulate = Color(1, 1, 1, 0.55 + 0.45 * (0.5 + 0.5 * cos(t * TAU)))
+		else:
+			b.modulate = Color.WHITE
 
 ## The direction the D-pad holds now ("" for none; tests).
 func held_dir() -> String:

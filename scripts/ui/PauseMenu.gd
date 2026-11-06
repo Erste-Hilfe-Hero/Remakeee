@@ -39,6 +39,8 @@ func run() -> void:
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle)
+		if "Travel" in labels:
+			await tip("travel")
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
@@ -46,6 +48,7 @@ func run() -> void:
 			"Goals": await run_goals()
 			"Team": await run_team()
 			"Friends":
+				await tip("friends")
 				await FriendsMenu.run(self)
 				if not echo_duel.is_empty():
 					return
@@ -69,15 +72,43 @@ func run() -> void:
 				if await run_room():
 					return
 
+## Shows a first-time tip in an info window (menus have no text box).
+func tip(id: String) -> void:
+	var lines: Array[String] = Tips.take(id)
+	if not lines.is_empty():
+		await info("\n".join(lines))
+
 ## Goals as a list (item 1870): the main goal first with a flag mark, then the open side
 ## goals and today's rare visitor. A row opens its full text.
 func run_goals() -> void:
 	while true:
 		var rows: Array[Dictionary] = goal_rows(GameState.flags)
+		var guide: int = -1
+		if not Tips.seen().is_empty():
+			guide = rows.size()
+			rows.append({"text": "Guide...", "hint": Loc.t("Read the tips again.")})
 		var idx: int = await pick("Goals", rows)
 		if idx < 0:
 			return
+		if idx == guide:
+			await run_guide()
+			continue
 		await info(str(rows[idx].get("detail", rows[idx].text)))
+
+## The Guide (item 1985): every tip already seen, by topic, to read again.
+func run_guide() -> void:
+	while true:
+		var ids: Array[String] = Tips.seen()
+		var names: Array[String] = []
+		for id: String in ids:
+			names.append(Tips.TOPICS[id])
+		var idx: int = await pick_strings("Guide", names)
+		if idx < 0:
+			return
+		var lines: Array[String] = []
+		for l: String in Tips.lines_of(ids[idx]):
+			lines.append(Loc.t(l))
+		await info("\n".join(lines))
 
 ## [param daily] replaces today's visitor line (tests).
 static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Dictionary]:
@@ -214,6 +245,8 @@ func run_travel() -> bool:
 	return true
 
 func run_team() -> void:
+	if GameState.party.size() >= 2:
+		await tip("team_order")
 	while true:
 		var rows: Array[Dictionary] = []
 		for s: Spirling in GameState.party:
@@ -226,6 +259,7 @@ func run_team() -> void:
 		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
 		if not s.data.unfold.is_empty():
 			opts.append("Unfurl")
+			await tip("unfurl")
 		if s.earlier_form() != null:
 			opts.append("Furl back")
 		var opt: int = await pick_strings(s.display_name(), opts)
@@ -335,6 +369,7 @@ static func bag_tab(it: Dictionary) -> int:
 	return 4
 
 func run_bag() -> void:
+	await tip("satchel")
 	var tab: int = -1
 	while true:
 		var by_tab: Array[Array] = [[], [], [], [], []]
@@ -598,6 +633,7 @@ func _withdraw() -> void:
 
 ## Storage box: deposit and withdraw.
 func run_storage() -> void:
+	await tip("storage")
 	while true:
 		var idx: int = await pick_strings("Storage (%d resting)" % GameState.storage.size(), ["Call back", "Send to rest"] as Array[String])
 		if idx < 0:
