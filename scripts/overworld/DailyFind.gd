@@ -59,6 +59,7 @@ static func maybe_spawn(table: String, flags: Dictionary, rng: RandomNumberGener
 		s.spark[key] = maxi(s.spark[key], SPARK_FLOOR)
 	s.restore()
 	flags[flag_for(day)] = true
+	DailyTasks.record("daily_find", {"map": table})
 	return s
 
 ## One line for the Goals screen.

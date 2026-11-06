@@ -758,3 +758,43 @@ func test_one_hand_menus_sit_low_with_back_on_the_thumb_side() -> void:
 	assert_lt(back2.position.y, host.picker.get_global_rect().position.y + 24.0, "Back is back in the top corner")
 	host.picker.picked.emit(-1)
 	await wait_process_frames(1)
+
+func test_large_text_uses_its_own_7x12_glyphs() -> void:
+	for ch: String in PixelFont.GLYPHS:
+		var g: Array[String] = PixelFont.large_glyph(ch)
+		assert_eq(g.size(), PixelFont.LARGE_H, ch)
+		for row: String in g:
+			assert_eq(row.length(), PixelFont.LARGE_W, ch)
+	var small: FontFile = PixelFont.get_font()
+	var large: FontFile = PixelFont.get_large_font()
+	assert_eq(large.font_name, "Chimora Pixel Groß")
+	var w_small: float = small.get_string_size("Spirlog", HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x
+	var w_large: float = large.get_string_size("Spirlog", HORIZONTAL_ALIGNMENT_LEFT, -1, UITheme.FONT_SIZE).x
+	assert_gt(w_large, w_small * 1.2, "the same size number draws bigger letters")
+	assert_gt(large.get_height(UITheme.FONT_SIZE), small.get_height(UITheme.FONT_SIZE))
+
+func test_large_text_setting_switches_the_theme_and_wraps_rows() -> void:
+	var d: Dictionary = GameState.settings_to_dict()
+	d["large_text"] = true
+	GameState.settings_from_dict(d)
+	GameState.apply_display()
+	assert_true(GameState.settings_to_dict()["large_text"])
+	assert_eq(UITheme.get_theme().default_font, PixelFont.get_large_font())
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var res: Array = []
+	_open(host, [{"text": "Battery saver: Off and a long tail"}] as Array[Dictionary], res)
+	await wait_process_frames(2)
+	var b: Button = host.picker.buttons()[0]
+	assert_false(b.clip_text, "long rows wrap instead of being cut")
+	assert_eq(b.autowrap_mode, TextServer.AUTOWRAP_WORD_SMART)
+	host.picker.picked.emit(-1)
+	d["large_text"] = false
+	GameState.settings_from_dict(d)
+	GameState.apply_display()
+	assert_eq(UITheme.get_theme().default_font, PixelFont.get_font())
+	var keys: Array = []
+	for r: Array in MenuHost.display_rows():
+		keys.append(r[0])
+	assert_has(keys, "large_text")

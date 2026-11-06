@@ -1,6 +1,6 @@
 class_name PauseMenu
 extends MenuHost
-## In-game menu: Goals, Team, Spirlog, Satchel, Save, Settings, and Storage once the box is unlocked.
+## In-game menu: Goals, Team, Spirlog, Satchel, Shop, Save, Settings, and Storage once the box is unlocked.
 
 const STORAGE_FLAG: String = "storage_remote"
 
@@ -18,6 +18,8 @@ var watch_replay: bool = false
 var echo_duel: Dictionary = {}
 ## Set when the player finds a league battle under Leagues: the battle the server set up.
 var league_match: Dictionary = {}
+## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
+var raid_attempt: Dictionary = {}
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -45,6 +47,7 @@ func run() -> void:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
 			GameState.has_flag("aldo_gift"))
+		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
 		if "Travel" in labels:
 			await tip("travel")
 		var idx: int = await pick_strings(menu_title(), labels)
@@ -57,7 +60,7 @@ func run() -> void:
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty():
+				if not echo_duel.is_empty() or not raid_attempt.is_empty():
 					return
 			"Leagues":
 				await LeagueMenu.run(self)
@@ -69,6 +72,8 @@ func run() -> void:
 				if watch_replay:
 					return
 			"Satchel": await run_bag()
+			"Shop": await ShopMenu.run(self)
+			"Shop (locked)": await info(ShopMenu.LOCKED_TEXT)
 			"Storage": await run_storage()
 			"Save":
 				save_now()
@@ -99,6 +104,11 @@ func run_goals() -> void:
 		if DailyTasks.can_swap():
 			swap = rows.size()
 			rows.append({"text": "Swap a daily task", "hint": Loc.t("Once a day, free of charge.")})
+		var saving: int = -1
+		if Exchange.is_open():
+			saving = rows.size()
+			var gl: String = Exchange.goal_line()
+			rows.append({"text": "Savings goal...", "hint": gl if gl != "" else Loc.t("Pick an offer of Marla's stand to save up for.")})
 		var guide: int = -1
 		if not Tips.seen().is_empty():
 			guide = rows.size()
@@ -108,6 +118,9 @@ func run_goals() -> void:
 			return
 		if idx == swap:
 			await _swap_daily_task()
+			continue
+		if idx == saving:
+			await _pick_savings_goal()
 			continue
 		if idx == guide:
 			await run_guide()
@@ -198,6 +211,18 @@ const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once t
 ## Goals screen in four tabs (plan 3526): Story, Today, Week, Collection. All tabs in one text.
 static func goals_text() -> String:
 	return Goals.all_text()
+
+## Plan 3126: pick an offer of Marla's stand as the savings goal.
+func _pick_savings_goal() -> void:
+	var offers: Array[Dictionary] = Exchange.offers()
+	var names: Array[String] = []
+	for o: Dictionary in offers:
+		names.append(Exchange.label(o))
+	var g: int = await pick_strings("Save up for which offer?", names)
+	if g < 0:
+		return
+	Exchange.set_goal(str(offers[g].item))
+	await info(Exchange.goal_line())
 
 ## Plan 3163: one open daily task a day can be swapped for free.
 func _swap_daily_task() -> void:

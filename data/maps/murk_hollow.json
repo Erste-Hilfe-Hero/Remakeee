@@ -7,7 +7,7 @@
  "encounters": "murk_hollow",
  "rows": [
   "@@@@@@@@@@@@",
-  "@L..S.L@.:.@",
+  "@L..S.L@=:.@",
   "@:..._....:@",
   "@L..__..@@@@",
   "@@@@@__@@@@@",
@@ -36,6 +36,14 @@
    "tx": 9,
    "ty": 15,
    "facing": "down"
+  },
+  {
+   "x": 8,
+   "y": 1,
+   "to": "murk_hollow@1",
+   "tx": 3,
+   "ty": 1,
+   "facing": "right"
   }
  ],
  "npcs": [
@@ -167,7 +175,49 @@
    "win_flags": [
     "hollow_swarm_cleared"
    ],
-   "leaves": true
+   "leaves": true,
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Mirkmole",
+      "level": 12
+     },
+     {
+      "species": "Shalebat",
+      "level": 12
+     },
+     {
+      "species": "Wickit",
+      "level": 11
+     },
+     {
+      "species": "Mirkmole",
+      "level": 11
+     }
+    ],
+    "tamer": [
+     {
+      "species": "Mirkmole",
+      "level": 12
+     },
+     {
+      "species": "Shalebat",
+      "level": 12
+     },
+     {
+      "species": "Wickit",
+      "level": 11
+     },
+     {
+      "species": "Mirkmole",
+      "level": 11
+     },
+     {
+      "species": "Shalebat",
+      "level": 13
+     }
+    ]
+   }
   }
  ],
  "signs": [
@@ -233,6 +283,71 @@
    "count": 1,
    "flag": "hollow_nook_find",
    "dialogue": "murk_hollow/nook_find"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Echo Gallery",
+   "encounters": "echo_gallery",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@.=.......:@",
+    "@.@@@@@@@@.@",
+    "@.@::....@.@",
+    "@.@.@@@@.@.@",
+    "@.@.@=S@.@.@",
+    "@.@.@..@.@.@",
+    "@...@..v...@",
+    "@@@@@@@@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 2,
+     "y": 1,
+     "to": "murk_hollow",
+     "tx": 8,
+     "ty": 2,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 5,
+     "to": "murk_hollow",
+     "tx": 5,
+     "ty": 11,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 6,
+     "y": 5,
+     "dialogue": "murk_hollow/echo_rope"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 5,
+     "open_flag": "echo_rope"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 3,
+     "y": 3,
+     "item": "max_tonic",
+     "count": 1,
+     "flag": "find_echo_corner"
+    },
+    {
+     "x": 10,
+     "y": 1,
+     "item": "remedy",
+     "count": 1,
+     "flag": "find_echo_far"
+    }
+   ]
   }
  ]
 }

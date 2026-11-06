@@ -160,6 +160,9 @@ static func fight(a: String, b: String, level: int, seed_value: int, moves: Dict
 static func valid_species(level: int) -> Array[String]:
 	var out: Array[String] = []
 	for sd: SpirlingData in Database.spirlings.values():
+		# Ancient kinds (First Voices) stand above every team on purpose; they are met once.
+		if sd.rarity == "ancient":
+			continue
 		var evolved: bool = evolve_at(sd) > 0 and level >= evolve_at(sd)
 		if level >= min_level(sd) and not evolved:
 			out.append(sd.species_name)
@@ -323,4 +326,120 @@ static func report(result: Dictionary, high: float = 0.65, low: float = 0.35) ->
 	if not all_moves.is_empty():
 		all_moves.sort()
 		lines.append_array(["", "Never picked at this level: " + ", ".join(all_moves) + "."])
+	return "\n".join(lines) + "\n"
+
+const REF_TEAMS_PATH: String = "res://tools/balance/ref_teams.json"
+const TARGETS_PATH: String = "res://tools/balance/targets.json"
+
+static func _read_json(path: String) -> Dictionary:
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+	return raw if raw is Dictionary else {}
+
+## Win-rate bands per difficulty key (tools/balance/targets.json, item 733): {"story": Vector2(lo, hi), ...}.
+static func warden_targets() -> Dictionary:
+	var out: Dictionary = {}
+	var w: Variant = _read_json(TARGETS_PATH).get("warden", {})
+	if w is Dictionary:
+		for k: String in w:
+			out[k] = Vector2(float(w[k][0]), float(w[k][1]))
+	return out
+
+## Warden mode (plan area 2, items 810 to 812): every reference team of tools/balance/ref_teams.json
+## fights every Warden of its story section [param rounds] times per difficulty, the Warden with the
+## team, AI tier, personality, rule and damage share of that difficulty. The reference side plays on
+## AI [param player_ai] without items. Returns {"rows": [{"section","team","warden","difficulty",
+## "wins","losses","draws","win_rate"}], "mode": "warden", "rounds", "ai"}. Same result for the same seed.
+static func run_warden(rounds: int, seed_value: int, player_ai: int = 2, difficulties: Array[int] = [], sections: Array[String] = []) -> Dictionary:
+	Database.load_all()
+	var cfg: Dictionary = _read_json(REF_TEAMS_PATH)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	var diffs: Array[int] = difficulties.duplicate()
+	if diffs.is_empty():
+		for d: int in TrainerData.DIFFICULTY_KEYS.size():
+			diffs.append(d)
+	var rows: Array[Dictionary] = []
+	var secs: Dictionary = cfg.get("sections", {})
+	for sec: String in secs:
+		if not sections.is_empty() and not sec in sections:
+			continue
+		var sd: Dictionary = secs[sec]
+		for pair: Array in sd.get("wardens", []):
+			var map: MapData = MapData.load_map(str(pair[0]))
+			var def: Dictionary = {}
+			for n: Dictionary in map.npcs:
+				if str(n.get("id", "")) == str(pair[1]):
+					def = n
+			if def.is_empty():
+				push_error("BalanceSim: no Warden %s on %s" % [pair[1], pair[0]])
+				continue
+			for team_id: String in sd.get("teams", {}):
+				var entries: Array = sd.teams[team_id]
+				for d: int in diffs:
+					var row: Dictionary = {"section": sec, "team": team_id, "warden": str(pair[1]),
+						"difficulty": TrainerData.DIFFICULTY_KEYS[d], "wins": 0, "losses": 0, "draws": 0, "turns": 0}
+					for r: int in rounds:
+						var res: Dictionary = warden_fight(entries, def, map.field, d, int(sd.get("cap", Spirling.MAX_LEVEL)), bool(sd.get("rematch", false)), rng.randi(), player_ai)
+						row.turns += int(res.turns)
+						match int(res.winner):
+							0: row.wins += 1
+							1: row.losses += 1
+							_: row.draws += 1
+					row["win_rate"] = float(row.wins) / maxf(rounds, 1)
+					rows.append(row)
+	return {"rows": rows, "mode": "warden", "rounds": rounds, "ai": player_ai}
+
+## One reference team against one Warden on [param difficulty]. [param cap] is the story level cap
+## of the section (binding from Veteran up); with [param rematch] the Warden brings the rematch team.
+static func warden_fight(entries: Array, def: Dictionary, field: String, difficulty: int, cap: int, rematch: bool, seed_value: int, player_ai: int = 2) -> Dictionary:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	var mine: Array[Spirling] = []
+	var top: int = 0
+	for e: Dictionary in entries:
+		var s := Spirling.new(Database.species(str(e.species)), int(e.level), rng)
+		mine.append(s)
+		top = maxi(top, s.level)
+	var ring_cap: int = cap if difficulty >= GameState.Difficulty.VETERAN else Spirling.MAX_LEVEL
+	var foes: Array[Spirling] = TrainerData.rematch_team(def, "", rng, top, ring_cap, difficulty) if rematch \
+		else TrainerData.build_team(def, "", rng, difficulty, ring_cap)
+	var info: Dictionary = TrainerData.battle_info(def, foes, GameState.AI_LEVELS[difficulty], difficulty)
+	var m := BattleModel.new(mine, foes, false, seed_value, int(info.ai))
+	m.items_allowed = false
+	m.ai.set_profile(str(info.profile))
+	m.foe_damage_mult = GameState.FOE_DAMAGE[difficulty]
+	m.field = field
+	m.foe_rule = str(info.rule)
+	var items: Variant = info.get("items", {})
+	m.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
+	m.foe_boss = str(info.boss)
+	var brain := BattleAI.new(player_ai)
+	m.start()
+	var turns: int = 0
+	while not m.is_finished() and turns < MAX_TURNS * 2:
+		if m.needs_player_switch():
+			m.submit_switch(brain.choose_replacement(m, BattleModel.Side.PLAYER, m.switch_slot()))
+			continue
+		m.submit_turn(brain.choose(m, BattleModel.Side.PLAYER))
+		turns += 1
+	var winner: int = -1
+	if m.outcome == BattleModel.Outcome.WIN:
+		winner = 0
+	elif m.outcome == BattleModel.Outcome.LOSS:
+		winner = 1
+	return {"winner": winner, "turns": turns}
+
+## Markdown report of a warden run: one line per team, Warden and difficulty, flagged outside the band.
+static func warden_report(result: Dictionary) -> String:
+	var bands: Dictionary = warden_targets()
+	var lines: PackedStringArray = ["# Warden report", "",
+		"%d battles per team, Warden and difficulty; the reference side plays AI tier %d without items." % [int(result.rounds), int(result.ai)],
+		"Generated by `tools/balance_sim.gd --mode warden`; bands from tools/balance/targets.json.", "",
+		"| Section | Team | Warden | Difficulty | Win rate | Band | Flag |", "| --- | --- | --- | --- | --- | --- | --- |"]
+	for row: Dictionary in result.rows:
+		var band: Vector2 = bands.get(row.difficulty, Vector2(0, 1))
+		var wr: float = float(row.win_rate)
+		var flag: String = "too hard" if wr < band.x else ("too easy" if wr > band.y else "")
+		lines.append("| %s | %s | %s | %s | %d%% | %d-%d%% | %s |" % [row.section, row.team, row.warden, row.difficulty,
+			roundi(wr * 100.0), roundi(band.x * 100.0), roundi(band.y * 100.0), flag])
 	return "\n".join(lines) + "\n"

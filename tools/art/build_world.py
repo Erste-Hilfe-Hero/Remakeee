@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "world"))
 from common import World  # noqa: E402
 
-GROUPS = ["veydal_core", "veydal_wilds", "veydal_caves", "corvane"]
+GROUPS = ["veydal_core", "veydal_wilds", "veydal_caves", "veydal_dungeons", "corvane"]
 
 
 def main(argv):
@@ -26,15 +26,15 @@ def main(argv):
             if mid in owner:
                 raise SystemExit("map %s is in both %s and %s" % (mid, owner[mid], g))
             owner[mid] = g
-        if g in wanted:
-            mod.build(world)
-    from common import MAPS
-    for f in sorted(os.listdir(MAPS)):
-        if f.endswith(".json") and f[:-5] not in owner:
-            raise SystemExit("map %s belongs to no group: add it to GROUP in one module" % f[:-5])
-    for mid in world.maps:
-        if owner.get(mid) not in wanted:
-            raise SystemExit("map %s was built but belongs to group %s" % (mid, owner.get(mid)))
+        # Every group is built so the German table stays complete; only wanted groups are written.
+        mod.build(world)
+    # Maps of other areas (story maps and the like) that no group owns are left as they are.
+    for mid in list(world.maps):
+        if mid not in owner:
+            raise SystemExit("map %s was built but is in no GROUP" % mid)
+        if owner[mid] not in wanted:
+            del world.maps[mid]
+            world.text.pop(mid, None)
     world.write()
 
 

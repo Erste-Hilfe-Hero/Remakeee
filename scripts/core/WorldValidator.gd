@@ -15,6 +15,7 @@ static func validate() -> PackedStringArray:
 	check_encounter_tables(errors, map_ids)
 	check_secrets(errors, map_ids)
 	check_puzzles(errors, map_ids)
+	check_passages(errors, map_ids)
 	check_layout(errors, map_ids, load_layout())
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
@@ -208,6 +209,91 @@ static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray)
 ## Puzzles (area 3 item 893): every plate, boulder and plank gap can be reached, every ladder
 ## leads to a walkable cell, a map with cracked floor has a floor below, and every boulder
 ## puzzle has a solution (PuzzleSolver) from the first cell the player arrives on.
+## Name prefixes and suffixes of spots that sit on an object (a sign, a desk), not on floor.
+const OBJECT_SPOT_PREFIX: Array[String] = ["letter_", "page_", "wall_", "burned_"]
+const OBJECT_SPOT_SUFFIX: Array[String] = ["_desk", "_shelf", "_stove", "_sign", "_plate", "_lamp"]
+
+static func is_object_spot(name: String) -> bool:
+	for p: String in OBJECT_SPOT_PREFIX:
+		if name.begins_with(p):
+			return true
+	for p: String in OBJECT_SPOT_SUFFIX:
+		if name.ends_with(p):
+			return true
+	return false
+
+## Secret passages (item 1082) are blocks with the same flag next to a reachable cell, and
+## spots for story figures sit inside the map on floor (or on an object for story signs).
+static func check_passages(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var entries: Dictionary = entry_cells(map_ids)
+	var flags: Dictionary = {}
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		for name: String in m.spots:
+			var c: Vector2i = m.spots[name]
+			if not m.in_bounds(c):
+				errors.append("map '%s': spot '%s' at %s is off the map" % [id, name, c])
+			elif not is_object_spot(name) and not m.is_walkable(c):
+				errors.append("map '%s': spot '%s' at %s is not on floor" % [id, name, c])
+		for b: Dictionary in m.blocks:
+			var of: String = str(b.get("open_flag", ""))
+			if of.begins_with("_") and not of in WorldMechanics.CLOCK_FLAGS:
+				errors.append("map '%s': block at %s,%s waits for unknown clock flag '%s'" % [id, b.x, b.y, of])
+		if not m.beam.is_empty():
+			check_beam(errors, id, m)
+		for list: Array in [m.npcs, m.signs, m.blocks]:
+			for def: Dictionary in list:
+				if not def.has("phase_only"):
+					continue
+				var only: Array = def.phase_only if def.phase_only is Array else [def.phase_only]
+				for ph: Variant in only:
+					if not str(ph) in DayCycle.PHASE_NAMES:
+						errors.append("map '%s': phase_only '%s' at %s,%s is not dawn, day, dusk or night" % [id, ph, def.x, def.y])
+		if m.passages.is_empty():
+			continue
+		var reach: Dictionary = reachable_cells(m, entries.get(id, []))
+		for p: Dictionary in m.passages:
+			var c := Vector2i(int(p.x), int(p.y))
+			var flag: String = str(p.get("flag", ""))
+			if flag == "" or flags.has(flag):
+				errors.append("map '%s': passage at %s needs its own flag" % [id, c])
+			flags[flag] = true
+			var blocked: bool = false
+			for b: Dictionary in m.blocks:
+				if int(b.x) == c.x and int(b.y) == c.y and str(b.get("open_flag", "")) == flag:
+					blocked = true
+			if not blocked:
+				errors.append("map '%s': passage at %s has no block with open_flag '%s'" % [id, c, flag])
+			var near: bool = false
+			for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+				near = near or reach.has(c + d)
+			if not near:
+				errors.append("map '%s': passage at %s cannot be reached" % [id, c])
+
+## Lanternwell (item 1010): some way of turning the mirrors must light the crystal, and the
+## room must not start solved.
+static func check_beam(errors: PackedStringArray, id: String, m: MapData) -> void:
+	var cells: Array[Vector2i] = []
+	var start: Dictionary = {}
+	for mm: Variant in m.beam.get("mirrors", []):
+		var c := Vector2i(int(mm[0]), int(mm[1]))
+		cells.append(c)
+		start[c] = str(mm[2]) if (mm as Array).size() > 2 else "/"
+	if cells.size() > 10:
+		errors.append("map '%s': too many mirrors to check (%d)" % [id, cells.size()])
+		return
+	if WorldMechanics.beam_hits(m, start):
+		errors.append("map '%s': the light already hits the crystal at the start" % id)
+	for bits: int in 1 << cells.size():
+		var ways: Dictionary = {}
+		for i: int in cells.size():
+			ways[cells[i]] = "\\" if bits & (1 << i) else "/"
+		if WorldMechanics.beam_hits(m, ways):
+			return
+	errors.append("map '%s': no way of turning the mirrors lights the crystal" % id)
+
 static func check_puzzles(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
 	var entries: Dictionary = entry_cells(map_ids)
 	for id: String in map_ids:
@@ -295,6 +381,14 @@ static func entry_cells(map_ids: PackedStringArray, start_map: String = "lightho
 			var arr: Array = entries.get(to, [])
 			arr.append(Vector2i(int(w.tx), int(w.ty)))
 			entries[to] = arr
+		# Falling through cracked floor lands on the same cell of the floor below.
+		if not m.drop_to.is_empty():
+			var below: Array = entries.get(m.drop_to, [])
+			for y: int in m.height:
+				for x: int in m.rows[y].length():
+					if m.kind_at(Vector2i(x, y)) == TilesetFactory.Kind.CRACKED:
+						below.append(Vector2i(x, y))
+			entries[m.drop_to] = below
 	return entries
 
 static func load_layout() -> Dictionary:
@@ -399,6 +493,15 @@ static func check_reachability(errors: PackedStringArray, map_ids: PackedStringA
 			var l: Dictionary = links.get(id, {})
 			l[to] = true
 			links[id] = l
+		# Cracked floor drops the player onto the floor below (Shatterfloor Mine).
+		if not m.drop_to.is_empty():
+			var drop: Array = entries.get(m.drop_to, [])
+			for e: Variant in entry_cells(PackedStringArray([id])).get(m.drop_to, []):
+				drop.append(e)
+			entries[m.drop_to] = drop
+			var dl: Dictionary = links.get(id, {})
+			dl[m.drop_to] = true
+			links[id] = dl
 	for id: String in map_ids:
 		if not entries.has(id):
 			errors.append("map '%s': no warp leads here" % id)

@@ -56,6 +56,13 @@ if grep -n -i -P -- "$de_terms" data/i18n/de/*.json tools/i18n/*.py 2>/dev/null;
 	fail=1
 fi
 
+# Shop texts: no direct purchase prompts at children (UWG annex no. 28, docs/legal/SHOP_COMPLIANCE.md).
+shop_phrases="$(python3 -c 'import json,re;b=json.load(open("data/shop_banned_phrases.json"));print("|".join(re.escape(x) for x in b["de"]+b["en"]))')"
+if grep -n -i -P -- "$shop_phrases" data/shop.json tools/i18n/de_shop.py scripts/shop/*.gd 2>/dev/null; then
+	echo "::error::Shop text uses a direct purchase prompt (lines above). Use neutral words like \"Price: 2,99 €\". See data/shop_banned_phrases.json."
+	fail=1
+fi
+
 if ! IP_PATTERN="$pattern" python3 tools/ip_meta_check.py; then
 	fail=1
 fi

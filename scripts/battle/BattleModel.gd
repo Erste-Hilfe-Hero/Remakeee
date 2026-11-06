@@ -54,6 +54,10 @@ var partner_ai: BattleAI
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
+## Share of damage the foe side deals (difficulty, plan area 2 item 728).
+var foe_damage_mult: float = 1.0
+## Factor on a boss's "hp_per_ally" (GameState.BOSS_HP_SCALE: Story bosses are 20 % smaller).
+var boss_hp_scale: float = 1.0
 var _boss_actions: int = 1
 ## Player slots still waiting for a replacement after faints (phase AWAIT_SWITCH), in order.
 var pending_switch: Array[int] = []
@@ -64,6 +68,9 @@ var battle_seed: int = 0
 var phase: Phase = Phase.INTRO
 var outcome: Outcome = Outcome.NONE
 var turn: int = 0
+## Raid attempts (plan area 7, item 2849) end after this many rounds, 0 = no limit. The battle then
+## ends as FLED: nobody won, the damage dealt so far counts.
+var round_limit: int = 0
 var items_allowed: bool = true
 var level_cap: int = Spirling.MAX_LEVEL
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
@@ -95,6 +102,9 @@ var foe_rule: String = ""
 ## Snares lying on each side (side_snare effect), oldest first. Each is {"move": name, plus
 ## "hp" (share of max Vigor), "status" or "stage"}. The next Spirling to swap in springs one.
 var snares: Array[Array] = [[], []]
+## Delayed hits on their way (delayed_hit effect, item 451), oldest first. Each is {"side", "slot"
+## (the slot it lands on), "amount", "eff", "move", "turns" (end-of-turn ticks left, the use turn counts)}.
+var delayed_hits: Array[Dictionary] = []
 ## Turn each Spirling last stepped onto the field (by swap or after a faint). The AI uses it to
 ## stop two sides from swapping back and forth forever.
 var entered_turn: Dictionary = {}
@@ -298,11 +308,12 @@ func start() -> Array[BattleEvent]:
 	base_field = field
 	field_turns = 0
 	snares = [[], []]
+	delayed_hits = []
 	boss_phase_done = false
 	var fielded: int = slot_count(Side.PLAYER)
 	if BattleRules.BOSSES.has(foe_boss):
 		var boss: Spirling = active_spirling(Side.FOE)
-		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded)
+		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded, boss_hp_scale)
 		boss.hp = boss.max_hp()
 		_boss_actions = BattleRules.boss_actions(foe_boss, fielded)
 	var foe: Spirling = active_spirling(Side.FOE)
@@ -636,6 +647,7 @@ func _phase_end_of_turn() -> void:
 			_end_of_turn_for(side, slot)
 	_tick_timers()
 	_tick_field()
+	_tick_delayed_hits()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	_weary_chip()
@@ -706,6 +718,9 @@ func _phase_victory_check() -> void:
 		phase = Phase.REWARDS
 	elif own_alive_count() == 0:
 		outcome = Outcome.LOSS
+		phase = Phase.REWARDS
+	elif round_limit > 0 and turn >= round_limit:
+		outcome = Outcome.FLED
 		phase = Phase.REWARDS
 	else:
 		phase = Phase.SWITCH_IN
@@ -848,8 +863,15 @@ func _do_move(a: BattleAction) -> void:
 			if BattleRules.trait_info(me.data.trait_id).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field)
+			if side == Side.FOE:
+				mult *= foe_damage_mult
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
-			ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
+			if mv.has_effect(&"delayed_hit"):
+				# Worked out now with today's stats; the delayed_hit effect sends it on its way.
+				ctx.held_damage = int(r.damage)
+				ctx.held_eff = float(r.eff)
+			else:
+				ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
 			if bool(react.get("cure", false)) and is_standing(target):
 				_cure(target_side, t_slot)
 		for fx: Dictionary in mv.effects:
@@ -910,13 +932,16 @@ func _do_bond(a: BattleAction) -> void:
 	var t_slot: int = a.target_slot if a.target_slot in standing else standing[0]
 	var target: Spirling = active_spirling(Side.FOE, t_slot)
 	var bonus: float = 0.0
+	var sure: bool = false
 	if not a.item_id.is_empty() and int(inventory.get(a.item_id, 0)) > 0:
 		inventory[a.item_id] = int(inventory[a.item_id]) - 1
 		bonus = float(Database.item(a.item_id).get("bond_bonus", 0.0))
+		# The shop's Bond Seal (plan area 10) makes this one bond certain.
+		sure = bool(Database.item(a.item_id).get("bond_sure", false))
 	var who: Dictionary = _who(Side.FOE, t_slot)
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
-	var success: bool = rng.randf() < BondCalc.chance(target, a.timing_score, bonus)
+	var success: bool = rng.randf() < BondCalc.chance(target, a.timing_score, bonus) or sure
 	var res: Dictionary = _who(Side.FOE, t_slot)
 	res["success"] = success
 	emit_event(BattleEvent.Type.BOND_RESULT, res)
@@ -1027,6 +1052,36 @@ func clear_snares(side: int) -> void:
 		return
 	snares[side] = []
 	emit_event(BattleEvent.Type.SNARE_CLEARED, {"side": side})
+
+## Sends a delayed hit of [param amount] at [param slot] of [param side]: it lands at the end of
+## the turn [param turns] turns from now on whoever stands there then. Emits DELAYED_SET.
+func queue_delayed_hit(side: int, slot: int, amount: int, eff: float, move_name: String, turns: int) -> void:
+	delayed_hits.append({"side": side, "slot": slot, "amount": amount, "eff": eff, "move": move_name, "turns": turns + 1})
+	emit_event(BattleEvent.Type.DELAYED_SET, {"side": side, "move": move_name, "turns": turns})
+
+## End of turn: every delayed hit moves one turn closer and the due ones land. A slot that is
+## empty by then (its side has nobody left to send) lets the hit fade.
+func _tick_delayed_hits() -> void:
+	var left: Array[Dictionary] = []
+	var due: Array[Dictionary] = []
+	for h: Dictionary in delayed_hits:
+		h.turns = int(h.turns) - 1
+		if int(h.turns) <= 0:
+			due.append(h)
+		else:
+			left.append(h)
+	delayed_hits = left
+	for h: Dictionary in due:
+		var side: int = int(h.side)
+		var slot: int = int(h.slot)
+		var s: Spirling = active_spirling(side, slot) if slot < slot_count(side) else null
+		if not is_standing(s):
+			emit_event(BattleEvent.Type.DELAYED_HIT, {"side": side, "move": str(h.move), "faded": true})
+			continue
+		var d: Dictionary = _who(side, slot)
+		d["move"] = str(h.move)
+		emit_event(BattleEvent.Type.DELAYED_HIT, d)
+		deal_damage(side, int(h.amount), {"eff": float(h.eff), "crit": false, "move": str(h.move), "delayed": true}, slot)
 
 ## The Spirling that just swapped into [param slot] springs the oldest snare on its side.
 func _spring_snare(side: int, slot: int) -> void:

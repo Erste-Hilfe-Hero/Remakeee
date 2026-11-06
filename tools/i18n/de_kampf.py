@@ -45,4 +45,13 @@ T.update({
 T.update({
 "The foe's Spirlings gain 1 extra Energy every second turn.": "Die Spirlings des Gegners erhalten jede zweite Runde 1 zusätzliche Energie.",
 "The current drags at your lead: it starts with less Pace.": "Die Strömung zerrt an deinem ersten Spirling: Er startet mit weniger Tempo.",
+"Relaxed battles for enjoying the story. Foes deal 90% damage.": "Entspannte Kämpfe, um die Geschichte zu genießen. Gegner machen 90 % Schaden.",
+})
+
+# Plan area 2, item 451: delayed hits.
+T.update({
+"%s will land in %d turns!": "%s trifft in %d Runden!",
+"%s fades with nobody to strike.": "%s verhallt, weil niemand mehr dasteht.",
+"%s lands on %s!": "%s trifft %s!",
+"Lands %d turns later on whoever stands there.": "Trifft %d Runden später, wer dann dort steht.",
 })

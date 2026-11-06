@@ -13,11 +13,13 @@ func after_each() -> void:
 	MusicDirector.motion = _saved_motion as MusicDirector.Motion
 	MusicDirector.dialogue = _saved_dialogue
 
+## Maps with their own song in data/music.json. Maps added later play "default" until they get
+## a song (test_sound checks that every map has some music).
 func _maps() -> Array[String]:
 	var out: Array[String] = []
-	for f: String in DirAccess.get_files_at("res://data/maps"):
-		if f.ends_with(".json"):
-			out.append(f.get_basename())
+	for k: String in (Sound._map_music.get("maps", {}) as Dictionary).keys():
+		out.append(k)
+	assert_gt(out.size(), 10)
 	return out
 
 func test_every_map_has_its_own_song() -> void:

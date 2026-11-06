@@ -37,6 +37,10 @@ var _ui: CanvasLayer
 var _text: TextBox
 var _picker: ListPicker
 var _banner: Label
+## Time-of-day symbol beside the place banner (area 3 item 1169).
+var _phase_icon: PhaseIcon
+## Plain weather dots and veil (area 3 item 1144).
+var weather_layer: WeatherLayer
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
@@ -92,6 +96,9 @@ func _ready() -> void:
 		"echo_song": _action_echo_song,
 		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
+		"bell": _action_bell,
+		"toggle": _action_toggle,
+		"mirror": _action_mirror,
 		"first_voice": _action_first_voice,
 	}
 	_world = WorldMechanics.new(self)
@@ -137,6 +144,7 @@ func _build() -> void:
 	player.step_started.connect(_on_player_step_started)
 	player.bob = true
 	player.interact.connect(_on_interact)
+	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
 	var hint := InteractHint.new()
 	hint.ow = self
@@ -153,6 +161,8 @@ func _build() -> void:
 	ui_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.theme = UITheme.get_theme()
+	# Text box, hints and the HUD follow high contrast and large text at once.
+	ui_root.add_to_group(MenuHost.THEME_GROUP)
 	_ui.add_child(ui_root)
 	_ui_root = ui_root
 	SafeArea.apply(ui_root)
@@ -163,12 +173,16 @@ func _build() -> void:
 	# The fade covers the whole screen, cut-outs included, under the (safe-area) UI.
 	_ui.add_child(_fade)
 	_ui.move_child(_fade, 0)
+	weather_layer = WeatherLayer.new()
+	_ui.add_child(weather_layer)
+	_ui.move_child(weather_layer, 0)
+	DayCycle.events.phase_changed.connect(_on_phase_changed)
 	_door_wipe = ColorRect.new()
 	_door_wipe.color = UITheme.INK
 	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_door_wipe.visible = false
 	_ui.add_child(_door_wipe)
-	_ui.move_child(_door_wipe, 1)
+	_ui.move_child(_door_wipe, 2)
 	_banner = Label.new()
 	_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	_banner.offset_top = 4
@@ -176,6 +190,8 @@ func _build() -> void:
 	_banner.add_theme_stylebox_override("normal", UITheme.panel_style())
 	_banner.visible = false
 	ui_root.add_child(_banner)
+	_phase_icon = PhaseIcon.new()
+	_banner.add_child(_phase_icon)
 	toast = Toast.new()
 	add_child(toast)
 	_text = TextBox.new()
@@ -252,18 +268,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	refresh_shade()
-	for n: NPC in _npcs:
-		n.queue_free()
-	_npcs.clear()
-	for def: Dictionary in map.npcs:
-		if def.has("hide_flag") and GameState.has_flag(str(def.hide_flag)):
-			continue
-		if def.has("show_flag") and not GameState.has_flag(str(def.show_flag)):
-			continue
-		var n := NPC.new()
-		n.setup(def)
-		_entities.add_child(n)
-		_npcs.append(n)
+	_spawn_npcs()
 	player.place(cell, face)
 	GameState.current_map = map_id
 	DailyTasks.note_map(map_id)
@@ -299,7 +304,11 @@ func refresh_daylight() -> void:
 		t.autostart = true
 		t.timeout.connect(refresh_daylight)
 		add_child(t)
-	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night)
+	var w: String = WeatherCycle.current(map)
+	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
+	if weather_layer != null:
+		weather_layer.show_kind(w)
+	DayCycle.poll()
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -401,8 +410,36 @@ func _try_gear(target: Vector2i) -> bool:
 	busy = false
 	return true
 
+## NPCs of the map that are there now: flags and "phase_only" (area 3 item 1168).
+func _spawn_npcs() -> void:
+	for n: NPC in _npcs:
+		n.queue_free()
+	_npcs.clear()
+	var phase: int = DayCycle.current() if _world.phase_override < 0 else _world.phase_override
+	for def: Dictionary in map.npcs:
+		if def.has("hide_flag") and GameState.has_flag(str(def.hide_flag)):
+			continue
+		if def.has("show_flag") and not GameState.has_flag(str(def.show_flag)):
+			continue
+		if not DayCycle.shows_at(def, phase):
+			continue
+		var n := NPC.new()
+		n.setup(def)
+		_entities.add_child(n)
+		_npcs.append(n)
+
+## The time of day moved on: light, people, doors and the banner symbol follow (item 1167).
+func _on_phase_changed(_phase: int) -> void:
+	if map == null or busy:
+		return
+	refresh_daylight()
+	_spawn_npcs()
+	_world.refresh(player.cell)
+
 func _show_banner(text: String) -> void:
-	_banner.text = " %s " % text
+	_banner.text = "    %s " % text
+	_phase_icon.phase = DayCycle.current()
+	_phase_icon.queue_redraw()
 	_banner.visible = true
 	await get_tree().create_timer(BANNER_TIME).timeout
 	_banner.visible = false
@@ -504,7 +541,10 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
 	if not s.is_empty():
+		var icons: Control = _gear_icons(s.get("gear", []))
 		await run_dialogue(str(s.dialogue))
+		if icons != null:
+			icons.queue_free()
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -512,6 +552,28 @@ func _on_interact(cell: Vector2i) -> void:
 		if beyond != null:
 			beyond.face_toward(player.cell)
 			await run_dialogue(beyond.dialogue_ref, beyond)
+
+## Cave entrance signs show the gear needed inside as pictures above the text (item 982).
+func _gear_icons(gear: Array) -> Control:
+	if gear.is_empty():
+		return null
+	var row := HBoxContainer.new()
+	row.name = "gear_icons"
+	row.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	row.offset_left = 4
+	row.offset_top = -TEXT_BOX_HEIGHT - TilesetFactory.TILE * 2 - 4
+	row.grow_vertical = Control.GROW_DIRECTION_END
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for g: Variant in gear:
+		var tex: Texture2D = PauseMenu.gear_picture(str(g))
+		if tex == null:
+			continue
+		var r := TextureRect.new()
+		r.texture = tex
+		r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(r)
+	_text.get_parent().add_child(row)
+	return row
 
 ## Shows a dialogue entry, then runs its action and flag. Freezes the player meanwhile.
 ## Follows "if"/"else", "choices" and "next" inside the same file (plan items 1335-1338).
@@ -780,11 +842,14 @@ func open_menu() -> void:
 	var watch: bool = menu.watch_replay
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
+	var raid: Dictionary = menu.raid_attempt
 	menu.queue_free()
 	if not duel.is_empty():
 		await echo_duel(duel)
 	if not league.is_empty():
 		await league_battle(league)
+	if not raid.is_empty():
+		await raid_battle(raid)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -892,10 +957,27 @@ func _unhandled_input(event: InputEvent) -> void:
 		var world: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * at
 		tap_cell(Vector2i(floori(world.x / GridWalker.TILE), floori(world.y / GridWalker.TILE)))
 
-## Walks toward [param cell]; NPCs, signs and counters get walked up to and talked to.
-func tap_cell(cell: Vector2i) -> void:
+## True if a tap on [param cell] should walk next to it and use it, like pressing A in front
+## of it: signs, counters, hidden finds, smooth rock passages, ladders and plank gaps
+## (item 2109, so all of the world works with taps alone). NPCs are checked by the caller.
+static func used_on_arrival(m: MapData, cell: Vector2i, flags: Dictionary) -> bool:
+	if not m.sign_at(cell, flags).is_empty() or not m.secret_at(cell, flags).is_empty():
+		return true
+	if not m.ladder_at(cell).is_empty():
+		return true
+	var p: Dictionary = m.passage_at(cell)
+	if not p.is_empty() and not bool(flags.get(str(p.get("flag", "")), false)):
+		return true
+	var k: int = m.kind_at(cell)
+	return k == TilesetFactory.Kind.COUNTER or k == TilesetFactory.Kind.PLANK
+
+## Walks toward [param cell]; NPCs, signs, counters and finds get walked up to and used.
+func tap_cell(cell: Vector2i, marker: bool = true) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
+	_tap_goal = cell
+	if marker:
+		_tap_retries = 0
 	var gear: Array = GameState.owned_gear()
 	var passable: Callable = func(c: Vector2i) -> bool: return PuzzleRoom.passable(map, c, gear) and npc_at(c) == null
 	# Tapping across water or a ledge: walk to the gear spot and use it.
@@ -906,11 +988,61 @@ func tap_cell(cell: Vector2i) -> void:
 			if f == player.cell or not route.is_empty():
 				player.follow(route, cell)
 				return
-	var talk: bool = npc_at(cell) != null or not map.sign_at(cell, GameState.flags).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
-	if talk:
-		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)
+	# Boulders: a tap next to one pushes it, a tap further away walks up to it (item 2109).
+	if map.char_at(cell) == "B":
+		if PathFinder.is_adjacent(cell, player.cell):
+			player.follow([cell] as Array[Vector2i])
+		else:
+			player.follow(PathFinder.find_adjacent(player.cell, cell, passable))
+		return
+	var route: Array[Vector2i] = []
+	var reached: bool = false
+	if npc_at(cell) != null or used_on_arrival(map, cell, GameState.flags):
+		route = PathFinder.find_adjacent(player.cell, cell, passable)
+		reached = not route.is_empty() or PathFinder.is_adjacent(cell, player.cell)
+		player.follow(route, cell if reached else Player.NO_TARGET)
 	else:
-		player.follow(PathFinder.find(player.cell, cell, passable))
+		route = PathFinder.find(player.cell, cell, passable)
+		reached = not route.is_empty()
+		player.follow(route)
+	if marker:
+		show_tap_marker(cell, reached)
+
+## The final cell of the last tap and how often a blocked walk was planned again (item 1822).
+var _tap_goal: Vector2i = Player.NO_TARGET
+var _tap_retries: int = 0
+const TAP_RETRY_DELAY: float = 0.3
+const TAP_RETRY_MAX: int = 5
+const TAP_MARKER_TIME: float = 0.4
+
+## A walking villager stepped into the tapped path: plan the way again after 0.3 s instead of
+## standing still (item 1822). Boulders and closed gear spots are not retried.
+func _on_path_blocked(next: Vector2i) -> void:
+	if npc_at(next) == null or _tap_retries >= TAP_RETRY_MAX or _tap_goal == Player.NO_TARGET:
+		return
+	_tap_retries += 1
+	var goal: Vector2i = _tap_goal
+	await get_tree().create_timer(TAP_RETRY_DELAY).timeout
+	if busy or player.moving or not player.path.is_empty() or _tap_goal != goal:
+		return
+	tap_cell(goal, false)
+
+## Shows where a tap leads: a blinking frame on the target for 0.4 s (item 1812), or a small X
+## and the "cancel" sound when no way leads there (item 1813).
+func show_tap_marker(cell: Vector2i, reachable: bool) -> TapMarker:
+	var old: Node = _entities.get_node_or_null("tap_marker")
+	if old != null:
+		old.name = "tap_marker_old"
+		old.queue_free()
+	var mk := TapMarker.new()
+	mk.name = "tap_marker"
+	mk.cross = not reachable
+	mk.life = TAP_MARKER_TIME
+	mk.position = GridWalker.cell_to_pos(cell)
+	_entities.add_child(mk)
+	if not reachable:
+		Sound.sfx("cancel")
+	return mk
 
 func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.is_empty():
@@ -1101,6 +1233,7 @@ func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
 	if score >= ECHO_SONG_PASS:
 		Sound.sfx("level_up")
 		GameState.set_flag(args[0])
+		DailyTasks.record("melody", {"map": map.id})
 	else:
 		Sound.sfx("cancel")
 
@@ -1156,11 +1289,19 @@ func _action_quest_show(args: PackedStringArray, _speaker: NPC) -> void:
 
 ## "lever <flag> <gear>": a sluice wheel, mine cart or grate that needs Wayfarer Gear (the Pry
 ## Bar). With the gear the flag is set and blocks with that open_flag open (area 3 item 1045).
+## "lever <flag> [gear]": without gear it is a plain lever (shortcuts that open from inside,
+## area 3 item 983).
 func _action_lever(args: PackedStringArray, _speaker: NPC) -> void:
-	if args.size() < 2:
+	if args.is_empty():
 		return
 	if GameState.has_flag(args[0]):
 		await say(["It has already been moved."] as Array[String])
+		return
+	if args.size() < 2:
+		GameState.set_flag(args[0])
+		Sound.sfx("warp")
+		_world.refresh(player.cell)
+		await say(["You pull the lever. Somewhere a rope ladder rattles down."] as Array[String])
 		return
 	if not GameState.has_gear(args[1]):
 		Sound.sfx("bump")
@@ -1246,6 +1387,46 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 			_world.refresh(player.cell)
 			await say(["The last lamp catches. Somewhere, rock grinds against rock!"] as Array[String])
 
+## "bell <puzzle> <n> <total>": Bellstone Ruins (area 3 item 1008). Same rules as switches:
+## ring the bells in the order drawn on the wall; a wrong bell silences them all.
+func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 3:
+		return
+	if GameState.has_flag(args[0]):
+		await say(["The bell hums softly. This room is done."] as Array[String])
+		return
+	match GameState.press_switch(args[0], int(args[1]), int(args[2])):
+		GameState.SwitchResult.WRONG:
+			Sound.sfx("cancel")
+			await say(["Clang! The note jars, and every bell falls silent. Start again."] as Array[String])
+		GameState.SwitchResult.STEP:
+			Sound.sfx("confirm")
+			await say(["Dong. The note hangs in the air."] as Array[String])
+		GameState.SwitchResult.SOLVED:
+			Sound.sfx("warp")
+			_world.refresh(player.cell)
+			await say(["The last note joins the others. A door swings open!"] as Array[String])
+
+## "toggle <flag>": a sluice wheel that can be turned both ways (Brackwater Sluice, item 1009).
+func _action_toggle(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var on: bool = not GameState.has_flag(args[0])
+	GameState.set_flag(args[0], on)
+	Sound.sfx("warp")
+	_world.refresh(player.cell)
+	var level: int = _world.water_level(map)
+	var line: String = "You turn the wheel open. The water is now at mark %d." if on else "You turn the wheel shut. The water is now at mark %d."
+	await say([line % level] as Array[String])
+
+## "mirror <x> <y>": turns a mirror in Lanternwell (item 1010) and follows the light again.
+func _action_mirror(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 2:
+		return
+	var hit: bool = _world.turn_mirror(Vector2i(int(args[0]), int(args[1])))
+	Sound.sfx("warp" if hit else "confirm")
+	await say(["The light strikes the crystal, and it rings out bright!" if hit else "You turn the mirror. The beam swings to a new wall."] as Array[String])
+
 ## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
 func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	if not GameState.has_flag("tower_intro"):
@@ -1319,19 +1500,33 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
-	var rec: Dictionary = GameState.records.get("weekly", {})
-	if str(rec.get("week", "")) != week and not GameState.time_went_back(str(rec.get("week", "")), week):
-		rec = {"week": week, "best": 0, "claimed": false}
+	var rec: Dictionary = WeeklyChallenge.record_for(week)
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var go: bool = await menu.confirm("This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d. Try?" % [
-		BattleRules.FIELDS[ch.field].label, BattleRules.RULES[ch.rule].label, ch.level, int(rec.best), WeeklyChallenge.ROUNDS])
+	var go: bool = false
+	while true:
+		var ask: String = Loc.t("This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d.") % [
+			Loc.t(str(BattleRules.FIELDS[ch.field].label)), Loc.t(str(BattleRules.RULES[ch.rule].label)), ch.level, int(rec.best), WeeklyChallenge.ROUNDS]
+		ask += "\n" + Loc.t("Tries with prizes left: %d of %d.") % [WeeklyChallenge.prize_tries_left(rec), WeeklyChallenge.PRIZE_TRIES]
+		var pick: int = await menu.pick_strings(ask, [Loc.t("Try"), Loc.t("Preview"), Loc.t("Archive")] as Array[String])
+		if pick == 0:
+			go = true
+			break
+		if pick == 1:
+			await menu.info(ch.preview_text())
+		elif pick == 2:
+			await menu.info(WeeklyChallenge.archive_text())
+		else:
+			break
 	menu.queue_free()
 	if not go:
 		return
+	var prizes: bool = WeeklyChallenge.start_try(rec)
+	GameState.records["weekly"] = rec
 	GameState.heal_party()
 	await say(["Your team is fully rested."] as Array[String])
 	var wins: int = 0
+	var turns_total: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
 		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field}
 		busy = false
@@ -1339,28 +1534,33 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		busy = true
 		player.frozen = true
 		var turns: int = last_model.turn if last_model != null else 0
+		turns_total += turns
 		if outcome != BattleModel.Outcome.WIN:
 			break
 		wins += 1
 		var lines: Array[String] = [WeeklyChallenge.round_text(wins, turns, GameState.party)]
-		var coins: int = WeeklyChallenge.claim_interim(rec, wins)
+		var coins: int = WeeklyChallenge.claim_interim(rec, wins) if prizes else 0
 		if coins > 0:
 			lines.append("Interim prize: %d coins." % coins)
 		await say(lines)
-	rec.best = maxi(int(rec.best), wins)
+	var booked: Array[String] = ch.finish_run(rec, wins, turns_total, GameState.party, prizes)
+	if not booked.is_empty():
+		await say(booked)
 	# Weekly board (item 125): rounds won and health left; the server keeps the best.
 	Online.call_fn("weekly_submit", {"p_week": week, "p_score": EchoTeam.weekly_score(wins, GameState.party)})
 	if wins >= WeeklyChallenge.ROUNDS and GameState.party.all(func(s: Spirling) -> bool: return not s.is_fainted()):
 		GameState.records["weekly_flawless"] = 1
-	if wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
+	if wins >= WeeklyChallenge.ROUNDS and prizes and not bool(rec.claimed):
 		rec.claimed = true
 		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1
 		GameState.money += WeeklyChallenge.PRIZE
 		var won: Array[String] = ["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE]
-		won.append_array(Waymarks.reward_lines(Waymarks.earn(WeeklyChallenge.WAYMARKS, "weekly")))
+		won.append_array(Waymarks.reward_lines(Waymarks.earn(WeeklyChallenge.full_waymarks(rec), "weekly")))
 		won.append_array(SeasonPath.add("weekly"))
 		await say(won)
 		await _action_give_item([ch.reward_item(), "1"] as PackedStringArray, null)
+	elif wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
+		await say(["Cleared! The prize tries are used up this week, but the score counts."] as Array[String])
 	elif wins >= WeeklyChallenge.ROUNDS:
 		await say(["Cleared again! The prize comes back next week."] as Array[String])
 	GameState.records["weekly"] = rec
@@ -1568,12 +1768,12 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		var labels: Array[String] = []
 		for id: String in args:
 			var it: Dictionary = Database.item(id)
-			labels.append("%s  %d" % [it.get("name", id), int(it.get("price", 0))])
+			labels.append("%s  %d" % [it.get("name", id), ShopEffects.merchant_price(int(it.get("price", 0)))])
 		var idx: int = await menu.pick_strings("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), labels)
 		if idx < 0:
 			break
 		var item: Dictionary = Database.item(args[idx])
-		var price: int = int(item.get("price", 0))
+		var price: int = ShopEffects.merchant_price(int(item.get("price", 0)))
 		if GameState.money < price:
 			await menu.info("Not enough coins.")
 			continue
@@ -1597,9 +1797,27 @@ func _action_exchange(_args: PackedStringArray, _speaker: NPC) -> void:
 		var labels: Array[String] = []
 		for o: Dictionary in offers:
 			labels.append(Exchange.label(o))
+		var list_row: int = -1
+		if Exchange.full_unlocked():
+			list_row = labels.size()
+			labels.append(Loc.t("Weekly crates..."))
+		var goal_row: int = labels.size()
+		labels.append(Loc.t("Savings goal..."))
 		var idx: int = await menu.pick_strings(Loc.t("Exchange   %s") % Waymarks.label(), labels)
 		if idx < 0:
 			break
+		if idx == list_row:
+			await menu.info(Exchange.weekly_list_text())
+			continue
+		if idx == goal_row:
+			var names: Array[String] = []
+			for o: Dictionary in offers:
+				names.append(Exchange.label(o))
+			var g: int = await menu.pick_strings(Loc.t("Save up for which offer?"), names)
+			if g >= 0:
+				Exchange.set_goal(str(offers[g].item))
+				await menu.info(Exchange.goal_line())
+			continue
 		var o: Dictionary = offers[idx]
 		if not await menu.confirm(Exchange.describe(o) + "\n\n" + Loc.t("Trade?")):
 			continue
@@ -1651,7 +1869,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 	if def.has("warden"):
 		# Warden fights are long; never lose progress to a crash or the OS closing the app.
 		SaveManager.save_game()
-	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty)
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
 	if team.is_empty():
 		push_warning("Overworld: Wayfarer '%s' has no valid team" % n.npc_id)
 		busy = false
@@ -1872,6 +2090,37 @@ func league_battle(m: Dictionary) -> void:
 	busy = false
 	player.frozen = false
 
+## Raid Rift attempt (plan area 7, items 2847-2851, 2871): the server set seed, teams and the
+## round limit; the battle is friendly, so it costs nothing and the team is healed afterwards.
+## The damage comes off the guardian once the referee checked the battle (2691).
+func raid_battle(at: Dictionary) -> void:
+	var snap: Dictionary = BattleReferee.from_expect(at)
+	var model: BattleModel = BattleReplay.build_model(snap)
+	if model == null:
+		await say(["The Raid Rift could not open. Try again later."] as Array[String])
+		return
+	model.trainer_name = "Rift guardian"
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await say([Loc.t("%s waits in the Raid Rift. You have %d rounds.") % [str(at.get("guardian", "?")), model.round_limit]] as Array[String])
+	busy = false
+	await start_battle(foes, false, {"name": "Rift guardian", "model": model, "friendly": true})
+	busy = true
+	player.frozen = true
+	var dealt: int = 0
+	for s: Spirling in model.parties[1]:
+		dealt += maxi(0, s.max_hp() - s.hp)
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": "raid", "p_ref": str(at.get("attempt_id", "")),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+	var lines: Array[String] = [Loc.t("You dealt %d damage to the guardian.") % dealt]
+	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		lines.append("It counts once the check is done.")
+	else:
+		lines.append("The result could not be sent, so it does not count.")
+	await say(lines)
+	busy = false
+	player.frozen = false
+
 # --- Battles --------------------------------------------------------------------------
 
 ## Cuts to the battle screen and waits for it to end. [param trainer] holds Wayfarer info (M5).
@@ -1880,6 +2129,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	for f: Spirling in foes:
+		DailyTasks.note_seen(f.data.species_name, map.id)
 		GameState.mark_seen(f.data.species_name)
 		GameState.note_spirlog(f, false)
 	Sound.sfx("encounter")
@@ -1934,6 +2184,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
 	model.ai.set_profile(str(trainer.get("profile", "")))
+	model.foe_damage_mult = GameState.foe_damage_mult()
+	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.prize_money = int(trainer.get("money", 0))
@@ -1949,7 +2201,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		if partner.get("echo") is Array:
 			ally.assign(partner.echo)
 		else:
-			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng, GameState.difficulty)
+			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
 			int(partner.get("ai", TrainerData.PARTNER_AI)))
 	return model

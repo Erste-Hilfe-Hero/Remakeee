@@ -18,7 +18,7 @@ path. `--json` writes every number for tests and comparisons.
 | Measure | Target | Checked by |
 | --- | --- | --- |
 | Duel win rate per species at Lv36 | 25% to 75% | `test_balance.gd`, `test_no_species_dominates_its_stage` |
-| Team win rate per species at Lv36 | 30% to 70% (the test holds 25% to 75% while the roster grows) | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
+| Team win rate per species at Lv36 | 30% to 70% | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
 | Team battles that stall (120 turns) | none | `test_balance.gd`, same test |
 | Battles with only the new arts that hit 60 turns | none | `test_move_curve.gd`, `test_fuzz_new_arts_only` |
 | Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | report line "Turns to KO" (test planned, item 851) |
@@ -132,14 +132,15 @@ Waymarks are the endgame currency. They are only earned by playing (`Waymarks.ea
 is lost with a short note. A loss in battle never takes Waymarks away.
 
 Target for an active player: **about 60 Waymarks a day and 500 a week** once the endgame is open;
-a player who does everything every day (all four daily tasks, trips, every weekly source) gets about 750.
+a player who does everything every day (all four daily tasks, trips, every weekly source) gets about 780.
 
 | Source | Amount | How often | Status |
 | --- | --- | --- | --- |
 | Daily task | 10 | 3 a day | built |
 | Fourth, harder daily task (after Act I) | 25 | once a day | `DailyTasks.HARD_REWARD` |
 | All daily tasks of the day | 10 extra | once a day | built |
-| Weekly echo, first win of the week | 60 | once a week | built |
+| Weekly echo, first win of the week | 60 (30 of it from round 3 on) | once a week, in the first 3 tries | built |
+| Weekly echo clear under the week's target score | 20 | once a week | `WeeklyChallenge.finish_run` |
 | Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
 | Master Wayfarer | 80 first win, then 5 | once a week each (8 masters) | `Masters.win` |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
@@ -180,15 +181,15 @@ festival; then buy at Marla's stand cheapest first). Nov 2026 run:
 | Daily tasks (3 + the hard one) + bonus | 4950 + 900 |
 | Master Wayfarers (640 in week 1, then 40 a week) | 1080 |
 | Roaming trips | 540 |
-| Weekly echo | 720 |
+| Weekly echo (with the target bonus) | 960 |
 | Echo Path | 480 |
 | Album | 300 |
 | Lighthouse stair | 285 |
 | Season path | 460 |
 | Festival | 150 |
-| **Total** | **9865 (110 a day, 767 a week; about 720 a week after the first)** |
+| **Total** | **10105 (112 a day, 786 a week; about 735 a week after the first)** |
 
-Marla's stand took 9270 (341 goods), so the pouch ends at about 600: nothing is lost over the
+Marla's stand took 9524 (398 goods, with the weekly crates), so the pouch ends at about 600: nothing is lost over the
 cap, and the full weekly stock (about 900) is more than a week brings, so buying stays a choice.
 The first run showed trips (48 a day) and weekly master rematches (160 a week) far above the
 target; they were cut to 1/2/3 per trip and 5 per rematch. The fourth daily task (plan 3170) added 175 a

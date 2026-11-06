@@ -46,7 +46,8 @@ var backdrop: String = "field"
 var field: String = ""
 ## Tall grass may only roll encounters if a table exists.
 var heal_point: Vector2i = Vector2i(-1, -1)
-## Puzzle blocks: {"x", "y", "open_flag"}. A closed block is drawn and treated as rock.
+## Puzzle blocks: {"x", "y", "open_flag", "closed"}. A closed block is drawn as "closed"
+## (rock "@" unless set, e.g. "~" for a gap full of sea water).
 var blocks: Array[Dictionary] = []
 ## Hidden finds: {"x", "y", "item", "count", "flag"}. Facing the cell and pressing A takes it.
 var secrets: Array[Dictionary] = []
@@ -66,6 +67,15 @@ var boulder_ground: String = "f"
 var drop_to: String = ""
 ## Ladder anchors: {"x", "y", "to", "tx", "ty"}. Hang the Rope Ladder once, then climb down.
 var ladders: Array[Dictionary] = []
+## Secret passages (item 1082): a smooth rock at {x, y} that A slides aside, setting "flag".
+## The rock itself is a block with the same open_flag.
+var passages: Array[Dictionary] = []
+## Named cells for story figures and story signs ("spots": {"name": [x, y]}).
+var spots: Dictionary = {}
+## Brackwater Sluice: flags of the sluice wheels on this map; the water level is how many are open.
+var sluices: Array = []
+## Lanternwell: {"x", "y", "dir", "mirrors": [[x, y, "/"], ...], "target": [x, y], "flag"}.
+var beam: Dictionary = {}
 var _base_rows: PackedStringArray = []
 
 static func exists(map_id: String) -> bool:
@@ -170,6 +180,13 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 		m.puzzles.append(pz)
 	for ld: Variant in raw.get("ladders", []):
 		m.ladders.append(ld)
+	for ps: Variant in raw.get("passages", []):
+		m.passages.append(ps)
+	var sp: Dictionary = raw.get("spots", {})
+	for k: Variant in sp:
+		m.spots[str(k)] = Vector2i(int(sp[k][0]), int(sp[k][1]))
+	m.sluices = (raw.get("sluices", []) as Array).duplicate()
+	m.beam = (raw.get("beam", {}) as Dictionary).duplicate(true)
 	m.boulder_ground = str(raw.get("boulder_ground", "f"))
 	m.biome = str(raw.get("biome", ""))
 	m.drop_to = str(raw.get("drop_to", ""))
@@ -222,6 +239,17 @@ func ladder_at(cell: Vector2i) -> Dictionary:
 			return l
 	return {}
 
+## The secret passage at [param cell], or {}.
+func passage_at(cell: Vector2i) -> Dictionary:
+	for p: Dictionary in passages:
+		if int(p.x) == cell.x and int(p.y) == cell.y:
+			return p
+	return {}
+
+## The named cell [param name], or (-1, -1) if the map has none.
+func spot(name: String) -> Vector2i:
+	return spots.get(name, Vector2i(-1, -1))
+
 func in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.y >= 0 and cell.y < height and cell.x < rows[cell.y].length()
 
@@ -268,6 +296,8 @@ func sign_at(cell: Vector2i, flags: Dictionary = {}) -> Dictionary:
 			continue
 		if s.has("show_flag") and not bool(flags.get(str(s.show_flag), false)):
 			continue
+		if not DayCycle.shows_at(s, int(flags.get("_phase", DayCycle.current()))):
+			continue
 		return s
 	return {}
 
@@ -278,7 +308,10 @@ func apply_blocks(flags: Dictionary) -> bool:
 		var x: int = int(b.x)
 		var y: int = int(b.y)
 		var open: bool = bool(flags.get(str(b.get("open_flag", "")), false))
-		var ch: String = _base_rows[y][x] if open else "@"
+		# "phase_only" blocks only stand at those times of day (area 3 item 1168).
+		if b.has("phase_only") and not DayCycle.shows_at(b, int(flags.get("_phase", DayCycle.current()))):
+			open = true
+		var ch: String = _base_rows[y][x] if open else str(b.get("closed", "@"))
 		if rows[y][x] != ch:
 			var r: String = rows[y]
 			rows[y] = r.substr(0, x) + ch + r.substr(x + 1)

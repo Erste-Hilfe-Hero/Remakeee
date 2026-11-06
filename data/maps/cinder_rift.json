@@ -13,8 +13,8 @@
   "^.::....::.^",
   "^^^^^..^^^^^",
   "^.::....::.^",
-  "^.::....::.^",
-  "^..........^",
+  "^S::....::.^",
+  "D..........^",
   "^..^^..^^..^",
   "^.::....::.^",
   "^..........^",
@@ -43,6 +43,14 @@
    "to": "echo_path",
    "tx": 4,
    "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "to": "kindle_vents",
+   "tx": 5,
+   "ty": 8,
    "facing": "up"
   }
  ],
@@ -110,7 +118,7 @@
     },
     {
      "species": "Kindlop",
-     "level": 11,
+     "level": 10,
      "moves": [
       "Glow Knuckle",
       "Kindle Up"
@@ -118,7 +126,7 @@
     },
     {
      "species": "Smoldrake",
-     "level": 12,
+     "level": 11,
      "moves": [
       "Char Mark",
       "Cinder Breath",
@@ -159,7 +167,7 @@
      },
      {
       "species": "Kindlop",
-      "level": 11,
+      "level": 10,
       "moves": [
        "Glow Knuckle",
        "Kindle Up",
@@ -180,7 +188,7 @@
     "rift_born": [
      {
       "species": "Shalebat",
-      "level": 10,
+      "level": 9,
       "moves": [
        "Grit Jab",
        "Hunker Down"
@@ -189,7 +197,7 @@
      },
      {
       "species": "Kindlop",
-      "level": 11,
+      "level": 10,
       "moves": [
        "Glow Knuckle",
        "Kindle Up",
@@ -199,7 +207,7 @@
      },
      {
       "species": "Smoldrake",
-      "level": 12,
+      "level": 10,
       "moves": [
        "Char Mark",
        "Cinder Breath",
@@ -209,7 +217,7 @@
      },
      {
       "species": "Zippit",
-      "level": 11,
+      "level": 9,
       "moves": [
        "Static Tag"
       ],
@@ -252,7 +260,16 @@
    "leaves": true
   }
  ],
- "signs": [],
+ "signs": [
+  {
+   "x": 1,
+   "y": 7,
+   "dialogue": "cinder_rift/kindle_vents_sign",
+   "gear": [
+    "plank_bundle"
+   ]
+  }
+ ],
  "blocks": [
   {
    "x": 7,

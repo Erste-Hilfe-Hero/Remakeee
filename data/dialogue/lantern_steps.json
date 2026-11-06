@@ -1,0 +1,37 @@
+{
+ "sign": [
+  "LANTERN STEPS",
+  "Rock stair, rings 10 to 13.",
+  "Five terraces up to Copperfold. A lantern burns on every one."
+ ],
+ "smooth": [
+  "Chisel marks run all over this stone. Someone hid something here."
+ ],
+ "tova": [
+  "Tova: I light all five lanterns every evening. My knees know every step."
+ ],
+ "tova_intro": [
+  "Tova: Climbing my stair? Show me your spark first."
+ ],
+ "tova_defeat": [
+  "Tova: Bright enough. Go on up."
+ ],
+ "garr": [
+  "Garr: Copperfold's at the top. Best hot pies in the valley."
+ ],
+ "garr_intro": [
+  "Garr: Off shift and bored. Battle?"
+ ],
+ "garr_defeat": [
+  "Garr: Back to the pies, then."
+ ],
+ "isa": [
+  "Isa: From up here you can see three Rifts on a clear night."
+ ],
+ "isa_intro": [
+  "Isa: The last terrace is mine. Earn it."
+ ],
+ "isa_defeat": [
+  "Isa: It's yours."
+ ]
+}

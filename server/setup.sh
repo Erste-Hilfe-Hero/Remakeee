@@ -78,6 +78,24 @@ if ! grep -q '^REFEREE_DB_PASSWORD=' .env; then
 	echo "REFEREE_DB_PASSWORD=$(openssl rand -hex 24)" >> .env
 	umask 022
 fi
+# The billing service's database password and the secret in Google's push address (plan area 10).
+if ! grep -q '^BILLING_DB_PASSWORD=' .env; then
+	umask 077
+	echo "BILLING_DB_PASSWORD=$(openssl rand -hex 24)" >> .env
+	umask 022
+fi
+if ! grep -q '^GOOGLE_PUSH_TOKEN=' .env; then
+	umask 077
+	echo "GOOGLE_PUSH_TOKEN=$(openssl rand -hex 24)" >> .env
+	umask 022
+fi
+# The Play service account file is optional; without it Play purchases wait (the app sends them again).
+# Only the billing container's user (uid 10001, server/billing/Dockerfile) may read it.
+mkdir -p secrets
+[ -f secrets/google_sa.json ] || : > secrets/google_sa.json
+chown -R 10001 secrets 2>/dev/null || true
+chmod 700 secrets
+chmod 600 secrets/google_sa.json
 # Address lines are rewritten each run (DOMAIN can change).
 grep -v '^\(DOMAIN\|SITE_ADDRESS\|PUBLIC_URL\|COMPOSE_FILE\|SHARED_NETWORK\)=' .env > .env.new || true
 {
@@ -98,7 +116,7 @@ mkdir -p public
 printf '{"url": "%s", "anon_key": "%s"}\n' "$public_url" "$anon" > public/chimora.json
 
 # --- Start -------------------------------------------------------------------------------------
-docker compose pull -q
+docker compose pull -q --ignore-buildable
 docker compose up -d --remove-orphans
 # The Caddyfile is a bind mount; an update replaces the file, so the container must restart to see it.
 docker compose restart caddy >/dev/null
@@ -126,6 +144,12 @@ if [ -f "$here/../data/spirlings.json" ] && command -v python3 >/dev/null 2>&1; 
 else
 	echo "Game data not loaded: the game project is not next to $here. The fair league needs it."
 fi
+
+# --- Billing service (plan area 10) --------------------------------------------------------------
+billing_pw="$(sed -n 's/^BILLING_DB_PASSWORD=//p' .env)"
+printf "alter role chimora_billing with login password :'pw';\n" | \
+	docker compose exec -T db psql -U postgres -h localhost -d postgres -v ON_ERROR_STOP=1 -q -v pw="$billing_pw"
+docker compose up -d --build billing
 
 # --- Battle referee (plan area 7, items 2687-2688) -----------------------------------------------
 # Its database user may only read battle_queue and write battle_results. The container has no

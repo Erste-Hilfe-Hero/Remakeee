@@ -13,6 +13,9 @@ const BONUS: int = 10
 const MAX_BATTLE_TASKS: int = 1
 ## After Act I a fourth, harder task joins the day (plan 3170) and pays HARD_REWARD.
 const HARD_REWARD: int = 25
+## An Echo melody score from here up counts as "Good or better" (plan 3166), the same mark as
+## the echo song outside battle.
+const MELODY_GOOD: float = 0.6
 const DATA_PATH: String = "res://data/events.json"
 
 static var _defs: Array[Dictionary] = []
@@ -77,7 +80,7 @@ static func reachable_elements(maps: Array[String]) -> Array[String]:
 	return out
 
 ## True if task [param t] can be done with the places and Spirlings this save can reach.
-static func doable(t: Dictionary, maps: Array[String], elements: Array[String]) -> bool:
+static func doable(t: Dictionary, maps: Array[String], elements: Array[String], day: String = "") -> bool:
 	var ev: String = str(t.get("event", ""))
 	var wild_maps: int = 0
 	for m: String in maps:
@@ -89,7 +92,7 @@ static func doable(t: Dictionary, maps: Array[String], elements: Array[String]) 
 		return false
 	if t.has("element") and not str(t.element) in elements:
 		return false
-	if ev in ["win", "bond"] and wild_maps == 0:
+	if ev in ["win", "bond", "melody"] and wild_maps == 0:
 		return false
 	if ev == "bond" and GameState.party.is_empty():
 		return false
@@ -102,9 +105,35 @@ static func doable(t: Dictionary, maps: Array[String], elements: Array[String]) 
 	# Roaming trips only once Aldo offers them (plan 3173).
 	if ev == "trip" and (not GameState.has_flag(GameState.ACT1_END_FLAG) or GameState.storage.is_empty()):
 		return false
+	# A new Spirling only while unseen kinds live where the player can go (plan 3167).
+	if ev == "discover" and unseen_reachable(maps).is_empty():
+		return false
+	# The day's rare visitor only when its place is reached (plan 3168).
+	if ev == "daily_find":
+		var p: Dictionary = DailyFind.pick(day if day != "" else day_key())
+		if p.is_empty() or not str(p.table) in maps:
+			return false
 	if bool(t.get("hard", false)) and not GameState.has_flag(GameState.ACT1_END_FLAG):
 		return false
 	return true
+
+## Species living on the reached maps that the Spirlog has not seen yet.
+static func unseen_reachable(maps: Array[String]) -> Array[String]:
+	var out: Array[String] = []
+	var tables: Array[String] = EncounterTable.table_ids()
+	for m: String in maps:
+		if not m in tables:
+			continue
+		for sp: String in EncounterTable.species_on(m):
+			if not sp in out and not bool((GameState.spirlog.get(sp, {}) as Dictionary).get("seen", false)):
+				out.append(sp)
+	return out
+
+## Counts the "discover" task when [param species] is met for the first time (call it before
+## GameState.mark_seen).
+static func note_seen(species: String, map_id: String) -> void:
+	if not bool((GameState.spirlog.get(species, {}) as Dictionary).get("seen", false)):
+		record("discover", {"map": map_id})
 
 static func reward_for(t: Dictionary) -> int:
 	return HARD_REWARD if bool(t.get("hard", false)) else REWARD
@@ -115,7 +144,7 @@ static func draw(day: String) -> Array[String]:
 	var elements: Array[String] = reachable_elements(maps)
 	var pool: Array[Dictionary] = []
 	for t: Dictionary in defs():
-		if doable(t, maps, elements):
+		if doable(t, maps, elements, day):
 			pool.append(t)
 	pool.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return str(a.id) < str(b.id))
 	var rng := RandomNumberGenerator.new()
@@ -288,7 +317,7 @@ static func swap(index: int) -> String:
 			continue
 		if str(t.get("kind", "")) == "battle" and battles >= MAX_BATTLE_TASKS:
 			continue
-		if doable(t, maps, elements):
+		if doable(t, maps, elements, str(st.day)):
 			pool.append(str(t.id))
 	if pool.is_empty():
 		return ""

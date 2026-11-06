@@ -519,14 +519,36 @@ func _pick_item(slot: int = 0) -> BattleAction:
 	var a := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], target, slot)
 	return a if model.is_legal(a) else null
 
+## Items in [param bag] that help a bond (a "bond_bonus" in items.json), Kin Charm first.
+static func bond_charms(bag: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	for id: Variant in bag:
+		var it: Dictionary = Database.item(str(id))
+		if int(bag[id]) > 0 and (float(it.get("bond_bonus", 0.0)) > 0.0 or bool(it.get("bond_sure", false))):
+			out.append(str(id))
+	out.sort_custom(func(a: String, b: String) -> bool: return a == "kin_charm" or (b != "kin_charm" and a < b))
+	return out
+
 func _bond(slot: int = 0) -> BattleAction:
 	var charm: String = ""
-	if int(model.inventory.get("kin_charm", 0)) > 0:
+	var charms: Array[String] = bond_charms(model.inventory)
+	if charms.size() == 1 and charms[0] == "kin_charm":
 		var use: int = await _picker.pick("Hold out a Kin Charm?", [{"text": "Yes (x%d)" % model.inventory.kin_charm}, {"text": "No"}] as Array[Dictionary])
 		if use < 0:
 			return null
 		if use == 0:
 			charm = "kin_charm"
+	elif not charms.is_empty():
+		# Shop charms (Echo Scent, Bond Seal) next to the Kin Charm: pick one or none.
+		var opts: Array[Dictionary] = []
+		for id: String in charms:
+			opts.append({"text": "%s x%d" % [Database.item(id).get("name", id), model.inventory[id]]})
+		opts.append({"text": "No"})
+		var use: int = await _picker.pick("Hold out a charm?", opts)
+		if use < 0:
+			return null
+		if use < charms.size():
+			charm = charms[use]
 	var aim: int = await _pick_target("Reach out to which one?")
 	if aim == -2:
 		return null
@@ -542,6 +564,8 @@ func _bond(slot: int = 0) -> BattleAction:
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
 	var score: float = await _bond_game.run(_bond_plans[key])
 	GameState.note_echo(score)
+	if score >= DailyTasks.MELODY_GOOD:
+		DailyTasks.record("melody", {"map": GameState.current_map})
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 
 # --- Event playback -----------------------------------------------------------------

@@ -23,6 +23,7 @@ Juice="*res://scripts/core/Juice.gd"
 Haptics="*res://scripts/core/Haptics.gd"
 Ticker="*res://scripts/ui/Ticker.gd"
 Online="*res://scripts/online/Online.gd"
+Billing="*res://scripts/shop/Billing.gd"
 
 [display]
 window/size/viewport_width=144

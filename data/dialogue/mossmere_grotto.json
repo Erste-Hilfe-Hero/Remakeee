@@ -1,0 +1,8 @@
+{
+ "rope": {
+  "lines": [
+   "A coiled rope hangs on a hook by a lever."
+  ],
+  "action": "lever mossmere_rope"
+ }
+}

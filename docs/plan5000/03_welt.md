@@ -31,13 +31,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 913. [P3] Lege Kachel-Varianten "_" mit Fußspuren an, damit oft gelaufene Wege nach 200 Schritten sichtbar ausgetreten wirken (nur Logik und Platzhalterkachel).
 
 ### Neue Routen in Veydal
-914. [P1] Baue die Route "Gloamwood" (de: Dämmerwald) westlich von Fernstair, 12 x 30 Kacheln, ein dichter Wald mit zwei Ebenen über Stufen, Ring 4 bis 7.
-915. [P1] Baue die Route "Quillbrook" (de: Federbach) zwischen Brindlewick und dem Südufer, ein Bachtal mit Furten aus "w", Ring 8 bis 11.
-916. [P1] Baue die Route "Brackwater Fen" (de: Brackfenn) östlich von Saltmarsh, ein Moor aus Stegen und Schilfinseln, Ring 12 bis 15.
-917. [P1] Baue die Route "Lantern Steps" (de: Laternenstufen) von Thornridge aus nach oben, eine Felsstiege mit fünf Terrassen und Laternen an jeder Stufe, Ring 10 bis 13.
-918. [P1] Verbinde Gloamwood mit Crowcrest über einen zweiten Eingang, damit Fernstair nicht der einzige Weg nach Norden bleibt.
-919. [P1] Plane jede neue Route mit mindestens einer Abkürzung, die erst nach einem Rätsel oder einer Ausrüstung öffnet und den Rückweg auf unter 20 Schritte kürzt.
-920. [P1] Setze auf jeder neuen Route mindestens drei Wanderer mit eigenem Team, die man nur durch Ansprechen herausfordert (sight bleibt 0).
+914. [x] [P1] Baue die Route "Gloamwood" (de: Dämmerwald) westlich von Fernstair, 12 x 30 Kacheln, ein dichter Wald mit zwei Ebenen über Stufen, Ring 4 bis 7.
+915. [x] [P1] Baue die Route "Quillbrook" (de: Federbach) zwischen Brindlewick und dem Südufer, ein Bachtal mit Furten aus "w", Ring 8 bis 11.
+916. [x] [P1] Baue die Route "Brackwater Fen" (de: Brackfenn) östlich von Saltmarsh, ein Moor aus Stegen und Schilfinseln, Ring 12 bis 15.
+917. [x] [P1] Baue die Route "Lantern Steps" (de: Laternenstufen) von Thornridge aus nach oben, eine Felsstiege mit fünf Terrassen und Laternen an jeder Stufe, Ring 10 bis 13.
+918. [x] [P1] Verbinde Gloamwood mit Crowcrest über einen zweiten Eingang, damit Fernstair nicht der einzige Weg nach Norden bleibt.
+919. [x] [P1] Plane jede neue Route mit mindestens einer Abkürzung, die erst nach einem Rätsel oder einer Ausrüstung öffnet und den Rückweg auf unter 20 Schritte kürzt.
+920. [x] [P1] Setze auf jeder neuen Route mindestens drei Wanderer mit eigenem Team, die man nur durch Ansprechen herausfordert (sight bleibt 0).
 921. [P2] Gib Gloamwood eine Lichtung mit einer Quelle (Kachel "o") als Heilpunkt, damit lange Wege eine Pause haben.
 922. [P2] Lege in Gloamwood einen umgestürzten Baumstamm als Brücke über eine Schlucht an, der nur von Süden begehbar ist.
 923. [P2] Gib Quillbrook drei Furten, die bei Regen zu tiefem Wasser werden und dann nur mit dem Enterhaken über ein gespanntes Seil zu queren sind.
@@ -69,11 +69,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 949. [P3] Baue auf Brackwater Fen eine Vogelwarte, von der aus man durch Ansehen die Lage aller Funde der Karte auf der Minikarte für 10 Minuten sieht.
 
 ### Neue Orte und Siedlungen
-950. [P1] Baue den Ort "Wrenhollow" (de: Zaunkönigsgrund) am Ende von Quillbrook, ein Dorf in einem Talkessel auf drei Ebenen, verbunden durch Leitern.
-951. [P1] Baue den Ort "Copperfold" (de: Kupferfalt) am Rand von Copper Gulch, eine Bergbausiedlung mit Förderturm und Werkstatt.
-952. [P1] Gib jedem neuen Ort eine eigene Heilstelle mit eigener Form, z. B. Wrenhollow eine Wasserstelle unter einer Weide, Copperfold eine warme Grubenquelle.
-953. [P1] Lege in jedem neuen Ort einen Händler mit festem Sortiment aus data/items.json an, ohne Echtgeld-Bezug (Shop gehört Bereich Monetarisierung).
-954. [P1] Baue den Weiler "Reedhaven" (de: Schilfhafen) in Brackwater Fen, Häuser auf Pfählen, nur über Stege erreichbar.
+950. [x] [P1] Baue den Ort "Wrenhollow" (de: Zaunkönigsgrund) am Ende von Quillbrook, ein Dorf in einem Talkessel auf drei Ebenen, verbunden durch Leitern.
+951. [x] [P1] Baue den Ort "Copperfold" (de: Kupferfalt) am Rand von Copper Gulch, eine Bergbausiedlung mit Förderturm und Werkstatt.
+952. [x] [P1] Gib jedem neuen Ort eine eigene Heilstelle mit eigener Form, z. B. Wrenhollow eine Wasserstelle unter einer Weide, Copperfold eine warme Grubenquelle.
+953. [x] [P1] Lege in jedem neuen Ort einen Händler mit festem Sortiment aus data/items.json an, ohne Echtgeld-Bezug (Shop gehört Bereich Monetarisierung).
+954. [x] [P1] Baue den Weiler "Reedhaven" (de: Schilfhafen) in Brackwater Fen, Häuser auf Pfählen, nur über Stege erreichbar.
 955. [P2] Gib Wrenhollow ein Kartografen-Kontor, in dem man die Weltkarte gegen Funde erweitert und Kartierquoten abgibt.
 956. [P2] Gib Copperfold eine Werkstatt, die Wanderer-Ausrüstung gegen Erze und Münzen verbessert (siehe Abschnitt Ausrüstung).
 957. [P2] Gib Reedhaven einen Bootsmann als Fährhaltestelle der Seelinie (siehe Abschnitt Schnellreise).
@@ -99,12 +99,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 977. [P3] Plane in Orten Zäune und Gärten so, dass kein Ort ein rechteckiges Raster mit einer Mittelstraße ist (Regel aus docs/WORLD.md).
 
 ### Höhlen und Grotten
-978. [P1] Baue die Höhle "Mossmere Grotto" (de: Moosseegrotte) unter Gloamwood, zwei Ebenen, feucht mit Moosböden, Ring 6 bis 9.
-979. [P1] Baue die Höhle "Sablecove" (de: Zobelbucht), eine Meereshöhle an Brackwater Fen, deren innere Kammer nur bei Ebbe offen ist.
-980. [P1] Erweitere Murk Hollow um eine untere Ebene "Echo Gallery" (de: Echogalerie) mit langen Gängen, Ring 13 bis 16.
-981. [P1] Baue die Höhle "Kindle Vents" (de: Glutschlote) am Fuß von Cinder Rift, mit heißen Schloten, die im Takt von 4 Sekunden den Weg sperren.
-982. [P1] Zeige in jeder Höhle am Eingang, welche Ausrüstung drinnen gebraucht wird, als Symbol auf dem Schild.
-983. [P1] Gib jeder Höhle mit mehr als einer Ebene einen kurzen Rückweg (Leiter oder Seil) vom tiefsten Punkt zum Eingang, der erst von innen öffnet.
+978. [x] [P1] Baue die Höhle "Mossmere Grotto" (de: Moosseegrotte) unter Gloamwood, zwei Ebenen, feucht mit Moosböden, Ring 6 bis 9.
+979. [x] [P1] Baue die Höhle "Sablecove" (de: Zobelbucht), eine Meereshöhle an Brackwater Fen, deren innere Kammer nur bei Ebbe offen ist.
+980. [x] [P1] Erweitere Murk Hollow um eine untere Ebene "Echo Gallery" (de: Echogalerie) mit langen Gängen, Ring 13 bis 16.
+981. [x] [P1] Baue die Höhle "Kindle Vents" (de: Glutschlote) am Fuß von Cinder Rift, mit heißen Schloten, die im Takt von 4 Sekunden den Weg sperren.
+982. [x] [P1] Zeige in jeder Höhle am Eingang, welche Ausrüstung drinnen gebraucht wird, als Symbol auf dem Schild.
+983. [x] [P1] Gib jeder Höhle mit mehr als einer Ebene einen kurzen Rückweg (Leiter oder Seil) vom tiefsten Punkt zum Eingang, der erst von innen öffnet.
 984. [P2] Lege in Mossmere Grotto Tropfsteine an, die man mit der Hebelstange abbricht, um eine Brücke über einen Bach zu schlagen.
 985. [P2] Lass in Sablecove die Gezeiten nach Gerätezeit alle sechs Stunden wechseln und zeige die nächste Ebbe auf einem Gezeitenstein am Eingang.
 986. [P2] Lege in Echo Gallery Hall-Felder an, in denen ein Glockenschlag einen versteckten Gang als Umriss für 5 Sekunden zeigt.
@@ -131,10 +131,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1007. [P3] Baue in Sablecove einen Unterwasser-Durchgang nur als Gang hinter einem Wasserfall, der zu Fuß begehbar ist.
 
 ### Rätsel-Dungeons
-1008. [P1] Baue den Dungeon "Bellstone Ruins" (de: Glockenstein-Ruine) nördlich von Gloamwood, fünf Räume, in denen Glocken in einer an der Wand gezeichneten Reihenfolge geläutet werden.
-1009. [P1] Baue den Dungeon "Brackwater Sluice" (de: Brackschleuse) in Brackwater Fen, sechs Räume, in denen drei Schleusen den Wasserstand in Stufen hoch und runter stellen.
-1010. [P1] Baue den Dungeon "Lanternwell" (de: Laternenbrunnen) unter dem Leuchtturm von Brindlewick, fünf Räume mit Spiegeln, die einen Lichtstrahl auf Ziel-Kristalle lenken.
-1011. [P1] Baue den Dungeon "Shatterfloor Mine" (de: Splitterboden-Mine) unter Copperfold, zwei Stockwerke, in denen rissiger Boden "k" nach einmaligem Betreten einbricht und ins untere Stockwerk führt.
+1008. [x] [P1] Baue den Dungeon "Bellstone Ruins" (de: Glockenstein-Ruine) nördlich von Gloamwood, fünf Räume, in denen Glocken in einer an der Wand gezeichneten Reihenfolge geläutet werden.
+1009. [x] [P1] Baue den Dungeon "Brackwater Sluice" (de: Brackschleuse) in Brackwater Fen, sechs Räume, in denen drei Schleusen den Wasserstand in Stufen hoch und runter stellen.
+1010. [x] [P1] Baue den Dungeon "Lanternwell" (de: Laternenbrunnen) unter dem Leuchtturm von Brindlewick, fünf Räume mit Spiegeln, die einen Lichtstrahl auf Ziel-Kristalle lenken.
+1011. [x] [P1] Baue den Dungeon "Shatterfloor Mine" (de: Splitterboden-Mine) unter Copperfold, zwei Stockwerke, in denen rissiger Boden "k" nach einmaligem Betreten einbricht und ins untere Stockwerk führt.
 1012. [x] [P1] Setze das Schieben von Felsblöcken "B" um: Spieler drückt gegen den Block, der Block rutscht eine Kachel, wenn dahinter frei ist, mit Rückgängig-Knopf pro Raum.
 1013. [x] [P1] Setze Druckplatten "P" um, die gedrückt bleiben, solange ein Block oder der Spieler darauf steht, und eine Tür über open_flag steuern.
 1014. [x] [P1] Gib jedem Rätselraum einen "Raum zurücksetzen" Eintrag im Menü, der Blöcke und Schalter auf den Anfang stellt.
@@ -209,7 +209,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1079. [x] [P1] Zeige pro Karte im Kartenbuch "Funde x/y", damit Spieler wissen, ob noch etwas fehlt.
 1080. [x] [P1] Lass versteckte Funde nur Gegenstände aus data/items.json geben, keine Echtgeld-Währung.
 1081. [x] [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
-1082. [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
+1082. [x] [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
 1083. [x] [P1] Ergänze WorldValidator.gd so, dass jeder Fund erreichbar ist und keine zwei Funde dieselbe Flag teilen.
 1084. [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
 1085. [P2] Gib für 4, 8 und 12 gefundene Kartografensteine je ein Andenken.
@@ -237,12 +237,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1107. [P3] Lass einen Fund in Gloamwood nur sichtbar sein, wenn der Spieler 30 Sekunden still steht.
 
 ### Begegnungstabellen
-1108. [P1] Lege Tabellen in data/encounters.json für jede neue Route, Höhle und jeden Dungeon an, mit Ringbereich passend zur Kartenreihenfolge.
+1108. [x] [P1] Lege Tabellen in data/encounters.json für jede neue Route, Höhle und jeden Dungeon an, mit Ringbereich passend zur Kartenreihenfolge.
 1109. [x] [P1] Erweitere das Format jeder Tabelle um "ground" je Eintrag (fern, reeds, scree, water, cave), damit Farn, Schilf und Geröll auf derselben Karte verschiedene Spirlings haben.
 1110. [x] [P1] Setze die Grundrate für Routen auf 0.12, für Moore und Höhlen auf 0.10 und für Dungeons auf 0.06.
 1111. [x] [P1] Ergänze EncounterTable.gd um eine Schutzzeit von 6 Schritten nach jedem Kampf, in der keine neue Begegnung kommt.
-1112. [P1] Verteile die 21 bestehenden Spirlings so, dass jede Grundform auf mindestens zwei Karten vorkommt und jede Entfaltungsstufe nur auf späten Karten selten wild auftritt.
-1113. [P1] Setze Riptail, Thornback und Smoldrake als seltene Einträge (Gewicht 5) auf Brackwater Fen, Gloamwood und Kindle Vents.
+1112. [x] [P1] Verteile die 21 bestehenden Spirlings so, dass jede Grundform auf mindestens zwei Karten vorkommt und jede Entfaltungsstufe nur auf späten Karten selten wild auftritt.
+1113. [x] [P1] Setze Riptail, Thornback und Smoldrake als seltene Einträge (Gewicht 5) auf Brackwater Fen, Gloamwood und Kindle Vents.
 1114. [x] [P1] Ergänze WorldValidator.gd um eine Prüfung, dass in jeder Tabelle die Gewichte zusammen mindestens 50 ergeben und kein Ringbereich die Kartenreihenfolge um mehr als 4 Ringe überspringt.
 1115. [x] [P1] Zeige im Spirlog-Tracker pro Karte zusätzlich, auf welchem Grund (Farn, Schilf, Geröll, Wasser, Höhle) eine Art vorkommt.
 1116. [P2] Füge "water" Begegnungen für seichtes Wasser "w" hinzu, die man nur mit Watstiefeln erreicht.
@@ -273,10 +273,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1141. [P3] Baue ein Datenformat für Corvane-Tabellen, das neue Arten per Platzhalter-ID zulässt, die der Validator bis zur Freigabe überspringt.
 
 ### Wetter in der Welt
-1142. [P1] Baue scripts/core/WeatherCycle.gd, das pro Region und 6-Stunden-Block aus dem Server-Datum ein Wetter würfelt (klar, Regen, Nebel, Wind, Gewitter), für alle Spieler gleich.
-1143. [P1] Lege die Wetter-Anteile pro Biom in data/weather.json fest, z. B. Moor: klar 40, Regen 30, Nebel 25, Gewitter 5.
-1144. [P1] Zeige das Wetter in der Welt zuerst als schlichte Farbtönung und einfache Punkte in UITheme-Farben; der eigentliche Stil kommt aus Bereich 6.
-1145. [P1] Füge in Display and access einen Schalter "Wetter" hinzu, der das Wetter ausschaltet und überall "klar" setzt.
+1142. [x] [P1] Baue scripts/core/WeatherCycle.gd, das pro Region und 6-Stunden-Block aus dem Server-Datum ein Wetter würfelt (klar, Regen, Nebel, Wind, Gewitter), für alle Spieler gleich.
+1143. [x] [P1] Lege die Wetter-Anteile pro Biom in data/weather.json fest, z. B. Moor: klar 40, Regen 30, Nebel 25, Gewitter 5.
+1144. [x] [P1] Zeige das Wetter in der Welt zuerst als schlichte Farbtönung und einfache Punkte in UITheme-Farben; der eigentliche Stil kommt aus Bereich 6.
+1145. [x] [P1] Füge in Display and access einen Schalter "Wetter" hinzu, der das Wetter ausschaltet und überall "klar" setzt.
 1146. [P2] Lass Regen in Quillbrook und Reedhaven Furten zu tiefem Wasser machen und Stege überfluten, mit Umweg als Alternative.
 1147. [P2] Lass Nebel auf Coldmoor und in Gloamwood die Minikarte ausblenden, die Weltkarte aber nicht.
 1148. [P2] Lass Wind auf Windmere Ridge und Lantern Steps Windfelder aktivieren, die den Spieler eine Kachel schieben.
@@ -300,8 +300,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1166. [P3] Lege eine Wetter-Vorhersage beim Wirt in Thornridge an, die die nächsten drei Blöcke nennt.
 
 ### Tageszeit in der Welt
-1167. [P1] Erweitere DayCycle.gd um ein Signal "phase_changed", auf das Karten, NPCs und Türen reagieren.
-1168. [P1] Ergänze MapData.gd um "phase_only" für NPCs, Schilder und Blöcke (dawn, day, dusk, night), damit Dinge nur zu einer Tageszeit da sind.
+1167. [x] [P1] Erweitere DayCycle.gd um ein Signal "phase_changed", auf das Karten, NPCs und Türen reagieren.
+1168. [x] [P1] Ergänze MapData.gd um "phase_only" für NPCs, Schilder und Blöcke (dawn, day, dusk, night), damit Dinge nur zu einer Tageszeit da sind.
 1169. [P1] Zeige die aktuelle Tageszeit klein neben dem Ortsbanner und in der Weltkarte als Symbol.
 1170. [P2] Lass Läden in Orten von 7 bis 20 Uhr Gerätezeit offen sein und nachts eine Klingel für einen müden Händler mit kleinerem Sortiment haben.
 1171. [P2] Lass die Seelinie der Fähre nur von 6 bis 22 Uhr fahren und nachts einen Nachtfischer übersetzen, der mehr Zeit braucht.
@@ -462,7 +462,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1316. [P3] Lege einen Debug-Schalter an, der "ferry_corvane_open" setzt, damit Tester Corvane vor der Story-Freigabe ansehen.
 
 ### Tests, Validierung und Zugänglichkeit
-1317. [P1] Ergänze tests/unit/test_map_checks.gd so, dass jede neue Karte geladen, ihr Rätsel per Testlösung gelöst und jeder Ausgang erreicht wird.
+1317. [x] [P1] Ergänze tests/unit/test_map_checks.gd so, dass jede neue Karte geladen, ihr Rätsel per Testlösung gelöst und jeder Ausgang erreicht wird.
 1318. [x] [P1] Lege für jedes Rätsel eine Lösungsfolge in tests/fixtures/puzzles/<map>.json an, die der Test abspielt.
 1319. [P1] Prüfe in CI mit tools/ip_check.sh alle neuen Orts- und Kartennamen gegen die Sperrliste.
 1320. [P2] Ergänze einen Test, dass jede Ausrüstung nur auf ihren Kachelzeichen wirkt und auf allen anderen nichts tut.

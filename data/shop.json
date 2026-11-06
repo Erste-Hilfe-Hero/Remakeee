@@ -1,0 +1,2857 @@
+{
+ "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
+ "riftglass_eur_cents_per_100": 99,
+ "catalog_version": 2,
+ "offers": [
+  {
+   "id": "rg_glass_100",
+   "kind": "currency",
+   "tab": "riftglass",
+   "name": "100 Riftglass",
+   "desc": "Exactly 100 Riftglass for the shop. No bonus, no chance.",
+   "rg_price": 0,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.glass.100",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 100
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4218,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_glass_200",
+   "kind": "currency",
+   "tab": "riftglass",
+   "name": "200 Riftglass",
+   "desc": "Exactly 200 Riftglass for the shop. No bonus, no chance.",
+   "rg_price": 0,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.glass.200",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 200
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4218,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_glass_500",
+   "kind": "currency",
+   "tab": "riftglass",
+   "name": "500 Riftglass",
+   "desc": "Exactly 500 Riftglass for the shop. No bonus, no chance.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.glass.500",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 500
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4218,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_glass_1000",
+   "kind": "currency",
+   "tab": "riftglass",
+   "name": "1000 Riftglass",
+   "desc": "Exactly 1000 Riftglass for the shop. No bonus, no chance.",
+   "rg_price": 0,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.glass.1000",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 1000
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4218,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_glass_2000",
+   "kind": "currency",
+   "tab": "riftglass",
+   "name": "2000 Riftglass",
+   "desc": "Exactly 2000 Riftglass for the shop. No bonus, no chance.",
+   "rg_price": 0,
+   "eur_cents": 1999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.glass.2000",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 2000
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4218,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_glass_5000",
+   "kind": "currency",
+   "tab": "riftglass",
+   "name": "5000 Riftglass",
+   "desc": "Exactly 5000 Riftglass for the shop. No bonus, no chance.",
+   "rg_price": 0,
+   "eur_cents": 4999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.glass.5000",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 5000
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4218,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_glass_10000",
+   "kind": "currency",
+   "tab": "riftglass",
+   "name": "10000 Riftglass",
+   "desc": "Exactly 10000 Riftglass for the shop. No bonus, no chance.",
+   "rg_price": 0,
+   "eur_cents": 9999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.glass.10000",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 10000
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4218,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_ring_tonic",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ring Tonic",
+   "desc": "A Spirling gains 1 Ring at once. Never above the Ring cap.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.ring_tonic",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4334,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_ring_tonic_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Great Ring Tonic",
+   "desc": "A Spirling gains 5 Rings at once. Never above the Ring cap.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.ring_tonic_5",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4335,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_ring_elixir",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ring Elixir",
+   "desc": "A Spirling rises to the current Ring cap.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.ring_elixir",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_elixir",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4336,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_growth_x2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Growth Crystal",
+   "desc": "Double growth for the whole team for the next 20 battles.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.growth_x2",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_growth_x2",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "20 battles",
+   "plan": 4339,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_growth_x3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Great Growth Crystal",
+   "desc": "Triple growth for the whole team for the next 20 battles.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.growth_x3",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_growth_x3",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "20 battles",
+   "plan": 4340,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_share_band",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Team Growth Band",
+   "desc": "Growth is shared evenly by all team members, also those who did not fight. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.share_band",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "share_band"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4343,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_ring_tonic_x5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ring Tonic x5",
+   "desc": "5 Ring Tonics. Each gives 1 Ring.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.ring_tonic_x5",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4345,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_riftheart",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Riftheart",
+   "desc": "Held memento: +15% Might. Permanent, 1 piece.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.riftheart",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_riftheart",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4394,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_glass_shield",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Glass Shield",
+   "desc": "Held memento: +15% Guard. Permanent, 1 piece.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.glass_shield",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_glass_shield",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4394,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_clear_shard",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Clear Shard",
+   "desc": "Held memento: +15% Focus. Permanent, 1 piece.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.clear_shard",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_clear_shard",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4394,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_whirl_glass",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Whirl Glass",
+   "desc": "Held memento: +15% Speed and +5% Focus. Permanent, 1 piece.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.whirl_glass",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_whirl_glass",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4394,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_vigor_glass",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Core Glass",
+   "desc": "Held memento: +12% Vigor. Permanent, 1 piece.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.vigor_glass",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_vigor_glass",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4394,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_ember",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ember Prism",
+   "desc": "Held memento: +20% damage for Ember techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_ember",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_ember",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_tide",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Tide Prism",
+   "desc": "Held memento: +20% damage for Tide techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_tide",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_tide",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_bloom",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bloom Prism",
+   "desc": "Held memento: +20% damage for Bloom techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_bloom",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_bloom",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_volt",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Volt Prism",
+   "desc": "Held memento: +20% damage for Volt techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_volt",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_volt",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_stone",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Stone Prism",
+   "desc": "Held memento: +20% damage for Stone techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_stone",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_stone",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_gale",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Gale Prism",
+   "desc": "Held memento: +20% damage for Gale techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_gale",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_gale",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_lumen",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Lumen Prism",
+   "desc": "Held memento: +20% damage for Lumen techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_lumen",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_lumen",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_prism_umbra",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Umbra Prism",
+   "desc": "Held memento: +20% damage for Umbra techniques. Permanent.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.prism_umbra",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_prism_umbra",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4402,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_hold_stone",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Hold Stone",
+   "desc": "Held memento: once per battle survives a hit from full Vigor with 1 Vigor.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.hold_stone",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_hold_stone",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4403,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_echo_ring",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Echo Ring",
+   "desc": "Held memento: heals 1/10 of Vigor every round.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.echo_ring",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_echo_ring",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4404,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_script_ember",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Glowglass Slash",
+   "desc": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy) to one Ember Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_ember",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_ember",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_script_tide",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Floodglass Wave",
+   "desc": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy) to one Tide Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_tide",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_tide",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_script_bloom",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Vineglass Sting",
+   "desc": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy) to one Bloom Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_bloom",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_bloom",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_script_volt",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Boltglass Bite",
+   "desc": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy) to one Volt Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_volt",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_volt",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_script_stone",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Rockglass Ram",
+   "desc": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy) to one Stone Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_stone",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_stone",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_script_gale",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Stormglass Cut",
+   "desc": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy) to one Gale Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_gale",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_gale",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_script_lumen",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Lightglass Beam",
+   "desc": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy) to one Lumen Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_lumen",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_lumen",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_script_umbra",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Script: Duskglass Grip",
+   "desc": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy) to one Umbra Spirling. Used up.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_umbra",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_umbra",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4448,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_move_memory",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Technique Memory",
+   "desc": "Spirlings can relearn forgotten techniques at any time. Permanent for the account.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.move_memory",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "move_memory"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4457,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_overcharge",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Overcharge Core",
+   "desc": "The whole team starts the next battle with 12 instead of 10 energy, maximum 12.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.overcharge",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_overcharge",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4495,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_overcharge_x5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Overcharge Core x5",
+   "desc": "5 Overcharge Cores.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.overcharge_x5",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_overcharge",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4495,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_breath",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Breath",
+   "desc": "In battle: revives a defeated Spirling with 50% Vigor. At most 1 per battle.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_breath",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4496,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_breath_full",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Great Rift Breath",
+   "desc": "In battle: revives with 100% Vigor and full energy. At most 1 per battle.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_breath_full",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath_full",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4497,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_last_stand",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Will to Win",
+   "desc": "If the whole team is defeated, the last one returns once with 30% Vigor. Not against Rift Wardens.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.last_stand",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_last_stand",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4499,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_glass_spark",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Glass Spark",
+   "desc": "In battle: fills a Spirling's energy and adds 1 energy per round for 3 rounds.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.glass_spark",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_glass_spark",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4501,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_glass_tonic",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Riftglass Tonic",
+   "desc": "In battle: heals 100% Vigor and all states without using the turn. At most 2 per battle.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.glass_tonic",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_glass_tonic",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4502,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_battle_supply",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Battle Supply",
+   "desc": "5 Rift Breaths, 5 Overcharge Cores, 5 Glass Sparks. Single price 1500 Riftglass.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.battle_supply",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 5
+    },
+    {
+     "t": "item",
+     "id": "rg_overcharge",
+     "n": 5
+    },
+    {
+     "t": "item",
+     "id": "rg_glass_spark",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4505,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_bond_seal",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bond Seal",
+   "desc": "The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.bond_seal",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_bond_seal",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4549,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_echo_scent",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Echo Scent",
+   "desc": "Bonding gets clearly easier for one try.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.echo_scent",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_echo_scent",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4550,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_echo_scent_x10",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Echo Scent x10",
+   "desc": "10 Echo Scents. Single price 1000 Riftglass.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.echo_scent_x10",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_echo_scent",
+     "n": 10
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4556,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_team_slot_6",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Sixth Team Place",
+   "desc": "Your team holds 6 Spirlings instead of 5 in battles against the world. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.team_slot_6",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "team_slot_6"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "plan": 4593,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_storage_box",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Storage Box +1",
+   "desc": "One more storage box with 30 places. At most 12 extra boxes.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.unlock.storage_box",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 12
+   },
+   "plan": 4597,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_pass",
+   "kind": "advantage",
+   "tab": "pass",
+   "name": "Wayfarer Pass",
+   "desc": "+50% growth, 30 Riftglass every day, +1 starting energy, 1 free Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "subscription",
+   "product_id": "de.chimora.game.pass",
+   "grants": [
+    {
+     "t": "pass",
+     "days": 30
+    }
+   ],
+   "league_scope": "open",
+   "duration": "monthly",
+   "plan": 4629,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_starter",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Starter Pack",
+   "desc": "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Single value 1300 Riftglass. Once per account.",
+   "rg_price": 0,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.starter",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 300
+    },
+    {
+     "t": "item",
+     "id": "rg_ring_tonic",
+     "n": 5
+    },
+    {
+     "t": "item",
+     "id": "rg_growth_x2",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 3
+    },
+    {
+     "t": "item",
+     "id": "rg_echo_scent",
+     "n": 3
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "rifts:1",
+   "plan": 4684,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_wayfarer_pack",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Wayfarer Pack",
+   "desc": "1000 Riftglass, Riftheart, Glass Shield, 2 Great Ring Tonics, 1 Bond Seal. Once per account.",
+   "rg_price": 0,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.wayfarer_pack",
+   "grants": [
+    {
+     "t": "rg",
+     "n": 1000
+    },
+    {
+     "t": "item",
+     "id": "rg_riftheart",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_glass_shield",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 2
+    },
+    {
+     "t": "item",
+     "id": "rg_bond_seal",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "plan": 4686,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_pack_1",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Pack 1",
+   "desc": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 1 is sealed.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_pack_1",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 2
+    },
+    {
+     "t": "choice",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "rifts:1",
+   "choice": [
+    "rg_prism_ember",
+    "rg_prism_tide",
+    "rg_prism_bloom",
+    "rg_prism_volt",
+    "rg_prism_stone",
+    "rg_prism_gale",
+    "rg_prism_lumen",
+    "rg_prism_umbra"
+   ],
+   "plan": 4687,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_pack_2",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Pack 2",
+   "desc": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 2 is sealed.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_pack_2",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 2
+    },
+    {
+     "t": "choice",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "rifts:2",
+   "choice": [
+    "rg_prism_ember",
+    "rg_prism_tide",
+    "rg_prism_bloom",
+    "rg_prism_volt",
+    "rg_prism_stone",
+    "rg_prism_gale",
+    "rg_prism_lumen",
+    "rg_prism_umbra"
+   ],
+   "plan": 4687,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_pack_3",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Pack 3",
+   "desc": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 3 is sealed.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_pack_3",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 2
+    },
+    {
+     "t": "choice",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "rifts:3",
+   "choice": [
+    "rg_prism_ember",
+    "rg_prism_tide",
+    "rg_prism_bloom",
+    "rg_prism_volt",
+    "rg_prism_stone",
+    "rg_prism_gale",
+    "rg_prism_lumen",
+    "rg_prism_umbra"
+   ],
+   "plan": 4687,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_pack_4",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Pack 4",
+   "desc": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 4 is sealed.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_pack_4",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 2
+    },
+    {
+     "t": "choice",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "rifts:4",
+   "choice": [
+    "rg_prism_ember",
+    "rg_prism_tide",
+    "rg_prism_bloom",
+    "rg_prism_volt",
+    "rg_prism_stone",
+    "rg_prism_gale",
+    "rg_prism_lumen",
+    "rg_prism_umbra"
+   ],
+   "plan": 4687,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_pack_5",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Pack 5",
+   "desc": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 5 is sealed.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_pack_5",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 2
+    },
+    {
+     "t": "choice",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "rifts:5",
+   "choice": [
+    "rg_prism_ember",
+    "rg_prism_tide",
+    "rg_prism_bloom",
+    "rg_prism_volt",
+    "rg_prism_stone",
+    "rg_prism_gale",
+    "rg_prism_lumen",
+    "rg_prism_umbra"
+   ],
+   "plan": 4687,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_pack_6",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Pack 6",
+   "desc": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 6 is sealed.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_pack_6",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 2
+    },
+    {
+     "t": "choice",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_breath",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "rifts:6",
+   "choice": [
+    "rg_prism_ember",
+    "rg_prism_tide",
+    "rg_prism_bloom",
+    "rg_prism_volt",
+    "rg_prism_stone",
+    "rg_prism_gale",
+    "rg_prism_lumen",
+    "rg_prism_umbra"
+   ],
+   "plan": 4687,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_comeback",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Welcome Back Pack",
+   "desc": "5 Great Ring Tonics and 1 Great Growth Crystal. Once per account, after 30 days away.",
+   "rg_price": 0,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.comeback",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_tonic_5",
+     "n": 5
+    },
+    {
+     "t": "item",
+     "id": "rg_growth_x3",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "away:30",
+   "plan": 4690,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_spark_forge",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Spark Forge",
+   "desc": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.spark_forge",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_spark_forge",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4741,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_spark_shard",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Spark Shard",
+   "desc": "Raises one chosen value by 6 Sparks, up to 12.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.spark_shard",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_spark_shard",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4742,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_temper_shift",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Temper Shift",
+   "desc": "Sets a Spirling's temperament to one you choose.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.temper_shift",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_temper_shift",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4743,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_spark_shard_x5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Five Spark Shards",
+   "desc": "5 Spark Shards. Single price 1000 Riftglass.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.spark_shard_x5",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_spark_shard",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4749,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_power_core",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Power Core",
+   "desc": "Raises a Spirling's temperament bonus from 1.1 to 1.2. Permanent.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.power_core",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_power_core",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4750,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_gleam_prism",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Gleam Prism",
+   "desc": "Turns one Spirling you choose into its Gleam form: +10% on all values and a Riftglass shimmer. At most 2 per week.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.gleam_prism",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_gleam_prism",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "limit": {
+    "per": "week",
+    "n": 2
+   },
+   "plan": 4791,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_battle_speed",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Battle Speed x4",
+   "desc": "Battle text and animations play four times as fast. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.battle_speed",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "battle_speed_4"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "plan": 4832,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_auto_battle",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Auto Battle",
+   "desc": "Your team fights wild Spirlings by itself. Not against Rift Wardens, story battles or in leagues. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.auto_battle",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "auto_battle"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "plan": 4833,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_coin_boost",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Coin Gleam",
+   "desc": "Double coins from battles for 20 battles.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.coin_boost",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_coin_boost",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "20 battles",
+   "plan": 4835,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_fast_travel",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Signpost",
+   "desc": "Fast travel to every place you have visited, not only rest spots. Permanent.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.fast_travel",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "fast_travel"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "plan": 4836,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_encounter_call",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Encounter Call",
+   "desc": "Twice as many wild encounters for 30 steps.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.encounter_call",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_encounter_call",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "30 steps",
+   "plan": 4838,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_skip_battle",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Battle Skip x10",
+   "desc": "10 skips. A wild battle against a foe at least 10 Rings lower is won at once, with full growth.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.skip_battle",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_skip_battle",
+     "n": 10
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4839,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rematch_key",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rematch Key",
+   "desc": "A beaten Wanderer can be challenged again on the same day.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rematch_key",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_rematch_key",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4841,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_warden_lore",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Warden Lore",
+   "desc": "Before a Rift Warden battle you see its team, techniques and gifts. Permanent. Only after one try without help.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.warden_lore",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "warden_lore"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "plan": 4883,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_rift_anchor",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Rift Anchor",
+   "desc": "After losing to a Warden, the next try starts right before it with a fully healed team.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_anchor",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_rift_anchor",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4884,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_warden_weaken",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Warden Weakener",
+   "desc": "The Warden starts with 15% less Vigor. At most 1 per Warden battle, not in Rift-Born.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.warden_weaken",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_warden_weaken",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4885,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_warden_bundle",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Warden Bundle",
+   "desc": "Warden Lore, 3 Warden Weakeners, 5 Rift Anchors. Single price 1900 Riftglass.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.warden_bundle",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "warden_lore"
+    },
+    {
+     "t": "item",
+     "id": "rg_warden_weaken",
+     "n": 3
+    },
+    {
+     "t": "item",
+     "id": "rg_rift_anchor",
+     "n": 5
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "plan": 4890,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_league_power",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "League Power Pack",
+   "desc": "5 Overcharge Cores Plus. They only work in the Open League.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.league_power",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_overcharge_plus",
+     "n": 5
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "plan": 4927,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_echo_amp",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Echo Amplifier",
+   "desc": "Your echo team fights with +10% values when a friend plays with shop bonuses. Permanent.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.echo_amp",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "echo_amp"
+    }
+   ],
+   "league_scope": "open",
+   "duration": "permanent",
+   "plan": 4929,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_coins_5000",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Coin Purse",
+   "desc": "Exactly 5000 coins. At most 3 per week.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.coins_5000",
+   "grants": [
+    {
+     "t": "coins",
+     "n": 5000
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "limit": {
+    "per": "week",
+    "n": 3
+   },
+   "plan": 4964,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_coins_20000",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Great Coin Purse",
+   "desc": "Exactly 20000 coins. At most 1 per week.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.coins_20000",
+   "grants": [
+    {
+     "t": "coins",
+     "n": 20000
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "limit": {
+    "per": "week",
+    "n": 1
+   },
+   "plan": 4965,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_merchant_discount",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Merchant Discount",
+   "desc": "20% lower coin prices in all merchant shops. Permanent.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.merchant_discount",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "merchant_discount"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "plan": 4970,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_jacket_moss",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Moss Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_moss",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_moss"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "4f7a3a"
+  },
+  {
+   "id": "rg_jacket_plum",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Plum Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_plum",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_plum"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "7a3f6a"
+  },
+  {
+   "id": "rg_jacket_slate",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Slate Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_slate",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_slate"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "4a5466"
+  },
+  {
+   "id": "rg_jacket_rust",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Rust Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_rust",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_rust"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "8a4a2a"
+  },
+  {
+   "id": "rg_jacket_sky",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Sky Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_sky",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_sky"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "4a7aa2"
+  },
+  {
+   "id": "rg_jacket_sand",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Sand Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_sand",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_sand"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "b09a6a"
+  },
+  {
+   "id": "rg_jacket_ink",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Ink Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_ink",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_ink"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "2a3048"
+  },
+  {
+   "id": "rg_jacket_rose",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Rose Jacket",
+   "desc": "A new jacket colour for your Wayfarer. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.jacket_rose",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "jacket_rose"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "jacket",
+   "plan": 4277,
+   "min_band": 13,
+   "ready": false,
+   "color": "a25a6a"
+  },
+  {
+   "id": "rg_backdrop_moon_lake",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Backdrop: Moon Lake",
+   "desc": "A battle backdrop. Only looks, no effect.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.backdrop_moon_lake",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "backdrop_moon_lake"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "backdrop",
+   "plan": 4281,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_backdrop_copper_wood",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Backdrop: Copper Wood",
+   "desc": "A battle backdrop. Only looks, no effect.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.backdrop_copper_wood",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "backdrop_copper_wood"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "backdrop",
+   "plan": 4281,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_backdrop_mist_harbour",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Backdrop: Mist Harbour",
+   "desc": "A battle backdrop. Only looks, no effect.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.backdrop_mist_harbour",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "backdrop_mist_harbour"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "backdrop",
+   "plan": 4281,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_backdrop_star_meadow",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Backdrop: Star Meadow",
+   "desc": "A battle backdrop. Only looks, no effect.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.backdrop_star_meadow",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "backdrop_star_meadow"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "backdrop",
+   "plan": 4281,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_backdrop_ash_field",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Backdrop: Ash Field",
+   "desc": "A battle backdrop. Only looks, no effect.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.backdrop_ash_field",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "backdrop_ash_field"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "backdrop",
+   "plan": 4281,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_backdrop_glass_grotto",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Backdrop: Glass Grotto",
+   "desc": "A battle backdrop. Only looks, no effect.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.backdrop_glass_grotto",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "backdrop_glass_grotto"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "backdrop",
+   "plan": 4281,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_frame_vine",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Text Frame: Vine",
+   "desc": "A frame for the dialogue box. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.frame_vine",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "frame_vine"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "frame",
+   "plan": 4282,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_frame_brass",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Text Frame: Brass",
+   "desc": "A frame for the dialogue box. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.frame_brass",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "frame_brass"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "frame",
+   "plan": 4282,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_frame_wave",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Text Frame: Wave",
+   "desc": "A frame for the dialogue box. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.frame_wave",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "frame_wave"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "frame",
+   "plan": 4282,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_frame_lantern",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Text Frame: Lantern",
+   "desc": "A frame for the dialogue box. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.frame_lantern",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "frame_lantern"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "frame",
+   "plan": 4282,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_frame_frost",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Text Frame: Frost",
+   "desc": "A frame for the dialogue box. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.frame_frost",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "frame_frost"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "frame",
+   "plan": 4282,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_hat_wide_brim",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Hat: Wide Brim",
+   "desc": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.hat_wide_brim",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "hat_wide_brim"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "hat",
+   "plan": 4283,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_hat_wool_cap",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Hat: Wool Cap",
+   "desc": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.hat_wool_cap",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "hat_wool_cap"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "hat",
+   "plan": 4283,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_hat_feather_hat",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Hat: Feather Hat",
+   "desc": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.hat_feather_hat",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "hat_feather_hat"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "hat",
+   "plan": 4283,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_hat_lantern_hood",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Hat: Lantern Hood",
+   "desc": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.hat_lantern_hood",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "hat_lantern_hood"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "hat",
+   "plan": 4283,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_hat_straw_hat",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Hat: Straw Hat",
+   "desc": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.hat_straw_hat",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "hat_straw_hat"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "hat",
+   "plan": 4283,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_hat_tricorn",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Hat: Tricorn",
+   "desc": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.hat_tricorn",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "hat_tricorn"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "hat",
+   "plan": 4283,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_card_frame_leaf",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Card Frame: Leaf",
+   "desc": "A frame for your card in the friends list. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.card_frame_leaf",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "card_frame_leaf"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "card_frame",
+   "plan": 4284,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_card_frame_shell",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Card Frame: Shell",
+   "desc": "A frame for your card in the friends list. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.card_frame_shell",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "card_frame_shell"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "card_frame",
+   "plan": 4284,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_card_frame_gear",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Card Frame: Gear",
+   "desc": "A frame for your card in the friends list. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.card_frame_gear",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "card_frame_gear"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "card_frame",
+   "plan": 4284,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_card_frame_star",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Card Frame: Star",
+   "desc": "A frame for your card in the friends list. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.card_frame_star",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "card_frame_star"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "card_frame",
+   "plan": 4284,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_card_frame_ripple",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Card Frame: Ripple",
+   "desc": "A frame for your card in the friends list. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.card_frame_ripple",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "card_frame_ripple"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "card_frame",
+   "plan": 4284,
+   "min_band": 13,
+   "ready": false
+  },
+  {
+   "id": "rg_card_frame_ember",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Card Frame: Ember",
+   "desc": "A frame for your card in the friends list. Only looks, no effect.",
+   "rg_price": 100,
+   "eur_cents": 99,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.card_frame_ember",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "card_frame_ember"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "card_frame",
+   "plan": 4284,
+   "min_band": 13,
+   "ready": false
+  }
+ ]
+}

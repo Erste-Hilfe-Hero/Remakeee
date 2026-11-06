@@ -26,6 +26,10 @@ const DEFAULT_CONFIG: Dictionary = {
 	"league_fair_blocked_sources": [],
 	"max_money_per_min": 5000, "save_time_slack": 300, "start_money": 3000, "cheat_flag_limit": 3, "cheat_flag_days": 7,
 	"data_export_limit": 5,
+	"raid_guardians": ["Leviarch", "Calderox", "Cairnhold", "Verdantusk", "Tempestrel", "Solmantle", "Obsidroth"],
+	"raid_rewards": [{"item": "max_tonic", "count": 2, "w": 3}, {"item": "revival_leaf", "count": 2, "w": 3},
+		{"item": "strong_tonic", "count": 5, "w": 3}, {"item": "keen_lens", "count": 1, "w": 1}, {"item": "swift_feather", "count": 1, "w": 1}],
+	"trade_min_level": 3, "trade_min_days": 7, "trade_max_open": 5, "trade_max_kinds": 6, "trade_max_count": 99, "trade_days": 7,
 	"save_server_keys": ["league", "leagues", "raid", "raids", "trades", "bund", "premium", "gems", "shards"],
 }
 const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
@@ -58,8 +62,13 @@ func _init(p_store_path: String = "") -> void:
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
 			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
 			"battle_submit", "battle_status", "league_info", "league_join", "league_find", "data_export",
-			"report_in", "notices_list", "notice_read", "appeal", "platform_set"]:
+			"report_in", "notices_list", "notice_read", "appeal", "platform_set",
+			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
+			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
+			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
+	# Shop functions (20261110000020_shop.sql) live in their own file.
+	LocalShop.install(self)
 
 func is_local() -> bool:
 	return true
@@ -614,6 +623,7 @@ func _fn_friend_request(a: Dictionary) -> Dictionary:
 		return _fail("full")
 	if f != null and f.requested_by == t:
 		f.status = "accepted"
+		f["accepted_at"] = now()
 		return {"ok": true, "status": "accepted"}
 	if f == null:
 		db.friendships[pair_key(u, t)] = {"a": u if u < t else t, "b": t if u < t else u, "status": "pending",
@@ -630,6 +640,7 @@ func _fn_friend_respond(a: Dictionary) -> Dictionary:
 		if bool(a.get("p_accept", false)):
 			if f.requested_by == t:
 				f.status = "accepted"
+				f["accepted_at"] = now()
 		else:
 			db.friendships.erase(pair_key(u, t))
 	return {"ok": true}
@@ -1115,6 +1126,15 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 		if lm.state != "open" or now() - int(lm.created_at) > 60 * config_int("league_match_minutes", 30):
 			return _fail("match_closed")
 		c["expect"] = _league_expect(lm)
+	var ra: Dictionary = {}
+	if kind == "raid":
+		var av: Variant = (_table("raid_attempts", {}) as Dictionary).get(str(a.get("p_ref", "")))
+		if not av is Dictionary or av.user != me():
+			return _fail("no_such_attempt")
+		ra = av
+		if ra.state != "open" or now() - int(ra.created_at) > 1800:
+			return _fail("attempt_closed")
+		c["expect"] = _raid_expect(ra)
 	var battles: Dictionary = _table("battles", {})
 	var id: int = int(db.get("battle_seq", 0)) + 1
 	db["battle_seq"] = id
@@ -1124,6 +1144,9 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 		lm.state = "submitted"
 		lm.battle_id = id
 		lm.rated = bool(lm.rated) and league_state(league_season()) == "running"
+	if not ra.is_empty():
+		ra.state = "submitted"
+		ra.battle_id = id
 	if referee_waits:
 		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": c}
 	else:
@@ -1158,6 +1181,8 @@ func _decide(id: int, result: Dictionary) -> void:
 				else:
 					m.state = "done"
 					m.rated = false
+	elif row.kind == "raid":
+		_raid_apply(id, row.status == "ok", result.detail)
 
 func _fn_battle_status(a: Dictionary) -> Dictionary:
 	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
@@ -1305,3 +1330,686 @@ func _league_apply(m: Dictionary, detail: Variant) -> void:
 	e.vol = nr.vol
 	e.games = int(e.games) + 1
 	e.wins = int(e.wins) + int(score)
+
+# --- Bunds (plan area 7, items 2817-2821, 2842, 2900), like 20261110000010_bunds.sql ---
+
+func _members() -> Dictionary:
+	return _table("bund_members", {})
+
+func _bund_of(uid: String) -> String:
+	var m: Variant = _members().get(uid)
+	return str(m.bund) if m is Dictionary else ""
+
+func _bund_role(uid: String) -> String:
+	var m: Variant = _members().get(uid)
+	return str(m.role) if m is Dictionary else ""
+
+func _bund_list(b: String) -> Array:
+	var out: Array = []
+	for uid: String in _members():
+		if str(_members()[uid].bund) == b:
+			out.append(uid)
+	out.sort_custom(func(x: String, y: String) -> bool: return int(_members()[x].joined) < int(_members()[y].joined))
+	return out
+
+func _bund_fix(b: String) -> void:
+	var ids: Array = _bund_list(b)
+	if ids.is_empty():
+		(_table("bunds", {}) as Dictionary).erase(b)
+		db.bund_invites = (_table("bund_invites", []) as Array).filter(func(i: Dictionary) -> bool: return str(i.bund) != b)
+		return
+	if not ids.any(func(x: String) -> bool: return _bund_role(x) == "leader"):
+		var next: String = ids[0]
+		for x: String in ids:
+			if _bund_role(x) == "helper":
+				next = x
+				break
+		_members()[next].role = "leader"
+	if ids.size() < 3:
+		db.bunds[b].dissolve_at = 0
+
+func _bund_check(uid: String) -> String:
+	if not flag_on("bund", 2147483647):
+		return "feature_off"
+	if not _social(uid):
+		return "social_off"
+	return ""
+
+func _invite_of(b: String, uid: String, kind: String) -> int:
+	var list: Array = _table("bund_invites", [])
+	for i: int in list.size():
+		if str(list[i].bund) == b and list[i].user == uid and (kind.is_empty() or list[i].kind == kind):
+			return i
+	return -1
+
+func _bund_join(b: String, uid: String, role: String) -> String:
+	if not _bund_of(uid).is_empty():
+		return "in_bund"
+	if _bund_list(b).size() >= config_int("bund_max", 30):
+		return "full"
+	_members()[uid] = {"bund": b, "role": role, "joined": now() * 1000 + _members().size()}
+	db.bund_invites = (_table("bund_invites", []) as Array).filter(func(i: Dictionary) -> bool: return i.user != uid)
+	return ""
+
+func _fn_bund_create(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var n: int = config_int("bund_words", 120)
+	var x: int = int(a.get("p_a", -1))
+	var y: int = int(a.get("p_b", -1))
+	if x < 0 or x >= n or y < 0 or y >= n:
+		return _fail("bad_name")
+	if not _bund_of(u).is_empty():
+		return _fail("in_bund")
+	if not _rate_ok("bund_create", 3):
+		return _fail("slow_down")
+	var b: String = str(_next_id("bund"))
+	(_table("bunds", {}) as Dictionary)[b] = {"name": [x, y], "dissolve_at": 0, "created": now()}
+	_bund_join(b, u, "leader")
+	return {"ok": true, "bund": int(b)}
+
+func _fn_bund_info(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var bund: Variant = null
+	var b: String = _bund_of(u)
+	if not b.is_empty():
+		_bund_fix(b)
+		var r: String = _bund_role(u)
+		var members: Array = []
+		for role: String in ["leader", "helper", "member"]:
+			for x: String in _bund_list(b):
+				if _bund_role(x) == role:
+					var p: Dictionary = profile_of(x)
+					members.append({"name": p.name, "code": p.code, "role": role, "me": x == u,
+						"online": int(p.get("last_seen", 0)) > now() - 300})
+		var pending: Array = []
+		if r in ["leader", "helper"]:
+			for i: Dictionary in _table("bund_invites", []):
+				if str(i.bund) == b:
+					pending.append({"kind": i.kind, "name": profile_of(i.user).name, "code": profile_of(i.user).code})
+		var row: Dictionary = db.bunds[b]
+		bund = {"id": int(b), "name": row.name, "role": r, "dissolve_at": row.dissolve_at if int(row.dissolve_at) > 0 else null,
+			"members": members, "pending": pending}
+	var invites: Array = []
+	for i: Dictionary in _table("bund_invites", []):
+		if i.user == u and i.kind == "invite" and db.bunds.has(str(i.bund)):
+			invites.append({"bund": int(i.bund), "name": db.bunds[str(i.bund)].name, "by": profile_of(i.by).name,
+				"size": _bund_list(str(i.bund)).size()})
+	return {"ok": true, "bund": bund, "invites": invites}
+
+func _fn_bund_invite(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or not _bund_role(u) in ["leader", "helper"]:
+		return _fail("not_allowed")
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	if t.is_empty() or t == u or is_blocked(u, t) or not _social(t):
+		return _fail("no_such_code")
+	if not _bund_of(t).is_empty():
+		return _fail("in_bund")
+	if not _rate_ok("bund_invite", 30):
+		return _fail("slow_down")
+	if _invite_of(b, t, "request") >= 0:
+		e = _bund_join(b, t, "member")
+		return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+	if _invite_of(b, t, "") < 0:
+		(_table("bund_invites", []) as Array).append({"bund": b, "user": t, "kind": "invite", "by": u, "at": now()})
+	return {"ok": true, "joined": false}
+
+func _fn_bund_request(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	var b: String = _bund_of(t) if not t.is_empty() else ""
+	if t.is_empty() or t == u or is_blocked(u, t) or not _social(t) or b.is_empty():
+		return _fail("no_such_bund")
+	if not _bund_of(u).is_empty():
+		return _fail("in_bund")
+	if _bund_list(b).any(func(x: String) -> bool: return is_blocked(u, x)):
+		return _fail("no_such_bund")
+	if not _rate_ok("bund_request", 10):
+		return _fail("slow_down")
+	if _invite_of(b, u, "invite") >= 0:
+		e = _bund_join(b, u, "member")
+		return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+	if _invite_of(b, u, "") < 0:
+		(_table("bund_invites", []) as Array).append({"bund": b, "user": u, "kind": "request", "by": u, "at": now()})
+	return {"ok": true, "joined": false}
+
+func _fn_bund_answer(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = str(int(a.get("p_bund", 0)))
+	var i: int = _invite_of(b, u, "invite")
+	if i < 0:
+		return _fail("no_such_invite")
+	if not bool(a.get("p_accept", false)):
+		(db.bund_invites as Array).remove_at(i)
+		return {"ok": true, "joined": false}
+	e = _bund_join(b, u, "member")
+	return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+
+func _fn_bund_admit(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or not _bund_role(u) in ["leader", "helper"]:
+		return _fail("not_allowed")
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	var i: int = _invite_of(b, t, "request") if not t.is_empty() else -1
+	if i < 0:
+		return _fail("no_such_request")
+	if not bool(a.get("p_accept", false)):
+		(db.bund_invites as Array).remove_at(i)
+		return {"ok": true, "joined": false}
+	e = _bund_join(b, t, "member")
+	return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+
+func _fn_bund_kick(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	if b.is_empty() or t.is_empty() or t == u or _bund_of(t) != b:
+		return _fail("no_such_member")
+	var mine: String = _bund_role(u)
+	if not (mine == "leader" or (mine == "helper" and _bund_role(t) == "member")):
+		return _fail("not_allowed")
+	_members().erase(t)
+	_bund_fix(b)
+	return {"ok": true}
+
+func _fn_bund_role(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var role: String = str(a.get("p_role", ""))
+	if not role in ["leader", "helper", "member"]:
+		return _fail("bad_role")
+	var b: String = _bund_of(u)
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	if b.is_empty() or t.is_empty() or t == u or _bund_of(t) != b:
+		return _fail("no_such_member")
+	if _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	if role == "leader":
+		_members()[u].role = "helper"
+	_members()[t].role = role
+	return {"ok": true}
+
+func _fn_bund_leave(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	_members().erase(u)
+	_bund_fix(b)
+	return {"ok": true}
+
+func _fn_bund_dissolve(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	var row: Dictionary = db.bunds[b]
+	if _bund_list(b).size() >= 3:
+		if int(row.dissolve_at) <= 0:
+			row.dissolve_at = now() + 86400
+			return {"ok": true, "dissolved": false, "confirm_from": row.dissolve_at}
+		if int(row.dissolve_at) > now():
+			return {"ok": true, "dissolved": false, "confirm_from": row.dissolve_at}
+	for x: String in _bund_list(b):
+		_members().erase(x)
+	_bund_fix(b)
+	return {"ok": true, "dissolved": true}
+
+func _fn_bund_keep(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	if _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	db.bunds[_bund_of(u)].dissolve_at = 0
+	return {"ok": true}
+
+# --- Raid Rifts (plan area 7, items 2847-2851, 2871), like 20261110000011_raids.sql ---
+
+func _raid_check(uid: String) -> String:
+	if not flag_on("raid", 2147483647):
+		return "feature_off"
+	if not _social(uid):
+		return "social_off"
+	if cheat_held(uid):
+		return "under_review"
+	return ""
+
+## 2 players 100 %, 3 players 140 %, 4 players 175 % of raid_base (item 2850).
+func raid_hp(players: int) -> int:
+	var pct: int = 100 if players == 2 else (140 if players == 3 else 175)
+	return config_int("raid_base", 1200) * pct / 100
+
+func _raid_expect(at: Dictionary) -> Dictionary:
+	return {"seed": at.seed, "teams": (at.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
+		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10)}
+
+## Members of raid [param r] as uid -> row. Rows live under "raid|uid", so deleting an account
+## removes only that player's row (like the SQL table).
+func _raid_members(r: String) -> Dictionary:
+	var out: Dictionary = {}
+	var t: Dictionary = _table("raid_members", {})
+	for key: String in t:
+		if key.begins_with(r + "|"):
+			out[key.substr(r.length() + 1)] = t[key]
+	return out
+
+func _day_start() -> int:
+	return now() - now() % 86400
+
+func _raid_tries_used(r: String, uid: String) -> int:
+	var n: int = 0
+	for at: Dictionary in (_table("raid_attempts", {}) as Dictionary).values():
+		if str(at.raid) == r and at.user == uid and int(at.created_at) >= _day_start():
+			n += 1
+	return n
+
+func _fn_raid_open(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _raid_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var codes: Variant = a.get("p_codes")
+	if not codes is Array or (codes as Array).size() < 1 or (codes as Array).size() > 3:
+		return _fail("bad_party")
+	var who: Array = [u]
+	for c: Variant in codes:
+		var t: String = uid_for_code(str(c))
+		var same_bund: bool = not _bund_of(u).is_empty() and _bund_of(u) == _bund_of(t)
+		var f: Variant = _friendship(u, t) if not t.is_empty() else null
+		var friends: bool = f != null and str(f.status) == "accepted"
+		if t.is_empty() or who.has(t) or is_blocked(u, t) or not _social(t) or not (friends or same_bund):
+			return _fail("no_such_code")
+		who.append(t)
+	if not _rate_ok("raid_open", 6):
+		return _fail("slow_down")
+	var pool: Array = (db.config.get("raid_guardians", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
+	if pool.is_empty():
+		return _fail("no_guardian")
+	var id: String = str(_next_id("raid"))
+	var hp: int = raid_hp(who.size())
+	(_table("raids", {}) as Dictionary)[id] = {"guardian": str(pool[rng.randi() % pool.size()]), "level": config_int("raid_level", 60),
+		"players": who.size(), "hp_total": hp, "hp_left": hp, "created_at": now(),
+		"closes_at": now() + 3600 * config_int("raid_hours", 48), "won_at": 0, "reward": null}
+	for x: String in who:
+		(_table("raid_members", {}) as Dictionary)["%s|%s" % [id, x]] = {"damage": 0, "claimed": false}
+	return {"ok": true, "raid": int(id)}
+
+func _raid_qualifies(r: Dictionary, damage: int) -> bool:
+	return int(r.won_at) > 0 and damage * 100 >= int(r.hp_total) * config_int("raid_share_min", 5)
+
+func _fn_raid_list(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _raid_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var tries: int = config_int("raid_tries", 3)
+	var out: Array = []
+	var raids: Dictionary = _table("raids", {})
+	for id: String in raids:
+		var r: Dictionary = raids[id]
+		var mem: Dictionary = _raid_members(id)
+		if not mem.has(u) or int(r.created_at) < now() - 7 * 86400:
+			continue
+		var members: Array = []
+		for x: String in mem:
+			members.append({"name": profile_of(x).name if db.users.has(x) else "?", "damage": mem[x].damage, "me": x == u})
+		members.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.damage) > int(q.damage))
+		out.push_front({"id": int(id), "guardian": r.guardian, "level": r.level, "players": r.players, "hp_total": r.hp_total,
+			"hp_left": r.hp_left, "closes_at": r.closes_at, "open": int(r.hp_left) > 0 and int(r.closes_at) > now(),
+			"won": int(r.won_at) > 0, "tries_left": maxi(0, tries - _raid_tries_used(id, u)),
+			"reward": r.reward if _raid_qualifies(r, int(mem[u].damage)) else null, "claimed": mem[u].claimed, "members": members})
+	return {"ok": true, "rewards": (db.config.get("raid_rewards", []) as Array).duplicate(true), "tries": tries,
+		"share_min": config_int("raid_share_min", 5), "rounds": config_int("raid_rounds", 10), "raids": out}
+
+func _fn_raid_start(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _raid_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var id: String = str(int(a.get("p_raid", 0)))
+	var r: Variant = (_table("raids", {}) as Dictionary).get(id)
+	if not r is Dictionary or not _raid_members(id).has(u):
+		return _fail("no_such_raid")
+	if int(r.hp_left) <= 0 or int(r.closes_at) <= now():
+		return _fail("raid_closed")
+	if _raid_tries_used(id, u) >= config_int("raid_tries", 3):
+		return _fail("no_tries")
+	var built: Dictionary = LeagueRules.build_team(profile_of(u).get("team", []), LeagueRules.FAIR, a.get("p_pick"),
+		config_int("league_fair_ring", 50), config_int("level_max", 60))
+	if built.has("error"):
+		return _fail(str(built.error))
+	var attempts: Dictionary = _table("raid_attempts", {})
+	for at: Dictionary in attempts.values():
+		if at.user == u and at.state == "open":
+			at.state = "expired"
+	var moves: Array = []
+	for md: MoveData in Database.species(str(r.guardian)).default_moves(int(r.level), 4):
+		moves.append(md.move_name)
+	var aid: String = str(_next_id("raid_attempt"))
+	attempts[aid] = {"raid": id, "user": u, "seed": rng.randi() & 0x7fffffff, "state": "open", "damage": 0, "created_at": now(),
+		"teams": [built.team, [{"species": r.guardian, "level": r.level, "moves": moves}]]}
+	var out: Dictionary = _raid_expect(attempts[aid])
+	out.merge({"ok": true, "attempt_id": int(aid)})
+	return out
+
+func _fn_raid_claim(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var id: String = str(int(a.get("p_raid", 0)))
+	var r: Variant = (_table("raids", {}) as Dictionary).get(id)
+	var mem: Dictionary = _raid_members(id)
+	if not r is Dictionary or not mem.has(u):
+		return _fail("no_such_raid")
+	if not _raid_qualifies(r, int(mem[u].damage)):
+		return _fail("no_reward")
+	if bool(mem[u].claimed):
+		return _fail("claimed")
+	mem[u].claimed = true
+	return {"ok": true, "item": r.reward.item, "count": int(r.reward.get("count", 1))}
+
+## Like public._raid_apply: checked damage comes off the guardian, never below zero.
+func _raid_apply(battle_id: int, ok: bool, detail: Variant) -> void:
+	for at: Dictionary in (_table("raid_attempts", {}) as Dictionary).values():
+		if int(at.get("battle_id", -1)) != battle_id or at.state != "submitted":
+			continue
+		at.state = "done"
+		var r: Dictionary = db.raids[str(at.raid)]
+		var dealt: int = int(detail.get("foe_damage", 0)) if ok and detail is Dictionary else 0
+		var d: int = clampi(dealt, 0, int(r.hp_left))
+		at.damage = d
+		if d == 0:
+			return
+		var mem: Dictionary = _raid_members(str(at.raid))
+		if mem.has(at.user):
+			mem[at.user].damage = int(mem[at.user].damage) + d
+		r.hp_left = int(r.hp_left) - d
+		if int(r.hp_left) == 0:
+			r.won_at = now()
+			var tbl: Array = db.config.get("raid_rewards", [])
+			var total: int = 0
+			for x: Dictionary in tbl:
+				total += int(x.w)
+			if total > 0:
+				var roll: int = rng.randi() % total
+				for x: Dictionary in tbl:
+					roll -= int(x.w)
+					if roll < 0:
+						r.reward = {"item": x.item, "count": int(x.get("count", 1))}
+						break
+		return
+
+# --- Trading (plan area 7, items 2791-2795, 2900), like 20261110000012_trades.sql ---------------
+# db.trades: {id: {state, created_at, closes_at}}; db.trade_sides: {"id|uid": {items, confirmed,
+# receive, collected}}. The server is the trustee: offers leave the stored save's bag at once.
+
+## Items with "tradeable": true in data/items.json (the server keeps the same list in trade_items).
+func trade_items() -> Array:
+	var given: Variant = db.config.get("trade_items")
+	if given is Array:
+		return given
+	Database.load_all()
+	var out: Array = []
+	for id: String in Database.items:
+		if bool((Database.items[id] as Dictionary).get("tradeable", false)):
+			out.append(id)
+	return out
+
+func _trade_check(uid: String) -> String:
+	if not flag_on("trade", 2147483647):
+		return "feature_off"
+	if not _social(uid):
+		return "social_off"
+	if cheat_held(uid):
+		return "under_review"
+	return ""
+
+func _trade_pair(x: String, y: String) -> String:
+	if x.is_empty() or y.is_empty() or x == y or not db.users.has(y) or is_blocked(x, y) or not _social(y):
+		return "no_such_code"
+	var f: Variant = _friendship(x, y)
+	if f == null or str(f.status) != "accepted":
+		return "no_such_code"
+	if level_for(int(f.points)) < config_int("trade_min_level", 3):
+		return "friend_level"
+	if int(f.get("accepted_at", 0)) > now() - config_int("trade_min_days", 7) * 86400:
+		return "too_new"
+	return ""
+
+## A clean offer {item: count}, or null when it breaks a rule.
+func _trade_offer(p: Variant) -> Variant:
+	if not p is Dictionary or (p as Dictionary).size() > config_int("trade_max_kinds", 6):
+		return null
+	var ok: Array = trade_items()
+	var out: Dictionary = {}
+	for k: Variant in p:
+		var v: Variant = p[k]
+		if not (v is int or v is float) or not ok.has(str(k)) or float(v) != floorf(float(v)):
+			return null
+		var n: int = int(v)
+		if n < 0 or n > config_int("trade_max_count", 99):
+			return null
+		if n > 0:
+			out[str(k)] = n
+	return out
+
+func _trade_bag(slot: int, rev: int, delta: Dictionary) -> Dictionary:
+	var sv: Variant = _saves().get(str(slot))
+	if sv == null:
+		return _fail("no_save")
+	if int(sv.rev) != rev:
+		return _fail("sync_first")
+	var inv: Dictionary = (sv.data.get("inventory", {}) as Dictionary).duplicate() if sv.data.get("inventory") is Dictionary else {}
+	for k: String in delta:
+		var n: int = int(inv.get(k, 0)) + int(delta[k])
+		if n < 0:
+			return _fail("not_enough")
+		if n == 0:
+			inv.erase(k)
+		else:
+			inv[k] = n
+	sv.data["inventory"] = inv
+	sv.rev = int(sv.rev) + 1
+	sv.saved_at = now()
+	sv.erase("request_id")
+	return {"ok": true, "rev": sv.rev}
+
+func _trade_side(id: String, uid: String) -> Variant:
+	return (_table("trade_sides", {}) as Dictionary).get("%s|%s" % [id, uid])
+
+## The other side's account id, or "" once that account is gone.
+func _trade_other(id: String, uid: String) -> String:
+	for k: String in _table("trade_sides", {}):
+		var parts: PackedStringArray = k.split("|")
+		if parts[0] == id and parts[1] != uid:
+			return parts[1]
+	return ""
+
+func _trade_tidy() -> void:
+	var trades: Dictionary = _table("trades", {})
+	var sides: Dictionary = _table("trade_sides", {})
+	for id: String in trades.keys():
+		var t: Dictionary = trades[id]
+		if t.state == "open" and int(t.closes_at) < now():
+			t.state = "cancelled"
+			for k: String in sides:
+				if k.begins_with(id + "|"):
+					sides[k].receive = sides[k].items
+		if t.state != "open":
+			var waiting: bool = sides.keys().any(func(k: String) -> bool: return k.begins_with(id + "|") and not bool(sides[k].collected))
+			if not waiting or now() - int(t.created_at) > 90 * 86400:
+				trades.erase(id)
+				for k: String in sides.keys():
+					if k.begins_with(id + "|"):
+						sides.erase(k)
+
+func _fn_trade_open(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	var e: String = _trade_check(u)
+	if e.is_empty():
+		e = _trade_pair(u, t)
+	if not e.is_empty():
+		return _fail(e)
+	_trade_tidy()
+	var trades: Dictionary = _table("trades", {})
+	var open: int = 0
+	for id: String in trades:
+		if trades[id].state != "open" or _trade_side(id, u) == null:
+			continue
+		if _trade_side(id, t) != null:
+			return {"ok": true, "trade": int(id), "again": true}
+		open += 1
+	if open >= config_int("trade_max_open", 5):
+		return _fail("too_many")
+	if not _rate_ok("trade_open", 10):
+		return _fail("slow_down")
+	var id: String = str(_next_id("trade"))
+	trades[id] = {"state": "open", "created_at": now(), "closes_at": now() + config_int("trade_days", 7) * 86400}
+	for x: String in [u, t]:
+		(_table("trade_sides", {}) as Dictionary)["%s|%s" % [id, x]] = {"items": {}, "confirmed": false, "receive": null, "collected": false}
+	return {"ok": true, "trade": int(id)}
+
+func _fn_trade_list(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	_trade_tidy()
+	var trades: Dictionary = _table("trades", {})
+	var ids: Array = trades.keys().filter(func(id: String) -> bool: return _trade_side(id, u) != null)
+	ids.sort_custom(func(x: String, y: String) -> bool: return int(x) > int(y))
+	var out: Array = []
+	for id: String in ids:
+		var t: Dictionary = trades[id]
+		var m: Dictionary = _trade_side(id, u)
+		if t.state != "open" and bool(m.collected):
+			continue
+		var other: String = _trade_other(id, u)
+		var o: Variant = _trade_side(id, other) if not other.is_empty() else null
+		var shown: bool = not other.is_empty() and db.users.has(other) and not is_blocked(u, other)
+		var p: Dictionary = profile_of(other) if shown else {}
+		out.append({"id": int(id), "state": t.state, "closes_at": t.closes_at, "code": p.get("code"), "name": p.get("name"),
+			"mine": (m.items as Dictionary).duplicate(), "theirs": (o.items as Dictionary).duplicate() if o != null else {},
+			"my_ok": m.confirmed, "their_ok": o.confirmed if o != null else false,
+			"collect": t.state != "open" and not bool(m.collected)})
+	return {"ok": true, "trades": out, "items": trade_items()}
+
+func _trade_open_side(id: String, u: String) -> Variant:
+	var t: Variant = (_table("trades", {}) as Dictionary).get(id)
+	if t == null or t.state != "open":
+		return null
+	return _trade_side(id, u)
+
+func _fn_trade_put(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _trade_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	_trade_tidy()
+	var id: String = str(int(a.get("p_trade", 0)))
+	var m: Variant = _trade_open_side(id, u)
+	if m == null:
+		return _fail("no_such_trade")
+	if not _trade_pair(u, _trade_other(id, u)).is_empty():
+		return _fail("partner_gone")
+	var offer: Variant = _trade_offer(a.get("p_items"))
+	if offer == null:
+		return _fail("not_tradeable")
+	if not _rate_ok("trade_put", 60):
+		return _fail("slow_down")
+	var delta: Dictionary = {}
+	var keys: Array = (m.items as Dictionary).keys()
+	for k: String in offer:
+		if not keys.has(k):
+			keys.append(k)
+	for k: String in keys:
+		var d: int = int(m.items.get(k, 0)) - int(offer.get(k, 0))
+		if d != 0:
+			delta[k] = d
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), delta)
+	if not bool(r.ok):
+		return r
+	m.items = offer
+	for k: String in _table("trade_sides", {}):
+		if k.begins_with(id + "|"):
+			db.trade_sides[k].confirmed = false
+	return {"ok": true, "rev": r.rev, "bag": delta}
+
+func _fn_trade_confirm(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _trade_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	_trade_tidy()
+	var id: String = str(int(a.get("p_trade", 0)))
+	var m: Variant = _trade_open_side(id, u)
+	if m == null:
+		return _fail("no_such_trade")
+	var other: String = _trade_other(id, u)
+	if other.is_empty() or not _trade_pair(u, other).is_empty():
+		return _fail("partner_gone")
+	var o: Dictionary = _trade_side(id, other)
+	var seen: Variant = _trade_offer(a.get("p_theirs"))
+	if o.items != (seen if seen != null else {}):
+		return _fail("changed")
+	if (m.items as Dictionary).is_empty() and (o.items as Dictionary).is_empty():
+		return _fail("empty")
+	m.confirmed = true
+	if bool(o.confirmed):
+		m.receive = (o.items as Dictionary).duplicate()
+		o.receive = (m.items as Dictionary).duplicate()
+		db.trades[id].state = "done"
+		return {"ok": true, "done": true}
+	return {"ok": true, "done": false}
+
+func _fn_trade_cancel(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var id: String = str(int(a.get("p_trade", 0)))
+	if _trade_open_side(id, u) == null:
+		return _fail("no_such_trade")
+	for k: String in _table("trade_sides", {}):
+		if k.begins_with(id + "|"):
+			db.trade_sides[k].receive = (db.trade_sides[k].items as Dictionary).duplicate()
+	db.trades[id].state = "cancelled"
+	return {"ok": true}
+
+func _fn_trade_collect(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	_trade_tidy()
+	var id: String = str(int(a.get("p_trade", 0)))
+	var t: Variant = (_table("trades", {}) as Dictionary).get(id)
+	var m: Variant = _trade_side(id, u)
+	if t == null or t.state == "open" or m == null:
+		return _fail("no_such_trade")
+	if bool(m.collected):
+		return _fail("already")
+	var got: Dictionary = (m.receive as Dictionary).duplicate() if m.receive is Dictionary else {}
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), got)
+	if not bool(r.ok):
+		return r
+	m.collected = true
+	_trade_tidy()
+	return {"ok": true, "rev": r.rev, "bag": got}

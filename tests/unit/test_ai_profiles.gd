@@ -151,3 +151,62 @@ func test_soft_undertow_drags_only_the_lead() -> void:
 	m.start()
 	assert_eq(a.stage("spd"), -1)
 	assert_eq(b.stage("spd"), 0)
+
+func test_difficulty_sets_spark_ring_shift_and_damage() -> void:
+	var rng := RandomNumberGenerator.new()
+	var ros: Dictionary = {"team": [{"species": "Mirkmole", "level": 12}]}
+	for d: int in TrainerData.DIFFICULTY_KEYS.size():
+		var s: Spirling = TrainerData.build_team(ros, "", rng, d)[0]
+		assert_eq(s.level, 12 + GameState.FOE_LEVEL_SHIFT[d], "item 727")
+		assert_eq(int(s.spark.atk), GameState.FOE_SPARK[d], "item 726")
+	assert_eq(TrainerData.build_team(ros, "", rng, GameState.Difficulty.RIFT_BORN, 12)[0].level, 14, "cap + 2")
+	assert_eq(TrainerData.build_team(ros, "", rng, GameState.Difficulty.RIFT_BORN, 10)[0].level, 12, "never below the map's ring")
+	var orrin: Dictionary = _npc("cinder_rift", "warden_orrin")
+	assert_eq(TrainerData.build_team(orrin, "", rng, GameState.Difficulty.STORY)[0].level, 10, "own blocks keep their rings")
+	var dealt: Array[int] = []
+	for mult: float in [1.0, 0.9]:
+		var m: BattleModel = _duel(["Pebble Toss"], ["Bowl Over"])
+		m.foe_damage_mult = mult
+		var me: Spirling = m.active_spirling(0)
+		me.hp = me.max_hp()
+		m.submit_turn(BattleAction.make_rest(0), BattleAction.make_move(1, 0))
+		dealt.append(me.max_hp() - me.hp)
+	assert_lt(dealt[1], dealt[0], "item 728: Story foes hit softer")
+
+func test_swarm_size_follows_difficulty() -> void:
+	var rng := RandomNumberGenerator.new()
+	var swarm: Dictionary = _npc("murk_hollow", "hush_swarm")
+	var sizes: Array[int] = []
+	for d: int in TrainerData.DIFFICULTY_KEYS.size():
+		sizes.append(TrainerData.build_team(swarm, "", rng, d).size())
+	assert_eq(sizes, [4, 5, 6, 6] as Array[int], "item 730")
+
+func test_veteran_kits_carry_a_status_or_stage_art() -> void:
+	# Item 731: every Spirling of a Veteran block has a fixed art that lays a status or a stage.
+	var rng := RandomNumberGenerator.new()
+	var checked: int = 0
+	for f: String in DirAccess.get_files_at("res://data/maps"):
+		if not f.ends_with(".json"):
+			continue
+		var map: MapData = MapData.load_map(f.get_basename())
+		if map == null:
+			continue
+		for n: Dictionary in map.npcs:
+			if not (n.get("teams_by_difficulty", {}) as Dictionary).has("veteran"):
+				continue
+			for s: Spirling in TrainerData.build_team(n, "", rng, GameState.Difficulty.VETERAN):
+				var ok: bool = false
+				for mv: MoveData in s.moves:
+					ok = ok or mv.kind == MoveData.Kind.STATUS or mv.has_effect(&"inflict_status") or mv.has_effect(&"stat_change")
+				assert_true(ok, "%s: %s" % [n.get("id", ""), s.data.species_name])
+				checked += 1
+	assert_gt(checked, 10)
+
+func test_story_bosses_are_a_fifth_smaller() -> void:
+	# Item 729: Story shrinks "hp_per_ally" by 20 %.
+	assert_almost_eq(BattleRules.boss_hp_mult("ashen_heart", 4, GameState.BOSS_HP_SCALE[GameState.Difficulty.STORY]), 2.56, 0.001)
+	assert_almost_eq(BattleRules.boss_hp_mult("ashen_heart", 4, GameState.BOSS_HP_SCALE[GameState.Difficulty.TAMER]), 3.2, 0.001)
+	var m: BattleModel = _duel(["Pebble Toss"], ["Bowl Over"])
+	m.boss_hp_scale = 0.8
+	var snap: Dictionary = BattleReplay.snapshot(m, "battle", "lake")
+	assert_eq(BattleReplay.build_model(JSON.parse_string(JSON.stringify(snap))).boss_hp_scale, 0.8)

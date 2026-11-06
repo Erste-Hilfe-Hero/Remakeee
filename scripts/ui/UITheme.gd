@@ -18,6 +18,18 @@ const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("2a1e2c"), Color("7
 const HIGH_CONTRAST_PALETTE: Array[Color] = [Color("ffffff"), Color("000000"), Color("3a3a3a"), Color("ffe680"), Color("6a6a6a")]
 
 static var high_contrast: bool = false
+## Large text (item 2042): menus, info windows, tips and talk use "Chimora Pixel Groß".
+static var large_text: bool = false
+
+static func set_large_text(on: bool) -> void:
+	if large_text == on:
+		return
+	large_text = on
+	_theme = null
+
+## The font every screen uses, small or large.
+static func font() -> FontFile:
+	return PixelFont.get_large_font() if large_text else PixelFont.get_font()
 
 ## WCAG contrast ratio of two colours (1 to 21).
 static func contrast(a: Color, b: Color) -> float:
@@ -100,7 +112,7 @@ static func _frame_texture(bg: Color) -> ImageTexture:
 static func _build() -> Theme:
 	var t := Theme.new()
 	t.default_font_size = FONT_SIZE
-	t.default_font = PixelFont.get_font()
+	t.default_font = font()
 	t.set_color("font_color", "Label", INK)
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		var bg: Color = BG

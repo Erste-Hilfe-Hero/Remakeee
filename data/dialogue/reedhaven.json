@@ -1,0 +1,22 @@
+{
+ "sign": [
+  "REEDHAVEN",
+  "Reedhaven, 19 folk.",
+  "Houses on stilts. Please don't jump on the walkways."
+ ],
+ "tender": {
+  "lines": [
+   "Tender Agna: The tide brings fresh water in at the stilt-spring. Let your team drink."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Trader Lusk: Dry towels and remedies. The fen gets into everything."
+  ],
+  "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm"
+ },
+ "boatman": [
+  "Boatman Rurik: When the lake calms down I'll run boats again. Mark my words."
+ ]
+}

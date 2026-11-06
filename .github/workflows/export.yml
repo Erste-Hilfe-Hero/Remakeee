@@ -48,6 +48,8 @@ jobs:
         run: python3 tools/save_version_check.py
       - name: Store web pages match docs/legal
         run: python3 tools/site/build_site.py --check
+      - name: Server copy of the shop offers and store/products.json match data/shop.json
+        run: python3 tools/shop/build_offers_sql.py --check
       - name: Store listing material (texts, screenshots, icons, presets)
         run: pip install --quiet pillow && python3 tools/release_check.py
 
@@ -58,6 +60,11 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: PostgreSQL server binaries
         run: ls /usr/lib/postgresql/*/bin/initdb || (sudo apt-get update && sudo apt-get install -y postgresql)
+      # The billing service (server/billing) needs the cryptography package, also for its database check.
+      - name: Billing service tests
+        run: |
+          python3 -m pip install -q --user --break-system-packages -r server/billing/requirements.txt
+          python3 -m unittest discover -s server/billing/tests -v
       - run: tools/online/test_sql.sh
 
   # Headless boot, data validation and GUT tests on every push and PR.

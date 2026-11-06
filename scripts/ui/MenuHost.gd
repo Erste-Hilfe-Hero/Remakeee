@@ -151,8 +151,10 @@ func pick_strings(title: String, items: Array[String], cancellable: bool = true)
 	return await pick(title, entries, cancellable)
 
 ## Yes/No question. Returns true for yes.
-func confirm(question: String) -> bool:
-	return await pick_strings(question, ["Yes", "No"] as Array[String], true) == 0
+## [param yes_text] and [param no_text] can name what each answer does, such as "Delete" and
+## "Keep", so the result of a choice is clear (item 1855).
+func confirm(question: String, yes_text: String = "Yes", no_text: String = "No") -> bool:
+	return await pick_strings(question, [yes_text, no_text] as Array[String], true) == 0
 
 ## A question whose "yes" cannot be undone (delete account, replace a save, the Iron Oath,
 ## taking over another phone's journeys): focus starts on the safe answer, "yes" carries a
@@ -313,8 +315,10 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"battery": "Fewer frames per second to save battery.",
 	"motion": "Calmer screen: no shaking, no flashes.",
 	"contrast": "Pure black and white for easier reading.",
+	"large_text": "Bigger letters in menus, texts and talk.",
 	"language": "English or Deutsch.",
 	"day_night": "The light changes with the time of day.",
+	"weather": "Rain, fog and wind in the world. Off: always clear.",
 	"pad_size": "How big the touch pad and buttons are.",
 	"pad_opacity": "How see-through the touch pad is.",
 	"left_handed": "Puts the pad on the right and A and B on the left.",
@@ -439,7 +443,7 @@ func _settings_action(key: String, dir: int = 1) -> void:
 ## Short names for the list rows; the line under the list explains each (items 2185, 2067).
 const DIFFICULTY_TEXT: Array[String] = ["Story", "Wayfarer", "Veteran", "Rift-Born"]
 const DIFFICULTY_HINTS: Array[String] = [
-	"Relaxed battles for enjoying the story.",
+	"Relaxed battles for enjoying the story. Foes deal 90% damage.",
 	"The normal journey.",
 	"Ring limits and smarter opponents.",
 	"No items in battle.",
@@ -527,10 +531,14 @@ func run_display() -> void:
 				GameState.reduce_motion = not GameState.reduce_motion
 			"contrast":
 				GameState.high_contrast = not GameState.high_contrast
+			"large_text":
+				GameState.large_text = not GameState.large_text
 			"language":
 				GameState.language = Loc.next_language()
 			"day_night":
 				GameState.day_night = not GameState.day_night
+			"weather":
+				GameState.weather = not GameState.weather
 			"retro":
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
@@ -548,8 +556,10 @@ static func display_rows() -> Array[Array]:
 		["battery", "Battery saver: %s" % ("On" if GameState.battery_saver else "Off")],
 		["motion", "Less motion: %s" % ("On" if GameState.reduce_motion else "Off")],
 		["contrast", "High contrast: %s" % ("On" if GameState.high_contrast else "Off")],
+		["large_text", "Large text: %s" % ("On" if GameState.large_text else "Off")],
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
 		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
+		["weather", "Weather: %s" % ("On" if GameState.weather else "Off")],
 		["retro", "Retro filter: %s" % retro],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
 	]
@@ -575,6 +585,8 @@ static func refresh_all_themes(tree: SceneTree) -> void:
 	for n: Node in tree.get_nodes_in_group(THEME_GROUP):
 		if n.has_method("refresh_theme"):
 			n.refresh_theme()
+		elif n is Control:
+			(n as Control).theme = UITheme.get_theme()
 
 const THEME_GROUP: StringName = &"ui_theme_users"
 
@@ -642,7 +654,7 @@ static func controls_rows() -> Array[Array]:
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
-		["swap_ab_pad", "Gamepad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
+		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
 		["vibration", "Vibration: %s" % Juice.LEVEL_NAMES[GameState.vibration]],
 		["pad_help", "Gamepad buttons..."],
 		["keys_help", "Keyboard keys..."],

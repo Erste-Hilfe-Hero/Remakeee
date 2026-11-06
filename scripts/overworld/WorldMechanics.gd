@@ -21,6 +21,17 @@ const GLINT_EVERY: float = 4.0
 const GLINT_TIME: float = 0.35
 var _glints: Node2D
 var _glint_timer: Timer
+## Clock flags (area 3 items 979 and 981): blocks can open on "_low_tide" (sea caves) or
+## "_vents_calm" (hot vents that block the way every few seconds).
+const CLOCK_FLAGS: Array[String] = ["_low_tide", "_vents_calm",
+	"_water_ge_0", "_water_ge_1", "_water_ge_2", "_water_ge_3", "_water_le_0", "_water_le_1", "_water_le_2", "_water_le_3"]
+## Vents: calm for VENT_HALF seconds, then blowing for VENT_HALF seconds (a 4 second beat).
+const VENT_HALF: float = 2.0
+var vents_calm: bool = true
+var _vent_timer: Timer
+## Test hook: -1 uses the device clock.
+var hour_override: int = -1
+var phase_override: int = -1
 
 func _init(overworld: Overworld) -> void:
 	ow = overworld
@@ -30,9 +41,161 @@ func prepare(m: MapData, cell: Vector2i) -> void:
 	_undo.clear()
 	_cracking = Vector2i(-1, -1)
 	PuzzleRoom.apply_state(m, GameState.world_of(m.id))
-	m.apply_blocks(PuzzleRoom.live_flags(m, GameState.flags, cell))
+	vents_calm = true
+	m.apply_blocks(flags_now(m, cell))
 	_pressed = _pressed_now(m, cell)
 	_build_glints(m)
+	_setup_vents(m)
+	_draw_beam(m)
+
+## True from midnight to 6 and from noon to 18 (two low tides a day, device clock).
+static func low_tide(hour: int) -> bool:
+	return posmod(hour, 12) < 6
+
+func _hour() -> int:
+	return hour_override if hour_override >= 0 else int(Time.get_time_dict_from_system().hour)
+
+## Story flags plus clock flags plus puzzles held down right now.
+func flags_now(m: MapData, cell: Vector2i) -> Dictionary:
+	var f: Dictionary = GameState.flags.duplicate()
+	f["_phase"] = phase_override if phase_override >= 0 else DayCycle.current()
+	if low_tide(_hour()):
+		f["_low_tide"] = true
+	if vents_calm:
+		f["_vents_calm"] = true
+	if not m.sluices.is_empty():
+		water_flags(water_level(m), f)
+	return PuzzleRoom.live_flags(m, f, cell)
+
+# --- Brackwater Sluice (item 1009): water level = sluices open on this map ---------------------
+
+## Water level on [param m]: how many of the map's "sluices" flags are set (0 to 3).
+func water_level(m: MapData, flags: Dictionary = GameState.flags) -> int:
+	var n: int = 0
+	for f: Variant in m.sluices:
+		if bool(flags.get(str(f), false)):
+			n += 1
+	return n
+
+## Clock-like flags for the water: "_water_ge_N" (level at least N) and "_water_le_N" (at most N).
+static func water_flags(level: int, out: Dictionary) -> void:
+	for n: int in range(0, 4):
+		if level >= n:
+			out["_water_ge_%d" % n] = true
+		if level <= n:
+			out["_water_le_%d" % n] = true
+
+# --- Lanternwell (item 1010): a beam of light, mirrors "/" or "\\", target crystals --------
+
+const MIRROR_TURN: Dictionary = {"/": "\\", "\\": "/"}
+
+## Mirror cells of the map's beam with their current way ("/" or "\\").
+func mirrors(m: MapData) -> Dictionary:
+	var out: Dictionary = {}
+	if m.beam.is_empty():
+		return out
+	var saved: Dictionary = GameState.world_of(m.id).get("mirrors", {})
+	for mm: Variant in m.beam.get("mirrors", []):
+		var c := Vector2i(int(mm[0]), int(mm[1]))
+		out[c] = str(saved.get("%d_%d" % [c.x, c.y], str(mm[2]) if (mm as Array).size() > 2 else "/"))
+	return out
+
+## Cells the beam passes, from its source, bouncing off [param ways] (cell -> "/" or "\\").
+static func trace_beam(m: MapData, ways: Dictionary) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	if m.beam.is_empty():
+		return out
+	var c := Vector2i(int(m.beam.x), int(m.beam.y))
+	var d: Vector2i = {"up": Vector2i.UP, "down": Vector2i.DOWN, "left": Vector2i.LEFT}.get(str(m.beam.get("dir", "right")), Vector2i.RIGHT)
+	var target := Vector2i(int(m.beam.target[0]), int(m.beam.target[1]))
+	for i: int in 200:
+		c += d
+		if not m.in_bounds(c):
+			break
+		out.append(c)
+		if c == target:
+			break
+		if ways.has(c):
+			# "/" sends right to up and down to left; "\\" sends right to down.
+			d = Vector2i(-d.y, -d.x) if ways[c] == "/" else Vector2i(d.y, d.x)
+			continue
+		if not m.is_walkable(c):
+			break
+	return out
+
+static func beam_hits(m: MapData, ways: Dictionary) -> bool:
+	var path: Array[Vector2i] = trace_beam(m, ways)
+	return not path.is_empty() and path[-1] == Vector2i(int(m.beam.target[0]), int(m.beam.target[1]))
+
+## Turns the mirror at [param cell]; sets the beam's flag once the crystal is lit.
+func turn_mirror(cell: Vector2i) -> bool:
+	var m: MapData = ow.map
+	var ways: Dictionary = mirrors(m)
+	if not ways.has(cell):
+		return false
+	ways[cell] = MIRROR_TURN[ways[cell]]
+	var state: Dictionary = GameState.world_of(m.id).duplicate(true)
+	var saved: Dictionary = state.get("mirrors", {})
+	saved["%d_%d" % [cell.x, cell.y]] = ways[cell]
+	state["mirrors"] = saved
+	_save_state(state)
+	var hit: bool = beam_hits(m, ways)
+	if hit:
+		GameState.set_flag(str(m.beam.flag))
+	refresh(ow.player.cell)
+	_draw_beam(m)
+	return hit
+
+var _beam_line: Line2D
+
+func _draw_beam(m: MapData) -> void:
+	if _beam_line == null:
+		_beam_line = Line2D.new()
+		_beam_line.name = "beam"
+		_beam_line.width = 2.0
+		_beam_line.default_color = UITheme.ACCENT
+		_beam_line.z_index = 3
+		ow.add_child(_beam_line)
+	_beam_line.clear_points()
+	if m.beam.is_empty():
+		return
+	var half := Vector2.ONE * TilesetFactory.TILE * 0.5
+	_beam_line.add_point(Vector2(int(m.beam.x), int(m.beam.y)) * TilesetFactory.TILE + half)
+	for c: Vector2i in trace_beam(m, mirrors(m)):
+		_beam_line.add_point(Vector2(c) * TilesetFactory.TILE + half)
+
+## Points of the drawn beam (for tests).
+func beam_points() -> int:
+	return _beam_line.get_point_count() if _beam_line != null else 0
+
+static func has_vents(m: MapData) -> bool:
+	for b: Dictionary in m.blocks:
+		if str(b.get("open_flag", "")) == "_vents_calm":
+			return true
+	return false
+
+func _setup_vents(m: MapData) -> void:
+	if _vent_timer == null:
+		_vent_timer = Timer.new()
+		_vent_timer.wait_time = VENT_HALF
+		_vent_timer.timeout.connect(vent_tick)
+		ow.add_child(_vent_timer)
+	if has_vents(m):
+		_vent_timer.start()
+	else:
+		_vent_timer.stop()
+
+## One half beat of the vents. They never blow up under the player: they wait a beat.
+func vent_tick() -> void:
+	var m: MapData = ow.map
+	if vents_calm:
+		for b: Dictionary in m.blocks:
+			if str(b.get("open_flag", "")) == "_vents_calm" and Vector2i(int(b.x), int(b.y)) == ow.player.cell:
+				return
+	vents_calm = not vents_calm
+	refresh(ow.player.cell)
+	if not vents_calm:
+		Sound.sfx("bump")
 
 func _build_glints(m: MapData) -> void:
 	if _glints == null:
@@ -91,7 +254,7 @@ func has_puzzle() -> bool:
 ## Redraws after a change and plays a sound if a puzzle opened or closed.
 func refresh(cell: Vector2i) -> void:
 	var m: MapData = ow.map
-	m.apply_blocks(PuzzleRoom.live_flags(m, GameState.flags, cell))
+	m.apply_blocks(flags_now(m, cell))
 	m.paint(ow.ground_layer())
 	var now: Dictionary = _pressed_now(m, cell)
 	for f: String in now:
@@ -164,13 +327,18 @@ func stepped(cell: Vector2i) -> bool:
 		refresh(cell)
 	return false
 
-## A on a plank gap or a ladder anchor. Returns true if handled.
+## A on a hidden find, a secret passage, a plank gap or a ladder anchor. Returns true if handled.
 func interact(cell: Vector2i) -> bool:
 	var m: MapData = ow.map
 	var find: Dictionary = m.secret_at(cell, GameState.flags)
 	if not find.is_empty():
 		await ow.take_find(find)
 		_build_glints(m)
+		return true
+	var passage: Dictionary = m.passage_at(cell)
+	if not passage.is_empty() and not GameState.has_flag(str(passage.get("flag", ""))):
+		open_passage(passage)
+		await ow.say_locked(["The smooth rock gives under your hands and slides aside. A way opens."] as Array[String])
 		return true
 	var state: Dictionary = GameState.world_of(m.id)
 	var ladder: Dictionary = m.ladder_at(cell)
@@ -197,6 +365,12 @@ func interact(cell: Vector2i) -> bool:
 		await ow.say_locked(["You lay a plank over the gap. It holds."] as Array[String])
 		return true
 	return false
+
+## Slides the smooth rock of [param passage] aside for good (item 1082).
+func open_passage(passage: Dictionary) -> void:
+	GameState.set_flag(str(passage.flag))
+	Sound.sfx("warp")
+	refresh(ow.player.cell)
 
 ## "Undo push" (item 1012): the last push in this room is taken back.
 func undo() -> bool:

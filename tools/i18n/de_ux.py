@@ -167,12 +167,15 @@ T = {
 "Gamepad (A and B swapped)\nD-pad or left stick: move\nB: talk, confirm\nA: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles": "Gamepad (A und B getauscht)\nSteuerkreuz oder linker Stick: laufen\nB: sprechen, bestätigen\nA: zurück, halten zum Rennen\nStart oder Select: Menü\nRB: Kampftempo\nY: wilde Kämpfe automatisch",
 "Keyboard\nArrow keys or W A S D: move\nEnter or Space: talk, confirm\nEscape or Backspace: back\nHold Backspace: run\nM: menu\nF: battle speed\nR: auto wild battles": "Tastatur\nPfeiltasten oder W A S D: laufen\nEnter oder Leertaste: sprechen, bestätigen\nEscape oder Rücktaste: zurück\nRücktaste halten: rennen\nM: Menü\nF: Kampftempo\nR: wilde Kämpfe automatisch",
 "Keyboard keys...": "Tastatur-Tasten...",
-"Touch A/B swap: %s": "A/B-Tausch Touch: %s",
-"Gamepad A/B swap: %s": "A/B-Tausch Pad: %s",
+"Touch A/B swap: %s": "Touch A/B: %s",
+"Pad A/B swap: %s": "Pad A/B: %s",
 "Today...": "Heute...",
 "This week...": "Diese Woche...",
 "Collection...": "Sammlung...",
 "Friends, mail: %s": "Freunde, Post: %s",
+"Large text: %s": "Große Schrift: %s",
+"Bigger letters in menus, texts and talk.": "Größere Buchstaben in Menüs, Texten und Gesprächen.",
+"Nothing here yet.": "Hier ist noch nichts.",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

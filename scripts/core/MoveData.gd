@@ -33,6 +33,13 @@ const TARGETS: Array[String] = ["single", "foes"]
 func is_area() -> bool:
 	return target == "foes"
 
+## True if one of the move's effects has [param id] (for example &"delayed_hit").
+func has_effect(id: StringName) -> bool:
+	for fx: Dictionary in effects:
+		if StringName(fx.get("id", "")) == id:
+			return true
+	return false
+
 ## True if the move deals direct damage.
 func is_damaging() -> bool:
 	return kind != Kind.STATUS and power > 0

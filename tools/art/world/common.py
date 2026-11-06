@@ -16,7 +16,7 @@ ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", ".."
 MAPS = os.path.join(ROOT, "data", "maps")
 DIA = os.path.join(ROOT, "data", "dialogue")
 ORDER = ["name", "region", "biome", "backdrop", "outdoor", "field", "encounters", "heal_point",
-         "rows", "warps", "npcs", "signs", "gear_spots", "blocks", "secrets", "floors"]
+         "rows", "warps", "npcs", "signs", "gear_spots", "blocks", "secrets", "floors", "passages", "spots", "sluices", "beam"]
 
 
 def warp(x, y, to, tx, ty, facing):
@@ -35,6 +35,23 @@ def team(*pairs):
 
 def secret(x, y, item, flag, count=1):
     return {"x": x, "y": y, "item": item, "count": count, "flag": flag}
+
+
+# German texts for generated maps: tr("English", "Deutsch") records the pair and returns the
+# English text (the key). World.write() puts them into tools/i18n/de_welt_maps.py.
+GERMAN = {}
+
+
+def tr(en, de):
+    if en in GERMAN and GERMAN[en] != de:
+        raise SystemExit("two German texts for %r" % en)
+    GERMAN[en] = de
+    return en
+
+
+def lines(*pairs):
+    """Dialogue lines from (English, German) pairs."""
+    return [tr(en, de) for en, de in pairs]
 
 
 def _ordered(m):
@@ -86,7 +103,16 @@ class World:
             with open(os.path.join(DIA, fid + ".json"), "w") as f:
                 json.dump(t, f, indent=1, ensure_ascii=False)
                 f.write("\n")
-        print("wrote %d maps, %d dialogue files" % (len(self.maps), len(self.text)))
+        if GERMAN:
+            path = os.path.join(ROOT, "tools", "i18n", "de_welt_maps.py")
+            with open(path, "w") as f:
+                f.write("# German texts for the generated area 3 maps. Written by tools/art/build_world.py:\n")
+                f.write("# edit the tr()/lines() pairs in tools/art/world/*.py, not this file.\n")
+                f.write("T = {\n")
+                for en in sorted(GERMAN):
+                    f.write("%s: %s,\n" % (json.dumps(en, ensure_ascii=False), json.dumps(GERMAN[en], ensure_ascii=False)))
+                f.write("}\n")
+        print("wrote %d maps, %d dialogue files, %d German texts" % (len(self.maps), len(self.text), len(GERMAN)))
 
 
 def check_rows(map_id, rows):

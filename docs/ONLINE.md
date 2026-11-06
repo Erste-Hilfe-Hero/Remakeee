@@ -215,6 +215,47 @@ Table `feature_flags` (key, `enabled`, `min_version`): switches the new online p
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
 `league_open`, `live_duel`, `trade`, `bund`, `raid`. All start switched off.
 
+## Bunds
+
+Bunds (plan area 7) wait behind the flag `bund`; switch them on with
+`update feature_flags set enabled = true where key = 'bund';`. A bund has at most `bund_max` (30)
+members, one leader, helpers and members, and a name made of two word numbers into
+`scripts/online/BundWords.gd` (never reorder those lists, only append). Leaving is always possible;
+when the leader leaves or deletes the account, the oldest helper (else the oldest member) leads.
+A leader dissolves a bund of 3 or more only by confirming again after 24 hours. Blocked players
+cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`; menu
+`scripts/ui/BundMenu.gd` (Friends, Bund).
+
+## Raid Rifts
+
+Raid Rifts (plan area 7) wait behind the flag `raid`. A player opens a Rift with 1 to 3 friends or
+members of the same bund (`raid_open`, never with blocked players). The server picks a guardian from
+`raid_guardians` at Ring `raid_level`; its strength is `raid_base` times 100/140/175 % for 2/3/4
+players. Each member has `raid_tries` (3) attempts a day for `raid_hours` (48). An attempt
+(`raid_start`) is a fair-league battle the server sets up (seed, teams, at most `raid_rounds` rounds);
+only the inputs come from the game, and the referee's own count of the Vigor the guardian lost comes
+off its strength. Once the guardian falls, everyone with at least `raid_share_min` percent of the
+damage takes the same reward (`raid_claim`), rolled by the server from the open table `raid_rewards`.
+Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they close. Tables:
+`raids` (no account ids), `raid_members`, `raid_attempts`; menu `scripts/ui/RaidMenu.gd`
+(Friends, Raid Rifts).
+
+## Trading
+
+Trading (plan area 7) waits behind the flag `trade`. Friends from friendship level
+`trade_min_level` (3) whose friendship was accepted at least `trade_min_days` (7) ago can open a
+trade (`trade_open`, one open trade per pair, at most `trade_max_open` per player, never with
+blocked players). Only items in `trade_items` can be traded; `tools/online/game_data_sql.py` fills
+it from `"tradeable": true` in `data/items.json` at every deploy. Shop items and Spirlings are never
+tradeable (a test checks that no item from `data/shop.json` is on the list). The server is the
+trustee: `trade_put` moves the offer out of the bag of the stored save at once, `trade_confirm` must
+name the other side's current offer, and once both confirmed each side takes the other's items
+with `trade_collect`. Any change of an offer resets both confirmations; `trade_cancel` (or 7 days
+without finishing) gives everyone their own items back. Every change of a save happens in a call
+of its own device, which sends the revision it knows (`sync_first` otherwise), so the game changes
+its bag the same way and saves on top of the new revision. Tables: `trades` (no account ids),
+`trade_sides`; menu `scripts/ui/TradeMenu.gd` (Friends, Trades).
+
 ## Reports and decisions (Ali, about once a week)
 
 Every report gets a number at once (`report_in`, the player sees "Your report has number 12"). Open

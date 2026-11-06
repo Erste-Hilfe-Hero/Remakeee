@@ -6,6 +6,15 @@ enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
 ## Level cap per Rift sealed (Veteran + Rift-Born only).
 const LEVEL_CAPS: Array[int] = [12, 18, 23, 28, 32, 36, 40, 44, 50]
 const AI_LEVELS: Array[int] = [0, 1, 2, 3]
+## Plan area 2, items 726-728: Wayfarer Spark in every stat, ring shift of a shared team, and the
+## share of damage foes deal, per difficulty (Story, Tamer, Veteran, Rift-Born).
+const FOE_SPARK: Array[int] = [0, 3, 6, 10]
+const FOE_LEVEL_SHIFT: Array[int] = [-1, 0, 1, 2]
+const FOE_DAMAGE: Array[float] = [0.9, 1.0, 1.0, 1.0]
+## Factor on a Rift boss's "hp_per_ally" per difficulty (item 729).
+const BOSS_HP_SCALE: Array[float] = [0.8, 1.0, 1.0, 1.0]
+## A shifted foe never stands more than this many rings above the player's ring cap.
+const FOE_OVER_CAP: int = 2
 const MAX_PARTY: int = 5
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
@@ -134,8 +143,12 @@ var tips_enabled: bool = true
 var battery_saver: bool = false
 var reduce_motion: bool = false
 var high_contrast: bool = false
+## Large text with the 7x12 glyph set (item 2042).
+var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
 var day_night: bool = true
+## Weather in the world (area 3 item 1145); off means always clear.
+var weather: bool = true
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
 const FPS_NORMAL: int = 60
@@ -187,6 +200,10 @@ func items_allowed_in_battle() -> bool:
 func ai_level() -> int:
 	return AI_LEVELS[difficulty]
 
+## Share of damage the foe side deals (Story softens every hit, item 728).
+func foe_damage_mult() -> float:
+	return FOE_DAMAGE[difficulty]
+
 func text_cps() -> float:
 	return TEXT_CPS[text_speed]
 
@@ -229,6 +246,8 @@ func set_held(s: Spirling, id: String) -> bool:
 	s.held = id
 	if not id.is_empty():
 		inventory[id] = item_count(id) - 1
+	# Some keepsakes raise max Vigor (Core Glass); taking one off must not leave too much Vigor.
+	s.hp = mini(s.hp, s.max_hp())
 	return true
 
 ## Wayfarer Gear (grapple_line, climbing_pick, storm_lantern) is a key item in the bag.
@@ -532,7 +551,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "day_night": day_night, "language": language}
+		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -561,7 +580,9 @@ func settings_from_dict(d: Dictionary) -> void:
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))
+	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
+	weather = bool(d.get("weather", true))
 	language = str(d.get("language", ""))
 	apply_display()
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
@@ -575,6 +596,7 @@ func apply_display() -> void:
 	Engine.max_fps = FPS_BATTERY if battery_saver else FPS_NORMAL
 	if UITheme.high_contrast != high_contrast:
 		UITheme.set_high_contrast(high_contrast)
+	UITheme.set_large_text(large_text)
 
 ## Extra Master gain (not saved): Sound fades it to 0 while the app is in the background.
 var master_fade: float = 1.0

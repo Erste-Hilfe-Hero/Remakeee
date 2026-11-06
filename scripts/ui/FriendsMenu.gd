@@ -46,6 +46,12 @@ static func run(menu: PauseMenu) -> void:
 		labels.append("World goal of the week")
 		labels.append("Weekly board")
 		labels.append("Blocked Wayfarers")
+		if Online.flag_on("bund"):
+			labels.append("Bund")
+		if Online.flag_on("raid"):
+			labels.append("Raid Rifts")
+		if Online.flag_on("trade"):
+			labels.append("Trades")
 		var title: String = "Friends %d   Your code %s" % [friends.size(), Online.pretty_code(Online.friend_code())]
 		var idx: int = await menu.pick_strings(title, labels)
 		if idx < 0:
@@ -62,6 +68,13 @@ static func run(menu: PauseMenu) -> void:
 			4: await run_goal(menu)
 			5: await run_board(menu)
 			6: await run_blocked(menu, data.get("blocked", []))
+		match labels[idx]:
+			"Bund": await BundMenu.run(menu)
+			"Trades": await TradeMenu.run(menu)
+			"Raid Rifts":
+				await RaidMenu.run(menu)
+				if not menu.raid_attempt.is_empty():
+					return
 
 ## Friends and Lantern Mail are asked for at the same time, while the menu already shows
 ## "Loading..." (item 2129). Returns [friends_list result, mail_list result].

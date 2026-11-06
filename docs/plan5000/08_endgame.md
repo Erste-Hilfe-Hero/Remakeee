@@ -18,7 +18,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3123. [x] [P2] Ein Wegmarken-Verlaufsfenster bauen, das die letzten 30 Gutschriften mit Quelle zeigt (zum Beispiel „Tagesauftrag: 10“).
 3124. [x] [P2] Einen Test schreiben, der prüft, dass jede Belohnungsquelle im Spiel eine gültige Quelle in Waymarks.SOURCES nutzt.
 3125. [x] [P2] Wegmarken nach einer Niederlage nie abziehen, anders als die Hälfte der Münzen.
-3126. [P2] Ein Sparziel im Pausenmenü einstellen lassen (ein Angebot des Tauschstands), das als Balken den fehlenden Betrag zeigt.
+3126. [x] [P2] Ein Sparziel im Pausenmenü einstellen lassen (ein Angebot des Tauschstands), das als Balken den fehlenden Betrag zeigt.
 3127. [x] [P2] Den Wegmarken-Stand auf der Spielstandkarte im Titelbild neben Spielzeit und Spirlog-Zahl zeigen.
 3128. [P3] Einen Jahresrückblick der verdienten Wegmarken nach Quelle in den Aufzeichnungen zeigen.
 3129. [P3] Beim Eisernen Schwur alle Wegmarken-Gutschriften um 25 Prozent erhöhen und den Bonus in der Gutschrift ausweisen.
@@ -34,9 +34,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3137. [x] [P1] Jedes Angebot vor dem Kauf mit Wirkung, Preis und Besitzzahl zeigen und jeden Tausch mit einer Ja-Nein-Frage bestätigen lassen.
 3138. [P2] Vier neue Jackenfarben für den Wanderer zu je 300 Wegmarken anbieten, die dauerhaft freigeschaltet bleiben.
 3139. [P2] Sechs Fotorahmen für den Fotomodus zu je 100 Wegmarken anbieten.
-3140. [P2] Den Vorrat des Tauschstands jeden Montag nach Server-Zeit auffüllen und die Restzeit am Stand anzeigen.
-3141. [P2] Eine Wochenauswahl mit drei wechselnden Angeboten aus einer festen, offen sichtbaren Liste anbieten, gezogen per Seed aus der Wochennummer.
-3142. [P2] Die ganze Liste möglicher Wochenangebote am Stand einsehbar machen, damit nichts zufällig oder verdeckt ist.
+3140. [x] [P2] Den Vorrat des Tauschstands jeden Montag nach Server-Zeit auffüllen und die Restzeit am Stand anzeigen.
+3141. [x] [P2] Eine Wochenauswahl mit drei wechselnden Angeboten aus einer festen, offen sichtbaren Liste anbieten, gezogen per Seed aus der Wochennummer.
+3142. [x] [P2] Die ganze Liste möglicher Wochenangebote am Stand einsehbar machen, damit nichts zufällig oder verdeckt ist.
 3143. [P2] Münzen-Ausgaben ausbauen: einen Spendenkasten im Rathaus von Brindlewick bauen, der Münzen für Stadtprojekte annimmt.
 3144. [P2] Fünf Stadtprojekte in Brindlewick anlegen (Brunnen 5000, Laternenreihe 10000, Bootssteg 20000, Gartenbeete 30000, Leuchtturmglas 50000 Münzen), die das Stadtbild sichtbar verändern.
 3145. [P2] Jedes fertige Stadtprojekt mit einer dauerhaften Kleinigkeit belohnen, etwa einer zusätzlichen Rastquelle am Bootssteg.
@@ -62,12 +62,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3163. [x] [P2] Einen Auftrag pro Tag einmal kostenlos gegen einen anderen tauschen lassen.
 3164. [x] [P2] Nicht erledigte Aufträge verfallen still um Mitternacht, ohne Strafe und ohne Serien-Zähler.
 3165. [x] [P2] Eine Auftragsart „Zeig dem Fotomodus einen Spirling bei Nacht“ ergänzen, damit Aufträge nicht nur Kämpfe sind.
-3166. [P2] Eine Auftragsart „Spiele das Echo-Melodie-Spiel mit der Wertung Gut oder besser“ ergänzen.
-3167. [P2] Eine Auftragsart „Sieh einen noch nicht gesehenen Spirling“ nur dann ziehen, wenn noch ungesehene Arten im erreichbaren Gebiet leben.
-3168. [P2] Den Fund des Tages (DailyFind) als eigenen Auftrag zählen lassen, wenn er an dem Tag im Pool landet.
+3166. [x] [P2] Eine Auftragsart „Spiele das Echo-Melodie-Spiel mit der Wertung Gut oder besser“ ergänzen.
+3167. [x] [P2] Eine Auftragsart „Sieh einen noch nicht gesehenen Spirling“ nur dann ziehen, wenn noch ungesehene Arten im erreichbaren Gebiet leben.
+3168. [x] [P2] Den Fund des Tages (DailyFind) als eigenen Auftrag zählen lassen, wenn er an dem Tag im Pool landet.
 3169. [x] [P2] Beim Abschluss eines Auftrags einen kurzen Hinweis oben im Bild zeigen, der den Kampf oder die Erkundung nicht anhält.
 3170. [x] [P2] Nach dem Ende von Akt I einen vierten, schwereren Auftrag mit 25 Wegmarken freischalten.
-3171. [P2] Für jede Auftragsart einen GUT-Test schreiben, der den Fortschritt aus einem nachgestellten Spielereignis zählt.
+3171. [x] [P2] Für jede Auftragsart einen GUT-Test schreiben, der den Fortschritt aus einem nachgestellten Spielereignis zählt.
 3172. [P2] Die Aufträge in data/i18n/de.json mit Platzhaltern für Zahl, Ort und Element übersetzen.
 3173. [x] [P2] Eine Auftragsart „Schick einen Spirling auf einen Streifzug“ ergänzen, sobald Streifzüge freigeschaltet sind.
 3174. [x] [P2] Pro Tag höchstens einen Kampfauftrag ziehen, damit jeder Tag eine Erkundungs- oder Sammelaufgabe enthält.
@@ -85,16 +85,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3184. [x] [P1] Die Wochenherausforderung von 3 auf 5 Runden erweitern und den Belohnungswert für Runde 4 und 5 als Zwischenpreis auszahlen.
 3185. [x] [P1] Nach jeder Runde im Wochen-Echo eine Zwischenwertung zeigen: Züge, übrige Kraft und erschöpfte Spirlings.
 3186. [x] [P1] Das Wochen-Echo nicht mehr an den stärksten eigenen Spirling, sondern an den Ring-Deckel binden, damit alle in derselben Woche dieselben Gegnerringe sehen.
-3187. [P2] Eine Wochen-Bestwertung aus Zügen und übriger Kraft in GameState.records["weekly_best"] speichern.
-3188. [P2] Für eine Wertung unter einem festen Zielwert der Woche einen Bonus von 20 Wegmarken zahlen.
-3189. [P2] Eine Wochenvorschau am Brett zeigen: Feld, Regel und die Elemente der drei ersten Echo-Teams.
-3190. [P2] Die letzten acht Wochen mit Feld, Regel und eigenem Ergebnis in einem Archiv anzeigen.
-3191. [P2] Den Gegenstandspreis aus WeeklyChallenge.REWARDS um die vier Kraftwerkzeuge erweitern, damit die Liste auf 12 Einträge wächst.
+3187. [x] [P2] Eine Wochen-Bestwertung aus Zügen und übriger Kraft in GameState.records["weekly_best"] speichern.
+3188. [x] [P2] Für eine Wertung unter einem festen Zielwert der Woche einen Bonus von 20 Wegmarken zahlen.
+3189. [x] [P2] Eine Wochenvorschau am Brett zeigen: Feld, Regel und die Elemente der drei ersten Echo-Teams.
+3190. [x] [P2] Die letzten acht Wochen mit Feld, Regel und eigenem Ergebnis in einem Archiv anzeigen.
+3191. [x] [P2] Den Gegenstandspreis aus WeeklyChallenge.REWARDS um die vier Kraftwerkzeuge erweitern, damit die Liste auf 12 Einträge wächst.
 3192. [P2] Im Wochen-Echo verbietet ein Leihteam-Modus eigene Spirlings und stellt ein festes Team von drei Spirlings für alle.
 3193. [P2] Den Leihteam-Modus jede zweite Woche statt des normalen Modus anbieten und das am Brett ankündigen.
 3194. [P2] Leihteams in data/events.json mit Art, Ring und Techniken festlegen, mindestens 12 Teams.
-3195. [P2] Einen Wochensieg auch nach einem Teilerfolg werten: ab Runde 3 gibt es 30 Wegmarken, ab Runde 5 die vollen 60.
-3196. [P2] Pro Woche drei Versuche mit voller Belohnung erlauben und weitere Versuche nur für die Bestwertung zählen.
+3195. [x] [P2] Einen Wochensieg auch nach einem Teilerfolg werten: ab Runde 3 gibt es 30 Wegmarken, ab Runde 5 die vollen 60.
+3196. [x] [P2] Pro Woche drei Versuche mit voller Belohnung erlauben und weitere Versuche nur für die Bestwertung zählen.
 3197. [P3] Eine Wochen-Sonderregel „Gleicher Ring“ ergänzen, bei der alle Spirlings beider Seiten auf Ring 40 gesetzt werden.
 3198. [P3] Die Zahl der gewonnenen Wochen in einem Erfolg zählen: 4, 12 und 52 Siege.
 3199. [P3] Ein kleines Abzeichen für jede Kalenderwoche mit Sieg in einem Jahresraster in den Aufzeichnungen zeigen.

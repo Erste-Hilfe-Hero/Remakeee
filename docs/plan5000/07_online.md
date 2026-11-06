@@ -37,7 +37,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2688. [x] [P1] Der Schiedsrichter bekommt einen eigenen Container in `server/docker-compose.yml` ohne öffentlichen Port, erreichbar nur aus dem internen Netz für die Datenbank-Funktionen.
 2689. [x] [P1] Eine Datenbank-Funktion `_referee_check(battle_id)` legt Kampfdaten in die Tabelle `battle_queue`, und der Schiedsrichter schreibt das Ergebnis (`ok`, `mismatch`, `error`) in `battle_results`.
 2690. [x] [P1] Der Schiedsrichter vergleicht Sieger, Restkraft jedes Spirlings und Anzahl der Runden und meldet `mismatch`, sobald ein Wert abweicht.
-2691. [P1] Ligapunkte, Raid-Schaden und Wochenwertungen zählen erst, wenn der Schiedsrichter `ok` gemeldet hat; bis dahin zeigt das Spiel "wird geprüft".
+2691. [x] [P1] Ligapunkte, Raid-Schaden und Wochenwertungen zählen erst, wenn der Schiedsrichter `ok` gemeldet hat; bis dahin zeigt das Spiel "wird geprüft".
 2692. [P2] Der Schiedsrichter läuft mit derselben Spieldaten-Version wie der Client; `data/*.json` werden beim Bau in den Container kopiert und ihr Prüfwert (SHA-256) im Ergebnis mitgeschrieben.
 2693. [P2] Kommt ein Client mit anderem Daten-Prüfwert als der Server, lehnt `hello` Liga und Raid ab und verweist auf das Update.
 2694. [P2] Ein Prüfschritt dauert höchstens 2 Sekunden; längere Kämpfe bricht der Schiedsrichter ab und markiert sie zur Handprüfung.
@@ -147,11 +147,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2789. [P3] Eine Vorsaison von 1 Woche vor dem Store-Start zum Testen, deren Wertung danach gelöscht wird.
 2790. [P3] Die Grenzen der Gegnersuche (100, 50, 400) stehen als Schlüssel in `server_config`, damit Ali sie bei wenigen Spielern lockern kann.
 ### Tausch zwischen Freunden
-2791. [P1] Tauschen geht nur zwischen bestätigten Freunden ab Freundschaftsstufe 3, die seit mindestens 7 Tagen befreundet sind.
-2792. [P1] Tauschbar sind nur Gegenstände mit `tradeable: true` in `data/items.json`; Spirlings werden nie getauscht (bestehende Grundregel bleibt).
-2793. [P1] Gegenstände mit Shop-Herkunftsmarke sind nicht tauschbar, damit kein grauer Handel und kein Betrug mit Rückbuchungen entsteht.
-2794. [P1] Der Tausch läuft über eine Treuhand-Tabelle `trades`: beide legen ein, beide bestätigen, dann tauscht der Server in einer Transaktion oder gar nicht.
-2795. [P1] Ändert eine Seite ihr Angebot, wird die Bestätigung beider Seiten automatisch zurückgesetzt.
+2791. [x] [P1] Tauschen geht nur zwischen bestätigten Freunden ab Freundschaftsstufe 3, die seit mindestens 7 Tagen befreundet sind.
+2792. [x] [P1] Tauschbar sind nur Gegenstände mit `tradeable: true` in `data/items.json`; Spirlings werden nie getauscht (bestehende Grundregel bleibt).
+2793. [x] [P1] Gegenstände mit Shop-Herkunftsmarke sind nicht tauschbar, damit kein grauer Handel und kein Betrug mit Rückbuchungen entsteht.
+2794. [x] [P1] Der Tausch läuft über eine Treuhand-Tabelle `trades`: beide legen ein, beide bestätigen, dann tauscht der Server in einer Transaktion oder gar nicht.
+2795. [x] [P1] Ändert eine Seite ihr Angebot, wird die Bestätigung beider Seiten automatisch zurückgesetzt.
 2796. [P2] Der Server zieht eingelegte Gegenstände aus dem Server-Spielstand ab und schreibt sie dem anderen gut; der Client darf das Ergebnis nicht selbst setzen.
 2797. [P2] Ein Tausch umfasst höchstens 5 verschiedene Gegenstände und 20 Stück je Seite.
 2798. [P2] Pro Tag sind 5 abgeschlossene Tausche pro Spieler erlaubt, eingestellt über `server_config.trade_day_limit`.
@@ -175,11 +175,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2815. [P3] Ein Tauschfenster im Pixelstil mit zwei Tischen und einer kurzen Animation beim Abschluss, aus eigener Grafik.
 2816. [P3] Eine Abfrage für Ali zeigt die meistgetauschten Gegenstände pro Woche, um Mangel im Spiel zu erkennen.
 ### Bünde (Gilden)
-2817. [P1] Neue Tabellen `bunds`, `bund_members`, `bund_invites` mit höchstens 30 Mitgliedern pro Bund und genau einem Bund pro Spieler.
-2818. [P1] Bundnamen werden aus zwei Wortbausteinen gebildet (Liste in `scripts/online/BundWords.gd`, je 120 Wörter), der Server speichert nur die Nummern; so braucht es keine freie Eingabe.
-2819. [P1] Beitritt nur per Einladung durch Leiter oder Helfer oder per Anfrage, die ein Leiter oder Helfer annimmt.
-2820. [P1] Die Rollen Leiter, Helfer und Mitglied mit festen Rechten: nur der Leiter löst auf, Helfer laden ein und entfernen Mitglieder.
-2821. [P1] Austreten ist jederzeit möglich, ohne Strafe und ohne Wartezeit.
+2817. [x] [P1] Neue Tabellen `bunds`, `bund_members`, `bund_invites` mit höchstens 30 Mitgliedern pro Bund und genau einem Bund pro Spieler.
+2818. [x] [P1] Bundnamen werden aus zwei Wortbausteinen gebildet (Liste in `scripts/online/BundWords.gd`, je 120 Wörter), der Server speichert nur die Nummern; so braucht es keine freie Eingabe.
+2819. [x] [P1] Beitritt nur per Einladung durch Leiter oder Helfer oder per Anfrage, die ein Leiter oder Helfer annimmt.
+2820. [x] [P1] Die Rollen Leiter, Helfer und Mitglied mit festen Rechten: nur der Leiter löst auf, Helfer laden ein und entfernen Mitglieder.
+2821. [x] [P1] Austreten ist jederzeit möglich, ohne Strafe und ohne Wartezeit.
 2822. [P2] Ein Wappen aus 12 Formen, 16 Farben und 24 Zeichen, gespeichert als drei Zahlen, gezeichnet im Pixelstil des Spiels.
 2823. [P2] Ein Bund-Wochenziel (Kämpfe, Bindungen oder Raid-Schaden), das alle Mitglieder füllen, mit Belohnung bei 100 Prozent für jeden, der beigetragen hat.
 2824. [P2] Ist der Leiter 30 Tage nicht online, wird automatisch der Helfer mit dem höchsten Wochenbeitrag Leiter, sonst das älteste Mitglied.
@@ -201,17 +201,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2840. [P3] Neue Wappenteile schaltet ein Bund frei, wenn er gemeinsam 5000 Beiträge sammelt.
 2841. [P3] Ein freundlicher Willkommensgruß in der Post, wenn ein neues Mitglied beitritt.
 
-2842. [P1] Ein Bund mit 3 oder mehr Mitgliedern löst sich erst auf, wenn der Leiter nach 24 Stunden erneut bestätigt; der Vorrat geht dann zu gleichen Teilen an die Mitglieder.
+2842. [x] [P1] Ein Bund mit 3 oder mehr Mitgliedern löst sich erst auf, wenn der Leiter nach 24 Stunden erneut bestätigt; der Vorrat geht dann zu gleichen Teilen an die Mitglieder.
 2843. [P2] Wer einen Bund verlässt, kann demselben Bund 24 Stunden lang nicht wieder beitreten, anderen Bünden sofort.
 2844. [P3] Bund-Ränge nach Gesamtbeitrag (Lehrling, Gefährte, Hüter) als reine Anzeige.
 2845. [P3] Ein Bundabend: der Leiter legt Wochentag und Uhrzeit fest, die alle Mitglieder als Hinweis sehen.
 2846. [P3] Ein Bund-Spirlog zeigt, welche Spirlings der Bund zusammen schon gesehen hat.
 ### Gemeinsame Raid-Risse
-2847. [P1] Ein Raid-Riss ist ein starker Wächter, den 2 bis 4 Freunde oder Bundmitglieder gemeinsam schwächen; jeder kämpft rundenbasiert auf seinem eigenen Kampfbildschirm.
-2848. [P1] Die Kraft des Wächters liegt auf dem Server (Tabelle `raids`, Spalte `hp_left`); jeder geprüfte Kampf zieht den Schaden ab, den der Schiedsrichter bestätigt.
-2849. [P1] Ein Raid-Riss bleibt 48 Stunden offen; jedes Mitglied hat 3 Versuche pro Tag, jeder Versuch dauert höchstens 10 Runden.
-2850. [P1] Die Kraft des Wächters richtet sich nach der Teilnehmerzahl: 2 Spieler 100 Prozent, 3 Spieler 140 Prozent, 4 Spieler 175 Prozent eines Grundwerts.
-2851. [P1] Alle, die mindestens 5 Prozent der Wächterkraft beigetragen haben, bekommen dieselbe Belohnung, gewürfelt auf dem Server aus einer offenen Tabelle, die das Spiel zeigt.
+2847. [x] [P1] Ein Raid-Riss ist ein starker Wächter, den 2 bis 4 Freunde oder Bundmitglieder gemeinsam schwächen; jeder kämpft rundenbasiert auf seinem eigenen Kampfbildschirm.
+2848. [x] [P1] Die Kraft des Wächters liegt auf dem Server (Tabelle `raids`, Spalte `hp_left`); jeder geprüfte Kampf zieht den Schaden ab, den der Schiedsrichter bestätigt.
+2849. [x] [P1] Ein Raid-Riss bleibt 48 Stunden offen; jedes Mitglied hat 3 Versuche pro Tag, jeder Versuch dauert höchstens 10 Runden.
+2850. [x] [P1] Die Kraft des Wächters richtet sich nach der Teilnehmerzahl: 2 Spieler 100 Prozent, 3 Spieler 140 Prozent, 4 Spieler 175 Prozent eines Grundwerts.
+2851. [x] [P1] Alle, die mindestens 5 Prozent der Wächterkraft beigetragen haben, bekommen dieselbe Belohnung, gewürfelt auf dem Server aus einer offenen Tabelle, die das Spiel zeigt.
 2852. [P2] Raid-Risse haben fünf Tiefen (I bis V) statt Sternen; jede Tiefe verlangt eine Mindest-Ringzahl von 15, 25, 35, 45 und 55.
 2853. [P2] Jeder Raid-Wächter hat 3 Phasen bei 100, 60 und 25 Prozent Kraft, die der Server allen Teilnehmern gleich vorgibt.
 2854. [P2] Ein Raid-Bildschirm im Menü zeigt den gemeinsamen Kraftbalken, den Beitrag jedes Teilnehmers und die Restzeit.
@@ -232,7 +232,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2869. [P3] Ein Gast-Platz: ein Freund außerhalb des Bundes darf auf Einladung als vierter Teilnehmer mitmachen.
 2870. [P3] Raid-Wiederholung: einen eigenen Raid-Versuch später aus der gespeicherten Aufnahme ansehen.
 
-2871. [P1] Raid-Versuche kosten nichts: kein Geld, keine Gegenstände, und das Team ist danach geheilt wie nach einem Echo-Duell.
+2871. [x] [P1] Raid-Versuche kosten nichts: kein Geld, keine Gegenstände, und das Team ist danach geheilt wie nach einem Echo-Duell.
 2872. [P2] Wer den letzten Treffer setzt, bekommt keinen Extrabonus, damit niemand auf den letzten Zug wartet.
 2873. [P3] Die Raid-Wächter wechseln jede Woche nach der Liste `server_config.raid_rotation`.
 2874. [P3] Raid-Wächter tragen den Grafikstil der Era der Region, in der ihr Riss liegt.
