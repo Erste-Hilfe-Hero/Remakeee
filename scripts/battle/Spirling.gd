@@ -64,6 +64,8 @@ var stages: Dictionary[String, int] = {}
 ## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
 ## Counted down at the end of each turn, so a fresh tax of N holds for the next N turns.
 var energy_tax: int = 0
+## Battle-only: turns left on a Glass Spark (shop, plan item 4501): +1 energy at each turn end.
+var energy_surge: int = 0
 ## Battle-only: move name -> turns it stays locked (moves.json "cooldown"), same counting.
 var cooldowns: Dictionary[String, int] = {}
 ## Battle-only: turns left on a heal block (heal_block effect), same counting.
@@ -231,6 +233,7 @@ func restore() -> void:
 func end_battle() -> void:
 	stages.clear()
 	energy_tax = 0
+	energy_surge = 0
 	heal_block = 0
 	burn_guard = 0
 	cooldowns.clear()
