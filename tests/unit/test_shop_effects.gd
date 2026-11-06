@@ -362,3 +362,13 @@ func test_pass_bond_try_skips_the_first_free_action() -> void:
 				assert_string_contains(res.describe(), "Pass")
 	assert_eq(fails, [true, false] as Array[bool], "first failed bond calm, the second gives the free action")
 	assert_eq(m.bond_grace, 0)
+
+func test_boost_lines_show_battles_left() -> void:
+	var boosts: Dictionary = GameState.shop_boosts.duplicate(true)
+	GameState.shop_boosts = {}
+	assert_eq(ShopEffects.boost_lines(), [] as Array[String])
+	GameState.shop_boosts = {"growth": {"mult": 2.0, "left": 14}, "overcharge": {"mult": 1.0, "left": 1}}
+	assert_eq(ShopEffects.boost_lines(), ["Growth x2: 14 battles left", "Overcharge: 1 battle left"] as Array[String])
+	GameState.shop_boosts = {"coins": {"mult": 1.5, "left": 3}}
+	assert_eq(ShopEffects.boost_lines(), ["Coins x1.5: 3 battles left"] as Array[String])
+	GameState.shop_boosts = boosts

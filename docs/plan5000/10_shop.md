@@ -368,7 +368,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4339. [x] [P1] (P2W) Den "Wachstumskristall" (`rg_growth_x2`) anlegen, der für die nächsten 20 Kämpfe das Wachstum des ganzen Teams verdoppelt, Preis 200 Rissglas (≈ 1,98 €).
 4340. [x] [P1] (P2W) Den "Großen Wachstumskristall" (`rg_growth_x3`) anlegen, der für 20 Kämpfe dreifaches Wachstum gibt, Preis 400 Rissglas (≈ 3,96 €).
 4341. [x] [P1] (P2W) Wachstums-Boosts zählen Kämpfe statt Minuten, damit keine Zeit abläuft und kein Druck entsteht, sofort zu spielen.
-4342. [P1] (P2W) Den aktiven Wachstums-Boost mit Restzahl ("Wachstum x2: noch 14 Kämpfe") in der Team-Ansicht und im Kampfende-Bildschirm zeigen.
+4342. [x] [P1] (P2W) Den aktiven Wachstums-Boost mit Restzahl ("Wachstum x2: noch 14 Kämpfe") in der Team-Ansicht und im Kampfende-Bildschirm zeigen.
 4343. [P1] (P2W) Ein "Team-Wachstumsband" (`rg_share_band`) anlegen, das das Wachstum gleichmäßig auf alle 5 Team-Mitglieder verteilt, auch auf nicht kämpfende, dauerhaft, Preis 1000 Rissglas oder 9,99 €.
 4344. [P1] (P2W) Ring-Tränke und Wachstums-Boosts als Verbrauchsgüter im Store anlegen und nach dem Kauf nur über den Server in die Tasche legen.
 4345. [P1] (P2W) Ring-Trank-Fünferpack (`rg_ring_tonic_x5`) für 400 Rissglas anbieten, das 5 einzelne Ring-Tränke liefert.

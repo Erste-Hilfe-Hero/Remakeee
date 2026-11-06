@@ -2537,7 +2537,14 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
+	# What is left of the shop boosts, right after the battle (item 4342).
+	var boosts: Array[String] = ShopEffects.boost_lines()
+	if not boosts.is_empty():
+		toast.show_note("  ".join(boosts))
+	elif had_growth:
+		toast.show_note(Loc.t("The growth boost is used up."))
 	var coins_before: int = GameState.money
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
 	if GameState.money != coins_before:

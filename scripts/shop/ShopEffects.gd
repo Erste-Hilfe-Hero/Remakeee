@@ -94,6 +94,24 @@ static func start_boost(id: String) -> String:
 		GameState.inventory.erase(id)
 	return "Works for the next battle." if left == 1 else "Works for the next %d battles." % left
 
+## Names of the boosts for the status lines.
+const BOOST_NAMES: Dictionary = {"growth": "Growth", "coins": "Coins", "overcharge": "Overcharge"}
+
+## One line per running boost ("Growth x2: 14 battles left"), for the team view and after each
+## battle (item 4342).
+static func boost_lines() -> Array[String]:
+	var out: Array[String] = []
+	for kind: String in ["growth", "coins", "overcharge"]:
+		var left: int = boost_left(kind)
+		if left <= 0:
+			continue
+		var b: Dictionary = GameState.shop_boosts[kind]
+		var head: String = Loc.t(str(BOOST_NAMES[kind]))
+		if kind != "overcharge":
+			head += " x%s" % String.num(float(b.get("mult", 1.0)), 1).trim_suffix(".0")
+		out.append(head + ": " + (Loc.t("1 battle left") if left == 1 else Loc.t("%d battles left") % left))
+	return out
+
 ## One battle is over: running boosts count down.
 static func battle_done() -> void:
 	for kind: String in GameState.shop_boosts.keys():
