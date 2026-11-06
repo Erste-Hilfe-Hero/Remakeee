@@ -151,8 +151,10 @@ func pick_strings(title: String, items: Array[String], cancellable: bool = true)
 	return await pick(title, entries, cancellable)
 
 ## Yes/No question. Returns true for yes.
-func confirm(question: String) -> bool:
-	return await pick_strings(question, ["Yes", "No"] as Array[String], true) == 0
+## [param yes_text] and [param no_text] can name what each answer does, such as "Delete" and
+## "Keep", so the result of a choice is clear (item 1855).
+func confirm(question: String, yes_text: String = "Yes", no_text: String = "No") -> bool:
+	return await pick_strings(question, [yes_text, no_text] as Array[String], true) == 0
 
 ## A question whose "yes" cannot be undone (delete account, replace a save, the Iron Oath,
 ## taking over another phone's journeys): focus starts on the safe answer, "yes" carries a
