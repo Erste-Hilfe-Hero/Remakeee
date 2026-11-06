@@ -51,6 +51,9 @@ static func run(level: int, rounds: int, seed_value: int, only: Array[String] = 
 	Database.load_all()
 	var names: Array[String] = []
 	for sd: SpirlingData in Database.spirlings.values():
+		# Ancient kinds (First Voices) are meant to stand above their stage; they are met once.
+		if sd.rarity == "ancient" and only.is_empty():
+			continue
 		if only.is_empty() or sd.species_name in only:
 			names.append(sd.species_name)
 	names.sort()

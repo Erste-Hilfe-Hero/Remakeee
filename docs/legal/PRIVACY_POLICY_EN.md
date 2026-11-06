@@ -21,10 +21,11 @@ analytics, no third-party sign-in, no email address required.**
 
 | Data | Purpose | Legal basis (GDPR) | Retention |
 | --- | --- | --- | --- |
-| Random player ID created on first launch, sign-in token, transfer code for changing devices, your Wayfarer name, save game (progress, Spirlings, items, settings), last sync time, app version, device model, OS version | Provide the game, store and restore your progress, also on a new device. Your Wayfarer name is shown only to players you are friends with | Art. 6(1)(b) (contract) | While your account exists; deleted within 30 days of account deletion, backups overwritten within 30 more days. Accounts unused for 24 months are deleted after notice in the game |
+| Random player ID created on first launch, sign-in token, transfer code for changing devices, your Wayfarer name, save game (progress, Spirlings, items, settings), last sync time, app version, device model, OS version | Provide the game, store and restore your progress, also on a new device. Your Wayfarer name is shown only to players you are friends with | Art. 6(1)(b) (contract) | While your account exists; deleted within 30 days of account deletion, backups overwritten within 30 more days. Accounts unused for 24 months are marked and deleted automatically 30 days later unless you play again. The browser test version at https://[DOMAIN]/play/ uses the same accounts, saves and periods |
 | Friends and Lantern Mail: friend code, friend list and requests, blocks, greetings (set phrases stored as a number, no free text), gifts, Wayfarer card (numbers such as Rifts sealed and play time, favourite Spirling), current place in the game (never a real location), echo team (species and level, no nicknames), world goal contribution, weekly board score, reports you send | Playing together, protection against abuse. Only confirmed friends see your name, card, place and echo team; strangers see board scores without names. Parents can switch these features off under Settings, Account | Art. 6(1)(b); reports also (c) (Art. 16 DSA) and (f) | Greetings and gifts 30 days, weekly values until the end of the following week, reports until handled and at most 6 months, friends and blocks while your account exists |
-| Server logs: IP address, date and time, endpoint, status code, app version | Operation, security, preventing attacks and save-game tampering | Art. 6(1)(f) (legitimate interest in secure, fair play) | 7 days, longer only while a specific security incident is investigated |
+| Server logs: IP address, date and time, endpoint, status code, app version | Operation, security, preventing attacks and save-game tampering | Art. 6(1)(f) (legitimate interest in secure, fair play) | 7 days, also for the sign-in service's audit log (it holds IP addresses; a daily run deletes older entries). Longer only while a specific security incident is investigated |
 | Purchase confirmations from Apple/Google (transaction ID, product, time), if you buy something. We never receive payment details | Unlock purchased content; statutory record keeping | Art. 6(1)(b) and (c) | Up to 10 years (German commercial and tax law) |
+| Leagues, battle check and save check: your league team (species, Ring and moves of the chosen Spirlings), rating and tier per league and season, battles and wins, the recording of rated battles (seed, teams, your inputs, result) and the referee's verdict. When you save, the server compares money, play time and game content with the save before and notes refused saves with the reason | Fair leagues, protection against cheating and tampered saves. The referee replays battles without the account id; a person (Ali) decides about notes, not an automated system alone | Art. 6(1)(b) and (f) (legitimate interest in fair play) | League values until the end of the following season, battle recordings 30 days, notes 6 months; everything ends with account deletion at the latest |
 | Support emails | Answer your request | Art. 6(1)(b) or (f) | Until resolved, at most 2 years |
 
 ## 4. Storage on your device
@@ -37,7 +38,8 @@ advertising identifiers (IDFA / Android Advertising ID).
 
 - Hosting: Contabo GmbH, Aschauer Straße 32a, 81549 Munich, Germany <!-- check against the DPA -->. The
   server is in a data centre in Germany. Contabo only provides the machine; we run the database on it
-  ourselves. Contabo processes the data on our behalf under an Art. 28 GDPR agreement. No data is transferred
+  ourselves. Other services of the same controller run on the same machine; they are kept apart from
+  Chimora and have no access to its database. Contabo processes the data on our behalf under an Art. 28 GDPR agreement. No data is transferred
   outside the EU.
 - Apple and Google process data as independent controllers when you download the app or buy something.
 - Authorities only where required by law.
@@ -53,6 +55,8 @@ no free chat (greetings between friends are fixed, translated phrases). Purchase
 
 You have the rights of access, rectification, erasure, restriction, data portability and objection
 (Art. 15–18, 20, 21 GDPR). Email aa.amuri@icloud.com and include your player ID (shown in the game's settings).
+**Download your data:** in the game under Settings → Account → "Download my data" you get everything the
+server keeps about your account as a JSON file (Art. 15 and 20 GDPR). Other players appear only as "another player".
 **Delete your account:** in the game under Settings → Account → "Delete account", or at
 https://[DOMAIN]/delete-account. Your account and save game are deleted permanently.
 You may lodge a complaint with a data protection supervisory authority (Art. 77 GDPR), in particular in the

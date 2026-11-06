@@ -9,7 +9,7 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online"]
-SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
+SKIP_SCRIPTS = {"BalanceSim.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
 def looks_like_text(s):
@@ -89,6 +89,11 @@ def strings():
         for k in ("habitat", "lore", "origin"):
             if isinstance(sp.get(k), str) and sp[k]:
                 found.append(sp[k])
+    lore = os.path.join(ROOT, "data/spirlog_lore.json")
+    if os.path.exists(lore):
+        for k, v in json.load(open(lore)).items():
+            if not k.startswith("_") and isinstance(v, str):
+                found.append(v)
     for a in json.load(open(os.path.join(ROOT, "data/achievements.json"))).get("achievements", []):
         for k in ("title", "text"):
             if isinstance(a.get(k), str):
@@ -100,7 +105,7 @@ def strings():
     if os.path.exists(ev):
         for group in json.load(open(ev)).values():
             for t in group if isinstance(group, list) else []:
-                for k in ("text", "name", "desc"):
+                for k in ("text", "name", "desc", "found"):
                     if isinstance(t.get(k), str):
                         found.append(t[k])
     for sd in SCRIPT_DIRS:

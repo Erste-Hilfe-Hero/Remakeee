@@ -20,6 +20,10 @@ const SESSION_PATH: String = "user://online_session.json"
 const LOCAL_STORE_PATH: String = "user://local_server.json"
 const HEARTBEAT_SECONDS: float = 45.0
 const RETRY_SECONDS: float = 5.0
+## Waits between reconnect tries after the first quick one (plan item 3657), each with up to
+## 20 % chance either way, so after a server restart the players do not all come back at once.
+const RETRY_STEPS: Array[float] = [4.0, 8.0, 16.0, 30.0]
+const RETRY_JITTER: float = 0.2
 ## A failed call is tried once more after this pause before anything is shown (item 2151).
 var net_retry_seconds: float = 2.0
 
@@ -48,6 +52,10 @@ var conflicts: Array[int] = []
 var _beat: float = 0.0
 var _beats: int = 0
 var _retry: float = 0.0
+## Failed reconnects in a row (picks the wait from RETRY_STEPS) and the current wait.
+var _retry_count: int = 0
+var _retry_wait: float = 4.0
+var _rng := RandomNumberGenerator.new()
 var _busy: bool = false
 var _overlay: ReconnectOverlay
 ## Slots with an upload on its way, slots saved again meanwhile (value: force), and a counter
@@ -320,8 +328,10 @@ func _push_once(slot: int, force: bool) -> bool:
 	if not d is Dictionary:
 		return false
 	d["schema"] = SAVE_SCHEMA
+	var base_rev: int = int(revs.get(slot, 0))
 	var r: Dictionary = await call_fn("save_put", {"p_slot": slot, "p_data": d,
-		"p_summary": SaveManager.summary_line(d), "p_base_rev": int(revs.get(slot, 0)), "p_force": force})
+		"p_summary": SaveManager.summary_line(d), "p_base_rev": base_rev, "p_force": force,
+		"p_request_id": request_id(d, slot, base_rev)})
 	if not r.ok or not r.data is Dictionary:
 		return false
 	if bool(r.data.get("ok", false)):
@@ -339,6 +349,11 @@ func _push_once(slot: int, force: bool) -> bool:
 	else:
 		push_error("Server refused save: %s" % str(r.data.get("error", "")))
 	return false
+
+## Same save on the same base revision = same id, even after a restart of the app, so the
+## server stores an upload that was resent after a timeout only once (plan item 3658).
+static func request_id(d: Dictionary, slot: int, base_rev: int) -> String:
+	return ("%d|%d|" % [slot, base_rev] + JSON.stringify(d, "", true)).sha256_text().left(32)
 
 ## The player kept the other device's journey: drop this phone's changes.
 func resolve_conflict_take_server(slot: int) -> bool:
@@ -434,7 +449,7 @@ func _process(delta: float) -> void:
 	_overlay.show_overlay()
 	_offline_for += delta
 	# The first try comes quickly, so a short drop is over before the big screen shows.
-	var wait: float = 1.0 if _tries == 0 else RETRY_SECONDS
+	var wait: float = 1.0 if _tries == 0 else _retry_wait
 	if state == State.OFFLINE and not _busy:
 		_retry += delta
 		if _retry >= wait:
@@ -459,7 +474,18 @@ func _to_title() -> void:
 func _reconnect() -> void:
 	_tries += 1
 	if await connect_now() == State.ONLINE:
+		_retry_count = 0
+		_retry_wait = retry_wait(0, 0.0)
 		await push_dirty()
+	else:
+		_retry_count += 1
+		_retry_wait = retry_wait(_retry_count, _rng.randf_range(-1.0, 1.0))
+
+## Seconds before reconnect try number [param failed] + 1; [param spread] from -1 to 1 is the
+## random part (scaled to RETRY_JITTER).
+static func retry_wait(failed: int, spread: float) -> float:
+	var base: float = RETRY_STEPS[clampi(failed, 0, RETRY_STEPS.size() - 1)]
+	return base * (1.0 + RETRY_JITTER * clampf(spread, -1.0, 1.0))
 
 func _heartbeat() -> void:
 	_beats += 1

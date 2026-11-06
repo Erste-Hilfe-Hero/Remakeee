@@ -10,22 +10,38 @@ extends SceneTree
 ##   --out PATH    also write the Markdown report there
 ##   --json PATH   also write every number as JSON there
 ## The old positional form "[level] [rounds] [out.md]" still works.
+## Endgame economy (plan 3513): godot --headless --path . -s res://tools/balance_sim.gd -- endgame [days]
+## The simulators are loaded at run time: compiling them together with this script would fail,
+## because the autoloads they use (Online, GameState, ...) only exist once the tree is running.
 
-func _init() -> void:
-	var opts: Dictionary = parse_args(OS.get_cmdline_user_args())
+func _initialize() -> void:
+	var args: PackedStringArray = OS.get_cmdline_user_args()
+	if args.size() > 0 and args[0] == "endgame":
+		load("res://scripts/core/Database.gd").call("load_all")
+		var sim: GDScript = load("res://scripts/core/EndgameSim.gd")
+		var days: int = int(args[1]) if args.size() > 1 else 90
+		var r: Dictionary = sim.call("run", days)
+		var report: String = sim.call("report", r)
+		if args.size() > 2:
+			_write(args[2], report)
+		print(report)
+		quit()
+		return
+	var opts: Dictionary = parse_args(args)
 	var mode: String = str(opts.get("mode", "duel"))
 	var level: int = int(opts.get("level", 20))
 	var seed_value: int = int(opts.get("seed", 1234))
+	var bs: GDScript = load("res://scripts/core/BalanceSim.gd")
 	var result: Dictionary
 	if mode == "team":
-		result = BalanceSim.run_team(level, int(opts.get("rounds", 500)), seed_value, int(opts.get("ai", 2)))
+		result = bs.call("run_team", level, int(opts.get("rounds", 500)), seed_value, int(opts.get("ai", 2)))
 	else:
-		result = BalanceSim.run(level, int(opts.get("rounds", 10)), seed_value, [], int(opts.get("ai", 1)))
-	var text: String = BalanceSim.report(result)
+		result = bs.call("run", level, int(opts.get("rounds", 10)), seed_value, [] as Array[String], int(opts.get("ai", 1)))
+	var text: String = bs.call("report", result)
 	if opts.has("out"):
 		_write(str(opts.out), text)
 	if opts.has("json"):
-		_write(str(opts.json), BalanceSim.to_json(result))
+		_write(str(opts.json), bs.call("to_json", result))
 	print(text)
 	quit()
 

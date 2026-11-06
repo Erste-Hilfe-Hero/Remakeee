@@ -70,6 +70,9 @@ func _ready() -> void:
 		"gauntlet": _action_gauntlet,
 		"weekly": _action_weekly,
 		"master": _action_master,
+		"merchant": _action_merchant,
+		"echo_room": _action_echo_room, "echo_chest": _action_echo_chest, "echo_info": _action_echo_info,
+		"expedition": _action_expedition,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
@@ -81,6 +84,7 @@ func _ready() -> void:
 		"echo_song": _action_echo_song,
 		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
+		"first_voice": _action_first_voice,
 	}
 	_world = WorldMechanics.new(self)
 	_build()
@@ -218,6 +222,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.current_map = map_id
 	DailyTasks.note_map(map_id)
 	DailyTasks.record("visit", {"map": map_id})
+	# Today's world event gives its find on the first visit (plan 3422).
+	GameState.notices.append_array(WorldEvents.on_visit(map_id))
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -594,7 +600,27 @@ func _run_action(action: String, speaker: NPC) -> void:
 			continue
 		await _actions[parts[0]].call(parts.slice(1), speaker)
 
+## "first_voice <species> <ring>": a fixed, one-time meeting with a First Voice (plan area 1,
+## items 153-155). It is wild, so it can be bonded with the Echo call. If it is not bonded
+## (beaten, fled or lost), it rests and comes back to the same place after the next rest.
+func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var voice := Spirling.new(sd, int(args[1]) if args.size() > 1 else 40, GameState.rng)
+	_text.visible = false
+	SaveManager.save_game()
+	await start_battle([voice] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
+	if FirstVoices.is_bonded(sd.species_name):
+		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
+	else:
+		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
+
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
+	FirstVoices.after_rest()
 	GameState.heal_party()
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
@@ -1138,7 +1164,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
 	var rec: Dictionary = GameState.records.get("weekly", {})
-	if str(rec.get("week", "")) != week:
+	if str(rec.get("week", "")) != week and not GameState.time_went_back(str(rec.get("week", "")), week):
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -1211,6 +1237,112 @@ func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
 	lines.append_array(Masters.win(id))
 	await say(lines)
 	await announce_achievements()
+
+## Echo Path room marker (plan 3464): wild fight, Wanderer echo, treasure, rest or riddle.
+func _action_echo_room(_args: PackedStringArray, _speaker: NPC) -> void:
+	var slot: int = EchoPath.slot_of(map.id)
+	if slot == 0:
+		return
+	if EchoPath.is_done(slot):
+		await say(["This room is already clear this week."] as Array[String])
+		return
+	var lines: Array[String] = []
+	match EchoPath.kind_of(slot):
+		"wild", "echo":
+			if GameState.first_healthy_index() < 0:
+				return
+			var wild: bool = EchoPath.kind_of(slot) == "wild"
+			var foes: Array[Spirling] = []
+			if wild:
+				var s: Spirling = EchoPath.wild_for(slot)
+				if s != null:
+					foes.append(s)
+			else:
+				foes = EchoPath.echo_team(slot)
+			if foes.is_empty():
+				return
+			SaveManager.save_game()
+			busy = false
+			var info: Dictionary = {} if wild else {"name": Loc.t("Wanderer echo"), "ai": 3}
+			var outcome: BattleModel.Outcome = await start_battle(foes, wild, info)
+			busy = true
+			player.frozen = true
+			if outcome != BattleModel.Outcome.WIN and outcome != BattleModel.Outcome.BONDED:
+				return
+			EchoPath.clear(slot)
+		"treasure":
+			lines.append_array(EchoPath.take_treasure(slot))
+		"rest":
+			# No rest point here: the rooms change every week.
+			GameState.heal_party()
+			Sound.sfx("heal")
+			DailyTasks.record("rest", {"map": map.id})
+			EchoPath.clear(slot)
+			lines.append("Your team is fully rested.")
+		"riddle":
+			EchoPath.clear(slot)
+			lines.append("The stone hums. The answer rings true.")
+	lines.append(Loc.t("Rooms cleared this week: %d of %d.") % [EchoPath.done_count(), EchoPath.ROOMS])
+	await say(lines)
+
+## The chest at the end of the Echo Path (plan 3465), then the way back to the hall.
+func _action_echo_chest(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say(EchoPath.open_chest())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var back: bool = await menu.confirm(Loc.t("Return to the entrance hall?"))
+	menu.queue_free()
+	if back:
+		Sound.sfx("warp")
+		load_map(EchoPath.FILE, EchoPath.ARRIVE_DOWN, "down")
+
+## The Echo Path guide: this week's wild kinds and progress.
+func _action_echo_info(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say([EchoPath.spirlog_hint(), EchoPath.goal_line()] as Array[String])
+
+## The wandering merchant (plan 3423): today's three goods for coins.
+func _action_merchant(_args: PackedStringArray, speaker: NPC) -> void:
+	var items: Array[String] = []
+	items.assign(WorldEvents.merchant().get("items", []))
+	await _action_shop(PackedStringArray(items), speaker)
+
+## Aldo's roaming trips (plan 3446-3448): bring finished trips home, then send Spirlings from
+## storage for 4, 8 or 12 hours with the reward shown before they go.
+func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
+	var back: Array[String] = Expeditions.collect()
+	if not back.is_empty():
+		await say(back)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var status: Array[String] = Expeditions.status_lines()
+	if not status.is_empty():
+		await menu.info("\n".join(status))
+	while true:
+		var title: String = Loc.t("Roaming trips %d/%d") % [Expeditions.trips().size(), Expeditions.max_trips()]
+		var options: Array[String] = []
+		if Expeditions.can_send():
+			options.append("Send a Spirling")
+		options.append("Done")
+		var pick: int = await menu.pick_strings(title, options)
+		if pick < 0 or options[pick] == "Done":
+			break
+		var ready: Array[Spirling] = Expeditions.ready_to_go()
+		var names: Array[String] = []
+		for s: Spirling in ready:
+			names.append("%s R%d" % [s.display_name(), s.level])
+		var who: int = await menu.pick_strings("Who goes?", names)
+		if who < 0:
+			continue
+		var plans: Array[String] = []
+		for p: Variant in Expeditions.plans():
+			plans.append(Expeditions.plan_text(p))
+		var how: int = await menu.pick_strings("How long?", plans)
+		if how < 0:
+			continue
+		var hours: int = int((Expeditions.plans()[how] as Dictionary).hours)
+		if Expeditions.send(ready[who], hours):
+			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
+	menu.queue_free()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
 func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -1599,7 +1731,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
-	scene.backdrop = map.backdrop
+	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
