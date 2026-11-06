@@ -17,4 +17,4 @@
 - [ ] `tools/ip_check.sh` passes, also for commit messages and the title
 - [ ] New player texts are in `tools/i18n/de_*.py`, new art and sound in `docs/ASSET_LOG.md`
 - [ ] `SAVE_VERSION` raised only with a fixture and a migration test
-- [ ] Privacy texts and `docs/legal/VVT.md` updated if data or periods change
+- [ ] Privacy texts and `docs/legal/VERARBEITUNGEN.md` updated if data or periods change
