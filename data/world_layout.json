@@ -36,6 +36,14 @@
   "brackwater_sluice": {"region": "veydal", "pos": [4, 5], "kind": "dungeon", "neighbours": ["brackwater_fen"]},
   "lanternwell": {"inside": "brindlewick"},
   "shatterfloor_mine": {"inside": "copperfold"},
-  "corvane_quay": {"region": "corvane", "pos": [0, 4], "kind": "town", "neighbours": ["brindlewick"]}
+  "corvane_quay": {"region": "corvane", "pos": [0, 4], "kind": "town", "neighbours": ["brindlewick", "madderby"]},
+  "madderby": {"region": "corvane", "pos": [0, 3], "kind": "town", "neighbours": ["corvane_quay", "woadfen", "stillwater"]},
+  "madderby_guild": {"inside": "madderby"},
+  "woadfen": {"region": "corvane", "pos": [1, 3], "kind": "marsh", "neighbours": ["madderby", "rain_rift"]},
+  "rain_rift": {"region": "corvane", "pos": [2, 3], "kind": "rift", "neighbours": ["woadfen"]},
+  "stillwater": {"region": "corvane", "pos": [0, 2], "kind": "route", "neighbours": ["madderby", "mirror_rift", "greyreach"]},
+  "mirror_rift": {"region": "corvane", "pos": [0, 1], "kind": "rift", "neighbours": ["stillwater"]},
+  "greyreach": {"region": "corvane", "pos": [1, 2], "kind": "route", "neighbours": ["stillwater", "wide_rift_edge"]},
+  "wide_rift_edge": {"region": "corvane", "pos": [1, 1], "kind": "rift", "neighbours": ["greyreach"]}
  }
 }

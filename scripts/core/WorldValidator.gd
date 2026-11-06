@@ -231,7 +231,7 @@ static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray)
 ## puzzle has a solution (PuzzleSolver) from the first cell the player arrives on.
 ## Name prefixes and suffixes of spots that sit on an object (a sign, a desk), not on floor.
 const OBJECT_SPOT_PREFIX: Array[String] = ["letter_", "page_", "wall_", "burned_"]
-const OBJECT_SPOT_SUFFIX: Array[String] = ["_desk", "_shelf", "_stove", "_sign", "_plate", "_lamp"]
+const OBJECT_SPOT_SUFFIX: Array[String] = ["_desk", "_shelf", "_stove", "_sign", "_plate", "_lamp", "_diary"]
 
 static func is_object_spot(name: String) -> bool:
 	for p: String in OBJECT_SPOT_PREFIX:

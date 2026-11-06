@@ -755,5 +755,205 @@
     "weight": 24
    }
   ]
+ },
+ "woadfen": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Paddlewisp",
+    "min": 18,
+    "max": 20,
+    "weight": 38,
+    "ground": "fern"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 18,
+    "max": 21,
+    "weight": 30,
+    "ground": "fern"
+   },
+   {
+    "species": "Fluting",
+    "min": 19,
+    "max": 21,
+    "weight": 15,
+    "ground": "reeds"
+   },
+   {
+    "species": "Hushkin",
+    "min": 19,
+    "max": 21,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Riptail",
+    "min": 20,
+    "max": 21,
+    "weight": 5,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "rain_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Paddlewisp",
+    "min": 20,
+    "max": 22,
+    "weight": 40,
+    "ground": "reeds"
+   },
+   {
+    "species": "Zephlet",
+    "min": 20,
+    "max": 22,
+    "weight": 25,
+    "ground": "reeds"
+   },
+   {
+    "species": "Puddlet",
+    "min": 21,
+    "max": 23,
+    "weight": 15,
+    "ground": "reeds"
+   },
+   {
+    "species": "Seamlet",
+    "min": 21,
+    "max": 23,
+    "weight": 15,
+    "ground": "reeds"
+   },
+   {
+    "species": "Ferrowyn",
+    "min": 23,
+    "max": 23,
+    "weight": 5,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "stillwater": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Croziel",
+    "min": 20,
+    "max": 22,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Paddlewisp",
+    "min": 20,
+    "max": 22,
+    "weight": 30,
+    "ground": "reeds"
+   },
+   {
+    "species": "Fluting",
+    "min": 21,
+    "max": 23,
+    "weight": 15,
+    "ground": "reeds"
+   },
+   {
+    "species": "Lanternel",
+    "min": 21,
+    "max": 23,
+    "weight": 15,
+    "ground": "fern"
+   },
+   {
+    "species": "Glasstarn",
+    "min": 23,
+    "max": 23,
+    "weight": 5,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "mirror_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 21,
+    "max": 23,
+    "weight": 45,
+    "ground": "scree"
+   },
+   {
+    "species": "Wickit",
+    "min": 21,
+    "max": 23,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Lanternel",
+    "min": 22,
+    "max": 24,
+    "weight": 20,
+    "ground": "scree"
+   },
+   {
+    "species": "Seamlet",
+    "min": 22,
+    "max": 24,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Lumenewt",
+    "min": 24,
+    "max": 24,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
+ },
+ "greyreach": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Talusk",
+    "min": 22,
+    "max": 24,
+    "weight": 38,
+    "ground": "scree"
+   },
+   {
+    "species": "Shalebat",
+    "min": 22,
+    "max": 24,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Brinelet",
+    "min": 23,
+    "max": 25,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Kindlop",
+    "min": 23,
+    "max": 25,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Obsidroth",
+    "min": 25,
+    "max": 25,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
  }
 }
