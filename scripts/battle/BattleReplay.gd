@@ -128,9 +128,15 @@ static func switch_to_dict(index: int) -> Dictionary:
 
 ## Plays [param snap] to the end without a screen. Returns the outcome (used by tests).
 static func simulate(snap: Dictionary) -> BattleModel.Outcome:
+	var m: BattleModel = run(snap)
+	return m.outcome if m != null else BattleModel.Outcome.NONE
+
+## Plays [param snap] through a fresh model and returns it (null if it cannot be rebuilt).
+## The battle referee on the server uses this (BattleReferee).
+static func run(snap: Dictionary) -> BattleModel:
 	var m: BattleModel = build_model(snap)
 	if m == null:
-		return BattleModel.Outcome.NONE
+		return null
 	m.start()
 	for v: Variant in snap.get("inputs", []):
 		if m.is_finished():
@@ -142,7 +148,7 @@ static func simulate(snap: Dictionary) -> BattleModel.Outcome:
 			m.submit_actions(actions_from_dict(d))
 		else:
 			m.submit_turn(action_from_dict(d))
-	return m.outcome
+	return m
 
 ## "Seed 1a2b3c4d" label for the Records screen.
 static func label(snap: Dictionary) -> String:
