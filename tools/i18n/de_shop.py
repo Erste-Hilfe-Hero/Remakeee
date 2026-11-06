@@ -607,4 +607,7 @@ T = {
 "Cancel any time in the App Store or Google Play.": "Jederzeit im App Store oder bei Google Play kündbar.",
 "No pass right now.": "Gerade kein Pass aktiv.",
 "Your pass runs until %s.": "Dein Pass läuft bis %s.",
+"Growth": "Wachstum", "Coins": "Münzen", "Overcharge": "Überladung",
+"1 battle left": "noch 1 Kampf", "%d battles left": "noch %d Kämpfe",
+"The growth boost is used up.": "Der Wachstums-Boost ist aufgebraucht.",
 }

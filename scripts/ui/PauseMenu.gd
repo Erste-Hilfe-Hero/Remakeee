@@ -498,7 +498,10 @@ func run_team() -> void:
 		# Free slots up to the limit show how much room is left (item 1898).
 		for i: int in range(GameState.party.size(), GameState.party_max()):
 			rows.append(free_slot_row())
-		var idx: int = await pick("Team", rows)
+		# Running shop boosts with the battles left (item 4342).
+		var boosts: Array[String] = ShopEffects.boost_lines()
+		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
+		var idx: int = await pick(title, rows)
 		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]
