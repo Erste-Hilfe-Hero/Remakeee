@@ -112,6 +112,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("spirling '%s': learnset must be an object (level -> move)" % sname)
 	_check_reachable(spirlings_raw, encounters_path, errors)
 	_check_ai_profiles(errors)
+	for problem: String in BattleRules.validate_variants():
+		errors.append("rule_variants.json: " + problem)
 	return errors
 
 ## Plan area 2, items 611 and 629: every AI profile weight stays between 0.2 and 2.0.

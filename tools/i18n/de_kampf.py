@@ -92,3 +92,19 @@ T.update({
 "Ember Trial Taker": "Glutprüfling",
 "Current Rider": "Strömungsreiter",
 })
+
+# Plan area 2, items 780-793: rule variants.
+T.update({
+"At most %d variants at once.": "Höchstens %d Varianten gleichzeitig.",
+"Unknown variant %s.": "Unbekannte Variante %s.",
+"%s and %s don't go together.": "%s und %s passen nicht zusammen.",
+"Spark Poor": "Funkenarm", "Energy tops out at 6, and everyone starts with 6.": "Energie reicht nur bis 6, und alle starten mit 6.",
+"Full Charge": "Volle Ladung", "Everyone starts full, gains no Energy per turn, and resting gives 3.": "Alle starten voll, gewinnen pro Runde keine Energie, und Rasten gibt 3.",
+"Swap Toll": "Wechselzoll", "Every chosen swap costs the incoming Spirling 2 Energy.": "Jeder freiwillige Wechsel kostet den eingewechselten Spirling 2 Energie.",
+"Glass Blades": "Glasklingen", "Every Spirling has half its Vigor.": "Jeder Spirling hat nur die halbe Kraft.",
+"Tough Round": "Zähe Runde", "Every Spirling has one and a half times its Vigor.": "Jeder Spirling hat anderthalbmal so viel Kraft.",
+"No Home Edge": "Ohne Heimvorteil", "Arts of a Spirling's own element get no bonus.": "Techniken des eigenen Elements bekommen keinen Bonus.",
+"Short Breath": "Kurzer Atem", "Every status ends after 2 turns at most.": "Jeder Status endet spätestens nach 2 Runden.",
+"Strong Reactions": "Starke Reaktionen", "Element reactions hit twice as hard beyond the normal.": "Element-Reaktionen wirken über das Normale hinaus doppelt so stark.",
+"Late End": "Spätes Ende", "From turn 15, every Spirling in front loses 1/8 of its Vigor each turn.": "Ab Runde 15 verliert jeder aktive Spirling jede Runde 1/8 seiner Kraft.",
+})
