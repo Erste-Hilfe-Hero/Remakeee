@@ -81,9 +81,13 @@ func test_long_info_text_scrolls_and_closes_on_a_tap() -> void:
 	host._input(up)
 	assert_false(done[0])
 	up.position = Vector2(51, 61)
-	host._input(down)
-	host._input(up)
-	await wait_process_frames(1)
+	# Long texts turn a page per tap (plan item 1838); the tap at the end closes it.
+	for i: int in 30:
+		if done[0]:
+			break
+		host._input(down)
+		host._input(up)
+		await wait_process_frames(1)
 	assert_true(done[0], "a tap closes the text")
 
 func test_info_text_is_translated() -> void:
