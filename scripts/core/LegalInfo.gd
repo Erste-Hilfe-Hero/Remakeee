@@ -1,9 +1,10 @@
 class_name LegalInfo
 extends RefCounted
 ## Legal links and licence notices shown under Settings -> Legal (docs/legal/).
-## Replace the domain once the website exists; the texts themselves live on the website.
+## The pages are served by the game server (server/site, built by tools/site/build_site.py).
+## Switch SITE to the own domain once Ali has one (and CHIMORA_DOMAIN in the site build).
 
-const SITE: String = "https://chimora.example"
+const SITE: String = "https://chimora.161-97-102-171.sslip.io"
 const IMPRINT_URL: String = SITE + "/impressum"
 const PRIVACY_URL: String = SITE + "/datenschutz"
 const TERMS_URL: String = SITE + "/nutzungsbedingungen"

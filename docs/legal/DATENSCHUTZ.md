@@ -22,7 +22,7 @@ Bei Fragen zum Datenschutz schreib an die oben genannte E-Mail-Adresse.
 ## 2. Kurz gesagt
 
 Chimora ist ein Online-Spiel für iOS und Android. Damit du spielen kannst, wird dein Spielstand auf unserem
-Server in Frankfurt gespeichert. Wir erheben nur, was dafür nötig ist. **Keine Werbung, kein Verkauf von
+Server in Deutschland gespeichert. Wir erheben nur, was dafür nötig ist. **Keine Werbung, kein Verkauf von
 Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, keine E-Mail-Adresse nötig.**
 
 ## 3. Welche Daten wir verarbeiten, wofür und auf welcher Rechtsgrundlage
@@ -93,7 +93,7 @@ Einwilligung. Wir lesen keine Werbe-IDs (IDFA / Android-Werbe-ID) aus.
 - **Behörden** nur, wenn wir gesetzlich dazu verpflichtet sind.
 
 Darüber hinaus übermitteln wir keine Daten in Länder außerhalb der EU bzw. des EWR. Die Spieldaten selbst
-liegen ausschließlich in Frankfurt.
+liegen ausschließlich in Deutschland.
 
 ## 6. Kinder und Jugendliche
 

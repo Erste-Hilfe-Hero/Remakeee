@@ -1,0 +1,5 @@
+Chimora is online only. No sign-in is needed: on first launch the game creates an anonymous account on our own server (Germany) and the game starts right away. There is no email, no third-party login, no chat and no purchases inside the app.
+
+To test online features: Menu > Friends shows your friend code. A second device or a second install can add it. Menu > Account shows the transfer code, the online rules, the privacy note and "Delete account..." (deletes the account and all data on the server at once, guideline 5.1.1(v)).
+
+Uses only standard HTTPS (ITSAppUsesNonExemptEncryption = NO). No tracking, no analytics, no ads.

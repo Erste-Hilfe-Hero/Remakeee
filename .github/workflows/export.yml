@@ -30,6 +30,10 @@ jobs:
       - run: tools/ip_check.sh
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n_extract.py de --check
+      - name: Store web pages match docs/legal
+        run: python3 tools/site/build_site.py --check
+      - name: Store listing material (texts, screenshots, icons, presets)
+        run: pip install --quiet pillow && python3 tools/release_check.py
 
   # Server functions (supabase/migrations) on a throwaway Postgres, with their tests.
   sql:
@@ -244,7 +248,7 @@ jobs:
         uses: r0adkll/upload-google-play@v1.1.3
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.chimora.game
+          packageName: de.chimora.game
           releaseFiles: build/android/Chimora.aab
           track: internal
           status: draft

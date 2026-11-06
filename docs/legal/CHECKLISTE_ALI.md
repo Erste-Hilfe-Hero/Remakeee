@@ -1,5 +1,7 @@
 # Checkliste: Was Ali selbst erledigen muss
 
+> Die kurze Fassung für den Store-Start steht in [docs/STORE_RELEASE.md](../STORE_RELEASE.md), Abschnitt 2.
+
 Alles, was sich im Code und in Texten lösen ließ, ist erledigt. Diese Punkte brauchen dich als Person, weil es
 um deine Identität, deine Unterschrift oder deine Konten geht. Reihenfolge = empfohlene Reihenfolge.
 
@@ -59,8 +61,8 @@ mache ich das.
       in `DATENSCHUTZ.md` und `PRIVACY_POLICY_EN.md` damit vergleichen.
 - [ ] In GitHub drei Secrets eintragen (IP, Root-Passwort, Server-Adresse) und den Workflow **Game server**
       starten. Die Schritte stehen in [docs/ONLINE.md](../ONLINE.md). Den Rest erledigt das Skript.
-- [ ] **Website** mit vier Seiten veröffentlichen: Impressum, Datenschutz, Nutzungsbedingungen,
-      Konto löschen (plus `/lizenzen`). Die Texte liegen fertig in diesem Ordner.
+- [x] **Website**: Impressum, Datenschutz, Nutzungsbedingungen, Konto löschen, Support und Lizenzen
+      liefert der Spielserver aus (`server/site`, gebaut aus diesem Ordner). Eigene Domain ist optional.
 
 ## 5. Store-Konten
 
@@ -71,8 +73,7 @@ mache ich das.
 - [ ] Steuer- und Bankdaten in beiden Konsolen hinterlegen.
 - [ ] **Data Safety / App Privacy / Altersfreigabe** mit den Antworten aus `STORE_COMPLIANCE.md` ausfüllen.
 - [ ] **12 Tester für 14 Tage** im geschlossenen Test (Pflicht für neue private Google-Konten).
-- [ ] Bundle-ID in `export_presets.cfg` auf deine Domain umstellen (z. B. `de.chimora.game`), **vor** dem
-      ersten Upload; danach nie mehr änderbar. Oder sag mir die Domain.
+- [x] Bundle-ID ist `de.chimora.game` (ab dem ersten Upload fest; wenn du eine andere willst, vorher sagen).
 - [ ] Signing-Secrets in GitHub anlegen (`docs/RELEASE.md`).
 
 ## 6. Laufend
