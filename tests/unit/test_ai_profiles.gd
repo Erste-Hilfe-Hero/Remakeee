@@ -151,3 +151,32 @@ func test_soft_undertow_drags_only_the_lead() -> void:
 	m.start()
 	assert_eq(a.stage("spd"), -1)
 	assert_eq(b.stage("spd"), 0)
+
+func test_difficulty_sets_spark_ring_shift_and_damage() -> void:
+	var rng := RandomNumberGenerator.new()
+	var ros: Dictionary = {"team": [{"species": "Mirkmole", "level": 12}]}
+	for d: int in TrainerData.DIFFICULTY_KEYS.size():
+		var s: Spirling = TrainerData.build_team(ros, "", rng, d)[0]
+		assert_eq(s.level, 12 + GameState.FOE_LEVEL_SHIFT[d], "item 727")
+		assert_eq(int(s.spark.atk), GameState.FOE_SPARK[d], "item 726")
+	assert_eq(TrainerData.build_team(ros, "", rng, GameState.Difficulty.RIFT_BORN, 12)[0].level, 14, "cap + 2")
+	assert_eq(TrainerData.build_team(ros, "", rng, GameState.Difficulty.RIFT_BORN, 10)[0].level, 12, "never below the map's ring")
+	var orrin: Dictionary = _npc("cinder_rift", "warden_orrin")
+	assert_eq(TrainerData.build_team(orrin, "", rng, GameState.Difficulty.STORY)[0].level, 10, "own blocks keep their rings")
+	var dealt: Array[int] = []
+	for mult: float in [1.0, 0.9]:
+		var m: BattleModel = _duel(["Pebble Toss"], ["Bowl Over"])
+		m.foe_damage_mult = mult
+		var me: Spirling = m.active_spirling(0)
+		me.hp = me.max_hp()
+		m.submit_turn(BattleAction.make_rest(0), BattleAction.make_move(1, 0))
+		dealt.append(me.max_hp() - me.hp)
+	assert_lt(dealt[1], dealt[0], "item 728: Story foes hit softer")
+
+func test_swarm_size_follows_difficulty() -> void:
+	var rng := RandomNumberGenerator.new()
+	var swarm: Dictionary = _npc("murk_hollow", "hush_swarm")
+	var sizes: Array[int] = []
+	for d: int in TrainerData.DIFFICULTY_KEYS.size():
+		sizes.append(TrainerData.build_team(swarm, "", rng, d).size())
+	assert_eq(sizes, [4, 5, 6, 6] as Array[int], "item 730")
