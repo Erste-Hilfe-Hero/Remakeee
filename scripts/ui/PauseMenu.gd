@@ -92,7 +92,7 @@ func run_records() -> void:
 ## Tower best, weekly challenge and the current festival.
 static func records_text() -> String:
 	var lines: PackedStringArray = []
-	lines.append("Lighthouse climb best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
+	lines.append("Lighthouse stair best: floor %d of %d" % [Gauntlet.best(), Gauntlet.FLOORS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
