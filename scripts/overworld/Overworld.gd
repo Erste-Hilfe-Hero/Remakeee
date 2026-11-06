@@ -895,7 +895,12 @@ func open_menu() -> void:
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
 	var raid: Dictionary = menu.raid_attempt
+	var quit: bool = menu.to_title
 	menu.queue_free()
+	if quit:
+		GameState.in_game = false
+		get_tree().change_scene_to_file(TITLE_SCENE)
+		return
 	if not duel.is_empty():
 		await echo_duel(duel)
 	if not league.is_empty():
@@ -921,6 +926,7 @@ func open_menu() -> void:
 
 ## Plays a recorded battle (item 14). The replay uses copies, so nothing in the save changes.
 const MENU_SLIDE: float = 40.0
+const TITLE_SCENE: String = "res://scenes/ui/Title.tscn"
 
 ## Slides the pause menu's last list back out to the right with "close" in 0.12 s.
 func _close_menu(menu: PauseMenu) -> void:
