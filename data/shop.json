@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 3,
+ "catalog_version": 4,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -935,7 +935,7 @@
    "duration": "once",
    "plan": 4496,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_rift_breath_full",
@@ -958,7 +958,7 @@
    "duration": "once",
    "plan": 4497,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_last_stand",
@@ -1011,7 +1011,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Riftglass Tonic",
-   "desc": "In battle: heals 100% Vigor and all states without using the turn. At most 2 per battle.",
+   "desc": "In battle: heals 100% Vigor and all states. At most 2 per battle.",
    "rg_price": 200,
    "eur_cents": 199,
    "store_type": "consumable",
@@ -1027,7 +1027,7 @@
    "duration": "once",
    "plan": 4502,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_battle_supply",
@@ -1250,7 +1250,7 @@
    "requires": "rifts:1",
    "plan": 4684,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_wayfarer_pack",

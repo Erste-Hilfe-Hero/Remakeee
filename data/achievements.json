@@ -1016,6 +1016,24 @@
    "reward": 25,
    "stat": "record:photos",
    "n": 25
+  },
+  {
+   "id": "cinder_proof",
+   "title": "Cinder Proof",
+   "text": "Clear all 15 floors of the Cinder Stair.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "record:rift_cinder_stair",
+   "n": 15
+  },
+  {
+   "id": "deep_diver",
+   "title": "Deep Diver",
+   "text": "Reach the bottom of the Tide Shaft.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "record:rift_tide_shaft",
+   "n": 15
   }
  ]
 }

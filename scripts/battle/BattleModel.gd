@@ -81,6 +81,8 @@ var items_allowed: bool = true
 var level_cap: int = Spirling.MAX_LEVEL
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
 var inventory: Dictionary = {}
+## Items used this battle per side, for the per-battle limits of shop items ("per_battle" in items.json).
+var items_used: Array[Dictionary] = [{}, {}]
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
@@ -306,7 +308,12 @@ func is_legal(a: BattleAction) -> bool:
 				return false
 			if is_partner_index(a.side, a.item_target):
 				return false
-			return a.item_target >= 0 and a.item_target < parties[a.side].size() and not (parties[a.side][a.item_target] as Spirling).is_fainted()
+			if not item_left_this_battle(a.side, a.item_id):
+				return false
+			if a.item_target < 0 or a.item_target >= parties[a.side].size():
+				return false
+			# A revive item (the shop's Rift Breath) wants a defeated Spirling, every other one a standing one.
+			return (parties[a.side][a.item_target] as Spirling).is_fainted() == is_revive_item(a.item_id)
 		BattleAction.Kind.BOND:
 			# The Echo call reaches only wild Spirlings, never a Wayfarer's partner.
 			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot):
@@ -1009,12 +1016,18 @@ func _do_item(a: BattleAction) -> void:
 	if int(bag.get(a.item_id, 0)) <= 0 or not _items_allowed_for(a.side):
 		return
 	var target: Spirling = parties[a.side][a.item_target]
-	if target.is_fainted():
+	if target.is_fainted() != is_revive_item(a.item_id) or not item_left_this_battle(a.side, a.item_id):
 		return
 	var it: Dictionary = Database.item(a.item_id)
 	bag[a.item_id] = int(bag[a.item_id]) - 1
+	items_used[a.side][a.item_id] = int(items_used[a.side].get(a.item_id, 0)) + 1
 	var d: Dictionary = {"side": a.side, "index": a.item_target, "name": target.display_name(), "item": a.item_id, "item_name": str(it.get("name", a.item_id))}
 	emit_event(BattleEvent.Type.ITEM_USED, d)
+	if is_revive_item(a.item_id):
+		_revive(a.side, a.item_target, float(it.battle_revive), bool(it.get("revive_energy", false)))
+		return
+	if float(it.get("heal_frac", 0.0)) > 0.0:
+		_heal_spirling(a.side, a.item_target, ceili(target.max_hp() * float(it.heal_frac)))
 	if int(it.get("heal", 0)) > 0:
 		_heal_spirling(a.side, a.item_target, int(it.heal))
 	var cure: Variant = it.get("cure", false)
@@ -1238,6 +1251,25 @@ func _cure(side: int, slot: int = 0) -> void:
 	s.status = ""
 	s.status_turns = 0
 	emit_event(BattleEvent.Type.STATUS_CURED, d)
+
+## True for items that bring a defeated Spirling back in battle (the shop's Rift Breath).
+static func is_revive_item(id: String) -> bool:
+	return float(Database.item(id).get("battle_revive", 0.0)) > 0.0
+
+## False once [param side] used [param id] as often as its "per_battle" limit allows (plan item 4512).
+func item_left_this_battle(side: int, id: String) -> bool:
+	var limit: int = int(Database.item(id).get("per_battle", 0))
+	return limit <= 0 or int(items_used[side].get(id, 0)) < limit
+
+## Brings the defeated Spirling at [param index] back with [param frac] of its Vigor, on the bench.
+func _revive(side: int, index: int, frac: float, full_energy: bool) -> void:
+	var s: Spirling = parties[side][index]
+	s.hp = 0
+	s.status = ""
+	s.status_turns = 0
+	if full_energy:
+		s.energy = max_energy()
+	_heal_spirling(side, index, maxi(1, ceili(s.max_hp() * frac)))
 
 func _heal_spirling(side: int, index: int, amount: int) -> int:
 	var s: Spirling = parties[side][index]

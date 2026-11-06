@@ -30,6 +30,8 @@ const SLOT_GAP: int = 6
 var model: BattleModel
 ## Backdrop for where the battle started (field, lake, ridge, ember). Set before adding.
 var backdrop: String = "field"
+## How much darker the backdrop is drawn (0 = as is), for towers that sink deeper (plan 3268).
+var backdrop_shade: float = 0.0
 ## Music for this fight ("battle" or "warden"); the overworld sets it before adding the scene.
 var music_track: String = "battle"
 ## Set to true to quit the app when the battle ends (standalone demo).
@@ -263,6 +265,7 @@ func _layout_field() -> void:
 	_player_sprite.size = Vector2(sprite, sprite)
 	_player_sprite.mirrored = true
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
+	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade)
 
 ## Creates the compact sprites and tags for every field slot (formation layout only).
 func _build_formation() -> void:
@@ -525,7 +528,7 @@ func _pick_item(slot: int = 0) -> BattleAction:
 	var entries: Array[Dictionary] = []
 	for id: Variant in model.inventory:
 		var it: Dictionary = Database.item(str(id))
-		if int(model.inventory[id]) > 0 and bool(it.get("battle", false)):
+		if int(model.inventory[id]) > 0 and bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, str(id)):
 			ids.append(str(id))
 			entries.append({"text": "%s x%d" % [it.get("name", id), model.inventory[id]]})
 	if ids.is_empty():
@@ -534,6 +537,12 @@ func _pick_item(slot: int = 0) -> BattleAction:
 	var idx: int = await _picker.pick("Use which item?", entries)
 	if idx < 0:
 		return null
+	if BattleModel.is_revive_item(ids[idx]):
+		var down: int = await _pick_defeated()
+		if down < 0:
+			return null
+		var r := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], down, slot)
+		return r if model.is_legal(r) else null
 	var own: int = model.active_index(BattleModel.Side.PLAYER, slot)
 	var target: int = await _pick_party("Use on?", true, slot) if model.party(BattleModel.Side.PLAYER).size() > 1 else own
 	if target < 0:
@@ -541,6 +550,22 @@ func _pick_item(slot: int = 0) -> BattleAction:
 		target = own
 	var a := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], target, slot)
 	return a if model.is_legal(a) else null
+
+## Picks a defeated Spirling of the player's team for a Rift Breath, or -1.
+func _pick_defeated() -> int:
+	var party: Array = model.party(BattleModel.Side.PLAYER)
+	var idx: Array[int] = []
+	var entries: Array[Dictionary] = []
+	for i: int in party.size():
+		var s: Spirling = party[i]
+		if s.is_fainted() and not model.is_partner_index(BattleModel.Side.PLAYER, i):
+			idx.append(i)
+			entries.append({"text": "%s R%d" % [s.display_name(), s.level]})
+	if idx.is_empty():
+		await _text.show_text("Nobody in your team is defeated.")
+		return -1
+	var k: int = await _picker.pick("Bring back whom?", entries)
+	return idx[k] if k >= 0 else -1
 
 ## Items in [param bag] that help a bond (a "bond_bonus" in items.json), Kin Charm first.
 static func bond_charms(bag: Dictionary) -> Array[String]:

@@ -384,8 +384,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1242. [P1] Baue eine Weltkarten-Ansicht im Pausenmenü unter "Map", die alle Karten aus data/world_layout.json als Felder mit Verbindungen zeigt.
 1243. [P1] Zeige auf der Weltkarte die eigene Position, Heilpunkte, Haltestellen und Rissorte als feste Symbole.
 1244. [P1] Zeige unbekannte Karten als leeres Pergament und gesichtete, aber nicht besuchte Karten als Umriss.
-1245. [P1] Speichere pro Karte, welche Kacheln der Spieler schon gesehen hat (Radius 3 um ihn), in GameState als Bitfeld "map_cells".
-1246. [P1] Zeige pro Karte eine "Kartierquote" in Prozent auf der Weltkarte und im Banner beim Betreten.
+1245. [x] [P1] Speichere pro Karte, welche Kacheln der Spieler schon gesehen hat (Radius 3 um ihn), in GameState als Bitfeld "map_cells".
+1246. [x] [P1] Zeige pro Karte eine "Kartierquote" in Prozent auf der Weltkarte und im Banner beim Betreten.
 1247. [P1] Lass die Weltkarte per Tippen auf einen Ort eine Detailansicht mit Funde x/y, Wetter, Tageszeit und vorkommenden Arten öffnen.
 1248. [P1] Halte die Weltkarte in 144x256 bedienbar: Zoomstufen 1x und 2x, Wischen zum Verschieben, Knopf "Hier".
 1249. [P2] Gib für 100 Prozent Kartierquote einer Karte eine kleine Belohnung (Münzen oder Heiltrank) und ein Häkchen.
@@ -411,9 +411,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1269. [P3] Gib der Weltkarte eine Vorlesehilfe für Bildschirmleser mit Ortsname, Quote und Richtung.
 
 ### Minikarte und Markierungen
-1270. [P1] Baue eine Minikarte oben rechts, 36 x 36 Pixel, die 12 x 12 Kacheln um den Spieler mit 3 Pixel pro Kachel zeigt.
-1271. [P1] Zeige auf der Minikarte Warps, Heilstellen und Wanderer als einzelne farbige Pixel aus der UITheme-Palette.
-1272. [P1] Füge in Display and access einen Schalter "Minikarte" (an, aus, nur draußen) hinzu.
+1270. [x] [P1] Baue eine Minikarte oben rechts, 36 x 36 Pixel, die 12 x 12 Kacheln um den Spieler mit 3 Pixel pro Kachel zeigt.
+1271. [x] [P1] Zeige auf der Minikarte Warps, Heilstellen und Wanderer als einzelne farbige Pixel aus der UITheme-Palette.
+1272. [x] [P1] Füge in Display and access einen Schalter "Minikarte" (an, aus, nur draußen) hinzu.
 1273. [P1] Lass den Spieler auf der Weltkarte bis zu 30 eigene Markierungen mit 6 Symbolen setzen (Stern, Kreuz, Frage, Herz, Pfeil, Hammer).
 1274. [P2] Zeige eigene Markierungen auch auf der Minikarte, wenn sie auf der aktuellen Karte liegen.
 1275. [P2] Lass Markierungen eine kurze Notiz bis 24 Zeichen tragen, eingegeben über NameKeyboard.gd.

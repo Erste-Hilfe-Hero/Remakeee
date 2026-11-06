@@ -252,6 +252,8 @@ func run_records() -> void:
 			lines.append("Waymark history")
 		if Masters.open():
 			lines.append("Master Wayfarers")
+		if GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
+			lines.append("Tower map")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -270,6 +272,7 @@ func run_records() -> void:
 			"Personal bests": await info(records_text())
 			"Waymark history": await info(Loc.t("Waymarks: %d") % GameState.waymarks + "\n" + "\n".join(Waymarks.history_lines()))
 			"Master Wayfarers": await run_masters()
+			"Tower map": await info("\n".join(RiftTower.card_lines()))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Watch last battle":
@@ -406,6 +409,9 @@ func run_travel() -> bool:
 	var idx: int = await pick_strings("Travel to a rest spot", names)
 	if idx < 0:
 		return false
+	# A mistap must not carry the player somewhere else (item 1878).
+	if not await confirm("Travel to %s?" % names[idx], "Travel", "Stay"):
+		return false
 	travel_to = ids[idx]
 	return true
 
@@ -414,10 +420,13 @@ func run_team() -> void:
 		await tip("team_order")
 	while true:
 		var rows: Array[Dictionary] = []
-		for s: Spirling in GameState.party:
-			rows.append(MenuHost.party_entry(s))
+		for i: int in GameState.party.size():
+			rows.append(MenuHost.party_entry(GameState.party[i], i == 0))
+		# Free slots up to the limit show how much room is left (item 1898).
+		for i: int in range(GameState.party.size(), GameState.MAX_PARTY):
+			rows.append(free_slot_row())
 		var idx: int = await pick("Team", rows)
-		if idx < 0:
+		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]
 		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake"]
@@ -443,6 +452,10 @@ func run_team() -> void:
 					GameState.move_party(idx, to)
 			3: await _use_item_on(s)
 			4: await _held_item(s)
+
+## A grey "free" team row; a tap says where new Spirlings go.
+static func free_slot_row() -> Dictionary:
+	return {"text": "free", "disabled": true, "why": "New Spirlings you bond with fill this slot."}
 
 ## Unfurl into the next form or furl back into the earlier one. Both can be undone later.
 func _unfurl(s: Spirling, forward: bool) -> void:

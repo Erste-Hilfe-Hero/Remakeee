@@ -528,13 +528,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Energie-Starthilfe und Kampfhilfen
 4495. [P1] (P2W) Den "Überladekern" (`rg_overcharge`) anlegen: das ganze Team startet den nächsten Kampf mit 12 statt 10 Energie und Höchstenergie 12, Preis 100 Rissglas pro Stück, 5 Stück für 400 Rissglas.
-4496. [P1] (P2W) Den "Rissatem" (`rg_rift_breath`) anlegen: belebt im Kampf einen besiegten Spirling mit 50 % Kraft wieder, höchstens 1 pro Kampf, Preis 200 Rissglas pro Stück.
-4497. [P1] (P2W) Den "Großen Rissatem" (`rg_rift_breath_full`) anlegen: belebt im Kampf mit 100 % Kraft und voller Energie, höchstens 1 pro Kampf, Preis 400 Rissglas.
+4496. [x] [P1] (P2W) Den "Rissatem" (`rg_rift_breath`) anlegen: belebt im Kampf einen besiegten Spirling mit 50 % Kraft wieder, höchstens 1 pro Kampf, Preis 200 Rissglas pro Stück.
+4497. [x] [P1] (P2W) Den "Großen Rissatem" (`rg_rift_breath_full`) anlegen: belebt im Kampf mit 100 % Kraft und voller Energie, höchstens 1 pro Kampf, Preis 400 Rissglas.
 4498. [P1] (P2W) Wiederbeleben im Kampf ist nur möglich, wenn der Gegenstand schon in der Tasche liegt; es erscheint nie ein Kauffenster im Kampf.
 4499. [P1] (P2W) Den "Siegeswillen" (`rg_last_stand`) anlegen: wird das ganze Team besiegt, kehrt der zuletzt besiegte Spirling einmal mit 30 % Kraft zurück, Preis 300 Rissglas, nicht gegen Rift-Wächter.
 4500. [P1] (P2W) Die Kampfhilfen über die bestehende Gegenstandsaktion im Kampf (`items_allowed_in_battle`) einsetzen und in Rift-Born gesperrt lassen.
 4501. [P1] (P2W) Den "Glasfunken" (`rg_glass_spark`) anlegen: füllt im Kampf sofort die Energie eines Spirlings auf und erhöht sie für 3 Runden um 1 pro Runde, Preis 100 Rissglas.
-4502. [P1] (P2W) Einen "Rissglas-Heiltrank" (`rg_glass_tonic`) anlegen: heilt im Kampf 100 % Kraft und alle Zustände, ohne den Zug zu verbrauchen, höchstens 2 pro Kampf, Preis 150 Rissglas.
+4502. [x] [P1] (P2W) (Umgesetzt ohne "ohne Zug": der Trank braucht den Zug wie jeder Gegenstand.) Einen "Rissglas-Heiltrank" (`rg_glass_tonic`) anlegen: heilt im Kampf 100 % Kraft und alle Zustände, ohne den Zug zu verbrauchen, höchstens 2 pro Kampf, Preis 150 Rissglas.
 4503. [P1] (P2W) Die Kampfhilfen in der Tasche in der Gruppe "Rissglas-Waren" führen und im Kampf-Gegenstandsmenü oben anzeigen, wenn vorhanden.
 4504. [P1] (P2W) Alle Kampfhilfen im Kampfmodell als Ereignisse (`ItemUsed`, `Revived`) ausgeben, damit Wiederholungen und Records sie korrekt zeigen.
 4505. [P1] (P2W) Ein Paket "Kampfvorrat" (5 Rissatem, 5 Überladekerne, 5 Glasfunken) für 1000 Rissglas statt 1500 einzeln anbieten.
@@ -544,7 +544,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4509. [P2] (P2W) Den "Tempospiegel" (`rg_haste_mirror`) anlegen: das Team handelt 2 Runden lang vor dem Gegner, unabhängig von Tempo, Preis 200 Rissglas.
 4510. [P2] (P2W) Den "Zweitzug-Kristall" (`rg_double_turn`) anlegen: ein Spirling handelt in dieser Runde zweimal, höchstens 1 pro Kampf, Preis 300 Rissglas.
 4511. [P2] (P2W) Die Kampfhilfen ohne Zugverbrauch im Kampfmenü mit dem Hinweis "kostet keinen Zug" kennzeichnen.
-4512. [P2] (P2W) Die Höchstmenge von Kampfhilfen pro Kampf (Rissatem 1, Heiltrank 2, Zweitzug 1, sonst 3) in `data/shop.json` als `per_battle_limit` führen.
+4512. [x] [P2] (P2W) (Umgesetzt als `per_battle` in `data/items.json`, wo die Kampfwirkung steht.) Die Höchstmenge von Kampfhilfen pro Kampf (Rissatem 1, Heiltrank 2, Zweitzug 1, sonst 3) in `data/shop.json` als `per_battle_limit` führen.
 4513. [P2] (P2W) Nach einer Niederlage einen Bildschirm "Weiter mit Rissatem?" nur zeigen, wenn der Spieler einen Rissatem besitzt, sonst den normalen Niederlage-Ablauf.
 4514. [P2] (P2W) Den Niederlage-Bildschirm nie mit Shop-Hinweisen füllen und ein Test prüft, dass dort kein Shop-Aufruf liegt.
 4515. [P2] (P2W) Einen "Rastplatz-Kristall" anlegen, der das Team überall in der Welt sofort voll heilt, ohne zum Rastplatz zu gehen, Preis 100 Rissglas.
@@ -724,7 +724,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4683. [P3] (P2W) Pass-Daten für Ali als Monatssumme ohne Personenbezug im Tagesbericht des Billing-Dienstes zeigen.
 
 ### Starter- und Fortschrittspakete
-4684. [P1] (P2W) Ein "Starterpaket" (`rg_starter`) für 2,99 € einmal pro Konto anlegen: 300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall x2, 3 Rissatem, 3 Echo-Düfte.
+4684. [x] [P1] (P2W) Ein "Starterpaket" (`rg_starter`) für 2,99 € einmal pro Konto anlegen: 300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall x2, 3 Rissatem, 3 Echo-Düfte.
 4685. [P1] (P2W) Das Starterpaket zeigt den Einzelwert ("einzeln 1300 Rissglas, ≈ 12,87 €") und den Preis 2,99 € und ist erst nach dem ersten geschlossenen Riss sichtbar.
 4686. [P1] (P2W) Ein "Wanderer-Paket" (`rg_wayfarer_pack`) für 9,99 € einmal pro Konto anlegen: 1000 Rissglas, Rissherz, Glasschild, 2 Große Ring-Tränke, 1 Bondsiegel.
 4687. [P1] (P2W) Ein "Rift-Paket" pro geschlossenem Riss anlegen (6 Pakete, je einmal), für 4,99 €: 2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem.

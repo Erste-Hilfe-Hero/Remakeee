@@ -88,3 +88,10 @@ T.update({
 "Driver: I only stop where you've been on foot first. Walk the valley, then we'll drive it.": "Kutscher: Ich halte nur dort, wo du schon zu Fuß warst. Lauf das Tal ab, dann fahren wir es.",
 "Boatman: I only row to landings you've walked to yourself. Find them first, then I know the way.": "Bootsmann: Ich rudere nur zu Anlegern, die du selbst erreicht hast. Finde sie erst, dann kenne ich den Weg.",
 })
+
+# Survey share and minimap (area 3 items 1245, 1246, 1270-1272)
+T.update({
+"Minimap: %s": "Minikarte: %s",
+"Outside only": "Nur draußen",
+"Small map in the top corner. Outside only: hidden in houses and caves.": "Kleine Karte oben in der Ecke. Nur draußen: in Häusern und Höhlen ausgeblendet.",
+})
