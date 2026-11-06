@@ -638,6 +638,39 @@ var _play_index: int = -1
 ## How the art at [param at] in [param events] lands on its first target: "miss" when the
 ## first result is a MISSED event, and "eff" (effectiveness) of the first damage. Looks only
 ## until the next art.
+## Hit-stop for the battle's last hit (item 2265).
+const FINAL_HITSTOP: float = 0.12
+
+## Hit-stop for the hit at [param at]: "final" for the hit that ends the battle (nothing but
+## faints and the end follow), "" for a middle hit of an art that strikes several times this
+## turn (only the first and last stop, item 2266), otherwise "normal".
+static func hitstop_kind(events: Array[BattleEvent], at: int) -> String:
+	if at < 0 or at >= events.size():
+		return "normal"
+	var e: BattleEvent = events[at]
+	var hits: Array[int] = []
+	var start: int = 0
+	for i: int in range(at, -1, -1):
+		if events[i].type == BattleEvent.Type.MOVE_USED:
+			start = i
+			break
+	for i: int in range(start, events.size()):
+		var x: BattleEvent = events[i]
+		if i > start and x.type == BattleEvent.Type.MOVE_USED:
+			break
+		if x.type == BattleEvent.Type.DAMAGE and not bool(x.data.get("status_tick", false)):
+			hits.append(i)
+	if int(e.data.get("hp", 1)) <= 0:
+		for i: int in range(at + 1, events.size()):
+			var t: int = events[i].type
+			if t == BattleEvent.Type.BATTLE_END:
+				return "final"
+			if t == BattleEvent.Type.DAMAGE or t == BattleEvent.Type.MOVE_USED:
+				break
+	if hits.size() > 2 and at != hits[0] and at != hits[-1]:
+		return ""
+	return "normal"
+
 static func art_outcome(events: Array[BattleEvent], at: int) -> Dictionary:
 	for i: int in range(at + 1, events.size()):
 		var e: BattleEvent = events[i]
@@ -879,9 +912,26 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	if kind != MoveData.Kind.PHYSICAL and target != user:
 		_fx_travel_sound.call_deferred(element)
 	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
+	# In the formation layout the user turns toward a target on the other half (item 2336).
+	var was_mirrored: bool = user.mirrored
+	if _multi and target != user:
+		var turn: int = turn_toward(user.position.x + user.size.x / 2.0, target.position.x + target.size.x / 2.0, _field.size.x / 2.0)
+		if turn != 0:
+			user.mirrored = turn > 0
+			user.queue_redraw()
 	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
 		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e),
 		ElementFx.after_for(mv), str(sym.symbol), second)
+	if user.mirrored != was_mirrored:
+		user.mirrored = was_mirrored
+		user.queue_redraw()
+
+## Which way an attacker at x [param from_x] turns for a target at [param to_x]: 1 to face
+## right, -1 to face left, 0 to stay when both stand on the same half split at [param mid].
+static func turn_toward(from_x: float, to_x: float, mid: float) -> int:
+	if (from_x < mid) == (to_x < mid):
+		return 0
+	return 1 if to_x > from_x else -1
 
 ## Particle factor from the art's power (item 2368).
 static func _art_amount(e: BattleEvent) -> float:
@@ -908,16 +958,20 @@ func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
 	Juice.add_trauma(Juice.TRAUMA_HIT_STRONG if strong else Juice.TRAUMA_HIT, _last_element[BattleModel.other(side)])
 	Haptics.play("heavy" if strong else "hit")
 	var max_hp: int = maxi(int(e.data.get("max_hp", 1)), 1)
-	await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp)
+	match hitstop_kind(_playing, _play_index) if _play_index >= 0 else "normal":
+		"final":
+			await Juice.hitstop(1.0, FINAL_HITSTOP)
+		"normal":
+			await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp)
 	var sp: SpirlingSprite = _sprite(side, slot)
 	sp.knockback(knockback_dir(side, _multi))
 	await sp.hit_flash()
 
-## Direction a Spirling on [param side] is pushed when hit: away from the other side.
 ## A dodging Spirling steps toward the outer screen edge: the foe right, the player left.
 static func dodge_dir(target_side: int) -> float:
 	return 1.0 if target_side == BattleModel.Side.FOE else -1.0
 
+## Direction a Spirling on [param side] is pushed when hit: away from the other side.
 static func knockback_dir(side: int, multi: bool) -> Vector2:
 	if multi:
 		return Vector2(0, 1) if side == BattleModel.Side.PLAYER else Vector2(0, -1)
