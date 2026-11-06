@@ -34,7 +34,24 @@
   "~~~++++++S~~",
   "~~~~~~~~~~~~"
  ],
- "warps": [],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "madderby",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "madderby",
+   "tx": 6,
+   "ty": 20,
+   "facing": "up"
+  }
+ ],
  "npcs": [
   {
    "id": "tender",

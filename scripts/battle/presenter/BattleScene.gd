@@ -855,7 +855,12 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 		_fx_travel_sound.call_deferred(element)
 	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
 	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
-		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))))
+		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e))
+
+## Particle factor from the art's power (item 2368).
+static func _art_amount(e: BattleEvent) -> float:
+	var mv: MoveData = Database.move(str(e.data.get("move", "")))
+	return ElementFx.particles_for_power(mv.power) if mv != null else 1.0
 
 ## The charge sound for an art kind: a short rush, a rising pulse or two soft tones.
 static func charge_sound(kind: int) -> String:

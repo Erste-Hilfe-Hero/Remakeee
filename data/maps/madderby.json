@@ -1,0 +1,203 @@
+{
+ "name": "Madderby",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "outdoor": true,
+ "heal_point": [
+  8,
+  7
+ ],
+ "rows": [
+  "TTTTT__TTTTT",
+  "T,,..__..*,T",
+  "T.RRR__....T",
+  "T.HDH__..S.T",
+  "T...._____.T",
+  "T*..._..._.T",
+  "T...._.o._.T",
+  "T...._..._.T",
+  "TRRR._..._RT",
+  "THDH._..._HT",
+  "T...._______",
+  "T.%S%_....._",
+  "T.%%%_.RRR.T",
+  "T...._.HDH.T",
+  "T*..._.....T",
+  "T,,.._..*..T",
+  "T,,,.__....T",
+  "T....__.S..T",
+  "T....__....T",
+  "T*...__...*T",
+  "T....__....T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "corvane_quay",
+   "tx": 5,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "corvane_quay",
+   "tx": 6,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 3,
+   "y": 3,
+   "to": "madderby_guild",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "to": "woadfen",
+   "tx": 1,
+   "ty": 24,
+   "facing": "right"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "to": "woadfen",
+   "tx": 1,
+   "ty": 25,
+   "facing": "right"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "stillwater",
+   "tx": 5,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "stillwater",
+   "tx": 6,
+   "ty": 24,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "guard",
+   "x": 10,
+   "y": 12,
+   "facing": "up",
+   "dialogue": "madderby/guard",
+   "sprite": "villager"
+  },
+  {
+   "id": "trader",
+   "x": 6,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "madderby/trader",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 3,
+   "dialogue": "madderby/sign"
+  },
+  {
+   "x": 8,
+   "y": 17,
+   "dialogue": "madderby/road"
+  },
+  {
+   "x": 3,
+   "y": 11,
+   "dialogue": "madderby/vats"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 10,
+   "open_flag": "guild_joined",
+   "closed": "#"
+  },
+  {
+   "x": 10,
+   "y": 11,
+   "open_flag": "guild_joined",
+   "closed": "#"
+  },
+  {
+   "x": 5,
+   "y": 1,
+   "open_flag": "guild_joined",
+   "closed": "#"
+  },
+  {
+   "x": 6,
+   "y": 1,
+   "open_flag": "guild_joined",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 14,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_madder_west"
+  },
+  {
+   "x": 11,
+   "y": 15,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_madder_east"
+  },
+  {
+   "x": 0,
+   "y": 5,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_madder_north"
+  }
+ ],
+ "spots": {
+  "kestra": [
+   10,
+   4
+  ],
+  "weda": [
+   8,
+   6
+  ],
+  "dyer_1": [
+   1,
+   10
+  ],
+  "dyer_2": [
+   2,
+   10
+  ],
+  "dyer_3": [
+   3,
+   10
+  ],
+  "letter_c2": [
+   10,
+   14
+  ]
+ }
+}
