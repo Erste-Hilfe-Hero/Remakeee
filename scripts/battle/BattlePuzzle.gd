@@ -91,6 +91,13 @@ static func build_model(p: Dictionary) -> BattleModel:
 	m.field = str(p.get("field", ""))
 	m.foe_rule = str(p.get("rule", ""))
 	m.trainer_name = str(p.get("name", ""))
+	# Tag Trials (item 704): "front" [player, foe] and an ally {"name", "team", "front", "ai"} the AI plays.
+	var front: Array = p.get("front", [1, 1])
+	if front.size() == 2:
+		m.front_size = [clampi(int(front[0]), 1, BattleRules.MAX_FRONT), clampi(int(front[1]), 1, BattleRules.MAX_FRONT)]
+	var ally: Dictionary = p.get("partner", {})
+	if not ally.is_empty():
+		m.set_partner(str(ally.get("name", "")), _team(ally.get("team", []), rng), int(ally.get("front", 1)), int(ally.get("ai", 1)), str(ally.get("profile", "")))
 	m.start()
 	for side: int in 2:
 		var list: Array = p.get("player" if side == 0 else "foe", [])
@@ -151,7 +158,10 @@ static func play(p: Dictionary, at: Attempt, a: BattleAction) -> bool:
 	return not is_over(p, at)
 
 static func is_over(p: Dictionary, at: Attempt) -> bool:
-	return at.model.is_finished() or at.turns() >= int(p.get("max_turns", 3))
+	if at.model.is_finished() or at.turns() >= int(p.get("max_turns", 3)):
+		return true
+	# With an ally the player can be left with nothing to choose; the Trial ends there.
+	return not at.model.needs_player_switch() and at.model.player_slots().is_empty()
 
 ## True once the attempt meets the goal of [param p].
 static func solved(p: Dictionary, at: Attempt) -> bool:
@@ -184,6 +194,18 @@ static func goal_met(p: Dictionary, goal: Dictionary, at: Attempt) -> bool:
 			return at.last_move == str(v)
 	return false
 
+## Lantern rating of an attempt (item 706): 0 lost, 1 won, 2 goal met, 3 goal met in the fewest
+## turns the solver found ("best_turns" in the puzzle, checked by test_puzzles).
+const MAX_LANTERNS: int = 3
+
+static func lanterns(p: Dictionary, at: Attempt) -> int:
+	if at.model.outcome != BattleModel.Outcome.WIN:
+		return 0
+	if not solved(p, at):
+		return 1
+	var best: int = int(p.get("best_turns", 0))
+	return MAX_LANTERNS if best > 0 and at.turns() <= best else 2
+
 ## The player's choices in the current position (switches when one is due).
 static func choices(at: Attempt) -> Array[BattleAction]:
 	if at.model.needs_player_switch():
@@ -191,13 +213,25 @@ static func choices(at: Attempt) -> Array[BattleAction]:
 		for i: int in at.model.swap_candidates(BattleModel.Side.PLAYER, at.model.switch_slot()):
 			out.append(BattleAction.make_swap(BattleModel.Side.PLAYER, i))
 		return out
-	return at.model.legal_actions(BattleModel.Side.PLAYER)
+	var m: BattleModel = at.model
+	var acts: Array[BattleAction] = []
+	var foes: Array[int] = m.standing_slots(BattleModel.Side.FOE)
+	for slot: int in m.player_slots().slice(0, 1):
+		for a: BattleAction in m.legal_actions(BattleModel.Side.PLAYER, slot):
+			var mv: MoveData = m.active_spirling(BattleModel.Side.PLAYER, slot).moves[a.move_index] if a.kind == BattleAction.Kind.MOVE else null
+			# Against several foes a single-target art is one choice per foe (item 704).
+			if mv != null and foes.size() > 1 and not mv.is_area() and (mv.is_damaging() or not mv.status_effect.is_empty()):
+				for t: int in foes:
+					acts.append(BattleAction.make_move(BattleModel.Side.PLAYER, a.move_index, slot, t))
+			else:
+				acts.append(a)
+	return acts
 
 ## Exhaustive search (item 700): plays every line of player choices to the end and returns
 ## {"lines": leaves, "wins": winning leaves, "share": winning share weighted by branching,
-##  "solution": one winning line as a list of action dicts}.
+##  "solution": one winning line as a list of action dicts, "best_turns": fewest turns of a win}.
 static func search(p: Dictionary) -> Dictionary:
-	var out: Dictionary = {"lines": 0, "wins": 0, "share": 0.0, "solution": []}
+	var out: Dictionary = {"lines": 0, "wins": 0, "share": 0.0, "solution": [], "best_turns": 0}
 	_walk(p, [] as Array[BattleAction], 1.0, out)
 	return out
 
@@ -213,6 +247,8 @@ static func _walk(p: Dictionary, line: Array[BattleAction], weight: float, out: 
 		out.lines += 1
 		if solved(p, at):
 			out.wins += 1
+			if int(out.best_turns) == 0 or at.turns() < int(out.best_turns):
+				out.best_turns = at.turns()
 			out.share = float(out.share) + weight
 			if (out.solution as Array).is_empty():
 				for a: BattleAction in line:

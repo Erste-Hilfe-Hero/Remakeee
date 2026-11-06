@@ -2258,7 +2258,8 @@ func offer_trials(n: NPC) -> bool:
 	var done: Dictionary = GameState.records.get("trials", {})
 	var entries: Array[Dictionary] = []
 	for p: Dictionary in trials:
-		var mark: String = " ✓" if bool(done.get(str(p.id), false)) else ""
+		var got: int = _trial_lanterns(done.get(str(p.id), 0))
+		var mark: String = (" " + Loc.t("Lanterns %d/%d") % [got, BattlePuzzle.MAX_LANTERNS]) if got > 0 else ""
 		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -2274,12 +2275,22 @@ func offer_trials(n: NPC) -> bool:
 	await start_battle(at.model.party(BattleModel.Side.FOE), false,
 		{"model": at.model, "friendly": true, "warden": true, "name": str(p.get("name", ""))})
 	var ok: bool = BattlePuzzle.solved(p, at)
-	if ok:
+	var lit: int = BattlePuzzle.lanterns(p, at)
+	if lit > _trial_lanterns(done.get(str(p.id), 0)):
 		var rec: Dictionary = done.duplicate()
-		rec[str(p.id)] = true
+		rec[str(p.id)] = lit
 		GameState.records["trials"] = rec
-	await say([Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")])
+	var lines: Array[String] = [Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")]
+	if lit > 0:
+		lines.append(Loc.t("Lanterns %d/%d") % [lit, BattlePuzzle.MAX_LANTERNS])
+	await say(lines)
 	return true
+
+## Lanterns stored for a Trial (item 706); older saves kept true for a solved Trial, worth 2.
+static func _trial_lanterns(v: Variant) -> int:
+	if v is bool:
+		return 2 if v else 0
+	return clampi(int(v), 0, BattlePuzzle.MAX_LANTERNS)
 
 ## The card before a Warden battle (item 687): rule, team size and elements, then [param question].
 ## "Not yet" leaves the player free to change their team first. Returns true to fight.
