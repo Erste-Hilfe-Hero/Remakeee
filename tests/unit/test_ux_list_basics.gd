@@ -79,6 +79,8 @@ func test_tap_marks_pointer_input_and_keys_clear_it() -> void:
 	key.pressed = true
 	host.picker._input(key)
 	assert_false(ListPicker.pointer_used, "keys bring the focus sound back")
+	ListPicker.last_device = "touch"
+	ListPicker.pointer_used = false
 
 func test_scroll_position_is_kept_per_list() -> void:
 	var host: MenuHost = await _host()
@@ -129,3 +131,53 @@ func test_long_info_shows_a_thin_scroll_bar() -> void:
 	await wait_process_frames(3)
 	assert_eq(host.info_bar_rect().size.y, 0.0, "no bar when the text fits")
 	host._info_closed.emit()
+
+func _joy(button: JoyButton) -> InputEventJoypadButton:
+	var e := InputEventJoypadButton.new()
+	e.button_index = button
+	e.pressed = true
+	return e
+
+func test_shoulder_buttons_jump_eight_rows() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	p.pick("Pages", _rows(30), true, 0)
+	await wait_process_frames(2)
+	p._input(_joy(JOY_BUTTON_RIGHT_SHOULDER))
+	assert_eq(p.focused_index(), ListPicker.PAGE_ROWS, "item 1846: R jumps down eight rows")
+	p._input(_joy(JOY_BUTTON_LEFT_SHOULDER))
+	p._input(_joy(JOY_BUTTON_LEFT_SHOULDER))
+	assert_eq(p.focused_index(), 0, "L stops at the top")
+	p.picked.emit(-1)
+	ListPicker.last_device = "touch"
+
+func test_held_pad_direction_repeats() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	p.pick("Hold", _rows(30), true, 0)
+	await wait_process_frames(2)
+	ListPicker.last_device = "pad"
+	Input.action_press("ui_down")
+	p._process(0.01)
+	p._process(ListPicker.REPEAT_DELAY - 0.02)
+	assert_eq(p.focused_index(), 0, "no repeat before 350 ms")
+	p._process(0.02)
+	assert_eq(p.focused_index(), 1, "first repeat at 350 ms")
+	p._process(ListPicker.REPEAT_EVERY * 2.0 + 0.001)
+	assert_eq(p.focused_index(), 3, "then every 80 ms")
+	Input.action_release("ui_down")
+	p._process(0.01)
+	p.picked.emit(-1)
+	ListPicker.last_device = "touch"
+
+func test_continue_hint_follows_the_device() -> void:
+	ListPicker.last_device = "touch"
+	assert_eq(MenuHost.continue_hint(), "(tap to continue)")
+	ListPicker.note_device(_joy(JOY_BUTTON_A))
+	assert_eq(MenuHost.continue_hint(), "(A: continue)")
+	var key := InputEventKey.new()
+	key.keycode = KEY_ENTER
+	key.pressed = true
+	ListPicker.note_device(key)
+	assert_eq(MenuHost.continue_hint(), "(Enter: continue)")
+	ListPicker.last_device = "touch"

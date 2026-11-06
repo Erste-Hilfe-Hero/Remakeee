@@ -528,5 +528,73 @@
   "battle": false,
   "shop": true,
   "spark": 6
+ },
+ {
+  "id": "rg_ring_tonic",
+  "name": "Ring Tonic",
+  "description": "A Spirling gains 1 Ring at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 1
+ },
+ {
+  "id": "rg_ring_tonic_5",
+  "name": "Great Ring Tonic",
+  "description": "A Spirling gains 5 Rings at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 5
+ },
+ {
+  "id": "rg_ring_elixir",
+  "name": "Ring Elixir",
+  "description": "A Spirling rises to the current Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 99
+ },
+ {
+  "id": "rg_growth_x2",
+  "name": "Growth Crystal",
+  "description": "Double growth for the whole team for the next 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "growth",
+   "mult": 2.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_growth_x3",
+  "name": "Great Growth Crystal",
+  "description": "Triple growth for the whole team for the next 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "growth",
+   "mult": 3.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_coin_boost",
+  "name": "Coin Gleam",
+  "description": "Double coins from battles for 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "coins",
+   "mult": 2.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_spark_forge",
+  "name": "Spark Forge",
+  "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",
+  "battle": false,
+  "shop": true,
+  "spark_all": true
  }
 ]

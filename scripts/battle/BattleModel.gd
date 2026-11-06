@@ -80,6 +80,8 @@ var foe_items: Dictionary = {}
 var ai: BattleAI
 ## Prize money for beating a Wayfarer (reported in BATTLE_END).
 var prize_money: int = 0
+## Growth multiplier for the player's side (shop Growth Crystals and the pass, ShopEffects).
+var xp_mult: float = 1.0
 var flee_attempts: int = 0
 ## The Spirling bonded this battle, if any.
 var bonded: Spirling = null
@@ -1136,6 +1138,7 @@ func _award_xp(foe: Spirling) -> void:
 	var total: float = float(foe.data.xp_yield) * float(foe.level) / XP_LEVEL_DIV
 	if not is_wild:
 		total *= TRAINER_XP_MULT
+	total *= xp_mult
 	var earners: Array[Spirling] = []
 	for s: Spirling in participants:
 		var i: int = parties[Side.PLAYER].find(s)

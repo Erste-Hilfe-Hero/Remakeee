@@ -360,14 +360,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4333. [P3] Einen monatlichen Abgleich zwischen Store-Auszahlungsberichten und `purchases` von Hand in `docs/shop/ABGLEICH.md` beschreiben.
 
 ### Ring-Tränke und Wachstums-Boosts
-4334. [P1] (P2W) Den Gegenstand "Ring-Trank" (`rg_ring_tonic`) anlegen, der einem Spirling sofort 1 Ring gibt, Preis 100 Rissglas (≈ 0,99 €) oder 0,99 € direkt.
-4335. [P1] (P2W) Den Gegenstand "Großer Ring-Trank" (`rg_ring_tonic_5`) anlegen, der 5 Ringe auf einmal gibt, Preis 400 Rissglas (≈ 3,96 €) oder 3,99 € direkt.
-4336. [P1] (P2W) Den Gegenstand "Ring-Elixier" (`rg_ring_elixir`) anlegen, der einen Spirling bis zur aktuellen Ring-Obergrenze hebt, Preis 1500 Rissglas (≈ 14,85 €).
-4337. [P1] (P2W) Alle Ring-Tränke halten die Ring-Obergrenze ein: nie über 60 und auf Veteran und Rift-Born nie über die Ring-Obergrenze des geschlossenen Risses aus `GameState.gd`.
-4338. [P1] (P2W) Ring-Tränke lösen beim Erreichen des Rings Entfalten und neue Techniken genauso aus wie normales Wachstum, über dieselbe Funktion in `GameState.gd`.
-4339. [P1] (P2W) Den "Wachstumskristall" (`rg_growth_x2`) anlegen, der für die nächsten 20 Kämpfe das Wachstum des ganzen Teams verdoppelt, Preis 200 Rissglas (≈ 1,98 €).
-4340. [P1] (P2W) Den "Großen Wachstumskristall" (`rg_growth_x3`) anlegen, der für 20 Kämpfe dreifaches Wachstum gibt, Preis 400 Rissglas (≈ 3,96 €).
-4341. [P1] (P2W) Wachstums-Boosts zählen Kämpfe statt Minuten, damit keine Zeit abläuft und kein Druck entsteht, sofort zu spielen.
+4334. [x] [P1] (P2W) Den Gegenstand "Ring-Trank" (`rg_ring_tonic`) anlegen, der einem Spirling sofort 1 Ring gibt, Preis 100 Rissglas (≈ 0,99 €) oder 0,99 € direkt.
+4335. [x] [P1] (P2W) Den Gegenstand "Großer Ring-Trank" (`rg_ring_tonic_5`) anlegen, der 5 Ringe auf einmal gibt, Preis 400 Rissglas (≈ 3,96 €) oder 3,99 € direkt.
+4336. [x] [P1] (P2W) Den Gegenstand "Ring-Elixier" (`rg_ring_elixir`) anlegen, der einen Spirling bis zur aktuellen Ring-Obergrenze hebt, Preis 1500 Rissglas (≈ 14,85 €).
+4337. [x] [P1] (P2W) Alle Ring-Tränke halten die Ring-Obergrenze ein: nie über 60 und auf Veteran und Rift-Born nie über die Ring-Obergrenze des geschlossenen Risses aus `GameState.gd`.
+4338. [x] [P1] (P2W) Ring-Tränke lösen beim Erreichen des Rings Entfalten und neue Techniken genauso aus wie normales Wachstum, über dieselbe Funktion in `GameState.gd`.
+4339. [x] [P1] (P2W) Den "Wachstumskristall" (`rg_growth_x2`) anlegen, der für die nächsten 20 Kämpfe das Wachstum des ganzen Teams verdoppelt, Preis 200 Rissglas (≈ 1,98 €).
+4340. [x] [P1] (P2W) Den "Großen Wachstumskristall" (`rg_growth_x3`) anlegen, der für 20 Kämpfe dreifaches Wachstum gibt, Preis 400 Rissglas (≈ 3,96 €).
+4341. [x] [P1] (P2W) Wachstums-Boosts zählen Kämpfe statt Minuten, damit keine Zeit abläuft und kein Druck entsteht, sofort zu spielen.
 4342. [P1] (P2W) Den aktiven Wachstums-Boost mit Restzahl ("Wachstum x2: noch 14 Kämpfe") in der Team-Ansicht und im Kampfende-Bildschirm zeigen.
 4343. [P1] (P2W) Ein "Team-Wachstumsband" (`rg_share_band`) anlegen, das das Wachstum gleichmäßig auf alle 5 Team-Mitglieder verteilt, auch auf nicht kämpfende, dauerhaft, Preis 1000 Rissglas oder 9,99 €.
 4344. [P1] (P2W) Ring-Tränke und Wachstums-Boosts als Verbrauchsgüter im Store anlegen und nach dem Kauf nur über den Server in die Tasche legen.
@@ -668,7 +668,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Wanderer-Pass (Abo)
 4629. [P1] (P2W) Den "Wanderer-Pass" als Auto-Abo für 4,99 € im Monat anlegen (Apple Abo-Gruppe "Pass", Google Abo `de.chimora.game.pass` mit Grundplan monatlich).
-4630. [P1] (P2W) Der Pass gibt dauerhaft für seine Laufzeit +50 % Wachstum für das ganze Team, mit dem Wachstumskristall multiplizierbar.
+4630. [x] [P1] (P2W) Der Pass gibt dauerhaft für seine Laufzeit +50 % Wachstum für das ganze Team, mit dem Wachstumskristall multiplizierbar.
 4631. [P1] (P2W) Der Pass gibt jeden Tag beim ersten Öffnen 30 Rissglas (in 30 Tagen 900 Rissglas, Wert ≈ 8,91 €) und das steht mit genauer Zahl auf der Pass-Seite.
 4632. [P1] (P2W) Der Pass gibt jedem Spirling im Team +1 Startenergie über die Höchstenergie (11 statt 10) in allen Kämpfen gegen die Spielwelt.
 4633. [P1] (P2W) Der Pass gibt 1 kostenlosen Rissatem pro Rift-Wächterkampf, der nicht in der Tasche liegt, sondern nur im Kampf erscheint.
@@ -783,7 +783,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4740. [P3] (P2W) Ein "Zwillingspaket" für Spieler mit zwei Spielständen nicht anbieten; Pakete sind pro Konto.
 
 ### Funken und Wesensart
-4741. [P1] (P2W) Eine "Funkenschmiede" (`rg_spark_forge`) anlegen, die alle Funken-Werte (`Spirling.spark`) eines Spirlings auf den Höchstwert 12 setzt, Preis 1000 Rissglas (≈ 9,90 €) oder 9,99 € direkt.
+4741. [x] [P1] (P2W) Eine "Funkenschmiede" (`rg_spark_forge`) anlegen, die alle Funken-Werte (`Spirling.spark`) eines Spirlings auf den Höchstwert 12 setzt, Preis 1000 Rissglas (≈ 9,90 €) oder 9,99 € direkt.
 4742. [x] [P1] (P2W) Einen "Funkensplitter" (`rg_spark_shard`) anlegen, der einen gewählten Wert um 6 Funken erhöht (bis 12), Preis 200 Rissglas, doppelt so stark wie `spark_charm` (3).
 4743. [P1] (P2W) Einen "Wesenswandel" (`rg_temper_shift`) anlegen, der die Wesensart eines Spirlings auf eine gewählte Wesensart setzt, Preis 400 Rissglas.
 4744. [P1] (P2W) Für den Wesenswandel ein gespeichertes Feld `temper_override` an `Spirling` anlegen, das `temperament_index(uid)` überschreibt, und in `SaveManager` sichern.
@@ -881,7 +881,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4832. [P1] (P2W) Eine "Kampfbeschleunigung x4" (`rg_battle_speed`) dauerhaft für 500 Rissglas anlegen, zusätzlich zur freien Stufe x2, die Text und Animationen viermal schneller spielt.
 4833. [P1] (P2W) Ein "Auto-Kampf" (`rg_auto_battle`) dauerhaft für 1000 Rissglas anlegen, bei dem die Spieler-KI (Stufe "lookahead") gegen wilde Spirlings automatisch kämpft.
 4834. [P1] (P2W) Den Auto-Kampf nie gegen Rift-Wächter, Story-Kämpfe und in Ligen erlauben, und das steht in der Detailansicht.
-4835. [P1] (P2W) Einen "Münzglanz" (`rg_coin_boost`) anlegen: doppelte Münzen aus Kämpfen für 20 Kämpfe, Preis 200 Rissglas, abgestimmt mit Bereich 8.
+4835. [x] [P1] (P2W) Einen "Münzglanz" (`rg_coin_boost`) anlegen: doppelte Münzen aus Kämpfen für 20 Kämpfe, Preis 200 Rissglas, abgestimmt mit Bereich 8.
 4836. [P1] (P2W) Einen "Wegweiser" (`rg_fast_travel`) dauerhaft für 800 Rissglas anlegen, mit dem Schnellreise zu jedem besuchten Ort geht statt nur zu Rastplätzen.
 4837. [P1] (P2W) Den Wegweiser mit `GameState.travel_targets` verbinden, sodass er alle besuchten Karten zusätzlich liefert.
 4838. [P1] (P2W) Einen "Begegnungsruf" (`rg_encounter_call`) anlegen: 30 Schritte lang doppelt so viele wilde Begegnungen, Preis 100 Rissglas.
