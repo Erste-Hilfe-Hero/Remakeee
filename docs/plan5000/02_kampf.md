@@ -279,11 +279,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 695. [P3] Wächter-Teams werden im Simulator-Modus "warden" gegen alle Referenzteams geprüft, bevor eine Änderung gemergt wird.
 
 ### Wächter-Rätselkämpfe
-696. [P1] Neue Datei data/puzzles.json: ein Rätsel hat `id`, `warden`, festes Spieler-Team (Art, Ring, Techniken, Kraft-Anteil, Energie, Status), festes Gegner-Team, `field`, `rule`, `seed`, `ai`, `goal` und `max_turns`.
-697. [P1] Nach dem Sieg über einen Wächter bietet er am Riss drei Rätselkämpfe an ("Prüfungen"), die keine Ringe, kein Wachstum und keine Teamänderung bringen.
-698. [P1] Rätsel "Glutprobe 1" (Orrin): Puddlet R12 mit Fizz Pop, Tide Call, Salt Snap und Drench gegen Smoldrake R13 im Feld ash_storm mit ember_pulse; Ziel: Sieg in höchstens 4 Runden.
-699. [P1] Rätsel "Strömungsprobe 1" (Maelis): Zippit R16 mit Crackle Bite, Static Tag, Overcharge und Spark Call startet mit 4 Energie gegen Riptail R17 mit Soak; Ziel: Sieg in höchstens 3 Runden über die Volt-Reaktion.
-700. [P1] Ein Test löst jedes Rätsel per Suche über alle Spieleraktionen bis `max_turns` mit festem Seed und prüft, dass es mindestens eine Lösung und höchstens 20 % gewinnende Aktionsfolgen gibt.
+696. [x] [P1] Neue Datei data/puzzles.json: ein Rätsel hat `id`, `warden`, festes Spieler-Team (Art, Ring, Techniken, Kraft-Anteil, Energie, Status), festes Gegner-Team, `field`, `rule`, `seed`, `ai`, `goal` und `max_turns`. Erledigt: data/puzzles.json, BattlePuzzle.gd (Lader, Modell, Ziel, Suche).
+697. [x] [P1] Nach dem Sieg über einen Wächter bietet er am Riss drei Rätselkämpfe an ("Prüfungen"), die keine Ringe, kein Wachstum und keine Teamänderung bringen. Erledigt: Overworld.offer_trials am besiegten Wächter, je drei Prüfungen; gelöst in records["trials"].
+698. [x] [P1] Rätsel "Glutprobe 1" (Orrin): Puddlet R12 mit Fizz Pop, Tide Call, Salt Snap und Drench gegen Smoldrake R13 im Feld ash_storm mit ember_pulse; Ziel: Sieg in höchstens 4 Runden. Erledigt: ember_trial_1 (7 % gewinnende Linien).
+699. [x] [P1] Rätsel "Strömungsprobe 1" (Maelis): Zippit R16 mit Crackle Bite, Static Tag, Overcharge und Spark Call startet mit 4 Energie gegen Riptail R17 mit Soak; Ziel: Sieg in höchstens 3 Runden über die Volt-Reaktion. Erledigt: current_trial_1 (11 % gewinnende Linien), Ziel mit "reaction": "VOLT".
+700. [x] [P1] Ein Test löst jedes Rätsel per Suche über alle Spieleraktionen bis `max_turns` mit festem Seed und prüft, dass es mindestens eine Lösung und höchstens 20 % gewinnende Aktionsfolgen gibt. Erledigt: tests/unit/test_puzzles.gd; alle sechs Prüfungen zwischen 7 und 15 %.
 701. [P2] Rätsel "Glutprobe 2": Kindlop R12 mit Scorch und Gabe Kindling, Glow Knuckle, Cinder Nip und Kindle Up gegen Shalebat R12 und Zippit R12 (1 gegen 2); Ziel: Sieg, ohne Scorch zu heilen.
 702. [P2] Rätsel "Glutprobe 3": Mossling R12 mit 50 % Kraft, Pollen Prick, Puffcap Haze, Bloom Call und Lichen Lash gegen Kindlop R12; Ziel: Sieg, bevor Root ihn 3 Runden lang hielt, also in höchstens 5 Runden mit Bloom-Feld.
 703. [P2] Rätsel "Strömungsprobe 2": Zephlet R16 startet mit 2 Energie und Kite Cut, Draft Needle, Drift Step und Crosswind gegen Puddlet R16 im Feld high_tide; Ziel: Sieg mit genau einem Rasten.

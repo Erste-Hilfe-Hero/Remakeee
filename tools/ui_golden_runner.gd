@@ -30,6 +30,8 @@ func _screens() -> Array[Array]:
 	out.append(["goals", "Goals", PauseMenu.goal_rows({"aldo_gift": true}, "Today: a rare visitor stirs in Fernstair.")])
 	# Rows are built; out of a journey the "connection lost" mark stays away (no server here).
 	GameState.in_game = false
+	# Lists fade in over 80 ms; the images show them settled.
+	GameState.reduce_motion = true
 	return out
 
 func _run() -> void:
