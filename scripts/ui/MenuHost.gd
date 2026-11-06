@@ -43,6 +43,7 @@ func _ready() -> void:
 	box.add_child(_info_picture)
 	_info_scroll = ScrollContainer.new()
 	_info_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_info_scroll.scroll_deadzone = int(TAP_SLOP)
 	_info_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	box.add_child(_info_scroll)
 	_info_label = Label.new()
@@ -64,8 +65,9 @@ func _fill(c: Control) -> void:
 	c.ready.connect(func() -> void: SafeArea.apply(c, PANEL_MARGIN), CONNECT_ONE_SHOT)
 
 ## Shows a list; returns the index or -1 (Back / cancel).
-func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -> int:
-	return await picker.pick(title, entries, cancellable)
+func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
+		guard_ms: int = ListPicker.TAP_GUARD_MS) -> int:
+	return await picker.pick(title, entries, cancellable, focus, guard_ms)
 
 ## Convenience: entries from plain strings.
 func pick_strings(title: String, items: Array[String], cancellable: bool = true) -> int:
@@ -77,6 +79,13 @@ func pick_strings(title: String, items: Array[String], cancellable: bool = true)
 ## Yes/No question. Returns true for yes.
 func confirm(question: String) -> bool:
 	return await pick_strings(question, ["Yes", "No"] as Array[String], true) == 0
+
+## A question whose "yes" cannot be undone (delete account, replace a save, the Iron Oath,
+## taking over another phone's journeys): focus starts on the safe answer, "yes" carries a
+## warning mark, and taps in the first 300 ms are ignored (items 1786, 1837).
+func confirm_danger(question: String, yes_text: String = "Yes", no_text: String = "No") -> bool:
+	var entries: Array[Dictionary] = [{"text": no_text}, {"text": yes_text, "danger": true}]
+	return await pick(question, entries, true, 0, ListPicker.DANGER_GUARD_MS) == 1
 
 ## Shows a block of text until the player taps or presses accept/cancel, with an optional
 ## [param picture] above it.
@@ -121,78 +130,92 @@ func _unhandled_input(event: InputEvent) -> void:
 ## Settings: text speed, battle speed, auto wild battles, Retro filter, volume. Saved immediately.
 func run_settings() -> void:
 	while true:
-		var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
-		var entries: Array[String] = [
-			"Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize(),
-			"Battle speed: %dx" % int(GameState.battle_speed_scale()),
-			"Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off"),
-			"Bench lessons: %s" % ("On" if GameState.bench_xp else "Off"),
-			"Damage preview: %s" % ("On" if GameState.damage_preview else "Off"),
-			"Retro filter: %s" % retro,
-			"Volume: %d%%" % int(round(GameState.volume * 100.0)),
-			"Music: %d%%" % int(round(GameState.music_volume * 100.0)),
-			"Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0)),
-			"Tips: %s" % ("On" if GameState.tips_enabled else "Off"),
-			"Controls...",
-			"Display and access...",
-			"Sound test...",
-			"Legal",
-			"Account...",
-		]
-		# Difficulty and the Iron Oath moved out of the new-game flow (only during a journey).
-		if GameState.in_game:
-			entries.append("Difficulty: %s" % DIFFICULTY_TEXT[GameState.difficulty])
-			entries.append("Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off"))
+		var rows: Array[Array] = settings_rows()
+		var entries: Array[String] = []
+		for r: Array in rows:
+			entries.append(str(r[1]))
 		var idx: int = await pick_strings("Settings", entries)
-		match idx:
-			-1:
-				SaveManager.save_settings()
-				return
-			0:
-				GameState.text_speed = ((GameState.text_speed + 1) % GameState.TextSpeed.size()) as GameState.TextSpeed
-			1:
-				GameState.cycle_battle_speed()
-			2:
-				GameState.auto_battle = not GameState.auto_battle
-			3:
-				GameState.bench_xp = not GameState.bench_xp
-			4:
-				GameState.damage_preview = not GameState.damage_preview
-			5:
-				# Only unlocked eras are offered (Era I only for now).
-				var next: int = EraManager.retro_filter + 1
-				EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
-			6:
-				var v: float = GameState.volume + 0.2
-				GameState.volume = 0.0 if v > 1.01 else v
-				GameState.apply_volume()
-			7:
-				GameState.music_volume = _step_volume(GameState.music_volume)
-				GameState.apply_volume()
-			8:
-				GameState.sfx_volume = _step_volume(GameState.sfx_volume)
-				GameState.apply_volume()
-				Sound.sfx("confirm")
-			9:
-				GameState.tips_enabled = not GameState.tips_enabled
-			10:
-				await run_controls()
-			11:
-				await run_display()
-			12:
-				await run_sound_test()
-			13:
-				await run_legal()
-			12:
-				await AccountMenu.run(self)
-				if not is_inside_tree():
-					return
-			13:
-				var d: int = await pick_strings("Difficulty", DIFFICULTY_TEXT)
-				if d >= 0:
-					GameState.difficulty = d as GameState.Difficulty
-			14:
-				await _iron_oath()
+		if idx < 0:
+			SaveManager.save_settings()
+			return
+		await _settings_action(str(rows[idx][0]))
+		if not is_inside_tree():
+			return
+		# Every change is kept at once, not only on Back (item 2066).
+		SaveManager.save_settings()
+
+## The settings list as [key, text] pairs. Rows are picked by key, never by position, so
+## optional rows (Difficulty, Iron Oath during a journey) cannot shift other rows (item 2062:
+## duplicate match arms used to send "Account..." to the Iron Oath).
+static func settings_rows() -> Array[Array]:
+	var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
+	var rows: Array[Array] = [
+		["text_speed", "Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize()],
+		["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
+		["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
+		["bench_xp", "Bench lessons: %s" % ("On" if GameState.bench_xp else "Off")],
+		["damage_preview", "Damage preview: %s" % ("On" if GameState.damage_preview else "Off")],
+		["retro", "Retro filter: %s" % retro],
+		["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
+		["music", "Music: %d%%" % int(round(GameState.music_volume * 100.0))],
+		["sfx", "Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0))],
+		["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
+		["controls", "Controls..."],
+		["display", "Display and access..."],
+		["sound_test", "Sound test..."],
+		["legal", "Legal"],
+		["account", "Account..."],
+	]
+	# Difficulty and the Iron Oath moved out of the new-game flow (only during a journey).
+	if GameState.in_game:
+		rows.append(["difficulty", "Difficulty: %s" % DIFFICULTY_TEXT[GameState.difficulty]])
+		rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
+	return rows
+
+func _settings_action(key: String) -> void:
+	match key:
+		"text_speed":
+			GameState.text_speed = ((GameState.text_speed + 1) % GameState.TextSpeed.size()) as GameState.TextSpeed
+		"battle_speed":
+			GameState.cycle_battle_speed()
+		"auto_battle":
+			GameState.auto_battle = not GameState.auto_battle
+		"bench_xp":
+			GameState.bench_xp = not GameState.bench_xp
+		"damage_preview":
+			GameState.damage_preview = not GameState.damage_preview
+		"retro":
+			# Only unlocked eras are offered (Era I only for now).
+			var next: int = EraManager.retro_filter + 1
+			EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
+		"volume":
+			GameState.volume = _step_volume(GameState.volume)
+			GameState.apply_volume()
+		"music":
+			GameState.music_volume = _step_volume(GameState.music_volume)
+			GameState.apply_volume()
+		"sfx":
+			GameState.sfx_volume = _step_volume(GameState.sfx_volume)
+			GameState.apply_volume()
+			Sound.sfx("confirm")
+		"tips":
+			GameState.tips_enabled = not GameState.tips_enabled
+		"controls":
+			await run_controls()
+		"display":
+			await run_display()
+		"sound_test":
+			await run_sound_test()
+		"legal":
+			await run_legal()
+		"account":
+			await AccountMenu.run(self)
+		"difficulty":
+			var d: int = await pick_strings("Difficulty", DIFFICULTY_TEXT)
+			if d >= 0:
+				GameState.difficulty = d as GameState.Difficulty
+		"iron_oath":
+			await _iron_oath()
 
 const DIFFICULTY_TEXT: Array[String] = [
 	"Story (relaxed)",
@@ -209,8 +232,8 @@ func _iron_oath() -> void:
 	if not GameState.rifts_sealed.is_empty() or GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
 		await info("The Iron Oath can only be sworn before you mend your first Rift.")
 		return
-	if await pick_strings("Iron Oath: Spirlings that faint retire to the Sanctuary for good. This can't be undone.",
-			["Not now", "Take the Iron Oath"] as Array[String]) == 1:
+	if await confirm_danger("Iron Oath: Spirlings that faint retire to the Sanctuary for good. This can't be undone.",
+			"Take the Iron Oath", "Not now"):
 		GameState.iron_oath = true
 
 ## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.
@@ -284,6 +307,7 @@ func run_display() -> void:
 			4:
 				GameState.day_night = not GameState.day_night
 		GameState.apply_display()
+		SaveManager.save_settings()
 		if idx == 2:
 			await info("High contrast applies to menus and text from the next screen on.")
 
@@ -326,6 +350,7 @@ func run_controls() -> void:
 			6:
 				await info(PAD_HELP)
 		VirtualPad.apply_settings()
+		SaveManager.save_settings()
 
 ## Multi-line summary of a Spirling.
 static func summary(s: Spirling) -> String:

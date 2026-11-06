@@ -540,6 +540,15 @@ func photo_mode() -> void:
 	_photo.queue_free()
 	_photo = null
 
+## Android back: opens the pause menu in the world, works like B everywhere else (item 1787).
+func _notification(what: int) -> void:
+	if what != NOTIFICATION_WM_GO_BACK_REQUEST or not is_inside_tree():
+		return
+	if not busy and _photo == null and player != null and not player.moving:
+		open_menu()
+	else:
+		BackButton.press_cancel()
+
 func _unhandled_input(event: InputEvent) -> void:
 	if _photo != null:
 		return
@@ -547,13 +556,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		open_menu()
 		return
-	# Tap-to-move (touch arrives here as an emulated left click).
-	var mb := event as InputEventMouseButton
-	if mb != null and mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT and GameState.tap_to_move:
-		if busy or player.frozen or VirtualPad.covers(mb.position):
+	# Tap-to-move: exactly once per tap, with or without mouse emulation (item 1780).
+	if TapInput.is_press(event) and GameState.tap_to_move:
+		var at: Vector2 = TapInput.position(event)
+		if busy or player.frozen or VirtualPad.covers(at):
 			return
 		get_viewport().set_input_as_handled()
-		var world: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * mb.position
+		var world: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * at
 		tap_cell(Vector2i(floori(world.x / GridWalker.TILE), floori(world.y / GridWalker.TILE)))
 
 ## Walks toward [param cell]; NPCs, signs and counters get walked up to and talked to.
