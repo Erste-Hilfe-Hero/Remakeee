@@ -57,6 +57,7 @@ func _ready() -> void:
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
 	Sound.music("title")
+	StartupLog.mark("title scene built")
 	_run.call_deferred()
 
 func _build_name_box() -> void:
@@ -169,6 +170,7 @@ func _resolve_conflicts() -> void:
 func _run() -> void:
 	var first_start: bool = GameState.language.is_empty() and not Online.privacy_seen and _used_slots() == 0
 	if GameState.language.is_empty():
+		StartupLog.mark("language menu ready")
 		await _pick_language()
 	await _go_online()
 	if first_start:
@@ -187,6 +189,7 @@ func _run() -> void:
 			items.append("Load...")
 		items.append("Settings")
 		_at_root = true
+		StartupLog.mark("title menu ready")
 		var idx: int = await _menu.pick_strings("", items, false)
 		_at_root = false
 		if idx == QUIT_ASKED:

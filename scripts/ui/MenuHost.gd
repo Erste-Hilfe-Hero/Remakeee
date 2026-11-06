@@ -279,7 +279,10 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"always_run": "Run without holding B. Hold B to walk.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
 	"rumble": "The gamepad shakes on big hits.",
+	"swap_ab_touch": "A and B on the touch pad change places.",
+	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
 	"pad_help": "Which gamepad button does what.",
+	"keys_help": "Which key does what in the browser.",
 }
 
 func run_settings() -> void:
@@ -525,6 +528,12 @@ static func step_volume(v: float, dir: int) -> float:
 	return steps / 10.0
 
 const PAD_HELP: String = "Gamepad\nD-pad or left stick: move\nA: talk, confirm\nB: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles"
+const PAD_HELP_SWAPPED: String = "Gamepad (A and B swapped)\nD-pad or left stick: move\nB: talk, confirm\nA: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles"
+## Keyboard help page (item 2110), mainly for the browser build.
+const KEYS_HELP: String = "Keyboard\nArrow keys or W A S D: move\nEnter or Space: talk, confirm\nEscape or Backspace: back\nHold Backspace: run\nM: menu\nF: battle speed\nR: auto wild battles"
+
+static func pad_help() -> String:
+	return PAD_HELP_SWAPPED if GameState.swap_ab_pad else PAD_HELP
 
 ## Controls: pad size, opacity, left-handed layout, tap-to-move.
 func run_controls() -> void:
@@ -549,8 +558,15 @@ func run_controls() -> void:
 			"rumble":
 				GameState.rumble = not GameState.rumble
 				GameState.rumble_pads(0.6, 0.2)
+			"swap_ab_touch":
+				GameState.swap_ab_touch = not GameState.swap_ab_touch
+			"swap_ab_pad":
+				GameState.swap_ab_pad = not GameState.swap_ab_pad
+				GameState.apply_pad_swap(GameState.swap_ab_pad)
 			"pad_help":
-				await info(PAD_HELP)
+				await info(pad_help())
+			"keys_help":
+				await info(KEYS_HELP)
 		VirtualPad.apply_settings()
 		SaveManager.save_settings()
 
@@ -562,8 +578,11 @@ static func controls_rows() -> Array[Array]:
 		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
+		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
+		["swap_ab_pad", "Gamepad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
 		["rumble", "Gamepad rumble: %s" % ("On" if GameState.rumble else "Off")],
 		["pad_help", "Gamepad buttons..."],
+		["keys_help", "Keyboard keys..."],
 	]
 
 ## Multi-line summary of a Spirling.

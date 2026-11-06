@@ -166,7 +166,26 @@ func _layout() -> void:
 	_dpad_origin = dpad_origin
 	if GameState.one_hand:
 		_layout_one_hand(safe, left)
-		return
+	else:
+		_layout_two_hands(safe, left, dpad_origin)
+	if GameState.swap_ab_touch:
+		_swap_ab()
+
+## A and B change places (item 2111); each keeps its letter, the menu button stays put.
+func _swap_ab() -> void:
+	var a: TouchScreenButton = null
+	var b: TouchScreenButton = null
+	for t: TouchScreenButton in _buttons:
+		if t.action == &"ui_accept":
+			a = t
+		elif t.action == &"ui_cancel":
+			b = t
+	if a != null and b != null:
+		var p: Vector2 = a.position
+		a.position = b.position
+		b.position = p
+
+func _layout_two_hands(safe: Rect2, left: bool, dpad_origin: Vector2) -> void:
 	for b: TouchScreenButton in _buttons:
 		var off: Vector2 = b.get_meta("offset")
 		match b.action:

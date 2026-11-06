@@ -162,5 +162,15 @@ T = {
 "Tip: Spirlings who aren't travelling with you rest in storage. Swap them any time here.": "Tipp: Spirlings, die nicht mitreisen, ruhen im Lager. Hier kannst du sie jederzeit tauschen.",
 "Tip: You found a page of Mirela's map book. Goals shows how many are still out there.": "Tipp: Du hast eine Seite aus Mirelas Kartenbuch gefunden. Unter Ziele steht, wie viele noch fehlen.",
 "Daily tasks": "Tagesaufgaben",
+"A and B on the touch pad change places.": "A und B auf dem Touch-Pad tauschen die Plätze.",
+"The gamepad's A goes back and B confirms.": "A am Gamepad geht zurück, B bestätigt.",
+"Which key does what in the browser.": "Welche Taste im Browser was macht.",
+"Gamepad (A and B swapped)\nD-pad or left stick: move\nB: talk, confirm\nA: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles": "Gamepad (A und B getauscht)\nSteuerkreuz oder linker Stick: laufen\nB: sprechen, bestätigen\nA: zurück, halten zum Rennen\nStart oder Select: Menü\nRB: Kampftempo\nY: wilde Kämpfe automatisch",
+"Keyboard\nArrow keys or W A S D: move\nEnter or Space: talk, confirm\nEscape or Backspace: back\nHold Backspace: run\nM: menu\nF: battle speed\nR: auto wild battles": "Tastatur\nPfeiltasten oder W A S D: laufen\nEnter oder Leertaste: sprechen, bestätigen\nEscape oder Rücktaste: zurück\nRücktaste halten: rennen\nM: Menü\nF: Kampftempo\nR: wilde Kämpfe automatisch",
+"Keyboard keys...": "Tastatur-Tasten...",
+"Touch A/B swap: %s": "A/B-Tausch Touch: %s",
+"Gamepad A/B swap: %s": "A/B-Tausch Pad: %s",
 }
-KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn"]
+KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
+	# Startup log stages (device log only, item 2128).
+	"title scene built", "language menu ready", "title menu ready", ", slower than the goal"]

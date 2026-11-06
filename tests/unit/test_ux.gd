@@ -611,3 +611,106 @@ func test_new_game_to_first_step_is_short() -> void:
 		flags["got_starter"] = true
 	seconds += Tips.lines_of("save").size() * 2.0
 	assert_lt(seconds, 90.0, "about %d s from new game to walking" % int(seconds))
+
+func _key(code: Key, uni: int = 0) -> InputEventKey:
+	var k := InputEventKey.new()
+	k.physical_keycode = code
+	k.keycode = code
+	k.unicode = uni
+	k.pressed = true
+	return k
+
+func test_browser_keys_walk_confirm_back_and_menu() -> void:
+	for pair: Array in [[KEY_W, "ui_up"], [KEY_A, "ui_left"], [KEY_S, "ui_down"], [KEY_D, "ui_right"],
+			[KEY_UP, "ui_up"], [KEY_ENTER, "ui_accept"], [KEY_SPACE, "ui_accept"],
+			[KEY_ESCAPE, "ui_cancel"], [KEY_BACKSPACE, "ui_cancel"], [KEY_M, "menu"]]:
+		assert_true(_key(pair[0]).is_action(pair[1]), "%s -> %s" % [OS.get_keycode_string(pair[0]), pair[1]])
+	assert_true("W A S D" in MenuHost.KEYS_HELP and "M: menu" in MenuHost.KEYS_HELP)
+	var keys: Array = []
+	for r: Array in MenuHost.controls_rows():
+		keys.append(r[0])
+	assert_has(keys, "keys_help")
+
+func test_typed_letters_go_into_the_name_not_the_focus() -> void:
+	var edit := LineEdit.new()
+	add_child_autofree(edit)
+	var k := NameKeyboard.new()
+	k.target = edit
+	add_child_autofree(k)
+	assert_true(k.type_key(_key(KEY_W, "w".unicode_at(0))))
+	assert_true(k.type_key(_key(KEY_A, "a".unicode_at(0))))
+	assert_true(k.type_key(_key(KEY_SEMICOLON, "ö".unicode_at(0))))
+	assert_eq(edit.text, "Waö")
+	assert_true(k.type_key(_key(KEY_BACKSPACE)))
+	assert_eq(edit.text, "Wa", "Backspace deletes instead of going back")
+	assert_false(k.type_key(_key(KEY_UP)), "arrows still move between keys")
+	k.set_mode(NameKeyboard.Mode.CODE)
+	edit.text = ""
+	assert_true(k.type_key(_key(KEY_7, "7".unicode_at(0))))
+	assert_false(k.type_key(_key(KEY_MINUS, "-".unicode_at(0))), "codes take letters and digits only")
+	assert_eq(edit.text, "7")
+
+func test_gamepad_a_and_b_can_swap() -> void:
+	var a := InputEventJoypadButton.new()
+	a.button_index = JOY_BUTTON_A
+	a.pressed = true
+	var b := InputEventJoypadButton.new()
+	b.button_index = JOY_BUTTON_B
+	b.pressed = true
+	assert_true(a.is_action("ui_accept") and b.is_action("ui_cancel"))
+	GameState.apply_pad_swap(true)
+	assert_true(a.is_action("ui_cancel") and b.is_action("ui_accept"), "A goes back, B confirms")
+	assert_false(a.is_action("ui_accept"))
+	GameState.swap_ab_pad = true
+	assert_true("swapped" in MenuHost.pad_help())
+	GameState.swap_ab_pad = false
+	GameState.apply_pad_swap(false)
+	assert_true(a.is_action("ui_accept") and not a.is_action("ui_cancel"))
+	assert_eq(MenuHost.pad_help(), MenuHost.PAD_HELP)
+
+func _ab_spots() -> Dictionary:
+	var out: Dictionary = {}
+	for btn: TouchScreenButton in VirtualPad._buttons:
+		out[str(btn.action)] = btn.position
+	return out
+
+func test_touch_a_and_b_swap_places_apart_from_the_gamepad() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	for one: bool in [false, true]:
+		GameState.one_hand = one
+		GameState.swap_ab_touch = false
+		VirtualPad.apply_settings()
+		var before: Dictionary = _ab_spots()
+		GameState.swap_ab_touch = true
+		VirtualPad.apply_settings()
+		var after: Dictionary = _ab_spots()
+		assert_eq(after["ui_accept"], before["ui_cancel"])
+		assert_eq(after["ui_cancel"], before["ui_accept"])
+		assert_eq(after["menu"], before["menu"], "the menu button stays")
+	var a := InputEventJoypadButton.new()
+	a.button_index = JOY_BUTTON_A
+	assert_true(a.is_action("ui_accept"), "the gamepad keeps its own setting")
+	GameState.swap_ab_touch = false
+	GameState.one_hand = false
+	VirtualPad.apply_settings()
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_swap_settings_are_kept() -> void:
+	var d: Dictionary = GameState.settings_to_dict()
+	d["swap_ab_touch"] = true
+	d["swap_ab_pad"] = false
+	GameState.settings_from_dict(d)
+	assert_true(GameState.swap_ab_touch)
+	assert_true(GameState.settings_to_dict()["swap_ab_touch"])
+	GameState.swap_ab_touch = false
+
+func test_startup_time_is_logged_once_per_stage() -> void:
+	StartupLog.reset()
+	var line: String = StartupLog.mark("title menu ready", 1840)
+	assert_eq(line, "Startup: title menu ready after 1840 ms (goal 3000 ms)")
+	assert_eq(StartupLog.mark("title menu ready", 2500), "", "only the first time counts")
+	assert_eq(StartupLog.at("title menu ready"), 1840)
+	assert_string_contains(StartupLog.line_for("title menu ready", 4200), "slower than the goal")
+	StartupLog.reset()
