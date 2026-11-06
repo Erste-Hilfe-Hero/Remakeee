@@ -8,7 +8,7 @@ const ROLES: Dictionary = {
 	"archivist": "Archivist", "child": "Child", "crier": "Crier", "crystals": "Crystal seller",
 	"elder": "Elder", "fisher": "Fisher", "gatherer": "Gatherer", "hauler": "Hauler",
 	"hiker": "Hiker", "keeper": "Keeper", "reedcutter": "Reed cutter", "sparkseer": "Sparkseer",
-	"trader": "Trader", "aldo": "Aldo", "ines": "Ines", "kestra": "Kestra", "tamsin": "Tamsin",
+	"trader": "Merchant", "aldo": "Aldo", "ines": "Ines", "kestra": "Kestra", "tamsin": "Tamsin",
 	"wynn": "Wynn",
 }
 ## The name to show for [param npc] before any line names someone ("" for signs).

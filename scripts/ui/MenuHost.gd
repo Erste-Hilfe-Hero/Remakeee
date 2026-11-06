@@ -400,7 +400,7 @@ func _iron_oath() -> void:
 	if not GameState.rifts_sealed.is_empty() or GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
 		await info("The Iron Oath can only be sworn before you mend your first Rift.")
 		return
-	if await confirm_danger("Iron Oath: Spirlings that faint retire to the Sanctuary for good. This can't be undone.",
+	if await confirm_danger("Iron Oath: Spirlings that faint retire to the Sanctuary for good, and every Waymark reward pays 25% more. This can't be undone.",
 			"Take the Iron Oath", "Not now"):
 		GameState.iron_oath = true
 

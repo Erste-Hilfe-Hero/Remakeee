@@ -29,12 +29,16 @@ var _shade: Node2D
 var _entities: Node2D
 var _camera: Camera2D
 var _photo: PhotoMode
+## The last battle's model (the weekly challenge reads its turn count).
+var last_model: BattleModel
 var _daylight: CanvasModulate
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
 var _picker: ListPicker
 var _banner: Label
+## Top-of-screen notes (badges, daily tasks).
+var toast: Toast
 var _fade: ColorRect
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
@@ -55,11 +59,13 @@ func _ready() -> void:
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
 		"exchange": _action_exchange,
+		"festival_shop": _action_festival_shop,
 		"spark_read": _action_spark_read,
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
 		"gauntlet": _action_gauntlet,
 		"weekly": _action_weekly,
+		"master": _action_master,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
@@ -136,6 +142,8 @@ func _build() -> void:
 	_banner.add_theme_stylebox_override("normal", UITheme.panel_style())
 	_banner.visible = false
 	ui_root.add_child(_banner)
+	toast = Toast.new()
+	add_child(toast)
 	_text = TextBox.new()
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_text.offset_top = -TEXT_BOX_HEIGHT
@@ -371,8 +379,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if scene_running:
 		return
 	DailyTasks.record("step", {"map": map.id})
-	if not GameState.notices.is_empty():
-		await _locked_say(take_notices())
+	show_notices()
 	if await _world.stepped(cell):
 		return
 	var warp: Dictionary = map.warp_at(cell)
@@ -503,15 +510,23 @@ func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
 
 ## Shows newly earned achievements (item 90).
 func announce_achievements() -> void:
-	var lines: Array[String] = take_notices()
-	lines.append_array(Collection.claim())
+	show_notices()
+	var lines: Array[String] = Collection.claim()
 	for t: String in Achievements.check():
-		lines.append("Achievement: %s" % t)
+		# Unlocked badges show at the top of the screen without stopping the game (plan 3315).
+		var a: Dictionary = Achievements.by_title(t)
+		toast.show_note(Loc.t("Badge: %s") % Loc.t(t) + "  " + Waymarks.gain_text(int(a.get("reward", 0))), Badges.texture(a, true))
+		Sound.sfx("level_up")
 	if lines.is_empty():
 		return
 	Sound.sfx("level_up")
 	await say(lines)
 	_text.visible = false
+
+## Shows queued reward notes (daily tasks, Waymarks) as toasts that do not stop the game.
+func show_notices() -> void:
+	for line: String in take_notices():
+		toast.show_note(line)
 
 ## Reward notes queued by DailyTasks / Waymarks, emptied.
 func take_notices() -> Array[String]:
@@ -956,54 +971,83 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 
 ## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
 func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not GameState.has_flag("tower_intro"):
+		GameState.set_flag("tower_intro")
+		await say(["The stair has %d floors. There is no healing on the way, only at a rest point after every tenth floor, where your climb is saved." % Gauntlet.FLOORS] as Array[String])
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var best: int = int(GameState.records.get("gauntlet_best", 0))
-	var go: bool = await menu.confirm("Climb the lighthouse stair? Best so far: %d of %d." % [best, Gauntlet.ROUNDS])
-	menu.queue_free()
-	if not go:
+	var best: int = Gauntlet.best()
+	var start: int = 0
+	var saved: int = Gauntlet.checkpoint()
+	if saved > 0:
+		var pick: int = await menu.pick_strings("Best so far: floor %d of %d." % [best, Gauntlet.FLOORS],
+			["Continue from floor %d" % (saved + 1), "Start from floor 1"] as Array[String])
+		if pick < 0:
+			menu.queue_free()
+			return
+		start = saved if pick == 0 else 0
+	elif not await menu.confirm("Climb the lighthouse stair? Best so far: floor %d of %d." % [best, Gauntlet.FLOORS]):
+		menu.queue_free()
 		return
-	var run: Gauntlet = Gauntlet.new(GameState.rng.randi(), GameState.party)
-	var wins: int = 0
+	menu.queue_free()
+	var run_seed: int = Gauntlet.checkpoint_seed() if start > 0 and Gauntlet.checkpoint_seed() != 0 else GameState.rng.randi()
+	var run: Gauntlet = Gauntlet.new(run_seed, GameState.progress_cap())
+	if start > 0:
+		# Continuing at a rest point: the team starts rested, as it was when the climb was saved.
+		GameState.heal_party()
+	var floors: int = start
 	var helper: Dictionary = await pick_echo_partner("Climb with a friend's echo beside you?")
-	while wins < Gauntlet.ROUNDS:
-		await say(["Echo %d of %d steps out of the light..." % [wins + 1, Gauntlet.ROUNDS]] as Array[String])
-		var team: Array[Spirling] = run.team(wins)
-		var info: Dictionary = {"name": "Echo Wayfarer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
+	while floors < Gauntlet.FLOORS:
+		await say(["Floor %d of %d: an echo steps out of the light..." % [floors + 1, Gauntlet.FLOORS]] as Array[String])
+		var info: Dictionary = {"name": "Echo Wayfarer %d" % (floors + 1), "ai": Gauntlet.ai_for(floors), "money": run.prize(floors)}
 		if not helper.is_empty():
 			for s: Spirling in helper.partner.echo:
 				s.restore()
 			info["partner"] = helper.partner
 		busy = false
-		var outcome: BattleModel.Outcome = await start_battle(team, false, info)
+		var outcome: BattleModel.Outcome = await start_battle(run.team(floors), false, info)
 		busy = true
 		player.frozen = true
 		if outcome != BattleModel.Outcome.WIN:
 			break
-		wins += 1
-	GameState.records["gauntlet_best"] = maxi(best, wins)
+		floors += 1
+		var lines: Array[String] = Gauntlet.pay_floor(floors)
+		if floors % Gauntlet.SECTION == 0 and GameState.party.all(func(s: Spirling) -> bool: return not s.is_fainted()):
+			GameState.records["tower_flawless"] = 1
+		if Gauntlet.is_rest_point(floors):
+			Gauntlet.save_checkpoint(floors, run_seed)
+			GameState.heal_party()
+			lines.append("A rest point. Your team is rested and your climb is saved.")
+		if not lines.is_empty():
+			await say(lines)
+		if Gauntlet.is_rest_point(floors):
+			var m := MenuHost.new()
+			_ui.add_child(m)
+			var climb_on: bool = await m.confirm("Keep climbing?")
+			m.queue_free()
+			if not climb_on:
+				break
+	GameState.records["gauntlet_best"] = maxi(best, floors)
 	if not helper.is_empty():
-		await thank_echo(helper, wins >= Gauntlet.ROUNDS)
-	if wins >= Gauntlet.ROUNDS:
+		await thank_echo(helper, floors >= Gauntlet.FLOORS)
+	if floors >= Gauntlet.FLOORS:
+		Gauntlet.clear_checkpoint()
 		GameState.set_flag("gauntlet_clear")
 		await _action_give_item([run.reward_item(), "1"] as PackedStringArray, null)
 		await say(["The echoes bow and fade. You reached the lamp room!"] as Array[String])
-	elif wins > best:
-		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
+	elif floors > best:
+		await say(["New best: floor %d of %d!" % [floors, Gauntlet.FLOORS]] as Array[String])
 
-## Weekly challenge (item 88): three echo Wayfarers that are the same for everyone this week.
+## Weekly challenge (item 88, plan area 8): five echo Wayfarers that are the same for everyone this week.
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
-	var top: int = 1
-	for s: Spirling in GameState.party:
-		top = maxi(top, s.level)
-	var ch := WeeklyChallenge.new(week, top)
+	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	if str(rec.get("week", "")) != week:
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var go: bool = await menu.confirm("This week: %s, rule %s. Three echoes at ring %d. Best this week: %d of %d. Try?" % [
+	var go: bool = await menu.confirm("This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d. Try?" % [
 		BattleRules.FIELDS[ch.field].label, BattleRules.RULES[ch.rule].label, ch.level, int(rec.best), WeeklyChallenge.ROUNDS])
 	menu.queue_free()
 	if not go:
@@ -1017,21 +1061,60 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
 		busy = true
 		player.frozen = true
+		var turns: int = last_model.turn if last_model != null else 0
 		if outcome != BattleModel.Outcome.WIN:
 			break
 		wins += 1
+		var lines: Array[String] = [WeeklyChallenge.round_text(wins, turns, GameState.party)]
+		var coins: int = WeeklyChallenge.claim_interim(rec, wins)
+		if coins > 0:
+			lines.append("Interim prize: %d coins." % coins)
+		await say(lines)
 	rec.best = maxi(int(rec.best), wins)
 	# Weekly board (item 125): rounds won and health left; the server keeps the best.
 	Online.call_fn("weekly_submit", {"p_week": week, "p_score": EchoTeam.weekly_score(wins, GameState.party)})
+	if wins >= WeeklyChallenge.ROUNDS and GameState.party.all(func(s: Spirling) -> bool: return not s.is_fainted()):
+		GameState.records["weekly_flawless"] = 1
 	if wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
 		rec.claimed = true
 		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1
 		GameState.money += WeeklyChallenge.PRIZE
-		await say(["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE] as Array[String])
+		var won: Array[String] = ["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE]
+		won.append_array(Waymarks.reward_lines(Waymarks.earn(WeeklyChallenge.WAYMARKS, "weekly")))
+		won.append_array(SeasonPath.add("weekly"))
+		await say(won)
 		await _action_give_item([ch.reward_item(), "1"] as PackedStringArray, null)
 	elif wins >= WeeklyChallenge.ROUNDS:
 		await say(["Cleared again! The prize comes back next week."] as Array[String])
 	GameState.records["weekly"] = rec
+	await announce_achievements()
+
+## Master Wayfarer duel (plan 3288-3289): ring 45-55 team, Waymarks first time and weekly.
+func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
+	var id: String = args[0] if not args.is_empty() else ""
+	var m: Dictionary = Masters.find(id)
+	if m.is_empty():
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var ask: String = Loc.t("Duel %s? Ring %d.") % [str(m.name), Masters.level(m)]
+	if not Masters.pays_now(id):
+		ask += " " + Loc.t("The Waymarks for this master come back next week.")
+	var go: bool = await menu.confirm(ask)
+	menu.queue_free()
+	if not go:
+		return
+	var info: Dictionary = {"name": "%s, %s" % [str(m.name), Loc.t(str(m.title))], "ai": 3}
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(Masters.team(id), false, info)
+	busy = true
+	player.frozen = true
+	if outcome != BattleModel.Outcome.WIN:
+		return
+	var lines: Array[String] = []
+	lines.append_array(Dialogue.get_entry("masters/" + id).get("win_lines", []))
+	lines.append_array(Masters.win(id))
+	await say(lines)
 	await announce_achievements()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
@@ -1044,11 +1127,47 @@ func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	await say([str(f.text)] as Array[String])
 	var flag: String = Season.gift_flag(f, Season.festival_year(int(d.month), int(d.year)))
-	if GameState.has_flag(flag):
-		await say(["Enjoy the festival!"] as Array[String])
+	if not GameState.has_flag(flag):
+		GameState.set_flag(flag)
+		await _action_give_item([str(f.gift), "1"] as PackedStringArray, null)
+	await _festival_task()
+
+## The crier's festival task of the day (plan 3211): one a day, pays festival ribbons.
+func _festival_task() -> void:
+	var task: Dictionary = Festival.take_task()
+	var t: Dictionary = Festival.task_def(str(task.get("id", "")))
+	if t.is_empty():
 		return
-	GameState.set_flag(flag)
-	await _action_give_item([str(f.gift), "1"] as PackedStringArray, null)
+	if bool(task.get("done", false)):
+		await say(["Crier: You've done today's festival task. Come back tomorrow for another!"] as Array[String])
+		return
+	await say([Loc.t("Crier: Today's festival task: %s (%d/%d). It pays %d ribbons.") % [Loc.t(str(t.text)), int(task.n), int(t.n), Festival.TASK_RIBBONS]] as Array[String])
+
+## Tilda's festival stand (plan 3209): festival goods for ribbons, only while a festival runs.
+func _action_festival_shop(_args: PackedStringArray, _speaker: NPC) -> void:
+	var a: Dictionary = Festival.active()
+	if a.is_empty():
+		var nxt: Dictionary = Season.next_after(int(Online.date_now().month))
+		await say([Loc.t("Tilda: My stand opens for the next festival, the %s.") % Loc.t(str(nxt.get("name", "")))] as Array[String])
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	while true:
+		var goods: Array = Festival.shop()
+		var labels: Array[String] = []
+		for o: Variant in goods:
+			labels.append("%s  %d" % [Loc.t(str(Database.item(str(o.item)).get("name", o.item))), int(o.price)])
+		var idx: int = await menu.pick_strings(Loc.t("%s   Ribbons %d") % [Loc.t(str(a.fest.name)), Festival.ribbons()], labels)
+		if idx < 0:
+			break
+		var o: Dictionary = goods[idx]
+		var it: Dictionary = Database.item(str(o.item))
+		if not await menu.confirm("%s\n%s\n\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", ""))), Loc.t("Trade for %d ribbons?") % int(o.price)]):
+			continue
+		var err: String = Festival.buy(str(o.item))
+		Sound.sfx("cancel" if err != "" else "coin")
+		await menu.info(err if err != "" else Loc.t("Traded for %s. You have %d.") % [Loc.t(str(it.get("name", ""))), GameState.item_count(str(o.item))])
+	menu.queue_free()
 
 ## The Sparkseer reads each party member's hidden Spark values in words.
 func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -1358,6 +1477,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		mine = []
 		mine.assign(own)
 	var model := BattleModel.new(mine, foes, wild, GameState.rng.randi(), ai_level)
+	last_model = model
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
 	model.level_cap = GameState.level_cap()
@@ -1392,6 +1512,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
+	GameState.note_battle_end()
 	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()
