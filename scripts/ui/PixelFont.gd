@@ -15,36 +15,70 @@ const SPACE_ADVANCE: int = 3
 const BASE_SIZE: int = 8
 
 static var _font: FontFile
+static var _large: FontFile
+
+## "Chimora Pixel Groß" (plan item 2042): the same glyphs drawn on a 7x12 grid, 9 px above the
+## baseline and 3 below, for the Large text option. It answers to the same font size, so every
+## screen can swap it in without new sizes.
+const LARGE_W: int = 7
+const LARGE_H: int = 12
+const LARGE_ASCENT: int = 9
+const LARGE_DESCENT: int = 3
+## Which small column and row each large column and row comes from: the inner columns and two
+## rows above the baseline and one below are drawn twice, so outlines stay one pixel thin.
+const LARGE_COLS: Array[int] = [0, 1, 1, 2, 3, 3, 4]
+const LARGE_ROWS: Array[int] = [0, 1, 2, 2, 3, 4, 5, 5, 6, 7, 7, 8]
 
 static func get_font() -> FontFile:
 	if _font == null:
 		_font = _build()
 	return _font
 
-static func _build() -> FontFile:
+static func get_large_font() -> FontFile:
+	if _large == null:
+		_large = _build(true)
+	return _large
+
+## One glyph of the large set, as rows of "#" and ".".
+static func large_glyph(ch: String) -> Array[String]:
+	var small: Array = GLYPHS[ch]
+	var out: Array[String] = []
+	for r: int in LARGE_ROWS:
+		var line: String = ""
+		for c: int in LARGE_COLS:
+			line += str(small[r])[c]
+		out.append(line)
+	return out
+
+static func _build(large: bool = false) -> FontFile:
 	var chars: Array = GLYPHS.keys()
+	var cw: int = LARGE_W if large else CELL_W
+	var chh: int = LARGE_H if large else CELL_H
+	var ascent: int = LARGE_ASCENT if large else ASCENT
+	var descent: int = LARGE_DESCENT if large else DESCENT
+	var space: int = SPACE_ADVANCE + 1 if large else SPACE_ADVANCE
 	var cols: int = 16
 	var rows: int = int(ceil(chars.size() / float(cols)))
 	var pad: int = 1
-	var img := Image.create(cols * (CELL_W + pad), rows * (CELL_H + pad), false, Image.FORMAT_LA8)
+	var img := Image.create(cols * (cw + pad), rows * (chh + pad), false, Image.FORMAT_LA8)
 	var f := FontFile.new()
 	f.fixed_size = BASE_SIZE
 	f.fixed_size_scale_mode = TextServer.FIXED_SIZE_SCALE_INTEGER_ONLY
 	f.antialiasing = TextServer.FONT_ANTIALIASING_NONE
 	f.subpixel_positioning = TextServer.SUBPIXEL_POSITIONING_DISABLED
-	f.font_name = "Chimora Pixel"
+	f.font_name = "Chimora Pixel Groß" if large else "Chimora Pixel"
 	var size := Vector2i(BASE_SIZE, 0)
-	f.set_cache_ascent(0, BASE_SIZE, ASCENT)
-	f.set_cache_descent(0, BASE_SIZE, DESCENT)
+	f.set_cache_ascent(0, BASE_SIZE, ascent)
+	f.set_cache_descent(0, BASE_SIZE, descent)
 	for i: int in chars.size():
 		var ch: String = chars[i]
-		var gx: int = (i % cols) * (CELL_W + pad)
-		var gy: int = (i / cols) * (CELL_H + pad)
-		var bitmap: Array = GLYPHS[ch]
-		var min_x: int = CELL_W
+		var gx: int = (i % cols) * (cw + pad)
+		var gy: int = (i / cols) * (chh + pad)
+		var bitmap: Array = large_glyph(ch) if large else GLYPHS[ch]
+		var min_x: int = cw
 		var max_x: int = -1
 		for y: int in bitmap.size():
-			for x: int in CELL_W:
+			for x: int in cw:
 				if str(bitmap[y])[x] == "#":
 					img.set_pixel(gx + x, gy + y, Color(1, 1, 1, 1))
 					min_x = mini(min_x, x)
@@ -53,12 +87,12 @@ static func _build() -> FontFile:
 		if max_x < 0:
 			# Blank glyph (space).
 			min_x = 0
-			max_x = SPACE_ADVANCE - GAP - 1
+			max_x = space - GAP - 1
 		var w: int = max_x - min_x + 1
 		f.set_glyph_advance(0, BASE_SIZE, code, Vector2(w + GAP, 0))
-		f.set_glyph_offset(0, size, code, Vector2(0, -ASCENT))
-		f.set_glyph_size(0, size, code, Vector2(w, CELL_H))
-		f.set_glyph_uv_rect(0, size, code, Rect2(gx + min_x, gy, w, CELL_H))
+		f.set_glyph_offset(0, size, code, Vector2(0, -ascent))
+		f.set_glyph_size(0, size, code, Vector2(w, chh))
+		f.set_glyph_uv_rect(0, size, code, Rect2(gx + min_x, gy, w, chh))
 		f.set_glyph_texture_idx(0, size, code, 0)
 	f.set_texture_image(0, size, 0, img)
 	return f
@@ -155,6 +189,8 @@ const GLYPHS: Dictionary[String, Array] = {
 	"~": [".....", ".....", ".#...", "#.#.#", "...#.", ".....", ".....", ".....", "....."],
 	"@": [".###.", "#...#", "#.###", "#.#.#", "#.###", "#....", ".####", ".....", "....."],
 	"$": ["..#..", ".####", "#.#..", ".###.", "..#.#", "####.", "..#..", ".....", "....."],
+	"€": ["..###", ".#...", "####.", ".#...", "####.", ".#...", "..###", ".....", "....."],
+	"≈": [".....", ".....", ".#..#", "#.##.", ".....", ".#..#", "#.##.", ".....", "....."],
 	"|": ["..#..", "..#..", "..#..", "..#..", "..#..", "..#..", "..#..", "..#..", "....."],
 	"`": [".#...", "..#..", ".....", ".....", ".....", ".....", ".....", ".....", "....."],
 	"{": ["...#.", "..#..", "..#..", ".#...", "..#..", "..#..", "...#.", ".....", "....."],

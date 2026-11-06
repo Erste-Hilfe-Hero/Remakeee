@@ -58,3 +58,15 @@ T.update({
 T.update({
 "You pull the lever. Somewhere a rope ladder rattles down.": "Du ziehst den Hebel. Irgendwo rasselt eine Strickleiter herunter.",
 })
+
+# Dungeons (area 3 items 1008 to 1010)
+T.update({
+"The bell hums softly. This room is done.": "Die Glocke summt leise. Dieser Raum ist geschafft.",
+"Clang! The note jars, and every bell falls silent. Start again.": "Klong! Der Ton passt nicht, und alle Glocken verstummen. Fang von vorn an.",
+"Dong. The note hangs in the air.": "Dong. Der Ton hängt in der Luft.",
+"The last note joins the others. A door swings open!": "Der letzte Ton fügt sich zu den anderen. Eine Tür schwingt auf!",
+"You turn the wheel open. The water is now at mark %d.": "Du drehst das Rad auf. Das Wasser steht jetzt bei Marke %d.",
+"You turn the wheel shut. The water is now at mark %d.": "Du drehst das Rad zu. Das Wasser steht jetzt bei Marke %d.",
+"The light strikes the crystal, and it rings out bright!": "Das Licht trifft den Kristall, und er klingt hell auf!",
+"You turn the mirror. The beam swings to a new wall.": "Du drehst den Spiegel. Der Strahl schwenkt an eine andere Wand.",
+})

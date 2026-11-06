@@ -21,6 +21,8 @@ nicht flüchtig, nicht geteilt):
 | --- | --- |
 | Personenbezogene Daten → **Nutzer-IDs** | **Ja** (zufällige Spieler-ID) |
 | Personenbezogene Daten → **Name** | **Ja** (Wayfarer-Name; Google zählt auch Spitznamen dazu) |
+| Finanzdaten → **Kaufverlauf** | **Ja**, erhoben, nicht geteilt, Zweck *App-Funktionen* (der Server speichert Käufe, Rissglas-Buchungen und Erstattungen) |
+| Personenbezogene Daten → **Sonstige Infos** | **Ja** (nur die Altersgruppe für den Shop, kein Geburtsdatum) |
 | App-Aktivitäten → **Sonstige Aktionen** | **Ja** (Spielstand/Fortschritt) |
 | E-Mail-Adresse, Geräte-IDs, Absturzprotokolle, Diagnose | **Nein** |
 | Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
@@ -42,10 +44,11 @@ Weitere Play-Console-Punkte:
 | --- | --- | --- | --- |
 | Identifiers → **User ID** | Ja | Nein | App Functionality |
 | User Content → **Gameplay Content** (Spielstand inkl. Wayfarer-Name) | Ja | Nein | App Functionality |
+| Purchases → **Purchase History** (Käufe, Rissglas-Buchungen, Erstattungen auf unserem Server) | Ja | Nein | App Functionality |
+| Other Data → **Other Data Types** (Altersgruppe für den Shop) | Ja | Nein | App Functionality |
 
-Alles andere (Kontaktdaten, Standort, Diagnose, Nutzungsdaten, Kaufdaten) nicht ankreuzen. Käufe wickelt Apple
-ab; die Kaufbestätigung gilt nicht als von dir erhobene „Purchase History“, solange du sie nur zum
-Freischalten nutzt.
+Alles andere (Kontaktdaten, Standort, Diagnose, Nutzungsdaten) nicht ankreuzen. Weil der Server Käufe dem
+Konto zuordnet und speichert, wird „Purchase History“ angegeben.
 
 - „Used for tracking“: **Nein** bei allem. Keine App-Tracking-Transparency-Abfrage nötig, solange kein
   Tracking-SDK drin ist.
@@ -68,11 +71,14 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
 
 - **IARC (Google, liefert USK/PEGI/ESRB):** Gewalt: ja, *Fantasy-/Cartoon-Gewalt gegen Fantasiewesen,
   nicht realistisch, kein Blut*. Alles andere: nein. Nutzer können interagieren: **ja, eingeschränkt** (Freunde
-  sehen den Wayfarer-Namen und tauschen nur feste Grüße, kein freier Chat; Melden und Blockieren vorhanden). Digitale Käufe: **nein** (kostenlos, zum Start keine In-App-Käufe; mit dem Shop auf **ja** stellen). Erwartung: **USK 6 / PEGI 7**
-  (Schätzung, die Freigabe vergibt IARC).
+  sehen den Wayfarer-Namen und tauschen nur feste Grüße, kein freier Chat; Melden und Blockieren vorhanden). Digitale Käufe: **ja** (Shop mit In-App-Käufen; keine Zufallsinhalte gegen Geld). Erwartung: **USK 6 / PEGI 7
+  mit Zusatz „In-Game-Käufe“** (ohne „zufällige Objekte“; Schätzung, die Freigabe vergibt IARC).
 - **Apple (Stufen 4+, 9+, 13+, 16+, 18+, neuer Fragebogen seit 31.01.2026):** Cartoon- oder Fantasy-Gewalt:
   *selten/mild* → Erwartung **9+**. In-App-Kontrollen/Fähigkeiten: kein Chat, keine nutzergenerierten Inhalte,
-  kein Web-Zugriff. Medizin/Wellness: nein.
+  kein Web-Zugriff. Medizin/Wellness: nein. **In-App-Käufe: ja.** Begründung für 9+ trotz Käufen: Die Stufe
+  hängt bei Apple an den Inhalten (milde Fantasy-Gewalt), nicht an Käufen; Käufe werden auf der Store-Seite
+  angezeigt, der Shop ist im Spiel unter 13 gesperrt, und es gibt keine Lootboxen (sonst Wahrscheinlichkeiten
+  Pflicht, Guideline 3.1.1).
 - **Achtung:** Bezahlte Zufallsinhalte (Lootboxen) führen in Deutschland zum USK-Hinweis „In-Game-Käufe +
   zufällige Objekte“ und meist zu einer höheren Freigabe; Apple verlangt dann die Anzeige der
   Wahrscheinlichkeiten. Empfehlung: keine Lootboxen.

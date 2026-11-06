@@ -77,10 +77,19 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
 
 ### 3.4 Käufe im Spiel
 
-Falls du im Spiel etwas kaufst, läuft der Kauf ausschließlich über den Apple App Store bzw. Google Play.
-Zahlungsdaten erhalten wir nicht. Wir erhalten vom Store eine Kaufbestätigung (Transaktions-ID, Produkt,
-Zeitpunkt), um den Inhalt freizuschalten. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO; für gesetzliche
-Aufbewahrungspflichten Art. 6 Abs. 1 lit. c DSGVO (bis zu 10 Jahre nach Handels- und Steuerrecht).
+Chimora ist kostenlos und hat einen Shop mit In-App-Käufen. Gekauft wird ausschließlich über den Apple App
+Store bzw. Google Play; Verkäufer und Rechnungssteller ist der jeweilige Store. Zahlungsdaten erhalten wir nie.
+
+- **Was wir speichern:** die Kaufbestätigung des Stores (Transaktions-ID, Produkt, Preis, Zeitpunkt, bei
+  Abos das Ablaufdatum), dein Rissglas-Guthaben mit allen Buchungen, freigeschaltete Inhalte, Erstattungen,
+  dein Ausgabelimit und deine **Altersgruppe** (unter 13, 13 bis 15, 16 bis 17, ab 18). Dein Geburtsdatum
+  speichern wir nicht, nur den Tag, an dem die nächste Altersgruppe beginnt.
+- **Wofür:** Käufe prüfen und gutschreiben, Erstattungen verarbeiten, Ausgabelimits und Jugendschutz
+  einhalten, die Liste „Meine Käufe“ zeigen. Kein Tracking, keine Werbung, kein Profiling.
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Vertrag); für die Altersgruppe und die Limits zusätzlich
+  Art. 6 Abs. 1 lit. c und f DSGVO (Jugendschutz, Schutz vor Überschuldung).
+- **Speicherdauer:** bis du dein Konto löschst; dann werden auch Käufe, Guthaben und Altersgruppe gelöscht.
+  Rechnungen bewahren Apple und Google als Verkäufer auf.
 
 ### 3.5 Kontakt und Support
 
@@ -125,8 +134,9 @@ liegen ausschließlich in Deutschland.
 
 Chimora ist für alle Altersgruppen gedacht. Wir verarbeiten nur die für das Spiel nötigen Daten, zeigen
 keine Werbung, erstellen keine Profile und bieten keinen freien Chat: Grüße unter Freunden sind feste,
-übersetzte Sätze. Käufe lassen sich mit den
-Jugendschutzfunktionen der Stores steuern.
+übersetzte Sätze. Vor dem ersten Öffnen des Shops fragen wir Geburtsjahr und -monat ab und speichern nur die
+Altersgruppe: **unter 13 Jahren ist der Shop gesperrt**, von 13 bis 15 gilt ein festes Monatslimit von 15 €,
+von 16 bis 17 von 30 €. Käufe lassen sich zusätzlich mit den Jugendschutzfunktionen der Stores steuern.
 
 ## 7. Deine Rechte
 

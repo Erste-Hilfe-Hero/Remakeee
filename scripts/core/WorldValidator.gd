@@ -241,6 +241,8 @@ static func check_passages(errors: PackedStringArray, map_ids: PackedStringArray
 			var of: String = str(b.get("open_flag", ""))
 			if of.begins_with("_") and not of in WorldMechanics.CLOCK_FLAGS:
 				errors.append("map '%s': block at %s,%s waits for unknown clock flag '%s'" % [id, b.x, b.y, of])
+		if not m.beam.is_empty():
+			check_beam(errors, id, m)
 		if m.passages.is_empty():
 			continue
 		var reach: Dictionary = reachable_cells(m, entries.get(id, []))
@@ -261,6 +263,28 @@ static func check_passages(errors: PackedStringArray, map_ids: PackedStringArray
 				near = near or reach.has(c + d)
 			if not near:
 				errors.append("map '%s': passage at %s cannot be reached" % [id, c])
+
+## Lanternwell (item 1010): some way of turning the mirrors must light the crystal, and the
+## room must not start solved.
+static func check_beam(errors: PackedStringArray, id: String, m: MapData) -> void:
+	var cells: Array[Vector2i] = []
+	var start: Dictionary = {}
+	for mm: Variant in m.beam.get("mirrors", []):
+		var c := Vector2i(int(mm[0]), int(mm[1]))
+		cells.append(c)
+		start[c] = str(mm[2]) if (mm as Array).size() > 2 else "/"
+	if cells.size() > 10:
+		errors.append("map '%s': too many mirrors to check (%d)" % [id, cells.size()])
+		return
+	if WorldMechanics.beam_hits(m, start):
+		errors.append("map '%s': the light already hits the crystal at the start" % id)
+	for bits: int in 1 << cells.size():
+		var ways: Dictionary = {}
+		for i: int in cells.size():
+			ways[cells[i]] = "\\" if bits & (1 << i) else "/"
+		if WorldMechanics.beam_hits(m, ways):
+			return
+	errors.append("map '%s': no way of turning the mirrors lights the crystal" % id)
 
 static func check_puzzles(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
 	var entries: Dictionary = entry_cells(map_ids)
@@ -349,6 +373,14 @@ static func entry_cells(map_ids: PackedStringArray, start_map: String = "lightho
 			var arr: Array = entries.get(to, [])
 			arr.append(Vector2i(int(w.tx), int(w.ty)))
 			entries[to] = arr
+		# Falling through cracked floor lands on the same cell of the floor below.
+		if not m.drop_to.is_empty():
+			var below: Array = entries.get(m.drop_to, [])
+			for y: int in m.height:
+				for x: int in m.rows[y].length():
+					if m.kind_at(Vector2i(x, y)) == TilesetFactory.Kind.CRACKED:
+						below.append(Vector2i(x, y))
+			entries[m.drop_to] = below
 	return entries
 
 static func load_layout() -> Dictionary:
@@ -453,6 +485,15 @@ static func check_reachability(errors: PackedStringArray, map_ids: PackedStringA
 			var l: Dictionary = links.get(id, {})
 			l[to] = true
 			links[id] = l
+		# Cracked floor drops the player onto the floor below (Shatterfloor Mine).
+		if not m.drop_to.is_empty():
+			var drop: Array = entries.get(m.drop_to, [])
+			for e: Variant in entry_cells(PackedStringArray([id])).get(m.drop_to, []):
+				drop.append(e)
+			entries[m.drop_to] = drop
+			var dl: Dictionary = links.get(id, {})
+			dl[m.drop_to] = true
+			links[id] = dl
 	for id: String in map_ids:
 		if not entries.has(id):
 			errors.append("map '%s': no warp leads here" % id)

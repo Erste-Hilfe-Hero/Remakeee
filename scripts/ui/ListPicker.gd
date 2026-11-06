@@ -174,6 +174,11 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(0, ROW_HEIGHT)
 		b.clip_text = true
+		# Large text (item 2042): long rows wrap onto a second line instead of being cut.
+		if UITheme.large_text:
+			b.clip_text = false
+			b.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+			b.custom_minimum_size.x = 1
 		b.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 		var result: int = -1 if bool(rows[i].get("cancel", false)) else i
 		_hints.append(str(rows[i].get("hint", "")))

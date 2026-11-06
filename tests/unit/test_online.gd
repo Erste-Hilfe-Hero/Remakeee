@@ -267,7 +267,12 @@ func test_spirlings_and_echo_cores_never_change_hands() -> void:
 		assert_false(str(id).contains("core") or str(id).contains("hall"), "Echo Cores are no item: %s" % id)
 		assert_null(Database.species(str(id)), "no item shares a Spirling's name: %s" % id)
 	for fn: String in _server._fns:
-		for bad: String in ["spirling", "trade", "core", "buy", "sell", "release"]:
+		# The shop (plan area 10) sells items for Riftglass; shop_buy never hands out Spirlings
+		# (ShopValidator bans species grants, test_shop_catalog checks it), so only "buy" is allowed there.
+		var banned: Array = ["spirling", "trade", "core", "sell", "release"]
+		if not fn.begins_with("shop_"):
+			banned.append("buy")
+		for bad: String in banned:
 			assert_false(fn.contains(bad), "server function %s must not move Spirlings" % fn)
 	# Mail carries only phrases, waves and thanks; gifts are rolled by the server.
 	assert_eq(_server._fn_mail_send({"p_kind": "spirling", "p_code": "X", "p_phrase": 0}).get("error", ""), "bad_kind")

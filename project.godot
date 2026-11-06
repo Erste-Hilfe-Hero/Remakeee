@@ -14,6 +14,7 @@ VirtualPad="*res://scripts/ui/VirtualPad.gd"
 SaveManager="*res://scripts/core/SaveManager.gd"
 Sound="*res://scripts/core/Sound.gd"
 Online="*res://scripts/online/Online.gd"
+Billing="*res://scripts/shop/Billing.gd"
 
 [display]
 window/size/viewport_width=144

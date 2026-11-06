@@ -84,6 +84,9 @@ func _ready() -> void:
 		"echo_song": _action_echo_song,
 		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
+		"bell": _action_bell,
+		"toggle": _action_toggle,
+		"mirror": _action_mirror,
 		"first_voice": _action_first_voice,
 	}
 	_world = WorldMechanics.new(self)
@@ -136,6 +139,8 @@ func _build() -> void:
 	ui_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.theme = UITheme.get_theme()
+	# Text box, hints and the HUD follow high contrast and large text at once.
+	ui_root.add_to_group(MenuHost.THEME_GROUP)
 	_ui.add_child(ui_root)
 	_ui_root = ui_root
 	SafeArea.apply(ui_root)
@@ -819,7 +824,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		var world: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * at
 		tap_cell(Vector2i(floori(world.x / GridWalker.TILE), floori(world.y / GridWalker.TILE)))
 
-## Walks toward [param cell]; NPCs, signs and counters get walked up to and talked to.
+## True if a tap on [param cell] should walk next to it and use it, like pressing A in front
+## of it: signs, counters, hidden finds, smooth rock passages, ladders and plank gaps
+## (item 2109, so all of the world works with taps alone). NPCs are checked by the caller.
+static func used_on_arrival(m: MapData, cell: Vector2i, flags: Dictionary) -> bool:
+	if not m.sign_at(cell, flags).is_empty() or not m.secret_at(cell, flags).is_empty():
+		return true
+	if not m.ladder_at(cell).is_empty():
+		return true
+	var p: Dictionary = m.passage_at(cell)
+	if not p.is_empty() and not bool(flags.get(str(p.get("flag", "")), false)):
+		return true
+	var k: int = m.kind_at(cell)
+	return k == TilesetFactory.Kind.COUNTER or k == TilesetFactory.Kind.PLANK
+
+## Walks toward [param cell]; NPCs, signs, counters and finds get walked up to and used.
 func tap_cell(cell: Vector2i) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
@@ -833,8 +852,14 @@ func tap_cell(cell: Vector2i) -> void:
 			if f == player.cell or not route.is_empty():
 				player.follow(route, cell)
 				return
-	var talk: bool = npc_at(cell) != null or not map.sign_at(cell, GameState.flags).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
-	if talk:
+	# Boulders: a tap next to one pushes it, a tap further away walks up to it (item 2109).
+	if map.char_at(cell) == "B":
+		if PathFinder.is_adjacent(cell, player.cell):
+			player.follow([cell] as Array[Vector2i])
+		else:
+			player.follow(PathFinder.find_adjacent(player.cell, cell, passable))
+		return
+	if npc_at(cell) != null or used_on_arrival(map, cell, GameState.flags):
 		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)
 	else:
 		player.follow(PathFinder.find(player.cell, cell, passable))
@@ -1027,6 +1052,7 @@ func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
 	if score >= ECHO_SONG_PASS:
 		Sound.sfx("level_up")
 		GameState.set_flag(args[0])
+		DailyTasks.record("melody", {"map": map.id})
 	else:
 		Sound.sfx("cancel")
 
@@ -1179,6 +1205,46 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 			Sound.sfx("warp")
 			_world.refresh(player.cell)
 			await say(["The last lamp catches. Somewhere, rock grinds against rock!"] as Array[String])
+
+## "bell <puzzle> <n> <total>": Bellstone Ruins (area 3 item 1008). Same rules as switches:
+## ring the bells in the order drawn on the wall; a wrong bell silences them all.
+func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 3:
+		return
+	if GameState.has_flag(args[0]):
+		await say(["The bell hums softly. This room is done."] as Array[String])
+		return
+	match GameState.press_switch(args[0], int(args[1]), int(args[2])):
+		GameState.SwitchResult.WRONG:
+			Sound.sfx("cancel")
+			await say(["Clang! The note jars, and every bell falls silent. Start again."] as Array[String])
+		GameState.SwitchResult.STEP:
+			Sound.sfx("confirm")
+			await say(["Dong. The note hangs in the air."] as Array[String])
+		GameState.SwitchResult.SOLVED:
+			Sound.sfx("warp")
+			_world.refresh(player.cell)
+			await say(["The last note joins the others. A door swings open!"] as Array[String])
+
+## "toggle <flag>": a sluice wheel that can be turned both ways (Brackwater Sluice, item 1009).
+func _action_toggle(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var on: bool = not GameState.has_flag(args[0])
+	GameState.set_flag(args[0], on)
+	Sound.sfx("warp")
+	_world.refresh(player.cell)
+	var level: int = _world.water_level(map)
+	var line: String = "You turn the wheel open. The water is now at mark %d." if on else "You turn the wheel shut. The water is now at mark %d."
+	await say([line % level] as Array[String])
+
+## "mirror <x> <y>": turns a mirror in Lanternwell (item 1010) and follows the light again.
+func _action_mirror(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 2:
+		return
+	var hit: bool = _world.turn_mirror(Vector2i(int(args[0]), int(args[1])))
+	Sound.sfx("warp" if hit else "confirm")
+	await say(["The light strikes the crystal, and it rings out bright!" if hit else "You turn the mirror. The beam swings to a new wall."] as Array[String])
 
 ## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
 func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -1831,6 +1897,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	for f: Spirling in foes:
+		DailyTasks.note_seen(f.data.species_name, map.id)
 		GameState.mark_seen(f.data.species_name)
 		GameState.note_spirlog(f, false)
 	Sound.sfx("encounter")

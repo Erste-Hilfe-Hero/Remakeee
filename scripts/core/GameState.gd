@@ -129,6 +129,8 @@ var tips_enabled: bool = true
 var battery_saver: bool = false
 var reduce_motion: bool = false
 var high_contrast: bool = false
+## Large text with the 7x12 glyph set (item 2042).
+var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
 var day_night: bool = true
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
@@ -529,7 +531,7 @@ func settings_to_dict() -> Dictionary:
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "day_night": day_night, "language": language}
+		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -553,6 +555,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))
+	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
 	language = str(d.get("language", ""))
 	apply_display()
@@ -567,6 +570,7 @@ func apply_display() -> void:
 	Engine.max_fps = FPS_BATTERY if battery_saver else FPS_NORMAL
 	if UITheme.high_contrast != high_contrast:
 		UITheme.set_high_contrast(high_contrast)
+	UITheme.set_large_text(large_text)
 
 func apply_volume() -> void:
 	ensure_buses()
