@@ -247,7 +247,7 @@ T = {
 "%s: back home": "%s: wieder da", "%s: %d h %d min left": "%s: noch %d Std. %d Min.",
 "Win 20 battles": "Gewinne 20 Kämpfe", "Beat 30 wild Spirlings": "Besiege 30 wilde Spirlings",
 "Bond with 3 Spirlings": "Schließe mit 3 Spirlings ein Band", "Bond with 6 Spirlings": "Schließe mit 6 Spirlings ein Band",
-"Rest at a Rest Spring 5 times": "Raste 5-mal an einer Rastquelle", "Rest at 3 different Rest Springs": "Raste an 3 verschiedenen Rastquellen",
+"Rest at a Rest Spring 5 times": "Raste 5-mal an einer Rastquelle", "Rest at 3 different Rest Springs": "Raste an 3 verschiedenen Rastquellen", "Rest at 4 different Rest Springs": "Raste an 4 verschiedenen Rastquellen",
 "Visit 6 different places": "Besuche 6 verschiedene Orte", "Walk 3000 steps": "Gehe 3000 Schritte", "Walk 8000 steps": "Gehe 8000 Schritte",
 "Take 3 photos": "Mach 3 Fotos", "Take 8 photos": "Mach 8 Fotos",
 "Talk to people 10 times": "Sprich 10-mal mit Leuten", "Talk to people 25 times": "Sprich 25-mal mit Leuten",

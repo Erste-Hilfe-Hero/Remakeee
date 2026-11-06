@@ -25,7 +25,27 @@ static func validate() -> PackedStringArray:
 			errors.append("%s: not readable JSON" % path)
 			continue
 		_walk(d, path.get_file(), items, errors)
+		if d is Dictionary and (d as Dictionary).has("album_tasks"):
+			errors.append_array(album_vs_daily((d as Dictionary).get("album_tasks", []), (d as Dictionary).get("daily_tasks", [])))
 	return errors
+
+## Plan 3488: one daily task never fills an album field on its own, so an album field of the
+## same kind as a daily task always needs more than that task.
+static func album_vs_daily(album: Array, daily: Array) -> PackedStringArray:
+	var errors: PackedStringArray = []
+	for a: Variant in album:
+		if not a is Dictionary:
+			continue
+		for t: Variant in daily:
+			if t is Dictionary and _same_kind(a, t) and int((a as Dictionary).get("n", 1)) <= int((t as Dictionary).get("n", 1)):
+				errors.append("%s: album field filled by daily task %s alone" % [(a as Dictionary).get("id", ""), (t as Dictionary).get("id", "")])
+	return errors
+
+static func _same_kind(a: Dictionary, t: Dictionary) -> bool:
+	for k: String in ["event", "map", "element", "wild", "night", "distinct"]:
+		if str(a.get(k, "")) != str(t.get(k, "")):
+			return false
+	return true
 
 static func _is_number(v: Variant) -> bool:
 	return v is int or v is float
