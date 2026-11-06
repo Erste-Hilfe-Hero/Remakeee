@@ -75,7 +75,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4064. [x] [P1] Das Apple-Datenschutzlabel um "Käufe, mit Identität verknüpft, App-Funktionalität, kein Tracking" ergänzen.
 4065. [x] [P1] Alle Produkte mit festen Produkt-IDs nach dem Muster `de.chimora.game.<art>.<name>` in einer Liste `store/products.json` anlegen, aus der beide Konsolen befüllt werden.
 4066. [P1] In App Store Connect und der Play Console Verbrauchsgüter (Rissglas-Pakete, Einzelteile), Nicht-Verbrauchsgüter (Team-Platz, Lager, Kosmetik) und ein Auto-Abo (Wanderer-Pass) anlegen und die Typen in `store/products.json` vermerken.
-4067. [P1] Ein Skript `tools/store/push_products.py` schreiben, das `store/products.json` über die Play Developer API (`monetization.onetimeproducts`, `monetization.subscriptions`) anlegt und aktualisiert.
+4067. [x] [P1] Ein Skript `tools/store/push_products.py` schreiben, das `store/products.json` über die Play Developer API (`monetization.onetimeproducts`, `monetization.subscriptions`) anlegt und aktualisiert.
 4068. [P2] Für Apple die Produkte über die App Store Connect API (`inAppPurchasesV2`, `subscriptionGroups`) mit demselben Skript anlegen, gesteuert durch den Schalter `--apple`.
 4069. [P2] Für jedes Produkt einen deutschen und einen englischen Anzeigenamen und eine Beschreibung in `store/products.json` pflegen, die exakt den Texten im Spiel entsprechen.
 4070. [P2] Für Apple pro In-App-Kauf einen Prüf-Screenshot (Shop-Ansicht des Produkts, 1320 x 2868) mit `tools/store/make_store_images.py` erzeugen.
