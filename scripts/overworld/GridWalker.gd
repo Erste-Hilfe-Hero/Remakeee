@@ -31,6 +31,12 @@ var _duration: float = WALK_TIME
 var bob: bool = false
 ## True while the current step is a running step.
 var running: bool = false
+## Direction the sprite looks in without turning the walker (idle glances, items 2308 and
+## 2310); "" draws [member facing]. Talking, walking and interacting always use facing.
+var look: String = "":
+	set(v):
+		look = v
+		queue_redraw()
 
 func place(c: Vector2i, face: String = "") -> void:
 	cell = c
@@ -45,7 +51,12 @@ static func cell_to_pos(c: Vector2i) -> Vector2:
 
 func face(dir: String) -> void:
 	facing = dir
+	look = ""
 	queue_redraw()
+
+## The direction the sprite is drawn in.
+func shown_facing() -> String:
+	return facing if look.is_empty() else look
 
 func facing_cell() -> Vector2i:
 	return cell + DIRS[facing]
@@ -53,6 +64,7 @@ func facing_cell() -> Vector2i:
 ## Starts a one-cell move. The caller checks walkability.
 func step(dir: String, run: bool = false) -> void:
 	facing = dir
+	look = ""
 	_from = position
 	cell += DIRS[dir]
 	_to = cell_to_pos(cell)
@@ -89,12 +101,12 @@ func _draw() -> void:
 	if bob and moving and _step_frame == 1:
 		draw_set_transform(Vector2(0, 1))
 	if sheet != null:
-		var src := Rect2(SHEET_COLUMNS[facing] * TILE, _step_frame * TILE, TILE, TILE)
+		var src := Rect2(SHEET_COLUMNS[shown_facing()] * TILE, _step_frame * TILE, TILE, TILE)
 		draw_texture_rect_region(sheet, Rect2(0, 0, TILE, TILE), src)
 		return
 	# Fallback body: coloured rectangle with a facing marker.
 	draw_rect(Rect2(2, 1, 12, 14), body_color)
 	draw_rect(Rect2(2, 1, 12, 14), UITheme.INK, false, 1.0)
-	var d: Vector2i = DIRS[facing]
+	var d: Vector2i = DIRS[shown_facing()]
 	var c := Vector2(8, 8) + Vector2(d) * 4.0
 	draw_rect(Rect2(c - Vector2(2, 2), Vector2(4, 4)), UITheme.BG)

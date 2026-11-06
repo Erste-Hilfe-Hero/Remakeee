@@ -625,5 +625,14 @@
   "heal_frac": 1.0,
   "cure": true,
   "per_battle": 2
+ },
+ {
+  "id": "rg_glass_spark",
+  "name": "Glass Spark",
+  "description": "In battle: fills a Spirling's energy and gives 1 more at the end of each of the next 3 turns. Three per battle.",
+  "battle": true,
+  "shop": true,
+  "energy_surge": 3,
+  "per_battle": 3
  }
 ]

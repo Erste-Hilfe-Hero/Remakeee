@@ -502,9 +502,9 @@ func test_always_run_setting_is_kept() -> void:
 
 func test_pause_menu_order_is_fixed() -> void:
 	assert_eq(PauseMenu.menu_labels(true, true, false),
-		["Goals", "Team", "Satchel", "Spirlog", "Travel", "Friends", "Records", "Storage", "Save", "Photo", "Settings"] as Array[String])
+		["Goals", "Map", "Team", "Satchel", "Spirlog", "Travel", "Friends", "Records", "Storage", "Save", "Photo", "Settings"] as Array[String])
 	var short: Array[String] = PauseMenu.menu_labels(false, false, false)
-	assert_eq(short.find("Satchel"), 2, "places do not move when Travel is missing")
+	assert_eq(short.find("Satchel"), 3, "places do not move when Travel is missing")
 	assert_false("Storage" in short)
 	assert_false("Leagues" in short)
 	var league: Array[String] = PauseMenu.menu_labels(false, false, false, true)
