@@ -204,7 +204,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 ### Nachhall: Aufzucht und Hallkind
 183. [x] [P1] Lege die eigene Nachwuchs-Mechanik "Nachhall" fest: zwei gebondete Spirlings singen an einer Echo-Quelle zusammen, und aus ihrem gemeinsamen Ruf entsteht ein schwebender Hallkern.
 184. [x] [P1] Mach jede Heilquelle nach dem zweiten geflickten Riss zu einer Echo-Quelle mit dem Menüpunkt "Gemeinsam singen", der zwei Spirlings aus Team oder Lager wählen lässt.
-185. [x] [P1] Lass den Hallkern nach 600 neu betretenen Feldern oder 30 gewonnenen Kämpfen, je nachdem was zuerst eintritt, zu einem Hallkind der Grundstufe auf Ring 1 erwachen.
+185. [x] [P1] Lass den Hallkern nach 600 neu betretenen Feldern oder 30 gewonnenen Kämpfen, je nachdem was zuerst eintritt, zu einem Hallkind der Grundstufe auf Ring 1 erwachen. Nach der Rechtsprüfung (Punkt 186): 30 gewonnene Kämpfe oder 5 Rasten an Heilquellen statt Schritten.
 186. [x] [P1] Prüfe die Beschreibung des Nachhalls mit dem Rechts-Thread und halte in docs/IP_HYGIENE.md fest, dass keine fremden Begriffe, Gegenstände oder Abläufe übernommen werden.
 187. [P2] Lege fest, dass zwei Spirlings nur singen können, wenn sie ein gemeinsames Element oder dieselbe Rolle haben, geprüft in einer reinen Funktion Nachhall.can_pair().
 188. [P2] Lass den Spieler wählen, welcher der beiden Eltern die Art des Hallkinds bestimmt, statt es zu würfeln.

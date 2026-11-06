@@ -365,8 +365,6 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if scene_running:
 		return
 	DailyTasks.record("step", {"map": map.id})
-	GameState.note_core_step()
-	await _wake_cores()
 	show_notices()
 	if await _world.stepped(cell):
 		return
@@ -614,7 +612,7 @@ func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
 ## Echo Cores that are ready wake into a Hallkind (item 185).
 func _wake_cores() -> void:
 	for kid: Spirling in GameState.awaken_cores():
-		await say(["The Echo Core you carry hums and opens.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
+		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
 		SaveManager.save_game()
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -628,6 +626,8 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
+	GameState.note_core_rest()
+	await _wake_cores()
 	# Every spring can swap the team with storage, even before storage opens from the menu,
 	# and load a saved team with one tap (plan area 1, items 378 and 381).
 	# After the second mended Rift every spring is an Echo spring (items 183-184).

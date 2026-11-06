@@ -195,9 +195,9 @@ T = {
 "Only Spirlings with you or in storage can sing.": "Nur Spirlings aus Team oder Lager können singen.",
 "A First Voice sings alone.": "Eine Erste Stimme singt allein.",
 "You already carry as many Echo Cores as you can.": "Du trägst schon so viele Hallkerne, wie du kannst.",
-"%s and %s sing together. Their call gathers into a floating Echo Core.\nCarry it along: it wakes after a long walk or many won battles.": "%s und %s singen gemeinsam. Ihr Ruf sammelt sich zu einem schwebenden Hallkern.\nNimm ihn mit: Er erwacht nach einem langen Weg oder vielen gewonnenen Kämpfen.",
-"The Echo Core you carry hums and opens.": "Der Hallkern, den du trägst, summt und öffnet sich.",
+"%s and %s sing together. Their call gathers into a floating Echo Core.\nCarry it along: it wakes after a few rests at a spring or many won battles.": "%s und %s singen gemeinsam. Ihr Ruf sammelt sich zu einem schwebenden Hallkern.\nNimm ihn mit: Er erwacht nach ein paar Rasten an einer Quelle oder vielen gewonnenen Kämpfen.",
+"The song in the Echo Core you carry grows dense and clear.": "Der Gesang im Hallkern, den du trägst, wird dicht und klar.",
 "A young %s wakes, still humming the song of %s.": "Ein junges %s erwacht und summt noch das Lied von %s.",
-"Echo Core of %s: humming": "Hallkern von %s: summt",
+"Echo Core of %s: %d/%d wins, %d/%d rests": "Hallkern von %s: %d/%d Siege, %d/%d Rasten",
 " and ": " und ",
 }

@@ -201,7 +201,9 @@ static func records_text() -> String:
 	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
 	lines.append(Collection.progress_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size()))
 	for c: Dictionary in GameState.echo_cores:
-		lines.append("Echo Core of %s: humming" % " and ".join(c.parents))
+		lines.append(Loc.t("Echo Core of %s: %d/%d wins, %d/%d rests") % [" and ".join(c.parents),
+			mini(int(c.wins), GameState.ECHO_CORE_WINS), GameState.ECHO_CORE_WINS,
+			mini(int(c.rests), GameState.ECHO_CORE_RESTS), GameState.ECHO_CORE_RESTS])
 	var titles: Array[String] = Collection.titles()
 	if not titles.is_empty():
 		lines.append("Titles: %s" % ", ".join(titles.map(func(t: String) -> String: return Loc.t(t))))
@@ -767,6 +769,6 @@ func run_sing_together() -> void:
 		await info(problem)
 		return
 	var core: Dictionary = GameState.sing_together(all[a], all[b])
-	await info("%s and %s sing together. Their call gathers into a floating Echo Core.\nCarry it along: it wakes after a long walk or many won battles." % [all[a].display_name(), all[b].display_name()])
+	await info("%s and %s sing together. Their call gathers into a floating Echo Core.\nCarry it along: it wakes after a few rests at a spring or many won battles." % [all[a].display_name(), all[b].display_name()])
 	if core.is_empty():
 		return

@@ -55,7 +55,7 @@ func test_sing_together_forms_core_of_a_first_form() -> void:
 		assert_false(core.is_empty())
 		kinds[core.kind] = true
 		assert_eq(core.parents, [pair[0].species_name, "Wickit"])
-		assert_eq(int(core.steps), 0)
+		assert_eq(int(core.rests), 0)
 	assert_true(kinds.has(pair[1].species_name), "evolved parent gives its first form")
 	assert_false(kinds.has(pair[0].species_name), "never the evolved form itself")
 	assert_eq(GameState.party.size(), 2, "parents stay")
@@ -69,15 +69,15 @@ func test_core_limit() -> void:
 	assert_true(GameState.sing_together(a, b).is_empty())
 	assert_eq(GameState.echo_cores.size(), GameState.MAX_ECHO_CORES)
 
-func test_core_wakes_after_steps() -> void:
+func test_core_wakes_after_rests() -> void:
 	var a := _mk("Kindlop")
 	var b := _mk("Wickit")
 	GameState.party.append_array([a, b])
 	GameState.sing_together(a, b)
-	for i: int in GameState.ECHO_CORE_STEPS - 1:
-		GameState.note_core_step()
+	for i: int in GameState.ECHO_CORE_RESTS - 1:
+		GameState.note_core_rest()
 	assert_eq(GameState.awaken_cores().size(), 0)
-	GameState.note_core_step()
+	GameState.note_core_rest()
 	var kids: Array[Spirling] = GameState.awaken_cores()
 	assert_eq(kids.size(), 1)
 	assert_eq(kids[0].level, 1, "Hallkind starts at Ring 1")
@@ -99,20 +99,28 @@ func test_cores_survive_save_and_bad_data_is_dropped() -> void:
 	var b := _mk("Wickit")
 	GameState.party.append_array([a, b])
 	GameState.sing_together(a, b)
-	GameState.note_core_step()
+	GameState.note_core_rest()
 	GameState.note_core_win()
 	var d: Dictionary = GameState.to_dict()
 	GameState.reset()
 	GameState.from_dict(d)
 	assert_eq(GameState.echo_cores.size(), 1)
-	assert_eq(int(GameState.echo_cores[0].steps), 1)
+	assert_eq(int(GameState.echo_cores[0].rests), 1)
 	assert_eq(int(GameState.echo_cores[0].wins), 1)
-	d["echo_cores"] = [{"kind": "NoSuchKind"}, "junk", {"kind": "Wickit", "steps": "x", "parents": 5},
+	d["echo_cores"] = [{"kind": "NoSuchKind"}, "junk", {"kind": "Wickit", "rests": "x", "parents": 5},
 		{"kind": "Wickit"}, {"kind": "Wickit"}, {"kind": "Wickit"}]
 	GameState.from_dict(d)
 	assert_eq(GameState.echo_cores.size(), GameState.MAX_ECHO_CORES)
-	assert_eq(int(GameState.echo_cores[0].steps), 0)
+	assert_eq(int(GameState.echo_cores[0].rests), 0)
 	assert_eq(GameState.echo_cores[0].parents, [])
 	d.erase("echo_cores")
 	GameState.from_dict(d)
 	assert_true(GameState.echo_cores.is_empty(), "old saves have no cores")
+
+func test_walking_never_wakes_a_core() -> void:
+	# Legal review (item 186): no step counter, cores wake only from wins or rests.
+	assert_false("note_core_step" in GameState.get_method_list().map(func(m: Dictionary) -> String: return m.name))
+	assert_false(GameState.core_ready({"kind": "Wickit", "steps": 100000, "rests": 0, "wins": 0}))
+	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
+	var stepped: String = src.substr(src.find("func _on_player_stepped"), 600)
+	assert_false(stepped.contains("core"), "the step handler never touches Echo Cores")

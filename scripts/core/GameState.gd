@@ -34,7 +34,7 @@ var storage_box_bonus: int = 0
 ## Saved teams [{"name", "uids": [uid...]}], at most TEAM_PRESETS (item 378).
 var team_presets: Array[Dictionary] = []
 ## Echo Cores from singing together (Nachhall, plan area 1, items 183-185):
-## [{"kind", "parents": [species, species], "steps", "wins"}].
+## [{"kind", "parents": [species, species], "rests", "wins"}].
 var echo_cores: Array[Dictionary] = []
 ## Iron Oath (item 15, opt-in at new game): Spirlings that faint retire to the Sanctuary.
 var iron_oath: bool = false
@@ -1063,7 +1063,8 @@ func load_preset(slot: int) -> bool:
 
 # --- Nachhall: singing together at an Echo spring (plan area 1, items 183-185) ------------
 
-const ECHO_CORE_STEPS: int = 600
+## Cores wake from won battles or rests only, never from walking (legal review, item 186).
+const ECHO_CORE_RESTS: int = 5
 const ECHO_CORE_WINS: int = 30
 const MAX_ECHO_CORES: int = 3
 
@@ -1078,7 +1079,7 @@ func _load_echo_cores(raw: Variant) -> void:
 		var parents: Variant = (c as Dictionary).get("parents", [])
 		echo_cores.append({"kind": kind,
 			"parents": (parents as Array).map(func(x: Variant) -> String: return str(x)).slice(0, 2) if parents is Array else [],
-			"steps": maxi(0, int((c as Dictionary).steps)) if (c as Dictionary).get("steps") is int or (c as Dictionary).get("steps") is float else 0,
+			"rests": maxi(0, int((c as Dictionary).rests)) if (c as Dictionary).get("rests") is int or (c as Dictionary).get("rests") is float else 0,
 			"wins": maxi(0, int((c as Dictionary).wins)) if (c as Dictionary).get("wins") is int or (c as Dictionary).get("wins") is float else 0})
 
 ## Every heal spring is an Echo spring once the second Rift is mended (item 184).
@@ -1115,20 +1116,20 @@ func sing_together(a: Spirling, b: Spirling, p_rng: RandomNumberGenerator = null
 	var r: RandomNumberGenerator = p_rng if p_rng != null else rng
 	var from: Spirling = a if r.randi_range(0, 1) == 0 else b
 	var core: Dictionary = {"kind": first_form(from.data).species_name,
-		"parents": [a.data.species_name, b.data.species_name], "steps": 0, "wins": 0}
+		"parents": [a.data.species_name, b.data.species_name], "rests": 0, "wins": 0}
 	echo_cores.append(core)
 	return core
 
-func note_core_step() -> void:
+func note_core_rest() -> void:
 	for c: Dictionary in echo_cores:
-		c["steps"] = int(c.steps) + 1
+		c["rests"] = int(c.rests) + 1
 
 func note_core_win() -> void:
 	for c: Dictionary in echo_cores:
 		c["wins"] = int(c.wins) + 1
 
 static func core_ready(c: Dictionary) -> bool:
-	return int(c.get("steps", 0)) >= ECHO_CORE_STEPS or int(c.get("wins", 0)) >= ECHO_CORE_WINS
+	return int(c.get("rests", 0)) >= ECHO_CORE_RESTS or int(c.get("wins", 0)) >= ECHO_CORE_WINS
 
 ## Wakes every ready Echo Core: a Hallkind at Ring 1 joins (team or storage). Returns them.
 func awaken_cores() -> Array[Spirling]:
