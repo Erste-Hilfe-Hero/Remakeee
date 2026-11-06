@@ -74,3 +74,21 @@ T.update({
 "Mossling against Riptail in the drag of the current. Win within 4 turns.": "Mossling gegen Riptail im Sog der Strömung. Gewinne in höchstens 4 Runden.",
 "Kelpup against Riptail, tide against tide. Win within 4 turns.": "Kelpup gegen Riptail, Flut gegen Flut. Gewinne in höchstens 4 Runden.",
 })
+
+# Plan area 2, items 755-757: bonus goals.
+T.update({
+"Bonus goal: %s.": "Bonusziel: %s.",
+"win within %d turns": "gewinne in höchstens %d Runden",
+"win without anyone on your side fainting": "gewinne, ohne dass jemand auf deiner Seite umfällt",
+"win without resting": "gewinne, ohne zu rasten",
+"win using only %s arts": "gewinne nur mit %s-Techniken",
+"win sending out at most %d Spirlings": "gewinne mit höchstens %d eingesetzten Spirlings",
+"win with at least %d%% Vigor left in your team": "gewinne mit mindestens %d %% Kraft im Team",
+"win setting off at least %d reactions": "gewinne mit mindestens %d Reaktionen",
+"Bonus goal met!": "Bonusziel erreicht!",
+"You get %d Echo Crystal shard(s).": "Du erhältst %d Echo-Kristall-Splitter.",
+"%d shards join into an Echo Crystal!": "%d Splitter fügen sich zu einem Echo-Kristall!",
+"A new lexicon entry is written down.": "Ein neuer Lexikon-Eintrag wird notiert.",
+"Ember Trial Taker": "Glutprüfling",
+"Current Rider": "Strömungsreiter",
+})
