@@ -61,7 +61,7 @@ func test_festivals_cover_their_months() -> void:
 	assert_eq(Season.next_after(11).id, "hearth_weeks")
 	assert_eq(Season.festival_year(1, 2027), 2026, "Hearth Weeks over New Year count as one festival")
 	assert_ne(Season.gift_flag(Season.for_month(10), 2026), Season.gift_flag(Season.for_month(10), 2027))
-	for f: Dictionary in Season.FESTIVALS:
+	for f: Dictionary in Season.festivals():
 		assert_true(Database.items.has(str(f.gift)), str(f.gift))
 
 func test_festival_boosts_encounter_weight() -> void:

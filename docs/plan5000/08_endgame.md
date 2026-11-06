@@ -106,13 +106,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3205. [P3] Den Gewinn eines Wochen-Echos auf dem Speicherslot mit der Zahl der Wochensiege zeigen.
 
 ### Feste ausbauen
-3206. [P1] Die Festdaten aus Season.FESTIVALS nach data/events.json verschieben, damit neue Feste ohne Codeänderung dazukommen.
-3207. [P1] Während jedes Festes eine Festwährung „Festbänder“ ausgeben: 3 pro gewonnenem Kampf gegen Spirlings der Festelemente.
-3208. [P1] Am Festende alle übrigen Festbänder automatisch 1 zu 1 in Wegmarken umwandeln, damit nie etwas verloren geht.
-3209. [P1] Pro Fest einen Festhändler in Brindlewick aufstellen, der Festbänder gegen festbezogene Dinge tauscht.
-3210. [P1] Jedem Fest eine eigene Festaufgabe mit 5 Stufen geben (zum Beispiel 10, 25, 50, 100, 200 Festbänder gesammelt), die je 30 Wegmarken zahlt.
-3211. [P1] Den Ausrufer in Brindlewick bei jedem Fest einen Festauftrag pro Tag geben lassen, der 5 Festbänder zahlt.
-3212. [P1] Festbänder in GameState.festival_ribbons getrennt pro Fest führen und im Pausenmenü nur während des Festes anzeigen.
+3206. [x] [P1] Die Festdaten aus Season.FESTIVALS nach data/events.json verschieben, damit neue Feste ohne Codeänderung dazukommen.
+3207. [x] [P1] Während jedes Festes eine Festwährung „Festbänder“ ausgeben: 3 pro gewonnenem Kampf gegen Spirlings der Festelemente.
+3208. [x] [P1] Am Festende alle übrigen Festbänder automatisch 1 zu 1 in Wegmarken umwandeln, damit nie etwas verloren geht.
+3209. [x] [P1] Pro Fest einen Festhändler in Brindlewick aufstellen, der Festbänder gegen festbezogene Dinge tauscht.
+3210. [x] [P1] Jedem Fest eine eigene Festaufgabe mit 5 Stufen geben (zum Beispiel 10, 25, 50, 100, 200 Festbänder gesammelt), die je 30 Wegmarken zahlt.
+3211. [x] [P1] Den Ausrufer in Brindlewick bei jedem Fest einen Festauftrag pro Tag geben lassen, der 5 Festbänder zahlt.
+3212. [x] [P1] Festbänder in GameState.festival_ribbons getrennt pro Fest führen und im Pausenmenü nur während des Festes anzeigen.
 3213. [P2] Brindlewick während des Blütenmarkts mit Blumenkästen schmücken, die als eigene Kacheln in den Era-I-Stil passen.
 3214. [P2] Brindlewick während der Laternennächte mit Papierlaternen schmücken, die nachts leicht leuchten.
 3215. [P2] Während der Gezeitentage am Strand von Saltmarsh ein kleines Wettrennen der Krebse als Minispiel mit Antippen aufbauen.

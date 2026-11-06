@@ -44,6 +44,8 @@ var money: int = 0
 var waymarks: int = 0
 ## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
 var daily_tasks: Dictionary = {}
+## Festival ribbons per festival (see Festival.gd): "<id>_<year>" -> {"ribbons", "earned", "stages", "task"}.
+var festival_ribbons: Dictionary = {}
 ## Short reward notes waiting to be shown by the overworld (not saved).
 var notices: Array[String] = []
 
@@ -294,6 +296,7 @@ func reset() -> void:
 	money = 0
 	waymarks = 0
 	daily_tasks = {}
+	festival_ribbons = {}
 	notices.clear()
 	current_map = "lighthouse"
 	player_cell = Vector2i(4, 4)
@@ -355,6 +358,7 @@ func to_dict() -> Dictionary:
 		"money": money,
 		"waymarks": waymarks,
 		"daily_tasks": daily_tasks.duplicate(true),
+		"festival_ribbons": festival_ribbons.duplicate(true),
 		"map": current_map,
 		"cell": [player_cell.x, player_cell.y],
 		"facing": facing,
@@ -401,6 +405,11 @@ func from_dict(d: Dictionary) -> void:
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
+	festival_ribbons = {}
+	for k: Variant in as_dict(d.get("festival_ribbons", {})):
+		var st: Dictionary = as_dict(d.festival_ribbons[k])
+		festival_ribbons[str(k)] = {"ribbons": maxi(0, as_int(st.get("ribbons", 0))), "earned": maxi(0, as_int(st.get("earned", 0))),
+			"stages": clampi(as_int(st.get("stages", 0)), 0, Festival.STAGES.size()), "task": as_dict(st.get("task", {})).duplicate(true)}
 	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))

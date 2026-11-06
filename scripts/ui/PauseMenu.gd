@@ -177,6 +177,8 @@ static func records_text() -> String:
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:
 	var t: String = "%s   %d coins   %s" % [GameState.tamer_name, GameState.money, Waymarks.label()]
+	if not Festival.active().is_empty():
+		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t

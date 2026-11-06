@@ -59,6 +59,7 @@ func _ready() -> void:
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
 		"exchange": _action_exchange,
+		"festival_shop": _action_festival_shop,
 		"spark_read": _action_spark_read,
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
@@ -1062,11 +1063,47 @@ func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	await say([str(f.text)] as Array[String])
 	var flag: String = Season.gift_flag(f, Season.festival_year(int(d.month), int(d.year)))
-	if GameState.has_flag(flag):
-		await say(["Enjoy the festival!"] as Array[String])
+	if not GameState.has_flag(flag):
+		GameState.set_flag(flag)
+		await _action_give_item([str(f.gift), "1"] as PackedStringArray, null)
+	await _festival_task()
+
+## The crier's festival task of the day (plan 3211): one a day, pays festival ribbons.
+func _festival_task() -> void:
+	var task: Dictionary = Festival.take_task()
+	var t: Dictionary = Festival.task_def(str(task.get("id", "")))
+	if t.is_empty():
 		return
-	GameState.set_flag(flag)
-	await _action_give_item([str(f.gift), "1"] as PackedStringArray, null)
+	if bool(task.get("done", false)):
+		await say(["Crier: You've done today's festival task. Come back tomorrow for another!"] as Array[String])
+		return
+	await say([Loc.t("Crier: Today's festival task: %s (%d/%d). It pays %d ribbons.") % [Loc.t(str(t.text)), int(task.n), int(t.n), Festival.TASK_RIBBONS]] as Array[String])
+
+## Tilda's festival stand (plan 3209): festival goods for ribbons, only while a festival runs.
+func _action_festival_shop(_args: PackedStringArray, _speaker: NPC) -> void:
+	var a: Dictionary = Festival.active()
+	if a.is_empty():
+		var nxt: Dictionary = Season.next_after(int(Online.date_now().month))
+		await say([Loc.t("Tilda: My stand opens for the next festival, the %s.") % Loc.t(str(nxt.get("name", "")))] as Array[String])
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	while true:
+		var goods: Array = Festival.shop()
+		var labels: Array[String] = []
+		for o: Variant in goods:
+			labels.append("%s  %d" % [Loc.t(str(Database.item(str(o.item)).get("name", o.item))), int(o.price)])
+		var idx: int = await menu.pick_strings(Loc.t("%s   Ribbons %d") % [Loc.t(str(a.fest.name)), Festival.ribbons()], labels)
+		if idx < 0:
+			break
+		var o: Dictionary = goods[idx]
+		var it: Dictionary = Database.item(str(o.item))
+		if not await menu.confirm("%s\n%s\n\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", ""))), Loc.t("Trade for %d ribbons?") % int(o.price)]):
+			continue
+		var err: String = Festival.buy(str(o.item))
+		Sound.sfx("cancel" if err != "" else "coin")
+		await menu.info(err if err != "" else Loc.t("Traded for %s. You have %d.") % [Loc.t(str(it.get("name", ""))), GameState.item_count(str(o.item))])
+	menu.queue_free()
 
 ## The Sparkseer reads each party member's hidden Spark values in words.
 func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:
