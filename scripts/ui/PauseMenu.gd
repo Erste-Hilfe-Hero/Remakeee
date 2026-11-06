@@ -96,6 +96,9 @@ static func goals_text() -> String:
 	var daily: String = DailyFind.hint(GameState.flags)
 	if not daily.is_empty():
 		text += "\n\n" + Loc.t(daily)
+	var world: Array[String] = WorldEvents.lines()
+	if not world.is_empty():
+		text += "\n\n" + "\n".join(world)
 	var tasks: Array[String] = DailyTasks.lines()
 	if not tasks.is_empty():
 		text += "\n\n" + "\n".join(tasks)
@@ -689,6 +692,9 @@ func _run_stored(index: int) -> void:
 			"Details":
 				await info(MenuHost.storage_card(s))
 			"Call back":
+				if Expeditions.is_away(s.uid):
+					await info("This Spirling is away on a trip. Aldo will tell you when it's back.")
+					continue
 				if GameState.withdraw(i):
 					return
 				await info("Your team is full.")

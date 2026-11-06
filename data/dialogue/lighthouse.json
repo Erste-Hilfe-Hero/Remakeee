@@ -116,5 +116,12 @@
   },
   "action": "exchange",
   "flag": "marla_met"
+ },
+ "aldo_post": {
+  "lines": [
+   "Aldo: The lamp stays lit. It always has, for her. Now for you too.",
+   "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+  ],
+  "action": "expedition"
  }
 }
