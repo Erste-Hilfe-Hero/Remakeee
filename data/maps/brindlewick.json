@@ -154,6 +154,153 @@
    "hide_flag": "first_voice_velahra_away"
   },
   {
+   "id": "brin",
+   "x": 3,
+   "y": 1,
+   "facing": "right",
+   "dialogue": "brindlewick/brin",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 8,
+     "y": 10,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     1
+    ]
+   ]
+  },
+  {
+   "id": "lotte",
+   "x": 8,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "brindlewick/lotte",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dawn",
+     "x": 1,
+     "y": 6,
+     "facing": "right"
+    },
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 10,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "tilda",
+   "x": 10,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "brindlewick/tilda",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 7,
+     "y": 9,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     10,
+     10
+    ],
+    [
+     10,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "joss",
+   "x": 4,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "brindlewick/joss",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": [
+      "day"
+     ],
+     "away": true
+    },
+    {
+     "phase": "night",
+     "x": 4,
+     "y": 10,
+     "facing": "down"
+    }
+   ]
+  },
+  {
+   "id": "wim",
+   "x": 8,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "brindlewick/wim",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 10,
+     "y": 9,
+     "facing": "left",
+     "map": "thornridge"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
    "id": "boatwoman",
    "x": 7,
    "y": 13,

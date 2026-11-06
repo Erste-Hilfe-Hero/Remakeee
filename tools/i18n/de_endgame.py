@@ -327,4 +327,7 @@ T = {
 "No Missed Beat": "Ohne Fehltakt", "Play the Echo melody without a missed note.": "Spiele die Echo-Melodie ohne verpassten Ton.",
 "Badge book %d/%d (%d%%)": "Abzeichenbuch %d/%d (%d%%)",
 "A secret badge. Its text appears once you earn it.": "Ein geheimes Abzeichen. Sein Text erscheint, sobald du es verdienst.",
+"Echo %s": "Echo %s", "The lighthouse stair": "Die Leuchtturmtreppe", "Climb the stair": "Die Treppe hinauf",
+"Endless stretch (best %d)": "Endlosstrecke (Bestwert %d)", "Endless floor %d cleared. Keep going?": "Endlos-Stockwerk %d geschafft. Weiter?",
+"Endless floor %d: ring %d.": "Endlos-Stockwerk %d: Ring %d.", "Endless stretch: %d floors (best %d).": "Endlosstrecke: %d Stockwerke (Bestwert %d).",
 }

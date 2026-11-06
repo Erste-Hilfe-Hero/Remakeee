@@ -85,6 +85,142 @@
    "facing": "left",
    "dialogue": "wrenhollow/coach",
    "sprite": "villager"
+  },
+  {
+   "id": "tamsa",
+   "x": 10,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "wrenhollow/tamsa",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 11,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     10,
+     2
+    ],
+    [
+     10,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "orrin",
+   "x": 6,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "wrenhollow/orrin",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 4,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "lise",
+   "x": 5,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "wrenhollow/lise",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 10,
+     "y": 12,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     5,
+     15
+    ],
+    [
+     4,
+     15
+    ],
+    [
+     3,
+     15
+    ]
+   ]
+  },
+  {
+   "id": "brann",
+   "x": 8,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "wrenhollow/brann",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dawn",
+      "day"
+     ],
+     "away": true
+    },
+    {
+     "phase": "night",
+     "x": 6,
+     "y": 12,
+     "facing": "down"
+    }
+   ]
+  },
+  {
+   "id": "ilse",
+   "x": 1,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "wrenhollow/ilse",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 8,
+     "y": 1,
+     "facing": "left",
+     "map": "reedhaven"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [

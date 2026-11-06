@@ -349,11 +349,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1211. [P3] Bereite die Seelinie so vor, dass später eine Linie nach Corvane angehängt wird (siehe Abschnitt Corvane).
 
 ### NPC-Leben in Orten
-1212. [P1] Ergänze NPC.gd um einen Tagesplan (Liste aus Phase, Karte, x, y), damit Leute morgens, tags, abends und nachts an anderen Orten stehen.
-1213. [P1] Ergänze NPC.gd um kurze Gehwege (Liste von Feldern), die Leute langsam abgehen, mit Halt, wenn der Spieler im Weg steht.
-1214. [P1] Gib jedem Ort mindestens sechs Leute mit Tagesplan, davon zwei, die zwischen Orten pendeln.
-1215. [P1] Lass Leute nach dem Heilen eines Risses andere Sätze sagen, über Flags aus Bereich 4, ohne neue Story zu schreiben.
-1216. [P1] Stelle sicher, dass NPCs mit Tagesplan nie einen Warp, eine Tür oder einen Rätselblock dauerhaft versperren (Validator-Prüfung).
+1212. [x] [P1] Ergänze NPC.gd um einen Tagesplan (Liste aus Phase, Karte, x, y), damit Leute morgens, tags, abends und nachts an anderen Orten stehen.
+1213. [x] [P1] Ergänze NPC.gd um kurze Gehwege (Liste von Feldern), die Leute langsam abgehen, mit Halt, wenn der Spieler im Weg steht.
+1214. [x] [P1] Gib jedem Ort mindestens sechs Leute mit Tagesplan, davon zwei, die zwischen Orten pendeln. (Die fünf Veydal-Orte; der Corvane-Kai bekommt seine Leute mit dem Corvane-Ausbau.)
+1215. [x] [P1] Lass Leute nach dem Heilen eines Risses andere Sätze sagen, über Flags aus Bereich 4, ohne neue Story zu schreiben.
+1216. [x] [P1] Stelle sicher, dass NPCs mit Tagesplan nie einen Warp, eine Tür oder einen Rätselblock dauerhaft versperren (Validator-Prüfung).
 1217. [P2] Baue in Brindlewick Fischer, die morgens zum Steg gehen und abends mit Fang zurückkommen.
 1218. [P2] Baue in Copperfold Bergleute, die zur Schicht in den Förderturm gehen und dann von der Karte verschwinden.
 1219. [P2] Lass Kinder in Orten Fangen spielen, als zwei NPCs, die sich gegenseitig auf einem festen Rundweg folgen.
@@ -366,7 +366,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1226. [P2] Gib jedem Ort einen Ortskundigen, der beim Ansprechen die nächsten drei unentdeckten Orte auf der Weltkarte als Umriss zeigt.
 1227. [P2] Baue eine Nachtwache in Brindlewick, die nachts mit Laterne über die Stege geht.
 1228. [P2] Lass Leute in Häusern abends am Tisch sitzen und nachts schlafen (andere Haltung, anderer Satz).
-1229. [P2] Ergänze tests/unit um test_npc_schedule.gd, das prüft, dass jeder Tagesplan auf begehbaren Feldern liegt.
+1229. [x] [P2] Ergänze tests/unit um test_npc_schedule.gd, das prüft, dass jeder Tagesplan auf begehbaren Feldern liegt.
 1230. [P3] Baue einen reisenden Händler, der jeden Tag in einem anderen Ort steht und ein wechselndes Sortiment aus drei Gegenständen hat.
 1231. [P3] Lass den reisenden Händler über das Gerüchte-Brett ankündigen, wo er morgen steht.
 1232. [P3] Gib Orten Geburtstage einzelner Leute nach Gerätedatum, an denen sie anders gekleidet sind und etwas verschenken.

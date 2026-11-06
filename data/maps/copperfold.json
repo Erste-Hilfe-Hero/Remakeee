@@ -95,6 +95,138 @@
    "facing": "left",
    "dialogue": "copperfold/coach",
    "sprite": "villager"
+  },
+  {
+   "id": "edda",
+   "x": 2,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "copperfold/edda",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 8,
+     "y": 13,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     2,
+     15
+    ],
+    [
+     3,
+     15
+    ],
+    [
+     4,
+     15
+    ]
+   ]
+  },
+  {
+   "id": "sorrel",
+   "x": 4,
+   "y": 8,
+   "facing": "up",
+   "dialogue": "copperfold/sorrel",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dawn",
+      "day"
+     ],
+     "away": true
+    },
+    {
+     "phase": "night",
+     "x": 4,
+     "y": 6,
+     "facing": "down"
+    }
+   ]
+  },
+  {
+   "id": "cobb",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "copperfold/cobb",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dawn",
+     "x": 8,
+     "y": 2,
+     "facing": "down"
+    },
+    {
+     "phase": "dusk",
+     "x": 10,
+     "y": 8,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "hask",
+   "x": 8,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "copperfold/hask",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 10,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "maud",
+   "x": 10,
+   "y": 6,
+   "facing": "left",
+   "dialogue": "copperfold/maud",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 10,
+     "y": 9,
+     "facing": "left",
+     "map": "wrenhollow"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [

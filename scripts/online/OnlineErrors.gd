@@ -10,9 +10,11 @@ const TIMEOUT: String = "The server took too long to answer. Try again."
 const SIGNED_OUT: String = "Your sign-in ran out. Go back to the title to sign in again."
 const TOO_MANY: String = "That was a lot at once. Please wait a little, then try again."
 const GENERIC: String = "No connection right now. Check your internet and try again."
+## This account was opened on another device (plan item 3010).
+const OTHER_DEVICE: String = "Signed in on another device. Your journey is saved there."
 
 ## Every sentence error_text can return (tests check each has a German text).
-const ALL: Array[String] = [NO_INTERNET, UNREACHABLE, MAINTENANCE, TIMEOUT, SIGNED_OUT, TOO_MANY, GENERIC]
+const ALL: Array[String] = [NO_INTERNET, UNREACHABLE, MAINTENANCE, TIMEOUT, SIGNED_OUT, TOO_MANY, GENERIC, OTHER_DEVICE]
 
 ## Kind of problem for an error code from OnlineBackend.
 static func kind(code: String) -> String:
@@ -29,6 +31,8 @@ static func kind(code: String) -> String:
 			return "signed_out"
 		"slow_down", "too_many_tries", "server_429", "429":
 			return "too_many"
+		"other_device":
+			return "other_device"
 	if code.begins_with("server_"):
 		return "unreachable"
 	return "generic"
@@ -41,6 +45,7 @@ static func text(code: String) -> String:
 		"timeout": return TIMEOUT
 		"signed_out": return SIGNED_OUT
 		"too_many": return TOO_MANY
+		"other_device": return OTHER_DEVICE
 	return GENERIC
 
 ## Error code for a failed HTTPRequest result (SupabaseBackend).
