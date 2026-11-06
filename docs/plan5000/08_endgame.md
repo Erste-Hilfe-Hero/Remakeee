@@ -26,12 +26,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3131. [P3] Eine Lexikonseite „Wegmarken“ anlegen, die alle Quellen mit Betrag und Häufigkeit aus der Belohnungstabelle zeigt.
 
 ### Wegmarken-Tauschstand und Münzen-Kreislauf
-3132. [P1] Im Erdgeschoss des Leuchtturms einen Tauschstand bei einer neuen Figur „Marla die Tauscherin“ aufstellen, der nur Wegmarken annimmt.
-3133. [P1] Das Angebot des Tauschstands in data/endgame.json pflegen, mit Gegenstand, Preis in Wegmarken und Vorrat pro Woche.
-3134. [P1] Echo-Kristalle aller acht Elemente für je 150 Wegmarken anbieten, höchstens einen pro Element und Woche.
-3135. [P1] Das Funkenamulett (spark_charm) für 120 Wegmarken und die Gezeitenperle (tide_pearl) für 200 Wegmarken anbieten, je zweimal pro Woche.
-3136. [P1] Den Tauschstand schon nach dem ersten versiegelten Riss mit sechs Grundangeboten öffnen und das volle Angebot nach dem Ende von Akt I freischalten.
-3137. [P1] Jedes Angebot vor dem Kauf mit Wirkung, Preis und Besitzzahl zeigen und jeden Tausch mit einer Ja-Nein-Frage bestätigen lassen.
+3132. [x] [P1] Im Erdgeschoss des Leuchtturms einen Tauschstand bei einer neuen Figur „Marla die Tauscherin“ aufstellen, der nur Wegmarken annimmt.
+3133. [x] [P1] Das Angebot des Tauschstands in data/endgame.json pflegen, mit Gegenstand, Preis in Wegmarken und Vorrat pro Woche.
+3134. [x] [P1] Echo-Kristalle aller acht Elemente für je 150 Wegmarken anbieten, höchstens einen pro Element und Woche.
+3135. [x] [P1] Das Funkenamulett (spark_charm) für 120 Wegmarken und die Gezeitenperle (tide_pearl) für 200 Wegmarken anbieten, je zweimal pro Woche.
+3136. [x] [P1] Den Tauschstand schon nach dem ersten versiegelten Riss mit sechs Grundangeboten öffnen und das volle Angebot nach dem Ende von Akt I freischalten.
+3137. [x] [P1] Jedes Angebot vor dem Kauf mit Wirkung, Preis und Besitzzahl zeigen und jeden Tausch mit einer Ja-Nein-Frage bestätigen lassen.
 3138. [P2] Vier neue Jackenfarben für den Wanderer zu je 300 Wegmarken anbieten, die dauerhaft freigeschaltet bleiben.
 3139. [P2] Sechs Fotorahmen für den Fotomodus zu je 100 Wegmarken anbieten.
 3140. [P2] Den Vorrat des Tauschstands jeden Montag nach Server-Zeit auffüllen und die Restzeit am Stand anzeigen.
