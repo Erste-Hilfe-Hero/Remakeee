@@ -445,6 +445,20 @@ func _tick_field() -> void:
 	if BattleRules.FIELDS.has(base_field):
 		set_field(base_field, 0)
 
+## Counts Energy taxes and cooldowns down for every Spirling (bench too). A tax that runs out
+## on the field says so (ENERGY_TAX with 0 turns).
+func _tick_timers() -> void:
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for i: int in parties[side].size():
+			var s: Spirling = parties[side][i]
+			var taxed: bool = s.energy_tax > 0
+			s.tick_timers()
+			var slot: int = slot_of(side, i)
+			if taxed and slot >= 0 and is_standing(s):
+				var d: Dictionary = _who(side, slot)
+				d.merge({"turns": maxi(0, s.energy_tax), "cost": BattleRules.ENERGY_TAX_COST})
+				emit_event(BattleEvent.Type.ENERGY_TAX, d)
+
 ## Second boss phase: once the boss in foe slot 0 drops to the phase threshold, it wakes up once.
 func _check_boss_phase(boss: Spirling) -> void:
 	if boss_phase_done or not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
@@ -516,6 +530,18 @@ func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
 	s.stages[stat] = after
 	emit_event(BattleEvent.Type.STAT_CHANGED, d)
 
+## Puts an Energy tax on the Spirling in [param slot]: its moves cost more for the next
+## [param turns] turns. Emits ENERGY_TAX.
+func apply_energy_tax(side: int, turns: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.is_fainted() or turns <= 0:
+		return
+	# +1 because the end of this very turn already counts one down.
+	s.energy_tax = turns + 1
+	var d: Dictionary = _who(side, slot)
+	d.merge({"turns": turns, "cost": BattleRules.ENERGY_TAX_COST, "fresh": true})
+	emit_event(BattleEvent.Type.ENERGY_TAX, d)
+
 func change_energy(side: int, delta: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null:
@@ -578,6 +604,7 @@ func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for slot: int in slot_count(side):
 			_end_of_turn_for(side, slot)
+	_tick_timers()
 	_tick_field()
 	turn += 1
 	phase = Phase.FAINT_CHECK
@@ -696,7 +723,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
 static func _is_self_effect(fx: Dictionary) -> bool:
 	var id: StringName = StringName(fx.get("id", ""))
-	return id == &"heal_self" or (id == &"stat_change" and bool(fx.get("self", true)))
+	return id == &"heal_self" or id == &"self_stage_after" or (id == &"stat_change" and bool(fx.get("self", true)))
 
 func _do_move(a: BattleAction) -> void:
 	var side: int = a.side
@@ -720,7 +747,12 @@ func _do_move(a: BattleAction) -> void:
 	if not me.can_afford(mv):
 		emit_event(BattleEvent.Type.NOT_ENOUGH_ENERGY, _who(side, slot))
 		return
-	change_energy(side, -mv.energy_cost, slot)
+	change_energy(side, -me.move_cost(mv), slot)
+	if mv.cooldown > 0:
+		# +1 because the end of this very turn already counts one down.
+		me.cooldowns[mv.move_name] = mv.cooldown + 1
+	# A field_element move lands in the active field's element (a cached copy, never the data).
+	mv = BattleRules.resolve_move(mv, field)
 	var power_mult: float = 1.0
 	if mv.overcharge and me.energy > 0:
 		var extra: int = me.energy

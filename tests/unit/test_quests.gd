@@ -16,7 +16,10 @@ func test_goals_advance_in_order() -> void:
 	flags["kestra_dock_talk"] = true
 	assert_eq(QuestLog.current(flags).id, "home")
 	flags["aldo_dock_told"] = true
-	assert_eq(QuestLog.current(flags).id, "act1_end")
+	assert_eq(QuestLog.current(flags).id, "lamp")
+	flags["mirela_lamp"] = true
+	assert_eq(QuestLog.current(flags).id, "crossing")
+	assert_eq(str(QuestLog.current(flags).act), "Act II: The Colours of Corvane")
 
 func test_old_save_without_new_flag_lands_on_later_goal() -> void:
 	# Saves from before "met_kestra" existed: both Rifts mended, never set met_kestra.
@@ -39,6 +42,10 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 		for k: Variant in d:
 			if d[k] is Dictionary and d[k].has("flag"):
 				settable[str(d[k].flag)] = true
+			# Answers in a choice set flags too.
+			for c: Variant in (d[k].get("choices", []) if d[k] is Dictionary else []):
+				if c is Dictionary and c.has("flag"):
+					settable[str(c.flag)] = true
 			# Actions that set flags themselves: quest_show <id> ..., switch <puzzle> ...
 			for one: String in (str(d[k].get("action", "")).split(";") if d[k] is Dictionary else PackedStringArray()):
 				var act: PackedStringArray = one.strip_edges().split(" ")
@@ -51,8 +58,18 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 				if act.size() > 1 and act[0] == "page":
 					settable["page_%s" % act[1]] = true
 					settable["pages_all"] = true
+				# "echo_song <flag>" sets its flag on a good echo.
+				if act.size() > 1 and act[0] == "echo_song":
+					settable[act[1]] = true
 				if act[0] == "choose_starter":
 					settable["got_starter"] = true
+	# Cut-scenes set flags with "flag" steps (data/scenes).
+	for f: String in DirAccess.get_files_at("res://data/scenes"):
+		var sc: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/scenes/" + f))
+		for step: Variant in sc.get("steps", []):
+			if step is Dictionary and step.has("flag"):
+				for fl: Variant in (step.flag if step.flag is Array else [step.flag]):
+					settable[str(fl)] = true
 	for f: String in DirAccess.get_files_at("res://data/maps"):
 		var m: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/maps/" + f))
 		for n: Variant in m.get("npcs", []):
@@ -62,5 +79,15 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 				settable["rift_%s_sealed" % n.warden] = true
 			for wf: Variant in n.get("win_flags", []):
 				settable[str(wf)] = true
+	# Story figures on area 3's maps (data/story_npcs.json) and story duels.
+	for mid: Variant in StoryPlacements.data():
+		for n: Variant in StoryPlacements.for_map(str(mid)).get("npcs", []):
+			if n.has("beaten_flag"):
+				settable[str(n.beaten_flag)] = true
+			if n.has("warden"):
+				settable["rift_%s_sealed" % n.warden] = true
+	for id: Variant in StoryBattles.data():
+		if StoryBattles.has(str(id)):
+			settable[StoryBattles.beaten_flag(str(id))] = true
 	for f: String in QuestLog.all_flags():
 		assert_true(settable.has(f), "quest flag '%s' is never set by dialogue or maps" % f)

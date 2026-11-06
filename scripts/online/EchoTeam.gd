@@ -4,8 +4,9 @@ extends RefCounted
 ## the friend does not need to be online and nothing happens to their real Spirlings.
 ## Only species, level and move names go online, never nicknames.
 
-## Level for echo duels: both sides fight at the same level (item 124).
-const DUEL_LEVEL: int = 30
+## Fallback Ring for echo duels: both sides fight at the same Ring (item 124). The server
+## sends the real one with the friend's team (server_config.duel_ring, plan item 2671).
+const DUEL_LEVEL: int = 50
 ## AI tier of a friend's echo beside you.
 const PARTNER_AI: int = 1
 ## AI tier of a friend's echo in a duel.
@@ -42,8 +43,13 @@ static func build(rows: Array, max_level: int, fixed_level: int = 0) -> Array[Sp
 	return out
 
 ## Copies of the player's own team on the duel level, so a duel never changes the real team.
-static func duel_copy(party: Array[Spirling]) -> Array[Spirling]:
-	return build(snapshot(party), Spirling.MAX_LEVEL, DUEL_LEVEL)
+static func duel_copy(party: Array[Spirling], ring: int = DUEL_LEVEL) -> Array[Spirling]:
+	return build(snapshot(party), Spirling.MAX_LEVEL, ring)
+
+## The duel Ring the server sent with a friend's team, kept inside the game's limits.
+static func duel_ring(d: Dictionary) -> int:
+	var v: Variant = d.get("duel_ring", DUEL_LEVEL)
+	return clampi(int(v) if (v is int or v is float) else DUEL_LEVEL, 1, Spirling.MAX_LEVEL)
 
 ## Rounds won * 100 + team health left in percent: the weekly board score (0-400).
 static func weekly_score(wins: int, party: Array[Spirling]) -> int:
@@ -51,4 +57,4 @@ static func weekly_score(wins: int, party: Array[Spirling]) -> int:
 	for s: Spirling in party:
 		hp += s.hp_fraction()
 	var pct: int = int(round(100.0 * hp / maxf(1.0, float(party.size())))) if wins >= WeeklyChallenge.ROUNDS else 0
-	return clampi(wins * 100 + pct, 0, 400)
+	return clampi(wins * WeeklyChallenge.POINTS_PER_ROUND + pct, 0, 400)

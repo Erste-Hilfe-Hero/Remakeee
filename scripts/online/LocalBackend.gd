@@ -18,12 +18,26 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "focus_brew", "w": 3}, {"item": "dash_brew", "w": 3}, {"item": "revival_leaf", "w": 1}],
 	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
+	"party_max": 5, "level_max": 60, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
+	"league_fair_ring": 50, "league_season_days": 42, "league_closing_minutes": 30, "league_search_start": 100,
+	"league_search_step": 50, "league_search_max": 400, "league_match_minutes": 30, "league_ai": 2,
+	"league_fair_blocked_sources": [],
+	"max_money_per_min": 5000, "save_time_slack": 300, "start_money": 3000, "cheat_flag_limit": 3, "cheat_flag_days": 7,
+	"data_export_limit": 5,
+	"save_server_keys": ["league", "leagues", "raid", "raids", "trades", "bund", "premium", "gems", "shards"],
+}
+const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
+## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
+const DEFAULT_FLAGS: Dictionary = {
+	"league_fair": {"enabled": true, "min_version": 1}, "league_open": {"enabled": true, "min_version": 1},
+	"live_duel": {"enabled": false, "min_version": 1}, "trade": {"enabled": false, "min_version": 1},
+	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
 var store_path: String = ""
 ## {"users": {uid: user}, "config": {...}}; a user holds "profile" and "saves".
-var db: Dictionary = {"users": {}, "config": DEFAULT_CONFIG.duplicate(true)}
+var db: Dictionary = {"users": {}, "config": DEFAULT_CONFIG.duplicate(true), "flags": DEFAULT_FLAGS.duplicate(true)}
 ## Seconds added to the real clock (tests move time with this).
 var clock_offset: int = 0
 ## When true every call fails like a dropped connection.
@@ -40,7 +54,8 @@ func _init(p_store_path: String = "") -> void:
 			"transfer_create", "transfer_claim",
 			"friend_request", "friend_respond", "friend_remove", "block", "unblock", "report", "set_social", "friends_list",
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
-			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board"]:
+			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
+			"battle_submit", "battle_status", "league_info", "league_join", "league_find", "data_export"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 
 func is_local() -> bool:
@@ -105,6 +120,10 @@ func _load() -> void:
 		if db.get("config") is Dictionary:
 			cfg.merge(db.config, true)
 		db["config"] = cfg
+		var flags: Dictionary = DEFAULT_FLAGS.duplicate(true)
+		if db.get("flags") is Dictionary:
+			flags.merge(db.flags, true)
+		db["flags"] = flags
 
 func _save() -> void:
 	if store_path.is_empty():
@@ -121,7 +140,7 @@ func _user() -> Dictionary:
 func profile_of(uid: String) -> Dictionary:
 	var u: Dictionary = db.users[uid]
 	if not u.has("profile"):
-		u["profile"] = {"code": _new_code(), "name": "Tamer", "color": 0, "favorite": "", "card": {},
+		u["profile"] = {"code": _new_code(), "name": "Wanderer", "color": 0, "favorite": "", "card": {},
 			"place": "", "social": true, "last_seen": now(), "created_at": now()}
 	return u.profile
 
@@ -144,7 +163,7 @@ func _new_code() -> String:
 
 static func clean_name(p_name: String, code: String) -> String:
 	var n: String = " ".join(p_name.strip_edges().split(" ", false))
-	var fallback: String = "Tamer " + code.right(4)
+	var fallback: String = "Wanderer " + code.right(4)
 	if n.is_empty() or n.length() > 10:
 		return fallback
 	var re := RegEx.create_from_string("^[\\p{L}\\p{N} ]+$")
@@ -170,14 +189,25 @@ func online_now() -> int:
 			n += 1
 	return n
 
-static func save_ok(d: Variant) -> bool:
+## Whole-number config value, like public._config_int.
+func config_int(key: String, fallback: int) -> int:
+	var v: Variant = db.config.get(key, fallback)
+	return int(v) if (v is int or v is float) else fallback
+
+## Like public._flag_on: the feature is on for this client version.
+func flag_on(key: String, version: int) -> bool:
+	var f: Variant = db.flags.get(key)
+	return f is Dictionary and bool(f.get("enabled", false)) and version >= int(f.get("min_version", 1))
+
+## Like public._save_ok: real game limits (team of party_max, Ring 1..level_max).
+static func save_ok(d: Variant, party_max: int = 5, level_max: int = 60) -> bool:
 	if not d is Dictionary:
 		return false
 	if JSON.stringify(d).length() > 400000:
 		return false
 	var party: Variant = d.get("party", [])
 	var storage: Variant = d.get("storage", [])
-	if not party is Array or not storage is Array or (party as Array).size() > 6:
+	if not party is Array or not storage is Array or (party as Array).size() > party_max:
 		return false
 	var money: Variant = d.get("money", 0)
 	if not (money is int or money is float) or float(money) < 0 or float(money) > 9999999:
@@ -185,9 +215,19 @@ static func save_ok(d: Variant) -> bool:
 	for s: Variant in (party as Array) + (storage as Array):
 		if s is Dictionary:
 			var lvl: Variant = s.get("level", 1)
-			if not (lvl is int or lvl is float) or float(lvl) < 1 or float(lvl) > 100:
+			if not (lvl is int or lvl is float) or float(lvl) < 1 or float(lvl) > level_max:
 				return false
 	return true
+
+## Like public._save_schema_ok: a whole number from 1 to save_schema_max.
+## JSON numbers come back as floats in Godot, so 1.0 counts as whole.
+static func save_schema_ok(d: Variant, schema_max: int = 1) -> bool:
+	if not d is Dictionary:
+		return false
+	var v: Variant = (d as Dictionary).get("schema")
+	if not (v is int or v is float):
+		return false
+	return float(v) == floorf(float(v)) and float(v) >= 1 and float(v) <= schema_max
 
 # --- Core functions (20261101000001_online_core.sql) ---------------------------------------
 
@@ -196,7 +236,17 @@ func _fn_hello(a: Dictionary) -> Dictionary:
 	p.last_seen = now()
 	return {"profile": profile_json(p), "server_time": now(),
 		"update_required": int(a.get("p_version", 0)) < int(db.config.get("min_version", 1)),
-		"motd": str(db.config.get("motd", "")), "online_now": online_now()}
+		"motd": str(db.config.get("motd", "")), "online_now": online_now(),
+		"flags": active_flags(int(a.get("p_version", 0)))}
+
+## Like hello's "flags": the feature keys that are on for [param version], sorted (item 2675).
+func active_flags(version: int) -> Array:
+	var out: Array = []
+	for key: String in db.flags:
+		if flag_on(key, version):
+			out.append(key)
+	out.sort()
+	return out
 
 func _fn_profile_set(a: Dictionary) -> Dictionary:
 	var p: Dictionary = profile_of(me())
@@ -254,16 +304,82 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 	var slot: int = int(a.get("p_slot", 0))
 	if slot < 1 or slot > 3:
 		return {"ok": false, "error": "bad_slot"}
-	if not save_ok(a.get("p_data")):
+	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
+		return {"ok": false, "error": "schema"}
+	if not save_ok(a.get("p_data"), config_int("party_max", 5), config_int("level_max", 60)):
 		return {"ok": false, "error": "implausible"}
+	var data: Dictionary = (a.p_data as Dictionary).duplicate(true)
+	# Values the server keeps itself are dropped (item 2924).
+	for k: Variant in db.config.get("save_server_keys", []):
+		data.erase(str(k))
 	var saves: Dictionary = _saves()
 	var cur: Variant = saves.get(str(slot))
 	if cur != null and int(cur.rev) != int(a.get("p_base_rev", 0)) and not bool(a.get("p_force", false)):
 		return {"ok": false, "conflict": true, "rev": cur.rev, "saved_at": cur.saved_at, "summary": cur.summary}
+	var why: String = save_cheat(cur.data if cur != null else null, int(cur.saved_at) if cur != null else 0, data)
+	if not why.is_empty():
+		var flags: Array = _user().get_or_add("cheat_flags", [])
+		# The game tries again at the next save; the same refusal counts once per 10 minutes.
+		if not flags.any(func(f: Dictionary) -> bool: return int(f.slot) == slot and f.reason == why and int(f.at) > now() - 600):
+			flags.append({"slot": slot, "reason": why, "at": now()})
+		return {"ok": false, "error": "refused", "reason": why}
 	var rev: int = (int(cur.rev) if cur != null else 0) + 1
-	saves[str(slot)] = {"rev": rev, "data": (a.p_data as Dictionary).duplicate(true),
+	saves[str(slot)] = {"rev": rev, "data": data,
 		"summary": str(a.get("p_summary", "")).left(60), "saved_at": now()}
 	return {"ok": true, "rev": rev, "saved_at": now()}
+
+## Like public._save_cheat (items 2921-2923): why a new save is refused, or "".
+func save_cheat(old: Variant, old_at: int, d: Dictionary) -> String:
+	var old_pt: float = 0.0
+	var new_pt: float = float(d.get("play_time", 0)) if d.get("play_time") is float or d.get("play_time") is int else 0.0
+	var old_money: float = config_int("start_money", 3000)
+	var new_money: float = float(d.get("money", 0)) if d.get("money") is float or d.get("money") is int else 0.0
+	if old is Dictionary and (old.get("play_time") is float or old.get("play_time") is int):
+		old_pt = float(old.play_time)
+		if new_pt >= old_pt:
+			old_money = maxf(float(old.get("money", 0)) if old.get("money") is float or old.get("money") is int else 0.0, 0.0)
+			if new_pt - old_pt > (now() - old_at) + config_int("save_time_slack", 300):
+				return "play_time_fast"
+		else:
+			old_pt = 0.0
+	var played_min: float = maxf(ceilf((new_pt - old_pt) / 60.0), 1.0)
+	if new_money - old_money > config_int("max_money_per_min", 5000) * played_min:
+		return "money_fast"
+	var mons: Array = []
+	for k: String in ["party", "storage", "sanctuary"]:
+		if d.get(k) is Array:
+			mons.append_array(d[k])
+	for m: Variant in mons:
+		if not m is Dictionary:
+			continue
+		var sp: String = str(m.get("species", "")) if m.get("species") != null else ""
+		if not sp.is_empty() and Database.species(sp) == null:
+			return "unknown_species"
+	for m: Variant in mons:
+		if m is Dictionary and m.get("moves") is Array:
+			for mv: Variant in m.moves:
+				if mv != null and not str(mv).is_empty() and Database.move(str(mv)) == null:
+					return "unknown_move"
+	var items: Array = []
+	for m: Variant in mons:
+		if m is Dictionary and m.get("held") != null:
+			items.append(str(m.held))
+	if d.get("inventory") is Dictionary:
+		items.append_array((d.inventory as Dictionary).keys())
+	for it: Variant in items:
+		if not str(it).is_empty() and Database.item(str(it)).is_empty():
+			return "unknown_item"
+	return ""
+
+## Like public._cheat_held (item 2925): enough refused saves lately, and Ali has not cleared it.
+func cheat_held(uid: String) -> bool:
+	var u: Dictionary = db.users.get(uid, {})
+	var since: int = maxi(now() - config_int("cheat_flag_days", 7) * 86400, int(u.get("cheat_cleared_at", 0)))
+	var n: int = 0
+	for f: Dictionary in u.get("cheat_flags", []):
+		if int(f.at) > since:
+			n += 1
+	return n >= config_int("cheat_flag_limit", 3)
 
 func _fn_save_delete(a: Dictionary) -> Dictionary:
 	var had: bool = _saves().erase(str(int(a.get("p_slot", 0))))
@@ -272,9 +388,84 @@ func _fn_save_delete(a: Dictionary) -> Dictionary:
 func _fn_delete_account(_a: Dictionary) -> Dictionary:
 	var uid: String = me()
 	_on_delete_user(uid)
+	_purge(uid)
 	db.users.erase(uid)
 	session = {}
 	return {"ok": true}
+
+## Tables of [member db] that hold rows of players (everything but accounts and settings).
+func _shared_tables() -> Array[String]:
+	var out: Array[String] = []
+	for name: String in db.keys():
+		if not ["users", "config", "flags"].has(name) and (db[name] is Dictionary or db[name] is Array):
+			out.append(name)
+	out.sort()
+	return out
+
+## True when [param v] (or the row key [param key]) carries the account id [param uid].
+func _mentions(v: Variant, uid: String, key: String = "") -> bool:
+	if not key.is_empty() and (key == uid or key.split("|").has(uid)):
+		return true
+	if v is String:
+		return v == uid
+	if v is Array:
+		return (v as Array).any(func(x: Variant) -> bool: return _mentions(x, uid))
+	if v is Dictionary:
+		for k: Variant in v:
+			if _mentions(v[k], uid, str(k)):
+				return true
+	return false
+
+## Like public._export_row: the player's id reads "you", other players' ids "another player".
+func _mask(v: Variant, uid: String) -> Variant:
+	if v is String:
+		return "you" if v == uid else ("another player" if db.users.has(v) else v)
+	if v is Array:
+		return (v as Array).map(func(x: Variant) -> Variant: return _mask(x, uid))
+	if v is Dictionary:
+		var out: Dictionary = {}
+		for k: Variant in v:
+			out[_mask_key(str(k), uid)] = _mask(v[k], uid)
+		return out
+	return v
+
+func _mask_key(k: String, uid: String) -> String:
+	var parts: PackedStringArray = k.split("|")
+	for i: int in parts.size():
+		parts[i] = str(_mask(parts[i], uid))
+	return "|".join(parts)
+
+## Like public.data_export (item 2972): every row that carries the account, other players hidden.
+func _fn_data_export(_a: Dictionary) -> Dictionary:
+	var uid: String = me()
+	profile_of(uid)
+	if not _rate_ok("data_export", config_int("data_export_limit", 5)):
+		return _fail("slow_down")
+	var tables: Dictionary = {"account": _mask(db.users[uid], uid)}
+	for name: String in _shared_tables():
+		var rows: Array = []
+		var t: Variant = db[name]
+		if t is Dictionary:
+			for k: Variant in t:
+				if _mentions(t[k], uid, str(k)):
+					rows.append({"key": _mask_key(str(k), uid), "row": _mask(t[k], uid)})
+		else:
+			for row: Variant in t:
+				if _mentions(row, uid):
+					rows.append(_mask(row, uid))
+		tables[name] = rows
+	return {"ok": true, "exported_at": now(), "format": 1, "tables": tables}
+
+## Like the end of public.delete_account (2973): no row anywhere still carries the account.
+func _purge(uid: String) -> void:
+	for name: String in _shared_tables():
+		var t: Variant = db[name]
+		if t is Dictionary:
+			for k: Variant in (t as Dictionary).keys():
+				if _mentions(t[k], uid, str(k)):
+					t.erase(k)
+		else:
+			db[name] = (t as Array).filter(func(row: Variant) -> bool: return not _mentions(row, uid))
 
 func _fn_transfer_create(_a: Dictionary) -> Dictionary:
 	profile_of(me())
@@ -575,7 +766,8 @@ func _fn_team_set(a: Dictionary) -> Dictionary:
 	if not given is Array:
 		return _fail("bad_team")
 	var clean: Array = []
-	for s: Variant in (given as Array).slice(0, 6):
+	var level_max: int = config_int("level_max", 60)
+	for s: Variant in (given as Array).slice(0, config_int("party_max", 5)):
 		var d: Dictionary = s if s is Dictionary else {}
 		var moves: Array = []
 		var mv_list: Variant = d.get("moves", [])
@@ -583,7 +775,7 @@ func _fn_team_set(a: Dictionary) -> Dictionary:
 			moves.append(_keep(str(mv), " '-").left(24))
 		var lvl: Variant = d.get("level", 1)
 		clean.append({"species": _keep(str(d.get("species", "")), "").left(20),
-			"level": clampi(int(lvl) if (lvl is int or lvl is float) else 1, 1, 100), "moves": moves})
+			"level": clampi(int(lvl) if (lvl is int or lvl is float) else 1, 1, level_max), "moves": moves})
 	profile_of(me())["team"] = clean
 	return {"ok": true, "size": clean.size()}
 
@@ -599,7 +791,8 @@ func _fn_friend_team(a: Dictionary) -> Dictionary:
 	if t.is_empty() or not is_friend(me(), t):
 		return _fail("not_friends")
 	var p: Dictionary = profile_of(t)
-	return {"ok": true, "name": p.name, "color": p.color, "team": (p.get("team", []) as Array).duplicate(true)}
+	return {"ok": true, "name": p.name, "color": p.color, "team": (p.get("team", []) as Array).duplicate(true),
+		"duel_ring": clampi(config_int("duel_ring", 50), 1, config_int("level_max", 60))}
 
 func _fn_echo_report(a: Dictionary) -> Dictionary:
 	var kind: String = str(a.get("p_kind", ""))
@@ -747,3 +940,236 @@ func _on_delete_user(uid: String) -> void:
 		for key: String in t.keys():
 			if key.ends_with("|" + uid):
 				t.erase(key)
+	var battles: Dictionary = _table("battles", {})
+	for key: String in battles.keys():
+		if battles[key].user == uid:
+			battles.erase(key)
+	for table: String in ["league_fair", "league_open"]:
+		var t: Dictionary = _table(table, {})
+		for key: String in t.keys():
+			if key.ends_with("|" + uid):
+				t.erase(key)
+	var matches: Dictionary = _table("league_matches", {})
+	for key: String in matches.keys():
+		if matches[key].user == uid:
+			matches.erase(key)
+
+# --- Battle referee (20261110000002_referee.sql) --------------------------------------------
+
+## Like public.battle_submit. The local stand-in has no queue: the referee runs at once,
+## with the same code as server/referee/ (BattleReferee), unless [member referee_waits] is set.
+func _fn_battle_submit(a: Dictionary) -> Dictionary:
+	var kind: String = str(a.get("p_kind", ""))
+	if not BATTLE_KINDS.has(kind):
+		return _fail("bad_kind")
+	var replay: Variant = a.get("p_replay")
+	var claim: Variant = a.get("p_claim")
+	if not replay is Dictionary or not claim is Dictionary or not (replay as Dictionary).get("teams") is Array \
+			or JSON.stringify(replay).length() > 200000 or JSON.stringify(claim).length() > 4000:
+		return _fail("bad_battle")
+	var inputs: Variant = (replay as Dictionary).get("inputs", [])
+	if not inputs is Array or (inputs as Array).size() > BattleReferee.MAX_INPUTS:
+		return _fail("bad_battle")
+	if not _rate_ok("battle", config_int("battle_submit_limit", 60)):
+		return _fail("slow_down")
+	var c: Dictionary = (claim as Dictionary).duplicate(true)
+	c.erase("expect")
+	var lm: Dictionary = {}
+	if kind == "league_fair" or kind == "league_open":
+		var mv: Variant = (_table("league_matches", {}) as Dictionary).get(str(a.get("p_ref", "")))
+		if not mv is Dictionary or mv.user != me() or mv.league != kind.substr(7):
+			return _fail("no_such_match")
+		lm = mv
+		if lm.state != "open" or now() - int(lm.created_at) > 60 * config_int("league_match_minutes", 30):
+			return _fail("match_closed")
+		c["expect"] = _league_expect(lm)
+	var battles: Dictionary = _table("battles", {})
+	var id: int = int(db.get("battle_seq", 0)) + 1
+	db["battle_seq"] = id
+	var row: Dictionary = {"user": me(), "kind": kind, "ref": str(a.get("p_ref", "")).left(40), "status": "pending"}
+	battles[str(id)] = row
+	if not lm.is_empty():
+		lm.state = "submitted"
+		lm.battle_id = id
+		lm.rated = bool(lm.rated) and league_state(league_season()) == "running"
+	if referee_waits:
+		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": c}
+	else:
+		_decide(id, BattleReferee.check(replay, c))
+	return {"ok": true, "battle_id": id, "status": "pending"}
+
+## Tests: battles stay "pending" until [method referee_run] (like the real queue).
+var referee_waits: bool = false
+
+## Decides every waiting battle, like one run of server/referee/run.sh.
+func referee_run() -> int:
+	var n: int = 0
+	for key: String in (_table("battles", {}) as Dictionary):
+		var row: Dictionary = db.battles[key]
+		if row.has("queued"):
+			var q: Dictionary = row.queued
+			row.erase("queued")
+			_decide(int(key), BattleReferee.check(q.replay, q.claim))
+			n += 1
+	return n
+
+## Like the battle_results trigger: the state, then league ratings.
+func _decide(id: int, result: Dictionary) -> void:
+	var row: Dictionary = db.battles[str(id)]
+	row.status = str(result.verdict)
+	if row.kind == "league_fair" or row.kind == "league_open":
+		for key: String in (_table("league_matches", {}) as Dictionary):
+			var m: Dictionary = db.league_matches[key]
+			if int(m.get("battle_id", -1)) == id and m.state == "submitted":
+				if row.status == "ok":
+					_league_apply(m, result.detail)
+				else:
+					m.state = "done"
+					m.rated = false
+
+func _fn_battle_status(a: Dictionary) -> Dictionary:
+	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
+	if not row is Dictionary or row.user != me():
+		return _fail("no_such_battle")
+	return {"ok": true, "status": row.status}
+
+## Like public._battle_ok: leagues, raids and weekly scores only count "ok" battles.
+func battle_ok(battle_id: int) -> bool:
+	var row: Variant = (_table("battles", {}) as Dictionary).get(str(battle_id))
+	return row is Dictionary and row.status == "ok"
+
+# --- Leagues (20261110000003_league.sql) ----------------------------------------------------
+
+## Like public._league_season: the season of now, started by itself after the last one.
+func league_season() -> Dictionary:
+	var seasons: Array = _table("league_seasons", [])
+	for i: int in range(seasons.size() - 1, -1, -1):
+		var sn: Dictionary = seasons[i]
+		if now() >= int(sn.starts_at) and now() < int(sn.ends_at):
+			return sn
+	var day: int = now() - now() % 86400
+	var sn: Dictionary = {"id": seasons.size() + 1, "starts_at": day,
+		"ends_at": day + 86400 * config_int("league_season_days", 42), "rules_version": 1, "state": "running"}
+	seasons.append(sn)
+	return sn
+
+## "running", "closing" (last 30 minutes) or "paused".
+func league_state(sn: Dictionary) -> String:
+	if sn.state == "paused":
+		return "paused"
+	if now() >= int(sn.ends_at) - 60 * config_int("league_closing_minutes", 30):
+		return "closing"
+	return "running"
+
+func league_entry(league: String, season: int, uid: String) -> Variant:
+	return (_table("league_" + league, {}) as Dictionary).get("%d|%s" % [season, uid])
+
+func _league_check(league: String) -> String:
+	if league != LeagueRules.FAIR and league != LeagueRules.OPEN:
+		return "bad_league"
+	if not flag_on("league_" + league, 2147483647):
+		return "feature_off"
+	if not session.is_empty() and db.users.has(me()) and cheat_held(me()):
+		return "under_review"
+	return ""
+
+func _fn_league_info(a: Dictionary) -> Dictionary:
+	var league: String = str(a.get("p_league", ""))
+	var err: String = _league_check(league)
+	if not err.is_empty():
+		return _fail(err)
+	profile_of(me())
+	var sn: Dictionary = league_season()
+	var e: Variant = league_entry(league, int(sn.id), me())
+	return {"ok": true, "season": sn.id, "ends_at": sn.ends_at, "state": league_state(sn), "rules_version": sn.rules_version,
+		"ring": config_int("league_fair_ring", 50) if league == LeagueRules.FAIR else config_int("level_max", 60),
+		"joined": e != null, "team": (e.team as Array).duplicate(true) if e != null else [],
+		"tier": LeagueRules.tier(float(e.rating)) if e != null else null,
+		"games": int(e.games) if e != null else 0, "wins": int(e.wins) if e != null else 0}
+
+func _fn_league_join(a: Dictionary) -> Dictionary:
+	var league: String = str(a.get("p_league", ""))
+	var err: String = _league_check(league)
+	if not err.is_empty():
+		return _fail(err)
+	var sn: Dictionary = league_season()
+	if league_state(sn) == "paused":
+		return _fail("season_paused")
+	if not _rate_ok("league_join", 30):
+		return _fail("slow_down")
+	var saved: Array = profile_of(me()).get("team", [])
+	var built: Dictionary = LeagueRules.build_team(saved, league, a.get("p_pick"), config_int("league_fair_ring", 50), config_int("level_max", 60))
+	if built.has("error"):
+		return _fail(str(built.error))
+	var key: String = "%d|%s" % [int(sn.id), me()]
+	var t: Dictionary = _table("league_" + league, {})
+	if not t.has(key):
+		t[key] = {"rating": Glicko.START_RATING, "rd": Glicko.START_RD, "vol": Glicko.START_VOL, "games": 0, "wins": 0}
+	t[key].team = built.team
+	return {"ok": true, "team": (built.team as Array).duplicate(true)}
+
+func _fn_league_find(a: Dictionary) -> Dictionary:
+	var league: String = str(a.get("p_league", ""))
+	var err: String = _league_check(league)
+	if not err.is_empty():
+		return _fail(err)
+	var sn: Dictionary = league_season()
+	if league_state(sn) == "paused":
+		return _fail("season_paused")
+	var mine: Variant = league_entry(league, int(sn.id), me())
+	if mine == null:
+		return _fail("not_joined")
+	if not _rate_ok("league_find", 240):
+		return _fail("slow_down")
+	var waited: int = maxi(0, int(a.get("p_waited", 0)))
+	var span: float = minf(config_int("league_search_start", 100) + config_int("league_search_step", 50) * floorf(waited / 10.0),
+		config_int("league_search_max", 400))
+	var best: String = ""
+	var best_d: float = INF
+	var t: Dictionary = _table("league_" + league, {})
+	for key: String in t:
+		var parts: PackedStringArray = key.split("|")
+		if int(parts[0]) != int(sn.id) or parts[1] == me() or is_blocked(me(), parts[1]):
+			continue
+		var d: float = absf(float(t[key].rating) - float(mine.rating))
+		if d <= span and d < best_d:
+			best = parts[1]
+			best_d = d
+	if best.is_empty():
+		return {"ok": true, "found": false, "range": span}
+	var matches: Dictionary = _table("league_matches", {})
+	for key: String in matches:
+		if matches[key].user == me() and matches[key].state == "open":
+			matches[key].state = "expired"
+	var opp: Dictionary = t["%d|%s" % [int(sn.id), best]]
+	var id: int = int(db.get("league_match_seq", 0)) + 1
+	db["league_match_seq"] = id
+	var teams: Array = [(mine.team as Array).duplicate(true), (opp.team as Array).duplicate(true)]
+	var rated: bool = league_state(sn) == "running"
+	matches[str(id)] = {"league": league, "season": int(sn.id), "user": me(), "opponent": best, "seed": rng.randi() & 0x7fffffff,
+		"teams": teams, "created_at": now(), "state": "open", "rated": rated}
+	return {"ok": true, "found": true, "match_id": id, "seed": matches[str(id)].seed, "teams": teams.duplicate(true),
+		"ai": config_int("league_ai", 2), "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated}
+
+func _league_expect(m: Dictionary) -> Dictionary:
+	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
+		"front": [1, 1], "items_allowed": false}
+
+## Like public._league_apply: only the player who fought is rated.
+func _league_apply(m: Dictionary, detail: Variant) -> void:
+	var score: float = 1.0 if detail is Dictionary and str(detail.get("winner", "")) == "player" else 0.0
+	m.state = "done"
+	m.score = score
+	if not bool(m.rated):
+		return
+	var e: Variant = league_entry(m.league, int(m.season), m.user)
+	if e == null:
+		return
+	var o: Variant = league_entry(m.league, int(m.season), str(m.opponent))
+	var nr: Dictionary = Glicko.rate(float(e.rating), float(e.rd), float(e.vol),
+		float(o.rating) if o != null else Glicko.START_RATING, float(o.rd) if o != null else Glicko.START_RD, score)
+	e.rating = nr.rating
+	e.rd = nr.rd
+	e.vol = nr.vol
+	e.games = int(e.games) + 1
+	e.wins = int(e.wins) + int(score)

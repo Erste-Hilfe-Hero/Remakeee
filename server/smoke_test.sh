@@ -22,7 +22,7 @@ hello="$(post /rest/v1/rpc/hello "$a" '{"p_version": 1}')"
 echo "$hello" | grep -q '"code"' || fail "hello: $hello"
 code_a="$(echo "$hello" | field '["profile"]["code"]')"
 
-put="$(post /rest/v1/rpc/save_put "$a" '{"p_slot": 1, "p_data": {"version": 3, "party": [], "money": 5}, "p_summary": "Smoke", "p_base_rev": 0}')"
+put="$(post /rest/v1/rpc/save_put "$a" '{"p_slot": 1, "p_data": {"schema": 1, "version": 3, "party": [], "money": 5}, "p_summary": "Smoke", "p_base_rev": 0}')"
 echo "$put" | grep -q '"ok": *true\|"ok":true' || fail "save_put: $put"
 got="$(post /rest/v1/rpc/save_get "$b" '{"p_slot": 1}')"
 echo "$got" | grep -q '"money"' && fail "another account could read the save: $got"

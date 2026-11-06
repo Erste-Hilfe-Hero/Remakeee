@@ -3,6 +3,25 @@ extends Resource
 ## Static species data loaded from data/spirlings.json. Never mutated at runtime.
 
 const DEFAULT_BOND_RATE: float = 0.45
+## Rarity tiers (plan area 1, items 130-133): bond rate band and encounter weight band per tier.
+## Ancient Spirlings (the First Voices) never appear in random encounter tables.
+const RARITIES: Array[String] = ["common", "uncommon", "shy", "ancient"]
+const BOND_RATE_BANDS: Dictionary[String, Vector2] = {
+	"common": Vector2(0.45, 0.55), "uncommon": Vector2(0.25, 0.35),
+	"shy": Vector2(0.08, 0.15), "ancient": Vector2(0.03, 0.05),
+}
+const WEIGHT_BANDS: Dictionary[String, Vector2i] = {
+	"common": Vector2i(25, 45), "uncommon": Vector2i(10, 24), "shy": Vector2i(2, 9),
+}
+## Base stat total allowed per rarity (data check in test_spirling_data.gd).
+const STAT_TOTAL_BANDS: Dictionary[String, Vector2i] = {
+	"common": Vector2i(260, 470), "uncommon": Vector2i(260, 520),
+	"shy": Vector2i(260, 520), "ancient": Vector2i(520, 640),
+}
+const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne"]
+const ROLES: Array[String] = ["vanguard", "bulwark", "weaver", "striker", "kindler"]
+## Unfold (unfurl) rules, see Spirling.unfold_ready().
+const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "time", "echo_streak"]
 
 @export var dex_id: int
 @export var species_name: String
@@ -12,6 +31,26 @@ const DEFAULT_BOND_RATE: float = 0.45
 @export var base_def: int
 @export var base_foc: int
 @export var base_spd: int
+@export var rarity: String = "common"
+@export var region: String = "veydal"
+@export var role: String = ""
+## The first two marks of its Echo call (0..2, never the same twice), so meeting a kind again
+## sounds familiar (plan area 1, item 278).
+@export var cry_motif: Array[int] = []
+## Held item id that suits this kind, shown in storage as "Suits it: ..." (item 355).
+@export var keepsake_hint: String = ""
+## Regional imprints (items 218-219): [{"region", "elements": [Elements.E], "palette", "lore",
+## "trait"}]. A Veydal kind that lives long in another region shows this form there, without
+## a new Spirlog number. The chosen one is stored in Spirling.variant (the region id).
+@export var variants: Array[Dictionary] = []
+## One line about where this kind comes from (Spirlog).
+@export var origin: String = ""
+## Id of the unfold line this kind belongs to (the first form's name in lower case).
+@export var line_id: String = ""
+## Unfold paths: [{"to": SpirlingData, "rule": String, "value": Variant, "map": String}].
+## A kind can have more than one path. The first path also fills evolves_to and friends below,
+## which older code and tests still read.
+@export var unfold: Array[Dictionary] = []
 @export var evolves_to: SpirlingData
 @export var evolve_level: int = 0
 @export var bond_rate: float = DEFAULT_BOND_RATE

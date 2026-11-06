@@ -53,6 +53,8 @@ var _text: TextBox
 var _menu: CommandMenu
 var _picker: ListPicker
 var _bond_game: BondMinigame
+## Echo call plan per wild Spirling (uid): a second try in this battle hears the same call.
+var _bond_plans: Dictionary[String, Dictionary] = {}
 var _ff_button: Button
 var _auto_button: Button
 var _auto_ai := BattleAI.new(1)
@@ -507,7 +509,15 @@ func _bond(slot: int = 0) -> BattleAction:
 	var target_slot: int = maxi(aim, 0)
 	await _text.show_text("Reach out to %s... Listen, then echo its call!" % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
-	var score: float = await _bond_game.run()
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, target_slot)
+	var key: String = foe.uid if not foe.uid.is_empty() else str(foe.get_instance_id())
+	if not _bond_plans.has(key):
+		var rng := RandomNumberGenerator.new()
+		rng.randomize()
+		var state: String = BondEcho.rift_state(GameState.current_map, GameState.rifts_sealed)
+		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
+	var score: float = await _bond_game.run(_bond_plans[key])
+	GameState.note_echo(score)
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 
 # --- Event playback -----------------------------------------------------------------
@@ -638,6 +648,13 @@ func _play_event(e: BattleEvent) -> void:
 		BattleEvent.Type.ENERGY_CHANGED:
 			_strip(side, slot).set_energy(int(e.data.energy))
 			_refresh_focus(side, slot)
+		BattleEvent.Type.ENERGY_TAX:
+			var ts: Variant = _strip(side, slot)
+			if ts is InfoStrip:
+				(ts as InfoStrip).set_tax(int(e.data.get("turns", 0)))
+			var tax_text: String = e.describe()
+			if not tax_text.is_empty():
+				await _text.show_text(tax_text)
 		BattleEvent.Type.STATUS_APPLIED:
 			Sound.sfx("status")
 			_strip(side, slot).set_status(str(e.data.status))
