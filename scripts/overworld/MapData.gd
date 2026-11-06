@@ -59,6 +59,8 @@ var file_id: String = ""
 ## Kind of land (fern, marsh, scree, forest, cave, town, rift, ...): steers encounters,
 ## weather and sounds together (area 3 item 898).
 var biome: String = ""
+## Meeting place of a town (area 3 item 966): spring, lamp or sign where folk gather at dusk.
+var square: Vector2i = Vector2i(-1, -1)
 ## Puzzles: {"id", "flag", "plates": [[x, y], ...]} (see PuzzleRoom).
 var puzzles: Array[Dictionary] = []
 ## Tile under a boulder drawn on the map ("f" floor by default, "_" outside).
@@ -194,6 +196,8 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	m.encounter_table = str(raw.get("encounters", ""))
 	m.backdrop = str(raw.get("backdrop", "field"))
 	m.field = str(raw.get("field", ""))
+	var sq: Array = raw.get("square", [-1, -1])
+	m.square = Vector2i(int(sq[0]), int(sq[1]))
 	var hp: Array = raw.get("heal_point", [-1, -1])
 	m.heal_point = Vector2i(int(hp[0]), int(hp[1]))
 	return m

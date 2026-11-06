@@ -4,6 +4,7 @@ lands on corvane_quay at (6, 22). The Act II maps beyond the quay are in corvane
 the Act III maps of Ashmere (region "ashmere") in ashmere.py; all three build as group "corvane"."""
 import ashmere
 import corvane_act2
+import townsfolk
 from common import check_rows, lines, npc, secret, tr, warp
 
 GROUP = ["corvane_quay"] + corvane_act2.GROUP + ashmere.GROUP
@@ -13,6 +14,8 @@ def build(world):
     corvane_quay(world)
     corvane_act2.build(world)
     ashmere.build(world)
+    for mid in ("corvane_quay", "madderby", "cinderfold", "ashmere_station"):
+        townsfolk.apply(world, mid)
 
 
 # --- Corvane Quay: the arrival harbour, 12 x 24, rest spring and a closed road north (1288) ---

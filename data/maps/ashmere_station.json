@@ -86,6 +86,72 @@
    "facing": "left",
    "dialogue": "ashmere_station/conductor",
    "sprite": "villager"
+  },
+  {
+   "id": "rhea",
+   "x": 9,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "ashmere_station/rhea",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 14,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "sev",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "ashmere_station/sev",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 15,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "mika",
+   "x": 4,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "ashmere_station/mika",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 13,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [
@@ -131,5 +197,9 @@
    2,
    18
   ]
- }
+ },
+ "square": [
+  2,
+  14
+ ]
 }

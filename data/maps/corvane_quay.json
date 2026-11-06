@@ -68,6 +68,72 @@
    "facing": "left",
    "dialogue": "corvane_quay/dockhand",
    "sprite": "villager"
+  },
+  {
+   "id": "bram",
+   "x": 9,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "corvane_quay/bram",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 7,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "sina",
+   "x": 9,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "corvane_quay/sina",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 8,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "tobin",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "corvane_quay/tobin",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 8,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [
@@ -133,5 +199,9 @@
    8,
    15
   ]
- }
+ },
+ "square": [
+  2,
+  7
+ ]
 }
