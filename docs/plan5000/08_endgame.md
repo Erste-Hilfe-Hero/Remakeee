@@ -438,8 +438,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3511. [P3] In den Einstellungen anzeigen, nach welcher Uhrzeit (Server-Mitternacht) der Tag wechselt, umgerechnet in die Ortszeit.
 
 ### Belohnungstabellen und Balance
-3512. [P1] Eine Belohnungstabelle in docs/BALANCE.md anlegen, die jede Wegmarken- und Münzquelle mit Betrag und Häufigkeit listet.
-3513. [P1] Das Simulationswerkzeug tools/balance_sim.gd um einen Endgame-Lauf erweitern, der 90 Spieltage mit festem Spielplan durchrechnet und Wegmarken-Ein- und Ausgaben ausgibt.
+3512. [x] [P1] Eine Belohnungstabelle in docs/BALANCE.md anlegen, die jede Wegmarken- und Münzquelle mit Betrag und Häufigkeit listet.
+3513. [x] [P1] Das Simulationswerkzeug tools/balance_sim.gd um einen Endgame-Lauf erweitern, der 90 Spieltage mit festem Spielplan durchrechnet und Wegmarken-Ein- und Ausgaben ausgibt.
 3514. [P2] Als Ziel festlegen, dass ein Spieler nach 30 Tagen etwa 60 Prozent des Tauschstand-Angebots einmal kaufen kann.
 3515. [P2] Die Münzpreise im Wochen-Echo und in den Türmen an den Ring-Deckel binden: 20 Münzen mal Ring-Deckel pro Runde.
 3516. [P2] Echo-Kristalle als Endgame-Belohnung höchstens einmal pro Woche aus Türmen zulassen, damit der Tauschstand wichtig bleibt.

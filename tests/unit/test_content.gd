@@ -39,6 +39,9 @@ func test_every_species_is_reachable() -> void:
 		# Kinds of regions that are not playable yet wait in the data (plan area 1, items 61-63).
 		if Database.spirlings[name].region != "veydal":
 			continue
+		# First Voices are met once at a fixed place (FirstVoices.VOICES), never in the wild.
+		if FirstVoices.VOICES.has(name):
+			continue
 		assert_true(reach.has(name), "%s can't be met anywhere" % name)
 
 func test_lumen_and_umbra_have_base_forms() -> void:

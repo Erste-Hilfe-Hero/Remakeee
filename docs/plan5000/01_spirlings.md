@@ -169,10 +169,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 151. [P3] Schreibe einen Tipp in Tips.gd, der erklärt, dass scheue Spirlings Bedingungen brauchen.
 
 ### Legendäre Spirlings: Die Ersten Stimmen
-152. [P1] Lege das Lore der Ersten Stimmen in docs/WORLD.md fest: sechs uralte Spirlings, deren Gesang das Land einst zusammenhielt, und deren Schweigen die Stille ausgelöst hat.
-153. [P1] Füge Velahra (Lumen/Tide, ancient) hinzu, die Erste Stimme Veydals, die als Licht unter dem See vor dem Leuchtturm schläft und Mirela zuletzt gesehen hat.
-154. [P1] Mach Velahra nach dem Finale im Lampenraum als feste, einmalige Begegnung am Seeufer erreichbar, mit dem Ring 40 und einem eigenen Kampfbildschirm-Hintergrund.
-155. [P1] Lass eine besiegte oder abgebrochene Begegnung mit einer Ersten Stimme nach dem nächsten Rasten an derselben Stelle wiederkehren, damit sie nie verloren geht.
+152. [x] [P1] Lege das Lore der Ersten Stimmen in docs/WORLD.md fest: sechs uralte Spirlings, deren Gesang das Land einst zusammenhielt, und deren Schweigen die Stille ausgelöst hat.
+153. [x] [P1] Füge Velahra (Lumen/Tide, ancient) hinzu, die Erste Stimme Veydals, die als Licht unter dem See vor dem Leuchtturm schläft und Mirela zuletzt gesehen hat.
+154. [x] [P1] Mach Velahra nach dem Finale im Lampenraum als feste, einmalige Begegnung am Seeufer erreichbar, mit dem Ring 40 und einem eigenen Kampfbildschirm-Hintergrund.
+155. [x] [P1] Lass eine besiegte oder abgebrochene Begegnung mit einer Ersten Stimme nach dem nächsten Rasten an derselben Stelle wiederkehren, damit sie nie verloren geht.
 156. [P2] Füge Morrowtide (Tide/Gale, ancient) hinzu, die Erste Stimme Corvanes, die als Flussmündung singt und Mühlräder antreibt, für Akt II.
 157. [P2] Füge Cindrelith (Ember/Stone, ancient) hinzu, die Erste Stimme Ashmeres, ein Glutkern unter dem Moor, der die Glashütten einst wärmte, für Akt III.
 158. [P2] Füge Aurelune (Lumen/Umbra, ancient) hinzu, die Erste Stimme Solennes, die Tag und Nacht teilt und in der Sternwarte wohnt, für Akt IV.
