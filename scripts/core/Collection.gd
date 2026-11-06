@@ -69,7 +69,7 @@ static func next_goal(spirlog: Dictionary, total: int) -> Dictionary:
 ## Claims every reached goal: adds the gifts and returns the lines to show.
 static func claim() -> Array[String]:
 	var claimed: Dictionary = (GameState.records.get("collection", {}) as Dictionary).duplicate()
-	var total: int = Database.spirlings.size()
+	var total: int = SpirlogBook.visible_kinds(GameState.flags).size()
 	var lines: Array[String] = []
 	for g: Dictionary in ready(GameState.spirlog, claimed, total):
 		claimed[g.id] = true
