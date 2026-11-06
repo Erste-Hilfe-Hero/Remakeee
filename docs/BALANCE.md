@@ -18,7 +18,7 @@ path. `--json` writes every number for tests and comparisons.
 | Measure | Target | Checked by |
 | --- | --- | --- |
 | Duel win rate per species at Lv36 | 25% to 75% | `test_balance.gd`, `test_no_species_dominates_its_stage` |
-| Team win rate per species at Lv36 | 30% to 70% (the test holds 25% to 75% while the roster grows) | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
+| Team win rate per species at Lv36 | 30% to 70% | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
 | Team battles that stall (120 turns) | none | `test_balance.gd`, same test |
 | Battles with only the new arts that hit 60 turns | none | `test_move_curve.gd`, `test_fuzz_new_arts_only` |
 | Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | report line "Turns to KO" (test planned, item 851) |

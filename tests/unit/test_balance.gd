@@ -75,6 +75,5 @@ func test_team_mode_keeps_every_species_in_band() -> void:
 	assert_eq(int(r.draws), 0, "no team battle stalls")
 	for n: String in r.species:
 		var wr: float = BalanceSim.win_rate(r.species[n])
-		# Target band 30-70% (plan item 849); while area 1 still adds species and tunes stats the
-		# test holds the duel band 25-75% and the report flags everything outside 30-70%.
-		assert_between(wr, 0.25, 0.75, "%s wins %d%% of team battles at ring 36" % [n, roundi(wr * 100.0)])
+		# Target band 30-70% (plan item 849).
+		assert_between(wr, 0.30, 0.70, "%s wins %d%% of team battles at ring 36" % [n, roundi(wr * 100.0)])
