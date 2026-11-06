@@ -136,6 +136,8 @@ func _build() -> void:
 	ui_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.theme = UITheme.get_theme()
+	# Text box, hints and the HUD follow high contrast and large text at once.
+	ui_root.add_to_group(MenuHost.THEME_GROUP)
 	_ui.add_child(ui_root)
 	_ui_root = ui_root
 	SafeArea.apply(ui_root)

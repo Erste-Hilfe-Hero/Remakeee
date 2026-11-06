@@ -59,6 +59,18 @@ func test_menu_rows_fit_in_english_and_german() -> void:
 			assert_lte(_width(shown), float(ROW_TEXT_WIDTH), "%s row too wide (%d px): %s" % [lang, int(_width(shown)), shown])
 	Loc.set_language("en")
 
+## Long lists scroll, and the scroll bar takes about 7 px of the row (seen on the golden
+## images, item 2044): the Controls rows must fit the narrower room.
+const SCROLL_ROW_TEXT_WIDTH: int = 108
+
+func test_scrolling_list_rows_fit_next_to_the_scroll_bar() -> void:
+	for lang: String in ["en", "de"]:
+		Loc.set_language(lang)
+		for r: Array in MenuHost.controls_rows():
+			var shown: String = Loc.t(str(r[1]))
+			assert_lte(_width(shown), float(SCROLL_ROW_TEXT_WIDTH), "%s row too wide next to the scroll bar (%d px): %s" % [lang, int(_width(shown)), shown])
+	Loc.set_language("en")
+
 func test_german_menus_have_no_english_left() -> void:
 	Loc.set_language("de")
 	var keep: Array[String] = ["OK", "Team", "Spirlog", "Veteran"]
