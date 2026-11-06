@@ -125,5 +125,6 @@ T = {
 "Run without holding B. Hold B to walk.": "Rennen ohne B zu halten. B halten zum Gehen.",
 "Side goal": "Nebenziel",
 "Today's visitor": "Heutiger Besucher",
+"Daily tasks": "Tagesaufgaben",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn"]
