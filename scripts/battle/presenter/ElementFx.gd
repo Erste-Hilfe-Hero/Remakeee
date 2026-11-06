@@ -16,6 +16,9 @@ const IMPACT_TIME: float = 0.25
 const REDUCED_IMPACT_TIME: float = 0.12
 const LUMEN_MAX_ALPHA: float = 0.6
 const FX_PATH: String = "res://art/era1/fx/%s_%d.png"
+## Impact size for a very effective hit and for a weak one (item 2376), no extra text.
+const IMPACT_SCALE_STRONG: float = 1.5
+const IMPACT_SCALE_WEAK: float = 0.5
 
 var phase: Phase = Phase.NONE
 ## Progress through the current phase, 0..1.
@@ -26,6 +29,10 @@ var _from: Vector2
 var _to: Vector2
 var _ground_from: Vector2
 var _ground_to: Vector2
+## Size of the impact drawing around the target (1, 1.5 or 0.5).
+var impact_size: float = 1.0
+## True while a missed art flies past its target (item 2375).
+var missed: bool = false
 var _rng := RandomNumberGenerator.new()
 static var _tex: Dictionary[String, Texture2D] = {}
 ## Phases played by the last play() call (tests).
@@ -45,13 +52,24 @@ static func shape(name: String, shade: int) -> Texture2D:
 		_tex[key] = load(path) if ResourceLoader.exists(path) else null
 	return _tex[key]
 
-## Phases an art of [param kind] plays (physical arts have no travel phase).
-static func phases_for(kind: int, reduced: bool) -> Array[Phase]:
+## Phases an art of [param kind] plays (physical arts have no travel phase). A miss has no
+## impact: a ranged art flies on past the target instead.
+static func phases_for(kind: int, reduced: bool, miss: bool = false) -> Array[Phase]:
 	if reduced:
-		return [Phase.IMPACT]
+		return [] as Array[Phase] if miss else [Phase.IMPACT] as Array[Phase]
 	if kind == MoveData.Kind.PHYSICAL:
-		return [Phase.CHARGE, Phase.IMPACT]
+		return [Phase.CHARGE] as Array[Phase] if miss else [Phase.CHARGE, Phase.IMPACT] as Array[Phase]
+	if miss:
+		return [Phase.CHARGE, Phase.TRAVEL]
 	return [Phase.CHARGE, Phase.TRAVEL, Phase.IMPACT]
+
+## Impact size for a hit of effectiveness [param eff].
+static func impact_scale(eff: float) -> float:
+	if eff > 1.0:
+		return IMPACT_SCALE_STRONG
+	if eff < 1.0:
+		return IMPACT_SCALE_WEAK
+	return 1.0
 
 static func phase_time(p: Phase, reduced: bool) -> float:
 	if reduced:
@@ -62,16 +80,22 @@ static func phase_time(p: Phase, reduced: bool) -> float:
 	return IMPACT_TIME
 
 ## Plays the effect from [param from] (user) to [param to] (target), both in this node's space.
-func play(p_element: int, kind: int, from: Rect2, to: Rect2) -> void:
+func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false, p_impact_size: float = 1.0) -> void:
 	element = p_element
+	missed = miss
+	impact_size = p_impact_size
 	_from = from.get_center().round()
 	_to = to.get_center().round()
+	if miss and _to != _from:
+		# Fly on past the target until well outside the battle field.
+		var reach: float = maxf(size.x, size.y) + 32.0 if size != Vector2.ZERO else 400.0
+		_to = (_from + (_to - _from).normalized() * reach).round()
 	_ground_from = Vector2(_from.x, from.end.y - 2).round()
 	_ground_to = Vector2(_to.x, to.end.y - 2).round()
 	played.clear()
 	var reduced: bool = Juice.reduced()
 	var home: Vector2 = user_sprite.position if user_sprite != null else Vector2.ZERO
-	for p: Phase in phases_for(kind, reduced):
+	for p: Phase in phases_for(kind, reduced, miss):
 		played.append(p)
 		phase = p
 		t = 0.0
@@ -125,6 +149,9 @@ func _line(a: Vector2, b: Vector2, k: int, alpha: float = 1.0) -> void:
 func _draw() -> void:
 	if phase == Phase.NONE:
 		return
+	if phase == Phase.IMPACT and impact_size != 1.0:
+		# Scale the whole impact around the target's centre.
+		draw_set_transform(_to * (1.0 - impact_size), 0.0, Vector2.ONE * impact_size)
 	match element:
 		Elements.E.EMBER: _draw_ember()
 		Elements.E.TIDE: _draw_tide()
