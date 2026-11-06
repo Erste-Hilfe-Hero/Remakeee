@@ -17,6 +17,12 @@ T = {
 "No connection right now. Nothing was deleted.": "Gerade keine Verbindung. Es wurde nichts gelöscht.",
 "Your account was deleted.": "Dein Konto wurde gelöscht.",
 "Account...": "Konto...",
+# League tiers
+"Spark": "Funke",
+"Ember": "Glut",
+"Flame": "Flamme",
+"Glow": "Leuchte",
+"Beacon": "Leuchtfeuer",
 "Get a transfer code": "Code für neues Handy",
 "Enter a code...": "Code eingeben...",
 "Your transfer code:\n\n%s-%s-%s\n\nOn the new phone open Settings, Account, Enter a code. It works once and for 7 days. Keep it secret: anyone with it gets your journeys.":

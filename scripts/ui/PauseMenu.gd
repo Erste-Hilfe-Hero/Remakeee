@@ -538,11 +538,30 @@ func run_spirlog() -> void:
 
 func _tracker_text() -> String:
 	var lines: PackedStringArray = ["Spirlog Tracker", ""]
+	var listed: Dictionary = {}
 	for sp: String in EncounterTable.species_on(encounter_table):
+		if listed.has(sp):
+			continue
+		listed[sp] = true
 		var e: Dictionary = GameState.spirlog.get(sp, {})
 		var mark: String = "bonded" if bool(e.get("bonded", false)) else ("seen" if bool(e.get("seen", false)) else "not seen")
-		lines.append("%s: %s" % [sp if bool(e.get("seen", false)) else "???", mark])
+		var line: String = "%s: %s" % [sp if bool(e.get("seen", false)) else "???", Loc.t(mark)]
+		# Area 3 item 1115: which ground it steps out of.
+		var grounds: PackedStringArray = []
+		for g: String in EncounterTable.grounds_for(encounter_table, sp):
+			grounds.append(Loc.t(GROUND_LABELS.get(g, g)))
+		if not grounds.is_empty():
+			line += " (%s)" % ", ".join(grounds)
+		lines.append(line)
+	# Area 3 item 1079: hidden finds on this map.
+	if MapData.exists(current_map):
+		var found: Vector2i = MapData.load_map(current_map).secrets_found(GameState.flags)
+		if found.y > 0:
+			lines.append("")
+			lines.append(Loc.t("Hidden finds here: %d/%d") % [found.x, found.y])
 	return "\n".join(lines)
+
+const GROUND_LABELS: Dictionary[String, String] = {"fern": "ferns", "reeds": "reeds", "scree": "scree", "water": "shallow water", "cave": "cave"}
 
 var _storage_sort: int = 0
 var _storage_element: int = -1
