@@ -111,3 +111,33 @@ func test_v2_to_v3_renames_moves_and_flag_and_trims_the_team() -> void:
 	SaveManager.apply_save(d)
 	assert_eq(GameState.party.size(), GameState.MAX_PARTY)
 	assert_true(GameState.has_flag("storage_remote"))
+
+func test_v3_to_v4_keeps_old_temperaments_and_adds_spirling_story() -> void:
+	var old: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FIXTURES + "v3_originality.json"))
+	var before: Array[String] = []
+	for s: Dictionary in old.party:
+		var sp: Spirling = Spirling.from_dict(s)
+		before.append(str(sp.temperament().id))
+	var d: Dictionary = SaveManager.migrate(old)
+	for i: int in d.party.size():
+		var p: Dictionary = d.party[i]
+		assert_eq(str(p.temper), before[i], "temperament unchanged by the migration")
+		assert_eq(str(p.temper), Spirling.legacy_temper(str(p.uid)))
+		for f: String in ["variant", "origin_map", "met_ring", "met_day", "lineage", "echo_streak"]:
+			assert_true(p.has(f), "%s gets %s" % [p.species, f])
+	var e: Dictionary = d.spirlog.Wickit
+	for f: String in ["seen", "bonded", "first_map", "first_day", "variants", "prism_seen", "tempers"]:
+		assert_true(e.has(f), "spirlog gets %s" % f)
+	assert_true(bool(e.bonded))
+	SaveManager.apply_save(d)
+	assert_eq(str(GameState.party[0].temperament().id), before[0])
+
+func test_v4_fixture_keeps_new_fields() -> void:
+	SaveManager.apply_save(_load_fixture("v4_spirling_story.json"))
+	var g: Spirling = GameState.party[0]
+	assert_eq(g.temper, "curious")
+	assert_eq(g.origin_map, "lighthouse")
+	assert_eq(g.met_ring, 5)
+	assert_eq(g.echo_streak, 3)
+	assert_eq(GameState.party[1].temper, "gentle")
+	assert_true(bool(GameState.spirlog.Mirkmole.prism_seen))

@@ -275,7 +275,7 @@ func pull(slot: int) -> bool:
 	if not r.data is Dictionary or not r.data.get("data") is Dictionary:
 		return true
 	var path: String = SaveManager.path_for_slot(slot)
-	if not SaveManager.write_atomic(path, JSON.stringify(r.data.data, "\t")):
+	if not SaveManager.write_save(path, r.data.data):
 		return false
 	revs[slot] = int(r.data.rev)
 	dirty.erase(slot)

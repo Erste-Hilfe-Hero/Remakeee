@@ -326,6 +326,9 @@ func test_horde_bond_takes_one_and_the_rest_fight_on() -> void:
 	var guard: int = 0
 	while not bonded and guard < 40 and not m.is_finished():
 		guard += 1
+		# Keep the team up: this test is about the bond, not about surviving the swarm.
+		for own: Spirling in m.party(Side.PLAYER):
+			own.hp = own.max_hp()
 		m.submit_actions([BattleAction.make_bond(Side.PLAYER, 1.0, "", 0, 2), BattleAction.make_rest(Side.PLAYER, 1)] as Array[BattleAction])
 		bonded = m.bonded != null
 	assert_true(bonded, "a weakened swarm member bonds sooner or later")
