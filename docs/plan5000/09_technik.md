@@ -227,7 +227,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3762. [P3] Lege eine Liste der CI-Geheimnisse mit Zweck, Ablaufdatum und Verantwortlichem in `docs/RELEASE.md` an, ohne die Werte selbst.
 
 ### Web-Testbuild
-3763. [P1] Setze für `/play/` den Header `X-Robots-Tag: noindex` und eine `robots.txt`, damit der Testbuild nicht in Suchmaschinen landet.
+3763. [x] [P1] Setze für `/play/` den Header `X-Robots-Tag: noindex` und eine `robots.txt`, damit der Testbuild nicht in Suchmaschinen landet.
 3764. [P1] Zeige im Web-Testbuild oben ein kleines Band "Testversion", damit niemand ihn für das fertige Spiel hält.
 3765. [P1] Markiere Konten aus dem Web-Testbuild auf dem Server als `platform = web` und lösche sie automatisch nach 30 Tagen ohne Nutzung, wie in der Datenschutzerklärung zu ergänzen.
 3766. [P2] Lege ein Größenbudget für den Web-Build fest (WASM plus PCK unter 40 MB) und prüfe es im Job `web-build`.
@@ -296,9 +296,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### Server-Betrieb: Backups und Wiederherstellung
 3825. [P1] Kopiere die nächtlichen Datenbanksicherungen zusätzlich verschlüsselt (mit `age`) zu einem zweiten Anbieter in der EU, weil sie bisher nur auf demselben Server liegen.
-3826. [P1] Lege einen wöchentlichen Workflow an, der die neueste Sicherung in eine Wegwerf-Datenbank zurückspielt, `server/smoke_test.sh` dagegen laufen lässt und bei Fehler ein Ticket öffnet.
-3827. [P1] Halte die Aufbewahrung aller Sicherungen (lokal 14 Tage, extern höchstens 30 Tage) fest und gleiche sie mit der Löschfrist in `docs/legal/DATENSCHUTZ.md` ab.
-3828. [P1] Schreibe in `docs/BETRIEB.md` eine Schritt-für-Schritt-Anleitung, wie der ganze Server auf einer neuen Maschine aus Sicherung und Repository in unter 2 Stunden wieder läuft.
+3826. [x] [P1] Lege einen wöchentlichen Workflow an, der die neueste Sicherung in eine Wegwerf-Datenbank zurückspielt, `server/smoke_test.sh` dagegen laufen lässt und bei Fehler ein Ticket öffnet.
+3827. [x] [P1] Halte die Aufbewahrung aller Sicherungen (lokal 14 Tage, extern höchstens 30 Tage) fest und gleiche sie mit der Löschfrist in `docs/legal/DATENSCHUTZ.md` ab.
+3828. [x] [P1] Schreibe in `docs/BETRIEB.md` eine Schritt-für-Schritt-Anleitung, wie der ganze Server auf einer neuen Maschine aus Sicherung und Repository in unter 2 Stunden wieder läuft.
 3829. [P1] Bewahre den privaten Schlüssel für die Sicherungsverschlüsselung und die Server-Geheimnisse (JWT-Secret, Datenbank-Passwort) offline bei Ali auf und halte fest, wo.
 3830. [P2] Prüfe in `server/backup.sh` nach jedem Lauf die Größe der Sicherung und melde einen Fehler, wenn sie mehr als 50 % kleiner als am Vortag ist.
 3831. [P2] Schreibe zu jeder Sicherung eine Prüfsumme und prüfe sie vor dem Hochladen und vor jedem Zurückspielen.
@@ -319,10 +319,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3846. [P3] Schreibe ein Skript `server/restore.sh`, das eine Sicherung prüft, entschlüsselt und nach Bestätigung zurückspielt.
 
 ### Server-Betrieb: Monitoring, Updates und Kapazität
-3847. [P1] Lege einen geplanten GitHub-Workflow an, der alle 15 Minuten Anmeldung, `hello` und die Rechtsseiten von außen prüft und bei zwei Fehlern hintereinander ein Ticket öffnet und Ali per E-Mail benachrichtigt.
+3847. [x] [P1] Lege einen geplanten GitHub-Workflow an, der alle 15 Minuten Anmeldung, `hello` und die Rechtsseiten von außen prüft und bei zwei Fehlern hintereinander ein Ticket öffnet und Ali per E-Mail benachrichtigt.
 3848. [x] [P1] Begrenze die Docker-Logs aller Dienste auf 7 Tage und 50 MB pro Dienst (`logging` mit `max-size` und `max-file`), damit Platte und Datenschutzversprechen stimmen.
-3849. [P1] Pinne alle Docker-Images in `server/docker-compose.yml` zusätzlich auf ihren Digest und aktualisiere sie nur über geprüfte Pull Requests.
-3850. [P1] Lege fest, dass Sicherheitsupdates für Postgres, GoTrue, PostgREST und Caddy innerhalb von 7 Tagen eingespielt werden, und halte jedes Update in `docs/BETRIEB.md` fest.
+3849. [x] [P1] Pinne alle Docker-Images in `server/docker-compose.yml` zusätzlich auf ihren Digest und aktualisiere sie nur über geprüfte Pull Requests.
+3850. [x] [P1] Lege fest, dass Sicherheitsupdates für Postgres, GoTrue, PostgREST und Caddy innerhalb von 7 Tagen eingespielt werden, und halte jedes Update in `docs/BETRIEB.md` fest.
 3851. [P2] Schalte `pg_stat_statements` in Postgres ein und erzeuge wöchentlich eine Liste der 10 langsamsten Serverfunktionen.
 3852. [P2] Lege eine Tabelle `ops_daily` an, die pro Tag nur Summen speichert (aktive Konten, Speichervorgänge, abgelehnte Spielstände, Fehler pro Funktion), ohne Bezug zu einzelnen Spielern.
 3853. [P2] Erzeuge aus `ops_daily` eine einfache Textübersicht unter einem geschützten Pfad, die nur mit einem Admin-Token abrufbar ist.
@@ -346,17 +346,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### Sicherheit
 3871. [P1] Ersetze den Root-Passwort-Zugang (`CHIMORA_SERVER_PASSWORD`) durch einen eigenen SSH-Schlüssel nur für Deploys und schalte die Passwort-Anmeldung per SSH ab.
-3872. [P1] Prüfe jede `security definer`-Funktion in `supabase/migrations/` darauf, dass sie `auth.uid()` prüft, `search_path` festlegt und keine fremden Daten zurückgibt, und halte das Ergebnis als Liste fest.
+3872. [x] [P1] Prüfe jede `security definer`-Funktion in `supabase/migrations/` darauf, dass sie `auth.uid()` prüft, `search_path` festlegt und keine fremden Daten zurückgibt, und halte das Ergebnis als Liste fest.
 3873. [x] [P1] Begrenze das Anlegen anonymer Konten zusätzlich in Caddy auf 10 pro Stunde pro IP, weil Massenanmeldungen sonst die Datenbank füllen. (Umgesetzt in GoTrue mit `GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 10`, weil das Standard-Caddy keinen Ratenbegrenzer hat.)
-3874. [P1] Setze auf allen Webseiten des Servers die Header `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy` und eine strenge `Content-Security-Policy`.
+3874. [x] [P1] Setze auf allen Webseiten des Servers die Header `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy` und eine strenge `Content-Security-Policy`.
 3875. [P1] Lege in `docs/SICHERHEIT.md` fest, wie das JWT-Secret im Notfall gewechselt wird (alle Spieler melden sich über das gespeicherte Konto neu an) und teste das einmal.
 3876. [P2] Begrenze die Aufrufe pro Konto und Minute für alle Serverfunktionen zentral (z. B. 60 pro Minute) und gib bei Überschreitung einen klaren Fehler zurück.
-3877. [P1] Prüfe, dass die Admin-API von GoTrue und die Dienst-Rolle von außen nicht erreichbar sind, mit einem Test im Server-Workflow.
+3877. [x] [P1] Prüfe, dass die Admin-API von GoTrue und die Dienst-Rolle von außen nicht erreichbar sind, mit einem Test im Server-Workflow.
 3878. [P2] Schalte Fail2ban oder eine gleichwertige Sperre für SSH ein und halte die Einstellungen in `server/setup.sh` fest.
 3879. [P2] Prüfe die Plausibilität von Spielständen auf dem Server um weitere Regeln (höchstens 999 pro Gegenstand, keine unbekannten Spirling-IDs, Spielzeit nicht rückwärts).
 3880. [P2] Melde serverseitig Konten mit auffälligen Spielständen (z. B. Geldsprung über 100000 in einer Speicherung) in einer Prüfliste, ohne sie automatisch zu sperren.
 3881. [P2] Lass `run_secret_scanning` beziehungsweise GitHub Secret Scanning mit Push-Schutz für das Repository eingeschaltet und prüfe es einmal im Monat.
-3882. [P1] Prüfe, dass im Spiel nur der öffentliche Anon-Schlüssel steckt und nie ein Dienst-Schlüssel, mit einer Prüfung in `tools/release_check.py`.
+3882. [x] [P1] Prüfe, dass im Spiel nur der öffentliche Anon-Schlüssel steckt und nie ein Dienst-Schlüssel, mit einer Prüfung in `tools/release_check.py`.
 3883. [P2] Speichere das Anmelde-Token auf dem Gerät nicht im Spielstand, sondern in einer eigenen Datei, die bei Konto löschen sicher entfernt wird.
 3884. [P2] Prüfe, dass `transfer_claim` nach 5 Fehlversuchen pro Stunde sperrt und die Codes genug Zufall haben (mindestens 40 Bit).
 3885. [P2] Prüfe, dass Wayfarer-Namen auf dem Server auf erlaubte Zeichen und eine Höchstlänge begrenzt sind, auch wenn das Spiel selbst schon filtert.
@@ -409,9 +409,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 ### Jugendschutz und Verbraucherrecht
 3929. [P1] Stelle `docs/legal/STORE_COMPLIANCE.md` und `docs/MONETIZATION.md` auf das neue Modell (kostenlos mit In-App-Käufen) um, damit IARC, Apple-Alter und Data Safety mit "Digitale Käufe: ja" neu beantwortet werden.
 3930. [P1] Rechne mit dem USK-Hinweis "In-Game-Käufe" und prüfe, ob bezahlte Vorteile im Kampf die erwartete Altersstufe ändern, bevor der Shop live geht.
-3931. [P1] Lege in `docs/legal/SHOP_RECHT.md` eine Prüfliste für alle Shop-Texte an: keine direkte Kaufaufforderung an Kinder (UWG Anhang Nr. 28), Echtgeld-Preis immer sichtbar, keine künstliche Zeitnot.
-3932. [P1] Halte die bestehende Regel "keine bezahlten Zufallsinhalte" in `docs/legal/SHOP_RECHT.md` fest, weil sie Altersstufe, Apple-Pflicht zur Anzeige der Chancen und das Verbot in Belgien auslöst.
-3933. [P1] Ergänze die Nutzungsbedingungen um einen Abschnitt zu virtuellen Gütern (kein Eigentum, kein Umtausch in Geld, Verhalten bei Kontolöschung) mit Hinweis zum Widerrufsrecht bei digitalen Inhalten.
+3931. [x] [P1] Lege in `docs/legal/SHOP_RECHT.md` eine Prüfliste für alle Shop-Texte an: keine direkte Kaufaufforderung an Kinder (UWG Anhang Nr. 28), Echtgeld-Preis immer sichtbar, keine künstliche Zeitnot.
+3932. [x] [P1] Halte die bestehende Regel "keine bezahlten Zufallsinhalte" in `docs/legal/SHOP_RECHT.md` fest, weil sie Altersstufe, Apple-Pflicht zur Anzeige der Chancen und das Verbot in Belgien auslöst.
+3933. [x] [P1] Ergänze die Nutzungsbedingungen um einen Abschnitt zu virtuellen Gütern (kein Eigentum, kein Umtausch in Geld, Verhalten bei Kontolöschung) mit Hinweis zum Widerrufsrecht bei digitalen Inhalten.
 3934. [P2] Prüfe die Grundsätze der EU-Verbraucherschutzbehörden zu Spielwährungen (März 2025) und halte in `docs/legal/SHOP_RECHT.md` fest, welche Punkte Bereich 10 umsetzen muss.
 3935. [P2] Erkläre auf der Support-Seite, wie Eltern Käufe über die Familienfunktionen von Apple und Google sperren oder bestätigen lassen.
 3936. [P2] Lege eine Vorlage für Erstattungsanfragen an, die auf die Erstattungswege von Apple und Google verweist, weil der Händler das nicht selbst abwickelt.
