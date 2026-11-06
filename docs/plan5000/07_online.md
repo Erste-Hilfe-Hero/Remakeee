@@ -13,12 +13,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 > (Bereich 9) sowie Kampfregeln selbst (Zugzeit, Ruhe-Regel, Seeds im Log stehen schon im Kampfplan).
 
 ### Grundlagen nachziehen
-2669. [P1] `_save_ok` in einer neuen Migration auf die echten Spielregeln setzen: höchstens 5 Spirlings im Team (heute 6) und Ring 1 bis 60 (heute 100), mit SQL-Test in `tools/online/sql_test/test_rules.sql`.
-2670. [P1] Dieselben Grenzen (Team 5, Ring 60) in `LocalBackend.gd` prüfen, damit Tests und Server gleich ablehnen.
-2671. [P1] Die Echo-Duell-Angleichung von heute Ring 30 auf einen Wert aus `server_config.duel_ring` umstellen (Startwert 50), damit Ali ihn ohne App-Update ändern kann.
-2672. [P1] In allen Online-Menüs und Server-Texten "Tamer" durch "Wanderer" ersetzen (Karte, Standardname "Wanderer 1A2B", `_clean_name`, Phrases.gd), samt Migration für bestehende Standardnamen.
-2673. [P1] Ein Feld `schema` (ganze Zahl, Start 1) in jeden Online-Spielstand schreiben und in `save_put` ablehnen, wenn es fehlt oder höher als `server_config.save_schema_max` ist.
-2674. [P1] Neue Tabelle `feature_flags` (Schlüssel, an/aus, Mindestversion) anlegen, damit Ligen, Tausch, Bünde und Raids einzeln am Server ein- und ausschaltbar sind.
+2669. [x] [P1] `_save_ok` in einer neuen Migration auf die echten Spielregeln setzen: höchstens 5 Spirlings im Team (heute 6) und Ring 1 bis 60 (heute 100), mit SQL-Test in `tools/online/sql_test/test_rules.sql`.
+2670. [x] [P1] Dieselben Grenzen (Team 5, Ring 60) in `LocalBackend.gd` prüfen, damit Tests und Server gleich ablehnen.
+2671. [x] [P1] Die Echo-Duell-Angleichung von heute Ring 30 auf einen Wert aus `server_config.duel_ring` umstellen (Startwert 50), damit Ali ihn ohne App-Update ändern kann.
+2672. [x] [P1] In allen Online-Menüs und Server-Texten "Tamer" durch "Wanderer" ersetzen (Karte, Standardname "Wanderer 1A2B", `_clean_name`, Phrases.gd), samt Migration für bestehende Standardnamen.
+2673. [x] [P1] Ein Feld `schema` (ganze Zahl, Start 1) in jeden Online-Spielstand schreiben und in `save_put` ablehnen, wenn es fehlt oder höher als `server_config.save_schema_max` ist.
+2674. [x] [P1] Neue Tabelle `feature_flags` (Schlüssel, an/aus, Mindestversion) anlegen, damit Ligen, Tausch, Bünde und Raids einzeln am Server ein- und ausschaltbar sind.
 2675. [P2] `hello` gibt die Liste der aktiven `feature_flags` zurück, und `Online.gd` blendet Menüpunkte ohne Flag aus statt Fehler zu zeigen.
 2676. [P2] Fehlercodes aller neuen Funktionen als feste Wörter (`not_friends`, `limit_day`, `blocked`, `season_closed` usw.) festlegen und in `scripts/online/OnlineErrors.gd` in Spielertexte übersetzen.
 2677. [P2] Jede neue Server-Funktion bekommt in `docs/ONLINE.md` eine Zeile in einer Tabelle "Funktion, Grenzen, Test", damit der Stand nachprüfbar bleibt.

@@ -1110,12 +1110,13 @@ func thank_echo(helper: Dictionary, won: bool) -> void:
 ## Echo duel (items 121-124): a friend's team, run by the AI, everyone on the same level.
 ## Nothing is lost and the real team does not change.
 func echo_duel(d: Dictionary) -> void:
-	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, EchoTeam.DUEL_LEVEL)
-	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party)
+	var ring: int = EchoTeam.duel_ring({"duel_ring": d.get("ring", EchoTeam.DUEL_LEVEL)})
+	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, ring)
+	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party, ring)
 	if foes.is_empty() or mine.is_empty():
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
-	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), EchoTeam.DUEL_LEVEL]] as Array[String])
+	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
 	busy = false
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
