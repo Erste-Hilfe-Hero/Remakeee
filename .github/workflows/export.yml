@@ -93,6 +93,9 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
+      # Google Play Billing plugin (plan area 10): built for exactly this engine version.
+      - name: Build billing plugin
+        run: tools/build_billing_plugin.sh
       - name: Create throwaway debug keystore
         run: |
           keytool -genkeypair -v -keystore "$RUNNER_TEMP/debug.keystore" -storepass android \
@@ -208,6 +211,9 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
+      # Google Play Billing plugin (plan area 10): built for exactly this engine version.
+      - name: Build billing plugin
+        run: tools/build_billing_plugin.sh
       - name: Stamp version code (Play needs a higher code for every upload)
         run: |
           code=$((1000 + ${{ github.run_number }}))
