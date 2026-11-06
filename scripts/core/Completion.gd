@@ -12,7 +12,7 @@ const PART_NAMES: Dictionary = {"story": "Story", "side": "Side goals", "spirlog
 static func parts() -> Dictionary:
 	var flags: Dictionary = GameState.flags
 	var main: Array = QuestLog.main_goals()
-	# The last main goal ("Waiting for the Ferry") has no flag: the story is done once it shows.
+	# The story is done once the last main goal is reached.
 	var story: float = 0.0
 	if main.size() > 1:
 		story = float(QuestLog.current_index(flags)) / float(main.size() - 1)

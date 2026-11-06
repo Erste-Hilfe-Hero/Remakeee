@@ -1,6 +1,7 @@
 {
  "name": "Map House",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "field",
  "rows": [
   "WWWWWWWWWW",
