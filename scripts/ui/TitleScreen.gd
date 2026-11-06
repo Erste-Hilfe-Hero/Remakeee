@@ -174,6 +174,7 @@ func _run() -> void:
 			"Continue":
 				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
+					await _say_if_recovered()
 					SaveManager.save_settings()
 					_enter_game()
 					return
@@ -183,6 +184,7 @@ func _run() -> void:
 				if n > 0:
 					SaveManager.set_slot(n)
 					if SaveManager.load_game():
+						await _say_if_recovered()
 						SaveManager.save_settings()
 						_enter_game()
 						return
@@ -254,3 +256,8 @@ func _new_game() -> bool:
 	GameState.iron_oath = false
 	EraManager.from_dict({})
 	return true
+
+## The main save file was damaged and a backup was loaded (plan item 3609).
+func _say_if_recovered() -> void:
+	if SaveManager.last_load_recovered:
+		await _menu.info("The save was damaged. The latest backup was loaded.")

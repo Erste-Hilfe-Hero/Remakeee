@@ -24,8 +24,9 @@ const SPARK_WEIGHT: float = 0.5
 ## Total XP needed to reach level L = floor(XP_MULT * L ^ XP_EXP).
 const XP_MULT: float = 1.2
 const XP_EXP: float = 2.6
-## Temperament (item 37): a small, penalty-free lean toward one stat, read from the uid so it
-## needs no extra RNG roll and old saves keep a stable temperament.
+## Temperament (item 37): a small, penalty-free lean toward one stat. Since save version 4 it is
+## stored in "temper"; new Spirlings pick it from the uid (no extra RNG roll). The last four only
+## colour behaviour and texts and lean toward no stat (plan area 1, item 313).
 const TEMPERAMENTS: Array[Dictionary] = [
 	{"id": "fierce", "label": "Fierce", "stat": "atk", "text": "Hits a little harder."},
 	{"id": "stalwart", "label": "Stalwart", "stat": "def", "text": "Shrugs off blows a little better."},
@@ -33,7 +34,13 @@ const TEMPERAMENTS: Array[Dictionary] = [
 	{"id": "brisk", "label": "Brisk", "stat": "spd", "text": "Moves a little quicker."},
 	{"id": "hearty", "label": "Hearty", "stat": "hp", "text": "Has a little more stamina."},
 	{"id": "even", "label": "Even", "stat": "", "text": "Calm and balanced."},
+	{"id": "curious", "label": "Curious", "stat": "", "text": "Noses into everything new."},
+	{"id": "shy", "label": "Shy", "stat": "", "text": "Stays close and watches first."},
+	{"id": "proud", "label": "Proud", "stat": "", "text": "Holds its head high, win or lose."},
+	{"id": "gentle", "label": "Gentle", "stat": "", "text": "Careful with everyone around it."},
 ]
+## Saves before version 4 read the temperament from the uid over the first six only.
+const LEGACY_TEMPERAMENTS: int = 6
 const TEMPER_BONUS: float = 1.05
 
 var data: SpirlingData
@@ -59,6 +66,18 @@ var stages: Dictionary[String, int] = {}
 var energy_tax: int = 0
 ## Battle-only: move name -> turns it stays locked (moves.json "cooldown"), same counting.
 var cooldowns: Dictionary[String, int] = {}
+## Temperament id (TEMPERAMENTS), stored since save version 4.
+var temper: String = ""
+## Regional imprint id ("" = none), see plan area 1, item 218.
+var variant: String = ""
+## Where and when it was met: map id, its ring then, and the day number (days since 1970).
+var origin_map: String = ""
+var met_ring: int = 0
+var met_day: int = 0
+## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
+var lineage: Array[String] = []
+## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
+var echo_streak: int = 0
 
 ## [param rng] rolls the hidden Spark values; pass the battle or game RNG for reproducibility.
 func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = null) -> void:
@@ -74,6 +93,7 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	for key: String in STAT_KEYS:
 		spark[key] = r.randi_range(0, SPARK_MAX)
 	uid = "%08x%08x" % [r.randi(), r.randi()]
+	temper = str(TEMPERAMENTS[absi(uid.hash()) % TEMPERAMENTS.size()].id)
 	moves = data.default_moves(level, MAX_MOVES)
 	hp = max_hp()
 
@@ -96,14 +116,20 @@ func max_hp() -> int:
 func _stat(key: String) -> int:
 	return int((_curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT) * _temper_mult(key))
 
-## Index into TEMPERAMENTS, derived from the uid (a fixed index for uid-less test Spirlings).
-static func temperament_index(p_uid: String) -> int:
+## The temperament id saves before version 4 had, read from the uid ("even" without a uid).
+static func legacy_temper(p_uid: String) -> String:
 	if p_uid.is_empty():
-		return TEMPERAMENTS.size() - 1
-	return absi(p_uid.hash()) % TEMPERAMENTS.size()
+		return "even"
+	return str(TEMPERAMENTS[absi(p_uid.hash()) % LEGACY_TEMPERAMENTS].id)
+
+static func temper_info(id: String) -> Dictionary:
+	for t: Dictionary in TEMPERAMENTS:
+		if t.id == id:
+			return t
+	return TEMPERAMENTS[5]
 
 func temperament() -> Dictionary:
-	return TEMPERAMENTS[temperament_index(uid)]
+	return temper_info(temper if not temper.is_empty() else legacy_temper(uid))
 
 func _temper_mult(key: String) -> float:
 	return TEMPER_BONUS if str(temperament().stat) == key else 1.0
@@ -204,18 +230,134 @@ func level_up() -> Array[MoveData]:
 ## True if this Spirling has reached its evolution level ([param map_id]: where the battle was,
 ## for species that only evolve in one place). Item evolutions use can_evolve_with().
 func can_evolve(map_id: String = "") -> bool:
-	if data.evolves_to == null or data.evolve_level <= 0 or level < data.evolve_level:
-		return false
-	return data.evolve_map.is_empty() or data.evolve_map == map_id
+	return can_unfurl(map_id)
 
 func can_evolve_with(item_id: String) -> bool:
-	return data.evolves_to != null and not data.evolve_item.is_empty() and data.evolve_item == item_id
+	for p: Dictionary in data.unfold:
+		if str(p.rule) == "item" and str(p.value) == item_id:
+			return true
+	return false
 
-## Unfurling (Chimora's own form change): never automatic. Once a Spirling has enough rings
-## (or stands in its special place), the player may unfurl it from the Team menu, and may
-## furl it back to its earlier form at any time. Rings, arts and Spark stay the same.
+## Unfurling (Chimora's own form change): never automatic. Once a Spirling meets one of its
+## unfold rules, the player may unfurl it from the Team menu, and may furl it back to its earlier
+## form at any time. Rings, arts and Spark stay the same. [param map_id] is where it stands;
+## the rest of the context (map pages, mended Rifts, time of day) comes from GameState.
 func can_unfurl(map_id: String = "") -> bool:
-	return can_evolve(map_id)
+	return not unfurl_targets(map_id).is_empty()
+
+## Forms this Spirling can unfurl into right now (item paths are used from the Bag instead).
+func unfurl_targets(map_id: String = "", ctx: Dictionary = {}) -> Array[SpirlingData]:
+	var c: Dictionary = ctx if not ctx.is_empty() else unfold_context(map_id)
+	var out: Array[SpirlingData] = []
+	if data == null:
+		return out
+	for p: Dictionary in data.unfold:
+		if unfold_ready(p, c) and not out.has(p.to):
+			out.append(p.to)
+	return out
+
+## What the unfold rules look at: {"map", "pages", "mended", "phase"}.
+## Reads the GameState autoload by node path, so data tools that run without autoloads
+## (tools/validate_data.gd) can still load this script.
+static func unfold_context(map_id: String = "") -> Dictionary:
+	var gs: Node = null
+	var tree: SceneTree = Engine.get_main_loop() as SceneTree
+	if tree != null:
+		gs = tree.root.get_node_or_null(^"/root/GameState")
+	var flags: Dictionary = gs.get("flags") if gs != null else {}
+	var mended: Array = (gs.get("rifts_sealed") as Array).duplicate() if gs != null else []
+	return {
+		"map": map_id,
+		"pages": map_pages(flags),
+		"mended": mended,
+		"phase": PHASE_IDS[DayCycle.current()],
+	}
+
+## Pages of Mirela's map book found (flags "page_1".."page_6", same as Overworld.pages_found).
+static func map_pages(flags: Dictionary) -> int:
+	var n: int = 0
+	for i: int in range(1, 7):
+		n += 1 if bool(flags.get("page_%d" % i, false)) else 0
+	return n
+
+## True if unfold path [param p] (from SpirlingData.unfold) is met in context [param ctx].
+func unfold_ready(p: Dictionary, ctx: Dictionary) -> bool:
+	var where: String = str(p.get("map", ""))
+	if not where.is_empty() and where != str(ctx.get("map", "")):
+		return false
+	var v: Variant = p.get("value", 0)
+	match str(p.get("rule", "ring")):
+		"ring":
+			return int(v) > 0 and level >= int(v)
+		"map_pages":
+			return int(ctx.get("pages", 0)) >= int(v)
+		"mended":
+			var rift: String = mend_rift(str(v))
+			var mended: Array = ctx.get("mended", [])
+			return mended.has(rift) if not rift.is_empty() else not mended.is_empty()
+		"time":
+			return str(ctx.get("phase", "")) == str(v)
+		"echo_streak":
+			return echo_streak >= int(v)
+	return false
+
+## The Rift a "mended" rule waits for. "origin" means the Rift nearest to where it was bonded.
+func mend_rift(value: String) -> String:
+	if value != "origin":
+		return value
+	if origin_map.ends_with("_rift"):
+		return origin_map.trim_suffix("_rift")
+	return str(ORIGIN_RIFTS.get(origin_map, ""))
+
+## Maps next to a Rift: a Spirling bonded there waits for that Rift ("mended", "origin").
+const ORIGIN_RIFTS: Dictionary[String, String] = {
+	"crowcrest": "cinder", "thornridge": "cinder", "murk_hollow": "cinder",
+	"saltmarsh": "tide", "fernstair": "tide",
+}
+
+## A short "what it still needs" line for each unfold path, for the Team menu (item 105).
+func unfold_hints() -> Array[String]:
+	var out: Array[String] = []
+	if data == null:
+		return out
+	for p: Dictionary in data.unfold:
+		out.append(unfold_hint(p))
+	return out
+
+func unfold_hint(p: Dictionary) -> String:
+	var where: String = str(p.get("map", ""))
+	var place: String = place_name(where)
+	match str(p.get("rule", "ring")):
+		"ring":
+			if not where.is_empty():
+				return "Needs: Ring %d and a battle in %s" % [int(p.value), place]
+			return "Needs: Ring %d" % int(p.value)
+		"item":
+			return "Needs: %s" % str(Database.item(str(p.value)).get("name", p.value))
+		"map_pages":
+			return "Needs: %d pages of the map book" % int(p.value)
+		"mended":
+			var rift: String = mend_rift(str(p.value))
+			if rift.is_empty():
+				return "Needs: a mended Rift"
+			return "Needs: %s mended" % place_name(rift + "_rift")
+		"time":
+			var phase: String = str(PHASE_WORDS.get(str(p.value), p.value))
+			if not where.is_empty():
+				return "Needs: %s in %s" % [phase, place]
+			return "Needs: %s" % phase
+		"echo_streak":
+			return "Needs: %d perfect Echo calls in the team" % int(p.value)
+	return ""
+
+## DayCycle.Phase index -> rule value, and the word shown in hints.
+const PHASE_IDS: Array[String] = ["dawn", "day", "dusk", "night"]
+const PHASE_WORDS: Dictionary[String, String] = {"dawn": "Dawn", "day": "Daytime", "dusk": "Dusk", "night": "Night"}
+
+static func place_name(map_id: String) -> String:
+	if map_id.is_empty() or not MapData.exists(map_id):
+		return map_id.replace("_", " ").capitalize()
+	return MapData.load_map(map_id).display_name
 
 ## The earlier form this one can furl back into, or null.
 func earlier_form() -> SpirlingData:
@@ -229,12 +371,17 @@ func furl_back() -> void:
 	data = prev
 	hp = maxi(1, int(round(frac * max_hp()))) if hp > 0 else 0
 
-## Evolves in place (new species, same Spark, level, moves and HP fraction).
-func evolve() -> void:
-	if data.evolves_to == null:
+## Evolves in place (new species, same Spark, level, moves and HP fraction). [param target]
+## picks one of several unfold paths; by default the first one that is ready, else the first.
+func evolve(target: SpirlingData = null) -> void:
+	var to: SpirlingData = target
+	if to == null:
+		var ready: Array[SpirlingData] = unfurl_targets()
+		to = ready[0] if not ready.is_empty() else data.evolves_to
+	if to == null:
 		return
 	var frac: float = hp_fraction()
-	data = data.evolves_to
+	data = to
 	# A fainted Spirling stays fainted: unfurling is no free revive.
 	hp = maxi(1, int(round(frac * max_hp()))) if hp > 0 else 0
 
@@ -253,6 +400,13 @@ func to_dict() -> Dictionary:
 		"uid": uid,
 		"held": held,
 		"prism": prism,
+		"temper": temperament().id,
+		"variant": variant,
+		"origin_map": origin_map,
+		"met_ring": met_ring,
+		"met_day": met_day,
+		"lineage": lineage.duplicate(),
+		"echo_streak": echo_streak,
 	}
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -277,5 +431,15 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
 	s.prism = bool(d.get("prism", false))
+	# Saves before version 4 have no "temper": keep the one the uid gave them back then.
+	s.temper = str(d.get("temper", legacy_temper(s.uid)))
+	if not temper_info(s.temper).id == s.temper:
+		s.temper = legacy_temper(s.uid)
+	s.variant = str(d.get("variant", ""))
+	s.origin_map = str(d.get("origin_map", ""))
+	s.met_ring = int(d.get("met_ring", 0))
+	s.met_day = int(d.get("met_day", 0))
+	s.lineage.assign((d.get("lineage", []) as Array).map(func(x: Variant) -> String: return str(x)))
+	s.echo_streak = maxi(0, int(d.get("echo_streak", 0)))
 	s.hp = clampi(int(d.get("hp", s.max_hp())), 0, s.max_hp())
 	return s

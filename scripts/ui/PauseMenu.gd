@@ -172,7 +172,8 @@ func run_team() -> void:
 			return
 		var s: Spirling = GameState.party[idx]
 		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake"]
-		if s.can_unfurl(current_map):
+		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
+		if not s.data.unfold.is_empty():
 			opts.append("Unfurl")
 		if s.earlier_form() != null:
 			opts.append("Furl back")
@@ -196,14 +197,28 @@ func run_team() -> void:
 ## Unfurl into the next form or furl back into the earlier one. Both can be undone later.
 func _unfurl(s: Spirling, forward: bool) -> void:
 	var old_name: String = s.display_name()
-	var target: SpirlingData = s.data.evolves_to if forward else s.earlier_form()
+	var target: SpirlingData = s.earlier_form()
+	if forward:
+		var ready: Array[SpirlingData] = s.unfurl_targets(current_map)
+		if ready.is_empty():
+			await info("\n".join(s.unfold_hints()))
+			return
+		target = ready[0]
+		if ready.size() > 1:
+			var names: Array[String] = []
+			for t: SpirlingData in ready:
+				names.append(t.species_name)
+			var pick: int = await pick_strings("Unfurl into...", names)
+			if pick < 0:
+				return
+			target = ready[pick]
 	if target == null:
 		return
 	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
 	if not await confirm(q):
 		return
 	if forward:
-		s.evolve()
+		s.evolve(target)
 		GameState.mark_seen(s.data.species_name, true)
 	else:
 		GameState.furl_back(s)
