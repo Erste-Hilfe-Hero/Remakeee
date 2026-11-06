@@ -22,7 +22,7 @@ static func rows(flags: Dictionary) -> Array[Dictionary]:
 	return out
 
 static func title(flags: Dictionary) -> String:
-	return "Mirela's map book (%d/%d)" % [Overworld.pages_found(flags), Overworld.PAGE_COUNT]
+	return "Mirela's map book (%d/%d)" % [Overworld.pages_found(flags), Overworld.page_total(flags)]
 
 static func page_text(n: int) -> String:
 	var lines: Array[String] = Dialogue.lines_for(Dialogue.get_entry("story/page_%d" % n), GameState.flags)

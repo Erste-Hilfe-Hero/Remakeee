@@ -56,6 +56,12 @@ func test_every_page_has_a_spot_and_text() -> void:
 			if act.begins_with("page "):
 				found[act.split(" ")[1]] = true
 				assert_eq(str(s.get("hide_flag", "")), "page_" + act.split(" ")[1], "page sign should vanish once found")
+	# Pages outside Veydal are placed through data/story_npcs.json (spots on area 3's maps).
+	for mid: Variant in StoryPlacements.data():
+		for s: Variant in (StoryPlacements.for_map(str(mid)).get("signs", [])):
+			var act2: String = str(Dialogue.get_entry(str(s.dialogue)).get("action", ""))
+			if act2.begins_with("page "):
+				found[act2.split(" ")[1]] = true
 	var kestra: Dictionary = Dialogue.get_entry("map_house/kestra")
 	found[str(kestra.get("action", "")).split(" ")[1]] = true
 	for i: int in range(1, Overworld.PAGE_COUNT + 1):
