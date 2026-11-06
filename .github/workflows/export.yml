@@ -136,6 +136,10 @@ jobs:
     needs: [android-debug, web]
     if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    # Runs from several PRs upload to the same release; one at a time, or --clobber races (HTTP 422).
+    concurrency:
+      group: online-test-release
+      cancel-in-progress: false
     permissions:
       contents: write
     steps:
