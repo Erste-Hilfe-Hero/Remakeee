@@ -63,6 +63,7 @@ static func collection() -> String:
 	var next: String = Collection.next_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size(), GameState.flags)
 	if not next.is_empty():
 		spirlog += "\n" + Loc.t(next)
+	spirlog += "\n" + "\n".join(Collection.set_lines())
 	return _join([Album.lines(), spirlog, Loc.t("Journey complete: %d%%") % Completion.percent()])
 
 ## Path (plan 3245): the season path with a bar and the next reward.
