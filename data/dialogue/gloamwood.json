@@ -56,5 +56,11 @@
  "mossmere_grotto_sign": [
   "MOSSMERE GROTTO",
   "Inside: Wading Boots, Plank Bundle."
- ]
+ ],
+ "spring": {
+  "lines": [
+   "A clear spring in a small clearing. The water is cold and tastes of moss."
+  ],
+  "action": "heal"
+ }
 }

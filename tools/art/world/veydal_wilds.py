@@ -73,7 +73,7 @@ def gloamwood(world):
             "T,,T,_,,,,.T",
             "T,,,,____,.T",
             "T*..,,,,_,.T",
-            "T..T,,,,_..T",
+            "To.T,,,,_..T",
             "T.S.,,,,____",
             "T..,,,TT,,,T",
             "T,,,,,,,,,,T",
@@ -90,9 +90,12 @@ def gloamwood(world):
                      "action": "give_item plank_bundle 1", "flag": "got_planks", "once": True,
                      "after_flag": {"flag": "got_planks", "lines": lines(("Forester Haldis: Chalk marks mean someone measured. Trust them.", "Försterin Haldis: Kreidezeichen heißen, dass jemand nachgemessen hat. Verlass dich drauf."))}},
         "smooth": lines(("The rock here is oddly smooth, as if many hands had pushed it.", "Der Fels ist hier seltsam glatt, als hätten ihn viele Hände geschoben.")),
+        # Item 921: a clearing with a spring halfway through the long forest.
+        "spring": {"lines": lines(("A clear spring in a small clearing. The water is cold and tastes of moss.", "Eine klare Quelle auf einer kleinen Lichtung. Das Wasser ist kalt und schmeckt nach Moos.")),
+                   "action": "heal"},
     })
     m = {"name": tr("Gloamwood", "Dämmerwald"), "biome": "forest", "backdrop": "field", "outdoor": True, "encounters": mid,
-         "rows": rows,
+         "heal_point": [1, 22], "rows": rows,
          "warps": [warp(11, 24, "fernstair", 1, 12, "right"), warp(11, 2, "crowcrest", 1, 4, "right")],
          "npcs": [
              npc("forester", 2, 22, "right", mid + "/forester", "ranger"),
@@ -110,7 +113,7 @@ def gloamwood(world):
                       [("Sorrel: Ha! The forest picked a good one.", "Sorrel: Ha! Der Wald hat sich jemand Gutes ausgesucht.")], 220),
          ],
          "signs": [{"x": 2, "y": 24, "dialogue": mid + "/sign"}, {"x": 9, "y": 5, "dialogue": mid + "/sign_top"},
-                   {"x": 2, "y": 6, "dialogue": mid + "/smooth"}],
+                   {"x": 2, "y": 6, "dialogue": mid + "/smooth"}, {"x": 1, "y": 23, "dialogue": mid + "/spring"}],
          "blocks": [{"x": 1, "y": 5, "open_flag": "pass_gloamwood"}],
          "passages": [passage(1, 5, "pass_gloamwood")],
          "secrets": [secret(0, 10, "tonic", "find_gloam_west", 2), secret(11, 18, "kin_charm", "find_gloam_east"),

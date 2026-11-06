@@ -5,6 +5,10 @@
  "backdrop": "field",
  "outdoor": true,
  "encounters": "gloamwood",
+ "heal_point": [
+  1,
+  22
+ ],
  "rows": [
   "TTTT_TTTTTTT",
   "T,,T.,,..,,T",
@@ -29,7 +33,7 @@
   "T,,T,_,,,,.T",
   "T,,,,____,.T",
   "T*..,,,,_,.T",
-  "T..T,,,,_..T",
+  "To.T,,,,_..T",
   "T.S.,,,,____",
   "T..,,,TT,,,T",
   "T,,,,,,,,,,T",
@@ -166,6 +170,11 @@
    "x": 2,
    "y": 6,
    "dialogue": "gloamwood/smooth"
+  },
+  {
+   "x": 1,
+   "y": 23,
+   "dialogue": "gloamwood/spring"
   },
   {
    "x": 2,

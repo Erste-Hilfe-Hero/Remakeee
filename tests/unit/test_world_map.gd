@@ -121,3 +121,23 @@ func test_menu_opens_and_closes() -> void:
 	assert_true(state.done)
 	await wait_process_frames(1)
 	assert_null(host.get_node_or_null("world_map"))
+
+func test_dungeon_banner_counts_rooms() -> void:
+	# Items 993 and 1026.
+	assert_eq(WorldAtlas.room_flags("lanternwell").size(), 5)
+	var m: MapData = MapData.load_map("lanternwell@1")
+	assert_eq(WorldAtlas.banner(m, {}), "%s  0/5" % Loc.t(m.display_name))
+	assert_eq(WorldAtlas.banner(m, {"beam_room_1": true, "beam_room_2": true}), "%s  2/5" % Loc.t(m.display_name))
+	assert_true(WorldAtlas.room_flags("brackwater_sluice").is_empty(), "water levels are no rooms")
+	var g: MapData = MapData.load_map("gloamwood")
+	assert_true(WorldAtlas.banner(g, {}).ends_with("%"), "routes show the survey share")
+
+func test_gloamwood_has_a_rest_spring() -> void:
+	# Item 921.
+	var g: MapData = MapData.load_map("gloamwood")
+	assert_ne(g.heal_point, Vector2i(-1, -1))
+	var heals: bool = false
+	for s: Dictionary in g.signs:
+		if str(Dialogue.get_entry(str(s.dialogue)).get("action", "")) == "heal":
+			heals = true
+	assert_true(heals)

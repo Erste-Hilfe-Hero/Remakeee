@@ -20,7 +20,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 902. [P2] Ergänze MapData.gd um "ambient" Punkte (x, y, Geräusch-ID) für Wasserrauschen, Wind oder Glocken in der Nähe.
 903. [x] [P2] Schreibe ein Werkzeug tools/world_stats.py, das pro Karte Größe, Anzahl Funde, Anzahl Wanderer und Begegnungsfelder ausgibt und als Tabelle in docs/WORLD.md einträgt.
 904. [x] [P2] Lege eine Kartenvorlage tools/art/world/template.py mit 12 Kacheln Breite, Rahmen aus Fels und je einem Warp oben und unten an.
-905. [P2] Ergänze GameState.gd um ein Wörterbuch "world_state" (Karte, Schlüssel, Wert), damit geschobene Felsen und offene Schleusen nach Speichern erhalten bleiben.
+905. [x] [P2] Ergänze GameState.gd um ein Wörterbuch "world_state" (Karte, Schlüssel, Wert), damit geschobene Felsen und offene Schleusen nach Speichern erhalten bleiben.
 906. [P2] Ergänze die Speicher-Migration in SaveManager.gd für "world_state", "map_cells" und "pins" mit einem Test in tests/unit/test_save_migration.gd.
 907. [x] [P2] Ergänze WorldValidator.gd um eine Höchstgröße von 12 Kacheln Breite und 40 Kacheln Höhe pro Karte für Außenkarten.
 908. [P3] Baue einen einfachen Karten-Editor als Godot-Szene tools/map_editor.tscn, der ASCII-Zeilen lädt, Kacheln per Tippen setzt und zurück in JSON speichert.
@@ -38,7 +38,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 918. [x] [P1] Verbinde Gloamwood mit Crowcrest über einen zweiten Eingang, damit Fernstair nicht der einzige Weg nach Norden bleibt.
 919. [x] [P1] Plane jede neue Route mit mindestens einer Abkürzung, die erst nach einem Rätsel oder einer Ausrüstung öffnet und den Rückweg auf unter 20 Schritte kürzt.
 920. [x] [P1] Setze auf jeder neuen Route mindestens drei Wanderer mit eigenem Team, die man nur durch Ansprechen herausfordert (sight bleibt 0).
-921. [P2] Gib Gloamwood eine Lichtung mit einer Quelle (Kachel "o") als Heilpunkt, damit lange Wege eine Pause haben.
+921. [x] [P2] Gib Gloamwood eine Lichtung mit einer Quelle (Kachel "o") als Heilpunkt, damit lange Wege eine Pause haben.
 922. [P2] Lege in Gloamwood einen umgestürzten Baumstamm als Brücke über eine Schlucht an, der nur von Süden begehbar ist.
 923. [P2] Gib Quillbrook drei Furten, die bei Regen zu tiefem Wasser werden und dann nur mit dem Enterhaken über ein gespanntes Seil zu queren sind.
 924. [P2] Lege in Quillbrook eine Mühle mit Wasserrad an, deren Rad man mit der Hebelstange anhält, um einen Durchgang unter dem Rad zu öffnen.
@@ -114,7 +114,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 990. [P2] Baue die Höhle "Copper Deep" (de: Kupfertiefe) unter Copperfold, ein Bergwerk mit vier Sohlen und Leitern dazwischen, Ring 12 bis 16.
 991. [P2] Gib Copper Deep Stützbalken, die man nicht entfernen darf, und Geröllhalden, die mit Kletterpicke begehbar werden.
 992. [P2] Lege in jeder Höhle mindestens einen Rastplatz mit Lagerfeuer an, an dem man speichert, aber nicht heilt.
-993. [P2] Zeige beim Betreten einer Höhle den Namen und die aktuelle Ebene als Banner, z. B. "Copper Deep, Sohle 2".
+993. [x] [P2] Zeige beim Betreten einer Höhle den Namen und die aktuelle Ebene als Banner, z. B. "Copper Deep, Sohle 2".
 994. [P2] Gib jeder Höhle eine eigene Tabelle in data/encounters.json mit Fokus auf Stone, Umbra und Lumen.
 995. [P2] Lege in Sablecove Muschelbänke an, die bei Ebbe einen Fund freigeben und bei Flut wieder verschwinden.
 996. [P2] Baue in Echo Gallery eine Tropfwasser-Uhr, die bei Wartezeit von 30 Sekunden einen Spalt im Fels öffnet.
@@ -149,10 +149,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1023. [P2] Lass im Gloamwood Maze die Wegzeichen nachts anders stehen als tags, und nur eine der beiden Lesarten führt zum Ziel.
 1024. [P2] Baue den Dungeon "Tidebell Tower" (de: Gezeitenglockenturm) auf einer Seeinsel, vier Stockwerke, deren Treppen sich je nach Gezeitenstand anders verbinden.
 1025. [P2] Setze in jedem Dungeon am Ende einen Hüter-Raum mit einem Hüter-NPC, der ein Andenken als Belohnung gibt (Kampf mit ihm nur durch Ansprechen).
-1026. [P2] Zeige im Dungeon-Banner beim Betreten die Zahl der gelösten Räume, z. B. "Lanternwell 3/5".
+1026. [x] [P2] Zeige im Dungeon-Banner beim Betreten die Zahl der gelösten Räume, z. B. "Lanternwell 3/5".
 1027. [P2] Gib jedem Dungeon eine Hinweistafel am Eingang, die nach drei gescheiterten Versuchen eines Raums einen Tipp freigibt.
 1028. [P2] Lass Türen, die ein gelöstes Rätsel geöffnet hat, dauerhaft offen bleiben (gespeichert in world_state).
-1029. [P2] Gib jedem Dungeon eine eigene Tabelle in data/encounters.json mit niedriger Rate 0.06, damit Rätsel nicht ständig unterbrochen werden.
+1029. [x] [P2] Gib jedem Dungeon eine eigene Tabelle in data/encounters.json mit niedriger Rate 0.06, damit Rätsel nicht ständig unterbrochen werden.
 1030. [P2] Setze in Rätselräumen keine Begegnungsfelder, nur in Fluren zwischen den Räumen.
 1031. [P2] Zeige in jedem Rätselraum beim ersten Betreten eine Zeile mit dem Ziel des Raums, z. B. "Bringe das Licht zu beiden Kristallen".
 1032. [P3] Baue den Endspiel-Dungeon "Inkwell Depths" (de: Tintenfasstiefe), zehn Räume, die alle vorher gelernten Rätselarten kombinieren, Ring 25 bis 32.
