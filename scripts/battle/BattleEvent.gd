@@ -12,7 +12,7 @@ enum Type {
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
-	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED,
+	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -140,6 +140,8 @@ func describe() -> String:
 			return "A snare lies in wait on your side!" if int(data.get("side", 0)) == 0 else "A snare lies in wait on the foe's side!"
 		Type.SNARE_HIT:
 			return "%s springs the snare!" % who
+		Type.BATTLE_LINE:
+			return "%s: %s" % [data.get("name", ""), data.get("text", "")]
 		Type.FIELD_EXTENDED:
 			if bool(data.get("failed", false)):
 				return "There is no Resonance field to hold."

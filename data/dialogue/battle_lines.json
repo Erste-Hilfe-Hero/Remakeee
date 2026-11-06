@@ -1,0 +1,86 @@
+{
+ "hothead_motto": [
+  "Never backs down, never swaps."
+ ],
+ "hothead_own_fall": [
+  "Hah! That just warms me up!"
+ ],
+ "hothead_foe_fall": [
+  "Down it goes! Who's next?"
+ ],
+ "hothead_last": [
+  "One left. All in, all out!"
+ ],
+ "wall_motto": [
+  "Builds up guard and waits."
+ ],
+ "wall_own_fall": [
+  "A crack in the wall. It holds."
+ ],
+ "wall_foe_fall": [
+  "You hit stone. Stone wins."
+ ],
+ "wall_last": [
+  "Last stone standing. Come on."
+ ],
+ "spoiler_motto": [
+  "Spoils your plans before striking."
+ ],
+ "spoiler_own_fall": [
+  "Fine. My tricks are still out there."
+ ],
+ "spoiler_foe_fall": [
+  "Told you that would sting."
+ ],
+ "spoiler_last": [
+  "One trick left. It's a good one."
+ ],
+ "field_keeper_motto": [
+  "Shapes the Rift field first."
+ ],
+ "field_keeper_own_fall": [
+  "The field still favors me."
+ ],
+ "field_keeper_foe_fall": [
+  "The Rift chose my side."
+ ],
+ "field_keeper_last": [
+  "Last one. Let the Rift decide."
+ ],
+ "tactician_motto": [
+  "Plans every turn ahead."
+ ],
+ "tactician_own_fall": [
+  "Expected. The plan holds."
+ ],
+ "tactician_foe_fall": [
+  "Just as I worked it out."
+ ],
+ "tactician_last": [
+  "Last piece on the board. Watch."
+ ],
+ "apprentice_motto": [
+  "Still learning, sometimes guesses."
+ ],
+ "apprentice_own_fall": [
+  "Oh no! I'll write that down."
+ ],
+ "apprentice_foe_fall": [
+  "Wait, did I do that? Yes!"
+ ],
+ "apprentice_last": [
+  "My last one... please, buddy!"
+ ],
+ "enduring_motto": [
+  "Rests, mends and outlasts you."
+ ],
+ "enduring_own_fall": [
+  "Slow and steady. Still here."
+ ],
+ "enduring_foe_fall": [
+  "You tired out first."
+ ],
+ "enduring_last": [
+  "One left, plenty of breath."
+ ]
+}
