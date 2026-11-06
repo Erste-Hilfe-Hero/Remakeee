@@ -377,4 +377,6 @@ T = {
 "Art book: %d of %d used": "Technikbuch: %d von %d eingesetzt",
 "Prism page: %d of %d kinds met in Prism colours": "Prisma-Seite: %d von %d Arten in Prisma-Farben getroffen",
 "Collector card: bonded, ring 30 and every art of its line used.": "Sammelkarte: gebondet, Ring 30 und jede Technik der Linie eingesetzt.",
+"Where to?": "Wohin?", "Trip diary": "Streifzug-Tagebuch", "%s grew %d rings on the way.": "%s ist unterwegs um %d Ringe gewachsen.",
+"%s found a %s on the way": "%s fand unterwegs %s", "%s found a %s in %s": "%s fand %s in %s",
 }

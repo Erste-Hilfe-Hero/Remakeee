@@ -1931,10 +1931,15 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 		var options: Array[String] = []
 		if Expeditions.can_send():
 			options.append("Send a Spirling")
+		if not Expeditions.diary().is_empty():
+			options.append("Trip diary")
 		options.append("Done")
 		var pick: int = await menu.pick_strings(title, options)
 		if pick < 0 or options[pick] == "Done":
 			break
+		if options[pick] == "Trip diary":
+			await menu.info("\n".join(Expeditions.diary()))
+			continue
 		var ready: Array[Spirling] = Expeditions.ready_to_go()
 		var names: Array[String] = []
 		for s: Spirling in ready:
@@ -1949,7 +1954,18 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 		if how < 0:
 			continue
 		var hours: int = int((Expeditions.plans()[how] as Dictionary).hours)
-		if Expeditions.send(ready[who], hours):
+		# Plan 3449/3450: only maps this journey knows; a matching element brings more coins.
+		var dests: Array[String] = Expeditions.destinations()
+		var dest: String = ""
+		if not dests.is_empty():
+			var where: Array[String] = []
+			for id: String in dests:
+				where.append(Spirling.place_name(id) + ("  +%d%%" % Expeditions.match_bonus_pct() if Expeditions.element_match(ready[who], id) else ""))
+			var w: int = await menu.pick_strings("Where to?", where)
+			if w < 0:
+				continue
+			dest = dests[w]
+		if Expeditions.send(ready[who], hours, dest):
 			DailyTasks.record("trip", {"map": map.id})
 			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
 	menu.queue_free()
