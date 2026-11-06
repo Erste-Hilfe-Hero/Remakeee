@@ -164,13 +164,18 @@ func stepped(cell: Vector2i) -> bool:
 		refresh(cell)
 	return false
 
-## A on a plank gap or a ladder anchor. Returns true if handled.
+## A on a hidden find, a secret passage, a plank gap or a ladder anchor. Returns true if handled.
 func interact(cell: Vector2i) -> bool:
 	var m: MapData = ow.map
 	var find: Dictionary = m.secret_at(cell, GameState.flags)
 	if not find.is_empty():
 		await ow.take_find(find)
 		_build_glints(m)
+		return true
+	var passage: Dictionary = m.passage_at(cell)
+	if not passage.is_empty() and not GameState.has_flag(str(passage.get("flag", ""))):
+		open_passage(passage)
+		await ow.say_locked(["The smooth rock gives under your hands and slides aside. A way opens."] as Array[String])
 		return true
 	var state: Dictionary = GameState.world_of(m.id)
 	var ladder: Dictionary = m.ladder_at(cell)
@@ -197,6 +202,12 @@ func interact(cell: Vector2i) -> bool:
 		await ow.say_locked(["You lay a plank over the gap. It holds."] as Array[String])
 		return true
 	return false
+
+## Slides the smooth rock of [param passage] aside for good (item 1082).
+func open_passage(passage: Dictionary) -> void:
+	GameState.set_flag(str(passage.flag))
+	Sound.sfx("warp")
+	refresh(ow.player.cell)
 
 ## "Undo push" (item 1012): the last push in this room is taken back.
 func undo() -> bool:

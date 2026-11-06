@@ -1,0 +1,195 @@
+{
+ "name": "Brackwater Fen",
+ "region": "veydal",
+ "biome": "marsh",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "brackwater_fen",
+ "rows": [
+  "~~~~~~~~~~~~",
+  "~%%~~++~~%%~",
+  "~%%%.++.%%%~",
+  "~~%..++..%~~",
+  "~~~.++++.~~~",
+  "~%%%+~~+%%%~",
+  "~%~~+~~+~~%~",
+  "~%%~+ww+~%%~",
+  "~%~~+~~+~~%~",
+  "~~%%++++%%~~",
+  "~~~%%++%%~~~",
+  "~%%~~++~~%%~",
+  "~%.%~++~%.%~",
+  "~%..%++%..%~",
+  "~~.~%++%~~~~",
+  "~~~~%++%%%%~",
+  "~%%%%++%%%%~",
+  "~%~~~++~~~%~",
+  "+++++++~~~%~",
+  "~~%%~++~%%%~",
+  "~%%%~++~~%%~",
+  "~%.%%++%%.%~",
+  "~%%%~++~~%%~",
+  "~~~~~++~~~~~"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 18,
+   "to": "saltmarsh",
+   "tx": 10,
+   "ty": 7,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 23,
+   "to": "reedhaven",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "reedhaven",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "marit",
+   "x": 4,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "brackwater_fen/marit",
+   "sprite": "villager",
+   "trainer": "Reed Cutter Marit",
+   "intro": "brackwater_fen/marit_intro",
+   "defeat": "brackwater_fen/marit_defeat",
+   "money": 380,
+   "team": [
+    {
+     "species": "Kelpup",
+     "level": 13
+    },
+    {
+     "species": "Mossling",
+     "level": 13
+    }
+   ]
+  },
+  {
+   "id": "jory",
+   "x": 9,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "brackwater_fen/jory",
+   "sprite": "villager",
+   "trainer": "Wanderer Jory",
+   "intro": "brackwater_fen/jory_intro",
+   "defeat": "brackwater_fen/jory_defeat",
+   "money": 400,
+   "team": [
+    {
+     "species": "Puddlet",
+     "level": 14
+    },
+    {
+     "species": "Wickit",
+     "level": 13
+    }
+   ]
+  },
+  {
+   "id": "hesk",
+   "x": 3,
+   "y": 20,
+   "facing": "down",
+   "dialogue": "brackwater_fen/hesk",
+   "sprite": "villager",
+   "trainer": "Bog Walker Hesk",
+   "intro": "brackwater_fen/hesk_intro",
+   "defeat": "brackwater_fen/hesk_defeat",
+   "money": 450,
+   "team": [
+    {
+     "species": "Kelpup",
+     "level": 14
+    },
+    {
+     "species": "Zephlet",
+     "level": 14
+    },
+    {
+     "species": "Riptail",
+     "level": 15
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 1,
+   "y": 17,
+   "dialogue": "brackwater_fen/sign"
+  },
+  {
+   "x": 3,
+   "y": 14,
+   "dialogue": "brackwater_fen/smooth"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 2,
+   "y": 14,
+   "open_flag": "pass_brackwater"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 1,
+   "y": 12,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_fen_islet"
+  },
+  {
+   "x": 10,
+   "y": 12,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_fen_east"
+  },
+  {
+   "x": 9,
+   "y": 21,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_fen_south"
+  },
+  {
+   "x": 2,
+   "y": 21,
+   "item": "dry_towel",
+   "count": 1,
+   "flag": "find_fen_reeds"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_fen_pocket"
+  }
+ ],
+ "passages": [
+  {
+   "x": 2,
+   "y": 14,
+   "flag": "pass_brackwater"
+  }
+ ]
+}

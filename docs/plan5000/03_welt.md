@@ -31,13 +31,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 913. [P3] Lege Kachel-Varianten "_" mit Fußspuren an, damit oft gelaufene Wege nach 200 Schritten sichtbar ausgetreten wirken (nur Logik und Platzhalterkachel).
 
 ### Neue Routen in Veydal
-914. [P1] Baue die Route "Gloamwood" (de: Dämmerwald) westlich von Fernstair, 12 x 30 Kacheln, ein dichter Wald mit zwei Ebenen über Stufen, Ring 4 bis 7.
-915. [P1] Baue die Route "Quillbrook" (de: Federbach) zwischen Brindlewick und dem Südufer, ein Bachtal mit Furten aus "w", Ring 8 bis 11.
-916. [P1] Baue die Route "Brackwater Fen" (de: Brackfenn) östlich von Saltmarsh, ein Moor aus Stegen und Schilfinseln, Ring 12 bis 15.
-917. [P1] Baue die Route "Lantern Steps" (de: Laternenstufen) von Thornridge aus nach oben, eine Felsstiege mit fünf Terrassen und Laternen an jeder Stufe, Ring 10 bis 13.
-918. [P1] Verbinde Gloamwood mit Crowcrest über einen zweiten Eingang, damit Fernstair nicht der einzige Weg nach Norden bleibt.
-919. [P1] Plane jede neue Route mit mindestens einer Abkürzung, die erst nach einem Rätsel oder einer Ausrüstung öffnet und den Rückweg auf unter 20 Schritte kürzt.
-920. [P1] Setze auf jeder neuen Route mindestens drei Wanderer mit eigenem Team, die man nur durch Ansprechen herausfordert (sight bleibt 0).
+914. [x] [P1] Baue die Route "Gloamwood" (de: Dämmerwald) westlich von Fernstair, 12 x 30 Kacheln, ein dichter Wald mit zwei Ebenen über Stufen, Ring 4 bis 7.
+915. [x] [P1] Baue die Route "Quillbrook" (de: Federbach) zwischen Brindlewick und dem Südufer, ein Bachtal mit Furten aus "w", Ring 8 bis 11.
+916. [x] [P1] Baue die Route "Brackwater Fen" (de: Brackfenn) östlich von Saltmarsh, ein Moor aus Stegen und Schilfinseln, Ring 12 bis 15.
+917. [x] [P1] Baue die Route "Lantern Steps" (de: Laternenstufen) von Thornridge aus nach oben, eine Felsstiege mit fünf Terrassen und Laternen an jeder Stufe, Ring 10 bis 13.
+918. [x] [P1] Verbinde Gloamwood mit Crowcrest über einen zweiten Eingang, damit Fernstair nicht der einzige Weg nach Norden bleibt.
+919. [x] [P1] Plane jede neue Route mit mindestens einer Abkürzung, die erst nach einem Rätsel oder einer Ausrüstung öffnet und den Rückweg auf unter 20 Schritte kürzt.
+920. [x] [P1] Setze auf jeder neuen Route mindestens drei Wanderer mit eigenem Team, die man nur durch Ansprechen herausfordert (sight bleibt 0).
 921. [P2] Gib Gloamwood eine Lichtung mit einer Quelle (Kachel "o") als Heilpunkt, damit lange Wege eine Pause haben.
 922. [P2] Lege in Gloamwood einen umgestürzten Baumstamm als Brücke über eine Schlucht an, der nur von Süden begehbar ist.
 923. [P2] Gib Quillbrook drei Furten, die bei Regen zu tiefem Wasser werden und dann nur mit dem Enterhaken über ein gespanntes Seil zu queren sind.
@@ -69,11 +69,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 949. [P3] Baue auf Brackwater Fen eine Vogelwarte, von der aus man durch Ansehen die Lage aller Funde der Karte auf der Minikarte für 10 Minuten sieht.
 
 ### Neue Orte und Siedlungen
-950. [P1] Baue den Ort "Wrenhollow" (de: Zaunkönigsgrund) am Ende von Quillbrook, ein Dorf in einem Talkessel auf drei Ebenen, verbunden durch Leitern.
-951. [P1] Baue den Ort "Copperfold" (de: Kupferfalt) am Rand von Copper Gulch, eine Bergbausiedlung mit Förderturm und Werkstatt.
-952. [P1] Gib jedem neuen Ort eine eigene Heilstelle mit eigener Form, z. B. Wrenhollow eine Wasserstelle unter einer Weide, Copperfold eine warme Grubenquelle.
-953. [P1] Lege in jedem neuen Ort einen Händler mit festem Sortiment aus data/items.json an, ohne Echtgeld-Bezug (Shop gehört Bereich Monetarisierung).
-954. [P1] Baue den Weiler "Reedhaven" (de: Schilfhafen) in Brackwater Fen, Häuser auf Pfählen, nur über Stege erreichbar.
+950. [x] [P1] Baue den Ort "Wrenhollow" (de: Zaunkönigsgrund) am Ende von Quillbrook, ein Dorf in einem Talkessel auf drei Ebenen, verbunden durch Leitern.
+951. [x] [P1] Baue den Ort "Copperfold" (de: Kupferfalt) am Rand von Copper Gulch, eine Bergbausiedlung mit Förderturm und Werkstatt.
+952. [x] [P1] Gib jedem neuen Ort eine eigene Heilstelle mit eigener Form, z. B. Wrenhollow eine Wasserstelle unter einer Weide, Copperfold eine warme Grubenquelle.
+953. [x] [P1] Lege in jedem neuen Ort einen Händler mit festem Sortiment aus data/items.json an, ohne Echtgeld-Bezug (Shop gehört Bereich Monetarisierung).
+954. [x] [P1] Baue den Weiler "Reedhaven" (de: Schilfhafen) in Brackwater Fen, Häuser auf Pfählen, nur über Stege erreichbar.
 955. [P2] Gib Wrenhollow ein Kartografen-Kontor, in dem man die Weltkarte gegen Funde erweitert und Kartierquoten abgibt.
 956. [P2] Gib Copperfold eine Werkstatt, die Wanderer-Ausrüstung gegen Erze und Münzen verbessert (siehe Abschnitt Ausrüstung).
 957. [P2] Gib Reedhaven einen Bootsmann als Fährhaltestelle der Seelinie (siehe Abschnitt Schnellreise).
@@ -209,7 +209,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1079. [x] [P1] Zeige pro Karte im Kartenbuch "Funde x/y", damit Spieler wissen, ob noch etwas fehlt.
 1080. [x] [P1] Lass versteckte Funde nur Gegenstände aus data/items.json geben, keine Echtgeld-Währung.
 1081. [x] [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
-1082. [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
+1082. [x] [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
 1083. [x] [P1] Ergänze WorldValidator.gd so, dass jeder Fund erreichbar ist und keine zwei Funde dieselbe Flag teilen.
 1084. [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
 1085. [P2] Gib für 4, 8 und 12 gefundene Kartografensteine je ein Andenken.
@@ -241,8 +241,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1109. [x] [P1] Erweitere das Format jeder Tabelle um "ground" je Eintrag (fern, reeds, scree, water, cave), damit Farn, Schilf und Geröll auf derselben Karte verschiedene Spirlings haben.
 1110. [x] [P1] Setze die Grundrate für Routen auf 0.12, für Moore und Höhlen auf 0.10 und für Dungeons auf 0.06.
 1111. [x] [P1] Ergänze EncounterTable.gd um eine Schutzzeit von 6 Schritten nach jedem Kampf, in der keine neue Begegnung kommt.
-1112. [P1] Verteile die 21 bestehenden Spirlings so, dass jede Grundform auf mindestens zwei Karten vorkommt und jede Entfaltungsstufe nur auf späten Karten selten wild auftritt.
-1113. [P1] Setze Riptail, Thornback und Smoldrake als seltene Einträge (Gewicht 5) auf Brackwater Fen, Gloamwood und Kindle Vents.
+1112. [x] [P1] Verteile die 21 bestehenden Spirlings so, dass jede Grundform auf mindestens zwei Karten vorkommt und jede Entfaltungsstufe nur auf späten Karten selten wild auftritt.
+1113. [x] [P1] Setze Riptail, Thornback und Smoldrake als seltene Einträge (Gewicht 5) auf Brackwater Fen, Gloamwood und Kindle Vents.
 1114. [x] [P1] Ergänze WorldValidator.gd um eine Prüfung, dass in jeder Tabelle die Gewichte zusammen mindestens 50 ergeben und kein Ringbereich die Kartenreihenfolge um mehr als 4 Ringe überspringt.
 1115. [x] [P1] Zeige im Spirlog-Tracker pro Karte zusätzlich, auf welchem Grund (Farn, Schilf, Geröll, Wasser, Höhle) eine Art vorkommt.
 1116. [P2] Füge "water" Begegnungen für seichtes Wasser "w" hinzu, die man nur mit Watstiefeln erreicht.

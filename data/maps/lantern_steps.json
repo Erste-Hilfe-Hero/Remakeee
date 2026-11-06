@@ -1,0 +1,191 @@
+{
+ "name": "Lantern Steps",
+ "region": "veydal",
+ "biome": "scree",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "lantern_steps",
+ "rows": [
+  "@@@@@__@@@@@",
+  "@:...__...:@",
+  "@.L..__..L.@",
+  "@^^^^^=^^^v@",
+  "@:..._____.@",
+  "@.L.:_..L..@",
+  "@^^=^^^^^^v@",
+  "@..__.....:@",
+  "@.L.___.L..@",
+  "@^^^^^^=^^v@",
+  "@::...___..@",
+  "@.L..__..L.@",
+  "@^^=^^^^^^v@",
+  "@...__..:..@",
+  "@.L.:____L.@",
+  "@^^^^^^^=^^@",
+  "@....___...@",
+  "@..S.__....@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 18,
+   "to": "thornridge",
+   "tx": 9,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 18,
+   "to": "thornridge",
+   "tx": 9,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "copperfold",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "copperfold",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "tova",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "lantern_steps/tova",
+   "sprite": "villager",
+   "trainer": "Lamplighter Tova",
+   "intro": "lantern_steps/tova_intro",
+   "defeat": "lantern_steps/tova_defeat",
+   "money": 330,
+   "team": [
+    {
+     "species": "Wickit",
+     "level": 11
+    },
+    {
+     "species": "Kindlop",
+     "level": 11
+    }
+   ]
+  },
+  {
+   "id": "garr",
+   "x": 2,
+   "y": 10,
+   "facing": "right",
+   "dialogue": "lantern_steps/garr",
+   "sprite": "villager",
+   "trainer": "Miner Garr",
+   "intro": "lantern_steps/garr_intro",
+   "defeat": "lantern_steps/garr_defeat",
+   "money": 350,
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 12
+    },
+    {
+     "species": "Mirkmole",
+     "level": 12
+    }
+   ]
+  },
+  {
+   "id": "isa",
+   "x": 8,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "lantern_steps/isa",
+   "sprite": "villager",
+   "trainer": "Wanderer Isa",
+   "intro": "lantern_steps/isa_intro",
+   "defeat": "lantern_steps/isa_defeat",
+   "money": 380,
+   "team": [
+    {
+     "species": "Zephlet",
+     "level": 13
+    },
+    {
+     "species": "Zippit",
+     "level": 12
+    },
+    {
+     "species": "Shalebat",
+     "level": 13
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 17,
+   "dialogue": "lantern_steps/sign"
+  },
+  {
+   "x": 1,
+   "y": 15,
+   "dialogue": "lantern_steps/smooth"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 2,
+   "y": 16,
+   "open_flag": "pass_lantern"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 13,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_steps_east"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_steps_west"
+  },
+  {
+   "x": 11,
+   "y": 1,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_steps_top"
+  },
+  {
+   "x": 1,
+   "y": 16,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_steps_pocket"
+  }
+ ],
+ "passages": [
+  {
+   "x": 2,
+   "y": 16,
+   "flag": "pass_lantern"
+  }
+ ]
+}

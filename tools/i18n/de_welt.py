@@ -48,3 +48,8 @@ T.update({
 "shallow water": "seichtes Wasser",
 "cave": "Höhle",
 })
+
+# Secret passages (area 3 item 1082)
+T.update({
+"The smooth rock gives under your hands and slides aside. A way opens.": "Der glatte Fels gibt unter deinen Händen nach und gleitet zur Seite. Ein Weg öffnet sich.",
+})

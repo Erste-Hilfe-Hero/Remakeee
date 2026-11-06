@@ -66,6 +66,11 @@ var boulder_ground: String = "f"
 var drop_to: String = ""
 ## Ladder anchors: {"x", "y", "to", "tx", "ty"}. Hang the Rope Ladder once, then climb down.
 var ladders: Array[Dictionary] = []
+## Secret passages (item 1082): a smooth rock at {x, y} that A slides aside, setting "flag".
+## The rock itself is a block with the same open_flag.
+var passages: Array[Dictionary] = []
+## Named cells for story figures and story signs ("spots": {"name": [x, y]}).
+var spots: Dictionary = {}
 var _base_rows: PackedStringArray = []
 
 static func exists(map_id: String) -> bool:
@@ -156,6 +161,11 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 		m.puzzles.append(pz)
 	for ld: Variant in raw.get("ladders", []):
 		m.ladders.append(ld)
+	for ps: Variant in raw.get("passages", []):
+		m.passages.append(ps)
+	var sp: Dictionary = raw.get("spots", {})
+	for k: Variant in sp:
+		m.spots[str(k)] = Vector2i(int(sp[k][0]), int(sp[k][1]))
 	m.boulder_ground = str(raw.get("boulder_ground", "f"))
 	m.biome = str(raw.get("biome", ""))
 	m.drop_to = str(raw.get("drop_to", ""))
@@ -207,6 +217,17 @@ func ladder_at(cell: Vector2i) -> Dictionary:
 		if int(l.x) == cell.x and int(l.y) == cell.y:
 			return l
 	return {}
+
+## The secret passage at [param cell], or {}.
+func passage_at(cell: Vector2i) -> Dictionary:
+	for p: Dictionary in passages:
+		if int(p.x) == cell.x and int(p.y) == cell.y:
+			return p
+	return {}
+
+## The named cell [param name], or (-1, -1) if the map has none.
+func spot(name: String) -> Vector2i:
+	return spots.get(name, Vector2i(-1, -1))
 
 func in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.y >= 0 and cell.y < height and cell.x < rows[cell.y].length()
