@@ -39,6 +39,10 @@ const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "tim
 @export var cry_motif: Array[int] = []
 ## Held item id that suits this kind, shown in storage as "Suits it: ..." (item 355).
 @export var keepsake_hint: String = ""
+## Regional imprints (items 218-219): [{"region", "elements": [Elements.E], "palette", "lore",
+## "trait"}]. A Veydal kind that lives long in another region shows this form there, without
+## a new Spirlog number. The chosen one is stored in Spirling.variant (the region id).
+@export var variants: Array[Dictionary] = []
 ## One line about where this kind comes from (Spirlog).
 @export var origin: String = ""
 ## Id of the unfold line this kind belongs to (the first form's name in lower case).
