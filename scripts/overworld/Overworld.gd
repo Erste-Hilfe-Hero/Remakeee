@@ -37,6 +37,10 @@ var _ui: CanvasLayer
 var _text: TextBox
 var _picker: ListPicker
 var _banner: Label
+## Time-of-day symbol beside the place banner (area 3 item 1169).
+var _phase_icon: PhaseIcon
+## Plain weather dots and veil (area 3 item 1144).
+var weather_layer: WeatherLayer
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
@@ -151,6 +155,10 @@ func _build() -> void:
 	# The fade covers the whole screen, cut-outs included, under the (safe-area) UI.
 	_ui.add_child(_fade)
 	_ui.move_child(_fade, 0)
+	weather_layer = WeatherLayer.new()
+	_ui.add_child(weather_layer)
+	_ui.move_child(weather_layer, 0)
+	DayCycle.events.phase_changed.connect(_on_phase_changed)
 	_banner = Label.new()
 	_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	_banner.offset_top = 4
@@ -158,6 +166,8 @@ func _build() -> void:
 	_banner.add_theme_stylebox_override("normal", UITheme.panel_style())
 	_banner.visible = false
 	ui_root.add_child(_banner)
+	_phase_icon = PhaseIcon.new()
+	_banner.add_child(_phase_icon)
 	toast = Toast.new()
 	add_child(toast)
 	_text = TextBox.new()
@@ -231,18 +241,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	refresh_shade()
-	for n: NPC in _npcs:
-		n.queue_free()
-	_npcs.clear()
-	for def: Dictionary in map.npcs:
-		if def.has("hide_flag") and GameState.has_flag(str(def.hide_flag)):
-			continue
-		if def.has("show_flag") and not GameState.has_flag(str(def.show_flag)):
-			continue
-		var n := NPC.new()
-		n.setup(def)
-		_entities.add_child(n)
-		_npcs.append(n)
+	_spawn_npcs()
 	player.place(cell, face)
 	GameState.current_map = map_id
 	DailyTasks.note_map(map_id)
@@ -278,7 +277,11 @@ func refresh_daylight() -> void:
 		t.autostart = true
 		t.timeout.connect(refresh_daylight)
 		add_child(t)
-	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night)
+	var w: String = WeatherCycle.current(map)
+	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
+	if weather_layer != null:
+		weather_layer.show_kind(w)
+	DayCycle.poll()
 
 const SHADE_DARK: float = 0.9
 const SHADE_LIT: float = 0.3
@@ -380,8 +383,36 @@ func _try_gear(target: Vector2i) -> bool:
 	busy = false
 	return true
 
+## NPCs of the map that are there now: flags and "phase_only" (area 3 item 1168).
+func _spawn_npcs() -> void:
+	for n: NPC in _npcs:
+		n.queue_free()
+	_npcs.clear()
+	var phase: int = DayCycle.current() if _world.phase_override < 0 else _world.phase_override
+	for def: Dictionary in map.npcs:
+		if def.has("hide_flag") and GameState.has_flag(str(def.hide_flag)):
+			continue
+		if def.has("show_flag") and not GameState.has_flag(str(def.show_flag)):
+			continue
+		if not DayCycle.shows_at(def, phase):
+			continue
+		var n := NPC.new()
+		n.setup(def)
+		_entities.add_child(n)
+		_npcs.append(n)
+
+## The time of day moved on: light, people, doors and the banner symbol follow (item 1167).
+func _on_phase_changed(_phase: int) -> void:
+	if map == null or busy:
+		return
+	refresh_daylight()
+	_spawn_npcs()
+	_world.refresh(player.cell)
+
 func _show_banner(text: String) -> void:
-	_banner.text = " %s " % text
+	_banner.text = "    %s " % text
+	_phase_icon.phase = DayCycle.current()
+	_phase_icon.queue_redraw()
 	_banner.visible = true
 	await get_tree().create_timer(BANNER_TIME).timeout
 	_banner.visible = false

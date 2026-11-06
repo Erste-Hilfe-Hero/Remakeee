@@ -296,6 +296,8 @@ func sign_at(cell: Vector2i, flags: Dictionary = {}) -> Dictionary:
 			continue
 		if s.has("show_flag") and not bool(flags.get(str(s.show_flag), false)):
 			continue
+		if not DayCycle.shows_at(s, int(flags.get("_phase", DayCycle.current()))):
+			continue
 		return s
 	return {}
 
@@ -306,6 +308,9 @@ func apply_blocks(flags: Dictionary) -> bool:
 		var x: int = int(b.x)
 		var y: int = int(b.y)
 		var open: bool = bool(flags.get(str(b.get("open_flag", "")), false))
+		# "phase_only" blocks only stand at those times of day (area 3 item 1168).
+		if b.has("phase_only") and not DayCycle.shows_at(b, int(flags.get("_phase", DayCycle.current()))):
+			open = true
 		var ch: String = _base_rows[y][x] if open else str(b.get("closed", "@"))
 		if rows[y][x] != ch:
 			var r: String = rows[y]

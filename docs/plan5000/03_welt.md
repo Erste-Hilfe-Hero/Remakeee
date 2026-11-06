@@ -273,10 +273,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1141. [P3] Baue ein Datenformat für Corvane-Tabellen, das neue Arten per Platzhalter-ID zulässt, die der Validator bis zur Freigabe überspringt.
 
 ### Wetter in der Welt
-1142. [P1] Baue scripts/core/WeatherCycle.gd, das pro Region und 6-Stunden-Block aus dem Server-Datum ein Wetter würfelt (klar, Regen, Nebel, Wind, Gewitter), für alle Spieler gleich.
-1143. [P1] Lege die Wetter-Anteile pro Biom in data/weather.json fest, z. B. Moor: klar 40, Regen 30, Nebel 25, Gewitter 5.
-1144. [P1] Zeige das Wetter in der Welt zuerst als schlichte Farbtönung und einfache Punkte in UITheme-Farben; der eigentliche Stil kommt aus Bereich 6.
-1145. [P1] Füge in Display and access einen Schalter "Wetter" hinzu, der das Wetter ausschaltet und überall "klar" setzt.
+1142. [x] [P1] Baue scripts/core/WeatherCycle.gd, das pro Region und 6-Stunden-Block aus dem Server-Datum ein Wetter würfelt (klar, Regen, Nebel, Wind, Gewitter), für alle Spieler gleich.
+1143. [x] [P1] Lege die Wetter-Anteile pro Biom in data/weather.json fest, z. B. Moor: klar 40, Regen 30, Nebel 25, Gewitter 5.
+1144. [x] [P1] Zeige das Wetter in der Welt zuerst als schlichte Farbtönung und einfache Punkte in UITheme-Farben; der eigentliche Stil kommt aus Bereich 6.
+1145. [x] [P1] Füge in Display and access einen Schalter "Wetter" hinzu, der das Wetter ausschaltet und überall "klar" setzt.
 1146. [P2] Lass Regen in Quillbrook und Reedhaven Furten zu tiefem Wasser machen und Stege überfluten, mit Umweg als Alternative.
 1147. [P2] Lass Nebel auf Coldmoor und in Gloamwood die Minikarte ausblenden, die Weltkarte aber nicht.
 1148. [P2] Lass Wind auf Windmere Ridge und Lantern Steps Windfelder aktivieren, die den Spieler eine Kachel schieben.
@@ -300,8 +300,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1166. [P3] Lege eine Wetter-Vorhersage beim Wirt in Thornridge an, die die nächsten drei Blöcke nennt.
 
 ### Tageszeit in der Welt
-1167. [P1] Erweitere DayCycle.gd um ein Signal "phase_changed", auf das Karten, NPCs und Türen reagieren.
-1168. [P1] Ergänze MapData.gd um "phase_only" für NPCs, Schilder und Blöcke (dawn, day, dusk, night), damit Dinge nur zu einer Tageszeit da sind.
+1167. [x] [P1] Erweitere DayCycle.gd um ein Signal "phase_changed", auf das Karten, NPCs und Türen reagieren.
+1168. [x] [P1] Ergänze MapData.gd um "phase_only" für NPCs, Schilder und Blöcke (dawn, day, dusk, night), damit Dinge nur zu einer Tageszeit da sind.
 1169. [P1] Zeige die aktuelle Tageszeit klein neben dem Ortsbanner und in der Weltkarte als Symbol.
 1170. [P2] Lass Läden in Orten von 7 bis 20 Uhr Gerätezeit offen sein und nachts eine Klingel für einen müden Händler mit kleinerem Sortiment haben.
 1171. [P2] Lass die Seelinie der Fähre nur von 6 bis 22 Uhr fahren und nachts einen Nachtfischer übersetzen, der mehr Zeit braucht.
