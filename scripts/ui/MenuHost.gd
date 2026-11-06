@@ -806,21 +806,35 @@ static func summary_pages(s: Spirling) -> Array[String]:
 
 ## Team row (item 1889): 14x14 sprite, name and ring, a 40 px Vigor bar under the name and the
 ## element icons on the right; worn-out Spirlings get their own mark (item 1892).
-static func party_entry(s: Spirling) -> Dictionary:
+static func party_entry(s: Spirling, leader: bool = false) -> Dictionary:
 	# The row is too narrow for "worn out" next to the icons: a cross on the empty bar shows
 	# it, the hint and the screen reader say it.
 	var worn: String = "worn out" if s.is_fainted() else ""
 	var hint: String = Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()])
 	if s.is_fainted():
 		hint += "  " + Loc.t(worn)
+	# The leader on slot 1 carries a small flag (item 1903).
+	if leader:
+		hint = Loc.t("Leads the team") + "  " + hint
 	return {"text": "%s R%d" % [s.display_name(), s.level], "icon": MiniSprite.of(s.data.species_name, 14),
-		"decorate": func(b: Button) -> void: _draw_party_row(b, s),
-		"hint": hint, "say": worn}
+		"decorate": func(b: Button) -> void: _draw_party_row(b, s, leader),
+		"hint": hint, "say": (("leads the team, worn out" if s.is_fainted() else "leads the team") if leader else worn), "leader": leader}
 
 const BAR_WIDTH: int = 40
+const FLAG_INSET: int = 8
 
-static func _draw_party_row(b: Button, s: Spirling) -> void:
+## A small pennant at the right end of the leader's row.
+static func _draw_leader_flag(b: Button, ink: Color) -> void:
+	var x: float = b.size.x - FLAG_INSET
+	var top: float = 3.0
+	var bottom: float = b.size.y - 3.0
+	b.draw_line(Vector2(x, top), Vector2(x, bottom), ink)
+	b.draw_colored_polygon(PackedVector2Array([Vector2(x + 1, top), Vector2(x + 6, top + 2.5), Vector2(x + 1, top + 5)]), ink)
+
+static func _draw_party_row(b: Button, s: Spirling, leader: bool = false) -> void:
 	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
+	if leader:
+		_draw_leader_flag(b, ink)
 	var x0: float = ListPicker.POINTER_SPACE + 16
 	var y: float = b.size.y - 3
 	b.draw_rect(Rect2(x0, y, BAR_WIDTH, 2), UITheme.DISABLED)
