@@ -575,4 +575,12 @@ T = {
 "Aldo: Two Corvane Rifts! I told the whole pier. Twice.": "Aldo: Zwei Risse in Corvane! Ich habe es dem ganzen Steg erzählt. Zweimal.",
 "Aldo: You saw her handwriting at the Wide Rift? \"Still here.\" ...That's her. That's exactly her.": "Aldo: Du hast ihre Handschrift am Weiten Riss gesehen? \"Noch hier.\" ...Das ist sie. Genau sie.",
 "Aldo: Sit with me a while. Tell me about Corvane again. The colours part.": "Aldo: Setz dich ein bisschen zu mir. Erzähl mir nochmal von Corvane. Den Teil mit den Farben.",
+# Daily and night lines (plan items 1352, 1353)
+"Crier: Hear ye! The ferryman swears the lake was warm this morning. Nobody believes him.": "Ausruferin: Hört, hört! Der Fährmann schwört, der See war heute Morgen warm. Keiner glaubt ihm.",
+"Crier: Hear ye! Lost: one fishing hat. Found: one Kelpup wearing a fishing hat.": "Ausruferin: Hört, hört! Verloren: ein Anglerhut. Gefunden: ein Kelpup mit Anglerhut.",
+"Crier: Hear ye! The lighthouse lamp burned all night again. Aldo says it always will.": "Ausruferin: Hört, hört! Die Leuchtturmlampe hat wieder die ganze Nacht gebrannt. Aldo sagt, das tut sie immer.",
+"Crier: Hear ye! Market day! Bring coin, bring baskets, leave your Spirlings' muddy paws outside.": "Ausruferin: Hört, hört! Markttag! Bringt Münzen und Körbe mit, und lasst die schlammigen Pfoten eurer Spirlings draußen.",
+"Crier: Hear ye! Mind the reeds by the pier. Something hums in there at dusk.": "Ausruferin: Hört, hört! Vorsicht im Schilf am Steg. In der Dämmerung summt da etwas.",
+"Keeper: Late visitor? The pool glows at night. Rest, the stars won't mind.": "Wärterin: Später Besuch? Nachts leuchtet das Becken. Ruh dich aus, die Sterne stört das nicht.",
+"Ros: Night shift, eh? Down here it's always night. The Mirkmoles like you better for it.": "Ros: Nachtschicht, was? Hier unten ist immer Nacht. Die Mirkmoles mögen dich dafür umso mehr.",
 }

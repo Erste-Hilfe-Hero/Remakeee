@@ -46,6 +46,10 @@ def strings():
                 found += v
             elif isinstance(v, dict):
                 found += v.get("lines", [])
+                found += v.get("night_lines", []) or []
+                for day in v.get("daily", []) or []:
+                    if isinstance(day, list):
+                        found += day
                 af = v.get("after_flag")
                 for alt in (af if isinstance(af, list) else [af]):
                     if isinstance(alt, dict):

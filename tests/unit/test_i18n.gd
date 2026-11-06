@@ -45,6 +45,12 @@ func _all_dialogue_lines() -> Array[String]:
 			elif v is Dictionary:
 				for s: Variant in v.get("lines", []):
 					out.append(str(s))
+				for s: Variant in v.get("night_lines", []):
+					out.append(str(s))
+				for day: Variant in v.get("daily", []):
+					if day is Array:
+						for s: Variant in day:
+							out.append(str(s))
 				var af: Variant = v.get("after_flag")
 				if af is Dictionary:
 					for s: Variant in af.get("lines", []):

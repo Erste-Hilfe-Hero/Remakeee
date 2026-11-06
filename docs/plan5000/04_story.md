@@ -22,8 +22,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1349. [P2] Platzhalter {pronoun_*} wählt anhand von tamer_look die passenden Fürwörter für die Spielfigur in Englisch und Deutsch.
 1350. [P2] Jede Figur bekommt einen eigenen Sprech-Piepton (Tonhöhe und Länge in data/dialogue/_voices.json), abgespielt pro drittem Buchstaben, abschaltbar.
 1351. [P2] Ein kleines Gefühlssymbol (Ausrufezeichen, Fragezeichen, Tropfen, Herz, Punkte) erscheint per Feld "emote" für 0,8 Sekunden über dem Kopf der sprechenden Figur.
-1352. [P2] Ein "once_per_day"-Feld lässt Figuren täglich einen neuen Satz aus einer Liste sagen (Tageswechsel nach DayCycle), damit die Welt lebendig wirkt.
-1353. [P2] Figuren können per Feld "night_lines" nachts andere Sätze sagen als am Tag.
+1352. [x] [P2] Ein "once_per_day"-Feld lässt Figuren täglich einen neuen Satz aus einer Liste sagen (Tageswechsel nach DayCycle), damit die Welt lebendig wirkt.
+1353. [x] [P2] Figuren können per Feld "night_lines" nachts andere Sätze sagen als am Tag.
 1354. [P2] Neue Aktion "take_item <id> <anzahl>" nimmt Story-Gegenstände wieder ab, mit einer Prüfung, dass der Gegenstand vorhanden ist.
 1355. [P2] Neue Aktion "give_spirling <art> <ring>" schenkt einen Spirling mit Namensabfrage, für Story-Geschenke wie Mirelas Gefährten.
 1356. [P2] Neue Aktion "heal_party_story" heilt still ohne Ton, damit Szenen nach einem Bosskampf nicht durch den Heil-Jingle unterbrochen werden.
