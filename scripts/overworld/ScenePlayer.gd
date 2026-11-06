@@ -69,6 +69,12 @@ func play(id: String, data: Dictionary = {}) -> void:
 	var scene: Dictionary = data if not data.is_empty() else load_scene(id)
 	var steps: Array = scene.get("steps", [])
 	var was_busy: bool = overworld.busy
+	var outer: bool = not overworld.scene_running
+	# A scene started inside a skipped scene is skipped too.
+	if overworld.scene_skipping:
+		skipping = true
+	elif skipping:
+		overworld.scene_skipping = true
 	overworld.busy = true
 	overworld.scene_running = true
 	overworld.player.frozen = true
@@ -83,9 +89,19 @@ func play(id: String, data: Dictionary = {}) -> void:
 		if skipping and not runs_when_skipped(kind, step):
 			continue
 		await _run(kind, step)
+		if overworld.scene_abort:
+			break
+	var aborted: bool = overworld.scene_abort
+	if outer:
+		overworld.scene_abort = false
 	_cleanup()
-	GameState.set_flag(seen_flag(id))
-	overworld.scene_running = false
+	if aborted:
+		overworld.fade_rect().color.a = 0.0
+	else:
+		GameState.set_flag(seen_flag(id))
+	if outer:
+		overworld.scene_running = false
+		overworld.scene_skipping = false
 	overworld.busy = was_busy
 	if not was_busy:
 		overworld.player.frozen = false
@@ -106,6 +122,7 @@ func _add_skip_button() -> void:
 ## Jumps to the end of the scene (effect steps still run).
 func skip() -> void:
 	skipping = true
+	overworld.scene_skipping = true
 	overworld.text_box().auto_advance = true
 	overworld.text_box().advance_now()
 	if _skip_button != null:

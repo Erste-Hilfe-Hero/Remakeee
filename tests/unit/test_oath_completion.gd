@@ -57,7 +57,10 @@ func test_completion_weights_and_range() -> void:
 	assert_eq(sum, 100)
 	var start: int = Completion.percent()
 	assert_between(start, 0, 10, "a new journey is barely started")
-	GameState.set_flag("aldo_dock_told")
+	# The story counts as done once the last main goal is reached (its flags set).
+	var goals: Array = QuestLog.main_goals()
+	for f: Variant in (goals[goals.size() - 1] as Dictionary).get("done", []):
+		GameState.set_flag(str(f))
 	assert_gte(Completion.percent(), start + 19, "the story is worth 20 percent")
 	for sd: SpirlingData in Database.spirlings.values():
 		GameState.spirlog[sd.species_name] = {"seen": true, "bonded": true}

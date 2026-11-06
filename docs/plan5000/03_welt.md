@@ -205,10 +205,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1077. [P3] Ergänze LEGAL.md um die neue Ausrüstungsliste mit dem Satz, dass keine davon Fliegen, Gleiten oder Reiten erlaubt.
 
 ### Geheimnisse und versteckte Gegenstände
-1078. [P1] Verteile auf jeder bestehenden und neuen Außenkarte 3 bis 5 versteckte Funde über das neue Feld "secrets", sichtbar nur als leichtes Glitzern alle 4 Sekunden.
-1079. [P1] Zeige pro Karte im Kartenbuch "Funde x/y", damit Spieler wissen, ob noch etwas fehlt.
+1078. [x] [P1] Verteile auf jeder bestehenden und neuen Außenkarte 3 bis 5 versteckte Funde über das neue Feld "secrets", sichtbar nur als leichtes Glitzern alle 4 Sekunden.
+1079. [x] [P1] Zeige pro Karte im Kartenbuch "Funde x/y", damit Spieler wissen, ob noch etwas fehlt.
 1080. [x] [P1] Lass versteckte Funde nur Gegenstände aus data/items.json geben, keine Echtgeld-Währung.
-1081. [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
+1081. [x] [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
 1082. [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
 1083. [x] [P1] Ergänze WorldValidator.gd so, dass jeder Fund erreichbar ist und keine zwei Funde dieselbe Flag teilen.
 1084. [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
@@ -238,13 +238,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 
 ### Begegnungstabellen
 1108. [P1] Lege Tabellen in data/encounters.json für jede neue Route, Höhle und jeden Dungeon an, mit Ringbereich passend zur Kartenreihenfolge.
-1109. [P1] Erweitere das Format jeder Tabelle um "ground" je Eintrag (fern, reeds, scree, water, cave), damit Farn, Schilf und Geröll auf derselben Karte verschiedene Spirlings haben.
-1110. [P1] Setze die Grundrate für Routen auf 0.12, für Moore und Höhlen auf 0.10 und für Dungeons auf 0.06.
-1111. [P1] Ergänze EncounterTable.gd um eine Schutzzeit von 6 Schritten nach jedem Kampf, in der keine neue Begegnung kommt.
+1109. [x] [P1] Erweitere das Format jeder Tabelle um "ground" je Eintrag (fern, reeds, scree, water, cave), damit Farn, Schilf und Geröll auf derselben Karte verschiedene Spirlings haben.
+1110. [x] [P1] Setze die Grundrate für Routen auf 0.12, für Moore und Höhlen auf 0.10 und für Dungeons auf 0.06.
+1111. [x] [P1] Ergänze EncounterTable.gd um eine Schutzzeit von 6 Schritten nach jedem Kampf, in der keine neue Begegnung kommt.
 1112. [P1] Verteile die 21 bestehenden Spirlings so, dass jede Grundform auf mindestens zwei Karten vorkommt und jede Entfaltungsstufe nur auf späten Karten selten wild auftritt.
 1113. [P1] Setze Riptail, Thornback und Smoldrake als seltene Einträge (Gewicht 5) auf Brackwater Fen, Gloamwood und Kindle Vents.
-1114. [P1] Ergänze WorldValidator.gd um eine Prüfung, dass in jeder Tabelle die Gewichte zusammen mindestens 50 ergeben und kein Ringbereich die Kartenreihenfolge um mehr als 4 Ringe überspringt.
-1115. [P1] Zeige im Spirlog-Tracker pro Karte zusätzlich, auf welchem Grund (Farn, Schilf, Geröll, Wasser, Höhle) eine Art vorkommt.
+1114. [x] [P1] Ergänze WorldValidator.gd um eine Prüfung, dass in jeder Tabelle die Gewichte zusammen mindestens 50 ergeben und kein Ringbereich die Kartenreihenfolge um mehr als 4 Ringe überspringt.
+1115. [x] [P1] Zeige im Spirlog-Tracker pro Karte zusätzlich, auf welchem Grund (Farn, Schilf, Geröll, Wasser, Höhle) eine Art vorkommt.
 1116. [P2] Füge "water" Begegnungen für seichtes Wasser "w" hinzu, die man nur mit Watstiefeln erreicht.
 1117. [P2] Gib jeder Tabelle eine Spalte "weather" (z. B. rain: Tide und Bloom x1.5), die mit dem Wettersystem verrechnet wird.
 1118. [P2] Gib jeder Karte eine feste "Leitart", die 40 Prozent der Begegnungen stellt, damit jeder Ort einen klaren Charakter hat.

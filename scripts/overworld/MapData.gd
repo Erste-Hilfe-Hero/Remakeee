@@ -55,6 +55,9 @@ var floor_index: int = 0
 var floor_count: int = 1
 ## Map file this map comes from (id without the floor part).
 var file_id: String = ""
+## Kind of land (fern, marsh, scree, forest, cave, town, rift, ...): steers encounters,
+## weather and sounds together (area 3 item 898).
+var biome: String = ""
 ## Puzzles: {"id", "flag", "plates": [[x, y], ...]} (see PuzzleRoom).
 var puzzles: Array[Dictionary] = []
 ## Tile under a boulder drawn on the map ("f" floor by default, "_" outside).
@@ -107,7 +110,10 @@ static func load_map(map_id: String) -> MapData:
 	if not raw is Dictionary:
 		push_error("MapData: cannot read map '%s'" % map_id)
 		return null
-	return from_dict(map_id, raw)
+	var m: MapData = from_dict(map_id, raw)
+	if m != null:
+		StoryPlacements.apply(m, raw)
+	return m
 
 ## Builds floor [param map_id] ("file" or "file@n") from a parsed map file.
 static func from_dict(map_id: String, raw: Dictionary) -> MapData:
@@ -157,6 +163,7 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	for ld: Variant in raw.get("ladders", []):
 		m.ladders.append(ld)
 	m.boulder_ground = str(raw.get("boulder_ground", "f"))
+	m.biome = str(raw.get("biome", ""))
 	m.drop_to = str(raw.get("drop_to", ""))
 	m._base_rows = m.rows.duplicate()
 	m.encounter_table = str(raw.get("encounters", ""))

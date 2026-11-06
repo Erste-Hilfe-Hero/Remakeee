@@ -4,10 +4,22 @@
   "Lake village of Veydal.",
   "North: Fernstair   East: Saltmarsh"
  ],
- "ferry": [
-  "FERRY TO CORVANE",
-  "No crossings while the lake is restless."
- ],
+ "ferry": {
+  "lines": [
+   "FERRY TO CORVANE",
+   "No crossings while the lake is restless."
+  ],
+  "after_flag": [
+   {
+    "flag": "ferry_corvane_open",
+    "lines": [
+     "FERRY TO CORVANE",
+     "Crossings resume. Ferryman: Aldo."
+    ]
+   }
+  ],
+  "next": "ferry_ask"
+ },
  "fisher": {
   "lines": [
    "The fish stopped jumping the night the Rift opened.",
@@ -37,10 +49,21 @@
    ]
   }
  },
- "child": [
-  "My Puddlet won't answer when I call it anymore.",
-  "Grandpa Aldo says a Wayfarer with a strong bond can wake it up again."
- ],
+ "child": {
+  "lines": [
+   "My Puddlet won't answer when I call it anymore.",
+   "Grandpa Aldo says a Wayfarer with a strong bond can wake it up again."
+  ],
+  "next": "child_ask",
+  "after_flag": [
+   {
+    "flag": "q_puddlet_done",
+    "lines": [
+     "Puddlet splashes me every morning now! Thank you, {name}!"
+    ]
+   }
+  ]
+ },
  "crier": {
   "lines": [
    "Crier: Hear ye! Veydal keeps its festivals, storm or no storm."
@@ -65,10 +88,160 @@
   "lines": [
    "Kestra: Two Rifts mended. The valley is calmer... and smaller.",
    "Kestra: There's a third one, up north past the crest. Bigger than both.",
-   "Kestra: I still think something lives on the other side. When the ferry runs again, we find out together."
+   "Kestra: I still think something lives on the other side. When the ferry runs again, we find out together.",
+   "Kestra: So? Do we cross together?"
   ],
-  "flag": "kestra_dock_talk"
+  "flag": "kestra_dock_talk",
+  "choice_id": "kestra_dock",
+  "choices": [
+   {
+    "text": "I'll come along.",
+    "id": "together",
+    "if": {
+     "not_flag": "kestra_dock_talk"
+    },
+    "action": "add_var kestra_trust 1",
+    "next": "kestra_dock_together"
+   },
+   {
+    "text": "I'll go alone.",
+    "id": "alone",
+    "if": {
+     "not_flag": "kestra_dock_talk"
+    },
+    "next": "kestra_dock_alone"
+   }
+  ],
+  "after_flag": [
+   {
+    "flag": "kestra_dock_talk",
+    "if": {
+     "choice": {
+      "kestra_dock": "together"
+     }
+    },
+    "lines": [
+     "Kestra: When Aldo opens the ferry, I'll be on it. Save me a seat."
+    ]
+   },
+   {
+    "flag": "kestra_dock_talk",
+    "if": {
+     "choice": {
+      "kestra_dock": "alone"
+     }
+    },
+    "lines": [
+     "Kestra: Going alone, then. I'll see you on the other side anyway."
+    ]
+   }
+  ]
  },
+ "ferry_ask": {
+  "if": {
+   "flag": "ferry_corvane_open"
+  },
+  "lines": [
+   "Aldo waits by the boat, his old oar across his knees."
+  ],
+  "choices": [
+   {
+    "text": "Cross the lake",
+    "next": "ferry_go"
+   },
+   {
+    "text": "Not yet"
+   }
+  ]
+ },
+ "ferry_go": {
+  "if": {
+   "not_flag": "scene_ferry_crossing_seen"
+  },
+  "else": "ferry_again",
+  "lines": [],
+  "action": "scene ferry_crossing"
+ },
+ "ferry_again": {
+  "lines": [
+   "Aldo: Hold on tight. The lake still has opinions."
+  ],
+  "action": "warp corvane_quay 6 22 up"
+ },
+ "ferry_row": {
+  "lines": [
+   "Aldo stops rowing and rubs his shoulder."
+  ],
+  "choice_id": "ferry_row",
+  "choices": [
+   {
+    "text": "Let me row",
+    "id": "self",
+    "next": "ferry_row_self"
+   },
+   {
+    "text": "Take your time",
+    "id": "aldo",
+    "next": "ferry_row_aldo"
+   }
+  ]
+ },
+ "ferry_row_self": [
+  "You take the oar. It's heavier than it looks.",
+  "Aldo: Ha! Mirela rowed like that. All arms, no rhythm. Keep going."
+ ],
+ "ferry_row_aldo": [
+  "Aldo: Forty years since I rowed this far. Give an old man a minute.",
+  "He rows on, slow and steady, humming the lighthouse tune."
+ ],
+ "kestra_dock_together": [
+  "Kestra: Good. Two cartographers see twice as much.",
+  "Kestra: I'll go ahead to Corvane once the ferry runs. Find me in Madderby."
+ ],
+ "kestra_dock_alone": [
+  "Kestra: Hm. Your call. Mirela went alone too, you know.",
+  "Kestra: I'll still be in Corvane. Someone has to map what you mend."
+ ],
+ "child_ask": {
+  "if": {
+   "not_flag": "q_puddlet_done"
+  },
+  "lines": [
+   "Can you sing to it? The way Wayfarers do?"
+  ],
+  "choices": [
+   {
+    "text": "I'll try",
+    "next": "child_song",
+    "flag": "q_puddlet_asked"
+   },
+   {
+    "text": "Not now",
+    "flag": "q_puddlet_asked"
+   }
+  ]
+ },
+ "child_song": {
+  "lines": [
+   "You kneel by the little Puddlet and listen for its call..."
+  ],
+  "action": "echo_song q_puddlet_done",
+  "next": "child_after"
+ },
+ "child_after": {
+  "if": {
+   "flag": "q_puddlet_done"
+  },
+  "else": "child_retry",
+  "lines": [
+   "The Puddlet blinks, then chirps back at you!",
+   "Puddlet is awake! Here, take this. I found it on the beach."
+  ],
+  "action": "give_item revival_leaf 1"
+ },
+ "child_retry": [
+  "The Puddlet stays quiet. Maybe try again in a moment."
+ ],
  "festival_trader": {
   "lines": [
    "Tilda: Festival ribbons for festival goods! Ribbons turn into Waymarks when the festival ends, so nothing goes to waste."
