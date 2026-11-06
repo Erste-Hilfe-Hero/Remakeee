@@ -180,6 +180,11 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 		lines.append("Lives in: %s" % sd.habitat)
 	var found: String = found_line(sd, spirlog)
 	lines.append("Found on: %s" % (found if not found.is_empty() else "unknown"))
+	var places: String = Collection.places_line(sd.species_name)
+	if not places.is_empty():
+		lines.append(places)
+	if Collection.card_open(sd):
+		lines.append(Collection.STAR + " " + Loc.t("Collector card: bonded, ring 30 and every art of its line used."))
 	var bonded: bool = is_bonded(spirlog, sd.species_name)
 	if bonded:
 		lines.append("Origin: %s" % sd.origin)
