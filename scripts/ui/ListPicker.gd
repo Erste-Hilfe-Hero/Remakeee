@@ -45,6 +45,11 @@ var _sliders: Array[bool] = []
 var last_dir: int = 0
 
 const BACK_SIZE: int = 16
+## pick() returns TAB_PICKED - n when the player switches to tab n (item 1914).
+const TAB_PICKED: int = -100
+var _tab_row: HBoxContainer
+var _tabs: Array[String] = []
+var _tab: int = 0
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -69,6 +74,10 @@ func _ready() -> void:
 	_back.draw.connect(_draw_back_arrow)
 	_back.pressed.connect(func() -> void: _on_row(-1))
 	head.add_child(_back)
+	_tab_row = HBoxContainer.new()
+	_tab_row.add_theme_constant_override("separation", 1)
+	_tab_row.visible = false
+	root.add_child(_tab_row)
 	_scroll = ScrollContainer.new()
 	_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -96,9 +105,15 @@ func _ready() -> void:
 ## [param entries]: Array of {"text": String, "disabled": bool, "danger": bool}.
 ## [param cancellable] adds a Back row. [param focus]: row to focus first (-1 = remembered or
 ## first enabled row). [param guard_ms]: how long taps are ignored after the list opens.
+## Rows may also carry "icon" (Texture2D, drawn left of the text), "decorate" (a Callable
+## that gets the row Button to draw on, e.g. a Vigor bar), "hint" (line under the list) and
+## "say" (a state only screen readers read, e.g. "worn out" when a mark shows it).
+## [param tabs]: names of tabs above the list; left/right or a tap on a tab returns
+## TAB_PICKED - tab.
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
-		guard_ms: int = TAP_GUARD_MS) -> int:
+		guard_ms: int = TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
 	_title.text = title
+	_set_tabs(tabs, tab)
 	_cancellable = cancellable
 	_guard_ms = guard_ms
 	_back.visible = cancellable
@@ -123,6 +138,13 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		else:
 			b.text = text
 		b.disabled = bool(rows[i].get("disabled", false))
+		var icon: Variant = rows[i].get("icon")
+		if icon is Texture2D:
+			b.icon = icon
+		var deco: Variant = rows[i].get("decorate")
+		if deco is Callable:
+			b.draw.connect(func() -> void: (deco as Callable).call(b))
+		b.set_meta("say", str(rows[i].get("say", "")))
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		b.custom_minimum_size = Vector2(0, ROW_HEIGHT)
 		b.clip_text = true
@@ -189,8 +211,44 @@ func _slider_dir(b: Button, i: int) -> int:
 		return -1 if local_x < b.size.x / 2.0 else 1
 	return 1
 
-## Left and right move a focused slider row (gamepad and keys).
+func _set_tabs(tabs: Array[String], tab: int) -> void:
+	_tabs = tabs
+	_tab = tab
+	for c: Node in _tab_row.get_children():
+		c.queue_free()
+	_tab_row.visible = not tabs.is_empty()
+	for i: int in tabs.size():
+		var t := Button.new()
+		t.text = tabs[i]
+		t.toggle_mode = true
+		t.button_pressed = i == tab
+		t.focus_mode = Control.FOCUS_NONE
+		t.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		t.clip_text = true
+		t.pressed.connect(func() -> void: _switch_tab(i))
+		_tab_row.add_child(t)
+
+func _switch_tab(i: int) -> void:
+	if _tabs.is_empty() or not visible:
+		return
+	var n: int = posmod(i, _tabs.size())
+	if n == _tab:
+		(_tab_row.get_child(n) as Button).button_pressed = true
+		return
+	Sound.sfx("select")
+	picked.emit(TAB_PICKED - n)
+
+## Tab a [code]TAB_PICKED - n[/code] result names, or -1.
+static func tab_of(result: int) -> int:
+	return TAB_PICKED - result if result <= TAB_PICKED else -1
+
+## Left and right move a focused slider row (gamepad and keys), or switch tabs.
 func _row_input(ev: InputEvent, i: int, result: int) -> void:
+	if not _tabs.is_empty() and (i >= _sliders.size() or not _sliders[i]):
+		if ev.is_action_pressed("ui_left") or ev.is_action_pressed("ui_right"):
+			_buttons[i].accept_event()
+			_switch_tab(_tab + (-1 if ev.is_action_pressed("ui_left") else 1))
+		return
 	if i >= _sliders.size() or not _sliders[i]:
 		return
 	var dir: int = 0
@@ -294,6 +352,9 @@ func _set_accessibility(title: String) -> void:
 	for i: int in n:
 		var b: Button = _buttons[i]
 		var state: String = Loc.t("unavailable") + ", " if b.disabled else ""
+		var say: String = str(b.get_meta("say", ""))
+		if not say.is_empty():
+			state = Loc.t(say) + ", " + state
 		var shown: String = b.text if b.auto_translate_mode == Node.AUTO_TRANSLATE_MODE_DISABLED else Loc.t(b.text)
 		b.accessibility_name = "%s, %s%s" % [shown, state, Loc.t("%d of %d" % [i + 1, n])]
 	_title.accessibility_live = AccessibilityServer.LIVE_POLITE

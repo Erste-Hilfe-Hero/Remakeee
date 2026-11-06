@@ -166,10 +166,10 @@ func run_travel() -> bool:
 
 func run_team() -> void:
 	while true:
-		var names: Array[String] = []
+		var rows: Array[Dictionary] = []
 		for s: Spirling in GameState.party:
-			names.append(MenuHost.party_line(s))
-		var idx: int = await pick_strings("Team", names)
+			rows.append(MenuHost.party_entry(s))
+		var idx: int = await pick("Team", rows)
 		if idx < 0:
 			return
 		var s: Spirling = GameState.party[idx]
@@ -184,7 +184,7 @@ func run_team() -> void:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
 		match opt:
-			0: await info(MenuHost.summary(s))
+			0: await info_pages(MenuHost.summary_pages(s), MiniSprite.of(s.data.species_name, 32))
 			1: GameState.swap_party(0, idx)
 			2:
 				var slots: Array[String] = []
@@ -270,36 +270,67 @@ func _usable_items() -> Array[String]:
 			out.append(str(id))
 	return out
 
+## Satchel tabs (item 1914) and which tab an item belongs to.
+const BAG_TABS: Array[String] = ["Care", "Keepsakes", "Crystals", "Gear", "Special"]
+
+static func bag_tab(it: Dictionary) -> int:
+	if bool(it.get("gear", false)):
+		return 3
+	if it.has("teaches"):
+		return 2
+	if bool(it.get("held", false)) or it.has("held"):
+		return 1
+	for k: String in ["heal", "cure", "revive", "energy", "stage", "battle"]:
+		if it.has(k) and it[k]:
+			return 0
+	return 4
+
 func run_bag() -> void:
+	var tab: int = -1
 	while true:
-		var ids: Array[String] = []
-		var entries: Array[String] = []
+		var by_tab: Array[Array] = [[], [], [], [], []]
 		for id: Variant in GameState.inventory:
-			if GameState.item_count(str(id)) <= 0:
-				continue
-			ids.append(str(id))
-			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
-		if ids.is_empty():
+			if GameState.item_count(str(id)) > 0:
+				by_tab[bag_tab(Database.item(str(id)))].append(str(id))
+		var tabs: Array[String] = []
+		var tab_ids: Array[int] = []
+		for t: int in BAG_TABS.size():
+			if not by_tab[t].is_empty():
+				tabs.append(BAG_TABS[t])
+				tab_ids.append(t)
+		if tabs.is_empty():
 			await info("The satchel is empty.")
 			return
-		var idx: int = await pick_strings("Satchel", entries)
+		tab = clampi(tab, 0, tabs.size() - 1) if tab >= 0 else 0
+		var ids: Array = by_tab[tab_ids[tab]]
+		var entries: Array[Dictionary] = []
+		for id: String in ids:
+			var it0: Dictionary = Database.item(id)
+			# The description stands in the line under the list (item 1915).
+			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)],
+				"hint": str(it0.get("description", ""))})
+		var idx: int = await pick("Satchel", entries, true, -1, ListPicker.TAP_GUARD_MS, tabs, tab)
+		if ListPicker.tab_of(idx) >= 0:
+			tab = ListPicker.tab_of(idx)
+			continue
 		if idx < 0:
 			return
-		var it: Dictionary = Database.item(ids[idx])
+		var item_id: String = ids[idx]
+		var it: Dictionary = Database.item(item_id)
 		if it.has("teaches"):
-			await _teach_echo(ids[idx])
+			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
-			await _use_spark_charm(ids[idx])
-		elif ids[idx] in _usable_items():
+			await _use_spark_charm(item_id)
+		elif item_id in _usable_items():
 			var names: Array[String] = []
 			for s: Spirling in GameState.party:
 				names.append(MenuHost.party_line(s))
 			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
 			if who >= 0:
-				var msg: String = GameState.use_item_outside_battle(ids[idx], GameState.party[who])
+				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
 				await info(msg if not msg.is_empty() else "That would do nothing right now.")
 		elif bool(it.get("gear", false)):
-			await info(gear_page(ids[idx]), gear_picture(ids[idx]))
+			await info(gear_page(item_id), gear_picture(item_id))
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
 
@@ -405,9 +436,11 @@ func run_spirlog() -> void:
 			var is_bonded: bool = bool(e.get("bonded", false))
 			seen += 1 if is_seen else 0
 			bonded += 1 if is_bonded else 0
-			var mark: String = "*" if is_bonded else ("+" if is_seen else " ")
-			entries.append({"text": "%02d %s %s" % [sd.dex_id, mark, sd.species_name if is_seen else "???"], "species": sd.species_name, "seen": is_seen})
-		var idx: int = await pick("Spirlog  seen %d  bonded %d" % [seen, bonded], entries)
+			# Own marks instead of "*" and "+" (item 1934): an eye for seen, a band for bonded.
+			var mark: Texture2D = SpirlogMarks.bonded() if is_bonded else (SpirlogMarks.seen() if is_seen else SpirlogMarks.none())
+			entries.append({"text": "%02d %s" % [sd.dex_id, sd.species_name if is_seen else "???"], "icon": mark,
+				"species": sd.species_name, "seen": is_seen})
+		var idx: int = await pick(Loc.t("Spirlog  seen %d  bonded %d" % [seen, bonded]) + "\n" + Loc.t(SpirlogMarks.LEGEND), entries)
 		if idx < 0:
 			return
 		if not encounter_table.is_empty() and idx == 0:
@@ -421,10 +454,7 @@ func run_spirlog() -> void:
 		var els: PackedStringArray = []
 		for el: int in sd.elements:
 			els.append(Elements.element_name(el))
-		var where: PackedStringArray = []
-		for table: String in EncounterTable.table_ids():
-			if sd.species_name in EncounterTable.species_on(table):
-				where.append(table.replace("_", " ").capitalize())
+		var where: PackedStringArray = found_on(sd.species_name)
 		var lines: PackedStringArray = ["#%02d %s   %s" % [sd.dex_id, sd.species_name, "/".join(els)]]
 		if not sd.height.is_empty():
 			lines.append("Height %s" % sd.height)
@@ -442,7 +472,44 @@ func run_spirlog() -> void:
 		else:
 			lines.append("")
 			lines.append("Bond with one to learn more.")
-		await info("\n".join(lines))
+		# Its own page with a big sprite (item 1936).
+		await info("\n".join(lines), MiniSprite.of(sd.species_name, 48))
+
+## Real map names where a kind lives (item 1935), not reshaped table ids.
+static func found_on(species: String) -> PackedStringArray:
+	var where: PackedStringArray = []
+	for table: String in EncounterTable.table_ids():
+		if not species in EncounterTable.species_on(table):
+			continue
+		var name: String = ""
+		for map_id: String in _maps_with_table(table):
+			var m: MapData = MapData.load_map(map_id)
+			if m != null and not m.display_name.is_empty():
+				name = m.display_name
+				break
+		if name.is_empty():
+			name = table.replace("_", " ").capitalize()
+		if not name in where:
+			where.append(name)
+	return where
+
+static var _table_maps: Dictionary[String, Array] = {}
+
+static func _maps_with_table(table: String) -> Array:
+	if _table_maps.is_empty():
+		for f: String in DirAccess.get_files_at("res://data/maps"):
+			if not f.ends_with(".json"):
+				continue
+			var id: String = f.get_basename()
+			var m: MapData = MapData.load_map(id) if MapData.exists(id) else null
+			if m == null:
+				continue
+			var t: String = m.encounter_table
+			if not t.is_empty():
+				if not _table_maps.has(t):
+					_table_maps[t] = []
+				_table_maps[t].append(id)
+	return _table_maps.get(table, [])
 
 func _tracker_text() -> String:
 	var lines: PackedStringArray = ["Spirlog Tracker", ""]

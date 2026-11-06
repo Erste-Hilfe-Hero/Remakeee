@@ -90,8 +90,8 @@ func _fill(c: Control) -> void:
 
 ## Shows a list; returns the index or -1 (Back / cancel).
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
-		guard_ms: int = ListPicker.TAP_GUARD_MS) -> int:
-	return await picker.pick(title, entries, cancellable, focus, guard_ms)
+		guard_ms: int = ListPicker.TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
+	return await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
 
 ## Convenience: entries from plain strings.
 func pick_strings(title: String, items: Array[String], cancellable: bool = true) -> int:
@@ -117,6 +117,7 @@ func info(text: String, picture: Texture2D = null) -> void:
 	_info_picture.texture = picture
 	_info_picture.visible = picture != null
 	_info_picture.custom_minimum_size = picture.get_size() if picture != null else Vector2.ZERO
+	_info_source = text
 	_info_label.text = Loc.t(text) + "\n\n" + Loc.t("(tap to continue)")
 	_info_scroll.scroll_vertical = 0
 	_info_press = Vector2(NAN, NAN)
@@ -124,6 +125,28 @@ func info(text: String, picture: Texture2D = null) -> void:
 	_info_wait = true
 	await _info_closed
 	_info_panel.visible = false
+
+## Several pages of one thing (a Spirling's summary, item 1890): left and right or a tap on
+## the left or right third turn the page, a tap elsewhere or A goes on, B closes.
+func info_pages(pages: Array[String], picture: Texture2D = null) -> void:
+	if pages.is_empty():
+		return
+	_pages = pages
+	_page = 0
+	while _page >= 0 and _page < _pages.size():
+		var footer: String = "\n\n< %d/%d >" % [_page + 1, _pages.size()] if _pages.size() > 1 else ""
+		_page_turn = 0
+		await info(Loc.t(_pages[_page]) + footer, picture if _page == 0 else null)
+		if _page_turn == -2:
+			break
+		_page += _page_turn if _page_turn != 0 else 1
+		_page = maxi(_page, 0) if _page_turn == -1 else _page
+	_pages = []
+
+var _pages: Array[String] = []
+var _page: int = 0
+## How the last page was left: 1 next, -1 back, -2 closed, 0 tap (next).
+var _page_turn: int = 0
 
 ## Shows [param text] for a moment at the top without waiting for a tap ("Saved.").
 func toast(text: String, seconds: float = TOAST_SECONDS) -> void:
@@ -175,6 +198,12 @@ func _input(event: InputEvent) -> void:
 		_info_press = Vector2(NAN, NAN)
 		if moved <= TAP_SLOP:
 			get_viewport().set_input_as_handled()
+			if not _pages.is_empty() and not info_has_more():
+				var x: float = TapInput.position(event).x - _info_panel.global_position.x
+				var third: float = _info_panel.size.x / 3.0
+				_page_turn = -1 if x < third else 1
+				_close_info()
+				return
 			_page_or_close()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -183,6 +212,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		_page_or_close()
 	elif _info_wait and event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
+		_page_turn = -2
+		_close_info()
+	elif _info_wait and not _pages.is_empty() and (event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right")):
+		get_viewport().set_input_as_handled()
+		_page_turn = -1 if event.is_action_pressed("ui_left") else 1
 		_close_info()
 
 # --- Shared screens --------------------------------------------------------------
@@ -540,8 +574,69 @@ static func summary(s: Spirling) -> String:
 	return "\n".join(lines)
 
 static func party_line(s: Spirling) -> String:
-	var tag: String = " (out)" if s.is_fainted() else ""
+	var tag: String = " " + Loc.t("worn out") if s.is_fainted() else ""
 	return "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
+
+## Summary in pages (item 1890): values, arts, gift and keepsake, temperament. Values are
+## written out in full (item 1891).
+static func summary_pages(s: Spirling) -> Array[String]:
+	var els: PackedStringArray = []
+	for e: int in s.elements():
+		els.append(Elements.element_name(e))
+	var head: String = "%s  (%s)\n%s   %s" % [s.display_name(), s.data.species_name, "/".join(els), Loc.t("Ring %d" % s.level)]
+	var values: PackedStringArray = [head, "",
+		Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()]) + ("  " + Loc.t("worn out") if s.is_fainted() else ""),
+		Loc.t("Growth to next ring %d" % s.xp_to_next()),
+		Loc.t("Might %d" % s.atk()), Loc.t("Guard %d" % s.def()), Loc.t("Focus %d" % s.foc()), Loc.t("Pace %d" % s.spd())]
+	var arts: PackedStringArray = [Loc.t("Arts of %s" % s.display_name()), ""]
+	for mv: MoveData in s.moves:
+		var power: String = "-" if mv.power <= 0 else str(mv.power)
+		arts.append("%s\n  %s  %s  %s" % [mv.move_name, Elements.element_name(mv.element),
+			Loc.t("Power %s" % power), Loc.t("Energy %d" % mv.energy_cost)])
+	var gift: PackedStringArray = []
+	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	gift.append(Loc.t("Gift: %s" % tr.label) + "\n" + Loc.t(str(tr.text)) if not tr.is_empty() else Loc.t("No gift."))
+	gift.append("")
+	if not s.held.is_empty():
+		var it: Dictionary = Database.item(s.held)
+		gift.append(Loc.t("Keepsake: %s" % it.get("name", s.held)) + "\n" + Loc.t(str(it.get("description", ""))))
+	else:
+		gift.append(Loc.t("No keepsake."))
+	var tm: Dictionary = s.temperament()
+	var nature: String = Loc.t("Temperament: %s" % tm.label) + "\n" + Loc.t(str(tm.text))
+	return [head.left(0) + "\n".join(values), "\n".join(arts), "\n".join(gift), nature] as Array[String]
+
+## Team row (item 1889): 14x14 sprite, name and ring, a 40 px Vigor bar under the name and the
+## element icons on the right; worn-out Spirlings get their own mark (item 1892).
+static func party_entry(s: Spirling) -> Dictionary:
+	# The row is too narrow for "worn out" next to the icons: a cross on the empty bar shows
+	# it, the hint and the screen reader say it.
+	var worn: String = "worn out" if s.is_fainted() else ""
+	var hint: String = Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()])
+	if s.is_fainted():
+		hint += "  " + Loc.t(worn)
+	return {"text": "%s R%d" % [s.display_name(), s.level], "icon": MiniSprite.of(s.data.species_name, 14),
+		"decorate": func(b: Button) -> void: _draw_party_row(b, s),
+		"hint": hint, "say": worn}
+
+const BAR_WIDTH: int = 40
+
+static func _draw_party_row(b: Button, s: Spirling) -> void:
+	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
+	var x0: float = ListPicker.POINTER_SPACE + 16
+	var y: float = b.size.y - 3
+	b.draw_rect(Rect2(x0, y, BAR_WIDTH, 2), UITheme.DISABLED)
+	var ratio: float = clampf(float(s.hp) / maxf(1.0, float(s.max_hp())), 0.0, 1.0)
+	if ratio > 0.0:
+		b.draw_rect(Rect2(x0, y, maxf(1.0, roundf(BAR_WIDTH * ratio)), 2), ink)
+	else:
+		# Worn out: a small cross at the end of the empty bar.
+		var cx: float = x0 + BAR_WIDTH + 3
+		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)
+		b.draw_line(Vector2(cx + 2, y - 2), Vector2(cx - 2, y + 2), ink)
+	var els: Array[int] = s.elements()
+	var w: float = els.size() * (ElementIcons.SIZE + 1)
+	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.SIZE) / 2.0)), ink)
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
 func run_legal() -> void:

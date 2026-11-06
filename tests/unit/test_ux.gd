@@ -270,3 +270,87 @@ func test_back_button_works_like_b_in_menus() -> void:
 		host.picker._unhandled_input(ev)
 	await wait_process_frames(1)
 	assert_eq(res, [-1])
+
+# --- 1889-1892 team, 1914-1915 satchel, 1934-1936 Spirlog -----------------------------
+
+func _a_spirling() -> Spirling:
+	Database.load_all()
+	return Spirling.new(Database.species("Mossling"), 5)
+
+func test_team_row_shows_sprite_bar_and_worn_out_word() -> void:
+	var s: Spirling = _a_spirling()
+	var e: Dictionary = MenuHost.party_entry(s)
+	assert_true(e.decorate is Callable, "Vigor bar and element icons are drawn on the row")
+	assert_false(str(e.text).contains("(out)"))
+	s.hp = 0
+	var worn: Dictionary = MenuHost.party_entry(s)
+	assert_string_contains(str(worn.hint), "worn out", "the hint says it")
+	assert_eq(str(worn.say), "worn out", "the screen reader says it")
+	assert_lt(PixelFont.get_font().get_string_size(str(worn.text), HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x, 70.0,
+		"the name fits beside sprite, bar and element icon")
+	assert_false(MenuHost.party_line(s).contains("(out)"))
+
+func test_summary_has_pages_with_full_words() -> void:
+	var pages: Array[String] = MenuHost.summary_pages(_a_spirling())
+	assert_eq(pages.size(), 4, "values, arts, gift and keepsake, temperament")
+	assert_string_contains(pages[0], "Might")
+	assert_string_contains(pages[0], "Pace")
+	assert_false(pages[0].contains("MGT"), "no short forms")
+	assert_string_contains(pages[3], "Temperament")
+
+func test_info_pages_turn_with_left_and_right() -> void:
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var done: Array[bool] = [false]
+	var run := func() -> void:
+		await host.info_pages(["Page A", "Page B"] as Array[String])
+		done[0] = true
+	run.call()
+	await wait_process_frames(1)
+	assert_string_contains(host._info_label.text, "Page A")
+	var right := InputEventAction.new()
+	right.action = &"ui_right"
+	right.pressed = true
+	host._unhandled_input(right)
+	await wait_process_frames(1)
+	assert_string_contains(host._info_label.text, "Page B")
+	assert_string_contains(host._info_label.text, "2/2")
+	var back := InputEventAction.new()
+	back.action = &"ui_cancel"
+	back.pressed = true
+	host._unhandled_input(back)
+	await wait_process_frames(1)
+	assert_true(done[0])
+
+func test_satchel_sorts_items_into_tabs() -> void:
+	assert_eq(PauseMenu.bag_tab({"gear": true}), 3)
+	assert_eq(PauseMenu.bag_tab({"teaches": "x"}), 2)
+	assert_eq(PauseMenu.bag_tab({"held": true}), 1)
+	assert_eq(PauseMenu.bag_tab({"heal": 20}), 0)
+	assert_eq(PauseMenu.bag_tab({"evolves": true}), 4)
+
+func test_tabs_switch_with_left_and_right() -> void:
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var res: Array = []
+	var run := func() -> void:
+		res.append(await host.pick("Satchel", [{"text": "Salve"}] as Array[Dictionary], true, -1, ListPicker.TAP_GUARD_MS, ["Care", "Gear"] as Array[String], 0))
+	run.call()
+	await wait_process_frames(1)
+	var right := InputEventAction.new()
+	right.action = &"ui_right"
+	right.pressed = true
+	host.picker._row_input(right, 0, 0)
+	await wait_process_frames(1)
+	assert_eq(ListPicker.tab_of(res[0]), 1)
+
+func test_spirlog_uses_marks_and_map_names() -> void:
+	assert_not_null(SpirlogMarks.seen())
+	assert_not_null(SpirlogMarks.bonded())
+	var src: String = FileAccess.get_file_as_string("res://scripts/ui/PauseMenu.gd")
+	assert_false(src.contains("\"*\" if is_bonded"), "no * and + marks")
+	for sd: SpirlingData in Database.spirlings.values():
+		for place: String in PauseMenu.found_on(sd.species_name):
+			assert_false(place.contains("_"), "a real place name: " + place)
