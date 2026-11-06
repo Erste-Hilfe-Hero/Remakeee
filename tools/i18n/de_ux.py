@@ -120,7 +120,7 @@ T = {
 "Keeper": "Wärterin",
 "Reed cutter": "Schilfschneider",
 "Sparkseer": "Funkenseherin",
-"Trader": "Händler",
+"Merchant": "Händler",
 "Always run: %s": "Immer rennen: %s",
 "Run without holding B. Hold B to walk.": "Rennen ohne B zu halten. B halten zum Gehen.",
 "Side goal": "Nebenziel",
