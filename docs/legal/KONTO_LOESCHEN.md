@@ -17,7 +17,7 @@ Sicherungskopien werden spätestens nach 30 Tagen überschrieben.
 
 ## Ohne das Spiel (per E-Mail)
 
-Wenn du Chimora nicht mehr installiert hast, schreib an **[E-MAIL]** mit dem Betreff „Konto löschen“ und
+Wenn du Chimora nicht mehr installiert hast, schreib an **aa.amuri@icloud.com** mit dem Betreff „Konto löschen“ und
 deinem **Freundescode** (steht im Spiel oben im Menü Konto, Form „ABCD-EFGH“). Hast du ihn nicht mehr,
 nenne deinen Wayfarer-Namen und ungefähr, wann du zuletzt gespielt hast. Wir löschen das Konto innerhalb
 von 30 Tagen und bestätigen es dir per E-Mail. Deine E-Mail-Adresse nutzen wir nur dafür und löschen sie
@@ -41,7 +41,7 @@ Kauf speichern, liegt bei ihnen und wird von uns nicht berührt.
 account, all saves, friends, greetings and gifts are removed from the server at once. Backups are
 overwritten within 30 days.
 
-**Without the game (by email):** write to **[EMAIL]** with the subject "Delete account" and your
+**Without the game (by email):** write to **aa.amuri@icloud.com** with the subject "Delete account" and your
 **friend code** (shown in the game under Menu → Account, like "ABCD-EFGH"). If you no longer have it, give
 your Wayfarer name and roughly when you last played. We delete the account within 30 days and confirm by
 email. We use your email address only for this and delete it afterwards.

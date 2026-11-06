@@ -68,7 +68,7 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
 
 - **IARC (Google, liefert USK/PEGI/ESRB):** Gewalt: ja, *Fantasy-/Cartoon-Gewalt gegen Fantasiewesen,
   nicht realistisch, kein Blut*. Alles andere: nein. Nutzer können interagieren: **ja, eingeschränkt** (Freunde
-  sehen den Wayfarer-Namen und tauschen nur feste Grüße, kein freier Chat; Melden und Blockieren vorhanden). Digitale Käufe: **nein** (Einmalkauf über den Store, keine In-App-Käufe). Erwartung: **USK 6 / PEGI 7**
+  sehen den Wayfarer-Namen und tauschen nur feste Grüße, kein freier Chat; Melden und Blockieren vorhanden). Digitale Käufe: **nein** (kostenlos, zum Start keine In-App-Käufe; mit dem Shop auf **ja** stellen). Erwartung: **USK 6 / PEGI 7**
   (Schätzung, die Freigabe vergibt IARC).
 - **Apple (Stufen 4+, 9+, 13+, 16+, 18+, neuer Fragebogen seit 31.01.2026):** Cartoon- oder Fantasy-Gewalt:
   *selten/mild* → Erwartung **9+**. In-App-Kontrollen/Fähigkeiten: kein Chat, keine nutzergenerierten Inhalte,

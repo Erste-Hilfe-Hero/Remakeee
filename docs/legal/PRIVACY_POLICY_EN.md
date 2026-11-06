@@ -9,7 +9,7 @@ Last updated: November 2026
 
 ## 1. Controller
 
-[NAME], [ADDRESS], Germany. Email: [EMAIL]
+Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany. Email: aa.amuri@icloud.com
 
 ## 2. Summary
 
@@ -52,7 +52,7 @@ no free chat (greetings between friends are fixed, translated phrases). Purchase
 ## 7. Your rights
 
 You have the rights of access, rectification, erasure, restriction, data portability and objection
-(Art. 15–18, 20, 21 GDPR). Email [EMAIL] and include your player ID (shown in the game's settings).
+(Art. 15–18, 20, 21 GDPR). Email aa.amuri@icloud.com and include your player ID (shown in the game's settings).
 **Delete your account:** in the game under Settings → Account → "Delete account", or at
 https://[DOMAIN]/delete-account. Your account and save game are deleted permanently.
 You may lodge a complaint with a data protection supervisory authority (Art. 77 GDPR), in particular in the
