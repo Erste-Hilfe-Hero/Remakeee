@@ -8,6 +8,24 @@
     "dialogue": "story/letter_v1",
     "show_flag": "aldo_dock_told",
     "hide_flag": "letter_v1"
+   },
+   {
+    "x": 5,
+    "y": 2,
+    "dialogue": "ashmere/mirela_gate_letter",
+    "show_flag": "ending_gate"
+   }
+  ],
+  "npcs": [
+   {
+    "id": "mirela_home",
+    "x": 6,
+    "y": 3,
+    "facing": "left",
+    "dialogue": "ashmere/mirela_home",
+    "sprite": "elder",
+    "show_flag": "story_complete",
+    "hide_flag": "ending_gate"
    }
   ]
  },
@@ -291,15 +309,67 @@
   ]
  },
  "ashmere_station": {
+  "on_enter": {
+   "scene": "ashmere_arrival",
+   "if": {
+    "flag": "act2_end"
+   }
+  },
+  "npcs": [
+   {
+    "id": "tamsin",
+    "spot": "tamsin",
+    "facing": "down",
+    "dialogue": "ashmere/tamsin",
+    "sprite": "villager"
+   }
+  ],
   "signs": [
    {
     "spot": "page_11",
     "dialogue": "story/find_11",
     "hide_flag": "page_11"
+   },
+   {
+    "spot": "rail_sign",
+    "dialogue": "ashmere/rail_sign"
    }
   ]
  },
  "kiln_rift": {
+  "npcs": [
+   {
+    "id": "warden_tovan",
+    "spot": "tovan",
+    "facing": "down",
+    "dialogue": "ashmere/tovan",
+    "sprite": "warden",
+    "trainer": "Warden Tovan",
+    "warden": "kiln",
+    "team": [
+     {
+      "species": "Calderox",
+      "level": 32
+     },
+     {
+      "species": "Obsidroth",
+      "level": 33
+     },
+     {
+      "species": "Smoldrake",
+      "level": 31
+     },
+     {
+      "species": "Duskdigger",
+      "level": 32
+     }
+    ],
+    "intro": "ashmere/tovan_intro",
+    "defeat": "ashmere/tovan_defeat",
+    "ai": 3,
+    "money": 1500
+   }
+  ],
   "signs": [
    {
     "spot": "page_12",
@@ -311,18 +381,199 @@
  "saltglass": {
   "signs": [
    {
+    "spot": "keeper_lamp",
+    "dialogue": "ashmere/keeper_lamp"
+   },
+   {
     "spot": "page_13",
     "dialogue": "story/find_13",
     "hide_flag": "page_13"
+   },
+   {
+    "spot": "letter_a3",
+    "dialogue": "story/letter_a3",
+    "hide_flag": "letter_a3"
    }
   ]
  },
  "gravers_hall": {
+  "npcs": [
+   {
+    "id": "halvard",
+    "spot": "halvard",
+    "facing": "down",
+    "dialogue": "ashmere/halvard",
+    "sprite": "elder"
+   }
+  ],
   "signs": [
+   {
+    "spot": "veit_plate",
+    "dialogue": "ashmere/veit_plate",
+    "show_flag": "veit_offer_done"
+   },
    {
     "spot": "page_14",
     "dialogue": "story/find_14",
     "hide_flag": "page_14"
+   },
+   {
+    "spot": "letter_a2",
+    "dialogue": "story/letter_a2",
+    "hide_flag": "letter_a2"
+   }
+  ]
+ },
+ "cinderfold": {
+  "npcs": [
+   {
+    "id": "veit_c",
+    "spot": "veit",
+    "facing": "down",
+    "dialogue": "ashmere/veit_cinder",
+    "sprite": "ranger",
+    "color": "5a4a3a",
+    "hide_flag": "veit_plate_done"
+   },
+   {
+    "id": "nella",
+    "spot": "nella",
+    "facing": "down",
+    "dialogue": "ashmere/nella",
+    "sprite": "villager"
+   },
+   {
+    "id": "oswin",
+    "spot": "oswin",
+    "facing": "down",
+    "dialogue": "ashmere/oswin",
+    "sprite": "elder"
+   },
+   {
+    "id": "kestra_c",
+    "spot": "kestra",
+    "facing": "down",
+    "dialogue": "ashmere/kestra_cinder",
+    "sprite": "ranger",
+    "hide_flag": "beat_story_kestra_3"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "letter_a1",
+    "dialogue": "story/letter_a1",
+    "hide_flag": "letter_a1"
+   }
+  ]
+ },
+ "glass_rift": {
+  "npcs": [
+   {
+    "id": "warden_ilse",
+    "spot": "ilse",
+    "facing": "down",
+    "dialogue": "ashmere/ilse",
+    "sprite": "warden",
+    "trainer": "Warden Ilse",
+    "warden": "glass",
+    "team": [
+     {
+      "species": "Leviarch",
+      "level": 34
+     },
+     {
+      "species": "Lumenewt",
+      "level": 33
+     },
+     {
+      "species": "Glimmerax",
+      "level": 34
+     },
+     {
+      "species": "Tempestrel",
+      "level": 33
+     }
+    ],
+    "intro": "ashmere/ilse_intro",
+    "defeat": "ashmere/ilse_defeat",
+    "ai": 3,
+    "money": 1600
+   }
+  ]
+ },
+ "wide_rift_far": {
+  "on_enter": {
+   "scene": "wide_rift_far",
+   "if": {
+    "flag": "veit_plate_done"
+   }
+  },
+  "npcs": [
+   {
+    "id": "kestra_f",
+    "spot": "kestra",
+    "facing": "down",
+    "dialogue": "ashmere/kestra_far",
+    "sprite": "ranger",
+    "show_flag": "veit_plate_done"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "gate",
+    "dialogue": "ashmere/undrawn_gate",
+    "show_flag": "beat_story_kestra_3"
+   }
+  ]
+ },
+ "undrawn_1": {
+  "signs": [
+   {
+    "spot": "echo_a",
+    "dialogue": "ashmere/echo_a"
+   }
+  ]
+ },
+ "undrawn_2": {
+  "npcs": [
+   {
+    "id": "ash",
+    "spot": "ash",
+    "facing": "down",
+    "dialogue": "ashmere/ash",
+    "sprite": "hush"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "echo_b",
+    "dialogue": "ashmere/echo_b"
+   }
+  ]
+ },
+ "undrawn_3": {
+  "on_enter": {
+   "scene": "finale_1",
+   "if": {
+    "flag": "undrawn_reached",
+    "not_flag": "story_complete"
+   }
+  },
+  "npcs": [
+   {
+    "id": "mirela",
+    "spot": "mirela",
+    "facing": "down",
+    "dialogue": "ashmere/mirela_wait",
+    "sprite": "elder",
+    "show_flag": "mirela_met",
+    "hide_flag": "story_complete"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "echo_c",
+    "dialogue": "ashmere/echo_c"
    }
   ]
  }

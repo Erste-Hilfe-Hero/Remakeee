@@ -826,6 +826,10 @@ func _action_battle(args: PackedStringArray, _speaker: NPC) -> void:
 			await play_entry(str(def.defeat))
 	elif def.has("lose"):
 		await play_entry(str(def.lose))
+	# A lost story duel sends the player to the last rest spot, so the scene around it stops
+	# there (it has not been "seen" and starts again, e.g. the finale chain).
+	if outcome == BattleModel.Outcome.LOSS:
+		scene_abort = scene_running
 
 ## "scene <id>": plays data/scenes/<id>.json (plan item 1341).
 func _action_scene(args: PackedStringArray, _speaker: NPC) -> void:
