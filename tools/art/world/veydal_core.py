@@ -1,7 +1,7 @@
 """Veydal core: the hand-edited Act I maps (Brindlewick, Fernstair, Crowcrest, Thornridge,
 Saltmarsh, the houses and the two Rift hollows). Only patches; see common.py. Every patch can
 run again without changing anything a second time."""
-from common import lines, npc, secret
+from common import lines, npc, secret, tr
 import townsfolk
 
 GROUP = ["lighthouse", "brindlewick", "map_house", "rest_spring", "fernstair", "crowcrest",
@@ -51,9 +51,21 @@ TRANSIT_NPCS = {
 }
 
 
+# Item 962: every town sign names the town and how many folk live there. The other lines keep
+# their old texts (German in tools/i18n/de_world.py).
+TOWN_SIGNS = {
+    "brindlewick": ["BRINDLEWICK", ("Brindlewick, 61 folk.", "Brindlewick, 61 Leute."), "Lake village of Veydal.",
+                    "North: Fernstair   East: Saltmarsh"],
+    "thornridge": ["THORNRIDGE", ("Thornridge, 27 folk.", "Thornridge, 27 Leute."), "Gorge village.",
+                   "Upper terrace: Rest Pool and the Cinder hollow"],
+}
+
+
 def build(world):
     for mid in ("brindlewick", "thornridge"):
         townsfolk.apply(world, mid)
+    for mid, sign in TOWN_SIGNS.items():
+        world.add_text(mid, {"sign": [tr(*l) if isinstance(l, tuple) else l for l in sign]})
     for mid, people in TRANSIT_NPCS.items():
         m = world.load_map(mid)
         for person, entry in people:

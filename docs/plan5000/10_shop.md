@@ -669,14 +669,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 ### Wanderer-Pass (Abo)
 4629. [P1] (P2W) Den "Wanderer-Pass" als Auto-Abo für 4,99 € im Monat anlegen (Apple Abo-Gruppe "Pass", Google Abo `de.chimora.game.pass` mit Grundplan monatlich).
 4630. [x] [P1] (P2W) Der Pass gibt dauerhaft für seine Laufzeit +50 % Wachstum für das ganze Team, mit dem Wachstumskristall multiplizierbar.
-4631. [P1] (P2W) Der Pass gibt jeden Tag beim ersten Öffnen 30 Rissglas (in 30 Tagen 900 Rissglas, Wert ≈ 8,91 €) und das steht mit genauer Zahl auf der Pass-Seite.
-4632. [P1] (P2W) Der Pass gibt jedem Spirling im Team +1 Startenergie über die Höchstenergie (11 statt 10) in allen Kämpfen gegen die Spielwelt.
-4633. [P1] (P2W) Der Pass gibt 1 kostenlosen Rissatem pro Rift-Wächterkampf, der nicht in der Tasche liegt, sondern nur im Kampf erscheint.
-4634. [P1] (P2W) Der Pass gibt +1 Bond-Versuch pro Kampf: misslingt Bonden, flieht der Spirling nicht sofort.
-4635. [P1] (P2W) Der Pass-Status kommt nur vom Server (`subscriptions`), und alle Pass-Vorteile prüfen `ShopEffects.pass_active()`.
+4631. [x] [P1] (P2W) Der Pass gibt jeden Tag beim ersten Öffnen 30 Rissglas (in 30 Tagen 900 Rissglas, Wert ≈ 8,91 €) und das steht mit genauer Zahl auf der Pass-Seite.
+4632. [x] [P1] (P2W) Der Pass gibt jedem Spirling im Team +1 Startenergie über die Höchstenergie (11 statt 10) in allen Kämpfen gegen die Spielwelt.
+4633. [x] [P1] (P2W) Der Pass gibt 1 kostenlosen Rissatem pro Rift-Wächterkampf, der nicht in der Tasche liegt, sondern nur im Kampf erscheint.
+4634. [x] [P1] (P2W) Der Pass gibt +1 Bond-Versuch pro Kampf: misslingt Bonden, flieht der Spirling nicht sofort.
+4635. [x] [P1] (P2W) Der Pass-Status kommt nur vom Server (`subscriptions`), und alle Pass-Vorteile prüfen `ShopEffects.pass_active()`.
 4636. [P1] (P2W) Die Pass-Seite listet alle Vorteile mit Zahlen, den Preis "4,99 € pro Monat", "verlängert sich automatisch" und "jederzeit im Store kündbar".
 4637. [x] [P1] (P2W) Die täglichen 30 Rissglas sammeln sich nicht an, wenn man nicht spielt; verpasste Tage gehen nicht verloren, sondern werden beim nächsten Öffnen bis höchstens 7 Tage nachgezahlt.
-4638. [P1] (P2W) Mit dem Ende des Passes enden alle Vorteile sofort; schon gutgeschriebenes Rissglas und Gegenstände bleiben.
+4638. [x] [P1] (P2W) Mit dem Ende des Passes enden alle Vorteile sofort; schon gutgeschriebenes Rissglas und Gegenstände bleiben.
 4639. [P1] (P2W) Für die erste Pass-Buchung eine kostenlose Probezeit von 7 Tagen über den Store anbieten und das Datum der ersten Abbuchung deutlich zeigen.
 4640. [P2] (P2W) Einen Jahresplan für 39,99 € im Jahr (statt 59,88 €) über den Store anbieten.
 4641. [P2] (P2W) Der Pass gibt jede Woche 1 Wachstumskristall (x2, 20 Kämpfe) und 3 Echo-Düfte in die Tasche.
@@ -690,7 +690,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4649. [P2] (P2W) Der Pass gibt doppelte Belohnung beim Tagesfund (Daily Find) des Spiels.
 4650. [P2] (P2W) Ein Pass-Symbol (Rissglas-Kompass) im Wanderer-Profil zeigen, nur wenn der Spieler das in den Einstellungen will.
 4651. [P2] (P2W) Der Pass ist in der Gleichstand-Liga ohne Wirkung, und die Pass-Seite sagt das in einer eigenen Zeile.
-4652. [P2] (P2W) Pass-Vorteile in Echo-Duellen nur für Wachstum und Münzen wirken lassen, nicht für Energie und Rissatem.
+4652. [x] [P2] (P2W) Pass-Vorteile in Echo-Duellen nur für Wachstum und Münzen wirken lassen, nicht für Energie und Rissatem.
 4653. [P2] (P2W) Abo-Ereignisse vom Server (Verlängerung, Ablauf, Kulanzzeit, Kündigung) im Spiel als Satz zeigen: "Dein Pass läuft am 6. 12. ab."
 4654. [P2] (P2W) In der Kulanzzeit (Zahlung fehlgeschlagen) die Pass-Vorteile bis zu 16 Tage behalten und einen Hinweis zeigen, die Zahlungsart im Store zu prüfen.
 4655. [P2] (P2W) Für unter 18-Jährige die Probezeit nicht anbieten, damit keine überraschende Abbuchung entsteht.

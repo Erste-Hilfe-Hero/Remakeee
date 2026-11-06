@@ -205,6 +205,7 @@ func _build() -> void:
 	_banner.add_child(_phase_icon)
 	toast = Toast.new()
 	add_child(toast)
+	Billing.pass_paid.connect(_on_pass_paid)
 	_text = TextBox.new()
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_text.offset_top = -TEXT_BOX_HEIGHT
@@ -707,9 +708,11 @@ func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
 func announce_achievements() -> void:
 	show_notices()
 	var lines: Array[String] = Collection.claim()
+	# Vows settle and the run is chronicled first, so "Three Ways" is checked right after (plan 3403).
+	lines.append_array(Vows.settle())
+	lines.append_array(RunChronicle.note())
 	var badges: Array[String] = Achievements.check()
 	lines.append_array(Completion.claim())
-	lines.append_array(Vows.settle())
 	for t: String in badges:
 		# Unlocked badges show at the top of the screen without stopping the game (plan 3315).
 		var a: Dictionary = Achievements.by_title(t)
@@ -2147,6 +2150,11 @@ func challenge(n: NPC, spotted: bool) -> void:
 	if outcome == BattleModel.Outcome.WIN or (bool(info.wild) and outcome == BattleModel.Outcome.BONDED):
 		await after_tamer_win(n)
 
+## The Wayfarer Pass paid its daily Riftglass (item 4631).
+func _on_pass_paid(added: int) -> void:
+	if is_instance_valid(toast):
+		toast.show_note(Loc.t("Wayfarer Pass: +%d Riftglass") % added)
+
 ## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.
 func _pay_bonus_goal(goal_key: String) -> void:
 	if last_model == null or not last_model.has_meta("goal_tracker"):
@@ -2499,7 +2507,11 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
-	model.energy_bonus = [ShopEffects.energy_bonus(), 0]
+	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
+	var world: bool = not (own is Array and not (own as Array).is_empty())
+	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
+	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
+	model.bond_grace = ShopEffects.bond_grace() if wild else 0
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])

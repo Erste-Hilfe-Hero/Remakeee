@@ -368,4 +368,9 @@ T = {
 "No Keepsakes": "Ohne Andenken", "Give no Spirling in your team a keepsake until the end of Act I.": "Gib bis zum Ende von Akt I keinem Spirling in deinem Team ein Andenken.",
 "Old Friend Stays": "Starter bleibt im Team", "Keep your first partner in the team until the end of Act I.": "Behalte deinen ersten Partner bis zum Ende von Akt I im Team.",
 "Under the Iron Oath: floor %d of %d": "Unter dem Eisernen Schwur: Stockwerk %d von %d",
+"Run chronicle": "Lauf-Chronik", "This journey is now in the run chronicle.": "Diese Reise steht jetzt in der Lauf-Chronik.",
+"%s with %s, %s, %d:%02d": "%s mit %s, %s, %d:%02d", "Vows kept: %d": "Gelübde gehalten: %d",
+"No journey has reached the end of Act I yet.": "Noch keine Reise hat das Ende von Akt I erreicht.",
+"%s Iron Oath  %s vows kept. Starters done: %d of %d.": "%s Eiserner Schwur  %s Gelübde gehalten. Starter geschafft: %d von %d.",
+"Three Ways": "Drei Wege", "Finish Act I once with each of the three starters, over any save slots.": "Schließe Akt I einmal mit jedem der drei Starter ab, über beliebige Speicherslots.",
 }

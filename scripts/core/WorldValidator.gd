@@ -37,6 +37,7 @@ static func validate() -> PackedStringArray:
 	check_layout(errors, map_ids, load_layout())
 	check_transit(errors, map_ids, load_layout().get("lines", {}))
 	check_schedules(errors, map_ids)
+	check_shapes(errors, map_ids, load_layout())
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -444,6 +445,35 @@ static func load_layout() -> Dictionary:
 ## World layout (area 3 item 896): every map file has a place in data/world_layout.json (or
 ## lies "inside" one, like a house in a town), every warp between two places is an edge there,
 ## and every edge is backed by a warp (the ferry and coach lines count as warps too).
+## Outdoor maps fit the portrait screen when scrolled: at most MAX_OUTDOOR_W wide and
+## MAX_OUTDOOR_H tall (item 907). Routes and marshes are walkable both ways: each has at least two
+## other places to go, by foot or by line (item 934).
+const MAX_OUTDOOR_W: int = 12
+const MAX_OUTDOOR_H: int = 40
+const THROUGH_KINDS: Array[String] = ["route", "marsh"]
+
+static func check_shapes(errors: PackedStringArray, map_ids: PackedStringArray, layout: Dictionary) -> void:
+	var places: Dictionary = layout.get("maps", {})
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		if m.outdoor and (m.width > MAX_OUTDOOR_W or m.height > MAX_OUTDOOR_H):
+			errors.append("map '%s' is %dx%d; outdoor maps are at most %dx%d" % [id, m.width, m.height, MAX_OUTDOOR_W, MAX_OUTDOOR_H])
+		var p: Dictionary = places.get(id, {})
+		if not str(p.get("kind", "")) in THROUGH_KINDS:
+			continue
+		var ways: Dictionary = {}
+		for w: Dictionary in m.warps:
+			ways[str(MapData.split_id(str(w.to))[0])] = true
+		for lid: String in Transit.lines():
+			if id in Transit.stops(lid):
+				for s: String in Transit.stops(lid):
+					ways[s] = true
+		ways.erase(id)
+		if ways.size() < 2:
+			errors.append("map '%s' is a %s with only one way out; give it a second exit" % [id, p.kind])
+
 static func check_layout(errors: PackedStringArray, map_ids: PackedStringArray, layout: Dictionary) -> void:
 	var places: Dictionary = layout.get("maps", {})
 	if places.is_empty():
