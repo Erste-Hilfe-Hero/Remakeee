@@ -48,6 +48,10 @@ const BACK_SIZE: int = 16
 ## pick() returns TAB_PICKED - n when the player switches to tab n (item 1914).
 const TAB_PICKED: int = -100
 var _tab_row: HBoxContainer
+var _head: HBoxContainer
+## One-hand mode (item 2108): Back moves to a row under the list, on the thumb's side.
+var _foot: HBoxContainer
+var one_hand: bool = false
 var _tabs: Array[String] = []
 var _tab: int = 0
 
@@ -95,12 +99,33 @@ func _ready() -> void:
 	_hint.add_theme_color_override("font_color", UITheme.MID)
 	_hint.visible = false
 	root.add_child(_hint)
+	_foot = HBoxContainer.new()
+	_foot.visible = false
+	root.add_child(_foot)
+	_head = head
 	_arrows = Control.new()
 	_arrows.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_arrows.draw.connect(_draw_arrows)
 	add_child(_arrows)
 	_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void: _arrows.queue_redraw())
 	_scroll.get_v_scroll_bar().changed.connect(_arrows.queue_redraw)
+
+## Puts Back in the top corner, or in one-hand mode at the bottom on the thumb's side
+## (right, or left when [param left] is set).
+func set_one_hand(on: bool, left: bool) -> void:
+	one_hand = on
+	if _back == null:
+		return
+	var want: Control = _foot if on else _head
+	if _back.get_parent() != want:
+		_back.get_parent().remove_child(_back)
+		want.add_child(_back)
+	_foot.alignment = BoxContainer.ALIGNMENT_BEGIN if left else BoxContainer.ALIGNMENT_END
+	_foot.visible = on and _back.visible
+
+## The Back button (tests).
+func back_button() -> Button:
+	return _back
 
 ## [param entries]: Array of {"text": String, "disabled": bool, "danger": bool}.
 ## [param cancellable] adds a Back row. [param focus]: row to focus first (-1 = remembered or
@@ -117,6 +142,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_cancellable = cancellable
 	_guard_ms = guard_ms
 	_back.visible = cancellable
+	_foot.visible = one_hand and cancellable
 	last_dir = 0
 	_hints.clear()
 	_sliders.clear()

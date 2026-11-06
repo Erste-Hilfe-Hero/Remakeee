@@ -291,4 +291,12 @@ T = {
 "Next festival: %s (%s)": "Nächstes Fest: %s (%s)",
 "Next step: %s": "Nächste Stufe: %s", "Every further step: %s": "Jede weitere Stufe: %s",
 
+"Send a Spirling on a roaming trip": "Schicke ein Spirling auf einen Streifzug",
+"Take a photo at night": "Mach ein Foto bei Nacht", "Win 10 battles": "Gewinne 10 Kämpfe",
+"Beat 15 wild Spirlings": "Besiege 15 wilde Spirlings", "Walk 2500 steps": "Gehe 2500 Schritte",
+"Bond with 2 Spirlings": "Stärke die Bindung zu 2 Spirlings", "Swap a daily task": "Tagesauftrag tauschen",
+"Swap which task? (once a day)": "Welchen Auftrag tauschen? (einmal am Tag)",
+"No other task fits today.": "Heute passt kein anderer Auftrag.", "New task: %s": "Neuer Auftrag: %s",
+"All of them: %d Waymarks extra.": "Alle zusammen: %d Wegmarken extra.",
+"Once a day, free of charge.": "Einmal am Tag, kostenlos.",
 }
