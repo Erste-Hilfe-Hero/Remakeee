@@ -3,6 +3,7 @@
 T = {
 "A boulder sits in the reeds, smoothed by hands, not water.": "Im Schilf liegt ein Felsbrocken, glatt geschliffen von Händen, nicht von Wasser.",
 "A clear crystal, dull and cold. It waits for light.": "Ein klarer Kristall, matt und kalt. Er wartet auf Licht.",
+"A clear spring in a small clearing. The water is cold and tastes of moss.": "Eine klare Quelle auf einer kleinen Lichtung. Das Wasser ist kalt und schmeckt nach Moos.",
 "A coiled rope hangs on a hook by a lever.": "Ein aufgerolltes Seil hängt an einem Haken neben einem Hebel.",
 "A cracked bell hangs from a beam.": "Eine Glocke (gesprungen) hängt an einem Balken.",
 "A deep bell hangs from a beam.": "Eine Glocke (tief) hängt an einem Balken.",

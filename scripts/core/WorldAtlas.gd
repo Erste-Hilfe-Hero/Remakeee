@@ -173,3 +173,39 @@ static func detail_text(place: String) -> String:
 			shown.append(s if s == "???" else Loc.t(s))
 		lines.append(Loc.t("Spirlings: %s") % ", ".join(shown))
 	return "\n".join(lines)
+
+## Rooms of a dungeon (item 1026): the flag each room sets when solved, over all levels of the
+## map file: a light beam's flag, a puzzle's flag or the flag that opens the room's door
+## (flags starting with "_" are water levels, not rooms).
+static func room_flags(file_id: String) -> Array[String]:
+	var out: Array[String] = []
+	var top: MapData = MapData.load_map(file_id)
+	if top == null:
+		return out
+	for i: int in top.floor_count:
+		var m: MapData = MapData.load_map(MapData.floor_id(file_id, i))
+		if m == null:
+			continue
+		var found: Array[String] = []
+		if not m.beam.is_empty():
+			found.append(str(m.beam.get("flag", "")))
+		for pz: Dictionary in m.puzzles:
+			found.append(str(pz.get("flag", "")))
+		for b: Dictionary in m.blocks:
+			found.append(str(b.get("open_flag", "")))
+		for f: String in found:
+			if not f.is_empty() and not f.begins_with("_") and not f in out:
+				out.append(f)
+	return out
+
+## Banner on entering a map: "Lanternwell  3/5" in a dungeon with rooms (item 1026), otherwise
+## the name and the survey share, "Gloamwood  40%" (item 1246). Floors carry their own names
+## ("Lanternwell, chamber 2"), so the level shows too (item 993).
+static func banner(m: MapData, flags: Dictionary) -> String:
+	var name: String = Loc.t(m.display_name)
+	if m.biome == "dungeon":
+		var rooms: Array[String] = room_flags(m.file_id)
+		if not rooms.is_empty():
+			var solved: int = rooms.filter(func(f: String) -> bool: return bool(flags.get(f, false))).size()
+			return "%s  %d/%d" % [name, solved, rooms.size()]
+	return "%s  %d%%" % [name, Survey.percent(m)]

@@ -474,7 +474,7 @@ func _on_phase_changed(_phase: int) -> void:
 
 ## Map name with its survey share (item 1246): "Brindlewick  42%".
 func banner_text() -> String:
-	return "%s  %d%%" % [Loc.t(map.display_name), Survey.percent(map)]
+	return WorldAtlas.banner(map, GameState.flags)
 
 ## Every step maps the cells around the player (item 1245) and moves the minimap.
 func survey_step(cell: Vector2i) -> void:
