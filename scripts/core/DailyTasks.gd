@@ -152,6 +152,12 @@ static func matches(t: Dictionary, event: String, info: Dictionary) -> bool:
 ## [param info] towards today's tasks, pays Waymarks for finished ones and returns the reward
 ## lines (also queued in GameState.notices for the overworld to show).
 static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Array[String]:
+	# Lifetime counters for achievements: count_win, count_win_wild, count_step, ...
+	var counters: Array[String] = ["count_" + event]
+	if event == "win":
+		counters.append("count_win_wild" if bool(info.get("wild", false)) else "count_win_tamer")
+	for c: String in counters:
+		GameState.records[c] = int(GameState.records.get(c, 0)) + amount
 	var state: Dictionary = today()
 	var lines: Array[String] = []
 	for entry: Dictionary in state.get("tasks", []):

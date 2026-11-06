@@ -35,6 +35,8 @@ var _ui: CanvasLayer
 var _text: TextBox
 var _picker: ListPicker
 var _banner: Label
+## Top-of-screen notes (badges, daily tasks).
+var toast: Toast
 var _fade: ColorRect
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
@@ -119,6 +121,8 @@ func _build() -> void:
 	_banner.add_theme_stylebox_override("normal", UITheme.panel_style())
 	_banner.visible = false
 	ui_root.add_child(_banner)
+	toast = Toast.new()
+	add_child(toast)
 	_text = TextBox.new()
 	_text.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
 	_text.offset_top = -TEXT_BOX_HEIGHT
@@ -311,8 +315,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	DailyTasks.record("step", {"map": map.id})
-	if not GameState.notices.is_empty():
-		await _locked_say(take_notices())
+	show_notices()
 	var warp: Dictionary = map.warp_at(cell)
 	if not warp.is_empty():
 		await _warp(warp)
@@ -394,15 +397,23 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 
 ## Shows newly earned achievements (item 90).
 func announce_achievements() -> void:
-	var lines: Array[String] = take_notices()
-	lines.append_array(Collection.claim())
+	show_notices()
+	var lines: Array[String] = Collection.claim()
 	for t: String in Achievements.check():
-		lines.append("Achievement: %s" % t)
+		# Unlocked badges show at the top of the screen without stopping the game (plan 3315).
+		var a: Dictionary = Achievements.by_title(t)
+		toast.show_note(Loc.t("Badge: %s") % Loc.t(t) + "  " + Waymarks.gain_text(int(a.get("reward", 0))), Badges.texture(a, true))
+		Sound.sfx("level_up")
 	if lines.is_empty():
 		return
 	Sound.sfx("level_up")
 	await say(lines)
 	_text.visible = false
+
+## Shows queued reward notes (daily tasks, Waymarks) as toasts that do not stop the game.
+func show_notices() -> void:
+	for line: String in take_notices():
+		toast.show_note(line)
 
 ## Reward notes queued by DailyTasks / Waymarks, emptied.
 func take_notices() -> Array[String]:
@@ -729,6 +740,8 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			break
 		floors += 1
 		var lines: Array[String] = Gauntlet.pay_floor(floors)
+		if floors % Gauntlet.SECTION == 0 and GameState.party.all(func(s: Spirling) -> bool: return not s.is_fainted()):
+			GameState.records["tower_flawless"] = 1
 		if Gauntlet.is_rest_point(floors):
 			Gauntlet.save_checkpoint(floors, run_seed)
 			GameState.heal_party()
@@ -788,6 +801,8 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	rec.best = maxi(int(rec.best), wins)
 	# Weekly board (item 125): rounds won and health left; the server keeps the best.
 	Online.call_fn("weekly_submit", {"p_week": week, "p_score": EchoTeam.weekly_score(wins, GameState.party)})
+	if wins >= WeeklyChallenge.ROUNDS and GameState.party.all(func(s: Spirling) -> bool: return not s.is_fainted()):
+		GameState.records["weekly_flawless"] = 1
 	if wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
 		rec.claimed = true
 		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1

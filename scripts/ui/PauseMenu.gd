@@ -65,29 +65,67 @@ static func goals_text() -> String:
 		text += "\n\n" + "\n".join(tasks)
 	return text
 
-## Achievements and personal bests (items 88-90).
+## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:
 	Achievements.check()
 	while true:
-		var lines: Array[String] = Achievements.lines()
-		lines.append("Personal bests")
+		var lines: Array[String] = ["Badge book", "Achievements by category", "Personal bests"]
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
 		var have: int = Achievements.unlocked().size()
-		var idx: int = await pick_strings("Achievements %d/%d" % [have, Achievements.LIST.size()], lines)
+		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
 		if idx < 0:
 			return
-		if lines[idx] == "Watch last battle":
-			if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
-				watch_replay = true
-				return
-		elif idx == Achievements.LIST.size():
-			await info(records_text())
-		else:
-			var a: Dictionary = Achievements.LIST[idx]
-			var when: String = str(Achievements.unlocked().get(a.id, ""))
-			await info("%s\n%s%s" % [a.title, a.text, ("\n\n" + ("Earned %s" % when)) if when != "" else ""])
+		match lines[idx]:
+			"Badge book": await run_badge_book()
+			"Achievements by category": await run_achievement_lists()
+			"Personal bests": await info(records_text())
+			"Watch last battle":
+				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
+					watch_replay = true
+					return
+
+## The badge grid; picking a badge shows its card.
+func run_badge_book() -> void:
+	var book := BadgeBook.new()
+	add_child(book)
+	picker.visible = false
+	while true:
+		var i: int = await book.chosen
+		if i < 0:
+			break
+		book.visible = false
+		await info(Achievements.card(Achievements.list()[i]))
+		book.visible = true
+		book.fill()
+	book.queue_free()
+	picker.visible = true
+
+## One list per category with progress (k/n) where there is a count (plan 3317).
+func run_achievement_lists() -> void:
+	while true:
+		var cats: Array[String] = []
+		for c: String in Achievements.CATEGORIES:
+			cats.append(Achievements.CATEGORY_NAMES[c])
+		var ci: int = await pick_strings("Achievements", cats)
+		if ci < 0:
+			return
+		var cat: String = Achievements.CATEGORIES[ci]
+		while true:
+			var shown: Array[Dictionary] = []
+			var lines: Array[String] = []
+			for a: Dictionary in Achievements.list():
+				if str(a.cat) != cat:
+					continue
+				shown.append(a)
+				var p: Array[int] = Achievements.progress(a)
+				var done: bool = Achievements.unlocked().has(a.id)
+				lines.append("%s %s%s" % ["[x]" if done else "[ ]", Loc.t(str(a.title)), ("  %d/%d" % [p[0], p[1]]) if not p.is_empty() and not done else ""])
+			var ai: int = await pick_strings(Loc.t(cats[ci]), lines)
+			if ai < 0:
+				break
+			await info(Achievements.card(shown[ai]))
 
 ## Tower best, weekly challenge and the current festival.
 static func records_text() -> String:

@@ -128,6 +128,9 @@ func seal_rift(rift_id: String) -> bool:
 	# Rifts can be mended in any order; the second one opens storage from the menu.
 	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
 		set_flag("storage_remote")
+		# Achievement "Small Band": both Rifts mended with three Spirlings or fewer.
+		if party.size() + storage.size() <= 3:
+			records["small_band"] = 1
 	return true
 
 ## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly

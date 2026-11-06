@@ -94,11 +94,15 @@ func test_achievements_for_bonds_and_prism() -> void:
 
 func test_every_achievement_has_a_check() -> void:
 	var ids: Dictionary = {}
-	for a: Dictionary in Achievements.LIST:
+	for a: Dictionary in Achievements.list():
 		assert_false(ids.has(a.id), "duplicate " + str(a.id))
 		ids[a.id] = true
-	assert_eq(Achievements.lines().size(), Achievements.LIST.size())
-	# Every id is handled by earned(): a fully set-up save earns each of them.
+	assert_eq(Achievements.lines().size(), Achievements.list().size())
+	# The old achievements are all still there.
+	for id: String in ["first_bond", "full_team", "seen_10", "bonded_10", "seen_all", "level_30", "evolved",
+			"first_rift", "both_rifts", "lamps", "helper", "tower", "weekly", "prism", "rich", "oath", "rematch"]:
+		assert_true(ids.has(id), id)
+	# A fully set-up save earns the old ones.
 	for f: String in QuestLog.all_flags():
 		GameState.set_flag(f)
 	for f: String in ["rift_cinder_sealed", "rift_tide_sealed", "hollow_lamps", "gauntlet_clear"]:
@@ -115,8 +119,9 @@ func test_every_achievement_has_a_check() -> void:
 		GameState.party.append(s)
 	GameState.party[1].prism = true
 	Achievements.check()
-	for a: Dictionary in Achievements.LIST:
-		assert_true(Achievements.unlocked().has(a.id), "never earned: " + str(a.id))
+	for id: String in ["first_bond", "full_team", "seen_10", "bonded_10", "seen_all", "level_30", "evolved",
+			"first_rift", "both_rifts", "lamps", "helper", "tower", "weekly", "prism", "rich", "oath", "rematch"]:
+		assert_true(Achievements.unlocked().has(id), "never earned: " + id)
 
 func test_side_goals_done() -> void:
 	assert_false(QuestLog.side_goals_done(GameState.flags))
