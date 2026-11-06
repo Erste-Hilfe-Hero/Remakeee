@@ -1,0 +1,74 @@
+{
+  "brannoc": {
+    "lines": [
+      "Brannoc: The Rift is quiet now, but my fire is not. Show me yours."
+    ],
+    "win_lines": [
+      "Brannoc: Hot enough. Come back next week and stoke it again."
+    ],
+    "action": "master brannoc"
+  },
+  "maren": {
+    "lines": [
+      "Maren: The tide came back to this place. Let's see if you can hold against it."
+    ],
+    "win_lines": [
+      "Maren: You stood firm. The water remembers that."
+    ],
+    "action": "master maren"
+  },
+  "hazel": {
+    "lines": [
+      "Hazel: Roots grow slow and hold fast. Mine have held for sixty springs."
+    ],
+    "win_lines": [
+      "Hazel: Well grown, Wayfarer. Well grown."
+    ],
+    "action": "master hazel"
+  },
+  "quill": {
+    "lines": [
+      "Quill: I chase storms along the ridge. You look like one."
+    ],
+    "win_lines": [
+      "Quill: What a spark! My hair is still standing up."
+    ],
+    "action": "master quill"
+  },
+  "flint": {
+    "lines": [
+      "Flint: Nothing moves my team. Many have tried."
+    ],
+    "win_lines": [
+      "Flint: Moved. Well, I'll be."
+    ],
+    "action": "master flint"
+  },
+  "wren": {
+    "lines": [
+      "Wren: The marsh wind never stops. Can you keep up with it?"
+    ],
+    "win_lines": [
+      "Wren: You caught the wind. Not many do."
+    ],
+    "action": "master wren"
+  },
+  "lume": {
+    "lines": [
+      "Lume: I kept the harbour lamps lit for forty years. Let's see your light."
+    ],
+    "win_lines": [
+      "Lume: Bright and steady. The lighthouse raised you well."
+    ],
+    "action": "master lume"
+  },
+  "morrow": {
+    "lines": [
+      "Morrow: Few come this deep after the Rifts closed. Fewer leave unbeaten."
+    ],
+    "win_lines": [
+      "Morrow: The dark bows to you. Remember that it bowed."
+    ],
+    "action": "master morrow"
+  }
+}

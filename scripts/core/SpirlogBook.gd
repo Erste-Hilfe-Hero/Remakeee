@@ -101,7 +101,12 @@ static func filtered(spirlog: Dictionary, flags: Dictionary, search: String = ""
 ## One list row: "07 * Mossling" (bonded), "+" (seen) or "07   ???" for an outline (item 245).
 static func list_line(sd: SpirlingData, spirlog: Dictionary) -> String:
 	var seen: bool = is_seen(spirlog, sd.species_name)
-	var mark: String = "*" if is_bonded(spirlog, sd.species_name) else ("+" if seen else " ")
+	var mark: String = " "
+	if is_bonded(spirlog, sd.species_name):
+		# A star once one of this kind grew to Ring 30 (plan area 8).
+		mark = Collection.STAR if Collection.starred(sd.species_name) else "*"
+	elif seen:
+		mark = "+"
 	return "%02d %s %s" % [sd.dex_id, mark, sd.species_name if seen else "???"]
 
 ## The lore sentences that are open: the first when seen, the second when bonded, the rest
