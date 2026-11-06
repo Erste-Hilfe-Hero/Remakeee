@@ -77,6 +77,17 @@ static func idle_offset(s: Spirling, t: float, reduced: bool) -> Vector2:
 			y -= 1.0
 	return Vector2(0, y)
 
+## A newly bonded Spirling hops 4 px once before its name shows (item 2344). Skipped
+## under reduced motion. Awaitable.
+const GREET_HOP_PX: float = 4.0
+const GREET_HOP_TIME: float = 0.2
+
+func greet_hop() -> void:
+	if Juice.reduced():
+		return
+	await Juice.tween(self, "position", _home + Vector2(0, -GREET_HOP_PX), "move", GREET_HOP_TIME * 0.45).finished
+	await Juice.tween(self, "position", _home, "impact", GREET_HOP_TIME * 0.55).finished
+
 ## Where a sidestep in `dir` (sign of x; 0 counts as right) lands.
 static func dodge_spot(home: Vector2, dir: float) -> Vector2:
 	return home + Vector2(-DODGE_PX if dir < 0.0 else DODGE_PX, 0)

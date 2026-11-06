@@ -45,7 +45,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2260. [x] [P2] Wackel-Richtung pro Element: Stone wackelt nur senkrecht, Gale nur waagrecht, Volt mit doppelter Frequenz und halber Weite, alle anderen kreisförmig.
 2261. [x] [P2] Wackel-Frequenz als Rauschen mit 30 Hz statt Zufall pro Bild berechnen, damit es nicht flimmert, sondern rollt.
 2262. [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
-2263. [P2] Overworld-Wackeln beim Laufen gegen eine Wand ersetzt durch einen 1-Pixel-Ruck der Spielfigur, nicht des Bildes.
+2263. [x] [P2] Overworld-Wackeln beim Laufen gegen eine Wand ersetzt durch einen 1-Pixel-Ruck der Spielfigur, nicht des Bildes.
 2264. [P3] Kleines Wackeln (Trauma 0,10) beim Öffnen einer verschlossenen Tür oder eines Durchgangs nach einer Story-Bedingung.
 2265. [x] [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
 2266. [x] [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
@@ -132,7 +132,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2341. [P2] Beim Tauschen von zwei Plätzen in der Teamliste wandern die Symbole mit Kurve "move" aneinander vorbei, statt zu springen.
 2342. [P2] Ring-Ablage (Lagerplatz der Spirlings): beim Ablegen gleitet das Symbol in die Liste, beim Holen springt es mit Juice.pop heraus.
 2343. [P2] Spirling-Lexikon: ein gesehener, aber nicht gebondeter Spirling erscheint als Silhouette, die beim ersten Bonden in 0,6 s von unten nach oben eingefärbt wird.
-2344. [P2] Begrüßungs-Moment nach dem Bonden: der neue Spirling springt im Ergebnisbild einmal 4 Pixel hoch, bevor sein Name erscheint.
+2344. [x] [P2] Begrüßungs-Moment nach dem Bonden: der neue Spirling springt im Ergebnisbild einmal 4 Pixel hoch, bevor sein Name erscheint.
 2345. [P2] Titelbild (TitleArt.gd): die drei Starter-Silhouetten blinzeln versetzt alle 3 bis 5 Sekunden über einen 1-Pixel-Augenlid-Strich.
 2346. [P3] Sammelkarten-Ansicht (Tamer-Karte): der Lieblings-Spirling hüpft beim Öffnen einmal nach seinem Bewegungsprofil.
 2347. [P3] Geschenk-Ansicht zwischen Freunden: der geschickte Spirling hüpft beim Öffnen des Geschenks aus der Mitte heraus.
