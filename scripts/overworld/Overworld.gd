@@ -1032,6 +1032,7 @@ func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
 	if score >= ECHO_SONG_PASS:
 		Sound.sfx("level_up")
 		GameState.set_flag(args[0])
+		DailyTasks.record("melody", {"map": map.id})
 	else:
 		Sound.sfx("cancel")
 
@@ -1876,6 +1877,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	for f: Spirling in foes:
+		DailyTasks.note_seen(f.data.species_name, map.id)
 		GameState.mark_seen(f.data.species_name)
 		GameState.note_spirlog(f, false)
 	Sound.sfx("encounter")
