@@ -106,6 +106,72 @@
    "facing": "right",
    "dialogue": "madderby/trader",
    "sprite": "villager"
+  },
+  {
+   "id": "nell",
+   "x": 2,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "madderby/nell",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 6,
+     "y": 6,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "oskar",
+   "x": 8,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "madderby/oskar",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 6,
+     "y": 5,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "fenna",
+   "x": 3,
+   "y": 18,
+   "facing": "up",
+   "dialogue": "madderby/fenna",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 7,
+     "y": 7,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [
@@ -199,5 +265,9 @@
    10,
    14
   ]
- }
+ },
+ "square": [
+  7,
+  6
+ ]
 }

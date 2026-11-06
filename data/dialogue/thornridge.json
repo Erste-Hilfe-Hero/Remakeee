@@ -86,7 +86,7 @@
  },
  "ula": {
   "lines": [
-   "Shepherd Ula: The flock grazes the scree by day. At dusk I count them twice, up top."
+   "Shepherd Ula: The flock grazes the scree by day. At dusk I count them twice, at the square."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -97,7 +97,7 @@
  },
  "marek": {
   "lines": [
-   "Stonecutter Marek: Up on the terrace I split stone. Down by the crystals I split hairs."
+   "Stonecutter Marek: Up on the terrace I split stone. At the square in the evening I split hairs."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
