@@ -423,12 +423,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3496. [x] [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
 3497. [x] [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
 3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
-3499. [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
+3499. [x] [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
 3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
-3501. [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.
+3501. [x] [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.
 3502. [P2] Für Kinderkonten (unter 16) alle Endgame-Belohnungen gleich halten und keine Hinweise auf Kaufangebote neben Wegmarken zeigen.
 3503. [P2] Eine Spielzeit-Erinnerung nach 90 Minuten anbieten, die man in den Einstellungen abschalten kann.
-3504. [P2] Belohnungen für Tagesaufträge auch nachträglich am nächsten Tag abholen lassen, wenn der Auftrag noch am alten Tag fertig wurde.
+3504. [x] [P2] Belohnungen für Tagesaufträge auch nachträglich am nächsten Tag abholen lassen, wenn der Auftrag noch am alten Tag fertig wurde.
 3505. [x] [P2] Einen Test schreiben, der einen Spielstand 30 Tage pausieren lässt und prüft, dass danach alle Ziele erreichbar und keine Belohnungen verloren sind.
 3506. [P3] Einen Urlaubsmodus anbieten, der bis zu 14 Tage den Jahreszeitenpfad pausiert, ohne Punkte zu verlieren.
 3507. [P3] Ereignisse in den Einstellungen einzeln ausblendbar machen (Weltereignisse, Festschmuck, Auftragshinweise).

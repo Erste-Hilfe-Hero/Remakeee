@@ -232,7 +232,11 @@ static func goal_lines() -> Array[String]:
 	var out: Array[String] = []
 	var a: Dictionary = active()
 	if not a.is_empty():
-		out.append(Loc.t("%s: %d days left, %d ribbons") % [Loc.t(str(a.fest.name)), days_left(), ribbons()])
+		# The last day reads "ends today", never a countdown under a day (plan 3501).
+		if days_left() <= 1:
+			out.append(Loc.t("%s: ends today, %d ribbons") % [Loc.t(str(a.fest.name)), ribbons()])
+		else:
+			out.append(Loc.t("%s: %d days left, %d ribbons") % [Loc.t(str(a.fest.name)), days_left(), ribbons()])
 		return out
 	var next: Dictionary = Season.next_after(int(Online.date_now().month))
 	if not next.is_empty():
