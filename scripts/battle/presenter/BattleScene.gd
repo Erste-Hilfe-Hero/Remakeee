@@ -846,17 +846,21 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	await user.windup(kind, dir)
 	if element < 0:
 		return
+	var mv: MoveData = Database.move(str(e.data.get("move", "")))
+	var sym: Dictionary = ElementFx.status_symbol(mv)
 	var target: SpirlingSprite = user
 	var targets: Array = e.data.get("targets", [])
-	if kind != MoveData.Kind.STATUS and not targets.is_empty():
+	if (kind != MoveData.Kind.STATUS or bool(sym.on_foe)) and not targets.is_empty():
 		target = _sprite(BattleModel.other(side), int(targets[0]))
+	var me: Spirling = model.active_spirling(side, slot) if model != null else null
+	var second: int = ElementFx.second_for(me.elements(), element) if me != null else -1
 	_fx.user_sprite = user
 	if kind != MoveData.Kind.PHYSICAL and target != user:
 		_fx_travel_sound.call_deferred(element)
 	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
 	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
 		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e),
-		ElementFx.after_for(Database.move(str(e.data.get("move", "")))))
+		ElementFx.after_for(mv), str(sym.symbol), second)
 
 ## Particle factor from the art's power (item 2368).
 static func _art_amount(e: BattleEvent) -> float:
