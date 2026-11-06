@@ -832,6 +832,16 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+		BattleEvent.Type.MISSED:
+			# The target sidesteps while the line shows (item 2337).
+			var t_side: int = BattleModel.other(side)
+			var t_slot: int = int(e.data.get("target_slot", 0))
+			var target: SpirlingSprite = _sprite(t_side, t_slot)
+			if target != null and target.visible:
+				target.dodge(dodge_dir(t_side))
+			var miss_text: String = e.describe()
+			if not miss_text.is_empty():
+				await _text.show_text(miss_text)
 		_:
 			var text: String = e.describe()
 			if not text.is_empty():
@@ -893,6 +903,10 @@ func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
 	await sp.hit_flash()
 
 ## Direction a Spirling on [param side] is pushed when hit: away from the other side.
+## A dodging Spirling steps toward the outer screen edge: the foe right, the player left.
+static func dodge_dir(target_side: int) -> float:
+	return 1.0 if target_side == BattleModel.Side.FOE else -1.0
+
 static func knockback_dir(side: int, multi: bool) -> Vector2:
 	if multi:
 		return Vector2(0, 1) if side == BattleModel.Side.PLAYER else Vector2(0, -1)
