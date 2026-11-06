@@ -88,6 +88,14 @@ die noch nicht genutzt wurden, beantragst du dort. Endet der Vertrag durch uns, 
 6.7 Den Preis zeigt jedes Angebot vor dem Kauf als Endpreis in Euro (bei Rissglas zusätzlich der
 Euro-Gegenwert). Minderjährige brauchen für Käufe die Zustimmung ihrer Eltern; die Stores bieten dafür eine
 Kaufsperre und Kauffreigabe.
+6.8 Chimora ist kostenlos; der Shop ist freiwillig. Rissglas verfällt nicht, solange dein Konto besteht.
+6.9 Der Shop ist **unter 13 Jahren gesperrt**. Für Minderjährige gelten feste Monatslimits (13 bis 15 Jahre:
+15 €, 16 bis 17 Jahre: 30 €); Erwachsene haben ein Limit von 100 €, das sie senken oder nach 7 Tagen Wartezeit
+auf bis zu 300 € erhöhen können.
+6.10 Der **Wanderer-Pass** ist ein Abo über den Store, das sich monatlich verlängert, bis du es im Store
+kündigst. Seine Vorteile enden mit dem Ende der Laufzeit; schon gutgeschriebenes Rissglas bleibt.
+6.11 Erstattet Apple oder Google einen Kauf, nehmen wir die gekauften Inhalte und das Rissglas zurück, auch wenn
+es schon ausgegeben wurde; bis das Guthaben wieder ausgeglichen ist, bleibt der Shop gesperrt.
 
 ## 7. Laufzeit und Kündigung
 

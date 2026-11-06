@@ -1,6 +1,6 @@
 class_name PauseMenu
 extends MenuHost
-## In-game menu: Goals, Team, Spirlog, Satchel, Save, Settings, and Storage once the box is unlocked.
+## In-game menu: Goals, Team, Spirlog, Satchel, Shop, Save, Settings, and Storage once the box is unlocked.
 
 const STORAGE_FLAG: String = "storage_remote"
 
@@ -45,6 +45,7 @@ func run() -> void:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
 			GameState.has_flag("aldo_gift"))
+		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
 		if "Travel" in labels:
 			await tip("travel")
 		var idx: int = await pick_strings(menu_title(), labels)
@@ -69,6 +70,8 @@ func run() -> void:
 				if watch_replay:
 					return
 			"Satchel": await run_bag()
+			"Shop": await ShopMenu.run(self)
+			"Shop (locked)": await info(ShopMenu.LOCKED_TEXT)
 			"Storage": await run_storage()
 			"Save":
 				save_now()

@@ -42,6 +42,11 @@ Last updated: November 2026
    selling or trading accounts is not allowed. If you delete your account, all virtual goods on it are lost
    for good and cannot be restored; refunds for unused purchases are requested from the store. If we end
    the contract, sections 6 and 8 apply.
+   **Shop rules.** Chimora is free; the shop is optional. Riftglass does not expire while your account exists.
+   The shop is **closed under 13**; minors have fixed monthly limits (13-15: 15 EUR, 16-17: 30 EUR); adults
+   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. The **Wayfarer Pass** renews
+   monthly until cancelled in the store; its benefits end with it. If Apple or Google refunds a purchase, we
+   take back the content and the Riftglass, even if spent; the shop stays locked until the balance is even.
 8. **Term.** You can end the contract at any time by deleting your account (Settings → Account →
    "Delete account"). We may end it with 4 weeks' notice, or immediately for good cause such as serious
    breaches of section 4; unused paid content is refunded pro rata if we end it with notice.

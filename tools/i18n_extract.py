@@ -8,9 +8,10 @@ pasted into the language file. Usage: python3 tools/i18n_extract.py [lang] [--al
 import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online"]
+SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online", "scripts/shop"]
 SKIP_SCRIPTS = {"BalanceSim.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd",
-                "BundWords.gd"}  # carries its own German word lists
+                "BundWords.gd",  # carries its own German word lists
+                "ShopValidator.gd", "LocalBilling.gd", "LocalShop.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
 def looks_like_text(s):
@@ -82,6 +83,13 @@ def strings():
         for k in ("name", "desc", "description"):
             if isinstance(it.get(k), str):
                 found.append(it[k])
+    shop = json.load(open(os.path.join(ROOT, "data/shop.json"), encoding="utf-8"))
+    for o in shop.get("offers", []):
+        for k in ("name", "desc"):
+            if isinstance(o.get(k), str):
+                found.append(o[k])
+        if isinstance(o.get("duration"), str) and " " in o["duration"]:
+            found.append(o["duration"])
     for f in sorted(os.listdir(os.path.join(ROOT, "data/maps"))):
         name = json.load(open(os.path.join(ROOT, "data/maps", f))).get("name")
         if isinstance(name, str):

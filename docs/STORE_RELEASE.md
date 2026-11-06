@@ -20,7 +20,7 @@ tools/release_check.py --strict` zeigt jederzeit, was noch offen ist; ohne `--st
 | **Webseiten** Datenschutz, Privacy, AGB, Impressum, Konto löschen, Support, Lizenzen | ✅ vom Spielserver ausgeliefert | `server/site/`, `tools/site/build_site.py` |
 | In-App-Kontolöschung (Apple 5.1.1(v), Google Pflicht) | ✅ Menü → Konto → Konto löschen... | `scripts/ui/AccountMenu.gd` |
 | Antworten für **Data Safety**, **App Privacy**, **Altersfreigabe**, DSA | ✅ | `docs/legal/STORE_COMPLIANCE.md` |
-| Geschäftsmodell: kostenlos, zum Start ohne Shop, keine Werbung/Lootboxen (Shop kommt später) | ✅ | `docs/MONETIZATION.md` |
+| Geschäftsmodell: kostenlos, Shop mit Rissglas und In-App-Käufen, keine Werbung, keine Lootboxen | ✅ | `docs/MONETIZATION.md`, `data/shop.json`, `store/products.json` |
 
 Store-URLs (bis es eine eigene Domain gibt, liefert der Spielserver sie aus):
 
@@ -37,15 +37,16 @@ Die Seiten gehen online, sobald dieser Stand per Workflow **Game server** auf de
    sagen, dann wird auf „Spirlings of Veydal“ umgestellt.
 2. 👤 **Gewerbe anmelden** und eine **ladungsfähige Adresse**, **E-Mail** und **Telefonnummer** festlegen.
    Die vier Angaben schickst du mir; ich trage sie in Impressum, Datenschutz, AGB, Support und Spiel ein.
-3. 👤 **Google Play Console** anlegen (25 $ einmalig, Identitätsprüfung), **DSA-Händlererklärung**. Steuer-/Bankdaten
-   und Zahlungsprofil erst nötig, wenn der Shop kommt.
-4. 👤 **Apple Developer Program** (99 $/Jahr), **DSA-Händlerstatus**. „Paid Apps“-Vertrag und
-   Steuer-/Bankdaten erst für den Shop.
+3. 👤 **Google Play Console** anlegen (25 $ einmalig, Identitätsprüfung), **DSA-Händlererklärung**.
+   **Zahlungsprofil als Händlerkonto für In-App-Käufe** mit Steuer- und Bankdaten (nötig für den Shop).
+4. 👤 **Apple Developer Program** (99 $/Jahr), **DSA-Händlerstatus**. Der Vertrag **„Paid Apps“** mit
+   Steuer- und Bankdaten bleibt nötig: ohne ihn gehen keine In-App-Käufe, auch bei einer kostenlosen App.
 5. 👤 **Signatur-Secrets** in GitHub → Settings → Environments → `prod` anlegen (Anleitung `docs/RELEASE.md`):
    Android-Upload-Key (3 Secrets), danach Play-Service-Account (1), Apple-Zertifikat, Profil, Team-ID und
    API-Key (7).
-6. 👤 App auf **kostenlos** stellen und **12 Tester** für den geschlossenen Test auf Google Play
-   einladen (Pflicht für neue private Konten, 14 Tage).
+6. 👤 App auf **kostenlos mit In-App-Käufen** stellen (Preis 0 €, Produkte aus `store/products.json`, siehe
+   `docs/shop/ALI_TODO.md`) und **12 Tester** für den geschlossenen Test auf Google Play einladen (Pflicht
+   für neue private Konten, 14 Tage).
 7. 👤 Contabo-**AV-Vertrag** unterschreiben (Kundenbereich).
 
 Die App-ID `de.chimora.game` ist ab dem ersten Upload für immer fest. Wenn du eine andere willst, sag es

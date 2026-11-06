@@ -62,6 +62,8 @@ func _init(p_store_path: String = "") -> void:
 			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
 			"bund_leave", "bund_dissolve", "bund_keep"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
+	# Shop functions (20261110000020_shop.sql) live in their own file.
+	LocalShop.install(self)
 
 func is_local() -> bool:
 	return true
