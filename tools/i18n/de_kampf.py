@@ -187,3 +187,10 @@ T.update({
 "Makes the Resonance field last %d turns longer.": "Lässt das Resonanz-Feld %d Runden länger halten.",
 "By %d at full Vigor.": "Bei voller Kraft um %d.",
 })
+
+# Plan area 2, items 675-677: Warden field rules.
+T.update({
+"Ash Rain": "Aschenregen", "Ash rains down: for 3 turns the Ash Storm can't be called away.": "Asche regnet herab: 3 Runden lang lässt sich der Aschesturm nicht vertreiben.",
+"Tide Turn": "Gezeitenwechsel", "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.": "Die Flut kommt und geht: 2 Runden Hochflut, dann 2 Runden Ruhe.",
+"The %s won't give way yet.": "%s weicht noch nicht.",
+})

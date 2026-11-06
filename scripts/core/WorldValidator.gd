@@ -78,7 +78,13 @@ static func validate() -> PackedStringArray:
 					errors.append("map '%s': npc '%s' lacks a team for some difficulties" % [id, n.get("id", "")])
 				if n.get("rule_by_difficulty") is Dictionary:
 					for k: String in n.rule_by_difficulty:
-						if not k in TrainerData.DIFFICULTY_KEYS or not BattleRules.RULES.has(str(n.rule_by_difficulty[k])):
+						var v: Variant = n.rule_by_difficulty[k]
+						var ids: Array = v if v is Array else [v]
+						var d: int = TrainerData.DIFFICULTY_KEYS.find(k)
+						var bad: bool = d < 0 or ids.is_empty() or ids.size() > BattleRules.rule_stack(d)
+						for r: Variant in ids:
+							bad = bad or not BattleRules.RULES.has(str(r)) or not d in BattleRules.RULES[str(r)].get("difficulty", [0, 1, 2, 3])
+						if bad:
 							errors.append("map '%s': npc '%s' has a bad difficulty rule %s" % [id, n.get("id", ""), k])
 				if n.has("profile") and not BattleAI.profiles().has(str(n.profile)):
 					errors.append("map '%s': npc '%s' has unknown AI profile '%s'" % [id, n.get("id", ""), n.profile])

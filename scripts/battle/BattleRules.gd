@@ -115,12 +115,35 @@ static func field_blocks(field: String, status: String) -> bool:
 ## player_stage: stat stages every player Spirling starts with.
 ## The Story forms (items 671, 674): foe_energy_every gives the extra Energy only every N-th turn,
 ## lead_only puts the player stages on the player's first Spirling alone.
+## "difficulty": the difficulties (GameState order) a rule may be used on (item 677). Field rules
+## (items 675, 676, "warden_only"): "field_opening" lays a field for the first turns, "field_cycle"
+## brings a field back every "on" + "off" turns and announces it one turn ahead.
 const RULES: Dictionary[String, Dictionary] = {
-	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1},
-	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}},
-	"ember_pulse_soft": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every second turn.", "foe_energy": 1, "foe_energy_every": 2},
-	"undertow_soft": {"label": "Undertow", "text": "The current drags at your lead: it starts with less Pace.", "player_stage": {"spd": -1}, "lead_only": true},
+	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1, "difficulty": [1, 2, 3]},
+	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}, "difficulty": [1, 2, 3]},
+	"ember_pulse_soft": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every second turn.", "foe_energy": 1, "foe_energy_every": 2, "difficulty": [0]},
+	"undertow_soft": {"label": "Undertow", "text": "The current drags at your lead: it starts with less Pace.", "player_stage": {"spd": -1}, "lead_only": true, "difficulty": [0]},
+	"ash_rain": {"label": "Ash Rain", "text": "Ash rains down: for 3 turns the Ash Storm can't be called away.",
+		"field_opening": {"field": "ash_storm", "turns": 3, "locked": true}, "difficulty": [2, 3], "warden_only": true},
+	"tide_turn": {"label": "Tide Turn", "text": "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.",
+		"field_cycle": {"field": "high_tide", "on": 2, "off": 2}, "difficulty": [2, 3], "warden_only": true},
 }
+## Several rules join with "+" in one rule string ("ember_pulse+ash_rain"); at most this many at
+## once below Veteran, RULE_STACK_HIGH from Veteran on (item 677).
+const RULE_STACK: int = 1
+const RULE_STACK_HIGH: int = 2
+
+## The known rule ids in [param rule_string] ("a+b"), in order.
+static func split_rules(rule_string: String) -> Array[String]:
+	var out: Array[String] = []
+	for id: String in rule_string.split("+", false):
+		if RULES.has(id) and not id in out:
+			out.append(id)
+	return out
+
+## How many rules may stack on [param difficulty].
+static func rule_stack(difficulty: int) -> int:
+	return RULE_STACK_HIGH if difficulty >= 2 else RULE_STACK
 
 ## Multi-Spirling battles: a sweep ("foes" move) that reaches more than one foe deals this share to each.
 const SPREAD_MULT: float = 0.75

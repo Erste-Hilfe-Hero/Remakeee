@@ -143,6 +143,8 @@ func describe() -> String:
 		Type.BATTLE_LINE:
 			return "%s: %s" % [data.get("name", ""), data.get("text", "")]
 		Type.FIELD_EXTENDED:
+			if bool(data.get("locked", false)):
+				return "The %s won't give way yet." % data.get("label", "")
 			if bool(data.get("failed", false)):
 				return "There is no Resonance field to hold."
 			return "The %s holds on for %d more turns!" % [data.get("label", ""), int(data.get("turns", 0))]

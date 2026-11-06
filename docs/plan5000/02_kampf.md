@@ -240,7 +240,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 658. [x] [P2] Feste Technik-Listen der Gegner enthalten nur Techniken, die die Art bis zu ihrem Ring lernen kann (Test über Lernliste). Erledigt in angepasster Form: feste Techniken dürfen vorgreifen (640–648, 669 setzen das bewusst), müssen aber in der Lernliste der Art stehen oder ihr Element haben. Zippit lernt Chill Mist bei Ring 14.
 659. [x] [P2] Preisgeld pro Wanderer folgt der Formel höchster Ring mal 40, Wächter mal 70; Ausnahmen nur über den Schlüssel `money`. Erledigt: TrainerData.MONEY_PER_LEVEL 40, WARDEN_MONEY_PER_LEVEL 70; tägliche Rückkämpfe behalten 12 pro Ring.
 660. [P3] Rückkampf-Teams der Wanderer erhalten ab dem dritten Sieg einen vierten Spirling aus derselben Elementgruppe, Ring wie der bisher höchste.
-661. [P2] Rückkämpfe nutzen feste Technik-Listen mit den neuen Techniken passend zum neuen Ring statt der letzten 4 Lernlisten-Einträge.
+661. [x] [P2] Rückkämpfe nutzen feste Technik-Listen mit den neuen Techniken passend zum neuen Ring statt der letzten 4 Lernlisten-Einträge. Erledigt: benannte Techniken bleiben, der Rest kommt aus der Lernliste des neuen Rings.
 662. [P3] Gruppen-Kampf "Lio und Bram" in Crowcrest nach dem ersten Riss: 2 gegen 2 mit je zwei Spirlings auf Ring 16, Profile bleiben pro Slot.
 663. [P3] Gruppen-Kampf "Ros und Fenn" in Murk Hollow: 2 gegen 2 im Feld deep_murk, beide auf Ring 20.
 664. [P3] Jeder Wanderer hat einen Elementhinweis auf seiner Karte vor dem Kampf (kleines Elementsymbol über dem Kopf), sobald man ihn einmal angesprochen hat.
@@ -256,9 +256,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 672. [x] [P1] Warden Maelis (Tide Rift, Tamer): Zephlet R15 mit Kite Cut und Crosswind, Zippit R15 mit Static Tag, Riptail R17 mit Rip Current, Undertow und Tide Call.
 673. [x] [P1] Warden Maelis auf Veteran: Riptail trägt bark_wrap, Zephlet erhält Scatter Gale; auf Rift-Born zusätzlich Kelpup R16 mit Shoal Trap.
 674. [x] [P1] Warden Maelis auf Story: nur Zephlet R14 und Riptail R16, Regel undertow senkt Tempo nur beim ersten Spirling des Spielers.
-675. [P2] Neue Wächter-Regel "Aschenregen" für Orrin ab Veteran: ash_storm liegt ab Runde 1 für 3 Runden, danach das Feld des Ortes.
-676. [P2] Neue Wächter-Regel "Gezeitenwechsel" für Maelis ab Veteran: high_tide liegt in den Runden 1 bis 2, 5 bis 6 und 9 bis 10, dazwischen kein Feld; das Banner zeigt den Wechsel eine Runde vorher.
-677. [P2] Wächter-Regeln stehen in BattleRules.RULES mit neuem Schlüssel `difficulty` (Liste der Stufen, auf denen sie gelten) und `stack` (wie viele Regeln gleichzeitig gelten dürfen, Standard 1, ab Veteran 2).
+675. [x] [P2] Neue Wächter-Regel "Aschenregen" für Orrin ab Veteran: ash_storm liegt ab Runde 1 für 3 Runden, danach das Feld des Ortes. Erledigt als Regel `ash_rain`: da Cinder Rift schon ash_storm trägt, sperrt der Aschenregen das Feld 3 Runden lang gegen Resonanz-Techniken.
+676. [x] [P2] Neue Wächter-Regel "Gezeitenwechsel" für Maelis ab Veteran: high_tide liegt in den Runden 1 bis 2, 5 bis 6 und 9 bis 10, dazwischen kein Feld; das Banner zeigt den Wechsel eine Runde vorher. Erledigt als Regel `tide_turn` (`field_cycle`), Ansage per FIELD_NEXT.
+677. [x] [P2] Wächter-Regeln stehen in BattleRules.RULES mit neuem Schlüssel `difficulty` (Liste der Stufen, auf denen sie gelten) und `stack` (wie viele Regeln gleichzeitig gelten dürfen, Standard 1, ab Veteran 2). Erledigt: `difficulty` an jeder Regel, mehrere Regeln als "a+b" bzw. Liste in rule_by_difficulty, BattleRules.rule_stack, WorldValidator prüft beides.
 678. [P2] Wächter-Wendepunkt: fällt der vorletzte Spirling eines Wächters, sagt der Wächter einen festen Satz und seine Regel verstärkt sich für den Rest (ember_pulse +1 auf +2, undertow zusätzlich Wucht -1 für den nächsten eingewechselten Spirling des Spielers).
 679. [P2] Der Wendepunkt gilt nur ab Tamer und erscheint als Regel-Banner mit eigenem Symbol.
 680. [P2] Wächter-Teams decken bewusst eine Schwäche ab: Orrin nimmt Shalebat gegen Tide, Maelis nimmt Zippit gegen Gale-Konter; im Lexikon nach dem Sieg erklärt.
