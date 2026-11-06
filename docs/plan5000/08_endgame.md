@@ -429,7 +429,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3502. [P2] Für Kinderkonten (unter 16) alle Endgame-Belohnungen gleich halten und keine Hinweise auf Kaufangebote neben Wegmarken zeigen.
 3503. [P2] Eine Spielzeit-Erinnerung nach 90 Minuten anbieten, die man in den Einstellungen abschalten kann.
 3504. [P2] Belohnungen für Tagesaufträge auch nachträglich am nächsten Tag abholen lassen, wenn der Auftrag noch am alten Tag fertig wurde.
-3505. [P2] Einen Test schreiben, der einen Spielstand 30 Tage pausieren lässt und prüft, dass danach alle Ziele erreichbar und keine Belohnungen verloren sind.
+3505. [x] [P2] Einen Test schreiben, der einen Spielstand 30 Tage pausieren lässt und prüft, dass danach alle Ziele erreichbar und keine Belohnungen verloren sind.
 3506. [P3] Einen Urlaubsmodus anbieten, der bis zu 14 Tage den Jahreszeitenpfad pausiert, ohne Punkte zu verlieren.
 3507. [P3] Ereignisse in den Einstellungen einzeln ausblendbar machen (Weltereignisse, Festschmuck, Auftragshinweise).
 3508. [P3] In docs/BALANCE.md eine Regel festhalten, dass kein Endgame-Inhalt mehr als 30 Minuten pro Tag braucht, um alle Tagesbelohnungen zu holen.
@@ -443,8 +443,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3514. [P2] Als Ziel festlegen, dass ein Spieler nach 30 Tagen etwa 60 Prozent des Tauschstand-Angebots einmal kaufen kann.
 3515. [P2] Die Münzpreise im Wochen-Echo und in den Türmen an den Ring-Deckel binden: 20 Münzen mal Ring-Deckel pro Runde.
 3516. [P2] Echo-Kristalle als Endgame-Belohnung höchstens einmal pro Woche aus Türmen zulassen, damit der Tauschstand wichtig bleibt.
-3517. [P2] Im Datenprüfer tools/validate_data.gd prüfen, dass jeder Gegenstand in data/endgame.json und data/events.json in data/items.json existiert.
-3518. [P2] Im Datenprüfer prüfen, dass jede Ereignis-Id einmalig ist und jede Belohnung einen Betrag über 0 hat.
+3517. [x] [P2] Im Datenprüfer tools/validate_data.gd prüfen, dass jeder Gegenstand in data/endgame.json und data/events.json in data/items.json existiert.
+3518. [x] [P2] Im Datenprüfer prüfen, dass jede Ereignis-Id einmalig ist und jede Belohnung einen Betrag über 0 hat.
 3519. [P2] Den Gesamtwert aller Wegmarken-Quellen pro Woche im Test begrenzen: höchstens 700 Wegmarken für einen Spieler, der alles macht.
 3520. [P2] Gegenstände aus Endgame-Quellen nie stärker machen als Gegenstände aus dem Laden, nur seltener im Laden.
 3521. [P3] Einen Bericht in docs/BALANCE.md pflegen, der nach jedem Update die Wegmarken-Kurve über 90 Tage zeigt.
@@ -474,12 +474,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3541. [x] [P1] Eine Speicherversion hochzählen und alte Stände unter tests/fixtures mit einem Lade-Test prüfen.
 3542. [P2] Die Gutschriften für Wochen-Echo und Türme vom Server über das Ergebnis und den Seed prüfen lassen, bevor der Stand angenommen wird.
 3543. [P2] Die Kosmetik-Freischaltungen kontoweit in einer eigenen Server-Tabelle in supabase/ speichern, getrennt vom Spielstand.
-3544. [P2] Einen GUT-Test für Waymarks.earn() schreiben: Obergrenze 9999, keine negativen Beträge, Log-Länge 200.
-3545. [P2] Einen GUT-Test für DailyTasks schreiben, der prüft, dass derselbe Tag immer dieselben drei Aufträge zieht.
+3544. [x] [P2] Einen GUT-Test für Waymarks.earn() schreiben: Obergrenze 9999, keine negativen Beträge, Log-Länge 200.
+3545. [x] [P2] Einen GUT-Test für DailyTasks schreiben, der prüft, dass derselbe Tag immer dieselben drei Aufträge zieht.
 3546. [P2] Einen GUT-Test für den Festband-Umtausch am Festende schreiben, auch wenn der Spieler erst Wochen später wieder öffnet.
 3547. [P2] Einen GUT-Test für die Turm-Rastpunkte schreiben: Lauf speichern, Spiel neu laden, am richtigen Stockwerk fortsetzen.
 3548. [P2] Einen GUT-Test für den Jahreszeitenpfad schreiben, der Saisonwechsel und Nachholfrist von 14 Tagen prüft.
-3549. [P2] Einen GUT-Test schreiben, der alle Texte der neuen Daten durch tools/ip_check.sh laufen lässt.
+3549. [x] [P2] Einen GUT-Test schreiben, der alle Texte der neuen Daten durch tools/ip_check.sh laufen lässt.
 3550. [P2] Den Ladebildschirm-Test mit einem Spielstand voller Endgame-Daten auf die Ladezeit unter 1 Sekunde prüfen.
 3551. [P3] Den Speicherumfang der neuen Daten messen und unter 20 KB pro Spielstand halten.
 3552. [P3] Einen Fuzz-Test über 365 simulierte Tage schreiben, der Aufträge, Feste und Pfad durchläuft und keinen Absturz zeigt.
