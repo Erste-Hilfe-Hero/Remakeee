@@ -26,7 +26,8 @@ class BillingExport extends EditorExportPlugin:
 		return platform is EditorExportPlatformAndroid and FileAccess.file_exists(AAR)
 
 	func _get_android_libraries(_platform: EditorExportPlatform, _debug: bool) -> PackedStringArray:
-		return PackedStringArray([AAR.trim_prefix("res://")])
+		# Godot looks for Android libraries relative to res://addons/.
+		return PackedStringArray([AAR.trim_prefix("res://addons/")])
 
 	func _get_android_dependencies(_platform: EditorExportPlatform, _debug: bool) -> PackedStringArray:
 		return PackedStringArray([BILLING])
