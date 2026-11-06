@@ -35,7 +35,7 @@
     "species": "Puddlet",
     "min": 13,
     "max": 15,
-    "weight": 35
+    "weight": 24
    },
    {
     "species": "Zephlet",
@@ -97,7 +97,7 @@
     "species": "Mossling",
     "min": 3,
     "max": 4,
-    "weight": 5,
+    "weight": 10,
     "ground": "fern"
    }
   ]
@@ -128,21 +128,21 @@
     "species": "Puddlet",
     "min": 6,
     "max": 7,
-    "weight": 5,
+    "weight": 10,
     "ground": "reeds"
    },
    {
     "species": "Kindlop",
     "min": 6,
     "max": 7,
-    "weight": 5,
+    "weight": 10,
     "ground": "scree"
    },
    {
     "species": "Mirkmole",
     "min": 5,
     "max": 7,
-    "weight": 12,
+    "weight": 25,
     "ground": "scree"
    }
   ]
@@ -154,7 +154,7 @@
     "species": "Puddlet",
     "min": 10,
     "max": 12,
-    "weight": 35,
+    "weight": 24,
     "ground": "reeds"
    },
    {
@@ -175,7 +175,7 @@
     "species": "Zephlet",
     "min": 11,
     "max": 12,
-    "weight": 20,
+    "weight": 25,
     "ground": "reeds"
    },
    {

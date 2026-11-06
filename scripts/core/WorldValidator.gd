@@ -63,6 +63,22 @@ static func validate() -> PackedStringArray:
 			for sp: String in EncounterTable.species_on(m.encounter_table):
 				if Database.species(sp) == null:
 					errors.append("encounter table '%s': unknown species '%s'" % [m.encounter_table, sp])
+	errors.append_array(check_rarity_weights())
+	return errors
+
+## Plan area 1, item 132: encounter weights follow the kind's rarity band
+## (SpirlingData.WEIGHT_BANDS); ancient kinds never spawn at random (DataValidator).
+static func check_rarity_weights() -> PackedStringArray:
+	var errors: PackedStringArray = []
+	for id: String in EncounterTable.table_ids():
+		for sp: Variant in EncounterTable.table(id).get("spawns", []):
+			var sd: SpirlingData = Database.species(str((sp as Dictionary).get("species", "")))
+			if sd == null or not SpirlingData.WEIGHT_BANDS.has(sd.rarity):
+				continue
+			var band: Vector2i = SpirlingData.WEIGHT_BANDS[sd.rarity]
+			var w: int = int((sp as Dictionary).get("weight", 0))
+			if w < band.x or w > band.y:
+				errors.append("encounter table '%s': %s weight %d outside %s band %d-%d" % [id, sd.species_name, w, sd.rarity, band.x, band.y])
 	return errors
 
 ## Encounter tables (area 3 item 894): every map with ferns, reeds or scree that rolls wild
