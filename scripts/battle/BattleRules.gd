@@ -259,7 +259,22 @@ const VARIANT_KEYS: Dictionary[String, float] = {
 	"start_energy": 10.0, "max_energy": 10.0, "energy_per_turn": 1.0, "rest_energy": 2.0,
 	"swap_energy_cost": 0.0, "hp_mult": 1.0, "stab": 1.25, "status_max_turns": 0.0,
 	"reaction_scale": 1.0, "chip_from_turn": 0.0,
+	# 1 locks every stage change; stage-only arts can't be picked (item 788).
+	"stages_locked": 0.0,
+	# Every N turns the battle seed lays a random field, announced a turn early (item 791).
+	"field_swirl_every": 0.0,
+	# 1: Rest is only there when no art can be paid, as a plain pass (item 792).
+	"rest_only_as_pass": 0.0,
 }
+
+## True for an art that does nothing but change stages (locked by "stages_locked").
+static func stage_only(mv: MoveData) -> bool:
+	if mv.is_damaging() or mv.effects.is_empty():
+		return false
+	for fx: Dictionary in mv.effects:
+		if not StringName(fx.get("id", "")) in [&"stat_change", &"self_stage_after", &"stage_steal"]:
+			return false
+	return true
 
 static var _variants: Dictionary = {}
 

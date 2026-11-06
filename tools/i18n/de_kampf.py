@@ -108,3 +108,14 @@ T.update({
 "Strong Reactions": "Starke Reaktionen", "Element reactions hit twice as hard beyond the normal.": "Element-Reaktionen wirken über das Normale hinaus doppelt so stark.",
 "Late End": "Spätes Ende", "From turn 15, every Spirling in front loses 1/8 of its Vigor each turn.": "Ab Runde 15 verliert jeder aktive Spirling jede Runde 1/8 seiner Kraft.",
 })
+
+# Plan area 2, items 762, 765, 788, 791, 792.
+T.update({
+"Optional extra goals in Wayfarer and Warden battles.": "Freiwillige Zusatzziele in Kämpfen gegen Wanderer und Wächter.",
+"Bonus goals: %s": "Bonusziele: %s",
+"T%d": "R%d",
+"The Rift stirs: %s comes next turn!": "Der Riss regt sich: nächste Runde kommt %s!",
+"Stage Still": "Stufenstarr", "No stage changes at all; arts that only change stages are locked.": "Keine Stufenänderungen; reine Stufen-Techniken sind gesperrt.",
+"Field Swirl": "Feldwirbel", "Every 3 turns a random field takes over, announced a turn early.": "Alle 3 Runden übernimmt ein zufälliges Feld, eine Runde vorher angesagt.",
+"No Rest": "Kein Rasten", "Resting is gone while an art can be paid; instead everyone gains 3 Energy each turn.": "Rasten fehlt, solange eine Technik bezahlbar ist; dafür gibt es für alle 3 Energie pro Runde.",
+})
