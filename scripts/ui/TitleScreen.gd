@@ -45,6 +45,12 @@ func _ready() -> void:
 	_status.add_theme_color_override("font_color", UITheme.BG)
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# A see-through dark strip keeps the line readable over any title art (item 1965).
+	var strip := StyleBoxFlat.new()
+	strip.bg_color = Color(0, 0, 0, 0.55)
+	strip.set_content_margin_all(1)
+	_status.add_theme_stylebox_override("normal", strip)
+	_status.visible = false
 	add_child(_status)
 	_build_name_box()
 	VirtualPad.set_wanted(false)
@@ -56,11 +62,11 @@ func _build_name_box() -> void:
 	_name_box = PanelContainer.new()
 	_name_box.add_theme_stylebox_override("panel", UITheme.panel_style())
 	_name_box.set_anchors_preset(Control.PRESET_CENTER)
-	_name_box.custom_minimum_size = Vector2(136, 110)
+	_name_box.custom_minimum_size = Vector2(136, 128)
 	_name_box.offset_left = -68
 	_name_box.offset_right = 68
-	_name_box.offset_top = -55
-	_name_box.offset_bottom = 55
+	_name_box.offset_top = -64
+	_name_box.offset_bottom = 64
 	_name_box.visible = false
 	add_child(_name_box)
 	var v := VBoxContainer.new()
@@ -82,7 +88,10 @@ func _build_name_box() -> void:
 	_name_keys = NameKeyboard.new()
 	_name_keys.target = _name_edit
 	_name_keys.confirmed.connect(func() -> void: _name_done.emit(_name_edit.text))
+	# Back to the boy or girl choice (item 1962).
+	_name_keys.cancelled.connect(func() -> void: _name_done.emit(NAME_BACK))
 	v.add_child(_name_keys)
+	v.add_child(_name_keys.make_extra_row())
 
 ## Chimora is online only: nothing past the title works without the server (item 1).
 func _go_online() -> void:
@@ -128,6 +137,7 @@ static func connecting_text(seconds: float) -> String:
 func _process(_delta: float) -> void:
 	if _connecting:
 		_status.text = connecting_text((Time.get_ticks_msec() - _connect_started) / 1000.0)
+	_status.visible = not _status.text.is_empty()
 
 func _show_status() -> void:
 	var lines: Array[String] = []
@@ -148,7 +158,12 @@ func _resolve_conflicts() -> void:
 			await Online.resolve_conflict_take_server(slot)
 
 func _run() -> void:
+	var first_start: bool = GameState.language.is_empty() and not Online.privacy_seen and _used_slots() == 0
+	if GameState.language.is_empty():
+		await _pick_language()
 	await _go_online()
+	if first_start:
+		await _ask_other_phone()
 	while true:
 		if not Online.is_online():
 			await _go_online()
@@ -190,7 +205,8 @@ func _run() -> void:
 						return
 					await _menu.info("The save could not be read.")
 			"New Game":
-				var slot: int = await _pick_slot("Save the new journey in...", true)
+				# With all slots empty there is nothing to choose (item 1959).
+				var slot: int = 1 if _used_slots() == 0 else await _pick_slot("Save the new journey in...", true)
 				if slot <= 0:
 					continue
 				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm_danger("Start over in slot %d? That save will be replaced when you save." % slot):
@@ -203,6 +219,25 @@ func _run() -> void:
 			"Settings":
 				await _menu.run_settings()
 
+## First start (item 1958): English or Deutsch, the device language comes first.
+func _pick_language() -> void:
+	var codes: Array[String] = Loc.LANGUAGES.duplicate()
+	var entries: Array[Dictionary] = []
+	for c: String in codes:
+		entries.append({"text": Loc.LANGUAGE_NAMES[c]})
+	var idx: int = await _menu.pick("Language / Sprache", entries, false, codes.find(Loc.default_language()))
+	GameState.language = codes[maxi(idx, 0)]
+	GameState.apply_display()
+	SaveManager.save_settings()
+
+## First start (item 1964): someone who played on another phone gets there with a code
+## instead of starting over by mistake.
+func _ask_other_phone() -> void:
+	var idx: int = await _menu.pick_strings("Played Chimora on another phone before?",
+		["No, I am new", "Yes, I have a code"] as Array[String], false)
+	if idx == 1:
+		await AccountMenu.claim_code(_menu, false)
+
 ## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
 func _notification(what: int) -> void:
 	if what != NOTIFICATION_WM_GO_BACK_REQUEST or _menu == null:
@@ -210,9 +245,30 @@ func _notification(what: int) -> void:
 	if _at_root and _menu.picker.visible:
 		_menu.picker.picked.emit(QUIT_ASKED)
 	elif _name_box != null and _name_box.visible:
-		pass
+		_name_done.emit(NAME_BACK)
 	else:
 		BackButton.press_cancel()
+
+## What the name box returns when Back was pressed.
+const NAME_BACK: String = "\n"
+
+## The name box until a real name comes (item 1961: empty or only spaces is refused and the
+## suggestion comes back), or NAME_BACK.
+func _ask_name(suggestion: String) -> String:
+	_name_edit.text = suggestion
+	_name_box.visible = true
+	_name_keys.fresh = true
+	_name_keys.focus_first()
+	var name: String = ""
+	while true:
+		name = await _name_done
+		if name == NAME_BACK or NameKeyboard.valid_name(name):
+			break
+		Sound.sfx("cancel")
+		_name_edit.text = suggestion
+		_name_keys.fresh = true
+	_name_box.visible = false
+	return name
 
 func _enter_game() -> void:
 	Online.push_profile()
@@ -243,16 +299,16 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 ## Spirling is picked in the story (prologue at the lighthouse). Difficulty and the Iron Oath
 ## live in the settings during the game.
 func _new_game() -> bool:
-	var look: int = await _menu.pick_strings("Who are you?", ["Boy", "Girl"] as Array[String])
-	if look < 0:
-		return false
-	_name_edit.text = GameState.DEFAULT_NAMES[look]
-	_name_box.visible = true
-	_name_keys.fresh = true
-	_name_keys.focus_first()
-	var name: String = await _name_done
-	_name_box.visible = false
-	GameState.new_game(GameState.Difficulty.TAMER, name, look, "", look)
+	var look: int = -1
+	var name: String = ""
+	while true:
+		look = await _menu.pick_strings("Who are you?", ["Boy", "Girl"] as Array[String])
+		if look < 0:
+			return false
+		name = await _ask_name(GameState.DEFAULT_NAMES[look])
+		if name != NAME_BACK:
+			break
+	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), look, "", look)
 	GameState.iron_oath = false
 	EraManager.from_dict({})
 	return true

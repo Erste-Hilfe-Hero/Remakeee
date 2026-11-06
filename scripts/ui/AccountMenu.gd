@@ -4,6 +4,7 @@ extends RefCounted
 ## the online rules, the privacy note and deleting the account (items 2, 4, 11, 20, 156).
 
 const TITLE_SCENE: String = "res://scenes/ui/Title.tscn"
+const TRANSFER_CODE_LENGTH: int = 12
 
 const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account."
 const ONLINE_RULES: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Wayfarer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
@@ -43,12 +44,17 @@ static func _show_transfer(menu: MenuHost) -> void:
 	await menu.info("Your transfer code:\n\n%s-%s-%s\n\nOn the new phone open Settings, Account, Enter a code. It works once and for 7 days. Keep it secret: anyone with it gets your journeys." % [c.left(4), c.substr(4, 4), c.substr(8)])
 
 static func _claim_transfer(menu: MenuHost) -> bool:
+	return await claim_code(menu, true)
+
+## Enters a transfer code. [param warn]: ask first, because journeys on this phone are
+## replaced (not needed on a fresh phone).
+static func claim_code(menu: MenuHost, warn: bool) -> bool:
 	if GameState.in_game:
 		await menu.info("Enter the code on the title screen.")
 		return false
-	if not await menu.confirm_danger("This phone will get the journeys of the other phone. Journeys saved on this phone are replaced. Continue?"):
+	if warn and not await menu.confirm_danger("This phone will get the journeys of the other phone. Journeys saved on this phone are replaced. Continue?"):
 		return false
-	var code: String = await TextPrompt.ask(menu, "Transfer code", false, 16)
+	var code: String = await CodePrompt.ask(menu, "Transfer code", TRANSFER_CODE_LENGTH)
 	if code.is_empty():
 		return false
 	var r: Dictionary = await Online.transfer_claim(code)

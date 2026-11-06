@@ -52,5 +52,13 @@ T = {
 "Volume, music and sound effects.": "Lautstärke, Musik und Geräusche.",
 "Pad, tap to walk and gamepad.": "Steuerkreuz, Tippen zum Gehen und Gamepad.",
 "Contrast, motion, language and battery.": "Kontrast, Bewegung, Sprache und Akku.",
+"Copy my code %s": "Meinen Code %s kopieren",
+"Copied.": "Kopiert.",
+"Paste": "Einfügen",
+"Space": "Leerzeichen",
+"Language / Sprache": "Language / Sprache",
+"Played Chimora on another phone before?": "Schon auf einem anderen Handy gespielt?",
+"No, I am new": "Nein, ich bin neu",
+"Yes, I have a code": "Ja, ich habe einen Code",
 }
 KEEP = []
