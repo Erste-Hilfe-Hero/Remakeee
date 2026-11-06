@@ -51,9 +51,7 @@ func run() -> void:
 			"Satchel": await run_bag()
 			"Storage": await run_storage()
 			"Save":
-				var ok: bool = SaveManager.save_game()
-				Sound.sfx("save" if ok else "cancel")
-				await info("Game saved." if ok else "Saving failed.")
+				save_now()
 			"Settings": await run_settings()
 			"Photo":
 				photo = true
@@ -64,6 +62,23 @@ func run() -> void:
 			"Room":
 				if await run_room():
 					return
+
+## Saves without blocking the menu (item 2130) and says honestly where the save is: "Saved."
+## only once the server has it, otherwise that the phone has it and the server follows (1868).
+func save_now() -> void:
+	var ok: bool = SaveManager.save_game()
+	Sound.sfx("save" if ok else "cancel")
+	if not ok:
+		toast("Saving failed.", 2.5)
+		return
+	toast("Saving...", 5.0)
+	var on_server: bool = await Online.wait_synced(SaveManager.slot)
+	if not is_inside_tree():
+		return
+	toast(SAVED_TEXT if on_server else SAVED_LOCAL_TEXT, 1.5 if on_server else 3.0)
+
+const SAVED_TEXT: String = "Saved."
+const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once the connection is back."
 
 ## Achievements and personal bests (items 88-90).
 func run_records() -> void:
