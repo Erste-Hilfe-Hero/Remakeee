@@ -56,6 +56,8 @@ var _partner_slot: int = -1
 var foe_boss: String = ""
 ## Share of damage the foe side deals (difficulty, plan area 2 item 728).
 var foe_damage_mult: float = 1.0
+## Factor on a boss's "hp_per_ally" (GameState.BOSS_HP_SCALE: Story bosses are 20 % smaller).
+var boss_hp_scale: float = 1.0
 var _boss_actions: int = 1
 ## Player slots still waiting for a replacement after faints (phase AWAIT_SWITCH), in order.
 var pending_switch: Array[int] = []
@@ -311,7 +313,7 @@ func start() -> Array[BattleEvent]:
 	var fielded: int = slot_count(Side.PLAYER)
 	if BattleRules.BOSSES.has(foe_boss):
 		var boss: Spirling = active_spirling(Side.FOE)
-		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded)
+		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded, boss_hp_scale)
 		boss.hp = boss.max_hp()
 		_boss_actions = BattleRules.boss_actions(foe_boss, fielded)
 	var foe: Spirling = active_spirling(Side.FOE)

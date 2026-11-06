@@ -11,6 +11,8 @@ const AI_LEVELS: Array[int] = [0, 1, 2, 3]
 const FOE_SPARK: Array[int] = [0, 3, 6, 10]
 const FOE_LEVEL_SHIFT: Array[int] = [-1, 0, 1, 2]
 const FOE_DAMAGE: Array[float] = [0.9, 1.0, 1.0, 1.0]
+## Factor on a Rift boss's "hp_per_ally" per difficulty (item 729).
+const BOSS_HP_SCALE: Array[float] = [0.8, 1.0, 1.0, 1.0]
 ## A shifted foe never stands more than this many rings above the player's ring cap.
 const FOE_OVER_CAP: int = 2
 const MAX_PARTY: int = 5
