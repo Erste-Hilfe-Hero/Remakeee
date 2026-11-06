@@ -210,6 +210,20 @@ func test_arrival_opens_the_madderby_road() -> void:
 	GameState.story_fixups()
 	assert_true(GameState.has_flag("madderby_road_open"), "old saves get the road too")
 
+func test_act_one_aftermath_lines() -> void:
+	var f: Dictionary = {"rift_cinder_sealed": true, "rift_tide_sealed": true, "tide_heart_mended": true, "hollow_lamps": true}
+	assert_true(" ".join(Dialogue.lines_for(Dialogue.get_entry("cinder_rift/orrin"), f)).contains("Mirela"))
+	assert_true(" ".join(Dialogue.lines_for(Dialogue.get_entry("tide_rift/maelis"), f)).contains("song"))
+	assert_true(" ".join(Dialogue.lines_for(Dialogue.get_entry("tide_rift/mystic"), f)).contains("looks back"))
+	assert_true(" ".join(Dialogue.lines_for(Dialogue.get_entry("murk_hollow/tamsin"), f)).contains("north"))
+	assert_true(" ".join(Dialogue.lines_for(Dialogue.get_entry("brindlewick/fisher"), f)).contains("jumping again"))
+	var gift: Dictionary = Dialogue.get_entry("brindlewick/fisher_gift")
+	assert_eq(str(gift.get("action", "")), "give_item tonic 2")
+	assert_true(Dialogue.check(gift.get("if"), f))
+	assert_false(Dialogue.check(gift.get("if"), {"rift_tide_sealed": true, "fisher_tonics": true}), "only once")
+	var ids: Array = StoryPlacements.for_map("thornridge").get("npcs", []).map(func(n: Dictionary) -> String: return str(n.get("id", "")))
+	assert_true("pell_v" in ids and "suri_v" in ids)
+
 func test_stillwater_tag_battle_with_kestra() -> void:
 	var def: Dictionary = StoryBattles.get_def("kestra_tag")
 	assert_true(def.has("partner"), "Kestra fights beside the player")
