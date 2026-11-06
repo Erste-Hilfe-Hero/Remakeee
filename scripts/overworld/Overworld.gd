@@ -2066,6 +2066,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.trainer_name = str(trainer.get("name", ""))
 	model.ai.set_profile(str(trainer.get("profile", "")))
 	model.foe_damage_mult = GameState.foe_damage_mult()
+	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.prize_money = int(trainer.get("money", 0))
