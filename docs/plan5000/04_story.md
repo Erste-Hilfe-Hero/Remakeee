@@ -400,7 +400,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Lore: Risse, Stille und Spirlinge
 1705. [x] [P1] docs/STORY.md bekommt ein Kapitel "Lore" mit den festen Wahrheiten: Spirlinge stammen aus dem Ungezeichneten, Risse entstehen, wo die gezeichnete Welt dünn wird, die Stille ist das Echo verlorener Bünde.
-1706. [P1] Jeder Spirlog-Eintrag der 21 Arten bekommt eine zweite Lore-Zeile, die nach dem Bonden der Art lesbar ist und auf Risse oder Regionen Bezug nimmt.
+1706. [x] [P1] Jeder Spirlog-Eintrag der 21 Arten bekommt eine zweite Lore-Zeile, die nach dem Bonden der Art lesbar ist und auf Risse oder Regionen Bezug nimmt.
 1707. [x] [P1] Die Lore-Texte werden mit tools/ip_check.sh geprüft und vermeiden jede Nähe zu fremden Ursprungsmythen; eigene Begriffe stehen in einer Glossarliste in docs/STORY.md.
 1708. [P2] Die Echo-Melodie bekommt eine Herkunft: Mirela hat sie im Ungezeichneten gehört und in Veydal als Wiegenlied weitergegeben; die Gilde lehrt sie seitdem.
 1709. [P2] Wardens werden erklärt: Menschen, deren Bund mit Spirlingen stark genug ist, einen Riss zu halten; wird der Bund still, öffnet sich der Riss weiter.

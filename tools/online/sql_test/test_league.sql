@@ -30,7 +30,7 @@ do $$ begin
   assert 'Kiln Strike' = any(public._league_learnable('Kindlop', 50));
   assert not ('Kiln Strike' = any(public._league_learnable('Kindlop', 19)));
   assert 'Dusk Rake' = any(public._league_learnable('Smoldrake', 9)), 'earlier form moves count';
-  assert public._league_default_moves('Kindlop', 50) = '["Kindle Up", "Dusk Rake", "Cinder Breath", "Kiln Strike"]'::jsonb,
+  assert public._league_default_moves('Kindlop', 50) = '["Dusk Rake", "Glow Knuckle", "Cinder Breath", "Kiln Strike"]'::jsonb,
     public._league_default_moves('Kindlop', 50)::text;
   assert public._league_fair_row('Kindlop', '["Kiln Strike", "Fly Away", "Bowl Over", "Kiln Strike"]')
     = '{"species": "Kindlop", "level": 50, "moves": ["Kiln Strike", "Bowl Over"]}'::jsonb, 'only learnable moves, no doubles';

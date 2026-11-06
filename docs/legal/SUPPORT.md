@@ -23,7 +23,8 @@ Schreib uns, was passiert ist, welches Gerät du nutzt und deinen Freundescode (
 Screenshot hilft.
 
 **Jemand nutzt einen unpassenden Namen.**
-Beim Freund **Melden** antippen. Wir prüfen Meldungen jede Woche.
+Beim Freund **Melden** antippen. Wir prüfen Meldungen jede Woche, das Ergebnis steht unter Konto, Nachrichten
+vom Team. Ohne Spiel geht es über das Formular [Inhalt melden](/melden).
 
 **Kostet das Spiel etwas?**
 Nein, Chimora ist kostenlos. Es gibt keine Werbung und keine Lootboxen. Ein Shop mit optionalen Käufen kann später dazukommen; Kämpfe und Fortschritt lassen sich nie kaufen.
