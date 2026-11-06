@@ -58,6 +58,7 @@ func _ready() -> void:
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
+		"exchange": _action_exchange,
 		"spark_read": _action_spark_read,
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
@@ -1149,6 +1150,36 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		Sound.sfx("coin")
 		await menu.info("Bought %s. You have %d." % [item.get("name", ""), GameState.item_count(args[idx])])
 	menu.queue_free()
+
+## Marla's exchange stand (plan area 8): items for Waymarks only, with a card and a yes/no
+## question before every trade.
+func _action_exchange(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not Exchange.is_open():
+		await say(["Marla: My stand opens once the valley is a little quieter. Mend a Rift, then come back."] as Array[String])
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	while true:
+		var offers: Array[Dictionary] = Exchange.offers()
+		var labels: Array[String] = []
+		for o: Dictionary in offers:
+			labels.append(Exchange.label(o))
+		var idx: int = await menu.pick_strings(Loc.t("Exchange   %s") % Waymarks.label(), labels)
+		if idx < 0:
+			break
+		var o: Dictionary = offers[idx]
+		if not await menu.confirm(Exchange.describe(o) + "\n\n" + Loc.t("Trade?")):
+			continue
+		var err: String = Exchange.buy(str(o.item))
+		if err != "":
+			Sound.sfx("cancel")
+			await menu.info(err)
+			continue
+		Sound.sfx("coin")
+		await menu.info(Loc.t("Traded for %s. You have %d.") % [Loc.t(str(Database.item(str(o.item)).get("name", ""))), GameState.item_count(str(o.item))])
+	menu.queue_free()
+	if not Exchange.full_unlocked():
+		await say(["Marla: Once the valley is fully quiet I'll bring out the good crates."] as Array[String])
 
 # --- Wayfarers --------------------------------------------------------------------------
 
