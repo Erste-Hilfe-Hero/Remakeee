@@ -16,6 +16,8 @@ var photo: bool = false
 var watch_replay: bool = false
 ## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
 var echo_duel: Dictionary = {}
+## Set when the player finds a league battle under Leagues: the battle the server set up.
+var league_match: Dictionary = {}
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -31,6 +33,8 @@ func run() -> void:
 			labels.insert(1, "Travel")
 		if room_puzzle:
 			labels.insert(1, "Room")
+		if Online.league_on():
+			labels.insert(labels.find("Friends") + 1, "Leagues")
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
@@ -41,6 +45,10 @@ func run() -> void:
 			"Friends":
 				await FriendsMenu.run(self)
 				if not echo_duel.is_empty():
+					return
+			"Leagues":
+				await LeagueMenu.run(self)
+				if not league_match.is_empty():
 					return
 			"Spirlog": await run_spirlog()
 			"Records":
@@ -563,16 +571,82 @@ const GROUND_LABELS: Dictionary[String, String] = {"fern": "ferns", "reeds": "re
 var _storage_sort: int = 0
 var _storage_element: int = -1
 
-## Withdraw list with sort and element filter rows on top (item 57).
-func _withdraw() -> void:
+## Storage (plan area 1, items 375-382): named boxes of 30, favourites, multi-move, team
+## presets, release, keepsakes and a detail card for each Spirling.
+func run_storage() -> void:
+	GameState.ensure_boxes()
 	while true:
-		var view: Array[int] = GameState.storage_view(_storage_sort, _storage_element)
+		var title: String = "Storage (%d/%d)" % [GameState.storage.size(), GameState.storage_capacity()]
+		var idx: int = await pick_strings(title, ["Boxes", "Send to rest", "Team presets"] as Array[String])
+		match idx:
+			-1:
+				return
+			0:
+				await _run_boxes()
+			1:
+				await _send_to_rest()
+			2:
+				await _run_presets()
+
+func _box_names() -> Array[String]:
+	var fill: Array[int] = GameState.box_fill()
+	var names: Array[String] = []
+	for i: int in GameState.storage_boxes.size():
+		names.append("%s (%d/%d)" % [GameState.storage_boxes[i].name, fill[i] if i < fill.size() else 0, GameState.BOX_SIZE])
+	return names
+
+func _run_boxes() -> void:
+	while true:
+		var b: int = await pick_strings("Boxes", _box_names())
+		if b < 0:
+			return
+		await _run_box(b)
+
+func _box_view(box: int) -> Array[int]:
+	var view: Array[int] = GameState.storage_view(_storage_sort, _storage_element)
+	return view.filter(func(i: int) -> bool: return GameState.storage[i].box == box)
+
+func _run_box(box: int) -> void:
+	while true:
+		var view: Array[int] = _box_view(box)
+		var bx: Dictionary = GameState.storage_boxes[box]
 		var names: Array[String] = [
 			"Sort: %s" % GameState.STORAGE_SORTS[_storage_sort],
 			"Show: %s" % ("all" if _storage_element < 0 else Elements.element_name(_storage_element)),
+			"Move several...",
+			"Rename box",
+			"Colour: %s" % Loc.t(str(bx.color).capitalize()),
 		]
 		for i: int in view:
+			names.append(MenuHost.storage_line(GameState.storage[i]))
+		var w: int = await pick_strings("%s (%d)" % [bx.name, view.size()], names)
+		match w:
+			-1:
+				return
+			0:
+				_storage_sort = (_storage_sort + 1) % GameState.STORAGE_SORTS.size()
+			1:
+				_storage_element += 1
+				if _storage_element >= Elements.E.size():
+					_storage_element = -1
+			2:
+				await _move_several(view)
+			3:
+				var n: String = await TextPrompt.ask(self, "Box name", false, GameState.BOX_NAME_MAX, str(bx.name))
+				GameState.rename_box(box, n)
+			4:
+				GameState.recolor_box(box)
+			_:
+				await _run_stored(view[w - 5])
+
+## Mark up to ten Spirlings, then pick the box they move to (item 376). Favourites stay put.
+func _move_several(view: Array[int]) -> void:
+	var marked: Array[int] = []
+	while true:
+		var names: Array[String] = ["Move marked (%d)" % marked.size()]
+		for i: int in view:
 			var s: Spirling = GameState.storage[i]
+<<<<<<< HEAD
 			var away: bool = Expeditions.is_away(s.uid)
 			names.append("%s%s R%d" % [Expeditions.GLYPH + " " if away else "", s.display_name(), s.level])
 		var w: int = await pick_strings("Call back (%d)" % view.size(), names)
@@ -600,12 +674,110 @@ func run_storage() -> void:
 		if idx == 0:
 			if GameState.storage.is_empty():
 				await info("The box is empty.")
+=======
+			var tag: String = "[x] " if marked.has(i) else ("(fav) " if s.favorite else "[ ] ")
+			names.append(tag + MenuHost.storage_line(s))
+		var w: int = await pick_strings("Mark up to %d" % GameState.MULTI_MOVE_MAX, names)
+		if w < 0:
+			return
+		if w == 0:
+			if marked.is_empty():
+>>>>>>> origin/claude/project-thread-lhphga-c
 				continue
-			await _withdraw()
+			var to: int = await pick_strings("Move to which box?", _box_names())
+			if to >= 0:
+				var moved: int = GameState.move_to_box(marked, to)
+				await info("%d moved." % moved)
+			return
+		var i: int = view[w - 1]
+		if GameState.storage[i].favorite:
+			await info("Favourites stay where they are. Move them one by one.")
+		elif marked.has(i):
+			marked.erase(i)
+		elif marked.size() < GameState.MULTI_MOVE_MAX:
+			marked.append(i)
+
+## One stored Spirling: details, call back, move, favourite, keepsake, release.
+func _run_stored(index: int) -> void:
+	var s: Spirling = GameState.storage[index]
+	while true:
+		var opts: Array[String] = ["Details", "Call back", "Move to box...", "Unmark favourite" if s.favorite else "Mark as favourite"]
+		if not s.held.is_empty():
+			opts.append("Take off keepsake")
+		opts.append("Release")
+		var c: int = await pick_strings(MenuHost.storage_line(s), opts)
+		var i: int = GameState.storage.find(s)
+		if c < 0 or i < 0:
+			return
+		match opts[c]:
+			"Details":
+				await info(MenuHost.storage_card(s))
+			"Call back":
+				if GameState.withdraw(i):
+					return
+				await info("Your team is full.")
+			"Move to box...":
+				var to: int = await pick_strings("Move to which box?", _box_names())
+				if to >= 0:
+					GameState.move_to_box([i] as Array[int], to, true)
+			"Mark as favourite", "Unmark favourite":
+				GameState.toggle_favorite(s)
+			"Take off keepsake":
+				GameState.add_item(s.held)
+				s.held = ""
+			"Release":
+				if s.favorite:
+					await info("Favourites are never released.")
+				elif await confirm_danger("Release %s?" % s.display_name()) \
+						and await confirm_danger("It goes home for good. Really release it?"):
+					await info(GameState.release(i))
+					return
+
+## Party -> storage, asking whether the keepsake stays in the satchel (item 356).
+func _send_to_rest() -> void:
+	var names2: Array[String] = []
+	for s: Spirling in GameState.party:
+		names2.append(MenuHost.party_line(s))
+	var d: int = await pick_strings("Send to rest", names2)
+	if d < 0:
+		return
+	if GameState.storage.size() >= GameState.storage_capacity():
+		await info("Storage is full.")
+		return
+	var keep: bool = false
+	if not GameState.party[d].held.is_empty():
+		keep = await confirm("Keep the keepsake?")
+	if not GameState.deposit(d, keep):
+		await info("You need at least one healthy Spirling with you.")
+
+## Saved teams of up to five, loaded with one tap (item 378).
+func _run_presets() -> void:
+	while true:
+		var names: Array[String] = []
+		for i: int in GameState.TEAM_PRESETS:
+			names.append(_preset_line(i))
+		var p: int = await pick_strings("Team presets", names)
+		if p < 0:
+			return
+		var has: bool = not GameState.preset_team(p).is_empty()
+		var opts: Array[String] = ["Load this team", "Save current team here"] if has else ["Save current team here"]
+		var c: int = await pick_strings(names[p], opts)
+		if c < 0:
+			continue
+		if opts[c] == "Load this team":
+			if GameState.load_preset(p):
+				await info("Your team is ready.")
+			else:
+				await info("That team can't travel right now.")
 		else:
-			var names2: Array[String] = []
-			for s: Spirling in GameState.party:
-				names2.append(MenuHost.party_line(s))
-			var d: int = await pick_strings("Send to rest", names2)
-			if d >= 0 and not GameState.deposit(d):
-				await info("You need at least one healthy Spirling with you.")
+			GameState.save_preset(p)
+			await info("Team saved.")
+
+func _preset_line(i: int) -> String:
+	var team: Array[Spirling] = GameState.preset_team(i)
+	if team.is_empty():
+		return "Team %d: empty" % (i + 1)
+	var names: PackedStringArray = []
+	for s: Spirling in team:
+		names.append(s.display_name())
+	return "%s: %s" % [GameState.team_presets[i].name, ", ".join(names)]
