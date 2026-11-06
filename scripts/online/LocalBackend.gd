@@ -26,6 +26,9 @@ const DEFAULT_CONFIG: Dictionary = {
 	"league_fair_blocked_sources": [],
 	"max_money_per_min": 5000, "save_time_slack": 300, "start_money": 3000, "cheat_flag_limit": 3, "cheat_flag_days": 7,
 	"data_export_limit": 5,
+	"raid_guardians": ["Leviarch", "Calderox", "Cairnhold", "Verdantusk", "Tempestrel", "Solmantle", "Obsidroth"],
+	"raid_rewards": [{"item": "max_tonic", "count": 2, "w": 3}, {"item": "revival_leaf", "count": 2, "w": 3},
+		{"item": "strong_tonic", "count": 5, "w": 3}, {"item": "keen_lens", "count": 1, "w": 1}, {"item": "swift_feather", "count": 1, "w": 1}],
 	"save_server_keys": ["league", "leagues", "raid", "raids", "trades", "bund", "premium", "gems", "shards"],
 }
 const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
@@ -60,7 +63,7 @@ func _init(p_store_path: String = "") -> void:
 			"battle_submit", "battle_status", "league_info", "league_join", "league_find", "data_export",
 			"report_in", "notices_list", "notice_read", "appeal", "platform_set",
 			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
-			"bund_leave", "bund_dissolve", "bund_keep"]:
+			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 
 func is_local() -> bool:
@@ -1117,6 +1120,15 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 		if lm.state != "open" or now() - int(lm.created_at) > 60 * config_int("league_match_minutes", 30):
 			return _fail("match_closed")
 		c["expect"] = _league_expect(lm)
+	var ra: Dictionary = {}
+	if kind == "raid":
+		var av: Variant = (_table("raid_attempts", {}) as Dictionary).get(str(a.get("p_ref", "")))
+		if not av is Dictionary or av.user != me():
+			return _fail("no_such_attempt")
+		ra = av
+		if ra.state != "open" or now() - int(ra.created_at) > 1800:
+			return _fail("attempt_closed")
+		c["expect"] = _raid_expect(ra)
 	var battles: Dictionary = _table("battles", {})
 	var id: int = int(db.get("battle_seq", 0)) + 1
 	db["battle_seq"] = id
@@ -1126,6 +1138,9 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 		lm.state = "submitted"
 		lm.battle_id = id
 		lm.rated = bool(lm.rated) and league_state(league_season()) == "running"
+	if not ra.is_empty():
+		ra.state = "submitted"
+		ra.battle_id = id
 	if referee_waits:
 		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": c}
 	else:
@@ -1160,6 +1175,8 @@ func _decide(id: int, result: Dictionary) -> void:
 				else:
 					m.state = "done"
 					m.rated = false
+	elif row.kind == "raid":
+		_raid_apply(id, row.status == "ok", result.detail)
 
 func _fn_battle_status(a: Dictionary) -> Dictionary:
 	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
@@ -1566,3 +1583,177 @@ func _fn_bund_keep(_a: Dictionary) -> Dictionary:
 		return _fail("not_allowed")
 	db.bunds[_bund_of(u)].dissolve_at = 0
 	return {"ok": true}
+
+# --- Raid Rifts (plan area 7, items 2847-2851, 2871), like 20261110000011_raids.sql ---
+
+func _raid_check(uid: String) -> String:
+	if not flag_on("raid", 2147483647):
+		return "feature_off"
+	if not _social(uid):
+		return "social_off"
+	if cheat_held(uid):
+		return "under_review"
+	return ""
+
+## 2 players 100 %, 3 players 140 %, 4 players 175 % of raid_base (item 2850).
+func raid_hp(players: int) -> int:
+	var pct: int = 100 if players == 2 else (140 if players == 3 else 175)
+	return config_int("raid_base", 1200) * pct / 100
+
+func _raid_expect(at: Dictionary) -> Dictionary:
+	return {"seed": at.seed, "teams": (at.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
+		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10)}
+
+## Members of raid [param r] as uid -> row. Rows live under "raid|uid", so deleting an account
+## removes only that player's row (like the SQL table).
+func _raid_members(r: String) -> Dictionary:
+	var out: Dictionary = {}
+	var t: Dictionary = _table("raid_members", {})
+	for key: String in t:
+		if key.begins_with(r + "|"):
+			out[key.substr(r.length() + 1)] = t[key]
+	return out
+
+func _day_start() -> int:
+	return now() - now() % 86400
+
+func _raid_tries_used(r: String, uid: String) -> int:
+	var n: int = 0
+	for at: Dictionary in (_table("raid_attempts", {}) as Dictionary).values():
+		if str(at.raid) == r and at.user == uid and int(at.created_at) >= _day_start():
+			n += 1
+	return n
+
+func _fn_raid_open(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _raid_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var codes: Variant = a.get("p_codes")
+	if not codes is Array or (codes as Array).size() < 1 or (codes as Array).size() > 3:
+		return _fail("bad_party")
+	var who: Array = [u]
+	for c: Variant in codes:
+		var t: String = uid_for_code(str(c))
+		var same_bund: bool = not _bund_of(u).is_empty() and _bund_of(u) == _bund_of(t)
+		var f: Variant = _friendship(u, t) if not t.is_empty() else null
+		var friends: bool = f != null and str(f.status) == "accepted"
+		if t.is_empty() or who.has(t) or is_blocked(u, t) or not _social(t) or not (friends or same_bund):
+			return _fail("no_such_code")
+		who.append(t)
+	if not _rate_ok("raid_open", 6):
+		return _fail("slow_down")
+	var pool: Array = (db.config.get("raid_guardians", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
+	if pool.is_empty():
+		return _fail("no_guardian")
+	var id: String = str(_next_id("raid"))
+	var hp: int = raid_hp(who.size())
+	(_table("raids", {}) as Dictionary)[id] = {"guardian": str(pool[rng.randi() % pool.size()]), "level": config_int("raid_level", 60),
+		"players": who.size(), "hp_total": hp, "hp_left": hp, "created_at": now(),
+		"closes_at": now() + 3600 * config_int("raid_hours", 48), "won_at": 0, "reward": null}
+	for x: String in who:
+		(_table("raid_members", {}) as Dictionary)["%s|%s" % [id, x]] = {"damage": 0, "claimed": false}
+	return {"ok": true, "raid": int(id)}
+
+func _raid_qualifies(r: Dictionary, damage: int) -> bool:
+	return int(r.won_at) > 0 and damage * 100 >= int(r.hp_total) * config_int("raid_share_min", 5)
+
+func _fn_raid_list(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _raid_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var tries: int = config_int("raid_tries", 3)
+	var out: Array = []
+	var raids: Dictionary = _table("raids", {})
+	for id: String in raids:
+		var r: Dictionary = raids[id]
+		var mem: Dictionary = _raid_members(id)
+		if not mem.has(u) or int(r.created_at) < now() - 7 * 86400:
+			continue
+		var members: Array = []
+		for x: String in mem:
+			members.append({"name": profile_of(x).name if db.users.has(x) else "?", "damage": mem[x].damage, "me": x == u})
+		members.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.damage) > int(q.damage))
+		out.push_front({"id": int(id), "guardian": r.guardian, "level": r.level, "players": r.players, "hp_total": r.hp_total,
+			"hp_left": r.hp_left, "closes_at": r.closes_at, "open": int(r.hp_left) > 0 and int(r.closes_at) > now(),
+			"won": int(r.won_at) > 0, "tries_left": maxi(0, tries - _raid_tries_used(id, u)),
+			"reward": r.reward if _raid_qualifies(r, int(mem[u].damage)) else null, "claimed": mem[u].claimed, "members": members})
+	return {"ok": true, "rewards": (db.config.get("raid_rewards", []) as Array).duplicate(true), "tries": tries,
+		"share_min": config_int("raid_share_min", 5), "rounds": config_int("raid_rounds", 10), "raids": out}
+
+func _fn_raid_start(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _raid_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var id: String = str(int(a.get("p_raid", 0)))
+	var r: Variant = (_table("raids", {}) as Dictionary).get(id)
+	if not r is Dictionary or not _raid_members(id).has(u):
+		return _fail("no_such_raid")
+	if int(r.hp_left) <= 0 or int(r.closes_at) <= now():
+		return _fail("raid_closed")
+	if _raid_tries_used(id, u) >= config_int("raid_tries", 3):
+		return _fail("no_tries")
+	var built: Dictionary = LeagueRules.build_team(profile_of(u).get("team", []), LeagueRules.FAIR, a.get("p_pick"),
+		config_int("league_fair_ring", 50), config_int("level_max", 60))
+	if built.has("error"):
+		return _fail(str(built.error))
+	var attempts: Dictionary = _table("raid_attempts", {})
+	for at: Dictionary in attempts.values():
+		if at.user == u and at.state == "open":
+			at.state = "expired"
+	var moves: Array = []
+	for md: MoveData in Database.species(str(r.guardian)).default_moves(int(r.level), 4):
+		moves.append(md.move_name)
+	var aid: String = str(_next_id("raid_attempt"))
+	attempts[aid] = {"raid": id, "user": u, "seed": rng.randi() & 0x7fffffff, "state": "open", "damage": 0, "created_at": now(),
+		"teams": [built.team, [{"species": r.guardian, "level": r.level, "moves": moves}]]}
+	var out: Dictionary = _raid_expect(attempts[aid])
+	out.merge({"ok": true, "attempt_id": int(aid)})
+	return out
+
+func _fn_raid_claim(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var id: String = str(int(a.get("p_raid", 0)))
+	var r: Variant = (_table("raids", {}) as Dictionary).get(id)
+	var mem: Dictionary = _raid_members(id)
+	if not r is Dictionary or not mem.has(u):
+		return _fail("no_such_raid")
+	if not _raid_qualifies(r, int(mem[u].damage)):
+		return _fail("no_reward")
+	if bool(mem[u].claimed):
+		return _fail("claimed")
+	mem[u].claimed = true
+	return {"ok": true, "item": r.reward.item, "count": int(r.reward.get("count", 1))}
+
+## Like public._raid_apply: checked damage comes off the guardian, never below zero.
+func _raid_apply(battle_id: int, ok: bool, detail: Variant) -> void:
+	for at: Dictionary in (_table("raid_attempts", {}) as Dictionary).values():
+		if int(at.get("battle_id", -1)) != battle_id or at.state != "submitted":
+			continue
+		at.state = "done"
+		var r: Dictionary = db.raids[str(at.raid)]
+		var dealt: int = int(detail.get("foe_damage", 0)) if ok and detail is Dictionary else 0
+		var d: int = clampi(dealt, 0, int(r.hp_left))
+		at.damage = d
+		if d == 0:
+			return
+		var mem: Dictionary = _raid_members(str(at.raid))
+		if mem.has(at.user):
+			mem[at.user].damage = int(mem[at.user].damage) + d
+		r.hp_left = int(r.hp_left) - d
+		if int(r.hp_left) == 0:
+			r.won_at = now()
+			var tbl: Array = db.config.get("raid_rewards", [])
+			var total: int = 0
+			for x: Dictionary in tbl:
+				total += int(x.w)
+			if total > 0:
+				var roll: int = rng.randi() % total
+				for x: Dictionary in tbl:
+					roll -= int(x.w)
+					if roll < 0:
+						r.reward = {"item": x.item, "count": int(x.get("count", 1))}
+						break
+		return

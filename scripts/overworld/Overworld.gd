@@ -740,11 +740,14 @@ func open_menu() -> void:
 	var watch: bool = menu.watch_replay
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
+	var raid: Dictionary = menu.raid_attempt
 	menu.queue_free()
 	if not duel.is_empty():
 		await echo_duel(duel)
 	if not league.is_empty():
 		await league_battle(league)
+	if not raid.is_empty():
+		await raid_battle(raid)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -1817,6 +1820,37 @@ func league_battle(m: Dictionary) -> void:
 		lines.append("The season ends soon, so this battle does not count.")
 	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		lines.append("Your result is being checked. It counts once the check is done.")
+	else:
+		lines.append("The result could not be sent, so it does not count.")
+	await say(lines)
+	busy = false
+	player.frozen = false
+
+## Raid Rift attempt (plan area 7, items 2847-2851, 2871): the server set seed, teams and the
+## round limit; the battle is friendly, so it costs nothing and the team is healed afterwards.
+## The damage comes off the guardian once the referee checked the battle (2691).
+func raid_battle(at: Dictionary) -> void:
+	var snap: Dictionary = BattleReferee.from_expect(at)
+	var model: BattleModel = BattleReplay.build_model(snap)
+	if model == null:
+		await say(["The Raid Rift could not open. Try again later."] as Array[String])
+		return
+	model.trainer_name = "Rift guardian"
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await say([Loc.t("%s waits in the Raid Rift. You have %d rounds.") % [str(at.get("guardian", "?")), model.round_limit]] as Array[String])
+	busy = false
+	await start_battle(foes, false, {"name": "Rift guardian", "model": model, "friendly": true})
+	busy = true
+	player.frozen = true
+	var dealt: int = 0
+	for s: Spirling in model.parties[1]:
+		dealt += maxi(0, s.max_hp() - s.hp)
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": "raid", "p_ref": str(at.get("attempt_id", "")),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+	var lines: Array[String] = [Loc.t("You dealt %d damage to the guardian.") % dealt]
+	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		lines.append("It counts once the check is done.")
 	else:
 		lines.append("The result could not be sent, so it does not count.")
 	await say(lines)

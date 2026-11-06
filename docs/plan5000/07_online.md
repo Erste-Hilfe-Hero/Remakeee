@@ -37,7 +37,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2688. [x] [P1] Der Schiedsrichter bekommt einen eigenen Container in `server/docker-compose.yml` ohne öffentlichen Port, erreichbar nur aus dem internen Netz für die Datenbank-Funktionen.
 2689. [x] [P1] Eine Datenbank-Funktion `_referee_check(battle_id)` legt Kampfdaten in die Tabelle `battle_queue`, und der Schiedsrichter schreibt das Ergebnis (`ok`, `mismatch`, `error`) in `battle_results`.
 2690. [x] [P1] Der Schiedsrichter vergleicht Sieger, Restkraft jedes Spirlings und Anzahl der Runden und meldet `mismatch`, sobald ein Wert abweicht.
-2691. [P1] Ligapunkte, Raid-Schaden und Wochenwertungen zählen erst, wenn der Schiedsrichter `ok` gemeldet hat; bis dahin zeigt das Spiel "wird geprüft".
+2691. [x] [P1] Ligapunkte, Raid-Schaden und Wochenwertungen zählen erst, wenn der Schiedsrichter `ok` gemeldet hat; bis dahin zeigt das Spiel "wird geprüft".
 2692. [P2] Der Schiedsrichter läuft mit derselben Spieldaten-Version wie der Client; `data/*.json` werden beim Bau in den Container kopiert und ihr Prüfwert (SHA-256) im Ergebnis mitgeschrieben.
 2693. [P2] Kommt ein Client mit anderem Daten-Prüfwert als der Server, lehnt `hello` Liga und Raid ab und verweist auf das Update.
 2694. [P2] Ein Prüfschritt dauert höchstens 2 Sekunden; längere Kämpfe bricht der Schiedsrichter ab und markiert sie zur Handprüfung.
@@ -207,11 +207,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2845. [P3] Ein Bundabend: der Leiter legt Wochentag und Uhrzeit fest, die alle Mitglieder als Hinweis sehen.
 2846. [P3] Ein Bund-Spirlog zeigt, welche Spirlings der Bund zusammen schon gesehen hat.
 ### Gemeinsame Raid-Risse
-2847. [P1] Ein Raid-Riss ist ein starker Wächter, den 2 bis 4 Freunde oder Bundmitglieder gemeinsam schwächen; jeder kämpft rundenbasiert auf seinem eigenen Kampfbildschirm.
-2848. [P1] Die Kraft des Wächters liegt auf dem Server (Tabelle `raids`, Spalte `hp_left`); jeder geprüfte Kampf zieht den Schaden ab, den der Schiedsrichter bestätigt.
-2849. [P1] Ein Raid-Riss bleibt 48 Stunden offen; jedes Mitglied hat 3 Versuche pro Tag, jeder Versuch dauert höchstens 10 Runden.
-2850. [P1] Die Kraft des Wächters richtet sich nach der Teilnehmerzahl: 2 Spieler 100 Prozent, 3 Spieler 140 Prozent, 4 Spieler 175 Prozent eines Grundwerts.
-2851. [P1] Alle, die mindestens 5 Prozent der Wächterkraft beigetragen haben, bekommen dieselbe Belohnung, gewürfelt auf dem Server aus einer offenen Tabelle, die das Spiel zeigt.
+2847. [x] [P1] Ein Raid-Riss ist ein starker Wächter, den 2 bis 4 Freunde oder Bundmitglieder gemeinsam schwächen; jeder kämpft rundenbasiert auf seinem eigenen Kampfbildschirm.
+2848. [x] [P1] Die Kraft des Wächters liegt auf dem Server (Tabelle `raids`, Spalte `hp_left`); jeder geprüfte Kampf zieht den Schaden ab, den der Schiedsrichter bestätigt.
+2849. [x] [P1] Ein Raid-Riss bleibt 48 Stunden offen; jedes Mitglied hat 3 Versuche pro Tag, jeder Versuch dauert höchstens 10 Runden.
+2850. [x] [P1] Die Kraft des Wächters richtet sich nach der Teilnehmerzahl: 2 Spieler 100 Prozent, 3 Spieler 140 Prozent, 4 Spieler 175 Prozent eines Grundwerts.
+2851. [x] [P1] Alle, die mindestens 5 Prozent der Wächterkraft beigetragen haben, bekommen dieselbe Belohnung, gewürfelt auf dem Server aus einer offenen Tabelle, die das Spiel zeigt.
 2852. [P2] Raid-Risse haben fünf Tiefen (I bis V) statt Sternen; jede Tiefe verlangt eine Mindest-Ringzahl von 15, 25, 35, 45 und 55.
 2853. [P2] Jeder Raid-Wächter hat 3 Phasen bei 100, 60 und 25 Prozent Kraft, die der Server allen Teilnehmern gleich vorgibt.
 2854. [P2] Ein Raid-Bildschirm im Menü zeigt den gemeinsamen Kraftbalken, den Beitrag jedes Teilnehmers und die Restzeit.
@@ -232,7 +232,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2869. [P3] Ein Gast-Platz: ein Freund außerhalb des Bundes darf auf Einladung als vierter Teilnehmer mitmachen.
 2870. [P3] Raid-Wiederholung: einen eigenen Raid-Versuch später aus der gespeicherten Aufnahme ansehen.
 
-2871. [P1] Raid-Versuche kosten nichts: kein Geld, keine Gegenstände, und das Team ist danach geheilt wie nach einem Echo-Duell.
+2871. [x] [P1] Raid-Versuche kosten nichts: kein Geld, keine Gegenstände, und das Team ist danach geheilt wie nach einem Echo-Duell.
 2872. [P2] Wer den letzten Treffer setzt, bekommt keinen Extrabonus, damit niemand auf den letzten Zug wartet.
 2873. [P3] Die Raid-Wächter wechseln jede Woche nach der Liste `server_config.raid_rotation`.
 2874. [P3] Raid-Wächter tragen den Grafikstil der Era der Region, in der ihr Riss liegt.

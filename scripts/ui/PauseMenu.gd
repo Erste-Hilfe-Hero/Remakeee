@@ -18,6 +18,8 @@ var watch_replay: bool = false
 var echo_duel: Dictionary = {}
 ## Set when the player finds a league battle under Leagues: the battle the server set up.
 var league_match: Dictionary = {}
+## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
+var raid_attempt: Dictionary = {}
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -57,7 +59,7 @@ func run() -> void:
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty():
+				if not echo_duel.is_empty() or not raid_attempt.is_empty():
 					return
 			"Leagues":
 				await LeagueMenu.run(self)
