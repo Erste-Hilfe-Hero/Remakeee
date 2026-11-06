@@ -1174,6 +1174,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	VirtualPad.set_wanted(false)
 	for f: Spirling in foes:
 		GameState.mark_seen(f.data.species_name)
+		GameState.note_spirlog(f, false)
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
 	var ai_level: int = 0 if wild else int(trainer.get("ai", GameState.ai_level()))
