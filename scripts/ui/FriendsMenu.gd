@@ -13,17 +13,21 @@ const GOAL_TEXT: Dictionary = {
 
 static func run(menu: PauseMenu) -> void:
 	if not Online.is_online():
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(Online.error_text())
 		return
 	if not Online.social_on():
 		await menu.info("Friends and greetings are switched off. You can switch them on under Settings, Account.")
 		return
 	while true:
-		var r: Dictionary = await Online.call_fn("friends_list")
-		var mail_r: Dictionary = await Online.call_fn("mail_list")
+		var got: Array[Dictionary] = await fetch_lists(menu)
+		var r: Dictionary = got[0]
+		var mail_r: Dictionary = got[1]
 		if not r.ok or not r.data is Dictionary:
-			await menu.info("No connection right now. Try again in a moment.")
-			return
+			# Stay in the menu with "Try again" and "Back" (item 2149).
+			var again: int = await menu.pick_strings(Online.error_text(r.error), ["Try again"] as Array[String])
+			if again < 0:
+				return
+			continue
 		var data: Dictionary = r.data
 		var friends: Array = data.get("friends", [])
 		var incoming: Array = data.get("incoming", [])
@@ -56,6 +60,24 @@ static func run(menu: PauseMenu) -> void:
 			3: await run_goal(menu)
 			4: await run_board(menu)
 			5: await run_blocked(menu, data.get("blocked", []))
+
+## Friends and Lantern Mail are asked for at the same time, while the menu already shows
+## "Loading..." (item 2129). Returns [friends_list result, mail_list result].
+static func fetch_lists(menu: MenuHost) -> Array[Dictionary]:
+	var got: Array[Dictionary] = [{}, {}]
+	var done: Array[int] = [0]
+	var ask := func(i: int, fn: String) -> void:
+		got[i] = await Online.call_fn(fn)
+		done[0] += 1
+	ask.call(0, "friends_list")
+	ask.call(1, "mail_list")
+	if done[0] < 2:
+		menu.picker.pick("Friends", [{"text": "Loading...", "disabled": true}] as Array[Dictionary], false)
+		while done[0] < 2 and menu.is_inside_tree():
+			await menu.get_tree().process_frame
+		if menu.picker.visible:
+			menu.picker.picked.emit(-1)
+	return got
 
 ## "● Mara  Lv3  Brindlewick": online dot, friendship level, where they are.
 static func friend_line(f: Dictionary) -> String:
@@ -315,7 +337,7 @@ static func open_tiers(g: Dictionary) -> Array[int]:
 static func run_goal(menu: MenuHost) -> void:
 	var r: Dictionary = await Online.call_fn("community_get")
 	if not r.ok or not r.data is Dictionary:
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(Online.error_text(r.error))
 		return
 	var g: Dictionary = r.data
 	var tiers: Array[int] = open_tiers(g)
@@ -338,7 +360,7 @@ static func run_board(menu: MenuHost) -> void:
 	while true:
 		var r: Dictionary = await Online.call_fn("weekly_board", {"p_friends": friends_only})
 		if not r.ok or not r.data is Dictionary:
-			await menu.info("No connection right now. Try again in a moment.")
+			await menu.info(Online.error_text(r.error))
 			return
 		var lines: Array[String] = []
 		for row: Dictionary in r.data.get("rows", []):
@@ -365,4 +387,4 @@ static func error_text(r: Dictionary) -> String:
 		"full": return "That friend list is full."
 		"limit_today": return "You opened all gifts you can today. The rest waits for tomorrow."
 		"social_off": return "Friends and greetings are switched off."
-	return "No connection right now. Try again in a moment."
+	return Online.error_text(e)
