@@ -73,7 +73,7 @@ def strings():
     quests = json.load(open(os.path.join(ROOT, "data/quests.json")))
     for group in quests.values():
         for q in group if isinstance(group, list) else []:
-            for k in ("title", "chapter", "text", "where", "hint"):
+            for k in ("title", "act", "chapter", "text", "where", "hint"):
                 if isinstance(q.get(k), str):
                     found.append(q[k])
     items = json.load(open(os.path.join(ROOT, "data/items.json")))
