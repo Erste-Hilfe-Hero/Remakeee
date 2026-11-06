@@ -79,3 +79,53 @@ func test_tap_marks_pointer_input_and_keys_clear_it() -> void:
 	key.pressed = true
 	host.picker._input(key)
 	assert_false(ListPicker.pointer_used, "keys bring the focus sound back")
+
+func test_scroll_position_is_kept_per_list() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	p.pick("Deep", _rows(30), true, 20)
+	await wait_process_frames(3)
+	var at: int = p._scroll.scroll_vertical
+	assert_gt(at, 0, "row 20 is further down")
+	p.picked.emit(20)
+	await wait_process_frames(1)
+	p.pick("Other", _rows(3))
+	await wait_process_frames(2)
+	p.picked.emit(-1)
+	p.pick("Deep", _rows(30))
+	await wait_process_frames(5)
+	assert_eq(p._scroll.scroll_vertical, at, "item 1853: back where it was")
+	p.picked.emit(-1)
+
+func test_list_fades_in_unless_reduce_motion() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	var before: bool = GameState.reduce_motion
+	GameState.reduce_motion = false
+	p.pick("Fade", _rows(2))
+	assert_lt(p.modulate.a, 1.0, "starts see-through")
+	await wait_seconds(ListPicker.FADE_IN + 0.1)
+	assert_eq(p.modulate.a, 1.0)
+	p.picked.emit(-1)
+	GameState.reduce_motion = true
+	p.pick("Still", _rows(2))
+	assert_eq(p.modulate.a, 1.0, "Reduce motion: no fade")
+	p.picked.emit(-1)
+	GameState.reduce_motion = before
+
+func test_long_info_shows_a_thin_scroll_bar() -> void:
+	var host: MenuHost = await _host()
+	var long_text: String = ""
+	for i: int in 40:
+		long_text += "Line %d of a long text.\n" % i
+	host.info(long_text)
+	await wait_process_frames(3)
+	var r: Rect2 = host.info_bar_rect()
+	assert_eq(r.size.x, float(MenuHost.INFO_BAR_W), "item 1840: 2 px wide")
+	assert_gt(r.size.y, 0.0)
+	host._close_info()
+	await wait_process_frames(1)
+	host.info("Short.")
+	await wait_process_frames(3)
+	assert_eq(host.info_bar_rect().size.y, 0.0, "no bar when the text fits")
+	host._info_closed.emit()
