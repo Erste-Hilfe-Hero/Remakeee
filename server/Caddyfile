@@ -20,6 +20,7 @@
 			Disallow: /play/
 			Disallow: /rest/
 			Disallow: /auth/
+			Disallow: /billing/
 			TXT 200
 	}
 	handle_path /auth/v1/* {
@@ -34,6 +35,13 @@
 			max_size 512KB
 		}
 		reverse_proxy rest:3000
+	}
+	# Billing service (plan area 10): purchase checks from the app, store notifications.
+	handle_path /billing/v1/* {
+		request_body {
+			max_size 64KB
+		}
+		reverse_proxy billing:8080
 	}
 	# Result of the weekly restore test, read by .github/workflows/monitor.yml.
 	handle /status.json {

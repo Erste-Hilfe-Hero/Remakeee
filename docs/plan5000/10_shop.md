@@ -111,7 +111,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4098. [x] [P1] Beim Start und nach jedem Wiederverbinden offene Käufe (Google `queryPurchasesAsync`, Apple `Transaction.unfinished`) abfragen und an den Server nachreichen.
 4099. [x] [P1] Den Kaufablauf als Zustandsmaschine in `Billing.gd` bauen: Bereit, Abfrage, Kauf läuft, Prüfung, Gutgeschrieben, Fehler, Abgebrochen.
 4100. [P2] Für ausstehende Käufe (Google `PENDING`, Apple "Ask to Buy") einen Text "Kauf wartet auf Freigabe" zeigen und nichts gutschreiben, bis der Status wechselt.
-4101. [P2] Eine Konto-Kennung als `obfuscatedAccountId` (Google) und `appAccountToken` (Apple, UUID aus der Konto-ID) mitschicken, damit der Server Käufe dem richtigen Konto zuordnet.
+4101. [x] [P2] Eine Konto-Kennung als `obfuscatedAccountId` (Google) und `appAccountToken` (Apple, UUID aus der Konto-ID) mitschicken, damit der Server Käufe dem richtigen Konto zuordnet.
 4102. [P2] Den Button "Käufe wiederherstellen" in `scripts/ui/AccountMenu.gd` und im Shop einbauen, der `restore` aufruft und das Ergebnis in einem Satz meldet.
 4103. [P2] Fehlercodes beider Stores auf 8 eigene Meldungen abbilden (abgebrochen, nicht verfügbar, schon gekauft, Netz fehlt, Zahlung abgelehnt, Store-Fehler, ausstehend, unbekannt).
 4104. [P2] Ohne Serververbindung den Kauf-Button sperren und "Shop braucht eine Verbindung" anzeigen, damit kein Kauf ohne Prüfung startet.
@@ -138,17 +138,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4125. [P3] Kauf-Abbrüche nur lokal zählen und nie an den Server senden, damit kein Nutzungsprofil entsteht.
 
 ### Server: Belege, Konto-Guthaben, Erstattungen
-4126. [P1] Einen neuen Dienst `server/billing/` (Python 3.13, ohne fremde Analytics) bauen, in `server/docker-compose.yml` eintragen und im `Caddyfile` unter `/billing/v1/*` erreichbar machen.
+4126. [x] [P1] Einen neuen Dienst `server/billing/` (Python 3.13, ohne fremde Analytics) bauen, in `server/docker-compose.yml` eintragen und im `Caddyfile` unter `/billing/v1/*` erreichbar machen.
 4127. [x] [P1] Eine Migration `supabase/migrations/20261110000020_shop.sql` mit den Tabellen `wallets`, `ledger`, `purchases`, `entitlements`, `subscriptions`, `spend_limits` und `refunds` anlegen, alle mit Zeilen-Zugriffsschutz (RLS) ohne Policies, wie die vorhandenen Tabellen. Zusätzlich `shop_offers`, `shop_profiles` und `deliveries`.
-4128. [x] [P1] Die Tabelle `purchases` bekommt eine eindeutige Spalte `store_transaction_id` (Apple `transactionId`, Google `orderId`), damit kein Beleg zweimal gutgeschrieben wird.
-4129. [P1] Apple-Belege mit der App Store Server API prüfen: JWS-Signatur gegen die Apple-Zertifikatskette, `bundleId` gleich `de.chimora.game`, `appAccountToken` passt zum Konto.
-4130. [P1] Google-Belege mit der Play Developer API `purchases.products.get` und `purchases.subscriptionsv2.get` prüfen und `obfuscatedExternalAccountId` mit dem Konto vergleichen.
+4128. [x] [P1] Die Tabelle `purchases` bekommt eine eindeutige Spalte `store_transaction_id` (Apple `transactionId`, Google `orderId`), damit kein Beleg zweimal gutgeschrieben wird. Umgesetzt mit Google `purchaseToken` statt `orderId` (auch Erstattungsmeldungen tragen ihn) und beim Pass mit der ursprünglichen Transaktion.
+4129. [x] [P1] Apple-Belege mit der App Store Server API prüfen: JWS-Signatur gegen die Apple-Zertifikatskette, `bundleId` gleich `de.chimora.game`, `appAccountToken` passt zum Konto. Umgesetzt ohne Aufruf bei Apple: die Kette im JWS endet in Apple Root CA G3 (SHA-256 fest im Code); der App-Store-Server-API-Schlüssel ist nur für spätere Abfragen nötig.
+4130. [x] [P1] Google-Belege mit der Play Developer API `purchases.products.get` und `purchases.subscriptionsv2.get` prüfen und `obfuscatedExternalAccountId` mit dem Konto vergleichen.
 4131. [x] [P1] Das Rissglas-Guthaben liegt nur auf dem Server in `wallets.balance`; Spielstände enthalten keinen Kontostand, und `SaveManager.gd` liest ihn nie aus dem Spielstand.
 4132. [x] [P1] Jede Gutschrift und jede Ausgabe wird als Zeile in `ledger` geschrieben (Konto, Betrag, Grund, Bezug, Zeit), und `wallets.balance` ist immer die Summe dieser Zeilen.
 4133. [x] [P1] Eine RPC-Funktion `shop_buy(offer_id, expected_price)` anlegen, die Preis, Guthaben, Limit und Kontostatus in einer Transaktion prüft und den Gegenstand als Berechtigung gutschreibt.
-4134. [P1] Apple App Store Server Notifications V2 unter `/billing/v1/apple/notify` empfangen und `REFUND`, `REVOKE`, `DID_RENEW`, `EXPIRED`, `DID_FAIL_TO_RENEW` verarbeiten.
-4135. [P1] Google Real-time Developer Notifications über Pub/Sub-Push unter `/billing/v1/google/notify` empfangen und Abo-Ereignisse sowie `voidedPurchaseNotification` verarbeiten.
-4136. [P1] Zusätzlich täglich die Google Voided Purchases API abfragen, um Rückbuchungen zu finden, die keine Benachrichtigung ausgelöst haben.
+4134. [x] [P1] Apple App Store Server Notifications V2 unter `/billing/v1/apple/notify` empfangen und `REFUND`, `REVOKE`, `DID_RENEW`, `EXPIRED`, `DID_FAIL_TO_RENEW` verarbeiten.
+4135. [x] [P1] Google Real-time Developer Notifications über Pub/Sub-Push unter `/billing/v1/google/notify` empfangen und Abo-Ereignisse sowie `voidedPurchaseNotification` verarbeiten.
+4136. [x] [P1] Zusätzlich täglich die Google Voided Purchases API abfragen, um Rückbuchungen zu finden, die keine Benachrichtigung ausgelöst haben. Umgesetzt: stündlich, letzte 3 Tage.
 4137. [P2] Bei einer Erstattung von Rissglas den Betrag vom Guthaben abziehen; reicht es nicht, wird das Guthaben negativ und der Shop für dieses Konto bis zum Ausgleich gesperrt.
 4138. [P2] Bei der Erstattung eines Einzelangebots den Gegenstand entfernen, wenn er noch ungenutzt ist, und schon verbrauchte Wirkungen nicht rückgängig machen.
 4139. [P2] Bei einer Rückbuchung (Chargeback) zusätzlich einen Zähler `profiles.chargebacks` erhöhen und ab 3 Rückbuchungen den Shop für das Konto sperren, ohne das Spiel zu sperren.
