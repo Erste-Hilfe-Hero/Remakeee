@@ -13,7 +13,18 @@ const WAYMARKS: int = 60
 const INTERIM: Dictionary = {3: 100, 4: 150}
 ## Weekly board points per round won; all five plus 100 for full health stay within 400.
 const POINTS_PER_ROUND: int = 60
-const REWARDS: Array[String] = ["max_tonic", "spark_charm", "power_brew", "guard_brew", "focus_brew", "dash_brew", "keen_lens", "iron_burr"]
+## Item prize list (plan 3191): twelve entries with the four power tools.
+const REWARDS: Array[String] = ["max_tonic", "spark_charm", "power_brew", "guard_brew", "focus_brew", "dash_brew", "keen_lens", "iron_burr",
+	"spark_coil", "bark_wrap", "swift_feather", "kin_charm"]
+## Partial win (plan 3195): from round PARTIAL_ROUND on PARTIAL_WAYMARKS, the full WAYMARKS for all five.
+const PARTIAL_ROUND: int = 3
+const PARTIAL_WAYMARKS: int = 30
+## Tries per week that can still win prizes (plan 3196); later tries only count for the best score.
+const PRIZE_TRIES: int = 3
+## Bonus for a clear with a score under the week's target (plan 3188).
+const TARGET_WAYMARKS: int = 20
+## Weeks kept in the archive (plan 3190).
+const ARCHIVE_WEEKS: int = 8
 
 var week: String
 var rng := RandomNumberGenerator.new()
@@ -72,6 +83,99 @@ static func round_text(round_no: int, turns: int, party: Array[Spirling]) -> Str
 			fainted += 1
 	var pct: int = int(round(100.0 * hp / maxf(1.0, float(party.size()))))
 	return Loc.t("Round %d of %d: %d turns, %d%% power left, %d fainted.") % [round_no, ROUNDS, turns, pct, fainted]
+
+## Run score of a full clear (plan 3187), lower is better: every turn counts 10, every
+## percent of power lost counts 1. 0 for a run that did not clear all rounds.
+static func run_score(wins: int, turns: int, party: Array[Spirling]) -> int:
+	if wins < ROUNDS:
+		return 0
+	var hp: float = 0.0
+	for s: Spirling in party:
+		hp += s.hp_fraction()
+	var pct: int = int(round(100.0 * hp / maxf(1.0, float(party.size()))))
+	return turns * 10 + (100 - pct)
+
+## The week's fixed target score (plan 3188): from the seed, between 180 and 260.
+static func target(week_key: String) -> int:
+	var r := RandomNumberGenerator.new()
+	r.seed = hash("chimora-weekly-target-" + week_key)
+	return 180 + 10 * r.randi_range(0, 8)
+
+## This week's record, fresh in a new week: {week, best, claimed, tries, partial, score, target_paid}.
+static func record_for(week_key: String) -> Dictionary:
+	var rec: Dictionary = GameState.records.get("weekly", {})
+	if str(rec.get("week", "")) != week_key and not GameState.time_went_back(str(rec.get("week", "")), week_key):
+		rec = {"week": week_key, "best": 0, "claimed": false}
+	return rec
+
+## Counts a new try; true while it can still win prizes.
+static func start_try(rec: Dictionary) -> bool:
+	rec["tries"] = int(rec.get("tries", 0)) + 1
+	return int(rec.tries) <= PRIZE_TRIES
+
+static func prize_tries_left(rec: Dictionary) -> int:
+	return maxi(0, PRIZE_TRIES - int(rec.get("tries", 0)))
+
+## Books a finished run: best rounds, best score (records.weekly_best), partial Waymarks, the
+## target bonus and the archive. The full prize stays with the caller. Returns the lines to show.
+func finish_run(rec: Dictionary, wins: int, turns: int, party: Array[Spirling], prizes: bool) -> Array[String]:
+	var lines: Array[String] = []
+	rec["best"] = maxi(int(rec.get("best", 0)), wins)
+	var score: int = run_score(wins, turns, party)
+	if score > 0:
+		var best: int = int(rec.get("score", 0))
+		if best == 0 or score < best:
+			rec["score"] = score
+			GameState.records["weekly_best"] = {"week": week, "score": score}
+			lines.append(Loc.t("New best score this week: %d (target %d).") % [score, target(week)])
+	if prizes and wins >= PARTIAL_ROUND and not bool(rec.get("partial", false)):
+		rec["partial"] = true
+		lines.append_array(Waymarks.reward_lines(Waymarks.earn(PARTIAL_WAYMARKS, "weekly")))
+	if prizes and score > 0 and score < target(week) and not bool(rec.get("target_paid", false)):
+		rec["target_paid"] = true
+		lines.append(Loc.t("Under the target score of %d!") % target(week))
+		lines.append_array(Waymarks.reward_lines(Waymarks.earn(TARGET_WAYMARKS, "weekly")))
+	_archive(rec)
+	return lines
+
+## Waymarks still due for the full clear: the partial share was paid already.
+static func full_waymarks(rec: Dictionary) -> int:
+	return WAYMARKS - (PARTIAL_WAYMARKS if bool(rec.get("partial", false)) else 0)
+
+func _archive(rec: Dictionary) -> void:
+	var arch: Array = GameState.records.get("weekly_archive", [])
+	arch = arch.filter(func(e: Variant) -> bool: return e is Dictionary and str((e as Dictionary).get("week", "")) != week)
+	arch.push_front({"week": week, "field": field, "rule": rule, "best": int(rec.get("best", 0)), "score": int(rec.get("score", 0))})
+	GameState.records["weekly_archive"] = arch.slice(0, ARCHIVE_WEEKS)
+
+## Archive screen: the last weeks with field, rule and the own result.
+static func archive_text() -> String:
+	var arch: Array = GameState.records.get("weekly_archive", [])
+	if arch.is_empty():
+		return Loc.t("No weekly echo tried yet.")
+	var out: PackedStringArray = [Loc.t("The last %d weeks:") % ARCHIVE_WEEKS]
+	for e: Variant in arch:
+		var d: Dictionary = e
+		var res: String = Loc.t("%d of %d rounds") % [int(d.get("best", 0)), ROUNDS]
+		if int(d.get("score", 0)) > 0:
+			res += ", " + Loc.t("score %d") % int(d.score)
+		out.append("%s  %s, %s: %s" % [str(d.get("week", "")), Loc.t(str(BattleRules.FIELDS.get(str(d.get("field", "")), {}).get("label", d.get("field", "")))),
+			Loc.t(str(BattleRules.RULES.get(str(d.get("rule", "")), {}).get("label", d.get("rule", "")))), res])
+	return "\n".join(out)
+
+## Week preview (plan 3189): field, rule, target and the elements of the first three teams.
+func preview_text() -> String:
+	var out: PackedStringArray = [Loc.t("This week: %s, rule %s, ring %d.") % [Loc.t(str(BattleRules.FIELDS[field].label)), Loc.t(str(BattleRules.RULES[rule].label)), level],
+		Loc.t("Target score: %d (lower is better).") % target(week)]
+	for i: int in 3:
+		var els: PackedStringArray = []
+		for sp: Spirling in team(i):
+			for e: int in sp.data.elements:
+				var nm: String = Loc.t(Elements.element_name(e))
+				if not nm in els:
+					els.append(nm)
+		out.append(Loc.t("Echo %d: %s") % [i + 1, ", ".join(els)])
+	return "\n".join(out)
 
 func reward_item() -> String:
 	return REWARDS[rng.randi_range(0, REWARDS.size() - 1)]
