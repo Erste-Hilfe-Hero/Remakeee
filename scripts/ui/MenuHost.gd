@@ -309,6 +309,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"battery": "Fewer frames per second to save battery.",
 	"motion": "Calmer screen: no shaking, no flashes.",
 	"contrast": "Pure black and white for easier reading.",
+	"large_text": "Bigger letters in menus, texts and talk.",
 	"language": "English or Deutsch.",
 	"day_night": "The light changes with the time of day.",
 	"pad_size": "How big the touch pad and buttons are.",
@@ -506,6 +507,8 @@ func run_display() -> void:
 				GameState.reduce_motion = not GameState.reduce_motion
 			"contrast":
 				GameState.high_contrast = not GameState.high_contrast
+			"large_text":
+				GameState.large_text = not GameState.large_text
 			"language":
 				GameState.language = Loc.next_language()
 			"day_night":
@@ -525,6 +528,7 @@ static func display_rows() -> Array[Array]:
 		["battery", "Battery saver: %s" % ("On" if GameState.battery_saver else "Off")],
 		["motion", "Less motion: %s" % ("On" if GameState.reduce_motion else "Off")],
 		["contrast", "High contrast: %s" % ("On" if GameState.high_contrast else "Off")],
+		["large_text", "Large text: %s" % ("On" if GameState.large_text else "Off")],
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
 		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
 		["retro", "Retro filter: %s" % retro],
@@ -551,6 +555,8 @@ static func refresh_all_themes(tree: SceneTree) -> void:
 	for n: Node in tree.get_nodes_in_group(THEME_GROUP):
 		if n.has_method("refresh_theme"):
 			n.refresh_theme()
+		elif n is Control:
+			(n as Control).theme = UITheme.get_theme()
 
 const THEME_GROUP: StringName = &"ui_theme_users"
 

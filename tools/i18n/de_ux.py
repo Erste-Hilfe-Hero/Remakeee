@@ -173,6 +173,8 @@ T = {
 "This week...": "Diese Woche...",
 "Collection...": "Sammlung...",
 "Friends, mail: %s": "Freunde, Post: %s",
+"Large text: %s": "Große Schrift: %s",
+"Bigger letters in menus, texts and talk.": "Größere Buchstaben in Menüs, Texten und Gesprächen.",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).
