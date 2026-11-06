@@ -166,4 +166,15 @@ T = {
 "Swap Spirlings here?": "Hier Spirlings tauschen?",
 "Go on": "Weiter",
 "%s seems %s.": "%s wirkt %s.",
+# Collection goals (items 408-411)
+"%d more kinds until %s.": "Noch %d Arten bis %s.",
+"the gift for %d kinds": "zum Geschenk für %d Arten",
+"the gift for %d kinds from %s": "zum Geschenk für %d Arten aus %s",
+"the Veydal chapter stamp": "zum Kapitel-Stempel Veydal",
+"Spirlog goal: %d kinds bonded! You received %d coins.": "Spirlog-Ziel: %d Arten gebunden! Du erhältst %d Münzen.",
+"New title: %s": "Neuer Titel: %s",
+"Titles: %s": "Titel: %s",
+"Veydal Wanderer": "Wanderer von Veydal",
+"Veydal Chronicler": "Chronist von Veydal",
+"Keeper of the Veydal Pages": "Hüter der Veydal-Seiten",
 }

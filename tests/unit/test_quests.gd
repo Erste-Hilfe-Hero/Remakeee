@@ -79,5 +79,15 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 				settable["rift_%s_sealed" % n.warden] = true
 			for wf: Variant in n.get("win_flags", []):
 				settable[str(wf)] = true
+	# Story figures on area 3's maps (data/story_npcs.json) and story duels.
+	for mid: Variant in StoryPlacements.data():
+		for n: Variant in StoryPlacements.for_map(str(mid)).get("npcs", []):
+			if n.has("beaten_flag"):
+				settable[str(n.beaten_flag)] = true
+			if n.has("warden"):
+				settable["rift_%s_sealed" % n.warden] = true
+	for id: Variant in StoryBattles.data():
+		if StoryBattles.has(str(id)):
+			settable[StoryBattles.beaten_flag(str(id))] = true
 	for f: String in QuestLog.all_flags():
 		assert_true(settable.has(f), "quest flag '%s' is never set by dialogue or maps" % f)
