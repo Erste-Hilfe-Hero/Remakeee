@@ -13,6 +13,13 @@ var _name_box: PanelContainer
 var _name_edit: LineEdit
 var _name_keys: NameKeyboard
 signal _name_done(text: String)
+## While Online.connect_now runs (animated status line).
+var _connecting: bool = false
+var _connect_started: int = 0
+## True while the main title list waits (the back button then asks to quit).
+var _at_root: bool = false
+## What the root list returns when the Android back button asks to quit.
+const QUIT_ASKED: int = -2
 
 func _ready() -> void:
 	Database.load_all()
@@ -80,8 +87,10 @@ func _build_name_box() -> void:
 ## Chimora is online only: nothing past the title works without the server (item 1).
 func _go_online() -> void:
 	while true:
-		_status.text = "Connecting..."
+		_connect_started = Time.get_ticks_msec()
+		_connecting = true
 		var st: Online.State = await Online.connect_now()
+		_connecting = false
 		if st == Online.State.ONLINE:
 			_status.text = ""
 			if not Online.privacy_seen:
@@ -94,13 +103,31 @@ func _go_online() -> void:
 			continue
 		if st == Online.State.UPDATE_REQUIRED:
 			_status.text = ""
-			await _menu.info("A new version of Chimora is out. Please update it in the store to keep playing.")
+			# A button opens the store page directly (item 2148).
+			var u: int = await _menu.pick_strings("A new version of Chimora is out. Please update it in the store to keep playing.",
+				["Open the store", "Try again"] as Array[String], false)
+			if u == 0:
+				OS.shell_open(Online.store_url())
 			continue
 		_status.text = "No connection"
-		var idx: int = await _menu.pick_strings("Chimora needs the internet. Your journeys are safe on the server.",
+		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t("Your journeys are safe on the server."),
 			["Try again", "Settings"] as Array[String], false)
 		if idx == 1:
 			await _menu.run_settings()
+
+## "Connecting..." with moving dots, a note after 5 s and another after 15 s (item 2127).
+static func connecting_text(seconds: float) -> String:
+	var dots: String = ".".repeat(1 + int(seconds * 2.0) % 3)
+	var line: String = Loc.t("Connecting") + dots
+	if seconds >= 15.0:
+		line += "\n" + Loc.t("Still trying. The next step comes as soon as the server answers.")
+	elif seconds >= 5.0:
+		line += "\n" + Loc.t("The server is answering slowly.")
+	return line
+
+func _process(_delta: float) -> void:
+	if _connecting:
+		_status.text = connecting_text((Time.get_ticks_msec() - _connect_started) / 1000.0)
 
 func _show_status() -> void:
 	var lines: Array[String] = []
@@ -135,7 +162,13 @@ func _run() -> void:
 		if _used_slots() > 1:
 			items.append("Load...")
 		items.append("Settings")
+		_at_root = true
 		var idx: int = await _menu.pick_strings("", items, false)
+		_at_root = false
+		if idx == QUIT_ASKED:
+			if await _menu.confirm("Quit Chimora?"):
+				get_tree().quit()
+			continue
 		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]
 		match choice:
 			"Continue":
@@ -158,7 +191,7 @@ func _run() -> void:
 				var slot: int = await _pick_slot("Save the new journey in...", true)
 				if slot <= 0:
 					continue
-				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm("Start over in slot %d? That save will be replaced when you save." % slot):
+				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm_danger("Start over in slot %d? That save will be replaced when you save." % slot):
 					continue
 				SaveManager.set_slot(slot)
 				if await _new_game():
@@ -167,6 +200,17 @@ func _run() -> void:
 					return
 			"Settings":
 				await _menu.run_settings()
+
+## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
+func _notification(what: int) -> void:
+	if what != NOTIFICATION_WM_GO_BACK_REQUEST or _menu == null:
+		return
+	if _at_root and _menu.picker.visible:
+		_menu.picker.picked.emit(QUIT_ASKED)
+	elif _name_box != null and _name_box.visible:
+		pass
+	else:
+		BackButton.press_cancel()
 
 func _enter_game() -> void:
 	Online.push_profile()
