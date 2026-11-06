@@ -14,7 +14,10 @@ func test_every_puzzle_has_the_fields_and_real_content() -> void:
 			assert_true(p.has(key), "%s has %s" % [p.get("id", "?"), key])
 		assert_false(ids.has(p.id), "unique id")
 		ids[p.id] = true
-		assert_true(str(p.goal.type) in BattlePuzzle.GOALS, str(p.id))
+		var gl: Array[Dictionary] = BattlePuzzle.goals(p)
+		assert_between(gl.size(), 1, BattlePuzzle.MAX_GOALS, str(p.id))
+		for g: Dictionary in gl:
+			assert_true(str(g.get("type", "")) in BattlePuzzle.GOALS, str(p.id))
 		assert_true(str(p.field).is_empty() or BattleRules.FIELDS.has(str(p.field)), str(p.id))
 		assert_true(str(p.rule).is_empty() or BattleRules.RULES.has(str(p.rule)), str(p.id))
 		for side: String in ["player", "foe"]:
@@ -70,3 +73,48 @@ func test_a_trial_leaves_the_party_alone() -> void:
 	assert_eq(GameState.party.size(), before)
 	for s: Spirling in at.model.party(0):
 		assert_false(s in GameState.party)
+
+## Plan area 2, items 701-703, 705: the new goal types and the second and third Trials.
+func test_new_trials_match_the_plan() -> void:
+	var m: BattleModel = BattlePuzzle.build_model(BattlePuzzle.by_id("ember_trial_2"))
+	assert_eq(m.active_spirling(0).data.species_name, "Kindlop")
+	assert_eq(m.active_spirling(0).status, "scorch")
+	assert_eq(m.party(1).size(), 2, "1 against 2")
+	m = BattlePuzzle.build_model(BattlePuzzle.by_id("ember_trial_3"))
+	assert_eq(m.active_spirling(0).data.species_name, "Mossling")
+	assert_lt(m.active_spirling(0).hp, m.active_spirling(0).max_hp())
+	var p: Dictionary = BattlePuzzle.by_id("current_trial_2")
+	m = BattlePuzzle.build_model(p)
+	assert_eq(m.active_spirling(0).energy, 2)
+	assert_eq(m.field, "high_tide")
+	assert_eq(BattlePuzzle.goals(p).size(), 2)
+
+func test_goal_types() -> void:
+	var p: Dictionary = BattlePuzzle.by_id("ember_trial_1")
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	at.rests = 1
+	at.cured.append("scorch")
+	at.last_move = "Fizz Pop"
+	assert_true(BattlePuzzle.goal_met(p, {"type": "exact_rests", "value": 1}, at))
+	assert_false(BattlePuzzle.goal_met(p, {"type": "exact_rests", "value": 0}, at))
+	assert_false(BattlePuzzle.goal_met(p, {"type": "keep_status", "value": "scorch"}, at))
+	assert_true(BattlePuzzle.goal_met(p, {"type": "keep_status", "value": "soak"}, at))
+	assert_true(BattlePuzzle.goal_met(p, {"type": "last_hit_with", "value": "Fizz Pop"}, at))
+	assert_false(BattlePuzzle.goal_met(p, {"type": "last_hit_with", "value": "Drench"}, at))
+	assert_true(BattlePuzzle.goal_met(p, {"type": "no_faint"}, at))
+	at.own_faints = 1
+	assert_false(BattlePuzzle.goal_met(p, {"type": "no_faint"}, at))
+	assert_false(BattlePuzzle.goal_met(p, {"type": "use_reaction", "value": "VOLT"}, at))
+	assert_false(BattlePuzzle.goal_met(p, {"type": "unknown"}, at))
+
+func test_scorch_trial_fails_when_cured() -> void:
+	# Resting cures the Scorch, so a rest anywhere in the line breaks the goal.
+	var p: Dictionary = BattlePuzzle.by_id("ember_trial_2")
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	BattlePuzzle.play(p, at, BattleAction.make_rest(BattleModel.Side.PLAYER))
+	if "scorch" in at.cured:
+		while not BattlePuzzle.is_over(p, at):
+			BattlePuzzle.play(p, at, BattleAction.make_move(0, 0))
+		assert_false(BattlePuzzle.solved(p, at))
+	else:
+		pass_test("resting does not cure Scorch here")
