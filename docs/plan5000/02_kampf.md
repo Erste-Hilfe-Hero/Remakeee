@@ -369,20 +369,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 779. [P3] Die Kampfende-Zusammenfassung nennt das Bonusziel mit erfüllt oder verfehlt und dem Wert (zum Beispiel "4 von 4 Runden").
 
 ### Regelvarianten
-780. [P1] Neue Datei data/rule_variants.json und Lader in BattleRules: jede Variante ist ein Satz von Zahlen-Schlüsseln, die BattleModel beim Start liest; kein Sonderfall im Code pro Variante.
-781. [P1] Varianten sind kombinierbar bis 3 gleichzeitig; widersprüchliche Paare stehen in `excludes` und werden beim Laden abgelehnt.
-782. [P2] Variante "Funkenarm": max. Energie 6, Start-Energie 6.
-783. [P2] Variante "Volle Ladung": Start-Energie 10, kein Energiegewinn pro Runde, Rasten gibt +3 statt +2.
-784. [P2] Variante "Wechselzoll": jeder freiwillige Wechsel kostet den eingewechselten Spirling 2 Energie.
-785. [P2] Variante "Glasklingen": max. Kraft aller Spirlings ×0,5.
-786. [P2] Variante "Zähe Runde": max. Kraft aller Spirlings ×1,5.
-787. [P2] Variante "Ohne Heimvorteil": der Bonus für Techniken des eigenen Elements (DamageCalc.STAB 1,25) fällt auf 1,0.
+780. [x] [P1] Neue Datei data/rule_variants.json und Lader in BattleRules: jede Variante ist ein Satz von Zahlen-Schlüsseln, die BattleModel beim Start liest; kein Sonderfall im Code pro Variante. Erledigt: data/rule_variants.json, BattleRules.VARIANT_KEYS/variant_values, BattleModel.variants und rules (im Replay gespeichert).
+781. [x] [P1] Varianten sind kombinierbar bis 3 gleichzeitig; widersprüchliche Paare stehen in `excludes` und werden beim Laden abgelehnt. Erledigt: variant_conflict, validate_variants (auch in validate_data).
+782. [x] [P2] Variante "Funkenarm": max. Energie 6, Start-Energie 6. Erledigt.
+783. [x] [P2] Variante "Volle Ladung": Start-Energie 10, kein Energiegewinn pro Runde, Rasten gibt +3 statt +2. Erledigt.
+784. [x] [P2] Variante "Wechselzoll": jeder freiwillige Wechsel kostet den eingewechselten Spirling 2 Energie. Erledigt.
+785. [x] [P2] Variante "Glasklingen": max. Kraft aller Spirlings ×0,5. Erledigt.
+786. [x] [P2] Variante "Zähe Runde": max. Kraft aller Spirlings ×1,5. Erledigt.
+787. [x] [P2] Variante "Ohne Heimvorteil": der Bonus für Techniken des eigenen Elements (DamageCalc.STAB 1,25) fällt auf 1,0. Erledigt.
 788. [P2] Variante "Stufenstarr": keine Stufenänderungen, Stufen-Techniken sind im Menü gesperrt.
-789. [P2] Variante "Kurzer Atem": jeder Status endet spätestens nach 2 Runden, auch Scorch, Root und Jolt.
-790. [P2] Variante "Starke Reaktionen": alle Reaktions-Faktoren aus REACTIONS gelten doppelt so stark über 1,0 hinaus (×1,2 wird ×1,4).
+789. [x] [P2] Variante "Kurzer Atem": jeder Status endet spätestens nach 2 Runden, auch Scorch, Root und Jolt. Erledigt.
+790. [x] [P2] Variante "Starke Reaktionen": alle Reaktions-Faktoren aus REACTIONS gelten doppelt so stark über 1,0 hinaus (×1,2 wird ×1,4). Erledigt.
 791. [P2] Variante "Feldwirbel": alle 3 Runden legt der Kampf-Seed ein zufälliges der Felder, Ansage eine Runde vorher.
 792. [P2] Variante "Kein Rasten": die Aktion Rasten fehlt, dafür +2 Energie pro Runde.
-793. [P2] Variante "Spätes Ende": ab Runde 15 verliert jeder aktive Spirling am Rundenende 1/8 seiner max. Kraft.
+793. [x] [P2] Variante "Spätes Ende": ab Runde 15 verliert jeder aktive Spirling am Rundenende 1/8 seiner max. Kraft. Erledigt.
 794. [P3] Variante "Einmal jede": jede Technik kann pro Spirling nur einmal pro Kampf gewählt werden.
 795. [P3] Variante "Spiegelkampf": der Gegner kämpft mit einer Kopie des Spieler-Teams auf gleichem Ring und mit gleichen Techniken.
 796. [P2] Varianten erscheinen beim Kampfstart als Regel-Banner mit eigenem Symbol pro Variante und im Pause-Menü als Liste.

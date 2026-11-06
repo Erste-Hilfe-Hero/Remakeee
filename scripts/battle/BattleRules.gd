@@ -247,3 +247,68 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 	if boost != 1.0 and move.element in user.elements() and user.hp * 3 < user.max_hp():
 		m *= boost
 	return m
+
+# --- Rule variants (plan area 2, items 780, 781) ---------------------------------------------
+
+const VARIANTS_PATH: String = "res://data/rule_variants.json"
+## Most variants that can be on at once.
+const MAX_VARIANTS: int = 3
+## Every number key a variant may set, with the value of the normal rules. BattleModel reads only
+## these; a variant is nothing but a set of them, so no variant needs its own code.
+const VARIANT_KEYS: Dictionary[String, float] = {
+	"start_energy": 10.0, "max_energy": 10.0, "energy_per_turn": 1.0, "rest_energy": 2.0,
+	"swap_energy_cost": 0.0, "hp_mult": 1.0, "stab": 1.25, "status_max_turns": 0.0,
+	"reaction_scale": 1.0, "chip_from_turn": 0.0,
+}
+
+static var _variants: Dictionary = {}
+
+## Every variant from data/rule_variants.json (cached). Unknown keys and one-sided excludes are
+## reported by validate_variants.
+static func variants() -> Dictionary:
+	if _variants.is_empty():
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(VARIANTS_PATH)) if FileAccess.file_exists(VARIANTS_PATH) else null
+		if raw is Dictionary:
+			_variants = (raw as Dictionary).duplicate(true)
+			_variants.erase("_doc")
+	return _variants
+
+## Problems in the variant file: unknown keys, excludes naming no variant or only one way.
+static func validate_variants() -> Array[String]:
+	var out: Array[String] = []
+	var all: Dictionary = variants()
+	for id: String in all:
+		for k: String in (all[id].get("keys", {}) as Dictionary):
+			if not VARIANT_KEYS.has(k):
+				out.append("%s: unknown key %s" % [id, k])
+		for ex: Variant in all[id].get("excludes", []):
+			if not all.has(str(ex)):
+				out.append("%s: excludes unknown %s" % [id, ex])
+			elif not id in (all[str(ex)].get("excludes", []) as Array):
+				out.append("%s: excludes %s, but not the other way" % [id, ex])
+	return out
+
+## Why [param ids] cannot be played together ("" when they can): too many, unknown, or excluded.
+static func variant_conflict(ids: Array[String]) -> String:
+	if ids.size() > MAX_VARIANTS:
+		return "At most %d variants at once." % MAX_VARIANTS
+	var all: Dictionary = variants()
+	for i: int in ids.size():
+		if not all.has(ids[i]):
+			return "Unknown variant %s." % ids[i]
+		for j: int in range(i + 1, ids.size()):
+			if ids[j] == ids[i] or ids[j] in (all[ids[i]].get("excludes", []) as Array):
+				return "%s and %s don't go together." % [all[ids[i]].label, all[ids[j]].get("label", ids[j])]
+	return ""
+
+## The merged keys of [param ids] over the normal values, or {} when they conflict.
+static func variant_values(ids: Array[String]) -> Dictionary:
+	var out: Dictionary = VARIANT_KEYS.duplicate()
+	if not variant_conflict(ids).is_empty():
+		return {}
+	for id: String in ids:
+		var keys: Dictionary = variants()[id].get("keys", {})
+		for k: String in keys:
+			out[k] = float(keys[k])
+	return out
+
