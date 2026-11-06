@@ -100,6 +100,23 @@ class Tracker:
 			top += s.max_hp()
 		return float(hp) / float(maxi(top, 1))
 
+	## For the mark beside the turn count (item 762): 1 once the goal is surely met, -1 once it is
+	## surely missed, 0 while it is still open. Only a won battle pays out in the end.
+	func status() -> int:
+		if model.outcome == BattleModel.Outcome.LOSS or model.outcome == BattleModel.Outcome.FLED:
+			return -1
+		if model.outcome == BattleModel.Outcome.WIN:
+			return 1 if met() else -1
+		var v: Variant = goal.get("value", 0)
+		match str(goal.get("type", "")):
+			"win_within": return -1 if turns() > int(v) else 0
+			"no_faint": return -1 if faints > 0 else 0
+			"no_rest": return -1 if rests > 0 else 0
+			"only_kind": return -1 if wrong_kind > 0 else 0
+			"max_fielded": return -1 if fielded.size() > int(v) else 0
+			"reaction_count": return 1 if reactions >= int(v) else 0
+		return 0
+
 	## True once the battle is won and the goal holds.
 	func met() -> bool:
 		if model.outcome != BattleModel.Outcome.WIN:

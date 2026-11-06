@@ -96,3 +96,22 @@ func test_a_tracker_changes_nothing_in_the_battle() -> void:
 			m.submit_turn(BattleAction.make_move(0, 0))
 		lines.append(log)
 	assert_eq(lines[0], lines[1])
+
+func test_status_marks_a_goal_once_it_is_sure() -> void:
+	var me: Spirling = BattleFixtures.make("Kindlop", 40, ["Cinder Dash"] as Array[String])
+	var foe: Spirling = BattleFixtures.make("Mossling", 30, ["Bowl Over"] as Array[String])
+	var m := BattleModel.new([me] as Array[Spirling], [foe] as Array[Spirling], false, 7, 0)
+	var t := BattleGoals.Tracker.new(m, {"type": "no_rest"})
+	m.start()
+	assert_eq(t.status(), 0, "open")
+	m.submit_turn(BattleAction.make_rest(0), BattleAction.make_rest(1))
+	assert_eq(t.status(), -1, "missed for sure")
+
+func test_bonus_goals_setting_is_saved() -> void:
+	var keep: bool = GameState.bonus_goals
+	GameState.bonus_goals = false
+	var d: Dictionary = GameState.settings_to_dict()
+	GameState.bonus_goals = true
+	GameState.settings_from_dict(d)
+	assert_false(GameState.bonus_goals)
+	GameState.bonus_goals = keep

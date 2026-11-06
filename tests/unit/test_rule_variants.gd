@@ -119,3 +119,54 @@ func test_variants_survive_a_replay() -> void:
 	m.variants = ["swap_toll", "late_end"] as Array[String]
 	var snap: Dictionary = BattleReplay.snapshot(m, "battle", "lake")
 	assert_eq(BattleReplay.build_model(JSON.parse_string(JSON.stringify(snap))).variants, ["swap_toll", "late_end"] as Array[String])
+
+func test_stage_still_locks_stage_changes_and_stage_only_arts() -> void:
+	var me: Spirling = BattleFixtures.make("Kindlop", 20, ["Kindle Up", "Cinder Dash"] as Array[String])
+	var foe: Spirling = BattleFixtures.make("Mossling", 20, ["Bowl Over"] as Array[String])
+	var m := BattleModel.new([me] as Array[Spirling], [foe] as Array[Spirling], false, 7, 0)
+	m.variants = ["stage_still"] as Array[String]
+	m.start()
+	assert_true(BattleRules.stage_only(me.moves[0]), "Kindle Up only raises a stage")
+	assert_true(m.move_locked(me.moves[0]))
+	assert_false(m.move_locked(me.moves[1]))
+	for a: BattleAction in m.legal_actions(0):
+		assert_false(a.kind == BattleAction.Kind.MOVE and a.move_index == 0, "locked art is not offered")
+	assert_false(m.is_legal(BattleAction.make_move(0, 0)))
+	m.change_stage(0, "atk", 1)
+	assert_eq(me.stage("atk"), 0)
+
+func test_no_rest_only_offers_rest_as_a_pass_and_feeds_three_energy() -> void:
+	var m: BattleModel = _model(["no_rest"] as Array[String])
+	var me: Spirling = m.active_spirling(0)
+	for a: BattleAction in m.legal_actions(0):
+		assert_ne(a.kind, BattleAction.Kind.REST, "an art can be paid, so no Rest")
+	me.energy = 0
+	var kinds: Array[int] = []
+	for a: BattleAction in m.legal_actions(0):
+		kinds.append(a.kind)
+	assert_true(BattleAction.Kind.REST in kinds, "with nothing to pay, Rest stays as a pass")
+	m.submit_turn(BattleAction.make_rest(0), BattleAction.make_rest(1))
+	assert_eq(me.energy, 3)
+	# The AI never rests by choice while it can pay an art.
+	var ai := BattleAI.new(2, "wall")
+	for i: int in 5:
+		assert_ne(ai.choose(m, 1).kind, BattleAction.Kind.REST)
+		m.submit_turn(BattleAction.make_swap(0, 1) if i == 0 else BattleAction.make_move(0, 0), ai.choose(m, 1))
+		if m.is_finished():
+			break
+
+func test_field_swirl_announces_then_lays_a_field_every_three_turns() -> void:
+	var m: BattleModel = _model(["field_swirl"] as Array[String])
+	var seen: Array[int] = []
+	m.event_emitted.connect(func(e: BattleEvent) -> void:
+		if e.type in [BattleEvent.Type.FIELD_NEXT, BattleEvent.Type.FIELD]:
+			seen.append(e.type))
+	var next: Dictionary = {}
+	m.event_emitted.connect(func(e: BattleEvent) -> void:
+		if e.type == BattleEvent.Type.FIELD_NEXT:
+			next["field"] = str(e.data.field))
+	for i: int in 4:
+		m.submit_turn(BattleAction.make_rest(0), BattleAction.make_rest(1))
+	assert_eq(seen.slice(0, 2), [BattleEvent.Type.FIELD_NEXT, BattleEvent.Type.FIELD] as Array[int], "announced, then laid a turn later")
+	assert_eq(m.field, str(next.get("field", "?")), "the announced field is the one that comes")
+	assert_true(BattleEvent.new(BattleEvent.Type.FIELD_NEXT, {"label": "Ash Storm"}).describe().contains("Ash Storm"))

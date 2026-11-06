@@ -111,6 +111,8 @@ var bench_xp: bool = true
 const BENCH_XP_SHARE: float = 0.5
 ## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
 var damage_preview: bool = true
+## Bonus goals of Wayfarers and Wardens (plan area 2, item 765); off hides them and their rewards.
+var bonus_goals: bool = true
 var volume: float = 0.8
 var music_volume: float = 0.7
 var sfx_volume: float = 0.8
@@ -563,7 +565,7 @@ func from_dict(d: Dictionary) -> void:
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
-		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
+		"bench_xp": bench_xp, "damage_preview": damage_preview, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
@@ -580,6 +582,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	auto_battle = bool(d.get("auto_battle", false))
 	bench_xp = bool(d.get("bench_xp", true))
 	damage_preview = bool(d.get("damage_preview", true))
+	bonus_goals = bool(d.get("bonus_goals", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
 	if d.has("pad_opacity") and not d.has("pad_opacity_steps"):
 		pad_opacity = OLD_PAD_ALPHA_STEPS[clampi(int(d.pad_opacity), 0, OLD_PAD_ALPHA_STEPS.size() - 1)]
