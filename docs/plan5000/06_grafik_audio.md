@@ -158,7 +158,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2365. [x] [P1] Lumen: Aufladen als Lichtpunkt über dem Anwender, der von 1 auf 5 Pixel wächst; Weg als gerader Strahl; Einschlag als Kreuz-Glanz, der in 0,2 s verblasst (ohne Blitz, höchstens 60 % Helligkeit).
 2366. [x] [P1] Umbra: Aufladen als Schatten, der sich vom Anwender löst; Weg als Schatten, der am Boden entlang kriecht; Einschlag als Schatten, der das Ziel von unten umschließt und sich zurückzieht.
 2367. [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
-2368. [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
+2368. [x] [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
 2369. [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
 2370. [P2] Heil-Techniken (HealSelfEffect) zeigen aufsteigende Punkte in Elementform am Anwender, keine Einschlags-Phase.
 2371. [P2] Kraft-Entzug (DrainEffect) zeigt 4 Partikel, die vom Ziel zum Anwender zurückwandern, in der Elementform.
@@ -168,11 +168,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2375. [x] [P2] Bei verfehlten Techniken läuft der Weg am Ziel vorbei aus dem Bild und es gibt keinen Einschlag.
 2376. [x] [P2] Bei sehr wirksamen Treffern ist der Einschlag 1,5-mal so groß, bei schwach wirksamen nur halb so groß, ohne zusätzliche Texte.
 2377. [P2] Effekte zeichnen nur mit den 4 Paletten-Farben aus EraManager.INK_PALETTE; ein GUT-Test zeichnet jeden Effekt in ein Bild und prüft die Farben.
-2378. [P2] Jeder Effekt hält die Gesamtzeit von 0,6 s bei 1x ein und kürzt mit Juice.speed() bei 2x und 4x.
+2378. [x] [P2] Jeder Effekt hält die Gesamtzeit von 0,6 s bei 1x ein und kürzt mit Juice.speed() bei 2x und 4x.
 2379. [P2] Bei Juice.reduced() zeigt jeder Effekt nur den Einschlag als Standbild für 0,2 s, ohne Aufladen und Weg.
 2380. [P2] Jede der 58 Techniken in data/moves.json bekommt ein optionales Feld "fx_variant" (0 bis 2), das kleine Unterschiede innerhalb eines Elements wählt, etwa Bogen flach, Bogen hoch oder Doppelweg.
-2381. [P2] Kampfbildschirm-Test in tests/unit/ spielt alle 58 Techniken nacheinander ab und prüft, dass keiner einen Fehler wirft und jeder endet.
-2382. [P2] Effekte laufen in einem eigenen Control über den Spirlings, das am Ende jedes Effekts alle Partikel freigibt (keine verwaisten Nodes).
+2381. [x] [P2] Kampfbildschirm-Test in tests/unit/ spielt alle 58 Techniken nacheinander ab und prüft, dass keiner einen Fehler wirft und jeder endet.
+2382. [x] [P2] Effekte laufen in einem eigenen Control über den Spirlings, das am Ende jedes Effekts alle Partikel freigibt (keine verwaisten Nodes).
 2383. [P3] Ember-Techniken lassen nach dem Einschlag 1 Sekunde lang Rauch-Pixel vom Ziel aufsteigen.
 2384. [P3] Tide-Techniken hinterlassen am Boden unter dem Ziel einen Pfützen-Strich, der in 1,5 s versickert.
 2385. [P3] Bloom-Techniken lassen nach dem Einschlag 2 Blätter langsam zu Boden sinken.

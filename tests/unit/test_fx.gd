@@ -155,3 +155,54 @@ func test_art_outcome_reads_the_first_result() -> void:
 	assert_eq(BattleScene.art_outcome(list, 2).eff, 2.0)
 	var ticks: Array[BattleEvent] = [ev.call(T.MOVE_USED), ev.call(T.DAMAGE, {"status_tick": true, "eff": 0.5}), ev.call(T.MOVE_USED), ev.call(T.DAMAGE, {"eff": 0.5})]
 	assert_eq(BattleScene.art_outcome(ticks, 0).eff, 1.0, "a status tick is not the art's hit, and the next art is not looked at")
+
+# --- Power, timing and every art (items 2368, 2378, 2381, 2382) --------------------------
+
+func test_particle_amount_follows_power() -> void:
+	assert_eq(ElementFx.particles_for_power(40), 1.0)
+	assert_eq(ElementFx.particles_for_power(50), 1.0)
+	assert_eq(ElementFx.particles_for_power(70), 1.5)
+	assert_eq(ElementFx.particles_for_power(90), 1.5)
+	assert_eq(ElementFx.particles_for_power(120), 2.0)
+	var fx := ElementFx.new()
+	fx.amount = 2.0
+	assert_eq(fx._n(5), 10)
+	fx.amount = 1.5
+	assert_eq(fx._n(3), 5)
+	fx.free()
+	assert_eq(ElementFx._spread(0, 3, 4.0), -4.0)
+	assert_eq(ElementFx._spread(2, 3, 4.0), 4.0)
+
+func test_full_art_takes_point_six_seconds_at_1x() -> void:
+	var total: float = 0.0
+	for p: ElementFx.Phase in ElementFx.phases_for(MoveData.Kind.FOCUS, false):
+		total += ElementFx.phase_time(p, false)
+	assert_almost_eq(total, 0.6, 0.001)
+	var fx := ElementFx.new()
+	fx.size = Vector2(144, 120)
+	add_child_autofree(fx)
+	GameState.battle_speed = 1
+	Juice.in_battle = true
+	var start: int = Time.get_ticks_msec()
+	await fx.play(Elements.E.TIDE, MoveData.Kind.FOCUS, Rect2(90, 70, 40, 40), Rect2(20, 10, 40, 40))
+	Juice.in_battle = false
+	var took: float = (Time.get_ticks_msec() - start) / 1000.0
+	assert_gt(GameState.battle_speed_scale(), 1.0)
+	assert_almost_eq(took, 0.6 / GameState.battle_speed_scale(), 0.12, "shortened by the battle speed")
+
+func test_every_art_in_the_data_plays_and_leaves_no_nodes() -> void:
+	var fx := ElementFx.new()
+	fx.size = Vector2(144, 120)
+	add_child_autofree(fx)
+	GameState.battle_speed = 2
+	Juice.in_battle = true
+	var played: int = 0
+	Database.load_all()
+	for mv: MoveData in Database.moves.values():
+		await fx.play(mv.element, mv.kind, Rect2(90, 70, 40, 40), Rect2(20, 10, 40, 40), false, 1.0,
+			ElementFx.particles_for_power(mv.power))
+		assert_eq(fx.phase, ElementFx.Phase.NONE, mv.move_name)
+		played += 1
+	Juice.in_battle = false
+	assert_gte(played, 58)
+	assert_eq(fx.get_child_count(), 0, "effects draw, they leave no nodes behind")

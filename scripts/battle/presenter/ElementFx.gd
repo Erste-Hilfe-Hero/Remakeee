@@ -33,6 +33,8 @@ var _ground_to: Vector2
 var impact_size: float = 1.0
 ## True while a missed art flies past its target (item 2375).
 var missed: bool = false
+## Particle count factor from the art's power (item 2368): 1, 1.5 or 2.
+var amount: float = 1.0
 var _rng := RandomNumberGenerator.new()
 static var _tex: Dictionary[String, Texture2D] = {}
 ## Phases played by the last play() call (tests).
@@ -63,6 +65,23 @@ static func phases_for(kind: int, reduced: bool, miss: bool = false) -> Array[Ph
 		return [Phase.CHARGE, Phase.TRAVEL]
 	return [Phase.CHARGE, Phase.TRAVEL, Phase.IMPACT]
 
+## Particle factor for an art of [param power]: up to 50 normal, up to 90 half again, above
+## that twice as many (item 2368).
+static func particles_for_power(power: int) -> float:
+	if power > 90:
+		return 2.0
+	if power > 50:
+		return 1.5
+	return 1.0
+
+## [param base] particles scaled by [member amount], at least one.
+func _n(base: int) -> int:
+	return maxi(1, roundi(base * amount))
+
+## Offset of particle [param i] of [param n] around the middle, [param gap] pixels apart.
+static func _spread(i: int, n: int, gap: float) -> float:
+	return (i - (n - 1) / 2.0) * gap
+
 ## Impact size for a hit of effectiveness [param eff].
 static func impact_scale(eff: float) -> float:
 	if eff > 1.0:
@@ -80,8 +99,9 @@ static func phase_time(p: Phase, reduced: bool) -> float:
 	return IMPACT_TIME
 
 ## Plays the effect from [param from] (user) to [param to] (target), both in this node's space.
-func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false, p_impact_size: float = 1.0) -> void:
+func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false, p_impact_size: float = 1.0, p_amount: float = 1.0) -> void:
 	element = p_element
+	amount = p_amount
 	missed = miss
 	impact_size = p_impact_size
 	_from = from.get_center().round()
@@ -166,14 +186,16 @@ func _draw() -> void:
 func _draw_ember() -> void:
 	match phase:
 		Phase.CHARGE:
-			for i: int in 3:
-				var ang: float = t * TAU + i * TAU / 3.0
+			var sparks: int = _n(3)
+			for i: int in sparks:
+				var ang: float = t * TAU + i * TAU / sparks
 				_shape("spark", _from + Vector2(cos(ang) * 12.0, sin(ang) * 6.0), 2)
 		Phase.TRAVEL:
 			_shape("spark", _along(t, 10.0), 2)
 		Phase.IMPACT:
-			for i: int in 5:
-				var x: float = (i - 2) * 4.0
+			var embers: int = _n(5)
+			for i: int in embers:
+				var x: float = _spread(i, embers, 4.0)
 				_px(_to + Vector2(x, 4.0 - t * (10.0 + i * 2.0)), 2 if i % 2 == 0 else 3, 1.0 - t * 0.5, 2)
 
 ## Tide: a ring spreads under the user; a wavy line with 3 px swing; six drops fall.
@@ -191,16 +213,18 @@ func _draw_tide() -> void:
 				var n: Vector2 = (_to - _from).normalized().orthogonal()
 				_px(p + n * roundf(3.0 * sin(k * TAU * 2.0)), 1)
 		Phase.IMPACT:
-			for i: int in 6:
-				var x: float = (i - 2.5) * 5.0
+			var drops: int = _n(6)
+			for i: int in drops:
+				var x: float = _spread(i, drops, 5.0)
 				_shape("drop", _to + Vector2(x, -8.0 + t * (14.0 + (i % 3) * 3.0)), 1, 1.0 - t * 0.4)
 
 ## Bloom: four leaves rise from the ground; a leaf whirl flies straight; vines wrap the target.
 func _draw_bloom() -> void:
 	match phase:
 		Phase.CHARGE:
-			for i: int in 4:
-				_shape("leaf", _ground_from + Vector2((i - 1.5) * 7.0, -t * (8.0 + i * 3.0)), 1)
+			var leaves: int = _n(4)
+			for i: int in leaves:
+				_shape("leaf", _ground_from + Vector2(_spread(i, leaves, 7.0), -t * (8.0 + i * 3.0)), 1)
 		Phase.TRAVEL:
 			for i: int in 3:
 				var ang: float = t * TAU * 2.0 + i * TAU / 3.0
@@ -240,8 +264,9 @@ func _draw_stone() -> void:
 			_px(Vector2(_from.x, _ground_from.y).lerp(Vector2(_to.x, _ground_to.y), t) - Vector2(2, 0), 0, 0.6, 4)
 			_shape("rock", _along(t, 28.0), 1)
 		Phase.IMPACT:
-			for i: int in 6:
-				var ang: float = i * TAU / 6.0
+			var splinters: int = _n(6)
+			for i: int in splinters:
+				var ang: float = i * TAU / splinters
 				_px(_to + Vector2(cos(ang), sin(ang)) * (2.0 + t * 12.0), 1, 1.0 - t * 0.5, 2)
 
 ## Gale: streaks drawn in toward the user; a vortex of three arcs; streaks sweep past the target.
@@ -261,9 +286,10 @@ func _draw_gale() -> void:
 					var ang: float = t * TAU * 3.0 + i * 1.3 + j * 0.35
 					_px(c + Vector2(cos(ang), sin(ang)) * r, 2)
 		Phase.IMPACT:
-			for i: int in 3:
+			var streaks: int = _n(3)
+			for i: int in streaks:
 				var x: float = lerpf(-20.0, 20.0, t) + i * 4.0
-				_shape("streak", _to + Vector2(x, (i - 1) * 5.0), 2, 1.0 - t * 0.3)
+				_shape("streak", _to + Vector2(x, _spread(i, streaks, 5.0)), 2, 1.0 - t * 0.3)
 
 ## Lumen: a light point above the user grows 1 to 5 px; a straight beam; a cross glint that
 ## fades in 0.2 s, never brighter than 60 % (no flash).
