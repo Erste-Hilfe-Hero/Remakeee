@@ -10,7 +10,7 @@ signal stepped(cell: Vector2i)
 signal path_blocked(next: Vector2i)
 
 ## Seconds a direction must be held after turning before walking starts.
-const TURN_GRACE: float = 0.09
+const TURN_GRACE: float = 0.08
 
 var can_move: Callable = func(_c: Vector2i) -> bool: return true
 var frozen: bool = false

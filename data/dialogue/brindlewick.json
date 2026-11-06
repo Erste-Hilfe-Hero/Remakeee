@@ -287,5 +287,17 @@
   "action": "give_item tonic 2",
   "flag": "fisher_tonics",
   "once": true
+ },
+ "boatwoman": {
+  "lines": [
+   "Boatwoman Hedda: Lake Line! Reedhaven and Quillbrook, if you've been there on foot."
+  ],
+  "action": "transit lake_line"
+ },
+ "coach": {
+  "lines": [
+   "Driver Odo: Valley Coach. Thornridge, Copperfold, Wrenhollow. Only stops you know."
+  ],
+  "action": "transit valley_coach"
  }
 }

@@ -220,6 +220,8 @@ static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Arr
 	var counters: Array[String] = ["count_" + event]
 	if event == "win":
 		counters.append("count_win_wild" if bool(info.get("wild", false)) else "count_win_tamer")
+		if bool(info.get("night", false)):
+			counters.append("count_win_night")
 	for c: String in counters:
 		GameState.records[c] = int(GameState.records.get(c, 0)) + amount
 	var state: Dictionary = today()

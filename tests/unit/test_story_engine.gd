@@ -223,3 +223,13 @@ func test_act_one_aftermath_lines() -> void:
 	assert_false(Dialogue.check(gift.get("if"), {"rift_tide_sealed": true, "fisher_tonics": true}), "only once")
 	var ids: Array = StoryPlacements.for_map("thornridge").get("npcs", []).map(func(n: Dictionary) -> String: return str(n.get("id", "")))
 	assert_true("pell_v" in ids and "suri_v" in ids)
+
+func test_stillwater_tag_battle_with_kestra() -> void:
+	var def: Dictionary = StoryBattles.get_def("kestra_tag")
+	assert_true(def.has("partner"), "Kestra fights beside the player")
+	assert_eq(TrainerData.front(def), [1, 2] as Array[int], "two Hush Wanderers at once")
+	assert_true("kestra_stillwater_tag" in def.get("win_flags", []))
+	var npcs: Array = StoryPlacements.for_map("stillwater").get("npcs", [])
+	assert_true(npcs.any(func(n: Dictionary) -> bool: return n.get("dialogue", "") == "corvane/kestra_still"))
+	var defeat: Dictionary = Dialogue.get_entry("corvane/kestra_tag_defeat")
+	assert_eq(str(defeat.get("action", "")), "add_var kestra_trust 1")

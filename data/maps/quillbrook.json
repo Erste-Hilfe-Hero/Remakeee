@@ -81,6 +81,14 @@
    "sprite": "villager"
   },
   {
+   "id": "boatman",
+   "x": 5,
+   "y": 27,
+   "facing": "right",
+   "dialogue": "quillbrook/boatman",
+   "sprite": "villager"
+  },
+  {
    "id": "brisa",
    "x": 10,
    "y": 10,

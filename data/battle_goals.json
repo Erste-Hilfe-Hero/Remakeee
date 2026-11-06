@@ -1,0 +1,15 @@
+{
+ "_doc": "Optional bonus goals (plan area 2, items 755-761). Key: map_id/npc_id. Rewards: shards (Echo Crystal shards, 5 make a crystal), title, lore (lexicon entry id). No battle edge.",
+ "crowcrest/lio": {"type": "win_within", "value": 4, "reward": {"shards": 1}},
+ "crowcrest/bram": {"type": "only_kind", "value": "focus", "reward": {"shards": 1}},
+ "crowcrest/kestra": {"type": "no_faint", "value": 0, "reward": {"shards": 1, "lore": "cartographers"}},
+ "cinder_rift/acolyte_a": {"type": "reaction_count", "value": 1, "reward": {"shards": 1, "lore": "reactions"}},
+ "cinder_rift/acolyte_b": {"type": "no_rest", "value": 0, "reward": {"shards": 1}},
+ "cinder_rift/warden_orrin": {"type": "max_fielded", "value": 2, "reward": {"shards": 2, "title": "Ember Trial Taker"}},
+ "murk_hollow/delve": {"type": "min_hp_end", "value": 0.5, "reward": {"shards": 1}},
+ "saltmarsh/neve": {"type": "win_within", "value": 5, "reward": {"shards": 1}},
+ "saltmarsh/kestra_tag": {"type": "no_faint", "value": 0, "reward": {"shards": 1}},
+ "tide_rift/mystic": {"type": "reaction_count", "value": 2, "reward": {"shards": 1, "lore": "rift_mystics"}},
+ "tide_rift/warden_maelis": {"type": "win_within", "value": 8, "reward": {"shards": 2, "title": "Current Rider"}},
+ "tide_rift/drowned_heart": {"type": "no_faint", "value": 0, "reward": {"shards": 2, "lore": "drowned_heart"}}
+}

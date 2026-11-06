@@ -87,6 +87,7 @@ func _add_key(label: String) -> void:
 	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	b.accessibility_name = Loc.t("Space") if label == SPACE else b.text
 	b.pressed.connect(press.bind(label))
+	Juice.press_feedback(b)
 	add_child(b)
 
 ## Switches between letters and codes (rebuilds the keys).

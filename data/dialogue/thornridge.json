@@ -73,5 +73,11 @@
  "suri": [
   "Suri: I thought the Hush would last forever. Now I'm learning to make Echo Crystals.",
   "Suri: My Kindlop runs warm, not hot. That's the difference, I think."
- ]
+ ],
+ "coach": {
+  "lines": [
+   "Driver Sela: Valley Coach, Thornridge stop. The road down is gentler than the stairs."
+  ],
+  "action": "transit valley_coach"
+ }
 }

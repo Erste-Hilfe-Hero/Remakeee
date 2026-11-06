@@ -176,6 +176,7 @@ T = {
 "Large text: %s": "Große Schrift: %s",
 "Bigger letters in menus, texts and talk.": "Größere Buchstaben in Menüs, Texten und Gesprächen.",
 "Nothing here yet.": "Hier ist noch nichts.",
+"Very large": "Sehr groß",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

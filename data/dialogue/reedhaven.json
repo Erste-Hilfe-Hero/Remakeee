@@ -16,7 +16,10 @@
   ],
   "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm"
  },
- "boatman": [
-  "Boatman Rurik: When the lake calms down I'll run boats again. Mark my words."
- ]
+ "boatman": {
+  "lines": [
+   "Boatman Rurik: The Lake Line runs again. Brindlewick, Quillbrook, wherever you've set foot."
+  ],
+  "action": "transit lake_line"
+ }
 }

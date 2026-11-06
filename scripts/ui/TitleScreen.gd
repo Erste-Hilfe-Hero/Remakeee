@@ -284,6 +284,10 @@ func _ask_name(suggestion: String) -> String:
 
 func _enter_game() -> void:
 	Online.push_profile()
+	# The title slides 24 px up and fades out before the world brightens in (item 2280).
+	if not Juice.reduced():
+		Juice.tween(self, "modulate:a", 0.0, "close")
+		await Juice.tween(self, "position", position + Vector2(0, -24), "close").finished
 	get_tree().change_scene_to_file(OVERWORLD)
 
 func _used_slots() -> int:

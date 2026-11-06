@@ -234,6 +234,17 @@
     "dialogue": "story/find_8",
     "hide_flag": "page_8"
    }
+  ],
+  "npcs": [
+   {
+    "id": "kestra_s",
+    "spot": "kestra",
+    "facing": "left",
+    "dialogue": "corvane/kestra_still",
+    "sprite": "ranger",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   }
   ]
  },
  "mirror_rift": {
