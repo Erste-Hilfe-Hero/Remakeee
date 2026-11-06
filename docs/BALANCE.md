@@ -126,6 +126,14 @@ Season path: 30 steps per quarter, 100 points per step. Points: daily task 10, w
 festival goal stage 20. An active player (3 tasks a day, 1 weekly win) earns about 3100 points in a
 13-week season, enough for every step. The rewards repeat every season, so nothing is missed for good.
 
+### Journey complete and the Iron Oath
+
+- "Journey complete: x%" (`Completion.gd`, records screen) weighs story 20, side goals 10,
+  Spirlog (bonded kinds) 25, achievements 20, towers (lighthouse stair floors) 15 and
+  exploring (maps visited) 10 percent. Each part counts its own share from 0 to 1.
+- Under the Iron Oath every Waymark reward pays 25% more (rounded down: 10 -> 12, 20 -> 25,
+  80 -> 100). It makes up for Spirlings lost to the Sanctuary, not for coins or items.
+
 ### Ring cap after Act I and the Master Wayfarers
 
 - `GameState.progress_cap()` follows the Veteran caps (12 ... 50) until Act I ends (flag

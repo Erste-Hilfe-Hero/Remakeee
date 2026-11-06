@@ -211,4 +211,9 @@ T = {
 "Lume: Bright and steady. The lighthouse raised you well.": "Lume: Hell und ruhig. Der Leuchtturm hat dich gut erzogen.",
 "Morrow: Few come this deep after the Rifts closed. Fewer leave unbeaten.": "Morrow: Seit die Risse zu sind, kommen nur wenige so tief. Noch weniger gehen unbesiegt.",
 "Morrow: The dark bows to you. Remember that it bowed.": "Morrow: Das Dunkel verneigt sich vor dir. Vergiss nicht, dass es das tat.",
+# Iron Oath extras and journey completion
+"Iron Oath: Spirlings that faint retire to the Sanctuary for good, and every Waymark reward pays 25% more. This can't be undone.": "Eiserner Schwur: Spirlings, die besiegt werden, ziehen sich für immer ins Refugium zurück, und jede Wegmarken-Belohnung bringt 25 % mehr. Das lässt sich nicht rückgängig machen.",
+"Memorial book": "Gedenkbuch", "%s, ring %d, %s, %s": "%s, Ring %d, %s, %s",
+"Journey complete: %d%%": "Reise vollendet: %d %%", "%s: %d%% (counts %d%%)": "%s: %d %% (zählt %d %%)",
+"Story": "Geschichte", "Side goals": "Seitenziele", "Towers": "Türme", "Exploring": "Erkundung",
 }
