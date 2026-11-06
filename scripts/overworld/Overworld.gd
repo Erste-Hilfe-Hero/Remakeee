@@ -79,6 +79,7 @@ func _ready() -> void:
 		"scene": _action_scene,
 		"warp": _action_warp,
 		"lever": _action_lever,
+		"first_voice": _action_first_voice,
 	}
 	_world = WorldMechanics.new(self)
 	_build()
@@ -589,7 +590,27 @@ func _run_action(action: String, speaker: NPC) -> void:
 			continue
 		await _actions[parts[0]].call(parts.slice(1), speaker)
 
+## "first_voice <species> <ring>": a fixed, one-time meeting with a First Voice (plan area 1,
+## items 153-155). It is wild, so it can be bonded with the Echo call. If it is not bonded
+## (beaten, fled or lost), it rests and comes back to the same place after the next rest.
+func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var voice := Spirling.new(sd, int(args[1]) if args.size() > 1 else 40, GameState.rng)
+	_text.visible = false
+	SaveManager.save_game()
+	await start_battle([voice] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
+	if FirstVoices.is_bonded(sd.species_name):
+		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
+	else:
+		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
+
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
+	FirstVoices.after_rest()
 	GameState.heal_party()
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
@@ -1529,7 +1550,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 			int(partner.get("ai", TrainerData.PARTNER_AI)))
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
-	scene.backdrop = map.backdrop
+	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)

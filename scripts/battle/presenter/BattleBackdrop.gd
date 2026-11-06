@@ -4,7 +4,8 @@ extends Control
 ## battle started (field, lake, ridge or ember hollow) and two raised earth banks the
 ## Spirlings stand on. Banks are flat-topped slabs, not oval platforms (LEGAL.md layout rule).
 
-const KINDS: Array[String] = ["field", "lake", "ridge", "ember"]
+## "voice": the lake at night with columns of light, only for First Voices (plan area 1, item 154).
+const KINDS: Array[String] = ["field", "lake", "ridge", "ember", "voice"]
 const HORIZON: float = 0.42
 const BANK_DEPTH: int = 7
 
@@ -39,6 +40,19 @@ func _draw() -> void:
 				var x0: float = fmod(i * 37.0, w)
 				draw_rect(Rect2(x0, y, 10, 1), UITheme.BG)
 				draw_rect(Rect2(fmod(x0 + 60.0, w), y + 4, 6, 1), UITheme.MID)
+		"voice":
+			draw_rect(Rect2(0, 0, w, hy), UITheme.INK)
+			for i: int in 12:
+				draw_rect(Rect2(fmod(i * 53.0, w), 4 + fmod(i * 17.0, hy - 10), 1, 1), UITheme.BG)
+			draw_rect(Rect2(0, hy, w, h - hy), UITheme.MID)
+			for i: int in 4:
+				var x: float = w * (0.15 + i * 0.24)
+				for y: int in range(int(hy * 0.2), int(hy), 2):
+					draw_rect(Rect2(x, y, 2, 1), UITheme.ACCENT)
+			for i: int in 7:
+				var y: float = hy + 4 + i * 9
+				var x0: float = fmod(i * 41.0, w)
+				draw_rect(Rect2(x0, y, 12, 1), UITheme.BG)
 		"ridge":
 			_peaks(hy, 22.0, 9, UITheme.MID)
 			_ground(hy)
