@@ -326,5 +326,178 @@
   "works_on": [
    "Y"
   ]
+ },
+ {
+  "id": "rg_riftheart",
+  "name": "Riftheart",
+  "description": "Held memento: +15% Might. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "atk_mult": 1.15
+  }
+ },
+ {
+  "id": "rg_glass_shield",
+  "name": "Glass Shield",
+  "description": "Held memento: +15% Guard. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "def_mult": 1.15
+  }
+ },
+ {
+  "id": "rg_clear_shard",
+  "name": "Clear Shard",
+  "description": "Held memento: +15% Focus. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "foc_mult": 1.15
+  }
+ },
+ {
+  "id": "rg_whirl_glass",
+  "name": "Whirl Glass",
+  "description": "Held memento: +15% Speed and +5% Focus. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "spd_mult": 1.15,
+   "foc_mult": 1.05
+  }
+ },
+ {
+  "id": "rg_vigor_glass",
+  "name": "Core Glass",
+  "description": "Held memento: +12% Vigor. Permanent, 1 piece.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "hp_mult": 1.12
+  }
+ },
+ {
+  "id": "rg_prism_ember",
+  "name": "Ember Prism",
+  "description": "Held memento: +20% damage for Ember techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "EMBER",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_tide",
+  "name": "Tide Prism",
+  "description": "Held memento: +20% damage for Tide techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "TIDE",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_bloom",
+  "name": "Bloom Prism",
+  "description": "Held memento: +20% damage for Bloom techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "BLOOM",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_volt",
+  "name": "Volt Prism",
+  "description": "Held memento: +20% damage for Volt techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "VOLT",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_stone",
+  "name": "Stone Prism",
+  "description": "Held memento: +20% damage for Stone techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "STONE",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_gale",
+  "name": "Gale Prism",
+  "description": "Held memento: +20% damage for Gale techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "GALE",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_lumen",
+  "name": "Lumen Prism",
+  "description": "Held memento: +20% damage for Lumen techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "LUMEN",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_prism_umbra",
+  "name": "Umbra Prism",
+  "description": "Held memento: +20% damage for Umbra techniques. Permanent.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "elem": "UMBRA",
+   "elem_mult": 1.2
+  }
+ },
+ {
+  "id": "rg_echo_ring",
+  "name": "Echo Ring",
+  "description": "Held memento: heals 1/10 of Vigor every round.",
+  "battle": false,
+  "shop": true,
+  "held": {
+   "regen_div": 10
+  }
+ },
+ {
+  "id": "rg_echo_scent",
+  "name": "Echo Scent",
+  "description": "Bonding gets clearly easier for one try.",
+  "battle": false,
+  "shop": true,
+  "bond_bonus": 0.25
+ },
+ {
+  "id": "rg_bond_seal",
+  "name": "Bond Seal",
+  "description": "The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.",
+  "battle": false,
+  "shop": true,
+  "bond_sure": true
+ },
+ {
+  "id": "rg_spark_shard",
+  "name": "Spark Shard",
+  "description": "Raises one chosen value by 6 Sparks, up to 12.",
+  "battle": false,
+  "shop": true,
+  "spark": 6
  }
 ]

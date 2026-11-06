@@ -1504,12 +1504,12 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		var labels: Array[String] = []
 		for id: String in args:
 			var it: Dictionary = Database.item(id)
-			labels.append("%s  %d" % [it.get("name", id), int(it.get("price", 0))])
+			labels.append("%s  %d" % [it.get("name", id), ShopEffects.merchant_price(int(it.get("price", 0)))])
 		var idx: int = await menu.pick_strings("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), labels)
 		if idx < 0:
 			break
 		var item: Dictionary = Database.item(args[idx])
-		var price: int = int(item.get("price", 0))
+		var price: int = ShopEffects.merchant_price(int(item.get("price", 0)))
 		if GameState.money < price:
 			await menu.info("Not enough coins.")
 			continue

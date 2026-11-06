@@ -43,8 +43,11 @@ func _set_step(s: Step) -> void:
 	step_changed.emit(s)
 
 func _on_online_state(s: int) -> void:
-	if s == Online.State.ONLINE and available():
+	if s != Online.State.ONLINE:
+		return
+	if available():
 		resume_pending()
+	await refresh_state()
 
 # --- Server state ------------------------------------------------------------------------------
 
@@ -52,6 +55,7 @@ func refresh_state() -> Dictionary:
 	var r: Dictionary = await Online.call_fn("shop_state")
 	if r.ok and r.data is Dictionary:
 		state = r.data
+		ShopEffects.apply_unlocks()
 	return r
 
 func band() -> Variant:

@@ -179,7 +179,7 @@
    "name_de": "Rissherz",
    "desc_en": "Held memento: +15% Might. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Wucht. Dauerhaft, 1 Stück.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.glass_shield",
@@ -191,7 +191,7 @@
    "name_de": "Glasschild",
    "desc_en": "Held memento: +15% Guard. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Schutz. Dauerhaft, 1 Stück.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.clear_shard",
@@ -203,7 +203,7 @@
    "name_de": "Klarsplitter",
    "desc_en": "Held memento: +15% Focus. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Fokus. Dauerhaft, 1 Stück.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.whirl_glass",
@@ -215,11 +215,11 @@
    "name_de": "Wirbelglas",
    "desc_en": "Held memento: +15% Speed and +5% Focus. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Tempo und +5 % Fokus. Dauerhaft, 1 Stück.",
-   "ready": false
+   "ready": true
   },
   {
-   "product_id": "de.chimora.game.unlock.core_glass",
-   "offer": "rg_core_glass",
+   "product_id": "de.chimora.game.unlock.vigor_glass",
+   "offer": "rg_vigor_glass",
    "apple_type": "NON_CONSUMABLE",
    "google_type": "onetime",
    "eur": "7.99",
@@ -227,7 +227,7 @@
    "name_de": "Kernglas",
    "desc_en": "Held memento: +12% Vigor. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +12 % Kraft. Dauerhaft, 1 Stück.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_ember",
@@ -239,7 +239,7 @@
    "name_de": "Ember-Prisma",
    "desc_en": "Held memento: +20% damage for Ember techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Ember-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_tide",
@@ -251,7 +251,7 @@
    "name_de": "Tide-Prisma",
    "desc_en": "Held memento: +20% damage for Tide techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Tide-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_bloom",
@@ -263,7 +263,7 @@
    "name_de": "Bloom-Prisma",
    "desc_en": "Held memento: +20% damage for Bloom techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Bloom-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_volt",
@@ -275,7 +275,7 @@
    "name_de": "Volt-Prisma",
    "desc_en": "Held memento: +20% damage for Volt techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Volt-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_stone",
@@ -287,7 +287,7 @@
    "name_de": "Stone-Prisma",
    "desc_en": "Held memento: +20% damage for Stone techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Stone-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_gale",
@@ -299,7 +299,7 @@
    "name_de": "Gale-Prisma",
    "desc_en": "Held memento: +20% damage for Gale techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Gale-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_lumen",
@@ -311,7 +311,7 @@
    "name_de": "Lumen-Prisma",
    "desc_en": "Held memento: +20% damage for Lumen techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Lumen-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.prism_umbra",
@@ -323,7 +323,7 @@
    "name_de": "Umbra-Prisma",
    "desc_en": "Held memento: +20% damage for Umbra techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Umbra-Techniken. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.hold_stone",
@@ -347,7 +347,7 @@
    "name_de": "Nachhallring",
    "desc_en": "Held memento: heals 1/10 of Vigor every round.",
    "desc_de": "Andenken zum Halten: heilt jede Runde 1/10 der Kraft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_ember",
@@ -563,7 +563,7 @@
    "name_de": "Bondsiegel",
    "desc_en": "The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.",
    "desc_de": "Das nächste Bonden gelingt sicher. Nicht bei Rift-Wächtern und einmaligen Spirlings.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.echo_scent",
@@ -575,7 +575,7 @@
    "name_de": "Echo-Duft",
    "desc_en": "Bonding gets clearly easier for one try.",
    "desc_de": "Bonden gelingt für einen Versuch deutlich leichter.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.echo_scent_x10",
@@ -587,7 +587,7 @@
    "name_de": "Echo-Duft x10",
    "desc_en": "10 Echo Scents. Single price 1000 Riftglass.",
    "desc_de": "10 Echo-Düfte. Einzeln 1000 Rissglas.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.team_slot_6",
@@ -611,7 +611,7 @@
    "name_de": "Lager-Fach +1",
    "desc_en": "One more storage box with 30 places. At most 12 extra boxes.",
    "desc_de": "Ein Lager-Fach mehr mit 30 Plätzen. Höchstens 12 zusätzliche Fächer.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.pass",
@@ -755,7 +755,7 @@
    "name_de": "Funkensplitter",
    "desc_en": "Raises one chosen value by 6 Sparks, up to 12.",
    "desc_de": "Erhöht einen gewählten Wert um 6 Funken, bis 12.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.temper_shift",
@@ -779,7 +779,7 @@
    "name_de": "Fünf Funkensplitter",
    "desc_en": "5 Spark Shards. Single price 1000 Riftglass.",
    "desc_de": "5 Funkensplitter. Einzeln 1000 Rissglas.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.power_core",
@@ -971,7 +971,7 @@
    "name_de": "Münzbeutel",
    "desc_en": "Exactly 5000 coins. At most 3 per week.",
    "desc_de": "Genau 5000 Münzen. Höchstens 3 pro Woche.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.coins_20000",
@@ -983,7 +983,7 @@
    "name_de": "Großer Münzbeutel",
    "desc_en": "Exactly 20000 coins. At most 1 per week.",
    "desc_de": "Genau 20000 Münzen. Höchstens 1 pro Woche.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.merchant_discount",
@@ -995,7 +995,7 @@
    "name_de": "Händlerrabatt",
    "desc_en": "20% lower coin prices in all merchant shops. Permanent.",
    "desc_de": "20 % niedrigere Münzpreise in allen Händlerläden. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_moss",
