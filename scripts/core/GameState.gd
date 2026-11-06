@@ -85,6 +85,8 @@ var pad_size: int = 1
 var pad_opacity: int = 1
 var left_handed: bool = false
 var tap_to_move: bool = true
+## Walking is running; holding B walks slowly instead (item 1810).
+var always_run: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
 ## Gamepad rumble on hits (item 63).
@@ -398,6 +400,7 @@ func settings_to_dict() -> Dictionary:
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"always_run": always_run,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "day_night": day_night, "language": language}
@@ -414,6 +417,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
+	always_run = bool(d.get("always_run", false))
 	one_hand = bool(d.get("one_hand", false))
 	rumble = bool(d.get("rumble", true))
 	tips_enabled = bool(d.get("tips", true))

@@ -1,6 +1,6 @@
 class_name Player
 extends GridWalker
-## The Wayfarer. Reads only input actions: ui_up/down/left/right to walk, hold ui_cancel to run,
+## The Wayfarer. Reads only input actions: ui_up/down/left/right to walk, hold ui_cancel to run (or to walk with Always run),
 ## ui_accept to interact. Tapping a new direction turns in place first.
 ## Tap-to-move: follow [member path] cell by cell; any held direction cancels it.
 
@@ -54,7 +54,7 @@ func _process(delta: float) -> void:
 		_turn_timer -= delta
 		return
 	if can_move.call(cell + DIRS[dir]):
-		step(dir, Input.is_action_pressed("ui_cancel"))
+		step(dir, Input.is_action_pressed("ui_cancel") != GameState.always_run)
 
 func _follow_step() -> void:
 	if path.is_empty():

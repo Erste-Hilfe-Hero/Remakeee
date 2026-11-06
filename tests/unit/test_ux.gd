@@ -431,3 +431,90 @@ func test_questions_end_above_the_pad() -> void:
 	var before: float = c.offset_bottom
 	MenuHost.keep_above_pad(c, -1.0)
 	assert_eq(c.offset_bottom, before, "hidden pad changes nothing")
+
+# --- Pad field, always run, pause order, goals list -------------------------------------
+
+func test_dpad_field_presses_one_direction_by_angle() -> void:
+	var side: float = 60.0
+	assert_eq(VirtualPad.dir_for(Vector2(30, 2), side), "ui_up")
+	assert_eq(VirtualPad.dir_for(Vector2(30, 58), side), "ui_down")
+	assert_eq(VirtualPad.dir_for(Vector2(2, 30), side), "ui_left")
+	assert_eq(VirtualPad.dir_for(Vector2(58, 30), side), "ui_right")
+	assert_eq(VirtualPad.dir_for(Vector2(57, 50), side), "ui_right", "a corner still presses a direction")
+	assert_eq(VirtualPad.dir_for(Vector2(36, 29), side), "ui_right", "near the middle too")
+	assert_eq(VirtualPad.dir_for(Vector2(30, 30), side), "", "the very middle keeps what is held")
+
+func test_dpad_touch_presses_and_releases_actions() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	VirtualPad.apply_settings()
+	var r: Rect2 = VirtualPad.dpad_rect()
+	var t := InputEventScreenTouch.new()
+	t.index = 3
+	t.pressed = true
+	t.position = r.position + Vector2(r.size.x - 2, r.size.y - 4)
+	VirtualPad._input(t)
+	assert_eq(VirtualPad.held_dir(), "ui_right")
+	assert_true(Input.is_action_pressed("ui_right"))
+	var d := InputEventScreenDrag.new()
+	d.index = 3
+	d.position = r.position + Vector2(r.size.x / 2.0, 1)
+	VirtualPad._input(d)
+	assert_eq(VirtualPad.held_dir(), "ui_up", "sliding the thumb changes direction")
+	assert_false(Input.is_action_pressed("ui_right"))
+	t.pressed = false
+	VirtualPad._input(t)
+	assert_eq(VirtualPad.held_dir(), "")
+	assert_false(Input.is_action_pressed("ui_up"))
+	assert_true(VirtualPad.covers(r.get_center()), "taps on the field do not walk")
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_menu_button_is_larger_and_clear_of_b() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	for one: bool in [false, true]:
+		GameState.one_hand = one
+		VirtualPad.apply_settings()
+		var menu: Rect2
+		var b: Rect2
+		for btn: TouchScreenButton in VirtualPad._buttons:
+			var rect := Rect2(btn.position, (btn.shape as RectangleShape2D).size)
+			if btn.action == &"menu":
+				menu = rect
+			elif btn.action == &"ui_cancel":
+				b = rect
+		assert_eq(menu.size, Vector2(16, 16))
+		assert_gte(b.position.y - menu.end.y, 8.0, "gap to B")
+	GameState.one_hand = false
+	VirtualPad.apply_settings()
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_always_run_setting_is_kept() -> void:
+	var before: bool = GameState.always_run
+	GameState.always_run = true
+	var d: Dictionary = GameState.settings_to_dict()
+	GameState.always_run = false
+	GameState.settings_from_dict(d)
+	assert_true(GameState.always_run)
+	var keys: Array = []
+	for r: Array in MenuHost.controls_rows():
+		keys.append(r[0])
+	assert_has(keys, "always_run")
+	GameState.always_run = before
+
+func test_pause_menu_order_is_fixed() -> void:
+	assert_eq(PauseMenu.menu_labels(true, true, false),
+		["Goals", "Team", "Satchel", "Spirlog", "Travel", "Friends", "Records", "Storage", "Save", "Photo", "Settings"] as Array[String])
+	var short: Array[String] = PauseMenu.menu_labels(false, false, false)
+	assert_eq(short.find("Satchel"), 2, "places do not move when Travel is missing")
+	assert_false("Storage" in short)
+
+func test_goals_are_a_list_with_main_goal_first() -> void:
+	var rows: Array[Dictionary] = PauseMenu.goal_rows({"aldo_gift": true}, "Today: a rare visitor stirs in Fernstair.")
+	assert_gte(rows.size(), 3, "main goal, a side goal and the visitor")
+	assert_true(rows[0].icon is Texture2D, "the main goal has its mark")
+	assert_eq(str(rows[-1].text), "Today's visitor")
+	for r: Dictionary in rows:
+		assert_false(str(r.detail).is_empty(), "every row opens details")

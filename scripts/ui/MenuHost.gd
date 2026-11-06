@@ -276,6 +276,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"pad_opacity": "How see-through the touch pad is.",
 	"left_handed": "Puts the pad on the right and A and B on the left.",
 	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
+	"always_run": "Run without holding B. Hold B to walk.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
 	"rumble": "The gamepad shakes on big hits.",
 	"pad_help": "Which gamepad button does what.",
@@ -541,6 +542,8 @@ func run_controls() -> void:
 				GameState.left_handed = not GameState.left_handed
 			"tap_to_move":
 				GameState.tap_to_move = not GameState.tap_to_move
+			"always_run":
+				GameState.always_run = not GameState.always_run
 			"one_hand":
 				GameState.one_hand = not GameState.one_hand
 			"rumble":
@@ -557,6 +560,7 @@ static func controls_rows() -> Array[Array]:
 		["pad_opacity", "Pad opacity: %d%%" % int(round(GameState.PAD_ALPHAS[GameState.pad_opacity] * 100.0))],
 		["left_handed", "Left-handed: %s" % ("On" if GameState.left_handed else "Off")],
 		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
+		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["rumble", "Gamepad rumble: %s" % ("On" if GameState.rumble else "Off")],
 		["pad_help", "Gamepad buttons..."],

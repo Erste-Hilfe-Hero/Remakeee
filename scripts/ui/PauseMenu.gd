@@ -22,24 +22,28 @@ var can_undo: bool = false
 ## Set to "undo" or "reset" when the player picks one; the overworld does it after closing.
 var room_action: String = ""
 
-const MENU_LABELS: Array[String] = ["Goals", "Team", "Friends", "Spirlog", "Records", "Satchel", "Save", "Photo", "Settings"]
+## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
+## they can be used; they keep their place.
+const MENU_ORDER: Array[String] = ["Goals", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+	"Records", "Storage", "Save", "Photo", "Settings"]
+
+static func menu_labels(storage: bool, travel: bool, room: bool) -> Array[String]:
+	var out: Array[String] = []
+	for l: String in MENU_ORDER:
+		if (l == "Storage" and not storage) or (l == "Travel" and not travel) or (l == "Room" and not room):
+			continue
+		out.append(l)
+	return out
 
 func run() -> void:
 	while true:
-		var labels: Array[String] = MENU_LABELS.duplicate()
-		if GameState.has_flag(STORAGE_FLAG):
-			labels.insert(labels.find("Save"), "Storage")
-		if not GameState.travel_targets(current_map).is_empty():
-			labels.insert(1, "Travel")
-		if room_puzzle:
-			labels.insert(1, "Room")
+		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
+			not GameState.travel_targets(current_map).is_empty(), room_puzzle)
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
 		match labels[idx]:
-			"Goals":
-				var daily: String = DailyFind.hint(GameState.flags)
-				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
+			"Goals": await run_goals()
 			"Team": await run_team()
 			"Friends":
 				await FriendsMenu.run(self)
@@ -64,6 +68,51 @@ func run() -> void:
 			"Room":
 				if await run_room():
 					return
+
+## Goals as a list (item 1870): the main goal first with a flag mark, then the open side
+## goals and today's rare visitor. A row opens its full text.
+func run_goals() -> void:
+	while true:
+		var rows: Array[Dictionary] = goal_rows(GameState.flags)
+		var idx: int = await pick("Goals", rows)
+		if idx < 0:
+			return
+		await info(str(rows[idx].get("detail", rows[idx].text)))
+
+## [param daily] replaces today's visitor line (tests).
+static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	var g: Dictionary = QuestLog.current(flags)
+	if not g.is_empty():
+		var where: String = str(g.get("where", ""))
+		var lines: PackedStringArray = []
+		if not str(g.get("chapter", "")).is_empty():
+			lines.append(str(g.chapter))
+		lines.append(QuestLog.goal_text(g, flags))
+		if not where.is_empty():
+			lines.append("Where: %s" % where)
+		rows.append({"text": QuestLog.goal_text(g, flags), "icon": goal_mark(),
+			"hint": Loc.t("Where: %s" % where) if not where.is_empty() else "",
+			"detail": "\n".join(lines)})
+	for s: Dictionary in QuestLog.open_side_goals(flags):
+		rows.append({"text": QuestLog.side_text(s, flags), "hint": Loc.t("Side goal"),
+			"detail": QuestLog.side_text(s, flags)})
+	var visitor: String = DailyFind.hint(flags) if daily == null else str(daily)
+	if not visitor.is_empty():
+		rows.append({"text": "Today's visitor", "hint": Loc.t(visitor), "detail": visitor})
+	return rows
+
+static var _goal_mark: ImageTexture
+
+## A small flag in front of the main goal.
+static func goal_mark() -> Texture2D:
+	if _goal_mark == null:
+		var img := Image.create(9, 9, false, Image.FORMAT_RGBA8)
+		img.fill_rect(Rect2i(1, 0, 1, 9), UITheme.INK)
+		img.fill_rect(Rect2i(2, 0, 6, 4), UITheme.INK)
+		img.fill_rect(Rect2i(3, 1, 3, 2), UITheme.MID)
+		_goal_mark = ImageTexture.create_from_image(img)
+	return _goal_mark
 
 ## Saves without blocking the menu (item 2130) and says honestly where the save is: "Saved."
 ## only once the server has it, otherwise that the phone has it and the server follows (1868).

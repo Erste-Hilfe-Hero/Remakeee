@@ -121,5 +121,9 @@ T = {
 "Reed cutter": "Schilfschneider",
 "Sparkseer": "Funkenseherin",
 "Trader": "Händler",
+"Always run: %s": "Immer rennen: %s",
+"Run without holding B. Hold B to walk.": "Rennen ohne B zu halten. B halten zum Gehen.",
+"Side goal": "Nebenziel",
+"Today's visitor": "Heutiger Besucher",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn"]

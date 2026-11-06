@@ -38,7 +38,7 @@ static func menu_rows() -> Array[String]:
 	for d: String in MenuHost.DIFFICULTY_TEXT:
 		out.append(d)
 		out.append("Challenge: %s" % d)
-	for t: String in PauseMenu.MENU_LABELS:
+	for t: String in PauseMenu.MENU_ORDER:
 		out.append(t)
 	out.append_array(["Continue", "New Game", "Load...", "Settings", "Back", "Yes", "No",
 		"Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
