@@ -30,7 +30,7 @@ const GEAR_KINDS: Dictionary[int, String] = {
 }
 
 ## Wild Spirlings hide in ferns (tall grass), reeds and scree, not only in grass.
-const ENCOUNTER_KINDS: Array[int] = [Kind.TALL_GRASS, Kind.REEDS, Kind.SCREE]
+const ENCOUNTER_KINDS: Array[int] = [Kind.TALL_GRASS, Kind.REEDS, Kind.SCREE, Kind.WADE]
 
 const SOLID: Array[int] = [Kind.WATER, Kind.TREE, Kind.WALL, Kind.ROOF, Kind.FENCE, Kind.SIGN, Kind.COUNTER, Kind.INNER_WALL, Kind.SPRING, Kind.CLIFF, Kind.TOWER, Kind.LAMP, Kind.ROCK, Kind.WADE, Kind.BOULDER, Kind.VINES, Kind.PLANK]
 
