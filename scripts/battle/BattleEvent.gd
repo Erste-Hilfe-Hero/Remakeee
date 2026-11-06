@@ -115,6 +115,8 @@ func describe() -> String:
 		Type.FIELD:
 			return str(data.get("text", ""))
 		Type.RULE:
+			if bool(data.get("turning", false)):
+				return "Turning point, %s: %s" % [data.get("label", ""), data.get("text", "")]
 			return "Rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
 		Type.PARTNER:
 			return "%s fights at your side!" % data.get("partner", "")

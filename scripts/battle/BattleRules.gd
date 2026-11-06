@@ -119,8 +119,11 @@ static func field_blocks(field: String, status: String) -> bool:
 ## (items 675, 676, "warden_only"): "field_opening" lays a field for the first turns, "field_cycle"
 ## brings a field back every "on" + "off" turns and announces it one turn ahead.
 const RULES: Dictionary[String, Dictionary] = {
-	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1, "difficulty": [1, 2, 3]},
-	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}, "difficulty": [1, 2, 3]},
+	"ember_pulse": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every turn.", "foe_energy": 1, "difficulty": [1, 2, 3],
+		"turning": {"text": "The pulse flares: the foe's Spirlings gain 1 Energy at once.", "full_text": "The pulse quickens: now 2 extra Energy every turn.",
+			"line": "One left? Then the embers burn for both of us!", "foe_energy_once": 1, "full_foe_energy": 1}},
+	"undertow": {"label": "Undertow", "text": "The current drags at you: your Spirlings start with less Pace.", "player_stage": {"spd": -1}, "difficulty": [1, 2, 3],
+		"turning": {"text": "The current deepens: your next Spirling to come in loses Might.", "line": "The tide turns. Whoever you send next, it pulls under!", "next_in_stage": {"atk": -1}}},
 	"ember_pulse_soft": {"label": "Ember Pulse", "text": "The foe's Spirlings gain 1 extra Energy every second turn.", "foe_energy": 1, "foe_energy_every": 2, "difficulty": [0]},
 	"undertow_soft": {"label": "Undertow", "text": "The current drags at your lead: it starts with less Pace.", "player_stage": {"spd": -1}, "lead_only": true, "difficulty": [0]},
 	"ash_rain": {"label": "Ash Rain", "text": "Ash rains down: for 3 turns the Ash Storm can't be called away.",
@@ -128,6 +131,14 @@ const RULES: Dictionary[String, Dictionary] = {
 	"tide_turn": {"label": "Tide Turn", "text": "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.",
 		"field_cycle": {"field": "high_tide", "on": 2, "off": 2}, "difficulty": [2, 3], "warden_only": true},
 }
+## The Warden turning point (items 678, 679): when the Warden's second-to-last Spirling drops, a
+## rule with a "turning" block grows for the rest of the battle. Only the Tamer-and-up forms carry
+## one, so Story never turns. "foe_energy_once" is Energy for the foe's Spirlings on the spot,
+## "next_in_stage" hits the next Spirling the player sends in. From Veteran on (BattleModel.
+## rule_turn_full) "full_foe_energy" adds to the rule's Energy every turn and "full_text" is shown.
+static func turning(rule_id: String) -> Dictionary:
+	return RULES.get(rule_id, {}).get("turning", {})
+
 ## Several rules join with "+" in one rule string ("ember_pulse+ash_rain"); at most this many at
 ## once below Veteran, RULE_STACK_HIGH from Veteran on (item 677).
 const RULE_STACK: int = 1

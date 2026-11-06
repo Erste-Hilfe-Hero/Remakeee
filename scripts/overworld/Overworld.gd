@@ -2487,6 +2487,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
+	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
 	model.energy_bonus = [ShopEffects.energy_bonus(), 0]

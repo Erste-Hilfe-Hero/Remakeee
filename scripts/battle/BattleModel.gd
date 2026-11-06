@@ -53,6 +53,11 @@ var partner_front: int = 0
 var partner_ai: BattleAI
 ## Personality lines already said this battle (kind -> true).
 var _lines_said: Dictionary = {}
+## True once the Warden's rule has turned (item 678); _turn_drag waits for the next player send-in.
+var rule_turned: bool = false
+## Veteran and up: the turning point uses the rule's "full_" keys (set by the caller, kept in replays).
+var rule_turn_full: bool = false
+var _turn_drag: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
@@ -484,6 +489,30 @@ func _battle_line(kind: String) -> void:
 	_lines_said[kind] = true
 	emit_event(BattleEvent.Type.BATTLE_LINE, {"side": Side.FOE, "name": trainer_name, "kind": kind, "text": text})
 
+## The Warden turning point (items 678, 679): its fixed line, a RULE banner marked "turning" and the
+## stronger rule for the rest of the battle. Happens once, only for rules with a "turning" block.
+func _turn_rules() -> bool:
+	if rule_turned or is_wild:
+		return false
+	for rule_id: String in BattleRules.split_rules(foe_rule):
+		var t: Dictionary = BattleRules.turning(rule_id)
+		if t.is_empty():
+			continue
+		rule_turned = true
+		if not trainer_name.is_empty():
+			emit_event(BattleEvent.Type.BATTLE_LINE, {"side": Side.FOE, "name": trainer_name, "kind": "turning", "text": str(t.line)})
+		var text: String = str(t.get("full_text", t.text)) if rule_turn_full else str(t.text)
+		emit_event(BattleEvent.Type.RULE, {"rule": rule_id, "label": str(BattleRules.RULES[rule_id].label), "text": text, "turning": true})
+		if int(t.get("foe_energy_once", 0)) > 0:
+			for fs: int in slot_count(Side.FOE):
+				var f: Spirling = active_spirling(Side.FOE, fs)
+				if f != null and not f.is_fainted():
+					change_energy(Side.FOE, int(t.foe_energy_once), fs)
+		var st: Dictionary = t.get("next_in_stage", {})
+		for stat: String in st:
+			_turn_drag[stat] = int(_turn_drag.get(stat, 0)) + int(st[stat])
+	return rule_turned
+
 ## Damages the Spirling in [param slot] of [param side]. Emits DAMAGE and, if it drops, FAINTED.
 func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) -> int:
 	var s: Spirling = active_spirling(side, slot)
@@ -498,7 +527,9 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 	if s.is_fainted():
 		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
 		if side == Side.FOE:
-			_battle_line("last" if alive_count(Side.FOE) == 1 else "own_fall")
+			# A Warden at its turning point says its fixed line instead of the profile's "last" one.
+			if not (alive_count(Side.FOE) == 1 and _turn_rules()):
+				_battle_line("last" if alive_count(Side.FOE) == 1 else "own_fall")
 		elif not is_partner_slot(side, slot):
 			_battle_line("foe_fall")
 	elif side == Side.FOE and slot == 0 and dealt > 0:
@@ -837,6 +868,8 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 			var rule: Dictionary = BattleRules.RULES[rule_id]
 			if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
 				gain += int(rule.get("foe_energy", 0))
+			if rule_turned and rule_turn_full:
+				gain += int(BattleRules.turning(rule_id).get("full_foe_energy", 0))
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:
@@ -1188,6 +1221,11 @@ func _swap_in(side: int, index: int, slot: int = 0) -> void:
 	if side == Side.PLAYER:
 		if not participants.has(s) and not is_partner_index(side, index):
 			participants.append(s)
+		if not _turn_drag.is_empty() and not is_partner_index(side, index):
+			var drag: Dictionary = _turn_drag
+			_turn_drag = {}
+			for stat: String in drag:
+				change_stage(side, stat, int(drag[stat]), slot)
 	elif not is_multi():
 		participants = [active_spirling(Side.PLAYER)]
 
