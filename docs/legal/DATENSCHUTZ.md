@@ -42,7 +42,7 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
 ### 3.2 Freunde, Leuchtpost und Meldungen
 
 - **Daten:** dein Freundescode, deine Freundesliste und Anfragen, Blockierungen, Grüße (nur feste Sätze als
-  Nummer, kein freier Text), Geschenke, die Tamer-Karte (Zahlen wie versiegelte Rifts und Spielzeit, dein
+  Nummer, kein freier Text), Geschenke, die Wanderer-Karte (Zahlen wie versiegelte Rifts und Spielzeit, dein
   Lieblings-Spirling), dein aktueller Ort im Spiel (nie ein echter Standort), dein Echo-Team (Art und Stufe
   deiner Spirlings, keine Spitznamen), dein Beitrag zum Weltziel der Woche und deine Punkte in der
   Wochen-Rangliste. Meldest du jemanden, speichern wir die Meldung mit Grund.

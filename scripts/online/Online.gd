@@ -12,6 +12,9 @@ enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 ## Must match version/code in export_presets.cfg (tests check it). The server sends builds
 ## older than its "min_version" to the store.
 const CLIENT_VERSION: int = 1
+## Format number of the online save (plan item 2673). The server refuses saves without it or
+## newer than its server_config.save_schema_max. Raise both together.
+const SAVE_SCHEMA: int = 1
 const CONFIG_PATH: String = "res://data/online.json"
 const SESSION_PATH: String = "user://online_session.json"
 const LOCAL_STORE_PATH: String = "user://local_server.json"
@@ -281,6 +284,7 @@ func _push_once(slot: int, force: bool) -> bool:
 	var d: Variant = SaveManager.read_save(path)
 	if not d is Dictionary:
 		return false
+	d["schema"] = SAVE_SCHEMA
 	var r: Dictionary = await call_fn("save_put", {"p_slot": slot, "p_data": d,
 		"p_summary": SaveManager.summary_line(d), "p_base_rev": int(revs.get(slot, 0)), "p_force": force})
 	if not r.ok or not r.data is Dictionary:

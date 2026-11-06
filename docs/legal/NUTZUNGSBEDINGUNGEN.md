@@ -44,7 +44,7 @@ Nicht erlaubt sind insbesondere:
 
 Freunde fügst du über den Freundescode hinzu. Grüße sind feste Sätze aus einer Liste, freier Text ist nicht
 möglich. Spirlings lassen sich nicht tauschen oder verschenken. Du kannst jeden Spieler blockieren und im
-Spiel melden (Freund, Melden). Wir prüfen Meldungen und setzen unpassende Namen auf „Tamer“ mit Nummer
+Spiel melden (Freund, Melden). Wir prüfen Meldungen und setzen unpassende Namen auf „Wanderer“ mit Nummer
 zurück. Eltern können Freunde, Grüße und Geschenke unter Einstellungen, Konto ausschalten.
 
 Bei Verstößen können wir nach Abwägung der Umstände verwarnen, Spielstände zurücksetzen oder das Konto

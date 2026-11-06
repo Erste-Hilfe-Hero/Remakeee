@@ -27,7 +27,7 @@ ideas list behind this is the "Chimora online: 200 ideas" artifact in the projec
 
 All under Menu, Friends. Spirlings are never traded or gifted, and there is no free text anywhere.
 
-- **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Tamer card,
+- **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Wanderer card,
   friendship level 1-5 (points from gifts, echo help and duels). 100 friends at most. 20 requests per hour.
 - **Lantern Mail:** one gift per friend per day; the item is rolled on the server when it is opened, from the
   open table in `server_config.gift_table` (the game shows the chances). Ten opens per day. Greetings are
@@ -147,20 +147,28 @@ In the database (see "Looking into the database"), table `server_config`, for ex
 | --- | --- | --- |
 | `min_version` | `1004` | builds with a lower version code must update |
 | `motd` | `"Maintenance today 3-4 am"` | notice on the title screen (`""` = none) |
+| `party_max` | `5` | most Spirlings in a saved team and an echo team |
+| `level_max` | `60` | highest Ring in saves and echo teams |
+| `duel_ring` | `50` | Ring everyone fights at in an echo duel |
+| `save_schema_max` | `1` | newest online save format the server takes (`Online.SAVE_SCHEMA`) |
 
 Also `gift_table`, `gift_open_limit`, `friend_limit`, `goal_rotation` (list of `{"kind", "target"}`;
 kinds `battles`, `bonds`, `rests`), `goal_rewards` (four item ids) and `goal_user_cap`.
 
-Table `banned_words`: words a Tamer name may not contain.
+Table `banned_words`: words a Wanderer name may not contain.
+
+Table `feature_flags` (key, `enabled`, `min_version`): switches the new online parts on one by one,
+for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
+`league_open`, `live_duel`, `trade`, `bund`, `raid`. All start switched off.
 
 ## Reports (Ali, about once a week)
 
 Table `reports` lists open reports (`handled = false`). To reset a name, run in the database:
 
 ```sql
-update public.profiles set name = 'Tamer ' || right(code, 4) where id = '<target>';
+update public.profiles set name = 'Wanderer ' || right(code, 4) where id = '<target>';
 update public.reports set handled = true where target = '<target>';
 ```
 
 The DSA asks for a short reason to the player. Until there is an in-game notice, answer by email if they
-write in, for example: "Your Tamer name was reset because it broke the rules in section 4 of the terms."
+write in, for example: "Your Wanderer name was reset because it broke the rules in section 4 of the terms."
