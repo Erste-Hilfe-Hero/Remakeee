@@ -1,9 +1,11 @@
 class_name SeasonPath
 extends RefCounted
-## Free season path (plan area 8): one path per quarter of the year (Jan-Mar, Apr-Jun, Jul-Sep,
+## Free season path (plan area 8, plan 3248: this is the free path; whether a paid lane
+## exists next to it is decided by area 10, not here): one path per quarter of the year (Jan-Mar, Apr-Jun, Jul-Sep,
 ## Oct-Dec) with TIERS steps. Path points come only from playing: daily tasks, the weekly echo
 ## and festival goals. Every step has a fixed reward that is shown before the season starts;
-## the same rewards come back every season, so nothing is missed for good. Progress lives in
+## the same rewards come back every season, so nothing is missed for good. Steps pay out the
+## moment they are reached, so a reached step is never left unclaimed at season end (plan 3243). Progress lives in
 ## GameState.records["season_path"] = {"season": "2026-Q4", "points": n, "claimed": steps}.
 
 const DATA_PATH: String = "res://data/endgame.json"
@@ -46,12 +48,17 @@ static func state() -> Dictionary:
 		GameState.records["season_path"] = st
 	return st
 
-## Waymarks for every step past the last one (plan 3244): no new cosmetics, just Waymarks.
+## Waymarks for every step past the last one (plan 3244): no new cosmetics, just Waymarks,
+## for at most MAX_EXTRA_STEPS steps a season.
 const EXTRA_STEP_WAYMARKS: int = 20
+const MAX_EXTRA_STEPS: int = 10
+## Pacing (plan 3242): step 30 needs 3000 points. Four play days a week with the three daily
+## tasks and their bonus (4 x 60) plus one weekly echo win (40) bring 280 a week, so step 30
+## is reached in 11 weeks of a 13-week season.
 
-## Steps reached past the last one this season.
+## Steps reached past the last one this season (counted up to MAX_EXTRA_STEPS).
 static func extra_steps() -> int:
-	return maxi(0, GameState.as_int(state().get("points", 0)) / per_tier() - tiers())
+	return clampi(GameState.as_int(state().get("points", 0)) / per_tier() - tiers(), 0, MAX_EXTRA_STEPS)
 
 static func tier() -> int:
 	return mini(GameState.as_int(state().get("points", 0)) / per_tier(), tiers())

@@ -144,13 +144,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3239. [x] [P1] Jede Stufe mit einer festen, vorher sichtbaren Belohnung belegen: Münzen, Wegmarken, Gegenstände oder Kosmetik.
 3240. [x] [P1] Den ganzen Pfad mit allen 30 Belohnungen vor dem Start einsehbar machen.
 3241. [P2] Die Stufen 10, 20 und 30 mit einer besonderen Belohnung belegen: Jackenmuster, Fotorahmen und ein Spirling-Halstuch als Kosmetik.
-3242. [P2] Die Zielzeit so legen, dass Stufe 30 mit 4 Tagen Spiel pro Woche in 11 Wochen erreichbar ist.
-3243. [P2] Pfadbelohnungen nach Saisonende 14 Tage lang nachholbar machen, wenn die Stufe erreicht, aber nicht abgeholt wurde.
+3242. [x] [P2] Die Zielzeit so legen, dass Stufe 30 mit 4 Tagen Spiel pro Woche in 11 Wochen erreichbar ist.
+3243. [x] [P2] Pfadbelohnungen nach Saisonende 14 Tage lang nachholbar machen, wenn die Stufe erreicht, aber nicht abgeholt wurde.
 3244. [x] [P2] Nach Stufe 30 jede weitere Stufe mit 20 Wegmarken belohnen, ohne neue Kosmetik.
 3245. [x] [P2] Den Pfad als eigenen Reiter im Ziele-Bildschirm zeigen, mit Balken und der nächsten Belohnung.
 3246. [P2] Die Pfaddaten jeder Jahreszeit in data/events.json mit Saison-Id wie „2027-Q1“ ablegen.
 3247. [P2] Kosmetik aus einem vergangenen Pfad zwei Jahre später im Wegmarken-Tauschstand wieder anbieten.
-3248. [P2] Diesen Pfad ausdrücklich als freien Pfad anlegen; ob es eine bezahlte Spur dazu gibt, entscheidet Bereich 10, nicht dieser Bereich.
+3248. [x] [P2] Diesen Pfad ausdrücklich als freien Pfad anlegen; ob es eine bezahlte Spur dazu gibt, entscheidet Bereich 10, nicht dieser Bereich.
 3249. [P2] Den Jahreszeitenpfad an den Jahreszeiten des Kalenders ausrichten (März, Juni, September, Dezember) und den Start nach Server-Zeit setzen.
 3250. [P3] Eine Pfadvorschau der nächsten Jahreszeit zwei Wochen vor deren Start zeigen.
 3251. [P3] Einen Erfolg für jeden voll abgeschlossenen Jahreszeitenpfad ergänzen.
