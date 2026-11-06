@@ -824,7 +824,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		var world: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * at
 		tap_cell(Vector2i(floori(world.x / GridWalker.TILE), floori(world.y / GridWalker.TILE)))
 
-## Walks toward [param cell]; NPCs, signs and counters get walked up to and talked to.
+## True if a tap on [param cell] should walk next to it and use it, like pressing A in front
+## of it: signs, counters, hidden finds, smooth rock passages, ladders and plank gaps
+## (item 2109, so all of the world works with taps alone). NPCs are checked by the caller.
+static func used_on_arrival(m: MapData, cell: Vector2i, flags: Dictionary) -> bool:
+	if not m.sign_at(cell, flags).is_empty() or not m.secret_at(cell, flags).is_empty():
+		return true
+	if not m.ladder_at(cell).is_empty():
+		return true
+	var p: Dictionary = m.passage_at(cell)
+	if not p.is_empty() and not bool(flags.get(str(p.get("flag", "")), false)):
+		return true
+	var k: int = m.kind_at(cell)
+	return k == TilesetFactory.Kind.COUNTER or k == TilesetFactory.Kind.PLANK
+
+## Walks toward [param cell]; NPCs, signs, counters and finds get walked up to and used.
 func tap_cell(cell: Vector2i) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
@@ -838,8 +852,14 @@ func tap_cell(cell: Vector2i) -> void:
 			if f == player.cell or not route.is_empty():
 				player.follow(route, cell)
 				return
-	var talk: bool = npc_at(cell) != null or not map.sign_at(cell, GameState.flags).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
-	if talk:
+	# Boulders: a tap next to one pushes it, a tap further away walks up to it (item 2109).
+	if map.char_at(cell) == "B":
+		if PathFinder.is_adjacent(cell, player.cell):
+			player.follow([cell] as Array[Vector2i])
+		else:
+			player.follow(PathFinder.find_adjacent(player.cell, cell, passable))
+		return
+	if npc_at(cell) != null or used_on_arrival(map, cell, GameState.flags):
 		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)
 	else:
 		player.follow(PathFinder.find(player.cell, cell, passable))
