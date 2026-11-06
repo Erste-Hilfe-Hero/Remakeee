@@ -16,6 +16,11 @@ const BOSS_HP_SCALE: Array[float] = [0.8, 1.0, 1.0, 1.0]
 ## A shifted foe never stands more than this many rings above the player's ring cap.
 const FOE_OVER_CAP: int = 2
 const MAX_PARTY: int = 5
+
+## Team size now: MAX_PARTY, one more with the shop's sixth team slot (plan area 10, unlock
+## team_slot_6; the server allows the same in saves).
+func party_max() -> int:
+	return MAX_PARTY + (1 if Billing.unlocked("team_slot_6") > 0 else 0)
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
 
@@ -722,7 +727,7 @@ func retire_fainted() -> Array[String]:
 func fill_party_from_storage() -> int:
 	var n: int = 0
 	for s: Spirling in storage.duplicate():
-		if party.size() >= MAX_PARTY:
+		if party.size() >= party_max():
 			break
 		if Expeditions.is_away(s.uid):
 			continue
@@ -736,7 +741,7 @@ func break_oath() -> void:
 	iron_oath = false
 	for s: Spirling in sanctuary:
 		s.restore()
-		if party.size() < MAX_PARTY:
+		if party.size() < party_max():
 			party.append(s)
 		else:
 			_store(s, true)
@@ -759,7 +764,7 @@ func receive_spirling(s: Spirling) -> bool:
 	mark_seen(s.data.species_name, true)
 	note_spirlog(s)
 	s.restore()
-	if party.size() < MAX_PARTY:
+	if party.size() < party_max():
 		party.append(s)
 		return true
 	_store(s, true)
@@ -999,7 +1004,7 @@ func deposit(index: int, keep_keepsake: bool = false) -> bool:
 	return true
 
 func withdraw(index: int) -> bool:
-	if index < 0 or index >= storage.size() or party.size() >= MAX_PARTY:
+	if index < 0 or index >= storage.size() or party.size() >= party_max():
 		return false
 	# Spirlings on a roaming trip stay away until they are home (plan 3448).
 	if Expeditions.is_away(storage[index].uid):

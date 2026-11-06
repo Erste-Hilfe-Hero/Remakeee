@@ -24,6 +24,9 @@ static func apply_unlocks() -> void:
 	if boxes > GameState.storage_box_bonus:
 		GameState.storage_box_bonus = boxes
 		GameState.ensure_boxes()
+	# A refunded sixth team slot: the last Spirling goes to storage, so saves stay valid.
+	while GameState.party.size() > GameState.party_max():
+		GameState._store(GameState.party.pop_back(), true)
 
 ## Growth with the pass (+50 %, item 4625) times a running Growth Crystal (items 4345, 4346).
 const PASS_GROWTH: float = 1.5

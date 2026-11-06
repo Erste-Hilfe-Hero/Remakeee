@@ -599,7 +599,7 @@
    "name_de": "Sechster Team-Platz",
    "desc_en": "Your team holds 6 Spirlings instead of 5 in battles against the world. Permanent.",
    "desc_de": "Dein Team hat 6 statt 5 Plätze in Kämpfen gegen die Spielwelt. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.storage_box",

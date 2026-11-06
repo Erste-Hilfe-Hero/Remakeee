@@ -629,7 +629,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4592. [P3] (P2W) Die Wirkung der Bond-Hilfen in einem Abschnitt in `docs/BALANCE.md` beschreiben, mit Zahlen nur für Entwickler.
 
 ### Team- und Lagerplätze
-4593. [P1] (P2W) Einen "Sechsten Team-Platz" (`rg_team_slot_6`) als dauerhaften Kauf anlegen, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt, der `GameState.MAX_PARTY` für das Konto auf 6 hebt.
+4593. [x] [P1] (P2W) Einen "Sechsten Team-Platz" (`rg_team_slot_6`) als dauerhaften Kauf anlegen, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt, der `GameState.MAX_PARTY` für das Konto auf 6 hebt.
 4594. [P1] (P2W) `MAX_PARTY` in `GameState.gd` durch eine Funktion `party_max()` ersetzen, die 5 oder mit Berechtigung 6 liefert, und alle Stellen (`party.size() < MAX_PARTY`) darauf umstellen.
 4595. [P1] (P2W) Der sechste Platz gilt in allen Kämpfen gegen die Spielwelt; in der Gleichstand-Liga und in Ligen mit Teamgröße 5 wird nur mit den ersten 5 gekämpft.
 4596. [P1] (P2W) Das Team-Menü zeigt den sechsten Platz mit Rissglas-Rand; ohne Kauf ist er nicht sichtbar, damit kein leerer Platz zum Kauf drängt.
