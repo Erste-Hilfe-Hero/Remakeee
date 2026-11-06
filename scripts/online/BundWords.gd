@@ -27,7 +27,7 @@ const SECOND: Array[String] = [
 	"Storytellers", "Swallows", "Swans", "Tinkers", "Toads", "Tortoises", "Travelers", "Trees", "Voices",
 	"Walkers", "Wanderers", "Watchers", "Weavers", "Whistlers", "Wings", "Wolves", "Wrens", "Archers", "Artists",
 	"Bakers", "Banners", "Bards", "Beacons", "Brothers", "Circles", "Clans", "Companions", "Crafters",
-	"Dragonflies", "Ferns", "Folk", "Gliders", "Hearts", "Heroes", "Islanders", "Jugglers", "Kin", "Lanterns",
+	"Dragonflies", "Ferns", "Folk", "Harpers", "Hearts", "Heroes", "Islanders", "Jugglers", "Kin", "Lanterns",
 	"Messengers", "Minstrels", "Nomads", "Oars", "Pioneers", "Ramblers", "Sisters", "Songbirds", "Tribe",
 ]
 const FIRST_DE: Array[String] = [
@@ -55,7 +55,7 @@ const SECOND_DE: Array[String] = [
 	"Sänger", "Funken", "Spatzen", "Eichhörnchen", "Sterne", "Erzähler", "Schwalben", "Schwäne", "Tüftler",
 	"Kröten", "Schildkröten", "Reisende", "Bäume", "Stimmen", "Gänger", "Streuner", "Beobachter", "Weber",
 	"Pfeifende", "Schwingen", "Wölfe", "Zaunkönige", "Bogenschützen", "Künstler", "Bäcker", "Banner", "Barden",
-	"Feuer", "Brüder", "Kreise", "Sippen", "Gefährten", "Handwerker", "Libellen", "Farne", "Leute", "Gleiter",
+	"Feuer", "Brüder", "Kreise", "Sippen", "Gefährten", "Handwerker", "Libellen", "Farne", "Leute", "Harfner",
 	"Herzen", "Helden", "Insulaner", "Gaukler", "Verwandten", "Laternen", "Boten", "Spielleute", "Nomaden",
 	"Ruder", "Pioniere", "Bummler", "Schwestern", "Singvögel", "Stämme",
 ]
