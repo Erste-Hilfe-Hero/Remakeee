@@ -299,4 +299,7 @@ T = {
 "No other task fits today.": "Heute passt kein anderer Auftrag.", "New task: %s": "Neuer Auftrag: %s",
 "All of them: %d Waymarks extra.": "Alle zusammen: %d Wegmarken extra.",
 "Once a day, free of charge.": "Einmal am Tag, kostenlos.",
+"Answer with the Echo melody: Good or better": "Antworte mit der Echo-Melodie: Gut oder besser",
+"See a Spirling you have not seen yet": "Sieh einen Spirling, den du noch nicht gesehen hast",
+"Meet today's rare visitor": "Triff den seltenen Besucher des Tages",
 }
