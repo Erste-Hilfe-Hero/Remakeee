@@ -38,3 +38,13 @@ T = {
 "You tie the rope ladder to the edge. It will stay here.": "Du knotest die Strickleiter an der Kante fest. Sie bleibt hier hängen.",
 "You lay a plank over the gap. It holds.": "Du legst ein Brett über die Lücke. Es hält.",
 }
+T.update({
+# Hidden finds and the Spirlog Tracker
+"Something glints here...": "Hier glitzert etwas...",
+"Hidden finds here: %d/%d": "Versteckte Funde hier: %d/%d",
+"ferns": "Farn",
+"reeds": "Schilf",
+"scree": "Geröll",
+"shallow water": "seichtes Wasser",
+"cave": "Höhle",
+})

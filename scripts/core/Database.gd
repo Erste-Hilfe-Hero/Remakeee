@@ -134,6 +134,10 @@ static func _load_spirlings() -> void:
 		sd.rarity = str(s.get("rarity", "common"))
 		sd.region = str(s.get("region", "veydal"))
 		sd.role = str(s.get("role", ""))
+		sd.keepsake_hint = str(s.get("keepsake_hint", ""))
+		sd.cry_motif.clear()
+		for m: Variant in s.get("cry_motif", []):
+			sd.cry_motif.append(int(m))
 		sd.origin = str(s.get("origin", ""))
 		sd.line_id = str(s.get("line_id", str(s.name).to_lower()))
 		sd.lore = str(s.get("lore", ""))
