@@ -98,7 +98,11 @@ static func build_model(p: Dictionary) -> BattleModel:
 	var ally: Dictionary = p.get("partner", {})
 	if not ally.is_empty():
 		m.set_partner(str(ally.get("name", "")), _team(ally.get("team", []), rng), int(ally.get("front", 1)), int(ally.get("ai", 1)), str(ally.get("profile", "")))
-	m.start()
+	# The battle screen plays these instead of starting the model again, which would reset the
+	# Energy the puzzle sets (item 708). The metas also drive the banner and the turn limit (711).
+	m.set_meta("intro", m.start())
+	m.set_meta("puzzle_max", int(p.get("max_turns", 3)))
+	m.set_meta("puzzle_first", m.turn)
 	for side: int in 2:
 		var list: Array = p.get("player" if side == 0 else "foe", [])
 		var team: Array[Spirling] = m.party(side)
@@ -259,3 +263,126 @@ static func _walk(p: Dictionary, line: Array[BattleAction], weight: float, out: 
 		var next: Array[BattleAction] = line.duplicate()
 		next.append(a)
 		_walk(p, next, weight / float(opts.size()), out)
+
+## Turns left for a puzzle model (item 711), or -1 for any other battle.
+static func turns_left(m: BattleModel) -> int:
+	if not m.has_meta("puzzle_max"):
+		return -1
+	return maxi(0, int(m.get_meta("puzzle_max")) - (m.turn - int(m.get_meta("puzzle_first", 0))))
+
+## True once a puzzle model has used up its turns; the battle screen stops there.
+static func out_of_turns(m: BattleModel) -> bool:
+	return turns_left(m) == 0
+
+## The goal as a sentence (item 711), translated: each goal of [param p] in turn.
+static func goal_text(p: Dictionary) -> String:
+	var parts: Array[String] = []
+	for goal: Dictionary in goals(p):
+		var v: Variant = goal.get("value")
+		match str(goal.get("type", "win_within")):
+			"win_within":
+				parts.append(Loc.t("Win within %d turns.") % int(goal.get("value", p.get("max_turns", 3))))
+			"no_faint":
+				parts.append(Loc.t("Win without losing a Spirling."))
+			"exact_rests":
+				parts.append(Loc.t("Rest exactly %d times.") % int(v) if int(v) != 1 else Loc.t("Rest exactly once."))
+			"keep_status":
+				parts.append(Loc.t("Never cure the %s.") % Loc.t(str(v).capitalize()))
+			"use_reaction":
+				parts.append(Loc.t("Set off a %s reaction.") % Loc.t(str(v).capitalize()))
+			"last_hit_with":
+				parts.append(Loc.t("Land the last blow with %s.") % Loc.t(str(v)))
+		var need: String = str(goal.get("reaction", ""))
+		if not need.is_empty():
+			parts.append(Loc.t("Set off a %s reaction.") % Loc.t(need.capitalize()))
+	return " ".join(parts)
+
+## A model for a fresh attempt (items 708, 711): built from the file, the goal sentence set.
+## [param quick] leaves out every text before the fight, for an instant restart.
+static func start_attempt(p: Dictionary, quick: bool = false) -> Attempt:
+	var at: Attempt = start(p)
+	at.model.set_meta("puzzle_goal", goal_text(p))
+	if quick:
+		at.model.set_meta("quick", true)
+	return at
+
+## The intro events of a prepared model; a quick restart drops the spoken lines.
+static func intro_events(m: BattleModel) -> Array[BattleEvent]:
+	var out: Array[BattleEvent] = []
+	for e: BattleEvent in m.get_meta("intro", []):
+		if m.has_meta("quick") and e.type == BattleEvent.Type.BATTLE_LINE:
+			continue
+		out.append(e)
+	return out
+
+# --- Hints, results and rewards (items 707, 710, 712) ------------------------------
+
+## A hint after this many failed tries: hint_1 from 2, hint_2 from 4 (item 707).
+const HINT_1_FAILS: int = 2
+const HINT_2_FAILS: int = 4
+
+## The hint for [param fails] failed tries, translated, or "" before the first one is due.
+static func hint(p: Dictionary, fails: int) -> String:
+	var key: String = "hint_2" if fails >= HINT_2_FAILS else ("hint_1" if fails >= HINT_1_FAILS else "")
+	if key.is_empty() or str(p.get(key, "")).is_empty():
+		return ""
+	return Loc.t(str(p.get(key)))
+
+## Puzzle results by id (item 712): {"lanterns", "turns" (fewest of a solved try, 0 for none),
+## "fails"}. Older saves kept lanterns (or true) in records["trials"]; those count here without
+## being removed, so nothing is lost.
+static func results(records: Dictionary) -> Dictionary:
+	var out: Dictionary = (records.get("puzzles", {}) as Dictionary).duplicate(true)
+	var old: Dictionary = records.get("trials", {})
+	for id: Variant in old:
+		var lit: int = _legacy_lanterns(old[id])
+		var e: Dictionary = out.get(str(id), {"lanterns": 0, "turns": 0, "fails": 0})
+		e["lanterns"] = maxi(int(e.get("lanterns", 0)), lit)
+		out[str(id)] = e
+	return out
+
+static func _legacy_lanterns(v: Variant) -> int:
+	if v is bool:
+		return 2 if v else 0
+	return clampi(int(v), 0, MAX_LANTERNS)
+
+## Best lanterns stored for puzzle [param id].
+static func best_lanterns(records: Dictionary, id: String) -> int:
+	return int((results(records).get(id, {}) as Dictionary).get("lanterns", 0))
+
+## Writes one finished attempt into records["puzzles"] and returns its entry.
+static func note_result(records: Dictionary, p: Dictionary, at: Attempt) -> Dictionary:
+	var all_res: Dictionary = results(records)
+	var id: String = str(p.get("id", ""))
+	var e: Dictionary = all_res.get(id, {"lanterns": 0, "turns": 0, "fails": 0})
+	e["lanterns"] = maxi(int(e.get("lanterns", 0)), lanterns(p, at))
+	if solved(p, at):
+		var t: int = at.turns()
+		e["turns"] = t if int(e.get("turns", 0)) <= 0 else mini(int(e.turns), t)
+	else:
+		e["fails"] = int(e.get("fails", 0)) + 1
+	all_res[id] = e
+	records["puzzles"] = all_res
+	return e
+
+## Echo Crystal for 3 lanterns on every Trial of a Warden (item 710).
+const WARDEN_REWARD: Dictionary = {"cinder": "echo_furnace_heart", "tide": "echo_fathom_crush"}
+
+## The reward item now due for [param warden], or "" (none, not earned or already given).
+static func reward_due(records: Dictionary, warden: String) -> String:
+	var item: String = str(WARDEN_REWARD.get(warden, ""))
+	if item.is_empty() or item in (records.get("puzzle_rewards", []) as Array):
+		return ""
+	var trials: Array[Dictionary] = for_warden(warden)
+	if trials.is_empty():
+		return ""
+	for p: Dictionary in trials:
+		if best_lanterns(records, str(p.get("id", ""))) < MAX_LANTERNS:
+			return ""
+	return item
+
+## Notes that the reward of [param warden] was given, so it comes only once.
+static func mark_reward(records: Dictionary, warden: String) -> void:
+	var given: Array = (records.get("puzzle_rewards", []) as Array).duplicate()
+	given.append(str(WARDEN_REWARD.get(warden, "")))
+	records["puzzle_rewards"] = given

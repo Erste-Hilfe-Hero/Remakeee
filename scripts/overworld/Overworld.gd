@@ -2263,8 +2263,8 @@ func _mark_rematch(def: Dictionary) -> void:
 	GameState.records["rematch"] = rec
 
 ## A beaten Warden offers its Trials at the Rift (plan area 2, item 697): fixed puzzle battles
-## with borrowed Spirlings. They give no rings, no growth and leave the team as it is; a solved
-## Trial is marked in GameState.records["trials"]. Returns false if there are none or the player leaves.
+## with borrowed Spirlings. They give no rings, no growth and leave the team as it is; results
+## go to GameState.records["puzzles"] (item 712). Returns false if there are none or the player leaves.
 func offer_trials(n: NPC) -> bool:
 	var def: Dictionary = n.definition
 	if not def.has("warden") or not TrainerData.is_beaten(def, map.id, GameState.flags):
@@ -2275,10 +2275,9 @@ func offer_trials(n: NPC) -> bool:
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
-	var done: Dictionary = GameState.records.get("trials", {})
 	var entries: Array[Dictionary] = []
 	for p: Dictionary in trials:
-		var got: int = _trial_lanterns(done.get(str(p.id), 0))
+		var got: int = BattlePuzzle.best_lanterns(GameState.records, str(p.id))
 		var mark: String = (" " + Loc.t("Lanterns %d/%d") % [got, BattlePuzzle.MAX_LANTERNS]) if got > 0 else ""
 		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
 	var menu := MenuHost.new()
@@ -2290,27 +2289,44 @@ func offer_trials(n: NPC) -> bool:
 		player.frozen = false
 		busy = false
 		return idx < 0
-	var p: Dictionary = trials[idx]
-	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
-	await start_battle(at.model.party(BattleModel.Side.FOE), false,
-		{"model": at.model, "friendly": true, "warden": true, "name": str(p.get("name", ""))})
-	var ok: bool = BattlePuzzle.solved(p, at)
-	var lit: int = BattlePuzzle.lanterns(p, at)
-	if lit > _trial_lanterns(done.get(str(p.id), 0)):
-		var rec: Dictionary = done.duplicate()
-		rec[str(p.id)] = lit
-		GameState.records["trials"] = rec
-	var lines: Array[String] = [Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")]
-	if lit > 0:
-		lines.append(Loc.t("Lanterns %d/%d") % [lit, BattlePuzzle.MAX_LANTERNS])
-	await say(lines)
+	await _play_trial(trials[idx], str(def.warden))
 	return true
 
-## Lanterns stored for a Trial (item 706); older saves kept true for a solved Trial, worth 2.
-static func _trial_lanterns(v: Variant) -> int:
-	if v is bool:
-		return 2 if v else 0
-	return clampi(int(v), 0, BattlePuzzle.MAX_LANTERNS)
+## Plays one Trial until it is solved or the player stops (items 707, 708, 710, 712). "Restart"
+## in the battle and "Try again" after a miss start it at once with the same seed and no text
+## before the fight; every miss counts towards the hints.
+func _play_trial(p: Dictionary, warden: String) -> void:
+	var quick: bool = false
+	while true:
+		var at: BattlePuzzle.Attempt = BattlePuzzle.start_attempt(p, quick)
+		await start_battle(at.model.party(BattleModel.Side.FOE), false,
+			{"model": at.model, "friendly": true, "warden": true, "name": str(p.get("name", ""))})
+		var entry: Dictionary = BattlePuzzle.note_result(GameState.records, p, at)
+		quick = true
+		if at.model.has_meta("puzzle_restart"):
+			continue
+		var ok: bool = BattlePuzzle.solved(p, at)
+		var lit: int = BattlePuzzle.lanterns(p, at)
+		var lines: Array[String] = [Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")]
+		if lit > 0:
+			lines.append(Loc.t("Lanterns %d/%d") % [lit, BattlePuzzle.MAX_LANTERNS])
+		var tip: String = "" if ok else BattlePuzzle.hint(p, int(entry.get("fails", 0)))
+		if not tip.is_empty():
+			lines.append(Loc.t("Hint: %s") % tip)
+		var reward: String = BattlePuzzle.reward_due(GameState.records, warden)
+		if not reward.is_empty():
+			BattlePuzzle.mark_reward(GameState.records, warden)
+			GameState.add_item(reward)
+			lines.append(Loc.t("Every Trial shines with 3 lanterns! You received %s.") % Loc.t(str(Database.item(reward).get("name", reward))))
+		await say(lines)
+		if ok:
+			return
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		var again: bool = await menu.confirm(Loc.t("Try again?"), "Try again", "Leave")
+		menu.queue_free()
+		if not again:
+			return
 
 ## The card before a Warden battle (item 687): rule, team size and elements, then [param question].
 ## "Not yet" leaves the player free to change their team first. Returns true to fight.

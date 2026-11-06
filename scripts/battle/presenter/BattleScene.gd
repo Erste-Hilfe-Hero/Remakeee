@@ -113,9 +113,21 @@ func _ready() -> void:
 	_multi = model.is_multi()
 	_run.call_deferred()
 
+## In a Trial "Leave" restarts it (item 708): the screen ends and the Rift starts it again.
+func _puzzle_restart(a: BattleAction) -> bool:
+	if a == null or a.kind != BattleAction.Kind.RUN or not model.has_meta("puzzle_max"):
+		return false
+	model.set_meta("puzzle_restart", true)
+	return true
+
 ## Call before adding to the tree.
 ## Shows "T3 ✓", "T3 ✗" or "T3" for the bonus goal of this battle (item 762).
 func _refresh_goal() -> void:
+	if _goal_label != null and model.has_meta("puzzle_max"):
+		# Trials (item 711): the goal as a sentence and the turns left, top left.
+		_goal_label.text = str(model.get_meta("puzzle_goal", "")) + "\n" + Loc.t("Turns left: %d") % BattlePuzzle.turns_left(model)
+		_goal_label.visible = true
+		return
 	if _goal_label == null or not model.has_meta("goal_tracker") or not GameState.bonus_goals:
 		return
 	var t: BattleGoals.Tracker = model.get_meta("goal_tracker")
@@ -369,18 +381,19 @@ func _run() -> void:
 	_auto_button.visible = model.is_wild
 	_apply_speed()
 	Sound.music(music_track)
-	var intro: Array[BattleEvent] = model.start()
+	# A Trial comes started (its Energy is set after the start); a restart skips its lines.
+	var intro: Array[BattleEvent] = BattlePuzzle.intro_events(model) if model.has_meta("intro") else model.start()
 	if _multi:
 		_build_formation()
 	await _play(intro)
-	if model.has_meta("bonus_goal"):
+	if model.has_meta("bonus_goal") and not model.has_meta("quick"):
 		await _text.show_text(str(model.get_meta("bonus_goal")))
 	_refresh_goal()
 	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
-	while not model.is_finished():
+	while not model.is_finished() and not BattlePuzzle.out_of_turns(model):
 		if _replaying:
 			if replay_inputs.is_empty():
 				break
@@ -402,6 +415,8 @@ func _run() -> void:
 			continue
 		if _multi:
 			var actions: Array[BattleAction] = await _choose_actions()
+			if _puzzle_restart(actions.back() if not actions.is_empty() else null):
+				break
 			inputs.append(BattleReplay.actions_to_dict(actions))
 			await _play(model.submit_actions(actions))
 			_refresh_goal()
@@ -409,6 +424,8 @@ func _run() -> void:
 		var action: BattleAction = await _choose_action()
 		if action == null:
 			continue
+		if _puzzle_restart(action):
+			break
 		inputs.append(BattleReplay.action_to_dict(action))
 		await _play(model.submit_turn(action))
 		_refresh_goal()

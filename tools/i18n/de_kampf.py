@@ -68,7 +68,7 @@ T.update({
 "Current Trial 2": "Strömungsprobe 2",
 "Current Trial 3": "Strömungsprobe 3",
 "Puddlet against Smoldrake in the ash storm. Win within 4 turns.": "Puddlet gegen Smoldrake im Aschesturm. Gewinne in höchstens 4 Runden.",
-"Kindlop burns, and its Kindling gift turns the Scorch into strength. Beat Shalebat and Zippit without curing the Scorch.": "Kindlop brennt, und seine Gabe Kindling macht aus dem Scorch Stärke. Besiege Shalebat und Zippit, ohne den Scorch zu heilen.",
+"Kindlop burns, and its Kindling gift turns the Scorch into strength. It starts with 5 Energy. Beat Shalebat and Zippit without curing the Scorch.": "Kindlop brennt, und seine Gabe Kindling macht aus dem Scorch Stärke. Es startet mit 5 Energie. Besiege Shalebat und Zippit, ohne den Scorch zu heilen.",
 "Mossling at half Vigor against Kindlop. Win within 5 turns.": "Mossling mit halber Kraft gegen Kindlop. Gewinne in höchstens 5 Runden.",
 "Zippit starts with 4 Energy against a soaked Riptail. Win within 3 turns through the Volt reaction.": "Zippit startet mit 4 Energie gegen ein durchnässtes Riptail. Gewinne in höchstens 3 Runden über die Volt-Reaktion.",
 "Zephlet starts with 2 Energy against Puddlet in the high tide. Win, resting exactly once.": "Zephlet startet mit 2 Energie gegen Puddlet in der Hochflut. Gewinne und raste dabei genau einmal.",
@@ -240,4 +240,32 @@ T.update({
 T.update({
 "Riptail and Kestra's Zephlet against Zippit and Kelpup. Win without losing a Spirling.": "Riptail und Kestras Zephlet gegen Zippit und Kelpup. Gewinne, ohne einen Spirling zu verlieren.",
 "Lanterns %d/%d": "Laternen %d/%d",
+})
+
+# Plan area 2, items 707-713: hints, restart, goal banner, results and the lantern reward.
+T.update({
+"Smoldrake fights Ember with Ember. Your Tide arts hit it hard, but Energy is short in the storm.": "Smoldrake kämpft mit Glut gegen Glut. Deine Tide-Techniken treffen es hart, aber im Sturm wird die Energie knapp.",
+"Open with Fizz Pop, call the tide once, then keep up the Fizz Pop.": "Beginne mit Fizz Pop, rufe einmal die Flut und bleib dann bei Fizz Pop.",
+"Kindlop only has 5 Energy. Plan one rest, and spend the rest of it on blows that count.": "Kindlop hat nur 5 Energie. Plane eine Rast ein und gib den Rest für Schläge aus, die zählen.",
+"Glow Knuckle twice, rest once, then Glow Knuckle and Cinder Nip.": "Zweimal Glow Knuckle, einmal rasten, dann Glow Knuckle und Cinder Nip.",
+"Kindlop wants to heat up. Hit it before it gets going, and do not wait.": "Kindlop will sich aufheizen. Triff es, bevor es loslegt, und warte nicht.",
+"Pollen Prick twice, a puff of Puffcap Haze, then finish with Pollen Prick.": "Zweimal Pollen Prick, ein Hauch Puffcap Haze, dann zum Schluss Pollen Prick.",
+"The Volt reaction needs a soaked foe and a Volt art. Riptail is already soaked.": "Die Volt-Reaktion braucht einen durchnässten Gegner und eine Volt-Technik. Riptail ist schon nass.",
+"Bite twice with Crackle Bite, then end it with Static Tag.": "Beiß zweimal mit Crackle Bite zu und beende es mit Static Tag.",
+"With 2 Energy, Zephlet cannot strike well yet. The one rest belongs at the start.": "Mit 2 Energie kann Zephlet noch nicht gut zuschlagen. Die eine Rast gehört an den Anfang.",
+"Rest first, then Crosswind twice and Draft Needle to finish.": "Erst rasten, dann zweimal Crosswind und Draft Needle zum Schluss.",
+"Kestra's Zephlet plays on its own. Keep Zippit from getting a second turn.": "Kestras Zephlet handelt selbst. Lass Zippit keine zweite Runde.",
+"Pull Zippit under with Undertow, then Rip Current, then Rip Current again.": "Zieh Zippit mit Undertow hinab, dann Rip Current und noch einmal Rip Current.",
+"Hint: %s": "Hinweis: %s",
+"Try again?": "Nochmal versuchen?",
+"Restart": "Neustart",
+"Turns left: %d": "Runden übrig: %d",
+"Win within %d turns.": "Gewinne in höchstens %d Runden.",
+"Win without losing a Spirling.": "Gewinne, ohne einen Spirling zu verlieren.",
+"Rest exactly %d times.": "Raste genau %d-mal.",
+"Rest exactly once.": "Raste genau einmal.",
+"Never cure the %s.": "Heile nie den %s.",
+"Set off a %s reaction.": "Löse eine %s-Reaktion aus.",
+"Land the last blow with %s.": "Setze den letzten Treffer mit %s.",
+"Every Trial shines with 3 lanterns! You received %s.": "Jede Prüfung leuchtet mit 3 Laternen! Du erhältst %s.",
 })
