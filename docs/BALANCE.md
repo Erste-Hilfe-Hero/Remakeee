@@ -154,7 +154,7 @@ a player who does everything every day (all four daily tasks, trips, every weekl
 | Season path, every step after 30 | 20 | per step, at most 10 a season | `SeasonPath.add` |
 | Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
 | Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
-| Roaming trip 4 / 8 / 12 h (also 60 / 120 / 180 coins and a Tonic / Remedy / Strong Tonic) | 1 / 1 / 2 | up to 3 trips at once | `Expeditions.collect` |
+| Roaming trip 4 / 8 / 12 h (also 60 / 120 / 180 coins, +50% for an element of the map's wild kinds, a common find of the map or a Tonic / Remedy / Strong Tonic, and a quarter of a wild battle's growth per hour up to the ring cap) | 1 / 1 / 2 | up to 3 trips at once | `Expeditions.collect` |
 | Echo Path chest (all 8 rooms cleared) | 40 | once a week | `EchoPath.open_chest` |
 | Monthly album, all 12 fields | 100 | once a month | `Album.record` |
 | Iron Oath | +25% on every source above | while sworn | `Waymarks.earn` |

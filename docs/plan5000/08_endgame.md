@@ -367,13 +367,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3446. [x] [P1] Spirlings aus dem Lager auf Streifzüge schicken lassen, bis zu drei gleichzeitig, mit einer Dauer von 4, 8 oder 12 Stunden nach Server-Zeit.
 3447. [x] [P1] Jeden Streifzug nach einer festen, vorher sichtbaren Tabelle Münzen, 4, 8 oder 12 Wegmarken und einen gewöhnlichen Gegenstand mitbringen lassen.
 3448. [x] [P1] Streifzüge im Leuchtturm bei Aldo starten und abholen und Spirlings auf Streifzug im Lager mit einem Rucksack-Symbol markieren.
-3449. [P2] Als Ziel nur Karten erlauben, die der Spielstand schon kennt, und Fundstücke dieser Karte mitbringen lassen.
-3450. [P2] Einem Spirling, dessen Element zu den wilden Arten der Zielkarte passt, 50 Prozent mehr Münzen geben.
-3451. [P2] Streifzüge pro Stunde ein Viertel des Wachstums eines Wildkampfs geben, höchstens bis zum Ring-Deckel.
-3452. [P2] Streifzüge nie scheitern lassen und Spirlings auf Streifzug nie Kraft verlieren lassen.
-3453. [P2] Jedes Streifzug-Ergebnis als kurze Tagebuchzeile zeigen, etwa „Mossling fand am Bach einen Kraftsud“.
-3454. [P2] Spirlings im Refugium des Eisernen Schwurs nicht auf Streifzüge schicken lassen.
-3455. [P2] Ziele, Dauer und Belohnungstabellen der Streifzüge in data/endgame.json festlegen.
+3449. [x] [P2] Als Ziel nur Karten erlauben, die der Spielstand schon kennt, und Fundstücke dieser Karte mitbringen lassen.
+3450. [x] [P2] Einem Spirling, dessen Element zu den wilden Arten der Zielkarte passt, 50 Prozent mehr Münzen geben.
+3451. [x] [P2] Streifzüge pro Stunde ein Viertel des Wachstums eines Wildkampfs geben, höchstens bis zum Ring-Deckel.
+3452. [x] [P2] Streifzüge nie scheitern lassen und Spirlings auf Streifzug nie Kraft verlieren lassen.
+3453. [x] [P2] Jedes Streifzug-Ergebnis als kurze Tagebuchzeile zeigen, etwa „Mossling fand am Bach einen Kraftsud“.
+3454. [x] [P2] Spirlings im Refugium des Eisernen Schwurs nicht auf Streifzüge schicken lassen.
+3455. [x] [P2] Ziele, Dauer und Belohnungstabellen der Streifzüge in data/endgame.json festlegen.
 3456. [P3] Eine Wanderkarte im Tauschstand für 400 Wegmarken anbieten, die einen vierten Streifzug-Platz freischaltet.
 3457. [P3] Streifzüge selten eine Postkarte der Zielkarte mitbringen lassen, die in einem Postkartenalbum mit 12 Plätzen landet.
 3458. [P3] Einen Streifzug jederzeit abbrechen lassen und die Belohnung anteilig nach verstrichener Zeit auszahlen.
