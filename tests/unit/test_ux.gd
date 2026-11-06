@@ -506,6 +506,9 @@ func test_pause_menu_order_is_fixed() -> void:
 	var short: Array[String] = PauseMenu.menu_labels(false, false, false)
 	assert_eq(short.find("Satchel"), 2, "places do not move when Travel is missing")
 	assert_false("Storage" in short)
+	assert_false("Leagues" in short)
+	var league: Array[String] = PauseMenu.menu_labels(false, false, false, true)
+	assert_eq(league.find("Leagues"), league.find("Friends") + 1, "Leagues sits right after Friends")
 
 func test_goals_are_a_list_with_main_goal_first() -> void:
 	var rows: Array[Dictionary] = PauseMenu.goal_rows({"aldo_gift": true}, "Today: a rare visitor stirs in Fernstair.")

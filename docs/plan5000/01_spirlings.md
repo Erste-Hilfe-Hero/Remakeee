@@ -341,8 +341,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 
 ### Temperament
 313. [x] [P1] Erweitere das Temperament auf zehn Werte mit vier neuen (Curious, Shy, Proud, Gentle), die keinen Wert stärken, sondern nur Verhalten und Texte färben, und speichere sie ab Speicherstand 4.
-314. [P1] Zeige das Temperament auf der Lagerkarte und im Team-Menü mit dem bestehenden Satz ("Moves a little quicker.") und dem deutschen Gegenstück.
-315. [P1] Lass wilde Spirlings ihr Temperament bis zum Bonden verbergen und zeige es danach einmal als Meldung ("Es wirkt neugierig").
+314. [x] [P1] Zeige das Temperament auf der Lagerkarte und im Team-Menü mit dem bestehenden Satz ("Moves a little quicker.") und dem deutschen Gegenstück.
+315. [x] [P1] Lass wilde Spirlings ihr Temperament bis zum Bonden verbergen und zeige es danach einmal als Meldung ("Es wirkt neugierig").
 316. [P2] Lass Curious-Spirlings beim Echo das Motiv manchmal vertauschen, Shy-Spirlings leiser rufen, Proud-Spirlings ein Zeichen länger halten, Gentle-Spirlings langsamer rufen.
 317. [P2] Gib jedem Temperament ein eigenes kleines Leerlauf-Verhalten im Team-Menü (Hüpfen, Wackeln, Ruhe, Ducken).
 318. [P2] Lass Dorfbewohner an zwei Orten das Temperament des ersten Spirlings im Team kommentieren.
@@ -386,9 +386,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 354. [P3] Plane Gabe-Zuordnungen für die späteren Arten der Regionen als offene Spalte in tools/data/spirling_sheet.py.
 
 ### Andenken-Zuordnung
-355. [P1] Gib jeder Art ein Feld "keepsake_hint" mit dem Andenken, das zu ihr passt, und zeige es im Lager als Vorschlag "Passt gut: Bark Wrap".
-356. [P1] Lass beim Senden eines Spirlings ins Lager sein Andenken in der Tasche bleiben, wenn der Spieler das will, mit Frage "Andenken behalten?".
-357. [P1] Zeige im Lager auf jeder Karte das Andenken als Symbol und erlaube das Abnehmen direkt dort.
+355. [x] [P1] Gib jeder Art ein Feld "keepsake_hint" mit dem Andenken, das zu ihr passt, und zeige es im Lager als Vorschlag "Passt gut: Bark Wrap".
+356. [x] [P1] Lass beim Senden eines Spirlings ins Lager sein Andenken in der Tasche bleiben, wenn der Spieler das will, mit Frage "Andenken behalten?".
+357. [x] [P1] Zeige im Lager auf jeder Karte das Andenken als Symbol und erlaube das Abnehmen direkt dort.
 358. [P2] Gib jedem Temperament ein Lieblingsandenken (Fierce: Whetstone, Stalwart: Iron Burr, Keen: Keen Lens, Brisk: Wind Anklet, Hearty: Spring Flask, Even: Spark Coil).
 359. [P2] Lass einen Spirling mit Lieblingsandenken im Team-Menü fröhlicher wackeln, rein kosmetisch.
 360. [P2] Zeige im Team-Menü eine Übersicht "Wer trägt was" für alle fünf Spirlings auf einem Bildschirm.
@@ -408,14 +408,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 374. [P3] Gib dem Spirlog eine Seite "Andenken", die zeigt, welche Arten welches Andenken lieben.
 
 ### Lager und Team-Verwaltung
-375. [P1] Teile das Lager in benannte Fächer zu je 30 Plätzen (Start 8 Fächer, 240 Plätze) mit Namen und Farbe, die der Spieler ändern kann.
-376. [P1] Füge Mehrfachauswahl im Lager hinzu, um bis zu 10 Spirlings auf einmal in ein anderes Fach zu verschieben.
-377. [P1] Lass den Spieler Spirlings als "Liebling" markieren, die nicht freigelassen und nicht versehentlich verschoben werden können.
-378. [P1] Füge Team-Vorlagen hinzu: bis zu 6 gespeicherte Teams von je 5 Spirlings, die an jeder Quelle mit einem Tipp geladen werden.
-379. [P1] Füge das Freilassen hinzu: ein Spirling kehrt mit einem kurzen Abschiedstext an seinen Fundort zurück, mit doppelter Bestätigung und nie für Lieblinge.
-380. [P1] Zeige im Lager eine Detailkarte mit Ring, Temperament, Gabe, Andenken, Herkunft (Fundort, Tag, Ring beim Treffen) und Spark-Wörtern.
-381. [P1] Lass das Team an jeder Heilquelle mit dem Lager tauschen, auch bevor das Lager aus dem Menü erreichbar ist.
-382. [P1] Prüfe mit Tests, dass Verschieben, Freilassen und Team-Vorlagen nie das letzte gesunde Team-Mitglied entfernen.
+375. [x] [P1] Teile das Lager in benannte Fächer zu je 30 Plätzen (Start 8 Fächer, 240 Plätze) mit Namen und Farbe, die der Spieler ändern kann.
+376. [x] [P1] Füge Mehrfachauswahl im Lager hinzu, um bis zu 10 Spirlings auf einmal in ein anderes Fach zu verschieben.
+377. [x] [P1] Lass den Spieler Spirlings als "Liebling" markieren, die nicht freigelassen und nicht versehentlich verschoben werden können.
+378. [x] [P1] Füge Team-Vorlagen hinzu: bis zu 6 gespeicherte Teams von je 5 Spirlings, die an jeder Quelle mit einem Tipp geladen werden.
+379. [x] [P1] Füge das Freilassen hinzu: ein Spirling kehrt mit einem kurzen Abschiedstext an seinen Fundort zurück, mit doppelter Bestätigung und nie für Lieblinge.
+380. [x] [P1] Zeige im Lager eine Detailkarte mit Ring, Temperament, Gabe, Andenken, Herkunft (Fundort, Tag, Ring beim Treffen) und Spark-Wörtern.
+381. [x] [P1] Lass das Team an jeder Heilquelle mit dem Lager tauschen, auch bevor das Lager aus dem Menü erreichbar ist.
+382. [x] [P1] Prüfe mit Tests, dass Verschieben, Freilassen und Team-Vorlagen nie das letzte gesunde Team-Mitglied entfernen.
 383. [P2] Lass das Lager nach Seltenheit, Temperament, Gabe, Prägung und Fundtag sortieren, zusätzlich zu den bestehenden vier Sortierungen.
 384. [P2] Gib jedem Spirling bis zu drei eigene Farbmarken im Lager zum Ordnen.
 385. [P2] Zeige im Lager einen Vergleich zweier Spirlings nebeneinander (Werte als Wörter, Techniken, Gabe).
