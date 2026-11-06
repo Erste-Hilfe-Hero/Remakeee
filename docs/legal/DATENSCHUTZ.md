@@ -56,7 +56,8 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   du sie angibst, Name und E-Mail, ohne Konto. Bist du in einem Bund, sehen die anderen Mitglieder deinen
   Wanderer-Namen, Freundescode, deine Rolle und ob du gerade online bist; der Bundname besteht nur aus zwei
   Wörtern einer festen Liste. In einem Raid-Riss sehen die Mitspieler deinen Wanderer-Namen und deinen
-  Schaden am Wächter; Risse löschen wir 7 Tage nach ihrem Ende.
+  Schaden am Wächter; Risse löschen wir 7 Tage nach ihrem Ende. Bei einem Tausch speichern wir, welche Gegenstände
+  jede Seite hineingelegt und ob sie bestätigt hat, bis beide abgeholt haben (höchstens 90 Tage).
 - **Wer sieht was:** Namen, Karte, Ort und Echo-Team sehen nur deine bestätigten Freunde. In der
   Wochen-Rangliste sehen Fremde nur Punkte, keinen Namen.
 - **Zweck:** gemeinsames Spielen und Schutz vor Missbrauch (Blockieren, Meldungen prüfen).

@@ -50,6 +50,14 @@ def main() -> None:
     print("delete from public.known_ids;")
     print("insert into public.known_ids (kind, id) select x->>'kind', x->>'id' from jsonb_array_elements($game$"
           + ids + "$game$::jsonb) x on conflict do nothing;")
+    # Trading (plan area 7, item 2792): only items with "tradeable": true in data/items.json.
+    items_path = os.path.join(folder, "items.json")
+    if os.path.exists(items_path):
+        with open(items_path, encoding="utf-8") as f:
+            trade = [str(x["id"]) for x in json.load(f) if isinstance(x, dict) and x.get("tradeable") is True]
+        print("insert into public.server_config (key, value) values ('trade_items', $game$"
+              + json.dumps(trade).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     print("commit;")
 
 

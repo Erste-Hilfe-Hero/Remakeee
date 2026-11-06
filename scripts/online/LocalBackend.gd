@@ -29,6 +29,7 @@ const DEFAULT_CONFIG: Dictionary = {
 	"raid_guardians": ["Leviarch", "Calderox", "Cairnhold", "Verdantusk", "Tempestrel", "Solmantle", "Obsidroth"],
 	"raid_rewards": [{"item": "max_tonic", "count": 2, "w": 3}, {"item": "revival_leaf", "count": 2, "w": 3},
 		{"item": "strong_tonic", "count": 5, "w": 3}, {"item": "keen_lens", "count": 1, "w": 1}, {"item": "swift_feather", "count": 1, "w": 1}],
+	"trade_min_level": 3, "trade_min_days": 7, "trade_max_open": 5, "trade_max_kinds": 6, "trade_max_count": 99, "trade_days": 7,
 	"save_server_keys": ["league", "leagues", "raid", "raids", "trades", "bund", "premium", "gems", "shards"],
 }
 const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
@@ -63,7 +64,8 @@ func _init(p_store_path: String = "") -> void:
 			"battle_submit", "battle_status", "league_info", "league_join", "league_find", "data_export",
 			"report_in", "notices_list", "notice_read", "appeal", "platform_set",
 			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
-			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim"]:
+			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
+			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
@@ -621,6 +623,7 @@ func _fn_friend_request(a: Dictionary) -> Dictionary:
 		return _fail("full")
 	if f != null and f.requested_by == t:
 		f.status = "accepted"
+		f["accepted_at"] = now()
 		return {"ok": true, "status": "accepted"}
 	if f == null:
 		db.friendships[pair_key(u, t)] = {"a": u if u < t else t, "b": t if u < t else u, "status": "pending",
@@ -637,6 +640,7 @@ func _fn_friend_respond(a: Dictionary) -> Dictionary:
 		if bool(a.get("p_accept", false)):
 			if f.requested_by == t:
 				f.status = "accepted"
+				f["accepted_at"] = now()
 		else:
 			db.friendships.erase(pair_key(u, t))
 	return {"ok": true}
@@ -1759,3 +1763,253 @@ func _raid_apply(battle_id: int, ok: bool, detail: Variant) -> void:
 						r.reward = {"item": x.item, "count": int(x.get("count", 1))}
 						break
 		return
+
+# --- Trading (plan area 7, items 2791-2795, 2900), like 20261110000012_trades.sql ---------------
+# db.trades: {id: {state, created_at, closes_at}}; db.trade_sides: {"id|uid": {items, confirmed,
+# receive, collected}}. The server is the trustee: offers leave the stored save's bag at once.
+
+## Items with "tradeable": true in data/items.json (the server keeps the same list in trade_items).
+func trade_items() -> Array:
+	var given: Variant = db.config.get("trade_items")
+	if given is Array:
+		return given
+	Database.load_all()
+	var out: Array = []
+	for id: String in Database.items:
+		if bool((Database.items[id] as Dictionary).get("tradeable", false)):
+			out.append(id)
+	return out
+
+func _trade_check(uid: String) -> String:
+	if not flag_on("trade", 2147483647):
+		return "feature_off"
+	if not _social(uid):
+		return "social_off"
+	if cheat_held(uid):
+		return "under_review"
+	return ""
+
+func _trade_pair(x: String, y: String) -> String:
+	if x.is_empty() or y.is_empty() or x == y or not db.users.has(y) or is_blocked(x, y) or not _social(y):
+		return "no_such_code"
+	var f: Variant = _friendship(x, y)
+	if f == null or str(f.status) != "accepted":
+		return "no_such_code"
+	if level_for(int(f.points)) < config_int("trade_min_level", 3):
+		return "friend_level"
+	if int(f.get("accepted_at", 0)) > now() - config_int("trade_min_days", 7) * 86400:
+		return "too_new"
+	return ""
+
+## A clean offer {item: count}, or null when it breaks a rule.
+func _trade_offer(p: Variant) -> Variant:
+	if not p is Dictionary or (p as Dictionary).size() > config_int("trade_max_kinds", 6):
+		return null
+	var ok: Array = trade_items()
+	var out: Dictionary = {}
+	for k: Variant in p:
+		var v: Variant = p[k]
+		if not (v is int or v is float) or not ok.has(str(k)) or float(v) != floorf(float(v)):
+			return null
+		var n: int = int(v)
+		if n < 0 or n > config_int("trade_max_count", 99):
+			return null
+		if n > 0:
+			out[str(k)] = n
+	return out
+
+func _trade_bag(slot: int, rev: int, delta: Dictionary) -> Dictionary:
+	var sv: Variant = _saves().get(str(slot))
+	if sv == null:
+		return _fail("no_save")
+	if int(sv.rev) != rev:
+		return _fail("sync_first")
+	var inv: Dictionary = (sv.data.get("inventory", {}) as Dictionary).duplicate() if sv.data.get("inventory") is Dictionary else {}
+	for k: String in delta:
+		var n: int = int(inv.get(k, 0)) + int(delta[k])
+		if n < 0:
+			return _fail("not_enough")
+		if n == 0:
+			inv.erase(k)
+		else:
+			inv[k] = n
+	sv.data["inventory"] = inv
+	sv.rev = int(sv.rev) + 1
+	sv.saved_at = now()
+	sv.erase("request_id")
+	return {"ok": true, "rev": sv.rev}
+
+func _trade_side(id: String, uid: String) -> Variant:
+	return (_table("trade_sides", {}) as Dictionary).get("%s|%s" % [id, uid])
+
+## The other side's account id, or "" once that account is gone.
+func _trade_other(id: String, uid: String) -> String:
+	for k: String in _table("trade_sides", {}):
+		var parts: PackedStringArray = k.split("|")
+		if parts[0] == id and parts[1] != uid:
+			return parts[1]
+	return ""
+
+func _trade_tidy() -> void:
+	var trades: Dictionary = _table("trades", {})
+	var sides: Dictionary = _table("trade_sides", {})
+	for id: String in trades.keys():
+		var t: Dictionary = trades[id]
+		if t.state == "open" and int(t.closes_at) < now():
+			t.state = "cancelled"
+			for k: String in sides:
+				if k.begins_with(id + "|"):
+					sides[k].receive = sides[k].items
+		if t.state != "open":
+			var waiting: bool = sides.keys().any(func(k: String) -> bool: return k.begins_with(id + "|") and not bool(sides[k].collected))
+			if not waiting or now() - int(t.created_at) > 90 * 86400:
+				trades.erase(id)
+				for k: String in sides.keys():
+					if k.begins_with(id + "|"):
+						sides.erase(k)
+
+func _fn_trade_open(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	var e: String = _trade_check(u)
+	if e.is_empty():
+		e = _trade_pair(u, t)
+	if not e.is_empty():
+		return _fail(e)
+	_trade_tidy()
+	var trades: Dictionary = _table("trades", {})
+	var open: int = 0
+	for id: String in trades:
+		if trades[id].state != "open" or _trade_side(id, u) == null:
+			continue
+		if _trade_side(id, t) != null:
+			return {"ok": true, "trade": int(id), "again": true}
+		open += 1
+	if open >= config_int("trade_max_open", 5):
+		return _fail("too_many")
+	if not _rate_ok("trade_open", 10):
+		return _fail("slow_down")
+	var id: String = str(_next_id("trade"))
+	trades[id] = {"state": "open", "created_at": now(), "closes_at": now() + config_int("trade_days", 7) * 86400}
+	for x: String in [u, t]:
+		(_table("trade_sides", {}) as Dictionary)["%s|%s" % [id, x]] = {"items": {}, "confirmed": false, "receive": null, "collected": false}
+	return {"ok": true, "trade": int(id)}
+
+func _fn_trade_list(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	_trade_tidy()
+	var trades: Dictionary = _table("trades", {})
+	var ids: Array = trades.keys().filter(func(id: String) -> bool: return _trade_side(id, u) != null)
+	ids.sort_custom(func(x: String, y: String) -> bool: return int(x) > int(y))
+	var out: Array = []
+	for id: String in ids:
+		var t: Dictionary = trades[id]
+		var m: Dictionary = _trade_side(id, u)
+		if t.state != "open" and bool(m.collected):
+			continue
+		var other: String = _trade_other(id, u)
+		var o: Variant = _trade_side(id, other) if not other.is_empty() else null
+		var shown: bool = not other.is_empty() and db.users.has(other) and not is_blocked(u, other)
+		var p: Dictionary = profile_of(other) if shown else {}
+		out.append({"id": int(id), "state": t.state, "closes_at": t.closes_at, "code": p.get("code"), "name": p.get("name"),
+			"mine": (m.items as Dictionary).duplicate(), "theirs": (o.items as Dictionary).duplicate() if o != null else {},
+			"my_ok": m.confirmed, "their_ok": o.confirmed if o != null else false,
+			"collect": t.state != "open" and not bool(m.collected)})
+	return {"ok": true, "trades": out, "items": trade_items()}
+
+func _trade_open_side(id: String, u: String) -> Variant:
+	var t: Variant = (_table("trades", {}) as Dictionary).get(id)
+	if t == null or t.state != "open":
+		return null
+	return _trade_side(id, u)
+
+func _fn_trade_put(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _trade_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	_trade_tidy()
+	var id: String = str(int(a.get("p_trade", 0)))
+	var m: Variant = _trade_open_side(id, u)
+	if m == null:
+		return _fail("no_such_trade")
+	if not _trade_pair(u, _trade_other(id, u)).is_empty():
+		return _fail("partner_gone")
+	var offer: Variant = _trade_offer(a.get("p_items"))
+	if offer == null:
+		return _fail("not_tradeable")
+	if not _rate_ok("trade_put", 60):
+		return _fail("slow_down")
+	var delta: Dictionary = {}
+	var keys: Array = (m.items as Dictionary).keys()
+	for k: String in offer:
+		if not keys.has(k):
+			keys.append(k)
+	for k: String in keys:
+		var d: int = int(m.items.get(k, 0)) - int(offer.get(k, 0))
+		if d != 0:
+			delta[k] = d
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), delta)
+	if not bool(r.ok):
+		return r
+	m.items = offer
+	for k: String in _table("trade_sides", {}):
+		if k.begins_with(id + "|"):
+			db.trade_sides[k].confirmed = false
+	return {"ok": true, "rev": r.rev, "bag": delta}
+
+func _fn_trade_confirm(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _trade_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	_trade_tidy()
+	var id: String = str(int(a.get("p_trade", 0)))
+	var m: Variant = _trade_open_side(id, u)
+	if m == null:
+		return _fail("no_such_trade")
+	var other: String = _trade_other(id, u)
+	if other.is_empty() or not _trade_pair(u, other).is_empty():
+		return _fail("partner_gone")
+	var o: Dictionary = _trade_side(id, other)
+	var seen: Variant = _trade_offer(a.get("p_theirs"))
+	if o.items != (seen if seen != null else {}):
+		return _fail("changed")
+	if (m.items as Dictionary).is_empty() and (o.items as Dictionary).is_empty():
+		return _fail("empty")
+	m.confirmed = true
+	if bool(o.confirmed):
+		m.receive = (o.items as Dictionary).duplicate()
+		o.receive = (m.items as Dictionary).duplicate()
+		db.trades[id].state = "done"
+		return {"ok": true, "done": true}
+	return {"ok": true, "done": false}
+
+func _fn_trade_cancel(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var id: String = str(int(a.get("p_trade", 0)))
+	if _trade_open_side(id, u) == null:
+		return _fail("no_such_trade")
+	for k: String in _table("trade_sides", {}):
+		if k.begins_with(id + "|"):
+			db.trade_sides[k].receive = (db.trade_sides[k].items as Dictionary).duplicate()
+	db.trades[id].state = "cancelled"
+	return {"ok": true}
+
+func _fn_trade_collect(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	_trade_tidy()
+	var id: String = str(int(a.get("p_trade", 0)))
+	var t: Variant = (_table("trades", {}) as Dictionary).get(id)
+	var m: Variant = _trade_side(id, u)
+	if t == null or t.state == "open" or m == null:
+		return _fail("no_such_trade")
+	if bool(m.collected):
+		return _fail("already")
+	var got: Dictionary = (m.receive as Dictionary).duplicate() if m.receive is Dictionary else {}
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), got)
+	if not bool(r.ok):
+		return r
+	m.collected = true
+	_trade_tidy()
+	return {"ok": true, "rev": r.rev, "bag": got}

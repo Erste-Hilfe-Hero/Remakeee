@@ -5,7 +5,8 @@
   "description": "Restores 25 Vigor.",
   "battle": true,
   "heal": 25,
-  "price": 150
+  "price": 150,
+  "tradeable": true
  },
  {
   "id": "strong_tonic",
@@ -13,7 +14,8 @@
   "description": "Restores 70 Vigor.",
   "battle": true,
   "heal": 70,
-  "price": 450
+  "price": 450,
+  "tradeable": true
  },
  {
   "id": "remedy",
@@ -21,7 +23,8 @@
   "description": "Cures any status.",
   "battle": true,
   "cure": true,
-  "price": 300
+  "price": 300,
+  "tradeable": true
  },
  {
   "id": "spark_drop",
@@ -29,7 +32,8 @@
   "description": "Restores 5 Energy to the active Spirling.",
   "battle": true,
   "energy": 5,
-  "price": 300
+  "price": 300,
+  "tradeable": true
  },
  {
   "id": "revival_leaf",
@@ -37,7 +41,8 @@
   "description": "Wakes a fainted Spirling outside battle with a third of its Vigor.",
   "battle": false,
   "revive": 0.34,
-  "price": 1100
+  "price": 1100,
+  "tradeable": true
  },
  {
   "id": "kin_charm",
@@ -45,7 +50,8 @@
   "description": "Hold it out during a bond to steady the link (+10%).",
   "battle": false,
   "bond_bonus": 0.1,
-  "price": 400
+  "price": 400,
+  "tradeable": true
  },
  {
   "id": "grapple_line",
@@ -89,7 +95,8 @@
   "held": {
    "energy_per_turn": 1
   },
-  "price": 1200
+  "price": 1200,
+  "tradeable": true
  },
  {
   "id": "bark_wrap",
@@ -99,7 +106,8 @@
   "held": {
    "regen_div": 12
   },
-  "price": 1200
+  "price": 1200,
+  "tradeable": true
  },
  {
   "id": "iron_burr",
@@ -109,7 +117,8 @@
   "held": {
    "phys_taken": 0.85
   },
-  "price": 1000
+  "price": 1000,
+  "tradeable": true
  },
  {
   "id": "swift_feather",
@@ -119,7 +128,8 @@
   "held": {
    "spd_mult": 1.15
   },
-  "price": 1000
+  "price": 1000,
+  "tradeable": true
  },
  {
   "id": "keen_lens",
@@ -129,7 +139,8 @@
   "held": {
    "crit_mult": 2.0
   },
-  "price": 900
+  "price": 900,
+  "tradeable": true
  },
  {
   "id": "max_tonic",
@@ -137,7 +148,8 @@
   "description": "A flask of rest-spring water. Restores all Vigor.",
   "battle": true,
   "heal": 999,
-  "price": 1200
+  "price": 1200,
+  "tradeable": true
  },
  {
   "id": "cooling_gel",
@@ -145,7 +157,8 @@
   "description": "Cures Scorch.",
   "battle": true,
   "cure": "scorch",
-  "price": 90
+  "price": 90,
+  "tradeable": true
  },
  {
   "id": "dry_towel",
@@ -153,7 +166,8 @@
   "description": "Cures Soak.",
   "battle": true,
   "cure": "soak",
-  "price": 90
+  "price": 90,
+  "tradeable": true
  },
  {
   "id": "wake_bell",
@@ -161,7 +175,8 @@
   "description": "Cures Drowse.",
   "battle": true,
   "cure": "drowse",
-  "price": 90
+  "price": 90,
+  "tradeable": true
  },
  {
   "id": "power_brew",
@@ -171,7 +186,8 @@
   "stage": {
    "atk": 1
   },
-  "price": 350
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "guard_brew",
@@ -181,7 +197,8 @@
   "stage": {
    "def": 1
   },
-  "price": 350
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "focus_brew",
@@ -191,7 +208,8 @@
   "stage": {
    "foc": 1
   },
-  "price": 350
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "dash_brew",
@@ -201,7 +219,8 @@
   "stage": {
    "spd": 1
   },
-  "price": 350
+  "price": 350,
+  "tradeable": true
  },
  {
   "id": "tide_pearl",
@@ -209,7 +228,8 @@
   "description": "A pearl that hums with the sea. Some Spirlings change when they hold it close.",
   "battle": false,
   "evolves": true,
-  "price": 2500
+  "price": 2500,
+  "tradeable": true
  },
  {
   "id": "spark_charm",
@@ -217,7 +237,8 @@
   "description": "Brightens one Spark value of a Spirling (+3).",
   "battle": false,
   "spark": 3,
-  "price": 2000
+  "price": 2000,
+  "tradeable": true
  },
  {
   "id": "echo_ember",
@@ -225,7 +246,8 @@
   "description": "Teaches Kiln Strike to an Ember Spirling. Never used up.",
   "battle": false,
   "teaches": "Kiln Strike",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_tide",
@@ -233,7 +255,8 @@
   "description": "Teaches Spindrift Shot to a Tide Spirling. Never used up.",
   "battle": false,
   "teaches": "Spindrift Shot",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_bloom",
@@ -241,7 +264,8 @@
   "description": "Teaches Sap Draw to a Bloom Spirling. Never used up.",
   "battle": false,
   "teaches": "Sap Draw",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_volt",
@@ -249,7 +273,8 @@
   "description": "Teaches Storm Gnash to a Volt Spirling. Never used up.",
   "battle": false,
   "teaches": "Storm Gnash",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_stone",
@@ -257,7 +282,8 @@
   "description": "Teaches Tremor Thud to a Stone Spirling. Never used up.",
   "battle": false,
   "teaches": "Tremor Thud",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_gale",
@@ -265,7 +291,8 @@
   "description": "Teaches Gale Scythe to a Gale Spirling. Never used up.",
   "battle": false,
   "teaches": "Gale Scythe",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_lumen",
@@ -273,7 +300,8 @@
   "description": "Teaches Prism Ray to a Lumen Spirling. Never used up.",
   "battle": false,
   "teaches": "Prism Ray",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "echo_umbra",
@@ -281,7 +309,8 @@
   "description": "Teaches Gloom Ripple to an Umbra Spirling. Never used up.",
   "battle": false,
   "teaches": "Gloom Ripple",
-  "price": 3000
+  "price": 3000,
+  "tradeable": true
  },
  {
   "id": "wading_boots",
