@@ -74,6 +74,7 @@ func _ready() -> void:
 	_actions = {
 		"storage": _action_storage,
 		"heal": _action_heal,
+		"camp": _action_camp,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
@@ -844,6 +845,13 @@ func _wake_cores() -> void:
 	for kid: Spirling in GameState.awaken_cores():
 		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
 		SaveManager.save_game()
+
+## A cave campfire (area 3 item 992): the journey is saved, the team is not healed.
+func _action_camp(_args: PackedStringArray, _speaker: NPC) -> void:
+	Sound.sfx("confirm")
+	var ok: bool = SaveManager.save_game()
+	await say([("You sit by the fire for a while. Your journey is saved." if ok else "The fire smokes. Saving did not work this time."),
+		"The warmth is welcome, but it does not rest your team."] as Array[String])
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()

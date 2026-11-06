@@ -1,6 +1,6 @@
 """Veydal caves (area 3 items 978 to 983): Murk Hollow with its lower level Echo Gallery,
 Mossmere Grotto under Gloamwood, the sea cave Sablecove off Brackwater Fen and Kindle Vents at
-the foot of Cinder Rift. Maps here are generated: edit this file, then run build_world.py.
+the foot of Cinder Rift. Each cave has a campfire that saves but does not heal (item 992). Maps here are generated: edit this file, then run build_world.py.
 
 Every cave entrance has a sign that shows the gear needed inside (item 982). Caves with more
 than one level have a rope back from the deepest point to the entrance that is let down from
@@ -46,11 +46,27 @@ def rope_back(world, mid, key, flag):
                                "action": "lever " + flag}})
 
 
+# Item 992: every cave has a rest place with a campfire ("L") that saves but does not heal.
+CAMPS = {"murk_hollow": (10, 10), "mossmere_grotto": (10, 9), "sablecove": (1, 5), "kindle_vents": (10, 8)}
+
+
+def campfire(world, mid, x, y):
+    m = world.load_map(mid)
+    m["signs"] = [s for s in m.get("signs", []) if (s["x"], s["y"]) != (x, y)]
+    m["signs"].append({"x": x, "y": y, "dialogue": mid + "/campfire"})
+    set_char(m, x, y, "L")
+    m["camp"] = [x, y]
+    world.add_text(mid, {"campfire": {"lines": lines(("A ring of stones with a small fire. Someone keeps it going for travellers.", "Ein Steinring mit einem kleinen Feuer. Jemand hält es für Reisende am Brennen.")),
+                                      "action": "camp"}})
+
+
 def build(world):
     murk_hollow(world)
     mossmere_grotto(world)
     sablecove(world)
     kindle_vents(world)
+    for mid, (x, y) in CAMPS.items():
+        campfire(world, mid, x, y)
 
 
 def murk_hollow(world):

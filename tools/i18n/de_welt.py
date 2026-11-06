@@ -1,6 +1,10 @@
 # German texts for area 3 (world, maps, exploring). Written to data/i18n/de/ by tools/i18n/build.py.
 # Kept apart from de_world.py so the world thread can add maps without clashing with story edits.
 T = {
+# Cave campfires (item 992)
+"You sit by the fire for a while. Your journey is saved.": "Du sitzt eine Weile am Feuer. Deine Reise ist gespeichert.",
+"The fire smokes. Saving did not work this time.": "Das Feuer qualmt. Speichern hat diesmal nicht geklappt.",
+"The warmth is welcome, but it does not rest your team.": "Die Wärme tut gut, aber dein Team erholt sich davon nicht.",
 # Gear (data/items.json)
 "Wading Boots": "Watstiefel",
 "Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.": "Wanderer-Ausrüstung. Hohe Lederstiefel: Schritt für Schritt durch seichtes Wasser waten.",
