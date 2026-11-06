@@ -11,10 +11,10 @@ Stand: November 2026
 
 ## 1. Verantwortlicher
 
-[NAME]
-[ADRESSE]
+Ali Amuri Alnasag
+Im Vogelgesang 9, 60488 Frankfurt am Main
 Deutschland
-E-Mail: [E-MAIL]
+E-Mail: aa.amuri@icloud.com
 
 Ein Datenschutzbeauftragter ist nicht bestellt, weil die gesetzlichen Voraussetzungen dafür nicht vorliegen.
 Bei Fragen zum Datenschutz schreib an die oben genannte E-Mail-Adresse.
@@ -106,7 +106,7 @@ Jugendschutzfunktionen der Stores steuern.
 
 Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung
 der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch gegen Verarbeitungen auf Grundlage
-von Art. 6 Abs. 1 lit. f (Art. 21). Schreib dazu an [E-MAIL] und nenne deine Spieler-ID (Einstellungen im
+von Art. 6 Abs. 1 lit. f (Art. 21). Schreib dazu an aa.amuri@icloud.com und nenne deine Spieler-ID (Einstellungen im
 Spiel).
 
 **Konto löschen:** im Spiel unter Einstellungen → Konto → „Konto löschen“ oder über
