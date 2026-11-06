@@ -646,35 +646,6 @@ func _move_several(view: Array[int]) -> void:
 		var names: Array[String] = ["Move marked (%d)" % marked.size()]
 		for i: int in view:
 			var s: Spirling = GameState.storage[i]
-<<<<<<< HEAD
-			var away: bool = Expeditions.is_away(s.uid)
-			names.append("%s%s R%d" % [Expeditions.GLYPH + " " if away else "", s.display_name(), s.level])
-		var w: int = await pick_strings("Call back (%d)" % view.size(), names)
-		if w < 0:
-			return
-		if w == 0:
-			_storage_sort = (_storage_sort + 1) % GameState.STORAGE_SORTS.size()
-		elif w == 1:
-			_storage_element += 1
-			if _storage_element >= Elements.E.size():
-				_storage_element = -1
-		elif Expeditions.is_away(GameState.storage[view[w - 2]].uid):
-			await info("This Spirling is away on a trip. Aldo will tell you when it's back.")
-		elif not GameState.withdraw(view[w - 2]):
-			await info("Your team is full.")
-		else:
-			return
-
-## Storage box: deposit and withdraw.
-func run_storage() -> void:
-	while true:
-		var idx: int = await pick_strings("Storage (%d resting)" % GameState.storage.size(), ["Call back", "Send to rest"] as Array[String])
-		if idx < 0:
-			return
-		if idx == 0:
-			if GameState.storage.is_empty():
-				await info("The box is empty.")
-=======
 			var tag: String = "[x] " if marked.has(i) else ("(fav) " if s.favorite else "[ ] ")
 			names.append(tag + MenuHost.storage_line(s))
 		var w: int = await pick_strings("Mark up to %d" % GameState.MULTI_MOVE_MAX, names)
@@ -682,7 +653,6 @@ func run_storage() -> void:
 			return
 		if w == 0:
 			if marked.is_empty():
->>>>>>> origin/claude/project-thread-lhphga-c
 				continue
 			var to: int = await pick_strings("Move to which box?", _box_names())
 			if to >= 0:
@@ -713,6 +683,9 @@ func _run_stored(index: int) -> void:
 			"Details":
 				await info(MenuHost.storage_card(s))
 			"Call back":
+				if Expeditions.is_away(s.uid):
+					await info("This Spirling is away on a trip. Aldo will tell you when it's back.")
+					continue
 				if GameState.withdraw(i):
 					return
 				await info("Your team is full.")
