@@ -160,6 +160,8 @@ var sound_captions: bool = false
 var text_voice: bool = true
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
+## Break reminder after PlayReminder.MINUTES of play (plan 3503).
+var play_reminder: bool = true
 ## Display and accessibility (items 59, 76, 78).
 var battery_saver: bool = false
 var reduce_motion: bool = false
@@ -610,7 +612,7 @@ func settings_to_dict() -> Dictionary:
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
-		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
+		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
@@ -642,6 +644,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	sound_captions = bool(d.get("sound_captions", false))
 	text_voice = bool(d.get("text_voice", true))
 	tips_enabled = bool(d.get("tips", true))
+	play_reminder = bool(d.get("play_reminder", true))
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))

@@ -426,8 +426,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3499. [x] [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
 3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
 3501. [x] [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.
-3502. [P2] Für Kinderkonten (unter 16) alle Endgame-Belohnungen gleich halten und keine Hinweise auf Kaufangebote neben Wegmarken zeigen.
-3503. [P2] Eine Spielzeit-Erinnerung nach 90 Minuten anbieten, die man in den Einstellungen abschalten kann.
+3502. [x] [P2] Für Kinderkonten (unter 16) alle Endgame-Belohnungen gleich halten und keine Hinweise auf Kaufangebote neben Wegmarken zeigen.
+3503. [x] [P2] Eine Spielzeit-Erinnerung nach 90 Minuten anbieten, die man in den Einstellungen abschalten kann.
 3504. [x] [P2] Belohnungen für Tagesaufträge auch nachträglich am nächsten Tag abholen lassen, wenn der Auftrag noch am alten Tag fertig wurde.
 3505. [x] [P2] Einen Test schreiben, der einen Spielstand 30 Tage pausieren lässt und prüft, dass danach alle Ziele erreichbar und keine Belohnungen verloren sind.
 3506. [P3] Einen Urlaubsmodus anbieten, der bis zu 14 Tage den Jahreszeitenpfad pausiert, ohne Punkte zu verlieren.
@@ -462,7 +462,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3531. [P2] Alle neuen Menüs auf 144x256 mit der bestehenden Schrift und Einhand-Bedienung prüfen und einen Screenshot je Menü in docs/screenshots ablegen.
 3532. [P2] Die Menüs mit dem Gamepad und dem Einhand-Pad bedienbar machen, wie die bestehenden Listen in ListPicker.gd.
 3533. [P2] Neue Symbole (Wegmarke, Festband, Pfadstufe, Abzeichenrahmen) mit tools/art erzeugen und in docs/ASSET_LOG.md eintragen.
-3534. [P2] Im Hochkontrast-Modus alle Fortschrittsbalken mit Zahlen statt nur Farbe zeigen.
+3534. [x] [P2] Im Hochkontrast-Modus alle Fortschrittsbalken mit Zahlen statt nur Farbe zeigen.
 3535. [P3] Einen Wochenrückblick am Montag zeigen: erledigte Aufträge, Wegmarken, neue Abzeichen.
 3536. [P3] Beim ersten Postgame-Start eine kurze Einführung in drei Bildern zeigen: Tauschstand, Türme, Aufträge.
 3537. [P3] Einen Leuchtturm-Raum „Ehrengalerie“ einrichten, in dem die Trophäen für volle Türme, Meisterrunde und 100 Prozent stehen.

@@ -236,6 +236,9 @@ func _process(delta: float) -> void:
 	# Music layers follow walking, running and open text boxes (items 2477, 2478).
 	MusicDirector.update_world(player.moving, player.running, delta)
 	MusicDirector.dialogue = _text.visible
+	var rest_note: String = PlayReminder.tick(delta)
+	if not rest_note.is_empty():
+		toast.show_note(rest_note)
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
