@@ -34,6 +34,130 @@ const SEEN_GOALS: Array[Dictionary] = [
 	{"id": "seen_15", "seen": 15, "waymarks": 30},
 	{"id": "seen_all", "seen": -1, "waymarks": 60},
 ]
+## Set goals (plan 3355-3365): Waymarks once each. "kind" names what is counted
+## (set_count), "n" -1 means the whole set (set_total).
+const SET_GOALS: Array[Dictionary] = [
+	{"id": "ring30_5", "kind": "ring30", "n": 5, "waymarks": 20, "label": "Kinds at ring 30"},
+	{"id": "ring30_10", "kind": "ring30", "n": 10, "waymarks": 40, "label": "Kinds at ring 30"},
+	{"id": "ring30_all", "kind": "ring30", "n": -1, "waymarks": 100, "label": "Kinds at ring 30"},
+	{"id": "lines_seen", "kind": "lines", "n": -1, "waymarks": 50, "label": "Lines seen in every form"},
+	{"id": "arts_20", "kind": "arts", "n": 20, "waymarks": 20, "label": "Arts used"},
+	{"id": "arts_40", "kind": "arts", "n": 40, "waymarks": 40, "label": "Arts used"},
+	{"id": "arts_all", "kind": "arts", "n": -1, "waymarks": 80, "label": "Arts used"},
+	{"id": "elements", "kind": "elements", "n": -1, "waymarks": 40, "label": "Elements bonded"},
+	{"id": "pages", "kind": "pages", "n": -1, "waymarks": 100, "label": "Map book pages"},
+	{"id": "keepsakes", "kind": "keepsakes", "n": -1, "waymarks": 50, "label": "Keepsakes held"},
+	{"id": "temperaments", "kind": "temperaments", "n": -1, "waymarks": 50, "label": "Temperaments met"},
+]
+
+## Arts the player's Spirlings can learn (boss-only arts do not count).
+static func learnable_arts() -> Array[String]:
+	var seen: Dictionary = {}
+	for sd: SpirlingData in Database.spirlings.values():
+		for mv: MoveData in sd.learnset_moves:
+			if mv != null:
+				seen[mv.move_name] = true
+	var out: Array[String] = []
+	for k: Variant in seen:
+		out.append(str(k))
+	out.sort()
+	return out
+
+## Notes an art used by the player's side in battle (BattleScene).
+static func note_art(art: String) -> void:
+	var used: Array = GameState.records.get("arts_used", [])
+	if not art in used:
+		used.append(art)
+		GameState.records["arts_used"] = used
+
+## Visible kinds grouped by line ("line_id", else the kind itself).
+static func lines() -> Dictionary:
+	var out: Dictionary = {}
+	for sd: SpirlingData in SpirlogBook.visible_kinds(GameState.flags):
+		var key: String = sd.line_id if sd.line_id != "" else sd.species_name
+		if not out.has(key):
+			out[key] = []
+		(out[key] as Array).append(sd.species_name)
+	return out
+
+static func _seen(species: String) -> bool:
+	return bool((GameState.spirlog.get(species, {}) as Dictionary).get("seen", false))
+
+static func _bonded(species: String) -> bool:
+	return bool((GameState.spirlog.get(species, {}) as Dictionary).get("bonded", false))
+
+static func set_count(kind: String) -> int:
+	match kind:
+		"ring30":
+			return SpirlogBook.visible_kinds(GameState.flags).filter(func(sd: SpirlingData) -> bool: return starred(sd.species_name)).size()
+		"lines":
+			var n: int = 0
+			var l: Dictionary = lines()
+			for k: Variant in l:
+				if (l[k] as Array).all(func(sp: Variant) -> bool: return _seen(str(sp))):
+					n += 1
+			return n
+		"arts":
+			var used: Array = GameState.records.get("arts_used", [])
+			return learnable_arts().filter(func(a: String) -> bool: return a in used).size()
+		"elements":
+			var els: Dictionary = {}
+			for sd: SpirlingData in Database.spirlings.values():
+				if _bonded(sd.species_name):
+					for e: int in sd.elements:
+						els[e] = true
+			return els.size()
+		"pages":
+			return Overworld.pages_found(GameState.flags)
+		"keepsakes":
+			return Achievements.stat("keepsakes")
+		"temperaments":
+			var t: Dictionary = {}
+			for s: Spirling in Achievements.all_spirlings():
+				t[str(s.temperament().id)] = true
+			return t.size()
+	return 0
+
+static func set_total(kind: String) -> int:
+	match kind:
+		"ring30":
+			return SpirlogBook.visible_kinds(GameState.flags).size()
+		"lines":
+			return lines().size()
+		"arts":
+			return learnable_arts().size()
+		"elements":
+			return Elements.E.size()
+		"pages":
+			return Overworld.PAGE_COUNT
+		"keepsakes":
+			return Achievements.keepsakes().size()
+		"temperaments":
+			return Spirling.TEMPERAMENTS.size()
+	return 0
+
+static func set_need(g: Dictionary) -> int:
+	return set_total(str(g.kind)) if int(g.n) < 0 else int(g.n)
+
+## One line per kind of set goal, for its next step: "Arts used: 12/20".
+static func set_lines() -> Array[String]:
+	var claimed: Dictionary = GameState.records.get("collection", {})
+	var pick: Dictionary = {}
+	var order: Array[String] = []
+	for g: Dictionary in SET_GOALS:
+		var kind: String = str(g.kind)
+		if not pick.has(kind):
+			order.append(kind)
+			pick[kind] = g
+		elif claimed.has(str((pick[kind] as Dictionary).id)):
+			pick[kind] = g
+	var out: Array[String] = []
+	for kind: String in order:
+		var g: Dictionary = pick[kind]
+		var need: int = set_need(g)
+		out.append("%s: %d/%d" % [Loc.t(str(g.label)), mini(set_count(kind), need), need])
+	return out
+
 ## Bonded and grown to this ring: the species gets a star in the Spirlog (plan 3353).
 const STAR_LEVEL: int = 30
 const STAR: String = "\ue002"
@@ -171,6 +295,12 @@ static func claim() -> Array[String]:
 			continue
 		claimed[g.id] = true
 		lines.append(Loc.t("Spirlog: %d kinds seen!") % need)
+		lines.append_array(Waymarks.reward_lines(Waymarks.earn(int(g.waymarks), "collection")))
+	for g: Dictionary in SET_GOALS:
+		if claimed.has(g.id) or set_count(str(g.kind)) < set_need(g):
+			continue
+		claimed[g.id] = true
+		lines.append(Loc.t("Collection goal: %s %d/%d!") % [Loc.t(str(g.label)), set_need(g), set_need(g)])
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(int(g.waymarks), "collection")))
 	if not lines.is_empty():
 		GameState.records["collection"] = claimed

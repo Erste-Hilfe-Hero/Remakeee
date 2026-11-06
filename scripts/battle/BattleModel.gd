@@ -51,6 +51,8 @@ var partner_name: String = ""
 var partner_start: int = -1
 var partner_front: int = 0
 var partner_ai: BattleAI
+## Personality lines already said this battle (kind -> true).
+var _lines_said: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
@@ -79,6 +81,8 @@ var items_allowed: bool = true
 var level_cap: int = Spirling.MAX_LEVEL
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
 var inventory: Dictionary = {}
+## Items used this battle per side, for the per-battle limits of shop items ("per_battle" in items.json).
+var items_used: Array[Dictionary] = [{}, {}]
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
@@ -198,6 +202,13 @@ func opponent(side: int) -> Spirling:
 	var st: Array[int] = standing_slots(other(side))
 	return active_spirling(other(side), st[0] if not st.is_empty() else 0)
 
+## Foe slot the player's own first art aims at in [param actions], or -1.
+func _player_aim(actions: Array[BattleAction]) -> int:
+	for a: BattleAction in actions:
+		if a != null and a.side == Side.PLAYER and a.kind == BattleAction.Kind.MOVE and not is_partner_slot(Side.PLAYER, a.slot):
+			return a.target_slot
+	return -1
+
 func alive_count(side: int) -> int:
 	var n: int = 0
 	for s: Spirling in parties[side]:
@@ -215,7 +226,7 @@ func own_alive_count() -> int:
 
 ## Adds an ally Wayfarer for a tag battle: [param team] fights beside the player, [param front] of
 ## them at once, steered by an AI of [param ai_level]. Call before start().
-func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level: int = 1) -> void:
+func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level: int = 1, profile_name: String = "") -> void:
 	if team.is_empty():
 		return
 	var combined: Array[Spirling] = []
@@ -227,7 +238,7 @@ func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level
 	parties[Side.PLAYER] = combined
 	partner_name = p_name
 	partner_front = clampi(front, 1, BattleRules.MAX_FRONT)
-	partner_ai = BattleAI.new(ai_level)
+	partner_ai = BattleAI.new(ai_level, profile_name)
 
 func is_finished() -> bool:
 	return phase == Phase.FINISHED
@@ -297,7 +308,12 @@ func is_legal(a: BattleAction) -> bool:
 				return false
 			if is_partner_index(a.side, a.item_target):
 				return false
-			return a.item_target >= 0 and a.item_target < parties[a.side].size() and not (parties[a.side][a.item_target] as Spirling).is_fainted()
+			if not item_left_this_battle(a.side, a.item_id):
+				return false
+			if a.item_target < 0 or a.item_target >= parties[a.side].size():
+				return false
+			# A revive item (the shop's Rift Breath) wants a defeated Spirling, every other one a standing one.
+			return (parties[a.side][a.item_target] as Spirling).is_fainted() == is_revive_item(a.item_id)
 		BattleAction.Kind.BOND:
 			# The Echo call reaches only wild Spirlings, never a Wayfarer's partner.
 			if a.side != Side.PLAYER or not is_wild or bonded != null or is_partner_slot(a.side, a.slot):
@@ -343,6 +359,7 @@ func start() -> Array[BattleEvent]:
 	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(),
 		"prism": foe.prism, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
 	if not is_wild:
+		_battle_line("motto")
 		for slot: int in slot_count(Side.FOE):
 			emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE, slot))
 	for slot: int in slot_count(Side.PLAYER):
@@ -397,6 +414,9 @@ func submit_actions(actions: Array[BattleAction]) -> Array[BattleEvent]:
 				if side == Side.PLAYER and not is_partner_slot(side, slot):
 					a = BattleAction.make_rest(side, slot)
 				else:
+					if side == Side.PLAYER:
+						# Item 628: the partner knows which foe the player goes for this turn.
+						partner_ai.ally_target = _player_aim(actions)
 					a = (partner_ai if side == Side.PLAYER else ai).choose(self, side, slot)
 			_queue.append(a)
 			if side == Side.FOE and slot == 0 and _boss_actions > 1:
@@ -434,6 +454,17 @@ func emit_event(t: BattleEvent.Type, d: Dictionary = {}) -> void:
 	_events.append(e)
 	event_emitted.emit(e)
 
+## The foe Wayfarer's personality line of [param kind] (items 621, 624): the motto at the start,
+## then each fall line at most once per battle. Only for a named trainer with a profile line.
+func _battle_line(kind: String) -> void:
+	if is_wild or trainer_name.is_empty() or _lines_said.has(kind):
+		return
+	var text: String = ai.line(kind)
+	if text.is_empty():
+		return
+	_lines_said[kind] = true
+	emit_event(BattleEvent.Type.BATTLE_LINE, {"side": Side.FOE, "name": trainer_name, "kind": kind, "text": text})
+
 ## Damages the Spirling in [param slot] of [param side]. Emits DAMAGE and, if it drops, FAINTED.
 func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) -> int:
 	var s: Spirling = active_spirling(side, slot)
@@ -447,6 +478,10 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 	emit_event(BattleEvent.Type.DAMAGE, d)
 	if s.is_fainted():
 		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
+		if side == Side.FOE:
+			_battle_line("last" if alive_count(Side.FOE) == 1 else "own_fall")
+		elif not is_partner_slot(side, slot):
+			_battle_line("foe_fall")
 	elif side == Side.FOE and slot == 0 and dealt > 0:
 		_check_boss_phase(s)
 	return dealt
@@ -981,12 +1016,18 @@ func _do_item(a: BattleAction) -> void:
 	if int(bag.get(a.item_id, 0)) <= 0 or not _items_allowed_for(a.side):
 		return
 	var target: Spirling = parties[a.side][a.item_target]
-	if target.is_fainted():
+	if target.is_fainted() != is_revive_item(a.item_id) or not item_left_this_battle(a.side, a.item_id):
 		return
 	var it: Dictionary = Database.item(a.item_id)
 	bag[a.item_id] = int(bag[a.item_id]) - 1
+	items_used[a.side][a.item_id] = int(items_used[a.side].get(a.item_id, 0)) + 1
 	var d: Dictionary = {"side": a.side, "index": a.item_target, "name": target.display_name(), "item": a.item_id, "item_name": str(it.get("name", a.item_id))}
 	emit_event(BattleEvent.Type.ITEM_USED, d)
+	if is_revive_item(a.item_id):
+		_revive(a.side, a.item_target, float(it.battle_revive), bool(it.get("revive_energy", false)))
+		return
+	if float(it.get("heal_frac", 0.0)) > 0.0:
+		_heal_spirling(a.side, a.item_target, ceili(target.max_hp() * float(it.heal_frac)))
 	if int(it.get("heal", 0)) > 0:
 		_heal_spirling(a.side, a.item_target, int(it.heal))
 	var cure: Variant = it.get("cure", false)
@@ -1210,6 +1251,25 @@ func _cure(side: int, slot: int = 0) -> void:
 	s.status = ""
 	s.status_turns = 0
 	emit_event(BattleEvent.Type.STATUS_CURED, d)
+
+## True for items that bring a defeated Spirling back in battle (the shop's Rift Breath).
+static func is_revive_item(id: String) -> bool:
+	return float(Database.item(id).get("battle_revive", 0.0)) > 0.0
+
+## False once [param side] used [param id] as often as its "per_battle" limit allows (plan item 4512).
+func item_left_this_battle(side: int, id: String) -> bool:
+	var limit: int = int(Database.item(id).get("per_battle", 0))
+	return limit <= 0 or int(items_used[side].get(id, 0)) < limit
+
+## Brings the defeated Spirling at [param index] back with [param frac] of its Vigor, on the bench.
+func _revive(side: int, index: int, frac: float, full_energy: bool) -> void:
+	var s: Spirling = parties[side][index]
+	s.hp = 0
+	s.status = ""
+	s.status_turns = 0
+	if full_energy:
+		s.energy = max_energy()
+	_heal_spirling(side, index, maxi(1, ceili(s.max_hp() * frac)))
 
 func _heal_spirling(side: int, index: int, amount: int) -> int:
 	var s: Spirling = parties[side][index]

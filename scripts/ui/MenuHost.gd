@@ -138,11 +138,40 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	for e: Dictionary in entries:
 		last_rows.append(str(e.get("text", "")))
 	apply_hand_layout()
+	# Item 1850: a question longer than three lines shows in full first; the list keeps
+	# only its last sentence (or "Your choice:") as the title.
+	if title_lines(title) > TITLE_MAX_LINES:
+		await info(title)
+		title = short_title(title)
 	var bottom: float = picker.offset_bottom
 	keep_above_pad(picker)
 	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
 	picker.offset_bottom = bottom
 	return r
+
+const TITLE_MAX_LINES: int = 3
+const SHORT_TITLE: String = "Your choice:"
+
+## How many lines [param title] takes as a list title.
+func title_lines(title: String) -> int:
+	var w: float = picker._title.size.x
+	if w < 8.0:
+		w = get_viewport_rect().size.x - PANEL_MARGIN * 2.0 - ListPicker.BACK_SIZE - 12.0
+	var f: Font = UITheme.font()
+	var line_h: float = f.get_height(UITheme.FONT_SIZE)
+	var h: float = f.get_multiline_string_size(Loc.t(title), HORIZONTAL_ALIGNMENT_LEFT, w, UITheme.FONT_SIZE).y
+	return int(ceil(h / maxf(line_h, 1.0) - 0.01))
+
+## The last sentence of a long question, if it fits in three lines, else "Your choice:".
+func short_title(title: String) -> String:
+	var text: String = Loc.t(title).strip_edges()
+	var cut: int = -1
+	for mark: String in [". ", "! ", "? ", "\n"]:
+		cut = maxi(cut, text.rfind(mark, text.length() - 2))
+	var last: String = text.substr(cut + 1).strip_edges() if cut >= 0 else ""
+	if not last.is_empty() and title_lines(last) <= TITLE_MAX_LINES:
+		return last
+	return SHORT_TITLE
 
 ## While the touch pad shows (a question during play), the list ends above its buttons so no
 ## answer lies under a button (item 2012).

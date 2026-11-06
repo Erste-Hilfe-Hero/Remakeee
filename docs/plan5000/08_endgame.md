@@ -265,17 +265,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3352. [x] [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
 3353. [x] [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
 3354. [x] [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
-3355. [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
-3356. [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
-3357. [P2] Ein Sammelziel „Jede Technik einmal eingesetzt“ für alle 58 Techniken mit Stufen bei 20, 40 und 58 ergänzen.
+3355. [x] [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
+3356. [x] [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
+3357. [x] [P2] Ein Sammelziel „Jede Technik einmal eingesetzt“ für alle 58 Techniken mit Stufen bei 20, 40 und 58 ergänzen.
 3358. [P2] Ein Technikbuch im Lexikon anlegen, das jede schon eingesetzte Technik markiert.
-3359. [P2] Ein Sammelziel „Jedes Element im Team“ ergänzen: einmal einen Spirling jedes der acht Elemente gebondet.
+3359. [x] [P2] Ein Sammelziel „Jedes Element im Team“ ergänzen: einmal einen Spirling jedes der acht Elemente gebondet.
 3360. [P2] Ein Sammelziel für Fundorte ergänzen: jede Art mindestens an jedem ihrer Fundorte einmal gesehen.
 3361. [P2] Im Spirlog für jede Art die Fundorte mit Haken zeigen, sobald man sie dort gesehen hat.
-3362. [P2] Ein Sammelziel „Lore-Seiten“ ergänzen, das alle gefundenen Lore-Seiten zählt und bei voll 100 Wegmarken zahlt.
-3363. [P2] Ein Sammelziel „Andenken-Sammlung“ ergänzen, das jedes Andenken einmal gehalten zählt.
+3362. [x] [P2] Ein Sammelziel „Lore-Seiten“ ergänzen, das alle gefundenen Lore-Seiten zählt und bei voll 100 Wegmarken zahlt.
+3363. [x] [P2] Ein Sammelziel „Andenken-Sammlung“ ergänzen, das jedes Andenken einmal gehalten zählt.
 3364. [P2] Ein Sammelziel für Prisma-Spirlings in einer eigenen Spirlog-Seite zeigen, ohne Hinweis auf eine Chance.
-3365. [P2] Ein Sammelziel „Temperamente“ ergänzen, das alle Temperamente über alle Spirlings zählt.
+3365. [x] [P2] Ein Sammelziel „Temperamente“ ergänzen, das alle Temperamente über alle Spirlings zählt.
 3366. [P2] Für jede Art eine kleine Sammelkarte im Spirlog freischalten, wenn sie gebondet, auf Ring 30 und mit jeder Technik ihrer Linie eingesetzt wurde.
 3367. [P3] Eine Fotowand im Leuchtturm einrichten, an die man pro Art ein Foto aus dem Fotomodus hängen kann.
 3368. [P3] Für eine volle Fotowand mit allen 21 Arten einen Rahmen in Gold und 100 Wegmarken vergeben.

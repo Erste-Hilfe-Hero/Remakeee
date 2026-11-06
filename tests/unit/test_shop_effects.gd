@@ -173,3 +173,39 @@ func test_xp_mult_scales_battle_growth() -> void:
 	m1._award_xp(foe1[0])
 	m2._award_xp(foe2[0])
 	assert_gt(b[0].xp, a[0].xp)
+
+func test_rift_breath_brings_back_a_defeated_spirling_once() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10), BattleFixtures.make("Mossling", 10)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 5)] as Array[Spirling], true, 5)
+	m.inventory["rg_rift_breath"] = 2
+	mine[1].hp = 0
+	mine[1].status = "burn"
+	var on_standing := BattleAction.make_item(BattleModel.Side.PLAYER, "rg_rift_breath", 0)
+	assert_false(m.is_legal(on_standing), "only for a defeated Spirling")
+	var a := BattleAction.make_item(BattleModel.Side.PLAYER, "rg_rift_breath", 1)
+	assert_true(m.is_legal(a))
+	m.submit_turn(a, BattleAction.make_rest(BattleModel.Side.FOE))
+	assert_eq(mine[1].hp, ceili(mine[1].max_hp() * 0.5))
+	assert_eq(mine[1].status, "")
+	assert_eq(int(m.inventory.rg_rift_breath), 1)
+	mine[1].hp = 0
+	assert_false(m.is_legal(a), "one per battle")
+
+func test_great_rift_breath_and_glass_tonic() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10), BattleFixtures.make("Mossling", 10)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 5)] as Array[Spirling], true, 5)
+	m.inventory["rg_rift_breath_full"] = 1
+	m.inventory["rg_glass_tonic"] = 3
+	mine[1].hp = 0
+	mine[1].energy = 0
+	m.submit_turn(BattleAction.make_item(BattleModel.Side.PLAYER, "rg_rift_breath_full", 1), BattleAction.make_rest(BattleModel.Side.FOE))
+	assert_eq(mine[1].hp, mine[1].max_hp())
+	assert_eq(mine[1].energy, m.max_energy())
+	var tonic := BattleAction.make_item(BattleModel.Side.PLAYER, "rg_glass_tonic", 0)
+	for i: int in 2:
+		mine[0].hp = 1
+		assert_true(m.is_legal(tonic))
+		m.submit_turn(tonic, BattleAction.make_rest(BattleModel.Side.FOE))
+		assert_eq(mine[0].hp, mine[0].max_hp(), "all Vigor")
+	assert_false(m.is_legal(tonic), "two per battle")
+	assert_false(BattleModel.is_revive_item("rg_glass_tonic"))

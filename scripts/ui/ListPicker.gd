@@ -224,7 +224,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		_hints.append(str(rows[i].get("hint", "")))
 		_whys.append(str(rows[i].get("why", "")))
 		_sliders.append(bool(rows[i].get("slider", false)))
-		b.pressed.connect(func() -> void: _on_row(result, _slider_dir(b, i)))
+		b.pressed.connect(func() -> void: _on_row(result, _slider_dir(b, i), b))
 		b.gui_input.connect(func(ev: InputEvent) -> void: _row_input(ev, i, result))
 		b.focus_entered.connect(func() -> void:
 			if visible and not pointer_used:
@@ -392,14 +392,22 @@ func _focus_row(want: int) -> void:
 	_back.accessibility_name = Loc.t("Back")
 	_arrows.queue_redraw.call_deferred()
 
-func _on_row(result: int, dir: int = 0) -> void:
+func _on_row(result: int, dir: int = 0, b: Button = null) -> void:
 	if not visible or not _tap_allowed():
+		return
+	# A tap on a row cut off at the edge scrolls it into view first (item 1794).
+	if b != null and pointer_used and not row_fully_shown(b):
+		_scroll.ensure_control_visible(b)
 		return
 	last_dir = dir
 	Sound.sfx("cancel" if result < 0 else "confirm")
 	if GameState.tap_vibration and pointer_used:
 		Haptics.play(TAP_BUZZ)
 	picked.emit(result)
+
+## True if all of [param b] is inside the visible part of the list.
+func row_fully_shown(b: Button) -> bool:
+	return _scroll.get_global_rect().grow(0.5).encloses(b.get_global_rect())
 
 ## Slider rows: a tap on the left half lowers, on the right half raises; A raises.
 func _slider_dir(b: Button, i: int) -> int:

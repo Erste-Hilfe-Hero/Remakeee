@@ -39,6 +39,15 @@ var _visible_chars: float = 0.0
 ## cannot skip a line unread (item 1783).
 const READ_GUARD_MS: int = 150
 var _shown_ms: int = -100000
+## The box rises this far into place when it opens (item 2286).
+const OPEN_RISE: int = 6
+## Between pages the old text slides up and fades out first (item 2287).
+const PAGE_LIFT: int = 2
+const PAGE_OUT_TIME: float = 0.08
+## The continue marker bobs 1 px, one full cycle per ARROW_BOB_PERIOD seconds (item 2288).
+const ARROW_BOB_PERIOD: float = 0.5
+var _arrow_pad: StyleBoxEmpty
+var _bob_time: float = 0.0
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -61,6 +70,8 @@ func _ready() -> void:
 	_arrow.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	_arrow.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	_arrow.visible = false
+	_arrow_pad = StyleBoxEmpty.new()
+	_arrow.add_theme_stylebox_override("normal", _arrow_pad)
 	add_child(_arrow)
 	_tag = Label.new()
 	_tag.top_level = true
@@ -71,7 +82,42 @@ func _ready() -> void:
 	visibility_changed.connect(func() -> void:
 		if not visible:
 			fast_forward = false
-			_press_ms = -1)
+			_press_ms = -1
+		else:
+			_rise_in())
+
+## Opening: the box comes up OPEN_RISE pixels from below with the "open" curve. Only where
+## the box places itself (the map); inside a container the layout owns its position.
+## The shift is applied relative to the last step, so the box may still grow upward for long
+## text while it rises.
+func _rise_in() -> void:
+	if Juice.reduced() or get_parent() is Container or not is_inside_tree():
+		return
+	_set_rise(OPEN_RISE)
+	Juice.tween(self, "rise", 0, "open")
+
+## Closing: the box sinks OPEN_RISE pixels and fades with the "close" curve, then hides
+## (item 2286). Instant under reduced motion and inside a container. Awaitable.
+func close() -> void:
+	if not visible:
+		return
+	if Juice.reduced() or get_parent() is Container or not is_inside_tree():
+		visible = false
+		return
+	Juice.tween(self, "modulate:a", 0.0, "close")
+	await Juice.tween(self, "rise", OPEN_RISE, "close").finished
+	visible = false
+	_set_rise(0)
+	modulate.a = 1.0
+
+## Pixels the box currently sits below its place (0 when settled).
+var rise: int = 0:
+	set(v):
+		position.y += v - rise
+		rise = v
+
+func _set_rise(v: int) -> void:
+	rise = v
 
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String, speaker: String = "") -> void:
@@ -87,9 +133,24 @@ func show_text(text: String, speaker: String = "") -> void:
 		speaker = Loc.t(speaker).replace("{name}", GameState.tamer_name)
 	set_speaker(speaker)
 	_line_voice = voice_for_line(speaker + ": " if not speaker.is_empty() else shown, voice)
-	for page: String in split_lines(shown, _text_width(), _label.get_theme_font("font"),
-			_label.get_theme_font_size("font_size"), MAX_LINES):
-		await _show_page(page)
+	var pages: Array[String] = split_lines(shown, _text_width(), _label.get_theme_font("font"),
+			_label.get_theme_font_size("font_size"), MAX_LINES)
+	for i: int in pages.size():
+		if i > 0:
+			await _page_out()
+		await _show_page(pages[i])
+
+## The old page lifts PAGE_LIFT pixels and fades before the next one types (item 2287).
+func _page_out() -> void:
+	if fast_forward or auto_advance or Juice.reduced() or not is_visible_in_tree():
+		return
+	var home: Vector2 = _label.position
+	var tw: Tween = _label.create_tween().set_parallel()
+	Juice.shaped(tw.tween_property(_label, "position:y", home.y - PAGE_LIFT, PAGE_OUT_TIME), "close")
+	Juice.shaped(tw.tween_property(_label, "modulate:a", 0.0, PAGE_OUT_TIME), "close")
+	await tw.finished
+	_label.position = home
+	_label.modulate.a = 1.0
 
 func _show_page(page: String) -> void:
 	_label.text = page
@@ -202,6 +263,7 @@ func _process(delta: float) -> void:
 		start_fast_forward()
 	if _tag.visible:
 		_place_tag()
+	_bob_arrow(delta)
 	if not _typing:
 		return
 	_visible_chars += delta * chars_per_second
@@ -214,6 +276,15 @@ func _process(delta: float) -> void:
 		_label.visible_characters = -1
 		_typing = false
 		_shown_ms = Time.get_ticks_msec()
+
+func _bob_arrow(delta: float) -> void:
+	if not _arrow.visible:
+		_bob_time = 0.0
+		_arrow_pad.content_margin_bottom = 0
+		return
+	_bob_time = fmod(_bob_time + delta, ARROW_BOB_PERIOD)
+	var up: bool = not Juice.reduced() and _bob_time >= ARROW_BOB_PERIOD / 2.0
+	_arrow_pad.content_margin_bottom = 1 if up else 0
 
 ## Finishes the current line and continues at once (scene "Skip").
 func advance_now() -> void:

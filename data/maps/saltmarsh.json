@@ -136,7 +136,8 @@
       "level": 13
      }
     ]
-   }
+   },
+   "profile": "field_keeper"
   },
   {
    "id": "kestra_tag",
@@ -163,7 +164,8 @@
       "level": 14
      }
     ],
-    "front": 1
+    "front": 1,
+    "profile": "tactician"
    },
    "show_flag": "kestra_spar",
    "hide_flag": "kestra_marsh_tag",
@@ -186,7 +188,8 @@
    "win_flags": [
     "kestra_marsh_tag"
    ],
-   "leaves": true
+   "leaves": true,
+   "profile": "enduring"
   },
   {
    "id": "hauler",
