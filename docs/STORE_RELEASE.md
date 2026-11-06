@@ -1,6 +1,6 @@
 # Chimora in den Stores veröffentlichen
 
-Stand: 6. 11. 2026. Diese Datei ist die Checkliste „fertig für Release“. Alles mit ✅ ist im Repo
+Stand: 6. 11. 2026 (kostenlos, Hauptsprache Englisch). Diese Datei ist die Checkliste „fertig für Release“. Alles mit ✅ ist im Repo
 erledigt. Alles mit 👤 braucht Ali selbst (Konto, Geld, Unterschrift, Identität). `python3
 tools/release_check.py --strict` zeigt jederzeit, was noch offen ist; ohne `--strict` läuft es in jeder CI.
 
@@ -20,7 +20,7 @@ tools/release_check.py --strict` zeigt jederzeit, was noch offen ist; ohne `--st
 | **Webseiten** Datenschutz, Privacy, AGB, Impressum, Konto löschen, Support, Lizenzen | ✅ vom Spielserver ausgeliefert | `server/site/`, `tools/site/build_site.py` |
 | In-App-Kontolöschung (Apple 5.1.1(v), Google Pflicht) | ✅ Menü → Konto → Konto löschen... | `scripts/ui/AccountMenu.gd` |
 | Antworten für **Data Safety**, **App Privacy**, **Altersfreigabe**, DSA | ✅ | `docs/legal/STORE_COMPLIANCE.md` |
-| Geschäftsmodell: Einmalkauf, keine IAP/Werbung/Lootboxen | ✅ | `docs/MONETIZATION.md` |
+| Geschäftsmodell: kostenlos, zum Start ohne Shop, keine Werbung/Lootboxen (Shop kommt später) | ✅ | `docs/MONETIZATION.md` |
 
 Store-URLs (bis es eine eigene Domain gibt, liefert der Spielserver sie aus):
 
@@ -37,13 +37,14 @@ Die Seiten gehen online, sobald dieser Stand per Workflow **Game server** auf de
    sagen, dann wird auf „Spirlings of Veydal“ umgestellt.
 2. 👤 **Gewerbe anmelden** und eine **ladungsfähige Adresse**, **E-Mail** und **Telefonnummer** festlegen.
    Die vier Angaben schickst du mir; ich trage sie in Impressum, Datenschutz, AGB, Support und Spiel ein.
-3. 👤 **Google Play Console** anlegen (25 $ einmalig, Identitätsprüfung), Steuer-/Bankdaten, Zahlungsprofil
-   für den Verkaufspreis, **DSA-Händlererklärung**.
-4. 👤 **Apple Developer Program** (99 $/Jahr), „Paid Apps“-Vertrag, Steuer-/Bankdaten, **DSA-Händlerstatus**.
+3. 👤 **Google Play Console** anlegen (25 $ einmalig, Identitätsprüfung), **DSA-Händlererklärung**. Steuer-/Bankdaten
+   und Zahlungsprofil erst nötig, wenn der Shop kommt.
+4. 👤 **Apple Developer Program** (99 $/Jahr), **DSA-Händlerstatus**. „Paid Apps“-Vertrag und
+   Steuer-/Bankdaten erst für den Shop.
 5. 👤 **Signatur-Secrets** in GitHub → Settings → Environments → `prod` anlegen (Anleitung `docs/RELEASE.md`):
    Android-Upload-Key (3 Secrets), danach Play-Service-Account (1), Apple-Zertifikat, Profil, Team-ID und
    API-Key (7).
-6. 👤 **Preis** festlegen (Empfehlung: 4,99 €) und **12 Tester** für den geschlossenen Test auf Google Play
+6. 👤 App auf **kostenlos** stellen und **12 Tester** für den geschlossenen Test auf Google Play
    einladen (Pflicht für neue private Konten, 14 Tage).
 7. 👤 Contabo-**AV-Vertrag** unterschreiben (Kundenbereich).
 
@@ -54,8 +55,9 @@ vorher.
 
 ### Google Play
 
-1. Play Console → **App erstellen**: Name „Chimora: Die Stille von Veydal“, Standardsprache Deutsch,
-   Spiel, kostenpflichtig.
+1. Play Console → **App erstellen**: Name „Chimora: Die Stille von Veydal“, Standardsprache Englisch (Deutsch als Übersetzung),
+   Spiel, **kostenlos**. (War als kostenpflichtig angelegt: unter Monetarisieren → App-Preis auf
+   kostenlos umstellen. Achtung: von kostenlos zurück auf kostenpflichtig geht bei Google nie mehr.)
 2. **App-Inhalte** ausfüllen mit `docs/legal/STORE_COMPLIANCE.md`: Datenschutz-URL, App-Zugriff
    (Text aus `store/android/app_access_de.txt`), Werbung „nein“, Altersfreigabe (IARC), Zielgruppe 13+,
    Data Safety, Konto-Löschung (URL oben), Behörden-App „nein“, Nachrichten-App „nein“.
@@ -63,11 +65,11 @@ vorher.
 4. In GitHub den Workflow **Export** per Hand starten, Haken bei **play_internal**. Der Build landet als
    Entwurf im **internen Test**. Ersten Upload einmal per Hand bestätigen, Play App Signing aktivieren.
 5. **Geschlossener Test** mit 12 Testern, 14 Tage. Danach **Produktion beantragen**, Länder wählen,
-   Preis setzen, Freigabe.
+   Freigabe.
 
 ### App Store
 
-1. App Store Connect → **Neue App**: iOS, Name „Chimora: Die Stille von Veydal“, Primärsprache Deutsch,
+1. App Store Connect → **Neue App**: iOS, Name „Chimora: Die Stille von Veydal“, Primärsprache Englisch (Deutsch als Lokalisierung),
    Bundle-ID `de.chimora.game` (vorher unter Certificates, Identifiers & Profiles anlegen), SKU `chimora`.
 2. **App-Datenschutz** und **Altersfreigabe** mit `docs/legal/STORE_COMPLIANCE.md`. Kategorie Spiele →
    Rollenspiel, Nebenkategorie Abenteuer.
@@ -75,7 +77,7 @@ vorher.
    (nur die 6,9"-Größe nötig), Review-Hinweis aus `store/ios/review_information/notes.txt`.
 4. Workflow **Export** per Hand starten, Haken bei **ios**. Der Build erscheint nach etwa 15 Minuten in
    **TestFlight**. Optional mit Freunden testen.
-5. Build der Version zuordnen, Preis setzen, **Zur Prüfung einreichen**.
+5. Build der Version zuordnen, unter Preise und Verfügbarkeit **kostenlos** (0 €) wählen, **Zur Prüfung einreichen**.
 
 ### Eine neue Version
 

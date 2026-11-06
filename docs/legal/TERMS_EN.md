@@ -7,7 +7,7 @@ Replace only [NAME], [ADDRESS], [EMAIL]. Written by an AI without review by a la
 
 Last updated: November 2026
 
-1. **Provider.** [NAME], [ADDRESS], Germany, [EMAIL] ("we"). These terms cover the game Chimora (iOS,
+1. **Provider.** Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany, aa.amuri@icloud.com ("we"). These terms cover the game Chimora (iOS,
    Android) and its online services. The app store's own terms also apply to downloads and purchases.
 2. **Account.** By accepting these terms on first launch you get a game account automatically; no email is
    needed. The game is **online only** and needs an internet connection. Keep your transfer code secret.
@@ -18,7 +18,7 @@ Last updated: November 2026
 4. **Rules.** No cheats, bots, tampering with saves or server traffic, exploiting bugs, reverse engineering
    (except where the law allows it), selling accounts or items for money, or offensive or unlawful Wayfarer
    names. We may warn, reset progress, or suspend or close accounts, taking all circumstances into account,
-   and will tell you why. You can object at [EMAIL].
+   and will tell you why. You can object at aa.amuri@icloud.com.
    **Friends and greetings:** friends are added with a friend code. Greetings are fixed phrases from a list;
    free text is not possible. Spirlings cannot be traded or gifted. You can block anyone and report them in
    the game (Friend, Report). We review reports and reset unsuitable names to "Wanderer" with a number. Parents

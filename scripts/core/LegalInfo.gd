@@ -9,7 +9,7 @@ const IMPRINT_URL: String = SITE + "/impressum"
 const PRIVACY_URL: String = SITE + "/datenschutz"
 const TERMS_URL: String = SITE + "/nutzungsbedingungen"
 const LICENCES_URL: String = SITE + "/lizenzen"
-const CONTACT: String = "kontakt@chimora.example"
+const CONTACT: String = "aa.amuri@icloud.com"
 
 ## Characters per info page on the 144 px wide screen.
 const PAGE_CHARS: int = 260

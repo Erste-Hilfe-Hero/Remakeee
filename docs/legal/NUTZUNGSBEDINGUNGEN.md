@@ -11,7 +11,7 @@ Stand: November 2026
 
 1.1 Diese Bedingungen gelten für die Nutzung des Spiels „Chimora“ (iOS und Android) und der dazugehörigen
 Online-Dienste (Spielkonto, Server-Spielstand).
-1.2 Anbieter ist [NAME], [ADRESSE], Deutschland, E-Mail [E-MAIL] („wir“).
+1.2 Anbieter ist Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Deutschland, E-Mail aa.amuri@icloud.com („wir“).
 Vollständige Angaben im [Impressum](IMPRESSUM.md).
 1.3 Für den Download und Käufe gelten zusätzlich die Bedingungen des jeweiligen App-Stores (Apple, Google).
 
@@ -49,7 +49,7 @@ zurück. Eltern können Freunde, Grüße und Geschenke unter Einstellungen, Kont
 
 Bei Verstößen können wir nach Abwägung der Umstände verwarnen, Spielstände zurücksetzen oder das Konto
 vorübergehend oder dauerhaft sperren. Bei einer Sperre informieren wir dich mit Begründung; du kannst
-widersprechen unter [E-MAIL].
+widersprechen unter aa.amuri@icloud.com.
 
 ## 5. Verfügbarkeit, Updates, Änderungen und Einstellung
 
