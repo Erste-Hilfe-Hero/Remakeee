@@ -1,11 +1,12 @@
 class_name Loc
 extends RefCounted
 ## Game languages (item 62). English is the source text; other languages come from
-## data/i18n/<code>.json and are installed as a PatternTranslation, so every Label and Button
+## data/i18n/<code>/*.json (one file per table in tools/i18n/) and are installed as a PatternTranslation, so every Label and Button
 ## follows the chosen language. Code that builds text outside a Control calls Loc.t().
 
 const LANGUAGES: Array[String] = ["en", "de"]
 const LANGUAGE_NAMES: Dictionary[String, String] = {"en": "English", "de": "Deutsch"}
+const DIR: String = "res://data/i18n/%s"
 const PATH: String = "res://data/i18n/%s.json"
 
 static var _installed: Dictionary[String, PatternTranslation] = {}
@@ -40,13 +41,36 @@ static func uninstall() -> void:
 	_current = "en"
 	TranslationServer.set_locale("en")
 
-## Reads data/i18n/[param code].json into a PatternTranslation (null if missing).
+## The merged table of [param code]: {"strings": {...}, "keep": [...]}. Reads every file in
+## data/i18n/<code>/ (older builds had one data/i18n/<code>.json; that still works). Empty if missing.
+static func load_table(code: String) -> Dictionary:
+	var paths: Array[String] = []
+	var dir: String = DIR % code
+	if DirAccess.dir_exists_absolute(dir):
+		for f: String in DirAccess.get_files_at(dir):
+			if f.ends_with(".json"):
+				paths.append(dir.path_join(f))
+	elif FileAccess.file_exists(PATH % code):
+		paths.append(PATH % code)
+	paths.sort()
+	var strings: Dictionary = {}
+	var keep: Array = []
+	for path: String in paths:
+		var data: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+		if not data is Dictionary:
+			continue
+		if data.get("strings") is Dictionary:
+			strings.merge(data.strings, true)
+		if data.get("keep") is Array:
+			keep.append_array(data.keep)
+	if paths.is_empty():
+		return {}
+	return {"strings": strings, "keep": keep}
+
+## Reads the table of [param code] into a PatternTranslation (null if missing).
 static func load_translation(code: String) -> PatternTranslation:
-	var f := FileAccess.open(PATH % code, FileAccess.READ)
-	if f == null:
-		return null
-	var data: Variant = JSON.parse_string(f.get_as_text())
-	if not data is Dictionary:
+	var data: Dictionary = load_table(code)
+	if data.is_empty():
 		return null
 	var t := PatternTranslation.new()
 	t.locale = code

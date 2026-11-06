@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lists every player-facing English string that data/i18n/<lang>.json must translate.
+"""Lists every player-facing English string that data/i18n/<lang>/*.json must translate.
 
 Sources: dialogue and map JSON, quests, items, plus string literals in the UI and battle scripts
 that look like text (a capital letter or a space). Prints missing keys as JSON so they can be
@@ -129,10 +129,14 @@ def strings():
 
 if __name__ == "__main__":
     lang = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else "de"
-    path = os.path.join(ROOT, "data/i18n/%s.json" % lang)
-    have = json.load(open(path)) if os.path.exists(path) else {}
-    keep = set(have.get("keep", []))
-    table = have.get("strings", {})
+    # One file per table in data/i18n/<lang>/ (built by tools/i18n/build.py).
+    d = os.path.join(ROOT, "data/i18n", lang)
+    keep, table = set(), {}
+    for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if f.endswith(".json"):
+            part = json.load(open(os.path.join(d, f), encoding="utf-8"))
+            keep.update(part.get("keep", []))
+            table.update(part.get("strings", {}))
     pats = [re.compile("^" + re.escape(k).replace("%%", "%").replace("%s", "(.+?)").replace("%d", r"(-?\d+)") + "$")
             for k in table if "%s" in k or "%d" in k]
     def known(s):

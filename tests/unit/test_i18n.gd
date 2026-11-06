@@ -7,8 +7,7 @@ var table: Dictionary
 
 func before_all() -> void:
 	Database.load_all()
-	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/i18n/de.json"))
-	table = raw
+	table = Loc.load_table("de")
 	de = Loc.load_translation("de")
 
 func after_all() -> void:
