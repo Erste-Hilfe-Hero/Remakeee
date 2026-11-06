@@ -318,10 +318,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1629. [P3] Nach dem Finale versammeln sich alle Hüter einmal in Brindlewick zu einem Fest, das der Ausrufer ankündigt.
 
 ### Nebenquests in Veydal
-1630. [P1] Neue Nebenquest letters_veydal: drei Briefe von Mirela an Aldo liegen in Veydal (Leuchtturm-Dachboden, Fernstair-Hütte, Thornridge-Brunnen), Belohnung je 1 Max Tonic.
-1631. [P1] quest_show bekommt eine zweite Stufe (q_<id>_stage), damit Nebenquests mehrere Schritte haben können, nicht nur "zeig mir Art X".
-1632. [P1] Neue Nebenquest puddlet_wake: das Kind in Brindlewick will sein stilles Puddlet wecken; die Spielfigur spielt eine Echo-Melodie mit ihm (Flag q_puddlet_done).
-1633. [P1] Nebenquests zeigen im Zielmenü einen Ortshinweis ("where") wie die Hauptziele.
+1630. [x] [P1] Neue Nebenquest letters_veydal: drei Briefe von Mirela an Aldo liegen in Veydal (Leuchtturm-Dachboden, Fernstair-Hütte, Thornridge-Brunnen), Belohnung je 1 Max Tonic.
+1631. [x] [P1] quest_show bekommt eine zweite Stufe (q_<id>_stage), damit Nebenquests mehrere Schritte haben können, nicht nur "zeig mir Art X".
+1632. [x] [P1] Neue Nebenquest puddlet_wake: das Kind in Brindlewick will sein stilles Puddlet wecken; die Spielfigur spielt eine Echo-Melodie mit ihm (Flag q_puddlet_done).
+1633. [x] [P1] Nebenquests zeigen im Zielmenü einen Ortshinweis ("where") wie die Hauptziele.
 1634. [P2] Neue Nebenquest lantern_route: Tamsin bittet, die drei Lampen im Murk Hollow jede Nacht zu zünden; nach drei Nächten erzählt sie ihre Geschichte.
 1635. [P2] Neue Nebenquest lost_map: ein Wanderer in Fernstair hat eine Karte verloren; sie liegt bei einem Farn mit Kompassrose, Belohnung 600 Münzen.
 1636. [P2] Neue Nebenquest orrin_names: Orrin hat die Namen seiner Spirlinge vergessen; die Spielfigur findet sie auf drei Steinen in Thornridge.
@@ -449,8 +449,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Ziele, Tagebuch und Kartenbuch
 1750. [x] [P1] QuestLog unterstützt Akte: Hauptziele bekommen ein Feld "act", das Zielmenü zeigt den Aktnamen über dem Kapitel.
-1751. [P1] Das Kartenbuch (Mirelas Seiten) wird ein eigenes Menü mit Seitenliste und gelesenen Seiten, statt nur Textzeilen beim Fund.
-1752. [P1] Nebenquests mit Stufen zeigen den aktuellen Schritttext statt nur den Starttext.
+1751. [x] [P1] Das Kartenbuch (Mirelas Seiten) wird ein eigenes Menü mit Seitenliste und gelesenen Seiten, statt nur Textzeilen beim Fund.
+1752. [x] [P1] Nebenquests mit Stufen zeigen den aktuellen Schritttext statt nur den Starttext.
 1753. [P2] Das Tagebuch sammelt Kapitel-Rückblicke (6 Zeilen pro Akt) automatisch, sobald ein Akt endet.
 1754. [P2] Eine Seite "People" im Tagebuch listet getroffene Figuren mit einem Satz, der sich mit ihrem Bogen ändert.
 1755. [P2] Erledigte Nebenquests bleiben im Tagebuch als Liste mit Ort und Belohnung lesbar.

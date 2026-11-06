@@ -1,0 +1,18 @@
+{
+ "_comment": "Story figures and signs per map id, in the map format (plan area 4, scripts/core/StoryPlacements.gd). Area 3 builds the maps; entries for maps that do not exist yet wait until they do.",
+ "lighthouse": {
+  "signs": [
+   {"x": 3, "y": 1, "dialogue": "story/letter_v1", "show_flag": "aldo_dock_told", "hide_flag": "letter_v1"}
+  ]
+ },
+ "fernstair": {
+  "signs": [
+   {"x": 10, "y": 9, "dialogue": "story/letter_v2", "show_flag": "aldo_dock_told", "hide_flag": "letter_v2"}
+  ]
+ },
+ "thornridge": {
+  "signs": [
+   {"x": 5, "y": 3, "dialogue": "story/letter_v3", "show_flag": "aldo_dock_told", "hide_flag": "letter_v3"}
+  ]
+ }
+}

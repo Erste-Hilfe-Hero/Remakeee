@@ -65,6 +65,8 @@ func _ready() -> void:
 		"battle": _action_battle,
 		"scene": _action_scene,
 		"warp": _action_warp,
+		"echo_song": _action_echo_song,
+		"quest_stage": _action_quest_stage,
 	}
 	_build()
 	if GameState.party.is_empty() and not GameState.in_game:
@@ -706,6 +708,8 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 		"The other two slip out into the morning, toward the lake."] as Array[String])
 
 const PAGE_COUNT: int = 6
+## Echo melody score that counts as a good answer outside battle.
+const ECHO_SONG_PASS: float = 0.6
 
 ## How many of Mirela's map-book pages the player has found.
 static func pages_found(flags: Dictionary) -> int:
@@ -727,6 +731,7 @@ func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	var n: int = pages_found(GameState.flags)
 	await say(["A page from Mirela's map book! (%d/%d)" % [n, PAGE_COUNT]] as Array[String])
 	await say(Dialogue.lines_for(Dialogue.get_entry("story/page_%s" % args[0]), GameState.flags))
+	GameState.set_flag("page_%s_read" % args[0])
 	if n >= PAGE_COUNT:
 		GameState.set_flag("pages_all")
 		await say(["That's all six pages. Aldo should see them."] as Array[String])
@@ -792,6 +797,34 @@ func _action_warp(args: PackedStringArray, _speaker: NPC) -> void:
 	SaveManager.save_game()
 	if not was_black and not scene_running:
 		await _fade_to(0.0)
+
+## "echo_song <flag>": the player answers a hushed Spirling's call with the Echo melody
+## outside battle (the bond minigame). A good echo sets the flag; a weak one can be retried
+## by talking again. Nothing is bonded or caught.
+func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.has_flag(args[0]):
+		return
+	_text.visible = false
+	var game := BondMinigame.new()
+	game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var dim := ColorRect.new()
+	dim.color = Color(UITheme.BG, 0.85)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_ui_root.add_child(dim)
+	_ui_root.add_child(game)
+	var score: float = await game.run()
+	game.queue_free()
+	dim.queue_free()
+	if score >= ECHO_SONG_PASS:
+		Sound.sfx("level_up")
+		GameState.set_flag(args[0])
+	else:
+		Sound.sfx("cancel")
+
+## "quest_stage <id> <n>": moves a side goal with stages to step n (plan item 1631).
+func _action_quest_stage(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() >= 2:
+		GameState.set_story_var("q_%s_stage" % args[0], int(args[1]))
 
 ## Plays a cut-scene and returns to the talk or the world afterwards.
 func play_scene(id: String) -> void:

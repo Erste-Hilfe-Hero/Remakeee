@@ -24,6 +24,8 @@ func run() -> void:
 			labels.insert(labels.find("Save"), "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
 			labels.insert(1, "Travel")
+		if GameState.has_flag("aldo_gift"):
+			labels.insert(labels.find("Goals") + 1, "Map book")
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
@@ -31,6 +33,7 @@ func run() -> void:
 			"Goals":
 				var daily: String = DailyFind.hint(GameState.flags)
 				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
+			"Map book": await MapBookMenu.run(self)
 			"Team": await run_team()
 			"Friends":
 				await FriendsMenu.run(self)

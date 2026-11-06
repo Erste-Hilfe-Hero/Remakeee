@@ -49,10 +49,21 @@
    ]
   }
  },
- "child": [
-  "My Puddlet won't answer when I call it anymore.",
-  "Grandpa Aldo says a Wayfarer with a strong bond can wake it up again."
- ],
+ "child": {
+  "lines": [
+   "My Puddlet won't answer when I call it anymore.",
+   "Grandpa Aldo says a Wayfarer with a strong bond can wake it up again."
+  ],
+  "next": "child_ask",
+  "after_flag": [
+   {
+    "flag": "q_puddlet_done",
+    "lines": [
+     "Puddlet splashes me every morning now! Thank you, {name}!"
+    ]
+   }
+  ]
+ },
  "crier": {
   "lines": [
    "Crier: Hear ye! Veydal keeps its festivals, storm or no storm."
@@ -190,5 +201,45 @@
  "kestra_dock_alone": [
   "Kestra: Hm. Your call. Mirela went alone too, you know.",
   "Kestra: I'll still be in Corvane. Someone has to map what you mend."
+ ],
+ "child_ask": {
+  "if": {
+   "not_flag": "q_puddlet_done"
+  },
+  "lines": [
+   "Can you sing to it? The way Wayfarers do?"
+  ],
+  "choices": [
+   {
+    "text": "I'll try",
+    "next": "child_song",
+    "flag": "q_puddlet_asked"
+   },
+   {
+    "text": "Not now",
+    "flag": "q_puddlet_asked"
+   }
+  ]
+ },
+ "child_song": {
+  "lines": [
+   "You kneel by the little Puddlet and listen for its call..."
+  ],
+  "action": "echo_song q_puddlet_done",
+  "next": "child_after"
+ },
+ "child_after": {
+  "if": {
+   "flag": "q_puddlet_done"
+  },
+  "else": "child_retry",
+  "lines": [
+   "The Puddlet blinks, then chirps back at you!",
+   "Puddlet is awake! Here, take this. I found it on the beach."
+  ],
+  "action": "give_item revival_leaf 1"
+ },
+ "child_retry": [
+  "The Puddlet stays quiet. Maybe try again in a moment."
  ]
 }
