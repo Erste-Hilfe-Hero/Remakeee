@@ -16,7 +16,6 @@ var _label: Label
 var _arrow: Label
 ## Name tag over the box for the one who speaks (plan item 1343).
 var _tag: Label
-const TAG_HEIGHT: int = 11
 ## Right padding reserved for the continue marker.
 const ARROW_SPACE: int = 6
 var _typing: bool = false
@@ -109,7 +108,7 @@ func speaker() -> String:
 
 func _place_tag() -> void:
 	if _tag.visible:
-		_tag.global_position = global_position + Vector2(2, -TAG_HEIGHT + 1)
+		_tag.global_position = global_position + Vector2(2, -_tag.size.y + 2)
 		_tag.visible = is_visible_in_tree()
 
 func _notification(what: int) -> void:

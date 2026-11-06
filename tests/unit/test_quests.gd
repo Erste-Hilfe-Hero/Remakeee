@@ -16,7 +16,10 @@ func test_goals_advance_in_order() -> void:
 	flags["kestra_dock_talk"] = true
 	assert_eq(QuestLog.current(flags).id, "home")
 	flags["aldo_dock_told"] = true
-	assert_eq(QuestLog.current(flags).id, "act1_end")
+	assert_eq(QuestLog.current(flags).id, "lamp")
+	flags["mirela_lamp"] = true
+	assert_eq(QuestLog.current(flags).id, "crossing")
+	assert_eq(str(QuestLog.current(flags).act), "Act II: The Colours of Corvane")
 
 func test_old_save_without_new_flag_lands_on_later_goal() -> void:
 	# Saves from before "met_kestra" existed: both Rifts mended, never set met_kestra.
@@ -53,6 +56,13 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 					settable["pages_all"] = true
 				if act[0] == "choose_starter":
 					settable["got_starter"] = true
+	# Cut-scenes set flags with "flag" steps (data/scenes).
+	for f: String in DirAccess.get_files_at("res://data/scenes"):
+		var sc: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/scenes/" + f))
+		for step: Variant in sc.get("steps", []):
+			if step is Dictionary and step.has("flag"):
+				for fl: Variant in (step.flag if step.flag is Array else [step.flag]):
+					settable[str(fl)] = true
 	for f: String in DirAccess.get_files_at("res://data/maps"):
 		var m: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/maps/" + f))
 		for n: Variant in m.get("npcs", []):
