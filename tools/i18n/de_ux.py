@@ -108,5 +108,18 @@ T = {
 "Gear": "Ausrüstung",
 "Special": "Wichtiges",
 "Eye: seen. Band: bonded.": "Auge: gesehen. Band: gebunden.",
+"Archivist": "Archivar",
+"Child": "Kind",
+"Crier": "Ausruferin",
+"Crystal seller": "Kristallhändler",
+"Elder": "Älteste",
+"Fisher": "Fischer",
+"Gatherer": "Sammlerin",
+"Hauler": "Schlepperin",
+"Hiker": "Bergsteiger",
+"Keeper": "Wärterin",
+"Reed cutter": "Schilfschneider",
+"Sparkseer": "Funkenseherin",
+"Trader": "Händler",
 }
-KEEP = []
+KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn"]

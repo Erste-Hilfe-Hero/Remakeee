@@ -130,6 +130,7 @@ func _build() -> void:
 	# Long lines (and German text) grow the box upward instead of off the bottom of the screen.
 	_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_text.visible = false
+	_text.allow_fast_forward = true
 	ui_root.add_child(_text)
 	_picker = ListPicker.new()
 	_picker.set_anchors_preset(Control.PRESET_CENTER)
@@ -386,7 +387,7 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
 	if not s.is_empty():
-		await run_dialogue(str(s.dialogue))
+		await run_dialogue(str(s.dialogue), null, true)
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -396,16 +397,21 @@ func _on_interact(cell: Vector2i) -> void:
 			await run_dialogue(beyond.dialogue_ref, beyond)
 
 ## Shows a dialogue entry, then runs its action and flag. Freezes the player meanwhile.
-func run_dialogue(ref: String, speaker: NPC = null) -> void:
+## Signs ([param is_sign]) show no speaker name; other lines name who speaks (item 2011).
+func run_dialogue(ref: String, speaker: NPC = null, is_sign: bool = false) -> void:
 	var goal_before: int = QuestLog.current_index(GameState.flags)
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	var entry: Dictionary = Dialogue.get_entry(ref)
+	_text.speaker = "" if is_sign else Speakers.name_for(speaker)
+	_text.names_from_text = not is_sign
 	_text.visible = true
 	for line: String in Dialogue.lines_for(entry, GameState.flags):
 		await _text.show_text(line)
 	_text.visible = false
+	_text.speaker = ""
+	_text.names_from_text = false
 	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
 	if entry.has("action") and not (already and bool(entry.get("once", false))):
 		await _run_action(str(entry.action), speaker)

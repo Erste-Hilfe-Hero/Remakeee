@@ -354,3 +354,80 @@ func test_spirlog_uses_marks_and_map_names() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		for place: String in PauseMenu.found_on(sd.species_name):
 			assert_false(place.contains("_"), "a real place name: " + place)
+
+# --- Dialogues: speaker line, three lines, fast-forward, questions above the pad ---------
+
+func _box() -> TextBox:
+	var t := TextBox.new()
+	t.size = Vector2(144, 44)
+	add_child_autofree(t)
+	return t
+
+func test_speaker_prefix_moves_into_name_line() -> void:
+	assert_eq(Speakers.split("Kestra: Two Rifts mended."), ["Kestra", "Two Rifts mended."] as Array[String])
+	assert_eq(Speakers.split("Hauler Wren: Move along."), ["Hauler Wren", "Move along."] as Array[String])
+	assert_eq(Speakers.split("Tangled in the reeds: a Waking Moss!")[0], "", "narration keeps its colon")
+	assert_eq(Speakers.split("...Alright: fine.")[0], "")
+	assert_eq(Speakers.split("Plain line.")[1], "Plain line.")
+
+func test_npc_without_prefix_gets_a_name() -> void:
+	var n := NPC.new()
+	n.setup({"id": "fisher", "x": 0, "y": 0})
+	assert_eq(Speakers.name_for(n), "Fisher")
+	n.setup({"id": "lio", "x": 0, "y": 0, "trainer": "Wanderer Lio"})
+	assert_eq(Speakers.name_for(n), "Wanderer Lio")
+	n.setup({"id": "kestra_dock", "x": 0, "y": 0})
+	assert_eq(Speakers.name_for(n), "Kestra")
+	assert_eq(Speakers.name_for(null), "", "signs have no speaker")
+	n.free()
+
+func test_long_text_splits_into_three_line_windows() -> void:
+	var font: Font = PixelFont.get_font()
+	var long: String = "The fish stopped jumping the night the Rift opened. Even the reeds sound quieter. That's the Hush, they say, and nobody knows how long it stays."
+	var pages: Array[String] = TextBox.split_lines(long, 120.0, font, 8, TextBox.MAX_LINES)
+	assert_gt(pages.size(), 1, "the text goes on in a second window")
+	var words: PackedStringArray = []
+	for p: String in pages:
+		var lines: PackedStringArray = p.split("\n")
+		assert_lte(lines.size(), TextBox.MAX_LINES)
+		for l: String in lines:
+			assert_lte(font.get_string_size(l, HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x, 120.0, l)
+			words.append_array(l.split(" ", false))
+	assert_eq(" ".join(words), long, "no word is lost")
+
+func test_box_shows_speaker_and_fast_forwards() -> void:
+	var t: TextBox = _box()
+	t.names_from_text = true
+	t.allow_fast_forward = true
+	t.show_text("Aldo: Good.")
+	await wait_process_frames(1)
+	assert_eq(t.speaker, "Aldo")
+	assert_eq(t._label.text, "Good.")
+	assert_true(t._name.visible)
+	t.start_fast_forward()
+	var done: Array = []
+	var run := func() -> void:
+		await t.show_text("Next line.")
+		await t.show_text("And another.")
+		done.append(true)
+	run.call()
+	await wait_process_frames(4)
+	assert_eq(done, [true], "fast-forward does not wait for taps")
+	t.visible = false
+	assert_false(t.fast_forward, "a question (box hidden) stops fast-forward")
+
+func test_fast_forward_needs_permission() -> void:
+	var t: TextBox = _box()
+	t.start_fast_forward()
+	assert_false(t.fast_forward, "battles keep every line")
+
+func test_questions_end_above_the_pad() -> void:
+	var c := Control.new()
+	add_child_autofree(c)
+	c.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var h: float = c.get_viewport_rect().size.y
+	MenuHost.keep_above_pad(c, h - 70.0)
+	assert_lte(c.get_viewport_rect().size.y + c.offset_bottom, h - 70.0, "no row under the pad")
+	var before: float = c.offset_bottom
+	MenuHost.keep_above_pad(c, -1.0)
+	assert_eq(c.offset_bottom, before, "hidden pad changes nothing")

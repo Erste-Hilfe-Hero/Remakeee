@@ -58,6 +58,15 @@ func covers(pos: Vector2) -> bool:
 			return true
 	return false
 
+## Top edge of the highest pad button in viewport pixels, or -1 while the pad is hidden.
+func top_y() -> float:
+	if not visible or _buttons.is_empty():
+		return -1.0
+	var top: float = INF
+	for b: TouchScreenButton in _buttons:
+		top = minf(top, b.position.y)
+	return top
+
 ## Show the pad in gameplay screens; hide it in menus and battles (they have their own buttons).
 func set_wanted(on: bool) -> void:
 	_wanted = on

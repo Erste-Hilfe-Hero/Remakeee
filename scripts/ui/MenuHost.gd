@@ -91,7 +91,20 @@ func _fill(c: Control) -> void:
 ## Shows a list; returns the index or -1 (Back / cancel).
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
 		guard_ms: int = ListPicker.TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
-	return await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
+	var bottom: float = picker.offset_bottom
+	keep_above_pad(picker)
+	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
+	picker.offset_bottom = bottom
+	return r
+
+## While the touch pad shows (a question during play), the list ends above its buttons so no
+## answer lies under a button (item 2012).
+static func keep_above_pad(c: Control, pad_top: float = -2.0) -> void:
+	var top: float = VirtualPad.top_y() if pad_top == -2.0 else pad_top
+	if top < 0.0 or not c.is_inside_tree():
+		return
+	var h: float = c.get_viewport_rect().size.y
+	c.offset_bottom = minf(c.offset_bottom, top - h - PANEL_MARGIN)
 
 ## Convenience: entries from plain strings.
 func pick_strings(title: String, items: Array[String], cancellable: bool = true) -> int:
