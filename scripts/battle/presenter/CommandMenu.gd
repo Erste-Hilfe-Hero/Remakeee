@@ -203,6 +203,8 @@ static func move_info(mv: MoveData) -> String:
 				line = Loc.t("Hands its own status to the foe.")
 			&"clear_snares":
 				line = Loc.t("Blows the snares off its own side.")
+			&"delayed_hit":
+				line = Loc.t("Lands %d turns later on whoever stands there.") % int(fx.get("turns", 2))
 			&"side_snare":
 				var sn: Dictionary = fx.get("snare", {})
 				if float(sn.get("hp", 0.0)) > 0.0:

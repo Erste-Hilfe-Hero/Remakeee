@@ -24,6 +24,7 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"heal_block": preload("res://scripts/battle/effects/HealBlockEffect.gd"),
 	&"cure_target": preload("res://scripts/battle/effects/CureTargetEffect.gd"),
 	&"stage_steal": preload("res://scripts/battle/effects/StageStealEffect.gd"),
+	&"delayed_hit": preload("res://scripts/battle/effects/DelayedHitEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

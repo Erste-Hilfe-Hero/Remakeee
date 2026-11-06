@@ -1105,6 +1105,15 @@
   }
  },
  {
+  "name": "Omen Bell",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 1.0,
+  "energy": 5,
+  "delay": 2
+ },
+ {
   "name": "Starlit Lash",
   "element": "LUMEN",
   "kind": "PHYSICAL",
