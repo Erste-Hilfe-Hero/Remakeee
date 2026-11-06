@@ -36,8 +36,7 @@ func run() -> void:
 			return
 		match labels[idx]:
 			"Goals":
-				var daily: String = DailyFind.hint(GameState.flags)
-				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
+				await info(goals_text())
 			"Team": await run_team()
 			"Friends":
 				await FriendsMenu.run(self)
@@ -79,6 +78,17 @@ func save_now() -> void:
 
 const SAVED_TEXT: String = "Saved."
 const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once the connection is back."
+
+## Goals screen: story goals, the find of the day and today's tasks (plan area 8).
+static func goals_text() -> String:
+	var text: String = Loc.t(QuestLog.summary(GameState.flags))
+	var daily: String = DailyFind.hint(GameState.flags)
+	if not daily.is_empty():
+		text += "\n\n" + Loc.t(daily)
+	var tasks: Array[String] = DailyTasks.lines()
+	if not tasks.is_empty():
+		text += "\n\n" + "\n".join(tasks)
+	return text
 
 ## Achievements and personal bests (items 88-90).
 func run_records() -> void:
@@ -128,7 +138,7 @@ static func records_text() -> String:
 
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:
-	var t: String = "%s   %d coins" % [GameState.tamer_name, GameState.money]
+	var t: String = "%s   %d coins   %s" % [GameState.tamer_name, GameState.money, Waymarks.label()]
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
@@ -172,7 +182,8 @@ func run_team() -> void:
 			return
 		var s: Spirling = GameState.party[idx]
 		var opts: Array[String] = ["Summary", "Lead the team", "Move to slot...", "Use item", "Keepsake"]
-		if s.can_unfurl(current_map):
+		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
+		if not s.data.unfold.is_empty():
 			opts.append("Unfurl")
 		if s.earlier_form() != null:
 			opts.append("Furl back")
@@ -196,7 +207,21 @@ func run_team() -> void:
 ## Unfurl into the next form or furl back into the earlier one. Both can be undone later.
 func _unfurl(s: Spirling, forward: bool) -> void:
 	var old_name: String = s.display_name()
-	var target: SpirlingData = s.data.evolves_to if forward else s.earlier_form()
+	var target: SpirlingData = s.earlier_form()
+	if forward:
+		var ready: Array[SpirlingData] = s.unfurl_targets(current_map)
+		if ready.is_empty():
+			await info("\n".join(s.unfold_hints()))
+			return
+		target = ready[0]
+		if ready.size() > 1:
+			var names: Array[String] = []
+			for t: SpirlingData in ready:
+				names.append(t.species_name)
+			var pick: int = await pick_strings("Unfurl into...", names)
+			if pick < 0:
+				return
+			target = ready[pick]
 	if target == null:
 		return
 	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
@@ -204,7 +229,7 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 		return
 	var old_data: SpirlingData = s.data
 	if forward:
-		s.evolve()
+		s.evolve(target)
 		GameState.mark_seen(s.data.species_name, true)
 		var seq := UnfurlSequence.new()
 		add_child(seq)
