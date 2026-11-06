@@ -624,7 +624,7 @@ static func controls_rows() -> Array[Array]:
 		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
-		["swap_ab_pad", "Gamepad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
+		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
 		["rumble", "Gamepad rumble: %s" % ("On" if GameState.rumble else "Off")],
 		["pad_help", "Gamepad buttons..."],
 		["keys_help", "Keyboard keys..."],
