@@ -1526,15 +1526,25 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["The stair has %d floors. There is no healing on the way, only at a rest point after every tenth floor, where your climb is saved." % Gauntlet.FLOORS] as Array[String])
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	if Gauntlet.endless_open():
-		var way: int = await menu.pick_strings(Loc.t("The lighthouse stair"), [Loc.t("Climb the stair"),
-			Loc.t("Endless stretch (best %d)") % Gauntlet.endless_best()] as Array[String])
+	if Gauntlet.endless_open() or Masters.round_open():
+		var ways: Array[String] = [Loc.t("Climb the stair")]
+		var kinds: Array[String] = ["stair"]
+		if Gauntlet.endless_open():
+			ways.append(Loc.t("Endless stretch (best %d)") % Gauntlet.endless_best())
+			kinds.append("endless")
+		if Masters.round_open():
+			ways.append(Loc.t("Master round (best %d of %d)") % [Masters.round_best(), Masters.list().size()])
+			kinds.append("masters")
+		var way: int = await menu.pick_strings(Loc.t("The lighthouse stair"), ways)
 		if way < 0:
 			menu.queue_free()
 			return
-		if way == 1:
+		if kinds[way] != "stair":
 			menu.queue_free()
-			await _run_endless()
+			if kinds[way] == "masters":
+				await _run_master_round()
+			else:
+				await _run_endless()
 			return
 	var best: int = Gauntlet.best()
 	var start: int = 0
@@ -1662,6 +1672,28 @@ func _action_rift_tower(args: PackedStringArray, _speaker: NPC) -> void:
 	lines.append_array(RiftTower.finish(t, cleared))
 	await say(lines)
 	await announce_achievements()
+
+## Master round (plan 3292): all eight masters in a row, healed at the start and once halfway.
+func _run_master_round() -> void:
+	GameState.heal_party()
+	var beaten: int = 0
+	var all: Array[Dictionary] = Masters.list()
+	for m: Dictionary in all:
+		await say([Loc.t("Master %d of %d: %s, %s.") % [beaten + 1, all.size(), str(m.name), Loc.t(str(m.title))]] as Array[String])
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(Masters.team(str(m.id)), false,
+			{"name": "%s, %s" % [str(m.name), Loc.t(str(m.title))], "ai": 3})
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		beaten += 1
+		if beaten == Masters.ROUND_REST_AFTER and beaten < all.size():
+			GameState.heal_party()
+			await say([Loc.t("Halfway. Your team is rested.")] as Array[String])
+	var lines: Array[String] = [Loc.t("Master round: %d of %d beaten.") % [beaten, all.size()]]
+	lines.append_array(Masters.finish_round(beaten))
+	await say(lines)
 
 ## Endless stretch (plan 3264-3265): one fight after another, one ring stronger each floor,
 ## no healing; the run ends with the first loss or when the player stops.
