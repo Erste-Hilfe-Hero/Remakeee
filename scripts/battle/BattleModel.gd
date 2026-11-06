@@ -635,10 +635,26 @@ func _phase_end_of_turn() -> void:
 			_end_of_turn_for(side, slot)
 	_tick_timers()
 	_tick_field()
+	if turn == BattleRules.WEARY_TURN:
+		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
+	_weary_chip()
 	turn += 1
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	phase = Phase.FAINT_CHECK
+
+## Share of max Vigor every Spirling in front loses each turn once the fight is weary.
+const WEARY_CHIP_DIV: int = 8
+
+## From BattleRules.WEARY_TURN on, the long fight costs every Spirling in front 1/8 of its Vigor
+## each turn, so even two walls that barely scratch each other finish within a few turns.
+func _weary_chip() -> void:
+	if turn < BattleRules.WEARY_TURN:
+		return
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for slot: int in standing_slots(side):
+			var s: Spirling = active_spirling(side, slot)
+			deal_damage(side, maxi(1, ceili(float(s.max_hp()) / float(WEARY_CHIP_DIV))), {"weary": true}, slot)
 
 func _end_of_turn_for(side: int, slot: int) -> void:
 	var s: Spirling = active_spirling(side, slot)

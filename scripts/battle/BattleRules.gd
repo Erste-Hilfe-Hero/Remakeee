@@ -19,6 +19,9 @@ const ENERGY_TAX_TURNS: int = 2
 const FIELD_ELEMENT_POWER: int = 20
 ## Most snares (side_snare) that can lie on one side at once.
 const MAX_SNARES: int = 3
+## Long fights: from this turn on nobody heals in battle any more (arts, gifts, fields, keepsakes),
+## so two Spirlings that mend faster than they hurt each other can't stall forever.
+const WEARY_TURN: int = 40
 ## Turns a heal_block holds by default.
 const HEAL_BLOCK_TURNS: int = 3
 ## After an energy_burn the target can't be burned again for this many turns.
