@@ -112,15 +112,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Akt II: Die Farben von Corvane
 1435. [x] [P1] Lege in docs/STORY.md eine Ortsliste für Akt II mit festen Karten-IDs an (corvane_landing, madderby, madderby_guild, woadfen, rain_rift, stillwater, mirror_rift, greyreach, wide_rift_edge), damit Bereich 3 die Karten passend baut.
-1436. [P1] quests.json bekommt die Hauptziele von Akt II mit Kapiteln 6 bis 11 und dem Aktnamen "Act II: The Colours of Corvane".
-1437. [P1] Kapitel 6 "The Landing": Ankunft in Corvane Landing, die Stille hat hier nicht nur Stimmen, sondern auch Farben aus den Spirlingen gezogen (Szene corvane_arrival).
-1438. [P1] In Madderby, der Färberstadt, steht das Gildenhaus der Kartografen; Gildenmeisterin Ysolde Rennick nimmt die Spielfigur als Lehrling auf (Flag guild_joined).
-1439. [P1] Kapitel 7 "Rain Rift": Warden Senna im Woadfen-Moor hört nur noch Regen; nach dem Duell wird der Riss gemeinsam gestopft (Flag rift_rain_sealed).
-1440. [P1] Kapitel 8 "Mirror Rift": Warden Joral am Stillwater-Teich sieht im Riss nur sich selbst; das Duell und der Mend setzen rift_mirror_sealed.
-1441. [P1] Die zwei Corvane-Risse sind in beliebiger Reihenfolge machbar, wie in Akt I, und das Ziel zeigt "(k/2)".
-1442. [P1] Kapitel 9 "The Wide Rift": am Rand von Greyreach erreicht die Spielfigur den dritten Riss, der sich nicht stopfen lässt, weil kein Warden ihn von außen hält.
-1443. [P1] Die Wende von Akt II: Ein Satz in Mirelas Handschrift ist in den Rand des Weiten Risses eingebrannt; Mirela ist die Hüterin von innen.
-1444. [P1] Kapitel 11 "The Far Side": Ysolde erklärt, dass der Weite Riss ein zweites Ende in Ashmere hat; das Ziel führt zur Bergbahn nach Ashmere (Flag act2_end).
+1436. [x] [P1] quests.json bekommt die Hauptziele von Akt II mit Kapiteln 6 bis 11 und dem Aktnamen "Act II: The Colours of Corvane".
+1437. [x] [P1] Kapitel 6 "The Landing": Ankunft in Corvane Landing, die Stille hat hier nicht nur Stimmen, sondern auch Farben aus den Spirlingen gezogen (Szene corvane_arrival).
+1438. [x] [P1] In Madderby, der Färberstadt, steht das Gildenhaus der Kartografen; Gildenmeisterin Ysolde Rennick nimmt die Spielfigur als Lehrling auf (Flag guild_joined).
+1439. [x] [P1] Kapitel 7 "Rain Rift": Warden Senna im Woadfen-Moor hört nur noch Regen; nach dem Duell wird der Riss gemeinsam gestopft (Flag rift_rain_sealed).
+1440. [x] [P1] Kapitel 8 "Mirror Rift": Warden Joral am Stillwater-Teich sieht im Riss nur sich selbst; das Duell und der Mend setzen rift_mirror_sealed.
+1441. [x] [P1] Die zwei Corvane-Risse sind in beliebiger Reihenfolge machbar, wie in Akt I, und das Ziel zeigt "(k/2)".
+1442. [x] [P1] Kapitel 9 "The Wide Rift": am Rand von Greyreach erreicht die Spielfigur den dritten Riss, der sich nicht stopfen lässt, weil kein Warden ihn von außen hält.
+1443. [x] [P1] Die Wende von Akt II: Ein Satz in Mirelas Handschrift ist in den Rand des Weiten Risses eingebrannt; Mirela ist die Hüterin von innen.
+1444. [x] [P1] Kapitel 11 "The Far Side": Ysolde erklärt, dass der Weite Riss ein zweites Ende in Ashmere hat; das Ziel führt zur Bergbahn nach Ashmere (Flag act2_end).
 1445. [P2] Kapitel 10 "Veit": Veit Harrow, ein früherer Gildenkartograf, will Risse nicht stopfen, sondern "auslöschen", indem er ihre Karten verbrennt; erste Begegnung in Madderby.
 1446. [P2] Veit duelliert die Spielfigur in Greyreach (Team: Shalebat Ring 24, Duskdigger Ring 25, Obsidroth Ring 27) und verschwindet danach Richtung Ashmere.
 1447. [P2] Ysolde Rennick gibt der Spielfigur nach guild_joined einen Gildenausweis (Story-Gegenstand guild_seal), der Türen im Gildenhaus öffnet.
@@ -240,9 +240,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1555. [x] [P1] Kestra bekommt in docs/STORY.md eine Figurenbeschreibung: Kindheit am Krähenkamm, Zephlet "Tatter" kam vor 12 Jahren aus einem kleinen Riss, Ziel ist Verstehen statt Schließen.
 1556. [P1] Eine Zahl kestra_trust (0 bis 6) wird bei sechs festen Momenten in Akt I bis III um 1 erhöht oder nicht, je nach Auswahl der Spielfigur.
 1557. [P1] Kestras Zephlet wird zur Story-Figur "Tatter" mit Spitznamen im Team; Kestras Team wächst pro Akt um ein Mitglied (Akt II 4, Akt III 5 Spirlinge).
-1558. [P1] Kestras zweites Duell findet in Madderby statt (Team: Tempestrel Ring 22, Glimmerax Ring 21, Shalebat Ring 21, Kelpup Ring 20), mit eigenem Vor- und Nachgespräch.
+1558. [x] [P1] Kestras zweites Duell findet in Madderby statt (Team: Tempestrel Ring 22, Glimmerax Ring 21, Shalebat Ring 21, Kelpup Ring 20), mit eigenem Vor- und Nachgespräch.
 1559. [P1] Kestras drittes Duell steht am fernen Ende des Weiten Risses (Team mit 5 Spirlingen, Ring 34 bis 36); es ist kein Hindernis, sondern ein Abschiedsduell vor dem Ungezeichneten.
-1560. [P1] Die Szene kestra_tatter_hush in Akt II zeigt Kestras größte Angst; die Spielfigur kann Tatter mit einer Echo-Melodie trösten, was kestra_trust um 1 hebt.
+1560. [x] [P1] Die Szene kestra_tatter_hush in Akt II zeigt Kestras größte Angst; die Spielfigur kann Tatter mit einer Echo-Melodie trösten, was kestra_trust um 1 hebt.
 1561. [P1] Kestra ändert ihre Haltung sichtbar: in Akt I will sie Risse offen, in Akt II zweifelt sie, in Akt III sucht sie einen dritten Weg; jede Haltung hat eigene Sätze.
 1562. [P2] Kestras Dialog im Kartenhaus bekommt nach jedem Akt eine neue Variante (after_flag-Liste mit act1_done, act2_end, story_complete).
 1563. [P2] Kestra führt ein eigenes Skizzenbuch; nach jedem Treffen ist eine neue Seite davon im Kartenbuch der Spielfigur lesbar (Abschnitt "Kestra's sketches", 8 Seiten).
@@ -271,7 +271,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 ### Aldo und Mirela
 1585. [x] [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
 1586. [x] [P1] Mirela bekommt in docs/STORY.md eine Figurenbeschreibung mit Lebenslauf, Zeichenstil und dem Grund, warum sie 40 Jahre im Ungezeichneten blieb.
-1587. [P1] Die Kartenbuch-Seiten 7 bis 14 erzählen Mirelas Zeit im Ungezeichneten in je 1 bis 2 Sätzen und decken die Lore schrittweise auf.
+1587. [x] [P1] Die Kartenbuch-Seiten 7 bis 14 erzählen Mirelas Zeit im Ungezeichneten in je 1 bis 2 Sätzen und decken die Lore schrittweise auf.
 1588. [P1] Die Szene, in der Aldo und Mirela sich wiedersehen, hängt vom Ende ab, wird aber in jeder Fassung am Steg in Brindlewick gespielt.
 1589. [P2] Aldo erzählt auf Nachfrage (Auswahl im Leuchtturm) drei Erinnerungen an Mirela, je nach Fortschritt freigeschaltet.
 1590. [P2] Aldos altes Ruder ist ein Story-Gegenstand (aldo_oar), den die Spielfigur zu Beginn von Akt II mitnimmt und im Postgame zurückgibt.
@@ -345,9 +345,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1654. [P3] Neue Nebenquest kestra_window: das Fenster im Kartenhaus, durch das Seite 1 hereinflog, zeigt nachts eine Spur; sie führt zu einer verborgenen Randnotiz von Mirela.
 
 ### Nebenquests in Corvane und Ashmere
-1655. [P1] Neue Nebenquest letters: Pim sucht Mirelas restliche Briefe (3 in Corvane, 3 in Ashmere), Fortschritt "(k/6)" im Zielmenü.
-1656. [P1] Neue Nebenquest colour_back: drei Färberfamilien in Madderby wollen je einen bestimmten Spirling sehen, der seine Farbe zurück hat (nach rift_rain_sealed).
-1657. [P1] Neue Nebenquest veit_workshop: in Veits Werkstatt liegen drei Hinweise auf Ash; wer sie findet, hebt veit_respect um 1.
+1655. [x] [P1] Neue Nebenquest letters: Pim sucht Mirelas restliche Briefe (3 in Corvane, 3 in Ashmere), Fortschritt "(k/6)" im Zielmenü.
+1656. [x] [P1] Neue Nebenquest colour_back: drei Färberfamilien in Madderby wollen je einen bestimmten Spirling sehen, der seine Farbe zurück hat (nach rift_rain_sealed).
+1657. [x] [P1] Neue Nebenquest veit_workshop: in Veits Werkstatt liegen drei Hinweise auf Ash; wer sie findet, hebt veit_respect um 1.
 1658. [P2] Neue Nebenquest mirror_faces: Joral bittet, im Stillwater-Teich drei Spiegelbilder zu finden, die nicht zur Spielfigur gehören.
 1659. [P2] Neue Nebenquest woad_dye: Senna braucht Färberwaid aus drei Moorstellen, um ihr verblasstes Halstuch neu zu färben.
 1660. [P2] Neue Nebenquest hushed_walkers: die zwei stillen Wanderer in Woadfen bekommen ihre Stimmen zurück, wenn die Spielfigur ihnen ihre verlorenen Spirlinge zeigt.
