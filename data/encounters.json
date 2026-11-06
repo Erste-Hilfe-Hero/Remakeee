@@ -76,25 +76,29 @@
     "species": "Zippit",
     "min": 2,
     "max": 4,
-    "weight": 35
+    "weight": 35,
+    "ground": "fern"
    },
    {
     "species": "Zephlet",
     "min": 2,
     "max": 4,
-    "weight": 35
+    "weight": 35,
+    "ground": "fern"
    },
    {
     "species": "Shalebat",
     "min": 3,
     "max": 5,
-    "weight": 25
+    "weight": 25,
+    "ground": "scree"
    },
    {
     "species": "Mossling",
     "min": 3,
     "max": 4,
-    "weight": 5
+    "weight": 5,
+    "ground": "fern"
    }
   ]
  },
@@ -117,89 +121,102 @@
     "species": "Shalebat",
     "min": 6,
     "max": 8,
-    "weight": 30
+    "weight": 30,
+    "ground": "scree"
    },
    {
     "species": "Puddlet",
     "min": 6,
     "max": 7,
-    "weight": 5
+    "weight": 5,
+    "ground": "reeds"
    },
    {
     "species": "Kindlop",
     "min": 6,
     "max": 7,
-    "weight": 5
+    "weight": 5,
+    "ground": "scree"
    },
    {
     "species": "Mirkmole",
     "min": 5,
     "max": 7,
-    "weight": 12
+    "weight": 12,
+    "ground": "scree"
    }
   ]
  },
  "saltmarsh": {
-  "rate": 0.14,
+  "rate": 0.1,
   "spawns": [
    {
     "species": "Puddlet",
     "min": 10,
     "max": 12,
-    "weight": 35
+    "weight": 35,
+    "ground": "reeds"
    },
    {
     "species": "Zippit",
     "min": 10,
     "max": 12,
-    "weight": 25
+    "weight": 25,
+    "ground": "reeds"
    },
    {
     "species": "Mossling",
     "min": 10,
     "max": 11,
-    "weight": 20
+    "weight": 20,
+    "ground": "reeds"
    },
    {
     "species": "Zephlet",
     "min": 11,
     "max": 12,
-    "weight": 20
+    "weight": 20,
+    "ground": "reeds"
    },
    {
     "species": "Wickit",
     "min": 10,
     "max": 12,
-    "weight": 15
+    "weight": 15,
+    "ground": "reeds"
    },
    {
     "species": "Kelpup",
     "min": 10,
     "max": 12,
-    "weight": 15
+    "weight": 15,
+    "ground": "reeds"
    }
   ]
  },
  "murk_hollow": {
-  "rate": 0.12,
+  "rate": 0.1,
   "spawns": [
    {
     "species": "Mirkmole",
     "min": 11,
     "max": 13,
-    "weight": 45
+    "weight": 45,
+    "ground": "cave"
    },
    {
     "species": "Shalebat",
     "min": 11,
     "max": 13,
-    "weight": 35
+    "weight": 35,
+    "ground": "cave"
    },
    {
     "species": "Wickit",
     "min": 11,
     "max": 12,
-    "weight": 20
+    "weight": 20,
+    "ground": "cave"
    }
   ]
  }
