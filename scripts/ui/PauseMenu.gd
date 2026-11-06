@@ -16,6 +16,8 @@ var photo: bool = false
 var watch_replay: bool = false
 ## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
 var echo_duel: Dictionary = {}
+## Set when the player finds a league battle under Leagues: the battle the server set up.
+var league_match: Dictionary = {}
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -31,6 +33,8 @@ func run() -> void:
 			labels.insert(1, "Travel")
 		if room_puzzle:
 			labels.insert(1, "Room")
+		if Online.league_on():
+			labels.insert(labels.find("Friends") + 1, "Leagues")
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
@@ -41,6 +45,10 @@ func run() -> void:
 			"Friends":
 				await FriendsMenu.run(self)
 				if not echo_duel.is_empty():
+					return
+			"Leagues":
+				await LeagueMenu.run(self)
+				if not league_match.is_empty():
 					return
 			"Spirlog": await run_spirlog()
 			"Records":
@@ -538,11 +546,30 @@ func run_spirlog() -> void:
 
 func _tracker_text() -> String:
 	var lines: PackedStringArray = ["Spirlog Tracker", ""]
+	var listed: Dictionary = {}
 	for sp: String in EncounterTable.species_on(encounter_table):
+		if listed.has(sp):
+			continue
+		listed[sp] = true
 		var e: Dictionary = GameState.spirlog.get(sp, {})
 		var mark: String = "bonded" if bool(e.get("bonded", false)) else ("seen" if bool(e.get("seen", false)) else "not seen")
-		lines.append("%s: %s" % [sp if bool(e.get("seen", false)) else "???", mark])
+		var line: String = "%s: %s" % [sp if bool(e.get("seen", false)) else "???", Loc.t(mark)]
+		# Area 3 item 1115: which ground it steps out of.
+		var grounds: PackedStringArray = []
+		for g: String in EncounterTable.grounds_for(encounter_table, sp):
+			grounds.append(Loc.t(GROUND_LABELS.get(g, g)))
+		if not grounds.is_empty():
+			line += " (%s)" % ", ".join(grounds)
+		lines.append(line)
+	# Area 3 item 1079: hidden finds on this map.
+	if MapData.exists(current_map):
+		var found: Vector2i = MapData.load_map(current_map).secrets_found(GameState.flags)
+		if found.y > 0:
+			lines.append("")
+			lines.append(Loc.t("Hidden finds here: %d/%d") % [found.x, found.y])
 	return "\n".join(lines)
+
+const GROUND_LABELS: Dictionary[String, String] = {"fern": "ferns", "reeds": "reeds", "scree": "scree", "water": "shallow water", "cave": "cave"}
 
 var _storage_sort: int = 0
 var _storage_element: int = -1
