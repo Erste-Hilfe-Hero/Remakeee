@@ -96,10 +96,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1419. [x] [P2] Pell und Suri aus dem Cinder-Riss erscheinen nach dem Mend in Thornridge und reden über ihr neues Leben ohne Stille.
 1420. [x] [P2] Ilka in der Tide-Senke sagt nach dem Mend eine Vorhersage über einen "Riss, der zurückschaut", als Vorbote von Akt II.
 1421. [x] [P2] Tamsin in Murk Hollow erwähnt nach hollow_lamps, dass Mirela einst bei ihr Lampenöl gekauft hat, und dass sie nach Norden wollte.
-1422. [P2] Ein Schild am Krähenkamm-Tarn zeigt nach kestra_spar eine Skizze von Kestra mit dem Satz "The tarn, before it froze. K."
+1422. [x] [P2] Ein Schild am Krähenkamm-Tarn zeigt nach kestra_spar eine Skizze von Kestra mit dem Satz "The tarn, before it froze. K."
 1423. [P2] Nach der ersten gestopften Rissstelle zeigt eine kurze Szene, wie ein stiller Wildspirling in der Nähe wieder ruft (Schritt "cry").
 1424. [P2] Kapitel 2 bekommt eine Zwischenmeldung nach dem ersten Mend ("One Rift mended. Kestra will hear of it."), damit die Reihenfolge frei bleibt und trotzdem erzählt wird.
-1425. [P2] Der Hinweis auf den dritten Riss wird in Akt I zweimal gesät: Kestra am Dock und ein Wanderer in Crowcrest, der von Licht im Norden spricht.
+1425. [x] [P2] Der Hinweis auf den dritten Riss wird in Akt I zweimal gesät: Kestra am Dock und ein Wanderer in Crowcrest, der von Licht im Norden spricht.
 1426. [P2] Die Hauptziele in quests.json bekommen Kurztexte für die Anzeige im Spiel und längere Texte für das Tagebuch (Feld "long").
 1427. [P3] Rasten an der Rest Spring nach Akt I zeigt eine kleine Abendszene mit Aldo am Steg, einmal pro Kapitel.
 1428. [P3] Lio und Bram am Krähenkamm bekommen je einen neuen Satz nach Akt I, der auf ihre eigenen Pläne deutet.
@@ -124,25 +124,25 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1445. [P2] Kapitel 10 "Veit": Veit Harrow, ein früherer Gildenkartograf, will Risse nicht stopfen, sondern "auslöschen", indem er ihre Karten verbrennt; erste Begegnung in Madderby.
 1446. [P2] Veit duelliert die Spielfigur in Greyreach (Team: Shalebat Ring 24, Duskdigger Ring 25, Obsidroth Ring 27) und verschwindet danach Richtung Ashmere.
 1447. [P2] Ysolde Rennick gibt der Spielfigur nach guild_joined einen Gildenausweis (Story-Gegenstand guild_seal), der Türen im Gildenhaus öffnet.
-1448. [P2] Archivar Pim im Gildenhaus führt eine Kiste mit Mirelas Briefen; jeder gefundene Brief wird von ihm vorgelesen (Nebenquest letters).
-1449. [P2] Warden Senna (Team: Riptail Ring 20, Tempestrel Ring 21, Kelphound Ring 22) hat einen Vorgesprächssatz und zwei Sätze nach dem Mend über das Wetter ohne Stille.
-1450. [P2] Warden Joral (Team: Lumenewt Ring 22, Glimmerax Ring 23, Verdantusk Ring 23) sagt nach dem Mend, dass er im Spiegel einmal eine ältere Frau mit Kompass gesehen hat.
+1448. [x] [P2] Archivar Pim im Gildenhaus führt eine Kiste mit Mirelas Briefen; jeder gefundene Brief wird von ihm vorgelesen (Nebenquest letters).
+1449. [x] [P2] Warden Senna (Team: Riptail Ring 20, Tempestrel Ring 21, Kelphound Ring 22) hat einen Vorgesprächssatz und zwei Sätze nach dem Mend über das Wetter ohne Stille.
+1450. [x] [P2] Warden Joral (Team: Lumenewt Ring 22, Glimmerax Ring 23, Verdantusk Ring 23) sagt nach dem Mend, dass er im Spiegel einmal eine ältere Frau mit Kompass gesehen hat.
 1451. [P2] Jeder Corvane-Riss hat wie in Akt I ein optionales Rissherz (rain_heart, mirror_heart) als Mehrfachkampf mit dem Warden an der Seite.
 1452. [P2] In Corvane sind gestille Wildspirlinge farblos dargestellt (Sprite mit Graustufen-Schaltung); gestopfte Risse geben den Spirlingen der Gegend ihre Farbe zurück.
-1453. [P2] Zwei Hush-Wanderer in Woadfen (Figuren, die selbst verstummt sind) sprechen nur "..." bis rift_rain_sealed und erzählen danach ihre Geschichte.
-1454. [P2] Kestra trifft die Spielfigur in Madderby wieder; sie kartiert die Farbschichten im Fluss und hat ihren Zephlet zu Tempestrel entfaltet.
-1455. [P2] Nach rift_rain_sealed wird Kestras Tempestrel still (Szene kestra_tatter_hush); Kestra hält der Spielfigur vor, dass das Stopfen Riss-Spirlinge krank macht.
-1456. [P2] Kapitel 9 löst die Frage: Ysolde zeigt in den Gildenakten, dass Riss-Spirlinge einen Anker-Bund brauchen, keinen offenen Riss; Kestra muss das selbst prüfen.
+1453. [x] [P2] Zwei Hush-Wanderer in Woadfen (Figuren, die selbst verstummt sind) sprechen nur "..." bis rift_rain_sealed und erzählen danach ihre Geschichte.
+1454. [x] [P2] Kestra trifft die Spielfigur in Madderby wieder; sie kartiert die Farbschichten im Fluss und hat ihren Zephlet zu Tempestrel entfaltet.
+1455. [x] [P2] Nach rift_rain_sealed wird Kestras Tempestrel still (Szene kestra_tatter_hush); Kestra hält der Spielfigur vor, dass das Stopfen Riss-Spirlinge krank macht.
+1456. [x] [P2] Kapitel 9 löst die Frage: Ysolde zeigt in den Gildenakten, dass Riss-Spirlinge einen Anker-Bund brauchen, keinen offenen Riss; Kestra muss das selbst prüfen.
 1457. [x] [P2] Ein Tag-Kampf mit Kestra in Stillwater gegen zwei Hush-Wanderer setzt kestra_stillwater_tag und hebt kestra_trust um 1.
-1458. [P2] Mirela-Seiten 7 bis 10 liegen in Corvane (Landing, Madderby-Dachboden, Woadfen, Greyreach) und führen den Seitenzähler im Kartenbuch auf "(k/10)" weiter.
-1459. [P2] Ein Brief von Aldo kommt nach jedem Corvane-Riss per Fährboten an (3 Briefe, Flags aldo_letter_1 bis 3) und hält die Familie im Spiel.
-1460. [P2] Ein Rastplatz in Madderby ist eine Färberquelle statt einer Heilstube, mit eigener Hüterin (Weda) und eigenem Satz.
-1461. [P2] Der Gildensaal hat eine Wandkarte, die sich mit jedem gestopften Riss in Corvane neu einfärbt (Schild mit drei after_flag-Varianten).
-1462. [P2] Am Rand des Weiten Risses steht eine verlassene Kartografenhütte, in der ein Tagebuch von Veit liegt, das seinen Verlust erklärt.
+1458. [x] [P2] Mirela-Seiten 7 bis 10 liegen in Corvane (Landing, Madderby-Dachboden, Woadfen, Greyreach) und führen den Seitenzähler im Kartenbuch auf "(k/10)" weiter.
+1459. [x] [P2] Ein Brief von Aldo kommt nach jedem Corvane-Riss per Fährboten an (3 Briefe, Flags aldo_letter_1 bis 3) und hält die Familie im Spiel.
+1460. [x] [P2] Ein Rastplatz in Madderby ist eine Färberquelle statt einer Heilstube, mit eigener Hüterin (Weda) und eigenem Satz.
+1461. [x] [P2] Der Gildensaal hat eine Wandkarte, die sich mit jedem gestopften Riss in Corvane neu einfärbt (Schild mit drei after_flag-Varianten).
+1462. [x] [P2] Am Rand des Weiten Risses steht eine verlassene Kartografenhütte, in der ein Tagebuch von Veit liegt, das seinen Verlust erklärt.
 1463. [P2] Die Szene wide_rift_reveal zeigt Mirelas eingebrannten Satz "Still drawing. Still here. M." und endet mit einer Kapitelkarte.
 1464. [P2] Nach act2_end bekommt die Spielfigur von Ysolde eine Empfehlung an die Graveur-Gilde in Ashmere (Story-Gegenstand guild_letter).
 1465. [P2] Akt II hat einen eigenen Musik-Hinweis pro Kapitel in den Szenen (Feld "music"), mit den vorhandenen Stücken als Platzhalter, bis Bereich Musik neue liefert.
-1466. [P2] Die Fähre zurück nach Brindlewick bleibt nach Akt II offen; Aldo sagt bei jedem Besuch etwas Neues zu den Funden aus Corvane.
+1466. [x] [P2] Die Fähre zurück nach Brindlewick bleibt nach Akt II offen; Aldo sagt bei jedem Besuch etwas Neues zu den Funden aus Corvane.
 1467. [P3] Ein Wanderer in Corvane Landing erzählt, dass das Wort "Corvane" in der alten Sprache "das Ufer, das färbt" bedeutet.
 1468. [P3] Madderby hat drei Färberfamilien mit kleinen Szenen über ihre Spirlinge, die Farbstoff aus Blüten lösen.
 1469. [P3] Der Weite Riss flackert bei Nacht stärker; nachts sagen Figuren in Greyreach andere Sätze (night_lines).
@@ -167,8 +167,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1486. [x] [P1] Kapitel 16 "The Undrawn": Die Spielfigur betritt mit dem Gildensiegel das Ungezeichnete, das Land hinter den Rissen, drei kurze Abschnitte ohne fertige Ränder.
 1487. [x] [P1] Kapitel 17 "Where the Map Ends": Am Rand des Ungezeichneten wartet Mirela; das führt direkt ins Finale.
 1488. [P2] Graveurmeister Halvard in der Graveurhalle nimmt den Empfehlungsbrief guild_letter an und erklärt, warum gestochene Karten Risse festhalten können.
-1489. [P2] Warden Tovan (Team: Calderox Ring 32, Obsidroth Ring 33, Smoldrake Ring 31, Duskdigger Ring 32) spricht nach dem Mend über seinen Vater, der den Riss vor ihm hielt.
-1490. [P2] Wardenin Ilse (Team: Leviarch Ring 34, Lumenewt Ring 33, Glimmerax Ring 34, Tempestrel Ring 33) kann nach dem Mend wieder singen und lehrt eine neue Strophe der Echo-Melodie.
+1489. [x] [P2] Warden Tovan (Team: Calderox Ring 32, Obsidroth Ring 33, Smoldrake Ring 31, Duskdigger Ring 32) spricht nach dem Mend über seinen Vater, der den Riss vor ihm hielt.
+1490. [x] [P2] Wardenin Ilse (Team: Leviarch Ring 34, Lumenewt Ring 33, Glimmerax Ring 34, Tempestrel Ring 33) kann nach dem Mend wieder singen und lehrt eine neue Strophe der Echo-Melodie.
 1491. [P2] Kiln und Glass bekommen je ein Rissherz als Mehrfachkampf (kiln_heart, glass_heart), mit dem Warden als Partner.
 1492. [P2] In Ashmere wirkt die Stille als Erstarrung: stille Wildspirlinge bewegen sich in der Welt nicht und haben ein Szenen-Symbol aus Asche.
 1493. [P2] Veit erscheint in Cinderfold, erklärt seinen Plan offen und bietet der Spielfigur an mitzumachen (Auswahl, beeinflusst veit_respect).

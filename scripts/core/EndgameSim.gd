@@ -44,7 +44,7 @@ static func run(days: int = DAYS) -> Dictionary:
 			st.season_claimed = int(st.season_claimed) + 1
 			pay.call("season_path", int(r.get("waymarks", 0)))
 			_add(coins, "season_path", int(r.get("coins", 0)))
-		while int(st.season_extra) < int(st.season_points) / SeasonPath.per_tier() - SeasonPath.tiers():
+		while int(st.season_extra) < mini(int(st.season_points) / SeasonPath.per_tier() - SeasonPath.tiers(), SeasonPath.MAX_EXTRA_STEPS):
 			st.season_extra = int(st.season_extra) + 1
 			pay.call("season_path", SeasonPath.EXTRA_STEP_WAYMARKS)
 	for day: int in range(1, days + 1):
@@ -54,6 +54,7 @@ static func run(days: int = DAYS) -> Dictionary:
 		pay.call("daily_task", DailyTasks.HARD_REWARD)
 		season.call("daily_task")
 		pay.call("daily_bonus", DailyTasks.BONUS)
+		season.call("daily_bonus")
 		if not trip.is_empty():
 			var n: int = TRIPS_PER_DAY * Expeditions.max_trips()
 			pay.call("expedition", n * int(trip.waymarks))

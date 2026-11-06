@@ -107,7 +107,7 @@ func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 	var foes: Array[int] = model.standing_slots(BattleModel.other(side))
 	var me_now: Spirling = model.active_spirling(side, slot)
 	var rest_below: int = int(_rule("rest_below", -1.0))
-	if level >= 1 and rest_below >= 0 and me_now.energy <= rest_below:
+	if level >= 1 and rest_below >= 0 and me_now.energy <= rest_below and model.can_rest(true):
 		return BattleAction.make_rest(side, slot)
 	if level <= 0:
 		var pick: BattleAction = moves[model.rng.randi_range(0, moves.size() - 1)]
@@ -133,7 +133,7 @@ func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 				best_score = score
 				best = BattleAction.make_move(side, a.move_index, slot, aim)
 	# Nothing it can afford does anything useful: catch its breath for a bigger art instead.
-	if best_value <= USELESS_SCORE and me.energy < Spirling.MAX_ENERGY and (rest_below < 0 or me.energy <= rest_below):
+	if best_value <= USELESS_SCORE and me.energy < Spirling.MAX_ENERGY and (rest_below < 0 or me.energy <= rest_below) and model.can_rest(true):
 		return BattleAction.make_rest(side, slot)
 	return best
 

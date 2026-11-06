@@ -1,0 +1,37 @@
+// Versions come from the Godot Android build template (android/build/config.gradle), so the
+// plugin always matches the engine it is exported with.
+buildscript {
+    apply from: rootProject.file('../../../android/build/config.gradle')
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:${versions.androidGradlePlugin}"
+    }
+}
+
+apply plugin: 'com.android.library'
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+android {
+    namespace 'de.chimora.billing'
+    compileSdk versions.compileSdk
+    defaultConfig {
+        minSdk versions.minSdk
+    }
+    compileOptions {
+        sourceCompatibility versions.javaVersion
+        targetCompatibility versions.javaVersion
+    }
+}
+
+dependencies {
+    // Same version as tools/build_billing_plugin.sh hands to the export (BILLING_VERSION).
+    implementation "com.android.billingclient:billing:${project.findProperty('billingVersion') ?: '8.0.0'}"
+    compileOnly "org.godotengine:godot:${project.findProperty('godotVersion') ?: '4.7.2.stable'}"
+}

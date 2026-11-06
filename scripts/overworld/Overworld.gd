@@ -226,6 +226,24 @@ func _process(delta: float) -> void:
 	# Music layers follow walking, running and open text boxes (items 2477, 2478).
 	MusicDirector.update_world(player.moving, player.running, delta)
 	MusicDirector.dialogue = _text.visible
+	_walk_clock += delta
+	if _walk_clock >= WALK_PAUSE:
+		_walk_clock = 0.0
+		walk_npcs()
+
+## Seconds between two steps of a walking villager (item 1213): slower than the player.
+const WALK_PAUSE: float = 1.4
+var _walk_clock: float = 0.0
+
+## One step for every villager on a walk, unless a talk or scene runs. Nobody steps onto the
+## player, another person or a blocked cell; they wait instead.
+func walk_npcs() -> void:
+	if busy or scene_running or map == null:
+		return
+	var free: Callable = func(c: Vector2i) -> bool:
+		return map.is_walkable(c) and npc_at(c) == null and player.cell != c
+	for n: NPC in _npcs:
+		n.walk_tick(free)
 
 # --- Maps --------------------------------------------------------------------------
 
@@ -422,7 +440,8 @@ func _spawn_npcs() -> void:
 		n.queue_free()
 	_npcs.clear()
 	var phase: int = DayCycle.current() if _world.phase_override < 0 else _world.phase_override
-	for def: Dictionary in map.npcs:
+	# Day plans (area 3 item 1212): people move with the time of day, some visit other maps.
+	for def: Dictionary in NpcSchedule.defs_for(map, phase):
 		if def.has("hide_flag") and GameState.has_flag(str(def.hide_flag)):
 			continue
 		if def.has("show_flag") and not GameState.has_flag(str(def.show_flag)):
@@ -587,7 +606,7 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	var goal_before: int = QuestLog.current_index(GameState.flags)
 	busy = true
 	player.frozen = true
-	VirtualPad.set_wanted(false)
+	VirtualPad.set_talk(true)
 	if speaker != null:
 		DailyTasks.record("talk", {"map": map.id, "key": ref})
 	_text.voice = Sound.voice_for(speaker.npc_id if speaker != null else "")
@@ -2302,7 +2321,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
 	var goal_key: String = str(trainer.get("goal_key", ""))
-	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() else {}
+	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}
 	if not goal.is_empty():
 		# The start card shows the goal; the tracker only watches, it never changes the battle.
 		model.set_meta("goal_tracker", BattleGoals.Tracker.new(model, goal))

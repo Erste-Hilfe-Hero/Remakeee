@@ -304,6 +304,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"auto_battle": "Wild battles pick moves by themselves.",
 	"bench_lessons": "Spirlings on the bench grow too.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
+	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
 	"difficulty": "How strong your opponents are. You can change it any time.",
 	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
@@ -371,6 +372,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
 				["bench_lessons", "Bench lessons: %s" % ("On" if GameState.bench_xp else "Off")],
 				["damage_preview", "Damage preview: %s" % ("On" if GameState.damage_preview else "Off")],
+				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 			]
 			# Difficulty and the Iron Oath only during a journey.
@@ -420,6 +422,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.bench_xp = not GameState.bench_xp
 		"damage_preview":
 			GameState.damage_preview = not GameState.damage_preview
+		"bonus_goals":
+			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":
 			GameState.tips_enabled = not GameState.tips_enabled
 		"volume":

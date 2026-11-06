@@ -17,7 +17,8 @@
      "Juna: Ashmere? I go there twice a week. Bring a scarf. The ash gets everywhere."
     ]
    }
-  ]
+  ],
+  "next": "juna_post_1"
  },
  "ysolde": {
   "lines": [
@@ -383,7 +384,8 @@
    {
     "flag": "rift_rain_sealed",
     "lines": [
-     "Senna: The rain stopped. I can hear the moor birds again. And my Riptail. Thank you."
+     "Senna: The rain stopped. I can hear the moor birds again. And my Riptail. Thank you.",
+     "Senna: Rain is just weather again. I'd forgotten it could smell this good."
     ]
    },
    {
@@ -517,5 +519,84 @@
  ],
  "kestra_still_after": [
   "Kestra: The Wanderers went home. Tatter keeps looking at the pond. I think it's smiling."
- ]
+ ],
+ "woad_wanderer_a": {
+  "lines": [
+   "..."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "Wanderer Hale: I walked into the fen to find my Spirling. Then I forgot why I was walking.",
+     "Wanderer Hale: Days, maybe weeks. The rain sang the same note over and over.",
+     "Wanderer Hale: When the Rift closed, my Riptail licked my hand. That's how I knew I was awake."
+    ]
+   }
+  ]
+ },
+ "woad_wanderer_b": {
+  "lines": [
+   "..."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "Wanderer Brisa: I was a dyer in Madderby. I came out here to gather woad, and the Hush came with the rain.",
+     "Wanderer Brisa: I still can't remember the colour of my own front door. Blue, I think. I'll go and see."
+    ]
+   }
+  ]
+ },
+ "juna_post_1": {
+  "if": {
+   "flag": "rift_rain_sealed",
+   "not_flag": "aldo_letter_1"
+  },
+  "else": "juna_post_2",
+  "lines": [
+   "Juna: Post for you! From the lighthouse.",
+   "\"{name}, the lake was calm this morning, and I thought of you. The Kelpups miss your boots. Eat something warm. Aldo.\""
+  ],
+  "flag": "aldo_letter_1"
+ },
+ "juna_post_2": {
+  "if": {
+   "flag": "rift_mirror_sealed",
+   "not_flag": "aldo_letter_2"
+  },
+  "else": "juna_post_3",
+  "lines": [
+   "Juna: Another one from Brindlewick. He writes small.",
+   "\"Kestra's mother came by asking after her. I said you two keep an eye on each other. Don't make me a liar. Aldo.\""
+  ],
+  "flag": "aldo_letter_2"
+ },
+ "juna_post_3": {
+  "if": {
+   "flag": "act2_end",
+   "not_flag": "aldo_letter_3"
+  },
+  "lines": [
+   "Juna: Last one before Ashmere. This one's heavy. I think it's mostly worry.",
+   "\"Mirela wrote me once from Ashmere. She said the ash tastes like old pencils. If you see her... tell her the lamp is lit. Aldo.\""
+  ],
+  "flag": "aldo_letter_3"
+ },
+ "weda": {
+  "lines": [
+   "Weda: The dye spring runs warm and red. Spirlings come out of it brighter than they went in.",
+   "Weda: Sit. Let the colour do the work."
+  ],
+  "action": "heal"
+ },
+ "veit_diary": {
+  "lines": [
+   "An abandoned cartographer's hut. On the table lies a diary, its edges singed.",
+   "\"Day one. Ash walked into the Wide Rift after a moth. I called until my voice gave out.\"",
+   "\"Day forty. The guild says wait, map it, mend it. I mapped it. It took him anyway.\"",
+   "\"Last page. If a map can open a Rift, a fire can close one. I will burn them all. V. H.\""
+  ]
+ }
 }

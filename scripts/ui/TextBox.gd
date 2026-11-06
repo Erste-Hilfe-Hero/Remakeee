@@ -236,6 +236,9 @@ func _skip_or_advance(tap: bool = false) -> void:
 		advanced.emit()
 
 func _gui_input(event: InputEvent) -> void:
+	# A tap on the pad's A button already advances through ui_accept (item 1818).
+	if TapInput.is_press(event) and VirtualPad.covers(get_global_transform_with_canvas() * TapInput.position(event)):
+		return
 	if TapInput.is_press(event):
 		_press_ms = Time.get_ticks_msec()
 		_skip_or_advance(true)
