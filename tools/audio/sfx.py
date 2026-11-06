@@ -57,6 +57,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out["run"] = noise(n, 1) * np.linspace(0.4, 0, n) * 0.6
     out.update(element_hits())
     out.update(feel_sfx())
+    out.update(world_sfx())
     return out
 
 
@@ -137,4 +138,33 @@ def element_hits() -> dict[str, np.ndarray]:
     out["hit_lumen"] = (sp * 0.4 + noise(len(sp), 1) * 0.1) * 0.8
     n = secs(0.24)  # Umbra: low, detuned and falling
     out["hit_umbra"] = (sweep(260, 90, n, "pulse", 0.5) * 0.35 + sweep(266, 92, n, "pulse", 0.25) * 0.35 + noise(n, 12) * 0.15) * env(n, decay=0.1, sustain=0.4) * 0.85
+    return out
+
+
+GROUNDS = ["grass", "path", "wood", "sand", "stone", "shore"]
+
+
+def world_sfx() -> dict[str, np.ndarray]:
+    """Footsteps per ground, two takes each, under 60 ms (items 2501, 2502), and the 15 ms
+    text blip (item 2503; Sound shifts its pitch per speaker). Own generator, so the older
+    effects keep their noise."""
+    rng = np.random.default_rng(2501)
+    out: dict[str, np.ndarray] = {}
+    t = lambda n: np.arange(n) / RATE
+    for take in (1, 2):
+        n = secs(0.045 if take == 1 else 0.05)
+        thump = lambda f0, f1: sweep(f0, f1, n, "tri") * env(n, attack=0.001, decay=0.02, sustain=0.2, release=0.01)
+        hiss = lambda step: noise(n, step, rng) * env(n, attack=0.001, decay=0.015, sustain=0.15, release=0.01)
+        out["step_grass_%d" % take] = hiss(1) * 0.5 * (rng.random(n) > 0.35) + thump(140, 90) * 0.2
+        out["step_path_%d" % take] = hiss(3 + take) * 0.45 + thump(120, 70) * 0.35
+        out["step_wood_%d" % take] = (triangle(260 + 30 * take, n) * 0.5 + hiss(6) * 0.2) * \
+            env(n, attack=0.001, decay=0.012, sustain=0.1, release=0.008)
+        out["step_sand_%d" % take] = noise(n, 2, rng) * np.sin(np.linspace(0, np.pi, n)) * 0.4
+        out["step_stone_%d" % take] = (pulse(520 + 60 * take, n, 0.125) * 0.25 + hiss(8) * 0.4) * \
+            env(n, attack=0.001, decay=0.008, sustain=0.08, release=0.006)
+        out["step_shore_%d" % take] = (noise(n, 4, rng) * 0.35 * np.sin(np.linspace(0, np.pi, n)) +
+                                       triangle(180, n) * 0.2 * (0.5 + 0.5 * np.sin(t(n) * 2 * np.pi * 70))) * \
+            env(n, attack=0.004, decay=0.02, sustain=0.4, release=0.012)
+    n = secs(0.015)
+    out["blip"] = pulse(freq(midi("A5")), n, 0.25) * env(n, attack=0.001, decay=0.005, sustain=0.6, release=0.004) * 0.5
     return out

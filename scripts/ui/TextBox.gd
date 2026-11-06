@@ -10,6 +10,11 @@ const AUTO_DELAY: float = 0.35
 const MARGIN: int = 3
 
 var auto_advance: bool = false
+## Text voice of the current speaker (Sound.VOICE_PITCH key); a line that starts with a known
+## name and a colon ("Kestra: ...") uses that name's voice instead (item 2503).
+var voice: String = "player"
+var _line_voice: String = "player"
+var _blipped: int = 0
 var chars_per_second: float = 60.0
 
 var _label: Label
@@ -53,6 +58,8 @@ func show_text(text: String) -> void:
 	_label.text = Loc.t(text).replace("{name}", GameState.tamer_name)
 	_label.visible_characters = 0
 	_visible_chars = 0.0
+	_blipped = 0
+	_line_voice = voice_for_line(_label.text, voice)
 	_typing = true
 	_waiting = false
 	_arrow.visible = false
@@ -65,6 +72,15 @@ func show_text(text: String) -> void:
 	_arrow.visible = true
 	await advanced
 	_arrow.visible = false
+
+## Voice for [param line]: a known speaker name before a colon wins over [param fallback].
+static func voice_for_line(line: String, fallback: String) -> String:
+	var colon: int = line.find(":")
+	if colon > 0 and colon <= 12:
+		var key: String = Sound.voice_for(line.substr(0, colon).to_lower())
+		if key != "villager" and key != "player":
+			return key
+	return fallback
 
 ## Shows text without waiting (prompts such as "Orders for Kindlop?").
 func show_prompt(text: String) -> void:
@@ -79,6 +95,10 @@ func _process(delta: float) -> void:
 		return
 	_visible_chars += delta * chars_per_second
 	_label.visible_characters = int(_visible_chars)
+	var text: String = _label.get_parsed_text()
+	while _blipped < mini(_label.visible_characters, text.length()):
+		Sound.text_blip(_line_voice, text[_blipped])
+		_blipped += 1
 	if _label.visible_characters >= _label.get_total_character_count():
 		_label.visible_characters = -1
 		_typing = false

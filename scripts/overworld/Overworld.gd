@@ -42,6 +42,7 @@ const DOOR_WIPE_TIME: float = 0.14
 ## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
 const EDGE_SLIDE: int = 16
 var _particles: PixelParticles
+var _walk_steps: int = 0
 var _run_steps: int = 0
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
@@ -231,7 +232,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	_show_banner(map.display_name)
 	refresh_daylight()
-	Sound.music(Sound.track_for_map(map_id))
+	Sound.enter_map(map_id)
 	if not map.encounter_table.is_empty():
 		_tip_after_load.call_deferred("wild_area")
 
@@ -467,9 +468,11 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	if speaker != null:
 		DailyTasks.record("talk", {"map": map.id, "key": ref})
 	_text.visible = true
+	_text.voice = Sound.voice_for(speaker.npc_id if speaker != null else "")
 	for line: String in Dialogue.lines_for(entry, GameState.flags):
 		await _text.show_text(line)
 	_text.visible = false
+	_text.voice = "player"
 	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
 	if entry.has("action") and not (already and bool(entry.get("once", false))):
 		await _run_action(str(entry.action), speaker)
@@ -579,7 +582,7 @@ func open_menu() -> void:
 		Sound.sfx("warp")
 		await _fade_to(1.0)
 		load_map(target, Vector2i(int(c[0]), int(c[1])), "down")
-		Sound.music(Sound.track_for_map(target))
+		Sound.enter_map(target)
 		await _fade_to(0.0)
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
 	refresh_daylight()
@@ -601,12 +604,25 @@ func _close_menu(menu: PauseMenu) -> void:
 
 ## Dust behind the feet on every second running step (items 2304, 2395).
 func _on_player_step_started(dir: String, run: bool) -> void:
+	_footstep(run)
 	if not run:
 		_run_steps = 0
 		return
 	_run_steps += 1
 	if _run_steps % 2 == 0:
 		_particles.dust(player.position + Vector2(8, 15), -Vector2(GridWalker.DIRS[dir]))
+
+## Footsteps by ground (items 2501, 2502): every second step walking, every step running.
+func _footstep(run: bool) -> void:
+	_walk_steps += 1
+	if not run and _walk_steps % 2 == 1:
+		return
+	var cell: Vector2i = player.cell
+	var wet: bool = false
+	for d: Vector2i in TilesetFactory.MASK_DIRS:
+		if map.kind_at(cell + d) == TilesetFactory.Kind.WATER:
+			wet = true
+	Sound.footstep(map.kind_at(cell), wet)
 
 func watch_replay(snap: Dictionary) -> void:
 	var model: BattleModel = BattleReplay.build_model(snap)
@@ -624,7 +640,7 @@ func watch_replay(snap: Dictionary) -> void:
 	await scene.battle_finished
 	await _fade_to(1.0)
 	scene.queue_free()
-	Sound.music(Sound.track_for_map(map.id))
+	Sound.enter_map(map.id)
 	await _fade_to(0.0)
 
 ## Photo mode (item 94): pan, frame and save pictures until the player backs out.
@@ -708,7 +724,7 @@ func prologue() -> void:
 	_fade.color.a = 1.0
 	Sound.music("title")
 	await say(Dialogue.lines_for(Dialogue.get_entry("story/prologue"), GameState.flags))
-	Sound.music(Sound.track_for_map(map.id))
+	Sound.enter_map(map.id)
 	var tw: Tween = create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 0.6)
 	await tw.finished
@@ -1279,7 +1295,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		await _fade_to(0.0)
 	else:
 		await _after_battle(model, outcome)
-	Sound.music(Sound.track_for_map(map.id))
+	Sound.enter_map(map.id)
 	await _fade_to(0.0)
 	await announce_achievements()
 	VirtualPad.set_wanted(true)

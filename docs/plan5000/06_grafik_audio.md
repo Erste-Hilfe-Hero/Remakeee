@@ -301,10 +301,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2500. [P3] Schicht-Regeln als Tabelle in data/music.json pro Karte überschreibbar machen (zum Beispiel keine Renn-Schicht im Kartenhaus).
 
 ### Soundeffekte für Welt und Menüs
-2501. [P1] Schritt-Geräusche pro Untergrund (Gras, Weg, Holz, Sand, Stein, Wasserkante) als 6 kurze Klänge unter 60 ms, leise (-18 dB), abwechselnd mit 2 Fassungen pro Untergrund.
-2502. [P1] Schritt-Geräusche werden über die Tile-Art aus TilesetFactory.gd gewählt und nur beim Rennen doppelt so oft gespielt.
-2503. [P1] Text-Stimme im Dialog: jeder 2. getippte Buchstabe spielt einen 15 ms kurzen Piep, dessen Tonhöhe pro Figur festgelegt ist (Spielfigur, Mirela, Kestra, Aldo, Hüterinnen, Dorfleute).
-2504. [P2] Text-Stimme lässt sich in den Einstellungen getrennt ausschalten und ist im Sound-Test hörbar.
+2501. [x] [P1] Schritt-Geräusche pro Untergrund (Gras, Weg, Holz, Sand, Stein, Wasserkante) als 6 kurze Klänge unter 60 ms, leise (-18 dB), abwechselnd mit 2 Fassungen pro Untergrund.
+2502. [x] [P1] Schritt-Geräusche werden über die Tile-Art aus TilesetFactory.gd gewählt und nur beim Rennen doppelt so oft gespielt.
+2503. [x] [P1] Text-Stimme im Dialog: jeder 2. getippte Buchstabe spielt einen 15 ms kurzen Piep, dessen Tonhöhe pro Figur festgelegt ist (Spielfigur, Mirela, Kestra, Aldo, Hüterinnen, Dorfleute).
+2504. [x] [P2] Text-Stimme lässt sich in den Einstellungen getrennt ausschalten und ist im Sound-Test hörbar.
 2505. [x] [P1] Eigener Klang für das "!" eines Wanderers, der jemanden entdeckt: zwei schnell steigende Töne, 0,15 s.
 2506. [x] [P1] Eigener Klang für das Aufnehmen eines Gegenstands auf der Karte, 4 aufsteigende Töne, getrennt vom Münzklang.
 2507. [P2] Tür-Klang (Öffnen) und Tür-Klang (Schließen) als zwei Klänge mit Holz-Charakter aus Rauschen und tiefem Puls.
@@ -351,10 +351,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2546. [P3] Kampf-Klänge bei 4x Tempo werden auf höchstens 0,15 s gekürzt, indem gen_audio.py von jedem Klang eine kurze Fassung "<name>_short" erzeugt.
 
 ### Klang-Technik, Busse und Mobilgeräte
-2547. [P1] Neue Busse "UI", "Voice" (Schreie und Text-Stimme) und "Ambience" unter "SFX" in GameState.ensure_buses() anlegen, damit sie getrennt regelbar sind.
-2548. [P1] Ein Limiter (AudioEffectHardLimiter, Decke -1 dB) auf dem Master-Bus verhindert Übersteuern bei vielen gleichzeitigen Klängen.
-2549. [P1] iOS: Projekteinstellung audio/general/ios/session_category auf "Ambient" stellen, damit der Lautlos-Schalter beachtet wird und Musik anderer Apps weiterlaufen kann.
-2550. [P1] Beim Wechsel der App in den Hintergrund (NOTIFICATION_APPLICATION_PAUSED) werden Musik und Klänge stumm geschaltet und beim Zurückkehren in 0,3 s wieder eingeblendet.
+2547. [x] [P1] Neue Busse "UI", "Voice" (Schreie und Text-Stimme) und "Ambience" unter "SFX" in GameState.ensure_buses() anlegen, damit sie getrennt regelbar sind.
+2548. [x] [P1] Ein Limiter (AudioEffectHardLimiter, Decke -1 dB) auf dem Master-Bus verhindert Übersteuern bei vielen gleichzeitigen Klängen.
+2549. [x] [P1] iOS: Projekteinstellung audio/general/ios/session_category auf "Ambient" stellen, damit der Lautlos-Schalter beachtet wird und Musik anderer Apps weiterlaufen kann.
+2550. [x] [P1] Beim Wechsel der App in den Hintergrund (NOTIFICATION_APPLICATION_PAUSED) werden Musik und Klänge stumm geschaltet und beim Zurückkehren in 0,3 s wieder eingeblendet.
 2551. [P2] Die Stimmenanzahl in Sound.gd (SFX_VOICES) steigt von 6 auf 10, und jeder Klang bekommt eine Priorität (UI 1, Welt 2, Kampf 3), sodass bei voller Belegung der unwichtigste Klang weicht.
 2552. [P2] Einstellung "Andere Musik erlauben": spielt eine andere App Musik, startet Chimora nur mit Klängen und ohne eigene Musik.
 2553. [P2] Android: bei Audio-Fokus-Verlust (Anruf, Sprachnachricht) Musik pausieren und danach an derselben Stelle fortsetzen.
@@ -375,24 +375,24 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2568. [P3] Sound.gd in zwei Dateien aufteilen: Sound.gd für Klänge und MusicDirector.gd für Musik, mit gleichbleibenden öffentlichen Aufrufen.
 
 ### Umgebungsklänge pro Ort
-2569. [P1] Neuer Ordner audio/ambience/ mit einer Schleife pro Außenkarte (30 bis 45 Sekunden, Ogg, Mono), erzeugt aus Rauschen und Tonfolgen in gen_audio.py.
-2570. [P1] data/music.json bekommt pro Karte ein Feld "ambience" mit dem Namen der Umgebungsschleife, abgespielt auf dem Ambience-Bus bei -14 dB.
-2571. [P1] lighthouse: Meeresrauschen als langsam an- und abschwellendes Rauschen (Periode 6 s) plus seltene Möwen-artige Pfeiftöne aus eigenen Tonfolgen.
-2572. [P2] brindlewick: Marktgeräusche als leises Stimmengemurmel aus gefiltertem Rauschen und gelegentlichen Glocken.
-2573. [P2] fernstair: Wind in Farnen als Rauschen mit Hochpass, plus Vogelzwitschern aus kurzen Puls-Tonfolgen.
-2574. [P2] crowcrest: starker Wind mit Böen alle 8 bis 15 Sekunden.
-2575. [P2] saltmarsh: Frosch-Rufe als tiefe, kurze Pulswellen und stehendes Wasser-Glucksen.
+2569. [x] [P1] Neuer Ordner audio/ambience/ mit einer Schleife pro Außenkarte (30 bis 45 Sekunden, Ogg, Mono), erzeugt aus Rauschen und Tonfolgen in gen_audio.py.
+2570. [x] [P1] data/music.json bekommt pro Karte ein Feld "ambience" mit dem Namen der Umgebungsschleife, abgespielt auf dem Ambience-Bus bei -14 dB.
+2571. [x] [P1] lighthouse: Meeresrauschen als langsam an- und abschwellendes Rauschen (Periode 6 s) plus seltene Möwen-artige Pfeiftöne aus eigenen Tonfolgen.
+2572. [x] [P2] brindlewick: Marktgeräusche als leises Stimmengemurmel aus gefiltertem Rauschen und gelegentlichen Glocken.
+2573. [x] [P2] fernstair: Wind in Farnen als Rauschen mit Hochpass, plus Vogelzwitschern aus kurzen Puls-Tonfolgen.
+2574. [x] [P2] crowcrest: starker Wind mit Böen alle 8 bis 15 Sekunden.
+2575. [x] [P2] saltmarsh: Frosch-Rufe als tiefe, kurze Pulswellen und stehendes Wasser-Glucksen.
 2576. [P2] Umgebungsschleifen haben eine Nachtfassung mit Grillen-Zirpen (schnelle hohe Pulse) statt Vogelstimmen, umgeschaltet über DayCycle.
 2577. [P2] Rift-Karten bekommen ein tiefes, gleichmäßiges Summen (40 bis 60 Hz) als Umgebungsklang, das in jedem Rift anders moduliert ist.
-2578. [P2] Bei Kartenwechsel blenden Umgebungsklänge in 1 Sekunde über, unabhängig vom Musikwechsel.
-2579. [P2] Im Kampf wird der Umgebungsklang auf -24 dB gesenkt, aber nicht ausgeschaltet, damit der Ort erhalten bleibt.
+2578. [x] [P2] Bei Kartenwechsel blenden Umgebungsklänge in 1 Sekunde über, unabhängig vom Musikwechsel.
+2579. [x] [P2] Im Kampf wird der Umgebungsklang auf -24 dB gesenkt, aber nicht ausgeschaltet, damit der Ort erhalten bleibt.
 2580. [P3] Ortsgebundene Klangquellen mit AudioStreamPlayer2D: Brunnen in brindlewick, Quelle in rest_spring, Leuchtturm-Mechanik in lighthouse, Reichweite 5 Felder.
 2581. [P3] thornridge: Holzhacken in der Ferne alle 20 bis 40 Sekunden als zufällig gesetzter Einzelklang.
 2582. [P3] map_house: leises Uhrenticken und Papier-Rascheln als Innenraum-Umgebung.
 2583. [P3] rest_spring: Wasserplätschern, das lauter wird, je näher die Spielfigur der Quelle kommt.
 2584. [P3] Zufällige Einzelklänge (Vogel, Glocke, Ast) werden nach einem festen Startwert pro Tag gesetzt, damit sie nicht in festen Abständen wiederkehren.
-2585. [P3] Umgebungsklänge sind im Sound-Test als eigene Gruppe "Orte" hörbar.
-2586. [P3] Umgebungsklänge zusammen höchstens 2,5 MB; gen_audio.py prüft die Grenze beim Erzeugen.
+2585. [x] [P3] Umgebungsklänge sind im Sound-Test als eigene Gruppe "Orte" hörbar.
+2586. [x] [P3] Umgebungsklänge zusammen höchstens 2,5 MB; gen_audio.py prüft die Grenze beim Erzeugen.
 
 ### Haptik und Vibration
 2587. [x] [P1] Neuer Autoload scripts/core/Haptics.gd, der auf Handys Input.vibrate_handheld(dauer_ms, stärke) nutzt und auf Gamepads das bestehende GameState.rumble_pads aufruft.
@@ -419,7 +419,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2608. [P3] Alle Haptik-Muster mit Dauer und Stärke als Tabelle in docs/JUICE.md festhalten.
 
 ### Werkzeuge zur Asset-Erzeugung (tools/art, tools/audio)
-2609. [P1] tools/audio/gen_audio.py in Module aufteilen: tools/audio/synth.py (Wellen, Hüllkurven), tools/audio/sfx.py, tools/audio/music.py, tools/audio/ambience.py, mit gen_audio.py als Einstieg.
+2609. [x] [P1] tools/audio/gen_audio.py in Module aufteilen: tools/audio/synth.py (Wellen, Hüllkurven), tools/audio/sfx.py, tools/audio/music.py, tools/audio/ambience.py, mit gen_audio.py als Einstieg.
 2610. [x] [P1] gen_audio.py bekommt Aufruf-Optionen --only <name>, --sfx, --music, --stems, damit nicht bei jeder Änderung alles neu erzeugt werden muss.
 2611. [x] [P1] Lautheits-Prüfung tools/audio/loudness.py mit ffmpeg ebur128: Musik soll -16 LUFS (±1) erreichen, Klänge einen Spitzenwert von -3 dBFS; Abweichungen werden gemeldet.
 2612. [x] [P1] gen_audio.py normalisiert jede Datei nach dem Erzeugen automatisch auf diese Zielwerte.
@@ -467,7 +467,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2652. [P3] tools/asset_log.py kann mit --check laufen und gibt nur Fehler aus, ohne die Datei zu ändern, für die CI.
 
 ### Leistung und Zugänglichkeit der Darstellung
-2653. [P1] Einstellung "Klang-Untertitel": wichtige Klänge (Wanderer entdeckt, Rift in der Nähe, Begegnung, Gegenstand) erscheinen als kurzer Text am oberen Rand, zum Beispiel "[Rascheln im Gras]".
+2653. [x] [P1] Einstellung "Klang-Untertitel": wichtige Klänge (Wanderer entdeckt, Rift in der Nähe, Begegnung, Gegenstand) erscheinen als kurzer Text am oberen Rand, zum Beispiel "[Rascheln im Gras]".
 2654. [P1] Leistungsziel für alle Punkte dieses Bereichs: auf dem schwächsten Ziel-Android-Gerät höchstens 2 ms zusätzliche Bildzeit im Kampf und 1 ms in der Welt.
 2655. [x] [P1] Alle neuen Bewegungen respektieren die bestehende Einstellung reduce_motion über Juice.reduced(); ein GUT-Test schaltet sie ein und prüft, dass kein Tween länger als 0,15 s läuft.
 2656. [P1] Kein Effekt dieses Bereichs wechselt die Helligkeit mehr als 3 Mal pro Sekunde um mehr als 2 Palettenstufen; ein Test prüft die Effekt-Galerie Bild für Bild.

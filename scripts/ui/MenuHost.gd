@@ -193,6 +193,8 @@ static func settings_rows() -> Array[Array]:
 		["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
 		["music", "Music: %d%%" % int(round(GameState.music_volume * 100.0))],
 		["sfx", "Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0))],
+		["text_voice", "Text voice: %s" % ("On" if GameState.text_voice else "Off")],
+		["sound_captions", "Sound captions: %s" % ("On" if GameState.sound_captions else "Off")],
 		["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 		["controls", "Controls..."],
 		["display", "Display and access..."],
@@ -232,6 +234,12 @@ func _settings_action(key: String) -> void:
 			GameState.sfx_volume = _step_volume(GameState.sfx_volume)
 			GameState.apply_volume()
 			Sound.sfx("confirm")
+		"text_voice":
+			GameState.text_voice = not GameState.text_voice
+			Sound.text_blip("player", "a")
+			Sound.text_blip("player", "a")
+		"sound_captions":
+			GameState.sound_captions = not GameState.sound_captions
 		"tips":
 			GameState.tips_enabled = not GameState.tips_enabled
 		"controls":
@@ -273,12 +281,22 @@ func _iron_oath() -> void:
 ## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.
 func run_sound_test() -> void:
 	var back_to: String = Sound.current_track
+	var back_amb: String = Sound.current_ambience
 	while true:
-		var idx: int = await pick_strings("Sound test", ["Music", "Sound effects", "Cries"])
+		var idx: int = await pick_strings("Sound test", ["Music", "Sound effects", "Cries", "Places"])
 		match idx:
 			-1:
-				Sound.music(back_to)
+				Sound.music(back_to, true)
+				Sound.ambience(back_amb)
 				return
+			3:
+				# Ambience loops as their own group (item 2585).
+				var places: Array[String] = Sound.list_sounds("res://audio/ambience/")
+				while true:
+					var a: int = await pick_strings("Places", places)
+					if a < 0:
+						break
+					Sound.ambience(places[a])
 			0:
 				var tracks: Array[String] = Sound.list_sounds("res://audio/music/")
 				while true:

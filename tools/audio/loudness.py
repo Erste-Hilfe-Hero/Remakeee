@@ -76,7 +76,8 @@ def check() -> list[str]:
         pk = peak_dbfs(_read_wav(p))
         if abs(pk - SFX_PEAK_DBFS) > 0.5:
             problems.append("%s: peak %.1f dBFS (want %.0f)" % (os.path.relpath(p, ROOT), pk, SFX_PEAK_DBFS))
-    for p in sorted(glob.glob(os.path.join(ROOT, "audio", "music", "*.ogg"))):
+    for p in sorted(glob.glob(os.path.join(ROOT, "audio", "music", "*.ogg")) +
+                    glob.glob(os.path.join(ROOT, "audio", "ambience", "*.ogg"))):
         v = lufs_of_file(p)
         if not np.isfinite(v) or abs(v - MUSIC_LUFS) > MUSIC_TOLERANCE:
             problems.append("%s: %.1f LUFS (want %.0f +-%.0f)" % (os.path.relpath(p, ROOT), v, MUSIC_LUFS, MUSIC_TOLERANCE))

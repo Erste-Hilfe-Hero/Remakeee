@@ -6,11 +6,49 @@ extends Node
 ##   Sound.jingle("victory")     plays a music file once, then resumes the previous track
 ##   Sound.cry(species_data)     the Spirling's own call (synthesized by Cry.gd)
 ##   Sound.element_hit(element)  hit sound for a move of that element
+##   Sound.enter_map(map_id)     the map's song and ambience loop (data/music.json)
+##   Sound.footstep(kind, wet)   quiet step sound for the ground under the Wayfarer
+##   Sound.text_blip(speaker)    15 ms dialogue blip at the speaker's own pitch
+## Buses (item 2547): menu sounds on "UI", cries and text voice on "Voice", ambience loops on
+## "Ambience"; all three feed "SFX".
 ## Missing files are ignored, so code can name sounds before they exist.
 
 const SFX_DIR: String = "res://audio/sfx/%s.wav"
 const MUSIC_DIR: String = "res://audio/music/%s.ogg"
 const MAP_MUSIC: String = "res://data/music.json"
+const AMBIENCE_DIR: String = "res://audio/ambience/%s.ogg"
+## Ambience loops sit well under the music (item 2570).
+const AMBIENCE_DB: float = -14.0
+## Under battle music the place stays faintly audible (item 2579).
+const AMBIENCE_DUCK_DB: float = -24.0
+## Ambience crossfades on its own clock, independent of the music (item 2578).
+const AMBIENCE_FADE: float = 1.0
+## Effects are written at a -3 dBFS peak; footsteps play 15 dB lower, at about -18 dB (item 2501).
+const STEP_DB: float = -15.0
+const BLIP_DB: float = -9.0
+## Fade back in after the app returns from the background (item 2550).
+const RESUME_FADE: float = 0.3
+## Menu sounds that go to the UI bus.
+const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save"]
+## Ground per tile kind for footsteps (item 2502); "sand" is a path or grass tile next to water.
+const GROUNDS: Dictionary[int, String] = {
+	TilesetFactory.Kind.GRASS: "grass", TilesetFactory.Kind.TALL_GRASS: "grass", TilesetFactory.Kind.FLOWER: "grass",
+	TilesetFactory.Kind.PATH: "path", TilesetFactory.Kind.STAIRS: "path", TilesetFactory.Kind.DOOR: "path",
+	TilesetFactory.Kind.FLOOR: "wood", TilesetFactory.Kind.PIER: "wood",
+	TilesetFactory.Kind.SCREE: "stone", TilesetFactory.Kind.PLATE: "stone", TilesetFactory.Kind.CRACKED: "stone",
+	TilesetFactory.Kind.RIFT: "stone", TilesetFactory.Kind.REEDS: "shore",
+}
+## Text voice pitch per speaker (item 2503): the Wayfarer for unnamed lines, Mirela, Kestra,
+## Aldo, the wardens, everyone else.
+const VOICE_PITCH: Dictionary[String, float] = {
+	"player": 1.0, "mirela": 1.26, "kestra": 1.12, "aldo": 0.79, "warden": 0.7, "villager": 0.94,
+}
+## Captions for important sounds (item 2653), shown at the top edge when the setting is on.
+const CAPTIONS: Dictionary[String, String] = {
+	"encounter": "[Rustling in the grass]",
+	"spot": "[Footsteps stop short]",
+	"pickup": "[Item picked up]",
+}
 const FADE_TIME: float = 0.4
 const SFX_VOICES: int = 6
 ## Same effect within this many seconds is skipped (menus scroll fast).
@@ -25,6 +63,13 @@ var _cache: Dictionary[String, AudioStream] = {}
 var _last_play: Dictionary[String, float] = {}
 var _map_music: Dictionary = {}
 var _resume_track: String = ""
+var current_ambience: String = ""
+var _ambience: AudioStreamPlayer
+var _ambience_out: AudioStreamPlayer
+var _step_take: int = 0
+var _blip_count: int = 0
+## Captions shown so far (tests).
+var captions: Array[String] = []
 ## Headless runs (CI, tests) have no audio output; the dummy driver never releases playbacks,
 ## which shows up as leaks at exit, so Sound stays silent there.
 var enabled: bool = DisplayServer.get_name() != "headless"
@@ -34,6 +79,8 @@ func _ready() -> void:
 	GameState.ensure_buses()
 	_music = _player(GameState.BUS_MUSIC)
 	_music_out = _player(GameState.BUS_MUSIC)
+	_ambience = _player(GameState.BUS_AMBIENCE)
+	_ambience_out = _player(GameState.BUS_AMBIENCE)
 	for i: int in SFX_VOICES:
 		_voices.append(_player(GameState.BUS_SFX))
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(MAP_MUSIC)) if FileAccess.file_exists(MAP_MUSIC) else null
@@ -41,7 +88,7 @@ func _ready() -> void:
 
 ## Drops streams on quit so nothing is reported as leaked.
 func _exit_tree() -> void:
-	for p: AudioStreamPlayer in [_music, _music_out] + _voices:
+	for p: AudioStreamPlayer in [_music, _music_out, _ambience, _ambience_out] + _voices:
 		p.stop()
 		p.stream = null
 	_cache.clear()
@@ -57,7 +104,8 @@ func _load(path: String) -> AudioStream:
 		_cache[path] = load(path) if ResourceLoader.exists(path) else null
 	return _cache[path]
 
-func sfx(sound_name: String) -> void:
+func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
+	caption(sound_name)
 	if not enabled:
 		return
 	var stream: AudioStream = _load(SFX_DIR % sound_name)
@@ -67,18 +115,138 @@ func sfx(sound_name: String) -> void:
 	if now - float(_last_play.get(sound_name, -1.0)) < SFX_MIN_GAP:
 		return
 	_last_play[sound_name] = now
-	_play_voice(stream)
+	_play_voice(stream, bus_for(sound_name), volume_db, pitch)
 
-func _play_voice(stream: AudioStream) -> void:
+## Bus for an effect: menu sounds on UI, the text blip on Voice, everything else on SFX.
+static func bus_for(sound_name: String) -> StringName:
+	if sound_name in UI_SOUNDS:
+		return GameState.BUS_UI
+	if sound_name == "blip":
+		return GameState.BUS_VOICE
+	return GameState.BUS_SFX
+
+func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	var p: AudioStreamPlayer = _voices[_next_voice]
 	_next_voice = (_next_voice + 1) % _voices.size()
 	p.stream = stream
+	p.bus = bus
+	p.volume_db = volume_db
+	p.pitch_scale = pitch
 	p.play()
 
 ## Plays the cry of [param sd] (item 70).
 func cry(sd: SpirlingData) -> void:
 	if enabled and sd != null:
-		_play_voice(Cry.stream_for(sd))
+		_play_voice(Cry.stream_for(sd), GameState.BUS_VOICE)
+
+## Shows the caption for [param sound_name] when sound captions are on (item 2653).
+func caption(sound_name: String) -> void:
+	if not GameState.sound_captions or not CAPTIONS.has(sound_name):
+		return
+	captions.append(CAPTIONS[sound_name])
+	if captions.size() > 8:
+		captions.pop_front()
+	Toast.show_text(CAPTIONS[sound_name])
+
+## Ground name for footsteps on a tile of [param kind]; [param wet] when water is next to it.
+static func ground_for(kind: int, wet: bool) -> String:
+	var g: String = GROUNDS.get(kind, "path")
+	if wet and (g == "path" or g == "grass"):
+		return "sand"
+	return g
+
+## One quiet footstep, alternating between the two takes of the ground (items 2501, 2502).
+func footstep(kind: int, wet: bool = false) -> void:
+	_step_take = 3 - _step_take if _step_take > 0 else 1
+	sfx("step_%s_%d" % [ground_for(kind, wet), _step_take], STEP_DB)
+
+## Speaker key for the text voice: a known character's id prefix, "player" for unnamed lines.
+static func voice_for(npc_id: String) -> String:
+	if npc_id.is_empty():
+		return "player"
+	for key: String in ["mirela", "kestra", "aldo", "warden"]:
+		if npc_id.begins_with(key):
+			return key
+	return "villager"
+
+## Dialogue blip: every second typed letter plays (item 2503).
+func text_blip(speaker: String, letter: String) -> void:
+	if not GameState.text_voice or letter.strip_edges().is_empty():
+		return
+	_blip_count += 1
+	if _blip_count % 2 == 0:
+		sfx("blip", BLIP_DB, float(VOICE_PITCH.get(speaker, 1.0)))
+
+## The song and ambience loop of [param map_id] (items 2443, 2570).
+func enter_map(map_id: String) -> void:
+	var amb: String = ambience_for_map(map_id)
+	music(track_for_map(map_id), true)
+	ambience(amb)
+
+## Ambience loop name of [param map_id], "" for none (indoor maps, rifts).
+func ambience_for_map(map_id: String) -> String:
+	var entry: Variant = map_entry(map_id)
+	return str((entry as Dictionary).get("ambience", "")) if entry is Dictionary else ""
+
+var ambience_ducked: bool = false
+
+## Lowers (or restores) the running ambience loop.
+func duck_ambience(on: bool) -> void:
+	ambience_ducked = on
+	if enabled and _ambience.playing:
+		create_tween().tween_property(_ambience, "volume_db", AMBIENCE_DUCK_DB if on else AMBIENCE_DB, FADE_TIME)
+
+## Loops audio/ambience/<name>.ogg on the Ambience bus, crossfading; "" stops it.
+func ambience(loop_name: String) -> void:
+	if loop_name == current_ambience:
+		if ambience_ducked:
+			duck_ambience(false)
+		return
+	ambience_ducked = false
+	current_ambience = loop_name
+	if not enabled:
+		return
+	if _ambience.playing:
+		var old: AudioStreamPlayer = _ambience
+		_ambience = _ambience_out
+		_ambience_out = old
+		var tw: Tween = create_tween()
+		tw.tween_property(_ambience_out, "volume_db", -60.0, AMBIENCE_FADE)
+		tw.tween_callback(_ambience_out.stop)
+	var stream: AudioStream = _load(AMBIENCE_DIR % loop_name) if not loop_name.is_empty() else null
+	if stream == null:
+		_ambience.stop()
+		return
+	if stream is AudioStreamOggVorbis:
+		stream = stream.duplicate()
+		(stream as AudioStreamOggVorbis).loop = true
+	_ambience.stream = stream
+	_ambience.volume_db = -60.0
+	_ambience.play()
+	create_tween().tween_property(_ambience, "volume_db", AMBIENCE_DB, AMBIENCE_FADE)
+
+## Background: silence everything; back in front: fade in over RESUME_FADE (item 2550).
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_PAUSED:
+		app_paused()
+	elif what == NOTIFICATION_APPLICATION_RESUMED:
+		app_resumed()
+
+var _resume_tween: Tween
+
+func app_paused() -> void:
+	if _resume_tween != null:
+		_resume_tween.kill()
+	GameState.master_fade = 0.0
+	GameState.apply_volume()
+
+func app_resumed() -> void:
+	if _resume_tween != null:
+		_resume_tween.kill()
+	_resume_tween = create_tween()
+	_resume_tween.tween_method(func(v: float) -> void:
+		GameState.master_fade = v
+		GameState.apply_volume(), GameState.master_fade, 1.0, RESUME_FADE)
 
 ## Sound effect name for a hit by a move of [param element] (Elements.E), "hit" if unknown.
 static func element_hit_name(element: int) -> String:
@@ -120,7 +288,13 @@ static func list_sounds(dir: String) -> Array[String]:
 	out.sort()
 	return out
 
-func music(track: String) -> void:
+## Other music lowers the map's ambience to AMBIENCE_DUCK_DB (battles) or stops it (title);
+## enter_map() brings it back.
+func music(track: String, keep_ambience: bool = false) -> void:
+	if track == "title":
+		ambience("")
+	elif not keep_ambience:
+		duck_ambience(true)
 	if track == current_track and _music.playing:
 		return
 	_resume_track = ""
