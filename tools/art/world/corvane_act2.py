@@ -69,7 +69,7 @@ def madderby(world):
             "T....__....T",
             "TTTTT__TTTTT"]
     world.add_text(mid, {
-        "sign": lines(("MADDERBY", "MADDERBY"), ("Dyers' town of Corvane. Home of the cartographers' guild.", "Färberstadt von Corvane. Sitz der Kartografengilde."),
+        "sign": lines(("MADDERBY", "MADDERBY"), ("Madderby, 140 folk.", "Madderby, 140 Leute."), ("Dyers' town of Corvane. Home of the cartographers' guild.", "Färberstadt von Corvane. Sitz der Kartografengilde."),
                       ("East: Woadfen   North: Stillwater", "Osten: Waidmoor   Norden: Stillwater")),
         "road": lines(("MADDERBY ROAD", "STRASSE NACH MADDERBY"), ("South: Corvane Quay", "Süden: Corvane-Kai")),
         "guard": lines(("Gatekeeper Ansel: The moor and the pond paths are guild business since the storm.", "Torwächter Ansel: Moor und Teichweg sind seit dem Sturm Sache der Gilde."),

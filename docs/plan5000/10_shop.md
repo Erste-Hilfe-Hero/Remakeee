@@ -674,7 +674,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4633. [x] [P1] (P2W) Der Pass gibt 1 kostenlosen Rissatem pro Rift-Wächterkampf, der nicht in der Tasche liegt, sondern nur im Kampf erscheint.
 4634. [x] [P1] (P2W) Der Pass gibt +1 Bond-Versuch pro Kampf: misslingt Bonden, flieht der Spirling nicht sofort.
 4635. [x] [P1] (P2W) Der Pass-Status kommt nur vom Server (`subscriptions`), und alle Pass-Vorteile prüfen `ShopEffects.pass_active()`.
-4636. [P1] (P2W) Die Pass-Seite listet alle Vorteile mit Zahlen, den Preis "4,99 € pro Monat", "verlängert sich automatisch" und "jederzeit im Store kündbar".
+4636. [x] [P1] (P2W) Die Pass-Seite listet alle Vorteile mit Zahlen, den Preis "4,99 € pro Monat", "verlängert sich automatisch" und "jederzeit im Store kündbar".
 4637. [x] [P1] (P2W) Die täglichen 30 Rissglas sammeln sich nicht an, wenn man nicht spielt; verpasste Tage gehen nicht verloren, sondern werden beim nächsten Öffnen bis höchstens 7 Tage nachgezahlt.
 4638. [x] [P1] (P2W) Mit dem Ende des Passes enden alle Vorteile sofort; schon gutgeschriebenes Rissglas und Gegenstände bleiben.
 4639. [P1] (P2W) Für die erste Pass-Buchung eine kostenlose Probezeit von 7 Tagen über den Store anbieten und das Datum der ersten Abbuchung deutlich zeigen.

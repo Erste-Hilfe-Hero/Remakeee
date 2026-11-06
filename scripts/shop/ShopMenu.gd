@@ -79,8 +79,44 @@ static func _run_tab(menu: MenuHost, tab: String) -> void:
 			return
 		await _run_offer(menu, list[idx])
 
+## The Wayfarer Pass page (items 4636, 4651, 4652): every benefit with its number, the price per
+## month, that it renews by itself and how to cancel, and whether it runs now.
+static func pass_text(o: Dictionary) -> String:
+	var rg: int = PASS_DAILY_RG
+	var lines: Array[String] = [Loc.t(str(o.name)), Loc.t("Advantage in the game"), "", pass_status_text(), "", Loc.t("What the pass gives:")]
+	lines.append("- " + Loc.t("+%d%% growth for the whole team, also together with a Growth Crystal") % roundi((ShopEffects.PASS_GROWTH - 1.0) * 100.0))
+	lines.append("- " + Loc.t("%d Riftglass every day (%d in 30 days), missed days paid up to 7 days later") % [rg, rg * 30])
+	lines.append("- " + Loc.t("+%d energy over the maximum in battles against the world (11 of 10)") % ShopEffects.PASS_ENERGY)
+	lines.append("- " + Loc.t("1 free Rift Breath in every Warden battle (only in that battle)"))
+	lines.append("- " + Loc.t("1 extra bond try per battle: the first failed bond gives no free action"))
+	lines.append("")
+	lines.append(Loc.t("In echo duels only the growth works."))
+	lines.append(Loc.t("Works in the Open League, not in the Fair League."))
+	lines.append(Loc.t("When the pass ends, every benefit ends at once. Riftglass and items you got stay yours."))
+	lines.append("")
+	lines.append(Loc.t("Price: %s per month, renews automatically.") % ShopCatalog.format_eur(int(o.get("eur_cents", 0))))
+	lines.append(Loc.t("Cancel any time in the App Store or Google Play."))
+	var p: String = Billing.price_text(o)
+	if not p.is_empty():
+		lines.append(Loc.t("Price in the store: %s") % p)
+	return "\n".join(lines)
+
+## The pass's daily Riftglass when the server sent no number (server_config shop_pass_daily).
+const PASS_DAILY_RG: int = 30
+
+## "Your pass runs until 6. 12." or "No pass right now." (item 4653).
+static func pass_status_text() -> String:
+	var u: Variant = Billing.state.get("pass_until")
+	var until: int = int(u) if u is int or u is float else 0
+	if not ShopEffects.pass_active() or until <= 0:
+		return Loc.t("No pass right now.")
+	var d: Dictionary = Time.get_datetime_dict_from_unix_time(until + Time.get_time_zone_from_system().get("bias", 0) * 60)
+	return Loc.t("Your pass runs until %s.") % ("%d. %d." % [int(d.day), int(d.month)])
+
 ## Detail view (item 4181): full contents, exact effect, duration, league effect, then the price options.
 static func detail_text(o: Dictionary) -> String:
+	if str(o.get("store_type", "")) == "subscription":
+		return pass_text(o)
 	var lines: Array[String] = [Loc.t(str(o.name))]
 	if ShopCatalog.is_advantage(o):
 		lines.append(Loc.t("Advantage in the game"))

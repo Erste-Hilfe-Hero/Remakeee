@@ -79,7 +79,7 @@ def ashmere_station(world):
             "############"]
     conductor_text(world, mid, "Conductor Rhea", "Schaffnerin Rhea")
     world.add_text(mid, {
-        "sign": lines(("ASHMERE", "ASHMERE"), ("Land of the gravers. Every stone here has been drawn twice.", "Land der Graveure. Jeder Stein hier wurde zweimal gezeichnet.")),
+        "sign": lines(("ASHMERE STATION", "BAHNHOF ASHMERE"), ("Ashmere Station, 9 folk.", "Bahnhof Ashmere, 9 Leute."), ("Land of the gravers. Every stone here has been drawn twice.", "Land der Graveure. Jeder Stein hier wurde zweimal gezeichnet.")),
     })
     m = {"name": tr("Ashmere Station", "Bahnhof Ashmere"), "biome": "town", "backdrop": "ridge", "outdoor": True,
          "rows": rows,
@@ -114,7 +114,7 @@ def cinderfold(world):
             "^....___...^",
             "^^^^^^^^^^^^"]
     world.add_text(mid, {
-        "sign": lines(("CINDERFOLD", "CINDERFOLD"), ("Town of the gravers. The hall is open to guild folk.", "Stadt der Graveure. Die Halle steht Gildenleuten offen.")),
+        "sign": lines(("CINDERFOLD", "CINDERFOLD"), ("Cinderfold, 88 folk.", "Cinderfold, 88 Leute."), ("Town of the gravers. The hall is open to guild folk.", "Stadt der Graveure. Die Halle steht Gildenleuten offen.")),
         "keeper": {"lines": lines(("Spring Keeper Oda: The water comes up warm under the basalt. It eases tired Spirlings.", "Quellhüterin Oda: Das Wasser kommt warm unter dem Basalt hervor. Es tut müden Spirlings gut.")),
                    "action": "heal"},
         "trader": {"lines": lines(("Trader Bastian: Engraved tins, strong brews. Ashmere prices, Ashmere quality.", "Händler Bastian: Gravierte Dosen, starke Tränke. Ashmere-Preise, Ashmere-Qualität.")),
@@ -210,7 +210,7 @@ def saltglass(world):
             "^.........S^",
             "^^^^^^^^^^^^"]
     world.add_text(mid, {
-        "sign": lines(("SALTGLASS FLATS", "SALZGLASEBENE"), ("Rings 26 to 29. The ground cracks like a window.", "Ring 26 bis 29. Der Boden springt wie eine Fensterscheibe.")),
+        "sign": lines(("SALTGLASS FLATS", "SALZGLASEBENE"), ("Salt flats, rings 26 to 29.", "Salzebene, Ring 26 bis 29."), ("The ground cracks like a window.", "Der Boden springt wie eine Fensterscheibe.")),
         "sign_east": lines(("Road to the far end of the Wide Rift.", "Weg zum fernen Ende des Weiten Risses."),
                            ("Closed by order of the gravers' hall.", "Auf Anordnung der Halle der Graveure gesperrt.")),
     })

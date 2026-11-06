@@ -385,7 +385,7 @@ def lantern_steps(world):
                       [("Garr: Copperfold's at the top. Best hot pies in the valley.", "Garr: Oben liegt Copperfold. Die besten heißen Pasteten im Tal.")],
                       [("Garr: Off shift and bored. Battle?", "Garr: Feierabend und Langeweile. Kampf?")],
                       [("Garr: Back to the pies, then.", "Garr: Dann zurück zu den Pasteten.")], 350),
-             wayfarer(world, mid, "isa", 8, 4, "left", "Wanderer Isa", team(("Zephlet", 13), ("Zippit", 12), ("Shalebat", 13)),
+             wayfarer(world, mid, "isa", 8, 4, "left", "Wanderer Isa", team(("Zephlet", 13), ("Zephlet", 12), ("Shalebat", 13)),
                       [("Isa: From up here you can see three Rifts on a clear night.", "Isa: Von hier oben siehst du in klaren Nächten drei Risse.")],
                       [("Isa: The last terrace is mine. Earn it.", "Isa: Die letzte Terrasse gehört mir. Verdien sie dir.")],
                       [("Isa: It's yours.", "Isa: Sie gehört dir.")], 380),
