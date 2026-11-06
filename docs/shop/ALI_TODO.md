@@ -20,6 +20,8 @@ Aussehen, 1 Abo). Statt alles per Hand anzulegen, legt ein Skript sie an. Dafür
       Nutzer und Berechtigungen für Chimora zusätzlich **„Store-Präsenz verwalten“**,
       **„Finanzdaten ansehen“** und **„Bestellungen und Abos verwalten“** geben.
       → [Play Console → Nutzer und Berechtigungen](https://play.google.com/console/developers/users-and-permissions)
+      Danach legt der Workflow „Store products“ (`tools/store/push_products.py`) alle fertigen Produkte und
+      den Pass an; sonst musst du nichts eintragen.
 - [ ] **Apple:** einen **In-App-Purchase-Schlüssel** erzeugen (für die App Store Server API) und die
       .p8-Datei mit Key-ID und Issuer-ID als Secrets `APPLE_IAP_KEY_P8`, `APPLE_IAP_KEY_ID`, `APPLE_ISSUER_ID`
       in lifekit ablegen. Der vorhandene API-Schlüssel braucht die Rolle **App-Manager**, damit das Skript
