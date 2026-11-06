@@ -1,7 +1,10 @@
 extends Node
 ## Autoload "SaveManager": versioned JSON saves in user://.
-## - Writes to a temp file, keeps the previous save as a backup, then renames, so a crash
-##   mid-write never corrupts the save.
+## - Writes to a temp file, checks that it reads back with the same SHA-256 checksum, keeps
+##   the last three saves as rotating backups, then renames, so a crash mid-write never
+##   corrupts the save (plan items 3633, 3634, 3637).
+## - Checks the structure of every save before using it; a broken one never crashes the game,
+##   the newest readable backup is loaded instead (items 3609, 3711).
 ## - Migrates old saves step by step by "save_version".
 ## - Saves when the app is paused / backgrounded (mobile OSes kill background apps).
 ## - Never loads .tres files as saves (loading resources can run embedded scripts).
@@ -12,8 +15,18 @@ const SLOT_PATH: String = "user://save_1.json"
 const SLOTS: int = 3
 const SETTINGS_PATH: String = "user://settings.json"
 
+## How many rotating backups each slot keeps (.bak.json is the newest, then .bak2, .bak3).
+const BACKUPS: int = 3
+## First line of a save with a checksum: the hash covers the rest of the file (see seal()).
+const CHECKSUM_PREFIX: String = "{\n\t\"_sha256\": \""
+
 signal saved
 signal save_failed(reason: String)
+## The main file of the slot was damaged and a backup was loaded instead.
+signal recovered(path: String)
+
+## True when the last load_game() had to use a backup (the title screen tells the player).
+var last_load_recovered: bool = false
 
 ## save_version -> Callable(Dictionary) -> Dictionary that upgrades to save_version + 1.
 var _migrations: Dictionary[int, Callable] = {
@@ -75,10 +88,24 @@ func _notification(what: int) -> void:
 		save_settings()
 
 func has_save() -> bool:
-	return FileAccess.file_exists(slot_path) or FileAccess.file_exists(backup_path())
+	for p: String in save_paths(slot_path):
+		if FileAccess.file_exists(p):
+			return true
+	return false
 
 func backup_path() -> String:
-	return slot_path.get_basename() + ".bak.json"
+	return backup_path_for(slot_path, 1)
+
+## Backup [param n] (1 = newest) of [param path]. Backup 1 keeps the old ".bak.json" name.
+static func backup_path_for(path: String, n: int) -> String:
+	return path.get_basename() + (".bak.json" if n <= 1 else ".bak%d.json" % n)
+
+## The main file followed by its backups, newest first.
+static func save_paths(path: String) -> Array[String]:
+	var out: Array[String] = [path]
+	for n: int in range(1, BACKUPS + 1):
+		out.append(backup_path_for(path, n))
+	return out
 
 func temp_path() -> String:
 	return slot_path + ".tmp"
@@ -93,13 +120,36 @@ func build_save() -> Dictionary:
 
 ## Saves the active slot to the local cache and sends it to the server (Online).
 func save_game() -> bool:
-	var ok: bool = write_atomic(slot_path, JSON.stringify(build_save(), "\t"))
+	var ok: bool = write_save(slot_path, build_save())
 	# Only the real slot files go online (tests point slot_path somewhere else).
 	if ok and slot_path == path_for_slot(slot):
 		Online.note_saved(slot)
 	return ok
 
-## Writes [param text] to [param path] via temp file + backup + rename.
+## Writes a save dictionary with its checksum (used for the slots and for saves from the server).
+func write_save(path: String, d: Dictionary) -> bool:
+	var clean: Dictionary = d.duplicate(true)
+	clean.erase("_sha256")
+	return write_atomic(path, seal(JSON.stringify(clean, "\t")))
+
+## Adds a SHA-256 checksum of [param text] (a JSON object) as its first key.
+static func seal(text: String) -> String:
+	if not text.begins_with("{\n"):
+		return text
+	return CHECKSUM_PREFIX + text.sha256_text() + "\",\n" + text.substr(2)
+
+## Checks the checksum of a sealed save. Files without one (older builds) count as unchecked
+## but fine: a cut-off one still fails to parse.
+static func checksum_ok(text: String) -> bool:
+	if not text.begins_with(CHECKSUM_PREFIX):
+		return true
+	var start: int = CHECKSUM_PREFIX.length()
+	var want: String = text.substr(start, 64)
+	if text.substr(start + 64, 3) != "\",\n":
+		return false
+	return ("{\n" + text.substr(start + 67)).sha256_text() == want
+
+## Writes [param text] to [param path] via temp file, read-back check, rotating backups and rename.
 func write_atomic(path: String, text: String) -> bool:
 	var tmp: String = path + ".tmp"
 	var f := FileAccess.open(tmp, FileAccess.WRITE)
@@ -109,11 +159,14 @@ func write_atomic(path: String, text: String) -> bool:
 	f.store_string(text)
 	f.flush()
 	f.close()
-	var backup: String = path.get_basename() + ".bak.json"
+	# Read it back before touching the old copies: a full disk or a cut-off write is caught
+	# here while the backups are still intact (item 3637).
+	if FileAccess.get_file_as_string(tmp) != text or not checksum_ok(FileAccess.get_file_as_string(tmp)):
+		DirAccess.remove_absolute(tmp)
+		save_failed.emit("read-back check failed for %s" % tmp)
+		return false
 	if FileAccess.file_exists(path):
-		if FileAccess.file_exists(backup):
-			DirAccess.remove_absolute(backup)
-		DirAccess.rename_absolute(path, backup)
+		_rotate_backups(path)
 	var err: Error = DirAccess.rename_absolute(tmp, path)
 	if err != OK:
 		save_failed.emit("rename failed: %s" % error_string(err))
@@ -121,28 +174,153 @@ func write_atomic(path: String, text: String) -> bool:
 	saved.emit()
 	return true
 
-## Reads, migrates and applies the save. Falls back to the backup if the main file is broken.
+## Shifts the backups down by one (.bak2 -> .bak3, .bak -> .bak2) and makes the current file .bak.
+func _rotate_backups(path: String) -> void:
+	var oldest: String = backup_path_for(path, BACKUPS)
+	if FileAccess.file_exists(oldest):
+		DirAccess.remove_absolute(oldest)
+	for n: int in range(BACKUPS - 1, 0, -1):
+		var p: String = backup_path_for(path, n)
+		if FileAccess.file_exists(p):
+			DirAccess.rename_absolute(p, backup_path_for(path, n + 1))
+	DirAccess.rename_absolute(path, backup_path_for(path, 1))
+
+## Reads, migrates and applies the save. Falls back to the newest readable backup if the main
+## file is broken (and says so through [member last_load_recovered] and [signal recovered]).
 func load_game() -> bool:
-	for path: String in [slot_path, backup_path()]:
+	last_load_recovered = false
+	var main_there: bool = FileAccess.file_exists(slot_path)
+	for path: String in save_paths(slot_path):
 		var d: Variant = read_save(path)
 		if d is Dictionary:
 			apply_save(d)
+			if path != slot_path and main_there:
+				last_load_recovered = true
+				recovered.emit(path)
 			return true
 	return false
 
 func read_save(path: String) -> Variant:
 	if not FileAccess.file_exists(path):
 		return null
+	return parse_save(FileAccess.get_file_as_string(path))
+
+## Checks, parses, cleans and migrates the text of a save. Returns null if it cannot be used.
+func parse_save(text: String) -> Variant:
+	if not checksum_ok(text):
+		return null
 	# JSON.new().parse() reports errors quietly (parse_string logs them), which keeps a corrupt
 	# save from spamming the log before we fall back to the backup.
 	var json := JSON.new()
-	if json.parse(FileAccess.get_file_as_string(path)) != OK or not json.data is Dictionary:
+	if json.parse(text) != OK or not json.data is Dictionary:
 		return null
-	return migrate(json.data)
+	var d: Dictionary = json.data
+	d.erase("_sha256")
+	var migrated: Variant = migrate(sanitize(d))
+	return sanitize(migrated) if migrated is Dictionary else null
+
+# --- Structure check (item 3609) ------------------------------------------------------------
+# A save can come from an older build, the server or a damaged file. Every value the loaders
+# read is checked for its type here; a wrong one is dropped so the loader uses its default.
+
+const DICT_KEYS: Array[String] = ["tamer", "spirlog", "inventory", "flags", "matchups", "rests",
+	"records", "switches", "era"]
+const LIST_KEYS: Array[String] = ["rifts", "party", "storage", "sanctuary"]
+const CELL_KEYS: Array[String] = ["cell", "heal_cell"]
+const NUMBER_KEYS: Array[String] = ["difficulty", "money", "play_time", "save_version"]
+const TEXT_KEYS: Array[String] = ["region", "map", "facing", "starter", "saved_at"]
+const FLAG_KEYS: Array[String] = ["iron_oath"]
+const SPIRLING_LISTS: Array[String] = ["party", "storage", "sanctuary"]
+const SPIRLING_NUMBERS: Array[String] = ["level", "xp", "hp"]
+const SPIRLING_TEXTS: Array[String] = ["species", "nickname", "uid", "held"]
+
+static func _is_number(v: Variant) -> bool:
+	return (v is int or v is float or v is bool) and not (v is float and (is_nan(v) or is_inf(v)))
+
+static func _is_scalar(v: Variant) -> bool:
+	return v is String or v is StringName or _is_number(v)
+
+## Drops every value of [param d] whose type the loaders cannot use. Returns [param d].
+static func sanitize(d: Dictionary) -> Dictionary:
+	for k: String in DICT_KEYS:
+		if d.has(k) and not d[k] is Dictionary:
+			d.erase(k)
+	for k: String in LIST_KEYS:
+		if d.has(k) and not d[k] is Array:
+			d.erase(k)
+	for k: String in CELL_KEYS:
+		if d.has(k) and not (d[k] is Array and (d[k] as Array).size() >= 2 and _is_number(d[k][0]) and _is_number(d[k][1])):
+			d.erase(k)
+	for k: String in NUMBER_KEYS:
+		if d.has(k) and not _is_number(d[k]):
+			d.erase(k)
+	for k: String in TEXT_KEYS + FLAG_KEYS:
+		if d.has(k) and not _is_scalar(d[k]):
+			d.erase(k)
+	for k: String in FLAG_KEYS:
+		if d.has(k) and d[k] is String:
+			d[k] = d[k] == "true"
+	if d.has("rifts"):
+		var rifts: Array = []
+		for r: Variant in d.rifts:
+			if _is_scalar(r):
+				rifts.append(str(r))
+		d["rifts"] = rifts
+	for k: String in ["inventory", "matchups"]:
+		if d.has(k):
+			_keep_numbers(d[k])
+	if d.has("tamer"):
+		var t: Dictionary = d.tamer
+		if t.has("name") and not _is_scalar(t.name):
+			t.erase("name")
+		for k: String in ["color", "look"]:
+			if t.has(k) and not _is_number(t[k]):
+				t.erase(k)
+	if d.has("era"):
+		_keep_numbers(d.era)
+	for k: String in SPIRLING_LISTS:
+		if not d.has(k):
+			continue
+		var kept: Array = []
+		for s: Variant in d[k]:
+			if s is Dictionary:
+				kept.append(_sanitize_spirling(s))
+		d[k] = kept
+	return d
+
+static func _keep_numbers(d: Dictionary) -> void:
+	for key: Variant in d.keys():
+		if not _is_number(d[key]):
+			d.erase(key)
+
+static func _sanitize_spirling(s: Dictionary) -> Dictionary:
+	for k: String in SPIRLING_NUMBERS:
+		if s.has(k) and not _is_number(s[k]):
+			s.erase(k)
+	for k: String in SPIRLING_TEXTS:
+		if s.has(k) and not _is_scalar(s[k]):
+			s.erase(k)
+	if s.has("prism") and not _is_number(s.prism):
+		s.erase("prism")
+	if s.has("spark"):
+		if s.spark is Dictionary:
+			_keep_numbers(s.spark)
+		else:
+			s.erase("spark")
+	if s.has("moves"):
+		if s.moves is Array:
+			var mv: Array = []
+			for m: Variant in s.moves:
+				if _is_scalar(m):
+					mv.append(str(m))
+			s["moves"] = mv
+		else:
+			s.erase("moves")
+	return s
 
 ## Upgrades [param d] to SAVE_VERSION. Returns null if it is from a newer game version.
 func migrate(d: Dictionary) -> Variant:
-	var v: int = int(d.get("save_version", 0))
+	var v: int = maxi(int(d.get("save_version", 0)), 0)
 	if v > SAVE_VERSION:
 		return null
 	while v < SAVE_VERSION:
@@ -257,7 +435,7 @@ func _migrate_3_to_4(d: Dictionary) -> Dictionary:
 
 ## Short "where and how long" line for the title screen's Continue button, or "" if unreadable.
 func save_summary() -> String:
-	for path: String in [slot_path, backup_path()]:
+	for path: String in save_paths(slot_path):
 		var d: Variant = read_save(path)
 		if d is Dictionary:
 			return summary_line(d)
@@ -273,7 +451,7 @@ static func summary_line(d: Dictionary) -> String:
 	return "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
 
 func delete_save() -> void:
-	for p: String in [slot_path, backup_path(), temp_path()]:
+	for p: String in save_paths(slot_path) + [temp_path()]:
 		if FileAccess.file_exists(p):
 			DirAccess.remove_absolute(p)
 

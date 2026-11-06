@@ -55,6 +55,14 @@ var floor_index: int = 0
 var floor_count: int = 1
 ## Map file this map comes from (id without the floor part).
 var file_id: String = ""
+## Puzzles: {"id", "flag", "plates": [[x, y], ...]} (see PuzzleRoom).
+var puzzles: Array[Dictionary] = []
+## Tile under a boulder drawn on the map ("f" floor by default, "_" outside).
+var boulder_ground: String = "f"
+## Map a broken cracked floor drops the player to (same cell), e.g. "shatterfloor_mine@1".
+var drop_to: String = ""
+## Ladder anchors: {"x", "y", "to", "tx", "ty"}. Hang the Rope Ladder once, then climb down.
+var ladders: Array[Dictionary] = []
 var _base_rows: PackedStringArray = []
 
 static func exists(map_id: String) -> bool:
@@ -141,6 +149,12 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 		m.blocks.append(b)
 	for sc: Variant in raw.get("secrets", []):
 		m.secrets.append(sc)
+	for pz: Variant in raw.get("puzzles", []):
+		m.puzzles.append(pz)
+	for ld: Variant in raw.get("ladders", []):
+		m.ladders.append(ld)
+	m.boulder_ground = str(raw.get("boulder_ground", "f"))
+	m.drop_to = str(raw.get("drop_to", ""))
 	m._base_rows = m.rows.duplicate()
 	m.encounter_table = str(raw.get("encounters", ""))
 	m.backdrop = str(raw.get("backdrop", "field"))
@@ -163,6 +177,32 @@ func secrets_found(flags: Dictionary) -> Vector2i:
 		if bool(flags.get(str(sc.get("flag", "")), false)):
 			got += 1
 	return Vector2i(got, secrets.size())
+
+## The map character at [param cell] right now ("" off the map).
+func char_at(cell: Vector2i) -> String:
+	return rows[cell.y][cell.x] if in_bounds(cell) else ""
+
+## The character the map file has at [param cell] (before blocks, boulders and planks).
+func base_char(cell: Vector2i) -> String:
+	if cell.y < 0 or cell.y >= _base_rows.size() or cell.x < 0 or cell.x >= _base_rows[cell.y].length():
+		return ""
+	return _base_rows[cell.y][cell.x]
+
+func base_row(y: int) -> String:
+	return _base_rows[y]
+
+## Changes one cell of the live rows (boulders, broken floor, planks).
+func set_char(cell: Vector2i, ch: String) -> void:
+	if in_bounds(cell):
+		var r: String = rows[cell.y]
+		rows[cell.y] = r.substr(0, cell.x) + ch + r.substr(cell.x + 1)
+
+## The ladder anchor at [param cell], or {}.
+func ladder_at(cell: Vector2i) -> Dictionary:
+	for l: Dictionary in ladders:
+		if int(l.x) == cell.x and int(l.y) == cell.y:
+			return l
+	return {}
 
 func in_bounds(cell: Vector2i) -> bool:
 	return cell.x >= 0 and cell.y >= 0 and cell.y < height and cell.x < rows[cell.y].length()
