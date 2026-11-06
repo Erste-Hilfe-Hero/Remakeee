@@ -111,8 +111,11 @@ func test_collection_completion_gives_money() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		GameState.mark_seen(sd.species_name, true)
 	var money: int = GameState.money
+	var paid: int = 0
+	for g: Dictionary in Collection.GOALS:
+		paid += int(g.get("money", 0))
 	Collection.claim()
-	assert_eq(GameState.money, money + 5000)
+	assert_eq(GameState.money, money + paid)
 	assert_true(Collection.next_goal(GameState.spirlog, Database.spirlings.size()).is_empty())
 	for g: Dictionary in Collection.GOALS:
 		if str(g.item) != "":
