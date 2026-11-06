@@ -240,6 +240,22 @@ Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they 
 `raids` (no account ids), `raid_members`, `raid_attempts`; menu `scripts/ui/RaidMenu.gd`
 (Friends, Raid Rifts).
 
+## Trading
+
+Trading (plan area 7) waits behind the flag `trade`. Friends from friendship level
+`trade_min_level` (3) whose friendship was accepted at least `trade_min_days` (7) ago can open a
+trade (`trade_open`, one open trade per pair, at most `trade_max_open` per player, never with
+blocked players). Only items in `trade_items` can be traded; `tools/online/game_data_sql.py` fills
+it from `"tradeable": true` in `data/items.json` at every deploy. Shop items and Spirlings are never
+tradeable (a test checks that no item from `data/shop.json` is on the list). The server is the
+trustee: `trade_put` moves the offer out of the bag of the stored save at once, `trade_confirm` must
+name the other side's current offer, and once both confirmed each side takes the other's items
+with `trade_collect`. Any change of an offer resets both confirmations; `trade_cancel` (or 7 days
+without finishing) gives everyone their own items back. Every change of a save happens in a call
+of its own device, which sends the revision it knows (`sync_first` otherwise), so the game changes
+its bag the same way and saves on top of the new revision. Tables: `trades` (no account ids),
+`trade_sides`; menu `scripts/ui/TradeMenu.gd` (Friends, Trades).
+
 ## Reports and decisions (Ali, about once a week)
 
 Every report gets a number at once (`report_in`, the player sees "Your report has number 12"). Open
