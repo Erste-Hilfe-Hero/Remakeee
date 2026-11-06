@@ -160,6 +160,9 @@ static func fight(a: String, b: String, level: int, seed_value: int, moves: Dict
 static func valid_species(level: int) -> Array[String]:
 	var out: Array[String] = []
 	for sd: SpirlingData in Database.spirlings.values():
+		# Ancient kinds (First Voices) stand above every team on purpose; they are met once.
+		if sd.rarity == "ancient":
+			continue
 		var evolved: bool = evolve_at(sd) > 0 and level >= evolve_at(sd)
 		if level >= min_level(sd) and not evolved:
 			out.append(sd.species_name)

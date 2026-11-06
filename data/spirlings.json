@@ -529,10 +529,10 @@
   "line_id": "mossling",
   "base": {
    "hp": 92,
-   "atk": 92,
+   "atk": 88,
    "foc": 88,
    "spd": 86,
-   "def": 102
+   "def": 94
   },
   "trait": "deep_roots",
   "learnset": {
@@ -655,11 +655,11 @@
   "role": "striker",
   "line_id": "zippit",
   "base": {
-   "hp": 68,
-   "atk": 84,
-   "foc": 100,
+   "hp": 82,
+   "atk": 88,
+   "foc": 108,
    "spd": 120,
-   "def": 64
+   "def": 72
   },
   "trait": "surge",
   "learnset": {
@@ -2695,11 +2695,11 @@
   "role": "kindler",
   "line_id": "reedquill",
   "base": {
-   "hp": 93,
+   "hp": 86,
    "atk": 75,
    "foc": 101,
    "spd": 75,
-   "def": 85
+   "def": 80
   },
   "trait": "deep_roots",
   "learnset": {
