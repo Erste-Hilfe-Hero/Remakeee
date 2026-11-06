@@ -81,6 +81,13 @@ var items_allowed: bool = true
 var level_cap: int = Spirling.MAX_LEVEL
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
 var inventory: Dictionary = {}
+## Battle-only player items that are not in the bag, item id -> count. The Wayfarer Pass puts a
+## free Rift Breath here for Warden battles (plan item 4633); it is used before the bag one and
+## never reaches the journey's bag.
+var gift_items: Dictionary = {}
+## Failed bonds that do not give the wild Spirling its free action (the pass's extra bond try,
+## plan item 4634).
+var bond_grace: int = 0
 ## Items used this battle per side, for the per-battle limits of shop items ("per_battle" in items.json).
 var items_used: Array[Dictionary] = [{}, {}]
 ## Extra energy above the normal maximum per side, set before start() (the shop's Overcharge
@@ -279,11 +286,10 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 	if not StatusRules.blocks_swap(me.status):
 		for i: int in swap_candidates(side, slot):
 			out.append(BattleAction.make_swap(side, i, slot))
-	var bag: Dictionary = _bag(side)
 	if _items_allowed_for(side, slot):
-		for id: Variant in bag:
-			if int(bag[id]) > 0 and _is_battle_item(str(id)):
-				var ia := BattleAction.make_item(side, str(id), active_index(side, slot), slot)
+		for id: String in bag_ids(side):
+			if _is_battle_item(id):
+				var ia := BattleAction.make_item(side, id, active_index(side, slot), slot)
 				# Revive items and spent per-battle limits do not fit the active Spirling.
 				if is_legal(ia):
 					out.append(ia)
@@ -312,7 +318,7 @@ func is_legal(a: BattleAction) -> bool:
 		BattleAction.Kind.SWAP:
 			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
 		BattleAction.Kind.ITEM:
-			if not _items_allowed_for(a.side, a.slot) or int(_bag(a.side).get(a.item_id, 0)) <= 0 or not _is_battle_item(a.item_id):
+			if not _items_allowed_for(a.side, a.slot) or bag_count(a.side, a.item_id) <= 0 or not _is_battle_item(a.item_id):
 				return false
 			if is_partner_index(a.side, a.item_target):
 				return false
@@ -1048,14 +1054,13 @@ func _do_swap(a: BattleAction) -> void:
 		change_energy(a.side, -int(rules.swap_energy_cost), a.slot)
 
 func _do_item(a: BattleAction) -> void:
-	var bag: Dictionary = _bag(a.side)
-	if int(bag.get(a.item_id, 0)) <= 0 or not _items_allowed_for(a.side):
+	if bag_count(a.side, a.item_id) <= 0 or not _items_allowed_for(a.side):
 		return
 	var target: Spirling = parties[a.side][a.item_target]
 	if target.is_fainted() != is_revive_item(a.item_id) or not item_left_this_battle(a.side, a.item_id):
 		return
 	var it: Dictionary = Database.item(a.item_id)
-	bag[a.item_id] = int(bag[a.item_id]) - 1
+	_take_item(a.side, a.item_id)
 	items_used[a.side][a.item_id] = int(items_used[a.side].get(a.item_id, 0)) + 1
 	var d: Dictionary = {"side": a.side, "index": a.item_target, "name": target.display_name(), "item": a.item_id, "item_name": str(it.get("name", a.item_id))}
 	emit_event(BattleEvent.Type.ITEM_USED, d)
@@ -1105,12 +1110,18 @@ func _do_bond(a: BattleAction) -> void:
 	var success: bool = rng.randf() < BondCalc.chance(target, a.timing_score, bonus) or sure
 	var res: Dictionary = _who(Side.FOE, t_slot)
 	res["success"] = success
+	var steadied: bool = not success and bond_grace > 0
+	if steadied:
+		bond_grace -= 1
+		res["steadied"] = true
 	emit_event(BattleEvent.Type.BOND_RESULT, res)
 	if success:
 		bonded = target
 		# In a horde the rest of the swarm fights on; the battle ends once none is left.
 		if not is_multi() or alive_count(Side.FOE) == 0:
 			outcome = Outcome.BONDED
+		return
+	if steadied:
 		return
 	# A failed bond gives the wild Spirling one free action, right now.
 	var free: BattleAction = ai.choose(self, Side.FOE, t_slot)
@@ -1356,6 +1367,34 @@ func _heal_spirling(side: int, index: int, amount: int) -> int:
 
 func _bag(side: int) -> Dictionary:
 	return inventory if side == Side.PLAYER else foe_items
+
+## How many of item [param id] [param side] can use: the bag plus the player's battle-only gifts.
+func bag_count(side: int, id: String) -> int:
+	var n: int = int(_bag(side).get(id, 0))
+	if side == Side.PLAYER:
+		n += int(gift_items.get(id, 0))
+	return n
+
+## Item ids [param side] holds at least one of, gifts included, in a stable order.
+func bag_ids(side: int) -> Array[String]:
+	var out: Array[String] = []
+	var bag: Dictionary = _bag(side)
+	for id: Variant in bag:
+		if int(bag[id]) > 0:
+			out.append(str(id))
+	if side == Side.PLAYER:
+		for id: Variant in gift_items:
+			if int(gift_items[id]) > 0 and not out.has(str(id)):
+				out.append(str(id))
+	return out
+
+## Uses up one [param id]: a battle-only gift first, then the bag.
+func _take_item(side: int, id: String) -> void:
+	if side == Side.PLAYER and int(gift_items.get(id, 0)) > 0:
+		gift_items[id] = int(gift_items[id]) - 1
+		return
+	var bag: Dictionary = _bag(side)
+	bag[id] = int(bag[id]) - 1
 
 func _items_allowed_for(side: int, slot: int = 0) -> bool:
 	if is_partner_slot(side, slot):

@@ -223,6 +223,17 @@ func test_pass_daily_riftglass() -> void:
 	s.clock_offset += 11 * 86400
 	assert_false(_call("shop_state").pass_active, "benefits end with the pass")
 
+func test_refresh_claims_the_pass_riftglass_once() -> void:
+	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
+	shop.sub_set(s.me(), "apple", "P1", "de.chimora.game.pass", s.now() + 30 * 86400, "active", true)
+	watch_signals(Billing)
+	await Billing.refresh_state()
+	assert_true(ShopEffects.pass_active())
+	assert_signal_emitted_with_parameters(Billing, "pass_paid", [30])
+	assert_eq(Billing.balance(), 30, "the shown balance includes it")
+	await Billing.refresh_state()
+	assert_signal_emit_count(Billing, "pass_paid", 1, "once a day")
+
 func test_transfer_keeps_purchases() -> void:
 	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
 	shop.credit(s.me(), "apple", "A1", "de.chimora.game.glass.500", 499)

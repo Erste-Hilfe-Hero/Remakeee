@@ -526,11 +526,11 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 func _pick_item(slot: int = 0) -> BattleAction:
 	var ids: Array[String] = []
 	var entries: Array[Dictionary] = []
-	for id: Variant in model.inventory:
-		var it: Dictionary = Database.item(str(id))
-		if int(model.inventory[id]) > 0 and bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, str(id)):
-			ids.append(str(id))
-			entries.append({"text": "%s x%d" % [it.get("name", id), model.inventory[id]]})
+	for id: String in model.bag_ids(BattleModel.Side.PLAYER):
+		var it: Dictionary = Database.item(id)
+		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
+			ids.append(id)
+			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)]})
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null

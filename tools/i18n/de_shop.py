@@ -586,4 +586,7 @@ T = {
 	"Vor einem Kampf benutzen: Das ganze Team startet den nächsten Kampf mit 12 statt 10 Energie, höchstens 12.",
 "Works by itself: if your whole team is defeated, the last one returns once with 30% Vigor. Not against Rift Wardens.":
 	"Wirkt von selbst: Wird dein ganzes Team besiegt, kehrt der zuletzt Besiegte einmal mit 30 % Kraft zurück. Nicht gegen Rift-Wächter.",
+"%s broke the bond, but your Pass keeps it calm.":
+	"%s hat die Bindung gelöst, aber dein Pass hält ihn ruhig.",
+"Wayfarer Pass: +%d Riftglass": "Wanderer-Pass: +%d Rissglas",
 }
