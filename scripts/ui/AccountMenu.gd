@@ -37,7 +37,7 @@ static func run(menu: MenuHost) -> void:
 static func _show_transfer(menu: MenuHost) -> void:
 	var r: Dictionary = await Online.transfer_create()
 	if not r.ok or not r.data is Dictionary:
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(Online.error_text(r.error))
 		return
 	var c: String = str(r.data.code)
 	await menu.info("Your transfer code:\n\n%s-%s-%s\n\nOn the new phone open Settings, Account, Enter a code. It works once and for 7 days. Keep it secret: anyone with it gets your journeys." % [c.left(4), c.substr(4, 4), c.substr(8)])
@@ -58,7 +58,7 @@ static func _claim_transfer(menu: MenuHost) -> bool:
 	if r.error == "too_many_tries":
 		await menu.info("Too many tries. Please wait an hour.")
 	elif r.net:
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(Online.error_text(r.error))
 	else:
 		await menu.info("That code does not work. Codes work once and for 7 days.")
 	return false
@@ -69,7 +69,7 @@ static func _toggle_social(menu: MenuHost) -> void:
 	if not on and not await menu.confirm("Switch off friends, greetings and gifts? Nobody can send you anything, and you cannot add friends. Your journeys stay online."):
 		return
 	if not await Online.set_social(on):
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(Online.error_text())
 
 static func _delete(menu: MenuHost) -> bool:
 	if not await menu.confirm_danger("Delete your account? All journeys and friends are removed for good."):
@@ -78,7 +78,7 @@ static func _delete(menu: MenuHost) -> bool:
 		return false
 	var r: Dictionary = await Online.delete_account()
 	if not r.ok:
-		await menu.info("No connection right now. Nothing was deleted.")
+		await menu.info(Online.error_text(r.error) + "\n\n" + Loc.t("Nothing was deleted."))
 		return false
 	await menu.info("Your account was deleted.")
 	GameState.in_game = false
