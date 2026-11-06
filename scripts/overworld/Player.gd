@@ -6,6 +6,8 @@ extends GridWalker
 
 signal interact(cell: Vector2i)
 signal stepped(cell: Vector2i)
+## A tap-to-move path ran into [param next], which became blocked (item 1822).
+signal path_blocked(next: Vector2i)
 
 ## Seconds a direction must be held after turning before walking starts.
 const TURN_GRACE: float = 0.09
@@ -73,6 +75,8 @@ func _follow_step() -> void:
 			step_dir = k
 	if step_dir.is_empty() or not can_move.call(next):
 		cancel_path()
+		if not step_dir.is_empty():
+			path_blocked.emit(next)
 		return
 	path.remove_at(0)
 	step(step_dir, path.size() >= RUN_AFTER)

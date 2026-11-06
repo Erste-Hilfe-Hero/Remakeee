@@ -123,6 +123,7 @@ func _build() -> void:
 	player.can_move = _can_enter
 	player.stepped.connect(_on_player_stepped)
 	player.interact.connect(_on_interact)
+	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
 	var hint := InteractHint.new()
 	hint.ow = self
@@ -839,9 +840,12 @@ static func used_on_arrival(m: MapData, cell: Vector2i, flags: Dictionary) -> bo
 	return k == TilesetFactory.Kind.COUNTER or k == TilesetFactory.Kind.PLANK
 
 ## Walks toward [param cell]; NPCs, signs, counters and finds get walked up to and used.
-func tap_cell(cell: Vector2i) -> void:
+func tap_cell(cell: Vector2i, marker: bool = true) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
+	_tap_goal = cell
+	if marker:
+		_tap_retries = 0
 	var gear: Array = GameState.owned_gear()
 	var passable: Callable = func(c: Vector2i) -> bool: return PuzzleRoom.passable(map, c, gear) and npc_at(c) == null
 	# Tapping across water or a ledge: walk to the gear spot and use it.
@@ -859,10 +863,54 @@ func tap_cell(cell: Vector2i) -> void:
 		else:
 			player.follow(PathFinder.find_adjacent(player.cell, cell, passable))
 		return
+	var route: Array[Vector2i] = []
+	var reached: bool = false
 	if npc_at(cell) != null or used_on_arrival(map, cell, GameState.flags):
-		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)
+		route = PathFinder.find_adjacent(player.cell, cell, passable)
+		reached = not route.is_empty() or PathFinder.is_adjacent(cell, player.cell)
+		player.follow(route, cell if reached else Player.NO_TARGET)
 	else:
-		player.follow(PathFinder.find(player.cell, cell, passable))
+		route = PathFinder.find(player.cell, cell, passable)
+		reached = not route.is_empty()
+		player.follow(route)
+	if marker:
+		show_tap_marker(cell, reached)
+
+## The final cell of the last tap and how often a blocked walk was planned again (item 1822).
+var _tap_goal: Vector2i = Player.NO_TARGET
+var _tap_retries: int = 0
+const TAP_RETRY_DELAY: float = 0.3
+const TAP_RETRY_MAX: int = 5
+const TAP_MARKER_TIME: float = 0.4
+
+## A walking villager stepped into the tapped path: plan the way again after 0.3 s instead of
+## standing still (item 1822). Boulders and closed gear spots are not retried.
+func _on_path_blocked(next: Vector2i) -> void:
+	if npc_at(next) == null or _tap_retries >= TAP_RETRY_MAX or _tap_goal == Player.NO_TARGET:
+		return
+	_tap_retries += 1
+	var goal: Vector2i = _tap_goal
+	await get_tree().create_timer(TAP_RETRY_DELAY).timeout
+	if busy or player.moving or not player.path.is_empty() or _tap_goal != goal:
+		return
+	tap_cell(goal, false)
+
+## Shows where a tap leads: a blinking frame on the target for 0.4 s (item 1812), or a small X
+## and the "cancel" sound when no way leads there (item 1813).
+func show_tap_marker(cell: Vector2i, reachable: bool) -> TapMarker:
+	var old: Node = _entities.get_node_or_null("tap_marker")
+	if old != null:
+		old.name = "tap_marker_old"
+		old.queue_free()
+	var mk := TapMarker.new()
+	mk.name = "tap_marker"
+	mk.cross = not reachable
+	mk.life = TAP_MARKER_TIME
+	mk.position = GridWalker.cell_to_pos(cell)
+	_entities.add_child(mk)
+	if not reachable:
+		Sound.sfx("cancel")
+	return mk
 
 func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.is_empty():
