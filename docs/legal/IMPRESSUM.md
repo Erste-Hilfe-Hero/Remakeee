@@ -13,15 +13,12 @@ Muss auf der Website, im Spiel (Einstellungen → Legal) und in beiden Store-Ein
 
 **Angaben gemäß § 5 DDG**
 
-[NAME]
-[ADRESSE]
+Ali Amuri Alnasag
+Im Vogelgesang 9, 60488 Frankfurt am Main
 Deutschland
 
 **Kontakt**
-E-Mail: [E-MAIL]
-Telefon: [TELEFON]
-
-**Umsatzsteuer-ID** gemäß § 27a UStG: [USt-IdNr., falls vorhanden – sonst diese Zeile löschen]
+E-Mail: aa.amuri@icloud.com
 
 **Verbraucherstreitbeilegung**
 Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
@@ -31,6 +28,6 @@ Verbraucherschlichtungsstelle teilzunehmen.
 
 # Imprint (English)
 
-[NAME], [ADDRESS], Germany · Email: [EMAIL] · Phone: [PHONE]
+Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany · Email: aa.amuri@icloud.com
 We are not willing or obliged to take part in dispute resolution proceedings before a consumer arbitration
 board.
