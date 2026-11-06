@@ -49,7 +49,12 @@
     "value": 14
    }
   ],
-  "origin": "Born in a lamp left burning through a long winter."
+  "origin": "Born in a lamp left burning through a long winter.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 2,
@@ -105,7 +110,12 @@
     "value": 31
    }
   ],
-  "origin": "A Kindlop that kept the lighthouse fire for a whole season."
+  "origin": "A Kindlop that kept the lighthouse fire for a whole season.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 3,
@@ -153,7 +163,12 @@
   "height": "1.9 m",
   "habitat": "Volcanic ridges",
   "lore": "The cracks in its shoulder plates glow like banked coals. Herders warm their hands on a dozing Calderox in winter.",
-  "origin": "Said to sleep inside the old kilns of the Thornridge."
+  "origin": "Said to sleep inside the old kilns of the Thornridge.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 4,
@@ -203,7 +218,12 @@
     "value": 18
    }
   ],
-  "origin": "A drop of the lighthouse lake that never wanted to sink."
+  "origin": "A drop of the lighthouse lake that never wanted to sink.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 5,
@@ -259,7 +279,12 @@
     "value": 33
    }
   ],
-  "origin": "Grows in the strong currents below the Saltmarsh dikes."
+  "origin": "Grows in the strong currents below the Saltmarsh dikes.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 6,
@@ -309,7 +334,12 @@
   "height": "2.4 m",
   "habitat": "Deep lakes",
   "lore": "The ring of light above it never touches the water. Old maps mark its lake with a single drawn circle.",
-  "origin": "Old tales say it carries the lake's light down to the deep."
+  "origin": "Old tales say it carries the lake's light down to the deep.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 7,
@@ -358,7 +388,12 @@
     "value": 17
    }
   ],
-  "origin": "Sprouts where a Wayfarer once rested under a fern."
+  "origin": "Sprouts where a Wayfarer once rested under a fern.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 8,
@@ -414,7 +449,12 @@
     "value": 35
    }
   ],
-  "origin": "Its thorns grew to guard the young ferns of the Fernstair."
+  "origin": "Its thorns grew to guard the young ferns of the Fernstair.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 9,
@@ -461,7 +501,12 @@
   "height": "2.0 m",
   "habitat": "Meadows, high pasture",
   "lore": "Ferns grow in its shaggy mane, and birds nest in its beard. An old one can graze for hours without moving a step.",
-  "origin": "Walks the shaded edge of the forest where moss turns dark."
+  "origin": "Walks the shaded edge of the forest where moss turns dark.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 10,
@@ -516,7 +561,12 @@
     "value": 24
    }
   ],
-  "origin": "A spark that jumped off the first storm over Brindlewick."
+  "origin": "A spark that jumped off the first storm over Brindlewick.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 11,
@@ -566,7 +616,12 @@
   "height": "0.8 m",
   "habitat": "Moonlit clearings",
   "lore": "Its axe-shaped horn lights the way for night travellers. It is drawn to lanterns and to people humming.",
-  "origin": "A Zippit that caught the lighthouse beam and kept it."
+  "origin": "A Zippit that caught the lighthouse beam and kept it.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 12,
@@ -619,7 +674,12 @@
     "value": 26
    }
   ],
-  "origin": "Chipped off the Crowcrest cliffs on a cold night."
+  "origin": "Chipped off the Crowcrest cliffs on a cold night.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 13,
@@ -667,7 +727,12 @@
   "height": "2.2 m",
   "habitat": "Deep quarries, Rift edges",
   "lore": "Slow, patient and very heavy. The glass shards on its back ring like bells when it laughs.",
-  "origin": "Its stone hardened deep in the cliff, far from any light."
+  "origin": "Its stone hardened deep in the cliff, far from any light.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 14,
@@ -719,7 +784,12 @@
     "value": 28
    }
   ],
-  "origin": "A gust that got lost between the hills and stayed."
+  "origin": "A gust that got lost between the hills and stayed.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 15,
@@ -763,7 +833,12 @@
   "height": "1.5 m",
   "habitat": "High crags",
   "lore": "It rides storm winds over the peaks. Its crest crackles before a gale; shepherds watch it to know when to head home.",
-  "origin": "Rides out every storm on the coast and returns unhurt."
+  "origin": "Rides out every storm on the coast and returns unhurt.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 16,
@@ -818,7 +893,12 @@
     "value": 22
    }
   ],
-  "origin": "The last flicker of a candle that a child would not blow out."
+  "origin": "The last flicker of a candle that a child would not blow out.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 17,
@@ -871,7 +951,12 @@
   "height": "1.2 m",
   "habitat": "Clear streams, cave pools",
   "lore": "Its gill stalks glow in slow waves, like breathing. Children follow the lights along the riverbank at dusk.",
-  "origin": "Found where lamp light falls on still water."
+  "origin": "Found where lamp light falls on still water.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 18,
@@ -930,7 +1015,12 @@
     "map": "murk_hollow"
    }
   ],
-  "origin": "Dug its way up from the dark under Murk Hollow."
+  "origin": "Dug its way up from the dark under Murk Hollow.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 19,
@@ -980,7 +1070,12 @@
   "height": "1.6 m",
   "habitat": "Old mine galleries",
   "lore": "It carries a slab of basalt on its back like a roof. Abandoned mines are often its doing, dug in a single night.",
-  "origin": "Only a Mirkmole that saw Murk Hollow's dark grows like this."
+  "origin": "Only a Mirkmole that saw Murk Hollow's dark grows like this.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 20,
@@ -1039,7 +1134,12 @@
     "value": "tide_pearl"
    }
   ],
-  "origin": "Washed up in a knot of kelp after a high tide."
+  "origin": "Washed up in a knot of kelp after a high tide.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 21,
@@ -1083,7 +1183,12 @@
   "height": "1.4 m",
   "habitat": "Kelp forests, sea cliffs",
   "lore": "Its mane streams out behind it when it swims, hiding it from bigger hunters. It guards fishing boats it has decided are its own.",
-  "origin": "A Kelpup that found a pearl and grew around its glow."
+  "origin": "A Kelpup that found a pearl and grew around its glow.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 22,
@@ -1136,7 +1241,12 @@
     "value": 6
    }
   ],
-  "origin": "Crawled out of Mirela's old inkwells in the lighthouse."
+  "origin": "Crawled out of Mirela's old inkwells in the lighthouse.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 23,
@@ -1183,7 +1293,12 @@
   "height": "1.3 m",
   "habitat": "Map rooms, quiet shores",
   "lore": "It draws maps of places it has never been. Wayfarers who followed them say the roads were right.",
-  "origin": "A Blotling that read every page of Mirela's map book."
+  "origin": "A Blotling that read every page of Mirela's map book.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 24,
@@ -1235,7 +1350,12 @@
     "value": 10
    }
   ],
-  "origin": "Born from the Hush itself, the silence that fell over Veydal."
+  "origin": "Born from the Hush itself, the silence that fell over Veydal.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 25,
@@ -1282,7 +1402,12 @@
   "height": "1.6 m",
   "habitat": "Ruins at the edge of Rifts",
   "lore": "It speaks only in floating signs of light. Those who learn to read them never feel alone again.",
-  "origin": "A Hushkin that heard ten perfect echoes and answered in light."
+  "origin": "A Hushkin that heard ten perfect echoes and answered in light.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 26,
@@ -1335,7 +1460,12 @@
     "value": 25
    }
   ],
-  "origin": "Lives under Aldo's ferry and was born in its wake."
+  "origin": "Lives under Aldo's ferry and was born in its wake.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 27,
@@ -1379,7 +1509,12 @@
   "height": "1.4 m",
   "habitat": "Ferry crossings, open water",
   "lore": "Its sails catch every gust. Ferry crews leave a seat free at the bow in case it wants to ride along.",
-  "origin": "A Paddlewisp that guided a ferry through a whole storm season."
+  "origin": "A Paddlewisp that guided a ferry through a whole storm season.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 28,
@@ -1428,7 +1563,12 @@
     "value": 19
    }
   ],
-  "origin": "A heap of Crowcrest scree that woke up with one grey eye."
+  "origin": "A heap of Crowcrest scree that woke up with one grey eye.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 29,
@@ -1475,7 +1615,12 @@
     "value": 37
    }
   ],
-  "origin": "A Talusk that carried its first waymark up the Crowcrest."
+  "origin": "A Talusk that carried its first waymark up the Crowcrest.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 30,
@@ -1516,7 +1661,12 @@
   "height": "2.4 m",
   "habitat": "High ridges, beacon hills",
   "lore": "A beacon fire burns on its top stone. On dark nights it climbs the ridge so travellers can find the way.",
-  "origin": "The oldest waymark of the Crowcrest, still walking."
+  "origin": "The oldest waymark of the Crowcrest, still walking.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 31,
@@ -1570,7 +1720,12 @@
     "map": "saltmarsh"
    }
   ],
-  "origin": "A hollow reed of the Saltmarsh that learned the wind's songs."
+  "origin": "A hollow reed of the Saltmarsh that learned the wind's songs.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 32,
@@ -1611,7 +1766,12 @@
   "height": "1.5 m",
   "habitat": "Saltmarsh at dusk",
   "lore": "At dusk its song carries across the whole marsh, and the reeds bend toward it to listen.",
-  "origin": "A Fluting that played through one long Saltmarsh dusk."
+  "origin": "A Fluting that played through one long Saltmarsh dusk.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 33,
@@ -1660,7 +1820,12 @@
   "height": "0.2 m",
   "habitat": "Still mountain tarns",
   "lore": "It only shows itself when there is no wind at all. Then it holds the whole sky on its back.",
-  "origin": "A piece of a Crowcrest mountain lake that mirrors the sky."
+  "origin": "A piece of a Crowcrest mountain lake that mirrors the sky.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 34,
@@ -1709,7 +1874,12 @@
   "height": "0.4 m",
   "habitat": "Lamp posts, lit windows",
   "lore": "It follows the lighthouse beam as it sweeps the coast. Since the first storm it has never left Brindlewick.",
-  "origin": "Followed the lighthouse lights to Brindlewick on the first storm night."
+  "origin": "Followed the lighthouse lights to Brindlewick on the first storm night.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 35,
@@ -1762,7 +1932,12 @@
     "value": "origin"
    }
   ],
-  "origin": "A spark that jumped from the edge of a Rift."
+  "origin": "A spark that jumped from the edge of a Rift.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 36,
@@ -1806,7 +1981,12 @@
   "height": "1.2 m",
   "habitat": "Mended Rifts",
   "lore": "Where a Rift was mended, a Mendlace stays behind and checks the seam every night.",
-  "origin": "A Seamlet that saw its own Rift mended at last."
+  "origin": "A Seamlet that saw its own Rift mended at last.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 37,
@@ -1855,7 +2035,12 @@
     "value": 21
    }
   ],
-  "origin": "A young fern frond of the Fernstair that never stopped curling."
+  "origin": "A young fern frond of the Fernstair that never stopped curling.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 38,
@@ -1898,7 +2083,12 @@
   "height": "1.6 m",
   "habitat": "Old fern woods",
   "lore": "Its antlers are open fern fronds. Each year it unrolls a new one.",
-  "origin": "A Croziel that finally unrolled, frond by frond."
+  "origin": "A Croziel that finally unrolled, frond by frond.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 39,
@@ -1951,7 +2141,12 @@
     "value": 27
    }
   ],
-  "origin": "A salt crystal from the pans of the Saltmarsh."
+  "origin": "A salt crystal from the pans of the Saltmarsh.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 40,
@@ -1992,6 +2187,11 @@
   "height": "2.0 m",
   "habitat": "Salt flats, coastal cliffs",
   "lore": "After a dry summer it stands like a white pillar on the flats. Sailors use it to steer by.",
-  "origin": "A Brinelet that grew through three dry summers."
+  "origin": "A Brinelet that grew through three dry summers.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
  }
 ]

@@ -119,6 +119,14 @@ done
 
 bash "$here/migrate.sh"
 
+# --- Game data for the leagues (species and learnsets, tools/online/game_data_sql.py) -------------
+if [ -f "$here/../data/spirlings.json" ] && command -v python3 >/dev/null 2>&1; then
+	python3 "$here/../tools/online/game_data_sql.py" "$here/../data/spirlings.json" | \
+		docker compose exec -T db psql -U postgres -h localhost -d postgres -v ON_ERROR_STOP=1 -q
+else
+	echo "Game data not loaded: the game project is not next to $here. The fair league needs it."
+fi
+
 # --- Battle referee (plan area 7, items 2687-2688) -----------------------------------------------
 # Its database user may only read battle_queue and write battle_results. The container has no
 # port; it needs the game project next to this folder (../project.godot) to build.

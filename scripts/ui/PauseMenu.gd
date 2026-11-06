@@ -16,6 +16,8 @@ var photo: bool = false
 var watch_replay: bool = false
 ## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
 var echo_duel: Dictionary = {}
+## Set when the player finds a league battle under Leagues: the battle the server set up.
+var league_match: Dictionary = {}
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -33,6 +35,8 @@ func run() -> void:
 			labels.insert(labels.find("Goals") + 1, "Map book")
 		if room_puzzle:
 			labels.insert(1, "Room")
+		if Online.league_on():
+			labels.insert(labels.find("Friends") + 1, "Leagues")
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
@@ -44,6 +48,10 @@ func run() -> void:
 			"Friends":
 				await FriendsMenu.run(self)
 				if not echo_duel.is_empty():
+					return
+			"Leagues":
+				await LeagueMenu.run(self)
+				if not league_match.is_empty():
 					return
 			"Spirlog": await run_spirlog()
 			"Records":
@@ -91,6 +99,9 @@ static func goals_text() -> String:
 	var tasks: Array[String] = DailyTasks.lines()
 	if not tasks.is_empty():
 		text += "\n\n" + "\n".join(tasks)
+	var next: String = Collection.next_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size(), GameState.flags)
+	if not next.is_empty():
+		text += "\n\n" + Loc.t(next)
 	var post: Array[String] = Postgame.lines()
 	if not post.is_empty():
 		text += "\n\n" + "\n".join(post)
@@ -199,7 +210,10 @@ static func records_text() -> String:
 	lines.append("This week: %d of %d" % [best, WeeklyChallenge.ROUNDS])
 	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
 	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
-	lines.append(Collection.progress_text(GameState.spirlog, Database.spirlings.size()))
+	lines.append(Collection.progress_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size()))
+	var titles: Array[String] = Collection.titles()
+	if not titles.is_empty():
+		lines.append("Titles: %s" % ", ".join(titles.map(func(t: String) -> String: return Loc.t(t))))
 	if GameState.iron_oath:
 		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
 		for s: Spirling in GameState.sanctuary:
@@ -472,117 +486,274 @@ func _use_spark_charm(id: String) -> void:
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
 
-## Spirlog: every species with seen/bonded marks, plus the Tracker for the current area.
+## Spirlog filters (item 249), kept while the menu is open.
+var _log_search: String = ""
+var _log_element: int = -1
+var _log_role: int = -1
+var _log_status: int = SpirlogBook.STATUS_ALL
+var _log_region: int = -1
+
+## Spirlog: chapters per open region with their progress, search and filters, then the kinds.
+## A seen kind opens its map-book page (SpirlogPage); unseen ones show as "???".
 func run_spirlog() -> void:
 	while true:
-		var all: Array[SpirlingData] = []
-		for sd: SpirlingData in Database.spirlings.values():
-			all.append(sd)
-		all.sort_custom(func(a: SpirlingData, b: SpirlingData) -> bool: return a.dex_id < b.dex_id)
-		var seen: int = 0
-		var bonded: int = 0
+		var regions: Array[String] = SpirlogBook.open_regions(GameState.flags)
+		var region: String = regions[_log_region] if _log_region >= 0 and _log_region < regions.size() else ""
+		var role: String = SpirlingData.ROLES[_log_role] if _log_role >= 0 else ""
+		var kinds: Array[SpirlingData] = SpirlogBook.filtered(GameState.spirlog, GameState.flags,
+			_log_search, _log_element, role, _log_status, region)
 		var entries: Array[Dictionary] = []
+		var actions: Array[String] = []
+		for r: String in regions:
+			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
+			actions.append("chapter")
+		entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
+		actions.append("region")
+		entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
+		actions.append("search")
+		entries.append({"text": "Element: %s" % ("all" if _log_element < 0 else Elements.element_name(_log_element))})
+		actions.append("element")
+		entries.append({"text": "Role: %s" % ("all" if role.is_empty() else role.capitalize())})
+		actions.append("role")
+		entries.append({"text": "Show: %s" % SpirlogBook.STATUS_NAMES[_log_status]})
+		actions.append("status")
 		if not encounter_table.is_empty():
 			entries.append({"text": "Tracker: this area"})
-		for sd: SpirlingData in all:
-			var e: Dictionary = GameState.spirlog.get(sd.species_name, {})
-			var is_seen: bool = bool(e.get("seen", false))
-			var is_bonded: bool = bool(e.get("bonded", false))
-			seen += 1 if is_seen else 0
-			bonded += 1 if is_bonded else 0
-			var mark: String = (Collection.STAR if Collection.starred(sd.species_name) else "*") if is_bonded else ("+" if is_seen else " ")
-			entries.append({"text": "%02d %s %s" % [sd.dex_id, mark, sd.species_name if is_seen else "???"], "species": sd.species_name, "seen": is_seen})
-		var idx: int = await pick("Spirlog  seen %d  bonded %d" % [seen, bonded], entries)
+			actions.append("tracker")
+		var first_kind: int = entries.size()
+		for sd: SpirlingData in kinds:
+			entries.append({"text": SpirlogBook.list_line(sd, GameState.spirlog)})
+			actions.append("kind")
+		var idx: int = await pick("Spirlog (%d)" % kinds.size(), entries, true, first_kind if not kinds.is_empty() else -1)
 		if idx < 0:
 			return
-		if not encounter_table.is_empty() and idx == 0:
-			await info(_tracker_text())
-			continue
-		var entry: Dictionary = entries[idx]
-		if not bool(entry.get("seen", false)):
-			await info("Not seen yet.")
-			continue
-		var sd: SpirlingData = Database.species(str(entry.species))
-		var els: PackedStringArray = []
-		for el: int in sd.elements:
-			els.append(Elements.element_name(el))
-		var where: PackedStringArray = []
-		for table: String in EncounterTable.table_ids():
-			if sd.species_name in EncounterTable.species_on(table):
-				where.append(table.replace("_", " ").capitalize())
-		var lines: PackedStringArray = ["#%02d %s   %s" % [sd.dex_id, sd.species_name, "/".join(els)]]
-		if not sd.height.is_empty():
-			lines.append("Height %s" % sd.height)
-		if not sd.habitat.is_empty():
-			lines.append("Lives in: %s" % sd.habitat)
-		lines.append("Found on: %s" % (", ".join(where) if not where.is_empty() else "unknown"))
-		var log_entry: Dictionary = GameState.spirlog.get(sd.species_name, {})
-		if bool(log_entry.get("bonded", false)):
-			var tr: Dictionary = BattleRules.trait_info(sd.trait_id)
-			if not tr.is_empty():
-				lines.append("Gift: %s" % tr.label)
-			if not sd.lore.is_empty():
-				lines.append("")
-				lines.append(sd.lore)
-			var rift_lore: String = SpirlogLore.line(sd.species_name)
-			if not rift_lore.is_empty():
-				lines.append(rift_lore)
-		else:
-			lines.append("")
-			lines.append("Bond with one to learn more.")
-		await info("\n".join(lines))
+		match actions[idx]:
+			"chapter", "region":
+				_log_region = _log_region + 1 if _log_region + 1 < regions.size() else -1
+			"search":
+				_log_search = await TextPrompt.ask(self, "Search by name", false, 16, _log_search)
+			"element":
+				_log_element = _log_element + 1 if _log_element + 1 < Elements.E.size() else -1
+			"role":
+				_log_role = _log_role + 1 if _log_role + 1 < SpirlingData.ROLES.size() else -1
+			"status":
+				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
+			"tracker":
+				await info(_tracker_text())
+			"kind":
+				var sd: SpirlingData = kinds[idx - first_kind]
+				if not SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
+					await info("#%02d  Not seen yet." % sd.dex_id)
+					continue
+				await SpirlogPage.show_pages(self, kinds, idx - first_kind)
 
 func _tracker_text() -> String:
 	var lines: PackedStringArray = ["Spirlog Tracker", ""]
+	var listed: Dictionary = {}
 	for sp: String in EncounterTable.species_on(encounter_table):
+		if listed.has(sp):
+			continue
+		listed[sp] = true
 		var e: Dictionary = GameState.spirlog.get(sp, {})
 		var mark: String = "bonded" if bool(e.get("bonded", false)) else ("seen" if bool(e.get("seen", false)) else "not seen")
-		lines.append("%s: %s" % [sp if bool(e.get("seen", false)) else "???", mark])
+		var line: String = "%s: %s" % [sp if bool(e.get("seen", false)) else "???", Loc.t(mark)]
+		# Area 3 item 1115: which ground it steps out of.
+		var grounds: PackedStringArray = []
+		for g: String in EncounterTable.grounds_for(encounter_table, sp):
+			grounds.append(Loc.t(GROUND_LABELS.get(g, g)))
+		if not grounds.is_empty():
+			line += " (%s)" % ", ".join(grounds)
+		lines.append(line)
+	# Area 3 item 1079: hidden finds on this map.
+	if MapData.exists(current_map):
+		var found: Vector2i = MapData.load_map(current_map).secrets_found(GameState.flags)
+		if found.y > 0:
+			lines.append("")
+			lines.append(Loc.t("Hidden finds here: %d/%d") % [found.x, found.y])
 	return "\n".join(lines)
+
+const GROUND_LABELS: Dictionary[String, String] = {"fern": "ferns", "reeds": "reeds", "scree": "scree", "water": "shallow water", "cave": "cave"}
 
 var _storage_sort: int = 0
 var _storage_element: int = -1
 
-## Withdraw list with sort and element filter rows on top (item 57).
-func _withdraw() -> void:
+## Storage (plan area 1, items 375-382): named boxes of 30, favourites, multi-move, team
+## presets, release, keepsakes and a detail card for each Spirling.
+func run_storage() -> void:
+	GameState.ensure_boxes()
 	while true:
-		var view: Array[int] = GameState.storage_view(_storage_sort, _storage_element)
+		var title: String = "Storage (%d/%d)" % [GameState.storage.size(), GameState.storage_capacity()]
+		var idx: int = await pick_strings(title, ["Boxes", "Send to rest", "Team presets"] as Array[String])
+		match idx:
+			-1:
+				return
+			0:
+				await _run_boxes()
+			1:
+				await _send_to_rest()
+			2:
+				await _run_presets()
+
+func _box_names() -> Array[String]:
+	var fill: Array[int] = GameState.box_fill()
+	var names: Array[String] = []
+	for i: int in GameState.storage_boxes.size():
+		names.append("%s (%d/%d)" % [GameState.storage_boxes[i].name, fill[i] if i < fill.size() else 0, GameState.BOX_SIZE])
+	return names
+
+func _run_boxes() -> void:
+	while true:
+		var b: int = await pick_strings("Boxes", _box_names())
+		if b < 0:
+			return
+		await _run_box(b)
+
+func _box_view(box: int) -> Array[int]:
+	var view: Array[int] = GameState.storage_view(_storage_sort, _storage_element)
+	return view.filter(func(i: int) -> bool: return GameState.storage[i].box == box)
+
+func _run_box(box: int) -> void:
+	while true:
+		var view: Array[int] = _box_view(box)
+		var bx: Dictionary = GameState.storage_boxes[box]
 		var names: Array[String] = [
 			"Sort: %s" % GameState.STORAGE_SORTS[_storage_sort],
 			"Show: %s" % ("all" if _storage_element < 0 else Elements.element_name(_storage_element)),
+			"Move several...",
+			"Rename box",
+			"Colour: %s" % Loc.t(str(bx.color).capitalize()),
 		]
 		for i: int in view:
+			names.append(MenuHost.storage_line(GameState.storage[i]))
+		var w: int = await pick_strings("%s (%d)" % [bx.name, view.size()], names)
+		match w:
+			-1:
+				return
+			0:
+				_storage_sort = (_storage_sort + 1) % GameState.STORAGE_SORTS.size()
+			1:
+				_storage_element += 1
+				if _storage_element >= Elements.E.size():
+					_storage_element = -1
+			2:
+				await _move_several(view)
+			3:
+				var n: String = await TextPrompt.ask(self, "Box name", false, GameState.BOX_NAME_MAX, str(bx.name))
+				GameState.rename_box(box, n)
+			4:
+				GameState.recolor_box(box)
+			_:
+				await _run_stored(view[w - 5])
+
+## Mark up to ten Spirlings, then pick the box they move to (item 376). Favourites stay put.
+func _move_several(view: Array[int]) -> void:
+	var marked: Array[int] = []
+	while true:
+		var names: Array[String] = ["Move marked (%d)" % marked.size()]
+		for i: int in view:
 			var s: Spirling = GameState.storage[i]
-			names.append("%s R%d" % [s.display_name(), s.level])
-		var w: int = await pick_strings("Call back (%d)" % view.size(), names)
+			var tag: String = "[x] " if marked.has(i) else ("(fav) " if s.favorite else "[ ] ")
+			names.append(tag + MenuHost.storage_line(s))
+		var w: int = await pick_strings("Mark up to %d" % GameState.MULTI_MOVE_MAX, names)
 		if w < 0:
 			return
 		if w == 0:
-			_storage_sort = (_storage_sort + 1) % GameState.STORAGE_SORTS.size()
-		elif w == 1:
-			_storage_element += 1
-			if _storage_element >= Elements.E.size():
-				_storage_element = -1
-		elif not GameState.withdraw(view[w - 2]):
-			await info("Your team is full.")
-		else:
-			return
-
-## Storage box: deposit and withdraw.
-func run_storage() -> void:
-	while true:
-		var idx: int = await pick_strings("Storage (%d resting)" % GameState.storage.size(), ["Call back", "Send to rest"] as Array[String])
-		if idx < 0:
-			return
-		if idx == 0:
-			if GameState.storage.is_empty():
-				await info("The box is empty.")
+			if marked.is_empty():
 				continue
-			await _withdraw()
+			var to: int = await pick_strings("Move to which box?", _box_names())
+			if to >= 0:
+				var moved: int = GameState.move_to_box(marked, to)
+				await info("%d moved." % moved)
+			return
+		var i: int = view[w - 1]
+		if GameState.storage[i].favorite:
+			await info("Favourites stay where they are. Move them one by one.")
+		elif marked.has(i):
+			marked.erase(i)
+		elif marked.size() < GameState.MULTI_MOVE_MAX:
+			marked.append(i)
+
+## One stored Spirling: details, call back, move, favourite, keepsake, release.
+func _run_stored(index: int) -> void:
+	var s: Spirling = GameState.storage[index]
+	while true:
+		var opts: Array[String] = ["Details", "Call back", "Move to box...", "Unmark favourite" if s.favorite else "Mark as favourite"]
+		if not s.held.is_empty():
+			opts.append("Take off keepsake")
+		opts.append("Release")
+		var c: int = await pick_strings(MenuHost.storage_line(s), opts)
+		var i: int = GameState.storage.find(s)
+		if c < 0 or i < 0:
+			return
+		match opts[c]:
+			"Details":
+				await info(MenuHost.storage_card(s))
+			"Call back":
+				if GameState.withdraw(i):
+					return
+				await info("Your team is full.")
+			"Move to box...":
+				var to: int = await pick_strings("Move to which box?", _box_names())
+				if to >= 0:
+					GameState.move_to_box([i] as Array[int], to, true)
+			"Mark as favourite", "Unmark favourite":
+				GameState.toggle_favorite(s)
+			"Take off keepsake":
+				GameState.add_item(s.held)
+				s.held = ""
+			"Release":
+				if s.favorite:
+					await info("Favourites are never released.")
+				elif await confirm_danger("Release %s?" % s.display_name()) \
+						and await confirm_danger("It goes home for good. Really release it?"):
+					await info(GameState.release(i))
+					return
+
+## Party -> storage, asking whether the keepsake stays in the satchel (item 356).
+func _send_to_rest() -> void:
+	var names2: Array[String] = []
+	for s: Spirling in GameState.party:
+		names2.append(MenuHost.party_line(s))
+	var d: int = await pick_strings("Send to rest", names2)
+	if d < 0:
+		return
+	if GameState.storage.size() >= GameState.storage_capacity():
+		await info("Storage is full.")
+		return
+	var keep: bool = false
+	if not GameState.party[d].held.is_empty():
+		keep = await confirm("Keep the keepsake?")
+	if not GameState.deposit(d, keep):
+		await info("You need at least one healthy Spirling with you.")
+
+## Saved teams of up to five, loaded with one tap (item 378).
+func _run_presets() -> void:
+	while true:
+		var names: Array[String] = []
+		for i: int in GameState.TEAM_PRESETS:
+			names.append(_preset_line(i))
+		var p: int = await pick_strings("Team presets", names)
+		if p < 0:
+			return
+		var has: bool = not GameState.preset_team(p).is_empty()
+		var opts: Array[String] = ["Load this team", "Save current team here"] if has else ["Save current team here"]
+		var c: int = await pick_strings(names[p], opts)
+		if c < 0:
+			continue
+		if opts[c] == "Load this team":
+			if GameState.load_preset(p):
+				await info("Your team is ready.")
+			else:
+				await info("That team can't travel right now.")
 		else:
-			var names2: Array[String] = []
-			for s: Spirling in GameState.party:
-				names2.append(MenuHost.party_line(s))
-			var d: int = await pick_strings("Send to rest", names2)
-			if d >= 0 and not GameState.deposit(d):
-				await info("You need at least one healthy Spirling with you.")
+			GameState.save_preset(p)
+			await info("Team saved.")
+
+func _preset_line(i: int) -> String:
+	var team: Array[Spirling] = GameState.preset_team(i)
+	if team.is_empty():
+		return "Team %d: empty" % (i + 1)
+	var names: PackedStringArray = []
+	for s: Spirling in team:
+		names.append(s.display_name())
+	return "%s: %s" % [GameState.team_presets[i].name, ", ".join(names)]
