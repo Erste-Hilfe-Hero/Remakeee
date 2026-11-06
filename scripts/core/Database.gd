@@ -102,6 +102,8 @@ static func parse_move(m: Dictionary) -> MoveData:
 		md.effects.append({"id": &"side_snare", "snare": m.snare})
 	if int(m.get("delay", 0)) > 0:
 		md.effects.append({"id": &"delayed_hit", "turns": int(m.delay)})
+	if int(m.get("mend", 0)) > 0:
+		md.effects.append({"id": &"mend", "turns": int(m.mend)})
 	if bool(m.get("clear_snares", false)):
 		md.effects.append({"id": &"clear_snares"})
 	# "stats": several stage changes at once, {"atk": -1, "foc": -1}; "self" picks the side.

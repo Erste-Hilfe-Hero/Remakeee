@@ -44,6 +44,9 @@ const FIELD_WEAKEN: float = 0.85
 ## A Resonance move (moves.json "field") lays its field for this many turns; then the place's
 ## own field (or none) comes back.
 const RESONANCE_TURNS: int = 5
+## Root Mend (item 492): turns of mending after the art and the share of max Vigor per turn.
+const MEND_TURNS: int = 3
+const MEND_DIV: int = 16
 ## Turns a field_extend art adds to the Resonance field in play.
 const FIELD_EXTEND_TURNS: int = 2
 

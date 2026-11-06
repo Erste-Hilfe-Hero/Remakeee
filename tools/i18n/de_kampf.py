@@ -178,3 +178,12 @@ T.update({
 "Fenn: My lantern bends the light down here. Let's see who it favors!": "Fenn: Meine Laterne lenkt hier unten das Licht. Mal sehen, wem es hilft!",
 "Fenn: The light turned on me. Well played.": "Fenn: Das Licht hat sich gegen mich gewandt. Gut gespielt.",
 })
+
+# Plan area 2, items 492, 511, 577, 578.
+T.update({
+"Right now: %s.": "Gerade: %s.",
+"Used now, it lands on turn %d.": "Jetzt eingesetzt, schlägt sie in Runde %d ein.",
+"Then mends a little at the end of the next %d turns.": "Heilt danach am Ende der nächsten %d Runden ein wenig.",
+"Makes the Resonance field last %d turns longer.": "Lässt das Resonanz-Feld %d Runden länger halten.",
+"By %d at full Vigor.": "Bei voller Kraft um %d.",
+})

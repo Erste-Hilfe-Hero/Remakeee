@@ -1231,5 +1231,16 @@
   "accuracy": 1.0,
   "energy": 3,
   "priority": -1
+ },
+ {
+  "name": "Root Mend",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_self",
+  "effect_amount": 0.2,
+  "mend": 3
  }
 ]

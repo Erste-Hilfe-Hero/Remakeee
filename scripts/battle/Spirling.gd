@@ -70,6 +70,8 @@ var energy_surge: int = 0
 var cooldowns: Dictionary[String, int] = {}
 ## Battle-only: turns left on a heal block (heal_block effect), same counting.
 var heal_block: int = 0
+## Battle-only: turns of mending left from Root Mend (1/16 max Vigor at each turn end).
+var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
 var burn_guard: int = 0
 ## Temperament id (TEMPERAMENTS), stored since save version 4.
@@ -235,6 +237,7 @@ func end_battle() -> void:
 	energy_tax = 0
 	energy_surge = 0
 	heal_block = 0
+	mend_turns = 0
 	burn_guard = 0
 	cooldowns.clear()
 	status = ""

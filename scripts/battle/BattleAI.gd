@@ -263,6 +263,8 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 			# field_renew (item 616): its own field with one turn left is worth laying again.
 			var renew: bool = int(profile.get("field_renew", 0)) > 0 and model.field == fid and model.field_turns == 1
 			fld += FIELD_BONUS * maxf(0.0, field_value(model, side, fid, renew))
+		elif fx_id == &"mend" and level >= 1 and me.mend_turns <= 0 and me.hp_fraction() < _rule("heal_below", HEAL_THRESHOLD):
+			score += HEAL_ART_WEIGHT * float(fx.get("turns", BattleRules.MEND_TURNS)) / float(BattleRules.MEND_DIV) * acc
 		elif fx_id == &"heal_self" and level >= 1 and me.hp_fraction() < _rule("heal_below", HEAL_THRESHOLD):
 			var back: float = minf(float(fx.get("amount", 0.5)), 1.0 - me.hp_fraction())
 			score += HEAL_ART_WEIGHT * back * acc
