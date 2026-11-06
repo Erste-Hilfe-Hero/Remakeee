@@ -34,6 +34,9 @@ const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "tim
 @export var rarity: String = "common"
 @export var region: String = "veydal"
 @export var role: String = ""
+## The first two marks of its Echo call (0..2, never the same twice), so meeting a kind again
+## sounds familiar (plan area 1, item 278).
+@export var cry_motif: Array[int] = []
 ## One line about where this kind comes from (Spirlog).
 @export var origin: String = ""
 ## Id of the unfold line this kind belongs to (the first form's name in lower case).

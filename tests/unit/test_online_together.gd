@@ -260,10 +260,10 @@ func test_weekly_board_scores_and_names() -> void:
 
 func test_weekly_score_formula() -> void:
 	GameState.new_game(GameState.Difficulty.TAMER, "Ann", 0, "Kindlop")
-	assert_eq(EchoTeam.weekly_score(2, GameState.party), 200)
-	assert_eq(EchoTeam.weekly_score(3, GameState.party), 400)
+	assert_eq(EchoTeam.weekly_score(2, GameState.party), 120)
+	assert_eq(EchoTeam.weekly_score(5, GameState.party), 400)
 	GameState.party[0].hp = 0
-	assert_eq(EchoTeam.weekly_score(3, GameState.party), 300)
+	assert_eq(EchoTeam.weekly_score(5, GameState.party), 300)
 
 func test_transfer_keeps_friends_and_mail() -> void:
 	_befriend()
