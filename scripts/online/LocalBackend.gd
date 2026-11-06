@@ -54,7 +54,7 @@ func _init(p_store_path: String = "") -> void:
 			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
 			"battle_submit", "battle_status", "league_info", "league_join", "league_find"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
-	# Shop functions (20261110000001_shop.sql) live in their own file.
+	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
 
 func is_local() -> bool:

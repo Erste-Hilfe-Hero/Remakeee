@@ -1,7 +1,7 @@
 class_name LocalShop
 extends RefCounted
 ## The shop part of the local stand-in server: the same rules as
-## supabase/migrations/20261110000001_shop.sql, kept in each player's row ("shop"), so moving to a
+## supabase/migrations/20261110000020_shop.sql, kept in each player's row ("shop"), so moving to a
 ## new phone and deleting the account work like on the server. Used by tests and by builds
 ## without a server address. tests/unit/test_shop_server.gd checks the rules.
 

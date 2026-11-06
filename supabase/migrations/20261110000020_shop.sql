@@ -8,7 +8,7 @@
 -- _shop_sub_set functions with the service role. The client never credits anything itself.
 --
 -- The offers themselves come from data/shop.json (tools/shop/build_offers_sql.py writes them into
--- 20261110000002_shop_offers.sql).
+-- 20261110000021_shop_offers.sql).
 
 do $$ begin
   if not exists (select 1 from pg_roles where rolname = 'service_role') then create role service_role nologin; end if;

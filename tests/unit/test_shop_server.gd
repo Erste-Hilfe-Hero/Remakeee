@@ -1,5 +1,5 @@
 extends GutTest
-## Shop on the local stand-in server (same rules as supabase/migrations/20261110000001_shop.sql)
+## Shop on the local stand-in server (same rules as supabase/migrations/20261110000020_shop.sql)
 ## and the Billing flow with the local test store: age gate, limits, Riftglass purchases, store
 ## receipts credited once and finished only afterwards, refunds, pass, moving phones.
 
@@ -177,7 +177,7 @@ func test_once_per_account_and_choice() -> void:
 	# A Rift pack needs a sealed Rift and a choice made before buying; a store purchase without one
 	# gets the first choice instead of a random one.
 	assert_eq(shop.offer_block(s.me(), ShopCatalog.offer("rg_rift_pack_1"), "rg_prism_tide"), "not_yet")
-	s.call_fn("save_put", {"p_slot": 1, "p_data": {"rifts": ["ashfall"], "party": []}, "p_summary": "", "p_base_rev": 0})
+	s.call_fn("save_put", {"p_slot": 1, "p_data": {"schema": 1, "rifts": ["ashfall"], "party": []}, "p_summary": "", "p_base_rev": 0})
 	assert_eq(shop.offer_block(s.me(), ShopCatalog.offer("rg_rift_pack_1"), null), "choice_needed")
 	assert_true(shop.credit(s.me(), "apple", "A2", "de.chimora.game.consumable.rift_pack_1", 499, "rg_prism_tide").ok)
 	var got: Array = _call("shop_claim")

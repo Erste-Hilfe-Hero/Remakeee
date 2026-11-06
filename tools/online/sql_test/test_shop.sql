@@ -156,7 +156,7 @@ set role authenticated;
 select pg_temp.as_user('20000000-0000-0000-0000-00000000000a');
 do $$ begin
   assert public.shop_buy('rg_test_pack', 500, 'rg_prism_ember')->>'error' = 'not_yet', 'needs a sealed Rift';
-  perform public.save_put(1, '{"rifts": ["ashfall"], "party": []}', 'x', 0);
+  assert (public.save_put(1, '{"schema": 1, "rifts": ["ashfall"], "party": []}', 'x', 0, true)->>'ok')::boolean, 'save stored';
   assert public.shop_buy('rg_test_pack', 500)->>'error' = 'choice_needed', 'choice is made before buying';
   assert public.shop_buy('rg_test_pack', 500, 'rg_prism_volt')->>'error' = 'choice_needed', 'only listed choices';
   assert (public.shop_buy('rg_test_pack', 500, 'rg_prism_tide')->>'ok')::boolean;

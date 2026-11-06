@@ -2,7 +2,7 @@
 """Builds the server copy of the shop offers and the store product list from data/shop.json.
 
 Writes:
-  supabase/migrations/20261110000002_shop_offers.sql  (offers for shop_buy / _shop_credit)
+  supabase/migrations/20261110000021_shop_offers.sql  (offers for shop_buy / _shop_credit)
   store/products.json                                 (products for App Store Connect and Play Console)
 Usage: python3 tools/shop/build_offers_sql.py [--check]   (--check fails if the files are out of date)
 """
@@ -10,7 +10,7 @@ import json, os, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SRC = os.path.join(ROOT, "data/shop.json")
-SQL = os.path.join(ROOT, "supabase/migrations/20261110000002_shop_offers.sql")
+SQL = os.path.join(ROOT, "supabase/migrations/20261110000021_shop_offers.sql")
 PRODUCTS = os.path.join(ROOT, "store/products.json")
 # Store product types (item 4066): Apple / Google names.
 TYPES = {"consumable": ("CONSUMABLE", "onetime"), "non_consumable": ("NON_CONSUMABLE", "onetime"),

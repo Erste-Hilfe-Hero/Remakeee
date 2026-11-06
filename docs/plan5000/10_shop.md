@@ -139,7 +139,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Server: Belege, Konto-Guthaben, Erstattungen
 4126. [P1] Einen neuen Dienst `server/billing/` (Python 3.13, ohne fremde Analytics) bauen, in `server/docker-compose.yml` eintragen und im `Caddyfile` unter `/billing/v1/*` erreichbar machen.
-4127. [x] [P1] Eine Migration `supabase/migrations/20261110000001_shop.sql` mit den Tabellen `wallets`, `ledger`, `purchases`, `entitlements`, `subscriptions`, `spend_limits` und `refunds` anlegen, alle mit Zeilen-Zugriffsschutz (RLS) ohne Policies, wie die vorhandenen Tabellen. Zusätzlich `shop_offers`, `shop_profiles` und `deliveries`.
+4127. [x] [P1] Eine Migration `supabase/migrations/20261110000020_shop.sql` mit den Tabellen `wallets`, `ledger`, `purchases`, `entitlements`, `subscriptions`, `spend_limits` und `refunds` anlegen, alle mit Zeilen-Zugriffsschutz (RLS) ohne Policies, wie die vorhandenen Tabellen. Zusätzlich `shop_offers`, `shop_profiles` und `deliveries`.
 4128. [x] [P1] Die Tabelle `purchases` bekommt eine eindeutige Spalte `store_transaction_id` (Apple `transactionId`, Google `orderId`), damit kein Beleg zweimal gutgeschrieben wird.
 4129. [P1] Apple-Belege mit der App Store Server API prüfen: JWS-Signatur gegen die Apple-Zertifikatskette, `bundleId` gleich `de.chimora.game`, `appAccountToken` passt zum Konto.
 4130. [P1] Google-Belege mit der Play Developer API `purchases.products.get` und `purchases.subscriptionsv2.get` prüfen und `obfuscatedExternalAccountId` mit dem Konto vergleichen.
