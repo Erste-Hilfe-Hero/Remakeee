@@ -230,6 +230,8 @@ const CELL_KEYS: Array[String] = ["cell", "heal_cell"]
 const NUMBER_KEYS: Array[String] = ["difficulty", "money", "play_time", "save_version"]
 const TEXT_KEYS: Array[String] = ["region", "map", "facing", "starter", "saved_at"]
 const FLAG_KEYS: Array[String] = ["iron_oath"]
+## Chain glyph in PixelFont, shown before the slot line of an Iron Oath save.
+const OATH_GLYPH: String = "\ue003"
 const SPIRLING_LISTS: Array[String] = ["party", "storage", "sanctuary"]
 const SPIRLING_NUMBERS: Array[String] = ["level", "xp", "hp"]
 const SPIRLING_TEXTS: Array[String] = ["species", "nickname", "uid", "held"]
@@ -448,7 +450,11 @@ static func summary_line(d: Dictionary) -> String:
 	if m != null and not m.display_name.is_empty():
 		place = m.display_name
 	var secs: int = int(float(d.get("play_time", 0.0)))
-	return "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	var line: String = "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	# A small chain marks a journey under the Iron Oath (plan 3396).
+	if d.get("iron_oath", false) is bool and bool(d.get("iron_oath", false)):
+		line = OATH_GLYPH + " " + line
+	return line
 
 func delete_save() -> void:
 	for p: String in save_paths(slot_path) + [temp_path()]:
