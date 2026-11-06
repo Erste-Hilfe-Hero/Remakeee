@@ -2,17 +2,328 @@
  "_comment": "Story figures and signs per map id, in the map format (plan area 4, scripts/core/StoryPlacements.gd). Area 3 builds the maps; entries for maps that do not exist yet wait until they do.",
  "lighthouse": {
   "signs": [
-   {"x": 3, "y": 1, "dialogue": "story/letter_v1", "show_flag": "aldo_dock_told", "hide_flag": "letter_v1"}
+   {
+    "x": 3,
+    "y": 1,
+    "dialogue": "story/letter_v1",
+    "show_flag": "aldo_dock_told",
+    "hide_flag": "letter_v1"
+   }
   ]
  },
  "fernstair": {
   "signs": [
-   {"x": 10, "y": 9, "dialogue": "story/letter_v2", "show_flag": "aldo_dock_told", "hide_flag": "letter_v2"}
+   {
+    "x": 10,
+    "y": 9,
+    "dialogue": "story/letter_v2",
+    "show_flag": "aldo_dock_told",
+    "hide_flag": "letter_v2"
+   }
   ]
  },
  "thornridge": {
   "signs": [
-   {"x": 5, "y": 3, "dialogue": "story/letter_v3", "show_flag": "aldo_dock_told", "hide_flag": "letter_v3"}
+   {
+    "x": 5,
+    "y": 3,
+    "dialogue": "story/letter_v3",
+    "show_flag": "aldo_dock_told",
+    "hide_flag": "letter_v3"
+   }
+  ]
+ },
+ "corvane_quay": {
+  "on_enter": {
+   "scene": "corvane_arrival",
+   "if": {
+    "flag": "ferry_crossed"
+   }
+  },
+  "npcs": [
+   {
+    "id": "juna",
+    "spot": "juna",
+    "facing": "down",
+    "dialogue": "corvane/juna",
+    "sprite": "ranger"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "page_7",
+    "dialogue": "story/find_7",
+    "hide_flag": "page_7"
+   }
+  ]
+ },
+ "madderby": {
+  "npcs": [
+   {
+    "id": "kestra_m",
+    "spot": "kestra",
+    "facing": "down",
+    "dialogue": "corvane/kestra_madderby",
+    "sprite": "ranger"
+   },
+   {
+    "id": "dyer_1",
+    "spot": "dyer_1",
+    "facing": "down",
+    "dialogue": "corvane/dyer_1",
+    "sprite": "villager",
+    "color": "b04a4a",
+    "show_flag": "rift_rain_sealed"
+   },
+   {
+    "id": "dyer_2",
+    "spot": "dyer_2",
+    "facing": "down",
+    "dialogue": "corvane/dyer_2",
+    "sprite": "villager",
+    "color": "c9a227",
+    "show_flag": "rift_rain_sealed"
+   },
+   {
+    "id": "dyer_3",
+    "spot": "dyer_3",
+    "facing": "down",
+    "dialogue": "corvane/dyer_3",
+    "sprite": "villager",
+    "color": "4c8f4c",
+    "show_flag": "rift_rain_sealed"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "letter_c2",
+    "dialogue": "story/letter_c2",
+    "hide_flag": "letter_c2"
+   }
+  ]
+ },
+ "madderby_guild": {
+  "npcs": [
+   {
+    "id": "ysolde",
+    "spot": "ysolde",
+    "facing": "down",
+    "dialogue": "corvane/ysolde",
+    "sprite": "elder"
+   },
+   {
+    "id": "pim",
+    "spot": "pim",
+    "facing": "down",
+    "dialogue": "corvane/pim",
+    "sprite": "villager"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "wall_map",
+    "dialogue": "corvane/wall_map"
+   },
+   {
+    "spot": "veit_desk",
+    "dialogue": "corvane/veit_desk",
+    "show_flag": "guild_joined",
+    "hide_flag": "veit_hint_1"
+   },
+   {
+    "spot": "veit_shelf",
+    "dialogue": "corvane/veit_shelf",
+    "show_flag": "guild_joined",
+    "hide_flag": "veit_hint_2"
+   },
+   {
+    "spot": "veit_stove",
+    "dialogue": "corvane/veit_stove",
+    "show_flag": "guild_joined",
+    "hide_flag": "veit_hint_3"
+   }
+  ]
+ },
+ "woadfen": {
+  "signs": [
+   {
+    "spot": "letter_c3",
+    "dialogue": "story/letter_c3",
+    "hide_flag": "letter_c3"
+   },
+   {
+    "spot": "page_9",
+    "dialogue": "story/find_9",
+    "hide_flag": "page_9"
+   }
+  ]
+ },
+ "rain_rift": {
+  "npcs": [
+   {
+    "id": "warden_senna",
+    "spot": "senna",
+    "facing": "down",
+    "dialogue": "corvane/senna",
+    "sprite": "warden",
+    "trainer": "Warden Senna",
+    "warden": "rain",
+    "team": [
+     {
+      "species": "Riptail",
+      "level": 20
+     },
+     {
+      "species": "Tempestrel",
+      "level": 21
+     },
+     {
+      "species": "Kelphound",
+      "level": 22
+     }
+    ],
+    "intro": "corvane/senna_intro",
+    "defeat": "corvane/senna_defeat",
+    "ai": 2,
+    "money": 1100
+   }
+  ]
+ },
+ "stillwater": {
+  "signs": [
+   {
+    "spot": "page_8",
+    "dialogue": "story/find_8",
+    "hide_flag": "page_8"
+   }
+  ]
+ },
+ "mirror_rift": {
+  "npcs": [
+   {
+    "id": "warden_joral",
+    "spot": "joral",
+    "facing": "down",
+    "dialogue": "corvane/joral",
+    "sprite": "warden",
+    "trainer": "Warden Joral",
+    "warden": "mirror",
+    "team": [
+     {
+      "species": "Lumenewt",
+      "level": 22
+     },
+     {
+      "species": "Glimmerax",
+      "level": 23
+     },
+     {
+      "species": "Verdantusk",
+      "level": 23
+     }
+    ],
+    "intro": "corvane/joral_intro",
+    "defeat": "corvane/joral_defeat",
+    "ai": 2,
+    "money": 1200
+   }
+  ]
+ },
+ "greyreach": {
+  "npcs": [
+   {
+    "id": "veit",
+    "spot": "veit",
+    "facing": "down",
+    "dialogue": "corvane/veit_leaves",
+    "sprite": "ranger",
+    "color": "5a4a3a",
+    "trainer": "Veit Harrow",
+    "team": [
+     {
+      "species": "Shalebat",
+      "level": 24
+     },
+     {
+      "species": "Duskdigger",
+      "level": 25
+     },
+     {
+      "species": "Obsidroth",
+      "level": 27
+     }
+    ],
+    "intro": "corvane/veit_intro",
+    "defeat": "corvane/veit_defeat",
+    "beaten_flag": "beat_veit_1",
+    "leaves": true,
+    "ai": 2,
+    "money": 1300,
+    "hide_flag": "beat_veit_1"
+   },
+   {
+    "id": "moss",
+    "spot": "moss",
+    "facing": "left",
+    "dialogue": "corvane/moss",
+    "sprite": "elder"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "page_10",
+    "dialogue": "story/find_10",
+    "hide_flag": "page_10"
+   }
+  ]
+ },
+ "wide_rift_edge": {
+  "signs": [
+   {
+    "spot": "burned_words",
+    "dialogue": "corvane/burned_words"
+   },
+   {
+    "spot": "letter_c1",
+    "dialogue": "story/letter_c1",
+    "hide_flag": "letter_c1"
+   }
+  ]
+ },
+ "ashmere_station": {
+  "signs": [
+   {
+    "spot": "page_11",
+    "dialogue": "story/find_11",
+    "hide_flag": "page_11"
+   }
+  ]
+ },
+ "kiln_rift": {
+  "signs": [
+   {
+    "spot": "page_12",
+    "dialogue": "story/find_12",
+    "hide_flag": "page_12"
+   }
+  ]
+ },
+ "saltglass": {
+  "signs": [
+   {
+    "spot": "page_13",
+    "dialogue": "story/find_13",
+    "hide_flag": "page_13"
+   }
+  ]
+ },
+ "gravers_hall": {
+  "signs": [
+   {
+    "spot": "page_14",
+    "dialogue": "story/find_14",
+    "hide_flag": "page_14"
+   }
   ]
  }
 }

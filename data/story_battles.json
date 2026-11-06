@@ -1,3 +1,31 @@
 {
- "_comment": "Story duels started by the dialogue/scene action 'battle <id>'. Same fields as a Wayfarer in a map file (scripts/overworld/TrainerData.gd), plus 'defeat'/'lose' dialogue refs and 'win_flags'."
+ "_comment": "Story duels started by the dialogue/scene action 'battle <id>'. Same fields as a Wayfarer in a map file (scripts/overworld/TrainerData.gd), plus 'defeat'/'lose' dialogue refs and 'win_flags'.",
+ "kestra_2": {
+  "trainer": "Cartographer Kestra",
+  "team": [
+   {
+    "species": "Tempestrel",
+    "level": 22
+   },
+   {
+    "species": "Glimmerax",
+    "level": 21
+   },
+   {
+    "species": "Shalebat",
+    "level": 21
+   },
+   {
+    "species": "Kelpup",
+    "level": 20
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "corvane/kestra_2_defeat",
+  "lose": "corvane/kestra_2_lose",
+  "win_flags": [
+   "kestra_duel_2"
+  ]
+ }
 }

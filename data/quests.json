@@ -7,7 +7,13 @@
     {"id": "dock", "text": "Kestra is waiting at the Brindlewick dock.", "where": "Brindlewick", "done": ["kestra_dock_talk"], "chapter": "Chapter 3: The Dock", "act": "Act I: The Hush of Veydal"},
     {"id": "home", "chapter": "Chapter 4: The Lamp", "text": "Go home to the lighthouse and tell Aldo what Kestra said.", "where": "Brindlewick Lighthouse", "done": ["aldo_dock_told"], "act": "Act I: The Hush of Veydal"},
     {"id": "lamp", "act": "Act I: The Hush of Veydal", "chapter": "Chapter 5: Mirela's Map", "text": "Find the six pages of Mirela's map book and take them up to the lamp room.", "where": "Brindlewick Lighthouse", "done": ["mirela_lamp"]},
-    {"id": "crossing", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 6: The Landing", "text": "Aldo is rowing the ferry himself. Cross the lake with him from the Brindlewick pier.", "where": "Brindlewick", "done": ["ferry_crossed"]}
+    {"id": "crossing", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 6: The Landing", "text": "Aldo is rowing the ferry himself. Cross the lake with him from the Brindlewick pier.", "where": "Brindlewick", "done": ["ferry_crossed"]},
+    {"id": "guild", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 6: The Landing", "text": "Follow the river road to Madderby and find the cartographers' guild house.", "where": "Madderby", "done": ["guild_joined"]},
+    {"id": "rifts2", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 7: Rain and Mirror", "text": "Mend the Rain Rift in the Woadfen and the Mirror Rift past Stillwater.", "where": "Woadfen / Stillwater", "done": ["rift_rain_sealed", "rift_mirror_sealed"]},
+    {"id": "kestra2", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 8: Kestra's Doubt", "text": "Something is wrong with Kestra's Tatter. Find her in Madderby.", "where": "Madderby", "done": ["beat_story_kestra_2"]},
+    {"id": "veit", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 9: Veit", "text": "Cross the Greyreach toward the Wide Rift. Someone is waiting on the ridge.", "where": "Greyreach", "done": ["beat_veit_1"]},
+    {"id": "wide", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 10: The Wide Rift", "text": "Reach the edge of the Wide Rift north of the Greyreach.", "where": "Wide Rift", "done": ["wide_rift_seen"]},
+    {"id": "far_side", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 11: The Far Side", "text": "Tell Ysolde at the guild house what you found at the Wide Rift.", "where": "Madderby guild house", "done": ["act2_end"]}
   ],
   "side": [
     {"id": "pages", "text": "Find the six pages of Mirela's map book. Kestra has one; the storm blew the rest to Fernstair, Crowcrest, Thornridge, the Saltmarsh and Murk Hollow.", "show": "aldo_gift", "done": "pages_all", "progress": ["page_1", "page_2", "page_3", "page_4", "page_5", "page_6"]},
@@ -23,6 +29,9 @@
     {"id": "cinder_heart", "text": "The Hush still smoulders at the heart of the Cinder Rift.", "show": "rift_cinder_sealed", "done": "cinder_heart_mended"},
     {"id": "tide_heart", "text": "Something stirs at the bottom of the Tidewater Rift.", "show": "rift_tide_sealed", "done": "tide_heart_mended"},
     {"id": "letters_veydal", "text": "Mirela hid three letters to Aldo in Veydal: in the lighthouse, on Fernstair and by the pond in Thornridge.", "where": "Lighthouse / Fernstair / Thornridge", "show": "aldo_dock_told", "done": "letters_veydal_done", "progress": ["letter_v1", "letter_v2", "letter_v3"]},
-    {"id": "puddlet", "text": "The child in Brindlewick wants their hushed Puddlet to wake up.", "where": "Brindlewick", "show": "q_puddlet_asked", "done": "q_puddlet_done"}
+    {"id": "puddlet", "text": "The child in Brindlewick wants their hushed Puddlet to wake up.", "where": "Brindlewick", "show": "q_puddlet_asked", "done": "q_puddlet_done"},
+    {"id": "letters", "text": "Pim the archivist is looking for Mirela's lost letters. Three are somewhere in Corvane.", "where": "Corvane", "show": "letters_pim_asked", "done": "letters_corvane_done", "progress": ["letter_c1", "letter_c2", "letter_c3"]},
+    {"id": "colour_back", "text": "Three dye families in Madderby want to see Spirlings with their colour back.", "where": "Madderby", "show": "rift_rain_sealed", "done": "colour_back_done", "progress": ["q_dyer_1_done", "q_dyer_2_done", "q_dyer_3_done"]},
+    {"id": "veit_workshop", "text": "Veit Harrow once worked at the guild. His old corner still holds clues.", "where": "Madderby guild house", "show": "guild_joined", "done": "veit_workshop_done", "progress": ["veit_hint_1", "veit_hint_2", "veit_hint_3"]}
   ]
 }
