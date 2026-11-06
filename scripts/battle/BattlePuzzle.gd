@@ -306,7 +306,7 @@ static func start_attempt(p: Dictionary, quick: bool = false) -> Attempt:
 		at.model.set_meta("quick", true)
 	return at
 
-## The intro events of a prepared model; a quick restart drops the spoken lines.
+## The intro events of a prepared model; a quick restart drops the lines said before the fight.
 static func intro_events(m: BattleModel) -> Array[BattleEvent]:
 	var out: Array[BattleEvent] = []
 	for e: BattleEvent in m.get_meta("intro", []):
