@@ -8,6 +8,7 @@ var _old_state: Online.State
 var _old_store: BillingStore
 var _old_inventory: Dictionary
 var _old_money: int
+var _old_in_game: bool
 var s: LocalBackend
 var shop: LocalShop
 var store: LocalBilling
@@ -19,6 +20,7 @@ func before_all() -> void:
 	_old_store = Billing.store
 	_old_inventory = GameState.inventory.duplicate()
 	_old_money = GameState.money
+	_old_in_game = GameState.in_game
 
 func after_all() -> void:
 	Online.backend = _old_backend
@@ -27,6 +29,7 @@ func after_all() -> void:
 	Billing.state = {}
 	GameState.inventory = _old_inventory
 	GameState.money = _old_money
+	GameState.in_game = _old_in_game
 
 func before_each() -> void:
 	s = LocalBackend.new()
@@ -41,6 +44,8 @@ func before_each() -> void:
 	s.call_fn("hello", {"p_version": 1})
 	GameState.inventory = {}
 	GameState.money = 0
+	# No journey is open: deliveries go into the bag without saving to the test server.
+	GameState.in_game = false
 
 func _call(fn: String, args: Dictionary = {}) -> Variant:
 	return s.call_fn(fn, args).data
