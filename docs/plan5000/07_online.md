@@ -287,11 +287,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2919. [P3] Doppelte Meldungen (gleicher Meldender, gleiches Ziel, 24 Stunden) werden still verworfen und nicht gezählt.
 2920. [P3] Vorlagen für Begründungstexte in allen Spielsprachen in `scripts/online/ModReasons.gd`, damit Begründungen einheitlich sind.
 ### Schutz vor Schummeln
-2921. [P1] `save_put` vergleicht jeden neuen Stand mit dem vorherigen und lehnt ab, wenn Geld schneller als 5000 Münzen pro gespielter Minute steigt (Grenze in `server_config.max_money_per_min`).
-2922. [P1] `save_put` lehnt Spirling-Arten, Techniken und Gegenstände ab, deren Kennung nicht in den Spieldaten auf dem Server steht (Tabelle `known_ids`, beim Deploy aus `data/*.json` gefüllt).
-2923. [P1] Spielzeit im Stand darf nur steigen und pro Speicherung höchstens um die echte Zeit seit der letzten Speicherung plus 5 Minuten.
-2924. [P1] Werte, die der Server führt (Ligawertung, Raid-Beiträge, Tauschbestand, Kaufwährung), stehen in eigenen Tabellen und werden aus dem Spielstand ignoriert, selbst wenn der Client sie mitschickt.
-2925. [P1] Jeder abgelehnte Stand wird mit Grund in `cheat_flags` vermerkt; ab 3 Vermerken in 7 Tagen wird das Konto aus Ligen und Raids genommen, bis Ali es prüft.
+2921. [x] [P1] `save_put` vergleicht jeden neuen Stand mit dem vorherigen und lehnt ab, wenn Geld schneller als 5000 Münzen pro gespielter Minute steigt (Grenze in `server_config.max_money_per_min`).
+2922. [x] [P1] `save_put` lehnt Spirling-Arten, Techniken und Gegenstände ab, deren Kennung nicht in den Spieldaten auf dem Server steht (Tabelle `known_ids`, beim Deploy aus `data/*.json` gefüllt).
+2923. [x] [P1] Spielzeit im Stand darf nur steigen und pro Speicherung höchstens um die echte Zeit seit der letzten Speicherung plus 5 Minuten.
+2924. [x] [P1] Werte, die der Server führt (Ligawertung, Raid-Beiträge, Tauschbestand, Kaufwährung), stehen in eigenen Tabellen und werden aus dem Spielstand ignoriert, selbst wenn der Client sie mitschickt.
+2925. [x] [P1] Jeder abgelehnte Stand wird mit Grund in `cheat_flags` vermerkt; ab 3 Vermerken in 7 Tagen wird das Konto aus Ligen und Raids genommen, bis Ali es prüft.
 2926. [P2] Wachstum pro Kampf darf den höchsten Wert aus den Spieldaten für den stärksten Gegner der jeweiligen Karte nicht übersteigen.
 2927. [P2] Ein Spirling kann den Ring nur erhöhen, nie senken, außer über eine Spielfunktion, die der Server kennt.
 2928. [P2] Die Anzahl jedes Gegenstands im Stand darf nur um das wachsen, was Kämpfe, Funde, Post, Tausch und Shop in der Zeit liefern konnten (Obergrenze 50 Stück pro Speicherung).
