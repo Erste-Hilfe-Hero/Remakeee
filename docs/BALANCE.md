@@ -237,3 +237,15 @@ to be claimed when the season ends. This is the free path; a paid lane is area 1
   fields four Spirlings of one element, final forms for the ring, at master ring - 2 up to the
   master ring (45, 46, 48, 49, 50, 52, 53, 55). Eight first wins pay 640 Waymarks once; after
   that the masters add up to 160 a week.
+
+### Shop techniques (Rift Scripts, plan area 10)
+
+- Eight Rift Scripts (`rg_script_<element>`, 500 Riftglass or 4,99 € each) each teach one shop
+  technique to one Spirling of that element and are used up. All have power 95, accuracy 100
+  and 4 energy, more than the Echo Crystal techniques (power 55 to 80, 4 to 5 energy).
+- Side effects: Glowglass Slash 20% scorch, Floodglass Wave 20% soak, Vineglass Sting heals 25%
+  of the damage, Boltglass Bite 30% Pace -1 on the foe, Rockglass Ram 30% own Guard +1,
+  Stormglass Cut priority +1, Lightglass Beam cures the user's condition, Duskglass Grip 30%
+  Focus -1 on the foe.
+- They are in no learnset: Wayfarer and Warden AI never field them, and the Fair League only
+  allows learnable moves, so they are dropped there.
