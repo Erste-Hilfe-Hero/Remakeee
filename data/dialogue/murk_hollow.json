@@ -105,5 +105,14 @@
    "A coiled rope hangs on a hook by a lever."
   ],
   "action": "lever echo_rope"
- }
+ },
+ "fenn": [
+  "Fenn: A Rift field lifts one element and dims another. Change it when it helps you."
+ ],
+ "fenn_intro": [
+  "Fenn: My lantern bends the light down here. Let's see who it favors!"
+ ],
+ "fenn_defeat": [
+  "Fenn: The light turned on me. Well played."
+ ]
 }

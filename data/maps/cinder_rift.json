@@ -68,11 +68,19 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 9
+     "level": 9,
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down"
+     ]
     },
     {
      "species": "Zippit",
-     "level": 9
+     "level": 9,
+     "moves": [
+      "Crackle Bite",
+      "Static Tag"
+     ]
     }
    ],
    "sprite": "warden",
@@ -90,11 +98,42 @@
    "team": [
     {
      "species": "Kindlop",
-     "level": 10
+     "level": 10,
+     "moves": [
+      "Cinder Dash",
+      "Kindle Up",
+      "Char Mark"
+     ]
     }
    ],
    "sprite": "warden",
-   "profile": "apprentice"
+   "profile": "apprentice",
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Cinder Dash",
+       "Kindle Up",
+       "Char Mark",
+       "Ash Call"
+      ]
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Cinder Dash",
+       "Kindle Up",
+       "Char Mark",
+       "Ash Call"
+      ]
+     }
+    ]
+   }
   },
   {
    "id": "warden_orrin",
