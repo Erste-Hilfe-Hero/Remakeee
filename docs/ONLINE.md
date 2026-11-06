@@ -256,6 +256,15 @@ of its own device, which sends the revision it knows (`sync_first` otherwise), s
 its bag the same way and saves on top of the new revision. Tables: `trades` (no account ids),
 `trade_sides`; menu `scripts/ui/TradeMenu.gd` (Friends, Trades).
 
+## Set phrases and names
+
+There is no free text anywhere. Every place that shows set phrases has its own list of allowed
+phrase numbers in `server_config.phrases_allowed` (`post`, `duel`, `bund`, `raid`), the same lists
+as `Phrases.CONTEXTS`; the server checks them with `_phrase_ok(context, n)`. Append new phrases at
+the end of `Phrases.LIST` and add their numbers to the lists in both places. Wanderer names hold
+1 to 10 letters, digits or spaces, at most 3 digits in total and nothing like "www" or "http";
+anything else becomes "Wanderer" and the end of the friend code.
+
 ## Reports and decisions (Ali, about once a week)
 
 Every report gets a number at once (`report_in`, the player sees "Your report has number 12"). Open
