@@ -360,6 +360,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"language": "English or Deutsch.",
 	"day_night": "The light changes with the time of day.",
 	"weather": "Rain, fog and wind in the world. Off: always clear.",
+	"minimap": "Small map in the top corner. Outside only: hidden in houses and caves.",
 	"pad_size": "How big the touch pad and buttons are.",
 	"pad_opacity": "How see-through the touch pad is.",
 	"left_handed": "Puts the pad on the right and A and B on the left.",
@@ -583,6 +584,9 @@ func run_display() -> void:
 				GameState.day_night = not GameState.day_night
 			"weather":
 				GameState.weather = not GameState.weather
+			"minimap":
+				var modes: Array[String] = Survey.MINIMAP_MODES
+				GameState.minimap = modes[(modes.find(GameState.minimap) + 1) % modes.size()]
 			"retro":
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
@@ -594,6 +598,8 @@ func run_display() -> void:
 		refresh_all_themes(get_tree())
 		SaveManager.save_settings()
 
+const MINIMAP_NAMES: Dictionary = {"on": "On", "off": "Off", "outdoor": "Outside only"}
+
 static func display_rows() -> Array[Array]:
 	var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
 	return [
@@ -604,6 +610,7 @@ static func display_rows() -> Array[Array]:
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
 		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
 		["weather", "Weather: %s" % ("On" if GameState.weather else "Off")],
+		["minimap", "Minimap: %s" % MINIMAP_NAMES[GameState.minimap]],
 		["retro", "Retro filter: %s" % retro],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
 	]

@@ -70,9 +70,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2283. [P2] Warp über Leuchtturm-Treppen bekommt einen senkrechten Übergang: das Bild schiebt sich beim Hochsteigen nach unten weg und umgekehrt.
 2284. [P2] Eintritt in eine Rift-Karte zeigt einen 0,3 s langen Riss-Schnitt, der sich von der Mitte aus öffnet, als eigener Shader shaders/rift_wipe.gdshader.
 2285. [P2] Ausstieg aus einer Rift-Karte schließt den Riss-Schnitt in umgekehrter Richtung.
-2286. [P2] Dialogfeld fährt mit Kurve "open" 6 Pixel von unten herein und schließt mit "close", statt sofort zu erscheinen.
-2287. [P2] Dialog-Seitenwechsel lässt den alten Text 2 Pixel nach oben rutschen und ausblenden, bevor der neue zu tippen beginnt.
-2288. [P2] Der Weiter-Pfeil im Dialogfeld wippt 1 Pixel auf und ab im Takt von 0,5 s statt still zu stehen.
+2286. [x] [P2] Dialogfeld fährt mit Kurve "open" 6 Pixel von unten herein und schließt mit "close", statt sofort zu erscheinen.
+2287. [x] [P2] Dialog-Seitenwechsel lässt den alten Text 2 Pixel nach oben rutschen und ausblenden, bevor der neue zu tippen beginnt.
+2288. [x] [P2] Der Weiter-Pfeil im Dialogfeld wippt 1 Pixel auf und ab im Takt von 0,5 s statt still zu stehen.
 2289. [P3] Freundes- und Kontomenü (FriendsMenu.gd, AccountMenu.gd) bekommen dieselben Schiebe-Übergänge wie das Pausemenü.
 2290. [P2] Ladepausen beim Server-Abruf über 200 ms zeigen drei Punkte, die nacheinander hüpfen, statt eines eingefrorenen Bildes.
 2291. [P2] Wiederverbinden-Anzeige (ReconnectOverlay.gd) blendet in 0,2 s ein und aus und dunkelt das Spiel nur auf 60 % ab.

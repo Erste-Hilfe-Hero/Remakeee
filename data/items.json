@@ -596,5 +596,34 @@
   "battle": false,
   "shop": true,
   "spark_all": true
+ },
+ {
+  "id": "rg_rift_breath",
+  "name": "Rift Breath",
+  "description": "In battle: brings a defeated Spirling back with half its Vigor. One per battle.",
+  "battle": true,
+  "shop": true,
+  "battle_revive": 0.5,
+  "per_battle": 1
+ },
+ {
+  "id": "rg_rift_breath_full",
+  "name": "Great Rift Breath",
+  "description": "In battle: brings a defeated Spirling back with full Vigor and full energy. One per battle.",
+  "battle": true,
+  "shop": true,
+  "battle_revive": 1.0,
+  "revive_energy": true,
+  "per_battle": 1
+ },
+ {
+  "id": "rg_glass_tonic",
+  "name": "Riftglass Tonic",
+  "description": "In battle: heals all Vigor and every state. Two per battle.",
+  "battle": true,
+  "shop": true,
+  "heal_frac": 1.0,
+  "cure": true,
+  "per_battle": 2
  }
 ]

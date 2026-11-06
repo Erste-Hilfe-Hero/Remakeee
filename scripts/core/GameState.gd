@@ -83,6 +83,10 @@ var heal_cell: Vector2i = Vector2i(4, 4)
 var flags: Dictionary = {}
 ## Rest spots the player has used: map id -> [x, y] (fast travel between them).
 var visited_rests: Dictionary = {}
+## Survey (area 3 item 1245): map id -> PackedByteArray, one bit per cell seen (Survey.gd).
+var map_cells: Dictionary = {}
+## Own world map marks (item 1273): [{"map", "x", "y", "icon"}], at most Survey.MAX_MARKS.
+var map_marks: Array = []
 ## Personal bests, e.g. "gauntlet_best".
 var records: Dictionary = {}
 ## Story numbers such as kestra_trust (dialogue actions set_var / add_var, plan item 1339).
@@ -158,6 +162,8 @@ var large_text: bool = false
 var day_night: bool = true
 ## Weather in the world (area 3 item 1145); off means always clear.
 var weather: bool = true
+## Minimap (area 3 item 1272): "on", "off" or "outdoor" (only outside).
+var minimap: String = "on"
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
 const FPS_NORMAL: int = 60
@@ -397,6 +403,8 @@ func reset() -> void:
 	heal_cell = Vector2i(4, 4)
 	flags = {}
 	visited_rests = {}
+	map_cells = {}
+	map_marks = []
 	records = endgame_defaults({})
 	story_vars = {}
 	story_choices = {}
@@ -482,6 +490,8 @@ func to_dict() -> Dictionary:
 		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
 		"rests": visited_rests.duplicate(true),
+		"map_cells": Survey.cells_to_save(map_cells),
+		"map_marks": map_marks.duplicate(true),
 		"records": records.duplicate(true),
 		"story_vars": story_vars.duplicate(),
 		"story_choices": story_choices.duplicate(),
@@ -546,6 +556,8 @@ func from_dict(d: Dictionary) -> void:
 			known_matchups[str(k)] = float(mu[k])
 	play_time = float(d.get("play_time", 0.0))
 	visited_rests = _as_dict(d.get("rests", {}))
+	map_cells = Survey.cells_from_save(d.get("map_cells", {}))
+	map_marks = Survey.marks_from_save(d.get("map_marks", []))
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
@@ -574,7 +586,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "language": language}
+		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -611,6 +623,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
 	weather = bool(d.get("weather", true))
+	minimap = str(d.get("minimap", "on")) if str(d.get("minimap", "on")) in Survey.MINIMAP_MODES else "on"
 	language = str(d.get("language", ""))
 	apply_display()
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)

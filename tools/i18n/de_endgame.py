@@ -336,4 +336,8 @@ T = {
 "Echo %s": "Echo %s", "The lighthouse stair": "Die Leuchtturmtreppe", "Climb the stair": "Die Treppe hinauf",
 "Endless stretch (best %d)": "Endlosstrecke (Bestwert %d)", "Endless floor %d cleared. Keep going?": "Endlos-Stockwerk %d geschafft. Weiter?",
 "Endless floor %d: ring %d.": "Endlos-Stockwerk %d: Ring %d.", "Endless stretch: %d floors (best %d).": "Endlosstrecke: %d Stockwerke (Bestwert %d).",
+"Kinds at ring 30": "Arten auf Ring 30", "Lines seen in every form": "Linien in jeder Form gesehen",
+"Arts used": "Eingesetzte Techniken", "Elements bonded": "Gebondete Elemente", "Map book pages": "Kartenbuch-Seiten",
+"Keepsakes held": "Gehaltene Andenken", "Temperaments met": "Getroffene Temperamente",
+"Collection goal: %s %d/%d!": "Sammelziel: %s %d/%d!",
 }

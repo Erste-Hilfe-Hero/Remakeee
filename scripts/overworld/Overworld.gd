@@ -43,6 +43,7 @@ var _banner: Label
 var _phase_icon: PhaseIcon
 ## Plain weather dots and veil (area 3 item 1144).
 var weather_layer: WeatherLayer
+var minimap: Minimap
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
@@ -180,6 +181,8 @@ func _build() -> void:
 	_ui.add_child(weather_layer)
 	_ui.move_child(weather_layer, 0)
 	DayCycle.events.phase_changed.connect(_on_phase_changed)
+	minimap = Minimap.new()
+	_ui_root.add_child(minimap)
 	_door_wipe = ColorRect.new()
 	_door_wipe.color = UITheme.INK
 	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -309,7 +312,9 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_top = 0
 	_camera.limit_right = map.width * GridWalker.TILE
 	_camera.limit_bottom = map.height * GridWalker.TILE
-	_show_banner(map.display_name)
+	Survey.reveal(map, cell)
+	_show_banner(banner_text())
+	refresh_minimap()
 	var arrive: String = StoryPlacements.enter_scene(map_id, GameState.flags)
 	if not arrive.is_empty():
 		_arrival_scene.call_deferred(arrive)
@@ -461,6 +466,26 @@ func _on_phase_changed(_phase: int) -> void:
 	_spawn_npcs()
 	_world.refresh(player.cell)
 
+## Map name with its survey share (item 1246): "Brindlewick  42%".
+func banner_text() -> String:
+	return "%s  %d%%" % [Loc.t(map.display_name), Survey.percent(map)]
+
+## Every step maps the cells around the player (item 1245) and moves the minimap.
+func survey_step(cell: Vector2i) -> void:
+	if map == null:
+		return
+	Survey.reveal(map, cell)
+	refresh_minimap()
+
+func refresh_minimap() -> void:
+	if minimap == null or map == null:
+		return
+	var trainers: Array[Vector2i] = []
+	for n: NPC in _npcs:
+		if _is_active_trainer(n):
+			trainers.append(n.cell)
+	minimap.refresh(map, player.cell if player != null else GameState.player_cell, trainers)
+
 func _show_banner(text: String) -> void:
 	_banner.text = "    %s " % text
 	_phase_icon.phase = DayCycle.current()
@@ -511,6 +536,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
+	survey_step(cell)
 	if scene_running:
 		return
 	DailyTasks.record("step", {"map": map.id})
@@ -656,7 +682,7 @@ func _play_one(ref: String, speaker: NPC) -> String:
 			await _run_action(str(pick.action), speaker)
 		if pick.has("next"):
 			next = str(pick.next)
-	_text.visible = false
+	await _text.close()
 	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
 	if entry.has("action") and not (already and bool(entry.get("once", false))):
 		await _run_action(str(entry.action), speaker)
@@ -2379,7 +2405,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		else:
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
-			int(partner.get("ai", TrainerData.PARTNER_AI)))
+			int(partner.get("ai", TrainerData.PARTNER_AI)), str(partner.get("profile", "")))
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:

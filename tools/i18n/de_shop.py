@@ -178,8 +178,8 @@ T = {
 	"Im Kampf: füllt die Energie eines Spirlings und gibt 3 Runden lang 1 Energie pro Runde dazu.",
 "Riftglass Tonic":
 	"Rissglas-Heiltrank",
-"In battle: heals 100% Vigor and all states without using the turn. At most 2 per battle.":
-	"Im Kampf: heilt 100 % Kraft und alle Zustände, ohne den Zug zu verbrauchen. Höchstens 2 pro Kampf.",
+"In battle: heals 100% Vigor and all states. At most 2 per battle.":
+	"Im Kampf: heilt 100 % Kraft und alle Zustände. Höchstens 2 pro Kampf.",
 "Battle Supply":
 	"Kampfvorrat",
 "5 Rift Breaths, 5 Overcharge Cores, 5 Glass Sparks. Single price 1500 Riftglass.":
@@ -568,4 +568,14 @@ T = {
 	"Ein stärkerer Schub wirkt noch.",
 "Works for the next %d battles.":
 	"Wirkt für die nächsten %d Kämpfe.",
+"Nobody in your team is defeated.":
+	"In deinem Team ist niemand besiegt.",
+"Bring back whom?":
+	"Wen zurückholen?",
+"In battle: brings a defeated Spirling back with half its Vigor. One per battle.":
+	"Im Kampf: holt einen besiegten Spirling mit halber Kraft zurück. Einer pro Kampf.",
+"In battle: brings a defeated Spirling back with full Vigor and full energy. One per battle.":
+	"Im Kampf: holt einen besiegten Spirling mit voller Kraft und voller Energie zurück. Einer pro Kampf.",
+"In battle: heals all Vigor and every state. Two per battle.":
+	"Im Kampf: heilt alle Kraft und jeden Zustand. Zwei pro Kampf.",
 }
