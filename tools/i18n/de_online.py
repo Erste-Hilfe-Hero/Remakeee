@@ -119,5 +119,5 @@ T = {
 "%s: %s": "%s: %s",
 }
 # Strings in online code that are not shown to players (server messages, HTTP headers).
-KEEP = ["%s %s  Bond %d  %s", "[%s] %d%%", "%d. %s  %d%s", "Tamer", "unknown function %s", "Tamer ", "apikey: ", "Authorization: Bearer ",
+KEEP = ["%s %s  Bond %d  %s", "[%s] %d%%", "%d. %s  %d%s", "Wanderer", "unknown function %s", "Wanderer ", "apikey: ", "Authorization: Bearer ",
 	"Content-Type: application/json", "Accept: application/json"]
