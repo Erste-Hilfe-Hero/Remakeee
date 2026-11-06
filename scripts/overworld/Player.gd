@@ -68,6 +68,7 @@ func _process(delta: float) -> void:
 		return
 	if dir.is_empty():
 		_turn_timer = 0.0
+		_bumped = NO_TARGET
 		return
 	if dir != facing:
 		face(dir)
@@ -77,7 +78,29 @@ func _process(delta: float) -> void:
 		_turn_timer -= delta
 		return
 	if can_move.call(cell + DIRS[dir]):
+		_bumped = NO_TARGET
 		step(dir, Input.is_action_pressed("ui_cancel") != GameState.always_run)
+	else:
+		bump(dir)
+
+## Length of the wall jolt.
+const BUMP_TIME: float = 0.08
+## Cell last bumped into, so holding a direction against a wall jolts only once.
+var _bumped: Vector2i = NO_TARGET
+
+## Jolts the drawn figure 1 px toward a blocked cell, once per approach (item 2263).
+## Skipped under reduced motion.
+func bump(dir: String) -> void:
+	var target: Vector2i = cell + DIRS[dir]
+	if target == _bumped:
+		return
+	_bumped = target
+	if Juice.reduced():
+		return
+	jolt = Vector2(DIRS[dir])
+	await get_tree().create_timer(BUMP_TIME).timeout
+	if is_instance_valid(self):
+		jolt = Vector2.ZERO
 
 func _follow_step() -> void:
 	if path.is_empty():

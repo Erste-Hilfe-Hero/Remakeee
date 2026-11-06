@@ -855,7 +855,9 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BOND_RESULT:
 			if bool(e.data.get("success", false)):
-				await _sprite(BattleModel.Side.FOE, slot).step_back(false)
+				var bonded: SpirlingSprite = _sprite(BattleModel.Side.FOE, slot)
+				await bonded.greet_hop()
+				await bonded.step_back(false)
 				_strip(BattleModel.Side.FOE, slot).visible = false
 			await _text.show_text(e.describe())
 		BattleEvent.Type.RULE:
