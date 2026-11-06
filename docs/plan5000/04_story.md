@@ -5,15 +5,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 > **Auftrag für den umsetzenden Thread:** Ziel ist, aus "Mirelas Kartenbuch" eine vollständige Geschichte über drei Akte mit Finale und Postgame zu machen, mit Figuren, die sich wandeln, und Entscheidungen, die etwas bewirken. Betroffen sind data/quests.json, data/dialogue/*.json, ein neuer Ordner data/scenes/, scripts/core/Dialogue.gd, scripts/core/QuestLog.gd, die Dialog-Aktionen in scripts/overworld/Overworld.gd, das Dialogfeld in scripts/ui/ und tools/i18n/de_story.py. Fang mit dem Dialogsystem (Auswahl, Bedingungen) und dem Szenen-Player an, weil fast alle Story-Punkte darauf aufbauen, und schreibe dann die Brücke von Akt I zu Akt II. Neue Karten baut Bereich 3 (dieser Bereich liefert nur die Ortsliste und setzt Figuren, Schilder und Auslöser auf fertige Karten), Endgame-Systeme wie Wiederholungskämpfe oder Turm-Modi gehören in Bereich 8, Porträts, Dialogfeld-Grafik und Epochen-Übergaberituale stehen im Plan DESIGN_EPOCHS.md.
 
 ### Dialogsystem: Auswahl, Bedingungen und Ablauf
-1335. [P1] Dialog-Einträge bekommen ein Feld "choices" mit 2 bis 3 Antworten (Text, optional "flag", "action", "next"), das Dialogfeld zeigt sie als Liste unter der letzten Zeile und wartet auf einen Tipp.
-1336. [P1] Mit "next" springt eine Antwort auf einen anderen Schlüssel derselben Datei, damit kurze Verzweigungen ohne neuen Code möglich sind.
-1337. [P1] "after_flag" wird zusätzlich als Liste erlaubt; Dialogue.lines_for nimmt den letzten Eintrag, dessen Flag gesetzt ist, damit eine Figur über mehrere Kapitel neue Sätze hat.
-1338. [P1] Neues Feld "if" mit Bedingungen (flag, not_flag, has_item, has_species, has_element, party_size_min, chapter_min) entscheidet, ob ein Eintrag oder eine Antwort gezeigt wird.
-1339. [P1] Neue Aktion "set_var <name> <wert>" und "add_var <name> <zahl>" speichert Story-Zahlen (zum Beispiel kestra_trust) in GameState und im Spielstand.
-1340. [P1] Neue Aktion "battle <figur_id>" startet aus einem Dialog heraus einen Kampf auf dem Kampfbildschirm, damit Duelle mitten in einer Szene beginnen können.
-1341. [P1] Neue Aktion "scene <id>" spielt eine Zwischensequenz aus data/scenes/<id>.json ab und kehrt danach in den Dialog oder die Welt zurück.
-1342. [P1] DataValidator prüft jeden "next", jede "scene"-ID, jede Gegenstands-ID in "give_item" und jeden Spirling-Namen in "has_species" und meldet tote Verweise im CI.
-1343. [P1] Der Sprecher wird als eigenes Feld "speaker" geführt statt als "Name:" im Text, und der Name erscheint als Namensschild über dem Dialogfeld.
+1335. [x] [P1] Dialog-Einträge bekommen ein Feld "choices" mit 2 bis 3 Antworten (Text, optional "flag", "action", "next"), das Dialogfeld zeigt sie als Liste unter der letzten Zeile und wartet auf einen Tipp.
+1336. [x] [P1] Mit "next" springt eine Antwort auf einen anderen Schlüssel derselben Datei, damit kurze Verzweigungen ohne neuen Code möglich sind.
+1337. [x] [P1] "after_flag" wird zusätzlich als Liste erlaubt; Dialogue.lines_for nimmt den letzten Eintrag, dessen Flag gesetzt ist, damit eine Figur über mehrere Kapitel neue Sätze hat.
+1338. [x] [P1] Neues Feld "if" mit Bedingungen (flag, not_flag, has_item, has_species, has_element, party_size_min, chapter_min) entscheidet, ob ein Eintrag oder eine Antwort gezeigt wird.
+1339. [x] [P1] Neue Aktion "set_var <name> <wert>" und "add_var <name> <zahl>" speichert Story-Zahlen (zum Beispiel kestra_trust) in GameState und im Spielstand.
+1340. [x] [P1] Neue Aktion "battle <figur_id>" startet aus einem Dialog heraus einen Kampf auf dem Kampfbildschirm, damit Duelle mitten in einer Szene beginnen können.
+1341. [x] [P1] Neue Aktion "scene <id>" spielt eine Zwischensequenz aus data/scenes/<id>.json ab und kehrt danach in den Dialog oder die Welt zurück.
+1342. [x] [P1] DataValidator prüft jeden "next", jede "scene"-ID, jede Gegenstands-ID in "give_item" und jeden Spirling-Namen in "has_species" und meldet tote Verweise im CI.
+1343. [x] [P1] Der Sprecher wird als eigenes Feld "speaker" geführt statt als "Name:" im Text, und der Name erscheint als Namensschild über dem Dialogfeld.
 1344. [P2] Ein Verlauf zeigt die letzten 30 Dialogzeilen, erreichbar über ein Symbol am Dialogfeld, damit verpasste Sätze nachlesbar sind.
 1345. [P2] Textgeschwindigkeit (langsam, normal, sofort) kommt in die Einstellungen und wird im Spielstand gespeichert.
 1346. [P2] Inline-Steuerzeichen im Text: {p} macht 0,4 Sekunden Pause, {slow} und {/slow} verlangsamen die Schrift für ruhige Momente.
@@ -42,14 +42,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1369. [P3] Dialoge mit Auswahl werden in BattleReplay und Spielstand-Export nicht mitgeschrieben, damit keine Story-Spoiler in geteilten Daten landen.
 
 ### Zwischensequenzen
-1370. [P1] Neuer Szenen-Player scripts/overworld/ScenePlayer.gd spielt Schritte aus data/scenes/<id>.json der Reihe nach ab und blockiert dabei die Steuerung.
-1371. [P1] Schritt "say": zeigt Dialogzeilen mit Sprecher, nutzt dieselben Steuerzeichen und Auswahlen wie normale Dialoge.
-1372. [P1] Schritt "move": bewegt eine Figur (NPC oder Spielfigur) Kachel für Kachel über eine Liste von Richtungen, mit PathFinder als Rückfall.
-1373. [P1] Schritt "face" und "emote": dreht Figuren und zeigt Gefühlssymbole, damit Gespräche lebendig wirken.
-1374. [P1] Schritt "fade" (in, out, Farbe, Dauer) und "wait" (Sekunden) für Übergänge.
-1375. [P1] Schritt "spawn" und "despawn" blendet Figuren nur für die Szene ein oder aus, ohne die Kartendatei zu ändern.
-1376. [P1] Ein Knopf "Überspringen" oben rechts springt ans Ende der Szene und führt dabei alle Flag-, Gegenstands- und Kampfschritte trotzdem aus.
-1377. [P1] Jede Szene setzt am Ende ein Flag "scene_<id>_seen", damit sie nur einmal automatisch läuft.
+1370. [x] [P1] Neuer Szenen-Player scripts/overworld/ScenePlayer.gd spielt Schritte aus data/scenes/<id>.json der Reihe nach ab und blockiert dabei die Steuerung.
+1371. [x] [P1] Schritt "say": zeigt Dialogzeilen mit Sprecher, nutzt dieselben Steuerzeichen und Auswahlen wie normale Dialoge.
+1372. [x] [P1] Schritt "move": bewegt eine Figur (NPC oder Spielfigur) Kachel für Kachel über eine Liste von Richtungen, mit PathFinder als Rückfall.
+1373. [x] [P1] Schritt "face" und "emote": dreht Figuren und zeigt Gefühlssymbole, damit Gespräche lebendig wirken.
+1374. [x] [P1] Schritt "fade" (in, out, Farbe, Dauer) und "wait" (Sekunden) für Übergänge.
+1375. [x] [P1] Schritt "spawn" und "despawn" blendet Figuren nur für die Szene ein oder aus, ohne die Kartendatei zu ändern.
+1376. [x] [P1] Ein Knopf "Überspringen" oben rechts springt ans Ende der Szene und führt dabei alle Flag-, Gegenstands- und Kampfschritte trotzdem aus.
+1377. [x] [P1] Jede Szene setzt am Ende ein Flag "scene_<id>_seen", damit sie nur einmal automatisch läuft.
 1378. [P2] Schritt "pan": schiebt die Kamera in ganzen Pixeln zu einer Kachel und zurück, ohne Glättung, passend zum Pixelraster.
 1379. [P2] Schritt "music" wechselt oder stoppt die Musik mit Ausblendung, Schritt "sfx" spielt einen Effekt.
 1380. [P2] Schritt "shake" lässt die Kamera 0,5 Sekunden wackeln, abschaltbar über "Bewegung reduzieren".
@@ -372,7 +372,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1679. [P3] Neue Nebenquest bram_ash: Bram aus Crowcrest sucht seine Shalebats im Ascheland, mit einem Wiedersehen in Cinderfold.
 
 ### Entscheidungen mit Folgen
-1680. [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.
+1680. [x] [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.
 1681. [P1] Das Ende "Bring her home" ist immer wählbar: Mirela kommt heim, der Weite Riss schließt sich, Riss-Spirlinge brauchen danach einen Anker-Bund (Story-Text, keine neuen Regeln).
 1682. [P1] Das Ende "Leave a gate" ist immer wählbar: der Weite Riss wird zu einer Pforte mit Mirela als Hüterin, sie bleibt im Ungezeichneten, Kestra ist froh.
 1683. [P1] Das Ende "Two keepers" verlangt veit_respect 3 und alle 14 Seiten: Veit bleibt mit Ash als Hüter im Ungezeichneten, und Mirela kommt heim.

@@ -41,6 +41,14 @@
    "dialogue": "lighthouse/aldo_dock",
    "sprite": "elder",
    "show_flag": "kestra_dock_talk"
+  },
+  {
+   "id": "marla",
+   "x": 6,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "lighthouse/marla",
+   "sprite": "villager"
   }
  ],
  "signs": [

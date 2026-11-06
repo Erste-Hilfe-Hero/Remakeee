@@ -126,6 +126,14 @@
    "facing": "down",
    "dialogue": "brindlewick/wynn",
    "sprite": "ranger"
+  },
+  {
+   "id": "festival_trader",
+   "x": 2,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "brindlewick/festival_trader",
+   "sprite": "villager"
   }
  ],
  "signs": [

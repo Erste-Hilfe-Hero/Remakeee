@@ -36,8 +36,7 @@ func run() -> void:
 			return
 		match labels[idx]:
 			"Goals":
-				var daily: String = DailyFind.hint(GameState.flags)
-				await info(QuestLog.summary(GameState.flags) + ("\n\n" + daily if not daily.is_empty() else ""))
+				await info(goals_text())
 			"Team": await run_team()
 			"Friends":
 				await FriendsMenu.run(self)
@@ -80,34 +79,117 @@ func save_now() -> void:
 const SAVED_TEXT: String = "Saved."
 const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once the connection is back."
 
-## Achievements and personal bests (items 88-90).
+## Goals screen: story goals, the find of the day and today's tasks (plan area 8).
+static func goals_text() -> String:
+	var text: String = Loc.t(QuestLog.summary(GameState.flags))
+	var daily: String = DailyFind.hint(GameState.flags)
+	if not daily.is_empty():
+		text += "\n\n" + Loc.t(daily)
+	var tasks: Array[String] = DailyTasks.lines()
+	if not tasks.is_empty():
+		text += "\n\n" + "\n".join(tasks)
+	var post: Array[String] = Postgame.lines()
+	if not post.is_empty():
+		text += "\n\n" + "\n".join(post)
+	return text
+
+## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:
 	Achievements.check()
 	while true:
-		var lines: Array[String] = Achievements.lines()
-		lines.append("Personal bests")
+		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
+		if Masters.open():
+			lines.append("Master Wayfarers")
+		if not memorial_lines().is_empty():
+			lines.append("Memorial book")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
 		var have: int = Achievements.unlocked().size()
-		var idx: int = await pick_strings("Achievements %d/%d" % [have, Achievements.LIST.size()], lines)
+		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
 		if idx < 0:
 			return
-		if lines[idx] == "Watch last battle":
-			if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
-				watch_replay = true
-				return
-		elif idx == Achievements.LIST.size():
-			await info(records_text())
-		else:
-			var a: Dictionary = Achievements.LIST[idx]
-			var when: String = str(Achievements.unlocked().get(a.id, ""))
-			await info("%s\n%s%s" % [a.title, a.text, ("\n\n" + ("Earned %s" % when)) if when != "" else ""])
+		match lines[idx]:
+			"Badge book": await run_badge_book()
+			"Achievements by category": await run_achievement_lists()
+			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
+			"Personal bests": await info(records_text())
+			"Master Wayfarers": await run_masters()
+			"Memorial book": await info("\n".join(memorial_lines()))
+			"Watch last battle":
+				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
+					watch_replay = true
+					return
+
+## Memorial book in the Sanctuary (plan 3397): every Spirling that retired under the Iron Oath.
+static func memorial_lines() -> Array[String]:
+	var out: Array[String] = []
+	var book: Variant = GameState.records.get("memorial", [])
+	if not book is Array:
+		return out
+	for e: Variant in book:
+		if not e is Dictionary:
+			continue
+		var d: Dictionary = e
+		var map_id: String = str(d.get("map", ""))
+		var place: String = MapData.load_map(map_id).display_name if MapData.exists(map_id) else map_id
+		out.append(Loc.t("%s, ring %d, %s, %s") % [str(d.get("name", "?")), int(d.get("level", 1)), Loc.t(place), str(d.get("date", ""))])
+	return out
+
+## Master Wayfarer profiles (plan 3290): place, theme and the player's own wins.
+func run_masters() -> void:
+	while true:
+		var i: int = await pick_strings(Loc.t("Master Wayfarers %d/%d") % [Masters.beaten_count(), Masters.list().size()], Masters.lines())
+		if i < 0:
+			return
+		await info(Masters.profile(Masters.list()[i]))
+
+## The badge grid; picking a badge shows its card.
+func run_badge_book() -> void:
+	var book := BadgeBook.new()
+	add_child(book)
+	picker.visible = false
+	while true:
+		var i: int = await book.chosen
+		if i < 0:
+			break
+		book.visible = false
+		await info(Achievements.card(Achievements.list()[i]))
+		book.visible = true
+		book.fill()
+	book.queue_free()
+	picker.visible = true
+
+## One list per category with progress (k/n) where there is a count (plan 3317).
+func run_achievement_lists() -> void:
+	while true:
+		var cats: Array[String] = []
+		for c: String in Achievements.CATEGORIES:
+			cats.append(Achievements.CATEGORY_NAMES[c])
+		var ci: int = await pick_strings("Achievements", cats)
+		if ci < 0:
+			return
+		var cat: String = Achievements.CATEGORIES[ci]
+		while true:
+			var shown: Array[Dictionary] = []
+			var lines: Array[String] = []
+			for a: Dictionary in Achievements.list():
+				if str(a.cat) != cat:
+					continue
+				shown.append(a)
+				var p: Array[int] = Achievements.progress(a)
+				var done: bool = Achievements.unlocked().has(a.id)
+				lines.append("%s %s%s" % ["[x]" if done else "[ ]", Loc.t(str(a.title)), ("  %d/%d" % [p[0], p[1]]) if not p.is_empty() and not done else ""])
+			var ai: int = await pick_strings(Loc.t(cats[ci]), lines)
+			if ai < 0:
+				break
+			await info(Achievements.card(shown[ai]))
 
 ## Tower best, weekly challenge and the current festival.
 static func records_text() -> String:
 	var lines: PackedStringArray = []
-	lines.append("Lighthouse climb best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
+	lines.append_array(Completion.lines())
+	lines.append("Lighthouse stair best: floor %d of %d" % [Gauntlet.best(), Gauntlet.FLOORS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
@@ -128,7 +210,9 @@ static func records_text() -> String:
 
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:
-	var t: String = "%s   %d coins" % [GameState.tamer_name, GameState.money]
+	var t: String = "%s   %d coins   %s" % [GameState.tamer_name, GameState.money, Waymarks.label()]
+	if not Festival.active().is_empty():
+		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
@@ -403,7 +487,7 @@ func run_spirlog() -> void:
 			var is_bonded: bool = bool(e.get("bonded", false))
 			seen += 1 if is_seen else 0
 			bonded += 1 if is_bonded else 0
-			var mark: String = "*" if is_bonded else ("+" if is_seen else " ")
+			var mark: String = (Collection.STAR if Collection.starred(sd.species_name) else "*") if is_bonded else ("+" if is_seen else " ")
 			entries.append({"text": "%02d %s %s" % [sd.dex_id, mark, sd.species_name if is_seen else "???"], "species": sd.species_name, "seen": is_seen})
 		var idx: int = await pick("Spirlog  seen %d  bonded %d" % [seen, bonded], entries)
 		if idx < 0:
