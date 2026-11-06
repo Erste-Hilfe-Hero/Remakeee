@@ -491,7 +491,7 @@
    "name_de": "Rissatem",
    "desc_en": "In battle: revives a defeated Spirling with 50% Vigor. At most 1 per battle.",
    "desc_de": "Im Kampf: belebt einen besiegten Spirling mit 50 % Kraft. Höchstens 1 pro Kampf.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_breath_full",
@@ -503,7 +503,7 @@
    "name_de": "Großer Rissatem",
    "desc_en": "In battle: revives with 100% Vigor and full energy. At most 1 per battle.",
    "desc_de": "Im Kampf: belebt mit 100 % Kraft und voller Energie. Höchstens 1 pro Kampf.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.last_stand",
@@ -537,9 +537,9 @@
    "eur": "1.99",
    "name_en": "Riftglass Tonic",
    "name_de": "Rissglas-Heiltrank",
-   "desc_en": "In battle: heals 100% Vigor and all states without using the turn. At most 2 per battle.",
-   "desc_de": "Im Kampf: heilt 100 % Kraft und alle Zustände, ohne den Zug zu verbrauchen. Höchstens 2 pro Kampf.",
-   "ready": false
+   "desc_en": "In battle: heals 100% Vigor and all states. At most 2 per battle.",
+   "desc_de": "In battle: heals 100% Vigor and all states. At most 2 per battle.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.battle_supply",
@@ -635,7 +635,7 @@
    "name_de": "Starterpaket",
    "desc_en": "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Single value 1300 Riftglass. Once per account.",
    "desc_de": "300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall, 3 Rissatem, 3 Echo-Düfte. Einzelwert 1300 Rissglas. Einmal pro Konto.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.wayfarer_pack",
