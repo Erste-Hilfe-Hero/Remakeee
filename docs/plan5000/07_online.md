@@ -175,11 +175,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2815. [P3] Ein Tauschfenster im Pixelstil mit zwei Tischen und einer kurzen Animation beim Abschluss, aus eigener Grafik.
 2816. [P3] Eine Abfrage für Ali zeigt die meistgetauschten Gegenstände pro Woche, um Mangel im Spiel zu erkennen.
 ### Bünde (Gilden)
-2817. [P1] Neue Tabellen `bunds`, `bund_members`, `bund_invites` mit höchstens 30 Mitgliedern pro Bund und genau einem Bund pro Spieler.
-2818. [P1] Bundnamen werden aus zwei Wortbausteinen gebildet (Liste in `scripts/online/BundWords.gd`, je 120 Wörter), der Server speichert nur die Nummern; so braucht es keine freie Eingabe.
-2819. [P1] Beitritt nur per Einladung durch Leiter oder Helfer oder per Anfrage, die ein Leiter oder Helfer annimmt.
-2820. [P1] Die Rollen Leiter, Helfer und Mitglied mit festen Rechten: nur der Leiter löst auf, Helfer laden ein und entfernen Mitglieder.
-2821. [P1] Austreten ist jederzeit möglich, ohne Strafe und ohne Wartezeit.
+2817. [x] [P1] Neue Tabellen `bunds`, `bund_members`, `bund_invites` mit höchstens 30 Mitgliedern pro Bund und genau einem Bund pro Spieler.
+2818. [x] [P1] Bundnamen werden aus zwei Wortbausteinen gebildet (Liste in `scripts/online/BundWords.gd`, je 120 Wörter), der Server speichert nur die Nummern; so braucht es keine freie Eingabe.
+2819. [x] [P1] Beitritt nur per Einladung durch Leiter oder Helfer oder per Anfrage, die ein Leiter oder Helfer annimmt.
+2820. [x] [P1] Die Rollen Leiter, Helfer und Mitglied mit festen Rechten: nur der Leiter löst auf, Helfer laden ein und entfernen Mitglieder.
+2821. [x] [P1] Austreten ist jederzeit möglich, ohne Strafe und ohne Wartezeit.
 2822. [P2] Ein Wappen aus 12 Formen, 16 Farben und 24 Zeichen, gespeichert als drei Zahlen, gezeichnet im Pixelstil des Spiels.
 2823. [P2] Ein Bund-Wochenziel (Kämpfe, Bindungen oder Raid-Schaden), das alle Mitglieder füllen, mit Belohnung bei 100 Prozent für jeden, der beigetragen hat.
 2824. [P2] Ist der Leiter 30 Tage nicht online, wird automatisch der Helfer mit dem höchsten Wochenbeitrag Leiter, sonst das älteste Mitglied.
@@ -201,7 +201,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2840. [P3] Neue Wappenteile schaltet ein Bund frei, wenn er gemeinsam 5000 Beiträge sammelt.
 2841. [P3] Ein freundlicher Willkommensgruß in der Post, wenn ein neues Mitglied beitritt.
 
-2842. [P1] Ein Bund mit 3 oder mehr Mitgliedern löst sich erst auf, wenn der Leiter nach 24 Stunden erneut bestätigt; der Vorrat geht dann zu gleichen Teilen an die Mitglieder.
+2842. [x] [P1] Ein Bund mit 3 oder mehr Mitgliedern löst sich erst auf, wenn der Leiter nach 24 Stunden erneut bestätigt; der Vorrat geht dann zu gleichen Teilen an die Mitglieder.
 2843. [P2] Wer einen Bund verlässt, kann demselben Bund 24 Stunden lang nicht wieder beitreten, anderen Bünden sofort.
 2844. [P3] Bund-Ränge nach Gesamtbeitrag (Lehrling, Gefährte, Hüter) als reine Anzeige.
 2845. [P3] Ein Bundabend: der Leiter legt Wochentag und Uhrzeit fest, die alle Mitglieder als Hinweis sehen.

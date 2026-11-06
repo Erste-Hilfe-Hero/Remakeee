@@ -51,7 +51,9 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   Wochen-Rangliste. Meldest du jemanden, speichern wir die Meldung mit Grund und Ort. Über jede Entscheidung
   bekommst du im Spiel eine Nachricht (Begründung, Ergebnis deiner Meldung, Antwort auf deinen Widerspruch).
   Meldungen über das Formular auf [DOMAIN]/melden speichern wir mit Freundescode, Grund, Erklärung und, wenn
-  du sie angibst, Name und E-Mail, ohne Konto.
+  du sie angibst, Name und E-Mail, ohne Konto. Bist du in einem Bund, sehen die anderen Mitglieder deinen
+  Wanderer-Namen, Freundescode, deine Rolle und ob du gerade online bist; der Bundname besteht nur aus zwei
+  Wörtern einer festen Liste.
 - **Wer sieht was:** Namen, Karte, Ort und Echo-Team sehen nur deine bestätigten Freunde. In der
   Wochen-Rangliste sehen Fremde nur Punkte, keinen Namen.
 - **Zweck:** gemeinsames Spielen und Schutz vor Missbrauch (Blockieren, Meldungen prüfen).
