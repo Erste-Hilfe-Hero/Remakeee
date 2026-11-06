@@ -22,9 +22,11 @@ const LEGEND: Dictionary[String, int] = {
 	"Y": Kind.PLANK,
 }
 
-## Kinds that are solid until the player owns a piece of Wayfarer Gear (always on foot).
+## Kinds the player walks into once they own a piece of Wayfarer Gear, always on foot:
+## wading through shallow water, climbing a vine wall hand over hand. Plank gaps ("Y") need a
+## plank laid with the Plank Bundle first (PuzzleRoom.lay_plank).
 const GEAR_KINDS: Dictionary[int, String] = {
-	Kind.WADE: "wading_boots", Kind.VINES: "climbing_pick", Kind.PLANK: "plank_bundle",
+	Kind.WADE: "wading_boots", Kind.VINES: "climbing_pick",
 }
 
 ## Wild Spirlings hide in ferns (tall grass), reeds and scree, not only in grass.
