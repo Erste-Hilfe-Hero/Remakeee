@@ -126,7 +126,12 @@ static func _build() -> Theme:
 			border = INK
 		elif state == "disabled":
 			border = DISABLED
-		t.set_stylebox(state, "Button", flat_style(bg, border))
+		var sb: StyleBoxFlat = flat_style(bg, border)
+		if state == "pressed":
+			# Held buttons sink 1 px (item 2415).
+			sb.content_margin_top = 3
+			sb.content_margin_bottom = 1
+		t.set_stylebox(state, "Button", sb)
 	t.set_color("font_color", "Button", INK)
 	t.set_color("font_hover_color", "Button", BG)
 	t.set_color("font_focus_color", "Button", BG)
