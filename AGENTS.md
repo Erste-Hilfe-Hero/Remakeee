@@ -160,3 +160,4 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 - Keep PRs small. Commit message format: `area: what changed` (e.g. `battle: add status ticks`).
 - If a task conflicts with LEGAL.md, stop and leave a note in the PR instead of guessing.
 - If something is underspecified, pick the simplest option that fits this file and note the assumption in the PR description.
+- New tweens go through `Juice.tween(node, prop, value, "curve")` (see docs/JUICE.md), so durations and feel can be tuned in one place. A plain `create_tween()` is only for steady bars that must run linearly, and for loops Juice does not cover yet.

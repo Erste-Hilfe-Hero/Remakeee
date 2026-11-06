@@ -7,7 +7,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 ### Werkzeugkasten für Spielgefühl und Tween-Kurven
 2225. [x] [P1] Neuen Autoload scripts/core/Juice.gd anlegen, der alle Spielgefühl-Helfer (Kurven, Wackeln, Treffer-Stopp, Pop, Nachfedern) an einer Stelle bündelt und von überall per Juice.<name>() aufrufbar ist.
 2226. [x] [P1] In Juice.gd eine feste Kurventabelle CURVES festlegen: "open" = TRANS_BACK/EASE_OUT 0,18 s, "close" = TRANS_QUAD/EASE_IN 0,12 s, "move" = TRANS_CUBIC/EASE_IN_OUT 0,22 s, "impact" = TRANS_EXPO/EASE_OUT 0,10 s, "settle" = TRANS_ELASTIC/EASE_OUT 0,35 s.
-2227. [P2] Eine Regel in AGENTS.md ergänzen, dass neue Tweens nur noch über Juice.tween(node, prop, wert, "kurve") entstehen, damit sich Dauer und Gefühl zentral nachstellen lassen.
+2227. [x] [P2] Eine Regel in AGENTS.md ergänzen, dass neue Tweens nur noch über Juice.tween(node, prop, wert, "kurve") entstehen, damit sich Dauer und Gefühl zentral nachstellen lassen.
 2228. [x] [P1] Juice.pop(node) bauen: Skalierung 1,0 auf 1,15 in 0,06 s und zurück mit "settle", für Bestätigungen, Belohnungen und Treffer auf UI-Elementen.
 2229. [x] [P1] Alle Juice-Tweens runden Positionen nach jedem Schritt auf ganze Pixel (process-Callback), damit nichts zwischen Pixeln verschwimmt.
 2230. [x] [P1] Juice.speed() liest GameState.battle_speed_scale() und teilt im Kampf jede Dauer automatisch, damit 2x und 4x ohne Sonderfälle funktionieren.
@@ -15,18 +15,18 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2232. [x] [P1] Bestehende Tweens in SpirlingSprite.gd (step_out, step_back, lunge, faint) auf die Kurven "move" und "impact" umstellen, damit sie nicht mehr linear laufen.
 2233. [x] [P2] Die Überblendung _fade_to in Overworld.gd auf Kurve "close" beim Abdunkeln und "open" ohne Überschwingen (TRANS_SINE/EASE_OUT) beim Aufhellen umstellen.
 2234. [x] [P2] GUT-Test tests/unit/test_juice.gd prüft, dass jede Kurve existiert, jede Dauer zwischen 0,05 und 0,6 s liegt und reduced() alle Bewegungs-Helfer auf 0 s verkürzt.
-2235. [P2] Juice.nudge(node, richtung, px) für kurzes Anstoßen um 1 bis 3 Pixel in eine Richtung mit Rückfedern in 0,1 s bauen.
+2235. [x] [P2] Juice.nudge(node, richtung, px) für kurzes Anstoßen um 1 bis 3 Pixel in eine Richtung mit Rückfedern in 0,1 s bauen.
 2236. [x] [P2] Juice.count_to(label, von, bis, dauer) bauen, das Zahlen hochzählt (Münzen, Wachstum, Rangpunkte) und bei jedem zehnten Schritt einen leisen Tick spielt.
-2237. [P2] Juice.stagger(nodes, abstand) bauen, das Listen-Einträge mit 0,03 s Versatz nacheinander einblendet.
-2238. [P2] Juice.blink_safe(node) bauen, der statt hartem An-und-Aus die Helligkeit über modulate zwischen 100 % und 60 % pendeln lässt, höchstens 3 Mal pro Sekunde.
-2239. [P2] Juice.wobble(node, grad, dauer) bauen, der ein Element um höchstens 4 Grad schwingen lässt, für wackelnde Hinweise wie neue Geschenke.
+2237. [x] [P2] Juice.stagger(nodes, abstand) bauen, das Listen-Einträge mit 0,03 s Versatz nacheinander einblendet.
+2238. [x] [P2] Juice.blink_safe(node) bauen, der statt hartem An-und-Aus die Helligkeit über modulate zwischen 100 % und 60 % pendeln lässt, höchstens 3 Mal pro Sekunde.
+2239. [x] [P2] Juice.wobble(node, grad, dauer) bauen, der ein Element um höchstens 4 Grad schwingen lässt, für wackelnde Hinweise wie neue Geschenke.
 2240. [P3] Juice.float_text(text, position, farbe) bauen, der kurze Texte 10 Pixel nach oben steigen und in 0,6 s ausblenden lässt.
 2241. [x] [P2] Juice speichert laufende Tweens pro Node und Eigenschaft und bricht einen alten Tween ab, bevor ein neuer startet, damit sich nichts aufschaukelt.
 2242. [P2] Ein Debug-Schalter "Juice x0,25" im Debug-Menü verlangsamt alle Juice-Tweens auf ein Viertel, um Kurven sauber abzustimmen.
 2243. [P3] Ein Debug-Schalter "Juice aus" schaltet alle Helfer ab, damit man im Vergleich sieht, was sie bringen.
-2244. [P2] docs/JUICE.md schreiben mit der Kurventabelle, je einem Beispiel pro Helfer und der Regel, wann welche Kurve gilt.
-2245. [P2] Alle TRANS_LINEAR-Tweens im Projekt per grep finden und auf eine benannte Kurve umstellen; Ausnahme sind nur Kraft-Leisten, die gleichmäßig laufen sollen.
-2246. [P2] Juice-Helfer dürfen pro Bild höchstens 0,3 ms Rechenzeit verbrauchen; ein Leistungstest mit 50 gleichzeitigen Tweens prüft das in tests/unit/.
+2244. [x] [P2] docs/JUICE.md schreiben mit der Kurventabelle, je einem Beispiel pro Helfer und der Regel, wann welche Kurve gilt.
+2245. [x] [P2] Alle TRANS_LINEAR-Tweens im Projekt per grep finden und auf eine benannte Kurve umstellen; Ausnahme sind nur Kraft-Leisten, die gleichmäßig laufen sollen.
+2246. [x] [P2] Juice-Helfer dürfen pro Bild höchstens 0,3 ms Rechenzeit verbrauchen; ein Leistungstest mit 50 gleichzeitigen Tweens prüft das in tests/unit/.
 2247. [P3] Juice.trail(node) bauen, der bei schnellen Bewegungen 2 Nachbilder mit 50 % und 25 % Deckkraft hinterherzieht.
 2248. [P3] Juice.squash(node, achse) bauen, der Breite oder Höhe um genau 2 Pixel ändert und nach 0,08 s zurückstellt, statt unscharf zu skalieren.
 2249. [P3] Kurventabelle als Ressource scripts/core/juice_curves.tres speichern, damit sie im Godot-Editor mit der Kurvenansicht bearbeitet werden kann.
@@ -42,8 +42,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2257. [x] [P1] Treffer-Stopp für normale Treffer bauen: das Spiel friert 40 ms plus 60 ms mal Anteil der verlorenen Kraft ein, höchstens 100 ms, über Engine.time_scale = 0,05.
 2258. [x] [P1] Treffer-Stopp und Wackeln sind bei Juice.reduced() aus; stattdessen bekommt der getroffene Spirling nur einen 1-Pixel-Ruck.
 2259. [x] [P1] Einstellung "Bildschirmwackeln" mit den Stufen Aus, Schwach (50 %) und Voll (100 %) in den Einstellungen von MenuHost.gd ergänzen und in settings_to_dict speichern.
-2260. [P2] Wackel-Richtung pro Element: Stone wackelt nur senkrecht, Gale nur waagrecht, Volt mit doppelter Frequenz und halber Weite, alle anderen kreisförmig.
-2261. [P2] Wackel-Frequenz als Rauschen mit 30 Hz statt Zufall pro Bild berechnen, damit es nicht flimmert, sondern rollt.
+2260. [x] [P2] Wackel-Richtung pro Element: Stone wackelt nur senkrecht, Gale nur waagrecht, Volt mit doppelter Frequenz und halber Weite, alle anderen kreisförmig.
+2261. [x] [P2] Wackel-Frequenz als Rauschen mit 30 Hz statt Zufall pro Bild berechnen, damit es nicht flimmert, sondern rollt.
 2262. [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
 2263. [P2] Overworld-Wackeln beim Laufen gegen eine Wand ersetzt durch einen 1-Pixel-Ruck der Spielfigur, nicht des Bildes.
 2264. [P3] Kleines Wackeln (Trauma 0,10) beim Öffnen einer verschlossenen Tür oder eines Durchgangs nach einer Story-Bedingung.
@@ -52,7 +52,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2267. [x] [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
 2268. [x] [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
 2269. [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
-2270. [P2] GUT-Test prüft, dass ShakeRoot nach Ende des Traumas exakt auf (0, 0) zurückkehrt und kein Restversatz bleibt.
+2270. [x] [P2] GUT-Test prüft, dass ShakeRoot nach Ende des Traumas exakt auf (0, 0) zurückkehrt und kein Restversatz bleibt.
 2271. [P3] Gerichtetes Wackeln: der erste Ausschlag zeigt in die Richtung, aus der der Treffer kam, danach freies Ausschwingen.
 2272. [P3] Leichtes Dauer-Zittern (Trauma 0,05) in den Rift-Karten cinder_rift, tide_rift und murk_hollow, nur wenn Wackeln auf Voll steht.
 2273. [P3] Zeitlupen-Effekt für den letzten Treffer gegen einen Rift-Wächter: 0,4 s mit time_scale 0,3, danach normale Geschwindigkeit.

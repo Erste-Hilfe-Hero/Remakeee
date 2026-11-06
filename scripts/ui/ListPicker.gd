@@ -358,7 +358,7 @@ func fade_in() -> void:
 		return
 	modulate.a = 0.0
 	_fade = create_tween()
-	_fade.tween_property(self, "modulate:a", 1.0, FADE_IN)
+	Juice.shaped(_fade.tween_property(self, "modulate:a", 1.0, FADE_IN), "fade")
 
 ## Scrolls the list back to its first row (a tap on the title, item 1797).
 func scroll_to_top() -> void:

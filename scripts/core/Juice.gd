@@ -30,6 +30,23 @@ const TRAUMA_HIT: float = 0.20
 const TRAUMA_HIT_STRONG: float = 0.40
 const TRAUMA_FAINT: float = 0.30
 const TRAUMA_WARDEN: float = 0.55
+## Shake follows smooth noise, sampled 30 times a second and stepping a short way along the
+## noise each time, so it rolls instead of flickering (item 2261).
+const SHAKE_NOISE_HZ: float = 30.0
+const SHAKE_NOISE_STEP: float = 0.3
+
+## Nudge: a 1 to 3 px push that springs back, 0.1 s in all (item 2235).
+const NUDGE_OUT_TIME: float = 0.03
+const NUDGE_BACK_TIME: float = 0.07
+## Stagger: list entries fade in one after another (item 2237).
+const STAGGER_GAP: float = 0.03
+const STAGGER_FADE: float = 0.12
+## Safe blink: brightness swings 100 % -> 60 % -> 100 %, at most 3 times a second (item 2238).
+const BLINK_LOW: float = 0.6
+const BLINK_PERIOD: float = 0.5
+const BLINK_MIN_PERIOD: float = 1.0 / 3.0
+## Wobble: at most 4 degrees either way (item 2239).
+const WOBBLE_MAX_DEG: float = 4.0
 ## Settings levels for screen shake and vibration: Off, Weak (50 %), Full.
 const LEVEL_NAMES: Array[String] = ["Off", "Weak", "Full"]
 const LEVEL_SCALES: Array[float] = [0.0, 0.5, 1.0]
@@ -48,10 +65,17 @@ var _shake_base: Vector2 = Vector2.ZERO
 var _rng := RandomNumberGenerator.new()
 var _running: Dictionary = {}
 var _hitstops: int = 0
+## Element of the last hit that shook the screen, or -1 (item 2260).
+var shake_element: int = -1
+var _shake_time: float = 0.0
+var _noise := FastNoiseLite.new()
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_rng.randomize()
+	_noise.noise_type = FastNoiseLite.TYPE_SIMPLEX_SMOOTH
+	_noise.frequency = 1.0
+	_noise.seed = _rng.randi()
 
 # --- Queries -----------------------------------------------------------------
 
@@ -99,6 +123,12 @@ func tween(node: Node, prop: String, value: Variant, curve: String = "move", tim
 		tw.tween_property(node, prop, value, dur).set_trans(c.trans).set_ease(c.ease)
 	return tw
 
+## Gives a property or method tweener a named curve's transition and easing, keeping its own
+## duration (item 2245): for tweens Juice.tween cannot build, such as fades on other nodes.
+func shaped(tweener: Variant, curve: String = "move") -> Variant:
+	var c: Dictionary = CURVES.get(curve, CURVES["move"])
+	return tweener.set_trans(c.trans).set_ease(c.ease)
+
 ## Confirm bounce: scale 1.0 -> 1.15 in 0.06 s, then back with "settle". Awaitable.
 func pop(node: Control) -> void:
 	if node == null or reduced():
@@ -135,6 +165,80 @@ func press_feedback(b: Control) -> void:
 	b.set_meta("juice_press", true)
 	(b as BaseButton).button_up.connect(func() -> void: pop(b))
 
+## Short push of [param px] (1 to 3) pixels towards [param dir], springing back in 0.1 s
+## (item 2235). Does nothing under reduced motion. Awaitable.
+func nudge(node: CanvasItem, dir: Vector2, px: int = 2) -> void:
+	if node == null or reduced() or dir == Vector2.ZERO:
+		return
+	var key: String = "nudge_home"
+	if not node.has_meta(key):
+		node.set_meta(key, node.get("position"))
+	var home: Vector2 = node.get_meta(key)
+	var to: Vector2 = home + (dir.normalized() * clampi(px, 1, 3)).round()
+	await tween(node, "position", to, "impact", NUDGE_OUT_TIME).finished
+	if is_instance_valid(node):
+		await tween(node, "position", home, "settle", NUDGE_BACK_TIME).finished
+	if is_instance_valid(node):
+		node.remove_meta(key)
+
+## Fades [param nodes] in one after another, [param gap] seconds apart (item 2237). Under
+## reduced motion they all appear at once. Awaitable; returns when the last one is in.
+func stagger(nodes: Array, gap: float = STAGGER_GAP) -> void:
+	var last: Tween = null
+	for i: int in nodes.size():
+		var n: CanvasItem = nodes[i] as CanvasItem
+		if n == null:
+			continue
+		if reduced():
+			n.modulate.a = 1.0
+			continue
+		n.modulate.a = 0.0
+		last = n.create_tween()
+		last.tween_interval(i * gap / speed())
+		last.tween_property(n, "modulate:a", 1.0, STAGGER_FADE / speed()) \
+			.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	if last != null:
+		await last.finished
+
+## Swings [param node]'s brightness between 100 % and 60 % instead of a hard on/off blink
+## (item 2238), never faster than 3 times a second. Loops until [method stop_blink].
+func blink_safe(node: CanvasItem, period: float = BLINK_PERIOD) -> Tween:
+	if node == null:
+		return null
+	stop_blink(node)
+	var half: float = maxf(period, BLINK_MIN_PERIOD) / 2.0
+	var tw: Tween = node.create_tween().set_loops()
+	tw.tween_property(node, "modulate", Color(BLINK_LOW, BLINK_LOW, BLINK_LOW, node.modulate.a), half) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(node, "modulate", Color(1, 1, 1, node.modulate.a), half) \
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	node.set_meta("juice_blink", tw)
+	return tw
+
+## Stops a [method blink_safe] loop and restores full brightness.
+func stop_blink(node: CanvasItem) -> void:
+	if node == null or not node.has_meta("juice_blink"):
+		return
+	var tw: Variant = node.get_meta("juice_blink")
+	if tw is Tween and (tw as Tween).is_valid():
+		(tw as Tween).kill()
+	node.remove_meta("juice_blink")
+	node.modulate = Color(1, 1, 1, node.modulate.a)
+
+## Rocks [param node] by up to [param deg] degrees (at most 4) and back to rest in
+## [param time] seconds, for hints such as a new gift (item 2239). Awaitable.
+func wobble(node: CanvasItem, deg: float = WOBBLE_MAX_DEG, time: float = 0.5) -> void:
+	if node == null or reduced():
+		return
+	var a: float = deg_to_rad(clampf(deg, 0.0, WOBBLE_MAX_DEG))
+	if node is Control:
+		(node as Control).pivot_offset = (node as Control).size / 2.0
+	var tw: Tween = node.create_tween()
+	var step: float = time / speed() / 4.0
+	for r: float in [a, -a, a * 0.5, 0.0]:
+		tw.tween_property(node, "rotation", r, step).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	await tw.finished
+
 # --- Screen shake ------------------------------------------------------------
 
 ## Registers the node that shakes (never the UI layer). Pass null to clear it.
@@ -144,20 +248,35 @@ func set_shake_root(node: CanvasItem) -> void:
 	_shake_base = node.get("position") if node != null else Vector2.ZERO
 	trauma = 0.0
 
-## Adds trauma (capped at 1). Ignored while shake is off or motion is reduced.
-func add_trauma(amount: float) -> void:
+## Adds trauma (capped at 1). Ignored while shake is off or motion is reduced. [param element]
+## (an Elements.E value) picks the shake direction (item 2260); -1 keeps both axes.
+func add_trauma(amount: float, element: int = -1) -> void:
 	if shake_scale() <= 0.0:
 		return
+	shake_element = element
 	if in_battle and speed() >= 4.0:
 		amount *= 0.6
 	trauma = clampf(trauma + amount, 0.0, 1.0)
 
-## Current whole-pixel shake offset for [param t] trauma.
-func shake_offset(t: float) -> Vector2:
+## Shake axes and speed for an element (item 2260): Stone only up and down, Gale only side to
+## side, Volt twice as fast at half the reach, every other element on both axes.
+## Returns [x weight, y weight, frequency factor].
+static func shake_shape(element: int) -> Vector3:
+	match element:
+		Elements.E.STONE: return Vector3(0.0, 1.0, 1.0)
+		Elements.E.GALE: return Vector3(1.0, 0.0, 1.0)
+		Elements.E.VOLT: return Vector3(0.5, 0.5, 2.0)
+	return Vector3(1.0, 1.0, 1.0)
+
+## Current whole-pixel shake offset for [param t] trauma, read from smooth noise at
+## [param at] seconds (defaults to the running shake clock).
+func shake_offset(t: float, at: float = -1.0) -> Vector2:
 	var k: float = t * t * shake_scale()
-	var x: int = roundi(SHAKE_MAX.x * k * _rng.randf_range(-1.0, 1.0))
-	var y: int = roundi(SHAKE_MAX.y * k * _rng.randf_range(-1.0, 1.0))
-	return Vector2(x, y)
+	var shape: Vector3 = shake_shape(shake_element)
+	var p: float = floorf((_shake_time if at < 0.0 else at) * SHAKE_NOISE_HZ) * SHAKE_NOISE_STEP * shape.z
+	var nx: float = clampf(_noise.get_noise_2d(p, 0.0) * 1.6, -1.0, 1.0)
+	var ny: float = clampf(_noise.get_noise_2d(p, 57.0) * 1.6, -1.0, 1.0)
+	return Vector2(roundi(SHAKE_MAX.x * k * shape.x * nx), roundi(SHAKE_MAX.y * k * shape.y * ny))
 
 func _process(delta: float) -> void:
 	if trauma <= 0.0:
@@ -165,11 +284,13 @@ func _process(delta: float) -> void:
 	# Decay in real time, so a hit-stop does not freeze the shake.
 	var real: float = delta / maxf(Engine.time_scale, 0.0001)
 	trauma = maxf(trauma - TRAUMA_DECAY * real, 0.0)
+	_shake_time += real
 	if not is_instance_valid(_shake_root):
 		_shake_root = null
 		return
 	if trauma <= 0.0:
 		_reset_shake()
+		shake_element = -1
 	else:
 		_shake_root.set("position", _shake_base + shake_offset(trauma))
 

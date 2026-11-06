@@ -77,11 +77,11 @@ func play_transition() -> void:
 	var tw: Tween = create_tween()
 	var half: float = TRANSITION_TIME / 2.0
 	if Juice.reduced():
-		tw.tween_property(_wipe, "modulate:a", 1.0, half)
+		Juice.shaped(tw.tween_property(_wipe, "modulate:a", 1.0, half), "close")
 	else:
-		tw.tween_property(_wipe, "size:y", size.y, half)
+		Juice.shaped(tw.tween_property(_wipe, "size:y", size.y, half), "close")
 	tw.tween_callback(_apply)
-	tw.tween_property(_wipe, "modulate:a", 0.0, half)
+	Juice.shaped(tw.tween_property(_wipe, "modulate:a", 0.0, half), "fade")
 	tw.tween_callback(func() -> void: _wipe.visible = false)
 
 func set_retro_filter(e: int) -> void:
