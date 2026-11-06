@@ -363,13 +363,6 @@ func _box() -> TextBox:
 	add_child_autofree(t)
 	return t
 
-func test_speaker_prefix_moves_into_name_line() -> void:
-	assert_eq(Speakers.split("Kestra: Two Rifts mended."), ["Kestra", "Two Rifts mended."] as Array[String])
-	assert_eq(Speakers.split("Hauler Wren: Move along."), ["Hauler Wren", "Move along."] as Array[String])
-	assert_eq(Speakers.split("Tangled in the reeds: a Waking Moss!")[0], "", "narration keeps its colon")
-	assert_eq(Speakers.split("...Alright: fine.")[0], "")
-	assert_eq(Speakers.split("Plain line.")[1], "Plain line.")
-
 func test_npc_without_prefix_gets_a_name() -> void:
 	var n := NPC.new()
 	n.setup({"id": "fisher", "x": 0, "y": 0})
@@ -397,13 +390,16 @@ func test_long_text_splits_into_three_line_windows() -> void:
 
 func test_box_shows_speaker_and_fast_forwards() -> void:
 	var t: TextBox = _box()
-	t.names_from_text = true
 	t.allow_fast_forward = true
-	t.show_text("Aldo: Good.")
+	t.show_text("Good.", "Fisher")
 	await wait_process_frames(1)
-	assert_eq(t.speaker, "Aldo")
+	assert_eq(t.speaker(), "Fisher", "the role shows when the line names no one")
+	t.start_fast_forward()
+	await wait_process_frames(1)
+	t.show_text("Aldo: Good.", "Fisher")
+	await wait_process_frames(1)
+	assert_eq(t.speaker(), "Aldo", "a name in the line wins")
 	assert_eq(t._label.text, "Good.")
-	assert_true(t._name.visible)
 	t.start_fast_forward()
 	var done: Array = []
 	var run := func() -> void:

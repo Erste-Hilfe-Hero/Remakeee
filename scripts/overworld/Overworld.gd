@@ -38,6 +38,9 @@ var _banner: Label
 var _fade: ColorRect
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
+var _ui_root: Control
+## True while a cut-scene runs (steps of the player do not trigger warps or encounters).
+var scene_running: bool = false
 ## Area 3 puzzles and gear on the map (boulders, plates, cracked floor, planks, ladders).
 var _world: WorldMechanics
 ## Cell the player arrived on in this map ("Reset room" puts them back here).
@@ -51,6 +54,7 @@ func _ready() -> void:
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
+		"exchange": _action_exchange,
 		"spark_read": _action_spark_read,
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
@@ -59,6 +63,10 @@ func _ready() -> void:
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
+		"set_var": _action_set_var,
+		"add_var": _action_add_var,
+		"battle": _action_battle,
+		"scene": _action_scene,
 		"lever": _action_lever,
 	}
 	_world = WorldMechanics.new(self)
@@ -112,6 +120,7 @@ func _build() -> void:
 	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.theme = UITheme.get_theme()
 	_ui.add_child(ui_root)
+	_ui_root = ui_root
 	SafeArea.apply(ui_root)
 	_fade = ColorRect.new()
 	_fade.color = Color(UITheme.INK, 0.0)
@@ -212,6 +221,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_npcs.append(n)
 	player.place(cell, face)
 	GameState.current_map = map_id
+	DailyTasks.note_map(map_id)
+	DailyTasks.record("visit", {"map": map_id})
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -357,6 +368,11 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
+	if scene_running:
+		return
+	DailyTasks.record("step", {"map": map.id})
+	if not GameState.notices.is_empty():
+		await _locked_say(take_notices())
 	if await _world.stepped(cell):
 		return
 	var warp: Dictionary = map.warp_at(cell)
@@ -406,7 +422,7 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
 	if not s.is_empty():
-		await run_dialogue(str(s.dialogue), null, true)
+		await run_dialogue(str(s.dialogue))
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -416,26 +432,15 @@ func _on_interact(cell: Vector2i) -> void:
 			await run_dialogue(beyond.dialogue_ref, beyond)
 
 ## Shows a dialogue entry, then runs its action and flag. Freezes the player meanwhile.
-## Signs ([param is_sign]) show no speaker name; other lines name who speaks (item 2011).
-func run_dialogue(ref: String, speaker: NPC = null, is_sign: bool = false) -> void:
+## Follows "if"/"else", "choices" and "next" inside the same file (plan items 1335-1338).
+func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	var goal_before: int = QuestLog.current_index(GameState.flags)
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
-	var entry: Dictionary = Dialogue.get_entry(ref)
-	_text.speaker = "" if is_sign else Speakers.name_for(speaker)
-	_text.names_from_text = not is_sign
-	_text.visible = true
-	for line: String in Dialogue.lines_for(entry, GameState.flags):
-		await _text.show_text(line)
-	_text.visible = false
-	_text.speaker = ""
-	_text.names_from_text = false
-	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
-	if entry.has("action") and not (already and bool(entry.get("once", false))):
-		await _run_action(str(entry.action), speaker)
-	if entry.has("flag"):
-		GameState.set_flag(str(entry.flag))
+	if speaker != null:
+		DailyTasks.record("talk", {"map": map.id, "key": ref})
+	await play_entry(ref, speaker)
 	refresh_shade()
 	await announce_achievements()
 	await announce_goal_if_changed(goal_before)
@@ -443,9 +448,63 @@ func run_dialogue(ref: String, speaker: NPC = null, is_sign: bool = false) -> vo
 	player.frozen = false
 	busy = false
 
+## Plays [param ref] and whatever it leads to via "else", choices and "next".
+func play_entry(ref: String, speaker: NPC = null) -> void:
+	var hops: int = 0
+	while not ref.is_empty() and hops < Dialogue.MAX_HOPS:
+		hops += 1
+		ref = await _play_one(ref, speaker)
+	_text.visible = false
+
+## Plays one entry and returns the next reference ("" when the talk is over).
+func _play_one(ref: String, speaker: NPC) -> String:
+	var entry: Dictionary = Dialogue.get_entry(ref)
+	if entry.has("if") and not Dialogue.check(entry.get("if"), GameState.flags):
+		return Dialogue.resolve_ref(ref, str(entry.else)) if entry.has("else") else ""
+	var lines: Array[String] = Dialogue.lines_for(entry, GameState.flags)
+	var who: String = Dialogue.speaker_for(entry)
+	if who.is_empty():
+		# Villagers whose lines carry no name show their role or Wayfarer name (item 2011).
+		who = Speakers.name_for(speaker)
+	var choices: Array[Dictionary] = Dialogue.choices_for(entry, GameState.flags)
+	var next: String = str(entry.get("next", ""))
+	_text.visible = true
+	for i: int in lines.size():
+		if i == lines.size() - 1 and not choices.is_empty():
+			_text.show_prompt(lines[i], who)
+		else:
+			await _text.show_text(lines[i], who)
+	if not choices.is_empty():
+		var pick: Dictionary = await _ask_choice(choices)
+		if entry.has("choice_id"):
+			GameState.record_choice(str(entry.choice_id), str(pick.get("id", choices.find(pick))))
+		if pick.has("flag"):
+			GameState.set_flag(str(pick.flag))
+		if pick.has("action"):
+			_text.visible = false
+			await _run_action(str(pick.action), speaker)
+		if pick.has("next"):
+			next = str(pick.next)
+	_text.visible = false
+	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
+	if entry.has("action") and not (already and bool(entry.get("once", false))):
+		await _run_action(str(entry.action), speaker)
+	if entry.has("flag"):
+		GameState.set_flag(str(entry.flag))
+	return Dialogue.resolve_ref(ref, next) if not next.is_empty() else ""
+
+## Shows the answers as a list under the last line and waits for a tap (plan item 1335).
+func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
+	var entries: Array[Dictionary] = []
+	for c: Dictionary in choices:
+		entries.append({"text": str(c.get("text", "..."))})
+	var idx: int = await _picker.pick("", entries, false)
+	return choices[clampi(idx, 0, choices.size() - 1)]
+
 ## Shows newly earned achievements (item 90).
 func announce_achievements() -> void:
-	var lines: Array[String] = Collection.claim()
+	var lines: Array[String] = take_notices()
+	lines.append_array(Collection.claim())
 	for t: String in Achievements.check():
 		lines.append("Achievement: %s" % t)
 	if lines.is_empty():
@@ -453,6 +512,12 @@ func announce_achievements() -> void:
 	Sound.sfx("level_up")
 	await say(lines)
 	_text.visible = false
+
+## Reward notes queued by DailyTasks / Waymarks, emptied.
+func take_notices() -> Array[String]:
+	var lines: Array[String] = GameState.notices.duplicate()
+	GameState.notices.clear()
+	return lines
 
 ## Shows "New goal: ..." when the story goal moved on since [param before].
 func announce_goal_if_changed(before: int) -> void:
@@ -471,6 +536,42 @@ func say(lines: Array[String]) -> void:
 		await _text.show_text(line)
 	_text.visible = false
 
+# --- Access for the ScenePlayer -----------------------------------------------------------
+
+func ui_root() -> Control:
+	return _ui_root
+
+func text_box() -> TextBox:
+	return _text
+
+func fade_rect() -> ColorRect:
+	return _fade
+
+func entities() -> Node2D:
+	return _entities
+
+## The NPC on this map with [param id], or null.
+func npc_by_id(id: String) -> NPC:
+	for n: NPC in _npcs:
+		if n.npc_id == id:
+			return n
+	return null
+
+## Shakes the camera for [param seconds] (thunder, the Rift opening).
+func shake_camera(seconds: float) -> void:
+	if GameState.reduce_motion:
+		return
+	var t: float = 0.0
+	while t < seconds:
+		_camera.offset = Vector2(GameState.rng.randi_range(-2, 2), GameState.rng.randi_range(-2, 2))
+		await get_tree().process_frame
+		t += get_process_delta_time()
+	_camera.offset = Vector2.ZERO
+
+## Runs dialogue actions from outside (scenes).
+func run_action(action: String, speaker: NPC = null) -> void:
+	await _run_action(action, speaker)
+
 ## Runs one action, or several separated by ";" (e.g. "page 1; give_item tonic 2").
 func _run_action(action: String, speaker: NPC) -> void:
 	for one: String in action.split(";", false):
@@ -488,6 +589,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.heal_cell = map.heal_point
 		GameState.visit_rest(map.id, map.heal_point)
 	Online.contribute("rests")
+	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
 	await say(Tips.take("rest_spot"))
 
@@ -566,6 +668,8 @@ func photo_mode() -> void:
 	add_child(_photo)
 	VirtualPad.set_wanted(true)
 	await _photo.finished
+	if _photo.taken > 0:
+		DailyTasks.record("photo", {"map": map.id})
 	_photo.queue_free()
 	_photo = null
 
@@ -700,6 +804,57 @@ func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["That's all six pages. Aldo should see them."] as Array[String])
 	else:
 		await say(Tips.take("map_page"))
+
+## "set_var <name> <value>": a story number such as kestra_trust (plan item 1339).
+func _action_set_var(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() >= 2:
+		GameState.set_story_var(args[0], int(args[1]))
+
+## "add_var <name> <amount>"
+func _action_add_var(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() >= 1:
+		GameState.add_story_var(args[0], int(args[1]) if args.size() > 1 else 1)
+
+## "battle <id>": a story duel from data/story_battles.json, straight out of a talk or scene
+## (plan item 1340). Wins set the beaten flag "beat_story_<id>" and the entry's win_flags.
+func _action_battle(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var def: Dictionary = StoryBattles.get_def(args[0])
+	if def.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng)
+	if team.is_empty():
+		return
+	_text.visible = false
+	SaveManager.save_game()
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	if outcome == BattleModel.Outcome.WIN:
+		GameState.set_flag(StoryBattles.beaten_flag(args[0]))
+		for f: Variant in def.get("win_flags", []):
+			GameState.set_flag(str(f))
+		if def.has("defeat"):
+			await play_entry(str(def.defeat))
+	elif def.has("lose"):
+		await play_entry(str(def.lose))
+
+## "scene <id>": plays data/scenes/<id>.json (plan item 1341).
+func _action_scene(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	await play_scene(args[0])
+
+## Plays a cut-scene and returns to the talk or the world afterwards.
+func play_scene(id: String) -> void:
+	var sp := ScenePlayer.new()
+	sp.overworld = self
+	add_child(sp)
+	await sp.play(id)
+	sp.queue_free()
 
 func _action_set_flag(args: PackedStringArray, _speaker: NPC) -> void:
 	for f: String in args:
@@ -925,6 +1080,36 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		await menu.info("Bought %s. You have %d." % [item.get("name", ""), GameState.item_count(args[idx])])
 	menu.queue_free()
 
+## Marla's exchange stand (plan area 8): items for Waymarks only, with a card and a yes/no
+## question before every trade.
+func _action_exchange(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not Exchange.is_open():
+		await say(["Marla: My stand opens once the valley is a little quieter. Mend a Rift, then come back."] as Array[String])
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	while true:
+		var offers: Array[Dictionary] = Exchange.offers()
+		var labels: Array[String] = []
+		for o: Dictionary in offers:
+			labels.append(Exchange.label(o))
+		var idx: int = await menu.pick_strings(Loc.t("Exchange   %s") % Waymarks.label(), labels)
+		if idx < 0:
+			break
+		var o: Dictionary = offers[idx]
+		if not await menu.confirm(Exchange.describe(o) + "\n\n" + Loc.t("Trade?")):
+			continue
+		var err: String = Exchange.buy(str(o.item))
+		if err != "":
+			Sound.sfx("cancel")
+			await menu.info(err)
+			continue
+		Sound.sfx("coin")
+		await menu.info(Loc.t("Traded for %s. You have %d.") % [Loc.t(str(Database.item(str(o.item)).get("name", ""))), GameState.item_count(str(o.item))])
+	menu.queue_free()
+	if not Exchange.full_unlocked():
+		await say(["Marla: Once the valley is fully quiet I'll bring out the good crates."] as Array[String])
+
 # --- Wayfarers --------------------------------------------------------------------------
 
 func _is_active_trainer(n: NPC) -> bool:
@@ -1126,15 +1311,19 @@ func thank_echo(helper: Dictionary, won: bool) -> void:
 	if pts > 0:
 		await say(["%s's echo fades with a smile. Your friendship grew!" % str(helper.name)] as Array[String])
 
+## What the last battle's result was (winner, Vigor left, rounds), for the server's referee.
+var last_claim: Dictionary = {}
+
 ## Echo duel (items 121-124): a friend's team, run by the AI, everyone on the same level.
 ## Nothing is lost and the real team does not change.
 func echo_duel(d: Dictionary) -> void:
-	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, EchoTeam.DUEL_LEVEL)
-	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party)
+	var ring: int = EchoTeam.duel_ring({"duel_ring": d.get("ring", EchoTeam.DUEL_LEVEL)})
+	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, ring)
+	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party, ring)
 	if foes.is_empty() or mine.is_empty():
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
-	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), EchoTeam.DUEL_LEVEL]] as Array[String])
+	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
 	busy = false
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
@@ -1142,6 +1331,9 @@ func echo_duel(d: Dictionary) -> void:
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
+	# The server's referee plays the duel again (plan area 7, item 2689).
+	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	await say(["You won the echo duel against %s!" % str(d.name) if won else "%s's echo won this time. Your team is fine." % str(d.name)] as Array[String])
 	busy = false
 	player.frozen = false
@@ -1200,6 +1392,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
+	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()
 	if bool(trainer.get("friendly", false)):
@@ -1220,11 +1413,20 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:
 		Online.contribute("battles")
+		var foe_elements: Array[String] = []
+		for f: Spirling in model.parties[1]:
+			for e: int in f.elements():
+				foe_elements.append(Elements.E.keys()[e])
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements})
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		GameState.receive_spirling(model.bonded)
+		var bond_elements: Array[String] = []
+		for e: int in model.bonded.elements():
+			bond_elements.append(Elements.E.keys()[e])
+		DailyTasks.record("bond", {"map": map.id, "elements": bond_elements})
 		SaveManager.save_game()
 	var oath: Array[String] = oath_lines(GameState.retire_fainted())
 	if outcome == BattleModel.Outcome.LOSS:

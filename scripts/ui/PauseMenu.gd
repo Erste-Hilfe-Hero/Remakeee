@@ -131,6 +131,9 @@ static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Diction
 	var visitor: String = DailyFind.hint(flags) if daily == null else str(daily)
 	if not visitor.is_empty():
 		rows.append({"text": "Today's visitor", "hint": Loc.t(visitor), "detail": visitor})
+	var tasks: Array[String] = DailyTasks.lines()
+	if not tasks.is_empty():
+		rows.append({"text": "Daily tasks", "hint": tasks[1] if tasks.size() > 1 else "", "detail": "\n".join(tasks)})
 	return rows
 
 static var _goal_mark: ImageTexture
@@ -161,6 +164,17 @@ func save_now() -> void:
 
 const SAVED_TEXT: String = "Saved."
 const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once the connection is back."
+
+## Goals screen: story goals, the find of the day and today's tasks (plan area 8).
+static func goals_text() -> String:
+	var text: String = Loc.t(QuestLog.summary(GameState.flags))
+	var daily: String = DailyFind.hint(GameState.flags)
+	if not daily.is_empty():
+		text += "\n\n" + Loc.t(daily)
+	var tasks: Array[String] = DailyTasks.lines()
+	if not tasks.is_empty():
+		text += "\n\n" + "\n".join(tasks)
+	return text
 
 ## Achievements and personal bests (items 88-90).
 func run_records() -> void:
@@ -210,7 +224,7 @@ static func records_text() -> String:
 
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:
-	var t: String = "%s   %s" % [GameState.tamer_name, Loc.plural(GameState.money, "%d coin", "%d coins")]
+	var t: String = "%s   %s   %s" % [GameState.tamer_name, Loc.plural(GameState.money, "%d coin", "%d coins"), Waymarks.label()]
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t

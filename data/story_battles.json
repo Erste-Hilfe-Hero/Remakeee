@@ -1,0 +1,3 @@
+{
+ "_comment": "Story duels started by the dialogue/scene action 'battle <id>'. Same fields as a Wayfarer in a map file (scripts/overworld/TrainerData.gd), plus 'defeat'/'lose' dialogue refs and 'win_flags'."
+}

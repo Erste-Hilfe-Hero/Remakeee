@@ -161,5 +161,6 @@ T = {
 "Tip: Share your friend code so friends can send gifts and meet your echo.": "Tipp: Teile deinen Freundescode, dann können Freunde dir Geschenke schicken und deinem Echo begegnen.",
 "Tip: Spirlings who aren't travelling with you rest in storage. Swap them any time here.": "Tipp: Spirlings, die nicht mitreisen, ruhen im Lager. Hier kannst du sie jederzeit tauschen.",
 "Tip: You found a page of Mirela's map book. Goals shows how many are still out there.": "Tipp: Du hast eine Seite aus Mirelas Kartenbuch gefunden. Unter Ziele steht, wie viele noch fehlen.",
+"Daily tasks": "Tagesaufgaben",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn"]

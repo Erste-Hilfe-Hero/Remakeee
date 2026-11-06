@@ -18,12 +18,20 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "focus_brew", "w": 3}, {"item": "dash_brew", "w": 3}, {"item": "revival_leaf", "w": 1}],
 	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
+	"party_max": 5, "level_max": 60, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
+}
+const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
+## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
+const DEFAULT_FLAGS: Dictionary = {
+	"league_fair": {"enabled": false, "min_version": 1}, "league_open": {"enabled": false, "min_version": 1},
+	"live_duel": {"enabled": false, "min_version": 1}, "trade": {"enabled": false, "min_version": 1},
+	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
 var store_path: String = ""
 ## {"users": {uid: user}, "config": {...}}; a user holds "profile" and "saves".
-var db: Dictionary = {"users": {}, "config": DEFAULT_CONFIG.duplicate(true)}
+var db: Dictionary = {"users": {}, "config": DEFAULT_CONFIG.duplicate(true), "flags": DEFAULT_FLAGS.duplicate(true)}
 ## Seconds added to the real clock (tests move time with this).
 var clock_offset: int = 0
 ## When true every call fails like a dropped connection.
@@ -40,7 +48,8 @@ func _init(p_store_path: String = "") -> void:
 			"transfer_create", "transfer_claim",
 			"friend_request", "friend_respond", "friend_remove", "block", "unblock", "report", "set_social", "friends_list",
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
-			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board"]:
+			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
+			"battle_submit", "battle_status"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 
 func is_local() -> bool:
@@ -105,6 +114,10 @@ func _load() -> void:
 		if db.get("config") is Dictionary:
 			cfg.merge(db.config, true)
 		db["config"] = cfg
+		var flags: Dictionary = DEFAULT_FLAGS.duplicate(true)
+		if db.get("flags") is Dictionary:
+			flags.merge(db.flags, true)
+		db["flags"] = flags
 
 func _save() -> void:
 	if store_path.is_empty():
@@ -121,7 +134,7 @@ func _user() -> Dictionary:
 func profile_of(uid: String) -> Dictionary:
 	var u: Dictionary = db.users[uid]
 	if not u.has("profile"):
-		u["profile"] = {"code": _new_code(), "name": "Tamer", "color": 0, "favorite": "", "card": {},
+		u["profile"] = {"code": _new_code(), "name": "Wanderer", "color": 0, "favorite": "", "card": {},
 			"place": "", "social": true, "last_seen": now(), "created_at": now()}
 	return u.profile
 
@@ -144,7 +157,7 @@ func _new_code() -> String:
 
 static func clean_name(p_name: String, code: String) -> String:
 	var n: String = " ".join(p_name.strip_edges().split(" ", false))
-	var fallback: String = "Tamer " + code.right(4)
+	var fallback: String = "Wanderer " + code.right(4)
 	if n.is_empty() or n.length() > 10:
 		return fallback
 	var re := RegEx.create_from_string("^[\\p{L}\\p{N} ]+$")
@@ -170,14 +183,25 @@ func online_now() -> int:
 			n += 1
 	return n
 
-static func save_ok(d: Variant) -> bool:
+## Whole-number config value, like public._config_int.
+func config_int(key: String, fallback: int) -> int:
+	var v: Variant = db.config.get(key, fallback)
+	return int(v) if (v is int or v is float) else fallback
+
+## Like public._flag_on: the feature is on for this client version.
+func flag_on(key: String, version: int) -> bool:
+	var f: Variant = db.flags.get(key)
+	return f is Dictionary and bool(f.get("enabled", false)) and version >= int(f.get("min_version", 1))
+
+## Like public._save_ok: real game limits (team of party_max, Ring 1..level_max).
+static func save_ok(d: Variant, party_max: int = 5, level_max: int = 60) -> bool:
 	if not d is Dictionary:
 		return false
 	if JSON.stringify(d).length() > 400000:
 		return false
 	var party: Variant = d.get("party", [])
 	var storage: Variant = d.get("storage", [])
-	if not party is Array or not storage is Array or (party as Array).size() > 6:
+	if not party is Array or not storage is Array or (party as Array).size() > party_max:
 		return false
 	var money: Variant = d.get("money", 0)
 	if not (money is int or money is float) or float(money) < 0 or float(money) > 9999999:
@@ -185,9 +209,19 @@ static func save_ok(d: Variant) -> bool:
 	for s: Variant in (party as Array) + (storage as Array):
 		if s is Dictionary:
 			var lvl: Variant = s.get("level", 1)
-			if not (lvl is int or lvl is float) or float(lvl) < 1 or float(lvl) > 100:
+			if not (lvl is int or lvl is float) or float(lvl) < 1 or float(lvl) > level_max:
 				return false
 	return true
+
+## Like public._save_schema_ok: a whole number from 1 to save_schema_max.
+## JSON numbers come back as floats in Godot, so 1.0 counts as whole.
+static func save_schema_ok(d: Variant, schema_max: int = 1) -> bool:
+	if not d is Dictionary:
+		return false
+	var v: Variant = (d as Dictionary).get("schema")
+	if not (v is int or v is float):
+		return false
+	return float(v) == floorf(float(v)) and float(v) >= 1 and float(v) <= schema_max
 
 # --- Core functions (20261101000001_online_core.sql) ---------------------------------------
 
@@ -254,7 +288,9 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 	var slot: int = int(a.get("p_slot", 0))
 	if slot < 1 or slot > 3:
 		return {"ok": false, "error": "bad_slot"}
-	if not save_ok(a.get("p_data")):
+	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
+		return {"ok": false, "error": "schema"}
+	if not save_ok(a.get("p_data"), config_int("party_max", 5), config_int("level_max", 60)):
 		return {"ok": false, "error": "implausible"}
 	var saves: Dictionary = _saves()
 	var cur: Variant = saves.get(str(slot))
@@ -575,7 +611,8 @@ func _fn_team_set(a: Dictionary) -> Dictionary:
 	if not given is Array:
 		return _fail("bad_team")
 	var clean: Array = []
-	for s: Variant in (given as Array).slice(0, 6):
+	var level_max: int = config_int("level_max", 60)
+	for s: Variant in (given as Array).slice(0, config_int("party_max", 5)):
 		var d: Dictionary = s if s is Dictionary else {}
 		var moves: Array = []
 		var mv_list: Variant = d.get("moves", [])
@@ -583,7 +620,7 @@ func _fn_team_set(a: Dictionary) -> Dictionary:
 			moves.append(_keep(str(mv), " '-").left(24))
 		var lvl: Variant = d.get("level", 1)
 		clean.append({"species": _keep(str(d.get("species", "")), "").left(20),
-			"level": clampi(int(lvl) if (lvl is int or lvl is float) else 1, 1, 100), "moves": moves})
+			"level": clampi(int(lvl) if (lvl is int or lvl is float) else 1, 1, level_max), "moves": moves})
 	profile_of(me())["team"] = clean
 	return {"ok": true, "size": clean.size()}
 
@@ -599,7 +636,8 @@ func _fn_friend_team(a: Dictionary) -> Dictionary:
 	if t.is_empty() or not is_friend(me(), t):
 		return _fail("not_friends")
 	var p: Dictionary = profile_of(t)
-	return {"ok": true, "name": p.name, "color": p.color, "team": (p.get("team", []) as Array).duplicate(true)}
+	return {"ok": true, "name": p.name, "color": p.color, "team": (p.get("team", []) as Array).duplicate(true),
+		"duel_ring": clampi(config_int("duel_ring", 50), 1, config_int("level_max", 60))}
 
 func _fn_echo_report(a: Dictionary) -> Dictionary:
 	var kind: String = str(a.get("p_kind", ""))
@@ -747,3 +785,61 @@ func _on_delete_user(uid: String) -> void:
 		for key: String in t.keys():
 			if key.ends_with("|" + uid):
 				t.erase(key)
+	var battles: Dictionary = _table("battles", {})
+	for key: String in battles.keys():
+		if battles[key].user == uid:
+			battles.erase(key)
+
+# --- Battle referee (20261110000002_referee.sql) --------------------------------------------
+
+## Like public.battle_submit. The local stand-in has no queue: the referee runs at once,
+## with the same code as server/referee/ (BattleReferee), unless [member referee_waits] is set.
+func _fn_battle_submit(a: Dictionary) -> Dictionary:
+	var kind: String = str(a.get("p_kind", ""))
+	if not BATTLE_KINDS.has(kind):
+		return _fail("bad_kind")
+	var replay: Variant = a.get("p_replay")
+	var claim: Variant = a.get("p_claim")
+	if not replay is Dictionary or not claim is Dictionary or not (replay as Dictionary).get("teams") is Array \
+			or JSON.stringify(replay).length() > 200000 or JSON.stringify(claim).length() > 4000:
+		return _fail("bad_battle")
+	var inputs: Variant = (replay as Dictionary).get("inputs", [])
+	if not inputs is Array or (inputs as Array).size() > BattleReferee.MAX_INPUTS:
+		return _fail("bad_battle")
+	if not _rate_ok("battle", config_int("battle_submit_limit", 60)):
+		return _fail("slow_down")
+	var battles: Dictionary = _table("battles", {})
+	var id: int = int(db.get("battle_seq", 0)) + 1
+	db["battle_seq"] = id
+	var row: Dictionary = {"user": me(), "kind": kind, "ref": str(a.get("p_ref", "")).left(40), "status": "pending"}
+	battles[str(id)] = row
+	if referee_waits:
+		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": (claim as Dictionary).duplicate(true)}
+	else:
+		row.status = str(BattleReferee.check(replay, claim).verdict)
+	return {"ok": true, "battle_id": id, "status": "pending"}
+
+## Tests: battles stay "pending" until [method referee_run] (like the real queue).
+var referee_waits: bool = false
+
+## Decides every waiting battle, like one run of server/referee/run.sh.
+func referee_run() -> int:
+	var n: int = 0
+	for key: String in (_table("battles", {}) as Dictionary):
+		var row: Dictionary = db.battles[key]
+		if row.has("queued"):
+			row.status = str(BattleReferee.check(row.queued.replay, row.queued.claim).verdict)
+			row.erase("queued")
+			n += 1
+	return n
+
+func _fn_battle_status(a: Dictionary) -> Dictionary:
+	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
+	if not row is Dictionary or row.user != me():
+		return _fail("no_such_battle")
+	return {"ok": true, "status": row.status}
+
+## Like public._battle_ok: leagues, raids and weekly scores only count "ok" battles.
+func battle_ok(battle_id: int) -> bool:
+	var row: Variant = (_table("battles", {}) as Dictionary).get(str(battle_id))
+	return row is Dictionary and row.status == "ok"
