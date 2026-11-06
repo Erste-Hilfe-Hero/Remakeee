@@ -61,7 +61,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3606. [P1] Baue unter Einstellungen, Hilfe einen Knopf "Fehlerbericht senden", der nur nach Zustimmung die letzte Logdatei an eine eigene Serverfunktion `bug_report` schickt, ohne fremdes SDK.
 3607. [P1] Lege die Tabelle `bug_reports` mit Spieler-ID, App-Version, Gerätemodell, Logtext (höchstens 64 KB) und Zeitpunkt an, mit 3 Berichten pro Tag pro Konto und Löschung nach 90 Tagen.
 3608. [P1] Prüfe alle `await`-Stellen in `scripts/online/` und `scripts/ui/` darauf, dass ein Fehler oder Timeout nie einen Bildschirm ohne Ausweg hinterlässt.
-3609. [P1] Fange beim Laden von Spielständen jede ungültige Struktur ab und zeige statt eines Absturzes "Spielstand beschädigt, Sicherung wird geladen".
+3609. [x] [P1] Fange beim Laden von Spielständen jede ungültige Struktur ab und zeige statt eines Absturzes "Spielstand beschädigt, Sicherung wird geladen".
 3610. [P2] Leite alle `push_error`-Aufrufe über eine kleine Funktion `Log.error(tag, text)`, damit Logs einheitlich mit Zeit, Szene und Tag geschrieben werden.
 3611. [P2] Entferne aus Logs alles, was personenbezogen sein kann (Wayfarer-Name, Freundescode, Token), bevor es geschrieben wird, und teste das.
 3612. [P2] Ergänze `Database.gd` so, dass ein fehlender Eintrag (Spirling, Technik, Gegenstand) einen sicheren Ersatz liefert und einen Logeintrag schreibt, statt `null` weiterzugeben.
@@ -87,11 +87,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3632. [P3] Lege fest, dass Debug-Ausgaben mit `print` in Release-Builds abgeschaltet sind, und prüfe das mit einer Regel in `tools/headless_check.sh`.
 
 ### Lokale Speicherstände
-3633. [P1] Behalte statt einer einzigen `.bak.json` drei rotierende Sicherungen pro Slot und lade beim Fehler die neueste lesbare.
-3634. [P1] Füge jedem Spielstand eine SHA-256-Prüfsumme über den Inhalt hinzu, damit abgeschnittene oder beschädigte Dateien sicher erkannt werden.
-3635. [P1] Speichere zusätzlich bei `NOTIFICATION_WM_CLOSE_REQUEST` und `NOTIFICATION_APPLICATION_FOCUS_OUT`, weil iOS die App sonst ohne Pause-Signal beenden kann.
-3636. [P1] Lege eine CI-Regel an, die scheitert, wenn `save_version` steigt, ohne dass in `tests/fixtures/saves/` eine passende Datei und ein Migrationstest dazukommen.
-3637. [P1] Prüfe nach jedem Schreiben, ob die Datei wieder lesbar ist und dieselbe Prüfsumme hat, bevor die alte Sicherung überschrieben wird.
+3633. [x] [P1] Behalte statt einer einzigen `.bak.json` drei rotierende Sicherungen pro Slot und lade beim Fehler die neueste lesbare.
+3634. [x] [P1] Füge jedem Spielstand eine SHA-256-Prüfsumme über den Inhalt hinzu, damit abgeschnittene oder beschädigte Dateien sicher erkannt werden.
+3635. [x] [P1] Speichere zusätzlich bei `NOTIFICATION_WM_CLOSE_REQUEST` und `NOTIFICATION_APPLICATION_FOCUS_OUT`, weil iOS die App sonst ohne Pause-Signal beenden kann.
+3636. [x] [P1] Lege eine CI-Regel an, die scheitert, wenn `save_version` steigt, ohne dass in `tests/fixtures/saves/` eine passende Datei und ein Migrationstest dazukommen.
+3637. [x] [P1] Prüfe nach jedem Schreiben, ob die Datei wieder lesbar ist und dieselbe Prüfsumme hat, bevor die alte Sicherung überschrieben wird.
 3638. [P2] Schreibe auch die Einstellungsdatei über `write_atomic`, damit ein Absturz beim Speichern keine leeren Einstellungen hinterlässt.
 3639. [P2] Begrenze einen Spielstand auf 256 KB und lass einen Test scheitern, wenn ein voll ausgespieltes Testprofil größer wird.
 3640. [P2] Erzeuge einen Test-Spielstand mit allem (alle Spirlings, alle Gegenstände, volle Liste der Aufgaben) und nutze ihn für Größen- und Ladetests.
@@ -171,7 +171,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3710. [P3] Dokumentiere in `docs/TESTING.md`, wie Tests geschrieben, gruppiert und lokal gestartet werden.
 
 ### Headless-, Fuzz- und Langzeittests
-3711. [P1] Schreibe einen Spielstand-Fuzzer `tests/fuzz/fuzz_saves.gd`, der die Dateien aus `tests/fixtures/saves/` 2000-mal zufällig verändert (Felder löschen, Typen tauschen, Zahlen kippen) und verlangt, dass das Laden nie abstürzt.
+3711. [x] [P1] Schreibe einen Spielstand-Fuzzer `tests/fuzz/fuzz_saves.gd`, der die Dateien aus `tests/fixtures/saves/` 2000-mal zufällig verändert (Felder löschen, Typen tauschen, Zahlen kippen) und verlangt, dass das Laden nie abstürzt.
 3712. [P1] Schreibe einen Fuzzer für die SQL-Funktionen, der jede öffentliche Funktion mit zufälligen Werten (null, riesige Zahlen, lange Texte, falsche JSON-Typen) aufruft und nur saubere Fehlerantworten erlaubt.
 3713. [P1] Erweitere `tools/headless_check.sh` so, dass auch Warnungen über fehlende Ressourcen und `orphan`-Meldungen den Lauf scheitern lassen.
 3714. [P2] Schreibe einen Fuzzer für die Antworten des Servers, der `SupabaseBackend.gd` mit zufälligen und kaputten JSON-Antworten füttert.
