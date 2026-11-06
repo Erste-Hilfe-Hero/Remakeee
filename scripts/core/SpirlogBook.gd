@@ -189,6 +189,9 @@ static func page_text(sd: SpirlingData, spirlog: Dictionary) -> String:
 	lines.append("")
 	for s: String in lore_sentences(sd, spirlog):
 		lines.append(s)
+	# Plan item 1706 (story area): a Rift and region line once the kind is bonded.
+	if bonded and not SpirlogLore.line(sd.species_name).is_empty():
+		lines.append(SpirlogLore.line(sd.species_name))
 	if not bonded:
 		lines.append("Bond with one to learn more.")
 	elif lore_sentences(sd, spirlog).size() < split_sentences(sd.lore).size():

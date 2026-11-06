@@ -110,7 +110,7 @@ static func win(id: String) -> Array[String]:
 		rec["first"] = Time.get_date_string_from_unix_time(Online.unix_now())
 		rec["week"] = week
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(FIRST_WAYMARKS, "master")))
-	elif str(rec.get("week", "")) != week:
+	elif str(rec.get("week", "")) < week:
 		rec["week"] = week
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(WEEKLY_WAYMARKS, "master")))
 	else:
@@ -123,7 +123,7 @@ static func win(id: String) -> Array[String]:
 ## True if beating [param id] this week still pays Waymarks.
 static func pays_now(id: String) -> bool:
 	var rec: Dictionary = record(id)
-	return str(rec.get("first", "")) == "" or str(rec.get("week", "")) != WeeklyChallenge.this_week()
+	return str(rec.get("first", "")) == "" or str(rec.get("week", "")) < WeeklyChallenge.this_week()
 
 ## Profile card (item 3290): place, theme and the player's own record.
 static func profile(m: Dictionary) -> String:

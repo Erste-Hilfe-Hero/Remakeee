@@ -70,6 +70,8 @@ func _ready() -> void:
 		"gauntlet": _action_gauntlet,
 		"weekly": _action_weekly,
 		"master": _action_master,
+		"merchant": _action_merchant,
+		"expedition": _action_expedition,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
@@ -78,6 +80,8 @@ func _ready() -> void:
 		"battle": _action_battle,
 		"scene": _action_scene,
 		"warp": _action_warp,
+		"echo_song": _action_echo_song,
+		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
 		"first_voice": _action_first_voice,
 	}
@@ -217,6 +221,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.current_map = map_id
 	DailyTasks.note_map(map_id)
 	DailyTasks.record("visit", {"map": map_id})
+	# Today's world event gives its find on the first visit (plan 3422).
+	GameState.notices.append_array(WorldEvents.on_visit(map_id))
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -228,6 +234,9 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_right = map.width * GridWalker.TILE
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	_show_banner(map.display_name)
+	var arrive: String = StoryPlacements.enter_scene(map_id, GameState.flags)
+	if not arrive.is_empty():
+		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
 	Sound.music(Sound.track_for_map(map_id))
 	if not map.encounter_table.is_empty():
@@ -677,9 +686,12 @@ func open_menu() -> void:
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
 	var duel: Dictionary = menu.echo_duel
+	var league: Dictionary = menu.league_match
 	menu.queue_free()
 	if not duel.is_empty():
 		await echo_duel(duel)
+	if not league.is_empty():
+		await league_battle(league)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -831,17 +843,25 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(["%s decided to stay with you!" % GameState.starter,
 		"The other two slip out into the morning, toward the lake."] as Array[String])
 
-const PAGE_COUNT: int = 6
+## Mirela's map book has 14 pages: 1-6 in Veydal (Act I), 7-10 in Corvane, 11-14 in Ashmere.
+const PAGE_COUNT: int = 14
+const VEYDAL_PAGES: int = 6
+## Echo melody score that counts as a good answer outside battle.
+const ECHO_SONG_PASS: float = 0.6
 
-## How many of Mirela's map-book pages the player has found.
-static func pages_found(flags: Dictionary) -> int:
+## How many of Mirela's map-book pages the player has found (of [param upto]).
+static func pages_found(flags: Dictionary, upto: int = PAGE_COUNT) -> int:
 	var n: int = 0
-	for i: int in range(1, PAGE_COUNT + 1):
+	for i: int in range(1, upto + 1):
 		n += 1 if bool(flags.get("page_%d" % i, false)) else 0
 	return n
 
-## "page <n>": one of the six pages of Mirela's map book. Shows the page, counts it, and sets
-## "pages_all" with the last one.
+## How many pages the player knows of: six until Act II shows there are more.
+static func page_total(flags: Dictionary) -> int:
+	return PAGE_COUNT if bool(flags.get("ferry_corvane_open", false)) else VEYDAL_PAGES
+
+## "page <n>": one of Mirela's map-book pages. Shows the page and counts it. The six Veydal
+## pages set "pages_all" (lamp room), all fourteen set "pages_complete".
 func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.is_empty():
 		return
@@ -851,11 +871,15 @@ func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.set_flag(flag)
 	Sound.sfx("level_up")
 	var n: int = pages_found(GameState.flags)
-	await say(["A page from Mirela's map book! (%d/%d)" % [n, PAGE_COUNT]] as Array[String])
+	await say(["A page from Mirela's map book! (%d/%d)" % [n, page_total(GameState.flags)]] as Array[String])
 	await say(Dialogue.lines_for(Dialogue.get_entry("story/page_%s" % args[0]), GameState.flags))
-	if n >= PAGE_COUNT:
+	GameState.set_flag("page_%s_read" % args[0])
+	if pages_found(GameState.flags, VEYDAL_PAGES) >= VEYDAL_PAGES and not GameState.has_flag("pages_all"):
 		GameState.set_flag("pages_all")
 		await say(["That's all six pages. Aldo should see them."] as Array[String])
+	if n >= PAGE_COUNT:
+		GameState.set_flag("pages_complete")
+		await say(["All fourteen pages. Mirela's whole map book, together again."] as Array[String])
 
 ## "set_var <name> <value>": a story number such as kestra_trust (plan item 1339).
 func _action_set_var(args: PackedStringArray, _speaker: NPC) -> void:
@@ -893,6 +917,10 @@ func _action_battle(args: PackedStringArray, _speaker: NPC) -> void:
 			await play_entry(str(def.defeat))
 	elif def.has("lose"):
 		await play_entry(str(def.lose))
+	# A lost story duel sends the player to the last rest spot, so the scene around it stops
+	# there (it has not been "seen" and starts again, e.g. the finale chain).
+	if outcome == BattleModel.Outcome.LOSS:
+		scene_abort = scene_running
 
 ## "scene <id>": plays data/scenes/<id>.json (plan item 1341).
 func _action_scene(args: PackedStringArray, _speaker: NPC) -> void:
@@ -918,6 +946,51 @@ func _action_warp(args: PackedStringArray, _speaker: NPC) -> void:
 	SaveManager.save_game()
 	if not was_black and not scene_running:
 		await _fade_to(0.0)
+
+## "echo_song <flag>": the player answers a hushed Spirling's call with the Echo melody
+## outside battle (the bond minigame). A good echo sets the flag; a weak one can be retried
+## by talking again. Nothing is bonded or caught.
+func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.has_flag(args[0]):
+		return
+	_text.visible = false
+	var game := BondMinigame.new()
+	game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var dim := ColorRect.new()
+	dim.color = Color(UITheme.BG, 0.85)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_ui_root.add_child(dim)
+	_ui_root.add_child(game)
+	var score: float = await game.run()
+	game.queue_free()
+	dim.queue_free()
+	if score >= ECHO_SONG_PASS:
+		Sound.sfx("level_up")
+		GameState.set_flag(args[0])
+	else:
+		Sound.sfx("cancel")
+
+## "quest_stage <id> <n>": moves a side goal with stages to step n (plan item 1631).
+func _action_quest_stage(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() >= 2:
+		GameState.set_story_var("q_%s_stage" % args[0], int(args[1]))
+
+## A map's arrival scene (story_npcs.json "on_enter"), once the map change has finished.
+func _arrival_scene(id: String) -> void:
+	while _fade.color.a > 0.0 and not scene_running:
+		await get_tree().process_frame
+	if scene_running:
+		# Arrived during a scene (a ferry crossing): play right after it.
+		while scene_running:
+			await get_tree().process_frame
+	var goal_before: int = QuestLog.current_index(GameState.flags)
+	busy = true
+	player.frozen = true
+	await play_scene(id)
+	await announce_goal_if_changed(goal_before)
+	player.frozen = false
+	busy = false
+	VirtualPad.set_wanted(true)
 
 ## Plays a cut-scene and returns to the talk or the world afterwards.
 func play_scene(id: String) -> void:
@@ -1113,7 +1186,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
 	var rec: Dictionary = GameState.records.get("weekly", {})
-	if str(rec.get("week", "")) != week:
+	if str(rec.get("week", "")) != week and not GameState.time_went_back(str(rec.get("week", "")), week):
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -1186,6 +1259,50 @@ func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
 	lines.append_array(Masters.win(id))
 	await say(lines)
 	await announce_achievements()
+
+## The wandering merchant (plan 3423): today's three goods for coins.
+func _action_merchant(_args: PackedStringArray, speaker: NPC) -> void:
+	var items: Array[String] = []
+	items.assign(WorldEvents.merchant().get("items", []))
+	await _action_shop(PackedStringArray(items), speaker)
+
+## Aldo's roaming trips (plan 3446-3448): bring finished trips home, then send Spirlings from
+## storage for 4, 8 or 12 hours with the reward shown before they go.
+func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
+	var back: Array[String] = Expeditions.collect()
+	if not back.is_empty():
+		await say(back)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var status: Array[String] = Expeditions.status_lines()
+	if not status.is_empty():
+		await menu.info("\n".join(status))
+	while true:
+		var title: String = Loc.t("Roaming trips %d/%d") % [Expeditions.trips().size(), Expeditions.max_trips()]
+		var options: Array[String] = []
+		if Expeditions.can_send():
+			options.append("Send a Spirling")
+		options.append("Done")
+		var pick: int = await menu.pick_strings(title, options)
+		if pick < 0 or options[pick] == "Done":
+			break
+		var ready: Array[Spirling] = Expeditions.ready_to_go()
+		var names: Array[String] = []
+		for s: Spirling in ready:
+			names.append("%s R%d" % [s.display_name(), s.level])
+		var who: int = await menu.pick_strings("Who goes?", names)
+		if who < 0:
+			continue
+		var plans: Array[String] = []
+		for p: Variant in Expeditions.plans():
+			plans.append(Expeditions.plan_text(p))
+		var how: int = await menu.pick_strings("How long?", plans)
+		if how < 0:
+			continue
+		var hours: int = int((Expeditions.plans()[how] as Dictionary).hours)
+		if Expeditions.send(ready[who], hours):
+			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
+	menu.queue_free()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
 func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -1527,6 +1644,36 @@ func echo_duel(d: Dictionary) -> void:
 	busy = false
 	player.frozen = false
 
+## League battle (plan area 7, items 2730-2772): the server picked the seed and both teams, the
+## rival's echo is run by the AI. The result only counts once the server's referee says ok (2691).
+func league_battle(m: Dictionary) -> void:
+	var snap: Dictionary = BattleReferee.from_expect(m)
+	var model: BattleModel = BattleReplay.build_model(snap)
+	if model == null:
+		await say(["The league battle could not start. Try again later."] as Array[String])
+		return
+	model.trainer_name = "League rival"
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await say(["A rival's echo steps into the league ring."] as Array[String])
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": "League rival", "model": model, "friendly": true})
+	busy = true
+	player.frozen = true
+	var kind: String = "league_" + str(m.get("league", LeagueRules.FAIR))
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind, "p_ref": str(m.get("match_id", "")),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+	var lines: Array[String] = ["You won the league battle!" if outcome == BattleModel.Outcome.WIN else "The rival won this league battle."]
+	if not bool(m.get("rated", true)):
+		lines.append("The season ends soon, so this battle does not count.")
+	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		lines.append("Your result is being checked. It counts once the check is done.")
+	else:
+		lines.append("The result could not be sent, so it does not count.")
+	await say(lines)
+	busy = false
+	player.frozen = false
+
 # --- Battles --------------------------------------------------------------------------
 
 ## Cuts to the battle screen and waits for it to end. [param trainer] holds Wayfarer info (M5).
@@ -1539,6 +1686,41 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		GameState.note_spirlog(f, false)
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
+	# A league battle comes ready-made from the server's seed and teams (plan area 7).
+	var preset: Variant = trainer.get("model")
+	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	var scene: BattleScene = BATTLE_SCENE.instantiate()
+	scene.setup(model)
+	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
+	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
+	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
+	_battle_layer.add_child(scene)
+	_fade.color.a = 0.0
+	var result: Array = await scene.battle_finished
+	var outcome: BattleModel.Outcome = result[0]
+	replay["inputs"] = scene.inputs
+	GameState.records["last_battle"] = replay
+	GameState.note_battle_end()
+	last_claim = BattleReferee.claim_of(model)
+	await _fade_to(1.0)
+	scene.queue_free()
+	if bool(trainer.get("friendly", false)):
+		await _fade_to(0.0)
+	else:
+		await _after_battle(model, outcome)
+	Sound.music(Sound.track_for_map(map.id))
+	EncounterTable.start_guard()
+	await _fade_to(0.0)
+	await _wake_cores()
+	await announce_achievements()
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
+	battle_ended.emit(outcome)
+	return outcome
+
+## The battle for [method start_battle] from the overworld's state and [param trainer].
+func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> BattleModel:
 	var ai_level: int = 0 if wild else int(trainer.get("ai", GameState.ai_level()))
 	# Echo duels fight with level-matched copies, so the real team never changes (item 123).
 	var own: Variant = trainer.get("player_team")
@@ -1571,35 +1753,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
 			int(partner.get("ai", TrainerData.PARTNER_AI)))
-	var scene: BattleScene = BATTLE_SCENE.instantiate()
-	scene.setup(model)
-	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
-	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
-	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
-	_battle_layer.add_child(scene)
-	_fade.color.a = 0.0
-	var result: Array = await scene.battle_finished
-	var outcome: BattleModel.Outcome = result[0]
-	replay["inputs"] = scene.inputs
-	GameState.records["last_battle"] = replay
-	GameState.note_battle_end()
-	last_claim = BattleReferee.claim_of(model)
-	await _fade_to(1.0)
-	scene.queue_free()
-	if bool(trainer.get("friendly", false)):
-		await _fade_to(0.0)
-	else:
-		await _after_battle(model, outcome)
-	Sound.music(Sound.track_for_map(map.id))
-	EncounterTable.start_guard()
-	await _fade_to(0.0)
-	await _wake_cores()
-	await announce_achievements()
-	VirtualPad.set_wanted(true)
-	player.frozen = false
-	busy = false
-	battle_ended.emit(outcome)
-	return outcome
+	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
