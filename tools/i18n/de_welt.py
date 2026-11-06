@@ -1,4 +1,4 @@
-# German texts for area 3 (world, maps, exploring). Merged into data/i18n/de.json by tools/i18n/build.py.
+# German texts for area 3 (world, maps, exploring). Written to data/i18n/de/ by tools/i18n/build.py.
 # Kept apart from de_world.py so the world thread can add maps without clashing with story edits.
 T = {
 # Gear (data/items.json)
