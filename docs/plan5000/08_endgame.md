@@ -264,7 +264,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3351. [x] [P1] Die Spirlog-Ziele in Collection.GOALS um „gesehen“-Stufen ergänzen: 5, 10, 15 und alle Arten gesehen, je mit Wegmarken-Lohn.
 3352. [x] [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
 3353. [x] [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
-3354. [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
+3354. [x] [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
 3355. [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
 3356. [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
 3357. [P2] Ein Sammelziel „Jede Technik einmal eingesetzt“ für alle 58 Techniken mit Stufen bei 20, 40 und 58 ergänzen.
@@ -382,10 +382,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3461. [P3] Die Zahl der laufenden Streifzüge im Reiter „Heute“ des Ziele-Bildschirms zeigen.
 
 ### Nachhall-Pfad: wöchentlicher Erkundungsgang
-3462. [P1] Einen Endgame-Ort „Nachhall-Pfad“ hinter dem versiegelten Cinder Rift bauen: eine Kette aus 8 kleinen Räumen, die jede Woche per Seed aus der Wochennummer neu angeordnet wird, gleich für alle.
-3463. [P1] Die Räume aus 12 handgebauten Raumvorlagen unter data/maps zusammensetzen und jede Anordnung mit dem bestehenden Erreichbarkeits-Test prüfen.
-3464. [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
-3465. [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
+3462. [x] [P1] Einen Endgame-Ort „Nachhall-Pfad“ hinter dem versiegelten Cinder Rift bauen: eine Kette aus 8 kleinen Räumen, die jede Woche per Seed aus der Wochennummer neu angeordnet wird, gleich für alle.
+3463. [x] [P1] Die Räume aus 12 handgebauten Raumvorlagen unter data/maps zusammensetzen und jede Anordnung mit dem bestehenden Erreichbarkeits-Test prüfen.
+3464. [x] [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
+3465. [x] [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
 3466. [P2] Rätselräume mit Lampen-Schalterrätseln in 6 Varianten bauen, angelehnt an das Lampenrätsel in Murk Hollow, aber mit eigener Anordnung.
 3467. [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
 3468. [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
@@ -404,8 +404,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3481. [P3] Einen Wochenrückblick des Pfads zeigen: Räume, Kämpfe, gefundene Schätze.
 
 ### Monatsalbum
-3482. [P1] Ein Monatsalbum mit 12 Stickerfeldern pro Kalendermonat anlegen, jedes Feld eine feste Aufgabe, die man den ganzen Monat lang lösen kann.
-3483. [P1] Ein volles Album mit 100 Wegmarken und einem Monatssticker für eine Stickerwand im Wanderer-Zimmer belohnen.
+3482. [x] [P1] Ein Monatsalbum mit 12 Stickerfeldern pro Kalendermonat anlegen, jedes Feld eine feste Aufgabe, die man den ganzen Monat lang lösen kann.
+3483. [x] [P1] Ein volles Album mit 100 Wegmarken und einem Monatssticker für eine Stickerwand im Wanderer-Zimmer belohnen.
 3484. [P2] Die Album-Aufgaben pro Monat per Seed aus einer Liste in data/events.json ziehen.
 3485. [P2] Bei 4 und 8 gefüllten Stickern je 20 Wegmarken auszahlen.
 3486. [P2] Für jeden Monat ein Stickerthema festlegen (Januar Herd, April Blüten, Oktober Laternen) und 16x16-Sticker mit tools/art zeichnen.
@@ -420,8 +420,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3495. [P3] Für ein Album, das in der ersten Monatshälfte voll ist, einen goldenen Stickerrand vergeben.
 
 ### Fairer Rhythmus ohne Druck
-3496. [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
-3497. [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
+3496. [x] [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
+3497. [x] [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
 3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
 3499. [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
 3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
@@ -454,9 +454,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3525. [P3] Für jede Belohnungsquelle eine Obergrenze pro Tag in data/endgame.json eintragen, die der Server prüft.
 
 ### Anzeige und Menüs
-3526. [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
-3527. [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
-3528. [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
+3526. [x] [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
+3527. [x] [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
+3528. [x] [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
 3529. [P2] Einen roten Punkt am Menüeintrag „Ziele“ zeigen, wenn eine Belohnung zum Abholen bereitliegt.
 3530. [P2] Eine Sammelabholung „Alles abholen“ für Aufträge, Pfad und Sammelziele bauen.
 3531. [P2] Alle neuen Menüs auf 144x256 mit der bestehenden Schrift und Einhand-Bedienung prüfen und einen Screenshot je Menü in docs/screenshots ablegen.

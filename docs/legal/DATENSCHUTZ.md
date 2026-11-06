@@ -37,7 +37,10 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags).
 - **Speicherdauer:** solange dein Konto besteht. Nach dem Löschen des Kontos löschen wir die Daten innerhalb
   von 30 Tagen; Sicherungskopien werden spätestens nach weiteren 30 Tagen überschrieben. Konten, die
-  24 Monate nicht genutzt wurden, löschen wir nach einer Ankündigung im Spiel.
+  24 Monate nicht genutzt wurden, werden markiert und 30 Tage später automatisch gelöscht, wenn du bis
+  dahin nicht wieder gespielt hast.
+- **Browser-Testversion:** Für Tests gibt es unter https://[DOMAIN]/play/ eine Testversion im Browser. Sie
+  nutzt dasselbe Konto- und Speichersystem und dieselben Fristen wie die App.
 
 ### 3.2 Freunde, Leuchtpost und Meldungen
 
@@ -61,7 +64,9 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   Spielständen.
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. f DSGVO. Unser berechtigtes Interesse ist ein sicherer, fairer
   Spielbetrieb.
-- **Speicherdauer:** 7 Tage. Länger nur, solange ein konkreter Sicherheitsvorfall aufgeklärt wird.
+- **Speicherdauer:** 7 Tage. Das gilt auch für das Anmelde-Protokoll des Anmeldedienstes, das IP-Adressen
+  enthält; ein täglicher Lauf löscht ältere Einträge. Länger nur, solange ein konkreter Sicherheitsvorfall
+  aufgeklärt wird.
 
 ### 3.4 Käufe im Spiel
 
@@ -99,7 +104,8 @@ Einwilligung. Wir lesen keine Werbe-IDs (IDFA / Android-Werbe-ID) aus.
 
 - **Hosting:** Contabo GmbH, Aschauer Straße 32a, 81549 München, Deutschland <!-- Adresse beim Abschluss des AV-Vertrags prüfen -->.
   Der Server steht in einem Rechenzentrum in Deutschland. Contabo stellt nur den Rechner bereit; die
-  Datenbank betreiben wir selbst darauf. Contabo verarbeitet die Daten in unserem Auftrag auf Grundlage
+  Datenbank betreiben wir selbst darauf. Auf demselben Rechner laufen weitere Dienste desselben
+  Verantwortlichen; sie sind von Chimora getrennt und haben keinen Zugriff auf die Chimora-Datenbank. Contabo verarbeitet die Daten in unserem Auftrag auf Grundlage
   eines Vertrags nach Art. 28 DSGVO. Eine Übermittlung in Länder außerhalb der EU findet nicht statt.
 - **App-Stores:** Apple und Google verarbeiten beim Download und bei Käufen eigene Daten in eigener
   Verantwortung; es gelten deren Datenschutzerklärungen.

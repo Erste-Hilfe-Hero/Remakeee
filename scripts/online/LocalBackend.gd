@@ -9,6 +9,8 @@ const CODE_ALPHABET: String = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 const BANNED: Array[String] = ["fuck", "shit", "bitch", "nazi", "hitler", "arsch", "fotze", "hure",
 	"wichser", "nigg", "schwuchtel", "sex", "porn", "kill", "cunt", "dick"]
 const ONLINE_WINDOW: int = 300
+## Same limit as save_max_bytes in server_config (plan item 3662).
+const SAVE_MAX_BYTES: int = 262144
 ## Same defaults as server_config in the migrations.
 const DEFAULT_CONFIG: Dictionary = {
 	"min_version": 1, "motd": "", "friend_limit": 100, "gift_open_limit": 10, "goal_user_cap": 500,
@@ -305,6 +307,8 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 	var slot: int = int(a.get("p_slot", 0))
 	if slot < 1 or slot > 3:
 		return {"ok": false, "error": "bad_slot"}
+	if JSON.stringify(a.get("p_data")).to_utf8_buffer().size() > SAVE_MAX_BYTES:
+		return {"ok": false, "error": "too_big"}
 	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
 		return {"ok": false, "error": "schema"}
 	if not save_ok(a.get("p_data"), config_int("party_max", 5), config_int("level_max", 60)):
@@ -315,6 +319,10 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		data.erase(str(k))
 	var saves: Dictionary = _saves()
 	var cur: Variant = saves.get(str(slot))
+	var rid: String = str(a.get("p_request_id", "")).left(64) if a.get("p_request_id") != null else ""
+	# The same upload again after a lost answer is already stored (plan item 3658).
+	if cur != null and not rid.is_empty() and str(cur.get("request_id", "")) == rid:
+		return {"ok": true, "rev": cur.rev, "saved_at": cur.saved_at, "repeat": true}
 	if cur != null and int(cur.rev) != int(a.get("p_base_rev", 0)) and not bool(a.get("p_force", false)):
 		return {"ok": false, "conflict": true, "rev": cur.rev, "saved_at": cur.saved_at, "summary": cur.summary}
 	var why: String = save_cheat(cur.data if cur != null else null, int(cur.saved_at) if cur != null else 0, data)
@@ -326,7 +334,7 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "refused", "reason": why}
 	var rev: int = (int(cur.rev) if cur != null else 0) + 1
 	saves[str(slot)] = {"rev": rev, "data": data,
-		"summary": str(a.get("p_summary", "")).left(60), "saved_at": now()}
+		"summary": str(a.get("p_summary", "")).left(60), "saved_at": now(), "request_id": rid}
 	return {"ok": true, "rev": rev, "saved_at": now()}
 
 ## Like public._save_cheat (items 2921-2923): why a new save is refused, or "".

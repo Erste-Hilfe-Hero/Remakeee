@@ -14,3 +14,19 @@ T = {
 "wait %d": "warte %d",
 "Energy tax %d": "Energie-Abgabe %d",
 }
+T.update({
+"Daze does not spoil its aim.": "Benommenheit stört ihr Zielen nicht.",
+"Ignores the foe's raised Guard and Focus.": "Übergeht erhöhten Schutz und Fokus des Ziels.",
+"Cures its own status.": "Heilt den eigenen Status.",
+"Hands its own status to the foe.": "Gibt den eigenen Status an das Ziel weiter.",
+"Blows the snares off its own side.": "Fegt die Fallen von der eigenen Seite.",
+"Lays a snare: the next foe to step in loses %d%% Vigor.": "Legt eine Falle: der nächste einwechselnde Gegner verliert %d%% Kraft.",
+"Lays a snare: the next foe to step in gets %s.": "Legt eine Falle: der nächste einwechselnde Gegner erhält %s.",
+"Lays a snare that weakens the next foe to step in.": "Legt eine Falle, die den nächsten einwechselnden Gegner schwächt.",
+"No room for another snare.": "Für eine weitere Falle ist kein Platz.",
+"A snare lies in wait on your side!": "Auf deiner Seite lauert eine Falle!",
+"A snare lies in wait on the foe's side!": "Auf der Gegnerseite lauert eine Falle!",
+"%s springs the snare!": "%s tritt in die Falle!",
+"The snares on your side blow away.": "Die Fallen auf deiner Seite sind fortgeweht.",
+"The snares on the foe's side blow away.": "Die Fallen auf der Gegnerseite sind fortgeweht.",
+})
