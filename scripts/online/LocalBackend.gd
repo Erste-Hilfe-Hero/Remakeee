@@ -22,6 +22,8 @@ const DEFAULT_CONFIG: Dictionary = {
 	"league_fair_ring": 50, "league_season_days": 42, "league_closing_minutes": 30, "league_search_start": 100,
 	"league_search_step": 50, "league_search_max": 400, "league_match_minutes": 30, "league_ai": 2,
 	"league_fair_blocked_sources": [],
+	"max_money_per_min": 5000, "save_time_slack": 300, "start_money": 3000, "cheat_flag_limit": 3, "cheat_flag_days": 7,
+	"save_server_keys": ["league", "leagues", "raid", "raids", "trades", "bund", "premium", "gems", "shards"],
 }
 const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
 ## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
@@ -233,7 +235,17 @@ func _fn_hello(a: Dictionary) -> Dictionary:
 	p.last_seen = now()
 	return {"profile": profile_json(p), "server_time": now(),
 		"update_required": int(a.get("p_version", 0)) < int(db.config.get("min_version", 1)),
-		"motd": str(db.config.get("motd", "")), "online_now": online_now()}
+		"motd": str(db.config.get("motd", "")), "online_now": online_now(),
+		"flags": active_flags(int(a.get("p_version", 0)))}
+
+## Like hello's "flags": the feature keys that are on for [param version], sorted (item 2675).
+func active_flags(version: int) -> Array:
+	var out: Array = []
+	for key: String in db.flags:
+		if flag_on(key, version):
+			out.append(key)
+	out.sort()
+	return out
 
 func _fn_profile_set(a: Dictionary) -> Dictionary:
 	var p: Dictionary = profile_of(me())
@@ -295,14 +307,78 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "schema"}
 	if not save_ok(a.get("p_data"), config_int("party_max", 5), config_int("level_max", 60)):
 		return {"ok": false, "error": "implausible"}
+	var data: Dictionary = (a.p_data as Dictionary).duplicate(true)
+	# Values the server keeps itself are dropped (item 2924).
+	for k: Variant in db.config.get("save_server_keys", []):
+		data.erase(str(k))
 	var saves: Dictionary = _saves()
 	var cur: Variant = saves.get(str(slot))
 	if cur != null and int(cur.rev) != int(a.get("p_base_rev", 0)) and not bool(a.get("p_force", false)):
 		return {"ok": false, "conflict": true, "rev": cur.rev, "saved_at": cur.saved_at, "summary": cur.summary}
+	var why: String = save_cheat(cur.data if cur != null else null, int(cur.saved_at) if cur != null else 0, data)
+	if not why.is_empty():
+		var flags: Array = _user().get_or_add("cheat_flags", [])
+		# The game tries again at the next save; the same refusal counts once per 10 minutes.
+		if not flags.any(func(f: Dictionary) -> bool: return int(f.slot) == slot and f.reason == why and int(f.at) > now() - 600):
+			flags.append({"slot": slot, "reason": why, "at": now()})
+		return {"ok": false, "error": "refused", "reason": why}
 	var rev: int = (int(cur.rev) if cur != null else 0) + 1
-	saves[str(slot)] = {"rev": rev, "data": (a.p_data as Dictionary).duplicate(true),
+	saves[str(slot)] = {"rev": rev, "data": data,
 		"summary": str(a.get("p_summary", "")).left(60), "saved_at": now()}
 	return {"ok": true, "rev": rev, "saved_at": now()}
+
+## Like public._save_cheat (items 2921-2923): why a new save is refused, or "".
+func save_cheat(old: Variant, old_at: int, d: Dictionary) -> String:
+	var old_pt: float = 0.0
+	var new_pt: float = float(d.get("play_time", 0)) if d.get("play_time") is float or d.get("play_time") is int else 0.0
+	var old_money: float = config_int("start_money", 3000)
+	var new_money: float = float(d.get("money", 0)) if d.get("money") is float or d.get("money") is int else 0.0
+	if old is Dictionary and (old.get("play_time") is float or old.get("play_time") is int):
+		old_pt = float(old.play_time)
+		if new_pt >= old_pt:
+			old_money = maxf(float(old.get("money", 0)) if old.get("money") is float or old.get("money") is int else 0.0, 0.0)
+			if new_pt - old_pt > (now() - old_at) + config_int("save_time_slack", 300):
+				return "play_time_fast"
+		else:
+			old_pt = 0.0
+	var played_min: float = maxf(ceilf((new_pt - old_pt) / 60.0), 1.0)
+	if new_money - old_money > config_int("max_money_per_min", 5000) * played_min:
+		return "money_fast"
+	var mons: Array = []
+	for k: String in ["party", "storage", "sanctuary"]:
+		if d.get(k) is Array:
+			mons.append_array(d[k])
+	for m: Variant in mons:
+		if not m is Dictionary:
+			continue
+		var sp: String = str(m.get("species", "")) if m.get("species") != null else ""
+		if not sp.is_empty() and Database.species(sp) == null:
+			return "unknown_species"
+	for m: Variant in mons:
+		if m is Dictionary and m.get("moves") is Array:
+			for mv: Variant in m.moves:
+				if mv != null and not str(mv).is_empty() and Database.move(str(mv)) == null:
+					return "unknown_move"
+	var items: Array = []
+	for m: Variant in mons:
+		if m is Dictionary and m.get("held") != null:
+			items.append(str(m.held))
+	if d.get("inventory") is Dictionary:
+		items.append_array((d.inventory as Dictionary).keys())
+	for it: Variant in items:
+		if not str(it).is_empty() and Database.item(str(it)).is_empty():
+			return "unknown_item"
+	return ""
+
+## Like public._cheat_held (item 2925): enough refused saves lately, and Ali has not cleared it.
+func cheat_held(uid: String) -> bool:
+	var u: Dictionary = db.users.get(uid, {})
+	var since: int = maxi(now() - config_int("cheat_flag_days", 7) * 86400, int(u.get("cheat_cleared_at", 0)))
+	var n: int = 0
+	for f: Dictionary in u.get("cheat_flags", []):
+		if int(f.at) > since:
+			n += 1
+	return n >= config_int("cheat_flag_limit", 3)
 
 func _fn_save_delete(a: Dictionary) -> Dictionary:
 	var had: bool = _saves().erase(str(int(a.get("p_slot", 0))))
@@ -917,6 +993,8 @@ func _league_check(league: String) -> String:
 		return "bad_league"
 	if not flag_on("league_" + league, 2147483647):
 		return "feature_off"
+	if not session.is_empty() and db.users.has(me()) and cheat_held(me()):
+		return "under_review"
 	return ""
 
 func _fn_league_info(a: Dictionary) -> Dictionary:
