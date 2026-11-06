@@ -54,6 +54,11 @@ var flags: Dictionary = {}
 var visited_rests: Dictionary = {}
 ## Personal bests, e.g. "gauntlet_best".
 var records: Dictionary = {}
+## Story numbers such as kestra_trust (dialogue actions set_var / add_var, plan item 1339).
+var story_vars: Dictionary = {}
+## Story decisions: choice id -> picked answer id (plan item 1680). "_v" is the format version.
+var story_choices: Dictionary = {}
+const STORY_CHOICES_VERSION: int = 1
 ## Puzzle progress: puzzle id -> number of switches pressed in the right order so far.
 var switch_progress: Dictionary = {}
 enum SwitchResult { WRONG, STEP, SOLVED }
@@ -260,6 +265,8 @@ func reset() -> void:
 	flags = {}
 	visited_rests = {}
 	records = {}
+	story_vars = {}
+	story_choices = {}
 	switch_progress = {}
 	known_matchups = {}
 	play_time = 0.0
@@ -317,6 +324,8 @@ func to_dict() -> Dictionary:
 		"play_time": play_time,
 		"rests": visited_rests.duplicate(true),
 		"records": records.duplicate(),
+		"story_vars": story_vars.duplicate(),
+		"story_choices": story_choices.duplicate(),
 		"switches": switch_progress.duplicate(),
 		"iron_oath": iron_oath,
 		"sanctuary": sanctuary.map(func(s: Spirling) -> Dictionary: return s.to_dict()),
@@ -360,6 +369,9 @@ func from_dict(d: Dictionary) -> void:
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
 	records = (d.get("records", {}) as Dictionary).duplicate()
+	for k: Variant in (d.get("story_vars", {}) as Dictionary):
+		story_vars[str(k)] = int(d.story_vars[k])
+	story_choices = (d.get("story_choices", {}) as Dictionary).duplicate()
 	switch_progress = (d.get("switches", {}) as Dictionary).duplicate()
 	iron_oath = bool(d.get("iron_oath", false))
 	for sd: Variant in d.get("sanctuary", []):
@@ -424,6 +436,21 @@ static func ensure_buses() -> void:
 			var idx: int = AudioServer.bus_count - 1
 			AudioServer.set_bus_name(idx, bus)
 			AudioServer.set_bus_send(idx, &"Master")
+
+## A story number (0 if never set).
+func story_var(name: String) -> int:
+	return int(story_vars.get(name, 0))
+
+func set_story_var(name: String, value: int) -> void:
+	story_vars[name] = value
+
+func add_story_var(name: String, amount: int) -> void:
+	story_vars[name] = story_var(name) + amount
+
+## Remembers a story decision (plan item 1680).
+func record_choice(id: String, answer: String) -> void:
+	story_choices[id] = answer
+	story_choices["_v"] = STORY_CHOICES_VERSION
 
 func has_flag(flag: String) -> bool:
 	return bool(flags.get(flag, false))

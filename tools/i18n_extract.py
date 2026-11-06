@@ -45,14 +45,31 @@ def strings():
             elif isinstance(v, dict):
                 found += v.get("lines", [])
                 af = v.get("after_flag")
-                if isinstance(af, dict):
-                    found += af.get("lines", [])
+                for alt in (af if isinstance(af, list) else [af]):
+                    if isinstance(alt, dict):
+                        found += alt.get("lines", [])
+                for c in v.get("choices", []) or []:
+                    if isinstance(c, dict) and isinstance(c.get("text"), str):
+                        found.append(c["text"])
+                if isinstance(v.get("speaker"), str) and "{" not in v["speaker"]:
+                    found.append(v["speaker"])
                 for k2 in ("text", "lose_lines", "win_lines", "before_lines", "after_lines"):
                     x = v.get(k2)
                     if isinstance(x, list):
                         found += x
                     elif isinstance(x, str):
                         found.append(x)
+    sd = os.path.join(ROOT, "data/scenes")
+    for f in sorted(os.listdir(sd)) if os.path.isdir(sd) else []:
+        if not f.endswith(".json"):
+            continue
+        for step in json.load(open(os.path.join(sd, f))).get("steps", []):
+            for k in ("say", "letter"):
+                x = step.get(k)
+                found += x if isinstance(x, list) else ([x] if isinstance(x, str) else [])
+            for k in ("speaker", "card", "title"):
+                if isinstance(step.get(k), str) and "{" not in step[k]:
+                    found.append(step[k])
     quests = json.load(open(os.path.join(ROOT, "data/quests.json")))
     for group in quests.values():
         for q in group if isinstance(group, list) else []:

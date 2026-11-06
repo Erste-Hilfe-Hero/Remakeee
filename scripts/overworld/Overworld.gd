@@ -36,6 +36,9 @@ var _banner: Label
 var _fade: ColorRect
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
+var _ui_root: Control
+## True while a cut-scene runs (steps of the player do not trigger warps or encounters).
+var scene_running: bool = false
 
 func _ready() -> void:
 	Database.load_all()
@@ -53,6 +56,10 @@ func _ready() -> void:
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
+		"set_var": _action_set_var,
+		"add_var": _action_add_var,
+		"battle": _action_battle,
+		"scene": _action_scene,
 	}
 	_build()
 	if GameState.party.is_empty() and not GameState.in_game:
@@ -101,6 +108,7 @@ func _build() -> void:
 	ui_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui_root.theme = UITheme.get_theme()
 	_ui.add_child(ui_root)
+	_ui_root = ui_root
 	SafeArea.apply(ui_root)
 	_fade = ColorRect.new()
 	_fade.color = Color(UITheme.INK, 0.0)
@@ -305,6 +313,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
+	if scene_running:
+		return
 	var warp: Dictionary = map.warp_at(cell)
 	if not warp.is_empty():
 		await _warp(warp)
@@ -360,27 +370,69 @@ func _on_interact(cell: Vector2i) -> void:
 			await run_dialogue(beyond.dialogue_ref, beyond)
 
 ## Shows a dialogue entry, then runs its action and flag. Freezes the player meanwhile.
+## Follows "if"/"else", "choices" and "next" inside the same file (plan items 1335-1338).
 func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	var goal_before: int = QuestLog.current_index(GameState.flags)
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
-	var entry: Dictionary = Dialogue.get_entry(ref)
-	_text.visible = true
-	for line: String in Dialogue.lines_for(entry, GameState.flags):
-		await _text.show_text(line)
-	_text.visible = false
-	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
-	if entry.has("action") and not (already and bool(entry.get("once", false))):
-		await _run_action(str(entry.action), speaker)
-	if entry.has("flag"):
-		GameState.set_flag(str(entry.flag))
+	await play_entry(ref, speaker)
 	refresh_shade()
 	await announce_achievements()
 	await announce_goal_if_changed(goal_before)
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
+
+## Plays [param ref] and whatever it leads to via "else", choices and "next".
+func play_entry(ref: String, speaker: NPC = null) -> void:
+	var hops: int = 0
+	while not ref.is_empty() and hops < Dialogue.MAX_HOPS:
+		hops += 1
+		ref = await _play_one(ref, speaker)
+	_text.visible = false
+
+## Plays one entry and returns the next reference ("" when the talk is over).
+func _play_one(ref: String, speaker: NPC) -> String:
+	var entry: Dictionary = Dialogue.get_entry(ref)
+	if entry.has("if") and not Dialogue.check(entry.get("if"), GameState.flags):
+		return Dialogue.resolve_ref(ref, str(entry.else)) if entry.has("else") else ""
+	var lines: Array[String] = Dialogue.lines_for(entry, GameState.flags)
+	var who: String = Dialogue.speaker_for(entry)
+	var choices: Array[Dictionary] = Dialogue.choices_for(entry, GameState.flags)
+	var next: String = str(entry.get("next", ""))
+	_text.visible = true
+	for i: int in lines.size():
+		if i == lines.size() - 1 and not choices.is_empty():
+			_text.show_prompt(lines[i], who)
+		else:
+			await _text.show_text(lines[i], who)
+	if not choices.is_empty():
+		var pick: Dictionary = await _ask_choice(choices)
+		if entry.has("choice_id"):
+			GameState.record_choice(str(entry.choice_id), str(pick.get("id", choices.find(pick))))
+		if pick.has("flag"):
+			GameState.set_flag(str(pick.flag))
+		if pick.has("action"):
+			_text.visible = false
+			await _run_action(str(pick.action), speaker)
+		if pick.has("next"):
+			next = str(pick.next)
+	_text.visible = false
+	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
+	if entry.has("action") and not (already and bool(entry.get("once", false))):
+		await _run_action(str(entry.action), speaker)
+	if entry.has("flag"):
+		GameState.set_flag(str(entry.flag))
+	return Dialogue.resolve_ref(ref, next) if not next.is_empty() else ""
+
+## Shows the answers as a list under the last line and waits for a tap (plan item 1335).
+func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
+	var entries: Array[Dictionary] = []
+	for c: Dictionary in choices:
+		entries.append({"text": str(c.get("text", "..."))})
+	var idx: int = await _picker.pick("", entries, false)
+	return choices[clampi(idx, 0, choices.size() - 1)]
 
 ## Shows newly earned achievements (item 90).
 func announce_achievements() -> void:
@@ -407,6 +459,42 @@ func say(lines: Array[String]) -> void:
 	for line: String in lines:
 		await _text.show_text(line)
 	_text.visible = false
+
+# --- Access for the ScenePlayer -----------------------------------------------------------
+
+func ui_root() -> Control:
+	return _ui_root
+
+func text_box() -> TextBox:
+	return _text
+
+func fade_rect() -> ColorRect:
+	return _fade
+
+func entities() -> Node2D:
+	return _entities
+
+## The NPC on this map with [param id], or null.
+func npc_by_id(id: String) -> NPC:
+	for n: NPC in _npcs:
+		if n.npc_id == id:
+			return n
+	return null
+
+## Shakes the camera for [param seconds] (thunder, the Rift opening).
+func shake_camera(seconds: float) -> void:
+	if GameState.reduce_motion:
+		return
+	var t: float = 0.0
+	while t < seconds:
+		_camera.offset = Vector2(GameState.rng.randi_range(-2, 2), GameState.rng.randi_range(-2, 2))
+		await get_tree().process_frame
+		t += get_process_delta_time()
+	_camera.offset = Vector2.ZERO
+
+## Runs dialogue actions from outside (scenes).
+func run_action(action: String, speaker: NPC = null) -> void:
+	await _run_action(action, speaker)
 
 ## Runs one action, or several separated by ";" (e.g. "page 1; give_item tonic 2").
 func _run_action(action: String, speaker: NPC) -> void:
@@ -613,6 +701,57 @@ func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	if n >= PAGE_COUNT:
 		GameState.set_flag("pages_all")
 		await say(["That's all six pages. Aldo should see them."] as Array[String])
+
+## "set_var <name> <value>": a story number such as kestra_trust (plan item 1339).
+func _action_set_var(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() >= 2:
+		GameState.set_story_var(args[0], int(args[1]))
+
+## "add_var <name> <amount>"
+func _action_add_var(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() >= 1:
+		GameState.add_story_var(args[0], int(args[1]) if args.size() > 1 else 1)
+
+## "battle <id>": a story duel from data/story_battles.json, straight out of a talk or scene
+## (plan item 1340). Wins set the beaten flag "beat_story_<id>" and the entry's win_flags.
+func _action_battle(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var def: Dictionary = StoryBattles.get_def(args[0])
+	if def.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng)
+	if team.is_empty():
+		return
+	_text.visible = false
+	SaveManager.save_game()
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	if outcome == BattleModel.Outcome.WIN:
+		GameState.set_flag(StoryBattles.beaten_flag(args[0]))
+		for f: Variant in def.get("win_flags", []):
+			GameState.set_flag(str(f))
+		if def.has("defeat"):
+			await play_entry(str(def.defeat))
+	elif def.has("lose"):
+		await play_entry(str(def.lose))
+
+## "scene <id>": plays data/scenes/<id>.json (plan item 1341).
+func _action_scene(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	await play_scene(args[0])
+
+## Plays a cut-scene and returns to the talk or the world afterwards.
+func play_scene(id: String) -> void:
+	var sp := ScenePlayer.new()
+	sp.overworld = self
+	add_child(sp)
+	await sp.play(id)
+	sp.queue_free()
 
 func _action_set_flag(args: PackedStringArray, _speaker: NPC) -> void:
 	for f: String in args:
