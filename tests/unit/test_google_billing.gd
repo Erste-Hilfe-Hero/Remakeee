@@ -76,6 +76,10 @@ func test_cancel_pending_owned() -> void:
 	assert_eq((await g.purchase(GLASS, "", "h")).error, "pending", "paid later: nothing yet")
 	fake.purchase_answer = {"code": 7}
 	assert_eq((await g.purchase(GLASS, "", "h")).error, "already_owned")
+	fake.purchase_answer = {"code": 12}
+	assert_eq((await g.purchase(GLASS, "", "h")).error, "offline", "network error")
+	fake.purchase_answer = {"code": 6}
+	assert_eq((await g.purchase(GLASS, "", "h")).error, "store_error")
 
 func test_unfinished_skips_acknowledged_unlocks() -> void:
 	var fake := FakePlay.new()

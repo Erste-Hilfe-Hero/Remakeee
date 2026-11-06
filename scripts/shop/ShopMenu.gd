@@ -187,7 +187,12 @@ static func reason_text(why: String) -> String:
 		"price_changed": return "The price has changed. Please look again."
 		"shop_closed": return "The shop is closed for a moment. Please look again later."
 		"not_available": return "Nothing here yet. New offers come with updates."
-	return "That did not work. Nothing was charged twice: open purchases are checked again by themselves."
+		"pending": return "The purchase waits for approval. It arrives by itself once it is paid."
+		"already_owned": return "You bought this before. It is being checked and arrives by itself."
+		"declined": return "The payment was declined. Nothing was charged."
+		"busy": return "A purchase is still running. Please wait a moment."
+		"store_error", "verify_failed": return "The store did not answer. Nothing was charged twice: open purchases are checked again by themselves."
+	return "Something unexpected happened. Nothing was charged twice: open purchases are checked again by themselves."
 
 ## "My purchases" (item 4184).
 static func history_text(rows: Array) -> String:
