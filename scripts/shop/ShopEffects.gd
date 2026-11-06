@@ -32,6 +32,12 @@ static func growth_mult() -> float:
 	var m: float = float(GameState.shop_boosts.get("growth", {}).get("mult", 1.0))
 	return m * (PASS_GROWTH if Billing.pass_active() else 1.0)
 
+## Extra energy (start and maximum) for the whole team while an Overcharge Core runs (item 4495).
+const OVERCHARGE: int = 2
+
+static func energy_bonus() -> int:
+	return OVERCHARGE if boost_left("overcharge") > 0 else 0
+
 ## Coins from Wayfarer battles with a running Coin Gleam.
 static func coin_mult() -> float:
 	return float(GameState.shop_boosts.get("coins", {}).get("mult", 1.0))
@@ -56,7 +62,7 @@ static func start_boost(id: String) -> String:
 	GameState.inventory[id] = GameState.item_count(id) - 1
 	if GameState.inventory[id] <= 0:
 		GameState.inventory.erase(id)
-	return "Works for the next %d battles." % left
+	return "Works for the next battle." if left == 1 else "Works for the next %d battles." % left
 
 ## One battle is over: running boosts count down.
 static func battle_done() -> void:

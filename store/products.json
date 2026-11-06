@@ -467,7 +467,7 @@
    "name_de": "Überladekern",
    "desc_en": "The whole team starts the next battle with 12 instead of 10 energy, maximum 12.",
    "desc_de": "Das ganze Team startet den nächsten Kampf mit 12 statt 10 Energie, Höchstenergie 12.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.overcharge_x5",
@@ -479,7 +479,7 @@
    "name_de": "Überladekern x5",
    "desc_en": "5 Overcharge Cores.",
    "desc_de": "5 Überladekerne.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_breath",
@@ -551,7 +551,7 @@
    "name_de": "Kampfvorrat",
    "desc_en": "5 Rift Breaths, 5 Overcharge Cores, 5 Glass Sparks. Single price 1500 Riftglass.",
    "desc_de": "5 Rissatem, 5 Überladekerne, 5 Glasfunken. Einzeln 1500 Rissglas.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.bond_seal",

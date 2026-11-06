@@ -2477,6 +2477,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
+	model.energy_bonus = [ShopEffects.energy_bonus(), 0]
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])
