@@ -122,6 +122,43 @@
    "Aldo: The lamp stays lit. It always has, for her. Now for you too.",
    "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
   ],
-  "action": "expedition"
+  "action": "expedition",
+  "after_flag": [
+   {
+    "flag": "guild_joined",
+    "lines": [
+     "Aldo: Guild apprentice! Mirela never wore her guild pin. Said it itched.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "rift_rain_sealed",
+    "lines": [
+     "Aldo: Juna says the Woadfen dries out in the sun now. Moor colours, she called them.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "rift_mirror_sealed",
+    "lines": [
+     "Aldo: Two Corvane Rifts! I told the whole pier. Twice.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "act2_end",
+    "lines": [
+     "Aldo: You saw her handwriting at the Wide Rift? \"Still here.\" ...That's her. That's exactly her.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Aldo: Sit with me a while. Tell me about Corvane again. The colours part.",
+     "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+    ]
+   }
+  ]
  }
 }
