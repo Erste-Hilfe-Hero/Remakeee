@@ -7,8 +7,11 @@ extends RefCounted
 ## Battles that run longer than this count as a draw (stalls show up in the report).
 const MAX_TURNS: int = 60
 
-## Evolution stage: 1 for base forms, 2 for their evolutions, and so on.
+## Evolution stage: 1 for base forms, 2 for their evolutions, and so on. Kinds that never
+## unfold (Glasstarn, Lanternel) are built like second stages and fight those.
 static func stage(sd: SpirlingData) -> int:
+	if sd.unfold.is_empty() and Database.earlier_form(sd) == null:
+		return 2
 	var st: int = 1
 	var cur: SpirlingData = sd
 	var guard: int = 0
