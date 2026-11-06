@@ -48,6 +48,7 @@ const CAPTIONS: Dictionary[String, String] = {
 	"encounter": "[Rustling in the grass]",
 	"spot": "[Footsteps stop short]",
 	"pickup": "[Item picked up]",
+	"rumble": "[A deep rumble]",
 }
 const FADE_TIME: float = 0.4
 const SFX_VOICES: int = 6

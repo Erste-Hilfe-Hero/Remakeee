@@ -58,6 +58,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(element_hits())
     out.update(feel_sfx())
     out.update(world_sfx())
+    out.update(rift_sfx())
     return out
 
 
@@ -167,4 +168,16 @@ def world_sfx() -> dict[str, np.ndarray]:
             env(n, attack=0.004, decay=0.02, sustain=0.4, release=0.012)
     n = secs(0.015)
     out["blip"] = pulse(freq(midi("A5")), n, 0.25) * env(n, attack=0.001, decay=0.005, sustain=0.6, release=0.004) * 0.5
+    return out
+
+
+def rift_sfx() -> dict[str, np.ndarray]:
+    """The deep rumble when a Rift opens around the Wayfarer (item 2262). Own generator, so
+    the older effects keep their noise."""
+    rng = np.random.default_rng(2262)
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.7)
+    body = sweep(72, 44, n, "tri") * 0.6 + noise(n, 48, rng) * 0.45
+    wobble = 0.75 + 0.25 * np.sin(np.arange(n) / RATE * 2 * np.pi * 9)
+    out["rumble"] = body * wobble * env(n, attack=0.04, decay=0.25, sustain=0.5, release=0.2) * 0.9
     return out
