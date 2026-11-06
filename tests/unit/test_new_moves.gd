@@ -166,3 +166,84 @@ func test_overcharge_spends_at_most_five_extra() -> void:
 	# End of turn adds the usual Energy (Zippit's Surge trait included).
 	var gain: int = BattleModel.ENERGY_PER_TURN + int(BattleRules.add_key(a, "energy_per_turn"))
 	assert_eq(a.energy, mini(Spirling.MAX_ENERGY, maxi(left, 0) + gain))
+
+# --- Batch 3: energy_burn, heal_block, cure_target, stage_steal, stats, priority -1 ----------
+
+func test_energy_burn_takes_energy_from_the_foe_only() -> void:
+	var a: Spirling = _only("Zippit", 20, "Overdraw")
+	var b: Spirling = _only("Mossling", 20, "Bowl Over")
+	var m: BattleModel = _duel(a, b)
+	b.energy = 5
+	var mine: int = a.energy
+	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	var gain: int = BattleModel.ENERGY_PER_TURN
+	assert_eq(b.energy, 5 - 2 + BattleModel.REST_ENERGY + gain, "lost 2, then rested and gained")
+	assert_eq(a.energy, mine - 2 + gain + int(BattleRules.add_key(a, "energy_per_turn")), "the user gets nothing back")
+
+func test_heal_block_stops_arts_gifts_and_fields_but_not_items() -> void:
+	var a: Spirling = _only("Mirkmole", 20, "Night Toll")
+	# A sure-hit copy of Night Toll, so the seed can't make it miss.
+	a.moves = [Database.parse_move({"name": "Night Toll", "element": "UMBRA", "kind": "STATUS", "power": 0, "accuracy": 1.0, "energy": 3, "effect": "heal_block", "effect_amount": 3})]
+	var b: Spirling = _only("Mossling", 20, "Candle Ward")
+	var m: BattleModel = _duel(a, b)
+	m.field = "pollen_drift"
+	a.energy = Spirling.MAX_ENERGY
+	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	assert_eq(b.heal_block, 3)
+	b.hp = b.max_hp() / 2
+	b.energy = Spirling.MAX_ENERGY
+	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_rest(0), BattleAction.make_move(1, 0))
+	assert_eq(b.hp, b.max_hp() / 2, "no art, gift or field heal gets through")
+	assert_not_null(BattleFixtures.first_of(ev, BattleEvent.Type.HEAL_BLOCKED))
+	assert_eq(m._heal_spirling(1, 0, 5), 5, "a bag item still heals")
+	m.submit_turn(BattleAction.make_rest(0), BattleAction.make_rest(1))
+	m.submit_turn(BattleAction.make_rest(0), BattleAction.make_rest(1))
+	assert_eq(b.heal_block, 0, "the block wears off after 3 turns")
+
+func test_lull_breaker_wakes_a_drowsing_foe() -> void:
+	var a: Spirling = _only("Zephlet", 20, "Lull Breaker")
+	var b: Spirling = _only("Mossling", 40, "Bowl Over")
+	var m: BattleModel = _duel(a, b)
+	assert_almost_eq(BattleRules.status_bonus(a.moves[0], b), 1.0, 0.0001)
+	b.status = "drowse"
+	b.status_turns = 2
+	assert_almost_eq(BattleRules.status_bonus(a.moves[0], b), 1.6, 0.0001)
+	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	assert_eq(b.status, "", "the hit wakes it")
+
+func test_graft_steals_the_highest_raised_stage() -> void:
+	var a: Spirling = _only("Thornback", 30, "Graft")
+	var b: Spirling = _only("Mossling", 30, "Bowl Over")
+	var m: BattleModel = _duel(a, b)
+	b.stages["def"] = 1
+	b.stages["atk"] = 2
+	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	assert_eq(b.stage("atk"), 1)
+	assert_eq(a.stage("atk"), 1)
+	assert_eq(b.stage("def"), 1, "only one stage moves")
+
+func test_stats_key_moves_several_stages() -> void:
+	var a: Spirling = _only("Zephlet", 20, "Chaff Feint")
+	var b: Spirling = _only("Mossling", 20, "Bowl Over")
+	var m: BattleModel = _duel(a, b, 3)
+	m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	if not BattleFixtures.types_of(m._events).has(BattleEvent.Type.MISSED):
+		assert_eq(b.stage("atk"), -1)
+		assert_eq(b.stage("foc"), -1)
+	var c: Spirling = _only("Verdantusk", 40, "Gloam Pact")
+	var m2: BattleModel = _duel(c, _only("Mossling", 40, "Bowl Over"))
+	m2.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
+	assert_eq(c.stage("atk"), 2)
+	assert_eq(c.stage("def"), -1)
+
+func test_low_priority_acts_last_even_against_slower_foes() -> void:
+	var a: Spirling = _only("Zephlet", 40, "Slow Quake")
+	var b: Spirling = _only("Calderox", 20, "Bowl Over")
+	assert_gt(a.effective_spd(), b.effective_spd())
+	var m: BattleModel = _duel(a, b)
+	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_move(1, 0))
+	var order: Array[int] = []
+	for e: BattleEvent in ev:
+		if e.type == BattleEvent.Type.MOVE_USED:
+			order.append(int(e.data.side))
+	assert_eq(order, [1, 0], "the slower foe acts first")

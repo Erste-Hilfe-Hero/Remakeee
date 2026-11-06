@@ -243,3 +243,13 @@ func test_validator_knows_the_new_keys() -> void:
 	assert_string_contains(joined, "negative cooldown")
 	assert_string_contains(joined, "stage_chance must be in (0, 1]")
 	assert_eq(DataValidator.validate().size(), 0, "the real data stays clean")
+
+func test_weary_fight_stops_healing_and_costs_vigor() -> void:
+	var a: Spirling = BattleFixtures.make("Mossling", 20, ["Bowl Over"] as Array[String])
+	var b: Spirling = BattleFixtures.make("Kindlop", 20, ["Bowl Over"] as Array[String])
+	var m: BattleModel = BattleFixtures.model([a] as Array[Spirling], [b] as Array[Spirling])
+	m.turn = BattleRules.WEARY_TURN
+	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_rest(0), BattleAction.make_rest(1))
+	assert_not_null(BattleFixtures.first_of(ev, BattleEvent.Type.WEARY))
+	assert_eq(a.max_hp() - a.hp, ceili(float(a.max_hp()) / float(BattleModel.WEARY_CHIP_DIV)))
+	assert_eq(m.heal(0, 5), 0, "nobody heals once the fight is weary")
