@@ -11,7 +11,7 @@ enum Type {
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
-	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED,
+	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -127,6 +127,10 @@ func describe() -> String:
 			return "%s's gift, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
 		Type.REACTION:
 			return str(data.get("text", "")) % who
+		Type.HEAL_BLOCKED:
+			if bool(data.get("fresh", false)):
+				return "%s can't heal for %d turns!" % [who, int(data.get("turns", 0))]
+			return "%s can't heal right now!" % who
 		Type.SNARE_SET:
 			if bool(data.get("full", false)):
 				return "No room for another snare."

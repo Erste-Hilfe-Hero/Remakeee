@@ -187,6 +187,16 @@ static func move_info(mv: MoveData) -> String:
 				line = Loc.t("The foe's arts cost %d more Energy for %d turns.") % [BattleRules.ENERGY_TAX_COST, turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS]
 			&"field_element":
 				line = Loc.t("In a field it takes the field's element, power +%d.") % int(fx.get("power_bonus", BattleRules.FIELD_ELEMENT_POWER))
+			&"energy_burn":
+				line = Loc.t("Burns away %d of the foe's Energy.") % int(fx.get("amount", 1))
+			&"heal_block":
+				var hb: int = int(fx.get("amount", 0))
+				line = Loc.t("The foe can't heal for %d turns.") % (hb if hb > 0 else BattleRules.HEAL_BLOCK_TURNS)
+			&"cure_target":
+				var ct: String = str(fx.get("status", ""))
+				line = Loc.t("Ends the foe's %s.") % Loc.t(StatusRules.label(ct)) if not ct.is_empty() else Loc.t("Ends the foe's status.")
+			&"stage_steal":
+				line = Loc.t("Steals one raised stage from the foe.")
 			&"cure_self":
 				line = Loc.t("Cures its own status.")
 			&"status_shift":

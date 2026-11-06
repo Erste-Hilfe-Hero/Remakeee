@@ -20,6 +20,10 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"status_shift": preload("res://scripts/battle/effects/StatusShiftEffect.gd"),
 	&"side_snare": preload("res://scripts/battle/effects/SideSnareEffect.gd"),
 	&"clear_snares": preload("res://scripts/battle/effects/ClearSnaresEffect.gd"),
+	&"energy_burn": preload("res://scripts/battle/effects/EnergyBurnEffect.gd"),
+	&"heal_block": preload("res://scripts/battle/effects/HealBlockEffect.gd"),
+	&"cure_target": preload("res://scripts/battle/effects/CureTargetEffect.gd"),
+	&"stage_steal": preload("res://scripts/battle/effects/StageStealEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

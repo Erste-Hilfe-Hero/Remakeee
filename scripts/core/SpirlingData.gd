@@ -47,9 +47,33 @@ func default_moves(level: int, max_count: int) -> Array[MoveData]:
 	for i: int in learnset_levels.size():
 		if learnset_levels[i] <= level and not known.has(learnset_moves[i]):
 			known.append(learnset_moves[i])
-	if known.size() > max_count:
-		known = known.slice(known.size() - max_count)
-	return known
+	if known.size() <= max_count:
+		return known
+	var kept: Array[MoveData] = known.slice(known.size() - max_count)
+	# The newest arts may all be status arts (late support picks); keep at least
+	# MIN_DAMAGING_DEFAULT hits by swapping the oldest status art for the newest hit left out.
+	var older: Array[MoveData] = known.slice(0, known.size() - max_count)
+	older.reverse()
+	for mv: MoveData in older:
+		if _damaging_count(kept) >= MIN_DAMAGING_DEFAULT:
+			break
+		if not mv.is_damaging():
+			continue
+		for i: int in kept.size():
+			if not kept[i].is_damaging():
+				kept.remove_at(i)
+				kept.insert(0, mv)
+				break
+	return kept
+
+## A Spirling's default four (wild, Wayfarer teams) hold at least this many damage arts.
+const MIN_DAMAGING_DEFAULT: int = 2
+
+static func _damaging_count(list: Array[MoveData]) -> int:
+	var n: int = 0
+	for mv: MoveData in list:
+		n += 1 if mv.is_damaging() else 0
+	return n
 
 func base_stat(key: String) -> int:
 	match key:

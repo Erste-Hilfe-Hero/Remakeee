@@ -44,6 +44,15 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("move '%s': unknown target '%s'" % [name, m.target])
 		if m.has("vs_status") and not (str(m.vs_status) in ["*", "stage_down"] or StatusRules.exists(str(m.vs_status))):
 			errors.append("move '%s': unknown vs_status '%s'" % [name, m.vs_status])
+		if int(m.get("priority", 0)) < -1 or int(m.get("priority", 0)) > 1:
+			errors.append("move '%s': priority must be -1, 0 or +1" % name)
+		if m.has("stats"):
+			if not m.stats is Dictionary:
+				errors.append("move '%s': stats must be an object (stat -> amount)" % name)
+			else:
+				for st: Variant in m.stats:
+					if not str(st) in BattleRules.STAGE_STATS:
+						errors.append("move '%s': unknown stat '%s' in stats" % [name, st])
 		if m.has("cooldown") and int(m.cooldown) < 0:
 			errors.append("move '%s': negative cooldown" % name)
 		if m.has("self_stages"):
