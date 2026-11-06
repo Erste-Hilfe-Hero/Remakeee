@@ -369,7 +369,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4340. [x] [P1] (P2W) Den "Großen Wachstumskristall" (`rg_growth_x3`) anlegen, der für 20 Kämpfe dreifaches Wachstum gibt, Preis 400 Rissglas (≈ 3,96 €).
 4341. [x] [P1] (P2W) Wachstums-Boosts zählen Kämpfe statt Minuten, damit keine Zeit abläuft und kein Druck entsteht, sofort zu spielen.
 4342. [x] [P1] (P2W) Den aktiven Wachstums-Boost mit Restzahl ("Wachstum x2: noch 14 Kämpfe") in der Team-Ansicht und im Kampfende-Bildschirm zeigen.
-4343. [P1] (P2W) Ein "Team-Wachstumsband" (`rg_share_band`) anlegen, das das Wachstum gleichmäßig auf alle 5 Team-Mitglieder verteilt, auch auf nicht kämpfende, dauerhaft, Preis 1000 Rissglas oder 9,99 €.
+4343. [x] [P1] (P2W) Ein "Team-Wachstumsband" (`rg_share_band`) anlegen, das das Wachstum gleichmäßig auf alle 5 Team-Mitglieder verteilt, auch auf nicht kämpfende, dauerhaft, Preis 1000 Rissglas oder 9,99 €.
 4344. [P1] (P2W) Ring-Tränke und Wachstums-Boosts als Verbrauchsgüter im Store anlegen und nach dem Kauf nur über den Server in die Tasche legen.
 4345. [P1] (P2W) Ring-Trank-Fünferpack (`rg_ring_tonic_x5`) für 400 Rissglas anbieten, das 5 einzelne Ring-Tränke liefert.
 4346. [P2] (P2W) Den "Ruhe-Wachstumsstein" (`rg_rest_growth`) anlegen, der Spirlings im Lager pro echter Stunde Spielzeit 1 % des Wachstums bis zum nächsten Ring gibt, dauerhaft, Preis 800 Rissglas.

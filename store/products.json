@@ -155,7 +155,7 @@
    "name_de": "Team-Wachstumsband",
    "desc_en": "Growth is shared evenly by all team members, also those who did not fight. Permanent.",
    "desc_de": "Das Wachstum verteilt sich gleichmäßig auf alle im Team, auch auf die, die nicht gekämpft haben. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.ring_tonic_x5",
