@@ -18,11 +18,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 900. [P2] Ergänze MapData.gd um "one_way" Kanten (Felsstufen, die man nur abwärts gehen kann), die der PathFinder beachtet.
 901. [P2] Ergänze PathFinder.gd so, dass Tipp-Laufen Druckplatten nicht aus Versehen auslöst, wenn das Ziel nicht die Platte selbst ist.
 902. [P2] Ergänze MapData.gd um "ambient" Punkte (x, y, Geräusch-ID) für Wasserrauschen, Wind oder Glocken in der Nähe.
-903. [P2] Schreibe ein Werkzeug tools/world_stats.py, das pro Karte Größe, Anzahl Funde, Anzahl Wanderer und Begegnungsfelder ausgibt und als Tabelle in docs/WORLD.md einträgt.
-904. [P2] Lege eine Kartenvorlage tools/art/world/template.py mit 12 Kacheln Breite, Rahmen aus Fels und je einem Warp oben und unten an.
+903. [x] [P2] Schreibe ein Werkzeug tools/world_stats.py, das pro Karte Größe, Anzahl Funde, Anzahl Wanderer und Begegnungsfelder ausgibt und als Tabelle in docs/WORLD.md einträgt.
+904. [x] [P2] Lege eine Kartenvorlage tools/art/world/template.py mit 12 Kacheln Breite, Rahmen aus Fels und je einem Warp oben und unten an.
 905. [P2] Ergänze GameState.gd um ein Wörterbuch "world_state" (Karte, Schlüssel, Wert), damit geschobene Felsen und offene Schleusen nach Speichern erhalten bleiben.
 906. [P2] Ergänze die Speicher-Migration in SaveManager.gd für "world_state", "map_cells" und "pins" mit einem Test in tests/unit/test_save_migration.gd.
-907. [P2] Ergänze WorldValidator.gd um eine Höchstgröße von 12 Kacheln Breite und 40 Kacheln Höhe pro Karte für Außenkarten.
+907. [x] [P2] Ergänze WorldValidator.gd um eine Höchstgröße von 12 Kacheln Breite und 40 Kacheln Höhe pro Karte für Außenkarten.
 908. [P3] Baue einen einfachen Karten-Editor als Godot-Szene tools/map_editor.tscn, der ASCII-Zeilen lädt, Kacheln per Tippen setzt und zurück in JSON speichert.
 909. [P3] Ergänze das Validator-Werkzeug um eine Warnung, wenn ein Weg länger als 30 Schritte ohne Abzweig, Fund oder Wanderer ist.
 910. [P3] Gib jeder Karte ein Feld "author_note", das nur im Debug-Menü angezeigt wird, um Bauabsichten festzuhalten.
@@ -50,8 +50,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 930. [P2] Lass auf Copper Gulch stillgelegte Loren als Hindernisse stehen, die man mit der Hebelstange auf dem Gleis um vier Kacheln verschiebt.
 931. [P2] Baue die Route "Windmere Ridge" (de: Windseegrat) oberhalb von Crowcrest, ein schmaler Grat mit Geröll und Windfeldern, Ring 9 bis 12.
 932. [P2] Lass auf Windmere Ridge Windböen den Spieler bei Wetter "Wind" um eine Kachel zur Seite schieben, sichtbar angekündigt, ohne dass er abstürzt.
-933. [P2] Gib jeder neuen Route einen eigenen Namensschild-Text am Eingang mit Ringbereich und Biom, z. B. "Brackwater Fen, Moor, Ring 12 bis 15".
-934. [P2] Plane die neuen Routen so, dass jede in beide Richtungen spielbar ist und keine nur einen Ausgang hat.
+933. [x] [P2] Gib jeder neuen Route einen eigenen Namensschild-Text am Eingang mit Ringbereich und Biom, z. B. "Brackwater Fen, Moor, Ring 12 bis 15".
+934. [x] [P2] Plane die neuen Routen so, dass jede in beide Richtungen spielbar ist und keine nur einen Ausgang hat.
 935. [P2] Lege auf Quillbrook einen Fischersteg mit Bank an, auf der man sitzen kann und die Uhr bis zur nächsten Tageszeit vorspult.
 936. [P2] Baue zwischen Hollowmere Shore und Gloamwood einen versteckten Hohlweg, der erst nach dem Fund einer Wegskizze im Spiel auftaucht.
 937. [P3] Baue die Endspiel-Route "Coldmoor" (de: Kaltmoor) im Norden, Ring 18 bis 24, nur mit Weg- und Geländelogik; Story-Anbindung gehört Bereich 4.
@@ -81,7 +81,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 959. [P2] Lege in Brindlewick einen Markt an, der an zwei Tagen pro Woche (Gerätezeit Mittwoch und Samstag) mit drei zusätzlichen Ständen erscheint.
 960. [P2] Erweitere Thornridge um einen Gasthof als Kutschstation, mit Wirt und schwarzem Brett für Gerüchte über Funde.
 961. [P2] Baue den Hof "Mossgate Farm" (de: Moostor-Hof) auf Hollowmere Shore, mit Feldern, die sich je nach Wochentag sichtbar verändern.
-962. [P2] Gib jedem Ort ein Ortsschild mit Name und Einwohnerzahl, z. B. "Wrenhollow, 34 Leute".
+962. [x] [P2] Gib jedem Ort ein Ortsschild mit Name und Einwohnerzahl, z. B. "Wrenhollow, 34 Leute".
 963. [P2] Lege in Copperfold einen Aufzug im Förderturm an, der zu Fuß betreten wird und zwei Ebenen der Siedlung verbindet.
 964. [P2] Gib Reedhaven einen Steg, an dem Reusen hängen, die man einmal am Tag leert und dabei einen Heiltrank oder Münzen findet.
 965. [P2] Baue in Wrenhollow eine Bibliothek, in der Bücher Hinweise auf versteckte Orte enthalten, gebunden an Flags, nicht an Questtexte.

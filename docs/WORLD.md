@@ -78,10 +78,70 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
 - **World layout:** `data/world_layout.json` gives every place a grid cell per region and its
   neighbours. Houses lie `inside` their town. Every warp between two places must be an edge.
 - **Map builders:** `python3 tools/art/build_world.py [group]` runs the modules in
-  `tools/art/world/` (veydal_core, veydal_wilds, veydal_caves, corvane). Act I maps are edited
-  in JSON and only patched by `veydal_core`; new maps are generated, so edit their Python.
+  `tools/art/world/` (veydal_core, veydal_wilds, veydal_caves, veydal_dungeons, corvane; the
+  corvane group also builds `corvane_act2.py` and the Ashmere maps in `ashmere.py`). Act I maps
+  are edited in JSON and only patched by `veydal_core`; new maps are generated, so edit their
+  Python. New maps start from `tools/art/world/template.py` (12 wide, rock frame, exits top and bottom).
+- **Shapes:** outdoor maps are at most 12 x 40 tiles; routes and marshes need at least two
+  ways out (by foot or by line). `WorldValidator.check_shapes` checks both.
+- **Statistics:** `python3 tools/world_stats.py` writes the table below (`--check` tells if it is stale).
 - **Overview:** `python3 tools/art/preview_map.py --region veydal` draws every map of a region
   on one sheet (`build/previews/veydal.png`).
 - **Checks:** `tools/validate_data.gd` and `tests/unit/test_world_data.gd` check tiles,
   encounter tables (no map without a table, no unused table), hidden finds (reachable, unique
   flag, real item) and the layout.
+
+## World statistics (item 903)
+
+Written by `python3 tools/world_stats.py`.
+
+<!-- world-stats:start -->
+| Region | Map | Kind | Size | Finds | Wayfarers | Wild cells |
+| --- | --- | --- | --- | --- | --- | --- |
+| veydal | `bellstone_ruins` | dungeon | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 2 | 0 | 10 |
+| veydal | `brackwater_fen` | marsh | 12x24 | 5 | 3 | 86 |
+| veydal | `brackwater_sluice` | dungeon | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 2 | 0 | 12 |
+| veydal | `brindlewick` | town | 12x20 | 4 | 0 | 0 |
+| veydal | `cinder_rift` | rift | 12x13 | 0 | 4 | 20 |
+| veydal | `copperfold` | town | 12x19 | 3 | 0 | 0 |
+| veydal | `crowcrest` | route | 12x24 | 4 | 3 | 42 |
+| veydal | `echo_path` | inside | 10x8 + 10x8 | 0 | 0 | 0 |
+| veydal | `fernstair` | route | 12x26 | 4 | 2 | 63 |
+| veydal | `gloamwood` | route | 12x30 | 5 | 3 | 152 |
+| veydal | `kindle_vents` | cave | 12x10 | 2 | 0 | 12 |
+| veydal | `lantern_steps` | route | 12x19 | 4 | 3 | 9 |
+| veydal | `lanternwell` | inside | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 1 | 0 | 8 |
+| veydal | `lighthouse` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `map_house` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 3 | 0 | 25 |
+| veydal | `murk_hollow` | cave | 12x13 + 12x9 | 4 | 3 | 20 |
+| veydal | `quillbrook` | route | 12x30 | 4 | 3 | 114 |
+| veydal | `reedhaven` | town | 12x10 | 3 | 0 | 0 |
+| veydal | `rest_spring` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `sablecove` | cave | 12x9 | 2 | 0 | 10 |
+| veydal | `saltmarsh` | marsh | 12x15 | 4 | 3 | 47 |
+| veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 10 |
+| veydal | `thornridge` | town | 12x20 | 4 | 0 | 6 |
+| veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
+| veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
+| corvane | `corvane_quay` | town | 12x24 | 3 | 0 | 0 |
+| corvane | `greyreach` | route | 12x29 | 4 | 3 | 44 |
+| corvane | `madderby` | town | 12x22 | 3 | 0 | 0 |
+| corvane | `madderby_guild` | inside | 10x9 | 0 | 0 | 0 |
+| corvane | `mirror_rift` | rift | 12x13 | 0 | 0 | 20 |
+| corvane | `rain_rift` | rift | 12x13 | 0 | 0 | 22 |
+| corvane | `stillwater` | route | 12x26 | 3 | 3 | 53 |
+| corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
+| corvane | `woadfen` | marsh | 12x28 | 4 | 3 | 154 |
+| ashmere | `ashmere_station` | town | 12x22 | 3 | 0 | 0 |
+| ashmere | `cinderfold` | town | 12x16 | 3 | 0 | 0 |
+| ashmere | `glass_rift` | rift | 12x13 | 0 | 0 | 20 |
+| ashmere | `gravers_hall` | inside | 10x9 | 0 | 0 | 0 |
+| ashmere | `kiln_rift` | rift | 12x13 | 0 | 0 | 20 |
+| ashmere | `saltglass` | route | 12x26 | 4 | 3 | 56 |
+| ashmere | `undrawn_1` | rift | 12x22 | 0 | 0 | 0 |
+| ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
+| ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
+| ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
+| | **45 maps** | | | **92** | **42** | **1067** |
+<!-- world-stats:end -->
