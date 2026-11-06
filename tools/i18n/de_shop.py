@@ -200,10 +200,10 @@ T = {
 	"Sechster Team-Platz",
 "Your team holds 6 Spirlings instead of 5 in battles against the world. Permanent.":
 	"Dein Team hat 6 statt 5 Plätze in Kämpfen gegen die Spielwelt. Dauerhaft.",
-"Storage +50":
-	"Lager +50",
-"50 more places in the storage, up to 600.":
-	"50 Plätze mehr im Lager, bis höchstens 600.",
+"Storage Box +1":
+	"Lager-Fach +1",
+"One more storage box with 30 places. At most 12 extra boxes.":
+	"Ein Lager-Fach mehr mit 30 Plätzen. Höchstens 12 zusätzliche Fächer.",
 "Wayfarer Pass":
 	"Wanderer-Pass",
 "+50% growth, 30 Riftglass every day, +1 starting energy, 1 free Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.":

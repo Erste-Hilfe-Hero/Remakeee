@@ -5,6 +5,8 @@ extends CanvasLayer
 ## Pictures are PNGs in user://photos/, scaled up 4x with sharp pixels. Nothing is uploaded.
 
 signal finished
+## Photos saved in this session (a daily task counts them).
+var taken: int = 0
 
 const DIR: String = "user://photos/"
 const SCALE: int = 4
@@ -74,6 +76,8 @@ func snap() -> void:
 	var img: Image = get_viewport().get_texture().get_image()
 	VirtualPad.visible = pad_was
 	var path: String = save_photo(img)
+	if path != "":
+		taken += 1
 	Sound.sfx("save" if path != "" else "cancel")
 	_hint.text = Loc.t("Photo saved.") if path != "" else Loc.t("Could not save the photo.")
 	_hint.visible = true

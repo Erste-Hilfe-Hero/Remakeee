@@ -5,15 +5,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 > **Auftrag für den umsetzenden Thread:** Ziel ist, dass Spieler nach dem Ende von Akt I über Monate einen Grund haben, Chimora zu öffnen, und dass sie dabei eine Währung bekommen, die man nur durch Spielen verdient. Betroffen sind vor allem scripts/core/ (Achievements.gd, Collection.gd, Season.gd, WeeklyChallenge.gd und neue Dateien wie Waymarks.gd, DailyTasks.gd, Endgame.gd), scripts/overworld/ (Gauntlet.gd, DailyFind.gd, Overworld.gd), neue Daten unter data/ (achievements.json, events.json, endgame.json) und die Tests unter tests/unit/. Fang mit der Wegmarken-Währung und den Tagesaufträgen an, denn fast alle anderen Punkte zahlen in Wegmarken aus. Premium-Währung, Kaufangebote und Preise gehören zu Bereich 10, Online-Ligen zu Bereich 7 und neue Story-Kapitel zu Bereich 4; Herausforderungsregeln, Bosskämpfe und Turm-Kampfregeln aus docs/KAMPF_PLAN_1000.md werden hier nicht neu geplant.
 
 ### Wegmarken: die erspielte Endgame-Währung
-3113. [P1] Eine neue Währung „Wegmarken“ (englisch „Waymarks“) einführen, die in GameState.waymarks als ganze Zahl gespeichert wird und nur durch Spielen steigt.
-3114. [P1] Eine neue Datei scripts/core/Waymarks.gd anlegen, die alle Gutschriften über eine einzige Funktion earn(amount, source) laufen lässt.
-3115. [P1] Jede Gutschrift mit Quelle und Datum in GameState.records["waymark_log"] festhalten, höchstens die letzten 200 Einträge.
-3116. [P1] Die Obergrenze für gehaltene Wegmarken auf 9999 setzen und überzählige Marken mit einem kurzen Hinweis verfallen lassen.
-3117. [P1] Wegmarken im Pausenmenü neben den Münzen anzeigen, mit eigenem 8x8-Symbol in Form eines kleinen Wegsteins.
-3118. [P1] Festlegen und in docs/BALANCE.md eintragen, dass ein aktiver Spieler im Schnitt 60 Wegmarken pro Tag und 500 pro Woche verdient.
-3119. [P1] Wegmarken beim Laden alter Spielstände mit 0 anlegen und die Nachzahlung für alte Erfolge nur über den Erfolgs-Lohn laufen lassen, nicht doppelt.
-3120. [P1] In docs/MONETIZATION.md und im Code festschreiben, dass Wegmarken nie gekauft, getauscht oder an Freunde geschickt werden können.
-3121. [P1] Wegmarken in jeder Belohnungsmeldung mit Zahl und Symbol nennen, zum Beispiel „+10 Wegmarken“.
+3113. [x] [P1] Eine neue Währung „Wegmarken“ (englisch „Waymarks“) einführen, die in GameState.waymarks als ganze Zahl gespeichert wird und nur durch Spielen steigt.
+3114. [x] [P1] Eine neue Datei scripts/core/Waymarks.gd anlegen, die alle Gutschriften über eine einzige Funktion earn(amount, source) laufen lässt.
+3115. [x] [P1] Jede Gutschrift mit Quelle und Datum in GameState.records["waymark_log"] festhalten, höchstens die letzten 200 Einträge.
+3116. [x] [P1] Die Obergrenze für gehaltene Wegmarken auf 9999 setzen und überzählige Marken mit einem kurzen Hinweis verfallen lassen.
+3117. [x] [P1] Wegmarken im Pausenmenü neben den Münzen anzeigen, mit eigenem 8x8-Symbol in Form eines kleinen Wegsteins.
+3118. [x] [P1] Festlegen und in docs/BALANCE.md eintragen, dass ein aktiver Spieler im Schnitt 60 Wegmarken pro Tag und 500 pro Woche verdient.
+3119. [x] [P1] Wegmarken beim Laden alter Spielstände mit 0 anlegen und die Nachzahlung für alte Erfolge nur über den Erfolgs-Lohn laufen lassen, nicht doppelt.
+3120. [x] [P1] In docs/MONETIZATION.md und im Code festschreiben, dass Wegmarken nie gekauft, getauscht oder an Freunde geschickt werden können.
+3121. [x] [P1] Wegmarken in jeder Belohnungsmeldung mit Zahl und Symbol nennen, zum Beispiel „+10 Wegmarken“.
 3122. [P2] Den Server beim Speichern prüfen lassen, dass die Wegmarken seit dem letzten Stand um höchstens 800 pro Tag gestiegen sind, sonst wird der Stand markiert.
 3123. [P2] Ein Wegmarken-Verlaufsfenster bauen, das die letzten 30 Gutschriften mit Quelle zeigt (zum Beispiel „Tagesauftrag: 10“).
 3124. [P2] Einen Test schreiben, der prüft, dass jede Belohnungsquelle im Spiel eine gültige Quelle in Waymarks.SOURCES nutzt.
@@ -22,16 +22,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3127. [P2] Den Wegmarken-Stand auf der Spielstandkarte im Titelbild neben Spielzeit und Spirlog-Zahl zeigen.
 3128. [P3] Einen Jahresrückblick der verdienten Wegmarken nach Quelle in den Aufzeichnungen zeigen.
 3129. [P3] Beim Eisernen Schwur alle Wegmarken-Gutschriften um 25 Prozent erhöhen und den Bonus in der Gutschrift ausweisen.
-3130. [P3] Erfolge „Sparsam“ für 5000 und „Wegkundig“ für 50000 insgesamt verdiente Wegmarken ergänzen.
+3130. [x] [P3] Erfolge „Sparsam“ für 5000 und „Wegkundig“ für 50000 insgesamt verdiente Wegmarken ergänzen.
 3131. [P3] Eine Lexikonseite „Wegmarken“ anlegen, die alle Quellen mit Betrag und Häufigkeit aus der Belohnungstabelle zeigt.
 
 ### Wegmarken-Tauschstand und Münzen-Kreislauf
-3132. [P1] Im Erdgeschoss des Leuchtturms einen Tauschstand bei einer neuen Figur „Marla die Tauscherin“ aufstellen, der nur Wegmarken annimmt.
-3133. [P1] Das Angebot des Tauschstands in data/endgame.json pflegen, mit Gegenstand, Preis in Wegmarken und Vorrat pro Woche.
-3134. [P1] Echo-Kristalle aller acht Elemente für je 150 Wegmarken anbieten, höchstens einen pro Element und Woche.
-3135. [P1] Das Funkenamulett (spark_charm) für 120 Wegmarken und die Gezeitenperle (tide_pearl) für 200 Wegmarken anbieten, je zweimal pro Woche.
-3136. [P1] Den Tauschstand schon nach dem ersten versiegelten Riss mit sechs Grundangeboten öffnen und das volle Angebot nach dem Ende von Akt I freischalten.
-3137. [P1] Jedes Angebot vor dem Kauf mit Wirkung, Preis und Besitzzahl zeigen und jeden Tausch mit einer Ja-Nein-Frage bestätigen lassen.
+3132. [x] [P1] Im Erdgeschoss des Leuchtturms einen Tauschstand bei einer neuen Figur „Marla die Tauscherin“ aufstellen, der nur Wegmarken annimmt.
+3133. [x] [P1] Das Angebot des Tauschstands in data/endgame.json pflegen, mit Gegenstand, Preis in Wegmarken und Vorrat pro Woche.
+3134. [x] [P1] Echo-Kristalle aller acht Elemente für je 150 Wegmarken anbieten, höchstens einen pro Element und Woche.
+3135. [x] [P1] Das Funkenamulett (spark_charm) für 120 Wegmarken und die Gezeitenperle (tide_pearl) für 200 Wegmarken anbieten, je zweimal pro Woche.
+3136. [x] [P1] Den Tauschstand schon nach dem ersten versiegelten Riss mit sechs Grundangeboten öffnen und das volle Angebot nach dem Ende von Akt I freischalten.
+3137. [x] [P1] Jedes Angebot vor dem Kauf mit Wirkung, Preis und Besitzzahl zeigen und jeden Tausch mit einer Ja-Nein-Frage bestätigen lassen.
 3138. [P2] Vier neue Jackenfarben für den Wanderer zu je 300 Wegmarken anbieten, die dauerhaft freigeschaltet bleiben.
 3139. [P2] Sechs Fotorahmen für den Fotomodus zu je 100 Wegmarken anbieten.
 3140. [P2] Den Vorrat des Tauschstands jeden Montag nach Server-Zeit auffüllen und die Restzeit am Stand anzeigen.
@@ -52,39 +52,39 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3155. [P3] Das Wanderer-Zimmer im Fotomodus als eigenen Ort mit festem Bildausschnitt anbieten.
 
 ### Tagesaufträge
-3156. [P1] Eine Datei scripts/core/DailyTasks.gd anlegen, die jeden Tag nach Server-Zeit drei Aufträge aus data/events.json per Seed „chimora-tasks-JJJJ-MM-TT“ zieht.
-3157. [P1] Jeder Tagesauftrag zahlt 10 Wegmarken, alle drei zusammen zahlen 10 Wegmarken extra.
-3158. [P1] Mindestens 30 Auftragsarten anlegen, zum Beispiel „Gewinne 3 Kämpfe in Thornridge“, „Bonde einen Spirling des Elements Gale“ oder „Raste an 2 Rastquellen“.
-3159. [P1] Tagesaufträge im Ziele-Bildschirm unter dem Fund des Tages als eigenen Block mit Fortschritt (k/n) zeigen.
-3160. [P1] Aufträge nur aus Orten ziehen, die der Spielstand schon erreicht hat, damit kein Auftrag unlösbar ist.
-3161. [P1] Jeden Auftrag so wählen, dass er in höchstens 15 Minuten Spielzeit zu schaffen ist.
-3162. [P1] Den Fortschritt jedes Tagesauftrags im Spielstand und auf dem Server speichern, damit ein Gerätewechsel am selben Tag nichts zurücksetzt.
+3156. [x] [P1] Eine Datei scripts/core/DailyTasks.gd anlegen, die jeden Tag nach Server-Zeit drei Aufträge aus data/events.json per Seed „chimora-tasks-JJJJ-MM-TT“ zieht.
+3157. [x] [P1] Jeder Tagesauftrag zahlt 10 Wegmarken, alle drei zusammen zahlen 10 Wegmarken extra.
+3158. [x] [P1] Mindestens 30 Auftragsarten anlegen, zum Beispiel „Gewinne 3 Kämpfe in Thornridge“, „Bonde einen Spirling des Elements Gale“ oder „Raste an 2 Rastquellen“.
+3159. [x] [P1] Tagesaufträge im Ziele-Bildschirm unter dem Fund des Tages als eigenen Block mit Fortschritt (k/n) zeigen.
+3160. [x] [P1] Aufträge nur aus Orten ziehen, die der Spielstand schon erreicht hat, damit kein Auftrag unlösbar ist.
+3161. [x] [P1] Jeden Auftrag so wählen, dass er in höchstens 15 Minuten Spielzeit zu schaffen ist.
+3162. [x] [P1] Den Fortschritt jedes Tagesauftrags im Spielstand und auf dem Server speichern, damit ein Gerätewechsel am selben Tag nichts zurücksetzt.
 3163. [P2] Einen Auftrag pro Tag einmal kostenlos gegen einen anderen tauschen lassen.
-3164. [P2] Nicht erledigte Aufträge verfallen still um Mitternacht, ohne Strafe und ohne Serien-Zähler.
+3164. [x] [P2] Nicht erledigte Aufträge verfallen still um Mitternacht, ohne Strafe und ohne Serien-Zähler.
 3165. [P2] Eine Auftragsart „Zeig dem Fotomodus einen Spirling bei Nacht“ ergänzen, damit Aufträge nicht nur Kämpfe sind.
 3166. [P2] Eine Auftragsart „Spiele das Echo-Melodie-Spiel mit der Wertung Gut oder besser“ ergänzen.
 3167. [P2] Eine Auftragsart „Sieh einen noch nicht gesehenen Spirling“ nur dann ziehen, wenn noch ungesehene Arten im erreichbaren Gebiet leben.
 3168. [P2] Den Fund des Tages (DailyFind) als eigenen Auftrag zählen lassen, wenn er an dem Tag im Pool landet.
-3169. [P2] Beim Abschluss eines Auftrags einen kurzen Hinweis oben im Bild zeigen, der den Kampf oder die Erkundung nicht anhält.
+3169. [x] [P2] Beim Abschluss eines Auftrags einen kurzen Hinweis oben im Bild zeigen, der den Kampf oder die Erkundung nicht anhält.
 3170. [P2] Nach dem Ende von Akt I einen vierten, schwereren Auftrag mit 25 Wegmarken freischalten.
 3171. [P2] Für jede Auftragsart einen GUT-Test schreiben, der den Fortschritt aus einem nachgestellten Spielereignis zählt.
 3172. [P2] Die Aufträge in data/i18n/de.json mit Platzhaltern für Zahl, Ort und Element übersetzen.
 3173. [P2] Eine Auftragsart „Schick einen Spirling auf einen Streifzug“ ergänzen, sobald Streifzüge freigeschaltet sind.
-3174. [P2] Pro Tag höchstens einen Kampfauftrag ziehen, damit jeder Tag eine Erkundungs- oder Sammelaufgabe enthält.
+3174. [x] [P2] Pro Tag höchstens einen Kampfauftrag ziehen, damit jeder Tag eine Erkundungs- oder Sammelaufgabe enthält.
 3175. [P3] Einen Wochenauftrag ergänzen, der aus sieben erledigten Tagesaufträgen in derselben Woche besteht und 50 Wegmarken zahlt.
 3176. [P3] Aufträge mit Tageszeit-Bezug ziehen, etwa „Triff bei Dämmerung einen Lumen-Spirling“, nur wenn Tag und Nacht eingeschaltet sind.
 3177. [P3] Einen Auftragsverlauf der letzten 14 Tage in den Aufzeichnungen zeigen.
-3178. [P3] Einen Erfolg „Fleißig“ für 100 erledigte Tagesaufträge und „Unermüdlich“ für 500 ergänzen.
+3178. [x] [P3] Einen Erfolg „Fleißig“ für 100 erledigte Tagesaufträge und „Unermüdlich“ für 500 ergänzen.
 3179. [P3] Aufträge, die zwei Tage hintereinander gezogen würden, durch die nächste Art ersetzen.
 3180. [P3] Den Auftrag „Zeig einem Dorfbewohner einen Spirling“ an die bestehenden Seitenfiguren (Fischer, Wanderin, Schilfschneider) binden, auch nach erledigtem Seitenziel.
 3181. [P3] Am Sonntag einen Ruheauftrag ziehen, der nur aus Rasten, Fotografieren oder einem Besuch im Wanderer-Zimmer besteht.
 3182. [P3] Für Aufträge in Gebieten mit Era-Wechsel die Ortsnamen aus der aktuellen Era-Karte nehmen.
 
 ### Wochen-Echo ausbauen
-3183. [P1] Die Wochenherausforderung zusätzlich mit 60 Wegmarken beim ersten Sieg der Woche belohnen, neben den 400 Münzen.
-3184. [P1] Die Wochenherausforderung von 3 auf 5 Runden erweitern und den Belohnungswert für Runde 4 und 5 als Zwischenpreis auszahlen.
-3185. [P1] Nach jeder Runde im Wochen-Echo eine Zwischenwertung zeigen: Züge, übrige Kraft und erschöpfte Spirlings.
-3186. [P1] Das Wochen-Echo nicht mehr an den stärksten eigenen Spirling, sondern an den Ring-Deckel binden, damit alle in derselben Woche dieselben Gegnerringe sehen.
+3183. [x] [P1] Die Wochenherausforderung zusätzlich mit 60 Wegmarken beim ersten Sieg der Woche belohnen, neben den 400 Münzen.
+3184. [x] [P1] Die Wochenherausforderung von 3 auf 5 Runden erweitern und den Belohnungswert für Runde 4 und 5 als Zwischenpreis auszahlen.
+3185. [x] [P1] Nach jeder Runde im Wochen-Echo eine Zwischenwertung zeigen: Züge, übrige Kraft und erschöpfte Spirlings.
+3186. [x] [P1] Das Wochen-Echo nicht mehr an den stärksten eigenen Spirling, sondern an den Ring-Deckel binden, damit alle in derselben Woche dieselben Gegnerringe sehen.
 3187. [P2] Eine Wochen-Bestwertung aus Zügen und übriger Kraft in GameState.records["weekly_best"] speichern.
 3188. [P2] Für eine Wertung unter einem festen Zielwert der Woche einen Bonus von 20 Wegmarken zahlen.
 3189. [P2] Eine Wochenvorschau am Brett zeigen: Feld, Regel und die Elemente der drei ersten Echo-Teams.
@@ -106,13 +106,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3205. [P3] Den Gewinn eines Wochen-Echos auf dem Speicherslot mit der Zahl der Wochensiege zeigen.
 
 ### Feste ausbauen
-3206. [P1] Die Festdaten aus Season.FESTIVALS nach data/events.json verschieben, damit neue Feste ohne Codeänderung dazukommen.
-3207. [P1] Während jedes Festes eine Festwährung „Festbänder“ ausgeben: 3 pro gewonnenem Kampf gegen Spirlings der Festelemente.
-3208. [P1] Am Festende alle übrigen Festbänder automatisch 1 zu 1 in Wegmarken umwandeln, damit nie etwas verloren geht.
-3209. [P1] Pro Fest einen Festhändler in Brindlewick aufstellen, der Festbänder gegen festbezogene Dinge tauscht.
-3210. [P1] Jedem Fest eine eigene Festaufgabe mit 5 Stufen geben (zum Beispiel 10, 25, 50, 100, 200 Festbänder gesammelt), die je 30 Wegmarken zahlt.
-3211. [P1] Den Ausrufer in Brindlewick bei jedem Fest einen Festauftrag pro Tag geben lassen, der 5 Festbänder zahlt.
-3212. [P1] Festbänder in GameState.festival_ribbons getrennt pro Fest führen und im Pausenmenü nur während des Festes anzeigen.
+3206. [x] [P1] Die Festdaten aus Season.FESTIVALS nach data/events.json verschieben, damit neue Feste ohne Codeänderung dazukommen.
+3207. [x] [P1] Während jedes Festes eine Festwährung „Festbänder“ ausgeben: 3 pro gewonnenem Kampf gegen Spirlings der Festelemente.
+3208. [x] [P1] Am Festende alle übrigen Festbänder automatisch 1 zu 1 in Wegmarken umwandeln, damit nie etwas verloren geht.
+3209. [x] [P1] Pro Fest einen Festhändler in Brindlewick aufstellen, der Festbänder gegen festbezogene Dinge tauscht.
+3210. [x] [P1] Jedem Fest eine eigene Festaufgabe mit 5 Stufen geben (zum Beispiel 10, 25, 50, 100, 200 Festbänder gesammelt), die je 30 Wegmarken zahlt.
+3211. [x] [P1] Den Ausrufer in Brindlewick bei jedem Fest einen Festauftrag pro Tag geben lassen, der 5 Festbänder zahlt.
+3212. [x] [P1] Festbänder in GameState.festival_ribbons getrennt pro Fest führen und im Pausenmenü nur während des Festes anzeigen.
 3213. [P2] Brindlewick während des Blütenmarkts mit Blumenkästen schmücken, die als eigene Kacheln in den Era-I-Stil passen.
 3214. [P2] Brindlewick während der Laternennächte mit Papierlaternen schmücken, die nachts leicht leuchten.
 3215. [P2] Während der Gezeitentage am Strand von Saltmarsh ein kleines Wettrennen der Krebse als Minispiel mit Antippen aufbauen.
@@ -139,10 +139,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3236. [P3] Pro Fest einen Erfolg für die höchste Stufe der Festaufgabe ergänzen.
 
 ### Freier Jahreszeitenpfad
-3237. [P1] Einen Jahreszeitenpfad mit 30 Stufen pro Jahreszeit (je drei Monate) anlegen, der nur durch Spielen voranschreitet.
-3238. [P1] Pfadpunkte nur aus Tagesaufträgen (10 pro Auftrag), Wochen-Echo (40) und Festaufgaben (20) vergeben, 100 Punkte pro Stufe.
-3239. [P1] Jede Stufe mit einer festen, vorher sichtbaren Belohnung belegen: Münzen, Wegmarken, Gegenstände oder Kosmetik.
-3240. [P1] Den ganzen Pfad mit allen 30 Belohnungen vor dem Start einsehbar machen.
+3237. [x] [P1] Einen Jahreszeitenpfad mit 30 Stufen pro Jahreszeit (je drei Monate) anlegen, der nur durch Spielen voranschreitet.
+3238. [x] [P1] Pfadpunkte nur aus Tagesaufträgen (10 pro Auftrag), Wochen-Echo (40) und Festaufgaben (20) vergeben, 100 Punkte pro Stufe.
+3239. [x] [P1] Jede Stufe mit einer festen, vorher sichtbaren Belohnung belegen: Münzen, Wegmarken, Gegenstände oder Kosmetik.
+3240. [x] [P1] Den ganzen Pfad mit allen 30 Belohnungen vor dem Start einsehbar machen.
 3241. [P2] Die Stufen 10, 20 und 30 mit einer besonderen Belohnung belegen: Jackenmuster, Fotorahmen und ein Spirling-Halstuch als Kosmetik.
 3242. [P2] Die Zielzeit so legen, dass Stufe 30 mit 4 Tagen Spiel pro Woche in 11 Wochen erreichbar ist.
 3243. [P2] Pfadbelohnungen nach Saisonende 14 Tage lang nachholbar machen, wenn die Stufe erreicht, aber nicht abgeholt wurde.
@@ -161,13 +161,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3256. [P3] Jede Jahreszeit mit einem eigenen Pfadmotiv versehen, das zum Fest dieser Jahreszeit passt.
 
 ### Leuchtturm-Treppe und Herausforderungs-Türme
-3257. [P1] Die Leuchtturm-Treppe (Gauntlet) von 5 Runden auf 30 Stockwerke erweitern, aufgeteilt in drei Abschnitte zu je 10 Stockwerken.
-3258. [P1] Nach jedem zehnten Stockwerk einen Rastpunkt einbauen, an dem man den Lauf speichert und später fortsetzt.
-3259. [P1] Den Lauf zwischen zwei Rastpunkten ohne Heilung führen, wie heute bei den 5 Runden.
-3260. [P1] Jedes erstmals erreichte Stockwerk einmalig mit 5 Wegmarken belohnen, jedes zehnte mit 50.
-3261. [P1] Den besten Stand als „Stockwerk x von 30“ statt „x von 5“ in GameState.records["gauntlet_best"] speichern und alte Werte übernehmen.
-3262. [P1] Die Ringe der Echo-Gegner pro Stockwerk an den Ring-Deckel binden statt an den stärksten eigenen Spirling, damit Hochziehen nichts nützt.
-3263. [P1] Beim ersten Betreten der neuen Leuchtturm-Treppe den Spieler mit einem Satz über Rastpunkte und fehlende Heilung aufklären.
+3257. [x] [P1] Die Leuchtturm-Treppe (Gauntlet) von 5 Runden auf 30 Stockwerke erweitern, aufgeteilt in drei Abschnitte zu je 10 Stockwerken.
+3258. [x] [P1] Nach jedem zehnten Stockwerk einen Rastpunkt einbauen, an dem man den Lauf speichert und später fortsetzt.
+3259. [x] [P1] Den Lauf zwischen zwei Rastpunkten ohne Heilung führen, wie heute bei den 5 Runden.
+3260. [x] [P1] Jedes erstmals erreichte Stockwerk einmalig mit 5 Wegmarken belohnen, jedes zehnte mit 50.
+3261. [x] [P1] Den besten Stand als „Stockwerk x von 30“ statt „x von 5“ in GameState.records["gauntlet_best"] speichern und alte Werte übernehmen.
+3262. [x] [P1] Die Ringe der Echo-Gegner pro Stockwerk an den Ring-Deckel binden statt an den stärksten eigenen Spirling, damit Hochziehen nichts nützt.
+3263. [x] [P1] Beim ersten Betreten der neuen Leuchtturm-Treppe den Spieler mit einem Satz über Rastpunkte und fehlende Heilung aufklären.
 3264. [P2] Nach Stockwerk 30 eine Endlosstrecke öffnen, deren Gegner pro Stockwerk einen Ring stärker werden bis Ring 60.
 3265. [P2] Die Endlosstrecke wöchentlich mit 2 Wegmarken pro neuem Stockwerk belohnen, höchstens 100 pro Woche.
 3266. [P2] Einen zweiten Turm „Glutstiege“ im Cinder Rift nach dem Versiegeln öffnen, in dem nur Ember-, Stone- und Volt-Gegner kämpfen, 15 Stockwerke.
@@ -192,11 +192,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3285. [P3] Für Spieler, die ein Turm-Stockwerk dreimal verloren haben, am Rastpunkt einen Tipp zu den Elementen der nächsten Gegner zeigen.
 
 ### Postgame in Veydal
-3286. [P1] Nach dem Kapitel „Waiting for the Ferry“ einen Postgame-Abschnitt im Ziele-Bildschirm zeigen, der alle Endgame-Inhalte als Liste mit Haken führt.
-3287. [P1] Den Ring-Deckel nach dem Ende von Akt I auf 60 anheben, damit Endgame-Inhalte die volle Spanne nutzen.
-3288. [P1] Acht „Meister-Wanderer“ an festen Orten in Veydal aufstellen, die erst nach beiden Rissen erscheinen und Teams mit Ring 45 bis 55 haben.
-3289. [P1] Jeden Meister-Wanderer beim ersten Sieg mit 80 Wegmarken und danach einmal pro Woche mit 20 Wegmarken belohnen.
-3290. [P1] Jeden Meister-Wanderer mit einem Steckbrief im Lexikon führen, der Ort, Thema und eigenen Sieg zeigt.
+3286. [x] [P1] Nach dem Kapitel „Waiting for the Ferry“ einen Postgame-Abschnitt im Ziele-Bildschirm zeigen, der alle Endgame-Inhalte als Liste mit Haken führt.
+3287. [x] [P1] Den Ring-Deckel nach dem Ende von Akt I auf 60 anheben, damit Endgame-Inhalte die volle Spanne nutzen.
+3288. [x] [P1] Acht „Meister-Wanderer“ an festen Orten in Veydal aufstellen, die erst nach beiden Rissen erscheinen und Teams mit Ring 45 bis 55 haben.
+3289. [x] [P1] Jeden Meister-Wanderer beim ersten Sieg mit 80 Wegmarken und danach einmal pro Woche mit 20 Wegmarken belohnen.
+3290. [x] [P1] Jeden Meister-Wanderer mit einem Steckbrief im Lexikon führen, der Ort, Thema und eigenen Sieg zeigt.
 3291. [P2] Die Teams der Meister-Wanderer in data/endgame.json mit Thema, Arten, Techniken und Andenken festlegen.
 3292. [P2] Nach dem Sieg über alle acht Meister-Wanderer eine Meisterrunde im Leuchtturm freischalten, in der alle acht nacheinander antreten.
 3293. [P2] Eine „Nachhall-Senke“ als neue kleine Karte am Rand der Saltmarsh anlegen, in der nur Spirlings ab Ring 40 wild leben.
@@ -219,14 +219,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3310. [P3] Die acht Meister-Wanderer auf einer Karte im Lexikon mit Sieg-Haken zeigen.
 
 ### Erfolge und Abzeichen
-3311. [P1] Die Erfolgsliste aus Achievements.LIST nach data/achievements.json verschieben, mit Id, Titel, Text, Kategorie und Wegmarken-Lohn.
-3312. [P1] Die Erfolge von 17 auf mindestens 80 erweitern, verteilt auf sechs Kategorien: Bonden, Kämpfen, Erkunden, Sammeln, Ereignisse, Herausforderung.
-3313. [P1] Jeden Erfolg mit 10, 25, 50 oder 100 Wegmarken nach Schwierigkeit belohnen und den Lohn beim Erfolg anzeigen.
-3314. [P1] Mehrstufige Erfolge einführen (Bronze, Silber, Gold), etwa „Kindred“ für 10, 15 und 21 gebondete Arten.
-3315. [P1] Beim Freischalten eines Erfolgs ein kurzes Abzeichen-Bild oben im Bild zeigen, ohne das Spiel anzuhalten.
-3316. [P1] Ein Abzeichenbuch im Menü bauen, das alle Erfolge als 16x16-Abzeichen im Raster zeigt, gesperrte grau mit Hinweistext.
-3317. [P1] Für jeden Erfolg einen Fortschritt (k/n) anzeigen, wo es eine Zahl gibt.
-3318. [P1] Alle bestehenden 17 Erfolge mit ihrem Freischaltdatum in das neue Format übernehmen und rückwirkend den Wegmarken-Lohn auszahlen.
+3311. [x] [P1] Die Erfolgsliste aus Achievements.LIST nach data/achievements.json verschieben, mit Id, Titel, Text, Kategorie und Wegmarken-Lohn.
+3312. [x] [P1] Die Erfolge von 17 auf mindestens 80 erweitern, verteilt auf sechs Kategorien: Bonden, Kämpfen, Erkunden, Sammeln, Ereignisse, Herausforderung.
+3313. [x] [P1] Jeden Erfolg mit 10, 25, 50 oder 100 Wegmarken nach Schwierigkeit belohnen und den Lohn beim Erfolg anzeigen.
+3314. [x] [P1] Mehrstufige Erfolge einführen (Bronze, Silber, Gold), etwa „Kindred“ für 10, 15 und 21 gebondete Arten.
+3315. [x] [P1] Beim Freischalten eines Erfolgs ein kurzes Abzeichen-Bild oben im Bild zeigen, ohne das Spiel anzuhalten.
+3316. [x] [P1] Ein Abzeichenbuch im Menü bauen, das alle Erfolge als 16x16-Abzeichen im Raster zeigt, gesperrte grau mit Hinweistext.
+3317. [x] [P1] Für jeden Erfolg einen Fortschritt (k/n) anzeigen, wo es eine Zahl gibt.
+3318. [x] [P1] Alle bestehenden 17 Erfolge mit ihrem Freischaltdatum in das neue Format übernehmen und rückwirkend den Wegmarken-Lohn auszahlen.
 3319. [P2] Geheime Erfolge einführen, deren Text erst nach dem Freischalten erscheint, höchstens 10 Stück.
 3320. [P2] Einen Erfolg „Ohne Fehltakt“ für ein Echo-Melodie-Spiel ohne verpassten Ton ergänzen.
 3321. [P2] Einen Erfolg „Nachtschwärmer“ für 50 Kämpfe bei Nacht ergänzen.
@@ -261,9 +261,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3350. [P3] Einen Erfolg „Albumpflege“ für 12 volle Monatsalben ergänzen.
 
 ### Sammelziele und Spirlog-Abschluss
-3351. [P1] Die Spirlog-Ziele in Collection.GOALS um „gesehen“-Stufen ergänzen: 5, 10, 15 und alle Arten gesehen, je mit Wegmarken-Lohn.
-3352. [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
-3353. [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
+3351. [x] [P1] Die Spirlog-Ziele in Collection.GOALS um „gesehen“-Stufen ergänzen: 5, 10, 15 und alle Arten gesehen, je mit Wegmarken-Lohn.
+3352. [x] [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
+3353. [x] [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
 3354. [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
 3355. [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
 3356. [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
@@ -290,8 +290,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3377. [P3] Ein Sammelziel „Postkarten“ für alle 12 Postkarten aus Streifzügen ergänzen.
 
 ### Abschlussziele und 100-Prozent-Anzeige
-3378. [P1] Eine Gesamtanzeige „Reise vollendet: x Prozent“ in den Aufzeichnungen bauen, die Story, Seitenziele, Spirlog, Erfolge, Türme und Erkundung gewichtet.
-3379. [P1] Die Gewichte festlegen und in docs/BALANCE.md eintragen: Story 20, Seitenziele 10, Spirlog 25, Erfolge 20, Türme 15, Erkundung 10 Prozent.
+3378. [x] [P1] Eine Gesamtanzeige „Reise vollendet: x Prozent“ in den Aufzeichnungen bauen, die Story, Seitenziele, Spirlog, Erfolge, Türme und Erkundung gewichtet.
+3379. [x] [P1] Die Gewichte festlegen und in docs/BALANCE.md eintragen: Story 20, Seitenziele 10, Spirlog 25, Erfolge 20, Türme 15, Erkundung 10 Prozent.
 3380. [P2] Eine Prüfliste „Was fehlt noch“ bauen, die pro Bereich die drei nächsten offenen Ziele zeigt.
 3381. [P2] Den Prozentwert auf dem Speicherslot im Titelbild anzeigen.
 3382. [P2] Bei 50, 75 und 100 Prozent eine Belohnung von 50, 100 und 300 Wegmarken auszahlen.
@@ -310,10 +310,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3395. [P3] Den 100-Prozent-Abschluss in der Lauf-Chronik vermerken.
 
 ### Eiserner Schwur und Wiederspielwert
-3396. [P1] Den Eisernen Schwur im Titelbild eines Speicherslots mit einem kleinen Kettensymbol kennzeichnen.
-3397. [P1] Ein Gedenkbuch im Refugium anlegen, das jeden ins Refugium gezogenen Spirling mit Name, Ring, Ort und Datum listet.
-3398. [P1] Den Erfolg „Oathkeeper“ um Stufen erweitern: beide Risse unter Schwur auf Wanderer, Veteran und Rift-Born-Schwierigkeit.
-3399. [P1] Die Wahl des Eisernen Schwurs beim neuen Spiel mit einem Satz zu Refugium und Bonus von 25 Prozent Wegmarken erklären.
+3396. [x] [P1] Den Eisernen Schwur im Titelbild eines Speicherslots mit einem kleinen Kettensymbol kennzeichnen.
+3397. [x] [P1] Ein Gedenkbuch im Refugium anlegen, das jeden ins Refugium gezogenen Spirling mit Name, Ring, Ort und Datum listet.
+3398. [x] [P1] Den Erfolg „Oathkeeper“ um Stufen erweitern: beide Risse unter Schwur auf Wanderer, Veteran und Rift-Born-Schwierigkeit.
+3399. [x] [P1] Die Wahl des Eisernen Schwurs beim neuen Spiel mit einem Satz zu Refugium und Bonus von 25 Prozent Wegmarken erklären.
 3400. [P2] Unter Schwur die Leuchtturm-Treppe als eigenen Bestwert führen, getrennt vom normalen Bestwert.
 3401. [P2] Eine Chronik der Läufe über alle drei Speicherslots anlegen, die abgeschlossene Läufe mit Starter, Schwierigkeit, Spielzeit und Schwur festhält.
 3402. [P2] Die Chronik auch nach dem Löschen eines Slots behalten, damit alte Läufe sichtbar bleiben.
@@ -422,7 +422,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 ### Fairer Rhythmus ohne Druck
 3496. [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
 3497. [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
-3498. [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
+3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
 3499. [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
 3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
 3501. [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.

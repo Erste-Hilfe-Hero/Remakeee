@@ -42,7 +42,7 @@ Diese Regeln gelten für jedes Angebot. Tests und `tools/ip_check.sh` prüfen si
 | Teil | Datei |
 | --- | --- |
 | Angebote (einzige Quelle) | `data/shop.json`, geprüft von `scripts/shop/ShopCatalog.gd` |
-| Store-Produkte für beide Konsolen | `store/products.json` (gebaut von `tools/shop/build_products.py`) |
+| Store-Produkte für beide Konsolen | `store/products.json` (gebaut von `tools/shop/build_offers_sql.py`) |
 | Billing-Brücke (Google, Apple, lokal) | `scripts/shop/Billing.gd` (Autoload), `scripts/shop/LocalBilling.gd` |
 | Shop-Menü, Altersabfrage | `scripts/shop/ShopMenu.gd`, `scripts/shop/AgeGate.gd` |
 | Server-Tabellen und Funktionen | `supabase/migrations/20261110000001_shop.sql`, Angebote in `…02_shop_offers.sql` |
@@ -54,3 +54,9 @@ Diese Regeln gelten für jedes Angebot. Tests und `tools/ip_check.sh` prüfen si
 Siehe Liste in [`docs/shop/ALI_TODO.md`](shop/ALI_TODO.md): Apple-Vertrag "Paid Apps" mit Steuer- und
 Bankdaten, Google-Zahlungsprofil (Händlerkonto), In-App-Produkte in beiden Konsolen anlegen (oder einen
 API-Zugang dafür geben), Altersfreigaben mit "In-Game-Käufe" neu beantworten.
+
+## Waymarks are never for sale (plan area 8)
+Waymarks (the endgame currency) are only earned by playing. They are never sold for money or
+for the premium currency, never traded and never sent to friends. In code `Waymarks.TRANSFERABLE`
+is false, there is no "shop", "gift" or "trade" source in `Waymarks.SOURCES`, and they are no bag
+item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).

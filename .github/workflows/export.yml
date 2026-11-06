@@ -30,6 +30,8 @@ jobs:
       - run: tools/ip_check.sh
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n_extract.py de --check
+      - name: A save version bump brings a fixture and a migration test
+        run: python3 tools/save_version_check.py
       - name: Store web pages match docs/legal
         run: python3 tools/site/build_site.py --check
       - name: Server copy of the shop offers and store/products.json match data/shop.json
@@ -136,8 +138,16 @@ jobs:
   # https://github.com/Erste-Hilfe-Hero/Remakeee/releases/download/online-test/Chimora-online-test.apk
   apk-link:
     needs: [android-debug, web]
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    # Only the integration branch (and main) publish the test build; feature PRs into it would
+    # otherwise overwrite it with their own unmerged state.
+    if: >-
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) &&
+      (github.head_ref == 'claude/project-thread-lhphga-c' || github.ref_name == 'claude/project-thread-lhphga-c' || github.ref_name == 'main')
     runs-on: ubuntu-latest
+    # Runs from several PRs upload to the same release; one at a time, or --clobber races (HTTP 422).
+    concurrency:
+      group: online-test-release
+      cancel-in-progress: false
     permissions:
       contents: write
     steps:
@@ -157,7 +167,12 @@ jobs:
           gh release view online-test >/dev/null 2>&1 || gh release create online-test --prerelease \
             --target "$sha" --title "Chimora online test" --notes "Latest test build (debug APK, real server)."
           gh release edit online-test --notes "Latest test build (debug APK, real server). Commit $sha, ref ${{ github.head_ref || github.ref_name }}."
-          gh release upload online-test Chimora-online-test.apk chimora-web.zip --clobber
+          # GitHub's upload endpoint sometimes times out (HTTP 408); try again.
+          for i in 1 2 3; do
+            gh release upload online-test Chimora-online-test.apk chimora-web.zip --clobber && break
+            [ "$i" = 3 ] && exit 1
+            sleep $((i * 15))
+          done
 
   # Signed release AAB for Google Play. Runs on version tags or manual runs.
   # Secrets live in the protected "prod" environment:

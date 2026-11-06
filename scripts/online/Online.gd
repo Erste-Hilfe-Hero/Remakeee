@@ -12,11 +12,16 @@ enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 ## Must match version/code in export_presets.cfg (tests check it). The server sends builds
 ## older than its "min_version" to the store.
 const CLIENT_VERSION: int = 1
+## Format number of the online save (plan item 2673). The server refuses saves without it or
+## newer than its server_config.save_schema_max. Raise both together.
+const SAVE_SCHEMA: int = 1
 const CONFIG_PATH: String = "res://data/online.json"
 const SESSION_PATH: String = "user://online_session.json"
 const LOCAL_STORE_PATH: String = "user://local_server.json"
 const HEARTBEAT_SECONDS: float = 45.0
-const RETRY_SECONDS: float = 4.0
+const RETRY_SECONDS: float = 5.0
+## A failed call is tried once more after this pause before anything is shown (item 2151).
+var net_retry_seconds: float = 2.0
 
 signal state_changed(state: State)
 ## Another device saved this slot after this one last synced it.
@@ -50,6 +55,10 @@ var _overlay: ReconnectOverlay
 var _pushing: Dictionary = {}
 var _push_again: Dictionary = {}
 var _save_gen: Dictionary = {}
+## Seconds without connection while playing, and reconnect tries so far (reconnect screen).
+var _store_url: String = ""
+var _offline_for: float = 0.0
+var _tries: int = 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -57,6 +66,8 @@ func _ready() -> void:
 	_load_session()
 	_overlay = ReconnectOverlay.new()
 	add_child(_overlay)
+	_overlay.try_now.connect(retry_now)
+	_overlay.to_title.connect(_to_title)
 
 ## The real server if data/online.json names one, otherwise the local stand-in.
 func make_backend() -> OnlineBackend:
@@ -137,7 +148,9 @@ func _take_hello(d: Variant) -> void:
 		return
 	profile = d.get("profile", {}) if d.get("profile") is Dictionary else {}
 	motd = str(d.get("motd", ""))
+	_store_url = str(d.get("store_url", ""))
 	online_now = int(d.get("online_now", 0))
+	flags.assign(d.get("flags", []) if d.get("flags") is Array else [])
 	_take_server_time(d.get("server_time"))
 	_set_state(State.UPDATE_REQUIRED if bool(d.get("update_required", false)) else State.ONLINE)
 
@@ -147,12 +160,37 @@ func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 	if state != State.ONLINE:
 		return OnlineBackend.fail("offline", true)
 	var r: Dictionary = await backend.call_fn(name, args)
+	if not r.ok and r.net and r.error != "server_429" and is_inside_tree():
+		if net_retry_seconds > 0.0:
+			await get_tree().create_timer(net_retry_seconds, true).timeout
+		r = await backend.call_fn(name, args)
 	if not r.ok and r.net:
 		last_error = r.error
 		_set_state(State.OFFLINE)
 	elif not r.ok and r.error == "not_signed_in":
 		_set_state(State.OFFLINE)
 	return r
+
+## A sentence and the next step for an online problem (item 2146). Empty: the last error.
+func error_text(code: String = "") -> String:
+	return OnlineErrors.text(code if not code.is_empty() else last_error)
+
+## Where "Open the store" goes when an update is needed (item 2148): the address the server
+## sends, otherwise the store page for this platform.
+func store_url() -> String:
+	if not _store_url.is_empty():
+		return _store_url
+	if OS.get_name() == "iOS":
+		return "itms-apps://apps.apple.com"
+	return "https://play.google.com/store/apps/details?id=de.chimora.game"
+
+## Waits up to [param max_seconds] for an upload of [param slot] on its way; true when the
+## server has the newest save (honest "Saved." in the pause menu, item 1868).
+func wait_synced(slot: int, max_seconds: float = 4.0) -> bool:
+	var until: int = Time.get_ticks_msec() + int(max_seconds * 1000.0)
+	while _pushing.has(slot) and Time.get_ticks_msec() < until and is_inside_tree():
+		await get_tree().process_frame
+	return state == State.ONLINE and not dirty.has(slot)
 
 # --- Account (items 2, 4, 11) -------------------------------------------------------------
 
@@ -241,7 +279,7 @@ func pull(slot: int) -> bool:
 	if not r.data is Dictionary or not r.data.get("data") is Dictionary:
 		return true
 	var path: String = SaveManager.path_for_slot(slot)
-	if not SaveManager.write_atomic(path, JSON.stringify(r.data.data, "\t")):
+	if not SaveManager.write_save(path, r.data.data):
 		return false
 	revs[slot] = int(r.data.rev)
 	dirty.erase(slot)
@@ -281,6 +319,7 @@ func _push_once(slot: int, force: bool) -> bool:
 	var d: Variant = SaveManager.read_save(path)
 	if not d is Dictionary:
 		return false
+	d["schema"] = SAVE_SCHEMA
 	var r: Dictionary = await call_fn("save_put", {"p_slot": slot, "p_data": d,
 		"p_summary": SaveManager.summary_line(d), "p_base_rev": int(revs.get(slot, 0)), "p_force": force})
 	if not r.ok or not r.data is Dictionary:
@@ -337,6 +376,16 @@ func contribute(kind: String, amount: int = 1) -> void:
 	if state == State.ONLINE:
 		await call_fn("community_add", {"p_kind": kind, "p_amount": amount})
 
+## Features the server switched on for this version (hello, item 2675). Menus hide the rest.
+var flags: Array[String] = []
+
+func flag_on(key: String) -> bool:
+	return flags.has(key)
+
+## The Leagues menu shows when at least one league is on.
+func league_on() -> bool:
+	return flag_on("league_" + LeagueRules.FAIR) or flag_on("league_" + LeagueRules.OPEN)
+
 ## Friends, mail and greetings are on (parents can switch them off, item 147).
 func social_on() -> bool:
 	return bool(profile.get("social", true))
@@ -369,6 +418,8 @@ static func card_numbers() -> Dictionary:
 func _process(delta: float) -> void:
 	if state == State.ONLINE:
 		_overlay.hide_overlay()
+		_offline_for = 0.0
+		_tries = 0
 		if GameState.in_game:
 			_beat += delta
 			if _beat >= HEARTBEAT_SECONDS:
@@ -376,16 +427,37 @@ func _process(delta: float) -> void:
 				_heartbeat()
 		return
 	if not GameState.in_game or state == State.UPDATE_REQUIRED:
+		_overlay.hide_overlay()
+		_offline_for = 0.0
 		return
 	# Playing without a connection is not possible: pause and keep trying (item 7).
 	_overlay.show_overlay()
+	_offline_for += delta
+	# The first try comes quickly, so a short drop is over before the big screen shows.
+	var wait: float = 1.0 if _tries == 0 else RETRY_SECONDS
 	if state == State.OFFLINE and not _busy:
 		_retry += delta
-		if _retry >= RETRY_SECONDS:
+		if _retry >= wait:
 			_retry = 0.0
 			_reconnect()
+	var next_in: float = 0.0 if _busy else maxf(0.0, wait - _retry)
+	_overlay.update_view(_tries + 1, next_in, _offline_for)
+
+## "Try now" on the reconnect screen.
+func retry_now() -> void:
+	if state == State.OFFLINE and not _busy:
+		_retry = 0.0
+		_reconnect()
+
+## "To title" on the reconnect screen after a minute without connection.
+func _to_title() -> void:
+	GameState.in_game = false
+	_overlay.hide_overlay()
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/ui/Title.tscn")
 
 func _reconnect() -> void:
+	_tries += 1
 	if await connect_now() == State.ONLINE:
 		await push_dirty()
 

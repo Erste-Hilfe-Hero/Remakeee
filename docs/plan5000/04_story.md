@@ -5,15 +5,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 > **Auftrag für den umsetzenden Thread:** Ziel ist, aus "Mirelas Kartenbuch" eine vollständige Geschichte über drei Akte mit Finale und Postgame zu machen, mit Figuren, die sich wandeln, und Entscheidungen, die etwas bewirken. Betroffen sind data/quests.json, data/dialogue/*.json, ein neuer Ordner data/scenes/, scripts/core/Dialogue.gd, scripts/core/QuestLog.gd, die Dialog-Aktionen in scripts/overworld/Overworld.gd, das Dialogfeld in scripts/ui/ und tools/i18n/de_story.py. Fang mit dem Dialogsystem (Auswahl, Bedingungen) und dem Szenen-Player an, weil fast alle Story-Punkte darauf aufbauen, und schreibe dann die Brücke von Akt I zu Akt II. Neue Karten baut Bereich 3 (dieser Bereich liefert nur die Ortsliste und setzt Figuren, Schilder und Auslöser auf fertige Karten), Endgame-Systeme wie Wiederholungskämpfe oder Turm-Modi gehören in Bereich 8, Porträts, Dialogfeld-Grafik und Epochen-Übergaberituale stehen im Plan DESIGN_EPOCHS.md.
 
 ### Dialogsystem: Auswahl, Bedingungen und Ablauf
-1335. [P1] Dialog-Einträge bekommen ein Feld "choices" mit 2 bis 3 Antworten (Text, optional "flag", "action", "next"), das Dialogfeld zeigt sie als Liste unter der letzten Zeile und wartet auf einen Tipp.
-1336. [P1] Mit "next" springt eine Antwort auf einen anderen Schlüssel derselben Datei, damit kurze Verzweigungen ohne neuen Code möglich sind.
-1337. [P1] "after_flag" wird zusätzlich als Liste erlaubt; Dialogue.lines_for nimmt den letzten Eintrag, dessen Flag gesetzt ist, damit eine Figur über mehrere Kapitel neue Sätze hat.
-1338. [P1] Neues Feld "if" mit Bedingungen (flag, not_flag, has_item, has_species, has_element, party_size_min, chapter_min) entscheidet, ob ein Eintrag oder eine Antwort gezeigt wird.
-1339. [P1] Neue Aktion "set_var <name> <wert>" und "add_var <name> <zahl>" speichert Story-Zahlen (zum Beispiel kestra_trust) in GameState und im Spielstand.
-1340. [P1] Neue Aktion "battle <figur_id>" startet aus einem Dialog heraus einen Kampf auf dem Kampfbildschirm, damit Duelle mitten in einer Szene beginnen können.
-1341. [P1] Neue Aktion "scene <id>" spielt eine Zwischensequenz aus data/scenes/<id>.json ab und kehrt danach in den Dialog oder die Welt zurück.
-1342. [P1] DataValidator prüft jeden "next", jede "scene"-ID, jede Gegenstands-ID in "give_item" und jeden Spirling-Namen in "has_species" und meldet tote Verweise im CI.
-1343. [P1] Der Sprecher wird als eigenes Feld "speaker" geführt statt als "Name:" im Text, und der Name erscheint als Namensschild über dem Dialogfeld.
+1335. [x] [P1] Dialog-Einträge bekommen ein Feld "choices" mit 2 bis 3 Antworten (Text, optional "flag", "action", "next"), das Dialogfeld zeigt sie als Liste unter der letzten Zeile und wartet auf einen Tipp.
+1336. [x] [P1] Mit "next" springt eine Antwort auf einen anderen Schlüssel derselben Datei, damit kurze Verzweigungen ohne neuen Code möglich sind.
+1337. [x] [P1] "after_flag" wird zusätzlich als Liste erlaubt; Dialogue.lines_for nimmt den letzten Eintrag, dessen Flag gesetzt ist, damit eine Figur über mehrere Kapitel neue Sätze hat.
+1338. [x] [P1] Neues Feld "if" mit Bedingungen (flag, not_flag, has_item, has_species, has_element, party_size_min, chapter_min) entscheidet, ob ein Eintrag oder eine Antwort gezeigt wird.
+1339. [x] [P1] Neue Aktion "set_var <name> <wert>" und "add_var <name> <zahl>" speichert Story-Zahlen (zum Beispiel kestra_trust) in GameState und im Spielstand.
+1340. [x] [P1] Neue Aktion "battle <figur_id>" startet aus einem Dialog heraus einen Kampf auf dem Kampfbildschirm, damit Duelle mitten in einer Szene beginnen können.
+1341. [x] [P1] Neue Aktion "scene <id>" spielt eine Zwischensequenz aus data/scenes/<id>.json ab und kehrt danach in den Dialog oder die Welt zurück.
+1342. [x] [P1] DataValidator prüft jeden "next", jede "scene"-ID, jede Gegenstands-ID in "give_item" und jeden Spirling-Namen in "has_species" und meldet tote Verweise im CI.
+1343. [x] [P1] Der Sprecher wird als eigenes Feld "speaker" geführt statt als "Name:" im Text, und der Name erscheint als Namensschild über dem Dialogfeld.
 1344. [P2] Ein Verlauf zeigt die letzten 30 Dialogzeilen, erreichbar über ein Symbol am Dialogfeld, damit verpasste Sätze nachlesbar sind.
 1345. [P2] Textgeschwindigkeit (langsam, normal, sofort) kommt in die Einstellungen und wird im Spielstand gespeichert.
 1346. [P2] Inline-Steuerzeichen im Text: {p} macht 0,4 Sekunden Pause, {slow} und {/slow} verlangsamen die Schrift für ruhige Momente.
@@ -42,14 +42,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1369. [P3] Dialoge mit Auswahl werden in BattleReplay und Spielstand-Export nicht mitgeschrieben, damit keine Story-Spoiler in geteilten Daten landen.
 
 ### Zwischensequenzen
-1370. [P1] Neuer Szenen-Player scripts/overworld/ScenePlayer.gd spielt Schritte aus data/scenes/<id>.json der Reihe nach ab und blockiert dabei die Steuerung.
-1371. [P1] Schritt "say": zeigt Dialogzeilen mit Sprecher, nutzt dieselben Steuerzeichen und Auswahlen wie normale Dialoge.
-1372. [P1] Schritt "move": bewegt eine Figur (NPC oder Spielfigur) Kachel für Kachel über eine Liste von Richtungen, mit PathFinder als Rückfall.
-1373. [P1] Schritt "face" und "emote": dreht Figuren und zeigt Gefühlssymbole, damit Gespräche lebendig wirken.
-1374. [P1] Schritt "fade" (in, out, Farbe, Dauer) und "wait" (Sekunden) für Übergänge.
-1375. [P1] Schritt "spawn" und "despawn" blendet Figuren nur für die Szene ein oder aus, ohne die Kartendatei zu ändern.
-1376. [P1] Ein Knopf "Überspringen" oben rechts springt ans Ende der Szene und führt dabei alle Flag-, Gegenstands- und Kampfschritte trotzdem aus.
-1377. [P1] Jede Szene setzt am Ende ein Flag "scene_<id>_seen", damit sie nur einmal automatisch läuft.
+1370. [x] [P1] Neuer Szenen-Player scripts/overworld/ScenePlayer.gd spielt Schritte aus data/scenes/<id>.json der Reihe nach ab und blockiert dabei die Steuerung.
+1371. [x] [P1] Schritt "say": zeigt Dialogzeilen mit Sprecher, nutzt dieselben Steuerzeichen und Auswahlen wie normale Dialoge.
+1372. [x] [P1] Schritt "move": bewegt eine Figur (NPC oder Spielfigur) Kachel für Kachel über eine Liste von Richtungen, mit PathFinder als Rückfall.
+1373. [x] [P1] Schritt "face" und "emote": dreht Figuren und zeigt Gefühlssymbole, damit Gespräche lebendig wirken.
+1374. [x] [P1] Schritt "fade" (in, out, Farbe, Dauer) und "wait" (Sekunden) für Übergänge.
+1375. [x] [P1] Schritt "spawn" und "despawn" blendet Figuren nur für die Szene ein oder aus, ohne die Kartendatei zu ändern.
+1376. [x] [P1] Ein Knopf "Überspringen" oben rechts springt ans Ende der Szene und führt dabei alle Flag-, Gegenstands- und Kampfschritte trotzdem aus.
+1377. [x] [P1] Jede Szene setzt am Ende ein Flag "scene_<id>_seen", damit sie nur einmal automatisch läuft.
 1378. [P2] Schritt "pan": schiebt die Kamera in ganzen Pixeln zu einer Kachel und zurück, ohne Glättung, passend zum Pixelraster.
 1379. [P2] Schritt "music" wechselt oder stoppt die Musik mit Ausblendung, Schritt "sfx" spielt einen Effekt.
 1380. [P2] Schritt "shake" lässt die Kamera 0,5 Sekunden wackeln, abschaltbar über "Bewegung reduzieren".
@@ -79,15 +79,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1404. [P3] Option "Szenen automatisch abspielen" blättert Zeilen nach 2,5 Sekunden selbst weiter.
 
 ### Akt I: Feinschliff und Brücke zu Akt II
-1405. [P1] Der tote Endpunkt "Chapter 5: Waiting for the Ferry" wird ersetzt: nach mirela_lamp und aldo_dock_told öffnet Aldo die Fähre selbst (Flag ferry_open).
-1406. [P1] Neue Szene act1_finale im Leuchtturm: Aldo holt sein altes Ruder vom Dachboden und sagt, dass er die Fähre ein letztes Mal selbst fährt.
-1407. [P1] Neue Szene ferry_crossing: Aldo rudert die Spielfigur über den See, erzählt in 6 Zeilen von Mirelas erster Überfahrt und zeigt den Riss am Nordhimmel.
-1408. [P1] Das Fährschild in Brindlewick bekommt eine after_flag-Variante: "Crossings resume. Ferryman: Aldo." sobald ferry_open gesetzt ist.
-1409. [P1] Die Lampenkammer-Szene mirela_lamp wird als Szene mit "letter"-Schritten und langsamem Text neu gebaut, statt nur Textzeilen.
-1410. [P1] Die Prologszene bekommt Blitz, Donner, Rissöffnung über dem See und die drei Lichtspirlinge, die der Lampe folgen, als echte Szene.
-1411. [P1] Bevor die Fähre fährt, verlangt die Brücke beide gestopften Rissherzen nicht, damit Akt II nicht an optionalen Kämpfen hängt (nur rifts und mirela_lamp zählen).
-1412. [P1] Kestras Dock-Gespräch kestra_dock bekommt eine Auswahl ("Ich komme mit." / "Ich gehe allein."), die kestra_trust um 1 hebt oder nicht.
-1413. [P1] Kapitelkarten (Schritt "card") werden für Prolog und Kapitel 1 bis 4 nachgerüstet, mit den Titeln aus quests.json.
+1405. [x] [P1] Der tote Endpunkt "Chapter 5: Waiting for the Ferry" wird ersetzt: nach mirela_lamp und aldo_dock_told öffnet Aldo die Fähre selbst (Flag ferry_open).
+1406. [x] [P1] Neue Szene act1_finale im Leuchtturm: Aldo holt sein altes Ruder vom Dachboden und sagt, dass er die Fähre ein letztes Mal selbst fährt.
+1407. [x] [P1] Neue Szene ferry_crossing: Aldo rudert die Spielfigur über den See, erzählt in 6 Zeilen von Mirelas erster Überfahrt und zeigt den Riss am Nordhimmel.
+1408. [x] [P1] Das Fährschild in Brindlewick bekommt eine after_flag-Variante: "Crossings resume. Ferryman: Aldo." sobald ferry_open gesetzt ist.
+1409. [x] [P1] Die Lampenkammer-Szene mirela_lamp wird als Szene mit "letter"-Schritten und langsamem Text neu gebaut, statt nur Textzeilen.
+1410. [x] [P1] Die Prologszene bekommt Blitz, Donner, Rissöffnung über dem See und die drei Lichtspirlinge, die der Lampe folgen, als echte Szene.
+1411. [x] [P1] Bevor die Fähre fährt, verlangt die Brücke beide gestopften Rissherzen nicht, damit Akt II nicht an optionalen Kämpfen hängt (nur rifts und mirela_lamp zählen).
+1412. [x] [P1] Kestras Dock-Gespräch kestra_dock bekommt eine Auswahl ("Ich komme mit." / "Ich gehe allein."), die kestra_trust um 1 hebt oder nicht.
+1413. [x] [P1] Kapitelkarten (Schritt "card") werden für Prolog und Kapitel 1 bis 4 nachgerüstet, mit den Titeln aus quests.json.
 1414. [P2] Warden Orrin bekommt nach dem Mend eine Rückschau: er erzählt, dass er Mirela vor 40 Jahren als Kind im Cinder-Hohlweg gesehen hat.
 1415. [P2] Warden Maelis bekommt nach tide_heart_mended einen Satz über ein Lied, das sie aus dem Riss hört, als Hinweis auf die Echo-Melodie-Lore.
 1416. [P2] Das Kind mit dem stillen Puddlet in Brindlewick bekommt eine after_flag-Variante: nach beiden Rissen ruft sein Puddlet wieder, mit Dank an die Spielfigur.
@@ -111,7 +111,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1434. [P3] Die Szene ferry_crossing kann im Postgame am Steg wiederholt werden, als ruhige Überfahrt ohne Text.
 
 ### Akt II: Die Farben von Corvane
-1435. [P1] Lege in docs/STORY.md eine Ortsliste für Akt II mit festen Karten-IDs an (corvane_landing, madderby, madderby_guild, woadfen, rain_rift, stillwater, mirror_rift, greyreach, wide_rift_edge), damit Bereich 3 die Karten passend baut.
+1435. [x] [P1] Lege in docs/STORY.md eine Ortsliste für Akt II mit festen Karten-IDs an (corvane_landing, madderby, madderby_guild, woadfen, rain_rift, stillwater, mirror_rift, greyreach, wide_rift_edge), damit Bereich 3 die Karten passend baut.
 1436. [P1] quests.json bekommt die Hauptziele von Akt II mit Kapiteln 6 bis 11 und dem Aktnamen "Act II: The Colours of Corvane".
 1437. [P1] Kapitel 6 "The Landing": Ankunft in Corvane Landing, die Stille hat hier nicht nur Stimmen, sondern auch Farben aus den Spirlingen gezogen (Szene corvane_arrival).
 1438. [P1] In Madderby, der Färberstadt, steht das Gildenhaus der Kartografen; Gildenmeisterin Ysolde Rennick nimmt die Spielfigur als Lehrling auf (Flag guild_joined).
@@ -158,7 +158,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1479. [P3] Die Bergbahn nach Ashmere fährt erst nach act2_end; vorher sagt der Bahnwärter einen Satz über Steinschlag.
 
 ### Akt III: Die Platten von Ashmere
-1480. [P1] Lege in docs/STORY.md eine Ortsliste für Akt III mit festen Karten-IDs an (ashmere_station, cinderfold, gravers_hall, kiln_rift, saltglass, glass_rift, wide_rift_far, undrawn_1 bis undrawn_3) für Bereich 3.
+1480. [x] [P1] Lege in docs/STORY.md eine Ortsliste für Akt III mit festen Karten-IDs an (ashmere_station, cinderfold, gravers_hall, kiln_rift, saltglass, glass_rift, wide_rift_far, undrawn_1 bis undrawn_3) für Bereich 3.
 1481. [P1] quests.json bekommt die Hauptziele von Akt III mit Kapiteln 12 bis 17 und dem Aktnamen "Act III: The Plates of Ashmere".
 1482. [P1] Kapitel 12 "Ash and Ink": Ankunft im Aschehochland; in Cinderfold arbeiten Graveure, die Karten in Kupfer stechen, damit sie hundert Jahre halten.
 1483. [P1] Kapitel 13 "Kiln Rift": Warden Tovan hält den Ofenriss halb geschlossen, aber seine Spirlinge sind schon still; Duell und Mend setzen rift_kiln_sealed.
@@ -237,7 +237,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1554. [P3] Kehrt die Spielfigur nach dem Finale an den Rand des Ungezeichneten zurück, liegt dort Mirelas leerer Zeichenstein mit einer neuen Inschrift, die vom gewählten Ende abhängt.
 
 ### Kestra: Gegenstück mit eigenem Weg
-1555. [P1] Kestra bekommt in docs/STORY.md eine Figurenbeschreibung: Kindheit am Krähenkamm, Zephlet "Tatter" kam vor 12 Jahren aus einem kleinen Riss, Ziel ist Verstehen statt Schließen.
+1555. [x] [P1] Kestra bekommt in docs/STORY.md eine Figurenbeschreibung: Kindheit am Krähenkamm, Zephlet "Tatter" kam vor 12 Jahren aus einem kleinen Riss, Ziel ist Verstehen statt Schließen.
 1556. [P1] Eine Zahl kestra_trust (0 bis 6) wird bei sechs festen Momenten in Akt I bis III um 1 erhöht oder nicht, je nach Auswahl der Spielfigur.
 1557. [P1] Kestras Zephlet wird zur Story-Figur "Tatter" mit Spitznamen im Team; Kestras Team wächst pro Akt um ein Mitglied (Akt II 4, Akt III 5 Spirlinge).
 1558. [P1] Kestras zweites Duell findet in Madderby statt (Team: Tempestrel Ring 22, Glimmerax Ring 21, Shalebat Ring 21, Kelpup Ring 20), mit eigenem Vor- und Nachgespräch.
@@ -269,13 +269,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1584. [P3] Kestra fragt die Spielfigur einmal nach ihrem Lieblingsort in Veydal (Auswahl aus 4), und erwähnt die Antwort im Postgame wieder.
 
 ### Aldo und Mirela
-1585. [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
-1586. [P1] Mirela bekommt in docs/STORY.md eine Figurenbeschreibung mit Lebenslauf, Zeichenstil und dem Grund, warum sie 40 Jahre im Ungezeichneten blieb.
+1585. [x] [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
+1586. [x] [P1] Mirela bekommt in docs/STORY.md eine Figurenbeschreibung mit Lebenslauf, Zeichenstil und dem Grund, warum sie 40 Jahre im Ungezeichneten blieb.
 1587. [P1] Die Kartenbuch-Seiten 7 bis 14 erzählen Mirelas Zeit im Ungezeichneten in je 1 bis 2 Sätzen und decken die Lore schrittweise auf.
 1588. [P1] Die Szene, in der Aldo und Mirela sich wiedersehen, hängt vom Ende ab, wird aber in jeder Fassung am Steg in Brindlewick gespielt.
 1589. [P2] Aldo erzählt auf Nachfrage (Auswahl im Leuchtturm) drei Erinnerungen an Mirela, je nach Fortschritt freigeschaltet.
 1590. [P2] Aldos altes Ruder ist ein Story-Gegenstand (aldo_oar), den die Spielfigur zu Beginn von Akt II mitnimmt und im Postgame zurückgibt.
-1591. [P2] Aldo wird beim Rudern in ferry_crossing müde; die Spielfigur kann wählen, ob sie selbst rudert, und Aldo kommentiert das später.
+1591. [x] [P2] Aldo wird beim Rudern in ferry_crossing müde; die Spielfigur kann wählen, ob sie selbst rudert, und Aldo kommentiert das später.
 1592. [P2] Mirelas Briefe an Aldo (Nebenquest letters, 6 Briefe) zeigen ihre Liebe zu ihm und ihre Zweifel, jeweils 2 bis 3 Zeilen.
 1593. [P2] Im Ende "Leave a gate" bleibt Mirela im Ungezeichneten; Aldo bekommt im Postgame einen Brief von ihr pro Woche (Tageswechsel, 8 Briefe).
 1594. [P2] Im Ende "Bring her home" wohnt Mirela im Leuchtturm; sie hat dort einen eigenen Platz am Kartentisch und neue Sätze.
@@ -292,7 +292,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Hüterinnen, Hüter und Nebenfiguren
 1605. [P1] Jede Hüterin und jeder Hüter bekommt eine feste Form: Satz vor dem Erwachen, Satz nach dem Duell, Satz nach dem Mend und einen späteren Satz nach dem Finale.
-1606. [P1] Eine Figurenliste in docs/STORY.md führt alle benannten Figuren mit Ort, Rolle, Team, Flags und Bogen, damit spätere Threads nichts doppeln.
+1606. [x] [P1] Eine Figurenliste in docs/STORY.md führt alle benannten Figuren mit Ort, Rolle, Team, Flags und Bogen, damit spätere Threads nichts doppeln.
 1607. [P1] Veit Harrow bekommt einen klaren Bogen: Verlust seiner Mirkmole Ash an die Stille vor 20 Jahren, Wut auf Risse, Zweifel in Akt III, Versöhnung oder Bruch nach Wahl.
 1608. [P1] Eine Zahl veit_respect (0 bis 3) wird bei drei Momenten in Akt II und III gesetzt und steuert sein Auftreten im Finale und Postgame.
 1609. [P2] Orrin und Maelis tauchen in Akt II als Gäste im Gildenhaus von Madderby auf und erzählen, wie sie ihre Risse seitdem halten.
@@ -372,7 +372,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1679. [P3] Neue Nebenquest bram_ash: Bram aus Crowcrest sucht seine Shalebats im Ascheland, mit einem Wiedersehen in Cinderfold.
 
 ### Entscheidungen mit Folgen
-1680. [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.
+1680. [x] [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.
 1681. [P1] Das Ende "Bring her home" ist immer wählbar: Mirela kommt heim, der Weite Riss schließt sich, Riss-Spirlinge brauchen danach einen Anker-Bund (Story-Text, keine neuen Regeln).
 1682. [P1] Das Ende "Leave a gate" ist immer wählbar: der Weite Riss wird zu einer Pforte mit Mirela als Hüterin, sie bleibt im Ungezeichneten, Kestra ist froh.
 1683. [P1] Das Ende "Two keepers" verlangt veit_respect 3 und alle 14 Seiten: Veit bleibt mit Ash als Hüter im Ungezeichneten, und Mirela kommt heim.
@@ -399,9 +399,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1704. [P3] Ein Erfolg pro Ende wird über Achievements.gd vergeben (drei Erfolge), ohne Belohnung im Spiel.
 
 ### Lore: Risse, Stille und Spirlinge
-1705. [P1] docs/STORY.md bekommt ein Kapitel "Lore" mit den festen Wahrheiten: Spirlinge stammen aus dem Ungezeichneten, Risse entstehen, wo die gezeichnete Welt dünn wird, die Stille ist das Echo verlorener Bünde.
+1705. [x] [P1] docs/STORY.md bekommt ein Kapitel "Lore" mit den festen Wahrheiten: Spirlinge stammen aus dem Ungezeichneten, Risse entstehen, wo die gezeichnete Welt dünn wird, die Stille ist das Echo verlorener Bünde.
 1706. [P1] Jeder Spirlog-Eintrag der 21 Arten bekommt eine zweite Lore-Zeile, die nach dem Bonden der Art lesbar ist und auf Risse oder Regionen Bezug nimmt.
-1707. [P1] Die Lore-Texte werden mit tools/ip_check.sh geprüft und vermeiden jede Nähe zu fremden Ursprungsmythen; eigene Begriffe stehen in einer Glossarliste in docs/STORY.md.
+1707. [x] [P1] Die Lore-Texte werden mit tools/ip_check.sh geprüft und vermeiden jede Nähe zu fremden Ursprungsmythen; eigene Begriffe stehen in einer Glossarliste in docs/STORY.md.
 1708. [P2] Die Echo-Melodie bekommt eine Herkunft: Mirela hat sie im Ungezeichneten gehört und in Veydal als Wiegenlied weitergegeben; die Gilde lehrt sie seitdem.
 1709. [P2] Wardens werden erklärt: Menschen, deren Bund mit Spirlingen stark genug ist, einen Riss zu halten; wird der Bund still, öffnet sich der Riss weiter.
 1710. [P2] Die Gabe-Beschreibungen bleiben spielmechanisch; die Lore steht nur im Spirlog, damit Werte und Geschichte getrennt bleiben.
@@ -448,7 +448,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1749. [P3] Die Wahl der Nachfolge in der Gilde ändert den Titel im Tagebuch und Sätze im Gildenhaus, sonst nichts.
 
 ### Ziele, Tagebuch und Kartenbuch
-1750. [P1] QuestLog unterstützt Akte: Hauptziele bekommen ein Feld "act", das Zielmenü zeigt den Aktnamen über dem Kapitel.
+1750. [x] [P1] QuestLog unterstützt Akte: Hauptziele bekommen ein Feld "act", das Zielmenü zeigt den Aktnamen über dem Kapitel.
 1751. [P1] Das Kartenbuch (Mirelas Seiten) wird ein eigenes Menü mit Seitenliste und gelesenen Seiten, statt nur Textzeilen beim Fund.
 1752. [P1] Nebenquests mit Stufen zeigen den aktuellen Schritttext statt nur den Starttext.
 1753. [P2] Das Tagebuch sammelt Kapitel-Rückblicke (6 Zeilen pro Akt) automatisch, sobald ein Akt endet.
@@ -466,8 +466,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Texte, Übersetzung und Prüfungen
 1765. [P1] Alle neuen Story-Texte stehen auf Englisch in data/dialogue und data/scenes und auf Deutsch in tools/i18n/de_story.py; der Build bricht ab, wenn ein Schlüssel fehlt.
-1766. [P1] Eine Stilregel in docs/STORY.md legt fest: kurze Sätze, höchstens 2 Zeilen pro Textfeld, keine typografischen Anführungszeichen (Pixelschrift), Spielerwörter laut AGENTS.md.
-1767. [P1] tools/ip_check.sh läuft über data/scenes und docs/STORY.md mit, und neue Figuren- und Ortsnamen werden vor dem Merge gegen bekannte Fremdnamen geprüft.
+1766. [x] [P1] Eine Stilregel in docs/STORY.md legt fest: kurze Sätze, höchstens 2 Zeilen pro Textfeld, keine typografischen Anführungszeichen (Pixelschrift), Spielerwörter laut AGENTS.md.
+1767. [x] [P1] tools/ip_check.sh läuft über data/scenes und docs/STORY.md mit, und neue Figuren- und Ortsnamen werden vor dem Merge gegen bekannte Fremdnamen geprüft.
 1768. [P2] Ein Lesbarkeitstest misst jede Dialogzeile gegen die Breite des Dialogfelds (144 Pixel minus Rand) und meldet zu lange Zeilen im CI.
 1769. [P2] Figurennamen bleiben in allen Sprachen gleich; nur Ortsnamen mit Bedeutung (Greyreach, Saltglass) bekommen deutsche Fassungen nach einer festen Liste.
 1770. [P2] Ein Wortzähler pro Akt (tools/story_stats.py) hilft, Akt II und III auf je etwa 9000 englische Wörter zu halten.

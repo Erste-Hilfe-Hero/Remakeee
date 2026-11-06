@@ -27,7 +27,7 @@ ideas list behind this is the "Chimora online: 200 ideas" artifact in the projec
 
 All under Menu, Friends. Spirlings are never traded or gifted, and there is no free text anywhere.
 
-- **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Tamer card,
+- **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Wanderer card,
   friendship level 1-5 (points from gifts, echo help and duels). 100 friends at most. 20 requests per hour.
 - **Lantern Mail:** one gift per friend per day; the item is rolled on the server when it is opened, from the
   open table in `server_config.gift_table` (the game shows the chances). Ten opens per day. Greetings are
@@ -60,10 +60,64 @@ All under Menu, Friends. Spirlings are never traded or gifted, and there is no f
 | Friends, mail, world goal, board | `scripts/ui/FriendsMenu.gd` |
 | Echo teams (snapshot, build, duel copies, board score) | `scripts/online/EchoTeam.gd` |
 | Echo partner and echo duel in the world | `scripts/overworld/Overworld.gd` (`pick_echo_partner`, `echo_duel`) |
+| Battle referee: checks an uploaded battle (shared by server and game) | `scripts/battle/BattleReferee.gd` |
+| Battle referee service (container, loop, runner) | `server/referee/` |
+| End-to-end referee test (local Postgres + Godot) | `tools/online/test_referee.sh` |
+| League menu and league battle | `scripts/ui/LeagueMenu.gd`, `scripts/overworld/Overworld.gd` (`league_battle`) |
+| League rules (fair rows, learnable moves, tiers) and Glicko-2 | `scripts/online/LeagueRules.gd`, `scripts/online/Glicko.gd` |
+| Species and learnsets for the database (`game_species`) | `tools/online/game_data_sql.py` |
 
 Security model: every table has row level security on and no policies, and players have no table rights. The
 game only calls the `security definer` functions, which check `auth.uid()` and every rule themselves.
 New server features add a migration file, a SQL test and the same rule in `LocalBackend`.
+
+### Battle referee
+
+After a battle that counts online (today the echo duel; later leagues, raids and live duels) the game
+calls `battle_submit(kind, ref, replay, claim)`: the replay is the `BattleReplay` snapshot (seed, both
+teams, every input) and the claim is what the game says came out (winner, Vigor left of every Spirling
+on both sides, rounds). `_referee_check` puts the battle data, without the account, into
+`battle_queue`. The `referee` container (`server/referee/run.sh`) takes up to 20 queued battles every
+2 seconds, plays them again with the game's own battle code (`BattleReferee.check`, Godot 4.7.2
+headless) and writes `ok`, `mismatch` or `error` into `battle_results`; a trigger copies the verdict to
+`battles.status` and removes the queue row. `battle_status(id)` shows a player the state of their own
+battle (`pending` = "being checked"), and `_battle_ok(id)` is what leagues, raids and weekly scores ask
+before anything counts.
+
+The referee logs in as the database user `chimora_referee` (password `REFEREE_DB_PASSWORD` in
+`server/.env`, made by `setup.sh`). It may only read `battle_queue` and read or insert into
+`battle_results`; PostgREST cannot switch to it, and its container has no port. `setup.sh` builds it from
+the repository root (`server/referee/Dockerfile`, compose profile `referee`), so the game project must
+sit next to `server/` (`/opt/chimora/project.godot`); otherwise it says so and the rest runs as before.
+Look at it with `docker compose --profile referee logs referee`. The limit per player is
+`server_config.battle_submit_limit` (60 an hour).
+
+### Leagues
+
+There are two leagues with separate tables: `league_fair_entries` (the fair league, the default) and
+`league_open_entries` (the open league, every advantage allowed). `league_join(league, pick)` takes only
+species names and move choices; the server rebuilds the team from the stored team (`_league_team`). In the
+fair league every Spirling fights at `league_fair_ring` (50) with base stats only (no spark, even temper)
+and only moves it can learn by Ring 50, its own or from earlier forms, checked against `game_species`.
+`game_species` is filled from `data/spirlings.json` by `tools/online/game_data_sql.py` (`setup.sh` does it
+when `../data` exists). The open league keeps the real team and Ring. The joined team is frozen as its
+own row, so a later save change does not touch it.
+
+`league_find(league, waited)` looks for an opponent within 100 rating points, widening by 50 every
+10 seconds up to 400 (`league_search_*`); blocked players never meet. The server picks the seed and both
+teams (the opponent is an echo played by the AI) and stores them in `league_matches`. `battle_submit`
+for `league_fair` / `league_open` ignores the client's teams and seed and lets the referee replay the
+server's battle with the uploaded inputs. Only an `ok` from the referee rates the player (Glicko-2 in
+`_league_rate`, start 1500 / 350 / 0.06); players see tiers (Spark, Ember, Flame, Glow, Beacon, each I to
+III), not numbers. A season (`league_seasons`) lasts `league_season_days` (42); in the last
+`league_closing_minutes` (30) nothing is rated, `paused` stops joining, and the next season starts by itself.
+Both leagues can be switched off with the flags `league_fair` and `league_open`.
+
+In the game, Menu > Leagues (`scripts/ui/LeagueMenu.gd`) shows the fair league first and the open league
+right below it. `hello` returns `flags`, the feature keys that are on for the game's version, and menus
+hide what is off (`Online.flag_on`). "Find a battle" asks `league_find` every 3 seconds for up to a
+minute; `Overworld.league_battle` builds the battle from the server's seed and teams
+(`BattleReferee.from_expect`), uploads it with `battle_submit` and tells the player it is being checked.
 
 Builds without a server address use `LocalBackend`, a test server that lives on the phone. The account menu
 then says "test server on this phone". The debug APK from CI works like this until the secrets below exist.
@@ -147,20 +201,28 @@ In the database (see "Looking into the database"), table `server_config`, for ex
 | --- | --- | --- |
 | `min_version` | `1004` | builds with a lower version code must update |
 | `motd` | `"Maintenance today 3-4 am"` | notice on the title screen (`""` = none) |
+| `party_max` | `5` | most Spirlings in a saved team and an echo team |
+| `level_max` | `60` | highest Ring in saves and echo teams |
+| `duel_ring` | `50` | Ring everyone fights at in an echo duel |
+| `save_schema_max` | `1` | newest online save format the server takes (`Online.SAVE_SCHEMA`) |
 
 Also `gift_table`, `gift_open_limit`, `friend_limit`, `goal_rotation` (list of `{"kind", "target"}`;
 kinds `battles`, `bonds`, `rests`), `goal_rewards` (four item ids) and `goal_user_cap`.
 
-Table `banned_words`: words a Tamer name may not contain.
+Table `banned_words`: words a Wanderer name may not contain.
+
+Table `feature_flags` (key, `enabled`, `min_version`): switches the new online parts on one by one,
+for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
+`league_open`, `live_duel`, `trade`, `bund`, `raid`. All start switched off.
 
 ## Reports (Ali, about once a week)
 
 Table `reports` lists open reports (`handled = false`). To reset a name, run in the database:
 
 ```sql
-update public.profiles set name = 'Tamer ' || right(code, 4) where id = '<target>';
+update public.profiles set name = 'Wanderer ' || right(code, 4) where id = '<target>';
 update public.reports set handled = true where target = '<target>';
 ```
 
 The DSA asks for a short reason to the player. Until there is an in-game notice, answer by email if they
-write in, for example: "Your Tamer name was reset because it broke the rules in section 4 of the terms."
+write in, for example: "Your Wanderer name was reset because it broke the rules in section 4 of the terms."

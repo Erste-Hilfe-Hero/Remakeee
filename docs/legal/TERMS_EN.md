@@ -21,7 +21,7 @@ Last updated: November 2026
    and will tell you why. You can object at aa.amuri@icloud.com.
    **Friends and greetings:** friends are added with a friend code. Greetings are fixed phrases from a list;
    free text is not possible. Spirlings cannot be traded or gifted. You can block anyone and report them in
-   the game (Friend, Report). We review reports and reset unsuitable names to "Tamer" with a number. Parents
+   the game (Friend, Report). We review reports and reset unsuitable names to "Wanderer" with a number. Parents
    can switch off friends, greetings and gifts under Settings, Account.
 5. **Availability and changes.** We aim for high availability but cannot guarantee uninterrupted service.
    We provide the updates needed to keep the game in conformity, especially security updates. We may change

@@ -8,7 +8,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 890. [x] [P1] Füge in TilesetFactory.gd die neuen Kachelzeichen "w" (seichtes Wasser zum Waten), "B" (schiebbarer Felsblock), "P" (Druckplatte), "k" (rissiger Boden), "v" (Rankenwand zum Klettern) und "Y" (Brückenbrett-Stelle) hinzu und dokumentiere sie in der Legende von MapData.gd.
 891. [x] [P1] Erweitere MapData.gd um ein Feld "secrets" (Liste aus x, y, Gegenstand, Flag), damit versteckte Funde nicht mehr als Schilder mit hide_flag gebaut werden müssen.
 892. [x] [P1] Erweitere MapData.gd um ein Feld "floors" (Liste von Zeilenblöcken je Ebene), damit eine Höhle oder ein Dungeon mehrere Stockwerke in einer Datei hat.
-893. [P1] Ergänze WorldValidator.gd so, dass er jede Druckplatte, jeden Felsblock und jede Brückenbrett-Stelle auf Erreichbarkeit prüft und Rätsel ohne Lösung als Fehler meldet.
+893. [x] [P1] Ergänze WorldValidator.gd so, dass er jede Druckplatte, jeden Felsblock und jede Brückenbrett-Stelle auf Erreichbarkeit prüft und Rätsel ohne Lösung als Fehler meldet.
 894. [x] [P1] Ergänze WorldValidator.gd um eine Prüfung, dass jede Karte mit wilden Spirlings ein Tabellen-Eintrag in data/encounters.json besitzt und umgekehrt keine Tabelle verwaist ist.
 895. [x] [P1] Teile tools/art/build_world.py in je eine Datei pro Kartengruppe (tools/art/world/veydal_core.py, veydal_wilds.py, veydal_caves.py, corvane.py), damit mehrere Leute parallel Karten bauen können.
 896. [x] [P1] Lege data/world_layout.json an, das jede Karte mit Position (Rasterfeld) und Nachbarn für die Weltkarte beschreibt, und lass den Validator prüfen, dass jede Warp-Verbindung dort als Kante steht.
@@ -135,9 +135,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1009. [P1] Baue den Dungeon "Brackwater Sluice" (de: Brackschleuse) in Brackwater Fen, sechs Räume, in denen drei Schleusen den Wasserstand in Stufen hoch und runter stellen.
 1010. [P1] Baue den Dungeon "Lanternwell" (de: Laternenbrunnen) unter dem Leuchtturm von Brindlewick, fünf Räume mit Spiegeln, die einen Lichtstrahl auf Ziel-Kristalle lenken.
 1011. [P1] Baue den Dungeon "Shatterfloor Mine" (de: Splitterboden-Mine) unter Copperfold, zwei Stockwerke, in denen rissiger Boden "k" nach einmaligem Betreten einbricht und ins untere Stockwerk führt.
-1012. [P1] Setze das Schieben von Felsblöcken "B" um: Spieler drückt gegen den Block, der Block rutscht eine Kachel, wenn dahinter frei ist, mit Rückgängig-Knopf pro Raum.
-1013. [P1] Setze Druckplatten "P" um, die gedrückt bleiben, solange ein Block oder der Spieler darauf steht, und eine Tür über open_flag steuern.
-1014. [P1] Gib jedem Rätselraum einen "Raum zurücksetzen" Eintrag im Menü, der Blöcke und Schalter auf den Anfang stellt.
+1012. [x] [P1] Setze das Schieben von Felsblöcken "B" um: Spieler drückt gegen den Block, der Block rutscht eine Kachel, wenn dahinter frei ist, mit Rückgängig-Knopf pro Raum.
+1013. [x] [P1] Setze Druckplatten "P" um, die gedrückt bleiben, solange ein Block oder der Spieler darauf steht, und eine Tür über open_flag steuern.
+1014. [x] [P1] Gib jedem Rätselraum einen "Raum zurücksetzen" Eintrag im Menü, der Blöcke und Schalter auf den Anfang stellt.
 1015. [P2] Gib Bellstone Ruins im letzten Raum ein Glockenrätsel mit fünf Glocken, dessen Reihenfolge auf drei Wandbildern in früheren Räumen verteilt ist.
 1016. [P2] Lass falsch geläutete Glocken in Bellstone Ruins nur die Reihe zurücksetzen und keinen Kampf auslösen.
 1017. [P2] Baue in Brackwater Sluice einen Raum, in dem bei hohem Wasser Kisten schwimmen und als Trittsteine dienen.
@@ -169,13 +169,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1043. [P3] Lege eine Online-Bestzeit pro Dungeon und Woche in die Rangliste, über die bestehende Ranglisten-Schnittstelle.
 
 ### Wanderer-Ausrüstung zu Fuß
-1044. [P1] Füge die Ausrüstung "Wading Boots" (de: Watstiefel) hinzu, die Gehen auf seichtem Wasser "w" erlaubt, mit gear: true in data/items.json.
-1045. [P1] Füge die Ausrüstung "Pry Bar" (de: Hebelstange) hinzu, mit der man Schleusenräder dreht, Loren schiebt und Gitter anhebt.
-1046. [P1] Füge die Ausrüstung "Rope Ladder" (de: Strickleiter) hinzu, die man an markierten Kanten festmacht, um in Schächte hinab zu klettern, und die dort dauerhaft hängen bleibt.
-1047. [P1] Füge die Ausrüstung "Plank Bundle" (de: Bretterbündel) hinzu, mit der man an Stellen "Y" ein Brett über eine Lücke legt, dauerhaft gespeichert.
-1048. [P1] Ergänze tests/unit/test_gear.gd so, dass keine Ausrüstung den Spieler über Wasser oder Lücken ohne Bodenkontakt bewegt und keine Animation "fly", "glide" oder "ride" heißt.
-1049. [P1] Ändere die Animation des Enterhakens in Overworld.gd so, dass die Figur sich Hand über Hand an einem gespannten Seil entlang zieht, die Füße am Seil, nie frei in der Luft.
-1050. [P1] Gib jeder Ausrüstung im Rucksack eine Seite mit Bild, Kurztext und den Kachelzeichen, an denen sie wirkt.
+1044. [x] [P1] Füge die Ausrüstung "Wading Boots" (de: Watstiefel) hinzu, die Gehen auf seichtem Wasser "w" erlaubt, mit gear: true in data/items.json.
+1045. [x] [P1] Füge die Ausrüstung "Pry Bar" (de: Hebelstange) hinzu, mit der man Schleusenräder dreht, Loren schiebt und Gitter anhebt.
+1046. [x] [P1] Füge die Ausrüstung "Rope Ladder" (de: Strickleiter) hinzu, die man an markierten Kanten festmacht, um in Schächte hinab zu klettern, und die dort dauerhaft hängen bleibt.
+1047. [x] [P1] Füge die Ausrüstung "Plank Bundle" (de: Bretterbündel) hinzu, mit der man an Stellen "Y" ein Brett über eine Lücke legt, dauerhaft gespeichert.
+1048. [x] [P1] Ergänze tests/unit/test_gear.gd so, dass keine Ausrüstung den Spieler über Wasser oder Lücken ohne Bodenkontakt bewegt und keine Animation "fly", "glide" oder "ride" heißt.
+1049. [x] [P1] Ändere die Animation des Enterhakens in Overworld.gd so, dass die Figur sich Hand über Hand an einem gespannten Seil entlang zieht, die Füße am Seil, nie frei in der Luft.
+1050. [x] [P1] Gib jeder Ausrüstung im Rucksack eine Seite mit Bild, Kurztext und den Kachelzeichen, an denen sie wirkt.
 1051. [P2] Füge die Ausrüstung "Rubbing Charcoal" (de: Pausstift) hinzu, mit der man verwitterte Steintafeln durchpaust und versteckte Inschriften als Hinweis lesbar macht.
 1052. [P2] Füge die Ausrüstung "Survey Glass" (de: Peilglas) hinzu, die beim Ansehen in eine Richtung bis 6 Kacheln entfernte Funde als Punkt auf der Minikarte zeigt.
 1053. [P2] Gib dem Peilglas eine Abklingzeit von 20 Sekunden, damit es kein Dauer-Radar wird.
@@ -205,10 +205,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1077. [P3] Ergänze LEGAL.md um die neue Ausrüstungsliste mit dem Satz, dass keine davon Fliegen, Gleiten oder Reiten erlaubt.
 
 ### Geheimnisse und versteckte Gegenstände
-1078. [P1] Verteile auf jeder bestehenden und neuen Außenkarte 3 bis 5 versteckte Funde über das neue Feld "secrets", sichtbar nur als leichtes Glitzern alle 4 Sekunden.
-1079. [P1] Zeige pro Karte im Kartenbuch "Funde x/y", damit Spieler wissen, ob noch etwas fehlt.
+1078. [x] [P1] Verteile auf jeder bestehenden und neuen Außenkarte 3 bis 5 versteckte Funde über das neue Feld "secrets", sichtbar nur als leichtes Glitzern alle 4 Sekunden.
+1079. [x] [P1] Zeige pro Karte im Kartenbuch "Funde x/y", damit Spieler wissen, ob noch etwas fehlt.
 1080. [x] [P1] Lass versteckte Funde nur Gegenstände aus data/items.json geben, keine Echtgeld-Währung.
-1081. [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
+1081. [x] [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
 1082. [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
 1083. [x] [P1] Ergänze WorldValidator.gd so, dass jeder Fund erreichbar ist und keine zwei Funde dieselbe Flag teilen.
 1084. [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
@@ -238,13 +238,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 
 ### Begegnungstabellen
 1108. [P1] Lege Tabellen in data/encounters.json für jede neue Route, Höhle und jeden Dungeon an, mit Ringbereich passend zur Kartenreihenfolge.
-1109. [P1] Erweitere das Format jeder Tabelle um "ground" je Eintrag (fern, reeds, scree, water, cave), damit Farn, Schilf und Geröll auf derselben Karte verschiedene Spirlings haben.
-1110. [P1] Setze die Grundrate für Routen auf 0.12, für Moore und Höhlen auf 0.10 und für Dungeons auf 0.06.
-1111. [P1] Ergänze EncounterTable.gd um eine Schutzzeit von 6 Schritten nach jedem Kampf, in der keine neue Begegnung kommt.
+1109. [x] [P1] Erweitere das Format jeder Tabelle um "ground" je Eintrag (fern, reeds, scree, water, cave), damit Farn, Schilf und Geröll auf derselben Karte verschiedene Spirlings haben.
+1110. [x] [P1] Setze die Grundrate für Routen auf 0.12, für Moore und Höhlen auf 0.10 und für Dungeons auf 0.06.
+1111. [x] [P1] Ergänze EncounterTable.gd um eine Schutzzeit von 6 Schritten nach jedem Kampf, in der keine neue Begegnung kommt.
 1112. [P1] Verteile die 21 bestehenden Spirlings so, dass jede Grundform auf mindestens zwei Karten vorkommt und jede Entfaltungsstufe nur auf späten Karten selten wild auftritt.
 1113. [P1] Setze Riptail, Thornback und Smoldrake als seltene Einträge (Gewicht 5) auf Brackwater Fen, Gloamwood und Kindle Vents.
-1114. [P1] Ergänze WorldValidator.gd um eine Prüfung, dass in jeder Tabelle die Gewichte zusammen mindestens 50 ergeben und kein Ringbereich die Kartenreihenfolge um mehr als 4 Ringe überspringt.
-1115. [P1] Zeige im Spirlog-Tracker pro Karte zusätzlich, auf welchem Grund (Farn, Schilf, Geröll, Wasser, Höhle) eine Art vorkommt.
+1114. [x] [P1] Ergänze WorldValidator.gd um eine Prüfung, dass in jeder Tabelle die Gewichte zusammen mindestens 50 ergeben und kein Ringbereich die Kartenreihenfolge um mehr als 4 Ringe überspringt.
+1115. [x] [P1] Zeige im Spirlog-Tracker pro Karte zusätzlich, auf welchem Grund (Farn, Schilf, Geröll, Wasser, Höhle) eine Art vorkommt.
 1116. [P2] Füge "water" Begegnungen für seichtes Wasser "w" hinzu, die man nur mit Watstiefeln erreicht.
 1117. [P2] Gib jeder Tabelle eine Spalte "weather" (z. B. rain: Tide und Bloom x1.5), die mit dem Wettersystem verrechnet wird.
 1118. [P2] Gib jeder Karte eine feste "Leitart", die 40 Prozent der Begegnungen stellt, damit jeder Ort einen klaren Charakter hat.
@@ -463,7 +463,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 
 ### Tests, Validierung und Zugänglichkeit
 1317. [P1] Ergänze tests/unit/test_map_checks.gd so, dass jede neue Karte geladen, ihr Rätsel per Testlösung gelöst und jeder Ausgang erreicht wird.
-1318. [P1] Lege für jedes Rätsel eine Lösungsfolge in tests/fixtures/puzzles/<map>.json an, die der Test abspielt.
+1318. [x] [P1] Lege für jedes Rätsel eine Lösungsfolge in tests/fixtures/puzzles/<map>.json an, die der Test abspielt.
 1319. [P1] Prüfe in CI mit tools/ip_check.sh alle neuen Orts- und Kartennamen gegen die Sperrliste.
 1320. [P2] Ergänze einen Test, dass jede Ausrüstung nur auf ihren Kachelzeichen wirkt und auf allen anderen nichts tut.
 1321. [P2] Ergänze einen Test, dass jede Karte über Fuß, Fähre oder Kutsche vom Start erreichbar ist, ohne Debug-Schalter.

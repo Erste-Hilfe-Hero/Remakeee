@@ -602,15 +602,15 @@
    "ready": false
   },
   {
-   "product_id": "de.chimora.game.consumable.storage_50",
-   "offer": "rg_storage_50",
+   "product_id": "de.chimora.game.unlock.storage_box",
+   "offer": "rg_storage_box",
    "apple_type": "CONSUMABLE",
    "google_type": "onetime",
    "eur": "2.99",
-   "name_en": "Storage +50",
-   "name_de": "Lager +50",
-   "desc_en": "50 more places in the storage, up to 600.",
-   "desc_de": "50 Plätze mehr im Lager, bis höchstens 600.",
+   "name_en": "Storage Box +1",
+   "name_de": "Lager-Fach +1",
+   "desc_en": "One more storage box with 30 places. At most 12 extra boxes.",
+   "desc_de": "Ein Lager-Fach mehr mit 30 Plätzen. Höchstens 12 zusätzliche Fächer.",
    "ready": false
   },
   {

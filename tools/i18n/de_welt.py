@@ -1,0 +1,50 @@
+# German texts for area 3 (world, maps, exploring). Merged into data/i18n/de.json by tools/i18n/build.py.
+# Kept apart from de_world.py so the world thread can add maps without clashing with story edits.
+T = {
+# Gear (data/items.json)
+"Wading Boots": "Watstiefel",
+"Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.": "Wanderer-Ausrüstung. Hohe Lederstiefel: Schritt für Schritt durch seichtes Wasser waten.",
+"The water here is shallow, but too cold for bare feet. Wading boots would do.": "Das Wasser ist hier seicht, aber zu kalt für nackte Füße. Watstiefel wären gut.",
+"Pry Bar": "Hebelstange",
+"Wayfarer Gear. Face a sluice wheel, a mine cart or a grate and press A to turn, shove or lift it.": "Wanderer-Ausrüstung. Stell dich vor ein Schleusenrad, eine Lore oder ein Gitter und drück A, um es zu drehen, zu schieben oder anzuheben.",
+"It won't budge by hand. A pry bar would give you the leverage.": "Mit bloßen Händen rührt sich das nicht. Mit einer Hebelstange hättest du die Kraft.",
+"Rope Ladder": "Strickleiter",
+"Wayfarer Gear. Face a marked edge over a shaft and press A to tie it on. It stays there, and you climb down rung by rung.": "Wanderer-Ausrüstung. Stell dich an eine markierte Kante über einem Schacht und drück A, um sie festzuknoten. Sie bleibt dort, und du kletterst Sprosse für Sprosse hinab.",
+"A chalk mark on the edge of a shaft. A rope ladder could be tied on here.": "Ein Kreidezeichen am Rand eines Schachts. Hier ließe sich eine Strickleiter festknoten.",
+"Plank Bundle": "Bretterbündel",
+"Wayfarer Gear. Face a gap with a chalk mark and press A to lay a plank over it. The plank stays.": "Wanderer-Ausrüstung. Stell dich vor eine Lücke mit Kreidezeichen und drück A, um ein Brett darüberzulegen. Das Brett bleibt liegen.",
+"A narrow gap with a chalk mark. A plank would bridge it.": "Eine schmale Lücke mit Kreidezeichen. Ein Brett würde sie überbrücken.",
+# Gear page in the satchel
+"Works on: %s": "Wirkt bei: %s",
+"Always on foot: you walk, wade and climb yourself.": "Immer zu Fuß: du gehst, watest und kletterst selbst.",
+"narrow water with a post on the far side": "schmalem Wasser mit Pfosten am anderen Ufer",
+"low cliffs": "niedrigen Klippen",
+"vine walls (v)": "Rankenwänden (v)",
+"shallow water (w)": "seichtem Wasser (w)",
+"gaps with a chalk mark (Y)": "Lücken mit Kreidezeichen (Y)",
+"pitch-dark passages": "stockdunklen Gängen",
+"sluice wheels, mine carts and grates": "Schleusenrädern, Loren und Gittern",
+"marked edges above a shaft": "markierten Kanten über einem Schacht",
+# Puzzle rooms
+"Room": "Raum",
+"Puzzle room": "Rätselraum",
+"Undo last push": "Letztes Schieben zurück",
+"Reset room": "Raum zurücksetzen",
+"Put every boulder back where it started?": "Alle Felsblöcke an ihren Anfang zurückstellen?",
+"It has already been moved.": "Das ist schon bewegt.",
+"It won't budge.": "Das rührt sich nicht.",
+"You set the %s and lean on it. Something gives with a groan!": "Du setzt die %s an und stemmst dich dagegen. Mit einem Ächzen gibt etwas nach!",
+"The floor gave way! You land on the level below, unhurt.": "Der Boden ist eingebrochen! Du landest unverletzt auf der Ebene darunter.",
+"You tie the rope ladder to the edge. It will stay here.": "Du knotest die Strickleiter an der Kante fest. Sie bleibt hier hängen.",
+"You lay a plank over the gap. It holds.": "Du legst ein Brett über die Lücke. Es hält.",
+}
+T.update({
+# Hidden finds and the Spirlog Tracker
+"Something glints here...": "Hier glitzert etwas...",
+"Hidden finds here: %d/%d": "Versteckte Funde hier: %d/%d",
+"ferns": "Farn",
+"reeds": "Schilf",
+"scree": "Geröll",
+"shallow water": "seichtes Wasser",
+"cave": "Höhle",
+})

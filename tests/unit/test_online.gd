@@ -182,7 +182,7 @@ func test_saves_from_before_the_server_are_uploaded() -> void:
 
 func test_server_refuses_impossible_saves() -> void:
 	await Online.connect_now()
-	var bad: Dictionary = {"party": [{"level": 250}], "money": 1}
+	var bad: Dictionary = {"schema": 1, "party": [{"level": 250}], "money": 1}
 	var r: Dictionary = (await _server.call_fn("save_put", {"p_slot": 1, "p_data": bad, "p_summary": "", "p_base_rev": 0})).data
 	assert_eq(r.error, "implausible")
 	assert_false(LocalBackend.save_ok({"money": -1}))
@@ -197,9 +197,9 @@ func test_server_clock_drives_the_date() -> void:
 
 func test_names_are_cleaned_like_on_the_server() -> void:
 	assert_eq(LocalBackend.clean_name("  Mara  ", "ABCDEFGH"), "Mara")
-	assert_eq(LocalBackend.clean_name("B1tch", "ABCDEFGH"), "Tamer EFGH")
-	assert_eq(LocalBackend.clean_name("<script>", "ABCDEFGH"), "Tamer EFGH")
-	assert_eq(LocalBackend.clean_name("Averyveryverylongname", "ABCDEFGH"), "Tamer EFGH")
+	assert_eq(LocalBackend.clean_name("B1tch", "ABCDEFGH"), "Wanderer EFGH")
+	assert_eq(LocalBackend.clean_name("<script>", "ABCDEFGH"), "Wanderer EFGH")
+	assert_eq(LocalBackend.clean_name("Averyveryverylongname", "ABCDEFGH"), "Wanderer EFGH")
 	assert_eq(LocalBackend.clean_name("Jörg", "ABCDEFGH"), "Jörg")
 	# The banned word list is the same as in the migration.
 	var sql: String = FileAccess.get_file_as_string("res://supabase/migrations/20261101000001_online_core.sql")
@@ -233,6 +233,8 @@ func test_losing_the_connection_while_playing_pauses_and_recovers() -> void:
 	GameState.in_game = true
 	_server.offline = true
 	await Online.call_fn("presence", {"p_place": "x"})
+	# Drops shorter than 3 s only show a small mark (plan item 2150).
+	Online._offline_for = ReconnectOverlay.SHORT_DROP
 	await wait_process_frames(2)
 	assert_true(Online._overlay.visible, "reconnect screen shows")
 	assert_true(get_tree().paused)

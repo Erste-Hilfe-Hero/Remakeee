@@ -14,6 +14,7 @@ static func validate() -> PackedStringArray:
 	check_reachability(errors, map_ids)
 	check_encounter_tables(errors, map_ids)
 	check_secrets(errors, map_ids)
+	check_puzzles(errors, map_ids)
 	check_layout(errors, map_ids, load_layout())
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
@@ -62,6 +63,22 @@ static func validate() -> PackedStringArray:
 			for sp: String in EncounterTable.species_on(m.encounter_table):
 				if Database.species(sp) == null:
 					errors.append("encounter table '%s': unknown species '%s'" % [m.encounter_table, sp])
+	errors.append_array(check_rarity_weights())
+	return errors
+
+## Plan area 1, item 132: encounter weights follow the kind's rarity band
+## (SpirlingData.WEIGHT_BANDS); ancient kinds never spawn at random (DataValidator).
+static func check_rarity_weights() -> PackedStringArray:
+	var errors: PackedStringArray = []
+	for id: String in EncounterTable.table_ids():
+		for sp: Variant in EncounterTable.table(id).get("spawns", []):
+			var sd: SpirlingData = Database.species(str((sp as Dictionary).get("species", "")))
+			if sd == null or not SpirlingData.WEIGHT_BANDS.has(sd.rarity):
+				continue
+			var band: Vector2i = SpirlingData.WEIGHT_BANDS[sd.rarity]
+			var w: int = int((sp as Dictionary).get("weight", 0))
+			if w < band.x or w > band.y:
+				errors.append("encounter table '%s': %s weight %d outside %s band %d-%d" % [id, sd.species_name, w, sd.rarity, band.x, band.y])
 	return errors
 
 ## Encounter tables (area 3 item 894): every map with ferns, reeds or scree that rolls wild
@@ -87,6 +104,49 @@ static func check_encounter_tables(errors: PackedStringArray, map_ids: PackedStr
 			continue
 		if not used.has(t):
 			errors.append("encounter table '%s' is not used by any map" % t)
+	check_table_balance(errors, map_ids)
+
+## Base rate per kind of place (area 3 item 1110). Rift hollows keep their own rate.
+const RATES: Dictionary[String, float] = {"route": 0.12, "marsh": 0.10, "cave": 0.10, "dungeon": 0.06}
+## Largest jump in ring between two tables next to each other in level order (item 1114).
+const MAX_RING_JUMP: int = 4
+const MIN_TABLE_WEIGHT: int = 50
+
+## Encounter balance (items 1109, 1110, 1114): grounds are known names, weights add up to at
+## least 50, the base rate fits the kind of place, and sorted by their lowest ring no table
+## jumps more than 4 rings past the one before it.
+static func check_table_balance(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var places: Dictionary = load_layout().get("maps", {})
+	var kind_of: Dictionary = {}
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null or m.encounter_table.is_empty():
+			continue
+		var place: String = layout_place(places, id)
+		kind_of[m.encounter_table] = str((places.get(place, {}) as Dictionary).get("kind", ""))
+	var mins: Array = []
+	for t: String in EncounterTable.table_ids():
+		if t.begins_with("_"):
+			continue
+		var total: int = 0
+		var low: int = 999
+		for sp: Dictionary in EncounterTable.table(t).get("spawns", []):
+			total += int(sp.get("weight", 1))
+			low = mini(low, int(sp.get("min", 2)))
+			for g: String in EncounterTable.grounds_of(sp):
+				if not g in EncounterTable.GROUND_NAMES:
+					errors.append("encounter table '%s': unknown ground '%s'" % [t, g])
+		if total < MIN_TABLE_WEIGHT:
+			errors.append("encounter table '%s': weights add up to %d, need at least %d" % [t, total, MIN_TABLE_WEIGHT])
+		var kind: String = str(kind_of.get(t, ""))
+		if RATES.has(kind) and not is_equal_approx(EncounterTable.rate(t), RATES[kind]):
+			errors.append("encounter table '%s': rate %.2f, a %s uses %.2f" % [t, EncounterTable.rate(t), kind, RATES[kind]])
+		if low < 999:
+			mins.append([low, t])
+	mins.sort()
+	for i: int in range(1, mins.size()):
+		if int(mins[i][0]) - int(mins[i - 1][0]) > MAX_RING_JUMP:
+			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][1], mins[i][0], MAX_RING_JUMP, mins[i - 1][1], mins[i - 1][0]])
 
 ## Hidden finds (area 3 items 1080, 1083): each one is reachable, gives a real item from
 ## data/items.json and has a flag no other find uses.
@@ -107,6 +167,12 @@ static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray)
 				errors.append("map '%s': hidden find flag '%s' is also used on '%s'" % [id, flag, flags[flag]])
 			else:
 				flags[flag] = id
+			if sc.has("dialogue"):
+				var entry: Dictionary = Dialogue.get_entry(str(sc.dialogue))
+				if entry.is_empty():
+					errors.append("map '%s': hidden find at %s has unknown dialogue '%s'" % [id, at, sc.dialogue])
+				elif str(entry.get("flag", "")) != flag:
+					errors.append("map '%s': hidden find at %s sets flag '%s' but its dialogue sets '%s'" % [id, at, flag, entry.get("flag", "")])
 			if Database.item(str(sc.get("item", ""))).is_empty():
 				errors.append("map '%s': hidden find at %s gives unknown item '%s'" % [id, at, sc.get("item", "")])
 			if int(sc.get("count", 1)) < 1:
@@ -119,6 +185,84 @@ static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray)
 				near = near or reach.has(at + d)
 			if not near:
 				errors.append("map '%s': hidden find at %s cannot be reached" % [id, at])
+
+## Puzzles (area 3 item 893): every plate, boulder and plank gap can be reached, every ladder
+## leads to a walkable cell, a map with cracked floor has a floor below, and every boulder
+## puzzle has a solution (PuzzleSolver) from the first cell the player arrives on.
+static func check_puzzles(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var entries: Dictionary = entry_cells(map_ids)
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		var starts: Array = entries.get(id, [])
+		var boulders: Array[Vector2i] = PuzzleRoom.start_boulders(m)
+		var cracked: bool = false
+		var gaps: Array[Vector2i] = []
+		for y: int in m.height:
+			for x: int in m.rows[y].length():
+				var k: int = m.kind_at(Vector2i(x, y))
+				cracked = cracked or k == TilesetFactory.Kind.CRACKED
+				if k == TilesetFactory.Kind.PLANK and m.ladder_at(Vector2i(x, y)).is_empty():
+					gaps.append(Vector2i(x, y))
+		if m.puzzles.is_empty() and boulders.is_empty() and not cracked and gaps.is_empty() and m.ladders.is_empty():
+			continue
+		var reach: Dictionary = reachable_cells(m, starts)
+		var near: Callable = func(c: Vector2i) -> bool:
+			if reach.has(c):
+				return true
+			for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+				if reach.has(c + d):
+					return true
+			return false
+		for b: Vector2i in boulders:
+			if not near.call(b):
+				errors.append("map '%s': boulder at %s cannot be reached" % [id, b])
+		for g: Vector2i in gaps:
+			if not near.call(g):
+				errors.append("map '%s': plank gap at %s cannot be reached" % [id, g])
+		if cracked and (m.drop_to.is_empty() or not MapData.exists(m.drop_to)):
+			errors.append("map '%s': has cracked floor but no floor below (drop_to)" % id)
+		elif cracked:
+			var below: MapData = MapData.load_map(m.drop_to)
+			for y: int in m.height:
+				for x: int in m.rows[y].length():
+					if m.kind_at(Vector2i(x, y)) == TilesetFactory.Kind.CRACKED and not below.is_walkable(Vector2i(x, y)):
+						errors.append("map '%s': cracked floor at %d,%d drops onto a blocked cell of '%s'" % [id, x, y, m.drop_to])
+		for l: Dictionary in m.ladders:
+			var at := Vector2i(int(l.x), int(l.y))
+			if not near.call(at):
+				errors.append("map '%s': ladder anchor at %s cannot be reached" % [id, at])
+			var to: String = str(l.get("to", ""))
+			if not MapData.exists(to) or not MapData.load_map(to).is_walkable(Vector2i(int(l.get("tx", -1)), int(l.get("ty", -1)))):
+				errors.append("map '%s': ladder at %s leads nowhere ('%s')" % [id, at, to])
+		for pz: Dictionary in m.puzzles:
+			var pid: String = str(pz.get("id", "?"))
+			if str(pz.get("flag", "")).is_empty():
+				errors.append("map '%s': puzzle '%s' has no flag" % [id, pid])
+			var plates: Array[Vector2i] = PuzzleRoom.plates(m, pz)
+			if plates.is_empty():
+				errors.append("map '%s': puzzle '%s' has no pressure plates" % [id, pid])
+				continue
+			if plates.size() > boulders.size():
+				errors.append("map '%s': puzzle '%s' has more plates than boulders" % [id, pid])
+				continue
+			for p: Vector2i in plates:
+				if m.base_char(p) != "P":
+					errors.append("map '%s': puzzle '%s' plate %s is not a 'P' tile" % [id, pid, p])
+				elif not reach.has(p):
+					errors.append("map '%s': puzzle '%s' plate %s cannot be reached" % [id, pid, p])
+			if starts.is_empty():
+				continue
+			# Other doors open (earlier rooms solved), this puzzle's own door shut.
+			var fresh: MapData = MapData.load_map(id)
+			var open: Dictionary = {}
+			for b: Dictionary in fresh.blocks:
+				open[str(b.get("open_flag", ""))] = true
+			open.erase(str(pz.get("flag", "")))
+			fresh.apply_blocks(open)
+			if PuzzleSolver.solve(fresh, pz, starts[0]) == null:
+				errors.append("map '%s': puzzle '%s' has no solution" % [id, pid])
 
 ## Cells the player can arrive on for each map: warp targets plus the new-game start.
 static func entry_cells(map_ids: PackedStringArray, start_map: String = "lighthouse", start_cell: Vector2i = Vector2i(4, 4)) -> Dictionary:
@@ -293,7 +437,7 @@ static func reachable_cells(m: MapData, starts: Array) -> Dictionary:
 		# All gear owned and every puzzle solved: wading water, vines and plank gaps are
 		# crossable and boulders can be pushed aside (PuzzleSolver checks the puzzles themselves).
 		var k: int = m.kind_at(c)
-		var open_kind: bool = m.in_bounds(c) and (TilesetFactory.GEAR_KINDS.has(k) or k == TilesetFactory.Kind.BOULDER)
+		var open_kind: bool = m.in_bounds(c) and (TilesetFactory.GEAR_KINDS.has(k) or k == TilesetFactory.Kind.BOULDER or k == TilesetFactory.Kind.PLANK)
 		return (m.is_walkable(c) or open_kind or m.gear_needed_at(c) != "") and not npc_cells.has(c)
 	var jumps: Dictionary = {}
 	for g: Dictionary in m.gear_spots:

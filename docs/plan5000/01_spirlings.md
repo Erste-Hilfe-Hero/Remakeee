@@ -8,14 +8,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 > Nicht in diesen Bereich gehören Kampfregeln, neue Gaben-Effekte und die Balance von Techniken (Bereich 2), der Shop und alles, was Geld kostet (Bereich 10), sowie Grafik-Epochen-Technik und Online-Funktionen; Spirlings werden nie getauscht oder verkauft.
 
 ### Datenmodell und Werkzeuge
-1. [P1] Ergänze in data/spirlings.json die Felder "rarity", "region", "role", "origin" und "line_id" für alle Arten und lies sie in SpirlingData.gd als typisierte Exporte ein.
-2. [P1] Erweitere DataValidator.gd so, dass jede Art ein gültiges "rarity" (common, uncommon, shy, ancient), eine bekannte "region" (veydal, corvane, ashmere, solenne) und eine nicht leere "origin"-Zeile hat.
-3. [P1] Ersetze das einzelne "evolves_to" durch eine Liste "unfold" mit Einträgen {"to", "rule", "value"}, damit eine Art mehrere Entfalten-Wege haben kann, und halte "evolves_to" beim Laden als Rückfall lesbar.
-4. [P1] Hebe SAVE_VERSION in SaveManager.gd auf 4 und schreibe eine Migration, die bei jedem gespeicherten Spirling die neuen Felder "temper", "variant", "origin_map", "met_ring", "met_day" und "lineage" mit Standardwerten füllt.
-5. [P1] Speichere das Temperament ab Speicherstand 4 fest im Spirling ("temper": id) statt es nur aus der uid zu lesen, und übernimm bei der Migration den bisher aus der uid berechneten Wert, damit sich kein altes Temperament ändert.
-6. [P1] Lege tests/unit/test_spirling_data.gd an, das für jede Art prüft: Summe der Grundwerte im Rahmen ihrer Seltenheit, gültige Elemente, gültige Gabe, Lerntabelle nur mit Techniken aus moves.json.
-7. [P1] Erweitere GameState.spirlog von {"seen", "bonded"} auf {"seen", "bonded", "first_map", "first_day", "variants", "prism_seen", "tempers"} mit Migration der alten Einträge.
-8. [P1] Füge im Validator eine Prüfung hinzu, dass jede Art in mindestens einer Begegnungstabelle, einer Geschichtsszene, einem Nachhall oder einem Entfalten-Weg erreichbar ist.
+1. [x] [P1] Ergänze in data/spirlings.json die Felder "rarity", "region", "role", "origin" und "line_id" für alle Arten und lies sie in SpirlingData.gd als typisierte Exporte ein.
+2. [x] [P1] Erweitere DataValidator.gd so, dass jede Art ein gültiges "rarity" (common, uncommon, shy, ancient), eine bekannte "region" (veydal, corvane, ashmere, solenne) und eine nicht leere "origin"-Zeile hat.
+3. [x] [P1] Ersetze das einzelne "evolves_to" durch eine Liste "unfold" mit Einträgen {"to", "rule", "value"}, damit eine Art mehrere Entfalten-Wege haben kann, und halte "evolves_to" beim Laden als Rückfall lesbar.
+4. [x] [P1] Hebe SAVE_VERSION in SaveManager.gd auf 4 und schreibe eine Migration, die bei jedem gespeicherten Spirling die neuen Felder "temper", "variant", "origin_map", "met_ring", "met_day" und "lineage" mit Standardwerten füllt.
+5. [x] [P1] Speichere das Temperament ab Speicherstand 4 fest im Spirling ("temper": id) statt es nur aus der uid zu lesen, und übernimm bei der Migration den bisher aus der uid berechneten Wert, damit sich kein altes Temperament ändert.
+6. [x] [P1] Lege tests/unit/test_spirling_data.gd an, das für jede Art prüft: Summe der Grundwerte im Rahmen ihrer Seltenheit, gültige Elemente, gültige Gabe, Lerntabelle nur mit Techniken aus moves.json.
+7. [x] [P1] Erweitere GameState.spirlog von {"seen", "bonded"} auf {"seen", "bonded", "first_map", "first_day", "variants", "prism_seen", "tempers"} mit Migration der alten Einträge.
+8. [x] [P1] Füge im Validator eine Prüfung hinzu, dass jede Art in mindestens einer Begegnungstabelle, einer Geschichtsszene, einem Nachhall oder einem Entfalten-Weg erreichbar ist.
 9. [P2] Schreibe tools/data/spirling_sheet.py, das aus spirlings.json eine Übersicht als CSV erzeugt (Nummer, Name, Elemente, Rolle, Seltenheit, Region, Gabe, Wertesumme) für Ali zum Durchsehen.
 10. [P2] Ergänze tools/art/gen_spirlings.py um einen Platzhalter-Modus, der für jede neue Art ohne Grafik ein farbiges 56x56-Rechteck mit Element-Glyphe erzeugt und im Asset-Log vermerkt.
 11. [P2] Lege eine Datei data/lines.json an, die jede Entfalten-Linie als Gruppe beschreibt (line_id, Stufen, Thema), damit Spirlog und Lager Linien zusammen zeigen können.
@@ -35,18 +35,18 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 25. [P3] Ergänze BalanceSim.gd um einen Modus, der nur neue Arten gegeneinander antreten lässt und die Siegquote pro Rolle ausgibt.
 
 ### Neue Spirlings in Veydal
-26. [P1] Füge die Linie Blotling (Tide/Umbra, Rolle weaver) und Scrivane hinzu: ein Tintenklecks, der in Mirelas alten Tintenfässern im Leuchtturm lebt und Karten nachzeichnet, die er nie gesehen hat.
-27. [P1] Füge die Linie Hushkin (Umbra, Rolle bulwark) und Silentra hinzu: ein Spirling, der aus der Stille selbst entstand, keinen Ruf hat und sich nur durch leuchtende Zeichen verständigt.
-28. [P1] Füge die Linie Paddlewisp (Tide/Gale, Rolle striker) und Ferrowyn hinzu: ein Wirbel, der unter Aldos Fähre wohnt und Boote bei Sturm sanft zum Steg schiebt.
-29. [P1] Füge die dreistufige Linie Talusk, Talusgard und Cairnhold (Stone, Rolle bulwark) hinzu: ein Haufen Geröll mit einem Auge aus Krähenkamm, der mit jeder Stufe einen Wegstein mehr auf sich stapelt.
-30. [P1] Füge die Linie Fluting (Gale/Bloom, Rolle kindler) und Marshfife hinzu: ein hohles Schilfrohr aus der Salzmarsch, das den Wind als Melodie spielt und Wanderer heimführt.
-31. [P1] Füge Glasstarn (Tide/Lumen, ohne Entfalten, Seltenheit shy) hinzu: ein stilles Stück Bergsee am Krähenkamm, das den Himmel spiegelt und nur bei Windstille erscheint.
-32. [P1] Füge Lanternel (Lumen/Gale, ohne Entfalten, Seltenheit uncommon) hinzu: ein kleines Lampenwesen, das den Lichtern des Leuchtturms folgt und seit dem ersten Sturm in Brindlewick bleibt.
-33. [P1] Füge die Linie Seamlet (Volt/Umbra, Rolle weaver) und Mendlace hinzu: ein Funke, der am Rand der Risse lebt und versucht, sie mit Lichtfäden zuzunähen.
-34. [P1] Füge die Linie Croziel (Bloom, Rolle kindler) und Frondmere hinzu: ein eingerollter Farnwedel aus der Farnstiege, dessen Entfalten im Spiel wörtlich als Aufrollen gezeigt wird.
-35. [P1] Füge die Linie Brinelet (Tide/Stone, Rolle vanguard) und Saltspire hinzu: ein Salzkristall aus den Pfannen der Salzmarsch, der in trockenen Sommern zu einer Säule wächst.
-36. [P1] Verteile die zehn neuen Veydal-Linien so auf die Karten, dass Farnstiege, Krähenkamm, Salzmarsch, Dornengrat und Murk Hollow je mindestens zwei neue Arten bekommen, und trage sie in data/encounters.json ein.
-37. [P1] Stelle sicher, dass mit den neuen Arten jedes der 8 Elemente in Veydal von mindestens 4 Arten getragen wird, und prüfe das in test_content.gd.
+26. [x] [P1] Füge die Linie Blotling (Tide/Umbra, Rolle weaver) und Scrivane hinzu: ein Tintenklecks, der in Mirelas alten Tintenfässern im Leuchtturm lebt und Karten nachzeichnet, die er nie gesehen hat.
+27. [x] [P1] Füge die Linie Hushkin (Umbra, Rolle bulwark) und Silentra hinzu: ein Spirling, der aus der Stille selbst entstand, keinen Ruf hat und sich nur durch leuchtende Zeichen verständigt.
+28. [x] [P1] Füge die Linie Paddlewisp (Tide/Gale, Rolle striker) und Ferrowyn hinzu: ein Wirbel, der unter Aldos Fähre wohnt und Boote bei Sturm sanft zum Steg schiebt.
+29. [x] [P1] Füge die dreistufige Linie Talusk, Talusgard und Cairnhold (Stone, Rolle bulwark) hinzu: ein Haufen Geröll mit einem Auge aus Krähenkamm, der mit jeder Stufe einen Wegstein mehr auf sich stapelt.
+30. [x] [P1] Füge die Linie Fluting (Gale/Bloom, Rolle kindler) und Marshfife hinzu: ein hohles Schilfrohr aus der Salzmarsch, das den Wind als Melodie spielt und Wanderer heimführt.
+31. [x] [P1] Füge Glasstarn (Tide/Lumen, ohne Entfalten, Seltenheit shy) hinzu: ein stilles Stück Bergsee am Krähenkamm, das den Himmel spiegelt und nur bei Windstille erscheint.
+32. [x] [P1] Füge Lanternel (Lumen/Gale, ohne Entfalten, Seltenheit uncommon) hinzu: ein kleines Lampenwesen, das den Lichtern des Leuchtturms folgt und seit dem ersten Sturm in Brindlewick bleibt.
+33. [x] [P1] Füge die Linie Seamlet (Volt/Umbra, Rolle weaver) und Mendlace hinzu: ein Funke, der am Rand der Risse lebt und versucht, sie mit Lichtfäden zuzunähen.
+34. [x] [P1] Füge die Linie Croziel (Bloom, Rolle kindler) und Frondmere hinzu: ein eingerollter Farnwedel aus der Farnstiege, dessen Entfalten im Spiel wörtlich als Aufrollen gezeigt wird.
+35. [x] [P1] Füge die Linie Brinelet (Tide/Stone, Rolle vanguard) und Saltspire hinzu: ein Salzkristall aus den Pfannen der Salzmarsch, der in trockenen Sommern zu einer Säule wächst.
+36. [x] [P1] Verteile die zehn neuen Veydal-Linien so auf die Karten, dass Farnstiege, Krähenkamm, Salzmarsch, Dornengrat und Murk Hollow je mindestens zwei neue Arten bekommen, und trage sie in data/encounters.json ein.
+37. [x] [P1] Stelle sicher, dass mit den neuen Arten jedes der 8 Elemente in Veydal von mindestens 4 Arten getragen wird, und prüfe das in test_content.gd.
 38. [P2] Platziere Blotling nicht in einer Begegnungstabelle, sondern als Geschichtsfund im Leuchtturm, der erscheint, sobald das Kartenbuch drei Seiten hat.
 39. [P2] Lass Hushkin nur in den Riss-Kratern vor dem Flicken erscheinen und nach dem Flicken gar nicht mehr, außer nachts am geflickten Riss mit Gewicht 5.
 40. [P2] Lass Paddlewisp nur auf Steg-Feldern (+) in Brindlewick und an der Fähre erscheinen, mit eigener Begegnungstabelle "ferry_pier" und Rate 0,08.
@@ -75,7 +75,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 61. [P1] Lege für Corvane (Era II, Flussdelta mit Mühlen und Regen) acht Linien fest und trage sie mit "region": "corvane" und Platzhalter-Sprites in die Daten ein, auch wenn die Region noch nicht spielbar ist.
 62. [P1] Lege für Ashmere (Era III, Aschemoor mit Glashütten und Kupferstichen) sechs Linien fest und trage sie mit "region": "ashmere" und Platzhalter-Sprites ein.
 63. [P1] Lege für Solenne (Era IV, sonnige Hochebene mit Sternwarten und Salzseen) sechs Linien fest und trage sie mit "region": "solenne" und Platzhalter-Sprites ein.
-64. [P1] Blende Arten aus noch nicht spielbaren Regionen im Spirlog und in Sammelzielen aus (Filter über GameState-Flag region_open_<id>), damit die Zahl "alle Arten" erreichbar bleibt.
+64. [x] [P1] Blende Arten aus noch nicht spielbaren Regionen im Spirlog und in Sammelzielen aus (Filter über GameState-Flag region_open_<id>), damit die Zahl "alle Arten" erreichbar bleibt.
 65. [P2] Corvane: Füge die Linie Drizzlet (Tide, Rolle striker) und Pluvane hinzu, ein Regentropfen, der nie den Boden berührt und in den Dachrinnen der Mühlenstadt wohnt.
 66. [P2] Corvane: Füge die Linie Millgrit (Stone/Gale, Rolle bulwark) und Grindsail hinzu, ein Sandkorn aus den Mahlsteinen, das mit den Windmühlenflügeln wächst.
 67. [P2] Corvane: Füge die dreistufige Linie Pigmentil, Chromaree und Washveil hinzu (Bloom/Lumen, Rolle weaver), ein Farbfleck, dessen Farben ineinander verlaufen wie Aquarell.
@@ -113,13 +113,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 99. [P3] Plane in docs/SPIRLINGS.md für jede neue Region einen Platz für zwei spätere Arten frei, ohne sie schon festzulegen.
 
 ### Entfalten-Linien
-100. [P1] Setze die neue Regel "rule": "ring" für alle bisherigen Ring-Entfaltungen um und prüfe, dass alle 21 bestehenden Arten genau wie vorher entfalten können.
-101. [P1] Füge die Entfalten-Regel "map_pages" hinzu (Kartenbuch hat mindestens N Seiten) und nutze sie für Blotling zu Scrivane bei 6 Seiten.
-102. [P1] Füge die Entfalten-Regel "mended" hinzu (bestimmter Riss geflickt) und nutze sie für Seamlet zu Mendlace nach dem Flicken des Ascheriss oder Flutriss, je nachdem, wo er gebondet wurde.
-103. [P1] Füge die Entfalten-Regel "time" hinzu (Tageszeit aus DayCycle an einem Ort) und nutze sie für Fluting zu Marshfife in der Dämmerung in der Salzmarsch.
-104. [P1] Füge die Entfalten-Regel "echo_streak" hinzu (N vollständig richtige Echo-Rufe, während der Spirling im Team ist) und nutze sie für Hushkin zu Silentra bei 10.
-105. [P1] Zeige im Team-Menü bei "Entfalten" für jede Regel einen klaren Hinweistext ("Braucht: Dämmerung in der Salzmarsch"), sobald die Art gebondet ist.
-106. [P1] Erweitere can_unfurl() in Spirling.gd auf die neue "unfold"-Liste und decke jede Regel mit einem eigenen Test in tests/unit/test_unfold.gd ab.
+100. [x] [P1] Setze die neue Regel "rule": "ring" für alle bisherigen Ring-Entfaltungen um und prüfe, dass alle 21 bestehenden Arten genau wie vorher entfalten können.
+101. [x] [P1] Füge die Entfalten-Regel "map_pages" hinzu (Kartenbuch hat mindestens N Seiten) und nutze sie für Blotling zu Scrivane bei 6 Seiten.
+102. [x] [P1] Füge die Entfalten-Regel "mended" hinzu (bestimmter Riss geflickt) und nutze sie für Seamlet zu Mendlace nach dem Flicken des Ascheriss oder Flutriss, je nachdem, wo er gebondet wurde.
+103. [x] [P1] Füge die Entfalten-Regel "time" hinzu (Tageszeit aus DayCycle an einem Ort) und nutze sie für Fluting zu Marshfife in der Dämmerung in der Salzmarsch.
+104. [x] [P1] Füge die Entfalten-Regel "echo_streak" hinzu (N vollständig richtige Echo-Rufe, während der Spirling im Team ist) und nutze sie für Hushkin zu Silentra bei 10.
+105. [x] [P1] Zeige im Team-Menü bei "Entfalten" für jede Regel einen klaren Hinweistext ("Braucht: Dämmerung in der Salzmarsch"), sobald die Art gebondet ist.
+106. [x] [P1] Erweitere can_unfurl() in Spirling.gd auf die neue "unfold"-Liste und decke jede Regel mit einem eigenen Test in tests/unit/test_unfold.gd ab.
 107. [P2] Füge die Entfalten-Regel "keepsake_at" hinzu (Andenken tragen an einem bestimmten Ort) und nutze sie für Brinelet zu Saltspire mit dem Andenken Tide Shell in der Salzmarsch.
 108. [P2] Füge die Entfalten-Regel "steps" hinzu (neu betretene Felder seit dem Bonden) und nutze sie für Paddlewisp zu Ferrowyn bei 800 Feldern.
 109. [P2] Füge die Entfalten-Regel "spring" hinzu (an einer Quelle rasten) und nutze sie für Croziel zu Frondmere ab Ring 16 beim Rasten an einer Quelle.
@@ -145,10 +145,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 129. [P3] Plane für Akt II die Regel "rift_echo", bei der eine Art nur in der Nähe des dritten Risses im Norden entfaltet, und vermerke sie in docs/SPIRLINGS.md.
 
 ### Seltenheitsstufen
-130. [P1] Lege vier Seltenheitsstufen fest (common, uncommon, shy, ancient) und ordne jede der 21 bestehenden und aller neuen Arten genau einer zu.
-131. [P1] Binde die Seltenheit an Spannen für bond_rate: common 0,45 bis 0,55, uncommon 0,25 bis 0,35, shy 0,08 bis 0,15, ancient 0,03 bis 0,05, geprüft im Validator.
-132. [P1] Binde die Seltenheit an Gewichtsspannen in data/encounters.json: common 25 bis 45, uncommon 10 bis 24, shy 2 bis 9, und prüfe das in WorldValidator.gd.
-133. [P1] Lass ancient-Arten nie in Zufallstabellen auftauchen, nur als feste Begegnungen, und prüfe das im Validator.
+130. [x] [P1] Lege vier Seltenheitsstufen fest (common, uncommon, shy, ancient) und ordne jede der 21 bestehenden und aller neuen Arten genau einer zu.
+131. [x] [P1] Binde die Seltenheit an Spannen für bond_rate: common 0,45 bis 0,55, uncommon 0,25 bis 0,35, shy 0,08 bis 0,15, ancient 0,03 bis 0,05, geprüft im Validator.
+132. [x] [P1] Binde die Seltenheit an Gewichtsspannen in data/encounters.json: common 25 bis 45, uncommon 10 bis 24, shy 2 bis 9, und prüfe das in WorldValidator.gd.
+133. [x] [P1] Lass ancient-Arten nie in Zufallstabellen auftauchen, nur als feste Begegnungen, und prüfe das im Validator.
 134. [P2] Lass shy-Arten nur dann erscheinen, wenn eine Ortsbedingung erfüllt ist (Tageszeit, Wetter oder geflickter Riss), mit dem Feld "when" pro Spawn-Eintrag.
 135. [P2] Gib shy-Arten beim Auftauchen eine eigene Einleitung im Kampf ("Etwas zögert im Schilf ..."), ohne Zahl oder Chancenhinweis.
 136. [P2] Lass shy-Arten im Kampf nach drei Runden ohne Bondversuch zurück in ihren Grund gehen, mit dem bestehenden Rückzug-Ereignis.
@@ -266,15 +266,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 242. [P3] Plane pro neuer Region höchstens 5 Prägungen, damit eigene Regionsarten im Vordergrund stehen.
 
 ### Spirlog
-243. [P1] Gestalte das Spirlog als Seiten des Kartenbuchs: eine Seite pro Art mit Sprite, Elementen, Größe, Lebensraum, Lore und Herkunft, im Hochformat 144x256 lesbar.
-244. [P1] Zeige auf jeder Spirlog-Seite die Fundkarte: die Karten, auf denen die Art schon gesehen wurde, als Liste mit Grund-Symbol (Farn, Schilf, Geröll).
-245. [P1] Lass "seen" schon beim Anblick im Kampf setzen und "bonded" beim Bonden, und zeige ungesehene Arten nur als Umriss mit Nummer.
-246. [P1] Spiele auf jeder gesehenen Spirlog-Seite den Ruf der Art über Cry.gd ab, mit einem Tipp auf das Sprite.
-247. [P1] Zeige auf der Spirlog-Seite die ganze Entfalten-Linie als Reihe kleiner Sprites, mit Tipp zum Springen.
-248. [P1] Teile das Spirlog in Kapitel nach Region und blende Kapitel unbekannter Regionen aus.
-249. [P1] Füge eine Suche nach Name und Filter nach Element, Rolle und "gebondet / nur gesehen / fehlt" hinzu.
-250. [P1] Lass die Lore-Absätze nach und nach aufgehen: erster Satz bei gesehen, zweiter bei gebondet, dritter nach 10 Kämpfen mit einem Spirling dieser Art im Team.
-251. [P1] Zeige oben im Spirlog den Fortschritt pro Kapitel ("Veydal: 31 gesehen, 18 gebondet") statt nur der Gesamtzahl.
+243. [x] [P1] Gestalte das Spirlog als Seiten des Kartenbuchs: eine Seite pro Art mit Sprite, Elementen, Größe, Lebensraum, Lore und Herkunft, im Hochformat 144x256 lesbar.
+244. [x] [P1] Zeige auf jeder Spirlog-Seite die Fundkarte: die Karten, auf denen die Art schon gesehen wurde, als Liste mit Grund-Symbol (Farn, Schilf, Geröll).
+245. [x] [P1] Lass "seen" schon beim Anblick im Kampf setzen und "bonded" beim Bonden, und zeige ungesehene Arten nur als Umriss mit Nummer.
+246. [x] [P1] Spiele auf jeder gesehenen Spirlog-Seite den Ruf der Art über Cry.gd ab, mit einem Tipp auf das Sprite.
+247. [x] [P1] Zeige auf der Spirlog-Seite die ganze Entfalten-Linie als Reihe kleiner Sprites, mit Tipp zum Springen.
+248. [x] [P1] Teile das Spirlog in Kapitel nach Region und blende Kapitel unbekannter Regionen aus.
+249. [x] [P1] Füge eine Suche nach Name und Filter nach Element, Rolle und "gebondet / nur gesehen / fehlt" hinzu.
+250. [x] [P1] Lass die Lore-Absätze nach und nach aufgehen: erster Satz bei gesehen, zweiter bei gebondet, dritter nach 10 Kämpfen mit einem Spirling dieser Art im Team.
+251. [x] [P1] Zeige oben im Spirlog den Fortschritt pro Kapitel ("Veydal: 31 gesehen, 18 gebondet") statt nur der Gesamtzahl.
 252. [P2] Speichere pro Art den ersten Fundort und den ersten Fundtag und zeige sie als Feldnotiz ("Zuerst gesehen: Farnstiege, Tag 3").
 253. [P2] Zeige auf der Seite, welche Temperamente der Spieler bei dieser Art schon gebondet hat, als sechs kleine Zeichen.
 254. [P2] Zeige ein Prisma-Zeichen auf der Seite, wenn eine Prisma-Form gesehen wurde, und die Prisma-Farbe, wenn eine gebondet wurde.
@@ -303,15 +303,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 277. [P3] Erlaube die Sortierung des Spirlogs nach Fundtag, um die eigene Reise nachzulesen.
 
 ### Echo-Melodie-Bonden
-278. [P1] Gib jeder Art ein festes Ruf-Motiv (die ersten zwei Zeichen ihres Rufs stehen in "cry_motif"), damit Wiedersehen mit einer Art sich vertraut anfühlt, und lass BondEcho.make_sequence() es nutzen.
-279. [P1] Spiele zu jedem Zeichen einen Ton, dessen Höhe vom Element des wilden Spirlings abhängt (acht Tonleitern in Sound.gd), sodass jedes Element anders klingt.
-280. [P1] Lass gestillte Spirlings in Rissnähe einen gedämpften Ruf mit nur drei Zeichen und blasseren Lichtern rufen, passend zur Stille im Lore.
-281. [P1] Lass Spirlings bei geflickten Rissen einen vollen Ruf mit vier Zeichen und einem leuchtenden Rahmen rufen, als sichtbaren Lohn fürs Flicken.
-282. [P1] Zeige nach dem Ruf nur ein Ergebnis in Worten ("Es hört dir zu", "Es zögert", "Es wendet sich ab"), nie eine Zahl, und halte das in test_bond_echo.gd fest.
-283. [P1] Lass einen zweiten Bondversuch im selben Kampf mit demselben Ruf beginnen, damit Lernen belohnt wird statt Glück.
-284. [P1] Füge die Antwort-Phase hinzu: nach einem fehlerfreien Echo ruft der Spirling manchmal ein fünftes Zeichen ("Nachklang"), dessen richtiges Echo den Ruf-Wert auf 1,0 hält, auch wenn das Zeichen eigentlich zusätzlich ist.
-285. [P1] Lass die Ruf-Länge mit der Seltenheit wachsen: common 4, uncommon 4, shy 5, ancient 5 plus zweite Phase, als Werte in BondEcho.gd.
-286. [P1] Ersetze die drei Zeichen Raute, Quadrat und Dreieck bei Lumen und Umbra durch Mond, Stern und Funke als eigene Form, ohne die Regeln zu ändern.
+278. [x] [P1] Gib jeder Art ein festes Ruf-Motiv (die ersten zwei Zeichen ihres Rufs stehen in "cry_motif"), damit Wiedersehen mit einer Art sich vertraut anfühlt, und lass BondEcho.make_sequence() es nutzen.
+279. [x] [P1] Spiele zu jedem Zeichen einen Ton, dessen Höhe vom Element des wilden Spirlings abhängt (acht Tonleitern in Sound.gd), sodass jedes Element anders klingt.
+280. [x] [P1] Lass gestillte Spirlings in Rissnähe einen gedämpften Ruf mit nur drei Zeichen und blasseren Lichtern rufen, passend zur Stille im Lore.
+281. [x] [P1] Lass Spirlings bei geflickten Rissen einen vollen Ruf mit vier Zeichen und einem leuchtenden Rahmen rufen, als sichtbaren Lohn fürs Flicken.
+282. [x] [P1] Zeige nach dem Ruf nur ein Ergebnis in Worten ("Es hört dir zu", "Es zögert", "Es wendet sich ab"), nie eine Zahl, und halte das in test_bond_echo.gd fest.
+283. [x] [P1] Lass einen zweiten Bondversuch im selben Kampf mit demselben Ruf beginnen, damit Lernen belohnt wird statt Glück.
+284. [x] [P1] Füge die Antwort-Phase hinzu: nach einem fehlerfreien Echo ruft der Spirling manchmal ein fünftes Zeichen ("Nachklang"), dessen richtiges Echo den Ruf-Wert auf 1,0 hält, auch wenn das Zeichen eigentlich zusätzlich ist.
+285. [x] [P1] Lass die Ruf-Länge mit der Seltenheit wachsen: common 4, uncommon 4, shy 5, ancient 5 plus zweite Phase, als Werte in BondEcho.gd.
+286. [x] [P1] Ersetze die drei Zeichen Raute, Quadrat und Dreieck bei Lumen und Umbra durch Mond, Stern und Funke als eigene Form, ohne die Regeln zu ändern.
 287. [P2] Lass die Echozeit ECHO_TIME in der Schwierigkeit Story auf 8 Sekunden steigen und in Rift-Born auf 5 Sekunden sinken.
 288. [P2] Gib dem Spirling im Team, das dieselbe Art wie der wilde Spirling ist, eine Hilfe: das erste Zeichen leuchtet beim Echo kurz nach.
 289. [P2] Lass einen Spirling, der ein Bonden abgelehnt hat und wieder auftaucht, beim nächsten Treffen sagen lassen "Es erinnert sich an deinen Ruf", und beginne mit demselben Motiv.
@@ -340,9 +340,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 312. [P3] Lass Bond-Ergebnis-Wörter je nach Art leicht anders klingen ("Es plätschert zustimmend" bei Tide).
 
 ### Temperament
-313. [P1] Erweitere das Temperament auf zehn Werte mit vier neuen (Curious, Shy, Proud, Gentle), die keinen Wert stärken, sondern nur Verhalten und Texte färben, und speichere sie ab Speicherstand 4.
-314. [P1] Zeige das Temperament auf der Lagerkarte und im Team-Menü mit dem bestehenden Satz ("Moves a little quicker.") und dem deutschen Gegenstück.
-315. [P1] Lass wilde Spirlings ihr Temperament bis zum Bonden verbergen und zeige es danach einmal als Meldung ("Es wirkt neugierig").
+313. [x] [P1] Erweitere das Temperament auf zehn Werte mit vier neuen (Curious, Shy, Proud, Gentle), die keinen Wert stärken, sondern nur Verhalten und Texte färben, und speichere sie ab Speicherstand 4.
+314. [x] [P1] Zeige das Temperament auf der Lagerkarte und im Team-Menü mit dem bestehenden Satz ("Moves a little quicker.") und dem deutschen Gegenstück.
+315. [x] [P1] Lass wilde Spirlings ihr Temperament bis zum Bonden verbergen und zeige es danach einmal als Meldung ("Es wirkt neugierig").
 316. [P2] Lass Curious-Spirlings beim Echo das Motiv manchmal vertauschen, Shy-Spirlings leiser rufen, Proud-Spirlings ein Zeichen länger halten, Gentle-Spirlings langsamer rufen.
 317. [P2] Gib jedem Temperament ein eigenes kleines Leerlauf-Verhalten im Team-Menü (Hüpfen, Wackeln, Ruhe, Ducken).
 318. [P2] Lass Dorfbewohner an zwei Orten das Temperament des ersten Spirlings im Team kommentieren.
@@ -362,10 +362,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 332. [P3] Prüfe mit BalanceSim, dass die neuen vier Temperamente keine Kampfwerte ändern.
 
 ### Gaben
-333. [P1] Ordne jeder neuen Art genau eine Gabe aus BattleRules.TRAITS zu und trage sie in spirlings.json ein, sodass keine Gabe mehr als 6 Linien hat.
-334. [P1] Lass jede Gabe-Zuordnung zur Herkunft passen (Brinelet "slick", Talusk "thick_hide", Fluting "light_sleeper") und begründe jede in docs/SPIRLINGS.md mit einem Satz.
-335. [P1] Liste in docs/SPIRLINGS.md die Arten auf, die auf neue Gaben aus Bereich 2 warten, mit Platzhalter "steady" bis die Gabe existiert.
-336. [P1] Prüfe im Validator, dass jede Art eine Gabe hat, die in BattleRules.TRAITS existiert.
+333. [x] [P1] Ordne jeder neuen Art genau eine Gabe aus BattleRules.TRAITS zu und trage sie in spirlings.json ein, sodass keine Gabe mehr als 6 Linien hat.
+334. [x] [P1] Lass jede Gabe-Zuordnung zur Herkunft passen (Brinelet "slick", Talusk "thick_hide", Fluting "light_sleeper") und begründe jede in docs/SPIRLINGS.md mit einem Satz.
+335. [x] [P1] Liste in docs/SPIRLINGS.md die Arten auf, die auf neue Gaben aus Bereich 2 warten, mit Platzhalter "steady" bis die Gabe existiert.
+336. [x] [P1] Prüfe im Validator, dass jede Art eine Gabe hat, die in BattleRules.TRAITS existiert.
 337. [P2] Gib jeder Gabe einen Lore-Satz, woher Spirlings mit dieser Gabe sie haben ("Tiefe Wurzeln: lernen Spirlings, die lange an einem Ort bleiben").
 338. [P2] Lass eine Linie beim Entfalten die Gabe wechseln dürfen, wenn die höhere Stufe eine andere trägt, und zeige "Neue Gabe: ..." beim Entfalten.
 339. [P2] Gib Prägungen ihre eigene Gabe nur, wenn das Element dadurch eine andere Gabe sinnvoll macht, höchstens bei 3 von 10 Prägungen.
@@ -386,9 +386,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 354. [P3] Plane Gabe-Zuordnungen für die späteren Arten der Regionen als offene Spalte in tools/data/spirling_sheet.py.
 
 ### Andenken-Zuordnung
-355. [P1] Gib jeder Art ein Feld "keepsake_hint" mit dem Andenken, das zu ihr passt, und zeige es im Lager als Vorschlag "Passt gut: Bark Wrap".
-356. [P1] Lass beim Senden eines Spirlings ins Lager sein Andenken in der Tasche bleiben, wenn der Spieler das will, mit Frage "Andenken behalten?".
-357. [P1] Zeige im Lager auf jeder Karte das Andenken als Symbol und erlaube das Abnehmen direkt dort.
+355. [x] [P1] Gib jeder Art ein Feld "keepsake_hint" mit dem Andenken, das zu ihr passt, und zeige es im Lager als Vorschlag "Passt gut: Bark Wrap".
+356. [x] [P1] Lass beim Senden eines Spirlings ins Lager sein Andenken in der Tasche bleiben, wenn der Spieler das will, mit Frage "Andenken behalten?".
+357. [x] [P1] Zeige im Lager auf jeder Karte das Andenken als Symbol und erlaube das Abnehmen direkt dort.
 358. [P2] Gib jedem Temperament ein Lieblingsandenken (Fierce: Whetstone, Stalwart: Iron Burr, Keen: Keen Lens, Brisk: Wind Anklet, Hearty: Spring Flask, Even: Spark Coil).
 359. [P2] Lass einen Spirling mit Lieblingsandenken im Team-Menü fröhlicher wackeln, rein kosmetisch.
 360. [P2] Zeige im Team-Menü eine Übersicht "Wer trägt was" für alle fünf Spirlings auf einem Bildschirm.
@@ -408,14 +408,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 374. [P3] Gib dem Spirlog eine Seite "Andenken", die zeigt, welche Arten welches Andenken lieben.
 
 ### Lager und Team-Verwaltung
-375. [P1] Teile das Lager in benannte Fächer zu je 30 Plätzen (Start 8 Fächer, 240 Plätze) mit Namen und Farbe, die der Spieler ändern kann.
-376. [P1] Füge Mehrfachauswahl im Lager hinzu, um bis zu 10 Spirlings auf einmal in ein anderes Fach zu verschieben.
-377. [P1] Lass den Spieler Spirlings als "Liebling" markieren, die nicht freigelassen und nicht versehentlich verschoben werden können.
-378. [P1] Füge Team-Vorlagen hinzu: bis zu 6 gespeicherte Teams von je 5 Spirlings, die an jeder Quelle mit einem Tipp geladen werden.
-379. [P1] Füge das Freilassen hinzu: ein Spirling kehrt mit einem kurzen Abschiedstext an seinen Fundort zurück, mit doppelter Bestätigung und nie für Lieblinge.
-380. [P1] Zeige im Lager eine Detailkarte mit Ring, Temperament, Gabe, Andenken, Herkunft (Fundort, Tag, Ring beim Treffen) und Spark-Wörtern.
-381. [P1] Lass das Team an jeder Heilquelle mit dem Lager tauschen, auch bevor das Lager aus dem Menü erreichbar ist.
-382. [P1] Prüfe mit Tests, dass Verschieben, Freilassen und Team-Vorlagen nie das letzte gesunde Team-Mitglied entfernen.
+375. [x] [P1] Teile das Lager in benannte Fächer zu je 30 Plätzen (Start 8 Fächer, 240 Plätze) mit Namen und Farbe, die der Spieler ändern kann.
+376. [x] [P1] Füge Mehrfachauswahl im Lager hinzu, um bis zu 10 Spirlings auf einmal in ein anderes Fach zu verschieben.
+377. [x] [P1] Lass den Spieler Spirlings als "Liebling" markieren, die nicht freigelassen und nicht versehentlich verschoben werden können.
+378. [x] [P1] Füge Team-Vorlagen hinzu: bis zu 6 gespeicherte Teams von je 5 Spirlings, die an jeder Quelle mit einem Tipp geladen werden.
+379. [x] [P1] Füge das Freilassen hinzu: ein Spirling kehrt mit einem kurzen Abschiedstext an seinen Fundort zurück, mit doppelter Bestätigung und nie für Lieblinge.
+380. [x] [P1] Zeige im Lager eine Detailkarte mit Ring, Temperament, Gabe, Andenken, Herkunft (Fundort, Tag, Ring beim Treffen) und Spark-Wörtern.
+381. [x] [P1] Lass das Team an jeder Heilquelle mit dem Lager tauschen, auch bevor das Lager aus dem Menü erreichbar ist.
+382. [x] [P1] Prüfe mit Tests, dass Verschieben, Freilassen und Team-Vorlagen nie das letzte gesunde Team-Mitglied entfernen.
 383. [P2] Lass das Lager nach Seltenheit, Temperament, Gabe, Prägung und Fundtag sortieren, zusätzlich zu den bestehenden vier Sortierungen.
 384. [P2] Gib jedem Spirling bis zu drei eigene Farbmarken im Lager zum Ordnen.
 385. [P2] Zeige im Lager einen Vergleich zweier Spirlings nebeneinander (Werte als Wörter, Techniken, Gabe).
@@ -473,8 +473,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 435. [P3] Prüfe mit einem Test, dass keine Sammelzielbelohnung im Shop-Datenbestand auftaucht.
 
 ### Recht, Originalität und Tests
-436. [P1] Prüfe jeden neuen Spirling-Namen, jede Ruf-Melodie und jeden Umriss gegen die Sperrliste und die IP-Regeln und vermerke die Prüfung pro Art in docs/IP_HYGIENE.md, bevor er in die Daten kommt.
-437. [P1] Halte in LEGAL.md und test_bond_echo.gd fest, dass Bonden weiter ohne Wurf, ohne Zielen, ohne schrumpfende Kreise und ohne Chancenanzeige läuft, auch bei Ersten Stimmen und friedlichen Begegnungen.
+436. [x] [P1] Prüfe jeden neuen Spirling-Namen, jede Ruf-Melodie und jeden Umriss gegen die Sperrliste und die IP-Regeln und vermerke die Prüfung pro Art in docs/IP_HYGIENE.md, bevor er in die Daten kommt.
+437. [x] [P1] Halte in LEGAL.md und test_bond_echo.gd fest, dass Bonden weiter ohne Wurf, ohne Zielen, ohne schrumpfende Kreise und ohne Chancenanzeige läuft, auch bei Ersten Stimmen und friedlichen Begegnungen.
 438. [P1] Stelle sicher, dass kein Spirling, Hallkern oder Hallkind je getauscht, verschenkt oder gegen Geld erhalten werden kann, und prüfe es in test_online.gd.
 439. [P2] Lege fest, dass Spirlings beim Einwechseln, Nachhall und Erwachen immer neben den Wanderer treten und nie herausgeworfen werden, und prüfe es in den Szenen.
 440. [P2] Prüfe alle neuen deutschen Texte mit tools/ip_check.sh auf gesperrte Wörter, einschließlich der Begriffe aus der Spielerwörter-Liste in docs/IP_HYGIENE.md.

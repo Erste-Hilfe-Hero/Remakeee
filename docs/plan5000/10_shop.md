@@ -633,7 +633,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4594. [P1] (P2W) `MAX_PARTY` in `GameState.gd` durch eine Funktion `party_max()` ersetzen, die 5 oder mit Berechtigung 6 liefert, und alle Stellen (`party.size() < MAX_PARTY`) darauf umstellen.
 4595. [P1] (P2W) Der sechste Platz gilt in allen Kämpfen gegen die Spielwelt; in der Gleichstand-Liga und in Ligen mit Teamgröße 5 wird nur mit den ersten 5 gekämpft.
 4596. [P1] (P2W) Das Team-Menü zeigt den sechsten Platz mit Rissglas-Rand; ohne Kauf ist er nicht sichtbar, damit kein leerer Platz zum Kauf drängt.
-4597. [P1] (P2W) Ein Lager-Limit von 150 Plätzen für alle einführen (vorher unbegrenzt) und "Lager-Erweiterung +50" (`rg_storage_50`) für 300 Rissglas anbieten, bis höchstens 600 Plätze.
+4597. [P1] (P2W) Ein Lager-Limit von 150 Plätzen für alle einführen (vorher unbegrenzt) und "Lager-Erweiterung +50" (`rg_storage_50`) für 300 Rissglas anbieten, bis höchstens 600 Plätze. Angepasst an Bereich 1: Lager mit Fächern zu 30 Plätzen (Start 8), Angebot "Lager-Fach +1" (`rg_storage_box`) erhöht `GameState.storage_box_bonus`.
 4598. [P1] (P2W) Spirlings über dem neuen Lager-Limit aus alten Spielständen bleiben erhalten; neue Bonden gehen dann nur noch ins Team, und ein Hinweis erklärt das.
 4599. [P1] (P2W) Der Server prüft beim Speichern die Teamgröße gegen die Berechtigung und lehnt 6 Team-Mitglieder ohne Kauf ab, und die Prüfung "mehr als 6" bleibt die harte Grenze.
 4600. [P2] (P2W) Einen "Mobilen Lagerzugang" (`rg_storage_anywhere`) anlegen: das Lager öffnet sich überall in der Welt und schon vor dem zweiten geschlossenen Riss, Preis 800 Rissglas.

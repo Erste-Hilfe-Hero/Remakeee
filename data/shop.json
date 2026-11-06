@@ -1157,26 +1157,26 @@
    "ready": false
   },
   {
-   "id": "rg_storage_50",
+   "id": "rg_storage_box",
    "kind": "advantage",
    "tab": "advantages",
-   "name": "Storage +50",
-   "desc": "50 more places in the storage, up to 600.",
+   "name": "Storage Box +1",
+   "desc": "One more storage box with 30 places. At most 12 extra boxes.",
    "rg_price": 300,
    "eur_cents": 299,
    "store_type": "consumable",
-   "product_id": "de.chimora.game.consumable.storage_50",
+   "product_id": "de.chimora.game.unlock.storage_box",
    "grants": [
     {
      "t": "unlock",
-     "id": "storage_50"
+     "id": "storage_box"
     }
    ],
    "league_scope": "open",
    "duration": "permanent",
    "limit": {
     "per": "account",
-    "n": 9
+    "n": 12
    },
    "plan": 4597,
    "min_band": 13,
