@@ -373,4 +373,8 @@ T = {
 "No journey has reached the end of Act I yet.": "Noch keine Reise hat das Ende von Akt I erreicht.",
 "%s Iron Oath  %s vows kept. Starters done: %d of %d.": "%s Eiserner Schwur  %s Gelübde gehalten. Starter geschafft: %d von %d.",
 "Three Ways": "Drei Wege", "Finish Act I once with each of the three starters, over any save slots.": "Schließe Akt I einmal mit jedem der drei Starter ab, über beliebige Speicherslots.",
+"Kinds seen at every place": "Arten an jedem Fundort gesehen", "Places: %s (%d of %d)": "Fundorte: %s (%d von %d)",
+"Art book: %d of %d used": "Technikbuch: %d von %d eingesetzt",
+"Prism page: %d of %d kinds met in Prism colours": "Prisma-Seite: %d von %d Arten in Prisma-Farben getroffen",
+"Collector card: bonded, ring 30 and every art of its line used.": "Sammelkarte: gebondet, Ring 30 und jede Technik der Linie eingesetzt.",
 }

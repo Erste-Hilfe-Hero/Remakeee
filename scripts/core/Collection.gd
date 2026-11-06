@@ -48,6 +48,7 @@ const SET_GOALS: Array[Dictionary] = [
 	{"id": "pages", "kind": "pages", "n": -1, "waymarks": 100, "label": "Map book pages"},
 	{"id": "keepsakes", "kind": "keepsakes", "n": -1, "waymarks": 50, "label": "Keepsakes held"},
 	{"id": "temperaments", "kind": "temperaments", "n": -1, "waymarks": 50, "label": "Temperaments met"},
+	{"id": "places", "kind": "places", "n": -1, "waymarks": 60, "label": "Kinds seen at every place"},
 ]
 
 ## Arts the player's Spirlings can learn (boss-only arts do not count).
@@ -69,6 +70,95 @@ static func note_art(art: String) -> void:
 	if not art in used:
 		used.append(art)
 		GameState.records["arts_used"] = used
+
+# --- Places, art book, Prism page and collector cards (plan 3358, 3360, 3361, 3364, 3366) ---
+
+static var _habitats: Dictionary = {}
+
+## Maps whose wild table has [param species], in map order (plan 3361).
+static func habitat_maps(species: String) -> Array[String]:
+	if _habitats.is_empty():
+		for id: String in MapData.all_ids():
+			var m: MapData = MapData.load_map(id)
+			if m == null or m.encounter_table.is_empty():
+				continue
+			for sp: String in EncounterTable.species_on(m.encounter_table):
+				if not _habitats.has(sp):
+					_habitats[sp] = []
+				if not id in (_habitats[sp] as Array):
+					(_habitats[sp] as Array).append(id)
+		_habitats["_built"] = []
+	var out: Array[String] = []
+	for id: Variant in _habitats.get(species, []):
+		out.append(str(id))
+	return out
+
+## Habitat maps where the player has seen [param species].
+static func places_seen(species: String) -> Array[String]:
+	var maps: Array = (GameState.spirlog.get(species, {}) as Dictionary).get("maps", []) if GameState.spirlog.get(species) is Dictionary else []
+	return habitat_maps(species).filter(func(id: String) -> bool: return id in maps)
+
+static func places_done(species: String) -> bool:
+	var all: Array[String] = habitat_maps(species)
+	return not all.is_empty() and places_seen(species).size() == all.size()
+
+static func _place_kinds() -> Array[SpirlingData]:
+	return SpirlogBook.visible_kinds(GameState.flags).filter(func(sd: SpirlingData) -> bool: return not habitat_maps(sd.species_name).is_empty())
+
+## Spirlog page line: places seen get their name and a "+", the others stay "???" (plan 3361).
+static func places_line(species: String) -> String:
+	var all: Array[String] = habitat_maps(species)
+	if all.is_empty():
+		return ""
+	var seen: Array[String] = places_seen(species)
+	var parts: PackedStringArray = []
+	for id: String in all:
+		parts.append(Spirling.place_name(id) + " +" if id in seen else "???")
+	return Loc.t("Places: %s (%d of %d)") % [", ".join(parts), seen.size(), all.size()]
+
+## The art book (plan 3358): every learnable art, a "+" before each one used in battle.
+static func art_book_lines() -> Array[String]:
+	var used: Array = GameState.records.get("arts_used", [])
+	var arts: Array[String] = learnable_arts()
+	var out: Array[String] = [Loc.t("Art book: %d of %d used") % [set_count("arts"), arts.size()]]
+	for a: String in arts:
+		out.append(("+ " if a in used else "  ") + Loc.t(a))
+	return out
+
+## Kinds met in Prism colours, for their own Spirlog page (plan 3364). No odds are shown.
+static func prism_kinds() -> Array[String]:
+	var out: Array[String] = []
+	for sd: SpirlingData in SpirlogBook.visible_kinds(GameState.flags):
+		var e: Variant = GameState.spirlog.get(sd.species_name)
+		if e is Dictionary and bool((e as Dictionary).get("prism_seen", false)):
+			out.append(sd.species_name)
+	return out
+
+static func prism_lines() -> Array[String]:
+	var kinds: Array[String] = prism_kinds()
+	var out: Array[String] = [Loc.t("Prism page: %d of %d kinds met in Prism colours") % [kinds.size(), SpirlogBook.visible_kinds(GameState.flags).size()]]
+	for sp: String in kinds:
+		out.append("  " + sp)
+	return out
+
+## Every art the kind's whole line can learn.
+static func line_arts(sd: SpirlingData) -> Array[String]:
+	var out: Array[String] = []
+	for member: SpirlingData in SpirlogBook.line_of(sd):
+		for mv: MoveData in member.learnset_moves:
+			if mv != null and not mv.move_name in out:
+				out.append(mv.move_name)
+	return out
+
+## A collector card opens once the kind is bonded, at ring 30 and every art of its line was used (plan 3366).
+static func card_open(sd: SpirlingData) -> bool:
+	if not starred(sd.species_name):
+		return false
+	var used: Array = GameState.records.get("arts_used", [])
+	return line_arts(sd).all(func(a: String) -> bool: return a in used)
+
+static func cards_open() -> int:
+	return SpirlogBook.visible_kinds(GameState.flags).filter(func(sd: SpirlingData) -> bool: return card_open(sd)).size()
 
 ## Visible kinds grouped by line ("line_id", else the kind itself).
 static func lines() -> Dictionary:
@@ -111,6 +201,8 @@ static func set_count(kind: String) -> int:
 			return Overworld.pages_found(GameState.flags)
 		"keepsakes":
 			return Achievements.stat("keepsakes")
+		"places":
+			return _place_kinds().filter(func(sd: SpirlingData) -> bool: return places_done(sd.species_name)).size()
 		"temperaments":
 			var t: Dictionary = {}
 			for s: Spirling in Achievements.all_spirlings():
@@ -134,6 +226,8 @@ static func set_total(kind: String) -> int:
 			return Achievements.keepsakes().size()
 		"temperaments":
 			return Spirling.TEMPERAMENTS.size()
+		"places":
+			return _place_kinds().size()
 	return 0
 
 static func set_need(g: Dictionary) -> int:

@@ -786,6 +786,11 @@ func run_spirlog() -> void:
 		if not encounter_table.is_empty():
 			entries.append({"text": "Tracker: this area"})
 			actions.append("tracker")
+		entries.append({"text": Collection.art_book_lines()[0]})
+		actions.append("arts")
+		if not Collection.prism_kinds().is_empty():
+			entries.append({"text": Collection.prism_lines()[0]})
+			actions.append("prism")
 		if GameState.has_flag(EchoPath.OPEN_FLAG):
 			# Plan 3354: the Echo Path's wild kinds of the week, so missing ones can be planned.
 			entries.append({"text": EchoPath.spirlog_hint()})
@@ -813,6 +818,10 @@ func run_spirlog() -> void:
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
 			"tracker":
 				await info(_tracker_text())
+			"arts":
+				await info("\n".join(Collection.art_book_lines()))
+			"prism":
+				await info("\n".join(Collection.prism_lines()))
 			"echo":
 				await info(EchoPath.spirlog_hint() + "\n" + Loc.t("They wait in the wild rooms of the Echo Path behind the Cinder Rift. A new set comes every week."))
 			"kind":

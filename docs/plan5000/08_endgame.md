@@ -268,15 +268,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3355. [x] [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
 3356. [x] [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
 3357. [x] [P2] Ein Sammelziel „Jede Technik einmal eingesetzt“ für alle 58 Techniken mit Stufen bei 20, 40 und 58 ergänzen.
-3358. [P2] Ein Technikbuch im Lexikon anlegen, das jede schon eingesetzte Technik markiert.
+3358. [x] [P2] Ein Technikbuch im Lexikon anlegen, das jede schon eingesetzte Technik markiert.
 3359. [x] [P2] Ein Sammelziel „Jedes Element im Team“ ergänzen: einmal einen Spirling jedes der acht Elemente gebondet.
-3360. [P2] Ein Sammelziel für Fundorte ergänzen: jede Art mindestens an jedem ihrer Fundorte einmal gesehen.
-3361. [P2] Im Spirlog für jede Art die Fundorte mit Haken zeigen, sobald man sie dort gesehen hat.
+3360. [x] [P2] Ein Sammelziel für Fundorte ergänzen: jede Art mindestens an jedem ihrer Fundorte einmal gesehen.
+3361. [x] [P2] Im Spirlog für jede Art die Fundorte mit Haken zeigen, sobald man sie dort gesehen hat.
 3362. [x] [P2] Ein Sammelziel „Lore-Seiten“ ergänzen, das alle gefundenen Lore-Seiten zählt und bei voll 100 Wegmarken zahlt.
 3363. [x] [P2] Ein Sammelziel „Andenken-Sammlung“ ergänzen, das jedes Andenken einmal gehalten zählt.
-3364. [P2] Ein Sammelziel für Prisma-Spirlings in einer eigenen Spirlog-Seite zeigen, ohne Hinweis auf eine Chance.
+3364. [x] [P2] Ein Sammelziel für Prisma-Spirlings in einer eigenen Spirlog-Seite zeigen, ohne Hinweis auf eine Chance.
 3365. [x] [P2] Ein Sammelziel „Temperamente“ ergänzen, das alle Temperamente über alle Spirlings zählt.
-3366. [P2] Für jede Art eine kleine Sammelkarte im Spirlog freischalten, wenn sie gebondet, auf Ring 30 und mit jeder Technik ihrer Linie eingesetzt wurde.
+3366. [x] [P2] Für jede Art eine kleine Sammelkarte im Spirlog freischalten, wenn sie gebondet, auf Ring 30 und mit jeder Technik ihrer Linie eingesetzt wurde.
 3367. [P3] Eine Fotowand im Leuchtturm einrichten, an die man pro Art ein Foto aus dem Fotomodus hängen kann.
 3368. [P3] Für eine volle Fotowand mit allen 21 Arten einen Rahmen in Gold und 100 Wegmarken vergeben.
 3369. [P3] Ein Sammelziel „Größte und kleinste“ ergänzen, das für jede Art Höhe oder Gewicht aus einem gebondeten Spirling festhält, falls das Spiel solche Werte bekommt.

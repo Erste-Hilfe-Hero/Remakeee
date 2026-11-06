@@ -60,4 +60,4 @@ func test_ring30_and_lines_in_goals_tab() -> void:
 	var text: String = Goals.collection()
 	assert_string_contains(text, Loc.t("Arts used"))
 	assert_string_contains(text, Loc.t("Kinds at ring 30"))
-	assert_eq(Collection.set_lines().size(), 7, "one line per kind of goal")
+	assert_eq(Collection.set_lines().size(), 8, "one line per kind of goal")
