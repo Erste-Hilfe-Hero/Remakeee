@@ -3,8 +3,17 @@
 # Started by server/setup.sh, which also writes .env. Nothing but Caddy is reachable from outside.
 name: chimora
 
+# Container logs hold IP addresses: at most 7 files of 7 MB per service (about 7 days of
+# traffic, plan item 3848). The privacy policy promises 7 days.
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "7m"
+    max-file: "7"
+
 services:
   db:
+    logging: *logging
     image: supabase/postgres:15.8.1.060
     restart: unless-stopped
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "log_min_messages=fatal"]
@@ -29,6 +38,7 @@ services:
       retries: 20
 
   auth:
+    logging: *logging
     image: supabase/gotrue:v2.177.0
     restart: unless-stopped
     depends_on:
@@ -51,9 +61,11 @@ services:
       GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "true"
       GOTRUE_EXTERNAL_EMAIL_ENABLED: "false"
       GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
-      GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 30
+      # New accounts per hour and IP address (plan item 3873; stock Caddy has no rate limiter).
+      GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 10
 
   rest:
+    logging: *logging
     image: postgrest/postgrest:v12.2.12
     restart: unless-stopped
     depends_on:
@@ -65,6 +77,8 @@ services:
       PGRST_DB_ANON_ROLE: anon
       PGRST_JWT_SECRET: ${JWT_SECRET}
       PGRST_DB_USE_LEGACY_GUCS: "false"
+      # Feature switches from server_config (supabase/migrations/20261110090001_tech_sync.sql).
+      PGRST_DB_PRE_REQUEST: public._pre_request
 
   # Battle referee (plan area 7, items 2687-2690, 2703): plays uploaded battles again with the
   # game's own battle code. No port; it only talks to the database, as user chimora_referee.
@@ -86,6 +100,7 @@ services:
       PGDATABASE: postgres
 
   caddy:
+    logging: *logging
     image: caddy:2.10.2
     restart: unless-stopped
     depends_on: [auth, rest]

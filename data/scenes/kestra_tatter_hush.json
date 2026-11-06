@@ -1,0 +1,11 @@
+{
+ "_note": "Chapter 8, Madderby: after the Rain Rift is mended Kestra's Tempestrel Tatter falls silent (plan items 1455, 1560, 1561).",
+ "steps": [
+  {"say": ["Kestra stands by the river, Tatter on her arm. It doesn't move."]},
+  {"emote": "kestra_m", "icon": "..."},
+  {"say": ["Kestra: Tatter stopped singing the moment the Rain Rift closed. Do you understand?", "Kestra: Tatter came through a Rift. Every one you close takes a piece of its home away."]},
+  {"dialogue": "corvane/kestra_comfort"},
+  {"say": ["Kestra: I need to know if I'm wrong. Only one way I know to find out."]},
+  {"battle": "kestra_2"}
+ ]
+}

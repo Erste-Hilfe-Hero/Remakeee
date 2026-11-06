@@ -1,0 +1,10 @@
+{
+ "_note": "Finale 4: the long Echo melody with Mirela's verse; the Echo listens (plan item 1529).",
+ "skippable": false,
+ "steps": [
+  {"say": ["The Echo is quiet now. Not gone. Waiting.", "Mirela: Now we sing back. I'll start. You answer."]},
+  {"action": "echo_song echo_answered"},
+  {"dialogue": "ashmere/finale_song"},
+  {"action": "scene finale_5"}
+ ]
+}

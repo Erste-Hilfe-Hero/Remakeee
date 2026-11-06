@@ -287,11 +287,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2919. [P3] Doppelte Meldungen (gleicher Meldender, gleiches Ziel, 24 Stunden) werden still verworfen und nicht gezählt.
 2920. [P3] Vorlagen für Begründungstexte in allen Spielsprachen in `scripts/online/ModReasons.gd`, damit Begründungen einheitlich sind.
 ### Schutz vor Schummeln
-2921. [P1] `save_put` vergleicht jeden neuen Stand mit dem vorherigen und lehnt ab, wenn Geld schneller als 5000 Münzen pro gespielter Minute steigt (Grenze in `server_config.max_money_per_min`).
-2922. [P1] `save_put` lehnt Spirling-Arten, Techniken und Gegenstände ab, deren Kennung nicht in den Spieldaten auf dem Server steht (Tabelle `known_ids`, beim Deploy aus `data/*.json` gefüllt).
-2923. [P1] Spielzeit im Stand darf nur steigen und pro Speicherung höchstens um die echte Zeit seit der letzten Speicherung plus 5 Minuten.
-2924. [P1] Werte, die der Server führt (Ligawertung, Raid-Beiträge, Tauschbestand, Kaufwährung), stehen in eigenen Tabellen und werden aus dem Spielstand ignoriert, selbst wenn der Client sie mitschickt.
-2925. [P1] Jeder abgelehnte Stand wird mit Grund in `cheat_flags` vermerkt; ab 3 Vermerken in 7 Tagen wird das Konto aus Ligen und Raids genommen, bis Ali es prüft.
+2921. [x] [P1] `save_put` vergleicht jeden neuen Stand mit dem vorherigen und lehnt ab, wenn Geld schneller als 5000 Münzen pro gespielter Minute steigt (Grenze in `server_config.max_money_per_min`).
+2922. [x] [P1] `save_put` lehnt Spirling-Arten, Techniken und Gegenstände ab, deren Kennung nicht in den Spieldaten auf dem Server steht (Tabelle `known_ids`, beim Deploy aus `data/*.json` gefüllt).
+2923. [x] [P1] Spielzeit im Stand darf nur steigen und pro Speicherung höchstens um die echte Zeit seit der letzten Speicherung plus 5 Minuten.
+2924. [x] [P1] Werte, die der Server führt (Ligawertung, Raid-Beiträge, Tauschbestand, Kaufwährung), stehen in eigenen Tabellen und werden aus dem Spielstand ignoriert, selbst wenn der Client sie mitschickt.
+2925. [x] [P1] Jeder abgelehnte Stand wird mit Grund in `cheat_flags` vermerkt; ab 3 Vermerken in 7 Tagen wird das Konto aus Ligen und Raids genommen, bis Ali es prüft.
 2926. [P2] Wachstum pro Kampf darf den höchsten Wert aus den Spieldaten für den stärksten Gegner der jeweiligen Karte nicht übersteigen.
 2927. [P2] Ein Spirling kann den Ring nur erhöhen, nie senken, außer über eine Spielfunktion, die der Server kennt.
 2928. [P2] Die Anzahl jedes Gegenstands im Stand darf nur um das wachsen, was Kämpfe, Funde, Post, Tausch und Shop in der Zeit liefern konnten (Obergrenze 50 Stück pro Speicherung).
@@ -342,9 +342,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2970. [P3] Der Duell-Dienst nutzt einen eigenen Verbindungspuffer mit 10 Datenbank-Verbindungen.
 2971. [P3] Vor jeder großen Event-Woche läuft der Lasttest einmal mit 20000 simulierten Spielern.
 ### Datenschutz (DSGVO)
-2972. [P1] Eine Funktion `data_export` liefert alle eigenen Daten (Profil, Spielstände, Freunde, Post, Tausche, Bund, Ligen, Meldungen gegen das eigene Konto) als JSON-Datei (DSGVO Art. 15 und 20), erreichbar unter Einstellungen, Konto.
-2973. [P1] `delete_account` löscht auch alle neuen Daten: Tausche, Bundmitgliedschaft, Raid-Beiträge, Ligawertung, Kampfaufnahmen und Phrasen auf Pinnwänden; ein SQL-Test prüft, dass danach keine Zeile mit der Konto-Kennung übrig ist.
-2974. [P1] Ein Verzeichnis der Verarbeitungen in `docs/legal/VERARBEITUNGEN.md` mit Zweck, Daten, Speicherdauer und Rechtsgrundlage für jede Online-Funktion.
+2972. [x] [P1] Eine Funktion `data_export` liefert alle eigenen Daten (Profil, Spielstände, Freunde, Post, Tausche, Bund, Ligen, Meldungen gegen das eigene Konto) als JSON-Datei (DSGVO Art. 15 und 20), erreichbar unter Einstellungen, Konto.
+2973. [x] [P1] `delete_account` löscht auch alle neuen Daten: Tausche, Bundmitgliedschaft, Raid-Beiträge, Ligawertung, Kampfaufnahmen und Phrasen auf Pinnwänden; ein SQL-Test prüft, dass danach keine Zeile mit der Konto-Kennung übrig ist.
+2974. [x] [P1] Ein Verzeichnis der Verarbeitungen in `docs/legal/VERARBEITUNGEN.md` mit Zweck, Daten, Speicherdauer und Rechtsgrundlage für jede Online-Funktion.
 2975. [P1] Die Datenschutzerklärung (`docs/legal/DATENSCHUTZ.md`, `server/site/datenschutz.html`) um Ligen, Tausch, Bünde, Raids, Schiedsrichter, Echtheitsprüfung und Moderation ergänzen.
 2976. [P2] Eine Tabelle der Speicherdauer pro Datenart in `docs/ONLINE.md` und ein nächtlicher Lauf, der sie durchsetzt (Post 30 Tage, Tausche 90, Raids 60, Moderation 12 Monate).
 2977. [P2] Caddy-Zugriffsprotokolle speichern IP-Adressen nur gekürzt und werden nach 7 Tagen gelöscht.
@@ -362,7 +362,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2989. [P3] Eine jährliche Prüfliste in `docs/legal/DATENSCHUTZ_PRUEFUNG.md`: Speicherdauern, Löschläufe, Auftragsverarbeitung mit Contabo, Zugriffe auf die Datenbank.
 2990. [P3] Für Kampfaufnahmen im Schiedsrichter werden nur Seed, Teams und Züge gespeichert, keine Gerätedaten und keine Namen.
 
-2991. [P1] Ein SQL-Test prüft über den Systemkatalog, dass `data_export` jede Tabelle mit einer Spalte für die Konto-Kennung abdeckt.
+2991. [x] [P1] Ein SQL-Test prüft über den Systemkatalog, dass `data_export` jede Tabelle mit einer Spalte für die Konto-Kennung abdeckt.
 2992. [P2] Liga- und Raid-Gegner sehen nur Stufe, Wappen und Spirlings, nie den Freundescode, damit Fremde keine Anfragen schicken können.
 2993. [P3] Der Datenexport lässt sich auch als lesbare Seite im Spiel ansehen, nicht nur als Datei.
 2994. [P3] Einwilligungen (Name in Weltrangliste, Live-Duelle) werden mit Datum gespeichert und im Export gezeigt.

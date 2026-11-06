@@ -11,6 +11,15 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"energy_drain": preload("res://scripts/battle/effects/EnergyDrainEffect.gd"),
 	&"stat_change": preload("res://scripts/battle/effects/StatChangeEffect.gd"),
 	&"set_field": preload("res://scripts/battle/effects/SetFieldEffect.gd"),
+	&"bonus_vs_status": preload("res://scripts/battle/effects/BonusVsStatusEffect.gd"),
+	&"energy_tax": preload("res://scripts/battle/effects/EnergyTaxEffect.gd"),
+	&"field_element": preload("res://scripts/battle/effects/FieldElementEffect.gd"),
+	&"self_stage_after": preload("res://scripts/battle/effects/SelfStageAfterEffect.gd"),
+	&"stage_on_hit": preload("res://scripts/battle/effects/StatChangeEffect.gd"),
+	&"cure_self": preload("res://scripts/battle/effects/CureSelfEffect.gd"),
+	&"status_shift": preload("res://scripts/battle/effects/StatusShiftEffect.gd"),
+	&"side_snare": preload("res://scripts/battle/effects/SideSnareEffect.gd"),
+	&"clear_snares": preload("res://scripts/battle/effects/ClearSnaresEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

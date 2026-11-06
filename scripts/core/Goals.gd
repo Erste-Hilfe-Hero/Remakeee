@@ -58,6 +58,9 @@ static func week() -> String:
 ## Collection: the monthly album, Spirlog goals and the season path.
 static func collection() -> String:
 	var spirlog: String = Loc.t(Collection.progress_text(GameState.spirlog, Database.spirlings.size()))
+	var next: String = Collection.next_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size(), GameState.flags)
+	if not next.is_empty():
+		spirlog += "\n" + Loc.t(next)
 	var season: String = Loc.t("Season path: step %d/%d") % [SeasonPath.tier(), SeasonPath.tiers()]
 	return _join([Album.lines(), spirlog, season, Loc.t("Journey complete: %d%%") % Completion.percent()])
 

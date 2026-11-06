@@ -8,20 +8,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 > Nicht in diesen Bereich gehören neue Spirling-Arten (Bereich 1), Online-Duelle und Online-Regeln (Bereich 7) und alles rund um den Shop (Bereich 10); auch keine Punkte, die schon in docs/KAMPF_PLAN_1000.md stehen.
 
 ### Neue Effekt-Bausteine für Techniken
-445. [P1] Neuer Effekt `bonus_vs_status` in scripts/battle/effects/: die Technik erhält einen Stärke-Faktor (Schlüssel `vs_status`, `vs_mult`), wenn das Ziel den genannten Status trägt; `"*"` steht für jeden Status.
-446. [P1] Neuer Effekt `energy_tax`: das Ziel zahlt 2 Runden lang für jede Technik 1 Energie mehr; die Restrunden stehen im Info-Streifen als Zahl neben einem Münzsymbol.
-447. [P1] Neuer Effekt `field_element`: die Technik nimmt das Element an, das das aktive Feld verstärkt, und erhält dann +20 Stärke; ohne Feld behält sie ihr eigenes Element.
-448. [P1] Neuer Effekt `self_stage_after`: nach einem Treffer sinkt eine eigene Stufe um den Wert aus `self_stages` (zum Beispiel Fokus -1), auch wenn das Ziel dabei fällt.
-449. [P1] Neuer Effekt `stage_on_hit`: mit der Chance `stage_chance` steigt nach einem Treffer eine eigene Stufe um 1; StatChangeEffect erhält dafür den optionalen Schlüssel `stage_chance` (Standard 1,0).
-450. [P1] Neuer Schlüssel `cooldown` in moves.json: nach dem Einsatz ist die Technik für die angegebene Zahl an Runden gesperrt und im Technik-Menü grau mit Restzahl.
+445. [x] [P1] Neuer Effekt `bonus_vs_status` in scripts/battle/effects/: die Technik erhält einen Stärke-Faktor (Schlüssel `vs_status`, `vs_mult`), wenn das Ziel den genannten Status trägt; `"*"` steht für jeden Status.
+446. [x] [P1] Neuer Effekt `energy_tax`: das Ziel zahlt 2 Runden lang für jede Technik 1 Energie mehr; die Restrunden stehen im Info-Streifen als Zahl neben einem Münzsymbol.
+447. [x] [P1] Neuer Effekt `field_element`: die Technik nimmt das Element an, das das aktive Feld verstärkt, und erhält dann +20 Stärke; ohne Feld behält sie ihr eigenes Element.
+448. [x] [P1] Neuer Effekt `self_stage_after`: nach einem Treffer sinkt eine eigene Stufe um den Wert aus `self_stages` (zum Beispiel Fokus -1), auch wenn das Ziel dabei fällt.
+449. [x] [P1] Neuer Effekt `stage_on_hit`: mit der Chance `stage_chance` steigt nach einem Treffer eine eigene Stufe um 1; StatChangeEffect erhält dafür den optionalen Schlüssel `stage_chance` (Standard 1,0).
+450. [x] [P1] Neuer Schlüssel `cooldown` in moves.json: nach dem Einsatz ist die Technik für die angegebene Zahl an Runden gesperrt und im Technik-Menü grau mit Restzahl.
 451. [P2] Neuer Effekt `delayed_hit`: der Schaden wird beim Einsatz mit den aktuellen Werten berechnet und trifft 2 Runden später den Spirling, der dann im Ziel-Slot steht.
 452. [P2] Neuer Effekt `energy_burn`: das Ziel verliert die Energie aus `effect_amount`, ohne dass der Nutzer sie erhält (Unterschied zum bestehenden `energy_drain`).
 453. [P2] Neuer Effekt `heal_block`: 3 Runden lang wirken beim Ziel keine Heiltechniken, keine Gabe-Regeneration, kein Feld-Heilen und kein Andenken mit `regen_div`.
-454. [P2] Neuer Effekt `status_shift`: der Nutzer gibt seinen eigenen Status an das Ziel weiter und ist danach frei; schlägt fehl, wenn das Ziel schon einen Status trägt oder immun ist.
+454. [x] [P2] Neuer Effekt `status_shift`: der Nutzer gibt seinen eigenen Status an das Ziel weiter und ist danach frei; schlägt fehl, wenn das Ziel schon einen Status trägt oder immun ist.
 455. [P3] Neuer Effekt `stage_steal`: nimmt dem Ziel eine positive Stufe in Wucht, Schutz, Fokus oder Tempo (die höchste zuerst) und gibt sie dem Nutzer.
-456. [P2] Neuer Effekt `side_snare`: legt eine Seitenfalle auf die Gegnerseite, die den nächsten einwechselnden Spirling trifft (Status, Stufe oder 1/10 der max. Kraft), danach ist sie verbraucht.
+456. [x] [P2] Neuer Effekt `side_snare`: legt eine Seitenfalle auf die Gegnerseite, die den nächsten einwechselnden Spirling trifft (Status, Stufe oder 1/10 der max. Kraft), danach ist sie verbraucht.
 457. [P3] Neuer Effekt `fixed_ring_damage`: Schaden genau Ring des Nutzers mal 1,2 (abgerundet), ohne Elemente, Stufen, Felder und Glückstreffer.
-458. [P2] Neuer Effekt `cure_self`: heilt nach dem Treffer oder der Statustechnik den eigenen Status.
+458. [x] [P2] Neuer Effekt `cure_self`: heilt nach dem Treffer oder der Statustechnik den eigenen Status.
 459. [P2] Priorität -1 zulassen: BattleModel sortiert Techniken mit `"priority": -1` hinter alle anderen derselben Aktionsklasse; validate_data erlaubt den Bereich -1 bis +1.
 460. [P3] Neuer Effekt `energy_refund`: fällt das Ziel durch den Treffer, erhält der Nutzer die Hälfte der Energiekosten (abgerundet) zurück.
 461. [P2] Neuer Effekt `field_extend`: verlängert das aktive Resonanz-Feld um 2 Runden und schlägt ohne Feld mit eigener Meldung fehl.
@@ -30,8 +30,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 464. [P3] Neuer Effekt `wake_ally`: weckt im Mehrfachkampf einen Verbündeten aus Drowse und gibt ihm 1 Energie.
 
 ### Neue Techniken: Ember und Tide
-465. [P1] Ember "Glow Knuckle": Physisch, Stärke 55, Genauigkeit 100 %, Energie 3, 30 % Chance auf eigene Wucht +1.
-466. [P1] Ember "Char Mark": Fokus, Stärke 50, Genauigkeit 100 %, Energie 3, Stärke ×1,6 gegen Ziele mit Scorch.
+465. [x] [P1] Ember "Glow Knuckle": Physisch, Stärke 55, Genauigkeit 100 %, Energie 3, 30 % Chance auf eigene Wucht +1.
+466. [x] [P1] Ember "Char Mark": Fokus, Stärke 50, Genauigkeit 100 %, Energie 3, Stärke ×1,6 gegen Ziele mit Scorch.
 467. [P2] Ember "Bellows Blast": Fokus, Stärke 110, Genauigkeit 90 %, Energie 7, danach eigener Fokus -1.
 468. [P3] Ember "Forge Focus": Status, Energie 3, eigener Fokus +2 und eigenes Tempo -1.
 469. [P2] Ember "Coal Seed": Status, Genauigkeit 100 %, Energie 3, Seitenfalle, die dem nächsten einwechselnden Gegner Scorch gibt.
@@ -41,8 +41,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 473. [P3] Ember "Brazier Pulse": Fokus, Stärke 70, Genauigkeit 95 %, Energie 5, trifft alle Gegner, 10 % Scorch.
 474. [P3] Ember "Hearth Hum": Status, Energie 4, `field_extend` um 2 Runden.
 475. [P3] Ember "Slow Fuse": Fokus, Stärke 100, Genauigkeit 100 %, Energie 5, `delayed_hit` nach 2 Runden.
-476. [P1] Tide "Spout Jab": Physisch, Stärke 40, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Soak.
-477. [P1] Tide "Deepwell Draught": Status, Energie 4, heilt 35 % der max. Kraft und den eigenen Status.
+476. [x] [P1] Tide "Spout Jab": Physisch, Stärke 40, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Soak.
+477. [x] [P1] Tide "Deepwell Draught": Status, Energie 4, heilt 35 % der max. Kraft und den eigenen Status.
 478. [P2] Tide "Salt Spray": Fokus, Stärke 55, Genauigkeit 100 %, Energie 3, 30 % Chance auf Tempo -1 beim Ziel.
 479. [P2] Tide "Rip Current": Physisch, Stärke 70, Genauigkeit 95 %, Energie 4, `energy_burn` 1.
 480. [P2] Tide "Fathom Crush": Physisch, Stärke 115, Genauigkeit 85 %, Energie 7, `cooldown` 1.
@@ -56,7 +56,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 488. [P2] Lernlisten Tide: Puddlet lernt Spout Jab bei Ring 7 und Salt Spray bei Ring 11, Riptail Rip Current bei Ring 21 und Deepwell Draught bei Ring 28, Leviarch Bore Wave bei Ring 44, Kelpup Shoal Trap bei Ring 16.
 
 ### Neue Techniken: Bloom und Volt
-489. [P1] Bloom "Pollen Prick": Physisch, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Root.
+489. [x] [P1] Bloom "Pollen Prick": Physisch, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Root.
 490. [P2] Bloom "Bramble Bed": Status, Energie 3, Seitenfalle, die den nächsten einwechselnden Gegner mit Root bindet.
 491. [P3] Bloom "Graft": Status, Genauigkeit 100 %, Energie 3, `stage_steal`.
 492. [P3] Bloom "Root Mend": Status, Energie 4, heilt sofort 20 % und danach 3 Runden je 1/16 der max. Kraft.
@@ -67,41 +67,41 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 497. [P3] Bloom "Compost Slap": Physisch, Stärke 70, Genauigkeit 95 %, Energie 4, `energy_refund`.
 498. [P3] Bloom "Bark Burst": Physisch, Stärke 80, Genauigkeit 95 %, Energie 5, 20 % Chance auf eigenen Schutz +1.
 499. [P3] Bloom "Seed Spit": Physisch, Stärke 30, Genauigkeit 100 %, Energie 1, Priorität +1.
-500. [P1] Volt "Static Tag": Fokus, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Jolt.
-501. [P1] Volt "Grid Lock": Status, Genauigkeit 90 %, Energie 3, `energy_tax` für 2 Runden.
+500. [x] [P1] Volt "Static Tag": Fokus, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Jolt.
+501. [x] [P1] Volt "Grid Lock": Status, Genauigkeit 90 %, Energie 3, `energy_tax` für 2 Runden.
 502. [P2] Volt "Overdraw": Status, Genauigkeit 100 %, Energie 2, `energy_burn` 2.
-503. [P2] Volt "Capacitor Crash": Physisch, Stärke 120, Genauigkeit 85 %, Energie 7, `cooldown` 1.
-504. [P2] Volt "Pylon Snap": Physisch, Stärke 60, Genauigkeit 100 %, Energie 3, 30 % Chance auf eigenes Tempo +1.
-505. [P3] Volt "Short Circuit": Fokus, Stärke 95, Genauigkeit 90 %, Energie 6, danach eigener Fokus -1.
+503. [x] [P2] Volt "Capacitor Crash": Physisch, Stärke 120, Genauigkeit 85 %, Energie 7, `cooldown` 1.
+504. [x] [P2] Volt "Pylon Snap": Physisch, Stärke 60, Genauigkeit 100 %, Energie 3, 30 % Chance auf eigenes Tempo +1.
+505. [x] [P3] Volt "Short Circuit": Fokus, Stärke 95, Genauigkeit 90 %, Energie 6, danach eigener Fokus -1.
 506. [P3] Volt "Ring Pulse": Fokus, Genauigkeit 100 %, Energie 3, `fixed_ring_damage`.
 507. [P3] Volt "Relay Spark": Status, Energie 3, `stage_relay`.
 508. [P3] Volt "Bleed Current": Fokus, Stärke 60, Genauigkeit 100 %, Energie 4, `energy_refund`.
 509. [P3] Volt "Wire Trap": Status, Energie 3, Seitenfalle, die dem nächsten einwechselnden Gegner Jolt gibt.
 510. [P3] Volt "Brownout": Status, Genauigkeit 85 %, Energie 4, trifft alle Gegner mit `energy_burn` 1.
 511. [P2] Lernlisten Bloom: Mossling lernt Pollen Prick bei Ring 6 und Husk Shed bei Ring 11, Thornback Graft bei Ring 24 und Wildgrowth Crash bei Ring 34, Verdantusk Thornwake bei Ring 46, Kelphound Root Mend bei Ring 35.
-512. [P2] Lernlisten Volt: Zippit lernt Static Tag bei Ring 6 und Pylon Snap bei Ring 10, Grid Lock bei Ring 16, Glimmerax Short Circuit bei Ring 36 und Capacitor Crash bei Ring 44.
+512. [x] [P2] Lernlisten Volt: Zippit lernt Static Tag bei Ring 6 und Pylon Snap bei Ring 10, Grid Lock bei Ring 16, Glimmerax Short Circuit bei Ring 36 und Capacitor Crash bei Ring 44.
 
 ### Neue Techniken: Stone und Gale
-513. [P1] Stone "Grit Jab": Physisch, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,3 gegen jedes Ziel mit Status.
-514. [P2] Stone "Quarry Wall": Status, Energie 3, eigener Schutz +2.
-515. [P2] Stone "Landslip": Physisch, Stärke 75, Genauigkeit 95 %, Energie 5, trifft alle Gegner, 30 % Tempo -1 pro Ziel.
-516. [P2] Stone "Shard Bed": Status, Energie 3, Seitenfalle, die dem nächsten einwechselnden Gegner 1/10 der max. Kraft nimmt.
-517. [P2] Stone "Monolith Drop": Physisch, Stärke 125, Genauigkeit 80 %, Energie 8, `cooldown` 1.
-518. [P2] Stone "Pumice Pelt": Physisch, Stärke 55, Genauigkeit 100 %, Energie 3, 50 % Chance auf eigenen Schutz +1.
+513. [x] [P1] Stone "Grit Jab": Physisch, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,3 gegen jedes Ziel mit Status.
+514. [x] [P2] Stone "Quarry Wall": Status, Energie 3, eigener Schutz +2.
+515. [x] [P2] Stone "Landslip": Physisch, Stärke 75, Genauigkeit 95 %, Energie 5, trifft alle Gegner, 30 % Tempo -1 pro Ziel.
+516. [x] [P2] Stone "Shard Bed": Status, Energie 3, Seitenfalle, die dem nächsten einwechselnden Gegner 1/10 der max. Kraft nimmt.
+517. [x] [P2] Stone "Monolith Drop": Physisch, Stärke 125, Genauigkeit 80 %, Energie 8, `cooldown` 1.
+518. [x] [P2] Stone "Pumice Pelt": Physisch, Stärke 55, Genauigkeit 100 %, Energie 3, 50 % Chance auf eigenen Schutz +1.
 519. [P3] Stone "Slow Quake": Physisch, Stärke 90, Genauigkeit 100 %, Energie 3, Priorität -1.
-520. [P3] Stone "Fault Line": Fokus, Stärke 70, Genauigkeit 95 %, Energie 4, ignoriert positive Schutz- und Fokus-Stufen des Ziels (Schlüssel `ignore_stages`).
+520. [x] [P3] Stone "Fault Line": Fokus, Stärke 70, Genauigkeit 95 %, Energie 4, ignoriert positive Schutz- und Fokus-Stufen des Ziels (Schlüssel `ignore_stages`).
 521. [P3] Stone "Geode Heart": Status, Energie 5, heilt 40 % der max. Kraft und gibt Schutz +1.
 522. [P3] Stone "Gravel Hum": Status, Genauigkeit 90 %, Energie 3, Ziel Tempo -2.
 523. [P3] Stone "Mason Strike": Physisch, Stärke 85, Genauigkeit 90 %, Energie 5, `energy_refund`.
-524. [P1] Gale "Crosswind": Fokus, Stärke 55, Genauigkeit 100 %, Energie 3, `field_element` (mit Feld Stärke 75 im Feld-Element).
-525. [P1] Gale "Kite Cut": Physisch, Stärke 50, Genauigkeit 100 %, Energie 3, 30 % Chance auf eigenes Tempo +1.
-526. [P1] Gale "Scatter Gale": Status, Genauigkeit 100 %, Energie 3, entfernt alle Seitenfallen der eigenen Seite und senkt das Tempo des Ziels um 1.
-527. [P2] Gale "Downburst": Physisch, Stärke 110, Genauigkeit 85 %, Energie 7, `cooldown` 1.
-528. [P2] Gale "Draft Needle": Physisch, Stärke 35, Genauigkeit 100 %, Energie 1, Priorität +1.
+524. [x] [P1] Gale "Crosswind": Fokus, Stärke 55, Genauigkeit 100 %, Energie 3, `field_element` (mit Feld Stärke 75 im Feld-Element).
+525. [x] [P1] Gale "Kite Cut": Physisch, Stärke 50, Genauigkeit 100 %, Energie 3, 30 % Chance auf eigenes Tempo +1.
+526. [x] [P1] Gale "Scatter Gale": Status, Genauigkeit 100 %, Energie 3, entfernt alle Seitenfallen der eigenen Seite und senkt das Tempo des Ziels um 1.
+527. [x] [P2] Gale "Downburst": Physisch, Stärke 110, Genauigkeit 85 %, Energie 7, `cooldown` 1.
+528. [x] [P2] Gale "Draft Needle": Physisch, Stärke 35, Genauigkeit 100 %, Energie 1, Priorität +1.
 529. [P2] Gale "Lull Breaker": Fokus, Stärke 60, Genauigkeit 100 %, Energie 3, Stärke ×1,6 gegen Ziele mit Drowse, weckt das Ziel danach.
-530. [P2] Gale "Squall Line": Physisch, Stärke 80, Genauigkeit 95 %, Energie 5, senkt das Tempo des Ziels sicher um 1.
+530. [x] [P2] Gale "Squall Line": Physisch, Stärke 80, Genauigkeit 95 %, Energie 5, senkt das Tempo des Ziels sicher um 1.
 531. [P3] Gale "Chaff Feint": Status, Genauigkeit 95 %, Energie 2, Ziel Wucht -1 und Fokus -1.
-532. [P2] Gale "Cloudbreak": Fokus, Stärke 105, Genauigkeit 90 %, Energie 6, danach eigenes Tempo -1.
+532. [x] [P2] Gale "Cloudbreak": Fokus, Stärke 105, Genauigkeit 90 %, Energie 6, danach eigenes Tempo -1.
 533. [P3] Gale "Pinion Rush": Physisch, Stärke 75, Genauigkeit 95 %, Energie 4, `energy_refund`.
 534. [P3] Gale "Whirl Shear": Fokus, Stärke 75, Genauigkeit 95 %, Energie 5, trifft alle Gegner und nimmt einem aktiven Feld 1 Restrunde.
 535. [P3] Gale "Pressure Drop": Status, Genauigkeit 85 %, Energie 4, `energy_tax` auf alle Gegner für 2 Runden.
@@ -110,8 +110,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 538. [P3] Gale "Gale Mantle": Status, Energie 3, eigenes Tempo +1 und Fokus +1.
 
 ### Neue Techniken: Lumen und Umbra
-539. [P1] Lumen "Beacon Ping": Fokus, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Daze.
-540. [P1] Lumen "Dawn Needle": Physisch, Stärke 35, Genauigkeit 100 %, Energie 1, Priorität +1, ignoriert die Genauigkeitsstrafe von Daze beim Nutzer.
+539. [x] [P1] Lumen "Beacon Ping": Fokus, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Daze.
+540. [x] [P1] Lumen "Dawn Needle": Physisch, Stärke 35, Genauigkeit 100 %, Energie 1, Priorität +1, ignoriert die Genauigkeitsstrafe von Daze beim Nutzer.
 541. [P2] Lumen "Sunwell Sip": Status, Energie 4, heilt 30 % der max. Kraft und gibt Fokus +1.
 542. [P2] Lumen "Daybreak Strike": Physisch, Stärke 115, Genauigkeit 85 %, Energie 7, `cooldown` 1.
 543. [P3] Lumen "Starlit Lash": Physisch, Stärke 60, Genauigkeit 100 %, Energie 3, 30 % Chance auf Wucht -1 beim Ziel.
@@ -121,8 +121,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 547. [P3] Lumen "Sun Tithe": Fokus, Stärke 70, Genauigkeit 95 %, Energie 4, `energy_refund`.
 548. [P3] Lumen "Glow Trap": Status, Energie 3, Seitenfalle, die dem nächsten einwechselnden Gegner Daze gibt.
 549. [P3] Lumen "Halo Pulse": Fokus, Stärke 80, Genauigkeit 95 %, Energie 5, trifft alle Gegner, 10 % Daze.
-550. [P1] Umbra "Shade Pounce": Physisch, Stärke 50, Genauigkeit 100 %, Energie 3, Stärke ×1,5 gegen Ziele mit mindestens einer negativen Stufe.
-551. [P1] Umbra "Gloom Handoff": Status, Genauigkeit 100 %, Energie 2, `status_shift`.
+550. [x] [P1] Umbra "Shade Pounce": Physisch, Stärke 50, Genauigkeit 100 %, Energie 3, Stärke ×1,5 gegen Ziele mit mindestens einer negativen Stufe.
+551. [x] [P1] Umbra "Gloom Handoff": Status, Genauigkeit 100 %, Energie 2, `status_shift`.
 552. [P2] Umbra "Night Toll": Status, Genauigkeit 90 %, Energie 3, `heal_block` für 3 Runden.
 553. [P2] Umbra "Eclipse Crush": Physisch, Stärke 115, Genauigkeit 85 %, Energie 7, `cooldown` 1.
 554. [P2] Umbra "Murmur Bite": Physisch, Stärke 65, Genauigkeit 95 %, Energie 4, `energy_burn` 1.
@@ -136,9 +136,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 562. [P2] Lernlisten Umbra: Mirkmole lernt Veil Step bei Ring 6 und Shade Pounce bei Ring 12, Duskdigger Gloom Handoff bei Ring 27 und Eclipse Crush bei Ring 46, Verdantusk Gloam Pact bei Ring 40, Obsidroth Murmur Bite bei Ring 32.
 
 ### Element-Reaktionen und Zuteilung der neuen Techniken
-563. [P1] BattleAI.score_move bewertet alle neuen Bausteine mit festen Werten: Seitenfalle 0,25 mal Zahl der gegnerischen Bank-Spirlings, `energy_tax` 0,15 pro Runde, `delayed_hit` 0,8 des geschätzten Schadens, `cooldown` ohne Abschlag im ersten Zug.
-564. [P1] Lernlisten Stone: Shalebat lernt Grit Jab bei Ring 8 und Pumice Pelt bei Ring 16, Obsidroth Landslip bei Ring 30 und Monolith Drop bei Ring 44, Calderox Quarry Wall bei Ring 36, Duskdigger Fault Line bei Ring 33.
-565. [P1] Lernlisten Gale: Zephlet lernt Draft Needle bei Ring 5, Kite Cut bei Ring 10, Crosswind bei Ring 14 und Scatter Gale bei Ring 19, Tempestrel Squall Line bei Ring 30, Cloudbreak bei Ring 40 und Downburst bei Ring 48.
+563. [x] [P1] BattleAI.score_move bewertet alle neuen Bausteine mit festen Werten: Seitenfalle 0,25 mal Zahl der gegnerischen Bank-Spirlings, `energy_tax` 0,15 pro Runde, `delayed_hit` 0,8 des geschätzten Schadens, `cooldown` ohne Abschlag im ersten Zug.
+564. [x] [P1] Lernlisten Stone: Shalebat lernt Grit Jab bei Ring 8 und Pumice Pelt bei Ring 16, Obsidroth Landslip bei Ring 30 und Monolith Drop bei Ring 44, Calderox Quarry Wall bei Ring 36, Duskdigger Fault Line bei Ring 33.
+565. [x] [P1] Lernlisten Gale: Zephlet lernt Draft Needle bei Ring 5, Kite Cut bei Ring 10, Crosswind bei Ring 14 und Scatter Gale bei Ring 19, Tempestrel Squall Line bei Ring 30, Cloudbreak bei Ring 40 und Downburst bei Ring 48.
 566. [P2] Neue Reaktion in BattleRules.REACTIONS: Stone trifft ein Ziel mit Jolt, erdet den Status (er endet) und richtet ×1,1 Schaden an.
 567. [P2] Neue Reaktion: Gale trifft ein Ziel mit Soak, beendet Soak und senkt das Tempo des Ziels um 1.
 568. [P3] Neue Reaktion: Bloom trifft ein Ziel mit Soak, der Nutzer heilt 1/8 des angerichteten Schadens.
@@ -156,16 +156,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 580. [P3] Seitenfallen erscheinen als kleines Symbol unter der Gegner-Bank-Anzeige mit Kürzel des Effekts (zum Beispiel "SC" für Scorch).
 
 ### Bestehende Techniken nachjustieren
-581. [P1] Lichen Lash (0,94 K.o. pro Einsatz bei Ring 36) von Stärke 40 auf 35 senken, Energie bleibt 2.
-582. [P1] Crackle Bite (0,80 K.o. pro Einsatz) behält Stärke 40, die Jolt-Chance sinkt von 10 % auf 5 %.
-583. [P1] Overcharge (1,00 K.o. pro Einsatz) erhält im Simulator eine Obergrenze von +5 Energie Zuschlag; OVERCHARGE_PER_ENERGY sinkt von 0,15 auf 0,12.
-584. [P1] Storm Gnash (0,07 K.o. pro Einsatz) von Stärke 75 auf 80 und Genauigkeit 90 % auf 95 %.
-585. [P1] Gale Scythe (0,08 K.o. pro Einsatz) von Stärke 80 auf 85 und Energie 5 auf 4.
-586. [P1] Arc Bolt (0,04 K.o. pro Einsatz) Jolt-Chance von 20 % auf 30 %, Stärke bleibt 65.
-587. [P1] All-In Crash Grundstärke von 30 auf 40, damit es neben Overcharge eine echte Stone-Wahl ist.
-588. [P1] Cairn Crash von Stärke 100, Genauigkeit 80 %, Energie 7 auf Stärke 105, Genauigkeit 85 %, Energie 7, Rückstoß bleibt 25 %.
-589. [P1] Furnace Spiral von Genauigkeit 85 % auf 90 %, Scorch-Chance bleibt 20 %.
-590. [P1] Hush (Drowse) von Genauigkeit 75 % auf 80 %, Energie von 4 auf 3, damit es außerhalb der Ruhe-Regel gewählt wird.
+581. [x] [P1] Lichen Lash (0,94 K.o. pro Einsatz bei Ring 36) von Stärke 40 auf 35 senken, Energie bleibt 2.
+582. [x] [P1] Crackle Bite (0,80 K.o. pro Einsatz) behält Stärke 40, die Jolt-Chance sinkt von 10 % auf 5 %.
+583. [x] [P1] Overcharge (1,00 K.o. pro Einsatz) erhält im Simulator eine Obergrenze von +5 Energie Zuschlag; OVERCHARGE_PER_ENERGY sinkt von 0,15 auf 0,12.
+584. [x] [P1] Storm Gnash (0,07 K.o. pro Einsatz) von Stärke 75 auf 80 und Genauigkeit 90 % auf 95 %.
+585. [x] [P1] Gale Scythe (0,08 K.o. pro Einsatz) von Stärke 80 auf 85 und Energie 5 auf 4.
+586. [x] [P1] Arc Bolt (0,04 K.o. pro Einsatz) Jolt-Chance von 20 % auf 30 %, Stärke bleibt 65.
+587. [x] [P1] All-In Crash Grundstärke von 30 auf 40, damit es neben Overcharge eine echte Stone-Wahl ist.
+588. [x] [P1] Cairn Crash von Stärke 100, Genauigkeit 80 %, Energie 7 auf Stärke 105, Genauigkeit 85 %, Energie 7, Rückstoß bleibt 25 %.
+589. [x] [P1] Furnace Spiral von Genauigkeit 85 % auf 90 %, Scorch-Chance bleibt 20 %.
+590. [x] [P1] Hush (Drowse) von Genauigkeit 75 % auf 80 %, Energie von 4 auf 3, damit es außerhalb der Ruhe-Regel gewählt wird.
 591. [P2] Bloom Burst von Stärke 90, Genauigkeit 90 % auf Stärke 95, Genauigkeit 90 %.
 592. [P2] Breaker Plunge von Genauigkeit 85 % auf 90 %, Rückstoß von 25 % auf 20 %.
 593. [P2] Radiant Lance von Stärke 85, Energie 6 auf Stärke 90, Energie 6.
@@ -440,7 +440,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 844. [P1] Test: jedes Element hat nach der Erweiterung mindestens 14 Techniken, davon mindestens 3 Status-Techniken und mindestens eine mit Energie 1 oder 2.
 845. [P1] Test: jede Art kann bis Ring 5 eine Schadens-Technik ihres Elements und bis Ring 30 Techniken aus mindestens 2 Elementen.
 846. [P1] Test: im Modus `warden` liegt die Gewinnrate jedes Referenzteams in den Zielbändern aus tools/balance/targets.json (mit kleiner Rundenzahl im normalen CI-Lauf).
-847. [P1] Test pro neuem Effekt-Baustein in tests/unit/test_move_effects.gd mit fester Kampflage und festem Seed, der das genaue Ergebnis prüft (Schaden, Energie, Status, Stufe).
+847. [x] [P1] Test pro neuem Effekt-Baustein in tests/unit/test_move_effects.gd mit fester Kampflage und festem Seed, der das genaue Ergebnis prüft (Schaden, Energie, Status, Stufe).
 848. [P1] Test: `delayed_hit`, `side_snare` und `cooldown` überstehen ein Replay-Hin-und-zurück mit BattleReplay ohne Abweichung.
 849. [P1] Test: im Modus `team` bei Ring 36 liegt keine Art unter 30 % oder über 70 % (zusätzlich zum bestehenden Duell-Band 25 bis 75 %).
 850. [P2] Test: der Vorteil des Ersten liegt bei Ring 20 und 36 höchstens bei 62 %.

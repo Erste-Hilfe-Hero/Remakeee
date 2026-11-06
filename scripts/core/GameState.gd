@@ -431,9 +431,9 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
-	for k: Variant in (d.get("spirlog", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
-	for k: Variant in (d.get("inventory", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("inventory", {})):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once

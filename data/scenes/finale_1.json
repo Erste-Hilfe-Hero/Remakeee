@@ -1,0 +1,12 @@
+{
+ "_note": "Finale 1: Mirela at the edge of the Undrawn (plan items 1525, 1526). The chain finale_1 to finale_5 runs on entering undrawn_3; a lost battle stops it and it starts again from here.",
+ "skippable": false,
+ "steps": [
+  {"music": "title"},
+  {"say": ["At the very end of the drawn land, an old woman sits on a folding stool, drawing.", "A Wickit sleeps on her shoulder. Its flame is the colour of old paper."]},
+  {"say": ["Mirela: Oh. Oh, look at you. You have Aldo's chin. And my terrible handwriting, I bet."]},
+  {"say": ["Mirela: Forty years I've drawn this edge. If I stop, the Wide Rift tears open. So I don't stop."]},
+  {"flag": "mirela_met"},
+  {"action": "scene finale_2"}
+ ]
+}

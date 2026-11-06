@@ -1,8 +1,8 @@
 # German texts for the online parts (scripts/online, account, friends, mail, echoes, world goal).
 T = {
 # Account and connection
-"Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account.":
-	"Chimora läuft nur online. Deine Reisen liegen auf unserem Server in Deutschland, damit sie sicher sind, wenn dein Handy kaputtgeht. Gespeichert werden nur Wanderer-Name, Freundescode und Spielstände. Keine Werbung, kein Tracking. Unter Einstellungen, Konto kannst du alles löschen.",
+"Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. You can download or delete everything under Settings, Account.":
+	"Chimora läuft nur online. Deine Reisen liegen auf unserem Server in Deutschland, damit sie sicher sind, wenn dein Handy kaputtgeht. Gespeichert werden nur Wanderer-Name, Freundescode, Spielstände, Freunde, Leuchtpost und Ligastand. Keine Werbung, kein Tracking. Unter Einstellungen, Konto kannst du alles herunterladen oder löschen.",
 "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Wayfarer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset.":
 	"Online-Regeln:\n- Sei freundlich. Grüße sind feste Sätze, es gibt keinen freien Chat.\n- Teile nie deinen echten Namen, deine Adresse oder Passwörter.\n- Spirlings bleiben bei dem Wanderer, der sie verbunden hat. Man kann sie nicht tauschen oder verschenken.\n- Melde Namen, die nicht okay sind. Blockieren wirkt sofort.\n- Wer schummelt, dessen Konto wird zurückgesetzt.",
 "Account  Code %s": "Konto  Code %s",
@@ -50,6 +50,10 @@ T = {
 "The season ends soon, so this battle does not count.": "Die Saison endet bald, darum zählt dieser Kampf nicht.",
 "Your result is being checked. It counts once the check is done.": "Dein Ergebnis wird geprüft. Es zählt, sobald die Prüfung fertig ist.",
 "The result could not be sent, so it does not count.": "Das Ergebnis konnte nicht gesendet werden, darum zählt es nicht.",
+"Download my data": "Meine Daten herunterladen",
+"Your data is downloading as %s.": "Deine Daten werden als %s heruntergeladen.",
+"The file could not be saved. Write to our support and we send your data by email.": "Die Datei konnte nicht gespeichert werden. Schreib unserem Support, dann schicken wir dir deine Daten per E-Mail.",
+"Your data was saved as:": "Deine Daten wurden gespeichert als:",
 # League tiers
 "Spark": "Funke",
 "Ember": "Glut",
@@ -158,5 +162,5 @@ T = {
 "%s: %s": "%s: %s",
 }
 # Strings in online code that are not shown to players (server messages, HTTP headers).
-KEEP = ["%s %s  Bond %d  %s", "[%s] %d%%", "%d. %s  %d%s", "Wanderer", "unknown function %s", "Wanderer ", "apikey: ", "Authorization: Bearer ",
+KEEP = ["another player", "%s %s  Bond %d  %s", "[%s] %d%%", "%d. %s  %d%s", "Wanderer", "unknown function %s", "Wanderer ", "apikey: ", "Authorization: Bearer ",
 	"Content-Type: application/json", "Accept: application/json"]

@@ -243,8 +243,45 @@ static func _is_number(v: Variant) -> bool:
 static func _is_scalar(v: Variant) -> bool:
 	return v is String or v is StringName or _is_number(v)
 
+## Types of a fresh save (GameState.to_dict) and of a fresh Spirling, so fields added later by
+## other features are checked too without listing them here.
+static var _template: Dictionary = {}
+static var _spirling_template: Dictionary = {}
+
+static func _templates() -> void:
+	if not _template.is_empty():
+		return
+	_template = GameState.to_dict()
+	for s: Variant in GameState.party:
+		_spirling_template = (s as Spirling).to_dict()
+		break
+	if _spirling_template.is_empty():
+		var sd: SpirlingData = Database.species("Puddlet")
+		if sd != null:
+			_spirling_template = Spirling.new(sd, 5).to_dict()
+
+## Drops values of [param d] whose type differs from the same key in [param t].
+static func _match_template(d: Dictionary, t: Dictionary) -> void:
+	for k: Variant in d.keys():
+		if not t.has(k) or t[k] == null:
+			continue
+		var want: Variant = t[k]
+		var v: Variant = d[k]
+		var fits: bool
+		if want is Dictionary:
+			fits = v is Dictionary
+		elif want is Array:
+			fits = v is Array
+		elif want is String or want is StringName:
+			fits = _is_scalar(v)
+		else:
+			fits = _is_number(v)
+		if not fits:
+			d.erase(k)
+
 ## Drops every value of [param d] whose type the loaders cannot use. Returns [param d].
 static func sanitize(d: Dictionary) -> Dictionary:
+	_templates()
 	for k: String in DICT_KEYS:
 		if d.has(k) and not d[k] is Dictionary:
 			d.erase(k)
@@ -289,6 +326,7 @@ static func sanitize(d: Dictionary) -> Dictionary:
 			if s is Dictionary:
 				kept.append(_sanitize_spirling(s))
 		d[k] = kept
+	_match_template(d, _template)
 	return d
 
 static func _keep_numbers(d: Dictionary) -> void:
@@ -319,6 +357,7 @@ static func _sanitize_spirling(s: Dictionary) -> Dictionary:
 			s["moves"] = mv
 		else:
 			s.erase("moves")
+	_match_template(s, _spirling_template)
 	return s
 
 ## Upgrades [param d] to SAVE_VERSION. Returns null if it is from a newer game version.
