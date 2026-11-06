@@ -39,8 +39,9 @@ Preset values: target SDK 36, min SDK 24, arm64-v8a only, Gradle build, AAB. The
 installed fresh in CI by `tools/ci_setup_android.sh` (the `android/` folder is gitignored). To build locally,
 use Project → Install Android Build Template in the editor.
 
-`package/unique_name` is `com.chimora.game` as a placeholder. Change it to a reverse domain you own before
-the first upload; it can never change afterwards.
+`package/unique_name` and the iOS bundle ID are `de.chimora.game`. They can never change after the first
+upload. Store texts, screenshots and the submission steps: `store/README.md` and `docs/STORE_RELEASE.md`.
+Run `python3 tools/release_check.py --strict` before tagging a release.
 
 ## iOS setup (one time)
 

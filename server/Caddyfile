@@ -21,6 +21,14 @@
 		root * /srv/public
 		file_server
 	}
+	# Legal and support pages for the stores (built by tools/site/build_site.py into server/site).
+	@site path /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /lizenzen
+	handle @site {
+		root * /srv/site
+		rewrite * {path}.html
+		header Cache-Control "max-age=300"
+		file_server
+	}
 	handle / {
 		redir * /play/
 	}

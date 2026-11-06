@@ -42,4 +42,10 @@ for t in "$a" "$b"; do
 	echo "$del" | grep -q '"ok": *true\|"ok":true' || fail "delete_account: $del"
 done
 
+# The store pages (privacy, account deletion, support) must be reachable.
+for page in datenschutz privacy konto-loeschen delete-account support impressum; do
+	code="$(curl -sS $k -o /dev/null -w '%{http_code}' "$url/$page")"
+	[ "$code" = "200" ] || fail "/$page answered $code"
+done
+
 echo "Smoke test OK against $url"

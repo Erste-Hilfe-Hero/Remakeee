@@ -42,7 +42,7 @@ advertising identifiers (IDFA / Android Advertising ID).
 - Apple and Google process data as independent controllers when you download the app or buy something.
 - Authorities only where required by law.
 
-Apart from this we do not transfer data outside the EU/EEA. The game data itself is stored only in Frankfurt.
+Apart from this we do not transfer data outside the EU/EEA. The game data itself is stored only in Germany.
 
 ## 6. Children
 

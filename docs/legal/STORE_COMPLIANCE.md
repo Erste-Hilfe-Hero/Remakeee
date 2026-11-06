@@ -12,7 +12,7 @@
 | --- | --- |
 | Erhebt oder teilt die App Nutzerdaten? | **Ja** (erheben). Teilen: **Nein** (Hoster als Auftragsverarbeiter zählt nicht als „Teilen“) |
 | Daten bei der Übertragung verschlüsselt? | **Ja** (TLS) |
-| Können Nutzer die Löschung ihrer Daten beantragen? | **Ja**, In-App + Web-Link [https://DOMAIN/konto-loeschen] (Pflicht, wenn die App Konten anlegt) |
+| Können Nutzer die Löschung ihrer Daten beantragen? | **Ja**, In-App + Web-Link `https://chimora.161-97-102-171.sslip.io/konto-loeschen` (Pflicht, wenn die App Konten anlegt) |
 
 Erhobene Datentypen (alle: *erforderlich*, Zweck *App-Funktionen* und ggf. *Betrugsprävention/Sicherheit*,
 nicht flüchtig, nicht geteilt):
@@ -26,7 +26,7 @@ nicht flüchtig, nicht geteilt):
 | Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
 
 Weitere Play-Console-Punkte:
-- **Datenschutzerklärung:** öffentliche URL (kein PDF, keine Store-Seite), z. B. `https://DOMAIN/datenschutz`.
+- **Datenschutzerklärung:** öffentliche URL (kein PDF, keine Store-Seite), `https://chimora.161-97-102-171.sslip.io/datenschutz`.
 - **Zielgruppe und Inhalte:** Zielgruppe **13 Jahre und älter** wählen und nicht gezielt an Kinder
   vermarkten. Falls Google das Spiel trotzdem als „für Kinder ansprechend“ einstuft: Chimora erfüllt die
   Families-Richtlinie bereits (keine Werbe-/Analytics-SDKs, keine Werbe-ID), dann einfach zustimmen.
@@ -64,11 +64,11 @@ Freischalten nutzt.
 ## 3. Altersfreigabe
 
 Antworten für den aktuellen Stand (Fantasy-Kreaturen kämpfen rundenbasiert, Gegner „fallen um“, kein Blut,
-keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspiel):
+keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspiel, Freunde nur mit festen Grüßen):
 
 - **IARC (Google, liefert USK/PEGI/ESRB):** Gewalt: ja, *Fantasy-/Cartoon-Gewalt gegen Fantasiewesen,
-  nicht realistisch, kein Blut*. Alles andere: nein. Nutzer können interagieren: **nein** (solange kein
-  Chat/keine sichtbaren Namen). Digitale Käufe: je nach Monetarisierung. Erwartung: **USK 6 / PEGI 7**
+  nicht realistisch, kein Blut*. Alles andere: nein. Nutzer können interagieren: **ja, eingeschränkt** (Freunde
+  sehen den Wayfarer-Namen und tauschen nur feste Grüße, kein freier Chat; Melden und Blockieren vorhanden). Digitale Käufe: **nein** (Einmalkauf über den Store, keine In-App-Käufe). Erwartung: **USK 6 / PEGI 7**
   (Schätzung, die Freigabe vergibt IARC).
 - **Apple (Stufen 4+, 9+, 13+, 16+, 18+, neuer Fragebogen seit 31.01.2026):** Cartoon- oder Fantasy-Gewalt:
   *selten/mild* → Erwartung **9+**. In-App-Kontrollen/Fähigkeiten: kein Chat, keine nutzergenerierten Inhalte,
@@ -101,27 +101,12 @@ der Beschreibung, in Keywords, Screenshots oder Anzeigen; keine Vergleiche („w
 Online-Pflicht offen nennen. Apple lehnt Metadaten mit fremden Marken oder Vergleichen ab (Guideline
 2.3.7); in Deutschland wäre es zusätzlich unlautere Anlehnung (UWG).
 
-**Kurzbeschreibung (DE, max. 80 Zeichen):**
-> Verbünde dich mit Spirlings und versiegle die Risse – ein Retro-Pixel-Abenteuer.
+Die fertigen Texte, Screenshots und die Feature-Grafik liegen in [`store/`](../../store/README.md)
+(Deutsch und Englisch). Ablauf beim Einreichen: [docs/STORE_RELEASE.md](../STORE_RELEASE.md).
 
-**Short description (EN):**
-> Bond with Spirlings and seal the Rifts in a retro pixel monster-taming RPG.
-
-**Beschreibung (DE):**
-> Chimora ist ein rundenbasiertes Monster-Zähmungs-RPG im Retro-Pixel-Stil.
-> Als Wayfarer erkundest du die Region Veydal, triffst über 15 einzigartige Spirlings und gewinnst ihr
-> Vertrauen in einem Minispiel. Acht Elemente, Energie statt Attackenpunkte und vier
-> Schwierigkeitsgrade bis hin zu „Rift-Born“ sorgen für taktische Tiefe.
-> Mit jeder neuen Region entwickelt sich auch der Grafikstil weiter.
-> • Rundenbasierte Kämpfe mit eigenem Elementsystem
-> • Bonding statt Fangen: baue in einem Minispiel eine Verbindung auf
-> • Rifts und ihre Wardens als Herausforderungen
-> • Spielstand sicher in der Cloud
-> **Hinweis: Chimora benötigt eine Internetverbindung.**
-> [Falls zutreffend: Enthält optionale In-App-Käufe. Keine Werbung.]
-
-**Keywords (Apple, 100 Zeichen):**
-`monster,rpg,pixel,retro,turn based,creature,wayfarer,adventure,bond,elements,strategy,rift`
+**URLs für die Konsolen** (vom Spielserver ausgeliefert, bis es eine eigene Domain gibt):
+Datenschutz `https://chimora.161-97-102-171.sslip.io/datenschutz` (EN `/privacy`), Konto löschen
+`/konto-loeschen` (EN `/delete-account`), Support `/support`, Impressum `/impressum`.
 
 ## 6. Sonstiges vor dem Launch
 
@@ -132,5 +117,5 @@ Online-Pflicht offen nennen. Apple lehnt Metadaten mit fremden Marken oder Vergl
   Godot-Lizenztext (`scripts/core/LegalInfo.gd`). Die Domain dort ersetzen, sobald die Website steht. Die
   Lizenztexte der in Godot enthaltenen Drittbibliotheken (FreeType, ENet, mbedTLS usw.) auf der Seite
   `/lizenzen` der Website veröffentlichen (Text aus `Engine.get_license_info()` oder Godots `COPYRIGHT.txt`).
-- **Noch zu bauen, sobald das Backend kommt:** Zustimmung zu den Nutzungsbedingungen beim ersten Start,
-  Einstellungen → Konto (Spieler-ID, Übertragungscode, „Konto löschen“) und die Web-Seite zur Kontolöschung.
+- **Konto in der App:** Menü → Konto (Freundescode, Übertragungscode, Online-Regeln, Datenschutz,
+  „Konto löschen“). Web-Seite zur Kontolöschung: `/konto-loeschen` auf dem Spielserver.
