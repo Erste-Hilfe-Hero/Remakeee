@@ -1784,6 +1784,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 		player.frozen = false
 		return
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	info["goal_key"] = BattleGoals.key(map.id, n.npc_id)
 	# Helper call (item 46): after losing to a Warden once, a friend's echo can fight beside you.
 	var losses: Dictionary = GameState.records.get("warden_losses", {})
 	var lost_key: String = TrainerData.beaten_flag(def, map.id)
@@ -1798,9 +1799,21 @@ func challenge(n: NPC, spotted: bool) -> void:
 		GameState.records["warden_losses"] = losses
 	if not helper.is_empty():
 		await thank_echo(helper, outcome == BattleModel.Outcome.WIN)
+	await _pay_bonus_goal(str(info.goal_key))
 	# A wild horde also counts as cleared when its last Spirling bonded with you.
 	if outcome == BattleModel.Outcome.WIN or (bool(info.wild) and outcome == BattleModel.Outcome.BONDED):
 		await after_tamer_win(n)
+
+## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.
+func _pay_bonus_goal(goal_key: String) -> void:
+	if last_model == null or not last_model.has_meta("goal_tracker"):
+		return
+	var tracker: BattleGoals.Tracker = last_model.get_meta("goal_tracker")
+	if not tracker.met():
+		return
+	var lines: Array[String] = BattleGoals.grant(goal_key, tracker.goal, GameState.records)
+	if not lines.is_empty():
+		await say(lines)
 
 ## Win aftermath: beaten flag, defeat lines, Rift seal for Wardens, win flags, autosave.
 func after_tamer_win(n: NPC) -> void:
@@ -2141,6 +2154,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	var goal_key: String = str(trainer.get("goal_key", ""))
+	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() else {}
+	if not goal.is_empty():
+		# The start card shows the goal; the tracker only watches, it never changes the battle.
+		model.set_meta("goal_tracker", BattleGoals.Tracker.new(model, goal))
+		var done: bool = bool((GameState.records.get("goals_done", {}) as Dictionary).get(goal_key, false))
+		model.set_meta("bonus_goal", BattleGoals.describe(goal) + (" ✓" if done else ""))
 	var partner: Variant = trainer.get("partner", {})
 	if partner is Dictionary and not (partner as Dictionary).is_empty():
 		var ally: Array[Spirling] = []

@@ -326,6 +326,8 @@ func _run() -> void:
 	if _multi:
 		_build_formation()
 	await _play(intro)
+	if model.has_meta("bonus_goal"):
+		await _text.show_text(str(model.get_meta("bonus_goal")))
 	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
 		for line: String in Tips.take(id):
 			await _text.show_text(line)

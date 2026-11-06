@@ -342,16 +342,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 754. [P3] Story: Wanderer kommentieren ihre stärkste Technik vor dem ersten Einsatz mit einem Satz, damit Anfänger die Gefahr lesen können.
 
 ### Kampf-Herausforderungen (Bonusziele)
-755. [P1] Neue Datei data/battle_goals.json: pro Wanderer und Wächter ein optionales Bonusziel mit `type`, `value` und `reward`, angezeigt als Zeile auf der Kampfstart-Karte.
-756. [P1] Zieltypen: `win_within` (Runden), `no_faint`, `no_rest`, `only_kind` (Physisch, Fokus oder Status), `max_fielded` (Zahl), `min_hp_end` (Anteil), `reaction_count`.
-757. [P1] Belohnungen sind nur Spielinhalte ohne Kampfvorteil über das Normale hinaus: Echo-Kristall-Splitter (5 Splitter ergeben einen Echo-Kristall), Titel und Lexikon-Einträge.
-758. [P2] Bonusziele Crowcrest: Lio `win_within` 4, Bram `only_kind` Fokus, Kestra `no_faint`.
-759. [P2] Bonusziele Cinder Rift: Pell `reaction_count` 1, Suri `no_rest`, Orrin `max_fielded` 2.
-760. [P2] Bonusziele Murk Hollow und Saltmarsh: Ros `min_hp_end` 0,5, Neve `win_within` 5, Tobin `no_faint` für Spieler und Kestra.
-761. [P2] Bonusziele Tide Rift: Ilka `reaction_count` 2, Maelis `win_within` 8, Drowned Heart `no_faint`.
+755. [x] [P1] Neue Datei data/battle_goals.json: pro Wanderer und Wächter ein optionales Bonusziel mit `type`, `value` und `reward`, angezeigt als Zeile auf der Kampfstart-Karte. Erledigt: data/battle_goals.json, BattleGoals.gd; Zeile nach der Kampfstart-Meldung (✓ wenn schon erfüllt).
+756. [x] [P1] Zieltypen: `win_within` (Runden), `no_faint`, `no_rest`, `only_kind` (Physisch, Fokus oder Status), `max_fielded` (Zahl), `min_hp_end` (Anteil), `reaction_count`. Erledigt: alle sieben Typen in BattleGoals.Tracker.
+757. [x] [P1] Belohnungen sind nur Spielinhalte ohne Kampfvorteil über das Normale hinaus: Echo-Kristall-Splitter (5 Splitter ergeben einen Echo-Kristall), Titel und Lexikon-Einträge. Erledigt: Belohnungen shards/title/lore in GameState.records (echo_shards, echo_crystals, titles, lexicon).
+758. [x] [P2] Bonusziele Crowcrest: Lio `win_within` 4, Bram `only_kind` Fokus, Kestra `no_faint`. Erledigt.
+759. [x] [P2] Bonusziele Cinder Rift: Pell `reaction_count` 1, Suri `no_rest`, Orrin `max_fielded` 2. Erledigt.
+760. [x] [P2] Bonusziele Murk Hollow und Saltmarsh: Ros `min_hp_end` 0,5, Neve `win_within` 5, Tobin `no_faint` für Spieler und Kestra. Erledigt (Tobin = saltmarsh/kestra_tag, zählt die ganze Spielerseite).
+761. [x] [P2] Bonusziele Tide Rift: Ilka `reaction_count` 2, Maelis `win_within` 8, Drowned Heart `no_faint`. Erledigt.
 762. [P2] Bonusziel-Fortschritt erscheint während des Kampfes als kleines Häkchen oder Kreuz neben der Rundenzahl, sobald es sicher erfüllt oder verfehlt ist.
-763. [P2] Bonusziele gelten auch in Rückkämpfen; ein bereits erfülltes Ziel zeigt sein Häkchen, gibt aber keine zweite Belohnung.
-764. [P2] Ein nicht erfülltes Bonusziel ändert nichts am Sieg, an Geld oder Wachstum.
+763. [x] [P2] Bonusziele gelten auch in Rückkämpfen; ein bereits erfülltes Ziel zeigt sein Häkchen, gibt aber keine zweite Belohnung. Erledigt: records["goals_done"].
+764. [x] [P2] Ein nicht erfülltes Bonusziel ändert nichts am Sieg, an Geld oder Wachstum. Erledigt: der Tracker hört nur zu (Test).
 765. [P3] Bonusziele lassen sich in den Einstellungen ausblenden (Standard an).
 766. [P2] GameState.records["goals"] speichert pro NPC erfüllt ja oder nein und die beste Rundenzahl; Speicherstand-Migration setzt leere Werte.
 767. [P2] Das Lexikon zeigt pro Karte die erfüllten Bonusziele als Zähler (zum Beispiel 3 von 5).
