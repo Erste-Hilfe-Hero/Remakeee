@@ -1,6 +1,7 @@
 {
  "name": "Saltmarsh",
  "region": "veydal",
+ "biome": "marsh",
  "backdrop": "lake",
  "outdoor": true,
  "encounters": "saltmarsh",
@@ -145,15 +146,41 @@
    "dialogue": "saltmarsh/sign"
   },
   {
-   "x": 10,
-   "y": 8,
-   "dialogue": "saltmarsh/reed_find"
-  },
-  {
    "x": 11,
    "y": 10,
    "dialogue": "story/find_5",
    "hide_flag": "page_5"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 8,
+   "item": "power_brew",
+   "count": 1,
+   "flag": "marsh_reed_find",
+   "dialogue": "saltmarsh/reed_find"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "tonic",
+   "count": 1,
+   "flag": "find_marsh_east"
+  },
+  {
+   "x": 2,
+   "y": 3,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_marsh_reeds"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_marsh_post"
   }
  ]
 }
