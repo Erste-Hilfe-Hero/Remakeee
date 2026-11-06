@@ -275,6 +275,14 @@ whose token is not the newest one (saving, trades, restores), and `presence` ret
 and only takes the account back when the player picks "Play on this device". Calls without the
 header (older builds) are not checked; moving the account with a transfer code claims anew.
 
+## Small actions while the connection is weak
+
+Set phrases, waves, thanks and world goal steps go through `Online.send_small`: each gets its own
+id and waits in `Online.actions` (at most 50, kept in the session file) until it is sent with
+`action_once(p_id, p_fn, p_args)`. The server runs `mail_send` or `community_add` and keeps the id
+for 2 days in `action_done`, so an action sent twice counts once. After a reconnect the queue goes
+out in order; a menu shows "It goes out as soon as the connection is back." for a waiting action.
+
 ## Set phrases and names
 
 There is no free text anywhere. Every place that shows set phrases has its own list of allowed
