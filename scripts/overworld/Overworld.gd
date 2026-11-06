@@ -1135,6 +1135,8 @@ func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
 		Sound.sfx("level_up")
 		GameState.set_flag(args[0])
 		DailyTasks.record("melody", {"map": map.id})
+	if score >= 1.0:
+		GameState.records["melody_perfect"] = 1
 	else:
 		Sound.sfx("cancel")
 
@@ -2124,7 +2126,11 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		for f: Spirling in model.parties[1]:
 			for e: int in f.elements():
 				foe_elements.append(Elements.E.keys()[e])
-		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements})
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements, "night": DayCycle.current() == DayCycle.Phase.NIGHT})
+		var fields: Array = GameState.records.get("fields_won", [])
+		if model.field != "" and not model.field in fields:
+			fields.append(model.field)
+			GameState.records["fields_won"] = fields
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).

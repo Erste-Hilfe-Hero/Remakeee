@@ -542,6 +542,8 @@ func _bond(slot: int = 0) -> BattleAction:
 	GameState.note_echo(score)
 	if score >= DailyTasks.MELODY_GOOD:
 		DailyTasks.record("melody", {"map": GameState.current_map})
+	if score >= 1.0:
+		GameState.records["melody_perfect"] = 1
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 
 # --- Event playback -----------------------------------------------------------------
