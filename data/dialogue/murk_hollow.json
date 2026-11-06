@@ -23,9 +23,14 @@
    }
   ]
  },
- "delve": [
-  "Ros: The Mirkmoles here hate bright light. Keep that lantern low."
- ],
+ "delve": {
+  "lines": [
+   "Ros: The Mirkmoles here hate bright light. Keep that lantern low."
+  ],
+  "night_lines": [
+   "Ros: Night shift, eh? Down here it's always night. The Mirkmoles like you better for it."
+  ]
+ },
  "delve_intro": [
   "Ros: A cartographer in my mine? Show me what you've got!"
  ],

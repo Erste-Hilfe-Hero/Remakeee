@@ -65,9 +65,12 @@ static func variants(entry: Dictionary) -> Array:
 	return []
 
 ## The lines to show now, honouring "after_flag" variants (the last one that applies wins).
-static func lines_for(entry: Dictionary, flags: Dictionary) -> Array[String]:
+## While no variant applies, "night_lines" replace the lines at night (plan item 1353) and
+## "daily" (a list of line lists) gives one new set per calendar day (plan item 1352).
+## [param phase] and [param day] default to the device clock; tests pass them in.
+static func lines_for(entry: Dictionary, flags: Dictionary, phase: int = -1, day: int = -1) -> Array[String]:
 	var out: Array[String] = []
-	var src: Variant = entry.get("lines", [])
+	var src: Variant = ambient_lines(entry, phase, day)
 	for v: Variant in variants(entry):
 		if not v is Dictionary:
 			continue
@@ -78,6 +81,27 @@ static func lines_for(entry: Dictionary, flags: Dictionary) -> Array[String]:
 	for l: Variant in src:
 		out.append(str(l))
 	return out
+
+## The base lines of [param entry] for this time: "night_lines" at night, else one set
+## from "daily" picked by the day number, else "lines".
+static func ambient_lines(entry: Dictionary, phase: int = -1, day: int = -1) -> Variant:
+	if entry.has("night_lines"):
+		var p: int = phase if phase >= 0 else (DayCycle.current() if GameState.day_night else DayCycle.Phase.DAY)
+		if p == DayCycle.Phase.NIGHT:
+			return entry.night_lines
+	var daily: Variant = entry.get("daily")
+	if daily is Array and not (daily as Array).is_empty():
+		var d: int = day if day >= 0 else day_number()
+		var pick: Variant = (daily as Array)[posmod(d, (daily as Array).size())]
+		if pick is Array:
+			return pick
+	return entry.get("lines", [])
+
+## Local calendar day count since 1970, so "daily" lines change at midnight.
+static func day_number() -> int:
+	var now: int = int(Time.get_unix_time_from_system())
+	var bias: int = int(Time.get_time_zone_from_system().get("bias", 0)) * 60
+	return int(floor(float(now + bias) / 86400.0))
 
 ## The speaker of an entry or variant, "" if none is given.
 static func speaker_for(entry: Dictionary) -> String:
