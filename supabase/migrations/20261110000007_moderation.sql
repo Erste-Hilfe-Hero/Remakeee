@@ -70,7 +70,8 @@ end $$;
 
 create or replace function public.report(p_code text, p_reason int) returns jsonb
 language sql volatile security definer set search_path = public as $$
-  select public.report_in(p_code, p_reason, 'friends', null)
+  -- public._uid() first: fails when signed out, like every player function.
+  select public.report_in(p_code, p_reason, 'friends', null) where public._uid() is not null
 $$;
 
 -- Ali's decision. p_action: 'name_reset', 'warning', 'league_block' or 'none' (rejected).
