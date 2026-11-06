@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 10,
+ "catalog_version": 11,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -667,7 +667,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Glowglass Slash",
-   "desc": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy) to one Ember Spirling. Used up.",
+   "desc": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy, 20% chance to scorch) to one Ember Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -683,14 +683,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_tide",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Floodglass Wave",
-   "desc": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy) to one Tide Spirling. Used up.",
+   "desc": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy, 20% chance to soak) to one Tide Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -706,14 +706,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_bloom",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Vineglass Sting",
-   "desc": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy) to one Bloom Spirling. Used up.",
+   "desc": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy, heals 25% of the damage) to one Bloom Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -729,14 +729,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_volt",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Boltglass Bite",
-   "desc": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy) to one Volt Spirling. Used up.",
+   "desc": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy, 30% chance to lower Pace) to one Volt Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -752,14 +752,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_stone",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Rockglass Ram",
-   "desc": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy) to one Stone Spirling. Used up.",
+   "desc": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy, 30% chance to raise own Guard) to one Stone Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -775,14 +775,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_gale",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Stormglass Cut",
-   "desc": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy) to one Gale Spirling. Used up.",
+   "desc": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy, strikes first) to one Gale Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -798,14 +798,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_lumen",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Lightglass Beam",
-   "desc": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy) to one Lumen Spirling. Used up.",
+   "desc": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy, cures the user's own condition) to one Lumen Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -821,14 +821,14 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_umbra",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rift Script: Duskglass Grip",
-   "desc": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy) to one Umbra Spirling. Used up.",
+   "desc": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.",
    "rg_price": 500,
    "eur_cents": 499,
    "store_type": "consumable",
@@ -844,7 +844,7 @@
    "duration": "once",
    "plan": 4448,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_move_memory",

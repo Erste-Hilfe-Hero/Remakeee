@@ -51,12 +51,25 @@ func _factor(mv: MoveData) -> float:
 					f *= float(FACTOR[id])
 	return f
 
+## Shop techniques (Rift Scripts, plan area 10, item 4450) sit above the curve on purpose, but
+## never further than SHOP_CURVE_MAX.
+const SHOP_CURVE_MAX: float = 24.0
+
+static func _shop_arts() -> Array[String]:
+	var out: Array[String] = []
+	for it: Dictionary in Database.items.values():
+		if bool(it.get("shop", false)) and it.has("teaches"):
+			out.append(str(it.teaches))
+	return out
+
 func test_every_damage_art_sits_on_the_curve() -> void:
+	var shop: Array[String] = _shop_arts()
 	for mv: MoveData in Database.moves.values():
 		if not mv.is_damaging() or mv.overcharge:
 			continue
 		var value: float = float(mv.power) * mv.accuracy / float(mv.energy_cost + 1) * _factor(mv)
-		assert_between(value, CURVE_MIN, CURVE_MAX, "%s: power x accuracy / (energy + 1) x %0.2f = %0.1f" % [mv.move_name, _factor(mv), value])
+		var top: float = SHOP_CURVE_MAX if mv.move_name in shop else CURVE_MAX
+		assert_between(value, CURVE_MIN, top, "%s: power x accuracy / (energy + 1) x %0.2f = %0.1f" % [mv.move_name, _factor(mv), value])
 
 func test_accuracy_and_status_chances_stay_fair() -> void:
 	for mv: MoveData in Database.moves.values():

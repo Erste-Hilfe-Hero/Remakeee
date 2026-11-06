@@ -261,6 +261,15 @@ func add_item(id: String, count: int = 1) -> void:
 	if count > 0 and BattleRules.is_holdable(id):
 		Achievements.note_keepsake(id)
 
+## Takes one [param id] out of the bag; an empty entry goes away. Returns false if there was none.
+func take_item(id: String) -> bool:
+	if item_count(id) <= 0:
+		return false
+	inventory[id] = item_count(id) - 1
+	if int(inventory[id]) <= 0:
+		inventory.erase(id)
+	return true
+
 func item_count(id: String) -> int:
 	return int(inventory.get(id, 0))
 
@@ -979,6 +988,23 @@ func train_spark(s: Spirling, key: String, amount: int) -> bool:
 	s.spark[key] = mini(Spirling.SPARK_MAX, v + amount)
 	if key == "hp":
 		s.hp = mini(s.max_hp(), s.hp + s.max_hp() - old_max)
+	return true
+
+## [param s] learns the move of Echo Crystal or Rift Script [param item_id], in place of move
+## [param forget] when it already knows 4. Rift Scripts from the shop are used up by this (plan
+## item 4452); Echo Crystals stay. Returns false when nothing was learned.
+func learn_from_item(s: Spirling, item_id: String, forget: int = -1) -> bool:
+	if not can_learn_echo(s, item_id) or item_count(item_id) <= 0:
+		return false
+	var mv: MoveData = Database.move(str(Database.item(item_id).teaches))
+	if s.moves.size() < Spirling.MAX_MOVES:
+		s.moves.append(mv)
+	elif forget >= 0 and forget < s.moves.size():
+		s.moves[forget] = mv
+	else:
+		return false
+	if bool(Database.item(item_id).get("used_up", false)):
+		take_item(item_id)
 	return true
 
 ## True if [param s] can learn the move an Echo Crystal holds (same element, not known yet).
