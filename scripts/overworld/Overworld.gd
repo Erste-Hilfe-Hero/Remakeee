@@ -560,9 +560,13 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if spotter != null:
 		await challenge(spotter, true)
 		return
+	# Encounter Call (item 4838): twice the encounter rate for its steps, then a short note.
+	var call_mult: float = ShopEffects.encounter_mult()
+	if ShopEffects.step_done():
+		toast.show_note(Loc.t("The Encounter Call fades."))
 	var guard_over: bool = EncounterTable.tick_guard()
 	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over:
-		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < EncounterTable.rate(map.encounter_table):
+		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])

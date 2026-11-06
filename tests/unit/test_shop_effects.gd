@@ -373,6 +373,27 @@ func test_boost_lines_show_battles_left() -> void:
 	assert_eq(ShopEffects.boost_lines(), ["Coins x1.5: 3 battles left"] as Array[String])
 	GameState.shop_boosts = boosts
 
+func test_encounter_call_doubles_encounters_for_30_steps() -> void:
+	var boosts: Dictionary = GameState.shop_boosts.duplicate(true)
+	var inv: Dictionary = GameState.inventory.duplicate(true)
+	GameState.shop_boosts = {}
+	GameState.inventory["rg_encounter_call"] = 1
+	assert_eq(ShopEffects.encounter_mult(), 1.0)
+	assert_eq(ShopEffects.start_boost("rg_encounter_call"), "Works for the next 30 steps.")
+	assert_eq(GameState.item_count("rg_encounter_call"), 0)
+	assert_eq(ShopEffects.encounter_mult(), 2.0)
+	assert_eq(ShopEffects.boost_lines(), ["Encounter Call: 30 steps left"] as Array[String])
+	# Battles do not use up steps.
+	ShopEffects.battle_done()
+	assert_eq(ShopEffects.boost_left("encounters"), 30)
+	for i: int in 29:
+		assert_false(ShopEffects.step_done())
+	assert_eq(ShopEffects.encounter_mult(), 2.0)
+	assert_true(ShopEffects.step_done())
+	assert_eq(ShopEffects.encounter_mult(), 1.0)
+	GameState.shop_boosts = boosts
+	GameState.inventory = inv
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

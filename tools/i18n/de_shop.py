@@ -636,4 +636,9 @@ T = {
 "Rift Script: Duskglass Grip": "Rissschrift: Schattenglas-Griff",
 "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.": "Lehrt einem Umbra-Spirling Schattenglas-Griff (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, den Fokus zu senken). Wird verbraucht.",
 "Travel to a place": "Reise wohin?",
+"Encounter Call": "Begegnungsruf",
+"Twice as many wild encounters for the next 30 steps.": "30 Schritte lang doppelt so viele wilde Begegnungen.",
+"Works for the next %d steps.": "Wirkt die nächsten %d Schritte.",
+"1 step left": "noch 1 Schritt", "%d steps left": "noch %d Schritte",
+"The Encounter Call fades.": "Der Begegnungsruf verklingt.",
 }
