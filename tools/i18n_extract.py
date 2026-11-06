@@ -89,6 +89,11 @@ def strings():
         for k in ("habitat", "lore", "origin"):
             if isinstance(sp.get(k), str) and sp[k]:
                 found.append(sp[k])
+    lore = os.path.join(ROOT, "data/spirlog_lore.json")
+    if os.path.exists(lore):
+        for k, v in json.load(open(lore)).items():
+            if not k.startswith("_") and isinstance(v, str):
+                found.append(v)
     for a in json.load(open(os.path.join(ROOT, "data/achievements.json"))).get("achievements", []):
         for k in ("title", "text"):
             if isinstance(a.get(k), str):
