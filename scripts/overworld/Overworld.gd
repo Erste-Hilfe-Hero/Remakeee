@@ -656,7 +656,7 @@ func _play_one(ref: String, speaker: NPC) -> String:
 			await _run_action(str(pick.action), speaker)
 		if pick.has("next"):
 			next = str(pick.next)
-	_text.visible = false
+	await _text.close()
 	var already: bool = entry.has("flag") and GameState.has_flag(str(entry.flag))
 	if entry.has("action") and not (already and bool(entry.get("once", false))):
 		await _run_action(str(entry.action), speaker)
