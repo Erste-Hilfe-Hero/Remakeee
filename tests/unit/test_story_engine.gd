@@ -233,3 +233,19 @@ func test_stillwater_tag_battle_with_kestra() -> void:
 	assert_true(npcs.any(func(n: Dictionary) -> bool: return n.get("dialogue", "") == "corvane/kestra_still"))
 	var defeat: Dictionary = Dialogue.get_entry("corvane/kestra_tag_defeat")
 	assert_eq(str(defeat.get("action", "")), "add_var kestra_trust 1")
+
+func test_corvane_post_brings_three_letters_from_aldo() -> void:
+	var f: Dictionary = {"rift_rain_sealed": true}
+	assert_true(Dialogue.check(Dialogue.get_entry("corvane/juna_post_1").get("if"), f))
+	f["aldo_letter_1"] = true
+	assert_false(Dialogue.check(Dialogue.get_entry("corvane/juna_post_1").get("if"), f), "letter 1 only once")
+	assert_false(Dialogue.check(Dialogue.get_entry("corvane/juna_post_2").get("if"), f), "letter 2 waits for the Mirror Rift")
+	f["rift_mirror_sealed"] = true
+	assert_true(Dialogue.check(Dialogue.get_entry("corvane/juna_post_2").get("if"), f))
+	assert_eq(str(Dialogue.get_entry("corvane/juna_post_3").get("flag", "")), "aldo_letter_3")
+
+func test_hushed_wanderers_speak_after_the_rain_rift() -> void:
+	var e: Dictionary = Dialogue.get_entry("corvane/woad_wanderer_a")
+	assert_eq(Dialogue.lines_for(e, {}), ["..."] as Array[String])
+	assert_true(Dialogue.lines_for(e, {"rift_rain_sealed": true}).size() > 1)
+	assert_eq(str(Dialogue.get_entry("corvane/weda").get("action", "")), "heal")
