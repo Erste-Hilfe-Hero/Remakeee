@@ -8,6 +8,8 @@ const PANEL_MARGIN: int = 6
 var picker: ListPicker
 var _info_panel: PanelContainer
 var _info_label: Label
+## Optional picture above the info text (gear pages, area 3 item 1050).
+var _info_picture: TextureRect
 var _info_scroll: ScrollContainer
 var _info_wait: bool = false
 ## Where the finger went down while an info text is open (NAN = no press yet), so a drag
@@ -35,10 +37,19 @@ func _ready() -> void:
 	add_child(_info_panel)
 	# Long texts (privacy note, German, small title-screen panel) scroll instead of running
 	# off the bottom of the screen, where "(tap to continue)" could not be seen.
+	# Picture (gear pages) above the scrolling text.
+	var box := VBoxContainer.new()
+	_info_panel.add_child(box)
+	_info_picture = TextureRect.new()
+	_info_picture.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	_info_picture.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_info_picture.visible = false
+	box.add_child(_info_picture)
 	_info_scroll = ScrollContainer.new()
 	_info_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	_info_scroll.scroll_deadzone = int(TAP_SLOP)
-	_info_panel.add_child(_info_scroll)
+	_info_scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	box.add_child(_info_scroll)
 	_info_label = Label.new()
 	_info_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_info_label.vertical_alignment = VERTICAL_ALIGNMENT_TOP
@@ -94,8 +105,12 @@ func confirm_danger(question: String, yes_text: String = "Yes", no_text: String 
 	var entries: Array[Dictionary] = [{"text": no_text}, {"text": yes_text, "danger": true}]
 	return await pick(question, entries, true, 0, ListPicker.DANGER_GUARD_MS) == 1
 
-## Shows a block of text until the player taps or presses accept/cancel.
-func info(text: String) -> void:
+## Shows a block of text until the player taps or presses accept/cancel, with an optional
+## [param picture] above it.
+func info(text: String, picture: Texture2D = null) -> void:
+	_info_picture.texture = picture
+	_info_picture.visible = picture != null
+	_info_picture.custom_minimum_size = picture.get_size() if picture != null else Vector2.ZERO
 	_info_label.text = Loc.t(text) + "\n\n" + Loc.t("(tap to continue)")
 	_info_scroll.scroll_vertical = 0
 	_info_press = Vector2(NAN, NAN)
