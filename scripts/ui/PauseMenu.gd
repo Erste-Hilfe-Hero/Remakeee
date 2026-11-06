@@ -99,10 +99,34 @@ func run_goals() -> void:
 	while true:
 		var tabs: Array[String] = []
 		tabs.assign(Goals.TABS)
+		if DailyTasks.can_swap():
+			tabs.append("Swap a daily task")
 		var i: int = await pick_strings("Goals", tabs)
 		if i < 0:
 			return
+		if tabs[i] == "Swap a daily task":
+			await _swap_daily_task()
+			continue
 		await info(Goals.tab_text(tabs[i]))
+
+## Plan 3163: one open daily task a day can be swapped for free.
+func _swap_daily_task() -> void:
+	var tasks: Array = DailyTasks.today().get("tasks", [])
+	var names: Array[String] = []
+	var index: Array[int] = []
+	for k: int in tasks.size():
+		var e: Dictionary = tasks[k]
+		if not DailyTasks.is_done(e) and int(e.get("n", 0)) == 0:
+			names.append(Loc.t(str(DailyTasks.def(str(e.id)).get("text", e.id))))
+			index.append(k)
+	var pick: int = await pick_strings("Swap which task? (once a day)", names)
+	if pick < 0:
+		return
+	var got: String = DailyTasks.swap(index[pick])
+	if got == "":
+		await info("No other task fits today.")
+	else:
+		await info(Loc.t("New task: %s") % Loc.t(str(DailyTasks.def(got).get("text", got))))
 
 ## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:

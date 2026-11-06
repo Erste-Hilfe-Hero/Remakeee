@@ -59,17 +59,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3160. [x] [P1] Aufträge nur aus Orten ziehen, die der Spielstand schon erreicht hat, damit kein Auftrag unlösbar ist.
 3161. [x] [P1] Jeden Auftrag so wählen, dass er in höchstens 15 Minuten Spielzeit zu schaffen ist.
 3162. [x] [P1] Den Fortschritt jedes Tagesauftrags im Spielstand und auf dem Server speichern, damit ein Gerätewechsel am selben Tag nichts zurücksetzt.
-3163. [P2] Einen Auftrag pro Tag einmal kostenlos gegen einen anderen tauschen lassen.
+3163. [x] [P2] Einen Auftrag pro Tag einmal kostenlos gegen einen anderen tauschen lassen.
 3164. [x] [P2] Nicht erledigte Aufträge verfallen still um Mitternacht, ohne Strafe und ohne Serien-Zähler.
-3165. [P2] Eine Auftragsart „Zeig dem Fotomodus einen Spirling bei Nacht“ ergänzen, damit Aufträge nicht nur Kämpfe sind.
+3165. [x] [P2] Eine Auftragsart „Zeig dem Fotomodus einen Spirling bei Nacht“ ergänzen, damit Aufträge nicht nur Kämpfe sind.
 3166. [P2] Eine Auftragsart „Spiele das Echo-Melodie-Spiel mit der Wertung Gut oder besser“ ergänzen.
 3167. [P2] Eine Auftragsart „Sieh einen noch nicht gesehenen Spirling“ nur dann ziehen, wenn noch ungesehene Arten im erreichbaren Gebiet leben.
 3168. [P2] Den Fund des Tages (DailyFind) als eigenen Auftrag zählen lassen, wenn er an dem Tag im Pool landet.
 3169. [x] [P2] Beim Abschluss eines Auftrags einen kurzen Hinweis oben im Bild zeigen, der den Kampf oder die Erkundung nicht anhält.
-3170. [P2] Nach dem Ende von Akt I einen vierten, schwereren Auftrag mit 25 Wegmarken freischalten.
+3170. [x] [P2] Nach dem Ende von Akt I einen vierten, schwereren Auftrag mit 25 Wegmarken freischalten.
 3171. [P2] Für jede Auftragsart einen GUT-Test schreiben, der den Fortschritt aus einem nachgestellten Spielereignis zählt.
 3172. [P2] Die Aufträge in data/i18n/de.json mit Platzhaltern für Zahl, Ort und Element übersetzen.
-3173. [P2] Eine Auftragsart „Schick einen Spirling auf einen Streifzug“ ergänzen, sobald Streifzüge freigeschaltet sind.
+3173. [x] [P2] Eine Auftragsart „Schick einen Spirling auf einen Streifzug“ ergänzen, sobald Streifzüge freigeschaltet sind.
 3174. [x] [P2] Pro Tag höchstens einen Kampfauftrag ziehen, damit jeder Tag eine Erkundungs- oder Sammelaufgabe enthält.
 3175. [P3] Einen Wochenauftrag ergänzen, der aus sieben erledigten Tagesaufträgen in derselben Woche besteht und 50 Wegmarken zahlt.
 3176. [P3] Aufträge mit Tageszeit-Bezug ziehen, etwa „Triff bei Dämmerung einen Lumen-Spirling“, nur wenn Tag und Nacht eingeschaltet sind.

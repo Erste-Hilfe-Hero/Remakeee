@@ -5,7 +5,7 @@ extends RefCounted
 ## source and the endgame coins. Run with tools/balance_sim.gd -- endgame.
 ##
 ## The plan (an active player after Act I, both Rifts mended, all masters open):
-##   every day   all daily tasks, two rounds of 8-hour roaming trips with MAX trips each
+##   every day   all daily tasks (with the hard fourth one), two rounds of 8-hour roaming trips with MAX trips each
 ##   every week  weekly echo cleared, all eight masters, the Echo Path, STAIR_FLOORS new floors
 ##               of the lighthouse stair (until the top), then buy at Marla's stand cheapest first
 ##   every month the full album; one festival in the run with all five goals
@@ -51,6 +51,8 @@ static func run(days: int = DAYS) -> Dictionary:
 		for i: int in DailyTasks.PER_DAY:
 			pay.call("daily_task", DailyTasks.REWARD)
 			season.call("daily_task")
+		pay.call("daily_task", DailyTasks.HARD_REWARD)
+		season.call("daily_task")
 		pay.call("daily_bonus", DailyTasks.BONUS)
 		if not trip.is_empty():
 			var n: int = TRIPS_PER_DAY * Expeditions.max_trips()

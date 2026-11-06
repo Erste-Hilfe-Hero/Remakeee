@@ -8,7 +8,7 @@ func test_ninety_days_stay_near_the_target() -> void:
 	var r: Dictionary = EndgameSim.run(90)
 	assert_eq(int(r.days), 90)
 	assert_eq(int(r.lost), 0, "nothing is lost over the cap")
-	assert_between(float(r.per_week), 450.0, 700.0, "about 500 a week (docs/BALANCE.md)")
+	assert_between(float(r.per_week), 500.0, 800.0, "about 750 a week for a full plan (docs/BALANCE.md)")
 	assert_gt(int(r.spent), 0, "Marla's stand is a real sink")
 	assert_gte(int(r.balance), 0)
 	for src: Variant in (r.earned as Dictionary).keys():
