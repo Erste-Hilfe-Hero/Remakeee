@@ -283,3 +283,28 @@ func test_local_server_allows_six_only_with_the_slot() -> void:
 	b.db.users[uid].shop.unlocks["team_slot_6"] = 1
 	assert_eq(b.party_max_of(uid), 6)
 	assert_eq(b.party_max_of("nobody"), 5)
+
+func test_will_to_win_brings_the_last_one_back_once() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 3)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 40)] as Array[Spirling], false, 5)
+	m.inventory["rg_last_stand"] = 2
+	var lost: bool = false
+	for i: int in 30:
+		if m.outcome != BattleModel.Outcome.NONE:
+			lost = m.outcome == BattleModel.Outcome.LOSS
+			break
+		mine[0].hp = mini(mine[0].hp, 1)
+		m.submit_turn(BattleAction.make_rest(BattleModel.Side.PLAYER), m.legal_actions(BattleModel.Side.FOE)[0])
+	assert_true(lost, "lost in the end")
+	assert_eq(int(m.inventory.rg_last_stand), 1, "used once, not twice")
+
+func test_will_to_win_not_against_wardens() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 3)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 40)] as Array[Spirling], false, 5)
+	m.inventory["rg_last_stand"] = 1
+	m.foe_boss = "warden"
+	mine[0].hp = 0
+	assert_false(m._last_stand())
+	m.foe_boss = ""
+	assert_true(m._last_stand())
+	assert_eq(mine[0].hp, ceili(mine[0].max_hp() * 0.3))

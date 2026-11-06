@@ -531,7 +531,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4496. [x] [P1] (P2W) Den "Rissatem" (`rg_rift_breath`) anlegen: belebt im Kampf einen besiegten Spirling mit 50 % Kraft wieder, höchstens 1 pro Kampf, Preis 200 Rissglas pro Stück.
 4497. [x] [P1] (P2W) Den "Großen Rissatem" (`rg_rift_breath_full`) anlegen: belebt im Kampf mit 100 % Kraft und voller Energie, höchstens 1 pro Kampf, Preis 400 Rissglas.
 4498. [P1] (P2W) Wiederbeleben im Kampf ist nur möglich, wenn der Gegenstand schon in der Tasche liegt; es erscheint nie ein Kauffenster im Kampf.
-4499. [P1] (P2W) Den "Siegeswillen" (`rg_last_stand`) anlegen: wird das ganze Team besiegt, kehrt der zuletzt besiegte Spirling einmal mit 30 % Kraft zurück, Preis 300 Rissglas, nicht gegen Rift-Wächter.
+4499. [x] [P1] (P2W) Den "Siegeswillen" (`rg_last_stand`) anlegen: wird das ganze Team besiegt, kehrt der zuletzt besiegte Spirling einmal mit 30 % Kraft zurück, Preis 300 Rissglas, nicht gegen Rift-Wächter.
 4500. [P1] (P2W) Die Kampfhilfen über die bestehende Gegenstandsaktion im Kampf (`items_allowed_in_battle`) einsetzen und in Rift-Born gesperrt lassen.
 4501. [x] [P1] (P2W) Den "Glasfunken" (`rg_glass_spark`) anlegen: füllt im Kampf sofort die Energie eines Spirlings auf und erhöht sie für 3 Runden um 1 pro Runde, Preis 100 Rissglas.
 4502. [x] [P1] (P2W) (Umgesetzt ohne "ohne Zug": der Trank braucht den Zug wie jeder Gegenstand.) Einen "Rissglas-Heiltrank" (`rg_glass_tonic`) anlegen: heilt im Kampf 100 % Kraft und alle Zustände, ohne den Zug zu verbrauchen, höchstens 2 pro Kampf, Preis 150 Rissglas.
