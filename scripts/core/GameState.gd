@@ -40,6 +40,12 @@ var difficulty: Difficulty = Difficulty.TAMER
 ## Item id -> count.
 var inventory: Dictionary = {}
 var money: int = 0
+## Waymarks (plan area 8): earned only by playing, never bought or traded. Change through Waymarks.earn().
+var waymarks: int = 0
+## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
+var daily_tasks: Dictionary = {}
+## Short reward notes waiting to be shown by the overworld (not saved).
+var notices: Array[String] = []
 
 ## Overworld position.
 var current_map: String = "lighthouse"
@@ -252,6 +258,9 @@ func reset() -> void:
 	difficulty = Difficulty.TAMER
 	inventory = {}
 	money = 0
+	waymarks = 0
+	daily_tasks = {}
+	notices.clear()
 	current_map = "lighthouse"
 	player_cell = Vector2i(4, 4)
 	facing = "down"
@@ -307,6 +316,8 @@ func to_dict() -> Dictionary:
 		"spirlog": spirlog.duplicate(true),
 		"inventory": inventory.duplicate(),
 		"money": money,
+		"waymarks": waymarks,
+		"daily_tasks": daily_tasks.duplicate(true),
 		"map": current_map,
 		"cell": [player_cell.x, player_cell.y],
 		"facing": facing,
@@ -344,6 +355,11 @@ func from_dict(d: Dictionary) -> void:
 	for k: Variant in (d.get("inventory", {}) as Dictionary):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
+	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
+	# through the achievement reward, never here.
+	waymarks = clampi(int(d.get("waymarks", 0)), 0, Waymarks.CAP)
+	var dt: Variant = d.get("daily_tasks", {})
+	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
 	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))

@@ -39,3 +39,9 @@ second Rift, not an in-app unlock.
 - Pick the price tier in App Store Connect and the Play Console.
 - Tick Family Sharing / Family Library there.
 - Fill the privacy labels as "Data not collected" (true while this file holds).
+
+## Waymarks are never for sale (plan area 8)
+Waymarks (the endgame currency) are only earned by playing. They are never sold for money or
+for the premium currency, never traded and never sent to friends. In code `Waymarks.TRANSFERABLE`
+is false, there is no "shop", "gift" or "trade" source in `Waymarks.SOURCES`, and they are no bag
+item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
