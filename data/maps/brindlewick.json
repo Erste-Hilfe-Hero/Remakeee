@@ -1,6 +1,7 @@
 {
  "name": "Brindlewick",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "lake",
  "outdoor": true,
  "rows": [
@@ -125,6 +126,14 @@
    "facing": "down",
    "dialogue": "brindlewick/wynn",
    "sprite": "ranger"
+  },
+  {
+   "id": "festival_trader",
+   "x": 2,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "brindlewick/festival_trader",
+   "sprite": "villager"
   }
  ],
  "signs": [
@@ -137,11 +146,6 @@
    "x": 9,
    "y": 18,
    "dialogue": "brindlewick/ferry"
-  },
-  {
-   "x": 2,
-   "y": 16,
-   "dialogue": "brindlewick/islet"
   }
  ],
  "gear_spots": [
@@ -170,6 +174,37 @@
     5,
     16
    ]
+  }
+ ],
+ "secrets": [
+  {
+   "x": 2,
+   "y": 16,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "islet_find",
+   "dialogue": "brindlewick/islet"
+  },
+  {
+   "x": 11,
+   "y": 1,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_brindle_tree"
+  },
+  {
+   "x": 1,
+   "y": 10,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_brindle_rock"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_brindle_fern"
   }
  ]
 }
