@@ -657,5 +657,103 @@
     "ground": "cave"
    }
   ]
+ },
+ "bellstone_ruins": {
+  "rate": 0.06,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 8,
+    "max": 10,
+    "weight": 40
+   },
+   {
+    "species": "Zippit",
+    "min": 8,
+    "max": 10,
+    "weight": 36
+   },
+   {
+    "species": "Wickit",
+    "min": 9,
+    "max": 11,
+    "weight": 24
+   }
+  ]
+ },
+ "brackwater_sluice": {
+  "rate": 0.06,
+  "spawns": [
+   {
+    "species": "Zephlet",
+    "min": 13,
+    "max": 15,
+    "weight": 35
+   },
+   {
+    "species": "Puddlet",
+    "min": 13,
+    "max": 15,
+    "weight": 24
+   },
+   {
+    "species": "Wickit",
+    "min": 14,
+    "max": 16,
+    "weight": 21
+   },
+   {
+    "species": "Kelpup",
+    "min": 13,
+    "max": 16,
+    "weight": 20
+   }
+  ]
+ },
+ "lanternwell": {
+  "rate": 0.06,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 14,
+    "max": 16,
+    "weight": 40
+   },
+   {
+    "species": "Zippit",
+    "min": 14,
+    "max": 16,
+    "weight": 36
+   },
+   {
+    "species": "Wickit",
+    "min": 15,
+    "max": 17,
+    "weight": 24
+   }
+  ]
+ },
+ "shatterfloor_mine": {
+  "rate": 0.06,
+  "spawns": [
+   {
+    "species": "Mirkmole",
+    "min": 12,
+    "max": 14,
+    "weight": 40
+   },
+   {
+    "species": "Shalebat",
+    "min": 12,
+    "max": 14,
+    "weight": 36
+   },
+   {
+    "species": "Kindlop",
+    "min": 13,
+    "max": 15,
+    "weight": 24
+   }
+  ]
  }
 }

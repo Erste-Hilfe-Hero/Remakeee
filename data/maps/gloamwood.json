@@ -6,7 +6,7 @@
  "outdoor": true,
  "encounters": "gloamwood",
  "rows": [
-  "TTTTTTTTTTTT",
+  "TTTT_TTTTTTT",
   "T,,T.,,..,,T",
   "T,,,.,,_____",
   "TT,,..,_,,TT",
@@ -60,6 +60,14 @@
    "to": "mossmere_grotto",
    "tx": 5,
    "ty": 9,
+   "facing": "up"
+  },
+  {
+   "x": 4,
+   "y": 0,
+   "to": "bellstone_ruins",
+   "tx": 5,
+   "ty": 5,
    "facing": "up"
   }
  ],

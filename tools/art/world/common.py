@@ -16,7 +16,7 @@ ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", "..", ".."
 MAPS = os.path.join(ROOT, "data", "maps")
 DIA = os.path.join(ROOT, "data", "dialogue")
 ORDER = ["name", "region", "biome", "backdrop", "outdoor", "field", "encounters", "heal_point",
-         "rows", "warps", "npcs", "signs", "gear_spots", "blocks", "secrets", "floors", "passages", "spots"]
+         "rows", "warps", "npcs", "signs", "gear_spots", "blocks", "secrets", "floors", "passages", "spots", "sluices", "beam"]
 
 
 def warp(x, y, to, tx, ty, facing):

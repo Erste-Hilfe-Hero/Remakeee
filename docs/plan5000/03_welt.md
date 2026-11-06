@@ -131,10 +131,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1007. [P3] Baue in Sablecove einen Unterwasser-Durchgang nur als Gang hinter einem Wasserfall, der zu Fuß begehbar ist.
 
 ### Rätsel-Dungeons
-1008. [P1] Baue den Dungeon "Bellstone Ruins" (de: Glockenstein-Ruine) nördlich von Gloamwood, fünf Räume, in denen Glocken in einer an der Wand gezeichneten Reihenfolge geläutet werden.
-1009. [P1] Baue den Dungeon "Brackwater Sluice" (de: Brackschleuse) in Brackwater Fen, sechs Räume, in denen drei Schleusen den Wasserstand in Stufen hoch und runter stellen.
-1010. [P1] Baue den Dungeon "Lanternwell" (de: Laternenbrunnen) unter dem Leuchtturm von Brindlewick, fünf Räume mit Spiegeln, die einen Lichtstrahl auf Ziel-Kristalle lenken.
-1011. [P1] Baue den Dungeon "Shatterfloor Mine" (de: Splitterboden-Mine) unter Copperfold, zwei Stockwerke, in denen rissiger Boden "k" nach einmaligem Betreten einbricht und ins untere Stockwerk führt.
+1008. [x] [P1] Baue den Dungeon "Bellstone Ruins" (de: Glockenstein-Ruine) nördlich von Gloamwood, fünf Räume, in denen Glocken in einer an der Wand gezeichneten Reihenfolge geläutet werden.
+1009. [x] [P1] Baue den Dungeon "Brackwater Sluice" (de: Brackschleuse) in Brackwater Fen, sechs Räume, in denen drei Schleusen den Wasserstand in Stufen hoch und runter stellen.
+1010. [x] [P1] Baue den Dungeon "Lanternwell" (de: Laternenbrunnen) unter dem Leuchtturm von Brindlewick, fünf Räume mit Spiegeln, die einen Lichtstrahl auf Ziel-Kristalle lenken.
+1011. [x] [P1] Baue den Dungeon "Shatterfloor Mine" (de: Splitterboden-Mine) unter Copperfold, zwei Stockwerke, in denen rissiger Boden "k" nach einmaligem Betreten einbricht und ins untere Stockwerk führt.
 1012. [x] [P1] Setze das Schieben von Felsblöcken "B" um: Spieler drückt gegen den Block, der Block rutscht eine Kachel, wenn dahinter frei ist, mit Rückgängig-Knopf pro Raum.
 1013. [x] [P1] Setze Druckplatten "P" um, die gedrückt bleiben, solange ein Block oder der Spieler darauf steht, und eine Tür über open_flag steuern.
 1014. [x] [P1] Gib jedem Rätselraum einen "Raum zurücksetzen" Eintrag im Menü, der Blöcke und Schalter auf den Anfang stellt.
@@ -237,7 +237,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1107. [P3] Lass einen Fund in Gloamwood nur sichtbar sein, wenn der Spieler 30 Sekunden still steht.
 
 ### Begegnungstabellen
-1108. [P1] Lege Tabellen in data/encounters.json für jede neue Route, Höhle und jeden Dungeon an, mit Ringbereich passend zur Kartenreihenfolge.
+1108. [x] [P1] Lege Tabellen in data/encounters.json für jede neue Route, Höhle und jeden Dungeon an, mit Ringbereich passend zur Kartenreihenfolge.
 1109. [x] [P1] Erweitere das Format jeder Tabelle um "ground" je Eintrag (fern, reeds, scree, water, cave), damit Farn, Schilf und Geröll auf derselben Karte verschiedene Spirlings haben.
 1110. [x] [P1] Setze die Grundrate für Routen auf 0.12, für Moore und Höhlen auf 0.10 und für Dungeons auf 0.06.
 1111. [x] [P1] Ergänze EncounterTable.gd um eine Schutzzeit von 6 Schritten nach jedem Kampf, in der keine neue Begegnung kommt.
@@ -462,7 +462,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1316. [P3] Lege einen Debug-Schalter an, der "ferry_corvane_open" setzt, damit Tester Corvane vor der Story-Freigabe ansehen.
 
 ### Tests, Validierung und Zugänglichkeit
-1317. [P1] Ergänze tests/unit/test_map_checks.gd so, dass jede neue Karte geladen, ihr Rätsel per Testlösung gelöst und jeder Ausgang erreicht wird.
+1317. [x] [P1] Ergänze tests/unit/test_map_checks.gd so, dass jede neue Karte geladen, ihr Rätsel per Testlösung gelöst und jeder Ausgang erreicht wird.
 1318. [x] [P1] Lege für jedes Rätsel eine Lösungsfolge in tests/fixtures/puzzles/<map>.json an, die der Test abspielt.
 1319. [P1] Prüfe in CI mit tools/ip_check.sh alle neuen Orts- und Kartennamen gegen die Sperrliste.
 1320. [P2] Ergänze einen Test, dass jede Ausrüstung nur auf ihren Kachelzeichen wirkt und auf allen anderen nichts tut.

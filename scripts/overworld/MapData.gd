@@ -72,6 +72,10 @@ var ladders: Array[Dictionary] = []
 var passages: Array[Dictionary] = []
 ## Named cells for story figures and story signs ("spots": {"name": [x, y]}).
 var spots: Dictionary = {}
+## Brackwater Sluice: flags of the sluice wheels on this map; the water level is how many are open.
+var sluices: Array = []
+## Lanternwell: {"x", "y", "dir", "mirrors": [[x, y, "/"], ...], "target": [x, y], "flag"}.
+var beam: Dictionary = {}
 var _base_rows: PackedStringArray = []
 
 static func exists(map_id: String) -> bool:
@@ -181,6 +185,8 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	var sp: Dictionary = raw.get("spots", {})
 	for k: Variant in sp:
 		m.spots[str(k)] = Vector2i(int(sp[k][0]), int(sp[k][1]))
+	m.sluices = (raw.get("sluices", []) as Array).duplicate()
+	m.beam = (raw.get("beam", {}) as Dictionary).duplicate(true)
 	m.boulder_ground = str(raw.get("boulder_ground", "f"))
 	m.biome = str(raw.get("biome", ""))
 	m.drop_to = str(raw.get("drop_to", ""))
