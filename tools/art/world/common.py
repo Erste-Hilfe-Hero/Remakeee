@@ -63,6 +63,13 @@ class World:
                 self.maps[map_id] = json.load(f)
         return self.maps[map_id]
 
+    def dialogue(self, file_id):
+        """Current dialogue entries of data/dialogue/<file_id>.json (read only)."""
+        if file_id in self.text:
+            return self.text[file_id]
+        path = os.path.join(DIA, file_id + ".json")
+        return json.load(open(path)) if os.path.exists(path) else {}
+
     def add_text(self, file_id, entries):
         """Sets dialogue keys in data/dialogue/<file_id>.json (other keys stay)."""
         if file_id not in self.text:

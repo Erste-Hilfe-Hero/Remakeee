@@ -45,6 +45,10 @@ var _actions: Dictionary[String, Callable] = {}
 var _ui_root: Control
 ## True while a cut-scene runs (steps of the player do not trigger warps or encounters).
 var scene_running: bool = false
+## Set by a step that cannot go on (a warp to a map that is not built yet); the scene stops.
+var scene_abort: bool = false
+## True while the running scene (and any scene inside it) is being skipped.
+var scene_skipping: bool = false
 ## Area 3 puzzles and gear on the map (boulders, plates, cracked floor, planks, ladders).
 var _world: WorldMechanics
 ## Cell the player arrived on in this map ("Reset room" puts them back here).
@@ -75,6 +79,7 @@ func _ready() -> void:
 		"add_var": _action_add_var,
 		"battle": _action_battle,
 		"scene": _action_scene,
+		"warp": _action_warp,
 		"lever": _action_lever,
 	}
 	_world = WorldMechanics.new(self)
@@ -374,14 +379,15 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if spotter != null:
 		await challenge(spotter, true)
 		return
-	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty():
+	var guard_over: bool = EncounterTable.tick_guard()
+	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over:
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < EncounterTable.rate(map.encounter_table):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost)
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell))
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
@@ -515,10 +521,22 @@ func take_notices() -> Array[String]:
 	GameState.notices.clear()
 	return lines
 
-## Shows "New goal: ..." when the story goal moved on since [param before].
+## Shows "New goal: ..." when the story goal moved on since [param before]. A new chapter
+## first gets its chapter card (plan item 1413), with the act name when the act changes.
 func announce_goal_if_changed(before: int) -> void:
-	if QuestLog.current_index(GameState.flags) == before:
+	var now: int = QuestLog.current_index(GameState.flags)
+	if now == before:
 		return
+	var card: Array[String] = QuestLog.card_for(before, now, GameState.flags)
+	if not card.is_empty():
+		GameState.set_flag(QuestLog.card_flag(QuestLog.current(GameState.flags)))
+		var sp := ScenePlayer.new()
+		sp.overworld = self
+		add_child(sp)
+		await sp.play("chapter_card", {"skippable": false, "steps": [{"card": card[0], "title": card[1] if card.size() > 1 else ""}]})
+		sp.queue_free()
+		busy = true
+		player.frozen = true
 	await say(["New goal: " + QuestLog.goal_text(QuestLog.current(GameState.flags), GameState.flags)] as Array[String])
 	var tip: Array[String] = Tips.take("goals")
 	if not tip.is_empty():
@@ -731,8 +749,11 @@ func prologue() -> void:
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	_fade.color.a = 1.0
-	Sound.music("title")
-	await say(Dialogue.lines_for(Dialogue.get_entry("story/prologue"), GameState.flags))
+	# The storm night is a real scene with lightning and thunder (plan item 1410).
+	await play_scene("prologue")
+	busy = true
+	player.frozen = true
+	_fade.color.a = 1.0
 	Sound.music(Sound.track_for_map(map.id))
 	var tw: Tween = create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 0.6)
@@ -833,6 +854,25 @@ func _action_scene(args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	await play_scene(args[0])
 
+## "warp <map> <x> <y> [facing]": moves the player to another map (ferry, coach). Used by
+## story scenes and by area 3's ferry signs. A map that does not exist yet stops the scene.
+func _action_warp(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 3:
+		return
+	if not MapData.exists(args[0]):
+		scene_abort = scene_running
+		await say(["The far landing is still being rebuilt after the storm. Not yet."] as Array[String])
+		return
+	var was_black: bool = _fade.color.a >= 0.99
+	Sound.sfx("warp")
+	if not was_black:
+		await _fade_to(1.0)
+	load_map(args[0], Vector2i(int(args[1]), int(args[2])), args[3] if args.size() > 3 else player.facing)
+	Sound.music(Sound.track_for_map(args[0]))
+	SaveManager.save_game()
+	if not was_black and not scene_running:
+		await _fade_to(0.0)
+
 ## Plays a cut-scene and returns to the talk or the world afterwards.
 func play_scene(id: String) -> void:
 	var sp := ScenePlayer.new()
@@ -891,6 +931,20 @@ func gear_hint_deferred(gear: String) -> void:
 
 func say_locked(lines: Array[String]) -> void:
 	await _locked_say(lines)
+
+## A hidden find: its own dialogue if it has one, else a short line and the item.
+func take_find(find: Dictionary) -> void:
+	busy = true
+	player.frozen = true
+	Sound.sfx("confirm")
+	if find.has("dialogue"):
+		await run_dialogue(str(find.dialogue))
+	else:
+		await say(["Something glints here..."] as Array[String])
+		await _action_give_item([str(find.item), str(find.get("count", 1))] as PackedStringArray, null)
+	GameState.set_flag(str(find.flag))
+	player.frozen = false
+	busy = false
 
 ## Cracked floor gave way: the player lands on the same cell of the floor below.
 func drop_to(map_id: String, cell: Vector2i) -> void:
@@ -1535,6 +1589,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	else:
 		await _after_battle(model, outcome)
 	Sound.music(Sound.track_for_map(map.id))
+	EncounterTable.start_guard()
 	await _fade_to(0.0)
 	await announce_achievements()
 	VirtualPad.set_wanted(true)
