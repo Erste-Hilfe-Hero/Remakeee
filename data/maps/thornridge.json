@@ -1,6 +1,7 @@
 {
  "name": "Thornridge",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "ridge",
  "outdoor": true,
  "encounters": "thornridge",
@@ -105,15 +106,41 @@
    "dialogue": "thornridge/sign"
   },
   {
-   "x": 9,
-   "y": 3,
-   "dialogue": "thornridge/rock_find"
-  },
-  {
    "x": 1,
    "y": 12,
    "dialogue": "story/find_4",
    "hide_flag": "page_4"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 9,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 2,
+   "flag": "thorn_rock_find",
+   "dialogue": "thornridge/rock_find"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_thorn_terrace"
+  },
+  {
+   "x": 0,
+   "y": 16,
+   "item": "kin_charm",
+   "count": 1,
+   "flag": "find_thorn_scree"
+  },
+  {
+   "x": 9,
+   "y": 14,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_thorn_fence"
   }
  ]
 }

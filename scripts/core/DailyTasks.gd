@@ -162,6 +162,12 @@ static func matches(t: Dictionary, event: String, info: Dictionary) -> bool:
 ## [param info] towards today's tasks, pays Waymarks for finished ones and returns the reward
 ## lines (also queued in GameState.notices for the overworld to show).
 static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Array[String]:
+	# Lifetime counters for achievements: count_win, count_win_wild, count_step, ...
+	var counters: Array[String] = ["count_" + event]
+	if event == "win":
+		counters.append("count_win_wild" if bool(info.get("wild", false)) else "count_win_tamer")
+	for c: String in counters:
+		GameState.records[c] = int(GameState.records.get(c, 0)) + amount
 	var state: Dictionary = today()
 	var lines: Array[String] = []
 	for entry: Dictionary in state.get("tasks", []):
@@ -184,10 +190,12 @@ static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Arr
 			lines.append(Loc.t("Daily task done: %s") % Loc.t(str(t.text)))
 			lines.append_array(Waymarks.reward_lines(Waymarks.earn(REWARD, "daily_task")))
 			GameState.records["daily_tasks_done"] = int(GameState.records.get("daily_tasks_done", 0)) + 1
+			lines.append_array(SeasonPath.add("daily_task"))
 	if not bool(state.get("bonus", false)) and all_done():
 		state["bonus"] = true
 		lines.append(Loc.t("All of today's tasks are done!"))
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(BONUS, "daily_bonus")))
+	lines.append_array(Festival.record(event, info, amount))
 	GameState.notices.append_array(lines)
 	return lines
 

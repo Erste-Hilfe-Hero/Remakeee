@@ -119,6 +119,49 @@ static func check_encounter_tables(errors: PackedStringArray, map_ids: PackedStr
 			continue
 		if not used.has(t):
 			errors.append("encounter table '%s' is not used by any map" % t)
+	check_table_balance(errors, map_ids)
+
+## Base rate per kind of place (area 3 item 1110). Rift hollows keep their own rate.
+const RATES: Dictionary[String, float] = {"route": 0.12, "marsh": 0.10, "cave": 0.10, "dungeon": 0.06}
+## Largest jump in ring between two tables next to each other in level order (item 1114).
+const MAX_RING_JUMP: int = 4
+const MIN_TABLE_WEIGHT: int = 50
+
+## Encounter balance (items 1109, 1110, 1114): grounds are known names, weights add up to at
+## least 50, the base rate fits the kind of place, and sorted by their lowest ring no table
+## jumps more than 4 rings past the one before it.
+static func check_table_balance(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var places: Dictionary = load_layout().get("maps", {})
+	var kind_of: Dictionary = {}
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null or m.encounter_table.is_empty():
+			continue
+		var place: String = layout_place(places, id)
+		kind_of[m.encounter_table] = str((places.get(place, {}) as Dictionary).get("kind", ""))
+	var mins: Array = []
+	for t: String in EncounterTable.table_ids():
+		if t.begins_with("_"):
+			continue
+		var total: int = 0
+		var low: int = 999
+		for sp: Dictionary in EncounterTable.table(t).get("spawns", []):
+			total += int(sp.get("weight", 1))
+			low = mini(low, int(sp.get("min", 2)))
+			for g: String in EncounterTable.grounds_of(sp):
+				if not g in EncounterTable.GROUND_NAMES:
+					errors.append("encounter table '%s': unknown ground '%s'" % [t, g])
+		if total < MIN_TABLE_WEIGHT:
+			errors.append("encounter table '%s': weights add up to %d, need at least %d" % [t, total, MIN_TABLE_WEIGHT])
+		var kind: String = str(kind_of.get(t, ""))
+		if RATES.has(kind) and not is_equal_approx(EncounterTable.rate(t), RATES[kind]):
+			errors.append("encounter table '%s': rate %.2f, a %s uses %.2f" % [t, EncounterTable.rate(t), kind, RATES[kind]])
+		if low < 999:
+			mins.append([low, t])
+	mins.sort()
+	for i: int in range(1, mins.size()):
+		if int(mins[i][0]) - int(mins[i - 1][0]) > MAX_RING_JUMP:
+			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][1], mins[i][0], MAX_RING_JUMP, mins[i - 1][1], mins[i - 1][0]])
 
 ## Hidden finds (area 3 items 1080, 1083): each one is reachable, gives a real item from
 ## data/items.json and has a flag no other find uses.
@@ -139,6 +182,12 @@ static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray)
 				errors.append("map '%s': hidden find flag '%s' is also used on '%s'" % [id, flag, flags[flag]])
 			else:
 				flags[flag] = id
+			if sc.has("dialogue"):
+				var entry: Dictionary = Dialogue.get_entry(str(sc.dialogue))
+				if entry.is_empty():
+					errors.append("map '%s': hidden find at %s has unknown dialogue '%s'" % [id, at, sc.dialogue])
+				elif str(entry.get("flag", "")) != flag:
+					errors.append("map '%s': hidden find at %s sets flag '%s' but its dialogue sets '%s'" % [id, at, flag, entry.get("flag", "")])
 			if Database.item(str(sc.get("item", ""))).is_empty():
 				errors.append("map '%s': hidden find at %s gives unknown item '%s'" % [id, at, sc.get("item", "")])
 			if int(sc.get("count", 1)) < 1:
