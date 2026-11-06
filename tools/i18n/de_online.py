@@ -348,6 +348,8 @@ T = {
 # One device at a time
 "Signed in on another device. Your journey is saved there.": "Auf einem anderen Gerät angemeldet. Deine Reise ist dort gespeichert.",
 "Play on this device": "Auf diesem Gerät spielen",
+# Small actions waiting for the connection
+"It goes out as soon as the connection is back.": "Das geht raus, sobald die Verbindung wieder da ist.",
 }
 # Strings in online code that are not shown to players (server messages, HTTP headers).
 KEEP = ["another player", "%s %s  Bond %d  %s", "[%s] %d%%", "%d. %s  %d%s", "Wanderer", "Leviarch", "Calderox", "Cairnhold", "Verdantusk", "Tempestrel", "Solmantle", "Obsidroth", "unknown function %s", "Wanderer ", "apikey: ", "Authorization: Bearer ",

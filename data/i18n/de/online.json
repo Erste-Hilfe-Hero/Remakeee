@@ -148,6 +148,7 @@
   "Invitation: %s (%d) from %s": "Einladung: %s (%d) von %s",
   "Invite a Wayfarer...": "Wanderer einladen...",
   "It counts once the check is done.": "Er zählt, sobald die Prüfung fertig ist.",
+  "It goes out as soon as the connection is back.": "Das geht raus, sobald die Verbindung wieder da ist.",
   "Join": "Beitreten",
   "Join %s?": "%s beitreten?",
   "Join the league first.": "Tritt zuerst der Liga bei.",
