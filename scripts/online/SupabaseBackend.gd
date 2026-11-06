@@ -90,12 +90,14 @@ func _http(method: int, path: String, body: Dictionary, with_token: bool) -> Dic
 	var code: int = res[1]
 	var text: String = (res[3] as PackedByteArray).get_string_from_utf8()
 	if result != HTTPRequest.RESULT_SUCCESS:
-		return fail("network", true)
+		return fail(OnlineErrors.code_for_result(result), true)
 	var parsed: Variant = JSON.parse_string(text) if not text.is_empty() else null
 	if code >= 200 and code < 300:
 		return ok(parsed)
 	if code == 401:
 		return fail("401")
+	if code == 429:
+		return fail("server_429", true)
 	if code >= 500 or code == 0:
 		return fail("server_%d" % code, true)
 	var msg: String = str(code)

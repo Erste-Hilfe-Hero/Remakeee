@@ -15,6 +15,10 @@ var _info_wait: bool = false
 var _info_press: Vector2 = Vector2(NAN, NAN)
 const TAP_SLOP: float = 6.0
 signal _info_closed
+## Short note at the top that goes away by itself (item 1839).
+var _toast: Label
+var _toast_gen: int = 0
+const TOAST_SECONDS: float = 1.5
 
 func _ready() -> void:
 	theme = UITheme.get_theme()
@@ -43,6 +47,20 @@ func _ready() -> void:
 	# Translated in info(): inside the scroll box the automatic translation did not apply.
 	_info_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	_info_scroll.add_child(_info_label)
+	_toast = Label.new()
+	_toast.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	_toast.offset_left = PANEL_MARGIN + 4
+	_toast.offset_right = -PANEL_MARGIN - 4
+	_toast.offset_top = PANEL_MARGIN + 2
+	_toast.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_toast.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_toast.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
+	_toast.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_toast.accessibility_live = AccessibilityServer.LIVE_POLITE
+	_toast.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_toast.visible = false
+	_toast.z_index = 10
+	add_child(_toast)
 
 func _fill(c: Control) -> void:
 	c.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -85,6 +103,22 @@ func info(text: String) -> void:
 	_info_wait = true
 	await _info_closed
 	_info_panel.visible = false
+
+## Shows [param text] for a moment at the top without waiting for a tap ("Saved.").
+func toast(text: String, seconds: float = TOAST_SECONDS) -> void:
+	_toast_gen += 1
+	var gen: int = _toast_gen
+	_toast.text = Loc.t(text)
+	_toast.visible = true
+	if not is_inside_tree():
+		return
+	await get_tree().create_timer(seconds, true).timeout
+	if gen == _toast_gen and is_instance_valid(_toast):
+		_toast.visible = false
+
+## The toast text while it shows ("" when hidden).
+func toast_text() -> String:
+	return _toast.text if _toast.visible else ""
 
 func _close_info() -> void:
 	if _info_wait:
