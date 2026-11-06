@@ -19,6 +19,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"field": model.field,
 		"bench_share": model.bench_share,
 		"rule": model.foe_rule,
+		"rule_turn_full": model.rule_turn_full,
 		"foe_items": model.foe_items.duplicate(),
 		"front": [model.front_size[0], model.front_size[1]],
 		"partner": _partner(model),
@@ -85,6 +86,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.field = str(snap.get("field", ""))
 	m.bench_share = float(snap.get("bench_share", 0.0))
 	m.foe_rule = str(snap.get("rule", ""))
+	m.rule_turn_full = bool(snap.get("rule_turn_full", false))
 	m.foe_items = (snap.get("foe_items", {}) as Dictionary).duplicate()
 	var front: Array = snap.get("front", [1, 1])
 	m.front_size = [int(front[0]), int(front[1])]

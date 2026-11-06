@@ -410,6 +410,7 @@ static func warden_fight(entries: Array, def: Dictionary, field: String, difficu
 	m.foe_damage_mult = GameState.FOE_DAMAGE[difficulty]
 	m.field = field
 	m.foe_rule = str(info.rule)
+	m.rule_turn_full = difficulty >= GameState.Difficulty.VETERAN
 	var items: Variant = info.get("items", {})
 	m.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	m.foe_boss = str(info.boss)
