@@ -202,12 +202,17 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 	var q: String = ("Unfurl %s into %s? You can furl it back later." if forward else "Furl %s back into %s? You can unfurl it again later.") % [old_name, target.species_name]
 	if not await confirm(q):
 		return
+	var old_data: SpirlingData = s.data
 	if forward:
 		s.evolve()
 		GameState.mark_seen(s.data.species_name, true)
+		var seq := UnfurlSequence.new()
+		add_child(seq)
+		await seq.play(old_data, s.data)
+		seq.queue_free()
 	else:
 		GameState.furl_back(s)
-	Sound.sfx("level_up")
+		Sound.sfx("level_up")
 	await info(("%s unfurls into %s!" if forward else "%s furls back into %s.") % [old_name, s.data.species_name])
 
 ## Give, swap or take off a keepsake.

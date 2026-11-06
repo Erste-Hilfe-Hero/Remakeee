@@ -115,11 +115,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2326. [P3] NPC-Sheets in tools/art/gen_tiles.py um die neuen Posen erweitern und die Frame-Reihenfolge in docs/ART_PIPELINE.md festhalten.
 
 ### Spirling-Bewegung in Kampf und Menüs
-2327. [P1] Entfalten-Sequenz bauen: alte und neue Form wechseln sich als Silhouette ab, erst alle 0,4 s, dann immer schneller bis alle 0,05 s, über 2,4 s, danach zeigt sich die neue Form mit Juice.pop.
-2328. [P1] Die Entfalten-Sequenz ist nach dem ersten Mal mit Tippen überspringbar und hat bei Juice.reduced() nur eine einfache Überblendung.
-2329. [P1] Pro Spirling ein Bewegungsprofil (hüpfen, schleichen, wogen, stampfen, gleiten am Boden) als Feld "motion" in data/spirlings.json für die bestehenden 21 Spirlings eintragen.
-2330. [P1] Beim Auftreten nutzt SpirlingSprite.step_out das Bewegungsprofil: hüpfen in 2 Sprüngen zu je 4 Pixeln Höhe, stampfen mit Trauma 0,1 beim Aufsetzen, schleichen mit Kurve "move".
-2331. [P1] Technik-Ausholbewegung nach Art: körperliche Techniken (PHYSICAL) holen 3 Pixel nach hinten aus und schnellen vor, besondere Techniken heben den Spirling 2 Pixel an und senken ihn beim Auslösen, Status-Techniken lassen ihn kurz zweimal wippen.
+2327. [x] [P1] Entfalten-Sequenz bauen: alte und neue Form wechseln sich als Silhouette ab, erst alle 0,4 s, dann immer schneller bis alle 0,05 s, über 2,4 s, danach zeigt sich die neue Form mit Juice.pop.
+2328. [x] [P1] Die Entfalten-Sequenz ist nach dem ersten Mal mit Tippen überspringbar und hat bei Juice.reduced() nur eine einfache Überblendung.
+2329. [x] [P1] Pro Spirling ein Bewegungsprofil (hüpfen, schleichen, wogen, stampfen, gleiten am Boden) als Feld "motion" in data/spirlings.json für die bestehenden 21 Spirlings eintragen.
+2330. [x] [P1] Beim Auftreten nutzt SpirlingSprite.step_out das Bewegungsprofil: hüpfen in 2 Sprüngen zu je 4 Pixeln Höhe, stampfen mit Trauma 0,1 beim Aufsetzen, schleichen mit Kurve "move".
+2331. [x] [P1] Technik-Ausholbewegung nach Art: körperliche Techniken (PHYSICAL) holen 3 Pixel nach hinten aus und schnellen vor, besondere Techniken heben den Spirling 2 Pixel an und senken ihn beim Auslösen, Status-Techniken lassen ihn kurz zweimal wippen.
 2332. [x] [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
 2333. [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
 2334. [P2] Ring-Aufstieg in der Welt (nach Kampf oder Gegenstand): derselbe Ring über dem Teamplatz im Pausemenü, wenn man es danach öffnet.
@@ -147,16 +147,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2356. [P3] Bewegungsprofile in docs/ART_PIPELINE.md mit Pixelweiten, Takt und Kurve beschreiben, damit neue Spirlings aus Bereich 1 sofort eines bekommen.
 
 ### Kampf-Effekte pro Element
-2357. [P1] Neue Klasse scripts/battle/presenter/ElementFx.gd mit je einer Funktion pro Element, die Aufladen, Weg und Einschlag einer Technik zeichnet und awaitbar ist.
-2358. [P1] Jede Technik läuft in drei Phasen: Aufladen am Anwender (0,15 s), Weg zum Ziel (0,2 s, bei körperlichen Techniken entfällt er), Einschlag am Ziel (0,25 s).
-2359. [P1] Ember: Aufladen als 3 Funken, die um den Anwender kreisen; Weg als Funke, der in einem flachen Bogen springt; Einschlag als 5 Glutpunkte, die nach oben steigen.
-2360. [P1] Tide: Aufladen als Ring, der sich unter dem Anwender ausbreitet; Weg als Wellenlinie mit 3 Pixeln Ausschlag; Einschlag als Spritzer aus 6 Tropfen, die nach unten fallen.
-2361. [P1] Bloom: Aufladen als 4 Blätter, die vom Boden aufsteigen; Weg als Blattwirbel auf gerader Linie; Einschlag als Ranken, die 2 Frames lang um das Ziel wachsen.
-2362. [P1] Volt: Aufladen als Zittern des Anwenders um 1 Pixel; Weg als Zickzack-Linie, die 2 Mal pro Bild neu gezeichnet wird; Einschlag als Stern aus 4 Strahlen.
-2363. [P1] Stone: Aufladen als Brocken, die unter dem Anwender aus dem Boden ragen; Weg als Brocken in hohem Bogen mit Schatten; Einschlag als Splitter in 6 Richtungen und senkrechtes Wackeln.
-2364. [P1] Gale: Aufladen als Strichlinien, die zum Anwender hin gezogen werden; Weg als Wirbel aus 3 Kreisbögen; Einschlag als Strichlinien, die waagrecht am Ziel vorbeistreichen.
-2365. [P1] Lumen: Aufladen als Lichtpunkt über dem Anwender, der von 1 auf 5 Pixel wächst; Weg als gerader Strahl; Einschlag als Kreuz-Glanz, der in 0,2 s verblasst (ohne Blitz, höchstens 60 % Helligkeit).
-2366. [P1] Umbra: Aufladen als Schatten, der sich vom Anwender löst; Weg als Schatten, der am Boden entlang kriecht; Einschlag als Schatten, der das Ziel von unten umschließt und sich zurückzieht.
+2357. [x] [P1] Neue Klasse scripts/battle/presenter/ElementFx.gd mit je einer Funktion pro Element, die Aufladen, Weg und Einschlag einer Technik zeichnet und awaitbar ist.
+2358. [x] [P1] Jede Technik läuft in drei Phasen: Aufladen am Anwender (0,15 s), Weg zum Ziel (0,2 s, bei körperlichen Techniken entfällt er), Einschlag am Ziel (0,25 s).
+2359. [x] [P1] Ember: Aufladen als 3 Funken, die um den Anwender kreisen; Weg als Funke, der in einem flachen Bogen springt; Einschlag als 5 Glutpunkte, die nach oben steigen.
+2360. [x] [P1] Tide: Aufladen als Ring, der sich unter dem Anwender ausbreitet; Weg als Wellenlinie mit 3 Pixeln Ausschlag; Einschlag als Spritzer aus 6 Tropfen, die nach unten fallen.
+2361. [x] [P1] Bloom: Aufladen als 4 Blätter, die vom Boden aufsteigen; Weg als Blattwirbel auf gerader Linie; Einschlag als Ranken, die 2 Frames lang um das Ziel wachsen.
+2362. [x] [P1] Volt: Aufladen als Zittern des Anwenders um 1 Pixel; Weg als Zickzack-Linie, die 2 Mal pro Bild neu gezeichnet wird; Einschlag als Stern aus 4 Strahlen.
+2363. [x] [P1] Stone: Aufladen als Brocken, die unter dem Anwender aus dem Boden ragen; Weg als Brocken in hohem Bogen mit Schatten; Einschlag als Splitter in 6 Richtungen und senkrechtes Wackeln.
+2364. [x] [P1] Gale: Aufladen als Strichlinien, die zum Anwender hin gezogen werden; Weg als Wirbel aus 3 Kreisbögen; Einschlag als Strichlinien, die waagrecht am Ziel vorbeistreichen.
+2365. [x] [P1] Lumen: Aufladen als Lichtpunkt über dem Anwender, der von 1 auf 5 Pixel wächst; Weg als gerader Strahl; Einschlag als Kreuz-Glanz, der in 0,2 s verblasst (ohne Blitz, höchstens 60 % Helligkeit).
+2366. [x] [P1] Umbra: Aufladen als Schatten, der sich vom Anwender löst; Weg als Schatten, der am Boden entlang kriecht; Einschlag als Schatten, der das Ziel von unten umschließt und sich zurückzieht.
 2367. [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
 2368. [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
 2369. [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
@@ -331,8 +331,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2528. [P3] Alle Klänge der Welt und Menüs bekommen im Sound-Test eine eigene Gruppe "Welt" und "Menü", damit man sie geordnet anhören kann.
 
 ### Soundeffekte im Kampf (ergänzend)
-2529. [P1] Aufladen-Klang pro Art: körperlich (kurzes Rauschen, 0,1 s), besonders (steigender Puls, 0,15 s), Status (zwei weiche Töne), passend zur Aufladen-Phase der Element-Effekte.
-2530. [P1] Weg-Klang pro Element für Techniken mit Weg-Phase, je 0,2 s, zum Beispiel Zischen für Gale, Knistern für Volt, Gluckern für Tide.
+2529. [x] [P1] Aufladen-Klang pro Art: körperlich (kurzes Rauschen, 0,1 s), besonders (steigender Puls, 0,15 s), Status (zwei weiche Töne), passend zur Aufladen-Phase der Element-Effekte.
+2530. [x] [P1] Weg-Klang pro Element für Techniken mit Weg-Phase, je 0,2 s, zum Beispiel Zischen für Gale, Knistern für Volt, Gluckern für Tide.
 2531. [P2] Klang für verfehlte Techniken: ein leiser Luftzug, der am Ziel vorbeizieht.
 2532. [P2] Treffer-Klänge (hit_*) werden je nach verlorener Kraft lauter: bis 10 % bei -6 dB, bis 30 % bei -3 dB, darüber bei 0 dB.
 2533. [P2] Treffer-Klänge bekommen eine zufällige Tonhöhe zwischen 0,95 und 1,05, damit Wiederholungen frischer klingen.
@@ -423,7 +423,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2610. [x] [P1] gen_audio.py bekommt Aufruf-Optionen --only <name>, --sfx, --music, --stems, damit nicht bei jeder Änderung alles neu erzeugt werden muss.
 2611. [P1] Lautheits-Prüfung tools/audio/loudness.py mit ffmpeg ebur128: Musik soll -16 LUFS (±1) erreichen, Klänge einen Spitzenwert von -3 dBFS; Abweichungen werden gemeldet.
 2612. [P1] gen_audio.py normalisiert jede Datei nach dem Erzeugen automatisch auf diese Zielwerte.
-2613. [P1] Neuer Generator tools/art/gen_fx.py erzeugt die Effekt-Formen (Funke, Tropfen, Blatt, Zacke, Brocken, Strich, Glanz, Schatten) als 8×8-Bildchen in art/era1/fx/ in den 4 Paletten-Farben.
+2613. [x] [P1] Neuer Generator tools/art/gen_fx.py erzeugt die Effekt-Formen (Funke, Tropfen, Blatt, Zacke, Brocken, Strich, Glanz, Schatten) als 8×8-Bildchen in art/era1/fx/ in den 4 Paletten-Farben.
 2614. [P2] Neuer Generator tools/art/gen_ui.py erzeugt Gefühls-Blasen, Toast-Rahmen, Punkt-Markierungen und Cursor als kleine PNGs in art/era1/ui/.
 2615. [P2] Eine Prüfung der Wiederholbarkeit: gen_audio.py und alle tools/art-Generatoren werden in der CI zweimal laufen gelassen und die Prüfsummen der Ausgaben verglichen.
 2616. [P2] gen_audio.py schreibt Schleifenpunkte (Start und Ende in Samples) pro Stück in tools/audio/loops.json, aus der Sound.gd und die .import-Dateien lesen.

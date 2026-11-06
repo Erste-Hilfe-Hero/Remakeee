@@ -7,6 +7,11 @@ const STEP_OUT_DISTANCE: float = 40.0
 const STEP_TIME: float = 0.3
 const HIT_FLASHES: int = 3
 const KNOCKBACK_PX: float = 3.0
+const HOPS: float = 2.0
+const HOP_HEIGHT: float = 4.0
+const MOTION_PATH: String = "res://data/spirling_motion.json"
+const MOTIONS: Array[String] = ["hop", "creep", "sway", "stomp", "slide"]
+static var _motion: Dictionary = {}
 ## Prism variants are drawn with a warm tint over the era palette.
 const PRISM_TINT: Color = Color(1.0, 0.78, 0.5)
 
@@ -38,13 +43,71 @@ func _ready() -> void:
 
 ## Steps out beside the Wayfarer (slides in from the screen edge; never thrown). Awaitable.
 ## Durations come from Juice curves, so the 2x / 4x battle speed applies on its own.
+## The way the Spirling moves follows its motion profile (item 2330).
 func step_out(from_left: bool) -> void:
 	_home = position
 	position = _home + Vector2(-STEP_OUT_DISTANCE if from_left else STEP_OUT_DISTANCE, 0)
 	modulate.a = 0.0
 	visible = true
 	Juice.tween(self, "modulate:a", 1.0, "move", STEP_TIME)
-	await Juice.tween(self, "position", _home, "move", STEP_TIME).finished
+	var m: String = motion_of(spirling.data.species_name, spirling.elements()) if spirling != null else "slide"
+	if Juice.reduced():
+		m = "slide"
+	match m:
+		"hop":
+			# Two hops of 4 px each on the way in.
+			var start: Vector2 = position
+			var hop := func(k: float) -> void:
+				var arc: float = absf(sin(k * PI * HOPS))
+				position = (start.lerp(_home, k) + Vector2(0, -HOP_HEIGHT * arc)).round()
+			var tw: Tween = create_tween()
+			tw.tween_method(hop, 0.0, 1.0, STEP_TIME / Juice.speed())
+			await tw.finished
+			position = _home
+		"stomp":
+			await Juice.tween(self, "position", _home, "impact", STEP_TIME).finished
+			Juice.add_trauma(0.1)
+		"creep":
+			await Juice.tween(self, "position", _home, "move", STEP_TIME * 1.3).finished
+		"sway":
+			var start2: Vector2 = position
+			var sway := func(k: float) -> void:
+				position = (start2.lerp(_home, k) + Vector2(0, -sin(k * PI * 3.0))).round()
+			var tw2: Tween = create_tween()
+			tw2.tween_method(sway, 0.0, 1.0, STEP_TIME / Juice.speed()).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+			await tw2.finished
+			position = _home
+		_:
+			await Juice.tween(self, "position", _home, "move", STEP_TIME).finished
+
+## Motion profile for [param species]: data/spirling_motion.json, else by first element.
+static func motion_of(species: String, elements: Array[int]) -> String:
+	if _motion.is_empty():
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(MOTION_PATH)) if FileAccess.file_exists(MOTION_PATH) else null
+		_motion = raw if raw is Dictionary else {"species": {}, "by_element": {}}
+	var sp: Dictionary = _motion.get("species", {})
+	if sp.has(species):
+		return str(sp[species])
+	if not elements.is_empty():
+		return str((_motion.get("by_element", {}) as Dictionary).get(Elements.E.keys()[elements[0]], "slide"))
+	return "slide"
+
+## Wind-up before an art (item 2331): physical arts pull back 3 px and snap forward, focus arts
+## rise 2 px and drop as they fire, status arts bob twice.
+func windup(kind: int, toward: Vector2) -> void:
+	if Juice.reduced():
+		return
+	match kind:
+		MoveData.Kind.PHYSICAL:
+			await Juice.tween(self, "position", _home - (toward.normalized() * 3.0).round(), "move", 0.08).finished
+			await lunge(toward)
+		MoveData.Kind.FOCUS:
+			await Juice.tween(self, "position", _home + Vector2(0, -2), "move", 0.1).finished
+			await Juice.tween(self, "position", _home, "impact", 0.06).finished
+		_:
+			for i: int in 2:
+				await Juice.tween(self, "position", _home + Vector2(0, -1), "impact", 0.05).finished
+				await Juice.tween(self, "position", _home, "move", 0.05).finished
 
 func step_back(to_left: bool) -> void:
 	Juice.tween(self, "modulate:a", 0.0, "move", STEP_TIME)
