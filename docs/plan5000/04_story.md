@@ -133,7 +133,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1454. [P2] Kestra trifft die Spielfigur in Madderby wieder; sie kartiert die Farbschichten im Fluss und hat ihren Zephlet zu Tempestrel entfaltet.
 1455. [P2] Nach rift_rain_sealed wird Kestras Tempestrel still (Szene kestra_tatter_hush); Kestra hält der Spielfigur vor, dass das Stopfen Riss-Spirlinge krank macht.
 1456. [P2] Kapitel 9 löst die Frage: Ysolde zeigt in den Gildenakten, dass Riss-Spirlinge einen Anker-Bund brauchen, keinen offenen Riss; Kestra muss das selbst prüfen.
-1457. [P2] Ein Tag-Kampf mit Kestra in Stillwater gegen zwei Hush-Wanderer setzt kestra_stillwater_tag und hebt kestra_trust um 1.
+1457. [x] [P2] Ein Tag-Kampf mit Kestra in Stillwater gegen zwei Hush-Wanderer setzt kestra_stillwater_tag und hebt kestra_trust um 1.
 1458. [P2] Mirela-Seiten 7 bis 10 liegen in Corvane (Landing, Madderby-Dachboden, Woadfen, Greyreach) und führen den Seitenzähler im Kartenbuch auf "(k/10)" weiter.
 1459. [P2] Ein Brief von Aldo kommt nach jedem Corvane-Riss per Fährboten an (3 Briefe, Flags aldo_letter_1 bis 3) und hält die Familie im Spiel.
 1460. [P2] Ein Rastplatz in Madderby ist eine Färberquelle statt einer Heilstube, mit eigener Hüterin (Weda) und eigenem Satz.
