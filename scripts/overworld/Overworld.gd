@@ -347,14 +347,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	DailyTasks.record("step", {"map": map.id})
-<<<<<<< HEAD
 	show_notices()
-=======
-	if not GameState.notices.is_empty():
-		await _locked_say(take_notices())
 	if await _world.stepped(cell):
 		return
->>>>>>> claude/project-thread-lmw4sa-d
 	var warp: Dictionary = map.warp_at(cell)
 	if not warp.is_empty():
 		await _warp(warp)
