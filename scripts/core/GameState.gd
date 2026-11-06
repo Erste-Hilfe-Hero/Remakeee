@@ -381,7 +381,7 @@ func from_dict(d: Dictionary) -> void:
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
 	# through the achievement reward, never here.
-	waymarks = clampi(int(d.get("waymarks", 0)), 0, Waymarks.CAP)
+	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
 	current_map = str(d.get("map", "lighthouse"))
@@ -401,7 +401,7 @@ func from_dict(d: Dictionary) -> void:
 		visit_rest(heal_map, heal_cell)
 	records = (d.get("records", {}) as Dictionary).duplicate()
 	switch_progress = (d.get("switches", {}) as Dictionary).duplicate()
-	world_state = (d.get("world", {}) as Dictionary).duplicate(true)
+	world_state = as_dict(d.get("world", {})).duplicate(true)
 	iron_oath = bool(d.get("iron_oath", false))
 	for sd: Variant in d.get("sanctuary", []):
 		var s: Spirling = Spirling.from_dict(sd)
@@ -545,9 +545,24 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 		var src: Dictionary = (e as Dictionary).duplicate(true)
 		for k: Variant in src:
 			out[str(k)] = src[k]
-	out["seen"] = bool(out.seen) or bool(out.bonded)
-	out["first_day"] = int(out.first_day)
+	out["seen"] = as_bool(out.seen) or as_bool(out.bonded)
+	out["bonded"] = as_bool(out.bonded)
+	out["first_day"] = as_int(out.first_day)
 	return out
+
+## Damaged-save guards: a number (or bool) as int, anything else -> [param fallback].
+static func as_int(v: Variant, fallback: int = 0) -> int:
+	if v is int or v is bool:
+		return int(v)
+	if v is float:
+		return int(clampf(v, -1e15, 1e15))
+	return fallback
+
+static func as_bool(v: Variant) -> bool:
+	return bool(v) if v is bool or v is int or v is float else false
+
+static func as_dict(v: Variant) -> Dictionary:
+	return v if v is Dictionary else {}
 
 ## Days since 1970 (local device date), for "met on day N".
 static func today() -> int:
