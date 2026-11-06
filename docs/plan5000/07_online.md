@@ -13,12 +13,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 > (Bereich 9) sowie Kampfregeln selbst (Zugzeit, Ruhe-Regel, Seeds im Log stehen schon im Kampfplan).
 
 ### Grundlagen nachziehen
-2669. [P1] `_save_ok` in einer neuen Migration auf die echten Spielregeln setzen: höchstens 5 Spirlings im Team (heute 6) und Ring 1 bis 60 (heute 100), mit SQL-Test in `tools/online/sql_test/test_rules.sql`.
-2670. [P1] Dieselben Grenzen (Team 5, Ring 60) in `LocalBackend.gd` prüfen, damit Tests und Server gleich ablehnen.
-2671. [P1] Die Echo-Duell-Angleichung von heute Ring 30 auf einen Wert aus `server_config.duel_ring` umstellen (Startwert 50), damit Ali ihn ohne App-Update ändern kann.
-2672. [P1] In allen Online-Menüs und Server-Texten "Tamer" durch "Wanderer" ersetzen (Karte, Standardname "Wanderer 1A2B", `_clean_name`, Phrases.gd), samt Migration für bestehende Standardnamen.
-2673. [P1] Ein Feld `schema` (ganze Zahl, Start 1) in jeden Online-Spielstand schreiben und in `save_put` ablehnen, wenn es fehlt oder höher als `server_config.save_schema_max` ist.
-2674. [P1] Neue Tabelle `feature_flags` (Schlüssel, an/aus, Mindestversion) anlegen, damit Ligen, Tausch, Bünde und Raids einzeln am Server ein- und ausschaltbar sind.
+2669. [x] [P1] `_save_ok` in einer neuen Migration auf die echten Spielregeln setzen: höchstens 5 Spirlings im Team (heute 6) und Ring 1 bis 60 (heute 100), mit SQL-Test in `tools/online/sql_test/test_rules.sql`.
+2670. [x] [P1] Dieselben Grenzen (Team 5, Ring 60) in `LocalBackend.gd` prüfen, damit Tests und Server gleich ablehnen.
+2671. [x] [P1] Die Echo-Duell-Angleichung von heute Ring 30 auf einen Wert aus `server_config.duel_ring` umstellen (Startwert 50), damit Ali ihn ohne App-Update ändern kann.
+2672. [x] [P1] In allen Online-Menüs und Server-Texten "Tamer" durch "Wanderer" ersetzen (Karte, Standardname "Wanderer 1A2B", `_clean_name`, Phrases.gd), samt Migration für bestehende Standardnamen.
+2673. [x] [P1] Ein Feld `schema` (ganze Zahl, Start 1) in jeden Online-Spielstand schreiben und in `save_put` ablehnen, wenn es fehlt oder höher als `server_config.save_schema_max` ist.
+2674. [x] [P1] Neue Tabelle `feature_flags` (Schlüssel, an/aus, Mindestversion) anlegen, damit Ligen, Tausch, Bünde und Raids einzeln am Server ein- und ausschaltbar sind.
 2675. [P2] `hello` gibt die Liste der aktiven `feature_flags` zurück, und `Online.gd` blendet Menüpunkte ohne Flag aus statt Fehler zu zeigen.
 2676. [P2] Fehlercodes aller neuen Funktionen als feste Wörter (`not_friends`, `limit_day`, `blocked`, `season_closed` usw.) festlegen und in `scripts/online/OnlineErrors.gd` in Spielertexte übersetzen.
 2677. [P2] Jede neue Server-Funktion bekommt in `docs/ONLINE.md` eine Zeile in einer Tabelle "Funktion, Grenzen, Test", damit der Stand nachprüfbar bleibt.
@@ -33,10 +33,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2685. [P3] Jede Änderung an `server_config` wird mit Zeit, altem und neuem Wert in `config_history` geschrieben, damit Ali sie zurückdrehen kann.
 2686. [P3] Eine Funktion `config_preview` zeigt Ali vor einer Änderung von `min_version` oder Limits, wie viele Konten in den letzten 7 Tagen betroffen gewesen wären.
 ### Kampf-Schiedsrichter auf dem Server
-2687. [P1] Einen neuen Dienst `server/referee/` bauen: ein Godot-4.7.2-Headless-Export, der nur `scripts/battle/` lädt und Kämpfe aus Seed, Teams und Zugliste nachrechnet.
-2688. [P1] Der Schiedsrichter bekommt einen eigenen Container in `server/docker-compose.yml` ohne öffentlichen Port, erreichbar nur aus dem internen Netz für die Datenbank-Funktionen.
-2689. [P1] Eine Datenbank-Funktion `_referee_check(battle_id)` legt Kampfdaten in die Tabelle `battle_queue`, und der Schiedsrichter schreibt das Ergebnis (`ok`, `mismatch`, `error`) in `battle_results`.
-2690. [P1] Der Schiedsrichter vergleicht Sieger, Restkraft jedes Spirlings und Anzahl der Runden und meldet `mismatch`, sobald ein Wert abweicht.
+2687. [x] [P1] Einen neuen Dienst `server/referee/` bauen: ein Godot-4.7.2-Headless-Export, der nur `scripts/battle/` lädt und Kämpfe aus Seed, Teams und Zugliste nachrechnet.
+2688. [x] [P1] Der Schiedsrichter bekommt einen eigenen Container in `server/docker-compose.yml` ohne öffentlichen Port, erreichbar nur aus dem internen Netz für die Datenbank-Funktionen.
+2689. [x] [P1] Eine Datenbank-Funktion `_referee_check(battle_id)` legt Kampfdaten in die Tabelle `battle_queue`, und der Schiedsrichter schreibt das Ergebnis (`ok`, `mismatch`, `error`) in `battle_results`.
+2690. [x] [P1] Der Schiedsrichter vergleicht Sieger, Restkraft jedes Spirlings und Anzahl der Runden und meldet `mismatch`, sobald ein Wert abweicht.
 2691. [P1] Ligapunkte, Raid-Schaden und Wochenwertungen zählen erst, wenn der Schiedsrichter `ok` gemeldet hat; bis dahin zeigt das Spiel "wird geprüft".
 2692. [P2] Der Schiedsrichter läuft mit derselben Spieldaten-Version wie der Client; `data/*.json` werden beim Bau in den Container kopiert und ihr Prüfwert (SHA-256) im Ergebnis mitgeschrieben.
 2693. [P2] Kommt ein Client mit anderem Daten-Prüfwert als der Server, lehnt `hello` Liga und Raid ab und verweist auf das Update.
@@ -50,7 +50,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2701. [P3] Ein Werkzeug `tools/online/referee_diff.gd` zeigt bei `mismatch` Runde für Runde, wo Client und Server auseinanderlaufen.
 2702. [P3] Die Ergebnisse des Schiedsrichters als Wochenzahl in `docs/ONLINE.md` beschreiben: wie viele Kämpfe geprüft, wie viele abgewiesen.
 
-2703. [P1] Der Schiedsrichter nutzt einen eigenen Datenbank-Nutzer, der nur `battle_queue` lesen und `battle_results` schreiben darf.
+2703. [x] [P1] Der Schiedsrichter nutzt einen eigenen Datenbank-Nutzer, der nur `battle_queue` lesen und `battle_results` schreiben darf.
 2704. [P2] Jedes Ergebnis trägt die Versionsnummer der Kampfregeln (`BattleRules.VERSION`), damit Kämpfe nach einem Update mit der passenden Regelversion geprüft werden.
 2705. [P3] Für eine Übergangswoche nach Regeländerungen laufen zwei Schiedsrichter-Versionen parallel, und jeder Kampf geht an die Version seiner Regelnummer.
 2706. [P3] Der Schiedsrichter rechnet Raid-Versuche mit Phasenwechsel und meldet die Phase, in der der Versuch endete.

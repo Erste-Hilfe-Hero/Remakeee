@@ -58,5 +58,19 @@
   "action": "give_item echo_lumen 1; give_item max_tonic 2",
   "flag": "mirela_lamp",
   "once": true
+ },
+ "marla": {
+  "lines": [
+   "Marla: I'm Marla. I trade goods for Waymarks, the stones Wayfarers earn on the road.",
+   "Marla: Coins won't do here, and nobody can buy Waymarks. You earn them, you spend them."
+  ],
+  "after_flag": {
+   "flag": "marla_met",
+   "lines": [
+    "Marla: Waymarks in hand? Let's see what's in the crates this week."
+   ]
+  },
+  "action": "exchange",
+  "flag": "marla_met"
  }
 }
