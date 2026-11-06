@@ -29,6 +29,8 @@ var _shade: Node2D
 var _entities: Node2D
 var _camera: Camera2D
 var _photo: PhotoMode
+## The last battle's model (the weekly challenge reads its turn count).
+var last_model: BattleModel
 var _daylight: CanvasModulate
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
@@ -957,19 +959,16 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	elif wins > best:
 		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
 
-## Weekly challenge (item 88): three echo Wayfarers that are the same for everyone this week.
+## Weekly challenge (item 88, plan area 8): five echo Wayfarers that are the same for everyone this week.
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
-	var top: int = 1
-	for s: Spirling in GameState.party:
-		top = maxi(top, s.level)
-	var ch := WeeklyChallenge.new(week, top)
+	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	if str(rec.get("week", "")) != week:
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var go: bool = await menu.confirm("This week: %s, rule %s. Three echoes at ring %d. Best this week: %d of %d. Try?" % [
+	var go: bool = await menu.confirm("This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d. Try?" % [
 		BattleRules.FIELDS[ch.field].label, BattleRules.RULES[ch.rule].label, ch.level, int(rec.best), WeeklyChallenge.ROUNDS])
 	menu.queue_free()
 	if not go:
@@ -983,9 +982,15 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
 		busy = true
 		player.frozen = true
+		var turns: int = last_model.turn if last_model != null else 0
 		if outcome != BattleModel.Outcome.WIN:
 			break
 		wins += 1
+		var lines: Array[String] = [WeeklyChallenge.round_text(wins, turns, GameState.party)]
+		var coins: int = WeeklyChallenge.claim_interim(rec, wins)
+		if coins > 0:
+			lines.append("Interim prize: %d coins." % coins)
+		await say(lines)
 	rec.best = maxi(int(rec.best), wins)
 	# Weekly board (item 125): rounds won and health left; the server keeps the best.
 	Online.call_fn("weekly_submit", {"p_week": week, "p_score": EchoTeam.weekly_score(wins, GameState.party)})
@@ -993,7 +998,9 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		rec.claimed = true
 		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1
 		GameState.money += WeeklyChallenge.PRIZE
-		await say(["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE] as Array[String])
+		var won: Array[String] = ["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE]
+		won.append_array(Waymarks.reward_lines(Waymarks.earn(WeeklyChallenge.WAYMARKS, "weekly")))
+		await say(won)
 		await _action_give_item([ch.reward_item(), "1"] as PackedStringArray, null)
 	elif wins >= WeeklyChallenge.ROUNDS:
 		await say(["Cleared again! The prize comes back next week."] as Array[String])
@@ -1324,6 +1331,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		mine = []
 		mine.assign(own)
 	var model := BattleModel.new(mine, foes, wild, GameState.rng.randi(), ai_level)
+	last_model = model
 	model.inventory = GameState.inventory
 	model.items_allowed = GameState.items_allowed_in_battle()
 	model.level_cap = GameState.level_cap()

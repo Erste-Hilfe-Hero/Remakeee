@@ -62,4 +62,7 @@ T = {
 "Marla: Waymarks in hand? Let's see what's in the crates this week.": "Marla: Wegmarken dabei? Mal sehen, was diese Woche in den Kisten ist.",
 "Marla: My stand opens once the valley is a little quieter. Mend a Rift, then come back.": "Marla: Mein Stand öffnet, wenn das Tal etwas ruhiger ist. Heile einen Riss und komm dann wieder.",
 "Marla: Once the valley is fully quiet I'll bring out the good crates.": "Marla: Wenn das Tal ganz ruhig ist, hole ich die guten Kisten heraus.",
+# Weekly echo
+"Round %d of %d: %d turns, %d%% power left, %d fainted.": "Runde %d von %d: %d Züge, %d%% Kraft übrig, %d erschöpft.",
+"Interim prize: %d coins.": "Zwischenpreis: %d Münzen.",
 }
