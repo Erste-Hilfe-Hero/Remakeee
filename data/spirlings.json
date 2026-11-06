@@ -1338,6 +1338,9 @@
     "Bowl Over",
     "Hush"
    ],
+   "4": [
+    "Shade Pounce"
+   ],
    "5": [
     "Cower Shade"
    ],
@@ -1540,6 +1543,9 @@
    "9": [
     "Tunnel Strike"
    ],
+   "11": [
+    "Mirk Nip"
+   ],
    "13": [
     "All-In Crash"
    ],
@@ -1571,10 +1577,10 @@
   "role": "bulwark",
   "line_id": "talusk",
   "base": {
-   "hp": 80,
+   "hp": 84,
    "atk": 90,
-   "foc": 44,
-   "spd": 84,
+   "foc": 60,
+   "spd": 88,
    "def": 112
   },
   "trait": "thick_hide",
@@ -1587,11 +1593,17 @@
    "19": [
     "Tremor Thud"
    ],
+   "22": [
+    "Shade Pounce"
+   ],
    "24": [
     "All-In Crash"
    ],
    "30": [
     "Cairn Crash"
+   ],
+   "34": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.12,
@@ -1630,7 +1642,8 @@
    "1": [
     "Tunnel Strike",
     "Tremor Thud",
-    "Hunker Down"
+    "Hunker Down",
+    "Cinder Nip"
    ],
    "37": [
     "Kiln Strike"
