@@ -88,6 +88,9 @@ static func goals_text() -> String:
 	var tasks: Array[String] = DailyTasks.lines()
 	if not tasks.is_empty():
 		text += "\n\n" + "\n".join(tasks)
+	var post: Array[String] = Postgame.lines()
+	if not post.is_empty():
+		text += "\n\n" + "\n".join(post)
 	return text
 
 ## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
@@ -95,6 +98,8 @@ func run_records() -> void:
 	Achievements.check()
 	while true:
 		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
+		if Masters.open():
+			lines.append("Master Wayfarers")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -107,10 +112,19 @@ func run_records() -> void:
 			"Achievements by category": await run_achievement_lists()
 			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
 			"Personal bests": await info(records_text())
+			"Master Wayfarers": await run_masters()
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+
+## Master Wayfarer profiles (plan 3290): place, theme and the player's own wins.
+func run_masters() -> void:
+	while true:
+		var i: int = await pick_strings(Loc.t("Master Wayfarers %d/%d") % [Masters.beaten_count(), Masters.list().size()], Masters.lines())
+		if i < 0:
+			return
+		await info(Masters.profile(Masters.list()[i]))
 
 ## The badge grid; picking a badge shows its card.
 func run_badge_book() -> void:

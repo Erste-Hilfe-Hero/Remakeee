@@ -890,6 +890,39 @@
    "reward": 10,
    "stat": "sanctuary_size",
    "n": 1
+  },
+  {
+   "id": "master_first",
+   "title": "Worthy Rival",
+   "text": "Beat a Master Wayfarer.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "masters",
+   "n": 1,
+   "group": "masters",
+   "tier": "bronze"
+  },
+  {
+   "id": "master_half",
+   "title": "Wayfarers' Respect",
+   "text": "Beat four Master Wayfarers.",
+   "cat": "battle",
+   "reward": 50,
+   "stat": "masters",
+   "n": 4,
+   "group": "masters",
+   "tier": "silver"
+  },
+  {
+   "id": "master_all",
+   "title": "Master of Masters",
+   "text": "Beat all eight Master Wayfarers.",
+   "cat": "battle",
+   "reward": 100,
+   "stat": "masters",
+   "n": 8,
+   "group": "masters",
+   "tier": "gold"
   }
  ]
 }

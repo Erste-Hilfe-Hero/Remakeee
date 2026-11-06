@@ -109,7 +109,7 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | All three daily tasks | 10 extra | once a day | built |
 | Weekly echo, first win of the week | 60 | once a week | built |
 | Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
-| Master Wayfarer | 80 first win, then 20 | once a week each | planned (3289) |
+| Master Wayfarer | 80 first win, then 20 | once a week each (8 masters) | `Masters.win` |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
@@ -125,3 +125,13 @@ festival task of the day. They buy festival goods from Tilda in Brindlewick.
 Season path: 30 steps per quarter, 100 points per step. Points: daily task 10, weekly echo win 40,
 festival goal stage 20. An active player (3 tasks a day, 1 weekly win) earns about 3100 points in a
 13-week season, enough for every step. The rewards repeat every season, so nothing is missed for good.
+
+### Ring cap after Act I and the Master Wayfarers
+
+- `GameState.progress_cap()` follows the Veteran caps (12 ... 50) until Act I ends (flag
+  `aldo_dock_told`), then opens to the full ring 60. Veteran and Rift-born use it as their
+  level cap, so the endgame (weekly echo, lighthouse stair, masters) can use the whole range.
+- Eight Master Wayfarers (data/endgame.json "masters") appear once both Rifts are mended. Each
+  fields four Spirlings of one element, final forms for the ring, at master ring - 2 up to the
+  master ring (45, 46, 48, 49, 50, 52, 53, 55). Eight first wins pay 640 Waymarks once; after
+  that the masters add up to 160 a week.
