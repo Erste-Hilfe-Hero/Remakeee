@@ -470,8 +470,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3539. [P3] Die Ehrengalerie über eine Tür im Erdgeschoss des Leuchtturms erreichbar machen, ohne neue Treppen.
 
 ### Speicherdaten, Server und Tests
-3540. [P1] Alle neuen Felder (waymarks, festival_ribbons, daily_tasks, path, towers, chronicle) in GameState.to_dict() und from_dict() mit Standardwerten aufnehmen.
-3541. [P1] Eine Speicherversion hochzählen und alte Stände unter tests/fixtures mit einem Lade-Test prüfen.
+3540. [x] [P1] Alle neuen Felder (waymarks, festival_ribbons, daily_tasks, path, towers, chronicle) in GameState.to_dict() und from_dict() mit Standardwerten aufnehmen.
+3541. [x] [P1] Eine Speicherversion hochzählen und alte Stände unter tests/fixtures mit einem Lade-Test prüfen.
 3542. [P2] Die Gutschriften für Wochen-Echo und Türme vom Server über das Ergebnis und den Seed prüfen lassen, bevor der Stand angenommen wird.
 3543. [P2] Die Kosmetik-Freischaltungen kontoweit in einer eigenen Server-Tabelle in supabase/ speichern, getrennt vom Spielstand.
 3544. [P2] Einen GUT-Test für Waymarks.earn() schreiben: Obergrenze 9999, keine negativen Beträge, Log-Länge 200.
