@@ -259,11 +259,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2893. [P3] Saisonale Phrasen zu Festivals, die der Server für die Festtage freischaltet.
 ### Melden, Blockieren und Moderation (DSA)
 2894. [P1] Melden geht an jeder Stelle, an der ein anderer Spieler sichtbar ist: Freundesliste, Wanderer-Karte, Duell, Tausch, Bund, Raid und Rangliste.
-2895. [P1] Die Tabelle `reports` bekommt die Spalten `context` (Ort der Meldung), `object_id` (Bund, Name, Wappen), `status` (offen, geprüft, abgelehnt) und `decided_at`.
-2896. [P1] Nach jeder Entscheidung bekommt der Betroffene eine Begründung im Spiel (DSA Art. 17): Maßnahme, Grund aus fester Liste, Regel aus den Nutzungsbedingungen, Hinweis auf Widerspruch.
-2897. [P1] Ein Widerspruchsknopf an dieser Begründung schickt innerhalb von 6 Monaten eine Beschwerde in `appeals`, die Ali erneut prüft und beantwortet.
-2898. [P1] Der Meldende bekommt eine kurze Nachricht über das Ergebnis seiner Meldung ("geprüft, Maßnahme ergriffen" oder "kein Verstoß gefunden").
-2899. [P1] Ein Meldeformular auf `server/site/melden.html` nimmt Meldungen zu rechtswidrigen Inhalten auch ohne Konto an (DSA Art. 16), mit Freundescode, Grund, Erklärung und Bestätigung guten Glaubens.
+2895. [x] [P1] Die Tabelle `reports` bekommt die Spalten `context` (Ort der Meldung), `object_id` (Bund, Name, Wappen), `status` (offen, geprüft, abgelehnt) und `decided_at`.
+2896. [x] [P1] Nach jeder Entscheidung bekommt der Betroffene eine Begründung im Spiel (DSA Art. 17): Maßnahme, Grund aus fester Liste, Regel aus den Nutzungsbedingungen, Hinweis auf Widerspruch.
+2897. [x] [P1] Ein Widerspruchsknopf an dieser Begründung schickt innerhalb von 6 Monaten eine Beschwerde in `appeals`, die Ali erneut prüft und beantwortet.
+2898. [x] [P1] Der Meldende bekommt eine kurze Nachricht über das Ergebnis seiner Meldung ("geprüft, Maßnahme ergriffen" oder "kein Verstoß gefunden").
+2899. [x] [P1] Ein Meldeformular auf `server/site/melden.html` nimmt Meldungen zu rechtswidrigen Inhalten auch ohne Konto an (DSA Art. 16), mit Freundescode, Grund, Erklärung und Bestätigung guten Glaubens.
 2900. [P1] Blockieren wirkt sofort auch in allen neuen Funktionen: keine Duelle, keine Tausche, keine Raid-Einladungen, kein gemeinsamer Bund-Raid, kein Treffen in der Gegnersuche.
 2901. [P2] Ein Moderationswerkzeug `tools/online/mod.sh` für Ali mit Befehlen `list`, `show <id>`, `reset-name`, `hide-bund`, `suspend <tage>`, das jede Aktion mit Grund in `mod_actions` schreibt.
 2902. [P2] Nach 3 Meldungen von verschiedenen Konten innerhalb von 7 Tagen blendet der Server einen Namen oder Bund vorläufig aus, bis Ali entschieden hat.
@@ -281,7 +281,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2914. [P3] Eine Liste der Blockierten im Menü Konto, mit Entblocken und Datum des Blocks.
 2915. [P3] Blocks werden beim Konto-Umzug per Übertragungscode mitgenommen (bestehend prüfen und als SQL-Test festhalten).
 
-2916. [P1] Jede Meldung bekommt sofort eine Eingangsbestätigung im Spiel mit Meldenummer (DSA Art. 16 Abs. 4).
+2916. [x] [P1] Jede Meldung bekommt sofort eine Eingangsbestätigung im Spiel mit Meldenummer (DSA Art. 16 Abs. 4).
 2917. [P2] Die Prüfliste sortiert Meldungen nach Schwere (Drohung zuerst, dann Name oder Wappen, dann Schummeln) und zeigt das Alter jeder Meldung.
 2918. [P3] Der Server schickt Ali eine Wochen-E-Mail, wenn mehr als 10 Meldungen offen sind.
 2919. [P3] Doppelte Meldungen (gleicher Meldender, gleiches Ziel, 24 Stunden) werden still verworfen und nicht gezählt.
@@ -342,9 +342,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2970. [P3] Der Duell-Dienst nutzt einen eigenen Verbindungspuffer mit 10 Datenbank-Verbindungen.
 2971. [P3] Vor jeder großen Event-Woche läuft der Lasttest einmal mit 20000 simulierten Spielern.
 ### Datenschutz (DSGVO)
-2972. [P1] Eine Funktion `data_export` liefert alle eigenen Daten (Profil, Spielstände, Freunde, Post, Tausche, Bund, Ligen, Meldungen gegen das eigene Konto) als JSON-Datei (DSGVO Art. 15 und 20), erreichbar unter Einstellungen, Konto.
-2973. [P1] `delete_account` löscht auch alle neuen Daten: Tausche, Bundmitgliedschaft, Raid-Beiträge, Ligawertung, Kampfaufnahmen und Phrasen auf Pinnwänden; ein SQL-Test prüft, dass danach keine Zeile mit der Konto-Kennung übrig ist.
-2974. [P1] Ein Verzeichnis der Verarbeitungen in `docs/legal/VERARBEITUNGEN.md` mit Zweck, Daten, Speicherdauer und Rechtsgrundlage für jede Online-Funktion.
+2972. [x] [P1] Eine Funktion `data_export` liefert alle eigenen Daten (Profil, Spielstände, Freunde, Post, Tausche, Bund, Ligen, Meldungen gegen das eigene Konto) als JSON-Datei (DSGVO Art. 15 und 20), erreichbar unter Einstellungen, Konto.
+2973. [x] [P1] `delete_account` löscht auch alle neuen Daten: Tausche, Bundmitgliedschaft, Raid-Beiträge, Ligawertung, Kampfaufnahmen und Phrasen auf Pinnwänden; ein SQL-Test prüft, dass danach keine Zeile mit der Konto-Kennung übrig ist.
+2974. [x] [P1] Ein Verzeichnis der Verarbeitungen in `docs/legal/VERARBEITUNGEN.md` mit Zweck, Daten, Speicherdauer und Rechtsgrundlage für jede Online-Funktion.
 2975. [P1] Die Datenschutzerklärung (`docs/legal/DATENSCHUTZ.md`, `server/site/datenschutz.html`) um Ligen, Tausch, Bünde, Raids, Schiedsrichter, Echtheitsprüfung und Moderation ergänzen.
 2976. [P2] Eine Tabelle der Speicherdauer pro Datenart in `docs/ONLINE.md` und ein nächtlicher Lauf, der sie durchsetzt (Post 30 Tage, Tausche 90, Raids 60, Moderation 12 Monate).
 2977. [P2] Caddy-Zugriffsprotokolle speichern IP-Adressen nur gekürzt und werden nach 7 Tagen gelöscht.
@@ -362,7 +362,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2989. [P3] Eine jährliche Prüfliste in `docs/legal/DATENSCHUTZ_PRUEFUNG.md`: Speicherdauern, Löschläufe, Auftragsverarbeitung mit Contabo, Zugriffe auf die Datenbank.
 2990. [P3] Für Kampfaufnahmen im Schiedsrichter werden nur Seed, Teams und Züge gespeichert, keine Gerätedaten und keine Namen.
 
-2991. [P1] Ein SQL-Test prüft über den Systemkatalog, dass `data_export` jede Tabelle mit einer Spalte für die Konto-Kennung abdeckt.
+2991. [x] [P1] Ein SQL-Test prüft über den Systemkatalog, dass `data_export` jede Tabelle mit einer Spalte für die Konto-Kennung abdeckt.
 2992. [P2] Liga- und Raid-Gegner sehen nur Stufe, Wappen und Spirlings, nie den Freundescode, damit Fremde keine Anfragen schicken können.
 2993. [P3] Der Datenexport lässt sich auch als lesbare Seite im Spiel ansehen, nicht nur als Datei.
 2994. [P3] Einwilligungen (Name in Weltrangliste, Live-Duelle) werden mit Datum gespeichert und im Export gezeigt.

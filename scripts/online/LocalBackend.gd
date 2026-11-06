@@ -9,6 +9,8 @@ const CODE_ALPHABET: String = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
 const BANNED: Array[String] = ["fuck", "shit", "bitch", "nazi", "hitler", "arsch", "fotze", "hure",
 	"wichser", "nigg", "schwuchtel", "sex", "porn", "kill", "cunt", "dick"]
 const ONLINE_WINDOW: int = 300
+## Same limit as save_max_bytes in server_config (plan item 3662).
+const SAVE_MAX_BYTES: int = 262144
 ## Same defaults as server_config in the migrations.
 const DEFAULT_CONFIG: Dictionary = {
 	"min_version": 1, "motd": "", "friend_limit": 100, "gift_open_limit": 10, "goal_user_cap": 500,
@@ -23,6 +25,7 @@ const DEFAULT_CONFIG: Dictionary = {
 	"league_search_step": 50, "league_search_max": 400, "league_match_minutes": 30, "league_ai": 2,
 	"league_fair_blocked_sources": [],
 	"max_money_per_min": 5000, "save_time_slack": 300, "start_money": 3000, "cheat_flag_limit": 3, "cheat_flag_days": 7,
+	"data_export_limit": 5,
 	"save_server_keys": ["league", "leagues", "raid", "raids", "trades", "bund", "premium", "gems", "shards"],
 }
 const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
@@ -54,7 +57,8 @@ func _init(p_store_path: String = "") -> void:
 			"friend_request", "friend_respond", "friend_remove", "block", "unblock", "report", "set_social", "friends_list",
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
 			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
-			"battle_submit", "battle_status", "league_info", "league_join", "league_find"]:
+			"battle_submit", "battle_status", "league_info", "league_join", "league_find", "data_export",
+			"report_in", "notices_list", "notice_read", "appeal", "platform_set"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 
 func is_local() -> bool:
@@ -178,7 +182,7 @@ static func clean_name(p_name: String, code: String) -> String:
 
 static func profile_json(p: Dictionary) -> Dictionary:
 	return {"code": p.code, "name": p.name, "color": p.color, "favorite": p.favorite,
-		"card": p.card, "place": p.place, "social": p.social}
+		"card": p.card, "place": p.place, "social": p.social, "platform": str(p.get("platform", "app"))}
 
 func online_now() -> int:
 	var n: int = 0
@@ -247,6 +251,14 @@ func active_flags(version: int) -> Array:
 	out.sort()
 	return out
 
+## Like public.platform_set (item 3765).
+func _fn_platform_set(a: Dictionary) -> Dictionary:
+	var plat: String = str(a.get("p_platform", ""))
+	if not plat in ["app", "web"]:
+		return {"ok": false, "error": "bad_platform"}
+	profile_of(me())["platform"] = plat
+	return {"ok": true, "platform": plat}
+
 func _fn_profile_set(a: Dictionary) -> Dictionary:
 	var p: Dictionary = profile_of(me())
 	var card: Dictionary = {}
@@ -303,6 +315,8 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 	var slot: int = int(a.get("p_slot", 0))
 	if slot < 1 or slot > 3:
 		return {"ok": false, "error": "bad_slot"}
+	if JSON.stringify(a.get("p_data")).to_utf8_buffer().size() > SAVE_MAX_BYTES:
+		return {"ok": false, "error": "too_big"}
 	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
 		return {"ok": false, "error": "schema"}
 	if not save_ok(a.get("p_data"), config_int("party_max", 5), config_int("level_max", 60)):
@@ -313,6 +327,10 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		data.erase(str(k))
 	var saves: Dictionary = _saves()
 	var cur: Variant = saves.get(str(slot))
+	var rid: String = str(a.get("p_request_id", "")).left(64) if a.get("p_request_id") != null else ""
+	# The same upload again after a lost answer is already stored (plan item 3658).
+	if cur != null and not rid.is_empty() and str(cur.get("request_id", "")) == rid:
+		return {"ok": true, "rev": cur.rev, "saved_at": cur.saved_at, "repeat": true}
 	if cur != null and int(cur.rev) != int(a.get("p_base_rev", 0)) and not bool(a.get("p_force", false)):
 		return {"ok": false, "conflict": true, "rev": cur.rev, "saved_at": cur.saved_at, "summary": cur.summary}
 	var why: String = save_cheat(cur.data if cur != null else null, int(cur.saved_at) if cur != null else 0, data)
@@ -324,7 +342,7 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "refused", "reason": why}
 	var rev: int = (int(cur.rev) if cur != null else 0) + 1
 	saves[str(slot)] = {"rev": rev, "data": data,
-		"summary": str(a.get("p_summary", "")).left(60), "saved_at": now()}
+		"summary": str(a.get("p_summary", "")).left(60), "saved_at": now(), "request_id": rid}
 	return {"ok": true, "rev": rev, "saved_at": now()}
 
 ## Like public._save_cheat (items 2921-2923): why a new save is refused, or "".
@@ -387,9 +405,84 @@ func _fn_save_delete(a: Dictionary) -> Dictionary:
 func _fn_delete_account(_a: Dictionary) -> Dictionary:
 	var uid: String = me()
 	_on_delete_user(uid)
+	_purge(uid)
 	db.users.erase(uid)
 	session = {}
 	return {"ok": true}
+
+## Tables of [member db] that hold rows of players (everything but accounts and settings).
+func _shared_tables() -> Array[String]:
+	var out: Array[String] = []
+	for name: String in db.keys():
+		if not ["users", "config", "flags", "next_ids"].has(name) and (db[name] is Dictionary or db[name] is Array):
+			out.append(name)
+	out.sort()
+	return out
+
+## True when [param v] (or the row key [param key]) carries the account id [param uid].
+func _mentions(v: Variant, uid: String, key: String = "") -> bool:
+	if not key.is_empty() and (key == uid or key.split("|").has(uid)):
+		return true
+	if v is String:
+		return v == uid
+	if v is Array:
+		return (v as Array).any(func(x: Variant) -> bool: return _mentions(x, uid))
+	if v is Dictionary:
+		for k: Variant in v:
+			if _mentions(v[k], uid, str(k)):
+				return true
+	return false
+
+## Like public._export_row: the player's id reads "you", other players' ids "another player".
+func _mask(v: Variant, uid: String) -> Variant:
+	if v is String:
+		return "you" if v == uid else ("another player" if db.users.has(v) else v)
+	if v is Array:
+		return (v as Array).map(func(x: Variant) -> Variant: return _mask(x, uid))
+	if v is Dictionary:
+		var out: Dictionary = {}
+		for k: Variant in v:
+			out[_mask_key(str(k), uid)] = _mask(v[k], uid)
+		return out
+	return v
+
+func _mask_key(k: String, uid: String) -> String:
+	var parts: PackedStringArray = k.split("|")
+	for i: int in parts.size():
+		parts[i] = str(_mask(parts[i], uid))
+	return "|".join(parts)
+
+## Like public.data_export (item 2972): every row that carries the account, other players hidden.
+func _fn_data_export(_a: Dictionary) -> Dictionary:
+	var uid: String = me()
+	profile_of(uid)
+	if not _rate_ok("data_export", config_int("data_export_limit", 5)):
+		return _fail("slow_down")
+	var tables: Dictionary = {"account": _mask(db.users[uid], uid)}
+	for name: String in _shared_tables():
+		var rows: Array = []
+		var t: Variant = db[name]
+		if t is Dictionary:
+			for k: Variant in t:
+				if _mentions(t[k], uid, str(k)):
+					rows.append({"key": _mask_key(str(k), uid), "row": _mask(t[k], uid)})
+		else:
+			for row: Variant in t:
+				if _mentions(row, uid):
+					rows.append(_mask(row, uid))
+		tables[name] = rows
+	return {"ok": true, "exported_at": now(), "format": 1, "tables": tables}
+
+## Like the end of public.delete_account (2973): no row anywhere still carries the account.
+func _purge(uid: String) -> void:
+	for name: String in _shared_tables():
+		var t: Variant = db[name]
+		if t is Dictionary:
+			for k: Variant in (t as Dictionary).keys():
+				if _mentions(t[k], uid, str(k)):
+					t.erase(k)
+		else:
+			db[name] = (t as Array).filter(func(row: Variant) -> bool: return not _mentions(row, uid))
 
 func _fn_transfer_create(_a: Dictionary) -> Dictionary:
 	profile_of(me())
@@ -562,13 +655,128 @@ func _fn_unblock(a: Dictionary) -> Dictionary:
 	return {"ok": true}
 
 func _fn_report(a: Dictionary) -> Dictionary:
+	return _fn_report_in({"p_code": a.get("p_code", ""), "p_reason": a.get("p_reason", 3), "p_context": "friends"})
+
+const REPORT_CONTEXTS: Array[String] = ["friends", "card", "duel", "trade", "bund", "raid", "board", "league"]
+const MOD_ACTIONS: Array[String] = ["name_reset", "warning", "league_block", "none"]
+
+## Like public.report_in (items 2895, 2916): a report from anywhere, answered with its number.
+func _fn_report_in(a: Dictionary) -> Dictionary:
 	var t: String = uid_for_code(str(a.get("p_code", "")))
 	if t.is_empty() or t == me():
 		return _fail("no_such_code")
+	var ctx: String = str(a.get("p_context", ""))
+	if not REPORT_CONTEXTS.has(ctx):
+		return _fail("bad_context")
 	if not _rate_ok("report", 10):
 		return _fail("slow_down")
-	(_table("reports", []) as Array).append({"reporter": me(), "target": t, "target_name": profile_of(t).name,
-		"reason": clampi(int(a.get("p_reason", 3)), 0, 3), "at": now()})
+	var id: int = _next_id("report")
+	var obj: String = str(a.get("p_object", "") if a.get("p_object") != null else "").left(40)
+	(_table("reports", []) as Array).append({"id": id, "reporter": me(), "target": t, "target_name": profile_of(t).name,
+		"reason": clampi(int(a.get("p_reason", 3)), 0, 3), "context": ctx, "object_id": obj, "status": "open",
+		"action": "", "at": now()})
+	return {"ok": true, "report_id": id}
+
+func _next_id(kind: String) -> int:
+	var ids: Dictionary = _table("next_ids", {})
+	ids[kind] = int(ids.get(kind, 0)) + 1
+	return int(ids[kind])
+
+## Every rule is in section 4 of the terms ("Verhaltensregeln"), like public._mod_reason_rule.
+static func mod_reason_rule(_reason: int) -> String:
+	return "4"
+
+func _notice(uid: String, kind: String, report_id: int, body: Dictionary) -> void:
+	if not db.users.has(uid):
+		return
+	(_table("notices", []) as Array).append({"id": _next_id("notice"), "user_id": uid, "kind": kind,
+		"report_id": report_id, "body": body, "at": now(), "read": false})
+
+## Like public.moderation_decide (items 2896, 2898): only Ali calls it, from the console.
+func moderation_decide(report_id: int, upheld: bool, action: String = "warning") -> Dictionary:
+	var act: String = action if upheld else "none"
+	if not MOD_ACTIONS.has(act):
+		return _fail("bad_action")
+	var r: Dictionary = {}
+	for row: Dictionary in _table("reports", []):
+		if int(row.get("id", 0)) == report_id:
+			r = row
+	if r.is_empty():
+		return _fail("no_such_report")
+	if r.status != "open":
+		return _fail("decided")
+	r.status = "upheld" if upheld else "rejected"
+	r.action = act
+	r.decided_at = now()
+	if upheld:
+		if act == "name_reset":
+			var p: Dictionary = profile_of(r.target)
+			p.name = "Wanderer " + str(p.code).right(4)
+		elif act == "league_block" and db.users.has(r.target):
+			var flags: Array = (db.users[r.target] as Dictionary).get_or_add("cheat_flags", [])
+			for i: int in config_int("cheat_flag_limit", 3):
+				flags.append({"slot": 0, "reason": "moderation", "at": now()})
+		_notice(r.target, "decision", report_id, {"action": act, "reason": r.reason, "rule": mod_reason_rule(int(r.reason)),
+			"context": r.context, "automated": false, "appeal_until": now() + 183 * 86400})
+	if not str(r.get("reporter", "")).is_empty():
+		_notice(r.reporter, "report_result", report_id, {"upheld": upheld})
+	return {"ok": true}
+
+func _fn_notices_list(_a: Dictionary) -> Dictionary:
+	var out: Array = []
+	for n: Dictionary in _table("notices", []):
+		if n.user_id != me():
+			continue
+		var ap: Dictionary = _appeal_of(int(n.id))
+		out.push_front({"id": n.id, "kind": n.kind, "report_id": n.report_id, "body": n.body, "at": n.at, "read": n.read,
+			"appealed": not ap.is_empty(), "appeal": ap.get("status")})
+	return {"ok": true, "notices": out}
+
+func _appeal_of(notice_id: int) -> Dictionary:
+	for ap: Dictionary in _table("appeals", []):
+		if int(ap.notice_id) == notice_id:
+			return ap
+	return {}
+
+func _fn_notice_read(a: Dictionary) -> Dictionary:
+	for n: Dictionary in _table("notices", []):
+		if int(n.id) == int(a.get("p_id", 0)) and n.user_id == me():
+			n.read = true
+	return {"ok": true}
+
+## Like public.appeal (item 2897): once per decision, within 6 months.
+func _fn_appeal(a: Dictionary) -> Dictionary:
+	var n: Dictionary = {}
+	for row: Dictionary in _table("notices", []):
+		if int(row.id) == int(a.get("p_notice", 0)) and row.user_id == me():
+			n = row
+	if n.is_empty() or n.kind != "decision":
+		return _fail("no_such_notice")
+	if int(n.at) < now() - 183 * 86400:
+		return _fail("too_late")
+	if not _appeal_of(int(n.id)).is_empty():
+		return _fail("appealed")
+	var id: int = _next_id("appeal")
+	(_table("appeals", []) as Array).append({"id": id, "notice_id": n.id, "user_id": me(),
+		"reason": clampi(int(a.get("p_reason", 2)), 0, 2), "status": "open", "at": now()})
+	return {"ok": true, "appeal_id": id}
+
+## Like public.appeal_answer: Ali keeps or lifts the measure.
+func appeal_answer(appeal_id: int, changed: bool) -> Dictionary:
+	var ap: Dictionary = {}
+	for row: Dictionary in _table("appeals", []):
+		if int(row.id) == appeal_id:
+			ap = row
+	if ap.is_empty():
+		return _fail("no_such_appeal")
+	ap.status = "changed" if changed else "kept"
+	var n: Dictionary = {}
+	for row: Dictionary in _table("notices", []):
+		if int(row.id) == int(ap.notice_id):
+			n = row
+	if changed and str(n.body.get("action", "")) == "league_block" and db.users.has(ap.user_id):
+		db.users[ap.user_id].cheat_cleared_at = now()
+	_notice(ap.user_id, "appeal_answer", int(n.get("report_id", 0)), {"changed": changed})
 	return {"ok": true}
 
 func _fn_set_social(a: Dictionary) -> Dictionary:

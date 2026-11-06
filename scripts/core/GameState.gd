@@ -111,6 +111,11 @@ var pad_size: int = 1
 var pad_opacity: int = 1
 var left_handed: bool = false
 var tap_to_move: bool = true
+## Walking is running; holding B walks slowly instead (item 1810).
+var always_run: bool = false
+## A and B change places (item 2111), apart for the touch pad and for gamepads.
+var swap_ab_touch: bool = false
+var swap_ab_pad: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
 ## Gamepad rumble on hits (item 63).
@@ -249,6 +254,7 @@ const MENU_ACTION: StringName = &"menu"
 func _ready() -> void:
 	rng.randomize()
 	_register_actions()
+	apply_pad_swap(swap_ab_pad)
 
 func _exit_tree() -> void:
 	Loc.uninstall()
@@ -269,7 +275,14 @@ const PAD_BINDINGS: Dictionary[StringName, Array] = {
 	SPEED_ACTION: [JOY_BUTTON_RIGHT_SHOULDER],
 	AUTO_ACTION: [JOY_BUTTON_Y],
 }
+## Keyboard (item 2110, web build): arrows or W A S D walk, Enter or Space confirm (built in),
+## Escape or Backspace go back, M opens the menu. Escape also opens the menu while walking.
 const KEY_BINDINGS: Dictionary[StringName, Array] = {
+	&"ui_up": [KEY_W],
+	&"ui_down": [KEY_S],
+	&"ui_left": [KEY_A],
+	&"ui_right": [KEY_D],
+	&"ui_cancel": [KEY_BACKSPACE],
 	MENU_ACTION: [KEY_ESCAPE, KEY_TAB, KEY_M],
 	SPEED_ACTION: [KEY_F],
 	AUTO_ACTION: [KEY_R],
@@ -290,6 +303,18 @@ static func _register_actions() -> void:
 			ev.physical_keycode = int(k) as Key
 			if not InputMap.action_has_event(action, ev):
 				InputMap.action_add_event(action, ev)
+
+## Puts gamepad A and B on confirm and back, or the other way round (item 2111).
+static func apply_pad_swap(swap: bool) -> void:
+	var pairs: Array = [[&"ui_accept", JOY_BUTTON_A, JOY_BUTTON_B], [&"ui_cancel", JOY_BUTTON_B, JOY_BUTTON_A]]
+	for p: Array in pairs:
+		var action: StringName = p[0]
+		for e: InputEvent in InputMap.action_get_events(action):
+			if e is InputEventJoypadButton and (e as InputEventJoypadButton).button_index in [JOY_BUTTON_A, JOY_BUTTON_B]:
+				InputMap.action_erase_event(action, e)
+		var pad := InputEventJoypadButton.new()
+		pad.button_index = (int(p[2]) if swap else int(p[1])) as JoyButton
+		InputMap.action_add_event(action, pad)
 
 static func _has_pad_button(action: StringName, button: int) -> bool:
 	for e: InputEvent in InputMap.action_get_events(action):
@@ -331,7 +356,7 @@ func reset() -> void:
 	heal_cell = Vector2i(4, 4)
 	flags = {}
 	visited_rests = {}
-	records = {}
+	records = endgame_defaults({})
 	story_vars = {}
 	story_choices = {}
 	switch_progress = {}
@@ -364,6 +389,23 @@ func tamer_sprite() -> String:
 	return TAMER_SPRITES[clampi(tamer_look, 0, TAMER_SPRITES.size() - 1)]
 
 ## Save data (see SaveManager for versioning and atomic writes).
+## Endgame records (plan area 8, item 3540) and their empty defaults. A loaded save keeps each
+## one only if it has the right type, so a damaged entry starts fresh instead of breaking a screen.
+const ENDGAME_RECORDS: Dictionary = {
+	"album": {}, "album_stickers": [], "echo_path": {}, "expeditions": [], "world_events": {},
+	"masters": {}, "season_path": {}, "exchange": {}, "weekly": {}, "memorial": [],
+	"waymark_log": [], "achievements": {}, "achievements_paid": {}, "collection": {},
+}
+
+## Fills the endgame records with their defaults where missing or of the wrong type.
+static func endgame_defaults(rec: Dictionary) -> Dictionary:
+	for k: String in ENDGAME_RECORDS:
+		var def: Variant = ENDGAME_RECORDS[k]
+		var have: Variant = rec.get(k)
+		if have == null or typeof(have) != typeof(def):
+			rec[k] = def.duplicate()
+	return rec
+
 func to_dict() -> Dictionary:
 	var party_d: Array = []
 	for s: Spirling in party:
@@ -397,7 +439,7 @@ func to_dict() -> Dictionary:
 		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
 		"rests": visited_rests.duplicate(true),
-		"records": records.duplicate(),
+		"records": records.duplicate(true),
 		"story_vars": story_vars.duplicate(),
 		"story_choices": story_choices.duplicate(),
 		"switches": switch_progress.duplicate(),
@@ -425,9 +467,9 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
-	for k: Variant in (d.get("spirlog", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
-	for k: Variant in (d.get("inventory", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("inventory", {})):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
@@ -457,7 +499,7 @@ func from_dict(d: Dictionary) -> void:
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
-	records = _as_dict(d.get("records", {}))
+	records = endgame_defaults(_as_dict(d.get("records", {})))
 	var sv: Dictionary = _as_dict(d.get("story_vars", {}))
 	for k: Variant in sv:
 		if sv[k] is int or sv[k] is float:
@@ -478,6 +520,7 @@ func settings_to_dict() -> Dictionary:
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "day_night": day_night, "language": language}
@@ -494,6 +537,10 @@ func settings_from_dict(d: Dictionary) -> void:
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
+	always_run = bool(d.get("always_run", false))
+	swap_ab_touch = bool(d.get("swap_ab_touch", false))
+	swap_ab_pad = bool(d.get("swap_ab_pad", false))
+	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
 	rumble = bool(d.get("rumble", true))
 	tips_enabled = bool(d.get("tips", true))
@@ -584,8 +631,13 @@ func retire_fainted() -> Array[String]:
 ## Fills an empty party from storage. Returns how many joined.
 func fill_party_from_storage() -> int:
 	var n: int = 0
-	while party.size() < MAX_PARTY and not storage.is_empty():
-		party.append(storage.pop_front())
+	for s: Spirling in storage.duplicate():
+		if party.size() >= MAX_PARTY:
+			break
+		if Expeditions.is_away(s.uid):
+			continue
+		storage.erase(s)
+		party.append(s)
 		n += 1
 	return n
 
@@ -661,6 +713,13 @@ static func as_int(v: Variant, fallback: int = 0) -> int:
 
 static func as_bool(v: Variant) -> bool:
 	return bool(v) if v is bool or v is int or v is float else false
+
+## True when the clock went back before [param stored] (a day, week, month or season key that
+## sorts by time, e.g. "2026-11-06", "2026-W45", "2026-11", "2026-Q4"). Timed content keeps its
+## stored state then, so setting a clock back never resets and pays the same goal twice
+## (plan 3497).
+static func time_went_back(stored: String, now: String) -> bool:
+	return stored != "" and now < stored
 
 static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
@@ -834,6 +893,9 @@ func deposit(index: int, keep_keepsake: bool = false) -> bool:
 
 func withdraw(index: int) -> bool:
 	if index < 0 or index >= storage.size() or party.size() >= MAX_PARTY:
+		return false
+	# Spirlings on a roaming trip stay away until they are home (plan 3448).
+	if Expeditions.is_away(storage[index].uid):
 		return false
 	party.append(storage[index])
 	storage.remove_at(index)

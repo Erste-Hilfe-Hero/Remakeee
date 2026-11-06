@@ -70,6 +70,9 @@ func _ready() -> void:
 		"gauntlet": _action_gauntlet,
 		"weekly": _action_weekly,
 		"master": _action_master,
+		"merchant": _action_merchant,
+		"echo_room": _action_echo_room, "echo_chest": _action_echo_chest, "echo_info": _action_echo_info,
+		"expedition": _action_expedition,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
@@ -81,6 +84,7 @@ func _ready() -> void:
 		"echo_song": _action_echo_song,
 		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
+		"first_voice": _action_first_voice,
 	}
 	_world = WorldMechanics.new(self)
 	_build()
@@ -117,6 +121,9 @@ func _build() -> void:
 	player.stepped.connect(_on_player_stepped)
 	player.interact.connect(_on_interact)
 	_entities.add_child(player)
+	var hint := InteractHint.new()
+	hint.ow = self
+	add_child(hint)
 	_camera = Camera2D.new()
 	_camera.position_smoothing_enabled = false
 	add_child(_camera)
@@ -154,6 +161,7 @@ func _build() -> void:
 	# Long lines (and German text) grow the box upward instead of off the bottom of the screen.
 	_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_text.visible = false
+	_text.allow_fast_forward = true
 	ui_root.add_child(_text)
 	_picker = ListPicker.new()
 	_picker.set_anchors_preset(Control.PRESET_CENTER)
@@ -188,6 +196,22 @@ func _era_line_after_load(line: String) -> void:
 	await get_tree().create_timer(EraManager.TRANSITION_TIME).timeout
 	await _locked_say([line] as Array[String])
 
+## The first free walk after the prologue (item 1982): a note with an arrow to the D-pad that
+## goes away after three steps; then the menu tip.
+func show_walk_hint() -> void:
+	var lines: Array[String] = Tips.take("walk")
+	if lines.is_empty():
+		return
+	var hint := WalkHint.new()
+	hint.text = lines[0]
+	_ui.add_child(hint)
+	for i: int in WalkHint.STEPS:
+		await player.stepped
+	hint.queue_free()
+	while busy:
+		await get_tree().process_frame
+	await show_tip("menu")
+
 ## Shows a first-time tip (if any) while the player waits.
 func show_tip(id: String) -> void:
 	var lines: Array[String] = Tips.take(id)
@@ -218,6 +242,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.current_map = map_id
 	DailyTasks.note_map(map_id)
 	DailyTasks.record("visit", {"map": map_id})
+	# Today's world event gives its find on the first visit (plan 3422).
+	GameState.notices.append_array(WorldEvents.on_visit(map_id))
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -461,6 +487,9 @@ func _play_one(ref: String, speaker: NPC) -> String:
 		return Dialogue.resolve_ref(ref, str(entry.else)) if entry.has("else") else ""
 	var lines: Array[String] = Dialogue.lines_for(entry, GameState.flags)
 	var who: String = Dialogue.speaker_for(entry)
+	if who.is_empty():
+		# Villagers whose lines carry no name show their role or Wayfarer name (item 2011).
+		who = Speakers.name_for(speaker)
 	var choices: Array[Dictionary] = Dialogue.choices_for(entry, GameState.flags)
 	var next: String = str(entry.get("next", ""))
 	_text.visible = true
@@ -544,6 +573,8 @@ func announce_goal_if_changed(before: int) -> void:
 		await say(tip)
 
 func say(lines: Array[String]) -> void:
+	if lines.is_empty():
+		return
 	_text.visible = true
 	for line: String in lines:
 		await _text.show_text(line)
@@ -594,7 +625,27 @@ func _run_action(action: String, speaker: NPC) -> void:
 			continue
 		await _actions[parts[0]].call(parts.slice(1), speaker)
 
+## "first_voice <species> <ring>": a fixed, one-time meeting with a First Voice (plan area 1,
+## items 153-155). It is wild, so it can be bonded with the Echo call. If it is not bonded
+## (beaten, fled or lost), it rests and comes back to the same place after the next rest.
+func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var voice := Spirling.new(sd, int(args[1]) if args.size() > 1 else 40, GameState.rng)
+	_text.visible = false
+	SaveManager.save_game()
+	await start_battle([voice] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
+	if FirstVoices.is_bonded(sd.species_name):
+		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
+	else:
+		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
+
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
+	FirstVoices.after_rest()
 	GameState.heal_party()
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
@@ -604,6 +655,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
+	await say(Tips.take("rest_spot"))
 	# Every spring can swap the team with storage, even before storage opens from the menu,
 	# and load a saved team with one tap (plan area 1, items 378 and 381).
 	if not GameState.storage.is_empty() or not GameState.team_presets.is_empty():
@@ -624,6 +676,7 @@ func open_menu() -> void:
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
+	GameState.set_flag(VirtualPad.MENU_SEEN_FLAG)
 	var menu := PauseMenu.new()
 	menu.encounter_table = map.encounter_table
 	menu.current_map = map.id
@@ -745,6 +798,8 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.add_item(args[0], count)
 	var item_name: String = str(Database.item(args[0]).get("name", args[0]))
 	await say(["You got %s x%d!" % [item_name, count]] as Array[String])
+	if PauseMenu.bag_tab(Database.item(args[0])) == 1:
+		await say(Tips.take("keepsake"))
 	if bool(Database.item(args[0]).get("gear", false)):
 		var tip: Array[String] = Tips.take("gear")
 		if not tip.is_empty():
@@ -773,7 +828,10 @@ func prologue() -> void:
 	while not GameState.has_flag("got_starter"):
 		await run_dialogue("lighthouse/morning")
 	await run_dialogue("lighthouse/aldo")
+	# Saved right after the prologue, and the tip says saving also works in the menu (1988).
 	SaveManager.save_game()
+	await _locked_say(Tips.take("save"))
+	show_walk_hint()
 
 ## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
 func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -829,6 +887,8 @@ func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	if pages_found(GameState.flags, VEYDAL_PAGES) >= VEYDAL_PAGES and not GameState.has_flag("pages_all"):
 		GameState.set_flag("pages_all")
 		await say(["That's all six pages. Aldo should see them."] as Array[String])
+	else:
+		await say(Tips.take("map_page"))
 	if n >= PAGE_COUNT:
 		GameState.set_flag("pages_complete")
 		await say(["All fourteen pages. Mirela's whole map book, together again."] as Array[String])
@@ -1138,7 +1198,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
 	var rec: Dictionary = GameState.records.get("weekly", {})
-	if str(rec.get("week", "")) != week:
+	if str(rec.get("week", "")) != week and not GameState.time_went_back(str(rec.get("week", "")), week):
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -1212,6 +1272,112 @@ func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
 	await say(lines)
 	await announce_achievements()
 
+## Echo Path room marker (plan 3464): wild fight, Wanderer echo, treasure, rest or riddle.
+func _action_echo_room(_args: PackedStringArray, _speaker: NPC) -> void:
+	var slot: int = EchoPath.slot_of(map.id)
+	if slot == 0:
+		return
+	if EchoPath.is_done(slot):
+		await say(["This room is already clear this week."] as Array[String])
+		return
+	var lines: Array[String] = []
+	match EchoPath.kind_of(slot):
+		"wild", "echo":
+			if GameState.first_healthy_index() < 0:
+				return
+			var wild: bool = EchoPath.kind_of(slot) == "wild"
+			var foes: Array[Spirling] = []
+			if wild:
+				var s: Spirling = EchoPath.wild_for(slot)
+				if s != null:
+					foes.append(s)
+			else:
+				foes = EchoPath.echo_team(slot)
+			if foes.is_empty():
+				return
+			SaveManager.save_game()
+			busy = false
+			var info: Dictionary = {} if wild else {"name": Loc.t("Wanderer echo"), "ai": 3}
+			var outcome: BattleModel.Outcome = await start_battle(foes, wild, info)
+			busy = true
+			player.frozen = true
+			if outcome != BattleModel.Outcome.WIN and outcome != BattleModel.Outcome.BONDED:
+				return
+			EchoPath.clear(slot)
+		"treasure":
+			lines.append_array(EchoPath.take_treasure(slot))
+		"rest":
+			# No rest point here: the rooms change every week.
+			GameState.heal_party()
+			Sound.sfx("heal")
+			DailyTasks.record("rest", {"map": map.id})
+			EchoPath.clear(slot)
+			lines.append("Your team is fully rested.")
+		"riddle":
+			EchoPath.clear(slot)
+			lines.append("The stone hums. The answer rings true.")
+	lines.append(Loc.t("Rooms cleared this week: %d of %d.") % [EchoPath.done_count(), EchoPath.ROOMS])
+	await say(lines)
+
+## The chest at the end of the Echo Path (plan 3465), then the way back to the hall.
+func _action_echo_chest(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say(EchoPath.open_chest())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var back: bool = await menu.confirm(Loc.t("Return to the entrance hall?"))
+	menu.queue_free()
+	if back:
+		Sound.sfx("warp")
+		load_map(EchoPath.FILE, EchoPath.ARRIVE_DOWN, "down")
+
+## The Echo Path guide: this week's wild kinds and progress.
+func _action_echo_info(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say([EchoPath.spirlog_hint(), EchoPath.goal_line()] as Array[String])
+
+## The wandering merchant (plan 3423): today's three goods for coins.
+func _action_merchant(_args: PackedStringArray, speaker: NPC) -> void:
+	var items: Array[String] = []
+	items.assign(WorldEvents.merchant().get("items", []))
+	await _action_shop(PackedStringArray(items), speaker)
+
+## Aldo's roaming trips (plan 3446-3448): bring finished trips home, then send Spirlings from
+## storage for 4, 8 or 12 hours with the reward shown before they go.
+func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
+	var back: Array[String] = Expeditions.collect()
+	if not back.is_empty():
+		await say(back)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var status: Array[String] = Expeditions.status_lines()
+	if not status.is_empty():
+		await menu.info("\n".join(status))
+	while true:
+		var title: String = Loc.t("Roaming trips %d/%d") % [Expeditions.trips().size(), Expeditions.max_trips()]
+		var options: Array[String] = []
+		if Expeditions.can_send():
+			options.append("Send a Spirling")
+		options.append("Done")
+		var pick: int = await menu.pick_strings(title, options)
+		if pick < 0 or options[pick] == "Done":
+			break
+		var ready: Array[Spirling] = Expeditions.ready_to_go()
+		var names: Array[String] = []
+		for s: Spirling in ready:
+			names.append("%s R%d" % [s.display_name(), s.level])
+		var who: int = await menu.pick_strings("Who goes?", names)
+		if who < 0:
+			continue
+		var plans: Array[String] = []
+		for p: Variant in Expeditions.plans():
+			plans.append(Expeditions.plan_text(p))
+		var how: int = await menu.pick_strings("How long?", plans)
+		if how < 0:
+			continue
+		var hours: int = int((Expeditions.plans()[how] as Dictionary).hours)
+		if Expeditions.send(ready[who], hours):
+			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
+	menu.queue_free()
+
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
 func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
 	var d: Dictionary = Online.date_now()
@@ -1280,7 +1446,7 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		for id: String in args:
 			var it: Dictionary = Database.item(id)
 			labels.append("%s  %d" % [it.get("name", id), int(it.get("price", 0))])
-		var idx: int = await menu.pick_strings("Shop   %d coins" % GameState.money, labels)
+		var idx: int = await menu.pick_strings("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), labels)
 		if idx < 0:
 			break
 		var item: Dictionary = Database.item(args[idx])
@@ -1599,7 +1765,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
-	scene.backdrop = map.backdrop
+	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)

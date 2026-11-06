@@ -23,6 +23,26 @@ world that does not follow the classic monster-RPG template. Check new content a
 - There is no villain team. The antagonist is the Hush itself.
 - End of Act I: both Rifts mended, a larger third Rift lies north, the ferry to Corvane (Era II) waits.
 
+## The First Voices (plan area 1, items 152-155)
+
+- Long before the Rifts, six ancient Spirlings sang together, and their song held the land
+  together: rivers kept their beds, hills kept their shape, and Spirlings and people understood
+  each other. They are the **First Voices**.
+- One by one the Voices fell silent. Nobody knows why yet. Their silence is where **the Hush**
+  began: the Rifts open where a Voice used to sing, and the Hush spreads from there.
+- Each region has its Voice. **Velahra** (Lumen/Tide) is the Voice of Veydal. It sleeps as a
+  light under the lake in front of the Brindlewick lighthouse and was the last one to see
+  **Mirela**, the cartographer whose map book the player follows. The Voices of Corvane, Ashmere
+  and Solenne wait in their regions; two more are not named in the map book at all.
+- A First Voice is met once, at a fixed place, never in the wild tables (DataValidator checks
+  that ancient kinds only appear in a fixed meeting). Bonding is the same Echo call as always,
+  with a longer call and a second phase, and no throw, aim or chance display (LEGAL.md).
+- A meeting that ends without a bond is never lost: the Voice sinks back and rises again at
+  the same place after the player's next rest (`FirstVoices.after_rest()`).
+- Velahra appears on the Brindlewick lake shore after the finale in the lamp room
+  (flag `mirela_lamp`), at Ring 40, with its own battle backdrop ("voice": the lake at night
+  with columns of light).
+
 ## Map design rules
 
 - **No numbered routes.** Every path has a name and a shape: Fernstair (switchback terraces),

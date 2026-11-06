@@ -9,6 +9,7 @@ The pages are served by the game server's Caddy (server/Caddyfile, folder server
   /konto-loeschen       Konto löschen + English        (KONTO_LOESCHEN.md)     Google Play: account deletion URL
   /delete-account       same page
   /support              Hilfe und Kontakt + English    (SUPPORT.md)            Apple: support URL
+  /melden               report illegal content without an account (DSA Art. 16), melden.js sends it
   /lizenzen             Godot and third-party licences (server/site/licences.txt, see --licences)
   /info                 overview with links to all of the above
 
@@ -156,6 +157,73 @@ def page(title: str, lang: str, body: str) -> str:
             % (lang, html.escape(title), CSS, nav, body))
 
 
+# The DSA report form (plan area 7, item 2899). Works without an account: melden.js signs in
+# anonymously like the game, calls public.report_web and shows the report number.
+MELDEN_BODY = """<h1>Inhalt melden · Report content</h1>
+<p>Hier kannst du uns Inhalte in Chimora melden, die rechtswidrig sind oder gegen unsere
+<a href="/nutzungsbedingungen">Nutzungsbedingungen</a> verstoßen, auch ohne Konto (Art. 16 DSA). Im Spiel geht das
+schneller: beim Freund auf <strong>Melden</strong> tippen.<br>
+Report content in Chimora that is illegal or breaks our <a href="/terms">terms</a>, also without an account.
+In the game it is quicker: tap <strong>Report</strong> on the friend.</p>
+<form id="f">
+<p><label>Freundescode des Spielers · Friend code of the player<br><input name="code" required maxlength="16" autocomplete="off"></label></p>
+<p><label>Grund · Reason<br><select name="reason">
+<option value="0">Name nicht okay · Name not okay</option>
+<option value="1">Unfreundliche Grüße · Unkind greetings</option>
+<option value="2">Schummeln · Cheating</option>
+<option value="3">Anderer rechtswidriger Inhalt · Other illegal content</option>
+</select></label></p>
+<p><label>Erklärung: was ist rechtswidrig und warum? · Explanation: what is illegal and why?<br>
+<textarea name="details" required minlength="10" maxlength="2000" rows="6" style="width:100%"></textarea></label></p>
+<p><label>Name und E-Mail für eine Antwort (freiwillig) · Name and e-mail for an answer (optional)<br>
+<input name="contact" maxlength="200" style="width:100%"></label></p>
+<p><label><input type="checkbox" name="faith" required> Ich bin in gutem Glauben überzeugt, dass meine Angaben richtig
+und vollständig sind. · I believe in good faith that this report is correct and complete.</label></p>
+<p><button type="submit">Melden · Send report</button></p>
+</form>
+<p id="out" role="status"></p>
+<noscript><p>Ohne JavaScript schreib uns bitte per E-Mail (siehe <a href="/support">Support</a>).
+Without JavaScript please write to us by e-mail (see <a href="/support">support</a>).</p></noscript>
+<p>Wir prüfen jede Meldung und speichern sie höchstens 6 Monate (<a href="/datenschutz">Datenschutz</a>).
+We check every report and keep it for at most 6 months (<a href="/privacy">privacy</a>).</p>
+<script src="/melden.js"></script>"""
+
+MELDEN_JS = """"use strict";
+// Sends the report form of /melden (plan area 7, item 2899). Built by tools/site/build_site.py.
+const MSG = {
+  good_faith: "Bitte bestätige den guten Glauben. / Please confirm good faith.",
+  details: "Bitte erkläre kurz, was rechtswidrig ist. / Please explain briefly what is illegal.",
+  no_such_code: "Bitte gib den Freundescode an. / Please enter the friend code.",
+  slow_down: "Gerade kommen sehr viele Meldungen. Bitte versuch es in einer Stunde noch einmal. / Too many reports right now, please try again in an hour.",
+  other: "Das hat nicht geklappt. Bitte versuch es später oder schreib uns (Support). / That did not work. Please try later or write to us (support)."
+};
+document.getElementById("f").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const f = ev.target;
+  const out = document.getElementById("out");
+  out.textContent = "Wird gesendet ... / Sending ...";
+  try {
+    const cfg = await (await fetch("/chimora.json")).json();
+    const h = { "apikey": cfg.anon_key, "Content-Type": "application/json" };
+    const s = await (await fetch("/auth/v1/signup", { method: "POST", headers: h, body: JSON.stringify({ data: {} }) })).json();
+    if (!s.access_token) { throw new Error("sign-in"); }
+    h["Authorization"] = "Bearer " + s.access_token;
+    const r = await (await fetch("/rest/v1/rpc/report_web", { method: "POST", headers: h, body: JSON.stringify({
+      p_code: f.code.value, p_reason: Number(f.reason.value), p_details: f.details.value,
+      p_contact: f.contact.value, p_good_faith: f.faith.checked }) })).json();
+    if (r && r.ok) {
+      out.textContent = "Danke. Deine Meldung hat die Nummer W" + r.report_id + ". / Thank you. Your report number is W" + r.report_id + ".";
+      f.reset();
+    } else {
+      out.textContent = MSG[r && r.error] || MSG.other;
+    }
+  } catch (e) {
+    out.textContent = MSG.other;
+  }
+});
+"""
+
+
 def split_lang(md: str, lang: str) -> str:
     """KONTO_LOESCHEN.md holds German first, English after the last '---'."""
     parts = re.split(r"\n---\n", md)
@@ -175,9 +243,11 @@ def build() -> dict[str, str]:
     files["lizenzen.html"] = page("Lizenzen", "en", "<h1>Licences</h1><p>Chimora is made with the Godot Engine. "
                                   "These are the licences of the engine and the parts it contains.</p><pre style=\"white-space:pre-wrap\">"
                                   + html.escape(lic) + "</pre>")
+    files["melden.html"] = page("Inhalt melden", "de", MELDEN_BODY)
+    files["melden.js"] = MELDEN_JS
     links = "".join('<li><a href="/%s">%s</a></li>' % (s, html.escape(t)) for s, _f, t, _l in PAGES)
     files["info.html"] = page("Chimora", "de", "<h1>Chimora</h1><p>Ein Retro-Pixel-Abenteuer für iOS und Android. "
-                              "A retro pixel adventure for iOS and Android.</p><ul>%s<li><a href=\"/lizenzen\">Lizenzen</a></li>"
+                              "A retro pixel adventure for iOS and Android.</p><ul>%s<li><a href=\"/melden\">Inhalt melden / report content</a></li><li><a href=\"/lizenzen\">Lizenzen</a></li>"
                               "<li><a href=\"/play/\">Im Browser testen / play test in the browser</a></li></ul>" % links)
     return files
 
