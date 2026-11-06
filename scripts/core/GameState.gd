@@ -414,9 +414,9 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
-	for k: Variant in (d.get("spirlog", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
-	for k: Variant in (d.get("inventory", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("inventory", {})):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
@@ -655,6 +655,13 @@ static func as_int(v: Variant, fallback: int = 0) -> int:
 
 static func as_bool(v: Variant) -> bool:
 	return bool(v) if v is bool or v is int or v is float else false
+
+## True when the clock went back before [param stored] (a day, week, month or season key that
+## sorts by time, e.g. "2026-11-06", "2026-W45", "2026-11", "2026-Q4"). Timed content keeps its
+## stored state then, so setting a clock back never resets and pays the same goal twice
+## (plan 3497).
+static func time_went_back(stored: String, now: String) -> bool:
+	return stored != "" and now < stored
 
 static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
