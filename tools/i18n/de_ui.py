@@ -34,7 +34,7 @@ T = {
 "Game saved.": "Spiel gespeichert.", "Saving failed.": "Speichern fehlgeschlagen.",
 "%s   %d coins": "%s   %d Münzen", "   Ring limit %d": "   Ringgrenze %d",
 "Travel to a rest spot": "Zu einem Rastplatz reisen",
-"Summary": "Übersicht", "Lead the team": "Team anführen", "Move to slot...": "Auf Platz verschieben...",
+"Summary": "Übersicht", "Lead the team": "An die Spitze", "Move to slot...": "Auf Platz verschieben...",
 "Use item": "Item benutzen", "Keepsake": "Andenken",
 "Move %s to...": "%s verschieben nach...", "Take off %s": "%s abnehmen",
 "You have nothing a Spirling can hold.": "Du hast nichts, was ein Spirling tragen kann.",

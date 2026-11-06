@@ -147,7 +147,7 @@ T = {
 "Tip: Press Start to open the menu: team, satchel, goals and saving.": "Tipp: Drück Start, um das Menü zu öffnen: Team, Tasche, Ziele und Speichern.",
 "Tip: The game saved itself. It saves when you change places, and you can save any time under Save in the menu.": "Tipp: Das Spiel hat gespeichert. Es speichert beim Ortswechsel, und im Menü unter Speichern geht es jederzeit.",
 "Tip: The first Spirling in Team goes out first.": "Tipp: Das erste Spirling im Team kämpft zuerst.",
-"Pick one and choose Lead the team or Move to slot.": "Wähle eines und dann Team anführen oder Auf Platz verschieben.",
+"Pick one and choose Lead the team or Move to slot.": "Wähle eines und dann An die Spitze oder Auf Platz verschieben.",
 "Tip: Rest spots heal your whole team for free.": "Tipp: Rastplätze heilen dein ganzes Team kostenlos.",
 "After a hard fight, you wake at the last one you used.": "Nach einem verlorenen Kampf wachst du am zuletzt benutzten auf.",
 "Tip: Travel in the menu takes you to rest spots you have already visited.": "Tipp: Mit Reisen im Menü kommst du zu Rastplätzen, die du schon kennst.",
@@ -183,6 +183,13 @@ T = {
 "Tap buzz: %s": "Tipp-Vibration: %s",
 "A short buzz each time you tap a choice.": "Ein kurzes Summen bei jedem Tipp auf eine Auswahl.",
 "Your choice:": "Deine Wahl:",
+"Travel to %s?": "Nach %s reisen?",
+"Stay": "Bleiben",
+"free": "frei",
+"New Spirlings you bond with fill this slot.": "Neue Spirlings, mit denen du dich verbindest, kommen auf diesen Platz.",
+"Leads the team": "Führt das Team an",
+"leads the team": "führt das Team an",
+"leads the team, worn out": "führt das Team an, erschöpft",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).
