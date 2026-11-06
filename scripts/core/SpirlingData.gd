@@ -37,6 +37,8 @@ const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "tim
 ## The first two marks of its Echo call (0..2, never the same twice), so meeting a kind again
 ## sounds familiar (plan area 1, item 278).
 @export var cry_motif: Array[int] = []
+## Held item id that suits this kind, shown in storage as "Suits it: ..." (item 355).
+@export var keepsake_hint: String = ""
 ## One line about where this kind comes from (Spirlog).
 @export var origin: String = ""
 ## Id of the unfold line this kind belongs to (the first form's name in lower case).
