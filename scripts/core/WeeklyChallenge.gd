@@ -26,11 +26,19 @@ const TARGET_WAYMARKS: int = 20
 ## Weeks kept in the archive (plan 3190).
 const ARCHIVE_WEEKS: int = 8
 
+## Loan-team weeks (plan 3192-3194): every second week everyone fights with the same fixed
+## team of three from data/events.json "loan_teams"; the own Spirlings stay at home.
+const EVENTS_PATH: String = "res://data/events.json"
+
+static var _loans: Array[Dictionary] = []
+
 var week: String
 var rng := RandomNumberGenerator.new()
 var field: String
 var rule: String
 var level: int
+## The loan team of this week ({id, ring, team}), empty in a normal week.
+var loan: Dictionary = {}
 
 ## [param week_key] like "2026-W44"; [param cap_level] is the save's ring cap by story progress
 ## (GameState.progress_cap()), so everyone at the same point of the story meets the same rings.
@@ -44,6 +52,66 @@ func _init(week_key: String, cap_level: int) -> void:
 	rules.sort()
 	rule = str(rules[rng.randi_range(0, rules.size() - 1)])
 	level = clampi(cap_level, 8, Spirling.MAX_LEVEL)
+	if is_loan_week(week_key):
+		loan = loan_for(week_key)
+		if not loan.is_empty():
+			level = int(loan.get("ring", level))
+
+static func loan_teams() -> Array[Dictionary]:
+	if _loans.is_empty():
+		var f := FileAccess.open(EVENTS_PATH, FileAccess.READ)
+		if f != null:
+			var d: Variant = JSON.parse_string(f.get_as_text())
+			if d is Dictionary:
+				for t: Variant in (d as Dictionary).get("loan_teams", []):
+					if t is Dictionary:
+						_loans.append(t)
+	return _loans
+
+## Odd ISO weeks are loan-team weeks ("2026-W45" -> 45).
+static func is_loan_week(week_key: String) -> bool:
+	var parts: PackedStringArray = week_key.split("-W")
+	return parts.size() == 2 and int(parts[1]) % 2 == 1 and not loan_teams().is_empty()
+
+## The loan team of week [param week_key], the same for everyone.
+static func loan_for(week_key: String) -> Dictionary:
+	var all: Array[Dictionary] = loan_teams()
+	if all.is_empty():
+		return {}
+	var r := RandomNumberGenerator.new()
+	r.seed = hash("chimora-loan-" + week_key)
+	return all[r.randi_range(0, all.size() - 1)]
+
+## Fresh Spirlings of the loan team: fixed species, ring and techniques, full health.
+func loan_party() -> Array[Spirling]:
+	var out: Array[Spirling] = []
+	var r := RandomNumberGenerator.new()
+	r.seed = hash("chimora-loan-party-" + week)
+	for e: Variant in loan.get("team", []):
+		var d: Dictionary = e
+		var sd: SpirlingData = Database.species(str(d.get("species", "")))
+		if sd == null:
+			continue
+		var sp := Spirling.new(sd, int(loan.get("ring", level)), r)
+		var ms: Array[MoveData] = []
+		for m: Variant in d.get("moves", []):
+			var md: MoveData = Database.move(str(m))
+			if md != null:
+				ms.append(md)
+		if not ms.is_empty():
+			sp.moves = ms
+		sp.restore()
+		out.append(sp)
+	return out
+
+## Board line about this week's mode.
+func mode_line() -> String:
+	if loan.is_empty():
+		return Loc.t("Your own team. Next week everyone gets the same loan team.")
+	var names: PackedStringArray = []
+	for e: Variant in loan.get("team", []):
+		names.append(str((e as Dictionary).get("species", "")))
+	return Loc.t("Loan-team week: everyone fights with %s at ring %d.") % [", ".join(names), int(loan.get("ring", level))]
 
 ## The echo team for round [param i]; the same for everyone in the same week.
 func team(i: int) -> Array[Spirling]:
@@ -167,6 +235,7 @@ static func archive_text() -> String:
 func preview_text() -> String:
 	var out: PackedStringArray = [Loc.t("This week: %s, rule %s, ring %d.") % [Loc.t(str(BattleRules.FIELDS[field].label)), Loc.t(str(BattleRules.RULES[rule].label)), level],
 		Loc.t("Target score: %d (lower is better).") % target(week)]
+	out.append(mode_line())
 	for i: int in 3:
 		var els: PackedStringArray = []
 		for sp: Spirling in team(i):

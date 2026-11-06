@@ -1424,8 +1424,13 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var prizes: bool = WeeklyChallenge.start_try(rec)
 	GameState.records["weekly"] = rec
-	GameState.heal_party()
-	await say(["Your team is fully rested."] as Array[String])
+	if not ch.loan.is_empty():
+		GameState.party_on_loan = GameState.party
+		GameState.party = ch.loan_party()
+		await say([ch.mode_line()] as Array[String])
+	else:
+		GameState.heal_party()
+		await say(["Your team is fully rested."] as Array[String])
 	var wins: int = 0
 	var turns_total: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
@@ -1451,6 +1456,9 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.call_fn("weekly_submit", {"p_week": week, "p_score": EchoTeam.weekly_score(wins, GameState.party)})
 	if wins >= WeeklyChallenge.ROUNDS and GameState.party.all(func(s: Spirling) -> bool: return not s.is_fainted()):
 		GameState.records["weekly_flawless"] = 1
+	if not GameState.party_on_loan.is_empty():
+		GameState.party = GameState.party_on_loan
+		GameState.party_on_loan = []
 	if wins >= WeeklyChallenge.ROUNDS and prizes and not bool(rec.claimed):
 		rec.claimed = true
 		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1
