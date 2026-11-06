@@ -62,7 +62,7 @@
  "wynn": {
   "lines": [
    "Wynn: Every week the lake throws up three new echoes. Same ones for every Wayfarer in Veydal.",
-   "Wynn: Beat all three and I'll pay out. Once a week, mind."
+   "Wynn: Beat all five and I'll pay out. Once a week, mind."
   ],
   "action": "weekly"
  },
@@ -190,5 +190,11 @@
  "kestra_dock_alone": [
   "Kestra: Hm. Your call. Mirela went alone too, you know.",
   "Kestra: I'll still be in Corvane. Someone has to map what you mend."
- ]
+ ],
+ "festival_trader": {
+  "lines": [
+   "Tilda: Festival ribbons for festival goods! Ribbons turn into Waymarks when the festival ends, so nothing goes to waste."
+  ],
+  "action": "festival_shop"
+ }
 }
