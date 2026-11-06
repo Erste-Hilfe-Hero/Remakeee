@@ -4,6 +4,8 @@ extends SceneTree
 ## in.json is a list of {"id", "replay", "claim"} from battle_queue; out.json gets one
 ## {"id", "verdict", "detail"} per battle. The work itself is BattleReferee (scripts/battle/).
 ##   ... -- sample out.json   writes test battles (one honest, one tampered, one broken).
+##   ... -- fair out.json     writes the fair league row of every species, so a test can compare
+##                            it with the database's _league_fair_row (plan item 2748).
 
 func _initialize() -> void:
 	Database.load_all()
@@ -13,8 +15,10 @@ func _initialize() -> void:
 		code = _check(args[1], args[2])
 	elif args.size() == 2 and args[0] == "sample":
 		code = _sample(args[1])
+	elif args.size() == 2 and args[0] == "fair":
+		code = _fair(args[1])
 	else:
-		printerr("usage: -- check in.json out.json | -- sample out.json")
+		printerr("usage: -- check in.json out.json | -- sample out.json | -- fair out.json")
 	quit(code)
 
 func _check(in_path: String, out_path: String) -> int:
@@ -58,6 +62,23 @@ func _sample(out_path: String) -> int:
 	tampered.hp[0][0] = int(tampered.hp[0][0]) + 50
 	var rows: Array = [{"replay": snap, "claim": honest}, {"replay": snap, "claim": tampered},
 		{"replay": {"teams": [[{"species": "Nobody"}], [{"species": "Puddlet"}]]}, "claim": honest}]
+	var f := FileAccess.open(out_path, FileAccess.WRITE)
+	if f == null:
+		return 1
+	f.store_string(JSON.stringify(rows))
+	return 0
+
+func _fair(out_path: String) -> int:
+	var rows: Array = []
+	for sp: String in Database.spirlings:
+		var sd: SpirlingData = Database.spirlings[sp]
+		var ask: Array = ["Not A Move"]
+		for md: MoveData in sd.learnset_moves:
+			ask.push_front(md.move_name)
+		var other: SpirlingData = Database.earlier_form(sd)
+		if other != null and not other.learnset_moves.is_empty():
+			ask.push_front(other.learnset_moves[-1].move_name)
+		rows.append({"species": sp, "ask": ask, "row": LeagueRules.fair_row(sp, ask), "none": LeagueRules.fair_row(sp, [])})
 	var f := FileAccess.open(out_path, FileAccess.WRITE)
 	if f == null:
 		return 1

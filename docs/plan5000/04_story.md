@@ -79,15 +79,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1404. [P3] Option "Szenen automatisch abspielen" blättert Zeilen nach 2,5 Sekunden selbst weiter.
 
 ### Akt I: Feinschliff und Brücke zu Akt II
-1405. [P1] Der tote Endpunkt "Chapter 5: Waiting for the Ferry" wird ersetzt: nach mirela_lamp und aldo_dock_told öffnet Aldo die Fähre selbst (Flag ferry_open).
-1406. [P1] Neue Szene act1_finale im Leuchtturm: Aldo holt sein altes Ruder vom Dachboden und sagt, dass er die Fähre ein letztes Mal selbst fährt.
-1407. [P1] Neue Szene ferry_crossing: Aldo rudert die Spielfigur über den See, erzählt in 6 Zeilen von Mirelas erster Überfahrt und zeigt den Riss am Nordhimmel.
-1408. [P1] Das Fährschild in Brindlewick bekommt eine after_flag-Variante: "Crossings resume. Ferryman: Aldo." sobald ferry_open gesetzt ist.
-1409. [P1] Die Lampenkammer-Szene mirela_lamp wird als Szene mit "letter"-Schritten und langsamem Text neu gebaut, statt nur Textzeilen.
-1410. [P1] Die Prologszene bekommt Blitz, Donner, Rissöffnung über dem See und die drei Lichtspirlinge, die der Lampe folgen, als echte Szene.
-1411. [P1] Bevor die Fähre fährt, verlangt die Brücke beide gestopften Rissherzen nicht, damit Akt II nicht an optionalen Kämpfen hängt (nur rifts und mirela_lamp zählen).
-1412. [P1] Kestras Dock-Gespräch kestra_dock bekommt eine Auswahl ("Ich komme mit." / "Ich gehe allein."), die kestra_trust um 1 hebt oder nicht.
-1413. [P1] Kapitelkarten (Schritt "card") werden für Prolog und Kapitel 1 bis 4 nachgerüstet, mit den Titeln aus quests.json.
+1405. [x] [P1] Der tote Endpunkt "Chapter 5: Waiting for the Ferry" wird ersetzt: nach mirela_lamp und aldo_dock_told öffnet Aldo die Fähre selbst (Flag ferry_open).
+1406. [x] [P1] Neue Szene act1_finale im Leuchtturm: Aldo holt sein altes Ruder vom Dachboden und sagt, dass er die Fähre ein letztes Mal selbst fährt.
+1407. [x] [P1] Neue Szene ferry_crossing: Aldo rudert die Spielfigur über den See, erzählt in 6 Zeilen von Mirelas erster Überfahrt und zeigt den Riss am Nordhimmel.
+1408. [x] [P1] Das Fährschild in Brindlewick bekommt eine after_flag-Variante: "Crossings resume. Ferryman: Aldo." sobald ferry_open gesetzt ist.
+1409. [x] [P1] Die Lampenkammer-Szene mirela_lamp wird als Szene mit "letter"-Schritten und langsamem Text neu gebaut, statt nur Textzeilen.
+1410. [x] [P1] Die Prologszene bekommt Blitz, Donner, Rissöffnung über dem See und die drei Lichtspirlinge, die der Lampe folgen, als echte Szene.
+1411. [x] [P1] Bevor die Fähre fährt, verlangt die Brücke beide gestopften Rissherzen nicht, damit Akt II nicht an optionalen Kämpfen hängt (nur rifts und mirela_lamp zählen).
+1412. [x] [P1] Kestras Dock-Gespräch kestra_dock bekommt eine Auswahl ("Ich komme mit." / "Ich gehe allein."), die kestra_trust um 1 hebt oder nicht.
+1413. [x] [P1] Kapitelkarten (Schritt "card") werden für Prolog und Kapitel 1 bis 4 nachgerüstet, mit den Titeln aus quests.json.
 1414. [P2] Warden Orrin bekommt nach dem Mend eine Rückschau: er erzählt, dass er Mirela vor 40 Jahren als Kind im Cinder-Hohlweg gesehen hat.
 1415. [P2] Warden Maelis bekommt nach tide_heart_mended einen Satz über ein Lied, das sie aus dem Riss hört, als Hinweis auf die Echo-Melodie-Lore.
 1416. [P2] Das Kind mit dem stillen Puddlet in Brindlewick bekommt eine after_flag-Variante: nach beiden Rissen ruft sein Puddlet wieder, mit Dank an die Spielfigur.
@@ -269,13 +269,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1584. [P3] Kestra fragt die Spielfigur einmal nach ihrem Lieblingsort in Veydal (Auswahl aus 4), und erwähnt die Antwort im Postgame wieder.
 
 ### Aldo und Mirela
-1585. [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
+1585. [x] [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
 1586. [x] [P1] Mirela bekommt in docs/STORY.md eine Figurenbeschreibung mit Lebenslauf, Zeichenstil und dem Grund, warum sie 40 Jahre im Ungezeichneten blieb.
 1587. [P1] Die Kartenbuch-Seiten 7 bis 14 erzählen Mirelas Zeit im Ungezeichneten in je 1 bis 2 Sätzen und decken die Lore schrittweise auf.
 1588. [P1] Die Szene, in der Aldo und Mirela sich wiedersehen, hängt vom Ende ab, wird aber in jeder Fassung am Steg in Brindlewick gespielt.
 1589. [P2] Aldo erzählt auf Nachfrage (Auswahl im Leuchtturm) drei Erinnerungen an Mirela, je nach Fortschritt freigeschaltet.
 1590. [P2] Aldos altes Ruder ist ein Story-Gegenstand (aldo_oar), den die Spielfigur zu Beginn von Akt II mitnimmt und im Postgame zurückgibt.
-1591. [P2] Aldo wird beim Rudern in ferry_crossing müde; die Spielfigur kann wählen, ob sie selbst rudert, und Aldo kommentiert das später.
+1591. [x] [P2] Aldo wird beim Rudern in ferry_crossing müde; die Spielfigur kann wählen, ob sie selbst rudert, und Aldo kommentiert das später.
 1592. [P2] Mirelas Briefe an Aldo (Nebenquest letters, 6 Briefe) zeigen ihre Liebe zu ihm und ihre Zweifel, jeweils 2 bis 3 Zeilen.
 1593. [P2] Im Ende "Leave a gate" bleibt Mirela im Ungezeichneten; Aldo bekommt im Postgame einen Brief von ihr pro Woche (Tageswechsel, 8 Briefe).
 1594. [P2] Im Ende "Bring her home" wohnt Mirela im Leuchtturm; sie hat dort einen eigenen Platz am Kartentisch und neue Sätze.
@@ -448,7 +448,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1749. [P3] Die Wahl der Nachfolge in der Gilde ändert den Titel im Tagebuch und Sätze im Gildenhaus, sonst nichts.
 
 ### Ziele, Tagebuch und Kartenbuch
-1750. [P1] QuestLog unterstützt Akte: Hauptziele bekommen ein Feld "act", das Zielmenü zeigt den Aktnamen über dem Kapitel.
+1750. [x] [P1] QuestLog unterstützt Akte: Hauptziele bekommen ein Feld "act", das Zielmenü zeigt den Aktnamen über dem Kapitel.
 1751. [P1] Das Kartenbuch (Mirelas Seiten) wird ein eigenes Menü mit Seitenliste und gelesenen Seiten, statt nur Textzeilen beim Fund.
 1752. [P1] Nebenquests mit Stufen zeigen den aktuellen Schritttext statt nur den Starttext.
 1753. [P2] Das Tagebuch sammelt Kapitel-Rückblicke (6 Zeilen pro Akt) automatisch, sobald ein Akt endet.
