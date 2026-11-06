@@ -639,8 +639,6 @@ func _phase_end_of_turn() -> void:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	_weary_chip()
 	turn += 1
-	if turn == BattleRules.WEARY_TURN:
-		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	phase = Phase.FAINT_CHECK
 
 ## Share of max Vigor every Spirling in front loses each turn once the fight is weary.
