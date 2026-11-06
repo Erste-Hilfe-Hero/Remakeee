@@ -1,5 +1,5 @@
 extends GutTest
-## Idle glances and the turn pause when spoken to (plan area 6, items 2307, 2308, 2310).
+## Idle glances and the turn pause when talked to (plan area 6, items 2307, 2308, 2310).
 
 func _npc(def: Dictionary) -> NPC:
 	var n := NPC.new()

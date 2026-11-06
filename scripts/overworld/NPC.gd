@@ -73,7 +73,7 @@ func _draw() -> void:
 		draw_rect(Rect2(7, -8, 2, 4), UITheme.INK)
 		draw_rect(Rect2(7, -3, 2, 1), UITheme.INK)
 
-## When spoken to, a villager pauses this long before turning (item 2307).
+## When talked to, a villager pauses this long before turning (item 2307).
 const TURN_PAUSE: float = 0.1
 ## Standing villagers glance in another direction every 3 to 7 seconds (item 2310). Only the
 ## drawn direction changes, so a Wayfarer's line of sight stays as placed. A map entry with
