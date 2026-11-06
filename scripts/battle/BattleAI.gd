@@ -19,6 +19,8 @@ const REPLY_WEIGHT: float = 0.5
 const BAD_MATCHUP_EFF: float = 2.0
 const RESIST_EFF: float = 0.5
 const SWAP_MIN_HP: float = 0.5
+## A Spirling that stepped in fewer than this many turns ago stays in (no endless swap dance).
+const SWAP_SETTLE_TURNS: int = 2
 ## Tier 2 heals below this HP fraction if it carries a healing item.
 const HEAL_THRESHOLD: float = 0.3
 ## Score for a Resonance field per side it helps (any AI tier above 0).
@@ -36,6 +38,10 @@ const TAX_BONUS_PER_TURN: float = 0.15
 const SNARE_BONUS_PER_BENCH: float = 0.25
 const DELAYED_SHARE: float = 0.8
 const SELF_DROP_COST: float = 0.1
+const BURN_BONUS_PER_ENERGY: float = 0.1
+## Moves scoring at most this (no damage, no useful effect) are not worth the Energy.
+const USELESS_SCORE: float = 0.01
+const HEAL_BLOCK_BONUS: float = 0.2
 
 var level: int = 0
 
@@ -65,16 +71,22 @@ func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 		return pick
 	var best: BattleAction = moves[0]
 	var best_score: float = -INF
+	var best_value: float = 0.0
+	var me: Spirling = model.active_spirling(side, slot)
 	for a: BattleAction in moves:
-		var mv: MoveData = model.active_spirling(side, slot).moves[a.move_index]
+		var mv: MoveData = me.moves[a.move_index]
 		var aims: Array[int] = [-1]
 		if not mv.is_area() and not foes.is_empty():
 			aims = foes
 		for aim: int in aims:
 			var score: float = score_action(model, side, slot, a.move_index, aim)
+			best_value = maxf(best_value, score_move(model, side, a.move_index, slot, aim))
 			if score > best_score:
 				best_score = score
 				best = BattleAction.make_move(side, a.move_index, slot, aim)
+	# Nothing it can afford does anything useful: catch its breath for a bigger art instead.
+	if best_value <= USELESS_SCORE and me.energy < Spirling.MAX_ENERGY:
+		return BattleAction.make_rest(side, slot)
 	return best
 
 ## Score of using [param move_index] aimed at foe slot [param aim] (-1 for a sweep or the first foe):
@@ -127,18 +139,32 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 				score += bonus
 		elif fx_id == &"set_field" and level >= 1:
 			score += FIELD_BONUS * maxf(0.0, field_value(model, side, str(fx.get("field", ""))))
-		elif fx_id == &"energy_tax" and target.energy_tax <= 1:
+		elif fx_id == &"energy_tax" and target.energy_tax <= 1 and target.energy >= _cheapest_hit(target):
+			# Only worth it while the foe has the Energy to strike; a drained foe is no target.
 			var turns: int = int(fx.get("amount", 0))
 			score += TAX_BONUS_PER_TURN * float(turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS) * acc
 		elif fx_id == &"status_shift":
 			if not me.status.is_empty() and target.status.is_empty() and not BattleRules.is_immune(target, me.status):
 				score += STATUS_BONUS * 2.0 * acc
+		elif fx_id == &"energy_burn" and target.burn_guard <= 0:
+			score += BURN_BONUS_PER_ENERGY * float(mini(target.energy, int(fx.get("amount", 1)))) * acc
+		elif fx_id == &"heal_block" and target.heal_block <= 1:
+			score += HEAL_BLOCK_BONUS * (1.0 if _can_heal(model, target) else 0.25) * acc
+		elif fx_id == &"stage_steal":
+			# Worth a stat art's bonus while the stolen stage still has room on our side.
+			for st_name: String in BattleRules.STAGE_STATS:
+				if target.stage(st_name) > 0 and me.stage(st_name) < 2:
+					score += STAGE_BONUS * acc * me.hp_fraction()
+					break
 		elif fx_id == &"cure_self" and not me.status.is_empty():
 			score += STATUS_BONUS * acc
 		elif fx_id == &"clear_snares":
 			score += SNARE_BONUS_PER_BENCH * float((model.snares[side] as Array).size())
 		elif fx_id == &"side_snare":
-			score += SNARE_BONUS_PER_BENCH * float(model.swap_candidates(BattleModel.other(side), maxi(target_slot, 0)).size()) * acc
+			# Each snare already lying there makes one more worth less; a full side is worth nothing.
+			var lying: int = (model.snares[BattleModel.other(side)] as Array).size()
+			var room: float = maxf(0.0, 1.0 - float(lying) / float(BattleRules.MAX_SNARES))
+			score += SNARE_BONUS_PER_BENCH * float(model.swap_candidates(BattleModel.other(side), maxi(target_slot, 0)).size()) * room * room * acc
 		elif fx_id == &"self_stage_after" and expected < float(target.hp):
 			var st: Dictionary = fx.get("stages", {})
 			for k: String in st:
@@ -151,6 +177,26 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 					continue
 				score += STATUS_BONUS * float(fx.get("chance", 1.0)) * acc
 	return score
+
+## Energy cost of the cheapest damage art [param s] knows (99 if none).
+func _cheapest_hit(s: Spirling) -> int:
+	var c: int = 99
+	for mv: MoveData in s.moves:
+		if mv.is_damaging():
+			c = mini(c, mv.energy_cost)
+	return c
+
+## True if [param s] has a way to heal in battle: a healing art, a regenerating gift or keepsake.
+func _can_heal(model: BattleModel, s: Spirling) -> bool:
+	if BattleRules.add_key(s, "regen_div") > 0.0:
+		return true
+	if not str(BattleRules.FIELDS.get(model.field, {}).get("regen_element", "")).is_empty():
+		return true
+	for mv: MoveData in s.moves:
+		for fx: Dictionary in mv.effects:
+			if StringName(fx.get("id", "")) in [&"heal_self", &"drain"]:
+				return true
+	return false
 
 ## How much laying field [param id] helps [param side]: +1 if one of its standing Spirlings has a
 ## move of the boosted element, -1 if a foe has one, half that for the weakened element.
@@ -213,7 +259,8 @@ func _tier2_special(model: BattleModel, side: int, slot: int = 0) -> BattleActio
 			if a.kind == BattleAction.Kind.ITEM and int(Database.item(a.item_id).get("heal", 0)) > 0:
 				return a
 	# Swap out of a bad matchup into an ally that resists the foe's elements.
-	if _threat_eff(foe, me) >= BAD_MATCHUP_EFF:
+	var settled: bool = model.turn - int(model.entered_turn.get(me, -SWAP_SETTLE_TURNS)) >= SWAP_SETTLE_TURNS
+	if settled and _threat_eff(foe, me) >= BAD_MATCHUP_EFF:
 		for a: BattleAction in model.legal_actions(side, slot):
 			if a.kind != BattleAction.Kind.SWAP:
 				continue

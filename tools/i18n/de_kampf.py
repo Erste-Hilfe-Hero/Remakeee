@@ -30,3 +30,15 @@ T.update({
 "The snares on your side blow away.": "Die Fallen auf deiner Seite sind fortgeweht.",
 "The snares on the foe's side blow away.": "Die Fallen auf der Gegnerseite sind fortgeweht.",
 })
+T.update({
+"%s can't heal for %d turns!": "%s kann %d Runden lang nicht heilen!",
+"%s can't heal right now!": "%s kann gerade nicht heilen!",
+"Burns away %d of the foe's Energy.": "Verbrennt %d Energie des Ziels.",
+"The foe can't heal for %d turns.": "Das Ziel kann %d Runden lang nicht heilen.",
+"Ends the foe's %s.": "Beendet %s beim Ziel.",
+"Ends the foe's status.": "Beendet den Status des Ziels.",
+"Steals one raised stage from the foe.": "Stiehlt dem Ziel eine erhöhte Stufe.",
+})
+T.update({
+"The long fight wears everyone out. Nobody can heal any more!": "Der lange Kampf zehrt an allen. Niemand kann mehr heilen!",
+})

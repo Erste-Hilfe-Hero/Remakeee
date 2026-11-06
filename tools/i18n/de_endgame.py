@@ -298,4 +298,5 @@ T = {
 "Swap which task? (once a day)": "Welchen Auftrag tauschen? (einmal am Tag)",
 "No other task fits today.": "Heute passt kein anderer Auftrag.", "New task: %s": "Neuer Auftrag: %s",
 "All of them: %d Waymarks extra.": "Alle zusammen: %d Wegmarken extra.",
+"Once a day, free of charge.": "Einmal am Tag, kostenlos.",
 }

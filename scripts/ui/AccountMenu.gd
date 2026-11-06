@@ -15,7 +15,7 @@ static func run(menu: MenuHost) -> void:
 		if Online.is_local():
 			title += "\n" + Loc.t("(test server on this phone)")
 		var entries: Array[String] = ["Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
-			"Friends and greetings: %s" % ("On" if Online.social_on() else "Off"), "Download my data", "Messages from the team"]
+			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", "Messages from the team"]
 		var idx: int = await menu.pick_strings(title, entries)
 		match idx:
 			-1:

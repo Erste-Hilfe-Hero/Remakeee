@@ -833,5 +833,382 @@
   "self_stages": {
    "foc": -1
   }
+ },
+ {
+  "name": "Bellows Blast",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 7,
+  "self_stages": {
+   "foc": -1
+  }
+ },
+ {
+  "name": "Coal Seed",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "scorch"
+  }
+ },
+ {
+  "name": "Furnace Heart",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Cinder Dash",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 35,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1
+ },
+ {
+  "name": "Brazier Pulse",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 5,
+  "target": "foes",
+  "status": "scorch",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Salt Spray",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Rip Current",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "effect": "energy_burn",
+  "effect_amount": 1
+ },
+ {
+  "name": "Fathom Crush",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Bore Wave",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 85,
+  "accuracy": 0.9,
+  "energy": 6,
+  "target": "foes",
+  "status": "soak",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Shoal Trap",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "soak"
+  }
+ },
+ {
+  "name": "Bramble Bed",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "root"
+  }
+ },
+ {
+  "name": "Wildgrowth Crash",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "def": -1
+  }
+ },
+ {
+  "name": "Husk Shed",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "cure_self": true,
+  "stat": "spd",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Thornwake",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 5,
+  "target": "foes",
+  "status": "root",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Bark Burst",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 5,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2
+ },
+ {
+  "name": "Seed Spit",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 30,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1
+ },
+ {
+  "name": "Graft",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "stage_steal"
+ },
+ {
+  "name": "Overdraw",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "energy_burn",
+  "effect_amount": 2
+ },
+ {
+  "name": "Wire Trap",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "jolt"
+  }
+ },
+ {
+  "name": "Lull Breaker",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "drowse",
+  "vs_mult": 1.6,
+  "cure_target": "drowse"
+ },
+ {
+  "name": "Chaff Feint",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "atk": -1,
+   "foc": -1
+  },
+  "self": false
+ },
+ {
+  "name": "Gale Mantle",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "spd": 1,
+   "foc": 1
+  },
+  "self": true
+ },
+ {
+  "name": "Sunwell Sip",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_self",
+  "effect_amount": 0.3,
+  "stat": "foc",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Daybreak Strike",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Prism Burst",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "foc": -1
+  }
+ },
+ {
+  "name": "Starlit Lash",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "atk",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Glow Trap",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "daze"
+  }
+ },
+ {
+  "name": "Night Toll",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "heal_block",
+  "effect_amount": 3
+ },
+ {
+  "name": "Eclipse Crush",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Murmur Bite",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 0.95,
+  "energy": 4,
+  "effect": "energy_burn",
+  "effect_amount": 1
+ },
+ {
+  "name": "Veil Step",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 30,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1
+ },
+ {
+  "name": "Gloam Pact",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "atk": 2,
+   "def": -1
+  },
+  "self": true
+ },
+ {
+  "name": "Dusk Snare",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "stage": {
+    "spd": -1
+   }
+  }
+ },
+ {
+  "name": "Gravel Hum",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "stat": "spd",
+  "stages": -2,
+  "self": false
+ },
+ {
+  "name": "Slow Quake",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 1.0,
+  "energy": 3,
+  "priority": -1
  }
 ]

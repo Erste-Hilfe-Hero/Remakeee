@@ -102,6 +102,12 @@ static func parse_move(m: Dictionary) -> MoveData:
 		md.effects.append({"id": &"side_snare", "snare": m.snare})
 	if bool(m.get("clear_snares", false)):
 		md.effects.append({"id": &"clear_snares"})
+	# "stats": several stage changes at once, {"atk": -1, "foc": -1}; "self" picks the side.
+	if m.get("stats", null) is Dictionary:
+		for st: String in m.stats:
+			md.effects.append({"id": &"stat_change", "stat": st, "amount": int(m.stats[st]), "self": bool(m.get("self", true)), "chance": float(m.get("stage_chance", 1.0))})
+	if m.has("cure_target"):
+		md.effects.append({"id": &"cure_target", "status": str(m.cure_target)})
 	md.ignore_daze = bool(m.get("ignore_daze", false))
 	md.ignore_stages = bool(m.get("ignore_stages", false))
 	return md
