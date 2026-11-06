@@ -68,6 +68,72 @@
    "facing": "left",
    "dialogue": "cinderfold/trader",
    "sprite": "villager"
+  },
+  {
+   "id": "agna",
+   "x": 8,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "cinderfold/agna",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 1,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "dorn",
+   "x": 3,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "cinderfold/dorn",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 2,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "lio",
+   "x": 9,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "cinderfold/lio",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 3,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [
@@ -121,5 +187,9 @@
    10,
    13
   ]
- }
+ },
+ "square": [
+  3,
+  1
+ ]
 }

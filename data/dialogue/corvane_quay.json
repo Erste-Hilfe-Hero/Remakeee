@@ -33,5 +33,20 @@
     "text": "Stay in Corvane"
    }
   ]
+ },
+ "bram": {
+  "lines": [
+   "Net-Hauler Bram: The quay empties at dusk and the little square by the spring fills up."
+  ]
+ },
+ "sina": {
+  "lines": [
+   "Sail-Mender Sina: I mend sails all day and trade stories all evening. The stories pay better."
+  ]
+ },
+ "tobin": {
+  "lines": [
+   "Harbour Elder Tobin: Fifty years I watched the ferry come in. Now I watch it from the spring, sitting down."
+  ]
  }
 }

@@ -56,7 +56,7 @@
  },
  "orrin": {
   "lines": [
-   "Well-Keeper Orrin: I check the well rope at noon and the gate at dusk. Nothing ever happens."
+   "Well-Keeper Orrin: I check the well rope at noon and sit by the well at dusk. Nothing ever happens."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",

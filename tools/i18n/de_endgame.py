@@ -379,4 +379,6 @@ T = {
 "Collector card: bonded, ring 30 and every art of its line used.": "Sammelkarte: gebondet, Ring 30 und jede Technik der Linie eingesetzt.",
 "Where to?": "Wohin?", "Trip diary": "Streifzug-Tagebuch", "%s grew %d rings on the way.": "%s ist unterwegs um %d Ringe gewachsen.",
 "%s found a %s on the way": "%s fand unterwegs %s", "%s found a %s in %s": "%s fand %s in %s",
+"Welcome back! Season path points count double for %d days.": "Willkommen zurück! Pfadpunkte zählen %d Tage lang doppelt.",
+"%s: back today": "%s: heute zurück", "%s: ends today, %d ribbons": "%s: endet heute, %d Festbänder",
 }

@@ -44,14 +44,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2259. [x] [P1] Einstellung "Bildschirmwackeln" mit den Stufen Aus, Schwach (50 %) und Voll (100 %) in den Einstellungen von MenuHost.gd ergänzen und in settings_to_dict speichern.
 2260. [x] [P2] Wackel-Richtung pro Element: Stone wackelt nur senkrecht, Gale nur waagrecht, Volt mit doppelter Frequenz und halber Weite, alle anderen kreisförmig.
 2261. [x] [P2] Wackel-Frequenz als Rauschen mit 30 Hz statt Zufall pro Bild berechnen, damit es nicht flimmert, sondern rollt.
-2262. [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
+2262. [x] [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
 2263. [x] [P2] Overworld-Wackeln beim Laufen gegen eine Wand ersetzt durch einen 1-Pixel-Ruck der Spielfigur, nicht des Bildes.
 2264. [P3] Kleines Wackeln (Trauma 0,10) beim Öffnen einer verschlossenen Tür oder eines Durchgangs nach einer Story-Bedingung.
 2265. [x] [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
 2266. [x] [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
 2267. [x] [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
 2268. [x] [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
-2269. [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
+2269. [x] [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
 2270. [x] [P2] GUT-Test prüft, dass ShakeRoot nach Ende des Traumas exakt auf (0, 0) zurückkehrt und kein Restversatz bleibt.
 2271. [P3] Gerichtetes Wackeln: der erste Ausschlag zeigt in die Richtung, aus der der Treffer kam, danach freies Ausschwingen.
 2272. [P3] Leichtes Dauer-Zittern (Trauma 0,05) in den Rift-Karten cinder_rift, tide_rift und murk_hollow, nur wenn Wackeln auf Voll steht.
@@ -76,7 +76,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2289. [P3] Freundes- und Kontomenü (FriendsMenu.gd, AccountMenu.gd) bekommen dieselben Schiebe-Übergänge wie das Pausemenü.
 2290. [P2] Ladepausen beim Server-Abruf über 200 ms zeigen drei Punkte, die nacheinander hüpfen, statt eines eingefrorenen Bildes.
 2291. [P2] Wiederverbinden-Anzeige (ReconnectOverlay.gd) blendet in 0,2 s ein und aus und dunkelt das Spiel nur auf 60 % ab.
-2292. [P2] Kampf-Ende zurück zur Welt: Spielfigur und Begleiter sind beim Aufhellen sichtbar 1 Pixel hochgesprungen, als kleine Begrüßung.
+2292. [x] [P2] Kampf-Ende zurück zur Welt: Spielfigur und Begleiter sind beim Aufhellen sichtbar 1 Pixel hochgesprungen, als kleine Begrüßung.
 2293. [P3] Übergang ins Spirling-Lexikon: die gewählte Karte vergrößert sich vom Listenplatz auf die volle Seite in 0,2 s.
 2294. [P2] Alle Übergänge haben eine zweite, ruhige Fassung für Juice.reduced(): nur Überblenden in 0,15 s ohne Bewegung.
 2295. [P3] Nach einem neuen Speicherstand-Laden blendet die Welt von der Mitte aus kreisförmig auf, als eigener Shader shaders/iris.gdshader.

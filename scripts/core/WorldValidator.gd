@@ -38,6 +38,7 @@ static func validate() -> PackedStringArray:
 	check_transit(errors, map_ids, load_layout().get("lines", {}))
 	check_schedules(errors, map_ids)
 	check_shapes(errors, map_ids, load_layout())
+	check_squares(errors, map_ids, load_layout())
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -462,6 +463,40 @@ static func load_layout() -> Dictionary:
 ## Outdoor maps fit the portrait screen when scrolled: at most MAX_OUTDOOR_W wide and
 ## MAX_OUTDOOR_H tall (item 907). Routes and marshes are walkable both ways: each has at least two
 ## other places to go, by foot or by line (item 934).
+const SQUARE_FOLK: int = 3
+const SQUARE_REACH: int = 2
+
+## Item 966: every town has a meeting place (a spring, a lamp or a sign) and at dusk at least
+## SQUARE_FOLK people with a day plan stand within SQUARE_REACH cells of it.
+static func check_squares(errors: PackedStringArray, map_ids: PackedStringArray, layout: Dictionary) -> void:
+	var places: Dictionary = layout.get("maps", {})
+	for id: String in map_ids:
+		if str((places.get(id, {}) as Dictionary).get("kind", "")) != "town":
+			continue
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		if not m.in_bounds(m.square):
+			errors.append("town '%s' has no square (meeting place)" % id)
+			continue
+		var k: int = m.kind_at(m.square)
+		if not k in [TilesetFactory.Kind.SPRING, TilesetFactory.Kind.LAMP, TilesetFactory.Kind.SIGN]:
+			errors.append("town '%s': square %s is not a spring, lamp or sign" % [id, m.square])
+		var n: int = square_folk(m, DayCycle.Phase.DUSK).size()
+		if n < SQUARE_FOLK:
+			errors.append("town '%s': only %d people at the square at dusk, at least %d" % [id, n, SQUARE_FOLK])
+
+## Ids of the people with a day plan near the square of [param m] at [param phase].
+static func square_folk(m: MapData, phase: int) -> Array[String]:
+	var out: Array[String] = []
+	for d: Dictionary in NpcSchedule.defs_for(m, phase):
+		if not NpcSchedule.has_plan(d) or not DayCycle.shows_at(d, phase):
+			continue
+		var c := Vector2i(int(d.x), int(d.y))
+		if maxi(absi(c.x - m.square.x), absi(c.y - m.square.y)) <= SQUARE_REACH:
+			out.append(str(d.get("id", "")))
+	return out
+
 const MAX_OUTDOOR_W: int = 12
 const MAX_OUTDOOR_H: int = 40
 const THROUGH_KINDS: Array[String] = ["route", "marsh"]

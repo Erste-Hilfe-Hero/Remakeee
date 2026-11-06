@@ -35,6 +35,19 @@ var jolt: Vector2 = Vector2.ZERO:
 	set(v):
 		jolt = v
 		queue_redraw()
+## Length of the 1 px greeting hop after a battle (item 2292).
+const GREET_TIME: float = 0.2
+
+## Hops the drawn figure 1 px up and back, as a small hello when the world brightens after a
+## battle (item 2292). Skipped under reduced motion.
+func greet() -> void:
+	if Juice.reduced():
+		return
+	jolt = Vector2(0, -1)
+	await get_tree().create_timer(GREET_TIME).timeout
+	if is_instance_valid(self):
+		jolt = Vector2.ZERO
+
 ## True while the current step is a running step.
 var running: bool = false
 ## Direction the sprite looks in without turning the walker (idle glances, items 2308 and

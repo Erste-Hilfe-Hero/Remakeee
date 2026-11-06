@@ -21,5 +21,20 @@
    "Trader Lorna: Brews and bandages. The colour may be gone, but bruises are still blue."
   ],
   "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "nell": {
+  "lines": [
+   "Dyer Nell: By day my hands are blue to the elbow. By the spring at dusk they're almost clean."
+  ]
+ },
+ "oskar": {
+  "lines": [
+   "Old Oskar: Every evening the same faces at the spring. I wouldn't trade a single one."
+  ]
+ },
+ "fenna": {
+  "lines": [
+   "Weaver Fenna: The guild bell rings, and half of Madderby comes to the spring to talk about the other half."
+  ]
  }
 }

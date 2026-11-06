@@ -122,7 +122,9 @@ func test_element_shake_directions() -> void:
 
 func test_shake_rolls_instead_of_flickering() -> void:
 	# Read once per frame at 60 fps, smooth noise changes by at most a pixel between frames,
-	# where per-frame random numbers jump across the whole range.
+	# where per-frame random numbers jump across the whole range. Both axes, normal speed
+	# (an earlier battle may have left Volt's double speed set).
+	Juice.shake_element = -1
 	var jumps: int = 0
 	var prev: Vector2 = Juice.shake_offset(1.0, 0.0)
 	for i: int in range(1, 240):
