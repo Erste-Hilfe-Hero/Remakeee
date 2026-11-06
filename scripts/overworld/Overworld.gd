@@ -477,6 +477,12 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
+	# Every spring can swap the team with storage, even before storage opens from the menu,
+	# and load a saved team with one tap (plan area 1, items 378 and 381).
+	if not GameState.storage.is_empty() or not GameState.team_presets.is_empty():
+		var c: int = await _picker.pick("Swap Spirlings here?", [{"text": "Storage"}, {"text": "Go on"}] as Array[Dictionary])
+		if c == 0:
+			await _action_storage(PackedStringArray(), null)
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := PauseMenu.new()
@@ -1212,6 +1218,9 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		GameState.receive_spirling(model.bonded)
+		# Wild Spirlings keep their temperament to themselves until they bond (item 315).
+		var tm: Dictionary = model.bonded.temperament()
+		await say(["%s seems %s." % [model.bonded.display_name(), Loc.t(str(tm.label)).to_lower()]] as Array[String])
 		var bond_elements: Array[String] = []
 		for e: int in model.bonded.elements():
 			bond_elements.append(Elements.E.keys()[e])
