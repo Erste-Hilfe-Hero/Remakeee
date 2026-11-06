@@ -57,7 +57,9 @@ jobs:
           exit $code
       - name: Battle effects never flash more than 3 times a second (plan item 2656)
         if: always()
-        run: xvfb-run -a godot --path . --rendering-driver opengl3 res://tools/fx_flash_check.tscn 2>&1 | tee /tmp/flash.log; grep -q "FX flash: OK" /tmp/flash.log
+        run: |
+          xvfb-run -a godot --path . --rendering-driver opengl3 res://tools/fx_flash_check.tscn 2>&1 | tee /tmp/flash.log
+          grep -q "FX flash: OK" /tmp/flash.log
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         if: always()
         with:
