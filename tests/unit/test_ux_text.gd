@@ -70,7 +70,7 @@ func test_german_menus_have_no_english_left() -> void:
 	Loc.set_language("en")
 
 func test_placeholders_and_name_survive_translation() -> void:
-	var table: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/i18n/de.json"))
+	var table: Dictionary = Loc.load_table("de")
 	var strings: Dictionary = table.strings
 	for k: String in strings.keys():
 		var v: String = strings[k]
@@ -81,7 +81,7 @@ func test_placeholders_and_name_survive_translation() -> void:
 			assert_eq(v.count("%d"), k.count("%d"), "%%d kept in: " + k)
 
 func test_chimora_words_not_genre_words() -> void:
-	var table: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/i18n/de.json"))
+	var table: Dictionary = Loc.load_table("de")
 	var en_words := RegEx.create_from_string("\\b(Level|Lv|XP|HP|Trainers?|Tamers?|Ability|Abilities|Evolution|Experience)\\b")
 	var de_words := RegEx.create_from_string("\\b(Level|Lv\\b|XP\\b|KP\\b|EP\\b|Trainer|Tamer|Fähigkeit|Entwicklung|Erfahrung)")
 	for k: String in table.strings.keys():
