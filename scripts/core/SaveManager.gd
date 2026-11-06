@@ -428,8 +428,7 @@ func _migrate_3_to_4(d: Dictionary) -> Dictionary:
 			if str(sd.origin_map).is_empty():
 				sd["met_ring"] = int(sd.get("level", 1)) if int(sd.met_ring) <= 0 else sd.met_ring
 	var log: Dictionary = {}
-	var raw_log: Variant = out.get("spirlog", {})
-	for k: Variant in (raw_log if raw_log is Dictionary else {}):
+	for k: Variant in (out.get("spirlog", {}) as Dictionary):
 		log[str(k)] = GameState.upgrade_spirlog_entry(out.spirlog[k])
 	out["spirlog"] = log
 	return out

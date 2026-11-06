@@ -356,14 +356,10 @@ func from_dict(d: Dictionary) -> void:
 	rifts_sealed.assign(d.get("rifts", []))
 	starter = str(d.get("starter", ""))
 	for sd: Variant in d.get("party", []):
-		if not sd is Dictionary:
-			continue
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			party.append(s)
 	for sd: Variant in d.get("storage", []):
-		if not sd is Dictionary:
-			continue
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			storage.append(s)
@@ -393,8 +389,6 @@ func from_dict(d: Dictionary) -> void:
 	world_state = (w as Dictionary).duplicate(true) if w is Dictionary else {}
 	iron_oath = bool(d.get("iron_oath", false))
 	for sd: Variant in d.get("sanctuary", []):
-		if not sd is Dictionary:
-			continue
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			sanctuary.append(s)
@@ -536,18 +530,9 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 		var src: Dictionary = (e as Dictionary).duplicate(true)
 		for k: Variant in src:
 			out[str(k)] = src[k]
-	out["seen"] = _truthy(out.seen) or _truthy(out.bonded)
-	out["bonded"] = _truthy(out.bonded)
-	out["first_day"] = int(out.first_day) if out.first_day is int or out.first_day is float else 0
+	out["seen"] = bool(out.seen) or bool(out.bonded)
+	out["first_day"] = int(out.first_day)
 	return out
-
-## A save value as true/false without crashing on odd types (damaged or edited saves).
-static func _truthy(v: Variant) -> bool:
-	if v is bool:
-		return v
-	if v is int or v is float:
-		return v != 0
-	return false
 
 ## Days since 1970 (local device date), for "met on day N".
 static func today() -> int:
