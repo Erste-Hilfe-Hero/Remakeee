@@ -181,3 +181,51 @@ func test_continue_hint_follows_the_device() -> void:
 	ListPicker.note_device(key)
 	assert_eq(MenuHost.continue_hint(), "(Enter: continue)")
 	ListPicker.last_device = "touch"
+
+func test_tapping_a_greyed_row_tells_why() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	var rows: Array[Dictionary] = [{"text": "Open"}, {"text": "Locked", "disabled": true, "why": "Opens after the second rift."}]
+	p.pick("Why", rows)
+	await wait_process_frames(3)
+	var b: Button = p.buttons()[1]
+	var at: Vector2 = b.get_global_rect().get_center()
+	for pressed: bool in [true, false]:
+		var e := InputEventMouseButton.new()
+		e.button_index = MOUSE_BUTTON_LEFT
+		e.pressed = pressed
+		e.position = at
+		e.global_position = at
+		get_viewport().push_input(e)
+	await wait_process_frames(1)
+	assert_eq(p.hint_text(), "Opens after the second rift.", "item 1842")
+	assert_true(p.visible, "the list stays open")
+	p.picked.emit(-1)
+	ListPicker.last_device = "touch"
+	ListPicker.pointer_used = false
+
+func test_tap_buzz_only_when_switched_on() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	var before_vib: int = GameState.vibration
+	var before_rm: bool = GameState.reduce_motion
+	GameState.vibration = 2
+	GameState.reduce_motion = false
+	ListPicker.pointer_used = true
+	Haptics.sent.clear()
+	p.pick("Buzz", _rows(2))
+	await wait_process_frames(1)
+	p._opened_ms = -10000
+	p._on_row(0)
+	assert_eq(Haptics.sent.size(), 0, "off by default")
+	GameState.tap_vibration = true
+	p.pick("Buzz", _rows(2))
+	await wait_process_frames(1)
+	p._opened_ms = -10000
+	p._on_row(0)
+	assert_eq(Haptics.sent.size(), 1, "item 1791: one short buzz per tapped choice")
+	assert_eq(int(Haptics.sent[0][0]), 15)
+	GameState.tap_vibration = false
+	GameState.vibration = before_vib
+	GameState.reduce_motion = before_rm
+	ListPicker.pointer_used = false

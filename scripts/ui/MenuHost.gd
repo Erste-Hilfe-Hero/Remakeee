@@ -315,6 +315,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"sound_captions": "Important sounds also show as a short text at the top.",
 	"screen_shake": "How much the screen shakes on big hits.",
 	"vibration": "How strongly the phone or gamepad vibrates.",
+	"tap_vibration": "A short buzz each time you tap a choice.",
 	"retro": "Old-style colours for each era you reached.",
 	"account": "Friend code, moving to a new phone, deleting your account.",
 	"legal": "Imprint, privacy and licences.",
@@ -643,6 +644,10 @@ func run_controls() -> void:
 			"vibration":
 				GameState.vibration = (GameState.vibration + 1) % Juice.LEVEL_NAMES.size()
 				Haptics.play("confirm")
+			"tap_vibration":
+				GameState.tap_vibration = not GameState.tap_vibration
+				if GameState.tap_vibration:
+					Haptics.play(ListPicker.TAP_BUZZ)
 			"swap_ab_touch":
 				GameState.swap_ab_touch = not GameState.swap_ab_touch
 			"swap_ab_pad":
@@ -666,6 +671,7 @@ static func controls_rows() -> Array[Array]:
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
 		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
 		["vibration", "Vibration: %s" % Juice.LEVEL_NAMES[GameState.vibration]],
+		["tap_vibration", "Tap buzz: %s" % ("On" if GameState.tap_vibration else "Off")],
 		["pad_help", "Gamepad buttons..."],
 		["keys_help", "Keyboard keys..."],
 	]

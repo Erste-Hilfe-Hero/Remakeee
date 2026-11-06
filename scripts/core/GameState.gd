@@ -132,6 +132,8 @@ var always_run: bool = false
 ## A and B change places (item 2111), apart for the touch pad and for gamepads.
 var swap_ab_touch: bool = false
 var swap_ab_pad: bool = false
+## A 15 ms buzz on every tapped choice in menus, off by default (item 1791).
+var tap_vibration: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
 ## Vibration on phones and gamepads (items 63, 2590): 0 Off, 1 Weak, 2 Full.
@@ -564,7 +566,7 @@ func settings_to_dict() -> Dictionary:
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
-		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
+		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
@@ -588,6 +590,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	always_run = bool(d.get("always_run", false))
 	swap_ab_touch = bool(d.get("swap_ab_touch", false))
 	swap_ab_pad = bool(d.get("swap_ab_pad", false))
+	tap_vibration = bool(d.get("tap_vibration", false))
 	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
 	# Older settings had an on/off "rumble"; on maps to Full vibration.
