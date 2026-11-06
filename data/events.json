@@ -1,0 +1,288 @@
+{
+ "_comment": "Plan area 8 event data. daily_tasks: kinds for DailyTasks.gd (event = what counts, n = how many, optional map / element / wild filters, distinct = different maps (or people for talk) only). Every task must be doable in 15 minutes.",
+ "daily_tasks": [
+  {
+   "id": "win_3",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "text": "Win 3 battles"
+  },
+  {
+   "id": "wild_5",
+   "kind": "battle",
+   "event": "win",
+   "n": 5,
+   "wild": true,
+   "text": "Beat 5 wild Spirlings"
+  },
+  {
+   "id": "win_fernstair",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "fernstair",
+   "text": "Win 3 battles in Fernstair"
+  },
+  {
+   "id": "win_crowcrest",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "crowcrest",
+   "text": "Win 3 battles in Crowcrest"
+  },
+  {
+   "id": "win_saltmarsh",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "saltmarsh",
+   "text": "Win 3 battles in Saltmarsh"
+  },
+  {
+   "id": "win_murk_hollow",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "murk_hollow",
+   "text": "Win 3 battles in Murk Hollow"
+  },
+  {
+   "id": "win_cinder_rift",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "cinder_rift",
+   "text": "Win 3 battles in Cinder Rift"
+  },
+  {
+   "id": "win_tide_rift",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "tide_rift",
+   "text": "Win 3 battles in Tidewater Rift"
+  },
+  {
+   "id": "beat_ember",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "EMBER",
+   "text": "Beat 2 wild Ember Spirlings"
+  },
+  {
+   "id": "beat_tide",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "TIDE",
+   "text": "Beat 2 wild Tide Spirlings"
+  },
+  {
+   "id": "beat_bloom",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "BLOOM",
+   "text": "Beat 2 wild Bloom Spirlings"
+  },
+  {
+   "id": "beat_volt",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "VOLT",
+   "text": "Beat 2 wild Volt Spirlings"
+  },
+  {
+   "id": "beat_stone",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "STONE",
+   "text": "Beat 2 wild Stone Spirlings"
+  },
+  {
+   "id": "beat_gale",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "GALE",
+   "text": "Beat 2 wild Gale Spirlings"
+  },
+  {
+   "id": "beat_lumen",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "LUMEN",
+   "text": "Beat 2 wild Lumen Spirlings"
+  },
+  {
+   "id": "beat_umbra",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "UMBRA",
+   "text": "Beat 2 wild Umbra Spirlings"
+  },
+  {
+   "id": "bond_any",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "text": "Bond with a wild Spirling"
+  },
+  {
+   "id": "bond_ember",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "EMBER",
+   "text": "Bond with an Ember Spirling"
+  },
+  {
+   "id": "bond_tide",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "TIDE",
+   "text": "Bond with a Tide Spirling"
+  },
+  {
+   "id": "bond_bloom",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "BLOOM",
+   "text": "Bond with a Bloom Spirling"
+  },
+  {
+   "id": "bond_volt",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "VOLT",
+   "text": "Bond with a Volt Spirling"
+  },
+  {
+   "id": "bond_stone",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "STONE",
+   "text": "Bond with a Stone Spirling"
+  },
+  {
+   "id": "bond_gale",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "GALE",
+   "text": "Bond with a Gale Spirling"
+  },
+  {
+   "id": "bond_lumen",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "LUMEN",
+   "text": "Bond with a Lumen Spirling"
+  },
+  {
+   "id": "bond_umbra",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "UMBRA",
+   "text": "Bond with an Umbra Spirling"
+  },
+  {
+   "id": "rest_2",
+   "kind": "explore",
+   "event": "rest",
+   "n": 2,
+   "distinct": true,
+   "text": "Rest at 2 Rest Springs"
+  },
+  {
+   "id": "visit_3",
+   "kind": "explore",
+   "event": "visit",
+   "n": 3,
+   "distinct": true,
+   "text": "Visit 3 different places"
+  },
+  {
+   "id": "steps_300",
+   "kind": "explore",
+   "event": "step",
+   "n": 300,
+   "text": "Walk 300 steps"
+  },
+  {
+   "id": "photo",
+   "kind": "explore",
+   "event": "photo",
+   "n": 1,
+   "text": "Take a photo in photo mode"
+  },
+  {
+   "id": "visit_thornridge",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "thornridge",
+   "text": "Visit Thornridge"
+  },
+  {
+   "id": "visit_saltmarsh",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "saltmarsh",
+   "text": "Visit Saltmarsh"
+  },
+  {
+   "id": "visit_crowcrest",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "crowcrest",
+   "text": "Visit Crowcrest"
+  },
+  {
+   "id": "visit_murk_hollow",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "murk_hollow",
+   "text": "Visit Murk Hollow"
+  },
+  {
+   "id": "talk_3",
+   "kind": "explore",
+   "event": "talk",
+   "n": 3,
+   "distinct": true,
+   "text": "Talk to 3 different people"
+  },
+  {
+   "id": "steps_600",
+   "kind": "explore",
+   "event": "step",
+   "n": 600,
+   "text": "Walk 600 steps"
+  }
+ ]
+}
