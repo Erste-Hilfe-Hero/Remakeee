@@ -377,14 +377,15 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if spotter != null:
 		await challenge(spotter, true)
 		return
-	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty():
+	var guard_over: bool = EncounterTable.tick_guard()
+	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over:
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < EncounterTable.rate(map.encounter_table):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost)
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell))
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
@@ -959,6 +960,20 @@ func gear_hint_deferred(gear: String) -> void:
 
 func say_locked(lines: Array[String]) -> void:
 	await _locked_say(lines)
+
+## A hidden find: its own dialogue if it has one, else a short line and the item.
+func take_find(find: Dictionary) -> void:
+	busy = true
+	player.frozen = true
+	Sound.sfx("confirm")
+	if find.has("dialogue"):
+		await run_dialogue(str(find.dialogue))
+	else:
+		await say(["Something glints here..."] as Array[String])
+		await _action_give_item([str(find.item), str(find.get("count", 1))] as PackedStringArray, null)
+	GameState.set_flag(str(find.flag))
+	player.frozen = false
+	busy = false
 
 ## Cracked floor gave way: the player lands on the same cell of the floor below.
 func drop_to(map_id: String, cell: Vector2i) -> void:
@@ -1550,6 +1565,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
+	GameState.note_battle_end()
 	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()
@@ -1558,6 +1574,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	else:
 		await _after_battle(model, outcome)
 	Sound.music(Sound.track_for_map(map.id))
+	EncounterTable.start_guard()
 	await _fade_to(0.0)
 	await announce_achievements()
 	VirtualPad.set_wanted(true)
