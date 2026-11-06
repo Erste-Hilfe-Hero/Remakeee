@@ -13,6 +13,10 @@ var _name_box: PanelContainer
 var _name_edit: LineEdit
 var _name_keys: NameKeyboard
 signal _name_done(text: String)
+## True while the main title list waits (the back button then asks to quit).
+var _at_root: bool = false
+## What the root list returns when the Android back button asks to quit.
+const QUIT_ASKED: int = -2
 
 func _ready() -> void:
 	Database.load_all()
@@ -135,7 +139,13 @@ func _run() -> void:
 		if _used_slots() > 1:
 			items.append("Load...")
 		items.append("Settings")
+		_at_root = true
 		var idx: int = await _menu.pick_strings("", items, false)
+		_at_root = false
+		if idx == QUIT_ASKED:
+			if await _menu.confirm("Quit Chimora?"):
+				get_tree().quit()
+			continue
 		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]
 		match choice:
 			"Continue":
@@ -160,7 +170,7 @@ func _run() -> void:
 				var slot: int = await _pick_slot("Save the new journey in...", true)
 				if slot <= 0:
 					continue
-				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm("Start over in slot %d? That save will be replaced when you save." % slot):
+				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm_danger("Start over in slot %d? That save will be replaced when you save." % slot):
 					continue
 				SaveManager.set_slot(slot)
 				if await _new_game():
@@ -169,6 +179,17 @@ func _run() -> void:
 					return
 			"Settings":
 				await _menu.run_settings()
+
+## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
+func _notification(what: int) -> void:
+	if what != NOTIFICATION_WM_GO_BACK_REQUEST or _menu == null:
+		return
+	if _at_root and _menu.picker.visible:
+		_menu.picker.picked.emit(QUIT_ASKED)
+	elif _name_box != null and _name_box.visible:
+		pass
+	else:
+		BackButton.press_cancel()
 
 func _enter_game() -> void:
 	Online.push_profile()
