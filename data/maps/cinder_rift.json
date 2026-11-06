@@ -293,7 +293,74 @@
     "setup_w": 0.8,
     "status_w": 0.8
    },
-   "lexicon": "warden_orrin"
+   "lexicon": "warden_orrin",
+   "second_trial": {
+    "needs_flags": [
+     "rift_cinder_sealed",
+     "rift_tide_sealed"
+    ],
+    "rules": [
+     "ember_pulse",
+     "ash_rain"
+    ],
+    "money": 1500,
+    "team": [
+     {
+      "species": "Calderox",
+      "level": 30
+     },
+     {
+      "species": "Smoldrake",
+      "level": 28
+     },
+     {
+      "species": "Shalebat",
+      "level": 27
+     }
+    ],
+    "teams_by_difficulty": {
+     "veteran": [
+      {
+       "species": "Calderox",
+       "level": 30
+      },
+      {
+       "species": "Smoldrake",
+       "level": 28
+      },
+      {
+       "species": "Shalebat",
+       "level": 27
+      },
+      {
+       "species": "Zippit",
+       "level": 27
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Calderox",
+       "level": 30
+      },
+      {
+       "species": "Smoldrake",
+       "level": 28
+      },
+      {
+       "species": "Shalebat",
+       "level": 27
+      },
+      {
+       "species": "Zippit",
+       "level": 27
+      },
+      {
+       "species": "Kindlop",
+       "level": 26
+      }
+     ]
+    }
+   }
   },
   {
    "id": "ashen_heart",

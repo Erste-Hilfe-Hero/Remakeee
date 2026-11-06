@@ -279,7 +279,74 @@
     "field_w": 1.5,
     "swap_below": 0.4
    },
-   "lexicon": "warden_maelis"
+   "lexicon": "warden_maelis",
+   "second_trial": {
+    "needs_flags": [
+     "rift_cinder_sealed",
+     "rift_tide_sealed"
+    ],
+    "rules": [
+     "undertow",
+     "tide_turn"
+    ],
+    "money": 1600,
+    "team": [
+     {
+      "species": "Leviarch",
+      "level": 31
+     },
+     {
+      "species": "Riptail",
+      "level": 29
+     },
+     {
+      "species": "Tempestrel",
+      "level": 29
+     }
+    ],
+    "teams_by_difficulty": {
+     "veteran": [
+      {
+       "species": "Leviarch",
+       "level": 31
+      },
+      {
+       "species": "Riptail",
+       "level": 29
+      },
+      {
+       "species": "Tempestrel",
+       "level": 29
+      },
+      {
+       "species": "Kelphound",
+       "level": 28
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Leviarch",
+       "level": 31
+      },
+      {
+       "species": "Riptail",
+       "level": 29
+      },
+      {
+       "species": "Tempestrel",
+       "level": 29
+      },
+      {
+       "species": "Kelphound",
+       "level": 28
+      },
+      {
+       "species": "Glimmerax",
+       "level": 28
+      }
+     ]
+    }
+   }
   },
   {
    "id": "drowned_heart",

@@ -81,6 +81,38 @@ static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGene
 		out.append(up)
 	return out
 
+## Warden "Second Trial" (items 682-684): a one-time rematch once every Rift in "needs_flags" is
+## mended. The npc's "second_trial" block holds its own "team" / "teams_by_difficulty", two "rules"
+## that always apply together (on every difficulty) and "money".
+const SECOND_TRIAL_RULES: int = 2
+
+static func has_second_trial(def: Dictionary) -> bool:
+	return def.get("second_trial") is Dictionary and def.has("warden")
+
+## The Trial as a Wayfarer definition of its own: the Warden's name, profile and items, the block's
+## teams, both rules joined, its own beaten flag.
+static func second_trial_def(def: Dictionary, map_id: String) -> Dictionary:
+	var block: Dictionary = def.get("second_trial", {})
+	var out: Dictionary = def.duplicate(true)
+	for k: String in ["team", "team_by_starter", "teams_by_difficulty", "rule", "rule_by_difficulty", "money", "intro", "defeat",
+			"lexicon", "win_flags", "second_trial"]:
+		out.erase(k)
+	for k: String in ["team", "teams_by_difficulty", "money"]:
+		if block.has(k):
+			out[k] = block[k]
+	out["rule"] = "+".join(PackedStringArray(block.get("rules", [])))
+	out["beaten_flag"] = "second_trial_" + beaten_flag(def, map_id)
+	return out
+
+## True when the Second Trial is open: the Warden is beaten, the Rifts are mended, the Trial not won.
+static func can_second_trial(def: Dictionary, map_id: String, flags: Dictionary) -> bool:
+	if not has_second_trial(def) or not is_beaten(def, map_id, flags):
+		return false
+	for f: Variant in (def.second_trial as Dictionary).get("needs_flags", []):
+		if not bool(flags.get(str(f), false)):
+			return false
+	return not is_beaten(second_trial_def(def, map_id), map_id, flags)
+
 ## The team entries for this Wayfarer ("team_by_starter" picks one from the player's starter).
 ## [param difficulty] is a GameState.Difficulty value; -1 ignores "teams_by_difficulty".
 static func team_entries(def: Dictionary, starter: String, difficulty: int = -1) -> Array:
