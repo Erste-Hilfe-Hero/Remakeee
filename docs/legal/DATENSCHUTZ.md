@@ -55,7 +55,8 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   Meldungen über das Formular auf [DOMAIN]/melden speichern wir mit Freundescode, Grund, Erklärung und, wenn
   du sie angibst, Name und E-Mail, ohne Konto. Bist du in einem Bund, sehen die anderen Mitglieder deinen
   Wanderer-Namen, Freundescode, deine Rolle und ob du gerade online bist; der Bundname besteht nur aus zwei
-  Wörtern einer festen Liste.
+  Wörtern einer festen Liste. In einem Raid-Riss sehen die Mitspieler deinen Wanderer-Namen und deinen
+  Schaden am Wächter; Risse löschen wir 7 Tage nach ihrem Ende.
 - **Wer sieht was:** Namen, Karte, Ort und Echo-Team sehen nur deine bestätigten Freunde. In der
   Wochen-Rangliste sehen Fremde nur Punkte, keinen Namen.
 - **Zweck:** gemeinsames Spielen und Schutz vor Missbrauch (Blockieren, Meldungen prüfen).

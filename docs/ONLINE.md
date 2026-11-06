@@ -226,6 +226,20 @@ A leader dissolves a bund of 3 or more only by confirming again after 24 hours. 
 cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`; menu
 `scripts/ui/BundMenu.gd` (Friends, Bund).
 
+## Raid Rifts
+
+Raid Rifts (plan area 7) wait behind the flag `raid`. A player opens a Rift with 1 to 3 friends or
+members of the same bund (`raid_open`, never with blocked players). The server picks a guardian from
+`raid_guardians` at Ring `raid_level`; its strength is `raid_base` times 100/140/175 % for 2/3/4
+players. Each member has `raid_tries` (3) attempts a day for `raid_hours` (48). An attempt
+(`raid_start`) is a fair-league battle the server sets up (seed, teams, at most `raid_rounds` rounds);
+only the inputs come from the game, and the referee's own count of the Vigor the guardian lost comes
+off its strength. Once the guardian falls, everyone with at least `raid_share_min` percent of the
+damage takes the same reward (`raid_claim`), rolled by the server from the open table `raid_rewards`.
+Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they close. Tables:
+`raids` (no account ids), `raid_members`, `raid_attempts`; menu `scripts/ui/RaidMenu.gd`
+(Friends, Raid Rifts).
+
 ## Reports and decisions (Ali, about once a week)
 
 Every report gets a number at once (`report_in`, the player sees "Your report has number 12"). Open

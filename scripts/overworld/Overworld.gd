@@ -745,11 +745,14 @@ func open_menu() -> void:
 	var watch: bool = menu.watch_replay
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
+	var raid: Dictionary = menu.raid_attempt
 	menu.queue_free()
 	if not duel.is_empty():
 		await echo_duel(duel)
 	if not league.is_empty():
 		await league_battle(league)
+	if not raid.is_empty():
+		await raid_battle(raid)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -824,7 +827,21 @@ func _unhandled_input(event: InputEvent) -> void:
 		var world: Vector2 = get_viewport().get_canvas_transform().affine_inverse() * at
 		tap_cell(Vector2i(floori(world.x / GridWalker.TILE), floori(world.y / GridWalker.TILE)))
 
-## Walks toward [param cell]; NPCs, signs and counters get walked up to and talked to.
+## True if a tap on [param cell] should walk next to it and use it, like pressing A in front
+## of it: signs, counters, hidden finds, smooth rock passages, ladders and plank gaps
+## (item 2109, so all of the world works with taps alone). NPCs are checked by the caller.
+static func used_on_arrival(m: MapData, cell: Vector2i, flags: Dictionary) -> bool:
+	if not m.sign_at(cell, flags).is_empty() or not m.secret_at(cell, flags).is_empty():
+		return true
+	if not m.ladder_at(cell).is_empty():
+		return true
+	var p: Dictionary = m.passage_at(cell)
+	if not p.is_empty() and not bool(flags.get(str(p.get("flag", "")), false)):
+		return true
+	var k: int = m.kind_at(cell)
+	return k == TilesetFactory.Kind.COUNTER or k == TilesetFactory.Kind.PLANK
+
+## Walks toward [param cell]; NPCs, signs, counters and finds get walked up to and used.
 func tap_cell(cell: Vector2i) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
@@ -838,8 +855,14 @@ func tap_cell(cell: Vector2i) -> void:
 			if f == player.cell or not route.is_empty():
 				player.follow(route, cell)
 				return
-	var talk: bool = npc_at(cell) != null or not map.sign_at(cell, GameState.flags).is_empty() or map.kind_at(cell) == TilesetFactory.Kind.COUNTER
-	if talk:
+	# Boulders: a tap next to one pushes it, a tap further away walks up to it (item 2109).
+	if map.char_at(cell) == "B":
+		if PathFinder.is_adjacent(cell, player.cell):
+			player.follow([cell] as Array[Vector2i])
+		else:
+			player.follow(PathFinder.find_adjacent(player.cell, cell, passable))
+		return
+	if npc_at(cell) != null or used_on_arrival(map, cell, GameState.flags):
 		player.follow(PathFinder.find_adjacent(player.cell, cell, passable), cell)
 	else:
 		player.follow(PathFinder.find(player.cell, cell, passable))
@@ -1032,6 +1055,7 @@ func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
 	if score >= ECHO_SONG_PASS:
 		Sound.sfx("level_up")
 		GameState.set_flag(args[0])
+		DailyTasks.record("melody", {"map": map.id})
 	else:
 		Sound.sfx("cancel")
 
@@ -1887,6 +1911,37 @@ func league_battle(m: Dictionary) -> void:
 	busy = false
 	player.frozen = false
 
+## Raid Rift attempt (plan area 7, items 2847-2851, 2871): the server set seed, teams and the
+## round limit; the battle is friendly, so it costs nothing and the team is healed afterwards.
+## The damage comes off the guardian once the referee checked the battle (2691).
+func raid_battle(at: Dictionary) -> void:
+	var snap: Dictionary = BattleReferee.from_expect(at)
+	var model: BattleModel = BattleReplay.build_model(snap)
+	if model == null:
+		await say(["The Raid Rift could not open. Try again later."] as Array[String])
+		return
+	model.trainer_name = "Rift guardian"
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await say([Loc.t("%s waits in the Raid Rift. You have %d rounds.") % [str(at.get("guardian", "?")), model.round_limit]] as Array[String])
+	busy = false
+	await start_battle(foes, false, {"name": "Rift guardian", "model": model, "friendly": true})
+	busy = true
+	player.frozen = true
+	var dealt: int = 0
+	for s: Spirling in model.parties[1]:
+		dealt += maxi(0, s.max_hp() - s.hp)
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": "raid", "p_ref": str(at.get("attempt_id", "")),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+	var lines: Array[String] = [Loc.t("You dealt %d damage to the guardian.") % dealt]
+	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		lines.append("It counts once the check is done.")
+	else:
+		lines.append("The result could not be sent, so it does not count.")
+	await say(lines)
+	busy = false
+	player.frozen = false
+
 # --- Battles --------------------------------------------------------------------------
 
 ## Cuts to the battle screen and waits for it to end. [param trainer] holds Wayfarer info (M5).
@@ -1895,6 +1950,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	for f: Spirling in foes:
+		DailyTasks.note_seen(f.data.species_name, map.id)
 		GameState.mark_seen(f.data.species_name)
 		GameState.note_spirlog(f, false)
 	Sound.sfx("encounter")

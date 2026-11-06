@@ -300,6 +300,27 @@
    "text": "Take a photo at night"
   },
   {
+   "id": "melody_good",
+   "kind": "bond",
+   "event": "melody",
+   "n": 1,
+   "text": "Answer with the Echo melody: Good or better"
+  },
+  {
+   "id": "see_new",
+   "kind": "explore",
+   "event": "discover",
+   "n": 1,
+   "text": "See a Spirling you have not seen yet"
+  },
+  {
+   "id": "meet_daily_find",
+   "kind": "explore",
+   "event": "daily_find",
+   "n": 1,
+   "text": "Meet today's rare visitor"
+  },
+  {
    "id": "hard_win_10",
    "kind": "battle",
    "event": "win",

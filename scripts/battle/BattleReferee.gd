@@ -70,7 +70,14 @@ static func check(replay: Variant, claim: Variant) -> Dictionary:
 	if not m.is_finished():
 		return {"verdict": MISMATCH, "detail": {"field": "unfinished", "rounds": m.turn}}
 	var real: Dictionary = claim_of(m)
-	return compare(real, claim)
+	var r: Dictionary = compare(real, claim)
+	if r.verdict == OK:
+		# Raids (item 2848): the Vigor the foe side lost, which the server takes off the guardian.
+		var dealt: int = 0
+		for s: Spirling in m.party(BattleModel.Side.FOE):
+			dealt += maxi(0, s.max_hp() - s.hp)
+		r.detail["foe_damage"] = dealt
+	return r
 
 ## Compares the referee's own result with the claim, field by field.
 static func compare(real: Dictionary, claim: Dictionary) -> Dictionary:
@@ -150,4 +157,5 @@ static func from_expect(expect: Dictionary, inputs: Variant = []) -> Dictionary:
 	var front: Variant = expect.get("front", [1, 1])
 	return {"seed": int(expect.get("seed", 0)), "wild": false, "ai": int(expect.get("ai", 2)), "teams": teams,
 		"front": front, "items_allowed": bool(expect.get("items_allowed", false)), "inventory": {},
+		"round_limit": int(expect.get("round_limit", 0)),
 		"inputs": inputs if inputs is Array else []}

@@ -66,6 +66,9 @@ var battle_seed: int = 0
 var phase: Phase = Phase.INTRO
 var outcome: Outcome = Outcome.NONE
 var turn: int = 0
+## Raid attempts (plan area 7, item 2849) end after this many rounds, 0 = no limit. The battle then
+## ends as FLED: nobody won, the damage dealt so far counts.
+var round_limit: int = 0
 var items_allowed: bool = true
 var level_cap: int = Spirling.MAX_LEVEL
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
@@ -708,6 +711,9 @@ func _phase_victory_check() -> void:
 		phase = Phase.REWARDS
 	elif own_alive_count() == 0:
 		outcome = Outcome.LOSS
+		phase = Phase.REWARDS
+	elif round_limit > 0 and turn >= round_limit:
+		outcome = Outcome.FLED
 		phase = Phase.REWARDS
 	else:
 		phase = Phase.SWITCH_IN
