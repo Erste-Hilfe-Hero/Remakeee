@@ -543,18 +543,39 @@ func _held_item(s: Spirling) -> void:
 	Sound.sfx("confirm")
 
 func _use_item_on(s: Spirling) -> void:
-	var ids: Array[String] = _usable_items()
-	if ids.is_empty():
-		await info("Nothing in the satchel can be used here.")
-		return
-	var entries: Array[String] = []
-	for id: String in ids:
-		entries.append("%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)])
-	var idx: int = await pick_strings("Use on %s" % s.display_name(), entries)
-	if idx < 0:
-		return
-	var msg: String = GameState.use_item_outside_battle(ids[idx], s)
-	await info(msg if not msg.is_empty() else "That would do nothing right now.")
+	# The list stays open after a use (item 1904) and keeps its place.
+	var focus: int = 0
+	while true:
+		var ids: Array[String] = _usable_items()
+		if ids.is_empty():
+			await info("Nothing in the satchel can be used here.")
+			return
+		var entries: Array[Dictionary] = []
+		for id: String in ids:
+			var row: Dictionary = {"text": "%s x%d" % [Database.item(id).get("name", id), GameState.item_count(id)]}
+			var after: String = vigor_preview(Database.item(id), s)
+			if not after.is_empty():
+				row["hint"] = after
+			entries.append(row)
+		var idx: int = await pick("Use on %s" % s.display_name(), entries, true, mini(focus, ids.size() - 1))
+		if idx < 0:
+			return
+		focus = idx
+		var msg: String = GameState.use_item_outside_battle(ids[idx], s)
+		await info(msg if not msg.is_empty() else "That would do nothing right now.")
+
+## "Vigor 12/40 to 32/40" for a healing or reviving item, empty for any other (item 1901).
+static func vigor_preview(it: Dictionary, s: Spirling) -> String:
+	var to: int = -1
+	if float(it.get("revive", 0.0)) > 0.0:
+		if s.is_fainted():
+			to = maxi(1, int(s.max_hp() * float(it.revive)))
+	elif int(it.get("heal", 0)) > 0:
+		if not s.is_fainted() and s.hp < s.max_hp():
+			to = mini(s.max_hp(), s.hp + int(it.heal))
+	if to < 0:
+		return ""
+	return Loc.t("Vigor %d/%d to %d/%d" % [s.hp, s.max_hp(), to, s.max_hp()])
 
 func _usable_items() -> Array[String]:
 	var out: Array[String] = []

@@ -143,3 +143,44 @@ func test_staying_keeps_the_session() -> void:
 		return
 	assert_false(state.result)
 	assert_false(menu.to_title)
+
+## Items 1901, 1904: item rows show Vigor before and after, and the list stays open.
+func test_vigor_preview_names_before_and_after() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var s: Spirling = GameState.party[0]
+	s.hp = 1
+	var it: Dictionary = Database.item("tonic")
+	var to: int = mini(s.max_hp(), 1 + int(it.heal))
+	assert_eq(PauseMenu.vigor_preview(it, s), "Vigor 1/%d to %d/%d" % [s.max_hp(), to, s.max_hp()])
+	s.hp = s.max_hp()
+	assert_eq(PauseMenu.vigor_preview(it, s), "", "nothing to heal, no preview")
+	assert_eq(PauseMenu.vigor_preview({"name": "Rope"}, s), "")
+
+func test_item_list_stays_open_after_a_use() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var s: Spirling = GameState.party[0]
+	s.hp = 1
+	GameState.add_item("tonic", 2)
+	var menu := _menu()
+	await wait_process_frames(1)
+	var state: Dictionary = {"done": false}
+	var runner := func() -> void:
+		await menu._use_item_on(s)
+		state.done = true
+	runner.call()
+	var frames: int = 0
+	var lists: int = 0
+	var seen: int = 0
+	while not state.done and frames < MAX_FRAMES:
+		await wait_process_frames(1)
+		frames += 1
+		if menu._info_wait:
+			menu._page_turn = -2
+			menu._close_info()
+		elif menu.picks > seen and menu.picker.visible:
+			seen = menu.picks
+			lists += 1
+			menu.picker.picked.emit(menu.last_rows.find("Tonic x%d" % GameState.item_count("tonic")) if lists == 1 else -1)
+	assert_true(state.done)
+	assert_eq(lists, 2, "the list opens again after the tonic")
+	assert_gt(s.hp, 1)
