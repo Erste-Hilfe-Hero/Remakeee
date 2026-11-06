@@ -120,6 +120,12 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 			push_error("MapData: map '%s' has no floor %d" % [file, level_no])
 			return null
 		var level: Dictionary = (floors[level_no - 1] as Dictionary).duplicate()
+		if level.has("slot"):
+			# Echo Path rooms (plan 3462): this week's template for the slot.
+			level = EchoPath.build_room(int(level.slot))
+			if level.is_empty():
+				push_error("MapData: no Echo Path room for '%s'" % map_id)
+				return null
 		for k: String in INHERITED:
 			if raw.has(k) and not level.has(k):
 				level[k] = raw[k]
