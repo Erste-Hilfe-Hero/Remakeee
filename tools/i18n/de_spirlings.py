@@ -98,4 +98,20 @@ T = {
 "Salt flats, coastal cliffs": "Salzebenen, Küstenklippen",
 "After a dry summer it stands like a white pillar on the flats. Sailors use it to steer by.": "Nach einem trockenen Sommer steht es wie eine weiße Säule in der Ebene. Seeleute steuern danach.",
 "A Brinelet that grew through three dry summers.": "Ein Brinelet, das drei trockene Sommer hindurch wuchs.",
+
+# Spirlog as map-book pages (items 243-251)
+"Spirlog (%d)": "Spirlog (%d)",
+"Search by name": "Nach Namen suchen",
+"only seen": "nur gesehen", "missing": "fehlt", "bonded": "gebunden",
+"Fern": "Farn", "Scree": "Geröll", "Reed": "Schilf", "Cave": "Höhle", "Rift": "Riss", "Path": "Weg",
+"Travel with one to learn more.": "Reise mit einem, um mehr zu erfahren.",
+"Chapter: %s": "Kapitel: %s",
+"Search: %s": "Suche: %s",
+"Element: %s": "Element: %s",
+"Role: %s": "Rolle: %s",
+"Show: %s": "Zeigen: %s",
+"%s: %d seen, %d bonded": "%s: %d gesehen, %d gebunden",
+"Origin: %s": "Herkunft: %s",
+"#%02d  Not seen yet.": "#%02d  Noch nicht gesehen.",
+"Vanguard": "Vorhut", "Bulwark": "Bollwerk", "Weaver": "Weber", "Striker": "Stürmer", "Kindler": "Zünder",
 }

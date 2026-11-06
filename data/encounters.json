@@ -317,13 +317,6 @@
     "ground": "cave"
    },
    {
-    "species": "Blotling",
-    "min": 11,
-    "max": 12,
-    "weight": 12,
-    "ground": "cave"
-   },
-   {
     "species": "Seamlet",
     "min": 11,
     "max": 13,
