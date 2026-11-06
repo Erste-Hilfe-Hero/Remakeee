@@ -76,6 +76,9 @@ def strings():
         for k in ("title", "text"):
             if isinstance(a.get(k), str):
                 found.append(a[k])
+    for m in json.load(open(os.path.join(ROOT, "data/endgame.json"))).get("masters", []):
+        if isinstance(m.get("title"), str):
+            found.append(m["title"])
     ev = os.path.join(ROOT, "data/events.json")
     if os.path.exists(ev):
         for group in json.load(open(ev)).values():

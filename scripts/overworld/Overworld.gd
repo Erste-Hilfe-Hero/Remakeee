@@ -62,6 +62,7 @@ func _ready() -> void:
 		"switch": _action_switch,
 		"gauntlet": _action_gauntlet,
 		"weekly": _action_weekly,
+		"master": _action_master,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
@@ -913,6 +914,34 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	elif wins >= WeeklyChallenge.ROUNDS:
 		await say(["Cleared again! The prize comes back next week."] as Array[String])
 	GameState.records["weekly"] = rec
+	await announce_achievements()
+
+## Master Wayfarer duel (plan 3288-3289): ring 45-55 team, Waymarks first time and weekly.
+func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
+	var id: String = args[0] if not args.is_empty() else ""
+	var m: Dictionary = Masters.find(id)
+	if m.is_empty():
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var ask: String = Loc.t("Duel %s? Ring %d.") % [str(m.name), Masters.level(m)]
+	if not Masters.pays_now(id):
+		ask += " " + Loc.t("The Waymarks for this master come back next week.")
+	var go: bool = await menu.confirm(ask)
+	menu.queue_free()
+	if not go:
+		return
+	var info: Dictionary = {"name": "%s, %s" % [str(m.name), Loc.t(str(m.title))], "ai": 3}
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(Masters.team(id), false, info)
+	busy = true
+	player.frozen = true
+	if outcome != BattleModel.Outcome.WIN:
+		return
+	var lines: Array[String] = []
+	lines.append_array(Dialogue.get_entry("masters/" + id).get("win_lines", []))
+	lines.append_array(Masters.win(id))
+	await say(lines)
 	await announce_achievements()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.

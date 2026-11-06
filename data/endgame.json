@@ -236,5 +236,15 @@
     "waymarks": 50
    }
   ]
- }
+ },
+ "masters": [
+  {"id": "brannoc", "name": "Brannoc", "title": "Master of the Kiln", "element": "EMBER", "map": "cinder_rift", "x": 6, "y": 7, "facing": "down", "level": 45, "sprite": "warden"},
+  {"id": "maren", "name": "Maren", "title": "Master of the Shoals", "element": "TIDE", "map": "tide_rift", "x": 10, "y": 11, "facing": "left", "level": 46, "sprite": "ranger"},
+  {"id": "hazel", "name": "Hazel", "title": "Master of the Old Grove", "element": "BLOOM", "map": "fernstair", "x": 6, "y": 13, "facing": "down", "level": 48, "sprite": "elder"},
+  {"id": "quill", "name": "Quill", "title": "Master of the Storm Wire", "element": "VOLT", "map": "crowcrest", "x": 6, "y": 12, "facing": "down", "level": 49, "sprite": "ranger"},
+  {"id": "flint", "name": "Flint", "title": "Master of the Quarry", "element": "STONE", "map": "thornridge", "x": 6, "y": 10, "facing": "down", "level": 50, "sprite": "warden"},
+  {"id": "wren", "name": "Wren", "title": "Master of the Salt Wind", "element": "GALE", "map": "saltmarsh", "x": 6, "y": 4, "facing": "down", "level": 52, "sprite": "villager"},
+  {"id": "lume", "name": "Lume", "title": "Master of the Harbour Lamp", "element": "LUMEN", "map": "brindlewick", "x": 6, "y": 10, "facing": "down", "level": 53, "sprite": "elder"},
+  {"id": "morrow", "name": "Morrow", "title": "Master of the Hollow", "element": "UMBRA", "map": "murk_hollow", "x": 6, "y": 6, "facing": "down", "level": 55, "sprite": "hush"}
+ ]
 }

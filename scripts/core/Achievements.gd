@@ -101,6 +101,8 @@ static func stat(name: String) -> int:
 			return all_spirlings().filter(func(s: Spirling) -> bool: return s.prism).size()
 		"rifts":
 			return _rifts()
+		"masters":
+			return Masters.beaten_count()
 		"rifts_veteran":
 			return _rifts() if GameState.difficulty >= GameState.Difficulty.VETERAN else 0
 		"rifts_riftborn":

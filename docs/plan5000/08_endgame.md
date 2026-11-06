@@ -192,11 +192,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3285. [P3] Für Spieler, die ein Turm-Stockwerk dreimal verloren haben, am Rastpunkt einen Tipp zu den Elementen der nächsten Gegner zeigen.
 
 ### Postgame in Veydal
-3286. [P1] Nach dem Kapitel „Waiting for the Ferry“ einen Postgame-Abschnitt im Ziele-Bildschirm zeigen, der alle Endgame-Inhalte als Liste mit Haken führt.
-3287. [P1] Den Ring-Deckel nach dem Ende von Akt I auf 60 anheben, damit Endgame-Inhalte die volle Spanne nutzen.
-3288. [P1] Acht „Meister-Wanderer“ an festen Orten in Veydal aufstellen, die erst nach beiden Rissen erscheinen und Teams mit Ring 45 bis 55 haben.
-3289. [P1] Jeden Meister-Wanderer beim ersten Sieg mit 80 Wegmarken und danach einmal pro Woche mit 20 Wegmarken belohnen.
-3290. [P1] Jeden Meister-Wanderer mit einem Steckbrief im Lexikon führen, der Ort, Thema und eigenen Sieg zeigt.
+3286. [x] [P1] Nach dem Kapitel „Waiting for the Ferry“ einen Postgame-Abschnitt im Ziele-Bildschirm zeigen, der alle Endgame-Inhalte als Liste mit Haken führt.
+3287. [x] [P1] Den Ring-Deckel nach dem Ende von Akt I auf 60 anheben, damit Endgame-Inhalte die volle Spanne nutzen.
+3288. [x] [P1] Acht „Meister-Wanderer“ an festen Orten in Veydal aufstellen, die erst nach beiden Rissen erscheinen und Teams mit Ring 45 bis 55 haben.
+3289. [x] [P1] Jeden Meister-Wanderer beim ersten Sieg mit 80 Wegmarken und danach einmal pro Woche mit 20 Wegmarken belohnen.
+3290. [x] [P1] Jeden Meister-Wanderer mit einem Steckbrief im Lexikon führen, der Ort, Thema und eigenen Sieg zeigt.
 3291. [P2] Die Teams der Meister-Wanderer in data/endgame.json mit Thema, Arten, Techniken und Andenken festlegen.
 3292. [P2] Nach dem Sieg über alle acht Meister-Wanderer eine Meisterrunde im Leuchtturm freischalten, in der alle acht nacheinander antreten.
 3293. [P2] Eine „Nachhall-Senke“ als neue kleine Karte am Rand der Saltmarsh anlegen, in der nur Spirlings ab Ring 40 wild leben.

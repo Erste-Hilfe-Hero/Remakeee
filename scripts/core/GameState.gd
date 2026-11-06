@@ -118,11 +118,13 @@ var known_matchups: Dictionary = {}
 
 ## Mended Rifts needed before the storage box opens from the menu (end of Act I).
 const RIFTS_FOR_STORAGE: int = 2
+## Story flag at the end of Act I ("Waiting for the Ferry" starts).
+const ACT1_END_FLAG: String = "aldo_dock_told"
 
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
 		return Spirling.MAX_LEVEL
-	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
+	return progress_cap()
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -140,7 +142,11 @@ func seal_rift(rift_id: String) -> bool:
 
 ## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
 ## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
+## After Act I (ACT1_END_FLAG) the cap opens to the full Spirling.MAX_LEVEL (plan 3287), so
+## Master Wayfarers and the endgame use the whole ring range.
 func progress_cap() -> int:
+	if has_flag(ACT1_END_FLAG):
+		return Spirling.MAX_LEVEL
 	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:
