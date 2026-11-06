@@ -1107,15 +1107,19 @@ func thank_echo(helper: Dictionary, won: bool) -> void:
 	if pts > 0:
 		await say(["%s's echo fades with a smile. Your friendship grew!" % str(helper.name)] as Array[String])
 
+## What the last battle's result was (winner, Vigor left, rounds), for the server's referee.
+var last_claim: Dictionary = {}
+
 ## Echo duel (items 121-124): a friend's team, run by the AI, everyone on the same level.
 ## Nothing is lost and the real team does not change.
 func echo_duel(d: Dictionary) -> void:
-	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, EchoTeam.DUEL_LEVEL)
-	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party)
+	var ring: int = EchoTeam.duel_ring({"duel_ring": d.get("ring", EchoTeam.DUEL_LEVEL)})
+	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, ring)
+	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party, ring)
 	if foes.is_empty() or mine.is_empty():
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
-	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), EchoTeam.DUEL_LEVEL]] as Array[String])
+	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
 	busy = false
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
@@ -1123,6 +1127,9 @@ func echo_duel(d: Dictionary) -> void:
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
+	# The server's referee plays the duel again (plan area 7, item 2689).
+	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	await say(["You won the echo duel against %s!" % str(d.name) if won else "%s's echo won this time. Your team is fine." % str(d.name)] as Array[String])
 	busy = false
 	player.frozen = false
@@ -1182,6 +1189,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
 	GameState.note_battle_end()
+	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()
 	if bool(trainer.get("friendly", false)):
