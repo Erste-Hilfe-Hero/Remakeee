@@ -40,8 +40,9 @@ static func earlier_form(sd: SpirlingData) -> SpirlingData:
 	if sd == null:
 		return null
 	for other: SpirlingData in spirlings.values():
-		if other.evolves_to == sd:
-			return other
+		for path: Dictionary in other.unfold:
+			if path.get("to") == sd:
+				return other
 	return null
 
 static func move(move_name: String) -> MoveData:
@@ -114,11 +115,13 @@ static func _load_spirlings() -> void:
 		sd.base_def = int(base["def"])
 		sd.base_foc = int(base.foc)
 		sd.base_spd = int(base.spd)
-		sd.evolve_level = int(s.get("evolve_level", 0))
 		sd.bond_rate = float(s.get("bond_rate", SpirlingData.DEFAULT_BOND_RATE))
 		sd.trait_id = str(s.get("trait", ""))
-		sd.evolve_item = str(s.get("evolve_item", ""))
-		sd.evolve_map = str(s.get("evolve_map", ""))
+		sd.rarity = str(s.get("rarity", "common"))
+		sd.region = str(s.get("region", "veydal"))
+		sd.role = str(s.get("role", ""))
+		sd.origin = str(s.get("origin", ""))
+		sd.line_id = str(s.get("line_id", str(s.name).to_lower()))
 		sd.lore = str(s.get("lore", ""))
 		sd.height = str(s.get("height", ""))
 		sd.habitat = str(s.get("habitat", ""))
@@ -139,8 +142,39 @@ static func _load_spirlings() -> void:
 				sd.learnset_moves.append(md)
 		spirlings[sd.species_name] = sd
 	for s: Dictionary in raw:
-		if s.get("evolves_to") != null:
-			spirlings[s.name].evolves_to = spirlings.get(str(s.evolves_to))
+		_link_unfold(spirlings[s.name], s)
+
+## Reads the "unfold" list, or the older single "evolves_to" fields as a fallback.
+static func unfold_paths(s: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if s.get("unfold") is Array:
+		for p: Variant in s.unfold:
+			if p is Dictionary:
+				out.append(p)
+	elif s.get("evolves_to") != null:
+		if not str(s.get("evolve_item", "")).is_empty():
+			out.append({"to": s.evolves_to, "rule": "item", "value": s.evolve_item})
+		else:
+			out.append({"to": s.evolves_to, "rule": "ring", "value": int(s.get("evolve_level", 0)), "map": str(s.get("evolve_map", ""))})
+	return out
+
+static func _link_unfold(sd: SpirlingData, s: Dictionary) -> void:
+	for p: Dictionary in unfold_paths(s):
+		var to: SpirlingData = spirlings.get(str(p.get("to", "")))
+		if to == null:
+			push_error("Database: %s unfolds into unknown %s" % [sd.species_name, p.get("to", "")])
+			continue
+		sd.unfold.append({"to": to, "rule": str(p.get("rule", "ring")), "value": p.get("value", 0), "map": str(p.get("map", ""))})
+	if sd.unfold.is_empty():
+		return
+	var first: Dictionary = sd.unfold[0]
+	sd.evolves_to = first.to
+	match str(first.rule):
+		"ring":
+			sd.evolve_level = int(first.value)
+			sd.evolve_map = str(first.map)
+		"item":
+			sd.evolve_item = str(first.value)
 
 static func _load_items() -> void:
 	var raw: Variant = _read(ITEMS_PATH)

@@ -4,10 +4,9 @@ Run after editing a table: python3 tools/i18n/build.py"""
 import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import importlib, glob
-# Every tools/i18n/de_*.py table is merged, so a new area can add its own file without
-# touching this list (the parallel plan threads each keep their own table).
-MODS = [importlib.import_module(os.path.basename(p)[:-3]) for p in sorted(glob.glob(os.path.join(HERE, "de_*.py")))]
+# Every tools/i18n/de_*.py table is merged, so a new area can add its own file without editing this one.
+import glob, importlib
+MODS = [importlib.import_module(os.path.basename(f)[:-3]) for f in sorted(glob.glob(os.path.join(HERE, "de_*.py")))]
 
 strings = {}
 for mod in MODS:
