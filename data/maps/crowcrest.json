@@ -120,7 +120,45 @@
      "species": "Zippit",
      "level": 8
     }
-   ]
+   ],
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Zephlet",
+      "level": 6
+     }
+    ],
+    "veteran": [
+     {
+      "species": "Zephlet",
+      "level": 7,
+      "moves": [
+       "Kite Cut",
+       "Draft Needle"
+      ]
+     },
+     {
+      "species": "Zippit",
+      "level": 8
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Zephlet",
+      "level": 7,
+      "moves": [
+       "Kite Cut",
+       "Draft Needle"
+      ]
+     },
+     {
+      "species": "Zippit",
+      "level": 8,
+      "held": "spark_coil"
+     }
+    ]
+   },
+   "profile": "hothead"
   },
   {
    "id": "bram",
@@ -135,13 +173,69 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 7
+     "level": 7,
+     "moves": [
+      "Hunker Down",
+      "Grit Jab"
+     ]
     },
     {
      "species": "Shalebat",
-     "level": 8
+     "level": 8,
+     "moves": [
+      "Hunker Down",
+      "Grit Jab"
+     ]
     }
-   ]
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Shalebat",
+      "level": 7,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 8,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ],
+      "held": "iron_burr"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Shalebat",
+      "level": 7,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 8,
+      "moves": [
+       "Hunker Down",
+       "Grit Jab"
+      ],
+      "held": "iron_burr"
+     },
+     {
+      "species": "Mossling",
+      "level": 8,
+      "moves": [
+       "Pollen Prick"
+      ]
+     }
+    ]
+   },
+   "profile": "wall"
   }
  ],
  "signs": [

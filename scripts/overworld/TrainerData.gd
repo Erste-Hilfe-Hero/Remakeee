@@ -96,7 +96,11 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 			var mv: MoveData = Database.move(str(n))
 			if mv != null and not fixed.has(mv) and fixed.size() < 4:
 				fixed.append(mv)
+		# Named arts come first; the rest of the four are filled from the default kit.
 		if not fixed.is_empty():
+			for mv: MoveData in s.moves:
+				if fixed.size() < 4 and not fixed.has(mv):
+					fixed.append(mv)
 			s.moves = fixed
 		s.held = str(entry.get("held", s.held))
 		out.append(s)
@@ -118,15 +122,22 @@ static func ai_tier(def: Dictionary, difficulty_ai: int) -> int:
 		tier = maxi(tier, WARDEN_MIN_AI)
 	return tier
 
+## The Warden rule for [param difficulty] ("rule_by_difficulty" wins over "rule").
+static func rule_for(def: Dictionary, difficulty: int = -1) -> String:
+	var by: Variant = def.get("rule_by_difficulty", {})
+	if difficulty >= 0 and difficulty < DIFFICULTY_KEYS.size() and by is Dictionary and (by as Dictionary).has(DIFFICULTY_KEYS[difficulty]):
+		return str(by[DIFFICULTY_KEYS[difficulty]])
+	return str(def.get("rule", ""))
+
 ## The battle info dictionary for Overworld.start_battle.
-static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: int) -> Dictionary:
+static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: int, difficulty: int = -1) -> Dictionary:
 	var info: Dictionary = {
 		"name": str(def.get("trainer", def.get("id", "Wayfarer"))),
 		"ai": ai_tier(def, difficulty_ai),
 		"money": 0 if is_wild_horde(def) else prize_money(def, team),
 		"items": def.get("items", {}),
 		"warden": def.has("warden") or def.has("boss"),
-		"rule": str(def.get("rule", "")),
+		"rule": rule_for(def, difficulty),
 		"front": front(def),
 		"boss": str(def.get("boss", "")),
 		"wild": is_wild_horde(def),

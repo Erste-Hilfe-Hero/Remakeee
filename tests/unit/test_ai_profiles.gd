@@ -90,9 +90,64 @@ func test_team_entries_take_fixed_arts_keepsake_and_difficulty() -> void:
 	assert_eq(TrainerData.build_team(def, "", rng, GameState.Difficulty.STORY)[0].level, 6)
 	assert_eq(TrainerData.build_team(def, "", rng, GameState.Difficulty.TAMER)[0].level, 7, "missing block falls back to team")
 	var vet: Spirling = TrainerData.build_team(def, "", rng, GameState.Difficulty.VETERAN)[0]
-	assert_eq(vet.moves.size(), 2, "unknown arts are skipped")
+	assert_eq(vet.moves.size(), 4, "named arts first, the default kit fills the rest")
+	assert_false(vet.moves.has(null), "unknown arts are skipped")
 	assert_eq(vet.moves[0].move_name, "Kite Cut")
 	assert_eq(vet.held, "spark_coil")
 	var up: Array[Spirling] = TrainerData.rematch_team(def, "", rng, 20, 100, GameState.Difficulty.VETERAN)
 	assert_eq(up[0].moves[1].move_name, "Draft Needle", "a rematch keeps the fixed kit")
 	assert_eq(TrainerData.battle_info(def, [vet] as Array[Spirling], 2).profile, "hothead")
+
+func _npc(map_id: String, npc_id: String) -> Dictionary:
+	for n: Dictionary in MapData.load_map(map_id).npcs:
+		if str(n.get("id", "")) == npc_id:
+			return n
+	return {}
+
+func test_wardens_scale_with_difficulty() -> void:
+	var rng := RandomNumberGenerator.new()
+	var orrin: Dictionary = _npc("cinder_rift", "warden_orrin")
+	var sizes: Array[int] = []
+	for d: int in TrainerData.DIFFICULTY_KEYS.size():
+		sizes.append(TrainerData.build_team(orrin, "", rng, d).size())
+	assert_eq(sizes, [2, 3, 3, 4] as Array[int], "items 669-671")
+	for s: Spirling in TrainerData.build_team(orrin, "", rng, GameState.Difficulty.RIFT_BORN):
+		assert_ne(s.held, "", "item 732: every Rift-Born Warden Spirling carries a keepsake")
+	assert_eq(TrainerData.battle_info(orrin, [] as Array[Spirling], 0, GameState.Difficulty.STORY).rule, "ember_pulse_soft")
+	assert_eq(TrainerData.battle_info(orrin, [] as Array[Spirling], 0, GameState.Difficulty.TAMER).rule, "ember_pulse")
+	var maelis: Dictionary = _npc("tide_rift", "warden_maelis")
+	assert_eq(TrainerData.build_team(maelis, "", rng, GameState.Difficulty.STORY).size(), 2)
+	assert_eq(TrainerData.rule_for(maelis, GameState.Difficulty.STORY), "undertow_soft")
+
+func test_wayfarers_keep_one_keepsake_and_only_from_veteran() -> void:
+	var rng := RandomNumberGenerator.new()
+	for key: Array in [["crowcrest", "lio"], ["crowcrest", "bram"], ["murk_hollow", "delve"], ["saltmarsh", "neve"], ["tide_rift", "mystic"]]:
+		var def: Dictionary = _npc(key[0], key[1])
+		for d: int in TrainerData.DIFFICULTY_KEYS.size():
+			var held: int = 0
+			for s: Spirling in TrainerData.build_team(def, "", rng, d):
+				held += 0 if s.held.is_empty() else 1
+			assert_lte(held, 1 if d >= GameState.Difficulty.VETERAN else 0, "%s on %s" % [key[1], TrainerData.DIFFICULTY_KEYS[d]])
+
+func test_soft_ember_pulse_feeds_every_second_turn() -> void:
+	var gains: Array[int] = []
+	for rule: String in ["ember_pulse", "ember_pulse_soft"]:
+		var me: Spirling = BattleFixtures.make("Mossling", 20, ["Bowl Over"] as Array[String])
+		var foe: Spirling = BattleFixtures.make("Kindlop", 20, ["Bowl Over"] as Array[String])
+		var m := BattleModel.new([me] as Array[Spirling], [foe] as Array[Spirling], false, 7, 1)
+		m.foe_rule = rule
+		m.start()
+		foe.energy = 0
+		for i: int in 2:
+			m.submit_turn(BattleAction.make_rest(0), BattleAction.make_rest(1))
+		gains.append(foe.energy)
+	assert_eq(gains[0] - gains[1], 1, "the Story form skips every other turn")
+
+func test_soft_undertow_drags_only_the_lead() -> void:
+	var a: Spirling = BattleFixtures.make("Mossling", 20)
+	var b: Spirling = BattleFixtures.make("Puddlet", 20)
+	var m := BattleModel.new([a, b] as Array[Spirling], [BattleFixtures.make("Riptail", 20)] as Array[Spirling], false, 7, 1)
+	m.foe_rule = "undertow_soft"
+	m.start()
+	assert_eq(a.stage("spd"), -1)
+	assert_eq(b.stage("spd"), 0)

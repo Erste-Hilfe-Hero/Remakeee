@@ -1533,7 +1533,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 		busy = false
 		player.frozen = false
 		return
-	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
 	# Helper call (item 46): after losing to a Warden once, a friend's echo can fight beside you.
 	var losses: Dictionary = GameState.records.get("warden_losses", {})
 	var lost_key: String = TrainerData.beaten_flag(def, map.id)
@@ -1631,7 +1631,7 @@ func offer_rematch(n: NPC) -> bool:
 		player.frozen = false
 		busy = false
 		return false
-	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
 	info["money"] = TrainerData.MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	if outcome == BattleModel.Outcome.WIN:

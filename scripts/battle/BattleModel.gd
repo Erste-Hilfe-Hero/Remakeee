@@ -325,7 +325,8 @@ func start() -> Array[BattleEvent]:
 		var rule: Dictionary = BattleRules.RULES[foe_rule]
 		emit_event(BattleEvent.Type.RULE, {"rule": foe_rule, "label": str(rule.label), "text": str(rule.text)})
 		var st: Dictionary = rule.get("player_stage", {})
-		for s: Spirling in parties[Side.PLAYER]:
+		var dragged: Array = parties[Side.PLAYER].slice(0, 1) if bool(rule.get("lead_only", false)) else parties[Side.PLAYER]
+		for s: Spirling in dragged:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	participants = []
@@ -685,7 +686,9 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		reveal_trait(side, slot)
 	var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
 	if side == Side.FOE:
-		gain += int(BattleRules.RULES.get(foe_rule, {}).get("foe_energy", 0))
+		var rule: Dictionary = BattleRules.RULES.get(foe_rule, {})
+		if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
+			gain += int(rule.get("foe_energy", 0))
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:
