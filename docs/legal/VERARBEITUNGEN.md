@@ -9,7 +9,7 @@ Betroffene sind immer Spielerinnen und Spieler von Chimora (alle Altersgruppen, 
 
 | Funktion | Zweck | Daten (Tabellen) | Speicherdauer | Rechtsgrundlage |
 | --- | --- | --- | --- | --- |
-| Konto und Anmeldung | Spiel ohne E-Mail bereitstellen, Gerätewechsel | `auth.users` (zufällige ID), `auth.sessions`, `auth.refresh_tokens`, `profiles` (Freundescode, Wanderer-Name, Farbe, Karte, letzter Besuch, `inactive_since`), `transfer_codes` (nur Hash), `transfer_attempts` (Zeit von Fehlversuchen) | solange das Konto besteht; nach 24 Monaten ohne Besuch markiert und 30 Tage später gelöscht (`_daily_cleanup`); Übertragungscodes 7 Tage, Fehlversuche 1 Tag | Art. 6 Abs. 1 lit. b |
+| Konto und Anmeldung | Spiel ohne E-Mail bereitstellen, Gerätewechsel | `auth.users` (zufällige ID), `auth.sessions`, `auth.refresh_tokens`, `profiles` (Freundescode, Wanderer-Name, Farbe, Karte, letzter Besuch, `inactive_since`), `transfer_codes` (nur Hash), `transfer_attempts` (Zeit von Fehlversuchen) | solange das Konto besteht; nach 24 Monaten ohne Besuch markiert und 30 Tage später gelöscht (`_daily_cleanup`); Konten aus der Browser-Testversion (`profiles.platform = 'web'`) nach 30 Tagen ohne Besuch (`_web_cleanup`); Übertragungscodes 7 Tage, Fehlversuche 1 Tag | Art. 6 Abs. 1 lit. b |
 | Spielstände | Fortschritt speichern und wiederherstellen | `saves` (Spielstand als JSON, Revision, Zeit) | solange das Konto besteht | Art. 6 Abs. 1 lit. b |
 | Echtheitsprüfung beim Speichern | Schutz vor manipulierten Ständen, faire Ligen | `cheat_flags` (Grund, Geld und Spielzeit vorher und nachher), `profiles.cheat_cleared_at` | 6 Monate (`_privacy_cleanup`) | Art. 6 Abs. 1 lit. f |
 | Freunde, Blockieren | gemeinsames Spielen, Schutz vor Belästigung | `friendships`, `blocks` | solange das Konto besteht | Art. 6 Abs. 1 lit. b |
@@ -31,7 +31,7 @@ Betroffene sind immer Spielerinnen und Spieler von Chimora (alle Altersgruppen, 
 - **Täglich 04:15** `server/cleanup.sh` → `public._daily_cleanup()` (Migration `20261110090002_tech_privacy.sql`):
   Leuchtpost 30 Tage, Meldungen 6 Monate, Wochenwerte und Weltziel-Beiträge nach der Folgewoche,
   `rate_events` und `transfer_attempts` 1 Tag, Übertragungscodes 7 Tage, inaktive Konten (siehe oben),
-  Anmelde-Protokoll 7 Tage. Ruft auch `_privacy_cleanup()` auf (Ligen, Kämpfe, Echtheitsprüfung), das
+  Anmelde-Protokoll 7 Tage, dazu `_web_cleanup()` für Browser-Testkonten (30 Tage). Ruft auch `_privacy_cleanup()` auf (Ligen, Kämpfe, Echtheitsprüfung), das
   zusätzlich ab und zu bei `hello` läuft. Das Ergebnis steht im Cron-Log.
 - Empfänger: Contabo GmbH (Hosting, Art. 28), Apple und Google (eigene Verantwortung), Behörden nur bei
   gesetzlicher Pflicht. Kein Drittland. Kein Datenschutzbeauftragter (keine Pflicht nach § 38 BDSG).

@@ -72,3 +72,16 @@ func test_too_big_save_is_refused() -> void:
 	var r: Dictionary = await Online.call_fn("save_put", {"p_slot": 2, "p_data": {"note": "x".repeat(LocalBackend.SAVE_MAX_BYTES)},
 		"p_summary": "", "p_base_rev": 0})
 	assert_eq(str(r.data.error), "too_big")
+
+func test_connect_reports_the_platform() -> void:
+	await Online.connect_now()
+	assert_eq(Online.platform_name(), "app", "tests run outside the browser")
+	assert_eq(str(Online.profile.get("platform", "")), "app", "new accounts count as app")
+	# The account was used in the browser before and now comes back on a phone.
+	await Online.call_fn("platform_set", {"p_platform": "web"})
+	assert_eq(str(_server.profile_of(_server.me()).platform), "web")
+	Online.state = Online.State.OFFLINE
+	await Online.connect_now()
+	assert_eq(str(_server.profile_of(_server.me()).platform), "app", "reported again after hello")
+	var r: Dictionary = await Online.call_fn("platform_set", {"p_platform": "moon"})
+	assert_eq(str(r.data.error), "bad_platform")
