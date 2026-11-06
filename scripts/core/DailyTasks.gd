@@ -252,6 +252,7 @@ static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Arr
 		state["bonus"] = true
 		lines.append(Loc.t("All of today's tasks are done!"))
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(BONUS, "daily_bonus")))
+		lines.append_array(SeasonPath.add("daily_bonus"))
 	lines.append_array(Festival.record(event, info, amount))
 	lines.append_array(Album.record(event, info, amount))
 	GameState.notices.append_array(lines)
