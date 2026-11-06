@@ -20,6 +20,8 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 ## Who the move reaches: "single" (one foe, picked by the player) or "foes" (every foe on the
 ## field at once, a sweep). In 1v1 both hit the one foe the same way.
 @export var target: String = "single"
+## Turns the move stays locked after each use (moves.json "cooldown", 0 = never locked).
+@export var cooldown: int = 0
 
 const TARGETS: Array[String] = ["single", "foes"]
 

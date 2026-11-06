@@ -51,7 +51,7 @@ static func goal_text(goal: Dictionary, flags: Dictionary) -> String:
 
 ## Side-goal text with progress for goals that list "progress" flags, e.g. "... (2/6)".
 static func side_text(goal: Dictionary, flags: Dictionary) -> String:
-	var text: String = str(goal.get("text", ""))
+	var text: String = str(side_step(goal).get("text", goal.get("text", "")))
 	var steps: Array = goal.get("progress", [])
 	if not steps.is_empty():
 		var have: int = 0
@@ -59,6 +59,22 @@ static func side_text(goal: Dictionary, flags: Dictionary) -> String:
 			have += 1 if bool(flags.get(str(f), false)) else 0
 		text += " (%d/%d)" % [have, steps.size()]
 	return text
+
+## Story number that holds the current step of a side goal with "stages" (plan item 1631).
+static func stage_var(goal: Dictionary) -> String:
+	return "q_%s_stage" % str(goal.get("id", ""))
+
+## The current step of a side goal with stages ({} if it has none): text and where.
+static func side_step(goal: Dictionary) -> Dictionary:
+	var stages: Array = goal.get("stages", [])
+	if stages.is_empty():
+		return {}
+	var i: int = clampi(GameState.story_var(stage_var(goal)), 0, stages.size() - 1)
+	return stages[i] if stages[i] is Dictionary else {}
+
+## Where to go for a side goal (the current step's place first).
+static func side_where(goal: Dictionary) -> String:
+	return str(side_step(goal).get("where", goal.get("where", "")))
 
 static func open_side_goals(flags: Dictionary) -> Array[Dictionary]:
 	var out: Array[Dictionary] = []
@@ -87,6 +103,8 @@ static func all_flags() -> Array[String]:
 	for g: Variant in data().get("side", []):
 		out.append(str((g as Dictionary).get("show", "")))
 		out.append(str((g as Dictionary).get("done", "")))
+		for f: Variant in (g as Dictionary).get("progress", []):
+			out.append(str(f))
 	return out
 
 ## Flag that remembers a chapter card was shown.
@@ -128,4 +146,7 @@ static func summary(flags: Dictionary) -> String:
 		lines.append("Also")
 		for s: Dictionary in side:
 			lines.append("- " + side_text(s, flags))
+			var where: String = side_where(s)
+			if not where.is_empty():
+				lines.append("  " + ("Where: %s" % where))
 	return "\n".join(lines)

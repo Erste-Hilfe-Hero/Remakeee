@@ -648,6 +648,13 @@ func _play_event(e: BattleEvent) -> void:
 		BattleEvent.Type.ENERGY_CHANGED:
 			_strip(side, slot).set_energy(int(e.data.energy))
 			_refresh_focus(side, slot)
+		BattleEvent.Type.ENERGY_TAX:
+			var ts: Variant = _strip(side, slot)
+			if ts is InfoStrip:
+				(ts as InfoStrip).set_tax(int(e.data.get("turns", 0)))
+			var tax_text: String = e.describe()
+			if not tax_text.is_empty():
+				await _text.show_text(tax_text)
 		BattleEvent.Type.STATUS_APPLIED:
 			Sound.sfx("status")
 			_strip(side, slot).set_status(str(e.data.status))
