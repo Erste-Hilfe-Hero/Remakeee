@@ -165,8 +165,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2372. [P2] Energie-Entzug (EnergyDrainEffect) zeigt 3 kleine Rauten, die vom Ziel abgezogen werden und sich auflösen.
 2373. [P2] Rückstoß (RecoilEffect) zeigt am Anwender einen kleinen Einschlag in halber Größe nach dem eigentlichen Treffer.
 2374. [P2] Feld-Techniken (SetFieldEffect) zeigen eine Welle der Elementform, die einmal von links nach rechts über den ganzen Kampfbildschirm läuft.
-2375. [P2] Bei verfehlten Techniken läuft der Weg am Ziel vorbei aus dem Bild und es gibt keinen Einschlag.
-2376. [P2] Bei sehr wirksamen Treffern ist der Einschlag 1,5-mal so groß, bei schwach wirksamen nur halb so groß, ohne zusätzliche Texte.
+2375. [x] [P2] Bei verfehlten Techniken läuft der Weg am Ziel vorbei aus dem Bild und es gibt keinen Einschlag.
+2376. [x] [P2] Bei sehr wirksamen Treffern ist der Einschlag 1,5-mal so groß, bei schwach wirksamen nur halb so groß, ohne zusätzliche Texte.
 2377. [P2] Effekte zeichnen nur mit den 4 Paletten-Farben aus EraManager.INK_PALETTE; ein GUT-Test zeichnet jeden Effekt in ein Bild und prüft die Farben.
 2378. [P2] Jeder Effekt hält die Gesamtzeit von 0,6 s bei 1x ein und kürzt mit Juice.speed() bei 2x und 4x.
 2379. [P2] Bei Juice.reduced() zeigt jeder Effekt nur den Einschlag als Standbild für 0,2 s, ohne Aufladen und Weg.

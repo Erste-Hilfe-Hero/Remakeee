@@ -621,8 +621,32 @@ func _bond(slot: int = 0) -> BattleAction:
 # --- Event playback -----------------------------------------------------------------
 
 func _play(events: Array[BattleEvent]) -> void:
-	for e: BattleEvent in events:
-		await _play_event(e)
+	_playing = events
+	for i: int in events.size():
+		_play_index = i
+		await _play_event(events[i])
+	_playing = []
+
+## The event list being played and the current position, so an art can look ahead at how
+## its first hit turns out (items 2375, 2376).
+var _playing: Array[BattleEvent] = []
+var _play_index: int = -1
+
+## How the art at [param at] in [param events] lands on its first target: "miss" when the
+## first result is a MISSED event, and "eff" (effectiveness) of the first damage. Looks only
+## until the next art.
+static func art_outcome(events: Array[BattleEvent], at: int) -> Dictionary:
+	for i: int in range(at + 1, events.size()):
+		var e: BattleEvent = events[i]
+		match e.type:
+			BattleEvent.Type.MOVE_USED:
+				break
+			BattleEvent.Type.MISSED:
+				return {"miss": true, "eff": 1.0}
+			BattleEvent.Type.DAMAGE:
+				if not bool(e.data.get("status_tick", false)):
+					return {"miss": false, "eff": float(e.data.get("eff", 1.0))}
+	return {"miss": false, "eff": 1.0}
 
 func _sprite(side: int, slot: int = 0) -> SpirlingSprite:
 	if _multi and slot >= 0 and slot < _slot_sprites[side].size():
@@ -829,7 +853,9 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	_fx.user_sprite = user
 	if kind != MoveData.Kind.PHYSICAL and target != user:
 		_fx_travel_sound.call_deferred(element)
-	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size))
+	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
+	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
+		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))))
 
 ## The charge sound for an art kind: a short rush, a rising pulse or two soft tones.
 static func charge_sound(kind: int) -> String:
