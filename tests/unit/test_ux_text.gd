@@ -62,10 +62,11 @@ func test_menu_rows_fit_in_english_and_german() -> void:
 func test_german_menus_have_no_english_left() -> void:
 	Loc.set_language("de")
 	var keep: Array[String] = ["OK", "Team", "Spirlog", "Veteran"]
+	var missing: Array[String] = []
 	for t: String in menu_rows():
-		var shown: String = Loc.t(t)
-		if shown == t and not t in keep:
-			assert_ne(shown, t, "no German for menu row: " + t)
+		if Loc.t(t) == t and not t in keep:
+			missing.append(t)
+	assert_eq(missing, [] as Array[String], "menu rows without German")
 	Loc.set_language("en")
 
 func test_placeholders_and_name_survive_translation() -> void:
