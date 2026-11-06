@@ -17,33 +17,112 @@ func _scripts_in(dir: String) -> Array[String]:
 
 # --- 2062 settings rows by key ------------------------------------------------------
 
-func test_every_settings_row_has_its_own_action() -> void:
+func _settings_keys(in_game: bool) -> Array[String]:
 	var was: bool = GameState.in_game
-	GameState.in_game = true
-	var rows: Array[Array] = MenuHost.settings_rows()
+	GameState.in_game = in_game
+	var keys: Array[String] = []
+	for g: String in ["game", "sound"]:
+		for r: Array in MenuHost.settings_rows(g):
+			keys.append(str(r[0]))
 	GameState.in_game = was
+	return keys
+
+func test_every_settings_row_has_its_own_action() -> void:
 	var src: String = FileAccess.get_file_as_string("res://scripts/ui/MenuHost.gd")
 	var body: String = src.substr(src.find("func _settings_action"))
 	body = body.substr(0, body.find("\nconst "))
-	var keys: Dictionary[String, bool] = {}
-	for r: Array in rows:
-		var key: String = str(r[0])
-		assert_false(keys.has(key), "duplicate settings key " + key)
-		keys[key] = true
+	var seen: Dictionary[String, bool] = {}
+	for key: String in _settings_keys(true):
+		assert_false(seen.has(key), "duplicate settings key " + key)
+		seen[key] = true
 		assert_eq(body.count("\"%s\":" % key), 1, "exactly one action for " + key)
-	assert_true(keys.has("account") and keys.has("difficulty") and keys.has("iron_oath"),
-		"Account, Difficulty and Iron Oath are all reachable")
+		assert_true(MenuHost.SETTING_HINTS.has(key), "explanation line for " + key)
+	assert_true(seen.has("difficulty") and seen.has("iron_oath"), "Difficulty and Iron Oath are reachable")
+	var groups: Array[String] = []
+	for g: Array in MenuHost.SETTINGS_GROUPS:
+		groups.append(str(g[0]))
+		assert_true(MenuHost.SETTING_HINTS.has(str(g[0])))
+	assert_true("account" in groups, "Account opens the account menu, not the Iron Oath")
+	assert_lte(groups.size(), 7, "the main settings list has at most seven rows")
+	var run: String = src.substr(src.find("func run_settings"), 800)
+	for g: String in groups:
+		assert_true(run.contains("\"%s\": " % g), "group %s has an action" % g)
 
 func test_difficulty_and_iron_oath_only_during_a_journey() -> void:
-	var was: bool = GameState.in_game
-	GameState.in_game = false
-	var keys: Array[String] = []
-	for r: Array in MenuHost.settings_rows():
-		keys.append(str(r[0]))
-	GameState.in_game = was
+	var keys: Array[String] = _settings_keys(false)
 	assert_false("difficulty" in keys)
 	assert_false("iron_oath" in keys)
-	assert_true("account" in keys)
+	assert_true("volume" in keys)
+
+func test_volume_steps_by_ten_and_never_wraps() -> void:
+	assert_almost_eq(MenuHost.step_volume(1.0, 1), 1.0, 0.001, "no jump from 100 to 0")
+	assert_almost_eq(MenuHost.step_volume(1.0, -1), 0.9, 0.001)
+	assert_almost_eq(MenuHost.step_volume(0.0, -1), 0.0, 0.001)
+	assert_almost_eq(MenuHost.step_volume(0.45, 1), 0.6, 0.001)
+
+func test_text_colours_reach_contrast() -> void:
+	var was: bool = UITheme.high_contrast
+	for hc: bool in [false, true]:
+		var p: Array[Color] = UITheme.HIGH_CONTRAST_PALETTE if hc else UITheme.NORMAL_PALETTE
+		var bg: Color = p[0]
+		var ink: Color = p[1]
+		var mid: Color = p[2]
+		var accent: Color = p[3]
+		var dis: Color = p[4]
+		var tag: String = "high contrast" if hc else "normal"
+		assert_gte(UITheme.contrast(ink, bg), 4.5, tag + ": ink on paper")
+		assert_gte(UITheme.contrast(bg, ink), 4.5, tag + ": focused row")
+		assert_gte(UITheme.contrast(mid, bg), 4.5, tag + ": mid text on paper")
+		assert_gte(UITheme.contrast(bg, mid), 4.5, tag + ": pressed row")
+		assert_gte(UITheme.contrast(ink, accent), 4.5, tag + ": text fields and toasts")
+		assert_gte(UITheme.contrast(dis, bg), 3.0, tag + ": greyed-out rows")
+	UITheme.set_high_contrast(was)
+
+func test_high_contrast_applies_to_open_menus() -> void:
+	var was: bool = UITheme.high_contrast
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	UITheme.set_high_contrast(true)
+	MenuHost.refresh_all_themes(get_tree())
+	assert_eq(host.theme, UITheme.get_theme(), "the open menu took the new theme")
+	UITheme.set_high_contrast(was)
+	MenuHost.refresh_all_themes(get_tree())
+
+func test_slider_rows_move_both_ways_and_rows_explain_themselves() -> void:
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var res: Array = []
+	_open(host, [{"text": "Volume: 50%", "slider": true, "hint": "All sound."}, {"text": "Other"}] as Array[Dictionary], res)
+	await wait_process_frames(2)
+	assert_true(host.picker._hint.visible)
+	assert_eq(host.picker._hint.text, "All sound.")
+	var left := InputEventAction.new()
+	left.action = &"ui_left"
+	left.pressed = true
+	host.picker._row_input(left, 0, 0)
+	await wait_process_frames(1)
+	assert_eq(res, [0])
+	assert_eq(host.picker.last_dir, -1)
+
+func test_fixed_back_button_and_more_arrows() -> void:
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var many: Array[Dictionary] = []
+	for i: int in 30:
+		many.append({"text": "Row %d" % i})
+	var res: Array = []
+	_open(host, many, res)
+	await wait_process_frames(3)
+	assert_true(host.picker._back.visible, "a back button sits next to the title")
+	assert_false(host.picker.more_above())
+	assert_true(host.picker.more_below(), "an arrow says more rows wait below")
+	host.picker._opened_ms -= 1000
+	host.picker._back.pressed.emit()
+	await wait_process_frames(1)
+	assert_eq(res, [-1])
 
 # --- 1781, 1782, 1785, 2088, 2211 list picker -----------------------------------------
 

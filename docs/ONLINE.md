@@ -63,6 +63,7 @@ All under Menu, Friends. Spirlings are never traded or gifted, and there is no f
 | Battle referee: checks an uploaded battle (shared by server and game) | `scripts/battle/BattleReferee.gd` |
 | Battle referee service (container, loop, runner) | `server/referee/` |
 | End-to-end referee test (local Postgres + Godot) | `tools/online/test_referee.sh` |
+| League menu and league battle | `scripts/ui/LeagueMenu.gd`, `scripts/overworld/Overworld.gd` (`league_battle`) |
 | League rules (fair rows, learnable moves, tiers) and Glicko-2 | `scripts/online/LeagueRules.gd`, `scripts/online/Glicko.gd` |
 | Species and learnsets for the database (`game_species`) | `tools/online/game_data_sql.py` |
 
@@ -111,6 +112,12 @@ server's battle with the uploaded inputs. Only an `ok` from the referee rates th
 III), not numbers. A season (`league_seasons`) lasts `league_season_days` (42); in the last
 `league_closing_minutes` (30) nothing is rated, `paused` stops joining, and the next season starts by itself.
 Both leagues can be switched off with the flags `league_fair` and `league_open`.
+
+In the game, Menu > Leagues (`scripts/ui/LeagueMenu.gd`) shows the fair league first and the open league
+right below it. `hello` returns `flags`, the feature keys that are on for the game's version, and menus
+hide what is off (`Online.flag_on`). "Find a battle" asks `league_find` every 3 seconds for up to a
+minute; `Overworld.league_battle` builds the battle from the server's seed and teams
+(`BattleReferee.from_expect`), uploads it with `battle_submit` and tells the player it is being checked.
 
 Builds without a server address use `LocalBackend`, a test server that lives on the phone. The account menu
 then says "test server on this phone". The debug APK from CI works like this until the secrets below exist.
