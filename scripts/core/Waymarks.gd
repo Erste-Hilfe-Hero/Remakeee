@@ -15,7 +15,7 @@ const TRANSFERABLE: bool = false
 ## Valid sources for earn(). New reward paths add their id here.
 const SOURCES: Array[String] = [
 	"daily_task", "daily_bonus", "weekly", "tower", "achievement", "collection",
-	"festival", "season_path", "master", "echo_path", "expedition", "album",
+	"festival", "season_path", "master", "echo_path", "expedition", "album", "vow",
 ]
 ## Shown in text next to the number: a small waystone glyph in PixelFont.
 const GLYPH: String = ""
@@ -73,7 +73,7 @@ const SOURCE_NAMES: Dictionary = {
 	"daily_task": "Daily task", "daily_bonus": "All daily tasks", "weekly": "Weekly echo",
 	"tower": "Lighthouse stair", "achievement": "Achievement", "collection": "Spirlog goal",
 	"festival": "Festival", "season_path": "Season path", "master": "Master Wayfarer",
-	"echo_path": "Echo Path", "expedition": "Roaming trip", "album": "Album",
+	"echo_path": "Echo Path", "expedition": "Roaming trip", "album": "Album", "vow": "Vow",
 }
 const HISTORY: int = 30
 

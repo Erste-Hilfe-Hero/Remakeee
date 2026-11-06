@@ -271,6 +271,8 @@ func set_held(s: Spirling, id: String) -> bool:
 	s.held = id
 	if not id.is_empty():
 		inventory[id] = item_count(id) - 1
+		if s in party:
+			Vows.broke("no_keepsake")
 	# Some keepsakes raise max Vigor (Core Glass); taking one off must not leave too much Vigor.
 	s.hp = mini(s.hp, s.max_hp())
 	return true
@@ -1001,6 +1003,7 @@ func deposit(index: int, keep_keepsake: bool = false) -> bool:
 		add_item(s.held)
 		s.held = ""
 	_store(s, true)
+	Vows.check_team()
 	return true
 
 func withdraw(index: int) -> bool:

@@ -360,4 +360,12 @@ T = {
 "Journey %d%% complete!": "Reise zu %d%% vollendet!", "Bond with %s": "Binde %s", "%s: best %d of %d": "%s: Bestwert %d von %d",
 "%d places not visited yet": "%d Orte noch nicht besucht", "Nothing left. Your journey is complete!": "Nichts mehr offen. Deine Reise ist vollendet!",
 "What is missing": "Was fehlt noch",
+"Vows": "Gelübde", "Vow": "Gelübde", "Vow kept: %s": "Gelübde gehalten: %s",
+"Vows: each one kept to the end of Act I pays %d Waymarks.": "Gelübde: Jedes bis zum Ende von Akt I gehaltene bringt %d Wegmarken.",
+"Take this vow?": "Dieses Gelübde ablegen?", "Give up this vow? You only lose its bonus.": "Dieses Gelübde aufgeben? Du verlierst nur den Bonus.",
+"not taken": "nicht abgelegt", "active": "aktiv", "broken": "gebrochen", "given up": "aufgegeben", "kept": "gehalten",
+"No Shopping": "Ohne Laden", "Buy nothing at the shops for coins until the end of Act I.": "Kaufe bis zum Ende von Akt I nichts für Münzen in den Läden.",
+"No Keepsakes": "Ohne Andenken", "Give no Spirling in your team a keepsake until the end of Act I.": "Gib bis zum Ende von Akt I keinem Spirling in deinem Team ein Andenken.",
+"Old Friend Stays": "Starter bleibt im Team", "Keep your first partner in the team until the end of Act I.": "Behalte deinen ersten Partner bis zum Ende von Akt I im Team.",
+"Under the Iron Oath: floor %d of %d": "Unter dem Eisernen Schwur: Stockwerk %d von %d",
 }
