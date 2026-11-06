@@ -32,3 +32,15 @@ static func position(event: InputEvent) -> Vector2:
 	if event is InputEventScreenTouch:
 		return (event as InputEventScreenTouch).position
 	return Vector2.ZERO
+
+## Each finger on its own, for the on-screen D-pad (item 1809), which must follow a thumb while
+## another finger presses A: {"finger": index, "pos": Vector2, "kind": "down"/"move"/"up"},
+## or {} for any other event. Menus and the map use is_press / is_release instead.
+static func finger(event: InputEvent) -> Dictionary:
+	var st := event as InputEventScreenTouch
+	if st != null:
+		return {"finger": st.index, "pos": st.position, "kind": "down" if st.pressed else "up"}
+	var sd := event as InputEventScreenDrag
+	if sd != null:
+		return {"finger": sd.index, "pos": sd.position, "kind": "move"}
+	return {}
