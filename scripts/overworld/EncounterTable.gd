@@ -2,10 +2,64 @@ class_name EncounterTable
 extends RefCounted
 ## Per-map spawn tables from data/encounters.json:
 ##   {"fernstair": {"rate": 0.12, "spawns": [{"species": "Zippit", "min": 2, "max": 4, "weight": 30}]}}
+## A spawn may name its "ground" ("fern", "reeds", "scree", "water", "cave", or a list): it then
+## only steps out of that ground, so ferns and reeds on one map hold different Spirlings
+## (area 3 item 1109). Spawns without "ground" appear everywhere on the map.
 
 const PATH: String = "res://data/encounters.json"
 
 static var _tables: Dictionary = {}
+
+## Ground names for the tiles wild Spirlings hide in.
+const GROUNDS: Dictionary[int, String] = {
+	TilesetFactory.Kind.TALL_GRASS: "fern", TilesetFactory.Kind.REEDS: "reeds",
+	TilesetFactory.Kind.SCREE: "scree", TilesetFactory.Kind.WADE: "water",
+}
+const GROUND_NAMES: Array[String] = ["fern", "reeds", "scree", "water", "cave"]
+## Steps after a battle in which nothing new steps out (area 3 item 1111).
+const GUARD_STEPS: int = 6
+static var _guard: int = 0
+
+## Ground of [param cell] on [param m]: "cave" anywhere in a cave, else from the tile.
+static func ground_at(m: MapData, cell: Vector2i) -> String:
+	if m.biome == "cave":
+		return "cave"
+	return GROUNDS.get(m.kind_at(cell), "")
+
+## Grounds a spawn entry appears on ([] = all).
+static func grounds_of(spawn: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	var g: Variant = spawn.get("ground", [])
+	if g is String:
+		out.append(g)
+	else:
+		for x: Variant in g:
+			out.append(str(x))
+	return out
+
+## Grounds [param species] appears on in table [param id] ([] = everywhere on the map).
+static func grounds_for(id: String, species: String) -> Array[String]:
+	var out: Array[String] = []
+	for s: Dictionary in table(id).get("spawns", []):
+		if str(s.species) == species:
+			var g: Array[String] = grounds_of(s)
+			if g.is_empty():
+				return [] as Array[String]
+			for x: String in g:
+				if not x in out:
+					out.append(x)
+	return out
+
+## Starts the quiet steps after a battle.
+static func start_guard() -> void:
+	_guard = GUARD_STEPS
+
+## Counts one step; true once the quiet steps after the last battle are over.
+static func tick_guard() -> bool:
+	if _guard > 0:
+		_guard -= 1
+		return false
+	return true
 
 static func table(id: String) -> Dictionary:
 	if _tables.is_empty() and FileAccess.file_exists(PATH):
@@ -37,9 +91,21 @@ static func weight_of(spawn: Dictionary, boost: Array[int]) -> int:
 		return w * Season.BOOST_NUM
 	return w * Season.BOOST_DEN
 
+## Spawns of table [param id] that can step out of [param ground] ("" = any spawn).
+static func spawns_on(id: String, ground: String) -> Array:
+	var all: Array = table(id).get("spawns", [])
+	if ground.is_empty():
+		return all
+	var out: Array = []
+	for s: Dictionary in all:
+		var g: Array[String] = grounds_of(s)
+		if g.is_empty() or ground in g:
+			out.append(s)
+	return out if not out.is_empty() else all
+
 ## Rolls a wild Spirling, or returns null if the table is empty.
-static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = []) -> Spirling:
-	var spawns: Array = table(id).get("spawns", [])
+static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = [], ground: String = "") -> Spirling:
+	var spawns: Array = spawns_on(id, ground)
 	var total: int = 0
 	for s: Dictionary in spawns:
 		total += weight_of(s, boost)

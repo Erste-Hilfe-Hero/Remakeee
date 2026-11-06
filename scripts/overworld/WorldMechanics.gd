@@ -16,6 +16,11 @@ var _undo: Array = []
 var _cracking: Vector2i = Vector2i(-1, -1)
 ## Last pressed state per puzzle flag, to play a sound when it changes.
 var _pressed: Dictionary = {}
+## Hidden finds glint briefly every few seconds (area 3 item 1078).
+const GLINT_EVERY: float = 4.0
+const GLINT_TIME: float = 0.35
+var _glints: Node2D
+var _glint_timer: Timer
 
 func _init(overworld: Overworld) -> void:
 	ow = overworld
@@ -27,6 +32,52 @@ func prepare(m: MapData, cell: Vector2i) -> void:
 	PuzzleRoom.apply_state(m, GameState.world_of(m.id))
 	m.apply_blocks(PuzzleRoom.live_flags(m, GameState.flags, cell))
 	_pressed = _pressed_now(m, cell)
+	_build_glints(m)
+
+func _build_glints(m: MapData) -> void:
+	if _glints == null:
+		_glints = Node2D.new()
+		_glints.name = "glints"
+		_glints.z_index = 2
+		ow.add_child(_glints)
+		_glint_timer = Timer.new()
+		_glint_timer.wait_time = GLINT_EVERY
+		_glint_timer.autostart = true
+		_glint_timer.timeout.connect(_glint)
+		_glints.add_child(_glint_timer)
+	for c: Node in _glints.get_children():
+		if c != _glint_timer:
+			_glints.remove_child(c)
+			c.queue_free()
+	for sc: Dictionary in m.secrets:
+		if GameState.has_flag(str(sc.get("flag", ""))):
+			continue
+		var g := Node2D.new()
+		g.position = Vector2(int(sc.x), int(sc.y)) * TilesetFactory.TILE
+		g.visible = false
+		g.set_meta("flag", str(sc.flag))
+		for p: Vector2i in [Vector2i(7, 4), Vector2i(6, 5), Vector2i(8, 5), Vector2i(7, 6), Vector2i(7, 5)]:
+			var px := ColorRect.new()
+			px.color = UITheme.BG if p != Vector2i(7, 5) else UITheme.ACCENT
+			px.position = Vector2(p)
+			px.size = Vector2.ONE
+			px.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			g.add_child(px)
+		_glints.add_child(g)
+
+func _glint() -> void:
+	for g: Node in _glints.get_children():
+		if g is Node2D and not GameState.has_flag(str(g.get_meta("flag", ""))):
+			(g as Node2D).visible = true
+	await ow.get_tree().create_timer(GLINT_TIME).timeout
+	if is_instance_valid(_glints):
+		for g: Node in _glints.get_children():
+			if g is Node2D:
+				(g as Node2D).visible = false
+
+## Glint nodes still on the map (for tests).
+func glint_count() -> int:
+	return _glints.get_child_count() - 1 if _glints != null else 0
 
 func _pressed_now(m: MapData, cell: Vector2i) -> Dictionary:
 	var out: Dictionary = {}
@@ -116,6 +167,11 @@ func stepped(cell: Vector2i) -> bool:
 ## A on a plank gap or a ladder anchor. Returns true if handled.
 func interact(cell: Vector2i) -> bool:
 	var m: MapData = ow.map
+	var find: Dictionary = m.secret_at(cell, GameState.flags)
+	if not find.is_empty():
+		await ow.take_find(find)
+		_build_glints(m)
+		return true
 	var state: Dictionary = GameState.world_of(m.id)
 	var ladder: Dictionary = m.ladder_at(cell)
 	if not ladder.is_empty():

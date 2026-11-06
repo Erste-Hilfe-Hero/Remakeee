@@ -31,6 +31,7 @@ static func validate() -> PackedStringArray:
 		for f: String in DirAccess.get_files_at(ScenePlayer.DIR):
 			if f.ends_with(".json"):
 				_check_scene(f.get_basename(), errors)
+	_check_placements(errors)
 	for id: Variant in StoryBattles.data():
 		if str(id).begins_with("_"):
 			continue
@@ -147,3 +148,25 @@ static func _check_scene(id: String, errors: PackedStringArray) -> void:
 			"move":
 				if not step.has("path") and not step.has("to"):
 					errors.append("%s: move needs 'path' or 'to'" % where)
+
+## data/story_npcs.json: dialogue refs exist, and on maps that exist the cells are inside
+## the map and no figure stands on a warp.
+static func _check_placements(errors: PackedStringArray) -> void:
+	for map_id: Variant in StoryPlacements.data():
+		if str(map_id).begins_with("_"):
+			continue
+		var extra: Dictionary = StoryPlacements.for_map(str(map_id))
+		var m: MapData = MapData.load_map(str(map_id)) if MapData.exists(str(map_id)) else null
+		for kind: String in ["npcs", "signs"]:
+			for e: Variant in extra.get(kind, []):
+				var d: Dictionary = e
+				var where: String = "story_npcs/%s" % map_id
+				if d.has("dialogue") and not Dialogue.exists(str(d.dialogue)):
+					errors.append("%s: dialogue '%s' does not exist" % [where, d.dialogue])
+				if m == null:
+					continue
+				var c := Vector2i(int(d.get("x", -1)), int(d.get("y", -1)))
+				if not m.in_bounds(c):
+					errors.append("%s: %s at %s is outside the map" % [where, kind, c])
+				elif kind == "npcs" and not m.warp_at(c).is_empty():
+					errors.append("%s: figure at %s stands on a warp" % [where, c])

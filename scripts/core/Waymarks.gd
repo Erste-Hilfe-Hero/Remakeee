@@ -5,6 +5,8 @@ extends RefCounted
 ## GameState.records["waymark_log"]. Waymarks can never be bought, traded or sent to friends:
 ## there is no shop price, no gift kind and no trade path for them (see docs/MONETIZATION.md).
 
+## Extra Waymarks in percent while the Iron Oath holds.
+const OATH_BONUS_PCT: int = 25
 const CAP: int = 9999
 const LOG_MAX: int = 200
 ## Waymarks are never sold, traded or gifted. Code that moves value between players or sells
@@ -30,6 +32,10 @@ static func earn(amount: int, source: String) -> Dictionary:
 	if not source in SOURCES:
 		push_warning("Waymarks: unknown source '%s'" % source)
 		return out
+	# The Iron Oath pays a quarter more on every Waymark reward (plan 3399).
+	var bonus: int = amount * OATH_BONUS_PCT / 100 if GameState.iron_oath else 0
+	out["bonus"] = bonus
+	amount += bonus
 	var room: int = maxi(0, CAP - GameState.waymarks)
 	out.gained = mini(amount, room)
 	out.lost = amount - int(out.gained)
