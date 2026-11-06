@@ -176,8 +176,11 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 	return false
 
 static func _send(menu: MenuHost, code: String, kind: String, phrase: int) -> void:
-	var r: Dictionary = await Online.call_fn("mail_send", {"p_code": code, "p_kind": kind, "p_phrase": phrase})
-	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+	# A small action: with a weak connection it waits and goes out later (plan item 3011).
+	var r: Dictionary = await Online.send_small("mail_send", {"p_code": code, "p_kind": kind, "p_phrase": phrase})
+	if r.ok and r.data is Dictionary and bool(r.data.get("queued", false)):
+		await menu.info("It goes out as soon as the connection is back.")
+	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		Sound.sfx("confirm")
 		await menu.info("Sent!")
 	else:

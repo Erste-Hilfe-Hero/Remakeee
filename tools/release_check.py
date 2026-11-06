@@ -101,6 +101,37 @@ def check_presets() -> None:
         errors.append("iOS preset lacks ITSAppUsesNonExemptEncryption in additional_plist_content")
 
 
+# Android permissions the game may ask for. Play Billing adds com.android.vending.BILLING through its
+# own manifest; anything else new must be a deliberate change here (plan item 4107).
+ALLOWED_PERMISSIONS = {"vibrate", "internet", "access_network_state"}
+# Ad and analytics SDKs stay out of the game (AGENTS.md rule 4, plan item 4012).
+AD_SDKS = re.compile(r"admob|applovin|unityads|unity_ads|ironsource|levelplay|firebase|analytics|adjust|appsflyer"
+                     r"|facebook|chartboost|vungle|mopub|tapjoy|gameanalytics|amplitude|mixpanel|flurry", re.I)
+
+
+def check_permissions() -> None:
+    text = read("export_presets.cfg")
+    on = set(re.findall(r"^permissions/([a-z_]+)=true$", text, re.M))
+    extra = sorted(on - ALLOWED_PERMISSIONS)
+    if extra:
+        errors.append("new Android permissions in export_presets.cfg: " + ", ".join(extra))
+    for custom in re.findall(r"^permissions/custom_permissions=PackedStringArray\((.*)\)$", text, re.M):
+        if custom.strip():
+            errors.append("custom Android permissions in export_presets.cfg: " + custom)
+
+
+def check_sdks() -> None:
+    files = glob.glob("addons/*/plugin.cfg") + glob.glob("addons/*/*.gdextension") + glob.glob("plugins/*/android/build.gradle")
+    names = [os.path.basename(d) for d in glob.glob("addons/*") + glob.glob("plugins/*")]
+    for n in names:
+        if AD_SDKS.search(n):
+            errors.append("ad or analytics plugin in the project: " + n)
+    for f in files:
+        m = AD_SDKS.search(read(f))
+        if m:
+            errors.append("%s mentions the ad or analytics SDK %r" % (f, m.group(0)))
+
+
 def check_legal() -> None:
     for p in sorted(glob.glob("docs/legal/*.md")):
         if p.endswith(("CHECKLISTE_ALI.md", "README.md", "STORE_COMPLIANCE.md", "IP_PATENT_AUDIT.md")):
@@ -155,6 +186,8 @@ def main() -> None:
     check_texts()
     check_images()
     check_presets()
+    check_permissions()
+    check_sdks()
     check_legal()
     for e in errors:
         print("ERROR:", e)

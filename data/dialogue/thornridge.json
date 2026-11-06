@@ -22,7 +22,10 @@
   "lines": [
    "Keeper: Rest by the pool a while."
   ],
-  "action": "heal"
+  "action": "heal",
+  "night_lines": [
+   "Keeper: Late visitor? The pool glows at night. Rest, the stars won't mind."
+  ]
  },
  "trader": {
   "lines": [

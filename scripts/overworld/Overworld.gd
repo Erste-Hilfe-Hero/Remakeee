@@ -1126,7 +1126,7 @@ func prologue() -> void:
 	_fade.color.a = 1.0
 	Sound.enter_map(map.id)
 	var tw: Tween = create_tween()
-	tw.tween_property(_fade, "color:a", 0.0, 0.6)
+	Juice.shaped(tw.tween_property(_fade, "color:a", 0.0, 0.6), "fade")
 	await tw.finished
 	busy = false
 	# The prologue dialogue picks the partner ("choose_starter"); Aldo then hands over the map book.
@@ -1525,6 +1525,16 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["The stair has %d floors. There is no healing on the way, only at a rest point after every tenth floor, where your climb is saved." % Gauntlet.FLOORS] as Array[String])
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
+	if Gauntlet.endless_open():
+		var way: int = await menu.pick_strings(Loc.t("The lighthouse stair"), [Loc.t("Climb the stair"),
+			Loc.t("Endless stretch (best %d)") % Gauntlet.endless_best()] as Array[String])
+		if way < 0:
+			menu.queue_free()
+			return
+		if way == 1:
+			menu.queue_free()
+			await _run_endless()
+			return
 	var best: int = Gauntlet.best()
 	var start: int = 0
 	var saved: int = Gauntlet.checkpoint()
@@ -1548,7 +1558,7 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 	var helper: Dictionary = await pick_echo_partner("Climb with a friend's echo beside you?")
 	while floors < Gauntlet.FLOORS:
 		await say(["Floor %d of %d: an echo steps out of the light..." % [floors + 1, Gauntlet.FLOORS]] as Array[String])
-		var info: Dictionary = {"name": "Echo Wayfarer %d" % (floors + 1), "ai": Gauntlet.ai_for(floors), "money": run.prize(floors)}
+		var info: Dictionary = {"name": run.echo_name(floors), "ai": Gauntlet.ai_for(floors), "money": run.prize(floors)}
 		if not helper.is_empty():
 			for s: Spirling in helper.partner.echo:
 				s.restore()
@@ -1586,6 +1596,33 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["The echoes bow and fade. You reached the lamp room!"] as Array[String])
 	elif floors > best:
 		await say(["New best: floor %d of %d!" % [floors, Gauntlet.FLOORS]] as Array[String])
+
+## Endless stretch (plan 3264-3265): one fight after another, one ring stronger each floor,
+## no healing; the run ends with the first loss or when the player stops.
+func _run_endless() -> void:
+	GameState.heal_party()
+	var run: Gauntlet = Gauntlet.new(GameState.rng.randi(), GameState.progress_cap())
+	var k: int = 0
+	while true:
+		await say([Loc.t("Endless floor %d: ring %d.") % [k + 1, run.endless_level(k)]] as Array[String])
+		var info: Dictionary = {"name": run.echo_name(Gauntlet.FLOORS + k), "ai": 3, "money": run.prize(Gauntlet.FLOORS)}
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(run.endless_team(k), false, info)
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		k += 1
+		if k % Gauntlet.SECTION == 0:
+			var m := MenuHost.new()
+			_ui.add_child(m)
+			var on: bool = await m.confirm(Loc.t("Endless floor %d cleared. Keep going?") % k)
+			m.queue_free()
+			if not on:
+				break
+	var lines: Array[String] = [Loc.t("Endless stretch: %d floors (best %d).") % [k, maxi(k, Gauntlet.endless_best())]]
+	lines.append_array(Gauntlet.pay_endless(k))
+	await say(lines)
 
 ## Weekly challenge (item 88, plan area 8): five echo Wayfarers that are the same for everyone this week.
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -2379,7 +2416,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		for f: Spirling in model.parties[1]:
 			for e: int in f.elements():
 				foe_elements.append(Elements.E.keys()[e])
-		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements, "night": DayCycle.current() == DayCycle.Phase.NIGHT})
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements, "night": DayCycle.current() == DayCycle.Phase.NIGHT, "one_element": Achievements.one_element_team(GameState.party)})
 		var fields: Array = GameState.records.get("fields_won", [])
 		if model.field != "" and not model.field in fields:
 			fields.append(model.field)

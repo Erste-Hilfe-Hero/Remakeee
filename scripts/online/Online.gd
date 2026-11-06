@@ -24,6 +24,8 @@ const RETRY_SECONDS: float = 5.0
 ## 20 % chance either way, so after a server restart the players do not all come back at once.
 const RETRY_STEPS: Array[float] = [4.0, 8.0, 16.0, 30.0]
 const RETRY_JITTER: float = 0.2
+## Small actions kept while the connection is weak (plan item 3011); the oldest go first.
+const ACTIONS_MAX: int = 50
 ## A failed call is tried once more after this pause before anything is shown (item 2151).
 var net_retry_seconds: float = 2.0
 
@@ -48,6 +50,12 @@ var dirty: Dictionary = {}
 var privacy_seen: bool = false
 ## Slots the player must decide about (both this phone and another device have changes).
 var conflicts: Array[int] = []
+## The account was opened on another device since this one claimed it (plan item 3010). The
+## title asks before this device takes it back.
+var kicked: bool = false
+## Small actions waiting to go out (plan item 3011): [{"id", "fn", "args"}], oldest first.
+var actions: Array = []
+var _sending_actions: bool = false
 
 var _beat: float = 0.0
 var _beats: int = 0
@@ -70,6 +78,8 @@ var _tries: int = 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	# Action ids (plan item 3011) must differ after every start of the app.
+	_rng.randomize()
 	backend = make_backend()
 	_load_session()
 	_overlay = ReconnectOverlay.new()
@@ -142,10 +152,14 @@ func connect_now() -> State:
 		r = await backend.sign_in_anonymous()
 	if r.ok:
 		r = await backend.call_fn("hello", {"p_version": CLIENT_VERSION})
+	if r.ok:
+		r = await _claim(r)
 	_busy = false
 	if not r.ok:
 		last_error = r.error
 		_set_state(State.OFFLINE)
+		if r.error == "other_device":
+			_other_device()
 		return state
 	_take_hello(r.data)
 	_save_session()
@@ -155,6 +169,29 @@ func connect_now() -> State:
 		if p.ok and p.data is Dictionary and bool(p.data.get("ok", false)):
 			profile["platform"] = platform_name()
 	return state
+
+## Claims the account for this device (plan item 3010): keeps the token it had, or gets a new
+## one on a fresh start. Fails with "other_device" when another device took over meanwhile.
+## Returns [param hello] (the hello answer) when all is well.
+func _claim(hello: Dictionary) -> Dictionary:
+	var c: Dictionary = await backend.call_fn("session_claim", {"p_token": backend.device_token})
+	if not c.ok:
+		# A server without the function yet lets every device save, as before.
+		return c if c.net else hello
+	if c.data is Dictionary and bool(c.data.get("ok", false)):
+		backend.device_token = str(c.data.get("token", ""))
+	elif c.data is Dictionary and str(c.data.get("error", "")) == "other_device":
+		return OnlineBackend.fail("other_device")
+	return hello
+
+## Another device has the account now: stop here and go to the title, which says so.
+func _other_device() -> void:
+	kicked = true
+	backend.device_token = ""
+	last_error = "other_device"
+	_set_state(State.OFFLINE)
+	if GameState.in_game:
+		_to_title()
 
 ## "web" for the browser test build, "app" for the phone apps (and desktop test runs).
 static func platform_name() -> String:
@@ -186,6 +223,8 @@ func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 		_set_state(State.OFFLINE)
 	elif not r.ok and r.error == "not_signed_in":
 		_set_state(State.OFFLINE)
+	elif not r.ok and r.error == "other_device":
+		_other_device()
 	return r
 
 ## A sentence and the next step for an online problem (item 2146). Empty: the last error.
@@ -226,7 +265,11 @@ func transfer_claim(code: String) -> Dictionary:
 	revs = {}
 	dirty = {}
 	_clear_cache()
+	# This phone takes the account over from the old one.
+	backend.device_token = ""
 	r = await call_fn("hello", {"p_version": CLIENT_VERSION})
+	if r.ok:
+		r = await _claim(r)
 	if r.ok:
 		_take_hello(r.data)
 	_save_session()
@@ -242,6 +285,7 @@ func delete_account() -> Dictionary:
 	profile = {}
 	revs = {}
 	dirty = {}
+	actions = []
 	_clear_cache()
 	_save_session()
 	_set_state(State.OFFLINE)
@@ -397,8 +441,47 @@ func push_team() -> void:
 
 ## Adds to the world goal of the week (items 81-85). The server only counts this week's kind.
 func contribute(kind: String, amount: int = 1) -> void:
-	if state == State.ONLINE:
-		await call_fn("community_add", {"p_kind": kind, "p_amount": amount})
+	await send_small("community_add", {"p_kind": kind, "p_amount": amount})
+
+# --- Small actions (plan item 3011) -------------------------------------------------------
+
+## Sends a set phrase, wave, thanks or world goal step. With a weak connection it waits in
+## [member actions] (up to ACTIONS_MAX) and goes out after the reconnect; its own id lets the
+## server count it once even if it is sent twice. Returns the server's answer, or
+## {"ok": true, "queued": true} while it waits.
+func send_small(fn: String, args: Dictionary) -> Dictionary:
+	var item: Dictionary = {"id": action_id(), "fn": fn, "args": args}
+	actions.append(item)
+	while actions.size() > ACTIONS_MAX:
+		actions.pop_front()
+	_save_session()
+	var sent: Dictionary = await send_actions()
+	return sent.get(item.id, OnlineBackend.ok({"ok": true, "queued": true}))
+
+## Sends the waiting actions in order until the queue is empty or the connection drops.
+## Returns the answers by action id.
+func send_actions() -> Dictionary:
+	var out: Dictionary = {}
+	if _sending_actions:
+		return out
+	_sending_actions = true
+	while state == State.ONLINE and not actions.is_empty():
+		var it: Dictionary = actions[0]
+		var r: Dictionary = await call_fn("action_once", {"p_id": it.id, "p_fn": it.fn, "p_args": it.args})
+		if not r.ok and not r.net and r.error.contains("action_once"):
+			# A server without the function yet takes the action directly.
+			r = await call_fn(str(it.fn), it.args)
+		if not r.ok and r.net:
+			break
+		if not actions.is_empty() and actions[0] == it:
+			actions.pop_front()
+		_save_session()
+		out[it.id] = r
+	_sending_actions = false
+	return out
+
+func action_id() -> String:
+	return "%08x%08x%08x" % [_rng.randi(), _rng.randi(), Time.get_ticks_usec() & 0xffffffff]
 
 ## Features the server switched on for this version (hello, item 2675). Menus hide the rest.
 var flags: Array[String] = []
@@ -486,6 +569,7 @@ func _reconnect() -> void:
 		_retry_count = 0
 		_retry_wait = retry_wait(0, 0.0)
 		await push_dirty()
+		await send_actions()
 	else:
 		_retry_count += 1
 		_retry_wait = retry_wait(_retry_count, _rng.randf_range(-1.0, 1.0))
@@ -501,6 +585,9 @@ func _heartbeat() -> void:
 	if _beats % 4 == 0:
 		push_team()
 	var r: Dictionary = await call_fn("presence", {"p_place": current_place()})
+	if r.ok and r.data is Dictionary and bool(r.data.get("other_device", false)):
+		_other_device()
+		return
 	if r.ok and r.data is Dictionary:
 		online_now = int(r.data.get("online_now", online_now))
 		_take_server_time(r.data.get("server_time"))
@@ -517,6 +604,7 @@ static func current_place() -> String:
 
 func _save_session() -> void:
 	var d: Dictionary = {"session": backend.session, "revs": revs, "dirty": dirty.keys(), "privacy_seen": privacy_seen,
+		"actions": actions,
 		"local": backend.is_local()}
 	var f := FileAccess.open(SESSION_PATH, FileAccess.WRITE)
 	if f != null:
@@ -535,6 +623,8 @@ func _load_session() -> void:
 			revs[int(k)] = int(raw.revs[k])
 		for k: Variant in (raw.get("dirty", []) as Array):
 			dirty[int(k)] = true
+		if raw.get("actions") is Array:
+			actions = (raw.actions as Array).filter(func(a: Variant) -> bool: return a is Dictionary and a.has("id"))
 	privacy_seen = bool(raw.get("privacy_seen", false))
 
 func mark_privacy_seen() -> void:

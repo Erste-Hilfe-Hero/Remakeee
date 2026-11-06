@@ -66,7 +66,7 @@ func _init(p_store_path: String = "") -> void:
 			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
 			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
-			"save_history_list", "save_restore"]:
+			"save_history_list", "save_restore", "session_claim", "action_once"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
@@ -103,9 +103,55 @@ func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 		return fail("not_signed_in")
 	if not _fns.has(name):
 		return fail("unknown function %s" % name)
+	# Like the trigger saves_device: a changed save from an older device fails (plan item 3010).
+	if name in SAVE_WRITERS and other_device():
+		return fail("other_device")
 	var r: Variant = _fns[name].call(args)
 	_save()
 	return ok(r)
+
+## Like public.action_once (plan item 3011): a small action whose id was seen in the last 2 days
+## counts once.
+func _fn_action_once(a: Dictionary) -> Dictionary:
+	var id: String = str(a.get("p_id", "")).left(40)
+	if id.length() < 8:
+		return _fail("bad_id")
+	var done: Dictionary = _user().get_or_add("actions_done", {})
+	for k: String in done.keys():
+		if int(done[k]) < now() - 2 * 86400:
+			done.erase(k)
+	if done.has(id):
+		return {"ok": true, "repeat": true}
+	var args: Dictionary = a.get("p_args", {}) if a.get("p_args") is Dictionary else {}
+	var r: Variant
+	if str(a.get("p_fn", "")) == "mail_send" and str(args.get("p_kind", "")) in ["phrase", "wave", "thanks"]:
+		r = _fn_mail_send({"p_code": args.get("p_code"), "p_kind": args.get("p_kind"), "p_phrase": int(args.get("p_phrase", 0))})
+	elif str(a.get("p_fn", "")) == "community_add":
+		r = _fn_community_add({"p_kind": args.get("p_kind"), "p_amount": int(args.get("p_amount", 0))})
+	else:
+		return _fail("bad_action")
+	if not (r is Dictionary and str((r as Dictionary).get("error", "")) == "slow_down"):
+		done[id] = now()
+	return r
+
+## Functions that change a stored save (the server checks them in a trigger on saves).
+const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect"]
+
+## Like public._other_device: this device's token is not the newest one of the account.
+func other_device() -> bool:
+	var t: String = str(profile_of(me()).get("session_token", ""))
+	return not t.is_empty() and not device_token.is_empty() and t != device_token
+
+func _fn_session_claim(a: Dictionary) -> Dictionary:
+	var p: Dictionary = profile_of(me())
+	var cur: String = str(p.get("session_token", ""))
+	var t: String = str(a.get("p_token", "")).left(64) if a.get("p_token") != null else ""
+	if not t.is_empty() and not cur.is_empty() and cur != t:
+		return _fail("other_device")
+	if t.is_empty() or cur.is_empty():
+		t = "%08x%08x%08x%08x" % [rng.randi(), rng.randi(), rng.randi(), rng.randi()]
+		p["session_token"] = t
+	return {"ok": true, "token": t}
 
 ## Test helper: acts as another player from now on (creates them if needed).
 func switch_user(uid: String) -> void:
@@ -305,7 +351,7 @@ func _fn_presence(a: Dictionary) -> Dictionary:
 		if ch in [" ", "'", "-"] or ch.to_upper() != ch.to_lower() or ch.is_valid_int():
 			place += ch
 	p.place = place.left(24)
-	return {"server_time": now(), "online_now": online_now()}
+	return {"server_time": now(), "online_now": online_now(), "other_device": other_device()}
 
 func _saves() -> Dictionary:
 	var u: Dictionary = _user()

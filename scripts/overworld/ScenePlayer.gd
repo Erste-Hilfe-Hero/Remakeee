@@ -187,7 +187,7 @@ func _run(kind: String, step: Dictionary) -> void:
 			if step.has("color"):
 				rect.color = Color(Color(str(step.color)), rect.color.a)
 			var tw: Tween = overworld.create_tween()
-			tw.tween_property(rect, "color:a", target, float(step.get("time", 0.4)))
+			Juice.shaped(tw.tween_property(rect, "color:a", target, float(step.get("time", 0.4))), "close" if target > 0.5 else "fade")
 			await tw.finished
 		"wait":
 			await _wait(float(step.wait))
@@ -300,7 +300,7 @@ func _show_emote(f: GridWalker, icon: String) -> void:
 func _card(top: String, title: String) -> void:
 	var rect: ColorRect = overworld.fade_rect()
 	var tw: Tween = overworld.create_tween()
-	tw.tween_property(rect, "color:a", 1.0, 0.3)
+	Juice.shaped(tw.tween_property(rect, "color:a", 1.0, 0.3), "close")
 	await tw.finished
 	var label := Label.new()
 	label.theme = UITheme.get_theme()
@@ -316,5 +316,5 @@ func _card(top: String, title: String) -> void:
 	await _wait(1.6)
 	label.queue_free()
 	var back: Tween = overworld.create_tween()
-	back.tween_property(rect, "color:a", 0.0, 0.3)
+	Juice.shaped(back.tween_property(rect, "color:a", 0.0, 0.3), "fade")
 	await back.finished

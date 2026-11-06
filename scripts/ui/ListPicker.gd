@@ -60,6 +60,10 @@ static var pointer_used: bool = false
 ## The device used last: "touch" (taps and clicks), "pad" (gamepad) or "keys" (keyboard).
 ## Hints follow it (item 1841).
 static var last_device: String = "touch"
+## Haptics pattern for a tapped choice when Tap buzz is on (item 1791, 15 ms).
+const TAP_BUZZ: String = "confirm"
+## Greyed-out rows can carry "why" (a reason); a tap on them shows it under the list (item 1842).
+var _whys: Array[String] = []
 ## L and R jump this many rows (item 1846).
 const PAGE_ROWS: int = 8
 ## Held up or down on a gamepad repeats after 350 ms, then every 80 ms (item 1848).
@@ -180,6 +184,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_foot.visible = one_hand and cancellable
 	last_dir = 0
 	_hints.clear()
+	_whys.clear()
 	_sliders.clear()
 	_hint.visible = false
 	for b: Button in _buttons:
@@ -217,6 +222,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 		var result: int = -1 if bool(rows[i].get("cancel", false)) else i
 		_hints.append(str(rows[i].get("hint", "")))
+		_whys.append(str(rows[i].get("why", "")))
 		_sliders.append(bool(rows[i].get("slider", false)))
 		b.pressed.connect(func() -> void: _on_row(result, _slider_dir(b, i)))
 		b.gui_input.connect(func(ev: InputEvent) -> void: _row_input(ev, i, result))
@@ -358,7 +364,7 @@ func fade_in() -> void:
 		return
 	modulate.a = 0.0
 	_fade = create_tween()
-	_fade.tween_property(self, "modulate:a", 1.0, FADE_IN)
+	Juice.shaped(_fade.tween_property(self, "modulate:a", 1.0, FADE_IN), "fade")
 
 ## Scrolls the list back to its first row (a tap on the title, item 1797).
 func scroll_to_top() -> void:
@@ -391,6 +397,8 @@ func _on_row(result: int, dir: int = 0) -> void:
 		return
 	last_dir = dir
 	Sound.sfx("cancel" if result < 0 else "confirm")
+	if GameState.tap_vibration and pointer_used:
+		Haptics.play(TAP_BUZZ)
 	picked.emit(result)
 
 ## Slider rows: a tap on the left half lowers, on the right half raises; A raises.
@@ -450,6 +458,29 @@ func _row_input(ev: InputEvent, i: int, result: int) -> void:
 	if dir != 0:
 		_buttons[i].accept_event()
 		_on_row(result, dir)
+
+## Shows why row [param i] is greyed out, if the row says (item 1842). Returns true if shown.
+func show_why(i: int) -> bool:
+	var w: String = _whys[i] if i < _whys.size() else ""
+	if w.is_empty():
+		return false
+	_hint.text = Loc.t(w)
+	_hint.visible = true
+	Sound.sfx("bump")
+	return true
+
+## A calm tap on a greyed-out row (disabled buttons get no press of their own).
+func _why_at(pos: Vector2) -> void:
+	if not _scroll.get_global_rect().has_point(pos):
+		return
+	for i: int in _buttons.size():
+		if _buttons[i].disabled and _buttons[i].get_global_rect().has_point(pos):
+			show_why(i)
+			return
+
+## The text under the list now (tests).
+func hint_text() -> String:
+	return _hint.text if _hint.visible else ""
 
 ## After a language change: the hint line and screen reader names in the new language.
 func retranslate() -> void:
@@ -534,6 +565,8 @@ func _input(event: InputEvent) -> void:
 	elif TapInput.is_release(event):
 		_release_frame = Engine.get_process_frames()
 		_release_ok = not is_nan(_press_pos.x) and TapInput.position(event).distance_to(_press_pos) <= TAP_SLOP
+		if _release_ok:
+			_why_at(TapInput.position(event))
 		_press_pos = Vector2(NAN, NAN)
 
 ## A small ink triangle left of the focused row, so focus shows without colour (item 2088).

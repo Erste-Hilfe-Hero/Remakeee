@@ -384,8 +384,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 3008. [P3] Ein Test für den Saisonwechsel stellt die Server-Zeit künstlich vor und prüft Abschluss, Rücksetzung und Belohnungen.
 ### Konto, Geräte und Verbindung
 3009. [x] [P1] Der Server behält die letzten 5 Stände je Spielstand-Platz in `save_history`, und Einstellungen, Konto zeigt sie mit Datum, Ort und Spielzeit zum Wiederherstellen.
-3010. [P1] Nur ein Gerät gleichzeitig: `hello` vergibt eine Sitzungskennung, Speicherungen mit einer alten Kennung lehnt der Server ab, und das alte Gerät zeigt "Auf einem anderen Gerät angemeldet".
-3011. [P1] Kleine Aktionen (Phrasen, Winken, Weltziel-Beiträge) sammelt `Online.gd` bei schwachem Netz in einer Warteschlange mit bis zu 50 Einträgen, jede mit eigener Kennung, damit der Server doppelte verwirft.
+3010. [x] [P1] Nur ein Gerät gleichzeitig: `hello` vergibt eine Sitzungskennung, Speicherungen mit einer alten Kennung lehnt der Server ab, und das alte Gerät zeigt "Auf einem anderen Gerät angemeldet".
+3011. [x] [P1] Kleine Aktionen (Phrasen, Winken, Weltziel-Beiträge) sammelt `Online.gd` bei schwachem Netz in einer Warteschlange mit bis zu 50 Einträgen, jede mit eigener Kennung, damit der Server doppelte verwirft.
 3012. [P2] Eine Status-Seite im Menü zeigt Ping, Server-Version, Regelversion, Kontostatus und laufende Sperren.
 3013. [P2] Ein Knopf "Übertragungscode ungültig machen" sperrt einen ausgegebenen Code sofort.
 3014. [P2] Nach einem Konto-Umzug liegt in der Post ein Hinweis mit Datum und Gerätetyp, damit ein gestohlener Code auffällt.

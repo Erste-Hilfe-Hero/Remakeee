@@ -18,7 +18,8 @@
   "[%s] %d%%",
   "another player",
   "apikey: ",
-  "unknown function %s"
+  "unknown function %s",
+  "x-chimora-session: "
  ],
  "strings": {
   "%d Wayfarers are in Veydal": "%d Wanderer sind in Veydal",
@@ -147,6 +148,7 @@
   "Invitation: %s (%d) from %s": "Einladung: %s (%d) von %s",
   "Invite a Wayfarer...": "Wanderer einladen...",
   "It counts once the check is done.": "Er zählt, sobald die Prüfung fertig ist.",
+  "It goes out as soon as the connection is back.": "Das geht raus, sobald die Verbindung wieder da ist.",
   "Join": "Beitreten",
   "Join %s?": "%s beitreten?",
   "Join the league first.": "Tritt zuerst der Liga bei.",
@@ -194,6 +196,7 @@
   "Open the Rift (%d Wayfarers)": "Riss öffnen (%d Wanderer)",
   "Pick 1 to 3 Wayfarers to go with you.": "Wähle 1 bis 3 Wanderer, die mitkommen.",
   "Pick two words for the name.": "Wähle zwei Wörter für den Namen.",
+  "Play on this device": "Auf diesem Gerät spielen",
   "Play time: %d h": "Spielzeit: %d Std.",
   "Privacy": "Datenschutz",
   "Put something in first.": "Leg zuerst etwas hinein.",
@@ -230,6 +233,7 @@
   "Sent!": "Geschickt!",
   "Show everyone": "Alle zeigen",
   "Show friends": "Freunde zeigen",
+  "Signed in on another device. Your journey is saved there.": "Auf einem anderen Gerät angemeldet. Deine Reise ist dort gespeichert.",
   "Slot %d was played on this phone and on another device. Which journey do you keep?": "Platz %d wurde auf diesem Handy und auf einem anderen Gerät gespielt. Welche Reise behältst du?",
   "Someone else used my phone": "Jemand anderes hatte mein Handy",
   "Something else": "Etwas anderes",

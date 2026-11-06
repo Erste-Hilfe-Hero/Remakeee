@@ -474,6 +474,16 @@ func set_field(id: String, turns: int = BattleRules.RESONANCE_TURNS) -> bool:
 	emit_event(BattleEvent.Type.FIELD, {"field": id, "label": str(f.label), "text": str(f.intro), "turns": field_turns})
 	return true
 
+## Stretches the Resonance field in play by [param turns]. Fails (FIELD_EXTENDED "failed") when
+## there is none, or only the place's own field, which never runs out anyway.
+func extend_field(turns: int) -> bool:
+	if field.is_empty() or field_turns <= 0:
+		emit_event(BattleEvent.Type.FIELD_EXTENDED, {"failed": true})
+		return false
+	field_turns += turns
+	emit_event(BattleEvent.Type.FIELD_EXTENDED, {"field": field, "label": str(BattleRules.FIELDS[field].label), "turns": turns})
+	return true
+
 ## Counts a Resonance field down at the end of a turn; when it runs out the place's field returns.
 func _tick_field() -> void:
 	if field_turns <= 0:
@@ -829,6 +839,8 @@ func _phase_rewards() -> void:
 		if s.has_meta("xp_paid"):
 			s.remove_meta("xp_paid")
 		s.hp_mult = 1.0
+		# A boss that outlived the fight keeps its Vigor inside the normal bounds again.
+		s.hp = mini(s.hp, s.max_hp())
 	if bonded != null:
 		bonded.end_battle()
 	var money: int = prize_money if outcome == Outcome.WIN and not is_wild else 0
@@ -937,6 +949,10 @@ func _do_move(a: BattleAction) -> void:
 				ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
 			if bool(react.get("cure", false)) and is_standing(target):
 				_cure(target_side, t_slot)
+			if is_standing(target):
+				var rs: Dictionary = react.get("stage", {})
+				for st: String in rs:
+					change_stage(target_side, st, int(rs[st]), t_slot)
 		for fx: Dictionary in mv.effects:
 			if self_done and _is_self_effect(fx):
 				continue

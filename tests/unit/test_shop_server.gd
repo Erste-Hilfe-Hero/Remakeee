@@ -139,6 +139,16 @@ func test_cancelled_and_failed_purchases() -> void:
 	assert_eq(store.unfinished().size(), 0)
 	assert_eq(_call("shop_state").balance, 100)
 
+func test_second_tap_starts_nothing() -> void:
+	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
+	Billing._buying = true
+	assert_eq((await Billing.buy_in_store(ShopCatalog.offer("rg_glass_100"))).error, "busy")
+	assert_true(Billing.busy())
+	Billing._buying = false
+	assert_true((await Billing.buy_in_store(ShopCatalog.offer("rg_glass_100"))).get("ok", false))
+	assert_false(Billing.busy(), "free again after the purchase")
+	assert_eq(store.finished.size(), 1, "only one purchase")
+
 func test_limit_checked_before_store() -> void:
 	_call("shop_set_age", {"p_year": _year(14), "p_month": 1})
 	await Billing.refresh_state()

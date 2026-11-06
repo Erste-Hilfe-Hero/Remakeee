@@ -16,7 +16,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4009. [P2] In `docs/MONETIZATION.md` die Umsatzziele als Planwerte notieren: Anteil zahlender Spieler 3 %, durchschnittlicher Umsatz je Zahler 12 € im Monat, nur als Rechengröße ohne Tracking.
 4010. [P2] Für beide Stores das Small Business Program (Apple) und die 15-%-Stufe (Google) als Schritt in `docs/STORE_RELEASE.md` aufnehmen, mit Hinweis, dass Ali es selbst beantragen muss.
 4011. [P2] In der Memory-Notiz `chimora-monetization` und in `AGENTS.md` unter Regel 4 vermerken: Billing-Plugins für Apple und Google sind freigegeben, Werbe- und Analytics-SDKs weiterhin nicht.
-4012. [P2] Eine Prüfung in `tools/release_check.py` ergänzen, die fehlschlägt, wenn in `addons/` ein Plugin mit den Namen bekannter Werbe- oder Analytics-SDKs liegt.
+4012. [x] [P2] Eine Prüfung in `tools/release_check.py` ergänzen, die fehlschlägt, wenn in `addons/` ein Plugin mit den Namen bekannter Werbe- oder Analytics-SDKs liegt.
 4013. [P3] In `docs/MONETIZATION.md` einen Abschnitt "Was nie verkauft wird" führen: Story-Kapitel, Karten, Rift-Zugang, Konto-Funktionen, Freunde, Geschenke an Freunde.
 4014. [P3] Im Titelbildschirm und in den Store-Texten keine Formulierung "gratis spielen, alles freischalten" verwenden, sondern "kostenlos spielbar, optionale In-App-Käufe".
 4015. [P3] Einen jährlichen Prüftermin (jeweils 1. November) in `docs/MONETIZATION.md` eintragen, an dem Preise, Rechtslage und Angebote neu bewertet werden.
@@ -101,7 +101,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4090. [P3] Einen jährlichen Abgleich der Länderpreise nach Wechselkursänderungen der Stores als Termin in `docs/shop/CHANGELOG.md` eintragen.
 
 ### Billing-Technik im Spiel (Godot)
-4091. [P1] Das offizielle Godot-Plugin für Google Play Billing (Billing Library ab Version 8) in `addons/` einbinden und in `export_presets.cfg` für Android aktivieren.
+4091. [x] [P1] (Umgesetzt als eigenes Plugin `plugins/chimora_billing`, siehe `addons/BILLING_VERSIONS.md`.) Das offizielle Godot-Plugin für Google Play Billing (Billing Library ab Version 8) in `addons/` einbinden und in `export_presets.cfg` für Android aktivieren.
 4092. [P1] Für iOS ein StoreKit-2-Plugin für Godot 4.7 einbinden, das signierte Transaktionen (JWS) liefert, und die Version in `docs/RELEASE.md` festhalten.
 4093. [x] [P1] Eine Klasse `scripts/shop/Billing.gd` als Autoload schreiben, die beide Plugins hinter einer gemeinsamen Schnittstelle versteckt (`query_products`, `purchase`, `restore`, `finish`).
 4094. [x] [P1] Eine Klasse `scripts/shop/LocalBilling.gd` für Desktop, Web und Tests schreiben, die Käufe nur mit dem lokalen Testserver vortäuscht und in Release-Builds nie aktiv ist.
@@ -110,14 +110,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4097. [x] [P1] Erst nach der Gutschrift auf dem Server den Kauf beim Store abschließen (Google `acknowledge` oder `consume`, Apple `transaction.finish()`), damit kein Kauf verloren geht.
 4098. [x] [P1] Beim Start und nach jedem Wiederverbinden offene Käufe (Google `queryPurchasesAsync`, Apple `Transaction.unfinished`) abfragen und an den Server nachreichen.
 4099. [x] [P1] Den Kaufablauf als Zustandsmaschine in `Billing.gd` bauen: Bereit, Abfrage, Kauf läuft, Prüfung, Gutgeschrieben, Fehler, Abgebrochen.
-4100. [P2] Für ausstehende Käufe (Google `PENDING`, Apple "Ask to Buy") einen Text "Kauf wartet auf Freigabe" zeigen und nichts gutschreiben, bis der Status wechselt.
+4100. [x] [P2] Für ausstehende Käufe (Google `PENDING`, Apple "Ask to Buy") einen Text "Kauf wartet auf Freigabe" zeigen und nichts gutschreiben, bis der Status wechselt.
 4101. [x] [P2] Eine Konto-Kennung als `obfuscatedAccountId` (Google) und `appAccountToken` (Apple, UUID aus der Konto-ID) mitschicken, damit der Server Käufe dem richtigen Konto zuordnet.
 4102. [P2] Den Button "Käufe wiederherstellen" in `scripts/ui/AccountMenu.gd` und im Shop einbauen, der `restore` aufruft und das Ergebnis in einem Satz meldet.
-4103. [P2] Fehlercodes beider Stores auf 8 eigene Meldungen abbilden (abgebrochen, nicht verfügbar, schon gekauft, Netz fehlt, Zahlung abgelehnt, Store-Fehler, ausstehend, unbekannt).
+4103. [x] [P2] Fehlercodes beider Stores auf 8 eigene Meldungen abbilden (abgebrochen, nicht verfügbar, schon gekauft, Netz fehlt, Zahlung abgelehnt, Store-Fehler, ausstehend, unbekannt).
 4104. [P2] Ohne Serververbindung den Kauf-Button sperren und "Shop braucht eine Verbindung" anzeigen, damit kein Kauf ohne Prüfung startet.
 4105. [P2] Produktdaten nach dem Laden 6 Stunden zwischenspeichern und bei Sprach- oder Landwechsel neu laden.
-4106. [P2] Bei doppeltem Tippen auf "Kaufen" nur einen Kauf starten und den Button bis zum Ende des Vorgangs sperren.
-4107. [P2] Den Android-Export auf die Berechtigung `com.android.vending.BILLING` prüfen und in `tools/release_check.py` sicherstellen, dass keine weiteren neuen Berechtigungen dazukommen.
+4106. [x] [P2] Bei doppeltem Tippen auf "Kaufen" nur einen Kauf starten und den Button bis zum Ende des Vorgangs sperren.
+4107. [x] [P2] Den Android-Export auf die Berechtigung `com.android.vending.BILLING` prüfen und in `tools/release_check.py` sicherstellen, dass keine weiteren neuen Berechtigungen dazukommen.
 4108. [P2] Die 16-KB-Seitengrößen-Prüfung in der CI auch für die nativen Teile der Billing-Plugins laufen lassen.
 4109. [P2] Beim iOS-Build die StoreKit-Funktion "In-App Purchase" im Export-Preset setzen und in der CI prüfen.
 4110. [P2] Eine StoreKit-Konfigurationsdatei `ios/Chimora.storekit` mit allen Produkten für lokale Tests in Xcode erstellen.
@@ -125,11 +125,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4112. [P2] Den Pass-Status beim Start vom Server lesen und nicht aus dem Store-Cache, damit gekündigte oder erstattete Pässe sofort enden.
 4113. [P2] Signale `purchase_done`, `purchase_failed`, `wallet_changed` und `entitlements_changed` in `Billing.gd` anbieten, auf die Shop und Menüs hören.
 4114. [P3] Kaufvorgänge in einer lokalen Warteschlange `user://billing_queue.json` speichern, damit ein Absturz während der Prüfung den Kauf nicht vergisst.
-4115. [P3] Für Google das Feld `isAcknowledged` beim Start prüfen und nicht bestätigte Käufe vor Ablauf der 3-Tage-Frist erneut an den Server geben.
+4115. [x] [P3] Für Google das Feld `isAcknowledged` beim Start prüfen und nicht bestätigte Käufe vor Ablauf der 3-Tage-Frist erneut an den Server geben.
 4116. [P3] Für Apple die Funktion `AppStore.showManageSubscriptions` und für Google den Abo-Link `play.google.com/store/account/subscriptions` als Button "Pass verwalten" anbieten.
 4117. [P3] Für Apple die Erstattungsanfrage `beginRefundRequest` als Button "Erstattung beantragen" in der Kaufliste anbieten.
 4118. [P3] Einen Unit-Test-Satz `tests/test_billing.gd` mit `LocalBilling.gd` schreiben, der Kauf, Abbruch, ausstehend, Wiederherstellen und Doppelkauf abdeckt.
-4119. [P3] Die Billing-Plugin-Versionen in `addons/` in einer Datei `addons/BILLING_VERSIONS.md` mit Prüfdatum festhalten.
+4119. [x] [P3] Die Billing-Plugin-Versionen in `addons/` in einer Datei `addons/BILLING_VERSIONS.md` mit Prüfdatum festhalten.
 4120. [P3] Bei Store-Ausfall die Produkte im Shop grau zeigen mit dem Satz "Store gerade nicht erreichbar" statt leerer Listen.
 4121. [P3] Den Kauf-Dialog des Stores nie mit eigenen Fenstern überdecken und vor dem Aufruf das Spiel pausieren.
 4122. [P3] Eine Debug-Ansicht nur in Debug-Builds anlegen, die alle Produkte, Belege und Serverantworten auflistet.

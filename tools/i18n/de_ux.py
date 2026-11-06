@@ -180,6 +180,8 @@ T = {
 "(A: continue)": "(A zum Fortfahren)",
 "(Enter: continue)": "(Enter zum Fortfahren)",
 "Gamepad disconnected": "Gamepad getrennt",
+"Tap buzz: %s": "Tipp-Vibration: %s",
+"A short buzz each time you tap a choice.": "Ein kurzes Summen bei jedem Tipp auf eine Auswahl.",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

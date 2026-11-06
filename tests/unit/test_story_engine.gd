@@ -249,3 +249,15 @@ func test_hushed_wanderers_speak_after_the_rain_rift() -> void:
 	assert_eq(Dialogue.lines_for(e, {}), ["..."] as Array[String])
 	assert_true(Dialogue.lines_for(e, {"rift_rain_sealed": true}).size() > 1)
 	assert_eq(str(Dialogue.get_entry("corvane/weda").get("action", "")), "heal")
+
+func test_night_and_daily_lines() -> void:
+	var keeper: Dictionary = Dialogue.get_entry("thornridge/keeper")
+	assert_eq(Dialogue.lines_for(keeper, {}, DayCycle.Phase.DAY), ["Keeper: Rest by the pool a while."] as Array[String])
+	assert_true(Dialogue.lines_for(keeper, {}, DayCycle.Phase.NIGHT)[0].contains("glows at night"))
+	var crier: Dictionary = Dialogue.get_entry("brindlewick/crier")
+	var n: int = (crier.daily as Array).size()
+	assert_ne(Dialogue.lines_for(crier, {}, -1, 0), Dialogue.lines_for(crier, {}, -1, 1), "a new line each day")
+	assert_eq(Dialogue.lines_for(crier, {}, -1, 0), Dialogue.lines_for(crier, {}, -1, n), "the list wraps around")
+	# An after_flag variant still wins over night lines.
+	var e: Dictionary = {"lines": ["a"], "night_lines": ["n"], "after_flag": {"flag": "f", "lines": ["b"]}}
+	assert_eq(Dialogue.lines_for(e, {"f": true}, DayCycle.Phase.NIGHT), ["b"] as Array[String])

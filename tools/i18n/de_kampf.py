@@ -119,3 +119,12 @@ T.update({
 "Field Swirl": "Feldwirbel", "Every 3 turns a random field takes over, announced a turn early.": "Alle 3 Runden übernimmt ein zufälliges Feld, eine Runde vorher angesagt.",
 "No Rest": "Kein Rasten", "Resting is gone while an art can be paid; instead everyone gains 3 Energy each turn.": "Rasten fehlt, solange eine Technik bezahlbar ist; dafür gibt es für alle 3 Energie pro Runde.",
 })
+
+# Plan area 2, items 461, 566-570, 591-608.
+T.update({
+"The stone grounds the charge in %s!": "Der Stein erdet die Ladung in %s!",
+"The gust blows %s dry, and it slows down!": "Die Böe bläst %s trocken, es wird langsamer!",
+"The light startles %s awake!": "Das Licht reißt %s aus dem Schlaf!",
+"There is no Resonance field to hold.": "Es gibt kein Resonanz-Feld, das sich halten ließe.",
+"The %s holds on for %d more turns!": "%s hält noch %d Runden länger!",
+})

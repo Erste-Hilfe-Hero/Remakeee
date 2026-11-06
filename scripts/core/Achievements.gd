@@ -135,6 +135,14 @@ static func stat(name: String) -> int:
 			return GameState.party.filter(func(s: Spirling) -> bool: return s.level >= Spirling.MAX_LEVEL).size()
 		"gear":
 			return int(GameState.has_gear("grapple_line")) + int(GameState.has_gear("climbing_pick")) + int(GameState.has_gear("storm_lantern"))
+		"keepsakes":
+			# Keepsakes from data/items.json owned at least once (plan 3325).
+			var had: Array = GameState.records.get("keepsakes_had", [])
+			return keepsakes().filter(func(id: String) -> bool: return id in had or _holds_now(id)).size()
+		"keepsakes_all":
+			return int(stat("keepsakes") >= keepsakes().size())
+		"festivals_all":
+			return int(stat("festival_gifts") >= festival_count())
 		"festival_gifts":
 			# Gift flags are "season_<festival id>_<year>"; count different festivals.
 			var seen: Dictionary = {}
@@ -145,6 +153,60 @@ static func stat(name: String) -> int:
 			return seen.size()
 	push_warning("Achievements: unknown stat '%s'" % name)
 	return 0
+
+## Stats that stat() knows besides the prefixes (plan 3337: a test checks every badge).
+const STATS: Array[String] = ["seen", "bonded", "bonded_wild", "party_size", "storage_size",
+	"sanctuary_size", "max_level", "level30_count", "starter_level", "evolved", "prism", "rifts",
+	"masters", "rifts_veteran", "rifts_riftborn", "oath_rifts", "oath_rifts_veteran",
+	"oath_rifts_riftborn", "side_goals", "gauntlet_best", "weekly_wins", "rematch_wins",
+	"daily_tasks_done", "waymarks_total", "money", "maps_visited", "all_fields", "wild_maps_all",
+	"team_at_cap", "gear", "keepsakes", "keepsakes_all", "festivals_all", "festival_gifts"]
+const STAT_PREFIXES: Array[String] = ["flag:", "record:", "element_bonded:", "count_"]
+
+static func known_stat(name: String) -> bool:
+	return name in STATS or STAT_PREFIXES.any(func(p: String) -> bool: return name.begins_with(p))
+
+## Keepsakes that can be found or bought for coins (shop mementos do not count, plan 3325).
+static func keepsakes() -> Array[String]:
+	var out: Array[String] = []
+	for id: String in Database.items:
+		var it: Dictionary = Database.items[id]
+		if it.get("held", null) is Dictionary and not bool(it.get("shop", false)):
+			out.append(id)
+	out.sort()
+	return out
+
+static func _holds_now(id: String) -> bool:
+	return GameState.item_count(id) > 0 or all_spirlings().any(func(s: Spirling) -> bool: return s.held == id)
+
+## Notes a keepsake once it is in the bag (GameState.add_item).
+static func note_keepsake(id: String) -> void:
+	var had: Array = GameState.records.get("keepsakes_had", [])
+	if not id in had:
+		had.append(id)
+		GameState.records["keepsakes_had"] = had
+
+## Number of yearly festivals in data/events.json.
+static func festival_count() -> int:
+	return maxi(1, Season.festivals().size())
+
+## True for a team of five that shares one element (plan 3324).
+static func one_element_team(team: Array[Spirling]) -> bool:
+	if team.size() < GameState.MAX_PARTY:
+		return false
+	for e: int in team[0].elements():
+		if team.all(func(s: Spirling) -> bool: return e in s.elements()):
+			return true
+	return false
+
+## Badges of [param cat] ("" = all), as indices into list() (plan 3333).
+static func indices_for(cat: String) -> Array[int]:
+	var out: Array[int] = []
+	var l: Array[Dictionary] = list()
+	for i: int in l.size():
+		if cat == "" or str(l[i].get("cat", "")) == cat:
+			out.append(i)
+	return out
 
 ## True if achievement [param id] is earned by the current save.
 static func earned(id: String) -> bool:

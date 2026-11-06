@@ -24,7 +24,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 458. [x] [P2] Neuer Effekt `cure_self`: heilt nach dem Treffer oder der Statustechnik den eigenen Status.
 459. [x] [P2] Priorität -1 zulassen: BattleModel sortiert Techniken mit `"priority": -1` hinter alle anderen derselben Aktionsklasse; validate_data erlaubt den Bereich -1 bis +1.
 460. [P3] Neuer Effekt `energy_refund`: fällt das Ziel durch den Treffer, erhält der Nutzer die Hälfte der Energiekosten (abgerundet) zurück.
-461. [P2] Neuer Effekt `field_extend`: verlängert das aktive Resonanz-Feld um 2 Runden und schlägt ohne Feld mit eigener Meldung fehl.
+461. [x] [P2] Neuer Effekt `field_extend`: verlängert das aktive Resonanz-Feld um 2 Runden und schlägt ohne Feld mit eigener Meldung fehl. Erledigt: Effekt `field_extend` (moves.json `"effect": "field_extend"`), Ereignis FIELD_EXTENDED.
 462. [P3] Neuer Effekt `stage_relay`: der Nutzer wechselt sofort zum gewählten Bank-Spirling, der alle Stufen des Nutzers übernimmt.
 463. [P3] Neuer Effekt `bench_splash`: trifft zusätzlich einen per Kampf-Seed gewählten Bank-Spirling des Gegners mit 1/16 seiner max. Kraft.
 464. [P3] Neuer Effekt `wake_ally`: weckt im Mehrfachkampf einen Verbündeten aus Drowse und gibt ihm 1 Energie.
@@ -139,11 +139,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 563. [x] [P1] BattleAI.score_move bewertet alle neuen Bausteine mit festen Werten: Seitenfalle 0,25 mal Zahl der gegnerischen Bank-Spirlings, `energy_tax` 0,15 pro Runde, `delayed_hit` 0,8 des geschätzten Schadens, `cooldown` ohne Abschlag im ersten Zug.
 564. [x] [P1] Lernlisten Stone: Shalebat lernt Grit Jab bei Ring 8 und Pumice Pelt bei Ring 16, Obsidroth Landslip bei Ring 30 und Monolith Drop bei Ring 44, Calderox Quarry Wall bei Ring 36, Duskdigger Fault Line bei Ring 33.
 565. [x] [P1] Lernlisten Gale: Zephlet lernt Draft Needle bei Ring 5, Kite Cut bei Ring 10, Crosswind bei Ring 14 und Scatter Gale bei Ring 19, Tempestrel Squall Line bei Ring 30, Cloudbreak bei Ring 40 und Downburst bei Ring 48.
-566. [P2] Neue Reaktion in BattleRules.REACTIONS: Stone trifft ein Ziel mit Jolt, erdet den Status (er endet) und richtet ×1,1 Schaden an.
-567. [P2] Neue Reaktion: Gale trifft ein Ziel mit Soak, beendet Soak und senkt das Tempo des Ziels um 1.
+566. [x] [P2] Neue Reaktion in BattleRules.REACTIONS: Stone trifft ein Ziel mit Jolt, erdet den Status (er endet) und richtet ×1,1 Schaden an. Erledigt.
+567. [x] [P2] Neue Reaktion: Gale trifft ein Ziel mit Soak, beendet Soak und senkt das Tempo des Ziels um 1. Erledigt: Reaktionszeile mit `stage`.
 568. [P3] Neue Reaktion: Bloom trifft ein Ziel mit Soak, der Nutzer heilt 1/8 des angerichteten Schadens.
-569. [P2] Neue Reaktion: Lumen trifft ein Ziel mit Drowse, weckt es und richtet ×1,3 Schaden an.
-570. [P2] Regel: höchstens eine Reaktion pro Treffer, es gilt die erste passende Zeile der Tabelle; ein Test prüft, dass sich keine zwei Zeilen widersprechen.
+569. [x] [P2] Neue Reaktion: Lumen trifft ein Ziel mit Drowse, weckt es und richtet ×1,3 Schaden an. Erledigt.
+570. [x] [P2] Regel: höchstens eine Reaktion pro Treffer, es gilt die erste passende Zeile der Tabelle; ein Test prüft, dass sich keine zwei Zeilen widersprechen. Erledigt: tests/unit/test_reactions_extend.gd.
 571. [P3] Neue Reaktion: Umbra trifft ein Ziel mit Daze und richtet ×1,2 Schaden an.
 572. [P3] Neue Reaktion: Ember trifft ein Ziel mit Soak, Soak verdampft (endet), der Treffer richtet nur ×0,8 Schaden an.
 573. [x] [P2] Jede Art erhält höchstens eine Technik mit `cooldown` und höchstens eine Seitenfalle in ihrer Lernliste.
@@ -166,24 +166,24 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 588. [x] [P1] Cairn Crash von Stärke 100, Genauigkeit 80 %, Energie 7 auf Stärke 105, Genauigkeit 85 %, Energie 7, Rückstoß bleibt 25 %.
 589. [x] [P1] Furnace Spiral von Genauigkeit 85 % auf 90 %, Scorch-Chance bleibt 20 %.
 590. [x] [P1] Hush (Drowse) von Genauigkeit 75 % auf 80 %, Energie von 4 auf 3, damit es außerhalb der Ruhe-Regel gewählt wird.
-591. [P2] Bloom Burst von Stärke 90, Genauigkeit 90 % auf Stärke 95, Genauigkeit 90 %.
-592. [P2] Breaker Plunge von Genauigkeit 85 % auf 90 %, Rückstoß von 25 % auf 20 %.
-593. [P2] Radiant Lance von Stärke 85, Energie 6 auf Stärke 90, Energie 6.
-594. [P2] Kiln Strike von Stärke 75, Genauigkeit 90 % auf Stärke 75, Genauigkeit 95 %.
-595. [P2] Salt Snap Soak-Chance von 10 % auf 20 %.
-596. [P3] Pebble Toss von Genauigkeit 95 % auf 100 %.
-597. [P2] Bowl Over von Stärke 35 auf 30, bleibt bei Energie 1 als billigster Stone-Schlag.
-598. [P2] Tunnel Strike erhält 20 % Chance auf eigenen Schutz +1.
-599. [P2] Night Siphon von Stärke 50 auf 60, Heilanteil 50 % bleibt.
-600. [P2] Dusk Rake erhält 20 % Chance auf Wucht -1 beim Ziel.
-601. [P2] Thorn Volley von Energie 4 auf 5 und Stärke 65 auf 75, damit der Flächenschlag neben Sap Draw lohnt.
-602. [P2] Charged Mist von Genauigkeit 85 % auf 80 %, weil Jolt gegen alle Gegner im Mehrfachkampf sonst zu sicher ist.
-603. [P3] Candle Ward von Energie 3 auf 2 (Heilung 30 % bleibt).
-604. [P2] Dawn Mend von Energie 5 auf 6, Heilung bleibt 50 %, damit sie nicht jede zweite Runde passt.
-605. [P2] Heat Haze, Murk Veil und Silt Cloud (alle Daze) bekommen dieselbe Genauigkeit von 90 % und dieselben Kosten von 3 Energie.
-606. [P2] Kindle Up, Hunker Down, Drift Step und Still Thought kosten weiter 2 Energie, geben aber 2 Stufen, wenn der Nutzer volle Kraft hat (Schlüssel `stages_full_hp`).
-607. [P3] Cower Shade von Genauigkeit 95 % auf 100 %.
-608. [P3] Chill Mist trifft alle Gegner, Genauigkeit bleibt 95 %, Energie von 2 auf 3.
+591. [x] [P2] Bloom Burst von Stärke 90, Genauigkeit 90 % auf Stärke 95, Genauigkeit 90 %.
+592. [x] [P2] Breaker Plunge von Genauigkeit 85 % auf 90 %, Rückstoß von 25 % auf 20 %.
+593. [x] [P2] Radiant Lance von Stärke 85, Energie 6 auf Stärke 90, Energie 6.
+594. [x] [P2] Kiln Strike von Stärke 75, Genauigkeit 90 % auf Stärke 75, Genauigkeit 95 %.
+595. [x] [P2] Salt Snap Soak-Chance von 10 % auf 20 %.
+596. [x] [P3] Pebble Toss von Genauigkeit 95 % auf 100 %.
+597. [x] [P2] Bowl Over von Stärke 35 auf 30, bleibt bei Energie 1 als billigster Stone-Schlag.
+598. [x] [P2] Tunnel Strike erhält 20 % Chance auf eigenen Schutz +1.
+599. [x] [P2] Night Siphon von Stärke 50 auf 60, Heilanteil 50 % bleibt.
+600. [x] [P2] Dusk Rake erhält 20 % Chance auf Wucht -1 beim Ziel.
+601. [x] [P2] Thorn Volley von Energie 4 auf 5 und Stärke 65 auf 75, damit der Flächenschlag neben Sap Draw lohnt.
+602. [x] [P2] Charged Mist von Genauigkeit 85 % auf 80 %, weil Jolt gegen alle Gegner im Mehrfachkampf sonst zu sicher ist.
+603. [x] [P3] Candle Ward von Energie 3 auf 2 (Heilung 30 % bleibt).
+604. [x] [P2] Dawn Mend von Energie 5 auf 6, Heilung bleibt 50 %, damit sie nicht jede zweite Runde passt.
+605. [x] [P2] Heat Haze, Murk Veil und Silt Cloud (alle Daze) bekommen dieselbe Genauigkeit von 90 % und dieselben Kosten von 3 Energie. Erledigt für Heat Haze und Murk Veil; Silt Cloud kommt mit Punkt 484 gleich mit diesen Werten.
+606. [x] [P2] Kindle Up, Hunker Down, Drift Step und Still Thought kosten weiter 2 Energie, geben aber 2 Stufen, wenn der Nutzer volle Kraft hat (Schlüssel `stages_full_hp`). Erledigt: Ausgleich für Glimmerax (Prism Burst Ring 35) und Lumenewt (Radiant Lance Ring 35), damit der Teamkampf-Test im Band bleibt.
+607. [x] [P3] Cower Shade von Genauigkeit 95 % auf 100 %.
+608. [x] [P3] Chill Mist trifft alle Gegner, Genauigkeit bleibt 95 %, Energie von 2 auf 3.
 609. [P3] Breeze Slice von Stärke 40 auf 35, weil Draft Needle die neue Gale-Prioritätstechnik mit Energie 1 wird.
 610. [P3] Updraft erhält 20 % Chance auf eigenes Tempo +1.
 

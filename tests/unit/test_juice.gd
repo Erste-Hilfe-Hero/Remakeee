@@ -78,14 +78,14 @@ func test_pop_returns_to_scale_one() -> void:
 
 func test_shake_offset_is_whole_and_within_limits() -> void:
 	for i: int in 200:
-		var o: Vector2 = Juice.shake_offset(1.0)
+		var o: Vector2 = Juice.shake_offset(1.0, i * 0.013)
 		assert_eq(o, o.round())
 		assert_lte(absf(o.x), 3.0)
 		assert_lte(absf(o.y), 2.0)
 	assert_eq(Juice.shake_offset(0.0), Vector2.ZERO)
 	GameState.screen_shake = 1
 	for i: int in 50:
-		assert_lte(absf(Juice.shake_offset(1.0).x), 2.0)
+		assert_lte(absf(Juice.shake_offset(1.0, i * 0.013).x), 2.0)
 
 func test_shake_root_returns_exactly_home() -> void:
 	var root := Control.new()

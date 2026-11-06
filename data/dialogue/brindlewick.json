@@ -88,7 +88,24 @@
   "lines": [
    "Crier: Hear ye! Veydal keeps its festivals, storm or no storm."
   ],
-  "action": "season"
+  "action": "season",
+  "daily": [
+   [
+    "Crier: Hear ye! The ferryman swears the lake was warm this morning. Nobody believes him."
+   ],
+   [
+    "Crier: Hear ye! Lost: one fishing hat. Found: one Kelpup wearing a fishing hat."
+   ],
+   [
+    "Crier: Hear ye! The lighthouse lamp burned all night again. Aldo says it always will."
+   ],
+   [
+    "Crier: Hear ye! Market day! Bring coin, bring baskets, leave your Spirlings' muddy paws outside."
+   ],
+   [
+    "Crier: Hear ye! Mind the reeds by the pier. Something hums in there at dusk."
+   ]
+  ]
  },
  "wynn": {
   "lines": [
