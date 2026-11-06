@@ -599,6 +599,12 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
+	# Every spring can swap the team with storage, even before storage opens from the menu,
+	# and load a saved team with one tap (plan area 1, items 378 and 381).
+	if not GameState.storage.is_empty() or not GameState.team_presets.is_empty():
+		var c: int = await _picker.pick("Swap Spirlings here?", [{"text": "Storage"}, {"text": "Go on"}] as Array[Dictionary])
+		if c == 0:
+			await _action_storage(PackedStringArray(), null)
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := PauseMenu.new()
@@ -627,9 +633,12 @@ func open_menu() -> void:
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
 	var duel: Dictionary = menu.echo_duel
+	var league: Dictionary = menu.league_match
 	menu.queue_free()
 	if not duel.is_empty():
 		await echo_duel(duel)
+	if not league.is_empty():
+		await league_battle(league)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -1477,6 +1486,36 @@ func echo_duel(d: Dictionary) -> void:
 	busy = false
 	player.frozen = false
 
+## League battle (plan area 7, items 2730-2772): the server picked the seed and both teams, the
+## rival's echo is run by the AI. The result only counts once the server's referee says ok (2691).
+func league_battle(m: Dictionary) -> void:
+	var snap: Dictionary = BattleReferee.from_expect(m)
+	var model: BattleModel = BattleReplay.build_model(snap)
+	if model == null:
+		await say(["The league battle could not start. Try again later."] as Array[String])
+		return
+	model.trainer_name = "League rival"
+	var foes: Array[Spirling] = []
+	foes.assign(model.parties[1])
+	await say(["A rival's echo steps into the league ring."] as Array[String])
+	busy = false
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": "League rival", "model": model, "friendly": true})
+	busy = true
+	player.frozen = true
+	var kind: String = "league_" + str(m.get("league", LeagueRules.FAIR))
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind, "p_ref": str(m.get("match_id", "")),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+	var lines: Array[String] = ["You won the league battle!" if outcome == BattleModel.Outcome.WIN else "The rival won this league battle."]
+	if not bool(m.get("rated", true)):
+		lines.append("The season ends soon, so this battle does not count.")
+	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		lines.append("Your result is being checked. It counts once the check is done.")
+	else:
+		lines.append("The result could not be sent, so it does not count.")
+	await say(lines)
+	busy = false
+	player.frozen = false
+
 # --- Battles --------------------------------------------------------------------------
 
 ## Cuts to the battle screen and waits for it to end. [param trainer] holds Wayfarer info (M5).
@@ -1489,6 +1528,40 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		GameState.note_spirlog(f, false)
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
+	# A league battle comes ready-made from the server's seed and teams (plan area 7).
+	var preset: Variant = trainer.get("model")
+	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
+	var scene: BattleScene = BATTLE_SCENE.instantiate()
+	scene.setup(model)
+	scene.backdrop = map.backdrop
+	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
+	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
+	_battle_layer.add_child(scene)
+	_fade.color.a = 0.0
+	var result: Array = await scene.battle_finished
+	var outcome: BattleModel.Outcome = result[0]
+	replay["inputs"] = scene.inputs
+	GameState.records["last_battle"] = replay
+	GameState.note_battle_end()
+	last_claim = BattleReferee.claim_of(model)
+	await _fade_to(1.0)
+	scene.queue_free()
+	if bool(trainer.get("friendly", false)):
+		await _fade_to(0.0)
+	else:
+		await _after_battle(model, outcome)
+	Sound.music(Sound.track_for_map(map.id))
+	EncounterTable.start_guard()
+	await _fade_to(0.0)
+	await announce_achievements()
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
+	battle_ended.emit(outcome)
+	return outcome
+
+## The battle for [method start_battle] from the overworld's state and [param trainer].
+func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> BattleModel:
 	var ai_level: int = 0 if wild else int(trainer.get("ai", GameState.ai_level()))
 	# Echo duels fight with level-matched copies, so the real team never changes (item 123).
 	var own: Variant = trainer.get("player_team")
@@ -1521,34 +1594,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
 			int(partner.get("ai", TrainerData.PARTNER_AI)))
-	var scene: BattleScene = BATTLE_SCENE.instantiate()
-	scene.setup(model)
-	scene.backdrop = map.backdrop
-	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
-	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
-	_battle_layer.add_child(scene)
-	_fade.color.a = 0.0
-	var result: Array = await scene.battle_finished
-	var outcome: BattleModel.Outcome = result[0]
-	replay["inputs"] = scene.inputs
-	GameState.records["last_battle"] = replay
-	GameState.note_battle_end()
-	last_claim = BattleReferee.claim_of(model)
-	await _fade_to(1.0)
-	scene.queue_free()
-	if bool(trainer.get("friendly", false)):
-		await _fade_to(0.0)
-	else:
-		await _after_battle(model, outcome)
-	Sound.music(Sound.track_for_map(map.id))
-	EncounterTable.start_guard()
-	await _fade_to(0.0)
-	await announce_achievements()
-	VirtualPad.set_wanted(true)
-	player.frozen = false
-	busy = false
-	battle_ended.emit(outcome)
-	return outcome
+	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
@@ -1565,6 +1611,9 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		GameState.receive_spirling(model.bonded)
+		# Wild Spirlings keep their temperament to themselves until they bond (item 315).
+		var tm: Dictionary = model.bonded.temperament()
+		await say(["%s seems %s." % [model.bonded.display_name(), Loc.t(str(tm.label)).to_lower()]] as Array[String])
 		var bond_elements: Array[String] = []
 		for e: int in model.bonded.elements():
 			bond_elements.append(Elements.E.keys()[e])
