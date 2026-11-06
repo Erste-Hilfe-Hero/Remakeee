@@ -5,23 +5,23 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 > **Auftrag für den umsetzenden Thread:** Ziel ist, dass sich Chimora in Epoche I (Tinte, 144×256) schon vor dem Store-Start lebendig, satt und rund anfühlt: jede Eingabe bekommt eine Antwort in Bewegung, Klang und auf Wunsch Vibration, und jeder Ort bekommt sein eigenes Musikstück. Betroffen sind vor allem scripts/core/ (neue Autoloads Juice, Haptics, MusicDirector), scripts/battle/presenter/, scripts/overworld/, scripts/ui/, shaders/, data/music.json, tools/art/, tools/audio/ und docs/ASSET_LOG.md. Fang mit dem Werkzeugkasten (Juice.gd mit festen Tween-Kurven, Bildschirmwackeln, Treffer-Stopp) und dem Haptik-Autoload an, weil fast alle anderen Punkte darauf aufbauen; danach folgen Musik pro Ort und die Element-Effekte. Nicht in diesen Bereich gehören neue Spirling-Designs, Shop-Kosmetik, Kampfregeln und Zahlenwerte, die Grafik-Epochen II bis V sowie alles, was bereits in DESIGN_EPOCHS.md oder KAMPF_PLAN_1000.md steht (zum Beispiel Tinten-Übergang in den Kampf, Idle-Frames, Status- und Stufen-Klänge, Sieges- und Niederlagen-Jingle).
 
 ### Werkzeugkasten für Spielgefühl und Tween-Kurven
-2225. [P1] Neuen Autoload scripts/core/Juice.gd anlegen, der alle Spielgefühl-Helfer (Kurven, Wackeln, Treffer-Stopp, Pop, Nachfedern) an einer Stelle bündelt und von überall per Juice.<name>() aufrufbar ist.
-2226. [P1] In Juice.gd eine feste Kurventabelle CURVES festlegen: "open" = TRANS_BACK/EASE_OUT 0,18 s, "close" = TRANS_QUAD/EASE_IN 0,12 s, "move" = TRANS_CUBIC/EASE_IN_OUT 0,22 s, "impact" = TRANS_EXPO/EASE_OUT 0,10 s, "settle" = TRANS_ELASTIC/EASE_OUT 0,35 s.
+2225. [x] [P1] Neuen Autoload scripts/core/Juice.gd anlegen, der alle Spielgefühl-Helfer (Kurven, Wackeln, Treffer-Stopp, Pop, Nachfedern) an einer Stelle bündelt und von überall per Juice.<name>() aufrufbar ist.
+2226. [x] [P1] In Juice.gd eine feste Kurventabelle CURVES festlegen: "open" = TRANS_BACK/EASE_OUT 0,18 s, "close" = TRANS_QUAD/EASE_IN 0,12 s, "move" = TRANS_CUBIC/EASE_IN_OUT 0,22 s, "impact" = TRANS_EXPO/EASE_OUT 0,10 s, "settle" = TRANS_ELASTIC/EASE_OUT 0,35 s.
 2227. [P2] Eine Regel in AGENTS.md ergänzen, dass neue Tweens nur noch über Juice.tween(node, prop, wert, "kurve") entstehen, damit sich Dauer und Gefühl zentral nachstellen lassen.
-2228. [P1] Juice.pop(node) bauen: Skalierung 1,0 auf 1,15 in 0,06 s und zurück mit "settle", für Bestätigungen, Belohnungen und Treffer auf UI-Elementen.
-2229. [P1] Alle Juice-Tweens runden Positionen nach jedem Schritt auf ganze Pixel (process-Callback), damit nichts zwischen Pixeln verschwimmt.
-2230. [P1] Juice.speed() liest GameState.battle_speed_scale() und teilt im Kampf jede Dauer automatisch, damit 2x und 4x ohne Sonderfälle funktionieren.
-2231. [P1] Juice.reduced() als einzige Abfrage für GameState.reduce_motion einführen und alle bestehenden direkten Abfragen in SpirlingSprite.gd und Overworld.gd darauf umstellen.
-2232. [P1] Bestehende Tweens in SpirlingSprite.gd (step_out, step_back, lunge, faint) auf die Kurven "move" und "impact" umstellen, damit sie nicht mehr linear laufen.
+2228. [x] [P1] Juice.pop(node) bauen: Skalierung 1,0 auf 1,15 in 0,06 s und zurück mit "settle", für Bestätigungen, Belohnungen und Treffer auf UI-Elementen.
+2229. [x] [P1] Alle Juice-Tweens runden Positionen nach jedem Schritt auf ganze Pixel (process-Callback), damit nichts zwischen Pixeln verschwimmt.
+2230. [x] [P1] Juice.speed() liest GameState.battle_speed_scale() und teilt im Kampf jede Dauer automatisch, damit 2x und 4x ohne Sonderfälle funktionieren.
+2231. [x] [P1] Juice.reduced() als einzige Abfrage für GameState.reduce_motion einführen und alle bestehenden direkten Abfragen in SpirlingSprite.gd und Overworld.gd darauf umstellen.
+2232. [x] [P1] Bestehende Tweens in SpirlingSprite.gd (step_out, step_back, lunge, faint) auf die Kurven "move" und "impact" umstellen, damit sie nicht mehr linear laufen.
 2233. [P2] Die Überblendung _fade_to in Overworld.gd auf Kurve "close" beim Abdunkeln und "open" ohne Überschwingen (TRANS_SINE/EASE_OUT) beim Aufhellen umstellen.
-2234. [P2] GUT-Test tests/unit/test_juice.gd prüft, dass jede Kurve existiert, jede Dauer zwischen 0,05 und 0,6 s liegt und reduced() alle Bewegungs-Helfer auf 0 s verkürzt.
+2234. [x] [P2] GUT-Test tests/unit/test_juice.gd prüft, dass jede Kurve existiert, jede Dauer zwischen 0,05 und 0,6 s liegt und reduced() alle Bewegungs-Helfer auf 0 s verkürzt.
 2235. [P2] Juice.nudge(node, richtung, px) für kurzes Anstoßen um 1 bis 3 Pixel in eine Richtung mit Rückfedern in 0,1 s bauen.
 2236. [P2] Juice.count_to(label, von, bis, dauer) bauen, das Zahlen hochzählt (Münzen, Wachstum, Rangpunkte) und bei jedem zehnten Schritt einen leisen Tick spielt.
 2237. [P2] Juice.stagger(nodes, abstand) bauen, das Listen-Einträge mit 0,03 s Versatz nacheinander einblendet.
 2238. [P2] Juice.blink_safe(node) bauen, der statt hartem An-und-Aus die Helligkeit über modulate zwischen 100 % und 60 % pendeln lässt, höchstens 3 Mal pro Sekunde.
 2239. [P2] Juice.wobble(node, grad, dauer) bauen, der ein Element um höchstens 4 Grad schwingen lässt, für wackelnde Hinweise wie neue Geschenke.
 2240. [P3] Juice.float_text(text, position, farbe) bauen, der kurze Texte 10 Pixel nach oben steigen und in 0,6 s ausblenden lässt.
-2241. [P2] Juice speichert laufende Tweens pro Node und Eigenschaft und bricht einen alten Tween ab, bevor ein neuer startet, damit sich nichts aufschaukelt.
+2241. [x] [P2] Juice speichert laufende Tweens pro Node und Eigenschaft und bricht einen alten Tween ab, bevor ein neuer startet, damit sich nichts aufschaukelt.
 2242. [P2] Ein Debug-Schalter "Juice x0,25" im Debug-Menü verlangsamt alle Juice-Tweens auf ein Viertel, um Kurven sauber abzustimmen.
 2243. [P3] Ein Debug-Schalter "Juice aus" schaltet alle Helfer ab, damit man im Vergleich sieht, was sie bringen.
 2244. [P2] docs/JUICE.md schreiben mit der Kurventabelle, je einem Beispiel pro Helfer und der Regel, wann welche Kurve gilt.
@@ -35,13 +35,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2252. [P3] Eine Testszene scenes/debug/JuiceLab.tscn mit Knöpfen für jeden Helfer, damit Gefühl und Kurven ohne Spielstand ausprobiert werden können.
 
 ### Bildschirmwackeln und Treffer-Stopp
-2253. [P1] Bildschirmwackeln als Trauma-System in Juice.gd bauen: Trauma von 0 bis 1, Versatz = Trauma² mal Höchstwert, Abbau 1,8 pro Sekunde.
-2254. [P1] Höchstversatz beim Wackeln auf 3 Pixel waagrecht und 2 Pixel senkrecht festlegen, immer ganzzahlig, damit die 144 Pixel Breite lesbar bleiben.
-2255. [P1] Wackeln wird auf einen eigenen Wurzel-Node (ShakeRoot) unter dem SubViewport angewendet, nie auf die UI-Ebene, damit Menüs und Texte ruhig bleiben.
-2256. [P1] Trauma-Werte festlegen: normaler Treffer 0,20, starker Treffer (hit_strong) 0,40, Spirling zieht sich zurück 0,30, Rift-Wächter erscheint 0,55.
-2257. [P1] Treffer-Stopp für normale Treffer bauen: das Spiel friert 40 ms plus 60 ms mal Anteil der verlorenen Kraft ein, höchstens 100 ms, über Engine.time_scale = 0,05.
-2258. [P1] Treffer-Stopp und Wackeln sind bei Juice.reduced() aus; stattdessen bekommt der getroffene Spirling nur einen 1-Pixel-Ruck.
-2259. [P1] Einstellung "Bildschirmwackeln" mit den Stufen Aus, Schwach (50 %) und Voll (100 %) in den Einstellungen von MenuHost.gd ergänzen und in settings_to_dict speichern.
+2253. [x] [P1] Bildschirmwackeln als Trauma-System in Juice.gd bauen: Trauma von 0 bis 1, Versatz = Trauma² mal Höchstwert, Abbau 1,8 pro Sekunde.
+2254. [x] [P1] Höchstversatz beim Wackeln auf 3 Pixel waagrecht und 2 Pixel senkrecht festlegen, immer ganzzahlig, damit die 144 Pixel Breite lesbar bleiben.
+2255. [x] [P1] Wackeln wird auf einen eigenen Wurzel-Node (ShakeRoot) unter dem SubViewport angewendet, nie auf die UI-Ebene, damit Menüs und Texte ruhig bleiben.
+2256. [x] [P1] Trauma-Werte festlegen: normaler Treffer 0,20, starker Treffer (hit_strong) 0,40, Spirling zieht sich zurück 0,30, Rift-Wächter erscheint 0,55.
+2257. [x] [P1] Treffer-Stopp für normale Treffer bauen: das Spiel friert 40 ms plus 60 ms mal Anteil der verlorenen Kraft ein, höchstens 100 ms, über Engine.time_scale = 0,05.
+2258. [x] [P1] Treffer-Stopp und Wackeln sind bei Juice.reduced() aus; stattdessen bekommt der getroffene Spirling nur einen 1-Pixel-Ruck.
+2259. [x] [P1] Einstellung "Bildschirmwackeln" mit den Stufen Aus, Schwach (50 %) und Voll (100 %) in den Einstellungen von MenuHost.gd ergänzen und in settings_to_dict speichern.
 2260. [P2] Wackel-Richtung pro Element: Stone wackelt nur senkrecht, Gale nur waagrecht, Volt mit doppelter Frequenz und halber Weite, alle anderen kreisförmig.
 2261. [P2] Wackel-Frequenz als Rauschen mit 30 Hz statt Zufall pro Bild berechnen, damit es nicht flimmert, sondern rollt.
 2262. [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
@@ -49,8 +49,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2264. [P3] Kleines Wackeln (Trauma 0,10) beim Öffnen einer verschlossenen Tür oder eines Durchgangs nach einer Story-Bedingung.
 2265. [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
 2266. [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
-2267. [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
-2268. [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
+2267. [x] [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
+2268. [x] [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
 2269. [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
 2270. [P2] GUT-Test prüft, dass ShakeRoot nach Ende des Traumas exakt auf (0, 0) zurückkehrt und kein Restversatz bleibt.
 2271. [P3] Gerichtetes Wackeln: der erste Ausschlag zeigt in die Richtung, aus der der Treffer kam, danach freies Ausschwingen.
@@ -120,7 +120,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2329. [P1] Pro Spirling ein Bewegungsprofil (hüpfen, schleichen, wogen, stampfen, gleiten am Boden) als Feld "motion" in data/spirlings.json für die bestehenden 21 Spirlings eintragen.
 2330. [P1] Beim Auftreten nutzt SpirlingSprite.step_out das Bewegungsprofil: hüpfen in 2 Sprüngen zu je 4 Pixeln Höhe, stampfen mit Trauma 0,1 beim Aufsetzen, schleichen mit Kurve "move".
 2331. [P1] Technik-Ausholbewegung nach Art: körperliche Techniken (PHYSICAL) holen 3 Pixel nach hinten aus und schnellen vor, besondere Techniken heben den Spirling 2 Pixel an und senken ihn beim Auslösen, Status-Techniken lassen ihn kurz zweimal wippen.
-2332. [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
+2332. [x] [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
 2333. [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
 2334. [P2] Ring-Aufstieg in der Welt (nach Kampf oder Gegenstand): derselbe Ring über dem Teamplatz im Pausemenü, wenn man es danach öffnet.
 2335. [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
@@ -395,11 +395,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2586. [P3] Umgebungsklänge zusammen höchstens 2,5 MB; gen_audio.py prüft die Grenze beim Erzeugen.
 
 ### Haptik und Vibration
-2587. [P1] Neuer Autoload scripts/core/Haptics.gd, der auf Handys Input.vibrate_handheld(dauer_ms, stärke) nutzt und auf Gamepads das bestehende GameState.rumble_pads aufruft.
-2588. [P1] Android-Exportvorlage in export_presets.cfg um die Berechtigung VIBRATE ergänzen und prüfen, dass der Export sie enthält.
-2589. [P1] Feste Muster in Haptics.gd: "tap" 10 ms/0,3, "confirm" 15 ms/0,5, "hit" 25 ms/0,7, "heavy" 45 ms/1,0, "error" zweimal 15 ms mit 40 ms Pause.
-2590. [P1] Die bestehende Einstellung "rumble" wird zu "Vibration" mit den Stufen Aus, Schwach (50 %) und Voll und gilt für Handy und Gamepad.
-2591. [P1] Treffer im Kampf rufen Haptics "hit" auf, starke Treffer "heavy", gekoppelt an dieselbe Stelle wie das Bildschirmwackeln in BattleScene.gd.
+2587. [x] [P1] Neuer Autoload scripts/core/Haptics.gd, der auf Handys Input.vibrate_handheld(dauer_ms, stärke) nutzt und auf Gamepads das bestehende GameState.rumble_pads aufruft.
+2588. [x] [P1] Android-Exportvorlage in export_presets.cfg um die Berechtigung VIBRATE ergänzen und prüfen, dass der Export sie enthält.
+2589. [x] [P1] Feste Muster in Haptics.gd: "tap" 10 ms/0,3, "confirm" 15 ms/0,5, "hit" 25 ms/0,7, "heavy" 45 ms/1,0, "error" zweimal 15 ms mit 40 ms Pause.
+2590. [x] [P1] Die bestehende Einstellung "rumble" wird zu "Vibration" mit den Stufen Aus, Schwach (50 %) und Voll und gilt für Handy und Gamepad.
+2591. [x] [P1] Treffer im Kampf rufen Haptics "hit" auf, starke Treffer "heavy", gekoppelt an dieselbe Stelle wie das Bildschirmwackeln in BattleScene.gd.
 2592. [P2] Bestätigen in Menüs ruft "tap" auf, aber höchstens einmal pro 80 ms, damit schnelles Tippen nicht dauernd brummt.
 2593. [P2] Gesperrte Menüpunkte und Fehler (Name zu lang, keine Verbindung) rufen "error" auf.
 2594. [P2] Ein Wanderer entdeckt die Spielfigur: zwei kurze "tap" mit 60 ms Abstand passend zum "!".
@@ -469,7 +469,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 ### Leistung und Zugänglichkeit der Darstellung
 2653. [P1] Einstellung "Klang-Untertitel": wichtige Klänge (Wanderer entdeckt, Rift in der Nähe, Begegnung, Gegenstand) erscheinen als kurzer Text am oberen Rand, zum Beispiel "[Rascheln im Gras]".
 2654. [P1] Leistungsziel für alle Punkte dieses Bereichs: auf dem schwächsten Ziel-Android-Gerät höchstens 2 ms zusätzliche Bildzeit im Kampf und 1 ms in der Welt.
-2655. [P1] Alle neuen Bewegungen respektieren die bestehende Einstellung reduce_motion über Juice.reduced(); ein GUT-Test schaltet sie ein und prüft, dass kein Tween länger als 0,15 s läuft.
+2655. [x] [P1] Alle neuen Bewegungen respektieren die bestehende Einstellung reduce_motion über Juice.reduced(); ein GUT-Test schaltet sie ein und prüft, dass kein Tween länger als 0,15 s läuft.
 2656. [P1] Kein Effekt dieses Bereichs wechselt die Helligkeit mehr als 3 Mal pro Sekunde um mehr als 2 Palettenstufen; ein Test prüft die Effekt-Galerie Bild für Bild.
 2657. [P2] Partikel, Wackeln und Shader-Übergänge werden im Energiesparmodus des Geräts (wenn das System ihn meldet) automatisch auf die ruhige Fassung gesetzt.
 2658. [P2] Visuelle Takt-Hilfe im Echo-Minispiel ist schon da; zusätzlich zeigt jede Marke beim Abspielen einen kurzen Ring, damit es auch ohne Ton lösbar bleibt.
