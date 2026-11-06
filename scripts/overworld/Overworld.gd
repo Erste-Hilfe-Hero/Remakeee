@@ -644,6 +644,12 @@ func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
 	else:
 		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
 
+## Echo Cores that are ready wake into a Hallkind (item 185).
+func _wake_cores() -> void:
+	for kid: Spirling in GameState.awaken_cores():
+		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
+		SaveManager.save_game()
+
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()
 	GameState.heal_party()
@@ -656,12 +662,29 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
 	await say(Tips.take("rest_spot"))
+	GameState.note_core_rest()
+	await _wake_cores()
 	# Every spring can swap the team with storage, even before storage opens from the menu,
 	# and load a saved team with one tap (plan area 1, items 378 and 381).
+	# After the second mended Rift every spring is an Echo spring (items 183-184).
+	var opts: Array[String] = []
 	if not GameState.storage.is_empty() or not GameState.team_presets.is_empty():
-		var c: int = await _picker.pick("Swap Spirlings here?", [{"text": "Storage"}, {"text": "Go on"}] as Array[Dictionary])
-		if c == 0:
+		opts.append("Storage")
+	if GameState.echo_spring_open():
+		opts.append("Sing together")
+	if not opts.is_empty():
+		opts.append("Go on")
+		var entries: Array[Dictionary] = []
+		for o: String in opts:
+			entries.append({"text": o})
+		var c: int = await _picker.pick("Swap Spirlings here?" if not GameState.echo_spring_open() else "The spring hums softly.", entries)
+		if c >= 0 and opts[c] == "Storage":
 			await _action_storage(PackedStringArray(), null)
+		elif c >= 0 and opts[c] == "Sing together":
+			var menu := PauseMenu.new()
+			_ui.add_child(menu)
+			await menu.run_sing_together()
+			menu.queue_free()
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := PauseMenu.new()
@@ -1527,13 +1550,13 @@ func challenge(n: NPC, spotted: bool) -> void:
 	if def.has("warden"):
 		# Warden fights are long; never lose progress to a crash or the OS closing the app.
 		SaveManager.save_game()
-	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng)
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty)
 	if team.is_empty():
 		push_warning("Overworld: Wayfarer '%s' has no valid team" % n.npc_id)
 		busy = false
 		player.frozen = false
 		return
-	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
 	# Helper call (item 46): after losing to a Warden once, a friend's echo can fight beside you.
 	var losses: Dictionary = GameState.records.get("warden_losses", {})
 	var lost_key: String = TrainerData.beaten_flag(def, map.id)
@@ -1625,13 +1648,13 @@ func offer_rematch(n: NPC) -> bool:
 	var top: int = 1
 	for s: Spirling in GameState.party:
 		top = maxi(top, s.level)
-	var team: Array[Spirling] = TrainerData.rematch_team(def, GameState.starter, GameState.rng, top, GameState.level_cap())
+	var team: Array[Spirling] = TrainerData.rematch_team(def, GameState.starter, GameState.rng, top, GameState.level_cap(), GameState.difficulty)
 	if team.is_empty():
 		VirtualPad.set_wanted(true)
 		player.frozen = false
 		busy = false
 		return false
-	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level())
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
 	info["money"] = TrainerData.MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	if outcome == BattleModel.Outcome.WIN:
@@ -1785,6 +1808,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	Sound.music(Sound.track_for_map(map.id))
 	EncounterTable.start_guard()
 	await _fade_to(0.0)
+	await _wake_cores()
 	await announce_achievements()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
@@ -1808,6 +1832,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
+	model.ai.set_profile(str(trainer.get("profile", "")))
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.prize_money = int(trainer.get("money", 0))
@@ -1823,7 +1848,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		if partner.get("echo") is Array:
 			ally.assign(partner.echo)
 		else:
-			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
+			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng, GameState.difficulty)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
 			int(partner.get("ai", TrainerData.PARTNER_AI)))
 	return model
@@ -1833,6 +1858,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:
 		Online.contribute("battles")
+		GameState.note_core_win()
 		var foe_elements: Array[String] = []
 		for f: Spirling in model.parties[1]:
 			for e: int in f.elements():

@@ -42,18 +42,37 @@ static func validate() -> PackedStringArray:
 			if TrainerData.is_trainer(n):
 				_check_dialogue(errors, id, str(n.get("intro", "")))
 				_check_dialogue(errors, id, str(n.get("defeat", "")))
-				var teams: Array = [n.get("team", [])]
+				var teams: Array = [n.get("team", [])] if n.has("team") or not n.has("teams_by_difficulty") else []
 				if n.has("team_by_starter"):
 					teams = (n.team_by_starter as Dictionary).values()
 					for st: String in Database.STARTERS:
 						if not (n.team_by_starter as Dictionary).has(st):
 							errors.append("map '%s': rival '%s' has no team for starter %s" % [id, n.get("id", ""), st])
+				if n.get("teams_by_difficulty") is Dictionary:
+					for k: String in n.teams_by_difficulty:
+						if not k in TrainerData.DIFFICULTY_KEYS:
+							errors.append("map '%s': npc '%s' has unknown difficulty team '%s'" % [id, n.get("id", ""), k])
+						teams.append(n.teams_by_difficulty[k])
+				if teams.size() < TrainerData.DIFFICULTY_KEYS.size() and not n.has("team") and not n.has("team_by_starter"):
+					errors.append("map '%s': npc '%s' lacks a team for some difficulties" % [id, n.get("id", "")])
+				if n.get("rule_by_difficulty") is Dictionary:
+					for k: String in n.rule_by_difficulty:
+						if not k in TrainerData.DIFFICULTY_KEYS or not BattleRules.RULES.has(str(n.rule_by_difficulty[k])):
+							errors.append("map '%s': npc '%s' has a bad difficulty rule %s" % [id, n.get("id", ""), k])
+				if n.has("profile") and not BattleAI.profiles().has(str(n.profile)):
+					errors.append("map '%s': npc '%s' has unknown AI profile '%s'" % [id, n.get("id", ""), n.profile])
 				for t: Variant in teams:
 					if (t as Array).is_empty():
 						errors.append("map '%s': wayfarer '%s' has an empty team" % [id, n.get("id", "")])
 					for entry: Variant in t:
 						if Database.species(str((entry as Dictionary).get("species", ""))) == null:
 							errors.append("map '%s': npc '%s' has unknown team species %s" % [id, n.get("id", ""), entry])
+						for mv: Variant in (entry as Dictionary).get("moves", []):
+							if Database.move(str(mv)) == null:
+								errors.append("map '%s': npc '%s' has unknown team art '%s'" % [id, n.get("id", ""), mv])
+						var held: String = str((entry as Dictionary).get("held", ""))
+						if not held.is_empty() and not Database.item(held).has("held"):
+							errors.append("map '%s': npc '%s' holds '%s', which is no keepsake" % [id, n.get("id", ""), held])
 				errors.append_array(format_errors(n, id))
 		for s: Dictionary in m.signs:
 			_check_dialogue(errors, id, str(s.get("dialogue", "")))

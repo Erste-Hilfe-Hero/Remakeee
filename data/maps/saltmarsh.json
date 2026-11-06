@@ -70,13 +70,65 @@
    "team": [
     {
      "species": "Puddlet",
-     "level": 12
+     "level": 12,
+     "moves": [
+      "Tide Call",
+      "Spout Jab"
+     ]
     },
     {
      "species": "Zephlet",
-     "level": 13
+     "level": 13,
+     "moves": [
+      "Crosswind"
+     ]
     }
-   ]
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Puddlet",
+      "level": 12,
+      "moves": [
+       "Tide Call",
+       "Spout Jab"
+      ]
+     },
+     {
+      "species": "Zephlet",
+      "level": 13,
+      "moves": [
+       "Crosswind"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Puddlet",
+      "level": 12,
+      "moves": [
+       "Tide Call",
+       "Spout Jab"
+      ],
+      "held": "bark_wrap"
+     },
+     {
+      "species": "Zephlet",
+      "level": 13,
+      "moves": [
+       "Crosswind"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     }
+    ]
+   }
   },
   {
    "id": "kestra_tag",
