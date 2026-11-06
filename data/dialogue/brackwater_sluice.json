@@ -1,0 +1,20 @@
+{
+ "sluice_a": {
+  "lines": [
+   "A great iron wheel works a sluice gate."
+  ],
+  "action": "toggle sluice_a"
+ },
+ "sluice_b": {
+  "lines": [
+   "A great iron wheel works a sluice gate."
+  ],
+  "action": "toggle sluice_b"
+ },
+ "sluice_c": {
+  "lines": [
+   "A great iron wheel works a sluice gate."
+  ],
+  "action": "toggle sluice_c"
+ }
+}

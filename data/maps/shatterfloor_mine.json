@@ -1,0 +1,81 @@
+{
+ "name": "Shatterfloor Mine",
+ "region": "veydal",
+ "biome": "dungeon",
+ "backdrop": "ridge",
+ "field": "deep_murk",
+ "encounters": "shatterfloor_mine",
+ "rows": [
+  "@@@@@@@@@@@@",
+  "@.....kkk..@",
+  "@.kkk.k.k..@",
+  "@.k.kkk.k..@",
+  "@.k.....kk.@",
+  "@.kkkkk..k.@",
+  "@:....k..k:@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 7,
+   "to": "copperfold",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "to": "copperfold",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 1,
+   "item": "max_tonic",
+   "count": 2,
+   "flag": "find_shatter_far"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Shatterfloor Mine, lower gallery",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@::........@",
+    "@..::......@",
+    "@......::..@",
+    "@...::.....@",
+    "@..........@",
+    "@=.........@",
+    "@@@@@@@@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 1,
+     "y": 6,
+     "to": "shatterfloor_mine",
+     "tx": 5,
+     "ty": 6,
+     "facing": "up"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 6,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_shatter_low"
+    }
+   ]
+  }
+ ],
+ "drop_to": "shatterfloor_mine@1"
+}

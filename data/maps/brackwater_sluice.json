@@ -1,0 +1,418 @@
+{
+ "name": "Brackwater Sluice",
+ "region": "veydal",
+ "biome": "dungeon",
+ "backdrop": "lake",
+ "field": "deep_murk",
+ "encounters": "brackwater_sluice",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@~~~~++~~~~@",
+  "@~~~~++~~~~@",
+  "@~~~~++~~~~@",
+  "@..S.......@",
+  "@:........:@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 6,
+   "to": "brackwater_fen",
+   "tx": 1,
+   "ty": 13,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "brackwater_sluice@1",
+   "tx": 5,
+   "ty": 5,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 6,
+   "to": "brackwater_fen",
+   "tx": 1,
+   "ty": 13,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "brackwater_sluice@1",
+   "tx": 6,
+   "ty": 5,
+   "facing": "up"
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "brackwater_sluice/sluice_a"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 2,
+   "open_flag": "_water_ge_1",
+   "closed": "~"
+  },
+  {
+   "x": 6,
+   "y": 2,
+   "open_flag": "_water_ge_1",
+   "closed": "~"
+  }
+ ],
+ "floors": [
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@..........@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "sluices": [
+    "sluice_a",
+    "sluice_b",
+    "sluice_c"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "brackwater_sluice",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "brackwater_sluice@2",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "brackwater_sluice",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "brackwater_sluice@2",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 2,
+     "open_flag": "_water_le_1",
+     "closed": "~"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "open_flag": "_water_le_1",
+     "closed": "~"
+    }
+   ],
+   "name": "Brackwater Sluice, basin 2"
+  },
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@..S.......@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "sluices": [
+    "sluice_a",
+    "sluice_b",
+    "sluice_c"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "brackwater_sluice@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "brackwater_sluice@3",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "brackwater_sluice@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "brackwater_sluice@3",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 2,
+     "open_flag": "_water_ge_2",
+     "closed": "~"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "open_flag": "_water_ge_2",
+     "closed": "~"
+    }
+   ],
+   "signs": [
+    {
+     "x": 3,
+     "y": 4,
+     "dialogue": "brackwater_sluice/sluice_b"
+    }
+   ],
+   "name": "Brackwater Sluice, basin 3"
+  },
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@..........@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "sluices": [
+    "sluice_a",
+    "sluice_b",
+    "sluice_c"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "brackwater_sluice@2",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "brackwater_sluice@4",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "brackwater_sluice@2",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "brackwater_sluice@4",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 2,
+     "open_flag": "_water_le_2",
+     "closed": "~"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "open_flag": "_water_le_2",
+     "closed": "~"
+    }
+   ],
+   "name": "Brackwater Sluice, basin 4"
+  },
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@..S.......@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "sluices": [
+    "sluice_a",
+    "sluice_b",
+    "sluice_c"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "brackwater_sluice@3",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "brackwater_sluice@5",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "brackwater_sluice@3",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "brackwater_sluice@5",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 2,
+     "open_flag": "_water_ge_3",
+     "closed": "~"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "open_flag": "_water_ge_3",
+     "closed": "~"
+    }
+   ],
+   "signs": [
+    {
+     "x": 3,
+     "y": 4,
+     "dialogue": "brackwater_sluice/sluice_c"
+    }
+   ],
+   "name": "Brackwater Sluice, basin 5"
+  },
+  {
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@~~~~++~~~~@",
+    "@..........@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "sluices": [
+    "sluice_a",
+    "sluice_b",
+    "sluice_c"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "brackwater_sluice@4",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "brackwater_sluice@4",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 2,
+     "open_flag": "_water_ge_0",
+     "closed": "~"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "open_flag": "_water_ge_0",
+     "closed": "~"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 1,
+     "y": 4,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_sluice_end"
+    },
+    {
+     "x": 10,
+     "y": 5,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_sluice_corner"
+    }
+   ],
+   "name": "Brackwater Sluice, basin 6"
+  }
+ ],
+ "sluices": [
+  "sluice_a",
+  "sluice_b",
+  "sluice_c"
+ ]
+}

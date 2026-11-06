@@ -10,7 +10,7 @@
   "WffffffffW",
   "WffffffffW",
   "WCfffffffW",
-  "WffffffffW",
+  "W=fffffffW",
   "WWWWDWWWWW"
  ],
  "warps": [
@@ -21,6 +21,14 @@
    "tx": 3,
    "ty": 12,
    "facing": "down"
+  },
+  {
+   "x": 1,
+   "y": 6,
+   "to": "lanternwell",
+   "tx": 5,
+   "ty": 5,
+   "facing": "up"
   }
  ],
  "npcs": [

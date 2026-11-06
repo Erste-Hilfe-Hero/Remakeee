@@ -84,6 +84,9 @@ func _ready() -> void:
 		"echo_song": _action_echo_song,
 		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
+		"bell": _action_bell,
+		"toggle": _action_toggle,
+		"mirror": _action_mirror,
 		"first_voice": _action_first_voice,
 	}
 	_world = WorldMechanics.new(self)
@@ -1179,6 +1182,46 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 			Sound.sfx("warp")
 			_world.refresh(player.cell)
 			await say(["The last lamp catches. Somewhere, rock grinds against rock!"] as Array[String])
+
+## "bell <puzzle> <n> <total>": Bellstone Ruins (area 3 item 1008). Same rules as switches:
+## ring the bells in the order drawn on the wall; a wrong bell silences them all.
+func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 3:
+		return
+	if GameState.has_flag(args[0]):
+		await say(["The bell hums softly. This room is done."] as Array[String])
+		return
+	match GameState.press_switch(args[0], int(args[1]), int(args[2])):
+		GameState.SwitchResult.WRONG:
+			Sound.sfx("cancel")
+			await say(["Clang! The note jars, and every bell falls silent. Start again."] as Array[String])
+		GameState.SwitchResult.STEP:
+			Sound.sfx("confirm")
+			await say(["Dong. The note hangs in the air."] as Array[String])
+		GameState.SwitchResult.SOLVED:
+			Sound.sfx("warp")
+			_world.refresh(player.cell)
+			await say(["The last note joins the others. A door swings open!"] as Array[String])
+
+## "toggle <flag>": a sluice wheel that can be turned both ways (Brackwater Sluice, item 1009).
+func _action_toggle(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var on: bool = not GameState.has_flag(args[0])
+	GameState.set_flag(args[0], on)
+	Sound.sfx("warp")
+	_world.refresh(player.cell)
+	var level: int = _world.water_level(map)
+	var line: String = "You turn the wheel open. The water is now at mark %d." if on else "You turn the wheel shut. The water is now at mark %d."
+	await say([line % level] as Array[String])
+
+## "mirror <x> <y>": turns a mirror in Lanternwell (item 1010) and follows the light again.
+func _action_mirror(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 2:
+		return
+	var hit: bool = _world.turn_mirror(Vector2i(int(args[0]), int(args[1])))
+	Sound.sfx("warp" if hit else "confirm")
+	await say(["The light strikes the crystal, and it rings out bright!" if hit else "You turn the mirror. The beam swings to a new wall."] as Array[String])
 
 ## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
 func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
