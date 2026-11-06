@@ -3,8 +3,17 @@
 # Started by server/setup.sh, which also writes .env. Nothing but Caddy is reachable from outside.
 name: chimora
 
+# Container logs hold IP addresses: at most 7 files of 7 MB per service (about 7 days of
+# traffic, plan item 3848). The privacy policy promises 7 days.
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "7m"
+    max-file: "7"
+
 services:
   db:
+    logging: *logging
     image: supabase/postgres:15.8.1.060
     restart: unless-stopped
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "log_min_messages=fatal"]
@@ -29,6 +38,7 @@ services:
       retries: 20
 
   auth:
+    logging: *logging
     image: supabase/gotrue:v2.177.0
     restart: unless-stopped
     depends_on:
@@ -54,6 +64,7 @@ services:
       GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 30
 
   rest:
+    logging: *logging
     image: postgrest/postgrest:v12.2.12
     restart: unless-stopped
     depends_on:
@@ -67,6 +78,7 @@ services:
       PGRST_DB_USE_LEGACY_GUCS: "false"
 
   caddy:
+    logging: *logging
     image: caddy:2.10.2
     restart: unless-stopped
     depends_on: [auth, rest]

@@ -132,6 +132,10 @@ if [ "$local_test" != "1" ]; then
 # Nightly database backup, kept 14 days (server/backup.sh).
 30 3 * * * root bash $here/backup.sh >> /var/log/chimora-backup.log 2>&1
 CRON
+	cat > /etc/cron.d/chimora-cleanup <<CRON
+# Daily deletion run for the periods in the privacy policy (server/cleanup.sh).
+15 4 * * * root bash $here/cleanup.sh >> /var/log/chimora-cleanup.log 2>&1
+CRON
 	if [ "$shared" = "1" ]; then
 		cat > /etc/cron.d/chimora-proxy <<CRON
 # Puts Chimora's route back when the shared proxy loads its own config again (server/proxy_site.sh).
