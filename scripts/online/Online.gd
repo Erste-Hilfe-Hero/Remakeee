@@ -150,6 +150,7 @@ func _take_hello(d: Variant) -> void:
 	motd = str(d.get("motd", ""))
 	_store_url = str(d.get("store_url", ""))
 	online_now = int(d.get("online_now", 0))
+	flags.assign(d.get("flags", []) if d.get("flags") is Array else [])
 	_take_server_time(d.get("server_time"))
 	_set_state(State.UPDATE_REQUIRED if bool(d.get("update_required", false)) else State.ONLINE)
 
@@ -374,6 +375,16 @@ func push_team() -> void:
 func contribute(kind: String, amount: int = 1) -> void:
 	if state == State.ONLINE:
 		await call_fn("community_add", {"p_kind": kind, "p_amount": amount})
+
+## Features the server switched on for this version (hello, item 2675). Menus hide the rest.
+var flags: Array[String] = []
+
+func flag_on(key: String) -> bool:
+	return flags.has(key)
+
+## The Leagues menu shows when at least one league is on.
+func league_on() -> bool:
+	return flag_on("league_" + LeagueRules.FAIR) or flag_on("league_" + LeagueRules.OPEN)
 
 ## Friends, mail and greetings are on (parents can switch them off, item 147).
 func social_on() -> bool:
