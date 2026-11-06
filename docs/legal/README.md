@@ -14,6 +14,7 @@
 | [STORE_COMPLIANCE.md](STORE_COMPLIANCE.md) | Antworten für Google Data Safety, Apple App Privacy, Altersfreigabe, DSA-Händlerstatus, Kontolöschung, Store-Texte | Play Console, App Store Connect |
 | [CHECKLISTE_ALI.md](CHECKLISTE_ALI.md) | Was nur Ali erledigen kann, in Reihenfolge | intern |
 | [SHOP_RECHT.md](SHOP_RECHT.md) | Prüfliste für Shop-Angebote und -Texte, Regel "keine bezahlten Zufallsinhalte", verbotene Formulierungen | intern, Abnahme für Bereich 10 |
+| [VERARBEITUNGEN.md](VERARBEITUNGEN.md) | Verzeichnis der Verarbeitungstätigkeiten (Art. 30 DSGVO): Zweck, Tabellen, Frist, Rechtsgrundlage, Löschläufe, TOMs | intern |
 
 ## Festgelegtes Modell (darauf beruhen alle Texte)
 
@@ -26,4 +27,5 @@
 - Käufe (falls es welche gibt) nur über Apple/Google, keine Lootboxen.
 
 Weicht die Umsetzung davon ab, müssen Datenschutzerklärung, Nutzungsbedingungen und Store-Antworten vorher
-angepasst werden. Das Backend ist noch nicht gebaut; der aktuelle Code speichert lokal.
+angepasst werden. Das Backend läuft seit 2. November 2026 auf Contabo; die versprochenen Löschfristen setzt
+der tägliche Lauf `server/cleanup.sh` um (siehe VERARBEITUNGEN.md).

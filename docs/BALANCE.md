@@ -109,19 +109,55 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | All three daily tasks | 10 extra | once a day | built |
 | Weekly echo, first win of the week | 60 | once a week | built |
 | Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
-| Master Wayfarer | 80 first win, then 20 | once a week each (8 masters) | `Masters.win` |
+| Master Wayfarer | 80 first win, then 5 | once a week each (8 masters) | `Masters.win` |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
 | Season path steps 5/15/25 and 10/20/30 | 30 / 50 | per season | built |
 | Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
 | Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
-| Roaming trip 4 / 8 / 12 h (also 150 / 300 / 450 coins and a Tonic / Remedy / Strong Tonic) | 4 / 8 / 12 | up to 3 trips at once | `Expeditions.collect` |
+| Roaming trip 4 / 8 / 12 h (also 60 / 120 / 180 coins and a Tonic / Remedy / Strong Tonic) | 1 / 2 / 3 | up to 3 trips at once | `Expeditions.collect` |
+| Echo Path chest (all 8 rooms cleared) | 40 | once a week | `EchoPath.open_chest` |
 | Monthly album, all 12 fields | 100 | once a month | `Album.record` |
 | Iron Oath | +25% on every source above | while sworn | `Waymarks.earn` |
 
-Daily tasks alone give 40 a day (280 a week); the weekly sources fill the rest. Three 12-hour
-trips a day add at most 72 a day if the player checks in twice; one round of 8-hour trips adds 24.
+Daily tasks alone give 40 a day (280 a week); the weekly sources fill the rest. Trips are an idle
+bonus: three 8-hour trips twice a day add 12 a day.
+
+### Endgame coins
+
+| Source | Coins | How often |
+| --- | --- | --- |
+| Weekly echo | 400 (100 / 150 after 3 / 4 wins) | once a week |
+| Lighthouse stair floor n | 100 + 20 per floor | once per floor |
+| Roaming trip 4 / 8 / 12 h | 60 / 120 / 180 | up to 3 at once |
+| Season path steps | 250 to 1650 | per season |
+| Wayfarer rematches, wild battles | as in the story | any time |
+
+### 90-day run (plan 3513)
+
+`godot --headless --path . -s res://tools/balance_sim.gd -- endgame` works out 90 days with a
+fixed plan (`EndgameSim.gd`: all daily tasks, two rounds of 8-hour trips a day, weekly echo,
+all 8 masters, the Echo Path and 3 stair floors a week, the full album every month, one
+festival; then buy at Marla's stand cheapest first). Nov 2026 run:
+
+| Source | Waymarks in 90 days |
+| --- | --- |
+| Daily tasks + bonus | 2700 + 900 |
+| Master Wayfarers (640 in week 1, then 40 a week) | 1080 |
+| Roaming trips | 1080 |
+| Weekly echo | 720 |
+| Echo Path | 480 |
+| Album | 300 |
+| Lighthouse stair | 285 |
+| Season path | 240 |
+| Festival | 150 |
+| **Total** | **7935 (88 a day, 617 a week; about 570 a week after the first)** |
+
+Marla's stand took 7520 (310 goods), so the pouch ends at about 400: nothing is lost over the
+cap, and the full weekly stock (about 900) is more than a week brings, so buying stays a choice.
+The first run showed trips (48 a day) and weekly master rematches (160 a week) far above the
+target; they were cut to 1/2/3 per trip and 5 per rematch.
 
 World events and the wandering merchant (`WorldEvents.gd`) pay no Waymarks: the event gives one
 small item on the first visit of the day to its place, and the merchant sells three common goods

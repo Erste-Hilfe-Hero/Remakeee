@@ -72,7 +72,7 @@ func test_trip_rewards_and_limits() -> void:
 	assert_eq(Expeditions.plans().size(), 3)
 	for h: int in [4, 8, 12]:
 		var p: Dictionary = Expeditions.plan_for(h)
-		assert_eq(int(p.waymarks), h, "4, 8 or 12 Waymarks")
+		assert_eq(int(p.waymarks), h / 4, "1, 2 or 3 Waymarks (docs/BALANCE.md, 90-day run)")
 		assert_true(Database.items.has(str(p.item)))
 		assert_string_contains(Expeditions.plan_text(p), "%d h" % h)
 	var team: Array[Spirling] = []
@@ -93,7 +93,7 @@ func test_trip_rewards_and_limits() -> void:
 	var lines: Array[String] = Expeditions.collect()
 	assert_gt(lines.size(), 0)
 	assert_eq(GameState.money, money + int(Expeditions.plan_for(4).coins))
-	assert_eq(GameState.waymarks, 4)
+	assert_eq(GameState.waymarks, int(Expeditions.plan_for(4).waymarks))
 	assert_eq(Expeditions.trips().size(), 2)
 	assert_eq(Expeditions.collect(), [] as Array[String], "paid once")
 	assert_true(GameState.withdraw(GameState.storage.find(team[0])), "home again")
