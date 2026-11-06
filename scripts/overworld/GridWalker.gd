@@ -29,6 +29,12 @@ var _t: float = 0.0
 var _duration: float = WALK_TIME
 ## Dips the sprite 1 px in the middle of each step so walking has weight (item 2303).
 var bob: bool = false
+## Drawn 1 px jolt toward a wall the walker ran into (item 2263); the node and the camera
+## stay where they are.
+var jolt: Vector2 = Vector2.ZERO:
+	set(v):
+		jolt = v
+		queue_redraw()
 ## True while the current step is a running step.
 var running: bool = false
 ## Direction the sprite looks in without turning the walker (idle glances, items 2308 and
@@ -98,8 +104,11 @@ static func sheet_for(style: String) -> Texture2D:
 
 func _draw() -> void:
 	var sheet: Texture2D = sheet_for(sprite_style)
+	var shift: Vector2 = jolt
 	if bob and moving and _step_frame == 1:
-		draw_set_transform(Vector2(0, 1))
+		shift += Vector2(0, 1)
+	if shift != Vector2.ZERO:
+		draw_set_transform(shift)
 	if sheet != null:
 		var src := Rect2(SHEET_COLUMNS[shown_facing()] * TILE, _step_frame * TILE, TILE, TILE)
 		draw_texture_rect_region(sheet, Rect2(0, 0, TILE, TILE), src)
