@@ -13,13 +13,18 @@ on:
         type: string
         default: ""
 
+# One run per branch; a newer push to a pull request cancels the older run (plan item 3739).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Starts the whole server on the runner and plays a short session against it.
   test:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Start server
         run: LOCAL_TEST=1 bash server/setup.sh
       - name: Run setup again (updates must keep data and keys)
@@ -38,7 +43,7 @@ jobs:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Start a stand-in for the existing proxy (loaded certificate, pinned TLS policies, drifted live config)
         run: |
           mkdir -p "$RUNNER_TEMP/proxy" "$RUNNER_TEMP/certs"
@@ -133,7 +138,7 @@ jobs:
       SSHPASS: ${{ secrets.CHIMORA_SERVER_PASSWORD }}
       DOMAIN: ${{ inputs.domain }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Check secrets
         id: have
         run: |

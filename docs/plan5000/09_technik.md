@@ -198,10 +198,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### CI und Build-Pipeline
 3735. [P1] Bringe `main` auf den Stand des neuesten Builds, schütze `main` mit Pflichtprüfungen (Tests, IP-Prüfung, Release-Prüfung) und erlaube Release-Tags nur von `main`.
-3736. [P1] Lege ein Skript `tools/bump_version.py` an, das Versionsname, Android-Versionscode, iOS-Version und `Online.CLIENT_VERSION` in einem Schritt setzt.
+3736. [x] [P1] Lege ein Skript `tools/bump_version.py` an, das Versionsname, Android-Versionscode, iOS-Version und `Online.CLIENT_VERSION` in einem Schritt setzt.
 3737. [P1] Führe die Store-Builds aus dem lifekit-Repository und die Builds aus diesem Repository auf dieselben gepinnten Versionen zurück und halte in `docs/RELEASE.md` fest, welcher Weg der offizielle ist.
-3738. [P1] Pinne alle GitHub Actions in `.github/workflows/` auf eine feste Commit-SHA statt auf `@v4`.
-3739. [P1] Lege in jedem Workflow `concurrency` mit Abbruch älterer Läufe für Pull Requests an, damit nicht mehrere Builds für denselben Zweig laufen.
+3738. [x] [P1] Pinne alle GitHub Actions in `.github/workflows/` auf eine feste Commit-SHA statt auf `@v4`.
+3739. [x] [P1] Lege in jedem Workflow `concurrency` mit Abbruch älterer Läufe für Pull Requests an, damit nicht mehrere Builds für denselben Zweig laufen.
 3740. [P2] Speichere den Godot-Importordner `.godot/imported` als Cache zwischen CI-Läufen und miss die gesparte Zeit.
 3741. [P2] Setze für jeden CI-Job ein `timeout-minutes` (Tests 15, Android 30, iOS 45), damit hängende Jobs keine Minuten verbrauchen.
 3742. [P2] Führe `gdtoolkit` (`gdlint` und `gdformat --check`) als Prüfung für alle Dateien in `scripts/` ein, zuerst nur als Warnung.
@@ -435,8 +435,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 ### Markenrecht, IP-Prüfung und Lizenzen
 3953. [P1] Lass Ali vor der Produktion die Namensprüfung "chimora" im EU-Markenregister (tmdn.org) und in der WIPO-Datenbank für die Klassen 9 und 41 machen und halte das Ergebnis mit Datum in `docs/legal/MARKE.md` fest.
 3954. [P1] Melde die Wortmarke "Chimora" für die Klassen 9 und 41 an (DPMA 290 Euro oder EUIPO 850 Euro) und trage Aktenzeichen und Datum in `docs/legal/MARKE.md` ein.
-3955. [P1] Erweitere `tools/ip_check.sh` so, dass auch Commit-Nachrichten und Pull-Request-Titel geprüft werden, weil `AGENTS.md` das verlangt.
-3956. [P1] Prüfe mit `tools/ip_check.sh` auch die Metadaten von Bild- und Audiodateien (PNG-Textfelder, OGG-Kommentare) auf verbotene Namen.
+3955. [x] [P1] Erweitere `tools/ip_check.sh` so, dass auch Commit-Nachrichten und Pull-Request-Titel geprüft werden, weil `AGENTS.md` das verlangt.
+3956. [x] [P1] Prüfe mit `tools/ip_check.sh` auch die Metadaten von Bild- und Audiodateien (PNG-Textfelder, OGG-Kommentare) auf verbotene Namen.
 3957. [P2] Sichere die Domains `chimora.de` und eine `.com`- oder `.game`-Variante sowie die Namen auf den wichtigsten Social-Media-Plattformen.
 3958. [P2] Ergänze in `docs/ASSET_LOG.md` für jede Datei eine SHA-256-Prüfsumme und lass `tools/ip_check.sh` scheitern, wenn eine Datei sich ohne neuen Logeintrag ändert.
 3959. [P2] Prüfe alle Schriftarten auf ihre Lizenz und lege die Lizenztexte auf der Seite `/lizenzen` ab.
@@ -458,7 +458,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### Code-Qualität und Wartbarkeit
 3975. [P1] Prüfe mit einer Regel in CI, dass alle Variablen, Parameter und Rückgabewerte in `scripts/` statisch typisiert sind, wie `AGENTS.md` es verlangt.
-3976. [P1] Lege fest, dass jeder Pull Request höchstens ein Thema hat, Tests mitbringt und die Prüfungen auf `main` besteht, und schreibe das als Vorlage in `.github/pull_request_template.md`.
+3976. [x] [P1] Lege fest, dass jeder Pull Request höchstens ein Thema hat, Tests mitbringt und die Prüfungen auf `main` besteht, und schreibe das als Vorlage in `.github/pull_request_template.md`.
 3977. [P1] Schreibe für `Online.gd` (435 Zeilen) eine Zustandsübersicht als Kommentar und teile Herzschlag, Wiederverbinden und Speichern in eigene Klassen auf.
 3978. [P1] Halte die Regeln aus `LocalBackend.gd` und den SQL-Funktionen an einer gemeinsamen Stelle fest (Grenzwerte in `server_config`), damit sie nicht auseinanderlaufen.
 3979. [P2] Lege eine Höchstlänge von 400 Zeilen pro Skript fest und teile längere Skripte nach Aufgaben auf, beginnend mit dem längsten.
