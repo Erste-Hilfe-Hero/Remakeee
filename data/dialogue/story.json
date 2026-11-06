@@ -221,5 +221,46 @@
    "Three letters from Corvane. Pim at the guild house will want to read them."
   ],
   "flag": "letters_corvane_found"
+ },
+ "letter_a1": {
+  "lines": [
+   "Under a loose basalt slab by the spring: a letter, warm from the ground.",
+   "'The gravers say a plate holds a place still. I don't want to hold you still, Aldo. M.'"
+  ],
+  "flag": "letter_a1",
+  "once": true,
+  "next": "letters_a_check"
+ },
+ "letter_a2": {
+  "lines": [
+   "Slipped behind an old copper plate in the hall: a letter in Mirela's hand.",
+   "'Halvard engraved our valley for me. I keep it in my coat. It is heavy and I don't care. M.'"
+  ],
+  "flag": "letter_a2",
+  "once": true,
+  "next": "letters_a_check"
+ },
+ "letter_a3": {
+  "lines": [
+   "Sealed in a jar of salt glass on the flats: the last letter.",
+   "'If you read this, someone found the way. Tell them to sing. Not fight. Sing. M.'"
+  ],
+  "flag": "letter_a3",
+  "once": true,
+  "next": "letters_a_check"
+ },
+ "letters_a_check": {
+  "if": {
+   "flag": [
+    "letter_a1",
+    "letter_a2",
+    "letter_a3"
+   ],
+   "not_flag": "letters_ashmere_found"
+  },
+  "lines": [
+   "Three letters from Ashmere. Pim will want these too."
+  ],
+  "flag": "letters_ashmere_found"
  }
 }

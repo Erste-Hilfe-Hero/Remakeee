@@ -66,7 +66,8 @@
    "not_flag": "act2_end"
   },
   "lines": [],
-  "action": "scene act2_far_side"
+  "action": "scene act2_far_side",
+  "else": "ysolde_epilogue"
  },
  "pim": {
   "lines": [
@@ -112,6 +113,16 @@
      "Pim: All three Corvane letters! 'I'll paint the lighthouse door blue.' Did she ever?",
      "Pim: Take these, for the road. Three more letters wait in Ashmere, I'm sure of it."
     ]
+   },
+   {
+    "flag": "letters_ashmere_found",
+    "if": {
+     "flag": "letters_corvane_found"
+    },
+    "lines": [
+     "Pim: All six! 'Tell them to sing. Not fight.' I'm copying these into the guild records.",
+     "Pim: Here. Ysolde said you've earned the good tonic."
+    ]
    }
   ],
   "next": "pim_reward"
@@ -121,6 +132,7 @@
    "flag": "letters_corvane_found",
    "not_flag": "letters_corvane_done"
   },
+  "else": "pim_reward_all",
   "lines": [],
   "action": "give_item max_tonic 2",
   "flag": "letters_corvane_done"
@@ -456,5 +468,28 @@
  "kestra_2_lose": [
   "Kestra: See? Maybe I'm not as wrong as you think.",
   "Kestra: Rest up. I'll be here by the river."
- ]
+ ],
+ "pim_reward_all": {
+  "if": {
+   "flag": [
+    "letters_corvane_found",
+    "letters_ashmere_found"
+   ],
+   "not_flag": "letters_all_done"
+  },
+  "lines": [],
+  "action": "give_item max_tonic 3",
+  "flag": "letters_all_done"
+ },
+ "ysolde_epilogue": {
+  "if": {
+   "flag": "story_complete",
+   "not_flag": "epilogue_guild"
+  },
+  "lines": [
+   "Ysolde: She's alive. Mirela is alive, and you found her. Give me a moment, apprentice.",
+   "Ysolde: ...There. The guild names you cartographer. Not apprentice. Never again."
+  ],
+  "flag": "epilogue_guild"
+ }
 }

@@ -159,13 +159,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Akt III: Die Platten von Ashmere
 1480. [x] [P1] Lege in docs/STORY.md eine Ortsliste für Akt III mit festen Karten-IDs an (ashmere_station, cinderfold, gravers_hall, kiln_rift, saltglass, glass_rift, wide_rift_far, undrawn_1 bis undrawn_3) für Bereich 3.
-1481. [P1] quests.json bekommt die Hauptziele von Akt III mit Kapiteln 12 bis 17 und dem Aktnamen "Act III: The Plates of Ashmere".
-1482. [P1] Kapitel 12 "Ash and Ink": Ankunft im Aschehochland; in Cinderfold arbeiten Graveure, die Karten in Kupfer stechen, damit sie hundert Jahre halten.
-1483. [P1] Kapitel 13 "Kiln Rift": Warden Tovan hält den Ofenriss halb geschlossen, aber seine Spirlinge sind schon still; Duell und Mend setzen rift_kiln_sealed.
-1484. [P1] Kapitel 14 "Glass Rift": Wardenin Ilse in Saltglass ist ganz verstummt; der Mend setzt rift_glass_sealed und öffnet den Weg zum fernen Ende des Weiten Risses.
-1485. [P1] Kapitel 15 "Veit's Plate": Veit hat in der Graveurhalle eine Platte gestochen, die den Weiten Riss samt allem dahinter löschen soll; die Spielfigur muss ihn aufhalten.
-1486. [P1] Kapitel 16 "The Undrawn": Die Spielfigur betritt mit dem Gildensiegel das Ungezeichnete, das Land hinter den Rissen, drei kurze Abschnitte ohne fertige Ränder.
-1487. [P1] Kapitel 17 "Where the Map Ends": Am Rand des Ungezeichneten wartet Mirela; das führt direkt ins Finale.
+1481. [x] [P1] quests.json bekommt die Hauptziele von Akt III mit Kapiteln 12 bis 17 und dem Aktnamen "Act III: The Plates of Ashmere".
+1482. [x] [P1] Kapitel 12 "Ash and Ink": Ankunft im Aschehochland; in Cinderfold arbeiten Graveure, die Karten in Kupfer stechen, damit sie hundert Jahre halten.
+1483. [x] [P1] Kapitel 13 "Kiln Rift": Warden Tovan hält den Ofenriss halb geschlossen, aber seine Spirlinge sind schon still; Duell und Mend setzen rift_kiln_sealed.
+1484. [x] [P1] Kapitel 14 "Glass Rift": Wardenin Ilse in Saltglass ist ganz verstummt; der Mend setzt rift_glass_sealed und öffnet den Weg zum fernen Ende des Weiten Risses.
+1485. [x] [P1] Kapitel 15 "Veit's Plate": Veit hat in der Graveurhalle eine Platte gestochen, die den Weiten Riss samt allem dahinter löschen soll; die Spielfigur muss ihn aufhalten.
+1486. [x] [P1] Kapitel 16 "The Undrawn": Die Spielfigur betritt mit dem Gildensiegel das Ungezeichnete, das Land hinter den Rissen, drei kurze Abschnitte ohne fertige Ränder.
+1487. [x] [P1] Kapitel 17 "Where the Map Ends": Am Rand des Ungezeichneten wartet Mirela; das führt direkt ins Finale.
 1488. [P2] Graveurmeister Halvard in der Graveurhalle nimmt den Empfehlungsbrief guild_letter an und erklärt, warum gestochene Karten Risse festhalten können.
 1489. [P2] Warden Tovan (Team: Calderox Ring 32, Obsidroth Ring 33, Smoldrake Ring 31, Duskdigger Ring 32) spricht nach dem Mend über seinen Vater, der den Riss vor ihm hielt.
 1490. [P2] Wardenin Ilse (Team: Leviarch Ring 34, Lumenewt Ring 33, Glimmerax Ring 34, Tempestrel Ring 33) kann nach dem Mend wieder singen und lehrt eine neue Strophe der Echo-Melodie.
@@ -205,13 +205,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1524. [P3] Halvard sticht nach rift_glass_sealed eine kleine Gedenkplatte für Ilses Jahre in der Stille und gibt sie ihr in einer kurzen Szene.
 
 ### Finale: Wo die Karte endet
-1525. [P1] Das Finale ist eine durchgehende Szenenkette (finale_1 bis finale_5) am Rand des Ungezeichneten, ohne Speicherverbot, mit Rückkehrpunkt vor finale_1.
-1526. [P1] Mirela erscheint als alte Frau mit ihrem Kartenbuch; sie hat das Ungezeichnete 40 Jahre lang gezeichnet, damit der Weite Riss nicht ganz aufreißt.
-1527. [P1] Mirela erklärt den Nachhall: das Echo aller Spirlinge, die ihren Wanderer verloren haben, ist der Ursprung der Stille (Lore-Auflösung).
-1528. [P1] Der Endkampf gegen den Nachhall ist ein Mehrfachkampf in drei Wellen (2, 3, dann 4 stille Spirlinge), mit Mirela als Partnerin in Welle 3.
-1529. [P1] Nach dem Kampf spielt die Spielfigur eine lange Echo-Melodie (doppelte Länge) mit Mirelas Strophe; gelingt sie, verstummt der Nachhall und hört zu.
-1530. [P1] Die Abschlusswahl hat drei Wege: "Bring her home", "Leave a gate" und, nur unter Bedingungen, "Two keepers" (siehe Abschnitt Entscheidungen).
-1531. [P1] Nach dem Finale läuft eine Abspann-Szene mit Rückkehr nach Brindlewick, Aldo am Steg und einer Abschlusskarte mit allen gestopften Rissen.
+1525. [x] [P1] Das Finale ist eine durchgehende Szenenkette (finale_1 bis finale_5) am Rand des Ungezeichneten, ohne Speicherverbot, mit Rückkehrpunkt vor finale_1.
+1526. [x] [P1] Mirela erscheint als alte Frau mit ihrem Kartenbuch; sie hat das Ungezeichnete 40 Jahre lang gezeichnet, damit der Weite Riss nicht ganz aufreißt.
+1527. [x] [P1] Mirela erklärt den Nachhall: das Echo aller Spirlinge, die ihren Wanderer verloren haben, ist der Ursprung der Stille (Lore-Auflösung).
+1528. [x] [P1] Der Endkampf gegen den Nachhall ist ein Mehrfachkampf in drei Wellen (2, 3, dann 4 stille Spirlinge), mit Mirela als Partnerin in Welle 3.
+1529. [x] [P1] Nach dem Kampf spielt die Spielfigur eine lange Echo-Melodie (doppelte Länge) mit Mirelas Strophe; gelingt sie, verstummt der Nachhall und hört zu.
+1530. [x] [P1] Die Abschlusswahl hat drei Wege: "Bring her home", "Leave a gate" und, nur unter Bedingungen, "Two keepers" (siehe Abschnitt Entscheidungen).
+1531. [x] [P1] Nach dem Finale läuft eine Abspann-Szene mit Rückkehr nach Brindlewick, Aldo am Steg und einer Abschlusskarte mit allen gestopften Rissen.
 1532. [P2] Scheitert die lange Echo-Melodie, kommt kein Game Over; Mirela summt mit, und der zweite Versuch ist um 20 Prozent langsamer.
 1533. [P2] Verliert die Spielfigur den Endkampf, setzt die Szene vor Welle 1 neu an, mit geheiltem Team und einem Satz von Mirela.
 1534. [P2] Kestra steht im Finale an der Seite der Spielfigur; ihr Satz vor dem Kampf hängt von kestra_trust ab (drei Varianten: unter 2, 2 bis 3, ab 4).
@@ -239,11 +239,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 ### Kestra: Gegenstück mit eigenem Weg
 1555. [x] [P1] Kestra bekommt in docs/STORY.md eine Figurenbeschreibung: Kindheit am Krähenkamm, Zephlet "Tatter" kam vor 12 Jahren aus einem kleinen Riss, Ziel ist Verstehen statt Schließen.
 1556. [P1] Eine Zahl kestra_trust (0 bis 6) wird bei sechs festen Momenten in Akt I bis III um 1 erhöht oder nicht, je nach Auswahl der Spielfigur.
-1557. [P1] Kestras Zephlet wird zur Story-Figur "Tatter" mit Spitznamen im Team; Kestras Team wächst pro Akt um ein Mitglied (Akt II 4, Akt III 5 Spirlinge).
+1557. [x] [P1] Kestras Zephlet wird zur Story-Figur "Tatter" mit Spitznamen im Team; Kestras Team wächst pro Akt um ein Mitglied (Akt II 4, Akt III 5 Spirlinge).
 1558. [x] [P1] Kestras zweites Duell findet in Madderby statt (Team: Tempestrel Ring 22, Glimmerax Ring 21, Shalebat Ring 21, Kelpup Ring 20), mit eigenem Vor- und Nachgespräch.
-1559. [P1] Kestras drittes Duell steht am fernen Ende des Weiten Risses (Team mit 5 Spirlingen, Ring 34 bis 36); es ist kein Hindernis, sondern ein Abschiedsduell vor dem Ungezeichneten.
+1559. [x] [P1] Kestras drittes Duell steht am fernen Ende des Weiten Risses (Team mit 5 Spirlingen, Ring 34 bis 36); es ist kein Hindernis, sondern ein Abschiedsduell vor dem Ungezeichneten.
 1560. [x] [P1] Die Szene kestra_tatter_hush in Akt II zeigt Kestras größte Angst; die Spielfigur kann Tatter mit einer Echo-Melodie trösten, was kestra_trust um 1 hebt.
-1561. [P1] Kestra ändert ihre Haltung sichtbar: in Akt I will sie Risse offen, in Akt II zweifelt sie, in Akt III sucht sie einen dritten Weg; jede Haltung hat eigene Sätze.
+1561. [x] [P1] Kestra ändert ihre Haltung sichtbar: in Akt I will sie Risse offen, in Akt II zweifelt sie, in Akt III sucht sie einen dritten Weg; jede Haltung hat eigene Sätze.
 1562. [P2] Kestras Dialog im Kartenhaus bekommt nach jedem Akt eine neue Variante (after_flag-Liste mit act1_done, act2_end, story_complete).
 1563. [P2] Kestra führt ein eigenes Skizzenbuch; nach jedem Treffen ist eine neue Seite davon im Kartenbuch der Spielfigur lesbar (Abschnitt "Kestra's sketches", 8 Seiten).
 1564. [P2] Kestra hat eine Lieblingsantwort auf die Frage nach Mirela, die sich bis Akt III von Neid zu Bewunderung wandelt (drei Sätze).
@@ -272,7 +272,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1585. [x] [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
 1586. [x] [P1] Mirela bekommt in docs/STORY.md eine Figurenbeschreibung mit Lebenslauf, Zeichenstil und dem Grund, warum sie 40 Jahre im Ungezeichneten blieb.
 1587. [x] [P1] Die Kartenbuch-Seiten 7 bis 14 erzählen Mirelas Zeit im Ungezeichneten in je 1 bis 2 Sätzen und decken die Lore schrittweise auf.
-1588. [P1] Die Szene, in der Aldo und Mirela sich wiedersehen, hängt vom Ende ab, wird aber in jeder Fassung am Steg in Brindlewick gespielt.
+1588. [x] [P1] Die Szene, in der Aldo und Mirela sich wiedersehen, hängt vom Ende ab, wird aber in jeder Fassung am Steg in Brindlewick gespielt.
 1589. [P2] Aldo erzählt auf Nachfrage (Auswahl im Leuchtturm) drei Erinnerungen an Mirela, je nach Fortschritt freigeschaltet.
 1590. [P2] Aldos altes Ruder ist ein Story-Gegenstand (aldo_oar), den die Spielfigur zu Beginn von Akt II mitnimmt und im Postgame zurückgibt.
 1591. [x] [P2] Aldo wird beim Rudern in ferry_crossing müde; die Spielfigur kann wählen, ob sie selbst rudert, und Aldo kommentiert das später.
@@ -293,8 +293,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 ### Hüterinnen, Hüter und Nebenfiguren
 1605. [P1] Jede Hüterin und jeder Hüter bekommt eine feste Form: Satz vor dem Erwachen, Satz nach dem Duell, Satz nach dem Mend und einen späteren Satz nach dem Finale.
 1606. [x] [P1] Eine Figurenliste in docs/STORY.md führt alle benannten Figuren mit Ort, Rolle, Team, Flags und Bogen, damit spätere Threads nichts doppeln.
-1607. [P1] Veit Harrow bekommt einen klaren Bogen: Verlust seiner Mirkmole Ash an die Stille vor 20 Jahren, Wut auf Risse, Zweifel in Akt III, Versöhnung oder Bruch nach Wahl.
-1608. [P1] Eine Zahl veit_respect (0 bis 3) wird bei drei Momenten in Akt II und III gesetzt und steuert sein Auftreten im Finale und Postgame.
+1607. [x] [P1] Veit Harrow bekommt einen klaren Bogen: Verlust seiner Mirkmole Ash an die Stille vor 20 Jahren, Wut auf Risse, Zweifel in Akt III, Versöhnung oder Bruch nach Wahl.
+1608. [x] [P1] Eine Zahl veit_respect (0 bis 3) wird bei drei Momenten in Akt II und III gesetzt und steuert sein Auftreten im Finale und Postgame.
 1609. [P2] Orrin und Maelis tauchen in Akt II als Gäste im Gildenhaus von Madderby auf und erzählen, wie sie ihre Risse seitdem halten.
 1610. [P2] Ysolde Rennick hat einen eigenen Bogen: sie hat Mirela damals nicht zurückgehalten und will das wieder gutmachen, aufgelöst in einer Szene nach act2_end.
 1611. [P2] Pim, der junge Archivar, ist die Stimme für Lore-Fragen; er beantwortet per Auswahl bis zu vier Fragen pro Kapitel zu Rissen, Stille und Spirlingen.
@@ -373,10 +373,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Entscheidungen mit Folgen
 1680. [x] [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.
-1681. [P1] Das Ende "Bring her home" ist immer wählbar: Mirela kommt heim, der Weite Riss schließt sich, Riss-Spirlinge brauchen danach einen Anker-Bund (Story-Text, keine neuen Regeln).
-1682. [P1] Das Ende "Leave a gate" ist immer wählbar: der Weite Riss wird zu einer Pforte mit Mirela als Hüterin, sie bleibt im Ungezeichneten, Kestra ist froh.
-1683. [P1] Das Ende "Two keepers" verlangt veit_respect 3 und alle 14 Seiten: Veit bleibt mit Ash als Hüter im Ungezeichneten, und Mirela kommt heim.
-1684. [P1] Vor der Abschlusswahl zeigt eine Bestätigung den gewählten Weg in einem Satz und fragt "Draw it so?", weil die Wahl endgültig ist.
+1681. [x] [P1] Das Ende "Bring her home" ist immer wählbar: Mirela kommt heim, der Weite Riss schließt sich, Riss-Spirlinge brauchen danach einen Anker-Bund (Story-Text, keine neuen Regeln).
+1682. [x] [P1] Das Ende "Leave a gate" ist immer wählbar: der Weite Riss wird zu einer Pforte mit Mirela als Hüterin, sie bleibt im Ungezeichneten, Kestra ist froh.
+1683. [x] [P1] Das Ende "Two keepers" verlangt veit_respect 3 und alle 14 Seiten: Veit bleibt mit Ash als Hüter im Ungezeichneten, und Mirela kommt heim.
+1684. [x] [P1] Vor der Abschlusswahl zeigt eine Bestätigung den gewählten Weg in einem Satz und fragt "Draw it so?", weil die Wahl endgültig ist.
 1685. [P1] Kleine Entscheidungen haben sichtbare Folgen innerhalb von höchstens einem Kapitel (andere Sätze, ein Geschenk, ein neuer Gefährte), damit sich Wählen lohnt.
 1686. [P2] Nach jedem gestopften Riss in Akt II und III fragt der Warden, ob ein Faden offen bleiben soll ("thread") oder der Riss ganz zu ist ("seal"), gespeichert pro Riss.
 1687. [P2] Bleibt ein Faden offen, erscheinen dort nachts gelegentlich Riss-Spirlinge mit eigenem Satz des Wardens; ganz geschlossen wird die Gegend ruhiger beschrieben.
@@ -426,7 +426,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1729. [P3] Ein Lore-Eintrag erklärt, warum niemand auf Spirlingen reisen kann: sie tragen das Gewicht der Karte, nicht das eines Menschen.
 
 ### Postgame-Story
-1730. [P1] Nach story_complete erscheint ein neues Hauptziel "Epilogue: The Open Map" mit drei Kapiteln, damit es nach dem Abspann weitergeht.
+1730. [x] [P1] Nach story_complete erscheint ein neues Hauptziel "Epilogue: The Open Map" mit drei Kapiteln, damit es nach dem Abspann weitergeht.
 1731. [P2] Epilog-Kapitel 1 "Homecoming": Besuche bei allen Hütern in Veydal, Corvane und Ashmere, die nach dem Finale neue Sätze haben (Ziel mit Fortschritt "(k/6)").
 1732. [P2] Epilog-Kapitel 2 "The Southern Tear": Kestra hat einen neuen kleinen Riss im Süden skizziert; die Spielfigur prüft ihn und findet eine Spur nach Solenne (Haken für spätere Teile).
 1733. [P2] Epilog-Kapitel 3 "A Map of Our Own": die Spielfigur zeichnet im Kartenhaus eine eigene Karte; die Szene setzt postgame_done und zeigt einen Satz von jedem Verbündeten.
