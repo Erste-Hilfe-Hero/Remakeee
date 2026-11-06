@@ -12,6 +12,8 @@ var _info_label: Label
 var _info_picture: TextureRect
 var _info_scroll: ScrollContainer
 var _info_wait: bool = false
+var _info_bar: Control
+const INFO_BAR_W: int = 2
 ## Where the finger went down while an info text is open (NAN = no press yet), so a drag
 ## that scrolls the text does not also close it.
 var _info_press: Vector2 = Vector2(NAN, NAN)
@@ -64,6 +66,14 @@ func _ready() -> void:
 	# Screen readers read new info texts like dialogue lines (item 2087).
 	_info_label.accessibility_live = AccessibilityServer.LIVE_POLITE
 	_info_scroll.add_child(_info_label)
+	# Item 1840: a 2 px bar on the right edge when the text is longer than the window.
+	_info_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	_info_bar = Control.new()
+	_info_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_info_bar.draw.connect(_draw_info_bar)
+	_info_panel.add_child(_info_bar)
+	_info_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void: _info_bar.queue_redraw())
+	_info_scroll.get_v_scroll_bar().changed.connect(_info_bar.queue_redraw)
 	_toast = Label.new()
 	_toast.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	_toast.offset_left = PANEL_MARGIN + 4
@@ -301,6 +311,10 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"music": "Music only. Left and right change it in steps of 10.",
 	"sfx": "Sound effects only. Left and right change it in steps of 10.",
 	"sound_test": "Listen to every tune, sound and cry you know.",
+	"text_voice": "Short blips while a line types out.",
+	"sound_captions": "Important sounds also show as a short text at the top.",
+	"screen_shake": "How much the screen shakes on big hits.",
+	"vibration": "How strongly the phone or gamepad vibrates.",
 	"retro": "Old-style colours for each era you reached.",
 	"account": "Friend code, moving to a new phone, deleting your account.",
 	"legal": "Imprint, privacy and licences.",
@@ -321,7 +335,6 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
 	"always_run": "Run without holding B. Hold B to walk.",
 	"one_hand": "Everything sits low on the screen for one thumb.",
-	"rumble": "The gamepad shakes on big hits.",
 	"swap_ab_touch": "A and B on the touch pad change places.",
 	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
 	"pad_help": "Which gamepad button does what.",
@@ -369,6 +382,8 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
 				["music", "Music: %d%%" % int(round(GameState.music_volume * 100.0))],
 				["sfx", "Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0))],
+				["text_voice", "Text voice: %s" % ("On" if GameState.text_voice else "Off")],
+				["sound_captions", "Sound captions: %s" % ("On" if GameState.sound_captions else "Off")],
 				["sound_test", "Sound test..."],
 			]
 	return rows
@@ -417,6 +432,12 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.sfx_volume = step_volume(GameState.sfx_volume, dir)
 			GameState.apply_volume()
 			Sound.sfx("confirm")
+		"text_voice":
+			GameState.text_voice = not GameState.text_voice
+			Sound.text_blip("player", "a")
+			Sound.text_blip("player", "a")
+		"sound_captions":
+			GameState.sound_captions = not GameState.sound_captions
 		"sound_test":
 			await run_sound_test()
 		"difficulty":
@@ -453,12 +474,22 @@ func _iron_oath() -> void:
 ## Sound test (item 71): every music track, sound effect and the cries of Spirlings you have seen.
 func run_sound_test() -> void:
 	var back_to: String = Sound.current_track
+	var back_amb: String = Sound.current_ambience
 	while true:
-		var idx: int = await pick_strings("Sound test", ["Music", "Sound effects", "Cries"])
+		var idx: int = await pick_strings("Sound test", ["Music", "Sound effects", "Cries", "Places"])
 		match idx:
 			-1:
-				Sound.music(back_to)
+				Sound.music(back_to, true)
+				Sound.ambience(back_amb)
 				return
+			3:
+				# Ambience loops as their own group (item 2585).
+				var places: Array[String] = Sound.list_sounds("res://audio/ambience/")
+				while true:
+					var a: int = await pick_strings("Places", places)
+					if a < 0:
+						break
+					Sound.ambience(places[a])
 			0:
 				var tracks: Array[String] = Sound.list_sounds("res://audio/music/")
 				while true:
@@ -522,6 +553,8 @@ func run_display() -> void:
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
 				EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
+			"screen_shake":
+				GameState.screen_shake = (GameState.screen_shake + 1) % Juice.LEVEL_NAMES.size()
 		GameState.apply_display()
 		# High contrast shows at once on every open menu (item 2065).
 		refresh_all_themes(get_tree())
@@ -538,6 +571,7 @@ static func display_rows() -> Array[Array]:
 		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
 		["weather", "Weather: %s" % ("On" if GameState.weather else "Off")],
 		["retro", "Retro filter: %s" % retro],
+		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
 	]
 
 ## Hand-made texts follow a language change at once (item 2187).
@@ -606,9 +640,9 @@ func run_controls() -> void:
 				GameState.always_run = not GameState.always_run
 			"one_hand":
 				GameState.one_hand = not GameState.one_hand
-			"rumble":
-				GameState.rumble = not GameState.rumble
-				GameState.rumble_pads(0.6, 0.2)
+			"vibration":
+				GameState.vibration = (GameState.vibration + 1) % Juice.LEVEL_NAMES.size()
+				Haptics.play("confirm")
 			"swap_ab_touch":
 				GameState.swap_ab_touch = not GameState.swap_ab_touch
 			"swap_ab_pad":
@@ -631,7 +665,7 @@ static func controls_rows() -> Array[Array]:
 		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
 		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
 		["swap_ab_pad", "Pad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
-		["rumble", "Gamepad rumble: %s" % ("On" if GameState.rumble else "Off")],
+		["vibration", "Vibration: %s" % Juice.LEVEL_NAMES[GameState.vibration]],
 		["pad_help", "Gamepad buttons..."],
 		["keys_help", "Keyboard keys..."],
 	]
@@ -775,3 +809,21 @@ func run_legal() -> void:
 			1:
 				for page: String in LegalInfo.pages(LegalInfo.licence_text()):
 					await info(page)
+
+## The info scroll bar: the part of the text in view, drawn in MID on the right edge.
+## Returns the drawn rect (empty when everything fits), for tests.
+func info_bar_rect() -> Rect2:
+	var bar: VScrollBar = _info_scroll.get_v_scroll_bar()
+	if bar.max_value <= bar.page + 0.5 or bar.max_value <= 0.0:
+		return Rect2()
+	var top: float = _info_scroll.position.y + _info_scroll.get_parent_control().position.y
+	var h: float = _info_scroll.size.y
+	var x: float = _info_bar.size.x - INFO_BAR_W - 1
+	var len: float = maxf(4.0, h * bar.page / bar.max_value)
+	var y: float = top + (h - len) * (bar.value / maxf(1.0, bar.max_value - bar.page))
+	return Rect2(Vector2(x, y), Vector2(INFO_BAR_W, len))
+
+func _draw_info_bar() -> void:
+	var r: Rect2 = info_bar_rect()
+	if r.size.y > 0.0:
+		_info_bar.draw_rect(r, UITheme.MID)

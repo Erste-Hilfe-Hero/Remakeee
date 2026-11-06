@@ -90,9 +90,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3189. [x] [P2] Eine Wochenvorschau am Brett zeigen: Feld, Regel und die Elemente der drei ersten Echo-Teams.
 3190. [x] [P2] Die letzten acht Wochen mit Feld, Regel und eigenem Ergebnis in einem Archiv anzeigen.
 3191. [x] [P2] Den Gegenstandspreis aus WeeklyChallenge.REWARDS um die vier Kraftwerkzeuge erweitern, damit die Liste auf 12 Einträge wächst.
-3192. [P2] Im Wochen-Echo verbietet ein Leihteam-Modus eigene Spirlings und stellt ein festes Team von drei Spirlings für alle.
-3193. [P2] Den Leihteam-Modus jede zweite Woche statt des normalen Modus anbieten und das am Brett ankündigen.
-3194. [P2] Leihteams in data/events.json mit Art, Ring und Techniken festlegen, mindestens 12 Teams.
+3192. [x] [P2] Im Wochen-Echo verbietet ein Leihteam-Modus eigene Spirlings und stellt ein festes Team von drei Spirlings für alle.
+3193. [x] [P2] Den Leihteam-Modus jede zweite Woche statt des normalen Modus anbieten und das am Brett ankündigen.
+3194. [x] [P2] Leihteams in data/events.json mit Art, Ring und Techniken festlegen, mindestens 12 Teams.
 3195. [x] [P2] Einen Wochensieg auch nach einem Teilerfolg werten: ab Runde 3 gibt es 30 Wegmarken, ab Runde 5 die vollen 60.
 3196. [x] [P2] Pro Woche drei Versuche mit voller Belohnung erlauben und weitere Versuche nur für die Bestwertung zählen.
 3197. [P3] Eine Wochen-Sonderregel „Gleicher Ring“ ergänzen, bei der alle Spirlings beider Seiten auf Ring 40 gesetzt werden.

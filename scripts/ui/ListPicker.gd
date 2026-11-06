@@ -60,6 +60,12 @@ static var pointer_used: bool = false
 ## Line shown when a list has no rows besides Back (item 1856).
 const EMPTY_TEXT: String = "Nothing here yet."
 var _empty: Label
+## Scroll position per list title, so going back a level lands where you were (item 1853).
+var _remembered_scroll: Dictionary[String, int] = {}
+var _title_key: String = ""
+## Lists fade in over 80 ms unless Reduce motion is on (item 1852).
+const FADE_IN: float = 0.08
+var _fade: Tween
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -209,6 +215,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 			_show_hint(i)
 			b.queue_redraw())
 		b.focus_exited.connect(b.queue_redraw)
+		Juice.press_feedback(b)
 		b.draw.connect(func() -> void: _draw_pointer(b))
 		_box.add_child(b)
 		_buttons.append(b)
@@ -219,12 +226,16 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_opened_ms = Time.get_ticks_msec()
 	_press_pos = Vector2(NAN, NAN)
 	_press_ms = -1
+	if not visible:
+		fade_in()
 	visible = true
+	_title_key = title
 	var want: int = focus
 	if want < 0:
 		want = int(_remembered.get(title, -1))
 	_focus_row.call_deferred(want)
 	var index: int = await picked
+	_remembered_scroll[title] = _scroll.scroll_vertical
 	visible = false
 	if index >= 0:
 		_remembered[title] = index
@@ -242,6 +253,26 @@ func _link_wrap() -> void:
 	var last: Button = on[on.size() - 1]
 	first.focus_neighbor_top = first.get_path_to(last)
 	last.focus_neighbor_bottom = last.get_path_to(first)
+
+## Puts the list back where it was once the rows are laid out, keeping the focused row in view.
+func _restore_scroll(key: String, target: Button) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not visible or _title_key != key or not is_instance_valid(target):
+		return
+	_scroll.scroll_vertical = _remembered_scroll[key]
+	_scroll.ensure_control_visible(target)
+
+## Starts the 80 ms fade-in; with Reduce motion the list is there at once.
+func fade_in() -> void:
+	if _fade != null and _fade.is_valid():
+		_fade.kill()
+	if GameState.reduce_motion or not is_inside_tree():
+		modulate.a = 1.0
+		return
+	modulate.a = 0.0
+	_fade = create_tween()
+	_fade.tween_property(self, "modulate:a", 1.0, FADE_IN)
 
 ## Scrolls the list back to its first row (a tap on the title, item 1797).
 func scroll_to_top() -> void:
@@ -264,6 +295,8 @@ func _focus_row(want: int) -> void:
 	if target != null and is_instance_valid(target):
 		target.grab_focus()
 		_scroll.ensure_control_visible.call_deferred(target)
+		if _remembered_scroll.has(_title_key):
+			_restore_scroll(_title_key, target)
 	_back.accessibility_name = Loc.t("Back")
 	_arrows.queue_redraw.call_deferred()
 

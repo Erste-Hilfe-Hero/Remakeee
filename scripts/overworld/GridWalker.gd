@@ -4,6 +4,7 @@ extends Node2D
 ## tweened in _process (never physics), integer positions.
 
 signal step_finished(cell: Vector2i)
+signal step_started(dir: String, run: bool)
 
 const TILE: int = 16
 const WALK_TIME: float = 0.22
@@ -26,6 +27,10 @@ var _from: Vector2
 var _to: Vector2
 var _t: float = 0.0
 var _duration: float = WALK_TIME
+## Dips the sprite 1 px in the middle of each step so walking has weight (item 2303).
+var bob: bool = false
+## True while the current step is a running step.
+var running: bool = false
 
 func place(c: Vector2i, face: String = "") -> void:
 	cell = c
@@ -53,8 +58,10 @@ func step(dir: String, run: bool = false) -> void:
 	_to = cell_to_pos(cell)
 	_t = 0.0
 	_duration = RUN_TIME if run else WALK_TIME
+	running = run
 	moving = true
 	queue_redraw()
+	step_started.emit(dir, run)
 
 func _process(delta: float) -> void:
 	if not moving:
@@ -79,6 +86,8 @@ static func sheet_for(style: String) -> Texture2D:
 
 func _draw() -> void:
 	var sheet: Texture2D = sheet_for(sprite_style)
+	if bob and moving and _step_frame == 1:
+		draw_set_transform(Vector2(0, 1))
 	if sheet != null:
 		var src := Rect2(SHEET_COLUMNS[facing] * TILE, _step_frame * TILE, TILE, TILE)
 		draw_texture_rect_region(sheet, Rect2(0, 0, TILE, TILE), src)

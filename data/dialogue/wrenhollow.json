@@ -36,5 +36,11 @@
  ],
  "kid": [
   "Wren-kid: I counted the ladder rungs. All of them. Two hundred and six!"
- ]
+ ],
+ "coach": {
+  "lines": [
+   "Driver Fenna: Valley Coach, Wrenhollow stop. Climb in, the seats are dry."
+  ],
+  "action": "transit valley_coach"
+ }
 }

@@ -211,6 +211,7 @@
   "Left this week: %d of %d": "Noch diese Woche: %d von %d",
   "Lighthouse stair": "Leuchtturmtreppe",
   "Lighthouse stair best: floor %d of %d": "Leuchtturm-Treppe, beste Leistung: Stockwerk %d von %d",
+  "Loan-team week: everyone fights with %s at ring %d.": "Leihteam-Woche: Alle kämpfen mit %s auf Ring %d.",
   "Locked: %s": "Gesperrt: %s",
   "Lume: Bright and steady. The lighthouse raised you well.": "Lume: Hell und ruhig. Der Leuchtturm hat dich gut erzogen.",
   "Lume: I kept the harbour lamps lit for forty years. Let's see your light.": "Lume: Vierzig Jahre habe ich die Hafenlampen brennen lassen. Zeig mir dein Licht.",
@@ -454,6 +455,7 @@
   "You find a swift feather in the grass.": "Du findest eine Flinkfeder im Gras.",
   "You got %s x%d.": "Du hast %s x%d erhalten.",
   "You pick a handful of berries and brew a tonic.": "Du pflückst eine Handvoll Beeren und braust daraus ein Tonikum.",
+  "Your own team. Next week everyone gets the same loan team.": "Dein eigenes Team. Nächste Woche bekommen alle dasselbe Leihteam.",
   "Your waymark pouch is full (%d). %d Waymarks were lost.": "Dein Wegmarken-Beutel ist voll (%d). %d Wegmarken sind verfallen.",
   "score %d": "Wertung %d"
  }

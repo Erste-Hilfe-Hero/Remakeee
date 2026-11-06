@@ -159,6 +159,8 @@ def quillbrook(world):
         "culvert": {"lines": lines(("An old culvert, its grate rusted shut. It runs back up the valley.", "Ein alter Durchlass, das Gitter festgerostet. Er führt das Tal hinauf zurück.")),
                     "action": "lever quill_culvert pry_bar"},
         "smooth": lines(("This stone is too smooth to be natural.", "Dieser Stein ist zu glatt, um natürlich zu sein.")),
+        "boatman": {"lines": lines(("Boatman Osk: Lake Line landing. The brook runs out to the lake from here, and so do I.", "Bootsmann Osk: Anleger der Seelinie. Von hier fließt der Bach in den See, und ich fahre mit.")),
+                    "action": "transit lake_line"},
     })
     m = {"name": tr("Quillbrook", "Federbach"), "biome": "fern", "backdrop": "lake", "outdoor": True, "encounters": mid,
          "rows": rows,
@@ -166,6 +168,8 @@ def quillbrook(world):
                    warp(9, 24, mid, 9, 2, "down"), warp(9, 1, mid, 9, 25, "down")],
          "npcs": [
              npc("fisher", 8, 3, "left", mid + "/fisher", "villager"),
+             # Lake Line (item 1187): Osk waits by his boat on the brook.
+             npc("boatman", 5, 27, "right", mid + "/boatman", "villager"),
              wayfarer(world, mid, "brisa", 10, 10, "left", "Angler Brisa", team(("Puddlet", 9), ("Kelpup", 9)),
                       [("Brisa: Kelpups chase the trout upstream every morning.", "Brisa: Kelpups jagen jeden Morgen die Forellen bachaufwärts.")],
                       [("Brisa: Scaring my fish? That's a duel!", "Brisa: Du verscheuchst meine Fische? Das gibt ein Duell!")],
@@ -224,6 +228,8 @@ def wrenhollow(world):
                       "after_flag": {"flag": "got_ladder", "lines": lines(("Ropemaker Nell: Every knot I tie has a name. That one was 'Patience'.", "Seilerin Nell: Jeder Knoten, den ich binde, hat einen Namen. Der hieß 'Geduld'."))}},
         "elder": lines(("Old Bertil: We heard the Rift from down here. Like a bell cracking.", "Der alte Bertil: Wir haben den Riss bis hier unten gehört. Wie eine Glocke, die springt.")),
         "kid": lines(("Wren-kid: I counted the ladder rungs. All of them. Two hundred and six!", "Kind: Ich hab alle Leitersprossen gezählt. Zweihundertsechs!")),
+        "coach": {"lines": lines(("Driver Fenna: Valley Coach, Wrenhollow stop. Climb in, the seats are dry.", "Kutscherin Fenna: Talkutsche, Halt Zaunkönigsgrund. Steig ein, die Sitze sind trocken.")),
+                  "action": "transit valley_coach"},
     })
     m = {"name": tr("Wrenhollow", "Zaunkönigsgrund"), "biome": "town", "backdrop": "field", "outdoor": True,
          "heal_point": [2, 8], "rows": rows,
@@ -232,7 +238,8 @@ def wrenhollow(world):
                   npc("trader", 9, 7, "left", mid + "/trader", "villager"),
                   npc("ropemaker", 8, 11, "left", mid + "/ropemaker", "villager"),
                   npc("elder", 9, 14, "left", mid + "/elder", "elder"),
-                  npc("kid", 6, 1, "down", mid + "/kid", "villager")],
+                  npc("kid", 6, 1, "down", mid + "/kid", "villager"),
+                  npc("coach", 10, 6, "left", mid + "/coach", "villager")],
          "signs": [{"x": 2, "y": 9, "dialogue": mid + "/sign"}],
          "secrets": [secret(11, 15, "kin_charm", "find_wren_corner"), secret(0, 12, "tonic", "find_wren_west", 2),
                      secret(11, 4, "spark_drop", "find_wren_roof")]}
@@ -320,7 +327,8 @@ def reedhaven(world):
                    "action": "heal"},
         "trader": {"lines": lines(("Trader Lusk: Dry towels and remedies. The fen gets into everything.", "Händler Lusk: Trockentücher und Heilmittel. Der Fenn kriecht in alles.")),
                    "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm"},
-        "boatman": lines(("Boatman Rurik: When the lake calms down I'll run boats again. Mark my words.", "Bootsmann Rurik: Wenn sich der See beruhigt, fahre ich wieder Boote. Merk dir das.")),
+        "boatman": {"lines": lines(("Boatman Rurik: The Lake Line runs again. Brindlewick, Quillbrook, wherever you've set foot.", "Bootsmann Rurik: Die Seelinie fährt wieder. Brindlewick, Federbach, überall, wo du schon warst.")),
+                    "action": "transit lake_line"},
     })
     m = {"name": tr("Reedhaven", "Schilfhafen"), "biome": "town", "backdrop": "lake", "outdoor": True,
          "heal_point": [9, 4], "rows": rows,
@@ -422,6 +430,8 @@ def copperfold(world):
                               ("Smith Holt: Take this one. Sluice wheels, stuck carts, rusty grates: lean on it and they give.", "Schmied Holt: Nimm die hier. Schleusenräder, festsitzende Loren, rostige Gitter: stemm dich dagegen und sie geben nach.")),
                   "action": "give_item pry_bar 1", "flag": "got_pry_bar", "once": True,
                   "after_flag": {"flag": "got_pry_bar", "lines": lines(("Smith Holt: Bring me ore some day and I'll make that bar sing.", "Schmied Holt: Bring mir irgendwann Erz, dann bringe ich die Stange zum Singen."))}},
+        "coach": {"lines": lines(("Driver Bram: Valley Coach, Copperfold stop. Mind your head, the roof is low.", "Kutscher Bram: Talkutsche, Halt Kupferfalt. Pass auf deinen Kopf auf, das Dach ist niedrig.")),
+                  "action": "transit valley_coach"},
         "shift": lines(("Miner Pell-Anne: The lower seams cracked in the storm. Nobody goes below the second level now.", "Bergfrau Pell-Anne: Die unteren Flöze sind im Sturm gerissen. Unter die zweite Sohle geht jetzt niemand mehr.")),
     })
     m = {"name": tr("Copperfold", "Kupferfalt"), "biome": "town", "backdrop": "ridge", "outdoor": True,
@@ -430,7 +440,8 @@ def copperfold(world):
          "npcs": [npc("pitkeeper", 3, 6, "down", mid + "/pitkeeper", "elder"),
                   npc("trader", 9, 10, "left", mid + "/trader", "villager"),
                   npc("smith", 1, 5, "right", mid + "/smith", "villager"),
-                  npc("shift", 10, 13, "left", mid + "/shift", "villager")],
+                  npc("shift", 10, 13, "left", mid + "/shift", "villager"),
+                  npc("coach", 10, 17, "left", mid + "/coach", "villager")],
          "signs": [{"x": 9, "y": 12, "dialogue": mid + "/sign"}],
          "secrets": [secret(11, 15, "tonic", "find_copper_east", 2), secret(0, 10, "spark_drop", "find_copper_west"),
                      secret(4, 1, "remedy", "find_copper_tower")]}

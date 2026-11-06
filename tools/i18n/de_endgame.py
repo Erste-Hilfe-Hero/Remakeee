@@ -317,4 +317,6 @@ T = {
 "This week: %s, rule %s, ring %d.": "Diese Woche: %s, Regel %s, Ring %d.",
 "Target score: %d (lower is better).": "Zielwertung: %d (weniger ist besser).", "Echo %d: %s": "Echo %d: %s",
 "Cleared! The prize tries are used up this week, but the score counts.": "Geschafft! Die Preisversuche dieser Woche sind aufgebraucht, aber die Wertung zählt.",
+"Your own team. Next week everyone gets the same loan team.": "Dein eigenes Team. Nächste Woche bekommen alle dasselbe Leihteam.",
+"Loan-team week: everyone fights with %s at ring %d.": "Leihteam-Woche: Alle kämpfen mit %s auf Ring %d.",
 }

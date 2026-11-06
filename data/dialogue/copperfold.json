@@ -33,5 +33,11 @@
  },
  "shift": [
   "Miner Pell-Anne: The lower seams cracked in the storm. Nobody goes below the second level now."
- ]
+ ],
+ "coach": {
+  "lines": [
+   "Driver Bram: Valley Coach, Copperfold stop. Mind your head, the roof is low."
+  ],
+  "action": "transit valley_coach"
+ }
 }

@@ -55,3 +55,22 @@ T.update({
 "%s lands on %s!": "%s trifft %s!",
 "Lands %d turns later on whoever stands there.": "Trifft %d Runden später, wer dann dort steht.",
 })
+
+# Plan area 2, items 696-700: Trials (puzzle battles) at the Rifts.
+T.update({
+"Trials": "Prüfungen",
+"Trial solved!": "Prüfung bestanden!",
+"Not this time. The Trial waits for you.": "Diesmal nicht. Die Prüfung wartet auf dich.",
+"Ember Trial 1": "Glutprobe 1",
+"Ember Trial 2": "Glutprobe 2",
+"Ember Trial 3": "Glutprobe 3",
+"Current Trial 1": "Strömungsprobe 1",
+"Current Trial 2": "Strömungsprobe 2",
+"Current Trial 3": "Strömungsprobe 3",
+"Puddlet against Smoldrake in the ash storm. Win within 4 turns.": "Puddlet gegen Smoldrake im Aschesturm. Gewinne in höchstens 4 Runden.",
+"Talusk alone against two. Win within 4 turns.": "Talusk allein gegen zwei. Gewinne in höchstens 4 Runden.",
+"Two tired Spirlings against Smoldrake. Win within 4 turns.": "Zwei müde Spirlings gegen Smoldrake. Gewinne in höchstens 4 Runden.",
+"Zippit starts with 4 Energy against a soaked Riptail. Win within 3 turns through the Volt reaction.": "Zippit startet mit 4 Energie gegen ein durchnässtes Riptail. Gewinne in höchstens 3 Runden über die Volt-Reaktion.",
+"Mossling against Riptail in the drag of the current. Win within 4 turns.": "Mossling gegen Riptail im Sog der Strömung. Gewinne in höchstens 4 Runden.",
+"Kelpup against Riptail, tide against tide. Win within 4 turns.": "Kelpup gegen Riptail, Flut gegen Flut. Gewinne in höchstens 4 Runden.",
+})

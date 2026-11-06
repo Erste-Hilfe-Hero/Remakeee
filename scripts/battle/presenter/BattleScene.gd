@@ -44,6 +44,10 @@ var replay_inputs: Array = []
 var _replaying: bool = false
 
 var _field: Control
+## Holds the backdrop and the sprites; Juice shakes this node, never the strips or menus.
+var _shake_root: Control
+## Element effects for arts, drawn above the sprites inside the shake root.
+var _fx: ElementFx
 var _backdrop: BattleBackdrop
 var _foe_sprite: SpirlingSprite
 var _player_sprite: SpirlingSprite
@@ -88,6 +92,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_auto_button.button_pressed = not _auto_button.button_pressed
 
+func _enter_tree() -> void:
+	Juice.in_battle = true
+
+func _exit_tree() -> void:
+	Juice.in_battle = false
+	Juice.set_shake_root(null)
+
 func _ready() -> void:
 	theme = UITheme.get_theme()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -125,16 +136,28 @@ func _build() -> void:
 	_menu = CommandMenu.new()
 	col.add_child(_menu)
 
+	_shake_root = Control.new()
+	_shake_root.name = "shake_root"
+	_shake_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_shake_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_field.add_child(_shake_root)
+	Juice.set_shake_root(_shake_root)
+
 	_backdrop = BattleBackdrop.new()
 	_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_field.add_child(_backdrop)
+	_shake_root.add_child(_backdrop)
 
 	_foe_sprite = SpirlingSprite.new()
 	_player_sprite = SpirlingSprite.new()
 	_foe_strip = InfoStrip.new()
 	_player_strip = InfoStrip.new()
 	_player_strip.show_numbers = true
-	for n: Control in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
+	for n: Control in [_foe_sprite, _player_sprite]:
+		_shake_root.add_child(n)
+	_fx = ElementFx.new()
+	_fx.name = "element_fx"
+	_shake_root.add_child(_fx)
+	for n: Control in [_foe_strip, _player_strip]:
 		_field.add_child(n)
 	_foe_sprite.visible = false
 	_player_sprite.visible = false
@@ -231,7 +254,7 @@ func _build_formation() -> void:
 		for slot: int in model.slot_count(side):
 			var sp := SpirlingSprite.new()
 			sp.visible = false
-			_field.add_child(sp)
+			_shake_root.add_child(sp)
 			_slot_sprites[side].append(sp)
 			var tag := MiniStrip.new()
 			tag.show_numbers = side == BattleModel.Side.PLAYER
@@ -243,6 +266,7 @@ func _build_formation() -> void:
 		n.visible = false
 	_foe_strip.show_numbers = true
 	_field.move_child(_pin, -1)
+	_shake_root.move_child(_fx, -1)
 	_layout_field()
 	_apply_speed()
 
@@ -606,6 +630,10 @@ func _play_event(e: BattleEvent) -> void:
 				return
 			_foe_sprite.setup(foe, "front")
 			_foe_strip.set_spirling(foe)
+			if music_track == "warden":
+				# A Rift Warden shakes the field as it appears (item 2256).
+				Juice.add_trauma(Juice.TRAUMA_WARDEN)
+				Haptics.play("heavy")
 			if model.is_wild:
 				_foe_strip.visible = true
 				Sound.cry(foe.data)
@@ -639,7 +667,7 @@ func _play_event(e: BattleEvent) -> void:
 			var dir: Vector2 = Vector2(-8, -4) if side == BattleModel.Side.PLAYER else Vector2(8, 4)
 			if _multi:
 				dir = Vector2(0, -6) if side == BattleModel.Side.PLAYER else Vector2(0, 6)
-			await _sprite(side, slot).lunge(dir)
+			await _play_art(e, side, slot, dir)
 			_pin.visible = false
 		BattleEvent.Type.DAMAGE:
 			var hit: String = _hit_sound(e)
@@ -652,9 +680,7 @@ func _play_event(e: BattleEvent) -> void:
 				if foe != null:
 					GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
 			if not bool(e.data.get("status_tick", false)):
-				if side == BattleModel.Side.PLAYER:
-					GameState.rumble_pads(0.8 if hit == "hit_strong" else 0.4, 0.15)
-				await _sprite(side, slot).hit_flash()
+				await _hit_feedback(e, side, slot, hit == "hit_strong")
 			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
 			_refresh_focus(side, slot)
 			_update_pinch()
@@ -699,6 +725,7 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.FAINTED:
 			Sound.sfx("faint")
+			Juice.add_trauma(Juice.TRAUMA_FAINT)
 			await _sprite(side, slot).faint()
 			await _text.show_text(e.describe())
 			_strip(side, slot).visible = false
@@ -731,6 +758,55 @@ func _play_event(e: BattleEvent) -> void:
 			var text: String = e.describe()
 			if not text.is_empty():
 				await _text.show_text(text)
+
+## Wind-up, charge and travel sounds and the element effect for an art (items 2329 to 2366, 2529, 2530).
+func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
+	var kind: int = int(e.data.get("kind", MoveData.Kind.PHYSICAL))
+	var element: int = int(e.data.get("element", -1))
+	var user: SpirlingSprite = _sprite(side, slot)
+	Sound.sfx(charge_sound(kind))
+	await user.windup(kind, dir)
+	if element < 0:
+		return
+	var target: SpirlingSprite = user
+	var targets: Array = e.data.get("targets", [])
+	if kind != MoveData.Kind.STATUS and not targets.is_empty():
+		target = _sprite(BattleModel.other(side), int(targets[0]))
+	_fx.user_sprite = user
+	if kind != MoveData.Kind.PHYSICAL and target != user:
+		_fx_travel_sound.call_deferred(element)
+	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size))
+
+## The charge sound for an art kind: a short rush, a rising pulse or two soft tones.
+static func charge_sound(kind: int) -> String:
+	match kind:
+		MoveData.Kind.PHYSICAL: return "charge_physical"
+		MoveData.Kind.FOCUS: return "charge_focus"
+	return "charge_status"
+
+## The travel sound starts with the travel phase, after the charge.
+func _fx_travel_sound(element: int) -> void:
+	await get_tree().create_timer(ElementFx.CHARGE_TIME / Juice.speed()).timeout
+	Sound.sfx(travel_sound(element))
+
+static func travel_sound(element: int) -> String:
+	return "travel_" + String(Elements.E.keys()[element]).to_lower()
+
+## Shake, vibration, hit-stop, knockback and flash for a landed hit (items 2256 to 2258, 2332, 2591).
+func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
+	Juice.add_trauma(Juice.TRAUMA_HIT_STRONG if strong else Juice.TRAUMA_HIT)
+	Haptics.play("heavy" if strong else "hit")
+	var max_hp: int = maxi(int(e.data.get("max_hp", 1)), 1)
+	await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp)
+	var sp: SpirlingSprite = _sprite(side, slot)
+	sp.knockback(knockback_dir(side, _multi))
+	await sp.hit_flash()
+
+## Direction a Spirling on [param side] is pushed when hit: away from the other side.
+static func knockback_dir(side: int, multi: bool) -> Vector2:
+	if multi:
+		return Vector2(0, 1) if side == BattleModel.Side.PLAYER else Vector2(0, -1)
+	return Vector2(2, 1) if side == BattleModel.Side.PLAYER else Vector2(-2, -1)
 
 ## Switches to the pinch music while the player's active Spirling is low, and back once it recovers.
 func _update_pinch() -> void:

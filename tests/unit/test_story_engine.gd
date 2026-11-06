@@ -201,3 +201,11 @@ func test_spirlog_rift_lore_covers_the_first_species() -> void:
 	for name: String in ["Kindlop", "Puddlet", "Mossling", "Zippit", "Shalebat", "Zephlet", "Wickit", "Mirkmole", "Kelpup"]:
 		assert_ne(SpirlogLore.line(name), "", name)
 	assert_eq(SpirlogLore.data().size() - 1, 21)
+
+## Area 3 blocks the road north of corvane_quay until "madderby_road_open".
+func test_arrival_opens_the_madderby_road() -> void:
+	var steps: Array = ScenePlayer.load_scene("corvane_arrival").steps
+	assert_true(steps.any(func(s: Dictionary) -> bool: return s.get("flag", "") == "madderby_road_open"))
+	GameState.set_flag("corvane_arrived")
+	GameState.story_fixups()
+	assert_true(GameState.has_flag("madderby_road_open"), "old saves get the road too")

@@ -238,9 +238,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2874. [P3] Raid-Wächter tragen den Grafikstil der Era der Region, in der ihr Riss liegt.
 2875. [P3] Ein Raid-Rückblick nach dem Sieg zeigt, welche Techniken den meisten Schaden gemacht haben.
 ### Schnellsätze, Kommunikation und Kinderschutz
-2876. [P1] Freier Text bleibt überall ausgeschlossen; alle neuen Funktionen (Duell, Tausch, Bund, Raid) nutzen nur Phrasen-Nummern aus `Phrases.gd`, die der Server gegen eine Liste erlaubter Nummern prüft.
-2877. [P1] Der Server prüft für jeden Kontext eigene erlaubte Nummern (`phrases_allowed` je Kontext: Post, Duell, Bund, Raid), damit keine Menü-Phrase im Duell landet.
-2878. [P1] Spielernamen dürfen keine Ziffernfolgen mit mehr als 3 Ziffern, keine Adressen und kein "@" enthalten, damit niemand Telefonnummern oder Konten weitergibt.
+2876. [x] [P1] Freier Text bleibt überall ausgeschlossen; alle neuen Funktionen (Duell, Tausch, Bund, Raid) nutzen nur Phrasen-Nummern aus `Phrases.gd`, die der Server gegen eine Liste erlaubter Nummern prüft.
+2877. [x] [P1] Der Server prüft für jeden Kontext eigene erlaubte Nummern (`phrases_allowed` je Kontext: Post, Duell, Bund, Raid), damit keine Menü-Phrase im Duell landet.
+2878. [x] [P1] Spielernamen dürfen keine Ziffernfolgen mit mehr als 3 Ziffern, keine Adressen und kein "@" enthalten, damit niemand Telefonnummern oder Konten weitergibt.
 2879. [P2] Der Namensfilter normalisiert vor der Prüfung Ersatzzeichen (4 wird a, 3 wird e, 0 wird o, 1 wird i, Leerzeichen und Punkte fallen weg) und prüft dann gegen `banned_words`.
 2880. [P2] Pro Sprache (Deutsch, Englisch und alle in `docs/I18N.md`) eine eigene Liste in `banned_words` mit Spalte `lang`.
 2881. [P2] Für Duelle 12 eigene Phrasen ("Guter Zug!", "Knapp!", "Noch eine Runde?"), für Raids 12 ("Ich schütze!", "Phase zwei!"), für Bünde 12.
