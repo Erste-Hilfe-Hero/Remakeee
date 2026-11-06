@@ -2302,7 +2302,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
 	var goal_key: String = str(trainer.get("goal_key", ""))
-	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() else {}
+	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}
 	if not goal.is_empty():
 		# The start card shows the goal; the tracker only watches, it never changes the battle.
 		model.set_meta("goal_tracker", BattleGoals.Tracker.new(model, goal))

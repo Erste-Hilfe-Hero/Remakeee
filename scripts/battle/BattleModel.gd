@@ -253,10 +253,13 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 	var me: Spirling = active_spirling(side, slot)
 	if not is_standing(me):
 		return out
+	var any_move: bool = false
 	for i: int in me.moves.size():
-		if me.can_afford(me.moves[i]):
+		if me.can_afford(me.moves[i]) and not move_locked(me.moves[i]):
 			out.append(BattleAction.make_move(side, i, slot))
-	out.append(BattleAction.make_rest(side, slot))
+			any_move = true
+	if can_rest(any_move):
+		out.append(BattleAction.make_rest(side, slot))
 	if not StatusRules.blocks_swap(me.status):
 		for i: int in swap_candidates(side, slot):
 			out.append(BattleAction.make_swap(side, i, slot))
@@ -280,9 +283,13 @@ func is_legal(a: BattleAction) -> bool:
 		BattleAction.Kind.MOVE:
 			if a.target_slot >= slot_count(other(a.side)):
 				return false
-			return a.move_index >= 0 and a.move_index < me.moves.size() and me.can_afford(me.moves[a.move_index])
+			return a.move_index >= 0 and a.move_index < me.moves.size() and me.can_afford(me.moves[a.move_index]) \
+				and not move_locked(me.moves[a.move_index])
 		BattleAction.Kind.REST:
-			return true
+			var any_move: bool = false
+			for mv: MoveData in me.moves:
+				any_move = any_move or (me.can_afford(mv) and not move_locked(mv))
+			return can_rest(any_move)
 		BattleAction.Kind.SWAP:
 			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
 		BattleAction.Kind.ITEM:
@@ -596,6 +603,8 @@ func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or delta == 0 or not stat in BattleRules.STAGE_STATS:
 		return
+	if float(rules.get("stages_locked", 0.0)) > 0.0:
+		return
 	var before: int = s.stage(stat)
 	var after: int = clampi(before + delta, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	var d: Dictionary = _who(side, slot)
@@ -679,12 +688,21 @@ func _phase_end_of_turn() -> void:
 			_end_of_turn_for(side, slot)
 	_tick_timers()
 	_tick_field()
+	_tick_field_swirl()
 	_tick_delayed_hits()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	_weary_chip()
 	turn += 1
 	phase = Phase.FAINT_CHECK
+
+## True when the variants in play take [param mv] off the menu (stage-only arts under "stages_locked").
+func move_locked(mv: MoveData) -> bool:
+	return float(rules.get("stages_locked", 0.0)) > 0.0 and BattleRules.stage_only(mv)
+
+## Whether Rest is on offer; under "rest_only_as_pass" only when no art can be paid ([param any_move] false).
+func can_rest(any_move: bool) -> bool:
+	return float(rules.get("rest_only_as_pass", 0.0)) <= 0.0 or not any_move
 
 ## Most Energy a Spirling can hold under the variants in play.
 func max_energy() -> int:
@@ -1099,6 +1117,24 @@ func clear_snares(side: int) -> void:
 		return
 	snares[side] = []
 	emit_event(BattleEvent.Type.SNARE_CLEARED, {"side": side})
+
+## The field the swirl lays next (field_swirl_every), picked a turn early so it can be announced.
+var _swirl_next: String = ""
+
+## "field_swirl_every" = N: at the end of every N-th turn a random field (from the battle seed) takes
+## over for N turns; one turn earlier FIELD_NEXT tells both sides which one is coming.
+func _tick_field_swirl() -> void:
+	var every: int = int(rules.get("field_swirl_every", 0))
+	if every <= 0:
+		return
+	if (turn + 1) % every == 0:
+		var ids: Array = BattleRules.FIELDS.keys()
+		ids.sort()
+		_swirl_next = str(ids[rng.randi_range(0, ids.size() - 1)])
+		emit_event(BattleEvent.Type.FIELD_NEXT, {"field": _swirl_next, "label": str(BattleRules.FIELDS[_swirl_next].label)})
+	elif turn % every == 0 and not _swirl_next.is_empty():
+		set_field(_swirl_next, every)
+		_swirl_next = ""
 
 ## Sends a delayed hit of [param amount] at [param slot] of [param side]: it lands at the end of
 ## the turn [param turns] turns from now on whoever stands there then. Emits DELAYED_SET.
