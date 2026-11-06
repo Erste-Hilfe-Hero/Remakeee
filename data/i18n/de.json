@@ -97,8 +97,10 @@
   "goes up",
   "lowest",
   "peak",
+  "read-back check failed for %s",
   "rename failed: %s",
-  "unknown function %s"
+  "unknown function %s",
+  "{\n\t\"_sha256\": \""
  ],
  "strings": {
   "\n\n(tap to continue)": "\n\n(tippen zum Fortfahren)",
@@ -929,6 +931,7 @@
   "The ring of light above it never touches the water. Old maps mark its lake with a single drawn circle.": "Der Lichtring über ihm berührt nie das Wasser. Alte Karten markieren seinen See mit einem einzigen gezeichneten Kreis.",
   "The satchel is empty.": "Die Umhängetasche ist leer.",
   "The save could not be read.": "Der Spielstand konnte nicht gelesen werden.",
+  "The save was damaged. The latest backup was loaded.": "Der Spielstand war beschädigt. Die neueste Sicherung wurde geladen.",
   "The server is answering slowly.": "Der Server antwortet langsam.",
   "The server is being looked after. Please try again a little later.": "Der Server wird gerade gewartet. Versuche es bitte etwas später.",
   "The server took too long to answer. Try again.": "Der Server hat zu lange gebraucht. Versuche es noch einmal.",
