@@ -119,6 +119,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -184,6 +185,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -256,6 +258,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -321,6 +324,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -377,6 +381,7 @@
      "facing": "down"
     }
    ],
+   "goal": "Goal: set the water level with the sluice wheels so the walkway is clear.",
    "blocks": [
     {
      "x": 5,
@@ -414,5 +419,6 @@
   "sluice_a",
   "sluice_b",
   "sluice_c"
- ]
+ ],
+ "goal": "Goal: set the water level with the sluice wheels so the walkway is clear."
 }

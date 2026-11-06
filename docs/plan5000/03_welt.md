@@ -154,7 +154,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1028. [P2] Lass Türen, die ein gelöstes Rätsel geöffnet hat, dauerhaft offen bleiben (gespeichert in world_state).
 1029. [x] [P2] Gib jedem Dungeon eine eigene Tabelle in data/encounters.json mit niedriger Rate 0.06, damit Rätsel nicht ständig unterbrochen werden.
 1030. [P2] Setze in Rätselräumen keine Begegnungsfelder, nur in Fluren zwischen den Räumen.
-1031. [P2] Zeige in jedem Rätselraum beim ersten Betreten eine Zeile mit dem Ziel des Raums, z. B. "Bringe das Licht zu beiden Kristallen".
+1031. [x] [P2] Zeige in jedem Rätselraum beim ersten Betreten eine Zeile mit dem Ziel des Raums, z. B. "Bringe das Licht zu beiden Kristallen".
 1032. [P3] Baue den Endspiel-Dungeon "Inkwell Depths" (de: Tintenfasstiefe), zehn Räume, die alle vorher gelernten Rätselarten kombinieren, Ring 25 bis 32.
 1033. [P3] Gib Inkwell Depths einen Raum, in dem Blöcke, Druckplatten und Spiegel gemeinsam genutzt werden.
 1034. [P3] Lege für jeden Dungeon eine Bestzeit-Messung an, die in den Statistiken (Records) steht.

@@ -149,6 +149,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: ring the bells in the order scratched into the wall.",
    "blocks": [
     {
      "x": 5,
@@ -234,6 +235,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: ring the bells in the order scratched into the wall.",
    "blocks": [
     {
      "x": 5,
@@ -319,6 +321,7 @@
      "facing": "up"
     }
    ],
+   "goal": "Goal: ring the bells in the order scratched into the wall.",
    "blocks": [
     {
      "x": 5,
@@ -411,5 +414,6 @@
    ],
    "name": "Bellstone Ruins, hall 5"
   }
- ]
+ ],
+ "goal": "Goal: ring the bells in the order scratched into the wall."
 }

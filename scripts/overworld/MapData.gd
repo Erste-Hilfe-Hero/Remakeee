@@ -59,6 +59,8 @@ var file_id: String = ""
 ## Kind of land (fern, marsh, scree, forest, cave, town, rift, ...): steers encounters,
 ## weather and sounds together (area 3 item 898).
 var biome: String = ""
+## Puzzle rooms (area 3 item 1031): one line with the room's goal, shown on the first visit.
+var goal: String = ""
 ## Meeting place of a town (area 3 item 966): spring, lamp or sign where folk gather at dusk.
 var square: Vector2i = Vector2i(-1, -1)
 ## Puzzles: {"id", "flag", "plates": [[x, y], ...]} (see PuzzleRoom).
@@ -191,6 +193,7 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	m.beam = (raw.get("beam", {}) as Dictionary).duplicate(true)
 	m.boulder_ground = str(raw.get("boulder_ground", "f"))
 	m.biome = str(raw.get("biome", ""))
+	m.goal = str(raw.get("goal", ""))
 	m.drop_to = str(raw.get("drop_to", ""))
 	m._base_rows = m.rows.duplicate()
 	m.encounter_table = str(raw.get("encounters", ""))

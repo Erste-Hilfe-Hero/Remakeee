@@ -263,6 +263,10 @@ func _tip_after_load(id: String) -> void:
 		await get_tree().process_frame
 	await show_tip(id)
 
+## Flag set once the goal line of room [param map_id] was shown.
+static func goal_flag(map_id: String) -> String:
+	return "goal_seen_" + map_id.replace(MapData.FLOOR_SEP, "_")
+
 func _era_line_after_load(line: String) -> void:
 	while busy:
 		await get_tree().process_frame
@@ -321,6 +325,10 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	Survey.reveal(map, cell)
 	_show_banner(banner_text())
+	# A puzzle room says its goal once, on the first visit (area 3 item 1031).
+	if not map.goal.is_empty() and not GameState.has_flag(goal_flag(map.id)):
+		GameState.set_flag(goal_flag(map.id))
+		_era_line_after_load.call_deferred(map.goal)
 	refresh_minimap()
 	var arrive: String = StoryPlacements.enter_scene(map_id, GameState.flags)
 	if not arrive.is_empty():
