@@ -476,11 +476,11 @@
   "role": "bulwark",
   "line_id": "mossling",
   "base": {
-   "hp": 104,
-   "atk": 106,
+   "hp": 92,
+   "atk": 92,
    "foc": 88,
    "spd": 86,
-   "def": 116
+   "def": 102
   },
   "trait": "deep_roots",
   "learnset": {
