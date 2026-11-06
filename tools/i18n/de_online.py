@@ -337,6 +337,14 @@ T = {
 "Done: %s": "Fertig: %s",
 "How many %s?": "Wie viele %s?",
 "Up to 6 kinds of items per trade.": "Bis zu 6 Arten von Gegenständen pro Tausch.",
+# Earlier saves
+"Earlier saves": "Frühere Spielstände",
+"Earlier saves of which slot?": "Frühere Spielstände von welchem Platz?",
+"There are no earlier saves of this slot yet.": "Von diesem Platz gibt es noch keine früheren Spielstände.",
+"Earlier saves (the server keeps the last 5)": "Frühere Spielstände (der Server behält die letzten 5)",
+"Bring back the save from %s? The current one stays in this list.": "Den Spielstand vom %s zurückholen? Der jetzige bleibt in dieser Liste.",
+"The earlier save is back.": "Der frühere Spielstand ist zurück.",
+"The earlier save is back. The game returns to the title, then continue from there.": "Der frühere Spielstand ist zurück. Das Spiel geht zum Titel, mach von dort aus weiter.",
 }
 # Strings in online code that are not shown to players (server messages, HTTP headers).
 KEEP = ["another player", "%s %s  Bond %d  %s", "[%s] %d%%", "%d. %s  %d%s", "Wanderer", "Leviarch", "Calderox", "Cairnhold", "Verdantusk", "Tempestrel", "Solmantle", "Obsidroth", "unknown function %s", "Wanderer ", "apikey: ", "Authorization: Bearer ",
