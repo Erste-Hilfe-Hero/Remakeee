@@ -94,3 +94,59 @@ Never picked at this level: Furnace Spiral, Bloom Burst, Cairn Crash, Salt Snap,
 - Every Spirling has a temperament (`Spirling.TEMPERAMENTS`) read from its uid, so it costs no RNG roll and old saves keep theirs. Five of the six give +5% to one stat (HP, ATK, DEF, FOC or SPD) with no penalty; "Even" gives nothing. It is a small lean, not a build choice, and it is shown in the team summary.
 - The Iron Oath is an opt-in challenge picked at new game. A Spirling that faints moves to the Sanctuary after the battle. If the party empties, storage steps in; if storage is empty too, the oath ends and everyone comes back, so the game can never lock.
 - Rematches: a beaten Wayfarer fights again once per calendar day. The team keeps its shape and is raised so its best Spirling matches the party's best level, never above the level cap and never below the first fight. Prize money is the level-based default.
+
+## Waymarks (plan area 8)
+
+Waymarks are the endgame currency. They are only earned by playing (`Waymarks.earn`, sources in
+`Waymarks.SOURCES`), never bought, traded or gifted. The pouch holds at most 9999; what does not fit
+is lost with a short note. A loss in battle never takes Waymarks away.
+
+Target for an active player: **about 60 Waymarks a day and 500 a week** once the endgame is open.
+
+| Source | Amount | How often | Status |
+| --- | --- | --- | --- |
+| Daily task | 10 | 3 a day | built |
+| All three daily tasks | 10 extra | once a day | built |
+| Weekly echo, first win of the week | 60 | once a week | built |
+| Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
+| Master Wayfarer | 80 first win, then 20 | once a week each (8 masters) | `Masters.win` |
+| Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
+| Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
+| Festival ribbons left at the end | 1 per ribbon | per festival | built |
+| Season path steps 5/15/25 and 10/20/30 | 30 / 50 | per season | built |
+| Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
+| Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
+| Roaming trip 4 / 8 / 12 h (also 150 / 300 / 450 coins and a Tonic / Remedy / Strong Tonic) | 4 / 8 / 12 | up to 3 trips at once | `Expeditions.collect` |
+| Iron Oath | +25% on every source above | while sworn | `Waymarks.earn` |
+
+Daily tasks alone give 40 a day (280 a week); the weekly sources fill the rest. Three 12-hour
+trips a day add at most 72 a day if the player checks in twice; one round of 8-hour trips adds 24.
+
+World events and the wandering merchant (`WorldEvents.gd`) pay no Waymarks: the event gives one
+small item on the first visit of the day to its place, and the merchant sells three common goods
+for coins at their normal price. Both are drawn from the date alone, so all players share them.
+
+Festival ribbons: 3 per won battle against Spirlings of the festival's elements, 5 for the crier's
+festival task of the day. They buy festival goods from Tilda in Brindlewick.
+
+Season path: 30 steps per quarter, 100 points per step. Points: daily task 10, weekly echo win 40,
+festival goal stage 20. An active player (3 tasks a day, 1 weekly win) earns about 3100 points in a
+13-week season, enough for every step. The rewards repeat every season, so nothing is missed for good.
+
+### Journey complete and the Iron Oath
+
+- "Journey complete: x%" (`Completion.gd`, records screen) weighs story 20, side goals 10,
+  Spirlog (bonded kinds) 25, achievements 20, towers (lighthouse stair floors) 15 and
+  exploring (maps visited) 10 percent. Each part counts its own share from 0 to 1.
+- Under the Iron Oath every Waymark reward pays 25% more (rounded down: 10 -> 12, 20 -> 25,
+  80 -> 100). It makes up for Spirlings lost to the Sanctuary, not for coins or items.
+
+### Ring cap after Act I and the Master Wayfarers
+
+- `GameState.progress_cap()` follows the Veteran caps (12 ... 50) until Act I ends (flag
+  `aldo_dock_told`), then opens to the full ring 60. Veteran and Rift-born use it as their
+  level cap, so the endgame (weekly echo, lighthouse stair, masters) can use the whole range.
+- Eight Master Wayfarers (data/endgame.json "masters") appear once both Rifts are mended. Each
+  fields four Spirlings of one element, final forms for the ring, at master ring - 2 up to the
+  master ring (45, 46, 48, 49, 50, 52, 53, 55). Eight first wins pay 640 Waymarks once; after
+  that the masters add up to 160 a week.

@@ -28,6 +28,14 @@ const SETUP_THREAT: float = 0.4
 const SETUP_SAFE_MULT: float = 1.5
 ## Tier 3: extra pull toward weakened foes (times the share of HP the target has lost).
 const FINISH_BONUS: float = 0.2
+## Fixed scores for the newer move blocks (docs/plan5000/02_kampf.md, item 563):
+## Energy tax per taxed turn, a side snare per foe on the bench, a delayed hit as a share of its
+## expected damage, and a small cost per own stage a self_stage_after hit gives up.
+## A cooldown costs nothing on the turn it is used.
+const TAX_BONUS_PER_TURN: float = 0.15
+const SNARE_BONUS_PER_BENCH: float = 0.25
+const DELAYED_SHARE: float = 0.8
+const SELF_DROP_COST: float = 0.1
 
 var level: int = 0
 
@@ -90,9 +98,15 @@ func score_action(model: BattleModel, side: int, slot: int, move_index: int, aim
 func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, target_slot: int = -1) -> float:
 	var me: Spirling = model.active_spirling(side, slot)
 	var target: Spirling = model.active_spirling(BattleModel.other(side), target_slot) if target_slot >= 0 else model.opponent(side)
-	var mv: MoveData = me.moves[move_index]
+	var mv: MoveData = BattleRules.resolve_move(me.moves[move_index], model.field)
 	var acc: float = mv.accuracy * StatusRules.acc_mult(me.status)
-	var expected: float = DamageCalc.estimate(me, target, mv)
+	var expected: float = DamageCalc.estimate(me, target, mv) * BattleRules.status_bonus(mv, target)
+	var delayed: bool = false
+	for fx: Dictionary in mv.effects:
+		delayed = delayed or StringName(fx.get("id", "")) == &"delayed_hit"
+	if delayed:
+		# Lands later: worth a share of the hit now, and never counted as a KO this turn.
+		return DELAYED_SHARE * minf(expected, float(target.hp)) / float(maxi(target.max_hp(), 1)) * acc
 	var score: float = minf(expected, float(target.hp)) / float(maxi(target.max_hp(), 1)) * acc
 	if mv.is_damaging() and expected >= float(target.hp):
 		score += KO_BONUS * acc
@@ -113,6 +127,15 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 				score += bonus
 		elif fx_id == &"set_field" and level >= 1:
 			score += FIELD_BONUS * maxf(0.0, field_value(model, side, str(fx.get("field", ""))))
+		elif fx_id == &"energy_tax" and target.energy_tax <= 1:
+			var turns: int = int(fx.get("amount", 0))
+			score += TAX_BONUS_PER_TURN * float(turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS) * acc
+		elif fx_id == &"side_snare":
+			score += SNARE_BONUS_PER_BENCH * float(model.swap_candidates(BattleModel.other(side), maxi(target_slot, 0)).size()) * acc
+		elif fx_id == &"self_stage_after" and expected < float(target.hp):
+			var st: Dictionary = fx.get("stages", {})
+			for k: String in st:
+				score -= SELF_DROP_COST * float(maxi(0, -int(st[k])))
 	if target.status.is_empty():
 		for fx: Dictionary in mv.effects:
 			if StringName(fx.get("id", "")) == &"inflict_status":

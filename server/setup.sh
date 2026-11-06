@@ -72,6 +72,12 @@ ANON_KEY=$header.$payload.$sig
 ENV
 	umask 022
 fi
+# The battle referee's own database password (plan area 7, item 2703), added to older .env files.
+if ! grep -q '^REFEREE_DB_PASSWORD=' .env; then
+	umask 077
+	echo "REFEREE_DB_PASSWORD=$(openssl rand -hex 24)" >> .env
+	umask 022
+fi
 # Address lines are rewritten each run (DOMAIN can change).
 grep -v '^\(DOMAIN\|SITE_ADDRESS\|PUBLIC_URL\|COMPOSE_FILE\|SHARED_NETWORK\)=' .env > .env.new || true
 {
@@ -112,6 +118,26 @@ for i in $(seq 1 90); do
 done
 
 bash "$here/migrate.sh"
+
+# --- Game data for the leagues (species and learnsets, tools/online/game_data_sql.py) -------------
+if [ -f "$here/../data/spirlings.json" ] && command -v python3 >/dev/null 2>&1; then
+	python3 "$here/../tools/online/game_data_sql.py" "$here/../data/spirlings.json" | \
+		docker compose exec -T db psql -U postgres -h localhost -d postgres -v ON_ERROR_STOP=1 -q
+else
+	echo "Game data not loaded: the game project is not next to $here. The fair league needs it."
+fi
+
+# --- Battle referee (plan area 7, items 2687-2688) -----------------------------------------------
+# Its database user may only read battle_queue and write battle_results. The container has no
+# port; it needs the game project next to this folder (../project.godot) to build.
+referee_pw="$(sed -n 's/^REFEREE_DB_PASSWORD=//p' .env)"
+printf "alter role chimora_referee with login password :'pw';\n" | \
+	docker compose exec -T db psql -U postgres -h localhost -d postgres -v ON_ERROR_STOP=1 -q -v pw="$referee_pw"
+if [ -f "$here/../project.godot" ] && [ -d "$here/../scripts/battle" ]; then
+	docker compose --profile referee up -d --build referee || echo "Battle referee did not start; the rest of the server runs." >&2
+else
+	echo "Battle referee not started: the game project is not next to $here (needs ../project.godot)."
+fi
 
 if [ "$shared" = "1" ]; then
 	DOMAIN="${DOMAIN}" PROXY_CADDYFILE="${PROXY_CADDYFILE:-}" bash "$here/proxy_site.sh"

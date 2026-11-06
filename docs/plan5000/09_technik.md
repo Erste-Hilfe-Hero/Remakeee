@@ -377,7 +377,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 ### Datenschutz und DSGVO
 3899. [x] [P1] Setze die versprochene Löschung inaktiver Konten nach 24 Monaten technisch um (täglicher Lauf, Hinweis im Spiel 30 Tage vorher), weil die Datenschutzerklärung sie schon verspricht. (Umgesetzt als Markierung mit 30 Tagen Frist; ein Hinweis im Spiel erreicht inaktive Spieler nicht, die Erklärung sagt das jetzt so.)
 3900. [x] [P1] Setze die versprochene Löschung von Meldungen nach höchstens 6 Monaten und von Wochenwerten nach Ende der Folgewoche als täglichen Lauf um und teste beide.
-3901. [x] [P1] Lege das Verzeichnis der Verarbeitungstätigkeiten nach Art. 30 DSGVO als `docs/legal/VVT.md` an, mit jeder Tabelle, Zweck, Rechtsgrundlage und Frist.
+3901. [x] [P1] Lege das Verzeichnis der Verarbeitungstätigkeiten nach Art. 30 DSGVO als `docs/legal/VVT.md` an, mit jeder Tabelle, Zweck, Rechtsgrundlage und Frist. (Umgesetzt in `docs/legal/VERARBEITUNGEN.md`, gemeinsam mit Bereich 7.)
 3902. [x] [P1] Prüfe die Datenschutzerklärung gegen den tatsächlichen Stand (Contabo, gemeinsamer Server, Fehlerberichte, Web-Testbuild, Käufe) und ändere sie vor dem Store-Start.
 3903. [P1] Baue unter Menü, Konto einen Punkt "Meine Daten" (Art. 15 und 20 DSGVO), der über eine Serverfunktion `export_my_data` alle eigenen Daten als JSON zum Teilen anbietet.
 3904. [x] [P1] Prüfe, ob GoTrue oder PostgREST IP-Adressen in eigene Tabellen (z. B. `auth.audit_log_entries`) schreiben, und lösche diese Einträge nach 7 Tagen wie versprochen.
@@ -388,13 +388,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3909. [P2] Lege eine Antwortvorlage für Auskunfts-, Lösch- und Berichtigungsanfragen per E-Mail mit Frist von einem Monat an.
 3910. [P2] Prüfe, dass die Löschung per E-Mail ohne App (Webseite `/konto-loeschen`) eine dokumentierte Admin-Funktion hat und innerhalb von 30 Tagen erledigt wird.
 3911. [P2] Lege ein einfaches Protokoll für Lösch- und Auskunftsanfragen an (Datum, Art, erledigt am), ohne mehr Daten als nötig.
-3912. [P2] Prüfe die Rechtsgrundlage für Spieler unter 16 Jahren (Vertrag über die Eltern) und halte die Begründung in `docs/legal/VVT.md` fest.
+3912. [P2] Prüfe die Rechtsgrundlage für Spieler unter 16 Jahren (Vertrag über die Eltern) und halte die Begründung in `docs/legal/VERARBEITUNGEN.md` fest.
 3913. [P1] Zeige beim ersten Start die Nutzungsbedingungen und die Datenschutzerklärung mit Zustimmungsknopf und speichere Version und Zeitpunkt der Zustimmung auf dem Server.
 3914. [P2] Zeige nach einer wesentlichen Änderung der Nutzungsbedingungen beim nächsten Start die neue Fassung mit erneuter Zustimmung.
 3915. [P2] Gleiche die englische Privacy Policy und die AGB in Englisch automatisch mit der deutschen Fassung ab (gleiche Abschnitte, gleiche Fristen) über `tools/site/build_site.py --check`.
 3916. [P2] Prüfe, dass keine Spielerdaten in CI-Logs, Testfixtures oder Fehlerberichten im Repository landen.
 3917. [P2] Prüfe, dass der Support-Weg (E-Mail) keine Spielerdaten in fremde Ticketsysteme schickt, und halte das Postfach beim Anbieter in der EU.
-3918. [P2] Lege fest, dass jede neue Datenart (z. B. Kaufbelege aus Bereich 10) erst in `docs/legal/VVT.md` und der Datenschutzerklärung stehen muss, bevor sie gespeichert wird, und prüfe das im Pull-Request-Text.
+3918. [P2] Lege fest, dass jede neue Datenart (z. B. Kaufbelege aus Bereich 10) erst in `docs/legal/VERARBEITUNGEN.md` und der Datenschutzerklärung stehen muss, bevor sie gespeichert wird, und prüfe das im Pull-Request-Text.
 3919. [P2] Prüfe, ob die Wochen-Rangliste ohne Namen wirklich keine Rückschlüsse auf einzelne Spieler erlaubt (z. B. bei sehr wenigen Teilnehmern).
 3920. [P2] Lösche Konten aus dem geschlossenen Test und interne Testkonten vor dem Store-Start und markiere künftige Testkonten eindeutig.
 3921. [P3] Prüfe einmal pro Jahr alle Speicherfristen gegen die tatsächlichen Daten mit einer festen SQL-Abfrage und halte das Ergebnis fest.

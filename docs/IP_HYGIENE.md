@@ -98,3 +98,26 @@ the right to modify) outside the repo.
 
 `docs/legal/` holds the IP and patent audit, draft privacy policy (DE/EN), terms, Impressum template and
 store-compliance answers. Written by an AI without lawyer review; only Ali's personal details are left as placeholders.
+
+## 8. New Spirlings (plan area 1, item 436)
+
+Every new kind is checked before it goes into `data/spirlings.json`: the name against the banned list
+(`tools/ip_check.sh` runs over all data), the name against a web search for existing creature brands,
+the outline against our own sheet (no two kinds share a silhouette), and the cry, which `Cry.gd` builds
+from the name hash and elements (no recorded or borrowed sounds). Names are English compound words
+or Latin-ish coinages of our own.
+
+| Kinds | Outline | Check |
+| --- | --- | --- |
+| Blotling / Scrivane | ink blot, then a quill-necked heron of ink | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Hushkin / Silentra | mouthless shadow cub, then a veiled figure with light signs | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Paddlewisp / Ferrowyn | water whirl with a paddle tail, then a spray otter with fin sails | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Talusk / Talusgard / Cairnhold | scree heap with one eye, then a walking cairn with a beacon fire | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Fluting / Marshfife | hollow reed with finger holes, then a heron of bound reeds | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Glasstarn | a flat disc of lake water with a face under the surface | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Lanternel | lamp-bellied creature with a cap and one wing | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Seamlet / Mendlace | spark with a needle tail, then a shadow tailor inside a thread loop | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Croziel / Frondmere | fiddlehead fern on root feet, then a deer whose antlers are fern fronds | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+| Brinelet / Saltspire | salt crystal cluster, then a walking salt pillar with a crown | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+
+The 40 kinds of Corvane, Ashmere and Solenne (items 61-63) follow the same check. Their names are built from plain words of their places (mill, reed, cog, glass, etch, salt, orrery, dune) and were run through `tools/ip_check.sh`. Their sprites are generated placeholders (round body, head, ears, crest or wings) until real designs are drawn. Regional imprints (items 218-219) are our own idea: a regional form keeps the Spirlog number and only changes elements, palette and lore, it is not a separate kind and no foreign terms are used for it.

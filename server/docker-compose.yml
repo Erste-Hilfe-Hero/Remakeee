@@ -77,6 +77,25 @@ services:
       PGRST_JWT_SECRET: ${JWT_SECRET}
       PGRST_DB_USE_LEGACY_GUCS: "false"
 
+  # Battle referee (plan area 7, items 2687-2690, 2703): plays uploaded battles again with the
+  # game's own battle code. No port; it only talks to the database, as user chimora_referee.
+  # Started by setup.sh when the game project is next to server/ (profile "referee").
+  referee:
+    build:
+      context: ..
+      dockerfile: server/referee/Dockerfile
+    restart: unless-stopped
+    profiles: ["referee"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGUSER: chimora_referee
+      PGPASSWORD: ${REFEREE_DB_PASSWORD}
+      PGDATABASE: postgres
+
   caddy:
     logging: *logging
     image: caddy:2.10.2

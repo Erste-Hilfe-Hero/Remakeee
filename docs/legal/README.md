@@ -13,7 +13,7 @@
 | [IMPRESSUM.md](IMPRESSUM.md) | Impressum nach § 5 DDG, DE/EN | Website, Spiel, beide Stores |
 | [STORE_COMPLIANCE.md](STORE_COMPLIANCE.md) | Antworten für Google Data Safety, Apple App Privacy, Altersfreigabe, DSA-Händlerstatus, Kontolöschung, Store-Texte | Play Console, App Store Connect |
 | [CHECKLISTE_ALI.md](CHECKLISTE_ALI.md) | Was nur Ali erledigen kann, in Reihenfolge | intern |
-| [VVT.md](VVT.md) | Verzeichnis der Verarbeitungstätigkeiten (Art. 30 DSGVO): jede Tabelle mit Zweck, Rechtsgrundlage, Frist und Löschlauf | intern |
+| [VERARBEITUNGEN.md](VERARBEITUNGEN.md) | Verzeichnis der Verarbeitungstätigkeiten (Art. 30 DSGVO): Zweck, Tabellen, Frist, Rechtsgrundlage, Löschläufe, TOMs | intern |
 
 ## Festgelegtes Modell (darauf beruhen alle Texte)
 
@@ -27,4 +27,4 @@
 
 Weicht die Umsetzung davon ab, müssen Datenschutzerklärung, Nutzungsbedingungen und Store-Antworten vorher
 angepasst werden. Das Backend läuft seit 2. November 2026 auf Contabo; die versprochenen Löschfristen setzt
-der tägliche Lauf `server/cleanup.sh` um (siehe VVT.md).
+der tägliche Lauf `server/cleanup.sh` um (siehe VERARBEITUNGEN.md).

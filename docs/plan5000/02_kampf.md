@@ -8,12 +8,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 > Nicht in diesen Bereich gehören neue Spirling-Arten (Bereich 1), Online-Duelle und Online-Regeln (Bereich 7) und alles rund um den Shop (Bereich 10); auch keine Punkte, die schon in docs/KAMPF_PLAN_1000.md stehen.
 
 ### Neue Effekt-Bausteine für Techniken
-445. [P1] Neuer Effekt `bonus_vs_status` in scripts/battle/effects/: die Technik erhält einen Stärke-Faktor (Schlüssel `vs_status`, `vs_mult`), wenn das Ziel den genannten Status trägt; `"*"` steht für jeden Status.
-446. [P1] Neuer Effekt `energy_tax`: das Ziel zahlt 2 Runden lang für jede Technik 1 Energie mehr; die Restrunden stehen im Info-Streifen als Zahl neben einem Münzsymbol.
-447. [P1] Neuer Effekt `field_element`: die Technik nimmt das Element an, das das aktive Feld verstärkt, und erhält dann +20 Stärke; ohne Feld behält sie ihr eigenes Element.
-448. [P1] Neuer Effekt `self_stage_after`: nach einem Treffer sinkt eine eigene Stufe um den Wert aus `self_stages` (zum Beispiel Fokus -1), auch wenn das Ziel dabei fällt.
-449. [P1] Neuer Effekt `stage_on_hit`: mit der Chance `stage_chance` steigt nach einem Treffer eine eigene Stufe um 1; StatChangeEffect erhält dafür den optionalen Schlüssel `stage_chance` (Standard 1,0).
-450. [P1] Neuer Schlüssel `cooldown` in moves.json: nach dem Einsatz ist die Technik für die angegebene Zahl an Runden gesperrt und im Technik-Menü grau mit Restzahl.
+445. [x] [P1] Neuer Effekt `bonus_vs_status` in scripts/battle/effects/: die Technik erhält einen Stärke-Faktor (Schlüssel `vs_status`, `vs_mult`), wenn das Ziel den genannten Status trägt; `"*"` steht für jeden Status.
+446. [x] [P1] Neuer Effekt `energy_tax`: das Ziel zahlt 2 Runden lang für jede Technik 1 Energie mehr; die Restrunden stehen im Info-Streifen als Zahl neben einem Münzsymbol.
+447. [x] [P1] Neuer Effekt `field_element`: die Technik nimmt das Element an, das das aktive Feld verstärkt, und erhält dann +20 Stärke; ohne Feld behält sie ihr eigenes Element.
+448. [x] [P1] Neuer Effekt `self_stage_after`: nach einem Treffer sinkt eine eigene Stufe um den Wert aus `self_stages` (zum Beispiel Fokus -1), auch wenn das Ziel dabei fällt.
+449. [x] [P1] Neuer Effekt `stage_on_hit`: mit der Chance `stage_chance` steigt nach einem Treffer eine eigene Stufe um 1; StatChangeEffect erhält dafür den optionalen Schlüssel `stage_chance` (Standard 1,0).
+450. [x] [P1] Neuer Schlüssel `cooldown` in moves.json: nach dem Einsatz ist die Technik für die angegebene Zahl an Runden gesperrt und im Technik-Menü grau mit Restzahl.
 451. [P2] Neuer Effekt `delayed_hit`: der Schaden wird beim Einsatz mit den aktuellen Werten berechnet und trifft 2 Runden später den Spirling, der dann im Ziel-Slot steht.
 452. [P2] Neuer Effekt `energy_burn`: das Ziel verliert die Energie aus `effect_amount`, ohne dass der Nutzer sie erhält (Unterschied zum bestehenden `energy_drain`).
 453. [P2] Neuer Effekt `heal_block`: 3 Runden lang wirken beim Ziel keine Heiltechniken, keine Gabe-Regeneration, kein Feld-Heilen und kein Andenken mit `regen_div`.
@@ -136,7 +136,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 562. [P2] Lernlisten Umbra: Mirkmole lernt Veil Step bei Ring 6 und Shade Pounce bei Ring 12, Duskdigger Gloom Handoff bei Ring 27 und Eclipse Crush bei Ring 46, Verdantusk Gloam Pact bei Ring 40, Obsidroth Murmur Bite bei Ring 32.
 
 ### Element-Reaktionen und Zuteilung der neuen Techniken
-563. [P1] BattleAI.score_move bewertet alle neuen Bausteine mit festen Werten: Seitenfalle 0,25 mal Zahl der gegnerischen Bank-Spirlings, `energy_tax` 0,15 pro Runde, `delayed_hit` 0,8 des geschätzten Schadens, `cooldown` ohne Abschlag im ersten Zug.
+563. [x] [P1] BattleAI.score_move bewertet alle neuen Bausteine mit festen Werten: Seitenfalle 0,25 mal Zahl der gegnerischen Bank-Spirlings, `energy_tax` 0,15 pro Runde, `delayed_hit` 0,8 des geschätzten Schadens, `cooldown` ohne Abschlag im ersten Zug.
 564. [P1] Lernlisten Stone: Shalebat lernt Grit Jab bei Ring 8 und Pumice Pelt bei Ring 16, Obsidroth Landslip bei Ring 30 und Monolith Drop bei Ring 44, Calderox Quarry Wall bei Ring 36, Duskdigger Fault Line bei Ring 33.
 565. [P1] Lernlisten Gale: Zephlet lernt Draft Needle bei Ring 5, Kite Cut bei Ring 10, Crosswind bei Ring 14 und Scatter Gale bei Ring 19, Tempestrel Squall Line bei Ring 30, Cloudbreak bei Ring 40 und Downburst bei Ring 48.
 566. [P2] Neue Reaktion in BattleRules.REACTIONS: Stone trifft ein Ziel mit Jolt, erdet den Status (er endet) und richtet ×1,1 Schaden an.
@@ -440,7 +440,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 844. [P1] Test: jedes Element hat nach der Erweiterung mindestens 14 Techniken, davon mindestens 3 Status-Techniken und mindestens eine mit Energie 1 oder 2.
 845. [P1] Test: jede Art kann bis Ring 5 eine Schadens-Technik ihres Elements und bis Ring 30 Techniken aus mindestens 2 Elementen.
 846. [P1] Test: im Modus `warden` liegt die Gewinnrate jedes Referenzteams in den Zielbändern aus tools/balance/targets.json (mit kleiner Rundenzahl im normalen CI-Lauf).
-847. [P1] Test pro neuem Effekt-Baustein in tests/unit/test_move_effects.gd mit fester Kampflage und festem Seed, der das genaue Ergebnis prüft (Schaden, Energie, Status, Stufe).
+847. [x] [P1] Test pro neuem Effekt-Baustein in tests/unit/test_move_effects.gd mit fester Kampflage und festem Seed, der das genaue Ergebnis prüft (Schaden, Energie, Status, Stufe).
 848. [P1] Test: `delayed_hit`, `side_snare` und `cooldown` überstehen ein Replay-Hin-und-zurück mit BattleReplay ohne Abweichung.
 849. [P1] Test: im Modus `team` bei Ring 36 liegt keine Art unter 30 % oder über 70 % (zusätzlich zum bestehenden Duell-Band 25 bis 75 %).
 850. [P2] Test: der Vorteil des Ersten liegt bei Ring 20 und 36 höchstens bei 62 %.

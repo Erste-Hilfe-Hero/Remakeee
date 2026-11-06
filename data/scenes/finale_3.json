@@ -1,0 +1,13 @@
+{
+ "_note": "Finale 3: the battle against the Echo in three waves, Mirela beside the player in wave 3 (plan item 1528).",
+ "skippable": false,
+ "steps": [
+  {"say": ["Mirela: It will push. Push back gently. Don't hurt them, only wake them."]},
+  {"battle": "echo_1"},
+  {"say": ["The first shapes fade, almost gratefully. More come."]},
+  {"battle": "echo_2"},
+  {"say": ["Mirela: I'm too old to sing it alone, but not too old for this. Glim, wake up!"]},
+  {"battle": "echo_3"},
+  {"action": "scene finale_4"}
+ ]
+}

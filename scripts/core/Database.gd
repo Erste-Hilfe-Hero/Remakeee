@@ -40,8 +40,9 @@ static func earlier_form(sd: SpirlingData) -> SpirlingData:
 	if sd == null:
 		return null
 	for other: SpirlingData in spirlings.values():
-		if other.evolves_to == sd:
-			return other
+		for path: Dictionary in other.unfold:
+			if path.get("to") == sd:
+				return other
 	return null
 
 static func move(move_name: String) -> MoveData:
@@ -63,27 +64,39 @@ static func _load_moves() -> void:
 		push_error("Database: cannot read %s" % MOVES_PATH)
 		return
 	for m: Dictionary in raw:
-		var md := MoveData.new()
-		md.move_name = m.name
-		md.element = Elements.E[m.element]
-		md.kind = MoveData.Kind[m.kind]
-		md.power = int(m.power)
-		md.accuracy = float(m.accuracy)
-		md.energy_cost = int(m.energy)
-		md.priority = int(m.get("priority", 0))
-		md.status_effect = str(m.get("status", ""))
-		md.status_chance = float(m.get("status_chance", 0.0))
-		if not md.status_effect.is_empty():
-			md.effects.append({"id": &"inflict_status", "status": md.status_effect, "chance": md.status_chance})
-		if m.has("stat"):
-			md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stat_chance", 1.0))})
-		md.overcharge = bool(m.get("overcharge", false))
-		md.target = str(m.get("target", "single"))
-		if m.has("field"):
-			md.effects.append({"id": &"set_field", "field": str(m.field)})
-		if m.has("effect"):
-			md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
+		var md: MoveData = parse_move(m)
 		moves[md.move_name] = md
+
+## Builds one move from its moves.json entry (also used by tests for moves not in the data).
+static func parse_move(m: Dictionary) -> MoveData:
+	var md := MoveData.new()
+	md.move_name = m.name
+	md.element = Elements.E[m.element]
+	md.kind = MoveData.Kind[m.kind]
+	md.power = int(m.power)
+	md.accuracy = float(m.accuracy)
+	md.energy_cost = int(m.energy)
+	md.priority = int(m.get("priority", 0))
+	md.status_effect = str(m.get("status", ""))
+	md.status_chance = float(m.get("status_chance", 0.0))
+	if not md.status_effect.is_empty():
+		md.effects.append({"id": &"inflict_status", "status": md.status_effect, "chance": md.status_chance})
+	if m.has("stat"):
+		md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stage_chance", m.get("stat_chance", 1.0)))})
+	md.overcharge = bool(m.get("overcharge", false))
+	md.target = str(m.get("target", "single"))
+	if m.has("field"):
+		md.effects.append({"id": &"set_field", "field": str(m.field)})
+	if m.has("effect"):
+		md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
+	md.cooldown = int(m.get("cooldown", 0))
+	if m.has("vs_status"):
+		md.effects.append({"id": &"bonus_vs_status", "vs_status": str(m.vs_status), "vs_mult": float(m.get("vs_mult", 1.5))})
+	if bool(m.get("field_element", false)):
+		md.effects.append({"id": &"field_element", "power_bonus": int(m.get("field_power", BattleRules.FIELD_ELEMENT_POWER))})
+	if m.has("self_stages"):
+		md.effects.append({"id": &"self_stage_after", "stages": m.self_stages})
+	return md
 
 static func _load_spirlings() -> void:
 	var raw: Variant = _read(SPIRLINGS_PATH)
@@ -102,11 +115,26 @@ static func _load_spirlings() -> void:
 		sd.base_def = int(base["def"])
 		sd.base_foc = int(base.foc)
 		sd.base_spd = int(base.spd)
-		sd.evolve_level = int(s.get("evolve_level", 0))
 		sd.bond_rate = float(s.get("bond_rate", SpirlingData.DEFAULT_BOND_RATE))
 		sd.trait_id = str(s.get("trait", ""))
-		sd.evolve_item = str(s.get("evolve_item", ""))
-		sd.evolve_map = str(s.get("evolve_map", ""))
+		sd.rarity = str(s.get("rarity", "common"))
+		sd.region = str(s.get("region", "veydal"))
+		sd.role = str(s.get("role", ""))
+		sd.keepsake_hint = str(s.get("keepsake_hint", ""))
+		sd.variants.clear()
+		for v: Variant in s.get("variants", []):
+			if v is Dictionary:
+				var els: Array[int] = []
+				for e: Variant in (v as Dictionary).get("elements", []):
+					if Elements.E.has(str(e)):
+						els.append(Elements.E[str(e)])
+				sd.variants.append({"region": str(v.get("region", "")), "elements": els, "palette": str(v.get("palette", "")),
+					"lore": str(v.get("lore", "")), "trait": str(v.get("trait", ""))})
+		sd.cry_motif.clear()
+		for m: Variant in s.get("cry_motif", []):
+			sd.cry_motif.append(int(m))
+		sd.origin = str(s.get("origin", ""))
+		sd.line_id = str(s.get("line_id", str(s.name).to_lower()))
 		sd.lore = str(s.get("lore", ""))
 		sd.height = str(s.get("height", ""))
 		sd.habitat = str(s.get("habitat", ""))
@@ -127,8 +155,43 @@ static func _load_spirlings() -> void:
 				sd.learnset_moves.append(md)
 		spirlings[sd.species_name] = sd
 	for s: Dictionary in raw:
-		if s.get("evolves_to") != null:
-			spirlings[s.name].evolves_to = spirlings.get(str(s.evolves_to))
+		_link_unfold(spirlings[s.name], s)
+
+## Reads the "unfold" list, or the older single "evolves_to" fields as a fallback.
+static func unfold_paths(s: Dictionary) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	if s.get("unfold") is Array:
+		for p: Variant in s.unfold:
+			if p is Dictionary:
+				out.append(p)
+	elif s.get("evolves_to") != null:
+		if not str(s.get("evolve_item", "")).is_empty():
+			out.append({"to": s.evolves_to, "rule": "item", "value": s.evolve_item})
+		else:
+			out.append({"to": s.evolves_to, "rule": "ring", "value": int(s.get("evolve_level", 0)), "map": str(s.get("evolve_map", ""))})
+	return out
+
+static func _link_unfold(sd: SpirlingData, s: Dictionary) -> void:
+	for p: Dictionary in unfold_paths(s):
+		var to: SpirlingData = spirlings.get(str(p.get("to", "")))
+		if to == null:
+			push_error("Database: %s unfolds into unknown %s" % [sd.species_name, p.get("to", "")])
+			continue
+		var v: Variant = p.get("value", 0)
+		# JSON numbers arrive as floats; rule values are whole numbers or ids.
+		if v is float and is_equal_approx(v, round(v)):
+			v = int(v)
+		sd.unfold.append({"to": to, "rule": str(p.get("rule", "ring")), "value": v, "map": str(p.get("map", ""))})
+	if sd.unfold.is_empty():
+		return
+	var first: Dictionary = sd.unfold[0]
+	sd.evolves_to = first.to
+	match str(first.rule):
+		"ring":
+			sd.evolve_level = int(first.value)
+			sd.evolve_map = str(first.map)
+		"item":
+			sd.evolve_item = str(first.value)
 
 static func _load_items() -> void:
 	var raw: Variant = _read(ITEMS_PATH)

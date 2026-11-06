@@ -9,7 +9,7 @@ extends Node
 ## - Saves when the app is paused / backgrounded (mobile OSes kill background apps).
 ## - Never loads .tres files as saves (loading resources can run embedded scripts).
 
-const SAVE_VERSION: int = 3
+const SAVE_VERSION: int = 4
 const SLOT_PATH: String = "user://save_1.json"
 ## Three save slots (item 58). Slot 1 keeps the old file name, so existing saves stay in it.
 const SLOTS: int = 3
@@ -33,6 +33,7 @@ var _migrations: Dictionary[int, Callable] = {
 	0: _migrate_0_to_1,
 	1: _migrate_1_to_2,
 	2: _migrate_2_to_3,
+	3: _migrate_3_to_4,
 }
 ## Act I world rebuild (save version 2): old map id -> [new map id, safe cell].
 const MAP_RENAMES_V2: Dictionary[String, Array] = {
@@ -223,12 +224,14 @@ func parse_save(text: String) -> Variant:
 # read is checked for its type here; a wrong one is dropped so the loader uses its default.
 
 const DICT_KEYS: Array[String] = ["tamer", "spirlog", "inventory", "flags", "matchups", "rests",
-	"records", "switches", "era"]
+	"records", "switches", "era", "world"]
 const LIST_KEYS: Array[String] = ["rifts", "party", "storage", "sanctuary"]
 const CELL_KEYS: Array[String] = ["cell", "heal_cell"]
 const NUMBER_KEYS: Array[String] = ["difficulty", "money", "play_time", "save_version"]
 const TEXT_KEYS: Array[String] = ["region", "map", "facing", "starter", "saved_at"]
 const FLAG_KEYS: Array[String] = ["iron_oath"]
+## Chain glyph in PixelFont, shown before the slot line of an Iron Oath save.
+const OATH_GLYPH: String = "\ue003"
 const SPIRLING_LISTS: Array[String] = ["party", "storage", "sanctuary"]
 const SPIRLING_NUMBERS: Array[String] = ["level", "xp", "hp"]
 const SPIRLING_TEXTS: Array[String] = ["species", "nickname", "uid", "held"]
@@ -239,8 +242,45 @@ static func _is_number(v: Variant) -> bool:
 static func _is_scalar(v: Variant) -> bool:
 	return v is String or v is StringName or _is_number(v)
 
+## Types of a fresh save (GameState.to_dict) and of a fresh Spirling, so fields added later by
+## other features are checked too without listing them here.
+static var _template: Dictionary = {}
+static var _spirling_template: Dictionary = {}
+
+static func _templates() -> void:
+	if not _template.is_empty():
+		return
+	_template = GameState.to_dict()
+	for s: Variant in GameState.party:
+		_spirling_template = (s as Spirling).to_dict()
+		break
+	if _spirling_template.is_empty():
+		var sd: SpirlingData = Database.species("Puddlet")
+		if sd != null:
+			_spirling_template = Spirling.new(sd, 5).to_dict()
+
+## Drops values of [param d] whose type differs from the same key in [param t].
+static func _match_template(d: Dictionary, t: Dictionary) -> void:
+	for k: Variant in d.keys():
+		if not t.has(k) or t[k] == null:
+			continue
+		var want: Variant = t[k]
+		var v: Variant = d[k]
+		var fits: bool
+		if want is Dictionary:
+			fits = v is Dictionary
+		elif want is Array:
+			fits = v is Array
+		elif want is String or want is StringName:
+			fits = _is_scalar(v)
+		else:
+			fits = _is_number(v)
+		if not fits:
+			d.erase(k)
+
 ## Drops every value of [param d] whose type the loaders cannot use. Returns [param d].
 static func sanitize(d: Dictionary) -> Dictionary:
+	_templates()
 	for k: String in DICT_KEYS:
 		if d.has(k) and not d[k] is Dictionary:
 			d.erase(k)
@@ -285,6 +325,7 @@ static func sanitize(d: Dictionary) -> Dictionary:
 			if s is Dictionary:
 				kept.append(_sanitize_spirling(s))
 		d[k] = kept
+	_match_template(d, _template)
 	return d
 
 static func _keep_numbers(d: Dictionary) -> void:
@@ -315,6 +356,7 @@ static func _sanitize_spirling(s: Dictionary) -> Dictionary:
 			s["moves"] = mv
 		else:
 			s.erase("moves")
+	_match_template(s, _spirling_template)
 	return s
 
 ## Upgrades [param d] to SAVE_VERSION. Returns null if it is from a newer game version.
@@ -404,6 +446,34 @@ func _migrate_2_to_3(d: Dictionary) -> Dictionary:
 		out["party"] = party.slice(0, TEAM_SIZE_V3)
 	return out
 
+## Version 3 -> 4: Spirlings get stored temperaments and their story (plan area 1, items 4,
+## 5 and 7). The temperament each one had (read from its uid over six kinds) is kept, so no old
+## temperament changes. Spirlog entries get the new fields.
+const SPIRLING_DEFAULTS_V4: Dictionary = {
+	"variant": "", "origin_map": "", "met_ring": 0, "met_day": 0, "lineage": [], "echo_streak": 0,
+}
+
+func _migrate_3_to_4(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	for key: String in ["party", "storage", "sanctuary"]:
+		for s: Variant in out.get(key, []):
+			if not s is Dictionary:
+				continue
+			var sd: Dictionary = s
+			if not sd.has("temper"):
+				sd["temper"] = Spirling.legacy_temper(str(sd.get("uid", "")))
+			for f: String in SPIRLING_DEFAULTS_V4:
+				if not sd.has(f):
+					var v: Variant = SPIRLING_DEFAULTS_V4[f]
+					sd[f] = v.duplicate() if v is Array else v
+			if str(sd.origin_map).is_empty():
+				sd["met_ring"] = int(sd.get("level", 1)) if int(sd.met_ring) <= 0 else sd.met_ring
+	var log: Dictionary = {}
+	for k: Variant in (out.get("spirlog", {}) as Dictionary):
+		log[str(k)] = GameState.upgrade_spirlog_entry(out.spirlog[k])
+	out["spirlog"] = log
+	return out
+
 ## Short "where and how long" line for the title screen's Continue button, or "" if unreadable.
 func save_summary() -> String:
 	for path: String in save_paths(slot_path):
@@ -419,7 +489,11 @@ static func summary_line(d: Dictionary) -> String:
 	if m != null and not m.display_name.is_empty():
 		place = m.display_name
 	var secs: int = int(float(d.get("play_time", 0.0)))
-	return "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	var line: String = "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	# A small chain marks a journey under the Iron Oath (plan 3396).
+	if d.get("iron_oath", false) is bool and bool(d.get("iron_oath", false)):
+		line = OATH_GLYPH + " " + line
+	return line
 
 func delete_save() -> void:
 	for p: String in save_paths(slot_path) + [temp_path()]:

@@ -11,6 +11,7 @@ enum Type {
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
+	ENERGY_TAX,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -126,4 +127,9 @@ func describe() -> String:
 			return "%s's gift, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
 		Type.REACTION:
 			return str(data.get("text", "")) % who
+		Type.ENERGY_TAX:
+			if bool(data.get("fresh", false)):
+				return "%s is taxed: every art costs %d more Energy for %d turns!" % [who, int(data.get("cost", 1)), int(data.get("turns", 0))]
+			# A tick only updates the strip; the end of the tax gets a line.
+			return "The Energy tax on %s lifts." % who if int(data.get("turns", 0)) <= 0 else ""
 	return ""
