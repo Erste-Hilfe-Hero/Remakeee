@@ -1298,19 +1298,33 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
-	var rec: Dictionary = GameState.records.get("weekly", {})
-	if str(rec.get("week", "")) != week and not GameState.time_went_back(str(rec.get("week", "")), week):
-		rec = {"week": week, "best": 0, "claimed": false}
+	var rec: Dictionary = WeeklyChallenge.record_for(week)
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var go: bool = await menu.confirm("This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d. Try?" % [
-		BattleRules.FIELDS[ch.field].label, BattleRules.RULES[ch.rule].label, ch.level, int(rec.best), WeeklyChallenge.ROUNDS])
+	var go: bool = false
+	while true:
+		var ask: String = Loc.t("This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d.") % [
+			Loc.t(str(BattleRules.FIELDS[ch.field].label)), Loc.t(str(BattleRules.RULES[ch.rule].label)), ch.level, int(rec.best), WeeklyChallenge.ROUNDS]
+		ask += "\n" + Loc.t("Tries with prizes left: %d of %d.") % [WeeklyChallenge.prize_tries_left(rec), WeeklyChallenge.PRIZE_TRIES]
+		var pick: int = await menu.pick_strings(ask, [Loc.t("Try"), Loc.t("Preview"), Loc.t("Archive")] as Array[String])
+		if pick == 0:
+			go = true
+			break
+		if pick == 1:
+			await menu.info(ch.preview_text())
+		elif pick == 2:
+			await menu.info(WeeklyChallenge.archive_text())
+		else:
+			break
 	menu.queue_free()
 	if not go:
 		return
+	var prizes: bool = WeeklyChallenge.start_try(rec)
+	GameState.records["weekly"] = rec
 	GameState.heal_party()
 	await say(["Your team is fully rested."] as Array[String])
 	var wins: int = 0
+	var turns_total: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
 		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field}
 		busy = false
@@ -1318,28 +1332,33 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		busy = true
 		player.frozen = true
 		var turns: int = last_model.turn if last_model != null else 0
+		turns_total += turns
 		if outcome != BattleModel.Outcome.WIN:
 			break
 		wins += 1
 		var lines: Array[String] = [WeeklyChallenge.round_text(wins, turns, GameState.party)]
-		var coins: int = WeeklyChallenge.claim_interim(rec, wins)
+		var coins: int = WeeklyChallenge.claim_interim(rec, wins) if prizes else 0
 		if coins > 0:
 			lines.append("Interim prize: %d coins." % coins)
 		await say(lines)
-	rec.best = maxi(int(rec.best), wins)
+	var booked: Array[String] = ch.finish_run(rec, wins, turns_total, GameState.party, prizes)
+	if not booked.is_empty():
+		await say(booked)
 	# Weekly board (item 125): rounds won and health left; the server keeps the best.
 	Online.call_fn("weekly_submit", {"p_week": week, "p_score": EchoTeam.weekly_score(wins, GameState.party)})
 	if wins >= WeeklyChallenge.ROUNDS and GameState.party.all(func(s: Spirling) -> bool: return not s.is_fainted()):
 		GameState.records["weekly_flawless"] = 1
-	if wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
+	if wins >= WeeklyChallenge.ROUNDS and prizes and not bool(rec.claimed):
 		rec.claimed = true
 		GameState.records["weekly_wins"] = int(GameState.records.get("weekly_wins", 0)) + 1
 		GameState.money += WeeklyChallenge.PRIZE
 		var won: Array[String] = ["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE]
-		won.append_array(Waymarks.reward_lines(Waymarks.earn(WeeklyChallenge.WAYMARKS, "weekly")))
+		won.append_array(Waymarks.reward_lines(Waymarks.earn(WeeklyChallenge.full_waymarks(rec), "weekly")))
 		won.append_array(SeasonPath.add("weekly"))
 		await say(won)
 		await _action_give_item([ch.reward_item(), "1"] as PackedStringArray, null)
+	elif wins >= WeeklyChallenge.ROUNDS and not bool(rec.claimed):
+		await say(["Cleared! The prize tries are used up this week, but the score counts."] as Array[String])
 	elif wins >= WeeklyChallenge.ROUNDS:
 		await say(["Cleared again! The prize comes back next week."] as Array[String])
 	GameState.records["weekly"] = rec

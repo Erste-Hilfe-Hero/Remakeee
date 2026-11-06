@@ -6,7 +6,7 @@ extends RefCounted
 ##
 ## The plan (an active player after Act I, both Rifts mended, all masters open):
 ##   every day   all daily tasks (with the hard fourth one), two rounds of 8-hour roaming trips with MAX trips each
-##   every week  weekly echo cleared, all eight masters, the Echo Path, STAIR_FLOORS new floors
+##   every week  weekly echo cleared under the target score, all eight masters, the Echo Path, STAIR_FLOORS new floors
 ##               of the lighthouse stair (until the top), then buy at Marla's stand cheapest first
 ##   every month the full album; one festival in the run with all five goals
 ## One-off rewards (achievements, Spirlog goals) are left out: they do not repeat.
@@ -60,7 +60,7 @@ static func run(days: int = DAYS) -> Dictionary:
 			_add(coins, "expedition", n * int(trip.coins))
 		if day % 7 == 0:
 			var week: int = day / 7
-			pay.call("weekly", WeeklyChallenge.WAYMARKS)
+			pay.call("weekly", WeeklyChallenge.WAYMARKS + WeeklyChallenge.TARGET_WAYMARKS)
 			season.call("weekly")
 			_add(coins, "weekly", WeeklyChallenge.PRIZE)
 			for m: Dictionary in Masters.list():
