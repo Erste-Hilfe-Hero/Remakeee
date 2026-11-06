@@ -54,6 +54,8 @@ var partner_ai: BattleAI
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
+## Share of damage the foe side deals (difficulty, plan area 2 item 728).
+var foe_damage_mult: float = 1.0
 var _boss_actions: int = 1
 ## Player slots still waiting for a replacement after faints (phase AWAIT_SWITCH), in order.
 var pending_switch: Array[int] = []
@@ -848,6 +850,8 @@ func _do_move(a: BattleAction) -> void:
 			if BattleRules.trait_info(me.data.trait_id).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field)
+			if side == Side.FOE:
+				mult *= foe_damage_mult
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
 			ctx.damage_dealt = deal_damage(target_side, int(r.damage), {"eff": r.eff, "crit": r.crit, "move": mv.move_name}, t_slot)
 			if bool(react.get("cure", false)) and is_standing(target):

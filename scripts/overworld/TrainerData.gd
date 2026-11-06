@@ -49,7 +49,7 @@ static func can_rematch(def: Dictionary, map_id: String, flags: Dictionary, reco
 ## The rematch team: the same Spirlings, all raised by the same amount so the strongest one
 ## matches the party's best level (never above the level cap, never below the first fight).
 static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, party_top: int, cap: int, difficulty: int = -1) -> Array[Spirling]:
-	var team: Array[Spirling] = build_team(def, starter, rng, difficulty)
+	var team: Array[Spirling] = build_team(def, starter, rng, difficulty, cap)
 	var top: int = 0
 	for s: Spirling in team:
 		top = maxi(top, s.level)
@@ -60,6 +60,8 @@ static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGene
 			out.append(s)
 			continue
 		var up := Spirling.new(s.data, s.level + shift, rng)
+		up.spark = s.spark.duplicate()
+		up.hp = up.max_hp()
 		# A fixed kit and keepsake stay with the Spirling when it grows.
 		up.moves = s.moves.duplicate()
 		up.held = s.held
@@ -81,16 +83,35 @@ static func team_entries(def: Dictionary, starter: String, difficulty: int = -1)
 		return by.values()[0] if not by.is_empty() else []
 	return def.get("team", [])
 
+## True if the Wayfarer has its own team block for [param difficulty].
+static func has_block(def: Dictionary, difficulty: int) -> bool:
+	var by: Variant = def.get("teams_by_difficulty", {})
+	return difficulty >= 0 and difficulty < DIFFICULTY_KEYS.size() and by is Dictionary and (by as Dictionary).get(DIFFICULTY_KEYS[difficulty]) is Array
+
 ## Builds the battle team. Unknown species are skipped (the validator reports them).
 ## Entries may fix the arts ("moves", unknown names skipped) and a keepsake ("held").
-static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, difficulty: int = -1) -> Array[Spirling]:
+## With a [param difficulty] (items 726-727) every foe gets GameState.FOE_SPARK in all stats, and a
+## shared team (no block of its own for that difficulty) moves by GameState.FOE_LEVEL_SHIFT rings,
+## never above [param ring_cap] + GameState.FOE_OVER_CAP.
+static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, difficulty: int = -1, ring_cap: int = Spirling.MAX_LEVEL) -> Array[Spirling]:
 	var out: Array[Spirling] = []
+	var tuned: bool = difficulty >= 0 and difficulty < DIFFICULTY_KEYS.size()
+	var shift: int = 0
+	if tuned and not has_block(def, difficulty):
+		shift = GameState.FOE_LEVEL_SHIFT[difficulty]
 	for e: Variant in team_entries(def, starter, difficulty):
 		var entry: Dictionary = e
 		var sd: SpirlingData = Database.species(str(entry.get("species", "")))
 		if sd == null:
 			continue
-		var s := Spirling.new(sd, int(entry.get("level", 5)), rng)
+		var lvl: int = int(entry.get("level", 5))
+		if shift != 0:
+			lvl = clampi(lvl + shift, 1, maxi(lvl, mini(Spirling.MAX_LEVEL, ring_cap + GameState.FOE_OVER_CAP)))
+		var s := Spirling.new(sd, lvl, rng)
+		if tuned:
+			for key: String in Spirling.STAT_KEYS:
+				s.spark[key] = GameState.FOE_SPARK[difficulty]
+			s.hp = s.max_hp()
 		var fixed: Array[MoveData] = []
 		for n: Variant in entry.get("moves", []):
 			var mv: MoveData = Database.move(str(n))

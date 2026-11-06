@@ -45,4 +45,5 @@ T.update({
 T.update({
 "The foe's Spirlings gain 1 extra Energy every second turn.": "Die Spirlings des Gegners erhalten jede zweite Runde 1 zusätzliche Energie.",
 "The current drags at your lead: it starts with less Pace.": "Die Strömung zerrt an deinem ersten Spirling: Er startet mit weniger Tempo.",
+"Relaxed battles for enjoying the story. Foes deal 90% damage.": "Entspannte Kämpfe, um die Geschichte zu genießen. Gegner machen 90 % Schaden.",
 })

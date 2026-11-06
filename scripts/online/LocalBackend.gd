@@ -58,7 +58,9 @@ func _init(p_store_path: String = "") -> void:
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
 			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
 			"battle_submit", "battle_status", "league_info", "league_join", "league_find", "data_export",
-			"report_in", "notices_list", "notice_read", "appeal", "platform_set"]:
+			"report_in", "notices_list", "notice_read", "appeal", "platform_set",
+			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
+			"bund_leave", "bund_dissolve", "bund_keep"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
@@ -1307,3 +1309,262 @@ func _league_apply(m: Dictionary, detail: Variant) -> void:
 	e.vol = nr.vol
 	e.games = int(e.games) + 1
 	e.wins = int(e.wins) + int(score)
+
+# --- Bunds (plan area 7, items 2817-2821, 2842, 2900), like 20261110000010_bunds.sql ---
+
+func _members() -> Dictionary:
+	return _table("bund_members", {})
+
+func _bund_of(uid: String) -> String:
+	var m: Variant = _members().get(uid)
+	return str(m.bund) if m is Dictionary else ""
+
+func _bund_role(uid: String) -> String:
+	var m: Variant = _members().get(uid)
+	return str(m.role) if m is Dictionary else ""
+
+func _bund_list(b: String) -> Array:
+	var out: Array = []
+	for uid: String in _members():
+		if str(_members()[uid].bund) == b:
+			out.append(uid)
+	out.sort_custom(func(x: String, y: String) -> bool: return int(_members()[x].joined) < int(_members()[y].joined))
+	return out
+
+func _bund_fix(b: String) -> void:
+	var ids: Array = _bund_list(b)
+	if ids.is_empty():
+		(_table("bunds", {}) as Dictionary).erase(b)
+		db.bund_invites = (_table("bund_invites", []) as Array).filter(func(i: Dictionary) -> bool: return str(i.bund) != b)
+		return
+	if not ids.any(func(x: String) -> bool: return _bund_role(x) == "leader"):
+		var next: String = ids[0]
+		for x: String in ids:
+			if _bund_role(x) == "helper":
+				next = x
+				break
+		_members()[next].role = "leader"
+	if ids.size() < 3:
+		db.bunds[b].dissolve_at = 0
+
+func _bund_check(uid: String) -> String:
+	if not flag_on("bund", 2147483647):
+		return "feature_off"
+	if not _social(uid):
+		return "social_off"
+	return ""
+
+func _invite_of(b: String, uid: String, kind: String) -> int:
+	var list: Array = _table("bund_invites", [])
+	for i: int in list.size():
+		if str(list[i].bund) == b and list[i].user == uid and (kind.is_empty() or list[i].kind == kind):
+			return i
+	return -1
+
+func _bund_join(b: String, uid: String, role: String) -> String:
+	if not _bund_of(uid).is_empty():
+		return "in_bund"
+	if _bund_list(b).size() >= config_int("bund_max", 30):
+		return "full"
+	_members()[uid] = {"bund": b, "role": role, "joined": now() * 1000 + _members().size()}
+	db.bund_invites = (_table("bund_invites", []) as Array).filter(func(i: Dictionary) -> bool: return i.user != uid)
+	return ""
+
+func _fn_bund_create(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var n: int = config_int("bund_words", 120)
+	var x: int = int(a.get("p_a", -1))
+	var y: int = int(a.get("p_b", -1))
+	if x < 0 or x >= n or y < 0 or y >= n:
+		return _fail("bad_name")
+	if not _bund_of(u).is_empty():
+		return _fail("in_bund")
+	if not _rate_ok("bund_create", 3):
+		return _fail("slow_down")
+	var b: String = str(_next_id("bund"))
+	(_table("bunds", {}) as Dictionary)[b] = {"name": [x, y], "dissolve_at": 0, "created": now()}
+	_bund_join(b, u, "leader")
+	return {"ok": true, "bund": int(b)}
+
+func _fn_bund_info(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var bund: Variant = null
+	var b: String = _bund_of(u)
+	if not b.is_empty():
+		_bund_fix(b)
+		var r: String = _bund_role(u)
+		var members: Array = []
+		for role: String in ["leader", "helper", "member"]:
+			for x: String in _bund_list(b):
+				if _bund_role(x) == role:
+					var p: Dictionary = profile_of(x)
+					members.append({"name": p.name, "code": p.code, "role": role, "me": x == u,
+						"online": int(p.get("last_seen", 0)) > now() - 300})
+		var pending: Array = []
+		if r in ["leader", "helper"]:
+			for i: Dictionary in _table("bund_invites", []):
+				if str(i.bund) == b:
+					pending.append({"kind": i.kind, "name": profile_of(i.user).name, "code": profile_of(i.user).code})
+		var row: Dictionary = db.bunds[b]
+		bund = {"id": int(b), "name": row.name, "role": r, "dissolve_at": row.dissolve_at if int(row.dissolve_at) > 0 else null,
+			"members": members, "pending": pending}
+	var invites: Array = []
+	for i: Dictionary in _table("bund_invites", []):
+		if i.user == u and i.kind == "invite" and db.bunds.has(str(i.bund)):
+			invites.append({"bund": int(i.bund), "name": db.bunds[str(i.bund)].name, "by": profile_of(i.by).name,
+				"size": _bund_list(str(i.bund)).size()})
+	return {"ok": true, "bund": bund, "invites": invites}
+
+func _fn_bund_invite(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or not _bund_role(u) in ["leader", "helper"]:
+		return _fail("not_allowed")
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	if t.is_empty() or t == u or is_blocked(u, t) or not _social(t):
+		return _fail("no_such_code")
+	if not _bund_of(t).is_empty():
+		return _fail("in_bund")
+	if not _rate_ok("bund_invite", 30):
+		return _fail("slow_down")
+	if _invite_of(b, t, "request") >= 0:
+		e = _bund_join(b, t, "member")
+		return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+	if _invite_of(b, t, "") < 0:
+		(_table("bund_invites", []) as Array).append({"bund": b, "user": t, "kind": "invite", "by": u, "at": now()})
+	return {"ok": true, "joined": false}
+
+func _fn_bund_request(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	var b: String = _bund_of(t) if not t.is_empty() else ""
+	if t.is_empty() or t == u or is_blocked(u, t) or not _social(t) or b.is_empty():
+		return _fail("no_such_bund")
+	if not _bund_of(u).is_empty():
+		return _fail("in_bund")
+	if _bund_list(b).any(func(x: String) -> bool: return is_blocked(u, x)):
+		return _fail("no_such_bund")
+	if not _rate_ok("bund_request", 10):
+		return _fail("slow_down")
+	if _invite_of(b, u, "invite") >= 0:
+		e = _bund_join(b, u, "member")
+		return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+	if _invite_of(b, u, "") < 0:
+		(_table("bund_invites", []) as Array).append({"bund": b, "user": u, "kind": "request", "by": u, "at": now()})
+	return {"ok": true, "joined": false}
+
+func _fn_bund_answer(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = str(int(a.get("p_bund", 0)))
+	var i: int = _invite_of(b, u, "invite")
+	if i < 0:
+		return _fail("no_such_invite")
+	if not bool(a.get("p_accept", false)):
+		(db.bund_invites as Array).remove_at(i)
+		return {"ok": true, "joined": false}
+	e = _bund_join(b, u, "member")
+	return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+
+func _fn_bund_admit(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or not _bund_role(u) in ["leader", "helper"]:
+		return _fail("not_allowed")
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	var i: int = _invite_of(b, t, "request") if not t.is_empty() else -1
+	if i < 0:
+		return _fail("no_such_request")
+	if not bool(a.get("p_accept", false)):
+		(db.bund_invites as Array).remove_at(i)
+		return {"ok": true, "joined": false}
+	e = _bund_join(b, t, "member")
+	return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+
+func _fn_bund_kick(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	if b.is_empty() or t.is_empty() or t == u or _bund_of(t) != b:
+		return _fail("no_such_member")
+	var mine: String = _bund_role(u)
+	if not (mine == "leader" or (mine == "helper" and _bund_role(t) == "member")):
+		return _fail("not_allowed")
+	_members().erase(t)
+	_bund_fix(b)
+	return {"ok": true}
+
+func _fn_bund_role(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var role: String = str(a.get("p_role", ""))
+	if not role in ["leader", "helper", "member"]:
+		return _fail("bad_role")
+	var b: String = _bund_of(u)
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	if b.is_empty() or t.is_empty() or t == u or _bund_of(t) != b:
+		return _fail("no_such_member")
+	if _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	if role == "leader":
+		_members()[u].role = "helper"
+	_members()[t].role = role
+	return {"ok": true}
+
+func _fn_bund_leave(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	_members().erase(u)
+	_bund_fix(b)
+	return {"ok": true}
+
+func _fn_bund_dissolve(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	var row: Dictionary = db.bunds[b]
+	if _bund_list(b).size() >= 3:
+		if int(row.dissolve_at) <= 0:
+			row.dissolve_at = now() + 86400
+			return {"ok": true, "dissolved": false, "confirm_from": row.dissolve_at}
+		if int(row.dissolve_at) > now():
+			return {"ok": true, "dissolved": false, "confirm_from": row.dissolve_at}
+	for x: String in _bund_list(b):
+		_members().erase(x)
+	_bund_fix(b)
+	return {"ok": true, "dissolved": true}
+
+func _fn_bund_keep(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	if _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	db.bunds[_bund_of(u)].dissolve_at = 0
+	return {"ok": true}

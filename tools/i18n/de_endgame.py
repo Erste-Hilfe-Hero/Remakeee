@@ -299,4 +299,10 @@ T = {
 "No other task fits today.": "Heute passt kein anderer Auftrag.", "New task: %s": "Neuer Auftrag: %s",
 "All of them: %d Waymarks extra.": "Alle zusammen: %d Wegmarken extra.",
 "Once a day, free of charge.": "Einmal am Tag, kostenlos.",
+"Savings goal...": "Sparziel...", "Pick an offer of Marla's stand to save up for.": "Wähle ein Angebot von Marlas Stand, auf das du sparst.",
+"Save up for which offer?": "Auf welches Angebot sparen?", "Weekly crates...": "Wochenkisten...",
+"Restock on Monday, in 1 day.": "Neue Ware am Montag, in 1 Tag.", "Restock on Monday, in %d days.": "Neue Ware am Montag, in %d Tagen.",
+"Marla's weekly crates: three of these each week, the same for everyone.": "Marlas Wochenkisten: jede Woche drei davon, für alle gleich.",
+"Savings goal %s: ready to trade at Marla's stand.": "Sparziel %s: bereit zum Tausch an Marlas Stand.",
+"Savings goal %s: [%s] %d more Waymarks": "Sparziel %s: [%s] noch %d Wegmarken",
 }

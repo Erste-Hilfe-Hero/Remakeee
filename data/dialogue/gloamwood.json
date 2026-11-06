@@ -1,0 +1,60 @@
+{
+ "sign": [
+  "GLOAMWOOD",
+  "Forest, rings 4 to 7.",
+  "East: Fernstair   Up the old stair: Crowcrest"
+ ],
+ "sign_top": [
+  "The trees grow so close that noon looks like dusk.",
+  "North-east: the high path to Crowcrest."
+ ],
+ "forester": {
+  "lines": [
+   "Forester Haldis: Half the footbridges in this valley rotted in the storm.",
+   "Forester Haldis: Here, a bundle of planks. Lay one over any gap with a chalk mark."
+  ],
+  "action": "give_item plank_bundle 1",
+  "flag": "got_planks",
+  "once": true,
+  "after_flag": {
+   "flag": "got_planks",
+   "lines": [
+    "Forester Haldis: Chalk marks mean someone measured. Trust them."
+   ]
+  }
+ },
+ "smooth": [
+  "The rock here is oddly smooth, as if many hands had pushed it."
+ ],
+ "wren": [
+  "Wren: I come here to listen. The forest is never fully quiet, Hush or not."
+ ],
+ "wren_intro": [
+  "Wren: You walk loud for a cartographer. Let's see how you fight."
+ ],
+ "wren_defeat": [
+  "Wren: Fair. I'll go back to listening."
+ ],
+ "olek": [
+  "Olek: The glowing caps only show at night. Don't eat them."
+ ],
+ "olek_intro": [
+  "Olek: You stepped on my patch! A duel, then."
+ ],
+ "olek_defeat": [
+  "Olek: Fine, fine. Watch your feet next time."
+ ],
+ "sorrel": [
+  "Sorrel: Up here the path splits. Crowcrest east, the old ruins north."
+ ],
+ "sorrel_intro": [
+  "Sorrel: Made it up the stair? Then you've earned a real duel."
+ ],
+ "sorrel_defeat": [
+  "Sorrel: Ha! The forest picked a good one."
+ ],
+ "mossmere_grotto_sign": [
+  "MOSSMERE GROTTO",
+  "Inside: Wading Boots, Plank Bundle."
+ ]
+}
