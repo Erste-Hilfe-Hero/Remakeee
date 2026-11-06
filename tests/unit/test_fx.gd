@@ -244,3 +244,36 @@ func test_every_after_plays_for_every_element() -> void:
 			assert_eq(fx.phase, ElementFx.Phase.NONE)
 	Juice.in_battle = false
 	assert_eq(fx.get_child_count(), 0)
+
+# --- Status symbols and second elements (items 2367, 2369) ------------------------------
+
+func test_status_arts_get_a_symbol() -> void:
+	var up := Database.parse_move({"name": "T Up", "element": "STONE", "kind": "STATUS", "power": 0, "accuracy": 1.0, "energy": 2, "stat": "def", "stages": 1})
+	var down := Database.parse_move({"name": "T Down", "element": "GALE", "kind": "STATUS", "power": 0, "accuracy": 1.0, "energy": 2, "stat": "atk", "stages": -1, "self": false})
+	var daze := Database.parse_move({"name": "T Daze", "element": "UMBRA", "kind": "STATUS", "power": 0, "accuracy": 1.0, "energy": 2, "status": "daze", "status_chance": 1.0})
+	var hit := Database.parse_move({"name": "T Hit", "element": "EMBER", "kind": "PHYSICAL", "power": 40, "accuracy": 1.0, "energy": 2})
+	assert_eq(ElementFx.status_symbol(up), {"symbol": "up", "on_foe": false})
+	assert_eq(ElementFx.status_symbol(down), {"symbol": "down", "on_foe": true})
+	assert_eq(ElementFx.status_symbol(daze), {"symbol": "ring", "on_foe": true})
+	assert_eq(str(ElementFx.status_symbol(hit).symbol), "")
+	assert_eq(str(ElementFx.status_symbol(null).symbol), "")
+	Database.load_all()
+	for mv: MoveData in Database.moves.values():
+		if mv.kind == MoveData.Kind.STATUS and not mv.has_effect(&"heal_self"):
+			assert_ne(str(ElementFx.status_symbol(mv).symbol), "", mv.move_name)
+
+func test_symbols_and_second_elements_play() -> void:
+	assert_eq(ElementFx.second_for([Elements.E.EMBER, Elements.E.STONE], Elements.E.EMBER), Elements.E.STONE)
+	assert_eq(ElementFx.second_for([Elements.E.EMBER], Elements.E.EMBER), -1)
+	assert_eq(ElementFx.second_for([], Elements.E.TIDE), -1)
+	var fx := ElementFx.new()
+	fx.size = Vector2(144, 120)
+	add_child_autofree(fx)
+	GameState.battle_speed = 2
+	Juice.in_battle = true
+	for s: String in ["up", "down", "ring"]:
+		await fx.play(Elements.E.BLOOM, MoveData.Kind.STATUS, Rect2(90, 70, 40, 40), Rect2(20, 10, 40, 40), false, 1.0, 1.0, "", s)
+		assert_eq(fx.phase, ElementFx.Phase.NONE, s)
+	await fx.play(Elements.E.EMBER, MoveData.Kind.FOCUS, Rect2(90, 70, 40, 40), Rect2(20, 10, 40, 40), false, 1.0, 1.0, "", "", Elements.E.STONE)
+	assert_eq(fx.second_element, Elements.E.STONE)
+	Juice.in_battle = false

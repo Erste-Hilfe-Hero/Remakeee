@@ -4,10 +4,19 @@
   "Uplands, rings 22 to 25.",
   "West: Stillwater   North: the Wide Rift"
  ],
- "sign_top": [
-  "MOUNTAIN RAILWAY",
-  "Halt Greyreach. No trains since the storm."
- ],
+ "sign_top": {
+  "lines": [
+   "MOUNTAIN RAILWAY",
+   "Halt Greyreach. No trains since the storm."
+  ],
+  "after_flag": {
+   "flag": "act2_end",
+   "lines": [
+    "MOUNTAIN RAILWAY",
+    "Halt Greyreach. Trains to Ashmere again."
+   ]
+  }
+ },
  "hut": [
   "A survey hut. Old charts of the uplands hang on the wall, every one of them grey."
  ],
@@ -37,5 +46,11 @@
  ],
  "edrik_defeat": [
   "Edrik: Go and look, then. Don't step too close."
- ]
+ ],
+ "conductor": {
+  "lines": [
+   "Conductor Tilde: Mountain railway to Ashmere. Mind the gap, mind the clouds."
+  ],
+  "action": "transit mountain_rail"
+ }
 }

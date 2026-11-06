@@ -64,6 +64,7 @@ var _bond_plans: Dictionary[String, Dictionary] = {}
 var _ff_button: Button
 var _auto_button: Button
 var _goal_label: Label
+var _rule_banner: RuleBanner
 var _auto_ai := BattleAI.new(1)
 var _log_button: Button
 var _log_panel: PanelContainer
@@ -195,6 +196,8 @@ func _build() -> void:
 	_goal_label.visible = false
 	_goal_label.add_theme_font_size_override("font_size", 8)
 	_field.add_child(_goal_label)
+	_rule_banner = RuleBanner.new()
+	_field.add_child(_rule_banner)
 	_log_button = Button.new()
 	_log_button.text = "Log"
 	_log_button.focus_mode = Control.FOCUS_NONE
@@ -819,6 +822,14 @@ func _play_event(e: BattleEvent) -> void:
 				await _sprite(BattleModel.Side.FOE, slot).step_back(false)
 				_strip(BattleModel.Side.FOE, slot).visible = false
 			await _text.show_text(e.describe())
+		BattleEvent.Type.RULE:
+			var turning: bool = bool(e.data.get("turning", false))
+			_rule_banner.show_rule(Loc.t(str(e.data.get("label", ""))), turning, _field.size.x, _field.size.y * 0.42)
+			if turning:
+				Sound.sfx("status")
+				Haptics.play("heavy")
+			await _text.show_text(e.describe())
+			_rule_banner.visible = false
 		BattleEvent.Type.BATTLE_LINE:
 			await _text.show_text(str(e.data.get("text", "")), str(e.data.get("name", "")))
 		BattleEvent.Type.BATTLE_END:
@@ -846,17 +857,21 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	await user.windup(kind, dir)
 	if element < 0:
 		return
+	var mv: MoveData = Database.move(str(e.data.get("move", "")))
+	var sym: Dictionary = ElementFx.status_symbol(mv)
 	var target: SpirlingSprite = user
 	var targets: Array = e.data.get("targets", [])
-	if kind != MoveData.Kind.STATUS and not targets.is_empty():
+	if (kind != MoveData.Kind.STATUS or bool(sym.on_foe)) and not targets.is_empty():
 		target = _sprite(BattleModel.other(side), int(targets[0]))
+	var me: Spirling = model.active_spirling(side, slot) if model != null else null
+	var second: int = ElementFx.second_for(me.elements(), element) if me != null else -1
 	_fx.user_sprite = user
 	if kind != MoveData.Kind.PHYSICAL and target != user:
 		_fx_travel_sound.call_deferred(element)
 	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
 	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
 		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e),
-		ElementFx.after_for(Database.move(str(e.data.get("move", "")))))
+		ElementFx.after_for(mv), str(sym.symbol), second)
 
 ## Particle factor from the art's power (item 2368).
 static func _art_amount(e: BattleEvent) -> float:

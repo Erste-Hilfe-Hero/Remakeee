@@ -1,0 +1,18 @@
+{
+ "sign": [
+  "CINDERFOLD",
+  "Town of the gravers. The hall is open to guild folk."
+ ],
+ "keeper": {
+  "lines": [
+   "Spring Keeper Oda: The water comes up warm under the basalt. It eases tired Spirlings."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Trader Bastian: Engraved tins, strong brews. Ashmere prices, Ashmere quality."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ }
+}

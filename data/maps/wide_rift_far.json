@@ -1,0 +1,90 @@
+{
+ "name": "Far End of the Wide Rift",
+ "region": "ashmere",
+ "biome": "rift",
+ "backdrop": "voice",
+ "encounters": "wide_rift_far",
+ "rows": [
+  "XXXXX__XXXXX",
+  "XXXXX__XXXXX",
+  "^XX......XX^",
+  "^^........^^",
+  "^..........^",
+  "^.::....::.^",
+  "^.::....::.^",
+  "^.........S^",
+  "^..^^..^^..^",
+  "^..........^",
+  "^.::....::.^",
+  "_..........^",
+  "_..........^",
+  "^.::....::.^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 11,
+   "to": "saltglass",
+   "tx": 9,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 0,
+   "y": 12,
+   "to": "saltglass",
+   "tx": 9,
+   "ty": 10,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "undrawn_1",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "undrawn_1",
+   "tx": 6,
+   "ty": 20,
+   "facing": "up"
+  }
+ ],
+ "npcs": [],
+ "signs": [
+  {
+   "x": 10,
+   "y": 7,
+   "dialogue": "wide_rift_far/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 1,
+   "open_flag": "undrawn_reached",
+   "closed": "#"
+  },
+  {
+   "x": 6,
+   "y": 1,
+   "open_flag": "undrawn_reached",
+   "closed": "#"
+  }
+ ],
+ "spots": {
+  "kestra": [
+   6,
+   4
+  ],
+  "gate": [
+   7,
+   2
+  ]
+ }
+}
