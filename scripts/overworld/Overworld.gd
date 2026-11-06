@@ -66,6 +66,8 @@ func _ready() -> void:
 		"gauntlet": _action_gauntlet,
 		"weekly": _action_weekly,
 		"master": _action_master,
+		"merchant": _action_merchant,
+		"expedition": _action_expedition,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
@@ -211,6 +213,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.current_map = map_id
 	DailyTasks.note_map(map_id)
 	DailyTasks.record("visit", {"map": map_id})
+	# Today's world event gives its find on the first visit (plan 3422).
+	GameState.notices.append_array(WorldEvents.on_visit(map_id))
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -1082,6 +1086,50 @@ func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
 	lines.append_array(Masters.win(id))
 	await say(lines)
 	await announce_achievements()
+
+## The wandering merchant (plan 3423): today's three goods for coins.
+func _action_merchant(_args: PackedStringArray, speaker: NPC) -> void:
+	var items: Array[String] = []
+	items.assign(WorldEvents.merchant().get("items", []))
+	await _action_shop(PackedStringArray(items), speaker)
+
+## Aldo's roaming trips (plan 3446-3448): bring finished trips home, then send Spirlings from
+## storage for 4, 8 or 12 hours with the reward shown before they go.
+func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
+	var back: Array[String] = Expeditions.collect()
+	if not back.is_empty():
+		await say(back)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var status: Array[String] = Expeditions.status_lines()
+	if not status.is_empty():
+		await menu.info("\n".join(status))
+	while true:
+		var title: String = Loc.t("Roaming trips %d/%d") % [Expeditions.trips().size(), Expeditions.max_trips()]
+		var options: Array[String] = []
+		if Expeditions.can_send():
+			options.append("Send a Spirling")
+		options.append("Done")
+		var pick: int = await menu.pick_strings(title, options)
+		if pick < 0 or options[pick] == "Done":
+			break
+		var ready: Array[Spirling] = Expeditions.ready_to_go()
+		var names: Array[String] = []
+		for s: Spirling in ready:
+			names.append("%s R%d" % [s.display_name(), s.level])
+		var who: int = await menu.pick_strings("Who goes?", names)
+		if who < 0:
+			continue
+		var plans: Array[String] = []
+		for p: Variant in Expeditions.plans():
+			plans.append(Expeditions.plan_text(p))
+		var how: int = await menu.pick_strings("How long?", plans)
+		if how < 0:
+			continue
+		var hours: int = int((Expeditions.plans()[how] as Dictionary).hours)
+		if Expeditions.send(ready[who], hours):
+			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
+	menu.queue_free()
 
 ## Seasonal festival (item 89): the crier names the festival and hands out its gift once a year.
 func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:

@@ -100,7 +100,7 @@ def strings():
     if os.path.exists(ev):
         for group in json.load(open(ev)).values():
             for t in group if isinstance(group, list) else []:
-                for k in ("text", "name", "desc"):
+                for k in ("text", "name", "desc", "found"):
                     if isinstance(t.get(k), str):
                         found.append(t[k])
     for sd in SCRIPT_DIRS:

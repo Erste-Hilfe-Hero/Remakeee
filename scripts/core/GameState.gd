@@ -552,8 +552,13 @@ func retire_fainted() -> Array[String]:
 ## Fills an empty party from storage. Returns how many joined.
 func fill_party_from_storage() -> int:
 	var n: int = 0
-	while party.size() < MAX_PARTY and not storage.is_empty():
-		party.append(storage.pop_front())
+	for s: Spirling in storage.duplicate():
+		if party.size() >= MAX_PARTY:
+			break
+		if Expeditions.is_away(s.uid):
+			continue
+		storage.erase(s)
+		party.append(s)
 		n += 1
 	return n
 
@@ -777,6 +782,9 @@ func deposit(index: int) -> bool:
 
 func withdraw(index: int) -> bool:
 	if index < 0 or index >= storage.size() or party.size() >= MAX_PARTY:
+		return false
+	# Spirlings on a roaming trip stay away until they are home (plan 3448).
+	if Expeditions.is_away(storage[index].uid):
 		return false
 	party.append(storage[index])
 	storage.remove_at(index)

@@ -552,5 +552,15 @@
    "element": "UMBRA",
    "text": "Bond with an Umbra Spirling"
   }
+ ],
+ "world_events": [
+  {"id": "fern_berries", "map": "fernstair", "text": "Berry bushes are heavy with fruit on the Fernstair slopes.", "found": "You pick a handful of berries and brew a tonic.", "item": "tonic", "count": 2},
+  {"id": "crow_feathers", "map": "crowcrest", "text": "A flock passed over Crowcrest and left feathers on the ridge.", "found": "You find a swift feather in the grass.", "item": "swift_feather", "count": 1},
+  {"id": "salt_tide", "map": "saltmarsh", "text": "A low tide in the Saltmarsh shows old crates in the mud.", "found": "One crate still holds a remedy.", "item": "remedy", "count": 1},
+  {"id": "thorn_sparks", "map": "thornridge", "text": "Sparks dance over the Thornridge rocks today.", "found": "You catch a spark drop as it falls.", "item": "spark_drop", "count": 1},
+  {"id": "murk_glow", "map": "murk_hollow", "text": "The mushrooms in Murk Hollow glow brighter than usual.", "found": "Under a glowing cap lies a wake bell someone dropped.", "item": "wake_bell", "count": 1},
+  {"id": "brindle_market", "map": "brindlewick", "text": "Fishers in Brindlewick are sharing their catch.", "found": "A fisher hands you a cooling gel for the road.", "item": "cooling_gel", "count": 2},
+  {"id": "spring_bloom", "map": "rest_spring", "text": "Flowers opened all around the Rest Spring.", "found": "A dry towel was left on the spring stones. You take it along.", "item": "dry_towel", "count": 1},
+  {"id": "lighthouse_crate", "map": "lighthouse", "text": "The supply boat left an extra crate at the lighthouse.", "found": "Aldo saved you a strong tonic from the crate.", "item": "strong_tonic", "count": 1}
  ]
 }

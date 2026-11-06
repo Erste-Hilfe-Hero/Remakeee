@@ -85,6 +85,9 @@ static func goals_text() -> String:
 	var daily: String = DailyFind.hint(GameState.flags)
 	if not daily.is_empty():
 		text += "\n\n" + Loc.t(daily)
+	var world: Array[String] = WorldEvents.lines()
+	if not world.is_empty():
+		text += "\n\n" + "\n".join(world)
 	var tasks: Array[String] = DailyTasks.lines()
 	if not tasks.is_empty():
 		text += "\n\n" + "\n".join(tasks)
@@ -547,7 +550,8 @@ func _withdraw() -> void:
 		]
 		for i: int in view:
 			var s: Spirling = GameState.storage[i]
-			names.append("%s R%d" % [s.display_name(), s.level])
+			var away: bool = Expeditions.is_away(s.uid)
+			names.append("%s%s R%d" % [Expeditions.GLYPH + " " if away else "", s.display_name(), s.level])
 		var w: int = await pick_strings("Call back (%d)" % view.size(), names)
 		if w < 0:
 			return
@@ -557,6 +561,8 @@ func _withdraw() -> void:
 			_storage_element += 1
 			if _storage_element >= Elements.E.size():
 				_storage_element = -1
+		elif Expeditions.is_away(GameState.storage[view[w - 2]].uid):
+			await info("This Spirling is away on a trip. Aldo will tell you when it's back.")
 		elif not GameState.withdraw(view[w - 2]):
 			await info("Your team is full.")
 		else:
