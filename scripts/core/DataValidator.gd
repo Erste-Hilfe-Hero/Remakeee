@@ -111,7 +111,20 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 		else:
 			errors.append("spirling '%s': learnset must be an object (level -> move)" % sname)
 	_check_reachable(spirlings_raw, encounters_path, errors)
+	_check_ai_profiles(errors)
 	return errors
+
+## Plan area 2, items 611 and 629: every AI profile weight stays between 0.2 and 2.0.
+const PROFILE_WEIGHTS: Array[String] = ["damage_w", "status_w", "setup_w", "field_w"]
+static func _check_ai_profiles(errors: PackedStringArray) -> void:
+	var all: Dictionary = BattleAI.profiles()
+	if not all.has(BattleAI.DEFAULT_PROFILE):
+		errors.append("ai_profiles: missing '%s'" % BattleAI.DEFAULT_PROFILE)
+	for id: String in all:
+		for k: String in PROFILE_WEIGHTS:
+			var w: float = float((all[id] as Dictionary).get(k, 1.0))
+			if w < 0.2 or w > 2.0:
+				errors.append("ai_profile '%s': %s %.2f is outside 0.2..2.0" % [id, k, w])
 
 ## Plan area 1, items 2, 3, 131 and 336: rarity, region, origin, unfold paths, bond rate band.
 static func _check_species_fields(s: Dictionary, sname: String, species_names: Dictionary, errors: PackedStringArray) -> void:

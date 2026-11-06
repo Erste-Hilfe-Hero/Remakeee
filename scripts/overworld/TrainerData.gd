@@ -11,6 +11,11 @@ extends RefCounted
 ##   "boss": "ashen_heart"    the foe in front is a Rift boss (BattleRules.BOSSES)
 ##   "wild": true             a wild horde: no Wayfarer, so the Echo call (Bond) and Run work
 ## Battles always start from the overworld and cut to the separate battle screen.
+## Plan area 2 (items 612, 638, 639) adds:
+##   "profile": "hothead"     personality from data/ai_profiles.json (default "balanced")
+##   team entries may carry "moves": ["Kite Cut", ...] (fixed arts) and "held": "spark_coil"
+##   "teams_by_difficulty": {"story": [...], "tamer": [...], "veteran": [...], "rift_born": [...]}
+##       a team per difficulty; a missing key falls back to "team" / "team_by_starter".
 
 ## Default money per foe level when the map gives none.
 const MONEY_PER_LEVEL: int = 12
@@ -18,9 +23,11 @@ const MONEY_PER_LEVEL: int = 12
 const WARDEN_MIN_AI: int = 1
 ## AI tier of an ally Wayfarer fighting beside the player.
 const PARTNER_AI: int = 1
+## Keys of "teams_by_difficulty", in GameState.Difficulty order.
+const DIFFICULTY_KEYS: Array[String] = ["story", "tamer", "veteran", "rift_born"]
 
 static func is_trainer(def: Dictionary) -> bool:
-	return def.has("team") or def.has("team_by_starter")
+	return def.has("team") or def.has("team_by_starter") or def.has("teams_by_difficulty")
 
 ## The world flag set once this Wayfarer is beaten.
 static func beaten_flag(def: Dictionary, map_id: String) -> String:
@@ -41,19 +48,32 @@ static func can_rematch(def: Dictionary, map_id: String, flags: Dictionary, reco
 
 ## The rematch team: the same Spirlings, all raised by the same amount so the strongest one
 ## matches the party's best level (never above the level cap, never below the first fight).
-static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, party_top: int, cap: int) -> Array[Spirling]:
-	var team: Array[Spirling] = build_team(def, starter, rng)
+static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, party_top: int, cap: int, difficulty: int = -1) -> Array[Spirling]:
+	var team: Array[Spirling] = build_team(def, starter, rng, difficulty)
 	var top: int = 0
 	for s: Spirling in team:
 		top = maxi(top, s.level)
 	var shift: int = maxi(0, mini(party_top, cap) - top)
 	var out: Array[Spirling] = []
 	for s: Spirling in team:
-		out.append(Spirling.new(s.data, s.level + shift, rng) if shift > 0 else s)
+		if shift <= 0:
+			out.append(s)
+			continue
+		var up := Spirling.new(s.data, s.level + shift, rng)
+		# A fixed kit and keepsake stay with the Spirling when it grows.
+		up.moves = s.moves.duplicate()
+		up.held = s.held
+		out.append(up)
 	return out
 
 ## The team entries for this Wayfarer ("team_by_starter" picks one from the player's starter).
-static func team_entries(def: Dictionary, starter: String) -> Array:
+## [param difficulty] is a GameState.Difficulty value; -1 ignores "teams_by_difficulty".
+static func team_entries(def: Dictionary, starter: String, difficulty: int = -1) -> Array:
+	var by_diff: Variant = def.get("teams_by_difficulty", {})
+	if difficulty >= 0 and difficulty < DIFFICULTY_KEYS.size() and by_diff is Dictionary:
+		var block: Variant = (by_diff as Dictionary).get(DIFFICULTY_KEYS[difficulty])
+		if block is Array:
+			return block
 	if def.has("team_by_starter"):
 		var by: Dictionary = def.team_by_starter
 		if by.has(starter):
@@ -62,13 +82,24 @@ static func team_entries(def: Dictionary, starter: String) -> Array:
 	return def.get("team", [])
 
 ## Builds the battle team. Unknown species are skipped (the validator reports them).
-static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenerator) -> Array[Spirling]:
+## Entries may fix the arts ("moves", unknown names skipped) and a keepsake ("held").
+static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, difficulty: int = -1) -> Array[Spirling]:
 	var out: Array[Spirling] = []
-	for e: Variant in team_entries(def, starter):
+	for e: Variant in team_entries(def, starter, difficulty):
 		var entry: Dictionary = e
 		var sd: SpirlingData = Database.species(str(entry.get("species", "")))
-		if sd != null:
-			out.append(Spirling.new(sd, int(entry.get("level", 5)), rng))
+		if sd == null:
+			continue
+		var s := Spirling.new(sd, int(entry.get("level", 5)), rng)
+		var fixed: Array[MoveData] = []
+		for n: Variant in entry.get("moves", []):
+			var mv: MoveData = Database.move(str(n))
+			if mv != null and not fixed.has(mv) and fixed.size() < 4:
+				fixed.append(mv)
+		if not fixed.is_empty():
+			s.moves = fixed
+		s.held = str(entry.get("held", s.held))
+		out.append(s)
 	return out
 
 ## Prize money: explicit "money", else a level-based default.
@@ -99,6 +130,7 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 		"front": front(def),
 		"boss": str(def.get("boss", "")),
 		"wild": is_wild_horde(def),
+		"profile": str(def.get("profile", "")),
 	}
 	if def.has("partner"):
 		info["partner"] = def.partner
