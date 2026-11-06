@@ -120,6 +120,6 @@ T = {
 "Keeper": "Wärterin",
 "Reed cutter": "Schilfschneider",
 "Sparkseer": "Funkenseherin",
-"Trader": "Händler",
+"Merchant": "Händler",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn"]

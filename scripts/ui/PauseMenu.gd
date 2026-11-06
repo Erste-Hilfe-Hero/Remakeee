@@ -90,43 +90,115 @@ static func goals_text() -> String:
 	var tasks: Array[String] = DailyTasks.lines()
 	if not tasks.is_empty():
 		text += "\n\n" + "\n".join(tasks)
+	var post: Array[String] = Postgame.lines()
+	if not post.is_empty():
+		text += "\n\n" + "\n".join(post)
 	return text
 
-## Achievements and personal bests (items 88-90).
+## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:
 	Achievements.check()
 	while true:
-		var lines: Array[String] = Achievements.lines()
-		lines.append("Personal bests")
+		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
+		if Masters.open():
+			lines.append("Master Wayfarers")
+		if not memorial_lines().is_empty():
+			lines.append("Memorial book")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
 		var have: int = Achievements.unlocked().size()
-		var idx: int = await pick_strings("Achievements %d/%d" % [have, Achievements.LIST.size()], lines)
+		var idx: int = await pick_strings(Loc.t("Achievements %d/%d") % [have, Achievements.list().size()], lines)
 		if idx < 0:
 			return
-		if lines[idx] == "Watch last battle":
-			if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
-				watch_replay = true
-				return
-		elif idx == Achievements.LIST.size():
-			await info(records_text())
-		else:
-			var a: Dictionary = Achievements.LIST[idx]
-			var when: String = str(Achievements.unlocked().get(a.id, ""))
-			await info("%s\n%s%s" % [a.title, a.text, ("\n\n" + ("Earned %s" % when)) if when != "" else ""])
+		match lines[idx]:
+			"Badge book": await run_badge_book()
+			"Achievements by category": await run_achievement_lists()
+			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
+			"Personal bests": await info(records_text())
+			"Master Wayfarers": await run_masters()
+			"Memorial book": await info("\n".join(memorial_lines()))
+			"Watch last battle":
+				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
+					watch_replay = true
+					return
+
+## Memorial book in the Sanctuary (plan 3397): every Spirling that retired under the Iron Oath.
+static func memorial_lines() -> Array[String]:
+	var out: Array[String] = []
+	var book: Variant = GameState.records.get("memorial", [])
+	if not book is Array:
+		return out
+	for e: Variant in book:
+		if not e is Dictionary:
+			continue
+		var d: Dictionary = e
+		var map_id: String = str(d.get("map", ""))
+		var place: String = MapData.load_map(map_id).display_name if MapData.exists(map_id) else map_id
+		out.append(Loc.t("%s, ring %d, %s, %s") % [str(d.get("name", "?")), int(d.get("level", 1)), Loc.t(place), str(d.get("date", ""))])
+	return out
+
+## Master Wayfarer profiles (plan 3290): place, theme and the player's own wins.
+func run_masters() -> void:
+	while true:
+		var i: int = await pick_strings(Loc.t("Master Wayfarers %d/%d") % [Masters.beaten_count(), Masters.list().size()], Masters.lines())
+		if i < 0:
+			return
+		await info(Masters.profile(Masters.list()[i]))
+
+## The badge grid; picking a badge shows its card.
+func run_badge_book() -> void:
+	var book := BadgeBook.new()
+	add_child(book)
+	picker.visible = false
+	while true:
+		var i: int = await book.chosen
+		if i < 0:
+			break
+		book.visible = false
+		await info(Achievements.card(Achievements.list()[i]))
+		book.visible = true
+		book.fill()
+	book.queue_free()
+	picker.visible = true
+
+## One list per category with progress (k/n) where there is a count (plan 3317).
+func run_achievement_lists() -> void:
+	while true:
+		var cats: Array[String] = []
+		for c: String in Achievements.CATEGORIES:
+			cats.append(Achievements.CATEGORY_NAMES[c])
+		var ci: int = await pick_strings("Achievements", cats)
+		if ci < 0:
+			return
+		var cat: String = Achievements.CATEGORIES[ci]
+		while true:
+			var shown: Array[Dictionary] = []
+			var lines: Array[String] = []
+			for a: Dictionary in Achievements.list():
+				if str(a.cat) != cat:
+					continue
+				shown.append(a)
+				var p: Array[int] = Achievements.progress(a)
+				var done: bool = Achievements.unlocked().has(a.id)
+				lines.append("%s %s%s" % ["[x]" if done else "[ ]", Loc.t(str(a.title)), ("  %d/%d" % [p[0], p[1]]) if not p.is_empty() and not done else ""])
+			var ai: int = await pick_strings(Loc.t(cats[ci]), lines)
+			if ai < 0:
+				break
+			await info(Achievements.card(shown[ai]))
 
 ## Tower best, weekly challenge and the current festival.
 static func records_text() -> String:
 	var lines: PackedStringArray = []
-	lines.append("Lighthouse climb best: %d of %d" % [int(GameState.records.get("gauntlet_best", 0)), Gauntlet.ROUNDS])
+	lines.append_array(Completion.lines())
+	lines.append("Lighthouse stair best: floor %d of %d" % [Gauntlet.best(), Gauntlet.FLOORS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0
 	lines.append("This week: %d of %d" % [best, WeeklyChallenge.ROUNDS])
 	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
 	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
-	lines.append(Collection.progress_text(GameState.spirlog, Database.spirlings.size()))
+	lines.append(Collection.progress_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size()))
 	if GameState.iron_oath:
 		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
 		for s: Spirling in GameState.sanctuary:
@@ -141,6 +213,8 @@ static func records_text() -> String:
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:
 	var t: String = "%s   %s   %s" % [GameState.tamer_name, Loc.plural(GameState.money, "%d coin", "%d coins"), Waymarks.label()]
+	if not Festival.active().is_empty():
+		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
@@ -428,62 +502,69 @@ func _use_spark_charm(id: String) -> void:
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
 
-## Spirlog: every species with seen/bonded marks, plus the Tracker for the current area.
+## Spirlog filters (item 249), kept while the menu is open.
+var _log_search: String = ""
+var _log_element: int = -1
+var _log_role: int = -1
+var _log_status: int = SpirlogBook.STATUS_ALL
+var _log_region: int = -1
+
+## Spirlog: chapters per open region with their progress, search and filters, then the kinds.
+## A seen kind opens its map-book page (SpirlogPage); unseen ones show as "???".
 func run_spirlog() -> void:
 	while true:
-		var all: Array[SpirlingData] = []
-		for sd: SpirlingData in Database.spirlings.values():
-			all.append(sd)
-		all.sort_custom(func(a: SpirlingData, b: SpirlingData) -> bool: return a.dex_id < b.dex_id)
-		var seen: int = 0
-		var bonded: int = 0
+		var regions: Array[String] = SpirlogBook.open_regions(GameState.flags)
+		var region: String = regions[_log_region] if _log_region >= 0 and _log_region < regions.size() else ""
+		var role: String = SpirlingData.ROLES[_log_role] if _log_role >= 0 else ""
+		var kinds: Array[SpirlingData] = SpirlogBook.filtered(GameState.spirlog, GameState.flags,
+			_log_search, _log_element, role, _log_status, region)
 		var entries: Array[Dictionary] = []
+		var actions: Array[String] = []
+		for r: String in regions:
+			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
+			actions.append("chapter")
+		entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
+		actions.append("region")
+		entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
+		actions.append("search")
+		entries.append({"text": "Element: %s" % ("all" if _log_element < 0 else Elements.element_name(_log_element))})
+		actions.append("element")
+		entries.append({"text": "Role: %s" % ("all" if role.is_empty() else role.capitalize())})
+		actions.append("role")
+		entries.append({"text": "Show: %s" % SpirlogBook.STATUS_NAMES[_log_status]})
+		actions.append("status")
 		if not encounter_table.is_empty():
 			entries.append({"text": "Tracker: this area"})
-		for sd: SpirlingData in all:
-			var e: Dictionary = GameState.spirlog.get(sd.species_name, {})
-			var is_seen: bool = bool(e.get("seen", false))
-			var is_bonded: bool = bool(e.get("bonded", false))
-			seen += 1 if is_seen else 0
-			bonded += 1 if is_bonded else 0
-			# Own marks instead of "*" and "+" (item 1934): an eye for seen, a band for bonded.
-			var mark: Texture2D = SpirlogMarks.bonded() if is_bonded else (SpirlogMarks.seen() if is_seen else SpirlogMarks.none())
-			entries.append({"text": "%02d %s" % [sd.dex_id, sd.species_name if is_seen else "???"], "icon": mark,
-				"species": sd.species_name, "seen": is_seen})
-		var idx: int = await pick(Loc.t("Spirlog  seen %d  bonded %d" % [seen, bonded]) + "\n" + Loc.t(SpirlogMarks.LEGEND), entries)
+			actions.append("tracker")
+		var first_kind: int = entries.size()
+		for sd: SpirlingData in kinds:
+			# Own marks beside the line (item 1934): an eye for seen, a band for bonded.
+			var mark: Texture2D = SpirlogMarks.bonded() if SpirlogBook.is_bonded(GameState.spirlog, sd.species_name) \
+				else (SpirlogMarks.seen() if SpirlogBook.is_seen(GameState.spirlog, sd.species_name) else SpirlogMarks.none())
+			entries.append({"text": SpirlogBook.list_line(sd, GameState.spirlog), "icon": mark})
+			actions.append("kind")
+		var idx: int = await pick("Spirlog (%d)" % kinds.size(), entries, true, first_kind if not kinds.is_empty() else -1)
 		if idx < 0:
 			return
-		if not encounter_table.is_empty() and idx == 0:
-			await info(_tracker_text())
-			continue
-		var entry: Dictionary = entries[idx]
-		if not bool(entry.get("seen", false)):
-			await info("Not seen yet.")
-			continue
-		var sd: SpirlingData = Database.species(str(entry.species))
-		var els: PackedStringArray = []
-		for el: int in sd.elements:
-			els.append(Elements.element_name(el))
-		var where: PackedStringArray = found_on(sd.species_name)
-		var lines: PackedStringArray = ["#%02d %s   %s" % [sd.dex_id, sd.species_name, "/".join(els)]]
-		if not sd.height.is_empty():
-			lines.append("Height %s" % sd.height)
-		if not sd.habitat.is_empty():
-			lines.append("Lives in: %s" % sd.habitat)
-		lines.append("Found on: %s" % (", ".join(where) if not where.is_empty() else "unknown"))
-		var log_entry: Dictionary = GameState.spirlog.get(sd.species_name, {})
-		if bool(log_entry.get("bonded", false)):
-			var tr: Dictionary = BattleRules.trait_info(sd.trait_id)
-			if not tr.is_empty():
-				lines.append("Gift: %s" % tr.label)
-			if not sd.lore.is_empty():
-				lines.append("")
-				lines.append(sd.lore)
-		else:
-			lines.append("")
-			lines.append("Bond with one to learn more.")
-		# Its own page with a big sprite (item 1936).
-		await info("\n".join(lines), MiniSprite.of(sd.species_name, 48))
+		match actions[idx]:
+			"chapter", "region":
+				_log_region = _log_region + 1 if _log_region + 1 < regions.size() else -1
+			"search":
+				_log_search = await TextPrompt.ask(self, "Search by name", false, 16, _log_search)
+			"element":
+				_log_element = _log_element + 1 if _log_element + 1 < Elements.E.size() else -1
+			"role":
+				_log_role = _log_role + 1 if _log_role + 1 < SpirlingData.ROLES.size() else -1
+			"status":
+				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
+			"tracker":
+				await info(_tracker_text())
+			"kind":
+				var sd: SpirlingData = kinds[idx - first_kind]
+				if not SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
+					await info("#%02d  Not seen yet." % sd.dex_id)
+					continue
+				await SpirlogPage.show_pages(self, kinds, idx - first_kind)
 
 ## Real map names where a kind lives (item 1935), not reshaped table ids.
 static func found_on(species: String) -> PackedStringArray:
