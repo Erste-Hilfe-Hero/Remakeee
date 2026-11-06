@@ -124,12 +124,22 @@ static func draw(day: String) -> Array[String]:
 ## Today's state, drawn fresh when the day changed: {"day", "tasks": [{"id", "n"}], "bonus"}.
 static func today() -> Dictionary:
 	var day: String = day_key()
-	if str(GameState.daily_tasks.get("day", "")) != day:
+	if str(GameState.daily_tasks.get("day", "")) != day or not _valid(GameState.daily_tasks):
 		var tasks: Array = []
 		for id: String in draw(day):
 			tasks.append({"id": id, "n": 0})
 		GameState.daily_tasks = {"day": day, "tasks": tasks, "bonus": false}
 	return GameState.daily_tasks
+
+## False for damaged task state (a broken save): it is then drawn again.
+static func _valid(state: Dictionary) -> bool:
+	var tasks: Variant = state.get("tasks")
+	if not tasks is Array:
+		return false
+	for e: Variant in tasks:
+		if not e is Dictionary or not (e as Dictionary).has("id") or not ((e as Dictionary).get("n", 0) is int or (e as Dictionary).get("n", 0) is float):
+			return false
+	return true
 
 static func is_done(entry: Dictionary) -> bool:
 	return int(entry.get("n", 0)) >= int(def(str(entry.get("id", ""))).get("n", 1))
