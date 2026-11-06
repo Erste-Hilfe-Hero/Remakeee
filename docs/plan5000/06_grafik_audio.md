@@ -93,10 +93,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2304. [x] [P1] Beim Rennen (hold-to-run) wird das Wippen doppelt so schnell und die Figur zeigt bei jedem zweiten Schritt eine kleine Staubwolke.
 2305. [x] [P1] Umdrehen auf der Stelle: ein Tipp in eine neue Richtung dreht die Figur erst und läuft nach 0,08 s los, damit Drehen und Gehen unterscheidbar sind.
 2306. [x] [P1] Das bestehende "!" über einem Wanderer (NPC.gd) erscheint mit Juice.pop und einem kurzen Ton, bevor er losläuft.
-2307. [P2] NPCs drehen sich beim Ansprechen mit 0,1 s Pause zur Spielfigur, statt sofort umzuspringen.
-2308. [P2] Nach 8 Sekunden ohne Eingabe schaut die Spielfigur nach links und rechts (Wechsel der Blickrichtung alle 1,2 s).
+2307. [x] [P2] NPCs drehen sich beim Ansprechen mit 0,1 s Pause zur Spielfigur, statt sofort umzuspringen.
+2308. [x] [P2] Nach 8 Sekunden ohne Eingabe schaut die Spielfigur nach links und rechts (Wechsel der Blickrichtung alle 1,2 s).
 2309. [P2] Nach 30 Sekunden ohne Eingabe setzt sich die Spielfigur hin (ein neuer Sitz-Frame in tamer.png und tamer_f.png).
-2310. [P2] Stehende NPCs drehen sich alle 3 bis 7 Sekunden zufällig in eine andere Richtung, wenn ihre Kartendaten das erlauben.
+2310. [x] [P2] Stehende NPCs drehen sich alle 3 bis 7 Sekunden zufällig in eine andere Richtung, wenn ihre Kartendaten das erlauben.
 2311. [P3] Gehende NPCs auf festen Wegen wippen wie die Spielfigur 1 Pixel pro Schritt.
 2312. [P2] Gefühls-Blasen für NPCs als kleine Symbole über dem Kopf: "?", Herz, Note, Schweißtropfen, drei Punkte, jeweils 8×8 Pixel und mit Juice.pop.
 2313. [P2] Gefühls-Blasen per Dialogdatei auslösbar über einen Befehl wie [emote:herz] in data/dialogue.

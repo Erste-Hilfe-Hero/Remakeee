@@ -32,8 +32,29 @@ func cancel_path() -> void:
 func _ready() -> void:
 	step_finished.connect(func(c: Vector2i) -> void: stepped.emit(c))
 
+## Standing still this long, the Wayfarer looks left and right (item 2308), switching every
+## IDLE_LOOK_EVERY seconds. Only the drawn direction changes.
+const IDLE_LOOK_AFTER: float = 8.0
+const IDLE_LOOK_EVERY: float = 1.2
+var idle_time: float = 0.0
+
+func _idle(delta: float, active: bool) -> void:
+	if active:
+		idle_time = 0.0
+		if not look.is_empty():
+			look = ""
+		return
+	idle_time += delta
+	if idle_time < IDLE_LOOK_AFTER:
+		return
+	var n: int = int((idle_time - IDLE_LOOK_AFTER) / IDLE_LOOK_EVERY)
+	var want: String = "left" if n % 2 == 0 else "right"
+	if look != want:
+		look = want
+
 func _process(delta: float) -> void:
 	super._process(delta)
+	_idle(delta, frozen or moving or not _held_direction().is_empty() or not path.is_empty())
 	if frozen:
 		cancel_path()
 		return
@@ -94,5 +115,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if frozen or moving:
 		return
 	if event.is_action_pressed("ui_accept"):
+		_idle(0.0, true)
 		get_viewport().set_input_as_handled()
 		interact.emit(facing_cell())

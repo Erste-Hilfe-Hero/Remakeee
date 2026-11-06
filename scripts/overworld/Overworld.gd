@@ -585,7 +585,7 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	var n: NPC = npc_at(cell)
 	if n != null:
-		n.face_toward(player.cell)
+		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
 		elif not await offer_rematch(n) and not await offer_trials(n):
@@ -602,7 +602,7 @@ func _on_interact(cell: Vector2i) -> void:
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
 		var beyond: NPC = npc_at(cell + (cell - player.cell))
 		if beyond != null:
-			beyond.face_toward(player.cell)
+			await beyond.turn_toward(player.cell)
 			await run_dialogue(beyond.dialogue_ref, beyond)
 
 ## Cave entrance signs show the gear needed inside as pictures above the text (item 982).
