@@ -92,7 +92,7 @@ func element_hit(element: int) -> void:
 ## Track for [param map_id] from data/music.json, in the variant for the active era.
 func track_for_map(map_id: String) -> String:
 	var maps: Dictionary = _map_music.get("maps", {})
-	var track: String = str(maps.get(map_id, _map_music.get("default", "")))
+	var track: String = str(maps.get(map_id, maps.get(map_id.get_slice("@", 0), _map_music.get("default", ""))))
 	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
 
 ## Era music (item 66): "<track>_era<N>" for the newest era N that has its own version, so a

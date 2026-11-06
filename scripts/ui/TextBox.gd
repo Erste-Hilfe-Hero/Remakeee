@@ -19,6 +19,10 @@ const ARROW_SPACE: int = 6
 var _typing: bool = false
 var _waiting: bool = false
 var _visible_chars: float = 0.0
+## Taps this soon after a line is fully shown are ignored, so the second tap of a double tap
+## cannot skip a line unread (item 1783).
+const READ_GUARD_MS: int = 150
+var _shown_ms: int = -100000
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -78,18 +82,22 @@ func _process(delta: float) -> void:
 	if _label.visible_characters >= _label.get_total_character_count():
 		_label.visible_characters = -1
 		_typing = false
+		_shown_ms = Time.get_ticks_msec()
 
-func _skip_or_advance() -> void:
+func _skip_or_advance(tap: bool = false) -> void:
 	if _typing:
 		_label.visible_characters = -1
 		_typing = false
+		_shown_ms = Time.get_ticks_msec()
 	elif _waiting:
+		if tap and Time.get_ticks_msec() - _shown_ms < READ_GUARD_MS:
+			return
 		_waiting = false
 		advanced.emit()
 
 func _gui_input(event: InputEvent) -> void:
 	if TapInput.is_press(event):
-		_skip_or_advance()
+		_skip_or_advance(true)
 		accept_event()
 
 func _unhandled_input(event: InputEvent) -> void:
