@@ -203,7 +203,7 @@ func _draw_volt() -> void:
 			for d: Vector2 in [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]:
 				_line(_to, _to + d * ray, 0)
 
-## Stone: rocks poke out under the user; a rock in a high arc with a shadow; six splinters.
+## Stone: rocks push up under the user; a rock in a high arc with a shadow; six splinters.
 func _draw_stone() -> void:
 	match phase:
 		Phase.CHARGE:
