@@ -215,6 +215,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 			_show_hint(i)
 			b.queue_redraw())
 		b.focus_exited.connect(b.queue_redraw)
+		Juice.press_feedback(b)
 		b.draw.connect(func() -> void: _draw_pointer(b))
 		_box.add_child(b)
 		_buttons.append(b)

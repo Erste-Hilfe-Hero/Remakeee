@@ -181,6 +181,14 @@ static func clean_name(p_name: String, code: String) -> String:
 	var re := RegEx.create_from_string("^[\\p{L}\\p{N} ]+$")
 	if re.search(n) == null:
 		return fallback
+	# At most 3 digits and no web address, so nobody passes on a phone number (item 2878).
+	var digits: int = 0
+	for ch: String in n:
+		if ch >= "0" and ch <= "9":
+			digits += 1
+	var squashed: String = n.to_lower().replace(" ", "")
+	if digits > 3 or squashed.contains("www") or squashed.contains("http"):
+		return fallback
 	var folded: String = n.to_lower()
 	for pair: Array in [["0", "o"], ["1", "i"], ["3", "e"], ["4", "a"], ["5", "s"], ["7", "t"], ["@", "a"], ["$", "s"], [" ", ""]]:
 		folded = folded.replace(pair[0], pair[1])
@@ -832,12 +840,17 @@ func _fn_mail_send(a: Dictionary) -> Dictionary:
 	if not _can_reach(t):
 		return _fail("not_friends")
 	var phrase: int = int(a.get("p_phrase", -1))
-	if phrase < 0 or phrase > 31:
+	if phrase < 0 or phrase > 31 or (kind == "phrase" and not phrase_ok("post", phrase)):
 		return _fail("bad_phrase")
 	if not _rate_ok("mail", 30):
 		return _fail("slow_down")
 	_new_mail(t, kind, phrase)
 	return {"ok": true}
+
+## Like public._phrase_ok: phrase number [param n] may be used in [param context] (item 2877).
+func phrase_ok(context: String, n: int) -> bool:
+	var lists: Variant = db.config.get("phrases_allowed", Phrases.CONTEXTS)
+	return lists is Dictionary and ((lists as Dictionary).get(context, []) as Array).has(n)
 
 func _fn_gift_send(a: Dictionary) -> Dictionary:
 	var t: String = uid_for_code(str(a.get("p_code", "")))

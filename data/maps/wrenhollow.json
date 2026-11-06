@@ -77,6 +77,14 @@
    "facing": "down",
    "dialogue": "wrenhollow/kid",
    "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 10,
+   "y": 6,
+   "facing": "left",
+   "dialogue": "wrenhollow/coach",
+   "sprite": "villager"
   }
  ],
  "signs": [

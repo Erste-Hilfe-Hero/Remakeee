@@ -105,6 +105,14 @@
    "facing": "left",
    "dialogue": "thornridge/crystals",
    "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 10,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "thornridge/coach",
+   "sprite": "villager"
   }
  ],
  "signs": [

@@ -113,6 +113,12 @@ var music_volume: float = 0.7
 var sfx_volume: float = 0.8
 const BUS_MUSIC: StringName = &"Music"
 const BUS_SFX: StringName = &"SFX"
+## Sub-buses of SFX (item 2547): menu sounds, cries and text voice, ambience loops.
+const BUS_UI: StringName = &"UI"
+const BUS_VOICE: StringName = &"Voice"
+const BUS_AMBIENCE: StringName = &"Ambience"
+## Ceiling of the Master limiter (item 2548).
+const LIMITER_CEILING_DB: float = -1.0
 ## Touch controls: pad size and opacity (index into PAD_SIZES / PAD_ALPHAS), left-handed layout, tap-to-move.
 var pad_size: int = 1
 var pad_opacity: int = 1
@@ -125,8 +131,14 @@ var swap_ab_touch: bool = false
 var swap_ab_pad: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
-## Gamepad rumble on hits (item 63).
-var rumble: bool = true
+## Vibration on phones and gamepads (items 63, 2590): 0 Off, 1 Weak, 2 Full.
+var vibration: int = 2
+## Screen shake in battle and the world (item 2259): 0 Off, 1 Weak, 2 Full.
+var screen_shake: int = 2
+## Short captions for important sounds at the top edge (item 2653).
+var sound_captions: bool = false
+## Text voice blips while dialogue types (items 2503, 2504).
+var text_voice: bool = true
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
 ## Display and accessibility (items 59, 76, 78).
@@ -337,8 +349,9 @@ static func _has_pad_button(action: StringName, button: int) -> bool:
 
 ## A short rumble on every connected gamepad, if rumble is on.
 func rumble_pads(strength: float, seconds: float) -> void:
-	if not rumble or reduce_motion:
+	if vibration <= 0 or reduce_motion:
 		return
+	strength *= 0.5 if vibration == 1 else 1.0
 	for d: int in Input.get_connected_joypads():
 		Input.start_joy_vibration(d, strength * 0.5, strength, seconds)
 
@@ -538,7 +551,8 @@ func settings_to_dict() -> Dictionary:
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
-		"one_hand": one_hand, "rumble": rumble,
+		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
+		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "language": language}
 
@@ -559,7 +573,12 @@ func settings_from_dict(d: Dictionary) -> void:
 	swap_ab_pad = bool(d.get("swap_ab_pad", false))
 	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
-	rumble = bool(d.get("rumble", true))
+	# Older settings had an on/off "rumble"; on maps to Full vibration.
+	var legacy_rumble: int = 2 if bool(d.get("rumble", true)) else 0
+	vibration = clampi(int(d.get("vibration", legacy_rumble)), 0, 2)
+	screen_shake = clampi(int(d.get("screen_shake", 2)), 0, 2)
+	sound_captions = bool(d.get("sound_captions", false))
+	text_voice = bool(d.get("text_voice", true))
 	tips_enabled = bool(d.get("tips", true))
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
@@ -582,20 +601,30 @@ func apply_display() -> void:
 		UITheme.set_high_contrast(high_contrast)
 	UITheme.set_large_text(large_text)
 
+## Extra Master gain (not saved): Sound fades it to 0 while the app is in the background.
+var master_fade: float = 1.0
+
 func apply_volume() -> void:
 	ensure_buses()
-	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.0001)))
+	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume * master_fade, 0.0001)))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_MUSIC), linear_to_db(maxf(music_volume, 0.0001)))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_SFX), linear_to_db(maxf(sfx_volume, 0.0001)))
 
-## Adds the Music and SFX buses (both feed Master) if the project has none yet.
+## Adds the Music and SFX buses (both feed Master), the UI, Voice and Ambience buses under SFX,
+## and a hard limiter on Master, where the project does not have them yet.
 static func ensure_buses() -> void:
-	for bus: StringName in [BUS_MUSIC, BUS_SFX]:
-		if AudioServer.get_bus_index(bus) < 0:
+	for pair: Array in [[BUS_MUSIC, &"Master"], [BUS_SFX, &"Master"], [BUS_UI, BUS_SFX], [BUS_VOICE, BUS_SFX], [BUS_AMBIENCE, BUS_SFX]]:
+		if AudioServer.get_bus_index(pair[0]) < 0:
 			AudioServer.add_bus()
 			var idx: int = AudioServer.bus_count - 1
-			AudioServer.set_bus_name(idx, bus)
-			AudioServer.set_bus_send(idx, &"Master")
+			AudioServer.set_bus_name(idx, pair[0])
+			AudioServer.set_bus_send(idx, pair[1])
+	for i: int in AudioServer.get_bus_effect_count(0):
+		if AudioServer.get_bus_effect(0, i) is AudioEffectHardLimiter:
+			return
+	var lim := AudioEffectHardLimiter.new()
+	lim.ceiling_db = LIMITER_CEILING_DB
+	AudioServer.add_bus_effect(0, lim)
 
 ## Keeps older saves on the story path: saves that lit the lamp room before Act I got its
 ## ending already have the ferry open (plan item 1405).
@@ -603,6 +632,9 @@ func story_fixups() -> void:
 	if has_flag("mirela_lamp") and not has_flag("ferry_corvane_open"):
 		set_flag("ferry_corvane_open")
 		set_flag("scene_act1_finale_seen")
+	# Area 3's road from Corvane Quay to Madderby opens with the arrival scene.
+	if has_flag("corvane_arrived") and not has_flag("madderby_road_open"):
+		set_flag("madderby_road_open")
 
 ## A story number (0 if never set).
 func story_var(name: String) -> int:

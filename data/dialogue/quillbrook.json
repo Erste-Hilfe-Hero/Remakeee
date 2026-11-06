@@ -54,5 +54,11 @@
  ],
  "pim_defeat": [
   "Pim: I'll practise two weeks next time."
- ]
+ ],
+ "boatman": {
+  "lines": [
+   "Boatman Osk: Lake Line landing. The brook runs out to the lake from here, and so do I."
+  ],
+  "action": "transit lake_line"
+ }
 }

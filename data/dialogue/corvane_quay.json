@@ -1,0 +1,36 @@
+{
+ "sign": [
+  "CORVANE QUAY",
+  "Harbour of Corvane.",
+  "North: Madderby Road"
+ ],
+ "road": [
+  "MADDERBY ROAD",
+  "Closed after the storm. Fallen trees, washed-out bridges.",
+  "Ask at the quay when it opens again."
+ ],
+ "tender": {
+  "lines": [
+   "Harbour Tender Mave: Salt spring, fresh off the lake. Let your team rest after the crossing."
+  ],
+  "action": "heal"
+ },
+ "dockhand": [
+  "Dockhand Tib: Veydal folk! First boat across since the storm. Mind the wet planks."
+ ],
+ "ferry": {
+  "lines": [
+   "QUAY BOATS",
+   "Back to Brindlewick, any tide."
+  ],
+  "choices": [
+   {
+    "text": "Cross to Brindlewick",
+    "action": "warp brindlewick 8 18 right"
+   },
+   {
+    "text": "Stay in Corvane"
+   }
+  ]
+ }
+}

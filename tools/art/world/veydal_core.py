@@ -1,7 +1,7 @@
 """Veydal core: the hand-edited Act I maps (Brindlewick, Fernstair, Crowcrest, Thornridge,
 Saltmarsh, the houses and the two Rift hollows). Only patches; see common.py. Every patch can
 run again without changing anything a second time."""
-from common import secret
+from common import lines, npc, secret
 
 GROUP = ["lighthouse", "brindlewick", "map_house", "rest_spring", "fernstair", "crowcrest",
          "thornridge", "saltmarsh", "cinder_rift", "tide_rift"]
@@ -31,7 +31,31 @@ NEW_FINDS = {
 }
 
 
+# Lake Line and Valley Coach (items 1187-1189): a boatwoman with her boat at the shore and a coach
+# driver at the east road. Stops and arrival cells: data/world_layout.json "lines".
+TRANSIT_NPCS = {
+    "brindlewick": [
+        (npc("boatwoman", 7, 13, "down", "brindlewick/boatwoman", "villager"), {"lines": lines(
+            ("Boatwoman Hedda: Lake Line! Reedhaven and Quillbrook, if you've been there on foot.", "Bootsfrau Hedda: Seelinie! Schilfhafen und Federbach, wenn du schon zu Fuß dort warst.")),
+            "action": "transit lake_line"}),
+        (npc("coach", 10, 7, "left", "brindlewick/coach", "villager"), {"lines": lines(
+            ("Driver Odo: Valley Coach. Thornridge, Copperfold, Wrenhollow. Only stops you know.", "Kutscher Odo: Talkutsche. Thornridge, Kupferfalt, Zaunkönigsgrund. Nur Halte, die du kennst.")),
+            "action": "transit valley_coach"}),
+    ],
+    "thornridge": [
+        (npc("coach", 10, 10, "left", "thornridge/coach", "villager"), {"lines": lines(
+            ("Driver Sela: Valley Coach, Thornridge stop. The road down is gentler than the stairs.", "Kutscherin Sela: Talkutsche, Halt Thornridge. Die Straße hinunter ist sanfter als die Treppen.")),
+            "action": "transit valley_coach"}),
+    ],
+}
+
+
 def build(world):
+    for mid, people in TRANSIT_NPCS.items():
+        m = world.load_map(mid)
+        for person, entry in people:
+            m["npcs"] = [n for n in m.get("npcs", []) if n["id"] != person["id"]] + [person]
+            world.add_text(mid, {person["dialogue"].split("/")[1]: entry})
     for mid, biome in BIOMES.items():
         world.load_map(mid)["biome"] = biome
     for mid, key, item, count in OLD_FINDS:
