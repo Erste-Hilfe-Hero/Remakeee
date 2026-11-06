@@ -1,0 +1,51 @@
+{
+ "_doc": "Wayfarer personalities (docs/plan5000/02_kampf.md, items 611-615). Weights scale parts of BattleAI.score_move; swap_below -1 means never swap by choice, null keeps the default rule; heal_below is a share of Vigor, rest_below an Energy count (-1 keeps the default rule). setup_stats limits setup_w to those own stats.",
+ "balanced": {
+  "damage_w": 1.0,
+  "status_w": 1.0,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 0
+ },
+ "hothead": {
+  "damage_w": 1.4,
+  "status_w": 0.4,
+  "setup_w": 0.3,
+  "field_w": 1.0,
+  "swap_below": -1,
+  "heal_below": 0.3,
+  "rest_below": 1,
+  "focus_fire": 0,
+  "status_first": 0
+ },
+ "wall": {
+  "damage_w": 0.8,
+  "status_w": 1.0,
+  "setup_w": 1.5,
+  "field_w": 1.0,
+  "swap_below": 0.5,
+  "heal_below": 0.45,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 0,
+  "setup_stats": [
+   "def",
+   "foc"
+  ]
+ },
+ "spoiler": {
+  "damage_w": 1.0,
+  "status_w": 1.6,
+  "setup_w": 1.0,
+  "field_w": 1.0,
+  "swap_below": null,
+  "heal_below": 0.3,
+  "rest_below": -1,
+  "focus_fire": 0,
+  "status_first": 1
+ }
+}
