@@ -136,7 +136,11 @@ jobs:
   # https://github.com/Erste-Hilfe-Hero/Remakeee/releases/download/online-test/Chimora-online-test.apk
   apk-link:
     needs: [android-debug, web]
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    # Only the integration branch (and main) publish the test build; feature PRs into it would
+    # otherwise overwrite it with their own unmerged state.
+    if: >-
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) &&
+      (github.head_ref == 'claude/project-thread-lhphga-c' || github.ref_name == 'claude/project-thread-lhphga-c' || github.ref_name == 'main')
     runs-on: ubuntu-latest
     # Runs from several PRs upload to the same release; one at a time, or --clobber races (HTTP 422).
     concurrency:
