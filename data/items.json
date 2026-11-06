@@ -53,7 +53,10 @@
   "description": "Wayfarer Gear. Face a far post across narrow water and press A to pull yourself over.",
   "battle": false,
   "gear": true,
-  "hint": "The far side is just out of reach. A grapple line could bridge it."
+  "hint": "The far side is just out of reach. A grapple line could bridge it.",
+  "works_on": [
+   "~"
+  ]
  },
  {
   "id": "climbing_pick",
@@ -61,7 +64,11 @@
   "description": "Wayfarer Gear. Face a low cliff and press A to climb up or down it.",
   "battle": false,
   "gear": true,
-  "hint": "A steep rock face. With a climbing pick you could get a grip."
+  "hint": "A steep rock face. With a climbing pick you could get a grip.",
+  "works_on": [
+   "^",
+   "v"
+  ]
  },
  {
   "id": "storm_lantern",
@@ -69,7 +76,10 @@
   "description": "Wayfarer Gear. Lights pitch-dark places so you can walk through them.",
   "battle": false,
   "gear": true,
-  "hint": "It's pitch dark ahead. A lantern would help."
+  "hint": "It's pitch dark ahead. A lantern would help.",
+  "works_on": [
+   "dark"
+  ]
  },
  {
   "id": "spark_coil",
@@ -272,5 +282,49 @@
   "battle": false,
   "teaches": "Gloom Ripple",
   "price": 3000
+ },
+ {
+  "id": "wading_boots",
+  "name": "Wading Boots",
+  "description": "Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.",
+  "battle": false,
+  "gear": true,
+  "hint": "The water here is shallow, but too cold for bare feet. Wading boots would do.",
+  "works_on": [
+   "w"
+  ]
+ },
+ {
+  "id": "pry_bar",
+  "name": "Pry Bar",
+  "description": "Wayfarer Gear. Face a sluice wheel, a mine cart or a grate and press A to turn, shove or lift it.",
+  "battle": false,
+  "gear": true,
+  "hint": "It won't budge by hand. A pry bar would give you the leverage.",
+  "works_on": [
+   "wheel"
+  ]
+ },
+ {
+  "id": "rope_ladder",
+  "name": "Rope Ladder",
+  "description": "Wayfarer Gear. Face a marked edge over a shaft and press A to tie it on. It stays there, and you climb down rung by rung.",
+  "battle": false,
+  "gear": true,
+  "hint": "A chalk mark on the edge of a shaft. A rope ladder could be tied on here.",
+  "works_on": [
+   "shaft"
+  ]
+ },
+ {
+  "id": "plank_bundle",
+  "name": "Plank Bundle",
+  "description": "Wayfarer Gear. Face a gap with a chalk mark and press A to lay a plank over it. The plank stays.",
+  "battle": false,
+  "gear": true,
+  "hint": "A narrow gap with a chalk mark. A plank would bridge it.",
+  "works_on": [
+   "Y"
+  ]
  }
 ]
