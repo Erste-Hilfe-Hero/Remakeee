@@ -165,7 +165,12 @@ jobs:
           gh release view online-test >/dev/null 2>&1 || gh release create online-test --prerelease \
             --target "$sha" --title "Chimora online test" --notes "Latest test build (debug APK, real server)."
           gh release edit online-test --notes "Latest test build (debug APK, real server). Commit $sha, ref ${{ github.head_ref || github.ref_name }}."
-          gh release upload online-test Chimora-online-test.apk chimora-web.zip --clobber
+          # GitHub's upload endpoint sometimes times out (HTTP 408); try again.
+          for i in 1 2 3; do
+            gh release upload online-test Chimora-online-test.apk chimora-web.zip --clobber && break
+            [ "$i" = 3 ] && exit 1
+            sleep $((i * 15))
+          done
 
   # Signed release AAB for Google Play. Runs on version tags or manual runs.
   # Secrets live in the protected "prod" environment:
