@@ -56,6 +56,12 @@ func test_every_page_has_a_spot_and_text() -> void:
 			if act.begins_with("page "):
 				found[act.split(" ")[1]] = true
 				assert_eq(str(s.get("hide_flag", "")), "page_" + act.split(" ")[1], "page sign should vanish once found")
+	# Pages outside Veydal are placed through data/story_npcs.json (spots on area 3's maps).
+	for mid: Variant in StoryPlacements.data():
+		for s: Variant in (StoryPlacements.for_map(str(mid)).get("signs", [])):
+			var act2: String = str(Dialogue.get_entry(str(s.dialogue)).get("action", ""))
+			if act2.begins_with("page "):
+				found[act2.split(" ")[1]] = true
 	var kestra: Dictionary = Dialogue.get_entry("map_house/kestra")
 	found[str(kestra.get("action", "")).split(" ")[1]] = true
 	for i: int in range(1, Overworld.PAGE_COUNT + 1):
@@ -151,3 +157,49 @@ func test_chapter_cards_show_once_with_the_act() -> void:
 	assert_eq(QuestLog.card_for(0, 1, {}), ["Chapter 1: The Map House"] as Array[String])
 	assert_true(QuestLog.card_for(0, 1, {QuestLog.card_flag(goals[1]): true}).is_empty())
 	assert_string_contains(QuestLog.summary({}), "Act I: The Hush of Veydal")
+
+# --- Story placements, side quests with stages, map book (items 1630-1633, 1751, 1752) -------
+
+func test_story_signs_land_on_their_maps() -> void:
+	var m: MapData = MapData.load_map("thornridge")
+	var refs: Array = m.signs.map(func(s: Dictionary) -> String: return str(s.dialogue))
+	assert_has(refs, "story/letter_v3")
+	assert_true(m.sign_at(Vector2i(5, 3), {}).is_empty(), "letters wait for the dock talk")
+	assert_eq(str(m.sign_at(Vector2i(5, 3), {"aldo_dock_told": true}).dialogue), "story/letter_v3")
+
+func test_letters_quest_counts_and_finishes() -> void:
+	var flags: Dictionary = {"aldo_dock_told": true, "letter_v1": true}
+	var g: Dictionary = {}
+	for s: Dictionary in QuestLog.open_side_goals(flags):
+		if s.id == "letters_veydal":
+			g = s
+	assert_false(g.is_empty())
+	assert_string_contains(QuestLog.side_text(g, flags), "(1/3)")
+	assert_string_contains(QuestLog.summary(flags), "Where: Lighthouse / Fernstair / Thornridge")
+	var check: Dictionary = Dialogue.get_entry("story/letters_check")
+	assert_false(Dialogue.check(check.get("if"), flags))
+	flags["letter_v2"] = true
+	flags["letter_v3"] = true
+	assert_true(Dialogue.check(check.get("if"), flags))
+
+func test_side_goal_stages_show_the_current_step() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Mara", 0, Database.STARTERS[0], 1)
+	var g: Dictionary = {"id": "demo", "text": "Start.", "stages": [{"text": "Step one.", "where": "A"}, {"text": "Step two.", "where": "B"}]}
+	assert_eq(QuestLog.side_text(g, {}), "Step one.")
+	GameState.set_story_var(QuestLog.stage_var(g), 1)
+	assert_eq(QuestLog.side_text(g, {}), "Step two.")
+	assert_eq(QuestLog.side_where(g), "B")
+
+func test_puddlet_quest_is_wired() -> void:
+	var e: Dictionary = Dialogue.get_entry("brindlewick/child_song")
+	assert_eq(str(e.action), "echo_song q_puddlet_done")
+	assert_eq(Dialogue.choices_for(Dialogue.get_entry("brindlewick/child_ask"), {}).size(), 2)
+
+func test_map_book_lists_found_pages() -> void:
+	var flags: Dictionary = {"page_1": true, "page_3": true, "page_3_read": true}
+	var rows: Array[Dictionary] = MapBookMenu.rows(flags)
+	assert_eq(rows.size(), 2)
+	assert_eq(str(rows[0].text), "Page 1 (new)")
+	assert_eq(str(rows[1].text), "Page 3")
+	assert_string_contains(MapBookMenu.title(flags), "(2/6)")
+	assert_false(MapBookMenu.page_text(1).is_empty())
