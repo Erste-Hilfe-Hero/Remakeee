@@ -365,5 +365,297 @@
     "weight": 10
    }
   ]
+ },
+ "gloamwood": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Mossling",
+    "min": 4,
+    "max": 6,
+    "weight": 20,
+    "ground": "fern"
+   },
+   {
+    "species": "Zippit",
+    "min": 4,
+    "max": 6,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Wickit",
+    "min": 5,
+    "max": 7,
+    "weight": 15,
+    "ground": "fern"
+   },
+   {
+    "species": "Shalebat",
+    "min": 5,
+    "max": 7,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Thornback",
+    "min": 7,
+    "max": 7,
+    "weight": 5,
+    "ground": "fern"
+   }
+  ]
+ },
+ "quillbrook": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Zephlet",
+    "min": 8,
+    "max": 10,
+    "weight": 35,
+    "ground": "fern"
+   },
+   {
+    "species": "Zippit",
+    "min": 8,
+    "max": 10,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Kindlop",
+    "min": 9,
+    "max": 11,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Puddlet",
+    "min": 8,
+    "max": 11,
+    "weight": 18,
+    "ground": "water"
+   },
+   {
+    "species": "Kelpup",
+    "min": 9,
+    "max": 11,
+    "weight": 10,
+    "ground": "water"
+   }
+  ]
+ },
+ "lantern_steps": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 10,
+    "max": 12,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 10,
+    "max": 12,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Kindlop",
+    "min": 11,
+    "max": 13,
+    "weight": 20,
+    "ground": "scree"
+   },
+   {
+    "species": "Wickit",
+    "min": 11,
+    "max": 13,
+    "weight": 10,
+    "ground": "scree"
+   }
+  ]
+ },
+ "brackwater_fen": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Puddlet",
+    "min": 12,
+    "max": 14,
+    "weight": 24,
+    "ground": "reeds"
+   },
+   {
+    "species": "Kelpup",
+    "min": 12,
+    "max": 15,
+    "weight": 18,
+    "ground": "reeds"
+   },
+   {
+    "species": "Zephlet",
+    "min": 13,
+    "max": 15,
+    "weight": 35,
+    "ground": "reeds"
+   },
+   {
+    "species": "Wickit",
+    "min": 13,
+    "max": 15,
+    "weight": 18,
+    "ground": "reeds"
+   },
+   {
+    "species": "Riptail",
+    "min": 15,
+    "max": 15,
+    "weight": 5,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "mossmere_grotto": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 6,
+    "max": 8,
+    "weight": 35,
+    "ground": "cave"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 6,
+    "max": 8,
+    "weight": 30,
+    "ground": "cave"
+   },
+   {
+    "species": "Mossling",
+    "min": 7,
+    "max": 9,
+    "weight": 20,
+    "ground": "cave"
+   },
+   {
+    "species": "Puddlet",
+    "min": 7,
+    "max": 9,
+    "weight": 15,
+    "ground": "cave"
+   }
+  ]
+ },
+ "echo_gallery": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 13,
+    "max": 15,
+    "weight": 40,
+    "ground": "cave"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 13,
+    "max": 16,
+    "weight": 35,
+    "ground": "cave"
+   },
+   {
+    "species": "Wickit",
+    "min": 14,
+    "max": 16,
+    "weight": 20,
+    "ground": "cave"
+   },
+   {
+    "species": "Duskdigger",
+    "min": 16,
+    "max": 16,
+    "weight": 5,
+    "ground": "cave"
+   }
+  ]
+ },
+ "sablecove": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 14,
+    "max": 16,
+    "weight": 35,
+    "ground": "cave"
+   },
+   {
+    "species": "Puddlet",
+    "min": 14,
+    "max": 16,
+    "weight": 24,
+    "ground": "cave"
+   },
+   {
+    "species": "Kelpup",
+    "min": 14,
+    "max": 16,
+    "weight": 20,
+    "ground": "cave"
+   },
+   {
+    "species": "Wickit",
+    "min": 15,
+    "max": 17,
+    "weight": 16,
+    "ground": "cave"
+   },
+   {
+    "species": "Riptail",
+    "min": 17,
+    "max": 17,
+    "weight": 5,
+    "ground": "cave"
+   }
+  ]
+ },
+ "kindle_vents": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 11,
+    "max": 13,
+    "weight": 40,
+    "ground": "cave"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 11,
+    "max": 13,
+    "weight": 31,
+    "ground": "cave"
+   },
+   {
+    "species": "Kindlop",
+    "min": 11,
+    "max": 13,
+    "weight": 24,
+    "ground": "cave"
+   },
+   {
+    "species": "Smoldrake",
+    "min": 14,
+    "max": 14,
+    "weight": 5,
+    "ground": "cave"
+   }
+  ]
  }
 }

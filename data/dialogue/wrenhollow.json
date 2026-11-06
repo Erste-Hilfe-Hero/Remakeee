@@ -1,0 +1,40 @@
+{
+ "sign": [
+  "WRENHOLLOW",
+  "Wrenhollow, 34 folk.",
+  "Three terraces, one well, too many ladders."
+ ],
+ "willow": {
+  "lines": [
+   "Keeper Ysolde: Sit under the willow and drink from the pool. It mends tired Spirlings."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Trader Ebbe: Brook-cooled tonics, fresh every day."
+  ],
+  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf"
+ },
+ "ropemaker": {
+  "lines": [
+   "Ropemaker Nell: The old wells hereabouts go deep. You'll want a ladder you can leave behind.",
+   "Ropemaker Nell: Tie it where you see a chalk mark. It holds."
+  ],
+  "action": "give_item rope_ladder 1",
+  "flag": "got_ladder",
+  "once": true,
+  "after_flag": {
+   "flag": "got_ladder",
+   "lines": [
+    "Ropemaker Nell: Every knot I tie has a name. That one was 'Patience'."
+   ]
+  }
+ },
+ "elder": [
+  "Old Bertil: We heard the Rift from down here. Like a bell cracking."
+ ],
+ "kid": [
+  "Wren-kid: I counted the ladder rungs. All of them. Two hundred and six!"
+ ]
+}

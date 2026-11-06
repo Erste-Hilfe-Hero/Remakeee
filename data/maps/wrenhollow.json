@@ -1,0 +1,112 @@
+{
+ "name": "Wrenhollow",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "outdoor": true,
+ "heal_point": [
+  2,
+  8
+ ],
+ "rows": [
+  "TTTT_TTTTTTT",
+  "T*.._....*.T",
+  "TRRR_..RRR.T",
+  "THDH_..HDH.T",
+  "T.._____...T",
+  "T^^^^^^=^^^T",
+  "T...__.__..T",
+  "T.o.__..._.T",
+  "T...__.#._.T",
+  "T.S.__.#._.T",
+  "T^^=^^^^^^^T",
+  "T.._____...T",
+  "T.RRR...*..T",
+  "T.HDH.##...T",
+  "T..___.##..T",
+  "T*.....,,,.T",
+  "TTTTTTTTTTTT"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 0,
+   "to": "quillbrook",
+   "tx": 1,
+   "ty": 28,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "willow",
+   "x": 1,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "wrenhollow/willow",
+   "sprite": "elder"
+  },
+  {
+   "id": "trader",
+   "x": 9,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "wrenhollow/trader",
+   "sprite": "villager"
+  },
+  {
+   "id": "ropemaker",
+   "x": 8,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "wrenhollow/ropemaker",
+   "sprite": "villager"
+  },
+  {
+   "id": "elder",
+   "x": 9,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "wrenhollow/elder",
+   "sprite": "elder"
+  },
+  {
+   "id": "kid",
+   "x": 6,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "wrenhollow/kid",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 9,
+   "dialogue": "wrenhollow/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 15,
+   "item": "kin_charm",
+   "count": 1,
+   "flag": "find_wren_corner"
+  },
+  {
+   "x": 0,
+   "y": 12,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_wren_west"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_wren_roof"
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+{
+ "sign": [
+  "BRACKWATER FEN",
+  "Moor, rings 12 to 15.",
+  "Stay on the boardwalks. The pale water is shallow, the dark is not."
+ ],
+ "smooth": [
+  "A boulder sits in the reeds, smoothed by hands, not water."
+ ],
+ "marit": [
+  "Marit: The reeds grow back twice as fast since the storm. Good for my trade."
+ ],
+ "marit_intro": [
+  "Marit: Mind the boardwalk! Now, a duel."
+ ],
+ "marit_defeat": [
+  "Marit: Cut down to size."
+ ],
+ "jory": [
+  "Jory: On a misty day you can't see your own boots out here."
+ ],
+ "jory_intro": [
+  "Jory: Lost? No? Then let's battle."
+ ],
+ "jory_defeat": [
+  "Jory: I'm the one who's lost now."
+ ],
+ "hesk": [
+  "Hesk: Reedhaven's down the boardwalk. Houses on stilts. Mind the gaps."
+ ],
+ "hesk_intro": [
+  "Hesk: Out this far? You must be good."
+ ],
+ "hesk_defeat": [
+  "Hesk: You are good."
+ ],
+ "sablecove_sign": [
+  "SABLECOVE",
+  "Inside: Wading Boots. The inner chamber opens at low tide."
+ ]
+}

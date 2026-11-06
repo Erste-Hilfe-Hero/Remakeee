@@ -48,5 +48,9 @@
  "heart_defeat": [
   "The heart cools to grey stone and crumbles away.",
   "Warden Orrin: That was the last of it. The Cinder Rift breathes again."
+ ],
+ "kindle_vents_sign": [
+  "KINDLE VENTS",
+  "Inside: Plank Bundle. Hot vents blow every few seconds: wait for the calm."
  ]
 }
