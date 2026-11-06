@@ -851,7 +851,7 @@
    "name_de": "Wegweiser",
    "desc_en": "Fast travel to every place you have visited, not only rest spots. Permanent.",
    "desc_de": "Schnellreise zu jedem besuchten Ort, nicht nur zu Rastplätzen. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.encounter_call",

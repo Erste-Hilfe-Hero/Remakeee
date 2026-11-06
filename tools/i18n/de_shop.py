@@ -635,4 +635,5 @@ T = {
 "Duskglass Grip": "Schattenglas-Griff",
 "Rift Script: Duskglass Grip": "Rissschrift: Schattenglas-Griff",
 "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.": "Lehrt einem Umbra-Spirling Schattenglas-Griff (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, den Fokus zu senken). Wird verbraucht.",
+"Travel to a place": "Reise wohin?",
 }
