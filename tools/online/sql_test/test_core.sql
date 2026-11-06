@@ -44,27 +44,27 @@ begin
   assert r->>'name' = 'Mara', 'name trimmed';
   assert (r->'card'->>'seals')::int = 2 and not (r->'card' ? 'evil') and (r->'card'->>'hours')::int = 0, 'card cleaned';
   r := public.profile_set('B1tch', 9, 'x', '{}');
-  assert r->>'name' = 'Tamer ' || right(c, 4), 'banned word replaced: ' || (r->>'name');
+  assert r->>'name' = 'Wanderer ' || right(c, 4), 'banned word replaced: ' || (r->>'name');
   assert (r->>'color')::int = 3, 'color clamped';
   r := public.profile_set('<script>', 0, '', '{}');
-  assert r->>'name' like 'Tamer %', 'symbols replaced';
+  assert r->>'name' like 'Wanderer %', 'symbols replaced';
 
   -- Saves: first write, then revisions.
-  r := public.save_put(1, '{"party": [{"level": 5}], "money": 10}', 'Brindlewick 0:10', 0);
+  r := public.save_put(1, '{"schema": 1, "party": [{"level": 5}], "money": 10}', 'Brindlewick 0:10', 0);
   assert (r->>'ok')::boolean and (r->>'rev')::int = 1, 'first save rev 1: ' || r::text;
-  r := public.save_put(1, '{"party": [{"level": 6}], "money": 20}', 'Brindlewick 0:20', 1);
+  r := public.save_put(1, '{"schema": 1, "party": [{"level": 6}], "money": 20}', 'Brindlewick 0:20', 1);
   assert (r->>'rev')::int = 2, 'second save rev 2';
   -- A device that still thinks rev 1 gets a conflict and changes nothing.
-  r := public.save_put(1, '{"party": [], "money": 1}', 'old device', 1);
+  r := public.save_put(1, '{"schema": 1, "party": [], "money": 1}', 'old device', 1);
   assert (r->>'conflict')::boolean and (r->>'rev')::int = 2, 'conflict reported';
   assert (public.save_get(1)->'data'->>'money')::int = 20, 'conflict did not overwrite';
-  r := public.save_put(1, '{"party": [], "money": 1}', 'old device', 1, true);
+  r := public.save_put(1, '{"schema": 1, "party": [], "money": 1}', 'old device', 1, true);
   assert (r->>'rev')::int = 3, 'forced write';
   -- Implausible saves are refused.
-  assert public.save_put(2, '{"party": [{"level": 200}]}', '', 0)->>'error' = 'implausible';
-  assert public.save_put(2, '{"party": [{},{},{},{},{},{},{}]}', '', 0)->>'error' = 'implausible';
-  assert public.save_put(2, '{"money": -5}', '', 0)->>'error' = 'implausible';
-  assert public.save_put(2, '{"money": "lots"}', '', 0)->>'error' = 'implausible';
+  assert public.save_put(2, '{"schema": 1, "party": [{"level": 200}]}', '', 0)->>'error' = 'implausible';
+  assert public.save_put(2, '{"schema": 1, "party": [{},{},{},{},{},{},{}]}', '', 0)->>'error' = 'implausible';
+  assert public.save_put(2, '{"schema": 1, "money": -5}', '', 0)->>'error' = 'implausible';
+  assert public.save_put(2, '{"schema": 1, "money": "lots"}', '', 0)->>'error' = 'implausible';
   assert public.save_put(4, '{}', '', 0)->>'error' = 'bad_slot';
   assert jsonb_array_length(public.save_list()) = 1;
   assert public.presence('Brindlewick <b>')->>'server_time' is not null;
@@ -112,7 +112,7 @@ do $$
 declare code text; fc text;
 begin
   fc := public.hello(1)->'profile'->>'code';
-  perform public.save_put(1, '{"money": 42}', 'old phone', 0);
+  perform public.save_put(1, '{"schema": 1, "money": 42}', 'old phone', 0);
   code := public.transfer_create()->>'code';
   assert length(code) = 12;
   insert into t_code values (code);
