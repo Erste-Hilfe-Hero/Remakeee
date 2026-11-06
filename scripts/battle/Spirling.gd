@@ -100,7 +100,27 @@ func display_name() -> String:
 	return nickname if not nickname.is_empty() else data.species_name
 
 func elements() -> Array[int]:
+	var v: Dictionary = variant_info()
+	if not v.is_empty() and not (v.elements as Array).is_empty():
+		return v.elements
 	return data.elements
+
+## The regional imprint this Spirling shows ("variant" = region id), or {} (items 218-219).
+func variant_info() -> Dictionary:
+	if variant.is_empty() or data == null:
+		return {}
+	for v: Dictionary in data.variants:
+		if str(v.region) == variant:
+			return v
+	return {}
+
+## Takes on the imprint of [param region] if this kind has one there. True when it changed.
+func apply_imprint(region: String) -> bool:
+	for v: Dictionary in data.variants:
+		if str(v.region) == region and variant != region:
+			variant = region
+			return true
+	return false
 
 func _curve(base: int, key: String, offset: float, div: float) -> int:
 	var s: float = float(base) + float(spark.get(key, 0)) * SPARK_WEIGHT
