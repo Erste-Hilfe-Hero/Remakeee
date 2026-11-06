@@ -209,3 +209,26 @@ func test_great_rift_breath_and_glass_tonic() -> void:
 		assert_eq(mine[0].hp, mine[0].max_hp(), "all Vigor")
 	assert_false(m.is_legal(tonic), "two per battle")
 	assert_false(BattleModel.is_revive_item("rg_glass_tonic"))
+
+func test_glass_spark_fills_and_surges() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 5)] as Array[Spirling], true, 5)
+	m.inventory["rg_glass_spark"] = 1
+	mine[0].energy = 0
+	m.submit_turn(BattleAction.make_item(BattleModel.Side.PLAYER, "rg_glass_spark", 0), BattleAction.make_rest(BattleModel.Side.FOE))
+	assert_eq(mine[0].energy, m.max_energy(), "filled")
+	assert_eq(mine[0].energy_surge, 2, "one surge turn used at this turn end")
+	mine[0].energy = 0
+	m.submit_turn(BattleAction.make_rest(BattleModel.Side.PLAYER), BattleAction.make_rest(BattleModel.Side.FOE))
+	var with_surge: int = mine[0].energy
+	assert_eq(mine[0].energy_surge, 1)
+	mine[0].end_battle()
+	assert_eq(mine[0].energy_surge, 0, "gone after the battle")
+	assert_gt(with_surge, 0)
+
+func test_legal_actions_skip_revive_on_the_active_one() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 5)] as Array[Spirling], true, 5)
+	m.inventory["rg_rift_breath"] = 1
+	for a: BattleAction in m.legal_actions(BattleModel.Side.PLAYER):
+		assert_ne(a.item_id, "rg_rift_breath")

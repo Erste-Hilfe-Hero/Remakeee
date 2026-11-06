@@ -527,7 +527,7 @@
    "name_de": "Glasfunke",
    "desc_en": "In battle: fills a Spirling's energy and adds 1 energy per round for 3 rounds.",
    "desc_de": "Im Kampf: füllt die Energie eines Spirlings und gibt 3 Runden lang 1 Energie pro Runde dazu.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.glass_tonic",

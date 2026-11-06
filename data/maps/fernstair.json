@@ -91,6 +91,50 @@
    "facing": "right",
    "dialogue": "fernstair/hiker",
    "sprite": "villager"
+  },
+  {
+   "id": "imme",
+   "x": 8,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "fernstair/imme",
+   "sprite": "villager",
+   "trainer": "Pathkeeper Imme",
+   "intro": "fernstair/imme_intro",
+   "defeat": "fernstair/imme_defeat",
+   "money": 120,
+   "profile": "apprentice",
+   "team": [
+    {
+     "species": "Zippit",
+     "level": 4
+    },
+    {
+     "species": "Mossling",
+     "level": 4
+    }
+   ]
+  },
+  {
+   "id": "joss",
+   "x": 2,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "fernstair/joss",
+   "sprite": "villager",
+   "trainer": "Herder Joss",
+   "intro": "fernstair/joss_intro",
+   "defeat": "fernstair/joss_defeat",
+   "profile": "wall",
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 5,
+     "moves": [
+      "Hunker Down"
+     ]
+    }
+   ]
   }
  ],
  "signs": [

@@ -578,4 +578,6 @@ T = {
 	"Im Kampf: holt einen besiegten Spirling mit voller Kraft und voller Energie zurück. Einer pro Kampf.",
 "In battle: heals all Vigor and every state. Two per battle.":
 	"Im Kampf: heilt alle Kraft und jeden Zustand. Zwei pro Kampf.",
+"In battle: fills a Spirling's energy and gives 1 more at the end of each of the next 3 turns. Three per battle.":
+	"Im Kampf: füllt die Energie eines Spirlings auf und gibt am Ende der nächsten 3 Runden je 1 mehr. Drei pro Kampf.",
 }

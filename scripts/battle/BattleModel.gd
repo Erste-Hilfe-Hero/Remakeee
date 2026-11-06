@@ -278,7 +278,10 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 	if _items_allowed_for(side, slot):
 		for id: Variant in bag:
 			if int(bag[id]) > 0 and _is_battle_item(str(id)):
-				out.append(BattleAction.make_item(side, str(id), active_index(side, slot), slot))
+				var ia := BattleAction.make_item(side, str(id), active_index(side, slot), slot)
+				# Revive items and spent per-battle limits do not fit the active Spirling.
+				if is_legal(ia):
+					out.append(ia)
 	if side == Side.PLAYER and is_wild and not is_partner_slot(side, slot):
 		if bonded == null:
 			out.append(BattleAction.make_bond(side, 0.0, "", slot))
@@ -799,6 +802,9 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
 		reveal_trait(side, slot)
 	var gain: int = int(rules.get("energy_per_turn", ENERGY_PER_TURN)) + int(BattleRules.add_key(s, "energy_per_turn"))
+	if s.energy_surge > 0:
+		s.energy_surge -= 1
+		gain += 1
 	if side == Side.FOE:
 		var rule: Dictionary = BattleRules.RULES.get(foe_rule, {})
 		if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
@@ -1041,6 +1047,9 @@ func _do_item(a: BattleAction) -> void:
 			target.status_turns = 0
 	if int(it.get("energy", 0)) > 0 and t_slot >= 0:
 		change_energy(a.side, int(it.energy), t_slot)
+	if int(it.get("energy_surge", 0)) > 0 and t_slot >= 0:
+		change_energy(a.side, max_energy(), t_slot)
+		target.energy_surge = int(it.energy_surge)
 	var st: Variant = it.get("stage", {})
 	if st is Dictionary and t_slot >= 0:
 		for stat: String in st:

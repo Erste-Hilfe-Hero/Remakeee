@@ -30,6 +30,8 @@ const SLOT_GAP: int = 6
 var model: BattleModel
 ## Backdrop for where the battle started (field, lake, ridge, ember). Set before adding.
 var backdrop: String = "field"
+## How much darker the backdrop is drawn (0 = as is), for towers that sink deeper (plan 3268).
+var backdrop_shade: float = 0.0
 ## Music for this fight ("battle" or "warden"); the overworld sets it before adding the scene.
 var music_track: String = "battle"
 ## Set to true to quit the app when the battle ends (standalone demo).
@@ -263,6 +265,7 @@ func _layout_field() -> void:
 	_player_sprite.size = Vector2(sprite, sprite)
 	_player_sprite.mirrored = true
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
+	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade)
 
 ## Creates the compact sprites and tags for every field slot (formation layout only).
 func _build_formation() -> void:

@@ -218,6 +218,35 @@
      }
     ]
    }
+  },
+  {
+   "id": "fenn",
+   "x": 3,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "murk_hollow/fenn",
+   "sprite": "villager",
+   "trainer": "Lampbearer Fenn",
+   "intro": "murk_hollow/fenn_intro",
+   "defeat": "murk_hollow/fenn_defeat",
+   "profile": "field_keeper",
+   "team": [
+    {
+     "species": "Wickit",
+     "level": 12,
+     "moves": [
+      "Dawn Call",
+      "Beacon Ping"
+     ]
+    },
+    {
+     "species": "Mirkmole",
+     "level": 13,
+     "moves": [
+      "Murk Call"
+     ]
+    }
+   ]
   }
  ],
  "signs": [
