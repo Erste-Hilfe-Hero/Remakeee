@@ -63,4 +63,6 @@ in `export_presets.cfg`, then push a tag such as `v0.1.0`.
 
 ## APK size budget
 
-CI fails the Android debug job when the APK is larger than 80 MB (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
+CI fails the Android debug job when the APK is larger than 88 MB (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
+
+Raised from 80 to 88 MB for the layered place music (plan area 6, items 2475 to 2479): every place song ships as four stems. Phones and tablets play the stems, so the Android and iOS presets leave out the eleven full mixes of the place songs; the web build plays the full mixes and leaves out `audio/music/stems/` (web audio plays samples, which AudioStreamSynchronized does not use).
