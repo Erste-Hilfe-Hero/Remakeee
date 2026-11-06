@@ -112,7 +112,7 @@ static func load_map(map_id: String) -> MapData:
 		return null
 	var m: MapData = from_dict(map_id, raw)
 	if m != null:
-		StoryPlacements.apply(m)
+		StoryPlacements.apply(m, raw)
 	return m
 
 ## Builds floor [param map_id] ("file" or "file@n") from a parsed map file.
