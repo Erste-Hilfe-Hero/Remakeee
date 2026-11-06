@@ -302,4 +302,10 @@ T = {
 "Answer with the Echo melody: Good or better": "Antworte mit der Echo-Melodie: Gut oder besser",
 "See a Spirling you have not seen yet": "Sieh einen Spirling, den du noch nicht gesehen hast",
 "Meet today's rare visitor": "Triff den seltenen Besucher des Tages",
+"Savings goal...": "Sparziel...", "Pick an offer of Marla's stand to save up for.": "Wähle ein Angebot von Marlas Stand, auf das du sparst.",
+"Save up for which offer?": "Auf welches Angebot sparen?", "Weekly crates...": "Wochenkisten...",
+"Restock on Monday, in 1 day.": "Neue Ware am Montag, in 1 Tag.", "Restock on Monday, in %d days.": "Neue Ware am Montag, in %d Tagen.",
+"Marla's weekly crates: three of these each week, the same for everyone.": "Marlas Wochenkisten: jede Woche drei davon, für alle gleich.",
+"Savings goal %s: ready to trade at Marla's stand.": "Sparziel %s: bereit zum Tausch an Marlas Stand.",
+"Savings goal %s: [%s] %d more Waymarks": "Sparziel %s: [%s] noch %d Wegmarken",
 }

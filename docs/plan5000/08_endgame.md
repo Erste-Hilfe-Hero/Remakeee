@@ -18,7 +18,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3123. [x] [P2] Ein Wegmarken-Verlaufsfenster bauen, das die letzten 30 Gutschriften mit Quelle zeigt (zum Beispiel „Tagesauftrag: 10“).
 3124. [x] [P2] Einen Test schreiben, der prüft, dass jede Belohnungsquelle im Spiel eine gültige Quelle in Waymarks.SOURCES nutzt.
 3125. [x] [P2] Wegmarken nach einer Niederlage nie abziehen, anders als die Hälfte der Münzen.
-3126. [P2] Ein Sparziel im Pausenmenü einstellen lassen (ein Angebot des Tauschstands), das als Balken den fehlenden Betrag zeigt.
+3126. [x] [P2] Ein Sparziel im Pausenmenü einstellen lassen (ein Angebot des Tauschstands), das als Balken den fehlenden Betrag zeigt.
 3127. [x] [P2] Den Wegmarken-Stand auf der Spielstandkarte im Titelbild neben Spielzeit und Spirlog-Zahl zeigen.
 3128. [P3] Einen Jahresrückblick der verdienten Wegmarken nach Quelle in den Aufzeichnungen zeigen.
 3129. [P3] Beim Eisernen Schwur alle Wegmarken-Gutschriften um 25 Prozent erhöhen und den Bonus in der Gutschrift ausweisen.
@@ -34,9 +34,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3137. [x] [P1] Jedes Angebot vor dem Kauf mit Wirkung, Preis und Besitzzahl zeigen und jeden Tausch mit einer Ja-Nein-Frage bestätigen lassen.
 3138. [P2] Vier neue Jackenfarben für den Wanderer zu je 300 Wegmarken anbieten, die dauerhaft freigeschaltet bleiben.
 3139. [P2] Sechs Fotorahmen für den Fotomodus zu je 100 Wegmarken anbieten.
-3140. [P2] Den Vorrat des Tauschstands jeden Montag nach Server-Zeit auffüllen und die Restzeit am Stand anzeigen.
-3141. [P2] Eine Wochenauswahl mit drei wechselnden Angeboten aus einer festen, offen sichtbaren Liste anbieten, gezogen per Seed aus der Wochennummer.
-3142. [P2] Die ganze Liste möglicher Wochenangebote am Stand einsehbar machen, damit nichts zufällig oder verdeckt ist.
+3140. [x] [P2] Den Vorrat des Tauschstands jeden Montag nach Server-Zeit auffüllen und die Restzeit am Stand anzeigen.
+3141. [x] [P2] Eine Wochenauswahl mit drei wechselnden Angeboten aus einer festen, offen sichtbaren Liste anbieten, gezogen per Seed aus der Wochennummer.
+3142. [x] [P2] Die ganze Liste möglicher Wochenangebote am Stand einsehbar machen, damit nichts zufällig oder verdeckt ist.
 3143. [P2] Münzen-Ausgaben ausbauen: einen Spendenkasten im Rathaus von Brindlewick bauen, der Münzen für Stadtprojekte annimmt.
 3144. [P2] Fünf Stadtprojekte in Brindlewick anlegen (Brunnen 5000, Laternenreihe 10000, Bootssteg 20000, Gartenbeete 30000, Leuchtturmglas 50000 Münzen), die das Stadtbild sichtbar verändern.
 3145. [P2] Jedes fertige Stadtprojekt mit einer dauerhaften Kleinigkeit belohnen, etwa einer zusätzlichen Rastquelle am Bootssteg.

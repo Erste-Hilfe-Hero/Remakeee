@@ -40,6 +40,8 @@ static func week() -> String:
 		for o: Dictionary in Exchange.offers():
 			left += Exchange.left(o)
 		out.append(Loc.t("Marla's crates this week: %d goods left") % left)
+		if Exchange.goal_line() != "":
+			out.append(Exchange.goal_line())
 	if Masters.open():
 		var due: int = 0
 		for m: Dictionary in Masters.list():
