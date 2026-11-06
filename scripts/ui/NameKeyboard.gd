@@ -131,6 +131,38 @@ func press(label: String) -> void:
 
 const SPACE_CHAR: String = " "
 
+## A real keyboard types too (item 2110): letters, digits, umlauts, hyphen, space and
+## Backspace go into the field, so W A S D type instead of moving the focus.
+func _input(event: InputEvent) -> void:
+	if target != null and is_visible_in_tree() and type_key(event):
+		get_viewport().set_input_as_handled()
+
+## The key for a typed [param event], pressed if there is one; true if it was used.
+func type_key(event: InputEvent) -> bool:
+	var k := event as InputEventKey
+	if k == null or not k.pressed or k.ctrl_pressed or k.meta_pressed or k.alt_pressed:
+		return false
+	if k.physical_keycode == KEY_BACKSPACE or k.keycode == KEY_BACKSPACE:
+		press(DELETE)
+		return true
+	if k.unicode <= 0:
+		return false
+	var ch: String = String.chr(k.unicode).to_upper()
+	if ch == "SS":
+		ch = "ß"
+	var label: String = ""
+	if mode == Mode.CODE:
+		if ch.length() == 1 and (LETTERS.contains(ch) or DIGITS.contains(ch)):
+			label = ch
+	elif ch == SPACE_CHAR:
+		label = SPACE
+	elif ch.length() == 1 and (LETTERS.contains(ch) or ch in EXTRA):
+		label = ch
+	if label.is_empty():
+		return false
+	press(label)
+	return true
+
 func _type_name(ch: String) -> void:
 	if target.max_length > 0 and target.text.length() >= target.max_length:
 		return

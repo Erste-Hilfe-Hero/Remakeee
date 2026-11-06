@@ -53,9 +53,11 @@ func _ready() -> void:
 	_status.visible = false
 	add_child(_status)
 	_build_name_box()
+	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
 	Sound.music("title")
+	StartupLog.mark("title scene built")
 	_run.call_deferred()
 
 func _build_name_box() -> void:
@@ -139,6 +141,14 @@ func _process(_delta: float) -> void:
 		_status.text = connecting_text((Time.get_ticks_msec() - _connect_started) / 1000.0)
 	_status.visible = not _status.text.is_empty()
 
+func _on_language_changed(_code: String) -> void:
+	if not _connecting and Online.is_online():
+		_show_status()
+
+func _exit_tree() -> void:
+	if Loc.events.language_changed.is_connected(_on_language_changed):
+		Loc.events.language_changed.disconnect(_on_language_changed)
+
 func _show_status() -> void:
 	var lines: Array[String] = []
 	if not Online.motd.is_empty():
@@ -160,6 +170,7 @@ func _resolve_conflicts() -> void:
 func _run() -> void:
 	var first_start: bool = GameState.language.is_empty() and not Online.privacy_seen and _used_slots() == 0
 	if GameState.language.is_empty():
+		StartupLog.mark("language menu ready")
 		await _pick_language()
 	await _go_online()
 	if first_start:
@@ -178,6 +189,7 @@ func _run() -> void:
 			items.append("Load...")
 		items.append("Settings")
 		_at_root = true
+		StartupLog.mark("title menu ready")
 		var idx: int = await _menu.pick_strings("", items, false)
 		_at_root = false
 		if idx == QUIT_ASKED:
