@@ -149,7 +149,16 @@ func connect_now() -> State:
 		return state
 	_take_hello(r.data)
 	_save_session()
+	if state == State.ONLINE and str(profile.get("platform", "")) != platform_name():
+		# The browser test build's accounts are deleted after 30 days unused (plan item 3765).
+		var p: Dictionary = await backend.call_fn("platform_set", {"p_platform": platform_name()})
+		if p.ok and p.data is Dictionary and bool(p.data.get("ok", false)):
+			profile["platform"] = platform_name()
 	return state
+
+## "web" for the browser test build, "app" for the phone apps (and desktop test runs).
+static func platform_name() -> String:
+	return "web" if OS.has_feature("web") else "app"
 
 func _take_hello(d: Variant) -> void:
 	if not d is Dictionary:

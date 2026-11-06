@@ -40,7 +40,9 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   24 Monate nicht genutzt wurden, werden markiert und 30 Tage später automatisch gelöscht, wenn du bis
   dahin nicht wieder gespielt hast.
 - **Browser-Testversion:** Für Tests gibt es unter https://[DOMAIN]/play/ eine Testversion im Browser. Sie
-  nutzt dasselbe Konto- und Speichersystem und dieselben Fristen wie die App.
+  nutzt dasselbe Konto- und Speichersystem wie die App. Konten, die zuletzt im Browser genutzt wurden,
+  löschen wir automatisch, wenn sie 30 Tage nicht genutzt wurden. Wer ein Browser-Konto per
+  Übertragungscode in die App mitnimmt, hat danach die Fristen der App.
 
 ### 3.2 Freunde, Leuchtpost und Meldungen
 
