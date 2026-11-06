@@ -28,12 +28,22 @@
    "Say, have you seen a Kelpup? The pups used to bark at my boat. Bring one by, would you?"
   ],
   "action": "quest_show fisher Kelpup max_tonic 2",
-  "after_flag": {
-   "flag": "q_fisher_done",
-   "lines": [
-    "That Kelpup of yours barked at my boat. Just like old times."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "q_fisher_done",
+    "lines": [
+     "That Kelpup of yours barked at my boat. Just like old times."
+    ]
+   },
+   {
+    "flag": "rift_tide_sealed",
+    "lines": [
+     "The fish are jumping again! Whole shoals of them, right by the pier.",
+     "That's your doing, I'd wager. The Rift's closed and the water's singing."
+    ]
+   }
+  ],
+  "next": "fisher_gift"
  },
  "islet": {
   "lines": [
@@ -60,6 +70,16 @@
     "flag": "q_puddlet_done",
     "lines": [
      "Puddlet splashes me every morning now! Thank you, {name}!"
+    ]
+   },
+   {
+    "flag": "rift_tide_sealed",
+    "if": {
+     "flag": "rift_cinder_sealed"
+    },
+    "lines": [
+     "Puddlet called for me all by itself this morning! Both Rifts are closed, aren't they?",
+     "Thank you, {name}! Puddlet says thank you too. Splash!"
     ]
    }
   ]
@@ -255,5 +275,17 @@
    "The light takes shape. It is Velahra, the First Voice of Veydal. It was the last to see Mirela."
   ],
   "action": "first_voice Velahra 40"
+ },
+ "fisher_gift": {
+  "if": {
+   "flag": "rift_tide_sealed",
+   "not_flag": "fisher_tonics"
+  },
+  "lines": [
+   "Here, take these. A fisher pays his debts."
+  ],
+  "action": "give_item tonic 2",
+  "flag": "fisher_tonics",
+  "once": true
  }
 }

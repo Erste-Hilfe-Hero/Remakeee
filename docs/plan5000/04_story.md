@@ -88,14 +88,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1411. [x] [P1] Bevor die Fähre fährt, verlangt die Brücke beide gestopften Rissherzen nicht, damit Akt II nicht an optionalen Kämpfen hängt (nur rifts und mirela_lamp zählen).
 1412. [x] [P1] Kestras Dock-Gespräch kestra_dock bekommt eine Auswahl ("Ich komme mit." / "Ich gehe allein."), die kestra_trust um 1 hebt oder nicht.
 1413. [x] [P1] Kapitelkarten (Schritt "card") werden für Prolog und Kapitel 1 bis 4 nachgerüstet, mit den Titeln aus quests.json.
-1414. [P2] Warden Orrin bekommt nach dem Mend eine Rückschau: er erzählt, dass er Mirela vor 40 Jahren als Kind im Cinder-Hohlweg gesehen hat.
-1415. [P2] Warden Maelis bekommt nach tide_heart_mended einen Satz über ein Lied, das sie aus dem Riss hört, als Hinweis auf die Echo-Melodie-Lore.
-1416. [P2] Das Kind mit dem stillen Puddlet in Brindlewick bekommt eine after_flag-Variante: nach beiden Rissen ruft sein Puddlet wieder, mit Dank an die Spielfigur.
-1417. [P2] Der Fischer erzählt nach rift_tide_sealed, dass die Fische wieder springen, und schenkt einmalig 2 Tonics.
-1418. [P2] Der Ältestensatz in Thornridge ändert sich nach rift_cinder_sealed und deutet auf Orrins Rückkehr ins Dorf.
-1419. [P2] Pell und Suri aus dem Cinder-Riss erscheinen nach dem Mend in Thornridge und reden über ihr neues Leben ohne Stille.
-1420. [P2] Ilka in der Tide-Senke sagt nach dem Mend eine Vorhersage über einen "Riss, der zurückschaut", als Vorbote von Akt II.
-1421. [P2] Tamsin in Murk Hollow erwähnt nach hollow_lamps, dass Mirela einst bei ihr Lampenöl gekauft hat, und dass sie nach Norden wollte.
+1414. [x] [P2] Warden Orrin bekommt nach dem Mend eine Rückschau: er erzählt, dass er Mirela vor 40 Jahren als Kind im Cinder-Hohlweg gesehen hat.
+1415. [x] [P2] Warden Maelis bekommt nach tide_heart_mended einen Satz über ein Lied, das sie aus dem Riss hört, als Hinweis auf die Echo-Melodie-Lore.
+1416. [x] [P2] Das Kind mit dem stillen Puddlet in Brindlewick bekommt eine after_flag-Variante: nach beiden Rissen ruft sein Puddlet wieder, mit Dank an die Spielfigur.
+1417. [x] [P2] Der Fischer erzählt nach rift_tide_sealed, dass die Fische wieder springen, und schenkt einmalig 2 Tonics.
+1418. [x] [P2] Der Ältestensatz in Thornridge ändert sich nach rift_cinder_sealed und deutet auf Orrins Rückkehr ins Dorf.
+1419. [x] [P2] Pell und Suri aus dem Cinder-Riss erscheinen nach dem Mend in Thornridge und reden über ihr neues Leben ohne Stille.
+1420. [x] [P2] Ilka in der Tide-Senke sagt nach dem Mend eine Vorhersage über einen "Riss, der zurückschaut", als Vorbote von Akt II.
+1421. [x] [P2] Tamsin in Murk Hollow erwähnt nach hollow_lamps, dass Mirela einst bei ihr Lampenöl gekauft hat, und dass sie nach Norden wollte.
 1422. [P2] Ein Schild am Krähenkamm-Tarn zeigt nach kestra_spar eine Skizze von Kestra mit dem Satz "The tarn, before it froze. K."
 1423. [P2] Nach der ersten gestopften Rissstelle zeigt eine kurze Szene, wie ein stiller Wildspirling in der Nähe wieder ruft (Schritt "cry").
 1424. [P2] Kapitel 2 bekommt eine Zwischenmeldung nach dem ersten Mend ("One Rift mended. Kestra will hear of it."), damit die Reihenfolge frei bleibt und trotzdem erzählt wird.

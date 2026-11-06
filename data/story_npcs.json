@@ -49,6 +49,26 @@
     "show_flag": "aldo_dock_told",
     "hide_flag": "letter_v3"
    }
+  ],
+  "npcs": [
+   {
+    "id": "pell_v",
+    "x": 5,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "thornridge/pell",
+    "sprite": "villager",
+    "show_flag": "rift_cinder_sealed"
+   },
+   {
+    "id": "suri_v",
+    "x": 6,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "thornridge/suri",
+    "sprite": "villager",
+    "show_flag": "rift_cinder_sealed"
+   }
   ]
  },
  "corvane_quay": {

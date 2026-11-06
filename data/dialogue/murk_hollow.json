@@ -7,12 +7,21 @@
   "action": "give_item storm_lantern 1",
   "flag": "got_lantern",
   "once": true,
-  "after_flag": {
-   "flag": "got_lantern",
-   "lines": [
-    "Tamsin: Mirkmoles dug half these tunnels. They like the quiet, not the dark."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "got_lantern",
+    "lines": [
+     "Tamsin: Mirkmoles dug half these tunnels. They like the quiet, not the dark."
+    ]
+   },
+   {
+    "flag": "hollow_lamps",
+    "lines": [
+     "Tamsin: You lit them in the right order. Just like the woman with the compass, years back.",
+     "Tamsin: Mirela, she was called. Bought a whole jug of my lamp oil and said she was heading north."
+    ]
+   }
+  ]
  },
  "delve": [
   "Ros: The Mirkmoles here hate bright light. Keep that lantern low."
