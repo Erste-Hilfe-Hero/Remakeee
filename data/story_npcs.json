@@ -2,17 +2,579 @@
  "_comment": "Story figures and signs per map id, in the map format (plan area 4, scripts/core/StoryPlacements.gd). Area 3 builds the maps; entries for maps that do not exist yet wait until they do.",
  "lighthouse": {
   "signs": [
-   {"x": 3, "y": 1, "dialogue": "story/letter_v1", "show_flag": "aldo_dock_told", "hide_flag": "letter_v1"}
+   {
+    "x": 3,
+    "y": 1,
+    "dialogue": "story/letter_v1",
+    "show_flag": "aldo_dock_told",
+    "hide_flag": "letter_v1"
+   },
+   {
+    "x": 5,
+    "y": 2,
+    "dialogue": "ashmere/mirela_gate_letter",
+    "show_flag": "ending_gate"
+   }
+  ],
+  "npcs": [
+   {
+    "id": "mirela_home",
+    "x": 6,
+    "y": 3,
+    "facing": "left",
+    "dialogue": "ashmere/mirela_home",
+    "sprite": "elder",
+    "show_flag": "story_complete",
+    "hide_flag": "ending_gate"
+   }
   ]
  },
  "fernstair": {
   "signs": [
-   {"x": 10, "y": 9, "dialogue": "story/letter_v2", "show_flag": "aldo_dock_told", "hide_flag": "letter_v2"}
+   {
+    "x": 10,
+    "y": 9,
+    "dialogue": "story/letter_v2",
+    "show_flag": "aldo_dock_told",
+    "hide_flag": "letter_v2"
+   }
   ]
  },
  "thornridge": {
   "signs": [
-   {"x": 5, "y": 3, "dialogue": "story/letter_v3", "show_flag": "aldo_dock_told", "hide_flag": "letter_v3"}
+   {
+    "x": 5,
+    "y": 3,
+    "dialogue": "story/letter_v3",
+    "show_flag": "aldo_dock_told",
+    "hide_flag": "letter_v3"
+   }
+  ]
+ },
+ "corvane_quay": {
+  "on_enter": {
+   "scene": "corvane_arrival",
+   "if": {
+    "flag": "ferry_crossed"
+   }
+  },
+  "npcs": [
+   {
+    "id": "juna",
+    "spot": "juna",
+    "facing": "down",
+    "dialogue": "corvane/juna",
+    "sprite": "ranger"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "page_7",
+    "dialogue": "story/find_7",
+    "hide_flag": "page_7"
+   }
+  ]
+ },
+ "madderby": {
+  "npcs": [
+   {
+    "id": "kestra_m",
+    "spot": "kestra",
+    "facing": "down",
+    "dialogue": "corvane/kestra_madderby",
+    "sprite": "ranger"
+   },
+   {
+    "id": "dyer_1",
+    "spot": "dyer_1",
+    "facing": "down",
+    "dialogue": "corvane/dyer_1",
+    "sprite": "villager",
+    "color": "b04a4a",
+    "show_flag": "rift_rain_sealed"
+   },
+   {
+    "id": "dyer_2",
+    "spot": "dyer_2",
+    "facing": "down",
+    "dialogue": "corvane/dyer_2",
+    "sprite": "villager",
+    "color": "c9a227",
+    "show_flag": "rift_rain_sealed"
+   },
+   {
+    "id": "dyer_3",
+    "spot": "dyer_3",
+    "facing": "down",
+    "dialogue": "corvane/dyer_3",
+    "sprite": "villager",
+    "color": "4c8f4c",
+    "show_flag": "rift_rain_sealed"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "letter_c2",
+    "dialogue": "story/letter_c2",
+    "hide_flag": "letter_c2"
+   }
+  ]
+ },
+ "madderby_guild": {
+  "npcs": [
+   {
+    "id": "ysolde",
+    "spot": "ysolde",
+    "facing": "down",
+    "dialogue": "corvane/ysolde",
+    "sprite": "elder"
+   },
+   {
+    "id": "pim",
+    "spot": "pim",
+    "facing": "down",
+    "dialogue": "corvane/pim",
+    "sprite": "villager"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "wall_map",
+    "dialogue": "corvane/wall_map"
+   },
+   {
+    "spot": "veit_desk",
+    "dialogue": "corvane/veit_desk",
+    "show_flag": "guild_joined",
+    "hide_flag": "veit_hint_1"
+   },
+   {
+    "spot": "veit_shelf",
+    "dialogue": "corvane/veit_shelf",
+    "show_flag": "guild_joined",
+    "hide_flag": "veit_hint_2"
+   },
+   {
+    "spot": "veit_stove",
+    "dialogue": "corvane/veit_stove",
+    "show_flag": "guild_joined",
+    "hide_flag": "veit_hint_3"
+   }
+  ]
+ },
+ "woadfen": {
+  "signs": [
+   {
+    "spot": "letter_c3",
+    "dialogue": "story/letter_c3",
+    "hide_flag": "letter_c3"
+   },
+   {
+    "spot": "page_9",
+    "dialogue": "story/find_9",
+    "hide_flag": "page_9"
+   }
+  ]
+ },
+ "rain_rift": {
+  "npcs": [
+   {
+    "id": "warden_senna",
+    "spot": "senna",
+    "facing": "down",
+    "dialogue": "corvane/senna",
+    "sprite": "warden",
+    "trainer": "Warden Senna",
+    "warden": "rain",
+    "team": [
+     {
+      "species": "Riptail",
+      "level": 20
+     },
+     {
+      "species": "Tempestrel",
+      "level": 21
+     },
+     {
+      "species": "Kelphound",
+      "level": 22
+     }
+    ],
+    "intro": "corvane/senna_intro",
+    "defeat": "corvane/senna_defeat",
+    "ai": 2,
+    "money": 1100
+   }
+  ]
+ },
+ "stillwater": {
+  "signs": [
+   {
+    "spot": "page_8",
+    "dialogue": "story/find_8",
+    "hide_flag": "page_8"
+   }
+  ]
+ },
+ "mirror_rift": {
+  "npcs": [
+   {
+    "id": "warden_joral",
+    "spot": "joral",
+    "facing": "down",
+    "dialogue": "corvane/joral",
+    "sprite": "warden",
+    "trainer": "Warden Joral",
+    "warden": "mirror",
+    "team": [
+     {
+      "species": "Lumenewt",
+      "level": 22
+     },
+     {
+      "species": "Glimmerax",
+      "level": 23
+     },
+     {
+      "species": "Verdantusk",
+      "level": 23
+     }
+    ],
+    "intro": "corvane/joral_intro",
+    "defeat": "corvane/joral_defeat",
+    "ai": 2,
+    "money": 1200
+   }
+  ]
+ },
+ "greyreach": {
+  "npcs": [
+   {
+    "id": "veit",
+    "spot": "veit",
+    "facing": "down",
+    "dialogue": "corvane/veit_leaves",
+    "sprite": "ranger",
+    "color": "5a4a3a",
+    "trainer": "Veit Harrow",
+    "team": [
+     {
+      "species": "Shalebat",
+      "level": 24
+     },
+     {
+      "species": "Duskdigger",
+      "level": 25
+     },
+     {
+      "species": "Obsidroth",
+      "level": 27
+     }
+    ],
+    "intro": "corvane/veit_intro",
+    "defeat": "corvane/veit_defeat",
+    "beaten_flag": "beat_veit_1",
+    "leaves": true,
+    "ai": 2,
+    "money": 1300,
+    "hide_flag": "beat_veit_1"
+   },
+   {
+    "id": "moss",
+    "spot": "moss",
+    "facing": "left",
+    "dialogue": "corvane/moss",
+    "sprite": "elder"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "page_10",
+    "dialogue": "story/find_10",
+    "hide_flag": "page_10"
+   }
+  ]
+ },
+ "wide_rift_edge": {
+  "signs": [
+   {
+    "spot": "burned_words",
+    "dialogue": "corvane/burned_words"
+   },
+   {
+    "spot": "letter_c1",
+    "dialogue": "story/letter_c1",
+    "hide_flag": "letter_c1"
+   }
+  ]
+ },
+ "ashmere_station": {
+  "on_enter": {
+   "scene": "ashmere_arrival",
+   "if": {
+    "flag": "act2_end"
+   }
+  },
+  "npcs": [
+   {
+    "id": "tamsin",
+    "spot": "tamsin",
+    "facing": "down",
+    "dialogue": "ashmere/tamsin",
+    "sprite": "villager"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "page_11",
+    "dialogue": "story/find_11",
+    "hide_flag": "page_11"
+   },
+   {
+    "spot": "rail_sign",
+    "dialogue": "ashmere/rail_sign"
+   }
+  ]
+ },
+ "kiln_rift": {
+  "npcs": [
+   {
+    "id": "warden_tovan",
+    "spot": "tovan",
+    "facing": "down",
+    "dialogue": "ashmere/tovan",
+    "sprite": "warden",
+    "trainer": "Warden Tovan",
+    "warden": "kiln",
+    "team": [
+     {
+      "species": "Calderox",
+      "level": 32
+     },
+     {
+      "species": "Obsidroth",
+      "level": 33
+     },
+     {
+      "species": "Smoldrake",
+      "level": 31
+     },
+     {
+      "species": "Duskdigger",
+      "level": 32
+     }
+    ],
+    "intro": "ashmere/tovan_intro",
+    "defeat": "ashmere/tovan_defeat",
+    "ai": 3,
+    "money": 1500
+   }
+  ],
+  "signs": [
+   {
+    "spot": "page_12",
+    "dialogue": "story/find_12",
+    "hide_flag": "page_12"
+   }
+  ]
+ },
+ "saltglass": {
+  "signs": [
+   {
+    "spot": "keeper_lamp",
+    "dialogue": "ashmere/keeper_lamp"
+   },
+   {
+    "spot": "page_13",
+    "dialogue": "story/find_13",
+    "hide_flag": "page_13"
+   },
+   {
+    "spot": "letter_a3",
+    "dialogue": "story/letter_a3",
+    "hide_flag": "letter_a3"
+   }
+  ]
+ },
+ "gravers_hall": {
+  "npcs": [
+   {
+    "id": "halvard",
+    "spot": "halvard",
+    "facing": "down",
+    "dialogue": "ashmere/halvard",
+    "sprite": "elder"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "veit_plate",
+    "dialogue": "ashmere/veit_plate",
+    "show_flag": "veit_offer_done"
+   },
+   {
+    "spot": "page_14",
+    "dialogue": "story/find_14",
+    "hide_flag": "page_14"
+   },
+   {
+    "spot": "letter_a2",
+    "dialogue": "story/letter_a2",
+    "hide_flag": "letter_a2"
+   }
+  ]
+ },
+ "cinderfold": {
+  "npcs": [
+   {
+    "id": "veit_c",
+    "spot": "veit",
+    "facing": "down",
+    "dialogue": "ashmere/veit_cinder",
+    "sprite": "ranger",
+    "color": "5a4a3a",
+    "hide_flag": "veit_plate_done"
+   },
+   {
+    "id": "nella",
+    "spot": "nella",
+    "facing": "down",
+    "dialogue": "ashmere/nella",
+    "sprite": "villager"
+   },
+   {
+    "id": "oswin",
+    "spot": "oswin",
+    "facing": "down",
+    "dialogue": "ashmere/oswin",
+    "sprite": "elder"
+   },
+   {
+    "id": "kestra_c",
+    "spot": "kestra",
+    "facing": "down",
+    "dialogue": "ashmere/kestra_cinder",
+    "sprite": "ranger",
+    "hide_flag": "beat_story_kestra_3"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "letter_a1",
+    "dialogue": "story/letter_a1",
+    "hide_flag": "letter_a1"
+   }
+  ]
+ },
+ "glass_rift": {
+  "npcs": [
+   {
+    "id": "warden_ilse",
+    "spot": "ilse",
+    "facing": "down",
+    "dialogue": "ashmere/ilse",
+    "sprite": "warden",
+    "trainer": "Warden Ilse",
+    "warden": "glass",
+    "team": [
+     {
+      "species": "Leviarch",
+      "level": 34
+     },
+     {
+      "species": "Lumenewt",
+      "level": 33
+     },
+     {
+      "species": "Glimmerax",
+      "level": 34
+     },
+     {
+      "species": "Tempestrel",
+      "level": 33
+     }
+    ],
+    "intro": "ashmere/ilse_intro",
+    "defeat": "ashmere/ilse_defeat",
+    "ai": 3,
+    "money": 1600
+   }
+  ]
+ },
+ "wide_rift_far": {
+  "on_enter": {
+   "scene": "wide_rift_far",
+   "if": {
+    "flag": "veit_plate_done"
+   }
+  },
+  "npcs": [
+   {
+    "id": "kestra_f",
+    "spot": "kestra",
+    "facing": "down",
+    "dialogue": "ashmere/kestra_far",
+    "sprite": "ranger",
+    "show_flag": "veit_plate_done"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "gate",
+    "dialogue": "ashmere/undrawn_gate",
+    "show_flag": "beat_story_kestra_3"
+   }
+  ]
+ },
+ "undrawn_1": {
+  "signs": [
+   {
+    "spot": "echo_a",
+    "dialogue": "ashmere/echo_a"
+   }
+  ]
+ },
+ "undrawn_2": {
+  "npcs": [
+   {
+    "id": "ash",
+    "spot": "ash",
+    "facing": "down",
+    "dialogue": "ashmere/ash",
+    "sprite": "hush"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "echo_b",
+    "dialogue": "ashmere/echo_b"
+   }
+  ]
+ },
+ "undrawn_3": {
+  "on_enter": {
+   "scene": "finale_1",
+   "if": {
+    "flag": "undrawn_reached",
+    "not_flag": "story_complete"
+   }
+  },
+  "npcs": [
+   {
+    "id": "mirela",
+    "spot": "mirela",
+    "facing": "down",
+    "dialogue": "ashmere/mirela_wait",
+    "sprite": "elder",
+    "show_flag": "mirela_met",
+    "hide_flag": "story_complete"
+   }
+  ],
+  "signs": [
+   {
+    "spot": "echo_c",
+    "dialogue": "ashmere/echo_c"
+   }
   ]
  }
 }
