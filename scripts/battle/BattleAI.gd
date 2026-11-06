@@ -130,6 +130,13 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 		elif fx_id == &"energy_tax" and target.energy_tax <= 1:
 			var turns: int = int(fx.get("amount", 0))
 			score += TAX_BONUS_PER_TURN * float(turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS) * acc
+		elif fx_id == &"status_shift":
+			if not me.status.is_empty() and target.status.is_empty() and not BattleRules.is_immune(target, me.status):
+				score += STATUS_BONUS * 2.0 * acc
+		elif fx_id == &"cure_self" and not me.status.is_empty():
+			score += STATUS_BONUS * acc
+		elif fx_id == &"clear_snares":
+			score += SNARE_BONUS_PER_BENCH * float((model.snares[side] as Array).size())
 		elif fx_id == &"side_snare":
 			score += SNARE_BONUS_PER_BENCH * float(model.swap_candidates(BattleModel.other(side), maxi(target_slot, 0)).size()) * acc
 		elif fx_id == &"self_stage_after" and expected < float(target.hp):

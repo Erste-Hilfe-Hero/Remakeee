@@ -113,6 +113,9 @@
    "34": [
     "Tremor Thud"
    ],
+   "36": [
+    "Quarry Wall"
+   ],
    "38": [
     "Kiln Strike",
     "Hunker Down"
@@ -418,14 +421,23 @@
    "4": [
     "Siphon Spark"
    ],
+   "6": [
+    "Static Tag"
+   ],
    "8": [
     "Charged Mist"
+   ],
+   "10": [
+    "Pylon Snap"
    ],
    "12": [
     "Arc Bolt"
    ],
    "15": [
     "Overcharge"
+   ],
+   "16": [
+    "Grid Lock"
    ],
    "18": [
     "Storm Gnash"
@@ -477,8 +489,14 @@
    "34": [
     "Charged Mist"
    ],
+   "36": [
+    "Short Circuit"
+   ],
    "40": [
     "Radiant Lance"
+   ],
+   "44": [
+    "Capacitor Crash"
    ]
   },
   "bond_rate": 0.12,
@@ -511,6 +529,9 @@
    "5": [
     "Hush"
    ],
+   "8": [
+    "Grit Jab"
+   ],
    "10": [
     "Pebble Toss"
    ],
@@ -519,6 +540,9 @@
    ],
    "15": [
     "Night Siphon"
+   ],
+   "16": [
+    "Pumice Pelt"
    ],
    "21": [
     "Tremor Thud"
@@ -557,7 +581,8 @@
    ],
    "30": [
     "Tremor Thud",
-    "All-In Crash"
+    "All-In Crash",
+    "Landslip"
    ],
    "33": [
     "Murk Call"
@@ -567,6 +592,9 @@
    ],
    "42": [
     "Cairn Crash"
+   ],
+   "44": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.12,
@@ -596,16 +624,24 @@
     "Breeze Slice"
    ],
    "5": [
-    "Updraft"
+    "Updraft",
+    "Draft Needle"
    ],
    "8": [
     "Drift Step"
    ],
    "10": [
-    "Crackle Bite"
+    "Crackle Bite",
+    "Kite Cut"
+   ],
+   "14": [
+    "Crosswind"
    ],
    "16": [
     "Gale Scythe"
+   ],
+   "19": [
+    "Scatter Gale"
    ],
    "22": [
     "Glint"
@@ -641,6 +677,9 @@
    "28": [
     "Gale Scythe"
    ],
+   "30": [
+    "Squall Line"
+   ],
    "32": [
     "Arc Bolt",
     "Drift Step"
@@ -648,8 +687,14 @@
    "38": [
     "Squall"
    ],
+   "40": [
+    "Cloudbreak"
+   ],
    "44": [
     "Prism Ray"
+   ],
+   "48": [
+    "Downburst"
    ]
   },
   "bond_rate": 0.12,
@@ -834,7 +879,8 @@
     "Murk Veil"
    ],
    "33": [
-    "Murk Call"
+    "Murk Call",
+    "Fault Line"
    ],
    "36": [
     "Dusk Gnaw"

@@ -8,13 +8,28 @@ const STAGE_MAX: int = 3
 const STAGE_STATS: Array[String] = ["atk", "def", "foc", "spd"]
 
 ## Overcharge moves: each leftover Energy point adds this much to the power multiplier.
-const OVERCHARGE_PER_ENERGY: float = 0.15
+const OVERCHARGE_PER_ENERGY: float = 0.12
+## At most this much leftover Energy goes into one Overcharge (the rest stays).
+const OVERCHARGE_MAX_EXTRA: int = 5
 
 ## Energy tax (energy_tax effect): extra Energy per move, and how many turns a tax holds by default.
 const ENERGY_TAX_COST: int = 1
 const ENERGY_TAX_TURNS: int = 2
 ## field_element moves: power added while they take the active field's element.
 const FIELD_ELEMENT_POWER: int = 20
+## Most snares (side_snare) that can lie on one side at once.
+const MAX_SNARES: int = 3
+
+## Short tag for a snare, shown under the bench row: "SC" for a Scorch snare, "-SP" for a Pace
+## drop, "HP" for a Vigor cut.
+static func snare_tag(snare: Dictionary) -> String:
+	if not str(snare.get("status", "")).is_empty():
+		return str(snare.status).substr(0, 2).to_upper()
+	var st: Variant = snare.get("stage", {})
+	if st is Dictionary and not (st as Dictionary).is_empty():
+		var k: String = str((st as Dictionary).keys()[0])
+		return ("+" if int(st[k]) > 0 else "-") + k.substr(0, 2).to_upper()
+	return "HP"
 
 ## Field (Rift resonance) multipliers for the boosted and the weakened element.
 const FIELD_BOOST: float = 1.2

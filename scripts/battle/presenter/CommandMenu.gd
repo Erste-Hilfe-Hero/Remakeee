@@ -145,6 +145,10 @@ static func move_info(mv: MoveData) -> String:
 		lines.append(Loc.t("Spends all leftover Energy for more power."))
 	if mv.cooldown > 0:
 		lines.append(Loc.t("Locked for %d turns after each use.") % mv.cooldown)
+	if mv.ignore_daze:
+		lines.append(Loc.t("Daze does not spoil its aim."))
+	if mv.ignore_stages:
+		lines.append(Loc.t("Ignores the foe's raised Guard and Focus."))
 	for fx: Dictionary in mv.effects:
 		var chance: float = float(fx.get("chance", 1.0))
 		var line: String = ""
@@ -183,6 +187,20 @@ static func move_info(mv: MoveData) -> String:
 				line = Loc.t("The foe's arts cost %d more Energy for %d turns.") % [BattleRules.ENERGY_TAX_COST, turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS]
 			&"field_element":
 				line = Loc.t("In a field it takes the field's element, power +%d.") % int(fx.get("power_bonus", BattleRules.FIELD_ELEMENT_POWER))
+			&"cure_self":
+				line = Loc.t("Cures its own status.")
+			&"status_shift":
+				line = Loc.t("Hands its own status to the foe.")
+			&"clear_snares":
+				line = Loc.t("Blows the snares off its own side.")
+			&"side_snare":
+				var sn: Dictionary = fx.get("snare", {})
+				if float(sn.get("hp", 0.0)) > 0.0:
+					line = Loc.t("Lays a snare: the next foe to step in loses %d%% Vigor.") % roundi(float(sn.hp) * 100.0)
+				elif not str(sn.get("status", "")).is_empty():
+					line = Loc.t("Lays a snare: the next foe to step in gets %s.") % Loc.t(StatusRules.label(str(sn.status)))
+				else:
+					line = Loc.t("Lays a snare that weakens the next foe to step in.")
 			&"self_stage_after":
 				var parts: Array[String] = []
 				var st: Dictionary = fx.get("stages", {})

@@ -18,10 +18,17 @@ const ROLL_MAX: float = 1.00
 const ROLL_MEAN: float = (ROLL_MIN + ROLL_MAX) / 2.0
 
 ## Attack and defense stats used for [param move] (PHYSICAL: ATK vs DEF, FOCUS: FOC vs FOC).
+## An ignore_stages move leaves the target's raised Guard or Focus stage out.
 static func stats_for(user: Spirling, target: Spirling, move: MoveData) -> Vector2:
 	if move.kind == MoveData.Kind.PHYSICAL:
-		return Vector2(user.effective_atk(), target.effective_def())
-	return Vector2(user.effective_foc(), target.effective_foc())
+		return Vector2(user.effective_atk(), _guarded(target, "def", target.effective_def(), move))
+	return Vector2(user.effective_foc(), _guarded(target, "foc", target.effective_foc(), move))
+
+static func _guarded(target: Spirling, stat: String, value: int, move: MoveData) -> float:
+	var st: int = target.stage(stat)
+	if move.ignore_stages and st > 0:
+		return float(value) / BattleRules.stage_mult(st)
+	return float(value)
 
 static func stab_for(user: Spirling, move: MoveData) -> float:
 	return STAB if move.element in user.elements() else 1.0
