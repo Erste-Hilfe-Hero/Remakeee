@@ -213,6 +213,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 			if visible and not pointer_used:
 				Sound.sfx("select")
 			_show_hint(i)
+			_slide_pointer(b)
 			b.queue_redraw())
 		b.focus_exited.connect(b.queue_redraw)
 		Juice.press_feedback(b)
@@ -449,10 +450,29 @@ func _input(event: InputEvent) -> void:
 		_press_pos = Vector2(NAN, NAN)
 
 ## A small ink triangle left of the focused row, so focus shows without colour (item 2088).
+## The focus pointer slides from the last row to the new one (item 2416): curve "move", 0.06 s.
+const POINTER_SLIDE_TIME: float = 0.06
+var _pointer_row: Button
+## Vertical offset of the pointer from its row while it slides (whole pixels when drawn).
+var pointer_slide: float = 0.0:
+	set(v):
+		pointer_slide = v
+		if is_instance_valid(_pointer_row):
+			_pointer_row.queue_redraw()
+
+func _slide_pointer(b: Button) -> void:
+	var from: Button = _pointer_row
+	_pointer_row = b
+	if not is_instance_valid(from) or from == b or not from.is_inside_tree() or not b.is_inside_tree():
+		pointer_slide = 0.0
+		return
+	pointer_slide = from.global_position.y - b.global_position.y
+	Juice.tween(self, "pointer_slide", 0.0, "move", POINTER_SLIDE_TIME)
+
 func _draw_pointer(b: Button) -> void:
 	if not b.has_focus():
 		return
-	var cy: float = floorf(b.size.y / 2.0)
+	var cy: float = floorf(b.size.y / 2.0) + (roundf(pointer_slide) if b == _pointer_row else 0.0)
 	var col: Color = b.get_theme_color("font_focus_color", "Button")
 	b.draw_colored_polygon(PackedVector2Array([Vector2(1, cy - 2), Vector2(4, cy + 0.5), Vector2(1, cy + 3)]), col)
 
