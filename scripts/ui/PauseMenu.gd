@@ -100,6 +100,8 @@ func run_records() -> void:
 		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
 		if Masters.open():
 			lines.append("Master Wayfarers")
+		if not memorial_lines().is_empty():
+			lines.append("Memorial book")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -113,10 +115,26 @@ func run_records() -> void:
 			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
 			"Personal bests": await info(records_text())
 			"Master Wayfarers": await run_masters()
+			"Memorial book": await info("\n".join(memorial_lines()))
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+
+## Memorial book in the Sanctuary (plan 3397): every Spirling that retired under the Iron Oath.
+static func memorial_lines() -> Array[String]:
+	var out: Array[String] = []
+	var book: Variant = GameState.records.get("memorial", [])
+	if not book is Array:
+		return out
+	for e: Variant in book:
+		if not e is Dictionary:
+			continue
+		var d: Dictionary = e
+		var map_id: String = str(d.get("map", ""))
+		var place: String = MapData.load_map(map_id).display_name if MapData.exists(map_id) else map_id
+		out.append(Loc.t("%s, ring %d, %s, %s") % [str(d.get("name", "?")), int(d.get("level", 1)), Loc.t(place), str(d.get("date", ""))])
+	return out
 
 ## Master Wayfarer profiles (plan 3290): place, theme and the player's own wins.
 func run_masters() -> void:
@@ -170,6 +188,7 @@ func run_achievement_lists() -> void:
 ## Tower best, weekly challenge and the current festival.
 static func records_text() -> String:
 	var lines: PackedStringArray = []
+	lines.append_array(Completion.lines())
 	lines.append("Lighthouse stair best: floor %d of %d" % [Gauntlet.best(), Gauntlet.FLOORS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()

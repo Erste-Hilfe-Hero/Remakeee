@@ -513,6 +513,11 @@ func retire_fainted() -> Array[String]:
 			s.restore()
 			sanctuary.append(s)
 			names.append(s.display_name())
+			# Memorial book (plan 3397): name, ring, place and date of every retirement.
+			var book: Array = records.get("memorial", []) if records.get("memorial", []) is Array else []
+			book.append({"name": s.display_name(), "species": s.data.species_name, "level": s.level,
+				"map": current_map, "date": Time.get_date_string_from_unix_time(Online.unix_now())})
+			records["memorial"] = book
 	return names
 
 ## Fills an empty party from storage. Returns how many joined.

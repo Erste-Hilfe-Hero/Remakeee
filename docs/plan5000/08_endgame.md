@@ -290,8 +290,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3377. [P3] Ein Sammelziel „Postkarten“ für alle 12 Postkarten aus Streifzügen ergänzen.
 
 ### Abschlussziele und 100-Prozent-Anzeige
-3378. [P1] Eine Gesamtanzeige „Reise vollendet: x Prozent“ in den Aufzeichnungen bauen, die Story, Seitenziele, Spirlog, Erfolge, Türme und Erkundung gewichtet.
-3379. [P1] Die Gewichte festlegen und in docs/BALANCE.md eintragen: Story 20, Seitenziele 10, Spirlog 25, Erfolge 20, Türme 15, Erkundung 10 Prozent.
+3378. [x] [P1] Eine Gesamtanzeige „Reise vollendet: x Prozent“ in den Aufzeichnungen bauen, die Story, Seitenziele, Spirlog, Erfolge, Türme und Erkundung gewichtet.
+3379. [x] [P1] Die Gewichte festlegen und in docs/BALANCE.md eintragen: Story 20, Seitenziele 10, Spirlog 25, Erfolge 20, Türme 15, Erkundung 10 Prozent.
 3380. [P2] Eine Prüfliste „Was fehlt noch“ bauen, die pro Bereich die drei nächsten offenen Ziele zeigt.
 3381. [P2] Den Prozentwert auf dem Speicherslot im Titelbild anzeigen.
 3382. [P2] Bei 50, 75 und 100 Prozent eine Belohnung von 50, 100 und 300 Wegmarken auszahlen.
@@ -310,10 +310,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3395. [P3] Den 100-Prozent-Abschluss in der Lauf-Chronik vermerken.
 
 ### Eiserner Schwur und Wiederspielwert
-3396. [P1] Den Eisernen Schwur im Titelbild eines Speicherslots mit einem kleinen Kettensymbol kennzeichnen.
-3397. [P1] Ein Gedenkbuch im Refugium anlegen, das jeden ins Refugium gezogenen Spirling mit Name, Ring, Ort und Datum listet.
-3398. [P1] Den Erfolg „Oathkeeper“ um Stufen erweitern: beide Risse unter Schwur auf Wanderer, Veteran und Rift-Born-Schwierigkeit.
-3399. [P1] Die Wahl des Eisernen Schwurs beim neuen Spiel mit einem Satz zu Refugium und Bonus von 25 Prozent Wegmarken erklären.
+3396. [x] [P1] Den Eisernen Schwur im Titelbild eines Speicherslots mit einem kleinen Kettensymbol kennzeichnen.
+3397. [x] [P1] Ein Gedenkbuch im Refugium anlegen, das jeden ins Refugium gezogenen Spirling mit Name, Ring, Ort und Datum listet.
+3398. [x] [P1] Den Erfolg „Oathkeeper“ um Stufen erweitern: beide Risse unter Schwur auf Wanderer, Veteran und Rift-Born-Schwierigkeit.
+3399. [x] [P1] Die Wahl des Eisernen Schwurs beim neuen Spiel mit einem Satz zu Refugium und Bonus von 25 Prozent Wegmarken erklären.
 3400. [P2] Unter Schwur die Leuchtturm-Treppe als eigenen Bestwert führen, getrennt vom normalen Bestwert.
 3401. [P2] Eine Chronik der Läufe über alle drei Speicherslots anlegen, die abgeschlossene Läufe mit Starter, Schwierigkeit, Spielzeit und Schwur festhält.
 3402. [P2] Die Chronik auch nach dem Löschen eines Slots behalten, damit alte Läufe sichtbar bleiben.
