@@ -19,7 +19,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2672. [x] [P1] In allen Online-Menüs und Server-Texten "Tamer" durch "Wanderer" ersetzen (Karte, Standardname "Wanderer 1A2B", `_clean_name`, Phrases.gd), samt Migration für bestehende Standardnamen.
 2673. [x] [P1] Ein Feld `schema` (ganze Zahl, Start 1) in jeden Online-Spielstand schreiben und in `save_put` ablehnen, wenn es fehlt oder höher als `server_config.save_schema_max` ist.
 2674. [x] [P1] Neue Tabelle `feature_flags` (Schlüssel, an/aus, Mindestversion) anlegen, damit Ligen, Tausch, Bünde und Raids einzeln am Server ein- und ausschaltbar sind.
-2675. [P2] `hello` gibt die Liste der aktiven `feature_flags` zurück, und `Online.gd` blendet Menüpunkte ohne Flag aus statt Fehler zu zeigen.
+2675. [x] [P2] `hello` gibt die Liste der aktiven `feature_flags` zurück, und `Online.gd` blendet Menüpunkte ohne Flag aus statt Fehler zu zeigen.
 2676. [P2] Fehlercodes aller neuen Funktionen als feste Wörter (`not_friends`, `limit_day`, `blocked`, `season_closed` usw.) festlegen und in `scripts/online/OnlineErrors.gd` in Spielertexte übersetzen.
 2677. [P2] Jede neue Server-Funktion bekommt in `docs/ONLINE.md` eine Zeile in einer Tabelle "Funktion, Grenzen, Test", damit der Stand nachprüfbar bleibt.
 2678. [P2] `server_config` um einen Schlüssel `rules_version` ergänzen, den der Client beim Start anzeigt und bei Duellen mitschickt, damit alle mit denselben Regeln spielen.
@@ -80,7 +80,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2728. [P3] Eine Duellbilanz pro Freund steht auf seiner Wanderer-Karte ("Gegen Mara: 7 zu 5").
 2729. [P3] Zwei Spieler im selben Raum können ein Duell per QR-Code auf dem Bildschirm starten, ohne den Freundescode zu tippen.
 ### Gleichstand-Liga (fair, mit Ausgleich)
-2730. [P1] Die Gleichstand-Liga ist die Standardliga und wird im Menü "Ligen" zuerst gezeigt, mit dem Satz "Hier zählt nur dein Können. Gekaufte Vorteile wirken hier nicht."
+2730. [x] [P1] Die Gleichstand-Liga ist die Standardliga und wird im Menü "Ligen" zuerst gezeigt, mit dem Satz "Hier zählt nur dein Können. Gekaufte Vorteile wirken hier nicht."
 2731. [x] [P1] In der Gleichstand-Liga kämpfen alle Spirlings auf Ring 50 mit Grundwerten aus `data/spirlings.json`; Wachstum, Trainingsboni und gekaufte Werte werden für den Kampf auf null gesetzt.
 2732. [P1] Gegenstände und Andenken mit Herkunftsmarke aus dem Shop sind in der Gleichstand-Liga gesperrt; die Liste der gesperrten Herkunftsmarken steht in `server_config.league_fair_blocked_sources`, die Bereich 10 befüllt.
 2733. [x] [P1] Erlaubt sind nur Techniken, die der Spirling bis Ring 50 laut Spieldaten lernen kann; der Server prüft jede Technik gegen diese Liste.
@@ -105,7 +105,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2751. [P3] Ein Saison-Rückblick zeigt die eigenen Siege nach Element des Gegners.
 2752. [P3] Eine Ehrenhalle mit den Leuchtfeuer-Spielern jeder Saison, nur mit ihrer Zustimmung.
 ### Offene Liga (alles erlaubt)
-2753. [P1] Die Offene Liga steht im Menü direkt unter der Gleichstand-Liga, klar beschriftet mit "Offene Liga: alle Vorteile erlaubt, auch gekaufte".
+2753. [x] [P1] Die Offene Liga steht im Menü direkt unter der Gleichstand-Liga, klar beschriftet mit "Offene Liga: alle Vorteile erlaubt, auch gekaufte".
 2754. [P1] In der Offenen Liga kämpft jeder mit seinem echten Team und echtem Ring (bis 60), mit allen Gegenständen, auch aus dem Shop.
 2755. [x] [P1] Wertung, Gegnersuche und Belohnungen der beiden Ligen sind komplett getrennt (eigene Tabellen `league_open_*`), damit Kaufvorteile die Gleichstand-Liga nicht berühren.
 2756. [P2] Die Gegnersuche der Offenen Liga berücksichtigt zusätzlich die Teamstärke (Summe aus Ring und Werten), damit ein Neuling nicht auf ein voll ausgebautes Team trifft.
