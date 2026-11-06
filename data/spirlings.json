@@ -53,7 +53,8 @@
   "cry_motif": [
    1,
    0
-  ]
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 2,
@@ -113,7 +114,8 @@
   "cry_motif": [
    2,
    0
-  ]
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 3,
@@ -165,7 +167,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 4,
@@ -219,7 +222,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 5,
@@ -279,7 +283,8 @@
   "cry_motif": [
    0,
    2
-  ]
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 6,
@@ -333,7 +338,8 @@
   "cry_motif": [
    0,
    1
-  ]
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 7,
@@ -386,7 +392,8 @@
   "cry_motif": [
    2,
    1
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 8,
@@ -446,7 +453,8 @@
   "cry_motif": [
    0,
    1
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 9,
@@ -497,7 +505,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 10,
@@ -556,7 +565,8 @@
   "cry_motif": [
    2,
    1
-  ]
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 11,
@@ -610,7 +620,8 @@
   "cry_motif": [
    0,
    1
-  ]
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 12,
@@ -667,7 +678,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 13,
@@ -719,7 +731,8 @@
   "cry_motif": [
    0,
    1
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 14,
@@ -775,7 +788,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 15,
@@ -823,7 +837,8 @@
   "cry_motif": [
    2,
    1
-  ]
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 16,
@@ -882,7 +897,8 @@
   "cry_motif": [
    1,
    0
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 17,
@@ -939,7 +955,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 18,
@@ -1002,7 +1019,8 @@
   "cry_motif": [
    2,
    1
-  ]
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 19,
@@ -1056,7 +1074,8 @@
   "cry_motif": [
    2,
    0
-  ]
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 20,
@@ -1119,7 +1138,8 @@
   "cry_motif": [
    2,
    1
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 21,
@@ -1167,7 +1187,8 @@
   "cry_motif": [
    2,
    0
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 22,
@@ -1224,7 +1245,8 @@
   "cry_motif": [
    0,
    1
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 23,
@@ -1275,7 +1297,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 24,
@@ -1331,7 +1354,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 25,
@@ -1382,7 +1406,8 @@
   "cry_motif": [
    2,
    0
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 26,
@@ -1439,7 +1464,8 @@
   "cry_motif": [
    2,
    0
-  ]
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 27,
@@ -1487,7 +1513,8 @@
   "cry_motif": [
    1,
    0
-  ]
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 28,
@@ -1540,7 +1567,8 @@
   "cry_motif": [
    1,
    0
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 29,
@@ -1591,7 +1619,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 30,
@@ -1636,7 +1665,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 31,
@@ -1694,7 +1724,8 @@
   "cry_motif": [
    0,
    2
-  ]
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 32,
@@ -1739,7 +1770,8 @@
   "cry_motif": [
    2,
    1
-  ]
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 33,
@@ -1792,7 +1824,8 @@
   "cry_motif": [
    1,
    0
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 34,
@@ -1845,7 +1878,8 @@
   "cry_motif": [
    0,
    1
-  ]
+  ],
+  "keepsake_hint": "keen_lens"
  },
  {
   "dex_id": 35,
@@ -1902,7 +1936,8 @@
   "cry_motif": [
    2,
    1
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 36,
@@ -1950,7 +1985,8 @@
   "cry_motif": [
    0,
    2
-  ]
+  ],
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 37,
@@ -2003,7 +2039,8 @@
   "cry_motif": [
    2,
    0
-  ]
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 38,
@@ -2050,7 +2087,8 @@
   "cry_motif": [
    1,
    2
-  ]
+  ],
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 39,
@@ -2107,7 +2145,8 @@
   "cry_motif": [
    0,
    2
-  ]
+  ],
+  "keepsake_hint": "swift_feather"
  },
  {
   "dex_id": 40,
@@ -2152,6 +2191,7 @@
   "cry_motif": [
    0,
    2
-  ]
+  ],
+  "keepsake_hint": "swift_feather"
  }
 ]

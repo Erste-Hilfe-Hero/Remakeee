@@ -233,7 +233,17 @@ func _fn_hello(a: Dictionary) -> Dictionary:
 	p.last_seen = now()
 	return {"profile": profile_json(p), "server_time": now(),
 		"update_required": int(a.get("p_version", 0)) < int(db.config.get("min_version", 1)),
-		"motd": str(db.config.get("motd", "")), "online_now": online_now()}
+		"motd": str(db.config.get("motd", "")), "online_now": online_now(),
+		"flags": active_flags(int(a.get("p_version", 0)))}
+
+## Like hello's "flags": the feature keys that are on for [param version], sorted (item 2675).
+func active_flags(version: int) -> Array:
+	var out: Array = []
+	for key: String in db.flags:
+		if flag_on(key, version):
+			out.append(key)
+	out.sort()
+	return out
 
 func _fn_profile_set(a: Dictionary) -> Dictionary:
 	var p: Dictionary = profile_of(me())
