@@ -33,6 +33,5 @@ android {
 dependencies {
     // Same version as tools/build_billing_plugin.sh hands to the export (BILLING_VERSION).
     implementation "com.android.billingclient:billing:${project.findProperty('billingVersion') ?: '8.0.0'}"
-    compileOnly "androidx.annotation:annotation:1.9.1"
     compileOnly "org.godotengine:godot:${project.findProperty('godotVersion') ?: '4.7.2.stable'}"
 }
