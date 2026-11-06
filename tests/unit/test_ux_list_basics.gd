@@ -229,3 +229,46 @@ func test_tap_buzz_only_when_switched_on() -> void:
 	GameState.vibration = before_vib
 	GameState.reduce_motion = before_rm
 	ListPicker.pointer_used = false
+
+func test_tap_on_cut_off_row_scrolls_instead_of_picking() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	var got: Array = []
+	var run := func() -> void: got.append(await p.pick("Cut", _rows(30), true, 0))
+	run.call()
+	await wait_process_frames(3)
+	var cut: Button = null
+	for b: Button in p.buttons():
+		if not p.row_fully_shown(b) and b.get_global_rect().intersects(p._scroll.get_global_rect()):
+			cut = b
+			break
+	assert_not_null(cut, "one row sits half at the bottom edge")
+	ListPicker.pointer_used = true
+	p._opened_ms = -10000
+	var before: int = p._scroll.scroll_vertical
+	p._on_row(p.buttons().find(cut), 0, cut)
+	await wait_process_frames(1)
+	assert_eq(got.size(), 0, "item 1794: nothing picked")
+	assert_gt(p._scroll.scroll_vertical, before, "the row scrolled into view")
+	assert_true(p.row_fully_shown(cut))
+	p._on_row(p.buttons().find(cut), 0, cut)
+	await wait_process_frames(1)
+	assert_eq(got, [p.buttons().find(cut)], "a second tap picks it")
+	ListPicker.pointer_used = false
+	ListPicker.last_device = "touch"
+
+func test_long_question_shows_first_then_short_title() -> void:
+	var host: MenuHost = await _host()
+	var long_q: String = "At most ten rounds. Attempts cost nothing and your team is healed afterwards, so try as often as you like. Fight now?"
+	assert_gt(host.title_lines(long_q), MenuHost.TITLE_MAX_LINES)
+	assert_eq(host.short_title(long_q), "Fight now?")
+	var run := func() -> void: await host.confirm(long_q)
+	run.call()
+	await wait_process_frames(2)
+	assert_true(host._info_panel.visible, "item 1850: the whole question shows first")
+	host._close_info()
+	await wait_process_frames(2)
+	assert_true(host.picker.visible)
+	assert_eq(host.picker._title.text, "Fight now?")
+	host.picker.picked.emit(-1)
+	assert_eq(host.title_lines("Save?"), 1)
