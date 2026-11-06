@@ -66,6 +66,26 @@ static func next_after(month: int) -> Dictionary:
 static func festival_year(month: int, year: int) -> int:
 	return year - 1 if month == 1 else year
 
+## The crier's gift of [param festival] in [param year]: one of its "gifts" list, changing each
+## year (plan 3221); "gift" when there is no list.
+static func gift_for(festival: Dictionary, year: int) -> String:
+	var gifts: Array = festival.get("gifts", [])
+	if gifts.is_empty():
+		return str(festival.get("gift", ""))
+	return str(gifts[posmod(year, gifts.size())])
+
+const MONTH_NAMES: Array[String] = ["January", "February", "March", "April", "May", "June", "July",
+	"August", "September", "October", "November", "December"]
+
+## Between festivals (plan 3223): "Next up: the Bloom Fair, from April, with Bloom & Gale Spirlings."
+static func next_line(month: int) -> String:
+	var nxt: Dictionary = next_after(month)
+	if nxt.is_empty():
+		return ""
+	var start: int = int((nxt.months as Array)[0])
+	return Loc.t("No festival right now. Next up: the %s, from %s, with %s Spirlings.") % [Loc.t(str(nxt.name)),
+		Loc.t(MONTH_NAMES[start - 1]), " & ".join(Festival.element_names(nxt))]
+
 ## Flag that marks this year's gift of [param festival] as taken.
 static func gift_flag(festival: Dictionary, year: int) -> String:
 	return "season_%s_%d" % [festival.get("id", ""), year]

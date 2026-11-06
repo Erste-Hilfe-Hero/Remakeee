@@ -125,6 +125,10 @@ func _ready() -> void:
 		# Coming from the title screen: the world brightens in underneath it (item 2280).
 		_fade.color.a = 1.0
 		_fade_to.call_deferred(0.0)
+		var hint: String = Festival.start_hint()
+		if hint != "":
+			GameState.notices.append(hint)
+			show_notices.call_deferred()
 
 func _build() -> void:
 	_ground = TileMapLayer.new()
@@ -1946,14 +1950,14 @@ func _action_season(_args: PackedStringArray, _speaker: NPC) -> void:
 	var d: Dictionary = Online.date_now()
 	var f: Dictionary = Season.for_month(int(d.month))
 	if f.is_empty():
-		var nxt: Dictionary = Season.next_after(int(d.month))
-		await say(["No festival right now. Next up: the %s." % str(nxt.get("name", ""))] as Array[String])
+		await say([Season.next_line(int(d.month))] as Array[String])
 		return
 	await say([str(f.text)] as Array[String])
-	var flag: String = Season.gift_flag(f, Season.festival_year(int(d.month), int(d.year)))
+	var year: int = Season.festival_year(int(d.month), int(d.year))
+	var flag: String = Season.gift_flag(f, year)
 	if not GameState.has_flag(flag):
 		GameState.set_flag(flag)
-		await _action_give_item([str(f.gift), "1"] as PackedStringArray, null)
+		await _action_give_item([Season.gift_for(f, year), "1"] as PackedStringArray, null)
 	await _festival_task()
 
 ## The crier's festival task of the day (plan 3211): one a day, pays festival ribbons.
@@ -1965,7 +1969,7 @@ func _festival_task() -> void:
 	if bool(task.get("done", false)):
 		await say(["Crier: You've done today's festival task. Come back tomorrow for another!"] as Array[String])
 		return
-	await say([Loc.t("Crier: Today's festival task: %s (%d/%d). It pays %d ribbons.") % [Loc.t(str(t.text)), int(task.n), int(t.n), Festival.TASK_RIBBONS]] as Array[String])
+	await say([Loc.t("Crier: Today's festival task: %s (%d/%d). It pays %d ribbons.") % [Loc.t(str(t.text)), int(task.n), Festival.task_need(t), Festival.TASK_RIBBONS]] as Array[String])
 
 ## Tilda's festival stand (plan 3209): festival goods for ribbons, only while a festival runs.
 func _action_festival_shop(_args: PackedStringArray, _speaker: NPC) -> void:

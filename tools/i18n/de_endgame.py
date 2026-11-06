@@ -355,4 +355,6 @@ T = {
 "Telmo: Tide, bloom and umbra echoes wait below. Three of yours at most, ring 30 or more.": "Telmo: Unten warten Tide-, Bloom- und Umbra-Echos. Höchstens drei von deinen, ab Ring 30.",
 "Master round (best %d of %d)": "Meisterrunde (Bestwert %d von %d)", "Master %d of %d: %s, %s.": "Meister %d von %d: %s, %s.",
 "Halfway. Your team is rested.": "Halbzeit. Dein Team ist ausgeruht.", "Master round: %d of %d beaten.": "Meisterrunde: %d von %d besiegt.",
+"The %s has begun! %s Spirlings are about, and Tilda's stand in Brindlewick trades festival goods.": "%s hat begonnen! %s-Spirlings sind unterwegs, und Tildas Stand in Brindlewick tauscht Festwaren.",
+"No festival right now. Next up: the %s, from %s, with %s Spirlings.": "Gerade ist kein Fest. Als Nächstes: %s, ab %s, mit %s-Spirlings.",
 }

@@ -120,13 +120,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3217. [P2] Für jedes Fest zwei festbezogene Jackenmuster beim Festhändler für 40 Festbänder anbieten.
 3218. [P2] Für jedes Fest einen Fotorahmen beim Festhändler für 20 Festbänder anbieten.
 3219. [P2] Für jedes Fest eine eigene Festmusik als Abwandlung der Brindlewick-Melodie in audio/ anlegen und in data/music.json eintragen.
-3220. [P2] Feste, die ein Spieler schon einmal gefeiert hat, im nächsten Jahr mit einer neuen Stufe der Festaufgabe fortsetzen.
-3221. [P2] Die Festgeschenke des Ausrufers pro Jahr wechseln lassen, aus einer offenen Liste von vier Gegenständen pro Fest.
+3220. [x] [P2] Feste, die ein Spieler schon einmal gefeiert hat, im nächsten Jahr mit einer neuen Stufe der Festaufgabe fortsetzen.
+3221. [x] [P2] Die Festgeschenke des Ausrufers pro Jahr wechseln lassen, aus einer offenen Liste von vier Gegenständen pro Fest.
 3222. [x] [P2] Im Ziele-Bildschirm Festname, Restdauer in Tagen und Festbänder-Stand zeigen.
-3223. [P2] Zwischen den Festen den Ausrufer das nächste Fest mit Startmonat ankündigen lassen, wie bisher, und zusätzlich die Festelemente nennen.
+3223. [x] [P2] Zwischen den Festen den Ausrufer das nächste Fest mit Startmonat ankündigen lassen, wie bisher, und zusätzlich die Festelemente nennen.
 3224. [x] [P2] Einen Test schreiben, der für jeden Monat prüft, dass höchstens ein Fest läuft.
 3225. [P2] Während jedes Festes den Wanderhändler ein festbezogenes Angebot gegen Festbänder führen lassen.
-3226. [P2] Am ersten Festtag einen kurzen Hinweis beim Spielstart zeigen, der Fest, Elemente und Festhändler nennt.
+3226. [x] [P2] Am ersten Festtag einen kurzen Hinweis beim Spielstart zeigen, der Fest, Elemente und Festhändler nennt.
 3227. [P3] Ein fünftes Fest „Sturmtage“ im März für Gale und Volt ergänzen, mit eigenem Schmuck in Crowcrest.
 3228. [P3] Ein sechstes Fest „Erntezeit“ im September für Bloom und Stone ergänzen, mit Marktständen in Fernstair.
 3229. [P3] Am Jahrestag des Kontos ein kleines persönliches Fest mit 50 Wegmarken und einem Kuchen-Bild im Fotomodus feiern.
