@@ -22,6 +22,10 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 @export var target: String = "single"
 ## Turns the move stays locked after each use (moves.json "cooldown", 0 = never locked).
 @export var cooldown: int = 0
+## The user's Daze does not lower this move's accuracy (moves.json "ignore_daze").
+@export var ignore_daze: bool = false
+## The target's raised Guard and Focus stages do not count against this move ("ignore_stages").
+@export var ignore_stages: bool = false
 
 const TARGETS: Array[String] = ["single", "foes"]
 

@@ -55,6 +55,9 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 					errs.append(where + ": bad grant " + str(g))
 				elif str(g.t) == "choice" and not o.get("choice") is Array:
 					errs.append(where + ": choice grant without a choice list (chosen before buying, item 4688)")
+				var gid: String = str((g as Dictionary).get("id", "")) if g is Dictionary else ""
+				if gid != "" and Database.species(gid) != null:
+					errs.append(where + ": Spirlings are never sold (rule 7)")
 		if str(o.get("kind", "")) in ["cosmetic", "comfort"]:
 			for k: String in ShopCatalog.STAT_FIELDS:
 				if o.has(k):

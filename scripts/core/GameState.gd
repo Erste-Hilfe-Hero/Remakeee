@@ -33,6 +33,9 @@ var storage_boxes: Array[Dictionary] = []
 var storage_box_bonus: int = 0
 ## Saved teams [{"name", "uids": [uid...]}], at most TEAM_PRESETS (item 378).
 var team_presets: Array[Dictionary] = []
+## Echo Cores from singing together (Nachhall, plan area 1, items 183-185):
+## [{"kind", "parents": [species, species], "rests", "wins"}].
+var echo_cores: Array[Dictionary] = []
 ## Iron Oath (item 15, opt-in at new game): Spirlings that faint retire to the Sanctuary.
 var iron_oath: bool = false
 var sanctuary: Array[Spirling] = []
@@ -104,6 +107,11 @@ var pad_size: int = 1
 var pad_opacity: int = 1
 var left_handed: bool = false
 var tap_to_move: bool = true
+## Walking is running; holding B walks slowly instead (item 1810).
+var always_run: bool = false
+## A and B change places (item 2111), apart for the touch pad and for gamepads.
+var swap_ab_touch: bool = false
+var swap_ab_pad: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
 ## Gamepad rumble on hits (item 63).
@@ -238,6 +246,7 @@ const MENU_ACTION: StringName = &"menu"
 func _ready() -> void:
 	rng.randomize()
 	_register_actions()
+	apply_pad_swap(swap_ab_pad)
 
 func _exit_tree() -> void:
 	Loc.uninstall()
@@ -258,7 +267,14 @@ const PAD_BINDINGS: Dictionary[StringName, Array] = {
 	SPEED_ACTION: [JOY_BUTTON_RIGHT_SHOULDER],
 	AUTO_ACTION: [JOY_BUTTON_Y],
 }
+## Keyboard (item 2110, web build): arrows or W A S D walk, Enter or Space confirm (built in),
+## Escape or Backspace go back, M opens the menu. Escape also opens the menu while walking.
 const KEY_BINDINGS: Dictionary[StringName, Array] = {
+	&"ui_up": [KEY_W],
+	&"ui_down": [KEY_S],
+	&"ui_left": [KEY_A],
+	&"ui_right": [KEY_D],
+	&"ui_cancel": [KEY_BACKSPACE],
 	MENU_ACTION: [KEY_ESCAPE, KEY_TAB, KEY_M],
 	SPEED_ACTION: [KEY_F],
 	AUTO_ACTION: [KEY_R],
@@ -280,6 +296,18 @@ static func _register_actions() -> void:
 			if not InputMap.action_has_event(action, ev):
 				InputMap.action_add_event(action, ev)
 
+## Puts gamepad A and B on confirm and back, or the other way round (item 2111).
+static func apply_pad_swap(swap: bool) -> void:
+	var pairs: Array = [[&"ui_accept", JOY_BUTTON_A, JOY_BUTTON_B], [&"ui_cancel", JOY_BUTTON_B, JOY_BUTTON_A]]
+	for p: Array in pairs:
+		var action: StringName = p[0]
+		for e: InputEvent in InputMap.action_get_events(action):
+			if e is InputEventJoypadButton and (e as InputEventJoypadButton).button_index in [JOY_BUTTON_A, JOY_BUTTON_B]:
+				InputMap.action_erase_event(action, e)
+		var pad := InputEventJoypadButton.new()
+		pad.button_index = (int(p[2]) if swap else int(p[1])) as JoyButton
+		InputMap.action_add_event(action, pad)
+
 static func _has_pad_button(action: StringName, button: int) -> bool:
 	for e: InputEvent in InputMap.action_get_events(action):
 		if e is InputEventJoypadButton and (e as InputEventJoypadButton).button_index == button:
@@ -300,6 +328,7 @@ func reset() -> void:
 	storage_boxes = default_boxes()
 	storage_box_bonus = 0
 	team_presets.clear()
+	echo_cores.clear()
 	iron_oath = false
 	sanctuary.clear()
 	spirlog.clear()
@@ -320,7 +349,7 @@ func reset() -> void:
 	heal_cell = Vector2i(4, 4)
 	flags = {}
 	visited_rests = {}
-	records = {}
+	records = endgame_defaults({})
 	story_vars = {}
 	story_choices = {}
 	switch_progress = {}
@@ -353,6 +382,23 @@ func tamer_sprite() -> String:
 	return TAMER_SPRITES[clampi(tamer_look, 0, TAMER_SPRITES.size() - 1)]
 
 ## Save data (see SaveManager for versioning and atomic writes).
+## Endgame records (plan area 8, item 3540) and their empty defaults. A loaded save keeps each
+## one only if it has the right type, so a damaged entry starts fresh instead of breaking a screen.
+const ENDGAME_RECORDS: Dictionary = {
+	"album": {}, "album_stickers": [], "echo_path": {}, "expeditions": [], "world_events": {},
+	"masters": {}, "season_path": {}, "exchange": {}, "weekly": {}, "memorial": [],
+	"waymark_log": [], "achievements": {}, "achievements_paid": {}, "collection": {},
+}
+
+## Fills the endgame records with their defaults where missing or of the wrong type.
+static func endgame_defaults(rec: Dictionary) -> Dictionary:
+	for k: String in ENDGAME_RECORDS:
+		var def: Variant = ENDGAME_RECORDS[k]
+		var have: Variant = rec.get(k)
+		if have == null or typeof(have) != typeof(def):
+			rec[k] = def.duplicate()
+	return rec
+
 func to_dict() -> Dictionary:
 	var party_d: Array = []
 	for s: Spirling in party:
@@ -371,6 +417,7 @@ func to_dict() -> Dictionary:
 		"storage_boxes": storage_boxes.duplicate(true),
 		"storage_box_bonus": storage_box_bonus,
 		"team_presets": team_presets.duplicate(true),
+		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
 		"inventory": inventory.duplicate(),
 		"money": money,
@@ -386,7 +433,7 @@ func to_dict() -> Dictionary:
 		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
 		"rests": visited_rests.duplicate(true),
-		"records": records.duplicate(),
+		"records": records.duplicate(true),
 		"story_vars": story_vars.duplicate(),
 		"story_choices": story_choices.duplicate(),
 		"switches": switch_progress.duplicate(),
@@ -414,6 +461,7 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
+	_load_echo_cores(d.get("echo_cores", []))
 	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
 	for k: Variant in _as_dict(d.get("inventory", {})):
@@ -446,7 +494,7 @@ func from_dict(d: Dictionary) -> void:
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
-	records = _as_dict(d.get("records", {}))
+	records = endgame_defaults(_as_dict(d.get("records", {})))
 	var sv: Dictionary = _as_dict(d.get("story_vars", {}))
 	for k: Variant in sv:
 		if sv[k] is int or sv[k] is float:
@@ -467,6 +515,7 @@ func settings_to_dict() -> Dictionary:
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "day_night": day_night, "language": language}
@@ -483,6 +532,10 @@ func settings_from_dict(d: Dictionary) -> void:
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
+	always_run = bool(d.get("always_run", false))
+	swap_ab_touch = bool(d.get("swap_ab_touch", false))
+	swap_ab_pad = bool(d.get("swap_ab_pad", false))
+	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
 	rumble = bool(d.get("rumble", true))
 	tips_enabled = bool(d.get("tips", true))
@@ -655,6 +708,13 @@ static func as_int(v: Variant, fallback: int = 0) -> int:
 
 static func as_bool(v: Variant) -> bool:
 	return bool(v) if v is bool or v is int or v is float else false
+
+## True when the clock went back before [param stored] (a day, week, month or season key that
+## sorts by time, e.g. "2026-11-06", "2026-W45", "2026-11", "2026-Q4"). Timed content keeps its
+## stored state then, so setting a clock back never resets and pays the same goal twice
+## (plan 3497).
+static func time_went_back(stored: String, now: String) -> bool:
+	return stored != "" and now < stored
 
 static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
@@ -1062,6 +1122,89 @@ func load_preset(slot: int) -> bool:
 		_store(s, true)
 	party.assign(team)
 	return true
+
+# --- Nachhall: singing together at an Echo spring (plan area 1, items 183-185) ------------
+
+## Cores wake from won battles or rests only, never from walking (legal review, item 186).
+const ECHO_CORE_RESTS: int = 5
+const ECHO_CORE_WINS: int = 30
+const MAX_ECHO_CORES: int = 3
+
+func _load_echo_cores(raw: Variant) -> void:
+	echo_cores.clear()
+	for c: Variant in (raw if raw is Array else []):
+		if not c is Dictionary or echo_cores.size() >= MAX_ECHO_CORES:
+			continue
+		var kind: String = str((c as Dictionary).get("kind", ""))
+		if Database.species(kind) == null:
+			continue
+		var parents: Variant = (c as Dictionary).get("parents", [])
+		echo_cores.append({"kind": kind,
+			"parents": (parents as Array).map(func(x: Variant) -> String: return str(x)).slice(0, 2) if parents is Array else [],
+			"rests": maxi(0, int((c as Dictionary).rests)) if (c as Dictionary).get("rests") is int or (c as Dictionary).get("rests") is float else 0,
+			"wins": maxi(0, int((c as Dictionary).wins)) if (c as Dictionary).get("wins") is int or (c as Dictionary).get("wins") is float else 0})
+
+## Every heal spring is an Echo spring once the second Rift is mended (item 184).
+func echo_spring_open() -> bool:
+	return has_flag("storage_remote")
+
+## The first form of [param sd]'s line.
+static func first_form(sd: SpirlingData) -> SpirlingData:
+	var cur: SpirlingData = sd
+	for i: int in 8:
+		var prev: SpirlingData = Database.earlier_form(cur)
+		if prev == null:
+			break
+		cur = prev
+	return cur
+
+## Why [param a] and [param b] can't sing together, or "" when they can.
+func sing_problem(a: Spirling, b: Spirling) -> String:
+	if a == null or b == null or a == b:
+		return "Pick two different Spirlings."
+	if not (party + storage).has(a) or not (party + storage).has(b):
+		return "Only Spirlings with you or in storage can sing."
+	if a.data.rarity == "ancient" or b.data.rarity == "ancient":
+		return "A First Voice sings alone."
+	if echo_cores.size() >= MAX_ECHO_CORES:
+		return "You already carry as many Echo Cores as you can."
+	return ""
+
+## Two bonded Spirlings sing together and their shared call forms a floating Echo Core.
+## The Hallkind that wakes from it is the first form of one of the two lines.
+func sing_together(a: Spirling, b: Spirling, p_rng: RandomNumberGenerator = null) -> Dictionary:
+	if not sing_problem(a, b).is_empty():
+		return {}
+	var r: RandomNumberGenerator = p_rng if p_rng != null else rng
+	var from: Spirling = a if r.randi_range(0, 1) == 0 else b
+	var core: Dictionary = {"kind": first_form(from.data).species_name,
+		"parents": [a.data.species_name, b.data.species_name], "rests": 0, "wins": 0}
+	echo_cores.append(core)
+	return core
+
+func note_core_rest() -> void:
+	for c: Dictionary in echo_cores:
+		c["rests"] = int(c.rests) + 1
+
+func note_core_win() -> void:
+	for c: Dictionary in echo_cores:
+		c["wins"] = int(c.wins) + 1
+
+static func core_ready(c: Dictionary) -> bool:
+	return int(c.get("rests", 0)) >= ECHO_CORE_RESTS or int(c.get("wins", 0)) >= ECHO_CORE_WINS
+
+## Wakes every ready Echo Core: a Hallkind at Ring 1 joins (team or storage). Returns them.
+func awaken_cores() -> Array[Spirling]:
+	var out: Array[Spirling] = []
+	for c: Dictionary in echo_cores.duplicate():
+		if not core_ready(c):
+			continue
+		echo_cores.erase(c)
+		var kid := Spirling.new(Database.species(str(c.kind)), 1, rng)
+		kid.lineage.assign(c.parents)
+		receive_spirling(kid)
+		out.append(kid)
+	return out
 
 ## Swaps two party slots (reordering; slot 0 leads in battle).
 func swap_party(a: int, b: int) -> void:

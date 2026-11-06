@@ -70,7 +70,58 @@
    "front": [
     3,
     3
-   ]
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Zippit",
+      "level": 14,
+      "moves": [
+       "Chill Mist"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 14
+     },
+     {
+      "species": "Mossling",
+      "level": 13,
+      "moves": [
+       "Thorn Volley"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Zippit",
+      "level": 14,
+      "moves": [
+       "Chill Mist"
+      ],
+      "held": "swift_feather"
+     },
+     {
+      "species": "Shalebat",
+      "level": 14
+     },
+     {
+      "species": "Mossling",
+      "level": 13,
+      "moves": [
+       "Thorn Volley"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     }
+    ]
+   }
   },
   {
    "id": "warden_maelis",
@@ -89,19 +140,121 @@
    "team": [
     {
      "species": "Zephlet",
-     "level": 15
+     "level": 15,
+     "moves": [
+      "Kite Cut",
+      "Crosswind"
+     ]
     },
     {
      "species": "Zippit",
-     "level": 15
+     "level": 15,
+     "moves": [
+      "Static Tag"
+     ]
     },
     {
      "species": "Riptail",
-     "level": 17
+     "level": 17,
+     "moves": [
+      "Rip Current",
+      "Undertow",
+      "Tide Call"
+     ]
     }
    ],
    "sprite": "warden",
-   "rule": "undertow"
+   "rule": "undertow",
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Zephlet",
+      "level": 14,
+      "moves": [
+       "Kite Cut",
+       "Crosswind"
+      ]
+     },
+     {
+      "species": "Riptail",
+      "level": 16,
+      "moves": [
+       "Rip Current",
+       "Undertow",
+       "Tide Call"
+      ]
+     }
+    ],
+    "veteran": [
+     {
+      "species": "Zephlet",
+      "level": 15,
+      "moves": [
+       "Kite Cut",
+       "Crosswind",
+       "Scatter Gale"
+      ]
+     },
+     {
+      "species": "Zippit",
+      "level": 15,
+      "moves": [
+       "Static Tag"
+      ]
+     },
+     {
+      "species": "Riptail",
+      "level": 17,
+      "moves": [
+       "Rip Current",
+       "Undertow",
+       "Tide Call"
+      ],
+      "held": "bark_wrap"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Zephlet",
+      "level": 15,
+      "moves": [
+       "Kite Cut",
+       "Crosswind",
+       "Scatter Gale"
+      ],
+      "held": "swift_feather"
+     },
+     {
+      "species": "Zippit",
+      "level": 15,
+      "moves": [
+       "Static Tag"
+      ],
+      "held": "spark_coil"
+     },
+     {
+      "species": "Riptail",
+      "level": 17,
+      "moves": [
+       "Rip Current",
+       "Undertow",
+       "Tide Call"
+      ],
+      "held": "bark_wrap"
+     },
+     {
+      "species": "Kelpup",
+      "level": 16,
+      "moves": [
+       "Shoal Trap"
+      ],
+      "held": "iron_burr"
+     }
+    ]
+   },
+   "rule_by_difficulty": {
+    "story": "undertow_soft"
+   }
   },
   {
    "id": "drowned_heart",

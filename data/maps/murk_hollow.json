@@ -60,13 +60,66 @@
    "team": [
     {
      "species": "Mirkmole",
-     "level": 12
+     "level": 12,
+     "moves": [
+      "Murk Veil",
+      "Shade Pounce"
+     ]
     },
     {
      "species": "Shalebat",
-     "level": 13
+     "level": 13,
+     "moves": [
+      "Grit Jab"
+     ]
     }
-   ]
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Mirkmole",
+      "level": 12,
+      "moves": [
+       "Murk Veil",
+       "Shade Pounce",
+       "Gloom Handoff"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 13,
+      "moves": [
+       "Grit Jab"
+      ]
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Mirkmole",
+      "level": 12,
+      "moves": [
+       "Murk Veil",
+       "Shade Pounce",
+       "Gloom Handoff"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 13,
+      "moves": [
+       "Grit Jab"
+      ]
+     },
+     {
+      "species": "Wickit",
+      "level": 12,
+      "moves": [
+       "Beacon Ping"
+      ]
+     }
+    ]
+   },
+   "profile": "spoiler"
   },
   {
    "id": "hush_swarm",

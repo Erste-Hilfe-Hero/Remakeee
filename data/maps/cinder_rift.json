@@ -7,7 +7,7 @@
  "encounters": "cinder_rift",
  "rows": [
   "^^^^^^^^^^^^",
-  "^^^^.XX.^^^^",
+  "^^^^.XX=^^^^",
   "^^........^^",
   "^.::....::.^",
   "^.::....::.^",
@@ -36,6 +36,14 @@
    "tx": 2,
    "ty": 2,
    "facing": "down"
+  },
+  {
+   "x": 7,
+   "y": 1,
+   "to": "echo_path",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -94,19 +102,124 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 10
+     "level": 10,
+     "moves": [
+      "Grit Jab",
+      "Hunker Down"
+     ]
     },
     {
      "species": "Kindlop",
-     "level": 11
+     "level": 11,
+     "moves": [
+      "Glow Knuckle",
+      "Kindle Up"
+     ]
     },
     {
      "species": "Smoldrake",
-     "level": 12
+     "level": 12,
+     "moves": [
+      "Char Mark",
+      "Cinder Breath",
+      "Ash Call"
+     ]
     }
    ],
    "sprite": "warden",
-   "rule": "ember_pulse"
+   "rule": "ember_pulse",
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Kindlop",
+      "level": 10,
+      "moves": [
+       "Glow Knuckle",
+       "Kindle Up"
+      ]
+     },
+     {
+      "species": "Smoldrake",
+      "level": 11,
+      "moves": [
+       "Char Mark",
+       "Cinder Breath",
+       "Ash Call"
+      ]
+     }
+    ],
+    "veteran": [
+     {
+      "species": "Shalebat",
+      "level": 10,
+      "moves": [
+       "Grit Jab",
+       "Hunker Down"
+      ]
+     },
+     {
+      "species": "Kindlop",
+      "level": 11,
+      "moves": [
+       "Glow Knuckle",
+       "Kindle Up",
+       "Coal Seed"
+      ]
+     },
+     {
+      "species": "Smoldrake",
+      "level": 12,
+      "moves": [
+       "Char Mark",
+       "Cinder Breath",
+       "Ash Call"
+      ],
+      "held": "spark_coil"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Shalebat",
+      "level": 10,
+      "moves": [
+       "Grit Jab",
+       "Hunker Down"
+      ],
+      "held": "iron_burr"
+     },
+     {
+      "species": "Kindlop",
+      "level": 11,
+      "moves": [
+       "Glow Knuckle",
+       "Kindle Up",
+       "Coal Seed"
+      ],
+      "held": "bark_wrap"
+     },
+     {
+      "species": "Smoldrake",
+      "level": 12,
+      "moves": [
+       "Char Mark",
+       "Cinder Breath",
+       "Ash Call"
+      ],
+      "held": "spark_coil"
+     },
+     {
+      "species": "Zippit",
+      "level": 11,
+      "moves": [
+       "Static Tag"
+      ],
+      "held": "swift_feather"
+     }
+    ]
+   },
+   "rule_by_difficulty": {
+    "story": "ember_pulse_soft"
+   }
   },
   {
    "id": "ashen_heart",
@@ -139,5 +252,12 @@
    "leaves": true
   }
  ],
- "signs": []
+ "signs": [],
+ "blocks": [
+  {
+   "x": 7,
+   "y": 1,
+   "open_flag": "rift_cinder_sealed"
+  }
+ ]
 }

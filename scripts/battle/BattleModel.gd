@@ -92,6 +92,12 @@ var bench_share: float = 0.0
 var boss_phase_done: bool = false
 ## Warden rule id (BattleRules.RULES) for the foe side, or "".
 var foe_rule: String = ""
+## Snares lying on each side (side_snare effect), oldest first. Each is {"move": name, plus
+## "hp" (share of max Vigor), "status" or "stage"}. The next Spirling to swap in springs one.
+var snares: Array[Array] = [[], []]
+## Turn each Spirling last stepped onto the field (by swap or after a faint). The AI uses it to
+## stop two sides from swapping back and forth forever.
+var entered_turn: Dictionary = {}
 
 var _queue: Array[BattleAction] = []
 var _events: Array[BattleEvent] = []
@@ -291,6 +297,7 @@ func start() -> Array[BattleEvent]:
 	_fill_initial_slots()
 	base_field = field
 	field_turns = 0
+	snares = [[], []]
 	boss_phase_done = false
 	var fielded: int = slot_count(Side.PLAYER)
 	if BattleRules.BOSSES.has(foe_boss):
@@ -318,7 +325,8 @@ func start() -> Array[BattleEvent]:
 		var rule: Dictionary = BattleRules.RULES[foe_rule]
 		emit_event(BattleEvent.Type.RULE, {"rule": foe_rule, "label": str(rule.label), "text": str(rule.text)})
 		var st: Dictionary = rule.get("player_stage", {})
-		for s: Spirling in parties[Side.PLAYER]:
+		var dragged: Array = parties[Side.PLAYER].slice(0, 1) if bool(rule.get("lead_only", false)) else parties[Side.PLAYER]
+		for s: Spirling in dragged:
 			for stat: String in st:
 				s.stages[stat] = clampi(s.stage(stat) + int(st[stat]), BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
 	participants = []
@@ -475,9 +483,31 @@ func _check_boss_phase(boss: Spirling) -> void:
 		base_field = str(p.field)
 		set_field(base_field, 0)
 
+## Heals the Spirling in [param slot] from an art, its gift, the field or a keepsake. A heal
+## block stops all of these (bag items heal through _heal_spirling and still work).
 func heal(side: int, amount: int, slot: int = 0) -> int:
 	var index: int = active_index(side, slot)
-	return _heal_spirling(side, index, amount) if index >= 0 else 0
+	if index < 0:
+		return 0
+	var s: Spirling = parties[side][index]
+	if turn >= BattleRules.WEARY_TURN:
+		return 0
+	if s.heal_block > 0:
+		if s.hp < s.max_hp():
+			emit_event(BattleEvent.Type.HEAL_BLOCKED, _who(side, slot))
+		return 0
+	return _heal_spirling(side, index, amount)
+
+## Blocks healing for the Spirling in [param slot] for the next [param turns] turns. Emits HEAL_BLOCKED.
+func apply_heal_block(side: int, turns: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.is_fainted() or turns <= 0:
+		return
+	# +1 because the end of this very turn already counts one down.
+	s.heal_block = turns + 1
+	var d: Dictionary = _who(side, slot)
+	d.merge({"turns": turns, "fresh": true})
+	emit_event(BattleEvent.Type.HEAL_BLOCKED, d)
 
 ## Tries to afflict the Spirling in [param slot] of [param side]. Fails if it already has a status.
 func apply_status(side: int, status: String, slot: int = 0) -> bool:
@@ -606,8 +636,24 @@ func _phase_end_of_turn() -> void:
 			_end_of_turn_for(side, slot)
 	_tick_timers()
 	_tick_field()
+	if turn == BattleRules.WEARY_TURN:
+		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
+	_weary_chip()
 	turn += 1
 	phase = Phase.FAINT_CHECK
+
+## Share of max Vigor every Spirling in front loses each turn once the fight is weary.
+const WEARY_CHIP_DIV: int = 8
+
+## From BattleRules.WEARY_TURN on, the long fight costs every Spirling in front 1/8 of its Vigor
+## each turn, so even two walls that barely scratch each other finish within a few turns.
+func _weary_chip() -> void:
+	if turn < BattleRules.WEARY_TURN:
+		return
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for slot: int in standing_slots(side):
+			var s: Spirling = active_spirling(side, slot)
+			deal_damage(side, maxi(1, ceili(float(s.max_hp()) / float(WEARY_CHIP_DIV))), {"weary": true}, slot)
 
 func _end_of_turn_for(side: int, slot: int) -> void:
 	var s: Spirling = active_spirling(side, slot)
@@ -640,7 +686,9 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		reveal_trait(side, slot)
 	var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
 	if side == Side.FOE:
-		gain += int(BattleRules.RULES.get(foe_rule, {}).get("foe_energy", 0))
+		var rule: Dictionary = BattleRules.RULES.get(foe_rule, {})
+		if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
+			gain += int(rule.get("foe_energy", 0))
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:
@@ -755,7 +803,7 @@ func _do_move(a: BattleAction) -> void:
 	mv = BattleRules.resolve_move(mv, field)
 	var power_mult: float = 1.0
 	if mv.overcharge and me.energy > 0:
-		var extra: int = me.energy
+		var extra: int = mini(me.energy, BattleRules.OVERCHARGE_MAX_EXTRA)
 		power_mult += BattleRules.OVERCHARGE_PER_ENERGY * extra
 		change_energy(side, -extra, slot)
 	var target_side: int = other(side)
@@ -774,7 +822,7 @@ func _do_move(a: BattleAction) -> void:
 			break
 		if not is_standing(target):
 			continue
-		var acc: float = mv.accuracy * StatusRules.acc_mult(me.status)
+		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status))
 		if acc < 1.0 and rng.randf() >= acc:
 			var miss: Dictionary = _who(side, slot)
 			miss["target_slot"] = t_slot
@@ -946,14 +994,58 @@ func _fill_initial_slots() -> void:
 func _swap_in(side: int, index: int, slot: int = 0) -> void:
 	slots[side][slot] = index
 	var s: Spirling = active_spirling(side, slot)
+	entered_turn[s] = turn
 	var d: Dictionary = _who(side, slot)
 	d.merge({"hp": s.hp, "max_hp": s.max_hp(), "level": s.level, "energy": s.energy})
 	emit_event(BattleEvent.Type.SWAP_IN, d)
+	_spring_snare(side, slot)
 	if side == Side.PLAYER:
 		if not participants.has(s) and not is_partner_index(side, index):
 			participants.append(s)
 	elif not is_multi():
 		participants = [active_spirling(Side.PLAYER)]
+
+## Cures the status of the Spirling in [param slot] (used by effects). Emits STATUS_CURED.
+func cure(side: int, slot: int = 0) -> void:
+	_cure(side, slot)
+
+## Lays [param snare] on [param side] (at most BattleRules.MAX_SNARES at once). Emits SNARE_SET.
+func lay_snare(side: int, snare: Dictionary, move_name: String = "") -> bool:
+	var row: Array = snares[side]
+	if row.size() >= BattleRules.MAX_SNARES:
+		emit_event(BattleEvent.Type.SNARE_SET, {"side": side, "full": true})
+		return false
+	var s: Dictionary = snare.duplicate(true)
+	s["move"] = move_name
+	row.append(s)
+	emit_event(BattleEvent.Type.SNARE_SET, {"side": side, "move": move_name, "count": row.size(), "tag": BattleRules.snare_tag(s)})
+	return true
+
+## Clears every snare on [param side]. Emits SNARE_CLEARED when there were any.
+func clear_snares(side: int) -> void:
+	if (snares[side] as Array).is_empty():
+		return
+	snares[side] = []
+	emit_event(BattleEvent.Type.SNARE_CLEARED, {"side": side})
+
+## The Spirling that just swapped into [param slot] springs the oldest snare on its side.
+func _spring_snare(side: int, slot: int) -> void:
+	var row: Array = snares[side]
+	var s: Spirling = active_spirling(side, slot)
+	if row.is_empty() or not is_standing(s):
+		return
+	var snare: Dictionary = row.pop_front()
+	var d: Dictionary = _who(side, slot)
+	d.merge({"move": str(snare.get("move", "")), "tag": BattleRules.snare_tag(snare)})
+	emit_event(BattleEvent.Type.SNARE_HIT, d)
+	if float(snare.get("hp", 0.0)) > 0.0:
+		deal_damage(side, maxi(1, int(s.max_hp() * float(snare.hp))), {"snare": true}, slot)
+	if not str(snare.get("status", "")).is_empty():
+		apply_status(side, str(snare.status), slot)
+	var st: Variant = snare.get("stage", {})
+	if st is Dictionary:
+		for stat: String in st:
+			change_stage(side, stat, int(st[stat]), slot)
 
 func _cure(side: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)

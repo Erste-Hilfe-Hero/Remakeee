@@ -138,3 +138,11 @@ A Veydal kind that lives long in another region shows a regional form there: oth
 | Wickit | ashmere | Lumen/Ember | ash |
 | Lumenewt | ashmere | Lumen/Ember | ash |
 | Talusk | solenne | Stone/Lumen | salt |
+
+## First Voices (plan area 1, items 152-155)
+
+| No. | Name | Elements | Rarity | Role | Gift | Met |
+|---|---|---|---|---|---|---|
+| 81 | Velahra | Lumen/Tide | ancient | weaver | last_stand | Once on the Brindlewick lake shore after the lamp room, Ring 40; returns after a rest if not bonded |
+
+See docs/WORLD.md for the lore. Ancient kinds are left out of the same-stage balance sim: they are meant to stand above their stage and are met only once.

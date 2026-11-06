@@ -21,15 +21,29 @@ env:
   GODOT_TEMPLATES: "4.7.2.stable"
   BUNDLETOOL_VERSION: "1.18.1"
 
+# One run per branch; a newer push to a pull request cancels the older run (plan item 3739).
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   # Banned-term scan and asset provenance (docs/IP_HYGIENE.md).
   ip-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
       - run: tools/ip_check.sh
+      - name: Commit messages and PR title (AGENTS.md, plan item 3955)
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: tools/ip_check.sh --messages "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
       - name: Every player-facing text has a German translation
-        run: python3 tools/i18n_extract.py de --check
+        run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
+      - name: Version name and code agree everywhere (tools/bump_version.py)
+        run: python3 tools/bump_version.py --check
       - name: A save version bump brings a fixture and a migration test
         run: python3 tools/save_version_check.py
       - name: Store web pages match docs/legal
@@ -43,7 +57,7 @@ jobs:
   sql:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: PostgreSQL server binaries
         run: ls /usr/lib/postgresql/*/bin/initdb || (sudo apt-get update && sudo apt-get install -y postgresql)
       - run: tools/online/test_sql.sh
@@ -53,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     container: barichello/godot-ci:4.7.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Import project
         run: godot --headless --path . --import
       - name: Headless boot must print no errors
@@ -71,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     container: barichello/godot-ci:4.7.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
       - name: Create throwaway debug keystore
@@ -98,7 +112,7 @@ jobs:
           "$(tools/find_zipalign.sh)" -c -P 16 -v 4 build/android/Chimora-debug.apk
       - name: APK size budget
         run: tools/apk_budget.sh build/android/Chimora-debug.apk 80
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-debug-apk
           path: build/android/Chimora-debug.apk
@@ -109,7 +123,7 @@ jobs:
     runs-on: ubuntu-latest
     container: barichello/godot-ci:4.7.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Export templates into HOME
         run: |
           mkdir -p "$HOME/.local/share/godot/export_templates"
@@ -129,7 +143,7 @@ jobs:
           ls -la build/web
           test -s build/web/index.wasm
           cd build/web && zip -qr ../chimora-web.zip .
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: web-build
           path: build/chimora-web.zip
@@ -151,10 +165,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: android-debug-apk
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: web-build
       - name: Upload to the online-test release
@@ -186,7 +200,7 @@ jobs:
     environment: prod
     container: barichello/godot-ci:4.7.2
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
       - name: Stamp version code (Play needs a higher code for every upload)
@@ -243,7 +257,7 @@ jobs:
       - name: Remove keystore
         if: always()
         run: rm -f "$RUNNER_TEMP/upload.keystore"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-release-aab
           path: build/android/Chimora.aab
@@ -257,12 +271,12 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         with:
           name: android-release-aab
           path: build/android
       - name: Upload to the internal testing track
-        uses: r0adkll/upload-google-play@v1.1.3
+        uses: r0adkll/upload-google-play@935ef9c68bb393a8e6116b1575626a7f5be3a7fb # v1.1.3
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: de.chimora.game
@@ -283,13 +297,13 @@ jobs:
     runs-on: macos-26
     environment: prod
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Select Xcode 26
         run: |
           sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
           xcodebuild -version
       - name: Cache Godot editor and templates
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           path: |
             ~/godot
@@ -365,7 +379,7 @@ jobs:
         run: |
           security delete-keychain "$RUNNER_TEMP/build.keychain-db" || true
           rm -rf ~/.appstoreconnect/private_keys "$RUNNER_TEMP/profile.mobileprovision"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ios-ipa
           path: build/ios/Chimora.ipa

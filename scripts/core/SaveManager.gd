@@ -9,7 +9,7 @@ extends Node
 ## - Saves when the app is paused / backgrounded (mobile OSes kill background apps).
 ## - Never loads .tres files as saves (loading resources can run embedded scripts).
 
-const SAVE_VERSION: int = 4
+const SAVE_VERSION: int = 5
 const SLOT_PATH: String = "user://save_1.json"
 ## Three save slots (item 58). Slot 1 keeps the old file name, so existing saves stay in it.
 const SLOTS: int = 3
@@ -34,6 +34,7 @@ var _migrations: Dictionary[int, Callable] = {
 	1: _migrate_1_to_2,
 	2: _migrate_2_to_3,
 	3: _migrate_3_to_4,
+	4: _migrate_4_to_5,
 }
 ## Act I world rebuild (save version 2): old map id -> [new map id, safe cell].
 const MAP_RENAMES_V2: Dictionary[String, Array] = {
@@ -474,6 +475,19 @@ func _migrate_3_to_4(d: Dictionary) -> Dictionary:
 	out["spirlog"] = log
 	return out
 
+## Version 5 (plan area 8, items 3540-3541): the endgame fields. Waymarks, daily tasks, festival
+## ribbons and the Iron Oath get their defaults, and every endgame record its empty start
+## (GameState.ENDGAME_RECORDS), so older saves open the endgame without special cases.
+func _migrate_4_to_5(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	out["waymarks"] = clampi(GameState.as_int(out.get("waymarks", 0)), 0, Waymarks.CAP)
+	for k: String in ["daily_tasks", "festival_ribbons"]:
+		if not out.get(k) is Dictionary:
+			out[k] = {}
+	out["iron_oath"] = bool(out.get("iron_oath", false))
+	out["records"] = GameState.endgame_defaults(GameState.as_dict(out.get("records", {})).duplicate(true))
+	return out
+
 ## Short "where and how long" line for the title screen's Continue button, or "" if unreadable.
 func save_summary() -> String:
 	for path: String in save_paths(slot_path):
@@ -490,6 +504,10 @@ static func summary_line(d: Dictionary) -> String:
 		place = m.display_name
 	var secs: int = int(float(d.get("play_time", 0.0)))
 	var line: String = "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	# Waymarks next to play time once the player has some (plan 3127).
+	var wm: int = GameState.as_int(d.get("waymarks", 0))
+	if wm > 0:
+		line += "  %s%d" % [Waymarks.GLYPH, wm]
 	# A small chain marks a journey under the Iron Oath (plan 3396).
 	if d.get("iron_oath", false) is bool and bool(d.get("iron_oath", false)):
 		line = OATH_GLYPH + " " + line

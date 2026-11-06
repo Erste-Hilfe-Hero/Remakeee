@@ -215,17 +215,52 @@ Table `feature_flags` (key, `enabled`, `min_version`): switches the new online p
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
 `league_open`, `live_duel`, `trade`, `bund`, `raid`. All start switched off.
 
-## Reports (Ali, about once a week)
+## Reports and decisions (Ali, about once a week)
 
-Table `reports` lists open reports (`handled = false`). To reset a name, run in the database:
+Every report gets a number at once (`report_in`, the player sees "Your report has number 12"). Open
+reports:
 
 ```sql
-update public.profiles set name = 'Wanderer ' || right(code, 4) where id = '<target>';
-update public.reports set handled = true where target = '<target>';
+select id, target_name, reason, context, object_id, created_at from public.reports where status = 'open' order by id;
 ```
 
-The DSA asks for a short reason to the player. Until there is an in-game notice, answer by email if they
-write in, for example: "Your Wanderer name was reset because it broke the rules in section 4 of the terms."
+Decide each one in the database console (players cannot call these functions):
+
+```sql
+select public.moderation_decide(12, true, 'name_reset');   -- upheld: name_reset, warning or league_block
+select public.moderation_decide(13, false, null);          -- rejected, no breach
+```
+
+An upheld decision sends the reported player a statement of reasons in the game (DSA Art. 17:
+measure, reason from the fixed list, section 4 of the terms, a person decided, objection possible for 6
+months), under Account, Messages from the team. The reporter always gets the result. Reasons: 0 name,
+1 greetings, 2 cheating, 3 something else.
+
+Objections (DSA Art. 20) come in as `appeals`:
+
+```sql
+select a.id, a.reason, n.body, a.created_at from public.appeals a join public.notices n on n.id = a.notice_id
+where a.status = 'open';
+select public.appeal_answer(4, true);   -- true: decision changed (a league block is lifted), false: kept
+```
+
+A name that was reset stays reset after a changed decision; the player picks a new one.
+
+Reports from the web form `/melden` (DSA Art. 16, also without an account) land in `web_reports`.
+Their numbers start with W on the page. Answer them by e-mail when a contact is given:
+
+```sql
+select id, code, reason, details, contact, created_at from public.web_reports where status = 'open' order by id;
+update public.web_reports set status = 'upheld', decided_at = now() where id = 3;  -- or 'rejected'
+```
+
+To act on the player, turn it into a normal report, so the player gets the statement of reasons:
+
+```sql
+insert into public.reports (reporter, target, target_name, reason, context)
+select null, id, name, 0, 'friends' from public.profiles where code = '<code>' returning id;
+select public.moderation_decide(<that id>, true, 'name_reset');
+```
 
 ## Refused saves (anti-cheat)
 

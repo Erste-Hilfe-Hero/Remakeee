@@ -31,16 +31,22 @@ Last updated: November 2026
 6. **Shutdown.** We may end the online service with at least 3 months' notice in the game and will try to
    provide an offline version first. Paid content bought less than 12 months before the notice that can no
    longer be used is refunded pro rata for the rest of those 12 months.
-7. **Purchases.** Chimora is free; the shop is optional. Purchases are processed only by Apple or Google under
-   their terms, including withdrawal and refunds. There is no random content for money or Riftglass (no loot
-   boxes, no gacha); every offer gives exactly what it lists. Bought content and the game currency
-   **Riftglass** are a simple, non-transferable right to use digital content in Chimora. Riftglass has no money
-   value, cannot be changed back into money, transferred or traded, and does not expire while your account
-   exists. The shop is **closed under 13**; minors have fixed monthly limits (13-15: 15 EUR, 16-17: 30 EUR) and
-   need their parents' consent; adults have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days.
-   The **Wayfarer Pass** renews monthly until cancelled in the store; its benefits end with it. If Apple or
-   Google refunds a purchase, we take back the content and the Riftglass, even if spent; the shop stays locked
-   until the balance is even again.
+7. **Purchases.** Purchases are processed only by Apple or Google under their terms, including withdrawal
+   and refunds. There are no paid random rewards (no loot boxes); every purchase delivers exactly the items
+   and amounts the offer names. Every offer shows its final price in euros before you buy (for Riftglass
+   also the euro equivalent). Some offers give in-game advantages (for example in battle); the offer says
+   so. Everything the story needs can be reached without buying anything.
+   **Virtual goods.** Riftglass, items, Spirlings, passes and other in-game content are not property and
+   not money. You get a simple, non-transferable right to use them in the game with your account. They
+   cannot be exchanged for real money, vouchers or goods, sold, or transferred to others outside the game;
+   selling or trading accounts is not allowed. If you delete your account, all virtual goods on it are lost
+   for good and cannot be restored; refunds for unused purchases are requested from the store. If we end
+   the contract, sections 6 and 8 apply.
+   **Shop rules.** Chimora is free; the shop is optional. Riftglass does not expire while your account exists.
+   The shop is **closed under 13**; minors have fixed monthly limits (13-15: 15 EUR, 16-17: 30 EUR); adults
+   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. The **Wayfarer Pass** renews
+   monthly until cancelled in the store; its benefits end with it. If Apple or Google refunds a purchase, we
+   take back the content and the Riftglass, even if spent; the shop stays locked until the balance is even.
 8. **Term.** You can end the contract at any time by deleting your account (Settings → Account →
    "Delete account"). We may end it with 4 weeks' notice, or immediately for good cause such as serious
    breaches of section 4; unused paid content is refunded pro rata if we end it with notice.

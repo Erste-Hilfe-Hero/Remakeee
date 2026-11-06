@@ -25,11 +25,17 @@
    "5": [
     "Heat Haze"
    ],
+   "6": [
+    "Cinder Dash"
+   ],
    "7": [
     "Kindle Up"
    ],
    "9": [
     "Dusk Rake"
+   ],
+   "11": [
+    "Glow Knuckle"
    ],
    "13": [
     "Cinder Breath"
@@ -83,6 +89,9 @@
    "13": [
     "Cinder Breath"
    ],
+   "18": [
+    "Char Mark"
+   ],
    "20": [
     "Kiln Strike"
    ],
@@ -97,6 +106,9 @@
    ],
    "30": [
     "Furnace Spiral"
+   ],
+   "32": [
+    "Bellows Blast"
    ]
   },
   "bond_rate": 0.15,
@@ -145,6 +157,9 @@
    "34": [
     "Tremor Thud"
    ],
+   "36": [
+    "Quarry Wall"
+   ],
    "38": [
     "Kiln Strike",
     "Hunker Down"
@@ -154,6 +169,9 @@
    ],
    "44": [
     "Ash Call"
+   ],
+   "46": [
+    "Furnace Heart"
    ],
    "48": [
     "Cairn Crash"
@@ -196,9 +214,15 @@
    "5": [
     "Drench"
    ],
+   "7": [
+    "Spout Jab"
+   ],
    "9": [
     "Glint",
     "Chill Mist"
+   ],
+   "11": [
+    "Salt Spray"
    ],
    "13": [
     "Spindrift Shot"
@@ -255,6 +279,9 @@
    "20": [
     "Undertow"
    ],
+   "21": [
+    "Rip Current"
+   ],
    "22": [
     "Chill Mist"
    ],
@@ -263,6 +290,9 @@
    ],
    "26": [
     "Prism Ray"
+   ],
+   "28": [
+    "Deepwell Draught"
    ],
    "30": [
     "Breaker Plunge"
@@ -326,8 +356,14 @@
    "42": [
     "Breaker Plunge"
    ],
+   "44": [
+    "Bore Wave"
+   ],
    "48": [
     "Radiant Lance"
+   ],
+   "50": [
+    "Daybreak Strike"
    ]
   },
   "bond_rate": 0.08,
@@ -367,8 +403,14 @@
    "5": [
     "Puffcap Haze"
    ],
+   "6": [
+    "Pollen Prick"
+   ],
    "9": [
     "Pebble Toss"
+   ],
+   "11": [
+    "Husk Shed"
    ],
    "13": [
     "Sap Draw"
@@ -443,11 +485,17 @@
    "22": [
     "Bloom Call"
    ],
+   "24": [
+    "Graft"
+   ],
    "26": [
     "Tremor Thud"
    ],
    "30": [
     "Bloom Burst"
+   ],
+   "34": [
+    "Wildgrowth Crash"
    ]
   },
   "bond_rate": 0.15,
@@ -480,11 +528,11 @@
   "role": "bulwark",
   "line_id": "mossling",
   "base": {
-   "hp": 104,
-   "atk": 106,
+   "hp": 92,
+   "atk": 92,
    "foc": 88,
    "spd": 86,
-   "def": 116
+   "def": 102
   },
   "trait": "deep_roots",
   "learnset": {
@@ -499,11 +547,17 @@
    "38": [
     "Thorn Volley"
    ],
+   "40": [
+    "Gloam Pact"
+   ],
    "42": [
     "Bloom Burst"
    ],
    "44": [
     "Bloom Call"
+   ],
+   "46": [
+    "Thornwake"
    ],
    "48": [
     "Dusk Gnaw"
@@ -546,14 +600,23 @@
    "4": [
     "Siphon Spark"
    ],
+   "6": [
+    "Static Tag"
+   ],
    "8": [
     "Charged Mist"
+   ],
+   "10": [
+    "Pylon Snap"
    ],
    "12": [
     "Arc Bolt"
    ],
    "15": [
     "Overcharge"
+   ],
+   "16": [
+    "Grid Lock"
    ],
    "18": [
     "Storm Gnash"
@@ -620,8 +683,17 @@
    "34": [
     "Charged Mist"
    ],
+   "36": [
+    "Short Circuit"
+   ],
+   "38": [
+    "Prism Burst"
+   ],
    "40": [
     "Radiant Lance"
+   ],
+   "44": [
+    "Capacitor Crash"
    ]
   },
   "bond_rate": 0.12,
@@ -662,6 +734,9 @@
    "5": [
     "Hush"
    ],
+   "8": [
+    "Grit Jab"
+   ],
    "10": [
     "Pebble Toss"
    ],
@@ -670,6 +745,9 @@
    ],
    "15": [
     "Night Siphon"
+   ],
+   "16": [
+    "Pumice Pelt"
    ],
    "21": [
     "Tremor Thud"
@@ -723,7 +801,11 @@
    ],
    "30": [
     "Tremor Thud",
-    "All-In Crash"
+    "All-In Crash",
+    "Landslip"
+   ],
+   "32": [
+    "Murmur Bite"
    ],
    "33": [
     "Murk Call"
@@ -733,6 +815,9 @@
    ],
    "42": [
     "Cairn Crash"
+   ],
+   "44": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.12,
@@ -770,16 +855,24 @@
     "Breeze Slice"
    ],
    "5": [
-    "Updraft"
+    "Updraft",
+    "Draft Needle"
    ],
    "8": [
     "Drift Step"
    ],
    "10": [
-    "Crackle Bite"
+    "Crackle Bite",
+    "Kite Cut"
+   ],
+   "14": [
+    "Crosswind"
    ],
    "16": [
     "Gale Scythe"
+   ],
+   "19": [
+    "Scatter Gale"
    ],
    "22": [
     "Glint"
@@ -842,6 +935,9 @@
    "28": [
     "Gale Scythe"
    ],
+   "30": [
+    "Squall Line"
+   ],
    "32": [
     "Arc Bolt",
     "Drift Step"
@@ -849,8 +945,14 @@
    "38": [
     "Squall"
    ],
+   "40": [
+    "Cloudbreak"
+   ],
    "44": [
     "Prism Ray"
+   ],
+   "48": [
+    "Downburst"
    ]
   },
   "bond_rate": 0.12,
@@ -902,8 +1004,14 @@
    "5": [
     "Fizz Pop"
    ],
+   "6": [
+    "Dawn Needle"
+   ],
    "9": [
     "Glint"
+   ],
+   "10": [
+    "Beacon Ping"
    ],
    "11": [
     "Still Thought"
@@ -976,6 +1084,9 @@
    "22": [
     "Spindrift Shot"
    ],
+   "24": [
+    "Starlit Lash"
+   ],
    "26": [
     "Prism Ray"
    ],
@@ -987,6 +1098,9 @@
    ],
    "32": [
     "Candle Ward"
+   ],
+   "34": [
+    "Sunwell Sip"
    ],
    "38": [
     "Radiant Lance"
@@ -1044,11 +1158,17 @@
    "5": [
     "Pebble Toss"
    ],
+   "6": [
+    "Veil Step"
+   ],
    "9": [
     "Hush"
    ],
    "11": [
     "Cower Shade"
+   ],
+   "12": [
+    "Shade Pounce"
    ],
    "13": [
     "Dusk Rake"
@@ -1110,6 +1230,9 @@
    "25": [
     "Tremor Thud"
    ],
+   "27": [
+    "Gloom Handoff"
+   ],
    "28": [
     "All-In Crash"
    ],
@@ -1117,13 +1240,17 @@
     "Murk Veil"
    ],
    "33": [
-    "Murk Call"
+    "Murk Call",
+    "Fault Line"
    ],
    "36": [
     "Dusk Gnaw"
    ],
    "42": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Eclipse Crush"
    ]
   },
   "bond_rate": 0.15,
@@ -1172,6 +1299,9 @@
    ],
    "14": [
     "Chill Mist"
+   ],
+   "16": [
+    "Shoal Trap"
    ],
    "17": [
     "Drench"
@@ -1382,6 +1512,9 @@
    "1": [
     "Bowl Over",
     "Hush"
+   ],
+   "4": [
+    "Shade Pounce"
    ],
    "5": [
     "Cower Shade"
@@ -1605,6 +1738,9 @@
    "9": [
     "Tunnel Strike"
    ],
+   "11": [
+    "Mirk Nip"
+   ],
    "13": [
     "All-In Crash"
    ],
@@ -1653,10 +1789,10 @@
   "role": "bulwark",
   "line_id": "talusk",
   "base": {
-   "hp": 80,
+   "hp": 84,
    "atk": 90,
-   "foc": 44,
-   "spd": 84,
+   "foc": 60,
+   "spd": 88,
    "def": 112
   },
   "trait": "thick_hide",
@@ -1669,11 +1805,17 @@
    "19": [
     "Tremor Thud"
    ],
+   "22": [
+    "Shade Pounce"
+   ],
    "24": [
     "All-In Crash"
    ],
    "30": [
     "Cairn Crash"
+   ],
+   "34": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.12,
@@ -1717,7 +1859,8 @@
    "1": [
     "Tunnel Strike",
     "Tremor Thud",
-    "Hunker Down"
+    "Hunker Down",
+    "Cinder Nip"
    ],
    "37": [
     "Kiln Strike"
@@ -2350,6 +2493,9 @@
    "24": [
     "Breeze Slice"
    ],
+   "26": [
+    "Crackle Bite"
+   ],
    "28": [
     "Breeze Slice"
    ],
@@ -2454,6 +2600,9 @@
    ],
    "24": [
     "Salt Snap"
+   ],
+   "26": [
+    "Mirk Nip"
    ],
    "28": [
     "Salt Snap"
@@ -2774,6 +2923,9 @@
    "24": [
     "Salt Snap"
    ],
+   "26": [
+    "Mirk Nip"
+   ],
    "28": [
     "Salt Snap"
    ],
@@ -2931,6 +3083,9 @@
    "9": [
     "Pebble Toss"
    ],
+   "11": [
+    "Cinder Nip"
+   ],
    "13": [
     "Bowl Over"
    ],
@@ -2985,6 +3140,9 @@
    ],
    "24": [
     "Tunnel Strike"
+   ],
+   "26": [
+    "Cinder Nip"
    ],
    "28": [
     "Tunnel Strike"
@@ -3197,6 +3355,9 @@
    ],
    "24": [
     "Cinder Breath"
+   ],
+   "26": [
+    "Grit Jab"
    ],
    "28": [
     "Cinder Breath"
@@ -3838,6 +3999,9 @@
    "24": [
     "Dawn Mend"
    ],
+   "26": [
+    "Breeze Slice"
+   ],
    "28": [
     "Dawn Mend"
    ],
@@ -4102,6 +4266,9 @@
    "9": [
     "Pebble Toss"
    ],
+   "11": [
+    "Cinder Nip"
+   ],
    "13": [
     "Bowl Over"
    ],
@@ -4156,6 +4323,9 @@
    ],
    "24": [
     "Tunnel Strike"
+   ],
+   "26": [
+    "Cinder Nip"
    ],
    "28": [
     "Tunnel Strike"
@@ -4261,6 +4431,9 @@
    ],
    "24": [
     "Breeze Slice"
+   ],
+   "26": [
+    "Crackle Bite"
    ],
    "28": [
     "Breeze Slice"
@@ -4389,5 +4562,58 @@
    0
   ],
   "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 81,
+  "name": "Velahra",
+  "elements": [
+   "LUMEN",
+   "TIDE"
+  ],
+  "rarity": "ancient",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "velahra",
+  "base": {
+   "hp": 110,
+   "atk": 84,
+   "foc": 132,
+   "spd": 108,
+   "def": 104
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Glint",
+    "Fizz Pop",
+    "Candle Ward"
+   ],
+   "30": [
+    "Spindrift Shot"
+   ],
+   "34": [
+    "Prism Ray"
+   ],
+   "38": [
+    "Dawn Mend"
+   ],
+   "42": [
+    "Radiant Lance"
+   ],
+   "46": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "4.2 m",
+  "habitat": "Under the lake before the lighthouse",
+  "lore": "The First Voice of Veydal. It sleeps as a light under the lake and sang the land together long ago. It was the last to see Mirela.",
+  "origin": "One of the six First Voices, whose silence let the Hush fall over the land.",
+  "met": "velahra_shore",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
  }
 ]
