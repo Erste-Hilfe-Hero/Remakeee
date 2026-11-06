@@ -219,8 +219,11 @@ to be claimed when the season ends. This is the free path; a paid lane is area 1
 ### Journey complete and the Iron Oath
 
 - "Journey complete: x%" (`Completion.gd`, records screen) weighs story 20, side goals 10,
-  Spirlog (bonded kinds) 25, achievements 20, towers (lighthouse stair floors) 15 and
-  exploring (maps visited) 10 percent. Each part counts its own share from 0 to 1.
+  Spirlog (bonded kinds) 25, achievements 20, towers (lighthouse stair and both Rift towers,
+  counted alike) 15 and exploring (maps visited) 10 percent. Each part counts its own share
+  from 0 to 1. Badges only reachable during festivals or in the weekly echo do not count.
+- At 50, 75 and 100 percent the journey pays 50, 100 and 300 Waymarks (`Completion.claim`),
+  each once. A step stays paid when an update adds goals and the percent drops.
 - Under the Iron Oath every Waymark reward pays 25% more (rounded down: 10 -> 12, 20 -> 25,
   80 -> 100). It makes up for Spirlings lost to the Sanctuary, not for coins or items.
 
