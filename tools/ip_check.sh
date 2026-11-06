@@ -52,6 +52,14 @@ while IFS= read -r f; do
 	fi
 done < <(git ls-files -- art audio)
 
+# Every generator named in the asset log must exist (item 2637).
+while IFS= read -r g; do
+	if [ ! -f "$g" ]; then
+		echo "::error::docs/ASSET_LOG.md names $g, which is not in the repo."
+		fail=1
+	fi
+done < <(grep -oE "tools/[A-Za-z0-9_/]+\.py" docs/ASSET_LOG.md | sort -u)
+
 if [ "$fail" -eq 0 ]; then
 	echo "IP check OK"
 fi

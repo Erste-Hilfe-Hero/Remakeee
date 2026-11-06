@@ -29,6 +29,8 @@ var _t: float = 0.0
 var _duration: float = WALK_TIME
 ## Dips the sprite 1 px in the middle of each step so walking has weight (item 2303).
 var bob: bool = false
+## True while the current step is a running step.
+var running: bool = false
 
 func place(c: Vector2i, face: String = "") -> void:
 	cell = c
@@ -56,6 +58,7 @@ func step(dir: String, run: bool = false) -> void:
 	_to = cell_to_pos(cell)
 	_t = 0.0
 	_duration = RUN_TIME if run else WALK_TIME
+	running = run
 	moving = true
 	queue_redraw()
 	step_started.emit(dir, run)

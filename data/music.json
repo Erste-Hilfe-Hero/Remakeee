@@ -1,17 +1,17 @@
 {
-  "_comment": "Which track (audio/music/<name>.ogg) plays on each map. Maps not listed play 'default'.",
+  "_comment": "Music per map (plan area 6, item 2443): every map has its own song (audio/music/<track>.ogg, with stems in audio/music/stems/ for the MusicDirector). An entry is either a track name or {\"track\": ..., \"ambience\": ...}. Maps not listed (new ones) play 'default'.",
   "default": "route",
   "maps": {
-    "lighthouse": "town",
-    "brindlewick": "town",
-    "map_house": "town",
-    "rest_spring": "town",
-    "thornridge": "town",
-    "fernstair": "route",
-    "crowcrest": "route",
-    "saltmarsh": "route",
-    "cinder_rift": "rift",
-    "tide_rift": "rift",
-    "murk_hollow": "rift"
+    "lighthouse": "lighthouse",
+    "brindlewick": "brindlewick",
+    "map_house": "map_house",
+    "rest_spring": "rest_spring",
+    "thornridge": "thornridge",
+    "fernstair": "fernstair",
+    "crowcrest": "crowcrest",
+    "saltmarsh": "saltmarsh",
+    "cinder_rift": "cinder_rift",
+    "tide_rift": "tide_rift",
+    "murk_hollow": "murk_hollow"
   }
 }

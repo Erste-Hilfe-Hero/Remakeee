@@ -166,11 +166,14 @@ func _build() -> void:
 	_battle_layer.layer = BATTLE_LAYER
 	add_child(_battle_layer)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	# Integer-rounded camera (no smoothing) keeps pixels on the grid.
 	_camera.global_position = (player.global_position + Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0)).round()
 	if _photo != null:
 		_camera.global_position += _photo.pan
+	# Music layers follow walking, running and open text boxes (items 2477, 2478).
+	MusicDirector.update_world(player.moving, player.running, delta)
+	MusicDirector.dialogue = _text.visible
 
 # --- Maps --------------------------------------------------------------------------
 

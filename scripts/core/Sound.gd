@@ -91,9 +91,14 @@ func element_hit(element: int) -> void:
 
 ## Track for [param map_id] from data/music.json, in the variant for the active era.
 func track_for_map(map_id: String) -> String:
-	var maps: Dictionary = _map_music.get("maps", {})
-	var track: String = str(maps.get(map_id, maps.get(map_id.get_slice("@", 0), _map_music.get("default", ""))))
+	var entry: Variant = map_entry(map_id)
+	var track: String = str((entry as Dictionary).get("track", "")) if entry is Dictionary else str(entry)
 	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
+
+## The data/music.json entry for [param map_id]: a track name or {"track", "ambience"}.
+func map_entry(map_id: String) -> Variant:
+	var maps: Dictionary = _map_music.get("maps", {})
+	return maps.get(map_id, maps.get(map_id.get_slice("@", 0), _map_music.get("default", "")))
 
 ## Era music (item 66): "<track>_era<N>" for the newest era N that has its own version, so a
 ## region can rearrange a theme for its hardware generation. Falls back to the plain track.
@@ -147,7 +152,11 @@ func _switch(track: String, loop: bool) -> void:
 		var tw: Tween = create_tween()
 		tw.tween_property(_music_out, "volume_db", -40.0, FADE_TIME)
 		tw.tween_callback(_music_out.stop)
-	var stream: AudioStream = _load(MUSIC_DIR % track) if not track.is_empty() else null
+	# Place songs with stems play through the MusicDirector's layers (item 2479).
+	var stream: AudioStream = MusicDirector.stream_for(track) if loop else null
+	MusicDirector.set_active(stream)
+	if stream == null and not track.is_empty():
+		stream = _load(MUSIC_DIR % track)
 	if stream == null:
 		_music.stop()
 		return

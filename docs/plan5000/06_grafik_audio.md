@@ -239,20 +239,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2442. [P3] Alle neuen UI-Bewegungen werden im Screenshot-Werkzeug als Bildfolge abgelegt und in docs/JUICE.md als Beispiel verlinkt.
 
 ### Musik: eigene Stücke pro Ort
-2443. [P1] Jede der 11 Karten bekommt ein eigenes Stück; data/music.json wird so umgestellt, dass jede Karte einen eigenen Eintrag hat und "default" nur noch für neue Karten gilt.
-2444. [P1] lighthouse: ruhiges Stück, 84 BPM, D-Dur, Melodie auf Dreieckswelle, Bass als Bordun, Leitmotiv des Spiels in 4 Takten.
-2445. [P1] brindlewick: Marktstadt-Stück, 112 BPM, G-Dur, hüpfende Bassfigur, Melodie auf Pulswelle 25 %.
-2446. [P1] fernstair: Weg-Stück, 128 BPM, A-Dur, Farn-Terrassen-Gefühl durch aufsteigende Arpeggien.
-2447. [P1] crowcrest: Klippen-Stück, 120 BPM, E-Moll, weite Intervalle (Quinten und Oktaven) in der Melodie, wenig Schlagzeug.
-2448. [P2] saltmarsh: Marschland-Stück, 96 BPM, F-Dur mit Mixolydisch, wiegender 6/8-Takt.
-2449. [P1] Das Leitmotiv aus lighthouse taucht in jedem Ort-Stück mindestens einmal verändert auf (andere Tonart, anderes Tempo), damit die Region zusammenklingt.
-2450. [P2] thornridge: Dorf-Stück, 100 BPM, C-Dur, Melodie mit kurzen Vorschlägen, Holzschlag-Rauschen als Perkussion.
-2451. [P2] map_house: Kartenhaus-Stück, 76 BPM, B-Dur, leises Spieluhr-Arpeggio auf hoher Pulswelle 12,5 %.
-2452. [P2] rest_spring: Rast-Stück, 70 BPM, Es-Dur, langsame Akkordflächen, keine Trommeln.
-2453. [P2] cinder_rift: Rift-Stück, 84 BPM, C-Moll, tiefe Pulswelle mit Glut-Knistern aus Rauschen.
-2454. [P2] tide_rift: Rift-Stück, 80 BPM, Fis-Moll, wellende Lautstärke-Schwankung im Akkordteppich (Tremolo 3 Hz).
-2455. [P2] murk_hollow: Rift-Stück, 66 BPM, B-Moll, gedämpfter Bass und lange Pausen in der Melodie.
-2456. [P2] Die drei Rift-Stücke teilen sich ein gemeinsames Rift-Motiv aus 3 Tönen, das in jedem Stück anders begleitet wird.
+2443. [x] [P1] Jede der 11 Karten bekommt ein eigenes Stück; data/music.json wird so umgestellt, dass jede Karte einen eigenen Eintrag hat und "default" nur noch für neue Karten gilt.
+2444. [x] [P1] lighthouse: ruhiges Stück, 84 BPM, D-Dur, Melodie auf Dreieckswelle, Bass als Bordun, Leitmotiv des Spiels in 4 Takten.
+2445. [x] [P1] brindlewick: Marktstadt-Stück, 112 BPM, G-Dur, hüpfende Bassfigur, Melodie auf Pulswelle 25 %.
+2446. [x] [P1] fernstair: Weg-Stück, 128 BPM, A-Dur, Farn-Terrassen-Gefühl durch aufsteigende Arpeggien.
+2447. [x] [P1] crowcrest: Klippen-Stück, 120 BPM, E-Moll, weite Intervalle (Quinten und Oktaven) in der Melodie, wenig Schlagzeug.
+2448. [x] [P2] saltmarsh: Marschland-Stück, 96 BPM, F-Dur mit Mixolydisch, wiegender 6/8-Takt.
+2449. [x] [P1] Das Leitmotiv aus lighthouse taucht in jedem Ort-Stück mindestens einmal verändert auf (andere Tonart, anderes Tempo), damit die Region zusammenklingt.
+2450. [x] [P2] thornridge: Dorf-Stück, 100 BPM, C-Dur, Melodie mit kurzen Vorschlägen, Holzschlag-Rauschen als Perkussion.
+2451. [x] [P2] map_house: Kartenhaus-Stück, 76 BPM, B-Dur, leises Spieluhr-Arpeggio auf hoher Pulswelle 12,5 %.
+2452. [x] [P2] rest_spring: Rast-Stück, 70 BPM, Es-Dur, langsame Akkordflächen, keine Trommeln.
+2453. [x] [P2] cinder_rift: Rift-Stück, 84 BPM, C-Moll, tiefe Pulswelle mit Glut-Knistern aus Rauschen.
+2454. [x] [P2] tide_rift: Rift-Stück, 80 BPM, Fis-Moll, wellende Lautstärke-Schwankung im Akkordteppich (Tremolo 3 Hz).
+2455. [x] [P2] murk_hollow: Rift-Stück, 66 BPM, B-Moll, gedämpfter Bass und lange Pausen in der Melodie.
+2456. [x] [P2] Die drei Rift-Stücke teilen sich ein gemeinsames Rift-Motiv aus 3 Tönen, das in jedem Stück anders begleitet wird.
 2457. [P2] Eigene Kampfmusik für wilde Spirlings in Rift-Karten, die das Rift-Motiv aufgreift, statt der allgemeinen battle.ogg.
 2458. [P2] Eigenes Stück für den Kampf gegen Rift-Wächter pro Rift, je eine Fassung des Rift-Stücks mit 1,3-fachem Tempo und vollem Schlagzeug.
 2459. [P2] Eigenes Stück für den Titel (title) wird überarbeitet, damit es mit dem Leitmotiv beginnt und auf dem Grundton endet, als saubere Schleife.
@@ -260,7 +260,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2461. [P2] Kurzes Spannungs-Stück für Story-Szenen mit Gefahr, 16 Takte, 140 BPM, nur Bass und Trommel.
 2462. [P2] Kurzes Stück für den Abschied und traurige Szenen, 70 BPM, Moll, 12 Takte mit sauberem Schleifenpunkt.
 2463. [P3] Kurzes Stück für Online-Menüs (Freunde, Geschenke, Rangliste), damit diese Menüs eine eigene ruhige Stimmung haben.
-2464. [P2] Jedes Ort-Stück ist zwischen 60 und 120 Sekunden lang und hat einen hörbar sauberen Schleifenpunkt ohne Knacken.
+2464. [x] [P2] Jedes Ort-Stück ist zwischen 60 und 120 Sekunden lang und hat einen hörbar sauberen Schleifenpunkt ohne Knacken.
 2465. [P3] Nachtfassung jedes Außen-Stücks: gleiche Noten, 10 % langsamer, Melodie eine Oktave tiefer, weniger Schlagzeug, umgeschaltet über DayCycle.
 2466. [P3] Kurzes Stück für die Heilung am Rastplatz als eigener Jingle (6 Töne), getrennt von der Ort-Musik.
 2467. [P3] Kurzer Jingle für neu entdeckte Orte (Kartenbuch wächst), 3 Sekunden, aus dem Leitmotiv abgeleitet.
@@ -273,11 +273,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2474. [P3] Eine Melodie-Prüfung in tools/audio/ vergleicht die Intervallfolgen aller eigenen Stücke untereinander und meldet Abschnitte von mehr als 8 gleichen Tönen, damit kein Stück das andere kopiert.
 
 ### Dynamische Musik-Schichten
-2475. [P1] tools/audio/gen_audio.py schreibt jedes Ort-Stück zusätzlich als 4 Einzelspuren (Bass, Akkorde, Melodie, Schlagzeug) mit exakt gleicher Länge in audio/music/stems/<name>_<spur>.ogg.
-2476. [P1] Neuer Autoload scripts/core/MusicDirector.gd spielt die Einzelspuren über AudioStreamSynchronized gleichzeitig ab und regelt jede Spur einzeln in der Lautstärke.
-2477. [P1] Schicht-Regel Welt: im Stillstand nur Bass und Akkorde, beim Gehen kommt die Melodie dazu, beim Rennen das Schlagzeug, jeweils in 0,8 s eingeblendet.
-2478. [P1] Schicht-Regel Dialog: während ein Dialog offen ist, sinken Melodie und Schlagzeug auf -12 dB, damit der Text im Vordergrund steht.
-2479. [P1] Sound.music() bleibt die öffentliche Schnittstelle; MusicDirector übernimmt nur, wenn Einzelspuren vorhanden sind, sonst läuft die bisherige Ogg-Datei.
+2475. [x] [P1] tools/audio/gen_audio.py schreibt jedes Ort-Stück zusätzlich als 4 Einzelspuren (Bass, Akkorde, Melodie, Schlagzeug) mit exakt gleicher Länge in audio/music/stems/<name>_<spur>.ogg.
+2476. [x] [P1] Neuer Autoload scripts/core/MusicDirector.gd spielt die Einzelspuren über AudioStreamSynchronized gleichzeitig ab und regelt jede Spur einzeln in der Lautstärke.
+2477. [x] [P1] Schicht-Regel Welt: im Stillstand nur Bass und Akkorde, beim Gehen kommt die Melodie dazu, beim Rennen das Schlagzeug, jeweils in 0,8 s eingeblendet.
+2478. [x] [P1] Schicht-Regel Dialog: während ein Dialog offen ist, sinken Melodie und Schlagzeug auf -12 dB, damit der Text im Vordergrund steht.
+2479. [x] [P1] Sound.music() bleibt die öffentliche Schnittstelle; MusicDirector übernimmt nur, wenn Einzelspuren vorhanden sind, sonst läuft die bisherige Ogg-Datei.
 2480. [P2] Schicht-Regel Begegnungsfeld: im hohen Gras kommt eine leise Spannungs-Spur (Akkorde mit Tremolo) dazu.
 2481. [P2] Schicht-Regel Rift-Nähe: in den letzten 6 Feldern vor einem Rift-Eingang wird die Akkord-Spur durch eine verstimmte Fassung (-20 Cent) ersetzt.
 2482. [P2] Schicht-Regel Team erschöpft: wenn kein Spirling im Team mehr als 25 % Kraft hat, fällt das Schlagzeug weg und die Melodie wird gedämpft (Tiefpass bei 2 kHz).
@@ -421,8 +421,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 ### Werkzeuge zur Asset-Erzeugung (tools/art, tools/audio)
 2609. [P1] tools/audio/gen_audio.py in Module aufteilen: tools/audio/synth.py (Wellen, Hüllkurven), tools/audio/sfx.py, tools/audio/music.py, tools/audio/ambience.py, mit gen_audio.py als Einstieg.
 2610. [x] [P1] gen_audio.py bekommt Aufruf-Optionen --only <name>, --sfx, --music, --stems, damit nicht bei jeder Änderung alles neu erzeugt werden muss.
-2611. [P1] Lautheits-Prüfung tools/audio/loudness.py mit ffmpeg ebur128: Musik soll -16 LUFS (±1) erreichen, Klänge einen Spitzenwert von -3 dBFS; Abweichungen werden gemeldet.
-2612. [P1] gen_audio.py normalisiert jede Datei nach dem Erzeugen automatisch auf diese Zielwerte.
+2611. [x] [P1] Lautheits-Prüfung tools/audio/loudness.py mit ffmpeg ebur128: Musik soll -16 LUFS (±1) erreichen, Klänge einen Spitzenwert von -3 dBFS; Abweichungen werden gemeldet.
+2612. [x] [P1] gen_audio.py normalisiert jede Datei nach dem Erzeugen automatisch auf diese Zielwerte.
 2613. [x] [P1] Neuer Generator tools/art/gen_fx.py erzeugt die Effekt-Formen (Funke, Tropfen, Blatt, Zacke, Brocken, Strich, Glanz, Schatten) als 8×8-Bildchen in art/era1/fx/ in den 4 Paletten-Farben.
 2614. [P2] Neuer Generator tools/art/gen_ui.py erzeugt Gefühls-Blasen, Toast-Rahmen, Punkt-Markierungen und Cursor als kleine PNGs in art/era1/ui/.
 2615. [P2] Eine Prüfung der Wiederholbarkeit: gen_audio.py und alle tools/art-Generatoren werden in der CI zweimal laufen gelassen und die Prüfsummen der Ausgaben verglichen.
@@ -448,8 +448,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 
 ### docs/ASSET_LOG.md und Herkunftsnachweis
 2635. [P1] Jede neue Datei aus diesem Bereich (fx, ui, ambience, stems, neue Stücke und Klänge) bekommt eine eigene Zeile in docs/ASSET_LOG.md, bevor sie eingecheckt wird.
-2636. [P1] Neues Werkzeug tools/asset_log.py erzeugt die Zeilen für alle Generator-Ausgaben automatisch aus einer Tabelle (Pfad, Generator, Beschreibung) und ergänzt fehlende.
-2637. [P1] tools/ip_check.sh prüft zusätzlich, dass jeder Generator, der in einer ASSET_LOG-Zeile genannt ist, auch im Repo existiert.
+2636. [x] [P1] Neues Werkzeug tools/asset_log.py erzeugt die Zeilen für alle Generator-Ausgaben automatisch aus einer Tabelle (Pfad, Generator, Beschreibung) und ergänzt fehlende.
+2637. [x] [P1] tools/ip_check.sh prüft zusätzlich, dass jeder Generator, der in einer ASSET_LOG-Zeile genannt ist, auch im Repo existiert.
 2638. [P2] Jede neue Musik-Zeile nennt in der Spalte "How it was made" den Notentext unter tools/audio/songs/ und den Satz "Melodie und Akkorde eigen geschrieben".
 2639. [P2] ASSET_LOG.md bekommt eine zusätzliche Spalte "Generator-Stand" mit dem Commit-Kürzel, aus dem die Datei zuletzt erzeugt wurde.
 2640. [P2] ASSET_LOG.md wird nach Ordnern gegliedert (art/era1/spirlings, chars, tiles, fx, ui, icon; audio/music, stems, sfx, ambience), mit je einer Überschrift.
