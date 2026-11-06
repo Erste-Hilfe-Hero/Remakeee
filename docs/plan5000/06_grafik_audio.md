@@ -210,7 +210,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 
 ### UI-Grafik und Rückmeldung in Menüs
 2415. [x] [P1] Jeder Knopf und jeder Listeneintrag reagiert beim Antippen sofort: 1 Pixel nach unten versetzt, solange der Finger drückt, und Juice.pop beim Loslassen.
-2416. [P1] Der Auswahl-Cursor in Listen (ListPicker.gd) gleitet mit Kurve "move" in 0,06 s zum neuen Eintrag, statt zu springen.
+2416. [x] [P1] Der Auswahl-Cursor in Listen (ListPicker.gd) gleitet mit Kurve "move" in 0,06 s zum neuen Eintrag, statt zu springen.
 2417. [P2] Der Auswahl-Cursor wippt im Leerlauf 1 Pixel waagrecht im Takt von 0,6 s.
 2418. [x] [P1] Kurze Hinweise (Toasts) für Ereignisse wie "Geschenk erhalten" oder "Gespeichert" bauen: 12 Pixel hohe Leiste fährt von oben herein, bleibt 1,6 s und fährt hinaus.
 2419. [x] [P1] Münzanzeige zählt bei Änderungen mit Juice.count_to hoch oder runter, statt den neuen Wert sofort zu zeigen.
@@ -447,7 +447,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2634. [P3] Eine kleine Formbibliothek in tools/art/px.py mit Kreis, Ring, Stern und Zacke in Pixelgenauigkeit, damit Effekte und UI-Bildchen dieselben Grundformen nutzen.
 
 ### docs/ASSET_LOG.md und Herkunftsnachweis
-2635. [P1] Jede neue Datei aus diesem Bereich (fx, ui, ambience, stems, neue Stücke und Klänge) bekommt eine eigene Zeile in docs/ASSET_LOG.md, bevor sie eingecheckt wird.
+2635. [x] [P1] Jede neue Datei aus diesem Bereich (fx, ui, ambience, stems, neue Stücke und Klänge) bekommt eine eigene Zeile in docs/ASSET_LOG.md, bevor sie eingecheckt wird.
 2636. [x] [P1] Neues Werkzeug tools/asset_log.py erzeugt die Zeilen für alle Generator-Ausgaben automatisch aus einer Tabelle (Pfad, Generator, Beschreibung) und ergänzt fehlende.
 2637. [x] [P1] tools/ip_check.sh prüft zusätzlich, dass jeder Generator, der in einer ASSET_LOG-Zeile genannt ist, auch im Repo existiert.
 2638. [P2] Jede neue Musik-Zeile nennt in der Spalte "How it was made" den Notentext unter tools/audio/songs/ und den Satz "Melodie und Akkorde eigen geschrieben".
@@ -470,7 +470,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2653. [x] [P1] Einstellung "Klang-Untertitel": wichtige Klänge (Wanderer entdeckt, Rift in der Nähe, Begegnung, Gegenstand) erscheinen als kurzer Text am oberen Rand, zum Beispiel "[Rascheln im Gras]".
 2654. [P1] Leistungsziel für alle Punkte dieses Bereichs: auf dem schwächsten Ziel-Android-Gerät höchstens 2 ms zusätzliche Bildzeit im Kampf und 1 ms in der Welt.
 2655. [x] [P1] Alle neuen Bewegungen respektieren die bestehende Einstellung reduce_motion über Juice.reduced(); ein GUT-Test schaltet sie ein und prüft, dass kein Tween länger als 0,15 s läuft.
-2656. [P1] Kein Effekt dieses Bereichs wechselt die Helligkeit mehr als 3 Mal pro Sekunde um mehr als 2 Palettenstufen; ein Test prüft die Effekt-Galerie Bild für Bild.
+2656. [x] [P1] (tools/fx_flash_check.tscn im UI-Golden-Job) Kein Effekt dieses Bereichs wechselt die Helligkeit mehr als 3 Mal pro Sekunde um mehr als 2 Palettenstufen; ein Test prüft die Effekt-Galerie Bild für Bild.
 2657. [P2] Partikel, Wackeln und Shader-Übergänge werden im Energiesparmodus des Geräts (wenn das System ihn meldet) automatisch auf die ruhige Fassung gesetzt.
 2658. [P2] Visuelle Takt-Hilfe im Echo-Minispiel ist schon da; zusätzlich zeigt jede Marke beim Abspielen einen kurzen Ring, damit es auch ohne Ton lösbar bleibt.
 2659. [P2] Text-Stimme und Schreie können im Hochkontrast-Modus durch eine kleine Schallwellen-Markierung neben dem Sprecher ergänzt werden.

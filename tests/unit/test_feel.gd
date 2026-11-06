@@ -98,3 +98,19 @@ func test_spotting_pops_the_alert() -> void:
 	n.alert = false
 	n.alert = true
 	assert_false(n._alert_pop)
+
+func test_list_pointer_slides_to_new_row() -> void:
+	var lp := ListPicker.new()
+	add_child_autofree(lp)
+	var run := func() -> void: await lp.pick("T", [{"text": "A"}, {"text": "B"}, {"text": "C"}] as Array[Dictionary])
+	run.call()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	var rows: Array = lp.buttons()
+	rows[0].grab_focus()
+	await get_tree().process_frame
+	rows[2].grab_focus()
+	assert_lt(lp.pointer_slide, 0.0, "starts at the old row, above the new one")
+	await wait_seconds(ListPicker.POINTER_SLIDE_TIME + 0.1)
+	assert_eq(lp.pointer_slide, 0.0, "lands on the new row")
+	lp.picked.emit(-1)
