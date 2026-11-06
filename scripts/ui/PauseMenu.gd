@@ -114,7 +114,7 @@ static func records_text() -> String:
 	lines.append("This week: %d of %d" % [best, WeeklyChallenge.ROUNDS])
 	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
 	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
-	lines.append(Collection.progress_text(GameState.spirlog, Database.spirlings.size()))
+	lines.append(Collection.progress_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size()))
 	if GameState.iron_oath:
 		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
 		for s: Spirling in GameState.sanctuary:
@@ -385,62 +385,66 @@ func _use_spark_charm(id: String) -> void:
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
 
-## Spirlog: every species with seen/bonded marks, plus the Tracker for the current area.
+## Spirlog filters (item 249), kept while the menu is open.
+var _log_search: String = ""
+var _log_element: int = -1
+var _log_role: int = -1
+var _log_status: int = SpirlogBook.STATUS_ALL
+var _log_region: int = -1
+
+## Spirlog: chapters per open region with their progress, search and filters, then the kinds.
+## A seen kind opens its map-book page (SpirlogPage); unseen ones show as "???".
 func run_spirlog() -> void:
 	while true:
-		var all: Array[SpirlingData] = []
-		for sd: SpirlingData in Database.spirlings.values():
-			all.append(sd)
-		all.sort_custom(func(a: SpirlingData, b: SpirlingData) -> bool: return a.dex_id < b.dex_id)
-		var seen: int = 0
-		var bonded: int = 0
+		var regions: Array[String] = SpirlogBook.open_regions(GameState.flags)
+		var region: String = regions[_log_region] if _log_region >= 0 and _log_region < regions.size() else ""
+		var role: String = SpirlingData.ROLES[_log_role] if _log_role >= 0 else ""
+		var kinds: Array[SpirlingData] = SpirlogBook.filtered(GameState.spirlog, GameState.flags,
+			_log_search, _log_element, role, _log_status, region)
 		var entries: Array[Dictionary] = []
+		var actions: Array[String] = []
+		for r: String in regions:
+			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
+			actions.append("chapter")
+		entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
+		actions.append("region")
+		entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
+		actions.append("search")
+		entries.append({"text": "Element: %s" % ("all" if _log_element < 0 else Elements.element_name(_log_element))})
+		actions.append("element")
+		entries.append({"text": "Role: %s" % ("all" if role.is_empty() else role.capitalize())})
+		actions.append("role")
+		entries.append({"text": "Show: %s" % SpirlogBook.STATUS_NAMES[_log_status]})
+		actions.append("status")
 		if not encounter_table.is_empty():
 			entries.append({"text": "Tracker: this area"})
-		for sd: SpirlingData in all:
-			var e: Dictionary = GameState.spirlog.get(sd.species_name, {})
-			var is_seen: bool = bool(e.get("seen", false))
-			var is_bonded: bool = bool(e.get("bonded", false))
-			seen += 1 if is_seen else 0
-			bonded += 1 if is_bonded else 0
-			var mark: String = "*" if is_bonded else ("+" if is_seen else " ")
-			entries.append({"text": "%02d %s %s" % [sd.dex_id, mark, sd.species_name if is_seen else "???"], "species": sd.species_name, "seen": is_seen})
-		var idx: int = await pick("Spirlog  seen %d  bonded %d" % [seen, bonded], entries)
+			actions.append("tracker")
+		var first_kind: int = entries.size()
+		for sd: SpirlingData in kinds:
+			entries.append({"text": SpirlogBook.list_line(sd, GameState.spirlog)})
+			actions.append("kind")
+		var idx: int = await pick("Spirlog (%d)" % kinds.size(), entries, true, first_kind if not kinds.is_empty() else -1)
 		if idx < 0:
 			return
-		if not encounter_table.is_empty() and idx == 0:
-			await info(_tracker_text())
-			continue
-		var entry: Dictionary = entries[idx]
-		if not bool(entry.get("seen", false)):
-			await info("Not seen yet.")
-			continue
-		var sd: SpirlingData = Database.species(str(entry.species))
-		var els: PackedStringArray = []
-		for el: int in sd.elements:
-			els.append(Elements.element_name(el))
-		var where: PackedStringArray = []
-		for table: String in EncounterTable.table_ids():
-			if sd.species_name in EncounterTable.species_on(table):
-				where.append(table.replace("_", " ").capitalize())
-		var lines: PackedStringArray = ["#%02d %s   %s" % [sd.dex_id, sd.species_name, "/".join(els)]]
-		if not sd.height.is_empty():
-			lines.append("Height %s" % sd.height)
-		if not sd.habitat.is_empty():
-			lines.append("Lives in: %s" % sd.habitat)
-		lines.append("Found on: %s" % (", ".join(where) if not where.is_empty() else "unknown"))
-		var log_entry: Dictionary = GameState.spirlog.get(sd.species_name, {})
-		if bool(log_entry.get("bonded", false)):
-			var tr: Dictionary = BattleRules.trait_info(sd.trait_id)
-			if not tr.is_empty():
-				lines.append("Gift: %s" % tr.label)
-			if not sd.lore.is_empty():
-				lines.append("")
-				lines.append(sd.lore)
-		else:
-			lines.append("")
-			lines.append("Bond with one to learn more.")
-		await info("\n".join(lines))
+		match actions[idx]:
+			"chapter", "region":
+				_log_region = _log_region + 1 if _log_region + 1 < regions.size() else -1
+			"search":
+				_log_search = await TextPrompt.ask(self, "Search by name", false, 16, _log_search)
+			"element":
+				_log_element = _log_element + 1 if _log_element + 1 < Elements.E.size() else -1
+			"role":
+				_log_role = _log_role + 1 if _log_role + 1 < SpirlingData.ROLES.size() else -1
+			"status":
+				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
+			"tracker":
+				await info(_tracker_text())
+			"kind":
+				var sd: SpirlingData = kinds[idx - first_kind]
+				if not SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
+					await info("#%02d  Not seen yet." % sd.dex_id)
+					continue
+				await SpirlogPage.show_pages(self, kinds, idx - first_kind)
 
 func _tracker_text() -> String:
 	var lines: PackedStringArray = ["Spirlog Tracker", ""]

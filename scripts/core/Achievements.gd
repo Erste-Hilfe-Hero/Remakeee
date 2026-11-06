@@ -52,7 +52,7 @@ static func earned(id: String) -> bool:
 		"bonded_10":
 			return bonded >= 10
 		"seen_all":
-			return seen >= Database.spirlings.size()
+			return seen >= SpirlogBook.visible_kinds(GameState.flags).size()
 		"level_30":
 			return all_spirlings().any(func(s: Spirling) -> bool: return s.level >= 30)
 		"evolved":
