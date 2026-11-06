@@ -19,11 +19,14 @@ const DEFAULT_CONFIG: Dictionary = {
 	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
 	"party_max": 5, "level_max": 60, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
+	"league_fair_ring": 50, "league_season_days": 42, "league_closing_minutes": 30, "league_search_start": 100,
+	"league_search_step": 50, "league_search_max": 400, "league_match_minutes": 30, "league_ai": 2,
+	"league_fair_blocked_sources": [],
 }
 const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
 ## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
 const DEFAULT_FLAGS: Dictionary = {
-	"league_fair": {"enabled": false, "min_version": 1}, "league_open": {"enabled": false, "min_version": 1},
+	"league_fair": {"enabled": true, "min_version": 1}, "league_open": {"enabled": true, "min_version": 1},
 	"live_duel": {"enabled": false, "min_version": 1}, "trade": {"enabled": false, "min_version": 1},
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 }
@@ -49,7 +52,7 @@ func _init(p_store_path: String = "") -> void:
 			"friend_request", "friend_respond", "friend_remove", "block", "unblock", "report", "set_social", "friends_list",
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
 			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
-			"battle_submit", "battle_status"]:
+			"battle_submit", "battle_status", "league_info", "league_join", "league_find"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 
 func is_local() -> bool:
@@ -789,6 +792,15 @@ func _on_delete_user(uid: String) -> void:
 	for key: String in battles.keys():
 		if battles[key].user == uid:
 			battles.erase(key)
+	for table: String in ["league_fair", "league_open"]:
+		var t: Dictionary = _table(table, {})
+		for key: String in t.keys():
+			if key.ends_with("|" + uid):
+				t.erase(key)
+	var matches: Dictionary = _table("league_matches", {})
+	for key: String in matches.keys():
+		if matches[key].user == uid:
+			matches.erase(key)
 
 # --- Battle referee (20261110000002_referee.sql) --------------------------------------------
 
@@ -808,15 +820,30 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 		return _fail("bad_battle")
 	if not _rate_ok("battle", config_int("battle_submit_limit", 60)):
 		return _fail("slow_down")
+	var c: Dictionary = (claim as Dictionary).duplicate(true)
+	c.erase("expect")
+	var lm: Dictionary = {}
+	if kind == "league_fair" or kind == "league_open":
+		var mv: Variant = (_table("league_matches", {}) as Dictionary).get(str(a.get("p_ref", "")))
+		if not mv is Dictionary or mv.user != me() or mv.league != kind.substr(7):
+			return _fail("no_such_match")
+		lm = mv
+		if lm.state != "open" or now() - int(lm.created_at) > 60 * config_int("league_match_minutes", 30):
+			return _fail("match_closed")
+		c["expect"] = _league_expect(lm)
 	var battles: Dictionary = _table("battles", {})
 	var id: int = int(db.get("battle_seq", 0)) + 1
 	db["battle_seq"] = id
 	var row: Dictionary = {"user": me(), "kind": kind, "ref": str(a.get("p_ref", "")).left(40), "status": "pending"}
 	battles[str(id)] = row
+	if not lm.is_empty():
+		lm.state = "submitted"
+		lm.battle_id = id
+		lm.rated = bool(lm.rated) and league_state(league_season()) == "running"
 	if referee_waits:
-		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": (claim as Dictionary).duplicate(true)}
+		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": c}
 	else:
-		row.status = str(BattleReferee.check(replay, claim).verdict)
+		_decide(id, BattleReferee.check(replay, c))
 	return {"ok": true, "battle_id": id, "status": "pending"}
 
 ## Tests: battles stay "pending" until [method referee_run] (like the real queue).
@@ -828,10 +855,25 @@ func referee_run() -> int:
 	for key: String in (_table("battles", {}) as Dictionary):
 		var row: Dictionary = db.battles[key]
 		if row.has("queued"):
-			row.status = str(BattleReferee.check(row.queued.replay, row.queued.claim).verdict)
+			var q: Dictionary = row.queued
 			row.erase("queued")
+			_decide(int(key), BattleReferee.check(q.replay, q.claim))
 			n += 1
 	return n
+
+## Like the battle_results trigger: the state, then league ratings.
+func _decide(id: int, result: Dictionary) -> void:
+	var row: Dictionary = db.battles[str(id)]
+	row.status = str(result.verdict)
+	if row.kind == "league_fair" or row.kind == "league_open":
+		for key: String in (_table("league_matches", {}) as Dictionary):
+			var m: Dictionary = db.league_matches[key]
+			if int(m.get("battle_id", -1)) == id and m.state == "submitted":
+				if row.status == "ok":
+					_league_apply(m, result.detail)
+				else:
+					m.state = "done"
+					m.rated = false
 
 func _fn_battle_status(a: Dictionary) -> Dictionary:
 	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
@@ -843,3 +885,137 @@ func _fn_battle_status(a: Dictionary) -> Dictionary:
 func battle_ok(battle_id: int) -> bool:
 	var row: Variant = (_table("battles", {}) as Dictionary).get(str(battle_id))
 	return row is Dictionary and row.status == "ok"
+
+# --- Leagues (20261110000003_league.sql) ----------------------------------------------------
+
+## Like public._league_season: the season of now, started by itself after the last one.
+func league_season() -> Dictionary:
+	var seasons: Array = _table("league_seasons", [])
+	for i: int in range(seasons.size() - 1, -1, -1):
+		var sn: Dictionary = seasons[i]
+		if now() >= int(sn.starts_at) and now() < int(sn.ends_at):
+			return sn
+	var day: int = now() - now() % 86400
+	var sn: Dictionary = {"id": seasons.size() + 1, "starts_at": day,
+		"ends_at": day + 86400 * config_int("league_season_days", 42), "rules_version": 1, "state": "running"}
+	seasons.append(sn)
+	return sn
+
+## "running", "closing" (last 30 minutes) or "paused".
+func league_state(sn: Dictionary) -> String:
+	if sn.state == "paused":
+		return "paused"
+	if now() >= int(sn.ends_at) - 60 * config_int("league_closing_minutes", 30):
+		return "closing"
+	return "running"
+
+func league_entry(league: String, season: int, uid: String) -> Variant:
+	return (_table("league_" + league, {}) as Dictionary).get("%d|%s" % [season, uid])
+
+func _league_check(league: String) -> String:
+	if league != LeagueRules.FAIR and league != LeagueRules.OPEN:
+		return "bad_league"
+	if not flag_on("league_" + league, 2147483647):
+		return "feature_off"
+	return ""
+
+func _fn_league_info(a: Dictionary) -> Dictionary:
+	var league: String = str(a.get("p_league", ""))
+	var err: String = _league_check(league)
+	if not err.is_empty():
+		return _fail(err)
+	profile_of(me())
+	var sn: Dictionary = league_season()
+	var e: Variant = league_entry(league, int(sn.id), me())
+	return {"ok": true, "season": sn.id, "ends_at": sn.ends_at, "state": league_state(sn), "rules_version": sn.rules_version,
+		"ring": config_int("league_fair_ring", 50) if league == LeagueRules.FAIR else config_int("level_max", 60),
+		"joined": e != null, "team": (e.team as Array).duplicate(true) if e != null else [],
+		"tier": LeagueRules.tier(float(e.rating)) if e != null else null,
+		"games": int(e.games) if e != null else 0, "wins": int(e.wins) if e != null else 0}
+
+func _fn_league_join(a: Dictionary) -> Dictionary:
+	var league: String = str(a.get("p_league", ""))
+	var err: String = _league_check(league)
+	if not err.is_empty():
+		return _fail(err)
+	var sn: Dictionary = league_season()
+	if league_state(sn) == "paused":
+		return _fail("season_paused")
+	if not _rate_ok("league_join", 30):
+		return _fail("slow_down")
+	var saved: Array = profile_of(me()).get("team", [])
+	var built: Dictionary = LeagueRules.build_team(saved, league, a.get("p_pick"), config_int("league_fair_ring", 50), config_int("level_max", 60))
+	if built.has("error"):
+		return _fail(str(built.error))
+	var key: String = "%d|%s" % [int(sn.id), me()]
+	var t: Dictionary = _table("league_" + league, {})
+	if not t.has(key):
+		t[key] = {"rating": Glicko.START_RATING, "rd": Glicko.START_RD, "vol": Glicko.START_VOL, "games": 0, "wins": 0}
+	t[key].team = built.team
+	return {"ok": true, "team": (built.team as Array).duplicate(true)}
+
+func _fn_league_find(a: Dictionary) -> Dictionary:
+	var league: String = str(a.get("p_league", ""))
+	var err: String = _league_check(league)
+	if not err.is_empty():
+		return _fail(err)
+	var sn: Dictionary = league_season()
+	if league_state(sn) == "paused":
+		return _fail("season_paused")
+	var mine: Variant = league_entry(league, int(sn.id), me())
+	if mine == null:
+		return _fail("not_joined")
+	if not _rate_ok("league_find", 240):
+		return _fail("slow_down")
+	var waited: int = maxi(0, int(a.get("p_waited", 0)))
+	var span: float = minf(config_int("league_search_start", 100) + config_int("league_search_step", 50) * floorf(waited / 10.0),
+		config_int("league_search_max", 400))
+	var best: String = ""
+	var best_d: float = INF
+	var t: Dictionary = _table("league_" + league, {})
+	for key: String in t:
+		var parts: PackedStringArray = key.split("|")
+		if int(parts[0]) != int(sn.id) or parts[1] == me() or is_blocked(me(), parts[1]):
+			continue
+		var d: float = absf(float(t[key].rating) - float(mine.rating))
+		if d <= span and d < best_d:
+			best = parts[1]
+			best_d = d
+	if best.is_empty():
+		return {"ok": true, "found": false, "range": span}
+	var matches: Dictionary = _table("league_matches", {})
+	for key: String in matches:
+		if matches[key].user == me() and matches[key].state == "open":
+			matches[key].state = "expired"
+	var opp: Dictionary = t["%d|%s" % [int(sn.id), best]]
+	var id: int = int(db.get("league_match_seq", 0)) + 1
+	db["league_match_seq"] = id
+	var teams: Array = [(mine.team as Array).duplicate(true), (opp.team as Array).duplicate(true)]
+	var rated: bool = league_state(sn) == "running"
+	matches[str(id)] = {"league": league, "season": int(sn.id), "user": me(), "opponent": best, "seed": rng.randi() & 0x7fffffff,
+		"teams": teams, "created_at": now(), "state": "open", "rated": rated}
+	return {"ok": true, "found": true, "match_id": id, "seed": matches[str(id)].seed, "teams": teams.duplicate(true),
+		"ai": config_int("league_ai", 2), "opponent_tier": LeagueRules.tier(float(opp.rating)), "range": span, "rated": rated}
+
+func _league_expect(m: Dictionary) -> Dictionary:
+	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
+		"front": [1, 1], "items_allowed": false}
+
+## Like public._league_apply: only the player who fought is rated.
+func _league_apply(m: Dictionary, detail: Variant) -> void:
+	var score: float = 1.0 if detail is Dictionary and str(detail.get("winner", "")) == "player" else 0.0
+	m.state = "done"
+	m.score = score
+	if not bool(m.rated):
+		return
+	var e: Variant = league_entry(m.league, int(m.season), m.user)
+	if e == null:
+		return
+	var o: Variant = league_entry(m.league, int(m.season), str(m.opponent))
+	var nr: Dictionary = Glicko.rate(float(e.rating), float(e.rd), float(e.vol),
+		float(o.rating) if o != null else Glicko.START_RATING, float(o.rd) if o != null else Glicko.START_RD, score)
+	e.rating = nr.rating
+	e.rd = nr.rd
+	e.vol = nr.vol
+	e.games = int(e.games) + 1
+	e.wins = int(e.wins) + int(score)
