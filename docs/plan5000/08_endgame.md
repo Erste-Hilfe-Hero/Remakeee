@@ -292,14 +292,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 ### Abschlussziele und 100-Prozent-Anzeige
 3378. [x] [P1] Eine Gesamtanzeige „Reise vollendet: x Prozent“ in den Aufzeichnungen bauen, die Story, Seitenziele, Spirlog, Erfolge, Türme und Erkundung gewichtet.
 3379. [x] [P1] Die Gewichte festlegen und in docs/BALANCE.md eintragen: Story 20, Seitenziele 10, Spirlog 25, Erfolge 20, Türme 15, Erkundung 10 Prozent.
-3380. [P2] Eine Prüfliste „Was fehlt noch“ bauen, die pro Bereich die drei nächsten offenen Ziele zeigt.
-3381. [P2] Den Prozentwert auf dem Speicherslot im Titelbild anzeigen.
-3382. [P2] Bei 50, 75 und 100 Prozent eine Belohnung von 50, 100 und 300 Wegmarken auszahlen.
-3383. [P2] Bei 100 Prozent einen goldenen Rand um den Speicherslot im Titelbild zeigen.
-3384. [P2] Einen Test schreiben, der prüft, dass ein voller Test-Spielstand unter tests/fixtures genau 100 Prozent ergibt.
-3385. [P2] Ziele, die nur zu Festen oder im Wochen-Echo erreichbar sind, nicht in die 100 Prozent zählen, damit niemand auf einen Monat warten muss.
-3386. [P2] Den Prozentwert nach neuen Updates neu berechnen und erreichte Lohnstufen nie zurücknehmen.
-3387. [P2] Den Prozentwert in einer Detailansicht nach den sechs Bereichen aufschlüsseln.
+3380. [x] [P2] Eine Prüfliste „Was fehlt noch“ bauen, die pro Bereich die drei nächsten offenen Ziele zeigt.
+3381. [x] [P2] Den Prozentwert auf dem Speicherslot im Titelbild anzeigen.
+3382. [x] [P2] Bei 50, 75 und 100 Prozent eine Belohnung von 50, 100 und 300 Wegmarken auszahlen.
+3383. [x] [P2] Bei 100 Prozent einen goldenen Rand um den Speicherslot im Titelbild zeigen.
+3384. [x] [P2] Einen Test schreiben, der prüft, dass ein voller Test-Spielstand unter tests/fixtures genau 100 Prozent ergibt.
+3385. [x] [P2] Ziele, die nur zu Festen oder im Wochen-Echo erreichbar sind, nicht in die 100 Prozent zählen, damit niemand auf einen Monat warten muss.
+3386. [x] [P2] Den Prozentwert nach neuen Updates neu berechnen und erreichte Lohnstufen nie zurücknehmen.
+3387. [x] [P2] Den Prozentwert in einer Detailansicht nach den sechs Bereichen aufschlüsseln.
 3388. [P3] Bei 100 Prozent eine kurze Abspannfolge mit allen gebondeten Spirlings in Reihe zeigen.
 3389. [P3] Einen Zeitpunkt „100 Prozent erreicht am“ in den Aufzeichnungen festhalten.
 3390. [P3] Den Prozentwert auf einem teilbaren Bild aus dem Fotomodus einblenden lassen.

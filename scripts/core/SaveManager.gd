@@ -508,6 +508,13 @@ static func summary_line(d: Dictionary) -> String:
 	var wm: int = GameState.as_int(d.get("waymarks", 0))
 	if wm > 0:
 		line += "  %s%d" % [Waymarks.GLYPH, wm]
+	# Journey percent on the slot (plan 3381); a full journey gets a gold star (plan 3383).
+	var rec: Variant = d.get("records", {})
+	if rec is Dictionary and (rec as Dictionary).has("completion"):
+		var pct: int = GameState.as_int((rec as Dictionary).completion)
+		line += "  %d%%" % pct
+		if pct >= 100:
+			line = Collection.STAR + " " + line
 	# A small chain marks a journey under the Iron Oath (plan 3396).
 	if d.get("iron_oath", false) is bool and bool(d.get("iron_oath", false)):
 		line = OATH_GLYPH + " " + line

@@ -357,4 +357,7 @@ T = {
 "Halfway. Your team is rested.": "Halbzeit. Dein Team ist ausgeruht.", "Master round: %d of %d beaten.": "Meisterrunde: %d von %d besiegt.",
 "The %s has begun! %s Spirlings are about, and Tilda's stand in Brindlewick trades festival goods.": "%s hat begonnen! %s-Spirlings sind unterwegs, und Tildas Stand in Brindlewick tauscht Festwaren.",
 "No festival right now. Next up: the %s, from %s, with %s Spirlings.": "Gerade ist kein Fest. Als Nächstes: %s, ab %s, mit %s-Spirlings.",
+"Journey %d%% complete!": "Reise zu %d%% vollendet!", "Bond with %s": "Binde %s", "%s: best %d of %d": "%s: Bestwert %d von %d",
+"%d places not visited yet": "%d Orte noch nicht besucht", "Nothing left. Your journey is complete!": "Nichts mehr offen. Deine Reise ist vollendet!",
+"What is missing": "Was fehlt noch",
 }
