@@ -49,5 +49,23 @@
  "murk_hollow_sign": [
   "MURK HOLLOW",
   "Inside: Storm Lantern, Climbing Pick."
- ]
+ ],
+ "tarn_sketch": [
+  "A pencil sketch is pinned to a post: the tarn, open water, a Spirling diving.",
+  "\"The tarn, before it froze. K.\""
+ ],
+ "wanderer": {
+  "lines": [
+   "Wanderer Osk: At night I see a light up north, past the crest. Not a lamp. Brighter, and it flickers.",
+   "Wanderer Osk: Two Rifts down here, they say. I'd bet my boots there's a third one under that light."
+  ],
+  "after_flag": [
+   {
+    "flag": "kestra_dock_talk",
+    "lines": [
+     "Wanderer Osk: The northern light? Still there. Some nights it looks like a map being drawn."
+    ]
+   }
+  ]
+ }
 }

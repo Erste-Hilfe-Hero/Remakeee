@@ -36,6 +36,7 @@ static func validate() -> PackedStringArray:
 	check_passages(errors, map_ids)
 	check_layout(errors, map_ids, load_layout())
 	check_transit(errors, map_ids, load_layout().get("lines", {}))
+	check_schedules(errors, map_ids)
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -608,30 +609,10 @@ static func check_reachability(errors: PackedStringArray, map_ids: PackedStringA
 		if m == null:
 			continue
 		var reach: Dictionary = reachable_cells(m, entries[id])
-		var near: Callable = func(c: Vector2i) -> bool:
-			if reach.has(c):
-				return true
-			for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
-				if reach.has(c + d):
-					return true
-			return false
+		check_reached(errors, id, m, reach)
 		for w: Dictionary in m.warps:
-			if not near.call(Vector2i(int(w.x), int(w.y))):
-				errors.append("map '%s': warp to '%s' at %s,%s cannot be reached" % [id, w.get("to", ""), w.x, w.y])
 			if not (links.get(str(w.get("to", "")), {}) as Dictionary).has(id):
 				errors.append("map '%s': no way back from '%s'" % [id, w.get("to", "")])
-		for n: Dictionary in m.npcs:
-			if not near.call(Vector2i(int(n.x), int(n.y))):
-				errors.append("map '%s': npc '%s' cannot be reached" % [id, n.get("id", "")])
-		for sg: Dictionary in m.signs:
-			if not near.call(Vector2i(int(sg.x), int(sg.y))):
-				errors.append("map '%s': sign at %s,%s cannot be reached" % [id, sg.x, sg.y])
-		for g: Dictionary in m.gear_spots:
-			var f: Array = g.get("from", [g.x, g.y])
-			if not reach.has(Vector2i(int(f[0]), int(f[1]))):
-				errors.append("map '%s': gear spot at %s,%s cannot be reached" % [id, g.x, g.y])
-		if m.heal_point.x >= 0 and not near.call(m.heal_point):
-			errors.append("map '%s': rest point cannot be reached" % id)
 	var seen: Dictionary = {start_map: true}
 	var queue: Array[String] = [start_map]
 	while not queue.is_empty():
@@ -644,6 +625,115 @@ static func check_reachability(errors: PackedStringArray, map_ids: PackedStringA
 		if not seen.has(id):
 			errors.append("map '%s': cannot be reached from the start" % id)
 
+## Every warp, NPC, sign, gear spot and the rest point of [param m] is in [param reach] or next
+## to it. [param when] names the time of day for day-plan checks ("" for the plain map).
+static func check_reached(errors: PackedStringArray, id: String, m: MapData, reach: Dictionary, when: String = "") -> void:
+	var at: String = "" if when.is_empty() else " at " + when
+	var near: Callable = func(c: Vector2i) -> bool:
+		if reach.has(c):
+			return true
+		for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+			if reach.has(c + d):
+				return true
+		return false
+	for w: Dictionary in m.warps:
+		if not near.call(Vector2i(int(w.x), int(w.y))):
+			errors.append("map '%s': warp to '%s' at %s,%s cannot be reached%s" % [id, w.get("to", ""), w.x, w.y, at])
+	for n: Dictionary in m.npcs:
+		if not _unplaced(n) and not near.call(Vector2i(int(n.x), int(n.y))):
+			errors.append("map '%s': npc '%s' cannot be reached%s" % [id, n.get("id", ""), at])
+	if not when.is_empty():
+		for sc: Dictionary in m.secrets:
+			if not near.call(Vector2i(int(sc.get("x", -1)), int(sc.get("y", -1)))):
+				errors.append("map '%s': hidden find at %s,%s cannot be reached%s" % [id, sc.get("x"), sc.get("y"), at])
+	for sg: Dictionary in m.signs:
+		if not near.call(Vector2i(int(sg.x), int(sg.y))):
+			errors.append("map '%s': sign at %s,%s cannot be reached%s" % [id, sg.x, sg.y, at])
+	for g: Dictionary in m.gear_spots:
+		var f: Array = g.get("from", [g.x, g.y])
+		if not reach.has(Vector2i(int(f[0]), int(f[1]))):
+			errors.append("map '%s': gear spot at %s,%s cannot be reached%s" % [id, g.x, g.y, at])
+	if m.heal_point.x >= 0 and not near.call(m.heal_point):
+		errors.append("map '%s': rest point cannot be reached%s" % [id, at])
+
+## Day plans and walks (area 3 items 1212-1216): only townsfolk get them, every phase name is
+## known, every place and walk cell is free floor (no warp, door, puzzle block, rest point or
+## arrival cell), walks are chains of neighbouring cells from the place, and at every time of
+## day the people standing around still leave every warp, sign, person and rest point reachable.
+static func check_schedules(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	NpcSchedule.reset()
+	var entries: Dictionary = entry_cells(map_ids)
+	for id: String in map_ids:
+		if id.contains(MapData.FLOOR_SEP):
+			continue
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		for def: Dictionary in m.npcs:
+			if not NpcSchedule.has_plan(def):
+				continue
+			var who: String = "map '%s': npc '%s'" % [id, def.get("id", "")]
+			if TrainerData.is_trainer(def):
+				errors.append("%s is a Wayfarer and cannot have a day plan" % who)
+			for e: Variant in def.get("schedule", []):
+				var p: Variant = (e as Dictionary).get("phase", []) if e is Dictionary else null
+				for name: Variant in (p if p is Array else [p]):
+					if not str(name) in DayCycle.PHASE_NAMES:
+						errors.append("%s: unknown phase '%s' in its day plan" % [who, name])
+				if e is Dictionary and (e as Dictionary).has("map") and not str(e.map) in map_ids:
+					errors.append("%s goes to unknown map '%s'" % [who, e.map])
+			for phase: int in DayCycle.PHASE_NAMES.size():
+				var pl: Dictionary = NpcSchedule.place_for(def, id, phase)
+				if pl.is_empty() or not str(pl.map) in map_ids:
+					continue
+				var tm: MapData = MapData.load_map(str(pl.map))
+				var start := Vector2i(int(pl.x), int(pl.y))
+				var route: Array[Vector2i] = pl.walk
+				if not route.is_empty() and route[0] != start:
+					errors.append("%s: walk at %s must start on its place %s" % [who, DayCycle.phase_name(phase), start])
+				var last: Vector2i = start
+				for c: Vector2i in [start] + route:
+					var why: String = _plan_cell_problem(tm, c, entries.get(str(pl.map), []))
+					if not why.is_empty():
+						errors.append("%s at %s: cell %s on '%s' %s" % [who, DayCycle.phase_name(phase), c, pl.map, why])
+					if absi(c.x - last.x) + absi(c.y - last.y) > 1:
+						errors.append("%s: walk jumps from %s to %s" % [who, last, c])
+					last = c
+	# Nobody stands in the way for good, at any time of day.
+	for id: String in map_ids:
+		if id.contains(MapData.FLOOR_SEP) or not entries.has(id):
+			continue
+		var base: MapData = MapData.load_map(id)
+		if base == null:
+			continue
+		var planned: bool = base.npcs.any(func(d: Dictionary) -> bool: return NpcSchedule.has_plan(d)) or not NpcSchedule.visitors(id).is_empty()
+		if not planned:
+			continue
+		for phase: int in DayCycle.PHASE_NAMES.size():
+			var m: MapData = MapData.load_map(id)
+			m.npcs.assign(NpcSchedule.defs_for(m, phase).filter(func(d: Dictionary) -> bool: return DayCycle.shows_at(d, phase)))
+			check_reached(errors, id, m, reachable_cells(m, entries[id]), DayCycle.phase_name(phase))
+
+## A map file's own entry for someone with a day plan (not yet moved to a time of day).
+static func _unplaced(def: Dictionary) -> bool:
+	return NpcSchedule.has_plan(def) and not def.has("home_place")
+
+static func _plan_cell_problem(m: MapData, c: Vector2i, arrivals: Array) -> String:
+	if not m.in_bounds(c) or not m.is_walkable(c):
+		return "is not floor"
+	if not m.warp_at(c).is_empty():
+		return "is a warp"
+	if m.kind_at(c) == TilesetFactory.Kind.DOOR:
+		return "is a door"
+	if c == m.heal_point:
+		return "is the rest point"
+	if c in arrivals:
+		return "is where the player arrives"
+	for b: Dictionary in m.blocks:
+		if Vector2i(int(b.x), int(b.y)) == c:
+			return "is a puzzle block"
+	return ""
+
 ## Cells reachable from [param starts] with blocks open, gear owned and NPCs in the way.
 static func reachable_cells(m: MapData, starts: Array) -> Dictionary:
 	var open: Dictionary = {}
@@ -652,6 +742,9 @@ static func reachable_cells(m: MapData, starts: Array) -> Dictionary:
 	m.apply_blocks(open)
 	var npc_cells: Dictionary = {}
 	for n: Dictionary in m.npcs:
+		# People with a day plan are checked per time of day (check_schedules), placed.
+		if _unplaced(n):
+			continue
 		npc_cells[Vector2i(int(n.x), int(n.y))] = true
 	var passable: Callable = func(c: Vector2i) -> bool:
 		# All gear owned and every puzzle solved: wading water, vines and plank gaps are

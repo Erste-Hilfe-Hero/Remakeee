@@ -93,6 +93,9 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
+      # Google Play Billing plugin (plan area 10): built for exactly this engine version.
+      - name: Build billing plugin
+        run: tools/build_billing_plugin.sh
       - name: Create throwaway debug keystore
         run: |
           keytool -genkeypair -v -keystore "$RUNNER_TEMP/debug.keystore" -storepass android \
@@ -115,6 +118,8 @@ jobs:
           godot --headless --path . --import
           godot --headless --path . --export-debug "Android APK (debug)" build/android/Chimora-debug.apk
           "$(tools/find_zipalign.sh)" -c -P 16 -v 4 build/android/Chimora-debug.apk
+      - name: Billing plugin is in the APK
+        run: unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/billing/ChimoraBilling'
       - name: APK size budget
         run: tools/apk_budget.sh build/android/Chimora-debug.apk 88
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
@@ -208,6 +213,9 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Set up Godot templates and Android build template
         run: tools/ci_setup_android.sh
+      # Google Play Billing plugin (plan area 10): built for exactly this engine version.
+      - name: Build billing plugin
+        run: tools/build_billing_plugin.sh
       - name: Stamp version code (Play needs a higher code for every upload)
         run: |
           code=$((1000 + ${{ github.run_number }}))
