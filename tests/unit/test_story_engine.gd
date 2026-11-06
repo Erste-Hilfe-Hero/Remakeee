@@ -190,3 +190,14 @@ func test_finale_chain_is_complete() -> void:
 	assert_true(ScenePlayer.exists("credits"))
 	var last: Array = ScenePlayer.load_scene("finale_5").steps
 	assert_true(last.any(func(s: Dictionary) -> bool: return s.get("flag", "") == "story_complete"))
+
+## Plan item 1706: the 21 first species each have a second Spirlog line, and every line
+## belongs to a real species.
+func test_spirlog_rift_lore_covers_the_first_species() -> void:
+	for k: Variant in SpirlogLore.data():
+		if str(k).begins_with("_"):
+			continue
+		assert_not_null(Database.species(str(k)), "lore for unknown species %s" % k)
+	for name: String in ["Kindlop", "Puddlet", "Mossling", "Zippit", "Shalebat", "Zephlet", "Wickit", "Mirkmole", "Kelpup"]:
+		assert_ne(SpirlogLore.line(name), "", name)
+	assert_eq(SpirlogLore.data().size() - 1, 21)

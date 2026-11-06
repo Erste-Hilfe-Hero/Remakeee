@@ -450,6 +450,9 @@ func run_spirlog() -> void:
 			if not sd.lore.is_empty():
 				lines.append("")
 				lines.append(sd.lore)
+			var rift_lore: String = SpirlogLore.line(sd.species_name)
+			if not rift_lore.is_empty():
+				lines.append(rift_lore)
 		else:
 			lines.append("")
 			lines.append("Bond with one to learn more.")
