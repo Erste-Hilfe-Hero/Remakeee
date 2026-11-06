@@ -11,6 +11,7 @@ enum Type {
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
+	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -126,4 +127,23 @@ func describe() -> String:
 			return "%s's gift, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
 		Type.REACTION:
 			return str(data.get("text", "")) % who
+		Type.WEARY:
+			return "The long fight wears everyone out. Nobody can heal any more!"
+		Type.HEAL_BLOCKED:
+			if bool(data.get("fresh", false)):
+				return "%s can't heal for %d turns!" % [who, int(data.get("turns", 0))]
+			return "%s can't heal right now!" % who
+		Type.SNARE_SET:
+			if bool(data.get("full", false)):
+				return "No room for another snare."
+			return "A snare lies in wait on your side!" if int(data.get("side", 0)) == 0 else "A snare lies in wait on the foe's side!"
+		Type.SNARE_HIT:
+			return "%s springs the snare!" % who
+		Type.SNARE_CLEARED:
+			return "The snares on your side blow away." if int(data.get("side", 0)) == 0 else "The snares on the foe's side blow away."
+		Type.ENERGY_TAX:
+			if bool(data.get("fresh", false)):
+				return "%s is taxed: every art costs %d more Energy for %d turns!" % [who, int(data.get("cost", 1)), int(data.get("turns", 0))]
+			# A tick only updates the strip; the end of the tax gets a line.
+			return "The Energy tax on %s lifts." % who if int(data.get("turns", 0)) <= 0 else ""
 	return ""

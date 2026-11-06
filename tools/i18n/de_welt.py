@@ -1,4 +1,4 @@
-# German texts for area 3 (world, maps, exploring). Merged into data/i18n/de.json by tools/i18n/build.py.
+# German texts for area 3 (world, maps, exploring). Written to data/i18n/de/ by tools/i18n/build.py.
 # Kept apart from de_world.py so the world thread can add maps without clashing with story edits.
 T = {
 # Gear (data/items.json)
@@ -38,3 +38,13 @@ T = {
 "You tie the rope ladder to the edge. It will stay here.": "Du knotest die Strickleiter an der Kante fest. Sie bleibt hier hängen.",
 "You lay a plank over the gap. It holds.": "Du legst ein Brett über die Lücke. Es hält.",
 }
+T.update({
+# Hidden finds and the Spirlog Tracker
+"Something glints here...": "Hier glitzert etwas...",
+"Hidden finds here: %d/%d": "Versteckte Funde hier: %d/%d",
+"ferns": "Farn",
+"reeds": "Schilf",
+"scree": "Geröll",
+"shallow water": "seichtes Wasser",
+"cave": "Höhle",
+})

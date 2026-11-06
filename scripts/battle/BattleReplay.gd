@@ -10,6 +10,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"seed": model.battle_seed,
 		"wild": model.is_wild,
 		"ai": model.ai.level,
+		"profile": model.ai.profile_id,
 		"teams": [_team(model.party(BattleModel.Side.PLAYER)), _team(model.party(BattleModel.Side.FOE))],
 		"inventory": model.inventory.duplicate(),
 		"items_allowed": model.items_allowed,
@@ -75,6 +76,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.items_allowed = bool(snap.get("items_allowed", true))
 	m.level_cap = int(snap.get("level_cap", Spirling.MAX_LEVEL))
 	m.trainer_name = str(snap.get("trainer", ""))
+	m.ai.set_profile(str(snap.get("profile", "")))
 	m.field = str(snap.get("field", ""))
 	m.bench_share = float(snap.get("bench_share", 0.0))
 	m.foe_rule = str(snap.get("rule", ""))

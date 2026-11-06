@@ -30,6 +30,7 @@
     },
     "cinder_rift": "cinder_rift",
     "tide_rift": "tide_rift",
-    "murk_hollow": "murk_hollow"
+    "murk_hollow": "murk_hollow",
+    "echo_path": "echo_path"
   }
 }

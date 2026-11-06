@@ -55,6 +55,9 @@ var floor_index: int = 0
 var floor_count: int = 1
 ## Map file this map comes from (id without the floor part).
 var file_id: String = ""
+## Kind of land (fern, marsh, scree, forest, cave, town, rift, ...): steers encounters,
+## weather and sounds together (area 3 item 898).
+var biome: String = ""
 ## Puzzles: {"id", "flag", "plates": [[x, y], ...]} (see PuzzleRoom).
 var puzzles: Array[Dictionary] = []
 ## Tile under a boulder drawn on the map ("f" floor by default, "_" outside).
@@ -107,7 +110,10 @@ static func load_map(map_id: String) -> MapData:
 	if not raw is Dictionary:
 		push_error("MapData: cannot read map '%s'" % map_id)
 		return null
-	return from_dict(map_id, raw)
+	var m: MapData = from_dict(map_id, raw)
+	if m != null:
+		StoryPlacements.apply(m, raw)
+	return m
 
 ## Builds floor [param map_id] ("file" or "file@n") from a parsed map file.
 static func from_dict(map_id: String, raw: Dictionary) -> MapData:
@@ -120,6 +126,12 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 			push_error("MapData: map '%s' has no floor %d" % [file, level_no])
 			return null
 		var level: Dictionary = (floors[level_no - 1] as Dictionary).duplicate()
+		if level.has("slot"):
+			# Echo Path rooms (plan 3462): this week's template for the slot.
+			level = EchoPath.build_room(int(level.slot))
+			if level.is_empty():
+				push_error("MapData: no Echo Path room for '%s'" % map_id)
+				return null
 		for k: String in INHERITED:
 			if raw.has(k) and not level.has(k):
 				level[k] = raw[k]
@@ -144,6 +156,8 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	if level_no == 0:
 		# Master Wayfarers (plan area 8) stand on their maps once both Rifts are mended.
 		m.npcs.append_array(Masters.npcs_for(file))
+		# The wandering merchant stands somewhere else every day (plan 3423).
+		m.npcs.append_array(WorldEvents.npcs_for(file))
 	for s: Variant in raw.get("signs", []):
 		m.signs.append(s)
 	for g: Variant in raw.get("gear_spots", []):
@@ -157,6 +171,7 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	for ld: Variant in raw.get("ladders", []):
 		m.ladders.append(ld)
 	m.boulder_ground = str(raw.get("boulder_ground", "f"))
+	m.biome = str(raw.get("biome", ""))
 	m.drop_to = str(raw.get("drop_to", ""))
 	m._base_rows = m.rows.duplicate()
 	m.encounter_table = str(raw.get("encounters", ""))

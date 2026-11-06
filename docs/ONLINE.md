@@ -63,6 +63,9 @@ All under Menu, Friends. Spirlings are never traded or gifted, and there is no f
 | Battle referee: checks an uploaded battle (shared by server and game) | `scripts/battle/BattleReferee.gd` |
 | Battle referee service (container, loop, runner) | `server/referee/` |
 | End-to-end referee test (local Postgres + Godot) | `tools/online/test_referee.sh` |
+| League menu and league battle | `scripts/ui/LeagueMenu.gd`, `scripts/overworld/Overworld.gd` (`league_battle`) |
+| League rules (fair rows, learnable moves, tiers) and Glicko-2 | `scripts/online/LeagueRules.gd`, `scripts/online/Glicko.gd` |
+| Species and learnsets for the database (`game_species`) | `tools/online/game_data_sql.py` |
 
 Security model: every table has row level security on and no policies, and players have no table rights. The
 game only calls the `security definer` functions, which check `auth.uid()` and every rule themselves.
@@ -88,6 +91,33 @@ the repository root (`server/referee/Dockerfile`, compose profile `referee`), so
 sit next to `server/` (`/opt/chimora/project.godot`); otherwise it says so and the rest runs as before.
 Look at it with `docker compose --profile referee logs referee`. The limit per player is
 `server_config.battle_submit_limit` (60 an hour).
+
+### Leagues
+
+There are two leagues with separate tables: `league_fair_entries` (the fair league, the default) and
+`league_open_entries` (the open league, every advantage allowed). `league_join(league, pick)` takes only
+species names and move choices; the server rebuilds the team from the stored team (`_league_team`). In the
+fair league every Spirling fights at `league_fair_ring` (50) with base stats only (no spark, even temper)
+and only moves it can learn by Ring 50, its own or from earlier forms, checked against `game_species`.
+`game_species` is filled from `data/spirlings.json` by `tools/online/game_data_sql.py` (`setup.sh` does it
+when `../data` exists). The open league keeps the real team and Ring. The joined team is frozen as its
+own row, so a later save change does not touch it.
+
+`league_find(league, waited)` looks for an opponent within 100 rating points, widening by 50 every
+10 seconds up to 400 (`league_search_*`); blocked players never meet. The server picks the seed and both
+teams (the opponent is an echo played by the AI) and stores them in `league_matches`. `battle_submit`
+for `league_fair` / `league_open` ignores the client's teams and seed and lets the referee replay the
+server's battle with the uploaded inputs. Only an `ok` from the referee rates the player (Glicko-2 in
+`_league_rate`, start 1500 / 350 / 0.06); players see tiers (Spark, Ember, Flame, Glow, Beacon, each I to
+III), not numbers. A season (`league_seasons`) lasts `league_season_days` (42); in the last
+`league_closing_minutes` (30) nothing is rated, `paused` stops joining, and the next season starts by itself.
+Both leagues can be switched off with the flags `league_fair` and `league_open`.
+
+In the game, Menu > Leagues (`scripts/ui/LeagueMenu.gd`) shows the fair league first and the open league
+right below it. `hello` returns `flags`, the feature keys that are on for the game's version, and menus
+hide what is off (`Online.flag_on`). "Find a battle" asks `league_find` every 3 seconds for up to a
+minute; `Overworld.league_battle` builds the battle from the server's seed and teams
+(`BattleReferee.from_expect`), uploads it with `battle_submit` and tells the player it is being checked.
 
 Builds without a server address use `LocalBackend`, a test server that lives on the phone. The account menu
 then says "test server on this phone". The debug APK from CI works like this until the secrets below exist.
@@ -185,14 +215,78 @@ Table `feature_flags` (key, `enabled`, `min_version`): switches the new online p
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
 `league_open`, `live_duel`, `trade`, `bund`, `raid`. All start switched off.
 
-## Reports (Ali, about once a week)
+## Reports and decisions (Ali, about once a week)
 
-Table `reports` lists open reports (`handled = false`). To reset a name, run in the database:
+Every report gets a number at once (`report_in`, the player sees "Your report has number 12"). Open
+reports:
 
 ```sql
-update public.profiles set name = 'Wanderer ' || right(code, 4) where id = '<target>';
-update public.reports set handled = true where target = '<target>';
+select id, target_name, reason, context, object_id, created_at from public.reports where status = 'open' order by id;
 ```
 
-The DSA asks for a short reason to the player. Until there is an in-game notice, answer by email if they
-write in, for example: "Your Wanderer name was reset because it broke the rules in section 4 of the terms."
+Decide each one in the database console (players cannot call these functions):
+
+```sql
+select public.moderation_decide(12, true, 'name_reset');   -- upheld: name_reset, warning or league_block
+select public.moderation_decide(13, false, null);          -- rejected, no breach
+```
+
+An upheld decision sends the reported player a statement of reasons in the game (DSA Art. 17:
+measure, reason from the fixed list, section 4 of the terms, a person decided, objection possible for 6
+months), under Account, Messages from the team. The reporter always gets the result. Reasons: 0 name,
+1 greetings, 2 cheating, 3 something else.
+
+Objections (DSA Art. 20) come in as `appeals`:
+
+```sql
+select a.id, a.reason, n.body, a.created_at from public.appeals a join public.notices n on n.id = a.notice_id
+where a.status = 'open';
+select public.appeal_answer(4, true);   -- true: decision changed (a league block is lifted), false: kept
+```
+
+A name that was reset stays reset after a changed decision; the player picks a new one.
+
+Reports from the web form `/melden` (DSA Art. 16, also without an account) land in `web_reports`.
+Their numbers start with W on the page. Answer them by e-mail when a contact is given:
+
+```sql
+select id, code, reason, details, contact, created_at from public.web_reports where status = 'open' order by id;
+update public.web_reports set status = 'upheld', decided_at = now() where id = 3;  -- or 'rejected'
+```
+
+To act on the player, turn it into a normal report, so the player gets the statement of reasons:
+
+```sql
+insert into public.reports (reporter, target, target_name, reason, context)
+select null, id, name, 0, 'friends' from public.profiles where code = '<code>' returning id;
+select public.moderation_decide(<that id>, true, 'name_reset');
+```
+
+## Refused saves (anti-cheat)
+
+`save_put` compares every save with the one before it in that slot (plan area 7, items 2921-2925):
+money may grow by at most `max_money_per_min` (5000) per minute played, play time by at most the real
+time since the last save plus `save_time_slack` (300 seconds), and every Spirling kind, move and item
+must be in `known_ids` (filled from `data/*.json` at every deploy by `tools/online/game_data_sql.py`).
+Less play time than before counts as a new journey in that slot, so money then counts from
+`start_money`. Keys in `save_server_keys` (league, raid, trades, premium currency …) are dropped from
+every save, because the server keeps those itself. A refused save answers `refused` with a reason and
+is noted in `cheat_flags` (the same refusal once per 10 minutes). With `cheat_flag_limit` (3) notes in
+`cheat_flag_days` (7) the account is out of leagues (`under_review`) until Ali clears it:
+
+```sql
+select p.code, f.reason, f.at, f.detail from public.cheat_flags f join public.profiles p on p.id = f.user_id
+order by f.at desc limit 50;
+update public.profiles set cheat_cleared_at = now() where code = '<CODE>';
+```
+
+## Privacy: export, deletion, retention
+
+`data_export()` returns every row of every public table that has a uuid (account) column, found
+through the system catalog, so new tables are covered without code changes; the player's own id reads
+"you", other players "another player", and hash or token columns are left out. `delete_account()`
+deletes the auth user and then every row anywhere that still carries the id. `tools/online/sql_test/test_privacy.sql`
+checks both against the catalog. `hello` runs `_privacy_cleanup()` about once in 100 calls: battle
+recordings and league matches older than 30 days, refused-save notes older than 6 months and league
+standings of seasons that ended more than a season ago are removed. The record of processing activities is
+`docs/legal/VERARBEITUNGEN.md`; add a row there before switching on a new online feature.

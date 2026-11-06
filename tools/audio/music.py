@@ -395,6 +395,10 @@ MAP_SONGS = {
                                         "Bbm", "Gb", "F7", "Bbm", "Ebm", "Bbm"],
                         motifs=[rift_motif("Bb4"), "-:16"], quotes={**dict(zip(range(6, 10), leitmotif(-4, minor=True))), 12: rift_motif("Bb4")},
                         arp_style="pad", bass_style="drone", drums="sparse", seed=151, bass_vol=0.5, rest_prob=0.45, lead_vol=0.24),
+    # Echo Path behind the Cinder Rift (endgame), G minor: the rift motif climbs over a slow pulse.
+    "echo_path": dict(bpm=90, chords=["Gm", "Eb", "Gm", "D", "Cm", "Eb", "D", "Gm"] * 3,
+                      motifs=[rift_motif("G4"), "D5:8 -:8"], quotes={**dict(zip(range(8, 12), leitmotif(5, minor=True))), 16: rift_motif("G5")},
+                      arp_style="climb", bass_style="pulse8", drums="soft", seed=157, lead_vol=0.25),
 }
 # Tracks that play once (jingles) instead of looping.
 ONE_SHOT = {"victory"}

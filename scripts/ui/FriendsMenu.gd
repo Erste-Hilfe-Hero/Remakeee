@@ -42,6 +42,7 @@ static func run(menu: PauseMenu) -> void:
 		labels.append("Lantern Mail (%d new)" % unread if unread > 0 else "Lantern Mail")
 		labels.append("Requests (%d)" % incoming.size() if incoming.size() > 0 else "Requests")
 		labels.append("Add a friend...")
+		labels.append("Copy my code")
 		labels.append("World goal of the week")
 		labels.append("Weekly board")
 		labels.append("Blocked Wayfarers")
@@ -57,9 +58,10 @@ static func run(menu: PauseMenu) -> void:
 			0: await run_mail(menu, mail_r.data if mail_r.data is Array else [])
 			1: await run_requests(menu, incoming, data.get("outgoing", []))
 			2: await add_friend(menu)
-			3: await run_goal(menu)
-			4: await run_board(menu)
-			5: await run_blocked(menu, data.get("blocked", []))
+			3: copy_code(menu)
+			4: await run_goal(menu)
+			5: await run_board(menu)
+			6: await run_blocked(menu, data.get("blocked", []))
 
 ## Friends and Lantern Mail are asked for at the same time, while the menu already shows
 ## "Loading..." (item 2129). Returns [friends_list result, mail_list result].
@@ -168,19 +170,26 @@ static func _send(menu: MenuHost, code: String, kind: String, phrase: int) -> vo
 	else:
 		await menu.info(error_text(r))
 
-static func report(menu: MenuHost, code: String, name: String) -> void:
+static func report(menu: MenuHost, code: String, name: String, context: String = "friends") -> void:
 	var reason: int = await menu.pick_strings("Why do you report %s?" % name, REPORT_REASONS)
 	if reason < 0:
 		return
-	var r: Dictionary = await Online.call_fn("report", {"p_code": code, "p_reason": reason})
+	var r: Dictionary = await Online.call_fn("report_in", {"p_code": code, "p_reason": reason, "p_context": context, "p_object": ""})
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
-		await menu.info("Thank you. We will look at it. You can also block %s." % name)
+		await menu.info(Loc.t("Thank you. Your report has number %d. We will look at it and tell you the result under Account, Messages from the team.") % int(r.data.get("report_id", 0))
+			+ "\n" + Loc.t("You can also block %s.") % name)
 	else:
 		await menu.info(error_text(r))
 
+## Puts the own friend code on the clipboard (item 2171).
+static func copy_code(menu: MenuHost) -> void:
+	DisplayServer.clipboard_set(Online.pretty_code(Online.friend_code()))
+	Sound.sfx("confirm")
+	menu.toast("Copied.")
+
 static func add_friend(menu: MenuHost) -> void:
 	await menu.info("Your friend code is %s. Share it only with people you know. Never share your real name or address." % Online.pretty_code(Online.friend_code()))
-	var code: String = await TextPrompt.ask(menu, "Friend code of your friend", false, 9)
+	var code: String = await CodePrompt.ask(menu, "Friend code of your friend", 8)
 	if code.is_empty():
 		return
 	var r: Dictionary = await Online.call_fn("friend_request", {"p_code": code})

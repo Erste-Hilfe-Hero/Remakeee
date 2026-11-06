@@ -43,9 +43,29 @@ for t in "$a" "$b"; do
 done
 
 # The store pages (privacy, account deletion, support) must be reachable.
-for page in datenschutz privacy konto-loeschen delete-account support impressum; do
+for page in datenschutz privacy konto-loeschen delete-account support impressum melden melden.js; do
 	code="$(curl -sS $k -o /dev/null -w '%{http_code}' "$url/$page")"
 	[ "$code" = "200" ] || fail "/$page answered $code"
 done
+
+# Plan item 3877: the sign-in admin API is closed to the public key and to player tokens.
+c="$(sign_in)" || fail "third sign-in"
+for tok in "$anon" "$c"; do
+	code="$(curl -sS $k -o /dev/null -w '%{http_code}' "$url/auth/v1/admin/users" -H "apikey: $anon" -H "Authorization: Bearer $tok")"
+	case "$code" in 401|403) ;; *) fail "admin API answered $code" ;; esac
+done
+post /rest/v1/rpc/delete_account "$c" '{}' >/dev/null
+# Items 3763 and 3874: no search engine indexing of the test build, security headers.
+curl -sS $k "$url/robots.txt" | grep -q "Disallow: /play/" || fail "robots.txt"
+headers="$(curl -sS $k -o /dev/null -D - "$url/datenschutz")"
+for h in "strict-transport-security" "x-content-type-options: nosniff" "referrer-policy" "content-security-policy"; do
+	echo "$headers" | grep -qi "^$h" || fail "header $h missing on /datenschutz"
+done
+# Item 2899: the report form may run its own script and call this server, nothing else.
+curl -sS $k -o /dev/null -D - "$url/melden" | grep -qi "^content-security-policy:.*script-src 'self'" || fail "/melden has no script CSP"
+play="$(curl -sS $k -o /dev/null -D - "$url/play/")"
+if echo "$play" | head -1 | grep -q " 200"; then
+	echo "$play" | grep -qi "^x-robots-tag: noindex" || fail "/play/ has no noindex"
+fi
 
 echo "Smoke test OK against $url"

@@ -11,12 +11,22 @@ psql_db -c "create schema if not exists chimora_meta;
 	revoke all on schema chimora_meta from public;
 	create table if not exists chimora_meta.migrations (name text primary key, applied_at timestamptz not null default now());"
 
+pending=()
 for f in "$dir"/*.sql; do
 	name="$(basename "$f")"
 	done_already="$(psql_db -tAc "select 1 from chimora_meta.migrations where name = '$name'")"
-	if [ "$done_already" = "1" ]; then
-		continue
+	[ "$done_already" = "1" ] || pending+=("$f")
+done
+# Plan item 3833: a backup before every migration; no backup, no migration.
+if [ "${#pending[@]}" -gt 0 ] && [ "${MIGRATE_SKIP_BACKUP:-0}" != "1" ]; then
+	has_tables="$(psql_db -tAc "select count(*) from chimora_meta.migrations")"
+	if [ "$has_tables" != "0" ]; then
+		echo "Backup before ${#pending[@]} migration(s)"
+		BACKUP_NAME=pre-migration bash ./backup.sh || { echo "Backup failed, migrations not applied." >&2; exit 1; }
 	fi
+fi
+for f in "${pending[@]}"; do
+	name="$(basename "$f")"
 	echo "Applying $name"
 	{ cat "$f"; echo; echo "insert into chimora_meta.migrations (name) values ('$name');"; } | psql_db -1
 done

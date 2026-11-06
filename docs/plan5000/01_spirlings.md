@@ -72,9 +72,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 60. [P3] Schreibe eine Spirlog-Fußnote für Scrivane, dass seine Tintenlinien Mirelas Handschrift ähneln, als leisen Hinweis auf Akt II.
 
 ### Neue Spirlings für Corvane, Ashmere und Solenne
-61. [P1] Lege für Corvane (Era II, Flussdelta mit Mühlen und Regen) acht Linien fest und trage sie mit "region": "corvane" und Platzhalter-Sprites in die Daten ein, auch wenn die Region noch nicht spielbar ist.
-62. [P1] Lege für Ashmere (Era III, Aschemoor mit Glashütten und Kupferstichen) sechs Linien fest und trage sie mit "region": "ashmere" und Platzhalter-Sprites ein.
-63. [P1] Lege für Solenne (Era IV, sonnige Hochebene mit Sternwarten und Salzseen) sechs Linien fest und trage sie mit "region": "solenne" und Platzhalter-Sprites ein.
+61. [x] [P1] Lege für Corvane (Era II, Flussdelta mit Mühlen und Regen) acht Linien fest und trage sie mit "region": "corvane" und Platzhalter-Sprites in die Daten ein, auch wenn die Region noch nicht spielbar ist.
+62. [x] [P1] Lege für Ashmere (Era III, Aschemoor mit Glashütten und Kupferstichen) sechs Linien fest und trage sie mit "region": "ashmere" und Platzhalter-Sprites ein.
+63. [x] [P1] Lege für Solenne (Era IV, sonnige Hochebene mit Sternwarten und Salzseen) sechs Linien fest und trage sie mit "region": "solenne" und Platzhalter-Sprites ein.
 64. [x] [P1] Blende Arten aus noch nicht spielbaren Regionen im Spirlog und in Sammelzielen aus (Filter über GameState-Flag region_open_<id>), damit die Zahl "alle Arten" erreichbar bleibt.
 65. [P2] Corvane: Füge die Linie Drizzlet (Tide, Rolle striker) und Pluvane hinzu, ein Regentropfen, der nie den Boden berührt und in den Dachrinnen der Mühlenstadt wohnt.
 66. [P2] Corvane: Füge die Linie Millgrit (Stone/Gale, Rolle bulwark) und Grindsail hinzu, ein Sandkorn aus den Mahlsteinen, das mit den Windmühlenflügeln wächst.
@@ -169,10 +169,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 151. [P3] Schreibe einen Tipp in Tips.gd, der erklärt, dass scheue Spirlings Bedingungen brauchen.
 
 ### Legendäre Spirlings: Die Ersten Stimmen
-152. [P1] Lege das Lore der Ersten Stimmen in docs/WORLD.md fest: sechs uralte Spirlings, deren Gesang das Land einst zusammenhielt, und deren Schweigen die Stille ausgelöst hat.
-153. [P1] Füge Velahra (Lumen/Tide, ancient) hinzu, die Erste Stimme Veydals, die als Licht unter dem See vor dem Leuchtturm schläft und Mirela zuletzt gesehen hat.
-154. [P1] Mach Velahra nach dem Finale im Lampenraum als feste, einmalige Begegnung am Seeufer erreichbar, mit dem Ring 40 und einem eigenen Kampfbildschirm-Hintergrund.
-155. [P1] Lass eine besiegte oder abgebrochene Begegnung mit einer Ersten Stimme nach dem nächsten Rasten an derselben Stelle wiederkehren, damit sie nie verloren geht.
+152. [x] [P1] Lege das Lore der Ersten Stimmen in docs/WORLD.md fest: sechs uralte Spirlings, deren Gesang das Land einst zusammenhielt, und deren Schweigen die Stille ausgelöst hat.
+153. [x] [P1] Füge Velahra (Lumen/Tide, ancient) hinzu, die Erste Stimme Veydals, die als Licht unter dem See vor dem Leuchtturm schläft und Mirela zuletzt gesehen hat.
+154. [x] [P1] Mach Velahra nach dem Finale im Lampenraum als feste, einmalige Begegnung am Seeufer erreichbar, mit dem Ring 40 und einem eigenen Kampfbildschirm-Hintergrund.
+155. [x] [P1] Lass eine besiegte oder abgebrochene Begegnung mit einer Ersten Stimme nach dem nächsten Rasten an derselben Stelle wiederkehren, damit sie nie verloren geht.
 156. [P2] Füge Morrowtide (Tide/Gale, ancient) hinzu, die Erste Stimme Corvanes, die als Flussmündung singt und Mühlräder antreibt, für Akt II.
 157. [P2] Füge Cindrelith (Ember/Stone, ancient) hinzu, die Erste Stimme Ashmeres, ein Glutkern unter dem Moor, der die Glashütten einst wärmte, für Akt III.
 158. [P2] Füge Aurelune (Lumen/Umbra, ancient) hinzu, die Erste Stimme Solennes, die Tag und Nacht teilt und in der Sternwarte wohnt, für Akt IV.
@@ -202,10 +202,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 182. [P3] Gib jeder Ersten Stimme einen Weltziel-Hinweis im Kartenbuch, der nur zeigt, in welcher Region sie wartet.
 
 ### Nachhall: Aufzucht und Hallkind
-183. [P1] Lege die eigene Nachwuchs-Mechanik "Nachhall" fest: zwei gebondete Spirlings singen an einer Echo-Quelle zusammen, und aus ihrem gemeinsamen Ruf entsteht ein schwebender Hallkern.
-184. [P1] Mach jede Heilquelle nach dem zweiten geflickten Riss zu einer Echo-Quelle mit dem Menüpunkt "Gemeinsam singen", der zwei Spirlings aus Team oder Lager wählen lässt.
-185. [P1] Lass den Hallkern nach 600 neu betretenen Feldern oder 30 gewonnenen Kämpfen, je nachdem was zuerst eintritt, zu einem Hallkind der Grundstufe auf Ring 1 erwachen.
-186. [P1] Prüfe die Beschreibung des Nachhalls mit dem Rechts-Thread und halte in docs/IP_HYGIENE.md fest, dass keine fremden Begriffe, Gegenstände oder Abläufe übernommen werden.
+183. [x] [P1] Lege die eigene Nachwuchs-Mechanik "Nachhall" fest: zwei gebondete Spirlings singen an einer Echo-Quelle zusammen, und aus ihrem gemeinsamen Ruf entsteht ein schwebender Hallkern.
+184. [x] [P1] Mach jede Heilquelle nach dem zweiten geflickten Riss zu einer Echo-Quelle mit dem Menüpunkt "Gemeinsam singen", der zwei Spirlings aus Team oder Lager wählen lässt.
+185. [x] [P1] Lass den Hallkern nach 600 neu betretenen Feldern oder 30 gewonnenen Kämpfen, je nachdem was zuerst eintritt, zu einem Hallkind der Grundstufe auf Ring 1 erwachen. Nach der Rechtsprüfung (Punkt 186): 30 gewonnene Kämpfe oder 5 Rasten an Heilquellen statt Schritten.
+186. [x] [P1] Prüfe die Beschreibung des Nachhalls mit dem Rechts-Thread und halte in docs/IP_HYGIENE.md fest, dass keine fremden Begriffe, Gegenstände oder Abläufe übernommen werden.
 187. [P2] Lege fest, dass zwei Spirlings nur singen können, wenn sie ein gemeinsames Element oder dieselbe Rolle haben, geprüft in einer reinen Funktion Nachhall.can_pair().
 188. [P2] Lass den Spieler wählen, welcher der beiden Eltern die Art des Hallkinds bestimmt, statt es zu würfeln.
 189. [P2] Berechne die Spark-Werte des Hallkinds pro Wert als höheren Elternwert minus eine Zufallszahl von 0 bis 3, mindestens 0.
@@ -239,8 +239,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 217. [P3] Lass den Spieler einem Hallkind beim Erwachen gleich einen Spitznamen geben, mit dem bestehenden NameKeyboard.
 
 ### Ortsprägungen (regionale Varianten)
-218. [P1] Lege die Mechanik "Ortsprägung" fest: eine Veydal-Art, die lange in einer anderen Region lebt, zeigt dort eine eigene Form mit geändertem Element und neuer Farbe, gespeichert im Feld "variant".
-219. [P1] Lege in data/spirlings.json ein Feld "variants" pro Art an ({"region", "elements", "palette", "lore", "trait"}), das ohne neue Art-Nummer auskommt.
+218. [x] [P1] Lege die Mechanik "Ortsprägung" fest: eine Veydal-Art, die lange in einer anderen Region lebt, zeigt dort eine eigene Form mit geändertem Element und neuer Farbe, gespeichert im Feld "variant".
+219. [x] [P1] Lege in data/spirlings.json ein Feld "variants" pro Art an ({"region", "elements", "palette", "lore", "trait"}), das ohne neue Art-Nummer auskommt.
 220. [P2] Gib Kindlop eine Corvane-Prägung (Ember/Tide), die im Regen glimmt statt zu erlöschen.
 221. [P2] Gib Mossling eine Ashmere-Prägung (Bloom/Ember), deren Moos auf warmer Asche wächst.
 222. [P2] Gib Zephlet eine Solenne-Prägung (Gale/Lumen), die im Hitzeflimmern sichtbar wird.
@@ -303,15 +303,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 277. [P3] Erlaube die Sortierung des Spirlogs nach Fundtag, um die eigene Reise nachzulesen.
 
 ### Echo-Melodie-Bonden
-278. [P1] Gib jeder Art ein festes Ruf-Motiv (die ersten zwei Zeichen ihres Rufs stehen in "cry_motif"), damit Wiedersehen mit einer Art sich vertraut anfühlt, und lass BondEcho.make_sequence() es nutzen.
-279. [P1] Spiele zu jedem Zeichen einen Ton, dessen Höhe vom Element des wilden Spirlings abhängt (acht Tonleitern in Sound.gd), sodass jedes Element anders klingt.
-280. [P1] Lass gestillte Spirlings in Rissnähe einen gedämpften Ruf mit nur drei Zeichen und blasseren Lichtern rufen, passend zur Stille im Lore.
-281. [P1] Lass Spirlings bei geflickten Rissen einen vollen Ruf mit vier Zeichen und einem leuchtenden Rahmen rufen, als sichtbaren Lohn fürs Flicken.
-282. [P1] Zeige nach dem Ruf nur ein Ergebnis in Worten ("Es hört dir zu", "Es zögert", "Es wendet sich ab"), nie eine Zahl, und halte das in test_bond_echo.gd fest.
-283. [P1] Lass einen zweiten Bondversuch im selben Kampf mit demselben Ruf beginnen, damit Lernen belohnt wird statt Glück.
-284. [P1] Füge die Antwort-Phase hinzu: nach einem fehlerfreien Echo ruft der Spirling manchmal ein fünftes Zeichen ("Nachklang"), dessen richtiges Echo den Ruf-Wert auf 1,0 hält, auch wenn das Zeichen eigentlich zusätzlich ist.
-285. [P1] Lass die Ruf-Länge mit der Seltenheit wachsen: common 4, uncommon 4, shy 5, ancient 5 plus zweite Phase, als Werte in BondEcho.gd.
-286. [P1] Ersetze die drei Zeichen Raute, Quadrat und Dreieck bei Lumen und Umbra durch Mond, Stern und Funke als eigene Form, ohne die Regeln zu ändern.
+278. [x] [P1] Gib jeder Art ein festes Ruf-Motiv (die ersten zwei Zeichen ihres Rufs stehen in "cry_motif"), damit Wiedersehen mit einer Art sich vertraut anfühlt, und lass BondEcho.make_sequence() es nutzen.
+279. [x] [P1] Spiele zu jedem Zeichen einen Ton, dessen Höhe vom Element des wilden Spirlings abhängt (acht Tonleitern in Sound.gd), sodass jedes Element anders klingt.
+280. [x] [P1] Lass gestillte Spirlings in Rissnähe einen gedämpften Ruf mit nur drei Zeichen und blasseren Lichtern rufen, passend zur Stille im Lore.
+281. [x] [P1] Lass Spirlings bei geflickten Rissen einen vollen Ruf mit vier Zeichen und einem leuchtenden Rahmen rufen, als sichtbaren Lohn fürs Flicken.
+282. [x] [P1] Zeige nach dem Ruf nur ein Ergebnis in Worten ("Es hört dir zu", "Es zögert", "Es wendet sich ab"), nie eine Zahl, und halte das in test_bond_echo.gd fest.
+283. [x] [P1] Lass einen zweiten Bondversuch im selben Kampf mit demselben Ruf beginnen, damit Lernen belohnt wird statt Glück.
+284. [x] [P1] Füge die Antwort-Phase hinzu: nach einem fehlerfreien Echo ruft der Spirling manchmal ein fünftes Zeichen ("Nachklang"), dessen richtiges Echo den Ruf-Wert auf 1,0 hält, auch wenn das Zeichen eigentlich zusätzlich ist.
+285. [x] [P1] Lass die Ruf-Länge mit der Seltenheit wachsen: common 4, uncommon 4, shy 5, ancient 5 plus zweite Phase, als Werte in BondEcho.gd.
+286. [x] [P1] Ersetze die drei Zeichen Raute, Quadrat und Dreieck bei Lumen und Umbra durch Mond, Stern und Funke als eigene Form, ohne die Regeln zu ändern.
 287. [P2] Lass die Echozeit ECHO_TIME in der Schwierigkeit Story auf 8 Sekunden steigen und in Rift-Born auf 5 Sekunden sinken.
 288. [P2] Gib dem Spirling im Team, das dieselbe Art wie der wilde Spirling ist, eine Hilfe: das erste Zeichen leuchtet beim Echo kurz nach.
 289. [P2] Lass einen Spirling, der ein Bonden abgelehnt hat und wieder auftaucht, beim nächsten Treffen sagen lassen "Es erinnert sich an deinen Ruf", und beginne mit demselben Motiv.
@@ -341,8 +341,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 
 ### Temperament
 313. [x] [P1] Erweitere das Temperament auf zehn Werte mit vier neuen (Curious, Shy, Proud, Gentle), die keinen Wert stärken, sondern nur Verhalten und Texte färben, und speichere sie ab Speicherstand 4.
-314. [P1] Zeige das Temperament auf der Lagerkarte und im Team-Menü mit dem bestehenden Satz ("Moves a little quicker.") und dem deutschen Gegenstück.
-315. [P1] Lass wilde Spirlings ihr Temperament bis zum Bonden verbergen und zeige es danach einmal als Meldung ("Es wirkt neugierig").
+314. [x] [P1] Zeige das Temperament auf der Lagerkarte und im Team-Menü mit dem bestehenden Satz ("Moves a little quicker.") und dem deutschen Gegenstück.
+315. [x] [P1] Lass wilde Spirlings ihr Temperament bis zum Bonden verbergen und zeige es danach einmal als Meldung ("Es wirkt neugierig").
 316. [P2] Lass Curious-Spirlings beim Echo das Motiv manchmal vertauschen, Shy-Spirlings leiser rufen, Proud-Spirlings ein Zeichen länger halten, Gentle-Spirlings langsamer rufen.
 317. [P2] Gib jedem Temperament ein eigenes kleines Leerlauf-Verhalten im Team-Menü (Hüpfen, Wackeln, Ruhe, Ducken).
 318. [P2] Lass Dorfbewohner an zwei Orten das Temperament des ersten Spirlings im Team kommentieren.
@@ -386,9 +386,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 354. [P3] Plane Gabe-Zuordnungen für die späteren Arten der Regionen als offene Spalte in tools/data/spirling_sheet.py.
 
 ### Andenken-Zuordnung
-355. [P1] Gib jeder Art ein Feld "keepsake_hint" mit dem Andenken, das zu ihr passt, und zeige es im Lager als Vorschlag "Passt gut: Bark Wrap".
-356. [P1] Lass beim Senden eines Spirlings ins Lager sein Andenken in der Tasche bleiben, wenn der Spieler das will, mit Frage "Andenken behalten?".
-357. [P1] Zeige im Lager auf jeder Karte das Andenken als Symbol und erlaube das Abnehmen direkt dort.
+355. [x] [P1] Gib jeder Art ein Feld "keepsake_hint" mit dem Andenken, das zu ihr passt, und zeige es im Lager als Vorschlag "Passt gut: Bark Wrap".
+356. [x] [P1] Lass beim Senden eines Spirlings ins Lager sein Andenken in der Tasche bleiben, wenn der Spieler das will, mit Frage "Andenken behalten?".
+357. [x] [P1] Zeige im Lager auf jeder Karte das Andenken als Symbol und erlaube das Abnehmen direkt dort.
 358. [P2] Gib jedem Temperament ein Lieblingsandenken (Fierce: Whetstone, Stalwart: Iron Burr, Keen: Keen Lens, Brisk: Wind Anklet, Hearty: Spring Flask, Even: Spark Coil).
 359. [P2] Lass einen Spirling mit Lieblingsandenken im Team-Menü fröhlicher wackeln, rein kosmetisch.
 360. [P2] Zeige im Team-Menü eine Übersicht "Wer trägt was" für alle fünf Spirlings auf einem Bildschirm.
@@ -408,14 +408,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 374. [P3] Gib dem Spirlog eine Seite "Andenken", die zeigt, welche Arten welches Andenken lieben.
 
 ### Lager und Team-Verwaltung
-375. [P1] Teile das Lager in benannte Fächer zu je 30 Plätzen (Start 8 Fächer, 240 Plätze) mit Namen und Farbe, die der Spieler ändern kann.
-376. [P1] Füge Mehrfachauswahl im Lager hinzu, um bis zu 10 Spirlings auf einmal in ein anderes Fach zu verschieben.
-377. [P1] Lass den Spieler Spirlings als "Liebling" markieren, die nicht freigelassen und nicht versehentlich verschoben werden können.
-378. [P1] Füge Team-Vorlagen hinzu: bis zu 6 gespeicherte Teams von je 5 Spirlings, die an jeder Quelle mit einem Tipp geladen werden.
-379. [P1] Füge das Freilassen hinzu: ein Spirling kehrt mit einem kurzen Abschiedstext an seinen Fundort zurück, mit doppelter Bestätigung und nie für Lieblinge.
-380. [P1] Zeige im Lager eine Detailkarte mit Ring, Temperament, Gabe, Andenken, Herkunft (Fundort, Tag, Ring beim Treffen) und Spark-Wörtern.
-381. [P1] Lass das Team an jeder Heilquelle mit dem Lager tauschen, auch bevor das Lager aus dem Menü erreichbar ist.
-382. [P1] Prüfe mit Tests, dass Verschieben, Freilassen und Team-Vorlagen nie das letzte gesunde Team-Mitglied entfernen.
+375. [x] [P1] Teile das Lager in benannte Fächer zu je 30 Plätzen (Start 8 Fächer, 240 Plätze) mit Namen und Farbe, die der Spieler ändern kann.
+376. [x] [P1] Füge Mehrfachauswahl im Lager hinzu, um bis zu 10 Spirlings auf einmal in ein anderes Fach zu verschieben.
+377. [x] [P1] Lass den Spieler Spirlings als "Liebling" markieren, die nicht freigelassen und nicht versehentlich verschoben werden können.
+378. [x] [P1] Füge Team-Vorlagen hinzu: bis zu 6 gespeicherte Teams von je 5 Spirlings, die an jeder Quelle mit einem Tipp geladen werden.
+379. [x] [P1] Füge das Freilassen hinzu: ein Spirling kehrt mit einem kurzen Abschiedstext an seinen Fundort zurück, mit doppelter Bestätigung und nie für Lieblinge.
+380. [x] [P1] Zeige im Lager eine Detailkarte mit Ring, Temperament, Gabe, Andenken, Herkunft (Fundort, Tag, Ring beim Treffen) und Spark-Wörtern.
+381. [x] [P1] Lass das Team an jeder Heilquelle mit dem Lager tauschen, auch bevor das Lager aus dem Menü erreichbar ist.
+382. [x] [P1] Prüfe mit Tests, dass Verschieben, Freilassen und Team-Vorlagen nie das letzte gesunde Team-Mitglied entfernen.
 383. [P2] Lass das Lager nach Seltenheit, Temperament, Gabe, Prägung und Fundtag sortieren, zusätzlich zu den bestehenden vier Sortierungen.
 384. [P2] Gib jedem Spirling bis zu drei eigene Farbmarken im Lager zum Ordnen.
 385. [P2] Zeige im Lager einen Vergleich zweier Spirlings nebeneinander (Werte als Wörter, Techniken, Gabe).
@@ -443,11 +443,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 407. [P3] Synchronisiere das Lager mit dem Server-Speicherstand über das bestehende Online-Speichern, ohne Tauschfunktion.
 
 ### Sammelziele
-408. [P1] Erweitere Collection.GOALS um Ziele pro Region (Veydal 10, 20, 30, alle), damit neue Arten nicht nur die Gesamtzahl verlängern.
-409. [P1] Ersetze das Ziel "kinds_11" durch eine gleitende Reihe 3, 5, 8, 12, 16, 20, 25, 30, alle, angepasst an 40 Veydal-Arten.
-410. [P1] Lass Belohnungen für Sammelziele nur Gegenstände aus dem Spiel, Münzen, Jackenfarben oder Titel sein, nie etwas, das man auch kaufen kann, und halte das in Collection.gd fest.
-411. [P1] Zeige im Ziele-Menü das nächste Sammelziel mit verbleibender Zahl ("Noch 3 Arten bis Kapitel-Stempel Veydal").
-412. [P1] Teste, dass jedes Sammelziel mit Inhalten des Akt I ohne Online-Funktionen erreichbar ist, wenn es zu Veydal gehört.
+408. [x] [P1] Erweitere Collection.GOALS um Ziele pro Region (Veydal 10, 20, 30, alle), damit neue Arten nicht nur die Gesamtzahl verlängern.
+409. [x] [P1] Ersetze das Ziel "kinds_11" durch eine gleitende Reihe 3, 5, 8, 12, 16, 20, 25, 30, alle, angepasst an 40 Veydal-Arten.
+410. [x] [P1] Lass Belohnungen für Sammelziele nur Gegenstände aus dem Spiel, Münzen, Jackenfarben oder Titel sein, nie etwas, das man auch kaufen kann, und halte das in Collection.gd fest.
+411. [x] [P1] Zeige im Ziele-Menü das nächste Sammelziel mit verbleibender Zahl ("Noch 3 Arten bis Kapitel-Stempel Veydal").
+412. [x] [P1] Teste, dass jedes Sammelziel mit Inhalten des Akt I ohne Online-Funktionen erreichbar ist, wenn es zu Veydal gehört.
 413. [P2] Füge Element-Ziele hinzu: alle Arten eines Elements in einer Region gebondet gibt eine Element-Zeichnung im Kartenbuch.
 414. [P2] Füge Linien-Ziele hinzu: jede Stufe einer Linie mindestens einmal entfaltet gibt eine Zeile im Spirlog.
 415. [P2] Füge ein Prägungs-Ziel hinzu: 5 Ortsprägungen gebondet gibt die Jackenfarbe "Reisende".
@@ -474,8 +474,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 
 ### Recht, Originalität und Tests
 436. [x] [P1] Prüfe jeden neuen Spirling-Namen, jede Ruf-Melodie und jeden Umriss gegen die Sperrliste und die IP-Regeln und vermerke die Prüfung pro Art in docs/IP_HYGIENE.md, bevor er in die Daten kommt.
-437. [P1] Halte in LEGAL.md und test_bond_echo.gd fest, dass Bonden weiter ohne Wurf, ohne Zielen, ohne schrumpfende Kreise und ohne Chancenanzeige läuft, auch bei Ersten Stimmen und friedlichen Begegnungen.
-438. [P1] Stelle sicher, dass kein Spirling, Hallkern oder Hallkind je getauscht, verschenkt oder gegen Geld erhalten werden kann, und prüfe es in test_online.gd.
+437. [x] [P1] Halte in LEGAL.md und test_bond_echo.gd fest, dass Bonden weiter ohne Wurf, ohne Zielen, ohne schrumpfende Kreise und ohne Chancenanzeige läuft, auch bei Ersten Stimmen und friedlichen Begegnungen.
+438. [x] [P1] Stelle sicher, dass kein Spirling, Hallkern oder Hallkind je getauscht, verschenkt oder gegen Geld erhalten werden kann, und prüfe es in test_online.gd.
 439. [P2] Lege fest, dass Spirlings beim Einwechseln, Nachhall und Erwachen immer neben den Wanderer treten und nie herausgeworfen werden, und prüfe es in den Szenen.
 440. [P2] Prüfe alle neuen deutschen Texte mit tools/ip_check.sh auf gesperrte Wörter, einschließlich der Begriffe aus der Spielerwörter-Liste in docs/IP_HYGIENE.md.
 441. [P2] Lass die neuen Arten in keinem Fall eine Feuer-Wasser-Pflanze-Dreiheit als Startwahl oder Geschenkset bilden.

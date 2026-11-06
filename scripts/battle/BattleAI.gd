@@ -19,6 +19,8 @@ const REPLY_WEIGHT: float = 0.5
 const BAD_MATCHUP_EFF: float = 2.0
 const RESIST_EFF: float = 0.5
 const SWAP_MIN_HP: float = 0.5
+## A Spirling that stepped in fewer than this many turns ago stays in (no endless swap dance).
+const SWAP_SETTLE_TURNS: int = 2
 ## Tier 2 heals below this HP fraction if it carries a healing item.
 const HEAL_THRESHOLD: float = 0.3
 ## Score for a Resonance field per side it helps (any AI tier above 0).
@@ -28,11 +30,67 @@ const SETUP_THREAT: float = 0.4
 const SETUP_SAFE_MULT: float = 1.5
 ## Tier 3: extra pull toward weakened foes (times the share of HP the target has lost).
 const FINISH_BONUS: float = 0.2
+## Fixed scores for the newer move blocks (docs/plan5000/02_kampf.md, item 563):
+## Energy tax per taxed turn, a side snare per foe on the bench, a delayed hit as a share of its
+## expected damage, and a small cost per own stage a self_stage_after hit gives up.
+## A cooldown costs nothing on the turn it is used.
+const TAX_BONUS_PER_TURN: float = 0.15
+const SNARE_BONUS_PER_BENCH: float = 0.25
+const DELAYED_SHARE: float = 0.8
+const SELF_DROP_COST: float = 0.1
+const BURN_BONUS_PER_ENERGY: float = 0.1
+## Moves scoring at most this (no damage, no useful effect) are not worth the Energy.
+const USELESS_SCORE: float = 0.01
+const HEAL_BLOCK_BONUS: float = 0.2
+## Wayfarer personalities (items 611-615): weights per profile in this file.
+const PROFILES_PATH: String = "res://data/ai_profiles.json"
+const DEFAULT_PROFILE: String = "balanced"
+## A healing art is worth the share of Vigor it gives back, times this, below heal_below.
+const HEAL_ART_WEIGHT: float = 1.0
+## focus_fire: extra pull toward the most hurt foe (times the share of HP it has lost).
+const FOCUS_BONUS: float = 0.3
+## status_first: damage counts this much while the target carries no status yet.
+const STATUS_FIRST_DAMAGE: float = 0.5
+
+static var _profiles: Dictionary = {}
 
 var level: int = 0
+## Personality id from data/ai_profiles.json ("balanced" when the Wayfarer names none).
+var profile_id: String = DEFAULT_PROFILE
+var profile: Dictionary = {}
 
-func _init(ai_level: int = 0) -> void:
+func _init(ai_level: int = 0, profile_name: String = "") -> void:
 	level = ai_level
+	set_profile(profile_name)
+
+## All profiles from data/ai_profiles.json, keyed by id (loaded once).
+static func profiles() -> Dictionary:
+	if _profiles.is_empty() and FileAccess.file_exists(PROFILES_PATH):
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(PROFILES_PATH))
+		if raw is Dictionary:
+			for k: String in raw:
+				if raw[k] is Dictionary:
+					_profiles[k] = raw[k]
+	return _profiles
+
+## Picks the personality; an unknown or empty id falls back to "balanced".
+func set_profile(profile_name: String) -> void:
+	var all: Dictionary = profiles()
+	profile_id = profile_name if all.has(profile_name) else DEFAULT_PROFILE
+	profile = all.get(profile_id, {})
+
+## A profile weight; tier 0 (wild, random) ignores personalities (item 625).
+func weight(key: String) -> float:
+	if level < 1:
+		return 1.0
+	return float(profile.get(key, 1.0))
+
+## A profile threshold, or [param fallback] when the profile leaves it at null / -1 default.
+func _rule(key: String, fallback: float) -> float:
+	var v: Variant = profile.get(key)
+	if level < 1 or v == null:
+		return fallback
+	return float(v)
 
 ## Picks an action for the Spirling in [param slot] of [param side]. Always returns a legal action.
 func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
@@ -47,6 +105,10 @@ func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 	if moves.is_empty():
 		return BattleAction.make_rest(side, slot)
 	var foes: Array[int] = model.standing_slots(BattleModel.other(side))
+	var me_now: Spirling = model.active_spirling(side, slot)
+	var rest_below: int = int(_rule("rest_below", -1.0))
+	if level >= 1 and rest_below >= 0 and me_now.energy <= rest_below:
+		return BattleAction.make_rest(side, slot)
 	if level <= 0:
 		var pick: BattleAction = moves[model.rng.randi_range(0, moves.size() - 1)]
 		# Only roll for a target when there is a choice, so 1v1 battles keep their RNG sequence.
@@ -57,16 +119,22 @@ func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 		return pick
 	var best: BattleAction = moves[0]
 	var best_score: float = -INF
+	var best_value: float = 0.0
+	var me: Spirling = model.active_spirling(side, slot)
 	for a: BattleAction in moves:
-		var mv: MoveData = model.active_spirling(side, slot).moves[a.move_index]
+		var mv: MoveData = me.moves[a.move_index]
 		var aims: Array[int] = [-1]
 		if not mv.is_area() and not foes.is_empty():
 			aims = foes
 		for aim: int in aims:
 			var score: float = score_action(model, side, slot, a.move_index, aim)
+			best_value = maxf(best_value, score_move(model, side, a.move_index, slot, aim))
 			if score > best_score:
 				best_score = score
 				best = BattleAction.make_move(side, a.move_index, slot, aim)
+	# Nothing it can afford does anything useful: catch its breath for a bigger art instead.
+	if best_value <= USELESS_SCORE and me.energy < Spirling.MAX_ENERGY and (rest_below < 0 or me.energy <= rest_below):
+		return BattleAction.make_rest(side, slot)
 	return best
 
 ## Score of using [param move_index] aimed at foe slot [param aim] (-1 for a sweep or the first foe):
@@ -90,14 +158,30 @@ func score_action(model: BattleModel, side: int, slot: int, move_index: int, aim
 func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, target_slot: int = -1) -> float:
 	var me: Spirling = model.active_spirling(side, slot)
 	var target: Spirling = model.active_spirling(BattleModel.other(side), target_slot) if target_slot >= 0 else model.opponent(side)
-	var mv: MoveData = me.moves[move_index]
+	var mv: MoveData = BattleRules.resolve_move(me.moves[move_index], model.field)
 	var acc: float = mv.accuracy * StatusRules.acc_mult(me.status)
-	var expected: float = DamageCalc.estimate(me, target, mv)
-	var score: float = minf(expected, float(target.hp)) / float(maxi(target.max_hp(), 1)) * acc
+	var expected: float = DamageCalc.estimate(me, target, mv) * BattleRules.status_bonus(mv, target)
+	var delayed: bool = false
+	for fx: Dictionary in mv.effects:
+		delayed = delayed or StringName(fx.get("id", "")) == &"delayed_hit"
+	var damage_w: float = weight("damage_w")
+	if weight("status_first") > 0.0 and target.status.is_empty() and level >= 1:
+		damage_w *= STATUS_FIRST_DAMAGE
+	if delayed:
+		# Lands later: worth a share of the hit now, and never counted as a KO this turn.
+		return damage_w * DELAYED_SHARE * minf(expected, float(target.hp)) / float(maxi(target.max_hp(), 1)) * acc
+	var hit: float = minf(expected, float(target.hp)) / float(maxi(target.max_hp(), 1)) * acc
 	if mv.is_damaging() and expected >= float(target.hp):
-		score += KO_BONUS * acc
+		hit += KO_BONUS * acc
 	if level >= 3 and mv.is_damaging():
-		score += FINISH_BONUS * (1.0 - target.hp_fraction()) * acc
+		hit += FINISH_BONUS * (1.0 - target.hp_fraction()) * acc
+	if mv.is_damaging() and weight("focus_fire") > 0.0 and level >= 1:
+		hit += FOCUS_BONUS * (1.0 - target.hp_fraction()) * acc
+	# Parts of the score each personality weighs differently (items 611-615).
+	var spoil: float = 0.0
+	var setup: float = 0.0
+	var fld: float = 0.0
+	var score: float = 0.0
 	for fx: Dictionary in mv.effects:
 		var fx_id: StringName = StringName(fx.get("id", ""))
 		if fx_id == &"stat_change":
@@ -110,17 +194,77 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 				var bonus: float = STAGE_BONUS * float(fx.get("chance", 1.0)) * acc * me.hp_fraction()
 				if level >= 3 and on_self and amt > 0:
 					bonus *= 0.0 if threat_to(model, side, slot) >= SETUP_THREAT else SETUP_SAFE_MULT
-				score += bonus
+				if on_self and amt > 0:
+					var only: Array = profile.get("setup_stats", [])
+					if only.is_empty() or str(fx.get("stat", "")) in only:
+						setup += bonus
+					else:
+						score += bonus
+				else:
+					spoil += bonus
 		elif fx_id == &"set_field" and level >= 1:
-			score += FIELD_BONUS * maxf(0.0, field_value(model, side, str(fx.get("field", ""))))
+			fld += FIELD_BONUS * maxf(0.0, field_value(model, side, str(fx.get("field", ""))))
+		elif fx_id == &"heal_self" and level >= 1 and me.hp_fraction() < _rule("heal_below", HEAL_THRESHOLD):
+			var back: float = minf(float(fx.get("amount", 0.5)), 1.0 - me.hp_fraction())
+			score += HEAL_ART_WEIGHT * back * acc
+		elif fx_id == &"energy_tax" and target.energy_tax <= 1 and target.energy >= _cheapest_hit(target):
+			# Only worth it while the foe has the Energy to strike; a drained foe is no target.
+			var turns: int = int(fx.get("amount", 0))
+			spoil += TAX_BONUS_PER_TURN * float(turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS) * acc
+		elif fx_id == &"status_shift":
+			if not me.status.is_empty() and target.status.is_empty() and not BattleRules.is_immune(target, me.status):
+				spoil += STATUS_BONUS * 2.0 * acc
+		elif fx_id == &"energy_burn" and target.burn_guard <= 0:
+			spoil += BURN_BONUS_PER_ENERGY * float(mini(target.energy, int(fx.get("amount", 1)))) * acc
+		elif fx_id == &"heal_block" and target.heal_block <= 1:
+			spoil += HEAL_BLOCK_BONUS * (1.0 if _can_heal(model, target) else 0.25) * acc
+		elif fx_id == &"stage_steal":
+			# Worth a stat art's bonus while the stolen stage still has room on our side.
+			for st_name: String in BattleRules.STAGE_STATS:
+				if target.stage(st_name) > 0 and me.stage(st_name) < 2:
+					setup += STAGE_BONUS * acc * me.hp_fraction()
+					break
+		elif fx_id == &"cure_self" and not me.status.is_empty():
+			score += STATUS_BONUS * acc
+		elif fx_id == &"clear_snares":
+			score += SNARE_BONUS_PER_BENCH * float((model.snares[side] as Array).size())
+		elif fx_id == &"side_snare":
+			# Each snare already lying there makes one more worth less; a full side is worth nothing.
+			var lying: int = (model.snares[BattleModel.other(side)] as Array).size()
+			var room: float = maxf(0.0, 1.0 - float(lying) / float(BattleRules.MAX_SNARES))
+			spoil += SNARE_BONUS_PER_BENCH * float(model.swap_candidates(BattleModel.other(side), maxi(target_slot, 0)).size()) * room * room * acc
+		elif fx_id == &"self_stage_after" and expected < float(target.hp):
+			var st: Dictionary = fx.get("stages", {})
+			for k: String in st:
+				score -= SELF_DROP_COST * float(maxi(0, -int(st[k])))
 	if target.status.is_empty():
 		for fx: Dictionary in mv.effects:
 			if StringName(fx.get("id", "")) == &"inflict_status":
 				var st: String = str(fx.get("status", ""))
 				if level >= 3 and (BattleRules.is_immune(target, st) or model.calm_rule_blocks(BattleModel.other(side), target, st)):
 					continue
-				score += STATUS_BONUS * float(fx.get("chance", 1.0)) * acc
-	return score
+				spoil += STATUS_BONUS * float(fx.get("chance", 1.0)) * acc
+	return score + hit * damage_w + spoil * weight("status_w") + setup * weight("setup_w") + fld * weight("field_w")
+
+## Energy cost of the cheapest damage art [param s] knows (99 if none).
+func _cheapest_hit(s: Spirling) -> int:
+	var c: int = 99
+	for mv: MoveData in s.moves:
+		if mv.is_damaging():
+			c = mini(c, mv.energy_cost)
+	return c
+
+## True if [param s] has a way to heal in battle: a healing art, a regenerating gift or keepsake.
+func _can_heal(model: BattleModel, s: Spirling) -> bool:
+	if BattleRules.add_key(s, "regen_div") > 0.0:
+		return true
+	if not str(BattleRules.FIELDS.get(model.field, {}).get("regen_element", "")).is_empty():
+		return true
+	for mv: MoveData in s.moves:
+		for fx: Dictionary in mv.effects:
+			if StringName(fx.get("id", "")) in [&"heal_self", &"drain"]:
+				return true
+	return false
 
 ## How much laying field [param id] helps [param side]: +1 if one of its standing Spirlings has a
 ## move of the boosted element, -1 if a foe has one, half that for the weakened element.
@@ -178,12 +322,19 @@ func _tier2_special(model: BattleModel, side: int, slot: int = 0) -> BattleActio
 	var me: Spirling = model.active_spirling(side, slot)
 	var foe: Spirling = model.opponent(side)
 	# Heal when low, if the bag allows it.
-	if me.hp_fraction() < HEAL_THRESHOLD:
+	if me.hp_fraction() < _rule("heal_below", HEAL_THRESHOLD):
 		for a: BattleAction in model.legal_actions(side, slot):
 			if a.kind == BattleAction.Kind.ITEM and int(Database.item(a.item_id).get("heal", 0)) > 0:
 				return a
 	# Swap out of a bad matchup into an ally that resists the foe's elements.
-	if _threat_eff(foe, me) >= BAD_MATCHUP_EFF:
+	var settled: bool = model.turn - int(model.entered_turn.get(me, -SWAP_SETTLE_TURNS)) >= SWAP_SETTLE_TURNS
+	var swap_below: float = _rule("swap_below", INF)
+	if swap_below < 0.0:
+		return null  # This personality never swaps by choice.
+	var bad: bool = _threat_eff(foe, me) >= BAD_MATCHUP_EFF
+	if swap_below != INF:
+		bad = _threat_eff(me, foe) - _threat_eff(foe, me) + me.hp_fraction() < swap_below
+	if settled and bad:
 		for a: BattleAction in model.legal_actions(side, slot):
 			if a.kind != BattleAction.Kind.SWAP:
 				continue

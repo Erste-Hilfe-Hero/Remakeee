@@ -4,8 +4,9 @@ extends RefCounted
 ## the online rules, the privacy note and deleting the account (items 2, 4, 11, 20, 156).
 
 const TITLE_SCENE: String = "res://scenes/ui/Title.tscn"
+const TRANSFER_CODE_LENGTH: int = 12
 
-const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code and saves, nothing else. No ads, no tracking. You can delete everything under Settings, Account."
+const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. You can download or delete everything under Settings, Account."
 const ONLINE_RULES: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Wayfarer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
 
 static func run(menu: MenuHost) -> void:
@@ -14,7 +15,7 @@ static func run(menu: MenuHost) -> void:
 		if Online.is_local():
 			title += "\n" + Loc.t("(test server on this phone)")
 		var entries: Array[String] = ["Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
-			"Friends and greetings: %s" % ("On" if Online.social_on() else "Off")]
+			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", "Messages from the team"]
 		var idx: int = await menu.pick_strings(title, entries)
 		match idx:
 			-1:
@@ -33,6 +34,44 @@ static func run(menu: MenuHost) -> void:
 					return
 			5:
 				await _toggle_social(menu)
+			6:
+				await _export(menu)
+			7:
+				await NoticesMenu.run(menu)
+
+## Everything the server keeps about this account as one JSON file (plan area 7, item 2972;
+## GDPR Art. 15 and 20). The browser version downloads it, phones save it to the documents folder.
+static func _export(menu: MenuHost) -> void:
+	var r: Dictionary = await Online.call_fn("data_export")
+	if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+		await menu.info(Online.error_text(str(r.data.get("error", "")) if r.get("data") is Dictionary else str(r.get("error", ""))))
+		return
+	var text: String = JSON.stringify(r.data, "\t")
+	if OS.has_feature("web"):
+		JavaScriptBridge.download_buffer(text.to_utf8_buffer(), EXPORT_FILE, "application/json")
+		await menu.info("Your data is downloading as %s." % EXPORT_FILE)
+		return
+	var path: String = write_export(text)
+	if path.is_empty():
+		await menu.info("The file could not be saved. Write to our support and we send your data by email.")
+		return
+	await menu.info(Loc.t("Your data was saved as:") + "\n" + path)
+
+const EXPORT_FILE: String = "chimora-my-data.json"
+
+## Writes the export to the documents folder, or the game's own folder when that is not allowed.
+## Returns the path, or "" when nothing could be written.
+static func write_export(text: String) -> String:
+	for dir: String in [OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS), OS.get_user_data_dir()]:
+		if dir.is_empty():
+			continue
+		var path: String = dir.path_join(EXPORT_FILE)
+		var f := FileAccess.open(path, FileAccess.WRITE)
+		if f != null:
+			f.store_string(text)
+			f.close()
+			return path
+	return ""
 
 static func _show_transfer(menu: MenuHost) -> void:
 	var r: Dictionary = await Online.transfer_create()
@@ -43,12 +82,17 @@ static func _show_transfer(menu: MenuHost) -> void:
 	await menu.info("Your transfer code:\n\n%s-%s-%s\n\nOn the new phone open Settings, Account, Enter a code. It works once and for 7 days. Keep it secret: anyone with it gets your journeys." % [c.left(4), c.substr(4, 4), c.substr(8)])
 
 static func _claim_transfer(menu: MenuHost) -> bool:
+	return await claim_code(menu, true)
+
+## Enters a transfer code. [param warn]: ask first, because journeys on this phone are
+## replaced (not needed on a fresh phone).
+static func claim_code(menu: MenuHost, warn: bool) -> bool:
 	if GameState.in_game:
 		await menu.info("Enter the code on the title screen.")
 		return false
-	if not await menu.confirm_danger("This phone will get the journeys of the other phone. Journeys saved on this phone are replaced. Continue?"):
+	if warn and not await menu.confirm_danger("This phone will get the journeys of the other phone. Journeys saved on this phone are replaced. Continue?"):
 		return false
-	var code: String = await TextPrompt.ask(menu, "Transfer code", false, 16)
+	var code: String = await CodePrompt.ask(menu, "Transfer code", TRANSFER_CODE_LENGTH)
 	if code.is_empty():
 		return false
 	var r: Dictionary = await Online.transfer_claim(code)

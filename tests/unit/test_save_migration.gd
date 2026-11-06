@@ -81,7 +81,7 @@ func test_v2_gets_defaults_for_newer_fields() -> void:
 	assert_false(GameState.party[0].prism)
 	assert_eq(GameState.storage.size(), 1)
 	assert_true(GameState.visited_rests.has("thornridge"), "last rest spot counts for fast travel")
-	assert_eq(GameState.records, {})
+	assert_eq(GameState.records, GameState.endgame_defaults({}), "only the empty endgame records")
 	assert_eq(Achievements.check().size() >= 1, true, "old progress earns achievements")
 
 func test_every_saved_key_is_optional() -> void:
@@ -141,3 +141,43 @@ func test_v4_fixture_keeps_new_fields() -> void:
 	assert_eq(g.echo_streak, 3)
 	assert_eq(GameState.party[1].temper, "gentle")
 	assert_true(bool(GameState.spirlog.Mirkmole.prism_seen))
+
+func test_v4_to_v5_adds_endgame_defaults() -> void:
+	var old: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(FIXTURES + "v4_spirling_story.json"))
+	assert_false(old.has("waymarks"))
+	var d: Dictionary = SaveManager.migrate(old)
+	assert_eq(int(d.save_version), SaveManager.SAVE_VERSION)
+	assert_eq(int(d.waymarks), 0)
+	assert_true(d.daily_tasks is Dictionary)
+	assert_true(d.festival_ribbons is Dictionary)
+	assert_false(bool(d.iron_oath))
+	for k: String in GameState.ENDGAME_RECORDS:
+		assert_eq(typeof(d.records[k]), typeof(GameState.ENDGAME_RECORDS[k]), "records.%s" % k)
+	SaveManager.apply_save(d)
+	assert_eq(GameState.waymarks, 0)
+	assert_eq(Album.filled(), 0, "an old save starts this month's album empty")
+	assert_eq(EchoPath.done_count(), 0)
+	assert_true(Expeditions.trips().is_empty())
+
+func test_v5_fixture_keeps_endgame_fields() -> void:
+	SaveManager.apply_save(_load_fixture("v5_endgame.json"))
+	assert_eq(GameState.waymarks, 345)
+	assert_eq(Album.stickers(), ["2026-10"])
+	assert_eq(int((GameState.festival_ribbons["lantern_2026"] as Dictionary).ribbons), 12)
+	assert_eq(Expeditions.trips().size(), 1, "a trip under way stays under way")
+	assert_true(Expeditions.is_away(str(GameState.storage[0].uid)))
+	assert_true(Masters.beaten("brannoc"))
+	assert_eq(int(GameState.records.echo_path_clears), 2)
+	var again: Dictionary = GameState.to_dict()
+	GameState.from_dict(again)
+	assert_eq(GameState.waymarks, 345)
+	assert_eq(GameState.records.album_stickers, ["2026-10"], "round trip keeps the endgame records")
+
+func test_damaged_endgame_records_start_fresh() -> void:
+	var d: Dictionary = _load_fixture("v5_endgame.json")
+	d.records["album"] = "broken"
+	d.records["expeditions"] = {"not": "a list"}
+	SaveManager.apply_save(d)
+	assert_true(GameState.records.album is Dictionary)
+	assert_true(Expeditions.trips().is_empty())
+	assert_eq(Album.filled(), 0)

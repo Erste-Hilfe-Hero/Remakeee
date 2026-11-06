@@ -248,6 +248,30 @@ func app_resumed() -> void:
 		GameState.master_fade = v
 		GameState.apply_volume(), GameState.master_fade, 1.0, RESUME_FADE)
 
+## Eight scales, one per element (Elements.E order): the three Echo call marks play these
+## notes, so every element sounds different (plan area 1, item 279).
+const ELEMENT_SCALES: Array = [
+	[60, 64, 67],  # EMBER: bright major
+	[62, 65, 69],  # TIDE: soft minor
+	[65, 69, 72],  # BLOOM: warm
+	[59, 65, 71],  # VOLT: tense
+	[55, 58, 62],  # STONE: low
+	[67, 72, 74],  # GALE: open
+	[72, 76, 79],  # LUMEN: high and clear
+	[57, 60, 63],  # UMBRA: dark
+]
+
+## MIDI note for mark [param mark] in the scale of [param element].
+static func mark_note(element: int, mark: int) -> int:
+	var scale: Array = ELEMENT_SCALES[clampi(element, 0, ELEMENT_SCALES.size() - 1)]
+	return int(scale[clampi(mark, 0, scale.size() - 1)])
+
+## Plays one Echo call mark. Muted calls (next to an open Rift) are quieter and thinner.
+func mark_tone(element: int, mark: int, muted: bool = false) -> void:
+	if enabled:
+		var voice: Array = Cry.ELEMENT_VOICE[clampi(element, 0, Cry.ELEMENT_VOICE.size() - 1)]
+		_play_voice(Cry.tone(mark_note(element, mark), float(voice[0]), 0.12 if muted else 0.3))
+
 ## Sound effect name for a hit by a move of [param element] (Elements.E), "hit" if unknown.
 static func element_hit_name(element: int) -> String:
 	if element < 0 or element >= Elements.E.size():

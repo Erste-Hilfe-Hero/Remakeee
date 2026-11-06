@@ -13,9 +13,10 @@
   "fernstair": {"region": "veydal", "pos": [3, 3], "kind": "route", "neighbours": ["crowcrest", "brindlewick"]},
   "brindlewick": {"region": "veydal", "pos": [3, 4], "kind": "town", "neighbours": ["fernstair", "saltmarsh"]},
   "lighthouse": {"inside": "brindlewick"},
+  "echo_path": {"inside": "cinder_rift"},
   "map_house": {"inside": "brindlewick"},
   "rest_spring": {"inside": "brindlewick"},
-  "saltmarsh": {"region": "veydal", "pos": [4, 4], "kind": "route", "neighbours": ["brindlewick", "tide_rift"]},
+  "saltmarsh": {"region": "veydal", "pos": [4, 4], "kind": "marsh", "neighbours": ["brindlewick", "tide_rift"]},
   "tide_rift": {"region": "veydal", "pos": [4, 3], "kind": "rift", "neighbours": ["saltmarsh"]}
  }
 }

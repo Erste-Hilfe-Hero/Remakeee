@@ -61,6 +61,15 @@ var held: String = ""
 var prism: bool = false
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
+## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
+## Counted down at the end of each turn, so a fresh tax of N holds for the next N turns.
+var energy_tax: int = 0
+## Battle-only: move name -> turns it stays locked (moves.json "cooldown"), same counting.
+var cooldowns: Dictionary[String, int] = {}
+## Battle-only: turns left on a heal block (heal_block effect), same counting.
+var heal_block: int = 0
+## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
+var burn_guard: int = 0
 ## Temperament id (TEMPERAMENTS), stored since save version 4.
 var temper: String = ""
 ## Regional imprint id ("" = none), see plan area 1, item 218.
@@ -69,6 +78,10 @@ var variant: String = ""
 var origin_map: String = ""
 var met_ring: int = 0
 var met_day: int = 0
+## Storage box this Spirling rests in (GameState.storage_boxes index) and the favourite mark:
+## favourites are never released and never moved by a multi-select (plan area 1, items 375-377).
+var box: int = 0
+var favorite: bool = false
 ## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
@@ -96,7 +109,27 @@ func display_name() -> String:
 	return nickname if not nickname.is_empty() else data.species_name
 
 func elements() -> Array[int]:
+	var v: Dictionary = variant_info()
+	if not v.is_empty() and not (v.elements as Array).is_empty():
+		return v.elements
 	return data.elements
+
+## The regional imprint this Spirling shows ("variant" = region id), or {} (items 218-219).
+func variant_info() -> Dictionary:
+	if variant.is_empty() or data == null:
+		return {}
+	for v: Dictionary in data.variants:
+		if str(v.region) == variant:
+			return v
+	return {}
+
+## Takes on the imprint of [param region] if this kind has one there. True when it changed.
+func apply_imprint(region: String) -> bool:
+	for v: Dictionary in data.variants:
+		if str(v.region) == region and variant != region:
+			variant = region
+			return true
+	return false
 
 func _curve(base: int, key: String, offset: float, div: float) -> int:
 	var s: float = float(base) + float(spark.get(key, 0)) * SPARK_WEIGHT
@@ -161,8 +194,30 @@ func is_fainted() -> bool:
 func hp_fraction() -> float:
 	return float(hp) / float(max_hp())
 
+## Energy [param move] costs right now: its own cost plus the Energy tax while one lasts.
+func move_cost(move: MoveData) -> int:
+	return move.energy_cost + (BattleRules.ENERGY_TAX_COST if energy_tax > 0 else 0)
+
+## Turns [param move] stays locked after a use ("cooldown"), 0 when it is free.
+func cooldown_left(move: MoveData) -> int:
+	return int(cooldowns.get(move.move_name, 0))
+
+## True if the move can be used now: enough Energy (tax included) and not locked by a cooldown.
 func can_afford(move: MoveData) -> bool:
-	return energy >= move.energy_cost
+	return energy >= move_cost(move) and cooldown_left(move) <= 0
+
+## Counts the battle-only timers (Energy tax, cooldowns) down by one at the end of a turn.
+func tick_timers() -> void:
+	if energy_tax > 0:
+		energy_tax -= 1
+	if heal_block > 0:
+		heal_block -= 1
+	if burn_guard > 0:
+		burn_guard -= 1
+	for k: String in cooldowns.keys():
+		cooldowns[k] = int(cooldowns[k]) - 1
+		if int(cooldowns[k]) <= 0:
+			cooldowns.erase(k)
 
 ## Full heal (rest stops between battles).
 func restore() -> void:
@@ -174,6 +229,10 @@ func restore() -> void:
 ## Clears battle-only state when a battle ends. Statuses do not persist outside battle.
 func end_battle() -> void:
 	stages.clear()
+	energy_tax = 0
+	heal_block = 0
+	burn_guard = 0
+	cooldowns.clear()
 	status = ""
 	status_turns = 0
 	energy = START_ENERGY
@@ -382,6 +441,8 @@ func to_dict() -> Dictionary:
 		"met_day": met_day,
 		"lineage": lineage.duplicate(),
 		"echo_streak": echo_streak,
+		"box": box,
+		"favorite": favorite,
 	}
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -418,6 +479,8 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var lin: Variant = d.get("lineage", [])
 	s.lineage.assign((lin as Array).map(func(x: Variant) -> String: return str(x)) if lin is Array else [])
 	s.echo_streak = maxi(0, _num(d.get("echo_streak"), 0))
+	s.box = maxi(0, _num(d.get("box"), 0))
+	s.favorite = d.get("favorite") is bool and d.get("favorite")
 	s.hp = clampi(_num(d.get("hp"), s.max_hp()), 0, s.max_hp())
 	return s
 

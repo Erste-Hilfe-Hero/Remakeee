@@ -246,5 +246,7 @@
   {"id": "wren", "name": "Wren", "title": "Master of the Salt Wind", "element": "GALE", "map": "saltmarsh", "x": 6, "y": 4, "facing": "down", "level": 52, "sprite": "villager"},
   {"id": "lume", "name": "Lume", "title": "Master of the Harbour Lamp", "element": "LUMEN", "map": "brindlewick", "x": 6, "y": 10, "facing": "down", "level": 53, "sprite": "elder"},
   {"id": "morrow", "name": "Morrow", "title": "Master of the Hollow", "element": "UMBRA", "map": "murk_hollow", "x": 6, "y": 6, "facing": "down", "level": 55, "sprite": "hush"}
- ]
+ ],
+ "merchant": {"spots": [{"map": "brindlewick", "x": 8, "y": 6}, {"map": "fernstair", "x": 3, "y": 21}, {"map": "crowcrest", "x": 9, "y": 11}, {"map": "thornridge", "x": 5, "y": 13}, {"map": "murk_hollow", "x": 7, "y": 9}], "stock": ["cooling_gel", "dry_towel", "wake_bell", "power_brew", "guard_brew", "focus_brew", "dash_brew", "spark_drop", "kin_charm", "keen_lens", "swift_feather", "iron_burr"], "per_day": 3},
+ "expeditions": {"max": 3, "plans": [{"hours": 4, "coins": 60, "waymarks": 1, "item": "tonic"}, {"hours": 8, "coins": 120, "waymarks": 1, "item": "remedy"}, {"hours": 12, "coins": 180, "waymarks": 2, "item": "strong_tonic"}]}
 }

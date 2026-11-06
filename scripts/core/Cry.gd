@@ -80,3 +80,28 @@ static func make(sd: SpirlingData) -> AudioStreamWAV:
 	w.stereo = false
 	w.data = data
 	return w
+
+static var _tones: Dictionary[String, AudioStreamWAV] = {}
+
+## A short square-wave note (Echo call marks, item 279), cached per pitch, timbre and gain.
+static func tone(midi: int, duty: float = 0.5, gain: float = 0.3, seconds: float = 0.22) -> AudioStreamWAV:
+	var key: String = "%d:%.3f:%.2f:%.2f" % [midi, duty, gain, seconds]
+	if _tones.has(key):
+		return _tones[key]
+	var total: int = int(seconds * RATE)
+	var data := PackedByteArray()
+	data.resize(total * 2)
+	var f: float = 440.0 * pow(2.0, (midi - 69.0) / 12.0)
+	var phase: float = 0.0
+	for i: int in total:
+		phase = fmod(phase + f / RATE, 1.0)
+		var v: float = 1.0 if phase < duty else -1.0
+		var g: float = minf(1.0, i / (RATE * 0.005)) * minf(1.0, (total - i) / (RATE * 0.06))
+		data.encode_s16(i * 2, clampi(int(v * g * gain * 32767.0), -32768, 32767))
+	var w := AudioStreamWAV.new()
+	w.format = AudioStreamWAV.FORMAT_16_BITS
+	w.mix_rate = RATE
+	w.stereo = false
+	w.data = data
+	_tones[key] = w
+	return w

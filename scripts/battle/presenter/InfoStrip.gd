@@ -30,6 +30,9 @@ var status: String = ""
 var speed_scale: float = 1.0
 ## Stat stages shown as small up/down arrows after the Energy pips.
 var stages: Dictionary[String, int] = {}
+## Turns left on an Energy tax, drawn as a coin with the number at the right end of the pips.
+var tax: int = 0
+const TAX_COIN: Color = Color("b8862b")
 
 func set_spirling(s: Spirling) -> void:
 	spirling_name = s.display_name()
@@ -40,6 +43,11 @@ func set_spirling(s: Spirling) -> void:
 	energy = s.energy
 	status = s.status
 	stages = s.stages.duplicate()
+	tax = s.energy_tax
+	queue_redraw()
+
+func set_tax(turns: int) -> void:
+	tax = maxi(turns, 0)
 	queue_redraw()
 
 func set_stages(value: Dictionary[String, int]) -> void:
@@ -75,6 +83,8 @@ func screen_reader_text() -> String:
 	var t: String = Loc.t("%s ring %d, Vigor %d of %d, Energy %d" % [spirling_name, level, int(round(display_hp)), max_hp, energy])
 	if not status.is_empty():
 		t += ", " + Loc.t(StatusRules.label(status))
+	if tax > 0:
+		t += ", " + Loc.t("Energy tax %d" % tax)
 	return t
 
 func _draw() -> void:
@@ -108,6 +118,8 @@ func _draw() -> void:
 		else:
 			draw_rect(r, UITheme.MID, false, 1.0)
 	_draw_stages(Vector2(Spirling.MAX_ENERGY * (PIP_SIZE + PIP_GAP) + 3, pip_y - 1))
+	if tax > 0:
+		_draw_tax(Vector2(w, pip_y - 1))
 	if show_numbers:
 		draw_string(font, Vector2(0, pip_y + PIP_SIZE + fs - 1), "%d/%d" % [int(round(display_hp)), max_hp], HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
 
@@ -130,6 +142,18 @@ func _draw_stages(at: Vector2) -> void:
 			draw_colored_polygon(tri, UITheme.INK)
 			x += 4
 		x += 2
+
+## Energy tax: a small coin and the turns left, right-aligned on the pip row.
+func _draw_tax(right_top: Vector2) -> void:
+	var font: Font = get_theme_default_font()
+	var fs: int = get_theme_default_font_size()
+	var num: String = str(tax)
+	var num_w: float = font.get_string_size(num, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var x: float = right_top.x - num_w
+	draw_string(font, Vector2(x, right_top.y + PIP_SIZE + 2), num, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
+	var c: Vector2 = Vector2(x - 4.0, right_top.y + 2.5)
+	draw_circle(c, 2.5, UITheme.INK)
+	draw_circle(c, 1.5, TAX_COIN)
 
 func _draw_plate() -> void:
 	var r := Rect2(-PLATE_PAD, size + PLATE_PAD * 2.0)

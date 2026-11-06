@@ -8,15 +8,22 @@ const FONT_SIZE: int = 8
 ## Palette. Static (not const) so the high-contrast option can swap it (item 78).
 static var BG: Color = Color("f4f1e6")
 static var INK: Color = Color("2a1e2c")
-static var MID: Color = Color("8a6a6a")
+static var MID: Color = Color("7d5f5f")
 static var ACCENT: Color = Color("e6c9a0")
-static var DISABLED: Color = Color("aaa096")
+static var DISABLED: Color = Color("908679")
 
-const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("2a1e2c"), Color("8a6a6a"), Color("e6c9a0"), Color("aaa096")]
+## MID reaches 5:1 on paper and DISABLED 3.2:1 (plan item 2041; they were 4.3:1 and 2.3:1).
+const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("2a1e2c"), Color("7d5f5f"), Color("e6c9a0"), Color("908679")]
 ## Pure paper and ink, a darker mid tone and a stronger accent: text stays above 15:1.
 const HIGH_CONTRAST_PALETTE: Array[Color] = [Color("ffffff"), Color("000000"), Color("3a3a3a"), Color("ffe680"), Color("6a6a6a")]
 
 static var high_contrast: bool = false
+
+## WCAG contrast ratio of two colours (1 to 21).
+static func contrast(a: Color, b: Color) -> float:
+	var la: float = a.srgb_to_linear().get_luminance()
+	var lb: float = b.srgb_to_linear().get_luminance()
+	return (maxf(la, lb) + 0.05) / (minf(la, lb) + 0.05)
 
 ## Switches the UI palette. Screens built afterwards use it; the theme is rebuilt on demand.
 static func set_high_contrast(on: bool) -> void:
