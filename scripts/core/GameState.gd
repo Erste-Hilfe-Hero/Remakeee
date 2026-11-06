@@ -44,6 +44,8 @@ var money: int = 0
 var waymarks: int = 0
 ## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
 var daily_tasks: Dictionary = {}
+## Festival ribbons per festival (see Festival.gd): "<id>_<year>" -> {"ribbons", "earned", "stages", "task"}.
+var festival_ribbons: Dictionary = {}
 ## Short reward notes waiting to be shown by the overworld (not saved).
 var notices: Array[String] = []
 
@@ -121,11 +123,13 @@ var known_matchups: Dictionary = {}
 
 ## Mended Rifts needed before the storage box opens from the menu (end of Act I).
 const RIFTS_FOR_STORAGE: int = 2
+## Story flag at the end of Act I ("Waiting for the Ferry" starts).
+const ACT1_END_FLAG: String = "aldo_dock_told"
 
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
 		return Spirling.MAX_LEVEL
-	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
+	return progress_cap()
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -136,7 +140,19 @@ func seal_rift(rift_id: String) -> bool:
 	# Rifts can be mended in any order; the second one opens storage from the menu.
 	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
 		set_flag("storage_remote")
+		# Achievement "Small Band": both Rifts mended with three Spirlings or fewer.
+		if party.size() + storage.size() <= 3:
+			records["small_band"] = 1
 	return true
+
+## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
+## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
+## After Act I (ACT1_END_FLAG) the cap opens to the full Spirling.MAX_LEVEL (plan 3287), so
+## Master Wayfarers and the endgame use the whole ring range.
+func progress_cap() -> int:
+	if has_flag(ACT1_END_FLAG):
+		return Spirling.MAX_LEVEL
+	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
@@ -286,6 +302,7 @@ func reset() -> void:
 	money = 0
 	waymarks = 0
 	daily_tasks = {}
+	festival_ribbons = {}
 	notices.clear()
 	current_map = "lighthouse"
 	player_cell = Vector2i(4, 4)
@@ -347,6 +364,7 @@ func to_dict() -> Dictionary:
 		"money": money,
 		"waymarks": waymarks,
 		"daily_tasks": daily_tasks.duplicate(true),
+		"festival_ribbons": festival_ribbons.duplicate(true),
 		"map": current_map,
 		"cell": [player_cell.x, player_cell.y],
 		"facing": facing,
@@ -393,6 +411,11 @@ func from_dict(d: Dictionary) -> void:
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
+	festival_ribbons = {}
+	for k: Variant in as_dict(d.get("festival_ribbons", {})):
+		var st: Dictionary = as_dict(d.festival_ribbons[k])
+		festival_ribbons[str(k)] = {"ribbons": maxi(0, as_int(st.get("ribbons", 0))), "earned": maxi(0, as_int(st.get("earned", 0))),
+			"stages": clampi(as_int(st.get("stages", 0)), 0, Festival.STAGES.size()), "task": as_dict(st.get("task", {})).duplicate(true)}
 	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))
@@ -519,6 +542,11 @@ func retire_fainted() -> Array[String]:
 			s.restore()
 			sanctuary.append(s)
 			names.append(s.display_name())
+			# Memorial book (plan 3397): name, ring, place and date of every retirement.
+			var book: Array = records.get("memorial", []) if records.get("memorial", []) is Array else []
+			book.append({"name": s.display_name(), "species": s.data.species_name, "level": s.level,
+				"map": current_map, "date": Time.get_date_string_from_unix_time(Online.unix_now())})
+			records["memorial"] = book
 	return names
 
 ## Fills an empty party from storage. Returns how many joined.
@@ -567,7 +595,7 @@ func receive_spirling(s: Spirling) -> bool:
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "tempers": []}
+		"variants": [], "prism_seen": false, "tempers": [], "maps": [], "battles": 0}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -579,6 +607,12 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["seen"] = out.seen is bool and out.seen or out.bonded is bool and out.bonded
 	out["bonded"] = out.bonded is bool and out.bonded
 	out["first_day"] = int(out.first_day) if out.first_day is int or out.first_day is float else 0
+	out["battles"] = int(out.battles) if out.battles is int or out.battles is float else 0
+	out["first_map"] = out.first_map if out.first_map is String else ""
+	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
+	for k: String in ["variants", "tempers", "maps"]:
+		if not out[k] is Array:
+			out[k] = []
 	return out
 
 ## A copy of v if it is a Dictionary, else {} (saves can be damaged or edited).
@@ -611,7 +645,22 @@ func mark_seen(species: String, bonded: bool = false) -> void:
 	e["seen"] = true
 	if bonded:
 		e["bonded"] = true
+	if not current_map.is_empty() and not (e.maps as Array).has(current_map):
+		(e.maps as Array).append(current_map)
 	spirlog[species] = e
+
+## After a battle: each kind in the team counts one more battle travelled together
+## (its third Spirlog lore sentence opens after SpirlogBook.LORE_BATTLES).
+func note_battle_end() -> void:
+	var done: Dictionary = {}
+	for s: Spirling in party:
+		var sp: String = s.data.species_name
+		if done.has(sp):
+			continue
+		done[sp] = true
+		var e: Dictionary = upgrade_spirlog_entry(spirlog.get(sp, {}))
+		e["battles"] = int(e.battles) + 1
+		spirlog[sp] = e
 
 ## An Echo call ended with [param score]: a fully right call adds one to every team member's
 ## streak, a miss starts them over (unfold rule "echo_streak", Hushkin to Silentra).
