@@ -25,15 +25,17 @@ var can_undo: bool = false
 var room_action: String = ""
 
 ## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
-## they can be used; they keep their place. Leagues shows only while leagues are on.
-const MENU_ORDER: Array[String] = ["Goals", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+## they can be used; they keep their place. Leagues shows only while leagues are on,
+## the Map book once Aldo gave it.
+const MENU_ORDER: Array[String] = ["Goals", "Map book", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
 	"Leagues", "Records", "Storage", "Save", "Photo", "Settings"]
 
-static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false) -> Array[String]:
+static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
+		map_book: bool = false) -> Array[String]:
 	var out: Array[String] = []
 	for l: String in MENU_ORDER:
 		if (l == "Storage" and not storage) or (l == "Travel" and not travel) or (l == "Room" and not room) \
-				or (l == "Leagues" and not leagues):
+				or (l == "Leagues" and not leagues) or (l == "Map book" and not map_book):
 			continue
 		out.append(l)
 	return out
@@ -41,7 +43,8 @@ static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool =
 func run() -> void:
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
-			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on())
+			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
+			GameState.has_flag("aldo_gift"))
 		if "Travel" in labels:
 			await tip("travel")
 		var idx: int = await pick_strings(menu_title(), labels)
@@ -49,6 +52,7 @@ func run() -> void:
 			return
 		match labels[idx]:
 			"Goals": await run_goals()
+			"Map book": await MapBookMenu.run(self)
 			"Team": await run_team()
 			"Friends":
 				await tip("friends")
@@ -181,6 +185,9 @@ static func goals_text() -> String:
 	var tasks: Array[String] = DailyTasks.lines()
 	if not tasks.is_empty():
 		text += "\n\n" + "\n".join(tasks)
+	var next: String = Collection.next_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size(), GameState.flags)
+	if not next.is_empty():
+		text += "\n\n" + Loc.t(next)
 	var post: Array[String] = Postgame.lines()
 	if not post.is_empty():
 		text += "\n\n" + "\n".join(post)
@@ -290,6 +297,9 @@ static func records_text() -> String:
 	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
 	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
 	lines.append(Collection.progress_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size()))
+	var titles: Array[String] = Collection.titles()
+	if not titles.is_empty():
+		lines.append("Titles: %s" % ", ".join(titles.map(func(t: String) -> String: return Loc.t(t))))
 	if GameState.iron_oath:
 		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
 		for s: Spirling in GameState.sanctuary:

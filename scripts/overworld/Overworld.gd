@@ -78,6 +78,8 @@ func _ready() -> void:
 		"battle": _action_battle,
 		"scene": _action_scene,
 		"warp": _action_warp,
+		"echo_song": _action_echo_song,
+		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
 	}
 	_world = WorldMechanics.new(self)
@@ -247,6 +249,9 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_camera.limit_right = map.width * GridWalker.TILE
 	_camera.limit_bottom = map.height * GridWalker.TILE
 	_show_banner(map.display_name)
+	var arrive: String = StoryPlacements.enter_scene(map_id, GameState.flags)
+	if not arrive.is_empty():
+		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
 	Sound.music(Sound.track_for_map(map_id))
 	if not map.encounter_table.is_empty():
@@ -822,17 +827,25 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(["%s decided to stay with you!" % GameState.starter,
 		"The other two slip out into the morning, toward the lake."] as Array[String])
 
-const PAGE_COUNT: int = 6
+## Mirela's map book has 14 pages: 1-6 in Veydal (Act I), 7-10 in Corvane, 11-14 in Ashmere.
+const PAGE_COUNT: int = 14
+const VEYDAL_PAGES: int = 6
+## Echo melody score that counts as a good answer outside battle.
+const ECHO_SONG_PASS: float = 0.6
 
-## How many of Mirela's map-book pages the player has found.
-static func pages_found(flags: Dictionary) -> int:
+## How many of Mirela's map-book pages the player has found (of [param upto]).
+static func pages_found(flags: Dictionary, upto: int = PAGE_COUNT) -> int:
 	var n: int = 0
-	for i: int in range(1, PAGE_COUNT + 1):
+	for i: int in range(1, upto + 1):
 		n += 1 if bool(flags.get("page_%d" % i, false)) else 0
 	return n
 
-## "page <n>": one of the six pages of Mirela's map book. Shows the page, counts it, and sets
-## "pages_all" with the last one.
+## How many pages the player knows of: six until Act II shows there are more.
+static func page_total(flags: Dictionary) -> int:
+	return PAGE_COUNT if bool(flags.get("ferry_corvane_open", false)) else VEYDAL_PAGES
+
+## "page <n>": one of Mirela's map-book pages. Shows the page and counts it. The six Veydal
+## pages set "pages_all" (lamp room), all fourteen set "pages_complete".
 func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.is_empty():
 		return
@@ -842,13 +855,17 @@ func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.set_flag(flag)
 	Sound.sfx("level_up")
 	var n: int = pages_found(GameState.flags)
-	await say(["A page from Mirela's map book! (%d/%d)" % [n, PAGE_COUNT]] as Array[String])
+	await say(["A page from Mirela's map book! (%d/%d)" % [n, page_total(GameState.flags)]] as Array[String])
 	await say(Dialogue.lines_for(Dialogue.get_entry("story/page_%s" % args[0]), GameState.flags))
-	if n >= PAGE_COUNT:
+	GameState.set_flag("page_%s_read" % args[0])
+	if pages_found(GameState.flags, VEYDAL_PAGES) >= VEYDAL_PAGES and not GameState.has_flag("pages_all"):
 		GameState.set_flag("pages_all")
 		await say(["That's all six pages. Aldo should see them."] as Array[String])
 	else:
 		await say(Tips.take("map_page"))
+	if n >= PAGE_COUNT:
+		GameState.set_flag("pages_complete")
+		await say(["All fourteen pages. Mirela's whole map book, together again."] as Array[String])
 
 ## "set_var <name> <value>": a story number such as kestra_trust (plan item 1339).
 func _action_set_var(args: PackedStringArray, _speaker: NPC) -> void:
@@ -886,6 +903,10 @@ func _action_battle(args: PackedStringArray, _speaker: NPC) -> void:
 			await play_entry(str(def.defeat))
 	elif def.has("lose"):
 		await play_entry(str(def.lose))
+	# A lost story duel sends the player to the last rest spot, so the scene around it stops
+	# there (it has not been "seen" and starts again, e.g. the finale chain).
+	if outcome == BattleModel.Outcome.LOSS:
+		scene_abort = scene_running
 
 ## "scene <id>": plays data/scenes/<id>.json (plan item 1341).
 func _action_scene(args: PackedStringArray, _speaker: NPC) -> void:
@@ -911,6 +932,51 @@ func _action_warp(args: PackedStringArray, _speaker: NPC) -> void:
 	SaveManager.save_game()
 	if not was_black and not scene_running:
 		await _fade_to(0.0)
+
+## "echo_song <flag>": the player answers a hushed Spirling's call with the Echo melody
+## outside battle (the bond minigame). A good echo sets the flag; a weak one can be retried
+## by talking again. Nothing is bonded or caught.
+func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.has_flag(args[0]):
+		return
+	_text.visible = false
+	var game := BondMinigame.new()
+	game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var dim := ColorRect.new()
+	dim.color = Color(UITheme.BG, 0.85)
+	dim.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_ui_root.add_child(dim)
+	_ui_root.add_child(game)
+	var score: float = await game.run()
+	game.queue_free()
+	dim.queue_free()
+	if score >= ECHO_SONG_PASS:
+		Sound.sfx("level_up")
+		GameState.set_flag(args[0])
+	else:
+		Sound.sfx("cancel")
+
+## "quest_stage <id> <n>": moves a side goal with stages to step n (plan item 1631).
+func _action_quest_stage(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() >= 2:
+		GameState.set_story_var("q_%s_stage" % args[0], int(args[1]))
+
+## A map's arrival scene (story_npcs.json "on_enter"), once the map change has finished.
+func _arrival_scene(id: String) -> void:
+	while _fade.color.a > 0.0 and not scene_running:
+		await get_tree().process_frame
+	if scene_running:
+		# Arrived during a scene (a ferry crossing): play right after it.
+		while scene_running:
+			await get_tree().process_frame
+	var goal_before: int = QuestLog.current_index(GameState.flags)
+	busy = true
+	player.frozen = true
+	await play_scene(id)
+	await announce_goal_if_changed(goal_before)
+	player.frozen = false
+	busy = false
+	VirtualPad.set_wanted(true)
 
 ## Plays a cut-scene and returns to the talk or the world afterwards.
 func play_scene(id: String) -> void:
