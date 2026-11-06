@@ -301,17 +301,20 @@ func _reset_shake() -> void:
 # --- Hit-stop ----------------------------------------------------------------
 
 ## Freeze length for a hit that took [param hp_share] (0..1) of the target's HP.
-func hitstop_time(hp_share: float) -> float:
+func hitstop_time(hp_share: float, fixed_time: float = -1.0) -> float:
 	var t: float = minf(HITSTOP_BASE + HITSTOP_PER_HP * clampf(hp_share, 0.0, 1.0), HITSTOP_MAX)
+	if fixed_time >= 0.0:
+		t = fixed_time
 	if in_battle and speed() >= 4.0:
 		t = minf(t, 0.04)
 	return t
 
-## Briefly slows the game to 5 % (item 2257). Does nothing under reduced motion. Awaitable.
-func hitstop(hp_share: float) -> void:
+## Briefly slows the game to 5 % (item 2257); [param fixed_time] overrides the length (item
+## 2265). Does nothing under reduced motion. Awaitable.
+func hitstop(hp_share: float, fixed_time: float = -1.0) -> void:
 	if reduced() or not is_inside_tree():
 		return
-	var t: float = hitstop_time(hp_share)
+	var t: float = hitstop_time(hp_share, fixed_time)
 	_hitstops += 1
 	Engine.time_scale = HITSTOP_TIME_SCALE
 	await get_tree().create_timer(t, true, false, true).timeout
