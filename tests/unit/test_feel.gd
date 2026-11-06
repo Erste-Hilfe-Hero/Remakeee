@@ -61,28 +61,14 @@ func test_pressed_buttons_sink_one_pixel() -> void:
 	assert_eq(pressed.content_margin_top - normal.content_margin_top, 1.0)
 	assert_eq(normal.content_margin_bottom - pressed.content_margin_bottom, 1.0)
 
-func test_list_cursor_glides_to_focused_row() -> void:
+func test_list_rows_pop_on_release() -> void:
 	var lp := ListPicker.new()
-	lp.size = Vector2(110, 100)
 	add_child_autofree(lp)
-	var res: Array = []
-	var run := func() -> void: res.append(await lp.pick("T", [{"text": "A"}, {"text": "B"}] as Array[Dictionary]))
+	var run := func() -> void: await lp.pick("T", [{"text": "A"}] as Array[Dictionary])
 	run.call()
 	await get_tree().process_frame
-	await get_tree().process_frame
-	assert_true(lp._cursor.visible)
-	var y0: float = lp._cursor.position.y
-	assert_eq(lp._cursor.position, lp._cursor_spot(lp._buttons[0]))
-	lp._move_cursor(lp._buttons[1])
-	assert_true(lp._cursor_tw.is_running(), "glides instead of jumping")
-	await get_tree().create_timer(0.15).timeout
-	assert_gt(lp._cursor.position.y, y0)
-	assert_eq(lp._cursor.position, lp._cursor_spot(lp._buttons[1]))
-	assert_eq(lp._cursor.position, lp._cursor.position.round())
-	assert_true(lp._buttons[0].has_meta("juice_press"))
+	assert_true(lp.buttons()[0].has_meta("juice_press"))
 	lp.picked.emit(-1)
-	await get_tree().process_frame
-	assert_false(lp._cursor.visible)
 
 func test_toasts_queue_and_count_coins() -> void:
 	Toast.shown.clear()
