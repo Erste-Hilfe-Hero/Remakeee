@@ -320,7 +320,7 @@ func reset() -> void:
 	heal_cell = Vector2i(4, 4)
 	flags = {}
 	visited_rests = {}
-	records = {}
+	records = endgame_defaults({})
 	story_vars = {}
 	story_choices = {}
 	switch_progress = {}
@@ -353,6 +353,23 @@ func tamer_sprite() -> String:
 	return TAMER_SPRITES[clampi(tamer_look, 0, TAMER_SPRITES.size() - 1)]
 
 ## Save data (see SaveManager for versioning and atomic writes).
+## Endgame records (plan area 8, item 3540) and their empty defaults. A loaded save keeps each
+## one only if it has the right type, so a damaged entry starts fresh instead of breaking a screen.
+const ENDGAME_RECORDS: Dictionary = {
+	"album": {}, "album_stickers": [], "echo_path": {}, "expeditions": [], "world_events": {},
+	"masters": {}, "season_path": {}, "exchange": {}, "weekly": {}, "memorial": [],
+	"waymark_log": [], "achievements": {}, "achievements_paid": {}, "collection": {},
+}
+
+## Fills the endgame records with their defaults where missing or of the wrong type.
+static func endgame_defaults(rec: Dictionary) -> Dictionary:
+	for k: String in ENDGAME_RECORDS:
+		var def: Variant = ENDGAME_RECORDS[k]
+		var have: Variant = rec.get(k)
+		if have == null or typeof(have) != typeof(def):
+			rec[k] = def.duplicate()
+	return rec
+
 func to_dict() -> Dictionary:
 	var party_d: Array = []
 	for s: Spirling in party:
@@ -386,7 +403,7 @@ func to_dict() -> Dictionary:
 		"matchups": known_matchups.duplicate(),
 		"play_time": play_time,
 		"rests": visited_rests.duplicate(true),
-		"records": records.duplicate(),
+		"records": records.duplicate(true),
 		"story_vars": story_vars.duplicate(),
 		"story_choices": story_choices.duplicate(),
 		"switches": switch_progress.duplicate(),
@@ -446,7 +463,7 @@ func from_dict(d: Dictionary) -> void:
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
-	records = _as_dict(d.get("records", {}))
+	records = endgame_defaults(_as_dict(d.get("records", {})))
 	var sv: Dictionary = _as_dict(d.get("story_vars", {}))
 	for k: Variant in sv:
 		if sv[k] is int or sv[k] is float:
