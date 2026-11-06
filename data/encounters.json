@@ -35,7 +35,7 @@
     "species": "Puddlet",
     "min": 13,
     "max": 15,
-    "weight": 35
+    "weight": 24
    },
    {
     "species": "Zephlet",
@@ -94,7 +94,7 @@
     "species": "Mossling",
     "min": 3,
     "max": 4,
-    "weight": 5
+    "weight": 10
    }
   ]
  },
@@ -123,19 +123,19 @@
     "species": "Puddlet",
     "min": 6,
     "max": 7,
-    "weight": 5
+    "weight": 10
    },
    {
     "species": "Kindlop",
     "min": 6,
     "max": 7,
-    "weight": 5
+    "weight": 10
    },
    {
     "species": "Mirkmole",
     "min": 5,
     "max": 7,
-    "weight": 12
+    "weight": 25
    }
   ]
  },
@@ -146,7 +146,7 @@
     "species": "Puddlet",
     "min": 10,
     "max": 12,
-    "weight": 35
+    "weight": 24
    },
    {
     "species": "Zippit",
@@ -164,7 +164,7 @@
     "species": "Zephlet",
     "min": 11,
     "max": 12,
-    "weight": 20
+    "weight": 25
    },
    {
     "species": "Wickit",
