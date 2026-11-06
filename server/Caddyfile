@@ -1,9 +1,16 @@
 # HTTPS certificate from Let's Encrypt is fetched automatically for SITE_ADDRESS.
 {$SITE_ADDRESS} {
 	handle_path /auth/v1/* {
+		request_body {
+			max_size 16KB
+		}
 		reverse_proxy auth:9999
 	}
 	handle_path /rest/v1/* {
+		# Largest request the game sends is a save (at most 256 KB, checked again in save_put).
+		request_body {
+			max_size 512KB
+		}
 		reverse_proxy rest:3000
 	}
 	# Public server address and anon key, read by CI when it builds the game.
