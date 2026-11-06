@@ -181,7 +181,7 @@ func info(text: String, picture: Texture2D = null) -> void:
 	_info_picture.visible = picture != null
 	_info_picture.custom_minimum_size = picture.get_size() if picture != null else Vector2.ZERO
 	_info_source = text
-	_info_label.text = Loc.t(text) + "\n\n" + Loc.t("(tap to continue)")
+	_info_label.text = Loc.t(text) + "\n\n" + Loc.t(continue_hint())
 	_info_scroll.scroll_vertical = 0
 	_info_press = Vector2(NAN, NAN)
 	_info_panel.visible = true
@@ -579,7 +579,7 @@ func _on_language_changed(_code: String) -> void:
 	if not is_instance_valid(_info_label):
 		return
 	if _info_panel.visible:
-		_info_label.text = Loc.t(_info_source) + "\n\n" + Loc.t("(tap to continue)")
+		_info_label.text = Loc.t(_info_source) + "\n\n" + Loc.t(continue_hint())
 	if _toast.visible:
 		_toast.text = Loc.t(_toast_source)
 	picker.retranslate()
@@ -827,3 +827,9 @@ func _draw_info_bar() -> void:
 	var r: Rect2 = info_bar_rect()
 	if r.size.y > 0.0:
 		_info_bar.draw_rect(r, UITheme.MID)
+
+## "(tap to continue)" in the words of the device used last (item 1841).
+const CONTINUE_HINTS: Dictionary[String, String] = {"touch": "(tap to continue)", "pad": "(A: continue)", "keys": "(Enter: continue)"}
+
+static func continue_hint() -> String:
+	return CONTINUE_HINTS.get(ListPicker.last_device, CONTINUE_HINTS.touch)
