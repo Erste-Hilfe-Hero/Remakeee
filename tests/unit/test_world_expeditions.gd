@@ -72,7 +72,7 @@ func test_trip_rewards_and_limits() -> void:
 	assert_eq(Expeditions.plans().size(), 3)
 	for h: int in [4, 8, 12]:
 		var p: Dictionary = Expeditions.plan_for(h)
-		assert_eq(int(p.waymarks), h / 4, "1, 2 or 3 Waymarks (docs/BALANCE.md, 90-day run)")
+		assert_eq(int(p.waymarks), {4: 1, 8: 1, 12: 2}[h], "1, 1 or 2 Waymarks (docs/BALANCE.md, 90-day run)")
 		assert_true(Database.items.has(str(p.item)))
 		assert_string_contains(Expeditions.plan_text(p), "%d h" % h)
 	var team: Array[Spirling] = []

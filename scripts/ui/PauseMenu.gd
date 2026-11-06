@@ -95,6 +95,10 @@ func run_goals() -> void:
 	while true:
 		var rows: Array[Dictionary] = goal_rows(GameState.flags)
 		rows.append_array(goal_tab_rows())
+		var swap: int = -1
+		if DailyTasks.can_swap():
+			swap = rows.size()
+			rows.append({"text": "Swap a daily task", "hint": Loc.t("Once a day, free of charge.")})
 		var guide: int = -1
 		if not Tips.seen().is_empty():
 			guide = rows.size()
@@ -102,6 +106,9 @@ func run_goals() -> void:
 		var idx: int = await pick("Goals", rows)
 		if idx < 0:
 			return
+		if idx == swap:
+			await _swap_daily_task()
+			continue
 		if idx == guide:
 			await run_guide()
 			continue
@@ -191,6 +198,25 @@ const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once t
 ## Goals screen in four tabs (plan 3526): Story, Today, Week, Collection. All tabs in one text.
 static func goals_text() -> String:
 	return Goals.all_text()
+
+## Plan 3163: one open daily task a day can be swapped for free.
+func _swap_daily_task() -> void:
+	var tasks: Array = DailyTasks.today().get("tasks", [])
+	var names: Array[String] = []
+	var index: Array[int] = []
+	for k: int in tasks.size():
+		var e: Dictionary = tasks[k]
+		if not DailyTasks.is_done(e) and int(e.get("n", 0)) == 0:
+			names.append(Loc.t(str(DailyTasks.def(str(e.id)).get("text", e.id))))
+			index.append(k)
+	var pick: int = await pick_strings("Swap which task? (once a day)", names)
+	if pick < 0:
+		return
+	var got: String = DailyTasks.swap(index[pick])
+	if got == "":
+		await info("No other task fits today.")
+	else:
+		await info(Loc.t("New task: %s") % Loc.t(str(DailyTasks.def(got).get("text", got))))
 
 ## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:

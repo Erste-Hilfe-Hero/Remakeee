@@ -765,7 +765,7 @@ func photo_mode() -> void:
 	VirtualPad.set_wanted(true)
 	await _photo.finished
 	if _photo.taken > 0:
-		DailyTasks.record("photo", {"map": map.id})
+		DailyTasks.record("photo", {"map": map.id, "night": DayCycle.current() == DayCycle.Phase.NIGHT})
 	_photo.queue_free()
 	_photo = null
 
@@ -1398,6 +1398,7 @@ func _action_expedition(_args: PackedStringArray, _speaker: NPC) -> void:
 			continue
 		var hours: int = int((Expeditions.plans()[how] as Dictionary).hours)
 		if Expeditions.send(ready[who], hours):
+			DailyTasks.record("trip", {"map": map.id})
 			await menu.info(Loc.t("%s sets off. Back in %d hours.") % [ready[who].display_name(), hours])
 	menu.queue_free()
 

@@ -80,8 +80,8 @@ func test_enough_task_kinds_with_text() -> void:
 		assert_false(ids.has(t.id), "duplicate task id %s" % t.id)
 		ids[t.id] = true
 		assert_true(str(t.get("text", "")) != "")
-		assert_true(str(t.event) in ["win", "bond", "rest", "visit", "step", "photo", "talk"], str(t.id))
-		assert_lte(int(t.n), 600, "each task fits in about 15 minutes")
+		assert_true(str(t.event) in ["win", "bond", "rest", "visit", "step", "photo", "talk", "trip"], str(t.id))
+		assert_lte(int(t.n), 2500 if bool(t.get("hard", false)) else 600, "each task fits in about 15 minutes (a hard one in 30)")
 		if t.has("map"):
 			assert_true(MapData.exists(str(t.map)), "map %s" % t.map)
 		if t.has("element"):

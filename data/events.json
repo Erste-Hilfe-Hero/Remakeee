@@ -283,6 +283,63 @@
    "event": "step",
    "n": 600,
    "text": "Walk 600 steps"
+  },
+  {
+   "id": "send_trip",
+   "kind": "explore",
+   "event": "trip",
+   "n": 1,
+   "text": "Send a Spirling on a roaming trip"
+  },
+  {
+   "id": "photo_night",
+   "kind": "explore",
+   "event": "photo",
+   "night": true,
+   "n": 1,
+   "text": "Take a photo at night"
+  },
+  {
+   "id": "hard_win_10",
+   "kind": "battle",
+   "event": "win",
+   "n": 10,
+   "hard": true,
+   "text": "Win 10 battles"
+  },
+  {
+   "id": "hard_wild_15",
+   "kind": "battle",
+   "event": "win",
+   "n": 15,
+   "wild": true,
+   "hard": true,
+   "text": "Beat 15 wild Spirlings"
+  },
+  {
+   "id": "hard_steps_2500",
+   "kind": "explore",
+   "event": "step",
+   "n": 2500,
+   "hard": true,
+   "text": "Walk 2500 steps"
+  },
+  {
+   "id": "hard_bond_2",
+   "kind": "bond",
+   "event": "bond",
+   "n": 2,
+   "hard": true,
+   "text": "Bond with 2 Spirlings"
+  },
+  {
+   "id": "hard_rest_3",
+   "kind": "explore",
+   "event": "rest",
+   "n": 3,
+   "distinct": true,
+   "hard": true,
+   "text": "Rest at 3 different Rest Springs"
   }
  ],
  "festivals": [
