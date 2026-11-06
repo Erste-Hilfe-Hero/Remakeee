@@ -21,6 +21,15 @@ const GLINT_EVERY: float = 4.0
 const GLINT_TIME: float = 0.35
 var _glints: Node2D
 var _glint_timer: Timer
+## Clock flags (area 3 items 979 and 981): blocks can open on "_low_tide" (sea caves) or
+## "_vents_calm" (hot vents that block the way every few seconds).
+const CLOCK_FLAGS: Array[String] = ["_low_tide", "_vents_calm"]
+## Vents: calm for VENT_HALF seconds, then blowing for VENT_HALF seconds (a 4 second beat).
+const VENT_HALF: float = 2.0
+var vents_calm: bool = true
+var _vent_timer: Timer
+## Test hook: -1 uses the device clock.
+var hour_override: int = -1
 
 func _init(overworld: Overworld) -> void:
 	ow = overworld
@@ -30,9 +39,56 @@ func prepare(m: MapData, cell: Vector2i) -> void:
 	_undo.clear()
 	_cracking = Vector2i(-1, -1)
 	PuzzleRoom.apply_state(m, GameState.world_of(m.id))
-	m.apply_blocks(PuzzleRoom.live_flags(m, GameState.flags, cell))
+	vents_calm = true
+	m.apply_blocks(flags_now(m, cell))
 	_pressed = _pressed_now(m, cell)
 	_build_glints(m)
+	_setup_vents(m)
+
+## True from midnight to 6 and from noon to 18 (two low tides a day, device clock).
+static func low_tide(hour: int) -> bool:
+	return posmod(hour, 12) < 6
+
+func _hour() -> int:
+	return hour_override if hour_override >= 0 else int(Time.get_time_dict_from_system().hour)
+
+## Story flags plus clock flags plus puzzles held down right now.
+func flags_now(m: MapData, cell: Vector2i) -> Dictionary:
+	var f: Dictionary = GameState.flags.duplicate()
+	if low_tide(_hour()):
+		f["_low_tide"] = true
+	if vents_calm:
+		f["_vents_calm"] = true
+	return PuzzleRoom.live_flags(m, f, cell)
+
+static func has_vents(m: MapData) -> bool:
+	for b: Dictionary in m.blocks:
+		if str(b.get("open_flag", "")) == "_vents_calm":
+			return true
+	return false
+
+func _setup_vents(m: MapData) -> void:
+	if _vent_timer == null:
+		_vent_timer = Timer.new()
+		_vent_timer.wait_time = VENT_HALF
+		_vent_timer.timeout.connect(vent_tick)
+		ow.add_child(_vent_timer)
+	if has_vents(m):
+		_vent_timer.start()
+	else:
+		_vent_timer.stop()
+
+## One half beat of the vents. They never blow up under the player: they wait a beat.
+func vent_tick() -> void:
+	var m: MapData = ow.map
+	if vents_calm:
+		for b: Dictionary in m.blocks:
+			if str(b.get("open_flag", "")) == "_vents_calm" and Vector2i(int(b.x), int(b.y)) == ow.player.cell:
+				return
+	vents_calm = not vents_calm
+	refresh(ow.player.cell)
+	if not vents_calm:
+		Sound.sfx("bump")
 
 func _build_glints(m: MapData) -> void:
 	if _glints == null:
@@ -91,7 +147,7 @@ func has_puzzle() -> bool:
 ## Redraws after a change and plays a sound if a puzzle opened or closed.
 func refresh(cell: Vector2i) -> void:
 	var m: MapData = ow.map
-	m.apply_blocks(PuzzleRoom.live_flags(m, GameState.flags, cell))
+	m.apply_blocks(flags_now(m, cell))
 	m.paint(ow.ground_layer())
 	var now: Dictionary = _pressed_now(m, cell)
 	for f: String in now:

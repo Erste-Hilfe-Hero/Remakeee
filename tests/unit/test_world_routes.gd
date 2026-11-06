@@ -15,7 +15,7 @@ func test_routes_have_wayfarers_finds_passage_and_table() -> void:
 		var wayfarers: int = 0
 		for n: Dictionary in m.npcs:
 			if n.has("trainer"):
-				assert_eq(int(n.get("sight", 0)), 0, "%s: %s only duels when spoken to" % [id, n.id])
+				assert_eq(int(n.get("sight", 0)), 0, "%s: %s only duels when talked to" % [id, n.id])
 				wayfarers += 1
 		assert_gte(wayfarers, 3, id)
 		assert_between(m.secrets.size(), 3, 5, id)
@@ -30,8 +30,8 @@ func test_route_rings_follow_the_plan() -> void:
 			assert_between(int(s.max), int(RINGS[id][0]), int(RINGS[id][1]), "%s %s" % [id, s.species])
 
 func test_unfolded_forms_are_rare() -> void:
-	# Item 1113: Riptail and Thornback show up with weight 5 only.
-	var want: Dictionary = {"brackwater_fen": "Riptail", "gloamwood": "Thornback"}
+	# Item 1113: Riptail, Thornback and Smoldrake show up with weight 5 only.
+	var want: Dictionary = {"brackwater_fen": "Riptail", "gloamwood": "Thornback", "kindle_vents": "Smoldrake"}
 	for id: String in want:
 		var found: bool = false
 		for s: Dictionary in EncounterTable.table(id).spawns:

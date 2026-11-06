@@ -46,7 +46,8 @@ var backdrop: String = "field"
 var field: String = ""
 ## Tall grass may only roll encounters if a table exists.
 var heal_point: Vector2i = Vector2i(-1, -1)
-## Puzzle blocks: {"x", "y", "open_flag"}. A closed block is drawn and treated as rock.
+## Puzzle blocks: {"x", "y", "open_flag", "closed"}. A closed block is drawn as "closed"
+## (rock "@" unless set, e.g. "~" for a gap full of sea water).
 var blocks: Array[Dictionary] = []
 ## Hidden finds: {"x", "y", "item", "count", "flag"}. Facing the cell and pressing A takes it.
 var secrets: Array[Dictionary] = []
@@ -285,7 +286,7 @@ func apply_blocks(flags: Dictionary) -> bool:
 		var x: int = int(b.x)
 		var y: int = int(b.y)
 		var open: bool = bool(flags.get(str(b.get("open_flag", "")), false))
-		var ch: String = _base_rows[y][x] if open else "@"
+		var ch: String = _base_rows[y][x] if open else str(b.get("closed", "@"))
 		if rows[y][x] != ch:
 			var r: String = rows[y]
 			rows[y] = r.substr(0, x) + ch + r.substr(x + 1)

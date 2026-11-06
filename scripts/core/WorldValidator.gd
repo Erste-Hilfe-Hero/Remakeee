@@ -218,6 +218,10 @@ static func check_passages(errors: PackedStringArray, map_ids: PackedStringArray
 				errors.append("map '%s': spot '%s' at %s is off the map" % [id, name, c])
 			elif not is_object_spot(name) and not m.is_walkable(c):
 				errors.append("map '%s': spot '%s' at %s is not on floor" % [id, name, c])
+		for b: Dictionary in m.blocks:
+			var of: String = str(b.get("open_flag", ""))
+			if of.begins_with("_") and not of in WorldMechanics.CLOCK_FLAGS:
+				errors.append("map '%s': block at %s,%s waits for unknown clock flag '%s'" % [id, b.x, b.y, of])
 		if m.passages.is_empty():
 			continue
 		var reach: Dictionary = reachable_cells(m, entries.get(id, []))

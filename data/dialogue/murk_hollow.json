@@ -85,5 +85,11 @@
  "swarm_defeat": [
   "The swarm scatters into the dark galleries.",
   "The corner is quiet now. The Hush has let go of them."
- ]
+ ],
+ "echo_rope": {
+  "lines": [
+   "A coiled rope hangs on a hook by a lever."
+  ],
+  "action": "lever echo_rope"
+ }
 }

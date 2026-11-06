@@ -99,12 +99,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 977. [P3] Plane in Orten Zäune und Gärten so, dass kein Ort ein rechteckiges Raster mit einer Mittelstraße ist (Regel aus docs/WORLD.md).
 
 ### Höhlen und Grotten
-978. [P1] Baue die Höhle "Mossmere Grotto" (de: Moosseegrotte) unter Gloamwood, zwei Ebenen, feucht mit Moosböden, Ring 6 bis 9.
-979. [P1] Baue die Höhle "Sablecove" (de: Zobelbucht), eine Meereshöhle an Brackwater Fen, deren innere Kammer nur bei Ebbe offen ist.
-980. [P1] Erweitere Murk Hollow um eine untere Ebene "Echo Gallery" (de: Echogalerie) mit langen Gängen, Ring 13 bis 16.
-981. [P1] Baue die Höhle "Kindle Vents" (de: Glutschlote) am Fuß von Cinder Rift, mit heißen Schloten, die im Takt von 4 Sekunden den Weg sperren.
-982. [P1] Zeige in jeder Höhle am Eingang, welche Ausrüstung drinnen gebraucht wird, als Symbol auf dem Schild.
-983. [P1] Gib jeder Höhle mit mehr als einer Ebene einen kurzen Rückweg (Leiter oder Seil) vom tiefsten Punkt zum Eingang, der erst von innen öffnet.
+978. [x] [P1] Baue die Höhle "Mossmere Grotto" (de: Moosseegrotte) unter Gloamwood, zwei Ebenen, feucht mit Moosböden, Ring 6 bis 9.
+979. [x] [P1] Baue die Höhle "Sablecove" (de: Zobelbucht), eine Meereshöhle an Brackwater Fen, deren innere Kammer nur bei Ebbe offen ist.
+980. [x] [P1] Erweitere Murk Hollow um eine untere Ebene "Echo Gallery" (de: Echogalerie) mit langen Gängen, Ring 13 bis 16.
+981. [x] [P1] Baue die Höhle "Kindle Vents" (de: Glutschlote) am Fuß von Cinder Rift, mit heißen Schloten, die im Takt von 4 Sekunden den Weg sperren.
+982. [x] [P1] Zeige in jeder Höhle am Eingang, welche Ausrüstung drinnen gebraucht wird, als Symbol auf dem Schild.
+983. [x] [P1] Gib jeder Höhle mit mehr als einer Ebene einen kurzen Rückweg (Leiter oder Seil) vom tiefsten Punkt zum Eingang, der erst von innen öffnet.
 984. [P2] Lege in Mossmere Grotto Tropfsteine an, die man mit der Hebelstange abbricht, um eine Brücke über einen Bach zu schlagen.
 985. [P2] Lass in Sablecove die Gezeiten nach Gerätezeit alle sechs Stunden wechseln und zeige die nächste Ebbe auf einem Gezeitenstein am Eingang.
 986. [P2] Lege in Echo Gallery Hall-Felder an, in denen ein Glockenschlag einen versteckten Gang als Umriss für 5 Sekunden zeigt.

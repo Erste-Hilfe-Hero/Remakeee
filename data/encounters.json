@@ -372,5 +372,144 @@
     "ground": "reeds"
    }
   ]
+ },
+ "mossmere_grotto": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 6,
+    "max": 8,
+    "weight": 35,
+    "ground": "cave"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 6,
+    "max": 8,
+    "weight": 30,
+    "ground": "cave"
+   },
+   {
+    "species": "Mossling",
+    "min": 7,
+    "max": 9,
+    "weight": 20,
+    "ground": "cave"
+   },
+   {
+    "species": "Puddlet",
+    "min": 7,
+    "max": 9,
+    "weight": 15,
+    "ground": "cave"
+   }
+  ]
+ },
+ "echo_gallery": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 13,
+    "max": 15,
+    "weight": 40,
+    "ground": "cave"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 13,
+    "max": 16,
+    "weight": 35,
+    "ground": "cave"
+   },
+   {
+    "species": "Wickit",
+    "min": 14,
+    "max": 16,
+    "weight": 20,
+    "ground": "cave"
+   },
+   {
+    "species": "Duskdigger",
+    "min": 16,
+    "max": 16,
+    "weight": 5,
+    "ground": "cave"
+   }
+  ]
+ },
+ "sablecove": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 14,
+    "max": 16,
+    "weight": 35,
+    "ground": "cave"
+   },
+   {
+    "species": "Puddlet",
+    "min": 14,
+    "max": 16,
+    "weight": 24,
+    "ground": "cave"
+   },
+   {
+    "species": "Kelpup",
+    "min": 14,
+    "max": 16,
+    "weight": 20,
+    "ground": "cave"
+   },
+   {
+    "species": "Wickit",
+    "min": 15,
+    "max": 17,
+    "weight": 16,
+    "ground": "cave"
+   },
+   {
+    "species": "Riptail",
+    "min": 17,
+    "max": 17,
+    "weight": 5,
+    "ground": "cave"
+   }
+  ]
+ },
+ "kindle_vents": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 11,
+    "max": 13,
+    "weight": 40,
+    "ground": "cave"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 11,
+    "max": 13,
+    "weight": 31,
+    "ground": "cave"
+   },
+   {
+    "species": "Kindlop",
+    "min": 11,
+    "max": 13,
+    "weight": 24,
+    "ground": "cave"
+   },
+   {
+    "species": "Smoldrake",
+    "min": 14,
+    "max": 14,
+    "weight": 5,
+    "ground": "cave"
+   }
+  ]
  }
 }

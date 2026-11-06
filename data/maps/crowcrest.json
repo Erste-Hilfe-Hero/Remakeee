@@ -21,7 +21,7 @@
   "@~~~%..:_..@",
   "@......::..@",
   "@^^^=^^^^D^@",
-  "@:::_:::...@",
+  "@:::_:::..S@",
   "@:::_::....@",
   "@...______.@",
   "@@........@@",
@@ -65,20 +65,20 @@
    "facing": "up"
   },
   {
-   "x": 9,
-   "y": 14,
-   "to": "murk_hollow",
-   "tx": 5,
-   "ty": 11,
-   "facing": "up"
-  },
-  {
    "x": 0,
    "y": 4,
    "to": "gloamwood",
    "tx": 10,
    "ty": 2,
    "facing": "left"
+  },
+  {
+   "x": 9,
+   "y": 14,
+   "to": "murk_hollow",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -163,6 +163,15 @@
    "y": 6,
    "dialogue": "story/find_3",
    "hide_flag": "page_3"
+  },
+  {
+   "x": 10,
+   "y": 15,
+   "dialogue": "crowcrest/murk_hollow_sign",
+   "gear": [
+    "storm_lantern",
+    "climbing_pick"
+   ]
   }
  ],
  "gear_spots": [

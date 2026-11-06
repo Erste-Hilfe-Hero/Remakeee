@@ -387,7 +387,10 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
 	if not s.is_empty():
+		var icons: Control = _gear_icons(s.get("gear", []))
 		await run_dialogue(str(s.dialogue))
+		if icons != null:
+			icons.queue_free()
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -395,6 +398,28 @@ func _on_interact(cell: Vector2i) -> void:
 		if beyond != null:
 			beyond.face_toward(player.cell)
 			await run_dialogue(beyond.dialogue_ref, beyond)
+
+## Cave entrance signs show the gear needed inside as pictures above the text (item 982).
+func _gear_icons(gear: Array) -> Control:
+	if gear.is_empty():
+		return null
+	var row := HBoxContainer.new()
+	row.name = "gear_icons"
+	row.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	row.offset_left = 4
+	row.offset_top = -TEXT_BOX_HEIGHT - TilesetFactory.TILE * 2 - 4
+	row.grow_vertical = Control.GROW_DIRECTION_END
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for g: Variant in gear:
+		var tex: Texture2D = PauseMenu.gear_picture(str(g))
+		if tex == null:
+			continue
+		var r := TextureRect.new()
+		r.texture = tex
+		r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		row.add_child(r)
+	_text.get_parent().add_child(row)
+	return row
 
 ## Shows a dialogue entry, then runs its action and flag. Freezes the player meanwhile.
 func run_dialogue(ref: String, speaker: NPC = null) -> void:
@@ -688,11 +713,19 @@ func _action_quest_show(args: PackedStringArray, _speaker: NPC) -> void:
 
 ## "lever <flag> <gear>": a sluice wheel, mine cart or grate that needs Wayfarer Gear (the Pry
 ## Bar). With the gear the flag is set and blocks with that open_flag open (area 3 item 1045).
+## "lever <flag> [gear]": without gear it is a plain lever (shortcuts that open from inside,
+## area 3 item 983).
 func _action_lever(args: PackedStringArray, _speaker: NPC) -> void:
-	if args.size() < 2:
+	if args.is_empty():
 		return
 	if GameState.has_flag(args[0]):
 		await say(["It has already been moved."] as Array[String])
+		return
+	if args.size() < 2:
+		GameState.set_flag(args[0])
+		Sound.sfx("warp")
+		_world.refresh(player.cell)
+		await say(["You pull the lever. Somewhere a rope ladder rattles down."] as Array[String])
 		return
 	if not GameState.has_gear(args[1]):
 		Sound.sfx("bump")
