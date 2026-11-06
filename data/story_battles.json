@@ -167,5 +167,51 @@
    "front": 1
   },
   "lose": "ashmere/finale_echo_1_lose"
+ },
+ "kestra_tag": {
+  "trainer": "Hush Wanderers",
+  "team": [
+   {
+    "species": "Kelpup",
+    "level": 22
+   },
+   {
+    "species": "Mirkmole",
+    "level": 22
+   },
+   {
+    "species": "Shalebat",
+    "level": 23
+   },
+   {
+    "species": "Lumenewt",
+    "level": 23
+   }
+  ],
+  "front": [
+   1,
+   2
+  ],
+  "ai": 2,
+  "money": 700,
+  "partner": {
+   "name": "Cartographer Kestra",
+   "team": [
+    {
+     "species": "Tempestrel",
+     "level": 22
+    },
+    {
+     "species": "Glimmerax",
+     "level": 21
+    }
+   ],
+   "front": 1
+  },
+  "defeat": "corvane/kestra_tag_defeat",
+  "lose": "corvane/kestra_tag_lose",
+  "win_flags": [
+   "kestra_stillwater_tag"
+  ]
  }
 }
