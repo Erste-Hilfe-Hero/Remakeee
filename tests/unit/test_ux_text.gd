@@ -75,7 +75,9 @@ func test_placeholders_and_name_survive_translation() -> void:
 		var v: String = strings[k]
 		assert_eq(v.count("{name}"), k.count("{name}"), "{name} kept in: " + k)
 		if not v.contains("{0}"):
-			assert_eq(v.count("%d%%"), k.count("%d%%"), "%%d%%%% kept in: " + k)
+			# German may write "50 %" with a space; the placeholders must all stay.
+			assert_eq(v.count("%%"), k.count("%%"), "%%%% kept in: " + k)
+			assert_eq(v.count("%d"), k.count("%d"), "%%d kept in: " + k)
 
 func test_chimora_words_not_genre_words() -> void:
 	var table: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/i18n/de.json"))
