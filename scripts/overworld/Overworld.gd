@@ -1278,6 +1278,8 @@ func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
 		Sound.sfx("level_up")
 		GameState.set_flag(args[0])
 		DailyTasks.record("melody", {"map": map.id})
+	if score >= 1.0:
+		GameState.records["melody_perfect"] = 1
 	else:
 		Sound.sfx("cancel")
 
@@ -2292,7 +2294,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
-	model.prize_money = int(trainer.get("money", 0))
+	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
+	model.xp_mult = ShopEffects.growth_mult()
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])
@@ -2318,6 +2321,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	ShopEffects.battle_done()
 	var coins_before: int = GameState.money
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
 	if GameState.money != coins_before:
@@ -2330,7 +2334,11 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		for f: Spirling in model.parties[1]:
 			for e: int in f.elements():
 				foe_elements.append(Elements.E.keys()[e])
-		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements})
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements, "night": DayCycle.current() == DayCycle.Phase.NIGHT})
+		var fields: Array = GameState.records.get("fields_won", [])
+		if model.field != "" and not model.field in fields:
+			fields.append(model.field)
+			GameState.records["fields_won"] = fields
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).

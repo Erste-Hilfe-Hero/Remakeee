@@ -123,6 +123,16 @@ static func stat(name: String) -> int:
 			return GameState.money
 		"maps_visited":
 			return (GameState.records.get("maps_visited", []) as Array).size()
+		"all_fields":
+			# 1 once a battle was won on every field of BattleRules.FIELDS (plan 3322).
+			var won: Array = GameState.records.get("fields_won", [])
+			return int(BattleRules.FIELDS.keys().all(func(f: Variant) -> bool: return str(f) in won))
+		"wild_maps_all":
+			# 1 once every map with wild Spirlings was entered (plan 3323).
+			var seen: Array = GameState.records.get("maps_visited", [])
+			return int(EncounterTable.table_ids().all(func(m: String) -> bool: return m in seen))
+		"team_at_cap":
+			return GameState.party.filter(func(s: Spirling) -> bool: return s.level >= Spirling.MAX_LEVEL).size()
 		"gear":
 			return int(GameState.has_gear("grapple_line")) + int(GameState.has_gear("climbing_pick")) + int(GameState.has_gear("storm_lantern"))
 		"festival_gifts":
@@ -176,18 +186,35 @@ static func by_title(title: String) -> Dictionary:
 			return a
 	return {}
 
+## Secret badges (plan 3319): title and text stay hidden until they are unlocked.
+const MAX_SECRET: int = 10
+
+static func is_hidden(a: Dictionary) -> bool:
+	return bool(a.get("secret", false)) and not unlocked().has(str(a.id))
+
+## Title as shown, "???" for a hidden secret badge (not translated yet).
+static func shown_title(a: Dictionary) -> String:
+	return "???" if is_hidden(a) else str(a.title)
+
+static func shown_text(a: Dictionary) -> String:
+	return "A secret badge. Its text appears once you earn it." if is_hidden(a) else str(a.text)
+
+## Share of unlocked badges in percent, rounded down (plan 3334).
+static func percent() -> int:
+	return unlocked().size() * 100 / maxi(1, list().size())
+
 ## Menu lines: "[x] Title" for each achievement.
 static func lines() -> Array[String]:
 	var have: Dictionary = unlocked()
 	var out: Array[String] = []
 	for a: Dictionary in list():
-		out.append("%s %s" % ["[x]" if have.has(a.id) else "[ ]", a.title])
+		out.append("%s %s" % ["[x]" if have.has(a.id) else "[ ]", shown_title(a)])
 	return out
 
 ## The info card for one achievement: title, text, progress, reward and date.
 static func card(a: Dictionary) -> String:
-	var parts: PackedStringArray = [Loc.t(str(a.title)), Loc.t(str(a.text))]
-	var p: Array[int] = progress(a)
+	var parts: PackedStringArray = [Loc.t(shown_title(a)), Loc.t(shown_text(a))]
+	var p: Array[int] = progress(a) if not is_hidden(a) else ([] as Array[int])
 	if not p.is_empty():
 		parts.append(Loc.t("Progress: %d/%d") % [p[0], p[1]])
 	parts.append(Loc.t("Reward: %d Waymarks") % int(a.get("reward", 0)))

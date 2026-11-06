@@ -47,7 +47,7 @@ func fill() -> void:
 		c.queue_free()
 	var have: Dictionary = Achievements.unlocked()
 	var list: Array[Dictionary] = Achievements.list()
-	_title.text = Loc.t("Badge book %d/%d") % [have.size(), list.size()]
+	_title.text = Loc.t("Badge book %d/%d (%d%%)") % [have.size(), list.size(), Achievements.percent()]
 	_first = null
 	for i: int in list.size():
 		var a: Dictionary = list[i]
@@ -55,9 +55,9 @@ func fill() -> void:
 		b.texture_normal = Badges.texture(a, have.has(a.id))
 		b.custom_minimum_size = Vector2(Badges.SIZE, Badges.SIZE)
 		b.focus_mode = Control.FOCUS_ALL
-		b.tooltip_text = Loc.t(str(a.title))
+		b.tooltip_text = Loc.t(Achievements.shown_title(a))
 		b.pressed.connect(func() -> void: chosen.emit(i))
-		b.focus_entered.connect(func() -> void: _title.text = "%s\n%s" % [Loc.t("Badge book %d/%d") % [have.size(), list.size()], Loc.t(str(a.title)) if have.has(a.id) else Loc.t("Locked: %s") % Loc.t(str(a.text))])
+		b.focus_entered.connect(func() -> void: _title.text = "%s\n%s" % [Loc.t("Badge book %d/%d") % [have.size(), list.size()], Loc.t(str(a.title)) if have.has(a.id) else Loc.t("Locked: %s") % Loc.t(Achievements.shown_text(a))])
 		_grid.add_child(b)
 		if _first == null:
 			_first = b
