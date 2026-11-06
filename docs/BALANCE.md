@@ -144,6 +144,7 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
 | Season path steps 5/15/25 and 10/20/30 | 30 / 50 | per season | built |
+| Season path, every step after 30 | 20 | per step | `SeasonPath.add` |
 | Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
 | Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
 | Roaming trip 4 / 8 / 12 h (also 60 / 120 / 180 coins and a Tonic / Remedy / Strong Tonic) | 1 / 2 / 3 | up to 3 trips at once | `Expeditions.collect` |

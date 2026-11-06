@@ -228,8 +228,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### Web-Testbuild
 3763. [x] [P1] Setze für `/play/` den Header `X-Robots-Tag: noindex` und eine `robots.txt`, damit der Testbuild nicht in Suchmaschinen landet.
-3764. [P1] Zeige im Web-Testbuild oben ein kleines Band "Testversion", damit niemand ihn für das fertige Spiel hält.
-3765. [P1] Markiere Konten aus dem Web-Testbuild auf dem Server als `platform = web` und lösche sie automatisch nach 30 Tagen ohne Nutzung, wie in der Datenschutzerklärung zu ergänzen.
+3764. [x] [P1] Zeige im Web-Testbuild oben ein kleines Band "Testversion", damit niemand ihn für das fertige Spiel hält.
+3765. [x] [P1] Markiere Konten aus dem Web-Testbuild auf dem Server als `platform = web` und lösche sie automatisch nach 30 Tagen ohne Nutzung, wie in der Datenschutzerklärung zu ergänzen.
 3766. [P2] Lege ein Größenbudget für den Web-Build fest (WASM plus PCK unter 40 MB) und prüfe es im Job `web-build`.
 3767. [P2] Hänge an die Dateinamen des Web-Builds die Build-Nummer an, damit Browser nach einem Update keine alte Version aus dem Cache laden.
 3768. [P2] Exportiere den Web-Build ohne Thread-Unterstützung, damit keine besonderen Header (COOP, COEP) nötig sind, und halte das in `docs/RELEASE.md` fest.

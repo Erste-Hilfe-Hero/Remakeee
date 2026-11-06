@@ -58,7 +58,7 @@ func _init(p_store_path: String = "") -> void:
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
 			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
 			"battle_submit", "battle_status", "league_info", "league_join", "league_find", "data_export",
-			"report_in", "notices_list", "notice_read", "appeal"]:
+			"report_in", "notices_list", "notice_read", "appeal", "platform_set"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 
 func is_local() -> bool:
@@ -182,7 +182,7 @@ static func clean_name(p_name: String, code: String) -> String:
 
 static func profile_json(p: Dictionary) -> Dictionary:
 	return {"code": p.code, "name": p.name, "color": p.color, "favorite": p.favorite,
-		"card": p.card, "place": p.place, "social": p.social}
+		"card": p.card, "place": p.place, "social": p.social, "platform": str(p.get("platform", "app"))}
 
 func online_now() -> int:
 	var n: int = 0
@@ -250,6 +250,14 @@ func active_flags(version: int) -> Array:
 			out.append(key)
 	out.sort()
 	return out
+
+## Like public.platform_set (item 3765).
+func _fn_platform_set(a: Dictionary) -> Dictionary:
+	var plat: String = str(a.get("p_platform", ""))
+	if not plat in ["app", "web"]:
+		return {"ok": false, "error": "bad_platform"}
+	profile_of(me())["platform"] = plat
+	return {"ok": true, "platform": plat}
 
 func _fn_profile_set(a: Dictionary) -> Dictionary:
 	var p: Dictionary = profile_of(me())

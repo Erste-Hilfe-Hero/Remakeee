@@ -66,7 +66,7 @@ func test_daily_events_fill_the_album() -> void:
 	assert_string_contains("\n".join(Album.lines()), "1/2")
 
 func test_goals_have_four_tabs() -> void:
-	assert_eq(Goals.TABS, ["Story", "Today", "Week", "Collection"] as Array[String])
+	assert_eq(Goals.TABS, ["Story", "Today", "Week", "Collection", "Season path"] as Array[String])
 	assert_string_contains(Goals.today(), "Daily tasks")
 	assert_string_contains(Goals.today(), "Wandering merchant today")
 	assert_string_contains(Goals.week(), "Weekly echo")
