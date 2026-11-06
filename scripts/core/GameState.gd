@@ -523,6 +523,12 @@ func mark_seen(species: String, bonded: bool = false) -> void:
 		e["bonded"] = true
 	spirlog[species] = e
 
+## An Echo call ended with [param score]: a fully right call adds one to every team member's
+## streak, a miss starts them over (unfold rule "echo_streak", Hushkin to Silentra).
+func note_echo(score: float) -> void:
+	for s: Spirling in party:
+		s.echo_streak = s.echo_streak + 1 if score >= 1.0 else 0
+
 ## Records what [param s] shows the Spirlog: its Prism colour, imprint and temperament.
 func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
 	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(s.data.species_name, {}))
