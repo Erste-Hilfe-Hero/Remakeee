@@ -34,6 +34,8 @@ var play_time: float = 0.0
 var in_game: bool = false
 
 var party: Array[Spirling] = []
+## The own team while a weekly loan team is out (plan 3192); saves always keep this one.
+var party_on_loan: Array[Spirling] = []
 ## Storage box for Spirlings beyond the party of 6.
 var storage: Array[Spirling] = []
 ## Named storage boxes [{"name", "color"}] (plan area 1, item 375). Spirling.box points here.
@@ -356,6 +358,7 @@ func rumble_pads(strength: float, seconds: float) -> void:
 ## Clears everything for a new game.
 func reset() -> void:
 	party.clear()
+	party_on_loan = []
 	storage.clear()
 	storage_boxes = default_boxes()
 	storage_box_bonus = 0
@@ -433,7 +436,7 @@ static func endgame_defaults(rec: Dictionary) -> Dictionary:
 
 func to_dict() -> Dictionary:
 	var party_d: Array = []
-	for s: Spirling in party:
+	for s: Spirling in (party_on_loan if not party_on_loan.is_empty() else party):
 		party_d.append(s.to_dict())
 	var storage_d: Array = []
 	for s: Spirling in storage:

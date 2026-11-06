@@ -363,6 +363,404 @@
    "text": "Rest at 3 different Rest Springs"
   }
  ],
+ "loan_teams": [
+  {
+   "id": "loan_01",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glimmerax",
+     "moves": [
+      "Glint",
+      "Prism Ray",
+      "Storm Gnash",
+      "Overcharge"
+     ]
+    },
+    {
+     "species": "Lanternel",
+     "moves": [
+      "Glint",
+      "Updraft",
+      "Prism Ray",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Floursprite",
+     "moves": [
+      "Breeze Slice",
+      "Drift Step",
+      "Wick Flicker",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_02",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Lumenewt",
+     "moves": [
+      "Starlit Lash",
+      "Prism Ray",
+      "Still Thought",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Reedwarden",
+     "moves": [
+      "Puffcap Haze",
+      "Fizz Pop",
+      "Kelp Lash",
+      "Salt Snap"
+     ]
+    },
+    {
+     "species": "Fenwarden",
+     "moves": [
+      "Mirk Nip",
+      "Murk Veil",
+      "Kelp Lash",
+      "Night Siphon"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_03",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glasstarn",
+     "moves": [
+      "Spindrift Shot",
+      "Prism Ray",
+      "Still Thought",
+      "Tide Call"
+     ]
+    },
+    {
+     "species": "Siltgrove",
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down",
+      "Tunnel Strike",
+      "Cinder Nip"
+     ]
+    },
+    {
+     "species": "Saltcrown",
+     "moves": [
+      "Drench",
+      "Wick Flicker",
+      "Salt Snap",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_04",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Saltspire",
+     "moves": [
+      "Salt Snap",
+      "Tunnel Strike",
+      "Hunker Down",
+      "Breaker Plunge"
+     ]
+    },
+    {
+     "species": "Burinox",
+     "moves": [
+      "Murk Veil",
+      "Pebble Toss",
+      "Night Siphon",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Velahra",
+     "moves": [
+      "Glint",
+      "Fizz Pop",
+      "Candle Ward",
+      "Spindrift Shot"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_05",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Delthorn",
+     "moves": [
+      "Fizz Pop",
+      "Drench",
+      "Salt Snap",
+      "Mirk Nip"
+     ]
+    },
+    {
+     "species": "Smeltmaw",
+     "moves": [
+      "Heat Haze",
+      "Pebble Toss",
+      "Cinder Breath",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Tempestrel",
+     "moves": [
+      "Updraft",
+      "Crackle Bite",
+      "Gale Scythe",
+      "Squall Line"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_06",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glassfell",
+     "moves": [
+      "Cinder Nip",
+      "Heat Haze",
+      "Cinder Breath",
+      "Grit Jab"
+     ]
+    },
+    {
+     "species": "Zenithare",
+     "moves": [
+      "Breeze Slice",
+      "Drift Step",
+      "Pebble Toss",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Ferrowyn",
+     "moves": [
+      "Salt Snap",
+      "Drift Step",
+      "Undertow",
+      "Gale Scythe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_07",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Cullhorn",
+     "moves": [
+      "Hunker Down",
+      "Wick Flicker",
+      "Tunnel Strike",
+      "Dawn Mend"
+     ]
+    },
+    {
+     "species": "Obsidroth",
+     "moves": [
+      "Gloom Ripple",
+      "Tremor Thud",
+      "All-In Crash",
+      "Landslip"
+     ]
+    },
+    {
+     "species": "Frondmere",
+     "moves": [
+      "Puffcap Haze",
+      "Thorn Volley",
+      "Sap Draw",
+      "Bloom Call"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_08",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Dunebastion",
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down",
+      "Tunnel Strike",
+      "Cinder Nip"
+     ]
+    },
+    {
+     "species": "Duskdigger",
+     "moves": [
+      "Tremor Thud",
+      "Gloom Handoff",
+      "All-In Crash",
+      "Murk Veil"
+     ]
+    },
+    {
+     "species": "Cogwright",
+     "moves": [
+      "Hunker Down",
+      "Crackle Bite",
+      "Tunnel Strike",
+      "Spark Call"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_09",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glimmerax",
+     "moves": [
+      "Glint",
+      "Prism Ray",
+      "Storm Gnash",
+      "Overcharge"
+     ]
+    },
+    {
+     "species": "Lanternel",
+     "moves": [
+      "Glint",
+      "Updraft",
+      "Prism Ray",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Floursprite",
+     "moves": [
+      "Breeze Slice",
+      "Drift Step",
+      "Wick Flicker",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_10",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Lumenewt",
+     "moves": [
+      "Starlit Lash",
+      "Prism Ray",
+      "Still Thought",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Reedwarden",
+     "moves": [
+      "Puffcap Haze",
+      "Fizz Pop",
+      "Kelp Lash",
+      "Salt Snap"
+     ]
+    },
+    {
+     "species": "Fenwarden",
+     "moves": [
+      "Mirk Nip",
+      "Murk Veil",
+      "Kelp Lash",
+      "Night Siphon"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_11",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glasstarn",
+     "moves": [
+      "Spindrift Shot",
+      "Prism Ray",
+      "Still Thought",
+      "Tide Call"
+     ]
+    },
+    {
+     "species": "Siltgrove",
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down",
+      "Tunnel Strike",
+      "Cinder Nip"
+     ]
+    },
+    {
+     "species": "Saltcrown",
+     "moves": [
+      "Drench",
+      "Wick Flicker",
+      "Salt Snap",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_12",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Saltspire",
+     "moves": [
+      "Salt Snap",
+      "Tunnel Strike",
+      "Hunker Down",
+      "Breaker Plunge"
+     ]
+    },
+    {
+     "species": "Burinox",
+     "moves": [
+      "Murk Veil",
+      "Pebble Toss",
+      "Night Siphon",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Velahra",
+     "moves": [
+      "Glint",
+      "Fizz Pop",
+      "Candle Ward",
+      "Spindrift Shot"
+     ]
+    }
+   ]
+  }
+ ],
  "festivals": [
   {
    "id": "bloom_fair",
