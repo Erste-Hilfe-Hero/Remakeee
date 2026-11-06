@@ -29,7 +29,7 @@ var room_action: String = ""
 ## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
 ## the Map book once Aldo gave it.
-const MENU_ORDER: Array[String] = ["Goals", "Map book", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+const MENU_ORDER: Array[String] = ["Goals", "Map book", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
 	"Leagues", "Records", "Storage", "Save", "Photo", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
@@ -56,6 +56,7 @@ func run() -> void:
 		match labels[idx]:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
+			"Map": await WorldMapMenu.run(self, current_map)
 			"Team": await run_team()
 			"Friends":
 				await tip("friends")
