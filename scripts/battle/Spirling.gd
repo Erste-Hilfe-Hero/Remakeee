@@ -66,12 +66,10 @@ var stages: Dictionary[String, int] = {}
 var energy_tax: int = 0
 ## Battle-only: move name -> turns it stays locked (moves.json "cooldown"), same counting.
 var cooldowns: Dictionary[String, int] = {}
-<<<<<<< HEAD
 ## Battle-only: turns left on a heal block (heal_block effect), same counting.
 var heal_block: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
 var burn_guard: int = 0
-=======
 ## Temperament id (TEMPERAMENTS), stored since save version 4.
 var temper: String = ""
 ## Regional imprint id ("" = none), see plan area 1, item 218.
@@ -84,7 +82,6 @@ var met_day: int = 0
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
 var echo_streak: int = 0
->>>>>>> claude/project-thread-sc7jly-b
 
 ## [param rng] rolls the hidden Spark values; pass the battle or game RNG for reproducibility.
 func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = null) -> void:
