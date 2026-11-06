@@ -13,6 +13,7 @@
 | [IMPRESSUM.md](IMPRESSUM.md) | Impressum nach § 5 DDG, DE/EN | Website, Spiel, beide Stores |
 | [STORE_COMPLIANCE.md](STORE_COMPLIANCE.md) | Antworten für Google Data Safety, Apple App Privacy, Altersfreigabe, DSA-Händlerstatus, Kontolöschung, Store-Texte | Play Console, App Store Connect |
 | [CHECKLISTE_ALI.md](CHECKLISTE_ALI.md) | Was nur Ali erledigen kann, in Reihenfolge | intern |
+| [SHOP_RECHT.md](SHOP_RECHT.md) | Prüfliste für Shop-Angebote und -Texte, Regel "keine bezahlten Zufallsinhalte", verbotene Formulierungen | intern, Abnahme für Bereich 10 |
 | [VERARBEITUNGEN.md](VERARBEITUNGEN.md) | Verzeichnis der Verarbeitungstätigkeiten (Art. 30 DSGVO): Zweck, Tabellen, Frist, Rechtsgrundlage, Löschläufe, TOMs | intern |
 
 ## Festgelegtes Modell (darauf beruhen alle Texte)
