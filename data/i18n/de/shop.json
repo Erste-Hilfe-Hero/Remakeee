@@ -4,6 +4,7 @@
  "strings": {
   "%d Riftglass": "%d Rissglas",
   "%d coins": "%d Münzen",
+  "%s broke the bond, but your Pass keeps it calm.": "%s hat die Bindung gelöst, aber dein Pass hält ihn ruhig.",
   "%s grew from Ring %d to Ring %d!": "%s wächst von Ring %d auf Ring %d!",
   "(refunded)": "(erstattet)",
   "+50% growth, 30 Riftglass every day, +1 starting energy, 1 free Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.": "+50 % Wachstum, jeden Tag 30 Rissglas, +1 Startenergie, 1 freier Rissatem pro Wächterkampf, +1 Bond-Versuch pro Kampf. 4,99 € pro Monat, verlängert sich automatisch, jederzeit im Store kündbar.",
@@ -280,6 +281,7 @@
   "Wayfarer Pack": "Wanderer-Paket",
   "Wayfarer Pass": "Wanderer-Pass",
   "Wayfarer Pass for %d days": "Wanderer-Pass für %d Tage",
+  "Wayfarer Pass: +%d Riftglass": "Wanderer-Pass: +%d Rissglas",
   "Welcome Back Pack": "Aufholpaket",
   "Whirl Glass": "Wirbelglas",
   "Will to Win": "Siegeswille",
