@@ -404,8 +404,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3481. [P3] Einen Wochenrückblick des Pfads zeigen: Räume, Kämpfe, gefundene Schätze.
 
 ### Monatsalbum
-3482. [P1] Ein Monatsalbum mit 12 Stickerfeldern pro Kalendermonat anlegen, jedes Feld eine feste Aufgabe, die man den ganzen Monat lang lösen kann.
-3483. [P1] Ein volles Album mit 100 Wegmarken und einem Monatssticker für eine Stickerwand im Wanderer-Zimmer belohnen.
+3482. [x] [P1] Ein Monatsalbum mit 12 Stickerfeldern pro Kalendermonat anlegen, jedes Feld eine feste Aufgabe, die man den ganzen Monat lang lösen kann.
+3483. [x] [P1] Ein volles Album mit 100 Wegmarken und einem Monatssticker für eine Stickerwand im Wanderer-Zimmer belohnen.
 3484. [P2] Die Album-Aufgaben pro Monat per Seed aus einer Liste in data/events.json ziehen.
 3485. [P2] Bei 4 und 8 gefüllten Stickern je 20 Wegmarken auszahlen.
 3486. [P2] Für jeden Monat ein Stickerthema festlegen (Januar Herd, April Blüten, Oktober Laternen) und 16x16-Sticker mit tools/art zeichnen.
@@ -420,8 +420,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3495. [P3] Für ein Album, das in der ersten Monatshälfte voll ist, einen goldenen Stickerrand vergeben.
 
 ### Fairer Rhythmus ohne Druck
-3496. [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
-3497. [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
+3496. [x] [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
+3497. [x] [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
 3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
 3499. [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
 3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
@@ -454,9 +454,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3525. [P3] Für jede Belohnungsquelle eine Obergrenze pro Tag in data/endgame.json eintragen, die der Server prüft.
 
 ### Anzeige und Menüs
-3526. [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
-3527. [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
-3528. [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
+3526. [x] [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
+3527. [x] [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
+3528. [x] [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
 3529. [P2] Einen roten Punkt am Menüeintrag „Ziele“ zeigen, wenn eine Belohnung zum Abholen bereitliegt.
 3530. [P2] Eine Sammelabholung „Alles abholen“ für Aufträge, Pfad und Sammelziele bauen.
 3531. [P2] Alle neuen Menüs auf 144x256 mit der bestehenden Schrift und Einhand-Bedienung prüfen und einen Screenshot je Menü in docs/screenshots ablegen.
