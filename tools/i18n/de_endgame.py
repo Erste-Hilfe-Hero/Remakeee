@@ -170,4 +170,9 @@ T = {
 "Tilda: My stand opens for the next festival, the %s.": "Tilda: Mein Stand öffnet zum nächsten Fest: %s.",
 "Tilda: Festival ribbons for festival goods! Ribbons turn into Waymarks when the festival ends, so nothing goes to waste.": "Tilda: Festbänder gegen Festwaren! Am Festende werden Festbänder zu Wegmarken, es geht also nichts verloren.",
 "Wynn: Beat all five and I'll pay out. Once a week, mind.": "Wynn: Besiege alle fünf, dann zahle ich aus. Aber nur einmal pro Woche.",
+# Season path and Spirlog goals
+"Season path": "Jahreszeitenpfad", "Season path step %d of %d!": "Jahreszeitenpfad: Stufe %d von %d!",
+"Season path %s: step %d of %d (%d points)": "Jahreszeitenpfad %s: Stufe %d von %d (%d Punkte)",
+"+%d coins": "+%d Münzen", "%d coins": "%d Münzen",
+"Spirlog: %d kinds seen!": "Spirlog: %d Arten gesehen!",
 }

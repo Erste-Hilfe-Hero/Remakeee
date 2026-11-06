@@ -168,4 +168,6 @@ const GLYPHS: Dictionary[String, Array] = {
 	"ß": [".##..", "#..#.", "#..#.", "#.#..", "#..#.", "#...#", "#.##.", ".....", "....."],
 	# Waymark (U+E001, private use): a small standing waystone with a carved notch.
 	"\ue001": ["..#..", ".###.", ".#.#.", ".###.", ".#.#.", ".###.", "#####", ".....", "....."],
+	# Star (U+E002): a bonded species grown to ring 30 in the Spirlog.
+	"\ue002": [".....", "..#..", "..#..", "#####", ".###.", ".#.#.", "#...#", ".....", "....."],
 }

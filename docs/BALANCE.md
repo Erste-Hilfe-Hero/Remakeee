@@ -113,8 +113,15 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
+| Season path steps 5/15/25 and 10/20/30 | 30 / 50 | per season | built |
+| Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
+| Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
 
 Daily tasks alone give 40 a day (280 a week); the weekly sources fill the rest.
 
 Festival ribbons: 3 per won battle against Spirlings of the festival's elements, 5 for the crier's
 festival task of the day. They buy festival goods from Tilda in Brindlewick.
+
+Season path: 30 steps per quarter, 100 points per step. Points: daily task 10, weekly echo win 40,
+festival goal stage 20. An active player (3 tasks a day, 1 weekly win) earns about 3100 points in a
+13-week season, enough for every step. The rewards repeat every season, so nothing is missed for good.
