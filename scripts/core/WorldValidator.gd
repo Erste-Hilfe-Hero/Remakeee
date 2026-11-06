@@ -14,6 +14,7 @@ static func validate() -> PackedStringArray:
 	check_reachability(errors, map_ids)
 	check_encounter_tables(errors, map_ids)
 	check_secrets(errors, map_ids)
+	check_puzzles(errors, map_ids)
 	check_layout(errors, map_ids, load_layout())
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
@@ -119,6 +120,84 @@ static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray)
 				near = near or reach.has(at + d)
 			if not near:
 				errors.append("map '%s': hidden find at %s cannot be reached" % [id, at])
+
+## Puzzles (area 3 item 893): every plate, boulder and plank gap can be reached, every ladder
+## leads to a walkable cell, a map with cracked floor has a floor below, and every boulder
+## puzzle has a solution (PuzzleSolver) from the first cell the player arrives on.
+static func check_puzzles(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var entries: Dictionary = entry_cells(map_ids)
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		var starts: Array = entries.get(id, [])
+		var boulders: Array[Vector2i] = PuzzleRoom.start_boulders(m)
+		var cracked: bool = false
+		var gaps: Array[Vector2i] = []
+		for y: int in m.height:
+			for x: int in m.rows[y].length():
+				var k: int = m.kind_at(Vector2i(x, y))
+				cracked = cracked or k == TilesetFactory.Kind.CRACKED
+				if k == TilesetFactory.Kind.PLANK and m.ladder_at(Vector2i(x, y)).is_empty():
+					gaps.append(Vector2i(x, y))
+		if m.puzzles.is_empty() and boulders.is_empty() and not cracked and gaps.is_empty() and m.ladders.is_empty():
+			continue
+		var reach: Dictionary = reachable_cells(m, starts)
+		var near: Callable = func(c: Vector2i) -> bool:
+			if reach.has(c):
+				return true
+			for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+				if reach.has(c + d):
+					return true
+			return false
+		for b: Vector2i in boulders:
+			if not near.call(b):
+				errors.append("map '%s': boulder at %s cannot be reached" % [id, b])
+		for g: Vector2i in gaps:
+			if not near.call(g):
+				errors.append("map '%s': plank gap at %s cannot be reached" % [id, g])
+		if cracked and (m.drop_to.is_empty() or not MapData.exists(m.drop_to)):
+			errors.append("map '%s': has cracked floor but no floor below (drop_to)" % id)
+		elif cracked:
+			var below: MapData = MapData.load_map(m.drop_to)
+			for y: int in m.height:
+				for x: int in m.rows[y].length():
+					if m.kind_at(Vector2i(x, y)) == TilesetFactory.Kind.CRACKED and not below.is_walkable(Vector2i(x, y)):
+						errors.append("map '%s': cracked floor at %d,%d drops onto a blocked cell of '%s'" % [id, x, y, m.drop_to])
+		for l: Dictionary in m.ladders:
+			var at := Vector2i(int(l.x), int(l.y))
+			if not near.call(at):
+				errors.append("map '%s': ladder anchor at %s cannot be reached" % [id, at])
+			var to: String = str(l.get("to", ""))
+			if not MapData.exists(to) or not MapData.load_map(to).is_walkable(Vector2i(int(l.get("tx", -1)), int(l.get("ty", -1)))):
+				errors.append("map '%s': ladder at %s leads nowhere ('%s')" % [id, at, to])
+		for pz: Dictionary in m.puzzles:
+			var pid: String = str(pz.get("id", "?"))
+			if str(pz.get("flag", "")).is_empty():
+				errors.append("map '%s': puzzle '%s' has no flag" % [id, pid])
+			var plates: Array[Vector2i] = PuzzleRoom.plates(m, pz)
+			if plates.is_empty():
+				errors.append("map '%s': puzzle '%s' has no pressure plates" % [id, pid])
+				continue
+			if plates.size() > boulders.size():
+				errors.append("map '%s': puzzle '%s' has more plates than boulders" % [id, pid])
+				continue
+			for p: Vector2i in plates:
+				if m.base_char(p) != "P":
+					errors.append("map '%s': puzzle '%s' plate %s is not a 'P' tile" % [id, pid, p])
+				elif not reach.has(p):
+					errors.append("map '%s': puzzle '%s' plate %s cannot be reached" % [id, pid, p])
+			if starts.is_empty():
+				continue
+			# Other doors open (earlier rooms solved), this puzzle's own door shut.
+			var fresh: MapData = MapData.load_map(id)
+			var open: Dictionary = {}
+			for b: Dictionary in fresh.blocks:
+				open[str(b.get("open_flag", ""))] = true
+			open.erase(str(pz.get("flag", "")))
+			fresh.apply_blocks(open)
+			if PuzzleSolver.solve(fresh, pz, starts[0]) == null:
+				errors.append("map '%s': puzzle '%s' has no solution" % [id, pid])
 
 ## Cells the player can arrive on for each map: warp targets plus the new-game start.
 static func entry_cells(map_ids: PackedStringArray, start_map: String = "lighthouse", start_cell: Vector2i = Vector2i(4, 4)) -> Dictionary:
@@ -293,7 +372,7 @@ static func reachable_cells(m: MapData, starts: Array) -> Dictionary:
 		# All gear owned and every puzzle solved: wading water, vines and plank gaps are
 		# crossable and boulders can be pushed aside (PuzzleSolver checks the puzzles themselves).
 		var k: int = m.kind_at(c)
-		var open_kind: bool = m.in_bounds(c) and (TilesetFactory.GEAR_KINDS.has(k) or k == TilesetFactory.Kind.BOULDER)
+		var open_kind: bool = m.in_bounds(c) and (TilesetFactory.GEAR_KINDS.has(k) or k == TilesetFactory.Kind.BOULDER or k == TilesetFactory.Kind.PLANK)
 		return (m.is_walkable(c) or open_kind or m.gear_needed_at(c) != "") and not npc_cells.has(c)
 	var jumps: Dictionary = {}
 	for g: Dictionary in m.gear_spots:
