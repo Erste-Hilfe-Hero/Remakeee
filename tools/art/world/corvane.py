@@ -43,7 +43,7 @@ def corvane_quay(world):
             "~~~++++++S~~",
             "~~~~~~~~~~~~"]
     world.add_text(mid, {
-        "sign": lines(("CORVANE QUAY", "CORVANE-KAI"), ("Harbour of Corvane.", "Hafen von Corvane."),
+        "sign": lines(("CORVANE QUAY", "CORVANE-KAI"), ("Corvane Quay, 23 folk.", "Corvane-Kai, 23 Leute."), ("Harbour of Corvane.", "Hafen von Corvane."),
                       ("North: Madderby Road", "Norden: Straße nach Madderby")),
         "road": lines(("MADDERBY ROAD", "STRASSE NACH MADDERBY"),
                       ("Closed after the storm. Fallen trees, washed-out bridges.", "Nach dem Sturm gesperrt. Umgestürzte Bäume, weggespülte Brücken."),
