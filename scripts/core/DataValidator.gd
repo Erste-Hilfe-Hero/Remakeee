@@ -7,7 +7,7 @@ const VALID_KINDS: Array[String] = ["PHYSICAL", "FOCUS", "STATUS"]
 const VALID_STATUSES: Array[String] = ["", "scorch", "soak", "root", "jolt", "daze", "drowse"]
 
 ## Returns a list of human-readable problems. Empty means the data is valid.
-static func validate(spirlings_path: String = "res://data/spirlings.json", moves_path: String = "res://data/moves.json") -> PackedStringArray:
+static func validate(spirlings_path: String = "res://data/spirlings.json", moves_path: String = "res://data/moves.json", encounters_path: String = "res://data/encounters.json") -> PackedStringArray:
 	var errors: PackedStringArray = []
 	var moves_raw: Variant = _load_json(moves_path, errors)
 	var spirlings_raw: Variant = _load_json(spirlings_path, errors)
@@ -73,6 +73,7 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("spirling '%s': evolves_to '%s' does not exist" % [sname, evo])
 		if evo != null and int(s.get("evolve_level", 0)) <= 0 and str(s.get("evolve_item", "")).is_empty():
 			errors.append("spirling '%s': evolves but has no evolve_level or evolve_item" % sname)
+		_check_species_fields(s, sname, species_names, errors)
 		var learnset: Variant = s.get("learnset", {})
 		if learnset is Dictionary and (learnset as Dictionary).is_empty():
 			errors.append("spirling '%s': empty learnset" % sname)
@@ -87,7 +88,82 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 						errors.append("spirling '%s': learnset move '%s' does not exist" % [sname, mv])
 		else:
 			errors.append("spirling '%s': learnset must be an object (level -> move)" % sname)
+	_check_reachable(spirlings_raw, encounters_path, errors)
 	return errors
+
+## Plan area 1, items 2, 3, 131 and 336: rarity, region, origin, unfold paths, bond rate band.
+static func _check_species_fields(s: Dictionary, sname: String, species_names: Dictionary, errors: PackedStringArray) -> void:
+	var rarity: String = str(s.get("rarity", ""))
+	if not rarity in SpirlingData.RARITIES:
+		errors.append("spirling '%s': unknown rarity '%s'" % [sname, rarity])
+	elif s.has("bond_rate"):
+		var band: Vector2 = SpirlingData.BOND_RATE_BANDS[rarity]
+		var br: float = float(s.bond_rate)
+		if br < band.x - 0.0001 or br > band.y + 0.0001:
+			errors.append("spirling '%s': bond_rate %.2f outside %s band %.2f-%.2f" % [sname, br, rarity, band.x, band.y])
+	if not str(s.get("region", "")) in SpirlingData.REGIONS:
+		errors.append("spirling '%s': unknown region '%s'" % [sname, s.get("region", "")])
+	if not str(s.get("role", "")) in SpirlingData.ROLES:
+		errors.append("spirling '%s': unknown role '%s'" % [sname, s.get("role", "")])
+	if str(s.get("origin", "")).strip_edges().is_empty():
+		errors.append("spirling '%s': empty origin" % sname)
+	if str(s.get("line_id", "")).is_empty():
+		errors.append("spirling '%s': no line_id" % sname)
+	if not s.has("trait") or not BattleRules.TRAITS.has(str(s.trait)):
+		errors.append("spirling '%s': needs a trait from BattleRules.TRAITS" % sname)
+	var unfold: Variant = s.get("unfold", [])
+	if not unfold is Array:
+		errors.append("spirling '%s': unfold must be a list" % sname)
+		return
+	for p: Variant in unfold:
+		if not p is Dictionary:
+			errors.append("spirling '%s': unfold entry is not an object" % sname)
+			continue
+		var to: String = str(p.get("to", ""))
+		if not species_names.has(to):
+			errors.append("spirling '%s': unfolds into unknown '%s'" % [sname, to])
+		var rule: String = str(p.get("rule", ""))
+		if not rule in SpirlingData.UNFOLD_RULES:
+			errors.append("spirling '%s': unknown unfold rule '%s'" % [sname, rule])
+		elif rule in ["ring", "map_pages", "echo_streak"] and int(p.get("value", 0)) <= 0:
+			errors.append("spirling '%s': unfold rule '%s' needs a positive value" % [sname, rule])
+		elif rule in ["item", "mended", "time"] and str(p.get("value", "")).is_empty():
+			errors.append("spirling '%s': unfold rule '%s' needs a value" % [sname, rule])
+
+## Item 8 and 133: every kind can be met somewhere (an encounter table, as a starting partner,
+## by unfolding, or a fixed meeting named in "met"), and ancient kinds never in random tables.
+static func _check_reachable(spirlings_raw: Array, encounters_path: String, errors: PackedStringArray) -> void:
+	var reach: Dictionary = {}
+	var rarity: Dictionary = {}
+	for sp: String in Database.STARTERS:
+		reach[sp] = true
+	for s: Variant in spirlings_raw:
+		if s is Dictionary:
+			rarity[str(s.get("name", ""))] = str(s.get("rarity", ""))
+			if not str(s.get("met", "")).is_empty():
+				reach[str(s.name)] = true
+	var enc: Variant = _load_json(encounters_path, errors) if FileAccess.file_exists(encounters_path) else {}
+	if enc is Dictionary:
+		for area: Variant in enc:
+			for sp: Variant in (enc[area] as Dictionary).get("spawns", []):
+				var n: String = str((sp as Dictionary).get("species", ""))
+				reach[n] = true
+				if str(rarity.get(n, "")) == "ancient":
+					errors.append("encounter table '%s': ancient '%s' must only be met in a fixed meeting" % [area, n])
+	var grew: bool = true
+	while grew:
+		grew = false
+		for s: Variant in spirlings_raw:
+			if not s is Dictionary or not reach.has(str(s.get("name", ""))):
+				continue
+			for p: Dictionary in Database.unfold_paths(s):
+				var to: String = str(p.get("to", ""))
+				if not reach.has(to):
+					reach[to] = true
+					grew = true
+	for s: Variant in spirlings_raw:
+		if s is Dictionary and not reach.has(str(s.get("name", ""))):
+			errors.append("spirling '%s': can't be met anywhere (no encounter, starter, unfold or fixed meeting)" % s.get("name", ""))
 
 static func _valid_element(e: String) -> bool:
 	return Elements.E.has(e)
