@@ -22,12 +22,15 @@ func after_each() -> void:
 
 func test_temperament_is_stable_and_boosts_one_stat() -> void:
 	var counts: Dictionary = {}
-	for i: int in 300:
-		var uid: String = "%08x%08x" % [i * 7919, i * 104729]
-		var t: int = Spirling.temperament_index(uid)
-		assert_eq(t, Spirling.temperament_index(uid), "same uid, same temperament")
-		counts[t] = int(counts.get(t, 0)) + 1
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 7
+	for i: int in 400:
+		var s := Spirling.new(Database.species("Zippit"), 5, rng)
+		counts[s.temperament().id] = int(counts.get(s.temperament().id, 0)) + 1
 	assert_eq(counts.size(), Spirling.TEMPERAMENTS.size(), "every temperament occurs")
+	for i: int in 50:
+		var uid: String = "%08x%08x" % [i * 7919, i * 104729]
+		assert_eq(Spirling.legacy_temper(uid), Spirling.legacy_temper(uid), "same uid, same old temperament")
 	var s := Spirling.new(Database.species("Kindlop"), 40)
 	var round_trip: Spirling = Spirling.from_dict(s.to_dict())
 	assert_eq(round_trip.temperament().id, s.temperament().id, "survives a save")
@@ -38,7 +41,8 @@ func test_temperament_bonus_applies_to_its_stat_only() -> void:
 	var s := Spirling.new(Database.species("Kindlop"), 50)
 	var plain := Spirling.new(Database.species("Kindlop"), 50)
 	plain.spark = s.spark.duplicate()
-	plain.uid = ""  # "Even": no bonus
+	plain.uid = ""
+	plain.temper = "even"  # no bonus
 	assert_eq(plain.temperament().id, "even")
 	var stat: String = str(s.temperament().stat)
 	var getters: Dictionary = {"atk": "atk", "def": "def", "foc": "foc", "spd": "spd", "hp": "max_hp"}
