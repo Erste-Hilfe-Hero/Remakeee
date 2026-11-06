@@ -117,6 +117,7 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
 | Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
 | Roaming trip 4 / 8 / 12 h (also 150 / 300 / 450 coins and a Tonic / Remedy / Strong Tonic) | 4 / 8 / 12 | up to 3 trips at once | `Expeditions.collect` |
+| Echo Path chest (all 8 rooms cleared) | 40 | once a week | `EchoPath.open_chest` |
 | Monthly album, all 12 fields | 100 | once a month | `Album.record` |
 | Iron Oath | +25% on every source above | while sworn | `Waymarks.earn` |
 

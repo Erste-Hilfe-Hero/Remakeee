@@ -1,0 +1,48 @@
+{
+ "guide": {
+  "lines": [
+   "Keeper Ilse: Behind the mended Rift the old echoes settle into a path. It shifts every week.",
+   "Keeper Ilse: Clear all eight rooms and the chest at the end opens for you."
+  ],
+  "action": "echo_info"
+ },
+ "wild": {
+  "lines": ["A wild Spirling's echo flickers here, waiting for a match."],
+  "action": "echo_room"
+ },
+ "echo": {
+  "lines": ["A Wanderer's echo raises a hand. It wants a duel."],
+  "action": "echo_room"
+ },
+ "treasure": {
+  "lines": ["Something glints among the stones."],
+  "action": "echo_room"
+ },
+ "rest": {
+  "lines": ["A warm spring of quiet light bubbles up here."],
+  "action": "echo_room"
+ },
+ "riddle_a": {
+  "lines": ["Echo Stone: I answer when you call, yet I have no voice of my own. What am I?"],
+  "choices": [
+   {"text": "A bell", "next": "riddle_wrong"},
+   {"text": "An echo", "action": "echo_room"},
+   {"text": "A shadow", "next": "riddle_wrong"}
+  ]
+ },
+ "riddle_b": {
+  "lines": ["Echo Stone: The more of me you take, the more of me you leave behind. What am I?"],
+  "choices": [
+   {"text": "Footsteps", "action": "echo_room"},
+   {"text": "Coins", "next": "riddle_wrong"},
+   {"text": "Stones", "next": "riddle_wrong"}
+  ]
+ },
+ "riddle_wrong": {
+  "lines": ["The stone stays silent. Think it over and ask again."]
+ },
+ "chest": {
+  "lines": ["An old chest, warm to the touch."],
+  "action": "echo_chest"
+ }
+}
