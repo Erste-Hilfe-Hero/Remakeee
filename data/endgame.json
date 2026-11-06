@@ -1,5 +1,6 @@
 {
- "_comment": "Plan area 8 endgame data. exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. exchange_weekly: the open list of weekly offers; after Act I three of them are on sale each week, drawn with the seed chimora-stand-<ISO week>. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance.",
+ "_comment": "Plan area 8 endgame data. wanderer_names: 40 names for the echo Wayfarers of the lighthouse stair (plan 3273). exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. exchange_weekly: the open list of weekly offers; after Act I three of them are on sale each week, drawn with the seed chimora-stand-<ISO week>. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance.",
+ "wanderer_names": ["Aldren", "Briska", "Corvin", "Dalla", "Eskel", "Tovah", "Garrow", "Hesper", "Arlo", "Joren", "Kirra", "Lusa", "Marrek", "Benna", "Caspar", "Dorian", "Edda", "Rhosa", "Faro", "Greta", "Ulla", "Varro", "Harlan", "Ivo", "Zarek", "Ansel", "Brea", "Cobb", "Dessa", "Elric", "Firra", "Gisli", "Kaspin", "Isra", "Jessamy", "Kell", "Linnet", "Mabry", "Noll", "Odessa"],
  "exchange_weekly": [
   {"item": "spark_coil", "price": 90, "stock": 1},
   {"item": "bark_wrap", "price": 90, "stock": 1},

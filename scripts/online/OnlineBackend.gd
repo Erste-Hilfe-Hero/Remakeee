@@ -9,6 +9,9 @@ extends RefCounted
 
 ## {"access_token", "refresh_token", "expires_at" (unix), "user_id"}
 var session: Dictionary = {}
+## The token this device got from session_claim (plan item 3010), sent with every call so the
+## server can refuse saves from a device that is no longer the newest one. Empty: not claimed.
+var device_token: String = ""
 
 func is_local() -> bool:
 	return false

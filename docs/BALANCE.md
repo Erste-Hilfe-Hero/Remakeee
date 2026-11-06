@@ -142,6 +142,7 @@ a player who does everything every day (all four daily tasks, trips, every weekl
 | Weekly echo, first win of the week | 60 (30 of it from round 3 on) | once a week, in the first 3 tries | built |
 | Weekly echo clear under the week's target score | 20 | once a week | `WeeklyChallenge.finish_run` |
 | Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
+| Endless stretch above floor 30, every floor past the week's best | 2, at most 100 a week | weekly | `Gauntlet.pay_endless` (not in the 90-day plan) |
 | Master Wayfarer | 80 first win, then 5 | once a week each (8 masters) | `Masters.win` |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |

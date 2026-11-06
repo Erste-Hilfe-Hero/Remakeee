@@ -168,8 +168,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3261. [x] [P1] Den besten Stand als „Stockwerk x von 30“ statt „x von 5“ in GameState.records["gauntlet_best"] speichern und alte Werte übernehmen.
 3262. [x] [P1] Die Ringe der Echo-Gegner pro Stockwerk an den Ring-Deckel binden statt an den stärksten eigenen Spirling, damit Hochziehen nichts nützt.
 3263. [x] [P1] Beim ersten Betreten der neuen Leuchtturm-Treppe den Spieler mit einem Satz über Rastpunkte und fehlende Heilung aufklären.
-3264. [P2] Nach Stockwerk 30 eine Endlosstrecke öffnen, deren Gegner pro Stockwerk einen Ring stärker werden bis Ring 60.
-3265. [P2] Die Endlosstrecke wöchentlich mit 2 Wegmarken pro neuem Stockwerk belohnen, höchstens 100 pro Woche.
+3264. [x] [P2] Nach Stockwerk 30 eine Endlosstrecke öffnen, deren Gegner pro Stockwerk einen Ring stärker werden bis Ring 60.
+3265. [x] [P2] Die Endlosstrecke wöchentlich mit 2 Wegmarken pro neuem Stockwerk belohnen, höchstens 100 pro Woche.
 3266. [P2] Einen zweiten Turm „Glutstiege“ im Cinder Rift nach dem Versiegeln öffnen, in dem nur Ember-, Stone- und Volt-Gegner kämpfen, 15 Stockwerke.
 3267. [P2] Einen dritten Turm „Gezeitenschacht“ im Tidewater Rift öffnen, mit Tide-, Bloom- und Umbra-Gegnern, 15 Stockwerke.
 3268. [P2] Im Gezeitenschacht nach unten statt nach oben zählen und den Hintergrund pro Abschnitt dunkler färben.
@@ -177,7 +177,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3270. [P2] Eine Turmkarte im Menü zeigen, die alle drei Türme mit bestem Stockwerk und nächster Belohnung listet.
 3271. [P2] Pro Turm einen Erfolg für den vollen Aufstieg ergänzen: „Glutfest“ und „Tiefgänger“.
 3272. [P2] Turmläufe beim Verbindungsabbruch am letzten Stockwerk fortsetzen, statt den Lauf zu werten.
-3273. [P2] Echo-Gegner im Turm mit Namen aus einer eigenen Liste von 40 Wanderernamen in data/endgame.json versehen.
+3273. [x] [P2] Echo-Gegner im Turm mit Namen aus einer eigenen Liste von 40 Wanderernamen in data/endgame.json versehen.
 3274. [P2] Pro Turm eine Wochenbelohnung von 30 Wegmarken für das Erreichen eines festen Ziel-Stockwerks der Woche vergeben.
 3275. [P2] In der Glutstiege und im Gezeitenschacht nur Spirlings ab Ring 30 zulassen und das am Eingang zeigen.
 3276. [P3] Einen vierten Turm „Windspitze“ in Crowcrest für Gale-, Lumen- und Stone-Gegner mit 15 Stockwerken bauen.

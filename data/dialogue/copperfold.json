@@ -39,5 +39,60 @@
    "Driver Bram: Valley Coach, Copperfold stop. Mind your head, the roof is low."
   ],
   "action": "transit valley_coach"
+ },
+ "edda": {
+  "lines": [
+   "Cart Pusher Edda: Back and forth, back and forth. The carts don't push themselves."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Cart Pusher Edda: The rails stopped humming since the Rift was sealed. Good riddance."
+   ]
+  }
+ },
+ "sorrel": {
+  "lines": [
+   "Lamp Girl Sorrel: I light the pit lamps when the day shift comes up. Then I count stars."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Lamp Girl Sorrel: The stars look closer now. Mum says that's just clean air."
+   ]
+  }
+ },
+ "cobb": {
+  "lines": [
+   "Foreman Cobb: Dawn at the tower, noon at the tower, dusk at the tower. Some say I live there."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Foreman Cobb: The deep seams stopped shaking. We'll open the lower levels again, slowly."
+   ]
+  }
+ },
+ "hask": {
+  "lines": [
+   "Old Miner Hask: Forty years below. Now I watch the young ones go down and come up."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Old Miner Hask: The mountain breathes easy again. I can hear it, you know."
+   ]
+  }
+ },
+ "maud": {
+  "lines": [
+   "Pedlar Maud: Copperfold nails by day, Wrenhollow rope by evening. Everyone needs both."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Pedlar Maud: Business is up since the Rift closed. People buy things when they're not scared."
+   ]
+  }
  }
 }

@@ -84,6 +84,8 @@ func _http(method: int, path: String, body: Dictionary, with_token: bool) -> Dic
 		"Content-Type: application/json",
 		"Accept: application/json",
 	]
+	if with_token and not device_token.is_empty():
+		headers.append("x-chimora-session: " + device_token)
 	var err: Error = req.request(url + path, headers, method, JSON.stringify(body))
 	if err != OK:
 		req.queue_free()

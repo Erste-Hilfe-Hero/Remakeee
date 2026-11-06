@@ -107,6 +107,138 @@
    "sprite": "villager"
   },
   {
+   "id": "ula",
+   "x": 3,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "thornridge/ula",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 2,
+     "y": 4,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     3,
+     15
+    ],
+    [
+     3,
+     16
+    ]
+   ]
+  },
+  {
+   "id": "marek",
+   "x": 10,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "thornridge/marek",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 8,
+     "y": 15,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     10,
+     4
+    ],
+    [
+     10,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "rue",
+   "x": 1,
+   "y": 2,
+   "facing": "right",
+   "dialogue": "thornridge/rue",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 13,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "ivo",
+   "x": 4,
+   "y": 15,
+   "facing": "up",
+   "dialogue": "thornridge/ivo",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dawn",
+      "day"
+     ],
+     "away": true
+    },
+    {
+     "phase": "night",
+     "x": 7,
+     "y": 13,
+     "facing": "down"
+    }
+   ]
+  },
+  {
+   "id": "kip",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "thornridge/kip",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 8,
+     "y": 6,
+     "facing": "down",
+     "map": "copperfold"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
    "id": "coach",
    "x": 10,
    "y": 10,

@@ -333,4 +333,7 @@ T = {
 "Keepsake Collector": "Sammler der Andenken", "Own every keepsake at least once.": "Besitze jedes Andenken mindestens einmal.",
 "Photographer": "Fotograf", "Save 25 photos in photo mode.": "Speichere 25 Fotos im Fotomodus.",
 "All badges": "Alle Abzeichen",
+"Echo %s": "Echo %s", "The lighthouse stair": "Die Leuchtturmtreppe", "Climb the stair": "Die Treppe hinauf",
+"Endless stretch (best %d)": "Endlosstrecke (Bestwert %d)", "Endless floor %d cleared. Keep going?": "Endlos-Stockwerk %d geschafft. Weiter?",
+"Endless floor %d: ring %d.": "Endlos-Stockwerk %d: Ring %d.", "Endless stretch: %d floors (best %d).": "Endlosstrecke: %d Stockwerke (Bestwert %d).",
 }

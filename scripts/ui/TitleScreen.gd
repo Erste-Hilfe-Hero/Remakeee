@@ -98,6 +98,11 @@ func _build_name_box() -> void:
 ## Chimora is online only: nothing past the title works without the server (item 1).
 func _go_online() -> void:
 	while true:
+		# Another device took the account (plan item 3010): only play here when the player says so.
+		if Online.kicked:
+			_status.text = ""
+			await _menu.pick_strings(Online.error_text("other_device"), ["Play on this device"] as Array[String], false)
+			Online.kicked = false
 		_connect_started = Time.get_ticks_msec()
 		_connecting = true
 		var st: Online.State = await Online.connect_now()

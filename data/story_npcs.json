@@ -130,6 +130,13 @@
     "sprite": "villager",
     "color": "4c8f4c",
     "show_flag": "rift_rain_sealed"
+   },
+   {
+    "id": "weda",
+    "spot": "weda",
+    "facing": "down",
+    "dialogue": "corvane/weda",
+    "sprite": "elder"
    }
   ],
   "signs": [
@@ -193,6 +200,24 @@
     "spot": "page_9",
     "dialogue": "story/find_9",
     "hide_flag": "page_9"
+   }
+  ],
+  "npcs": [
+   {
+    "id": "hale",
+    "spot": "wanderer_a",
+    "facing": "down",
+    "dialogue": "corvane/woad_wanderer_a",
+    "sprite": "villager",
+    "color": "8a8a8a"
+   },
+   {
+    "id": "brisa",
+    "spot": "wanderer_b",
+    "facing": "down",
+    "dialogue": "corvane/woad_wanderer_b",
+    "sprite": "villager",
+    "color": "8a8a8a"
    }
   ]
  },
@@ -336,6 +361,10 @@
     "spot": "letter_c1",
     "dialogue": "story/letter_c1",
     "hide_flag": "letter_c1"
+   },
+   {
+    "spot": "veit_diary",
+    "dialogue": "corvane/veit_diary"
    }
   ]
  },
@@ -605,6 +634,26 @@
    {
     "spot": "echo_c",
     "dialogue": "ashmere/echo_c"
+   }
+  ]
+ },
+ "crowcrest": {
+  "signs": [
+   {
+    "x": 4,
+    "y": 9,
+    "dialogue": "crowcrest/tarn_sketch",
+    "show_flag": "kestra_spar"
+   }
+  ],
+  "npcs": [
+   {
+    "id": "osk",
+    "x": 6,
+    "y": 19,
+    "facing": "up",
+    "dialogue": "crowcrest/wanderer",
+    "sprite": "villager"
    }
   ]
  }

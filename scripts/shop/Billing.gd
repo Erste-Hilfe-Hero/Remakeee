@@ -28,12 +28,21 @@ func _ready() -> void:
 	if Online.has_signal("state_changed"):
 		Online.state_changed.connect(_on_online_state)
 
-## Picks the store for this build. The real store plugins come with the platform plugins
-## (GoogleBillingStore, AppleBillingStore); until then only the local test store exists.
+## Picks the store for this build: Google Play on Android (plugins/chimora_billing), the local
+## test store in debug builds against the local server. Apple StoreKit 2 follows.
 func make_store() -> BillingStore:
+	if GoogleBillingStore.available_here():
+		var g := GoogleBillingStore.new()
+		_connect_google(g)
+		return g
 	if Online.is_local() and OS.is_debug_build():
 		return LocalBilling.new()
 	return null
+
+## Connects to Google Play in the background; open purchases go to the server once it is up.
+func _connect_google(g: GoogleBillingStore) -> void:
+	if await g.connect_store() and Online.is_online():
+		resume_pending()
 
 func available() -> bool:
 	return store != null and store.is_ready()
