@@ -72,4 +72,6 @@ T = {
 "Chapter 3: The Dock": "Kapitel 3: Am Steg",
 "Chapter 4: The Lamp": "Kapitel 4: Die Lampe",
 "Chapter 5: Waiting for the Ferry": "Kapitel 5: Warten auf die Fähre",
+# Story engine (plan area 4): scenes
+"Skip": "Überspringen",
 }

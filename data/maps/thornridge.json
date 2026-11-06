@@ -4,6 +4,7 @@
  "biome": "town",
  "backdrop": "ridge",
  "outdoor": true,
+ "encounters": "thornridge",
  "heal_point": [
   9,
   4
