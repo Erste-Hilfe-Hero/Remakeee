@@ -117,7 +117,8 @@ static func take_task() -> Dictionary:
 		return {}
 	var st: Dictionary = _state(a.key)
 	var day: String = DailyTasks.day_key()
-	if str((st.task as Dictionary).get("day", "")) != day:
+	var stored: String = str((st.task as Dictionary).get("day", ""))
+	if stored != day and not GameState.time_went_back(stored, day):
 		st.task = {"day": day, "id": draw_task(a.fest, day), "n": 0, "done": false}
 	return st.task
 

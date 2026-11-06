@@ -150,6 +150,8 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	if level_no == 0:
 		# Master Wayfarers (plan area 8) stand on their maps once both Rifts are mended.
 		m.npcs.append_array(Masters.npcs_for(file))
+		# The wandering merchant stands somewhere else every day (plan 3423).
+		m.npcs.append_array(WorldEvents.npcs_for(file))
 	for s: Variant in raw.get("signs", []):
 		m.signs.append(s)
 	for g: Variant in raw.get("gear_spots", []):

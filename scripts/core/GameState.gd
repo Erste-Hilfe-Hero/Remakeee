@@ -414,9 +414,9 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
-	for k: Variant in (d.get("spirlog", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
-	for k: Variant in (d.get("inventory", {}) as Dictionary):
+	for k: Variant in _as_dict(d.get("inventory", {})):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
 	# Saves from before plan area 8 start with no Waymarks; old achievements pay out once
@@ -573,8 +573,13 @@ func retire_fainted() -> Array[String]:
 ## Fills an empty party from storage. Returns how many joined.
 func fill_party_from_storage() -> int:
 	var n: int = 0
-	while party.size() < MAX_PARTY and not storage.is_empty():
-		party.append(storage.pop_front())
+	for s: Spirling in storage.duplicate():
+		if party.size() >= MAX_PARTY:
+			break
+		if Expeditions.is_away(s.uid):
+			continue
+		storage.erase(s)
+		party.append(s)
 		n += 1
 	return n
 
@@ -650,6 +655,13 @@ static func as_int(v: Variant, fallback: int = 0) -> int:
 
 static func as_bool(v: Variant) -> bool:
 	return bool(v) if v is bool or v is int or v is float else false
+
+## True when the clock went back before [param stored] (a day, week, month or season key that
+## sorts by time, e.g. "2026-11-06", "2026-W45", "2026-11", "2026-Q4"). Timed content keeps its
+## stored state then, so setting a clock back never resets and pays the same goal twice
+## (plan 3497).
+static func time_went_back(stored: String, now: String) -> bool:
+	return stored != "" and now < stored
 
 static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
@@ -823,6 +835,9 @@ func deposit(index: int, keep_keepsake: bool = false) -> bool:
 
 func withdraw(index: int) -> bool:
 	if index < 0 or index >= storage.size() or party.size() >= MAX_PARTY:
+		return false
+	# Spirlings on a roaming trip stay away until they are home (plan 3448).
+	if Expeditions.is_away(storage[index].uid):
 		return false
 	party.append(storage[index])
 	storage.remove_at(index)

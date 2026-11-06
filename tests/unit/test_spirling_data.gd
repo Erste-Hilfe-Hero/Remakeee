@@ -76,3 +76,55 @@ func _write(path: String, text: String) -> void:
 	var f := FileAccess.open(path, FileAccess.WRITE)
 	f.store_string(text)
 	f.close()
+
+# --- Other regions and regional imprints (plan area 1, items 61-63, 218-219) ---------------
+
+func _lines_in(region: String) -> Dictionary:
+	var lines: Dictionary = {}
+	for sd: SpirlingData in Database.spirlings.values():
+		if sd.region == region:
+			lines[sd.line_id] = true
+	return lines
+
+func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
+	Database.load_all()
+	assert_eq(_lines_in("corvane").size(), 8)
+	assert_eq(_lines_in("ashmere").size(), 6)
+	assert_eq(_lines_in("solenne").size(), 6)
+	for sd: SpirlingData in Database.spirlings.values():
+		if sd.region != "veydal":
+			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_front.png" % sd.species_name.to_lower()), "%s has a placeholder sprite" % sd.species_name)
+			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_back.png" % sd.species_name.to_lower()))
+
+func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
+	var kinds: Array[SpirlingData] = SpirlogBook.visible_kinds({})
+	for sd: SpirlingData in kinds:
+		assert_eq(sd.region, "veydal")
+	var enc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/encounters.json"))
+	for area: String in enc:
+		for s: Dictionary in enc[area].spawns:
+			assert_eq(Database.species(str(s.species)).region, "veydal", "%s in %s" % [s.species, area])
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 16)
+
+func test_regional_imprint_changes_element_but_keeps_the_spirlog_number() -> void:
+	var sd: SpirlingData = Database.species("Zephlet")
+	assert_false(sd.variants.is_empty())
+	var s := Spirling.new(sd, 10)
+	var plain: Array[int] = s.elements().duplicate()
+	assert_false(s.apply_imprint("solenne"), "no Solenne imprint for Zephlet")
+	assert_true(s.apply_imprint("corvane"))
+	assert_eq(s.variant, "corvane")
+	assert_ne(s.elements(), plain)
+	assert_true(Elements.E.TIDE in s.elements())
+	assert_eq(s.variant_info().palette, "rain")
+	var back: Spirling = Spirling.from_dict(s.to_dict())
+	assert_eq(back.elements(), s.elements(), "the imprint survives a save")
+	assert_eq(back.data.dex_id, sd.dex_id)
+
+func test_every_variant_is_well_formed() -> void:
+	for sd: SpirlingData in Database.spirlings.values():
+		for v: Dictionary in sd.variants:
+			assert_true(str(v.region) in SpirlingData.REGIONS and str(v.region) != sd.region, sd.species_name)
+			assert_false((v.elements as Array).is_empty(), sd.species_name)
+			assert_true(BattleRules.TRAITS.has(str(v.trait)), sd.species_name)
+			assert_false(str(v.lore).is_empty())

@@ -124,7 +124,10 @@ static func draw(day: String) -> Array[String]:
 ## Today's state, drawn fresh when the day changed: {"day", "tasks": [{"id", "n"}], "bonus"}.
 static func today() -> Dictionary:
 	var day: String = day_key()
-	if str(GameState.daily_tasks.get("day", "")) != day or not _valid(GameState.daily_tasks):
+	var stored: String = str(GameState.daily_tasks.get("day", ""))
+	if GameState.time_went_back(stored, day) and _valid(GameState.daily_tasks):
+		return GameState.daily_tasks
+	if stored != day or not _valid(GameState.daily_tasks):
 		var tasks: Array = []
 		for id: String in draw(day):
 			tasks.append({"id": id, "n": 0})
@@ -191,11 +194,13 @@ static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Arr
 			lines.append_array(Waymarks.reward_lines(Waymarks.earn(REWARD, "daily_task")))
 			GameState.records["daily_tasks_done"] = int(GameState.records.get("daily_tasks_done", 0)) + 1
 			lines.append_array(SeasonPath.add("daily_task"))
+			lines.append_array(Album.record("daily"))
 	if not bool(state.get("bonus", false)) and all_done():
 		state["bonus"] = true
 		lines.append(Loc.t("All of today's tasks are done!"))
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(BONUS, "daily_bonus")))
 	lines.append_array(Festival.record(event, info, amount))
+	lines.append_array(Album.record(event, info, amount))
 	GameState.notices.append_array(lines)
 	return lines
 

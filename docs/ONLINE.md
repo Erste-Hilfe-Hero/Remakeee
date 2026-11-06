@@ -244,3 +244,14 @@ select p.code, f.reason, f.at, f.detail from public.cheat_flags f join public.pr
 order by f.at desc limit 50;
 update public.profiles set cheat_cleared_at = now() where code = '<CODE>';
 ```
+
+## Privacy: export, deletion, retention
+
+`data_export()` returns every row of every public table that has a uuid (account) column, found
+through the system catalog, so new tables are covered without code changes; the player's own id reads
+"you", other players "another player", and hash or token columns are left out. `delete_account()`
+deletes the auth user and then every row anywhere that still carries the id. `tools/online/sql_test/test_privacy.sql`
+checks both against the catalog. `hello` runs `_privacy_cleanup()` about once in 100 calls: battle
+recordings and league matches older than 30 days, refused-save notes older than 6 months and league
+standings of seasons that ended more than a season ago are removed. The record of processing activities is
+`docs/legal/VERARBEITUNGEN.md`; add a row there before switching on a new online feature.
