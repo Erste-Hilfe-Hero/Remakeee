@@ -55,14 +55,25 @@
    "Elder: The Cinder hollow is up the stairs. Its Warden, Orrin, hasn't said a word in weeks.",
    "Elder: A Warden whose bond breaks becomes part of the Hush. Wake him, and he can help you mend the tear."
   ],
-  "after_flag": {
-   "flag": "rift_cinder_sealed",
-   "lines": [
-    "Elder: Orrin laughed today. First time since the storm.",
-    "Elder: Veydal owes you, young cartographer."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "rift_cinder_sealed",
+    "lines": [
+     "Elder: Orrin laughed today. First time since the storm.",
+     "Elder: Veydal owes you, young cartographer.",
+     "Elder: He says he'll come down to the village for the ember feast. We haven't seen him here in years."
+    ]
+   }
+  ]
  },
+ "pell": [
+  "Pell: No more tending a silent Warden. Orrin bakes bread now. Terrible bread.",
+  "Pell: My Spirlings sleep through the night again. So do I."
+ ],
+ "suri": [
+  "Suri: I thought the Hush would last forever. Now I'm learning to make Echo Crystals.",
+  "Suri: My Kindlop runs warm, not hot. That's the difference, I think."
+ ],
  "coach": {
   "lines": [
    "Driver Sela: Valley Coach, Thornridge stop. The road down is gentler than the stairs."

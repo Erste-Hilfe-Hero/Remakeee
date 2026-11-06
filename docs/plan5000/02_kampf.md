@@ -342,17 +342,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 754. [P3] Story: Wanderer kommentieren ihre stärkste Technik vor dem ersten Einsatz mit einem Satz, damit Anfänger die Gefahr lesen können.
 
 ### Kampf-Herausforderungen (Bonusziele)
-755. [P1] Neue Datei data/battle_goals.json: pro Wanderer und Wächter ein optionales Bonusziel mit `type`, `value` und `reward`, angezeigt als Zeile auf der Kampfstart-Karte.
-756. [P1] Zieltypen: `win_within` (Runden), `no_faint`, `no_rest`, `only_kind` (Physisch, Fokus oder Status), `max_fielded` (Zahl), `min_hp_end` (Anteil), `reaction_count`.
-757. [P1] Belohnungen sind nur Spielinhalte ohne Kampfvorteil über das Normale hinaus: Echo-Kristall-Splitter (5 Splitter ergeben einen Echo-Kristall), Titel und Lexikon-Einträge.
-758. [P2] Bonusziele Crowcrest: Lio `win_within` 4, Bram `only_kind` Fokus, Kestra `no_faint`.
-759. [P2] Bonusziele Cinder Rift: Pell `reaction_count` 1, Suri `no_rest`, Orrin `max_fielded` 2.
-760. [P2] Bonusziele Murk Hollow und Saltmarsh: Ros `min_hp_end` 0,5, Neve `win_within` 5, Tobin `no_faint` für Spieler und Kestra.
-761. [P2] Bonusziele Tide Rift: Ilka `reaction_count` 2, Maelis `win_within` 8, Drowned Heart `no_faint`.
-762. [P2] Bonusziel-Fortschritt erscheint während des Kampfes als kleines Häkchen oder Kreuz neben der Rundenzahl, sobald es sicher erfüllt oder verfehlt ist.
-763. [P2] Bonusziele gelten auch in Rückkämpfen; ein bereits erfülltes Ziel zeigt sein Häkchen, gibt aber keine zweite Belohnung.
-764. [P2] Ein nicht erfülltes Bonusziel ändert nichts am Sieg, an Geld oder Wachstum.
-765. [P3] Bonusziele lassen sich in den Einstellungen ausblenden (Standard an).
+755. [x] [P1] Neue Datei data/battle_goals.json: pro Wanderer und Wächter ein optionales Bonusziel mit `type`, `value` und `reward`, angezeigt als Zeile auf der Kampfstart-Karte. Erledigt: data/battle_goals.json, BattleGoals.gd; Zeile nach der Kampfstart-Meldung (✓ wenn schon erfüllt).
+756. [x] [P1] Zieltypen: `win_within` (Runden), `no_faint`, `no_rest`, `only_kind` (Physisch, Fokus oder Status), `max_fielded` (Zahl), `min_hp_end` (Anteil), `reaction_count`. Erledigt: alle sieben Typen in BattleGoals.Tracker.
+757. [x] [P1] Belohnungen sind nur Spielinhalte ohne Kampfvorteil über das Normale hinaus: Echo-Kristall-Splitter (5 Splitter ergeben einen Echo-Kristall), Titel und Lexikon-Einträge. Erledigt: Belohnungen shards/title/lore in GameState.records (echo_shards, echo_crystals, titles, lexicon).
+758. [x] [P2] Bonusziele Crowcrest: Lio `win_within` 4, Bram `only_kind` Fokus, Kestra `no_faint`. Erledigt.
+759. [x] [P2] Bonusziele Cinder Rift: Pell `reaction_count` 1, Suri `no_rest`, Orrin `max_fielded` 2. Erledigt.
+760. [x] [P2] Bonusziele Murk Hollow und Saltmarsh: Ros `min_hp_end` 0,5, Neve `win_within` 5, Tobin `no_faint` für Spieler und Kestra. Erledigt (Tobin = saltmarsh/kestra_tag, zählt die ganze Spielerseite).
+761. [x] [P2] Bonusziele Tide Rift: Ilka `reaction_count` 2, Maelis `win_within` 8, Drowned Heart `no_faint`. Erledigt.
+762. [x] [P2] Bonusziel-Fortschritt erscheint während des Kampfes als kleines Häkchen oder Kreuz neben der Rundenzahl, sobald es sicher erfüllt oder verfehlt ist. Erledigt: Rundenzähler „R3 ✓/✗“ im Kampf (BattleGoals.Tracker.status).
+763. [x] [P2] Bonusziele gelten auch in Rückkämpfen; ein bereits erfülltes Ziel zeigt sein Häkchen, gibt aber keine zweite Belohnung. Erledigt: records["goals_done"].
+764. [x] [P2] Ein nicht erfülltes Bonusziel ändert nichts am Sieg, an Geld oder Wachstum. Erledigt: der Tracker hört nur zu (Test).
+765. [x] [P3] Bonusziele lassen sich in den Einstellungen ausblenden (Standard an). Erledigt: Einstellung „Bonusziele“ (GameState.bonus_goals).
 766. [P2] GameState.records["goals"] speichert pro NPC erfüllt ja oder nein und die beste Rundenzahl; Speicherstand-Migration setzt leere Werte.
 767. [P2] Das Lexikon zeigt pro Karte die erfüllten Bonusziele als Zähler (zum Beispiel 3 von 5).
 768. [P2] Ein Test prüft für jedes Bonusziel mit dem Simulator, dass das Referenzteam es auf Tamer in mindestens 20 % der Kämpfe erfüllt (kein unmögliches Ziel).
@@ -369,20 +369,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 779. [P3] Die Kampfende-Zusammenfassung nennt das Bonusziel mit erfüllt oder verfehlt und dem Wert (zum Beispiel "4 von 4 Runden").
 
 ### Regelvarianten
-780. [P1] Neue Datei data/rule_variants.json und Lader in BattleRules: jede Variante ist ein Satz von Zahlen-Schlüsseln, die BattleModel beim Start liest; kein Sonderfall im Code pro Variante.
-781. [P1] Varianten sind kombinierbar bis 3 gleichzeitig; widersprüchliche Paare stehen in `excludes` und werden beim Laden abgelehnt.
-782. [P2] Variante "Funkenarm": max. Energie 6, Start-Energie 6.
-783. [P2] Variante "Volle Ladung": Start-Energie 10, kein Energiegewinn pro Runde, Rasten gibt +3 statt +2.
-784. [P2] Variante "Wechselzoll": jeder freiwillige Wechsel kostet den eingewechselten Spirling 2 Energie.
-785. [P2] Variante "Glasklingen": max. Kraft aller Spirlings ×0,5.
-786. [P2] Variante "Zähe Runde": max. Kraft aller Spirlings ×1,5.
-787. [P2] Variante "Ohne Heimvorteil": der Bonus für Techniken des eigenen Elements (DamageCalc.STAB 1,25) fällt auf 1,0.
-788. [P2] Variante "Stufenstarr": keine Stufenänderungen, Stufen-Techniken sind im Menü gesperrt.
-789. [P2] Variante "Kurzer Atem": jeder Status endet spätestens nach 2 Runden, auch Scorch, Root und Jolt.
-790. [P2] Variante "Starke Reaktionen": alle Reaktions-Faktoren aus REACTIONS gelten doppelt so stark über 1,0 hinaus (×1,2 wird ×1,4).
-791. [P2] Variante "Feldwirbel": alle 3 Runden legt der Kampf-Seed ein zufälliges der Felder, Ansage eine Runde vorher.
-792. [P2] Variante "Kein Rasten": die Aktion Rasten fehlt, dafür +2 Energie pro Runde.
-793. [P2] Variante "Spätes Ende": ab Runde 15 verliert jeder aktive Spirling am Rundenende 1/8 seiner max. Kraft.
+780. [x] [P1] Neue Datei data/rule_variants.json und Lader in BattleRules: jede Variante ist ein Satz von Zahlen-Schlüsseln, die BattleModel beim Start liest; kein Sonderfall im Code pro Variante. Erledigt: data/rule_variants.json, BattleRules.VARIANT_KEYS/variant_values, BattleModel.variants und rules (im Replay gespeichert).
+781. [x] [P1] Varianten sind kombinierbar bis 3 gleichzeitig; widersprüchliche Paare stehen in `excludes` und werden beim Laden abgelehnt. Erledigt: variant_conflict, validate_variants (auch in validate_data).
+782. [x] [P2] Variante "Funkenarm": max. Energie 6, Start-Energie 6. Erledigt.
+783. [x] [P2] Variante "Volle Ladung": Start-Energie 10, kein Energiegewinn pro Runde, Rasten gibt +3 statt +2. Erledigt.
+784. [x] [P2] Variante "Wechselzoll": jeder freiwillige Wechsel kostet den eingewechselten Spirling 2 Energie. Erledigt.
+785. [x] [P2] Variante "Glasklingen": max. Kraft aller Spirlings ×0,5. Erledigt.
+786. [x] [P2] Variante "Zähe Runde": max. Kraft aller Spirlings ×1,5. Erledigt.
+787. [x] [P2] Variante "Ohne Heimvorteil": der Bonus für Techniken des eigenen Elements (DamageCalc.STAB 1,25) fällt auf 1,0. Erledigt.
+788. [x] [P2] Variante "Stufenstarr": keine Stufenänderungen, Stufen-Techniken sind im Menü gesperrt. Erledigt: Schlüssel stages_locked, BattleModel.move_locked.
+789. [x] [P2] Variante "Kurzer Atem": jeder Status endet spätestens nach 2 Runden, auch Scorch, Root und Jolt. Erledigt.
+790. [x] [P2] Variante "Starke Reaktionen": alle Reaktions-Faktoren aus REACTIONS gelten doppelt so stark über 1,0 hinaus (×1,2 wird ×1,4). Erledigt.
+791. [x] [P2] Variante "Feldwirbel": alle 3 Runden legt der Kampf-Seed ein zufälliges der Felder, Ansage eine Runde vorher. Erledigt: Schlüssel field_swirl_every, Ereignis FIELD_NEXT.
+792. [x] [P2] Variante "Kein Rasten": die Aktion Rasten fehlt, dafür +2 Energie pro Runde. Erledigt: Schlüssel rest_only_as_pass (Rasten bleibt nur als Passen, wenn nichts bezahlbar ist).
+793. [x] [P2] Variante "Spätes Ende": ab Runde 15 verliert jeder aktive Spirling am Rundenende 1/8 seiner max. Kraft. Erledigt.
 794. [P3] Variante "Einmal jede": jede Technik kann pro Spirling nur einmal pro Kampf gewählt werden.
 795. [P3] Variante "Spiegelkampf": der Gegner kämpft mit einer Kopie des Spieler-Teams auf gleichem Ring und mit gleichen Techniken.
 796. [P2] Varianten erscheinen beim Kampfstart als Regel-Banner mit eigenem Symbol pro Variante und im Pause-Menü als Liste.

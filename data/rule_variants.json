@@ -1,0 +1,108 @@
+{
+ "_doc": "Battle rule variants (plan area 2, items 780-793). Each variant only sets number keys that BattleModel reads at the start (BattleRules.VARIANT_KEYS); up to 3 combine, pairs in excludes cannot.",
+ "spark_poor": {
+  "label": "Spark Poor",
+  "text": "Energy tops out at 6, and everyone starts with 6.",
+  "keys": {
+   "max_energy": 6,
+   "start_energy": 6
+  },
+  "excludes": [
+   "full_charge"
+  ]
+ },
+ "full_charge": {
+  "label": "Full Charge",
+  "text": "Everyone starts full, gains no Energy per turn, and resting gives 3.",
+  "keys": {
+   "start_energy": 10,
+   "energy_per_turn": 0,
+   "rest_energy": 3
+  },
+  "excludes": [
+   "no_rest",
+   "spark_poor"
+  ]
+ },
+ "swap_toll": {
+  "label": "Swap Toll",
+  "text": "Every chosen swap costs the incoming Spirling 2 Energy.",
+  "keys": {
+   "swap_energy_cost": 2
+  }
+ },
+ "glass_blades": {
+  "label": "Glass Blades",
+  "text": "Every Spirling has half its Vigor.",
+  "keys": {
+   "hp_mult": 0.5
+  },
+  "excludes": [
+   "tough_round"
+  ]
+ },
+ "tough_round": {
+  "label": "Tough Round",
+  "text": "Every Spirling has one and a half times its Vigor.",
+  "keys": {
+   "hp_mult": 1.5
+  },
+  "excludes": [
+   "glass_blades"
+  ]
+ },
+ "no_home_edge": {
+  "label": "No Home Edge",
+  "text": "Arts of a Spirling's own element get no bonus.",
+  "keys": {
+   "stab": 1.0
+  }
+ },
+ "short_breath": {
+  "label": "Short Breath",
+  "text": "Every status ends after 2 turns at most.",
+  "keys": {
+   "status_max_turns": 2
+  }
+ },
+ "strong_reactions": {
+  "label": "Strong Reactions",
+  "text": "Element reactions hit twice as hard beyond the normal.",
+  "keys": {
+   "reaction_scale": 2.0
+  }
+ },
+ "late_end": {
+  "label": "Late End",
+  "text": "From turn 15, every Spirling in front loses 1/8 of its Vigor each turn.",
+  "keys": {
+   "chip_from_turn": 15
+  }
+ },
+ "stage_still": {
+  "label": "Stage Still",
+  "text": "No stage changes at all; arts that only change stages are locked.",
+  "keys": {
+   "stages_locked": 1
+  }
+ },
+ "field_swirl": {
+  "label": "Field Swirl",
+  "text": "Every 3 turns a random field takes over, announced a turn early.",
+  "keys": {
+   "field_swirl_every": 3
+  }
+ },
+ "no_rest": {
+  "label": "No Rest",
+  "text": "Resting is gone while an art can be paid; instead everyone gains 3 Energy each turn.",
+  "keys": {
+   "rest_only_as_pass": 1,
+   "energy_per_turn": 3,
+   "rest_energy": 0
+  },
+  "excludes": [
+   "full_charge"
+  ]
+ }
+}

@@ -546,4 +546,16 @@ T = {
 	"Shop\n%s",
 "Hold out a charm?":
 	"Ein Amulett hochhalten?",
+"Use":
+	"Benutzen",
+"Afterwards every spark is at the top (12).":
+	"Danach steht jeder Funke ganz oben (12).",
+"%s grew from Ring %d to Ring %d!":
+	"%s wächst von Ring %d auf Ring %d!",
+"All of %s's sparks shine at the top.":
+	"Alle Funken von %s leuchten ganz oben.",
+"A stronger boost is still working.":
+	"Ein stärkerer Schub wirkt noch.",
+"Works for the next %d battles.":
+	"Wirkt für die nächsten %d Kämpfe.",
 }

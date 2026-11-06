@@ -49,6 +49,26 @@
     "show_flag": "aldo_dock_told",
     "hide_flag": "letter_v3"
    }
+  ],
+  "npcs": [
+   {
+    "id": "pell_v",
+    "x": 5,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "thornridge/pell",
+    "sprite": "villager",
+    "show_flag": "rift_cinder_sealed"
+   },
+   {
+    "id": "suri_v",
+    "x": 6,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "thornridge/suri",
+    "sprite": "villager",
+    "show_flag": "rift_cinder_sealed"
+   }
   ]
  },
  "corvane_quay": {
@@ -213,6 +233,17 @@
     "spot": "page_8",
     "dialogue": "story/find_8",
     "hide_flag": "page_8"
+   }
+  ],
+  "npcs": [
+   {
+    "id": "kestra_s",
+    "spot": "kestra",
+    "facing": "left",
+    "dialogue": "corvane/kestra_still",
+    "sprite": "ranger",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
    }
   ]
  },

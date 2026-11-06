@@ -65,7 +65,8 @@ func _init(p_store_path: String = "") -> void:
 			"report_in", "notices_list", "notice_read", "appeal", "platform_set",
 			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
 			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
-			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect"]:
+			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
+			"save_history_list", "save_restore"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
@@ -358,6 +359,7 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 			flags.append({"slot": slot, "reason": why, "at": now()})
 		return {"ok": false, "error": "refused", "reason": why}
 	var rev: int = (int(cur.rev) if cur != null else 0) + 1
+	keep_history(slot, cur, data)
 	saves[str(slot)] = {"rev": rev, "data": data,
 		"summary": str(a.get("p_summary", "")).left(60), "saved_at": now(), "request_id": rid}
 	return {"ok": true, "rev": rev, "saved_at": now()}
@@ -1837,6 +1839,7 @@ func _trade_bag(slot: int, rev: int, delta: Dictionary) -> Dictionary:
 		return _fail("no_save")
 	if int(sv.rev) != rev:
 		return _fail("sync_first")
+	keep_history(slot, sv, {"changed": true})
 	var inv: Dictionary = (sv.data.get("inventory", {}) as Dictionary).duplicate() if sv.data.get("inventory") is Dictionary else {}
 	for k: String in delta:
 		var n: int = int(inv.get(k, 0)) + int(delta[k])
@@ -2026,3 +2029,44 @@ func _fn_trade_collect(a: Dictionary) -> Dictionary:
 	m.collected = true
 	_trade_tidy()
 	return {"ok": true, "rev": r.rev, "bag": got}
+
+# --- Save history (plan area 7, item 3009), like 20261110000015_save_history.sql -----------------
+
+## Puts the stored version [param cur] of [param slot] into the history before it changes to
+## [param new_data] (nothing when the data stays the same). Keeps the newest save_history_keep.
+func keep_history(slot: int, cur: Variant, new_data: Dictionary) -> void:
+	if cur == null or cur.data == new_data:
+		return
+	var hist: Array = _user().get_or_add("save_history", [])
+	hist.append({"id": _next_id("save_history"), "slot": slot, "rev": int(cur.rev), "data": (cur.data as Dictionary).duplicate(true),
+		"summary": str(cur.get("summary", "")), "saved_at": int(cur.get("saved_at", 0))})
+	var mine: Array = hist.filter(func(h: Dictionary) -> bool: return int(h.slot) == slot)
+	while mine.size() > config_int("save_history_keep", 5):
+		hist.erase(mine.pop_front())
+
+func _fn_save_history_list(a: Dictionary) -> Dictionary:
+	var slot: int = int(a.get("p_slot", 0))
+	var out: Array = []
+	for h: Dictionary in _user().get("save_history", []):
+		if int(h.slot) == slot:
+			var pt: Variant = h.data.get("play_time", 0)
+			out.push_front({"id": h.id, "rev": h.rev, "summary": h.summary, "saved_at": h.saved_at,
+				"play_time": float(pt) if pt is float or pt is int else 0.0})
+	return {"ok": true, "saves": out}
+
+func _fn_save_restore(a: Dictionary) -> Dictionary:
+	var slot: int = int(a.get("p_slot", 0))
+	var found: Variant = null
+	for h: Dictionary in _user().get("save_history", []):
+		if int(h.id) == int(a.get("p_id", -1)) and int(h.slot) == slot:
+			found = h
+	var sv: Variant = _saves().get(str(slot))
+	if found == null or sv == null:
+		return _fail("no_such_save")
+	keep_history(slot, sv, found.data)
+	sv.data = (found.data as Dictionary).duplicate(true)
+	sv.summary = found.summary
+	sv.rev = int(sv.rev) + 1
+	sv.saved_at = now()
+	sv.erase("request_id")
+	return {"ok": true, "rev": sv.rev}

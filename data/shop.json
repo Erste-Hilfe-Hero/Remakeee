@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 2,
+ "catalog_version": 3,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -178,7 +178,7 @@
    "duration": "once",
    "plan": 4334,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_ring_tonic_5",
@@ -201,7 +201,7 @@
    "duration": "once",
    "plan": 4335,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_ring_elixir",
@@ -224,7 +224,7 @@
    "duration": "once",
    "plan": 4336,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_growth_x2",
@@ -247,7 +247,7 @@
    "duration": "20 battles",
    "plan": 4339,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_growth_x3",
@@ -270,7 +270,7 @@
    "duration": "20 battles",
    "plan": 4340,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_share_band",
@@ -315,7 +315,7 @@
    "duration": "once",
    "plan": 4345,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_riftheart",
@@ -1634,7 +1634,7 @@
    "duration": "once",
    "plan": 4741,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_spark_shard",
@@ -1820,7 +1820,7 @@
    "duration": "20 battles",
    "plan": 4835,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_fast_travel",

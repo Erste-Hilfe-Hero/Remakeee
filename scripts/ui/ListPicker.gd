@@ -57,6 +57,17 @@ var _tab: int = 0
 ## True after a tap or click, false after a key or gamepad button: the focus sound only plays
 ## for keys and pads, so a tap does not give two sounds at once (item 1849).
 static var pointer_used: bool = false
+## The device used last: "touch" (taps and clicks), "pad" (gamepad) or "keys" (keyboard).
+## Hints follow it (item 1841).
+static var last_device: String = "touch"
+## L and R jump this many rows (item 1846).
+const PAGE_ROWS: int = 8
+## Held up or down on a gamepad repeats after 350 ms, then every 80 ms (item 1848).
+const REPEAT_DELAY: float = 0.35
+const REPEAT_EVERY: float = 0.08
+var _hold_dir: int = 0
+var _hold_t: float = 0.0
+var _repeats: int = 0
 ## Line shown when a list has no rows besides Back (item 1856).
 const EMPTY_TEXT: String = "Nothing here yet."
 var _empty: Label
@@ -213,8 +224,10 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 			if visible and not pointer_used:
 				Sound.sfx("select")
 			_show_hint(i)
+			_slide_pointer(b)
 			b.queue_redraw())
 		b.focus_exited.connect(b.queue_redraw)
+		Juice.press_feedback(b)
 		b.draw.connect(func() -> void: _draw_pointer(b))
 		_box.add_child(b)
 		_buttons.append(b)
@@ -239,6 +252,80 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	if index >= 0:
 		_remembered[title] = index
 	return index
+
+## Remembers which device the player used last (taps, gamepad or keys).
+static func note_device(event: InputEvent) -> void:
+	if TapInput.is_press(event):
+		pointer_used = true
+		last_device = "touch"
+	elif event is InputEventKey and event.is_pressed():
+		pointer_used = false
+		last_device = "keys"
+	elif (event is InputEventJoypadButton and event.is_pressed()) or (event is InputEventJoypadMotion and absf((event as InputEventJoypadMotion).axis_value) > 0.5):
+		pointer_used = false
+		last_device = "pad"
+
+## -1 for L or Page Up, 1 for R or Page Down, else 0.
+static func page_jump(event: InputEvent) -> int:
+	var jb := event as InputEventJoypadButton
+	if jb != null:
+		if jb.button_index == JOY_BUTTON_LEFT_SHOULDER:
+			return -1
+		if jb.button_index == JOY_BUTTON_RIGHT_SHOULDER:
+			return 1
+	var k := event as InputEventKey
+	if k != null:
+		if k.keycode == KEY_PAGEUP:
+			return -1
+		if k.keycode == KEY_PAGEDOWN:
+			return 1
+	return 0
+
+## Index of the focused row, or -1.
+func focused_index() -> int:
+	for i: int in _buttons.size():
+		if _buttons[i].has_focus():
+			return i
+	return -1
+
+## Moves focus by [param delta] rows to the nearest enabled row; with [param wrap] it goes round
+## the ends, without it stops at the first or last row.
+func move_focus(delta: int, wrap: bool = true) -> void:
+	if _buttons.is_empty():
+		return
+	var at: int = maxi(focused_index(), 0)
+	var n: int = _buttons.size()
+	var want: int = at + delta
+	want = posmod(want, n) if wrap else clampi(want, 0, n - 1)
+	var step: int = 1 if delta >= 0 else -1
+	for k: int in n:
+		var i: int = posmod(want + step * k, n) if wrap else clampi(want - step * k, 0, n - 1)
+		if not _buttons[i].disabled:
+			_buttons[i].grab_focus()
+			_scroll.ensure_control_visible(_buttons[i])
+			return
+
+## Gamepad hold-to-repeat; keyboards repeat on their own.
+func _process(delta: float) -> void:
+	if not visible or last_device != "pad":
+		_hold_dir = 0
+		return
+	var dir: int = 0
+	if Input.is_action_pressed("ui_down"):
+		dir = 1
+	elif Input.is_action_pressed("ui_up"):
+		dir = -1
+	if dir != _hold_dir:
+		_hold_dir = dir
+		_hold_t = 0.0
+		_repeats = 0
+		return
+	if dir == 0:
+		return
+	_hold_t += delta
+	while _hold_t >= REPEAT_DELAY + REPEAT_EVERY * _repeats:
+		_repeats += 1
+		move_focus(dir)
 
 ## Up on the first row goes to the last one and down on the last to the first (item 1847).
 func _link_wrap() -> void:
@@ -432,13 +519,15 @@ func _tap_allowed() -> bool:
 
 ## Seen before the GUI, so the row's own pressed signal can ask how the finger moved.
 func _input(event: InputEvent) -> void:
-	if TapInput.is_press(event):
-		pointer_used = true
-	elif event is InputEventKey or event is InputEventJoypadButton or event is InputEventJoypadMotion:
-		if event.is_pressed():
-			pointer_used = false
+	note_device(event)
 	if not visible:
 		return
+	if event.is_pressed() and not event.is_echo():
+		var jump: int = page_jump(event)
+		if jump != 0:
+			move_focus(jump * PAGE_ROWS, false)
+			get_viewport().set_input_as_handled()
+			return
 	if TapInput.is_press(event):
 		_press_pos = TapInput.position(event)
 		_press_ms = Time.get_ticks_msec()
@@ -448,10 +537,29 @@ func _input(event: InputEvent) -> void:
 		_press_pos = Vector2(NAN, NAN)
 
 ## A small ink triangle left of the focused row, so focus shows without colour (item 2088).
+## The focus pointer slides from the last row to the new one (item 2416): curve "move", 0.06 s.
+const POINTER_SLIDE_TIME: float = 0.06
+var _pointer_row: Button
+## Vertical offset of the pointer from its row while it slides (whole pixels when drawn).
+var pointer_slide: float = 0.0:
+	set(v):
+		pointer_slide = v
+		if is_instance_valid(_pointer_row):
+			_pointer_row.queue_redraw()
+
+func _slide_pointer(b: Button) -> void:
+	var from: Button = _pointer_row
+	_pointer_row = b
+	if not is_instance_valid(from) or from == b or not from.is_inside_tree() or not b.is_inside_tree():
+		pointer_slide = 0.0
+		return
+	pointer_slide = from.global_position.y - b.global_position.y
+	Juice.tween(self, "pointer_slide", 0.0, "move", POINTER_SLIDE_TIME)
+
 func _draw_pointer(b: Button) -> void:
 	if not b.has_focus():
 		return
-	var cy: float = floorf(b.size.y / 2.0)
+	var cy: float = floorf(b.size.y / 2.0) + (roundf(pointer_slide) if b == _pointer_row else 0.0)
 	var col: Color = b.get_theme_color("font_focus_color", "Button")
 	b.draw_colored_polygon(PackedVector2Array([Vector2(1, cy - 2), Vector2(4, cy + 0.5), Vector2(1, cy + 3)]), col)
 

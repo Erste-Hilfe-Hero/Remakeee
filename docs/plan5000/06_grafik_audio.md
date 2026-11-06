@@ -5,23 +5,23 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 > **Auftrag für den umsetzenden Thread:** Ziel ist, dass sich Chimora in Epoche I (Tinte, 144×256) schon vor dem Store-Start lebendig, satt und rund anfühlt: jede Eingabe bekommt eine Antwort in Bewegung, Klang und auf Wunsch Vibration, und jeder Ort bekommt sein eigenes Musikstück. Betroffen sind vor allem scripts/core/ (neue Autoloads Juice, Haptics, MusicDirector), scripts/battle/presenter/, scripts/overworld/, scripts/ui/, shaders/, data/music.json, tools/art/, tools/audio/ und docs/ASSET_LOG.md. Fang mit dem Werkzeugkasten (Juice.gd mit festen Tween-Kurven, Bildschirmwackeln, Treffer-Stopp) und dem Haptik-Autoload an, weil fast alle anderen Punkte darauf aufbauen; danach folgen Musik pro Ort und die Element-Effekte. Nicht in diesen Bereich gehören neue Spirling-Designs, Shop-Kosmetik, Kampfregeln und Zahlenwerte, die Grafik-Epochen II bis V sowie alles, was bereits in DESIGN_EPOCHS.md oder KAMPF_PLAN_1000.md steht (zum Beispiel Tinten-Übergang in den Kampf, Idle-Frames, Status- und Stufen-Klänge, Sieges- und Niederlagen-Jingle).
 
 ### Werkzeugkasten für Spielgefühl und Tween-Kurven
-2225. [P1] Neuen Autoload scripts/core/Juice.gd anlegen, der alle Spielgefühl-Helfer (Kurven, Wackeln, Treffer-Stopp, Pop, Nachfedern) an einer Stelle bündelt und von überall per Juice.<name>() aufrufbar ist.
-2226. [P1] In Juice.gd eine feste Kurventabelle CURVES festlegen: "open" = TRANS_BACK/EASE_OUT 0,18 s, "close" = TRANS_QUAD/EASE_IN 0,12 s, "move" = TRANS_CUBIC/EASE_IN_OUT 0,22 s, "impact" = TRANS_EXPO/EASE_OUT 0,10 s, "settle" = TRANS_ELASTIC/EASE_OUT 0,35 s.
+2225. [x] [P1] Neuen Autoload scripts/core/Juice.gd anlegen, der alle Spielgefühl-Helfer (Kurven, Wackeln, Treffer-Stopp, Pop, Nachfedern) an einer Stelle bündelt und von überall per Juice.<name>() aufrufbar ist.
+2226. [x] [P1] In Juice.gd eine feste Kurventabelle CURVES festlegen: "open" = TRANS_BACK/EASE_OUT 0,18 s, "close" = TRANS_QUAD/EASE_IN 0,12 s, "move" = TRANS_CUBIC/EASE_IN_OUT 0,22 s, "impact" = TRANS_EXPO/EASE_OUT 0,10 s, "settle" = TRANS_ELASTIC/EASE_OUT 0,35 s.
 2227. [P2] Eine Regel in AGENTS.md ergänzen, dass neue Tweens nur noch über Juice.tween(node, prop, wert, "kurve") entstehen, damit sich Dauer und Gefühl zentral nachstellen lassen.
-2228. [P1] Juice.pop(node) bauen: Skalierung 1,0 auf 1,15 in 0,06 s und zurück mit "settle", für Bestätigungen, Belohnungen und Treffer auf UI-Elementen.
-2229. [P1] Alle Juice-Tweens runden Positionen nach jedem Schritt auf ganze Pixel (process-Callback), damit nichts zwischen Pixeln verschwimmt.
-2230. [P1] Juice.speed() liest GameState.battle_speed_scale() und teilt im Kampf jede Dauer automatisch, damit 2x und 4x ohne Sonderfälle funktionieren.
-2231. [P1] Juice.reduced() als einzige Abfrage für GameState.reduce_motion einführen und alle bestehenden direkten Abfragen in SpirlingSprite.gd und Overworld.gd darauf umstellen.
-2232. [P1] Bestehende Tweens in SpirlingSprite.gd (step_out, step_back, lunge, faint) auf die Kurven "move" und "impact" umstellen, damit sie nicht mehr linear laufen.
-2233. [P2] Die Überblendung _fade_to in Overworld.gd auf Kurve "close" beim Abdunkeln und "open" ohne Überschwingen (TRANS_SINE/EASE_OUT) beim Aufhellen umstellen.
-2234. [P2] GUT-Test tests/unit/test_juice.gd prüft, dass jede Kurve existiert, jede Dauer zwischen 0,05 und 0,6 s liegt und reduced() alle Bewegungs-Helfer auf 0 s verkürzt.
+2228. [x] [P1] Juice.pop(node) bauen: Skalierung 1,0 auf 1,15 in 0,06 s und zurück mit "settle", für Bestätigungen, Belohnungen und Treffer auf UI-Elementen.
+2229. [x] [P1] Alle Juice-Tweens runden Positionen nach jedem Schritt auf ganze Pixel (process-Callback), damit nichts zwischen Pixeln verschwimmt.
+2230. [x] [P1] Juice.speed() liest GameState.battle_speed_scale() und teilt im Kampf jede Dauer automatisch, damit 2x und 4x ohne Sonderfälle funktionieren.
+2231. [x] [P1] Juice.reduced() als einzige Abfrage für GameState.reduce_motion einführen und alle bestehenden direkten Abfragen in SpirlingSprite.gd und Overworld.gd darauf umstellen.
+2232. [x] [P1] Bestehende Tweens in SpirlingSprite.gd (step_out, step_back, lunge, faint) auf die Kurven "move" und "impact" umstellen, damit sie nicht mehr linear laufen.
+2233. [x] [P2] Die Überblendung _fade_to in Overworld.gd auf Kurve "close" beim Abdunkeln und "open" ohne Überschwingen (TRANS_SINE/EASE_OUT) beim Aufhellen umstellen.
+2234. [x] [P2] GUT-Test tests/unit/test_juice.gd prüft, dass jede Kurve existiert, jede Dauer zwischen 0,05 und 0,6 s liegt und reduced() alle Bewegungs-Helfer auf 0 s verkürzt.
 2235. [P2] Juice.nudge(node, richtung, px) für kurzes Anstoßen um 1 bis 3 Pixel in eine Richtung mit Rückfedern in 0,1 s bauen.
-2236. [P2] Juice.count_to(label, von, bis, dauer) bauen, das Zahlen hochzählt (Münzen, Wachstum, Rangpunkte) und bei jedem zehnten Schritt einen leisen Tick spielt.
+2236. [x] [P2] Juice.count_to(label, von, bis, dauer) bauen, das Zahlen hochzählt (Münzen, Wachstum, Rangpunkte) und bei jedem zehnten Schritt einen leisen Tick spielt.
 2237. [P2] Juice.stagger(nodes, abstand) bauen, das Listen-Einträge mit 0,03 s Versatz nacheinander einblendet.
 2238. [P2] Juice.blink_safe(node) bauen, der statt hartem An-und-Aus die Helligkeit über modulate zwischen 100 % und 60 % pendeln lässt, höchstens 3 Mal pro Sekunde.
 2239. [P2] Juice.wobble(node, grad, dauer) bauen, der ein Element um höchstens 4 Grad schwingen lässt, für wackelnde Hinweise wie neue Geschenke.
 2240. [P3] Juice.float_text(text, position, farbe) bauen, der kurze Texte 10 Pixel nach oben steigen und in 0,6 s ausblenden lässt.
-2241. [P2] Juice speichert laufende Tweens pro Node und Eigenschaft und bricht einen alten Tween ab, bevor ein neuer startet, damit sich nichts aufschaukelt.
+2241. [x] [P2] Juice speichert laufende Tweens pro Node und Eigenschaft und bricht einen alten Tween ab, bevor ein neuer startet, damit sich nichts aufschaukelt.
 2242. [P2] Ein Debug-Schalter "Juice x0,25" im Debug-Menü verlangsamt alle Juice-Tweens auf ein Viertel, um Kurven sauber abzustimmen.
 2243. [P3] Ein Debug-Schalter "Juice aus" schaltet alle Helfer ab, damit man im Vergleich sieht, was sie bringen.
 2244. [P2] docs/JUICE.md schreiben mit der Kurventabelle, je einem Beispiel pro Helfer und der Regel, wann welche Kurve gilt.
@@ -35,13 +35,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2252. [P3] Eine Testszene scenes/debug/JuiceLab.tscn mit Knöpfen für jeden Helfer, damit Gefühl und Kurven ohne Spielstand ausprobiert werden können.
 
 ### Bildschirmwackeln und Treffer-Stopp
-2253. [P1] Bildschirmwackeln als Trauma-System in Juice.gd bauen: Trauma von 0 bis 1, Versatz = Trauma² mal Höchstwert, Abbau 1,8 pro Sekunde.
-2254. [P1] Höchstversatz beim Wackeln auf 3 Pixel waagrecht und 2 Pixel senkrecht festlegen, immer ganzzahlig, damit die 144 Pixel Breite lesbar bleiben.
-2255. [P1] Wackeln wird auf einen eigenen Wurzel-Node (ShakeRoot) unter dem SubViewport angewendet, nie auf die UI-Ebene, damit Menüs und Texte ruhig bleiben.
-2256. [P1] Trauma-Werte festlegen: normaler Treffer 0,20, starker Treffer (hit_strong) 0,40, Spirling zieht sich zurück 0,30, Rift-Wächter erscheint 0,55.
-2257. [P1] Treffer-Stopp für normale Treffer bauen: das Spiel friert 40 ms plus 60 ms mal Anteil der verlorenen Kraft ein, höchstens 100 ms, über Engine.time_scale = 0,05.
-2258. [P1] Treffer-Stopp und Wackeln sind bei Juice.reduced() aus; stattdessen bekommt der getroffene Spirling nur einen 1-Pixel-Ruck.
-2259. [P1] Einstellung "Bildschirmwackeln" mit den Stufen Aus, Schwach (50 %) und Voll (100 %) in den Einstellungen von MenuHost.gd ergänzen und in settings_to_dict speichern.
+2253. [x] [P1] Bildschirmwackeln als Trauma-System in Juice.gd bauen: Trauma von 0 bis 1, Versatz = Trauma² mal Höchstwert, Abbau 1,8 pro Sekunde.
+2254. [x] [P1] Höchstversatz beim Wackeln auf 3 Pixel waagrecht und 2 Pixel senkrecht festlegen, immer ganzzahlig, damit die 144 Pixel Breite lesbar bleiben.
+2255. [x] [P1] Wackeln wird auf einen eigenen Wurzel-Node (ShakeRoot) unter dem SubViewport angewendet, nie auf die UI-Ebene, damit Menüs und Texte ruhig bleiben.
+2256. [x] [P1] Trauma-Werte festlegen: normaler Treffer 0,20, starker Treffer (hit_strong) 0,40, Spirling zieht sich zurück 0,30, Rift-Wächter erscheint 0,55.
+2257. [x] [P1] Treffer-Stopp für normale Treffer bauen: das Spiel friert 40 ms plus 60 ms mal Anteil der verlorenen Kraft ein, höchstens 100 ms, über Engine.time_scale = 0,05.
+2258. [x] [P1] Treffer-Stopp und Wackeln sind bei Juice.reduced() aus; stattdessen bekommt der getroffene Spirling nur einen 1-Pixel-Ruck.
+2259. [x] [P1] Einstellung "Bildschirmwackeln" mit den Stufen Aus, Schwach (50 %) und Voll (100 %) in den Einstellungen von MenuHost.gd ergänzen und in settings_to_dict speichern.
 2260. [P2] Wackel-Richtung pro Element: Stone wackelt nur senkrecht, Gale nur waagrecht, Volt mit doppelter Frequenz und halber Weite, alle anderen kreisförmig.
 2261. [P2] Wackel-Frequenz als Rauschen mit 30 Hz statt Zufall pro Bild berechnen, damit es nicht flimmert, sondern rollt.
 2262. [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
@@ -49,8 +49,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2264. [P3] Kleines Wackeln (Trauma 0,10) beim Öffnen einer verschlossenen Tür oder eines Durchgangs nach einer Story-Bedingung.
 2265. [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
 2266. [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
-2267. [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
-2268. [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
+2267. [x] [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
+2268. [x] [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
 2269. [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
 2270. [P2] GUT-Test prüft, dass ShakeRoot nach Ende des Traumas exakt auf (0, 0) zurückkehrt und kein Restversatz bleibt.
 2271. [P3] Gerichtetes Wackeln: der erste Ausschlag zeigt in die Richtung, aus der der Treffer kam, danach freies Ausschwingen.
@@ -61,11 +61,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2276. [P3] Wackel- und Stopp-Werte als Tabelle in docs/JUICE.md festhalten, damit spätere Epochen dieselben Grundwerte nutzen.
 
 ### Übergänge zwischen Orten, Menüs und Bildschirmen
-2277. [P1] Kartenwechsel über Türen bekommt einen eigenen Übergang: von der Tür aus wächst ein dunkles Rechteck in 0,14 s über das Bild, statt gleichmäßig abzudunkeln.
-2278. [P1] Kartenwechsel über Kartenränder (Wege) schiebt das Bild in Laufrichtung 16 Pixel weiter, während es abdunkelt, damit sich der Wechsel wie Weitergehen anfühlt.
+2277. [x] [P1] Kartenwechsel über Türen bekommt einen eigenen Übergang: von der Tür aus wächst ein dunkles Rechteck in 0,14 s über das Bild, statt gleichmäßig abzudunkeln.
+2278. [x] [P1] Kartenwechsel über Kartenränder (Wege) schiebt das Bild in Laufrichtung 16 Pixel weiter, während es abdunkelt, damit sich der Wechsel wie Weitergehen anfühlt.
 2279. [P2] Die Gesamtzeit jedes Kartenwechsels bleibt unter den 300 ms aus Overworld.gd; ein GUT-Test misst das für Tür, Weg und Warp.
-2280. [P1] Übergang vom Titelbild ins Spiel: das Titelbild rutscht mit Kurve "close" 24 Pixel nach oben und blendet aus, die Welt blendet darunter ein.
-2281. [P1] Pausemenü öffnet mit Kurve "open" von der rechten Kante herein (Weg 40 Pixel) und schließt mit "close" in 0,12 s.
+2280. [x] [P1] Übergang vom Titelbild ins Spiel: das Titelbild rutscht mit Kurve "close" 24 Pixel nach oben und blendet aus, die Welt blendet darunter ein.
+2281. [x] [P1] Pausemenü öffnet mit Kurve "open" von der rechten Kante herein (Weg 40 Pixel) und schließt mit "close" in 0,12 s.
 2282. [P2] Jeder Untermenü-Wechsel im Pausemenü schiebt die alte Seite 8 Pixel nach links und blendet die neue von rechts ein, beim Zurückgehen gespiegelt.
 2283. [P2] Warp über Leuchtturm-Treppen bekommt einen senkrechten Übergang: das Bild schiebt sich beim Hochsteigen nach unten weg und umgekehrt.
 2284. [P2] Eintritt in eine Rift-Karte zeigt einen 0,3 s langen Riss-Schnitt, der sich von der Mitte aus öffnet, als eigener Shader shaders/rift_wipe.gdshader.
@@ -89,10 +89,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2302. [P3] Screenshot-Werkzeug tools/screenshot.gd erhält eine Option, die alle Übergänge Bild für Bild als PNG-Folge ablegt, um sie zu prüfen.
 
 ### Figuren-Animation in der Welt
-2303. [P1] Spielfigur wippt bei jedem Schritt 1 Pixel nach unten in der Mitte des Schritts (zusätzlich zu den Lauf-Frames), damit das Gehen Gewicht bekommt.
-2304. [P1] Beim Rennen (hold-to-run) wird das Wippen doppelt so schnell und die Figur zeigt bei jedem zweiten Schritt eine kleine Staubwolke.
-2305. [P1] Umdrehen auf der Stelle: ein Tipp in eine neue Richtung dreht die Figur erst und läuft nach 0,08 s los, damit Drehen und Gehen unterscheidbar sind.
-2306. [P1] Das bestehende "!" über einem Wanderer (NPC.gd) erscheint mit Juice.pop und einem kurzen Ton, bevor er losläuft.
+2303. [x] [P1] Spielfigur wippt bei jedem Schritt 1 Pixel nach unten in der Mitte des Schritts (zusätzlich zu den Lauf-Frames), damit das Gehen Gewicht bekommt.
+2304. [x] [P1] Beim Rennen (hold-to-run) wird das Wippen doppelt so schnell und die Figur zeigt bei jedem zweiten Schritt eine kleine Staubwolke.
+2305. [x] [P1] Umdrehen auf der Stelle: ein Tipp in eine neue Richtung dreht die Figur erst und läuft nach 0,08 s los, damit Drehen und Gehen unterscheidbar sind.
+2306. [x] [P1] Das bestehende "!" über einem Wanderer (NPC.gd) erscheint mit Juice.pop und einem kurzen Ton, bevor er losläuft.
 2307. [P2] NPCs drehen sich beim Ansprechen mit 0,1 s Pause zur Spielfigur, statt sofort umzuspringen.
 2308. [P2] Nach 8 Sekunden ohne Eingabe schaut die Spielfigur nach links und rechts (Wechsel der Blickrichtung alle 1,2 s).
 2309. [P2] Nach 30 Sekunden ohne Eingabe setzt sich die Spielfigur hin (ein neuer Sitz-Frame in tamer.png und tamer_f.png).
@@ -115,12 +115,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2326. [P3] NPC-Sheets in tools/art/gen_tiles.py um die neuen Posen erweitern und die Frame-Reihenfolge in docs/ART_PIPELINE.md festhalten.
 
 ### Spirling-Bewegung in Kampf und Menüs
-2327. [P1] Entfalten-Sequenz bauen: alte und neue Form wechseln sich als Silhouette ab, erst alle 0,4 s, dann immer schneller bis alle 0,05 s, über 2,4 s, danach zeigt sich die neue Form mit Juice.pop.
-2328. [P1] Die Entfalten-Sequenz ist nach dem ersten Mal mit Tippen überspringbar und hat bei Juice.reduced() nur eine einfache Überblendung.
-2329. [P1] Pro Spirling ein Bewegungsprofil (hüpfen, schleichen, wogen, stampfen, gleiten am Boden) als Feld "motion" in data/spirlings.json für die bestehenden 21 Spirlings eintragen.
-2330. [P1] Beim Auftreten nutzt SpirlingSprite.step_out das Bewegungsprofil: hüpfen in 2 Sprüngen zu je 4 Pixeln Höhe, stampfen mit Trauma 0,1 beim Aufsetzen, schleichen mit Kurve "move".
-2331. [P1] Technik-Ausholbewegung nach Art: körperliche Techniken (PHYSICAL) holen 3 Pixel nach hinten aus und schnellen vor, besondere Techniken heben den Spirling 2 Pixel an und senken ihn beim Auslösen, Status-Techniken lassen ihn kurz zweimal wippen.
-2332. [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
+2327. [x] [P1] Entfalten-Sequenz bauen: alte und neue Form wechseln sich als Silhouette ab, erst alle 0,4 s, dann immer schneller bis alle 0,05 s, über 2,4 s, danach zeigt sich die neue Form mit Juice.pop.
+2328. [x] [P1] Die Entfalten-Sequenz ist nach dem ersten Mal mit Tippen überspringbar und hat bei Juice.reduced() nur eine einfache Überblendung.
+2329. [x] [P1] Pro Spirling ein Bewegungsprofil (hüpfen, schleichen, wogen, stampfen, gleiten am Boden) als Feld "motion" in data/spirlings.json für die bestehenden 21 Spirlings eintragen.
+2330. [x] [P1] Beim Auftreten nutzt SpirlingSprite.step_out das Bewegungsprofil: hüpfen in 2 Sprüngen zu je 4 Pixeln Höhe, stampfen mit Trauma 0,1 beim Aufsetzen, schleichen mit Kurve "move".
+2331. [x] [P1] Technik-Ausholbewegung nach Art: körperliche Techniken (PHYSICAL) holen 3 Pixel nach hinten aus und schnellen vor, besondere Techniken heben den Spirling 2 Pixel an und senken ihn beim Auslösen, Status-Techniken lassen ihn kurz zweimal wippen.
+2332. [x] [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
 2333. [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
 2334. [P2] Ring-Aufstieg in der Welt (nach Kampf oder Gegenstand): derselbe Ring über dem Teamplatz im Pausemenü, wenn man es danach öffnet.
 2335. [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
@@ -147,16 +147,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2356. [P3] Bewegungsprofile in docs/ART_PIPELINE.md mit Pixelweiten, Takt und Kurve beschreiben, damit neue Spirlings aus Bereich 1 sofort eines bekommen.
 
 ### Kampf-Effekte pro Element
-2357. [P1] Neue Klasse scripts/battle/presenter/ElementFx.gd mit je einer Funktion pro Element, die Aufladen, Weg und Einschlag einer Technik zeichnet und awaitbar ist.
-2358. [P1] Jede Technik läuft in drei Phasen: Aufladen am Anwender (0,15 s), Weg zum Ziel (0,2 s, bei körperlichen Techniken entfällt er), Einschlag am Ziel (0,25 s).
-2359. [P1] Ember: Aufladen als 3 Funken, die um den Anwender kreisen; Weg als Funke, der in einem flachen Bogen springt; Einschlag als 5 Glutpunkte, die nach oben steigen.
-2360. [P1] Tide: Aufladen als Ring, der sich unter dem Anwender ausbreitet; Weg als Wellenlinie mit 3 Pixeln Ausschlag; Einschlag als Spritzer aus 6 Tropfen, die nach unten fallen.
-2361. [P1] Bloom: Aufladen als 4 Blätter, die vom Boden aufsteigen; Weg als Blattwirbel auf gerader Linie; Einschlag als Ranken, die 2 Frames lang um das Ziel wachsen.
-2362. [P1] Volt: Aufladen als Zittern des Anwenders um 1 Pixel; Weg als Zickzack-Linie, die 2 Mal pro Bild neu gezeichnet wird; Einschlag als Stern aus 4 Strahlen.
-2363. [P1] Stone: Aufladen als Brocken, die unter dem Anwender aus dem Boden ragen; Weg als Brocken in hohem Bogen mit Schatten; Einschlag als Splitter in 6 Richtungen und senkrechtes Wackeln.
-2364. [P1] Gale: Aufladen als Strichlinien, die zum Anwender hin gezogen werden; Weg als Wirbel aus 3 Kreisbögen; Einschlag als Strichlinien, die waagrecht am Ziel vorbeistreichen.
-2365. [P1] Lumen: Aufladen als Lichtpunkt über dem Anwender, der von 1 auf 5 Pixel wächst; Weg als gerader Strahl; Einschlag als Kreuz-Glanz, der in 0,2 s verblasst (ohne Blitz, höchstens 60 % Helligkeit).
-2366. [P1] Umbra: Aufladen als Schatten, der sich vom Anwender löst; Weg als Schatten, der am Boden entlang kriecht; Einschlag als Schatten, der das Ziel von unten umschließt und sich zurückzieht.
+2357. [x] [P1] Neue Klasse scripts/battle/presenter/ElementFx.gd mit je einer Funktion pro Element, die Aufladen, Weg und Einschlag einer Technik zeichnet und awaitbar ist.
+2358. [x] [P1] Jede Technik läuft in drei Phasen: Aufladen am Anwender (0,15 s), Weg zum Ziel (0,2 s, bei körperlichen Techniken entfällt er), Einschlag am Ziel (0,25 s).
+2359. [x] [P1] Ember: Aufladen als 3 Funken, die um den Anwender kreisen; Weg als Funke, der in einem flachen Bogen springt; Einschlag als 5 Glutpunkte, die nach oben steigen.
+2360. [x] [P1] Tide: Aufladen als Ring, der sich unter dem Anwender ausbreitet; Weg als Wellenlinie mit 3 Pixeln Ausschlag; Einschlag als Spritzer aus 6 Tropfen, die nach unten fallen.
+2361. [x] [P1] Bloom: Aufladen als 4 Blätter, die vom Boden aufsteigen; Weg als Blattwirbel auf gerader Linie; Einschlag als Ranken, die 2 Frames lang um das Ziel wachsen.
+2362. [x] [P1] Volt: Aufladen als Zittern des Anwenders um 1 Pixel; Weg als Zickzack-Linie, die 2 Mal pro Bild neu gezeichnet wird; Einschlag als Stern aus 4 Strahlen.
+2363. [x] [P1] Stone: Aufladen als Brocken, die unter dem Anwender aus dem Boden ragen; Weg als Brocken in hohem Bogen mit Schatten; Einschlag als Splitter in 6 Richtungen und senkrechtes Wackeln.
+2364. [x] [P1] Gale: Aufladen als Strichlinien, die zum Anwender hin gezogen werden; Weg als Wirbel aus 3 Kreisbögen; Einschlag als Strichlinien, die waagrecht am Ziel vorbeistreichen.
+2365. [x] [P1] Lumen: Aufladen als Lichtpunkt über dem Anwender, der von 1 auf 5 Pixel wächst; Weg als gerader Strahl; Einschlag als Kreuz-Glanz, der in 0,2 s verblasst (ohne Blitz, höchstens 60 % Helligkeit).
+2366. [x] [P1] Umbra: Aufladen als Schatten, der sich vom Anwender löst; Weg als Schatten, der am Boden entlang kriecht; Einschlag als Schatten, der das Ziel von unten umschließt und sich zurückzieht.
 2367. [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
 2368. [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
 2369. [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
@@ -185,9 +185,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2392. [P3] Effekt-Formen (Funke, Tropfen, Blatt, Splitter usw.) als 8×8-Bildchen in art/era1/fx/ ablegen, erzeugt von einem neuen Generator, statt sie Pixel für Pixel im Code zu zeichnen.
 
 ### Partikel
-2393. [P1] Einen eigenen Partikel-Pool scripts/core/PixelParticles.gd bauen, der einzelne Pixel und 8×8-Formen als draw-Aufrufe zeichnet, mit fester Obergrenze von 64 Partikeln pro Szene.
-2394. [P1] Partikel haben Lebensdauer, Startgeschwindigkeit, Schwerkraft, Reibung und Paletten-Farbe; Positionen werden beim Zeichnen auf ganze Pixel gerundet.
-2395. [P1] Laufstaub: bei jedem zweiten Rennschritt 3 Staubpixel hinter der Figur, Lebensdauer 0,3 s.
+2393. [x] [P1] Einen eigenen Partikel-Pool scripts/core/PixelParticles.gd bauen, der einzelne Pixel und 8×8-Formen als draw-Aufrufe zeichnet, mit fester Obergrenze von 64 Partikeln pro Szene.
+2394. [x] [P1] Partikel haben Lebensdauer, Startgeschwindigkeit, Schwerkraft, Reibung und Paletten-Farbe; Positionen werden beim Zeichnen auf ganze Pixel gerundet.
+2395. [x] [P1] Laufstaub: bei jedem zweiten Rennschritt 3 Staubpixel hinter der Figur, Lebensdauer 0,3 s.
 2396. [P1] Gegenstand-Glitzern: liegende Gegenstände auf der Karte senden alle 1,5 s einen 4-Pixel-Stern aus, damit man sie findet.
 2397. [P2] Tagesfund (DailyFind.gd): der Fundort zeigt 2 aufsteigende Punkte pro Sekunde, solange der Fund nicht abgeholt ist.
 2398. [P2] Gras-Pixel: beim Betreten eines Begegnungsfeldes springen 2 Halm-Pixel in die Luft.
@@ -209,11 +209,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2414. [P3] Partikel-Voreinstellungen (Staub, Funke, Konfetti, Dampf) als Konstanten in PixelParticles.gd mit Namen, damit sie überall gleich aussehen.
 
 ### UI-Grafik und Rückmeldung in Menüs
-2415. [P1] Jeder Knopf und jeder Listeneintrag reagiert beim Antippen sofort: 1 Pixel nach unten versetzt, solange der Finger drückt, und Juice.pop beim Loslassen.
-2416. [P1] Der Auswahl-Cursor in Listen (ListPicker.gd) gleitet mit Kurve "move" in 0,06 s zum neuen Eintrag, statt zu springen.
+2415. [x] [P1] Jeder Knopf und jeder Listeneintrag reagiert beim Antippen sofort: 1 Pixel nach unten versetzt, solange der Finger drückt, und Juice.pop beim Loslassen.
+2416. [x] [P1] Der Auswahl-Cursor in Listen (ListPicker.gd) gleitet mit Kurve "move" in 0,06 s zum neuen Eintrag, statt zu springen.
 2417. [P2] Der Auswahl-Cursor wippt im Leerlauf 1 Pixel waagrecht im Takt von 0,6 s.
-2418. [P1] Kurze Hinweise (Toasts) für Ereignisse wie "Geschenk erhalten" oder "Gespeichert" bauen: 12 Pixel hohe Leiste fährt von oben herein, bleibt 1,6 s und fährt hinaus.
-2419. [P1] Münzanzeige zählt bei Änderungen mit Juice.count_to hoch oder runter, statt den neuen Wert sofort zu zeigen.
+2418. [x] [P1] Kurze Hinweise (Toasts) für Ereignisse wie "Geschenk erhalten" oder "Gespeichert" bauen: 12 Pixel hohe Leiste fährt von oben herein, bleibt 1,6 s und fährt hinaus.
+2419. [x] [P1] Münzanzeige zählt bei Änderungen mit Juice.count_to hoch oder runter, statt den neuen Wert sofort zu zeigen.
 2420. [P2] Erhaltene Gegenstände zeigen ein Ergebnis-Fenster mit dem Gegenstand-Symbol, das mit Juice.pop erscheint und 0,3 s bis zur Bestätigung wartet, damit man nicht versehentlich wegtippt.
 2421. [P2] Die Bildschirm-Steuerung (VirtualPad.gd) zeigt beim Drücken einer Richtung den gedrückten Pfeil 1 Pixel eingesunken und dunkler.
 2422. [P2] Die Bildschirm-Steuerung blendet sich nach 4 Sekunden ohne Berührung auf 40 % Deckkraft ab und beim Antippen in 0,1 s wieder auf.
@@ -239,20 +239,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2442. [P3] Alle neuen UI-Bewegungen werden im Screenshot-Werkzeug als Bildfolge abgelegt und in docs/JUICE.md als Beispiel verlinkt.
 
 ### Musik: eigene Stücke pro Ort
-2443. [P1] Jede der 11 Karten bekommt ein eigenes Stück; data/music.json wird so umgestellt, dass jede Karte einen eigenen Eintrag hat und "default" nur noch für neue Karten gilt.
-2444. [P1] lighthouse: ruhiges Stück, 84 BPM, D-Dur, Melodie auf Dreieckswelle, Bass als Bordun, Leitmotiv des Spiels in 4 Takten.
-2445. [P1] brindlewick: Marktstadt-Stück, 112 BPM, G-Dur, hüpfende Bassfigur, Melodie auf Pulswelle 25 %.
-2446. [P1] fernstair: Weg-Stück, 128 BPM, A-Dur, Farn-Terrassen-Gefühl durch aufsteigende Arpeggien.
-2447. [P1] crowcrest: Klippen-Stück, 120 BPM, E-Moll, weite Intervalle (Quinten und Oktaven) in der Melodie, wenig Schlagzeug.
-2448. [P2] saltmarsh: Marschland-Stück, 96 BPM, F-Dur mit Mixolydisch, wiegender 6/8-Takt.
-2449. [P1] Das Leitmotiv aus lighthouse taucht in jedem Ort-Stück mindestens einmal verändert auf (andere Tonart, anderes Tempo), damit die Region zusammenklingt.
-2450. [P2] thornridge: Dorf-Stück, 100 BPM, C-Dur, Melodie mit kurzen Vorschlägen, Holzschlag-Rauschen als Perkussion.
-2451. [P2] map_house: Kartenhaus-Stück, 76 BPM, B-Dur, leises Spieluhr-Arpeggio auf hoher Pulswelle 12,5 %.
-2452. [P2] rest_spring: Rast-Stück, 70 BPM, Es-Dur, langsame Akkordflächen, keine Trommeln.
-2453. [P2] cinder_rift: Rift-Stück, 84 BPM, C-Moll, tiefe Pulswelle mit Glut-Knistern aus Rauschen.
-2454. [P2] tide_rift: Rift-Stück, 80 BPM, Fis-Moll, wellende Lautstärke-Schwankung im Akkordteppich (Tremolo 3 Hz).
-2455. [P2] murk_hollow: Rift-Stück, 66 BPM, B-Moll, gedämpfter Bass und lange Pausen in der Melodie.
-2456. [P2] Die drei Rift-Stücke teilen sich ein gemeinsames Rift-Motiv aus 3 Tönen, das in jedem Stück anders begleitet wird.
+2443. [x] [P1] Jede der 11 Karten bekommt ein eigenes Stück; data/music.json wird so umgestellt, dass jede Karte einen eigenen Eintrag hat und "default" nur noch für neue Karten gilt.
+2444. [x] [P1] lighthouse: ruhiges Stück, 84 BPM, D-Dur, Melodie auf Dreieckswelle, Bass als Bordun, Leitmotiv des Spiels in 4 Takten.
+2445. [x] [P1] brindlewick: Marktstadt-Stück, 112 BPM, G-Dur, hüpfende Bassfigur, Melodie auf Pulswelle 25 %.
+2446. [x] [P1] fernstair: Weg-Stück, 128 BPM, A-Dur, Farn-Terrassen-Gefühl durch aufsteigende Arpeggien.
+2447. [x] [P1] crowcrest: Klippen-Stück, 120 BPM, E-Moll, weite Intervalle (Quinten und Oktaven) in der Melodie, wenig Schlagzeug.
+2448. [x] [P2] saltmarsh: Marschland-Stück, 96 BPM, F-Dur mit Mixolydisch, wiegender 6/8-Takt.
+2449. [x] [P1] Das Leitmotiv aus lighthouse taucht in jedem Ort-Stück mindestens einmal verändert auf (andere Tonart, anderes Tempo), damit die Region zusammenklingt.
+2450. [x] [P2] thornridge: Dorf-Stück, 100 BPM, C-Dur, Melodie mit kurzen Vorschlägen, Holzschlag-Rauschen als Perkussion.
+2451. [x] [P2] map_house: Kartenhaus-Stück, 76 BPM, B-Dur, leises Spieluhr-Arpeggio auf hoher Pulswelle 12,5 %.
+2452. [x] [P2] rest_spring: Rast-Stück, 70 BPM, Es-Dur, langsame Akkordflächen, keine Trommeln.
+2453. [x] [P2] cinder_rift: Rift-Stück, 84 BPM, C-Moll, tiefe Pulswelle mit Glut-Knistern aus Rauschen.
+2454. [x] [P2] tide_rift: Rift-Stück, 80 BPM, Fis-Moll, wellende Lautstärke-Schwankung im Akkordteppich (Tremolo 3 Hz).
+2455. [x] [P2] murk_hollow: Rift-Stück, 66 BPM, B-Moll, gedämpfter Bass und lange Pausen in der Melodie.
+2456. [x] [P2] Die drei Rift-Stücke teilen sich ein gemeinsames Rift-Motiv aus 3 Tönen, das in jedem Stück anders begleitet wird.
 2457. [P2] Eigene Kampfmusik für wilde Spirlings in Rift-Karten, die das Rift-Motiv aufgreift, statt der allgemeinen battle.ogg.
 2458. [P2] Eigenes Stück für den Kampf gegen Rift-Wächter pro Rift, je eine Fassung des Rift-Stücks mit 1,3-fachem Tempo und vollem Schlagzeug.
 2459. [P2] Eigenes Stück für den Titel (title) wird überarbeitet, damit es mit dem Leitmotiv beginnt und auf dem Grundton endet, als saubere Schleife.
@@ -260,7 +260,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2461. [P2] Kurzes Spannungs-Stück für Story-Szenen mit Gefahr, 16 Takte, 140 BPM, nur Bass und Trommel.
 2462. [P2] Kurzes Stück für den Abschied und traurige Szenen, 70 BPM, Moll, 12 Takte mit sauberem Schleifenpunkt.
 2463. [P3] Kurzes Stück für Online-Menüs (Freunde, Geschenke, Rangliste), damit diese Menüs eine eigene ruhige Stimmung haben.
-2464. [P2] Jedes Ort-Stück ist zwischen 60 und 120 Sekunden lang und hat einen hörbar sauberen Schleifenpunkt ohne Knacken.
+2464. [x] [P2] Jedes Ort-Stück ist zwischen 60 und 120 Sekunden lang und hat einen hörbar sauberen Schleifenpunkt ohne Knacken.
 2465. [P3] Nachtfassung jedes Außen-Stücks: gleiche Noten, 10 % langsamer, Melodie eine Oktave tiefer, weniger Schlagzeug, umgeschaltet über DayCycle.
 2466. [P3] Kurzes Stück für die Heilung am Rastplatz als eigener Jingle (6 Töne), getrennt von der Ort-Musik.
 2467. [P3] Kurzer Jingle für neu entdeckte Orte (Kartenbuch wächst), 3 Sekunden, aus dem Leitmotiv abgeleitet.
@@ -273,11 +273,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2474. [P3] Eine Melodie-Prüfung in tools/audio/ vergleicht die Intervallfolgen aller eigenen Stücke untereinander und meldet Abschnitte von mehr als 8 gleichen Tönen, damit kein Stück das andere kopiert.
 
 ### Dynamische Musik-Schichten
-2475. [P1] tools/audio/gen_audio.py schreibt jedes Ort-Stück zusätzlich als 4 Einzelspuren (Bass, Akkorde, Melodie, Schlagzeug) mit exakt gleicher Länge in audio/music/stems/<name>_<spur>.ogg.
-2476. [P1] Neuer Autoload scripts/core/MusicDirector.gd spielt die Einzelspuren über AudioStreamSynchronized gleichzeitig ab und regelt jede Spur einzeln in der Lautstärke.
-2477. [P1] Schicht-Regel Welt: im Stillstand nur Bass und Akkorde, beim Gehen kommt die Melodie dazu, beim Rennen das Schlagzeug, jeweils in 0,8 s eingeblendet.
-2478. [P1] Schicht-Regel Dialog: während ein Dialog offen ist, sinken Melodie und Schlagzeug auf -12 dB, damit der Text im Vordergrund steht.
-2479. [P1] Sound.music() bleibt die öffentliche Schnittstelle; MusicDirector übernimmt nur, wenn Einzelspuren vorhanden sind, sonst läuft die bisherige Ogg-Datei.
+2475. [x] [P1] tools/audio/gen_audio.py schreibt jedes Ort-Stück zusätzlich als 4 Einzelspuren (Bass, Akkorde, Melodie, Schlagzeug) mit exakt gleicher Länge in audio/music/stems/<name>_<spur>.ogg.
+2476. [x] [P1] Neuer Autoload scripts/core/MusicDirector.gd spielt die Einzelspuren über AudioStreamSynchronized gleichzeitig ab und regelt jede Spur einzeln in der Lautstärke.
+2477. [x] [P1] Schicht-Regel Welt: im Stillstand nur Bass und Akkorde, beim Gehen kommt die Melodie dazu, beim Rennen das Schlagzeug, jeweils in 0,8 s eingeblendet.
+2478. [x] [P1] Schicht-Regel Dialog: während ein Dialog offen ist, sinken Melodie und Schlagzeug auf -12 dB, damit der Text im Vordergrund steht.
+2479. [x] [P1] Sound.music() bleibt die öffentliche Schnittstelle; MusicDirector übernimmt nur, wenn Einzelspuren vorhanden sind, sonst läuft die bisherige Ogg-Datei.
 2480. [P2] Schicht-Regel Begegnungsfeld: im hohen Gras kommt eine leise Spannungs-Spur (Akkorde mit Tremolo) dazu.
 2481. [P2] Schicht-Regel Rift-Nähe: in den letzten 6 Feldern vor einem Rift-Eingang wird die Akkord-Spur durch eine verstimmte Fassung (-20 Cent) ersetzt.
 2482. [P2] Schicht-Regel Team erschöpft: wenn kein Spirling im Team mehr als 25 % Kraft hat, fällt das Schlagzeug weg und die Melodie wird gedämpft (Tiefpass bei 2 kHz).
@@ -301,12 +301,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2500. [P3] Schicht-Regeln als Tabelle in data/music.json pro Karte überschreibbar machen (zum Beispiel keine Renn-Schicht im Kartenhaus).
 
 ### Soundeffekte für Welt und Menüs
-2501. [P1] Schritt-Geräusche pro Untergrund (Gras, Weg, Holz, Sand, Stein, Wasserkante) als 6 kurze Klänge unter 60 ms, leise (-18 dB), abwechselnd mit 2 Fassungen pro Untergrund.
-2502. [P1] Schritt-Geräusche werden über die Tile-Art aus TilesetFactory.gd gewählt und nur beim Rennen doppelt so oft gespielt.
-2503. [P1] Text-Stimme im Dialog: jeder 2. getippte Buchstabe spielt einen 15 ms kurzen Piep, dessen Tonhöhe pro Figur festgelegt ist (Spielfigur, Mirela, Kestra, Aldo, Hüterinnen, Dorfleute).
-2504. [P2] Text-Stimme lässt sich in den Einstellungen getrennt ausschalten und ist im Sound-Test hörbar.
-2505. [P1] Eigener Klang für das "!" eines Wanderers, der jemanden entdeckt: zwei schnell steigende Töne, 0,15 s.
-2506. [P1] Eigener Klang für das Aufnehmen eines Gegenstands auf der Karte, 4 aufsteigende Töne, getrennt vom Münzklang.
+2501. [x] [P1] Schritt-Geräusche pro Untergrund (Gras, Weg, Holz, Sand, Stein, Wasserkante) als 6 kurze Klänge unter 60 ms, leise (-18 dB), abwechselnd mit 2 Fassungen pro Untergrund.
+2502. [x] [P1] Schritt-Geräusche werden über die Tile-Art aus TilesetFactory.gd gewählt und nur beim Rennen doppelt so oft gespielt.
+2503. [x] [P1] Text-Stimme im Dialog: jeder 2. getippte Buchstabe spielt einen 15 ms kurzen Piep, dessen Tonhöhe pro Figur festgelegt ist (Spielfigur, Mirela, Kestra, Aldo, Hüterinnen, Dorfleute).
+2504. [x] [P2] Text-Stimme lässt sich in den Einstellungen getrennt ausschalten und ist im Sound-Test hörbar.
+2505. [x] [P1] Eigener Klang für das "!" eines Wanderers, der jemanden entdeckt: zwei schnell steigende Töne, 0,15 s.
+2506. [x] [P1] Eigener Klang für das Aufnehmen eines Gegenstands auf der Karte, 4 aufsteigende Töne, getrennt vom Münzklang.
 2507. [P2] Tür-Klang (Öffnen) und Tür-Klang (Schließen) als zwei Klänge mit Holz-Charakter aus Rauschen und tiefem Puls.
 2508. [P2] Treppen-Klang mit 3 schnellen Schritten, die in der Tonhöhe steigen oder fallen, je nach Richtung.
 2509. [P2] Klang für das Öffnen und das Schließen des Pausemenüs, verschieden voneinander (Seite aufschlagen, Seite zuklappen).
@@ -331,8 +331,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2528. [P3] Alle Klänge der Welt und Menüs bekommen im Sound-Test eine eigene Gruppe "Welt" und "Menü", damit man sie geordnet anhören kann.
 
 ### Soundeffekte im Kampf (ergänzend)
-2529. [P1] Aufladen-Klang pro Art: körperlich (kurzes Rauschen, 0,1 s), besonders (steigender Puls, 0,15 s), Status (zwei weiche Töne), passend zur Aufladen-Phase der Element-Effekte.
-2530. [P1] Weg-Klang pro Element für Techniken mit Weg-Phase, je 0,2 s, zum Beispiel Zischen für Gale, Knistern für Volt, Gluckern für Tide.
+2529. [x] [P1] Aufladen-Klang pro Art: körperlich (kurzes Rauschen, 0,1 s), besonders (steigender Puls, 0,15 s), Status (zwei weiche Töne), passend zur Aufladen-Phase der Element-Effekte.
+2530. [x] [P1] Weg-Klang pro Element für Techniken mit Weg-Phase, je 0,2 s, zum Beispiel Zischen für Gale, Knistern für Volt, Gluckern für Tide.
 2531. [P2] Klang für verfehlte Techniken: ein leiser Luftzug, der am Ziel vorbeizieht.
 2532. [P2] Treffer-Klänge (hit_*) werden je nach verlorener Kraft lauter: bis 10 % bei -6 dB, bis 30 % bei -3 dB, darüber bei 0 dB.
 2533. [P2] Treffer-Klänge bekommen eine zufällige Tonhöhe zwischen 0,95 und 1,05, damit Wiederholungen frischer klingen.
@@ -351,10 +351,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2546. [P3] Kampf-Klänge bei 4x Tempo werden auf höchstens 0,15 s gekürzt, indem gen_audio.py von jedem Klang eine kurze Fassung "<name>_short" erzeugt.
 
 ### Klang-Technik, Busse und Mobilgeräte
-2547. [P1] Neue Busse "UI", "Voice" (Schreie und Text-Stimme) und "Ambience" unter "SFX" in GameState.ensure_buses() anlegen, damit sie getrennt regelbar sind.
-2548. [P1] Ein Limiter (AudioEffectHardLimiter, Decke -1 dB) auf dem Master-Bus verhindert Übersteuern bei vielen gleichzeitigen Klängen.
-2549. [P1] iOS: Projekteinstellung audio/general/ios/session_category auf "Ambient" stellen, damit der Lautlos-Schalter beachtet wird und Musik anderer Apps weiterlaufen kann.
-2550. [P1] Beim Wechsel der App in den Hintergrund (NOTIFICATION_APPLICATION_PAUSED) werden Musik und Klänge stumm geschaltet und beim Zurückkehren in 0,3 s wieder eingeblendet.
+2547. [x] [P1] Neue Busse "UI", "Voice" (Schreie und Text-Stimme) und "Ambience" unter "SFX" in GameState.ensure_buses() anlegen, damit sie getrennt regelbar sind.
+2548. [x] [P1] Ein Limiter (AudioEffectHardLimiter, Decke -1 dB) auf dem Master-Bus verhindert Übersteuern bei vielen gleichzeitigen Klängen.
+2549. [x] [P1] iOS: Projekteinstellung audio/general/ios/session_category auf "Ambient" stellen, damit der Lautlos-Schalter beachtet wird und Musik anderer Apps weiterlaufen kann.
+2550. [x] [P1] Beim Wechsel der App in den Hintergrund (NOTIFICATION_APPLICATION_PAUSED) werden Musik und Klänge stumm geschaltet und beim Zurückkehren in 0,3 s wieder eingeblendet.
 2551. [P2] Die Stimmenanzahl in Sound.gd (SFX_VOICES) steigt von 6 auf 10, und jeder Klang bekommt eine Priorität (UI 1, Welt 2, Kampf 3), sodass bei voller Belegung der unwichtigste Klang weicht.
 2552. [P2] Einstellung "Andere Musik erlauben": spielt eine andere App Musik, startet Chimora nur mit Klängen und ohne eigene Musik.
 2553. [P2] Android: bei Audio-Fokus-Verlust (Anruf, Sprachnachricht) Musik pausieren und danach an derselben Stelle fortsetzen.
@@ -375,31 +375,31 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2568. [P3] Sound.gd in zwei Dateien aufteilen: Sound.gd für Klänge und MusicDirector.gd für Musik, mit gleichbleibenden öffentlichen Aufrufen.
 
 ### Umgebungsklänge pro Ort
-2569. [P1] Neuer Ordner audio/ambience/ mit einer Schleife pro Außenkarte (30 bis 45 Sekunden, Ogg, Mono), erzeugt aus Rauschen und Tonfolgen in gen_audio.py.
-2570. [P1] data/music.json bekommt pro Karte ein Feld "ambience" mit dem Namen der Umgebungsschleife, abgespielt auf dem Ambience-Bus bei -14 dB.
-2571. [P1] lighthouse: Meeresrauschen als langsam an- und abschwellendes Rauschen (Periode 6 s) plus seltene Möwen-artige Pfeiftöne aus eigenen Tonfolgen.
-2572. [P2] brindlewick: Marktgeräusche als leises Stimmengemurmel aus gefiltertem Rauschen und gelegentlichen Glocken.
-2573. [P2] fernstair: Wind in Farnen als Rauschen mit Hochpass, plus Vogelzwitschern aus kurzen Puls-Tonfolgen.
-2574. [P2] crowcrest: starker Wind mit Böen alle 8 bis 15 Sekunden.
-2575. [P2] saltmarsh: Frosch-Rufe als tiefe, kurze Pulswellen und stehendes Wasser-Glucksen.
+2569. [x] [P1] Neuer Ordner audio/ambience/ mit einer Schleife pro Außenkarte (30 bis 45 Sekunden, Ogg, Mono), erzeugt aus Rauschen und Tonfolgen in gen_audio.py.
+2570. [x] [P1] data/music.json bekommt pro Karte ein Feld "ambience" mit dem Namen der Umgebungsschleife, abgespielt auf dem Ambience-Bus bei -14 dB.
+2571. [x] [P1] lighthouse: Meeresrauschen als langsam an- und abschwellendes Rauschen (Periode 6 s) plus seltene Möwen-artige Pfeiftöne aus eigenen Tonfolgen.
+2572. [x] [P2] brindlewick: Marktgeräusche als leises Stimmengemurmel aus gefiltertem Rauschen und gelegentlichen Glocken.
+2573. [x] [P2] fernstair: Wind in Farnen als Rauschen mit Hochpass, plus Vogelzwitschern aus kurzen Puls-Tonfolgen.
+2574. [x] [P2] crowcrest: starker Wind mit Böen alle 8 bis 15 Sekunden.
+2575. [x] [P2] saltmarsh: Frosch-Rufe als tiefe, kurze Pulswellen und stehendes Wasser-Glucksen.
 2576. [P2] Umgebungsschleifen haben eine Nachtfassung mit Grillen-Zirpen (schnelle hohe Pulse) statt Vogelstimmen, umgeschaltet über DayCycle.
 2577. [P2] Rift-Karten bekommen ein tiefes, gleichmäßiges Summen (40 bis 60 Hz) als Umgebungsklang, das in jedem Rift anders moduliert ist.
-2578. [P2] Bei Kartenwechsel blenden Umgebungsklänge in 1 Sekunde über, unabhängig vom Musikwechsel.
-2579. [P2] Im Kampf wird der Umgebungsklang auf -24 dB gesenkt, aber nicht ausgeschaltet, damit der Ort erhalten bleibt.
+2578. [x] [P2] Bei Kartenwechsel blenden Umgebungsklänge in 1 Sekunde über, unabhängig vom Musikwechsel.
+2579. [x] [P2] Im Kampf wird der Umgebungsklang auf -24 dB gesenkt, aber nicht ausgeschaltet, damit der Ort erhalten bleibt.
 2580. [P3] Ortsgebundene Klangquellen mit AudioStreamPlayer2D: Brunnen in brindlewick, Quelle in rest_spring, Leuchtturm-Mechanik in lighthouse, Reichweite 5 Felder.
 2581. [P3] thornridge: Holzhacken in der Ferne alle 20 bis 40 Sekunden als zufällig gesetzter Einzelklang.
 2582. [P3] map_house: leises Uhrenticken und Papier-Rascheln als Innenraum-Umgebung.
 2583. [P3] rest_spring: Wasserplätschern, das lauter wird, je näher die Spielfigur der Quelle kommt.
 2584. [P3] Zufällige Einzelklänge (Vogel, Glocke, Ast) werden nach einem festen Startwert pro Tag gesetzt, damit sie nicht in festen Abständen wiederkehren.
-2585. [P3] Umgebungsklänge sind im Sound-Test als eigene Gruppe "Orte" hörbar.
-2586. [P3] Umgebungsklänge zusammen höchstens 2,5 MB; gen_audio.py prüft die Grenze beim Erzeugen.
+2585. [x] [P3] Umgebungsklänge sind im Sound-Test als eigene Gruppe "Orte" hörbar.
+2586. [x] [P3] Umgebungsklänge zusammen höchstens 2,5 MB; gen_audio.py prüft die Grenze beim Erzeugen.
 
 ### Haptik und Vibration
-2587. [P1] Neuer Autoload scripts/core/Haptics.gd, der auf Handys Input.vibrate_handheld(dauer_ms, stärke) nutzt und auf Gamepads das bestehende GameState.rumble_pads aufruft.
-2588. [P1] Android-Exportvorlage in export_presets.cfg um die Berechtigung VIBRATE ergänzen und prüfen, dass der Export sie enthält.
-2589. [P1] Feste Muster in Haptics.gd: "tap" 10 ms/0,3, "confirm" 15 ms/0,5, "hit" 25 ms/0,7, "heavy" 45 ms/1,0, "error" zweimal 15 ms mit 40 ms Pause.
-2590. [P1] Die bestehende Einstellung "rumble" wird zu "Vibration" mit den Stufen Aus, Schwach (50 %) und Voll und gilt für Handy und Gamepad.
-2591. [P1] Treffer im Kampf rufen Haptics "hit" auf, starke Treffer "heavy", gekoppelt an dieselbe Stelle wie das Bildschirmwackeln in BattleScene.gd.
+2587. [x] [P1] Neuer Autoload scripts/core/Haptics.gd, der auf Handys Input.vibrate_handheld(dauer_ms, stärke) nutzt und auf Gamepads das bestehende GameState.rumble_pads aufruft.
+2588. [x] [P1] Android-Exportvorlage in export_presets.cfg um die Berechtigung VIBRATE ergänzen und prüfen, dass der Export sie enthält.
+2589. [x] [P1] Feste Muster in Haptics.gd: "tap" 10 ms/0,3, "confirm" 15 ms/0,5, "hit" 25 ms/0,7, "heavy" 45 ms/1,0, "error" zweimal 15 ms mit 40 ms Pause.
+2590. [x] [P1] Die bestehende Einstellung "rumble" wird zu "Vibration" mit den Stufen Aus, Schwach (50 %) und Voll und gilt für Handy und Gamepad.
+2591. [x] [P1] Treffer im Kampf rufen Haptics "hit" auf, starke Treffer "heavy", gekoppelt an dieselbe Stelle wie das Bildschirmwackeln in BattleScene.gd.
 2592. [P2] Bestätigen in Menüs ruft "tap" auf, aber höchstens einmal pro 80 ms, damit schnelles Tippen nicht dauernd brummt.
 2593. [P2] Gesperrte Menüpunkte und Fehler (Name zu lang, keine Verbindung) rufen "error" auf.
 2594. [P2] Ein Wanderer entdeckt die Spielfigur: zwei kurze "tap" mit 60 ms Abstand passend zum "!".
@@ -419,11 +419,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2608. [P3] Alle Haptik-Muster mit Dauer und Stärke als Tabelle in docs/JUICE.md festhalten.
 
 ### Werkzeuge zur Asset-Erzeugung (tools/art, tools/audio)
-2609. [P1] tools/audio/gen_audio.py in Module aufteilen: tools/audio/synth.py (Wellen, Hüllkurven), tools/audio/sfx.py, tools/audio/music.py, tools/audio/ambience.py, mit gen_audio.py als Einstieg.
-2610. [P1] gen_audio.py bekommt Aufruf-Optionen --only <name>, --sfx, --music, --stems, damit nicht bei jeder Änderung alles neu erzeugt werden muss.
-2611. [P1] Lautheits-Prüfung tools/audio/loudness.py mit ffmpeg ebur128: Musik soll -16 LUFS (±1) erreichen, Klänge einen Spitzenwert von -3 dBFS; Abweichungen werden gemeldet.
-2612. [P1] gen_audio.py normalisiert jede Datei nach dem Erzeugen automatisch auf diese Zielwerte.
-2613. [P1] Neuer Generator tools/art/gen_fx.py erzeugt die Effekt-Formen (Funke, Tropfen, Blatt, Zacke, Brocken, Strich, Glanz, Schatten) als 8×8-Bildchen in art/era1/fx/ in den 4 Paletten-Farben.
+2609. [x] [P1] tools/audio/gen_audio.py in Module aufteilen: tools/audio/synth.py (Wellen, Hüllkurven), tools/audio/sfx.py, tools/audio/music.py, tools/audio/ambience.py, mit gen_audio.py als Einstieg.
+2610. [x] [P1] gen_audio.py bekommt Aufruf-Optionen --only <name>, --sfx, --music, --stems, damit nicht bei jeder Änderung alles neu erzeugt werden muss.
+2611. [x] [P1] Lautheits-Prüfung tools/audio/loudness.py mit ffmpeg ebur128: Musik soll -16 LUFS (±1) erreichen, Klänge einen Spitzenwert von -3 dBFS; Abweichungen werden gemeldet.
+2612. [x] [P1] gen_audio.py normalisiert jede Datei nach dem Erzeugen automatisch auf diese Zielwerte.
+2613. [x] [P1] Neuer Generator tools/art/gen_fx.py erzeugt die Effekt-Formen (Funke, Tropfen, Blatt, Zacke, Brocken, Strich, Glanz, Schatten) als 8×8-Bildchen in art/era1/fx/ in den 4 Paletten-Farben.
 2614. [P2] Neuer Generator tools/art/gen_ui.py erzeugt Gefühls-Blasen, Toast-Rahmen, Punkt-Markierungen und Cursor als kleine PNGs in art/era1/ui/.
 2615. [P2] Eine Prüfung der Wiederholbarkeit: gen_audio.py und alle tools/art-Generatoren werden in der CI zweimal laufen gelassen und die Prüfsummen der Ausgaben verglichen.
 2616. [P2] gen_audio.py schreibt Schleifenpunkte (Start und Ende in Samples) pro Stück in tools/audio/loops.json, aus der Sound.gd und die .import-Dateien lesen.
@@ -447,9 +447,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2634. [P3] Eine kleine Formbibliothek in tools/art/px.py mit Kreis, Ring, Stern und Zacke in Pixelgenauigkeit, damit Effekte und UI-Bildchen dieselben Grundformen nutzen.
 
 ### docs/ASSET_LOG.md und Herkunftsnachweis
-2635. [P1] Jede neue Datei aus diesem Bereich (fx, ui, ambience, stems, neue Stücke und Klänge) bekommt eine eigene Zeile in docs/ASSET_LOG.md, bevor sie eingecheckt wird.
-2636. [P1] Neues Werkzeug tools/asset_log.py erzeugt die Zeilen für alle Generator-Ausgaben automatisch aus einer Tabelle (Pfad, Generator, Beschreibung) und ergänzt fehlende.
-2637. [P1] tools/ip_check.sh prüft zusätzlich, dass jeder Generator, der in einer ASSET_LOG-Zeile genannt ist, auch im Repo existiert.
+2635. [x] [P1] Jede neue Datei aus diesem Bereich (fx, ui, ambience, stems, neue Stücke und Klänge) bekommt eine eigene Zeile in docs/ASSET_LOG.md, bevor sie eingecheckt wird.
+2636. [x] [P1] Neues Werkzeug tools/asset_log.py erzeugt die Zeilen für alle Generator-Ausgaben automatisch aus einer Tabelle (Pfad, Generator, Beschreibung) und ergänzt fehlende.
+2637. [x] [P1] tools/ip_check.sh prüft zusätzlich, dass jeder Generator, der in einer ASSET_LOG-Zeile genannt ist, auch im Repo existiert.
 2638. [P2] Jede neue Musik-Zeile nennt in der Spalte "How it was made" den Notentext unter tools/audio/songs/ und den Satz "Melodie und Akkorde eigen geschrieben".
 2639. [P2] ASSET_LOG.md bekommt eine zusätzliche Spalte "Generator-Stand" mit dem Commit-Kürzel, aus dem die Datei zuletzt erzeugt wurde.
 2640. [P2] ASSET_LOG.md wird nach Ordnern gegliedert (art/era1/spirlings, chars, tiles, fx, ui, icon; audio/music, stems, sfx, ambience), mit je einer Überschrift.
@@ -467,10 +467,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2652. [P3] tools/asset_log.py kann mit --check laufen und gibt nur Fehler aus, ohne die Datei zu ändern, für die CI.
 
 ### Leistung und Zugänglichkeit der Darstellung
-2653. [P1] Einstellung "Klang-Untertitel": wichtige Klänge (Wanderer entdeckt, Rift in der Nähe, Begegnung, Gegenstand) erscheinen als kurzer Text am oberen Rand, zum Beispiel "[Rascheln im Gras]".
+2653. [x] [P1] Einstellung "Klang-Untertitel": wichtige Klänge (Wanderer entdeckt, Rift in der Nähe, Begegnung, Gegenstand) erscheinen als kurzer Text am oberen Rand, zum Beispiel "[Rascheln im Gras]".
 2654. [P1] Leistungsziel für alle Punkte dieses Bereichs: auf dem schwächsten Ziel-Android-Gerät höchstens 2 ms zusätzliche Bildzeit im Kampf und 1 ms in der Welt.
-2655. [P1] Alle neuen Bewegungen respektieren die bestehende Einstellung reduce_motion über Juice.reduced(); ein GUT-Test schaltet sie ein und prüft, dass kein Tween länger als 0,15 s läuft.
-2656. [P1] Kein Effekt dieses Bereichs wechselt die Helligkeit mehr als 3 Mal pro Sekunde um mehr als 2 Palettenstufen; ein Test prüft die Effekt-Galerie Bild für Bild.
+2655. [x] [P1] Alle neuen Bewegungen respektieren die bestehende Einstellung reduce_motion über Juice.reduced(); ein GUT-Test schaltet sie ein und prüft, dass kein Tween länger als 0,15 s läuft.
+2656. [x] [P1] (tools/fx_flash_check.tscn im UI-Golden-Job) Kein Effekt dieses Bereichs wechselt die Helligkeit mehr als 3 Mal pro Sekunde um mehr als 2 Palettenstufen; ein Test prüft die Effekt-Galerie Bild für Bild.
 2657. [P2] Partikel, Wackeln und Shader-Übergänge werden im Energiesparmodus des Geräts (wenn das System ihn meldet) automatisch auf die ruhige Fassung gesetzt.
 2658. [P2] Visuelle Takt-Hilfe im Echo-Minispiel ist schon da; zusätzlich zeigt jede Marke beim Abspielen einen kurzen Ring, damit es auch ohne Ton lösbar bleibt.
 2659. [P2] Text-Stimme und Schreie können im Hochkontrast-Modus durch eine kleine Schallwellen-Markierung neben dem Sprecher ergänzt werden.

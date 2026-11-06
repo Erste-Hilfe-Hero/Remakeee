@@ -21,13 +21,16 @@
   "lines": [
    "Orrin: ..."
   ],
-  "after_flag": {
-   "flag": "rift_cinder_sealed",
-   "lines": [
-    "Orrin: I'd forgotten my own Spirlings' names. Thank you for reminding me.",
-    "Orrin: The tear is stitched. Mark it on your map, cartographer."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "rift_cinder_sealed",
+    "lines": [
+     "Orrin: I'd forgotten my own Spirlings' names. Thank you for reminding me.",
+     "Orrin: The tear is stitched. Mark it on your map, cartographer.",
+     "Orrin: Forty years ago I was a boy in this hollow. A woman with a compass sat here and drew the tear. She said it would close one day. Her name was Mirela."
+    ]
+   }
+  ]
  },
  "orrin_intro": [
   "Warden Orrin: ...",

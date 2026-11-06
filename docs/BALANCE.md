@@ -147,7 +147,7 @@ a player who does everything every day (all four daily tasks, trips, every weekl
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
 | Season path steps 5/15/25 and 10/20/30 | 30 / 50 | per season | built |
-| Season path, every step after 30 | 20 | per step | `SeasonPath.add` |
+| Season path, every step after 30 | 20 | per step, at most 10 a season | `SeasonPath.add` |
 | Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
 | Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
 | Roaming trip 4 / 8 / 12 h (also 60 / 120 / 180 coins and a Tonic / Remedy / Strong Tonic) | 1 / 1 / 2 | up to 3 trips at once | `Expeditions.collect` |
@@ -185,9 +185,9 @@ festival; then buy at Marla's stand cheapest first). Nov 2026 run:
 | Echo Path | 480 |
 | Album | 300 |
 | Lighthouse stair | 285 |
-| Season path | 460 |
+| Season path | 440 |
 | Festival | 150 |
-| **Total** | **10105 (112 a day, 786 a week; about 735 a week after the first)** |
+| **Total** | **10085 (112 a day, 784 a week; about 735 a week after the first)** |
 
 Marla's stand took 9524 (398 goods, with the weekly crates), so the pouch ends at about 600: nothing is lost over the
 cap, and the full weekly stock (about 900) is more than a week brings, so buying stays a choice.
@@ -207,9 +207,11 @@ the clock goes back, stored progress is kept and nothing that was paid pays agai
 Festival ribbons: 3 per won battle against Spirlings of the festival's elements, 5 for the crier's
 festival task of the day. They buy festival goods from Tilda in Brindlewick.
 
-Season path: 30 steps per quarter, 100 points per step. Points: daily task 10, weekly echo win 40,
-festival goal stage 20. An active player (3 tasks a day, 1 weekly win) earns about 3100 points in a
-13-week season, enough for every step. The rewards repeat every season, so nothing is missed for good.
+Season path: 30 steps per quarter, 100 points per step. Points: daily task 15, all daily tasks 15,
+weekly echo win 40, festival goal stage 20. Four play days a week (3 tasks and the bonus) plus one
+weekly win bring 280 a week, so step 30 is reached in 11 of the 13 weeks (plan 3242). Steps past 30
+pay 20 Waymarks each, at most 10 a season. Steps pay the moment they are reached, so nothing waits
+to be claimed when the season ends. This is the free path; a paid lane is area 10's decision. The rewards repeat every season, so nothing is missed for good.
 
 ### Journey complete and the Iron Oath
 

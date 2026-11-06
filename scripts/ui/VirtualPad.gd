@@ -6,8 +6,8 @@ extends CanvasLayer
 
 const LAYER: int = 50
 ## Button sizes in viewport pixels per size setting (Medium is about 9-10 mm at integer scale 7).
-const DPAD_SIZES: Array[int] = [16, 20, 24]
-const AB_SIZES: Array[int] = [18, 22, 26]
+const DPAD_SIZES: Array[int] = [16, 20, 24, 28]
+const AB_SIZES: Array[int] = [18, 22, 26, 30]
 ## The menu button is a little larger than before and further from B, so it is not taken for
 ## B (item 1811).
 const MENU_BUTTON: int = 16
@@ -18,6 +18,13 @@ const DIRS: Array[String] = ["ui_up", "ui_down", "ui_left", "ui_right"]
 ## Force the pad on (desktop testing) regardless of touchscreen detection.
 var force_visible: bool = false
 var _wanted: bool = false
+## While a talk box is open only A shows, so it is clear what to press (item 1818).
+var _talk: bool = false
+## "Gamepad disconnected" at the top for 2 s when a pad goes away (item 1819).
+const NOTICE_SECONDS: float = 2.0
+const PAD_GONE_TEXT: String = "Gamepad disconnected"
+var _notice: Label
+var _notice_left: float = 0.0
 var _root: Node2D
 var _buttons: Array[TouchScreenButton] = []
 
@@ -35,7 +42,19 @@ func _ready() -> void:
 	_root = Node2D.new()
 	add_child(_root)
 	apply_settings()
-	Input.joy_connection_changed.connect(func(_d: int, _c: bool) -> void: _refresh())
+	Input.joy_connection_changed.connect(_on_joy_changed)
+	_notice = Label.new()
+	_notice.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	_notice.offset_top = 4
+	_notice.offset_left = 8
+	_notice.offset_right = -8
+	_notice.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_notice.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_notice.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
+	_notice.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_notice.visible = false
+	_notice.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	add_child(_notice)
 	get_viewport().size_changed.connect(_layout)
 
 ## Rebuilds the buttons from the size / opacity / handedness settings in GameState.
@@ -64,9 +83,11 @@ func apply_settings() -> void:
 func covers(pos: Vector2) -> bool:
 	if not visible:
 		return false
-	if dpad_rect().grow(2).has_point(pos):
+	if not _talk and dpad_rect().grow(2).has_point(pos):
 		return true
 	for b: TouchScreenButton in _buttons:
+		if not b.visible:
+			continue
 		var s: Vector2 = (b.shape as RectangleShape2D).size
 		if Rect2(b.position, s).grow(2).has_point(pos):
 			return true
@@ -78,17 +99,48 @@ func top_y() -> float:
 		return -1.0
 	var top: float = INF
 	for b: TouchScreenButton in _buttons:
-		top = minf(top, b.position.y)
+		if b.visible:
+			top = minf(top, b.position.y)
 	return top
 
 ## Show the pad in gameplay screens; hide it in menus and battles (they have their own buttons).
 func set_wanted(on: bool) -> void:
 	_wanted = on
+	_talk = false
 	_refresh()
+
+## Talk mode: the pad shows only A while a talk box waits (item 1818).
+func set_talk(on: bool) -> void:
+	_talk = on
+	if on:
+		_wanted = true
+	_set_dir("")
+	_dir_touch = -1
+	_refresh()
+
+func in_talk() -> bool:
+	return _talk
+
+## A pad was plugged in or pulled out. When the last one goes, the touch pad comes back at
+## once and a short notice says why (item 1819).
+func _on_joy_changed(_device: int, connected: bool) -> void:
+	_refresh()
+	if not connected and Input.get_connected_joypads().is_empty():
+		show_notice(PAD_GONE_TEXT)
+
+func show_notice(text: String) -> void:
+	_notice.text = Loc.t(text)
+	_notice.visible = true
+	_notice_left = NOTICE_SECONDS
+
+func notice_text() -> String:
+	return _notice.text if _notice.visible else ""
 
 func _refresh() -> void:
 	var touch: bool = DisplayServer.is_touchscreen_available() or force_visible
 	visible = _wanted and touch and Input.get_connected_joypads().is_empty()
+	for b: TouchScreenButton in _buttons:
+		b.visible = not _talk or b.action == &"ui_accept"
 	if not visible:
 		_set_dir("")
 		_dir_touch = -1
@@ -243,7 +295,7 @@ static func dir_for(local: Vector2, side: float) -> String:
 	return "ui_down" if d.y > 0.0 else "ui_up"
 
 func _input(event: InputEvent) -> void:
-	if not visible:
+	if not visible or _talk:
 		return
 	var f: Dictionary = TapInput.finger(event)
 	if f.is_empty():
@@ -289,7 +341,11 @@ const PULSE_SECONDS: float = 1.6
 func menu_hinted() -> bool:
 	return not GameState.has_flag(MENU_SEEN_FLAG)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
+	if _notice_left > 0.0:
+		_notice_left -= delta
+		if _notice_left <= 0.0:
+			_notice.visible = false
 	if not visible:
 		return
 	var hint: bool = menu_hinted()

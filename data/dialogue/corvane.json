@@ -491,5 +491,31 @@
    "Ysolde: ...There. The guild names you cartographer. Not apprentice. Never again."
   ],
   "flag": "epilogue_guild"
- }
+ },
+ "kestra_still": {
+  "if": {
+   "not_flag": "kestra_stillwater_tag"
+  },
+  "else": "kestra_still_after",
+  "lines": [
+   "Kestra: Shh. Look at the terraces. Two Wanderers, walking in circles.",
+   "Kestra: The Hush has them. Their Spirlings won't even look up.",
+   "Kestra: I can't wake them alone. Tatter's too tired. ...Fight with me?"
+  ],
+  "action": "battle kestra_tag"
+ },
+ "kestra_tag_defeat": {
+  "lines": [
+   "The two Wanderers blink, as if waking from a long walk.",
+   "Kestra: We did that. Both of us, side by side.",
+   "Kestra: ...Maybe your way and mine aren't so far apart."
+  ],
+  "action": "add_var kestra_trust 1"
+ },
+ "kestra_tag_lose": [
+  "Kestra: Too much Hush for one day. Rest up. I'll keep watch on them."
+ ],
+ "kestra_still_after": [
+  "Kestra: The Wanderers went home. Tatter keeps looking at the pond. I think it's smiling."
+ ]
 }

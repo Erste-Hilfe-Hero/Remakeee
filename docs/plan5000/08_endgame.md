@@ -144,13 +144,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3239. [x] [P1] Jede Stufe mit einer festen, vorher sichtbaren Belohnung belegen: Münzen, Wegmarken, Gegenstände oder Kosmetik.
 3240. [x] [P1] Den ganzen Pfad mit allen 30 Belohnungen vor dem Start einsehbar machen.
 3241. [P2] Die Stufen 10, 20 und 30 mit einer besonderen Belohnung belegen: Jackenmuster, Fotorahmen und ein Spirling-Halstuch als Kosmetik.
-3242. [P2] Die Zielzeit so legen, dass Stufe 30 mit 4 Tagen Spiel pro Woche in 11 Wochen erreichbar ist.
-3243. [P2] Pfadbelohnungen nach Saisonende 14 Tage lang nachholbar machen, wenn die Stufe erreicht, aber nicht abgeholt wurde.
+3242. [x] [P2] Die Zielzeit so legen, dass Stufe 30 mit 4 Tagen Spiel pro Woche in 11 Wochen erreichbar ist.
+3243. [x] [P2] Pfadbelohnungen nach Saisonende 14 Tage lang nachholbar machen, wenn die Stufe erreicht, aber nicht abgeholt wurde.
 3244. [x] [P2] Nach Stufe 30 jede weitere Stufe mit 20 Wegmarken belohnen, ohne neue Kosmetik.
 3245. [x] [P2] Den Pfad als eigenen Reiter im Ziele-Bildschirm zeigen, mit Balken und der nächsten Belohnung.
 3246. [P2] Die Pfaddaten jeder Jahreszeit in data/events.json mit Saison-Id wie „2027-Q1“ ablegen.
 3247. [P2] Kosmetik aus einem vergangenen Pfad zwei Jahre später im Wegmarken-Tauschstand wieder anbieten.
-3248. [P2] Diesen Pfad ausdrücklich als freien Pfad anlegen; ob es eine bezahlte Spur dazu gibt, entscheidet Bereich 10, nicht dieser Bereich.
+3248. [x] [P2] Diesen Pfad ausdrücklich als freien Pfad anlegen; ob es eine bezahlte Spur dazu gibt, entscheidet Bereich 10, nicht dieser Bereich.
 3249. [P2] Den Jahreszeitenpfad an den Jahreszeiten des Kalenders ausrichten (März, Juni, September, Dezember) und den Start nach Server-Zeit setzen.
 3250. [P3] Eine Pfadvorschau der nächsten Jahreszeit zwei Wochen vor deren Start zeigen.
 3251. [P3] Einen Erfolg für jeden voll abgeschlossenen Jahreszeitenpfad ergänzen.
@@ -227,23 +227,23 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3316. [x] [P1] Ein Abzeichenbuch im Menü bauen, das alle Erfolge als 16x16-Abzeichen im Raster zeigt, gesperrte grau mit Hinweistext.
 3317. [x] [P1] Für jeden Erfolg einen Fortschritt (k/n) anzeigen, wo es eine Zahl gibt.
 3318. [x] [P1] Alle bestehenden 17 Erfolge mit ihrem Freischaltdatum in das neue Format übernehmen und rückwirkend den Wegmarken-Lohn auszahlen.
-3319. [P2] Geheime Erfolge einführen, deren Text erst nach dem Freischalten erscheint, höchstens 10 Stück.
-3320. [P2] Einen Erfolg „Ohne Fehltakt“ für ein Echo-Melodie-Spiel ohne verpassten Ton ergänzen.
-3321. [P2] Einen Erfolg „Nachtschwärmer“ für 50 Kämpfe bei Nacht ergänzen.
-3322. [P2] Einen Erfolg „Alle Felder“ für einen Sieg auf jedem Kampffeld aus BattleRules.FIELDS ergänzen.
-3323. [P2] Einen Erfolg „Weltenbummler“ für jede Karte mit wilden Spirlings betreten ergänzen.
+3319. [x] [P2] Geheime Erfolge einführen, deren Text erst nach dem Freischalten erscheint, höchstens 10 Stück.
+3320. [x] [P2] Einen Erfolg „Ohne Fehltakt“ für ein Echo-Melodie-Spiel ohne verpassten Ton ergänzen.
+3321. [x] [P2] Einen Erfolg „Nachtschwärmer“ für 50 Kämpfe bei Nacht ergänzen.
+3322. [x] [P2] Einen Erfolg „Alle Felder“ für einen Sieg auf jedem Kampffeld aus BattleRules.FIELDS ergänzen.
+3323. [x] [P2] Einen Erfolg „Weltenbummler“ für jede Karte mit wilden Spirlings betreten ergänzen.
 3324. [P2] Einen Erfolg „Gleiches Element“ für einen Sieg mit fünf Spirlings eines Elements ergänzen.
 3325. [P2] Einen Erfolg „Sammler der Andenken“ für jedes Andenken aus data/items.json einmal besessen ergänzen.
-3326. [P2] Einen Erfolg „Ring 60“ für einen Spirling am Ring-Deckel und „Fünf am Deckel“ für ein ganzes Team ergänzen.
+3326. [x] [P2] Einen Erfolg „Ring 60“ für einen Spirling am Ring-Deckel und „Fünf am Deckel“ für ein ganzes Team ergänzen.
 3327. [P2] Einen Erfolg „Fotograf“ für 25 gespeicherte Fotos im Fotomodus ergänzen.
-3328. [P2] Einen Erfolg „Gastgeber“ für jeden getroffenen Fund des Tages an 30 verschiedenen Tagen ergänzen.
+3328. [x] [P2] Einen Erfolg „Gastgeber“ für jeden getroffenen Fund des Tages an 30 verschiedenen Tagen ergänzen.
 3329. [P2] Einen Erfolg „Festgänger“ für jedes der Feste einmal gefeiert ergänzen.
 3330. [P2] Einen Erfolg „Turmspitze“ für Stockwerk 30 der Leuchtturm-Treppe ergänzen und den alten „Echo Climber“ auf 5 Stockwerke belassen.
-3331. [P2] Einen Erfolg „Meistergruß“ für einen Sieg über alle acht Meister-Wanderer ergänzen.
+3331. [x] [P2] Einen Erfolg „Meistergruß“ für einen Sieg über alle acht Meister-Wanderer ergänzen.
 3332. [P2] Einen Erfolg „Stadtbauer“ für alle fünf Stadtprojekte in Brindlewick ergänzen.
 3333. [P2] Erfolge im Abzeichenbuch nach Kategorie filterbar machen.
-3334. [P2] Den Gesamtfortschritt als Prozentzahl oben im Abzeichenbuch zeigen.
-3335. [P2] Für jedes Abzeichen das Datum des Freischaltens anzeigen, das heute schon in records["achievements"] steht.
+3334. [x] [P2] Den Gesamtfortschritt als Prozentzahl oben im Abzeichenbuch zeigen.
+3335. [x] [P2] Für jedes Abzeichen das Datum des Freischaltens anzeigen, das heute schon in records["achievements"] steht.
 3336. [P2] Alle neuen Erfolgstexte in data/i18n/de.json eintragen und das Prüfskript tools/i18n_extract.py durchlaufen lassen.
 3337. [P2] Einen GUT-Test schreiben, der prüft, dass jede Erfolgs-Id in data/achievements.json eine Prüfung in Achievements.earned() hat.
 3338. [P2] Die Erfolge nach Plattform an Game Center und Google Play Spiele melden, sofern Ali die Konten freigibt, sonst nur lokal.

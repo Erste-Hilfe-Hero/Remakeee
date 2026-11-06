@@ -70,13 +70,13 @@ func play_transition() -> void:
 		_filter_layer.add_child(_wipe)
 	var size: Vector2 = get_viewport().get_visible_rect().size
 	_wipe.position = Vector2.ZERO
-	_wipe.size = Vector2(size.x, 0.0 if not GameState.reduce_motion else size.y)
-	_wipe.modulate.a = 1.0 if not GameState.reduce_motion else 0.0
+	_wipe.size = Vector2(size.x, 0.0 if not Juice.reduced() else size.y)
+	_wipe.modulate.a = 1.0 if not Juice.reduced() else 0.0
 	_wipe.visible = true
 	Sound.sfx("warp")
 	var tw: Tween = create_tween()
 	var half: float = TRANSITION_TIME / 2.0
-	if GameState.reduce_motion:
+	if Juice.reduced():
 		tw.tween_property(_wipe, "modulate:a", 1.0, half)
 	else:
 		tw.tween_property(_wipe, "size:y", size.y, half)

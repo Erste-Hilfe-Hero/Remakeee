@@ -256,6 +256,14 @@ of its own device, which sends the revision it knows (`sync_first` otherwise), s
 its bag the same way and saves on top of the new revision. Tables: `trades` (no account ids),
 `trade_sides`; menu `scripts/ui/TradeMenu.gd` (Friends, Trades).
 
+## Earlier saves
+
+Every change of a stored save (saving, a trade, a restore) puts the version before it into
+`save_history`, which keeps the newest `save_history_keep` (5) per slot. Settings, Account, Earlier
+saves lists them with date, place and play time (`save_history_list`); `save_restore` makes one the
+newest version again, and the replaced one stays in the list. When the running journey is replaced,
+the game reads the slot again and returns to the title.
+
 ## Set phrases and names
 
 There is no free text anywhere. Every place that shows set phrases has its own list of allowed

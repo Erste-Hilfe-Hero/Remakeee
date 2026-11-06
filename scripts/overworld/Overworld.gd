@@ -46,6 +46,14 @@ var weather_layer: WeatherLayer
 ## Top-of-screen notes (badges, daily tasks).
 var toast: Toast
 var _fade: ColorRect
+## Dark rectangle that grows from a door over the screen on door warps (item 2277).
+var _door_wipe: ColorRect
+const DOOR_WIPE_TIME: float = 0.14
+## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
+const EDGE_SLIDE: int = 16
+var _particles: PixelParticles
+var _walk_steps: int = 0
+var _run_steps: int = 0
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
 var _ui_root: Control
@@ -111,11 +119,18 @@ func _ready() -> void:
 		player.frozen = true
 		_fade.color.a = 1.0
 		prologue.call_deferred()
+	else:
+		# Coming from the title screen: the world brightens in underneath it (item 2280).
+		_fade.color.a = 1.0
+		_fade_to.call_deferred(0.0)
 
 func _build() -> void:
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
+	_particles = PixelParticles.new()
+	_particles.name = "particles"
+	add_child(_particles)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
@@ -129,6 +144,8 @@ func _build() -> void:
 	player.sprite_style = "tamer"
 	player.can_move = _can_enter
 	player.stepped.connect(_on_player_stepped)
+	player.step_started.connect(_on_player_step_started)
+	player.bob = true
 	player.interact.connect(_on_interact)
 	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
@@ -163,6 +180,12 @@ func _build() -> void:
 	_ui.add_child(weather_layer)
 	_ui.move_child(weather_layer, 0)
 	DayCycle.events.phase_changed.connect(_on_phase_changed)
+	_door_wipe = ColorRect.new()
+	_door_wipe.color = UITheme.INK
+	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_door_wipe.visible = false
+	_ui.add_child(_door_wipe)
+	_ui.move_child(_door_wipe, 2)
 	_banner = Label.new()
 	_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	_banner.offset_top = 4
@@ -200,6 +223,9 @@ func _process(delta: float) -> void:
 	_camera.global_position = (player.global_position + Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0)).round()
 	if _photo != null:
 		_camera.global_position += _photo.pan
+	# Music layers follow walking, running and open text boxes (items 2477, 2478).
+	MusicDirector.update_world(player.moving, player.running, delta)
+	MusicDirector.dialogue = _text.visible
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
@@ -288,7 +314,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	if not arrive.is_empty():
 		_arrival_scene.call_deferred(arrive)
 	refresh_daylight()
-	Sound.music(Sound.track_for_map(map_id))
+	Sound.enter_map(map_id)
 	if not map.encounter_table.is_empty():
 		_tip_after_load.call_deferred("wild_area")
 
@@ -443,10 +469,41 @@ func _show_banner(text: String) -> void:
 	await get_tree().create_timer(BANNER_TIME).timeout
 	_banner.visible = false
 
+## Darkens with the "close" curve and brightens without overshoot ("fade" curve).
 func _fade_to(alpha: float) -> void:
+	await Juice.tween(_fade, "color:a", alpha, "close" if alpha > _fade.color.a else "fade", FADE_TIME).finished
+
+## True when [param cell] lies on the map border (a path to the next map, not a door).
+func is_edge_cell(cell: Vector2i) -> bool:
+	return cell.x <= 0 or cell.y <= 0 or cell.y >= map.height - 1 or cell.x >= map.rows[cell.y].length() - 1
+
+## Darkening for a warp: doors grow a dark rectangle from the door, map edges slide the view
+## on in the walking direction. Plain fade under reduced motion.
+func _warp_out(edge: bool) -> void:
+	if Juice.reduced():
+		await _fade_to(1.0)
+		return
+	if edge:
+		var d: Vector2 = Vector2(GridWalker.DIRS[player.facing]) * EDGE_SLIDE
+		Juice.tween(_camera, "offset", d, "close", FADE_TIME)
+		await _fade_to(1.0)
+		return
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	var door: Vector2 = (player.get_global_transform_with_canvas().origin + Vector2(8, 8)).round()
+	var start := Rect2(door - Vector2(8, 8), Vector2(16, 16))
+	var full := Rect2(Vector2.ZERO, vp)
+	_door_wipe.visible = true
+	var grow := func(k: float) -> void:
+		var p: Vector2 = start.position.lerp(full.position, k).round()
+		var e: Vector2 = start.end.lerp(full.end, k).round()
+		_door_wipe.position = p
+		_door_wipe.size = e - p
+	grow.call(0.0)
 	var tw: Tween = create_tween()
-	tw.tween_property(_fade, "color:a", alpha, FADE_TIME)
+	tw.tween_method(grow, 0.0, 1.0, DOOR_WIPE_TIME).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await tw.finished
+	_fade.color.a = 1.0
+	_door_wipe.visible = false
 
 # --- Player events -------------------------------------------------------------------
 
@@ -484,8 +541,9 @@ func _warp(warp: Dictionary) -> void:
 	busy = true
 	player.frozen = true
 	Sound.sfx("warp")
-	await _fade_to(1.0)
+	await _warp_out(is_edge_cell(player.cell))
 	load_map(str(warp.to), Vector2i(int(warp.tx), int(warp.ty)), str(warp.get("facing", player.facing)))
+	_camera.offset = Vector2.ZERO
 	SaveManager.save_game()
 	await _fade_to(0.0)
 	player.frozen = false
@@ -548,10 +606,12 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	var goal_before: int = QuestLog.current_index(GameState.flags)
 	busy = true
 	player.frozen = true
-	VirtualPad.set_wanted(false)
+	VirtualPad.set_talk(true)
 	if speaker != null:
 		DailyTasks.record("talk", {"map": map.id, "key": ref})
+	_text.voice = Sound.voice_for(speaker.npc_id if speaker != null else "")
 	await play_entry(ref, speaker)
+	_text.voice = "player"
 	refresh_shade()
 	await announce_achievements()
 	await announce_goal_if_changed(goal_before)
@@ -690,7 +750,7 @@ func npc_by_id(id: String) -> NPC:
 
 ## Shakes the camera for [param seconds] (thunder, the Rift opening).
 func shake_camera(seconds: float) -> void:
-	if GameState.reduce_motion:
+	if Juice.reduced():
 		return
 	var t: float = 0.0
 	while t < seconds:
@@ -793,7 +853,12 @@ func open_menu() -> void:
 	menu.room_puzzle = _world.has_puzzle()
 	menu.can_undo = _world.can_undo()
 	_ui.add_child(menu)
+	# Slides in from the right edge with "open" (item 2281).
+	if not Juice.reduced():
+		menu.position.x = MENU_SLIDE
+		Juice.tween(menu, "position", Vector2.ZERO, "open")
 	await menu.run()
+	await _close_menu(menu)
 	match menu.room_action:
 		"undo": _world.undo()
 		"reset": _world.reset_room(_entry_cell)
@@ -819,7 +884,7 @@ func open_menu() -> void:
 		Sound.sfx("warp")
 		await _fade_to(1.0)
 		load_map(target, Vector2i(int(c[0]), int(c[1])), "down")
-		Sound.music(Sound.track_for_map(target))
+		Sound.enter_map(target)
 		await _fade_to(0.0)
 	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
 	refresh_daylight()
@@ -828,6 +893,39 @@ func open_menu() -> void:
 	busy = false
 
 ## Plays a recorded battle (item 14). The replay uses copies, so nothing in the save changes.
+const MENU_SLIDE: float = 40.0
+
+## Slides the pause menu's last list back out to the right with "close" in 0.12 s.
+func _close_menu(menu: PauseMenu) -> void:
+	if Juice.reduced():
+		return
+	menu.picker.visible = true
+	menu.picker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	Juice.tween(menu, "modulate:a", 0.0, "close")
+	await Juice.tween(menu, "position", Vector2(MENU_SLIDE, 0), "close").finished
+
+## Dust behind the feet on every second running step (items 2304, 2395).
+func _on_player_step_started(dir: String, run: bool) -> void:
+	_footstep(run)
+	if not run:
+		_run_steps = 0
+		return
+	_run_steps += 1
+	if _run_steps % 2 == 0:
+		_particles.dust(player.position + Vector2(8, 15), -Vector2(GridWalker.DIRS[dir]))
+
+## Footsteps by ground (items 2501, 2502): every second step walking, every step running.
+func _footstep(run: bool) -> void:
+	_walk_steps += 1
+	if not run and _walk_steps % 2 == 1:
+		return
+	var cell: Vector2i = player.cell
+	var wet: bool = false
+	for d: Vector2i in TilesetFactory.MASK_DIRS:
+		if map.kind_at(cell + d) == TilesetFactory.Kind.WATER:
+			wet = true
+	Sound.footstep(map.kind_at(cell), wet)
+
 func watch_replay(snap: Dictionary) -> void:
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
@@ -844,7 +942,7 @@ func watch_replay(snap: Dictionary) -> void:
 	await scene.battle_finished
 	await _fade_to(1.0)
 	scene.queue_free()
-	Sound.music(Sound.track_for_map(map.id))
+	Sound.enter_map(map.id)
 	await _fade_to(0.0)
 
 ## Photo mode (item 94): pan, frame and save pictures until the player backs out.
@@ -976,6 +1074,7 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var count: int = int(args[1]) if args.size() > 1 else 1
 	GameState.add_item(args[0], count)
+	Sound.sfx("pickup")
 	var item_name: String = str(Database.item(args[0]).get("name", args[0]))
 	await say(["You got %s x%d!" % [item_name, count]] as Array[String])
 	if PauseMenu.bag_tab(Database.item(args[0])) == 1:
@@ -999,7 +1098,7 @@ func prologue() -> void:
 	busy = true
 	player.frozen = true
 	_fade.color.a = 1.0
-	Sound.music(Sound.track_for_map(map.id))
+	Sound.enter_map(map.id)
 	var tw: Tween = create_tween()
 	tw.tween_property(_fade, "color:a", 0.0, 0.6)
 	await tw.finished
@@ -1198,6 +1297,8 @@ func _action_echo_song(args: PackedStringArray, _speaker: NPC) -> void:
 		Sound.sfx("level_up")
 		GameState.set_flag(args[0])
 		DailyTasks.record("melody", {"map": map.id})
+	if score >= 1.0:
+		GameState.records["melody_perfect"] = 1
 	else:
 		Sound.sfx("cancel")
 
@@ -1749,6 +1850,7 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		if GameState.money < price:
 			await menu.info("Not enough coins.")
 			continue
+		Ticker.coins(GameState.money, GameState.money - price)
 		GameState.money -= price
 		GameState.add_item(args[idx])
 		Sound.sfx("coin")
@@ -1847,6 +1949,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 		player.frozen = false
 		return
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	info["goal_key"] = BattleGoals.key(map.id, n.npc_id)
 	# Helper call (item 46): after losing to a Warden once, a friend's echo can fight beside you.
 	var losses: Dictionary = GameState.records.get("warden_losses", {})
 	var lost_key: String = TrainerData.beaten_flag(def, map.id)
@@ -1861,9 +1964,21 @@ func challenge(n: NPC, spotted: bool) -> void:
 		GameState.records["warden_losses"] = losses
 	if not helper.is_empty():
 		await thank_echo(helper, outcome == BattleModel.Outcome.WIN)
+	await _pay_bonus_goal(str(info.goal_key))
 	# A wild horde also counts as cleared when its last Spirling bonded with you.
 	if outcome == BattleModel.Outcome.WIN or (bool(info.wild) and outcome == BattleModel.Outcome.BONDED):
 		await after_tamer_win(n)
+
+## Bonus goal of the battle just fought (items 755-757): pays out once when it was met.
+func _pay_bonus_goal(goal_key: String) -> void:
+	if last_model == null or not last_model.has_meta("goal_tracker"):
+		return
+	var tracker: BattleGoals.Tracker = last_model.get_meta("goal_tracker")
+	if not tracker.met():
+		return
+	var lines: Array[String] = BattleGoals.grant(goal_key, tracker.goal, GameState.records)
+	if not lines.is_empty():
+		await say(lines)
 
 ## Win aftermath: beaten flag, defeat lines, Rift seal for Wardens, win flags, autosave.
 func after_tamer_win(n: NPC) -> void:
@@ -2166,7 +2281,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		await _fade_to(0.0)
 	else:
 		await _after_battle(model, outcome)
-	Sound.music(Sound.track_for_map(map.id))
+	Sound.enter_map(map.id)
 	EncounterTable.start_guard()
 	await _fade_to(0.0)
 	await _wake_cores()
@@ -2198,12 +2313,20 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
-	model.prize_money = int(trainer.get("money", 0))
+	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
+	model.xp_mult = ShopEffects.growth_mult()
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])
 	model.front_size = [int(front[0]), int(front[1])]
 	model.foe_boss = str(trainer.get("boss", ""))
+	var goal_key: String = str(trainer.get("goal_key", ""))
+	var goal: Dictionary = BattleGoals.all().get(goal_key, {}) if not goal_key.is_empty() and GameState.bonus_goals else {}
+	if not goal.is_empty():
+		# The start card shows the goal; the tracker only watches, it never changes the battle.
+		model.set_meta("goal_tracker", BattleGoals.Tracker.new(model, goal))
+		var done: bool = bool((GameState.records.get("goals_done", {}) as Dictionary).get(goal_key, false))
+		model.set_meta("bonus_goal", BattleGoals.describe(goal) + (" ✓" if done else ""))
 	var partner: Variant = trainer.get("partner", {})
 	if partner is Dictionary and not (partner as Dictionary).is_empty():
 		var ally: Array[Spirling] = []
@@ -2217,7 +2340,11 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	ShopEffects.battle_done()
+	var coins_before: int = GameState.money
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
+	if GameState.money != coins_before:
+		Ticker.coins(coins_before, GameState.money)
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:
 		Online.contribute("battles")
@@ -2226,7 +2353,11 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 		for f: Spirling in model.parties[1]:
 			for e: int in f.elements():
 				foe_elements.append(Elements.E.keys()[e])
-		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements})
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements, "night": DayCycle.current() == DayCycle.Phase.NIGHT})
+		var fields: Array = GameState.records.get("fields_won", [])
+		if model.field != "" and not model.field in fields:
+			fields.append(model.field)
+			GameState.records["fields_won"] = fields
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).

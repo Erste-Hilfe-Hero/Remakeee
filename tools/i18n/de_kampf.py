@@ -74,3 +74,48 @@ T.update({
 "Mossling against Riptail in the drag of the current. Win within 4 turns.": "Mossling gegen Riptail im Sog der Strömung. Gewinne in höchstens 4 Runden.",
 "Kelpup against Riptail, tide against tide. Win within 4 turns.": "Kelpup gegen Riptail, Flut gegen Flut. Gewinne in höchstens 4 Runden.",
 })
+
+# Plan area 2, items 755-757: bonus goals.
+T.update({
+"Bonus goal: %s.": "Bonusziel: %s.",
+"win within %d turns": "gewinne in höchstens %d Runden",
+"win without anyone on your side fainting": "gewinne, ohne dass jemand auf deiner Seite umfällt",
+"win without resting": "gewinne, ohne zu rasten",
+"win using only %s arts": "gewinne nur mit %s-Techniken",
+"win sending out at most %d Spirlings": "gewinne mit höchstens %d eingesetzten Spirlings",
+"win with at least %d%% Vigor left in your team": "gewinne mit mindestens %d %% Kraft im Team",
+"win setting off at least %d reactions": "gewinne mit mindestens %d Reaktionen",
+"Bonus goal met!": "Bonusziel erreicht!",
+"You get %d Echo Crystal shard(s).": "Du erhältst %d Echo-Kristall-Splitter.",
+"%d shards join into an Echo Crystal!": "%d Splitter fügen sich zu einem Echo-Kristall!",
+"A new lexicon entry is written down.": "Ein neuer Lexikon-Eintrag wird notiert.",
+"Ember Trial Taker": "Glutprüfling",
+"Current Rider": "Strömungsreiter",
+})
+
+# Plan area 2, items 780-793: rule variants.
+T.update({
+"At most %d variants at once.": "Höchstens %d Varianten gleichzeitig.",
+"Unknown variant %s.": "Unbekannte Variante %s.",
+"%s and %s don't go together.": "%s und %s passen nicht zusammen.",
+"Spark Poor": "Funkenarm", "Energy tops out at 6, and everyone starts with 6.": "Energie reicht nur bis 6, und alle starten mit 6.",
+"Full Charge": "Volle Ladung", "Everyone starts full, gains no Energy per turn, and resting gives 3.": "Alle starten voll, gewinnen pro Runde keine Energie, und Rasten gibt 3.",
+"Swap Toll": "Wechselzoll", "Every chosen swap costs the incoming Spirling 2 Energy.": "Jeder freiwillige Wechsel kostet den eingewechselten Spirling 2 Energie.",
+"Glass Blades": "Glasklingen", "Every Spirling has half its Vigor.": "Jeder Spirling hat nur die halbe Kraft.",
+"Tough Round": "Zähe Runde", "Every Spirling has one and a half times its Vigor.": "Jeder Spirling hat anderthalbmal so viel Kraft.",
+"No Home Edge": "Ohne Heimvorteil", "Arts of a Spirling's own element get no bonus.": "Techniken des eigenen Elements bekommen keinen Bonus.",
+"Short Breath": "Kurzer Atem", "Every status ends after 2 turns at most.": "Jeder Status endet spätestens nach 2 Runden.",
+"Strong Reactions": "Starke Reaktionen", "Element reactions hit twice as hard beyond the normal.": "Element-Reaktionen wirken über das Normale hinaus doppelt so stark.",
+"Late End": "Spätes Ende", "From turn 15, every Spirling in front loses 1/8 of its Vigor each turn.": "Ab Runde 15 verliert jeder aktive Spirling jede Runde 1/8 seiner Kraft.",
+})
+
+# Plan area 2, items 762, 765, 788, 791, 792.
+T.update({
+"Optional extra goals in Wayfarer and Warden battles.": "Freiwillige Zusatzziele in Kämpfen gegen Wanderer und Wächter.",
+"Bonus goals: %s": "Bonusziele: %s",
+"T%d": "R%d",
+"The Rift stirs: %s comes next turn!": "Der Riss regt sich: nächste Runde kommt %s!",
+"Stage Still": "Stufenstarr", "No stage changes at all; arts that only change stages are locked.": "Keine Stufenänderungen; reine Stufen-Techniken sind gesperrt.",
+"Field Swirl": "Feldwirbel", "Every 3 turns a random field takes over, announced a turn early.": "Alle 3 Runden übernimmt ein zufälliges Feld, eine Runde vorher angesagt.",
+"No Rest": "Kein Rasten", "Resting is gone while an art can be paid; instead everyone gains 3 Energy each turn.": "Rasten fehlt, solange eine Technik bezahlbar ist; dafür gibt es für alle 3 Energie pro Runde.",
+})

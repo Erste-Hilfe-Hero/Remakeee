@@ -42,6 +42,9 @@ var storage: Array[Spirling] = []
 var storage_boxes: Array[Dictionary] = []
 ## Extra boxes beyond STORAGE_BOXES_START (the shop's "+1 box" fills this, area 10).
 var storage_box_bonus: int = 0
+## Running shop boosts (Growth Crystal, Coin Gleam): {"growth": {"mult": 2.0, "left": 20}, ...}.
+## Counted down after every battle by ShopEffects.battle_done().
+var shop_boosts: Dictionary = {}
 ## Saved teams [{"name", "uids": [uid...]}], at most TEAM_PRESETS (item 378).
 var team_presets: Array[Dictionary] = []
 ## Echo Cores from singing together (Nachhall, plan area 1, items 183-185):
@@ -108,14 +111,22 @@ var bench_xp: bool = true
 const BENCH_XP_SHARE: float = 0.5
 ## Damage preview: the move list shows the expected share of the foe's HP once its matchup is known.
 var damage_preview: bool = true
+## Bonus goals of Wayfarers and Wardens (plan area 2, item 765); off hides them and their rewards.
+var bonus_goals: bool = true
 var volume: float = 0.8
 var music_volume: float = 0.7
 var sfx_volume: float = 0.8
 const BUS_MUSIC: StringName = &"Music"
 const BUS_SFX: StringName = &"SFX"
+## Sub-buses of SFX (item 2547): menu sounds, cries and text voice, ambience loops.
+const BUS_UI: StringName = &"UI"
+const BUS_VOICE: StringName = &"Voice"
+const BUS_AMBIENCE: StringName = &"Ambience"
+## Ceiling of the Master limiter (item 2548).
+const LIMITER_CEILING_DB: float = -1.0
 ## Touch controls: pad size and opacity (index into PAD_SIZES / PAD_ALPHAS), left-handed layout, tap-to-move.
 var pad_size: int = 1
-var pad_opacity: int = 1
+var pad_opacity: int = 2
 var left_handed: bool = false
 var tap_to_move: bool = true
 ## Walking is running; holding B walks slowly instead (item 1810).
@@ -125,8 +136,14 @@ var swap_ab_touch: bool = false
 var swap_ab_pad: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
-## Gamepad rumble on hits (item 63).
-var rumble: bool = true
+## Vibration on phones and gamepads (items 63, 2590): 0 Off, 1 Weak, 2 Full.
+var vibration: int = 2
+## Screen shake in battle and the world (item 2259): 0 Off, 1 Weak, 2 Full.
+var screen_shake: int = 2
+## Short captions for important sounds at the top edge (item 2653).
+var sound_captions: bool = false
+## Text voice blips while dialogue types (items 2503, 2504).
+var text_voice: bool = true
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
 ## Display and accessibility (items 59, 76, 78).
@@ -143,8 +160,11 @@ var weather: bool = true
 var language: String = ""
 const FPS_NORMAL: int = 60
 const FPS_BATTERY: int = 30
-const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large"]
-const PAD_ALPHAS: Array[float] = [0.3, 0.55, 0.85]
+## A fourth size "Very large" (item 1816) and five opacity steps (item 1817).
+const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large", "Very large"]
+const PAD_ALPHAS: Array[float] = [0.15, 0.3, 0.55, 0.7, 0.85]
+## Settings saved before item 1817 had three steps (30, 55, 85 %): their index in the new list.
+const OLD_PAD_ALPHA_STEPS: Array[int] = [1, 2, 4]
 
 ## What the Wayfarer has learned about matchups: "element:species" -> multiplier seen on a hit.
 ## Story difficulty shows every matchup from the start.
@@ -337,8 +357,9 @@ static func _has_pad_button(action: StringName, button: int) -> bool:
 
 ## A short rumble on every connected gamepad, if rumble is on.
 func rumble_pads(strength: float, seconds: float) -> void:
-	if not rumble or reduce_motion:
+	if vibration <= 0 or reduce_motion:
 		return
+	strength *= 0.5 if vibration == 1 else 1.0
 	for d: int in Input.get_connected_joypads():
 		Input.start_joy_vibration(d, strength * 0.5, strength, seconds)
 
@@ -349,6 +370,7 @@ func reset() -> void:
 	storage.clear()
 	storage_boxes = default_boxes()
 	storage_box_bonus = 0
+	shop_boosts = {}
 	team_presets.clear()
 	echo_cores.clear()
 	iron_oath = false
@@ -438,6 +460,7 @@ func to_dict() -> Dictionary:
 		"storage": storage_d,
 		"storage_boxes": storage_boxes.duplicate(true),
 		"storage_box_bonus": storage_box_bonus,
+		"shop_boosts": shop_boosts.duplicate(true),
 		"team_presets": team_presets.duplicate(true),
 		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
@@ -483,6 +506,12 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
+	shop_boosts = {}
+	if d.get("shop_boosts") is Dictionary:
+		for k: Variant in d.shop_boosts:
+			var b: Variant = d.shop_boosts[k]
+			if str(k) in ["growth", "coins"] and b is Dictionary and int(b.get("left", 0)) > 0:
+				shop_boosts[str(k)] = {"mult": clampf(float(b.get("mult", 1.0)), 1.0, 3.0), "left": mini(int(b.left), 200)}
 	_load_echo_cores(d.get("echo_cores", []))
 	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
@@ -534,11 +563,12 @@ func from_dict(d: Dictionary) -> void:
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
-		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
+		"bench_xp": bench_xp, "damage_preview": damage_preview, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
-		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
-		"one_hand": one_hand, "rumble": rumble,
+		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
+		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "language": language}
 
@@ -550,8 +580,12 @@ func settings_from_dict(d: Dictionary) -> void:
 	auto_battle = bool(d.get("auto_battle", false))
 	bench_xp = bool(d.get("bench_xp", true))
 	damage_preview = bool(d.get("damage_preview", true))
+	bonus_goals = bool(d.get("bonus_goals", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
-	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
+	if d.has("pad_opacity") and not d.has("pad_opacity_steps"):
+		pad_opacity = OLD_PAD_ALPHA_STEPS[clampi(int(d.pad_opacity), 0, OLD_PAD_ALPHA_STEPS.size() - 1)]
+	else:
+		pad_opacity = clampi(int(d.get("pad_opacity", 2)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
 	always_run = bool(d.get("always_run", false))
@@ -559,7 +593,12 @@ func settings_from_dict(d: Dictionary) -> void:
 	swap_ab_pad = bool(d.get("swap_ab_pad", false))
 	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
-	rumble = bool(d.get("rumble", true))
+	# Older settings had an on/off "rumble"; on maps to Full vibration.
+	var legacy_rumble: int = 2 if bool(d.get("rumble", true)) else 0
+	vibration = clampi(int(d.get("vibration", legacy_rumble)), 0, 2)
+	screen_shake = clampi(int(d.get("screen_shake", 2)), 0, 2)
+	sound_captions = bool(d.get("sound_captions", false))
+	text_voice = bool(d.get("text_voice", true))
 	tips_enabled = bool(d.get("tips", true))
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
@@ -582,20 +621,30 @@ func apply_display() -> void:
 		UITheme.set_high_contrast(high_contrast)
 	UITheme.set_large_text(large_text)
 
+## Extra Master gain (not saved): Sound fades it to 0 while the app is in the background.
+var master_fade: float = 1.0
+
 func apply_volume() -> void:
 	ensure_buses()
-	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume, 0.0001)))
+	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume * master_fade, 0.0001)))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_MUSIC), linear_to_db(maxf(music_volume, 0.0001)))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_SFX), linear_to_db(maxf(sfx_volume, 0.0001)))
 
-## Adds the Music and SFX buses (both feed Master) if the project has none yet.
+## Adds the Music and SFX buses (both feed Master), the UI, Voice and Ambience buses under SFX,
+## and a hard limiter on Master, where the project does not have them yet.
 static func ensure_buses() -> void:
-	for bus: StringName in [BUS_MUSIC, BUS_SFX]:
-		if AudioServer.get_bus_index(bus) < 0:
+	for pair: Array in [[BUS_MUSIC, &"Master"], [BUS_SFX, &"Master"], [BUS_UI, BUS_SFX], [BUS_VOICE, BUS_SFX], [BUS_AMBIENCE, BUS_SFX]]:
+		if AudioServer.get_bus_index(pair[0]) < 0:
 			AudioServer.add_bus()
 			var idx: int = AudioServer.bus_count - 1
-			AudioServer.set_bus_name(idx, bus)
-			AudioServer.set_bus_send(idx, &"Master")
+			AudioServer.set_bus_name(idx, pair[0])
+			AudioServer.set_bus_send(idx, pair[1])
+	for i: int in AudioServer.get_bus_effect_count(0):
+		if AudioServer.get_bus_effect(0, i) is AudioEffectHardLimiter:
+			return
+	var lim := AudioEffectHardLimiter.new()
+	lim.ceiling_db = LIMITER_CEILING_DB
+	AudioServer.add_bus_effect(0, lim)
 
 ## Keeps older saves on the story path: saves that lit the lamp room before Act I got its
 ## ending already have the ferry open (plan item 1405).
@@ -820,6 +869,23 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
+	elif int(it.get("rings", 0)) > 0:
+		# Ring Tonics from the shop: never above the Ring cap (plan item 4341).
+		var target: int = mini(s.level + int(it.rings), mini(level_cap(), Spirling.MAX_LEVEL))
+		if s.level >= target:
+			return ""
+		var from: int = s.level
+		while s.level < target:
+			s.level_up()
+		s.xp = Spirling.xp_for_level(s.level)
+		msg = "%s grew from Ring %d to Ring %d!" % [s.display_name(), from, s.level]
+	elif bool(it.get("spark_all", false)):
+		var raised: bool = false
+		for key: String in Spirling.STAT_KEYS:
+			raised = train_spark(s, key, Spirling.SPARK_MAX) or raised
+		if not raised:
+			return ""
+		msg = "All of %s's sparks shine at the top." % s.display_name()
 	elif float(it.get("revive", 0.0)) > 0.0:
 		if not s.is_fainted():
 			return ""

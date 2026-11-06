@@ -31,7 +31,8 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
 
 - **Daten:** eine beim ersten Start zufällig erzeugte Spieler-ID, ein Anmelde-Token, ein Übertragungscode
   für den Gerätewechsel, dein Wayfarer-Name, dein Spielstand (Fortschritt, Spirlings, Gegenstände,
-  Einstellungen), Zeitpunkt der letzten Synchronisierung, App-Version, Gerätetyp und Betriebssystemversion.
+  Einstellungen) mit den letzten 5 früheren Fassungen je Platz zum Zurückholen, Zeitpunkt der letzten
+  Synchronisierung, App-Version, Gerätetyp und Betriebssystemversion.
 - **Zweck:** Spiel bereitstellen, Fortschritt speichern und wiederherstellen, auch auf einem neuen Gerät.
   Dein Wayfarer-Name ist nur für Spieler sichtbar, mit denen du befreundet bist (siehe 3.2).
 - **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Erfüllung des Nutzungsvertrags).

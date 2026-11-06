@@ -51,6 +51,7 @@ func _ready() -> void:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.clip_text = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		Juice.press_feedback(b)
 		for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
 			var sb: StyleBox = b.get_theme_stylebox(state)
 			if sb != null:
@@ -234,6 +235,7 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.text = text
 	b.custom_minimum_size = Vector2(0, SMALL_BUTTON_HEIGHT)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
 		chosen.emit(kind, -1))
@@ -301,7 +303,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
 			_move_icons[i].texture = ElementIcons.outlined(mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
-			b.disabled = not me.can_afford(mv)
+			b.disabled = not me.can_afford(mv) or model.move_locked(mv)
 		else:
 			b.text = "-"
 			_move_costs[i].text = ""
@@ -316,7 +318,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 	_run.disabled = not BattleAction.Kind.RUN in kinds
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
-		_move_buttons[0].text = "Rest (+%d)" % BattleModel.REST_ENERGY
+		_move_buttons[0].text = "Rest (+%d)" % int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))
 		_move_costs[0].text = ""
 		_move_icons[0].texture = null
 		_move_buttons[0].disabled = false

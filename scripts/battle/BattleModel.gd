@@ -58,6 +58,10 @@ var foe_boss: String = ""
 var foe_damage_mult: float = 1.0
 ## Factor on a boss's "hp_per_ally" (GameState.BOSS_HP_SCALE: Story bosses are 20 % smaller).
 var boss_hp_scale: float = 1.0
+## Rule variants in play (data/rule_variants.json, at most BattleRules.MAX_VARIANTS). Set before start().
+var variants: Array[String] = []
+## The number keys of the variants (BattleRules.VARIANT_KEYS), filled by start().
+var rules: Dictionary = BattleRules.VARIANT_KEYS.duplicate()
 var _boss_actions: int = 1
 ## Player slots still waiting for a replacement after faints (phase AWAIT_SWITCH), in order.
 var pending_switch: Array[int] = []
@@ -80,6 +84,8 @@ var foe_items: Dictionary = {}
 var ai: BattleAI
 ## Prize money for beating a Wayfarer (reported in BATTLE_END).
 var prize_money: int = 0
+## Growth multiplier for the player's side (shop Growth Crystals and the pass, ShopEffects).
+var xp_mult: float = 1.0
 var flee_attempts: int = 0
 ## The Spirling bonded this battle, if any.
 var bonded: Spirling = null
@@ -247,10 +253,13 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 	var me: Spirling = active_spirling(side, slot)
 	if not is_standing(me):
 		return out
+	var any_move: bool = false
 	for i: int in me.moves.size():
-		if me.can_afford(me.moves[i]):
+		if me.can_afford(me.moves[i]) and not move_locked(me.moves[i]):
 			out.append(BattleAction.make_move(side, i, slot))
-	out.append(BattleAction.make_rest(side, slot))
+			any_move = true
+	if can_rest(any_move):
+		out.append(BattleAction.make_rest(side, slot))
 	if not StatusRules.blocks_swap(me.status):
 		for i: int in swap_candidates(side, slot):
 			out.append(BattleAction.make_swap(side, i, slot))
@@ -274,9 +283,13 @@ func is_legal(a: BattleAction) -> bool:
 		BattleAction.Kind.MOVE:
 			if a.target_slot >= slot_count(other(a.side)):
 				return false
-			return a.move_index >= 0 and a.move_index < me.moves.size() and me.can_afford(me.moves[a.move_index])
+			return a.move_index >= 0 and a.move_index < me.moves.size() and me.can_afford(me.moves[a.move_index]) \
+				and not move_locked(me.moves[a.move_index])
 		BattleAction.Kind.REST:
-			return true
+			var any_move: bool = false
+			for mv: MoveData in me.moves:
+				any_move = any_move or (me.can_afford(mv) and not move_locked(mv))
+			return can_rest(any_move)
 		BattleAction.Kind.SWAP:
 			return not StatusRules.blocks_swap(me.status) and a.swap_index in swap_candidates(a.side, a.slot)
 		BattleAction.Kind.ITEM:
@@ -301,9 +314,19 @@ func is_legal(a: BattleAction) -> bool:
 ## Intro: both sides step out. Returns the intro events.
 func start() -> Array[BattleEvent]:
 	_events = []
+	rules = BattleRules.variant_values(variants)
+	if rules.is_empty():
+		push_warning("BattleModel: rule variants %s don't go together; playing normal rules" % [variants])
+		variants = []
+		rules = BattleRules.VARIANT_KEYS.duplicate()
+	var hp_scale: float = float(rules.hp_mult)
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for s: Spirling in parties[side]:
-			s.energy = Spirling.START_ENERGY
+			s.energy = mini(int(rules.start_energy), max_energy())
+			if hp_scale != 1.0:
+				var share: float = float(s.hp) / float(s.max_hp())
+				s.hp_mult *= hp_scale
+				s.hp = maxi(1 if share > 0.0 else 0, roundi(s.max_hp() * share))
 	_fill_initial_slots()
 	base_field = field
 	field_turns = 0
@@ -543,12 +566,28 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
+	var cap: int = int(rules.get("status_max_turns", 0))
+	if cap > 0:
+		s.status_turns = mini(s.status_turns, cap) if s.status_turns > 0 else cap
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
 	if status == "scorch" and BattleRules.trait_info(s.data.trait_id).has("scorch_atk"):
 		reveal_trait(side, slot)
 	return true
+
+## Damage factor of the variants in play: the own-element bonus ("stab") and the reaction
+## strength ("reaction_scale" stretches a reaction's factor beyond 1.0).
+func _variant_mult(me: Spirling, target: Spirling, mv: MoveData) -> float:
+	var f: float = 1.0
+	if mv.element in me.elements() and float(rules.stab) != DamageCalc.STAB:
+		f *= float(rules.stab) / DamageCalc.STAB
+	var scale: float = float(rules.reaction_scale)
+	if scale != 1.0:
+		var r: float = float(BattleRules.reaction(mv, target).get("mult", 1.0))
+		if r > 1.0:
+			f *= (1.0 + (r - 1.0) * scale) / r
+	return f
 
 ## Calm rule: in Wayfarer battles a side may have only one Spirling sleeping (Drowse) at a time.
 func calm_rule_blocks(side: int, s: Spirling, status: String) -> bool:
@@ -563,6 +602,8 @@ func calm_rule_blocks(side: int, s: Spirling, status: String) -> bool:
 func change_stage(side: int, stat: String, delta: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or delta == 0 or not stat in BattleRules.STAGE_STATS:
+		return
+	if float(rules.get("stages_locked", 0.0)) > 0.0:
 		return
 	var before: int = s.stage(stat)
 	var after: int = clampi(before + delta, BattleRules.STAGE_MIN, BattleRules.STAGE_MAX)
@@ -588,7 +629,7 @@ func change_energy(side: int, delta: int, slot: int = 0) -> void:
 	if s == null:
 		return
 	var before: int = s.energy
-	s.energy = clampi(s.energy + delta, 0, Spirling.MAX_ENERGY)
+	s.energy = clampi(s.energy + delta, 0, max_energy())
 	if s.energy != before:
 		var d: Dictionary = _who(side, slot)
 		d["energy"] = s.energy
@@ -647,6 +688,7 @@ func _phase_end_of_turn() -> void:
 			_end_of_turn_for(side, slot)
 	_tick_timers()
 	_tick_field()
+	_tick_field_swirl()
 	_tick_delayed_hits()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
@@ -654,13 +696,28 @@ func _phase_end_of_turn() -> void:
 	turn += 1
 	phase = Phase.FAINT_CHECK
 
+## True when the variants in play take [param mv] off the menu (stage-only arts under "stages_locked").
+func move_locked(mv: MoveData) -> bool:
+	return float(rules.get("stages_locked", 0.0)) > 0.0 and BattleRules.stage_only(mv)
+
+## Whether Rest is on offer; under "rest_only_as_pass" only when no art can be paid ([param any_move] false).
+func can_rest(any_move: bool) -> bool:
+	return float(rules.get("rest_only_as_pass", 0.0)) <= 0.0 or not any_move
+
+## Most Energy a Spirling can hold under the variants in play.
+func max_energy() -> int:
+	return mini(int(rules.get("max_energy", Spirling.MAX_ENERGY)), Spirling.MAX_ENERGY)
+
 ## Share of max Vigor every Spirling in front loses each turn once the fight is weary.
 const WEARY_CHIP_DIV: int = 8
 
 ## From BattleRules.WEARY_TURN on, the long fight costs every Spirling in front 1/8 of its Vigor
 ## each turn, so even two walls that barely scratch each other finish within a few turns.
 func _weary_chip() -> void:
-	if turn < BattleRules.WEARY_TURN:
+	var from: int = BattleRules.WEARY_TURN
+	if int(rules.get("chip_from_turn", 0)) > 0:
+		from = mini(from, int(rules.chip_from_turn))
+	if turn < from:
 		return
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for slot: int in standing_slots(side):
@@ -696,7 +753,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
 	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
 		reveal_trait(side, slot)
-	var gain: int = ENERGY_PER_TURN + int(BattleRules.add_key(s, "energy_per_turn"))
+	var gain: int = int(rules.get("energy_per_turn", ENERGY_PER_TURN)) + int(BattleRules.add_key(s, "energy_per_turn"))
 	if side == Side.FOE:
 		var rule: Dictionary = BattleRules.RULES.get(foe_rule, {})
 		if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
@@ -754,7 +811,13 @@ func _refill_slot(side: int, slot: int, brain: BattleAI) -> void:
 		slots[side][slot] = -1
 
 func _phase_rewards() -> void:
+	var hp_scale: float = float(rules.get("hp_mult", 1.0))
 	for s: Spirling in parties[Side.PLAYER]:
+		if hp_scale != 1.0 and hp_scale > 0.0:
+			# The variant's Vigor was for this battle only: keep the share, drop the factor.
+			var share: float = float(s.hp) / float(s.max_hp())
+			s.hp_mult /= hp_scale
+			s.hp = 0 if s.hp <= 0 else maxi(1, roundi(s.max_hp() * share))
 		s.end_battle()
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for s: Spirling in parties[side]:
@@ -862,7 +925,7 @@ func _do_move(a: BattleAction) -> void:
 				reveal_trait(target_side, t_slot)
 			if BattleRules.trait_info(me.data.trait_id).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
-			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field)
+			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
 			if side == Side.FOE:
 				mult *= foe_damage_mult
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
@@ -884,7 +947,7 @@ func _do_move(a: BattleAction) -> void:
 
 func _do_rest(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))
-	change_energy(a.side, REST_ENERGY, a.slot)
+	change_energy(a.side, int(rules.get("rest_energy", REST_ENERGY)), a.slot)
 
 func _do_swap(a: BattleAction) -> void:
 	if StatusRules.blocks_swap(a.actor.status):
@@ -894,6 +957,8 @@ func _do_swap(a: BattleAction) -> void:
 		return
 	emit_event(BattleEvent.Type.SWAP_OUT, _who(a.side, a.slot))
 	_swap_in(a.side, a.swap_index, a.slot)
+	if int(rules.get("swap_energy_cost", 0)) > 0:
+		change_energy(a.side, -int(rules.swap_energy_cost), a.slot)
 
 func _do_item(a: BattleAction) -> void:
 	var bag: Dictionary = _bag(a.side)
@@ -1053,6 +1118,24 @@ func clear_snares(side: int) -> void:
 	snares[side] = []
 	emit_event(BattleEvent.Type.SNARE_CLEARED, {"side": side})
 
+## The field the swirl lays next (field_swirl_every), picked a turn early so it can be announced.
+var _swirl_next: String = ""
+
+## "field_swirl_every" = N: at the end of every N-th turn a random field (from the battle seed) takes
+## over for N turns; one turn earlier FIELD_NEXT tells both sides which one is coming.
+func _tick_field_swirl() -> void:
+	var every: int = int(rules.get("field_swirl_every", 0))
+	if every <= 0:
+		return
+	if (turn + 1) % every == 0:
+		var ids: Array = BattleRules.FIELDS.keys()
+		ids.sort()
+		_swirl_next = str(ids[rng.randi_range(0, ids.size() - 1)])
+		emit_event(BattleEvent.Type.FIELD_NEXT, {"field": _swirl_next, "label": str(BattleRules.FIELDS[_swirl_next].label)})
+	elif turn % every == 0 and not _swirl_next.is_empty():
+		set_field(_swirl_next, every)
+		_swirl_next = ""
+
 ## Sends a delayed hit of [param amount] at [param slot] of [param side]: it lands at the end of
 ## the turn [param turns] turns from now on whoever stands there then. Emits DELAYED_SET.
 func queue_delayed_hit(side: int, slot: int, amount: int, eff: float, move_name: String, turns: int) -> void:
@@ -1136,6 +1219,7 @@ func _award_xp(foe: Spirling) -> void:
 	var total: float = float(foe.data.xp_yield) * float(foe.level) / XP_LEVEL_DIV
 	if not is_wild:
 		total *= TRAINER_XP_MULT
+	total *= xp_mult
 	var earners: Array[Spirling] = []
 	for s: Spirling in participants:
 		var i: int = parties[Side.PLAYER].find(s)

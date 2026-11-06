@@ -95,7 +95,7 @@
    "name_de": "Ring-Trank",
    "desc_en": "A Spirling gains 1 Ring at once. Never above the Ring cap.",
    "desc_de": "Ein Spirling steigt sofort um 1 Ring. Nie über die Ring-Obergrenze.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.ring_tonic_5",
@@ -107,7 +107,7 @@
    "name_de": "Großer Ring-Trank",
    "desc_en": "A Spirling gains 5 Rings at once. Never above the Ring cap.",
    "desc_de": "Ein Spirling steigt sofort um 5 Ringe. Nie über die Ring-Obergrenze.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.ring_elixir",
@@ -119,7 +119,7 @@
    "name_de": "Ring-Elixier",
    "desc_en": "A Spirling rises to the current Ring cap.",
    "desc_de": "Ein Spirling steigt bis zur aktuellen Ring-Obergrenze.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.growth_x2",
@@ -131,7 +131,7 @@
    "name_de": "Wachstumskristall",
    "desc_en": "Double growth for the whole team for the next 20 battles.",
    "desc_de": "Doppeltes Wachstum für das ganze Team in den nächsten 20 Kämpfen.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.growth_x3",
@@ -143,7 +143,7 @@
    "name_de": "Großer Wachstumskristall",
    "desc_en": "Triple growth for the whole team for the next 20 battles.",
    "desc_de": "Dreifaches Wachstum für das ganze Team in den nächsten 20 Kämpfen.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.share_band",
@@ -167,7 +167,7 @@
    "name_de": "Ring-Trank x5",
    "desc_en": "5 Ring Tonics. Each gives 1 Ring.",
    "desc_de": "5 Ring-Tränke. Jeder gibt 1 Ring.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.riftheart",
@@ -743,7 +743,7 @@
    "name_de": "Funkenschmiede",
    "desc_en": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",
    "desc_de": "Setzt alle Funken-Werte eines Spirlings auf den Höchstwert 12. Zeigt vorher die neuen Werte.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.spark_shard",
@@ -839,7 +839,7 @@
    "name_de": "Münzglanz",
    "desc_en": "Double coins from battles for 20 battles.",
    "desc_de": "Doppelte Münzen aus Kämpfen für 20 Kämpfe.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.fast_travel",
