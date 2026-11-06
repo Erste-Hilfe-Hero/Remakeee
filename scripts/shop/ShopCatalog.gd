@@ -108,6 +108,24 @@ static func grant_lines(o: Dictionary) -> Array[String]:
 				out.append(Loc.t("1 x Element Prism of your choice"))
 	return out
 
+## What a pack's contents cost one by one in Riftglass (item 4685): Riftglass counts as itself,
+## each item as its own offer's Riftglass price, a choice as the first option's price.
+static func single_value(o: Dictionary) -> int:
+	var v: int = 0
+	for g: Variant in o.get("grants", []):
+		if not g is Dictionary:
+			continue
+		match str(g.get("t", "")):
+			"rg":
+				v += int(g.n)
+			"item":
+				v += int(g.get("n", 1)) * int(offer(str(g.id)).get("rg_price", 0))
+			"choice":
+				var opts: Variant = o.get("choice", [])
+				if opts is Array and not (opts as Array).is_empty():
+					v += int(g.get("n", 1)) * int(offer(str(opts[0])).get("rg_price", 0))
+	return v
+
 ## Problems in the catalog (empty = fine). Used by tests and tools/validate_data.gd.
 static func validate() -> Array[String]:
 	return ShopValidator.check(offers())

@@ -633,8 +633,8 @@
    "eur": "2.99",
    "name_en": "Starter Pack",
    "name_de": "Starterpaket",
-   "desc_en": "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Single value 1300 Riftglass. Once per account.",
-   "desc_de": "300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall, 3 Rissatem, 3 Echo-Düfte. Einzelwert 1300 Rissglas. Einmal pro Konto.",
+   "desc_en": "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Once per account.",
+   "desc_de": "300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall, 3 Rissatem, 3 Echo-Düfte. Einmal pro Konto.",
    "ready": true
   },
   {
@@ -647,7 +647,7 @@
    "name_de": "Wanderer-Paket",
    "desc_en": "1000 Riftglass, Riftheart, Glass Shield, 2 Great Ring Tonics, 1 Bond Seal. Once per account.",
    "desc_de": "1000 Rissglas, Rissherz, Glasschild, 2 Große Ring-Tränke, 1 Bondsiegel. Einmal pro Konto.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_pack_1",
@@ -659,7 +659,7 @@
    "name_de": "Riss-Paket 1",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 1 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 1. geschlossenen Riss.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_pack_2",
@@ -671,7 +671,7 @@
    "name_de": "Riss-Paket 2",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 2 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 2. geschlossenen Riss.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_pack_3",
@@ -683,7 +683,7 @@
    "name_de": "Riss-Paket 3",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 3 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 3. geschlossenen Riss.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_pack_4",
@@ -695,7 +695,7 @@
    "name_de": "Riss-Paket 4",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 4 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 4. geschlossenen Riss.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_pack_5",
@@ -707,7 +707,7 @@
    "name_de": "Riss-Paket 5",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 5 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 5. geschlossenen Riss.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_pack_6",
@@ -719,7 +719,7 @@
    "name_de": "Riss-Paket 6",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 6 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 6. geschlossenen Riss.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.comeback",

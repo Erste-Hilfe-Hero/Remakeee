@@ -388,3 +388,15 @@ func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	assert_gt(mine[1].xp - before[1], 0, "the bench learns")
 	assert_eq(mine[1].xp - before[1], mine[0].xp - before[0], "the same as the fighter")
 	GameState.bench_xp = bench
+
+func test_packs_show_their_single_value() -> void:
+	var wayfarer: Dictionary = ShopCatalog.offer("rg_wayfarer_pack")
+	var expect: int = 1000 + int(ShopCatalog.offer("rg_riftheart").rg_price) + int(ShopCatalog.offer("rg_glass_shield").rg_price) \
+		+ 2 * int(ShopCatalog.offer("rg_ring_tonic_5").rg_price) + int(ShopCatalog.offer("rg_bond_seal").rg_price)
+	assert_eq(ShopCatalog.single_value(wayfarer), expect)
+	assert_gt(ShopCatalog.single_value(ShopCatalog.offer("rg_rift_pack_1")), 0, "the chosen prism counts too")
+	assert_string_contains(ShopMenu.detail_text(wayfarer), "Worth one by one: %d Riftglass" % expect)
+	for i: int in range(1, 7):
+		var o: Dictionary = ShopCatalog.offer("rg_rift_pack_%d" % i)
+		assert_true(bool(o.ready))
+		assert_eq(str(o.requires), "rifts:%d" % i, "each after its own rift")

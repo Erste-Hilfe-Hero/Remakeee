@@ -725,9 +725,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Starter- und Fortschrittspakete
 4684. [x] [P1] (P2W) Ein "Starterpaket" (`rg_starter`) für 2,99 € einmal pro Konto anlegen: 300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall x2, 3 Rissatem, 3 Echo-Düfte.
-4685. [P1] (P2W) Das Starterpaket zeigt den Einzelwert ("einzeln 1300 Rissglas, ≈ 12,87 €") und den Preis 2,99 € und ist erst nach dem ersten geschlossenen Riss sichtbar.
-4686. [P1] (P2W) Ein "Wanderer-Paket" (`rg_wayfarer_pack`) für 9,99 € einmal pro Konto anlegen: 1000 Rissglas, Rissherz, Glasschild, 2 Große Ring-Tränke, 1 Bondsiegel.
-4687. [P1] (P2W) Ein "Rift-Paket" pro geschlossenem Riss anlegen (6 Pakete, je einmal), für 4,99 €: 2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem.
+4685. [x] [P1] (P2W) Das Starterpaket zeigt den Einzelwert ("einzeln 1300 Rissglas, ≈ 12,87 €") und den Preis 2,99 € und ist erst nach dem ersten geschlossenen Riss sichtbar.
+4686. [x] [P1] (P2W) Ein "Wanderer-Paket" (`rg_wayfarer_pack`) für 9,99 € einmal pro Konto anlegen: 1000 Rissglas, Rissherz, Glasschild, 2 Große Ring-Tränke, 1 Bondsiegel.
+4687. [x] [P1] (P2W) Ein "Rift-Paket" pro geschlossenem Riss anlegen (6 Pakete, je einmal), für 4,99 €: 2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem.
 4688. [x] [P1] (P2W) Pakete liefern feste Inhalte, die vor dem Kauf vollständig gelistet sind; Wahlteile (Element-Prisma) werden vor dem Kauf ausgewählt, nicht danach zugelost.
 4689. [x] [P1] (P2W) Alle Pakete als einmalige Verbrauchsgüter im Store anlegen und das Einmal-Limit auf dem Server über `purchases` prüfen.
 4690. [P1] (P2W) Ein "Aufholpaket" für Rückkehrer (30 Tage nicht gespielt) für 4,99 € anlegen: 5 Große Ring-Tränke und 1 Wachstumskristall x3, einmal pro Konto.

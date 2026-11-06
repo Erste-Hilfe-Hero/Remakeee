@@ -142,6 +142,8 @@ static func detail_text(o: Dictionary) -> String:
 		_:
 			lines.append(Loc.t("Does not work in leagues."))
 	lines.append("")
+	if str(o.get("tab", "")) == "packs" and ShopCatalog.single_value(o) > 0:
+		lines.append(Loc.t("Worth one by one: %s") % ShopCatalog.rg_text(ShopCatalog.single_value(o)))
 	if int(o.get("rg_price", 0)) > 0:
 		lines.append(Loc.t("Price: %s") % ShopCatalog.rg_text(int(o.rg_price)))
 	var p: String = Billing.price_text(o)
