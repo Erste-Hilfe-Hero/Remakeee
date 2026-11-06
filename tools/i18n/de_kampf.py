@@ -160,3 +160,21 @@ T.update({
 "You tired out first.": "Du bist zuerst müde geworden.",
 "One left, plenty of breath.": "Einer noch, und viel Atem.",
 })
+
+# Plan area 2, items 645-659: new Wayfarers.
+T.update({
+"Pathkeeper Imme": "Wegwärterin Imme", "Herder Joss": "Hirte Joss", "Netmender Aud": "Netzflickerin Aud", "Lampbearer Fenn": "Laternenträger Fenn",
+"Imme: Out of Energy? Rest for a turn. Your Spirling gets it back.": "Imme: Keine Energie mehr? Raste eine Runde, dann kommt sie zurück.",
+"Imme: I'm still learning too! Let's practise together.": "Imme: Ich lerne auch noch! Lass uns zusammen üben.",
+"Imme: Tip: when your Energy runs low, pick Rest and catch your breath.": "Imme: Tipp: Wird die Energie knapp, wähl Rasten und hol Luft.",
+"Imme: You rested at the right time. I'll remember that!": "Imme: Du hast zur rechten Zeit gerastet. Das merk ich mir!",
+"Joss: Stages stack up. Guard twice and nothing gets through.": "Joss: Stufen addieren sich. Zweimal Schutz, und nichts kommt durch.",
+"Joss: My Shalebat digs in. Watch its Guard climb!": "Joss: Mein Shalebat gräbt sich ein. Sieh, wie sein Schutz steigt!",
+"Joss: Even a wall cracks. Well hit.": "Joss: Auch eine Mauer bekommt Risse. Gut getroffen.",
+"Aud: A snare waits for the next Spirling that steps in. Swap with care.": "Aud: Eine Falle wartet auf den nächsten Spirling, der einwechselt. Wechsle mit Bedacht.",
+"Aud: I mend nets, and I lay them too. Mind your step!": "Aud: Ich flicke Netze und lege sie auch aus. Pass auf, wohin du trittst!",
+"Aud: Torn right through. Next time I'll knot them tighter.": "Aud: Glatt durchgerissen. Nächstes Mal knote ich fester.",
+"Fenn: A Rift field lifts one element and dims another. Change it when it helps you.": "Fenn: Ein Riss-Feld stärkt ein Element und schwächt ein anderes. Wechsle es, wenn es dir hilft.",
+"Fenn: My lantern bends the light down here. Let's see who it favors!": "Fenn: Meine Laterne lenkt hier unten das Licht. Mal sehen, wem es hilft!",
+"Fenn: The light turned on me. Well played.": "Fenn: Das Licht hat sich gegen mich gewandt. Gut gespielt.",
+})

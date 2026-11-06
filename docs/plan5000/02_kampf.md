@@ -224,21 +224,21 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 642. [x] [P1] Delver Ros (Murk Hollow): Tamer Mirkmole R12 mit Murk Veil und Shade Pounce, Shalebat R13 mit Grit Jab; Veteran Mirkmole mit Gloom Handoff, Rift-Born dritter Spirling Wickit R12 mit Beacon Ping.
 643. [x] [P1] Diver Neve (Saltmarsh): Tamer Puddlet R12 mit Tide Call und Spout Jab, Zephlet R13 mit Crosswind; Veteran Kelpup R13 als Dritter, Rift-Born Puddlet mit bark_wrap.
 644. [x] [P1] Rift Mystic Ilka (Tide Rift, 3 gegen 3): Tamer wie bisher, Veteran mit Chill Mist auf Zippit und Thorn Volley auf Mossling, Rift-Born mit Andenken swift_feather auf Zippit.
-645. [P2] Rift Acolyte Pell (Cinder Rift): Shalebat R9 mit Pebble Toss und Hunker Down, Zippit R9 mit Crackle Bite und Static Tag, damit er die Jolt-Reaktion vor Orrin zeigt.
-646. [P2] Rift Acolyte Suri (Cinder Rift): Kindlop R10 mit Cinder Dash, Kindle Up und Char Mark; auf Veteran zusätzlich Ash Call, damit sie das Feld vor dem Wächter vorführt.
-647. [P2] Hauler Tobin (Saltmarsh, Tag-Kampf): Shalebat R13 mit Shard Bed, Kelpup R13 mit Root Mend, Mirkmole R14 mit Night Toll, damit der Kampf Seitenfallen und Heilsperre lehrt.
-648. [P2] Cartographer Kestra (Crowcrest, Übungskampf): Zippit R7 mit Static Tag, Zephlet R8 mit Kite Cut, Shalebat R9 mit Grit Jab; auf Story nur Zephlet und Shalebat.
-649. [P2] Neuer Wanderer in Fernstair "Wegwärterin Imme": Zippit R4 und Mossling R4, Profil "Lehrling", Preisgeld 120, erster Kampf, der Rasten erklärt.
-650. [P3] Neuer Wanderer in Fernstair "Hirte Joss": Shalebat R5 mit Hunker Down, Profil "Mauer", zeigt Stufen.
-651. [P2] Neuer Wanderer in Saltmarsh "Netzflickerin Aud": Kelpup R12 mit Bramble Bed und Puddlet R12 mit Shoal Trap, Profil "Störer", lehrt Seitenfallen.
-652. [P2] Neuer Wanderer in Murk Hollow "Laternenträger Fenn": Wickit R12 mit Dawn Call und Beacon Ping, Mirkmole R13 mit Murk Call, Profil "Feldkundig", zeigt Feldwechsel im Kampf.
+645. [x] [P2] Rift Acolyte Pell (Cinder Rift): Shalebat R9 mit Pebble Toss und Hunker Down, Zippit R9 mit Crackle Bite und Static Tag, damit er die Jolt-Reaktion vor Orrin zeigt.
+646. [x] [P2] Rift Acolyte Suri (Cinder Rift): Kindlop R10 mit Cinder Dash, Kindle Up und Char Mark; auf Veteran zusätzlich Ash Call, damit sie das Feld vor dem Wächter vorführt.
+647. [x] [P2] Hauler Tobin (Saltmarsh, Tag-Kampf): Shalebat R13 mit Shard Bed, Kelpup R13 mit Root Mend, Mirkmole R14 mit Night Toll, damit der Kampf Seitenfallen und Heilsperre lehrt. Erledigt mit Deepwell Draught als Heiltechnik, bis Root Mend (492) kommt.
+648. [x] [P2] Cartographer Kestra (Crowcrest, Übungskampf): Zippit R7 mit Static Tag, Zephlet R8 mit Kite Cut, Shalebat R9 mit Grit Jab; auf Story nur Zephlet und Shalebat.
+649. [x] [P2] Neuer Wanderer in Fernstair "Wegwärterin Imme": Zippit R4 und Mossling R4, Profil "Lehrling", Preisgeld 120, erster Kampf, der Rasten erklärt. Erledigt: „Pathkeeper Imme“ (de: Wegwärterin Imme).
+650. [x] [P3] Neuer Wanderer in Fernstair "Hirte Joss": Shalebat R5 mit Hunker Down, Profil "Mauer", zeigt Stufen. Erledigt: „Herder Joss“.
+651. [x] [P2] Neuer Wanderer in Saltmarsh "Netzflickerin Aud": Kelpup R12 mit Bramble Bed und Puddlet R12 mit Shoal Trap, Profil "Störer", lehrt Seitenfallen. Erledigt: „Netmender Aud“.
+652. [x] [P2] Neuer Wanderer in Murk Hollow "Laternenträger Fenn": Wickit R12 mit Dawn Call und Beacon Ping, Mirkmole R13 mit Murk Call, Profil "Feldkundig", zeigt Feldwechsel im Kampf. Erledigt: „Lampbearer Fenn“.
 653. [P3] Neuer Wanderer in Thornridge "Pflückerin Rhea": Mossling R10, Kelpup R10 und Zephlet R11 als 2 gegen 2, Profil "Taktikerin", erster freiwilliger Mehrfachkampf außerhalb der Story.
-654. [P2] Kein Wanderer-Team darf zwei gleiche Arten auf gleichem Ring tragen, außer Ridgewalker Bram als bewusstes Thema; tests/unit/test_trainers.gd prüft das.
-655. [P2] Jeder Wanderer deckt mit seinem Team höchstens 3 Elemente ab, damit sein Thema erkennbar bleibt (Test).
-656. [P2] Der höchste Ring eines Wanderers liegt höchstens 2 über dem höchsten Wild-Ring seiner Karte aus data/encounters.json (Test).
+654. [x] [P2] Kein Wanderer-Team darf zwei gleiche Arten auf gleichem Ring tragen, außer Ridgewalker Bram als bewusstes Thema; tests/unit/test_trainers.gd prüft das. Erledigt (Wächter ausgenommen).
+655. [x] [P2] Jeder Wanderer deckt mit seinem Team höchstens 3 Elemente ab, damit sein Thema erkennbar bleibt (Test). Erledigt; bewusst gemischt bleiben Kestra, der Tag-Kampf und Ilkas 3 gegen 3. Isa hat dafür zwei Zephlet.
+656. [x] [P2] Der höchste Ring eines Wanderers liegt höchstens 2 über dem höchsten Wild-Ring seiner Karte aus data/encounters.json (Test).
 657. [x] [P2] Andenken bei Wanderern gibt es erst ab Veteran und höchstens eins pro Team; Wächter sind davon ausgenommen.
-658. [P2] Feste Technik-Listen der Gegner enthalten nur Techniken, die die Art bis zu ihrem Ring lernen kann (Test über Lernliste).
-659. [P2] Preisgeld pro Wanderer folgt der Formel höchster Ring mal 40, Wächter mal 70; Ausnahmen nur über den Schlüssel `money`.
+658. [x] [P2] Feste Technik-Listen der Gegner enthalten nur Techniken, die die Art bis zu ihrem Ring lernen kann (Test über Lernliste). Erledigt in angepasster Form: feste Techniken dürfen vorgreifen (640–648, 669 setzen das bewusst), müssen aber in der Lernliste der Art stehen oder ihr Element haben. Zippit lernt Chill Mist bei Ring 14.
+659. [x] [P2] Preisgeld pro Wanderer folgt der Formel höchster Ring mal 40, Wächter mal 70; Ausnahmen nur über den Schlüssel `money`. Erledigt: TrainerData.MONEY_PER_LEVEL 40, WARDEN_MONEY_PER_LEVEL 70; tägliche Rückkämpfe behalten 12 pro Ring.
 660. [P3] Rückkampf-Teams der Wanderer erhalten ab dem dritten Sieg einen vierten Spirling aus derselben Elementgruppe, Ring wie der bisher höchste.
 661. [P2] Rückkämpfe nutzen feste Technik-Listen mit den neuen Techniken passend zum neuen Ring statt der letzten 4 Lernlisten-Einträge.
 662. [P3] Gruppen-Kampf "Lio und Bram" in Crowcrest nach dem ersten Riss: 2 gegen 2 mit je zwei Spirlings auf Ring 16, Profile bleiben pro Slot.

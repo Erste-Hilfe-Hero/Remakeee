@@ -2136,7 +2136,7 @@ func offer_rematch(n: NPC) -> bool:
 		busy = false
 		return false
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
-	info["money"] = TrainerData.MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
+	info["money"] = TrainerData.REMATCH_MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	if outcome == BattleModel.Outcome.WIN:
 		_mark_rematch(def)
