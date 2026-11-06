@@ -5,15 +5,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 > **Auftrag für den umsetzenden Thread:** Ziel ist, aus "Mirelas Kartenbuch" eine vollständige Geschichte über drei Akte mit Finale und Postgame zu machen, mit Figuren, die sich wandeln, und Entscheidungen, die etwas bewirken. Betroffen sind data/quests.json, data/dialogue/*.json, ein neuer Ordner data/scenes/, scripts/core/Dialogue.gd, scripts/core/QuestLog.gd, die Dialog-Aktionen in scripts/overworld/Overworld.gd, das Dialogfeld in scripts/ui/ und tools/i18n/de_story.py. Fang mit dem Dialogsystem (Auswahl, Bedingungen) und dem Szenen-Player an, weil fast alle Story-Punkte darauf aufbauen, und schreibe dann die Brücke von Akt I zu Akt II. Neue Karten baut Bereich 3 (dieser Bereich liefert nur die Ortsliste und setzt Figuren, Schilder und Auslöser auf fertige Karten), Endgame-Systeme wie Wiederholungskämpfe oder Turm-Modi gehören in Bereich 8, Porträts, Dialogfeld-Grafik und Epochen-Übergaberituale stehen im Plan DESIGN_EPOCHS.md.
 
 ### Dialogsystem: Auswahl, Bedingungen und Ablauf
-1335. [P1] Dialog-Einträge bekommen ein Feld "choices" mit 2 bis 3 Antworten (Text, optional "flag", "action", "next"), das Dialogfeld zeigt sie als Liste unter der letzten Zeile und wartet auf einen Tipp.
-1336. [P1] Mit "next" springt eine Antwort auf einen anderen Schlüssel derselben Datei, damit kurze Verzweigungen ohne neuen Code möglich sind.
-1337. [P1] "after_flag" wird zusätzlich als Liste erlaubt; Dialogue.lines_for nimmt den letzten Eintrag, dessen Flag gesetzt ist, damit eine Figur über mehrere Kapitel neue Sätze hat.
-1338. [P1] Neues Feld "if" mit Bedingungen (flag, not_flag, has_item, has_species, has_element, party_size_min, chapter_min) entscheidet, ob ein Eintrag oder eine Antwort gezeigt wird.
-1339. [P1] Neue Aktion "set_var <name> <wert>" und "add_var <name> <zahl>" speichert Story-Zahlen (zum Beispiel kestra_trust) in GameState und im Spielstand.
-1340. [P1] Neue Aktion "battle <figur_id>" startet aus einem Dialog heraus einen Kampf auf dem Kampfbildschirm, damit Duelle mitten in einer Szene beginnen können.
-1341. [P1] Neue Aktion "scene <id>" spielt eine Zwischensequenz aus data/scenes/<id>.json ab und kehrt danach in den Dialog oder die Welt zurück.
-1342. [P1] DataValidator prüft jeden "next", jede "scene"-ID, jede Gegenstands-ID in "give_item" und jeden Spirling-Namen in "has_species" und meldet tote Verweise im CI.
-1343. [P1] Der Sprecher wird als eigenes Feld "speaker" geführt statt als "Name:" im Text, und der Name erscheint als Namensschild über dem Dialogfeld.
+1335. [x] [P1] Dialog-Einträge bekommen ein Feld "choices" mit 2 bis 3 Antworten (Text, optional "flag", "action", "next"), das Dialogfeld zeigt sie als Liste unter der letzten Zeile und wartet auf einen Tipp.
+1336. [x] [P1] Mit "next" springt eine Antwort auf einen anderen Schlüssel derselben Datei, damit kurze Verzweigungen ohne neuen Code möglich sind.
+1337. [x] [P1] "after_flag" wird zusätzlich als Liste erlaubt; Dialogue.lines_for nimmt den letzten Eintrag, dessen Flag gesetzt ist, damit eine Figur über mehrere Kapitel neue Sätze hat.
+1338. [x] [P1] Neues Feld "if" mit Bedingungen (flag, not_flag, has_item, has_species, has_element, party_size_min, chapter_min) entscheidet, ob ein Eintrag oder eine Antwort gezeigt wird.
+1339. [x] [P1] Neue Aktion "set_var <name> <wert>" und "add_var <name> <zahl>" speichert Story-Zahlen (zum Beispiel kestra_trust) in GameState und im Spielstand.
+1340. [x] [P1] Neue Aktion "battle <figur_id>" startet aus einem Dialog heraus einen Kampf auf dem Kampfbildschirm, damit Duelle mitten in einer Szene beginnen können.
+1341. [x] [P1] Neue Aktion "scene <id>" spielt eine Zwischensequenz aus data/scenes/<id>.json ab und kehrt danach in den Dialog oder die Welt zurück.
+1342. [x] [P1] DataValidator prüft jeden "next", jede "scene"-ID, jede Gegenstands-ID in "give_item" und jeden Spirling-Namen in "has_species" und meldet tote Verweise im CI.
+1343. [x] [P1] Der Sprecher wird als eigenes Feld "speaker" geführt statt als "Name:" im Text, und der Name erscheint als Namensschild über dem Dialogfeld.
 1344. [P2] Ein Verlauf zeigt die letzten 30 Dialogzeilen, erreichbar über ein Symbol am Dialogfeld, damit verpasste Sätze nachlesbar sind.
 1345. [P2] Textgeschwindigkeit (langsam, normal, sofort) kommt in die Einstellungen und wird im Spielstand gespeichert.
 1346. [P2] Inline-Steuerzeichen im Text: {p} macht 0,4 Sekunden Pause, {slow} und {/slow} verlangsamen die Schrift für ruhige Momente.
@@ -42,14 +42,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1369. [P3] Dialoge mit Auswahl werden in BattleReplay und Spielstand-Export nicht mitgeschrieben, damit keine Story-Spoiler in geteilten Daten landen.
 
 ### Zwischensequenzen
-1370. [P1] Neuer Szenen-Player scripts/overworld/ScenePlayer.gd spielt Schritte aus data/scenes/<id>.json der Reihe nach ab und blockiert dabei die Steuerung.
-1371. [P1] Schritt "say": zeigt Dialogzeilen mit Sprecher, nutzt dieselben Steuerzeichen und Auswahlen wie normale Dialoge.
-1372. [P1] Schritt "move": bewegt eine Figur (NPC oder Spielfigur) Kachel für Kachel über eine Liste von Richtungen, mit PathFinder als Rückfall.
-1373. [P1] Schritt "face" und "emote": dreht Figuren und zeigt Gefühlssymbole, damit Gespräche lebendig wirken.
-1374. [P1] Schritt "fade" (in, out, Farbe, Dauer) und "wait" (Sekunden) für Übergänge.
-1375. [P1] Schritt "spawn" und "despawn" blendet Figuren nur für die Szene ein oder aus, ohne die Kartendatei zu ändern.
-1376. [P1] Ein Knopf "Überspringen" oben rechts springt ans Ende der Szene und führt dabei alle Flag-, Gegenstands- und Kampfschritte trotzdem aus.
-1377. [P1] Jede Szene setzt am Ende ein Flag "scene_<id>_seen", damit sie nur einmal automatisch läuft.
+1370. [x] [P1] Neuer Szenen-Player scripts/overworld/ScenePlayer.gd spielt Schritte aus data/scenes/<id>.json der Reihe nach ab und blockiert dabei die Steuerung.
+1371. [x] [P1] Schritt "say": zeigt Dialogzeilen mit Sprecher, nutzt dieselben Steuerzeichen und Auswahlen wie normale Dialoge.
+1372. [x] [P1] Schritt "move": bewegt eine Figur (NPC oder Spielfigur) Kachel für Kachel über eine Liste von Richtungen, mit PathFinder als Rückfall.
+1373. [x] [P1] Schritt "face" und "emote": dreht Figuren und zeigt Gefühlssymbole, damit Gespräche lebendig wirken.
+1374. [x] [P1] Schritt "fade" (in, out, Farbe, Dauer) und "wait" (Sekunden) für Übergänge.
+1375. [x] [P1] Schritt "spawn" und "despawn" blendet Figuren nur für die Szene ein oder aus, ohne die Kartendatei zu ändern.
+1376. [x] [P1] Ein Knopf "Überspringen" oben rechts springt ans Ende der Szene und führt dabei alle Flag-, Gegenstands- und Kampfschritte trotzdem aus.
+1377. [x] [P1] Jede Szene setzt am Ende ein Flag "scene_<id>_seen", damit sie nur einmal automatisch läuft.
 1378. [P2] Schritt "pan": schiebt die Kamera in ganzen Pixeln zu einer Kachel und zurück, ohne Glättung, passend zum Pixelraster.
 1379. [P2] Schritt "music" wechselt oder stoppt die Musik mit Ausblendung, Schritt "sfx" spielt einen Effekt.
 1380. [P2] Schritt "shake" lässt die Kamera 0,5 Sekunden wackeln, abschaltbar über "Bewegung reduzieren".
@@ -79,15 +79,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1404. [P3] Option "Szenen automatisch abspielen" blättert Zeilen nach 2,5 Sekunden selbst weiter.
 
 ### Akt I: Feinschliff und Brücke zu Akt II
-1405. [P1] Der tote Endpunkt "Chapter 5: Waiting for the Ferry" wird ersetzt: nach mirela_lamp und aldo_dock_told öffnet Aldo die Fähre selbst (Flag ferry_open).
-1406. [P1] Neue Szene act1_finale im Leuchtturm: Aldo holt sein altes Ruder vom Dachboden und sagt, dass er die Fähre ein letztes Mal selbst fährt.
-1407. [P1] Neue Szene ferry_crossing: Aldo rudert die Spielfigur über den See, erzählt in 6 Zeilen von Mirelas erster Überfahrt und zeigt den Riss am Nordhimmel.
-1408. [P1] Das Fährschild in Brindlewick bekommt eine after_flag-Variante: "Crossings resume. Ferryman: Aldo." sobald ferry_open gesetzt ist.
-1409. [P1] Die Lampenkammer-Szene mirela_lamp wird als Szene mit "letter"-Schritten und langsamem Text neu gebaut, statt nur Textzeilen.
-1410. [P1] Die Prologszene bekommt Blitz, Donner, Rissöffnung über dem See und die drei Lichtspirlinge, die der Lampe folgen, als echte Szene.
-1411. [P1] Bevor die Fähre fährt, verlangt die Brücke beide gestopften Rissherzen nicht, damit Akt II nicht an optionalen Kämpfen hängt (nur rifts und mirela_lamp zählen).
-1412. [P1] Kestras Dock-Gespräch kestra_dock bekommt eine Auswahl ("Ich komme mit." / "Ich gehe allein."), die kestra_trust um 1 hebt oder nicht.
-1413. [P1] Kapitelkarten (Schritt "card") werden für Prolog und Kapitel 1 bis 4 nachgerüstet, mit den Titeln aus quests.json.
+1405. [x] [P1] Der tote Endpunkt "Chapter 5: Waiting for the Ferry" wird ersetzt: nach mirela_lamp und aldo_dock_told öffnet Aldo die Fähre selbst (Flag ferry_open).
+1406. [x] [P1] Neue Szene act1_finale im Leuchtturm: Aldo holt sein altes Ruder vom Dachboden und sagt, dass er die Fähre ein letztes Mal selbst fährt.
+1407. [x] [P1] Neue Szene ferry_crossing: Aldo rudert die Spielfigur über den See, erzählt in 6 Zeilen von Mirelas erster Überfahrt und zeigt den Riss am Nordhimmel.
+1408. [x] [P1] Das Fährschild in Brindlewick bekommt eine after_flag-Variante: "Crossings resume. Ferryman: Aldo." sobald ferry_open gesetzt ist.
+1409. [x] [P1] Die Lampenkammer-Szene mirela_lamp wird als Szene mit "letter"-Schritten und langsamem Text neu gebaut, statt nur Textzeilen.
+1410. [x] [P1] Die Prologszene bekommt Blitz, Donner, Rissöffnung über dem See und die drei Lichtspirlinge, die der Lampe folgen, als echte Szene.
+1411. [x] [P1] Bevor die Fähre fährt, verlangt die Brücke beide gestopften Rissherzen nicht, damit Akt II nicht an optionalen Kämpfen hängt (nur rifts und mirela_lamp zählen).
+1412. [x] [P1] Kestras Dock-Gespräch kestra_dock bekommt eine Auswahl ("Ich komme mit." / "Ich gehe allein."), die kestra_trust um 1 hebt oder nicht.
+1413. [x] [P1] Kapitelkarten (Schritt "card") werden für Prolog und Kapitel 1 bis 4 nachgerüstet, mit den Titeln aus quests.json.
 1414. [P2] Warden Orrin bekommt nach dem Mend eine Rückschau: er erzählt, dass er Mirela vor 40 Jahren als Kind im Cinder-Hohlweg gesehen hat.
 1415. [P2] Warden Maelis bekommt nach tide_heart_mended einen Satz über ein Lied, das sie aus dem Riss hört, als Hinweis auf die Echo-Melodie-Lore.
 1416. [P2] Das Kind mit dem stillen Puddlet in Brindlewick bekommt eine after_flag-Variante: nach beiden Rissen ruft sein Puddlet wieder, mit Dank an die Spielfigur.
@@ -111,16 +111,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1434. [P3] Die Szene ferry_crossing kann im Postgame am Steg wiederholt werden, als ruhige Überfahrt ohne Text.
 
 ### Akt II: Die Farben von Corvane
-1435. [P1] Lege in docs/STORY.md eine Ortsliste für Akt II mit festen Karten-IDs an (corvane_landing, madderby, madderby_guild, woadfen, rain_rift, stillwater, mirror_rift, greyreach, wide_rift_edge), damit Bereich 3 die Karten passend baut.
-1436. [P1] quests.json bekommt die Hauptziele von Akt II mit Kapiteln 6 bis 11 und dem Aktnamen "Act II: The Colours of Corvane".
-1437. [P1] Kapitel 6 "The Landing": Ankunft in Corvane Landing, die Stille hat hier nicht nur Stimmen, sondern auch Farben aus den Spirlingen gezogen (Szene corvane_arrival).
-1438. [P1] In Madderby, der Färberstadt, steht das Gildenhaus der Kartografen; Gildenmeisterin Ysolde Rennick nimmt die Spielfigur als Lehrling auf (Flag guild_joined).
-1439. [P1] Kapitel 7 "Rain Rift": Warden Senna im Woadfen-Moor hört nur noch Regen; nach dem Duell wird der Riss gemeinsam gestopft (Flag rift_rain_sealed).
-1440. [P1] Kapitel 8 "Mirror Rift": Warden Joral am Stillwater-Teich sieht im Riss nur sich selbst; das Duell und der Mend setzen rift_mirror_sealed.
-1441. [P1] Die zwei Corvane-Risse sind in beliebiger Reihenfolge machbar, wie in Akt I, und das Ziel zeigt "(k/2)".
-1442. [P1] Kapitel 9 "The Wide Rift": am Rand von Greyreach erreicht die Spielfigur den dritten Riss, der sich nicht stopfen lässt, weil kein Warden ihn von außen hält.
-1443. [P1] Die Wende von Akt II: Ein Satz in Mirelas Handschrift ist in den Rand des Weiten Risses eingebrannt; Mirela ist die Hüterin von innen.
-1444. [P1] Kapitel 11 "The Far Side": Ysolde erklärt, dass der Weite Riss ein zweites Ende in Ashmere hat; das Ziel führt zur Bergbahn nach Ashmere (Flag act2_end).
+1435. [x] [P1] Lege in docs/STORY.md eine Ortsliste für Akt II mit festen Karten-IDs an (corvane_landing, madderby, madderby_guild, woadfen, rain_rift, stillwater, mirror_rift, greyreach, wide_rift_edge), damit Bereich 3 die Karten passend baut.
+1436. [x] [P1] quests.json bekommt die Hauptziele von Akt II mit Kapiteln 6 bis 11 und dem Aktnamen "Act II: The Colours of Corvane".
+1437. [x] [P1] Kapitel 6 "The Landing": Ankunft in Corvane Landing, die Stille hat hier nicht nur Stimmen, sondern auch Farben aus den Spirlingen gezogen (Szene corvane_arrival).
+1438. [x] [P1] In Madderby, der Färberstadt, steht das Gildenhaus der Kartografen; Gildenmeisterin Ysolde Rennick nimmt die Spielfigur als Lehrling auf (Flag guild_joined).
+1439. [x] [P1] Kapitel 7 "Rain Rift": Warden Senna im Woadfen-Moor hört nur noch Regen; nach dem Duell wird der Riss gemeinsam gestopft (Flag rift_rain_sealed).
+1440. [x] [P1] Kapitel 8 "Mirror Rift": Warden Joral am Stillwater-Teich sieht im Riss nur sich selbst; das Duell und der Mend setzen rift_mirror_sealed.
+1441. [x] [P1] Die zwei Corvane-Risse sind in beliebiger Reihenfolge machbar, wie in Akt I, und das Ziel zeigt "(k/2)".
+1442. [x] [P1] Kapitel 9 "The Wide Rift": am Rand von Greyreach erreicht die Spielfigur den dritten Riss, der sich nicht stopfen lässt, weil kein Warden ihn von außen hält.
+1443. [x] [P1] Die Wende von Akt II: Ein Satz in Mirelas Handschrift ist in den Rand des Weiten Risses eingebrannt; Mirela ist die Hüterin von innen.
+1444. [x] [P1] Kapitel 11 "The Far Side": Ysolde erklärt, dass der Weite Riss ein zweites Ende in Ashmere hat; das Ziel führt zur Bergbahn nach Ashmere (Flag act2_end).
 1445. [P2] Kapitel 10 "Veit": Veit Harrow, ein früherer Gildenkartograf, will Risse nicht stopfen, sondern "auslöschen", indem er ihre Karten verbrennt; erste Begegnung in Madderby.
 1446. [P2] Veit duelliert die Spielfigur in Greyreach (Team: Shalebat Ring 24, Duskdigger Ring 25, Obsidroth Ring 27) und verschwindet danach Richtung Ashmere.
 1447. [P2] Ysolde Rennick gibt der Spielfigur nach guild_joined einen Gildenausweis (Story-Gegenstand guild_seal), der Türen im Gildenhaus öffnet.
@@ -158,14 +158,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1479. [P3] Die Bergbahn nach Ashmere fährt erst nach act2_end; vorher sagt der Bahnwärter einen Satz über Steinschlag.
 
 ### Akt III: Die Platten von Ashmere
-1480. [P1] Lege in docs/STORY.md eine Ortsliste für Akt III mit festen Karten-IDs an (ashmere_station, cinderfold, gravers_hall, kiln_rift, saltglass, glass_rift, wide_rift_far, undrawn_1 bis undrawn_3) für Bereich 3.
-1481. [P1] quests.json bekommt die Hauptziele von Akt III mit Kapiteln 12 bis 17 und dem Aktnamen "Act III: The Plates of Ashmere".
-1482. [P1] Kapitel 12 "Ash and Ink": Ankunft im Aschehochland; in Cinderfold arbeiten Graveure, die Karten in Kupfer stechen, damit sie hundert Jahre halten.
-1483. [P1] Kapitel 13 "Kiln Rift": Warden Tovan hält den Ofenriss halb geschlossen, aber seine Spirlinge sind schon still; Duell und Mend setzen rift_kiln_sealed.
-1484. [P1] Kapitel 14 "Glass Rift": Wardenin Ilse in Saltglass ist ganz verstummt; der Mend setzt rift_glass_sealed und öffnet den Weg zum fernen Ende des Weiten Risses.
-1485. [P1] Kapitel 15 "Veit's Plate": Veit hat in der Graveurhalle eine Platte gestochen, die den Weiten Riss samt allem dahinter löschen soll; die Spielfigur muss ihn aufhalten.
-1486. [P1] Kapitel 16 "The Undrawn": Die Spielfigur betritt mit dem Gildensiegel das Ungezeichnete, das Land hinter den Rissen, drei kurze Abschnitte ohne fertige Ränder.
-1487. [P1] Kapitel 17 "Where the Map Ends": Am Rand des Ungezeichneten wartet Mirela; das führt direkt ins Finale.
+1480. [x] [P1] Lege in docs/STORY.md eine Ortsliste für Akt III mit festen Karten-IDs an (ashmere_station, cinderfold, gravers_hall, kiln_rift, saltglass, glass_rift, wide_rift_far, undrawn_1 bis undrawn_3) für Bereich 3.
+1481. [x] [P1] quests.json bekommt die Hauptziele von Akt III mit Kapiteln 12 bis 17 und dem Aktnamen "Act III: The Plates of Ashmere".
+1482. [x] [P1] Kapitel 12 "Ash and Ink": Ankunft im Aschehochland; in Cinderfold arbeiten Graveure, die Karten in Kupfer stechen, damit sie hundert Jahre halten.
+1483. [x] [P1] Kapitel 13 "Kiln Rift": Warden Tovan hält den Ofenriss halb geschlossen, aber seine Spirlinge sind schon still; Duell und Mend setzen rift_kiln_sealed.
+1484. [x] [P1] Kapitel 14 "Glass Rift": Wardenin Ilse in Saltglass ist ganz verstummt; der Mend setzt rift_glass_sealed und öffnet den Weg zum fernen Ende des Weiten Risses.
+1485. [x] [P1] Kapitel 15 "Veit's Plate": Veit hat in der Graveurhalle eine Platte gestochen, die den Weiten Riss samt allem dahinter löschen soll; die Spielfigur muss ihn aufhalten.
+1486. [x] [P1] Kapitel 16 "The Undrawn": Die Spielfigur betritt mit dem Gildensiegel das Ungezeichnete, das Land hinter den Rissen, drei kurze Abschnitte ohne fertige Ränder.
+1487. [x] [P1] Kapitel 17 "Where the Map Ends": Am Rand des Ungezeichneten wartet Mirela; das führt direkt ins Finale.
 1488. [P2] Graveurmeister Halvard in der Graveurhalle nimmt den Empfehlungsbrief guild_letter an und erklärt, warum gestochene Karten Risse festhalten können.
 1489. [P2] Warden Tovan (Team: Calderox Ring 32, Obsidroth Ring 33, Smoldrake Ring 31, Duskdigger Ring 32) spricht nach dem Mend über seinen Vater, der den Riss vor ihm hielt.
 1490. [P2] Wardenin Ilse (Team: Leviarch Ring 34, Lumenewt Ring 33, Glimmerax Ring 34, Tempestrel Ring 33) kann nach dem Mend wieder singen und lehrt eine neue Strophe der Echo-Melodie.
@@ -205,13 +205,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1524. [P3] Halvard sticht nach rift_glass_sealed eine kleine Gedenkplatte für Ilses Jahre in der Stille und gibt sie ihr in einer kurzen Szene.
 
 ### Finale: Wo die Karte endet
-1525. [P1] Das Finale ist eine durchgehende Szenenkette (finale_1 bis finale_5) am Rand des Ungezeichneten, ohne Speicherverbot, mit Rückkehrpunkt vor finale_1.
-1526. [P1] Mirela erscheint als alte Frau mit ihrem Kartenbuch; sie hat das Ungezeichnete 40 Jahre lang gezeichnet, damit der Weite Riss nicht ganz aufreißt.
-1527. [P1] Mirela erklärt den Nachhall: das Echo aller Spirlinge, die ihren Wanderer verloren haben, ist der Ursprung der Stille (Lore-Auflösung).
-1528. [P1] Der Endkampf gegen den Nachhall ist ein Mehrfachkampf in drei Wellen (2, 3, dann 4 stille Spirlinge), mit Mirela als Partnerin in Welle 3.
-1529. [P1] Nach dem Kampf spielt die Spielfigur eine lange Echo-Melodie (doppelte Länge) mit Mirelas Strophe; gelingt sie, verstummt der Nachhall und hört zu.
-1530. [P1] Die Abschlusswahl hat drei Wege: "Bring her home", "Leave a gate" und, nur unter Bedingungen, "Two keepers" (siehe Abschnitt Entscheidungen).
-1531. [P1] Nach dem Finale läuft eine Abspann-Szene mit Rückkehr nach Brindlewick, Aldo am Steg und einer Abschlusskarte mit allen gestopften Rissen.
+1525. [x] [P1] Das Finale ist eine durchgehende Szenenkette (finale_1 bis finale_5) am Rand des Ungezeichneten, ohne Speicherverbot, mit Rückkehrpunkt vor finale_1.
+1526. [x] [P1] Mirela erscheint als alte Frau mit ihrem Kartenbuch; sie hat das Ungezeichnete 40 Jahre lang gezeichnet, damit der Weite Riss nicht ganz aufreißt.
+1527. [x] [P1] Mirela erklärt den Nachhall: das Echo aller Spirlinge, die ihren Wanderer verloren haben, ist der Ursprung der Stille (Lore-Auflösung).
+1528. [x] [P1] Der Endkampf gegen den Nachhall ist ein Mehrfachkampf in drei Wellen (2, 3, dann 4 stille Spirlinge), mit Mirela als Partnerin in Welle 3.
+1529. [x] [P1] Nach dem Kampf spielt die Spielfigur eine lange Echo-Melodie (doppelte Länge) mit Mirelas Strophe; gelingt sie, verstummt der Nachhall und hört zu.
+1530. [x] [P1] Die Abschlusswahl hat drei Wege: "Bring her home", "Leave a gate" und, nur unter Bedingungen, "Two keepers" (siehe Abschnitt Entscheidungen).
+1531. [x] [P1] Nach dem Finale läuft eine Abspann-Szene mit Rückkehr nach Brindlewick, Aldo am Steg und einer Abschlusskarte mit allen gestopften Rissen.
 1532. [P2] Scheitert die lange Echo-Melodie, kommt kein Game Over; Mirela summt mit, und der zweite Versuch ist um 20 Prozent langsamer.
 1533. [P2] Verliert die Spielfigur den Endkampf, setzt die Szene vor Welle 1 neu an, mit geheiltem Team und einem Satz von Mirela.
 1534. [P2] Kestra steht im Finale an der Seite der Spielfigur; ihr Satz vor dem Kampf hängt von kestra_trust ab (drei Varianten: unter 2, 2 bis 3, ab 4).
@@ -237,13 +237,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1554. [P3] Kehrt die Spielfigur nach dem Finale an den Rand des Ungezeichneten zurück, liegt dort Mirelas leerer Zeichenstein mit einer neuen Inschrift, die vom gewählten Ende abhängt.
 
 ### Kestra: Gegenstück mit eigenem Weg
-1555. [P1] Kestra bekommt in docs/STORY.md eine Figurenbeschreibung: Kindheit am Krähenkamm, Zephlet "Tatter" kam vor 12 Jahren aus einem kleinen Riss, Ziel ist Verstehen statt Schließen.
+1555. [x] [P1] Kestra bekommt in docs/STORY.md eine Figurenbeschreibung: Kindheit am Krähenkamm, Zephlet "Tatter" kam vor 12 Jahren aus einem kleinen Riss, Ziel ist Verstehen statt Schließen.
 1556. [P1] Eine Zahl kestra_trust (0 bis 6) wird bei sechs festen Momenten in Akt I bis III um 1 erhöht oder nicht, je nach Auswahl der Spielfigur.
-1557. [P1] Kestras Zephlet wird zur Story-Figur "Tatter" mit Spitznamen im Team; Kestras Team wächst pro Akt um ein Mitglied (Akt II 4, Akt III 5 Spirlinge).
-1558. [P1] Kestras zweites Duell findet in Madderby statt (Team: Tempestrel Ring 22, Glimmerax Ring 21, Shalebat Ring 21, Kelpup Ring 20), mit eigenem Vor- und Nachgespräch.
-1559. [P1] Kestras drittes Duell steht am fernen Ende des Weiten Risses (Team mit 5 Spirlingen, Ring 34 bis 36); es ist kein Hindernis, sondern ein Abschiedsduell vor dem Ungezeichneten.
-1560. [P1] Die Szene kestra_tatter_hush in Akt II zeigt Kestras größte Angst; die Spielfigur kann Tatter mit einer Echo-Melodie trösten, was kestra_trust um 1 hebt.
-1561. [P1] Kestra ändert ihre Haltung sichtbar: in Akt I will sie Risse offen, in Akt II zweifelt sie, in Akt III sucht sie einen dritten Weg; jede Haltung hat eigene Sätze.
+1557. [x] [P1] Kestras Zephlet wird zur Story-Figur "Tatter" mit Spitznamen im Team; Kestras Team wächst pro Akt um ein Mitglied (Akt II 4, Akt III 5 Spirlinge).
+1558. [x] [P1] Kestras zweites Duell findet in Madderby statt (Team: Tempestrel Ring 22, Glimmerax Ring 21, Shalebat Ring 21, Kelpup Ring 20), mit eigenem Vor- und Nachgespräch.
+1559. [x] [P1] Kestras drittes Duell steht am fernen Ende des Weiten Risses (Team mit 5 Spirlingen, Ring 34 bis 36); es ist kein Hindernis, sondern ein Abschiedsduell vor dem Ungezeichneten.
+1560. [x] [P1] Die Szene kestra_tatter_hush in Akt II zeigt Kestras größte Angst; die Spielfigur kann Tatter mit einer Echo-Melodie trösten, was kestra_trust um 1 hebt.
+1561. [x] [P1] Kestra ändert ihre Haltung sichtbar: in Akt I will sie Risse offen, in Akt II zweifelt sie, in Akt III sucht sie einen dritten Weg; jede Haltung hat eigene Sätze.
 1562. [P2] Kestras Dialog im Kartenhaus bekommt nach jedem Akt eine neue Variante (after_flag-Liste mit act1_done, act2_end, story_complete).
 1563. [P2] Kestra führt ein eigenes Skizzenbuch; nach jedem Treffen ist eine neue Seite davon im Kartenbuch der Spielfigur lesbar (Abschnitt "Kestra's sketches", 8 Seiten).
 1564. [P2] Kestra hat eine Lieblingsantwort auf die Frage nach Mirela, die sich bis Akt III von Neid zu Bewunderung wandelt (drei Sätze).
@@ -269,13 +269,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1584. [P3] Kestra fragt die Spielfigur einmal nach ihrem Lieblingsort in Veydal (Auswahl aus 4), und erwähnt die Antwort im Postgame wieder.
 
 ### Aldo und Mirela
-1585. [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
-1586. [P1] Mirela bekommt in docs/STORY.md eine Figurenbeschreibung mit Lebenslauf, Zeichenstil und dem Grund, warum sie 40 Jahre im Ungezeichneten blieb.
-1587. [P1] Die Kartenbuch-Seiten 7 bis 14 erzählen Mirelas Zeit im Ungezeichneten in je 1 bis 2 Sätzen und decken die Lore schrittweise auf.
-1588. [P1] Die Szene, in der Aldo und Mirela sich wiedersehen, hängt vom Ende ab, wird aber in jeder Fassung am Steg in Brindlewick gespielt.
+1585. [x] [P1] Aldo bekommt in jedem Kapitel einen neuen Satz im Leuchtturm (after_flag-Liste), damit Heimkehr sich lohnt.
+1586. [x] [P1] Mirela bekommt in docs/STORY.md eine Figurenbeschreibung mit Lebenslauf, Zeichenstil und dem Grund, warum sie 40 Jahre im Ungezeichneten blieb.
+1587. [x] [P1] Die Kartenbuch-Seiten 7 bis 14 erzählen Mirelas Zeit im Ungezeichneten in je 1 bis 2 Sätzen und decken die Lore schrittweise auf.
+1588. [x] [P1] Die Szene, in der Aldo und Mirela sich wiedersehen, hängt vom Ende ab, wird aber in jeder Fassung am Steg in Brindlewick gespielt.
 1589. [P2] Aldo erzählt auf Nachfrage (Auswahl im Leuchtturm) drei Erinnerungen an Mirela, je nach Fortschritt freigeschaltet.
 1590. [P2] Aldos altes Ruder ist ein Story-Gegenstand (aldo_oar), den die Spielfigur zu Beginn von Akt II mitnimmt und im Postgame zurückgibt.
-1591. [P2] Aldo wird beim Rudern in ferry_crossing müde; die Spielfigur kann wählen, ob sie selbst rudert, und Aldo kommentiert das später.
+1591. [x] [P2] Aldo wird beim Rudern in ferry_crossing müde; die Spielfigur kann wählen, ob sie selbst rudert, und Aldo kommentiert das später.
 1592. [P2] Mirelas Briefe an Aldo (Nebenquest letters, 6 Briefe) zeigen ihre Liebe zu ihm und ihre Zweifel, jeweils 2 bis 3 Zeilen.
 1593. [P2] Im Ende "Leave a gate" bleibt Mirela im Ungezeichneten; Aldo bekommt im Postgame einen Brief von ihr pro Woche (Tageswechsel, 8 Briefe).
 1594. [P2] Im Ende "Bring her home" wohnt Mirela im Leuchtturm; sie hat dort einen eigenen Platz am Kartentisch und neue Sätze.
@@ -292,9 +292,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Hüterinnen, Hüter und Nebenfiguren
 1605. [P1] Jede Hüterin und jeder Hüter bekommt eine feste Form: Satz vor dem Erwachen, Satz nach dem Duell, Satz nach dem Mend und einen späteren Satz nach dem Finale.
-1606. [P1] Eine Figurenliste in docs/STORY.md führt alle benannten Figuren mit Ort, Rolle, Team, Flags und Bogen, damit spätere Threads nichts doppeln.
-1607. [P1] Veit Harrow bekommt einen klaren Bogen: Verlust seiner Mirkmole Ash an die Stille vor 20 Jahren, Wut auf Risse, Zweifel in Akt III, Versöhnung oder Bruch nach Wahl.
-1608. [P1] Eine Zahl veit_respect (0 bis 3) wird bei drei Momenten in Akt II und III gesetzt und steuert sein Auftreten im Finale und Postgame.
+1606. [x] [P1] Eine Figurenliste in docs/STORY.md führt alle benannten Figuren mit Ort, Rolle, Team, Flags und Bogen, damit spätere Threads nichts doppeln.
+1607. [x] [P1] Veit Harrow bekommt einen klaren Bogen: Verlust seiner Mirkmole Ash an die Stille vor 20 Jahren, Wut auf Risse, Zweifel in Akt III, Versöhnung oder Bruch nach Wahl.
+1608. [x] [P1] Eine Zahl veit_respect (0 bis 3) wird bei drei Momenten in Akt II und III gesetzt und steuert sein Auftreten im Finale und Postgame.
 1609. [P2] Orrin und Maelis tauchen in Akt II als Gäste im Gildenhaus von Madderby auf und erzählen, wie sie ihre Risse seitdem halten.
 1610. [P2] Ysolde Rennick hat einen eigenen Bogen: sie hat Mirela damals nicht zurückgehalten und will das wieder gutmachen, aufgelöst in einer Szene nach act2_end.
 1611. [P2] Pim, der junge Archivar, ist die Stimme für Lore-Fragen; er beantwortet per Auswahl bis zu vier Fragen pro Kapitel zu Rissen, Stille und Spirlingen.
@@ -318,10 +318,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1629. [P3] Nach dem Finale versammeln sich alle Hüter einmal in Brindlewick zu einem Fest, das der Ausrufer ankündigt.
 
 ### Nebenquests in Veydal
-1630. [P1] Neue Nebenquest letters_veydal: drei Briefe von Mirela an Aldo liegen in Veydal (Leuchtturm-Dachboden, Fernstair-Hütte, Thornridge-Brunnen), Belohnung je 1 Max Tonic.
-1631. [P1] quest_show bekommt eine zweite Stufe (q_<id>_stage), damit Nebenquests mehrere Schritte haben können, nicht nur "zeig mir Art X".
-1632. [P1] Neue Nebenquest puddlet_wake: das Kind in Brindlewick will sein stilles Puddlet wecken; die Spielfigur spielt eine Echo-Melodie mit ihm (Flag q_puddlet_done).
-1633. [P1] Nebenquests zeigen im Zielmenü einen Ortshinweis ("where") wie die Hauptziele.
+1630. [x] [P1] Neue Nebenquest letters_veydal: drei Briefe von Mirela an Aldo liegen in Veydal (Leuchtturm-Dachboden, Fernstair-Hütte, Thornridge-Brunnen), Belohnung je 1 Max Tonic.
+1631. [x] [P1] quest_show bekommt eine zweite Stufe (q_<id>_stage), damit Nebenquests mehrere Schritte haben können, nicht nur "zeig mir Art X".
+1632. [x] [P1] Neue Nebenquest puddlet_wake: das Kind in Brindlewick will sein stilles Puddlet wecken; die Spielfigur spielt eine Echo-Melodie mit ihm (Flag q_puddlet_done).
+1633. [x] [P1] Nebenquests zeigen im Zielmenü einen Ortshinweis ("where") wie die Hauptziele.
 1634. [P2] Neue Nebenquest lantern_route: Tamsin bittet, die drei Lampen im Murk Hollow jede Nacht zu zünden; nach drei Nächten erzählt sie ihre Geschichte.
 1635. [P2] Neue Nebenquest lost_map: ein Wanderer in Fernstair hat eine Karte verloren; sie liegt bei einem Farn mit Kompassrose, Belohnung 600 Münzen.
 1636. [P2] Neue Nebenquest orrin_names: Orrin hat die Namen seiner Spirlinge vergessen; die Spielfigur findet sie auf drei Steinen in Thornridge.
@@ -345,9 +345,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1654. [P3] Neue Nebenquest kestra_window: das Fenster im Kartenhaus, durch das Seite 1 hereinflog, zeigt nachts eine Spur; sie führt zu einer verborgenen Randnotiz von Mirela.
 
 ### Nebenquests in Corvane und Ashmere
-1655. [P1] Neue Nebenquest letters: Pim sucht Mirelas restliche Briefe (3 in Corvane, 3 in Ashmere), Fortschritt "(k/6)" im Zielmenü.
-1656. [P1] Neue Nebenquest colour_back: drei Färberfamilien in Madderby wollen je einen bestimmten Spirling sehen, der seine Farbe zurück hat (nach rift_rain_sealed).
-1657. [P1] Neue Nebenquest veit_workshop: in Veits Werkstatt liegen drei Hinweise auf Ash; wer sie findet, hebt veit_respect um 1.
+1655. [x] [P1] Neue Nebenquest letters: Pim sucht Mirelas restliche Briefe (3 in Corvane, 3 in Ashmere), Fortschritt "(k/6)" im Zielmenü.
+1656. [x] [P1] Neue Nebenquest colour_back: drei Färberfamilien in Madderby wollen je einen bestimmten Spirling sehen, der seine Farbe zurück hat (nach rift_rain_sealed).
+1657. [x] [P1] Neue Nebenquest veit_workshop: in Veits Werkstatt liegen drei Hinweise auf Ash; wer sie findet, hebt veit_respect um 1.
 1658. [P2] Neue Nebenquest mirror_faces: Joral bittet, im Stillwater-Teich drei Spiegelbilder zu finden, die nicht zur Spielfigur gehören.
 1659. [P2] Neue Nebenquest woad_dye: Senna braucht Färberwaid aus drei Moorstellen, um ihr verblasstes Halstuch neu zu färben.
 1660. [P2] Neue Nebenquest hushed_walkers: die zwei stillen Wanderer in Woadfen bekommen ihre Stimmen zurück, wenn die Spielfigur ihnen ihre verlorenen Spirlinge zeigt.
@@ -372,11 +372,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1679. [P3] Neue Nebenquest bram_ash: Bram aus Crowcrest sucht seine Shalebats im Ascheland, mit einem Wiedersehen in Cinderfold.
 
 ### Entscheidungen mit Folgen
-1680. [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.
-1681. [P1] Das Ende "Bring her home" ist immer wählbar: Mirela kommt heim, der Weite Riss schließt sich, Riss-Spirlinge brauchen danach einen Anker-Bund (Story-Text, keine neuen Regeln).
-1682. [P1] Das Ende "Leave a gate" ist immer wählbar: der Weite Riss wird zu einer Pforte mit Mirela als Hüterin, sie bleibt im Ungezeichneten, Kestra ist froh.
-1683. [P1] Das Ende "Two keepers" verlangt veit_respect 3 und alle 14 Seiten: Veit bleibt mit Ash als Hüter im Ungezeichneten, und Mirela kommt heim.
-1684. [P1] Vor der Abschlusswahl zeigt eine Bestätigung den gewählten Weg in einem Satz und fragt "Draw it so?", weil die Wahl endgültig ist.
+1680. [x] [P1] Entscheidungen werden in GameState.story_choices (Dictionary) gespeichert und im Online-Spielstand gesichert, mit Versionsfeld für spätere Änderungen.
+1681. [x] [P1] Das Ende "Bring her home" ist immer wählbar: Mirela kommt heim, der Weite Riss schließt sich, Riss-Spirlinge brauchen danach einen Anker-Bund (Story-Text, keine neuen Regeln).
+1682. [x] [P1] Das Ende "Leave a gate" ist immer wählbar: der Weite Riss wird zu einer Pforte mit Mirela als Hüterin, sie bleibt im Ungezeichneten, Kestra ist froh.
+1683. [x] [P1] Das Ende "Two keepers" verlangt veit_respect 3 und alle 14 Seiten: Veit bleibt mit Ash als Hüter im Ungezeichneten, und Mirela kommt heim.
+1684. [x] [P1] Vor der Abschlusswahl zeigt eine Bestätigung den gewählten Weg in einem Satz und fragt "Draw it so?", weil die Wahl endgültig ist.
 1685. [P1] Kleine Entscheidungen haben sichtbare Folgen innerhalb von höchstens einem Kapitel (andere Sätze, ein Geschenk, ein neuer Gefährte), damit sich Wählen lohnt.
 1686. [P2] Nach jedem gestopften Riss in Akt II und III fragt der Warden, ob ein Faden offen bleiben soll ("thread") oder der Riss ganz zu ist ("seal"), gespeichert pro Riss.
 1687. [P2] Bleibt ein Faden offen, erscheinen dort nachts gelegentlich Riss-Spirlinge mit eigenem Satz des Wardens; ganz geschlossen wird die Gegend ruhiger beschrieben.
@@ -399,9 +399,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1704. [P3] Ein Erfolg pro Ende wird über Achievements.gd vergeben (drei Erfolge), ohne Belohnung im Spiel.
 
 ### Lore: Risse, Stille und Spirlinge
-1705. [P1] docs/STORY.md bekommt ein Kapitel "Lore" mit den festen Wahrheiten: Spirlinge stammen aus dem Ungezeichneten, Risse entstehen, wo die gezeichnete Welt dünn wird, die Stille ist das Echo verlorener Bünde.
-1706. [P1] Jeder Spirlog-Eintrag der 21 Arten bekommt eine zweite Lore-Zeile, die nach dem Bonden der Art lesbar ist und auf Risse oder Regionen Bezug nimmt.
-1707. [P1] Die Lore-Texte werden mit tools/ip_check.sh geprüft und vermeiden jede Nähe zu fremden Ursprungsmythen; eigene Begriffe stehen in einer Glossarliste in docs/STORY.md.
+1705. [x] [P1] docs/STORY.md bekommt ein Kapitel "Lore" mit den festen Wahrheiten: Spirlinge stammen aus dem Ungezeichneten, Risse entstehen, wo die gezeichnete Welt dünn wird, die Stille ist das Echo verlorener Bünde.
+1706. [x] [P1] Jeder Spirlog-Eintrag der 21 Arten bekommt eine zweite Lore-Zeile, die nach dem Bonden der Art lesbar ist und auf Risse oder Regionen Bezug nimmt.
+1707. [x] [P1] Die Lore-Texte werden mit tools/ip_check.sh geprüft und vermeiden jede Nähe zu fremden Ursprungsmythen; eigene Begriffe stehen in einer Glossarliste in docs/STORY.md.
 1708. [P2] Die Echo-Melodie bekommt eine Herkunft: Mirela hat sie im Ungezeichneten gehört und in Veydal als Wiegenlied weitergegeben; die Gilde lehrt sie seitdem.
 1709. [P2] Wardens werden erklärt: Menschen, deren Bund mit Spirlingen stark genug ist, einen Riss zu halten; wird der Bund still, öffnet sich der Riss weiter.
 1710. [P2] Die Gabe-Beschreibungen bleiben spielmechanisch; die Lore steht nur im Spirlog, damit Werte und Geschichte getrennt bleiben.
@@ -426,7 +426,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1729. [P3] Ein Lore-Eintrag erklärt, warum niemand auf Spirlingen reisen kann: sie tragen das Gewicht der Karte, nicht das eines Menschen.
 
 ### Postgame-Story
-1730. [P1] Nach story_complete erscheint ein neues Hauptziel "Epilogue: The Open Map" mit drei Kapiteln, damit es nach dem Abspann weitergeht.
+1730. [x] [P1] Nach story_complete erscheint ein neues Hauptziel "Epilogue: The Open Map" mit drei Kapiteln, damit es nach dem Abspann weitergeht.
 1731. [P2] Epilog-Kapitel 1 "Homecoming": Besuche bei allen Hütern in Veydal, Corvane und Ashmere, die nach dem Finale neue Sätze haben (Ziel mit Fortschritt "(k/6)").
 1732. [P2] Epilog-Kapitel 2 "The Southern Tear": Kestra hat einen neuen kleinen Riss im Süden skizziert; die Spielfigur prüft ihn und findet eine Spur nach Solenne (Haken für spätere Teile).
 1733. [P2] Epilog-Kapitel 3 "A Map of Our Own": die Spielfigur zeichnet im Kartenhaus eine eigene Karte; die Szene setzt postgame_done und zeigt einen Satz von jedem Verbündeten.
@@ -448,9 +448,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 1749. [P3] Die Wahl der Nachfolge in der Gilde ändert den Titel im Tagebuch und Sätze im Gildenhaus, sonst nichts.
 
 ### Ziele, Tagebuch und Kartenbuch
-1750. [P1] QuestLog unterstützt Akte: Hauptziele bekommen ein Feld "act", das Zielmenü zeigt den Aktnamen über dem Kapitel.
-1751. [P1] Das Kartenbuch (Mirelas Seiten) wird ein eigenes Menü mit Seitenliste und gelesenen Seiten, statt nur Textzeilen beim Fund.
-1752. [P1] Nebenquests mit Stufen zeigen den aktuellen Schritttext statt nur den Starttext.
+1750. [x] [P1] QuestLog unterstützt Akte: Hauptziele bekommen ein Feld "act", das Zielmenü zeigt den Aktnamen über dem Kapitel.
+1751. [x] [P1] Das Kartenbuch (Mirelas Seiten) wird ein eigenes Menü mit Seitenliste und gelesenen Seiten, statt nur Textzeilen beim Fund.
+1752. [x] [P1] Nebenquests mit Stufen zeigen den aktuellen Schritttext statt nur den Starttext.
 1753. [P2] Das Tagebuch sammelt Kapitel-Rückblicke (6 Zeilen pro Akt) automatisch, sobald ein Akt endet.
 1754. [P2] Eine Seite "People" im Tagebuch listet getroffene Figuren mit einem Satz, der sich mit ihrem Bogen ändert.
 1755. [P2] Erledigte Nebenquests bleiben im Tagebuch als Liste mit Ort und Belohnung lesbar.
@@ -466,8 +466,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 133
 
 ### Texte, Übersetzung und Prüfungen
 1765. [P1] Alle neuen Story-Texte stehen auf Englisch in data/dialogue und data/scenes und auf Deutsch in tools/i18n/de_story.py; der Build bricht ab, wenn ein Schlüssel fehlt.
-1766. [P1] Eine Stilregel in docs/STORY.md legt fest: kurze Sätze, höchstens 2 Zeilen pro Textfeld, keine typografischen Anführungszeichen (Pixelschrift), Spielerwörter laut AGENTS.md.
-1767. [P1] tools/ip_check.sh läuft über data/scenes und docs/STORY.md mit, und neue Figuren- und Ortsnamen werden vor dem Merge gegen bekannte Fremdnamen geprüft.
+1766. [x] [P1] Eine Stilregel in docs/STORY.md legt fest: kurze Sätze, höchstens 2 Zeilen pro Textfeld, keine typografischen Anführungszeichen (Pixelschrift), Spielerwörter laut AGENTS.md.
+1767. [x] [P1] tools/ip_check.sh läuft über data/scenes und docs/STORY.md mit, und neue Figuren- und Ortsnamen werden vor dem Merge gegen bekannte Fremdnamen geprüft.
 1768. [P2] Ein Lesbarkeitstest misst jede Dialogzeile gegen die Breite des Dialogfelds (144 Pixel minus Rand) und meldet zu lange Zeilen im CI.
 1769. [P2] Figurennamen bleiben in allen Sprachen gleich; nur Ortsnamen mit Bedeutung (Greyreach, Saltglass) bekommen deutsche Fassungen nach einer festen Liste.
 1770. [P2] Ein Wortzähler pro Akt (tools/story_stats.py) hilft, Akt II und III auf je etwa 9000 englische Wörter zu halten.

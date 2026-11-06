@@ -20,6 +20,8 @@ done
 for f in supabase/migrations/*.sql; do
 	psql_ -f "$f"
 done
+# Game data the server reads (species, learnsets), as setup.sh loads it at deploy.
+python3 tools/online/game_data_sql.py data/spirlings.json | psql_
 for t in tools/online/sql_test/test_*.sql; do
 	echo "== $t"
 	psql_ -f "$t"

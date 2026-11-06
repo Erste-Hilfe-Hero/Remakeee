@@ -54,7 +54,7 @@ func test_request_id_is_stable_and_depends_on_content_and_base() -> void:
 
 func test_resent_upload_counts_once() -> void:
 	await Online.connect_now()
-	var d: Dictionary = {"money": 1, "party": []}
+	var d: Dictionary = {"schema": Online.SAVE_SCHEMA, "money": 1, "party": []}
 	var args: Dictionary = {"p_slot": 1, "p_data": d, "p_summary": "", "p_base_rev": 0, "p_force": false,
 		"p_request_id": Online.request_id(d, 1, 0)}
 	var first: Dictionary = await Online.call_fn("save_put", args)
@@ -63,7 +63,7 @@ func test_resent_upload_counts_once() -> void:
 	var again: Dictionary = await Online.call_fn("save_put", args)
 	assert_true(bool(again.data.ok), "not a conflict")
 	assert_eq(int(again.data.rev), 1, "stored only once")
-	var stale: Dictionary = await Online.call_fn("save_put", {"p_slot": 1, "p_data": {"money": 2}, "p_summary": "",
+	var stale: Dictionary = await Online.call_fn("save_put", {"p_slot": 1, "p_data": {"schema": Online.SAVE_SCHEMA, "money": 2}, "p_summary": "",
 		"p_base_rev": 0, "p_force": false, "p_request_id": "other"})
 	assert_true(bool(stale.data.get("conflict", false)), "a different upload on an old base still conflicts")
 

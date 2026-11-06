@@ -66,8 +66,27 @@ services:
       PGRST_DB_ANON_ROLE: anon
       PGRST_JWT_SECRET: ${JWT_SECRET}
       PGRST_DB_USE_LEGACY_GUCS: "false"
-      # Feature switches from server_config (supabase/migrations/20261106090001_tech_sync.sql).
+      # Feature switches from server_config (supabase/migrations/20261110090001_tech_sync.sql).
       PGRST_DB_PRE_REQUEST: public._pre_request
+
+  # Battle referee (plan area 7, items 2687-2690, 2703): plays uploaded battles again with the
+  # game's own battle code. No port; it only talks to the database, as user chimora_referee.
+  # Started by setup.sh when the game project is next to server/ (profile "referee").
+  referee:
+    build:
+      context: ..
+      dockerfile: server/referee/Dockerfile
+    restart: unless-stopped
+    profiles: ["referee"]
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGUSER: chimora_referee
+      PGPASSWORD: ${REFEREE_DB_PASSWORD}
+      PGDATABASE: postgres
 
   caddy:
     image: caddy:2.10.2

@@ -1,0 +1,171 @@
+{
+ "_comment": "Story duels started by the dialogue/scene action 'battle <id>'. Same fields as a Wayfarer in a map file (scripts/overworld/TrainerData.gd), plus 'defeat'/'lose' dialogue refs and 'win_flags'.",
+ "kestra_2": {
+  "trainer": "Cartographer Kestra",
+  "team": [
+   {
+    "species": "Tempestrel",
+    "level": 22
+   },
+   {
+    "species": "Glimmerax",
+    "level": 21
+   },
+   {
+    "species": "Shalebat",
+    "level": 21
+   },
+   {
+    "species": "Kelpup",
+    "level": 20
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "corvane/kestra_2_defeat",
+  "lose": "corvane/kestra_2_lose",
+  "win_flags": [
+   "kestra_duel_2"
+  ]
+ },
+ "veit_2": {
+  "trainer": "Veit Harrow",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 34
+   },
+   {
+    "species": "Duskdigger",
+    "level": 35
+   },
+   {
+    "species": "Obsidroth",
+    "level": 36
+   },
+   {
+    "species": "Calderox",
+    "level": 35
+   }
+  ],
+  "ai": 3,
+  "money": 1800,
+  "defeat": "ashmere/veit_2_defeat",
+  "lose": "ashmere/veit_plate_wait"
+ },
+ "kestra_3": {
+  "trainer": "Cartographer Kestra",
+  "team": [
+   {
+    "species": "Tempestrel",
+    "level": 36
+   },
+   {
+    "species": "Glimmerax",
+    "level": 35
+   },
+   {
+    "species": "Shalebat",
+    "level": 34
+   },
+   {
+    "species": "Kelphound",
+    "level": 35
+   },
+   {
+    "species": "Lumenewt",
+    "level": 34
+   }
+  ],
+  "ai": 3,
+  "money": 1600,
+  "defeat": "ashmere/kestra_3_defeat",
+  "lose": "ashmere/kestra_3_wait"
+ },
+ "echo_1": {
+  "trainer": "The Echo",
+  "team": [
+   {
+    "species": "Wickit",
+    "level": 38
+   },
+   {
+    "species": "Puddlet",
+    "level": 38
+   }
+  ],
+  "front": [
+   2,
+   2
+  ],
+  "ai": 3,
+  "money": 0,
+  "lose": "ashmere/finale_echo_1_lose"
+ },
+ "echo_2": {
+  "trainer": "The Echo",
+  "team": [
+   {
+    "species": "Zephlet",
+    "level": 39
+   },
+   {
+    "species": "Mossling",
+    "level": 39
+   },
+   {
+    "species": "Kindlop",
+    "level": 39
+   }
+  ],
+  "front": [
+   3,
+   3
+  ],
+  "ai": 3,
+  "money": 0,
+  "lose": "ashmere/finale_echo_1_lose"
+ },
+ "echo_3": {
+  "trainer": "The Echo",
+  "team": [
+   {
+    "species": "Leviarch",
+    "level": 41
+   },
+   {
+    "species": "Obsidroth",
+    "level": 41
+   },
+   {
+    "species": "Tempestrel",
+    "level": 40
+   },
+   {
+    "species": "Mirkmole",
+    "level": 40
+   }
+  ],
+  "front": [
+   1,
+   2
+  ],
+  "ai": 3,
+  "money": 0,
+  "partner": {
+   "name": "Cartographer Mirela",
+   "team": [
+    {
+     "species": "Wickit",
+     "level": 45
+    },
+    {
+     "species": "Lumenewt",
+     "level": 42
+    }
+   ],
+   "front": 1
+  },
+  "lose": "ashmere/finale_echo_1_lose"
+ }
+}
