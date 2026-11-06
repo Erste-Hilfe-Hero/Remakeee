@@ -36,7 +36,7 @@ func run() -> void:
 			return
 		match labels[idx]:
 			"Goals":
-				await info(goals_text())
+				await run_goals()
 			"Team": await run_team()
 			"Friends":
 				await FriendsMenu.run(self)
@@ -79,22 +79,19 @@ func save_now() -> void:
 const SAVED_TEXT: String = "Saved."
 const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once the connection is back."
 
-## Goals screen: story goals, the find of the day and today's tasks (plan area 8).
+## Goals screen in four tabs (plan 3526): Story, Today, Week, Collection. All tabs in one text.
 static func goals_text() -> String:
-	var text: String = Loc.t(QuestLog.summary(GameState.flags))
-	var daily: String = DailyFind.hint(GameState.flags)
-	if not daily.is_empty():
-		text += "\n\n" + Loc.t(daily)
-	var world: Array[String] = WorldEvents.lines()
-	if not world.is_empty():
-		text += "\n\n" + "\n".join(world)
-	var tasks: Array[String] = DailyTasks.lines()
-	if not tasks.is_empty():
-		text += "\n\n" + "\n".join(tasks)
-	var post: Array[String] = Postgame.lines()
-	if not post.is_empty():
-		text += "\n\n" + "\n".join(post)
-	return text
+	return Goals.all_text()
+
+## Picks a goals tab and shows it until the player backs out.
+func run_goals() -> void:
+	while true:
+		var tabs: Array[String] = []
+		tabs.assign(Goals.TABS)
+		var i: int = await pick_strings("Goals", tabs)
+		if i < 0:
+			return
+		await info(Goals.tab_text(tabs[i]))
 
 ## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:
@@ -105,6 +102,8 @@ func run_records() -> void:
 			lines.append("Master Wayfarers")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
+		if not Album.stickers().is_empty():
+			lines.append("Sticker wall")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -119,6 +118,7 @@ func run_records() -> void:
 			"Personal bests": await info(records_text())
 			"Master Wayfarers": await run_masters()
 			"Memorial book": await info("\n".join(memorial_lines()))
+			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
