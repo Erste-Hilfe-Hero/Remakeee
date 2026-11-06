@@ -589,4 +589,22 @@ T = {
 "%s broke the bond, but your Pass keeps it calm.":
 	"%s hat die Bindung gelöst, aber dein Pass hält ihn ruhig.",
 "Wayfarer Pass: +%d Riftglass": "Wanderer-Pass: +%d Rissglas",
+"What the pass gives:": "Das gibt der Pass:",
+"+%d%% growth for the whole team, also together with a Growth Crystal":
+	"+%d %% Wachstum für das ganze Team, auch zusammen mit einem Wachstumskristall",
+"%d Riftglass every day (%d in 30 days), missed days paid up to 7 days later":
+	"%d Rissglas jeden Tag (%d in 30 Tagen), verpasste Tage werden bis zu 7 Tage nachgezahlt",
+"+%d energy over the maximum in battles against the world (11 of 10)":
+	"+%d Energie über dem Maximum in Kämpfen gegen die Spielwelt (11 von 10)",
+"1 free Rift Breath in every Warden battle (only in that battle)":
+	"1 kostenloser Rissatem in jedem Wächterkampf (nur in diesem Kampf)",
+"1 extra bond try per battle: the first failed bond gives no free action":
+	"1 zusätzlicher Bond-Versuch pro Kampf: Der erste misslungene Bond gibt keine freie Aktion",
+"In echo duels only the growth works.": "In Echo-Duellen wirkt nur das Wachstum.",
+"When the pass ends, every benefit ends at once. Riftglass and items you got stay yours.":
+	"Endet der Pass, enden alle Vorteile sofort. Erhaltenes Rissglas und Gegenstände bleiben dir.",
+"Price: %s per month, renews automatically.": "Preis: %s pro Monat, verlängert sich automatisch.",
+"Cancel any time in the App Store or Google Play.": "Jederzeit im App Store oder bei Google Play kündbar.",
+"No pass right now.": "Gerade kein Pass aktiv.",
+"Your pass runs until %s.": "Dein Pass läuft bis %s.",
 }

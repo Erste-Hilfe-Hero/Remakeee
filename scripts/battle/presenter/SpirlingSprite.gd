@@ -14,6 +14,15 @@ const MOTIONS: Array[String] = ["hop", "creep", "sway", "stomp", "slide"]
 static var _motion: Dictionary = {}
 ## Prism variants are drawn with a warm tint over the era palette.
 const PRISM_TINT: Color = Color(1.0, 0.78, 0.5)
+## Idle bob: 1 px up for half of each period (item 2335).
+const BOB_PERIOD: float = 1.0
+## Under a quarter of its strength a Spirling sits 1 px lower and bobs at half the pace.
+const LOW_HP_SHARE: float = 0.25
+const LOW_BOB_PERIOD: float = 2.0
+const LOW_SAG_PX: float = 1.0
+## Sidestep on a missed art: 4 px aside and back in 0.2 s (item 2337).
+const DODGE_PX: float = 4.0
+const DODGE_TIME: float = 0.2
 
 var spirling: Spirling
 var facing: String = "front"
@@ -22,6 +31,9 @@ var mirrored: bool = false
 var speed_scale: float = 1.0
 var _texture: Texture2D
 var _home: Vector2
+var _bob_time: float = 0.0
+## Drawn offset of the idle bob and the low-strength sag; never moves the node itself.
+var draw_offset: Vector2 = Vector2.ZERO
 
 func setup(s: Spirling, p_facing: String) -> void:
 	spirling = s
@@ -40,6 +52,42 @@ func texture() -> Texture2D:
 
 func _ready() -> void:
 	_home = position
+
+func _process(delta: float) -> void:
+	if spirling == null or not visible:
+		return
+	_bob_time += delta
+	var o: Vector2 = idle_offset(spirling, _bob_time, Juice.reduced())
+	if o != draw_offset:
+		draw_offset = o
+		queue_redraw()
+
+## True under a quarter of the Spirling's strength (but not fainted).
+static func is_weak(s: Spirling) -> bool:
+	return s != null and s.hp > 0 and s.hp < s.max_hp() * LOW_HP_SHARE
+
+## Idle drawing offset at time t: weak Spirlings sag 1 px and bob at half the pace; under
+## reduced motion only the sag stays.
+static func idle_offset(s: Spirling, t: float, reduced: bool) -> Vector2:
+	var weak: bool = is_weak(s)
+	var y: float = LOW_SAG_PX if weak else 0.0
+	if not reduced and s != null and s.hp > 0:
+		var period: float = LOW_BOB_PERIOD if weak else BOB_PERIOD
+		if fmod(t, period) >= period * 0.5:
+			y -= 1.0
+	return Vector2(0, y)
+
+## Where a sidestep in `dir` (sign of x; 0 counts as right) lands.
+static func dodge_spot(home: Vector2, dir: float) -> Vector2:
+	return home + Vector2(-DODGE_PX if dir < 0.0 else DODGE_PX, 0)
+
+## Sidesteps a missed art: 4 px in `dir` (sign of x) and back in 0.2 s. Skipped under
+## reduced motion. Awaitable.
+func dodge(dir: float) -> void:
+	if Juice.reduced():
+		return
+	await Juice.tween(self, "position", dodge_spot(_home, dir), "move", DODGE_TIME * 0.4).finished
+	await Juice.tween(self, "position", _home, "move", DODGE_TIME * 0.6).finished
 
 ## Steps out beside the Wayfarer (slides in from the screen edge; never thrown). Awaitable.
 ## Durations come from Juice curves, so the 2x / 4x battle speed applies on its own.
@@ -155,9 +203,10 @@ func _draw() -> void:
 	if spirling == null:
 		return
 	var r := Rect2(Vector2.ZERO, size)
+	draw_set_transform(draw_offset)
 	if _texture != null:
 		if mirrored:
-			draw_set_transform(Vector2(size.x, 0), 0.0, Vector2(-1, 1))
+			draw_set_transform(Vector2(size.x, 0) + draw_offset, 0.0, Vector2(-1, 1))
 		draw_texture_rect(_texture, r, false, PRISM_TINT if spirling.prism else Color.WHITE)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
