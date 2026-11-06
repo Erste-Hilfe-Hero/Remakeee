@@ -30,7 +30,7 @@ var storage: Array[Spirling] = []
 ## Iron Oath (item 15, opt-in at new game): Spirlings that faint retire to the Sanctuary.
 var iron_oath: bool = false
 var sanctuary: Array[Spirling] = []
-## Spirlog: species name -> {"seen": bool, "bonded": bool}.
+## Spirlog: species name -> entry (see new_spirlog_entry()).
 var spirlog: Dictionary = {}
 var region: String = "veydal"
 var rifts_sealed: Array[String] = []
@@ -374,7 +374,8 @@ func from_dict(d: Dictionary) -> void:
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			storage.append(s)
-	spirlog = (d.get("spirlog", {}) as Dictionary).duplicate(true)
+	for k: Variant in (d.get("spirlog", {}) as Dictionary):
+		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
 	for k: Variant in (d.get("inventory", {}) as Dictionary):
 		inventory[str(k)] = int(d.inventory[k])
 	money = int(d.get("money", 0))
@@ -518,7 +519,12 @@ func first_healthy_index() -> int:
 ## Adds a newly bonded Spirling to the party, or to storage if the party is full.
 ## Returns true if it joined the party.
 func receive_spirling(s: Spirling) -> bool:
+	if s.origin_map.is_empty():
+		s.origin_map = current_map
+		s.met_ring = s.level
+		s.met_day = today()
 	mark_seen(s.data.species_name, true)
+	note_spirlog(s)
 	s.restore()
 	if party.size() < MAX_PARTY:
 		party.append(s)
@@ -526,12 +532,48 @@ func receive_spirling(s: Spirling) -> bool:
 	storage.append(s)
 	return false
 
+## A Spirlog entry: seen and bonded, where and on which day it was first seen, and the
+## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
+static func new_spirlog_entry() -> Dictionary:
+	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
+		"variants": [], "prism_seen": false, "tempers": []}
+
+## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
+static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
+	var out: Dictionary = new_spirlog_entry()
+	if e is Dictionary:
+		var src: Dictionary = (e as Dictionary).duplicate(true)
+		for k: Variant in src:
+			out[str(k)] = src[k]
+	out["seen"] = bool(out.seen) or bool(out.bonded)
+	out["first_day"] = int(out.first_day)
+	return out
+
+## Days since 1970 (local device date), for "met on day N".
+static func today() -> int:
+	return int(Time.get_unix_time_from_system() / 86400.0)
+
 func mark_seen(species: String, bonded: bool = false) -> void:
-	var e: Dictionary = spirlog.get(species, {"seen": false, "bonded": false})
+	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(species, {}))
+	if not bool(e.seen):
+		e["first_map"] = current_map
+		e["first_day"] = today()
 	e["seen"] = true
 	if bonded:
 		e["bonded"] = true
 	spirlog[species] = e
+
+## Records what [param s] shows the Spirlog: its Prism colour, imprint and temperament.
+func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
+	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(s.data.species_name, {}))
+	if s.prism:
+		e["prism_seen"] = true
+	if not s.variant.is_empty() and not (e.variants as Array).has(s.variant):
+		(e.variants as Array).append(s.variant)
+	var t: String = str(s.temperament().id)
+	if show_temper and not (e.tempers as Array).has(t):
+		(e.tempers as Array).append(t)
+	spirlog[s.data.species_name] = e
 
 ## Furls [param s] back into its earlier form. A form that needed an item to unfurl (Tide
 ## Pearl) gives the item back, so "you can unfurl it again later" stays true.

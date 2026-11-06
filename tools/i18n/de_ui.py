@@ -79,6 +79,7 @@ T = {
 "Veteran (caps, smart AI)": "Veteran (Levelgrenzen, kluge KI)", "Rift-Born (no battle items)": "Rissgeboren (keine Kampf-Items)",
 "Your name?": "Dein Name?", "Continue": "Weiter", "Continue  %s": "Weiter  %s", "New Game": "Neues Spiel",
 "Load...": "Laden...", "The save could not be read.": "Der Spielstand konnte nicht gelesen werden.",
+"The save was damaged. The latest backup was loaded.": "Der Spielstand war beschädigt. Die neueste Sicherung wurde geladen.",
 "Load which save?": "Welchen Spielstand laden?", "Save the new journey in...": "Neue Reise speichern in...",
 "Start over in slot %d? That save will be replaced when you save.": "In Platz %d neu anfangen? Der alte Spielstand wird beim Speichern ersetzt.",
 "Slot %d: %s": "Platz %d: %s", "Slot %d": "Platz %d", "empty": "leer",
@@ -307,7 +308,7 @@ T = {
 # Strings the extractor finds that stay the same in every language (names, node and theme ids, debug text).
 KEEP = ["Label", "Button", "PanelContainer", "Panel", "LineEdit", "Ground", "Entities", "Shade", "Player",
 	"Juno", "Kindlop", "Puddlet", "Zippit", "Mossling", "%dE %s", "%dE", "%dE ~%d%%", "%s, %s", "%dx", "R%d", "%s R%d", "%s R%d %d/%d",
-	"%s R%d %d/%d%s", "%s_sealed", "%s_era%d", "cannot open %s (%s)", "rename failed: %s", "Battle log\n\n", "\n\n(tap to close)",
+	"%s R%d %d/%d%s", "%s_sealed", "%s_era%d", "cannot open %s (%s)", "rename failed: %s", "read-back check failed for %s", "{\n\t\"_sha256\": \"", "Battle log\n\n", "\n\n(tap to close)",
 	" a lot.", "%s's %s is already at its %s.", "Item", "Auto", "Log", "Team", "Spirlog", "Normal", "Ring", "Name",
 	"%s: %s.", "%s   Ring %d", "  %s R%d",
 	"Zephlet", "Smoldrake", "Shalebat", "Kelpup", "Mirkmole", "Wickit", "Rift Mystic Ilka", "Hauler Tobin", "Cartographer Kestra",
