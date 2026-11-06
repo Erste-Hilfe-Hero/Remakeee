@@ -25,6 +25,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"boss": model.foe_boss,
 		"foe_damage": model.foe_damage_mult,
 		"boss_hp": model.boss_hp_scale,
+		"variants": model.variants.duplicate(),
 		"round_limit": model.round_limit,
 		"music": music,
 		"backdrop": backdrop,
@@ -89,6 +90,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.foe_boss = str(snap.get("boss", ""))
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
 	m.boss_hp_scale = float(snap.get("boss_hp", 1.0))
+	m.variants.assign(snap.get("variants", []))
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))
 	if not partner.is_empty():
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
