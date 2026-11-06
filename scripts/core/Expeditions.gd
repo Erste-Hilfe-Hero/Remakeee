@@ -236,6 +236,9 @@ static func status_lines() -> Array[String]:
 		var who: String = s.display_name() if s != null else "?"
 		if left <= 0:
 			out.append(Loc.t("%s: back home") % who)
+		elif left < 3600:
+			# No countdown under an hour (plan 3501).
+			out.append(Loc.t("%s: back today") % who)
 		else:
 			out.append(Loc.t("%s: %d h %d min left") % [who, left / 3600, (left / 60) % 60])
 	return out

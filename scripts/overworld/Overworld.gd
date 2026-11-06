@@ -708,6 +708,7 @@ func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
 func announce_achievements() -> void:
 	show_notices()
 	var lines: Array[String] = Collection.claim()
+	lines.append_array(SeasonPath.note_play())
 	# Vows settle and the run is chronicled first, so "Three Ways" is checked right after (plan 3403).
 	lines.append_array(Vows.settle())
 	lines.append_array(RunChronicle.note())

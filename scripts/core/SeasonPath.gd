@@ -63,12 +63,37 @@ static func extra_steps() -> int:
 static func tier() -> int:
 	return mini(GameState.as_int(state().get("points", 0)) / per_tier(), tiers())
 
+## Return help (plan 3499): after RETURN_GAP_DAYS days without play, path points count double
+## for RETURN_DAYS days. State: records.last_play_day and records.return_boost_until (day numbers).
+const RETURN_GAP_DAYS: int = 14
+const RETURN_DAYS: int = 3
+
+static func day_number() -> int:
+	return int(Online.unix_now() / 86400)
+
+## Notes a play day; starts the return help after a long break. Returns the line to show.
+static func note_play() -> Array[String]:
+	var today: int = day_number()
+	var last: int = GameState.as_int(GameState.records.get("last_play_day", 0))
+	if today <= last:
+		return []
+	GameState.records["last_play_day"] = today
+	if last > 0 and today - last >= RETURN_GAP_DAYS:
+		GameState.records["return_boost_until"] = today + RETURN_DAYS
+		return [Loc.t("Welcome back! Season path points count double for %d days.") % RETURN_DAYS]
+	return []
+
+static func boost_active() -> bool:
+	return day_number() < GameState.as_int(GameState.records.get("return_boost_until", 0))
+
 ## Adds points from [param source], pays every step reached. Returns the reward lines.
 static func add(source: String) -> Array[String]:
 	var n: int = points_for(source)
 	var lines: Array[String] = []
 	if n <= 0:
 		return lines
+	if boost_active():
+		n *= 2
 	var st: Dictionary = state()
 	st.points = GameState.as_int(st.get("points", 0)) + n
 	while GameState.as_int(st.get("claimed", 0)) < tier():
