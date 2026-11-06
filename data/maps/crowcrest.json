@@ -97,18 +97,45 @@
    "team": [
     {
      "species": "Zippit",
-     "level": 7
+     "level": 7,
+     "moves": [
+      "Static Tag"
+     ]
     },
     {
      "species": "Zephlet",
-     "level": 8
+     "level": 8,
+     "moves": [
+      "Kite Cut"
+     ]
     },
     {
      "species": "Shalebat",
-     "level": 9
+     "level": 9,
+     "moves": [
+      "Grit Jab"
+     ]
     }
    ],
-   "profile": "tactician"
+   "profile": "tactician",
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Zephlet",
+      "level": 8,
+      "moves": [
+       "Kite Cut"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 9,
+      "moves": [
+       "Grit Jab"
+      ]
+     }
+    ]
+   }
   },
   {
    "id": "lio",

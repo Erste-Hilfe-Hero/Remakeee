@@ -111,13 +111,13 @@ func _draw() -> void:
 	for x: int in range(TICK_STEP, int(w) - 1, TICK_STEP):
 		draw_rect(Rect2(x, bar_y + 1, 1, 1), UITheme.INK)
 	var pip_y: float = bar_y + BAR_HEIGHT + 4.0
-	for i: int in Spirling.MAX_ENERGY:
+	for i: int in maxi(Spirling.MAX_ENERGY, energy):
 		var r := Rect2(i * (PIP_SIZE + PIP_GAP), pip_y, PIP_SIZE, PIP_SIZE)
 		if i < energy:
 			draw_rect(r, ENERGY_ON)
 		else:
 			draw_rect(r, UITheme.MID, false, 1.0)
-	_draw_stages(Vector2(Spirling.MAX_ENERGY * (PIP_SIZE + PIP_GAP) + 3, pip_y - 1))
+	_draw_stages(Vector2(maxi(Spirling.MAX_ENERGY, energy) * (PIP_SIZE + PIP_GAP) + 3, pip_y - 1))
 	if tax > 0:
 		_draw_tax(Vector2(w, pip_y - 1))
 	if show_numbers:

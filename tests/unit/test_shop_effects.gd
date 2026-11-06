@@ -232,3 +232,24 @@ func test_legal_actions_skip_revive_on_the_active_one() -> void:
 	m.inventory["rg_rift_breath"] = 1
 	for a: BattleAction in m.legal_actions(BattleModel.Side.PLAYER):
 		assert_ne(a.item_id, "rg_rift_breath")
+
+func test_overcharge_core_gives_twelve_energy_for_one_battle() -> void:
+	var boosts: Dictionary = GameState.shop_boosts.duplicate(true)
+	GameState.shop_boosts = {}
+	GameState.add_item("rg_overcharge", 2)
+	assert_eq(ShopEffects.start_boost("rg_overcharge"), "Works for the next battle.")
+	assert_eq(ShopEffects.energy_bonus(), 2)
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10)]
+	var m: BattleModel = BattleModel.new(mine, [BattleFixtures.make("Zephlet", 5)] as Array[Spirling], true, 5)
+	m.energy_bonus = [ShopEffects.energy_bonus(), 0]
+	m.start()
+	assert_eq(mine[0].energy, 12)
+	assert_eq(m.max_energy_of(BattleModel.Side.PLAYER), 12)
+	assert_eq(m.party(BattleModel.Side.FOE)[0].energy, 10, "only the player's team")
+	var snap: Dictionary = BattleReplay.snapshot(m, "", "")
+	assert_eq(BattleReplay.build_model(snap).energy_bonus[0], 2)
+	assert_eq(int(snap.energy_bonus), 2, "replays know it")
+	ShopEffects.battle_done()
+	assert_eq(ShopEffects.energy_bonus(), 0, "one battle only")
+	GameState.inventory.erase("rg_overcharge")
+	GameState.shop_boosts = boosts

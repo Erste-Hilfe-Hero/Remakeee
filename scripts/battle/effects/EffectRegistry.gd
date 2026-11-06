@@ -25,6 +25,7 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"cure_target": preload("res://scripts/battle/effects/CureTargetEffect.gd"),
 	&"stage_steal": preload("res://scripts/battle/effects/StageStealEffect.gd"),
 	&"delayed_hit": preload("res://scripts/battle/effects/DelayedHitEffect.gd"),
+	&"mend": preload("res://scripts/battle/effects/MendEffect.gd"),
 	&"field_extend": preload("res://scripts/battle/effects/FieldExtendEffect.gd"),
 }
 

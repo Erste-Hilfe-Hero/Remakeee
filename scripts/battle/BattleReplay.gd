@@ -24,6 +24,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"partner": _partner(model),
 		"boss": model.foe_boss,
 		"foe_damage": model.foe_damage_mult,
+		"energy_bonus": model.energy_bonus[0],
 		"boss_hp": model.boss_hp_scale,
 		"variants": model.variants.duplicate(),
 		"round_limit": model.round_limit,
@@ -89,6 +90,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.front_size = [int(front[0]), int(front[1])]
 	m.foe_boss = str(snap.get("boss", ""))
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
+	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.OVERCHARGE), 0]
 	m.boss_hp_scale = float(snap.get("boss_hp", 1.0))
 	m.variants.assign(snap.get("variants", []))
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))

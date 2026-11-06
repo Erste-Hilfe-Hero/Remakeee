@@ -48,13 +48,32 @@ static func npcs_for(map_id: String) -> Array[Dictionary]:
 static func level(m: Dictionary) -> int:
 	return clampi(int(m.get("level", MIN_RING)), MIN_RING, MAX_RING)
 
-## The master's team: TEAM_SIZE Spirlings of their element, final forms for their ring, the
-## same every time. The lead is two rings under the master, the last one at the master's ring.
+## Which of the three prepared teams master [param id] fields (plan 3300): the first until the
+## week after the first win, then one per week, the same for the whole week.
+static func variant(id: String) -> int:
+	var m: Dictionary = find(id)
+	var n: int = (m.get("teams", []) as Array).size()
+	var rec: Dictionary = record(id)
+	if n <= 1 or str(rec.get("first", "")) == "":
+		return 0
+	var week: String = WeeklyChallenge.this_week()
+	if week <= str(rec.get("first_week", rec.get("week", week))):
+		return 0
+	return absi(hash([id, week])) % n
+
+## The master's team: the prepared team of data/endgame.json (plan 3291) with its arts and
+## keepsakes, picked by variant(). Without prepared teams: TEAM_SIZE Spirlings of their element,
+## final forms for their ring, the lead two rings under the master.
 static func team(id: String) -> Array[Spirling]:
 	var m: Dictionary = find(id)
 	var out: Array[Spirling] = []
 	if m.is_empty():
 		return out
+	var prepared: Array = m.get("teams", [])
+	if not prepared.is_empty():
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash(["chimora-master", id, variant(id)])
+		return TrainerData.build_team({"team": prepared[variant(id)]}, "", rng)
 	var lv: int = level(m)
 	var e: int = int(Elements.E.get(str(m.get("element", "")), -1))
 	var fits := func(sd: SpirlingData) -> bool:
@@ -109,6 +128,7 @@ static func win(id: String) -> Array[String]:
 	if str(rec.get("first", "")) == "":
 		rec["first"] = Time.get_date_string_from_unix_time(Online.unix_now())
 		rec["week"] = week
+		rec["first_week"] = week
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(FIRST_WAYMARKS, "master")))
 	elif str(rec.get("week", "")) < week:
 		rec["week"] = week
@@ -138,6 +158,25 @@ static func profile(m: Dictionary) -> String:
 	else:
 		parts.append(Loc.t("Not beaten yet."))
 	return "\n".join(parts)
+
+## Master round (plan 3292): all eight masters one after another in the lighthouse, open once
+## every master is beaten. The first full clear pays ROUND_WAYMARKS once.
+const ROUND_WAYMARKS: int = 100
+const ROUND_REST_AFTER: int = 4
+
+static func round_open() -> bool:
+	return not list().is_empty() and beaten_count() >= list().size()
+
+static func round_best() -> int:
+	return int(GameState.records.get("master_round_best", 0))
+
+## Books a master round that beat [param beaten] masters and returns the reward lines.
+static func finish_round(beaten: int) -> Array[String]:
+	GameState.records["master_round_best"] = maxi(round_best(), beaten)
+	if beaten < list().size() or bool(GameState.records.get("master_round_paid", false)):
+		return []
+	GameState.records["master_round_paid"] = true
+	return Waymarks.reward_lines(Waymarks.earn(ROUND_WAYMARKS, "master"))
 
 ## Menu lines for the profile list: "[x] Name, title".
 static func lines() -> Array[String]:

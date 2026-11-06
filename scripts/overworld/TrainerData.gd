@@ -17,8 +17,11 @@ extends RefCounted
 ##   "teams_by_difficulty": {"story": [...], "tamer": [...], "veteran": [...], "rift_born": [...]}
 ##       a team per difficulty; a missing key falls back to "team" / "team_by_starter".
 
-## Default money per foe level when the map gives none.
-const MONEY_PER_LEVEL: int = 12
+## Default money per top foe ring when the map gives none (item 659): Wayfarers 40, Wardens 70.
+const MONEY_PER_LEVEL: int = 40
+const WARDEN_MONEY_PER_LEVEL: int = 70
+## Daily rematches keep the old, smaller rate so the coin flow stays as it was.
+const REMATCH_MONEY_PER_LEVEL: int = 12
 ## Wardens never play below this AI tier (0 random, 1 greedy, 2 lookahead).
 const WARDEN_MIN_AI: int = 1
 ## AI tier of an ally Wayfarer fighting beside the player.
@@ -134,7 +137,7 @@ static func prize_money(def: Dictionary, team: Array[Spirling]) -> int:
 	var top: int = 0
 	for s: Spirling in team:
 		top = maxi(top, s.level)
-	return top * MONEY_PER_LEVEL
+	return top * (WARDEN_MONEY_PER_LEVEL if def.has("warden") else MONEY_PER_LEVEL)
 
 ## AI tier for this Wayfarer given the difficulty default.
 static func ai_tier(def: Dictionary, difficulty_ai: int) -> int:
