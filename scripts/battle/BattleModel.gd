@@ -835,6 +835,8 @@ func _phase_victory_check() -> void:
 		if outcome == Outcome.NONE:
 			outcome = Outcome.WIN
 		phase = Phase.REWARDS
+	elif own_alive_count() == 0 and _last_stand():
+		phase = Phase.SWITCH_IN
 	elif own_alive_count() == 0:
 		outcome = Outcome.LOSS
 		phase = Phase.REWARDS
@@ -1271,6 +1273,26 @@ func _cure(side: int, slot: int = 0) -> void:
 	s.status = ""
 	s.status_turns = 0
 	emit_event(BattleEvent.Type.STATUS_CURED, d)
+
+## The shop's Will to Win (plan item 4499): once per battle, when the whole team is down, the
+## Spirling that fell last comes back with 30 % Vigor. Never against Rift Wardens.
+const LAST_STAND: String = "rg_last_stand"
+
+func _last_stand() -> bool:
+	if not foe_boss.is_empty() or not _items_allowed_for(Side.PLAYER) or int(inventory.get(LAST_STAND, 0)) <= 0:
+		return false
+	if not item_left_this_battle(Side.PLAYER, LAST_STAND):
+		return false
+	var index: int = active_index(Side.PLAYER, 0)
+	if index < 0 or is_partner_index(Side.PLAYER, index) or not (parties[Side.PLAYER][index] as Spirling).is_fainted():
+		return false
+	inventory[LAST_STAND] = int(inventory[LAST_STAND]) - 1
+	items_used[Side.PLAYER][LAST_STAND] = int(items_used[Side.PLAYER].get(LAST_STAND, 0)) + 1
+	var s: Spirling = parties[Side.PLAYER][index]
+	emit_event(BattleEvent.Type.ITEM_USED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "item": LAST_STAND,
+		"item_name": str(Database.item(LAST_STAND).get("name", LAST_STAND))})
+	_revive(Side.PLAYER, index, float(Database.item(LAST_STAND).get("last_stand", 0.3)), false)
+	return true
 
 ## True for items that bring a defeated Spirling back in battle (the shop's Rift Breath).
 static func is_revive_item(id: String) -> bool:

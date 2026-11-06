@@ -646,5 +646,14 @@
    "mult": 1.0,
    "battles": 1
   }
+ },
+ {
+  "id": "rg_last_stand",
+  "name": "Will to Win",
+  "description": "Works by itself: if your whole team is defeated, the last one returns once with 30% Vigor. Not against Rift Wardens.",
+  "battle": false,
+  "shop": true,
+  "last_stand": 0.3,
+  "per_battle": 1
  }
 ]
