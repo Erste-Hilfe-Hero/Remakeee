@@ -121,7 +121,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2330. [x] [P1] Beim Auftreten nutzt SpirlingSprite.step_out das Bewegungsprofil: hüpfen in 2 Sprüngen zu je 4 Pixeln Höhe, stampfen mit Trauma 0,1 beim Aufsetzen, schleichen mit Kurve "move".
 2331. [x] [P1] Technik-Ausholbewegung nach Art: körperliche Techniken (PHYSICAL) holen 3 Pixel nach hinten aus und schnellen vor, besondere Techniken heben den Spirling 2 Pixel an und senken ihn beim Auslösen, Status-Techniken lassen ihn kurz zweimal wippen.
 2332. [x] [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
-2333. [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
+2333. [x] [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
 2334. [P2] Ring-Aufstieg in der Welt (nach Kampf oder Gegenstand): derselbe Ring über dem Teamplatz im Pausemenü, wenn man es danach öffnet.
 2335. [x] [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
 2336. [x] [P2] Im Mehrfachkampf dreht sich der Angreifer vor seiner Technik zur Seite seines Ziels (Spiegelung über mirrored), wenn das Ziel auf der anderen Hälfte steht.

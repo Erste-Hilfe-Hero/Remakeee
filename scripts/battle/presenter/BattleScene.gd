@@ -845,6 +845,9 @@ func _play_event(e: BattleEvent) -> void:
 			Sound.sfx("level_up")
 			var lv_slot: int = model.slot_of(BattleModel.Side.PLAYER, int(e.data.get("index", -1)))
 			if lv_slot >= 0:
+				var lv_sprite: SpirlingSprite = _sprite(BattleModel.Side.PLAYER, lv_slot)
+				if lv_sprite != null and lv_sprite.visible:
+					LevelRing.spawn(_shake_root, lv_sprite.position + lv_sprite.size / 2.0)
 				var lst: Variant = _strip(BattleModel.Side.PLAYER, lv_slot)
 				if lst is InfoStrip:
 					(lst as InfoStrip).set_level(int(e.data.level))
