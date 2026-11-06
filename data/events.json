@@ -1,5 +1,5 @@
 {
- "_comment": "Plan area 8 event data. daily_tasks: kinds for DailyTasks.gd (event = what counts, n = how many, optional map / element / wild filters, distinct = different maps (or people for talk) only). Every task must be doable in 15 minutes.",
+ "_comment": "Plan area 8 event data. daily_tasks: kinds for DailyTasks.gd (event = what counts, n = how many, optional map / element / wild filters, distinct = different maps (or people for talk) only). Every task must be doable in 15 minutes. festivals: the yearly festivals (elements as Elements.E names, shop = ribbon prices at the festival trader). festival_tasks: the crier's task of the day during a festival (only ones that match the festival's elements are drawn).",
  "daily_tasks": [
   {
    "id": "win_3",
@@ -283,6 +283,274 @@
    "event": "step",
    "n": 600,
    "text": "Walk 600 steps"
+  }
+ ],
+ "festivals": [
+  {
+   "id": "bloom_fair",
+   "months": [
+    4,
+    5
+   ],
+   "name": "Bloom Fair",
+   "elements": [
+    "BLOOM",
+    "GALE"
+   ],
+   "gift": "bark_wrap",
+   "text": "The Bloom Fair is on! Bloom and Gale Spirlings are out in the spring air.",
+   "shop": [
+    {
+     "item": "bark_wrap",
+     "price": 40
+    },
+    {
+     "item": "echo_bloom",
+     "price": 60
+    },
+    {
+     "item": "echo_gale",
+     "price": 60
+    },
+    {
+     "item": "strong_tonic",
+     "price": 5
+    },
+    {
+     "item": "swift_feather",
+     "price": 40
+    }
+   ]
+  },
+  {
+   "id": "tide_days",
+   "months": [
+    7,
+    8
+   ],
+   "name": "Tide Days",
+   "elements": [
+    "TIDE",
+    "VOLT"
+   ],
+   "gift": "tide_pearl",
+   "text": "It's the Tide Days! Tide and Volt Spirlings play in the summer storms.",
+   "shop": [
+    {
+     "item": "tide_pearl",
+     "price": 80
+    },
+    {
+     "item": "echo_tide",
+     "price": 60
+    },
+    {
+     "item": "echo_volt",
+     "price": 60
+    },
+    {
+     "item": "spark_coil",
+     "price": 40
+    },
+    {
+     "item": "dry_towel",
+     "price": 3
+    }
+   ]
+  },
+  {
+   "id": "lantern_nights",
+   "months": [
+    10,
+    11
+   ],
+   "name": "Lantern Nights",
+   "elements": [
+    "LUMEN",
+    "UMBRA"
+   ],
+   "gift": "echo_lumen",
+   "text": "The Lantern Nights have begun! Lumen and Umbra Spirlings follow the lights.",
+   "shop": [
+    {
+     "item": "echo_lumen",
+     "price": 60
+    },
+    {
+     "item": "echo_umbra",
+     "price": 60
+    },
+    {
+     "item": "keen_lens",
+     "price": 40
+    },
+    {
+     "item": "wake_bell",
+     "price": 3
+    },
+    {
+     "item": "revival_leaf",
+     "price": 10
+    }
+   ]
+  },
+  {
+   "id": "hearth_weeks",
+   "months": [
+    12,
+    1
+   ],
+   "name": "Hearth Weeks",
+   "elements": [
+    "EMBER",
+    "STONE"
+   ],
+   "gift": "spark_charm",
+   "text": "The Hearth Weeks are here! Ember and Stone Spirlings gather where it's warm.",
+   "shop": [
+    {
+     "item": "spark_charm",
+     "price": 60
+    },
+    {
+     "item": "echo_ember",
+     "price": 60
+    },
+    {
+     "item": "echo_stone",
+     "price": 60
+    },
+    {
+     "item": "iron_burr",
+     "price": 40
+    },
+    {
+     "item": "cooling_gel",
+     "price": 3
+    }
+   ]
+  }
+ ],
+ "festival_tasks": [
+  {
+   "id": "fest_beat_ember",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "EMBER",
+   "text": "Beat 3 wild Ember Spirlings"
+  },
+  {
+   "id": "fest_bond_ember",
+   "event": "bond",
+   "n": 1,
+   "element": "EMBER",
+   "text": "Bond with an Ember Spirling"
+  },
+  {
+   "id": "fest_beat_tide",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "TIDE",
+   "text": "Beat 3 wild Tide Spirlings"
+  },
+  {
+   "id": "fest_bond_tide",
+   "event": "bond",
+   "n": 1,
+   "element": "TIDE",
+   "text": "Bond with a Tide Spirling"
+  },
+  {
+   "id": "fest_beat_bloom",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "BLOOM",
+   "text": "Beat 3 wild Bloom Spirlings"
+  },
+  {
+   "id": "fest_bond_bloom",
+   "event": "bond",
+   "n": 1,
+   "element": "BLOOM",
+   "text": "Bond with a Bloom Spirling"
+  },
+  {
+   "id": "fest_beat_volt",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "VOLT",
+   "text": "Beat 3 wild Volt Spirlings"
+  },
+  {
+   "id": "fest_bond_volt",
+   "event": "bond",
+   "n": 1,
+   "element": "VOLT",
+   "text": "Bond with a Volt Spirling"
+  },
+  {
+   "id": "fest_beat_stone",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "STONE",
+   "text": "Beat 3 wild Stone Spirlings"
+  },
+  {
+   "id": "fest_bond_stone",
+   "event": "bond",
+   "n": 1,
+   "element": "STONE",
+   "text": "Bond with a Stone Spirling"
+  },
+  {
+   "id": "fest_beat_gale",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "GALE",
+   "text": "Beat 3 wild Gale Spirlings"
+  },
+  {
+   "id": "fest_bond_gale",
+   "event": "bond",
+   "n": 1,
+   "element": "GALE",
+   "text": "Bond with a Gale Spirling"
+  },
+  {
+   "id": "fest_beat_lumen",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "LUMEN",
+   "text": "Beat 3 wild Lumen Spirlings"
+  },
+  {
+   "id": "fest_bond_lumen",
+   "event": "bond",
+   "n": 1,
+   "element": "LUMEN",
+   "text": "Bond with a Lumen Spirling"
+  },
+  {
+   "id": "fest_beat_umbra",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "UMBRA",
+   "text": "Beat 3 wild Umbra Spirlings"
+  },
+  {
+   "id": "fest_bond_umbra",
+   "event": "bond",
+   "n": 1,
+   "element": "UMBRA",
+   "text": "Bond with an Umbra Spirling"
   }
  ]
 }

@@ -1,6 +1,7 @@
 {
  "name": "Cinder Rift",
  "region": "veydal",
+ "biome": "rift",
  "backdrop": "ember",
  "field": "ash_storm",
  "encounters": "cinder_rift",

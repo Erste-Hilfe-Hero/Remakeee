@@ -34,6 +34,12 @@ var in_game: bool = false
 var party: Array[Spirling] = []
 ## Storage box for Spirlings beyond the party of 6.
 var storage: Array[Spirling] = []
+## Named storage boxes [{"name", "color"}] (plan area 1, item 375). Spirling.box points here.
+var storage_boxes: Array[Dictionary] = []
+## Extra boxes beyond STORAGE_BOXES_START (the shop's "+1 box" fills this, area 10).
+var storage_box_bonus: int = 0
+## Saved teams [{"name", "uids": [uid...]}], at most TEAM_PRESETS (item 378).
+var team_presets: Array[Dictionary] = []
 ## Iron Oath (item 15, opt-in at new game): Spirlings that faint retire to the Sanctuary.
 var iron_oath: bool = false
 var sanctuary: Array[Spirling] = []
@@ -51,6 +57,8 @@ var money: int = 0
 var waymarks: int = 0
 ## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
 var daily_tasks: Dictionary = {}
+## Festival ribbons per festival (see Festival.gd): "<id>_<year>" -> {"ribbons", "earned", "stages", "task"}.
+var festival_ribbons: Dictionary = {}
 ## Short reward notes waiting to be shown by the overworld (not saved).
 var notices: Array[String] = []
 
@@ -128,11 +136,13 @@ var known_matchups: Dictionary = {}
 
 ## Mended Rifts needed before the storage box opens from the menu (end of Act I).
 const RIFTS_FOR_STORAGE: int = 2
+## Story flag at the end of Act I ("Waiting for the Ferry" starts).
+const ACT1_END_FLAG: String = "aldo_dock_told"
 
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
 		return Spirling.MAX_LEVEL
-	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
+	return progress_cap()
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -143,7 +153,19 @@ func seal_rift(rift_id: String) -> bool:
 	# Rifts can be mended in any order; the second one opens storage from the menu.
 	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
 		set_flag("storage_remote")
+		# Achievement "Small Band": both Rifts mended with three Spirlings or fewer.
+		if party.size() + storage.size() <= 3:
+			records["small_band"] = 1
 	return true
+
+## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
+## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
+## After Act I (ACT1_END_FLAG) the cap opens to the full Spirling.MAX_LEVEL (plan 3287), so
+## Master Wayfarers and the endgame use the whole ring range.
+func progress_cap() -> int:
+	if has_flag(ACT1_END_FLAG):
+		return Spirling.MAX_LEVEL
+	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
@@ -286,6 +308,9 @@ func rumble_pads(strength: float, seconds: float) -> void:
 func reset() -> void:
 	party.clear()
 	storage.clear()
+	storage_boxes = default_boxes()
+	storage_box_bonus = 0
+	team_presets.clear()
 	iron_oath = false
 	sanctuary.clear()
 	spirlog.clear()
@@ -297,6 +322,7 @@ func reset() -> void:
 	money = 0
 	waymarks = 0
 	daily_tasks = {}
+	festival_ribbons = {}
 	notices.clear()
 	current_map = "lighthouse"
 	player_cell = Vector2i(4, 4)
@@ -353,11 +379,15 @@ func to_dict() -> Dictionary:
 		"rifts": rifts_sealed.duplicate(),
 		"party": party_d,
 		"storage": storage_d,
+		"storage_boxes": storage_boxes.duplicate(true),
+		"storage_box_bonus": storage_box_bonus,
+		"team_presets": team_presets.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
 		"inventory": inventory.duplicate(),
 		"money": money,
 		"waymarks": waymarks,
 		"daily_tasks": daily_tasks.duplicate(true),
+		"festival_ribbons": festival_ribbons.duplicate(true),
 		"map": current_map,
 		"cell": [player_cell.x, player_cell.y],
 		"facing": facing,
@@ -394,6 +424,7 @@ func from_dict(d: Dictionary) -> void:
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			storage.append(s)
+	_load_boxes(d)
 	for k: Variant in (d.get("spirlog", {}) as Dictionary):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
 	for k: Variant in (d.get("inventory", {}) as Dictionary):
@@ -404,6 +435,11 @@ func from_dict(d: Dictionary) -> void:
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
+	festival_ribbons = {}
+	for k: Variant in as_dict(d.get("festival_ribbons", {})):
+		var st: Dictionary = as_dict(d.festival_ribbons[k])
+		festival_ribbons[str(k)] = {"ribbons": maxi(0, as_int(st.get("ribbons", 0))), "earned": maxi(0, as_int(st.get("earned", 0))),
+			"stages": clampi(as_int(st.get("stages", 0)), 0, Festival.STAGES.size()), "task": as_dict(st.get("task", {})).duplicate(true)}
 	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))
@@ -427,6 +463,7 @@ func from_dict(d: Dictionary) -> void:
 		if sv[k] is int or sv[k] is float:
 			story_vars[str(k)] = int(sv[k])
 	story_choices = _as_dict(d.get("story_choices", {}))
+	story_fixups()
 	switch_progress = _as_dict(d.get("switches", {}))
 	world_state = _as_dict(d.get("world", {}))
 	iron_oath = bool(d.get("iron_oath", false))
@@ -493,6 +530,13 @@ static func ensure_buses() -> void:
 			AudioServer.set_bus_name(idx, bus)
 			AudioServer.set_bus_send(idx, &"Master")
 
+## Keeps older saves on the story path: saves that lit the lamp room before Act I got its
+## ending already have the ferry open (plan item 1405).
+func story_fixups() -> void:
+	if has_flag("mirela_lamp") and not has_flag("ferry_corvane_open"):
+		set_flag("ferry_corvane_open")
+		set_flag("scene_act1_finale_seen")
+
 ## A story number (0 if never set).
 func story_var(name: String) -> int:
 	return int(story_vars.get(name, 0))
@@ -530,6 +574,11 @@ func retire_fainted() -> Array[String]:
 			s.restore()
 			sanctuary.append(s)
 			names.append(s.display_name())
+			# Memorial book (plan 3397): name, ring, place and date of every retirement.
+			var book: Array = records.get("memorial", []) if records.get("memorial", []) is Array else []
+			book.append({"name": s.display_name(), "species": s.data.species_name, "level": s.level,
+				"map": current_map, "date": Time.get_date_string_from_unix_time(Online.unix_now())})
+			records["memorial"] = book
 	return names
 
 ## Fills an empty party from storage. Returns how many joined.
@@ -548,7 +597,7 @@ func break_oath() -> void:
 		if party.size() < MAX_PARTY:
 			party.append(s)
 		else:
-			storage.append(s)
+			_store(s, true)
 	sanctuary.clear()
 	set_flag("oath_broken")
 
@@ -571,14 +620,14 @@ func receive_spirling(s: Spirling) -> bool:
 	if party.size() < MAX_PARTY:
 		party.append(s)
 		return true
-	storage.append(s)
+	_store(s, true)
 	return false
 
 ## A Spirlog entry: seen and bonded, where and on which day it was first seen, and the
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "tempers": []}
+		"variants": [], "prism_seen": false, "tempers": [], "maps": [], "battles": 0}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -590,6 +639,12 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["seen"] = out.seen is bool and out.seen or out.bonded is bool and out.bonded
 	out["bonded"] = out.bonded is bool and out.bonded
 	out["first_day"] = int(out.first_day) if out.first_day is int or out.first_day is float else 0
+	out["battles"] = int(out.battles) if out.battles is int or out.battles is float else 0
+	out["first_map"] = out.first_map if out.first_map is String else ""
+	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
+	for k: String in ["variants", "tempers", "maps"]:
+		if not out[k] is Array:
+			out[k] = []
 	return out
 
 ## A copy of v if it is a Dictionary, else {} (saves can be damaged or edited).
@@ -622,7 +677,22 @@ func mark_seen(species: String, bonded: bool = false) -> void:
 	e["seen"] = true
 	if bonded:
 		e["bonded"] = true
+	if not current_map.is_empty() and not (e.maps as Array).has(current_map):
+		(e.maps as Array).append(current_map)
 	spirlog[species] = e
+
+## After a battle: each kind in the team counts one more battle travelled together
+## (its third Spirlog lore sentence opens after SpirlogBook.LORE_BATTLES).
+func note_battle_end() -> void:
+	var done: Dictionary = {}
+	for s: Spirling in party:
+		var sp: String = s.data.species_name
+		if done.has(sp):
+			continue
+		done[sp] = true
+		var e: Dictionary = upgrade_spirlog_entry(spirlog.get(sp, {}))
+		e["battles"] = int(e.battles) + 1
+		spirlog[sp] = e
 
 ## An Echo call ended with [param score]: a fully right call adds one to every team member's
 ## streak, a miss starts them over (unfold rule "echo_streak", Hushkin to Silentra).
@@ -743,8 +813,9 @@ static func can_learn_echo(s: Spirling, item_id: String) -> bool:
 	return mv.element in s.elements() and not s.moves.has(mv)
 
 ## Moves party member [param index] into storage. Keeps at least one healthy Spirling.
-func deposit(index: int) -> bool:
-	if index < 0 or index >= party.size() or party.size() <= 1:
+## With [param keep_keepsake] its keepsake goes back into the satchel (item 356).
+func deposit(index: int, keep_keepsake: bool = false) -> bool:
+	if index < 0 or index >= party.size() or party.size() <= 1 or storage.size() >= storage_capacity():
 		return false
 	var s: Spirling = party[index]
 	var healthy_left: int = 0
@@ -755,7 +826,10 @@ func deposit(index: int) -> bool:
 		return false
 	party.remove_at(index)
 	s.restore()
-	storage.append(s)
+	if keep_keepsake and not s.held.is_empty():
+		add_item(s.held)
+		s.held = ""
+	_store(s, true)
 	return true
 
 func withdraw(index: int) -> bool:
@@ -792,6 +866,205 @@ func storage_view(sort: int, element: int = -1, search: String = "") -> Array[in
 		2: idx.sort_custom(func(a: int, b: int) -> bool: return storage[a].display_name() < storage[b].display_name())
 		3: idx.sort_custom(func(a: int, b: int) -> bool: return storage[a].data.dex_id < storage[b].data.dex_id)
 	return idx
+
+# --- Storage boxes, favourites, release and team presets (plan area 1, items 375-382) ----
+
+const BOX_SIZE: int = 30
+const STORAGE_BOXES_START: int = 8
+## Most Spirlings one multi-select moves at once (item 376).
+const MULTI_MOVE_MAX: int = 10
+const TEAM_PRESETS: int = 6
+## Box colours the player can pick (UITheme tints by name).
+const BOX_COLORS: Array[String] = ["ink", "moss", "tide", "ember", "sun", "dusk", "stone", "rose"]
+
+static func default_boxes(count: int = STORAGE_BOXES_START) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for i: int in count:
+		out.append({"name": "Box %d" % (i + 1), "color": BOX_COLORS[i % BOX_COLORS.size()]})
+	return out
+
+func storage_box_count() -> int:
+	return STORAGE_BOXES_START + maxi(storage_box_bonus, 0)
+
+func storage_capacity() -> int:
+	return storage_box_count() * BOX_SIZE
+
+## Brings storage_boxes up to storage_box_count() (new shop boxes, old saves).
+func ensure_boxes() -> void:
+	while storage_boxes.size() < storage_box_count():
+		var i: int = storage_boxes.size()
+		storage_boxes.append({"name": "Box %d" % (i + 1), "color": BOX_COLORS[i % BOX_COLORS.size()]})
+
+func _load_boxes(d: Dictionary) -> void:
+	storage_box_bonus = maxi(0, int(d.storage_box_bonus)) if d.get("storage_box_bonus") is int or d.get("storage_box_bonus") is float else 0
+	storage_boxes.clear()
+	var raw: Variant = d.get("storage_boxes", [])
+	for b: Variant in (raw if raw is Array else []):
+		if b is Dictionary:
+			var color: String = str((b as Dictionary).get("color", "ink"))
+			storage_boxes.append({"name": str((b as Dictionary).get("name", "Box %d" % (storage_boxes.size() + 1))).left(BOX_NAME_MAX),
+				"color": color if color in BOX_COLORS else "ink"})
+	ensure_boxes()
+	team_presets.clear()
+	var pr: Variant = d.get("team_presets", [])
+	for p: Variant in (pr if pr is Array else []):
+		if p is Dictionary and (p as Dictionary).get("uids") is Array and team_presets.size() < TEAM_PRESETS:
+			var uids: Array = ((p as Dictionary).uids as Array).map(func(x: Variant) -> String: return str(x))
+			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY)})
+	# Old saves had one flat list: spread it over the boxes in order.
+	var fill: Array[int] = []
+	fill.resize(storage_boxes.size())
+	for s: Spirling in storage:
+		if s.box >= storage_boxes.size() or fill[s.box] >= BOX_SIZE:
+			s.box = _free_box(fill)
+		fill[s.box] += 1
+
+## First box index with room, given the current fill per box (last box if all are full).
+func _free_box(fill: Array[int]) -> int:
+	for i: int in fill.size():
+		if fill[i] < BOX_SIZE:
+			return i
+	return maxi(fill.size() - 1, 0)
+
+const BOX_NAME_MAX: int = 16
+
+func box_fill() -> Array[int]:
+	var fill: Array[int] = []
+	fill.resize(maxi(storage_boxes.size(), 1))
+	for s: Spirling in storage:
+		if s.box < fill.size():
+			fill[s.box] += 1
+	return fill
+
+## Storage indices of the Spirlings in box [param box].
+func box_members(box: int) -> Array[int]:
+	var out: Array[int] = []
+	for i: int in storage.size():
+		if storage[i].box == box:
+			out.append(i)
+	return out
+
+func rename_box(box: int, new_name: String) -> void:
+	if box >= 0 and box < storage_boxes.size() and not new_name.strip_edges().is_empty():
+		storage_boxes[box]["name"] = new_name.strip_edges().left(BOX_NAME_MAX)
+
+func recolor_box(box: int) -> String:
+	if box < 0 or box >= storage_boxes.size():
+		return ""
+	var i: int = BOX_COLORS.find(str(storage_boxes[box].color))
+	storage_boxes[box]["color"] = BOX_COLORS[(i + 1) % BOX_COLORS.size()]
+	return str(storage_boxes[box].color)
+
+## Puts a Spirling into storage, in the first box with room. False when storage is full.
+func _store(s: Spirling, force: bool = false) -> bool:
+	ensure_boxes()
+	if storage.size() >= storage_capacity() and not force:
+		return false
+	s.box = _free_box(box_fill())
+	storage.append(s)
+	return true
+
+## Moves up to MULTI_MOVE_MAX storage Spirlings into [param box] (item 376). Favourites only
+## move when [param include_favorites] is set (one at a time, after asking). Returns how many moved.
+func move_to_box(indices: Array[int], box: int, include_favorites: bool = false) -> int:
+	if box < 0 or box >= storage_boxes.size():
+		return 0
+	var room: int = BOX_SIZE - box_fill()[box]
+	var moved: int = 0
+	for i: int in indices:
+		if moved >= MULTI_MOVE_MAX or room <= 0:
+			break
+		if i < 0 or i >= storage.size() or storage[i].box == box:
+			continue
+		if storage[i].favorite and not include_favorites:
+			continue
+		storage[i].box = box
+		moved += 1
+		room -= 1
+	return moved
+
+func toggle_favorite(s: Spirling) -> bool:
+	s.favorite = not s.favorite
+	return s.favorite
+
+## Releases storage Spirling [param index] back to where it was found (item 379).
+## Never a favourite; only from storage, so the team always keeps its healthy members.
+## Returns the goodbye line, or "" when it cannot be released.
+func release(index: int) -> String:
+	if index < 0 or index >= storage.size() or storage[index].favorite:
+		return ""
+	var s: Spirling = storage[index]
+	storage.remove_at(index)
+	if not s.held.is_empty():
+		add_item(s.held)
+		s.held = ""
+	var home: String = Spirling.place_name(s.origin_map) if not s.origin_map.is_empty() else ""
+	if home.is_empty():
+		return "%s looks back once, then runs off into the grass." % s.display_name()
+	return "%s looks back once, then heads home to %s." % [s.display_name(), home]
+
+## Saves the current team as preset [param slot] (item 378).
+func save_preset(slot: int, preset_name: String = "") -> bool:
+	if slot < 0 or slot >= TEAM_PRESETS or party.is_empty():
+		return false
+	var uids: Array = []
+	for s: Spirling in party:
+		uids.append(s.uid)
+	var entry: Dictionary = {"name": preset_name if not preset_name.is_empty() else "Team %d" % (slot + 1), "uids": uids}
+	while team_presets.size() <= slot:
+		team_presets.append({"name": "", "uids": []})
+	team_presets[slot] = entry
+	return true
+
+## The team preset [param slot] would give, from party and storage, or [] if it cannot load.
+func preset_team(slot: int) -> Array[Spirling]:
+	var out: Array[Spirling] = []
+	if slot < 0 or slot >= team_presets.size():
+		return out
+	for u: Variant in team_presets[slot].get("uids", []):
+		var s: Spirling = _find_uid(str(u))
+		if s != null and not out.has(s):
+			out.append(s)
+	return out
+
+func _find_uid(u: String) -> Spirling:
+	if u.is_empty():
+		return null
+	for s: Spirling in party + storage:
+		if s.uid == u:
+			return s
+	return null
+
+## Loads preset [param slot] with one tap at a spring: members come out of storage, the rest
+## rests. Never leaves the team without a healthy member and never overfills storage.
+func load_preset(slot: int) -> bool:
+	var team: Array[Spirling] = preset_team(slot)
+	if team.is_empty():
+		return false
+	var healthy: bool = false
+	for s: Spirling in team:
+		if not s.is_fainted() or storage.has(s):
+			healthy = true
+	if not healthy:
+		return false
+	var leaving: Array[Spirling] = []
+	for s: Spirling in party:
+		if not team.has(s):
+			leaving.append(s)
+	var arriving: int = 0
+	for s: Spirling in team:
+		if storage.has(s):
+			arriving += 1
+	if storage.size() - arriving + leaving.size() > storage_capacity():
+		return false
+	for s: Spirling in team:
+		if storage.has(s):
+			storage.erase(s)
+	for s: Spirling in leaving:
+		s.restore()
+		_store(s, true)
+	party.assign(team)
+	return true
 
 ## Swaps two party slots (reordering; slot 0 leads in battle).
 func swap_party(a: int, b: int) -> void:

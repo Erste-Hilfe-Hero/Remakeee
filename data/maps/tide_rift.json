@@ -1,6 +1,7 @@
 {
  "name": "Tidewater Rift",
  "region": "veydal",
+ "biome": "rift",
  "backdrop": "lake",
  "field": "high_tide",
  "encounters": "tide_rift",

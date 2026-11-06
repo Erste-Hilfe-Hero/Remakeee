@@ -1,6 +1,7 @@
 {
  "name": "Murk Hollow",
  "region": "veydal",
+ "biome": "cave",
  "backdrop": "ridge",
  "field": "deep_murk",
  "encounters": "murk_hollow",
@@ -218,11 +219,6 @@
    "dialogue": "murk_hollow/sign_old"
   },
   {
-   "x": 2,
-   "y": 2,
-   "dialogue": "murk_hollow/gallery_find"
-  },
-  {
    "x": 6,
    "y": 1,
    "dialogue": "murk_hollow/lamp_1"
@@ -236,11 +232,6 @@
    "x": 1,
    "y": 3,
    "dialogue": "murk_hollow/lamp_3"
-  },
-  {
-   "x": 10,
-   "y": 1,
-   "dialogue": "murk_hollow/nook_find"
   },
   {
    "x": 8,
@@ -266,6 +257,24 @@
    "x": 7,
    "y": 2,
    "open_flag": "hollow_lamps"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 2,
+   "y": 2,
+   "item": "spark_coil",
+   "count": 1,
+   "flag": "hollow_find",
+   "dialogue": "murk_hollow/gallery_find"
+  },
+  {
+   "x": 10,
+   "y": 1,
+   "item": "echo_umbra",
+   "count": 1,
+   "flag": "hollow_nook_find",
+   "dialogue": "murk_hollow/nook_find"
   }
  ]
 }
