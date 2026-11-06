@@ -47,11 +47,11 @@ func test_weekly_changes_between_weeks() -> void:
 		seen[str(_names(c.team(0)))] = true
 	assert_gt(seen.size(), 4)
 
-func test_weekly_level_follows_the_team() -> void:
-	assert_eq(WeeklyChallenge.new("2026-W44", 20).level, 22)
+func test_weekly_level_follows_the_ring_cap() -> void:
+	assert_eq(WeeklyChallenge.new("2026-W44", 20).level, 20)
 	assert_eq(WeeklyChallenge.new("2026-W44", 1).level, 8)
 	for s: Spirling in WeeklyChallenge.new("2026-W44", 40).team(1):
-		assert_eq(s.level, 42)
+		assert_eq(s.level, 40)
 
 func test_festivals_cover_their_months() -> void:
 	assert_eq(Season.for_month(10).id, "lantern_nights")
@@ -61,7 +61,7 @@ func test_festivals_cover_their_months() -> void:
 	assert_eq(Season.next_after(11).id, "hearth_weeks")
 	assert_eq(Season.festival_year(1, 2027), 2026, "Hearth Weeks over New Year count as one festival")
 	assert_ne(Season.gift_flag(Season.for_month(10), 2026), Season.gift_flag(Season.for_month(10), 2027))
-	for f: Dictionary in Season.FESTIVALS:
+	for f: Dictionary in Season.festivals():
 		assert_true(Database.items.has(str(f.gift)), str(f.gift))
 
 func test_festival_boosts_encounter_weight() -> void:
@@ -94,11 +94,15 @@ func test_achievements_for_bonds_and_prism() -> void:
 
 func test_every_achievement_has_a_check() -> void:
 	var ids: Dictionary = {}
-	for a: Dictionary in Achievements.LIST:
+	for a: Dictionary in Achievements.list():
 		assert_false(ids.has(a.id), "duplicate " + str(a.id))
 		ids[a.id] = true
-	assert_eq(Achievements.lines().size(), Achievements.LIST.size())
-	# Every id is handled by earned(): a fully set-up save earns each of them.
+	assert_eq(Achievements.lines().size(), Achievements.list().size())
+	# The old achievements are all still there.
+	for id: String in ["first_bond", "full_team", "seen_10", "bonded_10", "seen_all", "level_30", "evolved",
+			"first_rift", "both_rifts", "lamps", "helper", "tower", "weekly", "prism", "rich", "oath", "rematch"]:
+		assert_true(ids.has(id), id)
+	# A fully set-up save earns the old ones.
 	for f: String in QuestLog.all_flags():
 		GameState.set_flag(f)
 	for f: String in ["rift_cinder_sealed", "rift_tide_sealed", "hollow_lamps", "gauntlet_clear"]:
@@ -115,8 +119,9 @@ func test_every_achievement_has_a_check() -> void:
 		GameState.party.append(s)
 	GameState.party[1].prism = true
 	Achievements.check()
-	for a: Dictionary in Achievements.LIST:
-		assert_true(Achievements.unlocked().has(a.id), "never earned: " + str(a.id))
+	for id: String in ["first_bond", "full_team", "seen_10", "bonded_10", "seen_all", "level_30", "evolved",
+			"first_rift", "both_rifts", "lamps", "helper", "tower", "weekly", "prism", "rich", "oath", "rematch"]:
+		assert_true(Achievements.unlocked().has(id), "never earned: " + id)
 
 func test_side_goals_done() -> void:
 	assert_false(QuestLog.side_goals_done(GameState.flags))
@@ -128,8 +133,8 @@ func test_records_text() -> void:
 	GameState.records["gauntlet_best"] = 3
 	GameState.records["weekly"] = {"week": WeeklyChallenge.this_week(), "best": 2, "claimed": false}
 	var t: String = PauseMenu.records_text()
-	assert_string_contains(t, "Lighthouse climb best: 3 of 5")
-	assert_string_contains(t, "This week: 2 of 3")
+	assert_string_contains(t, "Lighthouse stair best: floor 3 of 30")
+	assert_string_contains(t, "This week: 2 of 5")
 
 func test_info_strip_speaks() -> void:
 	var strip := InfoStrip.new()

@@ -101,7 +101,7 @@ func test_collection_goals_pay_once() -> void:
 		GameState.mark_seen(n, true)
 	var before: int = GameState.item_count("strong_tonic")
 	var lines: Array[String] = Collection.claim()
-	assert_eq(lines.size(), 2, "3 and 5 kinds reached (6 with the starter)")
+	assert_eq(lines.filter(func(l: String) -> bool: return l.begins_with("Spirlog goal")).size(), 2, "3 and 5 kinds reached (6 with the starter)")
 	assert_eq(GameState.item_count("strong_tonic"), before + 2)
 	assert_eq(GameState.item_count("revival_leaf"), 1)
 	assert_true(Collection.claim().is_empty(), "no double pay")
@@ -111,8 +111,11 @@ func test_collection_completion_gives_money() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		GameState.mark_seen(sd.species_name, true)
 	var money: int = GameState.money
+	var paid: int = 0
+	for g: Dictionary in Collection.GOALS:
+		paid += int(g.get("money", 0))
 	Collection.claim()
-	assert_eq(GameState.money, money + 5000)
+	assert_eq(GameState.money, money + paid)
 	assert_true(Collection.next_goal(GameState.spirlog, Database.spirlings.size()).is_empty())
 	for g: Dictionary in Collection.GOALS:
 		if str(g.item) != "":

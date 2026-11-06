@@ -9,7 +9,7 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online"]
-SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
+SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
 def looks_like_text(s):
@@ -45,18 +45,35 @@ def strings():
             elif isinstance(v, dict):
                 found += v.get("lines", [])
                 af = v.get("after_flag")
-                if isinstance(af, dict):
-                    found += af.get("lines", [])
+                for alt in (af if isinstance(af, list) else [af]):
+                    if isinstance(alt, dict):
+                        found += alt.get("lines", [])
+                for c in v.get("choices", []) or []:
+                    if isinstance(c, dict) and isinstance(c.get("text"), str):
+                        found.append(c["text"])
+                if isinstance(v.get("speaker"), str) and "{" not in v["speaker"]:
+                    found.append(v["speaker"])
                 for k2 in ("text", "lose_lines", "win_lines", "before_lines", "after_lines"):
                     x = v.get(k2)
                     if isinstance(x, list):
                         found += x
                     elif isinstance(x, str):
                         found.append(x)
+    sd = os.path.join(ROOT, "data/scenes")
+    for f in sorted(os.listdir(sd)) if os.path.isdir(sd) else []:
+        if not f.endswith(".json"):
+            continue
+        for step in json.load(open(os.path.join(sd, f))).get("steps", []):
+            for k in ("say", "letter"):
+                x = step.get(k)
+                found += x if isinstance(x, list) else ([x] if isinstance(x, str) else [])
+            for k in ("speaker", "card", "title"):
+                if isinstance(step.get(k), str) and "{" not in step[k]:
+                    found.append(step[k])
     quests = json.load(open(os.path.join(ROOT, "data/quests.json")))
     for group in quests.values():
         for q in group if isinstance(group, list) else []:
-            for k in ("title", "chapter", "text", "where", "hint"):
+            for k in ("title", "act", "chapter", "text", "where", "hint"):
                 if isinstance(q.get(k), str):
                     found.append(q[k])
     items = json.load(open(os.path.join(ROOT, "data/items.json")))
@@ -72,6 +89,25 @@ def strings():
         for k in ("habitat", "lore", "origin"):
             if isinstance(sp.get(k), str) and sp[k]:
                 found.append(sp[k])
+    lore = os.path.join(ROOT, "data/spirlog_lore.json")
+    if os.path.exists(lore):
+        for k, v in json.load(open(lore)).items():
+            if not k.startswith("_") and isinstance(v, str):
+                found.append(v)
+    for a in json.load(open(os.path.join(ROOT, "data/achievements.json"))).get("achievements", []):
+        for k in ("title", "text"):
+            if isinstance(a.get(k), str):
+                found.append(a[k])
+    for m in json.load(open(os.path.join(ROOT, "data/endgame.json"))).get("masters", []):
+        if isinstance(m.get("title"), str):
+            found.append(m["title"])
+    ev = os.path.join(ROOT, "data/events.json")
+    if os.path.exists(ev):
+        for group in json.load(open(ev)).values():
+            for t in group if isinstance(group, list) else []:
+                for k in ("text", "name", "desc"):
+                    if isinstance(t.get(k), str):
+                        found.append(t[k])
     for sd in SCRIPT_DIRS:
         for dp, _, fs in os.walk(os.path.join(ROOT, sd)):
             for f in sorted(fs):

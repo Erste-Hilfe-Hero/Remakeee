@@ -69,6 +69,10 @@ var variant: String = ""
 var origin_map: String = ""
 var met_ring: int = 0
 var met_day: int = 0
+## Storage box this Spirling rests in (GameState.storage_boxes index) and the favourite mark:
+## favourites are never released and never moved by a multi-select (plan area 1, items 375-377).
+var box: int = 0
+var favorite: bool = false
 ## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
@@ -96,7 +100,27 @@ func display_name() -> String:
 	return nickname if not nickname.is_empty() else data.species_name
 
 func elements() -> Array[int]:
+	var v: Dictionary = variant_info()
+	if not v.is_empty() and not (v.elements as Array).is_empty():
+		return v.elements
 	return data.elements
+
+## The regional imprint this Spirling shows ("variant" = region id), or {} (items 218-219).
+func variant_info() -> Dictionary:
+	if variant.is_empty() or data == null:
+		return {}
+	for v: Dictionary in data.variants:
+		if str(v.region) == variant:
+			return v
+	return {}
+
+## Takes on the imprint of [param region] if this kind has one there. True when it changed.
+func apply_imprint(region: String) -> bool:
+	for v: Dictionary in data.variants:
+		if str(v.region) == region and variant != region:
+			variant = region
+			return true
+	return false
 
 func _curve(base: int, key: String, offset: float, div: float) -> int:
 	var s: float = float(base) + float(spark.get(key, 0)) * SPARK_WEIGHT
@@ -382,6 +406,8 @@ func to_dict() -> Dictionary:
 		"met_day": met_day,
 		"lineage": lineage.duplicate(),
 		"echo_streak": echo_streak,
+		"box": box,
+		"favorite": favorite,
 	}
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -392,12 +418,13 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var s := Spirling.new()
 	s.data = sd
 	s.nickname = str(d.get("nickname", ""))
-	s.level = clampi(int(d.get("level", 1)), 1, MAX_LEVEL)
-	s.xp = int(d.get("xp", xp_for_level(s.level)))
-	var sp: Dictionary = d.get("spark", {})
+	s.level = clampi(_num(d.get("level"), 1), 1, MAX_LEVEL)
+	s.xp = _num(d.get("xp"), xp_for_level(s.level))
+	var sp: Variant = d.get("spark", {})
 	for key: String in STAT_KEYS:
-		s.spark[key] = clampi(int(sp.get(key, 0)), 0, SPARK_MAX)
-	for move_name: Variant in d.get("moves", []):
+		s.spark[key] = clampi(_num((sp as Dictionary).get(key) if sp is Dictionary else 0, 0), 0, SPARK_MAX)
+	var mv: Variant = d.get("moves", [])
+	for move_name: Variant in (mv if mv is Array else []):
 		var md: MoveData = Database.move(str(move_name))
 		if md != null:
 			s.moves.append(md)
@@ -405,17 +432,27 @@ static func from_dict(d: Dictionary) -> Spirling:
 		s.moves = sd.default_moves(s.level, MAX_MOVES)
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
-	s.prism = bool(d.get("prism", false))
+	s.prism = d.get("prism") is bool and d.get("prism")
 	# Saves before version 4 have no "temper": keep the one the uid gave them back then.
 	s.temper = str(d.get("temper", legacy_temper(s.uid)))
 	if not temper_info(s.temper).id == s.temper:
 		s.temper = legacy_temper(s.uid)
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
-	s.met_ring = int(d.get("met_ring", 0))
-	s.met_day = int(d.get("met_day", 0))
+	s.met_ring = _num(d.get("met_ring"), 0)
+	s.met_day = _num(d.get("met_day"), 0)
 	var lin: Variant = d.get("lineage", [])
-	s.lineage.assign((lin if lin is Array else []).map(func(x: Variant) -> String: return str(x)))
-	s.echo_streak = maxi(0, int(d.get("echo_streak", 0)))
-	s.hp = clampi(int(d.get("hp", s.max_hp())), 0, s.max_hp())
+	s.lineage.assign((lin as Array).map(func(x: Variant) -> String: return str(x)) if lin is Array else [])
+	s.echo_streak = maxi(0, _num(d.get("echo_streak"), 0))
+	s.box = maxi(0, _num(d.get("box"), 0))
+	s.favorite = d.get("favorite") is bool and d.get("favorite")
+	s.hp = clampi(_num(d.get("hp"), s.max_hp()), 0, s.max_hp())
 	return s
+
+## A save number as int; anything that is not a finite number in int range gives [param fallback].
+static func _num(v: Variant, fallback: int) -> int:
+	if v is int:
+		return v
+	if v is float and is_finite(v) and absf(v) < 9.0e18:
+		return int(v)
+	return fallback

@@ -103,6 +103,32 @@ static func _check_species_fields(s: Dictionary, sname: String, species_names: D
 			errors.append("spirling '%s': bond_rate %.2f outside %s band %.2f-%.2f" % [sname, br, rarity, band.x, band.y])
 	if not str(s.get("region", "")) in SpirlingData.REGIONS:
 		errors.append("spirling '%s': unknown region '%s'" % [sname, s.get("region", "")])
+	var motif: Variant = s.get("cry_motif", [])
+	if not motif is Array or (motif as Array).size() != 2 or int(motif[0]) == int(motif[1]) \
+			or int(motif[0]) < 0 or int(motif[1]) < 0 or int(motif[0]) >= BondEcho.MARKS or int(motif[1]) >= BondEcho.MARKS:
+		errors.append("spirling '%s': cry_motif must be two different marks 0..%d" % [sname, BondEcho.MARKS - 1])
+	var hint: String = str(s.get("keepsake_hint", ""))
+	if hint.is_empty() or not _held_items().has(hint):
+		errors.append("spirling '%s': keepsake_hint '%s' is not an item a Spirling can hold" % [sname, hint])
+	for v: Variant in s.get("variants", []):
+		if not v is Dictionary:
+			errors.append("spirling '%s': variants entries must be objects" % sname)
+			continue
+		var vd: Dictionary = v
+		var vr: String = str(vd.get("region", ""))
+		if not vr in SpirlingData.REGIONS or vr == str(s.get("region", "veydal")):
+			errors.append("spirling '%s': variant region '%s' must be another region" % [sname, vr])
+		var vels: Variant = vd.get("elements", [])
+		if not vels is Array or (vels as Array).is_empty() or (vels as Array).size() > 2:
+			errors.append("spirling '%s': variant needs one or two elements" % sname)
+		else:
+			for e: Variant in vels:
+				if not _valid_element(str(e)):
+					errors.append("spirling '%s': variant element '%s' unknown" % [sname, e])
+		if not BattleRules.TRAITS.has(str(vd.get("trait", ""))):
+			errors.append("spirling '%s': variant trait '%s' unknown" % [sname, vd.get("trait", "")])
+		if str(vd.get("palette", "")).is_empty() or str(vd.get("lore", "")).strip_edges().is_empty():
+			errors.append("spirling '%s': variant needs a palette and lore" % sname)
 	if not str(s.get("role", "")) in SpirlingData.ROLES:
 		errors.append("spirling '%s': unknown role '%s'" % [sname, s.get("role", "")])
 	if str(s.get("origin", "")).strip_edges().is_empty():
@@ -162,6 +188,9 @@ static func _check_reachable(spirlings_raw: Array, encounters_path: String, erro
 					reach[to] = true
 					grew = true
 	for s: Variant in spirlings_raw:
+		# Kinds of regions that are not playable yet (Corvane, Ashmere, Solenne) wait in the data.
+		if s is Dictionary and str(s.get("region", "veydal")) in SpirlingData.REGIONS and str(s.get("region", "veydal")) != "veydal":
+			continue
 		if s is Dictionary and not reach.has(str(s.get("name", ""))):
 			errors.append("spirling '%s': can't be met anywhere (no encounter, starter, unfold or fixed meeting)" % s.get("name", ""))
 
@@ -177,3 +206,16 @@ static func _load_json(path: String, errors: PackedStringArray) -> Variant:
 		errors.append("%s:%d: %s" % [path, json.get_error_line(), json.get_error_message()])
 		return null
 	return json.data
+
+## Ids of items a Spirling can hold (items.json entries with a "held" block).
+static func _held_items() -> Dictionary:
+	var out: Dictionary = {}
+	var path: String = "res://data/items.json"
+	if not FileAccess.file_exists(path):
+		return out
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	var list: Array = raw if raw is Array else ((raw as Dictionary).values() if raw is Dictionary else [])
+	for it: Variant in list:
+		if it is Dictionary and (it as Dictionary).has("held"):
+			out[str((it as Dictionary).get("id", ""))] = true
+	return out

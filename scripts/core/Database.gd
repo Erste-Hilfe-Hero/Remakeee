@@ -108,6 +108,19 @@ static func _load_spirlings() -> void:
 		sd.rarity = str(s.get("rarity", "common"))
 		sd.region = str(s.get("region", "veydal"))
 		sd.role = str(s.get("role", ""))
+		sd.keepsake_hint = str(s.get("keepsake_hint", ""))
+		sd.variants.clear()
+		for v: Variant in s.get("variants", []):
+			if v is Dictionary:
+				var els: Array[int] = []
+				for e: Variant in (v as Dictionary).get("elements", []):
+					if Elements.E.has(str(e)):
+						els.append(Elements.E[str(e)])
+				sd.variants.append({"region": str(v.get("region", "")), "elements": els, "palette": str(v.get("palette", "")),
+					"lore": str(v.get("lore", "")), "trait": str(v.get("trait", ""))})
+		sd.cry_motif.clear()
+		for m: Variant in s.get("cry_motif", []):
+			sd.cry_motif.append(int(m))
 		sd.origin = str(s.get("origin", ""))
 		sd.line_id = str(s.get("line_id", str(s.name).to_lower()))
 		sd.lore = str(s.get("lore", ""))
@@ -152,7 +165,11 @@ static func _link_unfold(sd: SpirlingData, s: Dictionary) -> void:
 		if to == null:
 			push_error("Database: %s unfolds into unknown %s" % [sd.species_name, p.get("to", "")])
 			continue
-		sd.unfold.append({"to": to, "rule": str(p.get("rule", "ring")), "value": p.get("value", 0), "map": str(p.get("map", ""))})
+		var v: Variant = p.get("value", 0)
+		# JSON numbers arrive as floats; rule values are whole numbers or ids.
+		if v is float and is_equal_approx(v, round(v)):
+			v = int(v)
+		sd.unfold.append({"to": to, "rule": str(p.get("rule", "ring")), "value": v, "map": str(p.get("map", ""))})
 	if sd.unfold.is_empty():
 		return
 	var first: Dictionary = sd.unfold[0]
