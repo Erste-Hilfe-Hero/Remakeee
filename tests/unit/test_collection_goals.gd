@@ -44,7 +44,7 @@ func test_rewards_are_only_game_items_coins_or_titles() -> void:
 			kinds += 1
 		assert_gt(kinds, 0, "%s pays something" % g.id)
 		for k: String in g:
-			assert_true(k in ["id", "bonded", "region", "item", "count", "money", "title", "label"], "%s: unknown reward '%s'" % [g.id, k])
+			assert_true(k in ["id", "bonded", "region", "item", "count", "money", "title", "label", "waymarks"], "%s: unknown reward '%s'" % [g.id, k])
 
 func test_region_goal_counts_only_that_region_and_gives_a_title() -> void:
 	var n: int = 0

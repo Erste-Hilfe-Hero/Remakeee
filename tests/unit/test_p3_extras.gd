@@ -101,7 +101,7 @@ func test_collection_goals_pay_once() -> void:
 		GameState.mark_seen(n, true)
 	var before: int = GameState.item_count("strong_tonic")
 	var lines: Array[String] = Collection.claim()
-	assert_eq(lines.size(), 2, "3 and 5 kinds reached (6 with the starter)")
+	assert_eq(lines.filter(func(l: String) -> bool: return l.begins_with("Spirlog goal")).size(), 2, "3 and 5 kinds reached (6 with the starter)")
 	assert_eq(GameState.item_count("strong_tonic"), before + 2)
 	assert_eq(GameState.item_count("revival_leaf"), 1)
 	assert_true(Collection.claim().is_empty(), "no double pay")
