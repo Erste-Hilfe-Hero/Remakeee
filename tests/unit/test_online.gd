@@ -247,3 +247,27 @@ func test_losing_the_connection_while_playing_pauses_and_recovers() -> void:
 	assert_false(Online._overlay.visible)
 	assert_false(get_tree().paused)
 	GameState.in_game = false
+
+## Item 438 (plan area 1): no Spirling, Echo Core or Hallkind can ever be traded, gifted or
+## bought. Gifts, goal rewards and the exchange hand out bag items only, the server has no
+## function that moves a Spirling between players, and Echo Cores are no bag item.
+func test_spirlings_and_echo_cores_never_change_hands() -> void:
+	var cfg: Dictionary = LocalBackend.DEFAULT_CONFIG
+	var handed: Array[String] = []
+	for e: Dictionary in cfg.gift_table:
+		handed.append(str(e.item))
+	for it: Variant in cfg.goal_rewards:
+		handed.append(str(it))
+	for o: Dictionary in Exchange.all_offers():
+		handed.append(str(o.item))
+	for id: String in handed:
+		assert_true(Database.items.has(id), "%s is a bag item" % id)
+		assert_null(Database.species(id), "%s is no Spirling" % id)
+	for id: Variant in Database.items:
+		assert_false(str(id).contains("core") or str(id).contains("hall"), "Echo Cores are no item: %s" % id)
+		assert_null(Database.species(str(id)), "no item shares a Spirling's name: %s" % id)
+	for fn: String in _server._fns:
+		for bad: String in ["spirling", "trade", "core", "buy", "sell", "release"]:
+			assert_false(fn.contains(bad), "server function %s must not move Spirlings" % fn)
+	# Mail carries only phrases, waves and thanks; gifts are rolled by the server.
+	assert_eq(_server._fn_mail_send({"p_kind": "spirling", "p_code": "X", "p_phrase": 0}).get("error", ""), "bad_kind")
