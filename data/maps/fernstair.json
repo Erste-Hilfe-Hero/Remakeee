@@ -1,6 +1,7 @@
 {
  "name": "Fernstair",
  "region": "veydal",
+ "biome": "fern",
  "backdrop": "field",
  "outdoor": true,
  "encounters": "fernstair",
@@ -96,11 +97,6 @@
    "dialogue": "fernstair/sign_top"
   },
   {
-   "x": 10,
-   "y": 5,
-   "dialogue": "fernstair/rock_find"
-  },
-  {
    "x": 1,
    "y": 14,
    "dialogue": "story/find_2",
@@ -133,6 +129,37 @@
     8,
     6
    ]
+  }
+ ],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 5,
+   "item": "kin_charm",
+   "count": 2,
+   "flag": "fern_rock_find",
+   "dialogue": "fernstair/rock_find"
+  },
+  {
+   "x": 0,
+   "y": 13,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_fern_west"
+  },
+  {
+   "x": 11,
+   "y": 22,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_fern_south"
+  },
+  {
+   "x": 2,
+   "y": 24,
+   "item": "cooling_gel",
+   "count": 1,
+   "flag": "find_fern_gate"
   }
  ]
 }
