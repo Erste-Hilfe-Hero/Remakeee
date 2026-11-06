@@ -114,5 +114,11 @@
  ],
  "fenn_defeat": [
   "Fenn: The light turned on me. Well played."
- ]
+ ],
+ "campfire": {
+  "lines": [
+   "A ring of stones with a small fire. Someone keeps it going for travellers."
+  ],
+  "action": "camp"
+ }
 }
