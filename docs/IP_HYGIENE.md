@@ -119,3 +119,5 @@ or Latin-ish coinages of our own.
 | Seamlet / Mendlace | spark with a needle tail, then a shadow tailor inside a thread loop | banned list OK, own design, cry from Cry.gd (2026-11-06) |
 | Croziel / Frondmere | fiddlehead fern on root feet, then a deer whose antlers are fern fronds | banned list OK, own design, cry from Cry.gd (2026-11-06) |
 | Brinelet / Saltspire | salt crystal cluster, then a walking salt pillar with a crown | banned list OK, own design, cry from Cry.gd (2026-11-06) |
+
+The 40 kinds of Corvane, Ashmere and Solenne (items 61-63) follow the same check. Their names are built from plain words of their places (mill, reed, cog, glass, etch, salt, orrery, dune) and were run through `tools/ip_check.sh`. Their sprites are generated placeholders (round body, head, ears, crest or wings) until real designs are drawn. Regional imprints (items 218-219) are our own idea: a regional form keeps the Spirlog number and only changes elements, palette and lore, it is not a separate kind and no foreign terms are used for it.

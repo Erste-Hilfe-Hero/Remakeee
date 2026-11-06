@@ -72,9 +72,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 60. [P3] Schreibe eine Spirlog-Fußnote für Scrivane, dass seine Tintenlinien Mirelas Handschrift ähneln, als leisen Hinweis auf Akt II.
 
 ### Neue Spirlings für Corvane, Ashmere und Solenne
-61. [P1] Lege für Corvane (Era II, Flussdelta mit Mühlen und Regen) acht Linien fest und trage sie mit "region": "corvane" und Platzhalter-Sprites in die Daten ein, auch wenn die Region noch nicht spielbar ist.
-62. [P1] Lege für Ashmere (Era III, Aschemoor mit Glashütten und Kupferstichen) sechs Linien fest und trage sie mit "region": "ashmere" und Platzhalter-Sprites ein.
-63. [P1] Lege für Solenne (Era IV, sonnige Hochebene mit Sternwarten und Salzseen) sechs Linien fest und trage sie mit "region": "solenne" und Platzhalter-Sprites ein.
+61. [x] [P1] Lege für Corvane (Era II, Flussdelta mit Mühlen und Regen) acht Linien fest und trage sie mit "region": "corvane" und Platzhalter-Sprites in die Daten ein, auch wenn die Region noch nicht spielbar ist.
+62. [x] [P1] Lege für Ashmere (Era III, Aschemoor mit Glashütten und Kupferstichen) sechs Linien fest und trage sie mit "region": "ashmere" und Platzhalter-Sprites ein.
+63. [x] [P1] Lege für Solenne (Era IV, sonnige Hochebene mit Sternwarten und Salzseen) sechs Linien fest und trage sie mit "region": "solenne" und Platzhalter-Sprites ein.
 64. [x] [P1] Blende Arten aus noch nicht spielbaren Regionen im Spirlog und in Sammelzielen aus (Filter über GameState-Flag region_open_<id>), damit die Zahl "alle Arten" erreichbar bleibt.
 65. [P2] Corvane: Füge die Linie Drizzlet (Tide, Rolle striker) und Pluvane hinzu, ein Regentropfen, der nie den Boden berührt und in den Dachrinnen der Mühlenstadt wohnt.
 66. [P2] Corvane: Füge die Linie Millgrit (Stone/Gale, Rolle bulwark) und Grindsail hinzu, ein Sandkorn aus den Mahlsteinen, das mit den Windmühlenflügeln wächst.
@@ -239,8 +239,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 217. [P3] Lass den Spieler einem Hallkind beim Erwachen gleich einen Spitznamen geben, mit dem bestehenden NameKeyboard.
 
 ### Ortsprägungen (regionale Varianten)
-218. [P1] Lege die Mechanik "Ortsprägung" fest: eine Veydal-Art, die lange in einer anderen Region lebt, zeigt dort eine eigene Form mit geändertem Element und neuer Farbe, gespeichert im Feld "variant".
-219. [P1] Lege in data/spirlings.json ein Feld "variants" pro Art an ({"region", "elements", "palette", "lore", "trait"}), das ohne neue Art-Nummer auskommt.
+218. [x] [P1] Lege die Mechanik "Ortsprägung" fest: eine Veydal-Art, die lange in einer anderen Region lebt, zeigt dort eine eigene Form mit geändertem Element und neuer Farbe, gespeichert im Feld "variant".
+219. [x] [P1] Lege in data/spirlings.json ein Feld "variants" pro Art an ({"region", "elements", "palette", "lore", "trait"}), das ohne neue Art-Nummer auskommt.
 220. [P2] Gib Kindlop eine Corvane-Prägung (Ember/Tide), die im Regen glimmt statt zu erlöschen.
 221. [P2] Gib Mossling eine Ashmere-Prägung (Bloom/Ember), deren Moos auf warmer Asche wächst.
 222. [P2] Gib Zephlet eine Solenne-Prägung (Gale/Lumen), die im Hitzeflimmern sichtbar wird.

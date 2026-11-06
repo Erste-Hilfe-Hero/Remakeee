@@ -338,9 +338,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3421. [P3] Nach einem gebrochenen Schwur den Lauf als normalen Lauf weiterführen und das in der Chronik mit Datum vermerken.
 
 ### Kleine Ereignisse in der Welt
-3422. [P1] Eine Datei scripts/core/WorldEvents.gd anlegen, die kleine Ereignisse per Seed aus Datum und Ort auslöst, gleich für alle Spieler am selben Tag.
-3423. [P1] Einen Wanderhändler einführen, der jeden Tag an einem anderen Ort steht und drei Gegenstände gegen Münzen verkauft.
-3424. [P1] Den Ort des Wanderhändlers im Ziele-Bildschirm nennen, damit man ihn nicht suchen muss.
+3422. [x] [P1] Eine Datei scripts/core/WorldEvents.gd anlegen, die kleine Ereignisse per Seed aus Datum und Ort auslöst, gleich für alle Spieler am selben Tag.
+3423. [x] [P1] Einen Wanderhändler einführen, der jeden Tag an einem anderen Ort steht und drei Gegenstände gegen Münzen verkauft.
+3424. [x] [P1] Den Ort des Wanderhändlers im Ziele-Bildschirm nennen, damit man ihn nicht suchen muss.
 3425. [P2] Eine Sternennacht einführen, die einmal pro Monat am Neumond nach Kalender stattfindet und Lumen-Spirlings nachts dreimal so oft erscheinen lässt.
 3426. [P2] Während der Sternennacht am Leuchtturm-Dach ein kleines Sternbild-Rätsel mit 5 Sternen zum Antippen anbieten, das 20 Wegmarken zahlt.
 3427. [P2] Einen Regentag pro Woche nach Seed bestimmen, an dem Tide-Spirlings draußen doppelt so oft auftreten, mit leichtem Regenfilter.
@@ -364,9 +364,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3445. [P3] Den Wanderhändler bei jedem Besuch einen Satz über seinen letzten Ort sagen lassen, aus 30 festen Sätzen.
 
 ### Streifzüge aus dem Lager
-3446. [P1] Spirlings aus dem Lager auf Streifzüge schicken lassen, bis zu drei gleichzeitig, mit einer Dauer von 4, 8 oder 12 Stunden nach Server-Zeit.
-3447. [P1] Jeden Streifzug nach einer festen, vorher sichtbaren Tabelle Münzen, 4, 8 oder 12 Wegmarken und einen gewöhnlichen Gegenstand mitbringen lassen.
-3448. [P1] Streifzüge im Leuchtturm bei Aldo starten und abholen und Spirlings auf Streifzug im Lager mit einem Rucksack-Symbol markieren.
+3446. [x] [P1] Spirlings aus dem Lager auf Streifzüge schicken lassen, bis zu drei gleichzeitig, mit einer Dauer von 4, 8 oder 12 Stunden nach Server-Zeit.
+3447. [x] [P1] Jeden Streifzug nach einer festen, vorher sichtbaren Tabelle Münzen, 4, 8 oder 12 Wegmarken und einen gewöhnlichen Gegenstand mitbringen lassen.
+3448. [x] [P1] Streifzüge im Leuchtturm bei Aldo starten und abholen und Spirlings auf Streifzug im Lager mit einem Rucksack-Symbol markieren.
 3449. [P2] Als Ziel nur Karten erlauben, die der Spielstand schon kennt, und Fundstücke dieser Karte mitbringen lassen.
 3450. [P2] Einem Spirling, dessen Element zu den wilden Arten der Zielkarte passt, 50 Prozent mehr Münzen geben.
 3451. [P2] Streifzüge pro Stunde ein Viertel des Wachstums eines Wildkampfs geben, höchstens bis zum Ring-Deckel.
