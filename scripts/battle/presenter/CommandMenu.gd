@@ -22,6 +22,8 @@ var _held_index: int = -1
 ## Set when a long press opened the card, so the release does not also pick the move.
 var _long_fired: bool = false
 var _shown_moves: Array[MoveData] = []
+## The battle the menu was last filled from (for the live info lines, item 578).
+var _model: BattleModel
 
 const LONG_PRESS: float = 0.45
 
@@ -119,7 +121,7 @@ func _on_hold() -> void:
 func open_info(index: int) -> void:
 	if index < 0 or index >= _shown_moves.size():
 		return
-	_info_label.text = move_info(_shown_moves[index])
+	_info_label.text = move_info(_shown_moves[index], _model)
 	_info_panel.visible = true
 	Sound.sfx("confirm")
 
@@ -130,7 +132,9 @@ func is_info_open() -> bool:
 	return _info_panel.visible
 
 ## Info card text for [param mv]: element, kind, power, accuracy, Energy and what its effects do.
-static func move_info(mv: MoveData) -> String:
+## With [param model] a field_element art names the element it takes right now and a delayed_hit
+## art the turn it would land (item 578).
+static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 	var lines: Array[String] = [mv.move_name]
 	var kind: String = Loc.t(MoveData.Kind.keys()[mv.kind].capitalize())
 	if mv.is_damaging():
@@ -161,6 +165,8 @@ static func move_info(mv: MoveData) -> String:
 				var amt: int = int(fx.get("amount", 1))
 				if bool(fx.get("self", true)):
 					line = (Loc.t("Raises its own %s by %d.") if amt > 0 else Loc.t("Lowers its own %s by %d.")) % [stat, absi(amt)]
+					if int(fx.get("full_hp_amount", 0)) != 0:
+						line += " " + Loc.t("By %d at full Vigor.") % absi(int(fx.full_hp_amount))
 				else:
 					line = (Loc.t("Raises the foe's %s by %d.") if amt > 0 else Loc.t("Lowers the foe's %s by %d.")) % [stat, absi(amt)]
 			&"heal_self":
@@ -188,6 +194,8 @@ static func move_info(mv: MoveData) -> String:
 				line = Loc.t("The foe's arts cost %d more Energy for %d turns.") % [BattleRules.ENERGY_TAX_COST, turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS]
 			&"field_element":
 				line = Loc.t("In a field it takes the field's element, power +%d.") % int(fx.get("power_bonus", BattleRules.FIELD_ELEMENT_POWER))
+				if model != null and BattleRules.FIELDS.has(model.field):
+					line += " " + Loc.t("Right now: %s.") % Elements.element_name(BattleRules.resolve_move(mv, model.field).element)
 			&"energy_burn":
 				line = Loc.t("Burns away %d of the foe's Energy.") % int(fx.get("amount", 1))
 			&"heal_block":
@@ -206,6 +214,13 @@ static func move_info(mv: MoveData) -> String:
 				line = Loc.t("Blows the snares off its own side.")
 			&"delayed_hit":
 				line = Loc.t("Lands %d turns later on whoever stands there.") % int(fx.get("turns", 2))
+				if model != null:
+					line += " " + Loc.t("Used now, it lands on turn %d.") % (model.turn + 1 + int(fx.get("turns", 2)))
+			&"mend":
+				line = Loc.t("Then mends a little at the end of the next %d turns.") % int(fx.get("turns", BattleRules.MEND_TURNS))
+			&"field_extend":
+				var fe: int = int(fx.get("amount", 0))
+				line = Loc.t("Makes the Resonance field last %d turns longer.") % (fe if fe > 0 else BattleRules.FIELD_EXTEND_TURNS)
 			&"side_snare":
 				var sn: Dictionary = fx.get("snare", {})
 				if float(sn.get("hp", 0.0)) > 0.0:
@@ -285,6 +300,7 @@ static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: Move
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
 ## The matchup tag shows only when one foe stands (with several, the target is picked after).
 func refresh(model: BattleModel, slot: int = 0) -> void:
+	_model = model
 	var me: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
 	var foes: Array[int] = model.standing_slots(BattleModel.Side.FOE)
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, foes[0]) if foes.size() == 1 else null

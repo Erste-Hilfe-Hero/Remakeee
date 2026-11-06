@@ -806,6 +806,10 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 	for rdiv: int in [regen, held_regen, field_regen]:
 		if rdiv > 0 and s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
+	if s.mend_turns > 0:
+		s.mend_turns -= 1
+		if s.hp < s.max_hp():
+			heal(side, maxi(1, s.max_hp() / BattleRules.MEND_DIV), slot)
 	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
 		reveal_trait(side, slot)
 	var gain: int = int(rules.get("energy_per_turn", ENERGY_PER_TURN)) + int(BattleRules.add_key(s, "energy_per_turn"))

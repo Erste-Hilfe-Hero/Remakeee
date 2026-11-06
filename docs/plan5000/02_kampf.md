@@ -59,7 +59,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 489. [x] [P1] Bloom "Pollen Prick": Physisch, Stärke 45, Genauigkeit 100 %, Energie 2, Stärke ×1,5 gegen Ziele mit Root.
 490. [x] [P2] Bloom "Bramble Bed": Status, Energie 3, Seitenfalle, die den nächsten einwechselnden Gegner mit Root bindet.
 491. [x] [P3] Bloom "Graft": Status, Genauigkeit 100 %, Energie 3, `stage_steal`.
-492. [P3] Bloom "Root Mend": Status, Energie 4, heilt sofort 20 % und danach 3 Runden je 1/16 der max. Kraft.
+492. [x] [P3] Bloom "Root Mend": Status, Energie 4, heilt sofort 20 % und danach 3 Runden je 1/16 der max. Kraft. Erledigt: Schlüssel `mend` (MendEffect), Hauler Tobins Kelpup nutzt sie jetzt.
 493. [x] [P2] Bloom "Wildgrowth Crash": Physisch, Stärke 110, Genauigkeit 90 %, Energie 6, danach eigener Schutz -1.
 494. [x] [P2] Bloom "Husk Shed": Status, Energie 2, heilt den eigenen Status und gibt Tempo +1.
 495. [P3] Bloom "Lattice Guard": Status, Energie 3, eigener Schutz +1 und Fokus +1.
@@ -78,7 +78,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 508. [P3] Volt "Bleed Current": Fokus, Stärke 60, Genauigkeit 100 %, Energie 4, `energy_refund`.
 509. [x] [P3] Volt "Wire Trap": Status, Energie 3, Seitenfalle, die dem nächsten einwechselnden Gegner Jolt gibt.
 510. [P3] Volt "Brownout": Status, Genauigkeit 85 %, Energie 4, trifft alle Gegner mit `energy_burn` 1.
-511. [P2] Lernlisten Bloom: Mossling lernt Pollen Prick bei Ring 6 und Husk Shed bei Ring 11, Thornback Graft bei Ring 24 und Wildgrowth Crash bei Ring 34, Verdantusk Thornwake bei Ring 46, Kelphound Root Mend bei Ring 35.
+511. [x] [P2] Lernlisten Bloom: Mossling lernt Pollen Prick bei Ring 6 und Husk Shed bei Ring 11, Thornback Graft bei Ring 24 und Wildgrowth Crash bei Ring 34, Verdantusk Thornwake bei Ring 46, Kelphound Root Mend bei Ring 35. Erledigt (Root Mend bei Kelphound Ring 35 kam mit 492 dazu).
 512. [x] [P2] Lernlisten Volt: Zippit lernt Static Tag bei Ring 6 und Pylon Snap bei Ring 10, Grid Lock bei Ring 16, Glimmerax Short Circuit bei Ring 36 und Capacitor Crash bei Ring 44.
 
 ### Neue Techniken: Stone und Gale
@@ -150,8 +150,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 574. [P2] Scatter Gale, Graft und Ring Pulse werden zusätzlich über Echo-Kristalle für alle Arten lernbar, damit jedes Team eine Antwort auf Seitenfallen und Stufenaufbau hat.
 575. [x] [P2] Lernlisten-Obergrenze: höchstens 14 Techniken pro Art, geprüft in tests/unit/test_learnsets.gd.
 576. [P2] Alle 92 neuen Techniken bekommen deutsche Namen und Beschreibungen in data/i18n/de.json, in eigener Wortwahl.
-577. [P2] tools/validate_data.gd kennt alle neuen Schlüssel (`vs_status`, `vs_mult`, `cooldown`, `stage_chance`, `self_stages`, `ignore_stages`, Priorität -1) und meldet unbekannte Schlüssel als Fehler.
-578. [P2] Die Technik-Info per langem Druck zeigt bei `field_element`-Techniken das gerade angenommene Element und bei `delayed_hit` die Runde des Einschlags.
+577. [x] [P2] tools/validate_data.gd kennt alle neuen Schlüssel (`vs_status`, `vs_mult`, `cooldown`, `stage_chance`, `self_stages`, `ignore_stages`, Priorität -1) und meldet unbekannte Schlüssel als Fehler. Erledigt: DataValidator.MOVE_KEYS, unbekannte Schlüssel sind Fehler.
+578. [x] [P2] Die Technik-Info per langem Druck zeigt bei `field_element`-Techniken das gerade angenommene Element und bei `delayed_hit` die Runde des Einschlags. Erledigt: CommandMenu.move_info(mv, model).
 579. [P3] Reine Echo-Kristall-Techniken ohne Lernlisten-Platz: Relay Spark, Dark Bargain, Mist Mirror und Hearth Hum.
 580. [P3] Seitenfallen erscheinen als kleines Symbol unter der Gegner-Bank-Anzeige mit Kürzel des Effekts (zum Beispiel "SC" für Scorch).
 
@@ -226,7 +226,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 644. [x] [P1] Rift Mystic Ilka (Tide Rift, 3 gegen 3): Tamer wie bisher, Veteran mit Chill Mist auf Zippit und Thorn Volley auf Mossling, Rift-Born mit Andenken swift_feather auf Zippit.
 645. [x] [P2] Rift Acolyte Pell (Cinder Rift): Shalebat R9 mit Pebble Toss und Hunker Down, Zippit R9 mit Crackle Bite und Static Tag, damit er die Jolt-Reaktion vor Orrin zeigt.
 646. [x] [P2] Rift Acolyte Suri (Cinder Rift): Kindlop R10 mit Cinder Dash, Kindle Up und Char Mark; auf Veteran zusätzlich Ash Call, damit sie das Feld vor dem Wächter vorführt.
-647. [x] [P2] Hauler Tobin (Saltmarsh, Tag-Kampf): Shalebat R13 mit Shard Bed, Kelpup R13 mit Root Mend, Mirkmole R14 mit Night Toll, damit der Kampf Seitenfallen und Heilsperre lehrt. Erledigt mit Deepwell Draught als Heiltechnik, bis Root Mend (492) kommt.
+647. [x] [P2] Hauler Tobin (Saltmarsh, Tag-Kampf): Shalebat R13 mit Shard Bed, Kelpup R13 mit Root Mend, Mirkmole R14 mit Night Toll, damit der Kampf Seitenfallen und Heilsperre lehrt. Erledigt (mit Root Mend seit 492).
 648. [x] [P2] Cartographer Kestra (Crowcrest, Übungskampf): Zippit R7 mit Static Tag, Zephlet R8 mit Kite Cut, Shalebat R9 mit Grit Jab; auf Story nur Zephlet und Shalebat.
 649. [x] [P2] Neuer Wanderer in Fernstair "Wegwärterin Imme": Zippit R4 und Mossling R4, Profil "Lehrling", Preisgeld 120, erster Kampf, der Rasten erklärt. Erledigt: „Pathkeeper Imme“ (de: Wegwärterin Imme).
 650. [x] [P3] Neuer Wanderer in Fernstair "Hirte Joss": Shalebat R5 mit Hunker Down, Profil "Mauer", zeigt Stufen. Erledigt: „Herder Joss“.

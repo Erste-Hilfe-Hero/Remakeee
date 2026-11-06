@@ -6,6 +6,13 @@ extends RefCounted
 const VALID_KINDS: Array[String] = ["PHYSICAL", "FOCUS", "STATUS"]
 const VALID_STATUSES: Array[String] = ["", "scorch", "soak", "root", "jolt", "daze", "drowse"]
 
+## Every key moves.json may use (plan area 2, item 577); anything else is reported as a typo.
+const MOVE_KEYS: Array[String] = ["name", "element", "kind", "power", "accuracy", "energy", "priority",
+	"target", "status", "status_chance", "stat", "stages", "self", "stats", "stat_chance", "stage_chance",
+	"stages_full_hp", "self_stages", "effect", "effect_amount", "field", "field_element", "field_power",
+	"overcharge", "cooldown", "vs_status", "vs_mult", "cure_self", "cure_target", "snare", "clear_snares",
+	"delay", "ignore_daze", "ignore_stages", "mend"]
+
 ## Returns a list of human-readable problems. Empty means the data is valid.
 static func validate(spirlings_path: String = "res://data/spirlings.json", moves_path: String = "res://data/moves.json", encounters_path: String = "res://data/encounters.json") -> PackedStringArray:
 	var errors: PackedStringArray = []
@@ -26,6 +33,9 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 		elif move_names.has(name):
 			errors.append("moves.json: duplicate move '%s'" % name)
 		move_names[name] = true
+		for k: Variant in m:
+			if not str(k) in MOVE_KEYS:
+				errors.append("move '%s': unknown key '%s'" % [name, k])
 		if not _valid_element(str(m.get("element", ""))):
 			errors.append("move '%s': unknown element '%s'" % [name, m.get("element", "")])
 		if not str(m.get("kind", "")) in VALID_KINDS:
