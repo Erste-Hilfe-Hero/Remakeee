@@ -85,7 +85,9 @@ func test_overcharge_spends_all_energy_and_hits_harder() -> void:
 		var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
 		var hit: BattleEvent = BattleFixtures.first_of(ev, BattleEvent.Type.DAMAGE)
 		dmg.append(int(hit.data.amount))
-		assert_eq(z.energy, 1 + 1, "spent everything, then +1 per turn and +1 Surge")
+		# Overcharge spends at most OVERCHARGE_MAX_EXTRA of the spare Energy (plan area 2, item 583).
+		var kept: int = maxi(0, spare - BattleRules.OVERCHARGE_MAX_EXTRA)
+		assert_eq(z.energy, kept + 1 + 1, "spent up to the cap, then +1 per turn and +1 Surge")
 	assert_gt(dmg[1], dmg[0])
 
 func test_warden_rules_apply() -> void:

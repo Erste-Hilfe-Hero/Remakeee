@@ -20,10 +20,14 @@ signal _info_closed
 ## Short note at the top that goes away by itself (item 1839).
 var _toast: Label
 var _toast_gen: int = 0
+var _toast_source: String = ""
+var _info_source: String = ""
 const TOAST_SECONDS: float = 1.5
 
 func _ready() -> void:
 	theme = UITheme.get_theme()
+	add_to_group(THEME_GROUP)
+	Loc.events.language_changed.connect(_on_language_changed)
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	picker = ListPicker.new()
@@ -57,6 +61,8 @@ func _ready() -> void:
 	_info_label.custom_minimum_size = Vector2(1, 0)
 	# Translated in info(): inside the scroll box the automatic translation did not apply.
 	_info_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	# Screen readers read new info texts like dialogue lines (item 2087).
+	_info_label.accessibility_live = AccessibilityServer.LIVE_POLITE
 	_info_scroll.add_child(_info_label)
 	_toast = Label.new()
 	_toast.set_anchors_preset(Control.PRESET_TOP_WIDE)
@@ -82,10 +88,60 @@ func _fill(c: Control) -> void:
 	# Keep menus clear of notches and the gesture bar once the viewport is known.
 	c.ready.connect(func() -> void: SafeArea.apply(c, PANEL_MARGIN), CONNECT_ONE_SHOT)
 
+## Lists and info windows opened so far, and what the last list showed (the menu walk test,
+## item 2210, uses these to see that every row does something).
+var picks: int = 0
+var infos: int = 0
+var last_title: String = ""
+var last_rows: Array[String] = []
+
+## Share of the screen height left free above menus in one-hand mode (item 2108): lists and
+## texts sit in the lower 60 percent, where the thumb reaches.
+const ONE_HAND_TOP: float = 0.4
+const ONE_HAND_MIN_H: float = 72.0
+
+## Moves the list and the info window down in one-hand mode and back up when it is off.
+func apply_hand_layout() -> void:
+	if not is_inside_tree():
+		return
+	var vp_h: float = get_viewport_rect().size.y
+	for c: Control in [picker, _info_panel] as Array[Control]:
+		if not c.has_meta("top"):
+			c.set_meta("top", c.offset_top)
+		var top: float = float(c.get_meta("top"))
+		if GameState.one_hand:
+			var low: float = vp_h * ONE_HAND_TOP
+			# With the pad on screen the list ends above it; keep room for a few rows.
+			var pad_top: float = VirtualPad.top_y()
+			if pad_top > 0.0:
+				low = minf(low, pad_top - ONE_HAND_MIN_H)
+			top = maxf(top, low - global_position.y)
+		c.offset_top = top
+	picker.set_one_hand(GameState.one_hand, GameState.left_handed)
+
 ## Shows a list; returns the index or -1 (Back / cancel).
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
-		guard_ms: int = ListPicker.TAP_GUARD_MS) -> int:
-	return await picker.pick(title, entries, cancellable, focus, guard_ms)
+		guard_ms: int = ListPicker.TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
+	picks += 1
+	last_title = title
+	last_rows.clear()
+	for e: Dictionary in entries:
+		last_rows.append(str(e.get("text", "")))
+	apply_hand_layout()
+	var bottom: float = picker.offset_bottom
+	keep_above_pad(picker)
+	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
+	picker.offset_bottom = bottom
+	return r
+
+## While the touch pad shows (a question during play), the list ends above its buttons so no
+## answer lies under a button (item 2012).
+static func keep_above_pad(c: Control, pad_top: float = -2.0) -> void:
+	var top: float = VirtualPad.top_y() if pad_top == -2.0 else pad_top
+	if top < 0.0 or not c.is_inside_tree():
+		return
+	var h: float = c.get_viewport_rect().size.y
+	c.offset_bottom = minf(c.offset_bottom, top - h - PANEL_MARGIN)
 
 ## Convenience: entries from plain strings.
 func pick_strings(title: String, items: Array[String], cancellable: bool = true) -> int:
@@ -108,21 +164,47 @@ func confirm_danger(question: String, yes_text: String = "Yes", no_text: String 
 ## Shows a block of text until the player taps or presses accept/cancel, with an optional
 ## [param picture] above it.
 func info(text: String, picture: Texture2D = null) -> void:
+	apply_hand_layout()
 	_info_picture.texture = picture
 	_info_picture.visible = picture != null
 	_info_picture.custom_minimum_size = picture.get_size() if picture != null else Vector2.ZERO
+	_info_source = text
 	_info_label.text = Loc.t(text) + "\n\n" + Loc.t("(tap to continue)")
 	_info_scroll.scroll_vertical = 0
 	_info_press = Vector2(NAN, NAN)
 	_info_panel.visible = true
 	_info_wait = true
+	infos += 1
 	await _info_closed
 	_info_panel.visible = false
+
+## Several pages of one thing (a Spirling's summary, item 1890): left and right or a tap on
+## the left or right third turn the page, a tap elsewhere or A goes on, B closes.
+func info_pages(pages: Array[String], picture: Texture2D = null) -> void:
+	if pages.is_empty():
+		return
+	_pages = pages
+	_page = 0
+	while _page >= 0 and _page < _pages.size():
+		var footer: String = "\n\n< %d/%d >" % [_page + 1, _pages.size()] if _pages.size() > 1 else ""
+		_page_turn = 0
+		await info(Loc.t(_pages[_page]) + footer, picture if _page == 0 else null)
+		if _page_turn == -2:
+			break
+		_page += _page_turn if _page_turn != 0 else 1
+		_page = maxi(_page, 0) if _page_turn == -1 else _page
+	_pages = []
+
+var _pages: Array[String] = []
+var _page: int = 0
+## How the last page was left: 1 next, -1 back, -2 closed, 0 tap (next).
+var _page_turn: int = 0
 
 ## Shows [param text] for a moment at the top without waiting for a tap ("Saved.").
 func toast(text: String, seconds: float = TOAST_SECONDS) -> void:
 	_toast_gen += 1
 	var gen: int = _toast_gen
+	_toast_source = text
 	_toast.text = Loc.t(text)
 	_toast.visible = true
 	if not is_inside_tree():
@@ -134,6 +216,22 @@ func toast(text: String, seconds: float = TOAST_SECONDS) -> void:
 ## The toast text while it shows ("" when hidden).
 func toast_text() -> String:
 	return _toast.text if _toast.visible else ""
+
+## A long text turns one page per tap; only the tap at the end closes it (item 1838).
+func _page_or_close() -> void:
+	if info_has_more():
+		var bar: VScrollBar = _info_scroll.get_v_scroll_bar()
+		# Keep the last line of the old page in view so the reader does not lose the place.
+		_info_scroll.scroll_vertical = int(minf(bar.value + maxf(bar.page - INFO_OVERLAP, 8.0), bar.max_value - bar.page))
+		return
+	_close_info()
+
+const INFO_OVERLAP: float = 10.0
+
+## True while the open info text has more below the visible part.
+func info_has_more() -> bool:
+	var bar: VScrollBar = _info_scroll.get_v_scroll_bar()
+	return bar.value + bar.page < bar.max_value - 1.0
 
 func _close_info() -> void:
 	if _info_wait:
@@ -152,61 +250,146 @@ func _input(event: InputEvent) -> void:
 		_info_press = Vector2(NAN, NAN)
 		if moved <= TAP_SLOP:
 			get_viewport().set_input_as_handled()
-			_close_info()
+			if not _pages.is_empty() and not info_has_more():
+				var x: float = TapInput.position(event).x - _info_panel.global_position.x
+				var third: float = _info_panel.size.x / 3.0
+				_page_turn = -1 if x < third else 1
+				_close_info()
+				return
+			_page_or_close()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _info_wait and (event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel")):
+	if _info_wait and event.is_action_pressed("ui_accept"):
 		get_viewport().set_input_as_handled()
+		_page_or_close()
+	elif _info_wait and event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		_page_turn = -2
+		_close_info()
+	elif _info_wait and not _pages.is_empty() and (event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right")):
+		get_viewport().set_input_as_handled()
+		_page_turn = -1 if event.is_action_pressed("ui_left") else 1
 		_close_info()
 
 # --- Shared screens --------------------------------------------------------------
 
-## Settings: text speed, battle speed, auto wild battles, Retro filter, volume. Saved immediately.
+## Settings in groups (item 2063): the main list has at most seven rows. Rows are picked by
+## key, never by position, so optional rows cannot shift others (item 2062: duplicate match
+## arms used to send "Account..." to the Iron Oath). Every change is saved at once (2066), and
+## each row explains itself in a line under the list (2067).
+const SETTINGS_GROUPS: Array[Array] = [
+	["game", "Game..."],
+	["sound", "Sound..."],
+	["controls", "Controls..."],
+	["display", "Display and access..."],
+	["account", "Account..."],
+	["legal", "Legal"],
+]
+
+const SETTING_HINTS: Dictionary[String, String] = {
+	"text_speed": "How fast text appears in talks and battles.",
+	"battle_speed": "Plays battle animations faster.",
+	"auto_battle": "Wild battles pick moves by themselves.",
+	"bench_lessons": "Spirlings on the bench grow too.",
+	"damage_preview": "Shows how hard a move would hit before you choose it.",
+	"tips": "Short hints the first time something new comes up.",
+	"difficulty": "How strong your opponents are. You can change it any time.",
+	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
+	"volume": "All sound. Left and right change it in steps of 10.",
+	"music": "Music only. Left and right change it in steps of 10.",
+	"sfx": "Sound effects only. Left and right change it in steps of 10.",
+	"sound_test": "Listen to every tune, sound and cry you know.",
+	"retro": "Old-style colours for each era you reached.",
+	"account": "Friend code, moving to a new phone, deleting your account.",
+	"legal": "Imprint, privacy and licences.",
+	"game": "Text, battles, tips and difficulty.",
+	"sound": "Volume, music and sound effects.",
+	"controls": "Pad, tap to walk and gamepad.",
+	"display": "Contrast, motion, language and battery.",
+	"battery": "Fewer frames per second to save battery.",
+	"motion": "Calmer screen: no shaking, no flashes.",
+	"contrast": "Pure black and white for easier reading.",
+	"language": "English or Deutsch.",
+	"day_night": "The light changes with the time of day.",
+	"pad_size": "How big the touch pad and buttons are.",
+	"pad_opacity": "How see-through the touch pad is.",
+	"left_handed": "Puts the pad on the right and A and B on the left.",
+	"tap_to_move": "Tap a tile and your Wayfarer walks there.",
+	"always_run": "Run without holding B. Hold B to walk.",
+	"one_hand": "Everything sits low on the screen for one thumb.",
+	"rumble": "The gamepad shakes on big hits.",
+	"swap_ab_touch": "A and B on the touch pad change places.",
+	"swap_ab_pad": "The gamepad's A goes back and B confirms.",
+	"pad_help": "Which gamepad button does what.",
+	"keys_help": "Which key does what in the browser.",
+}
+
 func run_settings() -> void:
 	while true:
-		var rows: Array[Array] = settings_rows()
-		var entries: Array[String] = []
-		for r: Array in rows:
-			entries.append(str(r[1]))
-		var idx: int = await pick_strings("Settings", entries)
+		var idx: int = await pick(SETTINGS_TITLE, _rows_to_entries(SETTINGS_GROUPS))
 		if idx < 0:
 			SaveManager.save_settings()
 			return
-		await _settings_action(str(rows[idx][0]))
+		match str(SETTINGS_GROUPS[idx][0]):
+			"game": await _run_setting_group("Game", "game")
+			"sound": await _run_setting_group("Sound", "sound")
+			"controls": await run_controls()
+			"display": await run_display()
+			"account": await AccountMenu.run(self)
+			"legal": await run_legal()
 		if not is_inside_tree():
 			return
-		# Every change is kept at once, not only on Back (item 2066).
 		SaveManager.save_settings()
 
-## The settings list as [key, text] pairs. Rows are picked by key, never by position, so
-## optional rows (Difficulty, Iron Oath during a journey) cannot shift other rows (item 2062:
-## duplicate match arms used to send "Account..." to the Iron Oath).
-static func settings_rows() -> Array[Array]:
-	var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
-	var rows: Array[Array] = [
-		["text_speed", "Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize()],
-		["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
-		["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
-		["bench_xp", "Bench lessons: %s" % ("On" if GameState.bench_xp else "Off")],
-		["damage_preview", "Damage preview: %s" % ("On" if GameState.damage_preview else "Off")],
-		["retro", "Retro filter: %s" % retro],
-		["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
-		["music", "Music: %d%%" % int(round(GameState.music_volume * 100.0))],
-		["sfx", "Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0))],
-		["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
-		["controls", "Controls..."],
-		["display", "Display and access..."],
-		["sound_test", "Sound test..."],
-		["legal", "Legal"],
-		["account", "Account..."],
-	]
-	# Difficulty and the Iron Oath moved out of the new-game flow (only during a journey).
-	if GameState.in_game:
-		rows.append(["difficulty", "Difficulty: %s" % DIFFICULTY_TEXT[GameState.difficulty]])
-		rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
+const SETTINGS_TITLE: String = "Settings"
+
+## Rows of a settings group as [key, text] pairs.
+static func settings_rows(group: String = "game") -> Array[Array]:
+	var rows: Array[Array] = []
+	match group:
+		"game":
+			rows = [
+				["text_speed", "Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize()],
+				["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
+				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
+				["bench_lessons", "Bench lessons: %s" % ("On" if GameState.bench_xp else "Off")],
+				["damage_preview", "Damage preview: %s" % ("On" if GameState.damage_preview else "Off")],
+				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
+			]
+			# Difficulty and the Iron Oath only during a journey.
+			if GameState.in_game:
+				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty]])
+				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
+		"sound":
+			rows = [
+				["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
+				["music", "Music: %d%%" % int(round(GameState.music_volume * 100.0))],
+				["sfx", "Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0))],
+				["sound_test", "Sound test..."],
+			]
 	return rows
 
-func _settings_action(key: String) -> void:
+const SLIDER_KEYS: Array[String] = ["volume", "music", "sfx"]
+
+static func _rows_to_entries(rows: Array) -> Array[Dictionary]:
+	var entries: Array[Dictionary] = []
+	for r: Array in rows:
+		var key: String = str(r[0])
+		entries.append({"text": str(r[1]), "hint": SETTING_HINTS.get(key, ""), "slider": key in SLIDER_KEYS})
+	return entries
+
+func _run_setting_group(title: String, group: String) -> void:
+	while true:
+		var rows: Array[Array] = settings_rows(group)
+		var idx: int = await pick(title, _rows_to_entries(rows))
+		if idx < 0:
+			return
+		await _settings_action(str(rows[idx][0]), picker.last_dir)
+		if not is_inside_tree():
+			return
+		SaveManager.save_settings()
+
+func _settings_action(key: String, dir: int = 1) -> void:
 	match key:
 		"text_speed":
 			GameState.text_speed = ((GameState.text_speed + 1) % GameState.TextSpeed.size()) as GameState.TextSpeed
@@ -214,48 +397,41 @@ func _settings_action(key: String) -> void:
 			GameState.cycle_battle_speed()
 		"auto_battle":
 			GameState.auto_battle = not GameState.auto_battle
-		"bench_xp":
+		"bench_lessons":
 			GameState.bench_xp = not GameState.bench_xp
 		"damage_preview":
 			GameState.damage_preview = not GameState.damage_preview
-		"retro":
-			# Only unlocked eras are offered (Era I only for now).
-			var next: int = EraManager.retro_filter + 1
-			EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
-		"volume":
-			GameState.volume = _step_volume(GameState.volume)
-			GameState.apply_volume()
-		"music":
-			GameState.music_volume = _step_volume(GameState.music_volume)
-			GameState.apply_volume()
-		"sfx":
-			GameState.sfx_volume = _step_volume(GameState.sfx_volume)
-			GameState.apply_volume()
-			Sound.sfx("confirm")
 		"tips":
 			GameState.tips_enabled = not GameState.tips_enabled
-		"controls":
-			await run_controls()
-		"display":
-			await run_display()
+		"volume":
+			GameState.volume = step_volume(GameState.volume, dir)
+			GameState.apply_volume()
+		"music":
+			GameState.music_volume = step_volume(GameState.music_volume, dir)
+			GameState.apply_volume()
+		"sfx":
+			GameState.sfx_volume = step_volume(GameState.sfx_volume, dir)
+			GameState.apply_volume()
+			Sound.sfx("confirm")
 		"sound_test":
 			await run_sound_test()
-		"legal":
-			await run_legal()
-		"account":
-			await AccountMenu.run(self)
 		"difficulty":
-			var d: int = await pick_strings("Difficulty", DIFFICULTY_TEXT)
+			var opts: Array[Dictionary] = []
+			for i: int in DIFFICULTY_TEXT.size():
+				opts.append({"text": DIFFICULTY_TEXT[i], "hint": DIFFICULTY_HINTS[i]})
+			var d: int = await pick("Difficulty", opts, true, GameState.difficulty)
 			if d >= 0:
 				GameState.difficulty = d as GameState.Difficulty
 		"iron_oath":
 			await _iron_oath()
 
-const DIFFICULTY_TEXT: Array[String] = [
-	"Story (relaxed)",
-	"Wayfarer (normal)",
-	"Veteran (caps, smart AI)",
-	"Rift-Born (no battle items)",
+## Short names for the list rows; the line under the list explains each (items 2185, 2067).
+const DIFFICULTY_TEXT: Array[String] = ["Story", "Wayfarer", "Veteran", "Rift-Born"]
+const DIFFICULTY_HINTS: Array[String] = [
+	"Relaxed battles for enjoying the story.",
+	"The normal journey.",
+	"Ring limits and smarter opponents.",
+	"No items in battle.",
 ]
 
 ## The Iron Oath (item 15) can only be sworn before the first Rift is mended, and never undone.
@@ -316,75 +492,137 @@ static func sound_test_cries() -> Array[SpirlingData]:
 	out.sort_custom(func(a: SpirlingData, b: SpirlingData) -> bool: return a.dex_id < b.dex_id)
 	return out
 
-## Display and accessibility: battery saver, reduced motion, high contrast, language.
+## Display and accessibility: battery saver, reduced motion, high contrast, language, Retro filter.
 func run_display() -> void:
 	while true:
-		var entries: Array[String] = [
-			"Battery saver (30 FPS): %s" % ("On" if GameState.battery_saver else "Off"),
-			"Reduce motion and flashes: %s" % ("On" if GameState.reduce_motion else "Off"),
-			"High contrast menus: %s" % ("On" if GameState.high_contrast else "Off"),
-			"Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()],
-			"Day and night: %s" % ("On" if GameState.day_night else "Off"),
-		]
-		var idx: int = await pick_strings("Display and access", entries)
-		match idx:
-			-1:
-				return
-			0:
+		var rows: Array[Array] = display_rows()
+		var idx: int = await pick("Display and access", _rows_to_entries(rows))
+		if idx < 0:
+			return
+		match str(rows[idx][0]):
+			"battery":
 				GameState.battery_saver = not GameState.battery_saver
-			1:
+			"motion":
 				GameState.reduce_motion = not GameState.reduce_motion
-			2:
+			"contrast":
 				GameState.high_contrast = not GameState.high_contrast
-			3:
+			"language":
 				GameState.language = Loc.next_language()
-			4:
+			"day_night":
 				GameState.day_night = not GameState.day_night
+			"retro":
+				# Only unlocked eras are offered (Era I only for now).
+				var next: int = EraManager.retro_filter + 1
+				EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
 		GameState.apply_display()
+		# High contrast shows at once on every open menu (item 2065).
+		refresh_all_themes(get_tree())
 		SaveManager.save_settings()
-		if idx == 2:
-			await info("High contrast applies to menus and text from the next screen on.")
 
-## Volume steps of 20%, wrapping from 100% to 0%.
-static func _step_volume(v: float) -> float:
-	var n: float = v + 0.2
-	return 0.0 if n > 1.01 else n
+static func display_rows() -> Array[Array]:
+	var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
+	return [
+		["battery", "Battery saver: %s" % ("On" if GameState.battery_saver else "Off")],
+		["motion", "Less motion: %s" % ("On" if GameState.reduce_motion else "Off")],
+		["contrast", "High contrast: %s" % ("On" if GameState.high_contrast else "Off")],
+		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
+		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
+		["retro", "Retro filter: %s" % retro],
+	]
+
+## Hand-made texts follow a language change at once (item 2187).
+func _on_language_changed(_code: String) -> void:
+	if not is_instance_valid(_info_label):
+		return
+	if _info_panel.visible:
+		_info_label.text = Loc.t(_info_source) + "\n\n" + Loc.t("(tap to continue)")
+	if _toast.visible:
+		_toast.text = Loc.t(_toast_source)
+	picker.retranslate()
+
+func _exit_tree() -> void:
+	if Loc.events.language_changed.is_connected(_on_language_changed):
+		Loc.events.language_changed.disconnect(_on_language_changed)
+
+## Every menu layer in the tree picks up the current palette.
+static func refresh_all_themes(tree: SceneTree) -> void:
+	if tree == null:
+		return
+	for n: Node in tree.get_nodes_in_group(THEME_GROUP):
+		if n.has_method("refresh_theme"):
+			n.refresh_theme()
+
+const THEME_GROUP: StringName = &"ui_theme_users"
+
+func refresh_theme() -> void:
+	theme = UITheme.get_theme()
+	picker.refresh_theme()
+	_info_panel.add_theme_stylebox_override("panel", UITheme.panel_style())
+	_toast.add_theme_stylebox_override("normal", UITheme.flat_style(UITheme.ACCENT, UITheme.INK))
+
+## Volume steps of 10%, up or down, held between 0% and 100% (item 2064: one tap used to jump
+## from 100% to 0%).
+static func step_volume(v: float, dir: int) -> float:
+	var steps: int = clampi(roundi(v * 10.0) + (1 if dir >= 0 else -1), 0, 10)
+	return steps / 10.0
 
 const PAD_HELP: String = "Gamepad\nD-pad or left stick: move\nA: talk, confirm\nB: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles"
+const PAD_HELP_SWAPPED: String = "Gamepad (A and B swapped)\nD-pad or left stick: move\nB: talk, confirm\nA: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles"
+## Keyboard help page (item 2110), mainly for the browser build.
+const KEYS_HELP: String = "Keyboard\nArrow keys or W A S D: move\nEnter or Space: talk, confirm\nEscape or Backspace: back\nHold Backspace: run\nM: menu\nF: battle speed\nR: auto wild battles"
+
+static func pad_help() -> String:
+	return PAD_HELP_SWAPPED if GameState.swap_ab_pad else PAD_HELP
 
 ## Controls: pad size, opacity, left-handed layout, tap-to-move.
 func run_controls() -> void:
 	while true:
-		var entries: Array[String] = [
-			"Pad size: %s" % GameState.PAD_SIZE_NAMES[GameState.pad_size],
-			"Pad opacity: %d%%" % int(round(GameState.PAD_ALPHAS[GameState.pad_opacity] * 100.0)),
-			"Left-handed: %s" % ("On" if GameState.left_handed else "Off"),
-			"Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off"),
-			"One-hand layout: %s" % ("On" if GameState.one_hand else "Off"),
-			"Gamepad rumble: %s" % ("On" if GameState.rumble else "Off"),
-			"Gamepad buttons...",
-		]
-		var idx: int = await pick_strings("Controls", entries)
-		match idx:
-			-1:
-				return
-			0:
+		var rows: Array[Array] = controls_rows()
+		var idx: int = await pick("Controls", _rows_to_entries(rows))
+		if idx < 0:
+			return
+		match str(rows[idx][0]):
+			"pad_size":
 				GameState.pad_size = (GameState.pad_size + 1) % GameState.PAD_SIZE_NAMES.size()
-			1:
+			"pad_opacity":
 				GameState.pad_opacity = (GameState.pad_opacity + 1) % GameState.PAD_ALPHAS.size()
-			2:
+			"left_handed":
 				GameState.left_handed = not GameState.left_handed
-			3:
+			"tap_to_move":
 				GameState.tap_to_move = not GameState.tap_to_move
-			4:
+			"always_run":
+				GameState.always_run = not GameState.always_run
+			"one_hand":
 				GameState.one_hand = not GameState.one_hand
-			5:
+			"rumble":
 				GameState.rumble = not GameState.rumble
 				GameState.rumble_pads(0.6, 0.2)
-			6:
-				await info(PAD_HELP)
+			"swap_ab_touch":
+				GameState.swap_ab_touch = not GameState.swap_ab_touch
+			"swap_ab_pad":
+				GameState.swap_ab_pad = not GameState.swap_ab_pad
+				GameState.apply_pad_swap(GameState.swap_ab_pad)
+			"pad_help":
+				await info(pad_help())
+			"keys_help":
+				await info(KEYS_HELP)
 		VirtualPad.apply_settings()
 		SaveManager.save_settings()
+
+static func controls_rows() -> Array[Array]:
+	return [
+		["pad_size", "Pad size: %s" % GameState.PAD_SIZE_NAMES[GameState.pad_size]],
+		["pad_opacity", "Pad opacity: %d%%" % int(round(GameState.PAD_ALPHAS[GameState.pad_opacity] * 100.0))],
+		["left_handed", "Left-handed: %s" % ("On" if GameState.left_handed else "Off")],
+		["tap_to_move", "Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off")],
+		["always_run", "Always run: %s" % ("On" if GameState.always_run else "Off")],
+		["one_hand", "One-hand layout: %s" % ("On" if GameState.one_hand else "Off")],
+		["swap_ab_touch", "Touch A/B swap: %s" % ("On" if GameState.swap_ab_touch else "Off")],
+		["swap_ab_pad", "Gamepad A/B swap: %s" % ("On" if GameState.swap_ab_pad else "Off")],
+		["rumble", "Gamepad rumble: %s" % ("On" if GameState.rumble else "Off")],
+		["pad_help", "Gamepad buttons..."],
+		["keys_help", "Keyboard keys..."],
+	]
 
 ## Multi-line summary of a Spirling.
 static func summary(s: Spirling) -> String:
@@ -410,9 +648,108 @@ static func summary(s: Spirling) -> String:
 		lines.append("%s  %s  P%s  E%d" % [mv.move_name, Elements.element_name(mv.element).substr(0, 3), power, mv.energy_cost])
 	return "\n".join(lines)
 
+## Storage detail card (plan area 1, item 380): Ring, temperament, gift, keepsake and a
+## suggestion, where and when it was met, and its spark words.
+static func storage_card(s: Spirling) -> String:
+	var lines: PackedStringArray = [
+		"%s%s  (%s)" % ["* " if s.favorite else "", s.display_name(), s.data.species_name],
+		"Ring %d" % s.level,
+	]
+	var tm: Dictionary = s.temperament()
+	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
+	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	if not tr.is_empty():
+		lines.append("Gift: %s. %s" % [tr.label, tr.text])
+	lines.append("Keepsake: %s" % (str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else "none"))
+	var hint: String = keepsake_suggestion(s)
+	if not hint.is_empty():
+		lines.append(hint)
+	if not s.origin_map.is_empty():
+		lines.append("Met in %s at Ring %d" % [Spirling.place_name(s.origin_map), maxi(s.met_ring, 1)])
+	if s.met_day > 0:
+		lines.append("On %s" % Time.get_date_string_from_unix_time(s.met_day * 86400))
+	var parts: PackedStringArray = []
+	for key: String in Spirling.STAT_KEYS:
+		parts.append("%s %s" % [key.to_upper(), GameState.spark_word(int(s.spark.get(key, 0)))])
+	lines.append("Sparks: %s" % ", ".join(parts))
+	return "\n".join(lines)
+
+## "Suits it: Bark Wrap" when the kind's keepsake_hint is not what it holds already (item 355).
+static func keepsake_suggestion(s: Spirling) -> String:
+	var hint: String = s.data.keepsake_hint
+	if hint.is_empty() or hint == s.held:
+		return ""
+	return "Suits it: %s" % str(Database.item(hint).get("name", hint))
+
+## One storage row: favourite star, name, Ring, and a keepsake mark (item 357). A Spirling on a
+## roaming trip carries the backpack glyph (plan 3448).
+static func storage_line(s: Spirling) -> String:
+	return "%s%s%s R%d%s" % [Expeditions.GLYPH + " " if Expeditions.is_away(s.uid) else "", "* " if s.favorite else "", s.display_name(), s.level, "  +%s" % str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else ""]
+
 static func party_line(s: Spirling) -> String:
-	var tag: String = " (out)" if s.is_fainted() else ""
+	var tag: String = " " + Loc.t("worn out") if s.is_fainted() else ""
 	return "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
+
+## Summary in pages (item 1890): values, arts, gift and keepsake, temperament. Values are
+## written out in full (item 1891).
+static func summary_pages(s: Spirling) -> Array[String]:
+	var els: PackedStringArray = []
+	for e: int in s.elements():
+		els.append(Elements.element_name(e))
+	var head: String = "%s  (%s)\n%s   %s" % [s.display_name(), s.data.species_name, "/".join(els), Loc.t("Ring %d" % s.level)]
+	var values: PackedStringArray = [head, "",
+		Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()]) + ("  " + Loc.t("worn out") if s.is_fainted() else ""),
+		Loc.t("Growth to next ring %d" % s.xp_to_next()),
+		Loc.t("Might %d" % s.atk()), Loc.t("Guard %d" % s.def()), Loc.t("Focus %d" % s.foc()), Loc.t("Pace %d" % s.spd())]
+	var arts: PackedStringArray = [Loc.t("Arts of %s" % s.display_name()), ""]
+	for mv: MoveData in s.moves:
+		var power: String = "-" if mv.power <= 0 else str(mv.power)
+		arts.append("%s\n  %s  %s  %s" % [mv.move_name, Elements.element_name(mv.element),
+			Loc.t("Power %s" % power), Loc.t("Energy %d" % mv.energy_cost)])
+	var gift: PackedStringArray = []
+	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	gift.append(Loc.t("Gift: %s" % tr.label) + "\n" + Loc.t(str(tr.text)) if not tr.is_empty() else Loc.t("No gift."))
+	gift.append("")
+	if not s.held.is_empty():
+		var it: Dictionary = Database.item(s.held)
+		gift.append(Loc.t("Keepsake: %s" % it.get("name", s.held)) + "\n" + Loc.t(str(it.get("description", ""))))
+	else:
+		gift.append(Loc.t("No keepsake."))
+	var tm: Dictionary = s.temperament()
+	var nature: String = Loc.t("Temperament: %s" % tm.label) + "\n" + Loc.t(str(tm.text))
+	return [head.left(0) + "\n".join(values), "\n".join(arts), "\n".join(gift), nature] as Array[String]
+
+## Team row (item 1889): 14x14 sprite, name and ring, a 40 px Vigor bar under the name and the
+## element icons on the right; worn-out Spirlings get their own mark (item 1892).
+static func party_entry(s: Spirling) -> Dictionary:
+	# The row is too narrow for "worn out" next to the icons: a cross on the empty bar shows
+	# it, the hint and the screen reader say it.
+	var worn: String = "worn out" if s.is_fainted() else ""
+	var hint: String = Loc.t("Vigor %d/%d" % [s.hp, s.max_hp()])
+	if s.is_fainted():
+		hint += "  " + Loc.t(worn)
+	return {"text": "%s R%d" % [s.display_name(), s.level], "icon": MiniSprite.of(s.data.species_name, 14),
+		"decorate": func(b: Button) -> void: _draw_party_row(b, s),
+		"hint": hint, "say": worn}
+
+const BAR_WIDTH: int = 40
+
+static func _draw_party_row(b: Button, s: Spirling) -> void:
+	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
+	var x0: float = ListPicker.POINTER_SPACE + 16
+	var y: float = b.size.y - 3
+	b.draw_rect(Rect2(x0, y, BAR_WIDTH, 2), UITheme.DISABLED)
+	var ratio: float = clampf(float(s.hp) / maxf(1.0, float(s.max_hp())), 0.0, 1.0)
+	if ratio > 0.0:
+		b.draw_rect(Rect2(x0, y, maxf(1.0, roundf(BAR_WIDTH * ratio)), 2), ink)
+	else:
+		# Worn out: a small cross at the end of the empty bar.
+		var cx: float = x0 + BAR_WIDTH + 3
+		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)
+		b.draw_line(Vector2(cx + 2, y - 2), Vector2(cx - 2, y + 2), ink)
+	var els: Array[int] = s.elements()
+	var w: float = els.size() * (ElementIcons.SIZE + 1)
+	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.SIZE) / 2.0)), ink)
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
 func run_legal() -> void:

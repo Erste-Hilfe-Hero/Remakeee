@@ -19,7 +19,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2672. [x] [P1] In allen Online-Menüs und Server-Texten "Tamer" durch "Wanderer" ersetzen (Karte, Standardname "Wanderer 1A2B", `_clean_name`, Phrases.gd), samt Migration für bestehende Standardnamen.
 2673. [x] [P1] Ein Feld `schema` (ganze Zahl, Start 1) in jeden Online-Spielstand schreiben und in `save_put` ablehnen, wenn es fehlt oder höher als `server_config.save_schema_max` ist.
 2674. [x] [P1] Neue Tabelle `feature_flags` (Schlüssel, an/aus, Mindestversion) anlegen, damit Ligen, Tausch, Bünde und Raids einzeln am Server ein- und ausschaltbar sind.
-2675. [P2] `hello` gibt die Liste der aktiven `feature_flags` zurück, und `Online.gd` blendet Menüpunkte ohne Flag aus statt Fehler zu zeigen.
+2675. [x] [P2] `hello` gibt die Liste der aktiven `feature_flags` zurück, und `Online.gd` blendet Menüpunkte ohne Flag aus statt Fehler zu zeigen.
 2676. [P2] Fehlercodes aller neuen Funktionen als feste Wörter (`not_friends`, `limit_day`, `blocked`, `season_closed` usw.) festlegen und in `scripts/online/OnlineErrors.gd` in Spielertexte übersetzen.
 2677. [P2] Jede neue Server-Funktion bekommt in `docs/ONLINE.md` eine Zeile in einer Tabelle "Funktion, Grenzen, Test", damit der Stand nachprüfbar bleibt.
 2678. [P2] `server_config` um einen Schlüssel `rules_version` ergänzen, den der Client beim Start anzeigt und bei Duellen mitschickt, damit alle mit denselben Regeln spielen.
@@ -80,12 +80,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2728. [P3] Eine Duellbilanz pro Freund steht auf seiner Wanderer-Karte ("Gegen Mara: 7 zu 5").
 2729. [P3] Zwei Spieler im selben Raum können ein Duell per QR-Code auf dem Bildschirm starten, ohne den Freundescode zu tippen.
 ### Gleichstand-Liga (fair, mit Ausgleich)
-2730. [P1] Die Gleichstand-Liga ist die Standardliga und wird im Menü "Ligen" zuerst gezeigt, mit dem Satz "Hier zählt nur dein Können. Gekaufte Vorteile wirken hier nicht."
-2731. [P1] In der Gleichstand-Liga kämpfen alle Spirlings auf Ring 50 mit Grundwerten aus `data/spirlings.json`; Wachstum, Trainingsboni und gekaufte Werte werden für den Kampf auf null gesetzt.
+2730. [x] [P1] Die Gleichstand-Liga ist die Standardliga und wird im Menü "Ligen" zuerst gezeigt, mit dem Satz "Hier zählt nur dein Können. Gekaufte Vorteile wirken hier nicht."
+2731. [x] [P1] In der Gleichstand-Liga kämpfen alle Spirlings auf Ring 50 mit Grundwerten aus `data/spirlings.json`; Wachstum, Trainingsboni und gekaufte Werte werden für den Kampf auf null gesetzt.
 2732. [P1] Gegenstände und Andenken mit Herkunftsmarke aus dem Shop sind in der Gleichstand-Liga gesperrt; die Liste der gesperrten Herkunftsmarken steht in `server_config.league_fair_blocked_sources`, die Bereich 10 befüllt.
-2733. [P1] Erlaubt sind nur Techniken, die der Spirling bis Ring 50 laut Spieldaten lernen kann; der Server prüft jede Technik gegen diese Liste.
-2734. [P1] Der Server baut das Ligateam selbst aus dem gespeicherten Team neu auf (Funktion `_league_team_fair`), der Client schickt nur Spirling-Kennungen und Technikwahl.
-2735. [P1] Ein SQL-Test prüft, dass zwei Konten mit gleichem Spirling, aber verschiedenem Kaufstand, in der Gleichstand-Liga exakt dieselben Kampfwerte bekommen.
+2733. [x] [P1] Erlaubt sind nur Techniken, die der Spirling bis Ring 50 laut Spieldaten lernen kann; der Server prüft jede Technik gegen diese Liste.
+2734. [x] [P1] Der Server baut das Ligateam selbst aus dem gespeicherten Team neu auf (Funktion `_league_team_fair`), der Client schickt nur Spirling-Kennungen und Technikwahl.
+2735. [x] [P1] Ein SQL-Test prüft, dass zwei Konten mit gleichem Spirling, aber verschiedenem Kaufstand, in der Gleichstand-Liga exakt dieselben Kampfwerte bekommen.
 2736. [P2] Pro Spirling-Art darf ein Ligateam nur ein Exemplar haben, damit nicht dieselbe starke Art dreifach antritt.
 2737. [P2] Andenken aus dem normalen Spiel sind erlaubt, aber jedes nur einmal pro Team.
 2738. [P2] Belohnungen der Gleichstand-Liga sind Ansehen-Abzeichen, Kartenrahmen und Titel, sichtbar auf der Wanderer-Karte.
@@ -99,15 +99,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2746. [P3] Eine Leih-Team-Woche pro Saison: alle bekommen dieselben drei Teams vom Server und wählen eins.
 2747. [P3] Eine Statistik "Meistgewählte Spirlings der Saison" in der Gleichstand-Liga, ohne Spielernamen.
 
-2748. [P1] Die Angleichung rechnet der Schiedsrichter mit derselben Funktion wie die Datenbank, und ein Test vergleicht beide Ergebnisse für alle 21 Spirlings.
+2748. [x] [P1] Die Angleichung rechnet der Schiedsrichter mit derselben Funktion wie die Datenbank, und ein Test vergleicht beide Ergebnisse für alle 21 Spirlings.
 2749. [P2] Spirlings, die nach dem Start neu ins Spiel kommen, sind in der ersten Woche nach Erscheinen in der Gleichstand-Liga gesperrt, damit alle gleich starten.
 2750. [P3] Eine Proberunde gegen ein Server-Team zählt nicht und zeigt die Regeln der Gleichstand-Liga im Kampf.
 2751. [P3] Ein Saison-Rückblick zeigt die eigenen Siege nach Element des Gegners.
 2752. [P3] Eine Ehrenhalle mit den Leuchtfeuer-Spielern jeder Saison, nur mit ihrer Zustimmung.
 ### Offene Liga (alles erlaubt)
-2753. [P1] Die Offene Liga steht im Menü direkt unter der Gleichstand-Liga, klar beschriftet mit "Offene Liga: alle Vorteile erlaubt, auch gekaufte".
+2753. [x] [P1] Die Offene Liga steht im Menü direkt unter der Gleichstand-Liga, klar beschriftet mit "Offene Liga: alle Vorteile erlaubt, auch gekaufte".
 2754. [P1] In der Offenen Liga kämpft jeder mit seinem echten Team und echtem Ring (bis 60), mit allen Gegenständen, auch aus dem Shop.
-2755. [P1] Wertung, Gegnersuche und Belohnungen der beiden Ligen sind komplett getrennt (eigene Tabellen `league_open_*`), damit Kaufvorteile die Gleichstand-Liga nicht berühren.
+2755. [x] [P1] Wertung, Gegnersuche und Belohnungen der beiden Ligen sind komplett getrennt (eigene Tabellen `league_open_*`), damit Kaufvorteile die Gleichstand-Liga nicht berühren.
 2756. [P2] Die Gegnersuche der Offenen Liga berücksichtigt zusätzlich die Teamstärke (Summe aus Ring und Werten), damit ein Neuling nicht auf ein voll ausgebautes Team trifft.
 2757. [P2] Vor dem ersten Kampf zeigt das Spiel einmal einen Hinweis: "Hier treffen manche auf gekaufte Vorteile. In der Gleichstand-Liga zählt nur Können."
 2758. [P2] Die Offene Liga hat eigene Ranglisten und einen eigenen Titel, der auf der Karte mit dem Zusatz "Offen" erscheint.
@@ -123,10 +123,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2767. [P3] Nach jedem Kampf zeigt ein Knopf "Gegnerteam ansehen" Ring, Techniken und Andenken des Gegners.
 2768. [P3] Eine SQL-Abfrage in `docs/ONLINE.md` zeigt Ali pro Woche, wie oft Teams mit und ohne Kaufvorteile gewinnen.
 ### Saisons, Wertung und Gegnersuche
-2769. [P1] Eine Saison dauert 6 Wochen, Start und Ende nach Server-Zeit, gespeichert in Tabelle `league_seasons` (Kennung, Start, Ende, Regelversion).
-2770. [P1] Die Wertung nutzt Glicko-2 mit Startwert 1500 und Abweichung 350, berechnet in der Datenbank-Funktion `_league_rate` nach jedem geprüften Kampf.
-2771. [P1] Sichtbar sind nur Stufen statt Zahlen: Funke, Glut, Flamme, Leuchte und Leuchtfeuer, jede in 3 Teilstufen.
-2772. [P1] Die Gegnersuche sucht zuerst im Bereich plus minus 100 Wertungspunkte und erweitert alle 10 Sekunden um 50, höchstens auf 400.
+2769. [x] [P1] Eine Saison dauert 6 Wochen, Start und Ende nach Server-Zeit, gespeichert in Tabelle `league_seasons` (Kennung, Start, Ende, Regelversion).
+2770. [x] [P1] Die Wertung nutzt Glicko-2 mit Startwert 1500 und Abweichung 350, berechnet in der Datenbank-Funktion `_league_rate` nach jedem geprüften Kampf.
+2771. [x] [P1] Sichtbar sind nur Stufen statt Zahlen: Funke, Glut, Flamme, Leuchte und Leuchtfeuer, jede in 3 Teilstufen.
+2772. [x] [P1] Die Gegnersuche sucht zuerst im Bereich plus minus 100 Wertungspunkte und erweitert alle 10 Sekunden um 50, höchstens auf 400.
 2773. [P2] Kein Abstieg durch Pause: wer eine Woche nicht spielt, verliert keine Stufe, nur die Abweichung wächst.
 2774. [P2] Am Saisonende wird jede Wertung zur Hälfte auf 1500 zurückgesetzt (neu = 1500 + (alt minus 1500) geteilt durch 2).
 2775. [P2] Die ersten 5 Kämpfe einer Saison sind Einstufungskämpfe und zeigen noch keine Stufe.
@@ -141,7 +141,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2784. [P3] Eine Vorschau "Nächste Saison" zeigt Sonderregel und Startdatum 7 Tage vorher.
 2785. [P3] Bei weniger als 2 suchenden Spielern in 60 Sekunden bietet die Gegnersuche sofort ein asynchrones Ligateam an.
 
-2786. [P1] `league_seasons` kennt die Zustände "läuft", "Abschluss" und "Pause"; im Abschluss (die letzten 30 Minuten) wird kein Kampf mehr gewertet.
+2786. [x] [P1] `league_seasons` kennt die Zustände "läuft", "Abschluss" und "Pause"; im Abschluss (die letzten 30 Minuten) wird kein Kampf mehr gewertet.
 2787. [P2] Die Gegnersuche zeigt die erwartete Wartezeit ("ungefähr 20 Sekunden"), berechnet aus den letzten 50 Treffern.
 2788. [P3] Am Ende jeder Woche kommt ein Zwischenstand in die Post ("Du bist in Glut II, 12 Siege").
 2789. [P3] Eine Vorsaison von 1 Woche vor dem Store-Start zum Testen, deren Wertung danach gelöscht wird.
@@ -259,11 +259,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2893. [P3] Saisonale Phrasen zu Festivals, die der Server für die Festtage freischaltet.
 ### Melden, Blockieren und Moderation (DSA)
 2894. [P1] Melden geht an jeder Stelle, an der ein anderer Spieler sichtbar ist: Freundesliste, Wanderer-Karte, Duell, Tausch, Bund, Raid und Rangliste.
-2895. [P1] Die Tabelle `reports` bekommt die Spalten `context` (Ort der Meldung), `object_id` (Bund, Name, Wappen), `status` (offen, geprüft, abgelehnt) und `decided_at`.
-2896. [P1] Nach jeder Entscheidung bekommt der Betroffene eine Begründung im Spiel (DSA Art. 17): Maßnahme, Grund aus fester Liste, Regel aus den Nutzungsbedingungen, Hinweis auf Widerspruch.
-2897. [P1] Ein Widerspruchsknopf an dieser Begründung schickt innerhalb von 6 Monaten eine Beschwerde in `appeals`, die Ali erneut prüft und beantwortet.
-2898. [P1] Der Meldende bekommt eine kurze Nachricht über das Ergebnis seiner Meldung ("geprüft, Maßnahme ergriffen" oder "kein Verstoß gefunden").
-2899. [P1] Ein Meldeformular auf `server/site/melden.html` nimmt Meldungen zu rechtswidrigen Inhalten auch ohne Konto an (DSA Art. 16), mit Freundescode, Grund, Erklärung und Bestätigung guten Glaubens.
+2895. [x] [P1] Die Tabelle `reports` bekommt die Spalten `context` (Ort der Meldung), `object_id` (Bund, Name, Wappen), `status` (offen, geprüft, abgelehnt) und `decided_at`.
+2896. [x] [P1] Nach jeder Entscheidung bekommt der Betroffene eine Begründung im Spiel (DSA Art. 17): Maßnahme, Grund aus fester Liste, Regel aus den Nutzungsbedingungen, Hinweis auf Widerspruch.
+2897. [x] [P1] Ein Widerspruchsknopf an dieser Begründung schickt innerhalb von 6 Monaten eine Beschwerde in `appeals`, die Ali erneut prüft und beantwortet.
+2898. [x] [P1] Der Meldende bekommt eine kurze Nachricht über das Ergebnis seiner Meldung ("geprüft, Maßnahme ergriffen" oder "kein Verstoß gefunden").
+2899. [x] [P1] Ein Meldeformular auf `server/site/melden.html` nimmt Meldungen zu rechtswidrigen Inhalten auch ohne Konto an (DSA Art. 16), mit Freundescode, Grund, Erklärung und Bestätigung guten Glaubens.
 2900. [P1] Blockieren wirkt sofort auch in allen neuen Funktionen: keine Duelle, keine Tausche, keine Raid-Einladungen, kein gemeinsamer Bund-Raid, kein Treffen in der Gegnersuche.
 2901. [P2] Ein Moderationswerkzeug `tools/online/mod.sh` für Ali mit Befehlen `list`, `show <id>`, `reset-name`, `hide-bund`, `suspend <tage>`, das jede Aktion mit Grund in `mod_actions` schreibt.
 2902. [P2] Nach 3 Meldungen von verschiedenen Konten innerhalb von 7 Tagen blendet der Server einen Namen oder Bund vorläufig aus, bis Ali entschieden hat.
@@ -281,17 +281,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2914. [P3] Eine Liste der Blockierten im Menü Konto, mit Entblocken und Datum des Blocks.
 2915. [P3] Blocks werden beim Konto-Umzug per Übertragungscode mitgenommen (bestehend prüfen und als SQL-Test festhalten).
 
-2916. [P1] Jede Meldung bekommt sofort eine Eingangsbestätigung im Spiel mit Meldenummer (DSA Art. 16 Abs. 4).
+2916. [x] [P1] Jede Meldung bekommt sofort eine Eingangsbestätigung im Spiel mit Meldenummer (DSA Art. 16 Abs. 4).
 2917. [P2] Die Prüfliste sortiert Meldungen nach Schwere (Drohung zuerst, dann Name oder Wappen, dann Schummeln) und zeigt das Alter jeder Meldung.
 2918. [P3] Der Server schickt Ali eine Wochen-E-Mail, wenn mehr als 10 Meldungen offen sind.
 2919. [P3] Doppelte Meldungen (gleicher Meldender, gleiches Ziel, 24 Stunden) werden still verworfen und nicht gezählt.
 2920. [P3] Vorlagen für Begründungstexte in allen Spielsprachen in `scripts/online/ModReasons.gd`, damit Begründungen einheitlich sind.
 ### Schutz vor Schummeln
-2921. [P1] `save_put` vergleicht jeden neuen Stand mit dem vorherigen und lehnt ab, wenn Geld schneller als 5000 Münzen pro gespielter Minute steigt (Grenze in `server_config.max_money_per_min`).
-2922. [P1] `save_put` lehnt Spirling-Arten, Techniken und Gegenstände ab, deren Kennung nicht in den Spieldaten auf dem Server steht (Tabelle `known_ids`, beim Deploy aus `data/*.json` gefüllt).
-2923. [P1] Spielzeit im Stand darf nur steigen und pro Speicherung höchstens um die echte Zeit seit der letzten Speicherung plus 5 Minuten.
-2924. [P1] Werte, die der Server führt (Ligawertung, Raid-Beiträge, Tauschbestand, Kaufwährung), stehen in eigenen Tabellen und werden aus dem Spielstand ignoriert, selbst wenn der Client sie mitschickt.
-2925. [P1] Jeder abgelehnte Stand wird mit Grund in `cheat_flags` vermerkt; ab 3 Vermerken in 7 Tagen wird das Konto aus Ligen und Raids genommen, bis Ali es prüft.
+2921. [x] [P1] `save_put` vergleicht jeden neuen Stand mit dem vorherigen und lehnt ab, wenn Geld schneller als 5000 Münzen pro gespielter Minute steigt (Grenze in `server_config.max_money_per_min`).
+2922. [x] [P1] `save_put` lehnt Spirling-Arten, Techniken und Gegenstände ab, deren Kennung nicht in den Spieldaten auf dem Server steht (Tabelle `known_ids`, beim Deploy aus `data/*.json` gefüllt).
+2923. [x] [P1] Spielzeit im Stand darf nur steigen und pro Speicherung höchstens um die echte Zeit seit der letzten Speicherung plus 5 Minuten.
+2924. [x] [P1] Werte, die der Server führt (Ligawertung, Raid-Beiträge, Tauschbestand, Kaufwährung), stehen in eigenen Tabellen und werden aus dem Spielstand ignoriert, selbst wenn der Client sie mitschickt.
+2925. [x] [P1] Jeder abgelehnte Stand wird mit Grund in `cheat_flags` vermerkt; ab 3 Vermerken in 7 Tagen wird das Konto aus Ligen und Raids genommen, bis Ali es prüft.
 2926. [P2] Wachstum pro Kampf darf den höchsten Wert aus den Spieldaten für den stärksten Gegner der jeweiligen Karte nicht übersteigen.
 2927. [P2] Ein Spirling kann den Ring nur erhöhen, nie senken, außer über eine Spielfunktion, die der Server kennt.
 2928. [P2] Die Anzahl jedes Gegenstands im Stand darf nur um das wachsen, was Kämpfe, Funde, Post, Tausch und Shop in der Zeit liefern konnten (Obergrenze 50 Stück pro Speicherung).
@@ -308,7 +308,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2939. [P3] Gesperrte Ligaplätze werden am Saisonende entfernt und die Belohnungen der Nachrückenden nachträglich vergeben.
 2940. [P3] Ein Fair-Play-Abzeichen für Konten, die eine ganze Saison ohne Vermerk und ohne Aufgeben gespielt haben.
 
-2941. [P1] Ligateams werden beim Eintragen einmal voll geprüft und als eigene Zeile eingefroren, statt bei jedem Kampf aus dem Spielstand gelesen.
+2941. [x] [P1] Ligateams werden beim Eintragen einmal voll geprüft und als eigene Zeile eingefroren, statt bei jedem Kampf aus dem Spielstand gelesen.
 2942. [P2] Kampfdaten mit einem Zeitstempel, der mehr als 10 Minuten von der Server-Zeit abweicht, verwirft der Server.
 2943. [P3] Ein Wochenbericht für Ali zeigt, welche Grenzen in `save_put` wie oft gegriffen haben.
 2944. [P3] Neue Konten haben in den ersten 7 Tagen halbe Geld- und Gegenstandsgrenzen.
@@ -342,9 +342,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2970. [P3] Der Duell-Dienst nutzt einen eigenen Verbindungspuffer mit 10 Datenbank-Verbindungen.
 2971. [P3] Vor jeder großen Event-Woche läuft der Lasttest einmal mit 20000 simulierten Spielern.
 ### Datenschutz (DSGVO)
-2972. [P1] Eine Funktion `data_export` liefert alle eigenen Daten (Profil, Spielstände, Freunde, Post, Tausche, Bund, Ligen, Meldungen gegen das eigene Konto) als JSON-Datei (DSGVO Art. 15 und 20), erreichbar unter Einstellungen, Konto.
-2973. [P1] `delete_account` löscht auch alle neuen Daten: Tausche, Bundmitgliedschaft, Raid-Beiträge, Ligawertung, Kampfaufnahmen und Phrasen auf Pinnwänden; ein SQL-Test prüft, dass danach keine Zeile mit der Konto-Kennung übrig ist.
-2974. [P1] Ein Verzeichnis der Verarbeitungen in `docs/legal/VERARBEITUNGEN.md` mit Zweck, Daten, Speicherdauer und Rechtsgrundlage für jede Online-Funktion.
+2972. [x] [P1] Eine Funktion `data_export` liefert alle eigenen Daten (Profil, Spielstände, Freunde, Post, Tausche, Bund, Ligen, Meldungen gegen das eigene Konto) als JSON-Datei (DSGVO Art. 15 und 20), erreichbar unter Einstellungen, Konto.
+2973. [x] [P1] `delete_account` löscht auch alle neuen Daten: Tausche, Bundmitgliedschaft, Raid-Beiträge, Ligawertung, Kampfaufnahmen und Phrasen auf Pinnwänden; ein SQL-Test prüft, dass danach keine Zeile mit der Konto-Kennung übrig ist.
+2974. [x] [P1] Ein Verzeichnis der Verarbeitungen in `docs/legal/VERARBEITUNGEN.md` mit Zweck, Daten, Speicherdauer und Rechtsgrundlage für jede Online-Funktion.
 2975. [P1] Die Datenschutzerklärung (`docs/legal/DATENSCHUTZ.md`, `server/site/datenschutz.html`) um Ligen, Tausch, Bünde, Raids, Schiedsrichter, Echtheitsprüfung und Moderation ergänzen.
 2976. [P2] Eine Tabelle der Speicherdauer pro Datenart in `docs/ONLINE.md` und ein nächtlicher Lauf, der sie durchsetzt (Post 30 Tage, Tausche 90, Raids 60, Moderation 12 Monate).
 2977. [P2] Caddy-Zugriffsprotokolle speichern IP-Adressen nur gekürzt und werden nach 7 Tagen gelöscht.
@@ -362,7 +362,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2989. [P3] Eine jährliche Prüfliste in `docs/legal/DATENSCHUTZ_PRUEFUNG.md`: Speicherdauern, Löschläufe, Auftragsverarbeitung mit Contabo, Zugriffe auf die Datenbank.
 2990. [P3] Für Kampfaufnahmen im Schiedsrichter werden nur Seed, Teams und Züge gespeichert, keine Gerätedaten und keine Namen.
 
-2991. [P1] Ein SQL-Test prüft über den Systemkatalog, dass `data_export` jede Tabelle mit einer Spalte für die Konto-Kennung abdeckt.
+2991. [x] [P1] Ein SQL-Test prüft über den Systemkatalog, dass `data_export` jede Tabelle mit einer Spalte für die Konto-Kennung abdeckt.
 2992. [P2] Liga- und Raid-Gegner sehen nur Stufe, Wappen und Spirlings, nie den Freundescode, damit Fremde keine Anfragen schicken können.
 2993. [P3] Der Datenexport lässt sich auch als lesbare Seite im Spiel ansehen, nicht nur als Datei.
 2994. [P3] Einwilligungen (Name in Weltrangliste, Live-Duelle) werden mit Datum gespeichert und im Export gezeigt.

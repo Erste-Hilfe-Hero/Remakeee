@@ -119,6 +119,14 @@ done
 
 bash "$here/migrate.sh"
 
+# --- Game data for the leagues (species and learnsets, tools/online/game_data_sql.py) -------------
+if [ -f "$here/../data/spirlings.json" ] && command -v python3 >/dev/null 2>&1; then
+	python3 "$here/../tools/online/game_data_sql.py" "$here/../data/spirlings.json" | \
+		docker compose exec -T db psql -U postgres -h localhost -d postgres -v ON_ERROR_STOP=1 -q
+else
+	echo "Game data not loaded: the game project is not next to $here. The fair league needs it."
+fi
+
 # --- Battle referee (plan area 7, items 2687-2688) -----------------------------------------------
 # Its database user may only read battle_queue and write battle_results. The container has no
 # port; it needs the game project next to this folder (../project.godot) to build.
@@ -149,6 +157,12 @@ if [ "$local_test" != "1" ]; then
 	cat > /etc/cron.d/chimora-backup <<CRON
 # Nightly database backup, kept 14 days (server/backup.sh).
 30 3 * * * root bash $here/backup.sh >> /var/log/chimora-backup.log 2>&1
+# Weekly restore test of the newest backup (server/restore_test.sh), result in /status.json.
+0 5 * * 1 root bash $here/restore_test.sh >> /var/log/chimora-restore.log 2>&1
+CRON
+	cat > /etc/cron.d/chimora-cleanup <<CRON
+# Daily deletion run for the periods in the privacy policy (server/cleanup.sh).
+15 4 * * * root bash $here/cleanup.sh >> /var/log/chimora-cleanup.log 2>&1
 CRON
 	if [ "$shared" = "1" ]; then
 		cat > /etc/cron.d/chimora-proxy <<CRON

@@ -1,0 +1,13 @@
+{
+ "_note": "Finale 2: the Echo explained (plan item 1527).",
+ "skippable": false,
+ "steps": [
+  {"say": ["Mirela: Spirlings are born here, at the edge of drawing. They wander out and find a person.", "Mirela: When that bond breaks, they call. And the call comes back here."]},
+  {"say": ["Mirela: All those calls became one voice. The Echo. It isn't cruel. It's grieving.", "Mirela: When it gets too loud it leaks out through the Rifts. That's your Hush."]},
+  {"dialogue": "ashmere/finale_kestra"},
+  {"shake": 0.6},
+  {"sfx": "warp"},
+  {"say": ["The grey at the edge of the map rises like a wave. Shapes in it. Spirlings, hushed and lost."]},
+  {"action": "scene finale_3"}
+ ]
+}

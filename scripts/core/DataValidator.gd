@@ -42,6 +42,28 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 			errors.append("move '%s': unknown field '%s'" % [name, m.field])
 		if m.has("target") and not str(m.target) in MoveData.TARGETS:
 			errors.append("move '%s': unknown target '%s'" % [name, m.target])
+		if m.has("vs_status") and not (str(m.vs_status) in ["*", "stage_down"] or StatusRules.exists(str(m.vs_status))):
+			errors.append("move '%s': unknown vs_status '%s'" % [name, m.vs_status])
+		if int(m.get("priority", 0)) < -1 or int(m.get("priority", 0)) > 1:
+			errors.append("move '%s': priority must be -1, 0 or +1" % name)
+		if m.has("stats"):
+			if not m.stats is Dictionary:
+				errors.append("move '%s': stats must be an object (stat -> amount)" % name)
+			else:
+				for st: Variant in m.stats:
+					if not str(st) in BattleRules.STAGE_STATS:
+						errors.append("move '%s': unknown stat '%s' in stats" % [name, st])
+		if m.has("cooldown") and int(m.cooldown) < 0:
+			errors.append("move '%s': negative cooldown" % name)
+		if m.has("self_stages"):
+			if not m.self_stages is Dictionary:
+				errors.append("move '%s': self_stages must be an object (stat -> amount)" % name)
+			else:
+				for st: Variant in m.self_stages:
+					if not str(st) in BattleRules.STAGE_STATS:
+						errors.append("move '%s': unknown stat '%s' in self_stages" % [name, st])
+		if m.has("stage_chance") and (float(m.stage_chance) <= 0.0 or float(m.stage_chance) > 1.0):
+			errors.append("move '%s': stage_chance must be in (0, 1]" % name)
 
 	var species_names: Dictionary[String, bool] = {}
 	var dex_ids: Dictionary[int, bool] = {}
@@ -89,7 +111,20 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 		else:
 			errors.append("spirling '%s': learnset must be an object (level -> move)" % sname)
 	_check_reachable(spirlings_raw, encounters_path, errors)
+	_check_ai_profiles(errors)
 	return errors
+
+## Plan area 2, items 611 and 629: every AI profile weight stays between 0.2 and 2.0.
+const PROFILE_WEIGHTS: Array[String] = ["damage_w", "status_w", "setup_w", "field_w"]
+static func _check_ai_profiles(errors: PackedStringArray) -> void:
+	var all: Dictionary = BattleAI.profiles()
+	if not all.has(BattleAI.DEFAULT_PROFILE):
+		errors.append("ai_profiles: missing '%s'" % BattleAI.DEFAULT_PROFILE)
+	for id: String in all:
+		for k: String in PROFILE_WEIGHTS:
+			var w: float = float((all[id] as Dictionary).get(k, 1.0))
+			if w < 0.2 or w > 2.0:
+				errors.append("ai_profile '%s': %s %.2f is outside 0.2..2.0" % [id, k, w])
 
 ## Plan area 1, items 2, 3, 131 and 336: rarity, region, origin, unfold paths, bond rate band.
 static func _check_species_fields(s: Dictionary, sname: String, species_names: Dictionary, errors: PackedStringArray) -> void:
@@ -107,6 +142,28 @@ static func _check_species_fields(s: Dictionary, sname: String, species_names: D
 	if not motif is Array or (motif as Array).size() != 2 or int(motif[0]) == int(motif[1]) \
 			or int(motif[0]) < 0 or int(motif[1]) < 0 or int(motif[0]) >= BondEcho.MARKS or int(motif[1]) >= BondEcho.MARKS:
 		errors.append("spirling '%s': cry_motif must be two different marks 0..%d" % [sname, BondEcho.MARKS - 1])
+	var hint: String = str(s.get("keepsake_hint", ""))
+	if hint.is_empty() or not _held_items().has(hint):
+		errors.append("spirling '%s': keepsake_hint '%s' is not an item a Spirling can hold" % [sname, hint])
+	for v: Variant in s.get("variants", []):
+		if not v is Dictionary:
+			errors.append("spirling '%s': variants entries must be objects" % sname)
+			continue
+		var vd: Dictionary = v
+		var vr: String = str(vd.get("region", ""))
+		if not vr in SpirlingData.REGIONS or vr == str(s.get("region", "veydal")):
+			errors.append("spirling '%s': variant region '%s' must be another region" % [sname, vr])
+		var vels: Variant = vd.get("elements", [])
+		if not vels is Array or (vels as Array).is_empty() or (vels as Array).size() > 2:
+			errors.append("spirling '%s': variant needs one or two elements" % sname)
+		else:
+			for e: Variant in vels:
+				if not _valid_element(str(e)):
+					errors.append("spirling '%s': variant element '%s' unknown" % [sname, e])
+		if not BattleRules.TRAITS.has(str(vd.get("trait", ""))):
+			errors.append("spirling '%s': variant trait '%s' unknown" % [sname, vd.get("trait", "")])
+		if str(vd.get("palette", "")).is_empty() or str(vd.get("lore", "")).strip_edges().is_empty():
+			errors.append("spirling '%s': variant needs a palette and lore" % sname)
 	if not str(s.get("role", "")) in SpirlingData.ROLES:
 		errors.append("spirling '%s': unknown role '%s'" % [sname, s.get("role", "")])
 	if str(s.get("origin", "")).strip_edges().is_empty():
@@ -166,6 +223,9 @@ static func _check_reachable(spirlings_raw: Array, encounters_path: String, erro
 					reach[to] = true
 					grew = true
 	for s: Variant in spirlings_raw:
+		# Kinds of regions that are not playable yet (Corvane, Ashmere, Solenne) wait in the data.
+		if s is Dictionary and str(s.get("region", "veydal")) in SpirlingData.REGIONS and str(s.get("region", "veydal")) != "veydal":
+			continue
 		if s is Dictionary and not reach.has(str(s.get("name", ""))):
 			errors.append("spirling '%s': can't be met anywhere (no encounter, starter, unfold or fixed meeting)" % s.get("name", ""))
 
@@ -181,3 +241,16 @@ static func _load_json(path: String, errors: PackedStringArray) -> Variant:
 		errors.append("%s:%d: %s" % [path, json.get_error_line(), json.get_error_message()])
 		return null
 	return json.data
+
+## Ids of items a Spirling can hold (items.json entries with a "held" block).
+static func _held_items() -> Dictionary:
+	var out: Dictionary = {}
+	var path: String = "res://data/items.json"
+	if not FileAccess.file_exists(path):
+		return out
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	var list: Array = raw if raw is Array else ((raw as Dictionary).values() if raw is Dictionary else [])
+	for it: Variant in list:
+		if it is Dictionary and (it as Dictionary).has("held"):
+			out[str((it as Dictionary).get("id", ""))] = true
+	return out

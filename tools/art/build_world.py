@@ -28,10 +28,7 @@ def main(argv):
             owner[mid] = g
         # Every group is built so the German table stays complete; only wanted groups are written.
         mod.build(world)
-    from common import MAPS
-    for f in sorted(os.listdir(MAPS)):
-        if f.endswith(".json") and f[:-5] not in owner:
-            raise SystemExit("map %s belongs to no group: add it to GROUP in one module" % f[:-5])
+    # Maps of other areas (story maps and the like) that no group owns are left as they are.
     for mid in list(world.maps):
         if mid not in owner:
             raise SystemExit("map %s was built but is in no GROUP" % mid)

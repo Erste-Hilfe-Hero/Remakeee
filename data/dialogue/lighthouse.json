@@ -8,12 +8,41 @@
    "Aldo: The cartographers will need fresh maps. Take this, and go see Kestra at the map house.",
    "Aldo: And {name}... if you find any of Mirela's pages out there, bring them home."
   ],
-  "after_flag": {
-   "flag": "aldo_gift",
-   "lines": [
-    "Aldo: The lamp stays lit for you. If your team is worn out, the Rest Spring is just up the pier."
-   ]
-  },
+  "after_flag": [
+   {
+    "flag": "aldo_gift",
+    "lines": [
+     "Aldo: The lamp stays lit for you. If your team is worn out, the Rest Spring is just up the pier."
+    ]
+   },
+   {
+    "flag": "met_kestra",
+    "lines": [
+     "Aldo: Kestra, eh? Sharp girl. Her maps are good, even when her ideas are wild."
+    ]
+   },
+   {
+    "flag": "rift_cinder_sealed",
+    "lines": [
+     "Aldo: The smoke over Thornridge is gone. You did that? Mirela would have whooped."
+    ]
+   },
+   {
+    "flag": "rift_tide_sealed",
+    "lines": [
+     "Aldo: The marsh birds are back on the lake. The Tidewater Rift is quiet, they say."
+    ]
+   },
+   {
+    "flag": "rift_tide_sealed",
+    "if": {
+     "flag": "rift_cinder_sealed"
+    },
+    "lines": [
+     "Aldo: Both Rifts mended. The valley breathes again. Kestra wanted to see you, at the dock."
+    ]
+   }
+  ],
   "action": "give_item tonic 2",
   "flag": "aldo_gift",
   "once": true
@@ -39,23 +68,38 @@
    "Aldo: The ferry will run again one day. Until then, make your team strong. And find her pages."
   ],
   "flag": "aldo_dock_told",
-  "after_flag": {
-   "flag": "aldo_dock_told",
-   "lines": [
-    "Aldo: The lamp stays lit. It always has, for her. Now for you too."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "aldo_dock_told",
+    "lines": [
+     "Aldo: The lamp stays lit. It always has, for her. Now for you too."
+    ]
+   },
+   {
+    "flag": "pages_all",
+    "lines": [
+     "Aldo: All six pages? Then take them up to the lamp room. I'll follow you."
+    ]
+   },
+   {
+    "flag": "mirela_lamp",
+    "lines": [
+     "Aldo: The oar is ready. Meet me at the ferry when you are."
+    ]
+   },
+   {
+    "flag": "scene_ferry_crossing_seen",
+    "lines": [
+     "Aldo: Back already? Tell me everything about Corvane. Slowly. I'm old."
+    ]
+   }
+  ]
  },
  "lamp_room": {
   "lines": [
-   "You climb the spiral stairs to the lamp room. Aldo follows, slowly.",
-   "You lay Mirela's six pages under the great lamp. The light shines through the paper...",
-   "...and the lines join up. It's one map: the lake, the terraces, and a path north past Crowcrest.",
-   "At its end, in Mirela's hand: 'Where the map ends, I wait. Keep the lamp lit.'",
-   "Aldo: Forty years I kept this lamp burning, and never knew why she asked me to.",
-   "Aldo: She's out there, {name}. Past the third Rift. Take this. It was hers."
+   "You climb the spiral stairs to the lamp room. Aldo follows, slowly."
   ],
-  "action": "give_item echo_lumen 1; give_item max_tonic 2",
+  "action": "scene mirela_lamp",
   "flag": "mirela_lamp",
   "once": true
  },
@@ -72,5 +116,12 @@
   },
   "action": "exchange",
   "flag": "marla_met"
+ },
+ "aldo_post": {
+  "lines": [
+   "Aldo: The lamp stays lit. It always has, for her. Now for you too.",
+   "Aldo: Your resting Spirlings get restless. I can send them roaming the valley for a few hours. They always bring something home."
+  ],
+  "action": "expedition"
  }
 }

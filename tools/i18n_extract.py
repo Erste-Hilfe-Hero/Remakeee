@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lists every player-facing English string that data/i18n/<lang>.json must translate.
+"""Lists every player-facing English string that data/i18n/<lang>/*.json must translate.
 
 Sources: dialogue and map JSON, quests, items, plus string literals in the UI and battle scripts
 that look like text (a capital letter or a space). Prints missing keys as JSON so they can be
@@ -9,7 +9,7 @@ import json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SCRIPT_DIRS = ["scripts/ui", "scripts/overworld", "scripts/battle", "scripts/core", "scripts/online"]
-SKIP_SCRIPTS = {"BalanceSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
+SKIP_SCRIPTS = {"BalanceSim.gd", "EndgameSim.gd", "BattleTest.gd", "DataValidator.gd", "StoryValidator.gd", "WorldValidator.gd", "PixelFont.gd", "Loc.gd", "PatternTranslation.gd"}
 LIT = re.compile(r'"((?:[^"\\\n]|\\.)*)"')
 
 def looks_like_text(s):
@@ -73,7 +73,7 @@ def strings():
     quests = json.load(open(os.path.join(ROOT, "data/quests.json")))
     for group in quests.values():
         for q in group if isinstance(group, list) else []:
-            for k in ("title", "chapter", "text", "where", "hint"):
+            for k in ("title", "act", "chapter", "text", "where", "hint"):
                 if isinstance(q.get(k), str):
                     found.append(q[k])
     items = json.load(open(os.path.join(ROOT, "data/items.json")))
@@ -89,6 +89,11 @@ def strings():
         for k in ("habitat", "lore", "origin"):
             if isinstance(sp.get(k), str) and sp[k]:
                 found.append(sp[k])
+    lore = os.path.join(ROOT, "data/spirlog_lore.json")
+    if os.path.exists(lore):
+        for k, v in json.load(open(lore)).items():
+            if not k.startswith("_") and isinstance(v, str):
+                found.append(v)
     for a in json.load(open(os.path.join(ROOT, "data/achievements.json"))).get("achievements", []):
         for k in ("title", "text"):
             if isinstance(a.get(k), str):
@@ -100,7 +105,7 @@ def strings():
     if os.path.exists(ev):
         for group in json.load(open(ev)).values():
             for t in group if isinstance(group, list) else []:
-                for k in ("text", "name", "desc"):
+                for k in ("text", "name", "desc", "found"):
                     if isinstance(t.get(k), str):
                         found.append(t[k])
     for sd in SCRIPT_DIRS:
@@ -124,10 +129,14 @@ def strings():
 
 if __name__ == "__main__":
     lang = sys.argv[1] if len(sys.argv) > 1 and not sys.argv[1].startswith("-") else "de"
-    path = os.path.join(ROOT, "data/i18n/%s.json" % lang)
-    have = json.load(open(path)) if os.path.exists(path) else {}
-    keep = set(have.get("keep", []))
-    table = have.get("strings", {})
+    # One file per table in data/i18n/<lang>/ (built by tools/i18n/build.py).
+    d = os.path.join(ROOT, "data/i18n", lang)
+    keep, table = set(), {}
+    for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if f.endswith(".json"):
+            part = json.load(open(os.path.join(d, f), encoding="utf-8"))
+            keep.update(part.get("keep", []))
+            table.update(part.get("strings", {}))
     pats = [re.compile("^" + re.escape(k).replace("%%", "%").replace("%s", "(.+?)").replace("%d", r"(-?\d+)") + "$")
             for k in table if "%s" in k or "%d" in k]
     def known(s):

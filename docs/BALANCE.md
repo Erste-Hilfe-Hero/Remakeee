@@ -1,11 +1,41 @@
 # Balance notes
 
-How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- <level> <rounds> [out.md]`.
-Every species fights every other species of the same evolution stage 1-on-1, both sides on the
-greedy AI (tier 1), no items. Forms that can't exist yet at that level are skipped, and so are
-forms a player would already have evolved (level at or past their evolution level).
-`tests/unit/test_balance.gd` fails CI if any species wins less than 25% or more than 75% of its
-same-stage fights at Lv36.
+How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- --level 36 --rounds 10 --mode duel`
+(switches: `--level`, `--rounds`, `--seed`, `--mode duel|team`, `--ai`, `--out report.md`,
+`--json report.json`; the old positional form `<level> <rounds> [out.md]` still works).
+
+- **duel**: every species fights every other species of the same evolution stage 1-on-1, both
+  sides on the greedy AI (tier 1), no items. Forms that can't exist yet at that level are skipped,
+  and so are forms a player would already have evolved.
+- **team**: random valid teams of 3 and 5 (no species twice), both sides on AI tier 2, one
+  Spirling on the field at a time; the report adds picks per element and the share of rests.
+
+Both modes run on the real `BattleModel` (all effects, fields and rules), never a separate damage
+path. `--json` writes every number for tests and comparisons.
+
+## Zielbänder (target bands)
+
+| Measure | Target | Checked by |
+| --- | --- | --- |
+| Duel win rate per species at Lv36 | 25% to 75% | `test_balance.gd`, `test_no_species_dominates_its_stage` |
+| Team win rate per species at Lv36 | 30% to 70% (the test holds 25% to 75% while the roster grows) | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
+| Team battles that stall (120 turns) | none | `test_balance.gd`, same test |
+| Battles with only the new arts that hit 60 turns | none | `test_move_curve.gd`, `test_fuzz_new_arts_only` |
+| Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | report line "Turns to KO" (test planned, item 851) |
+| First-mover advantage (faster Spirling wins) | at most 62% | report line (test planned, item 850) |
+| Damage art curve: power x accuracy / (energy + 1) x effect factor | 9 to 18 | `test_move_curve.gd` |
+| Accuracy of any art | at least 75% | `test_move_curve.gd` |
+| Status chance of a damage art | at most 30% | `test_move_curve.gd` |
+| Cooldown arts | power 110+, energy 7+ | `test_move_curve.gd` |
+| Arts per element | 14+, of them 3+ status arts and 1+ for 1-2 Energy | `test_move_curve.gd` |
+| Learnset size | at most 14 arts | `test_move_curve.gd` |
+
+Measured on 6 Nov 2026 (plan area 2, after the new arts): Lv36 duel turns to KO 2.5, first-mover
+advantage 52%; Lv36 teams (200 battles, seed 7) 0 draws, every species between 39% and 66%.
+Glimmerax sits lowest in duels (26%, it loses to 7 of 8 same-stage species on base stats).
+
+Long fights: from turn `BattleRules.WEARY_TURN` (40) nobody heals any more, so two Spirlings that
+mend faster than they hurt each other can't stall forever.
 
 ## Changes from the first run (Nov 2026)
 
@@ -101,23 +131,77 @@ Waymarks are the endgame currency. They are only earned by playing (`Waymarks.ea
 `Waymarks.SOURCES`), never bought, traded or gifted. The pouch holds at most 9999; what does not fit
 is lost with a short note. A loss in battle never takes Waymarks away.
 
-Target for an active player: **about 60 Waymarks a day and 500 a week** once the endgame is open.
+Target for an active player: **about 60 Waymarks a day and 500 a week** once the endgame is open;
+a player who does everything every day (all four daily tasks, trips, every weekly source) gets about 750.
 
 | Source | Amount | How often | Status |
 | --- | --- | --- | --- |
 | Daily task | 10 | 3 a day | built |
-| All three daily tasks | 10 extra | once a day | built |
+| Fourth, harder daily task (after Act I) | 25 | once a day | `DailyTasks.HARD_REWARD` |
+| All daily tasks of the day | 10 extra | once a day | built |
 | Weekly echo, first win of the week | 60 | once a week | built |
 | Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
-| Master Wayfarer | 80 first win, then 20 | once a week each (8 masters) | `Masters.win` |
+| Master Wayfarer | 80 first win, then 5 | once a week each (8 masters) | `Masters.win` |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
 | Season path steps 5/15/25 and 10/20/30 | 30 / 50 | per season | built |
+| Season path, every step after 30 | 20 | per step | `SeasonPath.add` |
 | Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
 | Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
+| Roaming trip 4 / 8 / 12 h (also 60 / 120 / 180 coins and a Tonic / Remedy / Strong Tonic) | 1 / 1 / 2 | up to 3 trips at once | `Expeditions.collect` |
+| Echo Path chest (all 8 rooms cleared) | 40 | once a week | `EchoPath.open_chest` |
+| Monthly album, all 12 fields | 100 | once a month | `Album.record` |
+| Iron Oath | +25% on every source above | while sworn | `Waymarks.earn` |
 
-Daily tasks alone give 40 a day (280 a week); the weekly sources fill the rest.
+Daily tasks alone give 40 a day (280 a week), 65 a day after Act I with the hard fourth task; the
+weekly sources fill the rest. Trips are an idle bonus: three 8-hour trips twice a day add 6 a day.
+Once a day one task that is not started yet can be swapped for another one, free of charge.
+
+### Endgame coins
+
+| Source | Coins | How often |
+| --- | --- | --- |
+| Weekly echo | 400 (100 / 150 after 3 / 4 wins) | once a week |
+| Lighthouse stair floor n | 100 + 20 per floor | once per floor |
+| Roaming trip 4 / 8 / 12 h | 60 / 120 / 180 | up to 3 at once |
+| Season path steps | 250 to 1650 | per season |
+| Wayfarer rematches, wild battles | as in the story | any time |
+
+### 90-day run (plan 3513)
+
+`godot --headless --path . -s res://tools/balance_sim.gd -- endgame` works out 90 days with a
+fixed plan (`EndgameSim.gd`: all daily tasks, two rounds of 8-hour trips a day, weekly echo,
+all 8 masters, the Echo Path and 3 stair floors a week, the full album every month, one
+festival; then buy at Marla's stand cheapest first). Nov 2026 run:
+
+| Source | Waymarks in 90 days |
+| --- | --- |
+| Daily tasks (3 + the hard one) + bonus | 4950 + 900 |
+| Master Wayfarers (640 in week 1, then 40 a week) | 1080 |
+| Roaming trips | 540 |
+| Weekly echo | 720 |
+| Echo Path | 480 |
+| Album | 300 |
+| Lighthouse stair | 285 |
+| Season path | 460 |
+| Festival | 150 |
+| **Total** | **9865 (110 a day, 767 a week; about 720 a week after the first)** |
+
+Marla's stand took 9270 (341 goods), so the pouch ends at about 600: nothing is lost over the
+cap, and the full weekly stock (about 900) is more than a week brings, so buying stays a choice.
+The first run showed trips (48 a day) and weekly master rematches (160 a week) far above the
+target; they were cut to 1/2/3 per trip and 5 per rematch. The fourth daily task (plan 3170) added 175 a
+week, so trips were cut again to 1/1/2.
+
+World events and the wandering merchant (`WorldEvents.gd`) pay no Waymarks: the event gives one
+small item on the first visit of the day to its place, and the merchant sells three common goods
+for coins at their normal price. Both are drawn from the date alone, so all players share them.
+
+Rhythm rules: no event asks for a streak, and a missed day, week or month costs nothing: the
+next one starts fresh. All timed content runs on server time (`Online.unix_now`/`date_now`). If
+the clock goes back, stored progress is kept and nothing that was paid pays again
+(`GameState.time_went_back`).
 
 Festival ribbons: 3 per won battle against Spirlings of the festival's elements, 5 for the crier's
 festival task of the day. They buy festival goods from Tilda in Brindlewick.

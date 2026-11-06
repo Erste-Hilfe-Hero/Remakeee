@@ -64,3 +64,18 @@ in `export_presets.cfg`, then push a tag such as `v0.1.0`.
 ## APK size budget
 
 CI fails the Android debug job when the APK is larger than 80 MB (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
+
+## Official build path and version numbers (plan area 9)
+
+- **Store builds** (signed AAB for Google Play, IPA for TestFlight) run in the lifekit repository, because the
+  signing keys and store accounts live there: workflow `.github/workflows/chimora-store.yml` on branch
+  `claude/chimora-store`, started by a commit `run:chimora-store-android` / `run:chimora-store-ios`. It checks
+  out this repository at the pinned `CHIMORA_REF`. That is the official path to the stores.
+- **This repository** builds the debug APK and the browser test build on every push (`export.yml`) and is the
+  only place where code changes. Before a store build, set `CHIMORA_REF` in lifekit to the commit on `main`
+  (or the release tag) that passed all checks here.
+- **Version numbers:** `python3 tools/bump_version.py --name 1.2.0` sets the version name and the next version
+  code in every export preset and `Online.CLIENT_VERSION` at once; CI runs `--check`. The lifekit build adds
+  its own build number for the store upload. Raise `server_config.min_version` only when the new build is
+  live in both stores.
+- GitHub Actions are pinned to commit SHAs (the tag stays as a comment). Update them in a reviewed PR.

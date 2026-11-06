@@ -717,6 +717,26 @@ def saltspire():
     ]
 
 
+def velahra():
+    # First Voice of Veydal: a long lake spirit curled in a ring of water, a crown of light
+    # on its head and wide veil fins that look like slow ripples.
+    return [
+        E(30, 46, 22, 7, "dark", shade=False),                                      # ripple ring
+        E(30, 46, 17, 4, "mid", outline=False, shade=False),
+        P([(44, 30), (55, 18), (54, 34), (46, 42)], "light"),                       # tail veil
+        P([(8, 34), (2, 22), (12, 26), (18, 36)], "light"),                         # far fin veil
+        E(36, 38, 12, 8, "mid"),                                                    # coil back
+        E(26, 34, 9, 10, "mid"),                                                    # neck
+        E(19, 22, 9, 8, "light"),                                                   # head
+        P([(14, 14), (16, 4), (19, 12), (22, 2), (24, 12), (28, 6), (27, 16)], "light"),  # crown of light
+        P([(30, 30), (42, 24), (40, 34)], "light"),                                 # near fin veil
+        Stamp(17, 3, ["3"]), Stamp(22, 1, ["3"]), Stamp(28, 5, ["3"]),              # crown sparks
+        glow_eye(13, 20),
+        Stamp(10, 26, ["00", ".0"]),                                                # mouth
+        Stamp(34, 40, ["3.3.3"]), Stamp(24, 46, ["3...3...3"]),                     # light marks
+    ]
+
+
 DESIGNS = {
     "Kindlop": kindlop, "Smoldrake": smoldrake, "Calderox": calderox,
     "Puddlet": puddlet, "Riptail": riptail, "Leviarch": leviarch,
@@ -733,8 +753,52 @@ DESIGNS = {
     "Fluting": fluting, "Marshfife": marshfife, "Glasstarn": glasstarn, "Lanternel": lanternel,
     "Seamlet": seamlet, "Mendlace": mendlace, "Croziel": croziel, "Frondmere": frondmere,
     "Brinelet": brinelet, "Saltspire": saltspire,
+    "Velahra": velahra,
 }
 BACK_DROP = 8
+
+# --- Placeholders for regions that are not playable yet (plan area 1, items 61-63) -------------
+# A simple round body with a head, ears or crest and eyes, varied by a hash of the name, so every
+# kind has a sprite until its real design is drawn. Unfolded forms are larger.
+PLACEHOLDERS = [
+    "Millwhit", "Millvane", "Drizzlet", "Rainmantle", "Reedquill", "Reedwarden", "Cogmite", "Cogwright",
+    "Puddock", "Delthorn", "Glimmoth", "Wickmoth", "Silthop", "Siltgrove", "Flourie", "Floursprite",
+    "Cindle", "Glassfell", "Etchling", "Burinox", "Ashwren", "Ashcrest", "Bogwick", "Fenwarden",
+    "Cullet", "Cullhorn", "Smeltpup", "Smeltmaw",
+    "Solkit", "Solmantle", "Saltsprig", "Saltcrown", "Orrlet", "Orrerine", "Duneshrew", "Dunebastion",
+    "Shimmerlet", "Mirassil", "Highhare", "Zenithare",
+]
+
+
+def placeholder(name: str, big: bool):
+    import hashlib
+    h = hashlib.sha1(name.encode()).digest()
+    r = 13 if big else 10
+    bx, by = 30, 40 - (2 if big else 0)
+    tones = ["light", "mid", "dark"]
+    body = tones[h[0] % 3]
+    head = tones[(h[0] + 1) % 3]
+    parts = []
+    kind = h[1] % 3
+    if kind == 0:  # tall ears
+        parts += [P([(18, 26 - r // 2), (22, 8 + h[2] % 6), (26, 24 - r // 3)], "dark"),
+                  P([(26, 24 - r // 3), (31, 9 + h[3] % 6), (33, 26 - r // 2)], "dark")]
+    elif kind == 1:  # crest
+        parts += [P([(18, 20), (24, 6 + h[2] % 5), (28, 18), (33, 8 + h[3] % 5), (34, 22)], "dark")]
+    else:  # wings or fins
+        parts += [P([(34, by - 6), (52, by - 14 - h[2] % 6), (48, by + 2)], "light"),
+                  P([(26, by - 6), (8, by - 16 - h[3] % 6), (12, by + 2)], "light")]
+    parts += [E(bx, by, r + 2, r, body)]
+    parts += [E(bx - 6, by + r - 1, 4, 3, "dark"), E(bx + 6, by + r - 1, 4, 3, "dark")]
+    parts += [E(26, 26 - (2 if big else 0), 9 if big else 8, 8 if big else 7, head)]
+    if h[4] % 2:
+        parts += [P([(bx + r, by - 2), (bx + r + 8, by - 8 - h[5] % 5), (bx + r + 4, by + 4)], body)]
+    parts += [eye(20, 23 - (2 if big else 0), big=big), Stamp(17, 30 - (2 if big else 0), ["0.0", ".0."])]
+    return parts
+
+
+for _i, _n in enumerate(PLACEHOLDERS):
+    DESIGNS[_n] = (lambda n=_n, b=(_i % 2 == 1): placeholder(n, b))
 
 
 def main() -> None:

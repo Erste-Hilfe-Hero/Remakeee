@@ -142,6 +142,16 @@
    "facing": "right",
    "dialogue": "brindlewick/festival_trader",
    "sprite": "villager"
+  },
+  {
+   "id": "velahra",
+   "x": 3,
+   "y": 12,
+   "facing": "down",
+   "dialogue": "brindlewick/velahra",
+   "sprite": "first_voice",
+   "show_flag": "mirela_lamp",
+   "hide_flag": "first_voice_velahra_away"
   }
  ],
  "signs": [

@@ -1,4 +1,4 @@
-# German texts for dialogue, signs, goals and map names. Merged into data/i18n/de.json by tools/i18n/build.py.
+# German texts for dialogue, signs, goals and map names. Written to data/i18n/de/ by tools/i18n/build.py.
 T = {
 "BRINDLEWICK": "BRINDLEWICK",
 "Lake village of Veydal.": "Seedorf von Veydal.",
