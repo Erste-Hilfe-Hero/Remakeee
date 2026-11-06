@@ -4562,5 +4562,58 @@
    0
   ],
   "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 81,
+  "name": "Velahra",
+  "elements": [
+   "LUMEN",
+   "TIDE"
+  ],
+  "rarity": "ancient",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "velahra",
+  "base": {
+   "hp": 110,
+   "atk": 84,
+   "foc": 132,
+   "spd": 108,
+   "def": 104
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Glint",
+    "Fizz Pop",
+    "Candle Ward"
+   ],
+   "30": [
+    "Spindrift Shot"
+   ],
+   "34": [
+    "Prism Ray"
+   ],
+   "38": [
+    "Dawn Mend"
+   ],
+   "42": [
+    "Radiant Lance"
+   ],
+   "46": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "4.2 m",
+  "habitat": "Under the lake before the lighthouse",
+  "lore": "The First Voice of Veydal. It sleeps as a light under the lake and sang the land together long ago. It was the last to see Mirela.",
+  "origin": "One of the six First Voices, whose silence let the Hush fall over the land.",
+  "met": "velahra_shore",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
  }
 ]

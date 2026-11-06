@@ -717,6 +717,26 @@ def saltspire():
     ]
 
 
+def velahra():
+    # First Voice of Veydal: a long lake spirit curled in a ring of water, a crown of light
+    # on its head and wide veil fins that look like slow ripples.
+    return [
+        E(30, 46, 22, 7, "dark", shade=False),                                      # ripple ring
+        E(30, 46, 17, 4, "mid", outline=False, shade=False),
+        P([(44, 30), (55, 18), (54, 34), (46, 42)], "light"),                       # tail veil
+        P([(8, 34), (2, 22), (12, 26), (18, 36)], "light"),                         # far fin veil
+        E(36, 38, 12, 8, "mid"),                                                    # coil back
+        E(26, 34, 9, 10, "mid"),                                                    # neck
+        E(19, 22, 9, 8, "light"),                                                   # head
+        P([(14, 14), (16, 4), (19, 12), (22, 2), (24, 12), (28, 6), (27, 16)], "light"),  # crown of light
+        P([(30, 30), (42, 24), (40, 34)], "light"),                                 # near fin veil
+        Stamp(17, 3, ["3"]), Stamp(22, 1, ["3"]), Stamp(28, 5, ["3"]),              # crown sparks
+        glow_eye(13, 20),
+        Stamp(10, 26, ["00", ".0"]),                                                # mouth
+        Stamp(34, 40, ["3.3.3"]), Stamp(24, 46, ["3...3...3"]),                     # light marks
+    ]
+
+
 DESIGNS = {
     "Kindlop": kindlop, "Smoldrake": smoldrake, "Calderox": calderox,
     "Puddlet": puddlet, "Riptail": riptail, "Leviarch": leviarch,
@@ -733,6 +753,7 @@ DESIGNS = {
     "Fluting": fluting, "Marshfife": marshfife, "Glasstarn": glasstarn, "Lanternel": lanternel,
     "Seamlet": seamlet, "Mendlace": mendlace, "Croziel": croziel, "Frondmere": frondmere,
     "Brinelet": brinelet, "Saltspire": saltspire,
+    "Velahra": velahra,
 }
 BACK_DROP = 8
 

@@ -8,7 +8,7 @@ extends RefCounted
 const DATA_PATH: String = "res://data/endgame.json"
 const SHOW_FLAG: String = "storage_remote"
 const FIRST_WAYMARKS: int = 80
-const WEEKLY_WAYMARKS: int = 20
+const WEEKLY_WAYMARKS: int = 5
 const TEAM_SIZE: int = 4
 const MIN_RING: int = 45
 const MAX_RING: int = 55
