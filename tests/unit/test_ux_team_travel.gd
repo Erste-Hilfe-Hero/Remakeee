@@ -84,3 +84,62 @@ func test_german_lead_option_is_clear() -> void:
 	Loc.set_language("de")
 	assert_eq(Loc.t("Lead the team"), "An die Spitze")
 	Loc.set_language("en")
+
+## Items 1873, 1875, 1879: the pause menu remembers its last entry, names the place and
+## can save and end the session.
+func _run_pause(answers: Array) -> Dictionary:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var menu := _menu()
+	await wait_process_frames(1)
+	var state: Dictionary = {"done": false}
+	var runner := func() -> void:
+		await menu.run()
+		state.done = true
+	runner.call()
+	var titles: Array[String] = await _answer(menu, state, answers)
+	return {"done": state.done, "menu": menu, "titles": titles}
+
+func test_pause_title_names_the_place() -> void:
+	var place: String = MapData.load_map("fernstair").display_name
+	assert_string_contains(PauseMenu.menu_title("fernstair"), place)
+	assert_false(PauseMenu.menu_title().contains("\n"))
+
+func test_pause_menu_starts_on_the_last_entry() -> void:
+	PauseMenu.last_label = ""
+	var r: Dictionary = await _run_pause([1, -1, -1])
+	assert_true(r.done)
+	var labels: Array[String] = r.menu.last_rows
+	assert_eq(PauseMenu.last_label, labels[1])
+	PauseMenu.last_label = ""
+
+func test_save_and_to_title_closes_the_menu() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var menu := _menu()
+	await wait_process_frames(1)
+	var state: Dictionary = {"done": false, "result": false}
+	var runner := func() -> void:
+		state.result = await menu.save_and_quit()
+		state.done = true
+	runner.call()
+	# Without a server the game asks first; "To title" is the first answer.
+	await _answer(menu, state, [0])
+	assert_true(state.done)
+	assert_true(state.result)
+	assert_true(menu.to_title)
+
+func test_staying_keeps_the_session() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var menu := _menu()
+	await wait_process_frames(1)
+	var state: Dictionary = {"done": false, "result": false}
+	var runner := func() -> void:
+		state.result = await menu.save_and_quit()
+		state.done = true
+	runner.call()
+	var titles: Array[String] = await _answer(menu, state, [1])
+	assert_true(state.done)
+	if titles.is_empty():
+		pass_test("saved on the server, nothing to ask")
+		return
+	assert_false(state.result)
+	assert_false(menu.to_title)

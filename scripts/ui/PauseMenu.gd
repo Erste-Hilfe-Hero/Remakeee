@@ -10,6 +10,10 @@ var encounter_table: String = ""
 var current_map: String = ""
 ## Set when the player picks a fast-travel target; the overworld moves them after the menu closes.
 var travel_to: String = ""
+## Set by "Save and to title" once the save went through; the overworld goes to the title (item 1879).
+var to_title: bool = false
+## The pause entry used last; the next opening starts there (item 1873).
+static var last_label: String = ""
 ## Set when the player picks Photo; the overworld opens photo mode after the menu closes.
 var photo: bool = false
 ## Set when the player picks "Watch last battle" in Records.
@@ -30,7 +34,7 @@ var room_action: String = ""
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
 ## the Map book once Aldo gave it.
 const MENU_ORDER: Array[String] = ["Goals", "Map book", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
-	"Leagues", "Records", "Storage", "Save", "Photo", "Settings"]
+	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
 		map_book: bool = false) -> Array[String]:
@@ -50,9 +54,13 @@ func run() -> void:
 		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
 		if "Travel" in labels:
 			await tip("travel")
-		var idx: int = await pick_strings(menu_title(), labels)
+		var entries: Array[Dictionary] = []
+		for l: String in labels:
+			entries.append({"text": l})
+		var idx: int = await pick(menu_title(current_map), entries, true, maxi(0, labels.find(last_label)))
 		if idx < 0:
 			return
+		last_label = labels[idx]
 		match labels[idx]:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
@@ -77,6 +85,9 @@ func run() -> void:
 			"Storage": await run_storage()
 			"Save":
 				save_now()
+			"Save and to title":
+				if await save_and_quit():
+					return
 			"Settings": await run_settings()
 			"Photo":
 				photo = true
@@ -204,6 +215,23 @@ func save_now() -> void:
 	if not is_inside_tree():
 		return
 	toast(SAVED_TEXT if on_server else SAVED_LOCAL_TEXT, 1.5 if on_server else 3.0)
+
+## Saves and, if that worked, ends the session (item 1879). Returns true when the menu
+## should close and the game go back to the title.
+func save_and_quit() -> bool:
+	if not SaveManager.save_game():
+		Sound.sfx("cancel")
+		toast("Saving failed.", 2.5)
+		return false
+	Sound.sfx("save")
+	toast("Saving...", 5.0)
+	var on_server: bool = await Online.wait_synced(SaveManager.slot)
+	if not is_inside_tree():
+		return false
+	if not on_server and not await confirm(Loc.t(SAVED_LOCAL_TEXT) + "\n" + Loc.t("Go to the title anyway?"), "To title", "Stay"):
+		return false
+	to_title = true
+	return true
 
 const SAVED_TEXT: String = "Saved."
 const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once the connection is back."
@@ -372,8 +400,11 @@ static func records_text() -> String:
 	return "\n".join(lines)
 
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
-static func menu_title() -> String:
+## Name, coins, waymarks and the place the player stands (item 1875).
+static func menu_title(map_id: String = "") -> String:
 	var t: String = "%s   %s   %s" % [GameState.tamer_name, Loc.plural(GameState.money, "%d coin", "%d coins"), Waymarks.label()]
+	if not map_id.is_empty() and MapData.exists(map_id):
+		t += "\n" + Loc.t(MapData.load_map(map_id).display_name)
 	if not Festival.active().is_empty():
 		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
