@@ -7,7 +7,7 @@ const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
 
 var _menu: MenuHost
-## Connection state, server notice and how many Tamers are online.
+## Connection state, server notice and how many Wanderers are online.
 var _status: Label
 var _name_box: PanelContainer
 var _name_edit: LineEdit
