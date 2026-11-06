@@ -634,5 +634,17 @@
   "shop": true,
   "energy_surge": 3,
   "per_battle": 3
+ },
+ {
+  "id": "rg_overcharge",
+  "name": "Overcharge Core",
+  "description": "Use it before a battle: the whole team starts the next battle with 12 instead of 10 energy, maximum 12.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "overcharge",
+   "mult": 1.0,
+   "battles": 1
+  }
  }
 ]
