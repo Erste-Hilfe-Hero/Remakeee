@@ -7,7 +7,7 @@ extends RefCounted
 const TILE: int = 16
 
 ## Tile kinds. The atlas column equals the enum value.
-enum Kind { GRASS, TALL_GRASS, PATH, WATER, TREE, WALL, ROOF, DOOR, FLOOR, FENCE, SIGN, FLOWER, COUNTER, INNER_WALL, SPRING, RIFT, CLIFF, STAIRS, REEDS, SCREE, PIER, TOWER, LAMP, ROCK }
+enum Kind { GRASS, TALL_GRASS, PATH, WATER, TREE, WALL, ROOF, DOOR, FLOOR, FENCE, SIGN, FLOWER, COUNTER, INNER_WALL, SPRING, RIFT, CLIFF, STAIRS, REEDS, SCREE, PIER, TOWER, LAMP, ROCK, WADE, BOULDER, PLATE, CRACKED, VINES, PLANK }
 
 ## Map character -> tile kind.
 const LEGEND: Dictionary[String, int] = {
@@ -16,12 +16,21 @@ const LEGEND: Dictionary[String, int] = {
 	"S": Kind.SIGN, "*": Kind.FLOWER, "C": Kind.COUNTER, "W": Kind.INNER_WALL, "o": Kind.SPRING,
 	"X": Kind.RIFT, "^": Kind.CLIFF, "=": Kind.STAIRS, "%": Kind.REEDS, ":": Kind.SCREE,
 	"+": Kind.PIER, "|": Kind.TOWER, "L": Kind.LAMP, "@": Kind.ROCK,
+	# Area 3 (world): wading water, push boulder, pressure plate, cracked floor, vine wall,
+	# plank gap. See MapData for how each one behaves.
+	"w": Kind.WADE, "B": Kind.BOULDER, "P": Kind.PLATE, "k": Kind.CRACKED, "v": Kind.VINES,
+	"Y": Kind.PLANK,
+}
+
+## Kinds that are solid until the player owns a piece of Wayfarer Gear (always on foot).
+const GEAR_KINDS: Dictionary[int, String] = {
+	Kind.WADE: "wading_boots", Kind.VINES: "climbing_pick", Kind.PLANK: "plank_bundle",
 }
 
 ## Wild Spirlings hide in ferns (tall grass), reeds and scree, not only in grass.
 const ENCOUNTER_KINDS: Array[int] = [Kind.TALL_GRASS, Kind.REEDS, Kind.SCREE]
 
-const SOLID: Array[int] = [Kind.WATER, Kind.TREE, Kind.WALL, Kind.ROOF, Kind.FENCE, Kind.SIGN, Kind.COUNTER, Kind.INNER_WALL, Kind.SPRING, Kind.CLIFF, Kind.TOWER, Kind.LAMP, Kind.ROCK]
+const SOLID: Array[int] = [Kind.WATER, Kind.TREE, Kind.WALL, Kind.ROOF, Kind.FENCE, Kind.SIGN, Kind.COUNTER, Kind.INNER_WALL, Kind.SPRING, Kind.CLIFF, Kind.TOWER, Kind.LAMP, Kind.ROCK, Kind.WADE, Kind.BOULDER, Kind.VINES, Kind.PLANK]
 
 const COLORS: Dictionary[int, Color] = {
 	Kind.GRASS: Color("9cc46a"), Kind.TALL_GRASS: Color("5f9a3e"), Kind.PATH: Color("d8c08a"),
@@ -32,12 +41,14 @@ const COLORS: Dictionary[int, Color] = {
 	Kind.RIFT: Color("3a2a55"), Kind.CLIFF: Color("8a7a5a"), Kind.STAIRS: Color("b0a080"),
 	Kind.REEDS: Color("5a8a6a"), Kind.SCREE: Color("a09a8a"), Kind.PIER: Color("c09a6a"),
 	Kind.TOWER: Color("e8e0d0"), Kind.LAMP: Color("f0d070"), Kind.ROCK: Color("7a7a6a"),
+	Kind.WADE: Color("7aa8d8"), Kind.BOULDER: Color("8a8070"), Kind.PLATE: Color("b0a890"),
+	Kind.CRACKED: Color("a08868"), Kind.VINES: Color("4a7a3a"), Kind.PLANK: Color("2a1e2c"),
 }
 
 const ATLAS_PATH: String = "res://art/era1/tiles/overworld.png"
 const VARIANT_ROWS: int = 16
 ## Kinds whose variant row is a neighbour mask (1 up, 2 right, 4 down, 8 left).
-const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FENCE, Kind.CLIFF, Kind.PIER]
+const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FENCE, Kind.CLIFF, Kind.PIER, Kind.WADE]
 ## Kinds with cosmetic variants 0..3 picked from the cell position.
 const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOWER, Kind.REEDS, Kind.SCREE, Kind.ROCK]
 const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
@@ -68,11 +79,13 @@ static func joins(kind: int, other: int) -> bool:
 		Kind.FENCE:
 			return other == Kind.SIGN
 		Kind.WATER:
-			return other == Kind.REEDS or other == Kind.PIER
+			return other == Kind.REEDS or other == Kind.PIER or other == Kind.WADE
 		Kind.PIER:
 			return other == Kind.PATH or other == Kind.STAIRS
 		Kind.CLIFF:
 			return other == Kind.STAIRS
+		Kind.WADE:
+			return other == Kind.WATER
 	return false
 
 ## Atlas coordinates for [param kind] at [param cell]; [param kind_at] returns the kind of
@@ -174,3 +187,22 @@ static func _paint(img: Image, k: int) -> void:
 		Kind.RIFT:
 			img.fill_rect(Rect2i(ox + 4, 2, 8, 12), Color("9a6ad8"))
 			img.fill_rect(Rect2i(ox + 6, 4, 4, 8), Color("e0d0ff"))
+		Kind.WADE:
+			img.fill_rect(Rect2i(ox + 3, 7, 10, 1), light)
+		Kind.BOULDER:
+			img.fill_rect(Rect2i(ox, 0, TILE, TILE), COLORS[Kind.GRASS])
+			img.fill_rect(Rect2i(ox + 2, 3, 12, 11), base)
+			img.fill_rect(Rect2i(ox + 4, 5, 4, 2), light)
+		Kind.PLATE:
+			img.fill_rect(Rect2i(ox + 3, 3, 10, 10), dark)
+			img.fill_rect(Rect2i(ox + 4, 4, 8, 8), light)
+		Kind.CRACKED:
+			for i: int in 10:
+				img.set_pixel(ox + 3 + i, 4 + (i * 7) % 8, dark)
+		Kind.VINES:
+			img.fill_rect(Rect2i(ox, 0, TILE, TILE), COLORS[Kind.CLIFF])
+			for x: int in range(2, TILE, 5):
+				img.fill_rect(Rect2i(ox + x, 0, 2, TILE), base)
+		Kind.PLANK:
+			img.fill_rect(Rect2i(ox, 0, TILE, 2), COLORS[Kind.CLIFF])
+			img.fill_rect(Rect2i(ox, 14, TILE, 2), COLORS[Kind.CLIFF])
