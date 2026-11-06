@@ -685,6 +685,8 @@ func _play_event(e: BattleEvent) -> void:
 			_pin.visible = false
 		BattleEvent.Type.MOVE_USED:
 			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER else -1
+			if side == BattleModel.Side.PLAYER:
+				Collection.note_art(str(e.data.get("move", "")))
 			_last_element[side] = int(e.data.get("element", -1))
 			_focus(side, slot)
 			_point_pin(side, slot, false)
