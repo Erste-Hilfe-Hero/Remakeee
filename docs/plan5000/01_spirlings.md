@@ -202,10 +202,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 182. [P3] Gib jeder Ersten Stimme einen Weltziel-Hinweis im Kartenbuch, der nur zeigt, in welcher Region sie wartet.
 
 ### Nachhall: Aufzucht und Hallkind
-183. [P1] Lege die eigene Nachwuchs-Mechanik "Nachhall" fest: zwei gebondete Spirlings singen an einer Echo-Quelle zusammen, und aus ihrem gemeinsamen Ruf entsteht ein schwebender Hallkern.
-184. [P1] Mach jede Heilquelle nach dem zweiten geflickten Riss zu einer Echo-Quelle mit dem Menüpunkt "Gemeinsam singen", der zwei Spirlings aus Team oder Lager wählen lässt.
-185. [P1] Lass den Hallkern nach 600 neu betretenen Feldern oder 30 gewonnenen Kämpfen, je nachdem was zuerst eintritt, zu einem Hallkind der Grundstufe auf Ring 1 erwachen.
-186. [P1] Prüfe die Beschreibung des Nachhalls mit dem Rechts-Thread und halte in docs/IP_HYGIENE.md fest, dass keine fremden Begriffe, Gegenstände oder Abläufe übernommen werden.
+183. [x] [P1] Lege die eigene Nachwuchs-Mechanik "Nachhall" fest: zwei gebondete Spirlings singen an einer Echo-Quelle zusammen, und aus ihrem gemeinsamen Ruf entsteht ein schwebender Hallkern.
+184. [x] [P1] Mach jede Heilquelle nach dem zweiten geflickten Riss zu einer Echo-Quelle mit dem Menüpunkt "Gemeinsam singen", der zwei Spirlings aus Team oder Lager wählen lässt.
+185. [x] [P1] Lass den Hallkern nach 600 neu betretenen Feldern oder 30 gewonnenen Kämpfen, je nachdem was zuerst eintritt, zu einem Hallkind der Grundstufe auf Ring 1 erwachen.
+186. [x] [P1] Prüfe die Beschreibung des Nachhalls mit dem Rechts-Thread und halte in docs/IP_HYGIENE.md fest, dass keine fremden Begriffe, Gegenstände oder Abläufe übernommen werden.
 187. [P2] Lege fest, dass zwei Spirlings nur singen können, wenn sie ein gemeinsames Element oder dieselbe Rolle haben, geprüft in einer reinen Funktion Nachhall.can_pair().
 188. [P2] Lass den Spieler wählen, welcher der beiden Eltern die Art des Hallkinds bestimmt, statt es zu würfeln.
 189. [P2] Berechne die Spark-Werte des Hallkinds pro Wert als höheren Elternwert minus eine Zufallszahl von 0 bis 3, mindestens 0.
@@ -475,7 +475,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 ### Recht, Originalität und Tests
 436. [x] [P1] Prüfe jeden neuen Spirling-Namen, jede Ruf-Melodie und jeden Umriss gegen die Sperrliste und die IP-Regeln und vermerke die Prüfung pro Art in docs/IP_HYGIENE.md, bevor er in die Daten kommt.
 437. [x] [P1] Halte in LEGAL.md und test_bond_echo.gd fest, dass Bonden weiter ohne Wurf, ohne Zielen, ohne schrumpfende Kreise und ohne Chancenanzeige läuft, auch bei Ersten Stimmen und friedlichen Begegnungen.
-438. [P1] Stelle sicher, dass kein Spirling, Hallkern oder Hallkind je getauscht, verschenkt oder gegen Geld erhalten werden kann, und prüfe es in test_online.gd.
+438. [x] [P1] Stelle sicher, dass kein Spirling, Hallkern oder Hallkind je getauscht, verschenkt oder gegen Geld erhalten werden kann, und prüfe es in test_online.gd.
 439. [P2] Lege fest, dass Spirlings beim Einwechseln, Nachhall und Erwachen immer neben den Wanderer treten und nie herausgeworfen werden, und prüfe es in den Szenen.
 440. [P2] Prüfe alle neuen deutschen Texte mit tools/ip_check.sh auf gesperrte Wörter, einschließlich der Begriffe aus der Spielerwörter-Liste in docs/IP_HYGIENE.md.
 441. [P2] Lass die neuen Arten in keinem Fall eine Feuer-Wasser-Pflanze-Dreiheit als Startwahl oder Geschenkset bilden.

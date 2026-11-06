@@ -186,4 +186,18 @@ T = {
 "It hums a note you have heard before, in the lamp room, when Mirela's map book fell open.": "Es summt einen Ton, den du schon einmal gehört hast, im Lampenraum, als Mirelas Kartenbuch aufschlug.",
 "The light takes shape. It is Velahra, the First Voice of Veydal. It was the last to see Mirela.": "Das Licht nimmt Gestalt an. Es ist Velahra, die Erste Stimme Veydals. Sie hat Mirela als Letzte gesehen.",
 "The light sinks back under the water. It will rise again after you rest.": "Das Licht sinkt zurück unter das Wasser. Nach deiner nächsten Rast steigt es wieder auf.",
+# Nachhall (items 183-185)
+"Sing together": "Gemeinsam singen",
+"The spring hums softly.": "Die Quelle summt leise.",
+"Who sings first?": "Wer singt zuerst?",
+"Who sings with %s?": "Wer singt mit %s?",
+"Pick two different Spirlings.": "Wähle zwei verschiedene Spirlings.",
+"Only Spirlings with you or in storage can sing.": "Nur Spirlings aus Team oder Lager können singen.",
+"A First Voice sings alone.": "Eine Erste Stimme singt allein.",
+"You already carry as many Echo Cores as you can.": "Du trägst schon so viele Hallkerne, wie du kannst.",
+"%s and %s sing together. Their call gathers into a floating Echo Core.\nCarry it along: it wakes after a long walk or many won battles.": "%s und %s singen gemeinsam. Ihr Ruf sammelt sich zu einem schwebenden Hallkern.\nNimm ihn mit: Er erwacht nach einem langen Weg oder vielen gewonnenen Kämpfen.",
+"The Echo Core you carry hums and opens.": "Der Hallkern, den du trägst, summt und öffnet sich.",
+"A young %s wakes, still humming the song of %s.": "Ein junges %s erwacht und summt noch das Lied von %s.",
+"Echo Core of %s: humming": "Hallkern von %s: summt",
+" and ": " und ",
 }

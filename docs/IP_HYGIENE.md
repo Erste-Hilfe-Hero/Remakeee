@@ -121,3 +121,15 @@ or Latin-ish coinages of our own.
 | Brinelet / Saltspire | salt crystal cluster, then a walking salt pillar with a crown | banned list OK, own design, cry from Cry.gd (2026-11-06) |
 
 The 40 kinds of Corvane, Ashmere and Solenne (items 61-63) follow the same check. Their names are built from plain words of their places (mill, reed, cog, glass, etch, salt, orrery, dune) and were run through `tools/ip_check.sh`. Their sprites are generated placeholders (round body, head, ears, crest or wings) until real designs are drawn. Regional imprints (items 218-219) are our own idea: a regional form keeps the Spirlog number and only changes elements, palette and lore, it is not a separate kind and no foreign terms are used for it.
+
+## 9. Nachhall (plan area 1, items 183-186)
+
+Nachhall is our own way for new Spirlings to appear. It is built on the game's song theme, not on breeding:
+
+- Two bonded Spirlings (team or storage) sing together at a heal spring. Springs become Echo springs once the second Rift is mended. Their shared call forms a floating **Echo Core** (German "Hallkern").
+- After 600 steps or 30 won battles, whichever comes first, a **Hallkind** wakes from the core. It is the first form of one of the two lines, at Ring 1, and remembers both singers as its lineage.
+- There are no genders, no pairing rules, no egg item, no day care, no incubator, no hatching by bike steps, no inherited moves or stats, and no compatibility screen. Both singers stay with the player. A First Voice (ancient) never sings with others, and at most 3 cores are carried at once.
+- Echo Cores live only in the player's own save. They are no bag item and no shop product, and they can't be traded, gifted or sold. The same holds for every Spirling and Hallkind (tests/unit/test_online.gd, item 438).
+- The words used are Echo spring, Sing together, Echo Core and Hallkind. All of them passed `tools/ip_check.sh`.
+
+The description was sent to the legal thread (area 9) for review on 2026-11-06.

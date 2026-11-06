@@ -33,6 +33,9 @@ var storage_boxes: Array[Dictionary] = []
 var storage_box_bonus: int = 0
 ## Saved teams [{"name", "uids": [uid...]}], at most TEAM_PRESETS (item 378).
 var team_presets: Array[Dictionary] = []
+## Echo Cores from singing together (Nachhall, plan area 1, items 183-185):
+## [{"kind", "parents": [species, species], "steps", "wins"}].
+var echo_cores: Array[Dictionary] = []
 ## Iron Oath (item 15, opt-in at new game): Spirlings that faint retire to the Sanctuary.
 var iron_oath: bool = false
 var sanctuary: Array[Spirling] = []
@@ -300,6 +303,7 @@ func reset() -> void:
 	storage_boxes = default_boxes()
 	storage_box_bonus = 0
 	team_presets.clear()
+	echo_cores.clear()
 	iron_oath = false
 	sanctuary.clear()
 	spirlog.clear()
@@ -371,6 +375,7 @@ func to_dict() -> Dictionary:
 		"storage_boxes": storage_boxes.duplicate(true),
 		"storage_box_bonus": storage_box_bonus,
 		"team_presets": team_presets.duplicate(true),
+		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
 		"inventory": inventory.duplicate(),
 		"money": money,
@@ -414,6 +419,7 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
+	_load_echo_cores(d.get("echo_cores", []))
 	for k: Variant in (d.get("spirlog", {}) as Dictionary):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
 	for k: Variant in (d.get("inventory", {}) as Dictionary):
@@ -1054,6 +1060,88 @@ func load_preset(slot: int) -> bool:
 		_store(s, true)
 	party.assign(team)
 	return true
+
+# --- Nachhall: singing together at an Echo spring (plan area 1, items 183-185) ------------
+
+const ECHO_CORE_STEPS: int = 600
+const ECHO_CORE_WINS: int = 30
+const MAX_ECHO_CORES: int = 3
+
+func _load_echo_cores(raw: Variant) -> void:
+	echo_cores.clear()
+	for c: Variant in (raw if raw is Array else []):
+		if not c is Dictionary or echo_cores.size() >= MAX_ECHO_CORES:
+			continue
+		var kind: String = str((c as Dictionary).get("kind", ""))
+		if Database.species(kind) == null:
+			continue
+		var parents: Variant = (c as Dictionary).get("parents", [])
+		echo_cores.append({"kind": kind,
+			"parents": (parents as Array).map(func(x: Variant) -> String: return str(x)).slice(0, 2) if parents is Array else [],
+			"steps": maxi(0, int((c as Dictionary).steps)) if (c as Dictionary).get("steps") is int or (c as Dictionary).get("steps") is float else 0,
+			"wins": maxi(0, int((c as Dictionary).wins)) if (c as Dictionary).get("wins") is int or (c as Dictionary).get("wins") is float else 0})
+
+## Every heal spring is an Echo spring once the second Rift is mended (item 184).
+func echo_spring_open() -> bool:
+	return has_flag("storage_remote")
+
+## The first form of [param sd]'s line.
+static func first_form(sd: SpirlingData) -> SpirlingData:
+	var cur: SpirlingData = sd
+	for i: int in 8:
+		var prev: SpirlingData = Database.earlier_form(cur)
+		if prev == null:
+			break
+		cur = prev
+	return cur
+
+## Why [param a] and [param b] can't sing together, or "" when they can.
+func sing_problem(a: Spirling, b: Spirling) -> String:
+	if a == null or b == null or a == b:
+		return "Pick two different Spirlings."
+	if not (party + storage).has(a) or not (party + storage).has(b):
+		return "Only Spirlings with you or in storage can sing."
+	if a.data.rarity == "ancient" or b.data.rarity == "ancient":
+		return "A First Voice sings alone."
+	if echo_cores.size() >= MAX_ECHO_CORES:
+		return "You already carry as many Echo Cores as you can."
+	return ""
+
+## Two bonded Spirlings sing together and their shared call forms a floating Echo Core.
+## The Hallkind that wakes from it is the first form of one of the two lines.
+func sing_together(a: Spirling, b: Spirling, p_rng: RandomNumberGenerator = null) -> Dictionary:
+	if not sing_problem(a, b).is_empty():
+		return {}
+	var r: RandomNumberGenerator = p_rng if p_rng != null else rng
+	var from: Spirling = a if r.randi_range(0, 1) == 0 else b
+	var core: Dictionary = {"kind": first_form(from.data).species_name,
+		"parents": [a.data.species_name, b.data.species_name], "steps": 0, "wins": 0}
+	echo_cores.append(core)
+	return core
+
+func note_core_step() -> void:
+	for c: Dictionary in echo_cores:
+		c["steps"] = int(c.steps) + 1
+
+func note_core_win() -> void:
+	for c: Dictionary in echo_cores:
+		c["wins"] = int(c.wins) + 1
+
+static func core_ready(c: Dictionary) -> bool:
+	return int(c.get("steps", 0)) >= ECHO_CORE_STEPS or int(c.get("wins", 0)) >= ECHO_CORE_WINS
+
+## Wakes every ready Echo Core: a Hallkind at Ring 1 joins (team or storage). Returns them.
+func awaken_cores() -> Array[Spirling]:
+	var out: Array[Spirling] = []
+	for c: Dictionary in echo_cores.duplicate():
+		if not core_ready(c):
+			continue
+		echo_cores.erase(c)
+		var kid := Spirling.new(Database.species(str(c.kind)), 1, rng)
+		kid.lineage.assign(c.parents)
+		receive_spirling(kid)
+		out.append(kid)
+	return out
 
 ## Swaps two party slots (reordering; slot 0 leads in battle).
 func swap_party(a: int, b: int) -> void:
