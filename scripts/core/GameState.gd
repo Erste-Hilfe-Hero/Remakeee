@@ -107,6 +107,11 @@ var pad_size: int = 1
 var pad_opacity: int = 1
 var left_handed: bool = false
 var tap_to_move: bool = true
+## Walking is running; holding B walks slowly instead (item 1810).
+var always_run: bool = false
+## A and B change places (item 2111), apart for the touch pad and for gamepads.
+var swap_ab_touch: bool = false
+var swap_ab_pad: bool = false
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
 ## Gamepad rumble on hits (item 63).
@@ -241,6 +246,7 @@ const MENU_ACTION: StringName = &"menu"
 func _ready() -> void:
 	rng.randomize()
 	_register_actions()
+	apply_pad_swap(swap_ab_pad)
 
 func _exit_tree() -> void:
 	Loc.uninstall()
@@ -261,7 +267,14 @@ const PAD_BINDINGS: Dictionary[StringName, Array] = {
 	SPEED_ACTION: [JOY_BUTTON_RIGHT_SHOULDER],
 	AUTO_ACTION: [JOY_BUTTON_Y],
 }
+## Keyboard (item 2110, web build): arrows or W A S D walk, Enter or Space confirm (built in),
+## Escape or Backspace go back, M opens the menu. Escape also opens the menu while walking.
 const KEY_BINDINGS: Dictionary[StringName, Array] = {
+	&"ui_up": [KEY_W],
+	&"ui_down": [KEY_S],
+	&"ui_left": [KEY_A],
+	&"ui_right": [KEY_D],
+	&"ui_cancel": [KEY_BACKSPACE],
 	MENU_ACTION: [KEY_ESCAPE, KEY_TAB, KEY_M],
 	SPEED_ACTION: [KEY_F],
 	AUTO_ACTION: [KEY_R],
@@ -282,6 +295,18 @@ static func _register_actions() -> void:
 			ev.physical_keycode = int(k) as Key
 			if not InputMap.action_has_event(action, ev):
 				InputMap.action_add_event(action, ev)
+
+## Puts gamepad A and B on confirm and back, or the other way round (item 2111).
+static func apply_pad_swap(swap: bool) -> void:
+	var pairs: Array = [[&"ui_accept", JOY_BUTTON_A, JOY_BUTTON_B], [&"ui_cancel", JOY_BUTTON_B, JOY_BUTTON_A]]
+	for p: Array in pairs:
+		var action: StringName = p[0]
+		for e: InputEvent in InputMap.action_get_events(action):
+			if e is InputEventJoypadButton and (e as InputEventJoypadButton).button_index in [JOY_BUTTON_A, JOY_BUTTON_B]:
+				InputMap.action_erase_event(action, e)
+		var pad := InputEventJoypadButton.new()
+		pad.button_index = (int(p[2]) if swap else int(p[1])) as JoyButton
+		InputMap.action_add_event(action, pad)
 
 static func _has_pad_button(action: StringName, button: int) -> bool:
 	for e: InputEvent in InputMap.action_get_events(action):
@@ -490,6 +515,7 @@ func settings_to_dict() -> Dictionary:
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "day_night": day_night, "language": language}
@@ -506,6 +532,10 @@ func settings_from_dict(d: Dictionary) -> void:
 	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
+	always_run = bool(d.get("always_run", false))
+	swap_ab_touch = bool(d.get("swap_ab_touch", false))
+	swap_ab_pad = bool(d.get("swap_ab_pad", false))
+	apply_pad_swap(swap_ab_pad)
 	one_hand = bool(d.get("one_hand", false))
 	rumble = bool(d.get("rumble", true))
 	tips_enabled = bool(d.get("tips", true))

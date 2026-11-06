@@ -270,3 +270,459 @@ func test_back_button_works_like_b_in_menus() -> void:
 		host.picker._unhandled_input(ev)
 	await wait_process_frames(1)
 	assert_eq(res, [-1])
+
+# --- 1889-1892 team, 1914-1915 satchel, 1934-1936 Spirlog -----------------------------
+
+func _a_spirling() -> Spirling:
+	Database.load_all()
+	return Spirling.new(Database.species("Mossling"), 5)
+
+func test_team_row_shows_sprite_bar_and_worn_out_word() -> void:
+	var s: Spirling = _a_spirling()
+	var e: Dictionary = MenuHost.party_entry(s)
+	assert_true(e.decorate is Callable, "Vigor bar and element icons are drawn on the row")
+	assert_false(str(e.text).contains("(out)"))
+	s.hp = 0
+	var worn: Dictionary = MenuHost.party_entry(s)
+	assert_string_contains(str(worn.hint), "worn out", "the hint says it")
+	assert_eq(str(worn.say), "worn out", "the screen reader says it")
+	assert_lt(PixelFont.get_font().get_string_size(str(worn.text), HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x, 70.0,
+		"the name fits beside sprite, bar and element icon")
+	assert_false(MenuHost.party_line(s).contains("(out)"))
+
+func test_summary_has_pages_with_full_words() -> void:
+	var pages: Array[String] = MenuHost.summary_pages(_a_spirling())
+	assert_eq(pages.size(), 4, "values, arts, gift and keepsake, temperament")
+	assert_string_contains(pages[0], "Might")
+	assert_string_contains(pages[0], "Pace")
+	assert_false(pages[0].contains("MGT"), "no short forms")
+	assert_string_contains(pages[3], "Temperament")
+
+func test_info_pages_turn_with_left_and_right() -> void:
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var done: Array[bool] = [false]
+	var run := func() -> void:
+		await host.info_pages(["Page A", "Page B"] as Array[String])
+		done[0] = true
+	run.call()
+	await wait_process_frames(1)
+	assert_string_contains(host._info_label.text, "Page A")
+	var right := InputEventAction.new()
+	right.action = &"ui_right"
+	right.pressed = true
+	host._unhandled_input(right)
+	await wait_process_frames(1)
+	assert_string_contains(host._info_label.text, "Page B")
+	assert_string_contains(host._info_label.text, "2/2")
+	var back := InputEventAction.new()
+	back.action = &"ui_cancel"
+	back.pressed = true
+	host._unhandled_input(back)
+	await wait_process_frames(1)
+	assert_true(done[0])
+
+func test_satchel_sorts_items_into_tabs() -> void:
+	assert_eq(PauseMenu.bag_tab({"gear": true}), 3)
+	assert_eq(PauseMenu.bag_tab({"teaches": "x"}), 2)
+	assert_eq(PauseMenu.bag_tab({"held": true}), 1)
+	assert_eq(PauseMenu.bag_tab({"heal": 20}), 0)
+	assert_eq(PauseMenu.bag_tab({"evolves": true}), 4)
+
+func test_tabs_switch_with_left_and_right() -> void:
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var res: Array = []
+	var run := func() -> void:
+		res.append(await host.pick("Satchel", [{"text": "Salve"}] as Array[Dictionary], true, -1, ListPicker.TAP_GUARD_MS, ["Care", "Gear"] as Array[String], 0))
+	run.call()
+	await wait_process_frames(1)
+	var right := InputEventAction.new()
+	right.action = &"ui_right"
+	right.pressed = true
+	host.picker._row_input(right, 0, 0)
+	await wait_process_frames(1)
+	assert_eq(ListPicker.tab_of(res[0]), 1)
+
+func test_spirlog_uses_marks_and_map_names() -> void:
+	assert_not_null(SpirlogMarks.seen())
+	assert_not_null(SpirlogMarks.bonded())
+	var src: String = FileAccess.get_file_as_string("res://scripts/ui/PauseMenu.gd")
+	assert_false(src.contains("\"*\" if is_bonded"), "no * and + marks")
+	for sd: SpirlingData in Database.spirlings.values():
+		for place: String in PauseMenu.found_on(sd.species_name):
+			assert_false(place.contains("_"), "a real place name: " + place)
+
+# --- Dialogues: speaker line, three lines, fast-forward, questions above the pad ---------
+
+func _box() -> TextBox:
+	var t := TextBox.new()
+	t.size = Vector2(144, 44)
+	add_child_autofree(t)
+	return t
+
+func test_npc_without_prefix_gets_a_name() -> void:
+	var n := NPC.new()
+	n.setup({"id": "fisher", "x": 0, "y": 0})
+	assert_eq(Speakers.name_for(n), "Fisher")
+	n.setup({"id": "lio", "x": 0, "y": 0, "trainer": "Wanderer Lio"})
+	assert_eq(Speakers.name_for(n), "Wanderer Lio")
+	n.setup({"id": "kestra_dock", "x": 0, "y": 0})
+	assert_eq(Speakers.name_for(n), "Kestra")
+	assert_eq(Speakers.name_for(null), "", "signs have no speaker")
+	n.free()
+
+func test_long_text_splits_into_three_line_windows() -> void:
+	var font: Font = PixelFont.get_font()
+	var long: String = "The fish stopped jumping the night the Rift opened. Even the reeds sound quieter. That's the Hush, they say, and nobody knows how long it stays."
+	var pages: Array[String] = TextBox.split_lines(long, 120.0, font, 8, TextBox.MAX_LINES)
+	assert_gt(pages.size(), 1, "the text goes on in a second window")
+	var words: PackedStringArray = []
+	for p: String in pages:
+		var lines: PackedStringArray = p.split("\n")
+		assert_lte(lines.size(), TextBox.MAX_LINES)
+		for l: String in lines:
+			assert_lte(font.get_string_size(l, HORIZONTAL_ALIGNMENT_LEFT, -1, 8).x, 120.0, l)
+			words.append_array(l.split(" ", false))
+	assert_eq(" ".join(words), long, "no word is lost")
+
+func test_box_shows_speaker_and_fast_forwards() -> void:
+	var t: TextBox = _box()
+	t.allow_fast_forward = true
+	t.show_text("Good.", "Fisher")
+	await wait_process_frames(1)
+	assert_eq(t.speaker(), "Fisher", "the role shows when the line names no one")
+	t.start_fast_forward()
+	await wait_process_frames(1)
+	t.show_text("Aldo: Good.", "Fisher")
+	await wait_process_frames(1)
+	assert_eq(t.speaker(), "Aldo", "a name in the line wins")
+	assert_eq(t._label.text, "Good.")
+	t.start_fast_forward()
+	var done: Array = []
+	var run := func() -> void:
+		await t.show_text("Next line.")
+		await t.show_text("And another.")
+		done.append(true)
+	run.call()
+	await wait_process_frames(4)
+	assert_eq(done, [true], "fast-forward does not wait for taps")
+	t.visible = false
+	assert_false(t.fast_forward, "a question (box hidden) stops fast-forward")
+
+func test_fast_forward_needs_permission() -> void:
+	var t: TextBox = _box()
+	t.start_fast_forward()
+	assert_false(t.fast_forward, "battles keep every line")
+
+func test_questions_end_above_the_pad() -> void:
+	var c := Control.new()
+	add_child_autofree(c)
+	c.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	var h: float = c.get_viewport_rect().size.y
+	MenuHost.keep_above_pad(c, h - 70.0)
+	assert_lte(c.get_viewport_rect().size.y + c.offset_bottom, h - 70.0, "no row under the pad")
+	var before: float = c.offset_bottom
+	MenuHost.keep_above_pad(c, -1.0)
+	assert_eq(c.offset_bottom, before, "hidden pad changes nothing")
+
+# --- Pad field, always run, pause order, goals list -------------------------------------
+
+func test_dpad_field_presses_one_direction_by_angle() -> void:
+	var side: float = 60.0
+	assert_eq(VirtualPad.dir_for(Vector2(30, 2), side), "ui_up")
+	assert_eq(VirtualPad.dir_for(Vector2(30, 58), side), "ui_down")
+	assert_eq(VirtualPad.dir_for(Vector2(2, 30), side), "ui_left")
+	assert_eq(VirtualPad.dir_for(Vector2(58, 30), side), "ui_right")
+	assert_eq(VirtualPad.dir_for(Vector2(57, 50), side), "ui_right", "a corner still presses a direction")
+	assert_eq(VirtualPad.dir_for(Vector2(36, 29), side), "ui_right", "near the middle too")
+	assert_eq(VirtualPad.dir_for(Vector2(30, 30), side), "", "the very middle keeps what is held")
+
+func test_dpad_touch_presses_and_releases_actions() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	VirtualPad.apply_settings()
+	var r: Rect2 = VirtualPad.dpad_rect()
+	var t := InputEventScreenTouch.new()
+	t.index = 3
+	t.pressed = true
+	t.position = r.position + Vector2(r.size.x - 2, r.size.y - 4)
+	VirtualPad._input(t)
+	assert_eq(VirtualPad.held_dir(), "ui_right")
+	assert_true(Input.is_action_pressed("ui_right"))
+	var d := InputEventScreenDrag.new()
+	d.index = 3
+	d.position = r.position + Vector2(r.size.x / 2.0, 1)
+	VirtualPad._input(d)
+	assert_eq(VirtualPad.held_dir(), "ui_up", "sliding the thumb changes direction")
+	assert_false(Input.is_action_pressed("ui_right"))
+	t.pressed = false
+	VirtualPad._input(t)
+	assert_eq(VirtualPad.held_dir(), "")
+	assert_false(Input.is_action_pressed("ui_up"))
+	assert_true(VirtualPad.covers(r.get_center()), "taps on the field do not walk")
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_menu_button_is_larger_and_clear_of_b() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	for one: bool in [false, true]:
+		GameState.one_hand = one
+		VirtualPad.apply_settings()
+		var menu: Rect2
+		var b: Rect2
+		for btn: TouchScreenButton in VirtualPad._buttons:
+			var rect := Rect2(btn.position, (btn.shape as RectangleShape2D).size)
+			if btn.action == &"menu":
+				menu = rect
+			elif btn.action == &"ui_cancel":
+				b = rect
+		assert_eq(menu.size, Vector2(16, 16))
+		assert_gte(b.position.y - menu.end.y, 8.0, "gap to B")
+	GameState.one_hand = false
+	VirtualPad.apply_settings()
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_always_run_setting_is_kept() -> void:
+	var before: bool = GameState.always_run
+	GameState.always_run = true
+	var d: Dictionary = GameState.settings_to_dict()
+	GameState.always_run = false
+	GameState.settings_from_dict(d)
+	assert_true(GameState.always_run)
+	var keys: Array = []
+	for r: Array in MenuHost.controls_rows():
+		keys.append(r[0])
+	assert_has(keys, "always_run")
+	GameState.always_run = before
+
+func test_pause_menu_order_is_fixed() -> void:
+	assert_eq(PauseMenu.menu_labels(true, true, false),
+		["Goals", "Team", "Satchel", "Spirlog", "Travel", "Friends", "Records", "Storage", "Save", "Photo", "Settings"] as Array[String])
+	var short: Array[String] = PauseMenu.menu_labels(false, false, false)
+	assert_eq(short.find("Satchel"), 2, "places do not move when Travel is missing")
+	assert_false("Storage" in short)
+	assert_false("Leagues" in short)
+	var league: Array[String] = PauseMenu.menu_labels(false, false, false, true)
+	assert_eq(league.find("Leagues"), league.find("Friends") + 1, "Leagues sits right after Friends")
+
+func test_goals_are_a_list_with_main_goal_first() -> void:
+	var rows: Array[Dictionary] = PauseMenu.goal_rows({"aldo_gift": true}, "Today: a rare visitor stirs in Fernstair.")
+	assert_gte(rows.size(), 3, "main goal, a side goal and the visitor")
+	assert_true(rows[0].icon is Texture2D, "the main goal has its mark")
+	var texts: Array[String] = []
+	for r: Dictionary in rows:
+		texts.append(str(r.text))
+	assert_has(texts, "Today's visitor")
+	for r: Dictionary in rows:
+		assert_false(str(r.detail).is_empty(), "every row opens details")
+
+# --- 2029 a mark shows where A does something ------------------------------------------
+
+class FakeWorld extends Node:
+	var map: MapData
+	var npc_cell: Vector2i = Vector2i(-99, -99)
+	var npc: NPC = NPC.new()
+	func npc_at(c: Vector2i) -> NPC:
+		return npc if c == npc_cell else null
+	func _exit_tree() -> void:
+		npc.free()
+
+func test_interaction_mark_kinds() -> void:
+	var w := FakeWorld.new()
+	add_child_autofree(w)
+	w.map = MapData.load_map("brindlewick")
+	var s: Dictionary = w.map.signs[0]
+	var sc := Vector2i(int(s.x), int(s.y))
+	assert_eq(InteractHint.kind_at(w, sc + Vector2i.DOWN, sc), InteractHint.Kind.READ, "sign")
+	w.npc_cell = Vector2i(3, 3)
+	assert_eq(InteractHint.kind_at(w, Vector2i(3, 4), Vector2i(3, 3)), InteractHint.Kind.TALK, "person")
+	assert_eq(InteractHint.kind_at(w, Vector2i(0, 1), Vector2i(-5, -5)), InteractHint.Kind.NONE, "nothing")
+
+# --- Tips and onboarding (1982-1988) ---------------------------------------------------
+
+func test_new_tips_exist_short_and_without_battle_words() -> void:
+	for id: String in ["menu", "save", "team_order", "rest_spot", "travel", "satchel", "keepsake",
+			"unfurl", "friends", "storage", "map_page"]:
+		assert_true(Tips.LINES.has(id), id)
+		assert_true(Tips.TOPICS.has(id), id + " is in the Guide")
+		for touch: bool in [true, false]:
+			var lines: Array[String] = Tips.lines_of(id, touch)
+			assert_between(lines.size(), 1, 2, id)
+			for l: String in lines:
+				assert_false(l.is_empty(), id)
+				for w: String in ["battle", "Battle", "damage", "Energy"]:
+					assert_false(l.contains(w), id + ": " + l)
+
+func test_tips_follow_the_input_device() -> void:
+	assert_string_contains(Tips.lines_of("menu", true)[0], "Tap")
+	assert_string_contains(Tips.lines_of("menu", false)[0], "Press")
+	assert_string_contains(Tips.lines_of("gear", false)[0], "press A")
+	assert_false(Tips.lines_of("gear", true)[0].contains("press A"))
+
+func test_guide_lists_seen_tips_only() -> void:
+	var before: Dictionary = GameState.flags.duplicate()
+	var tips_on: bool = GameState.tips_enabled
+	GameState.tips_enabled = true
+	GameState.flags.clear()
+	assert_eq(Tips.seen(), [] as Array[String])
+	Tips.take("save")
+	Tips.take("menu")
+	assert_eq(Tips.seen(), ["menu", "save"] as Array[String], "in Guide order")
+	assert_eq(Tips.take("save"), [] as Array[String], "each tip shows once")
+	GameState.flags = before
+	GameState.tips_enabled = tips_on
+
+func test_menu_button_hint_until_first_menu() -> void:
+	var before: Dictionary = GameState.flags.duplicate()
+	GameState.flags.erase(VirtualPad.MENU_SEEN_FLAG)
+	assert_true(VirtualPad.menu_hinted())
+	GameState.set_flag(VirtualPad.MENU_SEEN_FLAG)
+	assert_false(VirtualPad.menu_hinted())
+	GameState.flags = before
+
+func test_walk_hint_points_at_the_pad() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	VirtualPad.apply_settings()
+	var h := WalkHint.new()
+	h.text = "Walk: D-pad or tap a tile"
+	add_child_autofree(h)
+	await wait_process_frames(2)
+	var tip: Vector2 = h.arrow_tip()
+	assert_true(VirtualPad.dpad_rect().grow(2).has_point(tip + Vector2(0, 2)), "arrow ends at the D-pad")
+	assert_lt(h._label.position.y + h._label.size.y, VirtualPad.dpad_rect().position.y, "note sits above the pad")
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_new_game_to_first_step_is_short() -> void:
+	# Fast text: every line types at TEXT_CPS[FAST], plus about 1 s to read and tap, plus the
+	# partner pick and the fades. Must stay under 90 s (item 1986).
+	var cps: float = GameState.TEXT_CPS[GameState.TextSpeed.FAST]
+	var seconds: float = 0.6 + 12.0
+	var flags: Dictionary = {}
+	for ref: String in ["story/prologue", "lighthouse/morning", "lighthouse/aldo"]:
+		for l: String in Dialogue.lines_for(Dialogue.get_entry(ref), flags):
+			seconds += l.length() / cps + 1.0
+		flags["got_starter"] = true
+	seconds += Tips.lines_of("save").size() * 2.0
+	assert_lt(seconds, 90.0, "about %d s from new game to walking" % int(seconds))
+
+func _key(code: Key, uni: int = 0) -> InputEventKey:
+	var k := InputEventKey.new()
+	k.physical_keycode = code
+	k.keycode = code
+	k.unicode = uni
+	k.pressed = true
+	return k
+
+func test_browser_keys_walk_confirm_back_and_menu() -> void:
+	for pair: Array in [[KEY_W, "ui_up"], [KEY_A, "ui_left"], [KEY_S, "ui_down"], [KEY_D, "ui_right"],
+			[KEY_UP, "ui_up"], [KEY_ENTER, "ui_accept"], [KEY_SPACE, "ui_accept"],
+			[KEY_ESCAPE, "ui_cancel"], [KEY_BACKSPACE, "ui_cancel"], [KEY_M, "menu"]]:
+		assert_true(_key(pair[0]).is_action(pair[1]), "%s -> %s" % [OS.get_keycode_string(pair[0]), pair[1]])
+	assert_true("W A S D" in MenuHost.KEYS_HELP and "M: menu" in MenuHost.KEYS_HELP)
+	var keys: Array = []
+	for r: Array in MenuHost.controls_rows():
+		keys.append(r[0])
+	assert_has(keys, "keys_help")
+
+func test_typed_letters_go_into_the_name_not_the_focus() -> void:
+	var edit := LineEdit.new()
+	add_child_autofree(edit)
+	var k := NameKeyboard.new()
+	k.target = edit
+	add_child_autofree(k)
+	assert_true(k.type_key(_key(KEY_W, "w".unicode_at(0))))
+	assert_true(k.type_key(_key(KEY_A, "a".unicode_at(0))))
+	assert_true(k.type_key(_key(KEY_SEMICOLON, "ö".unicode_at(0))))
+	assert_eq(edit.text, "Waö")
+	assert_true(k.type_key(_key(KEY_BACKSPACE)))
+	assert_eq(edit.text, "Wa", "Backspace deletes instead of going back")
+	assert_false(k.type_key(_key(KEY_UP)), "arrows still move between keys")
+	k.set_mode(NameKeyboard.Mode.CODE)
+	edit.text = ""
+	assert_true(k.type_key(_key(KEY_7, "7".unicode_at(0))))
+	assert_false(k.type_key(_key(KEY_MINUS, "-".unicode_at(0))), "codes take letters and digits only")
+	assert_eq(edit.text, "7")
+
+func test_gamepad_a_and_b_can_swap() -> void:
+	var a := InputEventJoypadButton.new()
+	a.button_index = JOY_BUTTON_A
+	a.pressed = true
+	var b := InputEventJoypadButton.new()
+	b.button_index = JOY_BUTTON_B
+	b.pressed = true
+	assert_true(a.is_action("ui_accept") and b.is_action("ui_cancel"))
+	GameState.apply_pad_swap(true)
+	assert_true(a.is_action("ui_cancel") and b.is_action("ui_accept"), "A goes back, B confirms")
+	assert_false(a.is_action("ui_accept"))
+	GameState.swap_ab_pad = true
+	assert_true("swapped" in MenuHost.pad_help())
+	GameState.swap_ab_pad = false
+	GameState.apply_pad_swap(false)
+	assert_true(a.is_action("ui_accept") and not a.is_action("ui_cancel"))
+	assert_eq(MenuHost.pad_help(), MenuHost.PAD_HELP)
+
+func _ab_spots() -> Dictionary:
+	var out: Dictionary = {}
+	for btn: TouchScreenButton in VirtualPad._buttons:
+		out[str(btn.action)] = btn.position
+	return out
+
+func test_touch_a_and_b_swap_places_apart_from_the_gamepad() -> void:
+	VirtualPad.force_visible = true
+	VirtualPad.set_wanted(true)
+	for one: bool in [false, true]:
+		GameState.one_hand = one
+		GameState.swap_ab_touch = false
+		VirtualPad.apply_settings()
+		var before: Dictionary = _ab_spots()
+		GameState.swap_ab_touch = true
+		VirtualPad.apply_settings()
+		var after: Dictionary = _ab_spots()
+		assert_eq(after["ui_accept"], before["ui_cancel"])
+		assert_eq(after["ui_cancel"], before["ui_accept"])
+		assert_eq(after["menu"], before["menu"], "the menu button stays")
+	var a := InputEventJoypadButton.new()
+	a.button_index = JOY_BUTTON_A
+	assert_true(a.is_action("ui_accept"), "the gamepad keeps its own setting")
+	GameState.swap_ab_touch = false
+	GameState.one_hand = false
+	VirtualPad.apply_settings()
+	VirtualPad.set_wanted(false)
+	VirtualPad.force_visible = false
+
+func test_swap_settings_are_kept() -> void:
+	var d: Dictionary = GameState.settings_to_dict()
+	d["swap_ab_touch"] = true
+	d["swap_ab_pad"] = false
+	GameState.settings_from_dict(d)
+	assert_true(GameState.swap_ab_touch)
+	assert_true(GameState.settings_to_dict()["swap_ab_touch"])
+	GameState.swap_ab_touch = false
+
+func test_startup_time_is_logged_once_per_stage() -> void:
+	StartupLog.reset()
+	var line: String = StartupLog.mark("title menu ready", 1840)
+	assert_eq(line, "Startup: title menu ready after 1840 ms (goal 3000 ms)")
+	assert_eq(StartupLog.mark("title menu ready", 2500), "", "only the first time counts")
+	assert_eq(StartupLog.at("title menu ready"), 1840)
+	assert_string_contains(StartupLog.line_for("title menu ready", 4200), "slower than the goal")
+	StartupLog.reset()
+
+func test_goals_list_ends_with_the_wider_tabs() -> void:
+	var rows: Array[Dictionary] = PauseMenu.goal_tab_rows()
+	assert_eq(rows.size(), 3, "Today, week and collection; the story is the list itself")
+	assert_eq(str(rows[0].text), "Today...")
+	for r: Dictionary in rows:
+		assert_ne(str(r.detail), "")
+
+func test_map_book_sits_after_goals_once_given() -> void:
+	assert_false("Map book" in PauseMenu.menu_labels(false, false, false))
+	var labels: Array[String] = PauseMenu.menu_labels(false, false, false, false, true)
+	assert_eq(labels.find("Map book"), 1)
