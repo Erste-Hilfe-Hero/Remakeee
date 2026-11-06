@@ -16,7 +16,8 @@ Betroffene sind immer Spielerinnen und Spieler von Chimora (alle Altersgruppen, 
 | Leuchtpost und Geschenke | Grüße als feste Satznummern, tägliche Geschenke | `mail` | 30 Tage | Art. 6 Abs. 1 lit. b |
 | Echo-Team und Echo-Duell | Freunde kämpfen gegen eine Kopie des Teams | `profiles.team` (Art, Ring, Techniken) | solange das Konto besteht | Art. 6 Abs. 1 lit. b |
 | Weltziel und Wochen-Rangliste | gemeinsames Wochenziel, Bestenliste ohne Namen für Fremde | `community_contrib`, `weekly_scores` | bis zum Ende der Folgewoche | Art. 6 Abs. 1 lit. b |
-| Meldungen | Missbrauch prüfen (DSA Art. 16) | `reports` (Meldender, Gemeldeter, Grund) | bis zur Bearbeitung, höchstens 6 Monate | Art. 6 Abs. 1 lit. c und f |
+| Meldungen | Missbrauch prüfen (DSA Art. 16) | `reports` (Meldender, Gemeldeter, Grund, Ort, Status, Maßnahme) | bis zur Bearbeitung, höchstens 6 Monate | Art. 6 Abs. 1 lit. c und f |
+| Begründungen und Widersprüche | Entscheidungen begründen, Widerspruch ermöglichen (DSA Art. 17, 20) | `notices` (Art, Meldenummer, feste Angaben, gelesen), `appeals` (Grund aus fester Liste, Status) | solange das Konto besteht | Art. 6 Abs. 1 lit. c |
 | Kampfprüfung (Schiedsrichter) | Ergebnisse von Ligen, Raids und Duellen nachprüfen | `battles`, `battle_results`; `battle_queue` ohne Konto-Kennung | 30 Tage (`_privacy_cleanup`) | Art. 6 Abs. 1 lit. b und f |
 | Ligen | faire Wertung und Gegnersuche | `league_fair_entries`, `league_open_entries` (Team, Wertung, Kämpfe), `league_matches` | Einträge bis zum Ende der folgenden Saison, Paarungen 30 Tage | Art. 6 Abs. 1 lit. b |
 | Missbrauchsgrenzen | zu viele Aufrufe bremsen | `rate_events` (Art und Zeit) | 1 Stunde Wirkung, alte Zeilen werden mitgelöscht | Art. 6 Abs. 1 lit. f |
