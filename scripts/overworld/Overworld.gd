@@ -2184,6 +2184,9 @@ func after_tamer_win(n: NPC) -> void:
 		if GameState.level_cap() < Spirling.MAX_LEVEL:
 			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
+	# A Warden explains its team's cover in the lexicon after the first win (item 680).
+	if def.has("lexicon") and Lexicon.add(GameState.records, str(def.lexicon)):
+		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(str(def.lexicon))), Loc.t(Lexicon.text(str(def.lexicon)))]] as Array[String])
 	for f: Variant in def.get("win_flags", []):
 		GameState.set_flag(str(f))
 	if bool(def.get("leaves", false)):
@@ -2495,7 +2498,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.level_cap = GameState.level_cap()
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
-	model.ai.set_profile(str(trainer.get("profile", "")))
+	var tune: Variant = trainer.get("profile_tune", {})
+	model.ai.set_profile(str(trainer.get("profile", "")), tune if tune is Dictionary else {})
 	model.foe_damage_mult = GameState.foe_damage_mult()
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))

@@ -89,6 +89,17 @@ static func validate() -> PackedStringArray:
 							errors.append("map '%s': npc '%s' has a bad difficulty rule %s" % [id, n.get("id", ""), k])
 				if n.has("profile") and not BattleAI.profiles().has(str(n.profile)):
 					errors.append("map '%s': npc '%s' has unknown AI profile '%s'" % [id, n.get("id", ""), n.profile])
+				if n.has("profile_from") and not str(n.profile_from) in TrainerData.DIFFICULTY_KEYS:
+					errors.append("map '%s': npc '%s' has unknown profile_from '%s'" % [id, n.get("id", ""), n.profile_from])
+				var tune: Variant = n.get("profile_tune", {})
+				if not tune is Dictionary:
+					errors.append("map '%s': npc '%s' profile_tune must be an object" % [id, n.get("id", "")])
+				else:
+					for k: Variant in tune:
+						if not (tune[k] is float or tune[k] is int) or not (BattleAI.profiles().get("balanced", {}) as Dictionary).has(str(k)):
+							errors.append("map '%s': npc '%s' profile_tune '%s' is not a known number weight" % [id, n.get("id", ""), k])
+				if n.has("lexicon") and not Lexicon.has_entry(str(n.lexicon)):
+					errors.append("map '%s': npc '%s' has unknown lexicon entry '%s'" % [id, n.get("id", ""), n.lexicon])
 				for t: Variant in teams:
 					if (t as Array).is_empty():
 						errors.append("map '%s': wayfarer '%s' has an empty team" % [id, n.get("id", "")])

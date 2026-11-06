@@ -66,6 +66,8 @@ var level: int = 0
 ## Personality id from data/ai_profiles.json ("balanced" when the Wayfarer names none).
 var profile_id: String = DEFAULT_PROFILE
 var profile: Dictionary = {}
+## Per-Wayfarer weight changes on top of the profile (npc "profile_tune", item 681).
+var profile_tune: Dictionary = {}
 ## Foe slot the player aims at this turn (set for a tag partner, -1 otherwise).
 var ally_target: int = -1
 
@@ -83,11 +85,17 @@ static func profiles() -> Dictionary:
 					_profiles[k] = raw[k]
 	return _profiles
 
-## Picks the personality; an unknown or empty id falls back to "balanced".
-func set_profile(profile_name: String) -> void:
+## Picks the personality; an unknown or empty id falls back to "balanced". [param tune] sets
+## single numeric weights on top (a Warden's sharper "field_w", item 681).
+func set_profile(profile_name: String, tune: Dictionary = {}) -> void:
 	var all: Dictionary = profiles()
 	profile_id = profile_name if all.has(profile_name) else DEFAULT_PROFILE
-	profile = all.get(profile_id, {})
+	profile = (all.get(profile_id, {}) as Dictionary).duplicate()
+	profile_tune = {}
+	for k: Variant in tune:
+		if tune[k] is float or tune[k] is int:
+			profile[str(k)] = float(tune[k])
+			profile_tune[str(k)] = float(tune[k])
 
 ## The profile's line of [param kind] ("motto", "own_fall", "foe_fall", "last"), or "".
 func line(kind: String) -> String:

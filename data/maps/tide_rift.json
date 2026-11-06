@@ -272,7 +272,14 @@
      "undertow",
      "tide_turn"
     ]
-   }
+   },
+   "profile": "tactician",
+   "profile_from": "tamer",
+   "profile_tune": {
+    "field_w": 1.5,
+    "swap_below": 0.4
+   },
+   "lexicon": "warden_maelis"
   },
   {
    "id": "drowned_heart",
