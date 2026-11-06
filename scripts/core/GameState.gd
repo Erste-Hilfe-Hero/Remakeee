@@ -624,7 +624,7 @@ func receive_spirling(s: Spirling) -> bool:
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "tempers": []}
+		"variants": [], "prism_seen": false, "tempers": [], "maps": [], "battles": 0}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -636,6 +636,12 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["seen"] = out.seen is bool and out.seen or out.bonded is bool and out.bonded
 	out["bonded"] = out.bonded is bool and out.bonded
 	out["first_day"] = int(out.first_day) if out.first_day is int or out.first_day is float else 0
+	out["battles"] = int(out.battles) if out.battles is int or out.battles is float else 0
+	out["first_map"] = out.first_map if out.first_map is String else ""
+	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
+	for k: String in ["variants", "tempers", "maps"]:
+		if not out[k] is Array:
+			out[k] = []
 	return out
 
 ## A copy of v if it is a Dictionary, else {} (saves can be damaged or edited).
@@ -668,7 +674,22 @@ func mark_seen(species: String, bonded: bool = false) -> void:
 	e["seen"] = true
 	if bonded:
 		e["bonded"] = true
+	if not current_map.is_empty() and not (e.maps as Array).has(current_map):
+		(e.maps as Array).append(current_map)
 	spirlog[species] = e
+
+## After a battle: each kind in the team counts one more battle travelled together
+## (its third Spirlog lore sentence opens after SpirlogBook.LORE_BATTLES).
+func note_battle_end() -> void:
+	var done: Dictionary = {}
+	for s: Spirling in party:
+		var sp: String = s.data.species_name
+		if done.has(sp):
+			continue
+		done[sp] = true
+		var e: Dictionary = upgrade_spirlog_entry(spirlog.get(sp, {}))
+		e["battles"] = int(e.battles) + 1
+		spirlog[sp] = e
 
 ## An Echo call ended with [param score]: a fully right call adds one to every team member's
 ## streak, a miss starts them over (unfold rule "echo_streak", Hushkin to Silentra).

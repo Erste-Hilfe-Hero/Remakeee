@@ -1578,6 +1578,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
+	GameState.note_battle_end()
 	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()

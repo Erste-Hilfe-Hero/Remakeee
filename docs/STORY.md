@@ -1,0 +1,238 @@
+# Chimora story bible
+
+The fixed base for every story thread (plan area 4, `docs/plan5000/04_story.md`). Act I is
+described in `docs/WORLD.md`; this file adds the lore, the style rule, the named figures, the
+places of Act II and Act III with fixed map ids, the story numbers and the endings. Check new
+story text against this file before writing it, and add new figures and places here first.
+
+## Style rule (item 1766)
+
+- Short sentences. At most **2 lines per text box** (about 60 characters at 144 px).
+- The pixel font has no typographic quotes: use `'` for quotes, never curly quotes.
+- Answers in a choice are at most **18 characters** so they fit on one line.
+- Player words follow `AGENTS.md`: Spirling, Wayfarer, Ring (not level), bond / Echo call,
+  unfurl, Rift, Warden, mend, the Hush. Never the franchise words that `tools/ip_check.sh` bans.
+- `{name}` is the player's name. A figure speaks as `Name: text` or with a `speaker` field.
+- The Echo (the Hush's source) is **never a monster**. It is a grieving choir. Write it with
+  sorrow, not menace (item 1716).
+- No villain team. People who stand against the player have a reason and a way back.
+- Every new English line also goes into `tools/i18n/de_story.py` (the CI fails otherwise).
+
+## Lore (item 1705)
+
+Fixed truths. Later text may reveal them slowly, but never contradict them.
+
+1. **Spirlings come from the Undrawn**, the land beyond the edge of every map. It is not
+   broken, only unfinished: paths exist where someone draws them.
+2. **Rifts open where the drawn world grows thin**: places nobody has mapped for a long time,
+   or places where a map was burned or lost. Storms tear the thin places open.
+3. **The Hush is the echo of lost bonds.** Every Spirling that ever lost its Wayfarer leaves a
+   call that nobody answers. In the Undrawn those calls gather into one voice, **the Echo**.
+   Where a Rift is open, the Echo leaks out and drowns the voices of Spirlings nearby.
+4. **Wardens** are people whose bond is strong enough to hold a Rift. When their bond falls
+   silent, the Rift widens. A battle wakes the bond, and a Warden and a Wayfarer together
+   **mend** the Rift: they draw its edge to the end.
+5. **The Echo melody** is the song Mirela heard in the Undrawn. She brought it home as a
+   lullaby; the guild of cartographers has taught it since. It answers the Echo instead of
+   fighting it.
+6. **Unfurling** happens when a bond is deep enough, like a part of a map being drawn to its
+   edge. **Rings** are marks on a Spirling's skin, like tree rings; Ring 60 is what Mirela
+   called "the edge of drawing".
+7. Each region names the Hush in its own way: Veydal "the Hush", Corvane "the Fading" (it
+   drains colour), Ashmere "the Stilling" (it freezes movement).
+8. **Rift-born** Spirlings came through a Rift and have no home side. They need an **anchor
+   bond** with one person to stay well; an open Rift is not what they need.
+
+### Glossary (item 1707)
+
+Our own terms. They avoid any closeness to existing origin myths; check new ones here.
+
+| Term | Meaning |
+| --- | --- |
+| the Undrawn | the unfinished land behind the Rifts, where Spirlings come from |
+| Rift | a tear where the drawn world is thin |
+| the Hush / the Fading / the Stilling | the Echo leaking out, named per region |
+| the Echo | the grieving choir of every lost bond (finale) |
+| Echo melody | the song that answers the Echo; also the bond minigame |
+| Warden | a keeper whose bond holds a Rift |
+| mend | drawing a Rift's edge to the end, together with its Warden |
+| anchor bond | the bond a Rift-born Spirling needs instead of an open Rift |
+| Rift heart | the knot of Hush at the bottom of a mended Rift (optional battle) |
+| gate | a Rift kept open on purpose, with a keeper on the far side |
+| plate | a map engraved in copper by the gravers of Ashmere; it holds a place still |
+| guild seal | proof of guild membership; opens the way into the Undrawn |
+
+## Story numbers and choices
+
+Saved in `GameState.story_vars` and `GameState.story_choices` (online save included).
+
+### kestra_trust (0 to 6, item 1556)
+
+Raised by 1 at six fixed moments, depending on the player's answer:
+
+| # | Act | Moment | Raises trust when |
+| --- | --- | --- | --- |
+| 1 | I | `brindlewick/kestra_dock` | the player answers "I'll come along." |
+| 2 | II | Madderby duel aftermath | the player says Kestra's view matters |
+| 3 | II | scene `kestra_tatter_hush` | the player comforts Tatter with the Echo melody |
+| 4 | II | Stillwater tag battle | the player and Kestra win together |
+| 5 | III | Cinderfold, Veit's offer | the player turns Veit down |
+| 6 | III | Kestra's farewell duel | the player asks her to come into the Undrawn |
+
+Under 2: Kestra holds the way back in the finale instead of fighting beside the player. From 4:
+her pre-battle line in the finale is the warmest variant. From 5: she gives her old compass.
+
+### veit_respect (0 to 3, item 1608)
+
+| # | Act | Moment |
+| --- | --- | --- |
+| 1 | II | side quest `veit_workshop`: all three hints about Ash found |
+| 2 | III | Cinderfold: the player listens to Veit's plan to the end |
+| 3 | III | Veit's plate: the player lets Veit break it himself |
+
+From 2 Veit appears in the finale. At 3 (and all 14 pages) the ending "Two keepers" opens.
+
+### Choices (`story_choices`)
+
+`kestra_dock`, `ferry_row` (row yourself / let Aldo row), `veit_offer`, `veit_plate`,
+`mirela_aldo` (what the player says about Aldo), `ending` (`home`, `gate`, `two_keepers`).
+
+## The three endings (items 1681-1684)
+
+The final choice is confirmed with "Draw it so?" because it cannot be undone.
+
+- **Bring her home** (always): Mirela comes home and the Wide Rift closes. Rift-born
+  Spirlings need an anchor bond from now on (story text, no new rules).
+- **Leave a gate** (always): the Wide Rift becomes a gate. Mirela stays in the Undrawn as its
+  keeper and writes to Aldo. Kestra is glad.
+- **Two keepers** (veit_respect 3 and all 14 pages): Veit stays in the Undrawn with Ash as
+  keeper, and Mirela comes home.
+
+In every version Aldo and Mirela meet again on the Brindlewick dock (item 1588).
+
+## Acts and chapters
+
+| Act | Chapters | Name | Ends with flag |
+| --- | --- | --- | --- |
+| Prologue and Act I | 0-5 | The Hush of Veydal | `ferry_corvane_open` |
+| Act II | 6-11 | The Colours of Corvane | `act2_end` |
+| Act III | 12-17 | The Plates of Ashmere | `undrawn_reached` |
+| Finale | - | Where the Map Ends | `story_complete` |
+| Epilogue | 3 parts | The Open Map | `postgame_done` |
+
+Act I ends when Aldo opens the ferry himself (`ferry_corvane_open`, the flag area 3's ferry to
+`corvane_quay` waits for). The two Rift hearts are not needed for that (item 1411).
+
+## Places with fixed map ids
+
+Area 3 builds the maps; area 4 only places figures, signs and triggers on them (through
+`data/story_npcs.json`, so figures appear as soon as a map exists).
+
+### Act II: Corvane (items 1435)
+
+| Map id | Place | Role |
+| --- | --- | --- |
+| `corvane_quay` | Corvane Landing (the quay) | arrival by ferry, scene `corvane_arrival` (area 3 calls it corvane_quay) |
+| `madderby` | Madderby, the dyers' town | Kestra's second duel, colour_back quest |
+| `madderby_guild` | the guild house of cartographers | Ysolde, Pim, the wall map |
+| `woadfen` | Woadfen moor | way to the Rain Rift, hushed walkers |
+| `rain_rift` | the Rain Rift | Warden Senna |
+| `stillwater` | Stillwater pond | way to the Mirror Rift, tag battle with Kestra |
+| `mirror_rift` | the Mirror Rift | Warden Joral |
+| `greyreach` | Greyreach, grey uplands | Veit's duel, old cartographer Moss |
+| `wide_rift_edge` | the edge of the Wide Rift | scene `wide_rift_reveal` |
+
+### Act III: Ashmere (item 1480)
+
+| Map id | Place | Role |
+| --- | --- | --- |
+| `ashmere_station` | Ashmere station (mountain railway) | arrival |
+| `cinderfold` | Cinderfold, the gravers' town | Veit's offer, rest spring under basalt |
+| `gravers_hall` | the gravers' hall | Halvard, Veit's plate |
+| `kiln_rift` | the Kiln Rift | Warden Tovan |
+| `saltglass` | Saltglass flats | the silent lighthouse |
+| `glass_rift` | the Glass Rift | Warden Ilse |
+| `wide_rift_far` | the far end of the Wide Rift | Kestra's farewell duel |
+| `undrawn_1` to `undrawn_3` | the Undrawn | three short parts without finished edges; the finale at the end of `undrawn_3` |
+
+## Figures (item 1606)
+
+| Name | Place | Role | Team (Ring) | Flags | Arc |
+| --- | --- | --- | --- | --- | --- |
+| {name} | Brindlewick lighthouse | the player, apprentice cartographer | partner from the prologue | `got_starter` | maps the valley, finds Mirela |
+| Aldo | lighthouse | grandfather, old ferryman | - | `aldo_gift`, `aldo_dock_told`, `ferry_corvane_open` | keeps the lamp lit; rows one last crossing |
+| Mirela | the Undrawn | grandmother, first cartographer | Glim (Wickit, very old) | `page_1`..`page_14`, `mirela_met` | see below |
+| Kestra | map house, then everywhere | fellow cartographer | Act I 3, Act II 4, Act III 5 Spirlings; Tatter (Zephlet, later Tempestrel) | `met_kestra`, `kestra_spar`, `kestra_dock_talk` | see below |
+| Tamsin | Murk Hollow | lamp keeper | - | `got_lantern` | travels to Ashmere in Act III |
+| Lio | Crowcrest | wanderer | Zephlet 7, Zippit 8 | | becomes a guild helper in Act II |
+| Bram | Crowcrest | ridgewalker | Shalebat 7, Shalebat 8 | | |
+| Neve | Saltmarsh | diver | Puddlet 12, Zephlet 13 | | |
+| Orrin | Cinder Rift | Warden (Act I) | Shalebat 10, Kindlop 11, Smoldrake 12 | `rift_cinder_sealed` | guest in Madderby in Act II |
+| Maelis | Tidewater Rift | Warden (Act I) | Zephlet 15, Zippit 15, Riptail 17 | `rift_tide_sealed` | guest in Madderby in Act II |
+| Pell, Suri | Cinder Rift | Rift acolytes | | | Warden apprentices after the finale |
+| Ilka | Tidewater Rift | Rift mystic | | | |
+| Ines, Wynn | Brindlewick | echo gauntlet, weekly echoes | | | a new line per act |
+| Ysolde Rennick | Madderby guild house | guild master | | `guild_joined` | did not hold Mirela back 40 years ago and wants to make it right |
+| Pim | Madderby guild house | young archivist, voice for lore questions | | `letters` side quest | |
+| Senna | Rain Rift | Warden (Act II), hears only rain | Riptail 20, Tempestrel 21, Kelphound 22 | `rift_rain_sealed` | |
+| Joral | Mirror Rift | Warden (Act II), sees only himself | Lumenewt 22, Glimmerax 23, Verdantusk 23 | `rift_mirror_sealed` | once saw an old woman with a compass in the mirror |
+| Weda | Madderby | keeper of the dye spring (rest spot) | | | sister of the Veydal spring keeper |
+| Moss | Greyreach | old cartographer who knew Mirela | | | thinks she is dead until the finale |
+| Veit Harrow | Madderby, Greyreach, Ashmere | former guild cartographer | Shalebat 24, Duskdigger 25, Obsidroth 27 (Act II) | `veit_respect` | see below |
+| Brann | with Veit | Veit's helper | | | leaves Veit; works in the gravers' hall |
+| Juna | everywhere | courier between the regions | | | a new line per act |
+| Halvard | gravers' hall | master graver | | `mirela_plate` | from lasting maps to open maps |
+| Nella | Cinderfold | graver apprentice | | | |
+| Oswin | Cinderfold | keeper of the warm spring | | | |
+| Tovan | Kiln Rift | Warden (Act III) | Calderox 32, Obsidroth 33, Smoldrake 31, Duskdigger 32 | `rift_kiln_sealed` | his father Harl held the Rift before him |
+| Ilse | Glass Rift | Warden (Act III), fully silent | Leviarch 34, Lumenewt 33, Glimmerax 34, Tempestrel 33 | `rift_glass_sealed` | sings again and teaches a new verse |
+| the Echo | the Undrawn | the grieving choir of lost bonds | waves of 2, 3 and 4 hushed Spirlings | `story_complete` | listens at last |
+
+Every Warden has the same shape (item 1605): a line before waking, a line after the duel, a line
+after the mend and a later line after the finale.
+
+### Kestra (item 1555)
+
+Kestra grew up on Crowcrest, the scree ridge above Brindlewick. Twelve years ago a small Rift
+opened over the tarn for one night, and a Zephlet came through it. She called it **Tatter**
+because of its frayed wing and never told anyone where it came from. Since then she has wanted
+to *understand* Rifts, not close them: if Tatter came through one, what else is on the other side?
+
+Her stance changes visibly (item 1561):
+
+- **Act I, open:** "Every Rift you mend is a door we never open."
+- **Act II, unsure:** after the Rain Rift is mended, Tatter falls silent. She blames the mending,
+  until the guild files show that Rift-born Spirlings need an anchor bond, not an open Rift.
+- **Act III, a third way:** she wants neither Veit's erasing nor a sealed world. A gate with a
+  keeper is her idea of a good end.
+
+Kestra's team grows by one member per act. Duels: Crowcrest (Act I), Madderby (Act II:
+Tempestrel 22, Glimmerax 21, Shalebat 21, Kelpup 20), the far end of the Wide Rift (Act III,
+5 Spirlings, Ring 34 to 36, a farewell duel, not an obstacle).
+
+### Mirela (item 1586)
+
+- **Life:** born in Brindlewick, the first cartographer of the valley guild. Married Aldo, the
+  ferryman. When the sky split over the lake 40 years ago she went into the Rift to map it,
+  with her old Wickit Glim. Her daughter was small then; the player is that daughter's child.
+- **Drawing style:** thin ink lines, a compass rose in the corner of every page, notes in the
+  margin that talk to Aldo. She never draws an edge she has not walked.
+- **Why she stayed 40 years:** behind the Rift she found the Undrawn and the Echo at its heart.
+  The Wide Rift kept tearing wider; only someone drawing its edge from the inside could hold
+  it. She became its Warden from the far side. "Still drawing. Still here. M."
+- Her map book has 14 pages: pages 1 to 6 in Veydal (Act I), 7 to 10 in Corvane, 11 to 14 in
+  Ashmere. Pages 7 to 14 tell her time in the Undrawn and reveal the lore step by step.
+
+### Veit Harrow (item 1607)
+
+Twenty years ago Veit, then a guild cartographer, lost his Mirkmole **Ash** to the Hush near
+Greyreach: Ash went silent and walked into a Rift. Veit blames the Rifts themselves. In Act II
+he burns the maps of Rifts to "erase" them; in Act III he engraves a plate in the gravers' hall
+that would wipe out the Wide Rift and everything behind it, Mirela included. He doubts when he
+meets the echo of Ash in the Undrawn. Depending on the player's choices he makes peace
+(veit_respect high) or leaves (low). He is never a villain, only someone grieving.
+
+## Spoiler flags (for store texts and screenshots)
+
+Store material must not show anything behind these flags: `act2_end`, `mirela_plate`,
+`undrawn_reached`, `mirela_met`, `story_complete`.

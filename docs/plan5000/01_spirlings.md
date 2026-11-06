@@ -75,7 +75,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 61. [P1] Lege für Corvane (Era II, Flussdelta mit Mühlen und Regen) acht Linien fest und trage sie mit "region": "corvane" und Platzhalter-Sprites in die Daten ein, auch wenn die Region noch nicht spielbar ist.
 62. [P1] Lege für Ashmere (Era III, Aschemoor mit Glashütten und Kupferstichen) sechs Linien fest und trage sie mit "region": "ashmere" und Platzhalter-Sprites ein.
 63. [P1] Lege für Solenne (Era IV, sonnige Hochebene mit Sternwarten und Salzseen) sechs Linien fest und trage sie mit "region": "solenne" und Platzhalter-Sprites ein.
-64. [P1] Blende Arten aus noch nicht spielbaren Regionen im Spirlog und in Sammelzielen aus (Filter über GameState-Flag region_open_<id>), damit die Zahl "alle Arten" erreichbar bleibt.
+64. [x] [P1] Blende Arten aus noch nicht spielbaren Regionen im Spirlog und in Sammelzielen aus (Filter über GameState-Flag region_open_<id>), damit die Zahl "alle Arten" erreichbar bleibt.
 65. [P2] Corvane: Füge die Linie Drizzlet (Tide, Rolle striker) und Pluvane hinzu, ein Regentropfen, der nie den Boden berührt und in den Dachrinnen der Mühlenstadt wohnt.
 66. [P2] Corvane: Füge die Linie Millgrit (Stone/Gale, Rolle bulwark) und Grindsail hinzu, ein Sandkorn aus den Mahlsteinen, das mit den Windmühlenflügeln wächst.
 67. [P2] Corvane: Füge die dreistufige Linie Pigmentil, Chromaree und Washveil hinzu (Bloom/Lumen, Rolle weaver), ein Farbfleck, dessen Farben ineinander verlaufen wie Aquarell.
@@ -266,15 +266,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 242. [P3] Plane pro neuer Region höchstens 5 Prägungen, damit eigene Regionsarten im Vordergrund stehen.
 
 ### Spirlog
-243. [P1] Gestalte das Spirlog als Seiten des Kartenbuchs: eine Seite pro Art mit Sprite, Elementen, Größe, Lebensraum, Lore und Herkunft, im Hochformat 144x256 lesbar.
-244. [P1] Zeige auf jeder Spirlog-Seite die Fundkarte: die Karten, auf denen die Art schon gesehen wurde, als Liste mit Grund-Symbol (Farn, Schilf, Geröll).
-245. [P1] Lass "seen" schon beim Anblick im Kampf setzen und "bonded" beim Bonden, und zeige ungesehene Arten nur als Umriss mit Nummer.
-246. [P1] Spiele auf jeder gesehenen Spirlog-Seite den Ruf der Art über Cry.gd ab, mit einem Tipp auf das Sprite.
-247. [P1] Zeige auf der Spirlog-Seite die ganze Entfalten-Linie als Reihe kleiner Sprites, mit Tipp zum Springen.
-248. [P1] Teile das Spirlog in Kapitel nach Region und blende Kapitel unbekannter Regionen aus.
-249. [P1] Füge eine Suche nach Name und Filter nach Element, Rolle und "gebondet / nur gesehen / fehlt" hinzu.
-250. [P1] Lass die Lore-Absätze nach und nach aufgehen: erster Satz bei gesehen, zweiter bei gebondet, dritter nach 10 Kämpfen mit einem Spirling dieser Art im Team.
-251. [P1] Zeige oben im Spirlog den Fortschritt pro Kapitel ("Veydal: 31 gesehen, 18 gebondet") statt nur der Gesamtzahl.
+243. [x] [P1] Gestalte das Spirlog als Seiten des Kartenbuchs: eine Seite pro Art mit Sprite, Elementen, Größe, Lebensraum, Lore und Herkunft, im Hochformat 144x256 lesbar.
+244. [x] [P1] Zeige auf jeder Spirlog-Seite die Fundkarte: die Karten, auf denen die Art schon gesehen wurde, als Liste mit Grund-Symbol (Farn, Schilf, Geröll).
+245. [x] [P1] Lass "seen" schon beim Anblick im Kampf setzen und "bonded" beim Bonden, und zeige ungesehene Arten nur als Umriss mit Nummer.
+246. [x] [P1] Spiele auf jeder gesehenen Spirlog-Seite den Ruf der Art über Cry.gd ab, mit einem Tipp auf das Sprite.
+247. [x] [P1] Zeige auf der Spirlog-Seite die ganze Entfalten-Linie als Reihe kleiner Sprites, mit Tipp zum Springen.
+248. [x] [P1] Teile das Spirlog in Kapitel nach Region und blende Kapitel unbekannter Regionen aus.
+249. [x] [P1] Füge eine Suche nach Name und Filter nach Element, Rolle und "gebondet / nur gesehen / fehlt" hinzu.
+250. [x] [P1] Lass die Lore-Absätze nach und nach aufgehen: erster Satz bei gesehen, zweiter bei gebondet, dritter nach 10 Kämpfen mit einem Spirling dieser Art im Team.
+251. [x] [P1] Zeige oben im Spirlog den Fortschritt pro Kapitel ("Veydal: 31 gesehen, 18 gebondet") statt nur der Gesamtzahl.
 252. [P2] Speichere pro Art den ersten Fundort und den ersten Fundtag und zeige sie als Feldnotiz ("Zuerst gesehen: Farnstiege, Tag 3").
 253. [P2] Zeige auf der Seite, welche Temperamente der Spieler bei dieser Art schon gebondet hat, als sechs kleine Zeichen.
 254. [P2] Zeige ein Prisma-Zeichen auf der Seite, wenn eine Prisma-Form gesehen wurde, und die Prisma-Farbe, wenn eine gebondet wurde.
