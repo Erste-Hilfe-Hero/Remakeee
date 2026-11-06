@@ -9,6 +9,7 @@ func _initialize() -> void:
 	var errors: PackedStringArray = load("res://scripts/core/DataValidator.gd").call("validate")
 	errors.append_array(load("res://scripts/core/WorldValidator.gd").call("validate"))
 	errors.append_array(PackedStringArray(load("res://scripts/shop/ShopCatalog.gd").call("validate")))
+	errors.append_array(load("res://scripts/core/EndgameValidator.gd").call("validate"))
 	for e: String in errors:
 		printerr("DATA ERROR: " + e)
 	if errors.is_empty():
