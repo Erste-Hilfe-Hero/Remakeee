@@ -5,7 +5,15 @@ extends RefCounted
 ## every scene id, every item in "give_item", every species in "has_species", every
 ## condition name, every story duel. Used by tools/validate_data.gd and the GUT suite.
 
-const KNOWN_ACTIONS: Array[String] = ["storage", "heal", "give_item", "set_flag", "shop", "spark_read",
+## Dialogue actions the overworld knows, read from its action table so new actions from
+## other areas count without editing this list.
+static func known_actions() -> PackedStringArray:
+	var out: PackedStringArray = []
+	var src: String = FileAccess.get_file_as_string("res://scripts/overworld/Overworld.gd")
+	var re := RegEx.create_from_string("\"([a-z_]+)\": _action_")
+	for m: RegExMatch in re.search_all(src):
+		out.append(m.get_string(1))
+	return out = ["storage", "heal", "give_item", "set_flag", "shop", "spark_read",
 	"quest_show", "switch", "gauntlet", "weekly", "season", "choose_starter", "page", "set_var",
 	"add_var", "battle", "scene", "warp"]
 
@@ -88,11 +96,12 @@ static func _check_cond(ref: String, cond: Variant, errors: PackedStringArray) -
 
 ## Checks a ";"-separated action string.
 static func _check_action(ref: String, action: String, errors: PackedStringArray) -> void:
+	var known: PackedStringArray = known_actions()
 	for one: String in action.split(";", false):
 		var parts: PackedStringArray = one.strip_edges().split(" ", false)
 		if parts.is_empty():
 			continue
-		if not parts[0] in KNOWN_ACTIONS:
+		if not parts[0] in known:
 			errors.append("%s: unknown action '%s'" % [ref, parts[0]])
 			continue
 		match parts[0]:
