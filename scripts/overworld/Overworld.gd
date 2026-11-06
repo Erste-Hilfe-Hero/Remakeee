@@ -71,6 +71,7 @@ func _ready() -> void:
 		"weekly": _action_weekly,
 		"master": _action_master,
 		"merchant": _action_merchant,
+		"echo_room": _action_echo_room, "echo_chest": _action_echo_chest, "echo_info": _action_echo_info,
 		"expedition": _action_expedition,
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
@@ -83,6 +84,7 @@ func _ready() -> void:
 		"echo_song": _action_echo_song,
 		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
+		"first_voice": _action_first_voice,
 	}
 	_world = WorldMechanics.new(self)
 	_build()
@@ -623,7 +625,27 @@ func _run_action(action: String, speaker: NPC) -> void:
 			continue
 		await _actions[parts[0]].call(parts.slice(1), speaker)
 
+## "first_voice <species> <ring>": a fixed, one-time meeting with a First Voice (plan area 1,
+## items 153-155). It is wild, so it can be bonded with the Echo call. If it is not bonded
+## (beaten, fled or lost), it rests and comes back to the same place after the next rest.
+func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var voice := Spirling.new(sd, int(args[1]) if args.size() > 1 else 40, GameState.rng)
+	_text.visible = false
+	SaveManager.save_game()
+	await start_battle([voice] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
+	if FirstVoices.is_bonded(sd.species_name):
+		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
+	else:
+		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
+
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
+	FirstVoices.after_rest()
 	GameState.heal_party()
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
@@ -1250,6 +1272,68 @@ func _action_master(args: PackedStringArray, _speaker: NPC) -> void:
 	await say(lines)
 	await announce_achievements()
 
+## Echo Path room marker (plan 3464): wild fight, Wanderer echo, treasure, rest or riddle.
+func _action_echo_room(_args: PackedStringArray, _speaker: NPC) -> void:
+	var slot: int = EchoPath.slot_of(map.id)
+	if slot == 0:
+		return
+	if EchoPath.is_done(slot):
+		await say(["This room is already clear this week."] as Array[String])
+		return
+	var lines: Array[String] = []
+	match EchoPath.kind_of(slot):
+		"wild", "echo":
+			if GameState.first_healthy_index() < 0:
+				return
+			var wild: bool = EchoPath.kind_of(slot) == "wild"
+			var foes: Array[Spirling] = []
+			if wild:
+				var s: Spirling = EchoPath.wild_for(slot)
+				if s != null:
+					foes.append(s)
+			else:
+				foes = EchoPath.echo_team(slot)
+			if foes.is_empty():
+				return
+			SaveManager.save_game()
+			busy = false
+			var info: Dictionary = {} if wild else {"name": Loc.t("Wanderer echo"), "ai": 3}
+			var outcome: BattleModel.Outcome = await start_battle(foes, wild, info)
+			busy = true
+			player.frozen = true
+			if outcome != BattleModel.Outcome.WIN and outcome != BattleModel.Outcome.BONDED:
+				return
+			EchoPath.clear(slot)
+		"treasure":
+			lines.append_array(EchoPath.take_treasure(slot))
+		"rest":
+			# No rest point here: the rooms change every week.
+			GameState.heal_party()
+			Sound.sfx("heal")
+			DailyTasks.record("rest", {"map": map.id})
+			EchoPath.clear(slot)
+			lines.append("Your team is fully rested.")
+		"riddle":
+			EchoPath.clear(slot)
+			lines.append("The stone hums. The answer rings true.")
+	lines.append(Loc.t("Rooms cleared this week: %d of %d.") % [EchoPath.done_count(), EchoPath.ROOMS])
+	await say(lines)
+
+## The chest at the end of the Echo Path (plan 3465), then the way back to the hall.
+func _action_echo_chest(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say(EchoPath.open_chest())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var back: bool = await menu.confirm(Loc.t("Return to the entrance hall?"))
+	menu.queue_free()
+	if back:
+		Sound.sfx("warp")
+		load_map(EchoPath.FILE, EchoPath.ARRIVE_DOWN, "down")
+
+## The Echo Path guide: this week's wild kinds and progress.
+func _action_echo_info(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say([EchoPath.spirlog_hint(), EchoPath.goal_line()] as Array[String])
+
 ## The wandering merchant (plan 3423): today's three goods for coins.
 func _action_merchant(_args: PackedStringArray, speaker: NPC) -> void:
 	var items: Array[String] = []
@@ -1681,7 +1765,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
-	scene.backdrop = map.backdrop
+	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)

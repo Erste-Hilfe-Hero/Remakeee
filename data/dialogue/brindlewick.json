@@ -247,5 +247,13 @@
    "Tilda: Festival ribbons for festival goods! Ribbons turn into Waymarks when the festival ends, so nothing goes to waste."
   ],
   "action": "festival_shop"
+ },
+ "velahra": {
+  "lines": [
+   "A light rises from under the lake by the shore.",
+   "It hums a note you have heard before, in the lamp room, when Mirela's map book fell open.",
+   "The light takes shape. It is Velahra, the First Voice of Veydal. It was the last to see Mirela."
+  ],
+  "action": "first_voice Velahra 40"
  }
 }

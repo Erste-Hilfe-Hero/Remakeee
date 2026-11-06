@@ -29,7 +29,7 @@ func test_veydal_has_its_own_goals() -> void:
 		if str(g.get("region", "")) == "veydal":
 			steps.append(int(g.bonded))
 	assert_eq(steps, [10, 20, 30, -1] as Array[int])
-	assert_eq(Collection.region_total("veydal"), 40)
+	assert_eq(Collection.region_total("veydal"), 41, "40 kinds and the First Voice Velahra")
 
 func test_rewards_are_only_game_items_coins_or_titles() -> void:
 	for g: Dictionary in Collection.GOALS:
@@ -69,9 +69,13 @@ func test_goals_text_shows_the_next_goal() -> void:
 	assert_string_contains(PauseMenu.goals_text(), "more kinds until")
 
 func test_every_veydal_goal_is_reachable_offline_in_act_one() -> void:
-	# Offline Act I content: wild encounter tables on the Veydal maps plus unfolding. No starter
-	# counted (only one is chosen), no online meetings, no shop.
+	# Offline Act I content: wild encounter tables on the Veydal maps, fixed meetings ("met",
+	# like Velahra after the lamp room) and unfolding. No starter counted (only one is chosen),
+	# no online meetings, no shop.
 	var reach: Dictionary = {}
+	for sd: SpirlingData in Database.spirlings.values():
+		if sd.region == "veydal" and sd.rarity == "ancient":
+			reach[sd.species_name] = true
 	for table: Variant in (JSON.parse_string(FileAccess.get_file_as_string("res://data/encounters.json")) as Dictionary).values():
 		for sp: Variant in (table as Dictionary).get("spawns", []):
 			reach[str(sp.species)] = true

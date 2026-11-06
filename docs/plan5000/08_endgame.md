@@ -264,7 +264,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3351. [x] [P1] Die Spirlog-Ziele in Collection.GOALS um „gesehen“-Stufen ergänzen: 5, 10, 15 und alle Arten gesehen, je mit Wegmarken-Lohn.
 3352. [x] [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
 3353. [x] [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
-3354. [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
+3354. [x] [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
 3355. [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
 3356. [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
 3357. [P2] Ein Sammelziel „Jede Technik einmal eingesetzt“ für alle 58 Techniken mit Stufen bei 20, 40 und 58 ergänzen.
@@ -382,10 +382,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3461. [P3] Die Zahl der laufenden Streifzüge im Reiter „Heute“ des Ziele-Bildschirms zeigen.
 
 ### Nachhall-Pfad: wöchentlicher Erkundungsgang
-3462. [P1] Einen Endgame-Ort „Nachhall-Pfad“ hinter dem versiegelten Cinder Rift bauen: eine Kette aus 8 kleinen Räumen, die jede Woche per Seed aus der Wochennummer neu angeordnet wird, gleich für alle.
-3463. [P1] Die Räume aus 12 handgebauten Raumvorlagen unter data/maps zusammensetzen und jede Anordnung mit dem bestehenden Erreichbarkeits-Test prüfen.
-3464. [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
-3465. [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
+3462. [x] [P1] Einen Endgame-Ort „Nachhall-Pfad“ hinter dem versiegelten Cinder Rift bauen: eine Kette aus 8 kleinen Räumen, die jede Woche per Seed aus der Wochennummer neu angeordnet wird, gleich für alle.
+3463. [x] [P1] Die Räume aus 12 handgebauten Raumvorlagen unter data/maps zusammensetzen und jede Anordnung mit dem bestehenden Erreichbarkeits-Test prüfen.
+3464. [x] [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
+3465. [x] [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
 3466. [P2] Rätselräume mit Lampen-Schalterrätseln in 6 Varianten bauen, angelehnt an das Lampenrätsel in Murk Hollow, aber mit eigener Anordnung.
 3467. [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
 3468. [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
@@ -438,8 +438,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3511. [P3] In den Einstellungen anzeigen, nach welcher Uhrzeit (Server-Mitternacht) der Tag wechselt, umgerechnet in die Ortszeit.
 
 ### Belohnungstabellen und Balance
-3512. [P1] Eine Belohnungstabelle in docs/BALANCE.md anlegen, die jede Wegmarken- und Münzquelle mit Betrag und Häufigkeit listet.
-3513. [P1] Das Simulationswerkzeug tools/balance_sim.gd um einen Endgame-Lauf erweitern, der 90 Spieltage mit festem Spielplan durchrechnet und Wegmarken-Ein- und Ausgaben ausgibt.
+3512. [x] [P1] Eine Belohnungstabelle in docs/BALANCE.md anlegen, die jede Wegmarken- und Münzquelle mit Betrag und Häufigkeit listet.
+3513. [x] [P1] Das Simulationswerkzeug tools/balance_sim.gd um einen Endgame-Lauf erweitern, der 90 Spieltage mit festem Spielplan durchrechnet und Wegmarken-Ein- und Ausgaben ausgibt.
 3514. [P2] Als Ziel festlegen, dass ein Spieler nach 30 Tagen etwa 60 Prozent des Tauschstand-Angebots einmal kaufen kann.
 3515. [P2] Die Münzpreise im Wochen-Echo und in den Türmen an den Ring-Deckel binden: 20 Münzen mal Ring-Deckel pro Runde.
 3516. [P2] Echo-Kristalle als Endgame-Belohnung höchstens einmal pro Woche aus Türmen zulassen, damit der Tauschstand wichtig bleibt.

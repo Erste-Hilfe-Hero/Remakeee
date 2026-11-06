@@ -1,10 +1,43 @@
 # HTTPS certificate from Let's Encrypt is fetched automatically for SITE_ADDRESS.
 {$SITE_ADDRESS} {
+	# Security headers on every answer (plan item 3874). The pages load nothing from other hosts.
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "no-referrer"
+		X-Frame-Options "DENY"
+		-Server
+	}
+	@pages path /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /lizenzen
+	header @pages Content-Security-Policy "default-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+	# The browser test build must not end up in search engines (item 3763).
+	handle /robots.txt {
+		header Content-Type "text/plain; charset=utf-8"
+		respond <<TXT
+			User-agent: *
+			Disallow: /play/
+			Disallow: /rest/
+			Disallow: /auth/
+			TXT 200
+	}
 	handle_path /auth/v1/* {
+		request_body {
+			max_size 16KB
+		}
 		reverse_proxy auth:9999
 	}
 	handle_path /rest/v1/* {
+		# Largest request the game sends is a save (at most 256 KB, checked again in save_put).
+		request_body {
+			max_size 512KB
+		}
 		reverse_proxy rest:3000
+	}
+	# Result of the weekly restore test, read by .github/workflows/monitor.yml.
+	handle /status.json {
+		header Cache-Control "no-store"
+		root * /srv/public
+		file_server
 	}
 	# Public server address and anon key, read by CI when it builds the game.
 	handle /chimora.json {
@@ -18,6 +51,7 @@
 	handle /play/* {
 		encode gzip
 		header Cache-Control "no-cache"
+		header X-Robots-Tag "noindex, nofollow"
 		root * /srv/public
 		file_server
 	}

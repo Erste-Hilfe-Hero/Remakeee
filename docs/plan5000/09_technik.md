@@ -113,12 +113,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3656. [P3] Entferne nach drei erfolgreichen Versionen die ältesten Migrationsfunktionen nicht, sondern friere sie mit ihren Tests ein.
 
 ### Server-Sync und Netzwerk
-3657. [P1] Ersetze den festen Wiederholungstakt von 4 Sekunden in `Online.gd` durch steigende Wartezeiten (4, 8, 16, 30 Sekunden) mit 20 % Zufallsanteil, damit nach einem Serverneustart nicht alle Spieler gleichzeitig anfragen.
-3658. [P1] Gib jedem `save_put` eine eindeutige Anfrage-ID mit, damit eine doppelt gesendete Anfrage nach einem Timeout auf dem Server nur einmal zählt.
-3659. [P1] Speichere nicht gesendete Spielstände in einer Warteschlange in `user://`, damit sie auch nach einem Neustart der App hochgeladen werden.
+3657. [x] [P1] Ersetze den festen Wiederholungstakt von 4 Sekunden in `Online.gd` durch steigende Wartezeiten (4, 8, 16, 30 Sekunden) mit 20 % Zufallsanteil, damit nach einem Serverneustart nicht alle Spieler gleichzeitig anfragen.
+3658. [x] [P1] Gib jedem `save_put` eine eindeutige Anfrage-ID mit, damit eine doppelt gesendete Anfrage nach einem Timeout auf dem Server nur einmal zählt.
+3659. [x] [P1] Speichere nicht gesendete Spielstände in einer Warteschlange in `user://`, damit sie auch nach einem Neustart der App hochgeladen werden.
 3660. [P1] Gleiche die Plausibilitätsprüfung `_save_ok` an die Spielregeln an (Ring 1 bis 60 statt 100, Team höchstens 5 statt 6) und lies die Grenzen aus `server_config`, damit Server und Spiel dieselben Werte nutzen.
 3661. [P1] Wechsle vor dem Store-Start von `sslip.io` auf eine eigene Domain und lass die alte Adresse 12 Monate lang weiter funktionieren, weil ältere Builds sie fest eingebaut haben.
-3662. [P1] Lege eine Obergrenze für die Größe einer Anfrage in Caddy fest (512 KB für `/rest/v1/*`) und eine für `p_data` in `save_put` (256 KB).
+3662. [x] [P1] Lege eine Obergrenze für die Größe einer Anfrage in Caddy fest (512 KB für `/rest/v1/*`) und eine für `p_data` in `save_put` (256 KB).
 3663. [P2] Senke den Timeout in `SupabaseBackend.gd` für kleine Anfragen auf 8 Sekunden und lasse 15 Sekunden nur für das Hochladen von Spielständen.
 3664. [P2] Erneuere das Anmelde-Token, wenn es in weniger als 10 Minuten abläuft, und nicht erst nach einem Fehler 401.
 3665. [P2] Teste das Verhalten, wenn das Token während einer laufenden Anfrage abläuft, mit `LocalBackend` und einem künstlichen Ablauf.
@@ -130,7 +130,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3671. [P2] Prüfe, dass `min_version` sicher funktioniert, indem ein Test einen alten Client simuliert und den Weg zum Store-Link prüft.
 3672. [P2] Stempele `Online.CLIENT_VERSION` und den Versionscode aus derselben Quelle, damit sie nie auseinanderlaufen.
 3673. [P2] Behandle Antworten mit unerwartetem JSON (leer, HTML-Fehlerseite, falscher Typ) in `SupabaseBackend.gd` als Netzwerkfehler statt als Absturz.
-3674. [P1] Nutze in `server_config` Schalter für jede Online-Funktion (Freunde, Post, Weltziel, Rangliste), damit eine kaputte Funktion ohne neue Version abgeschaltet werden kann.
+3674. [x] [P1] Nutze in `server_config` Schalter für jede Online-Funktion (Freunde, Post, Weltziel, Rangliste), damit eine kaputte Funktion ohne neue Version abgeschaltet werden kann.
 3675. [P2] Zeige auf dem Wiederverbinden-Bildschirm nach 60 Sekunden einen Link zur Statusseite und die Möglichkeit, zum Titel zurückzukehren.
 3676. [P2] Teste den Sync mit künstlich schlechter Verbindung (500 ms Verzögerung, 10 % Verlust) über einen Proxy im CI-Job des Servers.
 3677. [P3] Lege eine öffentliche Statusseite `/status` auf dem Server an, die Erreichbarkeit der Datenbank und der Anmeldung als Text zeigt.
@@ -198,10 +198,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### CI und Build-Pipeline
 3735. [P1] Bringe `main` auf den Stand des neuesten Builds, schütze `main` mit Pflichtprüfungen (Tests, IP-Prüfung, Release-Prüfung) und erlaube Release-Tags nur von `main`.
-3736. [P1] Lege ein Skript `tools/bump_version.py` an, das Versionsname, Android-Versionscode, iOS-Version und `Online.CLIENT_VERSION` in einem Schritt setzt.
+3736. [x] [P1] Lege ein Skript `tools/bump_version.py` an, das Versionsname, Android-Versionscode, iOS-Version und `Online.CLIENT_VERSION` in einem Schritt setzt.
 3737. [P1] Führe die Store-Builds aus dem lifekit-Repository und die Builds aus diesem Repository auf dieselben gepinnten Versionen zurück und halte in `docs/RELEASE.md` fest, welcher Weg der offizielle ist.
-3738. [P1] Pinne alle GitHub Actions in `.github/workflows/` auf eine feste Commit-SHA statt auf `@v4`.
-3739. [P1] Lege in jedem Workflow `concurrency` mit Abbruch älterer Läufe für Pull Requests an, damit nicht mehrere Builds für denselben Zweig laufen.
+3738. [x] [P1] Pinne alle GitHub Actions in `.github/workflows/` auf eine feste Commit-SHA statt auf `@v4`.
+3739. [x] [P1] Lege in jedem Workflow `concurrency` mit Abbruch älterer Läufe für Pull Requests an, damit nicht mehrere Builds für denselben Zweig laufen.
 3740. [P2] Speichere den Godot-Importordner `.godot/imported` als Cache zwischen CI-Läufen und miss die gesparte Zeit.
 3741. [P2] Setze für jeden CI-Job ein `timeout-minutes` (Tests 15, Android 30, iOS 45), damit hängende Jobs keine Minuten verbrauchen.
 3742. [P2] Führe `gdtoolkit` (`gdlint` und `gdformat --check`) als Prüfung für alle Dateien in `scripts/` ein, zuerst nur als Warnung.
@@ -227,7 +227,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3762. [P3] Lege eine Liste der CI-Geheimnisse mit Zweck, Ablaufdatum und Verantwortlichem in `docs/RELEASE.md` an, ohne die Werte selbst.
 
 ### Web-Testbuild
-3763. [P1] Setze für `/play/` den Header `X-Robots-Tag: noindex` und eine `robots.txt`, damit der Testbuild nicht in Suchmaschinen landet.
+3763. [x] [P1] Setze für `/play/` den Header `X-Robots-Tag: noindex` und eine `robots.txt`, damit der Testbuild nicht in Suchmaschinen landet.
 3764. [P1] Zeige im Web-Testbuild oben ein kleines Band "Testversion", damit niemand ihn für das fertige Spiel hält.
 3765. [P1] Markiere Konten aus dem Web-Testbuild auf dem Server als `platform = web` und lösche sie automatisch nach 30 Tagen ohne Nutzung, wie in der Datenschutzerklärung zu ergänzen.
 3766. [P2] Lege ein Größenbudget für den Web-Build fest (WASM plus PCK unter 40 MB) und prüfe es im Job `web-build`.
@@ -296,14 +296,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### Server-Betrieb: Backups und Wiederherstellung
 3825. [P1] Kopiere die nächtlichen Datenbanksicherungen zusätzlich verschlüsselt (mit `age`) zu einem zweiten Anbieter in der EU, weil sie bisher nur auf demselben Server liegen.
-3826. [P1] Lege einen wöchentlichen Workflow an, der die neueste Sicherung in eine Wegwerf-Datenbank zurückspielt, `server/smoke_test.sh` dagegen laufen lässt und bei Fehler ein Ticket öffnet.
-3827. [P1] Halte die Aufbewahrung aller Sicherungen (lokal 14 Tage, extern höchstens 30 Tage) fest und gleiche sie mit der Löschfrist in `docs/legal/DATENSCHUTZ.md` ab.
-3828. [P1] Schreibe in `docs/BETRIEB.md` eine Schritt-für-Schritt-Anleitung, wie der ganze Server auf einer neuen Maschine aus Sicherung und Repository in unter 2 Stunden wieder läuft.
+3826. [x] [P1] Lege einen wöchentlichen Workflow an, der die neueste Sicherung in eine Wegwerf-Datenbank zurückspielt, `server/smoke_test.sh` dagegen laufen lässt und bei Fehler ein Ticket öffnet.
+3827. [x] [P1] Halte die Aufbewahrung aller Sicherungen (lokal 14 Tage, extern höchstens 30 Tage) fest und gleiche sie mit der Löschfrist in `docs/legal/DATENSCHUTZ.md` ab.
+3828. [x] [P1] Schreibe in `docs/BETRIEB.md` eine Schritt-für-Schritt-Anleitung, wie der ganze Server auf einer neuen Maschine aus Sicherung und Repository in unter 2 Stunden wieder läuft.
 3829. [P1] Bewahre den privaten Schlüssel für die Sicherungsverschlüsselung und die Server-Geheimnisse (JWT-Secret, Datenbank-Passwort) offline bei Ali auf und halte fest, wo.
 3830. [P2] Prüfe in `server/backup.sh` nach jedem Lauf die Größe der Sicherung und melde einen Fehler, wenn sie mehr als 50 % kleiner als am Vortag ist.
 3831. [P2] Schreibe zu jeder Sicherung eine Prüfsumme und prüfe sie vor dem Hochladen und vor jedem Zurückspielen.
 3832. [P2] Sichere auch `.env`, Caddy-Daten (Zertifikate) und die Proxy-Kopien in `/opt/chimora/server/backups/` verschlüsselt mit.
-3833. [P1] Lege vor jeder Datenbank-Migration automatisch eine Sicherung an und brich die Migration ab, wenn das scheitert.
+3833. [x] [P1] Lege vor jeder Datenbank-Migration automatisch eine Sicherung an und brich die Migration ab, wenn das scheitert.
 3834. [P2] Schreibe für jede Migration eine Rückweg-Datei oder halte im Kopf der Datei fest, warum es keinen Rückweg gibt.
 3835. [P2] Übe die Wiederherstellung eines einzelnen Kontos aus einer Sicherung, ohne die übrige Datenbank anzufassen, und dokumentiere die SQL-Schritte.
 3836. [P2] Lösche bei der Kontolöschung auch die serverseitigen Spielstand-Revisionen und halte fest, dass Sicherungen nach 30 Tagen nachziehen.
@@ -319,16 +319,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3846. [P3] Schreibe ein Skript `server/restore.sh`, das eine Sicherung prüft, entschlüsselt und nach Bestätigung zurückspielt.
 
 ### Server-Betrieb: Monitoring, Updates und Kapazität
-3847. [P1] Lege einen geplanten GitHub-Workflow an, der alle 15 Minuten Anmeldung, `hello` und die Rechtsseiten von außen prüft und bei zwei Fehlern hintereinander ein Ticket öffnet und Ali per E-Mail benachrichtigt.
-3848. [P1] Begrenze die Docker-Logs aller Dienste auf 7 Tage und 50 MB pro Dienst (`logging` mit `max-size` und `max-file`), damit Platte und Datenschutzversprechen stimmen.
-3849. [P1] Pinne alle Docker-Images in `server/docker-compose.yml` zusätzlich auf ihren Digest und aktualisiere sie nur über geprüfte Pull Requests.
-3850. [P1] Lege fest, dass Sicherheitsupdates für Postgres, GoTrue, PostgREST und Caddy innerhalb von 7 Tagen eingespielt werden, und halte jedes Update in `docs/BETRIEB.md` fest.
+3847. [x] [P1] Lege einen geplanten GitHub-Workflow an, der alle 15 Minuten Anmeldung, `hello` und die Rechtsseiten von außen prüft und bei zwei Fehlern hintereinander ein Ticket öffnet und Ali per E-Mail benachrichtigt.
+3848. [x] [P1] Begrenze die Docker-Logs aller Dienste auf 7 Tage und 50 MB pro Dienst (`logging` mit `max-size` und `max-file`), damit Platte und Datenschutzversprechen stimmen.
+3849. [x] [P1] Pinne alle Docker-Images in `server/docker-compose.yml` zusätzlich auf ihren Digest und aktualisiere sie nur über geprüfte Pull Requests.
+3850. [x] [P1] Lege fest, dass Sicherheitsupdates für Postgres, GoTrue, PostgREST und Caddy innerhalb von 7 Tagen eingespielt werden, und halte jedes Update in `docs/BETRIEB.md` fest.
 3851. [P2] Schalte `pg_stat_statements` in Postgres ein und erzeuge wöchentlich eine Liste der 10 langsamsten Serverfunktionen.
 3852. [P2] Lege eine Tabelle `ops_daily` an, die pro Tag nur Summen speichert (aktive Konten, Speichervorgänge, abgelehnte Spielstände, Fehler pro Funktion), ohne Bezug zu einzelnen Spielern.
 3853. [P2] Erzeuge aus `ops_daily` eine einfache Textübersicht unter einem geschützten Pfad, die nur mit einem Admin-Token abrufbar ist.
 3854. [P2] Lege Warnschwellen fest: Plattenplatz über 80 %, Speicher über 85 %, mehr als 5 % fehlgeschlagene Anfragen in 15 Minuten, und melde sie per E-Mail.
 3855. [P2] Prüfe das Ablaufdatum des TLS-Zertifikats täglich und warne 14 Tage vor Ablauf, falls die automatische Erneuerung scheitert.
-3856. [P1] Setze für die Rollen `anon` und `authenticated` ein `statement_timeout` von 3 Sekunden, damit eine langsame Abfrage den Server nicht blockiert.
+3856. [x] [P1] Setze für die Rollen `anon` und `authenticated` ein `statement_timeout` von 3 Sekunden, damit eine langsame Abfrage den Server nicht blockiert.
 3857. [P2] Setze in PostgREST eine Höchstzahl an Zeilen pro Antwort (`PGRST_DB_MAX_ROWS` = 200) als Schutz gegen große Abfragen.
 3858. [P2] Lege eine Obergrenze für Datenbankverbindungen fest und miss im Lasttest, ab wie vielen Spielern ein Verbindungspool (z. B. PgBouncer) nötig ist.
 3859. [P2] Plane Server-Updates mit Neustart in einem festen Wartungsfenster (Dienstag 4 bis 5 Uhr) und kündige sie über `motd` an.
@@ -346,17 +346,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### Sicherheit
 3871. [P1] Ersetze den Root-Passwort-Zugang (`CHIMORA_SERVER_PASSWORD`) durch einen eigenen SSH-Schlüssel nur für Deploys und schalte die Passwort-Anmeldung per SSH ab.
-3872. [P1] Prüfe jede `security definer`-Funktion in `supabase/migrations/` darauf, dass sie `auth.uid()` prüft, `search_path` festlegt und keine fremden Daten zurückgibt, und halte das Ergebnis als Liste fest.
-3873. [P1] Begrenze das Anlegen anonymer Konten zusätzlich in Caddy auf 10 pro Stunde pro IP, weil Massenanmeldungen sonst die Datenbank füllen.
-3874. [P1] Setze auf allen Webseiten des Servers die Header `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy` und eine strenge `Content-Security-Policy`.
+3872. [x] [P1] Prüfe jede `security definer`-Funktion in `supabase/migrations/` darauf, dass sie `auth.uid()` prüft, `search_path` festlegt und keine fremden Daten zurückgibt, und halte das Ergebnis als Liste fest.
+3873. [x] [P1] Begrenze das Anlegen anonymer Konten zusätzlich in Caddy auf 10 pro Stunde pro IP, weil Massenanmeldungen sonst die Datenbank füllen. (Umgesetzt in GoTrue mit `GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 10`, weil das Standard-Caddy keinen Ratenbegrenzer hat.)
+3874. [x] [P1] Setze auf allen Webseiten des Servers die Header `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy` und eine strenge `Content-Security-Policy`.
 3875. [P1] Lege in `docs/SICHERHEIT.md` fest, wie das JWT-Secret im Notfall gewechselt wird (alle Spieler melden sich über das gespeicherte Konto neu an) und teste das einmal.
 3876. [P2] Begrenze die Aufrufe pro Konto und Minute für alle Serverfunktionen zentral (z. B. 60 pro Minute) und gib bei Überschreitung einen klaren Fehler zurück.
-3877. [P1] Prüfe, dass die Admin-API von GoTrue und die Dienst-Rolle von außen nicht erreichbar sind, mit einem Test im Server-Workflow.
+3877. [x] [P1] Prüfe, dass die Admin-API von GoTrue und die Dienst-Rolle von außen nicht erreichbar sind, mit einem Test im Server-Workflow.
 3878. [P2] Schalte Fail2ban oder eine gleichwertige Sperre für SSH ein und halte die Einstellungen in `server/setup.sh` fest.
 3879. [P2] Prüfe die Plausibilität von Spielständen auf dem Server um weitere Regeln (höchstens 999 pro Gegenstand, keine unbekannten Spirling-IDs, Spielzeit nicht rückwärts).
 3880. [P2] Melde serverseitig Konten mit auffälligen Spielständen (z. B. Geldsprung über 100000 in einer Speicherung) in einer Prüfliste, ohne sie automatisch zu sperren.
 3881. [P2] Lass `run_secret_scanning` beziehungsweise GitHub Secret Scanning mit Push-Schutz für das Repository eingeschaltet und prüfe es einmal im Monat.
-3882. [P1] Prüfe, dass im Spiel nur der öffentliche Anon-Schlüssel steckt und nie ein Dienst-Schlüssel, mit einer Prüfung in `tools/release_check.py`.
+3882. [x] [P1] Prüfe, dass im Spiel nur der öffentliche Anon-Schlüssel steckt und nie ein Dienst-Schlüssel, mit einer Prüfung in `tools/release_check.py`.
 3883. [P2] Speichere das Anmelde-Token auf dem Gerät nicht im Spielstand, sondern in einer eigenen Datei, die bei Konto löschen sicher entfernt wird.
 3884. [P2] Prüfe, dass `transfer_claim` nach 5 Fehlversuchen pro Stunde sperrt und die Codes genug Zufall haben (mindestens 40 Bit).
 3885. [P2] Prüfe, dass Wayfarer-Namen auf dem Server auf erlaubte Zeichen und eine Höchstlänge begrenzt sind, auch wenn das Spiel selbst schon filtert.
@@ -375,12 +375,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3898. [P3] Wechsle SSH auf einen nicht standardmäßigen Port erst, wenn die Logs viele Anmeldeversuche zeigen, und halte die Entscheidung fest.
 
 ### Datenschutz und DSGVO
-3899. [P1] Setze die versprochene Löschung inaktiver Konten nach 24 Monaten technisch um (täglicher Lauf, Hinweis im Spiel 30 Tage vorher), weil die Datenschutzerklärung sie schon verspricht.
-3900. [P1] Setze die versprochene Löschung von Meldungen nach höchstens 6 Monaten und von Wochenwerten nach Ende der Folgewoche als täglichen Lauf um und teste beide.
-3901. [P1] Lege das Verzeichnis der Verarbeitungstätigkeiten nach Art. 30 DSGVO als `docs/legal/VVT.md` an, mit jeder Tabelle, Zweck, Rechtsgrundlage und Frist.
-3902. [P1] Prüfe die Datenschutzerklärung gegen den tatsächlichen Stand (Contabo, gemeinsamer Server, Fehlerberichte, Web-Testbuild, Käufe) und ändere sie vor dem Store-Start.
+3899. [x] [P1] Setze die versprochene Löschung inaktiver Konten nach 24 Monaten technisch um (täglicher Lauf, Hinweis im Spiel 30 Tage vorher), weil die Datenschutzerklärung sie schon verspricht. (Umgesetzt als Markierung mit 30 Tagen Frist; ein Hinweis im Spiel erreicht inaktive Spieler nicht, die Erklärung sagt das jetzt so.)
+3900. [x] [P1] Setze die versprochene Löschung von Meldungen nach höchstens 6 Monaten und von Wochenwerten nach Ende der Folgewoche als täglichen Lauf um und teste beide.
+3901. [x] [P1] Lege das Verzeichnis der Verarbeitungstätigkeiten nach Art. 30 DSGVO als `docs/legal/VVT.md` an, mit jeder Tabelle, Zweck, Rechtsgrundlage und Frist. (Umgesetzt in `docs/legal/VERARBEITUNGEN.md`, gemeinsam mit Bereich 7.)
+3902. [x] [P1] Prüfe die Datenschutzerklärung gegen den tatsächlichen Stand (Contabo, gemeinsamer Server, Fehlerberichte, Web-Testbuild, Käufe) und ändere sie vor dem Store-Start.
 3903. [P1] Baue unter Menü, Konto einen Punkt "Meine Daten" (Art. 15 und 20 DSGVO), der über eine Serverfunktion `export_my_data` alle eigenen Daten als JSON zum Teilen anbietet.
-3904. [P1] Prüfe, ob GoTrue oder PostgREST IP-Adressen in eigene Tabellen (z. B. `auth.audit_log_entries`) schreiben, und lösche diese Einträge nach 7 Tagen wie versprochen.
+3904. [x] [P1] Prüfe, ob GoTrue oder PostgREST IP-Adressen in eigene Tabellen (z. B. `auth.audit_log_entries`) schreiben, und lösche diese Einträge nach 7 Tagen wie versprochen.
 3905. [P2] Lege die technischen und organisatorischen Maßnahmen (TOM) nach Art. 32 DSGVO in `docs/legal/TOM.md` an, passend zu Server, Backups und Zugängen.
 3906. [P2] Lege eine Vorlage für Datenpannen nach Art. 33 DSGVO (Meldung binnen 72 Stunden an die hessische Aufsichtsbehörde) in `docs/legal/DATENPANNE.md` an.
 3907. [P2] Prüfe, ob der gemeinsame Server mit Nyrathen und Dranbleib in der Datenschutzerklärung und im AV-Vertrag richtig abgebildet ist.
@@ -388,13 +388,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3909. [P2] Lege eine Antwortvorlage für Auskunfts-, Lösch- und Berichtigungsanfragen per E-Mail mit Frist von einem Monat an.
 3910. [P2] Prüfe, dass die Löschung per E-Mail ohne App (Webseite `/konto-loeschen`) eine dokumentierte Admin-Funktion hat und innerhalb von 30 Tagen erledigt wird.
 3911. [P2] Lege ein einfaches Protokoll für Lösch- und Auskunftsanfragen an (Datum, Art, erledigt am), ohne mehr Daten als nötig.
-3912. [P2] Prüfe die Rechtsgrundlage für Spieler unter 16 Jahren (Vertrag über die Eltern) und halte die Begründung in `docs/legal/VVT.md` fest.
+3912. [P2] Prüfe die Rechtsgrundlage für Spieler unter 16 Jahren (Vertrag über die Eltern) und halte die Begründung in `docs/legal/VERARBEITUNGEN.md` fest.
 3913. [P1] Zeige beim ersten Start die Nutzungsbedingungen und die Datenschutzerklärung mit Zustimmungsknopf und speichere Version und Zeitpunkt der Zustimmung auf dem Server.
 3914. [P2] Zeige nach einer wesentlichen Änderung der Nutzungsbedingungen beim nächsten Start die neue Fassung mit erneuter Zustimmung.
 3915. [P2] Gleiche die englische Privacy Policy und die AGB in Englisch automatisch mit der deutschen Fassung ab (gleiche Abschnitte, gleiche Fristen) über `tools/site/build_site.py --check`.
 3916. [P2] Prüfe, dass keine Spielerdaten in CI-Logs, Testfixtures oder Fehlerberichten im Repository landen.
 3917. [P2] Prüfe, dass der Support-Weg (E-Mail) keine Spielerdaten in fremde Ticketsysteme schickt, und halte das Postfach beim Anbieter in der EU.
-3918. [P2] Lege fest, dass jede neue Datenart (z. B. Kaufbelege aus Bereich 10) erst in `docs/legal/VVT.md` und der Datenschutzerklärung stehen muss, bevor sie gespeichert wird, und prüfe das im Pull-Request-Text.
+3918. [P2] Lege fest, dass jede neue Datenart (z. B. Kaufbelege aus Bereich 10) erst in `docs/legal/VERARBEITUNGEN.md` und der Datenschutzerklärung stehen muss, bevor sie gespeichert wird, und prüfe das im Pull-Request-Text.
 3919. [P2] Prüfe, ob die Wochen-Rangliste ohne Namen wirklich keine Rückschlüsse auf einzelne Spieler erlaubt (z. B. bei sehr wenigen Teilnehmern).
 3920. [P2] Lösche Konten aus dem geschlossenen Test und interne Testkonten vor dem Store-Start und markiere künftige Testkonten eindeutig.
 3921. [P3] Prüfe einmal pro Jahr alle Speicherfristen gegen die tatsächlichen Daten mit einer festen SQL-Abfrage und halte das Ergebnis fest.
@@ -435,8 +435,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 ### Markenrecht, IP-Prüfung und Lizenzen
 3953. [P1] Lass Ali vor der Produktion die Namensprüfung "chimora" im EU-Markenregister (tmdn.org) und in der WIPO-Datenbank für die Klassen 9 und 41 machen und halte das Ergebnis mit Datum in `docs/legal/MARKE.md` fest.
 3954. [P1] Melde die Wortmarke "Chimora" für die Klassen 9 und 41 an (DPMA 290 Euro oder EUIPO 850 Euro) und trage Aktenzeichen und Datum in `docs/legal/MARKE.md` ein.
-3955. [P1] Erweitere `tools/ip_check.sh` so, dass auch Commit-Nachrichten und Pull-Request-Titel geprüft werden, weil `AGENTS.md` das verlangt.
-3956. [P1] Prüfe mit `tools/ip_check.sh` auch die Metadaten von Bild- und Audiodateien (PNG-Textfelder, OGG-Kommentare) auf verbotene Namen.
+3955. [x] [P1] Erweitere `tools/ip_check.sh` so, dass auch Commit-Nachrichten und Pull-Request-Titel geprüft werden, weil `AGENTS.md` das verlangt.
+3956. [x] [P1] Prüfe mit `tools/ip_check.sh` auch die Metadaten von Bild- und Audiodateien (PNG-Textfelder, OGG-Kommentare) auf verbotene Namen.
 3957. [P2] Sichere die Domains `chimora.de` und eine `.com`- oder `.game`-Variante sowie die Namen auf den wichtigsten Social-Media-Plattformen.
 3958. [P2] Ergänze in `docs/ASSET_LOG.md` für jede Datei eine SHA-256-Prüfsumme und lass `tools/ip_check.sh` scheitern, wenn eine Datei sich ohne neuen Logeintrag ändert.
 3959. [P2] Prüfe alle Schriftarten auf ihre Lizenz und lege die Lizenztexte auf der Seite `/lizenzen` ab.
@@ -458,7 +458,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 
 ### Code-Qualität und Wartbarkeit
 3975. [P1] Prüfe mit einer Regel in CI, dass alle Variablen, Parameter und Rückgabewerte in `scripts/` statisch typisiert sind, wie `AGENTS.md` es verlangt.
-3976. [P1] Lege fest, dass jeder Pull Request höchstens ein Thema hat, Tests mitbringt und die Prüfungen auf `main` besteht, und schreibe das als Vorlage in `.github/pull_request_template.md`.
+3976. [x] [P1] Lege fest, dass jeder Pull Request höchstens ein Thema hat, Tests mitbringt und die Prüfungen auf `main` besteht, und schreibe das als Vorlage in `.github/pull_request_template.md`.
 3977. [P1] Schreibe für `Online.gd` (435 Zeilen) eine Zustandsübersicht als Kommentar und teile Herzschlag, Wiederverbinden und Speichern in eigene Klassen auf.
 3978. [P1] Halte die Regeln aus `LocalBackend.gd` und den SQL-Funktionen an einer gemeinsamen Stelle fest (Grenzwerte in `server_config`), damit sie nicht auseinanderlaufen.
 3979. [P2] Lege eine Höchstlänge von 400 Zeilen pro Skript fest und teile längere Skripte nach Aufgaben auf, beginnend mit dem längsten.

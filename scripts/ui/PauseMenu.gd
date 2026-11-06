@@ -643,6 +643,10 @@ func run_spirlog() -> void:
 		if not encounter_table.is_empty():
 			entries.append({"text": "Tracker: this area"})
 			actions.append("tracker")
+		if GameState.has_flag(EchoPath.OPEN_FLAG):
+			# Plan 3354: the Echo Path's wild kinds of the week, so missing ones can be planned.
+			entries.append({"text": EchoPath.spirlog_hint()})
+			actions.append("echo")
 		var first_kind: int = entries.size()
 		for sd: SpirlingData in kinds:
 			# Own marks beside the line (item 1934): an eye for seen, a band for bonded.
@@ -666,6 +670,8 @@ func run_spirlog() -> void:
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
 			"tracker":
 				await info(_tracker_text())
+			"echo":
+				await info(EchoPath.spirlog_hint() + "\n" + Loc.t("They wait in the wild rooms of the Echo Path behind the Cinder Rift. A new set comes every week."))
 			"kind":
 				var sd: SpirlingData = kinds[idx - first_kind]
 				if not SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
