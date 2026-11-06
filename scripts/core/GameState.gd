@@ -44,6 +44,8 @@ var money: int = 0
 var waymarks: int = 0
 ## Today's daily tasks and their progress (see DailyTasks.gd): {"day", "tasks": [{"id", "n"}], "bonus"}.
 var daily_tasks: Dictionary = {}
+## Festival ribbons per festival (see Festival.gd): "<id>_<year>" -> {"ribbons", "earned", "stages", "task"}.
+var festival_ribbons: Dictionary = {}
 ## Short reward notes waiting to be shown by the overworld (not saved).
 var notices: Array[String] = []
 
@@ -60,6 +62,11 @@ var flags: Dictionary = {}
 var visited_rests: Dictionary = {}
 ## Personal bests, e.g. "gauntlet_best".
 var records: Dictionary = {}
+## Story numbers such as kestra_trust (dialogue actions set_var / add_var, plan item 1339).
+var story_vars: Dictionary = {}
+## Story decisions: choice id -> picked answer id (plan item 1680). "_v" is the format version.
+var story_choices: Dictionary = {}
+const STORY_CHOICES_VERSION: int = 1
 ## Puzzle progress: puzzle id -> number of switches pressed in the right order so far.
 var switch_progress: Dictionary = {}
 ## World changes that must survive saving, per map id (area 3 item 905): pushed boulders,
@@ -128,11 +135,13 @@ var known_matchups: Dictionary = {}
 
 ## Mended Rifts needed before the storage box opens from the menu (end of Act I).
 const RIFTS_FOR_STORAGE: int = 2
+## Story flag at the end of Act I ("Waiting for the Ferry" starts).
+const ACT1_END_FLAG: String = "aldo_dock_told"
 
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
 		return Spirling.MAX_LEVEL
-	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
+	return progress_cap()
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -143,7 +152,19 @@ func seal_rift(rift_id: String) -> bool:
 	# Rifts can be mended in any order; the second one opens storage from the menu.
 	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
 		set_flag("storage_remote")
+		# Achievement "Small Band": both Rifts mended with three Spirlings or fewer.
+		if party.size() + storage.size() <= 3:
+			records["small_band"] = 1
 	return true
+
+## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
+## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
+## After Act I (ACT1_END_FLAG) the cap opens to the full Spirling.MAX_LEVEL (plan 3287), so
+## Master Wayfarers and the endgame use the whole ring range.
+func progress_cap() -> int:
+	if has_flag(ACT1_END_FLAG):
+		return Spirling.MAX_LEVEL
+	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
@@ -294,6 +315,7 @@ func reset() -> void:
 	money = 0
 	waymarks = 0
 	daily_tasks = {}
+	festival_ribbons = {}
 	notices.clear()
 	current_map = "lighthouse"
 	player_cell = Vector2i(4, 4)
@@ -303,6 +325,8 @@ func reset() -> void:
 	flags = {}
 	visited_rests = {}
 	records = {}
+	story_vars = {}
+	story_choices = {}
 	switch_progress = {}
 	world_state = {}
 	known_matchups = {}
@@ -353,6 +377,7 @@ func to_dict() -> Dictionary:
 		"money": money,
 		"waymarks": waymarks,
 		"daily_tasks": daily_tasks.duplicate(true),
+		"festival_ribbons": festival_ribbons.duplicate(true),
 		"map": current_map,
 		"cell": [player_cell.x, player_cell.y],
 		"facing": facing,
@@ -363,6 +388,8 @@ func to_dict() -> Dictionary:
 		"play_time": play_time,
 		"rests": visited_rests.duplicate(true),
 		"records": records.duplicate(),
+		"story_vars": story_vars.duplicate(),
+		"story_choices": story_choices.duplicate(),
 		"switches": switch_progress.duplicate(),
 		"world": world_state.duplicate(true),
 		"iron_oath": iron_oath,
@@ -397,6 +424,11 @@ func from_dict(d: Dictionary) -> void:
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
+	festival_ribbons = {}
+	for k: Variant in as_dict(d.get("festival_ribbons", {})):
+		var st: Dictionary = as_dict(d.festival_ribbons[k])
+		festival_ribbons[str(k)] = {"ribbons": maxi(0, as_int(st.get("ribbons", 0))), "earned": maxi(0, as_int(st.get("earned", 0))),
+			"stages": clampi(as_int(st.get("stages", 0)), 0, Festival.STAGES.size()), "task": as_dict(st.get("task", {})).duplicate(true)}
 	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))
@@ -415,6 +447,11 @@ func from_dict(d: Dictionary) -> void:
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
 	records = _as_dict(d.get("records", {}))
+	var sv: Dictionary = _as_dict(d.get("story_vars", {}))
+	for k: Variant in sv:
+		if sv[k] is int or sv[k] is float:
+			story_vars[str(k)] = int(sv[k])
+	story_choices = _as_dict(d.get("story_choices", {}))
 	switch_progress = _as_dict(d.get("switches", {}))
 	world_state = _as_dict(d.get("world", {}))
 	iron_oath = bool(d.get("iron_oath", false))
@@ -497,6 +534,21 @@ static func ensure_buses() -> void:
 	lim.ceiling_db = LIMITER_CEILING_DB
 	AudioServer.add_bus_effect(0, lim)
 
+## A story number (0 if never set).
+func story_var(name: String) -> int:
+	return int(story_vars.get(name, 0))
+
+func set_story_var(name: String, value: int) -> void:
+	story_vars[name] = value
+
+func add_story_var(name: String, amount: int) -> void:
+	story_vars[name] = story_var(name) + amount
+
+## Remembers a story decision (plan item 1680).
+func record_choice(id: String, answer: String) -> void:
+	story_choices[id] = answer
+	story_choices["_v"] = STORY_CHOICES_VERSION
+
 func has_flag(flag: String) -> bool:
 	return bool(flags.get(flag, false))
 
@@ -519,6 +571,11 @@ func retire_fainted() -> Array[String]:
 			s.restore()
 			sanctuary.append(s)
 			names.append(s.display_name())
+			# Memorial book (plan 3397): name, ring, place and date of every retirement.
+			var book: Array = records.get("memorial", []) if records.get("memorial", []) is Array else []
+			book.append({"name": s.display_name(), "species": s.data.species_name, "level": s.level,
+				"map": current_map, "date": Time.get_date_string_from_unix_time(Online.unix_now())})
+			records["memorial"] = book
 	return names
 
 ## Fills an empty party from storage. Returns how many joined.

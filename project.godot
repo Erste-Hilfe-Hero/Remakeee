@@ -21,7 +21,7 @@ Sound="*res://scripts/core/Sound.gd"
 MusicDirector="*res://scripts/core/MusicDirector.gd"
 Juice="*res://scripts/core/Juice.gd"
 Haptics="*res://scripts/core/Haptics.gd"
-Toast="*res://scripts/ui/Toast.gd"
+Ticker="*res://scripts/ui/Ticker.gd"
 Online="*res://scripts/online/Online.gd"
 
 [display]

@@ -146,7 +146,7 @@ func caption(sound_name: String) -> void:
 	captions.append(CAPTIONS[sound_name])
 	if captions.size() > 8:
 		captions.pop_front()
-	Toast.show_text(CAPTIONS[sound_name])
+	Ticker.show_text(CAPTIONS[sound_name])
 
 ## Ground name for footsteps on a tile of [param kind]; [param wet] when water is next to it.
 static func ground_for(kind: int, wet: bool) -> String:

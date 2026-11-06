@@ -206,7 +206,7 @@ T = {
 "Week by Week": "Woche für Woche", "Win a weekly challenge.": "Gewinne eine Wochen-Herausforderung.",
 "Odd Colours": "Seltsame Farben", "Bond with a shimmering Spirling.": "Binde einen schimmernden Spirling.",
 "Full Purse": "Volle Börse", "Hold 10000 coins.": "Besitze 10000 Münzen.",
-"This week: %s, rule %s. Three echoes at ring %d. Best this week: %d of %d. Try?": "Diese Woche: %s, Regel %s. Drei Echos auf Ring %d. Bestleistung diese Woche: %d von %d. Versuchen?",
+"This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d. Try?": "Diese Woche: %s, Regel %s. Fünf Echos auf Ring %d. Bestleistung diese Woche: %d von %d. Versuchen?",
 "Weekly Echo %d": "Wochen-Echo %d",
 "You won this week's challenge! You received %d coins.": "Du hast die Wochen-Herausforderung gewonnen! Du hast %d Münzen erhalten.",
 "Cleared again! The prize comes back next week.": "Wieder geschafft! Den Preis gibt es nächste Woche wieder.",

@@ -1,75 +1,65 @@
+class_name Toast
 extends CanvasLayer
-## Autoload "Toast": short notices such as "Game saved." (item 2418). A 12 px bar slides in from
-## the top edge (below any notch), stays 1.6 s and slides out. Notices queue up, never overlap.
-##   Toast.show_text("Game saved.")
-##   Toast.coins(120, 340)       counts the coin total up (item 2419)
+## Short notes at the top of the screen (plan area 8): unlocked badges and finished daily tasks.
+## They never stop the game: input passes through and each note fades after SHOW_TIME.
 
-const HEIGHT: int = 12
-const STAY_TIME: float = 1.6
-const LAYER: int = 60
+const SHOW_TIME: float = 2.4
+const LAYER: int = 90
 
-var _bar: PanelContainer
+var _panel: PanelContainer
+var _icon: TextureRect
 var _label: Label
 var _queue: Array[Dictionary] = []
 var _busy: bool = false
-## Texts shown so far, newest last (for tests; keeps the last few).
-var shown: Array[String] = []
 
 func _ready() -> void:
 	layer = LAYER
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	_bar = PanelContainer.new()
-	_bar.theme = UITheme.get_theme()
-	_bar.add_theme_stylebox_override("panel", UITheme.flat_style(UITheme.BG, UITheme.INK))
-	_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_bar.visible = false
-	add_child(_bar)
+	_panel = PanelContainer.new()
+	_panel.theme = UITheme.get_theme()
+	_panel.add_theme_stylebox_override("panel", UITheme.panel_style())
+	_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	_panel.offset_left = 4
+	_panel.offset_right = -4
+	_panel.offset_top = 4
+	_panel.visible = false
+	add_child(_panel)
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_child(row)
+	_icon = TextureRect.new()
+	_icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(_icon)
 	_label = Label.new()
-	_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_label.clip_text = true
-	_label.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
-	_bar.add_child(_label)
+	_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	_label.custom_minimum_size = Vector2(1, 0)
+	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_child(_label)
 
-func show_text(text: String) -> void:
-	_queue.append({"text": text})
+## Queues a note; [param icon] may be null.
+func show_note(text: String, icon: Texture2D = null) -> void:
+	_queue.append({"text": text, "icon": icon})
 	if not _busy:
 		_run()
 
-## Shows the coin total counting from [param from] to [param to].
-func coins(from: int, to: int) -> void:
-	_queue.append({"text": "Coins: %d", "from": from, "to": to})
-	if not _busy:
-		_run()
-
-func busy() -> bool:
-	return _busy
+func pending() -> int:
+	return _queue.size() + (1 if _busy else 0)
 
 func _run() -> void:
 	_busy = true
 	while not _queue.is_empty():
-		var t: Dictionary = _queue.pop_front()
-		await _show(t)
+		var n: Dictionary = _queue.pop_front()
+		_label.text = Loc.t(str(n.text))
+		_icon.texture = n.icon
+		_icon.visible = n.icon != null
+		_panel.modulate.a = 1.0
+		_panel.visible = true
+		await get_tree().create_timer(SHOW_TIME).timeout
+		if not GameState.reduce_motion:
+			var tw: Tween = create_tween()
+			tw.tween_property(_panel, "modulate:a", 0.0, 0.25)
+			await tw.finished
+		_panel.visible = false
 	_busy = false
-
-func _show(t: Dictionary) -> void:
-	var vp: Vector2 = _bar.get_viewport().get_visible_rect().size
-	var top: float = SafeArea.rect(vp).position.y
-	_bar.size = Vector2(vp.x - 16.0, HEIGHT)
-	var home := Vector2(8.0, top + 2.0)
-	_bar.position = home - Vector2(0, HEIGHT + 2 + top)
-	var fmt: String = Loc.t(str(t.text))
-	if t.has("from"):
-		_label.text = fmt % int(t.from)
-	else:
-		_label.text = fmt
-	shown.append(_label.text if not t.has("to") else fmt % int(t.to))
-	if shown.size() > 8:
-		shown.pop_front()
-	_bar.visible = true
-	await Juice.tween(_bar, "position", home, "open").finished
-	if t.has("from"):
-		await Juice.count_to(_label, int(t.from), int(t.to), 0.6, fmt)
-	await get_tree().create_timer(STAY_TIME, true, false, true).timeout
-	await Juice.tween(_bar, "position", home - Vector2(0, HEIGHT + 2 + top), "close").finished
-	_bar.visible = false

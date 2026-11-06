@@ -71,17 +71,17 @@ func test_list_rows_pop_on_release() -> void:
 	lp.picked.emit(-1)
 
 func test_toasts_queue_and_count_coins() -> void:
-	Toast.shown.clear()
-	Toast.show_text("Game saved.")
-	Toast.coins(10, 40)
-	assert_true(Toast.busy())
+	Ticker.shown.clear()
+	Ticker.show_text("Game saved.")
+	Ticker.coins(10, 40)
+	assert_true(Ticker.busy())
 	var t: float = 0.0
-	while Toast.busy() and t < 8.0:
+	while Ticker.busy() and t < 8.0:
 		await get_tree().process_frame
 		t += get_process_delta_time()
-	assert_false(Toast.busy())
-	assert_eq(Toast.shown.size(), 2)
-	assert_eq(Toast.shown[1], "Coins: 40")
+	assert_false(Ticker.busy())
+	assert_eq(Ticker.shown.size(), 2)
+	assert_eq(Ticker.shown[1], "Coins: 40")
 	var l := Label.new()
 	add_child_autofree(l)
 	await Juice.count_to(l, 0, 25, 0.1)
