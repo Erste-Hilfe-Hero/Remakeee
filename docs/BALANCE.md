@@ -1,11 +1,41 @@
 # Balance notes
 
-How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- <level> <rounds> [out.md]`.
-Every species fights every other species of the same evolution stage 1-on-1, both sides on the
-greedy AI (tier 1), no items. Forms that can't exist yet at that level are skipped, and so are
-forms a player would already have evolved (level at or past their evolution level).
-`tests/unit/test_balance.gd` fails CI if any species wins less than 25% or more than 75% of its
-same-stage fights at Lv36.
+How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- --level 36 --rounds 10 --mode duel`
+(switches: `--level`, `--rounds`, `--seed`, `--mode duel|team`, `--ai`, `--out report.md`,
+`--json report.json`; the old positional form `<level> <rounds> [out.md]` still works).
+
+- **duel**: every species fights every other species of the same evolution stage 1-on-1, both
+  sides on the greedy AI (tier 1), no items. Forms that can't exist yet at that level are skipped,
+  and so are forms a player would already have evolved.
+- **team**: random valid teams of 3 and 5 (no species twice), both sides on AI tier 2, one
+  Spirling on the field at a time; the report adds picks per element and the share of rests.
+
+Both modes run on the real `BattleModel` (all effects, fields and rules), never a separate damage
+path. `--json` writes every number for tests and comparisons.
+
+## Zielbänder (target bands)
+
+| Measure | Target | Checked by |
+| --- | --- | --- |
+| Duel win rate per species at Lv36 | 25% to 75% | `test_balance.gd`, `test_no_species_dominates_its_stage` |
+| Team win rate per species at Lv36 | 30% to 70% (the test holds 25% to 75% while the roster grows) | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
+| Team battles that stall (120 turns) | none | `test_balance.gd`, same test |
+| Battles with only the new arts that hit 60 turns | none | `test_move_curve.gd`, `test_fuzz_new_arts_only` |
+| Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | report line "Turns to KO" (test planned, item 851) |
+| First-mover advantage (faster Spirling wins) | at most 62% | report line (test planned, item 850) |
+| Damage art curve: power x accuracy / (energy + 1) x effect factor | 9 to 18 | `test_move_curve.gd` |
+| Accuracy of any art | at least 75% | `test_move_curve.gd` |
+| Status chance of a damage art | at most 30% | `test_move_curve.gd` |
+| Cooldown arts | power 110+, energy 7+ | `test_move_curve.gd` |
+| Arts per element | 14+, of them 3+ status arts and 1+ for 1-2 Energy | `test_move_curve.gd` |
+| Learnset size | at most 14 arts | `test_move_curve.gd` |
+
+Measured on 6 Nov 2026 (plan area 2, after the new arts): Lv36 duel turns to KO 2.5, first-mover
+advantage 52%; Lv36 teams (200 battles, seed 7) 0 draws, every species between 39% and 66%.
+Glimmerax sits lowest in duels (26%, it loses to 7 of 8 same-stage species on base stats).
+
+Long fights: from turn `BattleRules.WEARY_TURN` (40) nobody heals any more, so two Spirlings that
+mend faster than they hurt each other can't stall forever.
 
 ## Changes from the first run (Nov 2026)
 
@@ -114,6 +144,7 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
 | Season path steps 5/15/25 and 10/20/30 | 30 / 50 | per season | built |
+| Season path, every step after 30 | 20 | per step | `SeasonPath.add` |
 | Spirlog goals: bonded 3/5/8/11/all | 20 / 30 / 40 / 60 / 200 | once | built |
 | Spirlog goals: seen 5/10/15/all | 10 / 20 / 30 / 60 | once | built |
 | Roaming trip 4 / 8 / 12 h (also 60 / 120 / 180 coins and a Tonic / Remedy / Strong Tonic) | 1 / 2 / 3 | up to 3 trips at once | `Expeditions.collect` |

@@ -504,6 +504,10 @@ static func summary_line(d: Dictionary) -> String:
 		place = m.display_name
 	var secs: int = int(float(d.get("play_time", 0.0)))
 	var line: String = "%s  %d:%02d" % [place, secs / 3600, (secs / 60) % 60]
+	# Waymarks next to play time once the player has some (plan 3127).
+	var wm: int = GameState.as_int(d.get("waymarks", 0))
+	if wm > 0:
+		line += "  %s%d" % [Waymarks.GLYPH, wm]
 	# A small chain marks a journey under the Iron Oath (plan 3396).
 	if d.get("iron_oath", false) is bool and bool(d.get("iron_oath", false)):
 		line = OATH_GLYPH + " " + line

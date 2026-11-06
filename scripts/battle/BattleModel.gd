@@ -95,6 +95,9 @@ var foe_rule: String = ""
 ## Snares lying on each side (side_snare effect), oldest first. Each is {"move": name, plus
 ## "hp" (share of max Vigor), "status" or "stage"}. The next Spirling to swap in springs one.
 var snares: Array[Array] = [[], []]
+## Turn each Spirling last stepped onto the field (by swap or after a faint). The AI uses it to
+## stop two sides from swapping back and forth forever.
+var entered_turn: Dictionary = {}
 
 var _queue: Array[BattleAction] = []
 var _events: Array[BattleEvent] = []
@@ -479,9 +482,31 @@ func _check_boss_phase(boss: Spirling) -> void:
 		base_field = str(p.field)
 		set_field(base_field, 0)
 
+## Heals the Spirling in [param slot] from an art, its gift, the field or a keepsake. A heal
+## block stops all of these (bag items heal through _heal_spirling and still work).
 func heal(side: int, amount: int, slot: int = 0) -> int:
 	var index: int = active_index(side, slot)
-	return _heal_spirling(side, index, amount) if index >= 0 else 0
+	if index < 0:
+		return 0
+	var s: Spirling = parties[side][index]
+	if turn >= BattleRules.WEARY_TURN:
+		return 0
+	if s.heal_block > 0:
+		if s.hp < s.max_hp():
+			emit_event(BattleEvent.Type.HEAL_BLOCKED, _who(side, slot))
+		return 0
+	return _heal_spirling(side, index, amount)
+
+## Blocks healing for the Spirling in [param slot] for the next [param turns] turns. Emits HEAL_BLOCKED.
+func apply_heal_block(side: int, turns: int, slot: int = 0) -> void:
+	var s: Spirling = active_spirling(side, slot)
+	if s == null or s.is_fainted() or turns <= 0:
+		return
+	# +1 because the end of this very turn already counts one down.
+	s.heal_block = turns + 1
+	var d: Dictionary = _who(side, slot)
+	d.merge({"turns": turns, "fresh": true})
+	emit_event(BattleEvent.Type.HEAL_BLOCKED, d)
 
 ## Tries to afflict the Spirling in [param slot] of [param side]. Fails if it already has a status.
 func apply_status(side: int, status: String, slot: int = 0) -> bool:
@@ -610,8 +635,24 @@ func _phase_end_of_turn() -> void:
 			_end_of_turn_for(side, slot)
 	_tick_timers()
 	_tick_field()
+	if turn == BattleRules.WEARY_TURN:
+		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
+	_weary_chip()
 	turn += 1
 	phase = Phase.FAINT_CHECK
+
+## Share of max Vigor every Spirling in front loses each turn once the fight is weary.
+const WEARY_CHIP_DIV: int = 8
+
+## From BattleRules.WEARY_TURN on, the long fight costs every Spirling in front 1/8 of its Vigor
+## each turn, so even two walls that barely scratch each other finish within a few turns.
+func _weary_chip() -> void:
+	if turn < BattleRules.WEARY_TURN:
+		return
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for slot: int in standing_slots(side):
+			var s: Spirling = active_spirling(side, slot)
+			deal_damage(side, maxi(1, ceili(float(s.max_hp()) / float(WEARY_CHIP_DIV))), {"weary": true}, slot)
 
 func _end_of_turn_for(side: int, slot: int) -> void:
 	var s: Spirling = active_spirling(side, slot)
@@ -950,6 +991,7 @@ func _fill_initial_slots() -> void:
 func _swap_in(side: int, index: int, slot: int = 0) -> void:
 	slots[side][slot] = index
 	var s: Spirling = active_spirling(side, slot)
+	entered_turn[s] = turn
 	var d: Dictionary = _who(side, slot)
 	d.merge({"hp": s.hp, "max_hp": s.max_hp(), "level": s.level, "energy": s.energy})
 	emit_event(BattleEvent.Type.SWAP_IN, d)

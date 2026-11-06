@@ -162,3 +162,40 @@ static func buy(item_id: String) -> String:
 			GameState.add_item(item_id)
 			return ""
 	return "Tilda doesn't have that right now."
+
+## Whole days left of the running festival, today included (0 outside festivals).
+static func days_left() -> int:
+	var a: Dictionary = active()
+	if a.is_empty():
+		return 0
+	var d: Dictionary = Online.date_now()
+	var months: Array = (a.fest as Dictionary).months
+	var y: int = int(d.year)
+	var m: int = int(d.month)
+	# Walk to the last month of this festival (Hearth Weeks run over New Year).
+	while ((m % 12) + 1) in months:
+		if m == 12:
+			y += 1
+		m = (m % 12) + 1
+	var ny: int = y + 1 if m == 12 else y
+	var nm: int = 1 if m == 12 else m + 1
+	var end: int = Time.get_unix_time_from_datetime_dict({"year": ny, "month": nm, "day": 1})
+	var today: int = Time.get_unix_time_from_datetime_dict({"year": int(d.year), "month": int(d.month), "day": int(d.day)})
+	return maxi(1, (end - today) / 86400)
+
+## Goals screen block (plan 3222): festival name, days left and ribbons; between festivals the
+## next one with its elements.
+static func goal_lines() -> Array[String]:
+	var out: Array[String] = []
+	var a: Dictionary = active()
+	if not a.is_empty():
+		out.append(Loc.t("%s: %d days left, %d ribbons") % [Loc.t(str(a.fest.name)), days_left(), ribbons()])
+		return out
+	var next: Dictionary = Season.next_after(int(Online.date_now().month))
+	if not next.is_empty():
+		var els: PackedStringArray = []
+		for e: Variant in next.get("elements", []):
+			els.append(Elements.element_name(int(Elements.E.get(str(e), 0))))
+		out.append(Loc.t("Next festival: %s (%s)") % [Loc.t(str(next.name)), ", ".join(els)])
+	return out
+

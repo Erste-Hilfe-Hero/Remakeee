@@ -26,7 +26,7 @@ static func run(days: int = DAYS) -> Dictionary:
 	var coins: Dictionary = {}
 	var by_day: Dictionary = {}
 	# Lambdas capture plain locals by value, so the running numbers live in one dictionary.
-	var st: Dictionary = {"balance": 0, "lost": 0, "season_points": 0, "season_claimed": 0}
+	var st: Dictionary = {"balance": 0, "lost": 0, "season_points": 0, "season_claimed": 0, "season_extra": 0}
 	var spent: int = 0
 	var bought: int = 0
 	var floors: int = 0
@@ -44,6 +44,9 @@ static func run(days: int = DAYS) -> Dictionary:
 			st.season_claimed = int(st.season_claimed) + 1
 			pay.call("season_path", int(r.get("waymarks", 0)))
 			_add(coins, "season_path", int(r.get("coins", 0)))
+		while int(st.season_extra) < int(st.season_points) / SeasonPath.per_tier() - SeasonPath.tiers():
+			st.season_extra = int(st.season_extra) + 1
+			pay.call("season_path", SeasonPath.EXTRA_STEP_WAYMARKS)
 	for day: int in range(1, days + 1):
 		for i: int in DailyTasks.PER_DAY:
 			pay.call("daily_task", DailyTasks.REWARD)

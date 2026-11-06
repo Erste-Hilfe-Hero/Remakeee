@@ -66,6 +66,10 @@ var stages: Dictionary[String, int] = {}
 var energy_tax: int = 0
 ## Battle-only: move name -> turns it stays locked (moves.json "cooldown"), same counting.
 var cooldowns: Dictionary[String, int] = {}
+## Battle-only: turns left on a heal block (heal_block effect), same counting.
+var heal_block: int = 0
+## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
+var burn_guard: int = 0
 ## Temperament id (TEMPERAMENTS), stored since save version 4.
 var temper: String = ""
 ## Regional imprint id ("" = none), see plan area 1, item 218.
@@ -206,6 +210,10 @@ func can_afford(move: MoveData) -> bool:
 func tick_timers() -> void:
 	if energy_tax > 0:
 		energy_tax -= 1
+	if heal_block > 0:
+		heal_block -= 1
+	if burn_guard > 0:
+		burn_guard -= 1
 	for k: String in cooldowns.keys():
 		cooldowns[k] = int(cooldowns[k]) - 1
 		if int(cooldowns[k]) <= 0:
@@ -222,6 +230,8 @@ func restore() -> void:
 func end_battle() -> void:
 	stages.clear()
 	energy_tax = 0
+	heal_block = 0
+	burn_guard = 0
 	cooldowns.clear()
 	status = ""
 	status_turns = 0
