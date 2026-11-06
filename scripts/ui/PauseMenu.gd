@@ -109,6 +109,8 @@ func run_records() -> void:
 	Achievements.check()
 	while true:
 		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
+		if not Waymarks.history_lines(1).is_empty():
+			lines.append("Waymark history")
 		if Masters.open():
 			lines.append("Master Wayfarers")
 		if not memorial_lines().is_empty():
@@ -127,6 +129,7 @@ func run_records() -> void:
 			"Achievements by category": await run_achievement_lists()
 			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
 			"Personal bests": await info(records_text())
+			"Waymark history": await info(Loc.t("Waymarks: %d") % GameState.waymarks + "\n" + "\n".join(Waymarks.history_lines()))
 			"Master Wayfarers": await run_masters()
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))

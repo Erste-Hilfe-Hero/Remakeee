@@ -68,6 +68,30 @@ static func reward_lines(result: Dictionary) -> Array[String]:
 		lines.append(Loc.t("Your waymark pouch is full (%d). %d Waymarks were lost.") % [CAP, int(result.lost)])
 	return lines
 
+## Names of the sources for the history window (plan 3123).
+const SOURCE_NAMES: Dictionary = {
+	"daily_task": "Daily task", "daily_bonus": "All daily tasks", "weekly": "Weekly echo",
+	"tower": "Lighthouse stair", "achievement": "Achievement", "collection": "Spirlog goal",
+	"festival": "Festival", "season_path": "Season path", "master": "Master Wayfarer",
+	"echo_path": "Echo Path", "expedition": "Roaming trip", "album": "Album",
+}
+const HISTORY: int = 30
+
+## The last HISTORY credits, newest first: "6 Nov  Daily task: 10".
+static func history_lines(n: int = HISTORY) -> Array[String]:
+	var out: Array[String] = []
+	var log: Variant = GameState.records.get("waymark_log", [])
+	if not log is Array:
+		return out
+	var entries: Array = log
+	for i: int in range(entries.size() - 1, maxi(-1, entries.size() - 1 - n), -1):
+		var e: Variant = entries[i]
+		if not e is Dictionary:
+			continue
+		var src: String = str((e as Dictionary).get("src", ""))
+		out.append("%s  %s: %d" % [str((e as Dictionary).get("date", "")), Loc.t(str(SOURCE_NAMES.get(src, src))), int((e as Dictionary).get("n", 0))])
+	return out
+
 ## Short label for the menu title: glyph and amount.
 static func label() -> String:
 	return "%s%d" % [GLYPH, GameState.waymarks]

@@ -15,11 +15,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3120. [x] [P1] In docs/MONETIZATION.md und im Code festschreiben, dass Wegmarken nie gekauft, getauscht oder an Freunde geschickt werden können.
 3121. [x] [P1] Wegmarken in jeder Belohnungsmeldung mit Zahl und Symbol nennen, zum Beispiel „+10 Wegmarken“.
 3122. [P2] Den Server beim Speichern prüfen lassen, dass die Wegmarken seit dem letzten Stand um höchstens 800 pro Tag gestiegen sind, sonst wird der Stand markiert.
-3123. [P2] Ein Wegmarken-Verlaufsfenster bauen, das die letzten 30 Gutschriften mit Quelle zeigt (zum Beispiel „Tagesauftrag: 10“).
-3124. [P2] Einen Test schreiben, der prüft, dass jede Belohnungsquelle im Spiel eine gültige Quelle in Waymarks.SOURCES nutzt.
-3125. [P2] Wegmarken nach einer Niederlage nie abziehen, anders als die Hälfte der Münzen.
+3123. [x] [P2] Ein Wegmarken-Verlaufsfenster bauen, das die letzten 30 Gutschriften mit Quelle zeigt (zum Beispiel „Tagesauftrag: 10“).
+3124. [x] [P2] Einen Test schreiben, der prüft, dass jede Belohnungsquelle im Spiel eine gültige Quelle in Waymarks.SOURCES nutzt.
+3125. [x] [P2] Wegmarken nach einer Niederlage nie abziehen, anders als die Hälfte der Münzen.
 3126. [P2] Ein Sparziel im Pausenmenü einstellen lassen (ein Angebot des Tauschstands), das als Balken den fehlenden Betrag zeigt.
-3127. [P2] Den Wegmarken-Stand auf der Spielstandkarte im Titelbild neben Spielzeit und Spirlog-Zahl zeigen.
+3127. [x] [P2] Den Wegmarken-Stand auf der Spielstandkarte im Titelbild neben Spielzeit und Spirlog-Zahl zeigen.
 3128. [P3] Einen Jahresrückblick der verdienten Wegmarken nach Quelle in den Aufzeichnungen zeigen.
 3129. [P3] Beim Eisernen Schwur alle Wegmarken-Gutschriften um 25 Prozent erhöhen und den Bonus in der Gutschrift ausweisen.
 3130. [x] [P3] Erfolge „Sparsam“ für 5000 und „Wegkundig“ für 50000 insgesamt verdiente Wegmarken ergänzen.
@@ -122,9 +122,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3219. [P2] Für jedes Fest eine eigene Festmusik als Abwandlung der Brindlewick-Melodie in audio/ anlegen und in data/music.json eintragen.
 3220. [P2] Feste, die ein Spieler schon einmal gefeiert hat, im nächsten Jahr mit einer neuen Stufe der Festaufgabe fortsetzen.
 3221. [P2] Die Festgeschenke des Ausrufers pro Jahr wechseln lassen, aus einer offenen Liste von vier Gegenständen pro Fest.
-3222. [P2] Im Ziele-Bildschirm Festname, Restdauer in Tagen und Festbänder-Stand zeigen.
+3222. [x] [P2] Im Ziele-Bildschirm Festname, Restdauer in Tagen und Festbänder-Stand zeigen.
 3223. [P2] Zwischen den Festen den Ausrufer das nächste Fest mit Startmonat ankündigen lassen, wie bisher, und zusätzlich die Festelemente nennen.
-3224. [P2] Einen Test schreiben, der für jeden Monat prüft, dass höchstens ein Fest läuft.
+3224. [x] [P2] Einen Test schreiben, der für jeden Monat prüft, dass höchstens ein Fest läuft.
 3225. [P2] Während jedes Festes den Wanderhändler ein festbezogenes Angebot gegen Festbänder führen lassen.
 3226. [P2] Am ersten Festtag einen kurzen Hinweis beim Spielstart zeigen, der Fest, Elemente und Festhändler nennt.
 3227. [P3] Ein fünftes Fest „Sturmtage“ im März für Gale und Volt ergänzen, mit eigenem Schmuck in Crowcrest.
@@ -146,8 +146,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3241. [P2] Die Stufen 10, 20 und 30 mit einer besonderen Belohnung belegen: Jackenmuster, Fotorahmen und ein Spirling-Halstuch als Kosmetik.
 3242. [P2] Die Zielzeit so legen, dass Stufe 30 mit 4 Tagen Spiel pro Woche in 11 Wochen erreichbar ist.
 3243. [P2] Pfadbelohnungen nach Saisonende 14 Tage lang nachholbar machen, wenn die Stufe erreicht, aber nicht abgeholt wurde.
-3244. [P2] Nach Stufe 30 jede weitere Stufe mit 20 Wegmarken belohnen, ohne neue Kosmetik.
-3245. [P2] Den Pfad als eigenen Reiter im Ziele-Bildschirm zeigen, mit Balken und der nächsten Belohnung.
+3244. [x] [P2] Nach Stufe 30 jede weitere Stufe mit 20 Wegmarken belohnen, ohne neue Kosmetik.
+3245. [x] [P2] Den Pfad als eigenen Reiter im Ziele-Bildschirm zeigen, mit Balken und der nächsten Belohnung.
 3246. [P2] Die Pfaddaten jeder Jahreszeit in data/events.json mit Saison-Id wie „2027-Q1“ ablegen.
 3247. [P2] Kosmetik aus einem vergangenen Pfad zwei Jahre später im Wegmarken-Tauschstand wieder anbieten.
 3248. [P2] Diesen Pfad ausdrücklich als freien Pfad anlegen; ob es eine bezahlte Spur dazu gibt, entscheidet Bereich 10, nicht dieser Bereich.

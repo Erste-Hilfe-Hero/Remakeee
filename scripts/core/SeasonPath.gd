@@ -46,6 +46,13 @@ static func state() -> Dictionary:
 		GameState.records["season_path"] = st
 	return st
 
+## Waymarks for every step past the last one (plan 3244): no new cosmetics, just Waymarks.
+const EXTRA_STEP_WAYMARKS: int = 20
+
+## Steps reached past the last one this season.
+static func extra_steps() -> int:
+	return maxi(0, GameState.as_int(state().get("points", 0)) / per_tier() - tiers())
+
 static func tier() -> int:
 	return mini(GameState.as_int(state().get("points", 0)) / per_tier(), tiers())
 
@@ -61,6 +68,10 @@ static func add(source: String) -> Array[String]:
 		st.claimed = GameState.as_int(st.claimed) + 1
 		lines.append(Loc.t("Season path step %d of %d!") % [int(st.claimed), tiers()])
 		lines.append_array(pay(rewards()[int(st.claimed) - 1]))
+	while GameState.as_int(st.get("extra", 0)) < extra_steps():
+		st["extra"] = GameState.as_int(st.get("extra", 0)) + 1
+		lines.append(Loc.t("Season path bonus step %d!") % int(st.extra))
+		lines.append_array(Waymarks.reward_lines(Waymarks.earn(EXTRA_STEP_WAYMARKS, "season_path")))
 	return lines
 
 static func pay(r: Dictionary) -> Array[String]:
@@ -92,6 +103,19 @@ static func reward_text(r: Dictionary) -> String:
 	if int(r.get("waymarks", 0)) > 0:
 		parts.append("%s%d" % [Waymarks.GLYPH, int(r.waymarks)])
 	return ", ".join(parts)
+
+## Goals tab (plan 3245): a bar to the next step and what it brings.
+static func goal_lines() -> Array[String]:
+	var pts: int = GameState.as_int(state().get("points", 0))
+	var into: int = pts % per_tier()
+	var filled: int = into * 10 / maxi(1, per_tier())
+	var out: Array[String] = [title(), "[%s%s] %d/%d" % ["#".repeat(filled), "-".repeat(10 - filled), into, per_tier()]]
+	var t: int = tier()
+	if t < tiers() and t < rewards().size():
+		out.append(Loc.t("Next step: %s") % reward_text(rewards()[t]))
+	else:
+		out.append(Loc.t("Every further step: %s") % ("%s%d" % [Waymarks.GLYPH, EXTRA_STEP_WAYMARKS]))
+	return out
 
 ## Title of the path screen: season, points and step.
 static func title() -> String:
