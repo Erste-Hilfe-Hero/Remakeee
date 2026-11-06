@@ -74,7 +74,20 @@ Zahlung, Widerrufsbelehrung und Erstattung richten sich nach deren Bedingungen.
 6.2 Bei digitalen Inhalten erlischt das Widerrufsrecht, wenn du ausdrücklich zustimmst, dass die
 Bereitstellung vor Ablauf der Widerrufsfrist beginnt, und bestätigst, dass du dadurch dein Widerrufsrecht
 verlierst (§ 356 Abs. 5 BGB). Die Stores holen diese Zustimmung beim Kauf ein.
-6.3 Es gibt keine zufallsbasierten Käufe gegen echtes Geld (keine Lootboxen).
+6.3 Es gibt keine zufallsbasierten Käufe gegen echtes Geld (keine Lootboxen). Jeder Kauf liefert genau die
+im Angebot genannten Gegenstände und Mengen.
+6.4 **Virtuelle Güter.** Rissglas, Gegenstände, Spirlings, Pässe und andere Inhalte im Spiel sind kein
+Eigentum und kein Geld. Du erhältst ein einfaches, nicht übertragbares Recht, sie im Spiel mit deinem Konto
+zu nutzen. Sie lassen sich nicht in echtes Geld, Gutscheine oder Waren umtauschen, nicht verkaufen und nicht
+außerhalb des Spiels an andere übertragen; der Verkauf oder Tausch von Konten ist untersagt.
+6.5 Manche Angebote geben spielerische Vorteile (zum Beispiel im Kampf). Das steht beim Angebot. Alles,
+was für die Geschichte nötig ist, lässt sich ohne Kauf erreichen.
+6.6 **Kontolöschung.** Wenn du dein Konto löschst, verfallen alle virtuellen Güter darauf endgültig; wir
+können sie danach nicht wiederherstellen. Der Kauf bleibt beim Store gespeichert: Erstattungen für Käufe,
+die noch nicht genutzt wurden, beantragst du dort. Endet der Vertrag durch uns, gelten Ziffer 5.4 und 7.2.
+6.7 Den Preis zeigt jedes Angebot vor dem Kauf als Endpreis in Euro (bei Rissglas zusätzlich der
+Euro-Gegenwert). Minderjährige brauchen für Käufe die Zustimmung ihrer Eltern; die Stores bieten dafür eine
+Kaufsperre und Kauffreigabe.
 
 ## 7. Laufzeit und Kündigung
 

@@ -264,7 +264,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3351. [x] [P1] Die Spirlog-Ziele in Collection.GOALS um „gesehen“-Stufen ergänzen: 5, 10, 15 und alle Arten gesehen, je mit Wegmarken-Lohn.
 3352. [x] [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
 3353. [x] [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
-3354. [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
+3354. [x] [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
 3355. [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
 3356. [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
 3357. [P2] Ein Sammelziel „Jede Technik einmal eingesetzt“ für alle 58 Techniken mit Stufen bei 20, 40 und 58 ergänzen.
@@ -338,9 +338,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3421. [P3] Nach einem gebrochenen Schwur den Lauf als normalen Lauf weiterführen und das in der Chronik mit Datum vermerken.
 
 ### Kleine Ereignisse in der Welt
-3422. [P1] Eine Datei scripts/core/WorldEvents.gd anlegen, die kleine Ereignisse per Seed aus Datum und Ort auslöst, gleich für alle Spieler am selben Tag.
-3423. [P1] Einen Wanderhändler einführen, der jeden Tag an einem anderen Ort steht und drei Gegenstände gegen Münzen verkauft.
-3424. [P1] Den Ort des Wanderhändlers im Ziele-Bildschirm nennen, damit man ihn nicht suchen muss.
+3422. [x] [P1] Eine Datei scripts/core/WorldEvents.gd anlegen, die kleine Ereignisse per Seed aus Datum und Ort auslöst, gleich für alle Spieler am selben Tag.
+3423. [x] [P1] Einen Wanderhändler einführen, der jeden Tag an einem anderen Ort steht und drei Gegenstände gegen Münzen verkauft.
+3424. [x] [P1] Den Ort des Wanderhändlers im Ziele-Bildschirm nennen, damit man ihn nicht suchen muss.
 3425. [P2] Eine Sternennacht einführen, die einmal pro Monat am Neumond nach Kalender stattfindet und Lumen-Spirlings nachts dreimal so oft erscheinen lässt.
 3426. [P2] Während der Sternennacht am Leuchtturm-Dach ein kleines Sternbild-Rätsel mit 5 Sternen zum Antippen anbieten, das 20 Wegmarken zahlt.
 3427. [P2] Einen Regentag pro Woche nach Seed bestimmen, an dem Tide-Spirlings draußen doppelt so oft auftreten, mit leichtem Regenfilter.
@@ -364,9 +364,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3445. [P3] Den Wanderhändler bei jedem Besuch einen Satz über seinen letzten Ort sagen lassen, aus 30 festen Sätzen.
 
 ### Streifzüge aus dem Lager
-3446. [P1] Spirlings aus dem Lager auf Streifzüge schicken lassen, bis zu drei gleichzeitig, mit einer Dauer von 4, 8 oder 12 Stunden nach Server-Zeit.
-3447. [P1] Jeden Streifzug nach einer festen, vorher sichtbaren Tabelle Münzen, 4, 8 oder 12 Wegmarken und einen gewöhnlichen Gegenstand mitbringen lassen.
-3448. [P1] Streifzüge im Leuchtturm bei Aldo starten und abholen und Spirlings auf Streifzug im Lager mit einem Rucksack-Symbol markieren.
+3446. [x] [P1] Spirlings aus dem Lager auf Streifzüge schicken lassen, bis zu drei gleichzeitig, mit einer Dauer von 4, 8 oder 12 Stunden nach Server-Zeit.
+3447. [x] [P1] Jeden Streifzug nach einer festen, vorher sichtbaren Tabelle Münzen, 4, 8 oder 12 Wegmarken und einen gewöhnlichen Gegenstand mitbringen lassen.
+3448. [x] [P1] Streifzüge im Leuchtturm bei Aldo starten und abholen und Spirlings auf Streifzug im Lager mit einem Rucksack-Symbol markieren.
 3449. [P2] Als Ziel nur Karten erlauben, die der Spielstand schon kennt, und Fundstücke dieser Karte mitbringen lassen.
 3450. [P2] Einem Spirling, dessen Element zu den wilden Arten der Zielkarte passt, 50 Prozent mehr Münzen geben.
 3451. [P2] Streifzüge pro Stunde ein Viertel des Wachstums eines Wildkampfs geben, höchstens bis zum Ring-Deckel.
@@ -382,10 +382,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3461. [P3] Die Zahl der laufenden Streifzüge im Reiter „Heute“ des Ziele-Bildschirms zeigen.
 
 ### Nachhall-Pfad: wöchentlicher Erkundungsgang
-3462. [P1] Einen Endgame-Ort „Nachhall-Pfad“ hinter dem versiegelten Cinder Rift bauen: eine Kette aus 8 kleinen Räumen, die jede Woche per Seed aus der Wochennummer neu angeordnet wird, gleich für alle.
-3463. [P1] Die Räume aus 12 handgebauten Raumvorlagen unter data/maps zusammensetzen und jede Anordnung mit dem bestehenden Erreichbarkeits-Test prüfen.
-3464. [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
-3465. [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
+3462. [x] [P1] Einen Endgame-Ort „Nachhall-Pfad“ hinter dem versiegelten Cinder Rift bauen: eine Kette aus 8 kleinen Räumen, die jede Woche per Seed aus der Wochennummer neu angeordnet wird, gleich für alle.
+3463. [x] [P1] Die Räume aus 12 handgebauten Raumvorlagen unter data/maps zusammensetzen und jede Anordnung mit dem bestehenden Erreichbarkeits-Test prüfen.
+3464. [x] [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
+3465. [x] [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
 3466. [P2] Rätselräume mit Lampen-Schalterrätseln in 6 Varianten bauen, angelehnt an das Lampenrätsel in Murk Hollow, aber mit eigener Anordnung.
 3467. [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
 3468. [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
@@ -404,8 +404,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3481. [P3] Einen Wochenrückblick des Pfads zeigen: Räume, Kämpfe, gefundene Schätze.
 
 ### Monatsalbum
-3482. [P1] Ein Monatsalbum mit 12 Stickerfeldern pro Kalendermonat anlegen, jedes Feld eine feste Aufgabe, die man den ganzen Monat lang lösen kann.
-3483. [P1] Ein volles Album mit 100 Wegmarken und einem Monatssticker für eine Stickerwand im Wanderer-Zimmer belohnen.
+3482. [x] [P1] Ein Monatsalbum mit 12 Stickerfeldern pro Kalendermonat anlegen, jedes Feld eine feste Aufgabe, die man den ganzen Monat lang lösen kann.
+3483. [x] [P1] Ein volles Album mit 100 Wegmarken und einem Monatssticker für eine Stickerwand im Wanderer-Zimmer belohnen.
 3484. [P2] Die Album-Aufgaben pro Monat per Seed aus einer Liste in data/events.json ziehen.
 3485. [P2] Bei 4 und 8 gefüllten Stickern je 20 Wegmarken auszahlen.
 3486. [P2] Für jeden Monat ein Stickerthema festlegen (Januar Herd, April Blüten, Oktober Laternen) und 16x16-Sticker mit tools/art zeichnen.
@@ -420,8 +420,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3495. [P3] Für ein Album, das in der ersten Monatshälfte voll ist, einen goldenen Stickerrand vergeben.
 
 ### Fairer Rhythmus ohne Druck
-3496. [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
-3497. [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
+3496. [x] [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
+3497. [x] [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
 3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
 3499. [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
 3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
@@ -438,8 +438,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3511. [P3] In den Einstellungen anzeigen, nach welcher Uhrzeit (Server-Mitternacht) der Tag wechselt, umgerechnet in die Ortszeit.
 
 ### Belohnungstabellen und Balance
-3512. [P1] Eine Belohnungstabelle in docs/BALANCE.md anlegen, die jede Wegmarken- und Münzquelle mit Betrag und Häufigkeit listet.
-3513. [P1] Das Simulationswerkzeug tools/balance_sim.gd um einen Endgame-Lauf erweitern, der 90 Spieltage mit festem Spielplan durchrechnet und Wegmarken-Ein- und Ausgaben ausgibt.
+3512. [x] [P1] Eine Belohnungstabelle in docs/BALANCE.md anlegen, die jede Wegmarken- und Münzquelle mit Betrag und Häufigkeit listet.
+3513. [x] [P1] Das Simulationswerkzeug tools/balance_sim.gd um einen Endgame-Lauf erweitern, der 90 Spieltage mit festem Spielplan durchrechnet und Wegmarken-Ein- und Ausgaben ausgibt.
 3514. [P2] Als Ziel festlegen, dass ein Spieler nach 30 Tagen etwa 60 Prozent des Tauschstand-Angebots einmal kaufen kann.
 3515. [P2] Die Münzpreise im Wochen-Echo und in den Türmen an den Ring-Deckel binden: 20 Münzen mal Ring-Deckel pro Runde.
 3516. [P2] Echo-Kristalle als Endgame-Belohnung höchstens einmal pro Woche aus Türmen zulassen, damit der Tauschstand wichtig bleibt.
@@ -454,9 +454,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3525. [P3] Für jede Belohnungsquelle eine Obergrenze pro Tag in data/endgame.json eintragen, die der Server prüft.
 
 ### Anzeige und Menüs
-3526. [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
-3527. [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
-3528. [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
+3526. [x] [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
+3527. [x] [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
+3528. [x] [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
 3529. [P2] Einen roten Punkt am Menüeintrag „Ziele“ zeigen, wenn eine Belohnung zum Abholen bereitliegt.
 3530. [P2] Eine Sammelabholung „Alles abholen“ für Aufträge, Pfad und Sammelziele bauen.
 3531. [P2] Alle neuen Menüs auf 144x256 mit der bestehenden Schrift und Einhand-Bedienung prüfen und einen Screenshot je Menü in docs/screenshots ablegen.
@@ -470,8 +470,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3539. [P3] Die Ehrengalerie über eine Tür im Erdgeschoss des Leuchtturms erreichbar machen, ohne neue Treppen.
 
 ### Speicherdaten, Server und Tests
-3540. [P1] Alle neuen Felder (waymarks, festival_ribbons, daily_tasks, path, towers, chronicle) in GameState.to_dict() und from_dict() mit Standardwerten aufnehmen.
-3541. [P1] Eine Speicherversion hochzählen und alte Stände unter tests/fixtures mit einem Lade-Test prüfen.
+3540. [x] [P1] Alle neuen Felder (waymarks, festival_ribbons, daily_tasks, path, towers, chronicle) in GameState.to_dict() und from_dict() mit Standardwerten aufnehmen.
+3541. [x] [P1] Eine Speicherversion hochzählen und alte Stände unter tests/fixtures mit einem Lade-Test prüfen.
 3542. [P2] Die Gutschriften für Wochen-Echo und Türme vom Server über das Ergebnis und den Seed prüfen lassen, bevor der Stand angenommen wird.
 3543. [P2] Die Kosmetik-Freischaltungen kontoweit in einer eigenen Server-Tabelle in supabase/ speichern, getrennt vom Spielstand.
 3544. [P2] Einen GUT-Test für Waymarks.earn() schreiben: Obergrenze 9999, keine negativen Beträge, Log-Länge 200.

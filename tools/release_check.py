@@ -116,7 +116,42 @@ def check_legal() -> None:
         todo.append("scripts/core/LegalInfo.gd: SITE uses the server's sslip.io address (fine for launch, own domain later)")
 
 
+JWT = re.compile(r"eyJ[A-Za-z0-9_-]{8,}\.([A-Za-z0-9_-]{8,})\.[A-Za-z0-9_-]{8,}")
+SECRET_WORDS = ("service_role", "SERVICE_ROLE_KEY", "JWT_SECRET=", "POSTGRES_PASSWORD=")
+
+
+def jwt_role(token_payload: str) -> str:
+    import base64, json as _json
+    try:
+        pad = "=" * (-len(token_payload) % 4)
+        return str(_json.loads(base64.urlsafe_b64decode(token_payload + pad)).get("role", ""))
+    except Exception:
+        return ""
+
+
+def check_keys() -> None:
+    """Plan item 3882: only the public anon key may ever be inside the game."""
+    roots = ["data", "scripts", "scenes", "project.godot", "export_presets.cfg"]
+    for root in roots:
+        paths = [root] if os.path.isfile(root) else [os.path.join(dp, f) for dp, _, fs in os.walk(root) for f in fs]
+        for p in paths:
+            if p.endswith((".png", ".ogg", ".wav", ".import", ".ttf")):
+                continue
+            try:
+                text = open(p, encoding="utf-8").read()
+            except (UnicodeDecodeError, OSError):
+                continue
+            for m in JWT.finditer(text):
+                role = jwt_role(m.group(1))
+                if role != "anon":
+                    errors.append("%s holds a key with role %r; the game may only carry the anon key" % (p, role or "?"))
+            for w in SECRET_WORDS:
+                if w in text and not p.endswith("release_check.py"):
+                    errors.append("%s mentions %s; server secrets never go into the game" % (p, w))
+
+
 def main() -> None:
+    check_keys()
     check_texts()
     check_images()
     check_presets()

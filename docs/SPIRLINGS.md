@@ -78,3 +78,71 @@ Every trait comes from `BattleRules.TRAITS` (area 2 owns trait effects). One lin
 None of the new Veydal lines needs a trait that does not exist yet. If area 2 adds traits that fit better
 (for example an "ink" or "silence" trait), these lines are the first to switch, and use their current
 trait until then: Blotling (slick), Hushkin (steady), Seamlet (surge).
+
+## Corvane, Ashmere and Solenne (plan area 1, items 61-63)
+
+These lines wait in the data with placeholder sprites. They have no encounters, the Spirlog hides them until the flag `region_open_<id>` is set, and the validator does not ask them to be reachable yet. Each line has a first form and one unfolded form.
+
+| No. | Name | Elements | Region | Rarity | Role | Gift | Unfolds |
+|---|---|---|---|---|---|---|---|
+| 41 | Millwhit | Gale | corvane | common | vanguard | light_sleeper | Millvane (ring 20) |
+| 42 | Millvane | Gale | corvane | shy | vanguard | light_sleeper | - |
+| 43 | Drizzlet | Tide | corvane | common | weaver | slick | Rainmantle (time night) |
+| 44 | Rainmantle | Tide | corvane | shy | weaver | slick | - |
+| 45 | Reedquill | Bloom/Tide | corvane | uncommon | kindler | deep_roots | Reedwarden (ring 22) |
+| 46 | Reedwarden | Bloom/Tide | corvane | shy | kindler | deep_roots | - |
+| 47 | Cogmite | Stone/Volt | corvane | uncommon | bulwark | thick_hide | Cogwright (ring 24) |
+| 48 | Cogwright | Stone/Volt | corvane | shy | bulwark | thick_hide | - |
+| 49 | Puddock | Tide | corvane | common | bulwark | steady | Delthorn (ring 23) |
+| 50 | Delthorn | Tide | corvane | shy | bulwark | steady | - |
+| 51 | Glimmoth | Lumen/Gale | corvane | uncommon | weaver | steady | Wickmoth (time dusk) |
+| 52 | Wickmoth | Lumen/Gale | corvane | shy | weaver | steady | - |
+| 53 | Silthop | Stone | corvane | common | vanguard | surge | Siltgrove (ring 26) |
+| 54 | Siltgrove | Stone | corvane | shy | vanguard | surge | - |
+| 55 | Flourie | Gale/Lumen | corvane | uncommon | kindler | kindling | Floursprite (ring 21) |
+| 56 | Floursprite | Gale/Lumen | corvane | shy | kindler | kindling | - |
+| 57 | Cindle | Ember | ashmere | common | striker | kindling | Glassfell (ring 24) |
+| 58 | Glassfell | Ember | ashmere | shy | striker | kindling | - |
+| 59 | Etchling | Umbra/Stone | ashmere | uncommon | weaver | slick | Burinox (ring 25) |
+| 60 | Burinox | Umbra/Stone | ashmere | shy | weaver | slick | - |
+| 61 | Ashwren | Gale/Ember | ashmere | uncommon | vanguard | light_sleeper | Ashcrest (time dawn) |
+| 62 | Ashcrest | Gale/Ember | ashmere | shy | vanguard | light_sleeper | - |
+| 63 | Bogwick | Bloom/Umbra | ashmere | uncommon | kindler | steady | Fenwarden (ring 27) |
+| 64 | Fenwarden | Bloom/Umbra | ashmere | shy | kindler | steady | - |
+| 65 | Cullet | Stone/Lumen | ashmere | uncommon | bulwark | thick_hide | Cullhorn (ring 28) |
+| 66 | Cullhorn | Stone/Lumen | ashmere | shy | bulwark | thick_hide | - |
+| 67 | Smeltpup | Ember/Stone | ashmere | uncommon | striker | surge | Smeltmaw (ring 26) |
+| 68 | Smeltmaw | Ember/Stone | ashmere | shy | striker | surge | - |
+| 69 | Solkit | Lumen | solenne | common | vanguard | light_sleeper | Solmantle (time day) |
+| 70 | Solmantle | Lumen | solenne | shy | vanguard | light_sleeper | - |
+| 71 | Saltsprig | Tide/Lumen | solenne | uncommon | kindler | deep_roots | Saltcrown (ring 25) |
+| 72 | Saltcrown | Tide/Lumen | solenne | shy | kindler | deep_roots | - |
+| 73 | Orrlet | Lumen/Gale | solenne | uncommon | weaver | steady | Orrerine (time night) |
+| 74 | Orrerine | Lumen/Gale | solenne | shy | weaver | steady | - |
+| 75 | Duneshrew | Stone | solenne | common | bulwark | thick_hide | Dunebastion (ring 28) |
+| 76 | Dunebastion | Stone | solenne | shy | bulwark | thick_hide | - |
+| 77 | Shimmerlet | Gale | solenne | common | striker | last_stand | Mirassil (ring 24) |
+| 78 | Mirassil | Gale | solenne | shy | striker | last_stand | - |
+| 79 | Highhare | Gale/Stone | solenne | uncommon | vanguard | surge | Zenithare (ring 27) |
+| 80 | Zenithare | Gale/Stone | solenne | shy | vanguard | surge | - |
+
+## Regional imprints (Ortsprägung, items 218-219)
+
+A Veydal kind that lives long in another region shows a regional form there: other elements, a new palette, its own lore line, without a new Spirlog number. The forms are listed in `variants` per kind in data/spirlings.json; `Spirling.apply_imprint(region)` stores the region id in `Spirling.variant`, and `Spirling.elements()` then uses the imprint's elements. What counts as "living long" in a region is decided once those regions are playable.
+
+| Kind | Region | Elements | Palette |
+|---|---|---|---|
+| Mossling | solenne | Bloom/Lumen | sun |
+| Zephlet | corvane | Gale/Tide | rain |
+| Tempestrel | corvane | Gale/Tide | rain |
+| Wickit | ashmere | Lumen/Ember | ash |
+| Lumenewt | ashmere | Lumen/Ember | ash |
+| Talusk | solenne | Stone/Lumen | salt |
+
+## First Voices (plan area 1, items 152-155)
+
+| No. | Name | Elements | Rarity | Role | Gift | Met |
+|---|---|---|---|---|---|---|
+| 81 | Velahra | Lumen/Tide | ancient | weaver | last_stand | Once on the Brindlewick lake shore after the lamp room, Ring 40; returns after a rest if not bonded |
+
+See docs/WORLD.md for the lore. Ancient kinds are left out of the same-stage balance sim: they are meant to stand above their stage and are met only once.

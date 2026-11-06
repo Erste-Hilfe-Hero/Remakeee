@@ -32,7 +32,16 @@ Last updated: November 2026
    provide an offline version first. Paid content bought less than 12 months before the notice that can no
    longer be used is refunded pro rata for the rest of those 12 months.
 7. **Purchases.** Purchases are processed only by Apple or Google under their terms, including withdrawal
-   and refunds. There are no paid random rewards (no loot boxes).
+   and refunds. There are no paid random rewards (no loot boxes); every purchase delivers exactly the items
+   and amounts the offer names. Every offer shows its final price in euros before you buy (for Riftglass
+   also the euro equivalent). Some offers give in-game advantages (for example in battle); the offer says
+   so. Everything the story needs can be reached without buying anything.
+   **Virtual goods.** Riftglass, items, Spirlings, passes and other in-game content are not property and
+   not money. You get a simple, non-transferable right to use them in the game with your account. They
+   cannot be exchanged for real money, vouchers or goods, sold, or transferred to others outside the game;
+   selling or trading accounts is not allowed. If you delete your account, all virtual goods on it are lost
+   for good and cannot be restored; refunds for unused purchases are requested from the store. If we end
+   the contract, sections 6 and 8 apply.
 8. **Term.** You can end the contract at any time by deleting your account (Settings → Account →
    "Delete account"). We may end it with 4 weeks' notice, or immediately for good cause such as serious
    breaches of section 4; unused paid content is refunded pro rata if we end it with notice.

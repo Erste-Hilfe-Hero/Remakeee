@@ -7,7 +7,7 @@
  "encounters": "cinder_rift",
  "rows": [
   "^^^^^^^^^^^^",
-  "^^^^.XX.^^^^",
+  "^^^^.XX=^^^^",
   "^^........^^",
   "^.::....::.^",
   "^.::....::.^",
@@ -36,6 +36,14 @@
    "tx": 2,
    "ty": 2,
    "facing": "down"
+  },
+  {
+   "x": 7,
+   "y": 1,
+   "to": "echo_path",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -244,5 +252,12 @@
    "leaves": true
   }
  ],
- "signs": []
+ "signs": [],
+ "blocks": [
+  {
+   "x": 7,
+   "y": 1,
+   "open_flag": "rift_cinder_sealed"
+  }
+ ]
 }

@@ -177,4 +177,13 @@ T = {
 "Veydal Wanderer": "Wanderer von Veydal",
 "Veydal Chronicler": "Chronist von Veydal",
 "Keeper of the Veydal Pages": "Hüter der Veydal-Seiten",
+# First Voices (items 152-155)
+"Velahra": "Velahra",
+"Under the lake before the lighthouse": "Unter dem See vor dem Leuchtturm",
+"The First Voice of Veydal. It sleeps as a light under the lake and sang the land together long ago. It was the last to see Mirela.": "Die Erste Stimme Veydals. Sie schläft als Licht unter dem See und hielt das Land einst mit ihrem Gesang zusammen. Sie hat Mirela als Letzte gesehen.",
+"One of the six First Voices, whose silence let the Hush fall over the land.": "Eine der sechs Ersten Stimmen, deren Schweigen die Stille über das Land brachte.",
+"A light rises from under the lake by the shore.": "Am Ufer steigt ein Licht aus dem See auf.",
+"It hums a note you have heard before, in the lamp room, when Mirela's map book fell open.": "Es summt einen Ton, den du schon einmal gehört hast, im Lampenraum, als Mirelas Kartenbuch aufschlug.",
+"The light takes shape. It is Velahra, the First Voice of Veydal. It was the last to see Mirela.": "Das Licht nimmt Gestalt an. Es ist Velahra, die Erste Stimme Veydals. Sie hat Mirela als Letzte gesehen.",
+"The light sinks back under the water. It will rise again after you rest.": "Das Licht sinkt zurück unter das Wasser. Nach deiner nächsten Rast steigt es wieder auf.",
 }
