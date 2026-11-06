@@ -14,6 +14,9 @@ var chars_per_second: float = 60.0
 
 var _label: Label
 var _arrow: Label
+## Name tag over the box for the one who speaks (plan item 1343).
+var _tag: Label
+const TAG_HEIGHT: int = 11
 ## Right padding reserved for the continue marker.
 const ARROW_SPACE: int = 6
 var _typing: bool = false
@@ -46,11 +49,26 @@ func _ready() -> void:
 	_arrow.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	_arrow.visible = false
 	add_child(_arrow)
+	_tag = Label.new()
+	_tag.top_level = true
+	_tag.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_tag.add_theme_stylebox_override("normal", UITheme.panel_style())
+	_tag.visible = false
+	add_child(_tag)
 
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
-func show_text(text: String) -> void:
+func show_text(text: String, speaker: String = "") -> void:
 	# Story lines may address the player by name: "{name}" (after translation).
-	_label.text = Loc.t(text).replace("{name}", GameState.tamer_name)
+	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
+	# Old lines carry the speaker as "Aldo: ..."; it moves to the name tag.
+	if speaker.is_empty():
+		var parts: PackedStringArray = Dialogue.split_speaker(shown)
+		speaker = parts[0]
+		shown = parts[1]
+	else:
+		speaker = Loc.t(speaker).replace("{name}", GameState.tamer_name)
+	set_speaker(speaker)
+	_label.text = shown
 	_label.visible_characters = 0
 	_visible_chars = 0.0
 	_typing = true
@@ -67,14 +85,41 @@ func show_text(text: String) -> void:
 	_arrow.visible = false
 
 ## Shows text without waiting (prompts such as "Orders for Kindlop?").
-func show_prompt(text: String) -> void:
-	_label.text = Loc.t(text)
+func show_prompt(text: String, speaker: String = "") -> void:
+	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
+	if speaker.is_empty():
+		var parts: PackedStringArray = Dialogue.split_speaker(shown)
+		speaker = parts[0]
+		shown = parts[1]
+	set_speaker(speaker)
+	_label.text = shown
 	_label.visible_characters = -1
 	_typing = false
 	_waiting = false
 	_arrow.visible = false
 
+## Shows [param who] on the name tag over the box ("" hides it).
+func set_speaker(who: String) -> void:
+	_tag.text = who
+	_tag.visible = not who.is_empty()
+	_place_tag()
+
+func speaker() -> String:
+	return _tag.text if _tag.visible else ""
+
+func _place_tag() -> void:
+	if _tag.visible:
+		_tag.global_position = global_position + Vector2(2, -TAG_HEIGHT + 1)
+		_tag.visible = is_visible_in_tree()
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_VISIBILITY_CHANGED and _tag != null:
+		_tag.visible = is_visible_in_tree() and not _tag.text.is_empty()
+		_place_tag()
+
 func _process(delta: float) -> void:
+	if _tag.visible:
+		_place_tag()
 	if not _typing:
 		return
 	_visible_chars += delta * chars_per_second
@@ -83,6 +128,15 @@ func _process(delta: float) -> void:
 		_label.visible_characters = -1
 		_typing = false
 		_shown_ms = Time.get_ticks_msec()
+
+## Finishes the current line and continues at once (scene "Skip").
+func advance_now() -> void:
+	if _typing:
+		_label.visible_characters = -1
+		_typing = false
+	if _waiting:
+		_waiting = false
+		advanced.emit()
 
 func _skip_or_advance(tap: bool = false) -> void:
 	if _typing:

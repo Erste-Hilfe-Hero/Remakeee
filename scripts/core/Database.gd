@@ -164,7 +164,11 @@ static func _link_unfold(sd: SpirlingData, s: Dictionary) -> void:
 		if to == null:
 			push_error("Database: %s unfolds into unknown %s" % [sd.species_name, p.get("to", "")])
 			continue
-		sd.unfold.append({"to": to, "rule": str(p.get("rule", "ring")), "value": p.get("value", 0), "map": str(p.get("map", ""))})
+		var v: Variant = p.get("value", 0)
+		# JSON numbers arrive as floats; rule values are whole numbers or ids.
+		if v is float and is_equal_approx(v, round(v)):
+			v = int(v)
+		sd.unfold.append({"to": to, "rule": str(p.get("rule", "ring")), "value": v, "map": str(p.get("map", ""))})
 	if sd.unfold.is_empty():
 		return
 	var first: Dictionary = sd.unfold[0]
