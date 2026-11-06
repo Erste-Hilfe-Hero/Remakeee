@@ -12,6 +12,8 @@ var _info_label: Label
 var _info_picture: TextureRect
 var _info_scroll: ScrollContainer
 var _info_wait: bool = false
+var _info_bar: Control
+const INFO_BAR_W: int = 2
 ## Where the finger went down while an info text is open (NAN = no press yet), so a drag
 ## that scrolls the text does not also close it.
 var _info_press: Vector2 = Vector2(NAN, NAN)
@@ -64,6 +66,14 @@ func _ready() -> void:
 	# Screen readers read new info texts like dialogue lines (item 2087).
 	_info_label.accessibility_live = AccessibilityServer.LIVE_POLITE
 	_info_scroll.add_child(_info_label)
+	# Item 1840: a 2 px bar on the right edge when the text is longer than the window.
+	_info_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_SHOW_NEVER
+	_info_bar = Control.new()
+	_info_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_info_bar.draw.connect(_draw_info_bar)
+	_info_panel.add_child(_info_bar)
+	_info_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void: _info_bar.queue_redraw())
+	_info_scroll.get_v_scroll_bar().changed.connect(_info_bar.queue_redraw)
 	_toast = Label.new()
 	_toast.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	_toast.offset_left = PANEL_MARGIN + 4
@@ -775,3 +785,21 @@ func run_legal() -> void:
 			1:
 				for page: String in LegalInfo.pages(LegalInfo.licence_text()):
 					await info(page)
+
+## The info scroll bar: the part of the text in view, drawn in MID on the right edge.
+## Returns the drawn rect (empty when everything fits), for tests.
+func info_bar_rect() -> Rect2:
+	var bar: VScrollBar = _info_scroll.get_v_scroll_bar()
+	if bar.max_value <= bar.page + 0.5 or bar.max_value <= 0.0:
+		return Rect2()
+	var top: float = _info_scroll.position.y + _info_scroll.get_parent_control().position.y
+	var h: float = _info_scroll.size.y
+	var x: float = _info_bar.size.x - INFO_BAR_W - 1
+	var len: float = maxf(4.0, h * bar.page / bar.max_value)
+	var y: float = top + (h - len) * (bar.value / maxf(1.0, bar.max_value - bar.page))
+	return Rect2(Vector2(x, y), Vector2(INFO_BAR_W, len))
+
+func _draw_info_bar() -> void:
+	var r: Rect2 = info_bar_rect()
+	if r.size.y > 0.0:
+		_info_bar.draw_rect(r, UITheme.MID)
