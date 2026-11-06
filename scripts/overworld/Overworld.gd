@@ -993,6 +993,9 @@ func thank_echo(helper: Dictionary, won: bool) -> void:
 	if pts > 0:
 		await say(["%s's echo fades with a smile. Your friendship grew!" % str(helper.name)] as Array[String])
 
+## What the last battle's result was (winner, Vigor left, rounds), for the server's referee.
+var last_claim: Dictionary = {}
+
 ## Echo duel (items 121-124): a friend's team, run by the AI, everyone on the same level.
 ## Nothing is lost and the real team does not change.
 func echo_duel(d: Dictionary) -> void:
@@ -1010,6 +1013,9 @@ func echo_duel(d: Dictionary) -> void:
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
+	# The server's referee plays the duel again (plan area 7, item 2689).
+	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	await say(["You won the echo duel against %s!" % str(d.name) if won else "%s's echo won this time. Your team is fine." % str(d.name)] as Array[String])
 	busy = false
 	player.frozen = false
@@ -1067,6 +1073,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
+	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()
 	if bool(trainer.get("friendly", false)):
