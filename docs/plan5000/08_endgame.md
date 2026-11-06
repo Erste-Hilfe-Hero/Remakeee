@@ -314,16 +314,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3397. [x] [P1] Ein Gedenkbuch im Refugium anlegen, das jeden ins Refugium gezogenen Spirling mit Name, Ring, Ort und Datum listet.
 3398. [x] [P1] Den Erfolg „Oathkeeper“ um Stufen erweitern: beide Risse unter Schwur auf Wanderer, Veteran und Rift-Born-Schwierigkeit.
 3399. [x] [P1] Die Wahl des Eisernen Schwurs beim neuen Spiel mit einem Satz zu Refugium und Bonus von 25 Prozent Wegmarken erklären.
-3400. [P2] Unter Schwur die Leuchtturm-Treppe als eigenen Bestwert führen, getrennt vom normalen Bestwert.
+3400. [x] [P2] Unter Schwur die Leuchtturm-Treppe als eigenen Bestwert führen, getrennt vom normalen Bestwert.
 3401. [P2] Eine Chronik der Läufe über alle drei Speicherslots anlegen, die abgeschlossene Läufe mit Starter, Schwierigkeit, Spielzeit und Schwur festhält.
 3402. [P2] Die Chronik auch nach dem Löschen eines Slots behalten, damit alte Läufe sichtbar bleiben.
 3403. [P2] Für jeden abgeschlossenen Lauf mit einem anderen Starter einen Erfolg vergeben: „Drei Wege“ bei allen drei Startern.
 3404. [P2] Kosmetik aus dem Tauschstand und den Jahreszeitenpfaden kontoweit freischalten, sodass ein neuer Lauf sie behält.
 3405. [P2] Wegmarken pro Slot führen, aber freigeschaltete Kosmetik kontoweit, und das im Tauschstand erklären.
-3406. [P2] Kleine freiwillige Gelübde zu Laufbeginn anbieten, die nur Wegmarken-Bonus geben: „Ohne Laden“, „Ohne Andenken“, „Starter bleibt im Team“.
-3407. [P2] Jedes erfüllte Gelübde am Ende von Akt I mit 100 Wegmarken belohnen und in der Chronik vermerken.
-3408. [P2] Gelübde jederzeit im Menü aufgeben lassen, ohne Strafe außer dem verlorenen Bonus.
-3409. [P2] Die Gelübde in data/endgame.json festlegen und keine Regel aus dem Herausforderungs-Abschnitt des Kampf-Plans doppeln.
+3406. [x] [P2] Kleine freiwillige Gelübde zu Laufbeginn anbieten, die nur Wegmarken-Bonus geben: „Ohne Laden“, „Ohne Andenken“, „Starter bleibt im Team“.
+3407. [x] [P2] Jedes erfüllte Gelübde am Ende von Akt I mit 100 Wegmarken belohnen und in der Chronik vermerken.
+3408. [x] [P2] Gelübde jederzeit im Menü aufgeben lassen, ohne Strafe außer dem verlorenen Bonus.
+3409. [x] [P2] Die Gelübde in data/endgame.json festlegen und keine Regel aus dem Herausforderungs-Abschnitt des Kampf-Plans doppeln.
 3410. [P2] Beim Neustart eines Laufs die Tagesaufträge und den Jahreszeitenpfad kontoweit weiterlaufen lassen.
 3411. [P2] Den Eisernen Schwur und die Gelübde in der Lauf-Chronik mit eigenem Symbol zeigen.
 3412. [P3] Ein Gelübde „Fünf Elemente“ ergänzen: das Team hat bei jedem Riss-Wächter fünf verschiedene Elemente.

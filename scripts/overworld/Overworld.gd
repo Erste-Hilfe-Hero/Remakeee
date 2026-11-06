@@ -709,6 +709,7 @@ func announce_achievements() -> void:
 	var lines: Array[String] = Collection.claim()
 	var badges: Array[String] = Achievements.check()
 	lines.append_array(Completion.claim())
+	lines.append_array(Vows.settle())
 	for t: String in badges:
 		# Unlocked badges show at the top of the screen without stopping the game (plan 3315).
 		var a: Dictionary = Achievements.by_title(t)
@@ -1610,6 +1611,9 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 			if not climb_on:
 				break
 	GameState.records["gauntlet_best"] = maxi(best, floors)
+	if GameState.iron_oath:
+		# Under the Iron Oath the stair keeps its own best as well (plan 3400).
+		GameState.records["gauntlet_best_oath"] = maxi(int(GameState.records.get("gauntlet_best_oath", 0)), floors)
 	if not helper.is_empty():
 		await thank_echo(helper, floors >= Gauntlet.FLOORS)
 	if floors >= Gauntlet.FLOORS:
@@ -2026,6 +2030,7 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		Ticker.coins(GameState.money, GameState.money - price)
 		GameState.money -= price
 		GameState.add_item(args[idx])
+		Vows.broke("no_shop")
 		Sound.sfx("coin")
 		await menu.info("Bought %s. You have %d." % [item.get("name", ""), GameState.item_count(args[idx])])
 	menu.queue_free()
