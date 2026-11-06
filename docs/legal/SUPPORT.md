@@ -25,8 +25,8 @@ Screenshot hilft.
 **Jemand nutzt einen unpassenden Namen.**
 Beim Freund **Melden** antippen. Wir prüfen Meldungen jede Woche.
 
-**Kostet das Spiel noch etwas?**
-Nein. Du zahlst einmal beim Kauf. Es gibt keine In-App-Käufe, keine Werbung und keine Lootboxen.
+**Kostet das Spiel etwas?**
+Nein, Chimora ist kostenlos. Es gibt keine Werbung und keine Lootboxen. Ein Shop mit optionalen Käufen kann später dazukommen; Kämpfe und Fortschritt lassen sich nie kaufen.
 
 Weitere Seiten: [Datenschutz](/datenschutz) · [Nutzungsbedingungen](/nutzungsbedingungen) ·
 [Konto löschen](/konto-loeschen) · [Impressum](/impressum) · [Lizenzen](/lizenzen)
@@ -47,8 +47,8 @@ on the new one **Enter a code...**. The code is valid for 7 days. No email neede
 **I found a bug.** Tell us what happened, your device and your friend code (Menu → Account). A screenshot
 helps.
 
-**Does the game cost anything after buying it?** No. You pay once. No in-app purchases, no ads, no loot
-boxes.
+**Does the game cost anything?** No, Chimora is free. No ads and no loot boxes. A shop with optional
+purchases may come later; battles and progress can never be bought.
 
 More: [Privacy](/privacy) · [Terms](/terms) · [Delete account](/delete-account) · [Imprint](/impressum) ·
 [Licences](/lizenzen)
