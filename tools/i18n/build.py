@@ -4,10 +4,10 @@ Run after editing a table: python3 tools/i18n/build.py"""
 import json, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import de_world, de_data, de_ui, de_online, de_story, de_ux
+import de_world, de_data, de_ui, de_online, de_story, de_ux, de_welt
 
 strings = {}
-for mod in (de_world, de_data, de_ui, de_online, de_story, de_ux):
+for mod in (de_world, de_data, de_ui, de_online, de_story, de_ux, de_welt):
     for k, v in mod.T.items():
         if k in strings and strings[k] != v:
             sys.exit("conflicting German text for %r" % k)

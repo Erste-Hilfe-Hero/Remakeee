@@ -1,15 +1,21 @@
 class_name WorldValidator
 extends RefCounted
-## Checks maps, warps, dialogue references and encounter tables in data/.
+## Checks maps, warps, dialogue references, encounter tables, hidden finds and the world
+## layout (data/world_layout.json) in data/.
+
+const LAYOUT_PATH: String = "res://data/world_layout.json"
+## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287).
+const REGIONS: Array[String] = ["veydal", "corvane"]
 
 static func validate() -> PackedStringArray:
 	var errors: PackedStringArray = []
 	Database.load_all()
-	var map_ids: PackedStringArray = []
-	for f: String in DirAccess.get_files_at(MapData.DIR):
-		if f.ends_with(".json"):
-			map_ids.append(f.get_basename())
+	var map_ids: PackedStringArray = MapData.all_ids()
 	check_reachability(errors, map_ids)
+	check_encounter_tables(errors, map_ids)
+	check_secrets(errors, map_ids)
+	check_puzzles(errors, map_ids)
+	check_layout(errors, map_ids, load_layout())
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -51,13 +57,243 @@ static func validate() -> PackedStringArray:
 				errors.append_array(format_errors(n, id))
 		for s: Dictionary in m.signs:
 			_check_dialogue(errors, id, str(s.get("dialogue", "")))
+		if not m.region in REGIONS:
+			errors.append("map '%s': unknown region '%s'" % [id, m.region])
 		if not m.encounter_table.is_empty():
-			if EncounterTable.table(m.encounter_table).is_empty():
-				errors.append("map '%s': unknown encounter table '%s'" % [id, m.encounter_table])
 			for sp: String in EncounterTable.species_on(m.encounter_table):
 				if Database.species(sp) == null:
 					errors.append("encounter table '%s': unknown species '%s'" % [m.encounter_table, sp])
 	return errors
+
+## Encounter tables (area 3 item 894): every map with ferns, reeds or scree that rolls wild
+## Spirlings names a table that exists, and every table in data/encounters.json is used by a map.
+static func check_encounter_tables(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var used: Dictionary = {}
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null or m.encounter_table.is_empty():
+			continue
+		used[m.encounter_table] = true
+		if EncounterTable.table(m.encounter_table).is_empty():
+			errors.append("map '%s': encounter table '%s' is missing in data/encounters.json" % [id, m.encounter_table])
+		var wild_cells: int = 0
+		for y: int in m.height:
+			for x: int in m.rows[y].length():
+				if m.kind_at(Vector2i(x, y)) in TilesetFactory.ENCOUNTER_KINDS:
+					wild_cells += 1
+		if wild_cells == 0:
+			errors.append("map '%s': has encounter table '%s' but no fern, reed or scree cell" % [id, m.encounter_table])
+	for t: String in EncounterTable.table_ids():
+		if t.begins_with("_"):
+			continue
+		if not used.has(t):
+			errors.append("encounter table '%s' is not used by any map" % t)
+
+## Hidden finds (area 3 items 1080, 1083): each one is reachable, gives a real item from
+## data/items.json and has a flag no other find uses.
+static func check_secrets(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var flags: Dictionary = {}
+	var entries: Dictionary = entry_cells(map_ids)
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null or m.secrets.is_empty():
+			continue
+		var reach: Dictionary = reachable_cells(m, entries.get(id, []))
+		for sc: Dictionary in m.secrets:
+			var at := Vector2i(int(sc.get("x", -1)), int(sc.get("y", -1)))
+			var flag: String = str(sc.get("flag", ""))
+			if flag.is_empty():
+				errors.append("map '%s': hidden find at %s has no flag" % [id, at])
+			elif flags.has(flag):
+				errors.append("map '%s': hidden find flag '%s' is also used on '%s'" % [id, flag, flags[flag]])
+			else:
+				flags[flag] = id
+			if Database.item(str(sc.get("item", ""))).is_empty():
+				errors.append("map '%s': hidden find at %s gives unknown item '%s'" % [id, at, sc.get("item", "")])
+			if int(sc.get("count", 1)) < 1:
+				errors.append("map '%s': hidden find at %s gives nothing" % [id, at])
+			if not m.in_bounds(at):
+				errors.append("map '%s': hidden find at %s is off the map" % [id, at])
+				continue
+			var near: bool = reach.has(at)
+			for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+				near = near or reach.has(at + d)
+			if not near:
+				errors.append("map '%s': hidden find at %s cannot be reached" % [id, at])
+
+## Puzzles (area 3 item 893): every plate, boulder and plank gap can be reached, every ladder
+## leads to a walkable cell, a map with cracked floor has a floor below, and every boulder
+## puzzle has a solution (PuzzleSolver) from the first cell the player arrives on.
+static func check_puzzles(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var entries: Dictionary = entry_cells(map_ids)
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		var starts: Array = entries.get(id, [])
+		var boulders: Array[Vector2i] = PuzzleRoom.start_boulders(m)
+		var cracked: bool = false
+		var gaps: Array[Vector2i] = []
+		for y: int in m.height:
+			for x: int in m.rows[y].length():
+				var k: int = m.kind_at(Vector2i(x, y))
+				cracked = cracked or k == TilesetFactory.Kind.CRACKED
+				if k == TilesetFactory.Kind.PLANK and m.ladder_at(Vector2i(x, y)).is_empty():
+					gaps.append(Vector2i(x, y))
+		if m.puzzles.is_empty() and boulders.is_empty() and not cracked and gaps.is_empty() and m.ladders.is_empty():
+			continue
+		var reach: Dictionary = reachable_cells(m, starts)
+		var near: Callable = func(c: Vector2i) -> bool:
+			if reach.has(c):
+				return true
+			for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+				if reach.has(c + d):
+					return true
+			return false
+		for b: Vector2i in boulders:
+			if not near.call(b):
+				errors.append("map '%s': boulder at %s cannot be reached" % [id, b])
+		for g: Vector2i in gaps:
+			if not near.call(g):
+				errors.append("map '%s': plank gap at %s cannot be reached" % [id, g])
+		if cracked and (m.drop_to.is_empty() or not MapData.exists(m.drop_to)):
+			errors.append("map '%s': has cracked floor but no floor below (drop_to)" % id)
+		elif cracked:
+			var below: MapData = MapData.load_map(m.drop_to)
+			for y: int in m.height:
+				for x: int in m.rows[y].length():
+					if m.kind_at(Vector2i(x, y)) == TilesetFactory.Kind.CRACKED and not below.is_walkable(Vector2i(x, y)):
+						errors.append("map '%s': cracked floor at %d,%d drops onto a blocked cell of '%s'" % [id, x, y, m.drop_to])
+		for l: Dictionary in m.ladders:
+			var at := Vector2i(int(l.x), int(l.y))
+			if not near.call(at):
+				errors.append("map '%s': ladder anchor at %s cannot be reached" % [id, at])
+			var to: String = str(l.get("to", ""))
+			if not MapData.exists(to) or not MapData.load_map(to).is_walkable(Vector2i(int(l.get("tx", -1)), int(l.get("ty", -1)))):
+				errors.append("map '%s': ladder at %s leads nowhere ('%s')" % [id, at, to])
+		for pz: Dictionary in m.puzzles:
+			var pid: String = str(pz.get("id", "?"))
+			if str(pz.get("flag", "")).is_empty():
+				errors.append("map '%s': puzzle '%s' has no flag" % [id, pid])
+			var plates: Array[Vector2i] = PuzzleRoom.plates(m, pz)
+			if plates.is_empty():
+				errors.append("map '%s': puzzle '%s' has no pressure plates" % [id, pid])
+				continue
+			if plates.size() > boulders.size():
+				errors.append("map '%s': puzzle '%s' has more plates than boulders" % [id, pid])
+				continue
+			for p: Vector2i in plates:
+				if m.base_char(p) != "P":
+					errors.append("map '%s': puzzle '%s' plate %s is not a 'P' tile" % [id, pid, p])
+				elif not reach.has(p):
+					errors.append("map '%s': puzzle '%s' plate %s cannot be reached" % [id, pid, p])
+			if starts.is_empty():
+				continue
+			# Other doors open (earlier rooms solved), this puzzle's own door shut.
+			var fresh: MapData = MapData.load_map(id)
+			var open: Dictionary = {}
+			for b: Dictionary in fresh.blocks:
+				open[str(b.get("open_flag", ""))] = true
+			open.erase(str(pz.get("flag", "")))
+			fresh.apply_blocks(open)
+			if PuzzleSolver.solve(fresh, pz, starts[0]) == null:
+				errors.append("map '%s': puzzle '%s' has no solution" % [id, pid])
+
+## Cells the player can arrive on for each map: warp targets plus the new-game start.
+static func entry_cells(map_ids: PackedStringArray, start_map: String = "lighthouse", start_cell: Vector2i = Vector2i(4, 4)) -> Dictionary:
+	var entries: Dictionary = {start_map: [start_cell]}
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		for w: Dictionary in m.warps:
+			var to: String = str(w.get("to", ""))
+			var arr: Array = entries.get(to, [])
+			arr.append(Vector2i(int(w.tx), int(w.ty)))
+			entries[to] = arr
+	return entries
+
+static func load_layout() -> Dictionary:
+	if not FileAccess.file_exists(LAYOUT_PATH):
+		return {}
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(LAYOUT_PATH))
+	return raw if raw is Dictionary else {}
+
+## World layout (area 3 item 896): every map file has a place in data/world_layout.json (or
+## lies "inside" one, like a house in a town), every warp between two places is an edge there,
+## and every edge is backed by a warp (the ferry and coach lines count as warps too).
+static func check_layout(errors: PackedStringArray, map_ids: PackedStringArray, layout: Dictionary) -> void:
+	var places: Dictionary = layout.get("maps", {})
+	if places.is_empty():
+		errors.append("data/world_layout.json is missing or has no maps")
+		return
+	var files: Dictionary = {}
+	for id: String in map_ids:
+		files[str(MapData.split_id(id)[0])] = true
+	var cells: Dictionary = {}
+	for pid: String in places:
+		var p: Dictionary = places[pid]
+		if not files.has(pid):
+			errors.append("world layout: '%s' is not a map" % pid)
+		if p.has("inside"):
+			if not places.has(str(p.inside)) or (places[str(p.inside)] as Dictionary).has("inside"):
+				errors.append("world layout: '%s' is inside unknown place '%s'" % [pid, p.inside])
+			continue
+		var pos: Array = p.get("pos", [])
+		if pos.size() != 2:
+			errors.append("world layout: '%s' needs a grid position [x, y]" % pid)
+			continue
+		if not str(p.get("region", "")) in REGIONS:
+			errors.append("world layout: '%s' has unknown region '%s'" % [pid, p.get("region", "")])
+		var key: String = "%s:%d,%d" % [p.get("region", ""), int(pos[0]), int(pos[1])]
+		if cells.has(key):
+			errors.append("world layout: '%s' and '%s' share the grid cell %s" % [pid, cells[key], key])
+		cells[key] = pid
+	for f: String in files:
+		if not places.has(f):
+			errors.append("world layout: map '%s' has no place" % f)
+	var edges: Dictionary = {}
+	for pid: String in places:
+		for n: Variant in (places[pid] as Dictionary).get("neighbours", []):
+			if not places.has(str(n)):
+				errors.append("world layout: '%s' lists unknown neighbour '%s'" % [pid, n])
+				continue
+			edges[layout_edge(pid, str(n))] = true
+	var warped: Dictionary = {}
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null:
+			continue
+		var a: String = layout_place(places, id)
+		var targets: Array = []
+		for w: Dictionary in m.warps:
+			targets.append(str(w.get("to", "")))
+		for t: Variant in layout.get("lines", {}).values():
+			if id in (t as Array):
+				targets.append_array(t)
+		for to: String in targets:
+			var b: String = layout_place(places, to)
+			if a.is_empty() or b.is_empty() or a == b:
+				continue
+			var e: String = layout_edge(a, b)
+			warped[e] = true
+			if not edges.has(e):
+				errors.append("world layout: warp from '%s' to '%s' is not an edge (add it to neighbours)" % [id, to])
+	for e: String in edges:
+		if not warped.has(e):
+			errors.append("world layout: edge %s has no warp" % e)
+
+## The place on the world map that [param map_id] belongs to: its file, or the place that
+## file lies inside. "" if the layout doesn't know it.
+static func layout_place(places: Dictionary, map_id: String) -> String:
+	var file: String = str(MapData.split_id(map_id)[0])
+	if not places.has(file):
+		return ""
+	var p: Dictionary = places[file]
+	return str(p.inside) if p.has("inside") else file
+
+static func layout_edge(a: String, b: String) -> String:
+	return "%s-%s" % [a, b] if a < b else "%s-%s" % [b, a]
 
 ## Map reachability (item 99): from every cell the player can arrive on (warps into the map,
 ## the new-game start), with every puzzle block open and all Wayfarer Gear owned, each warp, NPC,
@@ -133,7 +369,11 @@ static func reachable_cells(m: MapData, starts: Array) -> Dictionary:
 	for n: Dictionary in m.npcs:
 		npc_cells[Vector2i(int(n.x), int(n.y))] = true
 	var passable: Callable = func(c: Vector2i) -> bool:
-		return (m.is_walkable(c) or m.gear_needed_at(c) != "") and not npc_cells.has(c)
+		# All gear owned and every puzzle solved: wading water, vines and plank gaps are
+		# crossable and boulders can be pushed aside (PuzzleSolver checks the puzzles themselves).
+		var k: int = m.kind_at(c)
+		var open_kind: bool = m.in_bounds(c) and (TilesetFactory.GEAR_KINDS.has(k) or k == TilesetFactory.Kind.BOULDER or k == TilesetFactory.Kind.PLANK)
+		return (m.is_walkable(c) or open_kind or m.gear_needed_at(c) != "") and not npc_cells.has(c)
 	var jumps: Dictionary = {}
 	for g: Dictionary in m.gear_spots:
 		if g.has("to"):
