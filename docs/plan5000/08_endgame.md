@@ -5,15 +5,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 > **Auftrag für den umsetzenden Thread:** Ziel ist, dass Spieler nach dem Ende von Akt I über Monate einen Grund haben, Chimora zu öffnen, und dass sie dabei eine Währung bekommen, die man nur durch Spielen verdient. Betroffen sind vor allem scripts/core/ (Achievements.gd, Collection.gd, Season.gd, WeeklyChallenge.gd und neue Dateien wie Waymarks.gd, DailyTasks.gd, Endgame.gd), scripts/overworld/ (Gauntlet.gd, DailyFind.gd, Overworld.gd), neue Daten unter data/ (achievements.json, events.json, endgame.json) und die Tests unter tests/unit/. Fang mit der Wegmarken-Währung und den Tagesaufträgen an, denn fast alle anderen Punkte zahlen in Wegmarken aus. Premium-Währung, Kaufangebote und Preise gehören zu Bereich 10, Online-Ligen zu Bereich 7 und neue Story-Kapitel zu Bereich 4; Herausforderungsregeln, Bosskämpfe und Turm-Kampfregeln aus docs/KAMPF_PLAN_1000.md werden hier nicht neu geplant.
 
 ### Wegmarken: die erspielte Endgame-Währung
-3113. [P1] Eine neue Währung „Wegmarken“ (englisch „Waymarks“) einführen, die in GameState.waymarks als ganze Zahl gespeichert wird und nur durch Spielen steigt.
-3114. [P1] Eine neue Datei scripts/core/Waymarks.gd anlegen, die alle Gutschriften über eine einzige Funktion earn(amount, source) laufen lässt.
-3115. [P1] Jede Gutschrift mit Quelle und Datum in GameState.records["waymark_log"] festhalten, höchstens die letzten 200 Einträge.
-3116. [P1] Die Obergrenze für gehaltene Wegmarken auf 9999 setzen und überzählige Marken mit einem kurzen Hinweis verfallen lassen.
-3117. [P1] Wegmarken im Pausenmenü neben den Münzen anzeigen, mit eigenem 8x8-Symbol in Form eines kleinen Wegsteins.
-3118. [P1] Festlegen und in docs/BALANCE.md eintragen, dass ein aktiver Spieler im Schnitt 60 Wegmarken pro Tag und 500 pro Woche verdient.
-3119. [P1] Wegmarken beim Laden alter Spielstände mit 0 anlegen und die Nachzahlung für alte Erfolge nur über den Erfolgs-Lohn laufen lassen, nicht doppelt.
-3120. [P1] In docs/MONETIZATION.md und im Code festschreiben, dass Wegmarken nie gekauft, getauscht oder an Freunde geschickt werden können.
-3121. [P1] Wegmarken in jeder Belohnungsmeldung mit Zahl und Symbol nennen, zum Beispiel „+10 Wegmarken“.
+3113. [x] [P1] Eine neue Währung „Wegmarken“ (englisch „Waymarks“) einführen, die in GameState.waymarks als ganze Zahl gespeichert wird und nur durch Spielen steigt.
+3114. [x] [P1] Eine neue Datei scripts/core/Waymarks.gd anlegen, die alle Gutschriften über eine einzige Funktion earn(amount, source) laufen lässt.
+3115. [x] [P1] Jede Gutschrift mit Quelle und Datum in GameState.records["waymark_log"] festhalten, höchstens die letzten 200 Einträge.
+3116. [x] [P1] Die Obergrenze für gehaltene Wegmarken auf 9999 setzen und überzählige Marken mit einem kurzen Hinweis verfallen lassen.
+3117. [x] [P1] Wegmarken im Pausenmenü neben den Münzen anzeigen, mit eigenem 8x8-Symbol in Form eines kleinen Wegsteins.
+3118. [x] [P1] Festlegen und in docs/BALANCE.md eintragen, dass ein aktiver Spieler im Schnitt 60 Wegmarken pro Tag und 500 pro Woche verdient.
+3119. [x] [P1] Wegmarken beim Laden alter Spielstände mit 0 anlegen und die Nachzahlung für alte Erfolge nur über den Erfolgs-Lohn laufen lassen, nicht doppelt.
+3120. [x] [P1] In docs/MONETIZATION.md und im Code festschreiben, dass Wegmarken nie gekauft, getauscht oder an Freunde geschickt werden können.
+3121. [x] [P1] Wegmarken in jeder Belohnungsmeldung mit Zahl und Symbol nennen, zum Beispiel „+10 Wegmarken“.
 3122. [P2] Den Server beim Speichern prüfen lassen, dass die Wegmarken seit dem letzten Stand um höchstens 800 pro Tag gestiegen sind, sonst wird der Stand markiert.
 3123. [P2] Ein Wegmarken-Verlaufsfenster bauen, das die letzten 30 Gutschriften mit Quelle zeigt (zum Beispiel „Tagesauftrag: 10“).
 3124. [P2] Einen Test schreiben, der prüft, dass jede Belohnungsquelle im Spiel eine gültige Quelle in Waymarks.SOURCES nutzt.
@@ -52,15 +52,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3155. [P3] Das Wanderer-Zimmer im Fotomodus als eigenen Ort mit festem Bildausschnitt anbieten.
 
 ### Tagesaufträge
-3156. [P1] Eine Datei scripts/core/DailyTasks.gd anlegen, die jeden Tag nach Server-Zeit drei Aufträge aus data/events.json per Seed „chimora-tasks-JJJJ-MM-TT“ zieht.
-3157. [P1] Jeder Tagesauftrag zahlt 10 Wegmarken, alle drei zusammen zahlen 10 Wegmarken extra.
-3158. [P1] Mindestens 30 Auftragsarten anlegen, zum Beispiel „Gewinne 3 Kämpfe in Thornridge“, „Bonde einen Spirling des Elements Gale“ oder „Raste an 2 Rastquellen“.
-3159. [P1] Tagesaufträge im Ziele-Bildschirm unter dem Fund des Tages als eigenen Block mit Fortschritt (k/n) zeigen.
-3160. [P1] Aufträge nur aus Orten ziehen, die der Spielstand schon erreicht hat, damit kein Auftrag unlösbar ist.
-3161. [P1] Jeden Auftrag so wählen, dass er in höchstens 15 Minuten Spielzeit zu schaffen ist.
-3162. [P1] Den Fortschritt jedes Tagesauftrags im Spielstand und auf dem Server speichern, damit ein Gerätewechsel am selben Tag nichts zurücksetzt.
+3156. [x] [P1] Eine Datei scripts/core/DailyTasks.gd anlegen, die jeden Tag nach Server-Zeit drei Aufträge aus data/events.json per Seed „chimora-tasks-JJJJ-MM-TT“ zieht.
+3157. [x] [P1] Jeder Tagesauftrag zahlt 10 Wegmarken, alle drei zusammen zahlen 10 Wegmarken extra.
+3158. [x] [P1] Mindestens 30 Auftragsarten anlegen, zum Beispiel „Gewinne 3 Kämpfe in Thornridge“, „Bonde einen Spirling des Elements Gale“ oder „Raste an 2 Rastquellen“.
+3159. [x] [P1] Tagesaufträge im Ziele-Bildschirm unter dem Fund des Tages als eigenen Block mit Fortschritt (k/n) zeigen.
+3160. [x] [P1] Aufträge nur aus Orten ziehen, die der Spielstand schon erreicht hat, damit kein Auftrag unlösbar ist.
+3161. [x] [P1] Jeden Auftrag so wählen, dass er in höchstens 15 Minuten Spielzeit zu schaffen ist.
+3162. [x] [P1] Den Fortschritt jedes Tagesauftrags im Spielstand und auf dem Server speichern, damit ein Gerätewechsel am selben Tag nichts zurücksetzt.
 3163. [P2] Einen Auftrag pro Tag einmal kostenlos gegen einen anderen tauschen lassen.
-3164. [P2] Nicht erledigte Aufträge verfallen still um Mitternacht, ohne Strafe und ohne Serien-Zähler.
+3164. [x] [P2] Nicht erledigte Aufträge verfallen still um Mitternacht, ohne Strafe und ohne Serien-Zähler.
 3165. [P2] Eine Auftragsart „Zeig dem Fotomodus einen Spirling bei Nacht“ ergänzen, damit Aufträge nicht nur Kämpfe sind.
 3166. [P2] Eine Auftragsart „Spiele das Echo-Melodie-Spiel mit der Wertung Gut oder besser“ ergänzen.
 3167. [P2] Eine Auftragsart „Sieh einen noch nicht gesehenen Spirling“ nur dann ziehen, wenn noch ungesehene Arten im erreichbaren Gebiet leben.
@@ -70,7 +70,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3171. [P2] Für jede Auftragsart einen GUT-Test schreiben, der den Fortschritt aus einem nachgestellten Spielereignis zählt.
 3172. [P2] Die Aufträge in data/i18n/de.json mit Platzhaltern für Zahl, Ort und Element übersetzen.
 3173. [P2] Eine Auftragsart „Schick einen Spirling auf einen Streifzug“ ergänzen, sobald Streifzüge freigeschaltet sind.
-3174. [P2] Pro Tag höchstens einen Kampfauftrag ziehen, damit jeder Tag eine Erkundungs- oder Sammelaufgabe enthält.
+3174. [x] [P2] Pro Tag höchstens einen Kampfauftrag ziehen, damit jeder Tag eine Erkundungs- oder Sammelaufgabe enthält.
 3175. [P3] Einen Wochenauftrag ergänzen, der aus sieben erledigten Tagesaufträgen in derselben Woche besteht und 50 Wegmarken zahlt.
 3176. [P3] Aufträge mit Tageszeit-Bezug ziehen, etwa „Triff bei Dämmerung einen Lumen-Spirling“, nur wenn Tag und Nacht eingeschaltet sind.
 3177. [P3] Einen Auftragsverlauf der letzten 14 Tage in den Aufzeichnungen zeigen.
