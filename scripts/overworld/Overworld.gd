@@ -296,6 +296,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	if map == null:
 		return
 	_entry_cell = cell
+	if map.outdoor:
+		GameState.enter_map(map_id, cell)
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	refresh_shade()
@@ -940,8 +942,8 @@ func open_menu() -> void:
 		await photo_mode()
 	if watch:
 		await watch_replay(GameState.records.get("last_battle", {}))
-	if not target.is_empty() and GameState.visited_rests.has(target):
-		var c: Array = GameState.visited_rests[target]
+	var c: Array = GameState.travel_cell(target) if not target.is_empty() else []
+	if c.size() == 2:
 		Sound.sfx("warp")
 		await _fade_to(1.0)
 		load_map(target, Vector2i(int(c[0]), int(c[1])), "down")

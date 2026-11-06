@@ -882,8 +882,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4833. [P1] (P2W) Ein "Auto-Kampf" (`rg_auto_battle`) dauerhaft für 1000 Rissglas anlegen, bei dem die Spieler-KI (Stufe "lookahead") gegen wilde Spirlings automatisch kämpft.
 4834. [P1] (P2W) Den Auto-Kampf nie gegen Rift-Wächter, Story-Kämpfe und in Ligen erlauben, und das steht in der Detailansicht.
 4835. [x] [P1] (P2W) Einen "Münzglanz" (`rg_coin_boost`) anlegen: doppelte Münzen aus Kämpfen für 20 Kämpfe, Preis 200 Rissglas, abgestimmt mit Bereich 8.
-4836. [P1] (P2W) Einen "Wegweiser" (`rg_fast_travel`) dauerhaft für 800 Rissglas anlegen, mit dem Schnellreise zu jedem besuchten Ort geht statt nur zu Rastplätzen.
-4837. [P1] (P2W) Den Wegweiser mit `GameState.travel_targets` verbinden, sodass er alle besuchten Karten zusätzlich liefert.
+4836. [x] [P1] (P2W) Einen "Wegweiser" (`rg_fast_travel`) dauerhaft für 800 Rissglas anlegen, mit dem Schnellreise zu jedem besuchten Ort geht statt nur zu Rastplätzen.
+4837. [x] [P1] (P2W) Den Wegweiser mit `GameState.travel_targets` verbinden, sodass er alle besuchten Karten zusätzlich liefert.
 4838. [P1] (P2W) Einen "Begegnungsruf" (`rg_encounter_call`) anlegen: 30 Schritte lang doppelt so viele wilde Begegnungen, Preis 100 Rissglas.
 4839. [P1] (P2W) Einen "Kampf-Überspringer" (`rg_skip_battle`) anlegen: ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger wird sofort gewonnen, mit vollem Wachstum, Preis 100 Rissglas pro 10 Stück.
 4840. [P1] (P2W) Kampf-Überspringer laufen über das normale Kampfmodell mit Spieler-KI im Hintergrund und erzeugen ein Ergebnis-Ereignis, damit Wachstum und Münzen korrekt sind.
