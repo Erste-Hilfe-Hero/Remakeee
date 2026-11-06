@@ -143,6 +143,8 @@ static func move_info(mv: MoveData) -> String:
 		lines.append(Loc.t("Reaches every foe."))
 	if mv.overcharge:
 		lines.append(Loc.t("Spends all leftover Energy for more power."))
+	if mv.cooldown > 0:
+		lines.append(Loc.t("Locked for %d turns after each use.") % mv.cooldown)
 	for fx: Dictionary in mv.effects:
 		var chance: float = float(fx.get("chance", 1.0))
 		var line: String = ""
@@ -167,6 +169,28 @@ static func move_info(mv: MoveData) -> String:
 			&"set_field":
 				var f: Dictionary = BattleRules.FIELDS.get(str(fx.get("field", "")), {})
 				line = Loc.t("Lays %s for %d turns.") % [Loc.t(str(f.get("label", ""))), BattleRules.RESONANCE_TURNS]
+			&"bonus_vs_status":
+				var vs: String = str(fx.get("vs_status", ""))
+				var mult: String = String.num(float(fx.get("vs_mult", 1.0)), 1)
+				if vs == "*":
+					line = Loc.t("x%s power if the foe has any status.") % mult
+				elif vs == "stage_down":
+					line = Loc.t("x%s power if the foe has a lowered stat.") % mult
+				else:
+					line = Loc.t("x%s power if the foe has %s.") % [mult, Loc.t(StatusRules.label(vs))]
+			&"energy_tax":
+				var turns: int = int(fx.get("amount", 0))
+				line = Loc.t("The foe's arts cost %d more Energy for %d turns.") % [BattleRules.ENERGY_TAX_COST, turns if turns > 0 else BattleRules.ENERGY_TAX_TURNS]
+			&"field_element":
+				line = Loc.t("In a field it takes the field's element, power +%d.") % int(fx.get("power_bonus", BattleRules.FIELD_ELEMENT_POWER))
+			&"self_stage_after":
+				var parts: Array[String] = []
+				var st: Dictionary = fx.get("stages", {})
+				for k: String in st:
+					var n: int = int(st[k])
+					var sname: String = Loc.t(BattleEvent.STAT_NAMES.get(k, ""))
+					parts.append((Loc.t("Then raises its own %s by %d.") if n > 0 else Loc.t("Then lowers its own %s by %d.")) % [sname, absi(n)])
+				line = " ".join(parts)
 		if line.is_empty():
 			continue
 		if chance < 1.0:
@@ -201,23 +225,29 @@ static func matchup_tag(mult: float) -> String:
 ## Second line of a move button: cost, or what is missing, plus the known matchup.
 ## [param multi] marks sweeps ("all") in battles with several foes. [param pct] is the damage
 ## preview (expected share of the foe's max HP, -1 for none).
-static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1) -> String:
-	if energy < mv.energy_cost:
-		return "need %dE" % mv.energy_cost
+## [param cost] is what the move costs now (-1: its own cost; more under an Energy tax) and
+## [param wait] the turns a cooldown still locks it.
+static func move_line(mv: MoveData, energy: int, mult: float, multi: bool = false, pct: int = -1, cost: int = -1, wait: int = 0) -> String:
+	var c: int = cost if cost >= 0 else mv.energy_cost
+	if wait > 0:
+		return "wait %d" % wait
+	if energy < c:
+		return "need %dE" % c
 	if multi and mv.is_area():
-		return "%dE all" % mv.energy_cost
+		return "%dE all" % c
 	# The preview already carries the matchup, so it replaces the x2/x.5 tag (short rows on 144 px).
 	if pct >= 0 and mv.power > 0:
-		return "%dE ~%d%%" % [mv.energy_cost, pct]
+		return "%dE ~%d%%" % [c, pct]
 	var tag: String = "" if mv.power <= 0 else matchup_tag(mult)
-	return "%dE %s" % [mv.energy_cost, tag] if not tag.is_empty() else "%dE" % mv.energy_cost
+	return "%dE %s" % [c, tag] if not tag.is_empty() else "%dE" % c
 
 ## Damage preview: expected damage of [param mv] as a share (0-100) of [param foe]'s max HP,
 ## with traits, held items and the field. Mean roll, no keen hit, same estimate the AI uses.
 static func damage_pct(model: BattleModel, me: Spirling, foe: Spirling, mv: MoveData) -> int:
 	if not mv.is_damaging() or foe == null:
 		return -1
-	var dmg: float = DamageCalc.estimate(me, foe, mv) * BattleRules.damage_mult(me, foe, mv, model.field)
+	var hit: MoveData = BattleRules.resolve_move(mv, model.field)
+	var dmg: float = DamageCalc.estimate(me, foe, hit) * BattleRules.damage_mult(me, foe, hit, model.field)
 	return clampi(roundi(dmg * 100.0 / float(maxi(foe.max_hp(), 1))), 1, 100)
 
 ## Fills the buttons from the model's current legal actions for the Spirling in [param slot].
@@ -238,7 +268,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			b.text = mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and mult >= 0.0 else -1
-			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct)
+			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
 			_move_icons[i].texture = ElementIcons.outlined(mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv)

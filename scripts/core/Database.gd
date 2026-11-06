@@ -63,27 +63,39 @@ static func _load_moves() -> void:
 		push_error("Database: cannot read %s" % MOVES_PATH)
 		return
 	for m: Dictionary in raw:
-		var md := MoveData.new()
-		md.move_name = m.name
-		md.element = Elements.E[m.element]
-		md.kind = MoveData.Kind[m.kind]
-		md.power = int(m.power)
-		md.accuracy = float(m.accuracy)
-		md.energy_cost = int(m.energy)
-		md.priority = int(m.get("priority", 0))
-		md.status_effect = str(m.get("status", ""))
-		md.status_chance = float(m.get("status_chance", 0.0))
-		if not md.status_effect.is_empty():
-			md.effects.append({"id": &"inflict_status", "status": md.status_effect, "chance": md.status_chance})
-		if m.has("stat"):
-			md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stat_chance", 1.0))})
-		md.overcharge = bool(m.get("overcharge", false))
-		md.target = str(m.get("target", "single"))
-		if m.has("field"):
-			md.effects.append({"id": &"set_field", "field": str(m.field)})
-		if m.has("effect"):
-			md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
+		var md: MoveData = parse_move(m)
 		moves[md.move_name] = md
+
+## Builds one move from its moves.json entry (also used by tests for moves not in the data).
+static func parse_move(m: Dictionary) -> MoveData:
+	var md := MoveData.new()
+	md.move_name = m.name
+	md.element = Elements.E[m.element]
+	md.kind = MoveData.Kind[m.kind]
+	md.power = int(m.power)
+	md.accuracy = float(m.accuracy)
+	md.energy_cost = int(m.energy)
+	md.priority = int(m.get("priority", 0))
+	md.status_effect = str(m.get("status", ""))
+	md.status_chance = float(m.get("status_chance", 0.0))
+	if not md.status_effect.is_empty():
+		md.effects.append({"id": &"inflict_status", "status": md.status_effect, "chance": md.status_chance})
+	if m.has("stat"):
+		md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stage_chance", m.get("stat_chance", 1.0)))})
+	md.overcharge = bool(m.get("overcharge", false))
+	md.target = str(m.get("target", "single"))
+	if m.has("field"):
+		md.effects.append({"id": &"set_field", "field": str(m.field)})
+	if m.has("effect"):
+		md.effects.append({"id": StringName(m.effect), "amount": float(m.get("effect_amount", 0.0))})
+	md.cooldown = int(m.get("cooldown", 0))
+	if m.has("vs_status"):
+		md.effects.append({"id": &"bonus_vs_status", "vs_status": str(m.vs_status), "vs_mult": float(m.get("vs_mult", 1.5))})
+	if bool(m.get("field_element", false)):
+		md.effects.append({"id": &"field_element", "power_bonus": int(m.get("field_power", BattleRules.FIELD_ELEMENT_POWER))})
+	if m.has("self_stages"):
+		md.effects.append({"id": &"self_stage_after", "stages": m.self_stages})
+	return md
 
 static func _load_spirlings() -> void:
 	var raw: Variant = _read(SPIRLINGS_PATH)

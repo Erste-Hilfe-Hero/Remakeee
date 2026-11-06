@@ -54,6 +54,11 @@ var held: String = ""
 var prism: bool = false
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
+## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
+## Counted down at the end of each turn, so a fresh tax of N holds for the next N turns.
+var energy_tax: int = 0
+## Battle-only: move name -> turns it stays locked (moves.json "cooldown"), same counting.
+var cooldowns: Dictionary[String, int] = {}
 
 ## [param rng] rolls the hidden Spark values; pass the battle or game RNG for reproducibility.
 func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = null) -> void:
@@ -135,8 +140,26 @@ func is_fainted() -> bool:
 func hp_fraction() -> float:
 	return float(hp) / float(max_hp())
 
+## Energy [param move] costs right now: its own cost plus the Energy tax while one lasts.
+func move_cost(move: MoveData) -> int:
+	return move.energy_cost + (BattleRules.ENERGY_TAX_COST if energy_tax > 0 else 0)
+
+## Turns [param move] stays locked after a use ("cooldown"), 0 when it is free.
+func cooldown_left(move: MoveData) -> int:
+	return int(cooldowns.get(move.move_name, 0))
+
+## True if the move can be used now: enough Energy (tax included) and not locked by a cooldown.
 func can_afford(move: MoveData) -> bool:
-	return energy >= move.energy_cost
+	return energy >= move_cost(move) and cooldown_left(move) <= 0
+
+## Counts the battle-only timers (Energy tax, cooldowns) down by one at the end of a turn.
+func tick_timers() -> void:
+	if energy_tax > 0:
+		energy_tax -= 1
+	for k: String in cooldowns.keys():
+		cooldowns[k] = int(cooldowns[k]) - 1
+		if int(cooldowns[k]) <= 0:
+			cooldowns.erase(k)
 
 ## Full heal (rest stops between battles).
 func restore() -> void:
@@ -148,6 +171,8 @@ func restore() -> void:
 ## Clears battle-only state when a battle ends. Statuses do not persist outside battle.
 func end_battle() -> void:
 	stages.clear()
+	energy_tax = 0
+	cooldowns.clear()
 	status = ""
 	status_turns = 0
 	energy = START_ENERGY
