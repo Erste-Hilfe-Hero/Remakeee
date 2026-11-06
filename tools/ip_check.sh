@@ -3,7 +3,8 @@
 # 1. Fails if any tracked text file uses a banned franchise term. The pattern is stored
 #    base64-encoded so this script does not itself spell the terms out.
 # 2. Fails if a file under art/ or audio/ is missing from docs/ASSET_LOG.md.
-# 3. Checks the metadata of images and sounds (tools/ip_meta_check.py, plan item 3956).
+# 3. Checks the metadata of images and sounds (tools/ip_meta_check.py, plan item 3956) and
+#    place and map names (tools/ip_place_check.py, item 1319).
 # 4. With --messages <git range>: checks commit messages of that range and the PR title in
 #    PR_TITLE (plan item 3955, AGENTS.md).
 # AGENTS.md and LEGAL.md are skipped because they define the banned list.
@@ -60,6 +61,11 @@ fi
 shop_phrases="$(python3 -c 'import json,re;b=json.load(open("data/shop_banned_phrases.json"));print("|".join(re.escape(x) for x in b["de"]+b["en"]))')"
 if grep -n -i -P -- "$shop_phrases" data/shop.json tools/i18n/de_shop.py scripts/shop/*.gd 2>/dev/null; then
 	echo "::error::Shop text uses a direct purchase prompt (lines above). Use neutral words like \"Price: 2,99 €\". See data/shop_banned_phrases.json."
+	fail=1
+fi
+
+# Place and map names against the inspiration's towns and regions (area 3 item 1319).
+if ! python3 tools/ip_place_check.py; then
 	fail=1
 fi
 
