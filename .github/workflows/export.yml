@@ -32,6 +32,8 @@ jobs:
         run: python3 tools/i18n_extract.py de --check
       - name: Store web pages match docs/legal
         run: python3 tools/site/build_site.py --check
+      - name: Server copy of the shop offers and store/products.json match data/shop.json
+        run: python3 tools/shop/build_offers_sql.py --check
       - name: Store listing material (texts, screenshots, icons, presets)
         run: pip install --quiet pillow && python3 tools/release_check.py
 
