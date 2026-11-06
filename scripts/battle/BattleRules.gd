@@ -140,11 +140,12 @@ static func boss_phase(boss_id: String) -> Dictionary:
 	return p if p is Dictionary else {}
 
 ## Max HP multiplier for a boss facing [param fielded] player Spirlings.
-static func boss_hp_mult(boss_id: String, fielded: int) -> float:
+## [param scale] shrinks "hp_per_ally" (Story bosses use 0.8, plan item 729).
+static func boss_hp_mult(boss_id: String, fielded: int, scale: float = 1.0) -> float:
 	var b: Dictionary = BOSSES.get(boss_id, {})
 	if b.is_empty():
 		return 1.0
-	return maxf(1.0, float(b.get("hp_per_ally", 1.0)) * fielded)
+	return maxf(1.0, float(b.get("hp_per_ally", 1.0)) * scale * fielded)
 
 ## Actions per turn for a boss facing [param fielded] player Spirlings (at least 1).
 static func boss_actions(boss_id: String, fielded: int) -> int:

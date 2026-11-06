@@ -101,11 +101,35 @@ services:
       PGPASSWORD: ${REFEREE_DB_PASSWORD}
       PGDATABASE: postgres
 
+  # Billing service (plan area 10, server/billing): checks Apple and Google purchases. Reached only
+  # through Caddy at /billing/v1/; talks to the database as chimora_billing (four functions, no tables).
+  billing:
+    logging: *logging
+    build: ./billing
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PGHOST: db
+      PGPORT: 5432
+      PGUSER: chimora_billing
+      PGPASSWORD: ${BILLING_DB_PASSWORD}
+      PGDATABASE: postgres
+      JWT_SECRET: ${JWT_SECRET}
+      GOOGLE_PUSH_TOKEN: ${GOOGLE_PUSH_TOKEN}
+      GOOGLE_SA_FILE: /run/secrets/google_sa.json
+      APPLE_BUNDLE_ID: de.chimora.game
+      GOOGLE_PACKAGE: de.chimora.game
+    volumes:
+      # The Play service account (PLAY_SERVICE_ACCOUNT_JSON), put there by the deploy workflow.
+      - ./secrets:/run/secrets:ro
+
   caddy:
     logging: *logging
     image: caddy:2.10.2@sha256:c3d7ee5d2b11f9dc54f947f68a734c84e9c9666c92c88a7f30b9cba5da182adb
     restart: unless-stopped
-    depends_on: [auth, rest]
+    depends_on: [auth, rest, billing]
     ports:
       - "80:80"
       - "443:443"

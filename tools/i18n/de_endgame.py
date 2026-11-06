@@ -308,4 +308,13 @@ T = {
 "Marla's weekly crates: three of these each week, the same for everyone.": "Marlas Wochenkisten: jede Woche drei davon, für alle gleich.",
 "Savings goal %s: ready to trade at Marla's stand.": "Sparziel %s: bereit zum Tausch an Marlas Stand.",
 "Savings goal %s: [%s] %d more Waymarks": "Sparziel %s: [%s] noch %d Wegmarken",
+"Try": "Versuchen", "Preview": "Vorschau", "Archive": "Archiv",
+"Under the target score of %d!": "Unter der Zielwertung von %d!", "No weekly echo tried yet.": "Noch kein Wochen-Echo versucht.",
+"The last %d weeks:": "Die letzten %d Wochen:", "%d of %d rounds": "%d von %d Runden", "score %d": "Wertung %d",
+"New best score this week: %d (target %d).": "Neue Bestwertung diese Woche: %d (Ziel %d).",
+"This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d.": "Diese Woche: %s, Regel %s. Fünf Echos auf Ring %d. Bestleistung diese Woche: %d von %d.",
+"Tries with prizes left: %d of %d.": "Versuche mit Preis übrig: %d von %d.",
+"This week: %s, rule %s, ring %d.": "Diese Woche: %s, Regel %s, Ring %d.",
+"Target score: %d (lower is better).": "Zielwertung: %d (weniger ist besser).", "Echo %d: %s": "Echo %d: %s",
+"Cleared! The prize tries are used up this week, but the score counts.": "Geschafft! Die Preisversuche dieser Woche sind aufgebraucht, aber die Wertung zählt.",
 }

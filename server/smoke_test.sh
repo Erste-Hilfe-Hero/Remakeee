@@ -33,6 +33,17 @@ post /rest/v1/rpc/hello "$b" '{"p_version": 1}' >/dev/null
 req="$(post /rest/v1/rpc/friend_request "$b" "{\"p_code\": \"$code_a\"}")"
 echo "$req" | grep -q '"ok": *true\|"ok":true' || fail "friend_request: $req"
 
+# Billing service (plan area 10): up, and it refuses purchase checks without a sign-in.
+for i in $(seq 1 30); do
+	curl -fsS $k "$url/billing/v1/health" 2>/dev/null | grep -q '"ok": *true' && break
+	[ "$i" = 30 ] && fail "billing service does not answer"
+	sleep 1
+done
+code="$(curl -sS $k -o /dev/null -w '%{http_code}' -X POST "$url/billing/v1/verify" -H "Content-Type: application/json" -d '{}')"
+[ "$code" = "401" ] || fail "billing verify without sign-in gave $code"
+bad="$(post /billing/v1/verify "$a" '{"p_receipt": {"store": "local", "txn": "1"}}')"
+echo "$bad" | grep -q 'bad_receipt' || fail "billing accepted a local receipt: $bad"
+
 # Tables must not be reachable directly.
 raw="$(curl -sS $k "$url/rest/v1/saves?select=*" -H "apikey: $anon" -H "Authorization: Bearer $a")"
 echo "$raw" | grep -q '"money"' && fail "saves table is readable: $raw"

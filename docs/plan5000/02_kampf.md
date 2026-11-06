@@ -314,9 +314,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 726. [x] [P1] Gegner-Spark pro Stufe festlegen: Story 0, Tamer 3, Veteran 6, Rift-Born 10 in allen Werten (Spark-Bereich 0 bis 12 bleibt); Tabelle in GameState.FOE_SPARK.
 727. [x] [P1] Gegner-Ring-Versatz pro Stufe: Story -1, Tamer 0, Veteran +1, Rift-Born +2, nie über die aktuelle Ring-Obergrenze des Spielers plus 2.
 728. [x] [P1] Story: Gegner richten ×0,9 Schaden an; der Wert steht offen auf der Schwierigkeitsseite und in der Kampfregeln-Seite.
-729. [P1] Story: Wächter-Regeln abgeschwächt wie bei Orrin und Maelis festgelegt, Bosse mit 20 % weniger Kraft-Faktor `hp_per_ally`.
+729. [x] [P1] Story: Wächter-Regeln abgeschwächt wie bei Orrin und Maelis festgelegt, Bosse mit 20 % weniger Kraft-Faktor `hp_per_ally`. Erledigt: GameState.BOSS_HP_SCALE, BattleModel.boss_hp_scale (im Replay gespeichert).
 730. [x] [P1] Story: der Murk-Hollow-Schwarm hat 4 statt 6 Spirlings, Tamer 5, ab Veteran 6.
-731. [P1] Veteran: Gegner-Teams nutzen feste Technik-Listen mit mindestens einer Status- oder Stufen-Technik pro Spirling.
+731. [x] [P1] Veteran: Gegner-Teams nutzen feste Technik-Listen mit mindestens einer Status- oder Stufen-Technik pro Spirling. Erledigt: alle Veteran-Blöcke erfüllen das schon; test_ai_profiles.gd prüft es für jede Karte.
 732. [x] [P1] Rift-Born: Wächter tragen ein Andenken auf jedem Spirling, Wanderer eins pro Team.
 733. [x] [P1] Zielwerte für Gewinnraten des Referenzteams gegen Wächter: Story mindestens 95 %, Tamer 80 bis 90 %, Veteran 55 bis 70 %, Rift-Born 30 bis 45 % (Simulator-Modus "warden"). Erledigt: tools/balance/targets.json; Orrin 100/89/64/32 %, Maelis 100/88/63/36 % (Mittel der drei Referenzteams, 100 Kämpfe).
 734. [P2] Tamer: Gegner nutzen ihr Profil, aber ohne Andenken und mit KI-Stufe 1; Wächter Stufe 2 (bestehende Untergrenze bleibt).
