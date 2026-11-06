@@ -76,7 +76,7 @@ func play(p_element: int, kind: int, from: Rect2, to: Rect2) -> void:
 		phase = p
 		t = 0.0
 		if p == Phase.IMPACT and element == Elements.E.STONE:
-			Juice.add_trauma(0.12)
+			Juice.add_trauma(0.12, Elements.E.STONE)
 		await _run_phase(phase_time(p, reduced) / Juice.speed())
 		if user_sprite != null:
 			user_sprite.position = home

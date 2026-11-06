@@ -798,7 +798,7 @@ static func travel_sound(element: int) -> String:
 
 ## Shake, vibration, hit-stop, knockback and flash for a landed hit (items 2256 to 2258, 2332, 2591).
 func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
-	Juice.add_trauma(Juice.TRAUMA_HIT_STRONG if strong else Juice.TRAUMA_HIT)
+	Juice.add_trauma(Juice.TRAUMA_HIT_STRONG if strong else Juice.TRAUMA_HIT, _last_element[BattleModel.other(side)])
 	Haptics.play("heavy" if strong else "hit")
 	var max_hp: int = maxi(int(e.data.get("max_hp", 1)), 1)
 	await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp)

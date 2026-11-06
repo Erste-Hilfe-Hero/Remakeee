@@ -61,7 +61,7 @@ func step_out(from_left: bool) -> void:
 				var arc: float = absf(sin(k * PI * HOPS))
 				position = (start.lerp(_home, k) + Vector2(0, -HOP_HEIGHT * arc)).round()
 			var tw: Tween = create_tween()
-			tw.tween_method(hop, 0.0, 1.0, STEP_TIME / Juice.speed())
+			Juice.shaped(tw.tween_method(hop, 0.0, 1.0, STEP_TIME / Juice.speed()), "move")
 			await tw.finished
 			position = _home
 		"stomp":

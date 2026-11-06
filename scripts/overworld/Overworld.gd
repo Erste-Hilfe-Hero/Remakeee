@@ -1081,7 +1081,7 @@ func prologue() -> void:
 	_fade.color.a = 1.0
 	Sound.enter_map(map.id)
 	var tw: Tween = create_tween()
-	tw.tween_property(_fade, "color:a", 0.0, 0.6)
+	Juice.shaped(tw.tween_property(_fade, "color:a", 0.0, 0.6), "fade")
 	await tw.finished
 	busy = false
 	# The prologue dialogue picks the partner ("choose_starter"); Aldo then hands over the map book.
