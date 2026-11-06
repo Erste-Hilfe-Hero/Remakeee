@@ -396,8 +396,11 @@ func from_dict(d: Dictionary) -> void:
 	waymarks = clampi(as_int(d.get("waymarks", 0)), 0, Waymarks.CAP)
 	var dt: Variant = d.get("daily_tasks", {})
 	daily_tasks = (dt as Dictionary).duplicate(true) if dt is Dictionary else {}
-	var fr: Variant = d.get("festival_ribbons", {})
-	festival_ribbons = (fr as Dictionary).duplicate(true) if fr is Dictionary else {}
+	festival_ribbons = {}
+	for k: Variant in as_dict(d.get("festival_ribbons", {})):
+		var st: Dictionary = as_dict(d.festival_ribbons[k])
+		festival_ribbons[str(k)] = {"ribbons": maxi(0, as_int(st.get("ribbons", 0))), "earned": maxi(0, as_int(st.get("earned", 0))),
+			"stages": clampi(as_int(st.get("stages", 0)), 0, Festival.STAGES.size()), "task": as_dict(st.get("task", {})).duplicate(true)}
 	current_map = str(d.get("map", "lighthouse"))
 	var c: Array = d.get("cell", [4, 4])
 	player_cell = Vector2i(int(c[0]), int(c[1]))

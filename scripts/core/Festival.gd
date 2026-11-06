@@ -139,8 +139,8 @@ static func record(event: String, info: Dictionary, amount: int = 1) -> Array[St
 		return lines
 	var t: Dictionary = task_def(str(task.id))
 	if not t.is_empty() and DailyTasks.matches(t, event, info):
-		task.n = mini(int(task.n) + amount, int(t.get("n", 1)))
-		if int(task.n) >= int(t.get("n", 1)):
+		task.n = mini(GameState.as_int(task.get("n", 0)) + amount, int(t.get("n", 1)))
+		if GameState.as_int(task.n) >= int(t.get("n", 1)):
 			task.done = true
 			lines.append(Loc.t("Festival task done: %s") % Loc.t(str(t.text)))
 			lines.append_array(add(TASK_RIBBONS))
