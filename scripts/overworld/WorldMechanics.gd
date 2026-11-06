@@ -31,6 +31,7 @@ var vents_calm: bool = true
 var _vent_timer: Timer
 ## Test hook: -1 uses the device clock.
 var hour_override: int = -1
+var phase_override: int = -1
 
 func _init(overworld: Overworld) -> void:
 	ow = overworld
@@ -57,6 +58,7 @@ func _hour() -> int:
 ## Story flags plus clock flags plus puzzles held down right now.
 func flags_now(m: MapData, cell: Vector2i) -> Dictionary:
 	var f: Dictionary = GameState.flags.duplicate()
+	f["_phase"] = phase_override if phase_override >= 0 else DayCycle.current()
 	if low_tide(_hour()):
 		f["_low_tide"] = true
 	if vents_calm:

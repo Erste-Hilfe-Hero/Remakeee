@@ -243,6 +243,14 @@ static func check_passages(errors: PackedStringArray, map_ids: PackedStringArray
 				errors.append("map '%s': block at %s,%s waits for unknown clock flag '%s'" % [id, b.x, b.y, of])
 		if not m.beam.is_empty():
 			check_beam(errors, id, m)
+		for list: Array in [m.npcs, m.signs, m.blocks]:
+			for def: Dictionary in list:
+				if not def.has("phase_only"):
+					continue
+				var only: Array = def.phase_only if def.phase_only is Array else [def.phase_only]
+				for ph: Variant in only:
+					if not str(ph) in DayCycle.PHASE_NAMES:
+						errors.append("map '%s': phase_only '%s' at %s,%s is not dawn, day, dusk or night" % [id, ph, def.x, def.y])
 		if m.passages.is_empty():
 			continue
 		var reach: Dictionary = reachable_cells(m, entries.get(id, []))
