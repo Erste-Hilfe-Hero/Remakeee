@@ -538,7 +538,7 @@
    "name_en": "Riftglass Tonic",
    "name_de": "Rissglas-Heiltrank",
    "desc_en": "In battle: heals 100% Vigor and all states. At most 2 per battle.",
-   "desc_de": "In battle: heals 100% Vigor and all states. At most 2 per battle.",
+   "desc_de": "Im Kampf: heilt 100 % Kraft und alle Zustände. Höchstens 2 pro Kampf.",
    "ready": true
   },
   {
