@@ -9,7 +9,7 @@ const FILES: Array[String] = ["res://data/endgame.json", "res://data/events.json
 const ITEM_KEYS: Array[String] = ["item"]
 const ITEM_LIST_KEYS: Array[String] = ["items", "gifts"]
 ## Keys that hold a reward or price amount; each one must be above 0.
-const AMOUNT_KEYS: Array[String] = ["waymarks", "reward", "ribbons", "coins", "amount", "price"]
+const REWARD_KEYS: Array[String] = ["waymarks", "reward", "ribbons", "coins", "amount", "price"]
 
 static func validate() -> PackedStringArray:
 	var errors: PackedStringArray = []
@@ -43,7 +43,7 @@ static func _walk(v: Variant, where: String, items: Dictionary, errors: PackedSt
 				for y: Variant in x:
 					if y is String and not items.has(str(y)):
 						errors.append("%s: unknown item '%s'" % [at, y])
-			if key in AMOUNT_KEYS and _is_number(x) and float(x) <= 0.0:
+			if key in REWARD_KEYS and _is_number(x) and float(x) <= 0.0:
 				errors.append("%s: amount %s is not above 0" % [at, str(x)])
 			_walk(x, at, items, errors)
 	elif v is Array:
