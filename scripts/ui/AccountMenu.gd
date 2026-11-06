@@ -46,7 +46,7 @@ static func _claim_transfer(menu: MenuHost) -> bool:
 	if GameState.in_game:
 		await menu.info("Enter the code on the title screen.")
 		return false
-	if not await menu.confirm("This phone will get the journeys of the other phone. Journeys saved on this phone are replaced. Continue?"):
+	if not await menu.confirm_danger("This phone will get the journeys of the other phone. Journeys saved on this phone are replaced. Continue?"):
 		return false
 	var code: String = await TextPrompt.ask(menu, "Transfer code", false, 16)
 	if code.is_empty():
@@ -72,9 +72,9 @@ static func _toggle_social(menu: MenuHost) -> void:
 		await menu.info("No connection right now. Try again in a moment.")
 
 static func _delete(menu: MenuHost) -> bool:
-	if not await menu.confirm("Delete your account? All journeys and friends are removed for good."):
+	if not await menu.confirm_danger("Delete your account? All journeys and friends are removed for good."):
 		return false
-	if not await menu.confirm("Really delete? This cannot be undone."):
+	if not await menu.confirm_danger("Really delete? This cannot be undone.", "Delete", "Keep"):
 		return false
 	var r: Dictionary = await Online.delete_account()
 	if not r.ok:

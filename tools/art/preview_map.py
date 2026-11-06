@@ -1,6 +1,10 @@
 """Renders data/maps/<id>.json to a PNG with the Era I atlas (same variant rules as
 TilesetFactory.atlas_coords), for reviewing map layouts without starting Godot.
 Usage: python3 tools/art/preview_map.py <map_id> [out.png] [scale]
+       python3 tools/art/preview_map.py --region veydal [out.png]
+The region mode (area 3 item 897) puts every map of a region on one sheet, placed by its grid
+cell in data/world_layout.json, so gaps in the layout show at a glance. Default output:
+build/previews/<region>.png. A map id may name a floor: "copper_deep@2".
 """
 import json
 import os
@@ -15,18 +19,26 @@ LEGEND = {".": "GRASS", ",": "TALL_GRASS", "_": "PATH", "~": "WATER", "T": "TREE
           "R": "ROOF", "D": "DOOR", "f": "FLOOR", "#": "FENCE", "S": "SIGN", "*": "FLOWER",
           "C": "COUNTER", "W": "INNER_WALL", "o": "SPRING", "X": "RIFT", "^": "CLIFF",
           "=": "STAIRS", "%": "REEDS", ":": "SCREE", "+": "PIER", "|": "TOWER", "L": "LAMP",
-          "@": "ROCK"}
-MASKED = {"PATH", "WATER", "ROOF", "WALL", "FENCE", "CLIFF", "PIER"}
+          "@": "ROCK", "w": "WADE", "B": "BOULDER", "P": "PLATE", "k": "CRACKED", "v": "VINES",
+          "Y": "PLANK"}
+MASKED = {"PATH", "WATER", "ROOF", "WALL", "FENCE", "CLIFF", "PIER", "WADE"}
 SCATTERED = {"GRASS", "TALL_GRASS", "TREE", "FLOWER", "REEDS", "SCREE", "ROCK"}
 JOINS = {"PATH": {"DOOR", "SIGN"}, "WALL": {"DOOR"}, "FENCE": {"SIGN"},
-         "WATER": {"REEDS", "PIER"}, "PIER": {"PATH", "STAIRS"}, "CLIFF": {"STAIRS"}}
+         "WATER": {"REEDS", "PIER", "WADE"}, "WADE": {"WATER"}, "PIER": {"PATH", "STAIRS"}, "CLIFF": {"STAIRS"}}
 
 
-def main() -> None:
-    map_id = sys.argv[1]
-    out = sys.argv[2] if len(sys.argv) > 2 else f"{map_id}.png"
-    scale = int(sys.argv[3]) if len(sys.argv) > 3 else 2
-    d = json.load(open(os.path.join(ROOT, "data", "maps", map_id + ".json")))
+def load_level(map_id: str) -> dict:
+    file, _, level = map_id.partition("@")
+    d = json.load(open(os.path.join(ROOT, "data", "maps", file + ".json")))
+    if level:
+        floor = dict(d["floors"][int(level) - 1])
+        for k in ("name", "region"):
+            floor.setdefault(k, d.get(k))
+        return floor
+    return d
+
+
+def render(d: dict) -> Image.Image:
     rows = d["rows"]
     atlas = Image.open(os.path.join(ROOT, "art", "era1", "tiles", "overworld.png"))
     h, w = len(rows), max(len(r) for r in rows)
@@ -52,11 +64,53 @@ def main() -> None:
             img.paste(atlas.crop((col * 16, v * 16, col * 16 + 16, v * 16 + 16)), (x * 16, y * 16))
     for n in d.get("npcs", []):
         style = n.get("sprite", "villager")
-        sheet = Image.open(os.path.join(ROOT, "art", "era1", "chars", style + ".png"))
+        sheet_path = os.path.join(ROOT, "art", "era1", "chars", style + ".png")
+        if not os.path.exists(sheet_path):
+            sheet_path = os.path.join(ROOT, "art", "era1", "chars", "villager.png")
+        sheet = Image.open(sheet_path)
         col = ["down", "up", "left", "right"].index(n.get("facing", "down"))
         fr = sheet.crop((col * 16, 0, col * 16 + 16, 16))
         img.paste(fr, (int(n["x"]) * 16, int(n["y"]) * 16), fr)
-    img.resize((w * 16 * scale, h * 16 * scale), Image.NEAREST).save(out)
+    return img
+
+
+def region_sheet(region: str, out: str) -> None:
+    from PIL import ImageDraw
+    layout = json.load(open(os.path.join(ROOT, "data", "world_layout.json")))
+    places = {k: v for k, v in layout["maps"].items() if v.get("region") == region and "pos" in v}
+    if not places:
+        raise SystemExit("no maps in region %s" % region)
+    cell_w, cell_h, label = 12 * 8, 40 * 8, 12
+    xs = [p["pos"][0] for p in places.values()]
+    ys = [p["pos"][1] for p in places.values()]
+    x0, y0 = min(xs), min(ys)
+    sheet = Image.new("RGBA", ((max(xs) - x0 + 1) * (cell_w + 8) + 8, (max(ys) - y0 + 1) * (cell_h + label + 8) + 8),
+                      (42, 30, 44, 255))
+    draw = ImageDraw.Draw(sheet)
+    for pid, p in sorted(places.items()):
+        d = load_level(pid)
+        img = render(d)
+        img.thumbnail((cell_w, cell_h), Image.NEAREST)
+        px = 8 + (p["pos"][0] - x0) * (cell_w + 8)
+        py = 8 + (p["pos"][1] - y0) * (cell_h + label + 8)
+        draw.text((px, py), pid, fill=(242, 227, 194, 255))
+        sheet.paste(img, (px, py + label), img)
+    os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
+    sheet.save(out)
+    print("wrote", out)
+
+
+def main() -> None:
+    if sys.argv[1] == "--region":
+        region = sys.argv[2]
+        out = sys.argv[3] if len(sys.argv) > 3 else os.path.join(ROOT, "build", "previews", region + ".png")
+        region_sheet(region, out)
+        return
+    map_id = sys.argv[1]
+    out = sys.argv[2] if len(sys.argv) > 2 else f"{map_id}.png"
+    scale = int(sys.argv[3]) if len(sys.argv) > 3 else 2
+    img = render(load_level(map_id))
+    img.resize((img.width * scale, img.height * scale), Image.NEAREST).save(out)
 
 
 if __name__ == "__main__":
