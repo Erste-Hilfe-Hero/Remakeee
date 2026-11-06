@@ -10,6 +10,12 @@ const STAGE_STATS: Array[String] = ["atk", "def", "foc", "spd"]
 ## Overcharge moves: each leftover Energy point adds this much to the power multiplier.
 const OVERCHARGE_PER_ENERGY: float = 0.15
 
+## Energy tax (energy_tax effect): extra Energy per move, and how many turns a tax holds by default.
+const ENERGY_TAX_COST: int = 1
+const ENERGY_TAX_TURNS: int = 2
+## field_element moves: power added while they take the active field's element.
+const FIELD_ELEMENT_POWER: int = 20
+
 ## Field (Rift resonance) multipliers for the boosted and the weakened element.
 const FIELD_BOOST: float = 1.2
 const FIELD_WEAKEN: float = 0.85
@@ -159,9 +165,50 @@ static func field_mult(field: String, element: int) -> float:
 		return FIELD_WEAKEN
 	return 1.0
 
-## Damage multiplier from traits, held items and the field for one hit.
+## Power multiplier of a bonus_vs_status move against [param target] (1.0 when it doesn't apply).
+## "*" matches any status, "stage_down" any lowered stat stage.
+static func status_bonus(move: MoveData, target: Spirling) -> float:
+	if target == null:
+		return 1.0
+	for fx: Dictionary in move.effects:
+		if StringName(fx.get("id", "")) != &"bonus_vs_status":
+			continue
+		var want: String = str(fx.get("vs_status", ""))
+		var hit: bool = false
+		if want == "stage_down":
+			for stat: String in STAGE_STATS:
+				hit = hit or target.stage(stat) < 0
+		elif not target.status.is_empty():
+			hit = want == "*" or want == target.status
+		if hit:
+			return float(fx.get("vs_mult", 1.0))
+	return 1.0
+
+static var _resolved: Dictionary[String, MoveData] = {}
+
+## The move as it lands right now: a field_element move takes the element the active field
+## boosts and gains power. Returns [param move] itself when nothing changes; the changed copy is
+## cached per move and field, so MoveData from the Database is never mutated.
+static func resolve_move(move: MoveData, field: String) -> MoveData:
+	var f: Dictionary = FIELDS.get(field, {})
+	if f.is_empty():
+		return move
+	for fx: Dictionary in move.effects:
+		if StringName(fx.get("id", "")) != &"field_element":
+			continue
+		var key: String = move.move_name + "@" + field
+		if not _resolved.has(key):
+			var copy: MoveData = move.duplicate()
+			copy.element = Elements.E.get(str(f.boost), move.element)
+			copy.power = move.power + int(fx.get("power_bonus", FIELD_ELEMENT_POWER))
+			_resolved[key] = copy
+		return _resolved[key]
+	return move
+
+## Damage multiplier from traits, held items, the field and status bonuses for one hit.
 static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field: String) -> float:
 	var m: float = field_mult(field, move.element)
+	m *= status_bonus(move, target)
 	m *= float(reaction(move, target).get("mult", 1.0))
 	if move.kind == MoveData.Kind.PHYSICAL:
 		m *= mult_key(target, "phys_taken")

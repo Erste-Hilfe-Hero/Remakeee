@@ -1,6 +1,6 @@
 class_name FriendsMenu
 extends RefCounted
-## Menu > Friends: friend code, friends with Tamer cards, requests, Lantern Mail (greetings and
+## Menu > Friends: friend code, friends with Wanderer cards, requests, Lantern Mail (greetings and
 ## daily gifts), the world goal of the week and the weekly board (items 21-48, 81-85, 121-160).
 ## Picking "Echo duel" closes the menu and leaves the friend's team in [member PauseMenu.echo_duel].
 
@@ -42,6 +42,7 @@ static func run(menu: PauseMenu) -> void:
 		labels.append("Lantern Mail (%d new)" % unread if unread > 0 else "Lantern Mail")
 		labels.append("Requests (%d)" % incoming.size() if incoming.size() > 0 else "Requests")
 		labels.append("Add a friend...")
+		labels.append("Copy my code %s" % Online.pretty_code(Online.friend_code()))
 		labels.append("World goal of the week")
 		labels.append("Weekly board")
 		labels.append("Blocked Wayfarers")
@@ -57,9 +58,10 @@ static func run(menu: PauseMenu) -> void:
 			0: await run_mail(menu, mail_r.data if mail_r.data is Array else [])
 			1: await run_requests(menu, incoming, data.get("outgoing", []))
 			2: await add_friend(menu)
-			3: await run_goal(menu)
-			4: await run_board(menu)
-			5: await run_blocked(menu, data.get("blocked", []))
+			3: copy_code(menu)
+			4: await run_goal(menu)
+			5: await run_board(menu)
+			6: await run_blocked(menu, data.get("blocked", []))
 
 ## Friends and Lantern Mail are asked for at the same time, while the menu already shows
 ## "Loading..." (item 2129). Returns [friends_list result, mail_list result].
@@ -93,7 +95,7 @@ static func last_seen_text(unix: int) -> String:
 		return "seen %d h ago" % (ago / 3600)
 	return "seen %d days ago" % (ago / 86400)
 
-## The Tamer card (item 24).
+## The Wanderer card (item 24).
 static func card_text(f: Dictionary) -> String:
 	var c: Dictionary = f.get("card", {}) if f.get("card") is Dictionary else {}
 	var lines: Array[String] = [
@@ -139,12 +141,14 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 				if not bool(f.get("has_team", false)):
 					await menu.info("%s has no echo team yet." % str(f.name))
 					continue
-				if await menu.confirm("Echo duel with %s's team? Everyone fights at Ring %d. Nothing is lost, your team is rested after." % [str(f.name), EchoTeam.DUEL_LEVEL]):
-					var t: Dictionary = await Online.call_fn("friend_team", {"p_code": code})
-					if t.ok and t.data is Dictionary and bool(t.data.get("ok", false)):
-						menu.echo_duel = {"code": code, "name": str(t.data.name), "team": t.data.team}
-						return true
+				var t: Dictionary = await Online.call_fn("friend_team", {"p_code": code})
+				if not (t.ok and t.data is Dictionary and bool(t.data.get("ok", false))):
 					await menu.info(error_text(t))
+					continue
+				var ring: int = EchoTeam.duel_ring(t.data)
+				if await menu.confirm("Echo duel with %s's team? Everyone fights at Ring %d. Nothing is lost, your team is rested after." % [str(f.name), ring]):
+					menu.echo_duel = {"code": code, "name": str(t.data.name), "team": t.data.team, "ring": ring}
+					return true
 			5:
 				if await menu.confirm("Remove %s from your friends?" % str(f.name)):
 					await Online.call_fn("friend_remove", {"p_code": code})
@@ -176,9 +180,15 @@ static func report(menu: MenuHost, code: String, name: String) -> void:
 	else:
 		await menu.info(error_text(r))
 
+## Puts the own friend code on the clipboard (item 2171).
+static func copy_code(menu: MenuHost) -> void:
+	DisplayServer.clipboard_set(Online.pretty_code(Online.friend_code()))
+	Sound.sfx("confirm")
+	menu.toast("Copied.")
+
 static func add_friend(menu: MenuHost) -> void:
 	await menu.info("Your friend code is %s. Share it only with people you know. Never share your real name or address." % Online.pretty_code(Online.friend_code()))
-	var code: String = await TextPrompt.ask(menu, "Friend code of your friend", false, 9)
+	var code: String = await CodePrompt.ask(menu, "Friend code of your friend", 8)
 	if code.is_empty():
 		return
 	var r: Dictionary = await Online.call_fn("friend_request", {"p_code": code})
@@ -364,7 +374,7 @@ static func run_board(menu: MenuHost) -> void:
 		for row: Dictionary in r.data.get("rows", []):
 			var n: String = str(row.get("name", ""))
 			var you: String = "  " + Loc.t("(you)") if bool(row.get("me", false)) else ""
-			lines.append("%d. %s  %d%s" % [int(row.rank), n if not n.is_empty() else "Tamer", int(row.score), you])
+			lines.append("%d. %s  %d%s" % [int(row.rank), n if not n.is_empty() else "Wanderer", int(row.score), you])
 		if lines.is_empty():
 			lines.append("No runs yet this week. Try the weekly challenge!")
 		var title: String = "Weekly board, friends" if friends_only else "Weekly board, everyone"

@@ -1,0 +1,10 @@
+{
+ "_note": "Chapter 11, Madderby guild house: Ysolde explains the Wide Rift's far end in Ashmere and anchor bonds (plan items 1444, 1456).",
+ "steps": [
+  {"say": ["Ysolde spreads an old file across the table. The paper is brown with age."]},
+  {"say": ["Ysolde: The Wide Rift has two ends. This one, and a far end in the ash highlands of Ashmere.", "Ysolde: The gravers there engrave maps in copper. Their plates hold a place still, for a hundred years."]},
+  {"say": ["Ysolde: And this, for your friend Kestra. Rift-born Spirlings don't need an open Rift.", "Ysolde: They need an anchor bond. One person. Tatter has one already."]},
+  {"say": ["Ysolde: Take the mountain railway north. Master graver Halvard will help you. Go, apprentice."]},
+  {"flag": "act2_end"}
+ ]
+}

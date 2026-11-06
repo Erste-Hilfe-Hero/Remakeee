@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+"""Prints SQL that fills public.game_species from data/spirlings.json (plan area 7, leagues) and
+public.known_ids (species, moves and items from the same folder, anti-cheat item 2922).
+
+The server needs the species list and learnsets to rebuild fair league teams. It is filled at
+every deploy (server/setup.sh) and before the SQL tests (tools/online/test_sql.sh), so new
+Spirlings and moves from other areas reach the server without a new migration.
+Usage: tools/online/game_data_sql.py [path/to/spirlings.json] | psql ...
+"""
+import json
+import os
+import sys
+
+
+def main() -> None:
+    path = sys.argv[1] if len(sys.argv) > 1 else "data/spirlings.json"
+    with open(path, encoding="utf-8") as f:
+        raw = json.load(f)
+    earlier = {}
+    # Like Database.earlier_form: the first species (in file order) that unfolds into it.
+    for s in raw:
+        paths = s.get("unfold") if isinstance(s.get("unfold"), list) else (
+            [{"to": s["evolves_to"]}] if s.get("evolves_to") else [])
+        for p in paths:
+            if isinstance(p, dict) and p.get("to"):
+                earlier.setdefault(p["to"], s["name"])
+    rows = []
+    for s in raw:
+        learn = []
+        for lvl in sorted(s.get("learnset", {}), key=int):
+            entry = s["learnset"][lvl]
+            for mv in entry if isinstance(entry, list) else [entry]:
+                learn.append([int(lvl), mv])
+        rows.append({"name": s["name"], "learn": learn, "earlier": earlier.get(s["name"])})
+    data = json.dumps(rows).replace("$game$", "")
+    print("begin;")
+    print("insert into public.game_species (name, learn, earlier)")
+    print("select x->>'name', x->'learn', x->>'earlier' from jsonb_array_elements($game$" + data + "$game$::jsonb) x")
+    print("on conflict (name) do update set learn = excluded.learn, earlier = excluded.earlier;")
+    print("delete from public.game_species where name not in (select x->>'name' from jsonb_array_elements($game$"
+          + data + "$game$::jsonb) x);")
+    folder = os.path.dirname(os.path.abspath(path))
+    known = [{"kind": "species", "id": s["name"]} for s in raw]
+    for kind, name, key in (("move", "moves.json", "name"), ("item", "items.json", "id")):
+        p = os.path.join(folder, name)
+        if os.path.exists(p):
+            with open(p, encoding="utf-8") as f:
+                known += [{"kind": kind, "id": str(x[key])} for x in json.load(f) if isinstance(x, dict) and key in x]
+    ids = json.dumps(known).replace("$game$", "")
+    print("delete from public.known_ids;")
+    print("insert into public.known_ids (kind, id) select x->>'kind', x->>'id' from jsonb_array_elements($game$"
+          + ids + "$game$::jsonb) x on conflict do nothing;")
+    print("commit;")
+
+
+if __name__ == "__main__":
+    main()

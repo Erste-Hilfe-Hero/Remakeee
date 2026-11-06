@@ -42,7 +42,7 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
 ### 3.2 Freunde, Leuchtpost und Meldungen
 
 - **Daten:** dein Freundescode, deine Freundesliste und Anfragen, Blockierungen, Grüße (nur feste Sätze als
-  Nummer, kein freier Text), Geschenke, die Tamer-Karte (Zahlen wie versiegelte Rifts und Spielzeit, dein
+  Nummer, kein freier Text), Geschenke, die Wanderer-Karte (Zahlen wie versiegelte Rifts und Spielzeit, dein
   Lieblings-Spirling), dein aktueller Ort im Spiel (nie ein echter Standort), dein Echo-Team (Art und Stufe
   deiner Spirlings, keine Spitznamen), dein Beitrag zum Weltziel der Woche und deine Punkte in der
   Wochen-Rangliste. Meldest du jemanden, speichern wir die Meldung mit Grund.
@@ -76,6 +76,19 @@ Wenn du uns schreibst, verarbeiten wir deine Nachricht, deine E-Mail-Adresse und
 dein Anliegen zu bearbeiten (Art. 6 Abs. 1 lit. b oder f DSGVO). Wir löschen die Korrespondenz nach
 Erledigung, spätestens nach 2 Jahren, sofern keine Aufbewahrungspflicht besteht.
 
+### 3.6 Ligen, Kampfprüfung und Echtheitsprüfung
+
+- **Daten:** dein Ligateam (Art, Ring und Techniken der gewählten Spirlings), deine Wertung und Stufe je
+  Liga und Saison, Zahl der Kämpfe und Siege, die Kampfaufnahme gewerteter Kämpfe (Zufallswert, Teams,
+  deine Eingaben, Ergebnis) und das Prüfergebnis des Schiedsrichters. Beim Speichern vergleicht der Server
+  Geld, Spielzeit und Spielinhalte mit dem vorigen Stand; abgelehnte Stände vermerken wir mit Grund.
+- **Zweck:** faire Ligen, Schutz vor Schummeln und manipulierten Spielständen. Der Schiedsrichter spielt
+  Kämpfe ohne Konto-Kennung nach; über Vermerke entscheidet ein Mensch (Ali), nicht ein Automat allein.
+- **Rechtsgrundlage:** Art. 6 Abs. 1 lit. b DSGVO (Ligen als Teil des Spiels) und lit. f (berechtigtes
+  Interesse an einem fairen Spiel).
+- **Speicherdauer:** Ligawerte bis zum Ende der folgenden Saison, Kampfaufnahmen 30 Tage, Vermerke
+  6 Monate; alles endet spätestens mit dem Löschen des Kontos.
+
 ## 4. Speicherung auf deinem Gerät
 
 Das Spiel speichert auf deinem Gerät eine Kopie des Spielstands, deine Einstellungen und das Anmelde-Token.
@@ -108,6 +121,10 @@ Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschun
 der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerspruch gegen Verarbeitungen auf Grundlage
 von Art. 6 Abs. 1 lit. f (Art. 21). Schreib dazu an aa.amuri@icloud.com und nenne deine Spieler-ID (Einstellungen im
 Spiel).
+
+**Daten herunterladen:** im Spiel unter Einstellungen → Konto → „Meine Daten herunterladen“ bekommst du
+alles, was der Server über dein Konto speichert, als JSON-Datei (Art. 15 und 20 DSGVO). Andere Spieler
+erscheinen darin nur als „another player“.
 
 **Konto löschen:** im Spiel unter Einstellungen → Konto → „Konto löschen“ oder über
 https://[DOMAIN]/konto-loeschen. Konto und Spielstand werden dabei endgültig gelöscht.
