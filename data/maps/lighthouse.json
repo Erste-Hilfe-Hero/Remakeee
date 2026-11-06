@@ -40,7 +40,17 @@
    "facing": "right",
    "dialogue": "lighthouse/aldo_dock",
    "sprite": "elder",
-   "show_flag": "kestra_dock_talk"
+   "show_flag": "kestra_dock_talk",
+   "hide_flag": "aldo_dock_told"
+  },
+  {
+   "id": "aldo_post",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "lighthouse/aldo_post",
+   "sprite": "elder",
+   "show_flag": "aldo_dock_told"
   },
   {
    "id": "marla",

@@ -642,9 +642,10 @@ static func keepsake_suggestion(s: Spirling) -> String:
 		return ""
 	return "Suits it: %s" % str(Database.item(hint).get("name", hint))
 
-## One storage row: favourite star, name, Ring, and a keepsake mark (item 357).
+## One storage row: favourite star, name, Ring, and a keepsake mark (item 357). A Spirling on a
+## roaming trip carries the backpack glyph (plan 3448).
 static func storage_line(s: Spirling) -> String:
-	return "%s%s R%d%s" % ["* " if s.favorite else "", s.display_name(), s.level, "  +%s" % str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else ""]
+	return "%s%s%s R%d%s" % [Expeditions.GLYPH + " " if Expeditions.is_away(s.uid) else "", "* " if s.favorite else "", s.display_name(), s.level, "  +%s" % str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else ""]
 
 static func party_line(s: Spirling) -> String:
 	var tag: String = " " + Loc.t("worn out") if s.is_fainted() else ""

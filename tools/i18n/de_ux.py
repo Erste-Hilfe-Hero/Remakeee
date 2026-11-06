@@ -87,7 +87,6 @@ T = {
 "Battery saver: %s": "Akku sparen: %s",
 "Less motion: %s": "Ruhiges Bild: %s",
 "High contrast: %s": "Hoher Kontrast: %s",
-"Friends, mail: %s": "Freunde, Post: %s",
 "Shop   %s": "Laden   %s",
 "worn out": "erschöpft",
 "Ring %d": "Ring %d",

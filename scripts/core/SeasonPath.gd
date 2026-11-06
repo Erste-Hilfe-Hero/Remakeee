@@ -40,7 +40,8 @@ static func season_key() -> String:
 ## This season's progress (a new season starts at 0).
 static func state() -> Dictionary:
 	var st: Dictionary = GameState.as_dict(GameState.records.get("season_path", {}))
-	if str(st.get("season", "")) != season_key():
+	var stored: String = str(st.get("season", ""))
+	if stored != season_key() and not GameState.time_went_back(stored, season_key()):
 		st = {"season": season_key(), "points": 0, "claimed": 0}
 		GameState.records["season_path"] = st
 	return st
