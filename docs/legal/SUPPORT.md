@@ -5,7 +5,7 @@ Nur [E-MAIL] ersetzen.
 
 # Chimora: Hilfe und Kontakt
 
-**E-Mail:** [E-MAIL] (Antwort meist innerhalb von 2 Werktagen)
+**E-Mail:** aa.amuri@icloud.com (Antwort meist innerhalb von 2 Werktagen)
 
 ## Häufige Fragen
 
@@ -35,7 +35,7 @@ Weitere Seiten: [Datenschutz](/datenschutz) · [Nutzungsbedingungen](/nutzungsbe
 
 # Chimora: help and contact
 
-**Email:** [EMAIL] (we usually answer within 2 working days)
+**Email:** aa.amuri@icloud.com (we usually answer within 2 working days)
 
 **Why does Chimora need the internet?** Your save lives on our server in Germany, so it is safe if your
 phone breaks, and you can swap greetings, gifts and duels with friends. If the connection drops, the game
