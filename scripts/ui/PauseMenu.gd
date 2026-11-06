@@ -31,6 +31,8 @@ func run() -> void:
 			labels.insert(labels.find("Save"), "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
 			labels.insert(1, "Travel")
+		if GameState.has_flag("aldo_gift"):
+			labels.insert(labels.find("Goals") + 1, "Map book")
 		if room_puzzle:
 			labels.insert(1, "Room")
 		if Online.league_on():
@@ -41,6 +43,7 @@ func run() -> void:
 		match labels[idx]:
 			"Goals":
 				await info(goals_text())
+			"Map book": await MapBookMenu.run(self)
 			"Team": await run_team()
 			"Friends":
 				await FriendsMenu.run(self)
@@ -99,6 +102,9 @@ static func goals_text() -> String:
 	var tasks: Array[String] = DailyTasks.lines()
 	if not tasks.is_empty():
 		text += "\n\n" + "\n".join(tasks)
+	var next: String = Collection.next_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size(), GameState.flags)
+	if not next.is_empty():
+		text += "\n\n" + Loc.t(next)
 	var post: Array[String] = Postgame.lines()
 	if not post.is_empty():
 		text += "\n\n" + "\n".join(post)
@@ -208,6 +214,9 @@ static func records_text() -> String:
 	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
 	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
 	lines.append(Collection.progress_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size()))
+	var titles: Array[String] = Collection.titles()
+	if not titles.is_empty():
+		lines.append("Titles: %s" % ", ".join(titles.map(func(t: String) -> String: return Loc.t(t))))
 	if GameState.iron_oath:
 		lines.append("Iron Oath kept. In the Sanctuary: %d" % GameState.sanctuary.size())
 		for s: Spirling in GameState.sanctuary:

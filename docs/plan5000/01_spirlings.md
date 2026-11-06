@@ -443,11 +443,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 407. [P3] Synchronisiere das Lager mit dem Server-Speicherstand über das bestehende Online-Speichern, ohne Tauschfunktion.
 
 ### Sammelziele
-408. [P1] Erweitere Collection.GOALS um Ziele pro Region (Veydal 10, 20, 30, alle), damit neue Arten nicht nur die Gesamtzahl verlängern.
-409. [P1] Ersetze das Ziel "kinds_11" durch eine gleitende Reihe 3, 5, 8, 12, 16, 20, 25, 30, alle, angepasst an 40 Veydal-Arten.
-410. [P1] Lass Belohnungen für Sammelziele nur Gegenstände aus dem Spiel, Münzen, Jackenfarben oder Titel sein, nie etwas, das man auch kaufen kann, und halte das in Collection.gd fest.
-411. [P1] Zeige im Ziele-Menü das nächste Sammelziel mit verbleibender Zahl ("Noch 3 Arten bis Kapitel-Stempel Veydal").
-412. [P1] Teste, dass jedes Sammelziel mit Inhalten des Akt I ohne Online-Funktionen erreichbar ist, wenn es zu Veydal gehört.
+408. [x] [P1] Erweitere Collection.GOALS um Ziele pro Region (Veydal 10, 20, 30, alle), damit neue Arten nicht nur die Gesamtzahl verlängern.
+409. [x] [P1] Ersetze das Ziel "kinds_11" durch eine gleitende Reihe 3, 5, 8, 12, 16, 20, 25, 30, alle, angepasst an 40 Veydal-Arten.
+410. [x] [P1] Lass Belohnungen für Sammelziele nur Gegenstände aus dem Spiel, Münzen, Jackenfarben oder Titel sein, nie etwas, das man auch kaufen kann, und halte das in Collection.gd fest.
+411. [x] [P1] Zeige im Ziele-Menü das nächste Sammelziel mit verbleibender Zahl ("Noch 3 Arten bis Kapitel-Stempel Veydal").
+412. [x] [P1] Teste, dass jedes Sammelziel mit Inhalten des Akt I ohne Online-Funktionen erreichbar ist, wenn es zu Veydal gehört.
 413. [P2] Füge Element-Ziele hinzu: alle Arten eines Elements in einer Region gebondet gibt eine Element-Zeichnung im Kartenbuch.
 414. [P2] Füge Linien-Ziele hinzu: jede Stufe einer Linie mindestens einmal entfaltet gibt eine Zeile im Spirlog.
 415. [P2] Füge ein Prägungs-Ziel hinzu: 5 Ortsprägungen gebondet gibt die Jackenfarbe "Reisende".
