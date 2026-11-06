@@ -170,13 +170,14 @@ static func _send(menu: MenuHost, code: String, kind: String, phrase: int) -> vo
 	else:
 		await menu.info(error_text(r))
 
-static func report(menu: MenuHost, code: String, name: String) -> void:
+static func report(menu: MenuHost, code: String, name: String, context: String = "friends") -> void:
 	var reason: int = await menu.pick_strings("Why do you report %s?" % name, REPORT_REASONS)
 	if reason < 0:
 		return
-	var r: Dictionary = await Online.call_fn("report", {"p_code": code, "p_reason": reason})
+	var r: Dictionary = await Online.call_fn("report_in", {"p_code": code, "p_reason": reason, "p_context": context, "p_object": ""})
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
-		await menu.info("Thank you. We will look at it. You can also block %s." % name)
+		await menu.info(Loc.t("Thank you. Your report has number %d. We will look at it and tell you the result under Account, Messages from the team.") % int(r.data.get("report_id", 0))
+			+ "\n" + Loc.t("You can also block %s.") % name)
 	else:
 		await menu.info(error_text(r))
 
