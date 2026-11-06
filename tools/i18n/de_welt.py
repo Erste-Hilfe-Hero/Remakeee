@@ -76,3 +76,15 @@ T.update({
 "Weather: %s": "Wetter: %s",
 "Rain, fog and wind in the world. Off: always clear.": "Regen, Nebel und Wind in der Welt. Aus: immer klar.",
 })
+
+# Lake Line, Valley Coach and the Corvane ferry (area 3 items 1187-1191, 1289)
+T.update({
+"Lake Line": "Seelinie",
+"Valley Coach": "Talkutsche",
+"Ferry to Corvane": "Fähre nach Corvane",
+"The coach rattles along the valley road to %s.": "Die Kutsche rumpelt die Talstraße entlang nach %s.",
+"The ferry crosses the grey lake to %s.": "Die Fähre überquert den grauen See nach %s.",
+"The boat glides across the lake to %s.": "Das Boot gleitet über den See nach %s.",
+"Driver: I only stop where you've been on foot first. Walk the valley, then we'll drive it.": "Kutscher: Ich halte nur dort, wo du schon zu Fuß warst. Lauf das Tal ab, dann fahren wir es.",
+"Boatman: I only row to landings you've walked to yourself. Find them first, then I know the way.": "Bootsmann: Ich rudere nur zu Anlegern, die du selbst erreicht hast. Finde sie erst, dann kenne ich den Weg.",
+})

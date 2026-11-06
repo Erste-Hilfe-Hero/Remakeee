@@ -1,17 +1,21 @@
 {
- "_comment": "World map grid (area 3 item 896). pos = [x, y] cell on the region's grid (y grows south). Interiors lie 'inside' a place. Every warp between two places must be listed in neighbours; 'lines' are boat and coach routes (each stop connects to the others). Edit by hand; WorldValidator checks it.",
+ "_comment": "World map grid (area 3 item 896). pos = [x, y] cell on the region's grid (y grows south). Interiors lie 'inside' a place. Every warp between two places must be listed in neighbours; 'lines' are boat, coach and ferry routes (scripts/core/Transit.gd): stops are [x, y, facing] arrival cells, each stop connects to the others; a line needs no neighbours entry, the Corvane ferry is one anyway (the only edge between the regions). Edit by hand; WorldValidator checks it.",
  "regions": {
   "veydal": {"name": "Veydal", "origin": [0, 0], "size": [7, 7]},
   "corvane": {"name": "Corvane", "origin": [8, 0], "size": [4, 7]}
  },
- "lines": {},
+ "lines": {
+  "lake_line": {"name": "Lake Line", "kind": "boat", "stops": {"brindlewick": [8, 12, "down"], "reedhaven": [3, 8, "left"], "quillbrook": [5, 26, "down"]}},
+  "valley_coach": {"name": "Valley Coach", "kind": "coach", "stops": {"brindlewick": [9, 7, "right"], "thornridge": [9, 10, "right"], "copperfold": [9, 17, "right"], "wrenhollow": [9, 6, "right"]}},
+  "ferry_corvane": {"name": "Ferry to Corvane", "kind": "ferry", "story": true, "stops": {"brindlewick": [8, 18, "right"], "corvane_quay": [6, 22, "up"]}}
+ },
  "maps": {
   "cinder_rift": {"region": "veydal", "pos": [3, 0], "kind": "rift", "neighbours": ["thornridge", "kindle_vents"]},
   "thornridge": {"region": "veydal", "pos": [3, 1], "kind": "town", "neighbours": ["cinder_rift", "crowcrest", "lantern_steps"]},
   "crowcrest": {"region": "veydal", "pos": [3, 2], "kind": "route", "neighbours": ["thornridge", "fernstair", "murk_hollow", "gloamwood"]},
   "murk_hollow": {"region": "veydal", "pos": [4, 2], "kind": "cave", "neighbours": ["crowcrest"]},
   "fernstair": {"region": "veydal", "pos": [3, 3], "kind": "route", "neighbours": ["crowcrest", "brindlewick", "gloamwood"]},
-  "brindlewick": {"region": "veydal", "pos": [3, 4], "kind": "town", "neighbours": ["fernstair", "saltmarsh", "quillbrook"]},
+  "brindlewick": {"region": "veydal", "pos": [3, 4], "kind": "town", "neighbours": ["fernstair", "saltmarsh", "quillbrook", "corvane_quay"]},
   "lighthouse": {"inside": "brindlewick"},
   "echo_path": {"inside": "cinder_rift"},
   "map_house": {"inside": "brindlewick"},
@@ -31,6 +35,7 @@
   "bellstone_ruins": {"region": "veydal", "pos": [2, 2], "kind": "dungeon", "neighbours": ["gloamwood"]},
   "brackwater_sluice": {"region": "veydal", "pos": [4, 5], "kind": "dungeon", "neighbours": ["brackwater_fen"]},
   "lanternwell": {"inside": "brindlewick"},
-  "shatterfloor_mine": {"inside": "copperfold"}
+  "shatterfloor_mine": {"inside": "copperfold"},
+  "corvane_quay": {"region": "corvane", "pos": [0, 4], "kind": "town", "neighbours": ["brindlewick"]}
  }
 }

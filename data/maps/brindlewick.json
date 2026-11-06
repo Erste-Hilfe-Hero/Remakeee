@@ -152,6 +152,22 @@
    "sprite": "first_voice",
    "show_flag": "mirela_lamp",
    "hide_flag": "first_voice_velahra_away"
+  },
+  {
+   "id": "boatwoman",
+   "x": 7,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "brindlewick/boatwoman",
+   "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 10,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "brindlewick/coach",
+   "sprite": "villager"
   }
  ],
  "signs": [

@@ -62,5 +62,11 @@
     "Elder: Veydal owes you, young cartographer."
    ]
   }
+ },
+ "coach": {
+  "lines": [
+   "Driver Sela: Valley Coach, Thornridge stop. The road down is gentler than the stairs."
+  ],
+  "action": "transit valley_coach"
  }
 }
