@@ -1,6 +1,7 @@
 {
  "name": "Rest Spring",
  "region": "veydal",
+ "biome": "town",
  "backdrop": "field",
  "heal_point": [
   4,

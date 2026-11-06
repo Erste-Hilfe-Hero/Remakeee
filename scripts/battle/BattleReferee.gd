@@ -39,6 +39,10 @@ static func _hp(model: BattleModel, side: int) -> Array:
 ## Checks [param replay] (a BattleReplay snapshot with inputs) against [param claim].
 ## Returns {"verdict": "ok" | "mismatch" | "error", "detail": {...}}.
 static func check(replay: Variant, claim: Variant) -> Dictionary:
+	# League battles: the server chose seed and teams (claim.expect); only the inputs come
+	# from the game, so a changed team or seed can never count.
+	if replay is Dictionary and claim is Dictionary and (claim as Dictionary).get("expect") is Dictionary:
+		replay = from_expect(claim.expect, (replay as Dictionary).get("inputs", []))
 	var why: String = _shape_error(replay, claim)
 	if not why.is_empty():
 		return {"verdict": ERROR, "detail": {"reason": why}}
@@ -128,3 +132,22 @@ static func _shape_error(replay: Variant, claim: Variant) -> String:
 		if not front is Array or (front as Array).size() != 2:
 			return "front"
 	return ""
+
+## The battle the server set up (league_find): its seed, both teams as {species, level, moves}
+## rows, AI tier and front size. The game builds its league battle from the same snapshot.
+static func from_expect(expect: Dictionary, inputs: Variant = []) -> Dictionary:
+	var teams: Array = []
+	var given: Variant = expect.get("teams", [])
+	for t: Variant in (given as Array if given is Array else []):
+		var rows: Array = []
+		for r: Variant in (t as Array if t is Array else []):
+			if r is Dictionary:
+				rows.append({"species": str(r.get("species", "")), "level": int(r.get("level", 1)),
+					"moves": r.get("moves", []) if r.get("moves") is Array else []})
+			else:
+				rows.append(r)
+		teams.append(rows)
+	var front: Variant = expect.get("front", [1, 1])
+	return {"seed": int(expect.get("seed", 0)), "wild": false, "ai": int(expect.get("ai", 2)), "teams": teams,
+		"front": front, "items_allowed": bool(expect.get("items_allowed", false)), "inventory": {},
+		"inputs": inputs if inputs is Array else []}

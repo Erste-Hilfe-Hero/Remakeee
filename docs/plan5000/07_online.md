@@ -81,11 +81,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2729. [P3] Zwei Spieler im selben Raum können ein Duell per QR-Code auf dem Bildschirm starten, ohne den Freundescode zu tippen.
 ### Gleichstand-Liga (fair, mit Ausgleich)
 2730. [P1] Die Gleichstand-Liga ist die Standardliga und wird im Menü "Ligen" zuerst gezeigt, mit dem Satz "Hier zählt nur dein Können. Gekaufte Vorteile wirken hier nicht."
-2731. [P1] In der Gleichstand-Liga kämpfen alle Spirlings auf Ring 50 mit Grundwerten aus `data/spirlings.json`; Wachstum, Trainingsboni und gekaufte Werte werden für den Kampf auf null gesetzt.
+2731. [x] [P1] In der Gleichstand-Liga kämpfen alle Spirlings auf Ring 50 mit Grundwerten aus `data/spirlings.json`; Wachstum, Trainingsboni und gekaufte Werte werden für den Kampf auf null gesetzt.
 2732. [P1] Gegenstände und Andenken mit Herkunftsmarke aus dem Shop sind in der Gleichstand-Liga gesperrt; die Liste der gesperrten Herkunftsmarken steht in `server_config.league_fair_blocked_sources`, die Bereich 10 befüllt.
-2733. [P1] Erlaubt sind nur Techniken, die der Spirling bis Ring 50 laut Spieldaten lernen kann; der Server prüft jede Technik gegen diese Liste.
-2734. [P1] Der Server baut das Ligateam selbst aus dem gespeicherten Team neu auf (Funktion `_league_team_fair`), der Client schickt nur Spirling-Kennungen und Technikwahl.
-2735. [P1] Ein SQL-Test prüft, dass zwei Konten mit gleichem Spirling, aber verschiedenem Kaufstand, in der Gleichstand-Liga exakt dieselben Kampfwerte bekommen.
+2733. [x] [P1] Erlaubt sind nur Techniken, die der Spirling bis Ring 50 laut Spieldaten lernen kann; der Server prüft jede Technik gegen diese Liste.
+2734. [x] [P1] Der Server baut das Ligateam selbst aus dem gespeicherten Team neu auf (Funktion `_league_team_fair`), der Client schickt nur Spirling-Kennungen und Technikwahl.
+2735. [x] [P1] Ein SQL-Test prüft, dass zwei Konten mit gleichem Spirling, aber verschiedenem Kaufstand, in der Gleichstand-Liga exakt dieselben Kampfwerte bekommen.
 2736. [P2] Pro Spirling-Art darf ein Ligateam nur ein Exemplar haben, damit nicht dieselbe starke Art dreifach antritt.
 2737. [P2] Andenken aus dem normalen Spiel sind erlaubt, aber jedes nur einmal pro Team.
 2738. [P2] Belohnungen der Gleichstand-Liga sind Ansehen-Abzeichen, Kartenrahmen und Titel, sichtbar auf der Wanderer-Karte.
@@ -99,7 +99,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2746. [P3] Eine Leih-Team-Woche pro Saison: alle bekommen dieselben drei Teams vom Server und wählen eins.
 2747. [P3] Eine Statistik "Meistgewählte Spirlings der Saison" in der Gleichstand-Liga, ohne Spielernamen.
 
-2748. [P1] Die Angleichung rechnet der Schiedsrichter mit derselben Funktion wie die Datenbank, und ein Test vergleicht beide Ergebnisse für alle 21 Spirlings.
+2748. [x] [P1] Die Angleichung rechnet der Schiedsrichter mit derselben Funktion wie die Datenbank, und ein Test vergleicht beide Ergebnisse für alle 21 Spirlings.
 2749. [P2] Spirlings, die nach dem Start neu ins Spiel kommen, sind in der ersten Woche nach Erscheinen in der Gleichstand-Liga gesperrt, damit alle gleich starten.
 2750. [P3] Eine Proberunde gegen ein Server-Team zählt nicht und zeigt die Regeln der Gleichstand-Liga im Kampf.
 2751. [P3] Ein Saison-Rückblick zeigt die eigenen Siege nach Element des Gegners.
@@ -107,7 +107,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 ### Offene Liga (alles erlaubt)
 2753. [P1] Die Offene Liga steht im Menü direkt unter der Gleichstand-Liga, klar beschriftet mit "Offene Liga: alle Vorteile erlaubt, auch gekaufte".
 2754. [P1] In der Offenen Liga kämpft jeder mit seinem echten Team und echtem Ring (bis 60), mit allen Gegenständen, auch aus dem Shop.
-2755. [P1] Wertung, Gegnersuche und Belohnungen der beiden Ligen sind komplett getrennt (eigene Tabellen `league_open_*`), damit Kaufvorteile die Gleichstand-Liga nicht berühren.
+2755. [x] [P1] Wertung, Gegnersuche und Belohnungen der beiden Ligen sind komplett getrennt (eigene Tabellen `league_open_*`), damit Kaufvorteile die Gleichstand-Liga nicht berühren.
 2756. [P2] Die Gegnersuche der Offenen Liga berücksichtigt zusätzlich die Teamstärke (Summe aus Ring und Werten), damit ein Neuling nicht auf ein voll ausgebautes Team trifft.
 2757. [P2] Vor dem ersten Kampf zeigt das Spiel einmal einen Hinweis: "Hier treffen manche auf gekaufte Vorteile. In der Gleichstand-Liga zählt nur Können."
 2758. [P2] Die Offene Liga hat eigene Ranglisten und einen eigenen Titel, der auf der Karte mit dem Zusatz "Offen" erscheint.
@@ -123,10 +123,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2767. [P3] Nach jedem Kampf zeigt ein Knopf "Gegnerteam ansehen" Ring, Techniken und Andenken des Gegners.
 2768. [P3] Eine SQL-Abfrage in `docs/ONLINE.md` zeigt Ali pro Woche, wie oft Teams mit und ohne Kaufvorteile gewinnen.
 ### Saisons, Wertung und Gegnersuche
-2769. [P1] Eine Saison dauert 6 Wochen, Start und Ende nach Server-Zeit, gespeichert in Tabelle `league_seasons` (Kennung, Start, Ende, Regelversion).
-2770. [P1] Die Wertung nutzt Glicko-2 mit Startwert 1500 und Abweichung 350, berechnet in der Datenbank-Funktion `_league_rate` nach jedem geprüften Kampf.
-2771. [P1] Sichtbar sind nur Stufen statt Zahlen: Funke, Glut, Flamme, Leuchte und Leuchtfeuer, jede in 3 Teilstufen.
-2772. [P1] Die Gegnersuche sucht zuerst im Bereich plus minus 100 Wertungspunkte und erweitert alle 10 Sekunden um 50, höchstens auf 400.
+2769. [x] [P1] Eine Saison dauert 6 Wochen, Start und Ende nach Server-Zeit, gespeichert in Tabelle `league_seasons` (Kennung, Start, Ende, Regelversion).
+2770. [x] [P1] Die Wertung nutzt Glicko-2 mit Startwert 1500 und Abweichung 350, berechnet in der Datenbank-Funktion `_league_rate` nach jedem geprüften Kampf.
+2771. [x] [P1] Sichtbar sind nur Stufen statt Zahlen: Funke, Glut, Flamme, Leuchte und Leuchtfeuer, jede in 3 Teilstufen.
+2772. [x] [P1] Die Gegnersuche sucht zuerst im Bereich plus minus 100 Wertungspunkte und erweitert alle 10 Sekunden um 50, höchstens auf 400.
 2773. [P2] Kein Abstieg durch Pause: wer eine Woche nicht spielt, verliert keine Stufe, nur die Abweichung wächst.
 2774. [P2] Am Saisonende wird jede Wertung zur Hälfte auf 1500 zurückgesetzt (neu = 1500 + (alt minus 1500) geteilt durch 2).
 2775. [P2] Die ersten 5 Kämpfe einer Saison sind Einstufungskämpfe und zeigen noch keine Stufe.
@@ -141,7 +141,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2784. [P3] Eine Vorschau "Nächste Saison" zeigt Sonderregel und Startdatum 7 Tage vorher.
 2785. [P3] Bei weniger als 2 suchenden Spielern in 60 Sekunden bietet die Gegnersuche sofort ein asynchrones Ligateam an.
 
-2786. [P1] `league_seasons` kennt die Zustände "läuft", "Abschluss" und "Pause"; im Abschluss (die letzten 30 Minuten) wird kein Kampf mehr gewertet.
+2786. [x] [P1] `league_seasons` kennt die Zustände "läuft", "Abschluss" und "Pause"; im Abschluss (die letzten 30 Minuten) wird kein Kampf mehr gewertet.
 2787. [P2] Die Gegnersuche zeigt die erwartete Wartezeit ("ungefähr 20 Sekunden"), berechnet aus den letzten 50 Treffern.
 2788. [P3] Am Ende jeder Woche kommt ein Zwischenstand in die Post ("Du bist in Glut II, 12 Siege").
 2789. [P3] Eine Vorsaison von 1 Woche vor dem Store-Start zum Testen, deren Wertung danach gelöscht wird.
@@ -308,7 +308,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2939. [P3] Gesperrte Ligaplätze werden am Saisonende entfernt und die Belohnungen der Nachrückenden nachträglich vergeben.
 2940. [P3] Ein Fair-Play-Abzeichen für Konten, die eine ganze Saison ohne Vermerk und ohne Aufgeben gespielt haben.
 
-2941. [P1] Ligateams werden beim Eintragen einmal voll geprüft und als eigene Zeile eingefroren, statt bei jedem Kampf aus dem Spielstand gelesen.
+2941. [x] [P1] Ligateams werden beim Eintragen einmal voll geprüft und als eigene Zeile eingefroren, statt bei jedem Kampf aus dem Spielstand gelesen.
 2942. [P2] Kampfdaten mit einem Zeitstempel, der mehr als 10 Minuten von der Server-Zeit abweicht, verwirft der Server.
 2943. [P3] Ein Wochenbericht für Ali zeigt, welche Grenzen in `save_put` wie oft gegriffen haben.
 2944. [P3] Neue Konten haben in den ersten 7 Tagen halbe Geld- und Gegenstandsgrenzen.
