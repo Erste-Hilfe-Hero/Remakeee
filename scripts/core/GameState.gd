@@ -603,6 +603,9 @@ func story_fixups() -> void:
 	if has_flag("mirela_lamp") and not has_flag("ferry_corvane_open"):
 		set_flag("ferry_corvane_open")
 		set_flag("scene_act1_finale_seen")
+	# Area 3's road from Corvane Quay to Madderby opens with the arrival scene.
+	if has_flag("corvane_arrived") and not has_flag("madderby_road_open"):
+		set_flag("madderby_road_open")
 
 ## A story number (0 if never set).
 func story_var(name: String) -> int:
