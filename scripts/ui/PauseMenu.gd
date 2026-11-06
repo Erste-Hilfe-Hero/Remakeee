@@ -285,6 +285,7 @@ func run_records() -> void:
 			lines.append("Tower map")
 		if Vows.can_take() or not (GameState.records.get("vows", {}) as Dictionary).is_empty():
 			lines.append("Vows")
+		lines.append("Run chronicle")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -306,6 +307,7 @@ func run_records() -> void:
 			"Master Wayfarers": await run_masters()
 			"Tower map": await info("\n".join(RiftTower.card_lines()))
 			"Vows": await run_vows()
+			"Run chronicle": await info("\n".join(RunChronicle.lines()))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Watch last battle":
