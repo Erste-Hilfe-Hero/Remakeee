@@ -6,6 +6,7 @@ extends SceneTree
 func _init() -> void:
 	var errors: PackedStringArray = DataValidator.validate()
 	errors.append_array(WorldValidator.validate())
+	errors.append_array(ShopCatalog.validate())
 	for e: String in errors:
 		printerr("DATA ERROR: " + e)
 	if errors.is_empty():

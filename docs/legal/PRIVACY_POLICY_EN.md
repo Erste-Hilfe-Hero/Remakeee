@@ -24,7 +24,7 @@ analytics, no third-party sign-in, no email address required.**
 | Random player ID created on first launch, sign-in token, transfer code for changing devices, your Wayfarer name, save game (progress, Spirlings, items, settings), last sync time, app version, device model, OS version | Provide the game, store and restore your progress, also on a new device. Your Wayfarer name is shown only to players you are friends with | Art. 6(1)(b) (contract) | While your account exists; deleted within 30 days of account deletion, backups overwritten within 30 more days. Accounts unused for 24 months are deleted after notice in the game |
 | Friends and Lantern Mail: friend code, friend list and requests, blocks, greetings (set phrases stored as a number, no free text), gifts, Wayfarer card (numbers such as Rifts sealed and play time, favourite Spirling), current place in the game (never a real location), echo team (species and level, no nicknames), world goal contribution, weekly board score, reports you send | Playing together, protection against abuse. Only confirmed friends see your name, card, place and echo team; strangers see board scores without names. Parents can switch these features off under Settings, Account | Art. 6(1)(b); reports also (c) (Art. 16 DSA) and (f) | Greetings and gifts 30 days, weekly values until the end of the following week, reports until handled and at most 6 months, friends and blocks while your account exists |
 | Server logs: IP address, date and time, endpoint, status code, app version | Operation, security, preventing attacks and save-game tampering | Art. 6(1)(f) (legitimate interest in secure, fair play) | 7 days, longer only while a specific security incident is investigated |
-| Purchase confirmations from Apple/Google (transaction ID, product, time), if you buy something. We never receive payment details | Unlock purchased content; statutory record keeping | Art. 6(1)(b) and (c) | Up to 10 years (German commercial and tax law) |
+| Shop: purchase confirmations from Apple/Google (transaction ID, product, price, time, subscription end), Riftglass balance and bookings, unlocked content, refunds, spending limit and your **age group** (under 13, 13-15, 16-17, 18+; never the birth date). We never receive payment details | Check and credit purchases, refunds, spending limits and youth protection, "My purchases" | Art. 6(1)(b); age group and limits also (c) and (f) | Until you delete your account (Apple and Google keep invoices as sellers) |
 | Support emails | Answer your request | Art. 6(1)(b) or (f) | Until resolved, at most 2 years |
 
 ## 4. Storage on your device
@@ -47,7 +47,9 @@ Apart from this we do not transfer data outside the EU/EEA. The game data itself
 ## 6. Children
 
 Chimora is suitable for all ages. We process only what the game needs, show no ads, do no profiling and offer
-no free chat (greetings between friends are fixed, translated phrases). Purchases can be controlled with the stores' parental controls.
+no free chat (greetings between friends are fixed, translated phrases). Before the shop opens we ask for the
+birth year and month and keep only the age group: **the shop is closed under 13**, 13-15 have a fixed limit of
+15 EUR a month, 16-17 of 30 EUR. Purchases can also be controlled with the stores' parental controls.
 
 ## 7. Your rights
 

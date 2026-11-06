@@ -74,7 +74,20 @@ Zahlung, Widerrufsbelehrung und Erstattung richten sich nach deren Bedingungen.
 6.2 Bei digitalen Inhalten erlischt das Widerrufsrecht, wenn du ausdrücklich zustimmst, dass die
 Bereitstellung vor Ablauf der Widerrufsfrist beginnt, und bestätigst, dass du dadurch dein Widerrufsrecht
 verlierst (§ 356 Abs. 5 BGB). Die Stores holen diese Zustimmung beim Kauf ein.
-6.3 Es gibt keine zufallsbasierten Käufe gegen echtes Geld (keine Lootboxen).
+6.3 Es gibt keine zufallsbasierten Käufe, weder gegen echtes Geld noch gegen Rissglas (keine Lootboxen, keine
+Gacha). Jedes Angebot liefert genau die genannten Inhalte.
+6.4 **Käufe im Spiel.** Chimora ist kostenlos; der Shop ist freiwillig. Vertragspartner für die Zahlung ist
+Apple bzw. Google. Gekaufte Inhalte und die Spielwährung **Rissglas** sind ein einfaches, nicht übertragbares
+Nutzungsrecht an digitalen Inhalten in Chimora. Rissglas hat keinen Geldwert, wird nicht in Geld
+zurückgetauscht, ist nicht übertragbar und kann nicht zwischen Spielern gehandelt werden. Rissglas verfällt
+nicht, solange dein Konto besteht; es endet nur mit der Löschung deines Kontos (oder mit Erstattung des Kaufs).
+6.5 Der Shop ist **unter 13 Jahren gesperrt**. Für Minderjährige gelten feste Monatslimits (13 bis 15 Jahre:
+15 €, 16 bis 17 Jahre: 30 €); Erwachsene haben ein Limit von 100 €, das sie senken oder nach 7 Tagen Wartezeit
+auf bis zu 300 € erhöhen können. Minderjährige brauchen für Käufe die Zustimmung ihrer Eltern.
+6.6 Der **Wanderer-Pass** ist ein Abo über den Store, das sich monatlich verlängert, bis du es im Store
+kündigst. Seine Vorteile enden mit dem Ende der Laufzeit; schon gutgeschriebenes Rissglas bleibt.
+6.7 Erstattet Apple oder Google einen Kauf, nehmen wir die gekauften Inhalte und das Rissglas zurück, auch wenn
+es schon ausgegeben wurde; bis das Guthaben wieder ausgeglichen ist, bleibt der Shop gesperrt.
 
 ## 7. Laufzeit und Kündigung
 
