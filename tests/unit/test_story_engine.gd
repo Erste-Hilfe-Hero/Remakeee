@@ -165,3 +165,28 @@ func test_warp_to_unbuilt_map_stops_the_scene() -> void:
 	assert_false(GameState.has_flag("scene_t_seen"))
 	assert_eq(ow.map.id, before)
 	sp.queue_free()
+
+## Plan items 1530, 1683: "Two keepers" only with veit_respect 3 and all fourteen pages.
+func test_two_keepers_ending_needs_veit_respect_and_all_pages() -> void:
+	var pick: Dictionary = Dialogue.get_entry("ashmere/ending_pick")
+	assert_eq(Dialogue.choices_for(pick, GameState.flags).size(), 2)
+	GameState.set_story_var("veit_respect", 3)
+	assert_eq(Dialogue.choices_for(pick, GameState.flags).size(), 2, "pages still missing")
+	GameState.set_flag("pages_complete")
+	assert_eq(Dialogue.choices_for(pick, GameState.flags).size(), 3)
+
+## Plan item 1684: every ending asks "Draw it so?" and can go back to the pick.
+func test_every_ending_is_confirmed() -> void:
+	for id: String in ["home", "gate", "two"]:
+		var confirm: Dictionary = Dialogue.get_entry("ashmere/ending_%s_confirm" % id)
+		assert_eq(Dialogue.lines_for(confirm, GameState.flags), ["Draw it so?"] as Array[String])
+		var nexts: Array = Dialogue.choices_for(confirm, GameState.flags).map(func(c: Dictionary) -> String: return str(c.get("next", "")))
+		assert_has(nexts, "ending_pick")
+
+## Plan item 1525: the finale is one chain of five scenes ending in the credits.
+func test_finale_chain_is_complete() -> void:
+	for n: int in range(1, 6):
+		assert_true(ScenePlayer.exists("finale_%d" % n))
+	assert_true(ScenePlayer.exists("credits"))
+	var last: Array = ScenePlayer.load_scene("finale_5").steps
+	assert_true(last.any(func(s: Dictionary) -> bool: return s.get("flag", "") == "story_complete"))

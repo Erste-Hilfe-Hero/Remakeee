@@ -1,0 +1,11 @@
+{
+ "_note": "Credits: return to Brindlewick, Aldo at the dock, a final card with every mended Rift (plan items 1531, 1588).",
+ "steps": [
+  {"fade": 1.0},
+  {"action": "warp brindlewick 8 18 right"},
+  {"fade": 0.0},
+  {"dialogue": "ashmere/dock_meeting"},
+  {"card": "Every Rift mended", "title": "Cinder, Tide, Rain, Mirror, Kiln, Glass"},
+  {"card": "Chimora", "title": "Thank you for playing"}
+ ]
+}
