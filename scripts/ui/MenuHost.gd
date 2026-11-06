@@ -586,6 +586,43 @@ static func summary(s: Spirling) -> String:
 		lines.append("%s  %s  P%s  E%d" % [mv.move_name, Elements.element_name(mv.element).substr(0, 3), power, mv.energy_cost])
 	return "\n".join(lines)
 
+## Storage detail card (plan area 1, item 380): Ring, temperament, gift, keepsake and a
+## suggestion, where and when it was met, and its spark words.
+static func storage_card(s: Spirling) -> String:
+	var lines: PackedStringArray = [
+		"%s%s  (%s)" % ["* " if s.favorite else "", s.display_name(), s.data.species_name],
+		"Ring %d" % s.level,
+	]
+	var tm: Dictionary = s.temperament()
+	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
+	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	if not tr.is_empty():
+		lines.append("Gift: %s. %s" % [tr.label, tr.text])
+	lines.append("Keepsake: %s" % (str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else "none"))
+	var hint: String = keepsake_suggestion(s)
+	if not hint.is_empty():
+		lines.append(hint)
+	if not s.origin_map.is_empty():
+		lines.append("Met in %s at Ring %d" % [Spirling.place_name(s.origin_map), maxi(s.met_ring, 1)])
+	if s.met_day > 0:
+		lines.append("On %s" % Time.get_date_string_from_unix_time(s.met_day * 86400))
+	var parts: PackedStringArray = []
+	for key: String in Spirling.STAT_KEYS:
+		parts.append("%s %s" % [key.to_upper(), GameState.spark_word(int(s.spark.get(key, 0)))])
+	lines.append("Sparks: %s" % ", ".join(parts))
+	return "\n".join(lines)
+
+## "Suits it: Bark Wrap" when the kind's keepsake_hint is not what it holds already (item 355).
+static func keepsake_suggestion(s: Spirling) -> String:
+	var hint: String = s.data.keepsake_hint
+	if hint.is_empty() or hint == s.held:
+		return ""
+	return "Suits it: %s" % str(Database.item(hint).get("name", hint))
+
+## One storage row: favourite star, name, Ring, and a keepsake mark (item 357).
+static func storage_line(s: Spirling) -> String:
+	return "%s%s R%d%s" % ["* " if s.favorite else "", s.display_name(), s.level, "  +%s" % str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else ""]
+
 static func party_line(s: Spirling) -> String:
 	var tag: String = " " + Loc.t("worn out") if s.is_fainted() else ""
 	return "%s R%d %d/%d%s" % [s.display_name(), s.level, s.hp, s.max_hp(), tag]
