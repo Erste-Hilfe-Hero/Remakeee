@@ -13,9 +13,7 @@ static func known_actions() -> PackedStringArray:
 	var re := RegEx.create_from_string("\"([a-z_]+)\": _action_")
 	for m: RegExMatch in re.search_all(src):
 		out.append(m.get_string(1))
-	return out = ["storage", "heal", "give_item", "set_flag", "shop", "spark_read",
-	"quest_show", "switch", "gauntlet", "weekly", "season", "choose_starter", "page", "set_var",
-	"add_var", "battle", "scene"]
+	return out
 
 static func validate() -> PackedStringArray:
 	var errors: PackedStringArray = []
