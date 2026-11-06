@@ -113,12 +113,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3656. [P3] Entferne nach drei erfolgreichen Versionen die ältesten Migrationsfunktionen nicht, sondern friere sie mit ihren Tests ein.
 
 ### Server-Sync und Netzwerk
-3657. [P1] Ersetze den festen Wiederholungstakt von 4 Sekunden in `Online.gd` durch steigende Wartezeiten (4, 8, 16, 30 Sekunden) mit 20 % Zufallsanteil, damit nach einem Serverneustart nicht alle Spieler gleichzeitig anfragen.
-3658. [P1] Gib jedem `save_put` eine eindeutige Anfrage-ID mit, damit eine doppelt gesendete Anfrage nach einem Timeout auf dem Server nur einmal zählt.
-3659. [P1] Speichere nicht gesendete Spielstände in einer Warteschlange in `user://`, damit sie auch nach einem Neustart der App hochgeladen werden.
+3657. [x] [P1] Ersetze den festen Wiederholungstakt von 4 Sekunden in `Online.gd` durch steigende Wartezeiten (4, 8, 16, 30 Sekunden) mit 20 % Zufallsanteil, damit nach einem Serverneustart nicht alle Spieler gleichzeitig anfragen.
+3658. [x] [P1] Gib jedem `save_put` eine eindeutige Anfrage-ID mit, damit eine doppelt gesendete Anfrage nach einem Timeout auf dem Server nur einmal zählt.
+3659. [x] [P1] Speichere nicht gesendete Spielstände in einer Warteschlange in `user://`, damit sie auch nach einem Neustart der App hochgeladen werden.
 3660. [P1] Gleiche die Plausibilitätsprüfung `_save_ok` an die Spielregeln an (Ring 1 bis 60 statt 100, Team höchstens 5 statt 6) und lies die Grenzen aus `server_config`, damit Server und Spiel dieselben Werte nutzen.
 3661. [P1] Wechsle vor dem Store-Start von `sslip.io` auf eine eigene Domain und lass die alte Adresse 12 Monate lang weiter funktionieren, weil ältere Builds sie fest eingebaut haben.
-3662. [P1] Lege eine Obergrenze für die Größe einer Anfrage in Caddy fest (512 KB für `/rest/v1/*`) und eine für `p_data` in `save_put` (256 KB).
+3662. [x] [P1] Lege eine Obergrenze für die Größe einer Anfrage in Caddy fest (512 KB für `/rest/v1/*`) und eine für `p_data` in `save_put` (256 KB).
 3663. [P2] Senke den Timeout in `SupabaseBackend.gd` für kleine Anfragen auf 8 Sekunden und lasse 15 Sekunden nur für das Hochladen von Spielständen.
 3664. [P2] Erneuere das Anmelde-Token, wenn es in weniger als 10 Minuten abläuft, und nicht erst nach einem Fehler 401.
 3665. [P2] Teste das Verhalten, wenn das Token während einer laufenden Anfrage abläuft, mit `LocalBackend` und einem künstlichen Ablauf.
@@ -130,7 +130,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3671. [P2] Prüfe, dass `min_version` sicher funktioniert, indem ein Test einen alten Client simuliert und den Weg zum Store-Link prüft.
 3672. [P2] Stempele `Online.CLIENT_VERSION` und den Versionscode aus derselben Quelle, damit sie nie auseinanderlaufen.
 3673. [P2] Behandle Antworten mit unerwartetem JSON (leer, HTML-Fehlerseite, falscher Typ) in `SupabaseBackend.gd` als Netzwerkfehler statt als Absturz.
-3674. [P1] Nutze in `server_config` Schalter für jede Online-Funktion (Freunde, Post, Weltziel, Rangliste), damit eine kaputte Funktion ohne neue Version abgeschaltet werden kann.
+3674. [x] [P1] Nutze in `server_config` Schalter für jede Online-Funktion (Freunde, Post, Weltziel, Rangliste), damit eine kaputte Funktion ohne neue Version abgeschaltet werden kann.
 3675. [P2] Zeige auf dem Wiederverbinden-Bildschirm nach 60 Sekunden einen Link zur Statusseite und die Möglichkeit, zum Titel zurückzukehren.
 3676. [P2] Teste den Sync mit künstlich schlechter Verbindung (500 ms Verzögerung, 10 % Verlust) über einen Proxy im CI-Job des Servers.
 3677. [P3] Lege eine öffentliche Statusseite `/status` auf dem Server an, die Erreichbarkeit der Datenbank und der Anmeldung als Text zeigt.
@@ -303,7 +303,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3830. [P2] Prüfe in `server/backup.sh` nach jedem Lauf die Größe der Sicherung und melde einen Fehler, wenn sie mehr als 50 % kleiner als am Vortag ist.
 3831. [P2] Schreibe zu jeder Sicherung eine Prüfsumme und prüfe sie vor dem Hochladen und vor jedem Zurückspielen.
 3832. [P2] Sichere auch `.env`, Caddy-Daten (Zertifikate) und die Proxy-Kopien in `/opt/chimora/server/backups/` verschlüsselt mit.
-3833. [P1] Lege vor jeder Datenbank-Migration automatisch eine Sicherung an und brich die Migration ab, wenn das scheitert.
+3833. [x] [P1] Lege vor jeder Datenbank-Migration automatisch eine Sicherung an und brich die Migration ab, wenn das scheitert.
 3834. [P2] Schreibe für jede Migration eine Rückweg-Datei oder halte im Kopf der Datei fest, warum es keinen Rückweg gibt.
 3835. [P2] Übe die Wiederherstellung eines einzelnen Kontos aus einer Sicherung, ohne die übrige Datenbank anzufassen, und dokumentiere die SQL-Schritte.
 3836. [P2] Lösche bei der Kontolöschung auch die serverseitigen Spielstand-Revisionen und halte fest, dass Sicherungen nach 30 Tagen nachziehen.
@@ -328,7 +328,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 3853. [P2] Erzeuge aus `ops_daily` eine einfache Textübersicht unter einem geschützten Pfad, die nur mit einem Admin-Token abrufbar ist.
 3854. [P2] Lege Warnschwellen fest: Plattenplatz über 80 %, Speicher über 85 %, mehr als 5 % fehlgeschlagene Anfragen in 15 Minuten, und melde sie per E-Mail.
 3855. [P2] Prüfe das Ablaufdatum des TLS-Zertifikats täglich und warne 14 Tage vor Ablauf, falls die automatische Erneuerung scheitert.
-3856. [P1] Setze für die Rollen `anon` und `authenticated` ein `statement_timeout` von 3 Sekunden, damit eine langsame Abfrage den Server nicht blockiert.
+3856. [x] [P1] Setze für die Rollen `anon` und `authenticated` ein `statement_timeout` von 3 Sekunden, damit eine langsame Abfrage den Server nicht blockiert.
 3857. [P2] Setze in PostgREST eine Höchstzahl an Zeilen pro Antwort (`PGRST_DB_MAX_ROWS` = 200) als Schutz gegen große Abfragen.
 3858. [P2] Lege eine Obergrenze für Datenbankverbindungen fest und miss im Lasttest, ab wie vielen Spielern ein Verbindungspool (z. B. PgBouncer) nötig ist.
 3859. [P2] Plane Server-Updates mit Neustart in einem festen Wartungsfenster (Dienstag 4 bis 5 Uhr) und kündige sie über `motd` an.
@@ -347,7 +347,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 ### Sicherheit
 3871. [P1] Ersetze den Root-Passwort-Zugang (`CHIMORA_SERVER_PASSWORD`) durch einen eigenen SSH-Schlüssel nur für Deploys und schalte die Passwort-Anmeldung per SSH ab.
 3872. [P1] Prüfe jede `security definer`-Funktion in `supabase/migrations/` darauf, dass sie `auth.uid()` prüft, `search_path` festlegt und keine fremden Daten zurückgibt, und halte das Ergebnis als Liste fest.
-3873. [P1] Begrenze das Anlegen anonymer Konten zusätzlich in Caddy auf 10 pro Stunde pro IP, weil Massenanmeldungen sonst die Datenbank füllen.
+3873. [x] [P1] Begrenze das Anlegen anonymer Konten zusätzlich in Caddy auf 10 pro Stunde pro IP, weil Massenanmeldungen sonst die Datenbank füllen. (Umgesetzt in GoTrue mit `GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 10`, weil das Standard-Caddy keinen Ratenbegrenzer hat.)
 3874. [P1] Setze auf allen Webseiten des Servers die Header `Strict-Transport-Security`, `X-Content-Type-Options`, `Referrer-Policy` und eine strenge `Content-Security-Policy`.
 3875. [P1] Lege in `docs/SICHERHEIT.md` fest, wie das JWT-Secret im Notfall gewechselt wird (alle Spieler melden sich über das gespeicherte Konto neu an) und teste das einmal.
 3876. [P2] Begrenze die Aufrufe pro Konto und Minute für alle Serverfunktionen zentral (z. B. 60 pro Minute) und gib bei Überschreitung einen klaren Fehler zurück.
