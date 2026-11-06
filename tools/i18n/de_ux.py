@@ -179,6 +179,7 @@ T = {
 "Very large": "Sehr groß",
 "(A: continue)": "(A zum Fortfahren)",
 "(Enter: continue)": "(Enter zum Fortfahren)",
+"Gamepad disconnected": "Gamepad getrennt",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).
