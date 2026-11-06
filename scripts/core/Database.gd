@@ -82,7 +82,7 @@ static func parse_move(m: Dictionary) -> MoveData:
 	if not md.status_effect.is_empty():
 		md.effects.append({"id": &"inflict_status", "status": md.status_effect, "chance": md.status_chance})
 	if m.has("stat"):
-		md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stage_chance", m.get("stat_chance", 1.0)))})
+		md.effects.append({"id": &"stat_change", "stat": str(m.stat), "amount": int(m.get("stages", 1)), "self": bool(m.get("self", true)), "chance": float(m.get("stage_chance", m.get("stat_chance", 1.0))), "full_hp_amount": int(m.get("stages_full_hp", 0))})
 	md.overcharge = bool(m.get("overcharge", false))
 	md.target = str(m.get("target", "single"))
 	if m.has("field"):

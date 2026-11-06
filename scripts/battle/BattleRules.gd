@@ -44,6 +44,8 @@ const FIELD_WEAKEN: float = 0.85
 ## A Resonance move (moves.json "field") lays its field for this many turns; then the place's
 ## own field (or none) comes back.
 const RESONANCE_TURNS: int = 5
+## Turns a field_extend art adds to the Resonance field in play.
+const FIELD_EXTEND_TURNS: int = 2
 
 ## Passive traits (one per species, in spirlings.json "trait"). Keys:
 ##   scorch_atk:    ATK multiplier while Scorched (replaces the usual drop)
@@ -82,11 +84,15 @@ const FIELDS: Dictionary[String, Dictionary] = {
 		"intro": "A pale dawn fills the Rift. Lumen arts shine, Umbra arts thin out."},
 }
 
-## Element reactions: a move of "element" that hits a foe with "status" either hits harder
-## ("mult") or washes the status away after the hit ("cure").
+## Element reactions: a move of "element" that hits a foe with "status" hits harder ("mult"),
+## washes the status away after the hit ("cure") and/or moves a stage of the foe ("stage").
+## At most one reaction per hit: the first row that fits wins, and no two rows share a pair.
 const REACTIONS: Array[Dictionary] = [
 	{"element": "VOLT", "status": "soak", "mult": 1.2, "text": "The charge races through the soaked %s!"},
 	{"element": "TIDE", "status": "scorch", "cure": true, "text": "The water douses the embers on %s!"},
+	{"element": "STONE", "status": "jolt", "mult": 1.1, "cure": true, "text": "The stone grounds the charge in %s!"},
+	{"element": "GALE", "status": "soak", "cure": true, "stage": {"spd": -1}, "text": "The gust blows %s dry, and it slows down!"},
+	{"element": "LUMEN", "status": "drowse", "mult": 1.3, "cure": true, "text": "The light startles %s awake!"},
 ]
 
 ## The reaction a [param move] sets off on [param target], or {}.
