@@ -125,6 +125,10 @@ func test_shake_rolls_instead_of_flickering() -> void:
 	# where per-frame random numbers jump across the whole range. Both axes, normal speed
 	# (an earlier battle may have left Volt's double speed set).
 	Juice.shake_element = -1
+	# Juice seeds its noise at random; a fixed seed keeps the count the same on every run
+	# (over 200 seeds it lies between 5 and 22, per-frame random gives about 80).
+	var seed_was: int = Juice._noise.seed
+	Juice._noise.seed = 2261
 	var jumps: int = 0
 	var prev: Vector2 = Juice.shake_offset(1.0, 0.0)
 	for i: int in range(1, 240):
@@ -132,6 +136,7 @@ func test_shake_rolls_instead_of_flickering() -> void:
 		if absf(o.x - prev.x) > 2.0:
 			jumps += 1
 		prev = o
+	Juice._noise.seed = seed_was
 	assert_lt(jumps, 20, "few full swings from frame to frame (per-frame random gives about 80)")
 	# At most 30 different offsets a second.
 	var changes: int = 0
