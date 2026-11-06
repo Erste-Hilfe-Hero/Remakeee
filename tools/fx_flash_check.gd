@@ -42,9 +42,15 @@ func _run() -> void:
 		var steps: Array = [[ElementFx.Phase.CHARGE, ""], [ElementFx.Phase.TRAVEL, ""], [ElementFx.Phase.IMPACT, ""]]
 		for a: String in ElementFx.AFTERS:
 			steps.append([ElementFx.Phase.AFTER, a])
+		# Status symbols and an impact with a second element mixed in.
+		for sym: String in ["up", "down", "ring"]:
+			steps.append([ElementFx.Phase.IMPACT, "", sym])
+		steps.append([ElementFx.Phase.IMPACT, "", "", (e + 1) % 8])
 		for step: Array in steps:
 			var p: ElementFx.Phase = step[0]
 			fx.after = step[1]
+			fx.symbol = step[2] if step.size() > 2 else ""
+			fx.second_element = step[3] if step.size() > 3 else -1
 			var n: int = maxi(1, roundi(ElementFx.phase_time(p, false) * FPS))
 			for i: int in n:
 				fx.phase = p

@@ -42,6 +42,12 @@ var amount: float = 1.0
 var after: String = ""
 const AFTER_TIME: float = 0.2
 const AFTERS: Array[String] = ["heal", "drain", "energy_drain", "recoil", "field"]
+## Status arts show what they do instead of an impact (item 2369): "up" a raised stat,
+## "down" a lowered one, "ring" any other effect. "" for arts that hit.
+var symbol: String = ""
+## The user's second element, or -1: a hit mixes in two of its particles (item 2367).
+var second_element: int = -1
+
 ## The 8x8 shape that stands for each element (heal motes, drain motes, field wave).
 const ELEMENT_SHAPES: Array[String] = ["spark", "drop", "leaf", "zag", "rock", "streak", "glint", "shade"]
 var _rng := RandomNumberGenerator.new()
@@ -83,6 +89,26 @@ static func phases_for(kind: int, reduced: bool, miss: bool = false, p_after: St
 		if not p_after.is_empty():
 			out.append(Phase.AFTER)
 	return out
+
+## The symbol a status art shows over its target (item 2369), and whether that target is
+## the foe: {"symbol": "up" | "down" | "ring" | "", "on_foe": bool}.
+static func status_symbol(mv: MoveData) -> Dictionary:
+	if mv == null or mv.kind != MoveData.Kind.STATUS or mv.has_effect(&"heal_self"):
+		return {"symbol": "", "on_foe": false}
+	for fx: Dictionary in mv.effects:
+		if StringName(fx.get("id", "")) == &"stat_change":
+			var raise: bool = int(fx.get("amount", 0)) > 0
+			return {"symbol": "up" if raise else "down", "on_foe": not bool(fx.get("self", true))}
+	var on_foe: bool = mv.has_effect(&"inflict_status") or mv.has_effect(&"energy_drain") \
+		or mv.has_effect(&"energy_burn") or mv.has_effect(&"heal_block") or mv.has_effect(&"cure_target")
+	return {"symbol": "ring", "on_foe": on_foe}
+
+## The second element of a user with [param elements], other than the art's own, or -1.
+static func second_for(elements: Array, art_element: int) -> int:
+	for e: Variant in elements:
+		if int(e) != art_element:
+			return int(e)
+	return -1
 
 ## What an art shows after its hit, from its effects (items 2370 to 2374).
 static func after_for(mv: MoveData) -> String:
@@ -129,8 +155,10 @@ static func phase_time(p: Phase, reduced: bool) -> float:
 	return IMPACT_TIME
 
 ## Plays the effect from [param from] (user) to [param to] (target), both in this node's space.
-func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false, p_impact_size: float = 1.0, p_amount: float = 1.0, p_after: String = "") -> void:
+func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false, p_impact_size: float = 1.0, p_amount: float = 1.0, p_after: String = "", p_symbol: String = "", p_second: int = -1) -> void:
 	element = p_element
+	symbol = p_symbol
+	second_element = p_second
 	amount = p_amount
 	after = "" if miss and p_after != "heal" else p_after
 	missed = miss
@@ -150,7 +178,7 @@ func play(p_element: int, kind: int, from: Rect2, to: Rect2, miss: bool = false,
 		played.append(p)
 		phase = p
 		t = 0.0
-		if p == Phase.IMPACT and element == Elements.E.STONE:
+		if p == Phase.IMPACT and element == Elements.E.STONE and symbol.is_empty():
 			Juice.add_trauma(0.12, Elements.E.STONE)
 		await _run_phase(phase_time(p, reduced) / Juice.speed())
 		if user_sprite != null:
@@ -203,10 +231,41 @@ func _draw() -> void:
 	if phase == Phase.AFTER:
 		_draw_after()
 		return
+	if phase == Phase.IMPACT and not symbol.is_empty():
+		_draw_symbol()
+		return
 	if phase == Phase.IMPACT and impact_size != 1.0:
 		# Scale the whole impact around the target's centre.
 		draw_set_transform(_to * (1.0 - impact_size), 0.0, Vector2.ONE * impact_size)
 	_draw_element()
+	if phase == Phase.IMPACT and second_element >= 0 and second_element != element:
+		# Two particles of the user's second element join the impact.
+		var s2: String = ELEMENT_SHAPES[clampi(second_element, 0, ELEMENT_SHAPES.size() - 1)]
+		for side: int in [-1, 1]:
+			_shape(s2, _to + Vector2(side * (6.0 + t * 6.0), -4.0 - t * 6.0), 1, 1.0 - t * 0.5)
+
+## A status art's symbol over its target, drawn as a column of pixels topped by the
+## element's own shape (item 2369): rising arrow, sinking arrow or a ring.
+func _draw_symbol() -> void:
+	var s: String = _element_shape()
+	var top: Vector2 = _to + Vector2(0, -14.0)
+	match symbol:
+		"up", "down":
+			var dir: float = -1.0 if symbol == "up" else 1.0
+			var shift: float = roundf(dir * t * 4.0)
+			for i: int in 7:
+				_px(top + Vector2(0, shift + (i - 3) * 1.0), 2)
+			var tip: Vector2 = top + Vector2(0, shift + dir * 4.0)
+			for i: int in range(1, 4):
+				_px(tip + Vector2(-i, -dir * i), 2)
+				_px(tip + Vector2(i, -dir * i), 2)
+			_shape(s, tip + Vector2(0, dir * 5.0), 2, 1.0 - t * 0.4)
+		_:
+			var r: float = 6.0 + t * 2.0
+			for i: int in 12:
+				var ang: float = i * TAU / 12.0
+				_px(top + Vector2(cos(ang), sin(ang)) * r, 2)
+			_shape(s, top, 2, 1.0 - t * 0.4)
 
 func _draw_element() -> void:
 	match element:
