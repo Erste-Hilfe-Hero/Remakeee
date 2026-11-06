@@ -1,0 +1,120 @@
+{
+ "name": "Corvane Quay",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "lake",
+ "outdoor": true,
+ "heal_point": [
+  2,
+  8
+ ],
+ "rows": [
+  "TTTTT__TTTTT",
+  "T*..S__..*.T",
+  "T....__....T",
+  "TRRR.__.RRRT",
+  "THDH.__.HDHT",
+  "T....__....T",
+  "T.________.T",
+  "T.o.._.._..T",
+  "T...._.._..T",
+  "T,,..__..,,T",
+  "T,,,.__.,,,T",
+  "TRRR.__.%%%T",
+  "THDH.__.%%%T",
+  "T....__...ST",
+  "T*.._____.*T",
+  "T...__..@..T",
+  "T#..__....#T",
+  "T...__.....T",
+  "T....__....T",
+  "~~~~.++.~~~~",
+  "~~~~~++~~~~~",
+  "~~~~~++~~~~~",
+  "~~~++++++S~~",
+  "~~~~~~~~~~~~"
+ ],
+ "warps": [],
+ "npcs": [
+  {
+   "id": "tender",
+   "x": 1,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "corvane_quay/tender",
+   "sprite": "elder"
+  },
+  {
+   "id": "dockhand",
+   "x": 7,
+   "y": 19,
+   "facing": "left",
+   "dialogue": "corvane_quay/dockhand",
+   "sprite": "villager"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 13,
+   "dialogue": "corvane_quay/sign"
+  },
+  {
+   "x": 4,
+   "y": 1,
+   "dialogue": "corvane_quay/road"
+  },
+  {
+   "x": 9,
+   "y": 22,
+   "dialogue": "corvane_quay/ferry"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 1,
+   "open_flag": "madderby_road_open",
+   "closed": "#"
+  },
+  {
+   "x": 6,
+   "y": 1,
+   "open_flag": "madderby_road_open",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_quay_west"
+  },
+  {
+   "x": 11,
+   "y": 15,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_quay_east"
+  },
+  {
+   "x": 1,
+   "y": 14,
+   "item": "dry_towel",
+   "count": 1,
+   "flag": "find_quay_flowers"
+  }
+ ],
+ "spots": {
+  "juna": [
+   7,
+   13
+  ],
+  "page_7": [
+   8,
+   15
+  ]
+ }
+}

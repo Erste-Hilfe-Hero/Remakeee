@@ -36,6 +36,8 @@ var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
 var _picker: ListPicker
+## True while a boat or coach trip loads its stop: arriving that way does not open the stop.
+var _on_trip: bool = false
 var _banner: Label
 ## Time-of-day symbol beside the place banner (area 3 item 1169).
 var _phase_icon: PhaseIcon
@@ -85,6 +87,7 @@ func _ready() -> void:
 		"battle": _action_battle,
 		"scene": _action_scene,
 		"warp": _action_warp,
+		"transit": _action_transit,
 		"echo_song": _action_echo_song,
 		"quest_stage": _action_quest_stage,
 		"lever": _action_lever,
@@ -245,6 +248,9 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	_spawn_npcs()
 	player.place(cell, face)
 	GameState.current_map = map_id
+	# Boat and coach stops open once the player has walked there (area 3 item 1190).
+	if not _on_trip and Transit.is_stop(map_id):
+		GameState.set_flag(Transit.stop_flag(map_id))
 	DailyTasks.note_map(map_id)
 	DailyTasks.record("visit", {"map": map_id})
 	# Today's world event gives its find on the first visit (plan 3422).
@@ -1113,6 +1119,44 @@ func _action_warp(args: PackedStringArray, _speaker: NPC) -> void:
 	SaveManager.save_game()
 	if not was_black and not scene_running:
 		await _fade_to(0.0)
+
+## "transit <line>": the boatman or the coach driver offers the open stops of the line
+## (area 3 items 1187-1191). The trip is a short scene, then the player stands at the stop.
+func _action_transit(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or Transit.line(args[0]).is_empty():
+		return
+	var id: String = args[0]
+	var kind: String = str(Transit.line(id).get("kind", "boat"))
+	var open: Array[String] = Transit.open_stops(id, map.id, GameState.flags, GameState.visited_rests)
+	if open.is_empty():
+		await say([Transit.no_stops_line(kind)] as Array[String])
+		return
+	var entries: Array[Dictionary] = []
+	for s: String in open:
+		entries.append({"text": MapData.load_map(s).display_name if MapData.exists(s) else s})
+	var idx: int = await _picker.pick(str(Transit.line(id).get("name", "")), entries, true)
+	if idx < 0 or idx >= open.size():
+		return
+	await take_trip(id, open[idx])
+
+## Plays the trip scene for [param line_id] and puts the player at the stop on [param to].
+func take_trip(line_id: String, to: String) -> void:
+	var at: Dictionary = Transit.arrival(line_id, to)
+	if at.is_empty() or not MapData.exists(to):
+		return
+	var kind: String = str(Transit.line(line_id).get("kind", "boat"))
+	Sound.sfx("warp")
+	await _fade_to(1.0)
+	var scene := TripScene.new(kind, Transit.trip_line(kind, MapData.load_map(to).display_name))
+	_ui_root.add_child(scene)
+	await scene.run()
+	scene.queue_free()
+	_on_trip = true
+	load_map(to, at.cell, at.facing)
+	_on_trip = false
+	Sound.music(Sound.track_for_map(to))
+	SaveManager.save_game()
+	await _fade_to(0.0)
 
 ## "echo_song <flag>": the player answers a hushed Spirling's call with the Echo melody
 ## outside battle (the bond minigame). A good echo sets the flag; a weak one can be retried

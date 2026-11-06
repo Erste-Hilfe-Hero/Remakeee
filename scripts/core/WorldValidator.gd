@@ -7,6 +7,24 @@ const LAYOUT_PATH: String = "res://data/world_layout.json"
 ## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287).
 const REGIONS: Array[String] = ["veydal", "corvane"]
 
+## Maps per region, counted apart (item 1287): "Maps: veydal 37, corvane 1".
+static func region_counts(map_ids: PackedStringArray) -> Dictionary:
+	var out: Dictionary = {}
+	for r: String in REGIONS:
+		out[r] = 0
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m != null:
+			out[m.region] = int(out.get(m.region, 0)) + 1
+	return out
+
+static func region_summary() -> String:
+	var counts: Dictionary = region_counts(MapData.all_ids())
+	var parts: PackedStringArray = []
+	for r: Variant in counts:
+		parts.append("%s %d" % [r, counts[r]])
+	return "Maps: " + ", ".join(parts)
+
 static func validate() -> PackedStringArray:
 	var errors: PackedStringArray = []
 	Database.load_all()
@@ -17,6 +35,7 @@ static func validate() -> PackedStringArray:
 	check_puzzles(errors, map_ids)
 	check_passages(errors, map_ids)
 	check_layout(errors, map_ids, load_layout())
+	check_transit(errors, map_ids, load_layout().get("lines", {}))
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -389,6 +408,13 @@ static func entry_cells(map_ids: PackedStringArray, start_map: String = "lightho
 					if m.kind_at(Vector2i(x, y)) == TilesetFactory.Kind.CRACKED:
 						below.append(Vector2i(x, y))
 			entries[m.drop_to] = below
+	# Boat, coach and ferry stops (Transit) are ways in as well.
+	for t: Variant in Transit.lines().values():
+		var st: Dictionary = (t as Dictionary).get("stops", {})
+		for sid: Variant in st:
+			var arr: Array = entries.get(str(sid), [])
+			arr.append(Vector2i(int(st[sid][0]), int(st[sid][1])))
+			entries[str(sid)] = arr
 	return entries
 
 static func load_layout() -> Dictionary:
@@ -446,9 +472,6 @@ static func check_layout(errors: PackedStringArray, map_ids: PackedStringArray, 
 		var targets: Array = []
 		for w: Dictionary in m.warps:
 			targets.append(str(w.get("to", "")))
-		for t: Variant in layout.get("lines", {}).values():
-			if id in (t as Array):
-				targets.append_array(t)
 		for to: String in targets:
 			var b: String = layout_place(places, to)
 			if a.is_empty() or b.is_empty() or a == b:
@@ -457,9 +480,71 @@ static func check_layout(errors: PackedStringArray, map_ids: PackedStringArray, 
 			warped[e] = true
 			if not edges.has(e):
 				errors.append("world layout: warp from '%s' to '%s' is not an edge (add it to neighbours)" % [id, to])
+	# Boat, coach and ferry lines back an edge too, but need not be one: the world map draws
+	# them as routes of their own. The Corvane ferry is also an edge (item 1290).
+	for t: Variant in layout.get("lines", {}).values():
+		var st: Array = ((t as Dictionary).get("stops", {}) as Dictionary).keys()
+		for a: Variant in st:
+			for b: Variant in st:
+				var pa: String = layout_place(places, str(a))
+				var pb: String = layout_place(places, str(b))
+				if not pa.is_empty() and not pb.is_empty() and pa != pb:
+					warped[layout_edge(pa, pb)] = true
 	for e: String in edges:
 		if not warped.has(e):
 			errors.append("world layout: edge %s has no warp" % e)
+
+## Boat and coach lines (area 3 items 1187-1191, 1289): known kinds, every stop is a map with
+## a free arrival cell that the rest of the map reaches, and every stop of a line that is not
+## run by the story has someone there whose talk offers "transit <line>".
+static func check_transit(errors: PackedStringArray, map_ids: PackedStringArray, lines: Dictionary) -> void:
+	var warp_in: Dictionary = entry_cells(map_ids)
+	for lid: String in lines:
+		var l: Dictionary = lines[lid]
+		if not str(l.get("kind", "")) in Transit.KINDS:
+			errors.append("line '%s': unknown kind '%s'" % [lid, l.get("kind", "")])
+		var st: Dictionary = l.get("stops", {})
+		if st.size() < 2:
+			errors.append("line '%s' needs at least two stops" % lid)
+		for sid: String in st:
+			if not sid in map_ids:
+				errors.append("line '%s': stop '%s' is not a map" % [lid, sid])
+				continue
+			var m: MapData = MapData.load_map(sid)
+			var cell: Array = st[sid]
+			var c: Vector2i = Vector2i(int(cell[0]), int(cell[1])) if cell.size() >= 2 else Vector2i(-1, -1)
+			if not m.in_bounds(c) or not m.is_walkable(c):
+				errors.append("line '%s': arrival %s on '%s' is not on floor" % [lid, c, sid])
+				continue
+			for n: Dictionary in m.npcs:
+				if Vector2i(int(n.x), int(n.y)) == c:
+					errors.append("line '%s': npc '%s' stands on the arrival %s on '%s'" % [lid, n.get("id", ""), c, sid])
+			# Ways in on foot only: the stops themselves don't count.
+			var others: Array = (warp_in.get(sid, []) as Array).filter(func(e: Vector2i) -> bool: return not _is_stop_cell(sid, e, lines))
+			if not others.is_empty() and not reachable_cells(m, others).has(c):
+				errors.append("line '%s': arrival %s on '%s' cannot be reached on foot" % [lid, c, sid])
+			if not bool(l.get("story", false)) and not _offers_transit(m, lid):
+				errors.append("line '%s': nobody on '%s' offers 'transit %s'" % [lid, sid, lid])
+
+static func _is_stop_cell(sid: String, c: Vector2i, extra: Dictionary) -> bool:
+	for src: Dictionary in [Transit.lines(), extra]:
+		for t: Variant in src.values():
+			var a: Variant = ((t as Dictionary).get("stops", {}) as Dictionary).get(sid, [])
+			if a is Array and (a as Array).size() >= 2 and Vector2i(int(a[0]), int(a[1])) == c:
+				return true
+	return false
+
+static func _offers_transit(m: MapData, lid: String) -> bool:
+	var want: String = "transit " + lid
+	for list: Array in [m.npcs, m.signs]:
+		for def: Dictionary in list:
+			var e: Dictionary = Dialogue.get_entry(str(def.get("dialogue", "")))
+			if str(e.get("action", "")) == want:
+				return true
+			for ch: Variant in e.get("choices", []):
+				if ch is Dictionary and str((ch as Dictionary).get("action", "")) == want:
+					return true
+	return false
 
 ## The place on the world map that [param map_id] belongs to: its file, or the place that
 ## file lies inside. "" if the layout doesn't know it.
@@ -502,6 +587,19 @@ static func check_reachability(errors: PackedStringArray, map_ids: PackedStringA
 			var dl: Dictionary = links.get(id, {})
 			dl[m.drop_to] = true
 			links[id] = dl
+	# Boat, coach and ferry stops (Transit): each stop is a way in from every other stop.
+	for t: Variant in Transit.lines().values():
+		var st: Dictionary = (t as Dictionary).get("stops", {})
+		for a: Variant in st:
+			var cell: Array = st[a]
+			var arr: Array = entries.get(str(a), [])
+			arr.append(Vector2i(int(cell[0]), int(cell[1])))
+			entries[str(a)] = arr
+			var l: Dictionary = links.get(str(a), {})
+			for b: Variant in st:
+				if b != a:
+					l[str(b)] = true
+			links[str(a)] = l
 	for id: String in map_ids:
 		if not entries.has(id):
 			errors.append("map '%s': no warp leads here" % id)

@@ -322,11 +322,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1186. [P3] Gib Spielern mit Zeitzonenwechsel eine Meldung und rechne die Phase sauber neu, ohne Doppelfunde.
 
 ### Schnellreise zu Fuß
-1187. [P1] Baue die "Lake Line" (de: Seelinie): Großvater Aldo und ein zweiter Fährmann bringen den Spieler per Boot zwischen Brindlewick, Hollowmere Shore, Reedhaven und Quillbrook.
-1188. [P1] Zeige jede Fahrt als kurze Szene mit Ruderboot und Abblende, der Spieler sitzt im Boot, kein Spirling trägt ihn.
-1189. [P1] Baue die "Valley Coach" (de: Talkutsche) als Kutsche mit Kutscher zwischen Brindlewick, Thornridge, Copperfold und Wrenhollow, nur als Szene, nicht steuerbar.
-1190. [P1] Schalte Haltestellen der Seelinie und der Talkutsche erst frei, wenn man den Ort einmal zu Fuß erreicht hat.
-1191. [P1] Verbinde die bestehende Reise im Menü (travel_targets) mit Fähre und Kutsche: im Menü erscheinen Rastplätze, Haltestellen werden nur am Steg oder an der Station gewählt.
+1187. [x] [P1] Baue die "Lake Line" (de: Seelinie): Großvater Aldo und ein zweiter Fährmann bringen den Spieler per Boot zwischen Brindlewick, Hollowmere Shore, Reedhaven und Quillbrook. (Hollowmere Shore kommt als Haltestelle dazu, sobald die Karte aus 928 gebaut ist.)
+1188. [x] [P1] Zeige jede Fahrt als kurze Szene mit Ruderboot und Abblende, der Spieler sitzt im Boot, kein Spirling trägt ihn.
+1189. [x] [P1] Baue die "Valley Coach" (de: Talkutsche) als Kutsche mit Kutscher zwischen Brindlewick, Thornridge, Copperfold und Wrenhollow, nur als Szene, nicht steuerbar.
+1190. [x] [P1] Schalte Haltestellen der Seelinie und der Talkutsche erst frei, wenn man den Ort einmal zu Fuß erreicht hat.
+1191. [x] [P1] Verbinde die bestehende Reise im Menü (travel_targets) mit Fähre und Kutsche: im Menü erscheinen Rastplätze, Haltestellen werden nur am Steg oder an der Station gewählt.
 1192. [P2] Gib Fahrten einen kleinen Preis in Spielmünzen (Fähre 50, Kutsche 100), damit Laufen weiter Sinn ergibt.
 1193. [P2] Lass die erste Fahrt jeder Linie kostenlos sein.
 1194. [P2] Baue Abkürzungen als einseitige Leitern, die man von oben herunterlässt, z. B. in Fernstair, Crowcrest und Lantern Steps.
@@ -430,10 +430,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1286. [P3] Zeige auf der Minikarte in Dungeons nur bereits betretene Räume.
 
 ### Vorbereitung Corvane
-1287. [P1] Lege die Regionskennung "corvane" in MapData.gd und WorldValidator.gd an, sodass Karten mit region "corvane" geladen, geprüft und getrennt gezählt werden.
-1288. [P1] Baue die Karte "corvane_quay" (de: Corvane-Kai) als Ankunftshafen, 12 x 24 Kacheln, mit Heilstelle und Ausgang zu einem gesperrten Weg.
-1289. [P1] Verbinde den Fähranleger von Brindlewick mit corvane_quay über eine Fährfahrt, gesperrt durch das Flag "ferry_corvane_open", das Bereich 4 setzt.
-1290. [P1] Lege in data/world_layout.json Corvane als zweites Raster rechts neben Veydal an, mit der Fähre als einzige Kante.
+1287. [x] [P1] Lege die Regionskennung "corvane" in MapData.gd und WorldValidator.gd an, sodass Karten mit region "corvane" geladen, geprüft und getrennt gezählt werden.
+1288. [x] [P1] Baue die Karte "corvane_quay" (de: Corvane-Kai) als Ankunftshafen, 12 x 24 Kacheln, mit Heilstelle und Ausgang zu einem gesperrten Weg.
+1289. [x] [P1] Verbinde den Fähranleger von Brindlewick mit corvane_quay über eine Fährfahrt, gesperrt durch das Flag "ferry_corvane_open", das Bereich 4 setzt.
+1290. [x] [P1] Lege in data/world_layout.json Corvane als zweites Raster rechts neben Veydal an, mit der Fähre als einzige Kante.
 1291. [P2] Lege die Kachelzeichen für Corvane fest: "r" Flussfurt, "M" Marktstand, "K" Krähenbaum, "Q" Kaimauer, dokumentiert in TilesetFactory.gd.
 1292. [P2] Baue die Route "Rookfen Path" (de: Krähenfennpfad) als erste Corvane-Route, 12 x 30 Kacheln, Flussauen mit Furten, Ring 18 bis 22.
 1293. [P2] Baue den Weg "Ferrymarsh Bend" (de: Fährmarschbogen) als zweite Corvane-Route, ein Flussbogen mit Treidelpfad, Ring 20 bis 24.

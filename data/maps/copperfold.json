@@ -87,6 +87,14 @@
    "facing": "left",
    "dialogue": "copperfold/shift",
    "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 10,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "copperfold/coach",
+   "sprite": "villager"
   }
  ],
  "signs": [

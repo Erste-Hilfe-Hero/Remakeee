@@ -13,4 +13,5 @@ func _initialize() -> void:
 		printerr("DATA ERROR: " + e)
 	if errors.is_empty():
 		print("Data OK")
+		print(load("res://scripts/core/WorldValidator.gd").call("region_summary"))
 	quit(1 if not errors.is_empty() else 0)
