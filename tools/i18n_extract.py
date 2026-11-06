@@ -69,7 +69,7 @@ def strings():
         if isinstance(name, str):
             found.append(name)
     for sp in json.load(open(os.path.join(ROOT, "data/spirlings.json"))):
-        for k in ("habitat", "lore"):
+        for k in ("habitat", "lore", "origin"):
             if isinstance(sp.get(k), str) and sp[k]:
                 found.append(sp[k])
     for a in json.load(open(os.path.join(ROOT, "data/achievements.json"))).get("achievements", []):
