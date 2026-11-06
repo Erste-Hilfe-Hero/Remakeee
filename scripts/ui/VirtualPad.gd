@@ -6,8 +6,8 @@ extends CanvasLayer
 
 const LAYER: int = 50
 ## Button sizes in viewport pixels per size setting (Medium is about 9-10 mm at integer scale 7).
-const DPAD_SIZES: Array[int] = [16, 20, 24]
-const AB_SIZES: Array[int] = [18, 22, 26]
+const DPAD_SIZES: Array[int] = [16, 20, 24, 28]
+const AB_SIZES: Array[int] = [18, 22, 26, 30]
 ## The menu button is a little larger than before and further from B, so it is not taken for
 ## B (item 1811).
 const MENU_BUTTON: int = 16

@@ -115,7 +115,7 @@ const BUS_MUSIC: StringName = &"Music"
 const BUS_SFX: StringName = &"SFX"
 ## Touch controls: pad size and opacity (index into PAD_SIZES / PAD_ALPHAS), left-handed layout, tap-to-move.
 var pad_size: int = 1
-var pad_opacity: int = 1
+var pad_opacity: int = 2
 var left_handed: bool = false
 var tap_to_move: bool = true
 ## Walking is running; holding B walks slowly instead (item 1810).
@@ -143,8 +143,11 @@ var weather: bool = true
 var language: String = ""
 const FPS_NORMAL: int = 60
 const FPS_BATTERY: int = 30
-const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large"]
-const PAD_ALPHAS: Array[float] = [0.3, 0.55, 0.85]
+## A fourth size "Very large" (item 1816) and five opacity steps (item 1817).
+const PAD_SIZE_NAMES: Array[String] = ["Small", "Medium", "Large", "Very large"]
+const PAD_ALPHAS: Array[float] = [0.15, 0.3, 0.55, 0.7, 0.85]
+## Settings saved before item 1817 had three steps (30, 55, 85 %): their index in the new list.
+const OLD_PAD_ALPHA_STEPS: Array[int] = [1, 2, 4]
 
 ## What the Wayfarer has learned about matchups: "element:species" -> multiplier seen on a hit.
 ## Story difficulty shows every matchup from the start.
@@ -536,7 +539,7 @@ func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
-		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
+		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
@@ -551,7 +554,10 @@ func settings_from_dict(d: Dictionary) -> void:
 	bench_xp = bool(d.get("bench_xp", true))
 	damage_preview = bool(d.get("damage_preview", true))
 	pad_size = clampi(int(d.get("pad_size", 1)), 0, PAD_SIZE_NAMES.size() - 1)
-	pad_opacity = clampi(int(d.get("pad_opacity", 1)), 0, PAD_ALPHAS.size() - 1)
+	if d.has("pad_opacity") and not d.has("pad_opacity_steps"):
+		pad_opacity = OLD_PAD_ALPHA_STEPS[clampi(int(d.pad_opacity), 0, OLD_PAD_ALPHA_STEPS.size() - 1)]
+	else:
+		pad_opacity = clampi(int(d.get("pad_opacity", 2)), 0, PAD_ALPHAS.size() - 1)
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
 	always_run = bool(d.get("always_run", false))
