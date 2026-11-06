@@ -707,7 +707,9 @@ func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
 func announce_achievements() -> void:
 	show_notices()
 	var lines: Array[String] = Collection.claim()
-	for t: String in Achievements.check():
+	var badges: Array[String] = Achievements.check()
+	lines.append_array(Completion.claim())
+	for t: String in badges:
 		# Unlocked badges show at the top of the screen without stopping the game (plan 3315).
 		var a: Dictionary = Achievements.by_title(t)
 		toast.show_note(Loc.t("Badge: %s") % Loc.t(t) + "  " + Waymarks.gain_text(int(a.get("reward", 0))), Badges.texture(a, true))

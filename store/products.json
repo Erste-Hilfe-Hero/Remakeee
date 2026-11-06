@@ -515,7 +515,7 @@
    "name_de": "Siegeswille",
    "desc_en": "If the whole team is defeated, the last one returns once with 30% Vigor. Not against Rift Wardens.",
    "desc_de": "Wird das ganze Team besiegt, kehrt der Letzte einmal mit 30 % Kraft zurück. Nicht gegen Rift-Wächter.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.glass_spark",
