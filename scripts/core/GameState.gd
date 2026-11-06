@@ -40,6 +40,9 @@ var storage: Array[Spirling] = []
 var storage_boxes: Array[Dictionary] = []
 ## Extra boxes beyond STORAGE_BOXES_START (the shop's "+1 box" fills this, area 10).
 var storage_box_bonus: int = 0
+## Running shop boosts (Growth Crystal, Coin Gleam): {"growth": {"mult": 2.0, "left": 20}, ...}.
+## Counted down after every battle by ShopEffects.battle_done().
+var shop_boosts: Dictionary = {}
 ## Saved teams [{"name", "uids": [uid...]}], at most TEAM_PRESETS (item 378).
 var team_presets: Array[Dictionary] = []
 ## Echo Cores from singing together (Nachhall, plan area 1, items 183-185):
@@ -346,6 +349,7 @@ func reset() -> void:
 	storage.clear()
 	storage_boxes = default_boxes()
 	storage_box_bonus = 0
+	shop_boosts = {}
 	team_presets.clear()
 	echo_cores.clear()
 	iron_oath = false
@@ -435,6 +439,7 @@ func to_dict() -> Dictionary:
 		"storage": storage_d,
 		"storage_boxes": storage_boxes.duplicate(true),
 		"storage_box_bonus": storage_box_bonus,
+		"shop_boosts": shop_boosts.duplicate(true),
 		"team_presets": team_presets.duplicate(true),
 		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
@@ -480,6 +485,12 @@ func from_dict(d: Dictionary) -> void:
 		if s != null:
 			storage.append(s)
 	_load_boxes(d)
+	shop_boosts = {}
+	if d.get("shop_boosts") is Dictionary:
+		for k: Variant in d.shop_boosts:
+			var b: Variant = d.shop_boosts[k]
+			if str(k) in ["growth", "coins"] and b is Dictionary and int(b.get("left", 0)) > 0:
+				shop_boosts[str(k)] = {"mult": clampf(float(b.get("mult", 1.0)), 1.0, 3.0), "left": mini(int(b.left), 200)}
 	_load_echo_cores(d.get("echo_cores", []))
 	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
@@ -814,6 +825,23 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
+	elif int(it.get("rings", 0)) > 0:
+		# Ring Tonics from the shop: never above the Ring cap (plan item 4341).
+		var target: int = mini(s.level + int(it.rings), mini(level_cap(), Spirling.MAX_LEVEL))
+		if s.level >= target:
+			return ""
+		var from: int = s.level
+		while s.level < target:
+			s.level_up()
+		s.xp = Spirling.xp_for_level(s.level)
+		msg = "%s grew from Ring %d to Ring %d!" % [s.display_name(), from, s.level]
+	elif bool(it.get("spark_all", false)):
+		var raised: bool = false
+		for key: String in Spirling.STAT_KEYS:
+			raised = train_spark(s, key, Spirling.SPARK_MAX) or raised
+		if not raised:
+			return ""
+		msg = "All of %s's sparks shine at the top." % s.display_name()
 	elif float(it.get("revive", 0.0)) > 0.0:
 		if not s.is_fainted():
 			return ""

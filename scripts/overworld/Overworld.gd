@@ -2088,7 +2088,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
-	model.prize_money = int(trainer.get("money", 0))
+	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
+	model.xp_mult = ShopEffects.growth_mult()
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])
@@ -2107,6 +2108,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	ShopEffects.battle_done()
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:

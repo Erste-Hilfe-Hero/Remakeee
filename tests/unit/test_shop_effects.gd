@@ -103,3 +103,73 @@ func test_ready_offers_have_working_items() -> void:
 
 func test_receipt_check_goes_to_billing_service() -> void:
 	assert_eq(SupabaseBackend.SERVICE_ROUTES.get("shop_verify"), "/billing/v1/verify")
+
+func test_ring_tonics_stop_at_the_cap() -> void:
+	var s: Spirling = Spirling.new(Database.species("Mossling"), 10)
+	var diff: int = GameState.difficulty
+	GameState.difficulty = GameState.Difficulty.TAMER
+	GameState.add_item("rg_ring_tonic_5")
+	assert_string_contains(GameState.use_item_outside_battle("rg_ring_tonic_5", s), "Ring 15")
+	assert_eq(s.level, 15)
+	assert_eq(s.xp, Spirling.xp_for_level(15))
+	assert_eq(GameState.item_count("rg_ring_tonic_5"), 0, "used up")
+	GameState.add_item("rg_ring_elixir")
+	GameState.use_item_outside_battle("rg_ring_elixir", s)
+	assert_eq(s.level, mini(GameState.level_cap(), Spirling.MAX_LEVEL))
+	GameState.add_item("rg_ring_tonic")
+	assert_eq(GameState.use_item_outside_battle("rg_ring_tonic", s), "", "nothing above the cap")
+	assert_eq(GameState.item_count("rg_ring_tonic"), 1, "kept when it would do nothing")
+	GameState.inventory.erase("rg_ring_tonic")
+	GameState.difficulty = diff
+
+func test_spark_forge_sets_every_spark_to_top() -> void:
+	var s: Spirling = _mon()
+	GameState.add_item("rg_spark_forge")
+	assert_ne(GameState.use_item_outside_battle("rg_spark_forge", s), "")
+	for k: String in Spirling.STAT_KEYS:
+		assert_eq(int(s.spark[k]), Spirling.SPARK_MAX)
+
+func test_growth_and_coin_boosts_count_battles() -> void:
+	var boosts: Dictionary = GameState.shop_boosts.duplicate(true)
+	GameState.shop_boosts = {}
+	Billing.state = {}
+	GameState.add_item("rg_growth_x2")
+	GameState.add_item("rg_growth_x3")
+	assert_eq(ShopEffects.start_boost("rg_growth_x3"), "Works for the next 20 battles.")
+	assert_eq(ShopEffects.start_boost("rg_growth_x2"), "A stronger boost is still working.")
+	assert_eq(GameState.item_count("rg_growth_x2"), 1, "kept")
+	assert_almost_eq(ShopEffects.growth_mult(), 3.0, 0.001)
+	Billing.state = {"pass_active": true}
+	assert_almost_eq(ShopEffects.growth_mult(), 4.5, 0.001, "the pass multiplies")
+	for i: int in 20:
+		ShopEffects.battle_done()
+	assert_almost_eq(ShopEffects.growth_mult(), 1.5, 0.001, "crystal ran out after 20 battles")
+	GameState.add_item("rg_coin_boost")
+	ShopEffects.start_boost("rg_coin_boost")
+	assert_almost_eq(ShopEffects.coin_mult(), 2.0, 0.001)
+	assert_eq(ShopEffects.boost_left("coins"), 20)
+	GameState.inventory.erase("rg_growth_x2")
+	GameState.shop_boosts = boosts
+
+func test_boosts_survive_save_and_load() -> void:
+	var boosts: Dictionary = GameState.shop_boosts.duplicate(true)
+	GameState.shop_boosts = {"growth": {"mult": 2.0, "left": 7}}
+	var d: Dictionary = GameState.to_dict()
+	GameState.shop_boosts = {}
+	GameState.from_dict(d)
+	assert_eq(ShopEffects.boost_left("growth"), 7)
+	GameState.shop_boosts = boosts
+
+func test_xp_mult_scales_battle_growth() -> void:
+	var a: Array[Spirling] = [BattleFixtures.make("Kindlop", 10)]
+	var b: Array[Spirling] = [BattleFixtures.make("Kindlop", 10)]
+	var foe1: Array[Spirling] = [BattleFixtures.make("Zephlet", 10)]
+	var foe2: Array[Spirling] = [BattleFixtures.make("Zephlet", 10)]
+	var m1: BattleModel = BattleFixtures.model(a, foe1, true, 3)
+	var m2: BattleModel = BattleFixtures.model(b, foe2, true, 3)
+	m2.xp_mult = 2.0
+	m1.participants.append(a[0])
+	m2.participants.append(b[0])
+	m1._award_xp(foe1[0])
+	m2._award_xp(foe2[0])
+	assert_gt(b[0].xp, a[0].xp)

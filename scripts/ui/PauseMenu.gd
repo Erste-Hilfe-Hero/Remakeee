@@ -514,7 +514,8 @@ func _usable_items() -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
-		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))):
+		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
+				or int(it.get("rings", 0)) > 0 or bool(it.get("spark_all", false))):
 			out.append(str(id))
 	return out
 
@@ -570,11 +571,19 @@ func run_bag() -> void:
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
 			await _use_spark_charm(item_id)
+		elif it.has("boost"):
+			if await confirm("%s\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", "")))], "Use", "Not now"):
+				await info(ShopEffects.start_boost(item_id))
 		elif item_id in _usable_items():
 			var names: Array[String] = []
 			for s: Spirling in GameState.party:
 				names.append(MenuHost.party_line(s))
 			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
+			if who >= 0 and bool(it.get("spark_all", false)):
+				# The Spark Forge shows the values it will set before it is used.
+				var s: Spirling = GameState.party[who]
+				if not await confirm("%s\n%s" % [GameState.spark_reading(s), Loc.t("Afterwards every spark is at the top (12).")], "Use", "Not now"):
+					who = -1
 			if who >= 0:
 				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
 				await info(msg if not msg.is_empty() else "That would do nothing right now.")
