@@ -478,7 +478,7 @@ func _on_interact(cell: Vector2i) -> void:
 		n.face_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		elif not await offer_rematch(n):
+		elif not await offer_rematch(n) and not await offer_trials(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
@@ -1853,6 +1853,45 @@ func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()
 	rec[TrainerData.beaten_flag(def, map.id)] = _today()
 	GameState.records["rematch"] = rec
+
+## A beaten Warden offers its Trials at the Rift (plan area 2, item 697): fixed puzzle battles
+## with borrowed Spirlings. They give no rings, no growth and leave the team as it is; a solved
+## Trial is marked in GameState.records["trials"]. Returns false if there are none or the player leaves.
+func offer_trials(n: NPC) -> bool:
+	var def: Dictionary = n.definition
+	if not def.has("warden") or not TrainerData.is_beaten(def, map.id, GameState.flags):
+		return false
+	var trials: Array[Dictionary] = BattlePuzzle.for_warden(str(def.warden))
+	if trials.is_empty():
+		return false
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	var done: Dictionary = GameState.records.get("trials", {})
+	var entries: Array[Dictionary] = []
+	for p: Dictionary in trials:
+		var mark: String = " ✓" if bool(done.get(str(p.id), false)) else ""
+		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var idx: int = await menu.pick(Loc.t("Trials"), entries, true)
+	menu.queue_free()
+	if idx < 0 or idx >= trials.size():
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return idx < 0
+	var p: Dictionary = trials[idx]
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	await start_battle(at.model.party(BattleModel.Side.FOE), false,
+		{"model": at.model, "friendly": true, "warden": true, "name": str(p.get("name", ""))})
+	var ok: bool = BattlePuzzle.solved(p, at)
+	if ok:
+		var rec: Dictionary = done.duplicate()
+		rec[str(p.id)] = true
+		GameState.records["trials"] = rec
+	await say([Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")])
+	return true
 
 ## Offers a beaten Wayfarer's daily rematch. Returns false if there is none or the player declines.
 func offer_rematch(n: NPC) -> bool:
