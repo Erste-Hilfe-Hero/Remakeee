@@ -81,10 +81,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3182. [P3] Für Aufträge in Gebieten mit Era-Wechsel die Ortsnamen aus der aktuellen Era-Karte nehmen.
 
 ### Wochen-Echo ausbauen
-3183. [P1] Die Wochenherausforderung zusätzlich mit 60 Wegmarken beim ersten Sieg der Woche belohnen, neben den 400 Münzen.
-3184. [P1] Die Wochenherausforderung von 3 auf 5 Runden erweitern und den Belohnungswert für Runde 4 und 5 als Zwischenpreis auszahlen.
-3185. [P1] Nach jeder Runde im Wochen-Echo eine Zwischenwertung zeigen: Züge, übrige Kraft und erschöpfte Spirlings.
-3186. [P1] Das Wochen-Echo nicht mehr an den stärksten eigenen Spirling, sondern an den Ring-Deckel binden, damit alle in derselben Woche dieselben Gegnerringe sehen.
+3183. [x] [P1] Die Wochenherausforderung zusätzlich mit 60 Wegmarken beim ersten Sieg der Woche belohnen, neben den 400 Münzen.
+3184. [x] [P1] Die Wochenherausforderung von 3 auf 5 Runden erweitern und den Belohnungswert für Runde 4 und 5 als Zwischenpreis auszahlen.
+3185. [x] [P1] Nach jeder Runde im Wochen-Echo eine Zwischenwertung zeigen: Züge, übrige Kraft und erschöpfte Spirlings.
+3186. [x] [P1] Das Wochen-Echo nicht mehr an den stärksten eigenen Spirling, sondern an den Ring-Deckel binden, damit alle in derselben Woche dieselben Gegnerringe sehen.
 3187. [P2] Eine Wochen-Bestwertung aus Zügen und übriger Kraft in GameState.records["weekly_best"] speichern.
 3188. [P2] Für eine Wertung unter einem festen Zielwert der Woche einen Bonus von 20 Wegmarken zahlen.
 3189. [P2] Eine Wochenvorschau am Brett zeigen: Feld, Regel und die Elemente der drei ersten Echo-Teams.

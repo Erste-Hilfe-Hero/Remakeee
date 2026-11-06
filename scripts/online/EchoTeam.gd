@@ -51,4 +51,4 @@ static func weekly_score(wins: int, party: Array[Spirling]) -> int:
 	for s: Spirling in party:
 		hp += s.hp_fraction()
 	var pct: int = int(round(100.0 * hp / maxf(1.0, float(party.size())))) if wins >= WeeklyChallenge.ROUNDS else 0
-	return clampi(wins * 100 + pct, 0, 400)
+	return clampi(wins * WeeklyChallenge.POINTS_PER_ROUND + pct, 0, 400)

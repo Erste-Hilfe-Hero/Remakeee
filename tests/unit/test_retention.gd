@@ -47,11 +47,11 @@ func test_weekly_changes_between_weeks() -> void:
 		seen[str(_names(c.team(0)))] = true
 	assert_gt(seen.size(), 4)
 
-func test_weekly_level_follows_the_team() -> void:
-	assert_eq(WeeklyChallenge.new("2026-W44", 20).level, 22)
+func test_weekly_level_follows_the_ring_cap() -> void:
+	assert_eq(WeeklyChallenge.new("2026-W44", 20).level, 20)
 	assert_eq(WeeklyChallenge.new("2026-W44", 1).level, 8)
 	for s: Spirling in WeeklyChallenge.new("2026-W44", 40).team(1):
-		assert_eq(s.level, 42)
+		assert_eq(s.level, 40)
 
 func test_festivals_cover_their_months() -> void:
 	assert_eq(Season.for_month(10).id, "lantern_nights")
@@ -129,7 +129,7 @@ func test_records_text() -> void:
 	GameState.records["weekly"] = {"week": WeeklyChallenge.this_week(), "best": 2, "claimed": false}
 	var t: String = PauseMenu.records_text()
 	assert_string_contains(t, "Lighthouse climb best: 3 of 5")
-	assert_string_contains(t, "This week: 2 of 3")
+	assert_string_contains(t, "This week: 2 of 5")
 
 func test_info_strip_speaks() -> void:
 	var strip := InfoStrip.new()

@@ -130,6 +130,11 @@ func seal_rift(rift_id: String) -> bool:
 		set_flag("storage_remote")
 	return true
 
+## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
+## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
+func progress_cap() -> int:
+	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
+
 func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
 
