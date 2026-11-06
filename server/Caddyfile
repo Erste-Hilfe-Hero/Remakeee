@@ -21,9 +21,16 @@
 			TXT 200
 	}
 	handle_path /auth/v1/* {
+		request_body {
+			max_size 16KB
+		}
 		reverse_proxy auth:9999
 	}
 	handle_path /rest/v1/* {
+		# Largest request the game sends is a save (at most 256 KB, checked again in save_put).
+		request_body {
+			max_size 512KB
+		}
 		reverse_proxy rest:3000
 	}
 	# Result of the weekly restore test, read by .github/workflows/monitor.yml.
