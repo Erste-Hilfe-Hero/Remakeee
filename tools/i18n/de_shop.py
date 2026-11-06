@@ -210,8 +210,8 @@ T = {
 	"+50 % Wachstum, jeden Tag 30 Rissglas, +1 Startenergie, 1 freier Rissatem pro Wächterkampf, +1 Bond-Versuch pro Kampf. 4,99 € pro Monat, verlängert sich automatisch, jederzeit im Store kündbar.",
 "Starter Pack":
 	"Starterpaket",
-"300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Single value 1300 Riftglass. Once per account.":
-	"300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall, 3 Rissatem, 3 Echo-Düfte. Einzelwert 1300 Rissglas. Einmal pro Konto.",
+"300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Once per account.":
+	"300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall, 3 Rissatem, 3 Echo-Düfte. Einmal pro Konto.",
 "Wayfarer Pack":
 	"Wanderer-Paket",
 "1000 Riftglass, Riftheart, Glass Shield, 2 Great Ring Tonics, 1 Bond Seal. Once per account.":
@@ -610,4 +610,5 @@ T = {
 "Growth": "Wachstum", "Coins": "Münzen", "Overcharge": "Überladung",
 "1 battle left": "noch 1 Kampf", "%d battles left": "noch %d Kämpfe",
 "The growth boost is used up.": "Der Wachstums-Boost ist aufgebraucht.",
+"Worth one by one: %s": "Einzeln gekauft: %s",
 }
