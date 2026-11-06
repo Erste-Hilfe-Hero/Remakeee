@@ -391,17 +391,19 @@ func from_dict(d: Dictionary) -> void:
 	heal_map = str(d.get("heal_map", "lighthouse"))
 	var hc: Array = d.get("heal_cell", [4, 4])
 	heal_cell = Vector2i(int(hc[0]), int(hc[1]))
-	flags = (d.get("flags", {}) as Dictionary).duplicate()
-	for k: Variant in (d.get("matchups", {}) as Dictionary):
-		known_matchups[str(k)] = float(d.matchups[k])
+	flags = _as_dict(d.get("flags", {}))
+	var mu: Dictionary = _as_dict(d.get("matchups", {}))
+	for k: Variant in mu:
+		if mu[k] is float or mu[k] is int:
+			known_matchups[str(k)] = float(mu[k])
 	play_time = float(d.get("play_time", 0.0))
-	visited_rests = (d.get("rests", {}) as Dictionary).duplicate(true)
+	visited_rests = _as_dict(d.get("rests", {}))
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
-	records = (d.get("records", {}) as Dictionary).duplicate()
-	switch_progress = (d.get("switches", {}) as Dictionary).duplicate()
-	world_state = as_dict(d.get("world", {})).duplicate(true)
+	records = _as_dict(d.get("records", {}))
+	switch_progress = _as_dict(d.get("switches", {}))
+	world_state = _as_dict(d.get("world", {}))
 	iron_oath = bool(d.get("iron_oath", false))
 	for sd: Variant in d.get("sanctuary", []):
 		var s: Spirling = Spirling.from_dict(sd)
@@ -545,10 +547,14 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 		var src: Dictionary = (e as Dictionary).duplicate(true)
 		for k: Variant in src:
 			out[str(k)] = src[k]
-	out["seen"] = as_bool(out.seen) or as_bool(out.bonded)
-	out["bonded"] = as_bool(out.bonded)
-	out["first_day"] = as_int(out.first_day)
+	out["seen"] = out.seen is bool and out.seen or out.bonded is bool and out.bonded
+	out["bonded"] = out.bonded is bool and out.bonded
+	out["first_day"] = int(out.first_day) if out.first_day is int or out.first_day is float else 0
 	return out
+
+## A copy of v if it is a Dictionary, else {} (saves can be damaged or edited).
+static func _as_dict(v: Variant) -> Dictionary:
+	return (v as Dictionary).duplicate(true) if v is Dictionary else {}
 
 ## Damaged-save guards: a number (or bool) as int, anything else -> [param fallback].
 static func as_int(v: Variant, fallback: int = 0) -> int:
