@@ -149,6 +149,21 @@ static func prize_money(def: Dictionary, team: Array[Spirling]) -> int:
 		top = maxi(top, s.level)
 	return top * (WARDEN_MONEY_PER_LEVEL if def.has("warden") else MONEY_PER_LEVEL)
 
+## The AI profile for [param difficulty]: "profile", but none below "profile_from" (a difficulty
+## key, item 681: Wardens play their personality from Tamer on).
+static func profile_for(def: Dictionary, difficulty: int = -1) -> String:
+	var from: int = DIFFICULTY_KEYS.find(str(def.get("profile_from", "")))
+	if from > 0 and difficulty >= 0 and difficulty < from:
+		return ""
+	return str(def.get("profile", ""))
+
+## The weight changes on top of the profile ({} when no profile applies).
+static func profile_tune(def: Dictionary, difficulty: int = -1) -> Dictionary:
+	if profile_for(def, difficulty).is_empty():
+		return {}
+	var t: Variant = def.get("profile_tune", {})
+	return (t as Dictionary).duplicate() if t is Dictionary else {}
+
 ## AI tier for this Wayfarer given the difficulty default.
 static func ai_tier(def: Dictionary, difficulty_ai: int) -> int:
 	var tier: int = int(def.get("ai", difficulty_ai))
@@ -177,7 +192,8 @@ static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: i
 		"front": front(def),
 		"boss": str(def.get("boss", "")),
 		"wild": is_wild_horde(def),
-		"profile": str(def.get("profile", "")),
+		"profile": profile_for(def, difficulty),
+		"profile_tune": profile_tune(def, difficulty),
 	}
 	if def.has("partner"):
 		info["partner"] = def.partner

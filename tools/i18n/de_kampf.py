@@ -204,3 +204,20 @@ T.update({
 "The current deepens: your next Spirling to come in loses Might.": "Die Strömung wird tiefer: Dein nächster eingewechselter Spirling verliert Wucht.",
 "The tide turns. Whoever you send next, it pulls under!": "Die Flut kippt. Wen du auch schickst, sie zieht ihn hinab!",
 })
+
+# Plan area 2, items 680-681: Warden cover in the lexicon.
+T.update({
+"Lexicon": "Lexikon", "Lexicon %d": "Lexikon %d",
+"The cartographers": "Die Kartografen",
+"Kestra's guild draws every road of Veydal again each year. A map that is not walked goes wrong, they say, and a Wayfarer who keeps all their Spirlings standing walks it best.": "Kestras Gilde zeichnet jedes Jahr alle Wege von Veydal neu. Eine Karte, die keiner abläuft, wird falsch, sagen sie, und am besten läuft sie ab, wer alle seine Spirlings auf den Beinen hält.",
+"Reactions": "Reaktionen",
+"An art can set off a status already on its target: Ember on a Soaked foe dries it with a burst, Stone shakes off a Jolt. The battle log names every reaction it sees.": "Eine Technik kann einen Zustand auslösen, der schon auf dem Ziel liegt: Glut auf einem durchnässten Gegner trocknet ihn mit einem Knall, Stein schüttelt einen Schock ab. Das Kampfprotokoll nennt jede Reaktion.",
+"Rift mystics": "Riss-Mystiker",
+"The mystics at the Tide Rift listen to the Hush instead of fighting it. They chain reactions on purpose, one status feeding the next art.": "Die Mystiker am Gezeitenriss lauschen der Stille, statt sie zu bekämpfen. Sie reihen Reaktionen mit Absicht aneinander, ein Zustand nährt die nächste Technik.",
+"The Drowned Heart": "Das Ertrunkene Herz",
+"The Hush gathered at the bottom of the Tide Rift into one heavy heart. It grows with every Spirling you field, so a full team does not crush it, it only meets it.": "Die Stille hat sich am Grund des Gezeitenrisses zu einem schweren Herzen gesammelt. Es wächst mit jedem Spirling, den du aufstellst, also erdrückt ein volles Team es nicht, es stellt sich ihm nur.",
+"Orrin's cover": "Orrins Deckung",
+"Orrin knows that Tide puts out his embers. That is why Shalebat walks with him: its Stone hide and Hunker Down take the Tide arts you answer with, while Kindlop and Smoldrake build up Energy.": "Orrin weiß, dass Flut seine Glut löscht. Darum geht Shalebat mit ihm: Seine Steinhaut und Hunker Down fangen die Flut-Techniken ab, mit denen du antwortest, während Kindlop und Smoldrake Energie sammeln.",
+"Maelis's cover": "Maelis' Deckung",
+"Maelis knows her tide fears Volt and Bloom. Zephlet's Gale cuts Bloom down, and Zippit holds against the Volt Spirlings you bring, so her Riptail can wait for its moment.": "Maelis weiß, dass ihre Flut Volt und Blüte fürchtet. Zephlets Wind schneidet Blüte nieder, und Zippit hält gegen die Volt-Spirlings, die du mitbringst, damit ihr Riptail auf seinen Moment warten kann.",
+})

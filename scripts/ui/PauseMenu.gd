@@ -289,6 +289,8 @@ func run_records() -> void:
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
 			lines.append("Sticker wall")
+		if not Lexicon.collected(GameState.records).is_empty():
+			lines.append("Lexicon")
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -308,10 +310,23 @@ func run_records() -> void:
 			"Vows": await run_vows()
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
+			"Lexicon": await run_lexicon()
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+
+## The lexicon (plan area 2, item 680): the collected entries, each opened as a page.
+func run_lexicon() -> void:
+	var ids: Array[String] = Lexicon.collected(GameState.records)
+	var titles: Array[String] = []
+	for id: String in ids:
+		titles.append(Lexicon.title(id))
+	while true:
+		var i: int = await pick_strings(Loc.t("Lexicon %d") % ids.size(), titles)
+		if i < 0:
+			return
+		await info(Loc.t(Lexicon.text(ids[i])))
 
 ## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
 func run_vows() -> void:

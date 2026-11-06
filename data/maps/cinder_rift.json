@@ -285,7 +285,15 @@
      "ember_pulse",
      "ash_rain"
     ]
-   }
+   },
+   "profile": "hothead",
+   "profile_from": "tamer",
+   "profile_tune": {
+    "field_w": 1.5,
+    "setup_w": 0.8,
+    "status_w": 0.8
+   },
+   "lexicon": "warden_orrin"
   },
   {
    "id": "ashen_heart",
