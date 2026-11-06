@@ -2,6 +2,7 @@
 Saltmarsh, the houses and the two Rift hollows). Only patches; see common.py. Every patch can
 run again without changing anything a second time."""
 from common import lines, npc, secret
+import townsfolk
 
 GROUP = ["lighthouse", "brindlewick", "map_house", "rest_spring", "fernstair", "crowcrest",
          "thornridge", "saltmarsh", "cinder_rift", "tide_rift"]
@@ -51,6 +52,8 @@ TRANSIT_NPCS = {
 
 
 def build(world):
+    for mid in ("brindlewick", "thornridge"):
+        townsfolk.apply(world, mid)
     for mid, people in TRANSIT_NPCS.items():
         m = world.load_map(mid)
         for person, entry in people:

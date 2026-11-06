@@ -21,5 +21,60 @@
    "Boatman Rurik: The Lake Line runs again. Brindlewick, Quillbrook, wherever you've set foot."
   ],
   "action": "transit lake_line"
+ },
+ "gunn": {
+  "lines": [
+   "Eel-Catcher Gunn: West end by day, east end by evening. The eels move, so do I."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Eel-Catcher Gunn: The eels came back to the stilts. They know when the water's right."
+   ]
+  }
+ },
+ "aart": {
+  "lines": [
+   "Stilt-Builder Aart: I check the stilts by the gate each morning. One wobble and I know."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Stilt-Builder Aart: No wobble in weeks. The Rift shook more than the storm ever did."
+   ]
+  }
+ },
+ "wenna": {
+  "lines": [
+   "Reed-Cutter Wenna: I cut reeds from dawn to noon and sleep through the evening. Don't tell."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Reed-Cutter Wenna: The reeds grow so fast now I can't keep up. A nice problem."
+   ]
+  }
+ },
+ "pip": {
+  "lines": [
+   "Lantern Boy Pip: I'm allowed up at night to watch the lanterns on the water. It's my job!"
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Lantern Boy Pip: The lanterns don't flicker blue anymore. I kind of liked the blue."
+   ]
+  }
+ },
+ "hanne": {
+  "lines": [
+   "Fishwife Hanne: Morning catch here, evening market in Brindlewick. My feet know every plank."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Fishwife Hanne: Folk buy fish again without sniffing it twice. The Rift scared them off the lake."
+   ]
+  }
  }
 }

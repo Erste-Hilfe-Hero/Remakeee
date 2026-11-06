@@ -42,5 +42,60 @@
    "Driver Fenna: Valley Coach, Wrenhollow stop. Climb in, the seats are dry."
   ],
   "action": "transit valley_coach"
+ },
+ "tamsa": {
+  "lines": [
+   "Weaver Tamsa: I weave on the top terrace while the light lasts, then I go down to gossip."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Weaver Tamsa: My threads stopped tangling by themselves. Strange how a Rift reaches so far."
+   ]
+  }
+ },
+ "orrin": {
+  "lines": [
+   "Well-Keeper Orrin: I check the well rope at noon and the gate at dusk. Nothing ever happens."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Well-Keeper Orrin: The well water tastes of nothing again. That's how it should taste."
+   ]
+  }
+ },
+ "lise": {
+  "lines": [
+   "Goatherd Lise: The goats walk the bottom terrace and I walk behind them. Who leads whom?"
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Goatherd Lise: The goats climb up to the rim again. They hated the Rift more than I did."
+   ]
+  }
+ },
+ "brann": {
+  "lines": [
+   "Fiddler Brann: I tune at dusk on the top terrace and play for the lamps at night."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Fiddler Brann: My fiddle stays in tune all night now. A small miracle, but mine."
+   ]
+  }
+ },
+ "ilse": {
+  "lines": [
+   "Basket-Maker Ilse: I weave here by day and sell in Reedhaven at dusk. Reeds for baskets, baskets for reeds."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Basket-Maker Ilse: The reeds by the fen stand straight again. Better baskets for everyone."
+   ]
+  }
  }
 }
