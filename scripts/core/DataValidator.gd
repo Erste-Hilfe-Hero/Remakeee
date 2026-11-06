@@ -116,6 +116,13 @@ static func _check_species_fields(s: Dictionary, sname: String, species_names: D
 			errors.append("spirling '%s': bond_rate %.2f outside %s band %.2f-%.2f" % [sname, br, rarity, band.x, band.y])
 	if not str(s.get("region", "")) in SpirlingData.REGIONS:
 		errors.append("spirling '%s': unknown region '%s'" % [sname, s.get("region", "")])
+	var motif: Variant = s.get("cry_motif", [])
+	if not motif is Array or (motif as Array).size() != 2 or int(motif[0]) == int(motif[1]) \
+			or int(motif[0]) < 0 or int(motif[1]) < 0 or int(motif[0]) >= BondEcho.MARKS or int(motif[1]) >= BondEcho.MARKS:
+		errors.append("spirling '%s': cry_motif must be two different marks 0..%d" % [sname, BondEcho.MARKS - 1])
+	var hint: String = str(s.get("keepsake_hint", ""))
+	if hint.is_empty() or not _held_items().has(hint):
+		errors.append("spirling '%s': keepsake_hint '%s' is not an item a Spirling can hold" % [sname, hint])
 	if not str(s.get("role", "")) in SpirlingData.ROLES:
 		errors.append("spirling '%s': unknown role '%s'" % [sname, s.get("role", "")])
 	if str(s.get("origin", "")).strip_edges().is_empty():
@@ -190,3 +197,16 @@ static func _load_json(path: String, errors: PackedStringArray) -> Variant:
 		errors.append("%s:%d: %s" % [path, json.get_error_line(), json.get_error_message()])
 		return null
 	return json.data
+
+## Ids of items a Spirling can hold (items.json entries with a "held" block).
+static func _held_items() -> Dictionary:
+	var out: Dictionary = {}
+	var path: String = "res://data/items.json"
+	if not FileAccess.file_exists(path):
+		return out
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	var list: Array = raw if raw is Array else ((raw as Dictionary).values() if raw is Dictionary else [])
+	for it: Variant in list:
+		if it is Dictionary and (it as Dictionary).has("held"):
+			out[str((it as Dictionary).get("id", ""))] = true
+	return out

@@ -74,6 +74,10 @@ var variant: String = ""
 var origin_map: String = ""
 var met_ring: int = 0
 var met_day: int = 0
+## Storage box this Spirling rests in (GameState.storage_boxes index) and the favourite mark:
+## favourites are never released and never moved by a multi-select (plan area 1, items 375-377).
+var box: int = 0
+var favorite: bool = false
 ## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
@@ -407,6 +411,8 @@ func to_dict() -> Dictionary:
 		"met_day": met_day,
 		"lineage": lineage.duplicate(),
 		"echo_streak": echo_streak,
+		"box": box,
+		"favorite": favorite,
 	}
 
 ## Rebuilds a Spirling from to_dict() output. Returns null if the species is unknown.
@@ -443,6 +449,8 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var lin: Variant = d.get("lineage", [])
 	s.lineage.assign((lin as Array).map(func(x: Variant) -> String: return str(x)) if lin is Array else [])
 	s.echo_streak = maxi(0, _num(d.get("echo_streak"), 0))
+	s.box = maxi(0, _num(d.get("box"), 0))
+	s.favorite = d.get("favorite") is bool and d.get("favorite")
 	s.hp = clampi(_num(d.get("hp"), s.max_hp()), 0, s.max_hp())
 	return s
 
