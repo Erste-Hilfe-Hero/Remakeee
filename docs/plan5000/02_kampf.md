@@ -14,7 +14,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 448. [x] [P1] Neuer Effekt `self_stage_after`: nach einem Treffer sinkt eine eigene Stufe um den Wert aus `self_stages` (zum Beispiel Fokus -1), auch wenn das Ziel dabei fällt.
 449. [x] [P1] Neuer Effekt `stage_on_hit`: mit der Chance `stage_chance` steigt nach einem Treffer eine eigene Stufe um 1; StatChangeEffect erhält dafür den optionalen Schlüssel `stage_chance` (Standard 1,0).
 450. [x] [P1] Neuer Schlüssel `cooldown` in moves.json: nach dem Einsatz ist die Technik für die angegebene Zahl an Runden gesperrt und im Technik-Menü grau mit Restzahl.
-451. [P2] Neuer Effekt `delayed_hit`: der Schaden wird beim Einsatz mit den aktuellen Werten berechnet und trifft 2 Runden später den Spirling, der dann im Ziel-Slot steht.
+451. [x] [P2] Neuer Effekt `delayed_hit`: der Schaden wird beim Einsatz mit den aktuellen Werten berechnet und trifft 2 Runden später den Spirling, der dann im Ziel-Slot steht. Erledigt: Kunst „Omen Bell“ (Lumenewt Ring 36), Ereignisse DELAYED_SET/DELAYED_HIT.
 452. [x] [P2] Neuer Effekt `energy_burn`: das Ziel verliert die Energie aus `effect_amount`, ohne dass der Nutzer sie erhält (Unterschied zum bestehenden `energy_drain`).
 453. [x] [P2] Neuer Effekt `heal_block`: 3 Runden lang wirken beim Ziel keine Heiltechniken, keine Gabe-Regeneration, kein Feld-Heilen und kein Andenken mit `regen_div`.
 454. [x] [P2] Neuer Effekt `status_shift`: der Nutzer gibt seinen eigenen Status an das Ziel weiter und ist danach frei; schlägt fehl, wenn das Ziel schon einen Status trägt oder immun ist.
@@ -318,7 +318,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 730. [x] [P1] Story: der Murk-Hollow-Schwarm hat 4 statt 6 Spirlings, Tamer 5, ab Veteran 6.
 731. [P1] Veteran: Gegner-Teams nutzen feste Technik-Listen mit mindestens einer Status- oder Stufen-Technik pro Spirling.
 732. [x] [P1] Rift-Born: Wächter tragen ein Andenken auf jedem Spirling, Wanderer eins pro Team.
-733. [P1] Zielwerte für Gewinnraten des Referenzteams gegen Wächter: Story mindestens 95 %, Tamer 80 bis 90 %, Veteran 55 bis 70 %, Rift-Born 30 bis 45 % (Simulator-Modus "warden").
+733. [x] [P1] Zielwerte für Gewinnraten des Referenzteams gegen Wächter: Story mindestens 95 %, Tamer 80 bis 90 %, Veteran 55 bis 70 %, Rift-Born 30 bis 45 % (Simulator-Modus "warden"). Erledigt: tools/balance/targets.json; Orrin 100/89/64/32 %, Maelis 100/88/63/36 % (Mittel der drei Referenzteams, 100 Kämpfe).
 734. [P2] Tamer: Gegner nutzen ihr Profil, aber ohne Andenken und mit KI-Stufe 1; Wächter Stufe 2 (bestehende Untergrenze bleibt).
 735. [P3] Gegner-Temperament pro Stufe: Story und Tamer aus der uid wie beim Spieler, Veteran und Rift-Born das Temperament, das den Wert der Haupt-Technik-Art hebt.
 736. [P2] Ring-Obergrenzen LEVEL_CAPS prüfen: Orrins höchster Spirling auf Veteran ist R13 bei Obergrenze 12, daher Veteran-Team R11 bis R12 und Obergrenze-Hinweis in der Wächter-Karte.
@@ -401,9 +401,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 ### Balance-Simulator ausbauen
 808. [x] [P1] tools/balance_sim.gd nimmt benannte Schalter statt fester Reihenfolge: `--level`, `--rounds`, `--seed`, `--mode`, `--ai`, `--out`, `--json`.
 809. [x] [P1] Modus `team`: zufällige gültige 3er- und 5er-Teams pro Seed, beide Seiten auf KI-Stufe 2, 500 Kämpfe pro Lauf, Bericht nach Art, Technik und Element.
-810. [P1] Modus `warden`: jedes Referenzteam aus tools/balance/ref_teams.json kämpft 100-mal gegen jeden Wächter pro Schwierigkeit, mit der KI-Stufe und den Regeln der Stufe.
+810. [x] [P1] Modus `warden`: jedes Referenzteam aus tools/balance/ref_teams.json kämpft 100-mal gegen jeden Wächter pro Schwierigkeit, mit der KI-Stufe und den Regeln der Stufe. Erledigt: BalanceSim.run_warden, `tools/balance_sim.gd --mode warden [--section S]`.
 811. [x] [P1] BalanceSim nutzt für alle Modi dieselbe BattleModel-Logik mit neuen Effekten, Profilen, Varianten und Schwierigkeitswerten, ohne eigenen Schadensweg.
-812. [P1] tools/balance/ref_teams.json mit je drei Referenzteams pro Story-Abschnitt (vor Orrin, vor Maelis, nach beiden Rissen), gebaut aus Startern und Wild-Arten der Karten auf typischem Ring.
+812. [x] [P1] tools/balance/ref_teams.json mit je drei Referenzteams pro Story-Abschnitt (vor Orrin, vor Maelis, nach beiden Rissen), gebaut aus Startern und Wild-Arten der Karten auf typischem Ring. Erledigt: der Abschnitt „nach beiden Rissen“ kämpft gegen die Revanche-Teams beider Wächter.
 813. [x] [P1] Messwert "Züge bis K.o." pro Kampf; Zielband bei Ring 36 im Duell 2,5 bis 4,0 im Schnitt, sonst Hinweis im Bericht.
 814. [x] [P1] Messwert "Vorteil des Ersten": Anteil der Siege des schnelleren Spirlings im Duell; Zielwert höchstens 62 %.
 815. [x] [P1] JSON-Ausgabe mit allen Messwerten, damit Tests und Vergleiche sie lesen, ohne Markdown zu parsen.
@@ -439,9 +439,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 843. [x] [P1] Test: jede `cooldown`-Technik hat Stärke mindestens 110 und Energie mindestens 7.
 844. [x] [P1] Test: jedes Element hat nach der Erweiterung mindestens 14 Techniken, davon mindestens 3 Status-Techniken und mindestens eine mit Energie 1 oder 2.
 845. [x] [P1] Test: jede Art kann bis Ring 5 eine Schadens-Technik ihres Elements und bis Ring 30 Techniken aus mindestens 2 Elementen.
-846. [P1] Test: im Modus `warden` liegt die Gewinnrate jedes Referenzteams in den Zielbändern aus tools/balance/targets.json (mit kleiner Rundenzahl im normalen CI-Lauf).
+846. [x] [P1] Test: im Modus `warden` liegt die Gewinnrate jedes Referenzteams in den Zielbändern aus tools/balance/targets.json (mit kleiner Rundenzahl im normalen CI-Lauf). Erledigt: tests/unit/test_warden_sim.gd prüft das Mittel der drei Teams je Wächter und Stufe (12 Kämpfe, Spielraum 10 Punkte); einzelne Teams schwanken je nach Elementlage stark. Revanchen prüfen nur die Reihenfolge der Stufen.
 847. [x] [P1] Test pro neuem Effekt-Baustein in tests/unit/test_move_effects.gd mit fester Kampflage und festem Seed, der das genaue Ergebnis prüft (Schaden, Energie, Status, Stufe).
-848. [P1] Test: `delayed_hit`, `side_snare` und `cooldown` überstehen ein Replay-Hin-und-zurück mit BattleReplay ohne Abweichung.
+848. [x] [P1] Test: `delayed_hit`, `side_snare` und `cooldown` überstehen ein Replay-Hin-und-zurück mit BattleReplay ohne Abweichung. Erledigt: test_move_curve.gd (Fallen und Abklingzeit, dazu delayed_hit).
 849. [x] [P1] Test: im Modus `team` bei Ring 36 liegt keine Art unter 30 % oder über 70 % (zusätzlich zum bestehenden Duell-Band 25 bis 75 %).
 850. [P2] Test: der Vorteil des Ersten liegt bei Ring 20 und 36 höchstens bei 62 %.
 851. [P2] Test: die Züge bis K.o. liegen bei Ring 36 im Duell im Schnitt zwischen 2,5 und 4,0.

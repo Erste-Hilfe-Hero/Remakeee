@@ -14,3 +14,6 @@ var target: Spirling
 var move: MoveData
 ## Damage the move dealt this use (0 for status moves or misses).
 var damage_dealt: int = 0
+## A delayed hit (delayed_hit effect): the damage worked out now, dealt later, and its element factor.
+var held_damage: int = 0
+var held_eff: float = 1.0

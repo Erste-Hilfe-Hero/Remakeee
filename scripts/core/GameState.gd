@@ -133,6 +133,8 @@ var high_contrast: bool = false
 var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
 var day_night: bool = true
+## Weather in the world (area 3 item 1145); off means always clear.
+var weather: bool = true
 ## Game language (item 62): a Loc.LANGUAGES code, or "" for the device language.
 var language: String = ""
 const FPS_NORMAL: int = 60
@@ -230,6 +232,8 @@ func set_held(s: Spirling, id: String) -> bool:
 	s.held = id
 	if not id.is_empty():
 		inventory[id] = item_count(id) - 1
+	# Some keepsakes raise max Vigor (Core Glass); taking one off must not leave too much Vigor.
+	s.hp = mini(s.hp, s.max_hp())
 	return true
 
 ## Wayfarer Gear (grapple_line, climbing_pick, storm_lantern) is a key item in the bag.
@@ -531,7 +535,7 @@ func settings_to_dict() -> Dictionary:
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad,
 		"one_hand": one_hand, "rumble": rumble,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "language": language}
+		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -557,6 +561,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	high_contrast = bool(d.get("high_contrast", false))
 	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
+	weather = bool(d.get("weather", true))
 	language = str(d.get("language", ""))
 	apply_display()
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)

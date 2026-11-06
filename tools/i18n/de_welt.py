@@ -70,3 +70,9 @@ T.update({
 "The light strikes the crystal, and it rings out bright!": "Das Licht trifft den Kristall, und er klingt hell auf!",
 "You turn the mirror. The beam swings to a new wall.": "Du drehst den Spiegel. Der Strahl schwenkt an eine andere Wand.",
 })
+
+# Weather switch (area 3 item 1145)
+T.update({
+"Weather: %s": "Wetter: %s",
+"Rain, fog and wind in the world. Off: always clear.": "Regen, Nebel und Wind in der Welt. Aus: immer klar.",
+})

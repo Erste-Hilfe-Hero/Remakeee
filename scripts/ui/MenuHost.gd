@@ -312,6 +312,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"large_text": "Bigger letters in menus, texts and talk.",
 	"language": "English or Deutsch.",
 	"day_night": "The light changes with the time of day.",
+	"weather": "Rain, fog and wind in the world. Off: always clear.",
 	"pad_size": "How big the touch pad and buttons are.",
 	"pad_opacity": "How see-through the touch pad is.",
 	"left_handed": "Puts the pad on the right and A and B on the left.",
@@ -513,6 +514,8 @@ func run_display() -> void:
 				GameState.language = Loc.next_language()
 			"day_night":
 				GameState.day_night = not GameState.day_night
+			"weather":
+				GameState.weather = not GameState.weather
 			"retro":
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
@@ -531,6 +534,7 @@ static func display_rows() -> Array[Array]:
 		["large_text", "Large text: %s" % ("On" if GameState.large_text else "Off")],
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
 		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
+		["weather", "Weather: %s" % ("On" if GameState.weather else "Off")],
 		["retro", "Retro filter: %s" % retro],
 	]
 

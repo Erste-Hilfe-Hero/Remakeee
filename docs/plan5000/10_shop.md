@@ -422,17 +422,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4393. [P3] (P2W) Ring-Tränke in Story-Schwierigkeit um 50 % günstiger anbieten, weil dort keine Obergrenze die Balance stützt, wenn Bereich 8 dem zustimmt.
 
 ### Andenken aus dem Shop
-4394. [P1] (P2W) Das Andenken "Rissherz" (`rg_riftheart`) anlegen: +15 % Wucht, Preis 800 Rissglas (≈ 7,92 €) oder 7,99 € direkt, dauerhaft.
-4395. [P1] (P2W) Das Andenken "Glasschild" (`rg_glass_shield`) anlegen: +15 % Schutz, Preis 800 Rissglas, dauerhaft.
-4396. [P1] (P2W) Das Andenken "Klarsplitter" (`rg_clear_shard`) anlegen: +15 % Fokus, Preis 800 Rissglas, dauerhaft.
-4397. [P1] (P2W) Das Andenken "Wirbelglas" (`rg_whirl_glass`) anlegen: +15 % Tempo, Preis 800 Rissglas, dauerhaft.
-4398. [P1] (P2W) Das Andenken "Kernglas" (`rg_core_glass`) anlegen: +12 % Kraft, Preis 800 Rissglas, dauerhaft.
+4394. [x] [P1] (P2W) Das Andenken "Rissherz" (`rg_riftheart`) anlegen: +15 % Wucht, Preis 800 Rissglas (≈ 7,92 €) oder 7,99 € direkt, dauerhaft.
+4395. [x] [P1] (P2W) Das Andenken "Glasschild" (`rg_glass_shield`) anlegen: +15 % Schutz, Preis 800 Rissglas, dauerhaft.
+4396. [x] [P1] (P2W) Das Andenken "Klarsplitter" (`rg_clear_shard`) anlegen: +15 % Fokus, Preis 800 Rissglas, dauerhaft.
+4397. [x] [P1] (P2W) Das Andenken "Wirbelglas" (`rg_whirl_glass`) anlegen: +15 % Tempo, Preis 800 Rissglas, dauerhaft.
+4398. [x] [P1] (P2W) Das Andenken "Kernglas" (`rg_vigor_glass`) anlegen: +12 % Kraft, Preis 800 Rissglas, dauerhaft.
 4399. [P1] (P2W) Shop-Andenken nutzen das vorhandene Feld `held` in `data/items.json`, damit `BattleRules.add_key` sie ohne Sonderweg liest.
 4400. [P1] (P2W) Shop-Andenken sind dauerhafte Nicht-Verbrauchsgüter je Stück; ein Kauf gibt genau 1 Stück, das einem Spirling angelegt wird.
 4401. [P1] (P2W) Shop-Andenken sind stärker als die Münz-Andenken (`swift_feather` +15 % Tempo bleibt, Shop-Wirbelglas bekommt zusätzlich +5 % Fokus), und die Werte stehen in `docs/BALANCE.md`.
-4402. [P1] (P2W) Acht Element-Prismen anlegen (Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra), je +20 % Schaden für Techniken des Elements, je 600 Rissglas.
+4402. [x] [P1] (P2W) Acht Element-Prismen anlegen (Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra), je +20 % Schaden für Techniken des Elements, je 600 Rissglas.
 4403. [P1] (P2W) Das Andenken "Haltestein" (`rg_hold_stone`) anlegen: übersteht einmal pro Kampf einen Treffer, der bei voller Kraft besiegt hätte, mit 1 Kraft, Preis 1000 Rissglas.
-4404. [P1] (P2W) Das Andenken "Nachhallring" (`rg_echo_ring`) anlegen: heilt jede Runde 1/10 der Kraft, stärker als `bark_wrap` (1/12), Preis 1000 Rissglas.
+4404. [x] [P1] (P2W) Das Andenken "Nachhallring" (`rg_echo_ring`) anlegen: heilt jede Runde 1/10 der Kraft, stärker als `bark_wrap` (1/12), Preis 1000 Rissglas.
 4405. [P2] (P2W) Das Andenken "Funkenspeicher" (`rg_spark_store`) anlegen: +1 Energie pro Runde und +1 Höchstenergie, Preis 1200 Rissglas.
 4406. [P2] (P2W) Das Andenken "Spiegelglas" (`rg_mirror_glass`) anlegen: wirft 20 % des erlittenen Schadens aus Wucht-Techniken zurück, Preis 1000 Rissglas.
 4407. [P2] (P2W) Das Andenken "Erstschlag-Feder" (`rg_first_feather`) anlegen: der Träger handelt in der ersten Runde immer zuerst (nach Tausch und Gegenständen), Preis 1200 Rissglas.
@@ -583,8 +583,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4548. [P3] (P2W) Die Wirkung aller Kampfhilfen in einem Abschnitt "Shop-Kampfhilfen" in `docs/BALANCE.md` festhalten.
 
 ### Bond-Hilfen
-4549. [P1] (P2W) Das "Bondsiegel" (`rg_bond_seal`) anlegen: das nächste Bonden gelingt sicher, nicht bei Rift-Wächtern und einmaligen Spirlings, Preis 500 Rissglas (≈ 4,95 €) oder 4,99 € direkt.
-4550. [P1] (P2W) Den "Echo-Duft" (`rg_echo_scent`) anlegen: verbessert das Bonden für einen Versuch spürbar (Wert +0,25 in `BondCalc.chance`), Preis 100 Rissglas.
+4549. [x] [P1] (P2W) Das "Bondsiegel" (`rg_bond_seal`) anlegen: das nächste Bonden gelingt sicher, nicht bei Rift-Wächtern und einmaligen Spirlings, Preis 500 Rissglas (≈ 4,95 €) oder 4,99 € direkt.
+4550. [x] [P1] (P2W) Den "Echo-Duft" (`rg_echo_scent`) anlegen: verbessert das Bonden für einen Versuch spürbar (Wert +0,25 in `BondCalc.chance`), Preis 100 Rissglas.
 4551. [P1] (P2W) Bond-Hilfen zeigen nie eine Chance oder Prozentzahl, weder vor noch während des Echo-Minispiels; das Ergebnis erscheint erst danach (Patentregel).
 4552. [P1] (P2W) Im Shop die Wirkung des Echo-Dufts in Worten beschreiben ("Bonden gelingt deutlich leichter"), ohne Zahl, und das Bondsiegel als "gelingt sicher".
 4553. [P1] (P2W) Der Echo-Duft ist ein fest beschriebener Gegenstand, kein Zufallsinhalt: der Kauf liefert immer genau 1 Duft, nur seine Wirkung im Bonden folgt den normalen Spielregeln.
@@ -633,7 +633,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4594. [P1] (P2W) `MAX_PARTY` in `GameState.gd` durch eine Funktion `party_max()` ersetzen, die 5 oder mit Berechtigung 6 liefert, und alle Stellen (`party.size() < MAX_PARTY`) darauf umstellen.
 4595. [P1] (P2W) Der sechste Platz gilt in allen Kämpfen gegen die Spielwelt; in der Gleichstand-Liga und in Ligen mit Teamgröße 5 wird nur mit den ersten 5 gekämpft.
 4596. [P1] (P2W) Das Team-Menü zeigt den sechsten Platz mit Rissglas-Rand; ohne Kauf ist er nicht sichtbar, damit kein leerer Platz zum Kauf drängt.
-4597. [P1] (P2W) Ein Lager-Limit von 150 Plätzen für alle einführen (vorher unbegrenzt) und "Lager-Erweiterung +50" (`rg_storage_50`) für 300 Rissglas anbieten, bis höchstens 600 Plätze. Angepasst an Bereich 1: Lager mit Fächern zu 30 Plätzen (Start 8), Angebot "Lager-Fach +1" (`rg_storage_box`) erhöht `GameState.storage_box_bonus`.
+4597. [x] [P1] (P2W) Ein Lager-Limit von 150 Plätzen für alle einführen (vorher unbegrenzt) und "Lager-Erweiterung +50" (`rg_storage_50`) für 300 Rissglas anbieten, bis höchstens 600 Plätze. Angepasst an Bereich 1: Lager mit Fächern zu 30 Plätzen (Start 8), Angebot "Lager-Fach +1" (`rg_storage_box`) erhöht `GameState.storage_box_bonus`.
 4598. [P1] (P2W) Spirlings über dem neuen Lager-Limit aus alten Spielständen bleiben erhalten; neue Bonden gehen dann nur noch ins Team, und ein Hinweis erklärt das.
 4599. [P1] (P2W) Der Server prüft beim Speichern die Teamgröße gegen die Berechtigung und lehnt 6 Team-Mitglieder ohne Kauf ab, und die Prüfung "mehr als 6" bleibt die harte Grenze.
 4600. [P2] (P2W) Einen "Mobilen Lagerzugang" (`rg_storage_anywhere`) anlegen: das Lager öffnet sich überall in der Welt und schon vor dem zweiten geschlossenen Riss, Preis 800 Rissglas.
@@ -784,7 +784,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Funken und Wesensart
 4741. [P1] (P2W) Eine "Funkenschmiede" (`rg_spark_forge`) anlegen, die alle Funken-Werte (`Spirling.spark`) eines Spirlings auf den Höchstwert 12 setzt, Preis 1000 Rissglas (≈ 9,90 €) oder 9,99 € direkt.
-4742. [P1] (P2W) Einen "Funkensplitter" (`rg_spark_shard`) anlegen, der einen gewählten Wert um 6 Funken erhöht (bis 12), Preis 200 Rissglas, doppelt so stark wie `spark_charm` (3).
+4742. [x] [P1] (P2W) Einen "Funkensplitter" (`rg_spark_shard`) anlegen, der einen gewählten Wert um 6 Funken erhöht (bis 12), Preis 200 Rissglas, doppelt so stark wie `spark_charm` (3).
 4743. [P1] (P2W) Einen "Wesenswandel" (`rg_temper_shift`) anlegen, der die Wesensart eines Spirlings auf eine gewählte Wesensart setzt, Preis 400 Rissglas.
 4744. [P1] (P2W) Für den Wesenswandel ein gespeichertes Feld `temper_override` an `Spirling` anlegen, das `temperament_index(uid)` überschreibt, und in `SaveManager` sichern.
 4745. [P1] (P2W) Funken-Käufe zeigen vor dem Einsatz die neuen Werte (Kraft, Wucht, Schutz, Fokus, Tempo) und brauchen eine Bestätigung.
@@ -1016,14 +1016,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Wirtschafts-Balance zwischen Münzen und Rissglas
 4963. [x] [P1] (P2W) Münzen und Wegmarken bleiben die frei verdienten Spielwährungen aus Bereich 8; Wegmarken werden nie verkauft, und Münzen gibt es gegen Rissglas nur über die festen Münz-Angebote dieses Abschnitts.
-4964. [P1] (P2W) Ein "Münzbeutel" (`rg_coins_5000`) anlegen: genau 5000 Münzen für 300 Rissglas, höchstens 3 pro Woche.
-4965. [P1] (P2W) Ein "Großer Münzbeutel" (`rg_coins_20000`) anlegen: genau 20000 Münzen für 1000 Rissglas, höchstens 1 pro Woche.
+4964. [x] [P1] (P2W) Ein "Münzbeutel" (`rg_coins_5000`) anlegen: genau 5000 Münzen für 300 Rissglas, höchstens 3 pro Woche.
+4965. [x] [P1] (P2W) Ein "Großer Münzbeutel" (`rg_coins_20000`) anlegen: genau 20000 Münzen für 1000 Rissglas, höchstens 1 pro Woche.
 4966. [P1] (P2W) Die Münz-Angebote mit Bereich 8 abstimmen: Ali legt fest, wie viele Münzen ein Spieler pro Stunde verdient, und der Münzbeutel entspricht etwa 2 Stunden Spielzeit.
 4967. [x] [P1] (P2W) Rissglas lässt sich nie in den Händlerläden der Welt ausgeben; Händler nehmen nur Münzen.
 4968. [x] [P1] (P2W) Shop-Waren mit Kennung `rg_` erscheinen nie in Händlerläden, und ein Test prüft `Overworld._action_shop`-Listen auf diese Kennungen.
 4969. [P1] (P2W) Eine Zusammenfassung "Wirtschaft" in `docs/BALANCE.md` anlegen: Münzen pro Stunde, Preise der Händler, Rissglas-Preise, Münzbeutel-Kurs.
-4970. [P1] (P2W) Einen "Händlerrabatt" anlegen: 20 % weniger Münzpreise in allen Händlerläden, dauerhaft, Preis 1000 Rissglas.
-4971. [P1] (P2W) Den Händlerrabatt in `Overworld._action_shop` über `ShopEffects.merchant_mult()` einrechnen.
+4970. [x] [P1] (P2W) Einen "Händlerrabatt" anlegen: 20 % weniger Münzpreise in allen Händlerläden, dauerhaft, Preis 1000 Rissglas.
+4971. [x] [P1] (P2W) Den Händlerrabatt in `Overworld._action_shop` über `ShopEffects.merchant_mult()` einrechnen.
 4972. [P2] (P2W) Einen "Händlerkatalog" anlegen: alle Händlerläden bieten alle Münz-Waren an, die man schon gesehen hat, dauerhaft, Preis 600 Rissglas.
 4973. [P2] (P2W) Einen "Echo-Kristall-Rabatt" anlegen: Echo-Kristalle kosten 1500 statt 3000 Münzen, dauerhaft, Preis 800 Rissglas.
 4974. [P2] (P2W) Einen "Verkaufsbonus" anlegen: Gegenstände bringen beim Verkauf an Händler 75 % statt des Grundwerts, dauerhaft, Preis 500 Rissglas, falls Bereich 8 Verkaufen baut.

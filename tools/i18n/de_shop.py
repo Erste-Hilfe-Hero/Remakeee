@@ -544,4 +544,6 @@ T = {
 	"Senken: sofort. Erhöhen: nach 7 Tagen.",
 "Shop\n%s":
 	"Shop\n%s",
+"Hold out a charm?":
+	"Ein Amulett hochhalten?",
 }

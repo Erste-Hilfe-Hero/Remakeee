@@ -58,6 +58,8 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 				var gid: String = str((g as Dictionary).get("id", "")) if g is Dictionary else ""
 				if gid != "" and Database.species(gid) != null:
 					errs.append(where + ": Spirlings are never sold (rule 7)")
+				elif bool(o.get("ready", false)) and g is Dictionary and str(g.t) == "item" and Database.item(gid).is_empty():
+					errs.append(where + ": ready offer grants %s, which is no item in items.json" % gid)
 		if str(o.get("kind", "")) in ["cosmetic", "comfort"]:
 			for k: String in ShopCatalog.STAT_FIELDS:
 				if o.has(k):

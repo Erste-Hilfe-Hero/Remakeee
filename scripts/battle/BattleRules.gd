@@ -238,6 +238,10 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 	m *= float(reaction(move, target).get("mult", 1.0))
 	if move.kind == MoveData.Kind.PHYSICAL:
 		m *= mult_key(target, "phys_taken")
+	# Element Prisms from the shop: one element hits harder (plan item 4402).
+	var held: Dictionary = held_info(user.held)
+	if held.has("elem") and move.element == Elements.E.get(str(held.elem), -1):
+		m *= float(held.get("elem_mult", 1.0))
 	var boost: float = float(trait_info(user.data.trait_id).get("low_hp_boost", 1.0))
 	if boost != 1.0 and move.element in user.elements() and user.hp * 3 < user.max_hp():
 		m *= boost
