@@ -110,6 +110,25 @@ static func _check_species_fields(s: Dictionary, sname: String, species_names: D
 	var hint: String = str(s.get("keepsake_hint", ""))
 	if hint.is_empty() or not _held_items().has(hint):
 		errors.append("spirling '%s': keepsake_hint '%s' is not an item a Spirling can hold" % [sname, hint])
+	for v: Variant in s.get("variants", []):
+		if not v is Dictionary:
+			errors.append("spirling '%s': variants entries must be objects" % sname)
+			continue
+		var vd: Dictionary = v
+		var vr: String = str(vd.get("region", ""))
+		if not vr in SpirlingData.REGIONS or vr == str(s.get("region", "veydal")):
+			errors.append("spirling '%s': variant region '%s' must be another region" % [sname, vr])
+		var vels: Variant = vd.get("elements", [])
+		if not vels is Array or (vels as Array).is_empty() or (vels as Array).size() > 2:
+			errors.append("spirling '%s': variant needs one or two elements" % sname)
+		else:
+			for e: Variant in vels:
+				if not _valid_element(str(e)):
+					errors.append("spirling '%s': variant element '%s' unknown" % [sname, e])
+		if not BattleRules.TRAITS.has(str(vd.get("trait", ""))):
+			errors.append("spirling '%s': variant trait '%s' unknown" % [sname, vd.get("trait", "")])
+		if str(vd.get("palette", "")).is_empty() or str(vd.get("lore", "")).strip_edges().is_empty():
+			errors.append("spirling '%s': variant needs a palette and lore" % sname)
 	if not str(s.get("role", "")) in SpirlingData.ROLES:
 		errors.append("spirling '%s': unknown role '%s'" % [sname, s.get("role", "")])
 	if str(s.get("origin", "")).strip_edges().is_empty():
@@ -169,6 +188,9 @@ static func _check_reachable(spirlings_raw: Array, encounters_path: String, erro
 					reach[to] = true
 					grew = true
 	for s: Variant in spirlings_raw:
+		# Kinds of regions that are not playable yet (Corvane, Ashmere, Solenne) wait in the data.
+		if s is Dictionary and str(s.get("region", "veydal")) in SpirlingData.REGIONS and str(s.get("region", "veydal")) != "veydal":
+			continue
 		if s is Dictionary and not reach.has(str(s.get("name", ""))):
 			errors.append("spirling '%s': can't be met anywhere (no encounter, starter, unfold or fixed meeting)" % s.get("name", ""))
 

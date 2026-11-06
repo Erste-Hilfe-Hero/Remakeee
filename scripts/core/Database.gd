@@ -109,6 +109,15 @@ static func _load_spirlings() -> void:
 		sd.region = str(s.get("region", "veydal"))
 		sd.role = str(s.get("role", ""))
 		sd.keepsake_hint = str(s.get("keepsake_hint", ""))
+		sd.variants.clear()
+		for v: Variant in s.get("variants", []):
+			if v is Dictionary:
+				var els: Array[int] = []
+				for e: Variant in (v as Dictionary).get("elements", []):
+					if Elements.E.has(str(e)):
+						els.append(Elements.E[str(e)])
+				sd.variants.append({"region": str(v.get("region", "")), "elements": els, "palette": str(v.get("palette", "")),
+					"lore": str(v.get("lore", "")), "trait": str(v.get("trait", ""))})
 		sd.cry_motif.clear()
 		for m: Variant in s.get("cry_motif", []):
 			sd.cry_motif.append(int(m))
