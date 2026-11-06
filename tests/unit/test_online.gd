@@ -233,6 +233,8 @@ func test_losing_the_connection_while_playing_pauses_and_recovers() -> void:
 	GameState.in_game = true
 	_server.offline = true
 	await Online.call_fn("presence", {"p_place": "x"})
+	# Drops shorter than 3 s only show a small mark (plan item 2150).
+	Online._offline_for = ReconnectOverlay.SHORT_DROP
 	await wait_process_frames(2)
 	assert_true(Online._overlay.visible, "reconnect screen shows")
 	assert_true(get_tree().paused)

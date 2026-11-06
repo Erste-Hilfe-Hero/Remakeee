@@ -45,4 +45,23 @@ a fire/water/grass starter triangle, losing half your money when your team is wo
 
 ## Day and night
 
-Maps with `"outdoor": true` (set in `tools/art/build_world.py`) follow the device clock through `DayCycle`: dawn 5:00, day 7:00, dusk 18:00 and night 20:00. Outdoors the world gets a soft tint, and Umbra and Lumen Spirlings are met more often at night (Lumen at dusk, Gale at dawn), using the same weighting as festivals. Rooms, Murk Hollow and the Rifts never change. Players can switch it off under Display and access.
+Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:00, day 7:00, dusk 18:00 and night 20:00. Outdoors the world gets a soft tint, and Umbra and Lumen Spirlings are met more often at night (Lumen at dusk, Gale at dawn), using the same weighting as festivals. Rooms, Murk Hollow and the Rifts never change. Players can switch it off under Display and access.
+
+## World data and tools (5000-point plan, area 3)
+
+- **New tiles:** `w` shallow water (Wading Boots), `B` boulder to push, `P` pressure plate,
+  `k` cracked floor, `v` vine wall (Climbing Pick), `Y` plank gap (Plank Bundle). Legend and
+  rules: header of `scripts/overworld/MapData.gd`. Gear moves the player on foot only.
+- **Hidden finds** go in a map's `secrets` list (`x`, `y`, `item`, `count`, `flag`), not in signs.
+- **Floors:** a cave or dungeon keeps all its levels in one file under `floors`; level n of
+  `cave.json` is the map id `cave@n`.
+- **World layout:** `data/world_layout.json` gives every place a grid cell per region and its
+  neighbours. Houses lie `inside` their town. Every warp between two places must be an edge.
+- **Map builders:** `python3 tools/art/build_world.py [group]` runs the modules in
+  `tools/art/world/` (veydal_core, veydal_wilds, veydal_caves, corvane). Act I maps are edited
+  in JSON and only patched by `veydal_core`; new maps are generated, so edit their Python.
+- **Overview:** `python3 tools/art/preview_map.py --region veydal` draws every map of a region
+  on one sheet (`build/previews/veydal.png`).
+- **Checks:** `tools/validate_data.gd` and `tests/unit/test_world_data.gd` check tiles,
+  encounter tables (no map without a table, no unused table), hidden finds (reachable, unique
+  flag, real item) and the layout.
