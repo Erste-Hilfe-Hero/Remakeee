@@ -73,8 +73,54 @@ func _draw() -> void:
 		draw_rect(Rect2(7, -8, 2, 4), UITheme.INK)
 		draw_rect(Rect2(7, -3, 2, 1), UITheme.INK)
 
+## When spoken to, a villager pauses this long before turning (item 2307).
+const TURN_PAUSE: float = 0.1
+## Standing villagers glance in another direction every 3 to 7 seconds (item 2310). Only the
+## drawn direction changes, so a Wayfarer's line of sight stays as placed. A map entry with
+## "still": true, a walk or a team keeps the villager as placed.
+const GLANCE_MIN: float = 3.0
+const GLANCE_MAX: float = 7.0
+## After a talk the villager keeps facing the player this long before glancing again.
+const GLANCE_AFTER_TALK: float = 10.0
+var _glance_in: float = 0.0
+var _rng := RandomNumberGenerator.new()
+
+func _ready() -> void:
+	_rng.randomize()
+	_glance_in = _rng.randf_range(GLANCE_MIN, GLANCE_MAX)
+
+## True if this villager may glance around on its own.
+func may_glance() -> bool:
+	return walk_route.size() < 2 and not definition.has("trainer") and not definition.has("team") \
+		and not bool(definition.get("still", false))
+
+func _process(delta: float) -> void:
+	super._process(delta)
+	if moving or not may_glance():
+		return
+	_glance_in -= delta
+	if _glance_in <= 0.0:
+		_glance_in = _rng.randf_range(GLANCE_MIN, GLANCE_MAX)
+		glance()
+
+## Looks in a random direction other than the current one (facing itself stays).
+func glance() -> void:
+	var dirs: Array[String] = []
+	for d: String in DIRS:
+		if d != shown_facing():
+			dirs.append(d)
+	look = dirs[_rng.randi() % dirs.size()]
+
+## Waits [constant TURN_PAUSE], then turns toward [param who_cell]. Awaitable.
+func turn_toward(who_cell: Vector2i) -> void:
+	_glance_in = GLANCE_AFTER_TALK
+	if is_inside_tree():
+		await get_tree().create_timer(TURN_PAUSE).timeout
+	face_toward(who_cell)
+
 ## Turns toward [param who_cell].
 func face_toward(who_cell: Vector2i) -> void:
+	_glance_in = maxf(_glance_in, GLANCE_AFTER_TALK)
 	var d: Vector2i = who_cell - cell
 	if absi(d.x) > absi(d.y):
 		face("right" if d.x > 0 else "left")
