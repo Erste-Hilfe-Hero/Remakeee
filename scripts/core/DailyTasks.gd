@@ -190,6 +190,7 @@ static func record(event: String, info: Dictionary = {}, amount: int = 1) -> Arr
 			lines.append(Loc.t("Daily task done: %s") % Loc.t(str(t.text)))
 			lines.append_array(Waymarks.reward_lines(Waymarks.earn(REWARD, "daily_task")))
 			GameState.records["daily_tasks_done"] = int(GameState.records.get("daily_tasks_done", 0)) + 1
+			lines.append_array(SeasonPath.add("daily_task"))
 	if not bool(state.get("bonus", false)) and all_done():
 		state["bonus"] = true
 		lines.append(Loc.t("All of today's tasks are done!"))

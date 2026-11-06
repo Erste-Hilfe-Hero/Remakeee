@@ -1046,6 +1046,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.money += WeeklyChallenge.PRIZE
 		var won: Array[String] = ["You won this week's challenge! You received %d coins." % WeeklyChallenge.PRIZE]
 		won.append_array(Waymarks.reward_lines(Waymarks.earn(WeeklyChallenge.WAYMARKS, "weekly")))
+		won.append_array(SeasonPath.add("weekly"))
 		await say(won)
 		await _action_give_item([ch.reward_item(), "1"] as PackedStringArray, null)
 	elif wins >= WeeklyChallenge.ROUNDS:

@@ -94,7 +94,7 @@ static func goals_text() -> String:
 func run_records() -> void:
 	Achievements.check()
 	while true:
-		var lines: Array[String] = ["Badge book", "Achievements by category", "Personal bests"]
+		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
 		var last: Dictionary = GameState.records.get("last_battle", {})
 		if not last.is_empty():
 			lines.append("Watch last battle")
@@ -105,6 +105,7 @@ func run_records() -> void:
 		match lines[idx]:
 			"Badge book": await run_badge_book()
 			"Achievements by category": await run_achievement_lists()
+			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
 			"Personal bests": await info(records_text())
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
@@ -453,7 +454,7 @@ func run_spirlog() -> void:
 			var is_bonded: bool = bool(e.get("bonded", false))
 			seen += 1 if is_seen else 0
 			bonded += 1 if is_bonded else 0
-			var mark: String = "*" if is_bonded else ("+" if is_seen else " ")
+			var mark: String = (Collection.STAR if Collection.starred(sd.species_name) else "*") if is_bonded else ("+" if is_seen else " ")
 			entries.append({"text": "%02d %s %s" % [sd.dex_id, mark, sd.species_name if is_seen else "???"], "species": sd.species_name, "seen": is_seen})
 		var idx: int = await pick("Spirlog  seen %d  bonded %d" % [seen, bonded], entries)
 		if idx < 0:

@@ -1,5 +1,5 @@
 {
- "_comment": "Plan area 8 endgame data. exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I.",
+ "_comment": "Plan area 8 endgame data. exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance.",
  "exchange": [
   {
    "item": "strong_tonic",
@@ -121,5 +121,120 @@
    "stock": 1,
    "tier": "full"
   }
- ]
+ ],
+ "season_path": {
+  "tiers": 30,
+  "points_per_tier": 100,
+  "points": {
+   "daily_task": 10,
+   "weekly": 40,
+   "festival_stage": 20
+  },
+  "rewards": [
+   {
+    "coins": 250
+   },
+   {
+    "coins": 300
+   },
+   {
+    "item": "remedy",
+    "count": 2
+   },
+   {
+    "coins": 400
+   },
+   {
+    "waymarks": 30
+   },
+   {
+    "item": "power_brew",
+    "count": 2
+   },
+   {
+    "coins": 550
+   },
+   {
+    "coins": 600
+   },
+   {
+    "item": "guard_brew",
+    "count": 2
+   },
+   {
+    "item": "spark_charm",
+    "count": 1,
+    "waymarks": 50
+   },
+   {
+    "coins": 750
+   },
+   {
+    "item": "focus_brew",
+    "count": 2
+   },
+   {
+    "coins": 850
+   },
+   {
+    "coins": 900
+   },
+   {
+    "waymarks": 30
+   },
+   {
+    "coins": 1000
+   },
+   {
+    "coins": 1050
+   },
+   {
+    "item": "revival_leaf",
+    "count": 3
+   },
+   {
+    "coins": 1150
+   },
+   {
+    "item": "spark_charm",
+    "count": 1,
+    "waymarks": 50
+   },
+   {
+    "item": "max_tonic",
+    "count": 3
+   },
+   {
+    "coins": 1300
+   },
+   {
+    "coins": 1350
+   },
+   {
+    "item": "spark_charm",
+    "count": 3
+   },
+   {
+    "waymarks": 30
+   },
+   {
+    "coins": 1500
+   },
+   {
+    "item": "tide_pearl",
+    "count": 3
+   },
+   {
+    "coins": 1600
+   },
+   {
+    "coins": 1650
+   },
+   {
+    "item": "tide_pearl",
+    "count": 1,
+    "waymarks": 50
+   }
+  ]
+ }
 }

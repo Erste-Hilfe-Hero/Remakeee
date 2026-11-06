@@ -139,10 +139,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3236. [P3] Pro Fest einen Erfolg für die höchste Stufe der Festaufgabe ergänzen.
 
 ### Freier Jahreszeitenpfad
-3237. [P1] Einen Jahreszeitenpfad mit 30 Stufen pro Jahreszeit (je drei Monate) anlegen, der nur durch Spielen voranschreitet.
-3238. [P1] Pfadpunkte nur aus Tagesaufträgen (10 pro Auftrag), Wochen-Echo (40) und Festaufgaben (20) vergeben, 100 Punkte pro Stufe.
-3239. [P1] Jede Stufe mit einer festen, vorher sichtbaren Belohnung belegen: Münzen, Wegmarken, Gegenstände oder Kosmetik.
-3240. [P1] Den ganzen Pfad mit allen 30 Belohnungen vor dem Start einsehbar machen.
+3237. [x] [P1] Einen Jahreszeitenpfad mit 30 Stufen pro Jahreszeit (je drei Monate) anlegen, der nur durch Spielen voranschreitet.
+3238. [x] [P1] Pfadpunkte nur aus Tagesaufträgen (10 pro Auftrag), Wochen-Echo (40) und Festaufgaben (20) vergeben, 100 Punkte pro Stufe.
+3239. [x] [P1] Jede Stufe mit einer festen, vorher sichtbaren Belohnung belegen: Münzen, Wegmarken, Gegenstände oder Kosmetik.
+3240. [x] [P1] Den ganzen Pfad mit allen 30 Belohnungen vor dem Start einsehbar machen.
 3241. [P2] Die Stufen 10, 20 und 30 mit einer besonderen Belohnung belegen: Jackenmuster, Fotorahmen und ein Spirling-Halstuch als Kosmetik.
 3242. [P2] Die Zielzeit so legen, dass Stufe 30 mit 4 Tagen Spiel pro Woche in 11 Wochen erreichbar ist.
 3243. [P2] Pfadbelohnungen nach Saisonende 14 Tage lang nachholbar machen, wenn die Stufe erreicht, aber nicht abgeholt wurde.
@@ -261,9 +261,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3350. [P3] Einen Erfolg „Albumpflege“ für 12 volle Monatsalben ergänzen.
 
 ### Sammelziele und Spirlog-Abschluss
-3351. [P1] Die Spirlog-Ziele in Collection.GOALS um „gesehen“-Stufen ergänzen: 5, 10, 15 und alle Arten gesehen, je mit Wegmarken-Lohn.
-3352. [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
-3353. [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
+3351. [x] [P1] Die Spirlog-Ziele in Collection.GOALS um „gesehen“-Stufen ergänzen: 5, 10, 15 und alle Arten gesehen, je mit Wegmarken-Lohn.
+3352. [x] [P1] Die Lohnstufen für gebondete Arten zusätzlich mit Wegmarken belohnen: 3, 5, 8, 11 Arten je 20, 30, 40, 60 Wegmarken, alle Arten 200.
+3353. [x] [P1] Im Spirlog jede Art mit einem kleinen Stern markieren, wenn sie gebondet und auf Ring 30 gewachsen ist.
 3354. [P1] Einen Hinweis im Spirlog zeigen, welche Arten in der Nachhall-Senke diese Woche auftreten, damit fehlende Arten planbar werden.
 3355. [P2] Ein Sammelziel „Jede Art auf Ring 30“ mit Stufen von 5, 10 und 21 Arten ergänzen.
 3356. [P2] Ein Sammelziel „Jede Entfaltungsform gesehen“ ergänzen, das alle Stufen einer Linie zählt.
@@ -422,7 +422,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 ### Fairer Rhythmus ohne Druck
 3496. [P1] Festschreiben und testen, dass kein Ereignis eine Serie verlangt und kein Fortschritt bei einem verpassten Tag verloren geht.
 3497. [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
-3498. [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
+3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
 3499. [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
 3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
 3501. [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.

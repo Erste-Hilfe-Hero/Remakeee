@@ -49,6 +49,7 @@ static func add(n: int) -> Array[String]:
 		st.stages = int(st.stages) + 1
 		lines.append(Loc.t("Festival goal %d of %d reached!") % [int(st.stages), STAGES.size()])
 		lines.append_array(Waymarks.reward_lines(Waymarks.earn(STAGE_WAYMARKS, "festival")))
+		lines.append_array(SeasonPath.add("festival_stage"))
 	return lines
 
 static func spend(n: int) -> bool:
