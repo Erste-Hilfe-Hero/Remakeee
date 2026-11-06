@@ -6,8 +6,25 @@ extends RefCounted
 ## change nothing about the team.
 
 const PATH: String = "res://data/puzzles.json"
-## Goal types a puzzle can ask for.
-const GOALS: Array[String] = ["win_within"]
+## Goal types a puzzle can ask for (item 705). "goal" is one {"type", "value"} or a list of up to
+## MAX_GOALS of them; every goal needs the win as well.
+##   win_within N     win within N turns        no_faint          no own Spirling drops
+##   exact_rests N    rest exactly N times      keep_status S     status S is never cured
+##   use_reaction E   set off a reaction of element E           last_hit_with A   the last own art is A
+const GOALS: Array[String] = ["win_within", "no_faint", "exact_rests", "keep_status", "use_reaction", "last_hit_with"]
+const MAX_GOALS: int = 2
+
+## The goals of [param p] as a list (a single goal dict counts as one).
+static func goals(p: Dictionary) -> Array[Dictionary]:
+	var g: Variant = p.get("goal", {})
+	var out: Array[Dictionary] = []
+	if g is Dictionary:
+		out.append(g)
+	elif g is Array:
+		for v: Variant in g:
+			if v is Dictionary:
+				out.append(v)
+	return out
 
 static var _cache: Array = []
 
@@ -90,6 +107,11 @@ static func build_model(p: Dictionary) -> BattleModel:
 class Attempt:
 	var model: BattleModel
 	var reactions: Dictionary = {}
+	var rests: int = 0
+	var own_faints: int = 0
+	var last_move: String = ""
+	## Statuses taken off the player's Spirlings during the attempt.
+	var cured: Array[String] = []
 	var _first_turn: int = 0
 
 	func _init(m: BattleModel) -> void:
@@ -105,6 +127,15 @@ class Attempt:
 		if e.type == BattleEvent.Type.REACTION and int(e.data.get("side", 0)) == BattleModel.Side.FOE:
 			var el: int = int(e.data.get("element", -1))
 			reactions[el] = int(reactions.get(el, 0)) + 1
+		var mine: bool = int(e.data.get("side", -1)) == BattleModel.Side.PLAYER
+		if mine and e.type == BattleEvent.Type.REST:
+			rests += 1
+		elif mine and e.type == BattleEvent.Type.FAINTED:
+			own_faints += 1
+		elif mine and e.type == BattleEvent.Type.MOVE_USED:
+			last_move = str(e.data.get("move", ""))
+		elif mine and e.type == BattleEvent.Type.STATUS_CURED:
+			cured.append(str(e.data.get("status", "")))
 
 static func start(p: Dictionary) -> Attempt:
 	return Attempt.new(build_model(p))
@@ -124,15 +155,34 @@ static func is_over(p: Dictionary, at: Attempt) -> bool:
 
 ## True once the attempt meets the goal of [param p].
 static func solved(p: Dictionary, at: Attempt) -> bool:
-	var goal: Dictionary = p.get("goal", {})
 	if at.model.outcome != BattleModel.Outcome.WIN:
+		return false
+	for goal: Dictionary in goals(p):
+		if not goal_met(p, goal, at):
+			return false
+	return true
+
+## True if [param at] meets one [param goal] (the win itself is checked by solved()).
+static func goal_met(p: Dictionary, goal: Dictionary, at: Attempt) -> bool:
+	var v: Variant = goal.get("value")
+	# The older form names the reaction beside a win_within goal.
+	var need: String = str(goal.get("reaction", ""))
+	if not need.is_empty() and int(at.reactions.get(int(Elements.E.get(need, -1)), 0)) <= 0:
 		return false
 	match str(goal.get("type", "win_within")):
 		"win_within":
-			if at.turns() > int(goal.get("value", p.get("max_turns", 3))):
-				return false
-	var need: String = str(goal.get("reaction", ""))
-	return need.is_empty() or int(at.reactions.get(int(Elements.E.get(need, -1)), 0)) > 0
+			return at.turns() <= int(goal.get("value", p.get("max_turns", 3)))
+		"no_faint":
+			return at.own_faints == 0
+		"exact_rests":
+			return at.rests == int(v)
+		"keep_status":
+			return not str(v) in at.cured
+		"use_reaction":
+			return int(at.reactions.get(int(Elements.E.get(str(v), -1)), 0)) > 0
+		"last_hit_with":
+			return at.last_move == str(v)
+	return false
 
 ## The player's choices in the current position (switches when one is due).
 static func choices(at: Attempt) -> Array[BattleAction]:

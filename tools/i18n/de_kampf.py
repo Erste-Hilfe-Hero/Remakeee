@@ -68,10 +68,10 @@ T.update({
 "Current Trial 2": "Strömungsprobe 2",
 "Current Trial 3": "Strömungsprobe 3",
 "Puddlet against Smoldrake in the ash storm. Win within 4 turns.": "Puddlet gegen Smoldrake im Aschesturm. Gewinne in höchstens 4 Runden.",
-"Talusk alone against two. Win within 4 turns.": "Talusk allein gegen zwei. Gewinne in höchstens 4 Runden.",
-"Two tired Spirlings against Smoldrake. Win within 4 turns.": "Zwei müde Spirlings gegen Smoldrake. Gewinne in höchstens 4 Runden.",
+"Kindlop burns, and its Kindling gift turns the Scorch into strength. Beat Shalebat and Zippit without curing the Scorch.": "Kindlop brennt, und seine Gabe Kindling macht aus dem Scorch Stärke. Besiege Shalebat und Zippit, ohne den Scorch zu heilen.",
+"Mossling at half Vigor against Kindlop. Win within 5 turns.": "Mossling mit halber Kraft gegen Kindlop. Gewinne in höchstens 5 Runden.",
 "Zippit starts with 4 Energy against a soaked Riptail. Win within 3 turns through the Volt reaction.": "Zippit startet mit 4 Energie gegen ein durchnässtes Riptail. Gewinne in höchstens 3 Runden über die Volt-Reaktion.",
-"Mossling against Riptail in the drag of the current. Win within 4 turns.": "Mossling gegen Riptail im Sog der Strömung. Gewinne in höchstens 4 Runden.",
+"Zephlet starts with 2 Energy against Puddlet in the high tide. Win, resting exactly once.": "Zephlet startet mit 2 Energie gegen Puddlet in der Hochflut. Gewinne und raste dabei genau einmal.",
 "Kelpup against Riptail, tide against tide. Win within 4 turns.": "Kelpup gegen Riptail, Flut gegen Flut. Gewinne in höchstens 4 Runden.",
 })
 
