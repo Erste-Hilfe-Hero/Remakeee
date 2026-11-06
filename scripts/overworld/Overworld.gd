@@ -644,6 +644,12 @@ func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
 	else:
 		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
 
+## Echo Cores that are ready wake into a Hallkind (item 185).
+func _wake_cores() -> void:
+	for kid: Spirling in GameState.awaken_cores():
+		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
+		SaveManager.save_game()
+
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()
 	GameState.heal_party()
@@ -656,12 +662,29 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
 	await say(Tips.take("rest_spot"))
+	GameState.note_core_rest()
+	await _wake_cores()
 	# Every spring can swap the team with storage, even before storage opens from the menu,
 	# and load a saved team with one tap (plan area 1, items 378 and 381).
+	# After the second mended Rift every spring is an Echo spring (items 183-184).
+	var opts: Array[String] = []
 	if not GameState.storage.is_empty() or not GameState.team_presets.is_empty():
-		var c: int = await _picker.pick("Swap Spirlings here?", [{"text": "Storage"}, {"text": "Go on"}] as Array[Dictionary])
-		if c == 0:
+		opts.append("Storage")
+	if GameState.echo_spring_open():
+		opts.append("Sing together")
+	if not opts.is_empty():
+		opts.append("Go on")
+		var entries: Array[Dictionary] = []
+		for o: String in opts:
+			entries.append({"text": o})
+		var c: int = await _picker.pick("Swap Spirlings here?" if not GameState.echo_spring_open() else "The spring hums softly.", entries)
+		if c >= 0 and opts[c] == "Storage":
 			await _action_storage(PackedStringArray(), null)
+		elif c >= 0 and opts[c] == "Sing together":
+			var menu := PauseMenu.new()
+			_ui.add_child(menu)
+			await menu.run_sing_together()
+			menu.queue_free()
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := PauseMenu.new()
@@ -1785,6 +1808,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	Sound.music(Sound.track_for_map(map.id))
 	EncounterTable.start_guard()
 	await _fade_to(0.0)
+	await _wake_cores()
 	await announce_achievements()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
@@ -1834,6 +1858,7 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:
 		Online.contribute("battles")
+		GameState.note_core_win()
 		var foe_elements: Array[String] = []
 		for f: Spirling in model.parties[1]:
 			for e: int in f.elements():
