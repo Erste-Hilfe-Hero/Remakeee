@@ -16,6 +16,8 @@ const FADE_TIME: float = 0.11
 const SPOT_TIME: float = 0.5
 ## Seconds for a grapple swing or cliff climb.
 const GEAR_MOVE_TIME: float = 0.4
+## Hand-over-hand pulls along a grapple rope.
+const GRAPPLE_PULLS: int = 4
 
 var map: MapData
 var player: Player
@@ -36,6 +38,10 @@ var _banner: Label
 var _fade: ColorRect
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
+## Area 3 puzzles and gear on the map (boulders, plates, cracked floor, planks, ladders).
+var _world: WorldMechanics
+## Cell the player arrived on in this map ("Reset room" puts them back here).
+var _entry_cell: Vector2i = Vector2i.ZERO
 
 func _ready() -> void:
 	Database.load_all()
@@ -54,7 +60,9 @@ func _ready() -> void:
 		"season": _action_season,
 		"choose_starter": _action_choose_starter,
 		"page": _action_page,
+		"lever": _action_lever,
 	}
+	_world = WorldMechanics.new(self)
 	_build()
 	if GameState.party.is_empty() and not GameState.in_game:
 		# Running this scene directly from the editor: start a quick test game.
@@ -167,7 +175,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map = MapData.load_map(map_id)
 	if map == null:
 		return
-	map.apply_blocks(GameState.flags)
+	_entry_cell = cell
+	_world.prepare(map, cell)
 	map.paint(_ground)
 	refresh_shade()
 	for n: NPC in _npcs:
@@ -238,7 +247,12 @@ func npc_at(cell: Vector2i) -> NPC:
 	return null
 
 func _can_enter(cell: Vector2i) -> bool:
-	if busy or not map.is_walkable(cell) or npc_at(cell) != null:
+	if busy or npc_at(cell) != null:
+		return false
+	var world_rule: int = _world.can_enter(cell)
+	if world_rule >= 0:
+		return world_rule == 1
+	if not map.is_walkable(cell):
 		return false
 	var gear: String = map.gear_needed_at(cell)
 	if not gear.is_empty() and not GameState.has_gear(gear):
@@ -280,11 +294,29 @@ func _try_gear(target: Vector2i) -> bool:
 	Sound.sfx("confirm")
 	var from_pos: Vector2 = player.position
 	var to_pos: Vector2 = GridWalker.cell_to_pos(dest)
+	var rope: Line2D = null
+	if gear == "grapple_line":
+		# Area 3 item 1049: the rope is stretched first, then the Wayfarer pulls along it hand
+		# over hand, feet on the rope; no arc, never free in the air.
+		rope = Line2D.new()
+		rope.width = 1.0
+		rope.default_color = UITheme.INK
+		var half := Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0 + 2.0)
+		rope.points = PackedVector2Array([from_pos + half, to_pos + half])
+		_entities.add_child(rope)
 	var tw: Tween = create_tween()
-	tw.tween_method(func(k: float) -> void:
-		var arc: float = -10.0 * sin(k * PI)
-		player.position = from_pos.lerp(to_pos, k).round() + Vector2(0, round(arc)), 0.0, 1.0, GEAR_MOVE_TIME)
+	if rope != null:
+		for i: int in GRAPPLE_PULLS:
+			var a: Vector2 = from_pos.lerp(to_pos, float(i) / GRAPPLE_PULLS).round()
+			var b: Vector2 = from_pos.lerp(to_pos, float(i + 1) / GRAPPLE_PULLS).round()
+			tw.tween_property(player, "position", b, GEAR_MOVE_TIME / GRAPPLE_PULLS).from(a).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	else:
+		tw.tween_method(func(k: float) -> void:
+			var arc: float = -10.0 * sin(k * PI)
+			player.position = from_pos.lerp(to_pos, k).round() + Vector2(0, round(arc)), 0.0, 1.0, GEAR_MOVE_TIME)
 	await tw.finished
+	if rope != null:
+		rope.queue_free()
 	player.place(dest, player.facing)
 	GameState.player_cell = dest
 	player.frozen = false
@@ -311,6 +343,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	DailyTasks.record("step", {"map": map.id})
 	if not GameState.notices.is_empty():
 		await _locked_say(take_notices())
+	if await _world.stepped(cell):
+		return
 	var warp: Dictionary = map.warp_at(cell)
 	if not warp.is_empty():
 		await _warp(warp)
@@ -345,6 +379,8 @@ func _on_interact(cell: Vector2i) -> void:
 	if busy:
 		return
 	if await _try_gear(cell):
+		return
+	if await _world.interact(cell):
 		return
 	var n: NPC = npc_at(cell)
 	if n != null:
@@ -459,8 +495,13 @@ func open_menu() -> void:
 	var menu := PauseMenu.new()
 	menu.encounter_table = map.encounter_table
 	menu.current_map = map.id
+	menu.room_puzzle = _world.has_puzzle()
+	menu.can_undo = _world.can_undo()
 	_ui.add_child(menu)
 	await menu.run()
+	match menu.room_action:
+		"undo": _world.undo()
+		"reset": _world.reset_room(_entry_cell)
 	var target: String = menu.travel_to
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
@@ -546,7 +587,8 @@ func _unhandled_input(event: InputEvent) -> void:
 func tap_cell(cell: Vector2i) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
-	var passable: Callable = func(c: Vector2i) -> bool: return map.is_walkable(c) and npc_at(c) == null
+	var gear: Array = GameState.owned_gear()
+	var passable: Callable = func(c: Vector2i) -> bool: return PuzzleRoom.passable(map, c, gear) and npc_at(c) == null
 	# Tapping across water or a ledge: walk to the gear spot and use it.
 	for g: Dictionary in map.gear_spots:
 		if g.has("to") and int(g.x) == cell.x and int(g.y) == cell.y:
@@ -661,6 +703,62 @@ func _action_quest_show(args: PackedStringArray, _speaker: NPC) -> void:
 			await _action_give_item([args[2], args[3] if args.size() > 3 else "1"] as PackedStringArray, null)
 			return
 
+## "lever <flag> <gear>": a sluice wheel, mine cart or grate that needs Wayfarer Gear (the Pry
+## Bar). With the gear the flag is set and blocks with that open_flag open (area 3 item 1045).
+func _action_lever(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 2:
+		return
+	if GameState.has_flag(args[0]):
+		await say(["It has already been moved."] as Array[String])
+		return
+	if not GameState.has_gear(args[1]):
+		Sound.sfx("bump")
+		await say([str(Database.item(args[1]).get("hint", "It won't budge."))] as Array[String])
+		return
+	GameState.set_flag(args[0])
+	Sound.sfx("warp")
+	_world.refresh(player.cell)
+	await say(["You set the %s and lean on it. Something gives with a groan!" % Database.item(args[1]).get("name", args[1])] as Array[String])
+
+# --- Hooks for WorldMechanics ------------------------------------------------------------
+
+func ground_layer() -> TileMapLayer:
+	return _ground
+
+func npcs() -> Array[NPC]:
+	return _npcs
+
+func gear_hint_deferred(gear: String) -> void:
+	_gear_hint.call_deferred(gear)
+
+func say_locked(lines: Array[String]) -> void:
+	await _locked_say(lines)
+
+## Cracked floor gave way: the player lands on the same cell of the floor below.
+func drop_to(map_id: String, cell: Vector2i) -> void:
+	busy = true
+	player.frozen = true
+	Sound.sfx("bump")
+	await _fade_to(1.0)
+	load_map(map_id, cell, player.facing)
+	SaveManager.save_game()
+	await _fade_to(0.0)
+	player.frozen = false
+	busy = false
+	await _locked_say(["The floor gave way! You land on the level below, unhurt."] as Array[String])
+
+## Climbing down a rope ladder, rung by rung.
+func climb_to(map_id: String, cell: Vector2i) -> void:
+	busy = true
+	player.frozen = true
+	Sound.sfx("warp")
+	await _fade_to(1.0)
+	load_map(map_id, cell, "down")
+	SaveManager.save_game()
+	await _fade_to(0.0)
+	player.frozen = false
+	busy = false
+
 ## "switch <puzzle> <n> <total>": lamps/levers that must be used in order 1..total.
 ## Wrong order resets the puzzle; finishing sets the flag <puzzle> and opens its blocks.
 func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
@@ -680,8 +778,7 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 			await say(["The lamp flickers to life."] as Array[String])
 		GameState.SwitchResult.SOLVED:
 			Sound.sfx("warp")
-			if map.apply_blocks(GameState.flags):
-				map.paint(_ground)
+			_world.refresh(player.cell)
 			await say(["The last lamp catches. Somewhere, rock grinds against rock!"] as Array[String])
 
 ## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
