@@ -48,7 +48,10 @@ Daten, keine Tracking- oder Analyse-Dienste, kein Login über Drittanbieter, kei
   Nummer, kein freier Text), Geschenke, die Wanderer-Karte (Zahlen wie versiegelte Rifts und Spielzeit, dein
   Lieblings-Spirling), dein aktueller Ort im Spiel (nie ein echter Standort), dein Echo-Team (Art und Stufe
   deiner Spirlings, keine Spitznamen), dein Beitrag zum Weltziel der Woche und deine Punkte in der
-  Wochen-Rangliste. Meldest du jemanden, speichern wir die Meldung mit Grund.
+  Wochen-Rangliste. Meldest du jemanden, speichern wir die Meldung mit Grund und Ort. Über jede Entscheidung
+  bekommst du im Spiel eine Nachricht (Begründung, Ergebnis deiner Meldung, Antwort auf deinen Widerspruch).
+  Meldungen über das Formular auf [DOMAIN]/melden speichern wir mit Freundescode, Grund, Erklärung und, wenn
+  du sie angibst, Name und E-Mail, ohne Konto.
 - **Wer sieht was:** Namen, Karte, Ort und Echo-Team sehen nur deine bestätigten Freunde. In der
   Wochen-Rangliste sehen Fremde nur Punkte, keinen Namen.
 - **Zweck:** gemeinsames Spielen und Schutz vor Missbrauch (Blockieren, Meldungen prüfen).
