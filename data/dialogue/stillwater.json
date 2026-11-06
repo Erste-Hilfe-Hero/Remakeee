@@ -1,0 +1,38 @@
+{
+ "sign": [
+  "STILLWATER",
+  "Pond and terraces, rings 20 to 23.",
+  "South: Madderby   North: the Mirror Rift"
+ ],
+ "pond": [
+  "The pond is so still that the sky looks deeper than the water.",
+  "East: the Greyreach, closed by the guild for now."
+ ],
+ "teo": [
+  "Teo: Nothing bites since the colour went. I keep coming anyway."
+ ],
+ "teo_intro": [
+  "Teo: You scared the fish. Not that there were any."
+ ],
+ "teo_defeat": [
+  "Teo: Ha. That was more fun than fishing."
+ ],
+ "runa": [
+  "Runa: We grow rice on the steps. Grey rice this year."
+ ],
+ "runa_intro": [
+  "Runa: Mind the dykes! And mind my team."
+ ],
+ "runa_defeat": [
+  "Runa: You're steadier than the dykes."
+ ],
+ "ivo": [
+  "Ivo: Up there you see yourself. Only yourself. Hold on to something real."
+ ],
+ "ivo_intro": [
+  "Ivo: Let's see if you look away first."
+ ],
+ "ivo_defeat": [
+  "Ivo: Good. You'll do up there."
+ ]
+}

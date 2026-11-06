@@ -1,0 +1,41 @@
+{
+ "sign": [
+  "THE GREYREACH",
+  "Uplands, rings 22 to 25.",
+  "West: Stillwater   North: the Wide Rift"
+ ],
+ "sign_top": [
+  "MOUNTAIN RAILWAY",
+  "Halt Greyreach. No trains since the storm."
+ ],
+ "hut": [
+  "A survey hut. Old charts of the uplands hang on the wall, every one of them grey."
+ ],
+ "brann": [
+  "Brann: The scree up here slides if you look at it wrong."
+ ],
+ "brann_intro": [
+  "Brann: Steady feet? Prove it."
+ ],
+ "brann_defeat": [
+  "Brann: Steady enough."
+ ],
+ "kaja": [
+  "Kaja: I measure the Greyreach every year. This year it measured me."
+ ],
+ "kaja_intro": [
+  "Kaja: Hold still, I need a reference point. Ha, a duel will do."
+ ],
+ "kaja_defeat": [
+  "Kaja: Noted. You are a fixed point."
+ ],
+ "edrik": [
+  "Edrik: North of here the ground just stops. Like someone forgot to draw it."
+ ],
+ "edrik_intro": [
+  "Edrik: Last stop before nothing. Duel?"
+ ],
+ "edrik_defeat": [
+  "Edrik: Go and look, then. Don't step too close."
+ ]
+}
