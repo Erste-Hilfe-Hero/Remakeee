@@ -226,3 +226,21 @@ update public.reports set handled = true where target = '<target>';
 
 The DSA asks for a short reason to the player. Until there is an in-game notice, answer by email if they
 write in, for example: "Your Wanderer name was reset because it broke the rules in section 4 of the terms."
+
+## Refused saves (anti-cheat)
+
+`save_put` compares every save with the one before it in that slot (plan area 7, items 2921-2925):
+money may grow by at most `max_money_per_min` (5000) per minute played, play time by at most the real
+time since the last save plus `save_time_slack` (300 seconds), and every Spirling kind, move and item
+must be in `known_ids` (filled from `data/*.json` at every deploy by `tools/online/game_data_sql.py`).
+Less play time than before counts as a new journey in that slot, so money then counts from
+`start_money`. Keys in `save_server_keys` (league, raid, trades, premium currency …) are dropped from
+every save, because the server keeps those itself. A refused save answers `refused` with a reason and
+is noted in `cheat_flags` (the same refusal once per 10 minutes). With `cheat_flag_limit` (3) notes in
+`cheat_flag_days` (7) the account is out of leagues (`under_review`) until Ali clears it:
+
+```sql
+select p.code, f.reason, f.at, f.detail from public.cheat_flags f join public.profiles p on p.id = f.user_id
+order by f.at desc limit 50;
+update public.profiles set cheat_cleared_at = now() where code = '<CODE>';
+```
