@@ -124,3 +124,22 @@ Never picked at this level: Furnace Spiral, Bloom Burst, Cairn Crash, Salt Snap,
 - Every Spirling has a temperament (`Spirling.TEMPERAMENTS`) read from its uid, so it costs no RNG roll and old saves keep theirs. Five of the six give +5% to one stat (HP, ATK, DEF, FOC or SPD) with no penalty; "Even" gives nothing. It is a small lean, not a build choice, and it is shown in the team summary.
 - The Iron Oath is an opt-in challenge picked at new game. A Spirling that faints moves to the Sanctuary after the battle. If the party empties, storage steps in; if storage is empty too, the oath ends and everyone comes back, so the game can never lock.
 - Rematches: a beaten Wayfarer fights again once per calendar day. The team keeps its shape and is raised so its best Spirling matches the party's best level, never above the level cap and never below the first fight. Prize money is the level-based default.
+
+## Waymarks (plan area 8)
+
+Waymarks are the endgame currency. They are only earned by playing (`Waymarks.earn`, sources in
+`Waymarks.SOURCES`), never bought, traded or gifted. The pouch holds at most 9999; what does not fit
+is lost with a short note. A loss in battle never takes Waymarks away.
+
+Target for an active player: **about 60 Waymarks a day and 500 a week** once the endgame is open.
+
+| Source | Amount | How often | Status |
+| --- | --- | --- | --- |
+| Daily task | 10 | 3 a day | built |
+| All three daily tasks | 10 extra | once a day | built |
+| Weekly echo, first win of the week | 60 | once a week | planned (3183) |
+| Lighthouse climb, new floor / every 10th floor | 5 / 50 | once per floor | planned (3260) |
+| Master Wayfarer | 80 first win, then 20 | once a week each | planned (3289) |
+| Achievements | 10 / 25 / 50 / 100 | once each | planned (3313) |
+
+Daily tasks alone give 40 a day (280 a week); the weekly sources fill the rest.

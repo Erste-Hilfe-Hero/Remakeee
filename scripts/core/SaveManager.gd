@@ -224,7 +224,7 @@ func parse_save(text: String) -> Variant:
 # read is checked for its type here; a wrong one is dropped so the loader uses its default.
 
 const DICT_KEYS: Array[String] = ["tamer", "spirlog", "inventory", "flags", "matchups", "rests",
-	"records", "switches", "era"]
+	"records", "switches", "era", "world"]
 const LIST_KEYS: Array[String] = ["rifts", "party", "storage", "sanctuary"]
 const CELL_KEYS: Array[String] = ["cell", "heal_cell"]
 const NUMBER_KEYS: Array[String] = ["difficulty", "money", "play_time", "save_version"]
