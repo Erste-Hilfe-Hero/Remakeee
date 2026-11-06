@@ -114,4 +114,11 @@ T = {
 "Origin: %s": "Herkunft: %s",
 "#%02d  Not seen yet.": "#%02d  Noch nicht gesehen.",
 "Vanguard": "Vorhut", "Bulwark": "Bollwerk", "Weaver": "Weber", "Striker": "Stürmer", "Kindler": "Zünder",
+# Echo bonding (items 280-284)
+"It listens to you.": "Es hört dir zu.",
+"It hesitates.": "Es zögert.",
+"It turns away.": "Es wendet sich ab.",
+"It calls again...": "Es ruft noch einmal...",
+"An afterglow...": "Ein Nachklang...",
+"One more?": "Noch eins?",
 }

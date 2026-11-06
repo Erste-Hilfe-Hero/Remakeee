@@ -103,6 +103,10 @@ static func _check_species_fields(s: Dictionary, sname: String, species_names: D
 			errors.append("spirling '%s': bond_rate %.2f outside %s band %.2f-%.2f" % [sname, br, rarity, band.x, band.y])
 	if not str(s.get("region", "")) in SpirlingData.REGIONS:
 		errors.append("spirling '%s': unknown region '%s'" % [sname, s.get("region", "")])
+	var motif: Variant = s.get("cry_motif", [])
+	if not motif is Array or (motif as Array).size() != 2 or int(motif[0]) == int(motif[1]) \
+			or int(motif[0]) < 0 or int(motif[1]) < 0 or int(motif[0]) >= BondEcho.MARKS or int(motif[1]) >= BondEcho.MARKS:
+		errors.append("spirling '%s': cry_motif must be two different marks 0..%d" % [sname, BondEcho.MARKS - 1])
 	if not str(s.get("role", "")) in SpirlingData.ROLES:
 		errors.append("spirling '%s': unknown role '%s'" % [sname, s.get("role", "")])
 	if str(s.get("origin", "")).strip_edges().is_empty():
