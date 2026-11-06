@@ -82,7 +82,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 ### Gleichstand-Liga (fair, mit Ausgleich)
 2730. [x] [P1] Die Gleichstand-Liga ist die Standardliga und wird im Menü "Ligen" zuerst gezeigt, mit dem Satz "Hier zählt nur dein Können. Gekaufte Vorteile wirken hier nicht."
 2731. [x] [P1] In der Gleichstand-Liga kämpfen alle Spirlings auf Ring 50 mit Grundwerten aus `data/spirlings.json`; Wachstum, Trainingsboni und gekaufte Werte werden für den Kampf auf null gesetzt.
-2732. [P1] Gegenstände und Andenken mit Herkunftsmarke aus dem Shop sind in der Gleichstand-Liga gesperrt; die Liste der gesperrten Herkunftsmarken steht in `server_config.league_fair_blocked_sources`, die Bereich 10 befüllt.
+2732. [x] [P1] Gegenstände und Andenken mit Herkunftsmarke aus dem Shop sind in der Gleichstand-Liga gesperrt; die Liste der gesperrten Herkunftsmarken steht in `server_config.league_fair_blocked_sources`, die Bereich 10 befüllt.
 2733. [x] [P1] Erlaubt sind nur Techniken, die der Spirling bis Ring 50 laut Spieldaten lernen kann; der Server prüft jede Technik gegen diese Liste.
 2734. [x] [P1] Der Server baut das Ligateam selbst aus dem gespeicherten Team neu auf (Funktion `_league_team_fair`), der Client schickt nur Spirling-Kennungen und Technikwahl.
 2735. [x] [P1] Ein SQL-Test prüft, dass zwei Konten mit gleichem Spirling, aber verschiedenem Kaufstand, in der Gleichstand-Liga exakt dieselben Kampfwerte bekommen.
@@ -315,7 +315,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2945. [P3] Einige nie vergebene Fallen-Kennungen stehen in `known_ids`; taucht eine im Spielstand auf, entsteht sofort ein Vermerk.
 ### Server-Skalierung
 2946. [P1] Einen Verbindungspuffer (PgBouncer im Transaktionsmodus, eigener Container) zwischen PostgREST und Postgres schalten, mit höchstens 40 echten Verbindungen.
-2947. [P1] Indizes für alle Suchen der neuen Funktionen anlegen (Gegnersuche nach Saison und Wertung, Raids nach Bund und Ende, Tausche nach Spieler und Status) und mit `explain` in einem SQL-Test prüfen.
+2947. [x] [P1] Indizes für alle Suchen der neuen Funktionen anlegen (Gegnersuche nach Saison und Wertung, Raids nach Bund und Ende, Tausche nach Spieler und Status) und mit `explain` in einem SQL-Test prüfen.
 2948. [P1] Ein Lasttest-Skript `tools/online/load_test.js` (k6) simuliert 5000 gleichzeitige Spieler mit Herzschlag, Speichern, Post und Ligakampf und misst die Antwortzeit.
 2949. [P1] Zielwerte festlegen und im Lasttest prüfen: 95 Prozent aller Antworten unter 300 Millisekunden bei 5000 gleichzeitigen Spielern.
 2950. [P2] Die Tabelle `rate_events` nach Tagen aufteilen (Partitionen) und Partitionen älter als 2 Tage täglich löschen.
@@ -345,7 +345,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2972. [x] [P1] Eine Funktion `data_export` liefert alle eigenen Daten (Profil, Spielstände, Freunde, Post, Tausche, Bund, Ligen, Meldungen gegen das eigene Konto) als JSON-Datei (DSGVO Art. 15 und 20), erreichbar unter Einstellungen, Konto.
 2973. [x] [P1] `delete_account` löscht auch alle neuen Daten: Tausche, Bundmitgliedschaft, Raid-Beiträge, Ligawertung, Kampfaufnahmen und Phrasen auf Pinnwänden; ein SQL-Test prüft, dass danach keine Zeile mit der Konto-Kennung übrig ist.
 2974. [x] [P1] Ein Verzeichnis der Verarbeitungen in `docs/legal/VERARBEITUNGEN.md` mit Zweck, Daten, Speicherdauer und Rechtsgrundlage für jede Online-Funktion.
-2975. [P1] Die Datenschutzerklärung (`docs/legal/DATENSCHUTZ.md`, `server/site/datenschutz.html`) um Ligen, Tausch, Bünde, Raids, Schiedsrichter, Echtheitsprüfung und Moderation ergänzen.
+2975. [x] [P1] Die Datenschutzerklärung (`docs/legal/DATENSCHUTZ.md`, `server/site/datenschutz.html`) um Ligen, Tausch, Bünde, Raids, Schiedsrichter, Echtheitsprüfung und Moderation ergänzen.
 2976. [P2] Eine Tabelle der Speicherdauer pro Datenart in `docs/ONLINE.md` und ein nächtlicher Lauf, der sie durchsetzt (Post 30 Tage, Tausche 90, Raids 60, Moderation 12 Monate).
 2977. [P2] Caddy-Zugriffsprotokolle speichern IP-Adressen nur gekürzt und werden nach 7 Tagen gelöscht.
 2978. [P2] Eine Datenschutz-Folgenabschätzung für Konten unter 16 (Freunde, Tausch, Bünde) in `docs/legal/DSFA_KINDER.md`.
@@ -367,8 +367,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2993. [P3] Der Datenexport lässt sich auch als lesbare Seite im Spiel ansehen, nicht nur als Datei.
 2994. [P3] Einwilligungen (Name in Weltrangliste, Live-Duelle) werden mit Datum gespeichert und im Export gezeigt.
 ### Prüfung und Gleichlauf von Server und LocalBackend
-2995. [P1] Jede neue Server-Funktion bekommt eine eigene SQL-Testdatei in `tools/online/sql_test/` (`test_league.sql`, `test_trade.sql`, `test_bund.sql`, `test_raid.sql`, `test_mod.sql`, `test_privacy.sql`).
-2996. [P1] Jede neue Regel wird gleichlautend in `LocalBackend.gd` gebaut, und ein GDScript-Test ruft dieselben Fälle gegen LocalBackend auf und erwartet dieselben Fehlercodes.
+2995. [x] [P1] Jede neue Server-Funktion bekommt eine eigene SQL-Testdatei in `tools/online/sql_test/` (`test_league.sql`, `test_trade.sql`, `test_bund.sql`, `test_raid.sql`, `test_mod.sql`, `test_privacy.sql`).
+2996. [x] [P1] Jede neue Regel wird gleichlautend in `LocalBackend.gd` gebaut, und ein GDScript-Test ruft dieselben Fälle gegen LocalBackend auf und erwartet dieselben Fehlercodes.
 2997. [P2] Ein gemeinsamer Fallkatalog `tools/online/cases.json` (Eingabe, erwarteter Fehlercode) wird sowohl von den SQL-Tests als auch vom LocalBackend-Test gelesen.
 2998. [P2] `server/smoke_test.sh` um einen Ablauf erweitern: zwei Testkonten werden Freunde, tauschen einen Gegenstand, gründen einen Bund und machen einen Raid-Versuch.
 2999. [P2] Ein Test für Gleichzeitigkeit: 20 Aufrufe von `trade_confirm` und `raid_damage` gleichzeitig, danach sind Bestände und Kraft stimmig.
@@ -378,7 +378,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 3003. [P3] Ein Test-Werkzeug `tools/online/fake_players.gd`, das in LocalBackend 50 Spieler mit Bünden, Ligen und Raids anlegt, um Menüs mit vollen Listen zu prüfen.
 3004. [P3] Ein Test, dass der Schiedsrichter und der Client für 1000 zufällige Seeds dasselbe Ergebnis rechnen.
 
-3005. [P1] Ein Test ruft jede neue Funktion 100-mal pro Minute auf und erwartet ab der Grenze eine Ablehnung durch `_rate_ok`.
+3005. [x] [P1] Ein Test ruft jede neue Funktion 100-mal pro Minute auf und erwartet ab der Grenze eine Ablehnung durch `_rate_ok`.
 3006. [P2] Ein Test prüft, dass der Eltern-Schalter jede neue soziale Funktion für Konten unter 16 sperrt.
 3007. [P3] Ein Test prüft, dass `delete_account` während eines offenen Tauschs die Gegenstände dem Partner zurückgibt.
 3008. [P3] Ein Test für den Saisonwechsel stellt die Server-Zeit künstlich vor und prüft Abschluss, Rücksetzung und Belohnungen.
@@ -474,7 +474,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 3094. [P3] Beim Weltziel steht zusätzlich der Anteil des eigenen Bundes.
 ### Barrierefreiheit und Spielerwohl online
 3095. [P1] Alle neuen Online-Menüs (Ligen, Tausch, Bund, Raid, Moderation) funktionieren mit den bestehenden Anzeige-Optionen und passen auf 144x256 ohne abgeschnittenen Text.
-3096. [P1] Keine Strafen fürs Pausieren auch in den neuen Funktionen: kein Verlust von Ligastufe, Bundplatz oder Raid-Beitrag durch Abwesenheit, als SQL-Test festgehalten.
+3096. [x] [P1] Keine Strafen fürs Pausieren auch in den neuen Funktionen: kein Verlust von Ligastufe, Bundplatz oder Raid-Beitrag durch Abwesenheit, als SQL-Test festgehalten.
 3097. [P2] Freundesduelle und Live-Raids haben eine Option "mehr Zeit" mit doppelter Zugzeit, die beide sehen.
 3098. [P2] Nach 90 Minuten Ligaspiel am Stück fragt ein Hinweis "Zeit für eine Pause?", abschaltbar.
 3099. [P2] Nach einer Liga-Niederlage zeigt das Spiel eine kurze, freundliche Auswertung (Element-Vorteile des Gegners) statt nur "Verloren".
