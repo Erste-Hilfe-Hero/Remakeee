@@ -242,6 +242,8 @@ func known_multiplier(element: int, foe: Spirling) -> float:
 
 func add_item(id: String, count: int = 1) -> void:
 	inventory[id] = int(inventory.get(id, 0)) + count
+	if count > 0 and BattleRules.is_holdable(id):
+		Achievements.note_keepsake(id)
 
 func item_count(id: String) -> int:
 	return int(inventory.get(id, 0))

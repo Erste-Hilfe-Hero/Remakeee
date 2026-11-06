@@ -232,20 +232,20 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3321. [x] [P2] Einen Erfolg „Nachtschwärmer“ für 50 Kämpfe bei Nacht ergänzen.
 3322. [x] [P2] Einen Erfolg „Alle Felder“ für einen Sieg auf jedem Kampffeld aus BattleRules.FIELDS ergänzen.
 3323. [x] [P2] Einen Erfolg „Weltenbummler“ für jede Karte mit wilden Spirlings betreten ergänzen.
-3324. [P2] Einen Erfolg „Gleiches Element“ für einen Sieg mit fünf Spirlings eines Elements ergänzen.
-3325. [P2] Einen Erfolg „Sammler der Andenken“ für jedes Andenken aus data/items.json einmal besessen ergänzen.
+3324. [x] [P2] Einen Erfolg „Gleiches Element“ für einen Sieg mit fünf Spirlings eines Elements ergänzen.
+3325. [x] [P2] Einen Erfolg „Sammler der Andenken“ für jedes Andenken aus data/items.json einmal besessen ergänzen.
 3326. [x] [P2] Einen Erfolg „Ring 60“ für einen Spirling am Ring-Deckel und „Fünf am Deckel“ für ein ganzes Team ergänzen.
-3327. [P2] Einen Erfolg „Fotograf“ für 25 gespeicherte Fotos im Fotomodus ergänzen.
+3327. [x] [P2] Einen Erfolg „Fotograf“ für 25 gespeicherte Fotos im Fotomodus ergänzen.
 3328. [x] [P2] Einen Erfolg „Gastgeber“ für jeden getroffenen Fund des Tages an 30 verschiedenen Tagen ergänzen.
-3329. [P2] Einen Erfolg „Festgänger“ für jedes der Feste einmal gefeiert ergänzen.
-3330. [P2] Einen Erfolg „Turmspitze“ für Stockwerk 30 der Leuchtturm-Treppe ergänzen und den alten „Echo Climber“ auf 5 Stockwerke belassen.
+3329. [x] [P2] Einen Erfolg „Festgänger“ für jedes der Feste einmal gefeiert ergänzen.
+3330. [x] [P2] Einen Erfolg „Turmspitze“ für Stockwerk 30 der Leuchtturm-Treppe ergänzen und den alten „Echo Climber“ auf 5 Stockwerke belassen.
 3331. [x] [P2] Einen Erfolg „Meistergruß“ für einen Sieg über alle acht Meister-Wanderer ergänzen.
 3332. [P2] Einen Erfolg „Stadtbauer“ für alle fünf Stadtprojekte in Brindlewick ergänzen.
-3333. [P2] Erfolge im Abzeichenbuch nach Kategorie filterbar machen.
+3333. [x] [P2] Erfolge im Abzeichenbuch nach Kategorie filterbar machen.
 3334. [x] [P2] Den Gesamtfortschritt als Prozentzahl oben im Abzeichenbuch zeigen.
 3335. [x] [P2] Für jedes Abzeichen das Datum des Freischaltens anzeigen, das heute schon in records["achievements"] steht.
-3336. [P2] Alle neuen Erfolgstexte in data/i18n/de.json eintragen und das Prüfskript tools/i18n_extract.py durchlaufen lassen.
-3337. [P2] Einen GUT-Test schreiben, der prüft, dass jede Erfolgs-Id in data/achievements.json eine Prüfung in Achievements.earned() hat.
+3336. [x] [P2] Alle neuen Erfolgstexte in data/i18n/de.json eintragen und das Prüfskript tools/i18n_extract.py durchlaufen lassen.
+3337. [x] [P2] Einen GUT-Test schreiben, der prüft, dass jede Erfolgs-Id in data/achievements.json eine Prüfung in Achievements.earned() hat.
 3338. [P2] Die Erfolge nach Plattform an Game Center und Google Play Spiele melden, sofern Ali die Konten freigibt, sonst nur lokal.
 3339. [P2] Einen Erfolg „Pfadsucher“ für 10 abgeschlossene Nachhall-Pfade ergänzen.
 3340. [P3] Einen Erfolg „Temperamentvoll“ für jedes Temperament einmal im Team ergänzen.

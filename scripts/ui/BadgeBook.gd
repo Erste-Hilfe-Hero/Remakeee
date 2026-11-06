@@ -10,6 +10,9 @@ const COLUMNS: int = 7
 var _grid: GridContainer
 var _title: Label
 var _first: Control
+var _filter: Button
+## Category shown ("" = every badge, plan 3333).
+var category: String = ""
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -25,6 +28,9 @@ func _ready() -> void:
 	_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_title.custom_minimum_size = Vector2(1, 0)
 	box.add_child(_title)
+	_filter = Button.new()
+	_filter.pressed.connect(next_category)
+	box.add_child(_filter)
 	var scroll := ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.follow_focus = true
@@ -48,8 +54,9 @@ func fill() -> void:
 	var have: Dictionary = Achievements.unlocked()
 	var list: Array[Dictionary] = Achievements.list()
 	_title.text = Loc.t("Badge book %d/%d (%d%%)") % [have.size(), list.size(), Achievements.percent()]
+	_filter.text = Loc.t("Show: %s") % Loc.t(str(Achievements.CATEGORY_NAMES.get(category, "All badges")))
 	_first = null
-	for i: int in list.size():
+	for i: int in Achievements.indices_for(category):
 		var a: Dictionary = list[i]
 		var b := TextureButton.new()
 		b.texture_normal = Badges.texture(a, have.has(a.id))
@@ -63,6 +70,13 @@ func fill() -> void:
 			_first = b
 	if _first != null:
 		_first.grab_focus.call_deferred()
+
+## Steps the filter to the next category, after the last one back to every badge.
+func next_category() -> void:
+	var order: Array[String] = [""]
+	order.append_array(Achievements.CATEGORIES)
+	category = order[(order.find(category) + 1) % order.size()]
+	fill()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
