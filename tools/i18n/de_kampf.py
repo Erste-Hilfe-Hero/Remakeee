@@ -39,3 +39,6 @@ T.update({
 "Ends the foe's status.": "Beendet den Status des Ziels.",
 "Steals one raised stage from the foe.": "Stiehlt dem Ziel eine erhöhte Stufe.",
 })
+T.update({
+"The long fight wears everyone out. Nobody can heal any more!": "Der lange Kampf zehrt an allen. Niemand kann mehr heilen!",
+})

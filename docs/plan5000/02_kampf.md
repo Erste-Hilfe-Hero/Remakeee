@@ -399,14 +399,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 807. [P3] Eigene Übungskämpfe im Leuchtturm gegen ein gespeichertes Wanderer-Team mit frei wählbaren Varianten, ohne Belohnung.
 
 ### Balance-Simulator ausbauen
-808. [P1] tools/balance_sim.gd nimmt benannte Schalter statt fester Reihenfolge: `--level`, `--rounds`, `--seed`, `--mode`, `--ai`, `--out`, `--json`.
-809. [P1] Modus `team`: zufällige gültige 3er- und 5er-Teams pro Seed, beide Seiten auf KI-Stufe 2, 500 Kämpfe pro Lauf, Bericht nach Art, Technik und Element.
+808. [x] [P1] tools/balance_sim.gd nimmt benannte Schalter statt fester Reihenfolge: `--level`, `--rounds`, `--seed`, `--mode`, `--ai`, `--out`, `--json`.
+809. [x] [P1] Modus `team`: zufällige gültige 3er- und 5er-Teams pro Seed, beide Seiten auf KI-Stufe 2, 500 Kämpfe pro Lauf, Bericht nach Art, Technik und Element.
 810. [P1] Modus `warden`: jedes Referenzteam aus tools/balance/ref_teams.json kämpft 100-mal gegen jeden Wächter pro Schwierigkeit, mit der KI-Stufe und den Regeln der Stufe.
-811. [P1] BalanceSim nutzt für alle Modi dieselbe BattleModel-Logik mit neuen Effekten, Profilen, Varianten und Schwierigkeitswerten, ohne eigenen Schadensweg.
+811. [x] [P1] BalanceSim nutzt für alle Modi dieselbe BattleModel-Logik mit neuen Effekten, Profilen, Varianten und Schwierigkeitswerten, ohne eigenen Schadensweg.
 812. [P1] tools/balance/ref_teams.json mit je drei Referenzteams pro Story-Abschnitt (vor Orrin, vor Maelis, nach beiden Rissen), gebaut aus Startern und Wild-Arten der Karten auf typischem Ring.
-813. [P1] Messwert "Züge bis K.o." pro Kampf; Zielband bei Ring 36 im Duell 2,5 bis 4,0 im Schnitt, sonst Hinweis im Bericht.
-814. [P1] Messwert "Vorteil des Ersten": Anteil der Siege des schnelleren Spirlings im Duell; Zielwert höchstens 62 %.
-815. [P1] JSON-Ausgabe mit allen Messwerten, damit Tests und Vergleiche sie lesen, ohne Markdown zu parsen.
+813. [x] [P1] Messwert "Züge bis K.o." pro Kampf; Zielband bei Ring 36 im Duell 2,5 bis 4,0 im Schnitt, sonst Hinweis im Bericht.
+814. [x] [P1] Messwert "Vorteil des Ersten": Anteil der Siege des schnelleren Spirlings im Duell; Zielwert höchstens 62 %.
+815. [x] [P1] JSON-Ausgabe mit allen Messwerten, damit Tests und Vergleiche sie lesen, ohne Markdown zu parsen.
 816. [P2] Basiswert-Datei tools/balance/baseline_lv36.json und Schalter `--compare`: der Bericht markiert jede Art und Technik, deren Gewinnrate sich um mehr als 8 Punkte verschoben hat.
 817. [P2] Modus `ladder`: gleiche Teams, KI-Stufe n gegen n-1; Zielwerte Stufe 1 gegen 0 mindestens 75 %, 2 gegen 1 mindestens 60 %, 3 gegen 2 mindestens 55 %.
 818. [P2] Modus `mono`: Teams aus nur einem Element (je 3 Arten, wo möglich), Zielband 42 bis 58 % pro Element.
@@ -442,7 +442,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 846. [P1] Test: im Modus `warden` liegt die Gewinnrate jedes Referenzteams in den Zielbändern aus tools/balance/targets.json (mit kleiner Rundenzahl im normalen CI-Lauf).
 847. [x] [P1] Test pro neuem Effekt-Baustein in tests/unit/test_move_effects.gd mit fester Kampflage und festem Seed, der das genaue Ergebnis prüft (Schaden, Energie, Status, Stufe).
 848. [P1] Test: `delayed_hit`, `side_snare` und `cooldown` überstehen ein Replay-Hin-und-zurück mit BattleReplay ohne Abweichung.
-849. [P1] Test: im Modus `team` bei Ring 36 liegt keine Art unter 30 % oder über 70 % (zusätzlich zum bestehenden Duell-Band 25 bis 75 %).
+849. [x] [P1] Test: im Modus `team` bei Ring 36 liegt keine Art unter 30 % oder über 70 % (zusätzlich zum bestehenden Duell-Band 25 bis 75 %).
 850. [P2] Test: der Vorteil des Ersten liegt bei Ring 20 und 36 höchstens bei 62 %.
 851. [P2] Test: die Züge bis K.o. liegen bei Ring 36 im Duell im Schnitt zwischen 2,5 und 4,0.
 852. [P2] Test: der Rast-Anteil liegt im Modus `team` zwischen 10 und 25 %.
@@ -468,7 +468,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 872. [P3] Test: kein Wanderer-Team liegt im Modus `wayfarer` außerhalb von 60 bis 95 % Spielersieg auf Tamer.
 
 ### docs/BALANCE.md und Balance-Ablauf
-873. [P1] docs/BALANCE.md erhält eine Tabelle "Zielbänder" mit allen Messwerten, Zielwerten und dem Test, der sie prüft.
+873. [x] [P1] docs/BALANCE.md erhält eine Tabelle "Zielbänder" mit allen Messwerten, Zielwerten und dem Test, der sie prüft.
 874. [P2] Abschnitt "Neue Technik hinzufügen": Kurve prüfen, Lernliste prüfen, Simulator im Modus `team` und `ablation`, Basiswert aktualisieren, Name prüfen.
 875. [P2] Abschnitt "Schwierigkeitsstufen" mit der Tabelle Gegner-Ring, Spark, KI, Andenken, Energie-Start und Wächter-Regel-Stärke pro Stufe.
 876. [P2] Abschnitt "KI-Profile" mit allen Gewichten, Kurzsätzen und der Zuordnung zu Wanderern und Wächtern.

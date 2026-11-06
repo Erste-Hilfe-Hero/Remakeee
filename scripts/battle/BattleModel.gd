@@ -489,6 +489,8 @@ func heal(side: int, amount: int, slot: int = 0) -> int:
 	if index < 0:
 		return 0
 	var s: Spirling = parties[side][index]
+	if turn >= BattleRules.WEARY_TURN:
+		return 0
 	if s.heal_block > 0:
 		if s.hp < s.max_hp():
 			emit_event(BattleEvent.Type.HEAL_BLOCKED, _who(side, slot))
@@ -634,6 +636,8 @@ func _phase_end_of_turn() -> void:
 	_tick_timers()
 	_tick_field()
 	turn += 1
+	if turn == BattleRules.WEARY_TURN:
+		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	phase = Phase.FAINT_CHECK
 
 func _end_of_turn_for(side: int, slot: int) -> void:
