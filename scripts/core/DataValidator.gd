@@ -62,6 +62,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 				for st: Variant in m.self_stages:
 					if not str(st) in BattleRules.STAGE_STATS:
 						errors.append("move '%s': unknown stat '%s' in self_stages" % [name, st])
+		if m.has("stages_full_hp") and (not m.has("stat") or not bool(m.get("self", true)) or absi(int(m.stages_full_hp)) > 3):
+			errors.append("move '%s': stages_full_hp needs a self stat move and at most 3 stages" % name)
 		if m.has("stage_chance") and (float(m.stage_chance) <= 0.0 or float(m.stage_chance) > 1.0):
 			errors.append("move '%s': stage_chance must be in (0, 1]" % name)
 

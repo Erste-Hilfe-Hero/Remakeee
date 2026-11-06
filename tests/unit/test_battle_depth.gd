@@ -18,6 +18,7 @@ func test_stat_move_raises_and_clamps() -> void:
 	var b: Spirling = BattleFixtures.make("Mossling", 20, ["Bowl Over"] as Array[String])
 	var m: BattleModel = BattleFixtures.model([a] as Array[Spirling], [b] as Array[Spirling])
 	m.start()
+	a.hp -= 1 # at full Vigor Kindle Up gives 2 stages (stages_full_hp)
 	var atk_before: int = a.effective_atk()
 	var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_move(0, 0), BattleAction.make_rest(1))
 	assert_not_null(BattleFixtures.first_of(ev, BattleEvent.Type.STAT_CHANGED))
