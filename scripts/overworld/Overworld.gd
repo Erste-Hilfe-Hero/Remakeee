@@ -195,11 +195,29 @@ func _build() -> void:
 	_battle_layer.layer = BATTLE_LAYER
 	add_child(_battle_layer)
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	# Integer-rounded camera (no smoothing) keeps pixels on the grid.
 	_camera.global_position = (player.global_position + Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0)).round()
 	if _photo != null:
 		_camera.global_position += _photo.pan
+	_walk_clock += delta
+	if _walk_clock >= WALK_PAUSE:
+		_walk_clock = 0.0
+		walk_npcs()
+
+## Seconds between two steps of a walking villager (item 1213): slower than the player.
+const WALK_PAUSE: float = 1.4
+var _walk_clock: float = 0.0
+
+## One step for every villager on a walk, unless a talk or scene runs. Nobody steps onto the
+## player, another person or a blocked cell; they wait instead.
+func walk_npcs() -> void:
+	if busy or scene_running or map == null:
+		return
+	var free: Callable = func(c: Vector2i) -> bool:
+		return map.is_walkable(c) and npc_at(c) == null and player.cell != c
+	for n: NPC in _npcs:
+		n.walk_tick(free)
 
 # --- Maps --------------------------------------------------------------------------
 
@@ -396,7 +414,8 @@ func _spawn_npcs() -> void:
 		n.queue_free()
 	_npcs.clear()
 	var phase: int = DayCycle.current() if _world.phase_override < 0 else _world.phase_override
-	for def: Dictionary in map.npcs:
+	# Day plans (area 3 item 1212): people move with the time of day, some visit other maps.
+	for def: Dictionary in NpcSchedule.defs_for(map, phase):
 		if def.has("hide_flag") and GameState.has_flag(str(def.hide_flag)):
 			continue
 		if def.has("show_flag") and not GameState.has_flag(str(def.show_flag)):

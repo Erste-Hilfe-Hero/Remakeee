@@ -13,6 +13,39 @@ func setup(def: Dictionary) -> void:
 	body_color = Color(str(def.get("color", "b04a4a")))
 	sprite_style = str(def.get("sprite", "villager"))
 	place(Vector2i(int(def.x), int(def.y)), str(def.get("facing", "down")))
+	walk_route.assign(def.get("walk_cells", NpcSchedule.cells(def.get("walk", []))))
+	_walk_i = 0
+	_walk_dir = 1
+
+## Short walk (area 3 item 1213): cells from the start cell; walked to the end and back.
+var walk_route: Array[Vector2i] = []
+var _walk_i: int = 0
+var _walk_dir: int = 1
+
+## The next cell of the walk, or the current cell when there is no walk.
+func next_walk_cell() -> Vector2i:
+	if walk_route.size() < 2:
+		return cell
+	var i: int = _walk_i + _walk_dir
+	if i < 0 or i >= walk_route.size():
+		_walk_dir = -_walk_dir
+		i = _walk_i + _walk_dir
+	return walk_route[i]
+
+## Takes one slow step along the walk if [param free] (Callable(Vector2i) -> bool) lets it.
+## Returns true if it moved; a person in the way just makes it wait.
+func walk_tick(free: Callable) -> bool:
+	if moving or walk_route.size() < 2:
+		return false
+	var next: Vector2i = next_walk_cell()
+	var d: Vector2i = next - cell
+	if absi(d.x) + absi(d.y) != 1 or not free.call(next):
+		return false
+	for dir: String in DIRS:
+		if DIRS[dir] == d:
+			step(dir)
+	_walk_i += _walk_dir
+	return true
 
 ## Shows a "!" above the head when a Wayfarer spots the player.
 var alert: bool = false:
