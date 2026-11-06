@@ -25,11 +25,17 @@
    "5": [
     "Heat Haze"
    ],
+   "6": [
+    "Cinder Dash"
+   ],
    "7": [
     "Kindle Up"
    ],
    "9": [
     "Dusk Rake"
+   ],
+   "11": [
+    "Glow Knuckle"
    ],
    "13": [
     "Cinder Breath"
@@ -83,6 +89,9 @@
    "13": [
     "Cinder Breath"
    ],
+   "18": [
+    "Char Mark"
+   ],
    "20": [
     "Kiln Strike"
    ],
@@ -97,6 +106,9 @@
    ],
    "30": [
     "Furnace Spiral"
+   ],
+   "32": [
+    "Bellows Blast"
    ]
   },
   "bond_rate": 0.15,
@@ -158,6 +170,9 @@
    "44": [
     "Ash Call"
    ],
+   "46": [
+    "Furnace Heart"
+   ],
    "48": [
     "Cairn Crash"
    ]
@@ -199,9 +214,15 @@
    "5": [
     "Drench"
    ],
+   "7": [
+    "Spout Jab"
+   ],
    "9": [
     "Glint",
     "Chill Mist"
+   ],
+   "11": [
+    "Salt Spray"
    ],
    "13": [
     "Spindrift Shot"
@@ -258,6 +279,9 @@
    "20": [
     "Undertow"
    ],
+   "21": [
+    "Rip Current"
+   ],
    "22": [
     "Chill Mist"
    ],
@@ -266,6 +290,9 @@
    ],
    "26": [
     "Prism Ray"
+   ],
+   "28": [
+    "Deepwell Draught"
    ],
    "30": [
     "Breaker Plunge"
@@ -329,8 +356,14 @@
    "42": [
     "Breaker Plunge"
    ],
+   "44": [
+    "Bore Wave"
+   ],
    "48": [
     "Radiant Lance"
+   ],
+   "50": [
+    "Daybreak Strike"
    ]
   },
   "bond_rate": 0.08,
@@ -370,8 +403,14 @@
    "5": [
     "Puffcap Haze"
    ],
+   "6": [
+    "Pollen Prick"
+   ],
    "9": [
     "Pebble Toss"
+   ],
+   "11": [
+    "Husk Shed"
    ],
    "13": [
     "Sap Draw"
@@ -446,11 +485,17 @@
    "22": [
     "Bloom Call"
    ],
+   "24": [
+    "Graft"
+   ],
    "26": [
     "Tremor Thud"
    ],
    "30": [
     "Bloom Burst"
+   ],
+   "34": [
+    "Wildgrowth Crash"
    ]
   },
   "bond_rate": 0.15,
@@ -483,11 +528,11 @@
   "role": "bulwark",
   "line_id": "mossling",
   "base": {
-   "hp": 104,
-   "atk": 106,
+   "hp": 92,
+   "atk": 92,
    "foc": 88,
    "spd": 86,
-   "def": 116
+   "def": 102
   },
   "trait": "deep_roots",
   "learnset": {
@@ -502,11 +547,17 @@
    "38": [
     "Thorn Volley"
    ],
+   "40": [
+    "Gloam Pact"
+   ],
    "42": [
     "Bloom Burst"
    ],
    "44": [
     "Bloom Call"
+   ],
+   "46": [
+    "Thornwake"
    ],
    "48": [
     "Dusk Gnaw"
@@ -635,6 +686,9 @@
    "36": [
     "Short Circuit"
    ],
+   "38": [
+    "Prism Burst"
+   ],
    "40": [
     "Radiant Lance"
    ],
@@ -749,6 +803,9 @@
     "Tremor Thud",
     "All-In Crash",
     "Landslip"
+   ],
+   "32": [
+    "Murmur Bite"
    ],
    "33": [
     "Murk Call"
@@ -947,8 +1004,14 @@
    "5": [
     "Fizz Pop"
    ],
+   "6": [
+    "Dawn Needle"
+   ],
    "9": [
     "Glint"
+   ],
+   "10": [
+    "Beacon Ping"
    ],
    "11": [
     "Still Thought"
@@ -1021,6 +1084,9 @@
    "22": [
     "Spindrift Shot"
    ],
+   "24": [
+    "Starlit Lash"
+   ],
    "26": [
     "Prism Ray"
    ],
@@ -1032,6 +1098,9 @@
    ],
    "32": [
     "Candle Ward"
+   ],
+   "34": [
+    "Sunwell Sip"
    ],
    "38": [
     "Radiant Lance"
@@ -1089,11 +1158,17 @@
    "5": [
     "Pebble Toss"
    ],
+   "6": [
+    "Veil Step"
+   ],
    "9": [
     "Hush"
    ],
    "11": [
     "Cower Shade"
+   ],
+   "12": [
+    "Shade Pounce"
    ],
    "13": [
     "Dusk Rake"
@@ -1155,6 +1230,9 @@
    "25": [
     "Tremor Thud"
    ],
+   "27": [
+    "Gloom Handoff"
+   ],
    "28": [
     "All-In Crash"
    ],
@@ -1170,6 +1248,9 @@
    ],
    "42": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Eclipse Crush"
    ]
   },
   "bond_rate": 0.15,
@@ -1218,6 +1299,9 @@
    ],
    "14": [
     "Chill Mist"
+   ],
+   "16": [
+    "Shoal Trap"
    ],
    "17": [
     "Drench"
@@ -2409,6 +2493,9 @@
    "24": [
     "Breeze Slice"
    ],
+   "26": [
+    "Crackle Bite"
+   ],
    "28": [
     "Breeze Slice"
    ],
@@ -2513,6 +2600,9 @@
    ],
    "24": [
     "Salt Snap"
+   ],
+   "26": [
+    "Mirk Nip"
    ],
    "28": [
     "Salt Snap"
@@ -2833,6 +2923,9 @@
    "24": [
     "Salt Snap"
    ],
+   "26": [
+    "Mirk Nip"
+   ],
    "28": [
     "Salt Snap"
    ],
@@ -2990,6 +3083,9 @@
    "9": [
     "Pebble Toss"
    ],
+   "11": [
+    "Cinder Nip"
+   ],
    "13": [
     "Bowl Over"
    ],
@@ -3044,6 +3140,9 @@
    ],
    "24": [
     "Tunnel Strike"
+   ],
+   "26": [
+    "Cinder Nip"
    ],
    "28": [
     "Tunnel Strike"
@@ -3256,6 +3355,9 @@
    ],
    "24": [
     "Cinder Breath"
+   ],
+   "26": [
+    "Grit Jab"
    ],
    "28": [
     "Cinder Breath"
@@ -3897,6 +3999,9 @@
    "24": [
     "Dawn Mend"
    ],
+   "26": [
+    "Breeze Slice"
+   ],
    "28": [
     "Dawn Mend"
    ],
@@ -4161,6 +4266,9 @@
    "9": [
     "Pebble Toss"
    ],
+   "11": [
+    "Cinder Nip"
+   ],
    "13": [
     "Bowl Over"
    ],
@@ -4215,6 +4323,9 @@
    ],
    "24": [
     "Tunnel Strike"
+   ],
+   "26": [
+    "Cinder Nip"
    ],
    "28": [
     "Tunnel Strike"
@@ -4320,6 +4431,9 @@
    ],
    "24": [
     "Breeze Slice"
+   ],
+   "26": [
+    "Crackle Bite"
    ],
    "28": [
     "Breeze Slice"

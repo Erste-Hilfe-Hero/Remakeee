@@ -1,9 +1,9 @@
 class_name Goals
 extends RefCounted
-## The goals screen in four tabs (plan area 8, items 3526-3528): Story, Today, Week and
-## Collection. Each tab is a block of lines, already translated.
+## The goals screen in tabs (plan area 8, items 3526-3528, 3245): Story, Today, Week,
+## Collection and the season Path. Each tab is a block of lines, already translated.
 
-const TABS: Array[String] = ["Story", "Today", "Week", "Collection"]
+const TABS: Array[String] = ["Story", "Today", "Week", "Collection", "Season path"]
 
 static func _join(blocks: Array) -> String:
 	var parts: PackedStringArray = []
@@ -23,7 +23,7 @@ static func today() -> String:
 	var trips: Array[String] = Expeditions.status_lines()
 	if not trips.is_empty():
 		trips.insert(0, Loc.t("Roaming trips:"))
-	return _join([Loc.t(daily) if daily != "" else "", WorldEvents.lines(), DailyTasks.lines(), trips])
+	return _join([Loc.t(daily) if daily != "" else "", Festival.goal_lines(), WorldEvents.lines(), DailyTasks.lines(), trips])
 
 static func _weekly_line() -> String:
 	var rec: Dictionary = GameState.as_dict(GameState.records.get("weekly", {}))
@@ -61,8 +61,11 @@ static func collection() -> String:
 	var next: String = Collection.next_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size(), GameState.flags)
 	if not next.is_empty():
 		spirlog += "\n" + Loc.t(next)
-	var season: String = Loc.t("Season path: step %d/%d") % [SeasonPath.tier(), SeasonPath.tiers()]
-	return _join([Album.lines(), spirlog, season, Loc.t("Journey complete: %d%%") % Completion.percent()])
+	return _join([Album.lines(), spirlog, Loc.t("Journey complete: %d%%") % Completion.percent()])
+
+## Path (plan 3245): the season path with a bar and the next reward.
+static func path() -> String:
+	return "\n".join(SeasonPath.goal_lines())
 
 static func tab_text(tab: String) -> String:
 	match tab:
@@ -70,6 +73,7 @@ static func tab_text(tab: String) -> String:
 		"Today": return today()
 		"Week": return week()
 		"Collection": return collection()
+		"Season path": return path()
 	return ""
 
 ## Every tab in one text (tests, and a quick look).
