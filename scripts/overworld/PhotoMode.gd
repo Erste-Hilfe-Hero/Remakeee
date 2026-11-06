@@ -72,6 +72,11 @@ func snap() -> void:
 	_hint.visible = false
 	var pad_was: bool = VirtualPad.visible
 	VirtualPad.visible = false
+	# Photos never carry a shake offset (item 2269).
+	Juice.calm()
+	var cam: Camera2D = get_viewport().get_camera_2d()
+	if cam != null:
+		cam.offset = Vector2.ZERO
 	await RenderingServer.frame_post_draw
 	var img: Image = get_viewport().get_texture().get_image()
 	VirtualPad.visible = pad_was

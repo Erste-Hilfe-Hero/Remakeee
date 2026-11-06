@@ -785,6 +785,16 @@ func npc_by_id(id: String) -> NPC:
 			return n
 	return null
 
+## Trauma for stepping into a Rift (item 2262).
+const RIFT_TRAUMA: float = 0.35
+
+## The world shakes with trauma 0.35 and a deep rumble as a Rift opens (item 2262). The
+## camera offset shakes, never the menus.
+func rift_opens() -> void:
+	Sound.sfx("rumble")
+	Juice.set_shake_root(_camera, "offset")
+	Juice.add_trauma(RIFT_TRAUMA)
+
 ## Shakes the camera for [param seconds] (thunder, the Rift opening).
 func shake_camera(seconds: float) -> void:
 	if Juice.reduced():
@@ -1661,6 +1671,7 @@ func _action_rift_tower(args: PackedStringArray, _speaker: NPC) -> void:
 			break
 		team.append(left[i])
 	menu.queue_free()
+	rift_opens()
 	var run := RiftTower.new(t, GameState.rng.randi())
 	GameState.party_on_loan = GameState.party
 	GameState.party = team
@@ -2532,11 +2543,14 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	await _fade_to(1.0)
 	scene.queue_free()
 	if bool(trainer.get("friendly", false)):
+		player.greet()
 		await _fade_to(0.0)
 	else:
 		await _after_battle(model, outcome)
 	Sound.enter_map(map.id)
 	EncounterTable.start_guard()
+	if _fade.color.a > 0.0:
+		player.greet()
 	await _fade_to(0.0)
 	await _wake_cores()
 	await announce_achievements()

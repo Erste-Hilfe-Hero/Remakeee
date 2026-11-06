@@ -33,7 +33,7 @@ await Juice.hitstop(0.4)                                 # short freeze for a hi
 
 ## Screen shake
 
-Shake is trauma between 0 and 1 that decays by 1.8 per second. The offset is trauma squared times at most 3 x 2 pixels, read from smooth noise at 30 Hz, so it rolls instead of flickering. The element of the hit shapes it: Stone only shakes up and down, Gale only side to side, Volt twice as fast at half the reach, every other element on both axes. Only the registered shake root moves (the battle field or the map), never the UI. The settings level (Off, Weak, Full) scales it, and reduced motion turns it off.
+Shake is trauma between 0 and 1 that decays by 1.8 per second. The offset is trauma squared times at most 3 x 2 pixels, read from smooth noise at 30 Hz, so it rolls instead of flickering. Values from 0.15 px up to one pixel count as one pixel (larger ones round), so a strong hit (0.4) or a Rift opening (0.35) still shows a 1 px shake while a normal hit alone stays still. The element of the hit shapes it: Stone only shakes up and down, Gale only side to side, Volt twice as fast at half the reach, every other element on both axes. Only the registered shake root moves (the battle field's position, or the world camera's `offset` via `set_shake_root(camera, "offset")`), never the UI. `Juice.calm()` stops a shake at once; photo mode calls it before it takes a picture. The settings level (Off, Weak, Full) scales it, and reduced motion turns it off.
 
 ## Rules
 
