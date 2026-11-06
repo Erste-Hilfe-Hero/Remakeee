@@ -51,7 +51,7 @@ fi
 # German text: no terms from the franchise's German edition (move = "Attacke", critical hit,
 # fainted, the run command, the storage box). Base64 like the lists above.
 de_terms="$(printf '%s' 'QXR0YWNrZXxWb2xsdHJlZmZlcnxrYW1wZnVuZi5oaWd8IkZsdWNodCJ8IkJveCJ8Qm94IFwofFBvay4/bW9u' | base64 -d)"
-if grep -n -i -P -- "$de_terms" data/i18n/de.json tools/i18n/*.py 2>/dev/null; then
+if grep -n -i -P -- "$de_terms" data/i18n/de/*.json tools/i18n/*.py 2>/dev/null; then
 	echo "::error::German text uses a term from the franchise's German edition (lines above). See docs/IP_HYGIENE.md."
 	fail=1
 fi

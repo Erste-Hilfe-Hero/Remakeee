@@ -188,11 +188,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 610. [P3] Updraft erhält 20 % Chance auf eigenes Tempo +1.
 
 ### Wanderer-Persönlichkeiten (KI-Profile)
-611. [P1] Neue Datei data/ai_profiles.json mit festen Gewichten pro Profil: `damage_w`, `status_w`, `setup_w`, `field_w`, `swap_below` (Matchup-Wert), `heal_below` (Kraft-Anteil), `rest_below` (Energie), `focus_fire` (0 oder 1).
-612. [P1] BattleAI liest das Profil eines Wanderers aus dem NPC-Schlüssel `profile` und verrechnet die Gewichte in score_move; ohne Profil gilt "ausgewogen" mit allen Gewichten 1,0.
-613. [P1] Profil "Hitzkopf": `damage_w` 1,4, `setup_w` 0,3, `status_w` 0,4, `swap_below` nie, `rest_below` 1; wechselt nie freiwillig und rastet erst bei 0 oder 1 Energie.
-614. [P1] Profil "Mauer": `setup_w` 1,5 für Schutz-Stufen, `heal_below` 0,45, `swap_below` 0,5, `damage_w` 0,8.
-615. [P1] Profil "Störer": `status_w` 1,6, nutzt Status, Seitenfallen und `energy_tax` vor Schaden, bis das Ziel einen Status trägt.
+611. [x] [P1] Neue Datei data/ai_profiles.json mit festen Gewichten pro Profil: `damage_w`, `status_w`, `setup_w`, `field_w`, `swap_below` (Matchup-Wert), `heal_below` (Kraft-Anteil), `rest_below` (Energie), `focus_fire` (0 oder 1).
+612. [x] [P1] BattleAI liest das Profil eines Wanderers aus dem NPC-Schlüssel `profile` und verrechnet die Gewichte in score_move; ohne Profil gilt "ausgewogen" mit allen Gewichten 1,0.
+613. [x] [P1] Profil "Hitzkopf": `damage_w` 1,4, `setup_w` 0,3, `status_w` 0,4, `swap_below` nie, `rest_below` 1; wechselt nie freiwillig und rastet erst bei 0 oder 1 Energie.
+614. [x] [P1] Profil "Mauer": `setup_w` 1,5 für Schutz-Stufen, `heal_below` 0,45, `swap_below` 0,5, `damage_w` 0,8.
+615. [x] [P1] Profil "Störer": `status_w` 1,6, nutzt Status, Seitenfallen und `energy_tax` vor Schaden, bis das Ziel einen Status trägt.
 616. [P2] Profil "Feldkundig": `field_w` 2,0, legt in Runde 1 ein Feld, das dem eigenen Team hilft, und erneuert es, sobald nur noch 1 Restrunde bleibt.
 617. [P2] Profil "Taktikerin": `swap_below` 0,7, `focus_fire` 1, plant Energie für die beste Technik in der nächsten Runde und rastet gezielt dafür.
 618. [P2] Profil "Lehrling": wählt mit 30 % Chance (aus dem Kampf-Seed) die zweitbeste Technik, damit frühe Wanderer schlagbar und lesbar bleiben.
@@ -202,11 +202,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 622. [P2] Zuordnung: Wanderer Lio "Hitzkopf", Ridgewalker Bram "Mauer", Delver Ros "Störer", Diver Neve "Feldkundig", Rift Mystic Ilka "Taktikerin".
 623. [P2] Zuordnung: Rift Acolyte Suri "Lehrling", Rift Acolyte Pell "Hitzkopf", Hauler Tobin "Ausdauernd", Cartographer Kestra als Gegnerin "Taktikerin".
 624. [P2] Pro Profil drei Kampfsätze für die Ereignisse "eigener Spirling fällt", "Gegner fällt" und "letzter Spirling", in data/dialogue mit eigener Wortwahl, höchstens 40 Zeichen.
-625. [P2] Profile wirken nur ab KI-Stufe 1; in Stufe 0 bleibt die Zufallswahl unverändert.
+625. [x] [P2] Profile wirken nur ab KI-Stufe 1; in Stufe 0 bleibt die Zufallswahl unverändert.
 626. [P2] Auf Rift-Born nimmt die Meister-KI die Gewichte des Profils, aber nie schwächere Regeln als Stufe 3 (das Profil "Lehrling" fällt dort weg).
-627. [P2] Profile verändern nie Werte, Energie oder Würfe, nur die Auswahl (Test vergleicht Schadenszahlen mit und ohne Profil bei gleicher Aktion).
+627. [x] [P2] Profile verändern nie Werte, Energie oder Würfe, nur die Auswahl (Test vergleicht Schadenszahlen mit und ohne Profil bei gleicher Aktion).
 628. [P2] Kestra als Partnerin im Tag-Kampf nutzt das Profil "Taktikerin" mit `focus_fire` 1 auf das Ziel des Spielers.
-629. [P3] Profil-Gewichte bleiben unter 2,0 und über 0,2; validate_data prüft das.
+629. [x] [P3] Profil-Gewichte bleiben unter 2,0 und über 0,2; validate_data prüft das.
 630. [P3] Profil "Sammler" für spätere Wanderer: bevorzugt Techniken, die Stufen stehlen oder Energie verbrennen (`stage_steal`, `energy_burn`).
 631. [P3] Profil "Spiegel": wiederholt die Technik-Art (Physisch, Fokus, Status), die der Spieler in der Vorrunde genutzt hat, mit eigener bester Technik dieser Art.
 632. [P3] Profil "Vorhut": setzt in Runde 1 immer eine Technik mit Priorität +1 ein, wenn sie den Gegner unter 50 % seiner Kraft bringen würde.
@@ -214,16 +214,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 634. [P3] Der Lexikon-Eintrag eines besiegten Wanderers zeigt sein Profil und den Kurzsatz.
 635. [P3] Rückkämpfe dürfen ein zweites Profil tragen (NPC-Schlüssel `rematch_profile`), zum Beispiel Lio im Rückkampf "Taktikerin".
 636. [P3] Gruppen-Wanderer (zwei Gegner) mischen ihre Profile pro Slot, jeder Slot behält sein eigenes.
-637. [P3] Ein GUT-Test pro Profil prüft ein typisches Verhalten in einer festen Lage (Hitzkopf rastet nicht bei 4 Energie, Mauer heilt bei 40 % Kraft, Störer setzt Status zuerst).
+637. [x] [P3] Ein GUT-Test pro Profil prüft ein typisches Verhalten in einer festen Lage (Hitzkopf rastet nicht bei 4 Energie, Mauer heilt bei 40 % Kraft, Störer setzt Status zuerst).
 
 ### Wanderer-Gegnerteams
-638. [P1] NPC-Teams in data/maps/*.json dürfen pro Spirling `moves` (feste Technik-Liste) und `held` (Andenken) tragen; ohne Angabe gelten wie bisher die letzten 4 Techniken der Lernliste.
-639. [P1] NPC-Teams dürfen pro Schwierigkeit einen eigenen Block `teams_by_difficulty` mit den Schlüsseln `story`, `tamer`, `veteran`, `rift_born` haben; fehlt ein Block, gilt `team`.
-640. [P1] Wanderer Lio (Crowcrest): Story Zephlet R6 allein, Tamer wie bisher Zephlet R7 und Zippit R8, Veteran zusätzlich Kite Cut und Draft Needle auf Zephlet, Rift-Born Zippit mit Andenken spark_coil.
-641. [P1] Ridgewalker Bram (Crowcrest): Tamer Shalebat R7 und R8 mit Hunker Down und Grit Jab, Veteran ein Shalebat mit iron_burr, Rift-Born drittes Mitglied Mossling R8 mit Pollen Prick.
-642. [P1] Delver Ros (Murk Hollow): Tamer Mirkmole R12 mit Murk Veil und Shade Pounce, Shalebat R13 mit Grit Jab; Veteran Mirkmole mit Gloom Handoff, Rift-Born dritter Spirling Wickit R12 mit Beacon Ping.
-643. [P1] Diver Neve (Saltmarsh): Tamer Puddlet R12 mit Tide Call und Spout Jab, Zephlet R13 mit Crosswind; Veteran Kelpup R13 als Dritter, Rift-Born Puddlet mit bark_wrap.
-644. [P1] Rift Mystic Ilka (Tide Rift, 3 gegen 3): Tamer wie bisher, Veteran mit Chill Mist auf Zippit und Thorn Volley auf Mossling, Rift-Born mit Andenken swift_feather auf Zippit.
+638. [x] [P1] NPC-Teams in data/maps/*.json dürfen pro Spirling `moves` (feste Technik-Liste) und `held` (Andenken) tragen; ohne Angabe gelten wie bisher die letzten 4 Techniken der Lernliste.
+639. [x] [P1] NPC-Teams dürfen pro Schwierigkeit einen eigenen Block `teams_by_difficulty` mit den Schlüsseln `story`, `tamer`, `veteran`, `rift_born` haben; fehlt ein Block, gilt `team`.
+640. [x] [P1] Wanderer Lio (Crowcrest): Story Zephlet R6 allein, Tamer wie bisher Zephlet R7 und Zippit R8, Veteran zusätzlich Kite Cut und Draft Needle auf Zephlet, Rift-Born Zippit mit Andenken spark_coil.
+641. [x] [P1] Ridgewalker Bram (Crowcrest): Tamer Shalebat R7 und R8 mit Hunker Down und Grit Jab, Veteran ein Shalebat mit iron_burr, Rift-Born drittes Mitglied Mossling R8 mit Pollen Prick.
+642. [x] [P1] Delver Ros (Murk Hollow): Tamer Mirkmole R12 mit Murk Veil und Shade Pounce, Shalebat R13 mit Grit Jab; Veteran Mirkmole mit Gloom Handoff, Rift-Born dritter Spirling Wickit R12 mit Beacon Ping.
+643. [x] [P1] Diver Neve (Saltmarsh): Tamer Puddlet R12 mit Tide Call und Spout Jab, Zephlet R13 mit Crosswind; Veteran Kelpup R13 als Dritter, Rift-Born Puddlet mit bark_wrap.
+644. [x] [P1] Rift Mystic Ilka (Tide Rift, 3 gegen 3): Tamer wie bisher, Veteran mit Chill Mist auf Zippit und Thorn Volley auf Mossling, Rift-Born mit Andenken swift_feather auf Zippit.
 645. [P2] Rift Acolyte Pell (Cinder Rift): Shalebat R9 mit Pebble Toss und Hunker Down, Zippit R9 mit Crackle Bite und Static Tag, damit er die Jolt-Reaktion vor Orrin zeigt.
 646. [P2] Rift Acolyte Suri (Cinder Rift): Kindlop R10 mit Cinder Dash, Kindle Up und Char Mark; auf Veteran zusätzlich Ash Call, damit sie das Feld vor dem Wächter vorführt.
 647. [P2] Hauler Tobin (Saltmarsh, Tag-Kampf): Shalebat R13 mit Shard Bed, Kelpup R13 mit Root Mend, Mirkmole R14 mit Night Toll, damit der Kampf Seitenfallen und Heilsperre lehrt.
@@ -236,7 +236,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 654. [P2] Kein Wanderer-Team darf zwei gleiche Arten auf gleichem Ring tragen, außer Ridgewalker Bram als bewusstes Thema; tests/unit/test_trainers.gd prüft das.
 655. [P2] Jeder Wanderer deckt mit seinem Team höchstens 3 Elemente ab, damit sein Thema erkennbar bleibt (Test).
 656. [P2] Der höchste Ring eines Wanderers liegt höchstens 2 über dem höchsten Wild-Ring seiner Karte aus data/encounters.json (Test).
-657. [P2] Andenken bei Wanderern gibt es erst ab Veteran und höchstens eins pro Team; Wächter sind davon ausgenommen.
+657. [x] [P2] Andenken bei Wanderern gibt es erst ab Veteran und höchstens eins pro Team; Wächter sind davon ausgenommen.
 658. [P2] Feste Technik-Listen der Gegner enthalten nur Techniken, die die Art bis zu ihrem Ring lernen kann (Test über Lernliste).
 659. [P2] Preisgeld pro Wanderer folgt der Formel höchster Ring mal 40, Wächter mal 70; Ausnahmen nur über den Schlüssel `money`.
 660. [P3] Rückkampf-Teams der Wanderer erhalten ab dem dritten Sieg einen vierten Spirling aus derselben Elementgruppe, Ring wie der bisher höchste.
@@ -250,12 +250,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 668. [P3] Ein Werkzeug tools/team_check.gd druckt für einen NPC alle Techniken, Andenken, Profil und Gewinnrate gegen die Referenzteams.
 
 ### Wächter-Teams und Wächter-Regeln
-669. [P1] Warden Orrin (Cinder Rift, Tamer): Shalebat R10 mit Grit Jab und Hunker Down, Kindlop R11 mit Glow Knuckle und Kindle Up, Smoldrake R12 mit Char Mark, Cinder Breath und Ash Call.
-670. [P1] Warden Orrin auf Veteran: Smoldrake trägt spark_coil, Kindlop erhält Coal Seed; auf Rift-Born zusätzlich Zippit R11 mit Static Tag als vierter Spirling.
-671. [P1] Warden Orrin auf Story: nur Kindlop R10 und Smoldrake R11, Regel ember_pulse gibt die Zusatz-Energie nur in jeder zweiten Runde.
-672. [P1] Warden Maelis (Tide Rift, Tamer): Zephlet R15 mit Kite Cut und Crosswind, Zippit R15 mit Static Tag, Riptail R17 mit Rip Current, Undertow und Tide Call.
-673. [P1] Warden Maelis auf Veteran: Riptail trägt bark_wrap, Zephlet erhält Scatter Gale; auf Rift-Born zusätzlich Kelpup R16 mit Shoal Trap.
-674. [P1] Warden Maelis auf Story: nur Zephlet R14 und Riptail R16, Regel undertow senkt Tempo nur beim ersten Spirling des Spielers.
+669. [x] [P1] Warden Orrin (Cinder Rift, Tamer): Shalebat R10 mit Grit Jab und Hunker Down, Kindlop R11 mit Glow Knuckle und Kindle Up, Smoldrake R12 mit Char Mark, Cinder Breath und Ash Call.
+670. [x] [P1] Warden Orrin auf Veteran: Smoldrake trägt spark_coil, Kindlop erhält Coal Seed; auf Rift-Born zusätzlich Zippit R11 mit Static Tag als vierter Spirling.
+671. [x] [P1] Warden Orrin auf Story: nur Kindlop R10 und Smoldrake R11, Regel ember_pulse gibt die Zusatz-Energie nur in jeder zweiten Runde.
+672. [x] [P1] Warden Maelis (Tide Rift, Tamer): Zephlet R15 mit Kite Cut und Crosswind, Zippit R15 mit Static Tag, Riptail R17 mit Rip Current, Undertow und Tide Call.
+673. [x] [P1] Warden Maelis auf Veteran: Riptail trägt bark_wrap, Zephlet erhält Scatter Gale; auf Rift-Born zusätzlich Kelpup R16 mit Shoal Trap.
+674. [x] [P1] Warden Maelis auf Story: nur Zephlet R14 und Riptail R16, Regel undertow senkt Tempo nur beim ersten Spirling des Spielers.
 675. [P2] Neue Wächter-Regel "Aschenregen" für Orrin ab Veteran: ash_storm liegt ab Runde 1 für 3 Runden, danach das Feld des Ortes.
 676. [P2] Neue Wächter-Regel "Gezeitenwechsel" für Maelis ab Veteran: high_tide liegt in den Runden 1 bis 2, 5 bis 6 und 9 bis 10, dazwischen kein Feld; das Banner zeigt den Wechsel eine Runde vorher.
 677. [P2] Wächter-Regeln stehen in BattleRules.RULES mit neuem Schlüssel `difficulty` (Liste der Stufen, auf denen sie gelten) und `stack` (wie viele Regeln gleichzeitig gelten dürfen, Standard 1, ab Veteran 2).
@@ -317,7 +317,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 729. [P1] Story: Wächter-Regeln abgeschwächt wie bei Orrin und Maelis festgelegt, Bosse mit 20 % weniger Kraft-Faktor `hp_per_ally`.
 730. [P1] Story: der Murk-Hollow-Schwarm hat 4 statt 6 Spirlings, Tamer 5, ab Veteran 6.
 731. [P1] Veteran: Gegner-Teams nutzen feste Technik-Listen mit mindestens einer Status- oder Stufen-Technik pro Spirling.
-732. [P1] Rift-Born: Wächter tragen ein Andenken auf jedem Spirling, Wanderer eins pro Team.
+732. [x] [P1] Rift-Born: Wächter tragen ein Andenken auf jedem Spirling, Wanderer eins pro Team.
 733. [P1] Zielwerte für Gewinnraten des Referenzteams gegen Wächter: Story mindestens 95 %, Tamer 80 bis 90 %, Veteran 55 bis 70 %, Rift-Born 30 bis 45 % (Simulator-Modus "warden").
 734. [P2] Tamer: Gegner nutzen ihr Profil, aber ohne Andenken und mit KI-Stufe 1; Wächter Stufe 2 (bestehende Untergrenze bleibt).
 735. [P3] Gegner-Temperament pro Stufe: Story und Tamer aus der uid wie beim Spieler, Veteran und Rift-Born das Temperament, das den Wert der Haupt-Technik-Art hebt.

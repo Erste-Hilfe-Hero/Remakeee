@@ -95,6 +95,10 @@ func run_goals() -> void:
 	while true:
 		var rows: Array[Dictionary] = goal_rows(GameState.flags)
 		rows.append_array(goal_tab_rows())
+		var swap: int = -1
+		if DailyTasks.can_swap():
+			swap = rows.size()
+			rows.append({"text": "Swap a daily task", "hint": Loc.t("Once a day, free of charge.")})
 		var guide: int = -1
 		if not Tips.seen().is_empty():
 			guide = rows.size()
@@ -102,6 +106,9 @@ func run_goals() -> void:
 		var idx: int = await pick("Goals", rows)
 		if idx < 0:
 			return
+		if idx == swap:
+			await _swap_daily_task()
+			continue
 		if idx == guide:
 			await run_guide()
 			continue
@@ -191,6 +198,25 @@ const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once t
 ## Goals screen in four tabs (plan 3526): Story, Today, Week, Collection. All tabs in one text.
 static func goals_text() -> String:
 	return Goals.all_text()
+
+## Plan 3163: one open daily task a day can be swapped for free.
+func _swap_daily_task() -> void:
+	var tasks: Array = DailyTasks.today().get("tasks", [])
+	var names: Array[String] = []
+	var index: Array[int] = []
+	for k: int in tasks.size():
+		var e: Dictionary = tasks[k]
+		if not DailyTasks.is_done(e) and int(e.get("n", 0)) == 0:
+			names.append(Loc.t(str(DailyTasks.def(str(e.id)).get("text", e.id))))
+			index.append(k)
+	var pick: int = await pick_strings("Swap which task? (once a day)", names)
+	if pick < 0:
+		return
+	var got: String = DailyTasks.swap(index[pick])
+	if got == "":
+		await info("No other task fits today.")
+	else:
+		await info(Loc.t("New task: %s") % Loc.t(str(DailyTasks.def(got).get("text", got))))
 
 ## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:
@@ -302,6 +328,10 @@ static func records_text() -> String:
 	lines.append("Weekly wins: %d" % int(GameState.records.get("weekly_wins", 0)))
 	lines.append("Rematches won: %d" % int(GameState.records.get("rematch_wins", 0)))
 	lines.append(Collection.progress_text(GameState.spirlog, SpirlogBook.visible_kinds(GameState.flags).size()))
+	for c: Dictionary in GameState.echo_cores:
+		lines.append(Loc.t("Echo Core of %s: %d/%d wins, %d/%d rests") % [" and ".join(c.parents),
+			mini(int(c.wins), GameState.ECHO_CORE_WINS), GameState.ECHO_CORE_WINS,
+			mini(int(c.rests), GameState.ECHO_CORE_RESTS), GameState.ECHO_CORE_RESTS])
 	var titles: Array[String] = Collection.titles()
 	if not titles.is_empty():
 		lines.append("Titles: %s" % ", ".join(titles.map(func(t: String) -> String: return Loc.t(t))))
@@ -932,3 +962,25 @@ func _preset_line(i: int) -> String:
 	for s: Spirling in team:
 		names.append(s.display_name())
 	return "%s: %s" % [GameState.team_presets[i].name, ", ".join(names)]
+
+## "Sing together" at an Echo spring (Nachhall, items 183-184): pick two Spirlings from the
+## team or storage; their shared call forms an Echo Core that wakes later into a Hallkind.
+func run_sing_together() -> void:
+	var all: Array[Spirling] = GameState.party + GameState.storage
+	var names: Array[String] = []
+	for s: Spirling in all:
+		names.append("%s R%d" % [s.display_name(), s.level])
+	var a: int = await pick_strings("Who sings first?", names)
+	if a < 0:
+		return
+	var b: int = await pick_strings("Who sings with %s?" % all[a].display_name(), names)
+	if b < 0:
+		return
+	var problem: String = GameState.sing_problem(all[a], all[b])
+	if not problem.is_empty():
+		await info(problem)
+		return
+	var core: Dictionary = GameState.sing_together(all[a], all[b])
+	await info("%s and %s sing together. Their call gathers into a floating Echo Core.\nCarry it along: it wakes after a few rests at a spring or many won battles." % [all[a].display_name(), all[b].display_name()])
+	if core.is_empty():
+		return
