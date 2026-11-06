@@ -53,6 +53,7 @@ func _ready() -> void:
 	_status.visible = false
 	add_child(_status)
 	_build_name_box()
+	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
 	Sound.music("title")
@@ -138,6 +139,14 @@ func _process(_delta: float) -> void:
 	if _connecting:
 		_status.text = connecting_text((Time.get_ticks_msec() - _connect_started) / 1000.0)
 	_status.visible = not _status.text.is_empty()
+
+func _on_language_changed(_code: String) -> void:
+	if not _connecting and Online.is_online():
+		_show_status()
+
+func _exit_tree() -> void:
+	if Loc.events.language_changed.is_connected(_on_language_changed):
+		Loc.events.language_changed.disconnect(_on_language_changed)
 
 func _show_status() -> void:
 	var lines: Array[String] = []

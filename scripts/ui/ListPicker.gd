@@ -202,6 +202,13 @@ func _row_input(ev: InputEvent, i: int, result: int) -> void:
 		_buttons[i].accept_event()
 		_on_row(result, dir)
 
+## After a language change: the hint line and screen reader names in the new language.
+func retranslate() -> void:
+	for i: int in _buttons.size():
+		if _buttons[i].has_focus():
+			_show_hint(i)
+	_set_accessibility(_title.text)
+
 func _show_hint(i: int) -> void:
 	var h: String = _hints[i] if i < _hints.size() else ""
 	_hint.text = Loc.t(h)

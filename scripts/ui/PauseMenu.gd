@@ -22,9 +22,11 @@ var can_undo: bool = false
 ## Set to "undo" or "reset" when the player picks one; the overworld does it after closing.
 var room_action: String = ""
 
+const MENU_LABELS: Array[String] = ["Goals", "Team", "Friends", "Spirlog", "Records", "Satchel", "Save", "Photo", "Settings"]
+
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Goals", "Team", "Friends", "Spirlog", "Records", "Satchel", "Save", "Photo", "Settings"]
+		var labels: Array[String] = MENU_LABELS.duplicate()
 		if GameState.has_flag(STORAGE_FLAG):
 			labels.insert(labels.find("Save"), "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
@@ -128,7 +130,7 @@ static func records_text() -> String:
 
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:
-	var t: String = "%s   %d coins" % [GameState.tamer_name, GameState.money]
+	var t: String = "%s   %s" % [GameState.tamer_name, Loc.plural(GameState.money, "%d coin", "%d coins")]
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t

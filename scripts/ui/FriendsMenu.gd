@@ -42,7 +42,7 @@ static func run(menu: PauseMenu) -> void:
 		labels.append("Lantern Mail (%d new)" % unread if unread > 0 else "Lantern Mail")
 		labels.append("Requests (%d)" % incoming.size() if incoming.size() > 0 else "Requests")
 		labels.append("Add a friend...")
-		labels.append("Copy my code %s" % Online.pretty_code(Online.friend_code()))
+		labels.append("Copy my code")
 		labels.append("World goal of the week")
 		labels.append("Weekly board")
 		labels.append("Blocked Wayfarers")

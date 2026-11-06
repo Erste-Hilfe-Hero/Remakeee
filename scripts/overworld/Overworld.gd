@@ -875,7 +875,7 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		for id: String in args:
 			var it: Dictionary = Database.item(id)
 			labels.append("%s  %d" % [it.get("name", id), int(it.get("price", 0))])
-		var idx: int = await menu.pick_strings("Shop   %d coins" % GameState.money, labels)
+		var idx: int = await menu.pick_strings("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), labels)
 		if idx < 0:
 			break
 		var item: Dictionary = Database.item(args[idx])
