@@ -266,6 +266,12 @@ func flag_on(key: String, version: int) -> bool:
 	var f: Variant = db.flags.get(key)
 	return f is Dictionary and bool(f.get("enabled", false)) and version >= int(f.get("min_version", 1))
 
+## Like public._party_max: one more with the shop's sixth team slot (plan area 10).
+func party_max_of(uid: String) -> int:
+	var shop: Variant = (db.users.get(uid, {}) as Dictionary).get("shop", {})
+	var unlocks: Variant = shop.get("unlocks", {}) if shop is Dictionary else {}
+	return config_int("party_max", 5) + (1 if unlocks is Dictionary and int(unlocks.get("team_slot_6", 0)) > 0 else 0)
+
 ## Like public._save_ok: real game limits (team of party_max, Ring 1..level_max).
 static func save_ok(d: Variant, party_max: int = 5, level_max: int = 60) -> bool:
 	if not d is Dictionary:
@@ -383,7 +389,7 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "too_big"}
 	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
 		return {"ok": false, "error": "schema"}
-	if not save_ok(a.get("p_data"), config_int("party_max", 5), config_int("level_max", 60)):
+	if not save_ok(a.get("p_data"), party_max_of(me()), config_int("level_max", 60)):
 		return {"ok": false, "error": "implausible"}
 	var data: Dictionary = (a.p_data as Dictionary).duplicate(true)
 	# Values the server keeps itself are dropped (item 2924).

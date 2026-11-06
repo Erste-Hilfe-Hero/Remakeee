@@ -253,3 +253,33 @@ func test_overcharge_core_gives_twelve_energy_for_one_battle() -> void:
 	assert_eq(ShopEffects.energy_bonus(), 0, "one battle only")
 	GameState.inventory.erase("rg_overcharge")
 	GameState.shop_boosts = boosts
+
+func test_sixth_team_slot() -> void:
+	var party: Array[Spirling] = GameState.party.duplicate()
+	var storage: Array[Spirling] = GameState.storage.duplicate()
+	GameState.party.clear()
+	for i: int in 5:
+		GameState.party.append(_mon())
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.party_max(), 5)
+	assert_false(GameState.receive_spirling(_mon()), "sixth goes to storage without the slot")
+	Billing.state = {"unlocks": {"team_slot_6": 1}}
+	assert_eq(GameState.party_max(), 6)
+	assert_true(GameState.receive_spirling(_mon()), "sixth joins the team")
+	assert_false(GameState.receive_spirling(_mon()), "never a seventh")
+	Billing.state = {"unlocks": {}}
+	var before: int = GameState.storage.size()
+	ShopEffects.apply_unlocks()
+	assert_eq(GameState.party.size(), 5, "a refunded slot sends the sixth to storage")
+	assert_eq(GameState.storage.size(), before + 1)
+	GameState.party = party
+	GameState.storage = storage
+
+func test_local_server_allows_six_only_with_the_slot() -> void:
+	var b := LocalBackend.new()
+	var uid: String = "u-six"
+	b.db.users[uid] = {"shop": {"unlocks": {}}}
+	assert_eq(b.party_max_of(uid), 5)
+	b.db.users[uid].shop.unlocks["team_slot_6"] = 1
+	assert_eq(b.party_max_of(uid), 6)
+	assert_eq(b.party_max_of("nobody"), 5)
