@@ -773,6 +773,8 @@ func _play_event(e: BattleEvent) -> void:
 				await _sprite(BattleModel.Side.FOE, slot).step_back(false)
 				_strip(BattleModel.Side.FOE, slot).visible = false
 			await _text.show_text(e.describe())
+		BattleEvent.Type.BATTLE_LINE:
+			await _text.show_text(str(e.data.get("text", "")), str(e.data.get("name", "")))
 		BattleEvent.Type.BATTLE_END:
 			var outcome: int = int(e.data.get("outcome", 0))
 			if outcome == BattleModel.Outcome.WIN or outcome == BattleModel.Outcome.BONDED:
