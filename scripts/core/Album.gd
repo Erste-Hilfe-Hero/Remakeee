@@ -36,8 +36,10 @@ static func month_key() -> String:
 	return "%04d-%02d" % [int(d.year), int(d.month)]
 
 ## The FIELDS task ids for [param month], the same every time.
+## Fields with a place only for places this save has reached (plan 3489).
 static func draw(month: String) -> Array[String]:
-	var pool: Array[Dictionary] = defs().duplicate()
+	var reached: Array[String] = DailyTasks.reached_maps()
+	var pool: Array[Dictionary] = defs().filter(func(t: Dictionary) -> bool: return not t.has("map") or str(t.map) in reached)
 	pool.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return str(a.id) < str(b.id))
 	var r := RandomNumberGenerator.new()
 	r.seed = hash("chimora-album-" + month)
