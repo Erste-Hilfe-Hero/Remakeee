@@ -1,0 +1,13 @@
+{
+ "_note": "Prologue, the storm night over Brindlewick (plan item 1410). Starts over black.",
+ "steps": [
+  {"music": "title"},
+  {"say": ["Veydal. A valley of lakes and terraces, drawn and redrawn by its cartographers.", "Last night a storm tore the sky open above the lake."]},
+  {"flash": 0.12}, {"sfx": "hit_volt"}, {"shake": 0.4},
+  {"say": ["Where the lightning struck, Rifts opened, and the Spirlings near them fell silent."]},
+  {"flash": 0.08}, {"wait": 0.15}, {"flash": 0.12}, {"sfx": "hit_volt"}, {"shake": 0.3},
+  {"say": ["People call it the Hush.", "Three small lights crossed the lake in the storm, following the lighthouse lamp."]},
+  {"card": "Prologue: The Storm Night"},
+  {"say": ["In the Brindlewick lighthouse, an apprentice cartographer is still asleep...", "{name}! Wake up!"]}
+ ]
+}

@@ -70,6 +70,7 @@ static func buy(item_id: String) -> String:
 	bought[item_id] = int(bought.get(item_id, 0)) + 1
 	GameState.records["exchange"] = {"week": week(), "bought": bought}
 	GameState.add_item(item_id)
+	GameState.records["count_trade"] = int(GameState.records.get("count_trade", 0)) + 1
 	return ""
 
 ## Menu line: "Spark Charm  120" or "... (sold out)".

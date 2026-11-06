@@ -83,9 +83,10 @@ func test_players_are_wanderers() -> void:
 	assert_eq(s.profile_of("new").name, "Wanderer")
 
 func test_feature_flags_are_off_until_switched_on() -> void:
-	for key: String in ["league_fair", "league_open", "live_duel", "trade", "bund", "raid"]:
+	for key: String in ["live_duel", "trade", "bund", "raid"]:
 		assert_false(s.flag_on(key, 99), key)
 	assert_false(s.flag_on("nothing", 99))
+	assert_true(s.flag_on("league_fair", 1), "leagues are on since the league migration")
 	s.db.flags.trade = {"enabled": true, "min_version": 5}
 	assert_true(s.flag_on("trade", 5))
 	assert_false(s.flag_on("trade", 4), "version gate")

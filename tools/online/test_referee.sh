@@ -24,6 +24,7 @@ psql_() { PGOPTIONS="-c client_min_messages=warning" psql -X -h "$dir/sock" -U p
 psql_ -f tools/online/sql_test/stub_supabase.sql >/dev/null
 for f in supabase/migrations/*.sql; do psql_ -f "$f" >/dev/null; done
 psql_ -c "alter role chimora_referee login"
+python3 tools/online/game_data_sql.py data/spirlings.json | psql_ >/dev/null
 
 "$godot" --headless --path . --import >/dev/null 2>&1 || true
 "$godot" --headless --path . -s res://server/referee/referee.gd -- sample "$dir/sample.json" >/dev/null 2>&1
@@ -46,4 +47,16 @@ echo "states: $got"
 [ "$got" = "ok,mismatch,error" ] || { echo "referee gave the wrong verdicts"; exit 1; }
 left="$(psql_ -c "select count(*) from public.battle_queue")"
 [ "$left" = "0" ] || { echo "queue not empty"; exit 1; }
+# The fair league rows of the game and of the database are the same for every species (item 2748).
+"$godot" --headless --path . -s res://server/referee/referee.gd -- fair "$dir/fair.json" >/dev/null 2>&1
+[ -s "$dir/fair.json" ] || { echo "fair rows were not written"; exit 1; }
+diff="$({
+	printf '%s' "select string_agg(x->>'species', ', ') from jsonb_array_elements(\$f\$"
+	cat "$dir/fair.json"
+	echo "\$f\$::jsonb) x where public._league_fair_row(x->>'species', x->'ask') <> x->'row'
+		or public._league_fair_row(x->>'species', '[]') <> x->'none';"
+} | psql_)"
+count="$(psql_ -c "select count(*) from public.game_species")"
+echo "fair rows compared for $count species"
+[ -z "$diff" ] || { echo "fair rows differ for: $diff"; exit 1; }
 echo "Referee test OK"
