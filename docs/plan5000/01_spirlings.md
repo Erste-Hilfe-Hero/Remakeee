@@ -303,15 +303,15 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 277. [P3] Erlaube die Sortierung des Spirlogs nach Fundtag, um die eigene Reise nachzulesen.
 
 ### Echo-Melodie-Bonden
-278. [P1] Gib jeder Art ein festes Ruf-Motiv (die ersten zwei Zeichen ihres Rufs stehen in "cry_motif"), damit Wiedersehen mit einer Art sich vertraut anfühlt, und lass BondEcho.make_sequence() es nutzen.
-279. [P1] Spiele zu jedem Zeichen einen Ton, dessen Höhe vom Element des wilden Spirlings abhängt (acht Tonleitern in Sound.gd), sodass jedes Element anders klingt.
-280. [P1] Lass gestillte Spirlings in Rissnähe einen gedämpften Ruf mit nur drei Zeichen und blasseren Lichtern rufen, passend zur Stille im Lore.
-281. [P1] Lass Spirlings bei geflickten Rissen einen vollen Ruf mit vier Zeichen und einem leuchtenden Rahmen rufen, als sichtbaren Lohn fürs Flicken.
-282. [P1] Zeige nach dem Ruf nur ein Ergebnis in Worten ("Es hört dir zu", "Es zögert", "Es wendet sich ab"), nie eine Zahl, und halte das in test_bond_echo.gd fest.
-283. [P1] Lass einen zweiten Bondversuch im selben Kampf mit demselben Ruf beginnen, damit Lernen belohnt wird statt Glück.
-284. [P1] Füge die Antwort-Phase hinzu: nach einem fehlerfreien Echo ruft der Spirling manchmal ein fünftes Zeichen ("Nachklang"), dessen richtiges Echo den Ruf-Wert auf 1,0 hält, auch wenn das Zeichen eigentlich zusätzlich ist.
-285. [P1] Lass die Ruf-Länge mit der Seltenheit wachsen: common 4, uncommon 4, shy 5, ancient 5 plus zweite Phase, als Werte in BondEcho.gd.
-286. [P1] Ersetze die drei Zeichen Raute, Quadrat und Dreieck bei Lumen und Umbra durch Mond, Stern und Funke als eigene Form, ohne die Regeln zu ändern.
+278. [x] [P1] Gib jeder Art ein festes Ruf-Motiv (die ersten zwei Zeichen ihres Rufs stehen in "cry_motif"), damit Wiedersehen mit einer Art sich vertraut anfühlt, und lass BondEcho.make_sequence() es nutzen.
+279. [x] [P1] Spiele zu jedem Zeichen einen Ton, dessen Höhe vom Element des wilden Spirlings abhängt (acht Tonleitern in Sound.gd), sodass jedes Element anders klingt.
+280. [x] [P1] Lass gestillte Spirlings in Rissnähe einen gedämpften Ruf mit nur drei Zeichen und blasseren Lichtern rufen, passend zur Stille im Lore.
+281. [x] [P1] Lass Spirlings bei geflickten Rissen einen vollen Ruf mit vier Zeichen und einem leuchtenden Rahmen rufen, als sichtbaren Lohn fürs Flicken.
+282. [x] [P1] Zeige nach dem Ruf nur ein Ergebnis in Worten ("Es hört dir zu", "Es zögert", "Es wendet sich ab"), nie eine Zahl, und halte das in test_bond_echo.gd fest.
+283. [x] [P1] Lass einen zweiten Bondversuch im selben Kampf mit demselben Ruf beginnen, damit Lernen belohnt wird statt Glück.
+284. [x] [P1] Füge die Antwort-Phase hinzu: nach einem fehlerfreien Echo ruft der Spirling manchmal ein fünftes Zeichen ("Nachklang"), dessen richtiges Echo den Ruf-Wert auf 1,0 hält, auch wenn das Zeichen eigentlich zusätzlich ist.
+285. [x] [P1] Lass die Ruf-Länge mit der Seltenheit wachsen: common 4, uncommon 4, shy 5, ancient 5 plus zweite Phase, als Werte in BondEcho.gd.
+286. [x] [P1] Ersetze die drei Zeichen Raute, Quadrat und Dreieck bei Lumen und Umbra durch Mond, Stern und Funke als eigene Form, ohne die Regeln zu ändern.
 287. [P2] Lass die Echozeit ECHO_TIME in der Schwierigkeit Story auf 8 Sekunden steigen und in Rift-Born auf 5 Sekunden sinken.
 288. [P2] Gib dem Spirling im Team, das dieselbe Art wie der wilde Spirling ist, eine Hilfe: das erste Zeichen leuchtet beim Echo kurz nach.
 289. [P2] Lass einen Spirling, der ein Bonden abgelehnt hat und wieder auftaucht, beim nächsten Treffen sagen lassen "Es erinnert sich an deinen Ruf", und beginne mit demselben Motiv.
@@ -474,7 +474,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 1 b
 
 ### Recht, Originalität und Tests
 436. [x] [P1] Prüfe jeden neuen Spirling-Namen, jede Ruf-Melodie und jeden Umriss gegen die Sperrliste und die IP-Regeln und vermerke die Prüfung pro Art in docs/IP_HYGIENE.md, bevor er in die Daten kommt.
-437. [P1] Halte in LEGAL.md und test_bond_echo.gd fest, dass Bonden weiter ohne Wurf, ohne Zielen, ohne schrumpfende Kreise und ohne Chancenanzeige läuft, auch bei Ersten Stimmen und friedlichen Begegnungen.
+437. [x] [P1] Halte in LEGAL.md und test_bond_echo.gd fest, dass Bonden weiter ohne Wurf, ohne Zielen, ohne schrumpfende Kreise und ohne Chancenanzeige läuft, auch bei Ersten Stimmen und friedlichen Begegnungen.
 438. [P1] Stelle sicher, dass kein Spirling, Hallkern oder Hallkind je getauscht, verschenkt oder gegen Geld erhalten werden kann, und prüfe es in test_online.gd.
 439. [P2] Lege fest, dass Spirlings beim Einwechseln, Nachhall und Erwachen immer neben den Wanderer treten und nie herausgeworfen werden, und prüfe es in den Szenen.
 440. [P2] Prüfe alle neuen deutschen Texte mit tools/ip_check.sh auf gesperrte Wörter, einschließlich der Begriffe aus der Spielerwörter-Liste in docs/IP_HYGIENE.md.
