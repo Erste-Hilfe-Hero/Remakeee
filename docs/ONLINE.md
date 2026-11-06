@@ -246,6 +246,22 @@ select public.appeal_answer(4, true);   -- true: decision changed (a league bloc
 
 A name that was reset stays reset after a changed decision; the player picks a new one.
 
+Reports from the web form `/melden` (DSA Art. 16, also without an account) land in `web_reports`.
+Their numbers start with W on the page. Answer them by e-mail when a contact is given:
+
+```sql
+select id, code, reason, details, contact, created_at from public.web_reports where status = 'open' order by id;
+update public.web_reports set status = 'upheld', decided_at = now() where id = 3;  -- or 'rejected'
+```
+
+To act on the player, turn it into a normal report, so the player gets the statement of reasons:
+
+```sql
+insert into public.reports (reporter, target, target_name, reason, context)
+select null, id, name, 0, 'friends' from public.profiles where code = '<code>' returning id;
+select public.moderation_decide(<that id>, true, 'name_reset');
+```
+
 ## Refused saves (anti-cheat)
 
 `save_put` compares every save with the one before it in that slot (plan area 7, items 2921-2925):

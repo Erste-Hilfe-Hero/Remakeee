@@ -121,6 +121,9 @@ func _build() -> void:
 	player.stepped.connect(_on_player_stepped)
 	player.interact.connect(_on_interact)
 	_entities.add_child(player)
+	var hint := InteractHint.new()
+	hint.ow = self
+	add_child(hint)
 	_camera = Camera2D.new()
 	_camera.position_smoothing_enabled = false
 	add_child(_camera)
@@ -158,6 +161,7 @@ func _build() -> void:
 	# Long lines (and German text) grow the box upward instead of off the bottom of the screen.
 	_text.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	_text.visible = false
+	_text.allow_fast_forward = true
 	ui_root.add_child(_text)
 	_picker = ListPicker.new()
 	_picker.set_anchors_preset(Control.PRESET_CENTER)
@@ -191,6 +195,22 @@ func _era_line_after_load(line: String) -> void:
 		await get_tree().process_frame
 	await get_tree().create_timer(EraManager.TRANSITION_TIME).timeout
 	await _locked_say([line] as Array[String])
+
+## The first free walk after the prologue (item 1982): a note with an arrow to the D-pad that
+## goes away after three steps; then the menu tip.
+func show_walk_hint() -> void:
+	var lines: Array[String] = Tips.take("walk")
+	if lines.is_empty():
+		return
+	var hint := WalkHint.new()
+	hint.text = lines[0]
+	_ui.add_child(hint)
+	for i: int in WalkHint.STEPS:
+		await player.stepped
+	hint.queue_free()
+	while busy:
+		await get_tree().process_frame
+	await show_tip("menu")
 
 ## Shows a first-time tip (if any) while the player waits.
 func show_tip(id: String) -> void:
@@ -467,6 +487,9 @@ func _play_one(ref: String, speaker: NPC) -> String:
 		return Dialogue.resolve_ref(ref, str(entry.else)) if entry.has("else") else ""
 	var lines: Array[String] = Dialogue.lines_for(entry, GameState.flags)
 	var who: String = Dialogue.speaker_for(entry)
+	if who.is_empty():
+		# Villagers whose lines carry no name show their role or Wayfarer name (item 2011).
+		who = Speakers.name_for(speaker)
 	var choices: Array[Dictionary] = Dialogue.choices_for(entry, GameState.flags)
 	var next: String = str(entry.get("next", ""))
 	_text.visible = true
@@ -550,6 +573,8 @@ func announce_goal_if_changed(before: int) -> void:
 		await say(tip)
 
 func say(lines: Array[String]) -> void:
+	if lines.is_empty():
+		return
 	_text.visible = true
 	for line: String in lines:
 		await _text.show_text(line)
@@ -630,6 +655,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	Online.contribute("rests")
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
+	await say(Tips.take("rest_spot"))
 	# Every spring can swap the team with storage, even before storage opens from the menu,
 	# and load a saved team with one tap (plan area 1, items 378 and 381).
 	if not GameState.storage.is_empty() or not GameState.team_presets.is_empty():
@@ -650,6 +676,7 @@ func open_menu() -> void:
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
+	GameState.set_flag(VirtualPad.MENU_SEEN_FLAG)
 	var menu := PauseMenu.new()
 	menu.encounter_table = map.encounter_table
 	menu.current_map = map.id
@@ -771,6 +798,8 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.add_item(args[0], count)
 	var item_name: String = str(Database.item(args[0]).get("name", args[0]))
 	await say(["You got %s x%d!" % [item_name, count]] as Array[String])
+	if PauseMenu.bag_tab(Database.item(args[0])) == 1:
+		await say(Tips.take("keepsake"))
 	if bool(Database.item(args[0]).get("gear", false)):
 		var tip: Array[String] = Tips.take("gear")
 		if not tip.is_empty():
@@ -799,7 +828,10 @@ func prologue() -> void:
 	while not GameState.has_flag("got_starter"):
 		await run_dialogue("lighthouse/morning")
 	await run_dialogue("lighthouse/aldo")
+	# Saved right after the prologue, and the tip says saving also works in the menu (1988).
 	SaveManager.save_game()
+	await _locked_say(Tips.take("save"))
+	show_walk_hint()
 
 ## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
 func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -855,6 +887,8 @@ func _action_page(args: PackedStringArray, _speaker: NPC) -> void:
 	if pages_found(GameState.flags, VEYDAL_PAGES) >= VEYDAL_PAGES and not GameState.has_flag("pages_all"):
 		GameState.set_flag("pages_all")
 		await say(["That's all six pages. Aldo should see them."] as Array[String])
+	else:
+		await say(Tips.take("map_page"))
 	if n >= PAGE_COUNT:
 		GameState.set_flag("pages_complete")
 		await say(["All fourteen pages. Mirela's whole map book, together again."] as Array[String])
@@ -1412,7 +1446,7 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		for id: String in args:
 			var it: Dictionary = Database.item(id)
 			labels.append("%s  %d" % [it.get("name", id), int(it.get("price", 0))])
-		var idx: int = await menu.pick_strings("Shop   %d coins" % GameState.money, labels)
+		var idx: int = await menu.pick_strings("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), labels)
 		if idx < 0:
 			break
 		var item: Dictionary = Database.item(args[idx])

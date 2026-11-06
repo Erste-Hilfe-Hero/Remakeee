@@ -24,28 +24,38 @@ var can_undo: bool = false
 ## Set to "undo" or "reset" when the player picks one; the overworld does it after closing.
 var room_action: String = ""
 
+## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
+## they can be used; they keep their place. Leagues shows only while leagues are on,
+## the Map book once Aldo gave it.
+const MENU_ORDER: Array[String] = ["Goals", "Map book", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+	"Leagues", "Records", "Storage", "Save", "Photo", "Settings"]
+
+static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
+		map_book: bool = false) -> Array[String]:
+	var out: Array[String] = []
+	for l: String in MENU_ORDER:
+		if (l == "Storage" and not storage) or (l == "Travel" and not travel) or (l == "Room" and not room) \
+				or (l == "Leagues" and not leagues) or (l == "Map book" and not map_book):
+			continue
+		out.append(l)
+	return out
+
 func run() -> void:
 	while true:
-		var labels: Array[String] = ["Goals", "Team", "Friends", "Spirlog", "Records", "Satchel", "Save", "Photo", "Settings"]
-		if GameState.has_flag(STORAGE_FLAG):
-			labels.insert(labels.find("Save"), "Storage")
-		if not GameState.travel_targets(current_map).is_empty():
-			labels.insert(1, "Travel")
-		if GameState.has_flag("aldo_gift"):
-			labels.insert(labels.find("Goals") + 1, "Map book")
-		if room_puzzle:
-			labels.insert(1, "Room")
-		if Online.league_on():
-			labels.insert(labels.find("Friends") + 1, "Leagues")
+		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
+			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
+			GameState.has_flag("aldo_gift"))
+		if "Travel" in labels:
+			await tip("travel")
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
 		match labels[idx]:
-			"Goals":
-				await run_goals()
+			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
 			"Team": await run_team()
 			"Friends":
+				await tip("friends")
 				await FriendsMenu.run(self)
 				if not echo_duel.is_empty():
 					return
@@ -73,6 +83,94 @@ func run() -> void:
 				if await run_room():
 					return
 
+## Shows a first-time tip in an info window (menus have no text box).
+func tip(id: String) -> void:
+	var lines: Array[String] = Tips.take(id)
+	if not lines.is_empty():
+		await info("\n".join(lines))
+
+## Goals as a list (item 1870): the main goal first with a flag mark, then the open side
+## goals and today's rare visitor. A row opens its full text.
+func run_goals() -> void:
+	while true:
+		var rows: Array[Dictionary] = goal_rows(GameState.flags)
+		rows.append_array(goal_tab_rows())
+		var guide: int = -1
+		if not Tips.seen().is_empty():
+			guide = rows.size()
+			rows.append({"text": "Guide...", "hint": Loc.t("Read the tips again.")})
+		var idx: int = await pick("Goals", rows)
+		if idx < 0:
+			return
+		if idx == guide:
+			await run_guide()
+			continue
+		await info(str(rows[idx].get("detail", rows[idx].text)))
+
+## The wider goal tabs (plan area 8, item 3526) after the list: Today, Week and Collection.
+## Story is the list itself.
+const GOAL_TAB_ROWS: Dictionary = {"Today": "Today...", "Week": "This week...", "Collection": "Collection..."}
+
+static func goal_tab_rows() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for tab: String in Goals.TABS:
+		if GOAL_TAB_ROWS.has(tab):
+			out.append({"text": GOAL_TAB_ROWS[tab], "detail": Goals.tab_text(tab)})
+	return out
+
+## The Guide (item 1985): every tip already seen, by topic, to read again.
+func run_guide() -> void:
+	while true:
+		var ids: Array[String] = Tips.seen()
+		var names: Array[String] = []
+		for id: String in ids:
+			names.append(Tips.TOPICS[id])
+		var idx: int = await pick_strings("Guide", names)
+		if idx < 0:
+			return
+		var lines: Array[String] = []
+		for l: String in Tips.lines_of(ids[idx]):
+			lines.append(Loc.t(l))
+		await info("\n".join(lines))
+
+## [param daily] replaces today's visitor line (tests).
+static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Dictionary]:
+	var rows: Array[Dictionary] = []
+	var g: Dictionary = QuestLog.current(flags)
+	if not g.is_empty():
+		var where: String = str(g.get("where", ""))
+		var lines: PackedStringArray = []
+		if not str(g.get("chapter", "")).is_empty():
+			lines.append(str(g.chapter))
+		lines.append(QuestLog.goal_text(g, flags))
+		if not where.is_empty():
+			lines.append("Where: %s" % where)
+		rows.append({"text": QuestLog.goal_text(g, flags), "icon": goal_mark(),
+			"hint": Loc.t("Where: %s" % where) if not where.is_empty() else "",
+			"detail": "\n".join(lines)})
+	for s: Dictionary in QuestLog.open_side_goals(flags):
+		rows.append({"text": QuestLog.side_text(s, flags), "hint": Loc.t("Side goal"),
+			"detail": QuestLog.side_text(s, flags)})
+	var visitor: String = DailyFind.hint(flags) if daily == null else str(daily)
+	if not visitor.is_empty():
+		rows.append({"text": "Today's visitor", "hint": Loc.t(visitor), "detail": visitor})
+	var tasks: Array[String] = DailyTasks.lines()
+	if not tasks.is_empty():
+		rows.append({"text": "Daily tasks", "hint": tasks[1] if tasks.size() > 1 else "", "detail": "\n".join(tasks)})
+	return rows
+
+static var _goal_mark: ImageTexture
+
+## A small flag in front of the main goal.
+static func goal_mark() -> Texture2D:
+	if _goal_mark == null:
+		var img := Image.create(9, 9, false, Image.FORMAT_RGBA8)
+		img.fill_rect(Rect2i(1, 0, 1, 9), UITheme.INK)
+		img.fill_rect(Rect2i(2, 0, 6, 4), UITheme.INK)
+		img.fill_rect(Rect2i(3, 1, 3, 2), UITheme.MID)
+		_goal_mark = ImageTexture.create_from_image(img)
+	return _goal_mark
+
 ## Saves without blocking the menu (item 2130) and says honestly where the save is: "Saved."
 ## only once the server has it, otherwise that the phone has it and the server follows (1868).
 func save_now() -> void:
@@ -93,16 +191,6 @@ const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once t
 ## Goals screen in four tabs (plan 3526): Story, Today, Week, Collection. All tabs in one text.
 static func goals_text() -> String:
 	return Goals.all_text()
-
-## Picks a goals tab and shows it until the player backs out.
-func run_goals() -> void:
-	while true:
-		var tabs: Array[String] = []
-		tabs.assign(Goals.TABS)
-		var i: int = await pick_strings("Goals", tabs)
-		if i < 0:
-			return
-		await info(Goals.tab_text(tabs[i]))
 
 ## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:
@@ -227,7 +315,7 @@ static func records_text() -> String:
 
 ## Title line: name, coins, and the level cap on Veteran / Rift-Born (item 47).
 static func menu_title() -> String:
-	var t: String = "%s   %d coins   %s" % [GameState.tamer_name, GameState.money, Waymarks.label()]
+	var t: String = "%s   %s   %s" % [GameState.tamer_name, Loc.plural(GameState.money, "%d coin", "%d coins"), Waymarks.label()]
 	if not Festival.active().is_empty():
 		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
@@ -264,11 +352,13 @@ func run_travel() -> bool:
 	return true
 
 func run_team() -> void:
+	if GameState.party.size() >= 2:
+		await tip("team_order")
 	while true:
-		var names: Array[String] = []
+		var rows: Array[Dictionary] = []
 		for s: Spirling in GameState.party:
-			names.append(MenuHost.party_line(s))
-		var idx: int = await pick_strings("Team", names)
+			rows.append(MenuHost.party_entry(s))
+		var idx: int = await pick("Team", rows)
 		if idx < 0:
 			return
 		var s: Spirling = GameState.party[idx]
@@ -276,6 +366,7 @@ func run_team() -> void:
 		# Every kind that can unfold shows the option; if it isn't ready yet, it says what it needs.
 		if not s.data.unfold.is_empty():
 			opts.append("Unfurl")
+			await tip("unfurl")
 		if s.earlier_form() != null:
 			opts.append("Furl back")
 		var opt: int = await pick_strings(s.display_name(), opts)
@@ -283,7 +374,7 @@ func run_team() -> void:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
 		match opt:
-			0: await info(MenuHost.summary(s))
+			0: await info_pages(MenuHost.summary_pages(s), MiniSprite.of(s.data.species_name, 32))
 			1: GameState.swap_party(0, idx)
 			2:
 				var slots: Array[String] = []
@@ -369,36 +460,68 @@ func _usable_items() -> Array[String]:
 			out.append(str(id))
 	return out
 
+## Satchel tabs (item 1914) and which tab an item belongs to.
+const BAG_TABS: Array[String] = ["Care", "Keepsakes", "Crystals", "Gear", "Special"]
+
+static func bag_tab(it: Dictionary) -> int:
+	if bool(it.get("gear", false)):
+		return 3
+	if it.has("teaches"):
+		return 2
+	if bool(it.get("held", false)) or it.has("held"):
+		return 1
+	for k: String in ["heal", "cure", "revive", "energy", "stage", "battle"]:
+		if it.has(k) and it[k]:
+			return 0
+	return 4
+
 func run_bag() -> void:
+	await tip("satchel")
+	var tab: int = -1
 	while true:
-		var ids: Array[String] = []
-		var entries: Array[String] = []
+		var by_tab: Array[Array] = [[], [], [], [], []]
 		for id: Variant in GameState.inventory:
-			if GameState.item_count(str(id)) <= 0:
-				continue
-			ids.append(str(id))
-			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
-		if ids.is_empty():
+			if GameState.item_count(str(id)) > 0:
+				by_tab[bag_tab(Database.item(str(id)))].append(str(id))
+		var tabs: Array[String] = []
+		var tab_ids: Array[int] = []
+		for t: int in BAG_TABS.size():
+			if not by_tab[t].is_empty():
+				tabs.append(BAG_TABS[t])
+				tab_ids.append(t)
+		if tabs.is_empty():
 			await info("The satchel is empty.")
 			return
-		var idx: int = await pick_strings("Satchel", entries)
+		tab = clampi(tab, 0, tabs.size() - 1) if tab >= 0 else 0
+		var ids: Array = by_tab[tab_ids[tab]]
+		var entries: Array[Dictionary] = []
+		for id: String in ids:
+			var it0: Dictionary = Database.item(id)
+			# The description stands in the line under the list (item 1915).
+			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)],
+				"hint": str(it0.get("description", ""))})
+		var idx: int = await pick("Satchel", entries, true, -1, ListPicker.TAP_GUARD_MS, tabs, tab)
+		if ListPicker.tab_of(idx) >= 0:
+			tab = ListPicker.tab_of(idx)
+			continue
 		if idx < 0:
 			return
-		var it: Dictionary = Database.item(ids[idx])
+		var item_id: String = ids[idx]
+		var it: Dictionary = Database.item(item_id)
 		if it.has("teaches"):
-			await _teach_echo(ids[idx])
+			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
-			await _use_spark_charm(ids[idx])
-		elif ids[idx] in _usable_items():
+			await _use_spark_charm(item_id)
+		elif item_id in _usable_items():
 			var names: Array[String] = []
 			for s: Spirling in GameState.party:
 				names.append(MenuHost.party_line(s))
 			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
 			if who >= 0:
-				var msg: String = GameState.use_item_outside_battle(ids[idx], GameState.party[who])
+				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
 				await info(msg if not msg.is_empty() else "That would do nothing right now.")
 		elif bool(it.get("gear", false)):
-			await info(gear_page(ids[idx]), gear_picture(ids[idx]))
+			await info(gear_page(item_id), gear_picture(item_id))
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
 
@@ -526,7 +649,10 @@ func run_spirlog() -> void:
 			actions.append("echo")
 		var first_kind: int = entries.size()
 		for sd: SpirlingData in kinds:
-			entries.append({"text": SpirlogBook.list_line(sd, GameState.spirlog)})
+			# Own marks beside the line (item 1934): an eye for seen, a band for bonded.
+			var mark: Texture2D = SpirlogMarks.bonded() if SpirlogBook.is_bonded(GameState.spirlog, sd.species_name) \
+				else (SpirlogMarks.seen() if SpirlogBook.is_seen(GameState.spirlog, sd.species_name) else SpirlogMarks.none())
+			entries.append({"text": SpirlogBook.list_line(sd, GameState.spirlog), "icon": mark})
 			actions.append("kind")
 		var idx: int = await pick("Spirlog (%d)" % kinds.size(), entries, true, first_kind if not kinds.is_empty() else -1)
 		if idx < 0:
@@ -552,6 +678,42 @@ func run_spirlog() -> void:
 					await info("#%02d  Not seen yet." % sd.dex_id)
 					continue
 				await SpirlogPage.show_pages(self, kinds, idx - first_kind)
+
+## Real map names where a kind lives (item 1935), not reshaped table ids.
+static func found_on(species: String) -> PackedStringArray:
+	var where: PackedStringArray = []
+	for table: String in EncounterTable.table_ids():
+		if not species in EncounterTable.species_on(table):
+			continue
+		var name: String = ""
+		for map_id: String in _maps_with_table(table):
+			var m: MapData = MapData.load_map(map_id)
+			if m != null and not m.display_name.is_empty():
+				name = m.display_name
+				break
+		if name.is_empty():
+			name = table.replace("_", " ").capitalize()
+		if not name in where:
+			where.append(name)
+	return where
+
+static var _table_maps: Dictionary[String, Array] = {}
+
+static func _maps_with_table(table: String) -> Array:
+	if _table_maps.is_empty():
+		for f: String in DirAccess.get_files_at("res://data/maps"):
+			if not f.ends_with(".json"):
+				continue
+			var id: String = f.get_basename()
+			var m: MapData = MapData.load_map(id) if MapData.exists(id) else null
+			if m == null:
+				continue
+			var t: String = m.encounter_table
+			if not t.is_empty():
+				if not _table_maps.has(t):
+					_table_maps[t] = []
+				_table_maps[t].append(id)
+	return _table_maps.get(table, [])
 
 func _tracker_text() -> String:
 	var lines: PackedStringArray = ["Spirlog Tracker", ""]
@@ -587,6 +749,7 @@ var _storage_element: int = -1
 ## presets, release, keepsakes and a detail card for each Spirling.
 func run_storage() -> void:
 	GameState.ensure_boxes()
+	await tip("storage")
 	while true:
 		var title: String = "Storage (%d/%d)" % [GameState.storage.size(), GameState.storage_capacity()]
 		var idx: int = await pick_strings(title, ["Boxes", "Send to rest", "Team presets"] as Array[String])

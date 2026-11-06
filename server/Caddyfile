@@ -10,6 +10,8 @@
 	}
 	@pages path /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /lizenzen
 	header @pages Content-Security-Policy "default-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+	# The report form (plan item 2899) runs its own script and talks only to this server.
+	header /melden Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
 	# The browser test build must not end up in search engines (item 3763).
 	handle /robots.txt {
 		header Content-Type "text/plain; charset=utf-8"
@@ -56,7 +58,12 @@
 		file_server
 	}
 	# Legal and support pages for the stores (built by tools/site/build_site.py into server/site).
-	@site path /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /lizenzen
+	handle /melden.js {
+		root * /srv/site
+		header Cache-Control "max-age=300"
+		file_server
+	}
+	@site path /melden /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /lizenzen
 	handle @site {
 		root * /srv/site
 		rewrite * {path}.html

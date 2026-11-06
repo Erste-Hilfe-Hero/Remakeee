@@ -263,7 +263,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2896. [x] [P1] Nach jeder Entscheidung bekommt der Betroffene eine Begründung im Spiel (DSA Art. 17): Maßnahme, Grund aus fester Liste, Regel aus den Nutzungsbedingungen, Hinweis auf Widerspruch.
 2897. [x] [P1] Ein Widerspruchsknopf an dieser Begründung schickt innerhalb von 6 Monaten eine Beschwerde in `appeals`, die Ali erneut prüft und beantwortet.
 2898. [x] [P1] Der Meldende bekommt eine kurze Nachricht über das Ergebnis seiner Meldung ("geprüft, Maßnahme ergriffen" oder "kein Verstoß gefunden").
-2899. [P1] Ein Meldeformular auf `server/site/melden.html` nimmt Meldungen zu rechtswidrigen Inhalten auch ohne Konto an (DSA Art. 16), mit Freundescode, Grund, Erklärung und Bestätigung guten Glaubens.
+2899. [x] [P1] Ein Meldeformular auf `server/site/melden.html` nimmt Meldungen zu rechtswidrigen Inhalten auch ohne Konto an (DSA Art. 16), mit Freundescode, Grund, Erklärung und Bestätigung guten Glaubens.
 2900. [P1] Blockieren wirkt sofort auch in allen neuen Funktionen: keine Duelle, keine Tausche, keine Raid-Einladungen, kein gemeinsamer Bund-Raid, kein Treffen in der Gegnersuche.
 2901. [P2] Ein Moderationswerkzeug `tools/online/mod.sh` für Ali mit Befehlen `list`, `show <id>`, `reset-name`, `hide-bund`, `suspend <tage>`, das jede Aktion mit Grund in `mod_actions` schreibt.
 2902. [P2] Nach 3 Meldungen von verschiedenen Konten innerhalb von 7 Tagen blendet der Server einen Namen oder Bund vorläufig aus, bis Ali entschieden hat.
