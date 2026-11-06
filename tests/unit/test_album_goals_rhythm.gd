@@ -112,7 +112,7 @@ func _finish_today() -> void:
 	for e: Dictionary in DailyTasks.today().tasks.duplicate():
 		var t: Dictionary = DailyTasks.def(str(e.id))
 		var info: Dictionary = {"map": str(t.get("map", "fernstair")), "wild": bool(t.get("wild", true)),
-			"elements": [str(t.get("element", "EMBER"))]}
+			"elements": [str(t.get("element", "EMBER"))], "night": bool(t.get("night", false))}
 		if bool(t.get("distinct", false)):
 			for i: int in int(t.n):
 				DailyTasks.record(str(t.event), {"map": "p%d" % i, "key": "p%d" % i})

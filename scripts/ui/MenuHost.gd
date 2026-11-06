@@ -88,9 +88,46 @@ func _fill(c: Control) -> void:
 	# Keep menus clear of notches and the gesture bar once the viewport is known.
 	c.ready.connect(func() -> void: SafeArea.apply(c, PANEL_MARGIN), CONNECT_ONE_SHOT)
 
+## Lists and info windows opened so far, and what the last list showed (the menu walk test,
+## item 2210, uses these to see that every row does something).
+var picks: int = 0
+var infos: int = 0
+var last_title: String = ""
+var last_rows: Array[String] = []
+
+## Share of the screen height left free above menus in one-hand mode (item 2108): lists and
+## texts sit in the lower 60 percent, where the thumb reaches.
+const ONE_HAND_TOP: float = 0.4
+const ONE_HAND_MIN_H: float = 72.0
+
+## Moves the list and the info window down in one-hand mode and back up when it is off.
+func apply_hand_layout() -> void:
+	if not is_inside_tree():
+		return
+	var vp_h: float = get_viewport_rect().size.y
+	for c: Control in [picker, _info_panel] as Array[Control]:
+		if not c.has_meta("top"):
+			c.set_meta("top", c.offset_top)
+		var top: float = float(c.get_meta("top"))
+		if GameState.one_hand:
+			var low: float = vp_h * ONE_HAND_TOP
+			# With the pad on screen the list ends above it; keep room for a few rows.
+			var pad_top: float = VirtualPad.top_y()
+			if pad_top > 0.0:
+				low = minf(low, pad_top - ONE_HAND_MIN_H)
+			top = maxf(top, low - global_position.y)
+		c.offset_top = top
+	picker.set_one_hand(GameState.one_hand, GameState.left_handed)
+
 ## Shows a list; returns the index or -1 (Back / cancel).
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
 		guard_ms: int = ListPicker.TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
+	picks += 1
+	last_title = title
+	last_rows.clear()
+	for e: Dictionary in entries:
+		last_rows.append(str(e.get("text", "")))
+	apply_hand_layout()
 	var bottom: float = picker.offset_bottom
 	keep_above_pad(picker)
 	var r: int = await picker.pick(title, entries, cancellable, focus, guard_ms, tabs, tab)
@@ -127,6 +164,7 @@ func confirm_danger(question: String, yes_text: String = "Yes", no_text: String 
 ## Shows a block of text until the player taps or presses accept/cancel, with an optional
 ## [param picture] above it.
 func info(text: String, picture: Texture2D = null) -> void:
+	apply_hand_layout()
 	_info_picture.texture = picture
 	_info_picture.visible = picture != null
 	_info_picture.custom_minimum_size = picture.get_size() if picture != null else Vector2.ZERO
@@ -136,6 +174,7 @@ func info(text: String, picture: Texture2D = null) -> void:
 	_info_press = Vector2(NAN, NAN)
 	_info_panel.visible = true
 	_info_wait = true
+	infos += 1
 	await _info_closed
 	_info_panel.visible = false
 

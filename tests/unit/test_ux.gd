@@ -726,3 +726,35 @@ func test_map_book_sits_after_goals_once_given() -> void:
 	assert_false("Map book" in PauseMenu.menu_labels(false, false, false))
 	var labels: Array[String] = PauseMenu.menu_labels(false, false, false, false, true)
 	assert_eq(labels.find("Map book"), 1)
+
+func test_one_hand_menus_sit_low_with_back_on_the_thumb_side() -> void:
+	var host := MenuHost.new()
+	add_child_autofree(host)
+	await wait_process_frames(1)
+	var vp_h: float = host.get_viewport_rect().size.y
+	for left: bool in [false, true]:
+		GameState.one_hand = true
+		GameState.left_handed = left
+		var res: Array = []
+		_open(host, [{"text": "One"}, {"text": "Two"}] as Array[Dictionary], res)
+		await wait_process_frames(2)
+		var list: Rect2 = host.picker.get_global_rect()
+		assert_gte(list.position.y, vp_h * MenuHost.ONE_HAND_TOP - 0.5, "the list starts in the lower 60 percent")
+		var back: Rect2 = host.picker.back_button().get_global_rect()
+		assert_gt(back.get_center().y, list.get_center().y, "Back is at the bottom")
+		if left:
+			assert_lt(back.get_center().x, list.get_center().x, "left thumb: Back on the left")
+		else:
+			assert_gt(back.get_center().x, list.get_center().x, "right thumb: Back on the right")
+		host.picker.picked.emit(-1)
+		await wait_process_frames(1)
+	GameState.one_hand = false
+	GameState.left_handed = false
+	var res2: Array = []
+	_open(host, [{"text": "One"}] as Array[Dictionary], res2)
+	await wait_process_frames(2)
+	assert_lt(host.picker.get_global_rect().position.y, vp_h * MenuHost.ONE_HAND_TOP, "two hands: the list uses the whole height")
+	var back2: Rect2 = host.picker.back_button().get_global_rect()
+	assert_lt(back2.position.y, host.picker.get_global_rect().position.y + 24.0, "Back is back in the top corner")
+	host.picker.picked.emit(-1)
+	await wait_process_frames(1)
