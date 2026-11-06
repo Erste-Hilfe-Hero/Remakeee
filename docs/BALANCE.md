@@ -145,6 +145,7 @@ a player who does everything every day (all four daily tasks, trips, every weekl
 | Endless stretch above floor 30, every floor past the week's best | 2, at most 100 a week | weekly | `Gauntlet.pay_endless` (not in the 90-day plan) |
 | Rift towers (Cinder Stair, Tide Shaft), first clear of each floor; top floor | 5 per floor, 50 for the top (once each) | once | `RiftTower.finish` (not in the 90-day plan) |
 | Master Wayfarer | 80 first win, then 5 | once a week each (8 masters) | `Masters.win` |
+| Master round in the lighthouse, all eight in a row | 100, first full clear only | once | `Masters.finish_round` |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |

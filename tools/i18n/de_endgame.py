@@ -353,4 +353,6 @@ T = {
 "Vessa: Only ember, stone and volt echoes walk it. Three of yours at most, ring 30 or more.": "Vessa: Nur Ember-, Stone- und Volt-Echos gehen dort. Höchstens drei von deinen, ab Ring 30.",
 "Telmo: The shaft goes down, not up. Fifteen floors, darker each step.": "Telmo: Der Schacht geht nach unten, nicht nach oben. Fünfzehn Stockwerke, mit jedem Schritt dunkler.",
 "Telmo: Tide, bloom and umbra echoes wait below. Three of yours at most, ring 30 or more.": "Telmo: Unten warten Tide-, Bloom- und Umbra-Echos. Höchstens drei von deinen, ab Ring 30.",
+"Master round (best %d of %d)": "Meisterrunde (Bestwert %d von %d)", "Master %d of %d: %s, %s.": "Meister %d von %d: %s, %s.",
+"Halfway. Your team is rested.": "Halbzeit. Dein Team ist ausgeruht.", "Master round: %d of %d beaten.": "Meisterrunde: %d von %d besiegt.",
 }

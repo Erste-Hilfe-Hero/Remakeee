@@ -197,8 +197,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3288. [x] [P1] Acht „Meister-Wanderer“ an festen Orten in Veydal aufstellen, die erst nach beiden Rissen erscheinen und Teams mit Ring 45 bis 55 haben.
 3289. [x] [P1] Jeden Meister-Wanderer beim ersten Sieg mit 80 Wegmarken und danach einmal pro Woche mit 20 Wegmarken belohnen.
 3290. [x] [P1] Jeden Meister-Wanderer mit einem Steckbrief im Lexikon führen, der Ort, Thema und eigenen Sieg zeigt.
-3291. [P2] Die Teams der Meister-Wanderer in data/endgame.json mit Thema, Arten, Techniken und Andenken festlegen.
-3292. [P2] Nach dem Sieg über alle acht Meister-Wanderer eine Meisterrunde im Leuchtturm freischalten, in der alle acht nacheinander antreten.
+3291. [x] [P2] Die Teams der Meister-Wanderer in data/endgame.json mit Thema, Arten, Techniken und Andenken festlegen.
+3292. [x] [P2] Nach dem Sieg über alle acht Meister-Wanderer eine Meisterrunde im Leuchtturm freischalten, in der alle acht nacheinander antreten.
 3293. [P2] Eine „Nachhall-Senke“ als neue kleine Karte am Rand der Saltmarsh anlegen, in der nur Spirlings ab Ring 40 wild leben.
 3294. [P2] In der Nachhall-Senke alle 21 Arten im Wechsel nach Wochentag auftreten lassen, sodass jede Art jede Woche einmal erreichbar ist.
 3295. [P2] In der Nachhall-Senke den Fund des Tages mit doppelter Erscheinchance (0,5 statt 0,25) auftreten lassen.
@@ -206,7 +206,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3297. [P2] Sechs versteckte Schatzstellen in Veydal einbauen, die nur mit Enterhakenseil oder Kletterpickel erreichbar sind und je 30 Wegmarken geben.
 3298. [P2] Eine Schatzkarte als Gegenstand vom Tauschstand für 50 Wegmarken anbieten, die eine der sechs Stellen grob einkreist.
 3299. [P2] Eine Anzeige „Postgame: x von y erledigt“ in den Aufzeichnungen ergänzen.
-3300. [P2] Die Meister-Wanderer nach dem ersten Sieg in der zweiten Woche ein neues Team aus drei vorbereiteten Varianten nutzen lassen.
+3300. [x] [P2] Die Meister-Wanderer nach dem ersten Sieg in der zweiten Woche ein neues Team aus drei vorbereiteten Varianten nutzen lassen.
 3301. [P2] Kestra nach dem Ende von Akt I im Map House einen wöchentlichen Erkundungsauftrag geben lassen, der eine der sechs Schatzstellen betrifft.
 3302. [P3] Ein Wanderer-Treffen jeden Sonntag am Leuchtturm einrichten, an dem drei zufällige Meister-Wanderer nebeneinander stehen.
 3303. [P3] Die Meister-Wanderer nach dem Sieg Tipps zu ihrem Thema geben lassen, die im Lexikon gesammelt werden.
