@@ -6,7 +6,7 @@ extends Node
 ## - Saves when the app is paused / backgrounded (mobile OSes kill background apps).
 ## - Never loads .tres files as saves (loading resources can run embedded scripts).
 
-const SAVE_VERSION: int = 3
+const SAVE_VERSION: int = 4
 const SLOT_PATH: String = "user://save_1.json"
 ## Three save slots (item 58). Slot 1 keeps the old file name, so existing saves stay in it.
 const SLOTS: int = 3
@@ -20,6 +20,7 @@ var _migrations: Dictionary[int, Callable] = {
 	0: _migrate_0_to_1,
 	1: _migrate_1_to_2,
 	2: _migrate_2_to_3,
+	3: _migrate_3_to_4,
 }
 ## Act I world rebuild (save version 2): old map id -> [new map id, safe cell].
 const MAP_RENAMES_V2: Dictionary[String, Array] = {
@@ -224,6 +225,34 @@ func _migrate_2_to_3(d: Dictionary) -> Dictionary:
 		storage.append_array(party.slice(TEAM_SIZE_V3))
 		out["storage"] = storage
 		out["party"] = party.slice(0, TEAM_SIZE_V3)
+	return out
+
+## Version 3 -> 4: Spirlings get stored temperaments and their story (plan area 1, items 4,
+## 5 and 7). The temperament each one had (read from its uid over six kinds) is kept, so no old
+## temperament changes. Spirlog entries get the new fields.
+const SPIRLING_DEFAULTS_V4: Dictionary = {
+	"variant": "", "origin_map": "", "met_ring": 0, "met_day": 0, "lineage": [], "echo_streak": 0,
+}
+
+func _migrate_3_to_4(d: Dictionary) -> Dictionary:
+	var out: Dictionary = d.duplicate(true)
+	for key: String in ["party", "storage", "sanctuary"]:
+		for s: Variant in out.get(key, []):
+			if not s is Dictionary:
+				continue
+			var sd: Dictionary = s
+			if not sd.has("temper"):
+				sd["temper"] = Spirling.legacy_temper(str(sd.get("uid", "")))
+			for f: String in SPIRLING_DEFAULTS_V4:
+				if not sd.has(f):
+					var v: Variant = SPIRLING_DEFAULTS_V4[f]
+					sd[f] = v.duplicate() if v is Array else v
+			if str(sd.origin_map).is_empty():
+				sd["met_ring"] = int(sd.get("level", 1)) if int(sd.met_ring) <= 0 else sd.met_ring
+	var log: Dictionary = {}
+	for k: Variant in (out.get("spirlog", {}) as Dictionary):
+		log[str(k)] = GameState.upgrade_spirlog_entry(out.spirlog[k])
+	out["spirlog"] = log
 	return out
 
 ## Short "where and how long" line for the title screen's Continue button, or "" if unreadable.
