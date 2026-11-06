@@ -200,6 +200,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_npcs.append(n)
 	player.place(cell, face)
 	GameState.current_map = map_id
+	DailyTasks.note_map(map_id)
+	DailyTasks.record("visit", {"map": map_id})
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -347,6 +349,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	GameState.facing = player.facing
 	if scene_running:
 		return
+	DailyTasks.record("step", {"map": map.id})
+	if not GameState.notices.is_empty():
+		await _locked_say(take_notices())
 	if await _world.stepped(cell):
 		return
 	var warp: Dictionary = map.warp_at(cell)
@@ -412,6 +417,8 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
+	if speaker != null:
+		DailyTasks.record("talk", {"map": map.id, "key": ref})
 	await play_entry(ref, speaker)
 	refresh_shade()
 	await announce_achievements()
@@ -472,7 +479,8 @@ func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
 
 ## Shows newly earned achievements (item 90).
 func announce_achievements() -> void:
-	var lines: Array[String] = Collection.claim()
+	var lines: Array[String] = take_notices()
+	lines.append_array(Collection.claim())
 	for t: String in Achievements.check():
 		lines.append("Achievement: %s" % t)
 	if lines.is_empty():
@@ -480,6 +488,12 @@ func announce_achievements() -> void:
 	Sound.sfx("level_up")
 	await say(lines)
 	_text.visible = false
+
+## Reward notes queued by DailyTasks / Waymarks, emptied.
+func take_notices() -> Array[String]:
+	var lines: Array[String] = GameState.notices.duplicate()
+	GameState.notices.clear()
+	return lines
 
 ## Shows "New goal: ..." when the story goal moved on since [param before].
 func announce_goal_if_changed(before: int) -> void:
@@ -549,6 +563,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.heal_cell = map.heal_point
 		GameState.visit_rest(map.id, map.heal_point)
 	Online.contribute("rests")
+	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -625,6 +640,8 @@ func photo_mode() -> void:
 	add_child(_photo)
 	VirtualPad.set_wanted(true)
 	await _photo.finished
+	if _photo.taken > 0:
+		DailyTasks.record("photo", {"map": map.id})
 	_photo.queue_free()
 	_photo = null
 
@@ -1229,15 +1246,19 @@ func thank_echo(helper: Dictionary, won: bool) -> void:
 	if pts > 0:
 		await say(["%s's echo fades with a smile. Your friendship grew!" % str(helper.name)] as Array[String])
 
+## What the last battle's result was (winner, Vigor left, rounds), for the server's referee.
+var last_claim: Dictionary = {}
+
 ## Echo duel (items 121-124): a friend's team, run by the AI, everyone on the same level.
 ## Nothing is lost and the real team does not change.
 func echo_duel(d: Dictionary) -> void:
-	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, EchoTeam.DUEL_LEVEL)
-	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party)
+	var ring: int = EchoTeam.duel_ring({"duel_ring": d.get("ring", EchoTeam.DUEL_LEVEL)})
+	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, ring)
+	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party, ring)
 	if foes.is_empty() or mine.is_empty():
 		await say(["The echo flickers and fades. Try again later."] as Array[String])
 		return
-	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), EchoTeam.DUEL_LEVEL]] as Array[String])
+	await say(["%s's echo steps out of the light. Everyone fights at Ring %d." % [str(d.name), ring]] as Array[String])
 	busy = false
 	var outcome: BattleModel.Outcome = await start_battle(foes, false,
 		{"name": "%s's echo" % str(d.name), "ai": EchoTeam.DUEL_AI, "player_team": mine, "friendly": true})
@@ -1245,6 +1266,9 @@ func echo_duel(d: Dictionary) -> void:
 	player.frozen = true
 	var won: bool = outcome == BattleModel.Outcome.WIN
 	Online.call_fn("echo_report", {"p_code": d.code, "p_kind": "duel", "p_won": won})
+	# The server's referee plays the duel again (plan area 7, item 2689).
+	Online.call_fn("battle_submit", {"p_kind": "echo_duel", "p_ref": str(d.code),
+		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	await say(["You won the echo duel against %s!" % str(d.name) if won else "%s's echo won this time. Your team is fine." % str(d.name)] as Array[String])
 	busy = false
 	player.frozen = false
@@ -1303,6 +1327,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var outcome: BattleModel.Outcome = result[0]
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
+	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()
 	if bool(trainer.get("friendly", false)):
@@ -1323,11 +1348,20 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:
 		Online.contribute("battles")
+		var foe_elements: Array[String] = []
+		for f: Spirling in model.parties[1]:
+			for e: int in f.elements():
+				foe_elements.append(Elements.E.keys()[e])
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements})
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		GameState.receive_spirling(model.bonded)
+		var bond_elements: Array[String] = []
+		for e: int in model.bonded.elements():
+			bond_elements.append(Elements.E.keys()[e])
+		DailyTasks.record("bond", {"map": map.id, "elements": bond_elements})
 		SaveManager.save_game()
 	var oath: Array[String] = oath_lines(GameState.retire_fainted())
 	if outcome == BattleModel.Outcome.LOSS:
