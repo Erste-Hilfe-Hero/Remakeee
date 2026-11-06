@@ -10,6 +10,7 @@ T = {
 "A great iron wheel works a sluice gate.": "Ein großes Eisenrad bewegt ein Schleusentor.",
 "A green bell hangs from a beam.": "Eine Glocke (grün) hängt an einem Balken.",
 "A ladder leads back up to the mine entrance.": "Eine Leiter führt zurück hinauf zum Mineneingang.",
+"A ring of stones with a small fire. Someone keeps it going for travellers.": "Ein Steinring mit einem kleinen Feuer. Jemand hält es für Reisende am Brennen.",
 "A small bell hangs from a beam.": "Eine Glocke (klein) hängt an einem Balken.",
 "A starred bell hangs from a beam.": "Eine Glocke (mit Stern) hängt an einem Balken.",
 "A survey hut. Old charts of the uplands hang on the wall, every one of them grey.": "Eine Vermessungshütte. An der Wand hängen alte Karten des Hochlands, jede einzelne grau.",

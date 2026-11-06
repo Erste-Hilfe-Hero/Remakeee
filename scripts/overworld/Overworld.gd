@@ -74,6 +74,7 @@ func _ready() -> void:
 	_actions = {
 		"storage": _action_storage,
 		"heal": _action_heal,
+		"camp": _action_camp,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
@@ -295,6 +296,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	if map == null:
 		return
 	_entry_cell = cell
+	if map.outdoor:
+		GameState.enter_map(map_id, cell)
 	_world.prepare(map, cell)
 	map.paint(_ground)
 	refresh_shade()
@@ -845,6 +848,13 @@ func _wake_cores() -> void:
 		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
 		SaveManager.save_game()
 
+## A cave campfire (area 3 item 992): the journey is saved, the team is not healed.
+func _action_camp(_args: PackedStringArray, _speaker: NPC) -> void:
+	Sound.sfx("confirm")
+	var ok: bool = SaveManager.save_game()
+	await say([("You sit by the fire for a while. Your journey is saved." if ok else "The fire smokes. Saving did not work this time."),
+		"The warmth is welcome, but it does not rest your team."] as Array[String])
+
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()
 	GameState.heal_party()
@@ -932,8 +942,8 @@ func open_menu() -> void:
 		await photo_mode()
 	if watch:
 		await watch_replay(GameState.records.get("last_battle", {}))
-	if not target.is_empty() and GameState.visited_rests.has(target):
-		var c: Array = GameState.visited_rests[target]
+	var c: Array = GameState.travel_cell(target) if not target.is_empty() else []
+	if c.size() == 2:
 		Sound.sfx("warp")
 		await _fade_to(1.0)
 		load_map(target, Vector2i(int(c[0]), int(c[1])), "down")
@@ -2270,7 +2280,8 @@ func offer_trials(n: NPC) -> bool:
 	var done: Dictionary = GameState.records.get("trials", {})
 	var entries: Array[Dictionary] = []
 	for p: Dictionary in trials:
-		var mark: String = " ✓" if bool(done.get(str(p.id), false)) else ""
+		var got: int = _trial_lanterns(done.get(str(p.id), 0))
+		var mark: String = (" " + Loc.t("Lanterns %d/%d") % [got, BattlePuzzle.MAX_LANTERNS]) if got > 0 else ""
 		entries.append({"text": Loc.t(str(p.get("name", p.id))) + mark, "hint": Loc.t(str(p.get("text", "")))})
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -2286,12 +2297,22 @@ func offer_trials(n: NPC) -> bool:
 	await start_battle(at.model.party(BattleModel.Side.FOE), false,
 		{"model": at.model, "friendly": true, "warden": true, "name": str(p.get("name", ""))})
 	var ok: bool = BattlePuzzle.solved(p, at)
-	if ok:
+	var lit: int = BattlePuzzle.lanterns(p, at)
+	if lit > _trial_lanterns(done.get(str(p.id), 0)):
 		var rec: Dictionary = done.duplicate()
-		rec[str(p.id)] = true
+		rec[str(p.id)] = lit
 		GameState.records["trials"] = rec
-	await say([Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")])
+	var lines: Array[String] = [Loc.t("Trial solved!") if ok else Loc.t("Not this time. The Trial waits for you.")]
+	if lit > 0:
+		lines.append(Loc.t("Lanterns %d/%d") % [lit, BattlePuzzle.MAX_LANTERNS])
+	await say(lines)
 	return true
+
+## Lanterns stored for a Trial (item 706); older saves kept true for a solved Trial, worth 2.
+static func _trial_lanterns(v: Variant) -> int:
+	if v is bool:
+		return 2 if v else 0
+	return clampi(int(v), 0, BattlePuzzle.MAX_LANTERNS)
 
 ## The card before a Warden battle (item 687): rule, team size and elements, then [param question].
 ## "Not yet" leaves the player free to change their team first. Returns true to fight.

@@ -400,3 +400,49 @@ func test_packs_show_their_single_value() -> void:
 		var o: Dictionary = ShopCatalog.offer("rg_rift_pack_%d" % i)
 		assert_true(bool(o.ready))
 		assert_eq(str(o.requires), "rifts:%d" % i, "each after its own rift")
+
+func test_rift_scripts_teach_once_and_are_used_up() -> void:
+	var inv: Dictionary = GameState.inventory.duplicate()
+	for el: String in ["ember", "tide", "bloom", "volt", "stone", "gale", "lumen", "umbra"]:
+		var it: Dictionary = Database.item("rg_script_" + el)
+		assert_true(bool(it.get("used_up", false)), el)
+		var mv: MoveData = Database.move(str(it.teaches))
+		assert_not_null(mv, el)
+		assert_eq(mv.power, 95)
+		assert_eq(mv.energy_cost, 4)
+		assert_true(bool(ShopCatalog.offer("rg_script_" + el).ready))
+	var k := Spirling.new(Database.species("Kindlop"), 10)
+	GameState.inventory = {"rg_script_ember": 1, "rg_script_tide": 1, "echo_ember": 1}
+	assert_false(GameState.learn_from_item(k, "rg_script_tide"), "only its own element")
+	while k.moves.size() > 3:
+		k.moves.pop_back()
+	assert_true(GameState.learn_from_item(k, "rg_script_ember"))
+	assert_true(k.moves.has(Database.move("Glowglass Slash")))
+	assert_eq(GameState.item_count("rg_script_ember"), 0, "a script is used up")
+	assert_false(GameState.inventory.has("rg_script_ember"))
+	assert_true(GameState.learn_from_item(k, "echo_ember", 0), "a fourth move replaces the chosen one")
+	assert_eq(GameState.item_count("echo_ember"), 1, "an Echo Crystal stays")
+	GameState.inventory = inv
+
+func test_shop_moves_are_not_in_any_learnset() -> void:
+	for sp: SpirlingData in Database.spirlings.values():
+		for mv: MoveData in sp.learnset_moves:
+			assert_false(mv.move_name.contains("glass "), "%s learns %s" % [sp.species_name, mv.move_name])
+
+func test_signpost_reaches_every_outdoor_map_entered() -> void:
+	var rests: Dictionary = GameState.visited_rests.duplicate(true)
+	var maps: Dictionary = GameState.visited_maps.duplicate(true)
+	GameState.visited_rests = {"town": [1, 2]}
+	GameState.visited_maps = {}
+	GameState.enter_map("meadow", Vector2i(3, 4))
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.travel_targets("town"), [] as Array[String], "without the Signpost only rest spots")
+	assert_eq(GameState.travel_cell("meadow"), [])
+	Billing.state = {"unlocks": {"fast_travel": 1}}
+	assert_eq(GameState.travel_targets("town"), ["meadow"] as Array[String])
+	assert_eq(GameState.travel_cell("meadow"), [3, 4])
+	assert_eq(GameState.travel_cell("town"), [1, 2], "a rest spot keeps its own cell")
+	var saved: Dictionary = GameState.to_dict()
+	assert_eq(saved.maps_entered, {"meadow": [3, 4]})
+	GameState.visited_rests = rests
+	GameState.visited_maps = maps

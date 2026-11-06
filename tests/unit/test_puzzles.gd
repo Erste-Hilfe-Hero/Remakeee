@@ -26,7 +26,8 @@ func test_every_puzzle_has_the_fields_and_real_content() -> void:
 				for mv: Variant in e.get("moves", []):
 					assert_not_null(Database.move(str(mv)), str(mv))
 		var m: BattleModel = BattlePuzzle.build_model(p)
-		assert_eq(m.party(0).size(), (p.player as Array).size())
+		var ally: Array = (p.get("partner", {}) as Dictionary).get("team", [])
+		assert_eq(m.party(0).size(), (p.player as Array).size() + ally.size())
 
 func test_each_warden_offers_three_trials() -> void:
 	# Item 697.
@@ -58,6 +59,8 @@ func test_every_trial_is_solvable_but_not_by_chance() -> void:
 		for d: Dictionary in r.solution:
 			BattlePuzzle.play(p, at, BattleReplay.action_from_dict(d))
 		assert_true(BattlePuzzle.solved(p, at), str(p.id))
+		# Item 706: the stored fewest turns is what the solver finds.
+		assert_eq(int(p.get("best_turns", 0)), int(r.best_turns), "%s best_turns" % p.id)
 
 func test_the_reaction_goal_needs_the_reaction() -> void:
 	var p: Dictionary = BattlePuzzle.by_id("current_trial_1").duplicate(true)
@@ -118,3 +121,34 @@ func test_scorch_trial_fails_when_cured() -> void:
 		assert_false(BattlePuzzle.solved(p, at))
 	else:
 		pass_test("resting does not cure Scorch here")
+
+## Items 704, 706: the tag Trial and the lantern rating.
+func test_tag_trial_has_an_ally() -> void:
+	var p: Dictionary = BattlePuzzle.by_id("current_trial_3")
+	var m: BattleModel = BattlePuzzle.build_model(p)
+	assert_eq(m.active_spirling(0).data.species_name, "Riptail")
+	assert_eq(m.partner_name, "Cartographer Kestra")
+	assert_eq(m.slot_count(1), 2, "2 against 2")
+	assert_eq(str(BattlePuzzle.goals(p)[0].type), "no_faint")
+	# Single-target arts become one choice per foe.
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	var targets: Dictionary = {}
+	for a: BattleAction in BattlePuzzle.choices(at):
+		if a.kind == BattleAction.Kind.MOVE:
+			targets[a.target_slot] = true
+	assert_true(targets.has(0) and targets.has(1))
+
+func test_lanterns() -> void:
+	var p: Dictionary = BattlePuzzle.by_id("ember_trial_1")
+	var r: Dictionary = BattlePuzzle.search(p)
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	for d: Dictionary in r.solution:
+		BattlePuzzle.play(p, at, BattleReplay.action_from_dict(d))
+	assert_gte(BattlePuzzle.lanterns(p, at), 2)
+	var slow: Dictionary = p.duplicate(true)
+	slow["best_turns"] = at.turns() - 1
+	assert_eq(BattlePuzzle.lanterns(slow, at), 2, "slower than the best line")
+	slow["best_turns"] = at.turns()
+	assert_eq(BattlePuzzle.lanterns(slow, at), 3)
+	var lost: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	assert_eq(BattlePuzzle.lanterns(p, lost), 0)

@@ -478,19 +478,19 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4447. [P3] (P2W) Ein Andenken-Starterbündel (2 Element-Prismen nach Wahl) für 1000 Rissglas statt 1200 anbieten.
 
 ### Technik-Schriften
-4448. [P1] (P2W) Acht "Rissschriften" anlegen, je eine pro Element, die eine Shop-Technik lehren, Preis je 500 Rissglas (≈ 4,95 €) oder 4,99 € direkt.
-4449. [P1] (P2W) Die acht Shop-Techniken in `data/moves.json` mit eigenen Namen anlegen: Glutglas-Hieb (Ember), Flutglas-Welle (Tide), Rankenglas-Stich (Bloom), Blitzglas-Biss (Volt), Felsglas-Stoß (Stone), Sturmglas-Schnitt (Gale), Lichtglas-Strahl (Lumen), Schattenglas-Griff (Umbra).
-4450. [P1] (P2W) Jede Shop-Technik hat Stärke 95, Genauigkeit 100 und Energie 4, also mehr als die Echo-Kristall-Techniken bei gleichen Kosten, und die Werte stehen in `docs/BALANCE.md`.
-4451. [P1] (P2W) Rissschriften nutzen das vorhandene Feld `teaches` in `data/items.json` und lassen sich wie Echo-Kristalle anwenden.
-4452. [P1] (P2W) Eine Rissschrift ist ein Verbrauchsgut: ein Kauf lehrt genau einem Spirling einmal die Technik.
-4453. [P1] (P2W) Rissschriften nur an Spirlings des passenden Elements anwendbar machen, damit die Spielidee der Elemente bleibt.
+4448. [x] [P1] (P2W) Acht "Rissschriften" anlegen, je eine pro Element, die eine Shop-Technik lehren, Preis je 500 Rissglas (≈ 4,95 €) oder 4,99 € direkt.
+4449. [x] [P1] (P2W) Die acht Shop-Techniken in `data/moves.json` mit eigenen Namen anlegen: Glutglas-Hieb (Ember), Flutglas-Welle (Tide), Rankenglas-Stich (Bloom), Blitzglas-Biss (Volt), Felsglas-Stoß (Stone), Sturmglas-Schnitt (Gale), Lichtglas-Strahl (Lumen), Schattenglas-Griff (Umbra).
+4450. [x] [P1] (P2W) Jede Shop-Technik hat Stärke 95, Genauigkeit 100 und Energie 4, also mehr als die Echo-Kristall-Techniken bei gleichen Kosten, und die Werte stehen in `docs/BALANCE.md`.
+4451. [x] [P1] (P2W) Rissschriften nutzen das vorhandene Feld `teaches` in `data/items.json` und lassen sich wie Echo-Kristalle anwenden.
+4452. [x] [P1] (P2W) Eine Rissschrift ist ein Verbrauchsgut: ein Kauf lehrt genau einem Spirling einmal die Technik.
+4453. [x] [P1] (P2W) Rissschriften nur an Spirlings des passenden Elements anwendbar machen, damit die Spielidee der Elemente bleibt.
 4454. [P1] (P2W) Die Shop-Techniken mit eigenen Effekt-Skripten über `effect_id` anlegen, ohne Sonderfall in `BattleModel`.
 4455. [P1] (P2W) Shop-Techniken in der Gleichstand-Liga durch die Echo-Kristall-Technik des gleichen Elements ersetzen und das in der Gegnervorschau anzeigen.
-4456. [P1] (P2W) Shop-Techniken nie in der Gegner-KI für Wanderer und Wächter nutzen.
+4456. [x] [P1] (P2W) Shop-Techniken nie in der Gegner-KI für Wanderer und Wächter nutzen.
 4457. [P1] (P2W) Ein "Technik-Gedächtnis" (`rg_move_memory`) anlegen, mit dem ein Spirling vergessene Techniken jederzeit neu lernt, dauerhaft pro Konto, Preis 600 Rissglas.
-4458. [P2] (P2W) Jede Shop-Technik hat eine kleine Zusatzwirkung: Glutglas-Hieb 20 % Brand, Flutglas-Welle 20 % Nässe, Rankenglas-Stich heilt 25 % des Schadens.
-4459. [P2] (P2W) Weitere Zusatzwirkungen: Blitzglas-Biss senkt Tempo um 1 Stufe zu 30 %, Felsglas-Stoß hebt Schutz des Anwenders zu 30 %, Sturmglas-Schnitt handelt mit Vorrang +1.
-4460. [P2] (P2W) Weitere Zusatzwirkungen: Lichtglas-Strahl heilt Zustände des Anwenders, Schattenglas-Griff senkt Fokus des Gegners um 1 Stufe zu 30 %.
+4458. [x] [P2] (P2W) Jede Shop-Technik hat eine kleine Zusatzwirkung: Glutglas-Hieb 20 % Brand, Flutglas-Welle 20 % Nässe, Rankenglas-Stich heilt 25 % des Schadens.
+4459. [x] [P2] (P2W) Weitere Zusatzwirkungen: Blitzglas-Biss senkt Tempo um 1 Stufe zu 30 %, Felsglas-Stoß hebt Schutz des Anwenders zu 30 %, Sturmglas-Schnitt handelt mit Vorrang +1.
+4460. [x] [P2] (P2W) Weitere Zusatzwirkungen: Lichtglas-Strahl heilt Zustände des Anwenders, Schattenglas-Griff senkt Fokus des Gegners um 1 Stufe zu 30 %.
 4461. [P2] (P2W) Einen "Technik-Platz 5" (`rg_fifth_move`) anlegen, mit dem ein Spirling dauerhaft 5 statt 4 Techniken kennt, Preis 1200 Rissglas pro Spirling.
 4462. [P2] (P2W) Den Technik-Platz 5 im Kampfmenü als fünfte Zeile zeigen, ohne das eigene Kampfbild-Layout zu ändern, und in der Gleichstand-Liga sperren.
 4463. [P2] (P2W) Eine "Fremdschrift" (`rg_cross_script`) anlegen, die einem Spirling eine Technik eines anderen Elements lehrt, die er sonst nie lernt, Preis 800 Rissglas.
@@ -882,8 +882,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4833. [P1] (P2W) Ein "Auto-Kampf" (`rg_auto_battle`) dauerhaft für 1000 Rissglas anlegen, bei dem die Spieler-KI (Stufe "lookahead") gegen wilde Spirlings automatisch kämpft.
 4834. [P1] (P2W) Den Auto-Kampf nie gegen Rift-Wächter, Story-Kämpfe und in Ligen erlauben, und das steht in der Detailansicht.
 4835. [x] [P1] (P2W) Einen "Münzglanz" (`rg_coin_boost`) anlegen: doppelte Münzen aus Kämpfen für 20 Kämpfe, Preis 200 Rissglas, abgestimmt mit Bereich 8.
-4836. [P1] (P2W) Einen "Wegweiser" (`rg_fast_travel`) dauerhaft für 800 Rissglas anlegen, mit dem Schnellreise zu jedem besuchten Ort geht statt nur zu Rastplätzen.
-4837. [P1] (P2W) Den Wegweiser mit `GameState.travel_targets` verbinden, sodass er alle besuchten Karten zusätzlich liefert.
+4836. [x] [P1] (P2W) Einen "Wegweiser" (`rg_fast_travel`) dauerhaft für 800 Rissglas anlegen, mit dem Schnellreise zu jedem besuchten Ort geht statt nur zu Rastplätzen.
+4837. [x] [P1] (P2W) Den Wegweiser mit `GameState.travel_targets` verbinden, sodass er alle besuchten Karten zusätzlich liefert.
 4838. [P1] (P2W) Einen "Begegnungsruf" (`rg_encounter_call`) anlegen: 30 Schritte lang doppelt so viele wilde Begegnungen, Preis 100 Rissglas.
 4839. [P1] (P2W) Einen "Kampf-Überspringer" (`rg_skip_battle`) anlegen: ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger wird sofort gewonnen, mit vollem Wachstum, Preis 100 Rissglas pro 10 Stück.
 4840. [P1] (P2W) Kampf-Überspringer laufen über das normale Kampfmodell mit Spieler-KI im Hintergrund und erzeugen ein Ergebnis-Ereignis, damit Wachstum und Münzen korrekt sind.

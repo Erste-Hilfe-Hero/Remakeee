@@ -357,9 +357,9 @@
    "eur": "4.99",
    "name_en": "Rift Script: Glowglass Slash",
    "name_de": "Rissschrift: Glutglas-Hieb",
-   "desc_en": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy) to one Ember Spirling. Used up.",
-   "desc_de": "Bringt einem Ember-Spirling Glutglas-Hieb bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "desc_en": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy, 20% chance to scorch) to one Ember Spirling. Used up.",
+   "desc_de": "Lehrt einem Ember-Spirling Glutglas-Hieb (Stärke 95, Genauigkeit 100, 4 Energie, 20 % Chance auf Brand). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_tide",
@@ -369,9 +369,9 @@
    "eur": "4.99",
    "name_en": "Rift Script: Floodglass Wave",
    "name_de": "Rissschrift: Flutglas-Welle",
-   "desc_en": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy) to one Tide Spirling. Used up.",
-   "desc_de": "Bringt einem Tide-Spirling Flutglas-Welle bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "desc_en": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy, 20% chance to soak) to one Tide Spirling. Used up.",
+   "desc_de": "Lehrt einem Tide-Spirling Flutglas-Welle (Stärke 95, Genauigkeit 100, 4 Energie, 20 % Chance auf Nässe). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_bloom",
@@ -381,9 +381,9 @@
    "eur": "4.99",
    "name_en": "Rift Script: Vineglass Sting",
    "name_de": "Rissschrift: Rankenglas-Stich",
-   "desc_en": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy) to one Bloom Spirling. Used up.",
-   "desc_de": "Bringt einem Bloom-Spirling Rankenglas-Stich bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "desc_en": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy, heals 25% of the damage) to one Bloom Spirling. Used up.",
+   "desc_de": "Lehrt einem Bloom-Spirling Rankenglas-Stich (Stärke 95, Genauigkeit 100, 4 Energie, heilt 25 % des Schadens). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_volt",
@@ -393,9 +393,9 @@
    "eur": "4.99",
    "name_en": "Rift Script: Boltglass Bite",
    "name_de": "Rissschrift: Blitzglas-Biss",
-   "desc_en": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy) to one Volt Spirling. Used up.",
-   "desc_de": "Bringt einem Volt-Spirling Blitzglas-Biss bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "desc_en": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy, 30% chance to lower Pace) to one Volt Spirling. Used up.",
+   "desc_de": "Lehrt einem Volt-Spirling Blitzglas-Biss (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, das Tempo zu senken). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_stone",
@@ -405,9 +405,9 @@
    "eur": "4.99",
    "name_en": "Rift Script: Rockglass Ram",
    "name_de": "Rissschrift: Felsglas-Stoß",
-   "desc_en": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy) to one Stone Spirling. Used up.",
-   "desc_de": "Bringt einem Stone-Spirling Felsglas-Stoß bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "desc_en": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy, 30% chance to raise own Guard) to one Stone Spirling. Used up.",
+   "desc_de": "Lehrt einem Stone-Spirling Felsglas-Stoß (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, den eigenen Schutz zu heben). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_gale",
@@ -417,9 +417,9 @@
    "eur": "4.99",
    "name_en": "Rift Script: Stormglass Cut",
    "name_de": "Rissschrift: Sturmglas-Schnitt",
-   "desc_en": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy) to one Gale Spirling. Used up.",
-   "desc_de": "Bringt einem Gale-Spirling Sturmglas-Schnitt bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "desc_en": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy, strikes first) to one Gale Spirling. Used up.",
+   "desc_de": "Lehrt einem Gale-Spirling Sturmglas-Schnitt (Stärke 95, Genauigkeit 100, 4 Energie, handelt zuerst). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_lumen",
@@ -429,9 +429,9 @@
    "eur": "4.99",
    "name_en": "Rift Script: Lightglass Beam",
    "name_de": "Rissschrift: Lichtglas-Strahl",
-   "desc_en": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy) to one Lumen Spirling. Used up.",
-   "desc_de": "Bringt einem Lumen-Spirling Lichtglas-Strahl bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "desc_en": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy, cures the user's own condition) to one Lumen Spirling. Used up.",
+   "desc_de": "Lehrt einem Lumen-Spirling Lichtglas-Strahl (Stärke 95, Genauigkeit 100, 4 Energie, heilt den eigenen Zustand). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.script_umbra",
@@ -440,10 +440,10 @@
    "google_type": "onetime",
    "eur": "4.99",
    "name_en": "Rift Script: Duskglass Grip",
-   "name_de": "Rissschrift: Dämmerglas-Griff",
-   "desc_en": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy) to one Umbra Spirling. Used up.",
-   "desc_de": "Bringt einem Umbra-Spirling Dämmerglas-Griff bei (Stärke 95, Genauigkeit 100, 4 Energie). Wird verbraucht.",
-   "ready": false
+   "name_de": "Rissschrift: Schattenglas-Griff",
+   "desc_en": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.",
+   "desc_de": "Lehrt einem Umbra-Spirling Schattenglas-Griff (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, den Fokus zu senken). Wird verbraucht.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.move_memory",
@@ -851,7 +851,7 @@
    "name_de": "Wegweiser",
    "desc_en": "Fast travel to every place you have visited, not only rest spots. Permanent.",
    "desc_de": "Schnellreise zu jedem besuchten Ort, nicht nur zu Rastplätzen. Dauerhaft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.encounter_call",

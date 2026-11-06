@@ -113,7 +113,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 989. [P2] Lass in jeder dunklen Höhle die Laterne einen sichtbaren Radius von 2 Kacheln haben und den Rest abdunkeln (Erweiterung des bestehenden Schattens).
 990. [P2] Baue die Höhle "Copper Deep" (de: Kupfertiefe) unter Copperfold, ein Bergwerk mit vier Sohlen und Leitern dazwischen, Ring 12 bis 16.
 991. [P2] Gib Copper Deep Stützbalken, die man nicht entfernen darf, und Geröllhalden, die mit Kletterpicke begehbar werden.
-992. [P2] Lege in jeder Höhle mindestens einen Rastplatz mit Lagerfeuer an, an dem man speichert, aber nicht heilt.
+992. [x] [P2] Lege in jeder Höhle mindestens einen Rastplatz mit Lagerfeuer an, an dem man speichert, aber nicht heilt.
 993. [x] [P2] Zeige beim Betreten einer Höhle den Namen und die aktuelle Ebene als Banner, z. B. "Copper Deep, Sohle 2".
 994. [P2] Gib jeder Höhle eine eigene Tabelle in data/encounters.json mit Fokus auf Stone, Umbra und Lumen.
 995. [P2] Lege in Sablecove Muschelbänke an, die bei Ebbe einen Fund freigeben und bei Flut wieder verschwinden.
