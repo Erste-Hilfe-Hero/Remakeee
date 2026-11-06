@@ -6,6 +6,13 @@ enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
 ## Level cap per Rift sealed (Veteran + Rift-Born only).
 const LEVEL_CAPS: Array[int] = [12, 18, 23, 28, 32, 36, 40, 44, 50]
 const AI_LEVELS: Array[int] = [0, 1, 2, 3]
+## Plan area 2, items 726-728: Wayfarer Spark in every stat, ring shift of a shared team, and the
+## share of damage foes deal, per difficulty (Story, Tamer, Veteran, Rift-Born).
+const FOE_SPARK: Array[int] = [0, 3, 6, 10]
+const FOE_LEVEL_SHIFT: Array[int] = [-1, 0, 1, 2]
+const FOE_DAMAGE: Array[float] = [0.9, 1.0, 1.0, 1.0]
+## A shifted foe never stands more than this many rings above the player's ring cap.
+const FOE_OVER_CAP: int = 2
 const MAX_PARTY: int = 5
 enum TextSpeed { SLOW, NORMAL, FAST }
 const TEXT_CPS: Array[float] = [30.0, 60.0, 140.0]
@@ -133,6 +140,10 @@ func items_allowed_in_battle() -> bool:
 ## Trainer AI tier for the current difficulty: 0 random, 1 greedy, 2 lookahead, 3 master.
 func ai_level() -> int:
 	return AI_LEVELS[difficulty]
+
+## Share of damage the foe side deals (Story softens every hit, item 728).
+func foe_damage_mult() -> float:
+	return FOE_DAMAGE[difficulty]
 
 func text_cps() -> float:
 	return TEXT_CPS[text_speed]

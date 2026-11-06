@@ -252,7 +252,7 @@ func _settings_action(key: String) -> void:
 			await _iron_oath()
 
 const DIFFICULTY_TEXT: Array[String] = [
-	"Story (relaxed)",
+	"Story (relaxed, foes deal 90% damage)",
 	"Wayfarer (normal)",
 	"Veteran (caps, smart AI)",
 	"Rift-Born (no battle items)",

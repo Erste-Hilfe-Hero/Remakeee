@@ -311,11 +311,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 725. [P3] Ein Rätsel-Abschluss mit 3 Laternen für alle Prüfungen schaltet einen Titel im Profil frei ("Riss-Leser"), ohne Kampfvorteil.
 
 ### Schwierigkeitsstufen-Feinschliff
-726. [P1] Gegner-Spark pro Stufe festlegen: Story 0, Tamer 3, Veteran 6, Rift-Born 10 in allen Werten (Spark-Bereich 0 bis 12 bleibt); Tabelle in GameState.FOE_SPARK.
-727. [P1] Gegner-Ring-Versatz pro Stufe: Story -1, Tamer 0, Veteran +1, Rift-Born +2, nie über die aktuelle Ring-Obergrenze des Spielers plus 2.
-728. [P1] Story: Gegner richten ×0,9 Schaden an; der Wert steht offen auf der Schwierigkeitsseite und in der Kampfregeln-Seite.
+726. [x] [P1] Gegner-Spark pro Stufe festlegen: Story 0, Tamer 3, Veteran 6, Rift-Born 10 in allen Werten (Spark-Bereich 0 bis 12 bleibt); Tabelle in GameState.FOE_SPARK.
+727. [x] [P1] Gegner-Ring-Versatz pro Stufe: Story -1, Tamer 0, Veteran +1, Rift-Born +2, nie über die aktuelle Ring-Obergrenze des Spielers plus 2.
+728. [x] [P1] Story: Gegner richten ×0,9 Schaden an; der Wert steht offen auf der Schwierigkeitsseite und in der Kampfregeln-Seite.
 729. [P1] Story: Wächter-Regeln abgeschwächt wie bei Orrin und Maelis festgelegt, Bosse mit 20 % weniger Kraft-Faktor `hp_per_ally`.
-730. [P1] Story: der Murk-Hollow-Schwarm hat 4 statt 6 Spirlings, Tamer 5, ab Veteran 6.
+730. [x] [P1] Story: der Murk-Hollow-Schwarm hat 4 statt 6 Spirlings, Tamer 5, ab Veteran 6.
 731. [P1] Veteran: Gegner-Teams nutzen feste Technik-Listen mit mindestens einer Status- oder Stufen-Technik pro Spirling.
 732. [x] [P1] Rift-Born: Wächter tragen ein Andenken auf jedem Spirling, Wanderer eins pro Team.
 733. [P1] Zielwerte für Gewinnraten des Referenzteams gegen Wächter: Story mindestens 95 %, Tamer 80 bis 90 %, Veteran 55 bis 70 %, Rift-Born 30 bis 45 % (Simulator-Modus "warden").
