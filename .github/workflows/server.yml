@@ -28,6 +28,10 @@ jobs:
         run: bash server/smoke_test.sh
       - name: Backup
         run: bash server/backup.sh && ls -la server/backups
+      - name: Restore test of that backup
+        run: |
+          bash server/restore_test.sh
+          curl -fsS "$(python3 -c 'import json;print(json.load(open("server/public/chimora.json"))["url"])')/status.json" | grep -q '"ok": true'
       - name: Logs
         if: failure()
         run: cd server && docker compose logs --tail 80

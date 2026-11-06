@@ -131,6 +131,8 @@ if [ "$local_test" != "1" ]; then
 	cat > /etc/cron.d/chimora-backup <<CRON
 # Nightly database backup, kept 14 days (server/backup.sh).
 30 3 * * * root bash $here/backup.sh >> /var/log/chimora-backup.log 2>&1
+# Weekly restore test of the newest backup (server/restore_test.sh), result in /status.json.
+0 5 * * 1 root bash $here/restore_test.sh >> /var/log/chimora-restore.log 2>&1
 CRON
 	if [ "$shared" = "1" ]; then
 		cat > /etc/cron.d/chimora-proxy <<CRON

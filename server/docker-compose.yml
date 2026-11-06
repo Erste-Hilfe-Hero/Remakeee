@@ -2,10 +2,12 @@
 # The same programs as Supabase, so the game talks to it exactly like to a Supabase project.
 # Started by server/setup.sh, which also writes .env. Nothing but Caddy is reachable from outside.
 name: chimora
+# Images are pinned to tag + digest (plan item 3849). Update only in a reviewed pull request and
+# write the update into docs/BETRIEB.md (security updates within 7 days, item 3850).
 
 services:
   db:
-    image: supabase/postgres:15.8.1.060
+    image: supabase/postgres:15.8.1.060@sha256:0e2279598bc0224fb5960c3a61eb23270cd60119427f3a7bdec86ba282600dcc
     restart: unless-stopped
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "log_min_messages=fatal"]
     environment:
@@ -29,7 +31,7 @@ services:
       retries: 20
 
   auth:
-    image: supabase/gotrue:v2.177.0
+    image: supabase/gotrue:v2.177.0@sha256:6a916b47af0386b7e0152ca84f3d45d050bf056e449a75a5460b48742fd67822
     restart: unless-stopped
     depends_on:
       db:
@@ -54,7 +56,7 @@ services:
       GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 30
 
   rest:
-    image: postgrest/postgrest:v12.2.12
+    image: postgrest/postgrest:v12.2.12@sha256:5f4ce744539bbba786b4e24dbbd95bdb2a956dcf568c5374995a0ff4a68f5bd2
     restart: unless-stopped
     depends_on:
       db:
@@ -67,7 +69,7 @@ services:
       PGRST_DB_USE_LEGACY_GUCS: "false"
 
   caddy:
-    image: caddy:2.10.2
+    image: caddy:2.10.2@sha256:c3d7ee5d2b11f9dc54f947f68a734c84e9c9666c92c88a7f30b9cba5da182adb
     restart: unless-stopped
     depends_on: [auth, rest]
     ports:
