@@ -227,3 +227,12 @@ T.update({
 "%s offers the Second Trial: two rules at once, a full team. Battle?": "%s bietet die Zweite Prüfung an: zwei Regeln zugleich, ein volles Team. Kämpfen?",
 "%s: You passed the Second Trial. The Rift remembers you.": "%s: Du hast die Zweite Prüfung bestanden. Der Riss wird sich an dich erinnern.",
 })
+
+# Plan area 2, item 687: the Warden card.
+T.update({
+"No rule.": "Keine Regel.",
+"Spirlings: %d": "Spirlings: %d",
+"Elements: %s": "Elemente: %s",
+"Face the Warden now?": "Jetzt gegen den Wächter antreten?",
+"Fight": "Kämpfen",
+})

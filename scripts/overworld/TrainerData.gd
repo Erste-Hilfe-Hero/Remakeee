@@ -169,8 +169,28 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 					fixed.append(mv)
 			s.moves = fixed
 		s.held = str(entry.get("held", s.held))
+		if tuned and def.has("warden") and difficulty >= GameState.Difficulty.VETERAN:
+			var main: String = main_stat(s)
+			s.spark[main] = maxi(int(s.spark.get(main, 0)), WARDEN_MAIN_SPARK)
+			s.hp = s.max_hp()
 		out.append(s)
 	return out
+
+## Item 685: from Veteran on a Warden's Spirlings have at least this Spark in their main stat.
+const WARDEN_MAIN_SPARK: int = 10
+
+## "atk" or "foc": the stat behind most of the Spirling's damaging arts (a tie goes to "atk").
+static func main_stat(s: Spirling) -> String:
+	var phys: int = 0
+	var foc: int = 0
+	for mv: MoveData in s.moves:
+		if not mv.is_damaging():
+			continue
+		if mv.kind == MoveData.Kind.FOCUS:
+			foc += 1
+		else:
+			phys += 1
+	return "foc" if foc > phys else "atk"
 
 ## Prize money: explicit "money", else a level-based default.
 static func prize_money(def: Dictionary, team: Array[Spirling]) -> int:
