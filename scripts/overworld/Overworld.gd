@@ -1553,7 +1553,7 @@ func challenge(n: NPC, spotted: bool) -> void:
 	if def.has("warden"):
 		# Warden fights are long; never lose progress to a crash or the OS closing the app.
 		SaveManager.save_game()
-	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty)
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
 	if team.is_empty():
 		push_warning("Overworld: Wayfarer '%s' has no valid team" % n.npc_id)
 		busy = false
@@ -1836,6 +1836,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.bench_share = GameState.bench_share()
 	model.trainer_name = str(trainer.get("name", ""))
 	model.ai.set_profile(str(trainer.get("profile", "")))
+	model.foe_damage_mult = GameState.foe_damage_mult()
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.prize_money = int(trainer.get("money", 0))
@@ -1851,7 +1852,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		if partner.get("echo") is Array:
 			ally.assign(partner.echo)
 		else:
-			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng, GameState.difficulty)
+			ally = TrainerData.build_team(partner, GameState.starter, GameState.rng)
 		model.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
 			int(partner.get("ai", TrainerData.PARTNER_AI)))
 	return model

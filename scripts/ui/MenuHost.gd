@@ -429,7 +429,7 @@ func _settings_action(key: String, dir: int = 1) -> void:
 ## Short names for the list rows; the line under the list explains each (items 2185, 2067).
 const DIFFICULTY_TEXT: Array[String] = ["Story", "Wayfarer", "Veteran", "Rift-Born"]
 const DIFFICULTY_HINTS: Array[String] = [
-	"Relaxed battles for enjoying the story.",
+	"Relaxed battles for enjoying the story. Foes deal 90% damage.",
 	"The normal journey.",
 	"Ring limits and smarter opponents.",
 	"No items in battle.",

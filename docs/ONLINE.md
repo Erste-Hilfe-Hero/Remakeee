@@ -215,6 +215,17 @@ Table `feature_flags` (key, `enabled`, `min_version`): switches the new online p
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
 `league_open`, `live_duel`, `trade`, `bund`, `raid`. All start switched off.
 
+## Bunds
+
+Bunds (plan area 7) wait behind the flag `bund`; switch them on with
+`update feature_flags set enabled = true where key = 'bund';`. A bund has at most `bund_max` (30)
+members, one leader, helpers and members, and a name made of two word numbers into
+`scripts/online/BundWords.gd` (never reorder those lists, only append). Leaving is always possible;
+when the leader leaves or deletes the account, the oldest helper (else the oldest member) leads.
+A leader dissolves a bund of 3 or more only by confirming again after 24 hours. Blocked players
+cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`; menu
+`scripts/ui/BundMenu.gd` (Friends, Bund).
+
 ## Reports and decisions (Ali, about once a week)
 
 Every report gets a number at once (`report_in`, the player sees "Your report has number 12"). Open

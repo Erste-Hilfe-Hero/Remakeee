@@ -167,7 +167,49 @@
    "win_flags": [
     "hollow_swarm_cleared"
    ],
-   "leaves": true
+   "leaves": true,
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Mirkmole",
+      "level": 12
+     },
+     {
+      "species": "Shalebat",
+      "level": 12
+     },
+     {
+      "species": "Wickit",
+      "level": 11
+     },
+     {
+      "species": "Mirkmole",
+      "level": 11
+     }
+    ],
+    "tamer": [
+     {
+      "species": "Mirkmole",
+      "level": 12
+     },
+     {
+      "species": "Shalebat",
+      "level": 12
+     },
+     {
+      "species": "Wickit",
+      "level": 11
+     },
+     {
+      "species": "Mirkmole",
+      "level": 11
+     },
+     {
+      "species": "Shalebat",
+      "level": 13
+     }
+    ]
+   }
   }
  ],
  "signs": [
