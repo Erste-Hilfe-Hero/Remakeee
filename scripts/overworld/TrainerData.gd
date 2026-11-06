@@ -58,15 +58,25 @@ static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGene
 		top = maxi(top, s.level)
 	var shift: int = maxi(0, mini(party_top, cap) - top)
 	var out: Array[Spirling] = []
-	for s: Spirling in team:
+	var entries: Array = team_entries(def, starter, difficulty)
+	for i: int in team.size():
+		var s: Spirling = team[i]
 		if shift <= 0:
 			out.append(s)
 			continue
 		var up := Spirling.new(s.data, s.level + shift, rng)
 		up.spark = s.spark.duplicate()
 		up.hp = up.max_hp()
-		# A fixed kit and keepsake stay with the Spirling when it grows.
-		up.moves = s.moves.duplicate()
+		# Item 661: the named arts stay, the rest of the kit comes from the new ring's learn list.
+		var named: Array = (entries[i] as Dictionary).get("moves", []) if i < entries.size() and entries[i] is Dictionary else []
+		var kit: Array[MoveData] = []
+		for mv: MoveData in s.moves:
+			if mv.move_name in named and kit.size() < 4:
+				kit.append(mv)
+		for mv: MoveData in up.moves:
+			if kit.size() < 4 and not kit.has(mv):
+				kit.append(mv)
+		up.moves = kit
 		up.held = s.held
 		out.append(up)
 	return out
@@ -150,7 +160,9 @@ static func ai_tier(def: Dictionary, difficulty_ai: int) -> int:
 static func rule_for(def: Dictionary, difficulty: int = -1) -> String:
 	var by: Variant = def.get("rule_by_difficulty", {})
 	if difficulty >= 0 and difficulty < DIFFICULTY_KEYS.size() and by is Dictionary and (by as Dictionary).has(DIFFICULTY_KEYS[difficulty]):
-		return str(by[DIFFICULTY_KEYS[difficulty]])
+		var v: Variant = by[DIFFICULTY_KEYS[difficulty]]
+		# A list stacks several rules (item 677), stored as "a+b".
+		return "+".join(PackedStringArray(v)) if v is Array else str(v)
 	return str(def.get("rule", ""))
 
 ## The battle info dictionary for Overworld.start_battle.

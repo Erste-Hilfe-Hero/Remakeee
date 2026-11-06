@@ -39,7 +39,15 @@
   }
  ],
  "npcs": [
-  {"id": "tower_keeper", "x": 8, "y": 2, "facing": "down", "dialogue": "tide_rift/tower_keeper", "sprite": "villager", "show_flag": "rift_tide_sealed"},
+  {
+   "id": "tower_keeper",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "tide_rift/tower_keeper",
+   "sprite": "villager",
+   "show_flag": "rift_tide_sealed"
+  },
   {
    "id": "mystic",
    "x": 3,
@@ -255,7 +263,15 @@
     ]
    },
    "rule_by_difficulty": {
-    "story": "undertow_soft"
+    "story": "undertow_soft",
+    "veteran": [
+     "undertow",
+     "tide_turn"
+    ],
+    "rift_born": [
+     "undertow",
+     "tide_turn"
+    ]
    }
   },
   {

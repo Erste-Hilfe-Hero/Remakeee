@@ -258,7 +258,7 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 						score += bonus
 				else:
 					spoil += bonus
-		elif fx_id == &"set_field" and level >= 1:
+		elif fx_id == &"set_field" and level >= 1 and model.field_lock <= 0:
 			var fid: String = str(fx.get("field", ""))
 			# field_renew (item 616): its own field with one turn left is worth laying again.
 			var renew: bool = int(profile.get("field_renew", 0)) > 0 and model.field == fid and model.field_turns == 1

@@ -103,6 +103,8 @@ var participants: Array[Spirling] = []
 var field: String = ""
 ## The place's own field, restored when a Resonance field runs out (copied from field at start()).
 var base_field: String = ""
+## Turns left in which Resonance arts can't replace the field (Warden rule Ash Rain).
+var field_lock: int = 0
 ## Turns left on a Resonance field (0 = the field holds for the whole battle).
 var field_turns: int = 0
 ## Share of the XP an earner gets that each healthy Spirling on the player's bench also gets
@@ -352,6 +354,7 @@ func start() -> Array[BattleEvent]:
 	_fill_initial_slots()
 	base_field = field
 	field_turns = 0
+	field_lock = 0
 	snares = [[], []]
 	delayed_hits = []
 	boss_phase_done = false
@@ -378,9 +381,19 @@ func start() -> Array[BattleEvent]:
 			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
 	if BattleRules.FIELDS.has(field):
 		emit_event(BattleEvent.Type.FIELD, {"field": field, "text": str(BattleRules.FIELDS[field].intro)})
-	if BattleRules.RULES.has(foe_rule):
-		var rule: Dictionary = BattleRules.RULES[foe_rule]
-		emit_event(BattleEvent.Type.RULE, {"rule": foe_rule, "label": str(rule.label), "text": str(rule.text)})
+	for rule_id: String in BattleRules.split_rules(foe_rule):
+		var rule: Dictionary = BattleRules.RULES[rule_id]
+		emit_event(BattleEvent.Type.RULE, {"rule": rule_id, "label": str(rule.label), "text": str(rule.text)})
+		var opening: Dictionary = rule.get("field_opening", {})
+		if not opening.is_empty():
+			set_field(str(opening.field), int(opening.get("turns", BattleRules.RESONANCE_TURNS)))
+			if bool(opening.get("locked", false)):
+				field_lock = field_turns
+		var cycle: Dictionary = rule.get("field_cycle", {})
+		if not cycle.is_empty():
+			# Between the tides there is no field at all, not even the place's own.
+			base_field = ""
+			set_field(str(cycle.field), int(cycle.get("on", 2)))
 		var st: Dictionary = rule.get("player_stage", {})
 		var dragged: Array = parties[Side.PLAYER].slice(0, 1) if bool(rule.get("lead_only", false)) else parties[Side.PLAYER]
 		for s: Spirling in dragged:
@@ -527,6 +540,8 @@ func extend_field(turns: int) -> bool:
 
 ## Counts a Resonance field down at the end of a turn; when it runs out the place's field returns.
 func _tick_field() -> void:
+	if field_lock > 0:
+		field_lock -= 1
 	if field_turns <= 0:
 		return
 	field_turns -= 1
@@ -740,6 +755,7 @@ func _phase_end_of_turn() -> void:
 	_tick_timers()
 	_tick_field()
 	_tick_field_swirl()
+	_tick_field_cycle()
 	_tick_delayed_hits()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
@@ -817,9 +833,10 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		s.energy_surge -= 1
 		gain += 1
 	if side == Side.FOE:
-		var rule: Dictionary = BattleRules.RULES.get(foe_rule, {})
-		if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
-			gain += int(rule.get("foe_energy", 0))
+		for rule_id: String in BattleRules.split_rules(foe_rule):
+			var rule: Dictionary = BattleRules.RULES[rule_id]
+			if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
+				gain += int(rule.get("foe_energy", 0))
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:
@@ -1197,6 +1214,21 @@ func clear_snares(side: int) -> void:
 
 ## The field the swirl lays next (field_swirl_every), picked a turn early so it can be announced.
 var _swirl_next: String = ""
+
+## Warden rule "field_cycle" (Tide Turn, item 676): the field holds "on" turns, then "off" turns of
+## the place's own field, then comes back; FIELD_NEXT announces it at the end of the turn before.
+func _tick_field_cycle() -> void:
+	for rule_id: String in BattleRules.split_rules(foe_rule):
+		var cycle: Dictionary = BattleRules.RULES[rule_id].get("field_cycle", {})
+		if cycle.is_empty():
+			continue
+		var period: int = int(cycle.get("on", 2)) + int(cycle.get("off", 2))
+		var done: int = turn + 1
+		var fid: String = str(cycle.field)
+		if done % period == period - 1:
+			emit_event(BattleEvent.Type.FIELD_NEXT, {"field": fid, "label": str(BattleRules.FIELDS[fid].label)})
+		elif done % period == 0:
+			set_field(fid, int(cycle.get("on", 2)))
 
 ## "field_swirl_every" = N: at the end of every N-th turn a random field (from the battle seed) takes
 ## over for N turns; one turn earlier FIELD_NEXT tells both sides which one is coming.
