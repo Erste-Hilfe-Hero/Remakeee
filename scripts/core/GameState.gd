@@ -385,15 +385,19 @@ func from_dict(d: Dictionary) -> void:
 	# Saves from before fast travel: the last rest spot used still counts as visited.
 	if visited_rests.is_empty() and heal_map != "lighthouse":
 		visit_rest(heal_map, heal_cell)
-	records = (d.get("records", {}) as Dictionary).duplicate()
-	switch_progress = (d.get("switches", {}) as Dictionary).duplicate()
-	world_state = (d.get("world", {}) as Dictionary).duplicate(true)
+	records = _dict_or_empty(d.get("records", {})).duplicate()
+	switch_progress = _dict_or_empty(d.get("switches", {})).duplicate()
+	world_state = _dict_or_empty(d.get("world", {})).duplicate(true)
 	iron_oath = bool(d.get("iron_oath", false))
 	for sd: Variant in d.get("sanctuary", []):
 		var s: Spirling = Spirling.from_dict(sd)
 		if s != null:
 			sanctuary.append(s)
 	in_game = true
+
+## [param v] if it is a Dictionary, else an empty one (damaged saves must not crash the loader).
+static func _dict_or_empty(v: Variant) -> Dictionary:
+	return v if v is Dictionary else {}
 
 func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
