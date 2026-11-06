@@ -372,3 +372,19 @@ func test_boost_lines_show_battles_left() -> void:
 	GameState.shop_boosts = {"coins": {"mult": 1.5, "left": 3}}
 	assert_eq(ShopEffects.boost_lines(), ["Coins x1.5: 3 battles left"] as Array[String])
 	GameState.shop_boosts = boosts
+
+func test_team_growth_band_gives_the_bench_a_full_share() -> void:
+	var bench: bool = GameState.bench_xp
+	GameState.bench_xp = true
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.bench_share(), GameState.BENCH_XP_SHARE)
+	Billing.state = {"unlocks": {"share_band": 1}}
+	assert_eq(GameState.bench_share(), 1.0)
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10), BattleFixtures.make("Mossling", 10)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 8)] as Array[Spirling], true, 5)
+	m.bench_share = GameState.bench_share()
+	var before: Array[int] = [mine[0].xp, mine[1].xp]
+	m._award_xp(m.party(BattleModel.Side.FOE)[0])
+	assert_gt(mine[1].xp - before[1], 0, "the bench learns")
+	assert_eq(mine[1].xp - before[1], mine[0].xp - before[0], "the same as the fighter")
+	GameState.bench_xp = bench
