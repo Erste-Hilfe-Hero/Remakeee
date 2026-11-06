@@ -136,7 +136,8 @@
   "tiers": 30,
   "points_per_tier": 100,
   "points": {
-   "daily_task": 10,
+   "daily_task": 15,
+   "daily_bonus": 15,
    "weekly": 40,
    "festival_stage": 20
   },

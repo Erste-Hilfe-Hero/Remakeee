@@ -15,7 +15,7 @@ static func run(menu: MenuHost) -> void:
 		if Online.is_local():
 			title += "\n" + Loc.t("(test server on this phone)")
 		var entries: Array[String] = ["Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
-			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", "Messages from the team"]
+			"Friends, mail: %s" % ("On" if Online.social_on() else "Off"), "Download my data", "Messages from the team", "Earlier saves"]
 		var idx: int = await menu.pick_strings(title, entries)
 		match idx:
 			-1:
@@ -38,6 +38,9 @@ static func run(menu: MenuHost) -> void:
 				await _export(menu)
 			7:
 				await NoticesMenu.run(menu)
+			8:
+				if await SaveHistoryMenu.run(menu):
+					return
 
 ## Everything the server keeps about this account as one JSON file (plan area 7, item 2972;
 ## GDPR Art. 15 and 20). The browser version downloads it, phones save it to the documents folder.

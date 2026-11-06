@@ -15,7 +15,7 @@ func test_thirty_visible_rewards() -> void:
 		assert_ne(SeasonPath.reward_text(r), "")
 		if str((r as Dictionary).get("item", "")) != "":
 			assert_false(Database.item(str(r.item)).is_empty(), str(r.item))
-	assert_eq(SeasonPath.points_for("daily_task"), 10)
+	assert_eq(SeasonPath.points_for("daily_task"), 15)
 	assert_eq(SeasonPath.points_for("weekly"), 40)
 	assert_eq(SeasonPath.points_for("festival_stage"), 20)
 	assert_eq(SeasonPath.points_for("shop"), 0, "only playing moves the path")
@@ -40,7 +40,7 @@ func test_new_season_starts_fresh() -> void:
 func test_daily_task_feeds_the_path() -> void:
 	GameState.daily_tasks = {"day": DailyTasks.day_key(), "tasks": [{"id": "photo", "n": 0}], "bonus": false}
 	DailyTasks.record("photo", {})
-	assert_eq(int(SeasonPath.state().points), 10)
+	assert_eq(int(SeasonPath.state().points), SeasonPath.points_for("daily_task") + SeasonPath.points_for("daily_bonus"), "the only task of the day also brings the bonus points")
 
 func test_seen_goals_pay_waymarks() -> void:
 	var names: Array = Database.spirlings.keys()

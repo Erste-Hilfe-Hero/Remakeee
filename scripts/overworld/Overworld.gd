@@ -587,7 +587,7 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	var goal_before: int = QuestLog.current_index(GameState.flags)
 	busy = true
 	player.frozen = true
-	VirtualPad.set_wanted(false)
+	VirtualPad.set_talk(true)
 	if speaker != null:
 		DailyTasks.record("talk", {"map": map.id, "key": ref})
 	_text.voice = Sound.voice_for(speaker.npc_id if speaker != null else "")
