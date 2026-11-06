@@ -13,6 +13,8 @@ const CURVES: Dictionary = {
 	"move": {"trans": Tween.TRANS_CUBIC, "ease": Tween.EASE_IN_OUT, "time": 0.22},
 	"impact": {"trans": Tween.TRANS_EXPO, "ease": Tween.EASE_OUT, "time": 0.10},
 	"settle": {"trans": Tween.TRANS_ELASTIC, "ease": Tween.EASE_OUT, "time": 0.35},
+	# Brightening after a map change: no overshoot (item 2233).
+	"fade": {"trans": Tween.TRANS_SINE, "ease": Tween.EASE_OUT, "time": 0.11},
 }
 ## Under reduced motion no movement tween runs longer than this (item 2655).
 const REDUCED_MAX_TIME: float = 0.15
@@ -90,7 +92,7 @@ func tween(node: Node, prop: String, value: Variant, curve: String = "move", tim
 	_running[key] = tw
 	tw.finished.connect(func() -> void: _running.erase(key))
 	var from: Variant = node.get_indexed(prop)
-	if value is Vector2 and prop.begins_with("position"):
+	if value is Vector2 and (prop.begins_with("position") or prop == "offset"):
 		tw.tween_method(func(v: Vector2) -> void: node.set_indexed(prop, v.round()), from, value, dur) \
 			.set_trans(c.trans).set_ease(c.ease)
 	else:
@@ -105,6 +107,33 @@ func pop(node: Control) -> void:
 	await tween(node, "scale", Vector2.ONE * POP_SCALE, "impact", POP_UP_TIME).finished
 	if is_instance_valid(node):
 		await tween(node, "scale", Vector2.ONE, "settle").finished
+
+## Counts a label's number from [param from] to [param to] (coins, growth), with a soft tick
+## every tenth step (item 2236). [param fmt] gets the number through %d. Awaitable.
+func count_to(label: Label, from: int, to: int, time: float = 0.5, fmt: String = "%d") -> void:
+	if label == null:
+		return
+	if reduced() or from == to:
+		label.text = fmt % to
+		return
+	var last: Array[int] = [from]
+	var tw: Tween = label.create_tween()
+	tw.tween_method(func(v: float) -> void:
+		var n: int = roundi(v)
+		if n != last[0]:
+			if absi(n - from) % 10 == 0:
+				Sound.sfx("tick")
+			last[0] = n
+		label.text = fmt % n, float(from), float(to), time / speed()).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	await tw.finished
+
+## Buttons pop when released (item 2415); the 1 px sink while held comes from the theme's
+## "pressed" style (UITheme). Safe to call more than once.
+func press_feedback(b: Control) -> void:
+	if b == null or not b is BaseButton or b.has_meta("juice_press"):
+		return
+	b.set_meta("juice_press", true)
+	(b as BaseButton).button_up.connect(func() -> void: pop(b))
 
 # --- Screen shake ------------------------------------------------------------
 

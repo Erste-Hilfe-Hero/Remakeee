@@ -34,6 +34,13 @@ var _text: TextBox
 var _picker: ListPicker
 var _banner: Label
 var _fade: ColorRect
+## Dark rectangle that grows from a door over the screen on door warps (item 2277).
+var _door_wipe: ColorRect
+const DOOR_WIPE_TIME: float = 0.14
+## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
+const EDGE_SLIDE: int = 16
+var _particles: PixelParticles
+var _run_steps: int = 0
 var _battle_layer: CanvasLayer
 var _actions: Dictionary[String, Callable] = {}
 
@@ -68,11 +75,18 @@ func _ready() -> void:
 		player.frozen = true
 		_fade.color.a = 1.0
 		prologue.call_deferred()
+	else:
+		# Coming from the title screen: the world brightens in underneath it (item 2280).
+		_fade.color.a = 1.0
+		_fade_to.call_deferred(0.0)
 
 func _build() -> void:
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
+	_particles = PixelParticles.new()
+	_particles.name = "particles"
+	add_child(_particles)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
@@ -86,6 +100,8 @@ func _build() -> void:
 	player.sprite_style = "tamer"
 	player.can_move = _can_enter
 	player.stepped.connect(_on_player_stepped)
+	player.step_started.connect(_on_player_step_started)
+	player.bob = true
 	player.interact.connect(_on_interact)
 	_entities.add_child(player)
 	_camera = Camera2D.new()
@@ -109,6 +125,12 @@ func _build() -> void:
 	# The fade covers the whole screen, cut-outs included, under the (safe-area) UI.
 	_ui.add_child(_fade)
 	_ui.move_child(_fade, 0)
+	_door_wipe = ColorRect.new()
+	_door_wipe.color = UITheme.INK
+	_door_wipe.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_door_wipe.visible = false
+	_ui.add_child(_door_wipe)
+	_ui.move_child(_door_wipe, 1)
 	_banner = Label.new()
 	_banner.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	_banner.offset_top = 4
@@ -294,10 +316,41 @@ func _show_banner(text: String) -> void:
 	await get_tree().create_timer(BANNER_TIME).timeout
 	_banner.visible = false
 
+## Darkens with the "close" curve and brightens without overshoot ("fade" curve).
 func _fade_to(alpha: float) -> void:
+	await Juice.tween(_fade, "color:a", alpha, "close" if alpha > _fade.color.a else "fade", FADE_TIME).finished
+
+## True when [param cell] lies on the map border (a path to the next map, not a door).
+func is_edge_cell(cell: Vector2i) -> bool:
+	return cell.x <= 0 or cell.y <= 0 or cell.y >= map.height - 1 or cell.x >= map.rows[cell.y].length() - 1
+
+## Darkening for a warp: doors grow a dark rectangle from the door, map edges slide the view
+## on in the walking direction. Plain fade under reduced motion.
+func _warp_out(edge: bool) -> void:
+	if Juice.reduced():
+		await _fade_to(1.0)
+		return
+	if edge:
+		var d: Vector2 = Vector2(GridWalker.DIRS[player.facing]) * EDGE_SLIDE
+		Juice.tween(_camera, "offset", d, "close", FADE_TIME)
+		await _fade_to(1.0)
+		return
+	var vp: Vector2 = get_viewport().get_visible_rect().size
+	var door: Vector2 = (player.get_global_transform_with_canvas().origin + Vector2(8, 8)).round()
+	var start := Rect2(door - Vector2(8, 8), Vector2(16, 16))
+	var full := Rect2(Vector2.ZERO, vp)
+	_door_wipe.visible = true
+	var grow := func(k: float) -> void:
+		var p: Vector2 = start.position.lerp(full.position, k).round()
+		var e: Vector2 = start.end.lerp(full.end, k).round()
+		_door_wipe.position = p
+		_door_wipe.size = e - p
+	grow.call(0.0)
 	var tw: Tween = create_tween()
-	tw.tween_property(_fade, "color:a", alpha, FADE_TIME)
+	tw.tween_method(grow, 0.0, 1.0, DOOR_WIPE_TIME).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	await tw.finished
+	_fade.color.a = 1.0
+	_door_wipe.visible = false
 
 # --- Player events -------------------------------------------------------------------
 
@@ -328,8 +381,9 @@ func _warp(warp: Dictionary) -> void:
 	busy = true
 	player.frozen = true
 	Sound.sfx("warp")
-	await _fade_to(1.0)
+	await _warp_out(is_edge_cell(player.cell))
 	load_map(str(warp.to), Vector2i(int(warp.tx), int(warp.ty)), str(warp.get("facing", player.facing)))
+	_camera.offset = Vector2.ZERO
 	SaveManager.save_game()
 	await _fade_to(0.0)
 	player.frozen = false
@@ -444,7 +498,12 @@ func open_menu() -> void:
 	menu.encounter_table = map.encounter_table
 	menu.current_map = map.id
 	_ui.add_child(menu)
+	# Slides in from the right edge with "open" (item 2281).
+	if not Juice.reduced():
+		menu.position.x = MENU_SLIDE
+		Juice.tween(menu, "position", Vector2.ZERO, "open")
 	await menu.run()
+	await _close_menu(menu)
 	var target: String = menu.travel_to
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
@@ -470,6 +529,26 @@ func open_menu() -> void:
 	busy = false
 
 ## Plays a recorded battle (item 14). The replay uses copies, so nothing in the save changes.
+const MENU_SLIDE: float = 40.0
+
+## Slides the pause menu's last list back out to the right with "close" in 0.12 s.
+func _close_menu(menu: PauseMenu) -> void:
+	if Juice.reduced():
+		return
+	menu.picker.visible = true
+	menu.picker.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	Juice.tween(menu, "modulate:a", 0.0, "close")
+	await Juice.tween(menu, "position", Vector2(MENU_SLIDE, 0), "close").finished
+
+## Dust behind the feet on every second running step (items 2304, 2395).
+func _on_player_step_started(dir: String, run: bool) -> void:
+	if not run:
+		_run_steps = 0
+		return
+	_run_steps += 1
+	if _run_steps % 2 == 0:
+		_particles.dust(player.position + Vector2(8, 15), -Vector2(GridWalker.DIRS[dir]))
+
 func watch_replay(snap: Dictionary) -> void:
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
@@ -539,6 +618,7 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 		return
 	var count: int = int(args[1]) if args.size() > 1 else 1
 	GameState.add_item(args[0], count)
+	Sound.sfx("pickup")
 	var item_name: String = str(Database.item(args[0]).get("name", args[0]))
 	await say(["You got %s x%d!" % [item_name, count]] as Array[String])
 	if bool(Database.item(args[0]).get("gear", false)):
@@ -777,6 +857,7 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 		if GameState.money < price:
 			await menu.info("Not enough coins.")
 			continue
+		Toast.coins(GameState.money, GameState.money - price)
 		GameState.money -= price
 		GameState.add_item(args[idx])
 		Sound.sfx("coin")
@@ -1073,7 +1154,10 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	return outcome
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	var coins_before: int = GameState.money
 	GameState.money += int(model.prize_money) if outcome == BattleModel.Outcome.WIN and not model.is_wild else 0
+	if GameState.money != coins_before:
+		Toast.coins(coins_before, GameState.money)
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:
 		Online.contribute("battles")

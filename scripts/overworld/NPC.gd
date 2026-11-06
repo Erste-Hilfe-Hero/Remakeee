@@ -15,16 +15,28 @@ func setup(def: Dictionary) -> void:
 	place(Vector2i(int(def.x), int(def.y)), str(def.get("facing", "down")))
 
 ## Shows a "!" above the head when a Wayfarer spots the player.
+## It pops in (1 px bigger for a moment) with a short two-tone call (items 2306, 2505).
 var alert: bool = false:
 	set(v):
+		var was: bool = alert
 		alert = v
+		if v and not was:
+			Sound.sfx("spot")
+			_alert_pop = not Juice.reduced()
+			if _alert_pop and is_inside_tree():
+				get_tree().create_timer(ALERT_POP_TIME).timeout.connect(func() -> void:
+					_alert_pop = false
+					queue_redraw())
 		queue_redraw()
+var _alert_pop: bool = false
+const ALERT_POP_TIME: float = 0.06
 
 func _draw() -> void:
 	super._draw()
 	if alert:
-		draw_rect(Rect2(6, -9, 4, 8), UITheme.BG)
-		draw_rect(Rect2(6, -9, 4, 8), UITheme.INK, false, 1.0)
+		var g: int = 1 if _alert_pop else 0
+		draw_rect(Rect2(6 - g, -9 - g, 4 + g * 2, 8 + g * 2), UITheme.BG)
+		draw_rect(Rect2(6 - g, -9 - g, 4 + g * 2, 8 + g * 2), UITheme.INK, false, 1.0)
 		draw_rect(Rect2(7, -8, 2, 4), UITheme.INK)
 		draw_rect(Rect2(7, -3, 2, 1), UITheme.INK)
 

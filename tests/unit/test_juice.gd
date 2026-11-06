@@ -11,6 +11,8 @@ func before_each() -> void:
 	GameState.battle_speed = 0
 	Juice.in_battle = false
 	Juice.trauma = 0.0
+	# An earlier online test can leave the tree paused (reconnect overlay); tweens would stall.
+	get_tree().paused = false
 
 func after_each() -> void:
 	Juice.set_shake_root(null)

@@ -133,6 +133,26 @@ def sfx_defs() -> dict[str, np.ndarray]:
     n = secs(0.25)
     out["run"] = noise(n, 1) * np.linspace(0.4, 0, n) * 0.6
     out.update(element_hits())
+    out.update(feel_sfx())
+    return out
+
+
+def feel_sfx() -> dict[str, np.ndarray]:
+    """Plan area 6: counter tick, Wayfarer spots you, item picked up (items 2236, 2505, 2506).
+    Built after the older effects so their noise stays byte-identical."""
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.015)
+    out["tick"] = pulse(freq(midi("A6")), n, 0.125) * env(n, attack=0.001, decay=0.008, sustain=0.2, release=0.004) * 0.25
+    parts = []
+    for nm in ["E5", "B5"]:
+        k = secs(0.075)
+        parts.append(pulse(freq(midi(nm)), k, 0.25) * env(k, attack=0.002, sustain=0.7, release=0.01))
+    out["spot"] = np.concatenate(parts) * 0.45
+    parts = []
+    for nm in ["D5", "F#5", "A5", "D6"]:
+        k = secs(0.055)
+        parts.append(triangle(freq(midi(nm)), k) * env(k, attack=0.002, sustain=0.7, release=0.01))
+    out["pickup"] = np.concatenate(parts) * 0.7
     return out
 
 
@@ -367,12 +387,27 @@ def write_ogg(path: str, data: np.ndarray) -> None:
 
 
 def main() -> None:
+    import argparse
+    ap = argparse.ArgumentParser(description="Build Chimora's sound effects and music.")
+    ap.add_argument("--only", action="append", default=[], help="build only this sound or song (repeatable)")
+    ap.add_argument("--sfx", action="store_true", help="build sound effects only")
+    ap.add_argument("--music", action="store_true", help="build music only")
+    args = ap.parse_args()
+    do_sfx = args.sfx or not args.music
+    do_music = args.music or not args.sfx
+    wanted = set(args.only)
     os.makedirs(SFX_DIR, exist_ok=True)
     os.makedirs(MUSIC_DIR, exist_ok=True)
+    # Every effect is always synthesized (they share one seeded noise source, so skipping one
+    # would change the next); --only just limits what is written.
     for name, data in sfx_defs().items():
+        if not do_sfx or (wanted and name not in wanted):
+            continue
         write_wav(os.path.join(SFX_DIR, name + ".wav"), data)
         print("sfx", name)
     for name, spec in SONGS.items():
+        if not do_music or (wanted and name not in wanted):
+            continue
         data = compose(name, **spec)
         write_ogg(os.path.join(MUSIC_DIR, name + ".ogg"), data)
         print("music", name, "%.1fs" % (len(data) / RATE))

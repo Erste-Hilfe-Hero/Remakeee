@@ -51,6 +51,7 @@ func _ready() -> void:
 		b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		b.clip_text = true
 		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		Juice.press_feedback(b)
 		for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
 			var sb: StyleBox = b.get_theme_stylebox(state)
 			if sb != null:
@@ -180,6 +181,7 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.text = text
 	b.custom_minimum_size = Vector2(0, SMALL_BUTTON_HEIGHT)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
 		chosen.emit(kind, -1))

@@ -46,7 +46,10 @@ func run() -> void:
 			"Save":
 				var ok: bool = SaveManager.save_game()
 				Sound.sfx("save" if ok else "cancel")
-				await info("Game saved." if ok else "Saving failed.")
+				if ok:
+					Toast.show_text("Game saved.")
+				else:
+					await info("Saving failed.")
 			"Settings": await run_settings()
 			"Photo":
 				photo = true

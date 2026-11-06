@@ -3,4 +3,5 @@ T = {
 "Screen shake: %s": "Bildschirmwackeln: %s",
 "Vibration: %s": "Vibration: %s",
 "Weak": "Schwach", "Full": "Voll",
+"Coins: %d": "Münzen: %d",
 }

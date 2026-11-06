@@ -31,6 +31,7 @@ func _add_key(label: String) -> void:
 	b.custom_minimum_size = KEY_SIZE
 	b.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
 	b.pressed.connect(press.bind(label))
+	Juice.press_feedback(b)
 	add_child(b)
 
 ## What a key does (also used by the tests).

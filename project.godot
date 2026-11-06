@@ -14,6 +14,7 @@ SaveManager="*res://scripts/core/SaveManager.gd"
 Sound="*res://scripts/core/Sound.gd"
 Juice="*res://scripts/core/Juice.gd"
 Haptics="*res://scripts/core/Haptics.gd"
+Toast="*res://scripts/ui/Toast.gd"
 Online="*res://scripts/online/Online.gd"
 
 [display]

@@ -10,6 +10,12 @@ var _box: VBoxContainer
 var _title: Label
 var _buttons: Array[Button] = []
 var _cancellable: bool = true
+## Paper marker at the right end of the focused (ink) row; glides between rows (item 2416). A Node2D, so the
+## VBoxContainer does not lay it out.
+var _cursor: ListCursor
+const CURSOR_TIME: float = 0.06
+var _cursor_btn: Button
+var _cursor_tw: Tween
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -29,6 +35,10 @@ func _ready() -> void:
 	_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_box.add_theme_constant_override("separation", 1)
 	scroll.add_child(_box)
+	_cursor = ListCursor.new()
+	_cursor.visible = false
+	_cursor.z_index = 1
+	_box.add_child(_cursor)
 
 ## [param entries]: Array of {"text": String, "disabled": bool}. [param cancellable] adds a Back row.
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -> int:
@@ -52,8 +62,10 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -
 			Sound.sfx("cancel" if result < 0 else "confirm")
 			picked.emit(result))
 		b.focus_entered.connect(func() -> void:
+			_move_cursor(b)
 			if visible:
 				Sound.sfx("select"))
+		Juice.press_feedback(b)
 		_box.add_child(b)
 		_buttons.append(b)
 	visible = true
@@ -63,10 +75,26 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true) -
 			break
 	var index: int = await picked
 	visible = false
+	_cursor.visible = false
 	return index
 
-func _unhandled_input(event: InputEvent) -> void:
-	if visible and _cancellable and event.is_action_pressed("ui_cancel"):
-		get_viewport().set_input_as_handled()
-		Sound.sfx("cancel")
-		picked.emit(-1)
+## Glides the marker to [param b]'s row with the "move" curve in 0.06 s (jumps on the first row).
+func _move_cursor(b: Button) -> void:
+	var first: bool = not _cursor.visible or not is_instance_valid(_cursor_btn)
+	_cursor_btn = b
+	if first:
+		_cursor.position = _cursor_spot(b)
+		_cursor.visible = true
+		return
+	_cursor_tw = Juice.tween(_cursor, "position", _cursor_spot(b), "move", CURSOR_TIME)
+
+func _cursor_spot(b: Button) -> Vector2:
+	return Vector2(b.position.x + b.size.x - 6.0, b.position.y + floorf(b.size.y / 2.0) - 2.0).round()
+
+## Keeps the marker on its row when the list is laid out again (first frame, scrolling).
+func _process(_delta: float) -> void:
+	if not visible or not _cursor.visible or not is_instance_valid(_cursor_btn):
+		return
+	if _cursor_tw != null and _cursor_tw.is_running():
+		return
+	_cursor.position = _cursor_spot(_cursor_btn)
