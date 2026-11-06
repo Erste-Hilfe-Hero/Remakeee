@@ -118,6 +118,8 @@ jobs:
           godot --headless --path . --import
           godot --headless --path . --export-debug "Android APK (debug)" build/android/Chimora-debug.apk
           "$(tools/find_zipalign.sh)" -c -P 16 -v 4 build/android/Chimora-debug.apk
+      - name: Billing plugin is in the APK
+        run: unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/billing/ChimoraBilling'
       - name: APK size budget
         run: tools/apk_budget.sh build/android/Chimora-debug.apk 88
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
