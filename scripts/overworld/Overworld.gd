@@ -924,40 +924,70 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 
 ## Post-game gauntlet: five echo Wayfarers in a row, scaled to your strongest Spirling, no rest.
 func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not GameState.has_flag("tower_intro"):
+		GameState.set_flag("tower_intro")
+		await say(["The stair has %d floors. There is no healing on the way, only at a rest point after every tenth floor, where your climb is saved." % Gauntlet.FLOORS] as Array[String])
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	var best: int = int(GameState.records.get("gauntlet_best", 0))
-	var go: bool = await menu.confirm("Climb the lighthouse stair? Best so far: %d of %d." % [best, Gauntlet.ROUNDS])
-	menu.queue_free()
-	if not go:
+	var best: int = Gauntlet.best()
+	var start: int = 0
+	var saved: int = Gauntlet.checkpoint()
+	if saved > 0:
+		var pick: int = await menu.pick_strings("Best so far: floor %d of %d." % [best, Gauntlet.FLOORS],
+			["Continue from floor %d" % (saved + 1), "Start from floor 1"] as Array[String])
+		if pick < 0:
+			menu.queue_free()
+			return
+		start = saved if pick == 0 else 0
+	elif not await menu.confirm("Climb the lighthouse stair? Best so far: floor %d of %d." % [best, Gauntlet.FLOORS]):
+		menu.queue_free()
 		return
-	var run: Gauntlet = Gauntlet.new(GameState.rng.randi(), GameState.party)
-	var wins: int = 0
+	menu.queue_free()
+	var run_seed: int = Gauntlet.checkpoint_seed() if start > 0 and Gauntlet.checkpoint_seed() != 0 else GameState.rng.randi()
+	var run: Gauntlet = Gauntlet.new(run_seed, GameState.progress_cap())
+	if start > 0:
+		# Continuing at a rest point: the team starts rested, as it was when the climb was saved.
+		GameState.heal_party()
+	var floors: int = start
 	var helper: Dictionary = await pick_echo_partner("Climb with a friend's echo beside you?")
-	while wins < Gauntlet.ROUNDS:
-		await say(["Echo %d of %d steps out of the light..." % [wins + 1, Gauntlet.ROUNDS]] as Array[String])
-		var team: Array[Spirling] = run.team(wins)
-		var info: Dictionary = {"name": "Echo Wayfarer %d" % (wins + 1), "ai": 2, "money": run.prize(wins)}
+	while floors < Gauntlet.FLOORS:
+		await say(["Floor %d of %d: an echo steps out of the light..." % [floors + 1, Gauntlet.FLOORS]] as Array[String])
+		var info: Dictionary = {"name": "Echo Wayfarer %d" % (floors + 1), "ai": Gauntlet.ai_for(floors), "money": run.prize(floors)}
 		if not helper.is_empty():
 			for s: Spirling in helper.partner.echo:
 				s.restore()
 			info["partner"] = helper.partner
 		busy = false
-		var outcome: BattleModel.Outcome = await start_battle(team, false, info)
+		var outcome: BattleModel.Outcome = await start_battle(run.team(floors), false, info)
 		busy = true
 		player.frozen = true
 		if outcome != BattleModel.Outcome.WIN:
 			break
-		wins += 1
-	GameState.records["gauntlet_best"] = maxi(best, wins)
+		floors += 1
+		var lines: Array[String] = Gauntlet.pay_floor(floors)
+		if Gauntlet.is_rest_point(floors):
+			Gauntlet.save_checkpoint(floors, run_seed)
+			GameState.heal_party()
+			lines.append("A rest point. Your team is rested and your climb is saved.")
+		if not lines.is_empty():
+			await say(lines)
+		if Gauntlet.is_rest_point(floors):
+			var m := MenuHost.new()
+			_ui.add_child(m)
+			var climb_on: bool = await m.confirm("Keep climbing?")
+			m.queue_free()
+			if not climb_on:
+				break
+	GameState.records["gauntlet_best"] = maxi(best, floors)
 	if not helper.is_empty():
-		await thank_echo(helper, wins >= Gauntlet.ROUNDS)
-	if wins >= Gauntlet.ROUNDS:
+		await thank_echo(helper, floors >= Gauntlet.FLOORS)
+	if floors >= Gauntlet.FLOORS:
+		Gauntlet.clear_checkpoint()
 		GameState.set_flag("gauntlet_clear")
 		await _action_give_item([run.reward_item(), "1"] as PackedStringArray, null)
 		await say(["The echoes bow and fade. You reached the lamp room!"] as Array[String])
-	elif wins > best:
-		await say(["New best: %d of %d!" % [wins, Gauntlet.ROUNDS]] as Array[String])
+	elif floors > best:
+		await say(["New best: floor %d of %d!" % [floors, Gauntlet.FLOORS]] as Array[String])
 
 ## Weekly challenge (item 88, plan area 8): five echo Wayfarers that are the same for everyone this week.
 func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:

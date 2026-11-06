@@ -108,7 +108,7 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | Daily task | 10 | 3 a day | built |
 | All three daily tasks | 10 extra | once a day | built |
 | Weekly echo, first win of the week | 60 | once a week | built |
-| Lighthouse climb, new floor / every 10th floor | 5 / 50 | once per floor | planned (3260) |
+| Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
 | Master Wayfarer | 80 first win, then 20 | once a week each | planned (3289) |
 | Achievements | 10 / 25 / 50 / 100 | once each | planned (3313) |
 

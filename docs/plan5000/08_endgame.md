@@ -161,13 +161,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3256. [P3] Jede Jahreszeit mit einem eigenen Pfadmotiv versehen, das zum Fest dieser Jahreszeit passt.
 
 ### Leuchtturm-Treppe und Herausforderungs-Türme
-3257. [P1] Die Leuchtturm-Treppe (Gauntlet) von 5 Runden auf 30 Stockwerke erweitern, aufgeteilt in drei Abschnitte zu je 10 Stockwerken.
-3258. [P1] Nach jedem zehnten Stockwerk einen Rastpunkt einbauen, an dem man den Lauf speichert und später fortsetzt.
-3259. [P1] Den Lauf zwischen zwei Rastpunkten ohne Heilung führen, wie heute bei den 5 Runden.
-3260. [P1] Jedes erstmals erreichte Stockwerk einmalig mit 5 Wegmarken belohnen, jedes zehnte mit 50.
-3261. [P1] Den besten Stand als „Stockwerk x von 30“ statt „x von 5“ in GameState.records["gauntlet_best"] speichern und alte Werte übernehmen.
-3262. [P1] Die Ringe der Echo-Gegner pro Stockwerk an den Ring-Deckel binden statt an den stärksten eigenen Spirling, damit Hochziehen nichts nützt.
-3263. [P1] Beim ersten Betreten der neuen Leuchtturm-Treppe den Spieler mit einem Satz über Rastpunkte und fehlende Heilung aufklären.
+3257. [x] [P1] Die Leuchtturm-Treppe (Gauntlet) von 5 Runden auf 30 Stockwerke erweitern, aufgeteilt in drei Abschnitte zu je 10 Stockwerken.
+3258. [x] [P1] Nach jedem zehnten Stockwerk einen Rastpunkt einbauen, an dem man den Lauf speichert und später fortsetzt.
+3259. [x] [P1] Den Lauf zwischen zwei Rastpunkten ohne Heilung führen, wie heute bei den 5 Runden.
+3260. [x] [P1] Jedes erstmals erreichte Stockwerk einmalig mit 5 Wegmarken belohnen, jedes zehnte mit 50.
+3261. [x] [P1] Den besten Stand als „Stockwerk x von 30“ statt „x von 5“ in GameState.records["gauntlet_best"] speichern und alte Werte übernehmen.
+3262. [x] [P1] Die Ringe der Echo-Gegner pro Stockwerk an den Ring-Deckel binden statt an den stärksten eigenen Spirling, damit Hochziehen nichts nützt.
+3263. [x] [P1] Beim ersten Betreten der neuen Leuchtturm-Treppe den Spieler mit einem Satz über Rastpunkte und fehlende Heilung aufklären.
 3264. [P2] Nach Stockwerk 30 eine Endlosstrecke öffnen, deren Gegner pro Stockwerk einen Ring stärker werden bis Ring 60.
 3265. [P2] Die Endlosstrecke wöchentlich mit 2 Wegmarken pro neuem Stockwerk belohnen, höchstens 100 pro Woche.
 3266. [P2] Einen zweiten Turm „Glutstiege“ im Cinder Rift nach dem Versiegeln öffnen, in dem nur Ember-, Stone- und Volt-Gegner kämpfen, 15 Stockwerke.

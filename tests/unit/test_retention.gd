@@ -128,7 +128,7 @@ func test_records_text() -> void:
 	GameState.records["gauntlet_best"] = 3
 	GameState.records["weekly"] = {"week": WeeklyChallenge.this_week(), "best": 2, "claimed": false}
 	var t: String = PauseMenu.records_text()
-	assert_string_contains(t, "Lighthouse climb best: 3 of 5")
+	assert_string_contains(t, "Lighthouse stair best: floor 3 of 30")
 	assert_string_contains(t, "This week: 2 of 5")
 
 func test_info_strip_speaks() -> void:

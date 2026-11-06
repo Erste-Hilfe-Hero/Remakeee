@@ -65,4 +65,15 @@ T = {
 # Weekly echo
 "Round %d of %d: %d turns, %d%% power left, %d fainted.": "Runde %d von %d: %d Züge, %d%% Kraft übrig, %d erschöpft.",
 "Interim prize: %d coins.": "Zwischenpreis: %d Münzen.",
+# Lighthouse stair (30 floors)
+"The stair has %d floors. There is no healing on the way, only at a rest point after every tenth floor, where your climb is saved.": "Die Treppe hat %d Stockwerke. Unterwegs gibt es keine Heilung, nur an einem Rastpunkt nach jedem zehnten Stockwerk, wo dein Aufstieg gespeichert wird.",
+"Best so far: floor %d of %d.": "Bisher am besten: Stockwerk %d von %d.",
+"Continue from floor %d": "Weiter ab Stockwerk %d",
+"Start from floor 1": "Bei Stockwerk 1 beginnen",
+"Climb the lighthouse stair? Best so far: floor %d of %d.": "Die Leuchtturm-Treppe hinaufsteigen? Bisher am besten: Stockwerk %d von %d.",
+"Floor %d of %d: an echo steps out of the light...": "Stockwerk %d von %d: Ein Echo tritt aus dem Licht ...",
+"A rest point. Your team is rested and your climb is saved.": "Ein Rastpunkt. Dein Team ist ausgeruht und dein Aufstieg gespeichert.",
+"Keep climbing?": "Weiter hinauf?",
+"New best: floor %d of %d!": "Neue Bestleistung: Stockwerk %d von %d!",
+"Lighthouse stair best: floor %d of %d": "Leuchtturm-Treppe, beste Leistung: Stockwerk %d von %d",
 }
