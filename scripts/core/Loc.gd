@@ -11,6 +11,13 @@ const PATH: String = "res://data/i18n/%s.json"
 static var _installed: Dictionary[String, PatternTranslation] = {}
 static var _current: String = "en"
 
+## Sends language_changed(code) when the language really changes (plan item 2187), so texts
+## drawn by hand (title status, info texts, toasts, list hints) can draw themselves again.
+class Events extends RefCounted:
+	signal language_changed(code: String)
+
+static var events: Events = Events.new()
+
 ## The device language if the game has it, otherwise English.
 static func default_language() -> String:
 	var dev: String = OS.get_locale_language()
@@ -28,8 +35,11 @@ static func set_language(code: String) -> void:
 		if t != null:
 			_installed[code] = t
 			TranslationServer.add_translation(t)
+	var changed: bool = code != _current
 	_current = code
 	TranslationServer.set_locale(code)
+	if changed:
+		events.language_changed.emit(code)
 
 ## Removes the installed translations (on quit: the script-backed translations must go
 ## before the scripts are unloaded, or the engine crashes on exit).
@@ -62,6 +72,12 @@ static func t(s: String) -> String:
 		return s
 	var r: String = tr.lookup(s)
 	return r if r != "" else s
+
+## English singular or plural for [param n] (plan item 2188): "1 coin", "3 coins". Both forms
+## are their own keys in the language files, so other languages get theirs too.
+static func plural(n: int, one: String, other: String) -> String:
+	var form: String = one if n == 1 else other
+	return form % n if form.contains("%d") else form
 
 ## The next language after the current one, for a settings toggle.
 static func next_language() -> String:
