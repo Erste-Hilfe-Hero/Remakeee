@@ -655,5 +655,77 @@
   "shop": true,
   "last_stand": 0.3,
   "per_battle": 1
+ },
+ {
+  "id": "rg_script_ember",
+  "name": "Rift Script: Glowglass Slash",
+  "description": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy, 20% chance to scorch) to one Ember Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Glowglass Slash",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_tide",
+  "name": "Rift Script: Floodglass Wave",
+  "description": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy, 20% chance to soak) to one Tide Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Floodglass Wave",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_bloom",
+  "name": "Rift Script: Vineglass Sting",
+  "description": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy, heals 25% of the damage) to one Bloom Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Vineglass Sting",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_volt",
+  "name": "Rift Script: Boltglass Bite",
+  "description": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy, 30% chance to lower Pace) to one Volt Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Boltglass Bite",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_stone",
+  "name": "Rift Script: Rockglass Ram",
+  "description": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy, 30% chance to raise own Guard) to one Stone Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Rockglass Ram",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_gale",
+  "name": "Rift Script: Stormglass Cut",
+  "description": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy, strikes first) to one Gale Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Stormglass Cut",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_lumen",
+  "name": "Rift Script: Lightglass Beam",
+  "description": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy, cures the user's own condition) to one Lumen Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Lightglass Beam",
+  "used_up": true
+ },
+ {
+  "id": "rg_script_umbra",
+  "name": "Rift Script: Duskglass Grip",
+  "description": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Duskglass Grip",
+  "used_up": true
  }
 ]

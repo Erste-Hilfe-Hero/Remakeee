@@ -1242,5 +1242,89 @@
   "effect": "heal_self",
   "effect_amount": 0.2,
   "mend": 3
+ },
+ {
+  "name": "Glowglass Slash",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "status": "scorch",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Floodglass Wave",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "status": "soak",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Vineglass Sting",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "drain",
+  "effect_amount": 0.25
+ },
+ {
+  "name": "Boltglass Bite",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Rockglass Ram",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Stormglass Cut",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "priority": 1
+ },
+ {
+  "name": "Lightglass Beam",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "cure_self": true
+ },
+ {
+  "name": "Duskglass Grip",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "foc",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
  }
 ]

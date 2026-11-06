@@ -733,16 +733,16 @@ func _teach_echo(id: String) -> void:
 	if not GameState.can_learn_echo(s, id):
 		await info("%s can't learn %s." % [s.display_name(), mv.move_name])
 		return
-	if s.moves.size() < Spirling.MAX_MOVES:
-		s.moves.append(mv)
-	else:
+	var forget: int = -1
+	if s.moves.size() >= Spirling.MAX_MOVES:
 		var known: Array[String] = []
 		for m: MoveData in s.moves:
 			known.append(m.move_name)
-		var forget: int = await pick_strings("Forget which art for %s?" % mv.move_name, known)
+		forget = await pick_strings("Forget which art for %s?" % mv.move_name, known)
 		if forget < 0:
 			return
-		s.moves[forget] = mv
+	if not GameState.learn_from_item(s, id, forget):
+		return
 	Sound.sfx("level_up")
 	await info("%s learned %s!" % [s.display_name(), mv.move_name])
 
