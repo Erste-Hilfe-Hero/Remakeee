@@ -47,8 +47,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2262. [P2] Overworld-Wackeln beim Betreten eines Rifts mit Trauma 0,35 und tiefem Grollen.
 2263. [P2] Overworld-Wackeln beim Laufen gegen eine Wand ersetzt durch einen 1-Pixel-Ruck der Spielfigur, nicht des Bildes.
 2264. [P3] Kleines Wackeln (Trauma 0,10) beim Öffnen einer verschlossenen Tür oder eines Durchgangs nach einer Story-Bedingung.
-2265. [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
-2266. [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
+2265. [x] [P2] Treffer-Stopp auch beim Bestätigen des letzten Treffers eines Kampfes, 120 ms lang, damit das Ende spürbar wird.
+2266. [x] [P2] Treffer-Stopp wird bei Mehrfachtreffern in einem Zug nur beim ersten und letzten Treffer ausgelöst, damit es nicht stottert.
 2267. [x] [P2] Wackeln überlagert sich nicht unbegrenzt: Trauma wird bei 1,0 gekappt und neue Ereignisse addieren höchstens bis dahin.
 2268. [x] [P2] Bei 4x Kampftempo sinkt Trauma auf 60 % und der Treffer-Stopp auf höchstens 40 ms.
 2269. [P2] Das Fotomodus-Bild (PhotoMode.gd) wird immer ohne Wackel-Versatz aufgenommen.
@@ -124,7 +124,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2333. [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
 2334. [P2] Ring-Aufstieg in der Welt (nach Kampf oder Gegenstand): derselbe Ring über dem Teamplatz im Pausemenü, wenn man es danach öffnet.
 2335. [x] [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
-2336. [P2] Im Mehrfachkampf dreht sich der Angreifer vor seiner Technik zur Seite seines Ziels (Spiegelung über mirrored), wenn das Ziel auf der anderen Hälfte steht.
+2336. [x] [P2] Im Mehrfachkampf dreht sich der Angreifer vor seiner Technik zur Seite seines Ziels (Spiegelung über mirrored), wenn das Ziel auf der anderen Hälfte steht.
 2337. [x] [P2] Ausweichen bei verfehlter Technik: der Ziel-Spirling springt 4 Pixel zur Seite und zurück in 0,2 s.
 2338. [P3] Beim Rasten (Energie sammeln) sinkt der Spirling 1 Pixel ab und richtet sich mit "settle" wieder auf.
 2339. [P2] Teamliste im Pausemenü: der ausgewählte Spirling wippt 1 Pixel im Takt von 0,4 s, die anderen stehen still.

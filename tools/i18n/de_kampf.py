@@ -221,3 +221,9 @@ T.update({
 "Maelis's cover": "Maelis' Deckung",
 "Maelis knows her tide fears Volt and Bloom. Zephlet's Gale cuts Bloom down, and Zippit holds against the Volt Spirlings you bring, so her Riptail can wait for its moment.": "Maelis weiß, dass ihre Flut Volt und Blüte fürchtet. Zephlets Wind schneidet Blüte nieder, und Zippit hält gegen die Volt-Spirlings, die du mitbringst, damit ihr Riptail auf seinen Moment warten kann.",
 })
+
+# Plan area 2, items 682-684: the Warden Second Trial.
+T.update({
+"%s offers the Second Trial: two rules at once, a full team. Battle?": "%s bietet die Zweite Prüfung an: zwei Regeln zugleich, ein volles Team. Kämpfen?",
+"%s: You passed the Second Trial. The Rift remembers you.": "%s: Du hast die Zweite Prüfung bestanden. Der Riss wird sich an dich erinnern.",
+})

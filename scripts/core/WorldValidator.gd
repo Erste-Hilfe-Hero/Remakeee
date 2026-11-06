@@ -98,6 +98,20 @@ static func validate() -> PackedStringArray:
 					for k: Variant in tune:
 						if not (tune[k] is float or tune[k] is int) or not (BattleAI.profiles().get("balanced", {}) as Dictionary).has(str(k)):
 							errors.append("map '%s': npc '%s' profile_tune '%s' is not a known number weight" % [id, n.get("id", ""), k])
+				if n.has("second_trial"):
+					var st_ok: bool = TrainerData.has_second_trial(n)
+					if st_ok:
+						var rules: Array = n.second_trial.get("rules", [])
+						st_ok = rules.size() == TrainerData.SECOND_TRIAL_RULES
+						for r: Variant in rules:
+							st_ok = st_ok and BattleRules.RULES.has(str(r))
+						for d: int in TrainerData.DIFFICULTY_KEYS.size():
+							var entries: Array = TrainerData.team_entries(TrainerData.second_trial_def(n, id), "", d)
+							st_ok = st_ok and not entries.is_empty()
+							for e: Variant in entries:
+								st_ok = st_ok and e is Dictionary and Database.species(str(e.get("species", ""))) != null
+					if not st_ok:
+						errors.append("map '%s': npc '%s' has a bad second_trial (a Warden, %d known rules, known species)" % [id, n.get("id", ""), TrainerData.SECOND_TRIAL_RULES])
 				if n.has("lexicon") and not Lexicon.has_entry(str(n.lexicon)):
 					errors.append("map '%s': npc '%s' has unknown lexicon entry '%s'" % [id, n.get("id", ""), n.lexicon])
 				for t: Variant in teams:
