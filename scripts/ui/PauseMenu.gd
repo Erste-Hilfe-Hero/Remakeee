@@ -16,6 +16,11 @@ var photo: bool = false
 var watch_replay: bool = false
 ## Set when the player picks an echo duel under Friends: {"code", "name", "team"}.
 var echo_duel: Dictionary = {}
+## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
+var room_puzzle: bool = false
+var can_undo: bool = false
+## Set to "undo" or "reset" when the player picks one; the overworld does it after closing.
+var room_action: String = ""
 
 func run() -> void:
 	while true:
@@ -24,6 +29,8 @@ func run() -> void:
 			labels.insert(labels.find("Save"), "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
 			labels.insert(1, "Travel")
+		if room_puzzle:
+			labels.insert(1, "Room")
 		var idx: int = await pick_strings(menu_title(), labels)
 		if idx < 0:
 			return
@@ -44,9 +51,7 @@ func run() -> void:
 			"Satchel": await run_bag()
 			"Storage": await run_storage()
 			"Save":
-				var ok: bool = SaveManager.save_game()
-				Sound.sfx("save" if ok else "cancel")
-				await info("Game saved." if ok else "Saving failed.")
+				save_now()
 			"Settings": await run_settings()
 			"Photo":
 				photo = true
@@ -54,6 +59,26 @@ func run() -> void:
 			"Travel":
 				if await run_travel():
 					return
+			"Room":
+				if await run_room():
+					return
+
+## Saves without blocking the menu (item 2130) and says honestly where the save is: "Saved."
+## only once the server has it, otherwise that the phone has it and the server follows (1868).
+func save_now() -> void:
+	var ok: bool = SaveManager.save_game()
+	Sound.sfx("save" if ok else "cancel")
+	if not ok:
+		toast("Saving failed.", 2.5)
+		return
+	toast("Saving...", 5.0)
+	var on_server: bool = await Online.wait_synced(SaveManager.slot)
+	if not is_inside_tree():
+		return
+	toast(SAVED_TEXT if on_server else SAVED_LOCAL_TEXT, 1.5 if on_server else 3.0)
+
+const SAVED_TEXT: String = "Saved."
+const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once the connection is back."
 
 ## Achievements and personal bests (items 88-90).
 func run_records() -> void:
@@ -107,6 +132,23 @@ static func menu_title() -> String:
 	if GameState.level_cap() < Spirling.MAX_LEVEL:
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
+
+## Puzzle room tools (area 3 items 1012, 1014). Returns true if an action was picked.
+func run_room() -> bool:
+	var opts: Array[String] = []
+	if can_undo:
+		opts.append("Undo last push")
+	opts.append("Reset room")
+	var idx: int = await pick_strings("Puzzle room", opts)
+	if idx < 0:
+		return false
+	if opts[idx] == "Reset room":
+		if not await confirm("Put every boulder back where it started?"):
+			return false
+		room_action = "reset"
+	else:
+		room_action = "undo"
+	return true
 
 ## Fast travel between rest spots already used (item 41). Returns true if a target was picked.
 func run_travel() -> bool:
@@ -239,8 +281,43 @@ func run_bag() -> void:
 			if who >= 0:
 				var msg: String = GameState.use_item_outside_battle(ids[idx], GameState.party[who])
 				await info(msg if not msg.is_empty() else "That would do nothing right now.")
+		elif bool(it.get("gear", false)):
+			await info(gear_page(ids[idx]), gear_picture(ids[idx]))
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
+
+## What each "works_on" entry of a gear item means (area 3 item 1050).
+const GEAR_PLACES: Dictionary[String, String] = {
+	"~": "narrow water with a post on the far side", "^": "low cliffs", "v": "vine walls (v)",
+	"w": "shallow water (w)", "Y": "gaps with a chalk mark (Y)", "dark": "pitch-dark passages",
+	"wheel": "sluice wheels, mine carts and grates", "shaft": "marked edges above a shaft",
+}
+
+## Satchel page for a piece of Wayfarer Gear: name, short text and where it works.
+static func gear_page(id: String) -> String:
+	var it: Dictionary = Database.item(id)
+	var lines: PackedStringArray = [Loc.t(str(it.get("name", id))), Loc.t(str(it.get("description", "")))]
+	var places: PackedStringArray = []
+	for w: Variant in it.get("works_on", []):
+		places.append(Loc.t(GEAR_PLACES.get(str(w), str(w))))
+	if not places.is_empty():
+		lines.append(Loc.t("Works on: %s") % ", ".join(places))
+	lines.append(Loc.t("Always on foot: you walk, wade and climb yourself."))
+	return "\n".join(lines)
+
+## The tile a gear item works on, drawn at twice its size, or null.
+static func gear_picture(id: String) -> Texture2D:
+	var kinds: Dictionary = {"~": TilesetFactory.Kind.WATER, "^": TilesetFactory.Kind.CLIFF, "v": TilesetFactory.Kind.VINES,
+		"w": TilesetFactory.Kind.WADE, "Y": TilesetFactory.Kind.PLANK, "dark": TilesetFactory.Kind.ROCK,
+		"wheel": TilesetFactory.Kind.ROCK, "shaft": TilesetFactory.Kind.PLANK}
+	var on: Array = Database.item(id).get("works_on", [])
+	if on.is_empty() or not ResourceLoader.exists(TilesetFactory.ATLAS_PATH):
+		return null
+	var img: Image = (load(TilesetFactory.ATLAS_PATH) as Texture2D).get_image()
+	var k: int = int(kinds.get(str(on[0]), TilesetFactory.Kind.GRASS))
+	var tile: Image = img.get_region(Rect2i(k * TilesetFactory.TILE, 0, TilesetFactory.TILE, TilesetFactory.TILE))
+	tile.resize(TilesetFactory.TILE * 2, TilesetFactory.TILE * 2, Image.INTERPOLATE_NEAREST)
+	return ImageTexture.create_from_image(tile)
 
 ## Echo Crystal: pick a Spirling of the right element, then (if it knows 4 moves) one to forget.
 func _teach_echo(id: String) -> void:
