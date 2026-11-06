@@ -123,9 +123,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2332. [x] [P1] Getroffene Spirlings werden 3 Pixel weg vom Angreifer geschoben (Kurve "impact") und federn in 0,15 s zurück, zusätzlich zum bestehenden hit_flash.
 2333. [P2] Ring-Aufstieg im Kampf: ein Ring aus Pixeln wächst vom Spirling aus von 8 auf 40 Pixel Durchmesser in 0,4 s und blendet aus.
 2334. [P2] Ring-Aufstieg in der Welt (nach Kampf oder Gegenstand): derselbe Ring über dem Teamplatz im Pausemenü, wenn man es danach öffnet.
-2335. [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
+2335. [x] [P2] Spirlings mit wenig Kraft (unter 25 %) stehen 1 Pixel tiefer und wippen langsamer, sodass man Schwäche ohne Zahlen sieht.
 2336. [P2] Im Mehrfachkampf dreht sich der Angreifer vor seiner Technik zur Seite seines Ziels (Spiegelung über mirrored), wenn das Ziel auf der anderen Hälfte steht.
-2337. [P2] Ausweichen bei verfehlter Technik: der Ziel-Spirling springt 4 Pixel zur Seite und zurück in 0,2 s.
+2337. [x] [P2] Ausweichen bei verfehlter Technik: der Ziel-Spirling springt 4 Pixel zur Seite und zurück in 0,2 s.
 2338. [P3] Beim Rasten (Energie sammeln) sinkt der Spirling 1 Pixel ab und richtet sich mit "settle" wieder auf.
 2339. [P2] Teamliste im Pausemenü: der ausgewählte Spirling wippt 1 Pixel im Takt von 0,4 s, die anderen stehen still.
 2340. [P2] Teamliste: Spirlings mit wenig Kraft wippen langsamer (0,8 s), erschöpfte gar nicht und sind auf 60 % Helligkeit.
