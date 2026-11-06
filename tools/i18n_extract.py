@@ -89,6 +89,10 @@ def strings():
         for k in ("habitat", "lore", "origin"):
             if isinstance(sp.get(k), str) and sp[k]:
                 found.append(sp[k])
+    for a in json.load(open(os.path.join(ROOT, "data/achievements.json"))).get("achievements", []):
+        for k in ("title", "text"):
+            if isinstance(a.get(k), str):
+                found.append(a[k])
     ev = os.path.join(ROOT, "data/events.json")
     if os.path.exists(ev):
         for group in json.load(open(ev)).values():

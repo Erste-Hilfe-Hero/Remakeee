@@ -22,7 +22,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3127. [P2] Den Wegmarken-Stand auf der Spielstandkarte im Titelbild neben Spielzeit und Spirlog-Zahl zeigen.
 3128. [P3] Einen Jahresrückblick der verdienten Wegmarken nach Quelle in den Aufzeichnungen zeigen.
 3129. [P3] Beim Eisernen Schwur alle Wegmarken-Gutschriften um 25 Prozent erhöhen und den Bonus in der Gutschrift ausweisen.
-3130. [P3] Erfolge „Sparsam“ für 5000 und „Wegkundig“ für 50000 insgesamt verdiente Wegmarken ergänzen.
+3130. [x] [P3] Erfolge „Sparsam“ für 5000 und „Wegkundig“ für 50000 insgesamt verdiente Wegmarken ergänzen.
 3131. [P3] Eine Lexikonseite „Wegmarken“ anlegen, die alle Quellen mit Betrag und Häufigkeit aus der Belohnungstabelle zeigt.
 
 ### Wegmarken-Tauschstand und Münzen-Kreislauf
@@ -65,7 +65,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3166. [P2] Eine Auftragsart „Spiele das Echo-Melodie-Spiel mit der Wertung Gut oder besser“ ergänzen.
 3167. [P2] Eine Auftragsart „Sieh einen noch nicht gesehenen Spirling“ nur dann ziehen, wenn noch ungesehene Arten im erreichbaren Gebiet leben.
 3168. [P2] Den Fund des Tages (DailyFind) als eigenen Auftrag zählen lassen, wenn er an dem Tag im Pool landet.
-3169. [P2] Beim Abschluss eines Auftrags einen kurzen Hinweis oben im Bild zeigen, der den Kampf oder die Erkundung nicht anhält.
+3169. [x] [P2] Beim Abschluss eines Auftrags einen kurzen Hinweis oben im Bild zeigen, der den Kampf oder die Erkundung nicht anhält.
 3170. [P2] Nach dem Ende von Akt I einen vierten, schwereren Auftrag mit 25 Wegmarken freischalten.
 3171. [P2] Für jede Auftragsart einen GUT-Test schreiben, der den Fortschritt aus einem nachgestellten Spielereignis zählt.
 3172. [P2] Die Aufträge in data/i18n/de.json mit Platzhaltern für Zahl, Ort und Element übersetzen.
@@ -74,7 +74,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3175. [P3] Einen Wochenauftrag ergänzen, der aus sieben erledigten Tagesaufträgen in derselben Woche besteht und 50 Wegmarken zahlt.
 3176. [P3] Aufträge mit Tageszeit-Bezug ziehen, etwa „Triff bei Dämmerung einen Lumen-Spirling“, nur wenn Tag und Nacht eingeschaltet sind.
 3177. [P3] Einen Auftragsverlauf der letzten 14 Tage in den Aufzeichnungen zeigen.
-3178. [P3] Einen Erfolg „Fleißig“ für 100 erledigte Tagesaufträge und „Unermüdlich“ für 500 ergänzen.
+3178. [x] [P3] Einen Erfolg „Fleißig“ für 100 erledigte Tagesaufträge und „Unermüdlich“ für 500 ergänzen.
 3179. [P3] Aufträge, die zwei Tage hintereinander gezogen würden, durch die nächste Art ersetzen.
 3180. [P3] Den Auftrag „Zeig einem Dorfbewohner einen Spirling“ an die bestehenden Seitenfiguren (Fischer, Wanderin, Schilfschneider) binden, auch nach erledigtem Seitenziel.
 3181. [P3] Am Sonntag einen Ruheauftrag ziehen, der nur aus Rasten, Fotografieren oder einem Besuch im Wanderer-Zimmer besteht.
@@ -219,14 +219,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3310. [P3] Die acht Meister-Wanderer auf einer Karte im Lexikon mit Sieg-Haken zeigen.
 
 ### Erfolge und Abzeichen
-3311. [P1] Die Erfolgsliste aus Achievements.LIST nach data/achievements.json verschieben, mit Id, Titel, Text, Kategorie und Wegmarken-Lohn.
-3312. [P1] Die Erfolge von 17 auf mindestens 80 erweitern, verteilt auf sechs Kategorien: Bonden, Kämpfen, Erkunden, Sammeln, Ereignisse, Herausforderung.
-3313. [P1] Jeden Erfolg mit 10, 25, 50 oder 100 Wegmarken nach Schwierigkeit belohnen und den Lohn beim Erfolg anzeigen.
-3314. [P1] Mehrstufige Erfolge einführen (Bronze, Silber, Gold), etwa „Kindred“ für 10, 15 und 21 gebondete Arten.
-3315. [P1] Beim Freischalten eines Erfolgs ein kurzes Abzeichen-Bild oben im Bild zeigen, ohne das Spiel anzuhalten.
-3316. [P1] Ein Abzeichenbuch im Menü bauen, das alle Erfolge als 16x16-Abzeichen im Raster zeigt, gesperrte grau mit Hinweistext.
-3317. [P1] Für jeden Erfolg einen Fortschritt (k/n) anzeigen, wo es eine Zahl gibt.
-3318. [P1] Alle bestehenden 17 Erfolge mit ihrem Freischaltdatum in das neue Format übernehmen und rückwirkend den Wegmarken-Lohn auszahlen.
+3311. [x] [P1] Die Erfolgsliste aus Achievements.LIST nach data/achievements.json verschieben, mit Id, Titel, Text, Kategorie und Wegmarken-Lohn.
+3312. [x] [P1] Die Erfolge von 17 auf mindestens 80 erweitern, verteilt auf sechs Kategorien: Bonden, Kämpfen, Erkunden, Sammeln, Ereignisse, Herausforderung.
+3313. [x] [P1] Jeden Erfolg mit 10, 25, 50 oder 100 Wegmarken nach Schwierigkeit belohnen und den Lohn beim Erfolg anzeigen.
+3314. [x] [P1] Mehrstufige Erfolge einführen (Bronze, Silber, Gold), etwa „Kindred“ für 10, 15 und 21 gebondete Arten.
+3315. [x] [P1] Beim Freischalten eines Erfolgs ein kurzes Abzeichen-Bild oben im Bild zeigen, ohne das Spiel anzuhalten.
+3316. [x] [P1] Ein Abzeichenbuch im Menü bauen, das alle Erfolge als 16x16-Abzeichen im Raster zeigt, gesperrte grau mit Hinweistext.
+3317. [x] [P1] Für jeden Erfolg einen Fortschritt (k/n) anzeigen, wo es eine Zahl gibt.
+3318. [x] [P1] Alle bestehenden 17 Erfolge mit ihrem Freischaltdatum in das neue Format übernehmen und rückwirkend den Wegmarken-Lohn auszahlen.
 3319. [P2] Geheime Erfolge einführen, deren Text erst nach dem Freischalten erscheint, höchstens 10 Stück.
 3320. [P2] Einen Erfolg „Ohne Fehltakt“ für ein Echo-Melodie-Spiel ohne verpassten Ton ergänzen.
 3321. [P2] Einen Erfolg „Nachtschwärmer“ für 50 Kämpfe bei Nacht ergänzen.

@@ -1,0 +1,895 @@
+{
+ "_comment": "Achievements (plan area 8). stat = what is counted (Achievements.stat), n = goal, reward = Waymarks, group/tier = bronze/silver/gold steps.",
+ "achievements": [
+  {
+   "id": "first_bond",
+   "title": "First Bond",
+   "text": "Bond with a wild Spirling.",
+   "cat": "bond",
+   "reward": 10,
+   "stat": "bonded_wild",
+   "n": 1
+  },
+  {
+   "id": "full_team",
+   "title": "Full Team",
+   "text": "Travel with a full team of five Spirlings.",
+   "cat": "bond",
+   "reward": 10,
+   "stat": "party_size",
+   "n": 5
+  },
+  {
+   "id": "seen_10",
+   "title": "Field Notes",
+   "text": "See 10 kinds of Spirling.",
+   "cat": "collect",
+   "reward": 10,
+   "stat": "seen",
+   "n": 10,
+   "group": "field_notes",
+   "tier": "bronze"
+  },
+  {
+   "id": "bonded_10",
+   "title": "Kindred",
+   "text": "Bond with 10 kinds of Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "bonded",
+   "n": 10,
+   "group": "kindred",
+   "tier": "bronze"
+  },
+  {
+   "id": "seen_all",
+   "title": "Complete Spirlog",
+   "text": "See every kind of Spirling in Veydal.",
+   "cat": "collect",
+   "reward": 100,
+   "stat": "seen",
+   "n": 21,
+   "group": "field_notes",
+   "tier": "gold"
+  },
+  {
+   "id": "level_30",
+   "title": "Seasoned",
+   "text": "Grow a Spirling to ring 30.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "max_level",
+   "n": 30,
+   "group": "seasoned",
+   "tier": "bronze"
+  },
+  {
+   "id": "evolved",
+   "title": "Growing Up",
+   "text": "See a Spirling unfurl into its next form.",
+   "cat": "bond",
+   "reward": 10,
+   "stat": "evolved",
+   "n": 1,
+   "group": "growing",
+   "tier": "bronze"
+  },
+  {
+   "id": "first_rift",
+   "title": "Mender",
+   "text": "Mend your first Rift.",
+   "cat": "challenge",
+   "reward": 25,
+   "stat": "rifts",
+   "n": 1
+  },
+  {
+   "id": "both_rifts",
+   "title": "Quiet Valley",
+   "text": "Mend both Rifts of Veydal.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "rifts",
+   "n": 2
+  },
+  {
+   "id": "lamps",
+   "title": "Lamplighter",
+   "text": "Solve the lamp puzzle in Murk Hollow.",
+   "cat": "explore",
+   "reward": 25,
+   "stat": "flag:hollow_lamps",
+   "n": 1
+  },
+  {
+   "id": "helper",
+   "title": "Good Neighbour",
+   "text": "Finish every side goal.",
+   "cat": "explore",
+   "reward": 50,
+   "stat": "side_goals",
+   "n": 1
+  },
+  {
+   "id": "tower",
+   "title": "Echo Climber",
+   "text": "Climb the whole lighthouse tower.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "gauntlet_best",
+   "n": 30,
+   "group": "climber",
+   "tier": "gold"
+  },
+  {
+   "id": "weekly",
+   "title": "Week by Week",
+   "text": "Win a weekly challenge.",
+   "cat": "events",
+   "reward": 25,
+   "stat": "weekly_wins",
+   "n": 1,
+   "group": "weekly",
+   "tier": "bronze"
+  },
+  {
+   "id": "prism",
+   "title": "Odd Colours",
+   "text": "Bond with a shimmering Spirling.",
+   "cat": "collect",
+   "reward": 50,
+   "stat": "prism",
+   "n": 1
+  },
+  {
+   "id": "rich",
+   "title": "Full Purse",
+   "text": "Hold 10000 coins.",
+   "cat": "collect",
+   "reward": 25,
+   "stat": "money",
+   "n": 10000
+  },
+  {
+   "id": "oath",
+   "title": "Oathkeeper",
+   "text": "Mend both Rifts of Veydal under the Iron Oath.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "oath_rifts",
+   "n": 2,
+   "group": "oath",
+   "tier": "bronze"
+  },
+  {
+   "id": "rematch",
+   "title": "Old Rivals",
+   "text": "Win 5 rematches against Wayfarers.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "rematch_wins",
+   "n": 5,
+   "group": "rivals",
+   "tier": "bronze"
+  },
+  {
+   "id": "seen_15",
+   "title": "Field Notes II",
+   "text": "See 15 kinds of Spirling.",
+   "cat": "collect",
+   "reward": 25,
+   "stat": "seen",
+   "n": 15,
+   "group": "field_notes",
+   "tier": "silver"
+  },
+  {
+   "id": "bonded_15",
+   "title": "Kindred II",
+   "text": "Bond with 15 kinds of Spirling.",
+   "cat": "bond",
+   "reward": 50,
+   "stat": "bonded",
+   "n": 15,
+   "group": "kindred",
+   "tier": "silver"
+  },
+  {
+   "id": "bonded_21",
+   "title": "Kindred III",
+   "text": "Bond with all 21 kinds of Spirling.",
+   "cat": "bond",
+   "reward": 100,
+   "stat": "bonded",
+   "n": 21,
+   "group": "kindred",
+   "tier": "gold"
+  },
+  {
+   "id": "level_45",
+   "title": "Seasoned II",
+   "text": "Grow a Spirling to ring 45.",
+   "cat": "bond",
+   "reward": 50,
+   "stat": "max_level",
+   "n": 45,
+   "group": "seasoned",
+   "tier": "silver"
+  },
+  {
+   "id": "level_60",
+   "title": "Seasoned III",
+   "text": "Grow a Spirling to ring 60.",
+   "cat": "bond",
+   "reward": 100,
+   "stat": "max_level",
+   "n": 60,
+   "group": "seasoned",
+   "tier": "gold"
+  },
+  {
+   "id": "evolved_5",
+   "title": "Growing Up II",
+   "text": "Have 5 Spirlings in unfurled forms.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "evolved",
+   "n": 5,
+   "group": "growing",
+   "tier": "silver"
+  },
+  {
+   "id": "evolved_10",
+   "title": "Growing Up III",
+   "text": "Have 10 Spirlings in unfurled forms.",
+   "cat": "bond",
+   "reward": 50,
+   "stat": "evolved",
+   "n": 10,
+   "group": "growing",
+   "tier": "gold"
+  },
+  {
+   "id": "tower_10",
+   "title": "Echo Climber I",
+   "text": "Clear floor 10 of the lighthouse stair.",
+   "cat": "challenge",
+   "reward": 25,
+   "stat": "gauntlet_best",
+   "n": 10,
+   "group": "climber",
+   "tier": "bronze"
+  },
+  {
+   "id": "tower_20",
+   "title": "Echo Climber II",
+   "text": "Clear floor 20 of the lighthouse stair.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "gauntlet_best",
+   "n": 20,
+   "group": "climber",
+   "tier": "silver"
+  },
+  {
+   "id": "weekly_5",
+   "title": "Week by Week II",
+   "text": "Win 5 weekly challenges.",
+   "cat": "events",
+   "reward": 50,
+   "stat": "weekly_wins",
+   "n": 5,
+   "group": "weekly",
+   "tier": "silver"
+  },
+  {
+   "id": "weekly_20",
+   "title": "Week by Week III",
+   "text": "Win 20 weekly challenges.",
+   "cat": "events",
+   "reward": 100,
+   "stat": "weekly_wins",
+   "n": 20,
+   "group": "weekly",
+   "tier": "gold"
+  },
+  {
+   "id": "rematch_20",
+   "title": "Old Rivals II",
+   "text": "Win 20 rematches against Wayfarers.",
+   "cat": "battle",
+   "reward": 50,
+   "stat": "rematch_wins",
+   "n": 20,
+   "group": "rivals",
+   "tier": "silver"
+  },
+  {
+   "id": "rematch_50",
+   "title": "Old Rivals III",
+   "text": "Win 50 rematches against Wayfarers.",
+   "cat": "battle",
+   "reward": 100,
+   "stat": "rematch_wins",
+   "n": 50,
+   "group": "rivals",
+   "tier": "gold"
+  },
+  {
+   "id": "oath_veteran",
+   "title": "Oathkeeper II",
+   "text": "Mend both Rifts under the Iron Oath on Veteran.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "oath_rifts_veteran",
+   "n": 2,
+   "group": "oath",
+   "tier": "silver"
+  },
+  {
+   "id": "oath_riftborn",
+   "title": "Oathkeeper III",
+   "text": "Mend both Rifts under the Iron Oath on Rift-Born.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "oath_rifts_riftborn",
+   "n": 2,
+   "group": "oath",
+   "tier": "gold"
+  },
+  {
+   "id": "wins_10",
+   "title": "Scrapper",
+   "text": "Win 10 battles.",
+   "cat": "battle",
+   "reward": 10,
+   "stat": "count_win",
+   "n": 10,
+   "group": "wins",
+   "tier": "bronze"
+  },
+  {
+   "id": "wins_100",
+   "title": "Brawler",
+   "text": "Win 100 battles.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "count_win",
+   "n": 100,
+   "group": "wins",
+   "tier": "silver"
+  },
+  {
+   "id": "wins_500",
+   "title": "Champion of the Valley",
+   "text": "Win 500 battles.",
+   "cat": "battle",
+   "reward": 100,
+   "stat": "count_win",
+   "n": 500,
+   "group": "wins",
+   "tier": "gold"
+  },
+  {
+   "id": "wild_25",
+   "title": "Wild Ways",
+   "text": "Beat 25 wild Spirlings.",
+   "cat": "battle",
+   "reward": 10,
+   "stat": "count_win_wild",
+   "n": 25,
+   "group": "wild",
+   "tier": "bronze"
+  },
+  {
+   "id": "wild_250",
+   "title": "Wild Ways II",
+   "text": "Beat 250 wild Spirlings.",
+   "cat": "battle",
+   "reward": 50,
+   "stat": "count_win_wild",
+   "n": 250,
+   "group": "wild",
+   "tier": "silver"
+  },
+  {
+   "id": "tamer_10",
+   "title": "Wayfarer Duels",
+   "text": "Win 10 battles against Wayfarers.",
+   "cat": "battle",
+   "reward": 25,
+   "stat": "count_win_tamer",
+   "n": 10,
+   "group": "duels",
+   "tier": "bronze"
+  },
+  {
+   "id": "tamer_50",
+   "title": "Wayfarer Duels II",
+   "text": "Win 50 battles against Wayfarers.",
+   "cat": "battle",
+   "reward": 50,
+   "stat": "count_win_tamer",
+   "n": 50,
+   "group": "duels",
+   "tier": "silver"
+  },
+  {
+   "id": "bonds_10",
+   "title": "Many Friends",
+   "text": "Bond with 10 wild Spirlings.",
+   "cat": "bond",
+   "reward": 10,
+   "stat": "count_bond",
+   "n": 10,
+   "group": "friends",
+   "tier": "bronze"
+  },
+  {
+   "id": "bonds_30",
+   "title": "Many Friends II",
+   "text": "Bond with 30 wild Spirlings.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "count_bond",
+   "n": 30,
+   "group": "friends",
+   "tier": "silver"
+  },
+  {
+   "id": "bonds_75",
+   "title": "Many Friends III",
+   "text": "Bond with 75 wild Spirlings.",
+   "cat": "bond",
+   "reward": 50,
+   "stat": "count_bond",
+   "n": 75,
+   "group": "friends",
+   "tier": "gold"
+  },
+  {
+   "id": "element_ember",
+   "title": "Ember Friend",
+   "text": "Bond with every kind of Ember Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:EMBER",
+   "n": 1
+  },
+  {
+   "id": "element_tide",
+   "title": "Tide Friend",
+   "text": "Bond with every kind of Tide Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:TIDE",
+   "n": 1
+  },
+  {
+   "id": "element_bloom",
+   "title": "Bloom Friend",
+   "text": "Bond with every kind of Bloom Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:BLOOM",
+   "n": 1
+  },
+  {
+   "id": "element_volt",
+   "title": "Volt Friend",
+   "text": "Bond with every kind of Volt Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:VOLT",
+   "n": 1
+  },
+  {
+   "id": "element_stone",
+   "title": "Stone Friend",
+   "text": "Bond with every kind of Stone Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:STONE",
+   "n": 1
+  },
+  {
+   "id": "element_gale",
+   "title": "Gale Friend",
+   "text": "Bond with every kind of Gale Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:GALE",
+   "n": 1
+  },
+  {
+   "id": "element_lumen",
+   "title": "Lumen Friend",
+   "text": "Bond with every kind of Lumen Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:LUMEN",
+   "n": 1
+  },
+  {
+   "id": "element_umbra",
+   "title": "Umbra Friend",
+   "text": "Bond with every kind of Umbra Spirling.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "element_bonded:UMBRA",
+   "n": 1
+  },
+  {
+   "id": "level_30_x5",
+   "title": "Strong Together",
+   "text": "Grow five Spirlings to ring 30.",
+   "cat": "bond",
+   "reward": 50,
+   "stat": "level30_count",
+   "n": 5
+  },
+  {
+   "id": "big_box",
+   "title": "Busy Box",
+   "text": "Keep 20 Spirlings in storage.",
+   "cat": "collect",
+   "reward": 25,
+   "stat": "storage_size",
+   "n": 20
+  },
+  {
+   "id": "steps_1000",
+   "title": "Wanderer",
+   "text": "Walk 1000 steps.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "count_step",
+   "n": 1000,
+   "group": "wanderer",
+   "tier": "bronze"
+  },
+  {
+   "id": "steps_10000",
+   "title": "Wanderer II",
+   "text": "Walk 10000 steps.",
+   "cat": "explore",
+   "reward": 25,
+   "stat": "count_step",
+   "n": 10000,
+   "group": "wanderer",
+   "tier": "silver"
+  },
+  {
+   "id": "steps_50000",
+   "title": "Wanderer III",
+   "text": "Walk 50000 steps.",
+   "cat": "explore",
+   "reward": 50,
+   "stat": "count_step",
+   "n": 50000,
+   "group": "wanderer",
+   "tier": "gold"
+  },
+  {
+   "id": "maps_all",
+   "title": "Every Corner",
+   "text": "Visit every place in Veydal.",
+   "cat": "explore",
+   "reward": 50,
+   "stat": "maps_visited",
+   "n": 11
+  },
+  {
+   "id": "rests_10",
+   "title": "Spring Water",
+   "text": "Rest at a Rest Spring 10 times.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "count_rest",
+   "n": 10,
+   "group": "springs",
+   "tier": "bronze"
+  },
+  {
+   "id": "rests_100",
+   "title": "Spring Water II",
+   "text": "Rest at a Rest Spring 100 times.",
+   "cat": "explore",
+   "reward": 25,
+   "stat": "count_rest",
+   "n": 100,
+   "group": "springs",
+   "tier": "silver"
+  },
+  {
+   "id": "chat_50",
+   "title": "Friendly Face",
+   "text": "Talk to people 50 times.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "count_talk",
+   "n": 50
+  },
+  {
+   "id": "pages",
+   "title": "Mirela's Pages",
+   "text": "Find every page of Mirela's map book.",
+   "cat": "explore",
+   "reward": 100,
+   "stat": "flag:pages_all",
+   "n": 1
+  },
+  {
+   "id": "tools",
+   "title": "Wayfarer's Gear",
+   "text": "Carry the Grapple Line, Climbing Pick and Storm Lantern.",
+   "cat": "explore",
+   "reward": 25,
+   "stat": "gear",
+   "n": 3
+  },
+  {
+   "id": "find_islet",
+   "title": "Islet Find",
+   "text": "Find the hidden spot: Islet Find.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "flag:islet_find",
+   "n": 1
+  },
+  {
+   "id": "find_fern_rock",
+   "title": "Under the Fern Rock",
+   "text": "Find the hidden spot: Under the Fern Rock.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "flag:fern_rock_find",
+   "n": 1
+  },
+  {
+   "id": "find_thorn_rock",
+   "title": "Thornridge Cache",
+   "text": "Find the hidden spot: Thornridge Cache.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "flag:thorn_rock_find",
+   "n": 1
+  },
+  {
+   "id": "find_hollow_nook",
+   "title": "Hollow Nook",
+   "text": "Find the hidden spot: Hollow Nook.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "flag:hollow_nook_find",
+   "n": 1
+  },
+  {
+   "id": "find_marsh_reed",
+   "title": "In the Reeds",
+   "text": "Find the hidden spot: In the Reeds.",
+   "cat": "explore",
+   "reward": 10,
+   "stat": "flag:marsh_reed_find",
+   "n": 1
+  },
+  {
+   "id": "waymarks_500",
+   "title": "First Waymarks",
+   "text": "Earn 500 Waymarks in total.",
+   "cat": "collect",
+   "reward": 10,
+   "stat": "waymarks_total",
+   "n": 500,
+   "group": "waymarks",
+   "tier": "bronze"
+  },
+  {
+   "id": "waymarks_5000",
+   "title": "Thrifty",
+   "text": "Earn 5000 Waymarks in total.",
+   "cat": "collect",
+   "reward": 50,
+   "stat": "waymarks_total",
+   "n": 5000,
+   "group": "waymarks",
+   "tier": "silver"
+  },
+  {
+   "id": "waymarks_50000",
+   "title": "Wayfinder",
+   "text": "Earn 50000 Waymarks in total.",
+   "cat": "collect",
+   "reward": 100,
+   "stat": "waymarks_total",
+   "n": 50000,
+   "group": "waymarks",
+   "tier": "gold"
+  },
+  {
+   "id": "trades_10",
+   "title": "Trader",
+   "text": "Trade with Marla 10 times.",
+   "cat": "collect",
+   "reward": 10,
+   "stat": "count_trade",
+   "n": 10,
+   "group": "trader",
+   "tier": "bronze"
+  },
+  {
+   "id": "trades_100",
+   "title": "Trader II",
+   "text": "Trade with Marla 100 times.",
+   "cat": "collect",
+   "reward": 50,
+   "stat": "count_trade",
+   "n": 100,
+   "group": "trader",
+   "tier": "silver"
+  },
+  {
+   "id": "rich_50k",
+   "title": "Heavy Purse",
+   "text": "Hold 50000 coins.",
+   "cat": "collect",
+   "reward": 50,
+   "stat": "money",
+   "n": 50000
+  },
+  {
+   "id": "prism_3",
+   "title": "Odd Colours II",
+   "text": "Bond with 3 shimmering Spirlings.",
+   "cat": "collect",
+   "reward": 100,
+   "stat": "prism",
+   "n": 3
+  },
+  {
+   "id": "photos_10",
+   "title": "Snapshots",
+   "text": "Take 10 photos in photo mode.",
+   "cat": "collect",
+   "reward": 10,
+   "stat": "count_photo",
+   "n": 10,
+   "group": "photos",
+   "tier": "bronze"
+  },
+  {
+   "id": "photos_50",
+   "title": "Snapshots II",
+   "text": "Take 50 photos in photo mode.",
+   "cat": "collect",
+   "reward": 25,
+   "stat": "count_photo",
+   "n": 50,
+   "group": "photos",
+   "tier": "silver"
+  },
+  {
+   "id": "tasks_10",
+   "title": "Daily Rounds",
+   "text": "Finish 10 daily tasks.",
+   "cat": "events",
+   "reward": 10,
+   "stat": "daily_tasks_done",
+   "n": 10,
+   "group": "tasks",
+   "tier": "bronze"
+  },
+  {
+   "id": "tasks_100",
+   "title": "Diligent",
+   "text": "Finish 100 daily tasks.",
+   "cat": "events",
+   "reward": 50,
+   "stat": "daily_tasks_done",
+   "n": 100,
+   "group": "tasks",
+   "tier": "silver"
+  },
+  {
+   "id": "tasks_500",
+   "title": "Tireless",
+   "text": "Finish 500 daily tasks.",
+   "cat": "events",
+   "reward": 100,
+   "stat": "daily_tasks_done",
+   "n": 500,
+   "group": "tasks",
+   "tier": "gold"
+  },
+  {
+   "id": "weekly_full",
+   "title": "Five for Five",
+   "text": "Win all five rounds of a weekly challenge without a fainted Spirling.",
+   "cat": "events",
+   "reward": 50,
+   "stat": "record:weekly_flawless",
+   "n": 1
+  },
+  {
+   "id": "festival",
+   "title": "Festival Guest",
+   "text": "Collect a festival gift from the crier.",
+   "cat": "events",
+   "reward": 10,
+   "stat": "festival_gifts",
+   "n": 1
+  },
+  {
+   "id": "festival_4",
+   "title": "Every Season",
+   "text": "Collect the gifts of four different festivals.",
+   "cat": "events",
+   "reward": 50,
+   "stat": "festival_gifts",
+   "n": 4
+  },
+  {
+   "id": "tower_flawless",
+   "title": "Steady Climb",
+   "text": "Clear a section of the lighthouse stair without a fainted Spirling.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "record:tower_flawless",
+   "n": 1
+  },
+  {
+   "id": "veteran_rifts",
+   "title": "Veteran Mender",
+   "text": "Mend both Rifts on Veteran or Rift-Born.",
+   "cat": "challenge",
+   "reward": 50,
+   "stat": "rifts_veteran",
+   "n": 2
+  },
+  {
+   "id": "riftborn_rifts",
+   "title": "Rift-Born Mender",
+   "text": "Mend both Rifts on Rift-Born.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "rifts_riftborn",
+   "n": 2
+  },
+  {
+   "id": "story_team",
+   "title": "Small Band",
+   "text": "Mend both Rifts with no more than three Spirlings in the team.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "record:small_band",
+   "n": 1
+  },
+  {
+   "id": "starter_30",
+   "title": "Old Friends",
+   "text": "Grow your first partner to ring 30.",
+   "cat": "bond",
+   "reward": 25,
+   "stat": "starter_level",
+   "n": 30
+  },
+  {
+   "id": "starter_60",
+   "title": "Oldest Friends",
+   "text": "Grow your first partner to ring 60.",
+   "cat": "bond",
+   "reward": 50,
+   "stat": "starter_level",
+   "n": 60
+  },
+  {
+   "id": "sanctuary",
+   "title": "Remembered",
+   "text": "Keep a Spirling in the Sanctuary.",
+   "cat": "challenge",
+   "reward": 10,
+   "stat": "sanctuary_size",
+   "n": 1
+  }
+ ]
+}
