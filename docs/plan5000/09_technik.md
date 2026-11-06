@@ -409,9 +409,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 355
 ### Jugendschutz und Verbraucherrecht
 3929. [P1] Stelle `docs/legal/STORE_COMPLIANCE.md` und `docs/MONETIZATION.md` auf das neue Modell (kostenlos mit In-App-Käufen) um, damit IARC, Apple-Alter und Data Safety mit "Digitale Käufe: ja" neu beantwortet werden.
 3930. [P1] Rechne mit dem USK-Hinweis "In-Game-Käufe" und prüfe, ob bezahlte Vorteile im Kampf die erwartete Altersstufe ändern, bevor der Shop live geht.
-3931. [P1] Lege in `docs/legal/SHOP_RECHT.md` eine Prüfliste für alle Shop-Texte an: keine direkte Kaufaufforderung an Kinder (UWG Anhang Nr. 28), Echtgeld-Preis immer sichtbar, keine künstliche Zeitnot.
-3932. [P1] Halte die bestehende Regel "keine bezahlten Zufallsinhalte" in `docs/legal/SHOP_RECHT.md` fest, weil sie Altersstufe, Apple-Pflicht zur Anzeige der Chancen und das Verbot in Belgien auslöst.
-3933. [P1] Ergänze die Nutzungsbedingungen um einen Abschnitt zu virtuellen Gütern (kein Eigentum, kein Umtausch in Geld, Verhalten bei Kontolöschung) mit Hinweis zum Widerrufsrecht bei digitalen Inhalten.
+3931. [x] [P1] Lege in `docs/legal/SHOP_RECHT.md` eine Prüfliste für alle Shop-Texte an: keine direkte Kaufaufforderung an Kinder (UWG Anhang Nr. 28), Echtgeld-Preis immer sichtbar, keine künstliche Zeitnot.
+3932. [x] [P1] Halte die bestehende Regel "keine bezahlten Zufallsinhalte" in `docs/legal/SHOP_RECHT.md` fest, weil sie Altersstufe, Apple-Pflicht zur Anzeige der Chancen und das Verbot in Belgien auslöst.
+3933. [x] [P1] Ergänze die Nutzungsbedingungen um einen Abschnitt zu virtuellen Gütern (kein Eigentum, kein Umtausch in Geld, Verhalten bei Kontolöschung) mit Hinweis zum Widerrufsrecht bei digitalen Inhalten.
 3934. [P2] Prüfe die Grundsätze der EU-Verbraucherschutzbehörden zu Spielwährungen (März 2025) und halte in `docs/legal/SHOP_RECHT.md` fest, welche Punkte Bereich 10 umsetzen muss.
 3935. [P2] Erkläre auf der Support-Seite, wie Eltern Käufe über die Familienfunktionen von Apple und Google sperren oder bestätigen lassen.
 3936. [P2] Lege eine Vorlage für Erstattungsanfragen an, die auf die Erstattungswege von Apple und Google verweist, weil der Händler das nicht selbst abwickelt.
