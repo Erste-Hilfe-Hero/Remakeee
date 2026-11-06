@@ -61,7 +61,8 @@ services:
       GOTRUE_EXTERNAL_ANONYMOUS_USERS_ENABLED: "true"
       GOTRUE_EXTERNAL_EMAIL_ENABLED: "false"
       GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
-      GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 30
+      # New accounts per hour and IP address (plan item 3873; stock Caddy has no rate limiter).
+      GOTRUE_RATE_LIMIT_ANONYMOUS_USERS: 10
 
   rest:
     logging: *logging
@@ -76,6 +77,8 @@ services:
       PGRST_DB_ANON_ROLE: anon
       PGRST_JWT_SECRET: ${JWT_SECRET}
       PGRST_DB_USE_LEGACY_GUCS: "false"
+      # Feature switches from server_config (supabase/migrations/20261110090001_tech_sync.sql).
+      PGRST_DB_PRE_REQUEST: public._pre_request
 
   # Battle referee (plan area 7, items 2687-2690, 2703): plays uploaded battles again with the
   # game's own battle code. No port; it only talks to the database, as user chimora_referee.

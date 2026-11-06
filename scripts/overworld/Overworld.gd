@@ -1142,7 +1142,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var week: String = WeeklyChallenge.this_week()
 	var ch := WeeklyChallenge.new(week, GameState.progress_cap())
 	var rec: Dictionary = GameState.records.get("weekly", {})
-	if str(rec.get("week", "")) != week:
+	if str(rec.get("week", "")) != week and not GameState.time_went_back(str(rec.get("week", "")), week):
 		rec = {"week": week, "best": 0, "claimed": false}
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
