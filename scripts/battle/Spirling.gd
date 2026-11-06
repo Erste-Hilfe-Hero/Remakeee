@@ -414,7 +414,8 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.origin_map = str(d.get("origin_map", ""))
 	s.met_ring = int(d.get("met_ring", 0))
 	s.met_day = int(d.get("met_day", 0))
-	s.lineage.assign((d.get("lineage", []) as Array).map(func(x: Variant) -> String: return str(x)))
+	var lin: Variant = d.get("lineage", [])
+	s.lineage.assign((lin if lin is Array else []).map(func(x: Variant) -> String: return str(x)))
 	s.echo_streak = maxi(0, int(d.get("echo_streak", 0)))
 	s.hp = clampi(int(d.get("hp", s.max_hp())), 0, s.max_hp())
 	return s
