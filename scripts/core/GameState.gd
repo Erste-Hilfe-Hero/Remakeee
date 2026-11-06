@@ -230,6 +230,8 @@ func set_held(s: Spirling, id: String) -> bool:
 	s.held = id
 	if not id.is_empty():
 		inventory[id] = item_count(id) - 1
+	# Some keepsakes raise max Vigor (Core Glass); taking one off must not leave too much Vigor.
+	s.hp = mini(s.hp, s.max_hp())
 	return true
 
 ## Wayfarer Gear (grapple_line, climbing_pick, storm_lantern) is a key item in the bag.

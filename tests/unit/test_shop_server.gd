@@ -169,7 +169,7 @@ func test_riftglass_purchase_delivers_items() -> void:
 	assert_eq(GameState.item_count("rg_ring_tonic"), 1, "delivered into the bag by the server")
 	assert_eq(_call("shop_claim"), [], "only once")
 	assert_eq(_call("shop_buy", {"p_offer": "rg_ring_tonic", "p_expected_price": 50}).error, "price_changed")
-	assert_eq(_call("shop_buy", {"p_offer": "rg_riftheart", "p_expected_price": 800}).error, "not_available", "only ready offers")
+	assert_eq(_call("shop_buy", {"p_offer": "rg_team_slot_6", "p_expected_price": 1500}).error, "not_available", "only ready offers")
 
 func test_once_per_account_and_choice() -> void:
 	_call("shop_set_age", {"p_year": 1990, "p_month": 3})

@@ -1,6 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
+ "catalog_version": 2,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -337,7 +338,7 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_glass_shield",
@@ -360,7 +361,7 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_clear_shard",
@@ -383,7 +384,7 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_whirl_glass",
@@ -406,10 +407,10 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
-   "id": "rg_core_glass",
+   "id": "rg_vigor_glass",
    "kind": "advantage",
    "tab": "advantages",
    "name": "Core Glass",
@@ -417,11 +418,11 @@
    "rg_price": 800,
    "eur_cents": 799,
    "store_type": "non_consumable",
-   "product_id": "de.chimora.game.unlock.core_glass",
+   "product_id": "de.chimora.game.unlock.vigor_glass",
    "grants": [
     {
      "t": "item",
-     "id": "rg_core_glass",
+     "id": "rg_vigor_glass",
      "n": 1
     }
    ],
@@ -429,7 +430,7 @@
    "duration": "permanent",
    "plan": 4394,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_ember",
@@ -452,7 +453,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_tide",
@@ -475,7 +476,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_bloom",
@@ -498,7 +499,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_volt",
@@ -521,7 +522,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_stone",
@@ -544,7 +545,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_gale",
@@ -567,7 +568,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_lumen",
@@ -590,7 +591,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_prism_umbra",
@@ -613,7 +614,7 @@
    "duration": "permanent",
    "plan": 4402,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_hold_stone",
@@ -659,7 +660,7 @@
    "duration": "permanent",
    "plan": 4404,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_script_ember",
@@ -1082,7 +1083,7 @@
    "duration": "once",
    "plan": 4549,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_echo_scent",
@@ -1105,7 +1106,7 @@
    "duration": "once",
    "plan": 4550,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_echo_scent_x10",
@@ -1128,7 +1129,7 @@
    "duration": "once",
    "plan": 4556,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_team_slot_6",
@@ -1180,7 +1181,7 @@
    },
    "plan": 4597,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_pass",
@@ -1656,7 +1657,7 @@
    "duration": "once",
    "plan": 4742,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_temper_shift",
@@ -1702,7 +1703,7 @@
    "duration": "once",
    "plan": 4749,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_power_core",
@@ -2081,7 +2082,7 @@
    },
    "plan": 4964,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_coins_20000",
@@ -2107,7 +2108,7 @@
    },
    "plan": 4965,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_merchant_discount",
@@ -2129,7 +2130,7 @@
    "duration": "permanent",
    "plan": 4970,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_jacket_moss",

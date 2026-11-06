@@ -2,15 +2,29 @@
 """Builds the server copy of the shop offers and the store product list from data/shop.json.
 
 Writes:
-  supabase/migrations/20261110000021_shop_offers.sql  (offers for shop_buy / _shop_credit)
+  supabase/migrations/20261110000021_shop_offers_vNNN.sql  (offers for shop_buy / _shop_credit)
   store/products.json                                 (products for App Store Connect and Play Console)
 Usage: python3 tools/shop/build_offers_sql.py [--check]   (--check fails if the files are out of date)
+
+The server applies each migration file only once (server/migrate.sh). So every catalog change gets
+a new file: raise "catalog_version" in data/shop.json. A committed version file is never rewritten;
+the script stops and asks for a new version instead. Version 1 is the first file without a suffix.
 """
-import json, os, sys
+import json, os, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 SRC = os.path.join(ROOT, "data/shop.json")
-SQL = os.path.join(ROOT, "supabase/migrations/20261110000021_shop_offers.sql")
+
+def sql_path(version):
+    name = "20261110000021_shop_offers.sql" if version <= 1 else "20261110000021_shop_offers_v%03d.sql" % version
+    return os.path.join(ROOT, "supabase/migrations", name)
+
+def committed(path):
+    """The file's content in the last commit, or None if it is not committed."""
+    rel = os.path.relpath(path, ROOT)
+    r = subprocess.run(["git", "-C", ROOT, "show", "HEAD:" + rel], capture_output=True, text=True)
+    return r.stdout if r.returncode == 0 else None
+
 PRODUCTS = os.path.join(ROOT, "store/products.json")
 # Store product types (item 4066): Apple / Google names.
 TYPES = {"consumable": ("CONSUMABLE", "onetime"), "non_consumable": ("NON_CONSUMABLE", "onetime"),
@@ -22,6 +36,7 @@ def lit(s):
 def build():
     data = json.load(open(SRC, encoding="utf-8"))
     offers = data["offers"]
+    version = int(data.get("catalog_version", 1))
     de = {}
     try:
         sys.path.insert(0, os.path.join(ROOT, "tools/i18n"))
@@ -53,10 +68,15 @@ def build():
     prod = json.dumps({"_comment": "Store products for App Store Connect and the Play Console, built from data/shop.json by "
                        "tools/shop/build_offers_sql.py. Apple subscription group: Pass. Google subscription base plan: monthly.",
                        "products": products}, ensure_ascii=False, indent=1) + "\n"
-    return sql, prod
+    return version, sql, prod
 
 def main():
-    sql, prod = build()
+    version, sql, prod = build()
+    SQL = sql_path(version)
+    old = committed(SQL)
+    if old is not None and old != sql:
+        sys.exit("%s is committed and may already run on the server. Raise catalog_version in data/shop.json to %d."
+                 % (os.path.relpath(SQL, ROOT), version + 1))
     if "--check" in sys.argv:
         bad = [p for p, t in ((SQL, sql), (PRODUCTS, prod)) if not os.path.exists(p) or open(p, encoding="utf-8").read() != t]
         if bad:

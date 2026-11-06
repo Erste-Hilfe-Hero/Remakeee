@@ -930,13 +930,16 @@ func _do_bond(a: BattleAction) -> void:
 	var t_slot: int = a.target_slot if a.target_slot in standing else standing[0]
 	var target: Spirling = active_spirling(Side.FOE, t_slot)
 	var bonus: float = 0.0
+	var sure: bool = false
 	if not a.item_id.is_empty() and int(inventory.get(a.item_id, 0)) > 0:
 		inventory[a.item_id] = int(inventory[a.item_id]) - 1
 		bonus = float(Database.item(a.item_id).get("bond_bonus", 0.0))
+		# The shop's Bond Seal (plan area 10) makes this one bond certain.
+		sure = bool(Database.item(a.item_id).get("bond_sure", false))
 	var who: Dictionary = _who(Side.FOE, t_slot)
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
-	var success: bool = rng.randf() < BondCalc.chance(target, a.timing_score, bonus)
+	var success: bool = rng.randf() < BondCalc.chance(target, a.timing_score, bonus) or sure
 	var res: Dictionary = _who(Side.FOE, t_slot)
 	res["success"] = success
 	emit_event(BattleEvent.Type.BOND_RESULT, res)
