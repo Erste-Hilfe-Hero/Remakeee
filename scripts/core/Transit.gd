@@ -61,7 +61,7 @@ static func open_stops(id: String, here: String, flags: Dictionary, rests: Dicti
 			out.append(s)
 	return out
 
-## Line for a trip scene: "The Lake Line boat glides across the water to Reedhaven."
+## Line for a trip scene: "The Lake Line boat rows across the water to Reedhaven."
 static func trip_line(kind: String, place: String) -> String:
 	place = Loc.t(place)
 	match kind:
@@ -69,7 +69,7 @@ static func trip_line(kind: String, place: String) -> String:
 			return Loc.t("The coach rattles along the valley road to %s.") % place
 		"ferry":
 			return Loc.t("The ferry crosses the grey lake to %s.") % place
-	return Loc.t("The boat glides across the lake to %s.") % place
+	return Loc.t("The boat rows across the lake to %s.") % place
 
 ## What the boatman or the driver says when no other stop is open yet.
 static func no_stops_line(kind: String) -> String:
