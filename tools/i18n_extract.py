@@ -72,6 +72,13 @@ def strings():
         for k in ("habitat", "lore", "origin"):
             if isinstance(sp.get(k), str) and sp[k]:
                 found.append(sp[k])
+    ev = os.path.join(ROOT, "data/events.json")
+    if os.path.exists(ev):
+        for group in json.load(open(ev)).values():
+            for t in group if isinstance(group, list) else []:
+                for k in ("text", "name", "desc"):
+                    if isinstance(t.get(k), str):
+                        found.append(t[k])
     for sd in SCRIPT_DIRS:
         for dp, _, fs in os.walk(os.path.join(ROOT, sd)):
             for f in sorted(fs):

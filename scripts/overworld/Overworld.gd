@@ -192,6 +192,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		_npcs.append(n)
 	player.place(cell, face)
 	GameState.current_map = map_id
+	DailyTasks.note_map(map_id)
+	DailyTasks.record("visit", {"map": map_id})
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -337,6 +339,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
+	DailyTasks.record("step", {"map": map.id})
+	if not GameState.notices.is_empty():
+		await _locked_say(take_notices())
 	if await _world.stepped(cell):
 		return
 	var warp: Dictionary = map.warp_at(cell)
@@ -402,6 +407,8 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 	player.frozen = true
 	VirtualPad.set_wanted(false)
 	var entry: Dictionary = Dialogue.get_entry(ref)
+	if speaker != null:
+		DailyTasks.record("talk", {"map": map.id, "key": ref})
 	_text.visible = true
 	for line: String in Dialogue.lines_for(entry, GameState.flags):
 		await _text.show_text(line)
@@ -420,7 +427,8 @@ func run_dialogue(ref: String, speaker: NPC = null) -> void:
 
 ## Shows newly earned achievements (item 90).
 func announce_achievements() -> void:
-	var lines: Array[String] = Collection.claim()
+	var lines: Array[String] = take_notices()
+	lines.append_array(Collection.claim())
 	for t: String in Achievements.check():
 		lines.append("Achievement: %s" % t)
 	if lines.is_empty():
@@ -428,6 +436,12 @@ func announce_achievements() -> void:
 	Sound.sfx("level_up")
 	await say(lines)
 	_text.visible = false
+
+## Reward notes queued by DailyTasks / Waymarks, emptied.
+func take_notices() -> Array[String]:
+	var lines: Array[String] = GameState.notices.duplicate()
+	GameState.notices.clear()
+	return lines
 
 ## Shows "New goal: ..." when the story goal moved on since [param before].
 func announce_goal_if_changed(before: int) -> void:
@@ -461,6 +475,7 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.heal_cell = map.heal_point
 		GameState.visit_rest(map.id, map.heal_point)
 	Online.contribute("rests")
+	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
 
 func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
@@ -537,6 +552,8 @@ func photo_mode() -> void:
 	add_child(_photo)
 	VirtualPad.set_wanted(true)
 	await _photo.finished
+	if _photo.taken > 0:
+		DailyTasks.record("photo", {"map": map.id})
 	_photo.queue_free()
 	_photo = null
 
@@ -1192,11 +1209,20 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	# The world goal of the week (item 85): wins and bonds count when that is this week's kind.
 	if outcome == BattleModel.Outcome.WIN:
 		Online.contribute("battles")
+		var foe_elements: Array[String] = []
+		for f: Spirling in model.parties[1]:
+			for e: int in f.elements():
+				foe_elements.append(Elements.E.keys()[e])
+		DailyTasks.record("win", {"map": map.id, "wild": model.is_wild, "elements": foe_elements})
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		Online.contribute("bonds")
 	# In a horde the bond can land before the rest of the swarm is beaten (outcome WIN or FLED).
 	if model.bonded != null and outcome != BattleModel.Outcome.LOSS:
 		GameState.receive_spirling(model.bonded)
+		var bond_elements: Array[String] = []
+		for e: int in model.bonded.elements():
+			bond_elements.append(Elements.E.keys()[e])
+		DailyTasks.record("bond", {"map": map.id, "elements": bond_elements})
 		SaveManager.save_game()
 	var oath: Array[String] = oath_lines(GameState.retire_fainted())
 	if outcome == BattleModel.Outcome.LOSS:
