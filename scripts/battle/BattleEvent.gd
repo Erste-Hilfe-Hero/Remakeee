@@ -12,6 +12,7 @@ enum Type {
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
+	DELAYED_SET, DELAYED_HIT,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -139,6 +140,12 @@ func describe() -> String:
 			return "A snare lies in wait on your side!" if int(data.get("side", 0)) == 0 else "A snare lies in wait on the foe's side!"
 		Type.SNARE_HIT:
 			return "%s springs the snare!" % who
+		Type.DELAYED_SET:
+			return "%s will land in %d turns!" % [data.get("move", ""), int(data.get("turns", 2))]
+		Type.DELAYED_HIT:
+			if bool(data.get("faded", false)):
+				return "%s fades with nobody to strike." % data.get("move", "")
+			return "%s lands on %s!" % [data.get("move", ""), who]
 		Type.SNARE_CLEARED:
 			return "The snares on your side blow away." if int(data.get("side", 0)) == 0 else "The snares on the foe's side blow away."
 		Type.ENERGY_TAX:

@@ -10,7 +10,7 @@ const FACTOR: Dictionary = {
 	"priority_low": 0.75, "cooldown": 0.85, "self_stage_after": 0.9, "recoil": 0.85,
 	"priority_high": 1.0, "foes": 1.15, "status": 1.1, "stage": 1.1, "bonus_vs_status": 1.15,
 	"drain": 1.2, "energy_drain": 1.2, "energy_burn": 1.15, "field_element": 1.1, "ignore_stages": 1.1,
-	"cure_target": 1.0,
+	"cure_target": 1.0, "delayed_hit": 0.8,
 }
 
 func before_all() -> void:
@@ -26,7 +26,7 @@ const NEW_ARTS: Array[String] = [
 	"Fathom Crush", "Bore Wave", "Shoal Trap", "Bramble Bed", "Wildgrowth Crash", "Husk Shed", "Thornwake",
 	"Bark Burst", "Seed Spit", "Graft", "Overdraw", "Wire Trap", "Lull Breaker", "Chaff Feint", "Gale Mantle",
 	"Sunwell Sip", "Daybreak Strike", "Prism Burst", "Starlit Lash", "Glow Trap", "Night Toll", "Eclipse Crush",
-	"Murmur Bite", "Veil Step", "Gloam Pact", "Dusk Snare", "Gravel Hum", "Slow Quake",
+	"Murmur Bite", "Veil Step", "Gloam Pact", "Dusk Snare", "Gravel Hum", "Slow Quake", "Omen Bell",
 ]
 
 func _factor(mv: MoveData) -> float:
@@ -196,6 +196,13 @@ func test_snares_and_cooldowns_replay_exactly() -> void:
 	var f: Array[Spirling] = [BattleFixtures.make("Calderox", 44, ["Coal Seed", "Furnace Heart", "Cinder Dash", "Char Mark"] as Array[String]),
 		BattleFixtures.make("Riptail", 40, ["Shoal Trap", "Fathom Crush", "Rip Current", "Spout Jab"] as Array[String])]
 	_replay_round_trip(p, f, 4242)
+
+func test_delayed_hits_replay_exactly() -> void:
+	var p: Array[Spirling] = [BattleFixtures.make("Lumenewt", 40, ["Omen Bell", "Prism Ray", "Shard Bed", "Daybreak Strike"] as Array[String]),
+		BattleFixtures.make("Zephlet", 40, ["Scatter Gale", "Kite Cut", "Crosswind", "Draft Needle"] as Array[String])]
+	var f: Array[Spirling] = [BattleFixtures.make("Calderox", 40, ["Coal Seed", "Furnace Heart", "Cinder Dash", "Omen Bell"] as Array[String]),
+		BattleFixtures.make("Riptail", 40, ["Shoal Trap", "Fathom Crush", "Rip Current", "Spout Jab"] as Array[String])]
+	_replay_round_trip(p, f, 451)
 
 func test_one_cooldown_art_and_one_snare_per_species_at_most() -> void:
 	for sd: SpirlingData in Database.spirlings.values():

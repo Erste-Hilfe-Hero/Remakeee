@@ -1,0 +1,9 @@
+{
+ "_doc": "Win-rate bands of the reference teams against the Wardens per difficulty (plan area 2, item 733). [low, high].",
+ "warden": {
+  "story": [0.95, 1.0],
+  "tamer": [0.8, 0.9],
+  "veteran": [0.55, 0.7],
+  "rift_born": [0.3, 0.45]
+ }
+}

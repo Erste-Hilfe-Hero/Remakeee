@@ -140,7 +140,7 @@
    "team": [
     {
      "species": "Zephlet",
-     "level": 15,
+     "level": 14,
      "moves": [
       "Kite Cut",
       "Crosswind"
@@ -216,7 +216,7 @@
     "rift_born": [
      {
       "species": "Zephlet",
-      "level": 15,
+      "level": 14,
       "moves": [
        "Kite Cut",
        "Crosswind",
@@ -226,7 +226,7 @@
      },
      {
       "species": "Zippit",
-      "level": 15,
+      "level": 14,
       "moves": [
        "Static Tag"
       ],
@@ -234,7 +234,7 @@
      },
      {
       "species": "Riptail",
-      "level": 17,
+      "level": 15,
       "moves": [
        "Rip Current",
        "Undertow",
@@ -244,7 +244,7 @@
      },
      {
       "species": "Kelpup",
-      "level": 16,
+      "level": 14,
       "moves": [
        "Shoal Trap"
       ],
