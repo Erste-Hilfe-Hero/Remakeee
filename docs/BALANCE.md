@@ -111,5 +111,10 @@ Target for an active player: **about 60 Waymarks a day and 500 a week** once the
 | Lighthouse stair, new floor / every 10th floor | 5 / 50 | once per floor | built |
 | Master Wayfarer | 80 first win, then 20 | once a week each | planned (3289) |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
+| Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
+| Festival ribbons left at the end | 1 per ribbon | per festival | built |
 
 Daily tasks alone give 40 a day (280 a week); the weekly sources fill the rest.
+
+Festival ribbons: 3 per won battle against Spirlings of the festival's elements, 5 for the crier's
+festival task of the day. They buy festival goods from Tilda in Brindlewick.
