@@ -441,6 +441,7 @@ func from_dict(d: Dictionary) -> void:
 		if sv[k] is int or sv[k] is float:
 			story_vars[str(k)] = int(sv[k])
 	story_choices = _as_dict(d.get("story_choices", {}))
+	story_fixups()
 	switch_progress = _as_dict(d.get("switches", {}))
 	world_state = _as_dict(d.get("world", {}))
 	iron_oath = bool(d.get("iron_oath", false))
@@ -508,6 +509,13 @@ static func ensure_buses() -> void:
 			var idx: int = AudioServer.bus_count - 1
 			AudioServer.set_bus_name(idx, bus)
 			AudioServer.set_bus_send(idx, &"Master")
+
+## Keeps older saves on the story path: saves that lit the lamp room before Act I got its
+## ending already have the ferry open (plan item 1405).
+func story_fixups() -> void:
+	if has_flag("mirela_lamp") and not has_flag("ferry_corvane_open"):
+		set_flag("ferry_corvane_open")
+		set_flag("scene_act1_finale_seen")
 
 ## A story number (0 if never set).
 func story_var(name: String) -> int:

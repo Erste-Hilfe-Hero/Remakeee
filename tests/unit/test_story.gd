@@ -90,3 +90,64 @@ func test_chapters_name_every_main_goal() -> void:
 	for g: Variant in QuestLog.main_goals():
 		assert_false(str((g as Dictionary).get("chapter", "")).is_empty(), "goal %s has no chapter" % g.id)
 	assert_string_contains(QuestLog.summary({}), "Prologue")
+
+# --- Act I ending (plan area 4, items 1405-1413) ---------------------------------------------
+
+func test_act1_no_longer_ends_in_a_dead_goal() -> void:
+	for g: Variant in QuestLog.main_goals():
+		assert_false((g as Dictionary).get("done", []).is_empty(), "goal %s can never be done" % g.id)
+
+func test_ferry_only_needs_the_rifts_and_the_lamp() -> void:
+	# The Rift hearts stay optional (item 1411).
+	var flags: Dictionary = {"aldo_gift": true, "met_kestra": true, "rift_cinder_sealed": true, "rift_tide_sealed": true,
+		"kestra_dock_talk": true, "aldo_dock_told": true, "mirela_lamp": true}
+	assert_eq(QuestLog.current(flags).id, "crossing")
+
+func test_ferry_sign_changes_once_open() -> void:
+	var e: Dictionary = Dialogue.get_entry("brindlewick/ferry")
+	assert_true(Dialogue.lines_for(e, {}).has("No crossings while the lake is restless."))
+	assert_true(Dialogue.lines_for(e, {"ferry_corvane_open": true}).has("Crossings resume. Ferryman: Aldo."))
+
+func test_act1_scenes_open_the_ferry() -> void:
+	var finale: Dictionary = ScenePlayer.load_scene("act1_finale")
+	var flags: Array = []
+	for st: Dictionary in finale.steps:
+		if st.has("flag"):
+			flags.append(st.flag)
+	assert_has(flags, "ferry_corvane_open")
+	for id: String in ["prologue", "mirela_lamp", "act1_finale", "ferry_crossing"]:
+		assert_true(ScenePlayer.exists(id), "scene %s missing" % id)
+
+func test_old_save_with_lit_lamp_gets_the_ferry() -> void:
+	GameState.from_dict({"tamer": {"name": "Old"}, "flags": {"mirela_lamp": true}})
+	assert_true(GameState.has_flag("ferry_corvane_open"))
+
+func test_kestra_dock_choice_counts_once() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Mara", 0, Database.STARTERS[0], 1)
+	var e: Dictionary = Dialogue.get_entry("brindlewick/kestra_dock")
+	assert_eq(Dialogue.choices_for(e, GameState.flags).size(), 2)
+	GameState.set_flag("kestra_dock_talk")
+	assert_eq(Dialogue.choices_for(e, GameState.flags).size(), 0, "no second chance to farm trust")
+	GameState.record_choice("kestra_dock", "together")
+	assert_string_contains(Dialogue.lines_for(e, GameState.flags)[0], "Save me a seat")
+
+func test_aldo_has_a_line_per_chapter() -> void:
+	var e: Dictionary = Dialogue.get_entry("lighthouse/aldo")
+	var seen: Dictionary = {}
+	var flags: Dictionary = {}
+	for f: String in ["aldo_gift", "met_kestra", "rift_cinder_sealed", "rift_tide_sealed"]:
+		flags[f] = true
+		seen[Dialogue.lines_for(e, flags)[0]] = true
+	assert_eq(seen.size(), 4)
+
+func test_chapter_cards_show_once_with_the_act() -> void:
+	var goals: Array = QuestLog.main_goals()
+	var lamp: int = -1
+	for i: int in goals.size():
+		if goals[i].id == "lamp":
+			lamp = i
+	var card: Array[String] = QuestLog.card_for(lamp, lamp + 1, {})
+	assert_eq(card, ["Act II: The Colours of Corvane", "Chapter 6: The Landing"] as Array[String])
+	assert_eq(QuestLog.card_for(0, 1, {}), ["Chapter 1: The Map House"] as Array[String])
+	assert_true(QuestLog.card_for(0, 1, {QuestLog.card_flag(goals[1]): true}).is_empty())
+	assert_string_contains(QuestLog.summary({}), "Act I: The Hush of Veydal")
