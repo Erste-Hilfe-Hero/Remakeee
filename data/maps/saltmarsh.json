@@ -174,15 +174,24 @@
    "team": [
     {
      "species": "Shalebat",
-     "level": 13
+     "level": 13,
+     "moves": [
+      "Shard Bed"
+     ]
     },
     {
      "species": "Kelpup",
-     "level": 13
+     "level": 13,
+     "moves": [
+      "Deepwell Draught"
+     ]
     },
     {
      "species": "Mirkmole",
-     "level": 14
+     "level": 14,
+     "moves": [
+      "Night Toll"
+     ]
     }
    ],
    "win_flags": [
@@ -200,6 +209,34 @@
    "sprite": "villager",
    "show_flag": "kestra_spar",
    "hide_flag": "kestra_marsh_tag"
+  },
+  {
+   "id": "aud",
+   "x": 7,
+   "y": 10,
+   "facing": "right",
+   "dialogue": "saltmarsh/aud",
+   "sprite": "villager",
+   "trainer": "Netmender Aud",
+   "intro": "saltmarsh/aud_intro",
+   "defeat": "saltmarsh/aud_defeat",
+   "profile": "spoiler",
+   "team": [
+    {
+     "species": "Kelpup",
+     "level": 12,
+     "moves": [
+      "Bramble Bed"
+     ]
+    },
+    {
+     "species": "Puddlet",
+     "level": 12,
+     "moves": [
+      "Shoal Trap"
+     ]
+    }
+   ]
   }
  ],
  "signs": [

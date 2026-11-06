@@ -53,6 +53,9 @@ static func week() -> String:
 	if cp > 0:
 		stair += " " + Loc.t("(rest point at floor %d)") % cp
 	out.append(stair)
+	for t: Dictionary in RiftTower.list():
+		if RiftTower.is_open(t):
+			out.append(RiftTower.card_lines()[RiftTower.list().find(t) + 1])
 	if GameState.has_flag(EchoPath.OPEN_FLAG):
 		out.append(EchoPath.goal_line())
 	return "\n".join(out)

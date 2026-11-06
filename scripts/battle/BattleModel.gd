@@ -83,6 +83,9 @@ var level_cap: int = Spirling.MAX_LEVEL
 var inventory: Dictionary = {}
 ## Items used this battle per side, for the per-battle limits of shop items ("per_battle" in items.json).
 var items_used: Array[Dictionary] = [{}, {}]
+## Extra energy above the normal maximum per side, set before start() (the shop's Overcharge
+## Core: the whole team starts with 12 of 12, plan item 4495).
+var energy_bonus: Array[int] = [0, 0]
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
@@ -278,7 +281,10 @@ func legal_actions(side: int, slot: int = 0) -> Array[BattleAction]:
 	if _items_allowed_for(side, slot):
 		for id: Variant in bag:
 			if int(bag[id]) > 0 and _is_battle_item(str(id)):
-				out.append(BattleAction.make_item(side, str(id), active_index(side, slot), slot))
+				var ia := BattleAction.make_item(side, str(id), active_index(side, slot), slot)
+				# Revive items and spent per-battle limits do not fit the active Spirling.
+				if is_legal(ia):
+					out.append(ia)
 	if side == Side.PLAYER and is_wild and not is_partner_slot(side, slot):
 		if bonded == null:
 			out.append(BattleAction.make_bond(side, 0.0, "", slot))
@@ -338,7 +344,7 @@ func start() -> Array[BattleEvent]:
 	var hp_scale: float = float(rules.hp_mult)
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for s: Spirling in parties[side]:
-			s.energy = mini(int(rules.start_energy), max_energy())
+			s.energy = mini(int(rules.start_energy), max_energy()) + energy_bonus[side]
 			if hp_scale != 1.0:
 				var share: float = float(s.hp) / float(s.max_hp())
 				s.hp_mult *= hp_scale
@@ -674,7 +680,7 @@ func change_energy(side: int, delta: int, slot: int = 0) -> void:
 	if s == null:
 		return
 	var before: int = s.energy
-	s.energy = clampi(s.energy + delta, 0, max_energy())
+	s.energy = clampi(s.energy + delta, 0, max_energy_of(side))
 	if s.energy != before:
 		var d: Dictionary = _who(side, slot)
 		d["energy"] = s.energy
@@ -750,6 +756,10 @@ func can_rest(any_move: bool) -> bool:
 	return float(rules.get("rest_only_as_pass", 0.0)) <= 0.0 or not any_move
 
 ## Most Energy a Spirling can hold under the variants in play.
+## The energy maximum of [param side]'s Spirlings, with an Overcharge Core.
+func max_energy_of(side: int) -> int:
+	return max_energy() + energy_bonus[side]
+
 func max_energy() -> int:
 	return mini(int(rules.get("max_energy", Spirling.MAX_ENERGY)), Spirling.MAX_ENERGY)
 
@@ -799,6 +809,9 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
 		reveal_trait(side, slot)
 	var gain: int = int(rules.get("energy_per_turn", ENERGY_PER_TURN)) + int(BattleRules.add_key(s, "energy_per_turn"))
+	if s.energy_surge > 0:
+		s.energy_surge -= 1
+		gain += 1
 	if side == Side.FOE:
 		var rule: Dictionary = BattleRules.RULES.get(foe_rule, {})
 		if turn % maxi(1, int(rule.get("foe_energy_every", 1))) == 0:
@@ -1041,6 +1054,9 @@ func _do_item(a: BattleAction) -> void:
 			target.status_turns = 0
 	if int(it.get("energy", 0)) > 0 and t_slot >= 0:
 		change_energy(a.side, int(it.energy), t_slot)
+	if int(it.get("energy_surge", 0)) > 0 and t_slot >= 0:
+		change_energy(a.side, max_energy_of(a.side), t_slot)
+		target.energy_surge = int(it.energy_surge)
 	var st: Variant = it.get("stage", {})
 	if st is Dictionary and t_slot >= 0:
 		for stat: String in st:
@@ -1268,7 +1284,7 @@ func _revive(side: int, index: int, frac: float, full_energy: bool) -> void:
 	s.status = ""
 	s.status_turns = 0
 	if full_energy:
-		s.energy = max_energy()
+		s.energy = max_energy_of(side)
 	_heal_spirling(side, index, maxi(1, ceili(s.max_hp() * frac)))
 
 func _heal_spirling(side: int, index: int, amount: int) -> int:

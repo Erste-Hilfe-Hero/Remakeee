@@ -302,7 +302,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 ### Tageszeit in der Welt
 1167. [x] [P1] Erweitere DayCycle.gd um ein Signal "phase_changed", auf das Karten, NPCs und Türen reagieren.
 1168. [x] [P1] Ergänze MapData.gd um "phase_only" für NPCs, Schilder und Blöcke (dawn, day, dusk, night), damit Dinge nur zu einer Tageszeit da sind.
-1169. [P1] Zeige die aktuelle Tageszeit klein neben dem Ortsbanner und in der Weltkarte als Symbol.
+1169. [x] [P1] Zeige die aktuelle Tageszeit klein neben dem Ortsbanner und in der Weltkarte als Symbol.
 1170. [P2] Lass Läden in Orten von 7 bis 20 Uhr Gerätezeit offen sein und nachts eine Klingel für einen müden Händler mit kleinerem Sortiment haben.
 1171. [P2] Lass die Seelinie der Fähre nur von 6 bis 22 Uhr fahren und nachts einen Nachtfischer übersetzen, der mehr Zeit braucht.
 1172. [P2] Öffne in Lantern Steps nachts eine Tür, die tags zu ist, weil die Laternen dann den Weg zeigen.
@@ -381,13 +381,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1241. [P3] Baue einen Fotografen in Thornridge, der Fotos aus dem Fotomodus an eine Wand im Gasthof hängt.
 
 ### Weltkarte und Kartieren
-1242. [P1] Baue eine Weltkarten-Ansicht im Pausenmenü unter "Map", die alle Karten aus data/world_layout.json als Felder mit Verbindungen zeigt.
-1243. [P1] Zeige auf der Weltkarte die eigene Position, Heilpunkte, Haltestellen und Rissorte als feste Symbole.
-1244. [P1] Zeige unbekannte Karten als leeres Pergament und gesichtete, aber nicht besuchte Karten als Umriss.
+1242. [x] [P1] Baue eine Weltkarten-Ansicht im Pausenmenü unter "Map", die alle Karten aus data/world_layout.json als Felder mit Verbindungen zeigt.
+1243. [x] [P1] Zeige auf der Weltkarte die eigene Position, Heilpunkte, Haltestellen und Rissorte als feste Symbole.
+1244. [x] [P1] Zeige unbekannte Karten als leeres Pergament und gesichtete, aber nicht besuchte Karten als Umriss.
 1245. [x] [P1] Speichere pro Karte, welche Kacheln der Spieler schon gesehen hat (Radius 3 um ihn), in GameState als Bitfeld "map_cells".
 1246. [x] [P1] Zeige pro Karte eine "Kartierquote" in Prozent auf der Weltkarte und im Banner beim Betreten.
-1247. [P1] Lass die Weltkarte per Tippen auf einen Ort eine Detailansicht mit Funde x/y, Wetter, Tageszeit und vorkommenden Arten öffnen.
-1248. [P1] Halte die Weltkarte in 144x256 bedienbar: Zoomstufen 1x und 2x, Wischen zum Verschieben, Knopf "Hier".
+1247. [x] [P1] Lass die Weltkarte per Tippen auf einen Ort eine Detailansicht mit Funde x/y, Wetter, Tageszeit und vorkommenden Arten öffnen.
+1248. [x] [P1] Halte die Weltkarte in 144x256 bedienbar: Zoomstufen 1x und 2x, Wischen zum Verschieben, Knopf "Hier".
 1249. [P2] Gib für 100 Prozent Kartierquote einer Karte eine kleine Belohnung (Münzen oder Heiltrank) und ein Häkchen.
 1250. [P2] Gib für 100 Prozent Kartierquote einer Region ein Andenken "Surveyor's Seal".
 1251. [P2] Lass die Kartierquote bei Höhlen pro Ebene getrennt zählen.
@@ -399,7 +399,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1257. [P2] Zeige auf der Weltkarte den Weg zur gewählten Markierung als gestrichelte Linie über Karten hinweg.
 1258. [P2] Lass die Weltkarte den Kartografen-Kontor in Wrenhollow als Ort nennen, an dem man Quoten abgibt.
 1259. [P2] Öffne die Weltkarte zusätzlich über einen eigenen Knopf auf dem Bildschirm-Pad (Tasten-Belegung in den Einstellungen).
-1260. [P2] Ergänze tests/unit um test_world_map.gd, das Bitfeld, Quote und Speicherung prüft.
+1260. [x] [P2] Ergänze tests/unit um test_world_map.gd, das Bitfeld, Quote und Speicherung prüft.
 1261. [P3] Zeige auf der Weltkarte die Region Corvane als Umriss jenseits des Sees, gesperrt bis zur Freigabe.
 1262. [P3] Lass den Spieler auf der Weltkarte eigene Ortsnamen für versteckte Orte vergeben, nur lokal angezeigt.
 1263. [P3] Gib der Weltkarte einen Vergleich "Quote meiner Freunde" über die bestehende Freunde-Schnittstelle, nur als Zahl.
@@ -414,7 +414,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1270. [x] [P1] Baue eine Minikarte oben rechts, 36 x 36 Pixel, die 12 x 12 Kacheln um den Spieler mit 3 Pixel pro Kachel zeigt.
 1271. [x] [P1] Zeige auf der Minikarte Warps, Heilstellen und Wanderer als einzelne farbige Pixel aus der UITheme-Palette.
 1272. [x] [P1] Füge in Display and access einen Schalter "Minikarte" (an, aus, nur draußen) hinzu.
-1273. [P1] Lass den Spieler auf der Weltkarte bis zu 30 eigene Markierungen mit 6 Symbolen setzen (Stern, Kreuz, Frage, Herz, Pfeil, Hammer).
+1273. [x] [P1] Lass den Spieler auf der Weltkarte bis zu 30 eigene Markierungen mit 6 Symbolen setzen (Stern, Kreuz, Frage, Herz, Pfeil, Hammer).
 1274. [P2] Zeige eigene Markierungen auch auf der Minikarte, wenn sie auf der aktuellen Karte liegen.
 1275. [P2] Lass Markierungen eine kurze Notiz bis 24 Zeichen tragen, eingegeben über NameKeyboard.gd.
 1276. [P2] Setze automatisch eine Markierung "Wiederkommen" an jeder Stelle, an der eine fehlende Ausrüstung den Weg sperrt.
@@ -464,7 +464,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 ### Tests, Validierung und Zugänglichkeit
 1317. [x] [P1] Ergänze tests/unit/test_map_checks.gd so, dass jede neue Karte geladen, ihr Rätsel per Testlösung gelöst und jeder Ausgang erreicht wird.
 1318. [x] [P1] Lege für jedes Rätsel eine Lösungsfolge in tests/fixtures/puzzles/<map>.json an, die der Test abspielt.
-1319. [P1] Prüfe in CI mit tools/ip_check.sh alle neuen Orts- und Kartennamen gegen die Sperrliste.
+1319. [x] [P1] Prüfe in CI mit tools/ip_check.sh alle neuen Orts- und Kartennamen gegen die Sperrliste.
 1320. [P2] Ergänze einen Test, dass jede Ausrüstung nur auf ihren Kachelzeichen wirkt und auf allen anderen nichts tut.
 1321. [P2] Ergänze einen Test, dass jede Karte über Fuß, Fähre oder Kutsche vom Start erreichbar ist, ohne Debug-Schalter.
 1322. [P2] Ergänze einen Test für world_state, dass geschobene Blöcke und offene Schleusen nach Laden am selben Platz sind.

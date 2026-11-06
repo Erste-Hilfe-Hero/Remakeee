@@ -55,5 +55,12 @@
  "kindle_vents_sign": [
   "KINDLE VENTS",
   "Inside: Plank Bundle. Hot vents blow every few seconds: wait for the calm."
- ]
+ ],
+ "tower_keeper": {
+  "lines": [
+   "Vessa: With the Rift sealed, the old stair inside it is calm enough to climb.",
+   "Vessa: Only ember, stone and volt echoes walk it. Three of yours at most, ring 30 or more."
+  ],
+  "action": "rift_tower cinder_stair"
+ }
 }

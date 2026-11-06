@@ -66,7 +66,7 @@ func _draw() -> void:
 			draw_rect(Rect2(x, 0, 1, 1), UITheme.BG)
 	draw_rect(Rect2(1, 1, floorf((w - 2) * frac), BAR_HEIGHT), col)
 	var y: float = BAR_HEIGHT + 3
-	for i: int in Spirling.MAX_ENERGY:
+	for i: int in maxi(Spirling.MAX_ENERGY, energy):
 		var r := Rect2(i * (PIP + 1), y, PIP, PIP)
 		if i < energy:
 			draw_rect(r, InfoStrip.ENERGY_ON)

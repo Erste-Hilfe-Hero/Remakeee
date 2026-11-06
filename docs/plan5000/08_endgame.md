@@ -170,16 +170,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3263. [x] [P1] Beim ersten Betreten der neuen Leuchtturm-Treppe den Spieler mit einem Satz über Rastpunkte und fehlende Heilung aufklären.
 3264. [x] [P2] Nach Stockwerk 30 eine Endlosstrecke öffnen, deren Gegner pro Stockwerk einen Ring stärker werden bis Ring 60.
 3265. [x] [P2] Die Endlosstrecke wöchentlich mit 2 Wegmarken pro neuem Stockwerk belohnen, höchstens 100 pro Woche.
-3266. [P2] Einen zweiten Turm „Glutstiege“ im Cinder Rift nach dem Versiegeln öffnen, in dem nur Ember-, Stone- und Volt-Gegner kämpfen, 15 Stockwerke.
-3267. [P2] Einen dritten Turm „Gezeitenschacht“ im Tidewater Rift öffnen, mit Tide-, Bloom- und Umbra-Gegnern, 15 Stockwerke.
-3268. [P2] Im Gezeitenschacht nach unten statt nach oben zählen und den Hintergrund pro Abschnitt dunkler färben.
-3269. [P2] In beiden Rift-Türmen nur Teams mit höchstens drei Spirlings zulassen, damit sie sich von der Leuchtturm-Treppe abheben.
-3270. [P2] Eine Turmkarte im Menü zeigen, die alle drei Türme mit bestem Stockwerk und nächster Belohnung listet.
-3271. [P2] Pro Turm einen Erfolg für den vollen Aufstieg ergänzen: „Glutfest“ und „Tiefgänger“.
+3266. [x] [P2] Einen zweiten Turm „Glutstiege“ im Cinder Rift nach dem Versiegeln öffnen, in dem nur Ember-, Stone- und Volt-Gegner kämpfen, 15 Stockwerke.
+3267. [x] [P2] Einen dritten Turm „Gezeitenschacht“ im Tidewater Rift öffnen, mit Tide-, Bloom- und Umbra-Gegnern, 15 Stockwerke.
+3268. [x] [P2] Im Gezeitenschacht nach unten statt nach oben zählen und den Hintergrund pro Abschnitt dunkler färben.
+3269. [x] [P2] In beiden Rift-Türmen nur Teams mit höchstens drei Spirlings zulassen, damit sie sich von der Leuchtturm-Treppe abheben.
+3270. [x] [P2] Eine Turmkarte im Menü zeigen, die alle drei Türme mit bestem Stockwerk und nächster Belohnung listet.
+3271. [x] [P2] Pro Turm einen Erfolg für den vollen Aufstieg ergänzen: „Glutfest“ und „Tiefgänger“.
 3272. [P2] Turmläufe beim Verbindungsabbruch am letzten Stockwerk fortsetzen, statt den Lauf zu werten.
 3273. [x] [P2] Echo-Gegner im Turm mit Namen aus einer eigenen Liste von 40 Wanderernamen in data/endgame.json versehen.
 3274. [P2] Pro Turm eine Wochenbelohnung von 30 Wegmarken für das Erreichen eines festen Ziel-Stockwerks der Woche vergeben.
-3275. [P2] In der Glutstiege und im Gezeitenschacht nur Spirlings ab Ring 30 zulassen und das am Eingang zeigen.
+3275. [x] [P2] In der Glutstiege und im Gezeitenschacht nur Spirlings ab Ring 30 zulassen und das am Eingang zeigen.
 3276. [P3] Einen vierten Turm „Windspitze“ in Crowcrest für Gale-, Lumen- und Stone-Gegner mit 15 Stockwerken bauen.
 3277. [P3] In der Leuchtturm-Treppe jedes fünfte Stockwerk zu einem Ruhegeschoss machen, auf dem ein Händler einen von drei Gegenständen schenkt.
 3278. [P3] Die Wahl im Ruhegeschoss aus einer offenen Liste ziehen und alle drei Möglichkeiten vor der Wahl zeigen.
@@ -197,8 +197,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3288. [x] [P1] Acht „Meister-Wanderer“ an festen Orten in Veydal aufstellen, die erst nach beiden Rissen erscheinen und Teams mit Ring 45 bis 55 haben.
 3289. [x] [P1] Jeden Meister-Wanderer beim ersten Sieg mit 80 Wegmarken und danach einmal pro Woche mit 20 Wegmarken belohnen.
 3290. [x] [P1] Jeden Meister-Wanderer mit einem Steckbrief im Lexikon führen, der Ort, Thema und eigenen Sieg zeigt.
-3291. [P2] Die Teams der Meister-Wanderer in data/endgame.json mit Thema, Arten, Techniken und Andenken festlegen.
-3292. [P2] Nach dem Sieg über alle acht Meister-Wanderer eine Meisterrunde im Leuchtturm freischalten, in der alle acht nacheinander antreten.
+3291. [x] [P2] Die Teams der Meister-Wanderer in data/endgame.json mit Thema, Arten, Techniken und Andenken festlegen.
+3292. [x] [P2] Nach dem Sieg über alle acht Meister-Wanderer eine Meisterrunde im Leuchtturm freischalten, in der alle acht nacheinander antreten.
 3293. [P2] Eine „Nachhall-Senke“ als neue kleine Karte am Rand der Saltmarsh anlegen, in der nur Spirlings ab Ring 40 wild leben.
 3294. [P2] In der Nachhall-Senke alle 21 Arten im Wechsel nach Wochentag auftreten lassen, sodass jede Art jede Woche einmal erreichbar ist.
 3295. [P2] In der Nachhall-Senke den Fund des Tages mit doppelter Erscheinchance (0,5 statt 0,25) auftreten lassen.
@@ -206,7 +206,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3297. [P2] Sechs versteckte Schatzstellen in Veydal einbauen, die nur mit Enterhakenseil oder Kletterpickel erreichbar sind und je 30 Wegmarken geben.
 3298. [P2] Eine Schatzkarte als Gegenstand vom Tauschstand für 50 Wegmarken anbieten, die eine der sechs Stellen grob einkreist.
 3299. [P2] Eine Anzeige „Postgame: x von y erledigt“ in den Aufzeichnungen ergänzen.
-3300. [P2] Die Meister-Wanderer nach dem ersten Sieg in der zweiten Woche ein neues Team aus drei vorbereiteten Varianten nutzen lassen.
+3300. [x] [P2] Die Meister-Wanderer nach dem ersten Sieg in der zweiten Woche ein neues Team aus drei vorbereiteten Varianten nutzen lassen.
 3301. [P2] Kestra nach dem Ende von Akt I im Map House einen wöchentlichen Erkundungsauftrag geben lassen, der eine der sechs Schatzstellen betrifft.
 3302. [P3] Ein Wanderer-Treffen jeden Sonntag am Leuchtturm einrichten, an dem drei zufällige Meister-Wanderer nebeneinander stehen.
 3303. [P3] Die Meister-Wanderer nach dem Sieg Tipps zu ihrem Thema geben lassen, die im Lexikon gesammelt werden.

@@ -527,17 +527,17 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4494. [P3] (P2W) Shop-Techniken in Rift-Born erlauben, aber ihre Zusatzwirkung dort abschalten.
 
 ### Energie-Starthilfe und Kampfhilfen
-4495. [P1] (P2W) Den "Überladekern" (`rg_overcharge`) anlegen: das ganze Team startet den nächsten Kampf mit 12 statt 10 Energie und Höchstenergie 12, Preis 100 Rissglas pro Stück, 5 Stück für 400 Rissglas.
+4495. [x] [P1] (P2W) Den "Überladekern" (`rg_overcharge`) anlegen: das ganze Team startet den nächsten Kampf mit 12 statt 10 Energie und Höchstenergie 12, Preis 100 Rissglas pro Stück, 5 Stück für 400 Rissglas.
 4496. [x] [P1] (P2W) Den "Rissatem" (`rg_rift_breath`) anlegen: belebt im Kampf einen besiegten Spirling mit 50 % Kraft wieder, höchstens 1 pro Kampf, Preis 200 Rissglas pro Stück.
 4497. [x] [P1] (P2W) Den "Großen Rissatem" (`rg_rift_breath_full`) anlegen: belebt im Kampf mit 100 % Kraft und voller Energie, höchstens 1 pro Kampf, Preis 400 Rissglas.
 4498. [P1] (P2W) Wiederbeleben im Kampf ist nur möglich, wenn der Gegenstand schon in der Tasche liegt; es erscheint nie ein Kauffenster im Kampf.
 4499. [P1] (P2W) Den "Siegeswillen" (`rg_last_stand`) anlegen: wird das ganze Team besiegt, kehrt der zuletzt besiegte Spirling einmal mit 30 % Kraft zurück, Preis 300 Rissglas, nicht gegen Rift-Wächter.
 4500. [P1] (P2W) Die Kampfhilfen über die bestehende Gegenstandsaktion im Kampf (`items_allowed_in_battle`) einsetzen und in Rift-Born gesperrt lassen.
-4501. [P1] (P2W) Den "Glasfunken" (`rg_glass_spark`) anlegen: füllt im Kampf sofort die Energie eines Spirlings auf und erhöht sie für 3 Runden um 1 pro Runde, Preis 100 Rissglas.
+4501. [x] [P1] (P2W) Den "Glasfunken" (`rg_glass_spark`) anlegen: füllt im Kampf sofort die Energie eines Spirlings auf und erhöht sie für 3 Runden um 1 pro Runde, Preis 100 Rissglas.
 4502. [x] [P1] (P2W) (Umgesetzt ohne "ohne Zug": der Trank braucht den Zug wie jeder Gegenstand.) Einen "Rissglas-Heiltrank" (`rg_glass_tonic`) anlegen: heilt im Kampf 100 % Kraft und alle Zustände, ohne den Zug zu verbrauchen, höchstens 2 pro Kampf, Preis 150 Rissglas.
 4503. [P1] (P2W) Die Kampfhilfen in der Tasche in der Gruppe "Rissglas-Waren" führen und im Kampf-Gegenstandsmenü oben anzeigen, wenn vorhanden.
 4504. [P1] (P2W) Alle Kampfhilfen im Kampfmodell als Ereignisse (`ItemUsed`, `Revived`) ausgeben, damit Wiederholungen und Records sie korrekt zeigen.
-4505. [P1] (P2W) Ein Paket "Kampfvorrat" (5 Rissatem, 5 Überladekerne, 5 Glasfunken) für 1000 Rissglas statt 1500 einzeln anbieten.
+4505. [x] [P1] (P2W) Ein Paket "Kampfvorrat" (5 Rissatem, 5 Überladekerne, 5 Glasfunken) für 1000 Rissglas statt 1500 einzeln anbieten.
 4506. [P2] (P2W) Den Gegenstand "Fluchtglas" (`rg_escape_glass`) anlegen: beendet jeden Kampf ohne Verlust, auch gegen Wanderer, nicht gegen Rift-Wächter und Story-Kämpfe, Preis 100 Rissglas.
 4507. [P2] (P2W) Den "Schutzschleier" (`rg_veil`) anlegen: das ganze Team nimmt 3 Runden lang 30 % weniger Schaden, wirkt ohne Zugverbrauch, Preis 200 Rissglas.
 4508. [P2] (P2W) Den "Wuchtsplitter" (`rg_might_shard`) anlegen: hebt Wucht und Fokus eines Spirlings sofort um 2 Stufen, stärker als `power_brew`, Preis 100 Rissglas.

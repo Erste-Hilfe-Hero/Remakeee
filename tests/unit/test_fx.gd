@@ -116,3 +116,42 @@ func test_silhouette_is_flat_ink() -> void:
 		for x: int in range(0, img.get_width(), 3):
 			var c: Color = img.get_pixel(x, y)
 			assert_true(c.a == 0.0 or c.is_equal_approx(UITheme.INK))
+
+# --- Misses and effectiveness (items 2375, 2376) ---------------------------------------
+
+func test_missed_art_flies_past_without_impact() -> void:
+	var P := ElementFx.Phase
+	assert_eq(ElementFx.phases_for(MoveData.Kind.FOCUS, false, true), [P.CHARGE, P.TRAVEL] as Array[ElementFx.Phase])
+	assert_eq(ElementFx.phases_for(MoveData.Kind.PHYSICAL, false, true), [P.CHARGE] as Array[ElementFx.Phase])
+	assert_eq(ElementFx.phases_for(MoveData.Kind.FOCUS, true, true), [] as Array[ElementFx.Phase])
+	var fx := ElementFx.new()
+	fx.size = Vector2(144, 120)
+	add_child_autofree(fx)
+	GameState.battle_speed = 2
+	Juice.in_battle = true
+	await fx.play(Elements.E.EMBER, MoveData.Kind.FOCUS, Rect2(90, 70, 40, 40), Rect2(20, 10, 40, 40), true)
+	Juice.in_battle = false
+	assert_false(fx.played.has(P.IMPACT), "no impact on a miss")
+	var end: Vector2 = fx._to
+	assert_true(end.x < 0 or end.y < 0 or end.x > fx.size.x or end.y > fx.size.y, "the path leaves the screen")
+	# Same direction as towards the target.
+	assert_gt((end - Vector2(110, 90)).normalized().dot((Vector2(40, 30) - Vector2(110, 90)).normalized()), 0.99)
+
+func test_impact_size_follows_effectiveness() -> void:
+	assert_eq(ElementFx.impact_scale(2.0), 1.5)
+	assert_eq(ElementFx.impact_scale(1.0), 1.0)
+	assert_eq(ElementFx.impact_scale(0.5), 0.5)
+
+func test_art_outcome_reads_the_first_result() -> void:
+	var T := BattleEvent.Type
+	var ev := func(t: int, data: Dictionary = {}) -> BattleEvent:
+		var e := BattleEvent.new()
+		e.type = t
+		e.data = data
+		return e
+	var list: Array[BattleEvent] = [ev.call(T.MOVE_USED), ev.call(T.MISSED), ev.call(T.MOVE_USED), ev.call(T.DAMAGE, {"eff": 2.0})]
+	assert_true(BattleScene.art_outcome(list, 0).miss)
+	assert_false(BattleScene.art_outcome(list, 2).miss)
+	assert_eq(BattleScene.art_outcome(list, 2).eff, 2.0)
+	var ticks: Array[BattleEvent] = [ev.call(T.MOVE_USED), ev.call(T.DAMAGE, {"status_tick": true, "eff": 0.5}), ev.call(T.MOVE_USED), ev.call(T.DAMAGE, {"eff": 0.5})]
+	assert_eq(BattleScene.art_outcome(ticks, 0).eff, 1.0, "a status tick is not the art's hit, and the next art is not looked at")

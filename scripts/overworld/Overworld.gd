@@ -83,6 +83,7 @@ func _ready() -> void:
 		"quest_show": _action_quest_show,
 		"switch": _action_switch,
 		"gauntlet": _action_gauntlet,
+		"rift_tower": _action_rift_tower,
 		"weekly": _action_weekly,
 		"master": _action_master,
 		"merchant": _action_merchant,
@@ -584,7 +585,7 @@ func _on_interact(cell: Vector2i) -> void:
 		return
 	var n: NPC = npc_at(cell)
 	if n != null:
-		n.face_toward(player.cell)
+		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
 		elif not await offer_rematch(n) and not await offer_trials(n):
@@ -601,7 +602,7 @@ func _on_interact(cell: Vector2i) -> void:
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
 		var beyond: NPC = npc_at(cell + (cell - player.cell))
 		if beyond != null:
-			beyond.face_toward(player.cell)
+			await beyond.turn_toward(player.cell)
 			await run_dialogue(beyond.dialogue_ref, beyond)
 
 ## Cave entrance signs show the gear needed inside as pictures above the text (item 982).
@@ -1531,15 +1532,25 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["The stair has %d floors. There is no healing on the way, only at a rest point after every tenth floor, where your climb is saved." % Gauntlet.FLOORS] as Array[String])
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	if Gauntlet.endless_open():
-		var way: int = await menu.pick_strings(Loc.t("The lighthouse stair"), [Loc.t("Climb the stair"),
-			Loc.t("Endless stretch (best %d)") % Gauntlet.endless_best()] as Array[String])
+	if Gauntlet.endless_open() or Masters.round_open():
+		var ways: Array[String] = [Loc.t("Climb the stair")]
+		var kinds: Array[String] = ["stair"]
+		if Gauntlet.endless_open():
+			ways.append(Loc.t("Endless stretch (best %d)") % Gauntlet.endless_best())
+			kinds.append("endless")
+		if Masters.round_open():
+			ways.append(Loc.t("Master round (best %d of %d)") % [Masters.round_best(), Masters.list().size()])
+			kinds.append("masters")
+		var way: int = await menu.pick_strings(Loc.t("The lighthouse stair"), ways)
 		if way < 0:
 			menu.queue_free()
 			return
-		if way == 1:
+		if kinds[way] != "stair":
 			menu.queue_free()
-			await _run_endless()
+			if kinds[way] == "masters":
+				await _run_master_round()
+			else:
+				await _run_endless()
 			return
 	var best: int = Gauntlet.best()
 	var start: int = 0
@@ -1602,6 +1613,93 @@ func _action_gauntlet(_args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["The echoes bow and fade. You reached the lamp room!"] as Array[String])
 	elif floors > best:
 		await say(["New best: floor %d of %d!" % [floors, Gauntlet.FLOORS]] as Array[String])
+
+## "rift_tower <id>": a Rift tower (plan 3266-3275). Up to three Spirlings at ring 30 or more
+## climb fifteen floors; the team rests every five floors.
+func _action_rift_tower(args: PackedStringArray, _speaker: NPC) -> void:
+	var t: Dictionary = RiftTower.find(args[0] if not args.is_empty() else "")
+	if t.is_empty() or not RiftTower.is_open(t):
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var ok: Array[Spirling] = RiftTower.eligible(GameState.party)
+	if ok.is_empty():
+		await menu.info(RiftTower.entrance_text(t) + "\n" + Loc.t("None of your Spirlings is at ring %d yet.") % RiftTower.MIN_RING)
+		menu.queue_free()
+		return
+	if not await menu.confirm(RiftTower.entrance_text(t) + "\n" + Loc.t("Enter?")):
+		menu.queue_free()
+		return
+	var team: Array[Spirling] = []
+	while team.size() < RiftTower.MAX_TEAM and team.size() < ok.size():
+		var left: Array[Spirling] = ok.filter(func(s: Spirling) -> bool: return not s in team)
+		if team.size() > 0 and left.is_empty():
+			break
+		var names: Array[String] = []
+		for s: Spirling in left:
+			names.append("%s (%s)" % [s.display_name(), Loc.t("Ring %d") % s.level])
+		if team.size() > 0:
+			names.append(Loc.t("Go with %d") % team.size())
+		var i: int = await menu.pick_strings(Loc.t("Pick Spirling %d of up to %d") % [team.size() + 1, RiftTower.MAX_TEAM], names)
+		if i < 0:
+			menu.queue_free()
+			return
+		if i >= left.size():
+			break
+		team.append(left[i])
+	menu.queue_free()
+	var run := RiftTower.new(t, GameState.rng.randi())
+	GameState.party_on_loan = GameState.party
+	GameState.party = team
+	GameState.heal_party()
+	var cleared: int = 0
+	while cleared < RiftTower.floors(t):
+		await say([RiftTower.floor_label(t, cleared)] as Array[String])
+		var info: Dictionary = {"name": Gauntlet.new(run.seed_value, 1).echo_name(cleared), "ai": RiftTower.ai_for(cleared),
+			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared)}
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(run.team(cleared), false, info)
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		cleared += 1
+		if cleared % RiftTower.SECTION == 0 and cleared < RiftTower.floors(t):
+			GameState.heal_party()
+			var m := MenuHost.new()
+			_ui.add_child(m)
+			var on: bool = await m.confirm(Loc.t("Your team rests. Go on?"))
+			m.queue_free()
+			if not on:
+				break
+	GameState.party = GameState.party_on_loan
+	GameState.party_on_loan = []
+	var lines: Array[String] = [Loc.t("%s: %d of %d floors.") % [Loc.t(str(t.name)), cleared, RiftTower.floors(t)]]
+	lines.append_array(RiftTower.finish(t, cleared))
+	await say(lines)
+	await announce_achievements()
+
+## Master round (plan 3292): all eight masters in a row, healed at the start and once halfway.
+func _run_master_round() -> void:
+	GameState.heal_party()
+	var beaten: int = 0
+	var all: Array[Dictionary] = Masters.list()
+	for m: Dictionary in all:
+		await say([Loc.t("Master %d of %d: %s, %s.") % [beaten + 1, all.size(), str(m.name), Loc.t(str(m.title))]] as Array[String])
+		busy = false
+		var outcome: BattleModel.Outcome = await start_battle(Masters.team(str(m.id)), false,
+			{"name": "%s, %s" % [str(m.name), Loc.t(str(m.title))], "ai": 3})
+		busy = true
+		player.frozen = true
+		if outcome != BattleModel.Outcome.WIN:
+			break
+		beaten += 1
+		if beaten == Masters.ROUND_REST_AFTER and beaten < all.size():
+			GameState.heal_party()
+			await say([Loc.t("Halfway. Your team is rested.")] as Array[String])
+	var lines: Array[String] = [Loc.t("Master round: %d of %d beaten.") % [beaten, all.size()]]
+	lines.append_array(Masters.finish_round(beaten))
+	await say(lines)
 
 ## Endless stretch (plan 3264-3265): one fight after another, one ring stronger each floor,
 ## no healing; the run ends with the first loss or when the player stops.
@@ -2168,7 +2266,7 @@ func offer_rematch(n: NPC) -> bool:
 		busy = false
 		return false
 	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
-	info["money"] = TrainerData.MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
+	info["money"] = TrainerData.REMATCH_MONEY_PER_LEVEL * team.reduce(func(m: int, s: Spirling) -> int: return maxi(m, s.level), 0)
 	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
 	if outcome == BattleModel.Outcome.WIN:
 		_mark_rematch(def)
@@ -2334,6 +2432,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
 	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
+	scene.backdrop_shade = float(trainer.get("shade", 0.0))
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)
 	_battle_layer.add_child(scene)
@@ -2384,6 +2483,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
+	model.energy_bonus = [ShopEffects.energy_bonus(), 0]
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])

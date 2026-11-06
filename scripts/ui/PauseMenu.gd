@@ -33,7 +33,7 @@ var room_action: String = ""
 ## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
 ## the Map book once Aldo gave it.
-const MENU_ORDER: Array[String] = ["Goals", "Map book", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+const MENU_ORDER: Array[String] = ["Goals", "Map book", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
 	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
@@ -64,6 +64,7 @@ func run() -> void:
 		match labels[idx]:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
+			"Map": await WorldMapMenu.run(self, current_map)
 			"Team": await run_team()
 			"Friends":
 				await tip("friends")
@@ -280,6 +281,8 @@ func run_records() -> void:
 			lines.append("Waymark history")
 		if Masters.open():
 			lines.append("Master Wayfarers")
+		if GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
+			lines.append("Tower map")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -298,6 +301,7 @@ func run_records() -> void:
 			"Personal bests": await info(records_text())
 			"Waymark history": await info(Loc.t("Waymarks: %d") % GameState.waymarks + "\n" + "\n".join(Waymarks.history_lines()))
 			"Master Wayfarers": await run_masters()
+			"Tower map": await info("\n".join(RiftTower.card_lines()))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Watch last battle":
