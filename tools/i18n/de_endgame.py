@@ -282,4 +282,13 @@ T = {
 "The chest opens with a soft chime.": "Die Truhe öffnet sich mit einem leisen Klang.",
 "Echo Path this week: %s": "Nachhall-Pfad diese Woche: %s",
 "Echo Path: %d of %d rooms this week": "Nachhall-Pfad: %d von %d Räumen diese Woche",
+"Waymark history": "Wegmarken-Verlauf", "Waymarks: %d": "Wegmarken: %d",
+"Season path bonus step %d!": "Bonusstufe %d im Jahreszeitenpfad!",
+"Daily task": "Tagesauftrag", "All daily tasks": "Alle Tagesaufträge", "Weekly echo": "Wochen-Echo",
+"Lighthouse stair": "Leuchtturmtreppe", "Achievement": "Erfolg", "Spirlog goal": "Spirlog-Ziel",
+"Festival": "Fest", "Master Wayfarer": "Meister-Wanderer", "Roaming trip": "Streifzug", "Album": "Album",
+"%s: %d days left, %d ribbons": "%s: noch %d Tage, %d Festbänder",
+"Next festival: %s (%s)": "Nächstes Fest: %s (%s)",
+"Next step: %s": "Nächste Stufe: %s", "Every further step: %s": "Jede weitere Stufe: %s",
+
 }
