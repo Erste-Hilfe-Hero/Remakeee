@@ -707,9 +707,11 @@ func _ask_choice(choices: Array[Dictionary]) -> Dictionary:
 func announce_achievements() -> void:
 	show_notices()
 	var lines: Array[String] = Collection.claim()
+	# Vows settle and the run is chronicled first, so "Three Ways" is checked right after (plan 3403).
+	lines.append_array(Vows.settle())
+	lines.append_array(RunChronicle.note())
 	var badges: Array[String] = Achievements.check()
 	lines.append_array(Completion.claim())
-	lines.append_array(Vows.settle())
 	for t: String in badges:
 		# Unlocked badges show at the top of the screen without stopping the game (plan 3315).
 		var a: Dictionary = Achievements.by_title(t)

@@ -1009,6 +1009,15 @@
    "n": 1
   },
   {
+   "id": "three_ways",
+   "title": "Three Ways",
+   "text": "Finish Act I once with each of the three starters, over any save slots.",
+   "cat": "challenge",
+   "reward": 100,
+   "stat": "starters_done",
+   "n": 3
+  },
+  {
    "id": "photos_25",
    "title": "Photographer",
    "text": "Save 25 photos in photo mode.",
