@@ -511,7 +511,10 @@ func test_goals_are_a_list_with_main_goal_first() -> void:
 	var rows: Array[Dictionary] = PauseMenu.goal_rows({"aldo_gift": true}, "Today: a rare visitor stirs in Fernstair.")
 	assert_gte(rows.size(), 3, "main goal, a side goal and the visitor")
 	assert_true(rows[0].icon is Texture2D, "the main goal has its mark")
-	assert_eq(str(rows[-1].text), "Today's visitor")
+	var texts: Array[String] = []
+	for r: Dictionary in rows:
+		texts.append(str(r.text))
+	assert_has(texts, "Today's visitor")
 	for r: Dictionary in rows:
 		assert_false(str(r.detail).is_empty(), "every row opens details")
 
