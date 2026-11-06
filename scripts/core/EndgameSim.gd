@@ -72,7 +72,7 @@ static func run(days: int = DAYS) -> Dictionary:
 				floors += 1
 				pay.call("tower", Gauntlet.SECTION_WAYMARKS if floors % Gauntlet.SECTION == 0 else Gauntlet.FLOOR_WAYMARKS)
 				_add(coins, "tower", Gauntlet.BASE_PRIZE + Gauntlet.PRIZE_STEP * (floors - 1))
-			var offers: Array[Dictionary] = Exchange.all_offers()
+			var offers: Array[Dictionary] = Exchange.all_offers() + Exchange.weekly_for("sim-%d" % week)
 			offers.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.price) < int(b.price))
 			for o: Dictionary in offers:
 				for k: int in int(o.get("stock", 1)):

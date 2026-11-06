@@ -1497,9 +1497,27 @@ func _action_exchange(_args: PackedStringArray, _speaker: NPC) -> void:
 		var labels: Array[String] = []
 		for o: Dictionary in offers:
 			labels.append(Exchange.label(o))
+		var list_row: int = -1
+		if Exchange.full_unlocked():
+			list_row = labels.size()
+			labels.append(Loc.t("Weekly crates..."))
+		var goal_row: int = labels.size()
+		labels.append(Loc.t("Savings goal..."))
 		var idx: int = await menu.pick_strings(Loc.t("Exchange   %s") % Waymarks.label(), labels)
 		if idx < 0:
 			break
+		if idx == list_row:
+			await menu.info(Exchange.weekly_list_text())
+			continue
+		if idx == goal_row:
+			var names: Array[String] = []
+			for o: Dictionary in offers:
+				names.append(Exchange.label(o))
+			var g: int = await menu.pick_strings(Loc.t("Save up for which offer?"), names)
+			if g >= 0:
+				Exchange.set_goal(str(offers[g].item))
+				await menu.info(Exchange.goal_line())
+			continue
 		var o: Dictionary = offers[idx]
 		if not await menu.confirm(Exchange.describe(o) + "\n\n" + Loc.t("Trade?")):
 			continue

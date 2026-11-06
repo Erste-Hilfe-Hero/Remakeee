@@ -1,5 +1,15 @@
 {
- "_comment": "Plan area 8 endgame data. exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance.",
+ "_comment": "Plan area 8 endgame data. exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. exchange_weekly: the open list of weekly offers; after Act I three of them are on sale each week, drawn with the seed chimora-stand-<ISO week>. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance.",
+ "exchange_weekly": [
+  {"item": "spark_coil", "price": 90, "stock": 1},
+  {"item": "bark_wrap", "price": 90, "stock": 1},
+  {"item": "swift_feather", "price": 90, "stock": 1},
+  {"item": "kin_charm", "price": 30, "stock": 2},
+  {"item": "spark_drop", "price": 20, "stock": 3},
+  {"item": "cooling_gel", "price": 8, "stock": 3},
+  {"item": "dry_towel", "price": 8, "stock": 3},
+  {"item": "wake_bell", "price": 8, "stock": 3}
+ ],
  "exchange": [
   {
    "item": "strong_tonic",
