@@ -169,6 +169,10 @@ T = {
 "Keyboard keys...": "Tastatur-Tasten...",
 "Touch A/B swap: %s": "A/B-Tausch Touch: %s",
 "Gamepad A/B swap: %s": "A/B-Tausch Pad: %s",
+"Today...": "Heute...",
+"This week...": "Diese Woche...",
+"Collection...": "Sammlung...",
+"Friends, mail: %s": "Freunde, Post: %s",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

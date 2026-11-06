@@ -714,3 +714,15 @@ func test_startup_time_is_logged_once_per_stage() -> void:
 	assert_eq(StartupLog.at("title menu ready"), 1840)
 	assert_string_contains(StartupLog.line_for("title menu ready", 4200), "slower than the goal")
 	StartupLog.reset()
+
+func test_goals_list_ends_with_the_wider_tabs() -> void:
+	var rows: Array[Dictionary] = PauseMenu.goal_tab_rows()
+	assert_eq(rows.size(), 3, "Today, week and collection; the story is the list itself")
+	assert_eq(str(rows[0].text), "Today...")
+	for r: Dictionary in rows:
+		assert_ne(str(r.detail), "")
+
+func test_map_book_sits_after_goals_once_given() -> void:
+	assert_false("Map book" in PauseMenu.menu_labels(false, false, false))
+	var labels: Array[String] = PauseMenu.menu_labels(false, false, false, false, true)
+	assert_eq(labels.find("Map book"), 1)

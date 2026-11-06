@@ -42,7 +42,7 @@ static func menu_rows() -> Array[String]:
 		out.append(t)
 	out.append_array(["Continue", "New Game", "Load...", "Settings", "Back", "Yes", "No",
 		"Get a transfer code", "Enter a code...", "Online rules", "Privacy", "Delete account...",
-		"Friends and greetings: On", "Friends and greetings: Off", "Try again", "Open the store",
+		"Friends, mail: On", "Friends, mail: Off", "Try again", "Open the store",
 		"No, I am new", "Yes, I have a code", "Lantern Mail", "Add a friend...", "World goal of the week",
 		"Weekly board", "Blocked Wayfarers", "Copy my code", "Sound test...", "Music", "Sound effects",
 		"Cries", "Imprint & privacy", "Licences", "Take the Iron Oath", "Not now", "Delete", "Keep"])

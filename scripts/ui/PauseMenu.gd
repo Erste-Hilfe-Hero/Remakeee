@@ -94,6 +94,7 @@ func tip(id: String) -> void:
 func run_goals() -> void:
 	while true:
 		var rows: Array[Dictionary] = goal_rows(GameState.flags)
+		rows.append_array(goal_tab_rows())
 		var guide: int = -1
 		if not Tips.seen().is_empty():
 			guide = rows.size()
@@ -105,6 +106,17 @@ func run_goals() -> void:
 			await run_guide()
 			continue
 		await info(str(rows[idx].get("detail", rows[idx].text)))
+
+## The wider goal tabs (plan area 8, item 3526) after the list: Today, Week and Collection.
+## Story is the list itself.
+const GOAL_TAB_ROWS: Dictionary = {"Today": "Today...", "Week": "This week...", "Collection": "Collection..."}
+
+static func goal_tab_rows() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for tab: String in Goals.TABS:
+		if GOAL_TAB_ROWS.has(tab):
+			out.append({"text": GOAL_TAB_ROWS[tab], "detail": Goals.tab_text(tab)})
+	return out
 
 ## The Guide (item 1985): every tip already seen, by topic, to read again.
 func run_guide() -> void:
@@ -179,16 +191,6 @@ const SAVED_LOCAL_TEXT: String = "Saved on this phone. The server follows once t
 ## Goals screen in four tabs (plan 3526): Story, Today, Week, Collection. All tabs in one text.
 static func goals_text() -> String:
 	return Goals.all_text()
-
-## Picks a goals tab and shows it until the player backs out.
-func run_goals() -> void:
-	while true:
-		var tabs: Array[String] = []
-		tabs.assign(Goals.TABS)
-		var i: int = await pick_strings("Goals", tabs)
-		if i < 0:
-			return
-		await info(Goals.tab_text(tabs[i]))
 
 ## Achievements and personal bests (items 88-90, plan area 8): badge book, lists by category.
 func run_records() -> void:
