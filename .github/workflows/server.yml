@@ -160,9 +160,22 @@ jobs:
           sudo apt-get install -yq sshpass >/dev/null
           opts="-o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
           sshpass -e ssh $opts root@"$IP" "mkdir -p /opt/chimora/server /opt/chimora/supabase/migrations"
-          sshpass -e rsync -az --delete -e "ssh $opts" --exclude .env --exclude public --exclude backups \
+          sshpass -e rsync -az --delete -e "ssh $opts" --exclude .env --exclude public --exclude backups --exclude secrets \
             server/ root@"$IP":/opt/chimora/server/
           sshpass -e rsync -az --delete -e "ssh $opts" supabase/migrations/ root@"$IP":/opt/chimora/supabase/migrations/
+      # The Play service account lets the billing service check Google purchases (plan area 10).
+      - name: Billing secrets
+        if: steps.have.outputs.go == 'true'
+        env:
+          PLAY_SA: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          if [ -z "$PLAY_SA" ]; then
+            echo "::notice::PLAY_SERVICE_ACCOUNT_JSON not set: Google purchases wait until it is."
+            exit 0
+          fi
+          opts="-o StrictHostKeyChecking=accept-new -o UserKnownHostsFile=$RUNNER_TEMP/known_hosts"
+          printf '%s' "$PLAY_SA" | sshpass -e ssh $opts root@"$IP" \
+            "mkdir -p /opt/chimora/server/secrets && chmod 700 /opt/chimora/server/secrets && umask 077 && cat > /opt/chimora/server/secrets/google_sa.json"
       - name: Install or update
         if: steps.have.outputs.go == 'true'
         run: |

@@ -23,10 +23,13 @@ Aussehen, 1 Abo). Statt alles per Hand anzulegen, legt ein Skript sie an. Dafür
 - [ ] **Apple:** einen **In-App-Purchase-Schlüssel** erzeugen (für die App Store Server API) und die
       .p8-Datei mit Key-ID und Issuer-ID als Secrets `APPLE_IAP_KEY_P8`, `APPLE_IAP_KEY_ID`, `APPLE_ISSUER_ID`
       in lifekit ablegen. Der vorhandene API-Schlüssel braucht die Rolle **App-Manager**, damit das Skript
-      Produkte anlegen darf.
+      Produkte anlegen darf. (Die Belegprüfung selbst läuft schon ohne diesen Schlüssel: Apple signiert jeden
+      Kauf, der Server prüft die Signatur.)
       → [App Store Connect → Benutzer und Zugriff → Integrationen → In-App-Kauf](https://appstoreconnect.apple.com/access/integrations/api/subs)
 - [ ] **Google Cloud Pub/Sub** für Kauf-Benachrichtigungen: im Google-Cloud-Projekt des Service-Accounts
-      die Pub/Sub-API aktivieren. Topic und Push-Adresse legt Claude dann an.
+      die Pub/Sub-API aktivieren und dem Service-Account die Rolle „Pub/Sub-Administrator“ geben. Topic und
+      Push-Adresse (`/billing/v1/google/notify` mit geheimem Schlüssel) legt Claude dann an. Bis dahin findet
+      der Server Erstattungen trotzdem: er fragt Google jede Stunde danach.
       → [Google Cloud → Pub/Sub](https://console.cloud.google.com/cloudpubsub)
 
 ## 3. Formulare in den Konsolen neu beantworten

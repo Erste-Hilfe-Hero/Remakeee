@@ -54,6 +54,12 @@ var _foot: HBoxContainer
 var one_hand: bool = false
 var _tabs: Array[String] = []
 var _tab: int = 0
+## True after a tap or click, false after a key or gamepad button: the focus sound only plays
+## for keys and pads, so a tap does not give two sounds at once (item 1849).
+static var pointer_used: bool = false
+## Line shown when a list has no rows besides Back (item 1856).
+const EMPTY_TEXT: String = "Nothing here yet."
+var _empty: Label
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -68,6 +74,11 @@ func _ready() -> void:
 	_title.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_title.custom_minimum_size = Vector2(1, 0)
 	_title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# A tap on the title scrolls back to the top (item 1797).
+	_title.mouse_filter = Control.MOUSE_FILTER_STOP
+	_title.gui_input.connect(func(ev: InputEvent) -> void:
+		if TapInput.is_release(ev):
+			scroll_to_top())
 	head.add_child(_title)
 	_back = Button.new()
 	_back.custom_minimum_size = Vector2(BACK_SIZE, BACK_SIZE)
@@ -92,6 +103,13 @@ func _ready() -> void:
 	_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_box.add_theme_constant_override("separation", 1)
 	_scroll.add_child(_box)
+	_empty = Label.new()
+	_empty.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_empty.custom_minimum_size = Vector2(1, 0)
+	_empty.add_theme_color_override("font_color", UITheme.MID)
+	_empty.text = EMPTY_TEXT
+	_empty.visible = false
+	_box.add_child(_empty)
 	_hint = Label.new()
 	_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	_hint.custom_minimum_size = Vector2(1, 0)
@@ -186,7 +204,7 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		b.pressed.connect(func() -> void: _on_row(result, _slider_dir(b, i)))
 		b.gui_input.connect(func(ev: InputEvent) -> void: _row_input(ev, i, result))
 		b.focus_entered.connect(func() -> void:
-			if visible:
+			if visible and not pointer_used:
 				Sound.sfx("select")
 			_show_hint(i)
 			b.queue_redraw())
@@ -195,6 +213,8 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 		_box.add_child(b)
 		_buttons.append(b)
 		_pointer_room(b)
+	_link_wrap()
+	_empty.visible = entries.is_empty()
 	_set_accessibility(title)
 	_opened_ms = Time.get_ticks_msec()
 	_press_pos = Vector2(NAN, NAN)
@@ -209,6 +229,27 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	if index >= 0:
 		_remembered[title] = index
 	return index
+
+## Up on the first row goes to the last one and down on the last to the first (item 1847).
+func _link_wrap() -> void:
+	var on: Array[Button] = []
+	for b: Button in _buttons:
+		if not b.disabled:
+			on.append(b)
+	if on.size() < 2:
+		return
+	var first: Button = on[0]
+	var last: Button = on[on.size() - 1]
+	first.focus_neighbor_top = first.get_path_to(last)
+	last.focus_neighbor_bottom = last.get_path_to(first)
+
+## Scrolls the list back to its first row (a tap on the title, item 1797).
+func scroll_to_top() -> void:
+	_scroll.scroll_vertical = 0
+
+## The empty-list line (tests).
+func empty_label() -> Label:
+	return _empty
 
 ## The row the list would focus, or the first enabled one.
 func _focus_row(want: int) -> void:
@@ -359,6 +400,11 @@ func _tap_allowed() -> bool:
 
 ## Seen before the GUI, so the row's own pressed signal can ask how the finger moved.
 func _input(event: InputEvent) -> void:
+	if TapInput.is_press(event):
+		pointer_used = true
+	elif event is InputEventKey or event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		if event.is_pressed():
+			pointer_used = false
 	if not visible:
 		return
 	if TapInput.is_press(event):

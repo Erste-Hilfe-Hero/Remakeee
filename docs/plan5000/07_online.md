@@ -147,11 +147,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2789. [P3] Eine Vorsaison von 1 Woche vor dem Store-Start zum Testen, deren Wertung danach gelöscht wird.
 2790. [P3] Die Grenzen der Gegnersuche (100, 50, 400) stehen als Schlüssel in `server_config`, damit Ali sie bei wenigen Spielern lockern kann.
 ### Tausch zwischen Freunden
-2791. [P1] Tauschen geht nur zwischen bestätigten Freunden ab Freundschaftsstufe 3, die seit mindestens 7 Tagen befreundet sind.
-2792. [P1] Tauschbar sind nur Gegenstände mit `tradeable: true` in `data/items.json`; Spirlings werden nie getauscht (bestehende Grundregel bleibt).
-2793. [P1] Gegenstände mit Shop-Herkunftsmarke sind nicht tauschbar, damit kein grauer Handel und kein Betrug mit Rückbuchungen entsteht.
-2794. [P1] Der Tausch läuft über eine Treuhand-Tabelle `trades`: beide legen ein, beide bestätigen, dann tauscht der Server in einer Transaktion oder gar nicht.
-2795. [P1] Ändert eine Seite ihr Angebot, wird die Bestätigung beider Seiten automatisch zurückgesetzt.
+2791. [x] [P1] Tauschen geht nur zwischen bestätigten Freunden ab Freundschaftsstufe 3, die seit mindestens 7 Tagen befreundet sind.
+2792. [x] [P1] Tauschbar sind nur Gegenstände mit `tradeable: true` in `data/items.json`; Spirlings werden nie getauscht (bestehende Grundregel bleibt).
+2793. [x] [P1] Gegenstände mit Shop-Herkunftsmarke sind nicht tauschbar, damit kein grauer Handel und kein Betrug mit Rückbuchungen entsteht.
+2794. [x] [P1] Der Tausch läuft über eine Treuhand-Tabelle `trades`: beide legen ein, beide bestätigen, dann tauscht der Server in einer Transaktion oder gar nicht.
+2795. [x] [P1] Ändert eine Seite ihr Angebot, wird die Bestätigung beider Seiten automatisch zurückgesetzt.
 2796. [P2] Der Server zieht eingelegte Gegenstände aus dem Server-Spielstand ab und schreibt sie dem anderen gut; der Client darf das Ergebnis nicht selbst setzen.
 2797. [P2] Ein Tausch umfasst höchstens 5 verschiedene Gegenstände und 20 Stück je Seite.
 2798. [P2] Pro Tag sind 5 abgeschlossene Tausche pro Spieler erlaubt, eingestellt über `server_config.trade_day_limit`.

@@ -33,8 +33,12 @@ func sign_out() -> void:
 		await _http(HTTPClient.METHOD_POST, "/auth/v1/logout", {}, true)
 	session = {}
 
+## Server functions that are not database functions, but routes of the billing service
+## (server/billing, plan area 10): store receipts are checked with Apple and Google there.
+const SERVICE_ROUTES: Dictionary = {"shop_verify": "/billing/v1/verify"}
+
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
-	return await _authed(HTTPClient.METHOD_POST, "/rest/v1/rpc/" + name, args)
+	return await _authed(HTTPClient.METHOD_POST, str(SERVICE_ROUTES.get(name, "/rest/v1/rpc/" + name)), args)
 
 ## Refreshes the token when it is about to expire, and once more after a 401.
 func _authed(method: int, path: String, body: Dictionary) -> Dictionary:

@@ -100,3 +100,6 @@ func test_ready_offers_have_working_items() -> void:
 				var it: Dictionary = Database.item(str(g.id))
 				assert_false(it.is_empty(), "%s grants a real item" % o.id)
 				assert_false(it.has("price"), "%s: shop items have no merchant price" % g.id)
+
+func test_receipt_check_goes_to_billing_service() -> void:
+	assert_eq(SupabaseBackend.SERVICE_ROUTES.get("shop_verify"), "/billing/v1/verify")
