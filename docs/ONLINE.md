@@ -60,10 +60,34 @@ All under Menu, Friends. Spirlings are never traded or gifted, and there is no f
 | Friends, mail, world goal, board | `scripts/ui/FriendsMenu.gd` |
 | Echo teams (snapshot, build, duel copies, board score) | `scripts/online/EchoTeam.gd` |
 | Echo partner and echo duel in the world | `scripts/overworld/Overworld.gd` (`pick_echo_partner`, `echo_duel`) |
+| Battle referee: checks an uploaded battle (shared by server and game) | `scripts/battle/BattleReferee.gd` |
+| Battle referee service (container, loop, runner) | `server/referee/` |
+| End-to-end referee test (local Postgres + Godot) | `tools/online/test_referee.sh` |
 
 Security model: every table has row level security on and no policies, and players have no table rights. The
 game only calls the `security definer` functions, which check `auth.uid()` and every rule themselves.
 New server features add a migration file, a SQL test and the same rule in `LocalBackend`.
+
+### Battle referee
+
+After a battle that counts online (today the echo duel; later leagues, raids and live duels) the game
+calls `battle_submit(kind, ref, replay, claim)`: the replay is the `BattleReplay` snapshot (seed, both
+teams, every input) and the claim is what the game says came out (winner, Vigor left of every Spirling
+on both sides, rounds). `_referee_check` puts the battle data, without the account, into
+`battle_queue`. The `referee` container (`server/referee/run.sh`) takes up to 20 queued battles every
+2 seconds, plays them again with the game's own battle code (`BattleReferee.check`, Godot 4.7.2
+headless) and writes `ok`, `mismatch` or `error` into `battle_results`; a trigger copies the verdict to
+`battles.status` and removes the queue row. `battle_status(id)` shows a player the state of their own
+battle (`pending` = "being checked"), and `_battle_ok(id)` is what leagues, raids and weekly scores ask
+before anything counts.
+
+The referee logs in as the database user `chimora_referee` (password `REFEREE_DB_PASSWORD` in
+`server/.env`, made by `setup.sh`). It may only read `battle_queue` and read or insert into
+`battle_results`; PostgREST cannot switch to it, and its container has no port. `setup.sh` builds it from
+the repository root (`server/referee/Dockerfile`, compose profile `referee`), so the game project must
+sit next to `server/` (`/opt/chimora/project.godot`); otherwise it says so and the rest runs as before.
+Look at it with `docker compose --profile referee logs referee`. The limit per player is
+`server_config.battle_submit_limit` (60 an hour).
 
 Builds without a server address use `LocalBackend`, a test server that lives on the phone. The account menu
 then says "test server on this phone". The debug APK from CI works like this until the secrets below exist.

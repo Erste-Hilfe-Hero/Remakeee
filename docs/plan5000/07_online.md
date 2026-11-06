@@ -33,10 +33,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2685. [P3] Jede Änderung an `server_config` wird mit Zeit, altem und neuem Wert in `config_history` geschrieben, damit Ali sie zurückdrehen kann.
 2686. [P3] Eine Funktion `config_preview` zeigt Ali vor einer Änderung von `min_version` oder Limits, wie viele Konten in den letzten 7 Tagen betroffen gewesen wären.
 ### Kampf-Schiedsrichter auf dem Server
-2687. [P1] Einen neuen Dienst `server/referee/` bauen: ein Godot-4.7.2-Headless-Export, der nur `scripts/battle/` lädt und Kämpfe aus Seed, Teams und Zugliste nachrechnet.
-2688. [P1] Der Schiedsrichter bekommt einen eigenen Container in `server/docker-compose.yml` ohne öffentlichen Port, erreichbar nur aus dem internen Netz für die Datenbank-Funktionen.
-2689. [P1] Eine Datenbank-Funktion `_referee_check(battle_id)` legt Kampfdaten in die Tabelle `battle_queue`, und der Schiedsrichter schreibt das Ergebnis (`ok`, `mismatch`, `error`) in `battle_results`.
-2690. [P1] Der Schiedsrichter vergleicht Sieger, Restkraft jedes Spirlings und Anzahl der Runden und meldet `mismatch`, sobald ein Wert abweicht.
+2687. [x] [P1] Einen neuen Dienst `server/referee/` bauen: ein Godot-4.7.2-Headless-Export, der nur `scripts/battle/` lädt und Kämpfe aus Seed, Teams und Zugliste nachrechnet.
+2688. [x] [P1] Der Schiedsrichter bekommt einen eigenen Container in `server/docker-compose.yml` ohne öffentlichen Port, erreichbar nur aus dem internen Netz für die Datenbank-Funktionen.
+2689. [x] [P1] Eine Datenbank-Funktion `_referee_check(battle_id)` legt Kampfdaten in die Tabelle `battle_queue`, und der Schiedsrichter schreibt das Ergebnis (`ok`, `mismatch`, `error`) in `battle_results`.
+2690. [x] [P1] Der Schiedsrichter vergleicht Sieger, Restkraft jedes Spirlings und Anzahl der Runden und meldet `mismatch`, sobald ein Wert abweicht.
 2691. [P1] Ligapunkte, Raid-Schaden und Wochenwertungen zählen erst, wenn der Schiedsrichter `ok` gemeldet hat; bis dahin zeigt das Spiel "wird geprüft".
 2692. [P2] Der Schiedsrichter läuft mit derselben Spieldaten-Version wie der Client; `data/*.json` werden beim Bau in den Container kopiert und ihr Prüfwert (SHA-256) im Ergebnis mitgeschrieben.
 2693. [P2] Kommt ein Client mit anderem Daten-Prüfwert als der Server, lehnt `hello` Liga und Raid ab und verweist auf das Update.
@@ -50,7 +50,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 266
 2701. [P3] Ein Werkzeug `tools/online/referee_diff.gd` zeigt bei `mismatch` Runde für Runde, wo Client und Server auseinanderlaufen.
 2702. [P3] Die Ergebnisse des Schiedsrichters als Wochenzahl in `docs/ONLINE.md` beschreiben: wie viele Kämpfe geprüft, wie viele abgewiesen.
 
-2703. [P1] Der Schiedsrichter nutzt einen eigenen Datenbank-Nutzer, der nur `battle_queue` lesen und `battle_results` schreiben darf.
+2703. [x] [P1] Der Schiedsrichter nutzt einen eigenen Datenbank-Nutzer, der nur `battle_queue` lesen und `battle_results` schreiben darf.
 2704. [P2] Jedes Ergebnis trägt die Versionsnummer der Kampfregeln (`BattleRules.VERSION`), damit Kämpfe nach einem Update mit der passenden Regelversion geprüft werden.
 2705. [P3] Für eine Übergangswoche nach Regeländerungen laufen zwei Schiedsrichter-Versionen parallel, und jeder Kampf geht an die Version seiner Regelnummer.
 2706. [P3] Der Schiedsrichter rechnet Raid-Versuche mit Phasenwechsel und meldet die Phase, in der der Versuch endete.

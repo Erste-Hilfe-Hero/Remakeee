@@ -18,8 +18,9 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "focus_brew", "w": 3}, {"item": "dash_brew", "w": 3}, {"item": "revival_leaf", "w": 1}],
 	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
-	"party_max": 5, "level_max": 60, "duel_ring": 50, "save_schema_max": 1,
+	"party_max": 5, "level_max": 60, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
 }
+const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
 ## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
 const DEFAULT_FLAGS: Dictionary = {
 	"league_fair": {"enabled": false, "min_version": 1}, "league_open": {"enabled": false, "min_version": 1},
@@ -47,7 +48,8 @@ func _init(p_store_path: String = "") -> void:
 			"transfer_create", "transfer_claim",
 			"friend_request", "friend_respond", "friend_remove", "block", "unblock", "report", "set_social", "friends_list",
 			"mail_send", "gift_send", "mail_list", "gift_open", "mail_open", "team_set", "friend_team", "echo_report",
-			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board"]:
+			"community_get", "community_add", "community_claim", "weekly_submit", "weekly_board",
+			"battle_submit", "battle_status"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 
 func is_local() -> bool:
@@ -783,3 +785,61 @@ func _on_delete_user(uid: String) -> void:
 		for key: String in t.keys():
 			if key.ends_with("|" + uid):
 				t.erase(key)
+	var battles: Dictionary = _table("battles", {})
+	for key: String in battles.keys():
+		if battles[key].user == uid:
+			battles.erase(key)
+
+# --- Battle referee (20261110000002_referee.sql) --------------------------------------------
+
+## Like public.battle_submit. The local stand-in has no queue: the referee runs at once,
+## with the same code as server/referee/ (BattleReferee), unless [member referee_waits] is set.
+func _fn_battle_submit(a: Dictionary) -> Dictionary:
+	var kind: String = str(a.get("p_kind", ""))
+	if not BATTLE_KINDS.has(kind):
+		return _fail("bad_kind")
+	var replay: Variant = a.get("p_replay")
+	var claim: Variant = a.get("p_claim")
+	if not replay is Dictionary or not claim is Dictionary or not (replay as Dictionary).get("teams") is Array \
+			or JSON.stringify(replay).length() > 200000 or JSON.stringify(claim).length() > 4000:
+		return _fail("bad_battle")
+	var inputs: Variant = (replay as Dictionary).get("inputs", [])
+	if not inputs is Array or (inputs as Array).size() > BattleReferee.MAX_INPUTS:
+		return _fail("bad_battle")
+	if not _rate_ok("battle", config_int("battle_submit_limit", 60)):
+		return _fail("slow_down")
+	var battles: Dictionary = _table("battles", {})
+	var id: int = int(db.get("battle_seq", 0)) + 1
+	db["battle_seq"] = id
+	var row: Dictionary = {"user": me(), "kind": kind, "ref": str(a.get("p_ref", "")).left(40), "status": "pending"}
+	battles[str(id)] = row
+	if referee_waits:
+		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": (claim as Dictionary).duplicate(true)}
+	else:
+		row.status = str(BattleReferee.check(replay, claim).verdict)
+	return {"ok": true, "battle_id": id, "status": "pending"}
+
+## Tests: battles stay "pending" until [method referee_run] (like the real queue).
+var referee_waits: bool = false
+
+## Decides every waiting battle, like one run of server/referee/run.sh.
+func referee_run() -> int:
+	var n: int = 0
+	for key: String in (_table("battles", {}) as Dictionary):
+		var row: Dictionary = db.battles[key]
+		if row.has("queued"):
+			row.status = str(BattleReferee.check(row.queued.replay, row.queued.claim).verdict)
+			row.erase("queued")
+			n += 1
+	return n
+
+func _fn_battle_status(a: Dictionary) -> Dictionary:
+	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
+	if not row is Dictionary or row.user != me():
+		return _fail("no_such_battle")
+	return {"ok": true, "status": row.status}
+
+## Like public._battle_ok: leagues, raids and weekly scores only count "ok" battles.
+func battle_ok(battle_id: int) -> bool:
+	var row: Variant = (_table("battles", {}) as Dictionary).get(str(battle_id))
+	return row is Dictionary and row.status == "ok"
