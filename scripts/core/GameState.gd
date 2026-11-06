@@ -84,8 +84,10 @@ var left_handed: bool = false
 var tap_to_move: bool = true
 ## One-hand layout (item 79): D-pad and buttons stacked on one side of the screen.
 var one_hand: bool = false
-## Gamepad rumble on hits (item 63).
-var rumble: bool = true
+## Vibration on phones and gamepads (items 63, 2590): 0 Off, 1 Weak, 2 Full.
+var vibration: int = 2
+## Screen shake in battle and the world (item 2259): 0 Off, 1 Weak, 2 Full.
+var screen_shake: int = 2
 ## First-time tips (see Tips.gd).
 var tips_enabled: bool = true
 ## Display and accessibility (items 59, 76, 78).
@@ -234,8 +236,9 @@ static func _has_pad_button(action: StringName, button: int) -> bool:
 
 ## A short rumble on every connected gamepad, if rumble is on.
 func rumble_pads(strength: float, seconds: float) -> void:
-	if not rumble or reduce_motion:
+	if vibration <= 0 or reduce_motion:
 		return
+	strength *= 0.5 if vibration == 1 else 1.0
 	for d: int in Input.get_connected_joypads():
 		Input.start_joy_vibration(d, strength * 0.5, strength, seconds)
 
@@ -373,7 +376,7 @@ func settings_to_dict() -> Dictionary:
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "left_handed": left_handed, "tap_to_move": tap_to_move,
-		"one_hand": one_hand, "rumble": rumble,
+		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"tips": tips_enabled, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
 		"high_contrast": high_contrast, "day_night": day_night, "language": language}
 
@@ -390,7 +393,10 @@ func settings_from_dict(d: Dictionary) -> void:
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
 	one_hand = bool(d.get("one_hand", false))
-	rumble = bool(d.get("rumble", true))
+	# Older settings had an on/off "rumble"; on maps to Full vibration.
+	var legacy_rumble: int = 2 if bool(d.get("rumble", true)) else 0
+	vibration = clampi(int(d.get("vibration", legacy_rumble)), 0, 2)
+	screen_shake = clampi(int(d.get("screen_shake", 2)), 0, 2)
 	tips_enabled = bool(d.get("tips", true))
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))

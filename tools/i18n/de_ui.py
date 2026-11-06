@@ -228,7 +228,7 @@ T = {
 "Tip: Wayfarer Gear works where you can't walk. Face the spot and press A, or tap it.": "Tipp: Wanderer-Ausrüstung hilft, wo du nicht laufen kannst. Stell dich davor und drück A oder tippe darauf.",
 # P3 extras: controls, temperament, Iron Oath, collection, rematches, photo mode, replays, eras
 "Controls...": "Steuerung...", "Controls": "Steuerung",
-"One-hand layout: %s": "Einhand-Layout: %s", "Gamepad rumble: %s": "Gamepad-Vibration: %s",
+"One-hand layout: %s": "Einhand-Layout: %s",
 "Gamepad buttons...": "Gamepad-Tasten...",
 "Gamepad\nD-pad or left stick: move\nA: talk, confirm\nB: back, hold to run\nStart or Select: menu\nRB: battle speed\nY: auto wild battles":
 	"Gamepad\nSteuerkreuz oder linker Stick: laufen\nA: sprechen, bestätigen\nB: zurück, halten zum Rennen\nStart oder Select: Menü\nRB: Kampftempo\nY: wilde Kämpfe automatisch",

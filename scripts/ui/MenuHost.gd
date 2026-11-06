@@ -253,6 +253,7 @@ func run_display() -> void:
 			"High contrast menus: %s" % ("On" if GameState.high_contrast else "Off"),
 			"Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()],
 			"Day and night: %s" % ("On" if GameState.day_night else "Off"),
+			"Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake],
 		]
 		var idx: int = await pick_strings("Display and access", entries)
 		match idx:
@@ -268,6 +269,8 @@ func run_display() -> void:
 				GameState.language = Loc.next_language()
 			4:
 				GameState.day_night = not GameState.day_night
+			5:
+				GameState.screen_shake = (GameState.screen_shake + 1) % Juice.LEVEL_NAMES.size()
 		GameState.apply_display()
 		if idx == 2:
 			await info("High contrast applies to menus and text from the next screen on.")
@@ -288,7 +291,7 @@ func run_controls() -> void:
 			"Left-handed: %s" % ("On" if GameState.left_handed else "Off"),
 			"Tap to walk: %s" % ("On" if GameState.tap_to_move else "Off"),
 			"One-hand layout: %s" % ("On" if GameState.one_hand else "Off"),
-			"Gamepad rumble: %s" % ("On" if GameState.rumble else "Off"),
+			"Vibration: %s" % Juice.LEVEL_NAMES[GameState.vibration],
 			"Gamepad buttons...",
 		]
 		var idx: int = await pick_strings("Controls", entries)
@@ -306,8 +309,8 @@ func run_controls() -> void:
 			4:
 				GameState.one_hand = not GameState.one_hand
 			5:
-				GameState.rumble = not GameState.rumble
-				GameState.rumble_pads(0.6, 0.2)
+				GameState.vibration = (GameState.vibration + 1) % Juice.LEVEL_NAMES.size()
+				Haptics.play("confirm")
 			6:
 				await info(PAD_HELP)
 		VirtualPad.apply_settings()

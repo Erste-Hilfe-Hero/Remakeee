@@ -6,6 +6,7 @@ extends Control
 const STEP_OUT_DISTANCE: float = 40.0
 const STEP_TIME: float = 0.3
 const HIT_FLASHES: int = 3
+const KNOCKBACK_PX: float = 3.0
 ## Prism variants are drawn with a warm tint over the era palette.
 const PRISM_TINT: Color = Color(1.0, 0.78, 0.5)
 
@@ -36,49 +37,54 @@ func _ready() -> void:
 	_home = position
 
 ## Steps out beside the Wayfarer (slides in from the screen edge; never thrown). Awaitable.
+## Durations come from Juice curves, so the 2x / 4x battle speed applies on its own.
 func step_out(from_left: bool) -> void:
 	_home = position
 	position = _home + Vector2(-STEP_OUT_DISTANCE if from_left else STEP_OUT_DISTANCE, 0)
 	modulate.a = 0.0
 	visible = true
-	var tw: Tween = create_tween().set_parallel()
-	tw.tween_property(self, "position", _home, STEP_TIME / speed_scale)
-	tw.tween_property(self, "modulate:a", 1.0, STEP_TIME / speed_scale)
-	await tw.finished
+	Juice.tween(self, "modulate:a", 1.0, "move", STEP_TIME)
+	await Juice.tween(self, "position", _home, "move", STEP_TIME).finished
 
 func step_back(to_left: bool) -> void:
-	var tw: Tween = create_tween().set_parallel()
-	tw.tween_property(self, "position", _home + Vector2(-STEP_OUT_DISTANCE if to_left else STEP_OUT_DISTANCE, 0), STEP_TIME / speed_scale)
-	tw.tween_property(self, "modulate:a", 0.0, STEP_TIME / speed_scale)
-	await tw.finished
+	Juice.tween(self, "modulate:a", 0.0, "move", STEP_TIME)
+	await Juice.tween(self, "position", _home + Vector2(-STEP_OUT_DISTANCE if to_left else STEP_OUT_DISTANCE, 0), "move", STEP_TIME).finished
 	position = _home
 
 func lunge(toward: Vector2) -> void:
-	if GameState.reduce_motion:
+	if Juice.reduced():
 		return
-	var tw: Tween = create_tween()
-	tw.tween_property(self, "position", _home + toward, 0.08 / speed_scale)
-	tw.tween_property(self, "position", _home, 0.12 / speed_scale)
-	await tw.finished
+	await Juice.tween(self, "position", _home + toward, "impact", 0.08).finished
+	await Juice.tween(self, "position", _home, "move", 0.12).finished
+
+## Pushed 3 px away from the attacker, springs back in 0.15 s (item 2332). Under reduced
+## motion only a 1 px jolt (item 2258).
+func knockback(away: Vector2) -> void:
+	var d: Vector2 = away.normalized()
+	if Juice.reduced():
+		position = _home + d.round()
+		await get_tree().create_timer(0.05).timeout
+		position = _home
+		return
+	await Juice.tween(self, "position", _home + (d * KNOCKBACK_PX).round(), "impact").finished
+	await Juice.tween(self, "position", _home, "move", 0.15).finished
 
 func hit_flash() -> void:
-	if GameState.reduce_motion:
+	if Juice.reduced():
 		# One soft dim instead of blinking (no flashes).
 		modulate.a = 0.6
-		await get_tree().create_timer(0.12 / speed_scale).timeout
+		await get_tree().create_timer(0.12 / Juice.speed()).timeout
 		modulate.a = 1.0
 		return
 	for i: int in HIT_FLASHES:
 		visible = false
-		await get_tree().create_timer(0.05 / speed_scale).timeout
+		await get_tree().create_timer(0.05 / Juice.speed()).timeout
 		visible = true
-		await get_tree().create_timer(0.05 / speed_scale).timeout
+		await get_tree().create_timer(0.05 / Juice.speed()).timeout
 
 func faint() -> void:
-	var tw: Tween = create_tween().set_parallel()
-	tw.tween_property(self, "modulate:a", 0.0, 0.4 / speed_scale)
-	tw.tween_property(self, "position", _home + Vector2(0, 12), 0.4 / speed_scale)
-	await tw.finished
+	Juice.tween(self, "modulate:a", 0.0, "move", 0.4)
+	await Juice.tween(self, "position", _home + Vector2(0, 12), "move", 0.4).finished
 	visible = false
 	position = _home
 
