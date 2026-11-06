@@ -518,6 +518,8 @@ func _bond(slot: int = 0) -> BattleAction:
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
 	var score: float = await _bond_game.run(_bond_plans[key])
 	GameState.note_echo(score)
+	if score >= DailyTasks.MELODY_GOOD:
+		DailyTasks.record("melody", {"map": GameState.current_map})
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 
 # --- Event playback -----------------------------------------------------------------
