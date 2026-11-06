@@ -332,7 +332,10 @@ def greyreach(world):
     world.add_text(mid, {
         "sign": lines(("THE GREYREACH", "DIE GREYREACH"), ("Uplands, rings 22 to 25.", "Hochland, Ring 22 bis 25."),
                       ("West: Stillwater   North: the Wide Rift", "Westen: Stillwater   Norden: der Weite Riss")),
-        "sign_top": lines(("MOUNTAIN RAILWAY", "BERGBAHN"), ("Halt Greyreach. No trains since the storm.", "Halt Greyreach. Seit dem Sturm fahren keine Züge.")),
+        "sign_top": {"lines": lines(("MOUNTAIN RAILWAY", "BERGBAHN"), ("Halt Greyreach. No trains since the storm.", "Halt Greyreach. Seit dem Sturm fahren keine Züge.")),
+                     "after_flag": {"flag": "act2_end", "lines": lines(("MOUNTAIN RAILWAY", "BERGBAHN"), ("Halt Greyreach. Trains to Ashmere again.", "Halt Greyreach. Wieder Züge nach Ashmere."))}},
+        "conductor": {"lines": lines(("Conductor Tilde: Mountain railway to Ashmere. Mind the gap, mind the clouds.", "Schaffnerin Tilde: Bergbahn nach Ashmere. Achte auf die Lücke und auf die Wolken.")),
+                      "action": "transit mountain_rail"},
         "hut": lines(("A survey hut. Old charts of the uplands hang on the wall, every one of them grey.", "Eine Vermessungshütte. An der Wand hängen alte Karten des Hochlands, jede einzelne grau.")),
     })
     m = {"name": tr("Greyreach", "Greyreach"), "biome": "route", "backdrop": "ridge", "outdoor": True, "encounters": mid,
@@ -340,6 +343,7 @@ def greyreach(world):
          "warps": [warp(0, 26, "stillwater", 9, 13, "left"), warp(0, 27, "stillwater", 9, 14, "left"),
                    warp(5, 0, "wide_rift_edge", 5, 14, "up"), warp(6, 0, "wide_rift_edge", 6, 14, "up")],
          "npcs": [
+             npc("conductor", 10, 8, "left", mid + "/conductor", "villager"),
              wayfarer(world, mid, "brann", 2, 22, "right", "Ridgewalker Brann", team(("Mirkmole", 22), ("Talusk", 23)),
                       [("Brann: The scree up here slides if you look at it wrong.", "Brann: Das Geröll hier oben rutscht, wenn man es falsch ansieht.")],
                       [("Brann: Steady feet? Prove it.", "Brann: Sicher auf den Beinen? Beweis es.")],

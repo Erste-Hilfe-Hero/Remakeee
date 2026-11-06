@@ -72,6 +72,14 @@
  ],
  "npcs": [
   {
+   "id": "conductor",
+   "x": 10,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "greyreach/conductor",
+   "sprite": "villager"
+  },
+  {
    "id": "brann",
    "x": 2,
    "y": 22,

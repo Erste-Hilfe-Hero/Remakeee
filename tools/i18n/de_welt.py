@@ -83,6 +83,8 @@ T.update({
 "Valley Coach": "Talkutsche",
 "Ferry to Corvane": "Fähre nach Corvane",
 "The coach rattles along the valley road to %s.": "Die Kutsche rumpelt die Talstraße entlang nach %s.",
+"The mountain railway climbs through the clouds to %s.": "Die Bergbahn klettert durch die Wolken nach %s.",
+"Conductor: No trains until the line is cleared. The guild will send word.": "Schaffnerin: Keine Züge, bis die Strecke frei ist. Die Gilde gibt Bescheid.",
 "The ferry crosses the grey lake to %s.": "Die Fähre überquert den grauen See nach %s.",
 "The boat rows across the lake to %s.": "Das Boot rudert über den See nach %s.",
 "Driver: I only stop where you've been on foot first. Walk the valley, then we'll drive it.": "Kutscher: Ich halte nur dort, wo du schon zu Fuß warst. Lauf das Tal ab, dann fahren wir es.",
