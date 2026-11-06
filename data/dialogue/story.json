@@ -59,5 +59,49 @@
  "page_6": [
   "'If I don't come back: a Rift closes when someone draws it to the end.'",
   "'Tell Aldo to keep the lamp lit. Light finds the way home.'"
- ]
+ ],
+ "letter_v1": {
+  "lines": [
+   "Behind a loose board under the lamp stairs: a folded letter.",
+   "'Aldo. If you find this, you finally fixed the stairs. I knew you would. M.'"
+  ],
+  "action": "give_item max_tonic 1",
+  "flag": "letter_v1",
+  "once": true,
+  "next": "letters_check"
+ },
+ "letter_v2": {
+  "lines": [
+   "Under the rock, wrapped in oilcloth: a letter in Mirela's hand.",
+   "'The ferns talk when the wind is right. You'd laugh. I miss your laugh. M.'"
+  ],
+  "action": "give_item max_tonic 1",
+  "flag": "letter_v2",
+  "once": true,
+  "next": "letters_check"
+ },
+ "letter_v3": {
+  "lines": [
+   "A small tin floats in the pond, tied to a reed. A letter inside!",
+   "'If I'm late, keep my side of the bed cold. I hate warm sheets. M.'"
+  ],
+  "action": "give_item max_tonic 1",
+  "flag": "letter_v3",
+  "once": true,
+  "next": "letters_check"
+ },
+ "letters_check": {
+  "if": {
+   "flag": [
+    "letter_v1",
+    "letter_v2",
+    "letter_v3"
+   ],
+   "not_flag": "letters_veydal_done"
+  },
+  "lines": [
+   "That's all three of Mirela's letters from Veydal. Aldo should read them."
+  ],
+  "flag": "letters_veydal_done"
+ }
 }

@@ -110,7 +110,10 @@ static func load_map(map_id: String) -> MapData:
 	if not raw is Dictionary:
 		push_error("MapData: cannot read map '%s'" % map_id)
 		return null
-	return from_dict(map_id, raw)
+	var m: MapData = from_dict(map_id, raw)
+	if m != null:
+		StoryPlacements.apply(m)
+	return m
 
 ## Builds floor [param map_id] ("file" or "file@n") from a parsed map file.
 static func from_dict(map_id: String, raw: Dictionary) -> MapData:

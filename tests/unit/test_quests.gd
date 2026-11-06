@@ -42,6 +42,10 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 		for k: Variant in d:
 			if d[k] is Dictionary and d[k].has("flag"):
 				settable[str(d[k].flag)] = true
+			# Answers in a choice set flags too.
+			for c: Variant in (d[k].get("choices", []) if d[k] is Dictionary else []):
+				if c is Dictionary and c.has("flag"):
+					settable[str(c.flag)] = true
 			# Actions that set flags themselves: quest_show <id> ..., switch <puzzle> ...
 			for one: String in (str(d[k].get("action", "")).split(";") if d[k] is Dictionary else PackedStringArray()):
 				var act: PackedStringArray = one.strip_edges().split(" ")
@@ -54,6 +58,9 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 				if act.size() > 1 and act[0] == "page":
 					settable["page_%s" % act[1]] = true
 					settable["pages_all"] = true
+				# "echo_song <flag>" sets its flag on a good echo.
+				if act.size() > 1 and act[0] == "echo_song":
+					settable[act[1]] = true
 				if act[0] == "choose_starter":
 					settable["got_starter"] = true
 	# Cut-scenes set flags with "flag" steps (data/scenes).

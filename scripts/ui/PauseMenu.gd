@@ -31,6 +31,8 @@ func run() -> void:
 			labels.insert(labels.find("Save"), "Storage")
 		if not GameState.travel_targets(current_map).is_empty():
 			labels.insert(1, "Travel")
+		if GameState.has_flag("aldo_gift"):
+			labels.insert(labels.find("Goals") + 1, "Map book")
 		if room_puzzle:
 			labels.insert(1, "Room")
 		if Online.league_on():
@@ -41,6 +43,7 @@ func run() -> void:
 		match labels[idx]:
 			"Goals":
 				await info(goals_text())
+			"Map book": await MapBookMenu.run(self)
 			"Team": await run_team()
 			"Friends":
 				await FriendsMenu.run(self)
