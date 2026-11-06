@@ -28,6 +28,8 @@ jobs:
         run: bash server/smoke_test.sh
       - name: Backup
         run: bash server/backup.sh && ls -la server/backups
+      - name: Daily deletion run works against the real GoTrue tables
+        run: bash server/cleanup.sh
       - name: Restore test of that backup
         run: |
           bash server/restore_test.sh

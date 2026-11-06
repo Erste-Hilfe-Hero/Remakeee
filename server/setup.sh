@@ -160,6 +160,10 @@ if [ "$local_test" != "1" ]; then
 # Weekly restore test of the newest backup (server/restore_test.sh), result in /status.json.
 0 5 * * 1 root bash $here/restore_test.sh >> /var/log/chimora-restore.log 2>&1
 CRON
+	cat > /etc/cron.d/chimora-cleanup <<CRON
+# Daily deletion run for the periods in the privacy policy (server/cleanup.sh).
+15 4 * * * root bash $here/cleanup.sh >> /var/log/chimora-cleanup.log 2>&1
+CRON
 	if [ "$shared" = "1" ]; then
 		cat > /etc/cron.d/chimora-proxy <<CRON
 # Puts Chimora's route back when the shared proxy loads its own config again (server/proxy_site.sh).
