@@ -157,9 +157,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2364. [x] [P1] Gale: Aufladen als Strichlinien, die zum Anwender hin gezogen werden; Weg als Wirbel aus 3 Kreisbögen; Einschlag als Strichlinien, die waagrecht am Ziel vorbeistreichen.
 2365. [x] [P1] Lumen: Aufladen als Lichtpunkt über dem Anwender, der von 1 auf 5 Pixel wächst; Weg als gerader Strahl; Einschlag als Kreuz-Glanz, der in 0,2 s verblasst (ohne Blitz, höchstens 60 % Helligkeit).
 2366. [x] [P1] Umbra: Aufladen als Schatten, der sich vom Anwender löst; Weg als Schatten, der am Boden entlang kriecht; Einschlag als Schatten, der das Ziel von unten umschließt und sich zurückzieht.
-2367. [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
+2367. [x] [P2] Doppelelement-Techniken zeigen beim Einschlag eine kleine Beimischung des zweiten Elements (2 Partikel), wenn der Anwender zwei Elemente hat.
 2368. [x] [P2] Effektstärke wächst mit der Stärke der Technik in drei Stufen: bis 50 Stärke 1-fache Partikelzahl, bis 90 1,5-fach, darüber 2-fach.
-2369. [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
+2369. [x] [P2] Status-Techniken zeigen statt eines Einschlags ein Symbol der Wirkung (Pfeil hoch, Pfeil runter, Kreis) über dem Ziel, gezeichnet in der Form des Elements.
 2370. [x] [P2] Heil-Techniken (HealSelfEffect) zeigen aufsteigende Punkte in Elementform am Anwender, keine Einschlags-Phase.
 2371. [x] [P2] Kraft-Entzug (DrainEffect) zeigt 4 Partikel, die vom Ziel zum Anwender zurückwandern, in der Elementform.
 2372. [x] [P2] Energie-Entzug (EnergyDrainEffect) zeigt 3 kleine Rauten, die vom Ziel abgezogen werden und sich auflösen.

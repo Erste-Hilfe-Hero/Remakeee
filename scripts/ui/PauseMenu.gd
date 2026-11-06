@@ -276,13 +276,15 @@ func _swap_daily_task() -> void:
 func run_records() -> void:
 	Achievements.check()
 	while true:
-		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests"]
+		var lines: Array[String] = ["Badge book", "Achievements by category", "Season path", "Personal bests", "What is missing"]
 		if not Waymarks.history_lines(1).is_empty():
 			lines.append("Waymark history")
 		if Masters.open():
 			lines.append("Master Wayfarers")
 		if GameState.has_flag("rift_cinder_sealed") or GameState.has_flag("rift_tide_sealed"):
 			lines.append("Tower map")
+		if Vows.can_take() or not (GameState.records.get("vows", {}) as Dictionary).is_empty():
+			lines.append("Vows")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -299,15 +301,35 @@ func run_records() -> void:
 			"Achievements by category": await run_achievement_lists()
 			"Season path": await pick_strings(SeasonPath.title(), SeasonPath.lines())
 			"Personal bests": await info(records_text())
+			"What is missing": await info("\n".join(Completion.lines() + Completion.missing_lines()))
 			"Waymark history": await info(Loc.t("Waymarks: %d") % GameState.waymarks + "\n" + "\n".join(Waymarks.history_lines()))
 			"Master Wayfarers": await run_masters()
 			"Tower map": await info("\n".join(RiftTower.card_lines()))
+			"Vows": await run_vows()
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Watch last battle":
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+
+## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
+func run_vows() -> void:
+	while true:
+		var i: int = await pick_strings(Loc.t("Vows: each one kept to the end of Act I pays %d Waymarks.") % Vows.KEPT_WAYMARKS, Vows.lines())
+		if i < 0:
+			return
+		var v: Dictionary = Vows.list()[i]
+		var id: String = str(v.id)
+		var text: String = Loc.t(str(v.name)) + "\n" + Loc.t(str(v.text))
+		if Vows.status(id) == "" and Vows.can_take():
+			if await confirm(text + "\n\n" + Loc.t("Take this vow?")):
+				Vows.take(id)
+		elif Vows.is_active(id):
+			if await confirm(text + "\n\n" + Loc.t("Give up this vow? You only lose its bonus.")):
+				Vows.give_up(id)
+		else:
+			await info(text)
 
 ## Memorial book in the Sanctuary (plan 3397): every Spirling that retired under the Iron Oath.
 static func memorial_lines() -> Array[String]:
@@ -378,6 +400,8 @@ static func records_text() -> String:
 	var lines: PackedStringArray = []
 	lines.append_array(Completion.lines())
 	lines.append("Lighthouse stair best: floor %d of %d" % [Gauntlet.best(), Gauntlet.FLOORS])
+	if GameState.iron_oath:
+		lines.append(Loc.t("Under the Iron Oath: floor %d of %d") % [int(GameState.records.get("gauntlet_best_oath", 0)), Gauntlet.FLOORS])
 	var rec: Dictionary = GameState.records.get("weekly", {})
 	var week: String = WeeklyChallenge.this_week()
 	var best: int = int(rec.get("best", 0)) if str(rec.get("week", "")) == week else 0

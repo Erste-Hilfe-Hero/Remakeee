@@ -19,12 +19,15 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"field": model.field,
 		"bench_share": model.bench_share,
 		"rule": model.foe_rule,
+		"rule_turn_full": model.rule_turn_full,
 		"foe_items": model.foe_items.duplicate(),
 		"front": [model.front_size[0], model.front_size[1]],
 		"partner": _partner(model),
 		"boss": model.foe_boss,
 		"foe_damage": model.foe_damage_mult,
 		"energy_bonus": model.energy_bonus[0],
+		"gifts": model.gift_items.duplicate(),
+		"bond_grace": model.bond_grace,
 		"boss_hp": model.boss_hp_scale,
 		"variants": model.variants.duplicate(),
 		"round_limit": model.round_limit,
@@ -85,12 +88,18 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.field = str(snap.get("field", ""))
 	m.bench_share = float(snap.get("bench_share", 0.0))
 	m.foe_rule = str(snap.get("rule", ""))
+	m.rule_turn_full = bool(snap.get("rule_turn_full", false))
 	m.foe_items = (snap.get("foe_items", {}) as Dictionary).duplicate()
 	var front: Array = snap.get("front", [1, 1])
 	m.front_size = [int(front[0]), int(front[1])]
 	m.foe_boss = str(snap.get("boss", ""))
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
-	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.OVERCHARGE), 0]
+	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
+	# Only the pass's one Rift Breath can be a gift (item 4633).
+	var gifts: Variant = snap.get("gifts", {})
+	if gifts is Dictionary and int((gifts as Dictionary).get(ShopEffects.PASS_REVIVE, 0)) > 0:
+		m.gift_items = {ShopEffects.PASS_REVIVE: 1}
+	m.bond_grace = clampi(int(snap.get("bond_grace", 0)), 0, 1)
 	m.boss_hp_scale = float(snap.get("boss_hp", 1.0))
 	m.variants.assign(snap.get("variants", []))
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))

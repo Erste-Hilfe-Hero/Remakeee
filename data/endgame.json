@@ -1,5 +1,5 @@
 {
- "_comment": "Plan area 8 endgame data. wanderer_names: 40 names for the echo Wayfarers of the lighthouse stair (plan 3273). exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. exchange_weekly: the open list of weekly offers; after Act I three of them are on sale each week, drawn with the seed chimora-stand-<ISO week>. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance. masters: the eight Master Wayfarers; teams holds three prepared teams (species, ring, arts, keepsake): the first until they are beaten, then one per week from the week after the first win (plan 3291, 3300). rift_towers: the two Rift towers (plan 3266-3275), opened by the sealing flag of their Rift; echoes only of the listed elements, at most three Spirlings at ring 30 or more; down = the floors count down.",
+ "_comment": "Plan area 8 endgame data. wanderer_names: 40 names for the echo Wayfarers of the lighthouse stair (plan 3273). exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. exchange_weekly: the open list of weekly offers; after Act I three of them are on sale each week, drawn with the seed chimora-stand-<ISO week>. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance. masters: the eight Master Wayfarers; teams holds three prepared teams (species, ring, arts, keepsake): the first until they are beaten, then one per week from the week after the first win (plan 3291, 3300). vows: small optional vows taken before the first Rift is mended; each one kept to the end of Act I pays Waymarks (plan 3406-3409), none repeats a challenge rule of the battle plan. rift_towers: the two Rift towers (plan 3266-3275), opened by the sealing flag of their Rift; echoes only of the listed elements, at most three Spirlings at ring 30 or more; down = the floors count down.",
  "wanderer_names": ["Aldren", "Briska", "Corvin", "Dalla", "Eskel", "Tovah", "Garrow", "Hesper", "Arlo", "Joren", "Kirra", "Lusa", "Marrek", "Benna", "Caspar", "Dorian", "Edda", "Rhosa", "Faro", "Greta", "Ulla", "Varro", "Harlan", "Ivo", "Zarek", "Ansel", "Brea", "Cobb", "Dessa", "Elric", "Firra", "Gisli", "Kaspin", "Isra", "Jessamy", "Kell", "Linnet", "Mabry", "Noll", "Odessa"],
  "exchange_weekly": [
   {"item": "spark_coil", "price": 90, "stock": 1},
@@ -296,5 +296,10 @@
  "rift_towers": [
   {"id": "cinder_stair", "name": "Cinder Stair", "map": "cinder_rift", "open_flag": "rift_cinder_sealed", "elements": ["EMBER", "STONE", "VOLT"], "floors": 15, "down": false},
   {"id": "tide_shaft", "name": "Tide Shaft", "map": "tide_rift", "open_flag": "rift_tide_sealed", "elements": ["TIDE", "BLOOM", "UMBRA"], "floors": 15, "down": true}
+ ],
+ "vows": [
+  {"id": "no_shop", "name": "No Shopping", "text": "Buy nothing at the shops for coins until the end of Act I."},
+  {"id": "no_keepsake", "name": "No Keepsakes", "text": "Give no Spirling in your team a keepsake until the end of Act I."},
+  {"id": "starter_stays", "name": "Old Friend Stays", "text": "Keep your first partner in the team until the end of Act I."}
  ]
 }

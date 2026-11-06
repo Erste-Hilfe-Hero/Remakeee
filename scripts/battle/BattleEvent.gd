@@ -93,7 +93,11 @@ func describe() -> String:
 		Type.BOND_ATTEMPT:
 			return "You reach out to %s..." % who
 		Type.BOND_RESULT:
-			return "%s bonded with you!" % who if data.get("success", false) else "%s broke the bond!" % who
+			if data.get("success", false):
+				return "%s bonded with you!" % who
+			if data.get("steadied", false):
+				return "%s broke the bond, but your Pass keeps it calm." % who
+			return "%s broke the bond!" % who
 		Type.FREE_ACTION:
 			return "%s seizes the moment!" % who
 		Type.FLEE_RESULT:
@@ -115,6 +119,8 @@ func describe() -> String:
 		Type.FIELD:
 			return str(data.get("text", ""))
 		Type.RULE:
+			if bool(data.get("turning", false)):
+				return "Turning point, %s: %s" % [data.get("label", ""), data.get("text", "")]
 			return "Rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
 		Type.PARTNER:
 			return "%s fights at your side!" % data.get("partner", "")

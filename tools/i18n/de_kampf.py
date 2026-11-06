@@ -194,3 +194,13 @@ T.update({
 "Tide Turn": "Gezeitenwechsel", "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.": "Die Flut kommt und geht: 2 Runden Hochflut, dann 2 Runden Ruhe.",
 "The %s won't give way yet.": "%s weicht noch nicht.",
 })
+
+# Plan area 2, items 678-679: the Warden turning point.
+T.update({
+"Turning point, %s: %s": "Wendepunkt, %s: %s",
+"The pulse quickens: now 2 extra Energy every turn.": "Der Puls wird schneller: jetzt 2 Energie extra pro Runde.",
+"The pulse flares: the foe's Spirlings gain 1 Energy at once.": "Der Puls flackert auf: Die gegnerischen Spirlings erhalten sofort 1 Energie.",
+"One left? Then the embers burn for both of us!": "Nur noch einer? Dann brennt die Glut für uns beide!",
+"The current deepens: your next Spirling to come in loses Might.": "Die Strömung wird tiefer: Dein nächster eingewechselter Spirling verliert Wucht.",
+"The tide turns. Whoever you send next, it pulls under!": "Die Flut kippt. Wen du auch schickst, sie zieht ihn hinab!",
+})

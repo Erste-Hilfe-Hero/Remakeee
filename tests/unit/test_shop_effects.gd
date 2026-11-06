@@ -283,3 +283,82 @@ func test_local_server_allows_six_only_with_the_slot() -> void:
 	b.db.users[uid].shop.unlocks["team_slot_6"] = 1
 	assert_eq(b.party_max_of(uid), 6)
 	assert_eq(b.party_max_of("nobody"), 5)
+
+func test_will_to_win_brings_the_last_one_back_once() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 3)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 40)] as Array[Spirling], false, 5)
+	m.inventory["rg_last_stand"] = 2
+	var lost: bool = false
+	for i: int in 30:
+		if m.outcome != BattleModel.Outcome.NONE:
+			lost = m.outcome == BattleModel.Outcome.LOSS
+			break
+		mine[0].hp = mini(mine[0].hp, 1)
+		m.submit_turn(BattleAction.make_rest(BattleModel.Side.PLAYER), m.legal_actions(BattleModel.Side.FOE)[0])
+	assert_true(lost, "lost in the end")
+	assert_eq(int(m.inventory.rg_last_stand), 1, "used once, not twice")
+
+func test_will_to_win_not_against_wardens() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 3)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 40)] as Array[Spirling], false, 5)
+	m.inventory["rg_last_stand"] = 1
+	m.foe_boss = "warden"
+	mine[0].hp = 0
+	assert_false(m._last_stand())
+	m.foe_boss = ""
+	assert_true(m._last_stand())
+	assert_eq(mine[0].hp, ceili(mine[0].max_hp() * 0.3))
+
+func test_pass_gives_energy_rift_breath_and_a_bond_try() -> void:
+	Billing.state = {"pass_active": false}
+	assert_false(ShopEffects.pass_active())
+	assert_eq(ShopEffects.energy_bonus(), 0)
+	assert_true(ShopEffects.battle_gifts(true).is_empty())
+	assert_eq(ShopEffects.bond_grace(), 0)
+	Billing.state = {"pass_active": true}
+	assert_eq(ShopEffects.energy_bonus(), 1, "11 of 10 against the world")
+	assert_eq(ShopEffects.energy_bonus(false), 0, "nothing in echo duels")
+	assert_eq(ShopEffects.battle_gifts(true), {"rg_rift_breath": 1})
+	assert_true(ShopEffects.battle_gifts(false).is_empty(), "only in Warden battles")
+	assert_true(ShopEffects.battle_gifts(true, false).is_empty(), "not in echo duels")
+	assert_eq(ShopEffects.bond_grace(), 1)
+	Billing.state = {"pass_active": false}
+	assert_eq(ShopEffects.energy_bonus(), 0, "benefits end with the pass")
+
+func test_pass_rift_breath_is_used_before_the_bag_and_never_kept() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10), BattleFixtures.make("Mossling", 10)]
+	var m: BattleModel = BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 5)] as Array[Spirling], false, 5)
+	m.inventory.erase("rg_rift_breath")
+	m.gift_items = {"rg_rift_breath": 1}
+	mine[1].hp = 0
+	assert_eq(m.bag_count(BattleModel.Side.PLAYER, "rg_rift_breath"), 1)
+	assert_true("rg_rift_breath" in m.bag_ids(BattleModel.Side.PLAYER))
+	var a := BattleAction.make_item(BattleModel.Side.PLAYER, "rg_rift_breath", 1)
+	assert_true(m.is_legal(a), "the gift works without one in the bag")
+	m.submit_turn(a, BattleAction.make_rest(BattleModel.Side.FOE))
+	assert_gt(mine[1].hp, 0)
+	assert_eq(int(m.gift_items.rg_rift_breath), 0)
+	assert_false(m.inventory.has("rg_rift_breath"), "the bag never got one")
+	var snap: Dictionary = BattleReplay.snapshot(m, "", "")
+	assert_eq(int(snap.gifts.get("rg_rift_breath", 0)), 0)
+	snap.gifts = {"rg_rift_breath": 9, "rg_glass_tonic": 3}
+	assert_eq(BattleReplay.build_model(snap).gift_items, {"rg_rift_breath": 1}, "replays allow only the pass gift")
+
+func test_pass_bond_try_skips_the_first_free_action() -> void:
+	var theirs: Array[Spirling] = [BattleFixtures.make("Zephlet", 50)]
+	var m: BattleModel = BattleFixtures.model([BattleFixtures.make("Kindlop", 50)] as Array[Spirling], theirs, true, 5)
+	m.bond_grace = 1
+	var fails: Array[bool] = []
+	for i: int in 20:
+		if m.outcome != BattleModel.Outcome.NONE or fails.size() >= 2:
+			break
+		var ev: Array[BattleEvent] = m.submit_turn(BattleAction.make_bond(BattleModel.Side.PLAYER, 0.0, ""),
+			BattleAction.make_rest(BattleModel.Side.FOE))
+		var res: BattleEvent = BattleFixtures.first_of(ev, BattleEvent.Type.BOND_RESULT)
+		if res != null and not bool(res.data.success):
+			fails.append(BattleFixtures.first_of(ev, BattleEvent.Type.FREE_ACTION) == null)
+			if fails.size() == 1:
+				assert_true(bool(res.data.get("steadied", false)))
+				assert_string_contains(res.describe(), "Pass")
+	assert_eq(fails, [true, false] as Array[bool], "first failed bond calm, the second gives the free action")
+	assert_eq(m.bond_grace, 0)

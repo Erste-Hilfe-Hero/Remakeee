@@ -13,6 +13,8 @@ enum Step { READY, QUERY, PURCHASING, VERIFYING, CREDITED, FAILED, CANCELLED }
 signal step_changed(step: Step)
 ## Bag items and coins arrived from the server and went into the journey.
 signal delivered(grants: Array)
+## The Wayfarer Pass paid its daily Riftglass ([param added] includes missed days, item 4631).
+signal pass_paid(added: int)
 
 var step: Step = Step.READY
 ## The store in use, or null when this build cannot buy (web, release builds without a plugin).
@@ -66,7 +68,22 @@ func refresh_state() -> Dictionary:
 	if r.ok and r.data is Dictionary:
 		state = r.data
 		ShopEffects.apply_unlocks()
+		if pass_active():
+			await claim_pass_daily()
 	return r
+
+## The pass's 30 Riftglass a day, paid by the server once per Berlin calendar day and up to 7
+## missed days later (items 4631, 4637, 4659). Returns the Riftglass added (0 = already paid).
+func claim_pass_daily() -> int:
+	var r: Dictionary = await Online.call_fn("shop_pass_daily")
+	if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+		return 0
+	var added: int = int(r.data.get("added", 0))
+	if r.data.has("balance"):
+		state["balance"] = int(r.data.balance)
+	if added > 0:
+		pass_paid.emit(added)
+	return added
 
 func band() -> Variant:
 	return state.get("band")

@@ -146,6 +146,7 @@ a player who does everything every day (all four daily tasks, trips, every weekl
 | Rift towers (Cinder Stair, Tide Shaft), first clear of each floor; top floor | 5 per floor, 50 for the top (once each) | once | `RiftTower.finish` (not in the 90-day plan) |
 | Master Wayfarer | 80 first win, then 5 | once a week each (8 masters) | `Masters.win` |
 | Master round in the lighthouse, all eight in a row | 100, first full clear only | once | `Masters.finish_round` |
+| Vows kept to the end of Act I (No Shopping, No Keepsakes, Old Friend Stays) | 100 each | once per run | `Vows.settle` |
 | Achievements (88) | 10 / 25 / 50 / 100 | once each | built |
 | Festival goal (5 stages: 10/25/50/100/200 ribbons) | 30 each | per festival | built |
 | Festival ribbons left at the end | 1 per ribbon | per festival | built |
@@ -219,8 +220,11 @@ to be claimed when the season ends. This is the free path; a paid lane is area 1
 ### Journey complete and the Iron Oath
 
 - "Journey complete: x%" (`Completion.gd`, records screen) weighs story 20, side goals 10,
-  Spirlog (bonded kinds) 25, achievements 20, towers (lighthouse stair floors) 15 and
-  exploring (maps visited) 10 percent. Each part counts its own share from 0 to 1.
+  Spirlog (bonded kinds) 25, achievements 20, towers (lighthouse stair and both Rift towers,
+  counted alike) 15 and exploring (maps visited) 10 percent. Each part counts its own share
+  from 0 to 1. Badges only reachable during festivals or in the weekly echo do not count.
+- At 50, 75 and 100 percent the journey pays 50, 100 and 300 Waymarks (`Completion.claim`),
+  each once. A step stays paid when an update adds goals and the percent drops.
 - Under the Iron Oath every Waymark reward pays 25% more (rounded down: 10 -> 12, 20 -> 25,
   80 -> 100). It makes up for Spirlings lost to the Sanctuary, not for coins or items.
 

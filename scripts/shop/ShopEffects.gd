@@ -33,13 +33,40 @@ const PASS_GROWTH: float = 1.5
 
 static func growth_mult() -> float:
 	var m: float = float(GameState.shop_boosts.get("growth", {}).get("mult", 1.0))
-	return m * (PASS_GROWTH if Billing.pass_active() else 1.0)
+	return m * (PASS_GROWTH if pass_active() else 1.0)
+
+## The Wayfarer Pass runs. Only the server knows (shop_state, table subscriptions), so every pass
+## advantage asks here, and all of them end the moment the server says the pass ended (items
+## 4635, 4638).
+static func pass_active() -> bool:
+	return Billing.pass_active()
 
 ## Extra energy (start and maximum) for the whole team while an Overcharge Core runs (item 4495).
 const OVERCHARGE: int = 2
+## The pass: +1 energy over the maximum (11 of 10) in battles against the world (item 4632).
+const PASS_ENERGY: int = 1
+## Highest bonus a battle can carry (replays clamp to it).
+const MAX_ENERGY_BONUS: int = OVERCHARGE + PASS_ENERGY
+## The pass's free Rift Breath in Warden battles (item 4633).
+const PASS_REVIVE: String = "rg_rift_breath"
 
-static func energy_bonus() -> int:
-	return OVERCHARGE if boost_left("overcharge") > 0 else 0
+## Energy bonus for the next battle. [param world] is false for echo duels, where the pass gives
+## no energy (item 4652).
+static func energy_bonus(world: bool = true) -> int:
+	var n: int = OVERCHARGE if boost_left("overcharge") > 0 else 0
+	if world and pass_active():
+		n += PASS_ENERGY
+	return n
+
+## Battle-only items for the next battle: with the pass, 1 Rift Breath in every Warden battle that
+## never goes into the bag (item 4633). Echo duels get none (item 4652).
+static func battle_gifts(warden: bool, world: bool = true) -> Dictionary:
+	return {PASS_REVIVE: 1} if warden and world and pass_active() else {}
+
+## Failed bonds per battle that do not give the wild Spirling its free action: 1 with the pass
+## (item 4634).
+static func bond_grace() -> int:
+	return 1 if pass_active() else 0
 
 ## Coins from Wayfarer battles with a running Coin Gleam.
 static func coin_mult() -> float:
