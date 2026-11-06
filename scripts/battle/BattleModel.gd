@@ -51,6 +51,8 @@ var partner_name: String = ""
 var partner_start: int = -1
 var partner_front: int = 0
 var partner_ai: BattleAI
+## Personality lines already said this battle (kind -> true).
+var _lines_said: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
@@ -198,6 +200,13 @@ func opponent(side: int) -> Spirling:
 	var st: Array[int] = standing_slots(other(side))
 	return active_spirling(other(side), st[0] if not st.is_empty() else 0)
 
+## Foe slot the player's own first art aims at in [param actions], or -1.
+func _player_aim(actions: Array[BattleAction]) -> int:
+	for a: BattleAction in actions:
+		if a != null and a.side == Side.PLAYER and a.kind == BattleAction.Kind.MOVE and not is_partner_slot(Side.PLAYER, a.slot):
+			return a.target_slot
+	return -1
+
 func alive_count(side: int) -> int:
 	var n: int = 0
 	for s: Spirling in parties[side]:
@@ -215,7 +224,7 @@ func own_alive_count() -> int:
 
 ## Adds an ally Wayfarer for a tag battle: [param team] fights beside the player, [param front] of
 ## them at once, steered by an AI of [param ai_level]. Call before start().
-func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level: int = 1) -> void:
+func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level: int = 1, profile_name: String = "") -> void:
 	if team.is_empty():
 		return
 	var combined: Array[Spirling] = []
@@ -227,7 +236,7 @@ func set_partner(p_name: String, team: Array[Spirling], front: int = 1, ai_level
 	parties[Side.PLAYER] = combined
 	partner_name = p_name
 	partner_front = clampi(front, 1, BattleRules.MAX_FRONT)
-	partner_ai = BattleAI.new(ai_level)
+	partner_ai = BattleAI.new(ai_level, profile_name)
 
 func is_finished() -> bool:
 	return phase == Phase.FINISHED
@@ -343,6 +352,7 @@ func start() -> Array[BattleEvent]:
 	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(),
 		"prism": foe.prism, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
 	if not is_wild:
+		_battle_line("motto")
 		for slot: int in slot_count(Side.FOE):
 			emit_event(BattleEvent.Type.SEND_OUT, _who(Side.FOE, slot))
 	for slot: int in slot_count(Side.PLAYER):
@@ -397,6 +407,9 @@ func submit_actions(actions: Array[BattleAction]) -> Array[BattleEvent]:
 				if side == Side.PLAYER and not is_partner_slot(side, slot):
 					a = BattleAction.make_rest(side, slot)
 				else:
+					if side == Side.PLAYER:
+						# Item 628: the partner knows which foe the player goes for this turn.
+						partner_ai.ally_target = _player_aim(actions)
 					a = (partner_ai if side == Side.PLAYER else ai).choose(self, side, slot)
 			_queue.append(a)
 			if side == Side.FOE and slot == 0 and _boss_actions > 1:
@@ -434,6 +447,17 @@ func emit_event(t: BattleEvent.Type, d: Dictionary = {}) -> void:
 	_events.append(e)
 	event_emitted.emit(e)
 
+## The foe Wayfarer's personality line of [param kind] (items 621, 624): the motto at the start,
+## then each fall line at most once per battle. Only for a named trainer with a profile line.
+func _battle_line(kind: String) -> void:
+	if is_wild or trainer_name.is_empty() or _lines_said.has(kind):
+		return
+	var text: String = ai.line(kind)
+	if text.is_empty():
+		return
+	_lines_said[kind] = true
+	emit_event(BattleEvent.Type.BATTLE_LINE, {"side": Side.FOE, "name": trainer_name, "kind": kind, "text": text})
+
 ## Damages the Spirling in [param slot] of [param side]. Emits DAMAGE and, if it drops, FAINTED.
 func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) -> int:
 	var s: Spirling = active_spirling(side, slot)
@@ -447,6 +471,10 @@ func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) 
 	emit_event(BattleEvent.Type.DAMAGE, d)
 	if s.is_fainted():
 		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
+		if side == Side.FOE:
+			_battle_line("last" if alive_count(Side.FOE) == 1 else "own_fall")
+		elif not is_partner_slot(side, slot):
+			_battle_line("foe_fall")
 	elif side == Side.FOE and slot == 0 and dealt > 0:
 		_check_boss_phase(s)
 	return dealt

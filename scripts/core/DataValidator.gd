@@ -119,7 +119,7 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 	return errors
 
 ## Plan area 2, items 611 and 629: every AI profile weight stays between 0.2 and 2.0.
-const PROFILE_WEIGHTS: Array[String] = ["damage_w", "status_w", "setup_w", "field_w"]
+const PROFILE_WEIGHTS: Array[String] = ["damage_w", "status_w", "setup_w", "field_w", "drain_w"]
 static func _check_ai_profiles(errors: PackedStringArray) -> void:
 	var all: Dictionary = BattleAI.profiles()
 	if not all.has(BattleAI.DEFAULT_PROFILE):

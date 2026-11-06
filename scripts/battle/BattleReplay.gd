@@ -39,7 +39,7 @@ static func _partner(model: BattleModel) -> Dictionary:
 	var own: Array = model.party(BattleModel.Side.PLAYER).slice(0, model.partner_start)
 	var team: Array = model.party(BattleModel.Side.PLAYER).slice(model.partner_start)
 	return {"name": model.partner_name, "team": _team(team), "front": model.partner_front,
-		"ai": model.partner_ai.level, "own": own.size()}
+		"ai": model.partner_ai.level, "profile": model.partner_ai.profile_id, "own": own.size()}
 
 static func _team(team: Array) -> Array:
 	var out: Array = []
@@ -96,7 +96,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 		var ally: Array[Spirling] = _rebuild(partner.get("team", []))
 		if ally.size() != (partner.get("team", []) as Array).size():
 			return null
-		m.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)), int(partner.get("ai", 1)))
+		m.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)), int(partner.get("ai", 1)), str(partner.get("profile", "")))
 	return m
 
 static func action_to_dict(a: BattleAction) -> Dictionary:

@@ -51,6 +51,14 @@ const HEAL_ART_WEIGHT: float = 1.0
 const FOCUS_BONUS: float = 0.3
 ## status_first: damage counts this much while the target carries no status yet.
 const STATUS_FIRST_DAMAGE: float = 0.5
+## plan_energy (Tactician): rest when an art it can pay next turn scores this much more.
+const PLAN_MARGIN: float = 1.5
+## Tag battles (item 628): extra pull toward the foe the player aims at.
+const ALLY_FOCUS_BONUS: float = 0.15
+## Arts whose damage also refills the user (weighed by drain_w, item 619).
+const DRAIN_EFFECTS: Array[StringName] = [&"drain", &"energy_drain", &"energy_refund"]
+## Mottos and battle lines per profile: data/dialogue/<file>.json, keys "<profile>_<kind>".
+const LINES_FILE: String = "battle_lines"
 
 static var _profiles: Dictionary = {}
 
@@ -58,6 +66,8 @@ var level: int = 0
 ## Personality id from data/ai_profiles.json ("balanced" when the Wayfarer names none).
 var profile_id: String = DEFAULT_PROFILE
 var profile: Dictionary = {}
+## Foe slot the player aims at this turn (set for a tag partner, -1 otherwise).
+var ally_target: int = -1
 
 func _init(ai_level: int = 0, profile_name: String = "") -> void:
 	level = ai_level
@@ -78,6 +88,11 @@ func set_profile(profile_name: String) -> void:
 	var all: Dictionary = profiles()
 	profile_id = profile_name if all.has(profile_name) else DEFAULT_PROFILE
 	profile = all.get(profile_id, {})
+
+## The profile's line of [param kind] ("motto", "own_fall", "foe_fall", "last"), or "".
+func line(kind: String) -> String:
+	var v: Variant = Dialogue.file_data(LINES_FILE).get("%s_%s" % [profile_id, kind])
+	return str(v[0]) if v is Array and not (v as Array).is_empty() else ""
 
 ## A profile weight; tier 0 (wild, random) ignores personalities (item 625).
 func weight(key: String) -> float:
@@ -120,22 +135,57 @@ func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 	var best: BattleAction = moves[0]
 	var best_score: float = -INF
 	var best_value: float = 0.0
+	var second: BattleAction = null
+	var second_score: float = -INF
 	var me: Spirling = model.active_spirling(side, slot)
 	for a: BattleAction in moves:
 		var mv: MoveData = me.moves[a.move_index]
 		var aims: Array[int] = [-1]
 		if not mv.is_area() and not foes.is_empty():
 			aims = foes
+		var move_best: float = -INF
+		var move_pick: BattleAction = null
 		for aim: int in aims:
 			var score: float = score_action(model, side, slot, a.move_index, aim)
 			best_value = maxf(best_value, score_move(model, side, a.move_index, slot, aim))
-			if score > best_score:
-				best_score = score
-				best = BattleAction.make_move(side, a.move_index, slot, aim)
+			if score > move_best:
+				move_best = score
+				move_pick = BattleAction.make_move(side, a.move_index, slot, aim)
+		# Best and runner-up are kept per art, so the runner-up is a different art.
+		if move_best > best_score:
+			second = best if best_score > -INF else null
+			second_score = best_score
+			best_score = move_best
+			best = move_pick
+		elif move_best > second_score:
+			second_score = move_best
+			second = move_pick
 	# Nothing it can afford does anything useful: catch its breath for a bigger art instead.
 	if best_value <= USELESS_SCORE and me.energy < Spirling.MAX_ENERGY and (rest_below < 0 or me.energy <= rest_below) and model.can_rest(true):
 		return BattleAction.make_rest(side, slot)
+	if _plans_rest(model, side, slot, best_value):
+		return BattleAction.make_rest(side, slot)
+	# Apprentice (item 618): sometimes takes the runner-up; Rift-Born (level 3) never does (626).
+	var slip: float = float(profile.get("second_best", 0.0))
+	if second != null and slip > 0.0 and level >= 1 and level < 3 and model.rng.randf() < slip:
+		return second
 	return best
+
+## plan_energy (item 617): true when an art it can't pay now, but can after resting this turn,
+## beats everything affordable by PLAN_MARGIN.
+func _plans_rest(model: BattleModel, side: int, slot: int, best_now: float) -> bool:
+	if level < 1 or int(profile.get("plan_energy", 0)) <= 0 or not model.can_rest(true):
+		return false
+	var me: Spirling = model.active_spirling(side, slot)
+	var next: int = mini(me.energy + int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))
+		+ int(model.rules.get("energy_per_turn", 1)), model.max_energy())
+	for i: int in me.moves.size():
+		var mv: MoveData = me.moves[i]
+		if not mv.is_damaging() or me.can_afford(mv) or me.cooldown_left(mv) > 1 or me.move_cost(mv) > next:
+			continue
+		if score_move(model, side, i, slot) >= maxf(best_now, USELESS_SCORE) * PLAN_MARGIN:
+			return true
+	return false
 
 ## Score of using [param move_index] aimed at foe slot [param aim] (-1 for a sweep or the first foe):
 ## the greedy score per foe reached (sweeps scaled by the spread share), minus the tier-2 reply.
@@ -149,6 +199,8 @@ func score_action(model: BattleModel, side: int, slot: int, move_index: int, aim
 		score += score_move(model, side, move_index, slot, t) * share
 	if reached.is_empty():
 		score = score_move(model, side, move_index, slot)
+	if ally_target >= 0 and aim == ally_target and mv.is_damaging() and level >= 1 and weight("focus_fire") > 0.0:
+		score += ALLY_FOCUS_BONUS
 	if level >= 2:
 		score -= REPLY_WEIGHT * _best_reply_score(model, side, move_index, slot, reached[0] if not reached.is_empty() else -1)
 	return score
@@ -177,6 +229,10 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 		hit += FINISH_BONUS * (1.0 - target.hp_fraction()) * acc
 	if mv.is_damaging() and weight("focus_fire") > 0.0 and level >= 1:
 		hit += FOCUS_BONUS * (1.0 - target.hp_fraction()) * acc
+	for fx: Dictionary in mv.effects:
+		if StringName(fx.get("id", "")) in DRAIN_EFFECTS:
+			hit *= weight("drain_w")
+			break
 	# Parts of the score each personality weighs differently (items 611-615).
 	var spoil: float = 0.0
 	var setup: float = 0.0
@@ -203,7 +259,10 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 				else:
 					spoil += bonus
 		elif fx_id == &"set_field" and level >= 1:
-			fld += FIELD_BONUS * maxf(0.0, field_value(model, side, str(fx.get("field", ""))))
+			var fid: String = str(fx.get("field", ""))
+			# field_renew (item 616): its own field with one turn left is worth laying again.
+			var renew: bool = int(profile.get("field_renew", 0)) > 0 and model.field == fid and model.field_turns == 1
+			fld += FIELD_BONUS * maxf(0.0, field_value(model, side, fid, renew))
 		elif fx_id == &"heal_self" and level >= 1 and me.hp_fraction() < _rule("heal_below", HEAL_THRESHOLD):
 			var back: float = minf(float(fx.get("amount", 0.5)), 1.0 - me.hp_fraction())
 			score += HEAL_ART_WEIGHT * back * acc
@@ -268,10 +327,10 @@ func _can_heal(model: BattleModel, s: Spirling) -> bool:
 
 ## How much laying field [param id] helps [param side]: +1 if one of its standing Spirlings has a
 ## move of the boosted element, -1 if a foe has one, half that for the weakened element.
-## 0 when the field is already in place.
-func field_value(model: BattleModel, side: int, id: String) -> float:
+## 0 when the field is already in place (unless [param even_if_current], for renewing it).
+func field_value(model: BattleModel, side: int, id: String, even_if_current: bool = false) -> float:
 	var f: Dictionary = BattleRules.FIELDS.get(id, {})
-	if f.is_empty() or model.field == id:
+	if f.is_empty() or (model.field == id and not even_if_current):
 		return 0.0
 	var boost: int = Elements.E.get(str(f.boost), -1)
 	var weaken: int = Elements.E.get(str(f.weaken), -1)

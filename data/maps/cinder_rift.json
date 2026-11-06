@@ -74,7 +74,8 @@
      "level": 9
     }
    ],
-   "sprite": "warden"
+   "sprite": "warden",
+   "profile": "hothead"
   },
   {
    "id": "acolyte_b",
@@ -91,7 +92,8 @@
      "level": 10
     }
    ],
-   "sprite": "warden"
+   "sprite": "warden",
+   "profile": "apprentice"
   },
   {
    "id": "warden_orrin",

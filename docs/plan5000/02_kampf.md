@@ -193,19 +193,19 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 613. [x] [P1] Profil "Hitzkopf": `damage_w` 1,4, `setup_w` 0,3, `status_w` 0,4, `swap_below` nie, `rest_below` 1; wechselt nie freiwillig und rastet erst bei 0 oder 1 Energie.
 614. [x] [P1] Profil "Mauer": `setup_w` 1,5 für Schutz-Stufen, `heal_below` 0,45, `swap_below` 0,5, `damage_w` 0,8.
 615. [x] [P1] Profil "Störer": `status_w` 1,6, nutzt Status, Seitenfallen und `energy_tax` vor Schaden, bis das Ziel einen Status trägt.
-616. [P2] Profil "Feldkundig": `field_w` 2,0, legt in Runde 1 ein Feld, das dem eigenen Team hilft, und erneuert es, sobald nur noch 1 Restrunde bleibt.
-617. [P2] Profil "Taktikerin": `swap_below` 0,7, `focus_fire` 1, plant Energie für die beste Technik in der nächsten Runde und rastet gezielt dafür.
-618. [P2] Profil "Lehrling": wählt mit 30 % Chance (aus dem Kampf-Seed) die zweitbeste Technik, damit frühe Wanderer schlagbar und lesbar bleiben.
-619. [P2] Profil "Ausdauernd": `heal_below` 0,6, `rest_below` 4, bevorzugt Techniken mit `energy_refund` und Drain.
+616. [x] [P2] Profil "Feldkundig": `field_w` 2,0, legt in Runde 1 ein Feld, das dem eigenen Team hilft, und erneuert es, sobald nur noch 1 Restrunde bleibt. Erledigt: Profil `field_keeper` mit `field_renew`.
+617. [x] [P2] Profil "Taktikerin": `swap_below` 0,7, `focus_fire` 1, plant Energie für die beste Technik in der nächsten Runde und rastet gezielt dafür. Erledigt: Profil `tactician` mit `plan_energy`.
+618. [x] [P2] Profil "Lehrling": wählt mit 30 % Chance (aus dem Kampf-Seed) die zweitbeste Technik, damit frühe Wanderer schlagbar und lesbar bleiben. Erledigt: Profil `apprentice` mit `second_best` 0,3.
+619. [x] [P2] Profil "Ausdauernd": `heal_below` 0,6, `rest_below` 4, bevorzugt Techniken mit `energy_refund` und Drain. Erledigt: Profil `enduring` mit `drain_w` 1,5.
 620. [P3] Profil "Spieler": nutzt `delayed_hit`, Priorität -1 und Techniken mit Genauigkeit unter 90 % doppelt so oft wie "ausgewogen".
-621. [P2] Jedes Profil hat einen festen Kurzsatz, der beim Kampfstart unter dem Namen steht (zum Beispiel "Wechselt nie zurück"), damit der Spieler die Persönlichkeit lesen kann.
-622. [P2] Zuordnung: Wanderer Lio "Hitzkopf", Ridgewalker Bram "Mauer", Delver Ros "Störer", Diver Neve "Feldkundig", Rift Mystic Ilka "Taktikerin".
-623. [P2] Zuordnung: Rift Acolyte Suri "Lehrling", Rift Acolyte Pell "Hitzkopf", Hauler Tobin "Ausdauernd", Cartographer Kestra als Gegnerin "Taktikerin".
-624. [P2] Pro Profil drei Kampfsätze für die Ereignisse "eigener Spirling fällt", "Gegner fällt" und "letzter Spirling", in data/dialogue mit eigener Wortwahl, höchstens 40 Zeichen.
+621. [x] [P2] Jedes Profil hat einen festen Kurzsatz, der beim Kampfstart unter dem Namen steht (zum Beispiel "Wechselt nie zurück"), damit der Spieler die Persönlichkeit lesen kann. Erledigt: Mottos in data/dialogue/battle_lines.json, Ereignis BATTLE_LINE.
+622. [x] [P2] Zuordnung: Wanderer Lio "Hitzkopf", Ridgewalker Bram "Mauer", Delver Ros "Störer", Diver Neve "Feldkundig", Rift Mystic Ilka "Taktikerin".
+623. [x] [P2] Zuordnung: Rift Acolyte Suri "Lehrling", Rift Acolyte Pell "Hitzkopf", Hauler Tobin "Ausdauernd", Cartographer Kestra als Gegnerin "Taktikerin". Erledigt (Tobin ist der Gegner im Tag-Kampf kestra_tag).
+624. [x] [P2] Pro Profil drei Kampfsätze für die Ereignisse "eigener Spirling fällt", "Gegner fällt" und "letzter Spirling", in data/dialogue mit eigener Wortwahl, höchstens 40 Zeichen. Erledigt: data/dialogue/battle_lines.json, jeder Satz höchstens einmal pro Kampf.
 625. [x] [P2] Profile wirken nur ab KI-Stufe 1; in Stufe 0 bleibt die Zufallswahl unverändert.
-626. [P2] Auf Rift-Born nimmt die Meister-KI die Gewichte des Profils, aber nie schwächere Regeln als Stufe 3 (das Profil "Lehrling" fällt dort weg).
+626. [x] [P2] Auf Rift-Born nimmt die Meister-KI die Gewichte des Profils, aber nie schwächere Regeln als Stufe 3 (das Profil "Lehrling" fällt dort weg). Erledigt: auf KI-Stufe 3 greift `second_best` nie.
 627. [x] [P2] Profile verändern nie Werte, Energie oder Würfe, nur die Auswahl (Test vergleicht Schadenszahlen mit und ohne Profil bei gleicher Aktion).
-628. [P2] Kestra als Partnerin im Tag-Kampf nutzt das Profil "Taktikerin" mit `focus_fire` 1 auf das Ziel des Spielers.
+628. [x] [P2] Kestra als Partnerin im Tag-Kampf nutzt das Profil "Taktikerin" mit `focus_fire` 1 auf das Ziel des Spielers. Erledigt: Partner-KI erhält `ally_target` aus der Spieler-Aktion.
 629. [x] [P3] Profil-Gewichte bleiben unter 2,0 und über 0,2; validate_data prüft das.
 630. [P3] Profil "Sammler" für spätere Wanderer: bevorzugt Techniken, die Stufen stehlen oder Energie verbrennen (`stage_steal`, `energy_burn`).
 631. [P3] Profil "Spiegel": wiederholt die Technik-Art (Physisch, Fokus, Status), die der Spieler in der Vorrunde genutzt hat, mit eigener bester Technik dieser Art.
