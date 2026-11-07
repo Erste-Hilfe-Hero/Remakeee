@@ -94,11 +94,27 @@ static func fetch_lists(menu: MenuHost) -> Array[Dictionary]:
 			menu.picker.picked.emit(-1)
 	return got
 
+## Profile frames from the shop (item 4284): the marks drawn around a name on the friend
+## list and the Wanderer card. Only looks.
+const CARD_FRAMES: Dictionary[String, Array] = {
+	"leaf": ["~", "~"], "shell": ["(", ")"], "gear": ["[", "]"],
+	"star": ["+", "+"], "ripple": ["=", "="], "ember": ["^", "^"],
+}
+
+## [param name] inside the friend's profile frame (from their card), or plain.
+static func framed_name(f: Dictionary) -> String:
+	var name: String = str(f.get("name", ""))
+	var c: Variant = f.get("card", {})
+	var kind: String = str(c.get("frame", "")) if c is Dictionary and c.get("frame") is String else ""
+	if not CARD_FRAMES.has(kind):
+		return name
+	return "%s%s%s" % [CARD_FRAMES[kind][0], name, CARD_FRAMES[kind][1]]
+
 ## "● Mara  Lv3  Brindlewick": online dot, friendship level, where they are.
 static func friend_line(f: Dictionary) -> String:
 	var dot: String = "*" if bool(f.get("online", false)) else "-"
 	var where: String = str(f.get("place", "")) if bool(f.get("online", false)) else Loc.t(last_seen_text(int(f.get("last_seen", 0))))
-	return "%s %s  Bond %d  %s" % [dot, str(f.get("name", "")), int(f.get("level", 1)), where]
+	return "%s %s  Bond %d  %s" % [dot, framed_name(f), int(f.get("level", 1)), where]
 
 static func last_seen_text(unix: int) -> String:
 	var ago: int = maxi(0, Online.unix_now() - unix)
@@ -112,7 +128,7 @@ static func last_seen_text(unix: int) -> String:
 static func card_text(f: Dictionary) -> String:
 	var c: Dictionary = f.get("card", {}) if f.get("card") is Dictionary else {}
 	var lines: Array[String] = [
-		"%s   Code %s" % [str(f.get("name", "")), Online.pretty_code(str(f.get("code", "")))],
+		"%s   Code %s" % [framed_name(f), Online.pretty_code(str(f.get("code", "")))],
 		"Favourite: %s" % (str(f.favorite) if not str(f.get("favorite", "")).is_empty() else "-"),
 		"Rifts sealed: %d" % int(c.get("seals", 0)),
 		"Spirlog: %d seen, %d bonded" % [int(c.get("seen", 0)), int(c.get("bonded", 0))],
