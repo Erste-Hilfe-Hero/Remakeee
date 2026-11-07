@@ -317,6 +317,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.set_flag(Transit.stop_flag(map_id))
 	DailyTasks.note_map(map_id)
 	DailyTasks.record("visit", {"map": map_id})
+	EchoPath.note_visit(map_id)
 	# Today's world event gives its find on the first visit (plan 3422).
 	GameState.notices.append_array(WorldEvents.on_visit(map_id))
 	GameState.player_cell = cell

@@ -390,10 +390,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3467. [x] [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
 3468. [x] [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
 3469. [x] [P2] Wilde Spirlings im Pfad auf Ring-Deckel minus 5 setzen.
-3470. [P2] Eine Pfadkarte im Menü zeigen, die besuchte Räume und ihre Art markiert.
+3470. [x] [P2] Eine Pfadkarte im Menü zeigen, die besuchte Räume und ihre Art markiert.
 3471. [P2] Jeder Woche ein Motiv geben (Glut, Gezeiten, Wald, Höhle), das Kacheln und Elemente der wilden Spirlings bestimmt.
 3472. [x] [P2] Den Nachhall-Pfad erst nach dem Kapitel „Waiting for the Ferry“ öffnen.
-3473. [P2] Einen GUT-Test schreiben, der 52 Wochen-Seeds erzeugt und prüft, dass jeder Pfad begehbar und lösbar ist.
+3473. [x] [P2] Einen GUT-Test schreiben, der 52 Wochen-Seeds erzeugt und prüft, dass jeder Pfad begehbar und lösbar ist.
 3474. [x] [P2] Die beste eigene Zeit pro Woche nur lokal in GameState.records["echo_path_best"] speichern.
 3475. [P3] Nach dem Sieg über alle Meister-Wanderer einen langen Pfad mit 12 Räumen und 80 Wegmarken freischalten.
 3476. [P3] In einer von zehn Wochen, fest durch den Seed bestimmt, einen geheimen Raum mit einem besonderen Fotorahmen einbauen.
@@ -424,7 +424,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3497. [x] [P1] Alle zeitlich begrenzten Inhalte nach Server-Zeit laufen lassen und beim Verstellen der Handy-Uhr nichts doppelt auszahlen.
 3498. [x] [P1] Belohnungen von Festen und Jahreszeitenpfad nach spätestens zwei Jahren erneut erreichbar machen, damit nichts für immer verpasst ist.
 3499. [x] [P2] Eine Rückkehrhilfe einbauen: wer 14 Tage nicht gespielt hat, bekommt einmalig doppelte Pfadpunkte für 3 Tage.
-3500. [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
+3500. [x] [P2] Tagesaufträge nie per Benachrichtigung bewerben, auch wenn Push später freigeschaltet wird.
 3501. [x] [P2] Keine Countdown-Zahlen unter einer Stunde auf dem Bildschirm zeigen, nur „endet heute“.
 3502. [x] [P2] Für Kinderkonten (unter 16) alle Endgame-Belohnungen gleich halten und keine Hinweise auf Kaufangebote neben Wegmarken zeigen.
 3503. [x] [P2] Eine Spielzeit-Erinnerung nach 90 Minuten anbieten, die man in den Einstellungen abschalten kann.

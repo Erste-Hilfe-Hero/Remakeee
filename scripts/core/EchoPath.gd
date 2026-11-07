@@ -269,6 +269,38 @@ static func time_text(secs: int) -> String:
 		return Loc.t("%d min") % mins
 	return Loc.t("%d h %02d min") % [mins / 60, mins % 60]
 
+## Room names for the path map (plan 3470).
+const KIND_NAMES: Dictionary = {"wild": "Wild room", "echo": "Wanderer echo", "treasure": "Treasure room",
+	"rest": "Rest room", "riddle": "Riddle room"}
+
+## Notes that the player stepped into room [param map_id] this week (for the path map).
+static func note_visit(map_id: String) -> void:
+	var slot: int = slot_of(map_id)
+	if slot == 0:
+		return
+	var st: Dictionary = state()
+	var seen: Array = st.get("seen", []) if st.get("seen", []) is Array else []
+	if not slot in seen:
+		seen.append(slot)
+	st["seen"] = seen
+	GameState.records["echo_path"] = st
+
+static func is_visited(slot: int) -> bool:
+	var seen: Variant = state().get("seen", [])
+	return is_done(slot) or (seen is Array and slot in (seen as Array))
+
+## The path map (plan 3470): one line per room, its kind once visited, [x] once cleared.
+static func map_lines() -> Array[String]:
+	var out: Array[String] = [Loc.t("Echo Path: %d of %d rooms this week") % [done_count(), ROOMS]]
+	for slot: int in range(1, ROOMS + 1):
+		var name: String = Loc.t(str(KIND_NAMES.get(kind_of(slot), "???"))) if is_visited(slot) else "???"
+		out.append("%s %d  %s" % ["[x]" if is_done(slot) else "[ ]", slot, name])
+	out.append("%s    %s" % ["[x]" if bool(state().get("chest", false)) else "[ ]", Loc.t("The chest")])
+	var best: int = best_time()
+	if best >= 0:
+		out.append(Loc.t("Best this week: %s") % time_text(best))
+	return out
+
 ## Spirlog hint (plan 3354): which kinds roam the Echo Path this week.
 static func spirlog_hint() -> String:
 	var names: PackedStringArray = []
