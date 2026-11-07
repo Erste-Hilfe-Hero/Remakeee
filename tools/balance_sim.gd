@@ -25,6 +25,11 @@ extends SceneTree
 ##                 the same battle without (item 829, band +8 to +15 points)
 ##   --mode puzzle  every puzzle of data/puzzles.json: solutions and fewest turns (item 819);
 ##                 --puzzle ID for one
+##   --seeds N     duel, team: the run on N seeds (seed, seed+7919, ...); the report adds mean and
+##                 spread per species and marks a spread over 10 points as uncertain (item 830)
+##   --mode mirror every species against itself (default 400 duels each, item 831): the player
+##                 side must win 45 to 55 %
+##   The team report also lists every new art under 1 % of its element's picks (item 833).
 ##   --out PATH    also write the Markdown report there
 ##   --json PATH   also write every number as JSON there
 ## The old positional form "[level] [rounds] [out.md]" still works.
@@ -92,11 +97,29 @@ func _initialize() -> void:
 		print(wtext)
 		quit()
 		return
-	if mode == "team":
+	if mode == "mirror":
+		result = bs.call("run_mirror", level, int(opts.get("rounds", 400)), seed_value, int(opts.get("ai", 1)))
+		var mtext: String = bs.call("mirror_report", result)
+		if opts.has("out"):
+			_write(str(opts.out), mtext)
+		if opts.has("json"):
+			_write(str(opts.json), JSON.stringify(result, " ", true))
+		print(mtext)
+		quit()
+		return
+	var seeds: Dictionary = {}
+	if opts.has("seeds") and int(opts.seeds) > 1:
+		var team_mode: bool = mode == "team"
+		seeds = bs.call("run_seeds", mode, level, int(opts.get("rounds", 500 if team_mode else 10)), seed_value, int(opts.seeds),
+			int(opts.get("ai", 2 if team_mode else 1)))
+		result = seeds.first
+	elif mode == "team":
 		result = bs.call("run_team", level, int(opts.get("rounds", 500)), seed_value, int(opts.get("ai", 2)))
 	else:
 		result = bs.call("run", level, int(opts.get("rounds", 10)), seed_value, [] as Array[String], int(opts.get("ai", 1)))
 	var text: String = bs.call("report", result)
+	if not seeds.is_empty():
+		text += bs.call("seeds_report", seeds)
 	if opts.has("compare"):
 		var path: String = str(opts.compare) if str(opts.compare) != "true" else str(bs.get("BASELINE_PATH"))
 		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
