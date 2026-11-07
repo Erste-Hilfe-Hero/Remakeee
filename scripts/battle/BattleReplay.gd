@@ -76,7 +76,26 @@ static func _rebuild(team_d: Array) -> Array[Spirling]:
 	return out
 
 ## A fresh model from [param snap], or null if a species no longer exists.
+## Why [param snap] cannot be played back in this version, "" when it can (item 797): a rule
+## variant this version doesn't know, or variants that don't go together.
+static func problem(snap: Dictionary) -> String:
+	var ids: Array[String] = []
+	for v: Variant in snap.get("variants", []):
+		ids.append(str(v))
+	var all: Dictionary = BattleRules.variants()
+	var unknown: Array[String] = []
+	for id: String in ids:
+		if not all.has(id):
+			unknown.append(id)
+	if not unknown.is_empty():
+		return Loc.t("This replay uses a rule variant this version doesn't know: %s.") % ", ".join(unknown)
+	if not BattleRules.variant_conflict(ids).is_empty():
+		return Loc.t("This replay's rule variants don't go together.")
+	return ""
+
 static func build_model(snap: Dictionary) -> BattleModel:
+	if not problem(snap).is_empty():
+		return null
 	var teams: Array = snap.get("teams", [[], []])
 	var partner: Dictionary = snap.get("partner", {})
 	if not partner.is_empty():

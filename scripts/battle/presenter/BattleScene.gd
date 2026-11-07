@@ -730,9 +730,20 @@ func record(e: BattleEvent) -> void:
 	while log_lines.size() > LOG_KEEP:
 		log_lines.pop_front()
 
+## The rule variants in play as a list for the top of the log panel (item 796), "" without any.
+static func variant_list(m: BattleModel) -> String:
+	if m == null or m.variants.is_empty():
+		return ""
+	var all: Dictionary = BattleRules.variants()
+	var lines: Array[String] = [Loc.t("Rule variants")]
+	for id: String in m.variants:
+		var v: Dictionary = all.get(id, {})
+		lines.append("- %s: %s" % [Loc.t(str(v.get("label", id))), Loc.t(str(v.get("text", "")))])
+	return "\n".join(lines) + "\n\n"
+
 func _toggle_log() -> void:
 	Sound.sfx("confirm")
-	_log_label.text = "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
+	_log_label.text = variant_list(model) + "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
 	_log_panel.visible = not _log_panel.visible
 
 func _play_event(e: BattleEvent) -> void:
@@ -886,7 +897,8 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.RULE:
 			var turning: bool = bool(e.data.get("turning", false))
-			_rule_banner.show_rule(Loc.t(str(e.data.get("label", ""))), turning, _field.size.x, _field.size.y * 0.42)
+			_rule_banner.show_rule(Loc.t(str(e.data.get("label", ""))), turning, _field.size.x, _field.size.y * 0.42,
+				str(e.data.get("symbol", "")))
 			if turning:
 				Sound.sfx("status")
 				Haptics.play("heavy")

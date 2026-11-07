@@ -70,12 +70,12 @@ func test_a_loss_never_meets_a_goal() -> void:
 
 func test_rewards_pay_once_and_shards_join_into_a_crystal() -> void:
 	var rec: Dictionary = {"echo_shards": 4}
-	var g: Dictionary = {"type": "no_rest", "reward": {"shards": 2, "title": "Current Rider", "lore": "reactions"}}
+	var g: Dictionary = {"type": "no_rest", "reward": {"shards": 2, "title": "Current Reader", "lore": "reactions"}}
 	var lines: Array[String] = BattleGoals.grant("tide_rift/x", g, rec)
 	assert_gt(lines.size(), 2)
 	assert_eq(int(rec.echo_crystals), 1)
 	assert_eq(int(rec.echo_shards), 1)
-	assert_true((rec.titles as Array).has("Current Rider"))
+	assert_true((rec.titles as Array).has("Current Reader"))
 	assert_true((rec.lexicon as Array).has("reactions"))
 	assert_eq(BattleGoals.grant("tide_rift/x", g, rec), [] as Array[String], "item 763: no second reward")
 	assert_eq(int(rec.echo_shards), 1)

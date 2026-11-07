@@ -407,6 +407,11 @@ func start() -> Array[BattleEvent]:
 		emit_event(BattleEvent.Type.WARDEN_WEAKENED, {"side": Side.FOE, "trainer": trainer_name})
 	if BattleRules.FIELDS.has(field):
 		emit_event(BattleEvent.Type.FIELD, {"field": field, "text": str(BattleRules.FIELDS[field].intro)})
+	# Every variant in play gets its own banner with its seal (item 796).
+	var all_variants: Dictionary = BattleRules.variants()
+	for id: String in variants:
+		var v: Dictionary = all_variants[id]
+		emit_event(BattleEvent.Type.RULE, {"variant": id, "label": str(v.label), "text": str(v.text), "symbol": str(v.get("symbol", ""))})
 	for rule_id: String in BattleRules.split_rules(foe_rule):
 		var rule: Dictionary = BattleRules.RULES[rule_id]
 		emit_event(BattleEvent.Type.RULE, {"rule": rule_id, "label": str(rule.label), "text": str(rule.text)})

@@ -89,7 +89,7 @@ T.update({
 "%d shards join into an Echo Crystal!": "%d Splitter fügen sich zu einem Echo-Kristall!",
 "A new lexicon entry is written down.": "Ein neuer Lexikon-Eintrag wird notiert.",
 "Ember Trial Taker": "Glutprüfling",
-"Current Rider": "Strömungsreiter",
+"Current Reader": "Strömungsleser",
 })
 
 # Plan area 2, items 780-793: rule variants.
@@ -307,4 +307,11 @@ T.update({
 T.update({
 "Bonus goals": "Bonusziele",
 "%s: %d of %d": "%s: %d von %d",
+})
+
+# Plan area 2, items 768, 796-797: goal title, variant list and replay checks.
+T.update({
+"Rule variants": "Regelvarianten",
+"This replay uses a rule variant this version doesn't know: %s.": "Diese Wiederholung nutzt eine Regelvariante, die diese Version nicht kennt: %s.",
+"This replay's rule variants don't go together.": "Die Regelvarianten dieser Wiederholung passen nicht zusammen.",
 })

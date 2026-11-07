@@ -352,6 +352,9 @@ static func stage_only(mv: MoveData) -> bool:
 	return true
 
 static var _variants: Dictionary = {}
+## Seals the rule banner can draw for a variant (item 796); each variant names its own.
+const VARIANT_SYMBOLS: Array[String] = ["spark", "full", "toll", "glass", "block", "ring", "bars", "cross",
+	"hourglass", "line", "swirl", "wedge"]
 
 ## Every variant from data/rule_variants.json (cached). Unknown keys and one-sided excludes are
 ## reported by validate_variants.
@@ -367,7 +370,14 @@ static func variants() -> Dictionary:
 static func validate_variants() -> Array[String]:
 	var out: Array[String] = []
 	var all: Dictionary = variants()
+	var seals: Dictionary = {}
 	for id: String in all:
+		var seal: String = str(all[id].get("symbol", ""))
+		if not seal in VARIANT_SYMBOLS:
+			out.append("%s: unknown symbol %s" % [id, seal])
+		elif seals.has(seal):
+			out.append("%s: symbol %s already used by %s" % [id, seal, seals[seal]])
+		seals[seal] = id
 		for k: String in (all[id].get("keys", {}) as Dictionary):
 			if not VARIANT_KEYS.has(k):
 				out.append("%s: unknown key %s" % [id, k])

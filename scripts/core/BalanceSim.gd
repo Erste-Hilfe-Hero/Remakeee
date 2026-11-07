@@ -329,6 +329,7 @@ static func report(result: Dictionary, high: float = 0.65, low: float = 0.35) ->
 	return "\n".join(lines) + "\n"
 
 const REF_TEAMS_PATH: String = "res://tools/balance/ref_teams.json"
+const GOAL_TEAMS_PATH: String = "res://tools/balance/goal_teams.json"
 const TARGETS_PATH: String = "res://tools/balance/targets.json"
 
 static func _read_json(path: String) -> Dictionary:
@@ -447,3 +448,89 @@ static func warden_report(result: Dictionary) -> String:
 		lines.append("| %s | %s | %s | %s | %d%% | %d-%d%% | %s |" % [row.section, row.team, row.warden, row.difficulty,
 			roundi(wr * 100.0), roundi(band.x * 100.0), roundi(band.y * 100.0), flag])
 	return "\n".join(lines) + "\n"
+
+## Bonus goal check (plan area 2, item 768): one battle of a reference team against the Wayfarer
+## [param def] on [param map_id], set up as in the game (front, ally, boss, rule, difficulty), with
+## the goal tracker watching. Returns {"winner", "met", "turns"}.
+static func goal_fight(map_id: String, def: Dictionary, entries: Array, difficulty: int, seed_value: int, player_ai: int = 2) -> Dictionary:
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	var mine: Array[Spirling] = []
+	for e: Dictionary in entries:
+		var s := Spirling.new(Database.species(str(e.species)), int(e.level), rng)
+		var fixed: Array[MoveData] = []
+		for n: Variant in e.get("moves", []):
+			var mv: MoveData = Database.move(str(n))
+			if mv != null:
+				fixed.append(mv)
+		# Named arts come first; the rest of the four are filled from the default kit (as for foes),
+		# unless "kit_only" keeps the Spirling to its named arts.
+		if not fixed.is_empty() and bool(e.get("kit_only", false)):
+			s.moves = fixed
+		elif not fixed.is_empty():
+			for mv: MoveData in s.moves:
+				if fixed.size() < 4 and not fixed.has(mv):
+					fixed.append(mv)
+			s.moves = fixed
+		mine.append(s)
+	var map: MapData = MapData.load_map(map_id)
+	var foes: Array[Spirling] = TrainerData.build_team(def, "", rng, difficulty)
+	var info: Dictionary = TrainerData.battle_info(def, foes, GameState.AI_LEVELS[difficulty], difficulty)
+	var m := BattleModel.new(mine, foes, false, seed_value, int(info.ai))
+	m.items_allowed = false
+	m.ai.set_profile(str(info.profile), info.profile_tune)
+	m.ai.set_difficulty(difficulty)
+	m.start_energy_cut = [0, BattleRules.foe_start_cut(difficulty)]
+	m.foe_turn1_energy = BattleRules.foe_turn1_energy(difficulty)
+	m.foe_damage_mult = GameState.FOE_DAMAGE[difficulty]
+	m.boss_hp_scale = GameState.BOSS_HP_SCALE[difficulty]
+	m.boss_difficulty = difficulty
+	m.field = str(def.get("field", map.field))
+	m.foe_rule = str(info.rule)
+	m.rule_turn_full = difficulty >= GameState.Difficulty.VETERAN
+	var items: Variant = info.get("items", {})
+	m.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
+	var front: Array = info.get("front", [1, 1])
+	m.front_size = [int(front[0]), int(front[1])]
+	m.foe_boss = str(info.boss)
+	var partner: Variant = info.get("partner", {})
+	if partner is Dictionary and not (partner as Dictionary).is_empty():
+		var ally: Array[Spirling] = TrainerData.build_team(partner, "", rng)
+		m.set_partner(str(partner.get("name", "")), ally, int(partner.get("front", 1)),
+			int(partner.get("ai", TrainerData.PARTNER_AI)), str(partner.get("profile", "")))
+	var tracker := BattleGoals.Tracker.new(m, BattleGoals.goal_for(map_id, str(def.get("id", ""))))
+	var brain := BattleAI.new(player_ai)
+	m.start()
+	var turns: int = 0
+	while not m.is_finished() and turns < MAX_TURNS * 2:
+		if m.needs_player_switch():
+			m.submit_switch(brain.choose_replacement(m, BattleModel.Side.PLAYER, m.switch_slot()))
+			continue
+		var acts: Array[BattleAction] = []
+		for slot: int in m.player_slots():
+			acts.append(brain.choose(m, BattleModel.Side.PLAYER, slot))
+		m.submit_actions(acts)
+		turns += 1
+	var winner: int = -1
+	if m.outcome == BattleModel.Outcome.WIN:
+		winner = 0
+	elif m.outcome == BattleModel.Outcome.LOSS:
+		winner = 1
+	return {"winner": winner, "met": tracker.met(), "turns": turns}
+
+## Share of [param rounds] battles in which the reference team of tools/balance/goal_teams.json
+## meets the bonus goal [param key] ("map/npc") on [param difficulty].
+static func goal_rate(key: String, rounds: int, seed_value: int, difficulty: int = GameState.Difficulty.TAMER) -> float:
+	var teams: Dictionary = _read_json(GOAL_TEAMS_PATH).get("teams", {})
+	var map_id: String = key.get_slice("/", 0)
+	var def: Dictionary = {}
+	for n: Dictionary in MapData.load_map(map_id).npcs:
+		if str(n.get("id", "")) == key.get_slice("/", 1):
+			def = n
+	if def.is_empty() or not teams.has(key):
+		return 0.0
+	var met: int = 0
+	for r: int in rounds:
+		if bool(goal_fight(map_id, def, teams[key], difficulty, seed_value + r * 7919).met):
+			met += 1
+	return float(met) / float(maxi(rounds, 1))
