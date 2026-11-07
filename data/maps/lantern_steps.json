@@ -184,6 +184,14 @@
    "item": "max_tonic",
    "count": 1,
    "flag": "find_steps_pocket"
+  },
+  {
+   "x": 10,
+   "y": 11,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "dig_lantern_steps",
+   "soil": true
   }
  ],
  "passages": [

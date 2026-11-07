@@ -215,8 +215,11 @@ func _build_glints(m: MapData) -> void:
 		if c != _glint_timer:
 			_glints.remove_child(c)
 			c.queue_free()
+	_build_soil(m)
 	for sc: Dictionary in m.secrets:
 		if GameState.has_flag(str(sc.get("flag", ""))):
+			continue
+		if bool(sc.get("soil", false)):
 			continue
 		var g := Node2D.new()
 		g.position = Vector2(int(sc.x), int(sc.y)) * TilesetFactory.TILE
@@ -262,6 +265,45 @@ func _glint() -> void:
 		for g: Node in _glints.get_children():
 			if g is Node2D:
 				(g as Node2D).visible = false
+
+var _soil: Node2D = null
+
+## Loose soil over buried finds (area 3 item 1089): a dark patch with a few clods, always
+## visible until the find is dug up.
+func _build_soil(m: MapData) -> void:
+	if _soil == null:
+		_soil = Node2D.new()
+		_soil.name = "soil"
+		_soil.z_index = 1
+		ow.add_child(_soil)
+	for c: Node in _soil.get_children():
+		_soil.remove_child(c)
+		c.queue_free()
+	for sc: Dictionary in m.secrets:
+		if not bool(sc.get("soil", false)) or GameState.has_flag(str(sc.get("flag", ""))):
+			continue
+		var g := Node2D.new()
+		g.position = Vector2(int(sc.x), int(sc.y)) * TilesetFactory.TILE
+		g.set_meta("cell", Vector2i(int(sc.x), int(sc.y)))
+		for r: Rect2 in [Rect2(4, 6, 8, 5), Rect2(5, 5, 6, 1), Rect2(5, 11, 6, 1)]:
+			var px := ColorRect.new()
+			px.color = UITheme.MID
+			px.position = r.position
+			px.size = r.size
+			px.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			g.add_child(px)
+		for p: Vector2i in [Vector2i(6, 7), Vector2i(9, 8), Vector2i(7, 9)]:
+			var clod := ColorRect.new()
+			clod.color = UITheme.BG
+			clod.position = Vector2(p)
+			clod.size = Vector2.ONE
+			clod.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			g.add_child(clod)
+		_soil.add_child(g)
+
+## Loose soil patches still on the map (for tests).
+func soil_count() -> int:
+	return _soil.get_child_count() if _soil != null else 0
 
 ## Glint nodes still on the map (for tests).
 func glint_count() -> int:

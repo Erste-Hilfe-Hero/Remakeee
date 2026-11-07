@@ -286,6 +286,14 @@
    "item": "remedy",
    "count": 1,
    "flag": "find_marsh_post"
+  },
+  {
+   "x": 10,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "dig_saltmarsh",
+   "soil": true
   }
  ]
 }

@@ -216,7 +216,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1086. [P2] Verstecke 8 "Lost Sketches" (de: verlorene Skizzen), die jeweils eine Ecke der Weltkarte mit einem geheimen Ort zeigen.
 1087. [P2] Lass jede verlorene Skizze genau einen versteckten Ort freischalten, der vorher nicht auf der Weltkarte stand.
 1088. [x] [P2] Baue an fünf Stellen Grabhügel, an denen man nur mit dem Pausstift eine Inschrift liest, die auf einen vergrabenen Fund in der Nähe zeigt.
-1089. [P2] Lege vergrabene Funde an, die man an einer Stelle mit lockerem Boden durch Ansehen mit A ausgräbt, ohne Spirling-Hilfe.
+1089. [x] [P2] Lege vergrabene Funde an, die man an einer Stelle mit lockerem Boden durch Ansehen mit A ausgräbt, ohne Spirling-Hilfe.
 1090. [P2] Gib jedem Dungeon einen versteckten Raum, der auf der Raumzählung nicht erscheint.
 1091. [x] [P2] Lass Funde in Schilf und Farn bei Wetter Wind sichtbarer werden (Glitzern alle 2 Sekunden).
 1092. [P2] Verstecke in Orten 10 verlegte Alltagsdinge (Schlüssel, Brille, Pfeife), die man dem Besitzer zurückbringt und dafür einen kleinen Lohn bekommt.

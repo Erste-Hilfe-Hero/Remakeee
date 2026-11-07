@@ -35,6 +35,7 @@ T = {
 "Now: high tide, until %02d:00.": "Jetzt: Flut, bis %02d:00 Uhr.",
 "Next high tide: %02d:00 to %02d:00.": "Nächste Flut: %02d:00 bis %02d:00 Uhr.",
 "Next low tide: %02d:00 to %02d:00.": "Nächste Ebbe: %02d:00 bis %02d:00 Uhr.",
+"The soil here is loose. You dig with your hands and find something...": "Die Erde hier ist locker. Du gräbst mit den Händen und findest etwas...",
 "Rubbing Charcoal": "Pausstift",
 "Wayfarer Gear. A stick of charcoal and a roll of thin paper: face a weathered stone and press A to take a rubbing and read its worn inscription.": "Wanderer-Ausrüstung. Ein Stück Kohle und eine Rolle dünnes Papier: stell dich vor einen verwitterten Stein und drück A, um ihn durchzupausen und die verblasste Inschrift zu lesen.",
 "The letters are too worn to read. A charcoal rubbing might bring them back.": "Die Buchstaben sind zu verwittert, um sie zu lesen. Eine Kohlepause könnte sie zurückbringen.",

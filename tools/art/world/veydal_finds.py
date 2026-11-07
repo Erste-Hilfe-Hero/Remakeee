@@ -67,6 +67,11 @@ MARKET = [
      "kin_charm revival_leaf strong_tonic"),
 ]
 
+# Item 1089: buried finds under loose soil. The soil shows on the ground; press A on it to dig
+# the find up with your own hands, no Spirling needed. (map, x, y, item, flag)
+LOOSE_SOIL = [("saltmarsh", 10, 9, "remedy", "dig_saltmarsh"), ("woadfen", 3, 21, "strong_tonic", "dig_woadfen"),
+              ("saltglass", 9, 13, "revival_leaf", "dig_saltglass"), ("lantern_steps", 10, 11, "spark_drop", "dig_lantern_steps")]
+
 
 def set_char(m, x, y, ch):
     r = m["rows"][y]
@@ -126,3 +131,7 @@ def build(world):
     for sid, x, y, facing, sprite, line, shop in MARKET:
         m["npcs"].append(npc(sid, x, y, facing, "brindlewick/" + sid, sprite, weekdays=MARKET_DAYS))
         world.add_text("brindlewick", {sid: {"lines": lines(line), "action": "shop " + shop}})
+    for mid, x, y, item, flag in LOOSE_SOIL:
+        m = world.load_map(mid)
+        m["secrets"] = [s for s in m.get("secrets", []) if s["flag"] != flag]
+        m["secrets"].append(dict(secret(x, y, item, flag), soil=True))

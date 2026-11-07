@@ -1629,7 +1629,9 @@ func take_find(find: Dictionary) -> void:
 	if find.has("dialogue"):
 		await run_dialogue(str(find.dialogue))
 	else:
-		await say(["Something glints here..."] as Array[String])
+		# Item 1089: loose soil is dug up by hand, no Spirling needed.
+		var soil: bool = bool(find.get("soil", false))
+		await say([("The soil here is loose. You dig with your hands and find something..." if soil else "Something glints here...")] as Array[String])
 		await _action_give_item([str(find.item), str(find.get("count", 1))] as PackedStringArray, null)
 	GameState.set_flag(str(find.flag))
 	player.frozen = false
