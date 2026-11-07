@@ -24,6 +24,13 @@ How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- --level 
 - **keepsakes**: every holdable item, held by the lead of one side, against the same battle
   without (at most +6 points). **fields**: teams of a field's boosted element on the field against
   the same battle without (+8 to +15 points).
+- `--seeds N` (duel, team): the same run on N seeds; the report adds mean and spread per species
+  and marks a spread over 10 points as uncertain. **mirror**: every species against itself
+  (400 duels each), the player side must land between 45 and 55 %. The sim counts a double KO
+  (both sides out at once) as a draw; the game hands it to the player, which alone gave the
+  player side up to 76 % in mirror duels (Lumenewt, two Omen Bells landing together).
+- The team report lists the new arts a team at that ring carries that got less than 1 % of their
+  element's picks.
 - **puzzle**: every puzzle of `data/puzzles.json` searched to the end, with the number of winning
   lines, the fewest turns and whether the lantern target (`best_turns`) can be reached.
 - `--compare [path]` (team mode): flags every species and art whose win rate moved more than 8

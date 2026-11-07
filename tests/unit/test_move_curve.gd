@@ -17,17 +17,7 @@ func before_all() -> void:
 	Database.load_all()
 
 ## The new arts of plan area 2 (the ones without a learnset in the original roster).
-const NEW_ARTS: Array[String] = [
-	"Glow Knuckle", "Char Mark", "Spout Jab", "Deepwell Draught", "Pollen Prick", "Static Tag", "Grid Lock",
-	"Grit Jab", "Crosswind", "Kite Cut", "Scatter Gale", "Beacon Ping", "Dawn Needle", "Shade Pounce",
-	"Gloom Handoff", "Quarry Wall", "Landslip", "Shard Bed", "Monolith Drop", "Pumice Pelt", "Fault Line",
-	"Downburst", "Draft Needle", "Squall Line", "Cloudbreak", "Capacitor Crash", "Pylon Snap", "Short Circuit",
-	"Bellows Blast", "Coal Seed", "Furnace Heart", "Cinder Dash", "Brazier Pulse", "Salt Spray", "Rip Current",
-	"Fathom Crush", "Bore Wave", "Shoal Trap", "Bramble Bed", "Wildgrowth Crash", "Husk Shed", "Thornwake",
-	"Bark Burst", "Seed Spit", "Graft", "Overdraw", "Wire Trap", "Lull Breaker", "Chaff Feint", "Gale Mantle",
-	"Sunwell Sip", "Daybreak Strike", "Prism Burst", "Starlit Lash", "Glow Trap", "Night Toll", "Eclipse Crush",
-	"Murmur Bite", "Veil Step", "Gloam Pact", "Dusk Snare", "Gravel Hum", "Slow Quake", "Omen Bell",
-]
+const NEW_ARTS: Array[String] = BalanceSim.NEW_ARTS
 
 func _factor(mv: MoveData) -> float:
 	var f: float = 1.0
