@@ -343,6 +343,9 @@ static func _sanitize_spirling(s: Dictionary) -> Dictionary:
 			s.erase(k)
 	if s.has("prism") and not _is_number(s.prism):
 		s.erase("prism")
+	for flag: String in ["core", "gleam"]:
+		if s.has(flag) and not s[flag] is bool:
+			s.erase(flag)
 	if s.has("spark"):
 		if s.spark is Dictionary:
 			_keep_numbers(s.spark)

@@ -63,6 +63,10 @@ var held: String = ""
 var prism: bool = false
 ## Power Core used on this Spirling (saved as "core" only when true).
 var temper_core: bool = false
+## Gleam form from the shop's Gleam Prism (items 4791-4794): +10 % on all five values and a
+## Riftglass tint. Saved as "gleam" only when true. The Fair League never carries it.
+var gleam: bool = false
+const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
 ## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
@@ -147,11 +151,15 @@ func _curve(base: int, key: String, offset: float, div: float) -> int:
 var hp_mult: float = 1.0
 
 func max_hp() -> int:
-	return maxi(1, int(_curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV) * _temper_mult("hp") * hp_mult
+	return maxi(1, int(_curve(data.base_hp, "hp", HP_LEVEL_OFFSET, HP_LEVEL_DIV) * _temper_mult("hp") * hp_mult * shop_mult()
 		* BattleRules.mult_key(self, "hp_mult")))
 
 func _stat(key: String) -> int:
-	return int((_curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT) * _temper_mult(key))
+	return int((_curve(data.base_stat(key), key, STAT_LEVEL_OFFSET, STAT_LEVEL_DIV) + STAT_FLAT) * _temper_mult(key) * shop_mult())
+
+## Factor from shop purchases on this Spirling (Gleam form, item 4794).
+func shop_mult() -> float:
+	return GLEAM_MULT if gleam else 1.0
 
 ## The temperament id saves before version 4 had, read from the uid ("even" without a uid).
 static func legacy_temper(p_uid: String) -> String:
@@ -449,6 +457,7 @@ func to_dict() -> Dictionary:
 		"prism": prism,
 		"temper": temperament().id,
 		"core": temper_core,
+		"gleam": gleam,
 		"variant": variant,
 		"origin_map": origin_map,
 		"met_ring": met_ring,
@@ -487,6 +496,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	if not temper_info(s.temper).id == s.temper:
 		s.temper = legacy_temper(s.uid)
 	s.temper_core = d.get("core") is bool and d.get("core")
+	s.gleam = d.get("gleam") is bool and d.get("gleam")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
 	s.met_ring = _num(d.get("met_ring"), 0)

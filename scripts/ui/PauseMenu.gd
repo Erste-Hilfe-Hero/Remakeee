@@ -685,6 +685,8 @@ func run_bag() -> void:
 			await _use_temper_shift(item_id)
 		elif bool(it.get("temper_core", false)):
 			await _use_power_core(item_id)
+		elif bool(it.get("gleam", false)):
+			await _use_gleam_prism(item_id)
 		elif it.has("boost"):
 			if await confirm("%s\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", "")))], "Use", "Not now"):
 				await info(ShopEffects.start_boost(item_id))
@@ -797,6 +799,21 @@ func _use_power_core(id: String) -> void:
 		return
 	Sound.sfx("level_up")
 	await info(Loc.t("%s's temperament grows stronger: +10%% instead of +5%%.") % s.display_name())
+
+## Gleam Prism (items 4791, 4793): the player picks exactly which Spirling gleams.
+func _use_gleam_prism(id: String) -> void:
+	var who: int = await _pick_member("Use the Gleam Prism on?")
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	if s.gleam:
+		await info(Loc.t("%s already gleams.") % s.display_name())
+		return
+	if not await confirm(Loc.t("Turn %s into its Gleam form? +10%% on all values, for good.") % s.display_name(), "Gleam", "Not now"):
+		return
+	if GameState.use_gleam_prism(s, id):
+		Sound.sfx("level_up")
+		await info(Loc.t("%s gleams with Riftglass light!") % s.display_name())
 
 func _pick_member(question: String) -> int:
 	var names: Array[String] = []

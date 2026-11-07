@@ -286,6 +286,13 @@ func shift_temper(s: Spirling, temper_id: String, item_id: String = "rg_temper_s
 	s.temper = temper_id
 	return take_item(item_id)
 
+## Gleam Prism (shop item 4791): the chosen Spirling takes its Gleam form for good.
+func use_gleam_prism(s: Spirling, item_id: String = "rg_gleam_prism") -> bool:
+	if item_count(item_id) <= 0 or s.gleam:
+		return false
+	s.gleam = true
+	return take_item(item_id)
+
 ## Power Core (shop item 4750): doubles the lean of a temperament that leans toward a stat.
 func use_power_core(s: Spirling, item_id: String = "rg_temper_amp") -> bool:
 	if item_count(item_id) <= 0 or s.temper_core or str(s.temperament().stat).is_empty():

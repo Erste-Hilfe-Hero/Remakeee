@@ -670,4 +670,11 @@ T = {
 "%s is %s now.": "%s ist jetzt %s.",
 "That would do nothing: %s has no lean to strengthen, or already has a Power Core.": "Das würde nichts bewirken: %s hat keine Neigung zum Verstärken oder schon einen Kraftkern.",
 "%s's temperament grows stronger: +10%% instead of +5%%.": "Die Wesensart von %s wird stärker: +10 %% statt +5 %%.",
+"Gleam Prism": "Glanzform-Prisma",
+"Turns one Spirling you choose into its Gleam form for good: +10% on all values and a Riftglass sheen. Used up.": "Verwandelt einen Spirling deiner Wahl dauerhaft in seine Glanzform: +10 % auf alle Werte und ein Rissglas-Schimmer. Wird verbraucht.",
+"Use the Gleam Prism on?": "Glanzform-Prisma für wen?",
+"%s already gleams.": "%s glänzt schon.",
+"Turn %s into its Gleam form? +10%% on all values, for good.": "%s in die Glanzform verwandeln? +10 %% auf alle Werte, dauerhaft.",
+"Gleam": "Glanzform",
+"%s gleams with Riftglass light!": "%s glänzt im Rissglas-Licht!",
 }
