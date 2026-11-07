@@ -217,7 +217,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2420. [P2] Erhaltene Gegenstände zeigen ein Ergebnis-Fenster mit dem Gegenstand-Symbol, das mit Juice.pop erscheint und 0,3 s bis zur Bestätigung wartet, damit man nicht versehentlich wegtippt.
 2421. [P2] Die Bildschirm-Steuerung (VirtualPad.gd) zeigt beim Drücken einer Richtung den gedrückten Pfeil 1 Pixel eingesunken und dunkler.
 2422. [P2] Die Bildschirm-Steuerung blendet sich nach 4 Sekunden ohne Berührung auf 40 % Deckkraft ab und beim Antippen in 0,1 s wieder auf.
-2423. [P2] Gesperrte Menüpunkte schütteln beim Antippen 2 Pixel waagrecht (Juice.nudge zweimal) und spielen den Abbruch-Klang.
+2423. [x] [P2] Gesperrte Menüpunkte schütteln beim Antippen 2 Pixel waagrecht (Juice.nudge zweimal) und spielen den Abbruch-Klang.
 2424. [P2] Lange Listen (Lager, Lexikon, Gegenstände) laufen beim Wischen mit Schwung nach und bremsen mit Reibung 6 pro Sekunde ab.
 2425. [P2] Am Listenende federt die Liste 4 Pixel über und mit "settle" zurück, statt hart zu stoppen.
 2426. [P2] Ein Bildlauf-Anzeiger (1 Pixel breiter Strich) erscheint am rechten Rand langer Listen beim Scrollen und verschwindet nach 0,8 s.
@@ -319,7 +319,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2516. [x] [P2] Klang für erledigte Aufgaben im Aufgabenbuch, kurzer Strich plus Glocke.
 2517. [x] [P2] Klang für den Tagesfund beim Abholen, Glitzern aus 5 sehr hohen Tönen.
 2518. [P3] Klang für Bestätigung am Rastplatz vor dem Heilen (Wasser-Plätschern aus gefiltertem Rauschen).
-2519. [P2] Klang für das Betreten eines Begegnungsfeldes (leises Rascheln), nur jedes 3. Feld, damit es nicht nervt.
+2519. [x] [P2] Klang für das Betreten eines Begegnungsfeldes (leises Rascheln), nur jedes 3. Feld, damit es nicht nervt.
 2520. [x] [P2] Klang für das Laufen gegen eine Wand (bump) bekommt eine Sperre: höchstens einmal pro 0,4 s.
 2521. [P3] Klang für Gefühls-Blasen pro Symbol (Herz, Frage, Note, Schweiß, Punkte), jeweils unter 0,2 s.
 2522. [P3] Klang für die Online-Verbindung: wieder verbunden (steigend) und Verbindung verloren (fallend), leise.
@@ -365,7 +365,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2558. [P2] Schreie (Cry.gd) bekommen beim ersten Kampfstart des Tages einen Vorab-Aufbau im Hintergrund, damit kein Bild ruckelt.
 2559. [P2] Ogg-Schleifen nutzen in den .import-Dateien loop_offset aus den Steckbrief-Daten, damit Stücke mit Einleitung an der richtigen Stelle wiederholen.
 2560. [P2] Klang-Ausgabe unter 30 ms Verzögerung auf Android einstellen (Projekteinstellung audio/driver/output_latency auf 15).
-2561. [P2] GUT-Test prüft, dass jeder in Code genannte Klangname (Sound.sfx("...")) eine Datei in audio/sfx/ hat und umgekehrt keine ungenutzte Datei existiert.
+2561. [x] [P2] GUT-Test prüft, dass jeder in Code genannte Klangname (Sound.sfx("...")) eine Datei in audio/sfx/ hat und umgekehrt keine ungenutzte Datei existiert.
 2562. [P3] Leichter Raumklang pro Karte: Innenräume (map_house, Leuchtturm innen) mit kurzem Hall auf dem SFX-Bus, Außenkarten ohne.
 2563. [P3] Lautstärke-Ausgleich zwischen Musik und Klängen nach Ortstyp: in Rifts Musik -2 dB, damit Kampfklänge durchdringen.
 2564. [P3] Eine kleine Klang-Warteschlange für Jingles: kommen zwei Jingles gleichzeitig (Ring-Aufstieg und Gegenstand), spielt der zweite danach statt darüber.

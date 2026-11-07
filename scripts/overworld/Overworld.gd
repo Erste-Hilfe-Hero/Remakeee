@@ -559,6 +559,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	survey_step(cell)
 	if scene_running:
 		return
+	_grass_rustle(map.kind_at(cell))
 	DailyTasks.record("step", {"map": map.id})
 	show_notices()
 	if await _world.stepped(cell):
@@ -1017,6 +1018,21 @@ func _on_player_step_started(dir: String, run: bool) -> void:
 		_particles.dust(player.position + Vector2(8, 15), -Vector2(GridWalker.DIRS[dir]))
 
 ## Footsteps by ground (items 2501, 2502): every second step walking, every step running.
+## Every third step into encounter grass rustles softly (item 2519).
+const RUSTLE_EVERY: int = 3
+var _grass_steps: int = 0
+
+func _grass_rustle(kind: int) -> void:
+	if not kind in TilesetFactory.ENCOUNTER_KINDS or map.encounter_table.is_empty():
+		return
+	_grass_steps += 1
+	if rustle_due(_grass_steps):
+		Sound.sfx("rustle", -6.0)
+
+## True on the 1st, 4th, 7th ... grass step.
+static func rustle_due(grass_steps: int) -> bool:
+	return grass_steps > 0 and (grass_steps - 1) % RUSTLE_EVERY == 0
+
 func _footstep(run: bool) -> void:
 	_walk_steps += 1
 	if not run and _walk_steps % 2 == 1:

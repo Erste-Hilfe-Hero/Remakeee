@@ -62,6 +62,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(dodge_sfx())
     out.update(social_sfx())
     out.update(passage_sfx())
+    out.update(grass_sfx())
     return out
 
 
@@ -267,4 +268,15 @@ def passage_sfx() -> dict[str, np.ndarray]:
         env(n, attack=0.002, decay=0.05, sustain=0.4, release=0.04) * 0.6
     n = secs(0.012)
     out["energy_tick"] = pulse(freq(midi("E7")), n, 0.125) * env(n, attack=0.001, decay=0.006, sustain=0.2, release=0.003) * 0.2
+    return out
+
+
+def grass_sfx() -> dict[str, np.ndarray]:
+    """A soft rustle when the Wayfarer walks into encounter grass (item 2519). Own generator,
+    so the older effects keep their noise."""
+    rng = np.random.default_rng(2519)
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.14)
+    blades = noise(n, 1, rng) * (rng.random(n) > 0.45)
+    out["rustle"] = blades * np.sin(np.linspace(0, np.pi, n)) ** 2 * 0.35
     return out
