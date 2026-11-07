@@ -489,10 +489,18 @@ func _why_at(pos: Vector2) -> void:
 			return
 
 ## A tap on greyed-out row [param i]: its reason if it has one, and always a dull tap that
-## tells the row is locked (item 2511).
+## tells the row is locked (item 2511). The row shakes 2 px sideways, there and back (item 2423).
 func tap_locked(i: int) -> void:
 	if not show_why(i):
 		Sound.sfx("locked")
+	if i >= 0 and i < _buttons.size():
+		shake_row(_buttons[i])
+
+## Two quick 2 px nudges, right then left. Awaitable; nothing under reduced motion.
+static func shake_row(row: CanvasItem) -> void:
+	await Juice.nudge(row, Vector2.RIGHT)
+	if is_instance_valid(row):
+		await Juice.nudge(row, Vector2.LEFT)
 
 ## The text under the list now (tests).
 func hint_text() -> String:
