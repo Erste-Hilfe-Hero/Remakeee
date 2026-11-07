@@ -17,14 +17,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4010. [x] [P2] Für beide Stores das Small Business Program (Apple) und die 15-%-Stufe (Google) als Schritt in `docs/STORE_RELEASE.md` aufnehmen, mit Hinweis, dass Ali es selbst beantragen muss.
 4011. [P2] In der Memory-Notiz `chimora-monetization` und in `AGENTS.md` unter Regel 4 vermerken: Billing-Plugins für Apple und Google sind freigegeben, Werbe- und Analytics-SDKs weiterhin nicht.
 4012. [x] [P2] Eine Prüfung in `tools/release_check.py` ergänzen, die fehlschlägt, wenn in `addons/` ein Plugin mit den Namen bekannter Werbe- oder Analytics-SDKs liegt.
-4013. [P3] In `docs/MONETIZATION.md` einen Abschnitt "Was nie verkauft wird" führen: Story-Kapitel, Karten, Rift-Zugang, Konto-Funktionen, Freunde, Geschenke an Freunde.
-4014. [P3] Im Titelbildschirm und in den Store-Texten keine Formulierung "gratis spielen, alles freischalten" verwenden, sondern "kostenlos spielbar, optionale In-App-Käufe".
-4015. [P3] Einen jährlichen Prüftermin (jeweils 1. November) in `docs/MONETIZATION.md` eintragen, an dem Preise, Rechtslage und Angebote neu bewertet werden.
-4016. [P3] In `docs/MONETIZATION.md` eine Regel aufnehmen, dass kein Angebot nachträglich abgeschwächt wird, ohne Käufern einen gleichwertigen Ersatz zu geben.
-4017. [P3] In `docs/MONETIZATION.md` festhalten, dass ein späterer Wechsel zurück zum Bezahlmodell auf Google Play technisch nicht möglich ist, weil kostenlose Apps dort nicht kostenpflichtig werden dürfen.
-4018. [P3] Eine Änderungsliste `docs/shop/CHANGELOG.md` anlegen, in der jede Preis- oder Angebotsänderung mit Datum steht.
-4019. [P3] In `docs/MONETIZATION.md` eine Abschaltregel festhalten: wird der Server eingestellt, bekommen Spieler 60 Tage vorher Bescheid, und der Shop schließt zuerst.
-4020. [P3] Die Alt-Tabelle "Items 80 bis 86" in `docs/MONETIZATION.md` durch eine neue Tabelle mit dem Stand jedes Unterbereichs dieses Plans ersetzen.
+4013. [x] [P3] In `docs/MONETIZATION.md` einen Abschnitt "Was nie verkauft wird" führen: Story-Kapitel, Karten, Rift-Zugang, Konto-Funktionen, Freunde, Geschenke an Freunde.
+4014. [x] [P3] Im Titelbildschirm und in den Store-Texten keine Formulierung "gratis spielen, alles freischalten" verwenden, sondern "kostenlos spielbar, optionale In-App-Käufe".
+4015. [x] [P3] Einen jährlichen Prüftermin (jeweils 1. November) in `docs/MONETIZATION.md` eintragen, an dem Preise, Rechtslage und Angebote neu bewertet werden.
+4016. [x] [P3] In `docs/MONETIZATION.md` eine Regel aufnehmen, dass kein Angebot nachträglich abgeschwächt wird, ohne Käufern einen gleichwertigen Ersatz zu geben.
+4017. [x] [P3] In `docs/MONETIZATION.md` festhalten, dass ein späterer Wechsel zurück zum Bezahlmodell auf Google Play technisch nicht möglich ist, weil kostenlose Apps dort nicht kostenpflichtig werden dürfen.
+4018. [x] [P3] Eine Änderungsliste `docs/shop/CHANGELOG.md` anlegen, in der jede Preis- oder Angebotsänderung mit Datum steht.
+4019. [x] [P3] In `docs/MONETIZATION.md` eine Abschaltregel festhalten: wird der Server eingestellt, bekommen Spieler 60 Tage vorher Bescheid, und der Shop schließt zuerst. *Umgesetzt mit 3 Monaten statt 60 Tagen, weil die Nutzungsbedingungen (5.4) 3 Monate zusagen.*
+4020. [x] [P3] Die Alt-Tabelle "Items 80 bis 86" in `docs/MONETIZATION.md` durch eine neue Tabelle mit dem Stand jedes Unterbereichs dieses Plans ersetzen. *Die Alt-Tabelle gibt es nicht mehr; der Stand steht in diesem Plan und in der Angebotstabelle von `docs/MONETIZATION.md`.*
 
 ### Rechtsrahmen DE/EU und Jugendschutz
 4021. [x] [P1] Kein Angebot enthält Zufallsinhalte: Jeder Kauf liefert genau die im Angebot genannten Gegenstände und Mengen, und ein Test in `tests/test_shop_catalog.gd` prüft, dass `data/shop.json` kein Feld für Zufall, Ziehung oder Chancen kennt.
@@ -55,18 +55,18 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4046. [x] [P2] Für Spieler unter 18 alle Pass-Verlängerungen nur mit Store-Elternfreigabe zulassen und das in `docs/legal/SHOP_COMPLIANCE.md` als Regel festhalten.
 4047. [P2] Den Zeitpunkt der Annahme der neuen Nutzungsbedingungen in `profiles` speichern (`terms_version`, `terms_accepted_at`) und vor dem ersten Kauf erneut abfragen, wenn die Version neuer ist.
 4048. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Apple-Richtlinien 3.1.1 (Käufe), 3.1.2 (Abos) und 5.1.1(v) (Kontolöschung mit Abo) mit Umsetzungsort verlinken.
-4049. [P3] In `docs/legal/SHOP_COMPLIANCE.md` die Google-Richtlinien zu Zahlungen, Abos und Familien zusammenfassen und vermerken, dass die Zielgruppe "13 und älter" bleibt.
-4050. [P3] Den Digital Services Act prüfen: Händlerangaben im Store bleiben aktuell, ein Meldeweg für irreführende Angebote führt zur Support-Adresse.
-4051. [P3] Einen jährlichen Rechtscheck mit Datum in `docs/legal/SHOP_COMPLIANCE.md` eintragen und dabei den Stand des geplanten EU-Gesetzes zur digitalen Fairness nachtragen.
+4049. [x] [P3] In `docs/legal/SHOP_COMPLIANCE.md` die Google-Richtlinien zu Zahlungen, Abos und Familien zusammenfassen und vermerken, dass die Zielgruppe "13 und älter" bleibt.
+4050. [x] [P3] Den Digital Services Act prüfen: Händlerangaben im Store bleiben aktuell, ein Meldeweg für irreführende Angebote führt zur Support-Adresse.
+4051. [x] [P3] Einen jährlichen Rechtscheck mit Datum in `docs/legal/SHOP_COMPLIANCE.md` eintragen und dabei den Stand des geplanten EU-Gesetzes zur digitalen Fairness nachtragen.
 4052. [P3] Die Texte aller Shop-Angebote in einfacher Sprache halten: höchstens 2 Sätze, keine Fachwörter, und ein Test zählt die Satzlänge (höchstens 18 Wörter).
-4053. [P3] Eine Vorlage für Antworten auf Kaufbeschwerden in `docs/shop/SUPPORT_ANTWORTEN.md` schreiben (fehlender Kauf, doppelter Kauf, Kind hat gekauft, Pass kündigen).
+4053. [x] [P3] Eine Vorlage für Antworten auf Kaufbeschwerden in `docs/shop/SUPPORT_ANTWORTEN.md` schreiben (fehlender Kauf, doppelter Kauf, Kind hat gekauft, Pass kündigen).
 4054. [P3] Bei Angeboten mit Ende das Enddatum in Ortszeit Deutschland anzeigen und in den Angebotsdaten als UTC speichern.
-4055. [P3] Jede Preisänderung mindestens 7 Tage vorher in den Neuigkeiten des Spiels ankündigen, wenn ein Angebot teurer wird.
-4056. [P3] Für die Schweiz und Österreich prüfen, ob abweichende Preisangaben nötig sind, und das Ergebnis in `docs/legal/SHOP_COMPLIANCE.md` notieren.
-4057. [P3] Einen Rechtsabschnitt zur Übertragung des Kontos per Transfercode ergänzen: Käufe wandern mit, Verkauf von Konten ist untersagt.
+4055. [x] [P3] Jede Preisänderung mindestens 7 Tage vorher in den Neuigkeiten des Spiels ankündigen, wenn ein Angebot teurer wird.
+4056. [x] [P3] Für die Schweiz und Österreich prüfen, ob abweichende Preisangaben nötig sind, und das Ergebnis in `docs/legal/SHOP_COMPLIANCE.md` notieren.
+4057. [x] [P3] Einen Rechtsabschnitt zur Übertragung des Kontos per Transfercode ergänzen: Käufe wandern mit, Verkauf von Konten ist untersagt.
 4058. [P3] Ein Verbot des Kontohandels in die Nutzungsbedingungen schreiben und die Melden-Funktion um den Grund "Kontohandel" ergänzen.
 4059. [P3] Die englischen Shop-Texte auf die gleichen Regeln prüfen (keine "Buy now", "Get it now" gegenüber Kindern) und die Wortliste dafür nutzen.
-4060. [P3] In `docs/legal/SHOP_COMPLIANCE.md` festhalten, wie bei einer Anfrage einer Verbraucherzentrale reagiert wird: Antwortfrist 14 Tage, Ansprechpartner Ali.
+4060. [x] [P3] In `docs/legal/SHOP_COMPLIANCE.md` festhalten, wie bei einer Anfrage einer Verbraucherzentrale reagiert wird: Antwortfrist 14 Tage, Ansprechpartner Ali.
 
 ### Store-Einrichtung, Altersfreigabe und Datenschutz-Angaben
 4061. [x] [P1] In `docs/legal/STORE_COMPLIANCE.md` die IARC-Antwort "Digitale Käufe" von "nein" auf "ja" ändern und die erwartete Freigabe mit Zusatz "In-Game-Käufe" neu eintragen.
@@ -92,7 +92,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4081. [P3] In der Play Console die Länderpreise automatisch aus dem Euro-Preis ableiten und für die Eurozone feste Preise mit ",99" setzen.
 4082. [P3] In App Store Connect als Basisland Deutschland wählen, damit die Euro-Preise fest bleiben und andere Länder umgerechnet werden.
 4083. [P3] Für Apple "Promoted In-App Purchases" nicht verwenden, damit keine Käufe außerhalb des Spiels ohne Kontext beworben werden.
-4084. [P3] Einen Abo-Angebotscode (Apple Offer Codes, Google Promo Codes) für 1 Monat Pass als Support-Werkzeug in `docs/shop/SUPPORT_ANTWORTEN.md` beschreiben.
+4084. [x] [P3] Einen Abo-Angebotscode (Apple Offer Codes, Google Promo Codes) für 1 Monat Pass als Support-Werkzeug in `docs/shop/SUPPORT_ANTWORTEN.md` beschreiben.
 4085. [P3] Das Abo-Gruppen-Bild und den Abo-Anzeigenamen in App Store Connect mit eigenem Pixel-Bild aus `art/shop/` füllen.
 4086. [P3] Für Google die Abo-Grundpläne "monatlich" und "jährlich (39,99 €)" anlegen und den Jahresplan erst in der zweiten Version freigeben.
 4087. [P3] Einen Test-Track "shop-beta" in der Play Console für Shop-Änderungen vor der Produktion anlegen.
