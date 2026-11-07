@@ -664,6 +664,14 @@
   "temper_core": true
  },
  {
+  "id": "rg_gleam_prism",
+  "name": "Gleam Prism",
+  "description": "Turns one Spirling you choose into its Gleam form for good: +10% on all values and a Riftglass sheen. Used up.",
+  "battle": false,
+  "shop": true,
+  "gleam": true
+ },
+ {
   "id": "rg_spark_forge",
   "name": "Spark Forge",
   "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",

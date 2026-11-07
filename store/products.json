@@ -803,7 +803,7 @@
    "name_de": "Glanzform-Prisma",
    "desc_en": "Turns one Spirling you choose into its Gleam form: +10% on all values and a Riftglass shimmer. At most 2 per week.",
    "desc_de": "Verwandelt einen gewählten Spirling in seine Glanzform: +10 % auf alle Werte und Rissglas-Schimmer. Höchstens 2 pro Woche.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.battle_speed",

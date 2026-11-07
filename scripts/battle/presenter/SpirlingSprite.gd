@@ -14,6 +14,8 @@ const MOTIONS: Array[String] = ["hop", "creep", "sway", "stomp", "slide"]
 static var _motion: Dictionary = {}
 ## Prism variants are drawn with a warm tint over the era palette.
 const PRISM_TINT: Color = Color(1.0, 0.78, 0.5)
+## Gleam form (shop item 4792): a cool Riftglass sheen.
+const GLEAM_TINT: Color = Color(0.72, 0.92, 1.0)
 ## Idle bob: 1 px up for half of each period (item 2335).
 const BOB_PERIOD: float = 1.0
 ## Under a quarter of its strength a Spirling sits 1 px lower and bobs at half the pace.
@@ -218,7 +220,7 @@ func _draw() -> void:
 	if _texture != null:
 		if mirrored:
 			draw_set_transform(Vector2(size.x, 0) + draw_offset, 0.0, Vector2(-1, 1))
-		draw_texture_rect(_texture, r, false, PRISM_TINT if spirling.prism else Color.WHITE)
+		draw_texture_rect(_texture, r, false, GLEAM_TINT if spirling.gleam else (PRISM_TINT if spirling.prism else Color.WHITE))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 	var els: Array[int] = spirling.elements()

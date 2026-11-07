@@ -835,14 +835,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4790. [P3] (P2W) Die verborgenen Gaben nach 6 Monaten neu bewerten und zu starke Gaben mit Ersatz abschwächen.
 
 ### Glanzformen von Spirlings
-4791. [P1] (P2W) Ein "Glanzform-Prisma" (`rg_gleam_prism`) anlegen, das einen gewählten eigenen Spirling dauerhaft in seine Glanzform verwandelt, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt.
-4792. [P1] (P2W) Eine Glanzform hat +10 % auf Kraft, Wucht, Schutz, Fokus und Tempo und eine eigene Farbpalette mit Rissglas-Schimmer.
-4793. [P1] (P2W) Der Spieler wählt vor dem Kauf genau den Spirling aus, der Glanzform wird; es gibt keine zufällige Glanzform gegen Geld.
-4794. [P1] (P2W) Die Glanzform als Feld `gleam: bool` an `Spirling` speichern und in den Wertformeln als Faktor 1,1 in `shop_mult` einrechnen.
+4791. [x] [P1] (P2W) Ein "Glanzform-Prisma" (`rg_gleam_prism`) anlegen, das einen gewählten eigenen Spirling dauerhaft in seine Glanzform verwandelt, Preis 1500 Rissglas (≈ 14,85 €) oder 14,99 € direkt.
+4792. [x] [P1] (P2W) Eine Glanzform hat +10 % auf Kraft, Wucht, Schutz, Fokus und Tempo und eine eigene Farbpalette mit Rissglas-Schimmer.
+4793. [x] [P1] (P2W) Der Spieler wählt vor dem Kauf genau den Spirling aus, der Glanzform wird; es gibt keine zufällige Glanzform gegen Geld.
+4794. [x] [P1] (P2W) Die Glanzform als Feld `gleam: bool` an `Spirling` speichern und in den Wertformeln als Faktor 1,1 in `shop_mult` einrechnen.
 4795. [P1] (P2W) Glanzformen über Paletten-Tausch im Shader zeigen, wie die Kosmetik-Farbtöne, damit pro Era keine neuen Sprites nötig sind.
-4796. [P1] (P2W) Glanzformen wirken in der Gleichstand-Liga nur als Aussehen; ihre +10 % werden dort entfernt.
+4796. [x] [P1] (P2W) Glanzformen wirken in der Gleichstand-Liga nur als Aussehen; ihre +10 % werden dort entfernt.
 4797. [P1] (P2W) Der Server prüft beim Speichern, dass jede Glanzform zu einem verbrauchten Glanzform-Prisma gehört.
-4798. [P1] (P2W) Glanzformen auf 2 Käufe pro Woche begrenzen.
+4798. [x] [P1] (P2W) Glanzformen auf 2 Käufe pro Woche begrenzen.
 4799. [P2] (P2W) Eine "Glanz-Technik" für jede Glanzform anlegen: die Signatur-Technik der Art bekommt +10 Stärke, solange der Spirling Glanzform ist.
 4800. [P2] (P2W) Die Glanzform beim Entfalten erhalten, sodass die entfaltete Form auch Glanzform ist.
 4801. [P2] (P2W) Glanzformen im Spirlog mit eigenem Bild zeigen, nur wenn der Spieler eine besitzt.

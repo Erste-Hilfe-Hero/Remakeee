@@ -502,6 +502,23 @@ func test_temper_shift_and_power_core() -> void:
 	assert_false(GameState.use_power_core(plain), "no lean to double")
 	GameState.inventory = inv
 
+func test_gleam_prism_adds_ten_percent_and_saves() -> void:
+	var inv: Dictionary = GameState.inventory.duplicate(true)
+	var s: Spirling = BattleFixtures.make("Kindlop", 40)
+	s.temper = "even"
+	var before: Array[int] = [s.max_hp(), s.atk(), s.def(), s.foc(), s.spd()]
+	GameState.inventory["rg_gleam_prism"] = 1
+	assert_true(GameState.use_gleam_prism(s))
+	assert_false(GameState.use_gleam_prism(s), "once only")
+	assert_eq(GameState.item_count("rg_gleam_prism"), 0)
+	var after: Array[int] = [s.max_hp(), s.atk(), s.def(), s.foc(), s.spd()]
+	for i: int in before.size():
+		assert_almost_eq(float(after[i]), before[i] * Spirling.GLEAM_MULT, 1.5)
+	assert_true(Spirling.from_dict(s.to_dict()).gleam)
+	var limit: Dictionary = ShopCatalog.offer("rg_gleam_prism").get("limit", {})
+	assert_eq([str(limit.get("per")), int(limit.get("n", 0))], ["week", 2])
+	GameState.inventory = inv
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
