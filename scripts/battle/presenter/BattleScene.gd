@@ -800,10 +800,12 @@ func _play_event(e: BattleEvent) -> void:
 			_pin.visible = false
 		BattleEvent.Type.DAMAGE:
 			var hit: String = _hit_sound(e)
+			# Louder the more strength the hit took (item 2532).
+			var lost: float = float(e.data.get("amount", 0)) / maxf(float(e.data.get("max_hp", 1)), 1.0)
 			if hit == "hit" or hit == "hit_strong":
-				Sound.element_hit(_last_element[BattleModel.other(side)])
+				Sound.element_hit(_last_element[BattleModel.other(side)], lost)
 			if hit != "hit":
-				Sound.sfx(hit)
+				Sound.sfx(hit, Sound.hit_volume_db(lost))
 			if side == BattleModel.Side.FOE and _last_player_element >= 0 and e.data.has("eff"):
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, slot)
 				if foe != null:
@@ -903,7 +905,11 @@ func _play_event(e: BattleEvent) -> void:
 			var t_side: int = BattleModel.other(side)
 			var t_slot: int = int(e.data.get("target_slot", 0))
 			var target: SpirlingSprite = _sprite(t_side, t_slot)
+			# A soft rush of air past the target and a quick swish as it steps aside (items
+			# 2531, 2536).
+			Sound.sfx("miss")
 			if target != null and target.visible:
+				Sound.sfx("dodge")
 				target.dodge(dodge_dir(t_side))
 			var miss_text: String = e.describe()
 			if not miss_text.is_empty():
