@@ -326,12 +326,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 738. [x] [P2] Tamer: Rückenwind erst nach drei Niederlagen und ohne Energie-Abzug, nur volle Heilung; ab Veteran nie. Erledigt: Tamer ab 3 Niederlagen, nur Heilung; Veteran und Rift-Born nie (Test).
 739. [x] [P2] Rückenwind-Nutzung wird im Spielstand gezählt und in der Kampfende-Zusammenfassung genannt, aber nie versteckt angewendet. Erledigt: records["tailwind_used"] zählt; nach dem Kampf steht "Rückenwind hat in diesem Kampf geholfen. Bisher %d-mal genutzt." Ohne Ja wird nichts angewendet.
 740. [P3] Story: Seitenfallen der Gegner wirken nur einmal pro Kampf, auch wenn sie neu gelegt werden.
-741. [P2] Story und Tamer: Gegner nutzen keine `heal_block`-Techniken gegen den letzten Spirling des Spielers.
-742. [P2] Veteran: Gegner rasten nie zweimal hintereinander, damit die KI nicht stillsteht (gilt für alle Profile).
+741. [x] [P2] Story und Tamer: Gegner nutzen keine `heal_block`-Techniken gegen den letzten Spirling des Spielers. Erledigt: BattleAI.spare_last (set_difficulty, Story und Tamer): steht beim Spieler nur noch ein Spirling, fallen Techniken mit heal_block-Effekt (Night Toll) aus der Wahl, außer es bliebe sonst keine. Im Replay gespeichert.
+742. [x] [P2] Veteran: Gegner rasten nie zweimal hintereinander, damit die KI nicht stillsteht (gilt für alle Profile). Erledigt: BattleAI.no_double_rest (Veteran) für alle Profile: eine zweite Rast in Folge wird zur stärksten bezahlbaren Technik; im Replay gespeichert, auch in BalanceSim gesetzt.
 743. [P2] Rift-Born: Gegner-Teams haben immer 1 Spirling mehr als auf Tamer, höchstens 5.
 744. [P3] Rift-Born: der erste Gegner-Spirling ist der mit dem besten Matchup gegen den ersten Spirling des Spielers, ausgewählt beim Kampfstart nach festen Regeln.
 745. [P2] Schwierigkeitsseite im Neues-Spiel-Menü zeigt pro Stufe eine Tabelle mit 6 Zeilen: Gegner-Ring, Gegner-Spark, KI-Stufe, Andenken, Gegenstände im Kampf, Ring-Obergrenze.
-746. [P2] Ein Wechsel auf eine leichtere Stufe gilt ab dem nächsten Kampf und setzt `difficulty_lowered` im Spielstand, sichtbar im Profil.
+746. [x] [P2] Ein Wechsel auf eine leichtere Stufe gilt ab dem nächsten Kampf und setzt `difficulty_lowered` im Spielstand, sichtbar im Profil. Erledigt: GameState.set_difficulty aus dem Einstellungsmenü (gilt ab dem nächsten Kampf, das Menü geht im Kampf nicht auf); eine leichtere Stufe setzt records["difficulty_lowered"], sichtbar als "(gesenkt)" in der Einstellungszeile und in der Reise-Chronik.
 747. [P2] Boss-Aktionen pro Zug pro Stufe: Story höchstens 1, Tamer wie bisher, Veteran wie bisher, Rift-Born +1 ab Phase 2.
 748. [P2] Rift-Born: Boss-Phase schon bei 60 % statt 50 % Kraft.
 749. [P2] Gegner-Energie beim Start: Story 8, Tamer 10, Veteran 10, Rift-Born 10 mit +1 in Runde 1; Spieler immer 10 (bestehender Startwert).
