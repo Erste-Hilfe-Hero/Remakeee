@@ -12,10 +12,37 @@ const MAX_TURNS: int = 60
 static var sim_field: String = ""
 static var sim_variants: Array[String] = []
 
-static func _apply_switches(m: BattleModel) -> void:
+## Difficulty the foe side (side 1) is tuned to, as in the game (item 822, switch --difficulty);
+## -1 leaves both sides even.
+static var sim_difficulty: int = -1
+
+## [param tune_ai] false keeps the AI tiers a mode set itself (ladder).
+static func _apply_switches(m: BattleModel, tune_ai: bool = true) -> void:
 	if not sim_field.is_empty():
 		m.field = sim_field
 	m.variants = sim_variants.duplicate()
+	if sim_difficulty >= 0:
+		tune_foes(m, sim_difficulty, tune_ai)
+
+## Tunes [param m]'s foe side to [param difficulty] the way a Wayfarer battle is (item 822):
+## GameState.FOE_SPARK in every stat, the ring shift of a shared team, the AI tier with its
+## difficulty flags, the foe damage factor and the start and turn-one Energy. Random sim teams
+## carry no listed keepsakes, so there are none to drop below Veteran.
+static func tune_foes(m: BattleModel, difficulty: int, tune_ai: bool = true) -> void:
+	var d: int = clampi(difficulty, 0, GameState.AI_LEVELS.size() - 1)
+	for s: Spirling in m.parties[BattleModel.Side.FOE]:
+		s.level = clampi(s.level + GameState.FOE_LEVEL_SHIFT[d], 1, Spirling.MAX_LEVEL)
+		for key: String in Spirling.STAT_KEYS:
+			s.spark[key] = GameState.FOE_SPARK[d]
+		if not TrainerData.keeps_keepsakes(d):
+			s.held = ""
+		s.hp = s.max_hp()
+	if tune_ai:
+		m.ai.level = TrainerData.ai_tier({}, GameState.AI_LEVELS[d], d)
+	m.ai.set_difficulty(d)
+	m.foe_damage_mult = GameState.FOE_DAMAGE[d]
+	m.start_energy_cut = [0, BattleRules.foe_start_cut(d)]
+	m.foe_turn1_energy = BattleRules.foe_turn1_energy(d)
 
 ## Evolution stage: 1 for base forms, 2 for their evolutions, and so on. Kinds that never
 ## unfold (Glasstarn, Lanternel) are built like second stages and fight those.
@@ -198,7 +225,11 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 	var total_turns: int = 0
 	# Lambdas capture ints by value, so the counters live in a Dictionary.
 	var tally: Dictionary = {"rests": 0, "actions": 0}
+	# Arts used per side in the current battle, booked as wins once the winner is known (item 816).
+	var uses: Array[Dictionary] = [{}, {}]
 	for b: int in battles:
+		uses[0].clear()
+		uses[1].clear()
 		var size: int = sizes[b % sizes.size()]
 		var names: Array[Array] = [_pick(pool, size, rng), _pick(pool, size, rng)]
 		var teams: Array[Array] = [[], []]
@@ -215,9 +246,11 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 		m.event_emitted.connect(func(e: BattleEvent) -> void:
 			if e.type == BattleEvent.Type.MOVE_USED:
 				var mv: String = str(e.data.get("move", ""))
-				var t: Dictionary = moves.get(mv, {"used": 0, "kos": 0})
+				var t: Dictionary = moves.get(mv, {"used": 0, "kos": 0, "win_uses": 0})
 				t.used += 1
 				moves[mv] = t
+				var us: Dictionary = uses[clampi(int(e.data.get("side", 0)), 0, 1)]
+				us[mv] = int(us.get(mv, 0)) + 1
 				var el: String = Elements.element_name(int(e.data.get("element", 0)))
 				elements[el] = int(elements.get(el, 0)) + 1
 				tally.actions += 1
@@ -241,6 +274,9 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 			winner = 1
 		if winner < 0:
 			draws += 1
+		else:
+			for mv: String in uses[winner]:
+				moves[mv].win_uses += int(uses[winner][mv])
 		for side: int in 2:
 			for n: String in names[side]:
 				var row: Dictionary = species[n]
@@ -556,10 +592,10 @@ const MONO_BAND: Vector2 = Vector2(0.42, 0.58)
 
 ## One battle of two built teams, each side on its own AI tier; one Spirling on the field.
 ## Returns the winning side (0 player, 1 foe, -1 draw) and the turns.
-static func team_battle(mine: Array[Spirling], theirs: Array[Spirling], seed_value: int, player_ai: int, foe_ai: int) -> Dictionary:
+static func team_battle(mine: Array[Spirling], theirs: Array[Spirling], seed_value: int, player_ai: int, foe_ai: int, tune_ai: bool = true) -> Dictionary:
 	var m := BattleModel.new(mine, theirs, false, seed_value, foe_ai)
 	m.items_allowed = false
-	_apply_switches(m)
+	_apply_switches(m, tune_ai)
 	var brain := BattleAI.new(player_ai)
 	m.start()
 	var turns: int = 0
@@ -601,7 +637,7 @@ static func run_ladder(level: int, battles: int, seed_value: int) -> Dictionary:
 			mine.assign(teams[0])
 			var theirs: Array[Spirling] = []
 			theirs.assign(teams[1])
-			var r: Dictionary = team_battle(mine, theirs, bseed, n if high_side == 0 else n - 1, n - 1 if high_side == 0 else n)
+			var r: Dictionary = team_battle(mine, theirs, bseed, n if high_side == 0 else n - 1, n - 1 if high_side == 0 else n, false)
 			if int(r.winner) == high_side:
 				wins += 1.0
 			elif int(r.winner) < 0:
@@ -708,4 +744,83 @@ static func goals_report(result: Dictionary) -> String:
 	for k: String in result.goals:
 		var row: Dictionary = result.goals[k]
 		lines.append("| %s | %d%% | %s |" % [k, roundi(float(row.rate) * 100.0), "" if bool(row.ok) else "too hard"])
+	return "\n".join(lines) + "\n"
+
+# --- Puzzle mode (plan area 2, item 819) ----------------------------------------------------
+
+## Every puzzle of data/puzzles.json searched to the end: winning lines, all lines, the winning
+## share, the fewest turns of a win and the lantern target (best_turns) it is held to.
+static func run_puzzles(only: String = "") -> Dictionary:
+	Database.load_all()
+	var rows: Dictionary = {}
+	for p: Dictionary in BattlePuzzle.all():
+		if not only.is_empty() and str(p.id) != only:
+			continue
+		var r: Dictionary = BattlePuzzle.search(p)
+		var target: int = int(p.get("best_turns", 0))
+		rows[str(p.id)] = {"wins": int(r.wins), "lines": int(r.lines), "share": snappedf(float(r.share), 0.0001),
+			"best_turns": int(r.best_turns), "target_turns": target, "solvable": int(r.wins) > 0,
+			"target_reachable": target <= 0 or (int(r.wins) > 0 and int(r.best_turns) <= target)}
+	return {"mode": "puzzle", "puzzles": rows}
+
+static func puzzle_report(result: Dictionary) -> String:
+	var lines: PackedStringArray = ["# Puzzle report", "", "Every line of player choices played to the end (BattlePuzzle.search).", "",
+		"| Puzzle | Solutions | Lines | Share | Fewest turns | Lantern target | Flag |", "| --- | --- | --- | --- | --- | --- | --- |"]
+	for id: String in result.puzzles:
+		var row: Dictionary = result.puzzles[id]
+		var flag: String = "unsolvable" if not bool(row.solvable) else ("target out of reach" if not bool(row.target_reachable) else "")
+		lines.append("| %s | %d | %d | %.2f%% | %d | %s | %s |" % [id, row.wins, row.lines, float(row.share) * 100.0, row.best_turns,
+			str(row.target_turns) if int(row.target_turns) > 0 else "-", flag])
+	return "\n".join(lines) + "\n"
+
+# --- Baseline comparison (plan area 2, item 816) --------------------------------------------
+
+const BASELINE_PATH: String = "res://tools/balance/baseline_lv36.json"
+## Shift in win rate (as a share) beyond which the comparison flags a species or art.
+const COMPARE_SHIFT: float = 0.08
+const COMPARE_MIN_USES: int = 30
+
+## Share of an art's uses made by the side that went on to win (team mode), 0 without uses.
+static func move_win_rate(row: Dictionary) -> float:
+	return float(row.get("win_uses", 0)) / maxf(float(row.get("used", 0)), 1.0)
+
+## Every species and art of [param result] whose win rate moved more than COMPARE_SHIFT from
+## [param baseline] (both team results as to_json writes them). Kinds or arts missing on one side
+## are left out; a mode or level that differs is reported as "mismatch".
+static func compare(result: Dictionary, baseline: Dictionary) -> Dictionary:
+	var out: Dictionary = {"mismatch": "", "species": [], "moves": []}
+	if str(baseline.get("mode", "")) != str(result.get("mode", "")) or int(baseline.get("level", 0)) != int(result.get("level", 0)):
+		out.mismatch = "The baseline is %s at level %d, this run %s at level %d." % [baseline.get("mode", "?"), int(baseline.get("level", 0)),
+			result.get("mode", "?"), int(result.get("level", 0))]
+		return out
+	var bsp: Dictionary = baseline.get("species", {})
+	for n: String in result.get("species", {}):
+		if bsp.has(n):
+			var now: float = win_rate(result.species[n])
+			var was: float = win_rate(bsp[n])
+			if absf(now - was) > COMPARE_SHIFT:
+				out.species.append({"name": n, "was": snappedf(was, 0.001), "now": snappedf(now, 0.001)})
+	var bmv: Dictionary = baseline.get("moves", {})
+	for n: String in result.get("moves", {}):
+		# Rarely picked arts swing by chance; only arts used COMPARE_MIN_USES times on both sides count.
+		if bmv.has(n) and int(bmv[n].get("used", 0)) >= COMPARE_MIN_USES and int(result.moves[n].get("used", 0)) >= COMPARE_MIN_USES:
+			var now: float = move_win_rate(result.moves[n])
+			var was: float = move_win_rate(bmv[n])
+			if absf(now - was) > COMPARE_SHIFT:
+				out.moves.append({"name": n, "was": snappedf(was, 0.001), "now": snappedf(now, 0.001)})
+	return out
+
+static func compare_report(cmp: Dictionary) -> String:
+	var lines: PackedStringArray = ["", "## Shifts against the baseline", ""]
+	if not str(cmp.mismatch).is_empty():
+		lines.append(str(cmp.mismatch) + " Nothing compared.")
+		return "\n".join(lines) + "\n"
+	if (cmp.species as Array).is_empty() and (cmp.moves as Array).is_empty():
+		lines.append("No species or art moved by more than %d points." % roundi(COMPARE_SHIFT * 100.0))
+		return "\n".join(lines) + "\n"
+	lines.append_array(["| Kind | Name | Baseline | Now | Shift |", "| --- | --- | --- | --- | --- |"])
+	for kind: String in ["species", "moves"]:
+		for row: Dictionary in cmp[kind]:
+			lines.append("| %s | %s | %d%% | %d%% | %+d |" % ["Species" if kind == "species" else "Art", row.name,
+				roundi(float(row.was) * 100.0), roundi(float(row.now) * 100.0), roundi((float(row.now) - float(row.was)) * 100.0)])
 	return "\n".join(lines) + "\n"
