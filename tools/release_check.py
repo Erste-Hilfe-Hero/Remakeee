@@ -9,6 +9,7 @@ Open items (fail only with --strict): placeholder bundle ID, placeholders in the
 LegalInfo.gd, a site address that is not an own domain yet.
 """
 from __future__ import annotations
+import json
 
 import glob
 import os
@@ -181,6 +182,28 @@ def check_keys() -> None:
                     errors.append("%s mentions %s; server secrets never go into the game" % (p, w))
 
 
+# The fixed store price list (0.99 to 99.99 EUR, item 4078).
+PRICE_CENTS = {99, 199, 299, 399, 499, 599, 699, 799, 899, 999, 1199, 1299, 1499, 1999, 2499, 2999, 3999, 4999, 7999, 9999}
+
+
+def check_products() -> None:
+    """Every product ID of data/shop.json is in store/products.json and back (item 4077),
+    and every price is on the fixed price list (item 4078)."""
+    shop = json.loads(read("data/shop.json"))
+    store = json.loads(read("store/products.json"))
+    rows = store if isinstance(store, list) else store.get("products", [])
+    game = {str(o["product_id"]): o for o in shop["offers"] if o.get("product_id")}
+    listed = {str(p["product_id"]): p for p in rows}
+    for pid in sorted(set(game) - set(listed)):
+        errors.append("product %s is in data/shop.json but not in store/products.json" % pid)
+    for pid in sorted(set(listed) - set(game)):
+        errors.append("product %s is in store/products.json but not in data/shop.json" % pid)
+    for pid, o in sorted(game.items()):
+        cents = int(o.get("eur_cents", 0))
+        if cents not in PRICE_CENTS:
+            errors.append("product %s costs %d cents, not a price from the fixed list" % (pid, cents))
+
+
 def main() -> None:
     check_keys()
     check_texts()
@@ -189,6 +212,7 @@ def main() -> None:
     check_permissions()
     check_sdks()
     check_legal()
+    check_products()
     for e in errors:
         print("ERROR:", e)
     for t in todo:
