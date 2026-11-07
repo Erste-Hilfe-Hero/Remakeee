@@ -307,7 +307,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4284. [x] [P2] Profilrahmen für die Freundesliste (`FriendsMenu.gd`) anbieten: 6 Rahmen je 100 Rissglas.
 4285. [x] [P2] Echo-Grußkarten-Motive für Geschenke an Freunde anbieten: 8 Motive je 100 Rissglas, die nur das Aussehen der Karte ändern. (Umgesetzt als ein Set aus 8 Motiven für 400 Rissglas, damit Alis 2/3-Regel im Angebot hält.)
 4286. [P2] Fotorahmen und Sticker für den Fotomodus anbieten: 10 Sticker für 200 Rissglas als festes Set.
-4287. [P2] Einen Kosmetik-Schrank im Menü "Team" und unter Einstellungen bauen, in dem gekaufte Teile an- und abgelegt werden.
+4287. [x] [P2] Einen Kosmetik-Schrank im Menü "Team" und unter Einstellungen bauen, in dem gekaufte Teile an- und abgelegt werden.
 4288. [P2] Gekaufte Kosmetik in `entitlements` speichern und beim Laden des Spielstands nur anzeigen, was der Server bestätigt.
 4289. [P2] Kosmetik-Teile als Nicht-Verbrauchsgüter im Store anlegen, damit sie über "Käufe wiederherstellen" zurückkommen.
 4290. [P2] Eigene Pixelkunst für alle Kosmetik in `art/shop/cosmetics/` anlegen und mit `tools/ip_check.sh` auf fremde Formen prüfen.

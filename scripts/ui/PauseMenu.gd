@@ -516,10 +516,18 @@ func run_team() -> void:
 		# Free slots up to the limit show how much room is left (item 1898).
 		for i: int in range(GameState.party.size(), GameState.party_max()):
 			rows.append(free_slot_row())
+		# The wardrobe for bought looks (item 4287), once there is something in it.
+		var wardrobe: int = -1
+		if not ShopMenu.owned_looks().is_empty():
+			wardrobe = rows.size()
+			rows.append({"text": Loc.t("Wardrobe...")})
 		# Running shop boosts with the battles left (item 4342).
 		var boosts: Array[String] = ShopEffects.boost_lines()
 		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
 		var idx: int = await pick(title, rows)
+		if idx >= 0 and idx == wardrobe:
+			await ShopMenu.run_wardrobe(self)
+			continue
 		if idx < 0 or idx >= GameState.party.size():
 			return
 		var s: Spirling = GameState.party[idx]

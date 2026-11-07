@@ -220,6 +220,49 @@ static func look_key(o: Dictionary) -> String:
 		return str(g[0].id)
 	return ""
 
+## Owned looks that can be put on or off (wardrobe, item 4287): jackets, backdrops, text frames,
+## hats, profile frames and the gift card set, in catalog order.
+static func owned_looks() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for o: Dictionary in ShopCatalog.offers():
+		if str(o.get("tab", "")) != "looks":
+			continue
+		if str(o.get("slot", "")) == "gift_card":
+			if Billing.unlocked("gift_card_" + FriendsMenu.GIFT_CARDS.keys()[0]) > 0:
+				out.append(o)
+			continue
+		var key: String = look_key(o)
+		if not key.is_empty() and Billing.unlocked(key) > 0:
+			out.append(o)
+	return out
+
+## True when the look of [param o] is in use now.
+static func look_in_use(o: Dictionary) -> bool:
+	if str(o.get("slot", "")) == "gift_card":
+		return not GameState.gift_motif().is_empty()
+	var key: String = look_key(o)
+	return not key.is_empty() and key in [GameState.jacket, GameState.backdrop_look, GameState.text_frame, GameState.hat_look, GameState.card_frame]
+
+## The wardrobe (item 4287): every bought look, put on or taken off here. Opened from Team and
+## from Settings.
+static func run_wardrobe(menu: MenuHost) -> void:
+	while true:
+		var looks: Array[Dictionary] = owned_looks()
+		if looks.is_empty():
+			await menu.info("Your wardrobe is empty. Looks you get in the shop show up here.")
+			return
+		var names: Array[String] = []
+		for o: Dictionary in looks:
+			names.append(Loc.t(str(o.name)) + ("  " + Loc.t("(in use)") if look_in_use(o) else ""))
+		var idx: int = await menu.pick_strings("Wardrobe", names)
+		if idx < 0:
+			return
+		var o: Dictionary = looks[idx]
+		if str(o.get("slot", "")) == "gift_card":
+			await _run_gift_cards(menu)
+		else:
+			await _run_wear(menu, o, look_key(o))
+
 ## Names of the greeting card motifs in the set (item 4285), in FriendsMenu.GIFT_CARDS order.
 const GIFT_CARD_NAMES: Array[String] = ["Gift Card: Lantern", "Gift Card: Moth", "Gift Card: Wave", "Gift Card: Pine",
 	"Gift Card: Kite", "Gift Card: Moon", "Gift Card: Shell", "Gift Card: Ember"]

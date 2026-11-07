@@ -662,6 +662,25 @@ func test_shop_gift_cards_go_on_gifts_only_while_owned() -> void:
 	Billing.state = {}
 	GameState.gift_card = worn
 
+func test_wardrobe_lists_owned_looks_and_marks_the_worn_ones() -> void:
+	var hat: String = GameState.hat_look
+	var gift: String = GameState.gift_card
+	Billing.state = {"unlocks": {}}
+	assert_eq(ShopMenu.owned_looks().size(), 0)
+	Billing.state = {"unlocks": {"hat_tricorn": 1, "gift_card_lantern": 1, "gift_card_moth": 1, "team_slot_6": 1}}
+	var ids: Array = ShopMenu.owned_looks().map(func(o: Dictionary) -> String: return str(o.id))
+	assert_eq(ids, ["rg_hat_tricorn", "rg_gift_cards"])
+	GameState.hat_look = ""
+	assert_false(ShopMenu.look_in_use(ShopCatalog.offer("rg_hat_tricorn")))
+	GameState.hat_look = "hat_tricorn"
+	assert_true(ShopMenu.look_in_use(ShopCatalog.offer("rg_hat_tricorn")))
+	GameState.gift_card = "gift_card_moth"
+	assert_true(ShopMenu.look_in_use(ShopCatalog.offer("rg_gift_cards")))
+	assert_true(MenuHost.SETTINGS_GROUPS.any(func(g: Array) -> bool: return g[0] == "wardrobe"))
+	Billing.state = {}
+	GameState.hat_look = hat
+	GameState.gift_card = gift
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

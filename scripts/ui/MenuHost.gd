@@ -323,11 +323,13 @@ const SETTINGS_GROUPS: Array[Array] = [
 	["sound", "Sound..."],
 	["controls", "Controls..."],
 	["display", "Display and access..."],
+	["wardrobe", "Wardrobe..."],
 	["account", "Account..."],
 	["legal", "Legal"],
 ]
 
 const SETTING_HINTS: Dictionary[String, String] = {
+	"wardrobe": "Put on or take off the looks you got in the shop.",
 	"text_speed": "How fast text appears in talks and battles.",
 	"battle_speed": "Plays battle animations faster.",
 	"auto_battle": "Wild battles pick moves by themselves.",
@@ -388,6 +390,7 @@ func run_settings() -> void:
 			"sound": await _run_setting_group("Sound", "sound")
 			"controls": await run_controls()
 			"display": await run_display()
+			"wardrobe": await ShopMenu.run_wardrobe(self)
 			"account": await AccountMenu.run(self)
 			"legal": await run_legal()
 		if not is_inside_tree():
