@@ -28,6 +28,8 @@ func test_new_focus_restarts_the_bob() -> void:
 	var rows: Array = lp.buttons()
 	rows[0].grab_focus()
 	await get_tree().process_frame
+	# _process already adds the real frame time; pin it so a slow CI frame cannot push idle past the bob window.
+	lp._pointer_idle = 0.0
 	lp._bob_pointer(0.95)
 	assert_eq(lp._pointer_bob, 1)
 	rows[1].grab_focus()
