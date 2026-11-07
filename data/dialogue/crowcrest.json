@@ -73,5 +73,14 @@
    "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
   ],
   "action": "marker_stone 7"
- }
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing crowcrest/mound_words"
+ },
+ "mound_words": [
+  "\"Stand before me, then walk two steps toward the peaks.\""
+ ]
 }

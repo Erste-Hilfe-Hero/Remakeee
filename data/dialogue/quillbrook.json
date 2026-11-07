@@ -80,5 +80,14 @@
     "text": "Not now"
    }
   ]
- }
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing quillbrook/mound_words"
+ },
+ "mound_words": [
+  "\"Two steps toward the setting sun, the brook keeps my gift.\""
+ ]
 }

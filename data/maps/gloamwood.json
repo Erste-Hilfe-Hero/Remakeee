@@ -153,6 +153,14 @@
      "level": 6
     }
    ]
+  },
+  {
+   "id": "charcoaler",
+   "x": 8,
+   "y": 1,
+   "facing": "down",
+   "dialogue": "gloamwood/charcoaler",
+   "sprite": "villager"
   }
  ],
  "signs": [

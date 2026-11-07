@@ -52,5 +52,14 @@
    "Conductor Tilde: Mountain railway to Ashmere. Mind the gap, mind the clouds."
   ],
   "action": "transit mountain_rail"
- }
+ },
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing greyreach/mound_words"
+ },
+ "mound_words": [
+  "\"Three steps from me toward morning, two toward the rails' end.\""
+ ]
 }

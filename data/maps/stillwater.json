@@ -14,7 +14,7 @@
   "T^^^^==^^^^T",
   "T....__....T",
   "T.~~~~~~~..T",
-  "T.~~~~~~~..T",
+  "T.~~~~~~~..S",
   "T.~~~++~~..T",
   "T.~~~++~~..T",
   "T....__..S.T",
@@ -169,6 +169,11 @@
    "x": 9,
    "y": 11,
    "dialogue": "stillwater/pond"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "dialogue": "stillwater/mound_stone"
   }
  ],
  "blocks": [
@@ -206,6 +211,13 @@
    "item": "strong_tonic",
    "count": 1,
    "flag": "find_still_terrace"
+  },
+  {
+   "x": 9,
+   "y": 6,
+   "item": "tonic",
+   "count": 1,
+   "flag": "find_mound_1"
   }
  ],
  "spots": {

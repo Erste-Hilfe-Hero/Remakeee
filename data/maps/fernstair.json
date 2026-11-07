@@ -26,7 +26,7 @@
   "T,,,_,,,,..T",
   "T,,,_,,,,..T",
   "T...____...T",
-  "TT.....__..T",
+  "TS.....__..T",
   "T.....,__,.T",
   "T*....,__,,T",
   "T.....S__..T",
@@ -158,6 +158,11 @@
    "x": 1,
    "y": 4,
    "dialogue": "fernstair/marker_stone"
+  },
+  {
+   "x": 1,
+   "y": 20,
+   "dialogue": "fernstair/mound_stone"
   }
  ],
  "gear_spots": [
@@ -217,6 +222,13 @@
    "item": "cooling_gel",
    "count": 1,
    "flag": "find_fern_gate"
+  },
+  {
+   "x": 2,
+   "y": 22,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_mound_3"
   }
  ]
 }
