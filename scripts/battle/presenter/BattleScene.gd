@@ -170,6 +170,7 @@ func _build() -> void:
 
 	_backdrop = BattleBackdrop.new()
 	_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_backdrop.hat = GameState.worn_hat()
 	_shake_root.add_child(_backdrop)
 
 	_foe_sprite = SpirlingSprite.new()
