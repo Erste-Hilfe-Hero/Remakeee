@@ -133,5 +133,16 @@
    "A tall mirror on a turning stand."
   ],
   "action": "mirror 1 5"
+ },
+ "hint_board": {
+  "lines": [
+   "A board for travellers' notes. Nothing useful is pinned on it yet."
+  ],
+  "after_flag": {
+   "flag": "hint_lanternwell",
+   "lines": [
+    "Tip: follow the light from where it comes in. Turn only the mirrors it touches, one at a time, until it bends toward the crystal."
+   ]
+  }
  }
 }

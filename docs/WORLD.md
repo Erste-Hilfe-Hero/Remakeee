@@ -98,9 +98,9 @@ Written by `python3 tools/world_stats.py`.
 <!-- world-stats:start -->
 | Region | Map | Kind | Size | Finds | Wayfarers | Wild cells |
 | --- | --- | --- | --- | --- | --- | --- |
-| veydal | `bellstone_ruins` | dungeon | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 2 | 0 | 10 |
+| veydal | `bellstone_ruins` | dungeon | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 2 | 0 | 9 |
 | veydal | `brackwater_fen` | marsh | 12x24 | 5 | 3 | 86 |
-| veydal | `brackwater_sluice` | dungeon | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 2 | 0 | 12 |
+| veydal | `brackwater_sluice` | dungeon | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 2 | 0 | 11 |
 | veydal | `brindlewick` | town | 12x20 | 4 | 0 | 0 |
 | veydal | `cinder_rift` | rift | 12x13 | 0 | 4 | 20 |
 | veydal | `copperfold` | town | 12x19 | 3 | 0 | 0 |
@@ -110,7 +110,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `gloamwood` | route | 12x30 | 5 | 3 | 152 |
 | veydal | `kindle_vents` | cave | 12x10 | 2 | 0 | 12 |
 | veydal | `lantern_steps` | route | 12x19 | 4 | 3 | 9 |
-| veydal | `lanternwell` | inside | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 1 | 0 | 8 |
+| veydal | `lanternwell` | inside | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 1 | 0 | 7 |
 | veydal | `lighthouse` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `map_house` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 3 | 0 | 25 |
@@ -120,7 +120,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `rest_spring` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `sablecove` | cave | 12x9 | 2 | 0 | 10 |
 | veydal | `saltmarsh` | marsh | 12x15 | 4 | 3 | 47 |
-| veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 10 |
+| veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
 | veydal | `thornridge` | town | 12x20 | 4 | 0 | 6 |
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
 | veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
@@ -143,7 +143,7 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **45 maps** | | | **92** | **42** | **1067** |
+| | **45 maps** | | | **92** | **42** | **1063** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

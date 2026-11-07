@@ -16,5 +16,16 @@
    "A great iron wheel works a sluice gate."
   ],
   "action": "toggle sluice_c"
+ },
+ "hint_board": {
+  "lines": [
+   "A board for travellers' notes. Nothing useful is pinned on it yet."
+  ],
+  "after_flag": {
+   "flag": "hint_brackwater_sluice",
+   "lines": [
+    "Tip: each wheel turned open raises the water one mark. Some walkways need high water, some low: count the marks before you cross."
+   ]
+  }
  }
 }

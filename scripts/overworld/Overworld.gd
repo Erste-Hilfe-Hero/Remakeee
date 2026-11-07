@@ -974,7 +974,9 @@ func open_menu() -> void:
 	await _close_menu(menu)
 	match menu.room_action:
 		"undo": _world.undo()
-		"reset": _world.reset_room(_entry_cell)
+		"reset":
+			_world.reset_room(_entry_cell)
+			await _note_room_fail(map.id)
 	var target: String = menu.travel_to
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
@@ -1541,6 +1543,7 @@ func take_find(find: Dictionary) -> void:
 
 ## Cracked floor gave way: the player lands on the same cell of the floor below.
 func drop_to(map_id: String, cell: Vector2i) -> void:
+	var fell_from: String = map.id
 	busy = true
 	player.frozen = true
 	Sound.sfx("bump")
@@ -1551,6 +1554,12 @@ func drop_to(map_id: String, cell: Vector2i) -> void:
 	player.frozen = false
 	busy = false
 	await _locked_say(["The floor gave way! You land on the level below, unhurt."] as Array[String])
+	await _note_room_fail(fell_from)
+
+## A failed try in a puzzle room (area 3 item 1027): the third one pins a tip at the entrance.
+func _note_room_fail(room_id: String) -> void:
+	if DungeonHints.note_fail(room_id):
+		await _locked_say(["Somewhere near the entrance, someone has pinned a new note to the board."] as Array[String])
 
 ## Climbing down a rope ladder, rung by rung.
 func climb_to(map_id: String, cell: Vector2i) -> void:
@@ -1598,6 +1607,7 @@ func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.SwitchResult.WRONG:
 			Sound.sfx("cancel")
 			await say(["Clang! The note jars, and every bell falls silent. Start again."] as Array[String])
+			await _note_room_fail(map.id)
 		GameState.SwitchResult.STEP:
 			Sound.sfx("confirm")
 			await say(["Dong. The note hangs in the air."] as Array[String])

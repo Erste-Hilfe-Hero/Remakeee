@@ -127,5 +127,16 @@
  },
  "r5_wall": [
   "Scratched into the wall: the starred bell, then the deep bell, then the green bell, then the small bell, then the cracked bell."
- ]
+ ],
+ "hint_board": {
+  "lines": [
+   "A board for travellers' notes. Nothing useful is pinned on it yet."
+  ],
+  "after_flag": {
+   "flag": "hint_bellstone_ruins",
+   "lines": [
+    "Tip: each hall's order is scratched into the wall by the stairs. Ring the bells in exactly that order; a wrong bell only starts the row again."
+   ]
+  }
+ }
 }

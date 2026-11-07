@@ -27,11 +27,34 @@ def build(world):
     shatterfloor_mine(world)
 
 
+# Item 1027: a hint board at the entrance of each dungeon; its tip shows after three failed
+# tries in one room (DungeonHints.gd, flag hint_<dungeon>).
+HINTS = {
+    "bellstone_ruins": ("Tip: each hall's order is scratched into the wall by the stairs. Ring the bells in exactly that order; a wrong bell only starts the row again.",
+                        "Tipp: Die Reihenfolge jeder Halle ist neben der Treppe in die Wand geritzt. Läute die Glocken genau so; eine falsche Glocke fängt die Reihe nur von vorn an."),
+    "lanternwell": ("Tip: follow the light from where it comes in. Turn only the mirrors it touches, one at a time, until it bends toward the crystal.",
+                    "Tipp: Folge dem Licht von dort, wo es hereinfällt. Dreh nur die Spiegel, die es trifft, einen nach dem anderen, bis es zum Kristall abbiegt."),
+    "brackwater_sluice": ("Tip: each wheel turned open raises the water one mark. Some walkways need high water, some low: count the marks before you cross.",
+                          "Tipp: Jedes geöffnete Rad hebt das Wasser um eine Marke. Manche Stege brauchen hohes Wasser, manche niedriges: Zähl die Marken, bevor du hinübergehst."),
+    "shatterfloor_mine": ("Tip: cracked floor holds you once. Plan a path that never steps on the same crack twice.",
+                          "Tipp: Rissiger Boden hält dich einmal. Plane einen Weg, der keinen Riss zweimal betritt."),
+}
+
+
+def hint_board(world, mid, room, x, y):
+    room["signs"] = [s for s in room.get("signs", []) if (s["x"], s["y"]) != (x, y)] + [{"x": x, "y": y, "dialogue": mid + "/hint_board"}]
+    room["rows"][y] = room["rows"][y][:x] + "S" + room["rows"][y][x + 1:]
+    world.add_text(mid, {"hint_board": {
+        "lines": lines(("A board for travellers' notes. Nothing useful is pinned on it yet.", "Eine Tafel für Notizen von Reisenden. Noch hängt nichts Brauchbares daran.")),
+        "after_flag": {"flag": "hint_" + mid, "lines": lines(HINTS[mid])}}})
+
+
 def rooms(world, mid, name, rooms_, base):
     """Turns a list of room dicts into one map with floors."""
     first = dict(rooms_[0])
     first.update(base)
     first["name"] = name
+    hint_board(world, mid, first, 10, len(first["rows"]) - 2)
     if len(rooms_) > 1:
         first["floors"] = rooms_[1:]
     world.add_map(mid, first)
@@ -252,6 +275,7 @@ def shatterfloor_mine(world):
          "floors": [{"name": tr("Shatterfloor Mine, lower gallery", "Splitterboden-Mine, untere Strecke"), "rows": low,
                      "warps": [warp(1, 6, mid, 5, 6, "up")],
                      "secrets": [secret(10, 6, "spark_drop", "find_shatter_low")]}]}
+    hint_board(world, mid, m, 10, 6)
     world.add_map(mid, m)
     c = world.load_map("copperfold")
     set_char(c, 6, 0, "_")
