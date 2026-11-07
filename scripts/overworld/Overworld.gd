@@ -82,6 +82,7 @@ func _ready() -> void:
 		"fish_trap": _action_fish_trap,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
+		"tip": _action_tip,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
 		"exchange": _action_exchange,
@@ -1318,6 +1319,17 @@ func show_tap_marker(cell: Vector2i, reachable: bool) -> TapMarker:
 	if not reachable:
 		Sound.sfx("cancel")
 	return mk
+
+## "tip <coins> <who>": a teased townsfolk pays to make it stop (Ali, 7 Nov), once a day each.
+func _action_tip(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 2:
+		return
+	var coins: int = GameState.pay_tip(args[1], int(args[0]))
+	if coins <= 0:
+		await say(["Nobody pays twice a day. Come back tomorrow."] as Array[String])
+		return
+	Sound.sfx("pickup")
+	await say(["You got %d coins!" % coins] as Array[String])
 
 func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.is_empty():
