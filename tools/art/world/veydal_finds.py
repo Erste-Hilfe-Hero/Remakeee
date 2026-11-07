@@ -72,6 +72,9 @@ MARKET = [
 LOOSE_SOIL = [("saltmarsh", 10, 9, "remedy", "dig_saltmarsh"), ("woadfen", 3, 21, "strong_tonic", "dig_woadfen"),
               ("saltglass", 9, 13, "revival_leaf", "dig_saltglass"), ("lantern_steps", 10, 11, "spark_drop", "dig_lantern_steps")]
 
+# Item 964: fish traps hang from the Reedhaven jetty, emptied once a day. (id, x, y)
+FISH_TRAPS = [("reed_trap_a", 9, 5), ("reed_trap_b", 8, 6)]
+
 
 def set_char(m, x, y, ch):
     r = m["rows"][y]
@@ -135,3 +138,10 @@ def build(world):
         m = world.load_map(mid)
         m["secrets"] = [s for s in m.get("secrets", []) if s["flag"] != flag]
         m["secrets"].append(dict(secret(x, y, item, flag), soil=True))
+    m = world.load_map("reedhaven")
+    for tid, x, y in FISH_TRAPS:
+        m["signs"] = [s for s in m.get("signs", []) if (s["x"], s["y"]) != (x, y)]
+        m["signs"].append({"x": x, "y": y, "dialogue": "reedhaven/" + tid})
+        world.add_text("reedhaven", {tid: {"lines": lines(("A fish trap hangs from the jetty, half under water.",
+                                                            "Eine Reuse hängt am Steg, halb unter Wasser.")),
+                                           "action": "fish_trap " + tid}})

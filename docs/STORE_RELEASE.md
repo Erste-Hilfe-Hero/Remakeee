@@ -48,6 +48,10 @@ Die Seiten gehen online, sobald dieser Stand per Workflow **Game server** auf de
    `docs/shop/ALI_TODO.md`) und **12 Tester** für den geschlossenen Test auf Google Play einladen (Pflicht
    für neue private Konten, 14 Tage).
 7. 👤 Contabo-**AV-Vertrag** unterschreiben (Kundenbereich).
+8. 👤 **Weniger Store-Gebühr beantragen** (nur selbst möglich): bei Apple das **App Store Small Business
+   Program** (15 % statt 30 % bis 1 Mio. $ Umsatz im Jahr, Antrag im Developer-Konto), bei Google die
+   **15-%-Stufe** (gilt für die erste Mio. $ im Jahr, dafür in der Play Console eine Kontogruppe anlegen).
+   Ohne Antrag zahlen beide Stores den vollen Satz.
 
 Die App-ID `de.chimora.game` ist ab dem ersten Upload für immer fest. Wenn du eine andere willst, sag es
 vorher.

@@ -32,11 +32,37 @@
 | JuSchG § 10b / USK "In-Game-Käufe" | Altersfreigabe mit Zusatz "In-Game-Käufe" (`STORE_COMPLIANCE.md` Abschnitt 3); keine zufälligen Objekte |
 | §§ 104 ff. BGB (Minderjährige) | Limits, Hinweis auf Zustimmung der Eltern in den Nutzungsbedingungen 6.5; Store-Jugendschutz |
 
+### Jugendschutzgesetz und USK
+
+- **§ 10b JuSchG** (seit 2021): Bei der Altersfreigabe zählen auch **Nutzungsrisiken**, darunter
+  Kostenfallen durch In-Game-Käufe. Ein Spiel mit Käufen kann darum eine höhere Freigabe bekommen,
+  wenn Käufe Druck machen. Chimora mindert das Risiko mit festen Monatslimits, Sperre unter 13,
+  ohne Kaufaufforderungen und ohne Zufallsinhalte (Zeilen 5, 6, 9, 10 oben).
+- **USK-Hinweise:** Die USK (über IARC) zeigt neben der Altersstufe Zusatzhinweise. **"In-Game-Käufe"**
+  heißt: Das Spiel verkauft Inhalte oder Währung gegen Geld. **"In-Game-Käufe + zufällige Objekte"** heißt:
+  Darunter sind Käufe mit Zufall (Lootboxen). Für Chimora trifft nur **"In-Game-Käufe"** zu; im
+  IARC-Fragebogen wird "zufällige Objekte" mit Nein beantwortet.
+
 ## 3. Andere Länder
 
-- **Belgien, Niederlande:** keine Lootboxen, also kein Glücksspielrecht berührt.
-- **Apple Guideline 3.1.1 / Google Payments Policy:** nur Store-Billing für digitale Inhalte, keine Links zu
-  anderen Zahlwegen, "Käufe wiederherstellen" für dauerhafte Inhalte (`Billing.restore`).
+- **Belgien:** Die belgische Glücksspielkommission stuft bezahlte Lootboxen (Einsatz, Zufall, Gewinn
+  mit Wert) seit 2018 als Glücksspiel nach dem Glücksspielgesetz vom 7. 5. 1999 ein; ohne Lizenz sind sie
+  verboten. **Niederlande:** Die Kansspelautoriteit sah Lootboxen mit übertragbaren Gewinnen als
+  Glücksspiel; der Raad van State hat 2022 enger entschieden, die Politik plant ein Verbot.
+  **Chimora bietet keine bezahlten Zufallsinhalte an**, in keinem Land: kein Feld für Chancen, keine
+  Ziehungen, jedes Angebot liefert genau seine Liste (`ShopValidator._check_random`). Shop-Teile sind
+  außerdem nicht tauschbar, haben also keinen Wert außerhalb des Spiels. Damit greift keines der
+  beiden Regime, und es gibt keine Länder-Sonderwege im Code.
+- **Apple Guideline 3.1.1 (Käufe):** nur Store-Billing für digitale Inhalte, keine Links zu anderen
+  Zahlwegen, "Käufe wiederherstellen" für dauerhafte Inhalte. Umsetzung: `scripts/shop/Billing.gd`
+  (`restore`), `ShopMenu.gd` (Eintrag "Käufe wiederherstellen").
+- **Apple Guideline 3.1.2 (Abos):** der Wanderer-Pass nennt vor dem Kauf Laufzeit, Preis, automatische
+  Verlängerung und den Weg zur Kündigung im Store. Umsetzung: `ShopMenu.pass_text`, Belegprüfung des
+  Abos in `server/billing/`.
+- **Apple Guideline 5.1.1(v) (Kontolöschung):** Konto lässt sich im Spiel löschen; ein laufendes Abo
+  wird dabei nicht vom Spiel gekündigt, der Text sagt, dass es im Store gekündigt werden muss.
+  Umsetzung: `scripts/ui/AccountMenu.gd` (Konto löschen), Server-Funktion `delete_account`.
+- **Google Payments Policy:** nur Google Play Billing für digitale Inhalte, gleiche Regeln wie oben.
 
 ## 4. Offen (braucht Alis Hände)
 

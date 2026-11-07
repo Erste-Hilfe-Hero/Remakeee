@@ -83,7 +83,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 961. [P2] Baue den Hof "Mossgate Farm" (de: Moostor-Hof) auf Hollowmere Shore, mit Feldern, die sich je nach Wochentag sichtbar verändern.
 962. [x] [P2] Gib jedem Ort ein Ortsschild mit Name und Einwohnerzahl, z. B. "Wrenhollow, 34 Leute".
 963. [P2] Lege in Copperfold einen Aufzug im Förderturm an, der zu Fuß betreten wird und zwei Ebenen der Siedlung verbindet.
-964. [P2] Gib Reedhaven einen Steg, an dem Reusen hängen, die man einmal am Tag leert und dabei einen Heiltrank oder Münzen findet.
+964. [x] [P2] Gib Reedhaven einen Steg, an dem Reusen hängen, die man einmal am Tag leert und dabei einen Heiltrank oder Münzen findet.
 965. [P2] Baue in Wrenhollow eine Bibliothek, in der Bücher Hinweise auf versteckte Orte enthalten, gebunden an Flags, nicht an Questtexte.
 966. [x] [P2] Lege in jedem Ort einen Brunnen oder Platz als Treffpunkt, an dem abends mehrere Leute stehen (siehe NPC-Leben).
 967. [P2] Ergänze Brindlewick um einen zweiten Steg im Norden, an dem die Seelinie anlegt.

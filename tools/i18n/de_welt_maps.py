@@ -15,6 +15,7 @@ T = {
 "A cracked bell hangs from a beam.": "Eine Glocke (gesprungen) hängt an einem Balken.",
 "A deep bell hangs from a beam.": "Eine Glocke (tief) hängt an einem Balken.",
 "A dockhand mutters as he passes: \"Someone dropped a tonic among the trees on the west side. Never found it.\"": "Ein Hafenarbeiter murmelt im Vorbeigehen: \"Jemand hat bei den Bäumen auf der Westseite ein Tonikum verloren. Nie wiedergefunden.\"",
+"A fish trap hangs from the jetty, half under water.": "Eine Reuse hängt am Steg, halb unter Wasser.",
 "A great iron wheel works a sluice gate.": "Ein großes Eisenrad bewegt ein Schleusentor.",
 "A green bell hangs from a beam.": "Eine Glocke (grün) hängt an einem Balken.",
 "A ladder leads back up to the mine entrance.": "Eine Leiter führt zurück hinauf zum Mineneingang.",
