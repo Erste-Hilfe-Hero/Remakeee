@@ -884,10 +884,10 @@
    "google_type": "onetime",
    "eur": "0.99",
    "name_en": "Rematch Key",
-   "name_de": "Rematch-Schlüssel",
-   "desc_en": "A beaten Wanderer can be challenged again on the same day.",
+   "name_de": "Revanche-Schlüssel",
+   "desc_en": "A beaten Wayfarer can be challenged again on the same day.",
    "desc_de": "Ein besiegter Wanderer kann am selben Tag erneut gefordert werden.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.warden_lore",
