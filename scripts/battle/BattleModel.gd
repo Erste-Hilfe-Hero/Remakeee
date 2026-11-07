@@ -534,17 +534,29 @@ func _turn_rules() -> bool:
 			_turn_drag[stat] = int(_turn_drag.get(stat, 0)) + int(st[stat])
 	return rule_turned
 
+## Spirlings whose Hold Stone already worked in this battle.
+var _endured: Array[Spirling] = []
+
 ## Damages the Spirling in [param slot] of [param side]. Emits DAMAGE and, if it drops, FAINTED.
 func deal_damage(side: int, amount: int, extra: Dictionary = {}, slot: int = 0) -> int:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null:
 		return 0
 	var dealt: int = mini(amount, s.hp)
+	# Hold Stone (shop item 4403): once per battle a hit from full Vigor leaves 1 Vigor.
+	var endured: bool = false
+	if dealt >= s.hp and s.hp > 1 and s.hp >= s.max_hp() and not bool(extra.get("status_tick", false)) \
+			and bool(BattleRules.held_info(s.held).get("endure_full", false)) and not _endured.has(s):
+		_endured.append(s)
+		dealt = s.hp - 1
+		endured = true
 	s.hp -= dealt
 	var d: Dictionary = _who(side, slot)
 	d.merge({"amount": dealt, "hp": s.hp, "max_hp": s.max_hp()})
 	d.merge(extra)
 	emit_event(BattleEvent.Type.DAMAGE, d)
+	if endured:
+		emit_event(BattleEvent.Type.HELD_ENDURE, _who(side, slot))
 	if s.is_fainted():
 		emit_event(BattleEvent.Type.FAINTED, _who(side, slot))
 		if side == Side.FOE:
