@@ -37,3 +37,12 @@ func test_art_pick_climbs_a_scale() -> void:
 	assert_eq(Sound.art_pick_pitch(0), 1.0)
 	assert_almost_eq(Sound.art_pick_pitch(Elements.E.size() - 1), 2.0, 0.001, "eighth step is the octave")
 	assert_eq(Sound.art_pick_pitch(-1), 1.0)
+
+func test_grass_rustles_every_third_step() -> void:
+	assert_true(ResourceLoader.exists(Sound.SFX_DIR % "rustle"))
+	var due: Array[int] = []
+	for n: int in range(1, 10):
+		if Overworld.rustle_due(n):
+			due.append(n)
+	assert_eq(due, [1, 4, 7] as Array[int])
+	assert_false(Overworld.rustle_due(0))

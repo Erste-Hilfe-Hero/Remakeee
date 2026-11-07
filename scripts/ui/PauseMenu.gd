@@ -123,6 +123,9 @@ func run_goals() -> void:
 			saving = rows.size()
 			var gl: String = Exchange.goal_line()
 			rows.append({"text": "Savings goal...", "hint": gl if gl != "" else Loc.t("Pick an offer of Marla's stand to save up for.")})
+		if GameState.has_flag(EchoPath.OPEN_FLAG):
+			# Plan 3470: which rooms were visited, of what kind, and which are cleared.
+			rows.append({"text": "Echo Path map...", "detail": "\n".join(EchoPath.map_lines())})
 		var collect: int = -1
 		if Goals.pending() > 0:
 			collect = rows.size()

@@ -1,6 +1,6 @@
 extends GutTest
 ## Plan area 6: sounds for greyed-out rows (item 2511), toasts (2512), gifts (2514), new friends
-## (2515), finished daily tasks (2516) and the day's rare visitor (2517).
+## (2515), finished daily tasks (2516) and the day's rare visitor (2517); locked rows shake (2423).
 
 const NEW_SOUNDS: Array[String] = ["locked", "toast", "gift", "friend", "task_done", "sparkle"]
 
@@ -44,3 +44,28 @@ func test_locked_row_without_reason_still_taps() -> void:
 	lp.tap_locked(1)
 	assert_eq(Sound.last_sfx, "locked")
 	lp.picked.emit(-1)
+
+func test_locked_row_shakes_both_ways() -> void:
+	var saved: bool = GameState.reduce_motion
+	GameState.reduce_motion = false
+	var row := Control.new()
+	row.position = Vector2(10, 20)
+	add_child_autofree(row)
+	var seen: Dictionary = {"right": false, "left": false, "done": false}
+	var run := func() -> void:
+		await ListPicker.shake_row(row)
+		seen.done = true
+	run.call()
+	var frames: int = 0
+	while not seen.done and frames < 120:
+		await get_tree().process_frame
+		frames += 1
+		if row.position.x > 10.0:
+			seen.right = true
+		if row.position.x < 10.0:
+			seen.left = true
+	GameState.reduce_motion = saved
+	assert_true(seen.done)
+	assert_true(seen.right, "out to the right")
+	assert_true(seen.left, "and to the left")
+	assert_eq(row.position, Vector2(10, 20), "back home")
