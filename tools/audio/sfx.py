@@ -59,6 +59,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(feel_sfx())
     out.update(world_sfx())
     out.update(rift_sfx())
+    out.update(dodge_sfx())
     return out
 
 
@@ -180,4 +181,22 @@ def rift_sfx() -> dict[str, np.ndarray]:
     body = sweep(72, 44, n, "tri") * 0.6 + noise(n, 48, rng) * 0.45
     wobble = 0.75 + 0.25 * np.sin(np.arange(n) / RATE * 2 * np.pi * 9)
     out["rumble"] = body * wobble * env(n, attack=0.04, decay=0.25, sustain=0.5, release=0.2) * 0.9
+    return out
+
+
+def dodge_sfx() -> dict[str, np.ndarray]:
+    """A missed art's soft rush of air past the target (item 2531) and the quick sideways
+    swish of the dodge (item 2536). Own generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(2531)
+    out: dict[str, np.ndarray] = {}
+    n = secs(0.32)
+    # Noise held longer and longer as it passes: the rush falls in pitch and fades.
+    held = np.concatenate([noise(n // 4, step, rng) for step in (2, 3, 5, 8)])[:n]
+    if len(held) < n:
+        held = np.pad(held, (0, n - len(held)))
+    swell = np.sin(np.linspace(0, np.pi, n)) ** 1.5
+    out["miss"] = held * swell * 0.5
+    n = secs(0.12)
+    out["dodge"] = (noise(n, 1, rng) * 0.5 + sweep(900, 400, n, "tri") * 0.15) * \
+        env(n, attack=0.004, decay=0.05, sustain=0.3, release=0.03) * 0.7
     return out

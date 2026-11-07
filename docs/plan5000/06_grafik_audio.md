@@ -310,7 +310,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2507. [P2] Tür-Klang (Öffnen) und Tür-Klang (Schließen) als zwei Klänge mit Holz-Charakter aus Rauschen und tiefem Puls.
 2508. [P2] Treppen-Klang mit 3 schnellen Schritten, die in der Tonhöhe steigen oder fallen, je nach Richtung.
 2509. [P2] Klang für das Öffnen und das Schließen des Pausemenüs, verschieden voneinander (Seite aufschlagen, Seite zuklappen).
-2510. [P2] Cursor-Klang (select) bekommt 3 leicht verschiedene Tonhöhen, die zufällig wechseln, damit langes Scrollen nicht ermüdet.
+2510. [x] [P2] Cursor-Klang (select) bekommt 3 leicht verschiedene Tonhöhen, die zufällig wechseln, damit langes Scrollen nicht ermüdet.
 2511. [P2] Klang für gesperrte Menüpunkte, ein dumpfer kurzer Ton, der sich klar vom Abbruch-Klang unterscheidet.
 2512. [P2] Klang für den Toast-Hinweis (kurz und leise, 2 Töne).
 2513. [P3] Klang für ein neu erhaltenes Geschenk von einem Freund, ein heller 3-Ton-Akkord.
@@ -320,7 +320,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2517. [P2] Klang für den Tagesfund beim Abholen, Glitzern aus 5 sehr hohen Tönen.
 2518. [P3] Klang für Bestätigung am Rastplatz vor dem Heilen (Wasser-Plätschern aus gefiltertem Rauschen).
 2519. [P2] Klang für das Betreten eines Begegnungsfeldes (leises Rascheln), nur jedes 3. Feld, damit es nicht nervt.
-2520. [P2] Klang für das Laufen gegen eine Wand (bump) bekommt eine Sperre: höchstens einmal pro 0,4 s.
+2520. [x] [P2] Klang für das Laufen gegen eine Wand (bump) bekommt eine Sperre: höchstens einmal pro 0,4 s.
 2521. [P3] Klang für Gefühls-Blasen pro Symbol (Herz, Frage, Note, Schweiß, Punkte), jeweils unter 0,2 s.
 2522. [P3] Klang für die Online-Verbindung: wieder verbunden (steigend) und Verbindung verloren (fallend), leise.
 2523. [P3] Klang für Rangliste-Aufstieg, kurzer Lauf aus 5 Tönen.
@@ -333,12 +333,12 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 ### Soundeffekte im Kampf (ergänzend)
 2529. [x] [P1] Aufladen-Klang pro Art: körperlich (kurzes Rauschen, 0,1 s), besonders (steigender Puls, 0,15 s), Status (zwei weiche Töne), passend zur Aufladen-Phase der Element-Effekte.
 2530. [x] [P1] Weg-Klang pro Element für Techniken mit Weg-Phase, je 0,2 s, zum Beispiel Zischen für Gale, Knistern für Volt, Gluckern für Tide.
-2531. [P2] Klang für verfehlte Techniken: ein leiser Luftzug, der am Ziel vorbeizieht.
-2532. [P2] Treffer-Klänge (hit_*) werden je nach verlorener Kraft lauter: bis 10 % bei -6 dB, bis 30 % bei -3 dB, darüber bei 0 dB.
-2533. [P2] Treffer-Klänge bekommen eine zufällige Tonhöhe zwischen 0,95 und 1,05, damit Wiederholungen frischer klingen.
+2531. [x] [P2] Klang für verfehlte Techniken: ein leiser Luftzug, der am Ziel vorbeizieht.
+2532. [x] [P2] Treffer-Klänge (hit_*) werden je nach verlorener Kraft lauter: bis 10 % bei -6 dB, bis 30 % bei -3 dB, darüber bei 0 dB.
+2533. [x] [P2] Treffer-Klänge bekommen eine zufällige Tonhöhe zwischen 0,95 und 1,05, damit Wiederholungen frischer klingen.
 2534. [P2] Klang beim Auftreten eines Spirlings (step_out) passend zum Bewegungsprofil: Hüpfen, Schleichen, Stampfen, Wogen, Gleiten.
 2535. [P3] Klang beim Zurücktreten eines Spirlings (step_back), ein kurzer fallender Ton.
-2536. [P2] Klang für das Ausweichen, ein schneller seitlicher Wisch.
+2536. [x] [P2] Klang für das Ausweichen, ein schneller seitlicher Wisch.
 2537. [P2] Klang für den Energie-Zuwachs am Rundenbeginn, ein sehr leiser Tick pro Energiepunkt, höchstens 3 Ticks.
 2538. [P2] Klang für das Andenken, wenn es im Kampf auslöst, getrennt vom Gegenstand-Klang.
 2539. [P2] Klang für die Technik-Auswahl im Kampfmenü, der je nach Element der Technik eine andere Tonhöhe hat (8 Stufen einer Tonleiter).

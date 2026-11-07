@@ -76,6 +76,7 @@ var captions: Array[String] = []
 var enabled: bool = DisplayServer.get_name() != "headless"
 
 func _ready() -> void:
+	_vary.randomize()
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameState.ensure_buses()
 	_music = _player(GameState.BUS_MUSIC)
@@ -105,6 +106,30 @@ func _load(path: String) -> AudioStream:
 		_cache[path] = load(path) if ResourceLoader.exists(path) else null
 	return _cache[path]
 
+## Sounds that need a longer gap than SFX_MIN_GAP: running into a wall at most every 0.4 s
+## (item 2520).
+const SFX_GAPS: Dictionary[String, float] = {"bump": 0.4}
+## The cursor sound picks one of three close pitches, so long scrolling does not tire (item 2510).
+const SELECT_PITCHES: Array[float] = [0.97, 1.0, 1.03]
+## Hit sounds vary their pitch between 0.95 and 1.05 (item 2533).
+const HIT_PITCH_SPREAD: float = 0.05
+var _vary := RandomNumberGenerator.new()
+
+## Seconds that must pass before [param sound_name] plays again.
+static func gap_for(sound_name: String) -> float:
+	return SFX_GAPS.get(sound_name, SFX_MIN_GAP)
+
+## Pitch for [param sound_name]: the cursor and hit sounds vary a little unless a caller set
+## its own pitch.
+func varied_pitch(sound_name: String, pitch: float) -> float:
+	if pitch != 1.0:
+		return pitch
+	if sound_name == "select":
+		return SELECT_PITCHES[_vary.randi_range(0, SELECT_PITCHES.size() - 1)]
+	if sound_name == "hit" or sound_name.begins_with("hit_"):
+		return 1.0 + _vary.randf_range(-HIT_PITCH_SPREAD, HIT_PITCH_SPREAD)
+	return pitch
+
 func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	caption(sound_name)
 	if not enabled:
@@ -113,10 +138,10 @@ func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void
 	if stream == null:
 		return
 	var now: float = Time.get_ticks_msec() / 1000.0
-	if now - float(_last_play.get(sound_name, -1.0)) < SFX_MIN_GAP:
+	if now - float(_last_play.get(sound_name, -1.0)) < gap_for(sound_name):
 		return
 	_last_play[sound_name] = now
-	_play_voice(stream, bus_for(sound_name), volume_db, pitch)
+	_play_voice(stream, bus_for(sound_name), volume_db, varied_pitch(sound_name, pitch))
 
 ## Bus for an effect: menu sounds on UI, the text blip on Voice, everything else on SFX.
 static func bus_for(sound_name: String) -> StringName:
@@ -279,8 +304,17 @@ static func element_hit_name(element: int) -> String:
 		return "hit"
 	return "hit_" + String(Elements.E.keys()[element]).to_lower()
 
-func element_hit(element: int) -> void:
-	sfx(element_hit_name(element))
+## Loudness of a hit sound by the share of strength it took (item 2532): up to 10 % at
+## -6 dB, up to 30 % at -3 dB, more at full volume.
+static func hit_volume_db(share_lost: float) -> float:
+	if share_lost <= 0.10:
+		return -6.0
+	if share_lost <= 0.30:
+		return -3.0
+	return 0.0
+
+func element_hit(element: int, share_lost: float = 1.0) -> void:
+	sfx(element_hit_name(element), hit_volume_db(share_lost))
 
 ## Track for [param map_id] from data/music.json, in the variant for the active era.
 func track_for_map(map_id: String) -> String:
