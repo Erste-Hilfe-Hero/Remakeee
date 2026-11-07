@@ -223,7 +223,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1093. [P2] Baue an drei Stellen eine Bank mit Blick auf den See, auf der man sitzt und nach 10 Sekunden ein Spirling-Geräusch und einen Hinweis erhält.
 1094. [P2] Lege einen geheimen Pfad hinter dem Leuchtturm an, der nur nachts bei Leuchtfeuer sichtbar ist.
 1095. [P2] Gib jeder Höhle eine Nische, die man nur mit Laterne Stufe 2 sieht.
-1096. [P2] Ergänze die Statistik um "Funde gesamt" und "Geheimnisse gesamt" pro Region.
+1096. [x] [P2] Ergänze die Statistik um "Funde gesamt" und "Geheimnisse gesamt" pro Region.
 1097. [x] [P2] Lass einen Fund nach dem Aufheben als ausgefülltes Kreuz auf der Minikarte stehen.
 1098. [P3] Baue ein Geheimnis-Kapitel im Kartenbuch mit 20 Rätselbildern, die jeweils auf einen Ort zeigen, ohne Namen.
 1099. [P3] Lege einen Fund an, der nur erscheint, wenn man 100 Schritte rückwärts ohne Kampf auf Lakeloop gegangen ist.

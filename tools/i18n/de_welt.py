@@ -56,6 +56,10 @@ T.update({
 "scree": "Geröll",
 "shallow water": "seichtes Wasser",
 "cave": "Höhle",
+# Finds by region in the records (item 1096)
+"Finds by region": "Funde nach Region",
+"Finds: %d/%d": "Funde: %d/%d",
+"Secrets: %d/%d": "Geheimnisse: %d/%d",
 })
 
 # Secret passages (area 3 item 1082)
