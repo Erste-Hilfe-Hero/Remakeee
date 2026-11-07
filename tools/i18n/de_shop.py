@@ -262,8 +262,8 @@ T = {
 	"5 Funkensplitter. Einzeln 1000 Rissglas.",
 "Power Core":
 	"Kraftkern",
-"Raises a Spirling's temperament bonus from 1.1 to 1.2. Permanent.":
-	"Hebt den Wesensart-Faktor eines Spirlings von 1,1 auf 1,2. Dauerhaft.",
+"Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent.":
+	"Verdoppelt die Neigung der Wesensart eines Spirlings: +10 % statt +5 % auf ihren Wert. Dauerhaft.",
 "Gleam Prism":
 	"Glanzform-Prisma",
 "Turns one Spirling you choose into its Gleam form: +10% on all values and a Riftglass shimmer. At most 2 per week.":
@@ -661,4 +661,13 @@ T = {
 "Use a Rift Anchor? You stay right before the Warden and your team is rested (%d left).": "Rissanker nutzen? Du bleibst direkt vor dem Wächter und dein Team ist erholt (noch %d).",
 "Go back": "Zurückgehen",
 "The Rift Anchor holds you in place. Your team is rested again.": "Der Rissanker hält dich an Ort und Stelle. Dein Team ist wieder erholt.",
+"Temper Shift": "Wesenswandel", "Power Core": "Kraftkern",
+"Sets one Spirling's temperament to one you choose. Used up.": "Setzt die Wesensart eines Spirlings auf eine, die du wählst. Wird verbraucht.",
+"Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent. Used up.": "Verdoppelt die Neigung der Wesensart eines Spirlings: +10 % statt +5 % auf ihren Wert. Dauerhaft. Wird verbraucht.",
+"Use the Temper Shift on?": "Wesenswandel für wen?", "Use the Power Core on?": "Kraftkern für wen?",
+"New temperament for %s?": "Neue Wesensart für %s?",
+"%s already has that temperament.": "%s hat diese Wesensart schon.",
+"%s is %s now.": "%s ist jetzt %s.",
+"That would do nothing: %s has no lean to strengthen, or already has a Power Core.": "Das würde nichts bewirken: %s hat keine Neigung zum Verstärken oder schon einen Kraftkern.",
+"%s's temperament grows stronger: +10%% instead of +5%%.": "Die Wesensart von %s wird stärker: +10 %% statt +5 %%.",
 }

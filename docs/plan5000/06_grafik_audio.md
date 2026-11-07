@@ -220,9 +220,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2423. [x] [P2] Gesperrte Menüpunkte schütteln beim Antippen 2 Pixel waagrecht (Juice.nudge zweimal) und spielen den Abbruch-Klang.
 2424. [P2] Lange Listen (Lager, Lexikon, Gegenstände) laufen beim Wischen mit Schwung nach und bremsen mit Reibung 6 pro Sekunde ab.
 2425. [P2] Am Listenende federt die Liste 4 Pixel über und mit "settle" zurück, statt hart zu stoppen.
-2426. [P2] Ein Bildlauf-Anzeiger (1 Pixel breiter Strich) erscheint am rechten Rand langer Listen beim Scrollen und verschwindet nach 0,8 s.
+2426. [x] [P2] Ein Bildlauf-Anzeiger (1 Pixel breiter Strich) erscheint am rechten Rand langer Listen beim Scrollen und verschwindet nach 0,8 s.
 2427. [P2] Neue Einträge (neue Geschenke, neue Aufgaben, neue Freundesanfragen) bekommen einen 3×3-Pixel-Punkt, der mit Juice.wobble alle 2 Sekunden wackelt.
-2428. [P2] Die Namens-Tastatur (NameKeyboard.gd) lässt jede gedrückte Taste kurz aufleuchten (Palettenstufe heller für 0,08 s).
+2428. [x] [P2] Die Namens-Tastatur (NameKeyboard.gd) lässt jede gedrückte Taste kurz aufleuchten (Palettenstufe heller für 0,08 s).
 2429. [P3] Die Namens-Tastatur schüttelt das Eingabefeld, wenn ein Name zu lang oder leer ist.
 2430. [P2] Freundesliste: der Online-Punkt neben einem Namen pulsiert langsam (Helligkeit 100 % und 70 %, 1,5 s Takt).
 2431. [P2] Weltziel-Leiste: neue Beiträge seit dem letzten Besuch füllen sich sichtbar mit einer helleren Spitze, die an der neuen Stelle stehen bleibt.

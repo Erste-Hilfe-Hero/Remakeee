@@ -785,14 +785,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 ### Funken und Wesensart
 4741. [x] [P1] (P2W) Eine "Funkenschmiede" (`rg_spark_forge`) anlegen, die alle Funken-Werte (`Spirling.spark`) eines Spirlings auf den Höchstwert 12 setzt, Preis 1000 Rissglas (≈ 9,90 €) oder 9,99 € direkt.
 4742. [x] [P1] (P2W) Einen "Funkensplitter" (`rg_spark_shard`) anlegen, der einen gewählten Wert um 6 Funken erhöht (bis 12), Preis 200 Rissglas, doppelt so stark wie `spark_charm` (3).
-4743. [P1] (P2W) Einen "Wesenswandel" (`rg_temper_shift`) anlegen, der die Wesensart eines Spirlings auf eine gewählte Wesensart setzt, Preis 400 Rissglas.
-4744. [P1] (P2W) Für den Wesenswandel ein gespeichertes Feld `temper_override` an `Spirling` anlegen, das `temperament_index(uid)` überschreibt, und in `SaveManager` sichern.
+4743. [x] [P1] (P2W) Einen "Wesenswandel" (`rg_temper_shift`) anlegen, der die Wesensart eines Spirlings auf eine gewählte Wesensart setzt, Preis 400 Rissglas.
+4744. [x] [P1] (P2W) Für den Wesenswandel ein gespeichertes Feld `temper_override` an `Spirling` anlegen, das `temperament_index(uid)` überschreibt, und in `SaveManager` sichern.
 4745. [P1] (P2W) Funken-Käufe zeigen vor dem Einsatz die neuen Werte (Kraft, Wucht, Schutz, Fokus, Tempo) und brauchen eine Bestätigung.
 4746. [P1] (P2W) Die Funken-Werte im Team-Menü in Worten anzeigen, wie es `GameState.SPARK_WORDS` schon tut, und Käufe nicht als Zahl ausweisen.
 4747. [P1] (P2W) Der Server prüft beim Speichern, dass Funken-Werte über dem natürlichen Bereich nur mit verbrauchten Funken-Käufen oder `spark_charm` vorkommen.
 4748. [P1] (P2W) Funken- und Wesensart-Käufe wirken in der Gleichstand-Liga nicht, weil dort Werte ausgeglichen werden, und das steht im Angebot.
 4749. [P1] (P2W) Ein Bündel "Fünf Funkensplitter" für 800 Rissglas statt 1000 anbieten.
-4750. [P1] (P2W) Ein "Kraftkern" anlegen, der den Faktor einer Wesensart von 1,1 auf 1,2 für einen Spirling hebt, dauerhaft, Preis 800 Rissglas.
+4750. [x] [P1] (P2W) Ein "Kraftkern" anlegen, der den Faktor einer Wesensart von 1,1 auf 1,2 für einen Spirling hebt, dauerhaft, Preis 800 Rissglas.
 4751. [P2] (P2W) Eine "Doppelwesen-Gabe" anlegen, mit der ein Spirling zwei Wesensart-Boni gleichzeitig hat, Preis 1500 Rissglas, höchstens 3 Spirlings pro Konto.
 4752. [P2] (P2W) Einen "Funkenrücksetzer" anlegen, der die Funken eines Spirlings auf neue feste Werte nach Wahl verteilt (insgesamt 48 Punkte), Preis 500 Rissglas.
 4753. [P2] (P2W) Den Funkenrücksetzer ohne Zufall umsetzen: der Spieler verteilt die Punkte selbst auf die 5 Werte.

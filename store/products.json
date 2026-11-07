@@ -767,7 +767,7 @@
    "name_de": "Wesenswandel",
    "desc_en": "Sets a Spirling's temperament to one you choose.",
    "desc_de": "Setzt die Wesensart eines Spirlings auf eine gewählte.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.spark_shard_x5",
@@ -789,9 +789,9 @@
    "eur": "7.99",
    "name_en": "Power Core",
    "name_de": "Kraftkern",
-   "desc_en": "Raises a Spirling's temperament bonus from 1.1 to 1.2. Permanent.",
-   "desc_de": "Hebt den Wesensart-Faktor eines Spirlings von 1,1 auf 1,2. Dauerhaft.",
-   "ready": false
+   "desc_en": "Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent.",
+   "desc_de": "Verdoppelt die Neigung der Wesensart eines Spirlings: +10 % statt +5 % auf ihren Wert. Dauerhaft.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.gleam_prism",

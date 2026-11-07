@@ -1159,12 +1159,14 @@ func tap_cell(cell: Vector2i, marker: bool = true) -> void:
 		return
 	var route: Array[Vector2i] = []
 	var reached: bool = false
+	# Tap walks keep off pressure plates unless the plate is the goal (plan item 901).
+	var on_plate: Callable = func(c: Vector2i) -> bool: return map.kind_at(c) == TilesetFactory.Kind.PLATE
 	if npc_at(cell) != null or used_on_arrival(map, cell, GameState.flags):
-		route = PathFinder.find_adjacent(player.cell, cell, passable)
+		route = PathFinder.find_avoiding(player.cell, cell, passable, on_plate, true)
 		reached = not route.is_empty() or PathFinder.is_adjacent(cell, player.cell)
 		player.follow(route, cell if reached else Player.NO_TARGET)
 	else:
-		route = PathFinder.find(player.cell, cell, passable)
+		route = PathFinder.find_avoiding(player.cell, cell, passable, on_plate)
 		reached = not route.is_empty()
 		player.follow(route)
 	if marker:
