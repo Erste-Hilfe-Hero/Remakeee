@@ -827,6 +827,11 @@ func _play_event(e: BattleEvent) -> void:
 			_update_pinch()
 			await _text.show_text(e.describe())
 		BattleEvent.Type.ENERGY_CHANGED:
+			var es: Variant = _strip(side, slot)
+			if side == BattleModel.Side.PLAYER and es is InfoStrip:
+				var ticks: int = Sound.energy_ticks(int(e.data.energy) - (es as InfoStrip).energy)
+				if ticks > 0:
+					Sound.energy_tick(ticks)
 			_strip(side, slot).set_energy(int(e.data.energy))
 			_refresh_focus(side, slot)
 		BattleEvent.Type.ENERGY_TAX:

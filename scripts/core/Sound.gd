@@ -29,7 +29,7 @@ const BLIP_DB: float = -9.0
 ## Fade back in after the app returns from the background (item 2550).
 const RESUME_FADE: float = 0.3
 ## Menu sounds that go to the UI bus.
-const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save", "locked", "toast"]
+const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save", "locked", "toast", "page_open", "page_close"]
 ## Ground per tile kind for footsteps (item 2502); "sand" is a path or grass tile next to water.
 const GROUNDS: Dictionary[int, String] = {
 	TilesetFactory.Kind.GRASS: "grass", TilesetFactory.Kind.TALL_GRASS: "grass", TilesetFactory.Kind.FLOWER: "grass",
@@ -315,6 +315,29 @@ static func hit_volume_db(share_lost: float) -> float:
 	if share_lost <= 0.30:
 		return -3.0
 	return 0.0
+
+## Picking an art rings the confirm sound one step higher per element, eight steps of a major
+## scale in Elements.E order (item 2539).
+const ART_PICK_STEPS: Array[int] = [0, 2, 4, 5, 7, 9, 11, 12]
+
+static func art_pick_pitch(element: int) -> float:
+	if element < 0 or element >= ART_PICK_STEPS.size():
+		return 1.0
+	return pow(2.0, ART_PICK_STEPS[element] / 12.0)
+
+## Energy gained at round start ticks once per point, at most three times (item 2537).
+const ENERGY_TICKS_MAX: int = 3
+const ENERGY_TICK_GAP: float = 0.07
+
+static func energy_ticks(gain: int) -> int:
+	return clampi(gain, 0, ENERGY_TICKS_MAX)
+
+## Plays [param count] faint Energy ticks one after another.
+func energy_tick(count: int) -> void:
+	for i: int in count:
+		sfx("energy_tick")
+		if i < count - 1 and is_inside_tree():
+			await get_tree().create_timer(ENERGY_TICK_GAP, true).timeout
 
 func element_hit(element: int, share_lost: float = 1.0) -> void:
 	sfx(element_hit_name(element), hit_volume_db(share_lost))

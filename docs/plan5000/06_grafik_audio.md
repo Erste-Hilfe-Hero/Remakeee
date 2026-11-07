@@ -307,9 +307,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2504. [x] [P2] Text-Stimme lässt sich in den Einstellungen getrennt ausschalten und ist im Sound-Test hörbar.
 2505. [x] [P1] Eigener Klang für das "!" eines Wanderers, der jemanden entdeckt: zwei schnell steigende Töne, 0,15 s.
 2506. [x] [P1] Eigener Klang für das Aufnehmen eines Gegenstands auf der Karte, 4 aufsteigende Töne, getrennt vom Münzklang.
-2507. [P2] Tür-Klang (Öffnen) und Tür-Klang (Schließen) als zwei Klänge mit Holz-Charakter aus Rauschen und tiefem Puls.
-2508. [P2] Treppen-Klang mit 3 schnellen Schritten, die in der Tonhöhe steigen oder fallen, je nach Richtung.
-2509. [P2] Klang für das Öffnen und das Schließen des Pausemenüs, verschieden voneinander (Seite aufschlagen, Seite zuklappen).
+2507. [x] [P2] Tür-Klang (Öffnen) und Tür-Klang (Schließen) als zwei Klänge mit Holz-Charakter aus Rauschen und tiefem Puls.
+2508. [x] [P2] Treppen-Klang mit 3 schnellen Schritten, die in der Tonhöhe steigen oder fallen, je nach Richtung.
+2509. [x] [P2] Klang für das Öffnen und das Schließen des Pausemenüs, verschieden voneinander (Seite aufschlagen, Seite zuklappen).
 2510. [x] [P2] Cursor-Klang (select) bekommt 3 leicht verschiedene Tonhöhen, die zufällig wechseln, damit langes Scrollen nicht ermüdet.
 2511. [x] [P2] Klang für gesperrte Menüpunkte, ein dumpfer kurzer Ton, der sich klar vom Abbruch-Klang unterscheidet.
 2512. [x] [P2] Klang für den Toast-Hinweis (kurz und leise, 2 Töne).
@@ -339,9 +339,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2534. [P2] Klang beim Auftreten eines Spirlings (step_out) passend zum Bewegungsprofil: Hüpfen, Schleichen, Stampfen, Wogen, Gleiten.
 2535. [P3] Klang beim Zurücktreten eines Spirlings (step_back), ein kurzer fallender Ton.
 2536. [x] [P2] Klang für das Ausweichen, ein schneller seitlicher Wisch.
-2537. [P2] Klang für den Energie-Zuwachs am Rundenbeginn, ein sehr leiser Tick pro Energiepunkt, höchstens 3 Ticks.
+2537. [x] [P2] Klang für den Energie-Zuwachs am Rundenbeginn, ein sehr leiser Tick pro Energiepunkt, höchstens 3 Ticks.
 2538. [P2] Klang für das Andenken, wenn es im Kampf auslöst, getrennt vom Gegenstand-Klang.
-2539. [P2] Klang für die Technik-Auswahl im Kampfmenü, der je nach Element der Technik eine andere Tonhöhe hat (8 Stufen einer Tonleiter).
+2539. [x] [P2] Klang für die Technik-Auswahl im Kampfmenü, der je nach Element der Technik eine andere Tonhöhe hat (8 Stufen einer Tonleiter).
 2540. [P3] Klang für das Erscheinen eines Rift-Wächters: tiefes Grollen über 1,2 s, passend zur Wächter-Einleitung.
 2541. [P3] Klang für Doppelelement-Einschläge mischt die Treffer-Klänge beider Elemente (zweites bei -6 dB, 30 ms versetzt).
 2542. [P3] Klang für den Ring-Aufstieg im Kampf als eigener kurzer Klang zum wachsenden Pixel-Ring, getrennt vom bisherigen Aufstiegs-Klang in der Welt.

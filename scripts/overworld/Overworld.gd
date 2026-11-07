@@ -592,14 +592,27 @@ func _on_player_stepped(cell: Vector2i) -> void:
 func _warp(warp: Dictionary) -> void:
 	busy = true
 	player.frozen = true
-	Sound.sfx("warp")
+	var sounds: Array[String] = warp_sounds(map.kind_at(player.cell), player.facing)
+	Sound.sfx(sounds[0])
 	await _warp_out(is_edge_cell(player.cell))
 	load_map(str(warp.to), Vector2i(int(warp.tx), int(warp.ty)), str(warp.get("facing", player.facing)))
 	_camera.offset = Vector2.ZERO
 	SaveManager.save_game()
+	if not sounds[1].is_empty():
+		Sound.sfx(sounds[1])
 	await _fade_to(0.0)
 	player.frozen = false
 	busy = false
+
+## Sounds for leaving through a warp on tile [param kind] and for arriving: a wooden door
+## opens and shuts behind (item 2507), stairs climb or descend by the way the Wayfarer faces
+## (item 2508), anything else is the warp sweep.
+static func warp_sounds(kind: int, facing: String) -> Array[String]:
+	if kind == TilesetFactory.Kind.DOOR:
+		return ["door_open", "door_close"] as Array[String]
+	if kind == TilesetFactory.Kind.STAIRS:
+		return ["stairs_down" if facing == "down" else "stairs_up", ""] as Array[String]
+	return ["warp", ""] as Array[String]
 
 func _on_interact(cell: Vector2i) -> void:
 	if busy:
@@ -933,11 +946,14 @@ func open_menu() -> void:
 	menu.room_puzzle = _world.has_puzzle()
 	menu.can_undo = _world.can_undo()
 	_ui.add_child(menu)
+	# A page turned open, and folded shut when it closes (item 2509).
+	Sound.sfx("page_open")
 	# Slides in from the right edge with "open" (item 2281).
 	if not Juice.reduced():
 		menu.position.x = MENU_SLIDE
 		Juice.tween(menu, "position", Vector2.ZERO, "open")
 	await menu.run()
+	Sound.sfx("page_close")
 	await _close_menu(menu)
 	match menu.room_action:
 		"undo": _world.undo()
