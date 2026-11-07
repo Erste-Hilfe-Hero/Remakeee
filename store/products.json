@@ -899,7 +899,7 @@
    "name_de": "Wächterkunde",
    "desc_en": "Before a Rift Warden battle you see its team, techniques and gifts. Permanent. Only after one try without help.",
    "desc_de": "Vor einem Rift-Wächterkampf siehst du sein Team, seine Techniken und Gaben. Dauerhaft. Erst nach einem Versuch ohne Hilfe.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rift_anchor",

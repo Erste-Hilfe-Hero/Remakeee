@@ -2373,10 +2373,17 @@ func _play_trial(p: Dictionary, warden: String) -> void:
 
 ## The card before a Warden battle (item 687): rule, team size and elements, then [param question].
 ## "Not yet" leaves the player free to change their team first. Returns true to fight.
+## Lost tries against the Warden of [param def] (records "warden_losses").
+func _warden_losses(def: Dictionary) -> int:
+	return int((GameState.records.get("warden_losses", {}) as Dictionary).get(TrainerData.beaten_flag(def, map.id), 0))
+
 func warden_card(def: Dictionary, team: Array[Spirling], question: String) -> bool:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	await menu.info(WardenCard.text(def, team, GameState.difficulty, GameState.level_cap()), WardenCard.picture(team))
+	var card: String = WardenCard.text(def, team, GameState.difficulty, GameState.level_cap())
+	if ShopEffects.has_warden_lore(_warden_losses(def), GameState.difficulty):
+		card += "\n" + WardenCard.lore(def, team)
+	await menu.info(card, WardenCard.picture(team))
 	var go: bool = await menu.confirm(question, "Fight", "Not yet")
 	menu.queue_free()
 	return go

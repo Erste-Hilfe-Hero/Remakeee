@@ -191,3 +191,7 @@ static func warden_help_allowed(losses: int, difficulty: int) -> bool:
 
 static func can_weaken_warden(losses: int, difficulty: int) -> bool:
 	return warden_help_allowed(losses, difficulty) and GameState.item_count(WARDEN_WEAKEN_ITEM) > 0
+
+## Warden Lore (item 4883): the Warden card also lists the team, techniques and items.
+static func has_warden_lore(losses: int, difficulty: int) -> bool:
+	return warden_help_allowed(losses, difficulty) and Billing.unlocked("warden_lore") > 0

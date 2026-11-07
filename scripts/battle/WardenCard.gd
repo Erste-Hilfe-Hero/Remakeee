@@ -28,6 +28,26 @@ static func text(def: Dictionary, team: Array[Spirling], difficulty: int, cap: i
 		lines.append(Loc.t("Elements: %s") % ", ".join(names))
 	return "\n".join(lines)
 
+## Warden Lore (shop item 4883): every Spirling with its Ring, techniques and held item, and the
+## items the Warden brings into the battle.
+static func lore(def: Dictionary, team: Array[Spirling]) -> String:
+	var lines: Array[String] = [Loc.t("Warden Lore:")]
+	for s: Spirling in team:
+		var moves: Array[String] = []
+		for mv: MoveData in s.moves:
+			moves.append(Loc.t(mv.move_name))
+		var line: String = "%s R%d: %s" % [s.display_name(), s.level, ", ".join(moves)]
+		if not s.held.is_empty():
+			line += " " + Loc.t("(holds %s)") % Loc.t(str(Database.item(s.held).get("name", s.held)))
+		lines.append(line)
+	var gifts: Array[String] = []
+	var items: Variant = def.get("items", {})
+	if items is Dictionary:
+		for id: Variant in items:
+			gifts.append("%s x%d" % [Loc.t(str(Database.item(str(id)).get("name", id))), int(items[id])])
+	lines.append(Loc.t("Items: %s") % ", ".join(gifts) if not gifts.is_empty() else Loc.t("Items: none"))
+	return "\n".join(lines)
+
 ## Every element in [param team], in team order, each once.
 static func elements(team: Array[Spirling]) -> Array[int]:
 	var out: Array[int] = []

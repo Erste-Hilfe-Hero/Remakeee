@@ -931,7 +931,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4882. [P3] (P2W) Die Wirkung aller Beschleuniger in einem Abschnitt "Shop-Beschleuniger" in `docs/BALANCE.md` festhalten.
 
 ### Rift- und Wächter-Hilfen
-4883. [P1] (P2W) Eine "Wächterkunde" (`rg_warden_lore`) anlegen, die vor einem Rift-Wächterkampf dessen Team, Techniken und Gaben zeigt, dauerhaft, Preis 600 Rissglas.
+4883. [x] [P1] (P2W) Eine "Wächterkunde" (`rg_warden_lore`) anlegen, die vor einem Rift-Wächterkampf dessen Team, Techniken und Gaben zeigt, dauerhaft, Preis 600 Rissglas.
 4884. [P1] (P2W) Einen "Rissanker" (`rg_rift_anchor`) anlegen: nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor dem Wächter mit voll geheiltem Team, Preis 100 Rissglas pro Versuch.
 4885. [x] [P1] (P2W) Einen "Wächterschwächer" (`rg_warden_weaken`) anlegen: der Wächter startet mit 15 % weniger Kraft, Preis 300 Rissglas, höchstens 1 pro Wächterkampf.
 4886. [P1] (P2W) Wächter-Hilfen sind nur nutzbar, wenn der Spieler den Wächter mindestens einmal ohne Hilfe versucht hat, damit der erste Versuch fair bleibt.
