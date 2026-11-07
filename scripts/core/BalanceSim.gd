@@ -7,6 +7,16 @@ extends RefCounted
 ## Battles that run longer than this count as a draw (stalls show up in the report).
 const MAX_TURNS: int = 60
 
+## Field and rule variants every duel, team, ladder and mono battle is played under (item 821,
+## switches --field and --variant); empty for the normal rules.
+static var sim_field: String = ""
+static var sim_variants: Array[String] = []
+
+static func _apply_switches(m: BattleModel) -> void:
+	if not sim_field.is_empty():
+		m.field = sim_field
+	m.variants = sim_variants.duplicate()
+
 ## Evolution stage: 1 for base forms, 2 for their evolutions, and so on. Kinds that never
 ## unfold (Glasstarn, Lanternel) are built like second stages and fight those.
 static func stage(sd: SpirlingData) -> int:
@@ -130,6 +140,7 @@ static func fight(a: String, b: String, level: int, seed_value: int, moves: Dict
 		faster = 0 if mine[0].effective_spd() > theirs[0].effective_spd() else 1
 	var m := BattleModel.new(mine, theirs, false, seed_value, ai_level)
 	m.items_allowed = false
+	_apply_switches(m)
 	var ai := BattleAI.new(ai_level)
 	var last_move: Array[String] = ["", ""]
 	m.event_emitted.connect(func(e: BattleEvent) -> void:
@@ -200,6 +211,7 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 		theirs.assign(teams[1])
 		var m := BattleModel.new(mine, theirs, false, rng.randi(), ai_level)
 		m.items_allowed = false
+		_apply_switches(m)
 		m.event_emitted.connect(func(e: BattleEvent) -> void:
 			if e.type == BattleEvent.Type.MOVE_USED:
 				var mv: String = str(e.data.get("move", ""))
@@ -534,3 +546,166 @@ static func goal_rate(key: String, rounds: int, seed_value: int, difficulty: int
 		if bool(goal_fight(map_id, def, teams[key], difficulty, seed_value + r * 7919).met):
 			met += 1
 	return float(met) / float(maxi(rounds, 1))
+
+# --- Ladder, mono and goals modes (plan area 2, items 817, 818, 820) --------------------------
+
+## Target share of wins for AI tier n against tier n-1 (item 817), by n.
+const LADDER_TARGETS: Dictionary = {1: 0.75, 2: 0.6, 3: 0.55}
+## Target band of every element in mono mode (item 818).
+const MONO_BAND: Vector2 = Vector2(0.42, 0.58)
+
+## One battle of two built teams, each side on its own AI tier; one Spirling on the field.
+## Returns the winning side (0 player, 1 foe, -1 draw) and the turns.
+static func team_battle(mine: Array[Spirling], theirs: Array[Spirling], seed_value: int, player_ai: int, foe_ai: int) -> Dictionary:
+	var m := BattleModel.new(mine, theirs, false, seed_value, foe_ai)
+	m.items_allowed = false
+	_apply_switches(m)
+	var brain := BattleAI.new(player_ai)
+	m.start()
+	var turns: int = 0
+	while not m.is_finished() and turns < MAX_TURNS * 2:
+		if m.needs_player_switch():
+			m.submit_switch(brain.choose_replacement(m, BattleModel.Side.PLAYER, m.switch_slot()))
+			continue
+		m.submit_turn(brain.choose(m, BattleModel.Side.PLAYER))
+		turns += 1
+	var winner: int = -1
+	if m.outcome == BattleModel.Outcome.WIN:
+		winner = 0
+	elif m.outcome == BattleModel.Outcome.LOSS:
+		winner = 1
+	return {"winner": winner, "turns": turns}
+
+static func _build(names: Array[String], level: int, rng: RandomNumberGenerator) -> Array[Spirling]:
+	var out: Array[Spirling] = []
+	for n: String in names:
+		out.append(Spirling.new(Database.species(n), level, rng))
+	return out
+
+## Ladder mode (item 817): the same two random teams of 3, AI tier n against n-1 for n = 1..3.
+## The sides swap every battle, so neither tier keeps the player side. Draws count as half.
+static func run_ladder(level: int, battles: int, seed_value: int) -> Dictionary:
+	Database.load_all()
+	var pool: Array[String] = valid_species(level)
+	var rows: Dictionary = {}
+	for n: int in LADDER_TARGETS:
+		var rng := RandomNumberGenerator.new()
+		rng.seed = hash([seed_value, n])
+		var wins: float = 0.0
+		for b: int in battles:
+			var names: Array[Array] = [_pick(pool, 3, rng), _pick(pool, 3, rng)]
+			var bseed: int = rng.randi()
+			var high_side: int = b % 2
+			var teams: Array[Array] = [_build(names[0], level, rng), _build(names[1], level, rng)]
+			var mine: Array[Spirling] = []
+			mine.assign(teams[0])
+			var theirs: Array[Spirling] = []
+			theirs.assign(teams[1])
+			var r: Dictionary = team_battle(mine, theirs, bseed, n if high_side == 0 else n - 1, n - 1 if high_side == 0 else n)
+			if int(r.winner) == high_side:
+				wins += 1.0
+			elif int(r.winner) < 0:
+				wins += 0.5
+		var rate: float = wins / float(maxi(battles, 1))
+		rows[str(n)] = {"tier": n, "rate": snappedf(rate, 0.001), "target": LADDER_TARGETS[n], "ok": rate >= float(LADDER_TARGETS[n])}
+	return {"mode": "ladder", "level": level, "battles": battles, "tiers": rows}
+
+static func ladder_report(result: Dictionary) -> String:
+	var lines: PackedStringArray = ["# Ladder report", "",
+		"Level %d, %d battles per tier, same random teams of 3, sides swap every battle." % [result.level, result.battles], "",
+		"| Tier | Against | Win rate | Target | Flag |", "| --- | --- | --- | --- | --- |"]
+	for k: String in result.tiers:
+		var row: Dictionary = result.tiers[k]
+		lines.append("| %d | %d | %d%% | %d%% | %s |" % [row.tier, int(row.tier) - 1, roundi(float(row.rate) * 100.0),
+			roundi(float(row.target) * 100.0), "" if bool(row.ok) else "below target"])
+	return "\n".join(lines) + "\n"
+
+## Valid species of [param level] per element (an element counts if the species has it).
+static func mono_pools(level: int) -> Dictionary:
+	var out: Dictionary = {}
+	for n: String in valid_species(level):
+		for e: int in Database.species(n).elements:
+			var key: String = Elements.element_name(e)
+			if not out.has(key):
+				out[key] = [] as Array[String]
+			(out[key] as Array[String]).append(n)
+	return out
+
+## Mono mode (item 818): teams of one element (3 different species where the element has them,
+## else repeats) against a team of another element; win rate per element, both sides AI tier
+## [param ai_level].
+static func run_mono(level: int, battles: int, seed_value: int, ai_level: int = 2) -> Dictionary:
+	Database.load_all()
+	var pools: Dictionary = mono_pools(level)
+	var els: Array = pools.keys()
+	els.sort()
+	var rows: Dictionary = {}
+	for e: String in els:
+		rows[e] = {"wins": 0, "losses": 0, "draws": 0, "species": (pools[e] as Array).size()}
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	for b: int in battles:
+		if els.size() < 2:
+			break
+		var a: String = els[rng.randi_range(0, els.size() - 1)]
+		var c: String = a
+		while c == a:
+			c = els[rng.randi_range(0, els.size() - 1)]
+		var teams: Array[Array] = []
+		for e: String in [a, c]:
+			var pool: Array[String] = pools[e]
+			var names: Array[String] = _pick(pool, 3, rng)
+			while names.size() < 3:
+				names.append(pool[rng.randi_range(0, pool.size() - 1)])
+			teams.append(_build(names, level, rng))
+		var mine: Array[Spirling] = []
+		mine.assign(teams[0])
+		var theirs: Array[Spirling] = []
+		theirs.assign(teams[1])
+		var r: Dictionary = team_battle(mine, theirs, rng.randi(), ai_level, ai_level)
+		var w: int = int(r.winner)
+		if w < 0:
+			rows[a].draws += 1
+			rows[c].draws += 1
+		else:
+			rows[a if w == 0 else c].wins += 1
+			rows[c if w == 0 else a].losses += 1
+	for e: String in rows:
+		var wr: float = win_rate(rows[e])
+		rows[e]["win_rate"] = snappedf(wr, 0.001)
+		rows[e]["ok"] = wr >= MONO_BAND.x and wr <= MONO_BAND.y
+	return {"mode": "mono", "level": level, "battles": battles, "ai": ai_level, "elements": rows}
+
+static func mono_report(result: Dictionary) -> String:
+	var lines: PackedStringArray = ["# Mono report", "",
+		"Level %d, %d battles, teams of one element against another, AI tier %d. Target band %d to %d %%." % [
+			result.level, result.battles, result.ai, roundi(MONO_BAND.x * 100.0), roundi(MONO_BAND.y * 100.0)], "",
+		"| Element | Species | Win rate | W | L | D | Flag |", "| --- | --- | --- | --- | --- | --- | --- |"]
+	for e: String in result.elements:
+		var row: Dictionary = result.elements[e]
+		var wr: float = float(row.win_rate)
+		var flag: String = "" if bool(row.ok) else ("too strong" if wr > MONO_BAND.y else "too weak")
+		lines.append("| %s | %d | %d%% | %d | %d | %d | %s |" % [e, row.species, roundi(wr * 100.0), row.wins, row.losses, row.draws, flag])
+	return "\n".join(lines) + "\n"
+
+## Goals mode (item 820): every bonus goal with its reference team on [param difficulty].
+static func run_goals(rounds: int, seed_value: int, difficulty: int = GameState.Difficulty.TAMER) -> Dictionary:
+	Database.load_all()
+	var rows: Dictionary = {}
+	for key: String in BattleGoals.all():
+		var rate: float = goal_rate(key, rounds, seed_value, difficulty)
+		rows[key] = {"rate": snappedf(rate, 0.001), "ok": rate >= GOAL_MIN_RATE}
+	return {"mode": "goals", "rounds": rounds, "difficulty": difficulty, "goals": rows}
+
+## Least share of battles in which a reference team must meet its goal (item 768).
+const GOAL_MIN_RATE: float = 0.2
+
+static func goals_report(result: Dictionary) -> String:
+	var lines: PackedStringArray = ["# Bonus goal report", "",
+		"%d battles per goal, difficulty %d, reference teams from tools/balance/goal_teams.json. Each must reach %d %%." % [
+			result.rounds, result.difficulty, roundi(GOAL_MIN_RATE * 100.0)], "",
+		"| Goal | Met | Flag |", "| --- | --- | --- |"]
+	for k: String in result.goals:
+		var row: Dictionary = result.goals[k]
+		lines.append("| %s | %d%% | %s |" % [k, roundi(float(row.rate) * 100.0), "" if bool(row.ok) else "too hard"])
+	return "\n".join(lines) + "\n"
