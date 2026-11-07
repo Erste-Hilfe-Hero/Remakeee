@@ -29,9 +29,13 @@ static func links_text() -> String:
 static func purchases_url() -> String:
 	return PURCHASES_URL_DE if Loc.language() == "de" else PURCHASES_URL_EN
 
+## Japanese, Korean and Chinese letters (art/fonts/OFL.txt, SIL Open Font License 1.1).
+const FONT_NOTICE: String = "Japanese, Korean and Chinese text uses Chimora CJK Pixel, a subset of Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, with glyphs from Galmuri, Misaki, Boutique Bitmap 7x7 and Miseki Bitmap), licensed under the SIL Open Font License 1.1: https://openfontlicense.org"
+
 ## Engine licence notice (Godot is MIT licensed; its notice must ship with the game).
 static func licence_text() -> String:
 	return "Chimora uses the Godot Engine.\n\n" + Engine.get_license_text() \
+		+ "\n\n" + FONT_NOTICE \
 		+ "\n\nThird-party components inside Godot and their licences: " + LICENCES_URL
 
 ## Splits [param text] into pages of at most [param size] characters, breaking at spaces.

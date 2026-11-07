@@ -4,8 +4,17 @@ extends RefCounted
 ## data/i18n/<code>/*.json (one file per table in tools/i18n/) and are installed as a PatternTranslation, so every Label and Button
 ## follows the chosen language. Code that builds text outside a Control calls Loc.t().
 
-const LANGUAGES: Array[String] = ["en", "de"]
-const LANGUAGE_NAMES: Dictionary[String, String] = {"en": "English", "de": "Deutsch"}
+## The nine languages of the genre's current console games plus five more (Portuguese, Russian,
+## Polish, Turkish, Dutch). German is the reference table; the others are kept by hand and
+## checked with tools/i18n/check_lang.py (docs/I18N.md).
+const LANGUAGES: Array[String] = ["en", "de", "fr", "es", "it", "pt_BR", "nl", "pl", "tr", "ru",
+	"ja", "ko", "zh_CN", "zh_TW"]
+## Each language in its own words, so a player finds theirs whatever is on screen.
+const LANGUAGE_NAMES: Dictionary[String, String] = {"en": "English", "de": "Deutsch", "fr": "Français",
+	"es": "Español", "it": "Italiano", "pt_BR": "Português", "nl": "Nederlands", "pl": "Polski",
+	"tr": "Türkçe", "ru": "Русский", "ja": "日本語", "ko": "한국어", "zh_CN": "简体中文", "zh_TW": "繁體中文"}
+## Languages written with the CJK pixel fonts (PixelFont adds them as fallbacks).
+const CJK: Array[String] = ["ja", "ko", "zh_CN", "zh_TW"]
 const DIR: String = "res://data/i18n/%s"
 const PATH: String = "res://data/i18n/%s.json"
 
@@ -21,8 +30,20 @@ static var events: Events = Events.new()
 
 ## The device language if the game has it, otherwise English.
 static func default_language() -> String:
-	var dev: String = OS.get_locale_language()
-	return dev if dev in LANGUAGES else "en"
+	return language_for_locale(OS.get_locale())
+
+## The game language for a device locale such as "de_AT", "zh_Hant_TW" or "pt_PT".
+static func language_for_locale(locale: String) -> String:
+	var parts: PackedStringArray = locale.replace("-", "_").split("_")
+	var lang: String = parts[0].to_lower() if parts.size() > 0 else ""
+	if lang == "zh":
+		for p: String in parts.slice(1):
+			if p.to_upper() in ["TW", "HK", "MO", "HANT"]:
+				return "zh_TW"
+		return "zh_CN"
+	if lang == "pt":
+		return "pt_BR"
+	return lang if lang in LANGUAGES else "en"
 
 static func language() -> String:
 	return _current
@@ -39,6 +60,7 @@ static func set_language(code: String) -> void:
 	var changed: bool = code != _current
 	_current = code
 	TranslationServer.set_locale(code)
+	PixelFont.use_language(code)
 	if changed:
 		events.language_changed.emit(code)
 

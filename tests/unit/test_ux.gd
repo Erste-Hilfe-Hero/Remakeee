@@ -760,7 +760,7 @@ func test_one_hand_menus_sit_low_with_back_on_the_thumb_side() -> void:
 	await wait_process_frames(1)
 
 func test_large_text_uses_its_own_7x12_glyphs() -> void:
-	for ch: String in PixelFont.GLYPHS:
+	for ch: String in PixelFont.glyphs():
 		var g: Array[String] = PixelFont.large_glyph(ch)
 		assert_eq(g.size(), PixelFont.LARGE_H, ch)
 		for row: String in g:

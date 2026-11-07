@@ -42,6 +42,8 @@ jobs:
         run: tools/ip_check.sh --messages "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
+      - name: The other 12 languages keep their placeholders (coverage is only reported)
+        run: python3 tools/i18n/check_lang.py
       - name: Version name and code agree everywhere (tools/bump_version.py)
         run: python3 tools/bump_version.py --check
       - name: A save version bump brings a fixture and a migration test

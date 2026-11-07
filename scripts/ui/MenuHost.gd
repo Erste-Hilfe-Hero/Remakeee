@@ -604,7 +604,13 @@ func run_display() -> void:
 			"large_text":
 				GameState.large_text = not GameState.large_text
 			"language":
-				GameState.language = Loc.next_language()
+				var codes: Array[String] = Loc.LANGUAGES
+				var lang_rows: Array[Dictionary] = []
+				for c: String in codes:
+					lang_rows.append({"text": Loc.LANGUAGE_NAMES[c]})
+				var li: int = await pick("Language", lang_rows, true, codes.find(Loc.language()))
+				if li >= 0:
+					GameState.language = codes[li]
 			"day_night":
 				GameState.day_night = not GameState.day_night
 			"weather":
