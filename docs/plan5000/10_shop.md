@@ -160,7 +160,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4145. [x] [P2] Bei Kontolöschung offene Pässe nicht kündigen können: vor dem Löschen einen Hinweis zeigen, wie man das Abo im Store kündigt (Apple 5.1.1(v)), und Kaufdaten wegen Aufbewahrungspflicht pseudonymisiert behalten.
 4146. [x] [P2] Die Kontolöschung in `scripts/ui/AccountMenu.gd` um den Hinweis "Restliches Rissglas und gekaufte Inhalte gehen verloren" ergänzen.
 4147. [P2] Alle Store-Zugangsdaten (Apple-Schlüssel `.p8`, Google-Service-Account) nur als Docker-Secrets auf dem Server ablegen und nie ins Repo schreiben.
-4148. [P2] Eine Ratenbegrenzung für `shop_buy` (höchstens 30 Käufe pro Stunde) und für Belegprüfungen (höchstens 20 pro Stunde) über die vorhandene Tabelle `rate_events` setzen.
+4148. [x] [P2] Eine Ratenbegrenzung für `shop_buy` (höchstens 30 Käufe pro Stunde) und für Belegprüfungen (höchstens 20 pro Stunde) über die vorhandene Tabelle `rate_events` setzen.
 4149. [P2] Jede RPC-Antwort des Shops enthält das neue Guthaben und die Berechtigungen, damit der Client nie selbst rechnet.
 4150. [x] [P2] Eine RPC-Funktion `shop_state()` liefert Guthaben, Berechtigungen, Pass-Status, Ausgabelimit und Restbetrag in einem Aufruf.
 4151. [x] [P2] Eine RPC-Funktion `shop_history(limit)` liefert die letzten 50 Käufe mit Datum, Produkt und Euro-Preis für die Kaufliste im Spiel. *Liefert die letzten 100 Käufe.*

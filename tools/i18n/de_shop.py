@@ -732,4 +732,5 @@ T = {
 "Nothing to restore. Bought unlocks and the pass are already here.": "Nichts wiederherzustellen. Gekaufte Freischaltungen und der Pass sind schon da.",
 "Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in the App Store or Google Play (Subscriptions).": "Restliches Rissglas und alles im Shop Gekaufte gehen endgültig verloren. Das Löschen kündigt keinen Wanderer-Pass: kündige ihn vorher im App Store oder bei Google Play (Abos).",
 "The shop is only in the app for iPhone and Android. The browser test version cannot buy anything.": "Den Shop gibt es nur in der App für iPhone und Android. In der Browser-Testversion kann man nichts kaufen.",
+"That was a lot of purchases in a short time. Please wait a while and try again.": "Das waren viele Käufe in kurzer Zeit. Bitte warte eine Weile und versuch es dann noch einmal.",
 }

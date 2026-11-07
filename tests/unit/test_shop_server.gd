@@ -273,3 +273,15 @@ func test_shop_menu_texts() -> void:
 		"status": "refunded", "at": 1793900000}]), "4,99 €  (erstattet)")
 	Loc.set_language("en")
 	Billing.state = {}
+
+## Item 4148: at most 30 Riftglass purchases per hour, like the server.
+func test_riftglass_buys_are_rate_limited() -> void:
+	_call("shop_set_age", {"p_year": 1990, "p_month": 3})
+	_ready_offer("rg_ring_tonic")
+	var st: Dictionary = shop._shop(s.me())
+	for i: int in LocalShop.BUYS_PER_HOUR:
+		st.purchases.append({"id": 900 + i, "store": "riftglass", "txn": "", "product": "", "offer": "rg_ring_tonic",
+			"eur_cents": 0, "rg": 100, "choice": null, "status": "credited", "at": s.now()})
+	assert_eq(_call("shop_buy", {"p_offer": "rg_ring_tonic", "p_expected_price": 100}).error, "slow_down")
+	s.clock_offset += 3601
+	assert_ne(str(_call("shop_buy", {"p_offer": "rg_ring_tonic", "p_expected_price": 100}).get("error", "")), "slow_down")
