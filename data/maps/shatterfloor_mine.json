@@ -12,7 +12,7 @@
   "@.k.kkk.k..@",
   "@.k.....kk.@",
   "@.kkkkk..k.@",
-  "@:....k..k:@",
+  "@:....k..kS@",
   "@@@@@__@@@@@"
  ],
  "warps": [
@@ -33,7 +33,13 @@
    "facing": "down"
   }
  ],
- "signs": [],
+ "signs": [
+  {
+   "x": 10,
+   "y": 6,
+   "dialogue": "shatterfloor_mine/hint_board"
+  }
+ ],
  "secrets": [
   {
    "x": 10,

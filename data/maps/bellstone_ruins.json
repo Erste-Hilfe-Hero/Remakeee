@@ -11,7 +11,7 @@
   "@.S..S..S..@",
   "@..........@",
   "@S.........@",
-  "@:........:@",
+  "@:........S@",
   "@@@@@__@@@@@"
  ],
  "warps": [
@@ -68,6 +68,11 @@
    "x": 1,
    "y": 4,
    "dialogue": "bellstone_ruins/r1_wall"
+  },
+  {
+   "x": 10,
+   "y": 5,
+   "dialogue": "bellstone_ruins/hint_board"
   }
  ],
  "blocks": [

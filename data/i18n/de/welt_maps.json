@@ -2,6 +2,7 @@
  "_comment": "German texts from tools/i18n/de_welt_maps.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
+  "A board for travellers' notes. Nothing useful is pinned on it yet.": "Eine Tafel für Notizen von Reisenden. Noch hängt nichts Brauchbares daran.",
   "A boulder sits in the reeds, smoothed by hands, not water.": "Im Schilf liegt ein Felsbrocken, glatt geschliffen von Händen, nicht von Wasser.",
   "A clear crystal, dull and cold. It waits for light.": "Ein klarer Kristall, matt und kalt. Er wartet auf Licht.",
   "A clear spring in a small clearing. The water is cold and tastes of moss.": "Eine klare Quelle auf einer kleinen Lichtung. Das Wasser ist kalt und schmeckt nach Moos.",
@@ -312,6 +313,10 @@
   "This stone is too smooth to be natural.": "Dieser Stein ist zu glatt, um natürlich zu sein.",
   "Thornridge, 27 folk.": "Thornridge, 27 Leute.",
   "Three terraces, one well, too many ladders.": "Drei Terrassen, ein Brunnen, zu viele Leitern.",
+  "Tip: cracked floor holds you once. Plan a path that never steps on the same crack twice.": "Tipp: Rissiger Boden hält dich einmal. Plane einen Weg, der keinen Riss zweimal betritt.",
+  "Tip: each hall's order is scratched into the wall by the stairs. Ring the bells in exactly that order; a wrong bell only starts the row again.": "Tipp: Die Reihenfolge jeder Halle ist neben der Treppe in die Wand geritzt. Läute die Glocken genau so; eine falsche Glocke fängt die Reihe nur von vorn an.",
+  "Tip: each wheel turned open raises the water one mark. Some walkways need high water, some low: count the marks before you cross.": "Tipp: Jedes geöffnete Rad hebt das Wasser um eine Marke. Manche Stege brauchen hohes Wasser, manche niedriges: Zähl die Marken, bevor du hinübergehst.",
+  "Tip: follow the light from where it comes in. Turn only the mirrors it touches, one at a time, until it bends toward the crystal.": "Tipp: Folge dem Licht von dort, wo es hereinfällt. Dreh nur die Spiegel, die es trifft, einen nach dem anderen, bis es zum Kristall abbiegt.",
   "Tova: Bright enough. Go on up.": "Tova: Hell genug. Geh nur hinauf.",
   "Tova: Climbing my stair? Show me your spark first.": "Tova: Du steigst meine Stiege hinauf? Zeig mir erst deinen Funken.",
   "Tova: I light all five lanterns every evening. My knees know every step.": "Tova: Ich zünde jeden Abend alle fünf Laternen an. Meine Knie kennen jede Stufe.",

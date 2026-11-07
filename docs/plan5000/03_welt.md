@@ -139,7 +139,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1013. [x] [P1] Setze Druckplatten "P" um, die gedrückt bleiben, solange ein Block oder der Spieler darauf steht, und eine Tür über open_flag steuern.
 1014. [x] [P1] Gib jedem Rätselraum einen "Raum zurücksetzen" Eintrag im Menü, der Blöcke und Schalter auf den Anfang stellt.
 1015. [P2] Gib Bellstone Ruins im letzten Raum ein Glockenrätsel mit fünf Glocken, dessen Reihenfolge auf drei Wandbildern in früheren Räumen verteilt ist.
-1016. [P2] Lass falsch geläutete Glocken in Bellstone Ruins nur die Reihe zurücksetzen und keinen Kampf auslösen.
+1016. [x] [P2] Lass falsch geläutete Glocken in Bellstone Ruins nur die Reihe zurücksetzen und keinen Kampf auslösen.
 1017. [P2] Baue in Brackwater Sluice einen Raum, in dem bei hohem Wasser Kisten schwimmen und als Trittsteine dienen.
 1018. [P2] Baue in Brackwater Sluice einen Raum, in dem bei niedrigem Wasser ein Fund am Grund erreichbar wird.
 1019. [P2] Gib Lanternwell drehbare Spiegel mit vier Stellungen, die man durch Ansprechen um 90 Grad dreht.
@@ -150,8 +150,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1024. [P2] Baue den Dungeon "Tidebell Tower" (de: Gezeitenglockenturm) auf einer Seeinsel, vier Stockwerke, deren Treppen sich je nach Gezeitenstand anders verbinden.
 1025. [P2] Setze in jedem Dungeon am Ende einen Hüter-Raum mit einem Hüter-NPC, der ein Andenken als Belohnung gibt (Kampf mit ihm nur durch Ansprechen).
 1026. [x] [P2] Zeige im Dungeon-Banner beim Betreten die Zahl der gelösten Räume, z. B. "Lanternwell 3/5".
-1027. [P2] Gib jedem Dungeon eine Hinweistafel am Eingang, die nach drei gescheiterten Versuchen eines Raums einen Tipp freigibt.
-1028. [P2] Lass Türen, die ein gelöstes Rätsel geöffnet hat, dauerhaft offen bleiben (gespeichert in world_state).
+1027. [x] [P2] Gib jedem Dungeon eine Hinweistafel am Eingang, die nach drei gescheiterten Versuchen eines Raums einen Tipp freigibt.
+1028. [x] [P2] Lass Türen, die ein gelöstes Rätsel geöffnet hat, dauerhaft offen bleiben (gespeichert in world_state).
 1029. [x] [P2] Gib jedem Dungeon eine eigene Tabelle in data/encounters.json mit niedriger Rate 0.06, damit Rätsel nicht ständig unterbrochen werden.
 1030. [x] [P2] Setze in Rätselräumen keine Begegnungsfelder, nur in Fluren zwischen den Räumen.
 1031. [x] [P2] Zeige in jedem Rätselraum beim ersten Betreten eine Zeile mit dem Ziel des Raums, z. B. "Bringe das Licht zu beiden Kristallen".

@@ -1,6 +1,8 @@
 # German texts for area 3 (world, maps, exploring). Written to data/i18n/de/ by tools/i18n/build.py.
 # Kept apart from de_world.py so the world thread can add maps without clashing with story edits.
 T = {
+# Dungeon hint boards (item 1027)
+"Somewhere near the entrance, someone has pinned a new note to the board.": "Irgendwo am Eingang hat jemand einen neuen Zettel an die Tafel gesteckt.",
 # Cartographer's stones (items 1084, 1085)
 "You trace the mark with your finger. Cartographer's stones found: %d/%d": "Du fährst das Zeichen mit dem Finger nach. Kartografensteine gefunden: %d/%d",
 "Tucked behind the stone lies a keepsake: %s.": "Hinter dem Stein steckt ein Andenken: %s.",

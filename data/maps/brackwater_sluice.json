@@ -11,7 +11,7 @@
   "@~~~~++~~~~@",
   "@~~~~++~~~~@",
   "@..S.......@",
-  "@:........:@",
+  "@:........S@",
   "@@@@@__@@@@@"
  ],
  "warps": [
@@ -53,6 +53,11 @@
    "x": 3,
    "y": 4,
    "dialogue": "brackwater_sluice/sluice_a"
+  },
+  {
+   "x": 10,
+   "y": 5,
+   "dialogue": "brackwater_sluice/hint_board"
   }
  ],
  "blocks": [
