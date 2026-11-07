@@ -476,11 +476,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3543. [P2] Die Kosmetik-Freischaltungen kontoweit in einer eigenen Server-Tabelle in supabase/ speichern, getrennt vom Spielstand.
 3544. [x] [P2] Einen GUT-Test für Waymarks.earn() schreiben: Obergrenze 9999, keine negativen Beträge, Log-Länge 200.
 3545. [x] [P2] Einen GUT-Test für DailyTasks schreiben, der prüft, dass derselbe Tag immer dieselben drei Aufträge zieht.
-3546. [P2] Einen GUT-Test für den Festband-Umtausch am Festende schreiben, auch wenn der Spieler erst Wochen später wieder öffnet.
+3546. [x] [P2] Einen GUT-Test für den Festband-Umtausch am Festende schreiben, auch wenn der Spieler erst Wochen später wieder öffnet.
 3547. [P2] Einen GUT-Test für die Turm-Rastpunkte schreiben: Lauf speichern, Spiel neu laden, am richtigen Stockwerk fortsetzen.
-3548. [P2] Einen GUT-Test für den Jahreszeitenpfad schreiben, der Saisonwechsel und Nachholfrist von 14 Tagen prüft.
+3548. [x] [P2] Einen GUT-Test für den Jahreszeitenpfad schreiben, der Saisonwechsel und Nachholfrist von 14 Tagen prüft.
 3549. [x] [P2] Einen GUT-Test schreiben, der alle Texte der neuen Daten durch tools/ip_check.sh laufen lässt.
-3550. [P2] Den Ladebildschirm-Test mit einem Spielstand voller Endgame-Daten auf die Ladezeit unter 1 Sekunde prüfen.
+3550. [x] [P2] Den Ladebildschirm-Test mit einem Spielstand voller Endgame-Daten auf die Ladezeit unter 1 Sekunde prüfen.
 3551. [P3] Den Speicherumfang der neuen Daten messen und unter 20 KB pro Spielstand halten.
 3552. [P3] Einen Fuzz-Test über 365 simulierte Tage schreiben, der Aufträge, Feste und Pfad durchläuft und keinen Absturz zeigt.
 3553. [P3] Die Zeitzonen-Grenze testen: ein Spieler in Neuseeland und einer in Kalifornien bekommen am selben Server-Tag dieselben Aufträge.

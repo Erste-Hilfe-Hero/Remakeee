@@ -727,6 +727,9 @@ func announce_achievements() -> void:
 	show_notices()
 	var lines: Array[String] = Collection.claim()
 	lines.append_array(SeasonPath.note_play())
+	# Ribbons of a festival that ended while the game was closed turn into Waymarks on the
+	# first open, not only on the next battle (plan 3546).
+	lines.append_array(Festival.settle())
 	# Vows settle and the run is chronicled first, so "Three Ways" is checked right after (plan 3403).
 	lines.append_array(Vows.settle())
 	lines.append_array(RunChronicle.note())
