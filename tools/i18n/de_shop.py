@@ -641,4 +641,9 @@ T = {
 "Works for the next %d steps.": "Wirkt die nächsten %d Schritte.",
 "1 step left": "noch 1 Schritt", "%d steps left": "noch %d Schritte",
 "The Encounter Call fades.": "Der Begegnungsruf verklingt.",
+"Battle Skip": "Kampf-Überspringer",
+"Offered before a wild battle against one foe at least 10 Rings below your lead: your team wins it at once, with full growth. Used up.": "Wird vor einem wilden Kampf gegen einen Gegner angeboten, der mindestens 10 Ringe unter deinem vordersten Spirling liegt: Dein Team gewinnt sofort, mit vollem Wachstum. Wird verbraucht.",
+"Use a Battle Skip on %s? Your team wins it at once (%d left).": "Kampf-Überspringer gegen %s nutzen? Dein Team gewinnt sofort (noch %d).",
+"Skip": "Überspringen", "Fight": "Kämpfen",
+"Battle skipped: %s is beaten.": "Kampf übersprungen: %s ist besiegt.",
 }

@@ -620,6 +620,13 @@
   }
  },
  {
+  "id": "rg_skip_battle",
+  "name": "Battle Skip",
+  "description": "Offered before a wild battle against one foe at least 10 Rings below your lead: your team wins it at once, with full growth. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
   "id": "rg_spark_forge",
   "name": "Spark Forge",
   "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",
