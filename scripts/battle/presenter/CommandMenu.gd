@@ -66,7 +66,8 @@ func _ready() -> void:
 				_long_fired = false
 				return
 			_hold.stop()
-			Sound.sfx("confirm")
+			var el: int = _shown_moves[idx].element if idx < _shown_moves.size() else -1
+			Sound.sfx("confirm", 0.0, Sound.art_pick_pitch(el))
 			chosen.emit(BattleAction.Kind.MOVE, idx))
 		b.button_down.connect(func() -> void:
 			_held_index = idx

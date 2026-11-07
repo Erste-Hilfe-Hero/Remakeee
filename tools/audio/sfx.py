@@ -61,6 +61,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(rift_sfx())
     out.update(dodge_sfx())
     out.update(social_sfx())
+    out.update(passage_sfx())
     return out
 
 
@@ -232,4 +233,38 @@ def social_sfx() -> dict[str, np.ndarray]:
     for nm in ["E7", "B6", "G#7", "D#7", "B7"]:
         parts.append(tone(nm, 0.04, "tri"))
     out["sparkle"] = np.concatenate(parts) * 0.3
+    return out
+
+
+def passage_sfx() -> dict[str, np.ndarray]:
+    """Doors opening and closing in wood (item 2507), three quick steps up or down the stairs
+    (2508), the pause menu as a page turned open and folded shut (2509), the faint Energy tick
+    at round start (2537). Own generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(2507)
+    out: dict[str, np.ndarray] = {}
+    # Wood: band of noise held a few samples (darker) over a low pulse thump.
+    n = secs(0.22)
+    creak = sweep(180, 260, n, "pulse", 0.125) * 0.15 * np.sin(np.linspace(0, np.pi, n))
+    out["door_open"] = (noise(n, 10, rng) * 0.35 + creak + sweep(110, 80, n, "tri") * 0.35) * \
+        env(n, attack=0.01, decay=0.1, sustain=0.4, release=0.06) * 0.8
+    n = secs(0.12)
+    out["door_close"] = (noise(n, 14, rng) * 0.4 + sweep(95, 55, n, "tri") * 0.6) * \
+        env(n, attack=0.001, decay=0.05, sustain=0.2, release=0.04) * 0.9
+    for name, notes in [("stairs_up", ["C4", "E4", "G4"]), ("stairs_down", ["G4", "E4", "C4"])]:
+        parts = []
+        for nm in notes:
+            k = secs(0.05)
+            step = triangle(freq(midi(nm)), k) * 0.5 + noise(k, 4, rng) * 0.25
+            parts.append(step * env(k, attack=0.001, decay=0.02, sustain=0.2, release=0.01))
+            parts.append(np.zeros(secs(0.025)))
+        out[name] = np.concatenate(parts) * 0.7
+    # A page: a short rush of fine noise, rising when it opens, falling and soft when it shuts.
+    n = secs(0.16)
+    out["page_open"] = (noise(n, 1, rng) * np.linspace(0.2, 0.6, n) + sweep(600, 1200, n, "tri") * 0.08) * \
+        env(n, attack=0.01, decay=0.06, sustain=0.5, release=0.04) * 0.6
+    n = secs(0.13)
+    out["page_close"] = (noise(n, 2, rng) * np.linspace(0.6, 0.15, n) + sweep(700, 300, n, "tri") * 0.1) * \
+        env(n, attack=0.002, decay=0.05, sustain=0.4, release=0.04) * 0.6
+    n = secs(0.012)
+    out["energy_tick"] = pulse(freq(midi("E7")), n, 0.125) * env(n, attack=0.001, decay=0.006, sustain=0.2, release=0.003) * 0.2
     return out
