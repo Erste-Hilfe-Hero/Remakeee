@@ -109,7 +109,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `fernstair` | route | 12x26 | 5 | 2 | 63 |
 | veydal | `gloamwood` | route | 12x30 | 5 | 3 | 152 |
 | veydal | `kindle_vents` | cave | 12x10 | 2 | 0 | 12 |
-| veydal | `lantern_steps` | route | 12x19 | 4 | 3 | 9 |
+| veydal | `lantern_steps` | route | 12x19 | 5 | 3 | 9 |
 | veydal | `lanternwell` | inside | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 1 | 0 | 7 |
 | veydal | `lighthouse` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `map_house` | inside | 10x8 | 0 | 0 | 0 |
@@ -119,7 +119,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `reedhaven` | town | 12x10 | 3 | 0 | 0 |
 | veydal | `rest_spring` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `sablecove` | cave | 12x9 | 4 | 0 | 10 |
-| veydal | `saltmarsh` | marsh | 12x15 | 4 | 3 | 47 |
+| veydal | `saltmarsh` | marsh | 12x15 | 5 | 3 | 47 |
 | veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
 | veydal | `thornridge` | town | 12x20 | 4 | 0 | 6 |
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
@@ -132,18 +132,18 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `rain_rift` | rift | 12x13 | 0 | 0 | 22 |
 | corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
-| corvane | `woadfen` | marsh | 12x28 | 4 | 3 | 154 |
+| corvane | `woadfen` | marsh | 12x28 | 5 | 3 | 154 |
 | ashmere | `ashmere_station` | town | 12x22 | 3 | 0 | 0 |
 | ashmere | `cinderfold` | town | 12x16 | 3 | 0 | 0 |
 | ashmere | `glass_rift` | rift | 12x13 | 0 | 0 | 20 |
 | ashmere | `gravers_hall` | inside | 10x9 | 0 | 0 | 0 |
 | ashmere | `kiln_rift` | rift | 12x13 | 0 | 0 | 20 |
-| ashmere | `saltglass` | route | 12x26 | 4 | 3 | 56 |
+| ashmere | `saltglass` | route | 12x26 | 5 | 3 | 56 |
 | ashmere | `undrawn_1` | rift | 12x22 | 0 | 0 | 0 |
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **45 maps** | | | **99** | **42** | **1062** |
+| | **45 maps** | | | **103** | **42** | **1062** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
