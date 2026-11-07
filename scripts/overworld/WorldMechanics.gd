@@ -334,6 +334,7 @@ func interact(cell: Vector2i) -> bool:
 	if not find.is_empty():
 		await ow.take_find(find)
 		_build_glints(m)
+		ow.refresh_minimap()
 		return true
 	var passage: Dictionary = m.passage_at(cell)
 	if not passage.is_empty() and not GameState.has_flag(str(passage.get("flag", ""))):
