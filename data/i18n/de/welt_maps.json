@@ -2,6 +2,7 @@
  "_comment": "German texts from tools/i18n/de_welt_maps.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
  "keep": [],
  "strings": {
+  "A bench with a view over the lake. Sit and listen for a while?": "Eine Bank mit Blick über den See. Eine Weile sitzen und lauschen?",
   "A board for travellers' notes. Nothing useful is pinned on it yet.": "Eine Tafel für Notizen von Reisenden. Noch hängt nichts Brauchbares daran.",
   "A boulder sits in the reeds, smoothed by hands, not water.": "Im Schilf liegt ein Felsbrocken, glatt geschliffen von Händen, nicht von Wasser.",
   "A clear crystal, dull and cold. It waits for light.": "Ein klarer Kristall, matt und kalt. Er wartet auf Licht.",
@@ -9,6 +10,7 @@
   "A coiled rope hangs on a hook by a lever.": "Ein aufgerolltes Seil hängt an einem Haken neben einem Hebel.",
   "A cracked bell hangs from a beam.": "Eine Glocke (gesprungen) hängt an einem Balken.",
   "A deep bell hangs from a beam.": "Eine Glocke (tief) hängt an einem Balken.",
+  "A dockhand mutters as he passes: \"Someone dropped a tonic among the trees on the west side. Never found it.\"": "Ein Hafenarbeiter murmelt im Vorbeigehen: \"Jemand hat bei den Bäumen auf der Westseite ein Tonikum verloren. Nie wiedergefunden.\"",
   "A great iron wheel works a sluice gate.": "Ein großes Eisenrad bewegt ein Schleusentor.",
   "A green bell hangs from a beam.": "Eine Glocke (grün) hängt an einem Balken.",
   "A ladder leads back up to the mine entrance.": "Eine Leiter führt zurück hinauf zum Mineneingang.",
@@ -21,6 +23,7 @@
   "ASHMERE STATION": "BAHNHOF ASHMERE",
   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth.": "Ein alter Kartografenstein. Eine Windrose ist hineingemeißelt, fast glatt geschliffen.",
   "An old culvert, its grate rusted shut. It runs back up the valley.": "Ein alter Durchlass, das Gitter festgerostet. Er führt das Tal hinauf zurück.",
+  "An old fen-cutter rows past: \"That smooth boulder in Brackwater Fen? Hands put it there, to hide a way.\"": "Ein alter Torfstecher rudert vorbei: \"Der glatte Felsbrocken im Brackfenn? Den haben Hände dorthin gelegt, um einen Weg zu verstecken.\"",
   "Apprentice Kip: I learn smithing in Copperfold every evening. Days, I sweep the elder's porch.": "Lehrling Kip: Jeden Abend lerne ich in Kupferfalt schmieden. Tagsüber kehre ich die Veranda der Ältesten.",
   "Apprentice Kip: The forge fire burns blue in Copperfold now. Smith Holt says that's luck.": "Lehrling Kip: Das Schmiedefeuer in Kupferfalt brennt jetzt blau. Schmied Holt sagt, das bringt Glück.",
   "Ash-Sweeper Agna: The ash settles by evening. Then we sit by the spring and pretend it never falls.": "Aschefegerin Agna: Gegen Abend legt sich die Asche. Dann sitzen wir am Brunnen und tun so, als fiele sie nie.",
@@ -278,6 +281,7 @@
   "Shepherd Ula: My flock sleeps through the night again. No more ash on the wind.": "Schäferin Ula: Meine Herde schläft wieder durch. Keine Asche mehr im Wind.",
   "Shepherd Ula: The flock grazes the scree by day. At dusk I count them twice, at the square.": "Schäferin Ula: Tagsüber grast die Herde im Geröll. In der Dämmerung zähle ich sie am Platz zweimal.",
   "Signal-Keeper Sev: The lamp by the tracks is older than the railway. We built the station around it.": "Signalwärter Sev: Die Laterne an den Gleisen ist älter als die Bahn. Wir haben den Bahnhof um sie herum gebaut.",
+  "Sit and listen": "Sitzen und lauschen",
   "Sit and wait": "Sitzen und warten",
   "Smith Holt: Bring me ore some day and I'll make that bar sing.": "Schmied Holt: Bring mir irgendwann Erz, dann bringe ich die Stange zum Singen.",
   "Smith Holt: Take this one. Sluice wheels, stuck carts, rusty grates: lean on it and they give.": "Schmied Holt: Nimm die hier. Schleusenräder, festsitzende Loren, rostige Gitter: stemm dich dagegen und sie geben nach.",
@@ -345,6 +349,7 @@
   "Wren: I come here to listen. The forest is never fully quiet, Hush or not.": "Wren: Ich komme zum Zuhören her. Der Wald ist nie ganz still, Stille hin oder her.",
   "Wren: You walk loud for a cartographer. Let's see how you fight.": "Wren: Für jemanden mit Zeichenstift läufst du ganz schön laut. Mal sehen, wie du kämpfst.",
   "Wrenhollow": "Zaunkönigsgrund",
-  "Wrenhollow, 34 folk.": "Zaunkönigsgrund, 34 Leute."
+  "Wrenhollow, 34 folk.": "Zaunkönigsgrund, 34 Leute.",
+  "You remember a saying: \"In Quillbrook, the stone too smooth to be natural is a door.\"": "Dir fällt ein Spruch ein: \"In Federbach ist der Stein, der zu glatt ist, eine Tür.\""
  }
 }

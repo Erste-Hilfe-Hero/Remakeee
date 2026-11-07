@@ -82,5 +82,22 @@
    "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
   ],
   "action": "marker_stone 5"
- }
+ },
+ "lake_bench": {
+  "lines": [
+   "A bench with a view over the lake. Sit and listen for a while?"
+  ],
+  "choices": [
+   {
+    "text": "Sit and listen",
+    "action": "lake_bench Kelpup reedhaven/lake_hint"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "lake_hint": [
+  "An old fen-cutter rows past: \"That smooth boulder in Brackwater Fen? Hands put it there, to hide a way.\""
+ ]
 }
