@@ -130,7 +130,7 @@ def quillbrook(world):
             "T,,,..~~..ST",
             "T,,...ww...T",
             "TT,,..~~.,,T",
-            "T,,,.,~~,,,T",
+            "T,,,S+~~,,,T",
             "T..T..~~,,TT",
             "T,,,,.~~..,T",
             "T^^^^.~~^^^T",
@@ -165,6 +165,10 @@ def quillbrook(world):
         "culvert": {"lines": lines(("An old culvert, its grate rusted shut. It runs back up the valley.", "Ein alter Durchlass, das Gitter festgerostet. Er führt das Tal hinauf zurück.")),
                     "action": "lever quill_culvert pry_bar"},
         "smooth": lines(("This stone is too smooth to be natural.", "Dieser Stein ist zu glatt, um natürlich zu sein.")),
+        # Item 935: a bench on the fishing pier moves the clock on to the next time of day.
+        "bench": {"lines": lines(("A worn bench at the end of a little fishing pier. Sit for a while?", "Eine abgewetzte Bank am Ende eines kleinen Fischerstegs. Eine Weile sitzen?")),
+                  "choices": [{"text": tr("Sit and wait", "Sitzen und warten"), "action": "bench"},
+                              {"text": tr("Not now", "Jetzt nicht")}]},
         "boatman": {"lines": lines(("Boatman Osk: Lake Line landing. The brook runs out to the lake from here, and so do I.", "Bootsmann Osk: Anleger der Seelinie. Von hier fließt der Bach in den See, und ich fahre mit.")),
                     "action": "transit lake_line"},
     })
@@ -190,6 +194,7 @@ def quillbrook(world):
                       [("Pim: I'll practise two weeks next time.", "Pim: Nächstes Mal übe ich zwei Wochen.")], 300),
          ],
          "signs": [{"x": 10, "y": 2, "dialogue": mid + "/sign"}, {"x": 8, "y": 24, "dialogue": mid + "/culvert"},
+                   {"x": 4, "y": 5, "dialogue": mid + "/bench"},
                    {"x": 2, "y": 12, "dialogue": mid + "/smooth"}],
          # Shortcut (item 919): the culvert at the bottom opens with the Pry Bar and runs back to
          # the top of the valley; both doors stay shut until then.

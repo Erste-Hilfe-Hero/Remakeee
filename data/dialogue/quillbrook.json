@@ -66,5 +66,19 @@
    "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
   ],
   "action": "marker_stone 9"
+ },
+ "bench": {
+  "lines": [
+   "A worn bench at the end of a little fishing pier. Sit for a while?"
+  ],
+  "choices": [
+   {
+    "text": "Sit and wait",
+    "action": "bench"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
  }
 }
