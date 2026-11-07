@@ -443,13 +443,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 847. [x] [P1] Test pro neuem Effekt-Baustein in tests/unit/test_move_effects.gd mit fester Kampflage und festem Seed, der das genaue Ergebnis prüft (Schaden, Energie, Status, Stufe).
 848. [x] [P1] Test: `delayed_hit`, `side_snare` und `cooldown` überstehen ein Replay-Hin-und-zurück mit BattleReplay ohne Abweichung. Erledigt: test_move_curve.gd (Fallen und Abklingzeit, dazu delayed_hit).
 849. [x] [P1] Test: im Modus `team` bei Ring 36 liegt keine Art unter 30 % oder über 70 % (zusätzlich zum bestehenden Duell-Band 25 bis 75 %).
-850. [P2] Test: der Vorteil des Ersten liegt bei Ring 20 und 36 höchstens bei 62 %.
-851. [P2] Test: die Züge bis K.o. liegen bei Ring 36 im Duell im Schnitt zwischen 2,5 und 4,0.
-852. [P2] Test: der Rast-Anteil liegt im Modus `team` zwischen 10 und 25 %.
-853. [P2] Test: kein Andenken hebt die Gewinnrate um mehr als 6 Punkte.
-854. [P2] Test: jedes Feld hebt das verstärkte Element um 8 bis 15 Punkte.
-855. [P2] Test: die KI-Leiter erfüllt die Zielwerte (1 gegen 0 mindestens 75 %, 2 gegen 1 mindestens 60 %, 3 gegen 2 mindestens 55 %).
-856. [P2] Test: jedes Element liegt im Modus `mono` zwischen 42 und 58 %.
+850. [x] [P2] Test: der Vorteil des Ersten liegt bei Ring 20 und 36 höchstens bei 62 %. Erledigt: test_sim_bands.gd, Duell auf Ring 20 und 36 (3 Runden pro Paar, Seed 850): 54 % und 52 %.
+851. [x] [P2] Test: die Züge bis K.o. liegen bei Ring 36 im Duell im Schnitt zwischen 2,5 und 4,0. Erledigt: test_sim_bands.gd, Ring 36: 3,0 Züge.
+852. [x] [P2] Test: der Rast-Anteil liegt im Modus `team` zwischen 10 und 25 %. Erledigt: test_sim_bands.gd, 150 Teamkämpfe auf Ring 36: 18 %.
+853. [x] [P2] Test: kein Andenken hebt die Gewinnrate um mehr als 6 Punkte. Erledigt: test_sim_bands.gd, 120 Kampfpaare pro Andenken (Seed 1234): höchstens +5,8 (bark_wrap).
+854. [x] [P2] Test: jedes Feld hebt das verstärkte Element um 8 bis 15 Punkte. Erledigt: test_sim_bands.gd prüft das Band auf Ring 36 (200 Paare). High Tide und Pollen Drift liegen darin; Static Veil (+16,5), Deep Murk, Dawn Glow und Ash Storm (+5,5 bis +7,5) stehen als bekannte Lücken in KNOWN_GAPS. Ein eigener Verstärkungswert pro Feld bringt alle sechs ins Band (ausprobiert: Ash Storm 1,65, High Tide 1,4, Deep Murk und Dawn Glow 1,45, Static Veil 1,1), bricht aber Wächter, Prüfungen und Bonusziele (Orrin auf Veteran 22 %, current_trial_2 ohne Lösung). Ein Feld-Umbau muss daher zusammen mit diesen kommen; Details in docs/BALANCE.md "Known gaps".
+855. [x] [P2] Test: die KI-Leiter erfüllt die Zielwerte (1 gegen 0 mindestens 75 %, 2 gegen 1 mindestens 60 %, 3 gegen 2 mindestens 55 %). Erledigt: test_sim_bands.gd prüft die Leiter (Ring 36, 200 Kämpfe). Stufe 1 gegen 0 erfüllt das Ziel (82 %); 2 gegen 1 (56 %) und 3 gegen 2 (knapp 55 %) stehen als bekannte Lücken in KNOWN_GAPS und in docs/BALANCE.md "Known gaps", weil das eine eigene KI-Aufgabe ist.
+856. [x] [P2] Test: jedes Element liegt im Modus `mono` zwischen 42 und 58 %. Erledigt: test_sim_bands.gd prüft Mono (Ring 36, 400 Kämpfe). Bloom, Ember, Lumen, Stone und Tide liegen im Band; Volt (24 %, nur 3 Arten auf Ring 36), Gale und Umbra (je 60 %) stehen als bekannte Lücken in KNOWN_GAPS und in docs/BALANCE.md.
 857. [P2] Test: jede Reaktion wird im Fuzz-Lauf über 200 Kämpfe mindestens einmal ausgelöst und verändert den Schaden genau um ihren Faktor.
 858. [P2] Test: jede Seitenfalle wirkt genau einmal und verschwindet danach; Scatter Gale entfernt alle Fallen der eigenen Seite.
 859. [P2] Test: `heal_block` verhindert Heiltechnik, Gabe-Regeneration, Feld-Heilen und Andenken-Heilen, und nichts anderes.

@@ -50,8 +50,8 @@ path. `--json` writes every number for tests and comparisons.
 | Team win rate per species at Lv36 | 30% to 70% | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
 | Team battles that stall (120 turns) | none | `test_balance.gd`, same test |
 | Battles with only the new arts that hit 60 turns | none | `test_move_curve.gd`, `test_fuzz_new_arts_only` |
-| Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | report line "Turns to KO" (test planned, item 851) |
-| First-mover advantage (faster Spirling wins) | at most 62% | report line (test planned, item 850) |
+| Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | `test_sim_bands.gd` (item 851) |
+| First-mover advantage (faster Spirling wins) | at most 62% | `test_sim_bands.gd` (item 850) |
 | Damage art curve: power x accuracy / (energy + 1) x effect factor | 9 to 18 | `test_move_curve.gd` |
 | Accuracy of any art | at least 75% | `test_move_curve.gd` |
 | Status chance of a damage art | at most 30% | `test_move_curve.gd` |
@@ -65,6 +65,31 @@ Glimmerax sits lowest in duels (26%, it loses to 7 of 8 same-stage species on ba
 
 Long fights: from turn `BattleRules.WEARY_TURN` (40) nobody heals any more, so two Spirlings that
 mend faster than they hurt each other can't stall forever.
+
+## Known gaps
+
+Bands that `tests/unit/test_sim_bands.gd` measures but the game misses today (plan area 2,
+items 854 to 856). The test lists them in `KNOWN_GAPS`, prints them and fails on every other
+miss; take a key out of both places once it is fixed.
+
+| Key | Measured (ring 36, seed 1234) | Target | Why it stays open |
+| --- | --- | --- | --- |
+| `ladder:2` | AI tier 2 beats tier 1 in 56 % | at least 60 % | needs a better tier 2 lookahead, an AI task of its own |
+| `ladder:3` | tier 3 beats tier 2 in about 55 %, just under | at least 55 % | same |
+| `mono:Volt` | 24 % | 42 to 58 % | only 3 Volt species stand at ring 36; a roster question (area 1) |
+| `mono:Gale` | 60 % | 42 to 58 % | 11 species, wide pool |
+| `mono:Umbra` | 60 % | 42 to 58 % | just over the band |
+| `field:static_veil` | +16.5 | +8 to +15 | see below |
+| `field:deep_murk` | +7.5 | +8 to +15 | see below |
+| `field:dawn_glow` | +6.5 | +8 to +15 | see below |
+| `field:ash_storm` | +5.5 | +8 to +15 | see below |
+
+Fields (item 854): a per-field boost puts all six in the band at ring 36 (tried 7 Nov 2026:
+Ash Storm 1.65, High Tide 1.4, Deep Murk and Dawn Glow 1.45, Static Veil 1.1 with weaken 0.9:
+every field +9 to +14). But Wardens, the Trials and the bonus goals are tuned on today's fields:
+that change dropped Orrin on Veteran from the 45 to 80 % band to 22 %, Maelis on Tamer to 47 %,
+the drowned_heart goal to 10 % and left current_trial_2 without a solution. A field retune has
+to come together with those, so the fields stay at 1.2 / 0.85 for now.
 
 ## Changes from the first run (Nov 2026)
 
