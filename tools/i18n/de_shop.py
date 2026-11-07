@@ -692,4 +692,5 @@ T = {
 "Use for text": "Für Texte nutzen",
 "Text shows in the plain box again.": "Texte stehen wieder im einfachen Kasten.",
 "Text now shows in %s.": "Texte stehen jetzt im %s.",
+"You take off the hat.": "Du nimmst den Hut ab.",
 }

@@ -606,6 +606,23 @@ func test_shop_text_frames_show_only_while_owned() -> void:
 	Billing.state = {}
 	GameState.text_frame = worn
 
+func test_shop_hats_show_only_while_owned() -> void:
+	var worn: String = GameState.hat_look
+	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_hat_tricorn")), "hat_tricorn")
+	GameState.hat_look = "hat_tricorn"
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.worn_hat(), "")
+	Billing.state = {"unlocks": {"hat_tricorn": 1}}
+	assert_eq(GameState.worn_hat(), "tricorn")
+	for k: String in HatArt.KINDS:
+		assert_false(ShopCatalog.look_offer("hat_" + k).is_empty(), "offer for %s" % k)
+	var walker := GridWalker.new()
+	walker.hat = "tricorn"
+	assert_eq(walker.hat, "tricorn")
+	walker.free()
+	Billing.state = {}
+	GameState.hat_look = worn
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

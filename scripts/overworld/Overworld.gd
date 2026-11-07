@@ -117,6 +117,7 @@ func _ready() -> void:
 		GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 	GameState.in_game = true
 	player.body_color = GameState.body_color()
+	player.hat = GameState.worn_hat()
 	player.sprite_style = GameState.tamer_sprite()
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
 	VirtualPad.set_wanted(true)
@@ -1063,6 +1064,7 @@ func open_menu() -> void:
 		Sound.enter_map(target)
 		await _fade_to(0.0)
 	player.body_color = GameState.body_color()
+	player.hat = GameState.worn_hat()
 	refresh_daylight()
 	VirtualPad.set_wanted(true)
 	player.frozen = false
