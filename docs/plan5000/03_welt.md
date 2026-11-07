@@ -185,7 +185,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1057. [P2] Lege für jede Verbesserung feste Kosten in Münzen und Erzen fest, z. B. Laterne Stufe 2 für 1500 Münzen und 3 Kupfererz.
 1058. [P2] Füge die Erze "Copper Ore" (de: Kupfererz) und "Moonstone" (de: Mondstein) als Funde in Höhlen hinzu, nur nutzbar für Werkstatt-Verbesserungen.
 1059. [P2] Baue ein Ausrüstungs-Rad im Feldmenü, das per langem Druck auf A die passende Ausrüstung für das Feld vor dem Spieler vorschlägt.
-1060. [P2] Lass die passende Ausrüstung automatisch wirken, wenn der Spieler nur eine besitzt, die an dieser Stelle passt.
+1060. [x] [P2] Lass die passende Ausrüstung automatisch wirken, wenn der Spieler nur eine besitzt, die an dieser Stelle passt.
 1061. [x] [P2] Zeige vor einer noch gesperrten Stelle ein graues Symbol der benötigten Ausrüstung, damit man sich die Stelle merkt.
 1062. [x] [P2] Gib jede neue Ausrüstung an einem festen Ort im Spiel aus, nachvollziehbar in docs/WORLD.md eingetragen (Gebiet, Geber, Flag).
 1063. [x] [P2] Füge die Ausrüstung "Tide Chart" (de: Gezeitentafel) hinzu, die im Menü die nächste Ebbe und Flut nach Gerätezeit anzeigt.
