@@ -1,0 +1,30 @@
+{
+ "_comment": "Turkish texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Ambience": "Ortam",
+  "Ambience: %d%%": "Ortam: %%%d",
+  "Both ears hear the same sound, for hearing on one side.": "İki kulak aynı sesi duyar; tek taraflı işitme için.",
+  "Coins: %d": "Para: %d",
+  "Full": "Tam",
+  "How much the screen shakes on big hits.": "Büyük vuruşlarda ekranın ne kadar sarsılacağı.",
+  "How strongly the phone or gamepad vibrates.": "Telefonun ya da oyun kolunun ne kadar titreyeceği.",
+  "Important sounds also show as a short text at the top.": "Önemli sesler üstte kısa bir yazı olarak da görünür.",
+  "Mono sound: %s": "Mono ses: %s",
+  "Places": "Yerler",
+  "Screen shake: %s": "Sarsıntı: %s",
+  "Short blips while a line types out.": "Bir satır yazılırken kısa bip sesleri.",
+  "Sound captions: %s": "Ses altyazısı: %s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "Yazı sesi ve Spirling çığlıkları. Sol ve sağ 10'ar adımla değiştirir.",
+  "Text voice: %s": "Yazı sesi: %s",
+  "Vibration: %s": "Titreşim: %s",
+  "Voice": "Ses",
+  "Voices: %d%%": "Sesler: %%%d",
+  "Waiting for the server": "Sunucu bekleniyor",
+  "Weak": "Zayıf",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "Bir yerin rüzgârı, suyu ve diğer sesleri. Sol ve sağ 10'ar adımla değiştirir.",
+  "[A deep rumble]": "[Derin bir gürleme]",
+  "[Footsteps stop short]": "[Ayak sesleri birden durur]",
+  "[Item picked up]": "[Eşya alındı]",
+  "[Rustling in the grass]": "[Otlarda hışırtı]"
+ }
+}

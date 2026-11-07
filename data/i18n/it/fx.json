@@ -1,0 +1,30 @@
+{
+ "_comment": "Italian texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "Ambience": "Ambiente",
+  "Ambience: %d%%": "Ambiente: %d%%",
+  "Both ears hear the same sound, for hearing on one side.": "Le due orecchie sentono lo stesso suono, utile per chi sente da un lato solo.",
+  "Coins: %d": "Monete: %d",
+  "Full": "Forte",
+  "How much the screen shakes on big hits.": "Quanto trema lo schermo nei colpi più forti.",
+  "How strongly the phone or gamepad vibrates.": "Quanto vibra il telefono o il gamepad.",
+  "Important sounds also show as a short text at the top.": "I suoni importanti appaiono anche come breve testo in alto.",
+  "Mono sound: %s": "Audio mono: %s",
+  "Places": "Luoghi",
+  "Screen shake: %s": "Tremolio: %s",
+  "Short blips while a line types out.": "Brevi bip mentre una riga appare.",
+  "Sound captions: %s": "Sottotitoli: %s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "Voce del testo e versi degli Spirling. Sinistra e destra la cambiano di 10 in 10.",
+  "Text voice: %s": "Voce testo: %s",
+  "Vibration: %s": "Vibrazione: %s",
+  "Voice": "Voce",
+  "Voices: %d%%": "Voci: %d%%",
+  "Waiting for the server": "In attesa del server",
+  "Weak": "Debole",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "Vento, acqua e altri suoni di un luogo. Sinistra e destra li cambiano di 10 in 10.",
+  "[A deep rumble]": "[Un rombo profondo]",
+  "[Footsteps stop short]": "[Passi che si fermano di colpo]",
+  "[Item picked up]": "[Oggetto raccolto]",
+  "[Rustling in the grass]": "[Fruscio nell'erba]"
+ }
+}
