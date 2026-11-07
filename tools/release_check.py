@@ -14,6 +14,7 @@ import json
 import glob
 import os
 import re
+import subprocess
 import sys
 
 from PIL import Image
@@ -198,6 +199,9 @@ def check_products() -> None:
         errors.append("product %s is in data/shop.json but not in store/products.json" % pid)
     for pid in sorted(set(listed) - set(game)):
         errors.append("product %s is in store/products.json but not in data/shop.json" % pid)
+    table = subprocess.run([sys.executable, "tools/shop/make_shop_table.py", "--check"], capture_output=True, text=True)
+    if table.returncode != 0:
+        errors.append("docs/MONETIZATION.md: shop table is out of date, run tools/shop/make_shop_table.py")
     for pid, o in sorted(game.items()):
         cents = int(o.get("eur_cents", 0))
         if cents not in PRICE_CENTS:

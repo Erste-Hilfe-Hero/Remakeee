@@ -10,11 +10,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4003. [x] [P1] Preis in beiden Store-Konsolen auf "kostenlos" planen und in `docs/STORE_RELEASE.md` Schritt 6 ("Preis 4,99 €") durch "kostenlos mit In-App-Käufen" ersetzen.
 4004. [x] [P1] In `docs/STORE_RELEASE.md` Schritt 4 den Apple-Vertrag "Paid Apps" als weiter nötig für In-App-Käufe kennzeichnen und die Play-Zahlungsprofil-Zeile auf "Händlerkonto für In-App-Käufe" ändern.
 4005. [x] [P1] Die Zeile "Geschäftsmodell: Einmalkauf" in der Tabelle von `docs/STORE_RELEASE.md` auf "kostenlos, Shop mit Rissglas" ändern, damit `tools/release_check.py` nicht auf alte Angaben prüft.
-4006. [P2] In `docs/MONETIZATION.md` eine Tabelle aller Angebote mit Kennung, Euro-Preis, Rissglas-Preis, Art (Vorteil, Kosmetik, Komfort) und Liga-Wirkung führen, die aus `data/shop.json` erzeugt wird.
-4007. [P2] Ein Skript `tools/shop/make_shop_table.py` schreiben, das die Angebotstabelle aus `data/shop.json` in `docs/MONETIZATION.md` zwischen zwei Markern neu einsetzt.
-4008. [P2] In `docs/MONETIZATION.md` festhalten, dass jeder Spielinhalt auch ohne Kauf erreichbar bleibt, nur langsamer, und welche Zeit ein Spieler ohne Kauf für die Story braucht (Ziel: 25 Stunden).
-4009. [P2] In `docs/MONETIZATION.md` die Umsatzziele als Planwerte notieren: Anteil zahlender Spieler 3 %, durchschnittlicher Umsatz je Zahler 12 € im Monat, nur als Rechengröße ohne Tracking.
-4010. [P2] Für beide Stores das Small Business Program (Apple) und die 15-%-Stufe (Google) als Schritt in `docs/STORE_RELEASE.md` aufnehmen, mit Hinweis, dass Ali es selbst beantragen muss.
+4006. [x] [P2] In `docs/MONETIZATION.md` eine Tabelle aller Angebote mit Kennung, Euro-Preis, Rissglas-Preis, Art (Vorteil, Kosmetik, Komfort) und Liga-Wirkung führen, die aus `data/shop.json` erzeugt wird.
+4007. [x] [P2] Ein Skript `tools/shop/make_shop_table.py` schreiben, das die Angebotstabelle aus `data/shop.json` in `docs/MONETIZATION.md` zwischen zwei Markern neu einsetzt.
+4008. [x] [P2] In `docs/MONETIZATION.md` festhalten, dass jeder Spielinhalt auch ohne Kauf erreichbar bleibt, nur langsamer, und welche Zeit ein Spieler ohne Kauf für die Story braucht (Ziel: 25 Stunden).
+4009. [x] [P2] In `docs/MONETIZATION.md` die Umsatzziele als Planwerte notieren: Anteil zahlender Spieler 3 %, durchschnittlicher Umsatz je Zahler 12 € im Monat, nur als Rechengröße ohne Tracking.
+4010. [x] [P2] Für beide Stores das Small Business Program (Apple) und die 15-%-Stufe (Google) als Schritt in `docs/STORE_RELEASE.md` aufnehmen, mit Hinweis, dass Ali es selbst beantragen muss.
 4011. [P2] In der Memory-Notiz `chimora-monetization` und in `AGENTS.md` unter Regel 4 vermerken: Billing-Plugins für Apple und Google sind freigegeben, Werbe- und Analytics-SDKs weiterhin nicht.
 4012. [x] [P2] Eine Prüfung in `tools/release_check.py` ergänzen, die fehlschlägt, wenn in `addons/` ein Plugin mit den Namen bekannter Werbe- oder Analytics-SDKs liegt.
 4013. [P3] In `docs/MONETIZATION.md` einen Abschnitt "Was nie verkauft wird" führen: Story-Kapitel, Karten, Rift-Zugang, Konto-Funktionen, Freunde, Geschenke an Freunde.
@@ -36,8 +36,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4027. [x] [P1] Keine künstlichen Countdowns: Angebote mit Ende zeigen nur ein festes Enddatum, und ein abgelaufenes Angebot kommt nicht mit neuer Uhr sofort zurück.
 4028. [x] [P1] Kein Angebot wird mitten im Kampf, nach einer Niederlage oder während des Bondens als Fenster eingeblendet; der Shop öffnet sich nur, wenn der Spieler ihn selbst aufruft.
 4029. [x] [P1] Die Leitlinien des EU-Netzwerks der Verbraucherschutzbehörden (CPC) zu virtueller Währung als Prüfliste in `docs/legal/SHOP_COMPLIANCE.md` abbilden und jeden Punkt einer Datei im Code zuordnen.
-4030. [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Rechtslage zu bezahlten Zufallsinhalten in Belgien und den Niederlanden festhalten und begründen, warum Chimora keine anbietet.
-4031. [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Pflichten aus dem Jugendschutzgesetz (§ 10b, Kostenfallen als Risiko) und die USK-Hinweise "In-Game-Käufe" und "In-Game-Käufe + zufällige Objekte" erklären.
+4030. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Rechtslage zu bezahlten Zufallsinhalten in Belgien und den Niederlanden festhalten und begründen, warum Chimora keine anbietet.
+4031. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Pflichten aus dem Jugendschutzgesetz (§ 10b, Kostenfallen als Risiko) und die USK-Hinweise "In-Game-Käufe" und "In-Game-Käufe + zufällige Objekte" erklären.
 4032. [P2] Die Datenschutzerklärung `server/site/datenschutz.html` und `privacy.html` um Kaufdaten ergänzen: Transaktionskennung, Produkt, Zeitpunkt, Store, Erstattungsstatus, Rechtsgrundlage Vertragserfüllung, Speicherdauer 10 Jahre nach Handelsrecht.
 4033. [P2] Im Impressum und in den Nutzungsbedingungen eine Kontaktadresse für Kauffragen nennen und darauf hinweisen, dass Erstattungen nur Apple oder Google entscheiden.
 4034. [x] [P2] Den Text "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden" im Shop unter jedem Rissglas-Paket in einer Zeile zeigen.
@@ -54,7 +54,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4045. [P2] In der Shop-Oberfläche einen Link "Hilfe zu Käufen" auf `/kaeufe` setzen.
 4046. [P2] Für Spieler unter 18 alle Pass-Verlängerungen nur mit Store-Elternfreigabe zulassen und das in `docs/legal/SHOP_COMPLIANCE.md` als Regel festhalten.
 4047. [P2] Den Zeitpunkt der Annahme der neuen Nutzungsbedingungen in `profiles` speichern (`terms_version`, `terms_accepted_at`) und vor dem ersten Kauf erneut abfragen, wenn die Version neuer ist.
-4048. [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Apple-Richtlinien 3.1.1 (Käufe), 3.1.2 (Abos) und 5.1.1(v) (Kontolöschung mit Abo) mit Umsetzungsort verlinken.
+4048. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Apple-Richtlinien 3.1.1 (Käufe), 3.1.2 (Abos) und 5.1.1(v) (Kontolöschung mit Abo) mit Umsetzungsort verlinken.
 4049. [P3] In `docs/legal/SHOP_COMPLIANCE.md` die Google-Richtlinien zu Zahlungen, Abos und Familien zusammenfassen und vermerken, dass die Zielgruppe "13 und älter" bleibt.
 4050. [P3] Den Digital Services Act prüfen: Händlerangaben im Store bleiben aktuell, ein Meldeweg für irreführende Angebote führt zur Support-Adresse.
 4051. [P3] Einen jährlichen Rechtscheck mit Datum in `docs/legal/SHOP_COMPLIANCE.md` eintragen und dabei den Stand des geplanten EU-Gesetzes zur digitalen Fairness nachtragen.
@@ -79,7 +79,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4068. [P2] Für Apple die Produkte über die App Store Connect API (`inAppPurchasesV2`, `subscriptionGroups`) mit demselben Skript anlegen, gesteuert durch den Schalter `--apple`.
 4069. [P2] Für jedes Produkt einen deutschen und einen englischen Anzeigenamen und eine Beschreibung in `store/products.json` pflegen, die exakt den Texten im Spiel entsprechen.
 4070. [P2] Für Apple pro In-App-Kauf einen Prüf-Screenshot (Shop-Ansicht des Produkts, 1320 x 2868) mit `tools/store/make_store_images.py` erzeugen.
-4071. [P2] Die Store-Beschreibungen in `store/android/*/full_description.txt` und `store/ios/metadata/*/description.txt` um einen Absatz "Kostenlos spielbar. Optionale Käufe im Spiel, auch mit Vorteilen. Keine Zufallsinhalte." ergänzen.
+4071. [x] [P2] Die Store-Beschreibungen in `store/android/*/full_description.txt` und `store/ios/metadata/*/description.txt` um einen Absatz "Kostenlos spielbar. Optionale Käufe im Spiel, auch mit Vorteilen. Keine Zufallsinhalte." ergänzen.
 4072. [P2] Die Screenshots im Store um ein Bild der Shop-Ansicht mit sichtbaren Euro-Preisen ergänzen, damit niemand einen Gratis-Eindruck ohne Käufe bekommt.
 4073. [P2] Apple Familienfreigabe für Nicht-Verbrauchsgüter und den Pass aktivieren und das Feld `family_shareable` in `store/products.json` setzen.
 4074. [P2] Die Hinweise für die Apple-Prüfung in `store/ios/review_information/notes.txt` um eine Anleitung ergänzen: Shop öffnen, Testkauf, Wiederherstellen, Ausgabelimit.
@@ -87,7 +87,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4076. [P2] Lizenztester in der Play Console und Testkonten für Käufe in App Store Connect in `docs/STORE_RELEASE.md` als Schritt für Ali eintragen.
 4077. [x] [P2] In `tools/release_check.py` prüfen, dass jede Produkt-ID aus `data/shop.json` in `store/products.json` vorkommt und umgekehrt.
 4078. [x] [P2] In `tools/release_check.py` prüfen, dass jedes Produkt einen Preis aus der festen Preisliste (0,99 € bis 99,99 €) hat.
-4079. [P2] Die Neuigkeiten-Texte (`changelogs/default.txt`, `release_notes.txt`) für die erste Version mit Shop um den Satz "Neu: Shop mit Rissglas, alle Preise in Euro" ergänzen.
+4079. [x] [P2] Die Neuigkeiten-Texte (`changelogs/default.txt`, `release_notes.txt`) für die erste Version mit Shop um den Satz "Neu: Shop mit Rissglas, alle Preise in Euro" ergänzen.
 4080. [P2] Die Kategorie in den Konsolen auf "Rollenspiel" lassen und die Markierung "enthält In-App-Käufe" in beiden Konsolen prüfen.
 4081. [P3] In der Play Console die Länderpreise automatisch aus dem Euro-Preis ableiten und für die Eurozone feste Preise mit ",99" setzen.
 4082. [P3] In App Store Connect als Basisland Deutschland wählen, damit die Euro-Preise fest bleiben und andere Länder umgerechnet werden.
