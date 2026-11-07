@@ -21,6 +21,9 @@ How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- --level 
   battles like a Wayfarer: Spark, ring shift, AI tier (not in ladder), damage and start Energy.
 - The team report also shows the rest share against its band (10 to 25 %), the hit share of every
   status art, how many turns each status holds, and reactions per 100 battles.
+- **keepsakes**: every holdable item, held by the lead of one side, against the same battle
+  without (at most +6 points). **fields**: teams of a field's boosted element on the field against
+  the same battle without (+8 to +15 points).
 - **puzzle**: every puzzle of `data/puzzles.json` searched to the end, with the number of winning
   lines, the fewest turns and whether the lantern target (`best_turns`) can be reached.
 - `--compare [path]` (team mode): flags every species and art whose win rate moved more than 8

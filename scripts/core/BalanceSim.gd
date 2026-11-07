@@ -921,3 +921,129 @@ static func compare_report(cmp: Dictionary) -> String:
 			lines.append("| %s | %s | %d%% | %d%% | %+d |" % ["Species" if kind == "species" else "Art", row.name,
 				roundi(float(row.was) * 100.0), roundi(float(row.now) * 100.0), roundi((float(row.now) - float(row.was)) * 100.0)])
 	return "\n".join(lines) + "\n"
+
+# --- Keepsake and field value (plan area 2, items 828, 829) ---------------------------------
+
+## Most a keepsake may lift its team's win rate (item 828), as a share.
+const KEEPSAKE_MAX_GAIN: float = 0.06
+## Band a field must lift the win rate of its boosted element by (item 829), as shares.
+const FIELD_GAIN_BAND: Vector2 = Vector2(0.08, 0.15)
+
+## Every item a Spirling can hold, sorted.
+static func keepsakes() -> Array[String]:
+	var out: Array[String] = []
+	for id: String in Database.items:
+		if BattleRules.is_holdable(id):
+			out.append(id)
+	out.sort()
+	return out
+
+## Win share of side A over [param battles] battle pairs: the same two teams (A of [param a_names]
+## or random, B random) once with [param with] applied to A's model and once without. Sides swap
+## every pair so neither keeps the player side. Returns {"with", "without"} (draws count half).
+static func _paired(level: int, battles: int, seed_value: int, a_pool: Array[String], setup: Callable) -> Dictionary:
+	var pool: Array[String] = valid_species(level)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = seed_value
+	var score: Array[float] = [0.0, 0.0]
+	for b: int in battles:
+		var a_names: Array[String] = _pick(a_pool, 3, rng)
+		while a_names.size() < 3 and not a_pool.is_empty():
+			a_names.append(a_pool[rng.randi_range(0, a_pool.size() - 1)])
+		var b_names: Array[String] = _pick(pool, 3, rng)
+		var bseed: int = rng.randi()
+		var a_side: int = b % 2
+		for k: int in 2:
+			var trng := RandomNumberGenerator.new()
+			trng.seed = bseed
+			var teams: Array[Array] = [_build(a_names, level, trng), _build(b_names, level, trng)]
+			if a_side == 1:
+				teams.reverse()
+			var mine: Array[Spirling] = []
+			mine.assign(teams[0])
+			var theirs: Array[Spirling] = []
+			theirs.assign(teams[1])
+			var m := BattleModel.new(mine, theirs, false, bseed, 2)
+			m.items_allowed = false
+			_apply_switches(m)
+			if k == 0:
+				setup.call(m, a_side)
+			var r: Dictionary = _play(m, 2)
+			var w: int = int(r.winner)
+			score[k] += 1.0 if w == a_side else (0.5 if w < 0 else 0.0)
+	return {"with": score[0] / maxf(battles, 1), "without": score[1] / maxf(battles, 1)}
+
+## Plays a built model to the end with the player side on AI [param ai_level].
+static func _play(m: BattleModel, ai_level: int) -> Dictionary:
+	var brain := BattleAI.new(ai_level)
+	m.start()
+	var turns: int = 0
+	while not m.is_finished() and turns < MAX_TURNS * 2:
+		if m.needs_player_switch():
+			m.submit_switch(brain.choose_replacement(m, BattleModel.Side.PLAYER, m.switch_slot()))
+			continue
+		m.submit_turn(brain.choose(m, BattleModel.Side.PLAYER))
+		turns += 1
+	var winner: int = -1
+	if m.outcome == BattleModel.Outcome.WIN:
+		winner = 0
+	elif m.outcome == BattleModel.Outcome.LOSS:
+		winner = 1
+	return {"winner": winner, "turns": turns}
+
+## Keepsake mode (item 828): for every holdable item, random teams of 3 where A's lead holds it
+## against the same battle without; the gain is the difference of A's win rates.
+static func run_keepsakes(level: int, battles: int, seed_value: int, only: Array[String] = []) -> Dictionary:
+	Database.load_all()
+	var rows: Dictionary = {}
+	var pool: Array[String] = valid_species(level)
+	for id: String in keepsakes():
+		if not only.is_empty() and not id in only:
+			continue
+		var r: Dictionary = _paired(level, battles, hash([seed_value, id]), pool, func(m: BattleModel, side: int) -> void:
+			m.parties[side][0].held = id)
+		var gain: float = float(r.with) - float(r.without)
+		rows[id] = {"with": snappedf(r.with, 0.001), "without": snappedf(r.without, 0.001), "gain": snappedf(gain, 0.001),
+			"ok": gain <= KEEPSAKE_MAX_GAIN}
+	return {"mode": "keepsakes", "level": level, "battles": battles, "keepsakes": rows}
+
+## Field mode (item 829): for every field that boosts an element, teams of 3 of that element
+## against random teams, once on the field and once without; the gain is the difference.
+static func run_fields(level: int, battles: int, seed_value: int, only: Array[String] = []) -> Dictionary:
+	Database.load_all()
+	var pools: Dictionary = mono_pools(level)
+	var rows: Dictionary = {}
+	for fid: String in BattleRules.FIELDS:
+		var boost: String = str(BattleRules.FIELDS[fid].get("boost", ""))
+		var el: String = Elements.element_name(int(Elements.E.get(boost, -1))) if not boost.is_empty() else ""
+		if el.is_empty() or not pools.has(el) or (not only.is_empty() and not fid in only):
+			continue
+		var r: Dictionary = _paired(level, battles, hash([seed_value, fid]), pools[el], func(m: BattleModel, _side: int) -> void:
+			m.field = fid)
+		var gain: float = float(r.with) - float(r.without)
+		rows[fid] = {"element": el, "with": snappedf(r.with, 0.001), "without": snappedf(r.without, 0.001), "gain": snappedf(gain, 0.001),
+			"ok": gain >= FIELD_GAIN_BAND.x and gain <= FIELD_GAIN_BAND.y}
+	return {"mode": "fields", "level": level, "battles": battles, "fields": rows}
+
+static func keepsakes_report(result: Dictionary) -> String:
+	var lines: PackedStringArray = ["# Keepsake report", "",
+		"Level %d, %d battle pairs per keepsake (random teams of 3, the lead of one side holds it, same battle without). Target: at most +%d points." % [
+			result.level, result.battles, roundi(KEEPSAKE_MAX_GAIN * 100.0)], "",
+		"| Keepsake | With | Without | Gain | Flag |", "| --- | --- | --- | --- | --- |"]
+	for id: String in result.keepsakes:
+		var row: Dictionary = result.keepsakes[id]
+		lines.append("| %s | %d%% | %d%% | %+.1f | %s |" % [id, roundi(float(row.with) * 100.0), roundi(float(row.without) * 100.0),
+			float(row.gain) * 100.0, "" if bool(row.ok) else "too strong"])
+	return "\n".join(lines) + "\n"
+
+static func fields_report(result: Dictionary) -> String:
+	var lines: PackedStringArray = ["# Field report", "",
+		"Level %d, %d battle pairs per field (teams of the boosted element against random teams, on the field and without). Target band +%d to +%d points." % [
+			result.level, result.battles, roundi(FIELD_GAIN_BAND.x * 100.0), roundi(FIELD_GAIN_BAND.y * 100.0)], "",
+		"| Field | Element | With | Without | Gain | Flag |", "| --- | --- | --- | --- | --- | --- |"]
+	for fid: String in result.fields:
+		var row: Dictionary = result.fields[fid]
+		var g: float = float(row.gain)
+		lines.append("| %s | %s | %d%% | %d%% | %+.1f | %s |" % [fid, row.element, roundi(float(row.with) * 100.0), roundi(float(row.without) * 100.0),
+			g * 100.0, "" if bool(row.ok) else ("too strong" if g > FIELD_GAIN_BAND.y else "too weak")])
+	return "\n".join(lines) + "\n"

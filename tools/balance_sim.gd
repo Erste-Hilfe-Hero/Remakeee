@@ -19,6 +19,10 @@ extends SceneTree
 ##   --compare P   team: flag every species and art whose win rate moved more than 8 points
 ##                 from the baseline P (default tools/balance/baseline_lv36.json, item 816);
 ##                 write a new baseline with --mode team --level 36 --json <path>
+##   --mode keepsakes  every holdable item: win rate of a team whose lead holds it against the same
+##                 battle without (item 828, target at most +6 points)
+##   --mode fields  every field with a boosted element: teams of that element on the field against
+##                 the same battle without (item 829, band +8 to +15 points)
 ##   --mode puzzle  every puzzle of data/puzzles.json: solutions and fewest turns (item 819);
 ##                 --puzzle ID for one
 ##   --out PATH    also write the Markdown report there
@@ -53,13 +57,15 @@ func _initialize() -> void:
 		quit(1)
 		return
 	var extra: Dictionary = {"ladder": ["run_ladder", "ladder_report"], "mono": ["run_mono", "mono_report"], "goals": ["run_goals", "goals_report"],
-		"puzzle": ["run_puzzles", "puzzle_report"]}
+		"puzzle": ["run_puzzles", "puzzle_report"], "keepsakes": ["run_keepsakes", "keepsakes_report"], "fields": ["run_fields", "fields_report"]}
 	if extra.has(mode):
 		var fns: Array = extra[mode]
 		if mode == "ladder":
 			result = bs.call(fns[0], level, int(opts.get("rounds", 200)), seed_value)
 		elif mode == "mono":
 			result = bs.call(fns[0], level, int(opts.get("rounds", 400)), seed_value, int(opts.get("ai", 2)))
+		elif mode == "keepsakes" or mode == "fields":
+			result = bs.call(fns[0], level, int(opts.get("rounds", 200)), seed_value)
 		elif mode == "puzzle":
 			result = bs.call(fns[0], str(opts.get("puzzle", "")))
 		else:
