@@ -168,7 +168,7 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 				if fixed.size() < 4 and not fixed.has(mv):
 					fixed.append(mv)
 			s.moves = fixed
-		s.held = str(entry.get("held", s.held))
+		s.held = str(entry.get("held", s.held)) if keeps_keepsakes(difficulty) else ""
 		if tuned and def.has("warden") and difficulty >= GameState.Difficulty.VETERAN:
 			var main: String = main_stat(s)
 			s.spark[main] = maxi(int(s.spark.get(main, 0)), WARDEN_MAIN_SPARK)
@@ -216,12 +216,23 @@ static func profile_tune(def: Dictionary, difficulty: int = -1) -> Dictionary:
 	var t: Variant = def.get("profile_tune", {})
 	return (t as Dictionary).duplicate() if t is Dictionary else {}
 
-## AI tier for this Wayfarer given the difficulty default.
-static func ai_tier(def: Dictionary, difficulty_ai: int) -> int:
+## AI tier for this Wayfarer given the difficulty default. On Tamer (item 734) Wayfarers play
+## tier 1 and Wardens tier 2; the Warden floor WARDEN_MIN_AI holds on every difficulty.
+static func ai_tier(def: Dictionary, difficulty_ai: int, difficulty: int = -1) -> int:
 	var tier: int = int(def.get("ai", difficulty_ai))
-	if def.has("warden") or def.has("boss"):
+	var warden: bool = def.has("warden") or def.has("boss")
+	if difficulty == GameState.Difficulty.TAMER:
+		tier = TAMER_WARDEN_AI if warden else TAMER_AI
+	if warden:
 		tier = maxi(tier, WARDEN_MIN_AI)
 	return tier
+
+const TAMER_AI: int = 1
+const TAMER_WARDEN_AI: int = 2
+
+## Keepsakes stay off foe teams on Story and Tamer (item 734).
+static func keeps_keepsakes(difficulty: int) -> bool:
+	return difficulty < 0 or difficulty >= GameState.Difficulty.VETERAN
 
 ## The Warden rule for [param difficulty] ("rule_by_difficulty" wins over "rule").
 static func rule_for(def: Dictionary, difficulty: int = -1) -> String:
@@ -236,7 +247,7 @@ static func rule_for(def: Dictionary, difficulty: int = -1) -> String:
 static func battle_info(def: Dictionary, team: Array[Spirling], difficulty_ai: int, difficulty: int = -1) -> Dictionary:
 	var info: Dictionary = {
 		"name": str(def.get("trainer", def.get("id", "Wayfarer"))),
-		"ai": ai_tier(def, difficulty_ai),
+		"ai": ai_tier(def, difficulty_ai, difficulty),
 		"money": 0 if is_wild_horde(def) else prize_money(def, team),
 		"items": def.get("items", {}),
 		"warden": def.has("warden") or def.has("boss"),

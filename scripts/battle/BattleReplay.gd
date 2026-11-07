@@ -27,6 +27,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"boss": model.foe_boss,
 		"foe_damage": model.foe_damage_mult,
 		"energy_bonus": model.energy_bonus[0],
+		"foe_energy_cut": model.start_energy_cut[1],
 		"gifts": model.gift_items.duplicate(),
 		"bond_grace": model.bond_grace,
 		"boss_hp": model.boss_hp_scale,
@@ -97,6 +98,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.foe_boss = str(snap.get("boss", ""))
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
 	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
+	m.start_energy_cut = [0, clampi(int(snap.get("foe_energy_cut", 0)), 0, Tailwind.energy_cut(0))]
 	# Only the pass's one Rift Breath can be a gift (item 4633).
 	var gifts: Variant = snap.get("gifts", {})
 	if gifts is Dictionary and int((gifts as Dictionary).get(ShopEffects.PASS_REVIVE, 0)) > 0:

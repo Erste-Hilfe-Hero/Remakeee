@@ -2197,7 +2197,22 @@ func challenge(n: NPC, spotted: bool) -> void:
 		helper = await pick_echo_partner("This Warden is tough. Call a friend's echo to fight beside you?")
 		if not helper.is_empty():
 			info["partner"] = helper.partner
+	# Tailwind (items 737-739): offered openly after a few losses, only with the player's yes.
+	var tailwind: bool = false
+	if not bool(info.wild) and Tailwind.offered(GameState.difficulty, Tailwind.losses(GameState.records, lost_key)):
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		tailwind = await menu.confirm(Tailwind.question(GameState.difficulty), "Take Tailwind", "No, thanks")
+		menu.queue_free()
+		if tailwind:
+			GameState.heal_party()
+			info["foe_energy_cut"] = Tailwind.energy_cut(GameState.difficulty)
 	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
+	if not bool(info.wild) and outcome != BattleModel.Outcome.FLED:
+		Tailwind.note_outcome(GameState.records, lost_key, outcome == BattleModel.Outcome.WIN)
+	if tailwind:
+		var used: int = Tailwind.note_use(GameState.records)
+		await say([Loc.t("Tailwind helped in this battle. Used %d times so far.") % used] as Array[String])
 	if def.has("warden") and outcome == BattleModel.Outcome.LOSS:
 		losses[lost_key] = int(losses.get(lost_key, 0)) + 1
 		GameState.records["warden_losses"] = losses
@@ -2350,7 +2365,7 @@ func _play_trial(p: Dictionary, warden: String) -> void:
 func warden_card(def: Dictionary, team: Array[Spirling], question: String) -> bool:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
-	await menu.info(WardenCard.text(def, team, GameState.difficulty), WardenCard.picture(team))
+	await menu.info(WardenCard.text(def, team, GameState.difficulty, GameState.level_cap()), WardenCard.picture(team))
 	var go: bool = await menu.confirm(question, "Fight", "Not yet")
 	menu.queue_free()
 	return go
@@ -2675,6 +2690,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
+	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0))]
 	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
 	model.bond_grace = ShopEffects.bond_grace() if wild else 0
 	var items: Variant = trainer.get("items", {})
