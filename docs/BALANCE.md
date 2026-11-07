@@ -42,6 +42,11 @@ How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- --level 
 Both modes run on the real `BattleModel` (all effects, fields and rules), never a separate damage
 path. `--json` writes every number for tests and comparisons.
 
+Slow tests (item 865): the band tests and the baseline compare live in `tests/slow`
+(`test_slow_*`) and run in the nightly workflow `.github/workflows/nightly-sim.yml` or by hand:
+`godot --headless --path . -s res://addons/gut/gut_cmdln.gd -gconfig=res://tests/slow/.gutconfig.json`.
+The normal test run skips them; its balance tests take about 80 seconds.
+
 ## Zielbänder (target bands)
 
 | Measure | Target | Checked by |
@@ -50,8 +55,8 @@ path. `--json` writes every number for tests and comparisons.
 | Team win rate per species at Lv36 | 30% to 70% | `test_balance.gd`, `test_team_mode_keeps_every_species_in_band` |
 | Team battles that stall (120 turns) | none | `test_balance.gd`, same test |
 | Battles with only the new arts that hit 60 turns | none | `test_move_curve.gd`, `test_fuzz_new_arts_only` |
-| Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | `test_sim_bands.gd` (item 851) |
-| First-mover advantage (faster Spirling wins) | at most 62% | `test_sim_bands.gd` (item 850) |
+| Turns to KO in a Lv36 duel | 2.5 to 4.0 on average | `test_slow_sim_bands.gd` (item 851) |
+| First-mover advantage (faster Spirling wins) | at most 62% | `test_slow_sim_bands.gd` (item 850) |
 | Damage art curve: power x accuracy / (energy + 1) x effect factor | 9 to 18 | `test_move_curve.gd` |
 | Accuracy of any art | at least 75% | `test_move_curve.gd` |
 | Status chance of a damage art | at most 30% | `test_move_curve.gd` |
@@ -68,7 +73,7 @@ mend faster than they hurt each other can't stall forever.
 
 ## Known gaps
 
-Bands that `tests/unit/test_sim_bands.gd` measures but the game misses today (plan area 2,
+Bands that `tests/slow/test_slow_sim_bands.gd` measures but the game misses today (plan area 2,
 items 854 to 856). The test lists them in `KNOWN_GAPS`, prints them and fails on every other
 miss; take a key out of both places once it is fixed.
 
