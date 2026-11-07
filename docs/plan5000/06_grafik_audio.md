@@ -355,13 +355,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2548. [x] [P1] Ein Limiter (AudioEffectHardLimiter, Decke -1 dB) auf dem Master-Bus verhindert Übersteuern bei vielen gleichzeitigen Klängen.
 2549. [x] [P1] iOS: Projekteinstellung audio/general/ios/session_category auf "Ambient" stellen, damit der Lautlos-Schalter beachtet wird und Musik anderer Apps weiterlaufen kann.
 2550. [x] [P1] Beim Wechsel der App in den Hintergrund (NOTIFICATION_APPLICATION_PAUSED) werden Musik und Klänge stumm geschaltet und beim Zurückkehren in 0,3 s wieder eingeblendet.
-2551. [P2] Die Stimmenanzahl in Sound.gd (SFX_VOICES) steigt von 6 auf 10, und jeder Klang bekommt eine Priorität (UI 1, Welt 2, Kampf 3), sodass bei voller Belegung der unwichtigste Klang weicht.
+2551. [x] [P2] Die Stimmenanzahl in Sound.gd (SFX_VOICES) steigt von 6 auf 10, und jeder Klang bekommt eine Priorität (UI 1, Welt 2, Kampf 3), sodass bei voller Belegung der unwichtigste Klang weicht.
 2552. [P2] Einstellung "Andere Musik erlauben": spielt eine andere App Musik, startet Chimora nur mit Klängen und ohne eigene Musik.
 2553. [P2] Android: bei Audio-Fokus-Verlust (Anruf, Sprachnachricht) Musik pausieren und danach an derselben Stelle fortsetzen.
 2554. [P3] Kopfhörer abgezogen: Musik wird sofort auf -30 dB gesenkt, damit es nicht laut aus dem Lautsprecher kommt.
 2555. [P2] Mono-Ausgabe als Einstellung, die den Master-Bus auf Mono mischt, für Menschen mit einseitigem Hören.
 2556. [P2] Getrennte Lautstärke-Regler für Text-Stimme und Umgebungsklänge in den Einstellungen, zusätzlich zu Musik und Klängen.
-2557. [P2] Alle Klänge werden beim Start in einem Rutsch vorgeladen (unter 2 MB), damit der erste Treffer im Kampf nicht stockt.
+2557. [x] [P2] Alle Klänge werden beim Start in einem Rutsch vorgeladen (unter 2 MB), damit der erste Treffer im Kampf nicht stockt.
 2558. [P2] Schreie (Cry.gd) bekommen beim ersten Kampfstart des Tages einen Vorab-Aufbau im Hintergrund, damit kein Bild ruckelt.
 2559. [P2] Ogg-Schleifen nutzen in den .import-Dateien loop_offset aus den Steckbrief-Daten, damit Stücke mit Einleitung an der richtigen Stelle wiederholen.
 2560. [P2] Klang-Ausgabe unter 30 ms Verzögerung auf Android einstellen (Projekteinstellung audio/driver/output_latency auf 15).
