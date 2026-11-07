@@ -430,6 +430,25 @@ func test_rematch_key_opens_a_second_rematch_the_same_day() -> void:
 	assert_false(TrainerData.can_rematch_with_key(leaving, "crowcrest", flags, records, "2026-11-01"))
 	assert_true(bool(Database.item(TrainerData.REMATCH_KEY).get("shop", false)))
 
+func test_warden_weakener_cuts_the_foe_team_and_replays() -> void:
+	assert_false(ShopEffects.warden_help_allowed(0, GameState.Difficulty.TAMER), "first try stays fair")
+	assert_true(ShopEffects.warden_help_allowed(1, GameState.Difficulty.VETERAN))
+	assert_false(ShopEffects.warden_help_allowed(3, GameState.Difficulty.RIFT_BORN), "never in Rift-Born")
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 20)]
+	var theirs: Array[Spirling] = [BattleFixtures.make("Zephlet", 20), BattleFixtures.make("Puddlet", 20)]
+	var full: Array[int] = [theirs[0].max_hp(), theirs[1].max_hp()]
+	var m := BattleModel.new(mine, theirs, false, 5, 2)
+	m.items_allowed = false
+	m.warden_weakened = true
+	var snap: Dictionary = BattleReplay.snapshot(m, "warden", "lake")
+	var events: Array[BattleEvent] = m.start()
+	assert_eq(theirs[0].hp, roundi(full[0] * BattleModel.WARDEN_WEAKEN_SHARE))
+	assert_eq(theirs[1].hp, roundi(full[1] * BattleModel.WARDEN_WEAKEN_SHARE))
+	assert_eq(mine[0].hp, mine[0].max_hp(), "own team untouched")
+	assert_true(events.any(func(e: BattleEvent) -> bool: return e.type == BattleEvent.Type.WARDEN_WEAKENED))
+	var again: BattleModel = BattleReplay.build_model(JSON.parse_string(JSON.stringify(snap)))
+	assert_true(again.warden_weakened)
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

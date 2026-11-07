@@ -181,3 +181,13 @@ static func skip_battle(model: BattleModel) -> Array:
 		model.submit_turn(a)
 		turns += 1
 	return inputs
+
+## Warden helps (items 4885-4888): only after at least one lost try without help, never in
+## Rift-Born. They never touch levels, so the Ring cap stays.
+const WARDEN_WEAKEN_ITEM: String = "rg_warden_weaken"
+
+static func warden_help_allowed(losses: int, difficulty: int) -> bool:
+	return losses >= 1 and difficulty != GameState.Difficulty.RIFT_BORN
+
+static func can_weaken_warden(losses: int, difficulty: int) -> bool:
+	return warden_help_allowed(losses, difficulty) and GameState.item_count(WARDEN_WEAKEN_ITEM) > 0

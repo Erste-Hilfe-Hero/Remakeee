@@ -923,7 +923,7 @@
    "name_de": "Wächterschwächer",
    "desc_en": "The Warden starts with 15% less Vigor. At most 1 per Warden battle, not in Rift-Born.",
    "desc_de": "Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf, nicht in Rift-Born.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.warden_bundle",
