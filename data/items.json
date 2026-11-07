@@ -608,6 +608,18 @@
   }
  },
  {
+  "id": "rg_encounter_call",
+  "name": "Encounter Call",
+  "description": "Twice as many wild encounters for the next 30 steps.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "encounters",
+   "mult": 2.0,
+   "steps": 30
+  }
+ },
+ {
   "id": "rg_spark_forge",
   "name": "Spark Forge",
   "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",

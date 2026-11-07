@@ -87,26 +87,52 @@ static func start_boost(id: String) -> String:
 	var cur: Dictionary = GameState.shop_boosts.get(kind, {})
 	if not cur.is_empty() and float(cur.mult) > mult:
 		return "A stronger boost is still working."
-	var left: int = int(b.battles) + (int(cur.left) if not cur.is_empty() and is_equal_approx(float(cur.mult), mult) else 0)
+	var left: int = int(b.get("battles", b.get("steps", 0))) + (int(cur.left) if not cur.is_empty() and is_equal_approx(float(cur.mult), mult) else 0)
 	GameState.shop_boosts[kind] = {"mult": mult, "left": left}
 	GameState.inventory[id] = GameState.item_count(id) - 1
 	if GameState.inventory[id] <= 0:
 		GameState.inventory.erase(id)
+	if kind in STEP_KINDS:
+		return Loc.t("Works for the next %d steps.") % left
 	return "Works for the next battle." if left == 1 else "Works for the next %d battles." % left
 
+## Boosts that count steps instead of battles (Encounter Call, item 4838).
+const STEP_KINDS: Array[String] = ["encounters"]
+
+## How much more often wild Spirlings show up right now (2 while an Encounter Call runs).
+static func encounter_mult() -> float:
+	return float(GameState.shop_boosts.get("encounters", {}).get("mult", 1.0)) if boost_left("encounters") > 0 else 1.0
+
+## One step on the map: step boosts count down. True when one just ran out.
+static func step_done() -> bool:
+	var ended: bool = false
+	for kind: String in STEP_KINDS:
+		if not GameState.shop_boosts.has(kind):
+			continue
+		var b: Dictionary = GameState.shop_boosts[kind]
+		b.left = int(b.left) - 1
+		if int(b.left) <= 0:
+			GameState.shop_boosts.erase(kind)
+			ended = true
+	return ended
+
 ## Names of the boosts for the status lines.
-const BOOST_NAMES: Dictionary = {"growth": "Growth", "coins": "Coins", "overcharge": "Overcharge"}
+const BOOST_NAMES: Dictionary = {"growth": "Growth", "coins": "Coins", "overcharge": "Overcharge",
+	"encounters": "Encounter Call"}
 
 ## One line per running boost ("Growth x2: 14 battles left"), for the team view and after each
 ## battle (item 4342).
 static func boost_lines() -> Array[String]:
 	var out: Array[String] = []
-	for kind: String in ["growth", "coins", "overcharge"]:
+	for kind: String in ["growth", "coins", "overcharge", "encounters"]:
 		var left: int = boost_left(kind)
 		if left <= 0:
 			continue
 		var b: Dictionary = GameState.shop_boosts[kind]
 		var head: String = Loc.t(str(BOOST_NAMES[kind]))
+		if kind in STEP_KINDS:
+			out.append(head + ": " + (Loc.t("1 step left") if left == 1 else Loc.t("%d steps left") % left))
+			continue
 		if kind != "overcharge":
 			head += " x%s" % String.num(float(b.get("mult", 1.0)), 1).trim_suffix(".0")
 		out.append(head + ": " + (Loc.t("1 battle left") if left == 1 else Loc.t("%d battles left") % left))
@@ -115,6 +141,8 @@ static func boost_lines() -> Array[String]:
 ## One battle is over: running boosts count down.
 static func battle_done() -> void:
 	for kind: String in GameState.shop_boosts.keys():
+		if kind in STEP_KINDS:
+			continue
 		var b: Dictionary = GameState.shop_boosts[kind]
 		b.left = int(b.left) - 1
 		if int(b.left) <= 0:

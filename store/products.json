@@ -863,7 +863,7 @@
    "name_de": "Begegnungsruf",
    "desc_en": "Twice as many wild encounters for 30 steps.",
    "desc_de": "30 Schritte lang doppelt so viele wilde Begegnungen.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.skip_battle",
