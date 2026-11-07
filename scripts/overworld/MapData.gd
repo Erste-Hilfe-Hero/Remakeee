@@ -206,9 +206,13 @@ static func from_dict(map_id: String, raw: Dictionary) -> MapData:
 	return m
 
 ## The hidden find on [param cell] that is still there (its flag not set), or {}.
+## A find with "when" (a clock flag such as "_low_tide", area 3 item 995) is only there while
+## that flag is set in [param flags].
 func secret_at(cell: Vector2i, flags: Dictionary = {}) -> Dictionary:
 	for sc: Dictionary in secrets:
 		if int(sc.x) == cell.x and int(sc.y) == cell.y and not bool(flags.get(str(sc.get("flag", "")), false)):
+			if sc.has("when") and not bool(flags.get(str(sc.when), false)):
+				continue
 			return sc
 	return {}
 
