@@ -66,6 +66,8 @@ var _retry_wait: float = 4.0
 var _rng := RandomNumberGenerator.new()
 var _busy: bool = false
 var _overlay: ReconnectOverlay
+## Hopping dots while a server call is slow (plan item 2290).
+var wait_dots: WaitDots
 ## Slots with an upload on its way, slots saved again meanwhile (value: force), and a counter
 ## of local saves per slot (see push()).
 var _pushing: Dictionary = {}
@@ -86,6 +88,8 @@ func _ready() -> void:
 	add_child(_overlay)
 	_overlay.try_now.connect(retry_now)
 	_overlay.to_title.connect(_to_title)
+	wait_dots = WaitDots.new()
+	add_child(wait_dots)
 
 ## The real server if data/online.json names one, otherwise the local stand-in.
 func make_backend() -> OnlineBackend:
@@ -213,11 +217,15 @@ func _take_hello(d: Variant) -> void:
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
 	if state != State.ONLINE:
 		return OnlineBackend.fail("offline", true)
+	if wait_dots != null:
+		wait_dots.begin()
 	var r: Dictionary = await backend.call_fn(name, args)
 	if not r.ok and r.net and r.error != "server_429" and is_inside_tree():
 		if net_retry_seconds > 0.0:
 			await get_tree().create_timer(net_retry_seconds, true).timeout
 		r = await backend.call_fn(name, args)
+	if wait_dots != null:
+		wait_dots.end()
 	if not r.ok and r.net:
 		last_error = r.error
 		_set_state(State.OFFLINE)

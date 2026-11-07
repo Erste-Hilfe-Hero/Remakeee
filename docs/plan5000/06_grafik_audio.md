@@ -74,7 +74,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2287. [x] [P2] Dialog-Seitenwechsel lässt den alten Text 2 Pixel nach oben rutschen und ausblenden, bevor der neue zu tippen beginnt.
 2288. [x] [P2] Der Weiter-Pfeil im Dialogfeld wippt 1 Pixel auf und ab im Takt von 0,5 s statt still zu stehen.
 2289. [P3] Freundes- und Kontomenü (FriendsMenu.gd, AccountMenu.gd) bekommen dieselben Schiebe-Übergänge wie das Pausemenü.
-2290. [P2] Ladepausen beim Server-Abruf über 200 ms zeigen drei Punkte, die nacheinander hüpfen, statt eines eingefrorenen Bildes.
+2290. [x] [P2] Ladepausen beim Server-Abruf über 200 ms zeigen drei Punkte, die nacheinander hüpfen, statt eines eingefrorenen Bildes.
 2291. [x] [P2] Wiederverbinden-Anzeige (ReconnectOverlay.gd) blendet in 0,2 s ein und aus und dunkelt das Spiel nur auf 60 % ab.
 2292. [x] [P2] Kampf-Ende zurück zur Welt: Spielfigur und Begleiter sind beim Aufhellen sichtbar 1 Pixel hochgesprungen, als kleine Begrüßung.
 2293. [P3] Übergang ins Spirling-Lexikon: die gewählte Karte vergrößert sich vom Listenplatz auf die volle Seite in 0,2 s.

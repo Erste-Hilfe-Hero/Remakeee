@@ -10,6 +10,7 @@ T = {
 "[Footsteps stop short]": "[Schritte halten inne]",
 "[Item picked up]": "[Gegenstand aufgehoben]",
 "[A deep rumble]": "[Ein tiefes Grollen]",
+"Waiting for the server": "Warte auf den Server",
 "Short blips while a line types out.": "Kurze Pieptöne, während eine Zeile erscheint.",
 "Important sounds also show as a short text at the top.": "Wichtige Klänge erscheinen zusätzlich als kurzer Text am oberen Rand.",
 "How much the screen shakes on big hits.": "Wie stark der Bildschirm bei harten Treffern wackelt.",
