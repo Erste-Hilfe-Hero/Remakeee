@@ -7,9 +7,9 @@ and 12th give a keepsake.
 Lake benches (area 3 item 1093): three benches looking out over the lake. Sitting for ten
 seconds brings a Spirling call from the water and a true hint about a hidden place.
 """
-from common import lines, npc, secret, tr
+from common import lines, npc, secret, tr, warp
 
-GROUP = []
+GROUP = ["wren_library"]
 
 STONES = [("brindlewick", 1, 5), ("thornridge", 10, 2), ("copperfold", 8, 1), ("wrenhollow", 8, 13),
           ("reedhaven", 10, 6), ("fernstair", 1, 4), ("crowcrest", 1, 7), ("lantern_steps", 1, 2),
@@ -74,6 +74,24 @@ LOOSE_SOIL = [("saltmarsh", 10, 9, "remedy", "dig_saltmarsh"), ("woadfen", 3, 21
 
 # Item 964: fish traps hang from the Reedhaven jetty, emptied once a day. (id, x, y)
 FISH_TRAPS = [("reed_trap_a", 9, 5), ("reed_trap_b", 8, 6)]
+
+# Item 965: the Wrenhollow library behind the lower house door. Each book hints at a hidden
+# place; once its flag is set, a tick in the margin says it has been found.
+# (shelf x, y, flag of the place, hint)
+LIBRARY_BOOKS = [
+    (1, 1, "pass_gloamwood",
+     ("\"Forest Ways\": In Gloamwood's upper grove, west of the old path, one stone is far too smooth. Push it.",
+      "\"Waldwege\": Im oberen Hain von Dämmerwald, westlich des alten Pfads, ist ein Stein viel zu glatt. Schieb ihn.")),
+    (2, 1, "pass_quillbrook",
+     ("\"Brook and Stone\": Quillbrook hides a way in the west bank, halfway down the brook.",
+      "\"Bach und Stein\": Federbach verbirgt einen Weg im Westufer, auf halber Höhe des Bachs.")),
+    (7, 1, "find_sable_inner",
+     ("\"Sea Caves of Veydal\": Sablecove's inner chamber keeps a gift. It opens only when the tide is out.",
+      "\"Meereshöhlen von Veydal\": Die innere Kammer der Zobelbucht hütet eine Gabe. Sie öffnet sich nur bei Ebbe.")),
+    (8, 1, "dig_saltglass",
+     ("\"Buried and Forgotten\": Travellers on the Saltglass road buried their spare leaves where the soil is loose.",
+      "\"Vergraben und vergessen\": Reisende an der Salzglasstraße vergruben ihre Ersatzblätter, wo die Erde locker ist.")),
+]
 
 
 def set_char(m, x, y, ch):
@@ -145,3 +163,27 @@ def build(world):
         world.add_text("reedhaven", {tid: {"lines": lines(("A fish trap hangs from the jetty, half under water.",
                                                             "Eine Reuse hängt am Steg, halb unter Wasser.")),
                                            "action": "fish_trap " + tid}})
+    lib = "wren_library"
+    rows = ["WWWWWWWWWW",
+            "WCCCffCCCW",
+            "WffffffffW",
+            "WffCffCffW",
+            "WffffffffW",
+            "WffffffffW",
+            "WffffffffW",
+            "WWWDWWWWWW"]
+    world.add_map(lib, {"name": tr("Wrenhollow Library", "Bibliothek von Zaunkönigsgrund"), "region": "veydal",
+                        "biome": "town", "backdrop": "field", "rows": rows,
+                        "warps": [warp(3, 7, "wrenhollow", 3, 14, "down")],
+                        "npcs": [npc("librarian", 4, 2, "down", lib + "/librarian", "elder")],
+                        "signs": [{"x": x, "y": y, "dialogue": "%s/book_%d" % (lib, n)}
+                                  for n, (x, y, _f, _h) in enumerate(LIBRARY_BOOKS, 1)]})
+    texts = {"librarian": lines(("Librarian Odile: Every book here was written by someone who walked it first. Read, then go and look.",
+                                 "Bibliothekarin Odile: Jedes Buch hier hat jemand geschrieben, der den Weg zuerst gegangen ist. Lies, dann geh und sieh nach."))}
+    for n, (_x, _y, flag, hint) in enumerate(LIBRARY_BOOKS, 1):
+        texts["book_%d" % n] = {"lines": lines(hint), "after_flag": {"flag": flag, "lines": lines(
+            hint, ("A tick in the margin: you have found this place.", "Ein Haken am Rand: diesen Ort hast du gefunden."))}}
+    world.add_text(lib, texts)
+    m = world.load_map("wrenhollow")
+    m["warps"] = [w for w in m["warps"] if (w["x"], w["y"]) != (3, 13)]
+    m["warps"].append(warp(3, 13, lib, 3, 6, "up"))

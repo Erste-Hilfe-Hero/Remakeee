@@ -35,6 +35,14 @@
    "tx": 1,
    "ty": 28,
    "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 13,
+   "to": "wren_library",
+   "tx": 3,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
