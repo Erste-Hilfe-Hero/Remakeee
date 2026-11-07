@@ -394,6 +394,29 @@ func test_encounter_call_doubles_encounters_for_30_steps() -> void:
 	GameState.shop_boosts = boosts
 	GameState.inventory = inv
 
+func test_battle_skip_wins_through_the_model_and_replays() -> void:
+	var party: Array[Spirling] = GameState.party.duplicate()
+	var inv: Dictionary = GameState.inventory.duplicate(true)
+	GameState.party.clear()
+	GameState.party.append(BattleFixtures.make("Kindlop", 30))
+	var foe: Array[Spirling] = [BattleFixtures.make("Zephlet", 20)]
+	GameState.inventory.erase(ShopEffects.SKIP_ITEM)
+	assert_false(ShopEffects.can_skip(foe), "no skip in the bag")
+	GameState.inventory[ShopEffects.SKIP_ITEM] = 2
+	assert_true(ShopEffects.can_skip(foe))
+	assert_false(ShopEffects.can_skip([BattleFixtures.make("Zephlet", 21)] as Array[Spirling]), "gap below 10 Rings")
+	var xp: int = GameState.party[0].xp
+	var m := BattleModel.new(GameState.party, foe, true, 11, 0)
+	m.items_allowed = false
+	var snap: Dictionary = BattleReplay.snapshot(m, "battle", "lake")
+	snap["inputs"] = ShopEffects.skip_battle(m)
+	assert_eq(m.outcome, BattleModel.Outcome.WIN)
+	assert_gt(GameState.party[0].xp, xp, "full growth")
+	assert_eq(GameState.item_count(ShopEffects.SKIP_ITEM), 1)
+	assert_eq(BattleReplay.simulate(JSON.parse_string(JSON.stringify(snap))), BattleModel.Outcome.WIN)
+	GameState.party = party
+	GameState.inventory = inv
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

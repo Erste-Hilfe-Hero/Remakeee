@@ -2555,6 +2555,14 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		DailyTasks.note_seen(f.data.species_name, map.id)
 		GameState.mark_seen(f.data.species_name)
 		GameState.note_spirlog(f, false)
+	# Battle Skip (items 4839/4840): asked before the battle, fought by the AI in the background.
+	if wild and trainer.is_empty() and ShopEffects.can_skip(foes):
+		var ask := MenuHost.new()
+		_ui.add_child(ask)
+		var skip: bool = await ask.confirm(Loc.t("Use a Battle Skip on %s? Your team wins it at once (%d left).") % [foes[0].display_name(), GameState.item_count(ShopEffects.SKIP_ITEM)], "Skip", "Fight")
+		ask.queue_free()
+		if skip:
+			return await _skipped_battle(foes)
 	Sound.sfx("encounter")
 	await _fade_to(1.0)
 	# A league battle comes ready-made from the server's seed and teams (plan area 7).
@@ -2581,6 +2589,32 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 		await _fade_to(0.0)
 	else:
 		await _after_battle(model, outcome)
+	Sound.enter_map(map.id)
+	EncounterTable.start_guard()
+	if _fade.color.a > 0.0:
+		player.greet()
+	await _fade_to(0.0)
+	await _wake_cores()
+	await announce_achievements()
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
+	battle_ended.emit(outcome)
+	return outcome
+
+## A wild battle settled by a Battle Skip: the same model and aftermath, no battle screen.
+func _skipped_battle(foes: Array[Spirling]) -> BattleModel.Outcome:
+	var model: BattleModel = _new_model(foes, true, {})
+	model.items_allowed = false
+	var replay: Dictionary = BattleReplay.snapshot(model, "battle", map.backdrop)
+	replay["inputs"] = ShopEffects.skip_battle(model)
+	var outcome: BattleModel.Outcome = model.outcome
+	GameState.records["last_battle"] = replay
+	GameState.note_battle_end()
+	last_claim = BattleReferee.claim_of(model)
+	if outcome == BattleModel.Outcome.WIN:
+		toast.show_note(Loc.t("Battle skipped: %s is beaten.") % foes[0].display_name())
+	await _after_battle(model, outcome)
 	Sound.enter_map(map.id)
 	EncounterTable.start_guard()
 	if _fade.color.a > 0.0:
