@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 14,
+ "catalog_version": 15,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -1895,7 +1895,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Rematch Key",
-   "desc": "A beaten Wanderer can be challenged again on the same day.",
+   "desc": "A beaten Wayfarer can be challenged again on the same day.",
    "rg_price": 100,
    "eur_cents": 99,
    "store_type": "consumable",
@@ -1911,7 +1911,7 @@
    "duration": "once",
    "plan": 4841,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_warden_lore",
