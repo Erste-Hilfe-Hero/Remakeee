@@ -39,6 +39,7 @@ static func validate() -> PackedStringArray:
 	check_schedules(errors, map_ids)
 	check_shapes(errors, map_ids, load_layout())
 	check_squares(errors, map_ids, load_layout())
+	check_room_encounters(errors, map_ids)
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -463,6 +464,27 @@ static func load_layout() -> Dictionary:
 ## Outdoor maps fit the portrait screen when scrolled: at most MAX_OUTDOOR_W wide and
 ## MAX_OUTDOOR_H tall (item 907). Routes and marshes are walkable both ways: each has at least two
 ## other places to go, by foot or by line (item 934).
+## Item 1030: puzzle rooms (the rooms with a goal line) have no wild cells in the puzzle
+## itself; wild Spirlings only wait on the landing row in front of the stairs (second row from
+## the bottom), which is the corridor between two rooms.
+static func check_room_encounters(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	for id: String in map_ids:
+		var m: MapData = MapData.load_map(id)
+		if m == null or m.goal.is_empty():
+			continue
+		for c: Vector2i in wild_cells(m):
+			if c.y != m.height - 2:
+				errors.append("puzzle room '%s': wild cell %s inside the puzzle (only the landing row may have them)" % [id, c])
+
+## Cells of [param m] where wild Spirlings can appear.
+static func wild_cells(m: MapData) -> Array[Vector2i]:
+	var out: Array[Vector2i] = []
+	for y: int in m.height:
+		for x: int in m.width:
+			if m.kind_at(Vector2i(x, y)) in TilesetFactory.ENCOUNTER_KINDS:
+				out.append(Vector2i(x, y))
+	return out
+
 const SQUARE_FOLK: int = 3
 const SQUARE_REACH: int = 2
 
