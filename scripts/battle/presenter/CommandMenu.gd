@@ -332,6 +332,10 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 	_item.disabled = not BattleAction.Kind.ITEM in kinds
 	_bond.disabled = not BattleAction.Kind.BOND in kinds
 	_run.disabled = not BattleAction.Kind.RUN in kinds
+	# A Trial can be restarted at any time (item 708).
+	_run.text = "Restart" if model.has_meta("puzzle_max") else "Leave"
+	if model.has_meta("puzzle_max"):
+		_run.disabled = false
 	# "Rest" stands in for the moves when none is affordable.
 	if not BattleAction.Kind.MOVE in kinds:
 		_move_buttons[0].text = "Rest (+%d)" % int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))

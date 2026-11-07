@@ -12,14 +12,16 @@
   "ai": 2,
   "goal": {"type": "win_within", "value": 4},
   "max_turns": 4,
-  "best_turns": 3
+  "best_turns": 3,
+  "hint_1": "Smoldrake fights Ember with Ember. Your Tide arts hit it hard, but Energy is short in the storm.",
+  "hint_2": "Open with Fizz Pop, call the tide once, then keep up the Fizz Pop."
  },
  {
   "id": "ember_trial_2",
   "warden": "cinder",
   "name": "Ember Trial 2",
-  "text": "Kindlop burns, and its Kindling gift turns the Scorch into strength. Beat Shalebat and Zippit without curing the Scorch.",
-  "player": [{"species": "Kindlop", "level": 12, "moves": ["Glow Knuckle", "Cinder Nip", "Kindle Up"], "status": "scorch", "status_turns": 9}],
+  "text": "Kindlop burns, and its Kindling gift turns the Scorch into strength. It starts with 5 Energy. Beat Shalebat and Zippit without curing the Scorch.",
+  "player": [{"species": "Kindlop", "level": 12, "moves": ["Glow Knuckle", "Cinder Nip", "Kindle Up"], "status": "scorch", "status_turns": 9, "energy": 5}],
   "foe": [{"species": "Shalebat", "level": 12, "moves": ["Hunker Down", "Hush", "Mirk Nip"], "hp": 0.6}, {"species": "Zippit", "level": 12, "moves": ["Crackle Bite", "Charged Mist", "Siphon Spark"], "hp": 0.5}],
   "field": "",
   "rule": "",
@@ -27,7 +29,9 @@
   "ai": 2,
   "goal": [{"type": "keep_status", "value": "scorch"}],
   "max_turns": 6,
-  "best_turns": 4
+  "best_turns": 5,
+  "hint_1": "Kindlop only has 5 Energy. Plan one rest, and spend the rest of it on blows that count.",
+  "hint_2": "Glow Knuckle twice, rest once, then Glow Knuckle and Cinder Nip."
  },
  {
   "id": "ember_trial_3",
@@ -42,7 +46,9 @@
   "ai": 2,
   "goal": {"type": "win_within", "value": 5},
   "max_turns": 5,
-  "best_turns": 3
+  "best_turns": 3,
+  "hint_1": "Kindlop wants to heat up. Hit it before it gets going, and do not wait.",
+  "hint_2": "Pollen Prick twice, a puff of Puffcap Haze, then finish with Pollen Prick."
  },
  {
   "id": "current_trial_1",
@@ -57,7 +63,9 @@
   "ai": 2,
   "goal": {"type": "win_within", "value": 3, "reaction": "VOLT"},
   "max_turns": 3,
-  "best_turns": 3
+  "best_turns": 3,
+  "hint_1": "The Volt reaction needs a soaked foe and a Volt art. Riptail is already soaked.",
+  "hint_2": "Bite twice with Crackle Bite, then end it with Static Tag."
  },
  {
   "id": "current_trial_2",
@@ -72,7 +80,9 @@
   "ai": 2,
   "goal": [{"type": "win_within", "value": 5}, {"type": "exact_rests", "value": 1}],
   "max_turns": 5,
-  "best_turns": 4
+  "best_turns": 4,
+  "hint_1": "With 2 Energy, Zephlet cannot strike well yet. The one rest belongs at the start.",
+  "hint_2": "Rest first, then Crosswind twice and Draft Needle to finish."
  },
  {
   "id": "current_trial_3",
@@ -89,6 +99,8 @@
   "ai": 2,
   "goal": {"type": "no_faint"},
   "max_turns": 4,
-  "best_turns": 3
+  "best_turns": 3,
+  "hint_1": "Kestra's Zephlet plays on its own. Keep Zippit from getting a second turn.",
+  "hint_2": "Pull Zippit under with Undertow, then Rip Current, then Rip Current again."
  }
 ]

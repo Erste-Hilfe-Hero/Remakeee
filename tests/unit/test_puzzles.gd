@@ -152,3 +152,103 @@ func test_lanterns() -> void:
 	assert_eq(BattlePuzzle.lanterns(slow, at), 3)
 	var lost: BattlePuzzle.Attempt = BattlePuzzle.start(p)
 	assert_eq(BattlePuzzle.lanterns(p, lost), 0)
+
+## Items 707-713: hints, restart, fixed AI tier, the lantern reward, the banner and the results.
+func test_hints_after_two_and_four_misses() -> void:
+	for p: Dictionary in BattlePuzzle.all():
+		assert_false(str(p.get("hint_1", "")).is_empty(), "%s hint_1" % p.id)
+		assert_false(str(p.get("hint_2", "")).is_empty(), "%s hint_2" % p.id)
+		assert_eq(BattlePuzzle.hint(p, 1), "")
+		assert_eq(BattlePuzzle.hint(p, 2), Loc.t(str(p.hint_1)))
+		assert_eq(BattlePuzzle.hint(p, 3), Loc.t(str(p.hint_1)))
+		assert_eq(BattlePuzzle.hint(p, 4), Loc.t(str(p.hint_2)))
+
+func test_restart_keeps_the_seed_and_drops_lines() -> void:
+	var p: Dictionary = BattlePuzzle.by_id("current_trial_2")
+	var a: BattlePuzzle.Attempt = BattlePuzzle.start_attempt(p)
+	var b: BattlePuzzle.Attempt = BattlePuzzle.start_attempt(p, true)
+	assert_eq(a.model.battle_seed, b.model.battle_seed)
+	assert_eq(b.model.active_spirling(0).energy, 2, "the puzzle's Energy survives")
+	assert_true(b.model.has_meta("quick"))
+	for e: BattleEvent in BattlePuzzle.intro_events(b.model):
+		assert_ne(e.type, BattleEvent.Type.BATTLE_LINE)
+
+func test_ai_tier_ignores_difficulty() -> void:
+	var keep: GameState.Difficulty = GameState.difficulty
+	for d: GameState.Difficulty in [GameState.Difficulty.STORY, GameState.Difficulty.RIFT_BORN]:
+		GameState.difficulty = d
+		for p: Dictionary in BattlePuzzle.all():
+			var m: BattleModel = BattlePuzzle.start_attempt(p).model
+			assert_eq(m.ai.level, int(p.get("ai", 1)), "%s ai" % p.id)
+			assert_eq(m.foe_damage_mult, 1.0)
+	GameState.difficulty = keep
+
+func test_banner_and_turn_limit() -> void:
+	var p: Dictionary = BattlePuzzle.by_id("current_trial_2")
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start_attempt(p)
+	assert_true(str(at.model.get_meta("puzzle_goal")).contains("5"))
+	assert_eq(BattlePuzzle.turns_left(at.model), 5)
+	BattlePuzzle.play(p, at, BattleAction.make_rest(BattleModel.Side.PLAYER))
+	assert_eq(BattlePuzzle.turns_left(at.model), 4)
+	var plain := BattleModel.new([] as Array[Spirling], [] as Array[Spirling], true, 1)
+	assert_eq(BattlePuzzle.turns_left(plain), -1)
+	assert_false(BattlePuzzle.out_of_turns(plain))
+
+func test_results_migrate_old_trials() -> void:
+	var rec: Dictionary = {"trials": {"ember_trial_1": true, "ember_trial_2": 3}}
+	assert_eq(BattlePuzzle.best_lanterns(rec, "ember_trial_1"), 2)
+	assert_eq(BattlePuzzle.best_lanterns(rec, "ember_trial_2"), 3)
+	var p: Dictionary = BattlePuzzle.by_id("ember_trial_1")
+	var lost: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	var e: Dictionary = BattlePuzzle.note_result(rec, p, lost)
+	assert_eq(int(e.fails), 1)
+	assert_eq(int(e.lanterns), 2, "a miss keeps the old best")
+	assert_true(rec.has("trials"), "old data stays")
+	assert_eq(BattlePuzzle.best_lanterns(rec, "ember_trial_2"), 3)
+	var r: Dictionary = BattlePuzzle.search(p)
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	for d: Dictionary in r.solution:
+		BattlePuzzle.play(p, at, BattleReplay.action_from_dict(d))
+	e = BattlePuzzle.note_result(rec, p, at)
+	assert_eq(int(e.turns), at.turns())
+	assert_eq(int((rec.puzzles as Dictionary).ember_trial_1.fails), 1)
+
+func test_lantern_reward_once() -> void:
+	var rec: Dictionary = {}
+	assert_eq(BattlePuzzle.reward_due(rec, "cinder"), "")
+	var res: Dictionary = {}
+	for p: Dictionary in BattlePuzzle.for_warden("cinder"):
+		res[str(p.id)] = {"lanterns": 3, "turns": 3, "fails": 0}
+	rec["puzzles"] = res
+	assert_eq(BattlePuzzle.reward_due(rec, "cinder"), "echo_furnace_heart")
+	assert_eq(BattlePuzzle.reward_due(rec, "tide"), "")
+	BattlePuzzle.mark_reward(rec, "cinder")
+	assert_eq(BattlePuzzle.reward_due(rec, "cinder"), "")
+	for id: String in BattlePuzzle.WARDEN_REWARD.values():
+		var item: Dictionary = Database.item(id)
+		assert_false(item.is_empty(), id)
+		assert_not_null(Database.move(str(item.get("teaches", ""))), "%s teaches a real art" % id)
+
+## Item 713: no Trial falls to resting only, or to the first art whenever it is affordable.
+func _lazy_line(p: Dictionary, first: bool) -> bool:
+	var at: BattlePuzzle.Attempt = BattlePuzzle.start(p)
+	var guard: int = 0
+	while not BattlePuzzle.is_over(p, at) and guard < 40:
+		guard += 1
+		var opts: Array[BattleAction] = BattlePuzzle.choices(at)
+		var pick: BattleAction = opts[0] if at.model.needs_player_switch() else null
+		if pick == null:
+			for a: BattleAction in opts:
+				if (first and a.kind == BattleAction.Kind.MOVE and a.move_index == 0) or (pick == null and a.kind == BattleAction.Kind.REST):
+					pick = a
+					if first and a.kind == BattleAction.Kind.MOVE:
+						break
+		if pick == null:
+			pick = BattleAction.make_rest(BattleModel.Side.PLAYER)
+		BattlePuzzle.play(p, at, pick)
+	return BattlePuzzle.solved(p, at)
+
+func test_no_trial_falls_to_a_lazy_line() -> void:
+	for p: Dictionary in BattlePuzzle.all():
+		assert_false(_lazy_line(p, false), "%s solved by resting only" % p.id)
+		assert_false(_lazy_line(p, true), "%s solved by the first art only" % p.id)

@@ -313,6 +313,24 @@
   "tradeable": true
  },
  {
+  "id": "echo_furnace_heart",
+  "name": "Echo Crystal: Furnace Heart",
+  "description": "Teaches Furnace Heart to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Furnace Heart",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_fathom_crush",
+  "name": "Echo Crystal: Fathom Crush",
+  "description": "Teaches Fathom Crush to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Fathom Crush",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
   "id": "wading_boots",
   "name": "Wading Boots",
   "description": "Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.",
