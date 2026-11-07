@@ -42,6 +42,8 @@ const TEMPERAMENTS: Array[Dictionary] = [
 ## Saves before version 4 read the temperament from the uid over the first six only.
 const LEGACY_TEMPERAMENTS: int = 6
 const TEMPER_BONUS: float = 1.05
+## Power Core (shop item 4750): the temperament's lean doubles for this Spirling.
+const TEMPER_CORE_BONUS: float = 1.10
 
 var data: SpirlingData
 var nickname: String = ""
@@ -59,6 +61,8 @@ var uid: String = ""
 var held: String = ""
 ## Rare colour variant. Cosmetic only, never stronger.
 var prism: bool = false
+## Power Core used on this Spirling (saved as "core" only when true).
+var temper_core: bool = false
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
 ## Battle-only: turns left on an Energy tax (energy_tax effect): every move costs more meanwhile.
@@ -165,7 +169,9 @@ func temperament() -> Dictionary:
 	return temper_info(temper if not temper.is_empty() else legacy_temper(uid))
 
 func _temper_mult(key: String) -> float:
-	return TEMPER_BONUS if str(temperament().stat) == key else 1.0
+	if str(temperament().stat) != key:
+		return 1.0
+	return TEMPER_CORE_BONUS if temper_core else TEMPER_BONUS
 
 ## Raw stats (no status modifiers). Battle code uses the effective_* versions.
 func atk() -> int: return _stat("atk")
@@ -442,6 +448,7 @@ func to_dict() -> Dictionary:
 		"held": held,
 		"prism": prism,
 		"temper": temperament().id,
+		"core": temper_core,
 		"variant": variant,
 		"origin_map": origin_map,
 		"met_ring": met_ring,
@@ -479,6 +486,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.temper = str(d.get("temper", legacy_temper(s.uid)))
 	if not temper_info(s.temper).id == s.temper:
 		s.temper = legacy_temper(s.uid)
+	s.temper_core = d.get("core") is bool and d.get("core")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
 	s.met_ring = _num(d.get("met_ring"), 0)

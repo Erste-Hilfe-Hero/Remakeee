@@ -278,6 +278,21 @@ func add_item(id: String, count: int = 1) -> void:
 		Achievements.note_keepsake(id)
 
 ## Takes one [param id] out of the bag; an empty entry goes away. Returns false if there was none.
+## Temper Shift (shop item 4743): sets [param s]'s temperament to [param temper_id] and uses
+## the item up. False when nothing would change.
+func shift_temper(s: Spirling, temper_id: String, item_id: String = "rg_temper_shift") -> bool:
+	if item_count(item_id) <= 0 or Spirling.temper_info(temper_id).id != temper_id or s.temperament().id == temper_id:
+		return false
+	s.temper = temper_id
+	return take_item(item_id)
+
+## Power Core (shop item 4750): doubles the lean of a temperament that leans toward a stat.
+func use_power_core(s: Spirling, item_id: String = "rg_temper_amp") -> bool:
+	if item_count(item_id) <= 0 or s.temper_core or str(s.temperament().stat).is_empty():
+		return false
+	s.temper_core = true
+	return take_item(item_id)
+
 func take_item(id: String) -> bool:
 	if item_count(id) <= 0:
 		return false
