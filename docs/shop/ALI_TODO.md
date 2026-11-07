@@ -3,6 +3,28 @@
 Alles andere (Shop im Spiel, Server, Belegprüfung, Produktliste) baut Claude. Diese Schritte brauchen dein
 Konto, deine Steuer- und Bankdaten oder deine Unterschrift. Reihenfolge = Wichtigkeit.
 
+## 0. Apple: Stand 7. 11. 2026 und was nur du tun kannst
+
+Per API erledigt (lifekit-Workflow `chimora-store.yml`, Commit `run:chimora-store-asc+iap`): Build in
+TestFlight, Store-Texte und Screenshots in allen 14 Sprachen, Kategorie Rollenspiel + Abenteuer, Preis
+**kostenlos**, 109 In-App-Produkte (Texte EN/DE, Euro-Preise, alle Länder außer China, Familienfreigabe
+aus, Prüfbild), Altersfreigabe, Rechte an Inhalten, Hinweise für die Prüfung. Offen, weil es dein Konto,
+deine Unterschrift oder Angaben braucht, die es nicht per API gibt:
+
+1. [ ] **Vertrag „Paid Apps“, Bank und Steuer** → [Geschäftliches](https://appstoreconnect.apple.com/business)
+2. [ ] **DSA-Händlerstatus** (Name, Adresse, Telefon, E-Mail wie im Impressum) → [Geschäftliches](https://appstoreconnect.apple.com/business)
+3. [ ] **App-Datenschutz** (gibt es nicht per API) mit den Antworten aus `docs/legal/STORE_COMPLIANCE.md`
+   Abschnitt 2: User ID, Gameplay Content, Purchase History, Other Data, alles „mit Identität verknüpft“,
+   nichts „Tracking“, Zweck „App-Funktionalität“ → [App-Datenschutz](https://appstoreconnect.apple.com/apps/6831632885/distribution/privacy)
+4. [ ] **Telefonnummer für die App-Prüfung** (Pflichtfeld, Format +49 …) eintragen oder mir schicken →
+   [Version 1.0.0](https://appstoreconnect.apple.com/apps/6831632885/distribution/ios/version/inflight)
+5. [ ] **Server-Benachrichtigungen V2** (Abschnitt 3 unten) → [App-Informationen](https://appstoreconnect.apple.com/apps/6831632885/distribution/info)
+6. [ ] **Sandbox-Testkonto** → [Sandbox](https://appstoreconnect.apple.com/access/users/sandbox)
+7. [ ] **Small Business Program** (15 % statt 30 %) → [Antrag](https://developer.apple.com/app-store/small-business-program/)
+8. [ ] **Zur Prüfung einreichen**: auf der Versionsseite unter „In-App-Käufe und Abonnements“ die
+   Produkte auswählen (erste Produkte gehen nur zusammen mit einer Version in die Prüfung), dann
+   „Zur Prüfung hinzufügen“ → [Version 1.0.0](https://appstoreconnect.apple.com/apps/6831632885/distribution/ios/version/inflight)
+
 ## 1. Verträge und Zahlungsprofil (ohne das gehen keine Käufe)
 
 - [ ] **Apple: Vertrag „Paid Apps“** annehmen und **Bankkonto + Steuerformulare** eintragen (für

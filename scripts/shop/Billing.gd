@@ -31,21 +31,37 @@ func _ready() -> void:
 	if Online.has_signal("state_changed"):
 		Online.state_changed.connect(_on_online_state)
 
-## Picks the store for this build: Google Play on Android (plugins/chimora_billing), the local
-## test store in debug builds against the local server. Apple StoreKit 2 follows.
+## Picks the store for this build: Google Play on Android (plugins/chimora_billing), the App Store
+## with StoreKit 2 on iOS (plugins/chimora_storekit), the local test store in debug builds against
+## the local server.
 func make_store() -> BillingStore:
 	if GoogleBillingStore.available_here():
 		var g := GoogleBillingStore.new()
-		_connect_google(g)
+		_connect_store(g)
 		return g
+	if AppleBillingStore.available_here():
+		var a := AppleBillingStore.new()
+		a.purchase_updated.connect(_on_store_update)
+		_connect_store(a)
+		return a
 	if Online.is_local() and OS.is_debug_build():
 		return LocalBilling.new()
 	return null
 
-## Connects to Google Play in the background; open purchases go to the server once it is up.
-func _connect_google(g: GoogleBillingStore) -> void:
+## Connects to the store in the background; open purchases go to the server once it is up.
+func _connect_store(g: BillingStore) -> void:
 	if await g.connect_store() and Online.is_online():
 		resume_pending()
+
+## A purchase the store finished outside the sheet (Ask to Buy approved, bought on another device):
+## the server checks and credits it like any other.
+func _on_store_update(receipt: Dictionary) -> void:
+	if _buying or not Online.is_online():
+		return
+	if (await _verify(receipt)).get("ok", false):
+		await claim()
+		await refresh_state()
+	_set_step(Step.READY)
 
 func available() -> bool:
 	return store != null and store.is_ready()
