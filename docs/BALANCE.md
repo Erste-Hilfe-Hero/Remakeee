@@ -17,6 +17,15 @@ How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- --level 
   Tamer, each at least 20 % (also checked by `test_goal_sim.gd`).
 - `--field <id>` and `--variant <id,id>` put every duel, team, ladder and mono battle on one field
   and under rule variants, so each can be measured on its own.
+- `--difficulty story|tamer|veteran|rift_born` tunes the foe side of duel, team, ladder and mono
+  battles like a Wayfarer: Spark, ring shift, AI tier (not in ladder), damage and start Energy.
+- **puzzle**: every puzzle of `data/puzzles.json` searched to the end, with the number of winning
+  lines, the fewest turns and whether the lantern target (`best_turns`) can be reached.
+- `--compare [path]` (team mode): flags every species and art whose win rate moved more than 8
+  points from `tools/balance/baseline_lv36.json` (arts: share of uses by the winning side, at
+  least 30 uses). The baseline is `--mode team --level 36 --rounds 3000 --json <path>` at the
+  default seed; compare with the same rounds and seed, since another seed alone moves a few
+  arts by up to about 15 points.
 
 Both modes run on the real `BattleModel` (all effects, fields and rules), never a separate damage
 path. `--json` writes every number for tests and comparisons.
