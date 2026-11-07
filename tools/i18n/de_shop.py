@@ -653,4 +653,7 @@ T = {
 "Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle, not in Rift-Born. Used up.": "Wird vor einem Rift-Wächterkampf angeboten, den du schon einmal verloren hast: Das Team des Wächters startet mit 15 % weniger Kraft. Einer pro Kampf, nicht in Rift-Born. Wird verbraucht.",
 "Use a Warden Weakener? The Warden's team starts with 15%% less Vigor (%d left).": "Wächterschwächer nutzen? Das Team des Wächters startet mit 15 %% weniger Kraft (noch %d).",
 "A Warden Weakener dims %s's team: they start with 15%% less Vigor.": "Ein Wächterschwächer dämpft das Team von %s: Es startet mit 15 %% weniger Kraft.",
+"Warden Lore:": "Wächterkunde:",
+"(holds %s)": "(trägt %s)",
+"Items: %s": "Gegenstände: %s", "Items: none": "Gegenstände: keine",
 }

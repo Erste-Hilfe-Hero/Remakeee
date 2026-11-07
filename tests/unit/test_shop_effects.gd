@@ -449,6 +449,22 @@ func test_warden_weakener_cuts_the_foe_team_and_replays() -> void:
 	var again: BattleModel = BattleReplay.build_model(JSON.parse_string(JSON.stringify(snap)))
 	assert_true(again.warden_weakened)
 
+func test_warden_lore_lists_team_techniques_and_items() -> void:
+	var team: Array[Spirling] = [BattleFixtures.make("Zephlet", 18)]
+	var def: Dictionary = {"id": "w", "trainer": "Warden Test", "warden": "x", "items": {"tonic": 2}}
+	var t: String = WardenCard.lore(def, team)
+	assert_true(t.contains("R18"))
+	assert_true(t.contains(team[0].moves[0].move_name))
+	assert_true(t.contains(str(Database.item("tonic").get("name"))))
+	assert_true(t.contains("x2"))
+	Billing.state = {"unlocks": {}}
+	assert_false(ShopEffects.has_warden_lore(1, GameState.Difficulty.TAMER), "not bought")
+	Billing.state = {"unlocks": {"warden_lore": 1}}
+	assert_false(ShopEffects.has_warden_lore(0, GameState.Difficulty.TAMER), "first try without help")
+	assert_true(ShopEffects.has_warden_lore(1, GameState.Difficulty.TAMER))
+	assert_false(ShopEffects.has_warden_lore(1, GameState.Difficulty.RIFT_BORN))
+	Billing.state = {}
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
