@@ -719,4 +719,12 @@ T = {
 "Preview:": "Vorschau:",
 "Riftglass has no money value and cannot be changed back into euro or passed on.": "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden.",
 "Free to play, contains in-app purchases": "Kostenlos spielbar, enthält In-App-Käufe",
+"Help with purchases": "Hilfe zu Käufen",
+"Help with purchases: Riftglass, the pass, refunds and spending limits.": "Hilfe zu Käufen: Rissglas, Pass, Erstattung und Ausgabelimits.",
+"Open the page": "Seite öffnen",
+"Under 18: ask your parents first. Every renewal needs their OK in the store.": "Unter 18: frag zuerst deine Eltern. Jede Verlängerung braucht ihre Freigabe im Store.",
+"Once a week per account.": "Einmal pro Woche und Konto.",
+"Up to %d times a week per account.": "Bis zu %d-mal pro Woche und Konto.",
+"Once per account.": "Einmal pro Konto.",
+"Up to %d times per account.": "Bis zu %d-mal pro Konto.",
 }

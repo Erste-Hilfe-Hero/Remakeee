@@ -9,6 +9,9 @@ const IMPRINT_URL: String = SITE + "/impressum"
 const PRIVACY_URL: String = SITE + "/datenschutz"
 const TERMS_URL: String = SITE + "/nutzungsbedingungen"
 const LICENCES_URL: String = SITE + "/lizenzen"
+## Help with purchases (docs/legal/KAEUFE.md): German page and English page.
+const PURCHASES_URL_DE: String = SITE + "/kaeufe"
+const PURCHASES_URL_EN: String = SITE + "/purchases"
 const CONTACT: String = "aa.amuri@icloud.com"
 
 ## Characters per info page on the 144 px wide screen.
@@ -21,6 +24,10 @@ static func links_text() -> String:
 		"Terms: " + TERMS_URL,
 		"Contact: " + CONTACT,
 	])
+
+## The purchases help page in the game's language.
+static func purchases_url() -> String:
+	return PURCHASES_URL_DE if Loc.language() == "de" else PURCHASES_URL_EN
 
 ## Engine licence notice (Godot is MIT licensed; its notice must ship with the game).
 static func licence_text() -> String:

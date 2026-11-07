@@ -1,7 +1,11 @@
 # German texts for the generated area 3 maps. Written by tools/art/build_world.py:
 # edit the tr()/lines() pairs in tools/art/world/*.py, not this file.
 T = {
+"\"Brook and Stone\": Quillbrook hides a way in the west bank, halfway down the brook.": "\"Bach und Stein\": Federbach verbirgt einen Weg im Westufer, auf halber Höhe des Bachs.",
+"\"Buried and Forgotten\": Travellers on the Saltglass road buried their spare leaves where the soil is loose.": "\"Vergraben und vergessen\": Reisende an der Salzglasstraße vergruben ihre Ersatzblätter, wo die Erde locker ist.",
+"\"Forest Ways\": In Gloamwood's upper grove, west of the old path, one stone is far too smooth. Push it.": "\"Waldwege\": Im oberen Hain von Dämmerwald, westlich des alten Pfads, ist ein Stein viel zu glatt. Schieb ihn.",
 "\"One step toward morning, two toward the valley. Dig there.\"": "\"Einen Schritt zum Morgen, zwei zum Tal hin. Dort grab.\"",
+"\"Sea Caves of Veydal\": Sablecove's inner chamber keeps a gift. It opens only when the tide is out.": "\"Meereshöhlen von Veydal\": Die innere Kammer der Zobelbucht hütet eine Gabe. Sie öffnet sich nur bei Ebbe.",
 "\"Stand at my foot, take one step west, then two toward the north. The walker's gift lies there.\"": "\"Stell dich an meinen Fuß, geh einen Schritt nach Westen, dann zwei nach Norden. Dort liegt die Gabe des Wanderers.\"",
 "\"Stand before me, then walk two steps toward the peaks.\"": "\"Stell dich vor mich, dann geh zwei Schritte zu den Gipfeln hin.\"",
 "\"Three steps from me toward morning, two toward the rails' end.\"": "\"Drei Schritte von mir zum Morgen hin, zwei zum Ende der Gleise.\"",
@@ -24,6 +28,7 @@ T = {
 "A starred bell hangs from a beam.": "Eine Glocke (mit Stern) hängt an einem Balken.",
 "A survey hut. Old charts of the uplands hang on the wall, every one of them grey.": "Eine Vermessungshütte. An der Wand hängen alte Karten des Hochlands, jede einzelne grau.",
 "A tall mirror on a turning stand.": "Ein hoher Spiegel auf einem Drehgestell.",
+"A tick in the margin: you have found this place.": "Ein Haken am Rand: diesen Ort hast du gefunden.",
 "A tide stone. Lines and hours are scratched into it by many hands.": "Ein Gezeitenstein. Viele Hände haben Striche und Stunden hineingeritzt.",
 "A worn bench at the end of a little fishing pier. Sit for a while?": "Eine abgewetzte Bank am Ende eines kleinen Fischerstegs. Eine Weile sitzen?",
 "ASHMERE STATION": "BAHNHOF ASHMERE",
@@ -200,6 +205,7 @@ T = {
 "Lanternwell, chamber 3": "Laternenbrunnen, Kammer 3",
 "Lanternwell, chamber 4": "Laternenbrunnen, Kammer 4",
 "Lanternwell, chamber 5": "Laternenbrunnen, Kammer 5",
+"Librarian Odile: Every book here was written by someone who walked it first. Read, then go and look.": "Bibliothekarin Odile: Jedes Buch hier hat jemand geschrieben, der den Weg zuerst gegangen ist. Lies, dann geh und sieh nach.",
 "Lusa: Before the Rift, one last test.": "Lusa: Vor dem Riss noch eine letzte Prüfung.",
 "Lusa: Go on, then. Senna is waiting, even if she can't hear you.": "Lusa: Dann geh. Senna wartet, auch wenn sie dich nicht hört.",
 "Lusa: Past here the rain falls upward, if you look long enough.": "Lusa: Hinter dieser Stelle fällt der Regen nach oben, wenn man lange genug hinsieht.",
@@ -368,6 +374,7 @@ T = {
 "Wren: I come here to listen. The forest is never fully quiet, Hush or not.": "Wren: Ich komme zum Zuhören her. Der Wald ist nie ganz still, Stille hin oder her.",
 "Wren: You walk loud for a cartographer. Let's see how you fight.": "Wren: Für jemanden mit Zeichenstift läufst du ganz schön laut. Mal sehen, wie du kämpfst.",
 "Wrenhollow": "Zaunkönigsgrund",
+"Wrenhollow Library": "Bibliothek von Zaunkönigsgrund",
 "Wrenhollow, 34 folk.": "Zaunkönigsgrund, 34 Leute.",
 "You remember a saying: \"In Quillbrook, the stone too smooth to be natural is a door.\"": "Dir fällt ein Spruch ein: \"In Federbach ist der Stein, der zu glatt ist, eine Tür.\"",
 }

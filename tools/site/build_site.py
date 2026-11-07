@@ -9,6 +9,8 @@ The pages are served by the game server's Caddy (server/Caddyfile, folder server
   /konto-loeschen       Konto löschen + English        (KONTO_LOESCHEN.md)     Google Play: account deletion URL
   /delete-account       same page
   /support              Hilfe und Kontakt + English    (SUPPORT.md)            Apple: support URL
+  /kaeufe              Hilfe zu Käufen + English      (KAEUFE.md)             shop link "Help with purchases"
+  /purchases           same page
   /melden               report illegal content without an account (DSA Art. 16), melden.js sends it
   /lizenzen             Godot and third-party licences (server/site/licences.txt, see --licences)
   /info                 overview with links to all of the above
@@ -37,6 +39,8 @@ PAGES = [
     ("konto-loeschen", "KONTO_LOESCHEN.md", "Konto löschen", "de"),
     ("delete-account", "KONTO_LOESCHEN.md", "Delete account", "en"),
     ("support", "SUPPORT.md", "Hilfe und Kontakt", "de"),
+    ("kaeufe", "KAEUFE.md", "Käufe", "de"),
+    ("purchases", "KAEUFE.md", "Purchases", "en"),
 ]
 PLACEHOLDER = re.compile(r"\[(NAME|ADRESSE|ADDRESS|E-MAIL|EMAIL|TELEFON|PHONE|DOMAIN|USt-IdNr[^\]]*)\]")
 

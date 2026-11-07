@@ -123,6 +123,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
 | veydal | `thornridge` | town | 12x20 | 4 | 0 | 6 |
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
+| veydal | `wren_library` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
 | corvane | `corvane_quay` | town | 12x24 | 3 | 0 | 0 |
 | corvane | `greyreach` | route | 12x29 | 5 | 3 | 44 |
@@ -143,7 +144,7 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **45 maps** | | | **103** | **42** | **1062** |
+| | **46 maps** | | | **103** | **42** | **1062** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
