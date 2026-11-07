@@ -378,5 +378,23 @@
    "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
   ],
   "action": "marker_stone 1"
+ },
+ "stall_fish": {
+  "lines": [
+   "Fishwife Marit: Market day! Dried kelp towels and cool gel, straight off the boats."
+  ],
+  "action": "shop dry_towel cooling_gel wake_bell tonic"
+ },
+ "stall_herbs": {
+  "lines": [
+   "Herbwoman Agnes: Brews from the fen, only on market days. Smell that."
+  ],
+  "action": "shop power_brew guard_brew focus_brew dash_brew"
+ },
+ "stall_tinker": {
+  "lines": [
+   "Tinker Rasmus: Wednesday and Saturday, rain or shine. Charms and leaves, fair prices."
+  ],
+  "action": "shop kin_charm revival_leaf strong_tonic"
  }
 }

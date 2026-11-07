@@ -305,6 +305,10 @@ static func check_passages(errors: PackedStringArray, map_ids: PackedStringArray
 				for ph: Variant in only:
 					if not str(ph) in DayCycle.PHASE_NAMES:
 						errors.append("map '%s': phase_only '%s' at %s,%s is not dawn, day, dusk or night" % [id, ph, def.x, def.y])
+		for def: Dictionary in m.npcs:
+			for wd: Variant in def.get("weekdays", []):
+				if int(wd) < 0 or int(wd) > 6:
+					errors.append("map '%s': npc '%s' has weekday %s (0 Sunday .. 6 Saturday)" % [id, def.get("id", ""), wd])
 		if m.passages.is_empty():
 			continue
 		var reach: Dictionary = reachable_cells(m, entries.get(id, []))

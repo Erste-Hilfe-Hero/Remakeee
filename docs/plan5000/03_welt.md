@@ -78,7 +78,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 956. [P2] Gib Copperfold eine Werkstatt, die Wanderer-Ausrüstung gegen Erze und Münzen verbessert (siehe Abschnitt Ausrüstung).
 957. [P2] Gib Reedhaven einen Bootsmann als Fährhaltestelle der Seelinie (siehe Abschnitt Schnellreise).
 958. [P2] Baue für jeden neuen Ort mindestens zwei betretbare Häuser mit eigenem Innenraum 10 x 8 Kacheln.
-959. [P2] Lege in Brindlewick einen Markt an, der an zwei Tagen pro Woche (Gerätezeit Mittwoch und Samstag) mit drei zusätzlichen Ständen erscheint.
+959. [x] [P2] Lege in Brindlewick einen Markt an, der an zwei Tagen pro Woche (Gerätezeit Mittwoch und Samstag) mit drei zusätzlichen Ständen erscheint.
 960. [P2] Erweitere Thornridge um einen Gasthof als Kutschstation, mit Wirt und schwarzem Brett für Gerüchte über Funde.
 961. [P2] Baue den Hof "Mossgate Farm" (de: Moostor-Hof) auf Hollowmere Shore, mit Feldern, die sich je nach Wochentag sichtbar verändern.
 962. [x] [P2] Gib jedem Ort ein Ortsschild mit Name und Einwohnerzahl, z. B. "Wrenhollow, 34 Leute".

@@ -52,6 +52,22 @@ static func shows_at(def: Dictionary, phase: int) -> bool:
 	var name: String = phase_name(phase)
 	return name in only if only is Array else str(only) == name
 
+## Weekday by the device clock plus the bench shift: 0 Sunday .. 6 Saturday (area 3 item 959).
+static func weekday(unix: int = -1) -> int:
+	# Without [param unix], the device's local time (time zone bias in minutes).
+	var t: int = unix if unix >= 0 else int(Time.get_unix_time_from_system()) + int(Time.get_time_zone_from_system().get("bias", 0)) * 60
+	t += shift() * 3600
+	return int(Time.get_datetime_dict_from_unix_time(t).weekday)
+
+## True if [param def] has no "weekdays" list or lists [param wd] (0 Sunday .. 6 Saturday).
+static func on_weekday(def: Dictionary, wd: int) -> bool:
+	if not def.has("weekdays"):
+		return true
+	for d: Variant in def.weekdays:
+		if int(d) == wd:
+			return true
+	return false
+
 static func phase_for_hour(hour: int) -> Phase:
 	var h: int = posmod(hour, 24)
 	if h >= STARTS[Phase.NIGHT] or h < STARTS[Phase.DAWN]:

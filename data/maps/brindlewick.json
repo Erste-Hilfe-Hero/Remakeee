@@ -315,6 +315,42 @@
    "facing": "left",
    "dialogue": "brindlewick/coach",
    "sprite": "villager"
+  },
+  {
+   "id": "stall_fish",
+   "x": 9,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "brindlewick/stall_fish",
+   "sprite": "villager",
+   "weekdays": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "stall_herbs",
+   "x": 8,
+   "y": 10,
+   "facing": "up",
+   "dialogue": "brindlewick/stall_herbs",
+   "sprite": "elder",
+   "weekdays": [
+    3,
+    6
+   ]
+  },
+  {
+   "id": "stall_tinker",
+   "x": 2,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "brindlewick/stall_tinker",
+   "sprite": "villager",
+   "weekdays": [
+    3,
+    6
+   ]
   }
  ],
  "signs": [
