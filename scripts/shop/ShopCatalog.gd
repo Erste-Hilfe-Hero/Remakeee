@@ -110,6 +110,14 @@ static func grant_lines(o: Dictionary) -> Array[String]:
 
 ## What a pack's contents cost one by one in Riftglass (item 4685): Riftglass counts as itself,
 ## each item as its own offer's Riftglass price, a choice as the first option's price.
+## Riftglass price of the offer that sells only the unlock [param key] (0 if none does).
+static func _unlock_price(key: String) -> int:
+	for o: Dictionary in offers():
+		var g: Array = o.get("grants", [])
+		if g.size() == 1 and g[0] is Dictionary and str(g[0].get("t", "")) == "unlock" and str(g[0].get("id", "")) == key:
+			return int(o.get("rg_price", 0))
+	return 0
+
 static func single_value(o: Dictionary) -> int:
 	var v: int = 0
 	for g: Variant in o.get("grants", []):
@@ -120,6 +128,8 @@ static func single_value(o: Dictionary) -> int:
 				v += int(g.n)
 			"item":
 				v += int(g.get("n", 1)) * int(offer(str(g.id)).get("rg_price", 0))
+			"unlock":
+				v += _unlock_price(str(g.get("id", "")))
 			"choice":
 				var opts: Variant = o.get("choice", [])
 				if opts is Array and not (opts as Array).is_empty():

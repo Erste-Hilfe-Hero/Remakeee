@@ -310,8 +310,8 @@ T = {
 	"Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf, nicht in Rift-Born.",
 "Warden Bundle":
 	"Wächter-Bündel",
-"Warden Lore, 3 Warden Weakeners, 5 Rift Anchors. Single price 1900 Riftglass.":
-	"Wächterkunde, 3 Wächterschwächer, 5 Rissanker. Einzeln 1900 Rissglas.",
+"Warden Lore, 3 Warden Weakeners and 5 Rift Anchors in one pack.":
+	"Wächterkunde, 3 Wächterschwächer und 5 Rissanker in einem Paket.",
 "League Power Pack":
 	"Liga-Kraftpaket",
 "5 Overcharge Cores Plus. They only work in the Open League.":
@@ -656,4 +656,9 @@ T = {
 "Warden Lore:": "Wächterkunde:",
 "(holds %s)": "(trägt %s)",
 "Items: %s": "Gegenstände: %s", "Items: none": "Gegenstände: keine",
+"Rift Anchor": "Rissanker",
+"Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.": "Wird angeboten, wenn du gegen einen Rift-Wächter verlierst: Du bleibst direkt vor ihm, mit erholtem Team, statt zur Quelle zurückzugehen. Nicht in Rift-Born. Wird verbraucht.",
+"Use a Rift Anchor? You stay right before the Warden and your team is rested (%d left).": "Rissanker nutzen? Du bleibst direkt vor dem Wächter und dein Team ist erholt (noch %d).",
+"Go back": "Zurückgehen",
+"The Rift Anchor holds you in place. Your team is rested again.": "Der Rissanker hält dich an Ort und Stelle. Dein Team ist wieder erholt.",
 }

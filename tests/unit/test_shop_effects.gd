@@ -465,6 +465,17 @@ func test_warden_lore_lists_team_techniques_and_items() -> void:
 	assert_false(ShopEffects.has_warden_lore(1, GameState.Difficulty.RIFT_BORN))
 	Billing.state = {}
 
+func test_rift_anchor_and_warden_bundle() -> void:
+	var inv: Dictionary = GameState.inventory.duplicate(true)
+	GameState.inventory.erase(ShopEffects.RIFT_ANCHOR_ITEM)
+	assert_false(ShopEffects.can_anchor(GameState.Difficulty.TAMER), "none in the bag")
+	GameState.inventory[ShopEffects.RIFT_ANCHOR_ITEM] = 1
+	assert_true(ShopEffects.can_anchor(GameState.Difficulty.VETERAN))
+	assert_false(ShopEffects.can_anchor(GameState.Difficulty.RIFT_BORN))
+	GameState.inventory = inv
+	# 600 (Lore) + 3 x 300 + 5 x 100, sold for 1500.
+	assert_eq(ShopCatalog.single_value(ShopCatalog.offer("rg_warden_bundle")), 2000)
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
