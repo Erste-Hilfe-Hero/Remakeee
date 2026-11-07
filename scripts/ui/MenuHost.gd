@@ -453,9 +453,12 @@ func _run_setting_group(title: String, group: String) -> void:
 			return
 		SaveManager.save_settings()
 
-## [param value] for a setting row, or "Shop" while its shop unlock is missing (Ali, 7 Nov).
+## Shown instead of the value while a setting still needs its shop unlock (short in every language).
+const SHOP_MARK: String = "€"
+
+## [param value] for a setting row, or SHOP_MARK while its shop unlock is missing (Ali, 7 Nov).
 static func shop_or(key: String, value: String) -> String:
-	return value if ShopEffects.owns_setting(key) else "Shop"
+	return value if ShopEffects.owns_setting(key) else SHOP_MARK
 
 ## Shows where to buy [param key] and returns true when the setting is still locked.
 func locked_setting(key: String) -> bool:

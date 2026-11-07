@@ -27,7 +27,7 @@ func test_every_sold_setting_has_a_ready_offer() -> void:
 func test_locked_until_bought() -> void:
 	for key: String in ShopEffects.SETTING_UNLOCKS:
 		assert_false(ShopEffects.owns_setting(key), key)
-		assert_eq(MenuHost.shop_or(key, "On"), "Shop", key)
+		assert_eq(MenuHost.shop_or(key, "On"), MenuHost.SHOP_MARK, key)
 	assert_true(ShopEffects.owns_setting("tips"), "other settings stay free")
 	assert_true(ShopEffects.owns_setting("large_text"), "access settings stay free")
 	Billing.state = {"unlocks": {"sky_control": 1, "damage_preview": 1}}
