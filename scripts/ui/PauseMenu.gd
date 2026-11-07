@@ -298,6 +298,7 @@ func run_records() -> void:
 		if Vows.can_take() or not (GameState.records.get("vows", {}) as Dictionary).is_empty():
 			lines.append("Vows")
 		lines.append("Run chronicle")
+		lines.append("Finds by region")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
 		if not Album.stickers().is_empty():
@@ -322,6 +323,7 @@ func run_records() -> void:
 			"Tower map": await info("\n".join(RiftTower.card_lines()))
 			"Vows": await run_vows()
 			"Run chronicle": await info("\n".join(RunChronicle.lines()))
+			"Finds by region": await info("\n".join(RegionStats.lines(GameState.flags)))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
 			"Lexicon": await run_lexicon()
