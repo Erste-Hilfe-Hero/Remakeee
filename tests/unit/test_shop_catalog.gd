@@ -111,3 +111,19 @@ func test_purchases_help_url() -> void:
 	assert_true(LegalInfo.purchases_url() in [LegalInfo.PURCHASES_URL_DE, LegalInfo.PURCHASES_URL_EN])
 	assert_true(LegalInfo.PURCHASES_URL_DE.ends_with("/kaeufe"))
 	assert_true(LegalInfo.PURCHASES_URL_EN.ends_with("/purchases"))
+
+## Item 4037: a struck-through old price needs 30 days at the higher price; item 4035: never "free".
+func test_validator_old_price_and_wording() -> void:
+	var o: Dictionary = ShopCatalog.offer("rg_ring_tonic").duplicate(true)
+	var has := func(errs: Array[String], part: String) -> bool:
+		return errs.any(func(e: String) -> bool: return part in e)
+	o["was_rg_price"] = int(o.rg_price) + 100
+	assert_true(has.call(ShopValidator.check([o] as Array[Dictionary]), "4037"), "dates are needed")
+	o["was_since"] = "2026-11-01"
+	o["was_until"] = "2026-11-20"
+	assert_true(has.call(ShopValidator.check([o] as Array[Dictionary]), "30 days"))
+	o["was_until"] = "2026-12-01"
+	assert_eq(ShopValidator.check([o] as Array[Dictionary]), [] as Array[String])
+	o.erase("was_rg_price")
+	o["desc"] = "A free tonic."
+	assert_true(has.call(ShopValidator.check([o] as Array[Dictionary]), "4035"))

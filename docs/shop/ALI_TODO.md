@@ -51,3 +51,12 @@ Antworten stehen in `docs/legal/STORE_COMPLIANCE.md`:
 
 - [ ] Ein **Sandbox-Testkonto** (Apple) und deine Gmail-Adresse als **Lizenztester** (Google) eintragen,
       damit Testkäufe nichts kosten. Ablauf: `docs/shop/TESTPLAN.md`.
+
+## 5. Beim Anlegen der Produkte
+
+- [ ] Bei Apple die **Familienfreigabe** für alle Produkte **aus** lassen. Der Server ordnet jeden Kauf dem
+      Konto des Käufers zu; ein geteilter Kauf bei einem Familienmitglied würde abgelehnt. Wir schalten sie
+      erst ein, wenn der iOS-Kauf am Ende mit StoreKit 2 fertig ist (Plan 4073). Das Feld
+      `family_shareable` in `store/products.json` steht darum auf `false`.
+- [ ] Bei Apple **keine „Promoted In-App Purchases“** einschalten (Käufe sollen nur im Spiel mit Erklärung
+      erscheinen, Plan 4083).
