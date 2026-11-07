@@ -223,6 +223,7 @@ func _build_glints(m: MapData) -> void:
 		g.visible = false
 		g.set_meta("flag", str(sc.flag))
 		g.set_meta("cell", Vector2i(int(sc.x), int(sc.y)))
+		g.set_meta("when", str(sc.get("when", "")))
 		for p: Vector2i in [Vector2i(7, 4), Vector2i(6, 5), Vector2i(8, 5), Vector2i(7, 6), Vector2i(7, 5)]:
 			var px := ColorRect.new()
 			px.color = UITheme.BG if p != Vector2i(7, 5) else UITheme.ACCENT
@@ -245,8 +246,13 @@ func _glint() -> void:
 	_glint_tick += 1
 	var m: MapData = ow.map
 	var weather: String = WeatherCycle.current(m) if m != null else "clear"
+	var live: Dictionary = flags_now(m, ow.player.cell) if m != null and ow.player != null else GameState.flags
 	for g: Node in _glints.get_children():
 		if g is Node2D and not GameState.has_flag(str(g.get_meta("flag", ""))):
+			# Finds that are only there at a time (shell beds at low tide) glint only then.
+			var when: String = str(g.get_meta("when", ""))
+			if not when.is_empty() and not bool(live.get(when, false)):
+				continue
 			var every: float = glint_every(m, g.get_meta("cell", Vector2i(-1, -1)), weather) if m != null else GLINT_EVERY
 			var ticks: int = maxi(1, roundi(every / GLINT_WIND))
 			if _glint_tick % ticks == 0:
@@ -349,7 +355,7 @@ func stepped(cell: Vector2i) -> bool:
 ## A on a hidden find, a secret passage, a plank gap or a ladder anchor. Returns true if handled.
 func interact(cell: Vector2i) -> bool:
 	var m: MapData = ow.map
-	var find: Dictionary = m.secret_at(cell, GameState.flags)
+	var find: Dictionary = m.secret_at(cell, flags_now(m, ow.player.cell))
 	if not find.is_empty():
 		await ow.take_find(find)
 		_build_glints(m)

@@ -118,7 +118,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `quillbrook` | route | 12x30 | 4 | 3 | 113 |
 | veydal | `reedhaven` | town | 12x10 | 3 | 0 | 0 |
 | veydal | `rest_spring` | inside | 10x8 | 0 | 0 | 0 |
-| veydal | `sablecove` | cave | 12x9 | 2 | 0 | 10 |
+| veydal | `sablecove` | cave | 12x9 | 4 | 0 | 10 |
 | veydal | `saltmarsh` | marsh | 12x15 | 4 | 3 | 47 |
 | veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
 | veydal | `thornridge` | town | 12x20 | 4 | 0 | 6 |
@@ -143,7 +143,7 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **45 maps** | | | **92** | **42** | **1062** |
+| | **45 maps** | | | **94** | **42** | **1062** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

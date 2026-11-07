@@ -175,7 +175,10 @@ def sablecove(world):
          # Item 979: the inner chamber (right) opens at low tide only. Closed, the gap is water.
          "blocks": [{"x": 6, "y": 3, "open_flag": "_low_tide", "closed": "~"}],
          "signs": [{"x": 3, "y": 7, "dialogue": mid + "/tide_stone"}],
-         "secrets": [secret(10, 1, "max_tonic", "find_sable_inner"), secret(1, 1, "spark_drop", "find_sable_shelf")]}
+         # Item 995: shell beds on the sand give a find at low tide; at high tide they are under water.
+         "secrets": [secret(10, 1, "max_tonic", "find_sable_inner"), secret(1, 1, "spark_drop", "find_sable_shelf"),
+                     dict(secret(4, 6, "remedy", "find_sable_shells_a"), when="_low_tide"),
+                     dict(secret(7, 7, "tonic", "find_sable_shells_b", 2), when="_low_tide")]}
     world.add_map(mid, m)
     entrance(world, "brackwater_fen", (11, 16), (10, 15), mid, (5, 7), "up",
              [("SABLECOVE", "ZOBELBUCHT"), ("Inside: Wading Boots. The inner chamber opens at low tide.",

@@ -116,7 +116,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 992. [x] [P2] Lege in jeder Höhle mindestens einen Rastplatz mit Lagerfeuer an, an dem man speichert, aber nicht heilt.
 993. [x] [P2] Zeige beim Betreten einer Höhle den Namen und die aktuelle Ebene als Banner, z. B. "Copper Deep, Sohle 2".
 994. [P2] Gib jeder Höhle eine eigene Tabelle in data/encounters.json mit Fokus auf Stone, Umbra und Lumen.
-995. [P2] Lege in Sablecove Muschelbänke an, die bei Ebbe einen Fund freigeben und bei Flut wieder verschwinden.
+995. [x] [P2] Lege in Sablecove Muschelbänke an, die bei Ebbe einen Fund freigeben und bei Flut wieder verschwinden.
 996. [P2] Baue in Echo Gallery eine Tropfwasser-Uhr, die bei Wartezeit von 30 Sekunden einen Spalt im Fels öffnet.
 997. [P3] Baue die Endspiel-Höhle "Deeproot Hollow" (de: Tiefwurzelhöhle) unter Coldmoor, Ring 22 bis 28, mit Wurzelwänden "v".
 998. [P3] Lass in Deeproot Hollow Wurzeln je nach Tageszeit Wege öffnen (tags zurückgezogen, nachts ausgebreitet).
