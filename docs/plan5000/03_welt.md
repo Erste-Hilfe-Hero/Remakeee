@@ -220,7 +220,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1090. [P2] Gib jedem Dungeon einen versteckten Raum, der auf der Raumzählung nicht erscheint.
 1091. [x] [P2] Lass Funde in Schilf und Farn bei Wetter Wind sichtbarer werden (Glitzern alle 2 Sekunden).
 1092. [P2] Verstecke in Orten 10 verlegte Alltagsdinge (Schlüssel, Brille, Pfeife), die man dem Besitzer zurückbringt und dafür einen kleinen Lohn bekommt.
-1093. [P2] Baue an drei Stellen eine Bank mit Blick auf den See, auf der man sitzt und nach 10 Sekunden ein Spirling-Geräusch und einen Hinweis erhält.
+1093. [x] [P2] Baue an drei Stellen eine Bank mit Blick auf den See, auf der man sitzt und nach 10 Sekunden ein Spirling-Geräusch und einen Hinweis erhält.
 1094. [P2] Lege einen geheimen Pfad hinter dem Leuchtturm an, der nur nachts bei Leuchtfeuer sichtbar ist.
 1095. [P2] Gib jeder Höhle eine Nische, die man nur mit Laterne Stufe 2 sieht.
 1096. [x] [P2] Ergänze die Statistik um "Funde gesamt" und "Geheimnisse gesamt" pro Region.

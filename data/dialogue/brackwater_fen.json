@@ -43,5 +43,22 @@
    "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
   ],
   "action": "marker_stone 11"
- }
+ },
+ "lake_bench": {
+  "lines": [
+   "A bench with a view over the lake. Sit and listen for a while?"
+  ],
+  "choices": [
+   {
+    "text": "Sit and listen",
+    "action": "lake_bench Puddlet brackwater_fen/lake_hint"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "lake_hint": [
+  "You remember a saying: \"In Quillbrook, the stone too smooth to be natural is a door.\""
+ ]
 }

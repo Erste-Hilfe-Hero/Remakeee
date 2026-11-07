@@ -121,6 +121,8 @@ func _set_rise(v: int) -> void:
 
 ## Shows [param text] with the typewriter effect and waits for the player (or the auto timer).
 func show_text(text: String, speaker: String = "") -> void:
+	# A worn shop text frame (item 4282); the plain box otherwise.
+	add_theme_stylebox_override("panel", UITheme.text_frame_style(GameState.dialogue_frame()))
 	# Story lines may address the player by name: "{name}" (after translation).
 	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
 	# Old lines carry the speaker as "Aldo: ..."; it moves to the name tag. A name in the

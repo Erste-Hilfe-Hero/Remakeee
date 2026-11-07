@@ -66,6 +66,9 @@ T.update({
 "The sun climbs high. It is broad day now.": "Die Sonne steigt hoch. Jetzt ist heller Tag.",
 "The light turns golden. Dusk settles in.": "Das Licht wird golden. Die Dämmerung zieht auf.",
 "Stars come out over the brook. Night has fallen.": "Über dem Bach gehen die Sterne auf. Es ist Nacht geworden.",
+# Lake benches (item 1093)
+"You sit down and look out over the lake. Everything goes quiet...": "Du setzt dich und schaust über den See. Alles wird still...",
+"Somewhere out on the water, a Spirling calls.": "Irgendwo draußen auf dem Wasser ruft ein Spirling.",
 })
 
 # Secret passages (area 3 item 1082)

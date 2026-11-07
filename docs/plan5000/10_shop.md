@@ -302,7 +302,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4279. [P2] Spirling-Farbtöne als Kosmetik anbieten: pro Art ein alternativer Farbton für 300 Rissglas, der nur das Aussehen ändert und im Spirlog als "Farbton" vermerkt ist.
 4280. [P2] Die Farbtöne als Paletten-Tausch im Shader umsetzen, damit keine neuen Sprites pro Era nötig sind.
 4281. [x] [P2] Kampf-Hintergründe als Kosmetik anbieten: 6 Hintergründe (Mondsee, Kupferwald, Nebelhafen, Sternwiese, Aschefeld, Glasgrotte) je 300 Rissglas.
-4282. [P2] Textrahmen für das Dialogfenster als Kosmetik anbieten: 5 Rahmen je 100 Rissglas.
+4282. [x] [P2] Textrahmen für das Dialogfenster als Kosmetik anbieten: 5 Rahmen je 100 Rissglas.
 4283. [P2] Wanderer-Hüte als Kosmetik anbieten: 6 Hüte je 200 Rissglas, sichtbar in der Welt und im Kampfbild.
 4284. [P2] Profilrahmen für die Freundesliste (`FriendsMenu.gd`) anbieten: 6 Rahmen je 100 Rissglas.
 4285. [P2] Echo-Grußkarten-Motive für Geschenke an Freunde anbieten: 8 Motive je 100 Rissglas, die nur das Aussehen der Karte ändern.

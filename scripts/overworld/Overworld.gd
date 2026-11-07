@@ -76,6 +76,7 @@ func _ready() -> void:
 		"heal": _action_heal,
 		"camp": _action_camp,
 		"bench": _action_bench,
+		"lake_bench": _action_lake_bench,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
@@ -924,6 +925,21 @@ func _action_bench(_args: PackedStringArray, _speaker: NPC) -> void:
 	refresh_daylight()
 	_spawn_npcs()
 	_world.refresh(player.cell)
+
+## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
+var lake_bench_wait: float = 10.0
+
+## "lake_bench <species> <file/key>": sit, wait, hear a Spirling from the water, then a hint.
+func _action_lake_bench(args: PackedStringArray, _speaker: NPC) -> void:
+	await say(["You sit down and look out over the lake. Everything goes quiet..."] as Array[String])
+	if lake_bench_wait > 0.0:
+		await get_tree().create_timer(lake_bench_wait).timeout
+	var sd: SpirlingData = Database.species(args[0]) if args.size() > 0 else null
+	Sound.cry(sd)
+	var out: Array[String] = ["Somewhere out on the water, a Spirling calls."]
+	if args.size() > 1 and Dialogue.exists(args[1]):
+		out.append_array(Dialogue.lines_for(Dialogue.get_entry(args[1]), GameState.flags))
+	await say(out)
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()
