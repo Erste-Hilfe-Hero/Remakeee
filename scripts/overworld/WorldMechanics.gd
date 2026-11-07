@@ -19,6 +19,9 @@ var _pressed: Dictionary = {}
 ## Hidden finds glint briefly every few seconds (area 3 item 1078).
 const GLINT_EVERY: float = 4.0
 const GLINT_TIME: float = 0.35
+## In wind, finds hidden in ferns and reeds glint every 2 seconds (area 3 item 1091).
+const GLINT_WIND: float = 2.0
+var _glint_tick: int = 0
 var _glints: Node2D
 var _glint_timer: Timer
 ## Clock flags (area 3 items 979 and 981): blocks can open on "_low_tide" (sea caves) or
@@ -204,7 +207,7 @@ func _build_glints(m: MapData) -> void:
 		_glints.z_index = 2
 		ow.add_child(_glints)
 		_glint_timer = Timer.new()
-		_glint_timer.wait_time = GLINT_EVERY
+		_glint_timer.wait_time = GLINT_WIND
 		_glint_timer.autostart = true
 		_glint_timer.timeout.connect(_glint)
 		_glints.add_child(_glint_timer)
@@ -219,6 +222,7 @@ func _build_glints(m: MapData) -> void:
 		g.position = Vector2(int(sc.x), int(sc.y)) * TilesetFactory.TILE
 		g.visible = false
 		g.set_meta("flag", str(sc.flag))
+		g.set_meta("cell", Vector2i(int(sc.x), int(sc.y)))
 		for p: Vector2i in [Vector2i(7, 4), Vector2i(6, 5), Vector2i(8, 5), Vector2i(7, 6), Vector2i(7, 5)]:
 			var px := ColorRect.new()
 			px.color = UITheme.BG if p != Vector2i(7, 5) else UITheme.ACCENT
@@ -228,10 +232,25 @@ func _build_glints(m: MapData) -> void:
 			g.add_child(px)
 		_glints.add_child(g)
 
+## Seconds between glints of a find at [param cell] in [param weather]: 2 for ferns and reeds
+## in wind, else 4 (area 3 item 1091).
+static func glint_every(m: MapData, cell: Vector2i, weather: String) -> float:
+	var k: int = m.kind_at(cell)
+	if weather == "wind" and (k == TilesetFactory.Kind.TALL_GRASS or k == TilesetFactory.Kind.REEDS):
+		return GLINT_WIND
+	return GLINT_EVERY
+
 func _glint() -> void:
+	# The timer ticks every 2 s; a find with the normal 4 s rhythm shows on every second tick.
+	_glint_tick += 1
+	var m: MapData = ow.map
+	var weather: String = WeatherCycle.current(m) if m != null else "clear"
 	for g: Node in _glints.get_children():
 		if g is Node2D and not GameState.has_flag(str(g.get_meta("flag", ""))):
-			(g as Node2D).visible = true
+			var every: float = glint_every(m, g.get_meta("cell", Vector2i(-1, -1)), weather) if m != null else GLINT_EVERY
+			var ticks: int = maxi(1, roundi(every / GLINT_WIND))
+			if _glint_tick % ticks == 0:
+				(g as Node2D).visible = true
 	await ow.get_tree().create_timer(GLINT_TIME).timeout
 	if is_instance_valid(_glints):
 		for g: Node in _glints.get_children():
