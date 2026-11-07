@@ -45,6 +45,15 @@ const TAMER_SPRITES: Array[String] = ["tamer", "tamer_f"]
 const DEFAULT_NAMES: Array[String] = ["Corin", "Liora"]
 ## Coat colours on the title screen: teal, rust, ochre, plum (boy = teal, girl = rust by default).
 const TAMER_COLORS: Array[Color] = [Color("2f7f7a"), Color("a2502e"), Color("b08a2e"), Color("6a3f6e")]
+## Wayfarer look picked at new game (Ali, 7 Nov): skin tone and hair colour, indexes below.
+var skin_tone: int = 0
+var hair_color: int = 0
+const SKIN_TONES: Array[Color] = [Color("f2e3c2"), Color("e8c9a0"), Color("c99a6b"), Color("9a6a43"), Color("6b4429")]
+const SKIN_NAMES: Array[String] = ["Light", "Fair", "Tan", "Brown", "Deep"]
+const HAIR_COLORS: Array[Color] = [Color("6a4256"), Color("2a2a33"), Color("6e4a2a"), Color("a2502e"), Color("d8b45a"), Color("b8b8c4")]
+const HAIR_NAMES: Array[String] = ["Plum", "Black", "Brown", "Auburn", "Blond", "Silver"]
+const COAT_NAMES: Array[String] = ["Teal", "Rust", "Ochre", "Plum"]
+const TAMER_SHADER: String = "res://shaders/tamer_palette.gdshader"
 ## Seconds played (shown on the save card).
 var play_time: float = 0.0
 ## True while a game is running (the title screen sets it); saving on pause needs it.
@@ -503,6 +512,15 @@ func body_color() -> Color:
 		return Color(c)
 	return TAMER_COLORS[clampi(tamer_color, 0, TAMER_COLORS.size() - 1)]
 
+## Material that paints the Wayfarer sheet in the picked skin, hair and coat colours.
+func tamer_material() -> ShaderMaterial:
+	var m := ShaderMaterial.new()
+	m.shader = load(TAMER_SHADER)
+	m.set_shader_parameter("skin", SKIN_TONES[clampi(skin_tone, 0, SKIN_TONES.size() - 1)])
+	m.set_shader_parameter("hair", HAIR_COLORS[clampi(hair_color, 0, HAIR_COLORS.size() - 1)])
+	m.set_shader_parameter("coat", body_color())
+	return m
+
 ## The worn hat kind (HatArt.KINDS) while the unlock is owned, else "".
 func worn_hat() -> String:
 	if hat_look.begins_with("hat_") and Billing.unlocked(hat_look) > 0:
@@ -543,9 +561,11 @@ const NEWCOMER_SPIRLINGS: int = 6
 func is_newcomer() -> bool:
 	return party.size() + storage.size() < NEWCOMER_SPIRLINGS
 
-func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0) -> void:
+func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0, p_skin: int = 0, p_hair: int = 0) -> void:
 	reset()
 	difficulty = p_difficulty
+	skin_tone = clampi(p_skin, 0, SKIN_TONES.size() - 1)
+	hair_color = clampi(p_hair, 0, HAIR_COLORS.size() - 1)
 	tamer_look = clampi(p_look, 0, TAMER_SPRITES.size() - 1)
 	tamer_name = p_name.strip_edges() if not p_name.strip_edges().is_empty() else DEFAULT_NAMES[tamer_look]
 	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
@@ -593,7 +613,7 @@ func to_dict() -> Dictionary:
 	for s: Spirling in storage:
 		storage_d.append(s.to_dict())
 	return {
-		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket, "backdrop": backdrop_look, "frame": text_frame, "hat": hat_look, "card_frame": card_frame, "gift_card": gift_card},
+		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "skin": skin_tone, "hair": hair_color, "jacket": jacket, "backdrop": backdrop_look, "frame": text_frame, "hat": hat_look, "card_frame": card_frame, "gift_card": gift_card},
 		"starter": starter,
 		"difficulty": difficulty,
 		"region": region,
@@ -638,6 +658,8 @@ func from_dict(d: Dictionary) -> void:
 	tamer_name = str(wayfarer.get("name", "Juno"))
 	tamer_color = int(wayfarer.get("color", 0))
 	tamer_look = clampi(int(wayfarer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
+	skin_tone = clampi(int(wayfarer.get("skin", 0)), 0, SKIN_TONES.size() - 1)
+	hair_color = clampi(int(wayfarer.get("hair", 0)), 0, HAIR_COLORS.size() - 1)
 	jacket = str(wayfarer.get("jacket", "")) if wayfarer.get("jacket") is String else ""
 	backdrop_look = str(wayfarer.get("backdrop", "")) if wayfarer.get("backdrop") is String else ""
 	text_frame = str(wayfarer.get("frame", "")) if wayfarer.get("frame") is String else ""

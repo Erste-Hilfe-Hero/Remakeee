@@ -331,20 +331,32 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 			return idx + 1
 	return 0
 
-## New game (Ali, 2026-11-04): boy or girl, then a name, and the journey starts. The partner
+## New game (Ali, 2026-11-04): boy or girl, skin tone, hair and coat colour (Ali, 7 Nov), then a name, and the journey starts. The partner
 ## Spirling is picked in the story (prologue at the lighthouse). Difficulty and the Iron Oath
 ## live in the settings during the game.
 func _new_game() -> bool:
 	var look: int = -1
+	var skin: int = 0
+	var hair: int = 0
+	var coat: int = 0
 	var name: String = ""
 	while true:
 		look = await _menu.pick_strings("Who are you?", ["Boy", "Girl"] as Array[String])
 		if look < 0:
 			return false
+		skin = await _menu.pick_strings("Skin tone", GameState.SKIN_NAMES)
+		if skin < 0:
+			continue
+		hair = await _menu.pick_strings("Hair colour", GameState.HAIR_NAMES)
+		if hair < 0:
+			continue
+		coat = await _menu.pick_strings("Coat colour", GameState.COAT_NAMES)
+		if coat < 0:
+			continue
 		name = await _ask_name(GameState.DEFAULT_NAMES[look])
 		if name != NAME_BACK:
 			break
-	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), look, "", look)
+	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), coat, "", look, skin, hair)
 	GameState.iron_oath = false
 	EraManager.from_dict({})
 	return true
