@@ -154,7 +154,10 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 	var shift: int = 0
 	if tuned and not has_block(def, difficulty):
 		shift = GameState.FOE_LEVEL_SHIFT[difficulty]
-	for e: Variant in team_entries(def, starter, difficulty):
+	var entries: Array = team_entries(def, starter, difficulty)
+	if difficulty == GameState.Difficulty.RIFT_BORN and not has_block(def, difficulty):
+		entries = rift_born_entries(def, entries)
+	for e: Variant in entries:
 		var entry: Dictionary = e
 		var sd: SpirlingData = Database.species(str(entry.get("species", "")))
 		if sd == null:
@@ -184,6 +187,24 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 			s.spark[main] = maxi(int(s.spark.get(main, 0)), WARDEN_MAIN_SPARK)
 			s.hp = s.max_hp()
 		out.append(s)
+	return out
+
+## Rift-Born teams (item 743) have one Spirling more than on Tamer, at most RIFT_BORN_MAX_TEAM.
+## A shared team gets a second copy of its lowest-ring entry (without its keepsake). Bosses and
+## wild hordes keep their size.
+const RIFT_BORN_MAX_TEAM: int = 5
+
+static func rift_born_entries(def: Dictionary, entries: Array) -> Array:
+	if entries.is_empty() or entries.size() >= RIFT_BORN_MAX_TEAM or def.has("boss") or is_wild_horde(def):
+		return entries
+	var low: Dictionary = entries[0]
+	for e: Variant in entries:
+		if e is Dictionary and int((e as Dictionary).get("level", 5)) < int(low.get("level", 5)):
+			low = e
+	var extra: Dictionary = low.duplicate(true)
+	extra.erase("held")
+	var out: Array = entries.duplicate()
+	out.append(extra)
 	return out
 
 ## Item 685: from Veteran on a Warden's Spirlings have at least this Spark in their main stat.

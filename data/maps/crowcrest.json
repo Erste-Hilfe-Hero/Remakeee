@@ -191,6 +191,10 @@
       "species": "Zippit",
       "level": 8,
       "held": "spark_coil"
+     },
+     {
+      "species": "Puddlet",
+      "level": 7
      }
     ]
    },

@@ -34,6 +34,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"gifts": model.gift_items.duplicate(),
 		"bond_grace": model.bond_grace,
 		"boss_hp": model.boss_hp_scale,
+		"boss_difficulty": model.boss_difficulty,
 		"variants": model.variants.duplicate(),
 		"round_limit": model.round_limit,
 		"music": music,
@@ -111,6 +112,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 		m.gift_items = {ShopEffects.PASS_REVIVE: 1}
 	m.bond_grace = clampi(int(snap.get("bond_grace", 0)), 0, 1)
 	m.boss_hp_scale = float(snap.get("boss_hp", 1.0))
+	m.boss_difficulty = clampi(int(snap.get("boss_difficulty", -1)), -1, BattleRules.BOSS_PHASE_AT.size() - 1)
 	m.variants.assign(snap.get("variants", []))
 	m.round_limit = maxi(0, int(snap.get("round_limit", 0)))
 	if not partner.is_empty():
