@@ -568,6 +568,26 @@ func test_jackets_change_only_the_colour_while_owned() -> void:
 	Billing.state = {}
 	GameState.jacket = worn
 
+func test_shop_backdrops_show_only_while_owned() -> void:
+	var worn: String = GameState.backdrop_look
+	var o: Dictionary = ShopCatalog.offer("rg_backdrop_moon_lake")
+	assert_eq(ShopMenu.look_key(o), "backdrop_moon_lake")
+	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_jacket_moss")), "jacket_moss")
+	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_pass")), "")
+	GameState.backdrop_look = "backdrop_moon_lake"
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.battle_backdrop(), "")
+	Billing.state = {"unlocks": {"backdrop_moon_lake": 1}}
+	assert_eq(GameState.battle_backdrop(), "moon_lake")
+	for k: String in BattleBackdrop.SHOP_KINDS:
+		assert_false(ShopCatalog.look_offer("backdrop_" + k).is_empty(), "offer for %s" % k)
+	var bd := BattleBackdrop.new()
+	bd.set_scene("glass_grotto", Rect2(), Rect2())
+	assert_eq(bd.kind, "glass_grotto")
+	bd.free()
+	Billing.state = {}
+	GameState.backdrop_look = worn
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

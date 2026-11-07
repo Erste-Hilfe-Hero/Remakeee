@@ -359,8 +359,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2552. [P2] Einstellung "Andere Musik erlauben": spielt eine andere App Musik, startet Chimora nur mit Klängen und ohne eigene Musik.
 2553. [P2] Android: bei Audio-Fokus-Verlust (Anruf, Sprachnachricht) Musik pausieren und danach an derselben Stelle fortsetzen.
 2554. [P3] Kopfhörer abgezogen: Musik wird sofort auf -30 dB gesenkt, damit es nicht laut aus dem Lautsprecher kommt.
-2555. [P2] Mono-Ausgabe als Einstellung, die den Master-Bus auf Mono mischt, für Menschen mit einseitigem Hören.
-2556. [P2] Getrennte Lautstärke-Regler für Text-Stimme und Umgebungsklänge in den Einstellungen, zusätzlich zu Musik und Klängen.
+2555. [x] [P2] Mono-Ausgabe als Einstellung, die den Master-Bus auf Mono mischt, für Menschen mit einseitigem Hören.
+2556. [x] [P2] Getrennte Lautstärke-Regler für Text-Stimme und Umgebungsklänge in den Einstellungen, zusätzlich zu Musik und Klängen.
 2557. [x] [P2] Alle Klänge werden beim Start in einem Rutsch vorgeladen (unter 2 MB), damit der erste Treffer im Kampf nicht stockt.
 2558. [P2] Schreie (Cry.gd) bekommen beim ersten Kampfstart des Tages einen Vorab-Aufbau im Hintergrund, damit kein Bild ruckelt.
 2559. [P2] Ogg-Schleifen nutzen in den .import-Dateien loop_offset aus den Steckbrief-Daten, damit Stücke mit Einleitung an der richtigen Stelle wiederholen.

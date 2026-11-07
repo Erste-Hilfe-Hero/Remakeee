@@ -31,6 +31,8 @@ var tamer_color: int = 0
 var tamer_look: int = 0
 ## Shop jacket worn (unlock key such as "jacket_moss", item 4277); "" for the free colour.
 var jacket: String = ""
+## Shop battle backdrop shown (unlock key such as "backdrop_moon_lake", item 4281); "" for none.
+var backdrop_look: String = ""
 const TAMER_SPRITES: Array[String] = ["tamer", "tamer_f"]
 const DEFAULT_NAMES: Array[String] = ["Corin", "Liora"]
 ## Coat colours on the title screen: teal, rust, ochre, plum (boy = teal, girl = rust by default).
@@ -130,6 +132,11 @@ var bonus_goals: bool = true
 var volume: float = 0.8
 var music_volume: float = 0.7
 var sfx_volume: float = 0.8
+## Own levels for the text voice and cries, and for ambience loops (item 2556).
+var voice_volume: float = 0.9
+var ambience_volume: float = 0.9
+## Mixes everything to mono for one-sided hearing (item 2555).
+var mono_audio: bool = false
 const BUS_MUSIC: StringName = &"Music"
 const BUS_SFX: StringName = &"SFX"
 ## Sub-buses of SFX (item 2547): menu sounds, cries and text voice, ambience loops.
@@ -441,6 +448,7 @@ func reset() -> void:
 	storage_box_bonus = 0
 	shop_boosts = {}
 	jacket = ""
+	backdrop_look = ""
 	team_presets.clear()
 	echo_cores.clear()
 	iron_oath = false
@@ -482,6 +490,12 @@ func body_color() -> Color:
 	if not c.is_empty() and Billing.unlocked(jacket) > 0:
 		return Color(c)
 	return TAMER_COLORS[clampi(tamer_color, 0, TAMER_COLORS.size() - 1)]
+
+## The backdrop kind for normal battles: the worn shop backdrop while owned, else "".
+func battle_backdrop() -> String:
+	if backdrop_look.begins_with("backdrop_") and Billing.unlocked(backdrop_look) > 0:
+		return backdrop_look.trim_prefix("backdrop_")
+	return ""
 
 func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0) -> void:
 	reset()
@@ -531,7 +545,7 @@ func to_dict() -> Dictionary:
 	for s: Spirling in storage:
 		storage_d.append(s.to_dict())
 	return {
-		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket},
+		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket, "backdrop": backdrop_look},
 		"starter": starter,
 		"difficulty": difficulty,
 		"region": region,
@@ -577,6 +591,7 @@ func from_dict(d: Dictionary) -> void:
 	tamer_color = int(wayfarer.get("color", 0))
 	tamer_look = clampi(int(wayfarer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
 	jacket = str(wayfarer.get("jacket", "")) if wayfarer.get("jacket") is String else ""
+	backdrop_look = str(wayfarer.get("backdrop", "")) if wayfarer.get("backdrop") is String else ""
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))
@@ -652,6 +667,7 @@ func settings_to_dict() -> Dictionary:
 	return {"text_speed": text_speed, "battle_speed": battle_speed, "auto_battle": auto_battle,
 		"bench_xp": bench_xp, "damage_preview": damage_preview, "bonus_goals": bonus_goals, "volume": volume,
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
+		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
 		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
@@ -701,6 +717,9 @@ func settings_from_dict(d: Dictionary) -> void:
 	volume = clampf(float(d.get("volume", 0.8)), 0.0, 1.0)
 	music_volume = clampf(float(d.get("music_volume", 0.7)), 0.0, 1.0)
 	sfx_volume = clampf(float(d.get("sfx_volume", 0.8)), 0.0, 1.0)
+	voice_volume = clampf(float(d.get("voice_volume", 0.9)), 0.0, 1.0)
+	ambience_volume = clampf(float(d.get("ambience_volume", 0.9)), 0.0, 1.0)
+	mono_audio = bool(d.get("mono_audio", false))
 	apply_volume()
 
 ## Frame cap (battery saver), UI palette (high contrast) and language.
@@ -719,6 +738,20 @@ func apply_volume() -> void:
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(volume * master_fade, 0.0001)))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_MUSIC), linear_to_db(maxf(music_volume, 0.0001)))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_SFX), linear_to_db(maxf(sfx_volume, 0.0001)))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_VOICE), linear_to_db(maxf(voice_volume, 0.0001)))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(BUS_AMBIENCE), linear_to_db(maxf(ambience_volume, 0.0001)))
+	var mono: int = mono_effect_index()
+	if mono >= 0:
+		AudioServer.set_bus_effect_enabled(0, mono, mono_audio)
+
+## Index of the mono mix on Master: a stereo enhance with no pan pull-out folds left and right
+## into the middle (item 2555). -1 before ensure_buses adds it.
+static func mono_effect_index() -> int:
+	for i: int in AudioServer.get_bus_effect_count(0):
+		var fx: AudioEffect = AudioServer.get_bus_effect(0, i)
+		if fx is AudioEffectStereoEnhance and is_zero_approx((fx as AudioEffectStereoEnhance).pan_pullout):
+			return i
+	return -1
 
 ## Adds the Music and SFX buses (both feed Master), the UI, Voice and Ambience buses under SFX,
 ## and a hard limiter on Master, where the project does not have them yet.
@@ -729,6 +762,11 @@ static func ensure_buses() -> void:
 			var idx: int = AudioServer.bus_count - 1
 			AudioServer.set_bus_name(idx, pair[0])
 			AudioServer.set_bus_send(idx, pair[1])
+	if mono_effect_index() < 0:
+		var mono := AudioEffectStereoEnhance.new()
+		mono.pan_pullout = 0.0
+		AudioServer.add_bus_effect(0, mono, 0)
+		AudioServer.set_bus_effect_enabled(0, 0, false)
 	for i: int in AudioServer.get_bus_effect_count(0):
 		if AudioServer.get_bus_effect(0, i) is AudioEffectHardLimiter:
 			return

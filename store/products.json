@@ -1103,7 +1103,7 @@
    "name_de": "Hintergrund: Mondsee",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.backdrop_copper_wood",
@@ -1115,7 +1115,7 @@
    "name_de": "Hintergrund: Kupferwald",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.backdrop_mist_harbour",
@@ -1127,7 +1127,7 @@
    "name_de": "Hintergrund: Nebelhafen",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.backdrop_star_meadow",
@@ -1139,7 +1139,7 @@
    "name_de": "Hintergrund: Sternwiese",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.backdrop_ash_field",
@@ -1151,7 +1151,7 @@
    "name_de": "Hintergrund: Aschefeld",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.backdrop_glass_grotto",
@@ -1163,7 +1163,7 @@
    "name_de": "Hintergrund: Glasgrotte",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.frame_vine",
