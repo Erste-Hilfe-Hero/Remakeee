@@ -23,6 +23,12 @@ T = {
 "Plank Bundle": "Bretterbündel",
 "Wayfarer Gear. Face a gap with a chalk mark and press A to lay a plank over it. The plank stays.": "Wanderer-Ausrüstung. Stell dich vor eine Lücke mit Kreidezeichen und drück A, um ein Brett darüberzulegen. Das Brett bleibt liegen.",
 "A narrow gap with a chalk mark. A plank would bridge it.": "Eine schmale Lücke mit Kreidezeichen. Ein Brett würde sie überbrücken.",
+"Survey Glass": "Peilglas",
+"Wayfarer Gear. A brass spyglass: face open ground and press A to spot hidden finds up to 6 steps ahead on the minimap. It needs 20 seconds between looks.": "Wanderer-Ausrüstung. Ein Messingfernrohr: schau auf freien Boden und drück A, dann zeigt die Minikarte versteckte Funde bis 6 Schritte voraus. Zwischen zwei Blicken braucht es 20 Sekunden.",
+"With a Survey Glass you could look for hidden finds from here.": "Mit einem Peilglas könntest du von hier aus nach versteckten Funden suchen.",
+"The glass is still misted. %d s.": "Das Glas ist noch beschlagen. %d s.",
+"Through the glass: %d glints ahead.": "Durchs Glas: %d Glitzern voraus.",
+"Through the glass: nothing glints ahead.": "Durchs Glas: voraus glitzert nichts.",
 # Gear page in the satchel
 "Works on: %s": "Wirkt bei: %s",
 "Always on foot: you walk, wade and climb yourself.": "Immer zu Fuß: du gehst, watest und kletterst selbst.",
@@ -34,6 +40,7 @@ T = {
 "pitch-dark passages": "stockdunklen Gängen",
 "sluice wheels, mine carts and grates": "Schleusenrädern, Loren und Gittern",
 "marked edges above a shaft": "markierten Kanten über einem Schacht",
+"open ground ahead (hidden finds up to 6 steps away)": "freiem Boden voraus (versteckte Funde bis 6 Schritte entfernt)",
 # Puzzle rooms
 "Room": "Raum",
 "Puzzle room": "Rätselraum",

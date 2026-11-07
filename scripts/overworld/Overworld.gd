@@ -305,6 +305,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map = MapData.load_map(map_id)
 	if map == null:
 		return
+	if minimap != null:
+		minimap.spotted.clear()
 	_entry_cell = cell
 	if map.outdoor:
 		GameState.enter_map(map_id, cell)
@@ -647,6 +649,26 @@ func _on_interact(cell: Vector2i) -> void:
 		if beyond != null:
 			await beyond.turn_toward(player.cell)
 			await run_dialogue(beyond.dialogue_ref, beyond)
+			return
+	survey_look(cell - player.cell)
+
+## Survey Glass (area 3 items 1052, 1053): A on open ground looks ahead; finds up to 6 steps
+## away show on the minimap. Says so in the ticker, so it never stops the walk.
+func survey_look(dir: Vector2i) -> void:
+	if map == null or not GameState.has_gear(SurveyGlass.ITEM) or dir == Vector2i.ZERO:
+		return
+	if not SurveyGlass.ready():
+		Ticker.show_text(Loc.t("The glass is still misted. %d s.") % SurveyGlass.wait_left())
+		return
+	SurveyGlass.mark_used()
+	var seen: Array[Vector2i] = SurveyGlass.scan(map, player.cell, dir, GameState.flags)
+	if minimap != null:
+		for c: Vector2i in seen:
+			if not c in minimap.spotted:
+				minimap.spotted.append(c)
+		minimap.queue_redraw()
+	Sound.sfx("confirm" if not seen.is_empty() else "tick")
+	Ticker.show_text(Loc.t("Through the glass: %d glints ahead.") % seen.size() if not seen.is_empty() else Loc.t("Through the glass: nothing glints ahead."))
 
 ## Cave entrance signs show the gear needed inside as pictures above the text (item 982).
 func _gear_icons(gear: Array) -> Control:
@@ -1169,6 +1191,10 @@ static func used_on_arrival(m: MapData, cell: Vector2i, flags: Dictionary) -> bo
 
 ## Walks toward [param cell]; NPCs, signs, counters and finds get walked up to and used.
 func tap_cell(cell: Vector2i, marker: bool = true) -> void:
+	if map.in_bounds(cell) and cell == player.cell and not busy:
+		# Tapping yourself looks through the Survey Glass, like A on open ground (item 1052).
+		survey_look(player.facing_cell() - player.cell)
+		return
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
 	_tap_goal = cell

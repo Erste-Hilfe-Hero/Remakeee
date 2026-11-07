@@ -159,5 +159,6 @@ Written by `python3 tools/world_stats.py`.
 | `pry_bar` | Pry Bar | `copperfold` | veydal | smith (1, 5) | `got_pry_bar` |
 | `rope_ladder` | Rope Ladder | `wrenhollow` | veydal | ropemaker (8, 11) | `got_ladder` |
 | `storm_lantern` | Storm Lantern | `murk_hollow` | veydal | tamsin (3, 10) | `got_lantern` |
+| `survey_glass` | Survey Glass | `wrenhollow` | veydal | surveyor (10, 9) | `got_survey_glass` |
 | `wading_boots` | Wading Boots | `quillbrook` | veydal | fisher (8, 3) | `got_boots` |
 <!-- gear-givers:end -->

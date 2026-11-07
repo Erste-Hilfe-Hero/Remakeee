@@ -25,6 +25,8 @@ func _ready() -> void:
 	offset_bottom = 24 + SIDE
 	custom_minimum_size = Vector2(SIDE, SIDE)
 
+## Hidden finds spotted with the Survey Glass on this map (area 3 item 1052), drawn in accent.
+var spotted: Array[Vector2i] = []
 ## Flags used for taken finds (GameState.flags in the game, tests pass their own).
 var flags: Dictionary = {}
 
@@ -66,6 +68,9 @@ func _draw() -> void:
 		_dot(c, UITheme.INK)
 	for c: Vector2i in taken_finds():
 		_cross(c, UITheme.MID)
+	for c: Vector2i in spotted:
+		if not c in taken_finds():
+			_dot(c, UITheme.ACCENT)
 	var p: Vector2i = center - o
 	draw_rect(Rect2(p.x * PX, p.y * PX, PX, PX), UITheme.INK)
 

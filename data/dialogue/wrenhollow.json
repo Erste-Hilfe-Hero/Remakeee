@@ -103,5 +103,20 @@
    "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
   ],
   "action": "marker_stone 4"
+ },
+ "surveyor": {
+  "lines": [
+   "Surveyor Ilka: A map is only as good as what you've looked at. Here, look further.",
+   "Surveyor Ilka: Face where you want to look and press A on open ground. Give the glass a breath between looks."
+  ],
+  "action": "give_item survey_glass 1",
+  "flag": "got_survey_glass",
+  "once": true,
+  "after_flag": {
+   "flag": "got_survey_glass",
+   "lines": [
+    "Surveyor Ilka: Six steps out, no further. Past that, even glass gets lazy."
+   ]
+  }
  }
 }
