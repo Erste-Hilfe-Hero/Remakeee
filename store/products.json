@@ -1235,7 +1235,7 @@
    "name_de": "Hut: Breitkrempe",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.hat_wool_cap",
@@ -1247,7 +1247,7 @@
    "name_de": "Hut: Wollmütze",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.hat_feather_hat",
@@ -1259,7 +1259,7 @@
    "name_de": "Hut: Federhut",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.hat_lantern_hood",
@@ -1271,7 +1271,7 @@
    "name_de": "Hut: Laternenkapuze",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.hat_straw_hat",
@@ -1283,7 +1283,7 @@
    "name_de": "Hut: Strohhut",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.hat_tricorn",
@@ -1295,7 +1295,7 @@
    "name_de": "Hut: Dreispitz",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.card_frame_leaf",

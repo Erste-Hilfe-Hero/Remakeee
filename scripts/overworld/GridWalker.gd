@@ -14,6 +14,11 @@ const DIRS: Dictionary[String, Vector2i] = {"up": Vector2i.UP, "down": Vector2i.
 @export var body_color: Color = Color("3a5a9a")
 ## Sprite sheet style in art/era1/chars/ (tamer, villager, ranger, elder, warden).
 @export var sprite_style: String = "villager"
+## Worn shop hat kind (HatArt.KINDS, item 4283); "" for none.
+var hat: String = "":
+	set(v):
+		hat = v
+		queue_redraw()
 
 const CHAR_DIR: String = "res://art/era1/chars/%s.png"
 const SHEET_COLUMNS: Dictionary[String, int] = {"down": 0, "up": 1, "left": 2, "right": 3}
@@ -125,10 +130,12 @@ func _draw() -> void:
 	if sheet != null:
 		var src := Rect2(SHEET_COLUMNS[shown_facing()] * TILE, _step_frame * TILE, TILE, TILE)
 		draw_texture_rect_region(sheet, Rect2(0, 0, TILE, TILE), src)
+		HatArt.draw(self, Vector2(8, 3), hat)
 		return
 	# Fallback body: coloured rectangle with a facing marker.
 	draw_rect(Rect2(2, 1, 12, 14), body_color)
 	draw_rect(Rect2(2, 1, 12, 14), UITheme.INK, false, 1.0)
+	HatArt.draw(self, Vector2(8, 2), hat)
 	var d: Vector2i = DIRS[shown_facing()]
 	var c := Vector2(8, 8) + Vector2(d) * 4.0
 	draw_rect(Rect2(c - Vector2(2, 2), Vector2(4, 4)), UITheme.BG)

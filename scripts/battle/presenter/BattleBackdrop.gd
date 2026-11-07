@@ -14,6 +14,9 @@ const BANK_DEPTH: int = 7
 var kind: String = "field"
 var foe_rect: Rect2
 var player_rect: Rect2
+## Worn shop hat (HatArt.KINDS, item 4283): the Wayfarer is then seen from behind beside the
+## partner, wearing it. "" draws no Wayfarer.
+var hat: String = ""
 
 func set_scene(p_kind: String, p_foe: Rect2, p_player: Rect2) -> void:
 	kind = p_kind if p_kind in KINDS or p_kind in SHOP_KINDS else "field"
@@ -41,6 +44,18 @@ func _draw() -> void:
 		_bank(Rect2(foe_rect.position.x - 8, foe_rect.end.y - 6, foe_rect.size.x + 16, BANK_DEPTH))
 	if player_rect.size.x > 0.0:
 		_bank(Rect2(-4, player_rect.end.y - 6, player_rect.end.x + 18, BANK_DEPTH + 4))
+		if hat in HatArt.KINDS:
+			_wayfarer(Vector2(player_rect.position.x - 4, player_rect.end.y - 3))
+
+## The Wayfarer from behind (head and shoulders) with the worn hat; [param foot] is the
+## bottom middle.
+func _wayfarer(foot: Vector2) -> void:
+	var f: Vector2 = foot.round()
+	draw_rect(Rect2(f.x - 7, f.y - 6, 14, 6), GameState.body_color())
+	draw_rect(Rect2(f.x - 7, f.y - 6, 14, 6), UITheme.INK, false, 1.0)
+	draw_rect(Rect2(f.x - 3, f.y - 12, 6, 6), UITheme.INK)
+	draw_rect(Rect2(f.x - 2, f.y - 11, 4, 4), UITheme.MID)
+	HatArt.draw(self, Vector2(f.x, f.y - 11), hat)
 
 func _draw_shop(w: float, h: float, hy: float) -> void:
 	match kind:
