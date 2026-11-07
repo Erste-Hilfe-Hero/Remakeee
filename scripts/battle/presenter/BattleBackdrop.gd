@@ -6,6 +6,8 @@ extends Control
 
 ## "voice": the lake at night with columns of light, only for First Voices (plan area 1, item 154).
 const KINDS: Array[String] = ["field", "lake", "ridge", "ember", "voice"]
+## Shop backdrops (item 4281): only looks, worn from the shop page of an owned one.
+const SHOP_KINDS: Array[String] = ["moon_lake", "copper_wood", "mist_harbour", "star_meadow", "ash_field", "glass_grotto"]
 const HORIZON: float = 0.42
 const BANK_DEPTH: int = 7
 
@@ -14,7 +16,7 @@ var foe_rect: Rect2
 var player_rect: Rect2
 
 func set_scene(p_kind: String, p_foe: Rect2, p_player: Rect2) -> void:
-	kind = p_kind if p_kind in KINDS else "field"
+	kind = p_kind if p_kind in KINDS or p_kind in SHOP_KINDS else "field"
 	foe_rect = p_foe
 	player_rect = p_player
 	queue_redraw()
@@ -31,6 +33,80 @@ func _draw() -> void:
 				draw_rect(Rect2(x, y, 1, 1), UITheme.ACCENT)
 	_cloud(Vector2(w * 0.18, hy * 0.35), 14)
 	_cloud(Vector2(w * 0.62, hy * 0.18), 10)
+	if kind in SHOP_KINDS:
+		_draw_shop(w, h, hy)
+	else:
+		_draw_place(w, h, hy)
+	if foe_rect.size.x > 0.0:
+		_bank(Rect2(foe_rect.position.x - 8, foe_rect.end.y - 6, foe_rect.size.x + 16, BANK_DEPTH))
+	if player_rect.size.x > 0.0:
+		_bank(Rect2(-4, player_rect.end.y - 6, player_rect.end.x + 18, BANK_DEPTH + 4))
+
+func _draw_shop(w: float, h: float, hy: float) -> void:
+	match kind:
+		"moon_lake":
+			draw_rect(Rect2(0, 0, w, hy), UITheme.INK)
+			draw_circle(Vector2(w * 0.72, hy * 0.35), 7.0, UITheme.BG)
+			draw_circle(Vector2(w * 0.72 + 3, hy * 0.35 - 2), 6.0, UITheme.INK)
+			for i: int in 10:
+				draw_rect(Rect2(fmod(i * 47.0, w), 3 + fmod(i * 13.0, hy - 8), 1, 1), UITheme.BG)
+			_hills(hy, 4.0, 0.09, UITheme.MID)
+			draw_rect(Rect2(0, hy, w, h - hy), UITheme.MID)
+			for i: int in 6:
+				var y: float = hy + 5 + i * 10
+				draw_rect(Rect2(w * 0.72 - 6 + (i % 2) * 3, y, 12 - i, 1), UITheme.BG)
+				draw_rect(Rect2(fmod(i * 53.0, w), y + 3, 8, 1), UITheme.ACCENT)
+		"copper_wood":
+			_hills(hy, 6.0, 0.08, UITheme.MID)
+			for i: int in 9:
+				var x: float = fmod(i * 31.0 + 5.0, w)
+				var top: float = hy - 26.0 - fmod(i * 7.0, 10.0)
+				draw_rect(Rect2(x + 3, top + 12, 2, hy - top - 12), UITheme.INK)
+				draw_colored_polygon(PackedVector2Array([Vector2(x - 2, top + 16), Vector2(x + 4, top), Vector2(x + 10, top + 16)]), UITheme.MID)
+				draw_polyline(PackedVector2Array([Vector2(x - 2, top + 16), Vector2(x + 4, top), Vector2(x + 10, top + 16)]), UITheme.INK, 1.0)
+			_ground(hy)
+			for i: int in 14:
+				draw_rect(Rect2(fmod(i * 23.0, w), hy + 3 + fmod(i * 11.0, h - hy - 6), 2, 1), UITheme.MID)
+		"mist_harbour":
+			_hills(hy, 3.0, 0.05, UITheme.MID)
+			draw_rect(Rect2(0, hy, w, h - hy), UITheme.ACCENT)
+			for i: int in 5:
+				var x: float = w * (0.08 + i * 0.21)
+				draw_rect(Rect2(x, hy - 10, 2, 22), UITheme.INK)
+			for i: int in 4:
+				var y: float = hy - 6 + i * 12
+				for x: int in range(0, int(w), 2):
+					if (x / 2 + i) % 3 != 0:
+						draw_rect(Rect2(x, y, 1, 1), UITheme.BG)
+		"star_meadow":
+			draw_rect(Rect2(0, 0, w, hy), UITheme.INK)
+			for i: int in 18:
+				var p := Vector2(fmod(i * 37.0 + 3.0, w), 2 + fmod(i * 19.0, hy - 6))
+				draw_rect(Rect2(p, Vector2.ONE), UITheme.BG)
+				if i % 4 == 0:
+					draw_rect(Rect2(p + Vector2(-1, 0), Vector2(3, 1)), UITheme.ACCENT)
+			_ground(hy)
+			for i: int in 16:
+				draw_rect(Rect2(fmod(i * 29.0 + 11.0, w), hy + 4 + fmod(i * 13.0, h - hy - 6), 1, 1), UITheme.BG)
+		"ash_field":
+			draw_rect(Rect2(0, 0, w, hy), UITheme.MID)
+			_peaks(hy, 18.0, 7, UITheme.INK)
+			_ground(hy)
+			for i: int in 24:
+				draw_rect(Rect2(fmod(i * 41.0, w), fmod(i * 23.0, h), 1, 1), UITheme.BG)
+		"glass_grotto":
+			draw_rect(Rect2(0, 0, w, h), UITheme.INK)
+			var step: float = w / 9.0
+			for i: int in 10:
+				var x: float = i * step
+				draw_colored_polygon(PackedVector2Array([Vector2(x - step * 0.5, 0), Vector2(x, 10.0 + fmod(i * 7.0, 12.0)), Vector2(x + step * 0.5, 0)]), UITheme.MID)
+			draw_rect(Rect2(0, hy, w, h - hy), UITheme.MID)
+			for i: int in 6:
+				var x: float = w * (0.06 + i * 0.17)
+				draw_colored_polygon(PackedVector2Array([Vector2(x, hy), Vector2(x + 3, hy - 12.0 - (i % 3) * 4), Vector2(x + 6, hy)]), UITheme.ACCENT)
+				draw_line(Vector2(x + 3, hy - 10.0 - (i % 3) * 4), Vector2(x + 3, hy - 2), UITheme.BG, 1.0)
+
+func _draw_place(w: float, h: float, hy: float) -> void:
 	match kind:
 		"lake":
 			_hills(hy, 5.0, 0.11, UITheme.MID)
@@ -66,10 +142,6 @@ func _draw() -> void:
 		_:
 			_hills(hy, 9.0, 0.07, UITheme.MID)
 			_ground(hy)
-	if foe_rect.size.x > 0.0:
-		_bank(Rect2(foe_rect.position.x - 8, foe_rect.end.y - 6, foe_rect.size.x + 16, BANK_DEPTH))
-	if player_rect.size.x > 0.0:
-		_bank(Rect2(-4, player_rect.end.y - 6, player_rect.end.x + 18, BANK_DEPTH + 4))
 
 func _ground(hy: float) -> void:
 	draw_rect(Rect2(0, hy, size.x, size.y - hy), UITheme.ACCENT)

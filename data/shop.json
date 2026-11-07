@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 22,
+ "catalog_version": 23,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -2345,7 +2345,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_copper_wood",
@@ -2368,7 +2368,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_mist_harbour",
@@ -2391,7 +2391,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_star_meadow",
@@ -2414,7 +2414,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_ash_field",
@@ -2437,7 +2437,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_backdrop_glass_grotto",
@@ -2460,7 +2460,7 @@
    "slot": "backdrop",
    "plan": 4281,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_frame_vine",

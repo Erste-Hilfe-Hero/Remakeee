@@ -2737,7 +2737,9 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	var model: BattleModel = preset if preset is BattleModel else _new_model(foes, wild, trainer)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()
 	scene.setup(model)
-	scene.backdrop = str(trainer.get("backdrop", map.backdrop))
+	# A worn shop backdrop (item 4281) replaces the place's own, never a fixed one.
+	var worn: String = GameState.battle_backdrop()
+	scene.backdrop = str(trainer.get("backdrop", worn if not worn.is_empty() else map.backdrop))
 	scene.backdrop_shade = float(trainer.get("shade", 0.0))
 	scene.music_track = "warden" if bool(trainer.get("warden", false)) else "battle"
 	var replay: Dictionary = BattleReplay.snapshot(model, scene.music_track, scene.backdrop)

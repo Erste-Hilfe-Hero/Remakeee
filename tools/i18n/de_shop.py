@@ -686,4 +686,7 @@ T = {
 "Take it off": "Ablegen", "Wear it": "Anziehen", "(yours)": "(gehört dir)",
 "You wear your own colour again.": "Du trägst wieder deine eigene Farbe.",
 "You wear the %s.": "Du trägst die %s.",
+"Stop using it": "Nicht mehr nutzen", "Use in battles": "In Kämpfen nutzen",
+"Battles show the place you are in again.": "Kämpfe zeigen wieder den Ort, an dem du bist.",
+"Battles now show %s.": "Kämpfe zeigen jetzt %s.",
 }
