@@ -269,3 +269,13 @@ T.update({
 "Land the last blow with %s.": "Setze den letzten Treffer mit %s.",
 "Every Trial shines with 3 lanterns! You received %s.": "Jede Prüfung leuchtet mit 3 Laternen! Du erhältst %s.",
 })
+
+# Plan area 2, items 734-739: Tamer AI, ring cap on the Warden card, Tailwind.
+T.update({
+"Ring cap: R%d. The Warden's highest: R%d.": "Ring-Obergrenze: R%d. Höchster Spirling des Wächters: R%d.",
+"This battle has beaten you a few times. Take Tailwind? Your team is fully healed and the foe starts with %d Energy less.": "Dieser Kampf hat dich schon ein paar Mal besiegt. Rückenwind nehmen? Dein Team wird voll geheilt und der Gegner startet mit %d Energie weniger.",
+"This battle has beaten you a few times. Take Tailwind? Your team is fully healed.": "Dieser Kampf hat dich schon ein paar Mal besiegt. Rückenwind nehmen? Dein Team wird voll geheilt.",
+"Take Tailwind": "Rückenwind nehmen",
+"No, thanks": "Nein, danke",
+"Tailwind helped in this battle. Used %d times so far.": "Rückenwind hat in diesem Kampf geholfen. Bisher %d-mal genutzt.",
+})

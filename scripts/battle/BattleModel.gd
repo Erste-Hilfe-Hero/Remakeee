@@ -61,6 +61,8 @@ var _turn_drag: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
+## Energy each side starts without (Tailwind on Story cuts the foe's, item 737).
+var start_energy_cut: Array[int] = [0, 0]
 ## Share of damage the foe side deals (difficulty, plan area 2 item 728).
 var foe_damage_mult: float = 1.0
 ## Factor on a boss's "hp_per_ally" (GameState.BOSS_HP_SCALE: Story bosses are 20 % smaller).
@@ -357,7 +359,7 @@ func start() -> Array[BattleEvent]:
 	var hp_scale: float = float(rules.hp_mult)
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for s: Spirling in parties[side]:
-			s.energy = mini(int(rules.start_energy), max_energy()) + energy_bonus[side]
+			s.energy = maxi(0, mini(int(rules.start_energy), max_energy()) + energy_bonus[side] - start_energy_cut[side])
 			if hp_scale != 1.0:
 				var share: float = float(s.hp) / float(s.max_hp())
 				s.hp_mult *= hp_scale

@@ -6,8 +6,9 @@ extends RefCounted
 ## Pixels between two Spirlings' symbol groups on the picture.
 const GAP: int = 4
 
-## The card text for [param def] (already a Second Trial def if it is one).
-static func text(def: Dictionary, team: Array[Spirling], difficulty: int) -> String:
+## The card text for [param def] (already a Second Trial def if it is one). A [param cap] below
+## the top ring (Veteran and up, item 736) adds the ring cap beside the Warden's highest ring.
+static func text(def: Dictionary, team: Array[Spirling], difficulty: int, cap: int = 0) -> String:
 	var lines: Array[String] = [str(def.get("trainer", def.get("id", "")))]
 	var rules: Array[String] = BattleRules.split_rules(TrainerData.rule_for(def, difficulty))
 	if rules.is_empty():
@@ -15,6 +16,11 @@ static func text(def: Dictionary, team: Array[Spirling], difficulty: int) -> Str
 	for r: String in rules:
 		lines.append(Loc.t("Rule, %s: %s") % [Loc.t(str(BattleRules.RULES[r].label)), Loc.t(str(BattleRules.RULES[r].text))])
 	lines.append(Loc.t("Spirlings: %d") % team.size())
+	if cap > 0 and cap < Spirling.MAX_LEVEL and not team.is_empty():
+		var top: int = 0
+		for sp: Spirling in team:
+			top = maxi(top, sp.level)
+		lines.append(Loc.t("Ring cap: R%d. The Warden's highest: R%d.") % [cap, top])
 	var names: Array[String] = []
 	for e: int in elements(team):
 		names.append(Elements.element_name(e))
