@@ -1065,7 +1065,8 @@ func _footstep(run: bool) -> void:
 func watch_replay(snap: Dictionary) -> void:
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
-		await say(["That replay can't be shown any more."] as Array[String])
+		var why: String = BattleReplay.problem(snap)
+		await say([why if not why.is_empty() else "That replay can't be shown any more."] as Array[String])
 		return
 	await _fade_to(1.0)
 	var scene: BattleScene = BATTLE_SCENE.instantiate()

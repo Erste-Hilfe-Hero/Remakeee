@@ -46,6 +46,8 @@ static func check(replay: Variant, claim: Variant) -> Dictionary:
 	var why: String = _shape_error(replay, claim)
 	if not why.is_empty():
 		return {"verdict": ERROR, "detail": {"reason": why}}
+	if not BattleReplay.problem(replay).is_empty():
+		return {"verdict": ERROR, "detail": {"reason": "variant"}}
 	var m: BattleModel = BattleReplay.build_model(replay)
 	if m == null:
 		return {"verdict": ERROR, "detail": {"reason": "rebuild"}}
