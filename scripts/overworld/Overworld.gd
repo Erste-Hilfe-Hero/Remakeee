@@ -114,7 +114,7 @@ func _ready() -> void:
 		# Running this scene directly from the editor: start a quick test game.
 		GameState.new_game(GameState.Difficulty.TAMER, "Juno", 0, "Kindlop")
 	GameState.in_game = true
-	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
+	player.body_color = GameState.body_color()
 	player.sprite_style = GameState.tamer_sprite()
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
 	VirtualPad.set_wanted(true)
@@ -1006,7 +1006,7 @@ func open_menu() -> void:
 		load_map(target, Vector2i(int(c[0]), int(c[1])), "down")
 		Sound.enter_map(target)
 		await _fade_to(0.0)
-	player.body_color = GameState.TAMER_COLORS[GameState.tamer_color]
+	player.body_color = GameState.body_color()
 	refresh_daylight()
 	VirtualPad.set_wanted(true)
 	player.frozen = false

@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 21,
+ "catalog_version": 22,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -2153,7 +2153,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "4f7a3a"
   },
   {
@@ -2177,7 +2177,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "7a3f6a"
   },
   {
@@ -2201,7 +2201,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "4a5466"
   },
   {
@@ -2225,7 +2225,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "8a4a2a"
   },
   {
@@ -2249,7 +2249,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "4a7aa2"
   },
   {
@@ -2273,7 +2273,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "b09a6a"
   },
   {
@@ -2297,7 +2297,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "2a3048"
   },
   {
@@ -2321,7 +2321,7 @@
    "slot": "jacket",
    "plan": 4277,
    "min_band": 13,
-   "ready": false,
+   "ready": true,
    "color": "a25a6a"
   },
   {

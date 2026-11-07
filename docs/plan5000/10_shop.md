@@ -297,7 +297,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4276. [P3] Die Limits und Altersgruppen als Werte in `server_config` halten, damit sie ohne neue App-Version änderbar sind.
 
 ### Kosmetik
-4277. [P1] Wanderer-Jacken als Kosmetik anbieten: 8 neue Jackenfarben je 200 Rissglas (≈ 1,98 €) zusätzlich zu den 4 freien Farben in `GameState.TAMER_COLORS`.
+4277. [x] [P1] Wanderer-Jacken als Kosmetik anbieten: 8 neue Jackenfarben je 200 Rissglas (≈ 1,98 €) zusätzlich zu den 4 freien Farben in `GameState.TAMER_COLORS`.
 4278. [x] [P1] Kosmetik hat nie eine Wirkung im Kampf, beim Bonden oder in der Welt, und ein Test prüft, dass Kosmetik-Angebote keine Wertefelder haben.
 4279. [P2] Spirling-Farbtöne als Kosmetik anbieten: pro Art ein alternativer Farbton für 300 Rissglas, der nur das Aussehen ändert und im Spirlog als "Farbton" vermerkt ist.
 4280. [P2] Die Farbtöne als Paletten-Tausch im Shader umsetzen, damit keine neuen Sprites pro Era nötig sind.

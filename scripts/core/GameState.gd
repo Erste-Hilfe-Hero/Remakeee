@@ -29,6 +29,8 @@ var tamer_name: String = "Juno"
 var tamer_color: int = 0
 ## Boy or girl, picked first at new game. Index into TAMER_SPRITES / DEFAULT_NAMES.
 var tamer_look: int = 0
+## Shop jacket worn (unlock key such as "jacket_moss", item 4277); "" for the free colour.
+var jacket: String = ""
 const TAMER_SPRITES: Array[String] = ["tamer", "tamer_f"]
 const DEFAULT_NAMES: Array[String] = ["Corin", "Liora"]
 ## Coat colours on the title screen: teal, rust, ochre, plum (boy = teal, girl = rust by default).
@@ -438,6 +440,7 @@ func reset() -> void:
 	storage_boxes = default_boxes()
 	storage_box_bonus = 0
 	shop_boosts = {}
+	jacket = ""
 	team_presets.clear()
 	echo_cores.clear()
 	iron_oath = false
@@ -473,6 +476,13 @@ func reset() -> void:
 
 ## Starts a new game with the choices from the new-game flow. With an empty [param p_starter]
 ## the partner is picked later, in the prologue at the lighthouse (see choose_starter).
+## The Wayfarer's jacket colour: a worn shop jacket while it is owned, else the free colour.
+func body_color() -> Color:
+	var c: String = ShopCatalog.jacket_color(jacket)
+	if not c.is_empty() and Billing.unlocked(jacket) > 0:
+		return Color(c)
+	return TAMER_COLORS[clampi(tamer_color, 0, TAMER_COLORS.size() - 1)]
+
 func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0) -> void:
 	reset()
 	difficulty = p_difficulty
@@ -521,7 +531,7 @@ func to_dict() -> Dictionary:
 	for s: Spirling in storage:
 		storage_d.append(s.to_dict())
 	return {
-		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look},
+		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket},
 		"starter": starter,
 		"difficulty": difficulty,
 		"region": region,
@@ -566,6 +576,7 @@ func from_dict(d: Dictionary) -> void:
 	tamer_name = str(wayfarer.get("name", "Juno"))
 	tamer_color = int(wayfarer.get("color", 0))
 	tamer_look = clampi(int(wayfarer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
+	jacket = str(wayfarer.get("jacket", "")) if wayfarer.get("jacket") is String else ""
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))

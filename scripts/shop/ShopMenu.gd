@@ -152,6 +152,11 @@ static func detail_text(o: Dictionary) -> String:
 	return "\n".join(lines)
 
 static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
+	# An owned jacket is worn or taken off here (item 4277).
+	var key: String = jacket_key(o)
+	if not key.is_empty() and Billing.unlocked(key) > 0:
+		await _run_wear(menu, o, key)
+		return
 	await menu.info(detail_text(o))
 	var options: Array[String] = []
 	var kinds: Array[bool] = []
@@ -194,6 +199,21 @@ static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
 		await menu.info(Loc.t("Done. %s is yours.") % Loc.t(str(o.name)))
 	elif str(r.get("error", "")) != "cancelled":
 		await menu.info(reason_text(str(r.get("error", ""))))
+
+## The unlock key of a jacket offer ("" for any other offer).
+static func jacket_key(o: Dictionary) -> String:
+	var g: Array = o.get("grants", [])
+	if not o.has("color") or g.size() != 1 or not g[0] is Dictionary:
+		return ""
+	return str(g[0].get("id", ""))
+
+static func _run_wear(menu: MenuHost, o: Dictionary, key: String) -> void:
+	var wearing: bool = GameState.jacket == key
+	var opt: String = "Take it off" if wearing else "Wear it"
+	if await menu.pick_strings(Loc.t(str(o.name)) + "  " + Loc.t("(yours)"), [opt] as Array[String]) != 0:
+		return
+	GameState.jacket = "" if wearing else key
+	await menu.info(Loc.t("You wear your own colour again.") if wearing else Loc.t("You wear the %s.") % Loc.t(str(o.name)))
 
 static func _pick_choice(menu: MenuHost, o: Dictionary) -> Variant:
 	var names: Array[String] = []

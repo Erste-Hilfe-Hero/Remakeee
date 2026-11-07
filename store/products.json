@@ -1007,7 +1007,7 @@
    "name_de": "Jacke Moos",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_plum",
@@ -1019,7 +1019,7 @@
    "name_de": "Jacke Pflaume",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_slate",
@@ -1031,7 +1031,7 @@
    "name_de": "Jacke Schiefer",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_rust",
@@ -1043,7 +1043,7 @@
    "name_de": "Jacke Rost",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_sky",
@@ -1055,7 +1055,7 @@
    "name_de": "Jacke Himmel",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_sand",
@@ -1067,7 +1067,7 @@
    "name_de": "Jacke Sand",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_ink",
@@ -1079,7 +1079,7 @@
    "name_de": "Jacke Tinte",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.jacket_rose",
@@ -1091,7 +1091,7 @@
    "name_de": "Jacke Rose",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.backdrop_moon_lake",

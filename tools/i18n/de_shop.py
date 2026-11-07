@@ -683,4 +683,7 @@ T = {
 "Relearn an art": "Technik neu lernen",
 "%s knows every art it can learn right now.": "%s kennt schon jede Technik, die es gerade lernen kann.",
 "Relearn which art for %s?": "Welche Technik soll %s neu lernen?",
+"Take it off": "Ablegen", "Wear it": "Anziehen", "(yours)": "(gehört dir)",
+"You wear your own colour again.": "Du trägst wieder deine eigene Farbe.",
+"You wear the %s.": "Du trägst die %s.",
 }
