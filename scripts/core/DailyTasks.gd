@@ -6,6 +6,8 @@ extends RefCounted
 ## reached, elements living there), at most one battle task per day, and each fits in about
 ## 15 minutes. Progress lives in GameState.daily_tasks, so it is part of the (server) save and
 ## survives a device change on the same day. Missing a day costs nothing: there is no streak.
+## Daily tasks are never advertised by a notification, not even once push is available (plan
+## 3500): they wait quietly on the goals screen. tests/unit/test_endgame_p3a.gd keeps it so.
 
 const PER_DAY: int = 3
 const REWARD: int = 10
