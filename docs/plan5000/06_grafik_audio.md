@@ -211,7 +211,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 ### UI-Grafik und Rückmeldung in Menüs
 2415. [x] [P1] Jeder Knopf und jeder Listeneintrag reagiert beim Antippen sofort: 1 Pixel nach unten versetzt, solange der Finger drückt, und Juice.pop beim Loslassen.
 2416. [x] [P1] Der Auswahl-Cursor in Listen (ListPicker.gd) gleitet mit Kurve "move" in 0,06 s zum neuen Eintrag, statt zu springen.
-2417. [P2] Der Auswahl-Cursor wippt im Leerlauf 1 Pixel waagrecht im Takt von 0,6 s.
+2417. [x] [P2] Der Auswahl-Cursor wippt im Leerlauf 1 Pixel waagrecht im Takt von 0,6 s.
 2418. [x] [P1] Kurze Hinweise (Toasts) für Ereignisse wie "Geschenk erhalten" oder "Gespeichert" bauen: 12 Pixel hohe Leiste fährt von oben herein, bleibt 1,6 s und fährt hinaus.
 2419. [x] [P1] Münzanzeige zählt bei Änderungen mit Juice.count_to hoch oder runter, statt den neuen Wert sofort zu zeigen.
 2420. [P2] Erhaltene Gegenstände zeigen ein Ergebnis-Fenster mit dem Gegenstand-Symbol, das mit Juice.pop erscheint und 0,3 s bis zur Bestätigung wartet, damit man nicht versehentlich wegtippt.

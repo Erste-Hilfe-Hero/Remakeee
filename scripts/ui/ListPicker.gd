@@ -313,6 +313,8 @@ func move_focus(delta: int, wrap: bool = true) -> void:
 
 ## Gamepad hold-to-repeat; keyboards repeat on their own.
 func _process(delta: float) -> void:
+	if visible:
+		_bob_pointer(delta)
 	if not visible or last_device != "pad":
 		_hold_dir = 0
 		return
@@ -588,9 +590,30 @@ var pointer_slide: float = 0.0:
 		if is_instance_valid(_pointer_row):
 			_pointer_row.queue_redraw()
 
+## While the focus rests, the pointer bobs 1 px sideways: out for half of each 0.6 s
+## (item 2417). Still under reduced motion.
+const POINTER_BOB_PERIOD: float = 0.6
+var _pointer_idle: float = 0.0
+var _pointer_bob: int = 0
+
+static func pointer_bob_at(idle: float, reduced: bool) -> int:
+	if reduced or idle < POINTER_BOB_PERIOD:
+		return 0
+	return 1 if fmod(idle, POINTER_BOB_PERIOD) >= POINTER_BOB_PERIOD * 0.5 else 0
+
+func _bob_pointer(delta: float) -> void:
+	_pointer_idle += delta
+	var bob: int = pointer_bob_at(_pointer_idle, Juice.reduced())
+	if bob != _pointer_bob:
+		_pointer_bob = bob
+		if is_instance_valid(_pointer_row):
+			_pointer_row.queue_redraw()
+
 func _slide_pointer(b: Button) -> void:
 	var from: Button = _pointer_row
 	_pointer_row = b
+	_pointer_idle = 0.0
+	_pointer_bob = 0
 	if not is_instance_valid(from) or from == b or not from.is_inside_tree() or not b.is_inside_tree():
 		pointer_slide = 0.0
 		return
@@ -601,8 +624,9 @@ func _draw_pointer(b: Button) -> void:
 	if not b.has_focus():
 		return
 	var cy: float = floorf(b.size.y / 2.0) + (roundf(pointer_slide) if b == _pointer_row else 0.0)
+	var dx: float = float(_pointer_bob) if b == _pointer_row else 0.0
 	var col: Color = b.get_theme_color("font_focus_color", "Button")
-	b.draw_colored_polygon(PackedVector2Array([Vector2(1, cy - 2), Vector2(4, cy + 0.5), Vector2(1, cy + 3)]), col)
+	b.draw_colored_polygon(PackedVector2Array([Vector2(1 + dx, cy - 2), Vector2(4 + dx, cy + 0.5), Vector2(1 + dx, cy + 3)]), col)
 
 ## Screen readers: each row says its text, state and place (item 2085).
 func _set_accessibility(title: String) -> void:
