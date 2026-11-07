@@ -2279,6 +2279,7 @@ func _pay_bonus_goal(goal_key: String) -> void:
 	if last_model == null or not last_model.has_meta("goal_tracker"):
 		return
 	var tracker: BattleGoals.Tracker = last_model.get_meta("goal_tracker")
+	BattleGoals.note(GameState.records, goal_key, tracker)
 	if not tracker.met():
 		return
 	var lines: Array[String] = BattleGoals.grant(goal_key, tracker.goal, GameState.records)
@@ -2756,7 +2757,10 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
-	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0))]
+	# Story foes start with less Energy, Rift-Born foes gain more in turn 1 (item 749); echo duels stay even.
+	var d: int = GameState.difficulty if world else -1
+	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]
+	model.foe_turn1_energy = BattleRules.foe_turn1_energy(d)
 	model.warden_weakened = bool(trainer.get("warden_weakened", false))
 	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
 	model.bond_grace = ShopEffects.bond_grace() if wild else 0

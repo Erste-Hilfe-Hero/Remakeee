@@ -330,14 +330,18 @@ func run_records() -> void:
 ## The lexicon (plan area 2, item 680): the collected entries, each opened as a page.
 func run_lexicon() -> void:
 	var ids: Array[String] = Lexicon.collected(GameState.records)
-	var titles: Array[String] = []
+	# The first page counts the bonus goals met per map (item 767).
+	var titles: Array[String] = [Loc.t("Bonus goals")]
 	for id: String in ids:
 		titles.append(Lexicon.title(id))
 	while true:
 		var i: int = await pick_strings(Loc.t("Lexicon %d") % ids.size(), titles)
 		if i < 0:
 			return
-		await info(Loc.t(Lexicon.text(ids[i])))
+		if i == 0:
+			await info(BattleGoals.lexicon_text(GameState.records))
+		else:
+			await info(Loc.t(Lexicon.text(ids[i - 1])))
 
 ## Vows (plan 3406-3408): take one before the first Rift is mended, give one up at any time.
 func run_vows() -> void:

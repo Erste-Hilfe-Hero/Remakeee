@@ -334,7 +334,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 746. [x] [P2] Ein Wechsel auf eine leichtere Stufe gilt ab dem nächsten Kampf und setzt `difficulty_lowered` im Spielstand, sichtbar im Profil. Erledigt: GameState.set_difficulty aus dem Einstellungsmenü (gilt ab dem nächsten Kampf, das Menü geht im Kampf nicht auf); eine leichtere Stufe setzt records["difficulty_lowered"], sichtbar als "(gesenkt)" in der Einstellungszeile und in der Reise-Chronik.
 747. [x] [P2] Boss-Aktionen pro Zug pro Stufe: Story höchstens 1, Tamer wie bisher, Veteran wie bisher, Rift-Born +1 ab Phase 2. Erledigt: BattleRules.BOSS_ACTION_CAP / BOSS_PHASE_BONUS, model.boss_difficulty (im Replay): Story höchstens 1 Aktion, Tamer und Veteran wie bisher, Rift-Born +1 ab Phase 2.
 748. [x] [P2] Rift-Born: Boss-Phase schon bei 60 % statt 50 % Kraft. Erledigt: BattleRules.BOSS_PHASE_AT: Rift-Born weckt die zweite Phase bei 60 %.
-749. [P2] Gegner-Energie beim Start: Story 8, Tamer 10, Veteran 10, Rift-Born 10 mit +1 in Runde 1; Spieler immer 10 (bestehender Startwert).
+749. [x] [P2] Gegner-Energie beim Start: Story 8, Tamer 10, Veteran 10, Rift-Born 10 mit +1 in Runde 1; Spieler immer 10 (bestehender Startwert). Erledigt: BattleRules.FOE_START_CUT / FOE_TURN1_ENERGY: Story-Gegner starten mit 8 (model.start_energy_cut, zusammen mit Rückenwind), Rift-Born-Gegner bekommen am Ende der ersten Runde +1 (model.foe_turn1_energy); Spieler immer 10, Echo-Duelle ausgenommen. Im Replay und in der BalanceSim gesetzt.
 750. [P3] Eigene Stufe "Werkstatt": sechs Regler aus der Tabelle frei wählbar, Spielstand als "Werkstatt" markiert, Ranglisten-Einträge dafür gesperrt.
 751. [P3] Werkstatt-Einstellungen lassen sich als Kurzcode aus 8 Zeichen teilen und eingeben.
 752. [P3] Pro Stufe ein eigenes Symbol, das im Kampfstart-Banner und im Kampfende-Bericht neben dem Namen des Gegners steht.
@@ -353,10 +353,10 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 763. [x] [P2] Bonusziele gelten auch in Rückkämpfen; ein bereits erfülltes Ziel zeigt sein Häkchen, gibt aber keine zweite Belohnung. Erledigt: records["goals_done"].
 764. [x] [P2] Ein nicht erfülltes Bonusziel ändert nichts am Sieg, an Geld oder Wachstum. Erledigt: der Tracker hört nur zu (Test).
 765. [x] [P3] Bonusziele lassen sich in den Einstellungen ausblenden (Standard an). Erledigt: Einstellung „Bonusziele“ (GameState.bonus_goals).
-766. [P2] GameState.records["goals"] speichert pro NPC erfüllt ja oder nein und die beste Rundenzahl; Speicherstand-Migration setzt leere Werte.
-767. [P2] Das Lexikon zeigt pro Karte die erfüllten Bonusziele als Zähler (zum Beispiel 3 von 5).
+766. [x] [P2] GameState.records["goals"] speichert pro NPC erfüllt ja oder nein und die beste Rundenzahl; Speicherstand-Migration setzt leere Werte. Erledigt: BattleGoals.results/note: records["goals"] {Schlüssel: done, best_turns}, geschrieben nach jedem Kampf mit Ziel; alte records["goals_done"] werden beim Lesen als erfüllt übernommen (best_turns 0).
+767. [x] [P2] Das Lexikon zeigt pro Karte die erfüllten Bonusziele als Zähler (zum Beispiel 3 von 5). Erledigt: Rekorde → Lexikon hat als erste Seite "Bonusziele" mit einer Zeile pro Karte ("Crowcrest: 1 von 3"), BattleGoals.map_count/lexicon_text.
 768. [P2] Ein Test prüft für jedes Bonusziel mit dem Simulator, dass das Referenzteam es auf Tamer in mindestens 20 % der Kämpfe erfüllt (kein unmögliches Ziel).
-769. [P2] Bonusziel-Texte in eigener Wortwahl, de und en, höchstens 32 Zeichen für die Karte.
+769. [x] [P2] Bonusziel-Texte in eigener Wortwahl, de und en, höchstens 32 Zeichen für die Karte. Erledigt: alle Zieltexte gekürzt (z. B. "win with nobody fainting", "gewinne mit max. %d Spirlings"); BattleGoals.card_text, Test prüft jedes Ziel in en und de auf höchstens 32 Zeichen. Prozentzeichen vermieden, weil die Übersetzung %% zu % macht.
 770. [P3] Wochen-Bonusziel offline: jeden Montag wählt der Tages-Seed ein Ziel für alle Wanderer-Rückkämpfe dieser Woche (zum Beispiel "Nur Status und Fokus").
 771. [P3] Bonusziele zählen für bestehende Errungenschaften mit drei neuen Stufen: 5, 15 und alle Ziele erfüllt (scripts/core/Achievements.gd).
 772. [P3] Bonusziel-Kette pro Karte: wer alle Ziele einer Karte erfüllt, schaltet einen Rückkampf mit allen Wanderern der Karte hintereinander frei ("Kartenlauf").

@@ -176,6 +176,17 @@ const BOSSES: Dictionary[String, Dictionary] = {
 			"text": "The Drowned Heart pulls the tide around itself!"}},
 }
 
+## Foe Energy at the start per difficulty (item 749): Story foes start with 2 less (8), Rift-Born
+## foes gain 1 extra at the end of the first turn. The player always starts with the normal 10.
+const FOE_START_CUT: Array[int] = [2, 0, 0, 0]
+const FOE_TURN1_ENERGY: Array[int] = [0, 0, 0, 1]
+
+static func foe_start_cut(difficulty: int) -> int:
+	return FOE_START_CUT[difficulty] if difficulty >= 0 and difficulty < FOE_START_CUT.size() else 0
+
+static func foe_turn1_energy(difficulty: int) -> int:
+	return FOE_TURN1_ENERGY[difficulty] if difficulty >= 0 and difficulty < FOE_TURN1_ENERGY.size() else 0
+
 ## Boss tuning per difficulty (Story, Tamer, Veteran, Rift-Born; plan area 2 items 747, 748):
 ## the most actions a boss takes per turn (0 = as BOSSES says), extra actions once the second
 ## phase starts, and the share of max HP that starts it.

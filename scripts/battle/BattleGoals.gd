@@ -34,14 +34,24 @@ static func describe(goal: Dictionary) -> String:
 	var text: String = ""
 	match str(goal.get("type", "")):
 		"win_within": text = Loc.t("win within %d turns") % int(v)
-		"no_faint": text = Loc.t("win without anyone on your side fainting")
+		"no_faint": text = Loc.t("win with nobody fainting")
 		"no_rest": text = Loc.t("win without resting")
-		"only_kind": text = Loc.t("win using only %s arts") % Loc.t(str(v).capitalize())
-		"max_fielded": text = Loc.t("win sending out at most %d Spirlings") % int(v)
-		"min_hp_end": text = Loc.t("win with at least %d%% Vigor left in your team") % roundi(float(v) * 100.0)
-		"reaction_count": text = Loc.t("win setting off at least %d reactions") % int(v)
+		"only_kind": text = Loc.t("win with %s arts only") % Loc.t(str(v).capitalize())
+		"max_fielded": text = Loc.t("win using at most %d Spirlings") % int(v)
+		"min_hp_end": text = Loc.t("win with %d percent Vigor left") % roundi(float(v) * 100.0)
+		"reaction_count": text = Loc.t("win with %d+ reactions") % int(v)
 		_: return ""
 	return Loc.t("Bonus goal: %s.") % text
+
+## The goal alone, as on the card (item 769: at most CARD_CHARS characters in every language).
+const CARD_CHARS: int = 32
+
+static func card_text(goal: Dictionary) -> String:
+	var line: String = describe(goal)
+	if line.is_empty():
+		return ""
+	var head: String = Loc.t("Bonus goal: %s.").split("%s")[0]
+	return line.trim_prefix(head).trim_suffix(".")
 
 ## Watches one battle for its goal. Attach before the battle starts.
 class Tracker:
@@ -131,6 +141,59 @@ class Tracker:
 			"min_hp_end": return hp_share() >= float(v)
 			"reaction_count": return reactions >= int(v)
 		return false
+
+## Results per goal (item 766): records["goals"] {key: {"done": bool, "best_turns": int}}.
+## Older saves only kept records["goals_done"]; those count as done with no turn count yet.
+static func results(records: Dictionary) -> Dictionary:
+	var out: Dictionary = (records.get("goals", {}) as Dictionary).duplicate(true)
+	var old: Dictionary = records.get("goals_done", {})
+	for k: Variant in old:
+		var e: Dictionary = out.get(str(k), {"done": false, "best_turns": 0})
+		e["done"] = bool(e.get("done", false)) or bool(old[k])
+		out[str(k)] = e
+	return out
+
+## Notes a finished battle for [param goal_key]: a won battle keeps its fewest turns, a met goal
+## marks it done. Returns the entry.
+static func note(records: Dictionary, goal_key: String, tracker: Tracker) -> Dictionary:
+	var all_res: Dictionary = results(records)
+	var e: Dictionary = all_res.get(goal_key, {"done": false, "best_turns": 0})
+	if tracker.model.outcome == BattleModel.Outcome.WIN:
+		var t: int = tracker.turns()
+		e["best_turns"] = t if int(e.get("best_turns", 0)) <= 0 else mini(int(e.best_turns), t)
+		e["done"] = bool(e.get("done", false)) or tracker.met()
+	all_res[goal_key] = e
+	records["goals"] = all_res
+	return e
+
+## Met goals on [param map_id] against the goals it has (item 767): [done, total].
+static func map_count(records: Dictionary, map_id: String) -> Array[int]:
+	var res: Dictionary = results(records)
+	var done: int = 0
+	var total: int = 0
+	for k: String in all():
+		if k.begins_with(map_id + "/"):
+			total += 1
+			if bool((res.get(k, {}) as Dictionary).get("done", false)):
+				done += 1
+	return [done, total]
+
+## The lexicon page of bonus goals (item 767): one line per map, "Crowcrest: 3 of 5".
+static func lexicon_text(records: Dictionary) -> String:
+	var lines: Array[String] = []
+	for m: String in maps():
+		var c: Array[int] = map_count(records, m)
+		lines.append(Loc.t("%s: %d of %d") % [Loc.t(Spirling.place_name(m)), c[0], c[1]])
+	return "\n".join(lines)
+
+## Every map with bonus goals, in file order.
+static func maps() -> Array[String]:
+	var out: Array[String] = []
+	for k: String in all():
+		var m: String = k.get_slice("/", 0)
+		if not m in out:
+			out.append(m)
+	return out
 
 ## Pays out [param goal] for [param goal_key] into [param records] once. Returns the lines to show,
 ## or [] when it was already paid (item 763).
