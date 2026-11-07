@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 18,
+ "catalog_version": 19,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -1680,7 +1680,7 @@
    "duration": "once",
    "plan": 4743,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_spark_shard_x5",
@@ -1710,7 +1710,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Power Core",
-   "desc": "Raises a Spirling's temperament bonus from 1.1 to 1.2. Permanent.",
+   "desc": "Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent.",
    "rg_price": 800,
    "eur_cents": 799,
    "store_type": "consumable",
@@ -1718,7 +1718,7 @@
    "grants": [
     {
      "t": "item",
-     "id": "rg_power_core",
+     "id": "rg_temper_amp",
      "n": 1
     }
    ],
@@ -1726,7 +1726,7 @@
    "duration": "once",
    "plan": 4750,
    "min_band": 13,
-   "ready": false
+   "ready": true
   },
   {
    "id": "rg_gleam_prism",

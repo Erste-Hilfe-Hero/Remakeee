@@ -648,6 +648,22 @@
   "shop": true
  },
  {
+  "id": "rg_temper_shift",
+  "name": "Temper Shift",
+  "description": "Sets one Spirling's temperament to one you choose. Used up.",
+  "battle": false,
+  "shop": true,
+  "temper_shift": true
+ },
+ {
+  "id": "rg_temper_amp",
+  "name": "Power Core",
+  "description": "Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent. Used up.",
+  "battle": false,
+  "shop": true,
+  "temper_core": true
+ },
+ {
   "id": "rg_spark_forge",
   "name": "Spark Forge",
   "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",

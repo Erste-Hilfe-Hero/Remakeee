@@ -677,6 +677,10 @@ func run_bag() -> void:
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
 			await _use_spark_charm(item_id)
+		elif bool(it.get("temper_shift", false)):
+			await _use_temper_shift(item_id)
+		elif bool(it.get("temper_core", false)):
+			await _use_power_core(item_id)
 		elif it.has("boost"):
 			if await confirm("%s\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", "")))], "Use", "Not now"):
 				await info(ShopEffects.start_boost(item_id))
@@ -757,6 +761,44 @@ func _teach_echo(id: String) -> void:
 		return
 	Sound.sfx("level_up")
 	await info("%s learned %s!" % [s.display_name(), mv.move_name])
+
+## Temper Shift (item 4743): pick a Spirling, then the temperament it gets.
+func _use_temper_shift(id: String) -> void:
+	var who: int = await _pick_member("Use the Temper Shift on?")
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	var names: Array[String] = []
+	for t: Dictionary in Spirling.TEMPERAMENTS:
+		var line: String = "%s: %s" % [Loc.t(str(t.label)), Loc.t(str(t.text))]
+		names.append(("> " if t.id == s.temperament().id else "") + line)
+	var pick: int = await pick_strings(Loc.t("New temperament for %s?") % s.display_name(), names)
+	if pick < 0:
+		return
+	var t: Dictionary = Spirling.TEMPERAMENTS[pick]
+	if not GameState.shift_temper(s, str(t.id), id):
+		await info(Loc.t("%s already has that temperament.") % s.display_name())
+		return
+	Sound.sfx("level_up")
+	await info(Loc.t("%s is %s now.") % [s.display_name(), Loc.t(str(t.label))])
+
+## Power Core (item 4750): doubles the lean of one Spirling's temperament.
+func _use_power_core(id: String) -> void:
+	var who: int = await _pick_member("Use the Power Core on?")
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	if not GameState.use_power_core(s, id):
+		await info(Loc.t("That would do nothing: %s has no lean to strengthen, or already has a Power Core.") % s.display_name())
+		return
+	Sound.sfx("level_up")
+	await info(Loc.t("%s's temperament grows stronger: +10%% instead of +5%%.") % s.display_name())
+
+func _pick_member(question: String) -> int:
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	return await pick_strings(question, names)
 
 ## Spark Charm: pick a Spirling, then the stat to brighten.
 func _use_spark_charm(id: String) -> void:

@@ -476,6 +476,32 @@ func test_rift_anchor_and_warden_bundle() -> void:
 	# 600 (Lore) + 3 x 300 + 5 x 100, sold for 1500.
 	assert_eq(ShopCatalog.single_value(ShopCatalog.offer("rg_warden_bundle")), 2000)
 
+func test_temper_shift_and_power_core() -> void:
+	var inv: Dictionary = GameState.inventory.duplicate(true)
+	var s: Spirling = BattleFixtures.make("Kindlop", 30)
+	s.temper = "even"
+	var atk_even: int = s.atk()
+	GameState.inventory.erase("rg_temper_shift")
+	assert_false(GameState.shift_temper(s, "fierce"), "needs the item")
+	GameState.inventory["rg_temper_shift"] = 1
+	assert_false(GameState.shift_temper(s, "even"), "same temperament changes nothing")
+	assert_false(GameState.shift_temper(s, "nonsense"))
+	assert_true(GameState.shift_temper(s, "fierce"))
+	assert_eq(GameState.item_count("rg_temper_shift"), 0)
+	var atk_fierce: int = s.atk()
+	assert_gt(atk_fierce, atk_even)
+	GameState.inventory["rg_temper_amp"] = 2
+	assert_true(GameState.use_power_core(s))
+	assert_gt(s.atk(), atk_fierce)
+	assert_false(GameState.use_power_core(s), "only once per Spirling")
+	var round_trip: Spirling = Spirling.from_dict(s.to_dict())
+	assert_true(round_trip.temper_core)
+	assert_eq(round_trip.atk(), s.atk())
+	var plain: Spirling = BattleFixtures.make("Kindlop", 30)
+	plain.temper = "shy"
+	assert_false(GameState.use_power_core(plain), "no lean to double")
+	GameState.inventory = inv
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
