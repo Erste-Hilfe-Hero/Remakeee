@@ -70,10 +70,11 @@
    }
   ]
  },
- "pell": [
-  "Pell: No more tending a silent Warden. Orrin bakes bread now. Terrible bread.",
-  "Pell: My Spirlings sleep through the night again. So do I."
- ],
+ "pell": {
+  "lines": [
+   "Pell: Orrin bakes bread now. It's so hard Marek splits it with his chisel and still calls it the best stone of the week."
+  ]
+ },
  "suri": [
   "Suri: I thought the Hush would last forever. Now I'm learning to make Echo Crystals.",
   "Suri: My Kindlop runs warm, not hot. That's the difference, I think."
@@ -86,7 +87,7 @@
  },
  "ula": {
   "lines": [
-   "Shepherd Ula: The flock grazes the scree by day. At dusk I count them twice, at the square."
+   "Shepherd Ula: I count my flock twice. Ivo I don't count at all. He's asleep somewhere."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -97,7 +98,7 @@
  },
  "marek": {
   "lines": [
-   "Stonecutter Marek: Up on the terrace I split stone. At the square in the evening I split hairs."
+   "Stonecutter Marek: Ivo guards the night like a stone guards the road. Lying there, getting walked over."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -108,7 +109,7 @@
  },
  "rue": {
   "lines": [
-   "Herbalist Rue: I pick herbs by the old door at sunrise. Dew makes them honest."
+   "Herbalist Rue: I have a herb for every pain. For Marek's jokes, nothing helps."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -119,14 +120,23 @@
  },
  "ivo": {
   "lines": [
-   "Night Watch Ivo: I start my round at dusk and finish when the birds complain."
+   "Night Watch Ivo: I keep watch so the village can sleep. They keep laughing so I can't."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
    "lines": [
     "Night Watch Ivo: Quiet nights since the Rift closed. I almost miss the trouble. Almost."
    ]
-  }
+  },
+  "choices": [
+   {
+    "text": "Snore loudly next to Ivo",
+    "next": "ivo_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
  },
  "kip": {
   "lines": [
@@ -144,5 +154,11 @@
    "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
   ],
   "action": "marker_stone 2"
+ },
+ "ivo_pays": {
+  "lines": [
+   "Night Watch Ivo: I was NOT asleep! Take these coins and tell nobody."
+  ],
+  "action": "tip 100 ivo"
  }
 }

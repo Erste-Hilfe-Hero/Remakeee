@@ -998,6 +998,16 @@ static func time_went_back(stored: String, now: String) -> bool:
 static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
 
+## Pays [param coins] from townsfolk [param who] once per day (story var "tip_<who>" holds the
+## last day). Returns the coins paid, 0 when [param who] already paid today.
+func pay_tip(who: String, coins: int, day: int = today()) -> int:
+	var key: String = "tip_" + who
+	if coins <= 0 or int(story_vars.get(key, -1)) == day:
+		return 0
+	story_vars[key] = day
+	money += coins
+	return coins
+
 ## Days since 1970 (local device date), for "met on day N".
 static func today() -> int:
 	return int(Time.get_unix_time_from_system() / 86400.0)
