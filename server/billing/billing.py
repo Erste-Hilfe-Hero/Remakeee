@@ -94,10 +94,25 @@ def is_subscription(product_id):
 
 
 class Billing:
-    def __init__(self, db, play, cfg):
+    # Item 4148: at most 20 receipt checks per account and hour (kept in memory, one process).
+    CHECKS_PER_HOUR = 20
+
+    def __init__(self, db, play, cfg, clock=time.time):
         self.db = db
         self.play = play
         self.cfg = cfg
+        self.clock = clock
+        self._checks = {}
+
+    def _too_many_checks(self, uid):
+        now = self.clock()
+        recent = [t for t in self._checks.get(uid, []) if t > now - 3600]
+        if len(recent) >= self.CHECKS_PER_HOUR:
+            self._checks[uid] = recent
+            return True
+        recent.append(now)
+        self._checks[uid] = recent
+        return False
 
     # --- The app ---------------------------------------------------------------------------------
 
@@ -106,6 +121,8 @@ class Billing:
         choice = body.get("p_choice")
         choice = str(choice) if choice not in (None, "") else None
         store = str(receipt.get("store", body.get("p_store", "")))
+        if self._too_many_checks(uid):
+            return {"ok": False, "error": "slow_down"}
         try:
             if store == "apple":
                 return self._verify_apple(uid, receipt, choice)

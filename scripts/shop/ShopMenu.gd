@@ -394,6 +394,7 @@ static func reason_text(why: String) -> String:
 		"age", "age_needed": return LOCKED_TEXT
 		"offline": return "No connection right now. Try again in a moment."
 		"price_changed": return "The price has changed. Please look again."
+		"slow_down": return "That was a lot of purchases in a short time. Please wait a while and try again."
 		"shop_closed": return "The shop is closed for a moment. Please look again later."
 		"not_available": return "Nothing here yet. New offers come with updates."
 		"pending": return "The purchase waits for approval. It arrives by itself once it is paid."

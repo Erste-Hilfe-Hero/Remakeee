@@ -247,6 +247,16 @@ func _fn_shop_set_limit(a: Dictionary) -> Dictionary:
 	s.raise_at = b.now() + RAISE_WAIT
 	return {"ok": true, "cap_cents": cur, "raise_to_cents": want, "raise_at": s.raise_at}
 
+## Item 4148: at most 30 Riftglass purchases per hour, like shop_buy on the server.
+const BUYS_PER_HOUR: int = 30
+
+func _recent_buys(uid: String) -> int:
+	var n: int = 0
+	for p: Dictionary in _shop(uid).purchases:
+		if str(p.store) == "riftglass" and int(p.at) > b.now() - 3600:
+			n += 1
+	return n
+
 func _fn_shop_buy(a: Dictionary) -> Dictionary:
 	var uid: String = b.me()
 	var id: String = str(a.get("p_offer", ""))
@@ -258,6 +268,8 @@ func _fn_shop_buy(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "not_for_riftglass"}
 	if price != int(a.get("p_expected_price", -1)):
 		return {"ok": false, "error": "price_changed", "price": price}
+	if _recent_buys(uid) >= BUYS_PER_HOUR:
+		return {"ok": false, "error": "slow_down"}
 	var choice: Variant = a.get("p_choice")
 	var why: String = offer_block(uid, o, choice)
 	if not why.is_empty():
