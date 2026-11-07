@@ -2680,6 +2680,8 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.trainer_name = str(trainer.get("name", ""))
 	var tune: Variant = trainer.get("profile_tune", {})
 	model.ai.set_profile(str(trainer.get("profile", "")), tune if tune is Dictionary else {})
+	if not wild:
+		model.ai.set_difficulty(GameState.difficulty)
 	model.foe_damage_mult = GameState.foe_damage_mult()
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
 	model.field = str(trainer.get("field", map.field))

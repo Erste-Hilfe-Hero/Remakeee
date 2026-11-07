@@ -12,6 +12,8 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"ai": model.ai.level,
 		"profile": model.ai.profile_id,
 		"profile_tune": model.ai.profile_tune.duplicate(),
+		"ai_spare_last": model.ai.spare_last,
+		"ai_no_double_rest": model.ai.no_double_rest,
 		"teams": [_team(model.party(BattleModel.Side.PLAYER)), _team(model.party(BattleModel.Side.FOE))],
 		"inventory": model.inventory.duplicate(),
 		"items_allowed": model.items_allowed,
@@ -88,6 +90,8 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.trainer_name = str(snap.get("trainer", ""))
 	var tune: Variant = snap.get("profile_tune", {})
 	m.ai.set_profile(str(snap.get("profile", "")), tune if tune is Dictionary else {})
+	m.ai.spare_last = bool(snap.get("ai_spare_last", false))
+	m.ai.no_double_rest = bool(snap.get("ai_no_double_rest", false))
 	m.field = str(snap.get("field", ""))
 	m.bench_share = float(snap.get("bench_share", 0.0))
 	m.foe_rule = str(snap.get("rule", ""))

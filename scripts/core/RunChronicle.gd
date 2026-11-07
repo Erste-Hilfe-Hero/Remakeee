@@ -39,7 +39,7 @@ static func entry() -> Dictionary:
 		if Vows.status(str(v.id)) == "kept":
 			kept.append(str(v.id))
 	return {"name": GameState.tamer_name, "starter": GameState.starter, "difficulty": int(GameState.difficulty),
-		"play_time": int(GameState.play_time), "oath": GameState.iron_oath, "vows": kept,
+		"play_time": int(GameState.play_time), "oath": GameState.iron_oath, "vows": kept, "lowered": GameState.difficulty_lowered(),
 		"date": Time.get_date_string_from_unix_time(Online.unix_now())}
 
 ## Books the run once it reaches the end of Act I. Returns the lines to show.
@@ -74,7 +74,7 @@ static func line(r: Dictionary) -> String:
 	var sd: SpirlingData = Database.species(str(r.get("starter", "")))
 	var secs: int = int(r.get("play_time", 0))
 	var text: String = Loc.t("%s with %s, %s, %d:%02d") % [str(r.get("name", "")),
-		sd.species_name if sd != null else "?", difficulty_name(int(r.get("difficulty", 0))), secs / 3600, (secs / 60) % 60]
+		sd.species_name if sd != null else "?", difficulty_name(int(r.get("difficulty", 0))) + (" " + Loc.t("(lowered)") if bool(r.get("lowered", false)) else ""), secs / 3600, (secs / 60) % 60]
 	if r.get("vows") is Array and not (r.vows as Array).is_empty():
 		text += "  " + Loc.t("Vows kept: %d") % (r.vows as Array).size()
 	return (mark + " " if not mark.is_empty() else "") + text + "  " + str(r.get("date", ""))

@@ -410,7 +410,8 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 			]
 			# Difficulty and the Iron Oath only during a journey.
 			if GameState.in_game:
-				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty]])
+				# A lowered challenge stays visible (item 746).
+				rows.append(["difficulty", "Challenge: %s" % DIFFICULTY_TEXT[GameState.difficulty] + (" " + Loc.t("(lowered)") if GameState.difficulty_lowered() else "")])
 				rows.append(["iron_oath", "Iron Oath: %s" % ("Sworn" if GameState.iron_oath else "Off")])
 		"sound":
 			rows = [
@@ -485,7 +486,7 @@ func _settings_action(key: String, dir: int = 1) -> void:
 				opts.append({"text": DIFFICULTY_TEXT[i], "hint": DIFFICULTY_HINTS[i]})
 			var d: int = await pick("Difficulty", opts, true, GameState.difficulty)
 			if d >= 0:
-				GameState.difficulty = d as GameState.Difficulty
+				GameState.set_difficulty(d)
 		"iron_oath":
 			await _iron_oath()
 

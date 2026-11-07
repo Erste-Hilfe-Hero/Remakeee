@@ -407,6 +407,7 @@ static func warden_fight(entries: Array, def: Dictionary, field: String, difficu
 	var m := BattleModel.new(mine, foes, false, seed_value, int(info.ai))
 	m.items_allowed = false
 	m.ai.set_profile(str(info.profile), info.profile_tune)
+	m.ai.set_difficulty(difficulty)
 	m.foe_damage_mult = GameState.FOE_DAMAGE[difficulty]
 	m.field = field
 	m.foe_rule = str(info.rule)

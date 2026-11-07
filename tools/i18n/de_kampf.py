@@ -279,3 +279,8 @@ T.update({
 "No, thanks": "Nein, danke",
 "Tailwind helped in this battle. Used %d times so far.": "Rückenwind hat in diesem Kampf geholfen. Bisher %d-mal genutzt.",
 })
+
+# Plan area 2, item 746: a lowered difficulty stays visible.
+T.update({
+"(lowered)": "(gesenkt)",
+})

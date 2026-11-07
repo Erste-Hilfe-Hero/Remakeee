@@ -116,11 +116,66 @@ func _rule(key: String, fallback: float) -> float:
 	return float(v)
 
 ## Picks an action for the Spirling in [param slot] of [param side]. Always returns a legal action.
+## Story and Tamer (item 741): no heal_block art against the foe's last standing Spirling.
+var spare_last: bool = false
+## Veteran (item 742): never rest twice in a row while an art is affordable.
+var no_double_rest: bool = false
+## Sets spare_last and no_double_rest for a Wayfarer battle on [param difficulty] (items 741, 742).
+func set_difficulty(difficulty: int) -> void:
+	spare_last = difficulty >= 0 and difficulty <= 1
+	no_double_rest = difficulty == 2
+
+## Slots that rested on their last action (for no_double_rest).
+var _rested: Dictionary = {}
+
 func choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
+	var a: BattleAction = _choose(model, side, slot)
+	if no_double_rest and a.kind == BattleAction.Kind.REST and bool(_rested.get(slot, false)):
+		var arts: Array[BattleAction] = _arts(model, side, slot)
+		if not arts.is_empty():
+			# The hardest-hitting affordable art stands in for the second rest.
+			a = arts[0]
+			var me: Spirling = model.active_spirling(side, slot)
+			for b: BattleAction in arts:
+				if me.moves[b.move_index].power > me.moves[a.move_index].power:
+					a = b
+			var foes: Array[int] = model.standing_slots(BattleModel.other(side))
+			if not foes.is_empty():
+				a.target_slot = foes[0]
+	_rested[slot] = a.kind == BattleAction.Kind.REST
+	return a
+
+## True if [param mv] carries a heal_block effect.
+static func blocks_heal(mv: MoveData) -> bool:
+	for fx: Dictionary in mv.effects:
+		if StringName(fx.get("id", "")) == &"heal_block":
+			return true
+	return false
+
+## The affordable art actions, without heal_block arts when spare_last holds and the other
+## side has one Spirling left (unless nothing else is left).
+func _arts(model: BattleModel, side: int, slot: int) -> Array[BattleAction]:
 	var moves: Array[BattleAction] = []
 	for a: BattleAction in model.legal_actions(side, slot):
 		if a.kind == BattleAction.Kind.MOVE:
 			moves.append(a)
+	if spare_last and not moves.is_empty():
+		var left: int = 0
+		for s: Spirling in model.parties[BattleModel.other(side)]:
+			if not s.is_fainted():
+				left += 1
+		if left == 1:
+			var me: Spirling = model.active_spirling(side, slot)
+			var kept: Array[BattleAction] = []
+			for a: BattleAction in moves:
+				if not blocks_heal(me.moves[a.move_index]):
+					kept.append(a)
+			if not kept.is_empty():
+				moves = kept
+	return moves
+
+func _choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
+	var moves: Array[BattleAction] = _arts(model, side, slot)
 	if level >= 2:
 		var special: BattleAction = _tier2_special(model, side, slot)
 		if special != null:

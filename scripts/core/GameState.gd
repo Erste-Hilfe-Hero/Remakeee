@@ -225,6 +225,17 @@ func items_allowed_in_battle() -> bool:
 	return difficulty != Difficulty.RIFT_BORN
 
 ## Trainer AI tier for the current difficulty: 0 random, 1 greedy, 2 lookahead, 3 master.
+## Changes the difficulty in a running game (item 746). It holds from the next battle on (the
+## menu cannot open mid-battle); a step down marks records["difficulty_lowered"] for good.
+func set_difficulty(d: int) -> void:
+	d = clampi(d, 0, Difficulty.size() - 1)
+	if d < int(difficulty):
+		records["difficulty_lowered"] = true
+	difficulty = d as Difficulty
+
+func difficulty_lowered() -> bool:
+	return bool(records.get("difficulty_lowered", false))
+
 func ai_level() -> int:
 	return AI_LEVELS[difficulty]
 
