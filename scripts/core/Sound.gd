@@ -29,7 +29,7 @@ const BLIP_DB: float = -9.0
 ## Fade back in after the app returns from the background (item 2550).
 const RESUME_FADE: float = 0.3
 ## Menu sounds that go to the UI bus.
-const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save"]
+const UI_SOUNDS: Array[String] = ["select", "confirm", "cancel", "bump", "tick", "coin", "save", "locked", "toast"]
 ## Ground per tile kind for footsteps (item 2502); "sand" is a path or grass tile next to water.
 const GROUNDS: Dictionary[int, String] = {
 	TilesetFactory.Kind.GRASS: "grass", TilesetFactory.Kind.TALL_GRASS: "grass", TilesetFactory.Kind.FLOWER: "grass",
@@ -69,6 +69,8 @@ var _ambience: AudioStreamPlayer
 var _ambience_out: AudioStreamPlayer
 var _step_take: int = 0
 var _blip_count: int = 0
+## The effect asked for last, even when silent (tests).
+var last_sfx: String = ""
 ## Captions shown so far (tests).
 var captions: Array[String] = []
 ## Headless runs (CI, tests) have no audio output; the dummy driver never releases playbacks,
@@ -108,7 +110,7 @@ func _load(path: String) -> AudioStream:
 
 ## Sounds that need a longer gap than SFX_MIN_GAP: running into a wall at most every 0.4 s
 ## (item 2520).
-const SFX_GAPS: Dictionary[String, float] = {"bump": 0.4}
+const SFX_GAPS: Dictionary[String, float] = {"bump": 0.4, "locked": 0.4, "toast": 0.3}
 ## The cursor sound picks one of three close pitches, so long scrolling does not tire (item 2510).
 const SELECT_PITCHES: Array[float] = [0.97, 1.0, 1.03]
 ## Hit sounds vary their pitch between 0.95 and 1.05 (item 2533).
@@ -131,6 +133,7 @@ func varied_pitch(sound_name: String, pitch: float) -> float:
 	return pitch
 
 func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
+	last_sfx = sound_name
 	caption(sound_name)
 	if not enabled:
 		return
