@@ -44,6 +44,21 @@ static func offers() -> Array[Dictionary]:
 	load_all()
 	return _offers
 
+## Jacket colour ("4f7a3a") of the look offer that unlocks [param key] (item 4277), or "".
+static func jacket_color(key: String) -> String:
+	if key.is_empty():
+		return ""
+	var o: Dictionary = look_offer(key)
+	return str(o.get("color", ""))
+
+## The look offer whose only grant is the unlock [param key] ({} if none).
+static func look_offer(key: String) -> Dictionary:
+	for o: Dictionary in offers():
+		var g: Array = o.get("grants", [])
+		if str(o.get("tab", "")) == "looks" and g.size() == 1 and g[0] is Dictionary and str(g[0].get("id", "")) == key:
+			return o
+	return {}
+
 static func offer(id: String) -> Dictionary:
 	load_all()
 	return _by_id.get(id, {})

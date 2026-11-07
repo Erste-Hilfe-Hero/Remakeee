@@ -553,6 +553,21 @@ func test_move_memory_relearns_forgotten_arts() -> void:
 	assert_false(GameState.relearn(s, "No Such Art", 0))
 	Billing.state = {}
 
+func test_jackets_change_only_the_colour_while_owned() -> void:
+	var worn: String = GameState.jacket
+	var o: Dictionary = ShopCatalog.offer("rg_jacket_moss")
+	assert_eq(ShopMenu.jacket_key(o), "jacket_moss")
+	assert_eq(ShopMenu.jacket_key(ShopCatalog.offer("rg_pass")), "")
+	GameState.jacket = "jacket_moss"
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.body_color(), GameState.TAMER_COLORS[clampi(GameState.tamer_color, 0, 3)], "not owned: free colour")
+	Billing.state = {"unlocks": {"jacket_moss": 1}}
+	assert_eq(GameState.body_color(), Color(str(o.color)))
+	var d: Dictionary = GameState.to_dict()
+	assert_eq(str(d.tamer.jacket), "jacket_moss")
+	Billing.state = {}
+	GameState.jacket = worn
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
