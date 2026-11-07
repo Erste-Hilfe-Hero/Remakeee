@@ -2747,6 +2747,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		model.ai.set_difficulty(GameState.difficulty)
 	model.foe_damage_mult = GameState.foe_damage_mult()
 	model.boss_hp_scale = GameState.BOSS_HP_SCALE[GameState.difficulty]
+	model.boss_difficulty = GameState.difficulty
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN

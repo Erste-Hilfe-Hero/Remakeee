@@ -284,3 +284,21 @@ T.update({
 T.update({
 "(lowered)": "(gesenkt)",
 })
+
+# Plan area 2, item 745: the difficulty table.
+T.update({
+"Foe rings: %s": "Gegner-Ringe: %s",
+"as listed": "wie angegeben",
+"Foe Spark: %d in every stat": "Gegner-Spark: %d in jedem Wert",
+"AI tier: %d, Wardens %d": "KI-Stufe: %d, Wächter %d",
+"Keepsakes: %s": "Andenken: %s",
+"some foes": "bei manchen Gegnern",
+"on every Warden Spirling": "auf jedem Wächter-Spirling",
+"no keepsakes": "keine",
+"no cap": "keine",
+"Items in battle: %s": "Gegenstände im Kampf: %s",
+"no": "nein",
+"yes": "ja",
+"Ring cap: %s": "Ring-Obergrenze: %s",
+"rises with each sealed Rift (R%d to R%d)": "steigt mit jedem versiegelten Riss (R%d bis R%d)",
+})

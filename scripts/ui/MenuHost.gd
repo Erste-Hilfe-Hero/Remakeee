@@ -483,7 +483,7 @@ func _settings_action(key: String, dir: int = 1) -> void:
 		"difficulty":
 			var opts: Array[Dictionary] = []
 			for i: int in DIFFICULTY_TEXT.size():
-				opts.append({"text": DIFFICULTY_TEXT[i], "hint": DIFFICULTY_HINTS[i]})
+				opts.append({"text": DIFFICULTY_TEXT[i], "hint": DifficultyTable.hint(i, DIFFICULTY_HINTS[i])})
 			var d: int = await pick("Difficulty", opts, true, GameState.difficulty)
 			if d >= 0:
 				GameState.set_difficulty(d)

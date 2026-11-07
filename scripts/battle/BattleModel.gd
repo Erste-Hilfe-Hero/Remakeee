@@ -75,6 +75,8 @@ var variants: Array[String] = []
 ## The number keys of the variants (BattleRules.VARIANT_KEYS), filled by start().
 var rules: Dictionary = BattleRules.VARIANT_KEYS.duplicate()
 var _boss_actions: int = 1
+## Difficulty the boss rules follow (BattleRules.BOSS_*; -1 keeps the plain boss).
+var boss_difficulty: int = -1
 ## Player slots still waiting for a replacement after faints (phase AWAIT_SWITCH), in order.
 var pending_switch: Array[int] = []
 var is_wild: bool = true
@@ -383,7 +385,7 @@ func start() -> Array[BattleEvent]:
 		var boss: Spirling = active_spirling(Side.FOE)
 		boss.hp_mult = BattleRules.boss_hp_mult(foe_boss, fielded, boss_hp_scale)
 		boss.hp = boss.max_hp()
-		_boss_actions = BattleRules.boss_actions(foe_boss, fielded)
+		_boss_actions = BattleRules.boss_actions_for(foe_boss, fielded, boss_difficulty)
 	var foe: Spirling = active_spirling(Side.FOE)
 	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(),
 		"prism": foe.prism, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
@@ -620,9 +622,11 @@ func _check_boss_phase(boss: Spirling) -> void:
 	if boss_phase_done or not BattleRules.BOSSES.has(foe_boss) or boss != parties[Side.FOE][active_index(Side.FOE)]:
 		return
 	var p: Dictionary = BattleRules.boss_phase(foe_boss)
-	if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * float(p.get("at", 0.5)):
+	if p.is_empty() or float(boss.hp) > float(boss.max_hp()) * BattleRules.boss_phase_at(foe_boss, boss_difficulty):
 		return
 	boss_phase_done = true
+	if boss_difficulty >= 0 and boss_difficulty < BattleRules.BOSS_PHASE_BONUS.size():
+		_boss_actions += BattleRules.BOSS_PHASE_BONUS[boss_difficulty]
 	emit_event(BattleEvent.Type.BOSS_PHASE, {"side": Side.FOE, "slot": 0, "name": boss.display_name(), "boss": foe_boss, "text": str(p.get("text", ""))})
 	var st: Dictionary = p.get("stage", {})
 	for stat: String in st:

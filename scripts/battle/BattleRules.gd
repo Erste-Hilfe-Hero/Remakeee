@@ -176,6 +176,27 @@ const BOSSES: Dictionary[String, Dictionary] = {
 			"text": "The Drowned Heart pulls the tide around itself!"}},
 }
 
+## Boss tuning per difficulty (Story, Tamer, Veteran, Rift-Born; plan area 2 items 747, 748):
+## the most actions a boss takes per turn (0 = as BOSSES says), extra actions once the second
+## phase starts, and the share of max HP that starts it.
+const BOSS_ACTION_CAP: Array[int] = [1, 0, 0, 0]
+const BOSS_PHASE_BONUS: Array[int] = [0, 0, 0, 1]
+const BOSS_PHASE_AT: Array[float] = [0.5, 0.5, 0.5, 0.6]
+
+## Actions per turn on [param difficulty] (-1 for none set) before the second phase.
+static func boss_actions_for(boss_id: String, fielded: int, difficulty: int) -> int:
+	var n: int = boss_actions(boss_id, fielded)
+	if difficulty >= 0 and difficulty < BOSS_ACTION_CAP.size() and BOSS_ACTION_CAP[difficulty] > 0:
+		n = mini(n, BOSS_ACTION_CAP[difficulty])
+	return n
+
+## The HP share that starts the second phase on [param difficulty].
+static func boss_phase_at(boss_id: String, difficulty: int) -> float:
+	var at: float = float(boss_phase(boss_id).get("at", 0.5))
+	if difficulty >= 0 and difficulty < BOSS_PHASE_AT.size():
+		at = maxf(at, BOSS_PHASE_AT[difficulty])
+	return at
+
 ## Second phase of a boss (BOSSES[id].phase), or {}. Once its HP falls to "at" of max HP the boss
 ## wakes up: its "stage" changes apply and its "field" (if any) takes over for the rest of the fight.
 static func boss_phase(boss_id: String) -> Dictionary:
