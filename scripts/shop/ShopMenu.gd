@@ -160,7 +160,8 @@ static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
 	if not key.is_empty() and Billing.unlocked(key) > 0:
 		await _run_wear(menu, o, key)
 		return
-	await menu.info(detail_text(o))
+	# Looks are shown before they are bought (item 4291).
+	await menu.info(detail_text(o) + ShopPreview.preview_text(o), await ShopPreview.picture(o, menu))
 	var options: Array[String] = []
 	var kinds: Array[bool] = []
 	if int(o.get("rg_price", 0)) > 0:

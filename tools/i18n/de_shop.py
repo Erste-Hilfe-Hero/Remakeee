@@ -715,4 +715,6 @@ T = {
 "Wardrobe...": "Kleiderschrank...",
 "Your wardrobe is empty. Looks you get in the shop show up here.": "Dein Kleiderschrank ist leer. Aussehen-Teile aus dem Shop erscheinen hier.",
 "Put on or take off the looks you got in the shop.": "Aussehen-Teile aus dem Shop an- und ablegen.",
+"Preview: %s": "Vorschau: %s",
+"Preview:": "Vorschau:",
 }
