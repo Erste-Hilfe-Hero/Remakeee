@@ -5,6 +5,8 @@ extends Control
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
 const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
+const IAP_NOTE: String = "Free to play, contains in-app purchases"
+var _iap_note: Label
 
 var _menu: MenuHost
 ## Connection state, server notice and how many Wanderers are online.
@@ -52,6 +54,17 @@ func _ready() -> void:
 	_status.add_theme_stylebox_override("normal", strip)
 	_status.visible = false
 	add_child(_status)
+	# Free to play with optional purchases, said before the game starts (shop item 4036).
+	_iap_note = Label.new()
+	_iap_note.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_iap_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	_iap_note.offset_top = ART_HEIGHT - 11
+	_iap_note.offset_bottom = ART_HEIGHT
+	_iap_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_iap_note.add_theme_color_override("font_color", UITheme.BG)
+	_iap_note.add_theme_stylebox_override("normal", strip)
+	_iap_note.text = Loc.t(IAP_NOTE)
+	add_child(_iap_note)
 	_build_name_box()
 	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
@@ -147,6 +160,8 @@ func _process(_delta: float) -> void:
 	_status.visible = not _status.text.is_empty()
 
 func _on_language_changed(_code: String) -> void:
+	if _iap_note != null:
+		_iap_note.text = Loc.t(IAP_NOTE)
 	if not _connecting and Online.is_online():
 		_show_status()
 

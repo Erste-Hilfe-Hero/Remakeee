@@ -40,9 +40,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4031. [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Pflichten aus dem Jugendschutzgesetz (§ 10b, Kostenfallen als Risiko) und die USK-Hinweise "In-Game-Käufe" und "In-Game-Käufe + zufällige Objekte" erklären.
 4032. [P2] Die Datenschutzerklärung `server/site/datenschutz.html` und `privacy.html` um Kaufdaten ergänzen: Transaktionskennung, Produkt, Zeitpunkt, Store, Erstattungsstatus, Rechtsgrundlage Vertragserfüllung, Speicherdauer 10 Jahre nach Handelsrecht.
 4033. [P2] Im Impressum und in den Nutzungsbedingungen eine Kontaktadresse für Kauffragen nennen und darauf hinweisen, dass Erstattungen nur Apple oder Google entscheiden.
-4034. [P2] Den Text "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden" im Shop unter jedem Rissglas-Paket in einer Zeile zeigen.
+4034. [x] [P2] Den Text "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden" im Shop unter jedem Rissglas-Paket in einer Zeile zeigen.
 4035. [P2] Gegenüber Spielern immer "Angebot" oder "Paket" schreiben, nie "Geschenk", wenn etwas Geld kostet, damit nichts als kostenlos erscheint.
-4036. [P2] Ein Hinweis "kostenlos spielbar, enthält In-App-Käufe" steht im Titelbildschirm unter dem Logo in kleiner Schrift, damit es vor dem Spielstart klar ist.
+4036. [x] [P2] Ein Hinweis "kostenlos spielbar, enthält In-App-Käufe" steht im Titelbildschirm unter dem Logo in kleiner Schrift, damit es vor dem Spielstart klar ist.
 4037. [P2] "Vorher/Nachher-Preise" (durchgestrichene Preise) nur zeigen, wenn das Angebot vorher mindestens 30 Tage zum höheren Preis verkauft wurde (Preisangabenverordnung § 11), und das Datum in `data/shop.json` speichern.
 4038. [P2] In der Shop-Oberfläche steht bei Angeboten mit Vorteil eine kleine Marke "Vorteil im Spiel", damit Eltern und Spieler sehen, was spielerisch wirkt.
 4039. [P2] Die Tageslimits für Käufe und die Altersstufen aus dem Bereich "Ausgabelimits" in den Nutzungsbedingungen beschreiben.
@@ -85,8 +85,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4074. [P2] Die Hinweise für die Apple-Prüfung in `store/ios/review_information/notes.txt` um eine Anleitung ergänzen: Shop öffnen, Testkauf, Wiederherstellen, Ausgabelimit.
 4075. [P2] Den Play-Text `store/android/app_access_de.txt` um den Weg zum Shop und den Hinweis auf Lizenztester ergänzen.
 4076. [P2] Lizenztester in der Play Console und Testkonten für Käufe in App Store Connect in `docs/STORE_RELEASE.md` als Schritt für Ali eintragen.
-4077. [P2] In `tools/release_check.py` prüfen, dass jede Produkt-ID aus `data/shop.json` in `store/products.json` vorkommt und umgekehrt.
-4078. [P2] In `tools/release_check.py` prüfen, dass jedes Produkt einen Preis aus der festen Preisliste (0,99 € bis 99,99 €) hat.
+4077. [x] [P2] In `tools/release_check.py` prüfen, dass jede Produkt-ID aus `data/shop.json` in `store/products.json` vorkommt und umgekehrt.
+4078. [x] [P2] In `tools/release_check.py` prüfen, dass jedes Produkt einen Preis aus der festen Preisliste (0,99 € bis 99,99 €) hat.
 4079. [P2] Die Neuigkeiten-Texte (`changelogs/default.txt`, `release_notes.txt`) für die erste Version mit Shop um den Satz "Neu: Shop mit Rissglas, alle Preise in Euro" ergänzen.
 4080. [P2] Die Kategorie in den Konsolen auf "Rollenspiel" lassen und die Markierung "enthält In-App-Käufe" in beiden Konsolen prüfen.
 4081. [P3] In der Play Console die Länderpreise automatisch aus dem Euro-Preis ableiten und für die Eurozone feste Preise mit ",99" setzen.

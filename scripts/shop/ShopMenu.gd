@@ -6,6 +6,7 @@ extends RefCounted
 ## Riftglass prices always show their euro value. No direct purchase prompts (UWG annex no. 28).
 
 const ADVANTAGE_MARK: String = "+ "
+const RG_NO_VALUE: String = "Riftglass has no money value and cannot be changed back into euro or passed on."
 const LOCKED_TEXT: String = "The shop is closed for your age. Ask a grown-up."
 const ABOUT_TEXT: String = "About purchases:\n- Chimora is free. Everything in the shop is optional.\n- Each offer gives exactly what it lists. Nothing is random.\n- \"+\" marks an advantage in the game. In the Fair League bought advantages do not count.\n- Riftglass is a right to use, it has no money value and cannot be changed back.\n- Payment and refunds go through Apple or Google.\n- Monthly limits protect you: 15 EUR (13-15), 30 EUR (16-17), adults choose up to 300 EUR."
 const WITHDRAWAL_TEXT: String = "Before your first purchase: digital goods are delivered at once. You agree that the right of withdrawal ends when the delivery starts. Refunds go through Apple or Google."
@@ -144,6 +145,9 @@ static func detail_text(o: Dictionary) -> String:
 	lines.append("")
 	if str(o.get("tab", "")) == "packs" and ShopCatalog.single_value(o) > 0:
 		lines.append(Loc.t("Worth one by one: %s") % ShopCatalog.rg_text(ShopCatalog.single_value(o)))
+	# Under every Riftglass pack (item 4034).
+	if str(o.get("kind", "")) == "currency":
+		lines.append(Loc.t(RG_NO_VALUE))
 	if int(o.get("rg_price", 0)) > 0:
 		lines.append(Loc.t("Price: %s") % ShopCatalog.rg_text(int(o.rg_price)))
 	var p: String = Billing.price_text(o)

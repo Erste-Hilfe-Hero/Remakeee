@@ -717,4 +717,6 @@ T = {
 "Put on or take off the looks you got in the shop.": "Aussehen-Teile aus dem Shop an- und ablegen.",
 "Preview: %s": "Vorschau: %s",
 "Preview:": "Vorschau:",
+"Riftglass has no money value and cannot be changed back into euro or passed on.": "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden.",
+"Free to play, contains in-app purchases": "Kostenlos spielbar, enthält In-App-Käufe",
 }

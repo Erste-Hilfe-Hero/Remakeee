@@ -695,6 +695,12 @@ func test_shop_previews_show_looks_before_buying() -> void:
 	var plain: Image = (await ShopPreview.picture(ShopCatalog.offer("rg_hat_tricorn"))).get_image()
 	assert_ne(hat_img.get_data(), plain.get_data(), "hats look different")
 
+func test_riftglass_packs_say_they_have_no_money_value() -> void:
+	assert_string_contains(ShopMenu.detail_text(ShopCatalog.offer("rg_glass_100")), Loc.t(ShopMenu.RG_NO_VALUE))
+	assert_false(Loc.t(ShopMenu.RG_NO_VALUE) in ShopMenu.detail_text(ShopCatalog.offer("rg_hat_tricorn")))
+	var src: String = FileAccess.get_file_as_string("res://scripts/ui/TitleScreen.gd")
+	assert_string_contains(src, "Loc.t(IAP_NOTE)", "the title screen says the game has in-app purchases")
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
