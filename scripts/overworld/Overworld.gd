@@ -79,6 +79,7 @@ func _ready() -> void:
 		"lake_bench": _action_lake_bench,
 		"tide_stone": _action_tide_stone,
 		"rubbing": _action_rubbing,
+		"fish_trap": _action_fish_trap,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
@@ -977,6 +978,23 @@ static func rubbing_lines(key: String) -> Array[String]:
 	if Dialogue.exists(key):
 		out.append_array(Dialogue.lines_for(Dialogue.get_entry(key), GameState.flags))
 	return out
+
+## "fish_trap <id>": a trap on the Reedhaven jetty, emptied once a day (area 3 item 964).
+func _action_fish_trap(args: PackedStringArray, _speaker: NPC) -> void:
+	var id: String = args[0] if args.size() > 0 else "trap"
+	var day: String = DailyFind.today_key()
+	var got: Dictionary = FishTrap.catch(id, day)
+	if got.is_empty():
+		await say(["The trap is empty. Check it again tomorrow."] as Array[String])
+		return
+	FishTrap.empty(id, day)
+	await say(["You haul up the trap. Something is caught in the reeds..."] as Array[String])
+	if got.has("item"):
+		await _action_give_item([str(got.item), "1"] as PackedStringArray, null)
+	else:
+		GameState.money += int(got.money)
+		Sound.sfx("pickup")
+		await say([Loc.plural(int(got.money), "You found %d coin!", "You found %d coins!")] as Array[String])
 
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0
