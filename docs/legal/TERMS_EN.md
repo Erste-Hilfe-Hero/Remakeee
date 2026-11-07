@@ -44,7 +44,9 @@ Last updated: November 2026
    the contract, sections 6 and 8 apply.
    **Shop rules.** Chimora is free; the shop is optional. Riftglass does not expire while your account exists.
    The shop is **closed under 13**; minors have fixed monthly limits (13-15: 15 EUR, 16-17: 30 EUR); adults
-   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. The **Wayfarer Pass** is a store
+   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. Your age group comes from the age you give when you first
+   open the shop. Some offers also have a fixed limit per account or per week (for example "once per
+   account" or "up to 3 times a week"); the offer shows it. There are no daily limits. The **Wayfarer Pass** is a store
    subscription for one month that renews automatically for another month at the shown price until you
    cancel it. You can cancel at any time to the end of the current month in the subscription settings of
    Apple or Google, which also provide the legally required cancel button (section 312k German Civil Code);

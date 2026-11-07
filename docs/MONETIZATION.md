@@ -85,7 +85,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-115 Angebote (Katalog v27): 76 Vorteil, 32 Kosmetik, 7 Rissglas.
+115 Angebote (Katalog v28): 76 Vorteil, 32 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |

@@ -11,6 +11,7 @@
    "name_de": "100 Rissglas",
    "desc_en": "Exactly 100 Riftglass for the shop. No bonus, no chance.",
    "desc_de": "Genau 100 Rissglas für den Shop. Kein Bonus, kein Zufall.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -23,6 +24,7 @@
    "name_de": "200 Rissglas",
    "desc_en": "Exactly 200 Riftglass for the shop. No bonus, no chance.",
    "desc_de": "Genau 200 Rissglas für den Shop. Kein Bonus, kein Zufall.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -35,6 +37,7 @@
    "name_de": "500 Rissglas",
    "desc_en": "Exactly 500 Riftglass for the shop. No bonus, no chance.",
    "desc_de": "Genau 500 Rissglas für den Shop. Kein Bonus, kein Zufall.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -47,6 +50,7 @@
    "name_de": "1000 Rissglas",
    "desc_en": "Exactly 1000 Riftglass for the shop. No bonus, no chance.",
    "desc_de": "Genau 1000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -59,6 +63,7 @@
    "name_de": "2000 Rissglas",
    "desc_en": "Exactly 2000 Riftglass for the shop. No bonus, no chance.",
    "desc_de": "Genau 2000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -71,6 +76,7 @@
    "name_de": "5000 Rissglas",
    "desc_en": "Exactly 5000 Riftglass for the shop. No bonus, no chance.",
    "desc_de": "Genau 5000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -83,6 +89,7 @@
    "name_de": "10000 Rissglas",
    "desc_en": "Exactly 10000 Riftglass for the shop. No bonus, no chance.",
    "desc_de": "Genau 10000 Rissglas für den Shop. Kein Bonus, kein Zufall.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -95,6 +102,7 @@
    "name_de": "Ring-Trank",
    "desc_en": "A Spirling gains 1 Ring at once. Never above the Ring cap.",
    "desc_de": "Ein Spirling steigt sofort um 1 Ring. Nie über die Ring-Obergrenze.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -107,6 +115,7 @@
    "name_de": "Großer Ring-Trank",
    "desc_en": "A Spirling gains 5 Rings at once. Never above the Ring cap.",
    "desc_de": "Ein Spirling steigt sofort um 5 Ringe. Nie über die Ring-Obergrenze.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -119,6 +128,7 @@
    "name_de": "Ring-Elixier",
    "desc_en": "A Spirling rises to the current Ring cap.",
    "desc_de": "Ein Spirling steigt bis zur aktuellen Ring-Obergrenze.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -131,6 +141,7 @@
    "name_de": "Wachstumskristall",
    "desc_en": "Double growth for the whole team for the next 20 battles.",
    "desc_de": "Doppeltes Wachstum für das ganze Team in den nächsten 20 Kämpfen.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -143,6 +154,7 @@
    "name_de": "Großer Wachstumskristall",
    "desc_en": "Triple growth for the whole team for the next 20 battles.",
    "desc_de": "Dreifaches Wachstum für das ganze Team in den nächsten 20 Kämpfen.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -155,6 +167,7 @@
    "name_de": "Team-Wachstumsband",
    "desc_en": "Growth is shared evenly by all team members, also those who did not fight. Permanent.",
    "desc_de": "Das Wachstum verteilt sich gleichmäßig auf alle im Team, auch auf die, die nicht gekämpft haben. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -167,6 +180,7 @@
    "name_de": "Ring-Trank x5",
    "desc_en": "5 Ring Tonics. Each gives 1 Ring.",
    "desc_de": "5 Ring-Tränke. Jeder gibt 1 Ring.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -179,6 +193,7 @@
    "name_de": "Rissherz",
    "desc_en": "Held memento: +15% Might. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Wucht. Dauerhaft, 1 Stück.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -191,6 +206,7 @@
    "name_de": "Glasschild",
    "desc_en": "Held memento: +15% Guard. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Schutz. Dauerhaft, 1 Stück.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -203,6 +219,7 @@
    "name_de": "Klarsplitter",
    "desc_en": "Held memento: +15% Focus. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Fokus. Dauerhaft, 1 Stück.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -215,6 +232,7 @@
    "name_de": "Wirbelglas",
    "desc_en": "Held memento: +15% Speed and +5% Focus. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +15 % Tempo und +5 % Fokus. Dauerhaft, 1 Stück.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -227,6 +245,7 @@
    "name_de": "Kernglas",
    "desc_en": "Held memento: +12% Vigor. Permanent, 1 piece.",
    "desc_de": "Andenken zum Halten: +12 % Kraft. Dauerhaft, 1 Stück.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -239,6 +258,7 @@
    "name_de": "Ember-Prisma",
    "desc_en": "Held memento: +20% damage for Ember techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Ember-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -251,6 +271,7 @@
    "name_de": "Tide-Prisma",
    "desc_en": "Held memento: +20% damage for Tide techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Tide-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -263,6 +284,7 @@
    "name_de": "Bloom-Prisma",
    "desc_en": "Held memento: +20% damage for Bloom techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Bloom-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -275,6 +297,7 @@
    "name_de": "Volt-Prisma",
    "desc_en": "Held memento: +20% damage for Volt techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Volt-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -287,6 +310,7 @@
    "name_de": "Stone-Prisma",
    "desc_en": "Held memento: +20% damage for Stone techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Stone-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -299,6 +323,7 @@
    "name_de": "Gale-Prisma",
    "desc_en": "Held memento: +20% damage for Gale techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Gale-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -311,6 +336,7 @@
    "name_de": "Lumen-Prisma",
    "desc_en": "Held memento: +20% damage for Lumen techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Lumen-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -323,6 +349,7 @@
    "name_de": "Umbra-Prisma",
    "desc_en": "Held memento: +20% damage for Umbra techniques. Permanent.",
    "desc_de": "Andenken zum Halten: +20 % Schaden für Umbra-Techniken. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -335,6 +362,7 @@
    "name_de": "Haltestein",
    "desc_en": "Held memento: once per battle survives a hit from full Vigor with 1 Vigor.",
    "desc_de": "Andenken zum Halten: übersteht einmal pro Kampf einen Treffer bei voller Kraft mit 1 Kraft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -347,6 +375,7 @@
    "name_de": "Nachhallring",
    "desc_en": "Held memento: heals 1/10 of Vigor every round.",
    "desc_de": "Andenken zum Halten: heilt jede Runde 1/10 der Kraft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -359,6 +388,7 @@
    "name_de": "Rissschrift: Glutglas-Hieb",
    "desc_en": "Teaches Glowglass Slash (power 95, accuracy 100, 4 energy, 20% chance to scorch) to one Ember Spirling. Used up.",
    "desc_de": "Lehrt einem Ember-Spirling Glutglas-Hieb (Stärke 95, Genauigkeit 100, 4 Energie, 20 % Chance auf Brand). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -371,6 +401,7 @@
    "name_de": "Rissschrift: Flutglas-Welle",
    "desc_en": "Teaches Floodglass Wave (power 95, accuracy 100, 4 energy, 20% chance to soak) to one Tide Spirling. Used up.",
    "desc_de": "Lehrt einem Tide-Spirling Flutglas-Welle (Stärke 95, Genauigkeit 100, 4 Energie, 20 % Chance auf Nässe). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -383,6 +414,7 @@
    "name_de": "Rissschrift: Rankenglas-Stich",
    "desc_en": "Teaches Vineglass Sting (power 95, accuracy 100, 4 energy, heals 25% of the damage) to one Bloom Spirling. Used up.",
    "desc_de": "Lehrt einem Bloom-Spirling Rankenglas-Stich (Stärke 95, Genauigkeit 100, 4 Energie, heilt 25 % des Schadens). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -395,6 +427,7 @@
    "name_de": "Rissschrift: Blitzglas-Biss",
    "desc_en": "Teaches Boltglass Bite (power 95, accuracy 100, 4 energy, 30% chance to lower Pace) to one Volt Spirling. Used up.",
    "desc_de": "Lehrt einem Volt-Spirling Blitzglas-Biss (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, das Tempo zu senken). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -407,6 +440,7 @@
    "name_de": "Rissschrift: Felsglas-Stoß",
    "desc_en": "Teaches Rockglass Ram (power 95, accuracy 100, 4 energy, 30% chance to raise own Guard) to one Stone Spirling. Used up.",
    "desc_de": "Lehrt einem Stone-Spirling Felsglas-Stoß (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, den eigenen Schutz zu heben). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -419,6 +453,7 @@
    "name_de": "Rissschrift: Sturmglas-Schnitt",
    "desc_en": "Teaches Stormglass Cut (power 95, accuracy 100, 4 energy, strikes first) to one Gale Spirling. Used up.",
    "desc_de": "Lehrt einem Gale-Spirling Sturmglas-Schnitt (Stärke 95, Genauigkeit 100, 4 Energie, handelt zuerst). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -431,6 +466,7 @@
    "name_de": "Rissschrift: Lichtglas-Strahl",
    "desc_en": "Teaches Lightglass Beam (power 95, accuracy 100, 4 energy, cures the user's own condition) to one Lumen Spirling. Used up.",
    "desc_de": "Lehrt einem Lumen-Spirling Lichtglas-Strahl (Stärke 95, Genauigkeit 100, 4 Energie, heilt den eigenen Zustand). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -443,6 +479,7 @@
    "name_de": "Rissschrift: Schattenglas-Griff",
    "desc_en": "Teaches Duskglass Grip (power 95, accuracy 100, 4 energy, 30% chance to lower Focus) to one Umbra Spirling. Used up.",
    "desc_de": "Lehrt einem Umbra-Spirling Schattenglas-Griff (Stärke 95, Genauigkeit 100, 4 Energie, 30 % Chance, den Fokus zu senken). Wird verbraucht.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -455,6 +492,7 @@
    "name_de": "Technik-Gedächtnis",
    "desc_en": "Spirlings can relearn forgotten techniques at any time. Permanent for the account.",
    "desc_de": "Spirlings lernen vergessene Techniken jederzeit neu. Dauerhaft für das Konto.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -467,6 +505,7 @@
    "name_de": "Überladekern",
    "desc_en": "The whole team starts the next battle with 12 instead of 10 energy, maximum 12.",
    "desc_de": "Das ganze Team startet den nächsten Kampf mit 12 statt 10 Energie, Höchstenergie 12.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -479,6 +518,7 @@
    "name_de": "Überladekern x5",
    "desc_en": "5 Overcharge Cores.",
    "desc_de": "5 Überladekerne.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -491,6 +531,7 @@
    "name_de": "Rissatem",
    "desc_en": "In battle: revives a defeated Spirling with 50% Vigor. At most 1 per battle.",
    "desc_de": "Im Kampf: belebt einen besiegten Spirling mit 50 % Kraft. Höchstens 1 pro Kampf.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -503,6 +544,7 @@
    "name_de": "Großer Rissatem",
    "desc_en": "In battle: revives with 100% Vigor and full energy. At most 1 per battle.",
    "desc_de": "Im Kampf: belebt mit 100 % Kraft und voller Energie. Höchstens 1 pro Kampf.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -515,6 +557,7 @@
    "name_de": "Siegeswille",
    "desc_en": "If the whole team is defeated, the last one returns once with 30% Vigor. Not against Rift Wardens.",
    "desc_de": "Wird das ganze Team besiegt, kehrt der Letzte einmal mit 30 % Kraft zurück. Nicht gegen Rift-Wächter.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -527,6 +570,7 @@
    "name_de": "Glasfunke",
    "desc_en": "In battle: fills a Spirling's energy and adds 1 energy per round for 3 rounds.",
    "desc_de": "Im Kampf: füllt die Energie eines Spirlings und gibt 3 Runden lang 1 Energie pro Runde dazu.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -539,6 +583,7 @@
    "name_de": "Rissglas-Heiltrank",
    "desc_en": "In battle: heals 100% Vigor and all states. At most 2 per battle.",
    "desc_de": "Im Kampf: heilt 100 % Kraft und alle Zustände. Höchstens 2 pro Kampf.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -551,6 +596,7 @@
    "name_de": "Kampfvorrat",
    "desc_en": "5 Rift Breaths, 5 Overcharge Cores, 5 Glass Sparks. Single price 1500 Riftglass.",
    "desc_de": "5 Rissatem, 5 Überladekerne, 5 Glasfunken. Einzeln 1500 Rissglas.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -563,6 +609,7 @@
    "name_de": "Bondsiegel",
    "desc_en": "The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.",
    "desc_de": "Das nächste Bonden gelingt sicher. Nicht bei Rift-Wächtern und einmaligen Spirlings.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -575,6 +622,7 @@
    "name_de": "Echo-Duft",
    "desc_en": "Bonding gets clearly easier for one try.",
    "desc_de": "Bonden gelingt für einen Versuch deutlich leichter.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -587,6 +635,7 @@
    "name_de": "Echo-Duft x10",
    "desc_en": "10 Echo Scents. Single price 1000 Riftglass.",
    "desc_de": "10 Echo-Düfte. Einzeln 1000 Rissglas.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -599,6 +648,7 @@
    "name_de": "Sechster Team-Platz",
    "desc_en": "Your team holds 6 Spirlings instead of 5 in battles against the world. Permanent.",
    "desc_de": "Dein Team hat 6 statt 5 Plätze in Kämpfen gegen die Spielwelt. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -611,6 +661,7 @@
    "name_de": "Lager-Fach +1",
    "desc_en": "One more storage box with 30 places. At most 12 extra boxes.",
    "desc_de": "Ein Lager-Fach mehr mit 30 Plätzen. Höchstens 12 zusätzliche Fächer.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -621,8 +672,9 @@
    "eur": "4.99",
    "name_en": "Wayfarer Pass",
    "name_de": "Wanderer-Pass",
-   "desc_en": "+50% growth, 30 Riftglass every day, +1 starting energy, 1 free Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.",
-   "desc_de": "+50 % Wachstum, jeden Tag 30 Rissglas, +1 Startenergie, 1 freier Rissatem pro Wächterkampf, +1 Bond-Versuch pro Kampf. 4,99 € pro Monat, verlängert sich automatisch, jederzeit im Store kündbar.",
+   "desc_en": "+50% growth, 30 Riftglass every day, +1 starting energy, 1 extra Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.",
+   "desc_de": "+50 % Wachstum, jeden Tag 30 Rissglas, +1 Startenergie, 1 zusätzlicher Rissatem pro Wächterkampf, +1 Bond-Versuch pro Kampf. 4,99 € pro Monat, verlängert sich automatisch, jederzeit im Store kündbar.",
+   "family_shareable": false,
    "ready": false
   },
   {
@@ -635,6 +687,7 @@
    "name_de": "Starterpaket",
    "desc_en": "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Once per account.",
    "desc_de": "300 Rissglas, 5 Ring-Tränke, 1 Wachstumskristall, 3 Rissatem, 3 Echo-Düfte. Einmal pro Konto.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -647,6 +700,7 @@
    "name_de": "Wanderer-Paket",
    "desc_en": "1000 Riftglass, Riftheart, Glass Shield, 2 Great Ring Tonics, 1 Bond Seal. Once per account.",
    "desc_de": "1000 Rissglas, Rissherz, Glasschild, 2 Große Ring-Tränke, 1 Bondsiegel. Einmal pro Konto.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -659,6 +713,7 @@
    "name_de": "Riss-Paket 1",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 1 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 1. geschlossenen Riss.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -671,6 +726,7 @@
    "name_de": "Riss-Paket 2",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 2 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 2. geschlossenen Riss.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -683,6 +739,7 @@
    "name_de": "Riss-Paket 3",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 3 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 3. geschlossenen Riss.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -695,6 +752,7 @@
    "name_de": "Riss-Paket 4",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 4 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 4. geschlossenen Riss.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -707,6 +765,7 @@
    "name_de": "Riss-Paket 5",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 5 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 5. geschlossenen Riss.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -719,6 +778,7 @@
    "name_de": "Riss-Paket 6",
    "desc_en": "2 Great Ring Tonics, 1 Element Prism of your choice, 5 Rift Breaths. Once, after Rift 6 is sealed.",
    "desc_de": "2 Große Ring-Tränke, 1 Element-Prisma nach Wahl, 5 Rissatem. Einmal, nach dem 6. geschlossenen Riss.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -731,6 +791,7 @@
    "name_de": "Aufholpaket",
    "desc_en": "5 Great Ring Tonics and 1 Great Growth Crystal. Once per account, after 30 days away.",
    "desc_de": "5 Große Ring-Tränke und 1 Großer Wachstumskristall. Einmal pro Konto, nach 30 Tagen Pause.",
+   "family_shareable": false,
    "ready": false
   },
   {
@@ -743,6 +804,7 @@
    "name_de": "Funkenschmiede",
    "desc_en": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",
    "desc_de": "Setzt alle Funken-Werte eines Spirlings auf den Höchstwert 12. Zeigt vorher die neuen Werte.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -755,6 +817,7 @@
    "name_de": "Funkensplitter",
    "desc_en": "Raises one chosen value by 6 Sparks, up to 12.",
    "desc_de": "Erhöht einen gewählten Wert um 6 Funken, bis 12.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -767,6 +830,7 @@
    "name_de": "Wesenswandel",
    "desc_en": "Sets a Spirling's temperament to one you choose.",
    "desc_de": "Setzt die Wesensart eines Spirlings auf eine gewählte.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -779,6 +843,7 @@
    "name_de": "Fünf Funkensplitter",
    "desc_en": "5 Spark Shards. Single price 1000 Riftglass.",
    "desc_de": "5 Funkensplitter. Einzeln 1000 Rissglas.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -791,6 +856,7 @@
    "name_de": "Kraftkern",
    "desc_en": "Doubles the lean of one Spirling's temperament: +10% instead of +5% on its stat. Permanent.",
    "desc_de": "Verdoppelt die Neigung der Wesensart eines Spirlings: +10 % statt +5 % auf ihren Wert. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -803,6 +869,7 @@
    "name_de": "Glanzform-Prisma",
    "desc_en": "Turns one Spirling you choose into its Gleam form: +10% on all values and a Riftglass shimmer. At most 2 per week.",
    "desc_de": "Verwandelt einen gewählten Spirling in seine Glanzform: +10 % auf alle Werte und Rissglas-Schimmer. Höchstens 2 pro Woche.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -815,6 +882,7 @@
    "name_de": "Kampftempo x4",
    "desc_en": "Battle text and animations play four times as fast. Permanent.",
    "desc_de": "Kampftexte und Animationen laufen viermal so schnell. Dauerhaft.",
+   "family_shareable": false,
    "ready": false
   },
   {
@@ -827,6 +895,7 @@
    "name_de": "Auto-Kampf",
    "desc_en": "Your team fights wild Spirlings by itself. Not against Rift Wardens, story battles or in leagues. Permanent.",
    "desc_de": "Dein Team kämpft selbst gegen wilde Spirlings. Nicht gegen Rift-Wächter, in Story-Kämpfen und in Ligen. Dauerhaft.",
+   "family_shareable": false,
    "ready": false
   },
   {
@@ -839,6 +908,7 @@
    "name_de": "Münzglanz",
    "desc_en": "Double coins from battles for 20 battles.",
    "desc_de": "Doppelte Münzen aus Kämpfen für 20 Kämpfe.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -851,6 +921,7 @@
    "name_de": "Wegweiser",
    "desc_en": "Fast travel to every place you have visited, not only rest spots. Permanent.",
    "desc_de": "Schnellreise zu jedem besuchten Ort, nicht nur zu Rastplätzen. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -863,6 +934,7 @@
    "name_de": "Begegnungsruf",
    "desc_en": "Twice as many wild encounters for 30 steps.",
    "desc_de": "30 Schritte lang doppelt so viele wilde Begegnungen.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -875,6 +947,7 @@
    "name_de": "Kampf-Überspringer x10",
    "desc_en": "10 skips. A wild battle against a foe at least 10 Rings lower is won at once, with full growth.",
    "desc_de": "10 Stück. Ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger ist sofort gewonnen, mit vollem Wachstum.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -887,6 +960,7 @@
    "name_de": "Revanche-Schlüssel",
    "desc_en": "A beaten Wayfarer can be challenged again on the same day.",
    "desc_de": "Ein besiegter Wanderer kann am selben Tag erneut gefordert werden.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -899,6 +973,7 @@
    "name_de": "Wächterkunde",
    "desc_en": "Before a Rift Warden battle you see its team, techniques and gifts. Permanent. Only after one try without help.",
    "desc_de": "Vor einem Rift-Wächterkampf siehst du sein Team, seine Techniken und Gaben. Dauerhaft. Erst nach einem Versuch ohne Hilfe.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -911,6 +986,7 @@
    "name_de": "Rissanker",
    "desc_en": "After losing to a Warden, the next try starts right before it with a fully healed team.",
    "desc_de": "Nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor ihm mit geheiltem Team.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -923,6 +999,7 @@
    "name_de": "Wächterschwächer",
    "desc_en": "The Warden starts with 15% less Vigor. At most 1 per Warden battle, not in Rift-Born.",
    "desc_de": "Der Wächter startet mit 15 % weniger Kraft. Höchstens 1 pro Wächterkampf, nicht in Rift-Born.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -935,6 +1012,7 @@
    "name_de": "Wächter-Bündel",
    "desc_en": "Warden Lore, 3 Warden Weakeners and 5 Rift Anchors in one pack.",
    "desc_de": "Wächterkunde, 3 Wächterschwächer und 5 Rissanker in einem Paket.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -947,6 +1025,7 @@
    "name_de": "Liga-Kraftpaket",
    "desc_en": "5 Overcharge Cores Plus. They only work in the Open League.",
    "desc_de": "5 Überladekerne Plus. Sie wirken nur in der Offenen Liga.",
+   "family_shareable": false,
    "ready": false
   },
   {
@@ -959,6 +1038,7 @@
    "name_de": "Echo-Verstärker",
    "desc_en": "Your echo team fights with +10% values when a friend plays with shop bonuses. Permanent.",
    "desc_de": "Dein Echo-Team kämpft mit +10 % Werten, wenn ein Freund mit Shop-Vorteilen spielt. Dauerhaft.",
+   "family_shareable": false,
    "ready": false
   },
   {
@@ -971,6 +1051,7 @@
    "name_de": "Münzbeutel",
    "desc_en": "Exactly 5000 coins. At most 3 per week.",
    "desc_de": "Genau 5000 Münzen. Höchstens 3 pro Woche.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -983,6 +1064,7 @@
    "name_de": "Großer Münzbeutel",
    "desc_en": "Exactly 20000 coins. At most 1 per week.",
    "desc_de": "Genau 20000 Münzen. Höchstens 1 pro Woche.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -995,6 +1077,7 @@
    "name_de": "Händlerrabatt",
    "desc_en": "20% lower coin prices in all merchant shops. Permanent.",
    "desc_de": "20 % niedrigere Münzpreise in allen Händlerläden. Dauerhaft.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1007,6 +1090,7 @@
    "name_de": "Jacke Moos",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1019,6 +1103,7 @@
    "name_de": "Jacke Pflaume",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1031,6 +1116,7 @@
    "name_de": "Jacke Schiefer",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1043,6 +1129,7 @@
    "name_de": "Jacke Rost",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1055,6 +1142,7 @@
    "name_de": "Jacke Himmel",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1067,6 +1155,7 @@
    "name_de": "Jacke Sand",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1079,6 +1168,7 @@
    "name_de": "Jacke Tinte",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1091,6 +1181,7 @@
    "name_de": "Jacke Rose",
    "desc_en": "A new jacket colour for your Wayfarer. Only looks, no effect.",
    "desc_de": "Eine neue Jackenfarbe für deinen Wanderer. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1103,6 +1194,7 @@
    "name_de": "Hintergrund: Mondsee",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1115,6 +1207,7 @@
    "name_de": "Hintergrund: Kupferwald",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1127,6 +1220,7 @@
    "name_de": "Hintergrund: Nebelhafen",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1139,6 +1233,7 @@
    "name_de": "Hintergrund: Sternwiese",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1151,6 +1246,7 @@
    "name_de": "Hintergrund: Aschefeld",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1163,6 +1259,7 @@
    "name_de": "Hintergrund: Glasgrotte",
    "desc_en": "A battle backdrop. Only looks, no effect.",
    "desc_de": "Ein Kampf-Hintergrund. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1175,6 +1272,7 @@
    "name_de": "Textrahmen: Ranke",
    "desc_en": "A frame for the dialogue box. Only looks, no effect.",
    "desc_de": "Ein Rahmen für das Dialogfenster. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1187,6 +1285,7 @@
    "name_de": "Textrahmen: Messing",
    "desc_en": "A frame for the dialogue box. Only looks, no effect.",
    "desc_de": "Ein Rahmen für das Dialogfenster. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1199,6 +1298,7 @@
    "name_de": "Textrahmen: Welle",
    "desc_en": "A frame for the dialogue box. Only looks, no effect.",
    "desc_de": "Ein Rahmen für das Dialogfenster. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1211,6 +1311,7 @@
    "name_de": "Textrahmen: Laterne",
    "desc_en": "A frame for the dialogue box. Only looks, no effect.",
    "desc_de": "Ein Rahmen für das Dialogfenster. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1223,6 +1324,7 @@
    "name_de": "Textrahmen: Frost",
    "desc_en": "A frame for the dialogue box. Only looks, no effect.",
    "desc_de": "Ein Rahmen für das Dialogfenster. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1235,6 +1337,7 @@
    "name_de": "Hut: Breitkrempe",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1247,6 +1350,7 @@
    "name_de": "Hut: Wollmütze",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1259,6 +1363,7 @@
    "name_de": "Hut: Federhut",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1271,6 +1376,7 @@
    "name_de": "Hut: Laternenkapuze",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1283,6 +1389,7 @@
    "name_de": "Hut: Strohhut",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1295,6 +1402,7 @@
    "name_de": "Hut: Dreispitz",
    "desc_en": "A hat for your Wayfarer, in the world and in battle. Only looks, no effect.",
    "desc_de": "Ein Hut für deinen Wanderer, in der Welt und im Kampf. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1307,6 +1415,7 @@
    "name_de": "Profilrahmen: Blatt",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1319,6 +1428,7 @@
    "name_de": "Profilrahmen: Muschel",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1331,6 +1441,7 @@
    "name_de": "Profilrahmen: Zahnrad",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1343,6 +1454,7 @@
    "name_de": "Profilrahmen: Stern",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1355,6 +1467,7 @@
    "name_de": "Profilrahmen: Kreise",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1367,6 +1480,7 @@
    "name_de": "Profilrahmen: Glut",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
+   "family_shareable": false,
    "ready": true
   },
   {
@@ -1379,6 +1493,7 @@
    "name_de": "Grußkarten: 8 Motive",
    "desc_en": "Eight motifs for the card on your gifts to friends, as one set. Only looks, the gift stays the same.",
    "desc_de": "Acht Motive für die Karte an deinen Geschenken für Freunde, als ein Set. Nur Aussehen, das Geschenk bleibt gleich.",
+   "family_shareable": false,
    "ready": true
   }
  ]

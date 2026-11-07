@@ -206,8 +206,8 @@ T = {
 	"Ein Lager-Fach mehr mit 30 Plätzen. Höchstens 12 zusätzliche Fächer.",
 "Wayfarer Pass":
 	"Wanderer-Pass",
-"+50% growth, 30 Riftglass every day, +1 starting energy, 1 free Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.":
-	"+50 % Wachstum, jeden Tag 30 Rissglas, +1 Startenergie, 1 freier Rissatem pro Wächterkampf, +1 Bond-Versuch pro Kampf. 4,99 € pro Monat, verlängert sich automatisch, jederzeit im Store kündbar.",
+"+50% growth, 30 Riftglass every day, +1 starting energy, 1 extra Rift Breath per Warden battle, +1 bond try per battle. 4,99 EUR per month, renews automatically, cancel any time in the store.":
+	"+50 % Wachstum, jeden Tag 30 Rissglas, +1 Startenergie, 1 zusätzlicher Rissatem pro Wächterkampf, +1 Bond-Versuch pro Kampf. 4,99 € pro Monat, verlängert sich automatisch, jederzeit im Store kündbar.",
 "Starter Pack":
 	"Starterpaket",
 "300 Riftglass, 5 Ring Tonics, 1 Growth Crystal, 3 Rift Breaths, 3 Echo Scents. Once per account.":
@@ -596,8 +596,8 @@ T = {
 	"%d Rissglas jeden Tag (%d in 30 Tagen), verpasste Tage werden bis zu 7 Tage nachgezahlt",
 "+%d energy over the maximum in battles against the world (11 of 10)":
 	"+%d Energie über dem Maximum in Kämpfen gegen die Spielwelt (11 von 10)",
-"1 free Rift Breath in every Warden battle (only in that battle)":
-	"1 kostenloser Rissatem in jedem Wächterkampf (nur in diesem Kampf)",
+"1 extra Rift Breath in every Warden battle (only in that battle)":
+	"1 zusätzlicher Rissatem in jedem Wächterkampf (nur in diesem Kampf)",
 "1 extra bond try per battle: the first failed bond gives no free action":
 	"1 zusätzlicher Bond-Versuch pro Kampf: Der erste misslungene Bond gibt keine freie Aktion",
 "In echo duels only the growth works.": "In Echo-Duellen wirkt nur das Wachstum.",
@@ -727,4 +727,7 @@ T = {
 "Up to %d times a week per account.": "Bis zu %d-mal pro Woche und Konto.",
 "Once per account.": "Einmal pro Konto.",
 "Up to %d times per account.": "Bis zu %d-mal pro Konto.",
+"Restore purchases": "Käufe wiederherstellen",
+"Restored: %d purchases.": "Wiederhergestellt: %d Käufe.",
+"Nothing to restore. Bought unlocks and the pass are already here.": "Nichts wiederherzustellen. Gekaufte Freischaltungen und der Pass sind schon da.",
 }

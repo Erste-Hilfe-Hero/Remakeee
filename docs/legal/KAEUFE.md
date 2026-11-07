@@ -6,7 +6,7 @@ Der Shop im Spiel verlinkt hierher ("Hilfe zu Käufen", Punkt 4045).
 # Chimora: Hilfe zu Käufen
 
 Chimora ist kostenlos. Der Shop ist freiwillig. Manche Angebote geben Vorteile im Spiel, das steht beim
-Angebot mit einem **+**. Alles, was die Geschichte braucht, erreichst du ohne Kauf. In der Fairen Liga zählen
+Angebot mit einem **+**. Alles, was die Geschichte braucht, erreichst du ohne Kauf. In der Gleichstand-Liga zählen
 gekaufte Vorteile nicht.
 
 ## Rissglas
@@ -47,6 +47,7 @@ gutgeschriebenes Rissglas bleibt.
 - Erwachsene: 100 € im Monat. Du kannst das Limit jederzeit senken. Eine Erhöhung bis 300 € gilt erst nach
   7 Tagen.
 - Das Limit stellst du im Shop unter **Ausgabelimit** ein.
+- Manche Angebote gibt es nur einmal pro Konto oder ein paar Mal pro Woche. Das steht beim Angebot.
 - Eltern können Käufe zusätzlich im Store sperren oder freigeben lassen (Apple: Bildschirmzeit, Kaufanfrage;
   Google: Familienlink, Kaufgenehmigung).
 
@@ -114,6 +115,7 @@ received stays.
 - Ages 13 to 15: at most 15 EUR a month. Ages 16 to 17: at most 30 EUR a month.
 - Adults: 100 EUR a month. You can lower it at any time. Raising it up to 300 EUR takes effect after 7 days.
 - Set the limit in the shop under **Spending limit**.
+- Some offers can be bought only once per account or a few times a week. The offer says so.
 - Parents can also block or approve purchases in the store (Apple: Screen Time, Ask to Buy; Google: Family
   Link, purchase approval).
 
