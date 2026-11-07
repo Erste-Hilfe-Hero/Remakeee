@@ -146,7 +146,9 @@ func _ready() -> void:
 	_arrows.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_arrows.draw.connect(_draw_arrows)
 	add_child(_arrows)
-	_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void: _arrows.queue_redraw())
+	_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void:
+		scroll_shown = SCROLL_SHOW_TIME
+		_arrows.queue_redraw())
 	_scroll.get_v_scroll_bar().changed.connect(_arrows.queue_redraw)
 
 ## Puts Back in the top corner, or in one-hand mode at the bottom on the thumb's side
@@ -315,6 +317,10 @@ func move_focus(delta: int, wrap: bool = true) -> void:
 func _process(delta: float) -> void:
 	if visible:
 		_bob_pointer(delta)
+	if scroll_shown > 0.0:
+		scroll_shown = maxf(0.0, scroll_shown - delta)
+		if scroll_shown == 0.0:
+			_arrows.queue_redraw()
 	if not visible or last_device != "pad":
 		_hold_dir = 0
 		return
@@ -524,12 +530,32 @@ func _draw_back_arrow() -> void:
 	var c := Vector2(floorf(_back.size.x / 2.0), floorf(_back.size.y / 2.0))
 	_back.draw_colored_polygon(PackedVector2Array([c + Vector2(2, -4), c + Vector2(-2, 0.5), c + Vector2(2, 5)]), col)
 
+## A 1 px scroll indicator at the right edge shows while the list scrolls and goes 0.8 s
+## after it stops (item 2426).
+const SCROLL_SHOW_TIME: float = 0.8
+const SCROLL_MIN_PX: float = 3.0
+## Seconds the scroll indicator still shows.
+var scroll_shown: float = 0.0
+
+## Where the indicator sits in list area [param r] for a scroll bar at [param value] of
+## [param max_value] showing [param page]; an empty Rect2 when the whole list fits.
+static func indicator_rect(r: Rect2, value: float, page: float, max_value: float) -> Rect2:
+	if max_value <= 0.0 or page >= max_value:
+		return Rect2()
+	var h: float = maxf(SCROLL_MIN_PX, roundf(r.size.y * page / max_value))
+	var y: float = roundf(r.position.y + (r.size.y - h) * clampf(value / maxf(max_value - page, 1.0), 0.0, 1.0))
+	return Rect2(r.position.x + r.size.x - 1.0, y, 1.0, h)
+
 ## Small triangles at the top and bottom of the list when more rows are hidden there.
 func _draw_arrows() -> void:
 	if not visible or _scroll == null:
 		return
 	var bar: VScrollBar = _scroll.get_v_scroll_bar()
 	var r: Rect2 = Rect2(_scroll.global_position - _arrows.global_position, _scroll.size)
+	if scroll_shown > 0.0:
+		var ind: Rect2 = indicator_rect(r, bar.value, bar.page, bar.max_value)
+		if ind.size.y > 0.0:
+			_arrows.draw_rect(ind, UITheme.MID)
 	var x: float = floorf(r.position.x + r.size.x - 5)
 	var col: Color = UITheme.INK
 	if bar.value > 0.5:
