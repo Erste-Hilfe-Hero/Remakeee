@@ -431,7 +431,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4400. [P1] (P2W) Shop-Andenken sind dauerhafte Nicht-Verbrauchsgüter je Stück; ein Kauf gibt genau 1 Stück, das einem Spirling angelegt wird.
 4401. [P1] (P2W) Shop-Andenken sind stärker als die Münz-Andenken (`swift_feather` +15 % Tempo bleibt, Shop-Wirbelglas bekommt zusätzlich +5 % Fokus), und die Werte stehen in `docs/BALANCE.md`.
 4402. [x] [P1] (P2W) Acht Element-Prismen anlegen (Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra), je +20 % Schaden für Techniken des Elements, je 600 Rissglas.
-4403. [P1] (P2W) Das Andenken "Haltestein" (`rg_hold_stone`) anlegen: übersteht einmal pro Kampf einen Treffer, der bei voller Kraft besiegt hätte, mit 1 Kraft, Preis 1000 Rissglas.
+4403. [x] [P1] (P2W) Das Andenken "Haltestein" (`rg_hold_stone`) anlegen: übersteht einmal pro Kampf einen Treffer, der bei voller Kraft besiegt hätte, mit 1 Kraft, Preis 1000 Rissglas.
 4404. [x] [P1] (P2W) Das Andenken "Nachhallring" (`rg_echo_ring`) anlegen: heilt jede Runde 1/10 der Kraft, stärker als `bark_wrap` (1/12), Preis 1000 Rissglas.
 4405. [P2] (P2W) Das Andenken "Funkenspeicher" (`rg_spark_store`) anlegen: +1 Energie pro Runde und +1 Höchstenergie, Preis 1200 Rissglas.
 4406. [P2] (P2W) Das Andenken "Spiegelglas" (`rg_mirror_glass`) anlegen: wirft 20 % des erlittenen Schadens aus Wucht-Techniken zurück, Preis 1000 Rissglas.
@@ -487,7 +487,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4454. [P1] (P2W) Die Shop-Techniken mit eigenen Effekt-Skripten über `effect_id` anlegen, ohne Sonderfall in `BattleModel`.
 4455. [P1] (P2W) Shop-Techniken in der Gleichstand-Liga durch die Echo-Kristall-Technik des gleichen Elements ersetzen und das in der Gegnervorschau anzeigen.
 4456. [x] [P1] (P2W) Shop-Techniken nie in der Gegner-KI für Wanderer und Wächter nutzen.
-4457. [P1] (P2W) Ein "Technik-Gedächtnis" (`rg_move_memory`) anlegen, mit dem ein Spirling vergessene Techniken jederzeit neu lernt, dauerhaft pro Konto, Preis 600 Rissglas.
+4457. [x] [P1] (P2W) Ein "Technik-Gedächtnis" (`rg_move_memory`) anlegen, mit dem ein Spirling vergessene Techniken jederzeit neu lernt, dauerhaft pro Konto, Preis 600 Rissglas.
 4458. [x] [P2] (P2W) Jede Shop-Technik hat eine kleine Zusatzwirkung: Glutglas-Hieb 20 % Brand, Flutglas-Welle 20 % Nässe, Rankenglas-Stich heilt 25 % des Schadens.
 4459. [x] [P2] (P2W) Weitere Zusatzwirkungen: Blitzglas-Biss senkt Tempo um 1 Stufe zu 30 %, Felsglas-Stoß hebt Schutz des Anwenders zu 30 %, Sturmglas-Schnitt handelt mit Vorrang +1.
 4460. [x] [P2] (P2W) Weitere Zusatzwirkungen: Lichtglas-Strahl heilt Zustände des Anwenders, Schattenglas-Griff senkt Fokus des Gegners um 1 Stufe zu 30 %.

@@ -335,7 +335,7 @@
    "name_de": "Haltestein",
    "desc_en": "Held memento: once per battle survives a hit from full Vigor with 1 Vigor.",
    "desc_de": "Andenken zum Halten: übersteht einmal pro Kampf einen Treffer bei voller Kraft mit 1 Kraft.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.echo_ring",
@@ -455,7 +455,7 @@
    "name_de": "Technik-Gedächtnis",
    "desc_en": "Spirlings can relearn forgotten techniques at any time. Permanent for the account.",
    "desc_de": "Spirlings lernen vergessene Techniken jederzeit neu. Dauerhaft für das Konto.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.overcharge",

@@ -519,6 +519,40 @@ func test_gleam_prism_adds_ten_percent_and_saves() -> void:
 	assert_eq([str(limit.get("per")), int(limit.get("n", 0))], ["week", 2])
 	GameState.inventory = inv
 
+func test_hold_stone_endures_one_full_hit_per_battle() -> void:
+	var mine: Array[Spirling] = [BattleFixtures.make("Kindlop", 10)]
+	mine[0].held = "rg_hold_stone"
+	var m := BattleFixtures.model(mine, [BattleFixtures.make("Zephlet", 10)] as Array[Spirling])
+	var s: Spirling = mine[0]
+	var big: int = s.max_hp() * 3
+	m.deal_damage(BattleModel.Side.PLAYER, big)
+	assert_eq(s.hp, 1, "a full-Vigor knockout leaves 1 Vigor")
+	s.hp = s.max_hp()
+	m.deal_damage(BattleModel.Side.PLAYER, big)
+	assert_eq(s.hp, 0, "only once per battle")
+	var plain: Array[Spirling] = [BattleFixtures.make("Kindlop", 10)]
+	var m2 := BattleFixtures.model(plain, [BattleFixtures.make("Zephlet", 10)] as Array[Spirling])
+	plain[0].held = "rg_hold_stone"
+	plain[0].hp -= 1
+	m2.deal_damage(BattleModel.Side.PLAYER, big)
+	assert_eq(plain[0].hp, 0, "not from below full Vigor")
+
+func test_move_memory_relearns_forgotten_arts() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 30)
+	var names: Array[String] = GameState.relearnable(s)
+	Billing.state = {"unlocks": {}}
+	if names.is_empty():
+		s.moves.remove_at(0)
+		names = GameState.relearnable(s)
+	assert_false(names.is_empty())
+	assert_false(GameState.relearn(s, names[0], 0), "needs the unlock")
+	Billing.state = {"unlocks": {"move_memory": 1}}
+	assert_true(GameState.relearn(s, names[0], 0))
+	assert_true(s.moves.any(func(mv: MoveData) -> bool: return mv.move_name == names[0]))
+	assert_false(names[0] in GameState.relearnable(s))
+	assert_false(GameState.relearn(s, "No Such Art", 0))
+	Billing.state = {}
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

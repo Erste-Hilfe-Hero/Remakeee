@@ -1066,6 +1066,29 @@ func learn_from_item(s: Spirling, item_id: String, forget: int = -1) -> bool:
 		take_item(item_id)
 	return true
 
+## Move Memory (shop item 4457): arts [param s] could know at its Ring but does not.
+static func relearnable(s: Spirling) -> Array[String]:
+	var out: Array[String] = []
+	for name: String in LeagueRules.learnable(s.data, s.level):
+		if not s.moves.any(func(m: MoveData) -> bool: return m.move_name == name):
+			out.append(name)
+	return out
+
+## Relearns [param move_name] with the Move Memory unlock, in place of [param forget] when full.
+func relearn(s: Spirling, move_name: String, forget: int = -1) -> bool:
+	if Billing.unlocked("move_memory") <= 0 or not move_name in relearnable(s):
+		return false
+	var mv: MoveData = Database.move(move_name)
+	if mv == null:
+		return false
+	if s.moves.size() < Spirling.MAX_MOVES:
+		s.moves.append(mv)
+	elif forget >= 0 and forget < s.moves.size():
+		s.moves[forget] = mv
+	else:
+		return false
+	return true
+
 ## True if [param s] can learn the move an Echo Crystal holds (same element, not known yet).
 static func can_learn_echo(s: Spirling, item_id: String) -> bool:
 	var mv: MoveData = Database.move(str(Database.item(item_id).get("teaches", "")))

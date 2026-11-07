@@ -530,7 +530,13 @@ func run_team() -> void:
 			await tip("unfurl")
 		if s.earlier_form() != null:
 			opts.append("Furl back")
+		# Move Memory (shop item 4457).
+		if Billing.unlocked("move_memory") > 0:
+			opts.append("Relearn an art")
 		var opt: int = await pick_strings(s.display_name(), opts)
+		if opt >= 0 and opts[opt] == "Relearn an art":
+			await _relearn(s)
+			continue
 		if opt >= 5:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
@@ -769,6 +775,30 @@ func _teach_echo(id: String) -> void:
 		return
 	Sound.sfx("level_up")
 	await info("%s learned %s!" % [s.display_name(), mv.move_name])
+
+## Move Memory (item 4457): any art the Spirling could know at its Ring, at any time.
+func _relearn(s: Spirling) -> void:
+	var names: Array[String] = GameState.relearnable(s)
+	if names.is_empty():
+		await info(Loc.t("%s knows every art it can learn right now.") % s.display_name())
+		return
+	var shown: Array[String] = []
+	for n: String in names:
+		shown.append(Loc.t(n))
+	var pick: int = await pick_strings(Loc.t("Relearn which art for %s?") % s.display_name(), shown)
+	if pick < 0:
+		return
+	var forget: int = -1
+	if s.moves.size() >= Spirling.MAX_MOVES:
+		var known: Array[String] = []
+		for m: MoveData in s.moves:
+			known.append(Loc.t(m.move_name))
+		forget = await pick_strings(Loc.t("Forget which art for %s?") % shown[pick], known)
+		if forget < 0:
+			return
+	if GameState.relearn(s, names[pick], forget):
+		Sound.sfx("level_up")
+		await info(Loc.t("%s learned %s!") % [s.display_name(), shown[pick]])
 
 ## Temper Shift (item 4743): pick a Spirling, then the temperament it gets.
 func _use_temper_shift(id: String) -> void:

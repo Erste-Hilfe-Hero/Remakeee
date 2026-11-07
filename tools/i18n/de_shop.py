@@ -677,4 +677,10 @@ T = {
 "Turn %s into its Gleam form? +10%% on all values, for good.": "%s in die Glanzform verwandeln? +10 %% auf alle Werte, dauerhaft.",
 "Gleam": "Glanzform",
 "%s gleams with Riftglass light!": "%s glänzt im Rissglas-Licht!",
+"Hold Stone": "Haltestein",
+"Held memento: once per battle, a hit that would knock the holder out from full Vigor leaves it with 1 Vigor. Permanent.": "Getragenes Andenken: Einmal pro Kampf lässt ein Treffer, der den Träger bei voller Kraft besiegen würde, ihm 1 Kraft. Dauerhaft.",
+"%s holds on with its Hold Stone!": "%s hält dank seines Haltesteins durch!",
+"Relearn an art": "Technik neu lernen",
+"%s knows every art it can learn right now.": "%s kennt schon jede Technik, die es gerade lernen kann.",
+"Relearn which art for %s?": "Welche Technik soll %s neu lernen?",
 }
