@@ -4,7 +4,9 @@
  "strings": {
   "%d Spirlings are back from their trips. Aldo has them at the lighthouse.": "%d Spirlings sind von ihren Streifzügen zurück. Aldo wartet mit ihnen im Leuchtturm.",
   "%d coins": "%d Münzen",
+  "%d h %02d min": "%d Std. %02d Min.",
   "%d h: %d coins, %d Waymarks, %s": "%d Std.: %d Münzen, %d Wegmarken, %s",
+  "%d min": "%d Min.",
   "%d of %d rounds": "%d von %d Runden",
   "%d places not visited yet": "%d Orte noch nicht besucht",
   "%s   %d coins   %s": "%s   %d Münzen   %s",
@@ -574,6 +576,7 @@
   "You pick a handful of berries and brew a tonic.": "Du pflückst eine Handvoll Beeren und braust daraus ein Tonikum.",
   "Your own team. Next week everyone gets the same loan team.": "Dein eigenes Team. Nächste Woche bekommen alle dasselbe Leihteam.",
   "Your team rests. Go on?": "Dein Team ruht sich aus. Weiter?",
+  "Your time: %s. Best this week: %s.": "Deine Zeit: %s. Beste Zeit diese Woche: %s.",
   "Your waymark pouch is full (%d). %d Waymarks were lost.": "Dein Wegmarken-Beutel ist voll (%d). %d Wegmarken sind verfallen.",
   "active": "aktiv",
   "broken": "gebrochen",
