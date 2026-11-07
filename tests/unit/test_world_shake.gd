@@ -20,6 +20,10 @@ func test_camera_root_shakes_offset_not_position() -> void:
 	cam.position = Vector2(100, 50)
 	add_child_autofree(cam)
 	Juice.set_shake_root(cam, "offset")
+	# Fixed noise and no element shape: other tests leave both changed.
+	var seed_was: int = Juice._noise.seed
+	Juice._noise.seed = 2261
+	Juice.shake_element = -1
 	var moved: bool = false
 	# The noise phase decides when the pixel peaks fall; try a few starts.
 	for start: int in 10:
@@ -31,6 +35,7 @@ func test_camera_root_shakes_offset_not_position() -> void:
 			if cam.offset != Vector2.ZERO:
 				moved = true
 		assert_eq(cam.offset, Vector2.ZERO, "back to rest when the trauma is gone")
+	Juice._noise.seed = seed_was
 	assert_eq(cam.position, Vector2(100, 50), "the camera keeps following")
 	assert_true(moved, "the offset shakes")
 

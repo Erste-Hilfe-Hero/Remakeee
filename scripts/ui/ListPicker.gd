@@ -119,6 +119,7 @@ func _ready() -> void:
 	_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	# A calm tap never counts as a swipe (item 1785).
 	_scroll.scroll_deadzone = int(TAP_SLOP)
+	_scroll.gui_input.connect(_overscroll_input)
 	root.add_child(_scroll)
 	_box = VBoxContainer.new()
 	_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -534,6 +535,45 @@ func _draw_back_arrow() -> void:
 	var col: Color = _back.get_theme_color("font_color", "Button")
 	var c := Vector2(floorf(_back.size.x / 2.0), floorf(_back.size.y / 2.0))
 	_back.draw_colored_polygon(PackedVector2Array([c + Vector2(2, -4), c + Vector2(-2, 0.5), c + Vector2(2, 5)]), col)
+
+## Pushing a list past its end springs it 4 px over and back with "settle" (item 2425).
+const OVERSCROLL_PX: float = 4.0
+const OVERSCROLL_OUT_TIME: float = 0.05
+var _bouncing: bool = false
+
+## -1 for a push past the top, 1 past the bottom, 0 while the list can still scroll that way.
+## [param push] is the way the player scrolls (1 down, -1 up).
+static func overscroll_dir(value: float, page: float, max_value: float, push: int) -> int:
+	if push > 0 and value + page >= max_value - 0.5:
+		return 1
+	if push < 0 and value <= 0.5:
+		return -1
+	return 0
+
+func _overscroll_input(ev: InputEvent) -> void:
+	# A finger dragging on past the end (taps stay with TapInput).
+	var push: int = 0
+	var drag := ev as InputEventScreenDrag
+	if drag != null and absf(drag.relative.y) >= 1.0:
+		push = 1 if drag.relative.y < 0.0 else -1
+	if push == 0:
+		return
+	var bar: VScrollBar = _scroll.get_v_scroll_bar()
+	var d: int = overscroll_dir(bar.value, bar.page, bar.max_value, push)
+	if d != 0:
+		bounce(d)
+
+## Springs the list [param dir] times OVERSCROLL_PX over (down for -1, up for 1) and back.
+## Awaitable; nothing under reduced motion or while a bounce runs.
+func bounce(dir: int) -> void:
+	if _bouncing or Juice.reduced() or _scroll == null:
+		return
+	_bouncing = true
+	var home: Vector2 = _scroll.position
+	await Juice.tween(_scroll, "position", home + Vector2(0, -dir * OVERSCROLL_PX), "impact", OVERSCROLL_OUT_TIME).finished
+	if is_instance_valid(_scroll):
+		await Juice.tween(_scroll, "position", home, "settle").finished
+	_bouncing = false
 
 ## A 1 px scroll indicator at the right edge shows while the list scrolls and goes 0.8 s
 ## after it stops (item 2426).
