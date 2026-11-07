@@ -51,7 +51,14 @@ const CAPTIONS: Dictionary[String, String] = {
 	"rumble": "[A deep rumble]",
 }
 const FADE_TIME: float = 0.4
-const SFX_VOICES: int = 6
+## Ten voices; when all are busy the least important sound gives way (item 2551).
+const SFX_VOICES: int = 10
+## Priority per kind of sound: menus 1, the world 2, battle 3 (cries and the Echo marks too).
+const PRIO_UI: int = 1
+const PRIO_WORLD: int = 2
+const PRIO_BATTLE: int = 3
+const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run"]
+const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_"]
 ## Same effect within this many seconds is skipped (menus scroll fast).
 const SFX_MIN_GAP: float = 0.03
 
@@ -60,6 +67,8 @@ var _music: AudioStreamPlayer
 var _music_out: AudioStreamPlayer
 var _voices: Array[AudioStreamPlayer] = []
 var _next_voice: int = 0
+## Priority of what each voice plays now.
+var _voice_prio: Array[int] = []
 var _cache: Dictionary[String, AudioStream] = {}
 var _last_play: Dictionary[String, float] = {}
 var _map_music: Dictionary = {}
@@ -87,6 +96,9 @@ func _ready() -> void:
 	_ambience_out = _player(GameState.BUS_AMBIENCE)
 	for i: int in SFX_VOICES:
 		_voices.append(_player(GameState.BUS_SFX))
+		_voice_prio.append(0)
+	if enabled:
+		preload_sfx()
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(MAP_MUSIC)) if FileAccess.file_exists(MAP_MUSIC) else null
 	_map_music = raw if raw is Dictionary else {}
 
@@ -144,7 +156,7 @@ func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void
 	if now - float(_last_play.get(sound_name, -1.0)) < gap_for(sound_name):
 		return
 	_last_play[sound_name] = now
-	_play_voice(stream, bus_for(sound_name), volume_db, varied_pitch(sound_name, pitch))
+	_play_voice(stream, bus_for(sound_name), volume_db, varied_pitch(sound_name, pitch), priority_of(sound_name))
 
 ## Bus for an effect: menu sounds on UI, the text blip on Voice, everything else on SFX.
 static func bus_for(sound_name: String) -> StringName:
@@ -154,9 +166,53 @@ static func bus_for(sound_name: String) -> StringName:
 		return GameState.BUS_VOICE
 	return GameState.BUS_SFX
 
-func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volume_db: float = 0.0, pitch: float = 1.0) -> void:
-	var p: AudioStreamPlayer = _voices[_next_voice]
-	_next_voice = (_next_voice + 1) % _voices.size()
+## Priority of effect [param sound_name] (item 2551).
+static func priority_of(sound_name: String) -> int:
+	if sound_name in UI_SOUNDS or sound_name == "blip":
+		return PRIO_UI
+	if sound_name in BATTLE_SOUNDS:
+		return PRIO_BATTLE
+	for p: String in BATTLE_PREFIXES:
+		if sound_name.begins_with(p):
+			return PRIO_BATTLE
+	return PRIO_WORLD
+
+## Voice for a new sound of priority [param prio], or -1 to drop it: a free voice from
+## [param start] on, else the busy voice with the lowest priority not above [param prio]
+## (the first one from [param start] among equals).
+static func pick_voice(busy: Array[bool], prios: Array[int], prio: int, start: int) -> int:
+	var n: int = busy.size()
+	for k: int in n:
+		var i: int = (start + k) % n
+		if not busy[i]:
+			return i
+	var best: int = -1
+	for k: int in n:
+		var i: int = (start + k) % n
+		if prios[i] <= prio and (best < 0 or prios[i] < prios[best]):
+			best = i
+	return best
+
+## Loads every effect up front (well under 2 MB), so the first hit in a battle does not
+## stall on a disk read (item 2557). Returns how many were loaded.
+func preload_sfx() -> int:
+	var count: int = 0
+	for f: String in ResourceLoader.list_directory(SFX_DIR.get_base_dir()):
+		if f.get_extension() == "wav":
+			if _load(SFX_DIR % f.get_basename()) != null:
+				count += 1
+	return count
+
+func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volume_db: float = 0.0, pitch: float = 1.0, prio: int = PRIO_WORLD) -> void:
+	var busy: Array[bool] = []
+	for v: AudioStreamPlayer in _voices:
+		busy.append(v.playing)
+	var i: int = pick_voice(busy, _voice_prio, prio, _next_voice)
+	if i < 0:
+		return
+	_next_voice = (i + 1) % _voices.size()
+	_voice_prio[i] = prio
+	var p: AudioStreamPlayer = _voices[i]
 	p.stream = stream
 	p.bus = bus
 	p.volume_db = volume_db
@@ -166,7 +222,7 @@ func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volum
 ## Plays the cry of [param sd] (item 70).
 func cry(sd: SpirlingData) -> void:
 	if enabled and sd != null:
-		_play_voice(Cry.stream_for(sd), GameState.BUS_VOICE)
+		_play_voice(Cry.stream_for(sd), GameState.BUS_VOICE, 0.0, 1.0, PRIO_BATTLE)
 
 ## Shows the caption for [param sound_name] when sound captions are on (item 2653).
 func caption(sound_name: String) -> void:
@@ -299,7 +355,7 @@ static func mark_note(element: int, mark: int) -> int:
 func mark_tone(element: int, mark: int, muted: bool = false) -> void:
 	if enabled:
 		var voice: Array = Cry.ELEMENT_VOICE[clampi(element, 0, Cry.ELEMENT_VOICE.size() - 1)]
-		_play_voice(Cry.tone(mark_note(element, mark), float(voice[0]), 0.12 if muted else 0.3))
+		_play_voice(Cry.tone(mark_note(element, mark), float(voice[0]), 0.12 if muted else 0.3), GameState.BUS_SFX, 0.0, 1.0, PRIO_BATTLE)
 
 ## Sound effect name for a hit by a move of [param element] (Elements.E), "hit" if unknown.
 static func element_hit_name(element: int) -> String:
