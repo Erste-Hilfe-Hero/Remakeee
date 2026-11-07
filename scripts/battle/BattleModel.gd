@@ -1077,7 +1077,7 @@ func _do_move(a: BattleAction) -> void:
 		var react: Dictionary = BattleRules.reaction(mv, target)
 		if not react.is_empty():
 			var rd: Dictionary = _who(target_side, t_slot)
-			rd.merge({"text": str(react.text), "element": mv.element})
+			rd.merge({"text": str(react.text), "element": mv.element, "status": str(react.status)})
 			emit_event(BattleEvent.Type.REACTION, rd)
 		if mv.is_damaging():
 			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.data.trait_id).has("phys_taken"):
