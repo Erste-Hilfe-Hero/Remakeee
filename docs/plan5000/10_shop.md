@@ -311,7 +311,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4288. [P2] Gekaufte Kosmetik in `entitlements` speichern und beim Laden des Spielstands nur anzeigen, was der Server bestätigt.
 4289. [P2] Kosmetik-Teile als Nicht-Verbrauchsgüter im Store anlegen, damit sie über "Käufe wiederherstellen" zurückkommen.
 4290. [P2] Eigene Pixelkunst für alle Kosmetik in `art/shop/cosmetics/` anlegen und mit `tools/ip_check.sh` auf fremde Formen prüfen.
-4291. [P2] Jedes Kosmetik-Teil in der Vorschau des Shops zeigen, bevor es gekauft wird.
+4291. [x] [P2] Jedes Kosmetik-Teil in der Vorschau des Shops zeigen, bevor es gekauft wird.
 4292. [P2] Kosmetik-Sets anbieten (Jacke, Hut, Rahmen im gleichen Stil) für 400 Rissglas statt 500 einzeln, mit ehrlichem Einzelpreis daneben.
 4293. [P3] Kosmetik ist in der Gleichstand-Liga sichtbar, weil sie keinen Vorteil gibt, und wird beim Gegner im Kampfbild gezeigt.
 4294. [P3] Ein Spirlog-Einbandmotiv als Kosmetik anbieten: 4 Motive je 200 Rissglas.

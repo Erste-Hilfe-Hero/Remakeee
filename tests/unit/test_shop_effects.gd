@@ -681,6 +681,20 @@ func test_wardrobe_lists_owned_looks_and_marks_the_worn_ones() -> void:
 	GameState.hat_look = hat
 	GameState.gift_card = gift
 
+func test_shop_previews_show_looks_before_buying() -> void:
+	for id: String in ["rg_jacket_moss", "rg_hat_tricorn", "rg_frame_vine"]:
+		var tex: Texture2D = await ShopPreview.picture(ShopCatalog.offer(id))
+		assert_not_null(tex, "picture for %s" % id)
+		if tex != null:
+			assert_gt(tex.get_width(), 30)
+	assert_null(await ShopPreview.picture(ShopCatalog.offer("rg_ring_tonic")), "no picture for an item")
+	assert_string_contains(ShopPreview.preview_text(ShopCatalog.offer("rg_card_frame_star")), "+")
+	assert_string_contains(ShopPreview.preview_text(ShopCatalog.offer("rg_gift_cards")), FriendsMenu.GIFT_CARDS["moth"])
+	assert_eq(ShopPreview.preview_text(ShopCatalog.offer("rg_ring_tonic")), "")
+	var hat_img: Image = (await ShopPreview.picture(ShopCatalog.offer("rg_hat_straw_hat"))).get_image()
+	var plain: Image = (await ShopPreview.picture(ShopCatalog.offer("rg_hat_tricorn"))).get_image()
+	assert_ne(hat_img.get_data(), plain.get_data(), "hats look different")
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
