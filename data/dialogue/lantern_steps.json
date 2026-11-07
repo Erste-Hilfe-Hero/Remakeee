@@ -33,5 +33,11 @@
  ],
  "isa_defeat": [
   "Isa: It's yours."
- ]
+ ],
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 8"
+ }
 }

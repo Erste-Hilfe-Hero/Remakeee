@@ -211,8 +211,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1081. [x] [P1] Ersetze die bisherigen Fund-Schilder (reed_find, gallery_find, nook_find) durch Einträge im Feld "secrets" und behalte die Flags für alte Spielstände.
 1082. [x] [P1] Gib jeder neuen Route einen Geheimgang hinter einer verdächtig glatten Felswand, der beim Ansehen mit A öffnet.
 1083. [x] [P1] Ergänze WorldValidator.gd so, dass jeder Fund erreichbar ist und keine zwei Funde dieselbe Flag teilen.
-1084. [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
-1085. [P2] Gib für 4, 8 und 12 gefundene Kartografensteine je ein Andenken.
+1084. [x] [P2] Lege 12 "Waymarker Stones" (de: Kartografensteine) in Veydal an, alte Steine mit einem Symbol, die beim Ansehen gezählt werden.
+1085. [x] [P2] Gib für 4, 8 und 12 gefundene Kartografensteine je ein Andenken.
 1086. [P2] Verstecke 8 "Lost Sketches" (de: verlorene Skizzen), die jeweils eine Ecke der Weltkarte mit einem geheimen Ort zeigen.
 1087. [P2] Lass jede verlorene Skizze genau einen versteckten Ort freischalten, der vorher nicht auf der Weltkarte stand.
 1088. [P2] Baue an fünf Stellen Grabhügel, an denen man nur mit dem Pausstift eine Inschrift liest, die auf einen vergrabenen Fund in der Nähe zeigt.

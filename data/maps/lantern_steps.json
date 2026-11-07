@@ -8,7 +8,7 @@
  "rows": [
   "@@@@@__@@@@@",
   "@:...__...:@",
-  "@.L..__..L.@",
+  "@SL..__..L.@",
   "@^^^^^=^^^v@",
   "@:..._____.@",
   "@.L.:_..L..@",
@@ -142,6 +142,11 @@
    "x": 1,
    "y": 15,
    "dialogue": "lantern_steps/smooth"
+  },
+  {
+   "x": 1,
+   "y": 2,
+   "dialogue": "lantern_steps/marker_stone"
   }
  ],
  "blocks": [

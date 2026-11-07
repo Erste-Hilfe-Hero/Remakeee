@@ -1,6 +1,9 @@
 # German texts for area 3 (world, maps, exploring). Written to data/i18n/de/ by tools/i18n/build.py.
 # Kept apart from de_world.py so the world thread can add maps without clashing with story edits.
 T = {
+# Cartographer's stones (items 1084, 1085)
+"You trace the mark with your finger. Cartographer's stones found: %d/%d": "Du fährst das Zeichen mit dem Finger nach. Kartografensteine gefunden: %d/%d",
+"Tucked behind the stone lies a keepsake: %s.": "Hinter dem Stein steckt ein Andenken: %s.",
 # Cave campfires (item 992)
 "You sit by the fire for a while. Your journey is saved.": "Du sitzt eine Weile am Feuer. Deine Reise ist gespeichert.",
 "The fire smokes. Saving did not work this time.": "Das Feuer qualmt. Speichern hat diesmal nicht geklappt.",

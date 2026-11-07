@@ -10,7 +10,7 @@
   "T,,,__,,,..T",
   "T,,,____...T",
   "T^^^^^^^=^^T",
-  "T*..,,,,_..T",
+  "TS..,,,,_..T",
   "T.S.,,,,_.@T",
   "T________..T",
   "T_^^^^^^^^^T",
@@ -153,6 +153,11 @@
    "y": 14,
    "dialogue": "story/find_2",
    "hide_flag": "page_2"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "fernstair/marker_stone"
   }
  ],
  "gear_spots": [

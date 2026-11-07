@@ -37,5 +37,11 @@
  "sablecove_sign": [
   "SABLECOVE",
   "Inside: Wading Boots. The inner chamber opens at low tide."
- ]
+ ],
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 11"
+ }
 }

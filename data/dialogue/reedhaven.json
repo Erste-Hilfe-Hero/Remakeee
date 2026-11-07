@@ -76,5 +76,11 @@
     "Fishwife Hanne: Folk buy fish again without sniffing it twice. The Rift scared them off the lake."
    ]
   }
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 5"
  }
 }

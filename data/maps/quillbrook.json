@@ -15,7 +15,7 @@
   "T..T..~~,,TT",
   "T,,,,.~~..,T",
   "T^^^^.~~^^^T",
-  "T,,,..~~.,,T",
+  "T,,,..~~S,,T",
   "T,,,.,~~,,,T",
   "T....,~~,,,T",
   "TTT,..~~.,,T",
@@ -174,6 +174,11 @@
    "x": 2,
    "y": 12,
    "dialogue": "quillbrook/smooth"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "dialogue": "quillbrook/marker_stone"
   }
  ],
  "blocks": [
