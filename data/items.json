@@ -363,6 +363,16 @@
   ]
  },
  {
+  "id": "rubbing_charcoal",
+  "name": "Rubbing Charcoal",
+  "description": "Wayfarer Gear. A stick of charcoal and a roll of thin paper: face a weathered stone and press A to take a rubbing and read its worn inscription.",
+  "battle": false,
+  "gear": true,
+  "works_on": [
+   "rubbing"
+  ]
+ },
+ {
   "id": "pry_bar",
   "name": "Pry Bar",
   "description": "Wayfarer Gear. Face a sluice wheel, a mine cart or a grate and press A to turn, shove or lift it.",

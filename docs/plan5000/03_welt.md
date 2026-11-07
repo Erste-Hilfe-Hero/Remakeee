@@ -176,7 +176,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1048. [x] [P1] Ergänze tests/unit/test_gear.gd so, dass keine Ausrüstung den Spieler über Wasser oder Lücken ohne Bodenkontakt bewegt und keine Animation "fly", "glide" oder "ride" heißt.
 1049. [x] [P1] Ändere die Animation des Enterhakens in Overworld.gd so, dass die Figur sich Hand über Hand an einem gespannten Seil entlang zieht, die Füße am Seil, nie frei in der Luft.
 1050. [x] [P1] Gib jeder Ausrüstung im Rucksack eine Seite mit Bild, Kurztext und den Kachelzeichen, an denen sie wirkt.
-1051. [P2] Füge die Ausrüstung "Rubbing Charcoal" (de: Pausstift) hinzu, mit der man verwitterte Steintafeln durchpaust und versteckte Inschriften als Hinweis lesbar macht.
+1051. [x] [P2] Füge die Ausrüstung "Rubbing Charcoal" (de: Pausstift) hinzu, mit der man verwitterte Steintafeln durchpaust und versteckte Inschriften als Hinweis lesbar macht.
 1052. [x] [P2] Füge die Ausrüstung "Survey Glass" (de: Peilglas) hinzu, die beim Ansehen in eine Richtung bis 6 Kacheln entfernte Funde als Punkt auf der Minikarte zeigt.
 1053. [x] [P2] Gib dem Peilglas eine Abklingzeit von 20 Sekunden, damit es kein Dauer-Radar wird.
 1054. [P2] Baue in Copperfold eine Werkstatt, die die Laterne auf Stufe 2 (Radius 3 Kacheln) und Stufe 3 (Radius 4 Kacheln) verbessert.
@@ -215,7 +215,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1085. [x] [P2] Gib für 4, 8 und 12 gefundene Kartografensteine je ein Andenken.
 1086. [P2] Verstecke 8 "Lost Sketches" (de: verlorene Skizzen), die jeweils eine Ecke der Weltkarte mit einem geheimen Ort zeigen.
 1087. [P2] Lass jede verlorene Skizze genau einen versteckten Ort freischalten, der vorher nicht auf der Weltkarte stand.
-1088. [P2] Baue an fünf Stellen Grabhügel, an denen man nur mit dem Pausstift eine Inschrift liest, die auf einen vergrabenen Fund in der Nähe zeigt.
+1088. [x] [P2] Baue an fünf Stellen Grabhügel, an denen man nur mit dem Pausstift eine Inschrift liest, die auf einen vergrabenen Fund in der Nähe zeigt.
 1089. [P2] Lege vergrabene Funde an, die man an einer Stelle mit lockerem Boden durch Ansehen mit A ausgräbt, ohne Spirling-Hilfe.
 1090. [P2] Gib jedem Dungeon einen versteckten Raum, der auf der Raumzählung nicht erscheint.
 1091. [x] [P2] Lass Funde in Schilf und Farn bei Wetter Wind sichtbarer werden (Glitzern alle 2 Sekunden).

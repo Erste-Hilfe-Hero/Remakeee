@@ -78,6 +78,7 @@ func _ready() -> void:
 		"bench": _action_bench,
 		"lake_bench": _action_lake_bench,
 		"tide_stone": _action_tide_stone,
+		"rubbing": _action_rubbing,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
@@ -954,6 +955,25 @@ func _action_bench(_args: PackedStringArray, _speaker: NPC) -> void:
 ## clock; the stone tells the current tide and the next low tide.
 func _action_tide_stone(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(TideChart.stone_lines())
+
+## Gear that reads weathered stones (area 3 item 1051).
+const RUBBING_ITEM := "rubbing_charcoal"
+
+## "rubbing <file/key>": a weathered stone on a burial mound (item 1088). With the Rubbing
+## Charcoal the worn inscription comes back and points to a hidden find nearby.
+func _action_rubbing(args: PackedStringArray, _speaker: NPC) -> void:
+	if GameState.has_gear(RUBBING_ITEM):
+		Sound.sfx("confirm")
+	await say(rubbing_lines(args[0] if args.size() > 0 else ""))
+
+## What a weathered stone shows: the inscription with the charcoal, else a hint at it.
+static func rubbing_lines(key: String) -> Array[String]:
+	if not GameState.has_gear(RUBBING_ITEM):
+		return ["The letters are too worn to read. A charcoal rubbing might bring them back."] as Array[String]
+	var out: Array[String] = ["You lay paper on the stone and rub the charcoal over it. Letters appear:"]
+	if Dialogue.exists(key):
+		out.append_array(Dialogue.lines_for(Dialogue.get_entry(key), GameState.flags))
+	return out
 
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0

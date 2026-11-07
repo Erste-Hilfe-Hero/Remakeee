@@ -34,5 +34,14 @@
  ],
  "ivo_defeat": [
   "Ivo: Good. You'll do up there."
+ ],
+ "mound_stone": {
+  "lines": [
+   "An old burial mound. A weathered stone stands on it, its letters worn almost away."
+  ],
+  "action": "rubbing stillwater/mound_words"
+ },
+ "mound_words": [
+  "\"Stand at my foot, take one step west, then two toward the north. The walker's gift lies there.\""
  ]
 }
