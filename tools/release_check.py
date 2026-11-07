@@ -21,7 +21,7 @@ from PIL import Image
 
 LANGS = ["de-DE", "en-US"]
 # Store texts in all 14 game languages (docs/I18N.md): (Google Play folder, App Store folder).
-# Screenshots and graphics exist for LANGS; the other listings use the default language's images.
+# Every language has its own screenshots and graphics too (tools/store/make_store_images.py).
 TEXT_LANGS = [("de-DE", "de-DE"), ("en-US", "en-US"), ("fr-FR", "fr-FR"), ("es-ES", "es-ES"), ("it-IT", "it"),
               ("pt-BR", "pt-BR"), ("nl-NL", "nl-NL"), ("pl-PL", "pl"), ("tr-TR", "tr"), ("ru-RU", "ru"),
               ("ja-JP", "ja"), ("ko-KR", "ko"), ("zh-CN", "zh-Hans"), ("zh-TW", "zh-Hant")]
@@ -67,7 +67,7 @@ def check_texts() -> None:
 
 
 def check_images() -> None:
-    for lang in LANGS:
+    for lang, ios_lang in TEXT_LANGS:
         for pattern, size in IMAGES.items():
             p = pattern.format(l=lang)
             if not os.path.exists(p) or Image.open(p).size != size:
@@ -79,12 +79,14 @@ def check_images() -> None:
             w, h = Image.open(p).size
             if not (320 <= min(w, h) and max(w, h) <= 3840 and max(w, h) <= 2 * min(w, h)):
                 errors.append(p + " has a size Google Play does not accept")
-        ios = sorted(glob.glob("store/ios/screenshots/%s/*_iphone69.png" % lang))
+        ios = sorted(glob.glob("store/ios/screenshots/%s/*_iphone69.png" % ios_lang))
         if not ios:
-            errors.append("App Store needs 6.9\" iPhone screenshots for " + lang)
+            errors.append("App Store needs 6.9\" iPhone screenshots for " + ios_lang)
         for p in ios:
             if Image.open(p).size not in ((1320, 2868), (1290, 2796)):
                 errors.append(p + " must be 1320x2868 or 1290x2796")
+    if not os.path.exists("store/ios/iap_review.png") or min(Image.open("store/ios/iap_review.png").size) < 640:
+        errors.append("store/ios/iap_review.png (App Review picture of the shop) missing or smaller than 640 px")
     for p, size in ICONS.items():
         if not os.path.exists(p) or Image.open(p).size != size:
             errors.append("%s must be %dx%d" % (p, *size))

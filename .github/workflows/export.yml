@@ -367,6 +367,8 @@ jobs:
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           CHIMORA_SERVER: ${{ secrets.CHIMORA_SERVER || 'https://chimora.161-97-102-171.sslip.io' }}
         run: tools/online/write_config.sh --require
+      - name: StoreKit 2 plugin (App Store purchases)
+        run: tools/build_storekit_plugin.sh
       - name: Export IPA
         env:
           IOS_TEAM_ID: ${{ secrets.IOS_TEAM_ID }}

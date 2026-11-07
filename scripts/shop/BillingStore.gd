@@ -14,6 +14,10 @@ func store_name() -> String:
 func is_ready() -> bool:
 	return false
 
+## Connects to the store (Google Play, App Store). Safe to call again after a drop.
+func connect_store() -> bool:
+	return is_ready()
+
 ## Store prices for [param product_ids]: {product_id: "2,99 €"}. Only these texts are shown as
 ## prices (item 4095), never prices from data/shop.json.
 func query(_product_ids: Array[String]) -> Dictionary:

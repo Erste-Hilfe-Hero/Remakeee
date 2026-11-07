@@ -13,9 +13,15 @@ Everything the two store consoles ask for, in the folder layout of fastlane (`su
 | `ios/metadata/<lang>/*.txt` | Name, subtitle, description, keywords, promotional text, URLs, release notes |
 | `ios/screenshots/<lang>/N_iphone69.png` | 1320 x 2868 (6.9" iPhone, the one size Apple requires; smaller iPhones are scaled from it) |
 | `ios/review_information/notes.txt` | Notes for App Review |
+| `ios/iap_review.png` | 720 x 1280 picture of the shop, App Review needs one for every in-app purchase |
+| `products.json` | In-app products for both stores |
 
-Languages: `de-DE` and `en-US`. The app is iPhone-only (`targeted_device_family=0`), so no iPad
-screenshots are needed.
+Languages: all 14 of the game (Play folders like `ja-JP`, App Store folders like `ja`, pairs in
+`tools/release_check.py` TEXT_LANGS), each with its own texts and screenshots. The app is
+iPhone-only (`targeted_device_family=0`), so no iPad screenshots are needed.
+
+Upload: Google Play by `play_store.mjs`, App Store Connect by `app_store.mjs` and `iap.mjs` in the
+lifekit workflow `chimora-store.yml` (commits `run:chimora-store-play`, `run:chimora-store-asc+iap`).
 
 Rebuild the images after the art or the UI changes: see the top of `tools/store/make_store_images.py`.
 Rules for every text and image: no other game's or brand's names, no comparisons (docs/IP_HYGIENE.md,
