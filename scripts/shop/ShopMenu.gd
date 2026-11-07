@@ -152,7 +152,7 @@ static func detail_text(o: Dictionary) -> String:
 	return "\n".join(lines)
 
 static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
-	# An owned jacket or backdrop is worn or taken off here (items 4277, 4281).
+	# An owned jacket, backdrop or text frame is worn or taken off here (items 4277, 4281).
 	var key: String = look_key(o)
 	if not key.is_empty() and Billing.unlocked(key) > 0:
 		await _run_wear(menu, o, key)
@@ -207,17 +207,24 @@ static func jacket_key(o: Dictionary) -> String:
 		return ""
 	return str(g[0].get("id", ""))
 
-## The unlock key of a look that can be worn now: a jacket or a battle backdrop ("" otherwise).
+## The unlock key of a look that can be worn now: a jacket, battle backdrop or text frame ("" otherwise).
 static func look_key(o: Dictionary) -> String:
 	var j: String = jacket_key(o)
 	if not j.is_empty():
 		return j
 	var g: Array = o.get("grants", [])
-	if str(o.get("tab", "")) == "looks" and g.size() == 1 and g[0] is Dictionary and str(g[0].get("id", "")).begins_with("backdrop_"):
+	if str(o.get("tab", "")) == "looks" and g.size() == 1 and g[0] is Dictionary and (str(g[0].get("id", "")).begins_with("backdrop_") or str(g[0].get("id", "")).begins_with("frame_")):
 		return str(g[0].id)
 	return ""
 
 static func _run_wear(menu: MenuHost, o: Dictionary, key: String) -> void:
+	if key.begins_with("frame_"):
+		var on: bool = GameState.text_frame == key
+		if await menu.pick_strings(Loc.t(str(o.name)) + "  " + Loc.t("(yours)"), [("Stop using it" if on else "Use for text")] as Array[String]) != 0:
+			return
+		GameState.text_frame = "" if on else key
+		await menu.info(Loc.t("Text shows in the plain box again.") if on else Loc.t("Text now shows in %s.") % Loc.t(str(o.name)))
+		return
 	var backdrop: bool = key.begins_with("backdrop_")
 	var wearing: bool = (GameState.backdrop_look if backdrop else GameState.jacket) == key
 	var opt: String

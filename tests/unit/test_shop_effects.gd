@@ -588,6 +588,24 @@ func test_shop_backdrops_show_only_while_owned() -> void:
 	Billing.state = {}
 	GameState.backdrop_look = worn
 
+func test_shop_text_frames_show_only_while_owned() -> void:
+	var worn: String = GameState.text_frame
+	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_frame_vine")), "frame_vine")
+	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_card_frame_leaf")), "")
+	GameState.text_frame = "frame_vine"
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.dialogue_frame(), "")
+	Billing.state = {"unlocks": {"frame_vine": 1}}
+	assert_eq(GameState.dialogue_frame(), "vine")
+	for k: String in UITheme.TEXT_FRAMES:
+		assert_false(ShopCatalog.look_offer("frame_" + k).is_empty(), "offer for %s" % k)
+		var sb: StyleBox = UITheme.text_frame_style(k)
+		assert_true(sb is StyleBoxTexture, "style for %s" % k)
+		assert_eq(sb.get_content_margin(SIDE_LEFT), UITheme.panel_style().get_content_margin(SIDE_LEFT))
+	assert_ne(UITheme.text_frame_style("vine"), UITheme.text_frame_style("brass"))
+	Billing.state = {}
+	GameState.text_frame = worn
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
