@@ -36,6 +36,7 @@ T = {
 "Next high tide: %02d:00 to %02d:00.": "Nächste Flut: %02d:00 bis %02d:00 Uhr.",
 "Next low tide: %02d:00 to %02d:00.": "Nächste Ebbe: %02d:00 bis %02d:00 Uhr.",
 "Sea caves open their inner chambers at low tide.": "Meereshöhlen öffnen ihre inneren Kammern bei Ebbe.",
+"The inner chamber is open.": "Die innere Kammer ist offen.",
 # Gear page in the satchel
 "Works on: %s": "Wirkt bei: %s",
 "Always on foot: you walk, wade and climb yourself.": "Immer zu Fuß: du gehst, watest und kletterst selbst.",

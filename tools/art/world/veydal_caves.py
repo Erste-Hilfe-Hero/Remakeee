@@ -160,16 +160,21 @@ def sablecove(world):
             "@.%%..@....@",
             "@.....@@@@@@",
             "@~~...~~~..@",
-            "@~~.....~..@",
+            "@~~S....~..@",
             "@@@@@__@@@@@"]
     check_rows(mid, rows)
     world.add_text(mid, {"tide": lines(("Sea water stands in the gap. At low tide it runs out.",
-                                        "Im Spalt steht Meerwasser. Bei Ebbe läuft es ab."))})
+                                        "Im Spalt steht Meerwasser. Bei Ebbe läuft es ab.")),
+                         # Item 985: the tide stone at the entrance shows the next low tide.
+                         "tide_stone": {"lines": lines(("A tide stone. Lines and hours are scratched into it by many hands.",
+                                                        "Ein Gezeitenstein. Viele Hände haben Striche und Stunden hineingeritzt.")),
+                                        "action": "tide_stone"}})
     m = {"name": tr("Sablecove", "Zobelbucht"), "region": "veydal", "biome": "cave", "backdrop": "lake",
          "field": "deep_murk", "encounters": mid, "rows": rows,
          "warps": [warp(5, 8, "brackwater_fen", 10, 16, "left"), warp(6, 8, "brackwater_fen", 10, 16, "left")],
          # Item 979: the inner chamber (right) opens at low tide only. Closed, the gap is water.
          "blocks": [{"x": 6, "y": 3, "open_flag": "_low_tide", "closed": "~"}],
+         "signs": [{"x": 3, "y": 7, "dialogue": mid + "/tide_stone"}],
          "secrets": [secret(10, 1, "max_tonic", "find_sable_inner"), secret(1, 1, "spark_drop", "find_sable_shelf")]}
     world.add_map(mid, m)
     entrance(world, "brackwater_fen", (11, 16), (10, 15), mid, (5, 7), "up",

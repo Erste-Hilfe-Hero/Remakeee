@@ -77,6 +77,7 @@ func _ready() -> void:
 		"camp": _action_camp,
 		"bench": _action_bench,
 		"lake_bench": _action_lake_bench,
+		"tide_stone": _action_tide_stone,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
@@ -948,6 +949,11 @@ func _action_bench(_args: PackedStringArray, _speaker: NPC) -> void:
 	refresh_daylight()
 	_spawn_npcs()
 	_world.refresh(player.cell)
+
+## The tide stone at Sablecove (area 3 item 985): tides turn every six hours by the device
+## clock; the stone tells the current tide and the next low tide.
+func _action_tide_stone(_args: PackedStringArray, _speaker: NPC) -> void:
+	await say(TideChart.stone_lines())
 
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0

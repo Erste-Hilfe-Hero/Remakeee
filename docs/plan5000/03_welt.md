@@ -106,7 +106,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 982. [x] [P1] Zeige in jeder Höhle am Eingang, welche Ausrüstung drinnen gebraucht wird, als Symbol auf dem Schild.
 983. [x] [P1] Gib jeder Höhle mit mehr als einer Ebene einen kurzen Rückweg (Leiter oder Seil) vom tiefsten Punkt zum Eingang, der erst von innen öffnet.
 984. [P2] Lege in Mossmere Grotto Tropfsteine an, die man mit der Hebelstange abbricht, um eine Brücke über einen Bach zu schlagen.
-985. [P2] Lass in Sablecove die Gezeiten nach Gerätezeit alle sechs Stunden wechseln und zeige die nächste Ebbe auf einem Gezeitenstein am Eingang.
+985. [x] [P2] Lass in Sablecove die Gezeiten nach Gerätezeit alle sechs Stunden wechseln und zeige die nächste Ebbe auf einem Gezeitenstein am Eingang.
 986. [P2] Lege in Echo Gallery Hall-Felder an, in denen ein Glockenschlag einen versteckten Gang als Umriss für 5 Sekunden zeigt.
 987. [P2] Gib Kindle Vents drei Schlotreihen mit verschiedenem Takt (3, 4, 5 Sekunden), die man nacheinander durchquert.
 988. [P2] Baue die Höhle "Hollowmere Geode" (de: Hohlseedruse) auf einer Seeinsel, voller Kristalle, die das Laternenlicht weiterwerfen.
