@@ -1,0 +1,1068 @@
+{
+ "_comment": "Plan area 8 event data. daily_tasks: kinds for DailyTasks.gd (event = what counts, n = how many, optional map / element / wild filters, distinct = different maps (or people for talk) only). Every task must be doable in 15 minutes. festivals: the yearly festivals (elements as Elements.E names, shop = ribbon prices at the festival trader, gifts = the crier's gift, one per year in turn). festival_tasks: the crier's task of the day during a festival (only ones that match the festival's elements are drawn).",
+ "daily_tasks": [
+  {
+   "id": "win_3",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "text": "Win 3 battles"
+  },
+  {
+   "id": "wild_5",
+   "kind": "battle",
+   "event": "win",
+   "n": 5,
+   "wild": true,
+   "text": "Beat 5 wild Spirlings"
+  },
+  {
+   "id": "win_fernstair",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "fernstair",
+   "text": "Win 3 battles in Fernstair"
+  },
+  {
+   "id": "win_crowcrest",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "crowcrest",
+   "text": "Win 3 battles in Crowcrest"
+  },
+  {
+   "id": "win_saltmarsh",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "saltmarsh",
+   "text": "Win 3 battles in Saltmarsh"
+  },
+  {
+   "id": "win_murk_hollow",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "murk_hollow",
+   "text": "Win 3 battles in Murk Hollow"
+  },
+  {
+   "id": "win_cinder_rift",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "cinder_rift",
+   "text": "Win 3 battles in Cinder Rift"
+  },
+  {
+   "id": "win_tide_rift",
+   "kind": "battle",
+   "event": "win",
+   "n": 3,
+   "map": "tide_rift",
+   "text": "Win 3 battles in Tidewater Rift"
+  },
+  {
+   "id": "beat_ember",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "EMBER",
+   "text": "Beat 2 wild Ember Spirlings"
+  },
+  {
+   "id": "beat_tide",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "TIDE",
+   "text": "Beat 2 wild Tide Spirlings"
+  },
+  {
+   "id": "beat_bloom",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "BLOOM",
+   "text": "Beat 2 wild Bloom Spirlings"
+  },
+  {
+   "id": "beat_volt",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "VOLT",
+   "text": "Beat 2 wild Volt Spirlings"
+  },
+  {
+   "id": "beat_stone",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "STONE",
+   "text": "Beat 2 wild Stone Spirlings"
+  },
+  {
+   "id": "beat_gale",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "GALE",
+   "text": "Beat 2 wild Gale Spirlings"
+  },
+  {
+   "id": "beat_lumen",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "LUMEN",
+   "text": "Beat 2 wild Lumen Spirlings"
+  },
+  {
+   "id": "beat_umbra",
+   "kind": "battle",
+   "event": "win",
+   "n": 2,
+   "wild": true,
+   "element": "UMBRA",
+   "text": "Beat 2 wild Umbra Spirlings"
+  },
+  {
+   "id": "bond_any",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "text": "Bond with a wild Spirling"
+  },
+  {
+   "id": "bond_ember",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "EMBER",
+   "text": "Bond with an Ember Spirling"
+  },
+  {
+   "id": "bond_tide",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "TIDE",
+   "text": "Bond with a Tide Spirling"
+  },
+  {
+   "id": "bond_bloom",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "BLOOM",
+   "text": "Bond with a Bloom Spirling"
+  },
+  {
+   "id": "bond_volt",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "VOLT",
+   "text": "Bond with a Volt Spirling"
+  },
+  {
+   "id": "bond_stone",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "STONE",
+   "text": "Bond with a Stone Spirling"
+  },
+  {
+   "id": "bond_gale",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "GALE",
+   "text": "Bond with a Gale Spirling"
+  },
+  {
+   "id": "bond_lumen",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "LUMEN",
+   "text": "Bond with a Lumen Spirling"
+  },
+  {
+   "id": "bond_umbra",
+   "kind": "collect",
+   "event": "bond",
+   "n": 1,
+   "element": "UMBRA",
+   "text": "Bond with an Umbra Spirling"
+  },
+  {
+   "id": "rest_2",
+   "kind": "explore",
+   "event": "rest",
+   "n": 2,
+   "distinct": true,
+   "text": "Rest at 2 Rest Springs"
+  },
+  {
+   "id": "visit_3",
+   "kind": "explore",
+   "event": "visit",
+   "n": 3,
+   "distinct": true,
+   "text": "Visit 3 different places"
+  },
+  {
+   "id": "steps_300",
+   "kind": "explore",
+   "event": "step",
+   "n": 300,
+   "text": "Walk 300 steps"
+  },
+  {
+   "id": "photo",
+   "kind": "explore",
+   "event": "photo",
+   "n": 1,
+   "text": "Take a photo in photo mode"
+  },
+  {
+   "id": "visit_thornridge",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "thornridge",
+   "text": "Visit Thornridge"
+  },
+  {
+   "id": "visit_saltmarsh",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "saltmarsh",
+   "text": "Visit Saltmarsh"
+  },
+  {
+   "id": "visit_crowcrest",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "crowcrest",
+   "text": "Visit Crowcrest"
+  },
+  {
+   "id": "visit_murk_hollow",
+   "kind": "explore",
+   "event": "visit",
+   "n": 1,
+   "map": "murk_hollow",
+   "text": "Visit Murk Hollow"
+  },
+  {
+   "id": "talk_3",
+   "kind": "explore",
+   "event": "talk",
+   "n": 3,
+   "distinct": true,
+   "text": "Talk to 3 different people"
+  },
+  {
+   "id": "steps_600",
+   "kind": "explore",
+   "event": "step",
+   "n": 600,
+   "text": "Walk 600 steps"
+  },
+  {
+   "id": "send_trip",
+   "kind": "explore",
+   "event": "trip",
+   "n": 1,
+   "text": "Send a Spirling on a roaming trip"
+  },
+  {
+   "id": "photo_night",
+   "kind": "explore",
+   "event": "photo",
+   "night": true,
+   "n": 1,
+   "text": "Take a photo at night"
+  },
+  {
+   "id": "melody_good",
+   "kind": "bond",
+   "event": "melody",
+   "n": 1,
+   "text": "Answer with the Echo melody: Good or better"
+  },
+  {
+   "id": "see_new",
+   "kind": "explore",
+   "event": "discover",
+   "n": 1,
+   "text": "See a Spirling you have not seen yet"
+  },
+  {
+   "id": "meet_daily_find",
+   "kind": "explore",
+   "event": "daily_find",
+   "n": 1,
+   "text": "Meet today's rare visitor"
+  },
+  {
+   "id": "hard_win_10",
+   "kind": "battle",
+   "event": "win",
+   "n": 10,
+   "hard": true,
+   "text": "Win 10 battles"
+  },
+  {
+   "id": "hard_wild_15",
+   "kind": "battle",
+   "event": "win",
+   "n": 15,
+   "wild": true,
+   "hard": true,
+   "text": "Beat 15 wild Spirlings"
+  },
+  {
+   "id": "hard_steps_2500",
+   "kind": "explore",
+   "event": "step",
+   "n": 2500,
+   "hard": true,
+   "text": "Walk 2500 steps"
+  },
+  {
+   "id": "hard_bond_2",
+   "kind": "bond",
+   "event": "bond",
+   "n": 2,
+   "hard": true,
+   "text": "Bond with 2 Spirlings"
+  },
+  {
+   "id": "hard_rest_3",
+   "kind": "explore",
+   "event": "rest",
+   "n": 3,
+   "distinct": true,
+   "hard": true,
+   "text": "Rest at 3 different Rest Springs"
+  }
+ ],
+ "loan_teams": [
+  {
+   "id": "loan_01",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glimmerax",
+     "moves": [
+      "Glint",
+      "Prism Ray",
+      "Storm Gnash",
+      "Overcharge"
+     ]
+    },
+    {
+     "species": "Lanternel",
+     "moves": [
+      "Glint",
+      "Updraft",
+      "Prism Ray",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Floursprite",
+     "moves": [
+      "Breeze Slice",
+      "Drift Step",
+      "Wick Flicker",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_02",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Lumenewt",
+     "moves": [
+      "Starlit Lash",
+      "Prism Ray",
+      "Still Thought",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Reedwarden",
+     "moves": [
+      "Puffcap Haze",
+      "Fizz Pop",
+      "Kelp Lash",
+      "Salt Snap"
+     ]
+    },
+    {
+     "species": "Fenwarden",
+     "moves": [
+      "Mirk Nip",
+      "Murk Veil",
+      "Kelp Lash",
+      "Night Siphon"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_03",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glasstarn",
+     "moves": [
+      "Spindrift Shot",
+      "Prism Ray",
+      "Still Thought",
+      "Tide Call"
+     ]
+    },
+    {
+     "species": "Siltgrove",
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down",
+      "Tunnel Strike",
+      "Cinder Nip"
+     ]
+    },
+    {
+     "species": "Saltcrown",
+     "moves": [
+      "Drench",
+      "Wick Flicker",
+      "Salt Snap",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_04",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Saltspire",
+     "moves": [
+      "Salt Snap",
+      "Tunnel Strike",
+      "Hunker Down",
+      "Breaker Plunge"
+     ]
+    },
+    {
+     "species": "Burinox",
+     "moves": [
+      "Murk Veil",
+      "Pebble Toss",
+      "Night Siphon",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Velahra",
+     "moves": [
+      "Glint",
+      "Fizz Pop",
+      "Candle Ward",
+      "Spindrift Shot"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_05",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Delthorn",
+     "moves": [
+      "Fizz Pop",
+      "Drench",
+      "Salt Snap",
+      "Mirk Nip"
+     ]
+    },
+    {
+     "species": "Smeltmaw",
+     "moves": [
+      "Heat Haze",
+      "Pebble Toss",
+      "Cinder Breath",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Tempestrel",
+     "moves": [
+      "Updraft",
+      "Crackle Bite",
+      "Gale Scythe",
+      "Squall Line"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_06",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glassfell",
+     "moves": [
+      "Cinder Nip",
+      "Heat Haze",
+      "Cinder Breath",
+      "Grit Jab"
+     ]
+    },
+    {
+     "species": "Zenithare",
+     "moves": [
+      "Breeze Slice",
+      "Drift Step",
+      "Pebble Toss",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Ferrowyn",
+     "moves": [
+      "Salt Snap",
+      "Drift Step",
+      "Undertow",
+      "Gale Scythe"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_07",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Cullhorn",
+     "moves": [
+      "Hunker Down",
+      "Wick Flicker",
+      "Tunnel Strike",
+      "Dawn Mend"
+     ]
+    },
+    {
+     "species": "Obsidroth",
+     "moves": [
+      "Gloom Ripple",
+      "Tremor Thud",
+      "All-In Crash",
+      "Landslip"
+     ]
+    },
+    {
+     "species": "Frondmere",
+     "moves": [
+      "Puffcap Haze",
+      "Thorn Volley",
+      "Sap Draw",
+      "Bloom Call"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_08",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Dunebastion",
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down",
+      "Tunnel Strike",
+      "Cinder Nip"
+     ]
+    },
+    {
+     "species": "Duskdigger",
+     "moves": [
+      "Tremor Thud",
+      "Gloom Handoff",
+      "All-In Crash",
+      "Murk Veil"
+     ]
+    },
+    {
+     "species": "Cogwright",
+     "moves": [
+      "Hunker Down",
+      "Crackle Bite",
+      "Tunnel Strike",
+      "Spark Call"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_09",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glimmerax",
+     "moves": [
+      "Glint",
+      "Prism Ray",
+      "Storm Gnash",
+      "Overcharge"
+     ]
+    },
+    {
+     "species": "Lanternel",
+     "moves": [
+      "Glint",
+      "Updraft",
+      "Prism Ray",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Floursprite",
+     "moves": [
+      "Breeze Slice",
+      "Drift Step",
+      "Wick Flicker",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_10",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Lumenewt",
+     "moves": [
+      "Starlit Lash",
+      "Prism Ray",
+      "Still Thought",
+      "Dawn Call"
+     ]
+    },
+    {
+     "species": "Reedwarden",
+     "moves": [
+      "Puffcap Haze",
+      "Fizz Pop",
+      "Kelp Lash",
+      "Salt Snap"
+     ]
+    },
+    {
+     "species": "Fenwarden",
+     "moves": [
+      "Mirk Nip",
+      "Murk Veil",
+      "Kelp Lash",
+      "Night Siphon"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_11",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Glasstarn",
+     "moves": [
+      "Spindrift Shot",
+      "Prism Ray",
+      "Still Thought",
+      "Tide Call"
+     ]
+    },
+    {
+     "species": "Siltgrove",
+     "moves": [
+      "Pebble Toss",
+      "Hunker Down",
+      "Tunnel Strike",
+      "Cinder Nip"
+     ]
+    },
+    {
+     "species": "Saltcrown",
+     "moves": [
+      "Drench",
+      "Wick Flicker",
+      "Salt Snap",
+      "Dawn Mend"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "loan_12",
+   "ring": 30,
+   "team": [
+    {
+     "species": "Saltspire",
+     "moves": [
+      "Salt Snap",
+      "Tunnel Strike",
+      "Hunker Down",
+      "Breaker Plunge"
+     ]
+    },
+    {
+     "species": "Burinox",
+     "moves": [
+      "Murk Veil",
+      "Pebble Toss",
+      "Night Siphon",
+      "Tunnel Strike"
+     ]
+    },
+    {
+     "species": "Velahra",
+     "moves": [
+      "Glint",
+      "Fizz Pop",
+      "Candle Ward",
+      "Spindrift Shot"
+     ]
+    }
+   ]
+  }
+ ],
+ "festivals": [
+  {
+   "id": "bloom_fair",
+   "months": [
+    4,
+    5
+   ],
+   "name": "Bloom Fair",
+   "elements": [
+    "BLOOM",
+    "GALE"
+   ],
+   "gift": "bark_wrap",
+   "gifts": ["bark_wrap", "echo_bloom", "swift_feather", "echo_gale"],
+   "text": "The Bloom Fair is on! Bloom and Gale Spirlings are out in the spring air.",
+   "shop": [
+    {
+     "item": "bark_wrap",
+     "price": 40
+    },
+    {
+     "item": "echo_bloom",
+     "price": 60
+    },
+    {
+     "item": "echo_gale",
+     "price": 60
+    },
+    {
+     "item": "strong_tonic",
+     "price": 5
+    },
+    {
+     "item": "swift_feather",
+     "price": 40
+    }
+   ]
+  },
+  {
+   "id": "tide_days",
+   "months": [
+    7,
+    8
+   ],
+   "name": "Tide Days",
+   "elements": [
+    "TIDE",
+    "VOLT"
+   ],
+   "gift": "tide_pearl",
+   "gifts": ["tide_pearl", "echo_tide", "spark_coil", "echo_volt"],
+   "text": "It's the Tide Days! Tide and Volt Spirlings play in the summer storms.",
+   "shop": [
+    {
+     "item": "tide_pearl",
+     "price": 80
+    },
+    {
+     "item": "echo_tide",
+     "price": 60
+    },
+    {
+     "item": "echo_volt",
+     "price": 60
+    },
+    {
+     "item": "spark_coil",
+     "price": 40
+    },
+    {
+     "item": "dry_towel",
+     "price": 3
+    }
+   ]
+  },
+  {
+   "id": "lantern_nights",
+   "months": [
+    10,
+    11
+   ],
+   "name": "Lantern Nights",
+   "elements": [
+    "LUMEN",
+    "UMBRA"
+   ],
+   "gift": "echo_lumen",
+   "gifts": ["echo_lumen", "keen_lens", "echo_umbra", "kin_charm"],
+   "text": "The Lantern Nights have begun! Lumen and Umbra Spirlings follow the lights.",
+   "shop": [
+    {
+     "item": "echo_lumen",
+     "price": 60
+    },
+    {
+     "item": "echo_umbra",
+     "price": 60
+    },
+    {
+     "item": "keen_lens",
+     "price": 40
+    },
+    {
+     "item": "wake_bell",
+     "price": 3
+    },
+    {
+     "item": "revival_leaf",
+     "price": 10
+    }
+   ]
+  },
+  {
+   "id": "hearth_weeks",
+   "months": [
+    12,
+    1
+   ],
+   "name": "Hearth Weeks",
+   "elements": [
+    "EMBER",
+    "STONE"
+   ],
+   "gift": "spark_charm",
+   "gifts": ["spark_charm", "echo_ember", "iron_burr", "echo_stone"],
+   "text": "The Hearth Weeks are here! Ember and Stone Spirlings gather where it's warm.",
+   "shop": [
+    {
+     "item": "spark_charm",
+     "price": 60
+    },
+    {
+     "item": "echo_ember",
+     "price": 60
+    },
+    {
+     "item": "echo_stone",
+     "price": 60
+    },
+    {
+     "item": "iron_burr",
+     "price": 40
+    },
+    {
+     "item": "cooling_gel",
+     "price": 3
+    }
+   ]
+  }
+ ],
+ "festival_tasks": [
+  {
+   "id": "fest_beat_ember",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "EMBER",
+   "text": "Beat 3 wild Ember Spirlings"
+  },
+  {
+   "id": "fest_bond_ember",
+   "event": "bond",
+   "n": 1,
+   "element": "EMBER",
+   "text": "Bond with an Ember Spirling"
+  },
+  {
+   "id": "fest_beat_tide",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "TIDE",
+   "text": "Beat 3 wild Tide Spirlings"
+  },
+  {
+   "id": "fest_bond_tide",
+   "event": "bond",
+   "n": 1,
+   "element": "TIDE",
+   "text": "Bond with a Tide Spirling"
+  },
+  {
+   "id": "fest_beat_bloom",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "BLOOM",
+   "text": "Beat 3 wild Bloom Spirlings"
+  },
+  {
+   "id": "fest_bond_bloom",
+   "event": "bond",
+   "n": 1,
+   "element": "BLOOM",
+   "text": "Bond with a Bloom Spirling"
+  },
+  {
+   "id": "fest_beat_volt",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "VOLT",
+   "text": "Beat 3 wild Volt Spirlings"
+  },
+  {
+   "id": "fest_bond_volt",
+   "event": "bond",
+   "n": 1,
+   "element": "VOLT",
+   "text": "Bond with a Volt Spirling"
+  },
+  {
+   "id": "fest_beat_stone",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "STONE",
+   "text": "Beat 3 wild Stone Spirlings"
+  },
+  {
+   "id": "fest_bond_stone",
+   "event": "bond",
+   "n": 1,
+   "element": "STONE",
+   "text": "Bond with a Stone Spirling"
+  },
+  {
+   "id": "fest_beat_gale",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "GALE",
+   "text": "Beat 3 wild Gale Spirlings"
+  },
+  {
+   "id": "fest_bond_gale",
+   "event": "bond",
+   "n": 1,
+   "element": "GALE",
+   "text": "Bond with a Gale Spirling"
+  },
+  {
+   "id": "fest_beat_lumen",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "LUMEN",
+   "text": "Beat 3 wild Lumen Spirlings"
+  },
+  {
+   "id": "fest_bond_lumen",
+   "event": "bond",
+   "n": 1,
+   "element": "LUMEN",
+   "text": "Bond with a Lumen Spirling"
+  },
+  {
+   "id": "fest_beat_umbra",
+   "event": "win",
+   "n": 3,
+   "wild": true,
+   "element": "UMBRA",
+   "text": "Beat 3 wild Umbra Spirlings"
+  },
+  {
+   "id": "fest_bond_umbra",
+   "event": "bond",
+   "n": 1,
+   "element": "UMBRA",
+   "text": "Bond with an Umbra Spirling"
+  }
+ ],
+ "world_events": [
+  {"id": "fern_berries", "map": "fernstair", "text": "Berry bushes are heavy with fruit on the Fernstair slopes.", "found": "You pick a handful of berries and brew a tonic.", "item": "tonic", "count": 2},
+  {"id": "crow_feathers", "map": "crowcrest", "text": "A flock passed over Crowcrest and left feathers on the ridge.", "found": "You find a swift feather in the grass.", "item": "swift_feather", "count": 1},
+  {"id": "salt_tide", "map": "saltmarsh", "text": "A low tide in the Saltmarsh shows old crates in the mud.", "found": "One crate still holds a remedy.", "item": "remedy", "count": 1},
+  {"id": "thorn_sparks", "map": "thornridge", "text": "Sparks dance over the Thornridge rocks today.", "found": "You catch a spark drop as it falls.", "item": "spark_drop", "count": 1},
+  {"id": "murk_glow", "map": "murk_hollow", "text": "The mushrooms in Murk Hollow glow brighter than usual.", "found": "Under a glowing cap lies a wake bell someone dropped.", "item": "wake_bell", "count": 1},
+  {"id": "brindle_market", "map": "brindlewick", "text": "Fishers in Brindlewick are sharing their catch.", "found": "A fisher hands you a cooling gel for the road.", "item": "cooling_gel", "count": 2},
+  {"id": "spring_bloom", "map": "rest_spring", "text": "Flowers opened all around the Rest Spring.", "found": "A dry towel was left on the spring stones. You take it along.", "item": "dry_towel", "count": 1},
+  {"id": "lighthouse_crate", "map": "lighthouse", "text": "The supply boat left an extra crate at the lighthouse.", "found": "Aldo saved you a strong tonic from the crate.", "item": "strong_tonic", "count": 1}
+ ],
+ "album_tasks": [
+  {"id": "alb_win_20", "event": "win", "n": 20, "text": "Win 20 battles"},
+  {"id": "alb_wild_30", "event": "win", "n": 30, "wild": true, "text": "Beat 30 wild Spirlings"},
+  {"id": "alb_bond_3", "event": "bond", "n": 3, "text": "Bond with 3 Spirlings"},
+  {"id": "alb_bond_6", "event": "bond", "n": 6, "text": "Bond with 6 Spirlings"},
+  {"id": "alb_rest_5", "event": "rest", "n": 5, "text": "Rest at a Rest Spring 5 times"},
+  {"id": "alb_rest_places", "event": "rest", "n": 4, "distinct": true, "text": "Rest at 4 different Rest Springs"},
+  {"id": "alb_visit_6", "event": "visit", "n": 6, "distinct": true, "text": "Visit 6 different places"},
+  {"id": "alb_steps_3000", "event": "step", "n": 3000, "text": "Walk 3000 steps"},
+  {"id": "alb_steps_8000", "event": "step", "n": 8000, "text": "Walk 8000 steps"},
+  {"id": "alb_photo_3", "event": "photo", "n": 3, "text": "Take 3 photos"},
+  {"id": "alb_photo_8", "event": "photo", "n": 8, "text": "Take 8 photos"},
+  {"id": "alb_talk_10", "event": "talk", "n": 10, "text": "Talk to people 10 times"},
+  {"id": "alb_talk_25", "event": "talk", "n": 25, "text": "Talk to people 25 times"},
+  {"id": "alb_daily_5", "event": "daily", "n": 5, "text": "Finish 5 daily tasks"},
+  {"id": "alb_daily_15", "event": "daily", "n": 15, "text": "Finish 15 daily tasks"},
+  {"id": "alb_win_fern", "event": "win", "n": 5, "map": "fernstair", "text": "Win 5 battles in Fernstair"},
+  {"id": "alb_win_crow", "event": "win", "n": 5, "map": "crowcrest", "text": "Win 5 battles in Crowcrest"},
+  {"id": "alb_win_salt", "event": "win", "n": 5, "map": "saltmarsh", "text": "Win 5 battles in the Saltmarsh"},
+  {"id": "alb_win_thorn", "event": "win", "n": 5, "map": "thornridge", "text": "Win 5 battles in Thornridge"},
+  {"id": "alb_win_murk", "event": "win", "n": 5, "map": "murk_hollow", "text": "Win 5 battles in Murk Hollow"}
+ ]
+}

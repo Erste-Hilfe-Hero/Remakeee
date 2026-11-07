@@ -260,10 +260,10 @@ func test_weekly_board_scores_and_names() -> void:
 
 func test_weekly_score_formula() -> void:
 	GameState.new_game(GameState.Difficulty.TAMER, "Ann", 0, "Kindlop")
-	assert_eq(EchoTeam.weekly_score(2, GameState.party), 200)
-	assert_eq(EchoTeam.weekly_score(3, GameState.party), 400)
+	assert_eq(EchoTeam.weekly_score(2, GameState.party), 120)
+	assert_eq(EchoTeam.weekly_score(5, GameState.party), 400)
 	GameState.party[0].hp = 0
-	assert_eq(EchoTeam.weekly_score(3, GameState.party), 300)
+	assert_eq(EchoTeam.weekly_score(5, GameState.party), 300)
 
 func test_transfer_keeps_friends_and_mail() -> void:
 	_befriend()
@@ -287,7 +287,7 @@ func test_deleting_an_account_removes_it_from_friends() -> void:
 func test_card_and_lines_read_well() -> void:
 	var f: Dictionary = {"code": "ABCDEFGH", "name": "Ben", "favorite": "Puddlet", "card": {"seals": 2, "seen": 9, "bonded": 4, "hours": 3},
 		"level": 2, "points": 12, "online": true, "place": "Brindlewick", "last_seen": Online.unix_now()}
-	assert_eq(FriendsMenu.friend_line(f), "* Ben  Lv2  Brindlewick")
+	assert_eq(FriendsMenu.friend_line(f), "* Ben  Bond 2  Brindlewick")
 	assert_string_contains(FriendsMenu.card_text(f), "Rifts sealed: 2")
 	f.online = false
 	f.last_seen = Online.unix_now() - 7200

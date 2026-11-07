@@ -13,15 +13,16 @@ Muss auf der Website, im Spiel (Einstellungen → Legal) und in beiden Store-Ein
 
 **Angaben gemäß § 5 DDG**
 
-[NAME]
-[ADRESSE]
+Ali Amuri Alnasag
+Im Vogelgesang 9, 60488 Frankfurt am Main
 Deutschland
 
 **Kontakt**
-E-Mail: [E-MAIL]
-Telefon: [TELEFON]
+E-Mail: aa.amuri@icloud.com
 
-**Umsatzsteuer-ID** gemäß § 27a UStG: [USt-IdNr., falls vorhanden – sonst diese Zeile löschen]
+**Fragen zu Käufen**
+E-Mail: aa.amuri@icloud.com (bitte Freundescode und Bestellnummer angeben). Bezahlt wird über Apple oder
+Google; über Erstattungen entscheidet nur der jeweilige Store. Mehr unter [Hilfe zu Käufen](/kaeufe).
 
 **Verbraucherstreitbeilegung**
 Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer
@@ -31,6 +32,8 @@ Verbraucherschlichtungsstelle teilzunehmen.
 
 # Imprint (English)
 
-[NAME], [ADDRESS], Germany · Email: [EMAIL] · Phone: [PHONE]
+Ali Amuri Alnasag, Im Vogelgesang 9, 60488 Frankfurt am Main, Germany · Email: aa.amuri@icloud.com
+Questions about purchases: the same email (please add your friend code and order number). Only Apple or Google
+decide on refunds. More under [help with purchases](/purchases).
 We are not willing or obliged to take part in dispute resolution proceedings before a consumer arbitration
 board.

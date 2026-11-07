@@ -1,0 +1,12 @@
+{
+ "_note": "Chapter 6, Corvane Landing: Aldo says goodbye; the Fading has drained colour from the Spirlings here (plan item 1437).",
+ "steps": [
+  {"music": "town"},
+  {"say": ["The ferry bumps against the quay. Corvane smells of river mud and wet wool."]},
+  {"say": ["Aldo: This is as far as an old ferryman goes. The lamp needs me.", "Aldo: Write to me. Juna the courier knows the way to Brindlewick."]},
+  {"say": ["A flock of Zephlets lifts off the quay roof. Their feathers are grey as ash, every one.", "Here the Hush does more than silence. It drains the colour out of the Spirlings."]},
+  {"say": ["Aldo: Mirela came through here, forty years ago. Find the guild in Madderby. They knew her."]},
+  {"flag": "corvane_arrived"},
+  {"flag": "madderby_road_open"}
+ ]
+}

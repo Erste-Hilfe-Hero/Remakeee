@@ -12,12 +12,12 @@ const NONE: String = ""
 ##   blocks_swap: cannot swap out
 ##   sleeps:      cannot act while turns remain
 const RULES: Dictionary[String, Dictionary] = {
-	"scorch": {"label": "Scorch", "tick_div": 16, "atk_mult": 0.75, "turns": [0, 0]},
+	"scorch": {"label": "Scorch", "tick_div": 12, "atk_mult": 0.75, "turns": [0, 0]},
 	"soak":   {"label": "Soak",   "spd_mult": 0.5, "turns": [3, 3]},
-	"root":   {"label": "Root",   "tick_div": 16, "blocks_swap": true, "turns": [0, 0]},
-	"jolt":   {"label": "Jolt",   "skip_chance": 0.25, "turns": [0, 0]},
+	"root":   {"label": "Root",   "tick_div": 12, "blocks_swap": true, "turns": [0, 0]},
+	"jolt":   {"label": "Jolt",   "skip_chance": 0.2, "turns": [0, 0]},
 	"daze":   {"label": "Daze",   "acc_mult": 0.7, "turns": [3, 3]},
-	"drowse": {"label": "Drowse", "sleeps": true, "turns": [1, 3]},
+	"drowse": {"label": "Drowse", "sleeps": true, "turns": [2, 2]},
 }
 
 static func exists(status: String) -> bool:

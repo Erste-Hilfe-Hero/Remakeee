@@ -1,21 +1,23 @@
 extends Node
-## Each region = a visual generation jump (Era I Mono -> IV Dual).
+## Each region = a visual jump in the art style (Era I Ink -> IV Panorama), like an old map
+## being redrawn: ink sketch, watercolour wash, fine etching, then a wide painted panorama.
 ## Owns the active era: internal resolution, palette filter, sprite set and the Retro filter choice.
 
 signal era_changed(era: int)
 ## Emitted when a new region unlocks a newer era (item 48); the overworld shows a line for it.
 signal era_unlocked(era: int)
 
-enum Era { MONO = 1, COLOR = 2, ADVANCED = 3, DUAL = 4 }
-const REGION_ERA: Dictionary[String, int] = {"veydal": Era.MONO, "corvane": Era.COLOR, "ashmere": Era.ADVANCED, "solenne": Era.DUAL}
-const RESOLUTION: Dictionary[int, Vector2i] = {Era.MONO: Vector2i(144, 256), Era.COLOR: Vector2i(144, 256), Era.ADVANCED: Vector2i(180, 320), Era.DUAL: Vector2i(270, 480)}
-const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.MONO: 56, Era.COLOR: 56, Era.ADVANCED: 64, Era.DUAL: 96}
-## Era I: four fixed greens (original values, darkest to lightest).
-const MONO_PALETTE: Array[Color] = [Color("1b2a1b"), Color("3e5a3a"), Color("8aa86b"), Color("d4e3b5")]
+enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4 }
+const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.WASH, "ashmere": Era.ETCHED, "solenne": Era.PANORAMA}
+const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480)}
+const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96}
+## Era I: four cartographer's inks on parchment (original values, darkest to lightest). Deliberately
+## not the green four-shade look of old handheld screens.
+const INK_PALETTE: Array[Color] = [Color("2a1e2c"), Color("6a4256"), Color("c48a5e"), Color("f2e3c2")]
 const FILTER_LAYER: int = 100
 const PALETTE_SHADER: Shader = preload("res://shaders/palette_filter.gdshader")
 
-var unlocked_era: int = Era.MONO
+var unlocked_era: int = Era.INK
 var retro_filter: int = 0   # 0 = use newest unlocked era
 
 var _filter_layer: CanvasLayer
@@ -30,8 +32,8 @@ func _ready() -> void:
 	_filter_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var mat := ShaderMaterial.new()
 	mat.shader = PALETTE_SHADER
-	for i: int in MONO_PALETTE.size():
-		mat.set_shader_parameter("c%d" % i, MONO_PALETTE[i])
+	for i: int in INK_PALETTE.size():
+		mat.set_shader_parameter("c%d" % i, INK_PALETTE[i])
 	_filter_rect.material = mat
 	_filter_layer.add_child(_filter_rect)
 	_apply()
@@ -41,15 +43,15 @@ func active_era() -> int:
 
 ## Lines shown when an era opens up for the first time.
 const ERA_LINES: Dictionary[int, String] = {
-	Era.COLOR: "The grey of Veydal falls away. The world blooms into colour!",
-	Era.ADVANCED: "The air grows sharper. Every leaf and stone shows more detail!",
-	Era.DUAL: "The sky splits wide open. Two horizons stretch before you!",
+	Era.WASH: "The ink of Veydal runs and spreads. The world fills with colour!",
+	Era.ETCHED: "The air grows sharper. Every leaf and stone shows more detail!",
+	Era.PANORAMA: "The map unrolls wider than ever. The whole horizon opens before you!",
 }
 const TRANSITION_TIME: float = 0.9
 var _wipe: ColorRect
 
 func unlock_region(region: String) -> void:
-	var e: int = REGION_ERA.get(region, Era.MONO)
+	var e: int = REGION_ERA.get(region, Era.INK)
 	if e > unlocked_era:
 		unlocked_era = e
 		if retro_filter == 0 and is_inside_tree():
@@ -68,18 +70,18 @@ func play_transition() -> void:
 		_filter_layer.add_child(_wipe)
 	var size: Vector2 = get_viewport().get_visible_rect().size
 	_wipe.position = Vector2.ZERO
-	_wipe.size = Vector2(size.x, 0.0 if not GameState.reduce_motion else size.y)
-	_wipe.modulate.a = 1.0 if not GameState.reduce_motion else 0.0
+	_wipe.size = Vector2(size.x, 0.0 if not Juice.reduced() else size.y)
+	_wipe.modulate.a = 1.0 if not Juice.reduced() else 0.0
 	_wipe.visible = true
 	Sound.sfx("warp")
 	var tw: Tween = create_tween()
 	var half: float = TRANSITION_TIME / 2.0
-	if GameState.reduce_motion:
-		tw.tween_property(_wipe, "modulate:a", 1.0, half)
+	if Juice.reduced():
+		Juice.shaped(tw.tween_property(_wipe, "modulate:a", 1.0, half), "close")
 	else:
-		tw.tween_property(_wipe, "size:y", size.y, half)
+		Juice.shaped(tw.tween_property(_wipe, "size:y", size.y, half), "close")
 	tw.tween_callback(_apply)
-	tw.tween_property(_wipe, "modulate:a", 0.0, half)
+	Juice.shaped(tw.tween_property(_wipe, "modulate:a", 0.0, half), "fade")
 	tw.tween_callback(func() -> void: _wipe.visible = false)
 
 func set_retro_filter(e: int) -> void:
@@ -102,7 +104,7 @@ func to_dict() -> Dictionary:
 	return {"unlocked_era": unlocked_era, "retro_filter": retro_filter}
 
 func from_dict(d: Dictionary) -> void:
-	unlocked_era = clampi(int(d.get("unlocked_era", Era.MONO)), Era.MONO, Era.DUAL)
+	unlocked_era = clampi(int(d.get("unlocked_era", Era.INK)), Era.INK, Era.PANORAMA)
 	retro_filter = clampi(int(d.get("retro_filter", 0)), 0, unlocked_era)
 	_apply()
 
@@ -111,5 +113,5 @@ func _apply() -> void:
 	if is_inside_tree():
 		get_window().content_scale_size = RESOLUTION[era]
 	if _filter_rect != null:
-		_filter_rect.visible = era == Era.MONO
+		_filter_rect.visible = era == Era.INK
 	era_changed.emit(era)

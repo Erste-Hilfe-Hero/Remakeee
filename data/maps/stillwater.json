@@ -1,0 +1,233 @@
+{
+ "name": "Stillwater",
+ "region": "corvane",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "stillwater",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T,,,.__.,,,T",
+  "T,,,.__.,,,T",
+  "T^^^^==^^^^T",
+  "T,,,,..,,,,T",
+  "T^^^^==^^^^T",
+  "T....__....T",
+  "T.~~~~~~~..T",
+  "T.~~~~~~~..S",
+  "T.~~~++~~..T",
+  "T.~~~++~~..T",
+  "T....__..S.T",
+  "T,,..__....T",
+  "T,,,.__..___",
+  "T,,,.______.",
+  "T%%%.__.,,,T",
+  "T%%%.__.,,,T",
+  "T~~~.__.,,,T",
+  "T~~~.__.%%.T",
+  "T,,,.__.%%.T",
+  "T,,,.__....T",
+  "T*...__..*.T",
+  "T....__....T",
+  "T.S..__....T",
+  "T....__....T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 25,
+   "to": "madderby",
+   "tx": 5,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "madderby",
+   "tx": 6,
+   "ty": 2,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "mirror_rift",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "mirror_rift",
+   "tx": 6,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "to": "greyreach",
+   "tx": 1,
+   "ty": 26,
+   "facing": "right"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "to": "greyreach",
+   "tx": 1,
+   "ty": 27,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "teo",
+   "x": 2,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "stillwater/teo",
+   "sprite": "villager",
+   "trainer": "Angler Teo",
+   "intro": "stillwater/teo_intro",
+   "defeat": "stillwater/teo_defeat",
+   "money": 1000,
+   "team": [
+    {
+     "species": "Puddlet",
+     "level": 20
+    },
+    {
+     "species": "Fluting",
+     "level": 21
+    }
+   ]
+  },
+  {
+   "id": "runa",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "stillwater/runa",
+   "sprite": "villager",
+   "trainer": "Terrace Farmer Runa",
+   "intro": "stillwater/runa_intro",
+   "defeat": "stillwater/runa_defeat",
+   "money": 1050,
+   "team": [
+    {
+     "species": "Croziel",
+     "level": 21
+    },
+    {
+     "species": "Mossling",
+     "level": 21
+    },
+    {
+     "species": "Puddlet",
+     "level": 22
+    }
+   ]
+  },
+  {
+   "id": "ivo",
+   "x": 8,
+   "y": 2,
+   "facing": "left",
+   "dialogue": "stillwater/ivo",
+   "sprite": "villager",
+   "trainer": "Wanderer Ivo",
+   "intro": "stillwater/ivo_intro",
+   "defeat": "stillwater/ivo_defeat",
+   "money": 1100,
+   "team": [
+    {
+     "species": "Wickit",
+     "level": 22
+    },
+    {
+     "species": "Lanternel",
+     "level": 22
+    },
+    {
+     "species": "Croziel",
+     "level": 22
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 23,
+   "dialogue": "stillwater/sign"
+  },
+  {
+   "x": 9,
+   "y": 11,
+   "dialogue": "stillwater/pond"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "dialogue": "stillwater/mound_stone"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 13,
+   "open_flag": "beat_story_kestra_2",
+   "closed": "#"
+  },
+  {
+   "x": 10,
+   "y": 14,
+   "open_flag": "beat_story_kestra_2",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 20,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_still_west"
+  },
+  {
+   "x": 11,
+   "y": 22,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_still_east"
+  },
+  {
+   "x": 0,
+   "y": 4,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_still_terrace"
+  },
+  {
+   "x": 9,
+   "y": 6,
+   "item": "tonic",
+   "count": 1,
+   "flag": "find_mound_1"
+  }
+ ],
+ "spots": {
+  "kestra": [
+   7,
+   4
+  ],
+  "page_8": [
+   10,
+   9
+  ]
+ }
+}

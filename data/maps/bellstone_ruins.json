@@ -1,0 +1,424 @@
+{
+ "name": "Bellstone Ruins",
+ "region": "veydal",
+ "biome": "dungeon",
+ "backdrop": "ridge",
+ "field": "deep_murk",
+ "encounters": "bellstone_ruins",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@..........@",
+  "@.S..S..S..@",
+  "@..........@",
+  "@S.........@",
+  "@:........S@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 6,
+   "to": "gloamwood",
+   "tx": 4,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "bellstone_ruins@1",
+   "tx": 5,
+   "ty": 5,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 6,
+   "to": "gloamwood",
+   "tx": 4,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "bellstone_ruins@1",
+   "tx": 6,
+   "ty": 5,
+   "facing": "up"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 2,
+   "dialogue": "bellstone_ruins/r1_bell_0"
+  },
+  {
+   "x": 5,
+   "y": 2,
+   "dialogue": "bellstone_ruins/r1_bell_1"
+  },
+  {
+   "x": 8,
+   "y": 2,
+   "dialogue": "bellstone_ruins/r1_bell_2"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "bellstone_ruins/r1_wall"
+  },
+  {
+   "x": 10,
+   "y": 5,
+   "dialogue": "bellstone_ruins/hint_board"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "bell_room_1"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "bell_room_1"
+  }
+ ],
+ "floors": [
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@.S..S..S..@",
+    "@..........@",
+    "@S.........@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r2_bell_0"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r2_bell_1"
+    },
+    {
+     "x": 8,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r2_bell_2"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r2_wall"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "bellstone_ruins",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "bellstone_ruins@2",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "bellstone_ruins",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "bellstone_ruins@2",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "goal": "Goal: ring the bells in the order scratched into the wall.",
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "bell_room_2"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "bell_room_2"
+    }
+   ],
+   "name": "Bellstone Ruins, hall 2"
+  },
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@.S..S..S..@",
+    "@..........@",
+    "@S..S......@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r3_bell_0"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r3_bell_1"
+    },
+    {
+     "x": 8,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r3_bell_2"
+    },
+    {
+     "x": 4,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r3_bell_3"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r3_wall"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "bellstone_ruins@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "bellstone_ruins@3",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "bellstone_ruins@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "bellstone_ruins@3",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "goal": "Goal: ring the bells in the order scratched into the wall.",
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "bell_room_3"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "bell_room_3"
+    }
+   ],
+   "name": "Bellstone Ruins, hall 3"
+  },
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@.S..S..S..@",
+    "@..........@",
+    "@S..S......@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r4_bell_0"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r4_bell_1"
+    },
+    {
+     "x": 8,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r4_bell_2"
+    },
+    {
+     "x": 4,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r4_bell_3"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r4_wall"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "bellstone_ruins@2",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "bellstone_ruins@4",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "bellstone_ruins@2",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "bellstone_ruins@4",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "goal": "Goal: ring the bells in the order scratched into the wall.",
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "bell_room_4"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "bell_room_4"
+    }
+   ],
+   "name": "Bellstone Ruins, hall 4"
+  },
+  {
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@..........@",
+    "@.S..S..S..@",
+    "@..........@",
+    "@S..S..S...@",
+    "@:........:@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r5_bell_0"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r5_bell_1"
+    },
+    {
+     "x": 8,
+     "y": 2,
+     "dialogue": "bellstone_ruins/r5_bell_2"
+    },
+    {
+     "x": 4,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r5_bell_3"
+    },
+    {
+     "x": 7,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r5_bell_4"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "bellstone_ruins/r5_wall"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "bellstone_ruins@3",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "bellstone_ruins@3",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 5,
+     "y": 1,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_bell_top"
+    },
+    {
+     "x": 10,
+     "y": 1,
+     "item": "kin_charm",
+     "count": 1,
+     "flag": "find_bell_corner"
+    }
+   ],
+   "name": "Bellstone Ruins, hall 5"
+  }
+ ],
+ "goal": "Goal: ring the bells in the order scratched into the wall."
+}

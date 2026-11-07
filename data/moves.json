@@ -39,7 +39,7 @@
   "name": "Lichen Lash",
   "element": "BLOOM",
   "kind": "PHYSICAL",
-  "power": 40,
+  "power": 35,
   "accuracy": 1.0,
   "energy": 2
  },
@@ -61,14 +61,14 @@
   "accuracy": 1.0,
   "energy": 2,
   "status": "jolt",
-  "status_chance": 0.1
+  "status_chance": 0.05
  },
  {
   "name": "Pebble Toss",
   "element": "STONE",
   "kind": "PHYSICAL",
   "power": 45,
-  "accuracy": 0.95,
+  "accuracy": 1.0,
   "energy": 2
  },
  {
@@ -95,33 +95,33 @@
   "element": "UMBRA",
   "kind": "STATUS",
   "power": 0,
-  "accuracy": 0.75,
-  "energy": 4,
+  "accuracy": 0.8,
+  "energy": 3,
   "status": "drowse",
   "status_chance": 1.0
  },
  {
-  "name": "Headlong Charge",
+  "name": "Bowl Over",
   "element": "STONE",
   "kind": "PHYSICAL",
-  "power": 35,
+  "power": 30,
   "accuracy": 1.0,
   "energy": 1
  },
  {
-  "name": "Flare Lash",
+  "name": "Kiln Strike",
   "element": "EMBER",
   "kind": "PHYSICAL",
   "power": 75,
-  "accuracy": 0.9,
+  "accuracy": 0.95,
   "energy": 5
  },
  {
-  "name": "Blaze Coil",
+  "name": "Furnace Spiral",
   "element": "EMBER",
   "kind": "FOCUS",
   "power": 90,
-  "accuracy": 0.85,
+  "accuracy": 0.9,
   "energy": 6,
   "status": "scorch",
   "status_chance": 0.2
@@ -137,7 +137,7 @@
   "status_chance": 1.0
  },
  {
-  "name": "Brine Jet",
+  "name": "Spindrift Shot",
   "element": "TIDE",
   "kind": "FOCUS",
   "power": 70,
@@ -145,14 +145,14 @@
   "energy": 4
  },
  {
-  "name": "Tidal Crash",
+  "name": "Breaker Plunge",
   "element": "TIDE",
   "kind": "PHYSICAL",
   "power": 95,
-  "accuracy": 0.85,
+  "accuracy": 0.9,
   "energy": 6,
   "effect": "recoil",
-  "effect_amount": 0.25
+  "effect_amount": 0.2
  },
  {
   "name": "Drench",
@@ -168,9 +168,9 @@
   "name": "Thorn Volley",
   "element": "BLOOM",
   "kind": "PHYSICAL",
-  "power": 65,
+  "power": 75,
   "accuracy": 0.95,
-  "energy": 4,
+  "energy": 5,
   "target": "foes"
  },
  {
@@ -187,7 +187,7 @@
   "name": "Bloom Burst",
   "element": "BLOOM",
   "kind": "FOCUS",
-  "power": 90,
+  "power": 95,
   "accuracy": 0.9,
   "energy": 6
  },
@@ -199,14 +199,14 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "jolt",
-  "status_chance": 0.2
+  "status_chance": 0.3
  },
  {
-  "name": "Surge Fang",
+  "name": "Storm Gnash",
   "element": "VOLT",
   "kind": "PHYSICAL",
-  "power": 75,
-  "accuracy": 0.9,
+  "power": 80,
+  "accuracy": 0.95,
   "energy": 5
  },
  {
@@ -214,7 +214,7 @@
   "element": "VOLT",
   "kind": "STATUS",
   "power": 0,
-  "accuracy": 0.85,
+  "accuracy": 0.8,
   "energy": 3,
   "status": "jolt",
   "status_chance": 1.0,
@@ -231,7 +231,7 @@
   "effect_amount": 1
  },
  {
-  "name": "Quake Stomp",
+  "name": "Tremor Thud",
   "element": "STONE",
   "kind": "PHYSICAL",
   "power": 80,
@@ -240,11 +240,11 @@
   "target": "foes"
  },
  {
-  "name": "Boulder Slam",
+  "name": "Cairn Crash",
   "element": "STONE",
   "kind": "PHYSICAL",
-  "power": 100,
-  "accuracy": 0.8,
+  "power": 105,
+  "accuracy": 0.85,
   "energy": 7,
   "effect": "recoil",
   "effect_amount": 0.25
@@ -258,12 +258,12 @@
   "energy": 3
  },
  {
-  "name": "Cyclone Edge",
+  "name": "Gale Scythe",
   "element": "GALE",
   "kind": "PHYSICAL",
-  "power": 80,
+  "power": 85,
   "accuracy": 0.9,
-  "energy": 5
+  "energy": 4
  },
  {
   "name": "Squall",
@@ -290,7 +290,7 @@
   "kind": "STATUS",
   "power": 0,
   "accuracy": 1.0,
-  "energy": 5,
+  "energy": 6,
   "effect": "heal_self",
   "effect_amount": 0.5
  },
@@ -298,7 +298,7 @@
   "name": "Radiant Lance",
   "element": "LUMEN",
   "kind": "PHYSICAL",
-  "power": 85,
+  "power": 90,
   "accuracy": 0.9,
   "energy": 6
  },
@@ -308,10 +308,14 @@
   "kind": "PHYSICAL",
   "power": 50,
   "accuracy": 1.0,
-  "energy": 3
+  "energy": 3,
+  "stat": "atk",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2
  },
  {
-  "name": "Gloom Pulse",
+  "name": "Gloom Ripple",
   "element": "UMBRA",
   "kind": "FOCUS",
   "power": 70,
@@ -322,7 +326,7 @@
   "target": "foes"
  },
  {
-  "name": "Eclipse Fang",
+  "name": "Dusk Gnaw",
   "element": "UMBRA",
   "kind": "PHYSICAL",
   "power": 90,
@@ -333,7 +337,7 @@
   "name": "Night Siphon",
   "element": "UMBRA",
   "kind": "FOCUS",
-  "power": 50,
+  "power": 60,
   "accuracy": 1.0,
   "energy": 4,
   "effect": "drain",
@@ -353,7 +357,7 @@
   "kind": "STATUS",
   "power": 0,
   "accuracy": 1.0,
-  "energy": 3,
+  "energy": 2,
   "effect": "heal_self",
   "effect_amount": 0.3
  },
@@ -370,7 +374,7 @@
   "element": "UMBRA",
   "kind": "STATUS",
   "power": 0,
-  "accuracy": 0.85,
+  "accuracy": 0.9,
   "energy": 3,
   "status": "daze",
   "status_chance": 1.0
@@ -381,17 +385,21 @@
   "kind": "PHYSICAL",
   "power": 65,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2
  },
  {
-  "name": "Brine Fang",
+  "name": "Salt Snap",
   "element": "TIDE",
   "kind": "PHYSICAL",
   "power": 55,
   "accuracy": 0.95,
   "energy": 3,
   "status": "soak",
-  "status_chance": 0.1
+  "status_chance": 0.2
  },
  {
   "name": "Kelp Lash",
@@ -412,10 +420,11 @@
   "energy": 2,
   "stat": "atk",
   "stages": 1,
-  "self": true
+  "self": true,
+  "stages_full_hp": 2
  },
  {
-  "name": "Shell Up",
+  "name": "Hunker Down",
   "element": "STONE",
   "kind": "STATUS",
   "power": 0,
@@ -423,10 +432,11 @@
   "energy": 2,
   "stat": "def",
   "stages": 1,
-  "self": true
+  "self": true,
+  "stages_full_hp": 2
  },
  {
-  "name": "Tailwind Step",
+  "name": "Drift Step",
   "element": "GALE",
   "kind": "STATUS",
   "power": 0,
@@ -434,10 +444,11 @@
   "energy": 2,
   "stat": "spd",
   "stages": 1,
-  "self": true
+  "self": true,
+  "stages_full_hp": 2
  },
  {
-  "name": "Clear Mind",
+  "name": "Still Thought",
   "element": "LUMEN",
   "kind": "STATUS",
   "power": 0,
@@ -445,14 +456,15 @@
   "energy": 2,
   "stat": "foc",
   "stages": 1,
-  "self": true
+  "self": true,
+  "stages_full_hp": 2
  },
  {
   "name": "Cower Shade",
   "element": "UMBRA",
   "kind": "STATUS",
   "power": 0,
-  "accuracy": 0.95,
+  "accuracy": 1.0,
   "energy": 2,
   "stat": "atk",
   "stages": -1,
@@ -464,7 +476,7 @@
   "kind": "STATUS",
   "power": 0,
   "accuracy": 0.95,
-  "energy": 2,
+  "energy": 3,
   "stat": "spd",
   "stages": -1,
   "self": false,
@@ -483,9 +495,836 @@
   "name": "All-In Crash",
   "element": "STONE",
   "kind": "PHYSICAL",
-  "power": 30,
+  "power": 40,
   "accuracy": 0.95,
   "energy": 2,
   "overcharge": true
+ },
+ {
+  "name": "Ash Call",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "ash_storm"
+ },
+ {
+  "name": "Tide Call",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "high_tide"
+ },
+ {
+  "name": "Murk Call",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "deep_murk"
+ },
+ {
+  "name": "Spark Call",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "static_veil"
+ },
+ {
+  "name": "Bloom Call",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "pollen_drift"
+ },
+ {
+  "name": "Dawn Call",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field": "dawn_glow"
+ },
+ {
+  "name": "Glow Knuckle",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "atk",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Char Mark",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "scorch",
+  "vs_mult": 1.6
+ },
+ {
+  "name": "Spout Jab",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "soak",
+  "vs_mult": 1.5
+ },
+ {
+  "name": "Deepwell Draught",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_self",
+  "effect_amount": 0.35,
+  "cure_self": true
+ },
+ {
+  "name": "Pollen Prick",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "root",
+  "vs_mult": 1.5
+ },
+ {
+  "name": "Static Tag",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "jolt",
+  "vs_mult": 1.5
+ },
+ {
+  "name": "Grid Lock",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "energy_tax",
+  "effect_amount": 2
+ },
+ {
+  "name": "Grit Jab",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "*",
+  "vs_mult": 1.3
+ },
+ {
+  "name": "Quarry Wall",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "def",
+  "stages": 2,
+  "self": true
+ },
+ {
+  "name": "Landslip",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 5,
+  "target": "foes",
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Shard Bed",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "hp": 0.1
+  }
+ },
+ {
+  "name": "Monolith Drop",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 125,
+  "accuracy": 0.8,
+  "energy": 8,
+  "cooldown": 1
+ },
+ {
+  "name": "Pumice Pelt",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.5
+ },
+ {
+  "name": "Fault Line",
+  "element": "STONE",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "ignore_stages": true
+ },
+ {
+  "name": "Crosswind",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3,
+  "field_element": true
+ },
+ {
+  "name": "Kite Cut",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Scatter Gale",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "clear_snares": true
+ },
+ {
+  "name": "Downburst",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 110,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Draft Needle",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 35,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1
+ },
+ {
+  "name": "Squall Line",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 5,
+  "stat": "spd",
+  "stages": -1,
+  "self": false
+ },
+ {
+  "name": "Cloudbreak",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 105,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "spd": -1
+  }
+ },
+ {
+  "name": "Beacon Ping",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "daze",
+  "vs_mult": 1.5
+ },
+ {
+  "name": "Dawn Needle",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 35,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1,
+  "ignore_daze": true
+ },
+ {
+  "name": "Shade Pounce",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "stage_down",
+  "vs_mult": 1.5
+ },
+ {
+  "name": "Gloom Handoff",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "status_shift"
+ },
+ {
+  "name": "Capacitor Crash",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Pylon Snap",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Short Circuit",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "foc": -1
+  }
+ },
+ {
+  "name": "Bellows Blast",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 7,
+  "self_stages": {
+   "foc": -1
+  }
+ },
+ {
+  "name": "Coal Seed",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "scorch"
+  }
+ },
+ {
+  "name": "Furnace Heart",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Cinder Dash",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 35,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1
+ },
+ {
+  "name": "Brazier Pulse",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 5,
+  "target": "foes",
+  "status": "scorch",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Salt Spray",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Rip Current",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "effect": "energy_burn",
+  "effect_amount": 1
+ },
+ {
+  "name": "Fathom Crush",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Bore Wave",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 85,
+  "accuracy": 0.9,
+  "energy": 6,
+  "target": "foes",
+  "status": "soak",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Shoal Trap",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "soak"
+  }
+ },
+ {
+  "name": "Bramble Bed",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "root"
+  }
+ },
+ {
+  "name": "Wildgrowth Crash",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "def": -1
+  }
+ },
+ {
+  "name": "Husk Shed",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "cure_self": true,
+  "stat": "spd",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Thornwake",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 5,
+  "target": "foes",
+  "status": "root",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Bark Burst",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 5,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2
+ },
+ {
+  "name": "Seed Spit",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 30,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1
+ },
+ {
+  "name": "Graft",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "stage_steal"
+ },
+ {
+  "name": "Overdraw",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "energy_burn",
+  "effect_amount": 2
+ },
+ {
+  "name": "Wire Trap",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "jolt"
+  }
+ },
+ {
+  "name": "Lull Breaker",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "drowse",
+  "vs_mult": 1.6,
+  "cure_target": "drowse"
+ },
+ {
+  "name": "Chaff Feint",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "atk": -1,
+   "foc": -1
+  },
+  "self": false
+ },
+ {
+  "name": "Gale Mantle",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "spd": 1,
+   "foc": 1
+  },
+  "self": true
+ },
+ {
+  "name": "Sunwell Sip",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_self",
+  "effect_amount": 0.3,
+  "stat": "foc",
+  "stages": 1,
+  "self": true
+ },
+ {
+  "name": "Daybreak Strike",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Prism Burst",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "foc": -1
+  }
+ },
+ {
+  "name": "Omen Bell",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 1.0,
+  "energy": 5,
+  "delay": 2
+ },
+ {
+  "name": "Starlit Lash",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "atk",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Glow Trap",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "daze"
+  }
+ },
+ {
+  "name": "Night Toll",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "effect": "heal_block",
+  "effect_amount": 3
+ },
+ {
+  "name": "Eclipse Crush",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Murmur Bite",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 0.95,
+  "energy": 4,
+  "effect": "energy_burn",
+  "effect_amount": 1
+ },
+ {
+  "name": "Veil Step",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 30,
+  "accuracy": 1.0,
+  "energy": 1,
+  "priority": 1
+ },
+ {
+  "name": "Gloam Pact",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "atk": 2,
+   "def": -1
+  },
+  "self": true
+ },
+ {
+  "name": "Dusk Snare",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "stage": {
+    "spd": -1
+   }
+  }
+ },
+ {
+  "name": "Gravel Hum",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "stat": "spd",
+  "stages": -2,
+  "self": false
+ },
+ {
+  "name": "Slow Quake",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 1.0,
+  "energy": 3,
+  "priority": -1
+ },
+ {
+  "name": "Root Mend",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_self",
+  "effect_amount": 0.2,
+  "mend": 3
+ },
+ {
+  "name": "Glowglass Slash",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "status": "scorch",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Floodglass Wave",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "status": "soak",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Vineglass Sting",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "drain",
+  "effect_amount": 0.25
+ },
+ {
+  "name": "Boltglass Bite",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Rockglass Ram",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3
+ },
+ {
+  "name": "Stormglass Cut",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "priority": 1
+ },
+ {
+  "name": "Lightglass Beam",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "cure_self": true
+ },
+ {
+  "name": "Duskglass Grip",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "foc",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3
  }
 ]

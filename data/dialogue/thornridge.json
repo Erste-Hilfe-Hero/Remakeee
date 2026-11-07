@@ -1,6 +1,7 @@
 {
  "sign": [
   "THORNRIDGE",
+  "Thornridge, 27 folk.",
   "Gorge village.",
   "Upper terrace: Rest Pool and the Cinder hollow"
  ],
@@ -22,11 +23,14 @@
   "lines": [
    "Keeper: Rest by the pool a while."
   ],
-  "action": "heal"
+  "action": "heal",
+  "night_lines": [
+   "Keeper: Late visitor? The pool glows at night. Rest, the stars won't mind."
+  ]
  },
  "trader": {
   "lines": [
-   "Trader: Supplies for the road! Your bag holds as much as you like."
+   "Trader: Supplies for the road! Your satchel holds as much as you like."
   ],
   "action": "shop tonic strong_tonic max_tonic remedy cooling_gel dry_towel wake_bell spark_drop revival_leaf kin_charm"
  },
@@ -45,22 +49,100 @@
  },
  "crystals": {
   "lines": [
-   "Crystal seller: Echo Crystals keep a move's echo. Teach it as often as you like!",
+   "Crystal seller: Echo Crystals keep an art's echo. Teach it as often as you like!",
    "Crystal seller: And things for Spirlings to hold, brews, pearls..."
   ],
-  "action": "shop echo_ember echo_tide echo_bloom echo_volt echo_stone echo_gale echo_lumen echo_umbra spark_charm tide_pearl bark_wrap iron_burr swift_feather keen_lens power_brew guard_brew focus_brew dash_brew"
+  "action": "shop echo_ember echo_tide echo_bloom echo_volt echo_stone echo_gale echo_lumen echo_umbra echo_scatter_gale echo_graft spark_charm tide_pearl bark_wrap iron_burr swift_feather keen_lens power_brew guard_brew focus_brew dash_brew"
  },
  "elder": {
   "lines": [
    "Elder: The Cinder hollow is up the stairs. Its Warden, Orrin, hasn't said a word in weeks.",
    "Elder: A Warden whose bond breaks becomes part of the Hush. Wake him, and he can help you mend the tear."
   ],
+  "after_flag": [
+   {
+    "flag": "rift_cinder_sealed",
+    "lines": [
+     "Elder: Orrin laughed today. First time since the storm.",
+     "Elder: Veydal owes you, young cartographer.",
+     "Elder: He says he'll come down to the village for the ember feast. We haven't seen him here in years."
+    ]
+   }
+  ]
+ },
+ "pell": [
+  "Pell: No more tending a silent Warden. Orrin bakes bread now. Terrible bread.",
+  "Pell: My Spirlings sleep through the night again. So do I."
+ ],
+ "suri": [
+  "Suri: I thought the Hush would last forever. Now I'm learning to make Echo Crystals.",
+  "Suri: My Kindlop runs warm, not hot. That's the difference, I think."
+ ],
+ "coach": {
+  "lines": [
+   "Driver Sela: Valley Coach, Thornridge stop. The road down is gentler than the stairs."
+  ],
+  "action": "transit valley_coach"
+ },
+ "ula": {
+  "lines": [
+   "Shepherd Ula: The flock grazes the scree by day. At dusk I count them twice, at the square."
+  ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
    "lines": [
-    "Elder: Orrin laughed today. First time since the storm.",
-    "Elder: Veydal owes you, young cartographer."
+    "Shepherd Ula: My flock sleeps through the night again. No more ash on the wind."
    ]
   }
+ },
+ "marek": {
+  "lines": [
+   "Stonecutter Marek: Up on the terrace I split stone. At the square in the evening I split hairs."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Stonecutter Marek: The stone rings clean again. The Rift made it sound cracked."
+   ]
+  }
+ },
+ "rue": {
+  "lines": [
+   "Herbalist Rue: I pick herbs by the old door at sunrise. Dew makes them honest."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Herbalist Rue: The herbs grow sweet again. Bitter only where they should be."
+   ]
+  }
+ },
+ "ivo": {
+  "lines": [
+   "Night Watch Ivo: I start my round at dusk and finish when the birds complain."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Night Watch Ivo: Quiet nights since the Rift closed. I almost miss the trouble. Almost."
+   ]
+  }
+ },
+ "kip": {
+  "lines": [
+   "Apprentice Kip: I learn smithing in Copperfold every evening. Days, I sweep the elder's porch."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Apprentice Kip: The forge fire burns blue in Copperfold now. Smith Holt says that's luck."
+   ]
+  }
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 2"
  }
 }

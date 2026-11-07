@@ -1,0 +1,3 @@
+// Chimora's Google Play Billing plugin for Godot (plan area 10). Built in CI by
+// tools/build_billing_plugin.sh with the Gradle wrapper of the Godot Android build template.
+rootProject.name = 'chimora_billing'

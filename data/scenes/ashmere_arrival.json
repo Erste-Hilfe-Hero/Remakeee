@@ -1,0 +1,10 @@
+{
+ "_note": "Chapter 12, Ashmere station: ash highlands, the Stilling freezes Spirlings mid-step (plan item 1482).",
+ "steps": [
+  {"music": "town"},
+  {"say": ["The railway car groans to a stop. Grey flakes drift past the window. Not snow. Ash."]},
+  {"say": ["On the platform a Kindlop stands mid-step, one paw raised. It doesn't move.", "Here the Hush has another name. The Stilling. It freezes Spirlings where they stand."]},
+  {"say": ["Find master graver Halvard in Cinderfold. Ysolde said he'd know what to do."]},
+  {"flag": "ashmere_arrived"}
+ ]
+}

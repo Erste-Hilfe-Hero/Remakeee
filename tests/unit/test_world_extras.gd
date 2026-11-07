@@ -60,20 +60,19 @@ func test_quest_dialogue_refs_exist() -> void:
 		assert_false(Database.item(parts[3]).is_empty(), "%s rewards a real item" % ref)
 
 func test_gauntlet_teams_scale_and_are_seeded() -> void:
-	var party: Array[Spirling] = [Spirling.new(Database.species("Calderox"), 40)]
-	var a := Gauntlet.new(9, party)
-	var b := Gauntlet.new(9, party)
-	var ta: Array[Spirling] = a.team(0)
-	var tb: Array[Spirling] = b.team(0)
+	var a := Gauntlet.new(9, 40)
+	var b := Gauntlet.new(9, 40)
+	var ta: Array[Spirling] = a.team(29)
+	var tb: Array[Spirling] = b.team(29)
 	assert_eq(ta.size(), Gauntlet.TEAM_SIZE)
 	for i: int in ta.size():
 		assert_eq(ta[i].data.species_name, tb[i].data.species_name, "same seed, same echoes")
-		assert_eq(ta[i].level, 40)
+		assert_eq(ta[i].level, 40, "the top floor meets the ring cap")
 		assert_false(ta[i].data.evolves_to != null and ta[i].data.evolve_level > 0 and ta[i].data.evolve_level <= 40, "no unevolved forms past their level")
-	assert_eq(a.level_for(4), 44)
+	assert_eq(a.level_for(0), 31)
 	assert_false(Database.item(a.reward_item()).is_empty())
 
 func test_menu_title_shows_cap_only_when_capped() -> void:
 	assert_false(PauseMenu.menu_title().contains("Cap"))
 	GameState.difficulty = GameState.Difficulty.VETERAN
-	assert_true(PauseMenu.menu_title().contains("Cap Lv"))
+	assert_true(PauseMenu.menu_title().contains("Ring limit"))

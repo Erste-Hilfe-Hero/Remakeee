@@ -1,0 +1,77 @@
+{
+ "name": "Kindle Vents",
+ "region": "veydal",
+ "biome": "cave",
+ "backdrop": "ridge",
+ "field": "deep_murk",
+ "encounters": "kindle_vents",
+ "rows": [
+  "@@@@@@@@@@@@",
+  "@::.....::.@",
+  "@:..@@@@...@",
+  "@...@::@.:.@",
+  "@@@@@..@@Y@@",
+  "@..:....:..@",
+  "@.:......:.@",
+  "@@@@@__@@@@@",
+  "@....__...L@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "cinder_rift",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 9,
+   "to": "cinder_rift",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 8,
+   "dialogue": "kindle_vents/campfire"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 7,
+   "open_flag": "_vents_calm"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "open_flag": "_vents_calm"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 5,
+   "y": 3,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_kindle_pocket"
+  },
+  {
+   "x": 10,
+   "y": 1,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_kindle_ledge"
+  }
+ ],
+ "camp": [
+  10,
+  8
+ ]
+}

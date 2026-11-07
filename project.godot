@@ -2,8 +2,15 @@ config_version=5
 
 [application]
 config/name="Chimora"
+config/icon="res://art/icon/icon_192.png"
 run/main_scene="res://scenes/ui/Title.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+config/quit_on_go_back=false
+
+[audio]
+
+general/ios/session_category=0
+general/ios/mix_with_others=true
 
 [autoload]
 GameState="*res://scripts/core/GameState.gd"
@@ -11,7 +18,12 @@ EraManager="*res://scripts/core/EraManager.gd"
 VirtualPad="*res://scripts/ui/VirtualPad.gd"
 SaveManager="*res://scripts/core/SaveManager.gd"
 Sound="*res://scripts/core/Sound.gd"
+MusicDirector="*res://scripts/core/MusicDirector.gd"
+Juice="*res://scripts/core/Juice.gd"
+Haptics="*res://scripts/core/Haptics.gd"
+Ticker="*res://scripts/ui/Ticker.gd"
 Online="*res://scripts/online/Online.gd"
+Billing="*res://scripts/shop/Billing.gd"
 
 [display]
 window/size/viewport_width=144
@@ -33,4 +45,4 @@ textures/vram_compression/import_etc2_astc=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+enabled=PackedStringArray("res://addons/chimora_billing/plugin.cfg", "res://addons/gut/plugin.cfg")

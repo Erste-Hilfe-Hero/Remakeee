@@ -1,0 +1,193 @@
+{
+ "_doc": "Reference teams for the bonus goal check (plan area 2, item 768): each must meet its goal on Tamer in at least 20 % of BalanceSim.goal_fight battles. An entry with \"kit_only\" keeps only its named arts.",
+ "teams": {
+  "crowcrest/lio": [
+   {
+    "species": "Shalebat",
+    "level": 10
+   },
+   {
+    "species": "Kindlop",
+    "level": 10
+   },
+   {
+    "species": "Puddlet",
+    "level": 10
+   }
+  ],
+  "crowcrest/bram": [
+   {
+    "species": "Puddlet",
+    "level": 10,
+    "moves": [
+     "Fizz Pop",
+     "Drench"
+    ]
+   },
+   {
+    "species": "Mossling",
+    "level": 10
+   }
+  ],
+  "crowcrest/kestra": [
+   {
+    "species": "Kindlop",
+    "level": 14
+   },
+   {
+    "species": "Puddlet",
+    "level": 14
+   },
+   {
+    "species": "Shalebat",
+    "level": 14
+   }
+  ],
+  "cinder_rift/acolyte_a": [
+   {
+    "species": "Puddlet",
+    "level": 11,
+    "moves": [
+     "Drench",
+     "Fizz Pop"
+    ],
+    "kit_only": true
+   },
+   {
+    "species": "Zippit",
+    "level": 11,
+    "moves": [
+     "Crackle Bite",
+     "Siphon Spark"
+    ],
+    "kit_only": true
+   }
+  ],
+  "cinder_rift/acolyte_b": [
+   {
+    "species": "Puddlet",
+    "level": 12,
+    "moves": [
+     "Fizz Pop",
+     "Salt Snap"
+    ]
+   }
+  ],
+  "cinder_rift/warden_orrin": [
+   {
+    "species": "Puddlet",
+    "level": 14
+   },
+   {
+    "species": "Kelpup",
+    "level": 14
+   }
+  ],
+  "murk_hollow/delve": [
+   {
+    "species": "Kindlop",
+    "level": 16
+   },
+   {
+    "species": "Puddlet",
+    "level": 16
+   },
+   {
+    "species": "Zippit",
+    "level": 16
+   }
+  ],
+  "saltmarsh/neve": [
+   {
+    "species": "Zippit",
+    "level": 15
+   },
+   {
+    "species": "Shalebat",
+    "level": 15
+   },
+   {
+    "species": "Mossling",
+    "level": 15
+   }
+  ],
+  "saltmarsh/kestra_tag": [
+   {
+    "species": "Kindlop",
+    "level": 19
+   },
+   {
+    "species": "Puddlet",
+    "level": 19
+   },
+   {
+    "species": "Zippit",
+    "level": 19
+   }
+  ],
+  "tide_rift/mystic": [
+   {
+    "species": "Puddlet",
+    "level": 20,
+    "moves": [
+     "Drench",
+     "Fizz Pop"
+    ],
+    "kit_only": true
+   },
+   {
+    "species": "Zippit",
+    "level": 20,
+    "moves": [
+     "Crackle Bite",
+     "Storm Gnash"
+    ],
+    "kit_only": true
+   },
+   {
+    "species": "Zippit",
+    "level": 20,
+    "moves": [
+     "Crackle Bite",
+     "Storm Gnash"
+    ],
+    "kit_only": true
+   }
+  ],
+  "tide_rift/warden_maelis": [
+   {
+    "species": "Zippit",
+    "level": 23
+   },
+   {
+    "species": "Mossling",
+    "level": 23
+   },
+   {
+    "species": "Shalebat",
+    "level": 23
+   }
+  ],
+  "tide_rift/drowned_heart": [
+   {
+    "species": "Zippit",
+    "level": 24
+   },
+   {
+    "species": "Mossling",
+    "level": 24,
+    "moves": [
+     "Root Mend"
+    ]
+   },
+   {
+    "species": "Kindlop",
+    "level": 24
+   },
+   {
+    "species": "Shalebat",
+    "level": 24
+   }
+  ]
+ }
+}

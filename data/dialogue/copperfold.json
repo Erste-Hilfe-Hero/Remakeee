@@ -1,0 +1,104 @@
+{
+ "sign": [
+  "COPPERFOLD",
+  "Copperfold, 52 folk.",
+  "Mind the carts. The winding tower rings at every shift."
+ ],
+ "pitkeeper": {
+  "lines": [
+   "Pit Keeper Dorn: The warm spring comes straight up from the deep seams. Rest here."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Trader Wilma: Gear for the deep and brews for the brave."
+  ],
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell spark_drop revival_leaf dash_brew guard_brew"
+ },
+ "smith": {
+  "lines": [
+   "Smith Holt: You came up the Steps without a pry bar? Brave or daft.",
+   "Smith Holt: Take this one. Sluice wheels, stuck carts, rusty grates: lean on it and they give."
+  ],
+  "action": "give_item pry_bar 1",
+  "flag": "got_pry_bar",
+  "once": true,
+  "after_flag": {
+   "flag": "got_pry_bar",
+   "lines": [
+    "Smith Holt: Bring me ore some day and I'll make that bar sing."
+   ]
+  }
+ },
+ "shift": [
+  "Miner Pell-Anne: The lower seams cracked in the storm. Nobody goes below the second level now."
+ ],
+ "coach": {
+  "lines": [
+   "Driver Bram: Valley Coach, Copperfold stop. Mind your head, the roof is low."
+  ],
+  "action": "transit valley_coach"
+ },
+ "edda": {
+  "lines": [
+   "Cart Pusher Edda: Back and forth, back and forth. The carts don't push themselves."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Cart Pusher Edda: The rails stopped humming since the Rift was sealed. Good riddance."
+   ]
+  }
+ },
+ "sorrel": {
+  "lines": [
+   "Lamp Girl Sorrel: I light the pit lamps when the day shift comes up. Then I count stars."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Lamp Girl Sorrel: The stars look closer now. Mum says that's just clean air."
+   ]
+  }
+ },
+ "cobb": {
+  "lines": [
+   "Foreman Cobb: Dawn at the tower, noon at the tower, dusk at the spring. Some say I live at the tower."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Foreman Cobb: The deep seams stopped shaking. We'll open the lower levels again, slowly."
+   ]
+  }
+ },
+ "hask": {
+  "lines": [
+   "Old Miner Hask: Forty years below. Now I watch the young ones go down and come up."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Old Miner Hask: The mountain breathes easy again. I can hear it, you know."
+   ]
+  }
+ },
+ "maud": {
+  "lines": [
+   "Pedlar Maud: Copperfold nails by day, Wrenhollow rope by evening. Everyone needs both."
+  ],
+  "after_flag": {
+   "flag": "rift_cinder_sealed",
+   "lines": [
+    "Pedlar Maud: Business is up since the Rift closed. People buy things when they're not scared."
+   ]
+  }
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 3"
+ }
+}

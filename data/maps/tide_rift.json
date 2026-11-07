@@ -1,6 +1,7 @@
 {
  "name": "Tidewater Rift",
  "region": "veydal",
+ "biome": "rift",
  "backdrop": "lake",
  "field": "high_tide",
  "encounters": "tide_rift",
@@ -39,6 +40,15 @@
  ],
  "npcs": [
   {
+   "id": "tower_keeper",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "tide_rift/tower_keeper",
+   "sprite": "villager",
+   "show_flag": "rift_tide_sealed"
+  },
+  {
    "id": "mystic",
    "x": 3,
    "y": 2,
@@ -69,7 +79,63 @@
    "front": [
     3,
     3
-   ]
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Zippit",
+      "level": 14,
+      "moves": [
+       "Chill Mist"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 14
+     },
+     {
+      "species": "Mossling",
+      "level": 13,
+      "moves": [
+       "Thorn Volley"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Zippit",
+      "level": 14,
+      "moves": [
+       "Chill Mist"
+      ],
+      "held": "swift_feather"
+     },
+     {
+      "species": "Shalebat",
+      "level": 14
+     },
+     {
+      "species": "Mossling",
+      "level": 13,
+      "moves": [
+       "Thorn Volley"
+      ]
+     },
+     {
+      "species": "Kelpup",
+      "level": 13
+     },
+     {
+      "species": "Zephlet",
+      "level": 13
+     }
+    ]
+   },
+   "profile": "tactician"
   },
   {
    "id": "warden_maelis",
@@ -88,19 +154,203 @@
    "team": [
     {
      "species": "Zephlet",
-     "level": 15
+     "level": 14,
+     "moves": [
+      "Kite Cut",
+      "Crosswind"
+     ]
     },
     {
      "species": "Zippit",
-     "level": 15
+     "level": 15,
+     "moves": [
+      "Static Tag"
+     ]
     },
     {
      "species": "Riptail",
-     "level": 17
+     "level": 17,
+     "moves": [
+      "Rip Current",
+      "Undertow",
+      "Tide Call"
+     ]
     }
    ],
    "sprite": "warden",
-   "rule": "undertow"
+   "rule": "undertow",
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Zephlet",
+      "level": 14,
+      "moves": [
+       "Kite Cut",
+       "Crosswind"
+      ]
+     },
+     {
+      "species": "Riptail",
+      "level": 16,
+      "moves": [
+       "Rip Current",
+       "Undertow",
+       "Tide Call"
+      ]
+     }
+    ],
+    "veteran": [
+     {
+      "species": "Zephlet",
+      "level": 15,
+      "moves": [
+       "Kite Cut",
+       "Crosswind",
+       "Scatter Gale"
+      ]
+     },
+     {
+      "species": "Zippit",
+      "level": 15,
+      "moves": [
+       "Static Tag"
+      ]
+     },
+     {
+      "species": "Riptail",
+      "level": 17,
+      "moves": [
+       "Rip Current",
+       "Undertow",
+       "Tide Call"
+      ],
+      "held": "bark_wrap"
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Zephlet",
+      "level": 14,
+      "moves": [
+       "Kite Cut",
+       "Crosswind",
+       "Scatter Gale"
+      ],
+      "held": "swift_feather"
+     },
+     {
+      "species": "Zippit",
+      "level": 14,
+      "moves": [
+       "Static Tag"
+      ],
+      "held": "spark_coil"
+     },
+     {
+      "species": "Riptail",
+      "level": 15,
+      "moves": [
+       "Rip Current",
+       "Undertow",
+       "Tide Call"
+      ],
+      "held": "bark_wrap"
+     },
+     {
+      "species": "Kelpup",
+      "level": 14,
+      "moves": [
+       "Shoal Trap"
+      ],
+      "held": "iron_burr"
+     }
+    ]
+   },
+   "rule_by_difficulty": {
+    "story": "undertow_soft",
+    "veteran": [
+     "undertow",
+     "tide_turn"
+    ],
+    "rift_born": [
+     "undertow",
+     "tide_turn"
+    ]
+   },
+   "profile": "tactician",
+   "profile_from": "tamer",
+   "profile_tune": {
+    "field_w": 1.5,
+    "swap_below": 0.4
+   },
+   "lexicon": "warden_maelis",
+   "second_trial": {
+    "needs_flags": [
+     "rift_cinder_sealed",
+     "rift_tide_sealed"
+    ],
+    "rules": [
+     "undertow",
+     "tide_turn"
+    ],
+    "money": 1600,
+    "team": [
+     {
+      "species": "Leviarch",
+      "level": 31
+     },
+     {
+      "species": "Riptail",
+      "level": 29
+     },
+     {
+      "species": "Tempestrel",
+      "level": 29
+     }
+    ],
+    "teams_by_difficulty": {
+     "veteran": [
+      {
+       "species": "Leviarch",
+       "level": 31
+      },
+      {
+       "species": "Riptail",
+       "level": 29
+      },
+      {
+       "species": "Tempestrel",
+       "level": 29
+      },
+      {
+       "species": "Kelphound",
+       "level": 28
+      }
+     ],
+     "rift_born": [
+      {
+       "species": "Leviarch",
+       "level": 31
+      },
+      {
+       "species": "Riptail",
+       "level": 29
+      },
+      {
+       "species": "Tempestrel",
+       "level": 29
+      },
+      {
+       "species": "Kelphound",
+       "level": 28
+      },
+      {
+       "species": "Glimmerax",
+       "level": 28
+      }
+     ]
+    }
+   }
   },
   {
    "id": "drowned_heart",

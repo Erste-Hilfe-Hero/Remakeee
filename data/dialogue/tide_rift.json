@@ -1,7 +1,18 @@
 {
- "mystic": [
-  "Ilka: Maelis speaks with the tide itself. Or she did."
- ],
+ "mystic": {
+  "lines": [
+   "Ilka: Maelis speaks with the tide itself. Or she did."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_tide_sealed",
+    "lines": [
+     "Ilka: The currents are calm. But they told me one more thing.",
+     "Ilka: Across the water waits a Rift that looks back at you. Don't stare into it too long."
+    ]
+   }
+  ]
+ },
  "mystic_intro": [
   "Ilka: The currents told me you'd come.",
   "Ilka: Three of mine against three of yours, all at once. Show me your bond!"
@@ -13,12 +24,21 @@
   "lines": [
    "Maelis: ..."
   ],
-  "after_flag": {
-   "flag": "rift_tide_sealed",
-   "lines": [
-    "Maelis: The tide is still. Thank you, cartographer."
-   ]
-  }
+  "after_flag": [
+   {
+    "flag": "rift_tide_sealed",
+    "lines": [
+     "Maelis: The tide is still. Thank you, cartographer."
+    ]
+   },
+   {
+    "flag": "tide_heart_mended",
+    "lines": [
+     "Maelis: Since the heart was mended I hear a song in the water. Five notes, over and over.",
+     "Maelis: Someone taught the Rift that tune long ago. I think it was meant for you."
+    ]
+   }
+  ]
  },
  "maelis_intro": [
   "Warden Maelis: ...",
@@ -39,5 +59,12 @@
  "heart_defeat": [
   "The drowned heart sinks and dissolves into clear water.",
   "Warden Maelis: Now the tide is truly still."
- ]
+ ],
+ "tower_keeper": {
+  "lines": [
+   "Telmo: The shaft goes down, not up. Fifteen floors, darker each step.",
+   "Telmo: Tide, bloom and umbra echoes wait below. Three of yours at most, ring 30 or more."
+  ],
+  "action": "rift_tower tide_shaft"
+ }
 }

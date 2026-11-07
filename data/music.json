@@ -1,17 +1,36 @@
 {
-  "_comment": "Which track (audio/music/<name>.ogg) plays on each map. Maps not listed play 'default'.",
+  "_comment": "Music per map (plan area 6, item 2443): every map has its own song (audio/music/<track>.ogg, with stems in audio/music/stems/ for the MusicDirector). An entry is either a track name or {\"track\": ..., \"ambience\": ...}. Maps not listed (new ones) play 'default'. Outdoor maps name an ambience loop (audio/ambience/<name>.ogg, items 2569, 2570), played on the Ambience bus at -14 dB.",
   "default": "route",
   "maps": {
-    "lighthouse": "town",
-    "brindlewick": "town",
-    "map_house": "town",
-    "rest_spring": "town",
-    "thornridge": "town",
-    "fernstair": "route",
-    "crowcrest": "route",
-    "saltmarsh": "route",
-    "cinder_rift": "rift",
-    "tide_rift": "rift",
-    "murk_hollow": "rift"
+    "lighthouse": {
+      "track": "lighthouse",
+      "ambience": "sea"
+    },
+    "brindlewick": {
+      "track": "brindlewick",
+      "ambience": "market"
+    },
+    "map_house": "map_house",
+    "rest_spring": "rest_spring",
+    "thornridge": {
+      "track": "thornridge",
+      "ambience": "meadow"
+    },
+    "fernstair": {
+      "track": "fernstair",
+      "ambience": "ferns"
+    },
+    "crowcrest": {
+      "track": "crowcrest",
+      "ambience": "cliffs"
+    },
+    "saltmarsh": {
+      "track": "saltmarsh",
+      "ambience": "marsh"
+    },
+    "cinder_rift": "cinder_rift",
+    "tide_rift": "tide_rift",
+    "murk_hollow": "murk_hollow",
+    "echo_path": "echo_path"
   }
 }

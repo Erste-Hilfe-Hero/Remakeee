@@ -1,0 +1,47 @@
+{
+ "name": "Gravers' Hall",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WfCCffCCfW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "cinderfold",
+   "tx": 4,
+   "ty": 6,
+   "facing": "down"
+  }
+ ],
+ "npcs": [],
+ "signs": [],
+ "spots": {
+  "halvard": [
+   4,
+   2
+  ],
+  "veit_plate": [
+   7,
+   3
+  ],
+  "page_14": [
+   1,
+   6
+  ],
+  "letter_a2": [
+   8,
+   6
+  ]
+ }
+}

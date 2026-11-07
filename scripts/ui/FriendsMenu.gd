@@ -1,6 +1,6 @@
 class_name FriendsMenu
 extends RefCounted
-## Menu > Friends: friend code, friends with Tamer cards, requests, Lantern Mail (greetings and
+## Menu > Friends: friend code, friends with Wanderer cards, requests, Lantern Mail (greetings and
 ## daily gifts), the world goal of the week and the weekly board (items 21-48, 81-85, 121-160).
 ## Picking "Echo duel" closes the menu and leaves the friend's team in [member PauseMenu.echo_duel].
 
@@ -13,17 +13,21 @@ const GOAL_TEXT: Dictionary = {
 
 static func run(menu: PauseMenu) -> void:
 	if not Online.is_online():
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(Online.error_text())
 		return
 	if not Online.social_on():
 		await menu.info("Friends and greetings are switched off. You can switch them on under Settings, Account.")
 		return
 	while true:
-		var r: Dictionary = await Online.call_fn("friends_list")
-		var mail_r: Dictionary = await Online.call_fn("mail_list")
+		var got: Array[Dictionary] = await fetch_lists(menu)
+		var r: Dictionary = got[0]
+		var mail_r: Dictionary = got[1]
 		if not r.ok or not r.data is Dictionary:
-			await menu.info("No connection right now. Try again in a moment.")
-			return
+			# Stay in the menu with "Try again" and "Back" (item 2149).
+			var again: int = await menu.pick_strings(Online.error_text(r.error), ["Try again"] as Array[String])
+			if again < 0:
+				return
+			continue
 		var data: Dictionary = r.data
 		var friends: Array = data.get("friends", [])
 		var incoming: Array = data.get("incoming", [])
@@ -38,9 +42,16 @@ static func run(menu: PauseMenu) -> void:
 		labels.append("Lantern Mail (%d new)" % unread if unread > 0 else "Lantern Mail")
 		labels.append("Requests (%d)" % incoming.size() if incoming.size() > 0 else "Requests")
 		labels.append("Add a friend...")
+		labels.append("Copy my code")
 		labels.append("World goal of the week")
 		labels.append("Weekly board")
-		labels.append("Blocked Tamers")
+		labels.append("Blocked Wayfarers")
+		if Online.flag_on("bund"):
+			labels.append("Bund")
+		if Online.flag_on("raid"):
+			labels.append("Raid Rifts")
+		if Online.flag_on("trade"):
+			labels.append("Trades")
 		var title: String = "Friends %d   Your code %s" % [friends.size(), Online.pretty_code(Online.friend_code())]
 		var idx: int = await menu.pick_strings(title, labels)
 		if idx < 0:
@@ -53,15 +64,76 @@ static func run(menu: PauseMenu) -> void:
 			0: await run_mail(menu, mail_r.data if mail_r.data is Array else [])
 			1: await run_requests(menu, incoming, data.get("outgoing", []))
 			2: await add_friend(menu)
-			3: await run_goal(menu)
-			4: await run_board(menu)
-			5: await run_blocked(menu, data.get("blocked", []))
+			3: copy_code(menu)
+			4: await run_goal(menu)
+			5: await run_board(menu)
+			6: await run_blocked(menu, data.get("blocked", []))
+		match labels[idx]:
+			"Bund": await BundMenu.run(menu)
+			"Trades": await TradeMenu.run(menu)
+			"Raid Rifts":
+				await RaidMenu.run(menu)
+				if not menu.raid_attempt.is_empty():
+					return
+
+## Friends and Lantern Mail are asked for at the same time, while the menu already shows
+## "Loading..." (item 2129). Returns [friends_list result, mail_list result].
+static func fetch_lists(menu: MenuHost) -> Array[Dictionary]:
+	var got: Array[Dictionary] = [{}, {}]
+	var done: Array[int] = [0]
+	var ask := func(i: int, fn: String) -> void:
+		got[i] = await Online.call_fn(fn)
+		done[0] += 1
+	ask.call(0, "friends_list")
+	ask.call(1, "mail_list")
+	if done[0] < 2:
+		menu.picker.pick("Friends", [{"text": "Loading...", "disabled": true}] as Array[Dictionary], false)
+		while done[0] < 2 and menu.is_inside_tree():
+			await menu.get_tree().process_frame
+		if menu.picker.visible:
+			menu.picker.picked.emit(-1)
+	return got
+
+## Profile frames from the shop (item 4284): the marks drawn around a name on the friend
+## list and the Wanderer card. Only looks.
+const CARD_FRAMES: Dictionary[String, Array] = {
+	"leaf": ["~", "~"], "shell": ["(", ")"], "gear": ["[", "]"],
+	"star": ["+", "+"], "ripple": ["=", "="], "ember": ["^", "^"],
+}
+
+## Greeting card motifs from the shop (item 4285): the border line drawn above and below a
+## friend's gift when it is opened, and the mark on the mail line. Only looks.
+const GIFT_CARDS: Dictionary[String, String] = {
+	"lantern": "o-o-o-o-o-o", "moth": "}{ }{ }{ }{", "wave": "~~~~~~~~~~~~", "pine": "^ ^ ^ ^ ^ ^",
+	"kite": "<> <> <> <>", "moon": "( ) ( ) ( )", "shell": "@ @ @ @ @ @", "ember": "* . * . * .",
+}
+
+## The gift's card motif from the sender ("" for the plain card).
+static func gift_motif(m: Dictionary) -> String:
+	var k: String = str(m.get("motif", "")) if m.get("motif") is String else ""
+	return k if GIFT_CARDS.has(k) else ""
+
+## [param text] on the sender's greeting card: the motif's border above and below.
+static func on_card(m: Dictionary, text: String) -> String:
+	var k: String = gift_motif(m)
+	if k.is_empty():
+		return text
+	return "%s\n%s\n%s" % [GIFT_CARDS[k], text, GIFT_CARDS[k]]
+
+## [param name] inside the friend's profile frame (from their card), or plain.
+static func framed_name(f: Dictionary) -> String:
+	var name: String = str(f.get("name", ""))
+	var c: Variant = f.get("card", {})
+	var kind: String = str(c.get("frame", "")) if c is Dictionary and c.get("frame") is String else ""
+	if not CARD_FRAMES.has(kind):
+		return name
+	return "%s%s%s" % [CARD_FRAMES[kind][0], name, CARD_FRAMES[kind][1]]
 
 ## "● Mara  Lv3  Brindlewick": online dot, friendship level, where they are.
 static func friend_line(f: Dictionary) -> String:
 	var dot: String = "*" if bool(f.get("online", false)) else "-"
 	var where: String = str(f.get("place", "")) if bool(f.get("online", false)) else Loc.t(last_seen_text(int(f.get("last_seen", 0))))
-	return "%s %s  Lv%d  %s" % [dot, str(f.get("name", "")), int(f.get("level", 1)), where]
+	return "%s %s  Bond %d  %s" % [dot, framed_name(f), int(f.get("level", 1)), where]
 
 static func last_seen_text(unix: int) -> String:
 	var ago: int = maxi(0, Online.unix_now() - unix)
@@ -71,16 +143,16 @@ static func last_seen_text(unix: int) -> String:
 		return "seen %d h ago" % (ago / 3600)
 	return "seen %d days ago" % (ago / 86400)
 
-## The Tamer card (item 24).
+## The Wanderer card (item 24).
 static func card_text(f: Dictionary) -> String:
 	var c: Dictionary = f.get("card", {}) if f.get("card") is Dictionary else {}
 	var lines: Array[String] = [
-		"%s   Code %s" % [str(f.get("name", "")), Online.pretty_code(str(f.get("code", "")))],
+		"%s   Code %s" % [framed_name(f), Online.pretty_code(str(f.get("code", "")))],
 		"Favourite: %s" % (str(f.favorite) if not str(f.get("favorite", "")).is_empty() else "-"),
 		"Rifts sealed: %d" % int(c.get("seals", 0)),
 		"Spirlog: %d seen, %d bonded" % [int(c.get("seen", 0)), int(c.get("bonded", 0))],
 		"Play time: %d h" % int(c.get("hours", 0)),
-		"Friendship Lv%d (%d points)" % [int(f.get("level", 1)), int(f.get("points", 0))],
+		"Friendship %d (%d points)" % [int(f.get("level", 1)), int(f.get("points", 0))],
 	]
 	return Loc.t("\n".join(lines))
 
@@ -89,7 +161,7 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 	var code: String = str(f.code)
 	while true:
 		var gift: String = "Gift sent today" if bool(f.get("gift_sent", false)) else "Send today's gift"
-		var entries: Array[String] = ["Tamer card", gift, "Send a greeting...", "Wave", "Echo duel", "Remove friend", "Block", "Report..."]
+		var entries: Array[String] = ["Wayfarer card", gift, "Send a greeting...", "Wave", "Echo duel", "Remove friend", "Block", "Report..."]
 		var idx: int = await menu.pick_strings(str(f.name), entries)
 		match idx:
 			-1:
@@ -103,7 +175,7 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 				var r: Dictionary = await Online.call_fn("gift_send", {"p_code": code})
 				if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 					f["gift_sent"] = true
-					Sound.sfx("confirm")
+					Sound.sfx("gift")
 					await menu.info("Your gift is on its way to %s." % str(f.name))
 				else:
 					await menu.info(error_text(r))
@@ -117,12 +189,14 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 				if not bool(f.get("has_team", false)):
 					await menu.info("%s has no echo team yet." % str(f.name))
 					continue
-				if await menu.confirm("Echo duel with %s's team? Everyone fights at Lv%d. Nothing is lost, your team is rested after." % [str(f.name), EchoTeam.DUEL_LEVEL]):
-					var t: Dictionary = await Online.call_fn("friend_team", {"p_code": code})
-					if t.ok and t.data is Dictionary and bool(t.data.get("ok", false)):
-						menu.echo_duel = {"code": code, "name": str(t.data.name), "team": t.data.team}
-						return true
+				var t: Dictionary = await Online.call_fn("friend_team", {"p_code": code})
+				if not (t.ok and t.data is Dictionary and bool(t.data.get("ok", false))):
 					await menu.info(error_text(t))
+					continue
+				var ring: int = EchoTeam.duel_ring(t.data)
+				if await menu.confirm("Echo duel with %s's team? Everyone fights at Ring %d. Nothing is lost, your team is rested after." % [str(f.name), ring]):
+					menu.echo_duel = {"code": code, "name": str(t.data.name), "team": t.data.team, "ring": ring}
+					return true
 			5:
 				if await menu.confirm("Remove %s from your friends?" % str(f.name)):
 					await Online.call_fn("friend_remove", {"p_code": code})
@@ -137,32 +211,42 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 	return false
 
 static func _send(menu: MenuHost, code: String, kind: String, phrase: int) -> void:
-	var r: Dictionary = await Online.call_fn("mail_send", {"p_code": code, "p_kind": kind, "p_phrase": phrase})
-	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+	# A small action: with a weak connection it waits and goes out later (plan item 3011).
+	var r: Dictionary = await Online.send_small("mail_send", {"p_code": code, "p_kind": kind, "p_phrase": phrase})
+	if r.ok and r.data is Dictionary and bool(r.data.get("queued", false)):
+		await menu.info("It goes out as soon as the connection is back.")
+	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		Sound.sfx("confirm")
 		await menu.info("Sent!")
 	else:
 		await menu.info(error_text(r))
 
-static func report(menu: MenuHost, code: String, name: String) -> void:
+static func report(menu: MenuHost, code: String, name: String, context: String = "friends") -> void:
 	var reason: int = await menu.pick_strings("Why do you report %s?" % name, REPORT_REASONS)
 	if reason < 0:
 		return
-	var r: Dictionary = await Online.call_fn("report", {"p_code": code, "p_reason": reason})
+	var r: Dictionary = await Online.call_fn("report_in", {"p_code": code, "p_reason": reason, "p_context": context, "p_object": ""})
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
-		await menu.info("Thank you. We will look at it. You can also block %s." % name)
+		await menu.info(Loc.t("Thank you. Your report has number %d. We will look at it and tell you the result under Account, Messages from the team.") % int(r.data.get("report_id", 0))
+			+ "\n" + Loc.t("You can also block %s.") % name)
 	else:
 		await menu.info(error_text(r))
 
+## Puts the own friend code on the clipboard (item 2171).
+static func copy_code(menu: MenuHost) -> void:
+	DisplayServer.clipboard_set(Online.pretty_code(Online.friend_code()))
+	Sound.sfx("confirm")
+	menu.toast("Copied.")
+
 static func add_friend(menu: MenuHost) -> void:
 	await menu.info("Your friend code is %s. Share it only with people you know. Never share your real name or address." % Online.pretty_code(Online.friend_code()))
-	var code: String = await TextPrompt.ask(menu, "Friend code of your friend", false, 9)
+	var code: String = await CodePrompt.ask(menu, "Friend code of your friend", 8)
 	if code.is_empty():
 		return
 	var r: Dictionary = await Online.call_fn("friend_request", {"p_code": code})
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		if str(r.data.get("status", "")) == "accepted":
-			Sound.sfx("confirm")
+			Sound.sfx("friend")
 			await menu.info("You are friends now!")
 		else:
 			await menu.info("Request sent. You are friends once they accept.")
@@ -184,7 +268,7 @@ static func run_requests(menu: MenuHost, incoming: Array, outgoing: Array) -> vo
 		match idx:
 			0:
 				await Online.call_fn("friend_respond", {"p_code": req.code, "p_accept": true})
-				Sound.sfx("confirm")
+				Sound.sfx("friend")
 			1:
 				await Online.call_fn("friend_respond", {"p_code": req.code, "p_accept": false})
 			2:
@@ -254,9 +338,9 @@ static func run_mail(menu: MenuHost, mail: Array) -> void:
 				Sound.sfx("coin")
 				var where: String = str(m.get("place", ""))
 				if where.is_empty():
-					await menu.info("%s sent you %s!" % [str(m.name), item_name(item)])
+					await menu.info(on_card(m, Loc.t("%s sent you %s!") % [str(m.name), item_name(item)]))
 				else:
-					await menu.info("%s sent you %s from %s!" % [str(m.name), item_name(item), where])
+					await menu.info(on_card(m, Loc.t("%s sent you %s from %s!") % [str(m.name), item_name(item), where]))
 			else:
 				await menu.info(error_text(r))
 			continue
@@ -292,12 +376,12 @@ static func goal_text(g: Dictionary) -> String:
 		bar += "#" if i < pct / 10 else "."
 	var lines: Array[String] = [
 		"This week: %s" % str(GOAL_TEXT.get(str(g.get("kind", "")), g.get("kind", ""))),
-		"All Tamers: %d of %d" % [total, target],
+		"All Wayfarers: %d of %d" % [total, target],
 		"[%s] %d%%" % [bar, pct],
 		"You helped: %d" % int(g.get("mine", 0)),
 	]
 	if int(g.get("online_now", 0)) > 1:
-		lines.append("%d Tamers are in Veydal" % int(g.online_now))
+		lines.append("%d Wayfarers are in Veydal" % int(g.online_now))
 	return Loc.t("\n".join(lines))
 
 ## Tiers reached and not claimed yet (1-4).
@@ -313,7 +397,7 @@ static func open_tiers(g: Dictionary) -> Array[int]:
 static func run_goal(menu: MenuHost) -> void:
 	var r: Dictionary = await Online.call_fn("community_get")
 	if not r.ok or not r.data is Dictionary:
-		await menu.info("No connection right now. Try again in a moment.")
+		await menu.info(Online.error_text(r.error))
 		return
 	var g: Dictionary = r.data
 	var tiers: Array[int] = open_tiers(g)
@@ -336,13 +420,13 @@ static func run_board(menu: MenuHost) -> void:
 	while true:
 		var r: Dictionary = await Online.call_fn("weekly_board", {"p_friends": friends_only})
 		if not r.ok or not r.data is Dictionary:
-			await menu.info("No connection right now. Try again in a moment.")
+			await menu.info(Online.error_text(r.error))
 			return
 		var lines: Array[String] = []
 		for row: Dictionary in r.data.get("rows", []):
 			var n: String = str(row.get("name", ""))
 			var you: String = "  " + Loc.t("(you)") if bool(row.get("me", false)) else ""
-			lines.append("%d. %s  %d%s" % [int(row.rank), n if not n.is_empty() else "Tamer", int(row.score), you])
+			lines.append("%d. %s  %d%s" % [int(row.rank), n if not n.is_empty() else "Wanderer", int(row.score), you])
 		if lines.is_empty():
 			lines.append("No runs yet this week. Try the weekly challenge!")
 		var title: String = "Weekly board, friends" if friends_only else "Weekly board, everyone"
@@ -356,11 +440,11 @@ static func error_text(r: Dictionary) -> String:
 	if r.ok and r.data is Dictionary:
 		e = str(r.data.get("error", ""))
 	match e:
-		"no_such_code": return "No Tamer has that code."
+		"no_such_code": return "No Wayfarer has that code."
 		"not_friends": return "You can only do that with friends."
 		"already_today": return "Already done today. Tomorrow again!"
 		"slow_down": return "That was a lot at once. Please wait a little."
 		"full": return "That friend list is full."
 		"limit_today": return "You opened all gifts you can today. The rest waits for tomorrow."
 		"social_off": return "Friends and greetings are switched off."
-	return "No connection right now. Try again in a moment."
+	return Online.error_text(e)

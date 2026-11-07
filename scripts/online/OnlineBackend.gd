@@ -1,7 +1,7 @@
 class_name OnlineBackend
 extends RefCounted
 ## The server Chimora talks to. Two implementations:
-## - SupabaseBackend: the real server (Supabase in Frankfurt), used when data/online.json has a URL.
+## - SupabaseBackend: the real server (our server in server/, or Supabase Cloud), used when data/online.json has a URL.
 ## - LocalBackend: an in-memory stand-in with the same rules, used in tests and in builds
 ##   without a server address (debug APKs before the server exists).
 ## Every call is a coroutine and returns {"ok": bool, "data": Variant, "error": String,
@@ -9,6 +9,9 @@ extends RefCounted
 
 ## {"access_token", "refresh_token", "expires_at" (unix), "user_id"}
 var session: Dictionary = {}
+## The token this device got from session_claim (plan item 3010), sent with every call so the
+## server can refuse saves from a device that is no longer the newest one. Empty: not claimed.
+var device_token: String = ""
 
 func is_local() -> bool:
 	return false

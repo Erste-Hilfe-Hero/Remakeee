@@ -1,12 +1,13 @@
 {
  "name": "Murk Hollow",
  "region": "veydal",
+ "biome": "cave",
  "backdrop": "ridge",
  "field": "deep_murk",
  "encounters": "murk_hollow",
  "rows": [
   "@@@@@@@@@@@@",
-  "@L..S.L@.:.@",
+  "@L..S.L@=:.@",
   "@:..._....:@",
   "@L..__..@@@@",
   "@@@@@__@@@@@",
@@ -15,7 +16,7 @@
   "@@@..__..@@@",
   "@::......::@",
   "@::.____.::@",
-  "@...____...@",
+  "@...____..L@",
   "@@...__...@@",
   "@@@@@__@@@@@"
  ],
@@ -35,6 +36,14 @@
    "tx": 9,
    "ty": 15,
    "facing": "down"
+  },
+  {
+   "x": 8,
+   "y": 1,
+   "to": "murk_hollow@1",
+   "tx": 3,
+   "ty": 1,
+   "facing": "right"
   }
  ],
  "npcs": [
@@ -59,13 +68,66 @@
    "team": [
     {
      "species": "Mirkmole",
-     "level": 12
+     "level": 12,
+     "moves": [
+      "Murk Veil",
+      "Shade Pounce"
+     ]
     },
     {
      "species": "Shalebat",
-     "level": 13
+     "level": 13,
+     "moves": [
+      "Grit Jab"
+     ]
     }
-   ]
+   ],
+   "teams_by_difficulty": {
+    "veteran": [
+     {
+      "species": "Mirkmole",
+      "level": 12,
+      "moves": [
+       "Murk Veil",
+       "Shade Pounce",
+       "Gloom Handoff"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 13,
+      "moves": [
+       "Grit Jab"
+      ]
+     }
+    ],
+    "rift_born": [
+     {
+      "species": "Mirkmole",
+      "level": 12,
+      "moves": [
+       "Murk Veil",
+       "Shade Pounce",
+       "Gloom Handoff"
+      ]
+     },
+     {
+      "species": "Shalebat",
+      "level": 13,
+      "moves": [
+       "Grit Jab"
+      ]
+     },
+     {
+      "species": "Wickit",
+      "level": 12,
+      "moves": [
+       "Beacon Ping"
+      ]
+     }
+    ]
+   },
+   "profile": "spoiler"
   },
   {
    "id": "hush_swarm",
@@ -113,7 +175,78 @@
    "win_flags": [
     "hollow_swarm_cleared"
    ],
-   "leaves": true
+   "leaves": true,
+   "teams_by_difficulty": {
+    "story": [
+     {
+      "species": "Mirkmole",
+      "level": 12
+     },
+     {
+      "species": "Shalebat",
+      "level": 12
+     },
+     {
+      "species": "Wickit",
+      "level": 11
+     },
+     {
+      "species": "Mirkmole",
+      "level": 11
+     }
+    ],
+    "tamer": [
+     {
+      "species": "Mirkmole",
+      "level": 12
+     },
+     {
+      "species": "Shalebat",
+      "level": 12
+     },
+     {
+      "species": "Wickit",
+      "level": 11
+     },
+     {
+      "species": "Mirkmole",
+      "level": 11
+     },
+     {
+      "species": "Shalebat",
+      "level": 13
+     }
+    ]
+   }
+  },
+  {
+   "id": "fenn",
+   "x": 3,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "murk_hollow/fenn",
+   "sprite": "villager",
+   "trainer": "Lampbearer Fenn",
+   "intro": "murk_hollow/fenn_intro",
+   "defeat": "murk_hollow/fenn_defeat",
+   "profile": "field_keeper",
+   "team": [
+    {
+     "species": "Wickit",
+     "level": 12,
+     "moves": [
+      "Dawn Call",
+      "Beacon Ping"
+     ]
+    },
+    {
+     "species": "Mirkmole",
+     "level": 13,
+     "moves": [
+      "Murk Call"
+     ]
+    }
+   ]
   }
  ],
  "signs": [
@@ -121,11 +254,6 @@
    "x": 4,
    "y": 1,
    "dialogue": "murk_hollow/sign_old"
-  },
-  {
-   "x": 2,
-   "y": 2,
-   "dialogue": "murk_hollow/gallery_find"
   },
   {
    "x": 6,
@@ -143,9 +271,15 @@
    "dialogue": "murk_hollow/lamp_3"
   },
   {
+   "x": 8,
+   "y": 3,
+   "dialogue": "story/find_6",
+   "hide_flag": "page_6"
+  },
+  {
    "x": 10,
-   "y": 1,
-   "dialogue": "murk_hollow/nook_find"
+   "y": 10,
+   "dialogue": "murk_hollow/campfire"
   }
  ],
  "gear_spots": [
@@ -166,5 +300,92 @@
    "y": 2,
    "open_flag": "hollow_lamps"
   }
+ ],
+ "secrets": [
+  {
+   "x": 2,
+   "y": 2,
+   "item": "spark_coil",
+   "count": 1,
+   "flag": "hollow_find",
+   "dialogue": "murk_hollow/gallery_find"
+  },
+  {
+   "x": 10,
+   "y": 1,
+   "item": "echo_umbra",
+   "count": 1,
+   "flag": "hollow_nook_find",
+   "dialogue": "murk_hollow/nook_find"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Echo Gallery",
+   "encounters": "echo_gallery",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@.=.......:@",
+    "@.@@@@@@@@.@",
+    "@.@::....@.@",
+    "@.@.@@@@.@.@",
+    "@.@.@=S@.@.@",
+    "@.@.@..@.@.@",
+    "@...@..v...@",
+    "@@@@@@@@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 2,
+     "y": 1,
+     "to": "murk_hollow",
+     "tx": 8,
+     "ty": 2,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 5,
+     "to": "murk_hollow",
+     "tx": 5,
+     "ty": 11,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 6,
+     "y": 5,
+     "dialogue": "murk_hollow/echo_rope"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 5,
+     "open_flag": "echo_rope"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 3,
+     "y": 3,
+     "item": "max_tonic",
+     "count": 1,
+     "flag": "find_echo_corner"
+    },
+    {
+     "x": 10,
+     "y": 1,
+     "item": "remedy",
+     "count": 1,
+     "flag": "find_echo_far"
+    }
+   ]
+  }
+ ],
+ "camp": [
+  10,
+  10
  ]
 }

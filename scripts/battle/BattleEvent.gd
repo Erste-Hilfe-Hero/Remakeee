@@ -10,9 +10,12 @@ enum Type {
 	ITEM_USED, BOND_ATTEMPT, BOND_RESULT, FREE_ACTION, FLEE_RESULT,
 	XP_GAINED, LEVEL_UP, MOVE_LEARNED, BATTLE_END,
 	STAT_CHANGED, FIELD, RULE, PARTNER, BOSS,
+	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
+	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
+	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
 }
 
-const STAT_NAMES: Dictionary[String, String] = {"atk": "ATK", "def": "DEF", "foc": "FOC", "spd": "SPD"}
+const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
 
 var type: Type
 var data: Dictionary
@@ -36,7 +39,7 @@ func describe() -> String:
 				return "A hushed %s blocks your way.%s" % [data.get("foe_name", ""), shimmer]
 			if bool(data.get("boss", false)):
 				return "%s rises from the Rift!" % data.get("trainer", "")
-			return "%s calls for a duel!" % data.get("trainer", "A Tamer")
+			return "%s calls for a duel!" % data.get("trainer", "A Wayfarer")
 		Type.SEND_OUT, Type.SWAP_IN:
 			return "%s steps out!" % who
 		Type.SWAP_OUT:
@@ -50,7 +53,7 @@ func describe() -> String:
 		Type.MISSED:
 			return "%s missed!" % who
 		Type.NO_TARGET:
-			return "The move found nothing to strike."
+			return "The art found nothing to strike."
 		Type.DAMAGE:
 			var eff: float = float(data.get("eff", 1.0))
 			var tail: String = ""
@@ -62,17 +65,21 @@ func describe() -> String:
 				tail += " It barely landed..."
 			return ("%s took %d damage." % [who, data.get("amount", 0)]) + tail
 		Type.HEAL:
-			return "%s recovered %d HP." % [who, data.get("amount", 0)]
+			return "%s recovered %d Vigor." % [who, data.get("amount", 0)]
 		Type.STATUS_APPLIED:
 			return "%s is afflicted with %s!" % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_FAILED:
+			if not str(data.get("field_label", "")).is_empty():
+				return "The %s keeps %s safe." % [data.get("field_label", ""), who]
+			if bool(data.get("clause", false)):
+				return "Calm rule: %s stays awake while an ally drowses." % who
 			return "It had no effect on %s." % who
 		Type.STATUS_TICK:
-			return "%s is hurt by %s." % [who, StatusRules.label(str(data.get("status", "")))]
+			return "%s suffers from %s." % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_CURED:
 			return "%s shook off %s." % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.STATUS_PREVENTED:
-			return "%s can't move (%s)!" % [who, StatusRules.label(str(data.get("status", "")))]
+			return "%s is held back by %s!" % [who, StatusRules.label(str(data.get("status", "")))]
 		Type.ENERGY_CHANGED:
 			return ""
 		Type.NOT_ENOUGH_ENERGY:
@@ -86,15 +93,19 @@ func describe() -> String:
 		Type.BOND_ATTEMPT:
 			return "You reach out to %s..." % who
 		Type.BOND_RESULT:
-			return "%s bonded with you!" % who if data.get("success", false) else "%s broke the bond!" % who
+			if data.get("success", false):
+				return "%s bonded with you!" % who
+			if data.get("steadied", false):
+				return "%s broke the bond, but your Pass keeps it calm." % who
+			return "%s broke the bond!" % who
 		Type.FREE_ACTION:
 			return "%s seizes the moment!" % who
 		Type.FLEE_RESULT:
 			return "You slipped away." if data.get("success", false) else "No way out!"
 		Type.XP_GAINED:
-			return "%s gained %d XP." % [who, data.get("amount", 0)]
+			return "%s gained %d growth." % [who, data.get("amount", 0)]
 		Type.LEVEL_UP:
-			return "%s reached Lv%d!" % [who, data.get("level", 0)]
+			return "%s grew ring %d!" % [who, data.get("level", 0)]
 		Type.MOVE_LEARNED:
 			return "%s picked up %s!" % [who, data.get("move", "")]
 		Type.BATTLE_END:
@@ -103,14 +114,63 @@ func describe() -> String:
 			var stat: String = STAT_NAMES.get(str(data.get("stat", "")), "")
 			var delta: int = int(data.get("delta", 0))
 			if delta == 0:
-				return "%s's %s won't go any %s!" % [who, stat, "higher" if int(data.get("tried", 0)) > 0 else "lower"]
-			return "%s's %s %s%s" % [who, stat, "rose" if delta > 0 else "fell", "!" if absi(delta) == 1 else " sharply!"]
+				return "%s's %s is already at its %s." % [who, stat, "peak" if int(data.get("tried", 0)) > 0 else "lowest"]
+			return "%s's %s %s%s" % [who, stat, "goes up" if delta > 0 else "drops", "." if absi(delta) == 1 else " a lot."]
 		Type.FIELD:
 			return str(data.get("text", ""))
 		Type.RULE:
+			if bool(data.get("turning", false)):
+				return "Turning point, %s: %s" % [data.get("label", ""), data.get("text", "")]
 			return "Rule, %s: %s" % [data.get("label", ""), data.get("text", "")]
 		Type.PARTNER:
 			return "%s fights at your side!" % data.get("partner", "")
 		Type.BOSS:
 			return "%s: %s" % [data.get("label", ""), data.get("text", "")]
+		Type.FIELD_END:
+			return "The %s fades away." % data.get("label", "")
+		Type.BOSS_PHASE:
+			return str(data.get("text", ""))
+		Type.TRAIT:
+			return "%s's gift, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
+		Type.REACTION:
+			return str(data.get("text", "")) % who
+		Type.WEARY:
+			return "The long fight wears everyone out. Nobody can heal any more!"
+		Type.HEAL_BLOCKED:
+			if bool(data.get("fresh", false)):
+				return "%s can't heal for %d turns!" % [who, int(data.get("turns", 0))]
+			return "%s can't heal right now!" % who
+		Type.SNARE_SET:
+			if bool(data.get("full", false)):
+				return "No room for another snare."
+			return "A snare lies in wait on your side!" if int(data.get("side", 0)) == 0 else "A snare lies in wait on the foe's side!"
+		Type.SNARE_HIT:
+			return "%s springs the snare!" % who
+		Type.BATTLE_LINE:
+			return "%s: %s" % [data.get("name", ""), data.get("text", "")]
+		Type.FIELD_EXTENDED:
+			if bool(data.get("locked", false)):
+				return "The %s won't give way yet." % data.get("label", "")
+			if bool(data.get("failed", false)):
+				return "There is no Resonance field to hold."
+			return "The %s holds on for %d more turns!" % [data.get("label", ""), int(data.get("turns", 0))]
+		Type.FIELD_NEXT:
+			return "The Rift stirs: %s comes next turn!" % data.get("label", "")
+		Type.DELAYED_SET:
+			return "%s will land in %d turns!" % [data.get("move", ""), int(data.get("turns", 2))]
+		Type.DELAYED_HIT:
+			if bool(data.get("faded", false)):
+				return "%s fades with nobody to strike." % data.get("move", "")
+			return "%s lands on %s!" % [data.get("move", ""), who]
+		Type.SNARE_CLEARED:
+			return "The snares on your side blow away." if int(data.get("side", 0)) == 0 else "The snares on the foe's side blow away."
+		Type.HELD_ENDURE:
+			return "%s holds on with its Hold Stone!" % who
+		Type.WARDEN_WEAKENED:
+			return "A Warden Weakener dims %s's team: they start with 15%% less Vigor." % data.get("trainer", "")
+		Type.ENERGY_TAX:
+			if bool(data.get("fresh", false)):
+				return "%s is taxed: every art costs %d more Energy for %d turns!" % [who, int(data.get("cost", 1)), int(data.get("turns", 0))]
+			# A tick only updates the strip; the end of the tax gets a line.
+			return "The Energy tax on %s lifts." % who if int(data.get("turns", 0)) <= 0 else ""
 	return ""

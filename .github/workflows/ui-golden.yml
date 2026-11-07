@@ -1,0 +1,68 @@
+name: UI golden images
+
+# Plan item 2044: every menu screen in English and German at 144x256 is rendered and
+# compared with tests/golden/, so cut-off rows and overflowing texts show up in review.
+# After a wanted change, refresh the images with:
+#   xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/ui_golden.gd -- update
+# For now a difference warns (annotation, job summary, diff images as artifact) and does
+# not block the merge.
+
+on:
+  pull_request:
+    paths:
+      - "scripts/ui/**"
+      - "scripts/core/**"
+      - "tools/i18n/**"
+      - "tools/ui_golden*.gd"
+      - "tools/fx_flash_check.*"
+      - "scripts/battle/presenter/**"
+      - "tests/golden/**"
+      - ".github/workflows/ui-golden.yml"
+  workflow_dispatch:
+
+env:
+  GODOT_VERSION: "4.7.2"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  golden:
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Godot, a virtual display and software OpenGL
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q xvfb libgl1-mesa-dri libgl1 libxcursor1 libxinerama1 libxrandr2 libxi6
+          curl -sSL -o /tmp/godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q /tmp/godot.zip -d /tmp/godot
+          sudo mv /tmp/godot/Godot_v${GODOT_VERSION}-stable_linux.x86_64 /usr/local/bin/godot
+      - name: Import project
+        run: godot --headless --path . --import
+      - name: Compare menu screens with tests/golden
+        id: compare
+        run: |
+          set +e
+          xvfb-run -a godot --path . --rendering-driver opengl3 -s res://tools/ui_golden.gd -- compare 2>&1 | tee /tmp/golden.log
+          code=${PIPESTATUS[0]}
+          line=$(grep "UI golden:" /tmp/golden.log | tail -1)
+          echo "### UI golden images" >> "$GITHUB_STEP_SUMMARY"
+          echo "$line" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$code" != "0" ]; then
+            echo "::warning title=UI golden images::$line Check the diff images (artifact ui-golden) and refresh with tools/ui_golden.gd -- update if the change is wanted."
+          fi
+          exit $code
+      - name: Battle effects never flash more than 3 times a second (plan item 2656)
+        if: always()
+        run: |
+          xvfb-run -a godot --path . --rendering-driver opengl3 res://tools/fx_flash_check.tscn 2>&1 | tee /tmp/flash.log
+          grep -q "FX flash: OK" /tmp/flash.log
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: ui-golden
+          path: ~/.local/share/godot/app_userdata/Chimora/golden_out/
+          if-no-files-found: ignore

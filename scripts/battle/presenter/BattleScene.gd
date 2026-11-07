@@ -30,6 +30,8 @@ const SLOT_GAP: int = 6
 var model: BattleModel
 ## Backdrop for where the battle started (field, lake, ridge, ember). Set before adding.
 var backdrop: String = "field"
+## How much darker the backdrop is drawn (0 = as is), for towers that sink deeper (plan 3268).
+var backdrop_shade: float = 0.0
 ## Music for this fight ("battle" or "warden"); the overworld sets it before adding the scene.
 var music_track: String = "battle"
 ## Set to true to quit the app when the battle ends (standalone demo).
@@ -44,6 +46,10 @@ var replay_inputs: Array = []
 var _replaying: bool = false
 
 var _field: Control
+## Holds the backdrop and the sprites; Juice shakes this node, never the strips or menus.
+var _shake_root: Control
+## Element effects for arts, drawn above the sprites inside the shake root.
+var _fx: ElementFx
 var _backdrop: BattleBackdrop
 var _foe_sprite: SpirlingSprite
 var _player_sprite: SpirlingSprite
@@ -53,8 +59,12 @@ var _text: TextBox
 var _menu: CommandMenu
 var _picker: ListPicker
 var _bond_game: BondMinigame
+## Echo call plan per wild Spirling (uid): a second try in this battle hears the same call.
+var _bond_plans: Dictionary[String, Dictionary] = {}
 var _ff_button: Button
 var _auto_button: Button
+var _goal_label: Label
+var _rule_banner: RuleBanner
 var _auto_ai := BattleAI.new(1)
 var _log_button: Button
 var _log_panel: PanelContainer
@@ -86,6 +96,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		_auto_button.button_pressed = not _auto_button.button_pressed
 
+func _enter_tree() -> void:
+	Juice.in_battle = true
+
+func _exit_tree() -> void:
+	Juice.in_battle = false
+	Juice.set_shake_root(null)
+
 func _ready() -> void:
 	theme = UITheme.get_theme()
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -96,7 +113,28 @@ func _ready() -> void:
 	_multi = model.is_multi()
 	_run.call_deferred()
 
+## In a Trial "Leave" restarts it (item 708): the screen ends and the Rift starts it again.
+func _puzzle_restart(a: BattleAction) -> bool:
+	if a == null or a.kind != BattleAction.Kind.RUN or not model.has_meta("puzzle_max"):
+		return false
+	model.set_meta("puzzle_restart", true)
+	return true
+
 ## Call before adding to the tree.
+## Shows "T3 ✓", "T3 ✗" or "T3" for the bonus goal of this battle (item 762).
+func _refresh_goal() -> void:
+	if _goal_label != null and model.has_meta("puzzle_max"):
+		# Trials (item 711): the goal as a sentence and the turns left, top left.
+		_goal_label.text = str(model.get_meta("puzzle_goal", "")) + "\n" + Loc.t("Turns left: %d") % BattlePuzzle.turns_left(model)
+		_goal_label.visible = true
+		return
+	if _goal_label == null or not model.has_meta("goal_tracker") or not GameState.bonus_goals:
+		return
+	var t: BattleGoals.Tracker = model.get_meta("goal_tracker")
+	var mark: String = ["✗", "", "✓"][t.status() + 1]
+	_goal_label.text = (Loc.t("T%d") % (t.turns() + 1)) + ("" if mark.is_empty() else " " + mark)
+	_goal_label.visible = true
+
 func setup(p_model: BattleModel) -> void:
 	model = p_model
 
@@ -123,16 +161,29 @@ func _build() -> void:
 	_menu = CommandMenu.new()
 	col.add_child(_menu)
 
+	_shake_root = Control.new()
+	_shake_root.name = "shake_root"
+	_shake_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_shake_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_field.add_child(_shake_root)
+	Juice.set_shake_root(_shake_root)
+
 	_backdrop = BattleBackdrop.new()
 	_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	_field.add_child(_backdrop)
+	_backdrop.hat = GameState.worn_hat()
+	_shake_root.add_child(_backdrop)
 
 	_foe_sprite = SpirlingSprite.new()
 	_player_sprite = SpirlingSprite.new()
 	_foe_strip = InfoStrip.new()
 	_player_strip = InfoStrip.new()
 	_player_strip.show_numbers = true
-	for n: Control in [_foe_sprite, _player_sprite, _foe_strip, _player_strip]:
+	for n: Control in [_foe_sprite, _player_sprite]:
+		_shake_root.add_child(n)
+	_fx = ElementFx.new()
+	_fx.name = "element_fx"
+	_shake_root.add_child(_fx)
+	for n: Control in [_foe_strip, _player_strip]:
 		_field.add_child(n)
 	_foe_sprite.visible = false
 	_player_sprite.visible = false
@@ -153,6 +204,13 @@ func _build() -> void:
 		_apply_speed())
 	_auto_button.visible = false
 	_field.add_child(_auto_button)
+	# Turn count with the bonus goal mark (plan area 2, item 762); only shown when a goal is on.
+	_goal_label = Label.new()
+	_goal_label.visible = false
+	_goal_label.add_theme_font_size_override("font_size", 8)
+	_field.add_child(_goal_label)
+	_rule_banner = RuleBanner.new()
+	_field.add_child(_rule_banner)
 	_log_button = Button.new()
 	_log_button.text = "Log"
 	_log_button.focus_mode = Control.FOCUS_NONE
@@ -187,7 +245,7 @@ func _build() -> void:
 	_log_panel.visible = false
 	_log_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	_log_panel.gui_input.connect(func(ev: InputEvent) -> void:
-		if (ev is InputEventMouseButton and ev.pressed) or (ev is InputEventScreenTouch and ev.pressed):
+		if TapInput.is_press(ev):
 			_log_panel.visible = false)
 	add_child(_log_panel)
 	_log_label = Label.new()
@@ -213,6 +271,7 @@ func _layout_field() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
+	_goal_label.position = Vector2(MARGIN, MARGIN + 42)
 	_foe_sprite.position = Vector2(MARGIN * 2 + 28, MARGIN + STRIP_HEIGHT - 6)
 	_foe_sprite.size = Vector2(sprite, sprite)
 	_foe_sprite.mirrored = true
@@ -222,6 +281,7 @@ func _layout_field() -> void:
 	_player_sprite.size = Vector2(sprite, sprite)
 	_player_sprite.mirrored = true
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
+	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade)
 
 ## Creates the compact sprites and tags for every field slot (formation layout only).
 func _build_formation() -> void:
@@ -229,7 +289,7 @@ func _build_formation() -> void:
 		for slot: int in model.slot_count(side):
 			var sp := SpirlingSprite.new()
 			sp.visible = false
-			_field.add_child(sp)
+			_shake_root.add_child(sp)
 			_slot_sprites[side].append(sp)
 			var tag := MiniStrip.new()
 			tag.show_numbers = side == BattleModel.Side.PLAYER
@@ -241,6 +301,7 @@ func _build_formation() -> void:
 		n.visible = false
 	_foe_strip.show_numbers = true
 	_field.move_child(_pin, -1)
+	_shake_root.move_child(_fx, -1)
 	_layout_field()
 	_apply_speed()
 
@@ -257,6 +318,7 @@ func _layout_formation() -> void:
 	_auto_button.size = Vector2(26, 12)
 	_log_button.position = Vector2(w - 26 - MARGIN, MARGIN + 28)
 	_log_button.size = Vector2(26, 12)
+	_goal_label.position = Vector2(w - 26 - MARGIN, MARGIN + 42)
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
@@ -320,15 +382,19 @@ func _run() -> void:
 	_auto_button.visible = model.is_wild
 	_apply_speed()
 	Sound.music(music_track)
-	var intro: Array[BattleEvent] = model.start()
+	# A Trial comes started (its Energy is set after the start); a restart skips its lines.
+	var intro: Array[BattleEvent] = BattlePuzzle.intro_events(model) if model.has_meta("intro") else model.start()
 	if _multi:
 		_build_formation()
 	await _play(intro)
+	if model.has_meta("bonus_goal") and not model.has_meta("quick"):
+		await _text.show_text(str(model.get_meta("bonus_goal")))
+	_refresh_goal()
 	for id: String in (["battle", "bond"] if model.is_wild else ["battle"]):
 		for line: String in Tips.take(id):
 			await _text.show_text(line)
 	_replaying = not replay_inputs.is_empty()
-	while not model.is_finished():
+	while not model.is_finished() and not BattlePuzzle.out_of_turns(model):
 		if _replaying:
 			if replay_inputs.is_empty():
 				break
@@ -350,14 +416,21 @@ func _run() -> void:
 			continue
 		if _multi:
 			var actions: Array[BattleAction] = await _choose_actions()
+			if _puzzle_restart(actions.back() if not actions.is_empty() else null):
+				break
 			inputs.append(BattleReplay.actions_to_dict(actions))
 			await _play(model.submit_actions(actions))
+			_refresh_goal()
 			continue
 		var action: BattleAction = await _choose_action()
 		if action == null:
 			continue
+		if _puzzle_restart(action):
+			break
 		inputs.append(BattleReplay.action_to_dict(action))
 		await _play(model.submit_turn(action))
+		_refresh_goal()
+	_refresh_goal()
 	battle_finished.emit(model.outcome, model)
 	if quit_on_finish:
 		get_tree().quit()
@@ -383,7 +456,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 	_focus(BattleModel.Side.PLAYER, slot)
 	_point_pin(BattleModel.Side.PLAYER, slot, false)
 	if _auto_active():
-		_text.show_prompt("Auto: %s picks a move." % me.display_name())
+		_text.show_prompt("Auto: %s picks an art." % me.display_name())
 		await get_tree().create_timer(AUTO_DELAY / GameState.battle_speed_scale()).timeout
 		if _auto_active():
 			return _auto_ai.choose(model, BattleModel.Side.PLAYER, slot)
@@ -464,7 +537,7 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 		if model.is_partner_index(BattleModel.Side.PLAYER, i):
 			continue
 		var s: Spirling = party[i]
-		entries.append({"text": "%s Lv%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
+		entries.append({"text": "%s R%d %d/%d" % [s.display_name(), s.level, s.hp, s.max_hp()], "disabled": not i in candidates})
 	while true:
 		var idx: int = await _picker.pick(title, entries, cancellable)
 		if idx < 0 or idx in candidates:
@@ -474,17 +547,23 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 func _pick_item(slot: int = 0) -> BattleAction:
 	var ids: Array[String] = []
 	var entries: Array[Dictionary] = []
-	for id: Variant in model.inventory:
-		var it: Dictionary = Database.item(str(id))
-		if int(model.inventory[id]) > 0 and bool(it.get("battle", false)):
-			ids.append(str(id))
-			entries.append({"text": "%s x%d" % [it.get("name", id), model.inventory[id]]})
+	for id: String in model.bag_ids(BattleModel.Side.PLAYER):
+		var it: Dictionary = Database.item(id)
+		if bool(it.get("battle", false)) and model.item_left_this_battle(BattleModel.Side.PLAYER, id):
+			ids.append(id)
+			entries.append({"text": "%s x%d" % [it.get("name", id), model.bag_count(BattleModel.Side.PLAYER, id)]})
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null
 	var idx: int = await _picker.pick("Use which item?", entries)
 	if idx < 0:
 		return null
+	if BattleModel.is_revive_item(ids[idx]):
+		var down: int = await _pick_defeated()
+		if down < 0:
+			return null
+		var r := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], down, slot)
+		return r if model.is_legal(r) else null
 	var own: int = model.active_index(BattleModel.Side.PLAYER, slot)
 	var target: int = await _pick_party("Use on?", true, slot) if model.party(BattleModel.Side.PLAYER).size() > 1 else own
 	if target < 0:
@@ -493,28 +572,135 @@ func _pick_item(slot: int = 0) -> BattleAction:
 	var a := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], target, slot)
 	return a if model.is_legal(a) else null
 
+## Picks a defeated Spirling of the player's team for a Rift Breath, or -1.
+func _pick_defeated() -> int:
+	var party: Array = model.party(BattleModel.Side.PLAYER)
+	var idx: Array[int] = []
+	var entries: Array[Dictionary] = []
+	for i: int in party.size():
+		var s: Spirling = party[i]
+		if s.is_fainted() and not model.is_partner_index(BattleModel.Side.PLAYER, i):
+			idx.append(i)
+			entries.append({"text": "%s R%d" % [s.display_name(), s.level]})
+	if idx.is_empty():
+		await _text.show_text("Nobody in your team is defeated.")
+		return -1
+	var k: int = await _picker.pick("Bring back whom?", entries)
+	return idx[k] if k >= 0 else -1
+
+## Items in [param bag] that help a bond (a "bond_bonus" in items.json), Kin Charm first.
+static func bond_charms(bag: Dictionary) -> Array[String]:
+	var out: Array[String] = []
+	for id: Variant in bag:
+		var it: Dictionary = Database.item(str(id))
+		if int(bag[id]) > 0 and (float(it.get("bond_bonus", 0.0)) > 0.0 or bool(it.get("bond_sure", false))):
+			out.append(str(id))
+	out.sort_custom(func(a: String, b: String) -> bool: return a == "kin_charm" or (b != "kin_charm" and a < b))
+	return out
+
 func _bond(slot: int = 0) -> BattleAction:
 	var charm: String = ""
-	if int(model.inventory.get("kin_charm", 0)) > 0:
+	var charms: Array[String] = bond_charms(model.inventory)
+	if charms.size() == 1 and charms[0] == "kin_charm":
 		var use: int = await _picker.pick("Hold out a Kin Charm?", [{"text": "Yes (x%d)" % model.inventory.kin_charm}, {"text": "No"}] as Array[Dictionary])
 		if use < 0:
 			return null
 		if use == 0:
 			charm = "kin_charm"
+	elif not charms.is_empty():
+		# Shop charms (Echo Scent, Bond Seal) next to the Kin Charm: pick one or none.
+		var opts: Array[Dictionary] = []
+		for id: String in charms:
+			opts.append({"text": "%s x%d" % [Database.item(id).get("name", id), model.inventory[id]]})
+		opts.append({"text": "No"})
+		var use: int = await _picker.pick("Hold out a charm?", opts)
+		if use < 0:
+			return null
+		if use < charms.size():
+			charm = charms[use]
 	var aim: int = await _pick_target("Reach out to which one?")
 	if aim == -2:
 		return null
 	var target_slot: int = maxi(aim, 0)
 	await _text.show_text("Reach out to %s... Listen, then echo its call!" % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
-	var score: float = await _bond_game.run()
+	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, target_slot)
+	var key: String = foe.uid if not foe.uid.is_empty() else str(foe.get_instance_id())
+	if not _bond_plans.has(key):
+		var rng := RandomNumberGenerator.new()
+		rng.randomize()
+		var state: String = BondEcho.rift_state(GameState.current_map, GameState.rifts_sealed)
+		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
+	var score: float = await _bond_game.run(_bond_plans[key])
+	GameState.note_echo(score)
+	if score >= DailyTasks.MELODY_GOOD:
+		DailyTasks.record("melody", {"map": GameState.current_map})
+	if score >= 1.0:
+		GameState.records["melody_perfect"] = 1
 	return BattleAction.make_bond(BattleModel.Side.PLAYER, score, charm, slot, aim)
 
 # --- Event playback -----------------------------------------------------------------
 
 func _play(events: Array[BattleEvent]) -> void:
-	for e: BattleEvent in events:
-		await _play_event(e)
+	_playing = events
+	for i: int in events.size():
+		_play_index = i
+		await _play_event(events[i])
+	_playing = []
+
+## The event list being played and the current position, so an art can look ahead at how
+## its first hit turns out (items 2375, 2376).
+var _playing: Array[BattleEvent] = []
+var _play_index: int = -1
+
+## How the art at [param at] in [param events] lands on its first target: "miss" when the
+## first result is a MISSED event, and "eff" (effectiveness) of the first damage. Looks only
+## until the next art.
+## Hit-stop for the battle's last hit (item 2265).
+const FINAL_HITSTOP: float = 0.12
+
+## Hit-stop for the hit at [param at]: "final" for the hit that ends the battle (nothing but
+## faints and the end follow), "" for a middle hit of an art that strikes several times this
+## turn (only the first and last stop, item 2266), otherwise "normal".
+static func hitstop_kind(events: Array[BattleEvent], at: int) -> String:
+	if at < 0 or at >= events.size():
+		return "normal"
+	var e: BattleEvent = events[at]
+	var hits: Array[int] = []
+	var start: int = 0
+	for i: int in range(at, -1, -1):
+		if events[i].type == BattleEvent.Type.MOVE_USED:
+			start = i
+			break
+	for i: int in range(start, events.size()):
+		var x: BattleEvent = events[i]
+		if i > start and x.type == BattleEvent.Type.MOVE_USED:
+			break
+		if x.type == BattleEvent.Type.DAMAGE and not bool(x.data.get("status_tick", false)):
+			hits.append(i)
+	if int(e.data.get("hp", 1)) <= 0:
+		for i: int in range(at + 1, events.size()):
+			var t: int = events[i].type
+			if t == BattleEvent.Type.BATTLE_END:
+				return "final"
+			if t == BattleEvent.Type.DAMAGE or t == BattleEvent.Type.MOVE_USED:
+				break
+	if hits.size() > 2 and at != hits[0] and at != hits[-1]:
+		return ""
+	return "normal"
+
+static func art_outcome(events: Array[BattleEvent], at: int) -> Dictionary:
+	for i: int in range(at + 1, events.size()):
+		var e: BattleEvent = events[i]
+		match e.type:
+			BattleEvent.Type.MOVE_USED:
+				break
+			BattleEvent.Type.MISSED:
+				return {"miss": true, "eff": 1.0}
+			BattleEvent.Type.DAMAGE:
+				if not bool(e.data.get("status_tick", false)):
+					return {"miss": false, "eff": float(e.data.get("eff", 1.0))}
+	return {"miss": false, "eff": 1.0}
 
 func _sprite(side: int, slot: int = 0) -> SpirlingSprite:
 	if _multi and slot >= 0 and slot < _slot_sprites[side].size():
@@ -545,9 +731,20 @@ func record(e: BattleEvent) -> void:
 	while log_lines.size() > LOG_KEEP:
 		log_lines.pop_front()
 
+## The rule variants in play as a list for the top of the log panel (item 796), "" without any.
+static func variant_list(m: BattleModel) -> String:
+	if m == null or m.variants.is_empty():
+		return ""
+	var all: Dictionary = BattleRules.variants()
+	var lines: Array[String] = [Loc.t("Rule variants")]
+	for id: String in m.variants:
+		var v: Dictionary = all.get(id, {})
+		lines.append("- %s: %s" % [Loc.t(str(v.get("label", id))), Loc.t(str(v.get("text", "")))])
+	return "\n".join(lines) + "\n\n"
+
 func _toggle_log() -> void:
 	Sound.sfx("confirm")
-	_log_label.text = "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
+	_log_label.text = variant_list(model) + "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
 	_log_panel.visible = not _log_panel.visible
 
 func _play_event(e: BattleEvent) -> void:
@@ -572,6 +769,10 @@ func _play_event(e: BattleEvent) -> void:
 				return
 			_foe_sprite.setup(foe, "front")
 			_foe_strip.set_spirling(foe)
+			if music_track == "warden":
+				# A Rift Warden shakes the field as it appears (item 2256).
+				Juice.add_trauma(Juice.TRAUMA_WARDEN)
+				Haptics.play("heavy")
 			if model.is_wild:
 				_foe_strip.visible = true
 				Sound.cry(foe.data)
@@ -590,7 +791,7 @@ func _play_event(e: BattleEvent) -> void:
 		BattleEvent.Type.SWAP_OUT:
 			await _text.show_text(e.describe())
 			await _sprite(side, slot).step_back(side != BattleModel.Side.PLAYER)
-		BattleEvent.Type.BOSS:
+		BattleEvent.Type.BOSS, BattleEvent.Type.BOSS_PHASE:
 			_focus(side, slot)
 			_point_pin(side, slot, true)
 			Sound.sfx("status")
@@ -598,6 +799,8 @@ func _play_event(e: BattleEvent) -> void:
 			_pin.visible = false
 		BattleEvent.Type.MOVE_USED:
 			_last_player_element = int(e.data.get("element", -1)) if side == BattleModel.Side.PLAYER else -1
+			if side == BattleModel.Side.PLAYER:
+				Collection.note_art(str(e.data.get("move", "")))
 			_last_element[side] = int(e.data.get("element", -1))
 			_focus(side, slot)
 			_point_pin(side, slot, false)
@@ -605,22 +808,22 @@ func _play_event(e: BattleEvent) -> void:
 			var dir: Vector2 = Vector2(-8, -4) if side == BattleModel.Side.PLAYER else Vector2(8, 4)
 			if _multi:
 				dir = Vector2(0, -6) if side == BattleModel.Side.PLAYER else Vector2(0, 6)
-			await _sprite(side, slot).lunge(dir)
+			await _play_art(e, side, slot, dir)
 			_pin.visible = false
 		BattleEvent.Type.DAMAGE:
 			var hit: String = _hit_sound(e)
+			# Louder the more strength the hit took (item 2532).
+			var lost: float = float(e.data.get("amount", 0)) / maxf(float(e.data.get("max_hp", 1)), 1.0)
 			if hit == "hit" or hit == "hit_strong":
-				Sound.element_hit(_last_element[BattleModel.other(side)])
+				Sound.element_hit(_last_element[BattleModel.other(side)], lost)
 			if hit != "hit":
-				Sound.sfx(hit)
+				Sound.sfx(hit, Sound.hit_volume_db(lost))
 			if side == BattleModel.Side.FOE and _last_player_element >= 0 and e.data.has("eff"):
 				var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, slot)
 				if foe != null:
 					GameState.learn_matchup(_last_player_element, foe.data.species_name, float(e.data.eff))
 			if not bool(e.data.get("status_tick", false)):
-				if side == BattleModel.Side.PLAYER:
-					GameState.rumble_pads(0.8 if hit == "hit_strong" else 0.4, 0.15)
-				await _sprite(side, slot).hit_flash()
+				await _hit_feedback(e, side, slot, hit == "hit_strong")
 			await _strip(side, slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
 			_refresh_focus(side, slot)
 			_update_pinch()
@@ -636,8 +839,20 @@ func _play_event(e: BattleEvent) -> void:
 			_update_pinch()
 			await _text.show_text(e.describe())
 		BattleEvent.Type.ENERGY_CHANGED:
+			var es: Variant = _strip(side, slot)
+			if side == BattleModel.Side.PLAYER and es is InfoStrip:
+				var ticks: int = Sound.energy_ticks(int(e.data.energy) - (es as InfoStrip).energy)
+				if ticks > 0:
+					Sound.energy_tick(ticks)
 			_strip(side, slot).set_energy(int(e.data.energy))
 			_refresh_focus(side, slot)
+		BattleEvent.Type.ENERGY_TAX:
+			var ts: Variant = _strip(side, slot)
+			if ts is InfoStrip:
+				(ts as InfoStrip).set_tax(int(e.data.get("turns", 0)))
+			var tax_text: String = e.describe()
+			if not tax_text.is_empty():
+				await _text.show_text(tax_text)
 		BattleEvent.Type.STATUS_APPLIED:
 			Sound.sfx("status")
 			_strip(side, slot).set_status(str(e.data.status))
@@ -658,6 +873,7 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.FAINTED:
 			Sound.sfx("faint")
+			Juice.add_trauma(Juice.TRAUMA_FAINT)
 			await _sprite(side, slot).faint()
 			await _text.show_text(e.describe())
 			_strip(side, slot).visible = false
@@ -665,6 +881,9 @@ func _play_event(e: BattleEvent) -> void:
 			Sound.sfx("level_up")
 			var lv_slot: int = model.slot_of(BattleModel.Side.PLAYER, int(e.data.get("index", -1)))
 			if lv_slot >= 0:
+				var lv_sprite: SpirlingSprite = _sprite(BattleModel.Side.PLAYER, lv_slot)
+				if lv_sprite != null and lv_sprite.visible:
+					LevelRing.spawn(_shake_root, lv_sprite.position + lv_sprite.size / 2.0)
 				var lst: Variant = _strip(BattleModel.Side.PLAYER, lv_slot)
 				if lst is InfoStrip:
 					(lst as InfoStrip).set_level(int(e.data.level))
@@ -672,9 +891,22 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BOND_RESULT:
 			if bool(e.data.get("success", false)):
-				await _sprite(BattleModel.Side.FOE, slot).step_back(false)
+				var bonded: SpirlingSprite = _sprite(BattleModel.Side.FOE, slot)
+				await bonded.greet_hop()
+				await bonded.step_back(false)
 				_strip(BattleModel.Side.FOE, slot).visible = false
 			await _text.show_text(e.describe())
+		BattleEvent.Type.RULE:
+			var turning: bool = bool(e.data.get("turning", false))
+			_rule_banner.show_rule(Loc.t(str(e.data.get("label", ""))), turning, _field.size.x, _field.size.y * 0.42,
+				str(e.data.get("symbol", "")))
+			if turning:
+				Sound.sfx("status")
+				Haptics.play("heavy")
+			await _text.show_text(e.describe())
+			_rule_banner.visible = false
+		BattleEvent.Type.BATTLE_LINE:
+			await _text.show_text(str(e.data.get("text", "")), str(e.data.get("name", "")))
 		BattleEvent.Type.BATTLE_END:
 			var outcome: int = int(e.data.get("outcome", 0))
 			if outcome == BattleModel.Outcome.WIN or outcome == BattleModel.Outcome.BONDED:
@@ -686,10 +918,110 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text("You received %d coins." % money)
 			elif int(e.data.outcome) == BattleModel.Outcome.LOSS:
 				await _text.show_text("Your team is worn out...")
+		BattleEvent.Type.MISSED:
+			# The target sidesteps while the line shows (item 2337).
+			var t_side: int = BattleModel.other(side)
+			var t_slot: int = int(e.data.get("target_slot", 0))
+			var target: SpirlingSprite = _sprite(t_side, t_slot)
+			# A soft rush of air past the target and a quick swish as it steps aside (items
+			# 2531, 2536).
+			Sound.sfx("miss")
+			if target != null and target.visible:
+				Sound.sfx("dodge")
+				target.dodge(dodge_dir(t_side))
+			var miss_text: String = e.describe()
+			if not miss_text.is_empty():
+				await _text.show_text(miss_text)
 		_:
 			var text: String = e.describe()
 			if not text.is_empty():
 				await _text.show_text(text)
+
+## Wind-up, charge and travel sounds and the element effect for an art (items 2329 to 2366, 2529, 2530).
+func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
+	var kind: int = int(e.data.get("kind", MoveData.Kind.PHYSICAL))
+	var element: int = int(e.data.get("element", -1))
+	var user: SpirlingSprite = _sprite(side, slot)
+	Sound.sfx(charge_sound(kind))
+	await user.windup(kind, dir)
+	if element < 0:
+		return
+	var mv: MoveData = Database.move(str(e.data.get("move", "")))
+	var sym: Dictionary = ElementFx.status_symbol(mv)
+	var target: SpirlingSprite = user
+	var targets: Array = e.data.get("targets", [])
+	if (kind != MoveData.Kind.STATUS or bool(sym.on_foe)) and not targets.is_empty():
+		target = _sprite(BattleModel.other(side), int(targets[0]))
+	var me: Spirling = model.active_spirling(side, slot) if model != null else null
+	var second: int = ElementFx.second_for(me.elements(), element) if me != null else -1
+	_fx.user_sprite = user
+	if kind != MoveData.Kind.PHYSICAL and target != user:
+		_fx_travel_sound.call_deferred(element)
+	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
+	# In the formation layout the user turns toward a target on the other half (item 2336).
+	var was_mirrored: bool = user.mirrored
+	if _multi and target != user:
+		var turn: int = turn_toward(user.position.x + user.size.x / 2.0, target.position.x + target.size.x / 2.0, _field.size.x / 2.0)
+		if turn != 0:
+			user.mirrored = turn > 0
+			user.queue_redraw()
+	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
+		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e),
+		ElementFx.after_for(mv), str(sym.symbol), second)
+	if user.mirrored != was_mirrored:
+		user.mirrored = was_mirrored
+		user.queue_redraw()
+
+## Which way an attacker at x [param from_x] turns for a target at [param to_x]: 1 to face
+## right, -1 to face left, 0 to stay when both stand on the same half split at [param mid].
+static func turn_toward(from_x: float, to_x: float, mid: float) -> int:
+	if (from_x < mid) == (to_x < mid):
+		return 0
+	return 1 if to_x > from_x else -1
+
+## Particle factor from the art's power (item 2368).
+static func _art_amount(e: BattleEvent) -> float:
+	var mv: MoveData = Database.move(str(e.data.get("move", "")))
+	return ElementFx.particles_for_power(mv.power) if mv != null else 1.0
+
+## The charge sound for an art kind: a short rush, a rising pulse or two soft tones.
+static func charge_sound(kind: int) -> String:
+	match kind:
+		MoveData.Kind.PHYSICAL: return "charge_physical"
+		MoveData.Kind.FOCUS: return "charge_focus"
+	return "charge_status"
+
+## The travel sound starts with the travel phase, after the charge.
+func _fx_travel_sound(element: int) -> void:
+	await get_tree().create_timer(ElementFx.CHARGE_TIME / Juice.speed()).timeout
+	Sound.sfx(travel_sound(element))
+
+static func travel_sound(element: int) -> String:
+	return "travel_" + String(Elements.E.keys()[element]).to_lower()
+
+## Shake, vibration, hit-stop, knockback and flash for a landed hit (items 2256 to 2258, 2332, 2591).
+func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
+	Juice.add_trauma(Juice.TRAUMA_HIT_STRONG if strong else Juice.TRAUMA_HIT, _last_element[BattleModel.other(side)])
+	Haptics.play("heavy" if strong else "hit")
+	var max_hp: int = maxi(int(e.data.get("max_hp", 1)), 1)
+	match hitstop_kind(_playing, _play_index) if _play_index >= 0 else "normal":
+		"final":
+			await Juice.hitstop(1.0, FINAL_HITSTOP)
+		"normal":
+			await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp)
+	var sp: SpirlingSprite = _sprite(side, slot)
+	sp.knockback(knockback_dir(side, _multi))
+	await sp.hit_flash()
+
+## A dodging Spirling steps toward the outer screen edge: the foe right, the player left.
+static func dodge_dir(target_side: int) -> float:
+	return 1.0 if target_side == BattleModel.Side.FOE else -1.0
+
+## Direction a Spirling on [param side] is pushed when hit: away from the other side.
+static func knockback_dir(side: int, multi: bool) -> Vector2:
+	if multi:
+		return Vector2(0, 1) if side == BattleModel.Side.PLAYER else Vector2(0, -1)
+	return Vector2(2, 1) if side == BattleModel.Side.PLAYER else Vector2(-2, -1)
 
 ## Switches to the pinch music while the player's active Spirling is low, and back once it recovers.
 func _update_pinch() -> void:

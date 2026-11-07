@@ -7,16 +7,35 @@ extends RefCounted
 const FONT_SIZE: int = 8
 ## Palette. Static (not const) so the high-contrast option can swap it (item 78).
 static var BG: Color = Color("f4f1e6")
-static var INK: Color = Color("20241c")
-static var MID: Color = Color("7d8a6a")
-static var ACCENT: Color = Color("c7d6a4")
-static var DISABLED: Color = Color("a6a89c")
+static var INK: Color = Color("2a1e2c")
+static var MID: Color = Color("7d5f5f")
+static var ACCENT: Color = Color("e6c9a0")
+static var DISABLED: Color = Color("908679")
 
-const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("20241c"), Color("7d8a6a"), Color("c7d6a4"), Color("a6a89c")]
+## MID reaches 5:1 on paper and DISABLED 3.2:1 (plan item 2041; they were 4.3:1 and 2.3:1).
+const NORMAL_PALETTE: Array[Color] = [Color("f4f1e6"), Color("2a1e2c"), Color("7d5f5f"), Color("e6c9a0"), Color("908679")]
 ## Pure paper and ink, a darker mid tone and a stronger accent: text stays above 15:1.
 const HIGH_CONTRAST_PALETTE: Array[Color] = [Color("ffffff"), Color("000000"), Color("3a3a3a"), Color("ffe680"), Color("6a6a6a")]
 
 static var high_contrast: bool = false
+## Large text (item 2042): menus, info windows, tips and talk use "Chimora Pixel Groß".
+static var large_text: bool = false
+
+static func set_large_text(on: bool) -> void:
+	if large_text == on:
+		return
+	large_text = on
+	_theme = null
+
+## The font every screen uses, small or large.
+static func font() -> FontFile:
+	return PixelFont.get_large_font() if large_text else PixelFont.get_font()
+
+## WCAG contrast ratio of two colours (1 to 21).
+static func contrast(a: Color, b: Color) -> float:
+	var la: float = a.srgb_to_linear().get_luminance()
+	var lb: float = b.srgb_to_linear().get_luminance()
+	return (maxf(la, lb) + 0.05) / (minf(la, lb) + 0.05)
 
 ## Switches the UI palette. Screens built afterwards use it; the theme is rebuilt on demand.
 static func set_high_contrast(on: bool) -> void:
@@ -90,10 +109,68 @@ static func _frame_texture(bg: Color) -> ImageTexture:
 	_frames[bg] = tex
 	return tex
 
+## Shop text frames for the dialogue box (item 4282): only looks. Each kind gives the three
+## outer rings of one 3 px edge tile (outside first); the tile repeats along every edge.
+const TEXT_FRAMES: Array[String] = ["vine", "brass", "wave", "lantern", "frost"]
+static var _text_frames: Dictionary[String, StyleBoxTexture] = {}
+
+## The dialogue box style: the plain panel, or a worn shop frame by kind.
+static func text_frame_style(kind: String) -> StyleBox:
+	if not kind in TEXT_FRAMES:
+		return panel_style()
+	var key: String = kind + BG.to_html()
+	if _text_frames.has(key):
+		return _text_frames[key]
+	var rings: Array = _frame_rings(kind)
+	var img := Image.create(FRAME_SIZE, FRAME_SIZE, false, Image.FORMAT_RGBA8)
+	img.fill(BG)
+	var last: int = FRAME_SIZE - 1
+	for i: int in FRAME_SIZE:
+		for ring: int in 3:
+			var c: Color = rings[ring][i % 3]
+			if ring == 2 and (i < 2 or i > last - 2):
+				continue
+			img.set_pixel(i, ring, c)
+			img.set_pixel(i, last - ring, c)
+			img.set_pixel(ring, i, c)
+			img.set_pixel(last - ring, i, c)
+	var corner: Color = rings[3]
+	for p: Vector2i in [Vector2i(0, 0), Vector2i(last, 0), Vector2i(0, last), Vector2i(last, last)]:
+		img.set_pixel(p.x, p.y, Color(0, 0, 0, 0))
+		var inner := Vector2i(1 if p.x == 0 else last - 1, 1 if p.y == 0 else last - 1)
+		img.set_pixel(inner.x, inner.y, corner)
+		img.set_pixel(inner.x + (1 if p.x == 0 else -1), inner.y, corner)
+		img.set_pixel(inner.x, inner.y + (1 if p.y == 0 else -1), corner)
+	var sb := StyleBoxTexture.new()
+	sb.texture = ImageTexture.create_from_image(img)
+	sb.texture_margin_left = FRAME_MARGIN
+	sb.texture_margin_top = FRAME_MARGIN
+	sb.texture_margin_right = FRAME_MARGIN
+	sb.texture_margin_bottom = FRAME_MARGIN
+	sb.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
+	sb.axis_stretch_vertical = StyleBoxTexture.AXIS_STRETCH_MODE_TILE
+	sb.set_content_margin_all(FRAME_MARGIN + 2)
+	_text_frames[key] = sb
+	return sb
+
+## Three rings of three pixels each, then the corner rivet colour.
+static func _frame_rings(kind: String) -> Array:
+	match kind:
+		"vine":
+			return [[INK, INK, INK], [MID, ACCENT, MID], [BG, MID, BG], MID]
+		"brass":
+			return [[INK, INK, INK], [ACCENT, ACCENT, ACCENT], [INK, BG, INK], ACCENT]
+		"wave":
+			return [[INK, INK, INK], [BG, MID, BG], [MID, BG, MID], MID]
+		"lantern":
+			return [[INK, INK, INK], [INK, ACCENT, INK], [ACCENT, BG, BG], ACCENT]
+		_:
+			return [[INK, INK, INK], [BG, BG, ACCENT], [ACCENT, BG, BG], BG]
+
 static func _build() -> Theme:
 	var t := Theme.new()
 	t.default_font_size = FONT_SIZE
-	t.default_font = PixelFont.get_font()
+	t.default_font = font()
 	t.set_color("font_color", "Label", INK)
 	for state: String in ["normal", "hover", "pressed", "focus", "disabled"]:
 		var bg: Color = BG
@@ -107,7 +184,12 @@ static func _build() -> Theme:
 			border = INK
 		elif state == "disabled":
 			border = DISABLED
-		t.set_stylebox(state, "Button", flat_style(bg, border))
+		var sb: StyleBoxFlat = flat_style(bg, border)
+		if state == "pressed":
+			# Held buttons sink 1 px (item 2415).
+			sb.content_margin_top = 3
+			sb.content_margin_bottom = 1
+		t.set_stylebox(state, "Button", sb)
 	t.set_color("font_color", "Button", INK)
 	t.set_color("font_hover_color", "Button", BG)
 	t.set_color("font_focus_color", "Button", BG)

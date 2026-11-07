@@ -1,0 +1,40 @@
+{
+ "sign": [
+  "MADDERBY",
+  "Madderby, 140 folk.",
+  "Dyers' town of Corvane. Home of the cartographers' guild.",
+  "East: Woadfen   North: Stillwater"
+ ],
+ "road": [
+  "MADDERBY ROAD",
+  "South: Corvane Quay"
+ ],
+ "guard": [
+  "Gatekeeper Ansel: The moor and the pond paths are guild business since the storm.",
+  "Gatekeeper Ansel: Show Ysolde at the guild house what you can do, then I'll let you through."
+ ],
+ "vats": [
+  "Dye vats, cold and grey. Nobody has stirred them since the colour went out."
+ ],
+ "trader": {
+  "lines": [
+   "Trader Lorna: Brews and bandages. The colour may be gone, but bruises are still blue."
+  ],
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "nell": {
+  "lines": [
+   "Dyer Nell: By day my hands are blue to the elbow. By the spring at dusk they're almost clean."
+  ]
+ },
+ "oskar": {
+  "lines": [
+   "Old Oskar: Every evening the same faces at the spring. I wouldn't trade a single one."
+  ]
+ },
+ "fenna": {
+  "lines": [
+   "Weaver Fenna: The guild bell rings, and half of Madderby comes to the spring to talk about the other half."
+  ]
+ }
+}

@@ -13,7 +13,7 @@ const STRONG := {
 	E.UMBRA: [E.LUMEN, E.GALE],
 }
 
-## Placeholder colours per element (Era I maps them to greens by brightness).
+## Placeholder colours per element (Era I maps them to its four inks by brightness).
 const COLORS := {
 	E.EMBER: Color("e0603a"),
 	E.TIDE:  Color("3a7be0"),

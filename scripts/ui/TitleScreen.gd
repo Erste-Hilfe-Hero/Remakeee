@@ -1,24 +1,27 @@
 class_name TitleScreen
 extends Control
-## Title and new-game flow: difficulty -> Tamer customisation (placeholder) -> starter.
+## Title and new-game flow: boy or girl -> name -> the prologue starts in the overworld.
 
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
-const STARTERS: Array[String] = Database.STARTERS
-const DIFFICULTY_TEXT: Array[String] = [
-	"Story (relaxed)",
-	"Tamer (normal)",
-	"Veteran (caps, smart AI)",
-	"Rift-Born (no battle items)",
-]
 const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
+const IAP_NOTE: String = "Free, in-app purchases"
+var _iap_note: Label
 
 var _menu: MenuHost
-## Connection state, server notice and how many Tamers are online.
+## Connection state, server notice and how many Wanderers are online.
 var _status: Label
 var _name_box: PanelContainer
 var _name_edit: LineEdit
+var _name_keys: NameKeyboard
 signal _name_done(text: String)
+## While Online.connect_now runs (animated status line).
+var _connecting: bool = false
+var _connect_started: int = 0
+## True while the main title list waits (the back button then asks to quit).
+var _at_root: bool = false
+## What the root list returns when the Android back button asks to quit.
+const QUIT_ASKED: int = -2
 
 func _ready() -> void:
 	Database.load_all()
@@ -37,26 +40,48 @@ func _ready() -> void:
 	_menu.offset_top = ART_HEIGHT + 4
 	_status = Label.new()
 	_status.set_anchors_preset(Control.PRESET_TOP_WIDE)
-	_status.offset_top = ART_HEIGHT - 24
-	_status.offset_bottom = ART_HEIGHT
+	# In the night sky above the lake, in light ink: lower down it sat on the three Spirlings
+	# in dark ink and could not be read.
+	_status.offset_top = 64
+	_status.offset_bottom = 86
+	_status.add_theme_color_override("font_color", UITheme.BG)
 	_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	# A see-through dark strip keeps the line readable over any title art (item 1965).
+	var strip := StyleBoxFlat.new()
+	strip.bg_color = Color(0, 0, 0, 0.55)
+	strip.set_content_margin_all(1)
+	_status.add_theme_stylebox_override("normal", strip)
+	_status.visible = false
 	add_child(_status)
+	# Free to play with optional purchases, said before the game starts (shop item 4036).
+	_iap_note = Label.new()
+	_iap_note.auto_translate_mode = Node.AUTO_TRANSLATE_MODE_DISABLED
+	_iap_note.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	_iap_note.offset_top = ART_HEIGHT - 11
+	_iap_note.offset_bottom = ART_HEIGHT
+	_iap_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_iap_note.add_theme_color_override("font_color", UITheme.BG)
+	_iap_note.add_theme_stylebox_override("normal", strip)
+	_iap_note.text = Loc.t(IAP_NOTE)
+	add_child(_iap_note)
 	_build_name_box()
+	Loc.events.language_changed.connect(_on_language_changed)
 	VirtualPad.set_wanted(false)
 	GameState.in_game = false
 	Sound.music("title")
+	StartupLog.mark("title scene built")
 	_run.call_deferred()
 
 func _build_name_box() -> void:
 	_name_box = PanelContainer.new()
 	_name_box.add_theme_stylebox_override("panel", UITheme.panel_style())
 	_name_box.set_anchors_preset(Control.PRESET_CENTER)
-	_name_box.custom_minimum_size = Vector2(120, 50)
-	_name_box.offset_left = -60
-	_name_box.offset_right = 60
-	_name_box.offset_top = -25
-	_name_box.offset_bottom = 25
+	_name_box.custom_minimum_size = Vector2(136, 128)
+	_name_box.offset_left = -68
+	_name_box.offset_right = 68
+	_name_box.offset_top = -64
+	_name_box.offset_bottom = 64
 	_name_box.visible = false
 	add_child(_name_box)
 	var v := VBoxContainer.new()
@@ -74,17 +99,29 @@ func _build_name_box() -> void:
 		if ev.is_action_pressed("ui_accept") and not (ev is InputEventKey):
 			_name_done.emit(_name_edit.text))
 	v.add_child(_name_edit)
-	var ok := Button.new()
-	ok.text = "OK"
-	ok.pressed.connect(func() -> void: _name_done.emit(_name_edit.text))
-	v.add_child(ok)
+	# Own letter keys: the phone keyboard does not always open (iPhone browser, item from Ali 2026-11-04).
+	_name_keys = NameKeyboard.new()
+	_name_keys.target = _name_edit
+	_name_keys.confirmed.connect(func() -> void: _name_done.emit(_name_edit.text))
+	# Back to the boy or girl choice (item 1962).
+	_name_keys.cancelled.connect(func() -> void: _name_done.emit(NAME_BACK))
+	v.add_child(_name_keys)
+	v.add_child(_name_keys.make_extra_row())
 
 ## Chimora is online only: nothing past the title works without the server (item 1).
 func _go_online() -> void:
 	while true:
-		_status.text = "Connecting..."
+		# Another device took the account (plan item 3010): only play here when the player says so.
+		if Online.kicked:
+			_status.text = ""
+			await _menu.pick_strings(Online.error_text("other_device"), ["Play on this device"] as Array[String], false)
+			Online.kicked = false
+		_connect_started = Time.get_ticks_msec()
+		_connecting = true
 		var st: Online.State = await Online.connect_now()
+		_connecting = false
 		if st == Online.State.ONLINE:
+			_status.text = ""
 			if not Online.privacy_seen:
 				await _menu.info(AccountMenu.PRIVACY_NOTE)
 				Online.mark_privacy_seen()
@@ -95,20 +132,49 @@ func _go_online() -> void:
 			continue
 		if st == Online.State.UPDATE_REQUIRED:
 			_status.text = ""
-			await _menu.info("A new version of Chimora is out. Please update it in the store to keep playing.")
+			# A button opens the store page directly (item 2148).
+			var u: int = await _menu.pick_strings("A new version of Chimora is out. Please update it in the store to keep playing.",
+				["Open the store", "Try again"] as Array[String], false)
+			if u == 0:
+				OS.shell_open(Online.store_url())
 			continue
 		_status.text = "No connection"
-		var idx: int = await _menu.pick_strings("Chimora needs the internet. Your journeys are safe on the server.",
+		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t("Your journeys are safe on the server."),
 			["Try again", "Settings"] as Array[String], false)
 		if idx == 1:
 			await _menu.run_settings()
+
+## "Connecting..." with moving dots, a note after 5 s and another after 15 s (item 2127).
+static func connecting_text(seconds: float) -> String:
+	var dots: String = ".".repeat(1 + int(seconds * 2.0) % 3)
+	var line: String = Loc.t("Connecting") + dots
+	if seconds >= 15.0:
+		line += "\n" + Loc.t("Still trying. The next step comes as soon as the server answers.")
+	elif seconds >= 5.0:
+		line += "\n" + Loc.t("The server is answering slowly.")
+	return line
+
+func _process(_delta: float) -> void:
+	if _connecting:
+		_status.text = connecting_text((Time.get_ticks_msec() - _connect_started) / 1000.0)
+	_status.visible = not _status.text.is_empty()
+
+func _on_language_changed(_code: String) -> void:
+	if _iap_note != null:
+		_iap_note.text = Loc.t(IAP_NOTE)
+	if not _connecting and Online.is_online():
+		_show_status()
+
+func _exit_tree() -> void:
+	if Loc.events.language_changed.is_connected(_on_language_changed):
+		Loc.events.language_changed.disconnect(_on_language_changed)
 
 func _show_status() -> void:
 	var lines: Array[String] = []
 	if not Online.motd.is_empty():
 		lines.append(Online.motd)
 	if Online.online_now > 1:
-		lines.append("%d Tamers are in Veydal" % Online.online_now)
+		lines.append("%d Wayfarers are in Veydal" % Online.online_now)
 	_status.text = "\n".join(lines)
 
 ## A slot changed on this phone and on another device: the player picks which to keep (item 8).
@@ -122,7 +188,13 @@ func _resolve_conflicts() -> void:
 			await Online.resolve_conflict_take_server(slot)
 
 func _run() -> void:
+	var first_start: bool = GameState.language.is_empty() and not Online.privacy_seen and _used_slots() == 0
+	if GameState.language.is_empty():
+		StartupLog.mark("language menu ready")
+		await _pick_language()
 	await _go_online()
+	if first_start:
+		await _ask_other_phone()
 	while true:
 		if not Online.is_online():
 			await _go_online()
@@ -136,12 +208,20 @@ func _run() -> void:
 		if _used_slots() > 1:
 			items.append("Load...")
 		items.append("Settings")
+		_at_root = true
+		StartupLog.mark("title menu ready")
 		var idx: int = await _menu.pick_strings("", items, false)
+		_at_root = false
+		if idx == QUIT_ASKED:
+			if await _menu.confirm("Quit Chimora?"):
+				get_tree().quit()
+			continue
 		var choice: String = "Continue" if items[idx].begins_with("Continue") else items[idx]
 		match choice:
 			"Continue":
 				SaveManager.set_slot(latest)
 				if SaveManager.load_game():
+					await _say_if_recovered()
 					SaveManager.save_settings()
 					_enter_game()
 					return
@@ -151,15 +231,17 @@ func _run() -> void:
 				if n > 0:
 					SaveManager.set_slot(n)
 					if SaveManager.load_game():
+						await _say_if_recovered()
 						SaveManager.save_settings()
 						_enter_game()
 						return
 					await _menu.info("The save could not be read.")
 			"New Game":
-				var slot: int = await _pick_slot("Save the new journey in...", true)
+				# With all slots empty there is nothing to choose (item 1959).
+				var slot: int = 1 if _used_slots() == 0 else await _pick_slot("Save the new journey in...", true)
 				if slot <= 0:
 					continue
-				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm("Start over in slot %d? That save will be replaced when you save." % slot):
+				if not SaveManager.slot_summary(slot).is_empty() and not await _menu.confirm_danger("Start over in slot %d? That save will be replaced when you save." % slot):
 					continue
 				SaveManager.set_slot(slot)
 				if await _new_game():
@@ -169,8 +251,63 @@ func _run() -> void:
 			"Settings":
 				await _menu.run_settings()
 
+## First start (item 1958): English or Deutsch, the device language comes first.
+func _pick_language() -> void:
+	var codes: Array[String] = Loc.LANGUAGES.duplicate()
+	var entries: Array[Dictionary] = []
+	for c: String in codes:
+		entries.append({"text": Loc.LANGUAGE_NAMES[c]})
+	var idx: int = await _menu.pick("Language / Sprache", entries, false, codes.find(Loc.default_language()))
+	GameState.language = codes[maxi(idx, 0)]
+	GameState.apply_display()
+	SaveManager.save_settings()
+
+## First start (item 1964): someone who played on another phone gets there with a code
+## instead of starting over by mistake.
+func _ask_other_phone() -> void:
+	var idx: int = await _menu.pick_strings("Played Chimora on another phone before?",
+		["No, I am new", "Yes, I have a code"] as Array[String], false)
+	if idx == 1:
+		await AccountMenu.claim_code(_menu, false)
+
+## Android back (item 1787): on the main list it asks to quit, otherwise it works like B.
+func _notification(what: int) -> void:
+	if what != NOTIFICATION_WM_GO_BACK_REQUEST or _menu == null:
+		return
+	if _at_root and _menu.picker.visible:
+		_menu.picker.picked.emit(QUIT_ASKED)
+	elif _name_box != null and _name_box.visible:
+		_name_done.emit(NAME_BACK)
+	else:
+		BackButton.press_cancel()
+
+## What the name box returns when Back was pressed.
+const NAME_BACK: String = "\n"
+
+## The name box until a real name comes (item 1961: empty or only spaces is refused and the
+## suggestion comes back), or NAME_BACK.
+func _ask_name(suggestion: String) -> String:
+	_name_edit.text = suggestion
+	_name_box.visible = true
+	_name_keys.fresh = true
+	_name_keys.focus_first()
+	var name: String = ""
+	while true:
+		name = await _name_done
+		if name == NAME_BACK or NameKeyboard.valid_name(name):
+			break
+		Sound.sfx("cancel")
+		_name_edit.text = suggestion
+		_name_keys.fresh = true
+	_name_box.visible = false
+	return name
+
 func _enter_game() -> void:
 	Online.push_profile()
+	# The title slides 24 px up and fades out before the world brightens in (item 2280).
+	if not Juice.reduced():
+		Juice.tween(self, "modulate:a", 0.0, "close")
+		await Juice.tween(self, "position", position + Vector2(0, -24), "close").finished
 	get_tree().change_scene_to_file(OVERWORLD)
 
 func _used_slots() -> int:
@@ -194,33 +331,25 @@ func _pick_slot(title: String, allow_empty: bool) -> int:
 			return idx + 1
 	return 0
 
+## New game (Ali, 2026-11-04): boy or girl, then a name, and the journey starts. The partner
+## Spirling is picked in the story (prologue at the lighthouse). Difficulty and the Iron Oath
+## live in the settings during the game.
 func _new_game() -> bool:
-	var diff: int = await _menu.pick_strings("Difficulty", DIFFICULTY_TEXT)
-	if diff < 0:
-		return false
-	# "Normal" comes first so mashing accept never takes the oath by accident.
-	var oath: bool = await _menu.pick_strings("Iron Oath: Spirlings that faint retire to the Sanctuary for good. Only for a new game.",
-		["Normal journey", "Take the Iron Oath"] as Array[String]) == 1
-	_name_edit.text = GameState.tamer_name
-	_name_box.visible = true
-	_name_edit.grab_focus()
-	var name: String = await _name_done
-	_name_box.visible = false
-	var colors: Array[String] = ["Blue jacket", "Red jacket", "Green jacket", "Gold jacket"]
-	var color: int = await _menu.pick_strings("Your look", colors)
-	if color < 0:
-		color = 0
+	var look: int = -1
+	var name: String = ""
 	while true:
-		var entries: Array[String] = []
-		for sp: String in STARTERS:
-			entries.append("%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])])
-		var pick: int = await _menu.pick_strings("Three Spirlings sheltered in the lighthouse from the storm. Which one stays with you?", entries)
-		if pick < 0:
+		look = await _menu.pick_strings("Who are you?", ["Boy", "Girl"] as Array[String])
+		if look < 0:
 			return false
-		var sd: SpirlingData = Database.species(STARTERS[pick])
-		if await _menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
-			GameState.new_game(diff as GameState.Difficulty, name, color, sd.species_name)
-			GameState.iron_oath = oath
-			EraManager.from_dict({})
-			return true
-	return false
+		name = await _ask_name(GameState.DEFAULT_NAMES[look])
+		if name != NAME_BACK:
+			break
+	GameState.new_game(GameState.Difficulty.TAMER, name.strip_edges(), look, "", look)
+	GameState.iron_oath = false
+	EraManager.from_dict({})
+	return true
+
+## The main save file was damaged and a backup was loaded (plan item 3609).
+func _say_if_recovered() -> void:
+	if SaveManager.last_load_recovered:
+		await _menu.info("The save was damaged. The latest backup was loaded.")

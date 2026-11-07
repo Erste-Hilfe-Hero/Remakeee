@@ -1,0 +1,30 @@
+{
+ "_comment": "Dutch texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Ambience": "Omgeving",
+  "Ambience: %d%%": "Omgeving: %d%%",
+  "Both ears hear the same sound, for hearing on one side.": "Beide oren horen hetzelfde geluid, voor horen aan een kant.",
+  "Coins: %d": "Munten: %d",
+  "Full": "Vol",
+  "How much the screen shakes on big hits.": "Hoe sterk het scherm schudt bij harde klappen.",
+  "How strongly the phone or gamepad vibrates.": "Hoe sterk de telefoon of gamepad trilt.",
+  "Important sounds also show as a short text at the top.": "Belangrijke geluiden verschijnen ook als korte tekst bovenaan.",
+  "Mono sound: %s": "Monogeluid: %s",
+  "Places": "Plekken",
+  "Screen shake: %s": "Schudden: %s",
+  "Short blips while a line types out.": "Korte piepjes terwijl een regel verschijnt.",
+  "Sound captions: %s": "Ondertitels: %s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "Tekststem en roepen van Spirlings. Links en rechts veranderen het in stappen van 10.",
+  "Text voice: %s": "Tekststem: %s",
+  "Vibration: %s": "Trillen: %s",
+  "Voice": "Stem",
+  "Voices: %d%%": "Stemmen: %d%%",
+  "Waiting for the server": "Wachten op de server",
+  "Weak": "Zwak",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "Wind, water en andere geluiden van een plek. Links en rechts veranderen het in stappen van 10.",
+  "[A deep rumble]": "[Een diep gerommel]",
+  "[Footsteps stop short]": "[Voetstappen stoppen abrupt]",
+  "[Item picked up]": "[Voorwerp opgepakt]",
+  "[Rustling in the grass]": "[Geritsel in het gras]"
+ }
+}

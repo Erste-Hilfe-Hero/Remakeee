@@ -20,12 +20,25 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 ## Who the move reaches: "single" (one foe, picked by the player) or "foes" (every foe on the
 ## field at once, a sweep). In 1v1 both hit the one foe the same way.
 @export var target: String = "single"
+## Turns the move stays locked after each use (moves.json "cooldown", 0 = never locked).
+@export var cooldown: int = 0
+## The user's Daze does not lower this move's accuracy (moves.json "ignore_daze").
+@export var ignore_daze: bool = false
+## The target's raised Guard and Focus stages do not count against this move ("ignore_stages").
+@export var ignore_stages: bool = false
 
 const TARGETS: Array[String] = ["single", "foes"]
 
 ## True for moves that sweep every foe on the field.
 func is_area() -> bool:
 	return target == "foes"
+
+## True if one of the move's effects has [param id] (for example &"delayed_hit").
+func has_effect(id: StringName) -> bool:
+	for fx: Dictionary in effects:
+		if StringName(fx.get("id", "")) == id:
+			return true
+	return false
 
 ## True if the move deals direct damage.
 func is_damaging() -> bool:

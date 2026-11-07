@@ -11,7 +11,7 @@ const TWEEN_TIME: float = 0.4
 
 ## Show the current HP under the bar (player side; 30 px has no room for "hp/max").
 var show_numbers: bool = false
-## True for a Spirling of the ally Tamer: a small flag marks it.
+## True for a Spirling of the ally Wayfarer: a small flag marks it.
 var ally: bool = false
 var display_hp: float = 1.0
 var max_hp: int = 1
@@ -51,14 +51,14 @@ func set_status(value: String) -> void:
 
 ## What a screen reader says for this tag (item 77).
 func screen_reader_text() -> String:
-	return Loc.t("%s, HP %d of %d, Energy %d" % [spirling_name, int(round(display_hp)), max_hp, energy])
+	return Loc.t("%s, Vigor %d of %d, Energy %d" % [spirling_name, int(round(display_hp)), max_hp, energy])
 
 func _draw() -> void:
 	accessibility_name = screen_reader_text()
 	var w: float = size.x
 	draw_rect(Rect2(-1, -1, w + 2, needed_height() + 2), UITheme.BG)
 	var frac: float = clampf(display_hp / float(maxi(max_hp, 1)), 0.0, 1.0)
-	var col: Color = InfoStrip.HP_HIGH if frac > 0.5 else (InfoStrip.HP_MID if frac > 0.2 else InfoStrip.HP_LOW)
+	var col: Color = InfoStrip.HP_HIGH if frac > InfoStrip.HP_LOW_AT else InfoStrip.HP_LOW
 	# A dashed frame instead of a solid one tells a status apart without colour.
 	draw_rect(Rect2(0, 0, w, BAR_HEIGHT + 2), UITheme.INK, false, 1.0)
 	if not status.is_empty():
@@ -66,7 +66,7 @@ func _draw() -> void:
 			draw_rect(Rect2(x, 0, 1, 1), UITheme.BG)
 	draw_rect(Rect2(1, 1, floorf((w - 2) * frac), BAR_HEIGHT), col)
 	var y: float = BAR_HEIGHT + 3
-	for i: int in Spirling.MAX_ENERGY:
+	for i: int in maxi(Spirling.MAX_ENERGY, energy):
 		var r := Rect2(i * (PIP + 1), y, PIP, PIP)
 		if i < energy:
 			draw_rect(r, InfoStrip.ENERGY_ON)

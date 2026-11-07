@@ -1,0 +1,130 @@
+{
+ "name": "Mossmere Grotto",
+ "region": "veydal",
+ "biome": "cave",
+ "backdrop": "ridge",
+ "field": "deep_murk",
+ "encounters": "mossmere_grotto",
+ "rows": [
+  "@@@@@@@@@@@@",
+  "@.,,..@@.=.@",
+  "@.,,,.@@...@",
+  "@..,..@@,,.@",
+  "@.....ww...@",
+  "@.,,..@@,..@",
+  "@.....@@...@",
+  "@...__..@@@@",
+  "@:..__..::.@",
+  "@...__....L@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 10,
+   "to": "gloamwood",
+   "tx": 3,
+   "ty": 7,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 10,
+   "to": "gloamwood",
+   "tx": 3,
+   "ty": 7,
+   "facing": "down"
+  },
+  {
+   "x": 9,
+   "y": 1,
+   "to": "mossmere_grotto@1",
+   "tx": 9,
+   "ty": 2,
+   "facing": "down"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 9,
+   "dialogue": "mossmere_grotto/campfire"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 1,
+   "y": 1,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_moss_nook"
+  },
+  {
+   "x": 10,
+   "y": 6,
+   "item": "kin_charm",
+   "count": 1,
+   "flag": "find_moss_pool"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Mossmere Grotto, lower pool",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@..,,.@..=.@",
+    "@.,,,.@....@",
+    "@..,..Y....@",
+    "@.,...@.,,.@",
+    "@=....@....@",
+    "@.S...@@@@@@",
+    "@@@@@@@@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 9,
+     "y": 1,
+     "to": "mossmere_grotto",
+     "tx": 9,
+     "ty": 2,
+     "facing": "down"
+    },
+    {
+     "x": 1,
+     "y": 5,
+     "to": "mossmere_grotto",
+     "tx": 5,
+     "ty": 9,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 6,
+     "dialogue": "mossmere_grotto/rope"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 1,
+     "y": 5,
+     "open_flag": "mossmere_rope"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 1,
+     "y": 1,
+     "item": "max_tonic",
+     "count": 1,
+     "flag": "find_moss_deep"
+    }
+   ]
+  }
+ ],
+ "camp": [
+  10,
+  9
+ ]
+}

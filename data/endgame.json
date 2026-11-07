@@ -1,0 +1,317 @@
+{
+ "_comment": "Plan area 8 endgame data. wanderer_names: 40 names for the echo Wayfarers of the lighthouse stair (plan 3273). exchange: Marla's stand in the lighthouse, prices in Waymarks, stock per week (refills Monday by the server clock). tier base opens after the first mended Rift, full after Act I. exchange_weekly: the open list of weekly offers; after Act I three of them are on sale each week, drawn with the seed chimora-stand-<ISO week>. season_path: the free seasonal path (one per quarter), 30 tiers, rewards fixed and visible in advance. masters: the eight Master Wayfarers; teams holds three prepared teams (species, ring, arts, keepsake): the first until they are beaten, then one per week from the week after the first win (plan 3291, 3300). vows: small optional vows taken before the first Rift is mended; each one kept to the end of Act I pays Waymarks (plan 3406-3409), none repeats a challenge rule of the battle plan. rift_towers: the two Rift towers (plan 3266-3275), opened by the sealing flag of their Rift; echoes only of the listed elements, at most three Spirlings at ring 30 or more; down = the floors count down.",
+ "wanderer_names": ["Aldren", "Briska", "Corvin", "Dalla", "Eskel", "Tovah", "Garrow", "Hesper", "Arlo", "Joren", "Kirra", "Lusa", "Marrek", "Benna", "Caspar", "Dorian", "Edda", "Rhosa", "Faro", "Greta", "Ulla", "Varro", "Harlan", "Ivo", "Zarek", "Ansel", "Brea", "Cobb", "Dessa", "Elric", "Firra", "Gisli", "Kaspin", "Isra", "Jessamy", "Kell", "Linnet", "Mabry", "Noll", "Odessa"],
+ "exchange_weekly": [
+  {"item": "spark_coil", "price": 90, "stock": 1},
+  {"item": "bark_wrap", "price": 90, "stock": 1},
+  {"item": "swift_feather", "price": 90, "stock": 1},
+  {"item": "kin_charm", "price": 30, "stock": 2},
+  {"item": "spark_drop", "price": 20, "stock": 3},
+  {"item": "cooling_gel", "price": 8, "stock": 3},
+  {"item": "dry_towel", "price": 8, "stock": 3},
+  {"item": "wake_bell", "price": 8, "stock": 3}
+ ],
+ "exchange": [
+  {
+   "item": "strong_tonic",
+   "price": 20,
+   "stock": 5,
+   "tier": "base"
+  },
+  {
+   "item": "remedy",
+   "price": 10,
+   "stock": 5,
+   "tier": "base"
+  },
+  {
+   "item": "revival_leaf",
+   "price": 40,
+   "stock": 3,
+   "tier": "base"
+  },
+  {
+   "item": "max_tonic",
+   "price": 50,
+   "stock": 3,
+   "tier": "base"
+  },
+  {
+   "item": "power_brew",
+   "price": 25,
+   "stock": 3,
+   "tier": "base"
+  },
+  {
+   "item": "spark_charm",
+   "price": 120,
+   "stock": 2,
+   "tier": "base"
+  },
+  {
+   "item": "tide_pearl",
+   "price": 200,
+   "stock": 2,
+   "tier": "full"
+  },
+  {
+   "item": "guard_brew",
+   "price": 25,
+   "stock": 3,
+   "tier": "full"
+  },
+  {
+   "item": "focus_brew",
+   "price": 25,
+   "stock": 3,
+   "tier": "full"
+  },
+  {
+   "item": "dash_brew",
+   "price": 25,
+   "stock": 3,
+   "tier": "full"
+  },
+  {
+   "item": "keen_lens",
+   "price": 90,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "iron_burr",
+   "price": 90,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_ember",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_tide",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_bloom",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_volt",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_stone",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_gale",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_lumen",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_umbra",
+   "price": 150,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_scatter_gale",
+   "price": 200,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_graft",
+   "price": 200,
+   "stock": 1,
+   "tier": "full"
+  }
+ ],
+ "season_path": {
+  "tiers": 30,
+  "points_per_tier": 100,
+  "points": {
+   "daily_task": 15,
+   "daily_bonus": 15,
+   "weekly": 40,
+   "festival_stage": 20
+  },
+  "rewards": [
+   {
+    "coins": 250
+   },
+   {
+    "coins": 300
+   },
+   {
+    "item": "remedy",
+    "count": 2
+   },
+   {
+    "coins": 400
+   },
+   {
+    "waymarks": 30
+   },
+   {
+    "item": "power_brew",
+    "count": 2
+   },
+   {
+    "coins": 550
+   },
+   {
+    "coins": 600
+   },
+   {
+    "item": "guard_brew",
+    "count": 2
+   },
+   {
+    "item": "spark_charm",
+    "count": 1,
+    "waymarks": 50
+   },
+   {
+    "coins": 750
+   },
+   {
+    "item": "focus_brew",
+    "count": 2
+   },
+   {
+    "coins": 850
+   },
+   {
+    "coins": 900
+   },
+   {
+    "waymarks": 30
+   },
+   {
+    "coins": 1000
+   },
+   {
+    "coins": 1050
+   },
+   {
+    "item": "revival_leaf",
+    "count": 3
+   },
+   {
+    "coins": 1150
+   },
+   {
+    "item": "spark_charm",
+    "count": 1,
+    "waymarks": 50
+   },
+   {
+    "item": "max_tonic",
+    "count": 3
+   },
+   {
+    "coins": 1300
+   },
+   {
+    "coins": 1350
+   },
+   {
+    "item": "spark_charm",
+    "count": 3
+   },
+   {
+    "waymarks": 30
+   },
+   {
+    "coins": 1500
+   },
+   {
+    "item": "tide_pearl",
+    "count": 3
+   },
+   {
+    "coins": 1600
+   },
+   {
+    "coins": 1650
+   },
+   {
+    "item": "tide_pearl",
+    "count": 1,
+    "waymarks": 50
+   }
+  ]
+ },
+ "masters": [
+  {"id": "brannoc", "name": "Brannoc", "title": "Master of the Kiln", "element": "EMBER", "map": "cinder_rift", "x": 6, "y": 7, "facing": "down", "level": 45, "sprite": "warden", "teams": [
+    [{"species": "Cairnhold", "level": 43, "moves": ["Cinder Nip", "Kiln Strike", "Cairn Crash", "Ash Call"]}, {"species": "Smeltmaw", "level": 44, "moves": ["Cinder Breath", "Tunnel Strike", "Kiln Strike", "Furnace Spiral"]}, {"species": "Calderox", "level": 45, "moves": ["Kiln Strike", "Hunker Down", "Furnace Spiral", "Ash Call"]}, {"species": "Glassfell", "level": 45, "moves": ["Grit Jab", "Cinder Breath", "Kiln Strike", "Furnace Spiral"], "held": "spark_coil"}],
+    [{"species": "Glassfell", "level": 43, "moves": ["Grit Jab", "Cinder Breath", "Kiln Strike", "Furnace Spiral"]}, {"species": "Calderox", "level": 44, "moves": ["Kiln Strike", "Hunker Down", "Furnace Spiral", "Ash Call"], "held": "keen_lens"}, {"species": "Cairnhold", "level": 45, "moves": ["Cinder Nip", "Kiln Strike", "Cairn Crash", "Ash Call"]}, {"species": "Ashcrest", "level": 45, "moves": ["Breeze Slice", "Cinder Breath", "Gale Scythe", "Squall"], "held": "spark_coil"}],
+    [{"species": "Cairnhold", "level": 43, "moves": ["Cinder Nip", "Kiln Strike", "Cairn Crash", "Ash Call"]}, {"species": "Calderox", "level": 44, "moves": ["Kiln Strike", "Hunker Down", "Furnace Spiral", "Ash Call"]}, {"species": "Ashcrest", "level": 45, "moves": ["Breeze Slice", "Cinder Breath", "Gale Scythe", "Squall"], "held": "spark_coil"}, {"species": "Smeltmaw", "level": 45, "moves": ["Cinder Breath", "Tunnel Strike", "Kiln Strike", "Furnace Spiral"], "held": "swift_feather"}]
+  ]},
+  {"id": "maren", "name": "Maren", "title": "Master of the Shoals", "element": "TIDE", "map": "tide_rift", "x": 10, "y": 11, "facing": "left", "level": 46, "sprite": "ranger", "teams": [
+    [{"species": "Delthorn", "level": 44, "moves": ["Mirk Nip", "Salt Snap", "Spindrift Shot", "Breaker Plunge"]}, {"species": "Reedwarden", "level": 45, "moves": ["Kelp Lash", "Salt Snap", "Thorn Volley", "Bloom Burst"]}, {"species": "Leviarch", "level": 46, "moves": ["Prism Ray", "Dawn Call", "Breaker Plunge", "Bore Wave"]}, {"species": "Saltcrown", "level": 46, "moves": ["Salt Snap", "Dawn Mend", "Spindrift Shot", "Breaker Plunge"], "held": "iron_burr"}],
+    [{"species": "Rainmantle", "level": 44, "moves": ["Mirk Nip", "Salt Snap", "Spindrift Shot", "Breaker Plunge"]}, {"species": "Lumenewt", "level": 45, "moves": ["Sunwell Sip", "Radiant Lance", "Omen Bell", "Dawn Mend"], "held": "swift_feather"}, {"species": "Velahra", "level": 46, "moves": ["Prism Ray", "Dawn Mend", "Radiant Lance", "Breaker Plunge"]}, {"species": "Kelphound", "level": 46, "moves": ["Undertow", "Sap Draw", "Breaker Plunge", "Bloom Burst"], "held": "spark_coil"}],
+    [{"species": "Kelphound", "level": 44, "moves": ["Undertow", "Sap Draw", "Breaker Plunge", "Bloom Burst"]}, {"species": "Reedwarden", "level": 45, "moves": ["Kelp Lash", "Salt Snap", "Thorn Volley", "Bloom Burst"]}, {"species": "Delthorn", "level": 46, "moves": ["Mirk Nip", "Salt Snap", "Spindrift Shot", "Breaker Plunge"], "held": "swift_feather"}, {"species": "Saltspire", "level": 46, "moves": ["Hunker Down", "Breaker Plunge", "Tremor Thud", "Cairn Crash"], "held": "iron_burr"}]
+  ]},
+  {"id": "hazel", "name": "Hazel", "title": "Master of the Old Grove", "element": "BLOOM", "map": "fernstair", "x": 6, "y": 13, "facing": "down", "level": 48, "sprite": "elder", "teams": [
+    [{"species": "Marshfife", "level": 46, "moves": ["Puffcap Haze", "Squall", "Bloom Burst", "Bloom Call"]}, {"species": "Verdantusk", "level": 47, "moves": ["Bloom Burst", "Bloom Call", "Thornwake", "Dusk Gnaw"]}, {"species": "Fenwarden", "level": 48, "moves": ["Kelp Lash", "Night Siphon", "Thorn Volley", "Bloom Burst"]}, {"species": "Reedwarden", "level": 48, "moves": ["Kelp Lash", "Salt Snap", "Thorn Volley", "Bloom Burst"], "held": "bark_wrap"}],
+    [{"species": "Fenwarden", "level": 46, "moves": ["Kelp Lash", "Night Siphon", "Thorn Volley", "Bloom Burst"]}, {"species": "Frondmere", "level": 47, "moves": ["Thorn Volley", "Sap Draw", "Bloom Call", "Bloom Burst"], "held": "bark_wrap"}, {"species": "Reedwarden", "level": 48, "moves": ["Kelp Lash", "Salt Snap", "Thorn Volley", "Bloom Burst"]}, {"species": "Verdantusk", "level": 48, "moves": ["Bloom Burst", "Bloom Call", "Thornwake", "Dusk Gnaw"], "held": "iron_burr"}],
+    [{"species": "Reedwarden", "level": 46, "moves": ["Kelp Lash", "Salt Snap", "Thorn Volley", "Bloom Burst"]}, {"species": "Marshfife", "level": 47, "moves": ["Puffcap Haze", "Squall", "Bloom Burst", "Bloom Call"]}, {"species": "Frondmere", "level": 48, "moves": ["Thorn Volley", "Sap Draw", "Bloom Call", "Bloom Burst"], "held": "iron_burr"}, {"species": "Verdantusk", "level": 48, "moves": ["Bloom Burst", "Bloom Call", "Thornwake", "Dusk Gnaw"], "held": "spark_coil"}]
+  ]},
+  {"id": "quill", "name": "Quill", "title": "Master of the Storm Wire", "element": "VOLT", "map": "crowcrest", "x": 6, "y": 12, "facing": "down", "level": 49, "sprite": "ranger", "teams": [
+    [{"species": "Glimmerax", "level": 47, "moves": ["Prism Burst", "Short Circuit", "Radiant Lance", "Capacitor Crash"]}, {"species": "Saltcrown", "level": 48, "moves": ["Salt Snap", "Dawn Mend", "Spindrift Shot", "Breaker Plunge"]}, {"species": "Mendlace", "level": 49, "moves": ["Gloom Ripple", "Spark Call", "Storm Gnash", "Overcharge"]}, {"species": "Cogwright", "level": 49, "moves": ["Tunnel Strike", "Spark Call", "Tremor Thud", "Cairn Crash"], "held": "keen_lens"}],
+    [{"species": "Cogwright", "level": 47, "moves": ["Tunnel Strike", "Spark Call", "Tremor Thud", "Cairn Crash"]}, {"species": "Mendlace", "level": 48, "moves": ["Gloom Ripple", "Spark Call", "Storm Gnash", "Overcharge"], "held": "keen_lens"}, {"species": "Glimmerax", "level": 49, "moves": ["Prism Burst", "Short Circuit", "Radiant Lance", "Capacitor Crash"]}, {"species": "Mirassil", "level": 49, "moves": ["Crackle Bite", "Breeze Slice", "Gale Scythe", "Squall"], "held": "keen_lens"}],
+    [{"species": "Glimmerax", "level": 47, "moves": ["Prism Burst", "Short Circuit", "Radiant Lance", "Capacitor Crash"]}, {"species": "Mendlace", "level": 48, "moves": ["Gloom Ripple", "Spark Call", "Storm Gnash", "Overcharge"]}, {"species": "Cogwright", "level": 49, "moves": ["Tunnel Strike", "Spark Call", "Tremor Thud", "Cairn Crash"], "held": "iron_burr"}, {"species": "Solmantle", "level": 49, "moves": ["Breeze Slice", "Dawn Mend", "Prism Ray", "Radiant Lance"], "held": "keen_lens"}]
+  ]},
+  {"id": "flint", "name": "Flint", "title": "Master of the Quarry", "element": "STONE", "map": "thornridge", "x": 6, "y": 10, "facing": "down", "level": 50, "sprite": "warden", "teams": [
+    [{"species": "Saltspire", "level": 48, "moves": ["Hunker Down", "Breaker Plunge", "Tremor Thud", "Cairn Crash"]}, {"species": "Duskdigger", "level": 49, "moves": ["Fault Line", "Dusk Gnaw", "Cairn Crash", "Eclipse Crush"]}, {"species": "Cogwright", "level": 50, "moves": ["Tunnel Strike", "Spark Call", "Tremor Thud", "Cairn Crash"]}, {"species": "Dunebastion", "level": 50, "moves": ["Cinder Nip", "Tunnel Strike", "Tremor Thud", "Cairn Crash"], "held": "bark_wrap"}],
+    [{"species": "Dunebastion", "level": 48, "moves": ["Cinder Nip", "Tunnel Strike", "Tremor Thud", "Cairn Crash"]}, {"species": "Cullhorn", "level": 49, "moves": ["Tunnel Strike", "Dawn Mend", "Tremor Thud", "Cairn Crash"], "held": "keen_lens"}, {"species": "Duskdigger", "level": 50, "moves": ["Fault Line", "Dusk Gnaw", "Cairn Crash", "Eclipse Crush"]}, {"species": "Siltgrove", "level": 50, "moves": ["Cinder Nip", "Tunnel Strike", "Tremor Thud", "Cairn Crash"], "held": "bark_wrap"}],
+    [{"species": "Duskdigger", "level": 48, "moves": ["Fault Line", "Dusk Gnaw", "Cairn Crash", "Eclipse Crush"]}, {"species": "Dunebastion", "level": 49, "moves": ["Cinder Nip", "Tunnel Strike", "Tremor Thud", "Cairn Crash"]}, {"species": "Cairnhold", "level": 50, "moves": ["Cinder Nip", "Kiln Strike", "Cairn Crash", "Ash Call"], "held": "swift_feather"}, {"species": "Zenithare", "level": 50, "moves": ["Breeze Slice", "Tunnel Strike", "Gale Scythe", "Squall"], "held": "swift_feather"}]
+  ]},
+  {"id": "wren", "name": "Wren", "title": "Master of the Salt Wind", "element": "GALE", "map": "saltmarsh", "x": 6, "y": 4, "facing": "down", "level": 52, "sprite": "villager", "teams": [
+    [{"species": "Zenithare", "level": 50, "moves": ["Breeze Slice", "Tunnel Strike", "Gale Scythe", "Squall"]}, {"species": "Marshfife", "level": 51, "moves": ["Puffcap Haze", "Squall", "Bloom Burst", "Bloom Call"]}, {"species": "Ashcrest", "level": 52, "moves": ["Breeze Slice", "Cinder Breath", "Gale Scythe", "Squall"]}, {"species": "Mirassil", "level": 52, "moves": ["Crackle Bite", "Breeze Slice", "Gale Scythe", "Squall"], "held": "bark_wrap"}],
+    [{"species": "Lanternel", "level": 50, "moves": ["Updraft", "Prism Ray", "Dawn Call", "Squall"]}, {"species": "Marshfife", "level": 51, "moves": ["Puffcap Haze", "Squall", "Bloom Burst", "Bloom Call"], "held": "swift_feather"}, {"species": "Ashcrest", "level": 52, "moves": ["Breeze Slice", "Cinder Breath", "Gale Scythe", "Squall"]}, {"species": "Wickmoth", "level": 52, "moves": ["Dawn Mend", "Breeze Slice", "Prism Ray", "Radiant Lance"], "held": "spark_coil"}],
+    [{"species": "Wickmoth", "level": 50, "moves": ["Dawn Mend", "Breeze Slice", "Prism Ray", "Radiant Lance"]}, {"species": "Zenithare", "level": 51, "moves": ["Breeze Slice", "Tunnel Strike", "Gale Scythe", "Squall"]}, {"species": "Marshfife", "level": 52, "moves": ["Puffcap Haze", "Squall", "Bloom Burst", "Bloom Call"], "held": "keen_lens"}, {"species": "Ferrowyn", "level": 52, "moves": ["Undertow", "Gale Scythe", "Tide Call", "Breaker Plunge"], "held": "iron_burr"}]
+  ]},
+  {"id": "lume", "name": "Lume", "title": "Master of the Harbour Lamp", "element": "LUMEN", "map": "brindlewick", "x": 6, "y": 10, "facing": "down", "level": 53, "sprite": "elder", "teams": [
+    [{"species": "Leviarch", "level": 51, "moves": ["Breaker Plunge", "Bore Wave", "Radiant Lance", "Daybreak Strike"]}, {"species": "Glasstarn", "level": 52, "moves": ["Prism Ray", "Still Thought", "Tide Call", "Radiant Lance"]}, {"species": "Saltcrown", "level": 53, "moves": ["Salt Snap", "Dawn Mend", "Spindrift Shot", "Breaker Plunge"]}, {"species": "Silentra", "level": 53, "moves": ["Gloom Ripple", "Candle Ward", "Dusk Gnaw", "Still Thought"], "held": "swift_feather"}],
+    [{"species": "Glimmerax", "level": 51, "moves": ["Prism Burst", "Short Circuit", "Radiant Lance", "Capacitor Crash"]}, {"species": "Cullhorn", "level": 52, "moves": ["Tunnel Strike", "Dawn Mend", "Tremor Thud", "Cairn Crash"], "held": "swift_feather"}, {"species": "Wickmoth", "level": 53, "moves": ["Dawn Mend", "Breeze Slice", "Prism Ray", "Radiant Lance"]}, {"species": "Solmantle", "level": 53, "moves": ["Breeze Slice", "Dawn Mend", "Prism Ray", "Radiant Lance"], "held": "spark_coil"}],
+    [{"species": "Solmantle", "level": 51, "moves": ["Breeze Slice", "Dawn Mend", "Prism Ray", "Radiant Lance"]}, {"species": "Floursprite", "level": 52, "moves": ["Breeze Slice", "Dawn Mend", "Gale Scythe", "Squall"]}, {"species": "Saltcrown", "level": 53, "moves": ["Salt Snap", "Dawn Mend", "Spindrift Shot", "Breaker Plunge"], "held": "bark_wrap"}, {"species": "Glasstarn", "level": 53, "moves": ["Prism Ray", "Still Thought", "Tide Call", "Radiant Lance"], "held": "bark_wrap"}]
+  ]},
+  {"id": "morrow", "name": "Morrow", "title": "Master of the Hollow", "element": "UMBRA", "map": "murk_hollow", "x": 6, "y": 6, "facing": "down", "level": 55, "sprite": "hush", "teams": [
+    [{"species": "Verdantusk", "level": 53, "moves": ["Bloom Burst", "Bloom Call", "Thornwake", "Dusk Gnaw"]}, {"species": "Burinox", "level": 54, "moves": ["Night Siphon", "Tunnel Strike", "Gloom Ripple", "Dusk Gnaw"]}, {"species": "Fenwarden", "level": 55, "moves": ["Kelp Lash", "Night Siphon", "Thorn Volley", "Bloom Burst"]}, {"species": "Mendlace", "level": 55, "moves": ["Gloom Ripple", "Spark Call", "Storm Gnash", "Overcharge"], "held": "spark_coil"}],
+    [{"species": "Burinox", "level": 53, "moves": ["Night Siphon", "Tunnel Strike", "Gloom Ripple", "Dusk Gnaw"]}, {"species": "Verdantusk", "level": 54, "moves": ["Bloom Burst", "Bloom Call", "Thornwake", "Dusk Gnaw"], "held": "iron_burr"}, {"species": "Duskdigger", "level": 55, "moves": ["Fault Line", "Dusk Gnaw", "Cairn Crash", "Eclipse Crush"]}, {"species": "Scrivane", "level": 55, "moves": ["Spindrift Shot", "Murk Call", "Tide Call", "Dusk Gnaw"], "held": "keen_lens"}],
+    [{"species": "Silentra", "level": 53, "moves": ["Gloom Ripple", "Candle Ward", "Dusk Gnaw", "Still Thought"]}, {"species": "Duskdigger", "level": 54, "moves": ["Fault Line", "Dusk Gnaw", "Cairn Crash", "Eclipse Crush"]}, {"species": "Fenwarden", "level": 55, "moves": ["Kelp Lash", "Night Siphon", "Thorn Volley", "Bloom Burst"], "held": "iron_burr"}, {"species": "Obsidroth", "level": 55, "moves": ["Murk Call", "Dusk Gnaw", "Cairn Crash", "Monolith Drop"], "held": "swift_feather"}]
+  ]}
+ ],
+ "merchant": {"spots": [{"map": "brindlewick", "x": 8, "y": 6}, {"map": "fernstair", "x": 3, "y": 21}, {"map": "crowcrest", "x": 9, "y": 11}, {"map": "thornridge", "x": 5, "y": 13}, {"map": "murk_hollow", "x": 7, "y": 9}], "stock": ["cooling_gel", "dry_towel", "wake_bell", "power_brew", "guard_brew", "focus_brew", "dash_brew", "spark_drop", "kin_charm", "keen_lens", "swift_feather", "iron_burr"], "per_day": 3},
+ "expeditions": {"max": 3, "match_bonus_pct": 50, "xp_per_hour": 0.25, "find_max_price": 450, "plans": [{"hours": 4, "coins": 60, "waymarks": 1, "item": "tonic"}, {"hours": 8, "coins": 120, "waymarks": 1, "item": "remedy"}, {"hours": 12, "coins": 180, "waymarks": 2, "item": "strong_tonic"}]},
+ "rift_towers": [
+  {"id": "cinder_stair", "name": "Cinder Stair", "map": "cinder_rift", "open_flag": "rift_cinder_sealed", "elements": ["EMBER", "STONE", "VOLT"], "floors": 15, "down": false},
+  {"id": "tide_shaft", "name": "Tide Shaft", "map": "tide_rift", "open_flag": "rift_tide_sealed", "elements": ["TIDE", "BLOOM", "UMBRA"], "floors": 15, "down": true}
+ ],
+ "vows": [
+  {"id": "no_shop", "name": "No Shopping", "text": "Buy nothing at the shops for coins until the end of Act I."},
+  {"id": "no_keepsake", "name": "No Keepsakes", "text": "Give no Spirling in your team a keepsake until the end of Act I."},
+  {"id": "starter_stays", "name": "Old Friend Stays", "text": "Keep your first partner in the team until the end of Act I."}
+ ]
+}

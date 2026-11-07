@@ -52,8 +52,20 @@ func test_frozen_player_drops_path() -> void:
 	pl._process(0.05)
 	assert_true(pl.path.is_empty())
 
+func test_old_three_step_opacity_keeps_its_look() -> void:
+	# Item 1817: 30, 55 and 85 % stay 30, 55 and 85 % in the five-step list.
+	for old: int in 3:
+		GameState.settings_from_dict({"pad_opacity": old})
+		assert_eq(GameState.PAD_ALPHAS[GameState.pad_opacity], [0.3, 0.55, 0.85][old])
+	GameState.settings_from_dict({})
+	assert_eq(GameState.PAD_ALPHAS[GameState.pad_opacity], 0.55, "default stays 55 %")
+	assert_eq(GameState.PAD_ALPHAS.size(), 5)
+	assert_eq(GameState.PAD_SIZE_NAMES.size(), VirtualPad.DPAD_SIZES.size(), "item 1816: a size name per pad size")
+	assert_eq(VirtualPad.DPAD_SIZES[3], 28)
+	assert_eq(VirtualPad.AB_SIZES[3], 30)
+
 func test_control_settings_round_trip_and_defaults() -> void:
-	GameState.settings_from_dict({"pad_size": 2, "pad_opacity": 0, "left_handed": true, "tap_to_move": false})
+	GameState.settings_from_dict({"pad_size": 2, "pad_opacity": 0, "pad_opacity_steps": 5, "left_handed": true, "tap_to_move": false})
 	var d: Dictionary = GameState.settings_to_dict()
 	assert_eq(d.pad_size, 2)
 	assert_eq(d.pad_opacity, 0)

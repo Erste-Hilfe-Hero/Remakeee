@@ -1,0 +1,271 @@
+{
+ "name": "Copperfold",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "heal_point": [
+  3,
+  7
+ ],
+ "rows": [
+  "@@@@@@_@@@@@",
+  "@..|..:.S|.@",
+  "@..|.....|.@",
+  "@RRRR.._RRR@",
+  "@HHDH.._HDH@",
+  "@..._____..@",
+  "@.:.._..._.@",
+  "@.o.._..##.@",
+  "@....____..@",
+  "@^^^^^^=^^^@",
+  "@.:..___...@",
+  "@.RRR._.:..@",
+  "@.HDH._..S.@",
+  "@..__._....@",
+  "@:.._.__.:.@",
+  "@....._....@",
+  "@:...___..:@",
+  "@....___...@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 18,
+   "to": "lantern_steps",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 18,
+   "to": "lantern_steps",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "shatterfloor_mine",
+   "tx": 5,
+   "ty": 6,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "pitkeeper",
+   "x": 3,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "copperfold/pitkeeper",
+   "sprite": "elder"
+  },
+  {
+   "id": "trader",
+   "x": 9,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "copperfold/trader",
+   "sprite": "villager"
+  },
+  {
+   "id": "smith",
+   "x": 1,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "copperfold/smith",
+   "sprite": "villager"
+  },
+  {
+   "id": "shift",
+   "x": 10,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "copperfold/shift",
+   "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 10,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "copperfold/coach",
+   "sprite": "villager"
+  },
+  {
+   "id": "edda",
+   "x": 2,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "copperfold/edda",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 6,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ],
+   "walk": [
+    [
+     2,
+     15
+    ],
+    [
+     3,
+     15
+    ],
+    [
+     4,
+     15
+    ]
+   ]
+  },
+  {
+   "id": "sorrel",
+   "x": 4,
+   "y": 8,
+   "facing": "up",
+   "dialogue": "copperfold/sorrel",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": [
+      "dawn",
+      "day"
+     ],
+     "away": true
+    },
+    {
+     "phase": "night",
+     "x": 4,
+     "y": 6,
+     "facing": "down"
+    }
+   ]
+  },
+  {
+   "id": "cobb",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "copperfold/cobb",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dawn",
+     "x": 8,
+     "y": 2,
+     "facing": "down"
+    },
+    {
+     "phase": "dusk",
+     "x": 1,
+     "y": 8,
+     "facing": "up"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "hask",
+   "x": 8,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "copperfold/hask",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 3,
+     "y": 10,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "maud",
+   "x": 10,
+   "y": 6,
+   "facing": "left",
+   "dialogue": "copperfold/maud",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 10,
+     "y": 9,
+     "facing": "left",
+     "map": "wrenhollow"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 12,
+   "dialogue": "copperfold/sign"
+  },
+  {
+   "x": 8,
+   "y": 1,
+   "dialogue": "copperfold/marker_stone"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 15,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_copper_east"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_copper_west"
+  },
+  {
+   "x": 4,
+   "y": 1,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_copper_tower"
+  }
+ ],
+ "square": [
+  2,
+  7
+ ]
+}

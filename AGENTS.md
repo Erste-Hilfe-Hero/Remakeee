@@ -6,7 +6,7 @@ Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read 
 
 **Chimora** is a retro pixel-art, turn-based monster-taming RPG for **iOS and Android**, built in **Godot 4.7.2 (GDScript)**. It has the feel of 2000s handheld monster RPGs. It aims for deep, replayable systems (difficulty modes with level caps, smart AI, post-game challenges). It uses **zero Nintendo / Game Freak / The Pokémon Company IP**.
 
-- The player is a Tamer in the region **Veydal**, who bonds with original creatures called **Spirlings** and seals **Rifts** (Rifts replace gyms).
+- The player is a Wayfarer in the region **Veydal**, who bonds with original creatures called **Spirlings** and seals **Rifts** (Rifts replace gyms).
 - **Every region upgrades the art style** (Era I → IV). See "Era system" below.
 - The full design doc (GDD) is the source of truth for design questions. Ali owns it; ask him for the link if you need it.
 
@@ -16,8 +16,8 @@ Instructions for coding agents (Codex, Claude, etc.) working in this repo. Read 
 2. **Patent-safe mechanics** (Nintendo sued Palworld over these):
    - NO throwing or aiming an item to capture. Bonding is a **menu-triggered echo minigame** inside the battle (repeat the Spirling's call; no shrinking rings or timing circles, see `docs/legal/IP_PATENT_AUDIT.md`).
    - NO live capture-probability gauge. Show the result only after the minigame.
-   - NO riding a creature to fly or glide. Traversal uses **Tamer Gear** items on foot (grapple, climbing pick, lantern). No gliders, wings or any gliding/flying traversal (patent risk zone).
-   - NO throwing out a creature to summon it, and no flick-to-throw on the touchscreen. Spirlings step out beside the Tamer.
+   - NO riding a creature to fly or glide. Traversal uses **Wayfarer Gear** items on foot (grapple, climbing pick, lantern). No gliders, wings or any gliding/flying traversal (patent risk zone).
+   - NO throwing out a creature to summon it, and no flick-to-throw on the touchscreen. Spirlings step out beside the Wayfarer.
    - Battles start from overworld encounters and **cut to a separate battle screen**. No real-time shared-field fights.
 3. **Original assets only.** Never add ripped sprites, tiles, music or fonts. Use colored placeholder rectangles until real art exists.
 4. Don't add analytics, ads or network SDKs without Ali's explicit OK (they affect privacy forms and 16 KB compliance).
@@ -81,21 +81,25 @@ tests/           GUT tests
 | Lumen | Umbra, Volt |
 | Umbra | Lumen, Gale |
 
-**Stats:** HP, ATK, DEF, FOC (element/special), SPD. Each Spirling has hidden **Spark** values (0–15 per stat).
+**Stats:** HP, ATK, DEF, FOC (element/special), SPD. Each Spirling has hidden **Spark** values (0–12 per stat). Team of **5**, level cap **60**, up to 4 moves shown as a one-column list (never a 2x2 grid).
+
+**Player-facing words:** code keeps its internal names (`level`, `hp`, `atk`, `trait_id`, `held`, `evolve`), but every text the player sees uses Chimora's own words: Ring (not level), Growth (not XP), Vigor (not HP), Might/Guard/Focus/Pace, Gift (not trait), Keepsake (not held item), Wayfarer (not trainer), art (not move), Unfurling (not evolution). German: Ring, Wachstum, Kraft, Wucht/Schutz/Fokus/Tempo, Gabe, Andenken, Wanderer, Technik, Entfalten. Full table in `docs/IP_HYGIENE.md`.
+
+**Unfurling:** form changes are never automatic. When a Spirling is ready (ring, item or place), the overworld hints once and the Team menu offers "Unfurl"; an unfurled Spirling can "Furl back" to its earlier form at any time and keeps rings, arts and Spark.
 
 **Energy instead of PP:** 10 Energy at battle start, +1 per turn. Each move has an energy cost.
 
-**Statuses:** Scorch (−1/16 HP per turn, ATK ×0.75), Soak (SPD ×0.5, 3 turns), Root (can't swap, −1/16 HP per turn), Jolt (25% chance to skip the turn), Daze (accuracy ×0.7, 3 turns), Drowse (sleep 1–3 turns).
+**Statuses:** Scorch (−1/12 HP per turn, ATK ×0.75), Soak (SPD ×0.5, 3 turns), Root (can't swap, −1/12 HP per turn), Jolt (20% chance to skip the turn), Daze (accuracy ×0.7, 3 turns), Drowse (sleeps 2 turns).
 
 **Damage:** `DamageCalc.gd` uses Chimora's own curve (replaced the classic-style formula in M1):
-`dmg = (P × (A / D)^0.8 × (L / 5 + 3) / 12 + 1) × STAB(1.25) × E × Crit(1.5, 1/16) × R(0.9–1.0)`.
+`dmg = (P × (A / D)^0.8 × (L / 5 + 3) / 12 + 1) × STAB(1.25) × E × Crit(1.4, 1/12) × R(0.9–1.0)`.
 A same-level, neutral, 40-power move takes 15–25% of a balanced foe's HP; `tests/unit/test_damage.gd` pins this.
 
 **Bonding:** chance = bond_rate × max(1 − HP%, 0.1) × timing_score × (1.5 if statused) + charm bonus, capped at 0.95. The score comes from the "Echo call" minigame (`BondEcho.gd`): the wild Spirling calls 4 marks, the player repeats them; score = correct prefix / length. A failed bond gives the wild Spirling one free action.
 
-**Multi-Spirling battles (story set pieces):** a Tamer in map JSON may set `"front": [player, foe]` (up to 4 each), `"partner"` (an ally Tamer, e.g. Kestra, steered by AI), `"boss"` (a Rift boss from `BattleRules.BOSSES` whose HP and actions grow with the player's field) or `"wild": true` (a horde). Single-target moves are aimed; moves with `"target": "foes"` sweep every foe for 75% damage each. The Echo call (Bond) only works on wild foes. Random encounters and ordinary Tamers stay 1v1. See `BattleModel` (slots) and `tests/unit/test_multi_battle.gd`.
+**Multi-Spirling battles (story set pieces):** a Wayfarer in map JSON may set `"front": [player, foe]` (up to 4 each), `"partner"` (an ally Wayfarer, e.g. Kestra, steered by AI), `"boss"` (a Rift boss from `BattleRules.BOSSES` whose HP and actions grow with the player's field) or `"wild": true` (a horde). Single-target moves are aimed; moves with `"target": "foes"` sweep every foe for 75% damage each. The Echo call (Bond) only works on wild foes. Random encounters and ordinary Wayfarers stay 1v1. See `BattleModel` (slots) and `tests/unit/test_multi_battle.gd`.
 
-**Difficulty:** Story / Tamer / Veteran / Rift-Born. Veteran and Rift-Born use level caps; Rift-Born bans items in battle. AI levels are 0 / 1 / 2 / 2. See `GameState.gd`.
+**Difficulty:** Story / Wayfarer / Veteran / Rift-Born. Veteran and Rift-Born use level caps; Rift-Born bans items in battle. AI levels are 0 / 1 / 2 / 2. See `GameState.gd`.
 
 **AI tiers:** 0 = random legal move (wild); 1 = greedy (expected damage × accuracy × effectiveness, plus KO and status bonus); 2 = 1-ply lookahead plus switching on bad matchups plus items under HP thresholds.
 
@@ -105,10 +109,10 @@ Each region is a visual generation jump. `EraManager` (autoload) owns the active
 
 | Era | Region | Resolution | Battle sprite | Palette |
 | --- | --- | --- | --- | --- |
-| I Mono | Veydal | 144×256 | 56×56 | 4 fixed greens |
-| II Color | Corvane | 144×256 | 56×56 | 4 per sprite, day/night |
-| III Advanced | Ashmere | 180×320 | 64×64 | 16 per sprite |
-| IV Dual | Solenne | 270×480 | 96×96, 6-frame idle | 32 per sprite, 2.5D via SubViewport |
+| I Ink | Veydal | 144×256 | 56×56 | 4 fixed inks on parchment (never handheld green) |
+| II Wash | Corvane | 144×256 | 56×56 | 4 per sprite, day/night |
+| III Etched | Ashmere | 180×320 | 64×64 | 16 per sprite |
+| IV Panorama | Solenne | 270×480 | 96×96, 6-frame idle | 32 per sprite, 2.5D via SubViewport |
 
 Until Era II+ art exists, sprite lookups must fall back to `art/era1/`.
 
@@ -142,7 +146,7 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 ### M4 — Meta systems
 - [x] Party (max 6), storage box, a Spirlog that tracks seen/bonded and route spawns (Spirlog Tracker).
 - [x] SaveManager: versioned, atomic, saves on pause.
-- [x] New-game flow: difficulty pick → Tamer customization (placeholder) → starter pick (Kindlop / Puddlet / Mossling).
+- [x] New-game flow: difficulty pick → Wayfarer customization (placeholder) → starter pick (Kindlop / Zippit / Wickit; no element triangle).
 - [x] Settings: text speed, Retro filter (Era I only for now), volume.
 
 ### M5 — Vertical slice content
@@ -156,3 +160,4 @@ Each milestone must run headless (`godot --headless --quit` with no errors) and 
 - Keep PRs small. Commit message format: `area: what changed` (e.g. `battle: add status ticks`).
 - If a task conflicts with LEGAL.md, stop and leave a note in the PR instead of guessing.
 - If something is underspecified, pick the simplest option that fits this file and note the assumption in the PR description.
+- New tweens go through `Juice.tween(node, prop, value, "curve")` (see docs/JUICE.md), so durations and feel can be tuned in one place. A plain `create_tween()` is only for steady bars that must run linearly, and for loops Juice does not cover yet.

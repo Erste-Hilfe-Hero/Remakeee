@@ -2,7 +2,7 @@
 
 > Erstellt von einer KI ohne anwaltliche Prüfung. Die Antworten gelten für das Modell aus
 > [DATENSCHUTZ.md](DATENSCHUTZ.md): automatisches Konto mit zufälliger Spieler-ID, Übertragungscode statt
-> E-Mail, Tamer-Name nur für dich sichtbar, Server bei Supabase in Frankfurt, keine Werbung, keine Analytics,
+> E-Mail, Wayfarer-Name nur für dich sichtbar, eigener Server bei Contabo in Deutschland, keine Werbung, keine Analytics,
 > keine Absturzberichte, kein Drittanbieter-Login, kein Chat, keine Lootboxen. Ändert sich davon etwas,
 > ändern sich die Antworten. Store-Formulare ändern sich oft: im Zweifel die Hilfe in der Konsole lesen.
 
@@ -12,7 +12,7 @@
 | --- | --- |
 | Erhebt oder teilt die App Nutzerdaten? | **Ja** (erheben). Teilen: **Nein** (Hoster als Auftragsverarbeiter zählt nicht als „Teilen“) |
 | Daten bei der Übertragung verschlüsselt? | **Ja** (TLS) |
-| Können Nutzer die Löschung ihrer Daten beantragen? | **Ja**, In-App + Web-Link [https://DOMAIN/konto-loeschen] (Pflicht, wenn die App Konten anlegt) |
+| Können Nutzer die Löschung ihrer Daten beantragen? | **Ja**, In-App + Web-Link `https://chimora.161-97-102-171.sslip.io/konto-loeschen` (Pflicht, wenn die App Konten anlegt) |
 
 Erhobene Datentypen (alle: *erforderlich*, Zweck *App-Funktionen* und ggf. *Betrugsprävention/Sicherheit*,
 nicht flüchtig, nicht geteilt):
@@ -20,13 +20,15 @@ nicht flüchtig, nicht geteilt):
 | Kategorie → Typ | Wann |
 | --- | --- |
 | Personenbezogene Daten → **Nutzer-IDs** | **Ja** (zufällige Spieler-ID) |
-| Personenbezogene Daten → **Name** | **Ja** (Tamer-Name; Google zählt auch Spitznamen dazu) |
+| Personenbezogene Daten → **Name** | **Ja** (Wayfarer-Name; Google zählt auch Spitznamen dazu) |
+| Finanzdaten → **Kaufverlauf** | **Ja**, erhoben, nicht geteilt, Zweck *App-Funktionen* (der Server speichert Käufe, Rissglas-Buchungen und Erstattungen) |
+| Personenbezogene Daten → **Sonstige Infos** | **Ja** (nur die Altersgruppe für den Shop, kein Geburtsdatum) |
 | App-Aktivitäten → **Sonstige Aktionen** | **Ja** (Spielstand/Fortschritt) |
 | E-Mail-Adresse, Geräte-IDs, Absturzprotokolle, Diagnose | **Nein** |
 | Standort → Ungefährer Standort | **Nein** (IP-Adressen liegen nur 7 Tage in Sicherheits-Logs und werden nicht zur Standortbestimmung genutzt) |
 
 Weitere Play-Console-Punkte:
-- **Datenschutzerklärung:** öffentliche URL (kein PDF, keine Store-Seite), z. B. `https://DOMAIN/datenschutz`.
+- **Datenschutzerklärung:** öffentliche URL (kein PDF, keine Store-Seite), `https://chimora.161-97-102-171.sslip.io/datenschutz`.
 - **Zielgruppe und Inhalte:** Zielgruppe **13 Jahre und älter** wählen und nicht gezielt an Kinder
   vermarkten. Falls Google das Spiel trotzdem als „für Kinder ansprechend“ einstuft: Chimora erfüllt die
   Families-Richtlinie bereits (keine Werbe-/Analytics-SDKs, keine Werbe-ID), dann einfach zustimmen.
@@ -41,11 +43,12 @@ Weitere Play-Console-Punkte:
 | Datentyp | Mit Identität verknüpft? | Tracking? | Zweck |
 | --- | --- | --- | --- |
 | Identifiers → **User ID** | Ja | Nein | App Functionality |
-| User Content → **Gameplay Content** (Spielstand inkl. Tamer-Name) | Ja | Nein | App Functionality |
+| User Content → **Gameplay Content** (Spielstand inkl. Wayfarer-Name) | Ja | Nein | App Functionality |
+| Purchases → **Purchase History** (Käufe, Rissglas-Buchungen, Erstattungen auf unserem Server) | Ja | Nein | App Functionality |
+| Other Data → **Other Data Types** (Altersgruppe für den Shop) | Ja | Nein | App Functionality |
 
-Alles andere (Kontaktdaten, Standort, Diagnose, Nutzungsdaten, Kaufdaten) nicht ankreuzen. Käufe wickelt Apple
-ab; die Kaufbestätigung gilt nicht als von dir erhobene „Purchase History“, solange du sie nur zum
-Freischalten nutzt.
+Alles andere (Kontaktdaten, Standort, Diagnose, Nutzungsdaten) nicht ankreuzen. Weil der Server Käufe dem
+Konto zuordnet und speichert, wird „Purchase History“ angegeben.
 
 - „Used for tracking“: **Nein** bei allem. Keine App-Tracking-Transparency-Abfrage nötig, solange kein
   Tracking-SDK drin ist.
@@ -64,15 +67,18 @@ Freischalten nutzt.
 ## 3. Altersfreigabe
 
 Antworten für den aktuellen Stand (Fantasy-Kreaturen kämpfen rundenbasiert, Gegner „fallen um“, kein Blut,
-keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspiel):
+keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspiel, Freunde nur mit festen Grüßen):
 
 - **IARC (Google, liefert USK/PEGI/ESRB):** Gewalt: ja, *Fantasy-/Cartoon-Gewalt gegen Fantasiewesen,
-  nicht realistisch, kein Blut*. Alles andere: nein. Nutzer können interagieren: **nein** (solange kein
-  Chat/keine sichtbaren Namen). Digitale Käufe: je nach Monetarisierung. Erwartung: **USK 6 / PEGI 7**
-  (Schätzung, die Freigabe vergibt IARC).
+  nicht realistisch, kein Blut*. Alles andere: nein. Nutzer können interagieren: **ja, eingeschränkt** (Freunde
+  sehen den Wayfarer-Namen und tauschen nur feste Grüße, kein freier Chat; Melden und Blockieren vorhanden). Digitale Käufe: **ja** (Shop mit In-App-Käufen; keine Zufallsinhalte gegen Geld). Erwartung: **USK 6 / PEGI 7
+  mit Zusatz „In-Game-Käufe“** (ohne „zufällige Objekte“; Schätzung, die Freigabe vergibt IARC).
 - **Apple (Stufen 4+, 9+, 13+, 16+, 18+, neuer Fragebogen seit 31.01.2026):** Cartoon- oder Fantasy-Gewalt:
   *selten/mild* → Erwartung **9+**. In-App-Kontrollen/Fähigkeiten: kein Chat, keine nutzergenerierten Inhalte,
-  kein Web-Zugriff. Medizin/Wellness: nein.
+  kein Web-Zugriff. Medizin/Wellness: nein. **In-App-Käufe: ja.** Begründung für 9+ trotz Käufen: Die Stufe
+  hängt bei Apple an den Inhalten (milde Fantasy-Gewalt), nicht an Käufen; Käufe werden auf der Store-Seite
+  angezeigt, der Shop ist im Spiel unter 13 gesperrt, und es gibt keine Lootboxen (sonst Wahrscheinlichkeiten
+  Pflicht, Guideline 3.1.1).
 - **Achtung:** Bezahlte Zufallsinhalte (Lootboxen) führen in Deutschland zum USK-Hinweis „In-Game-Käufe +
   zufällige Objekte“ und meist zu einer höheren Freigabe; Apple verlangt dann die Anzeige der
   Wahrscheinlichkeiten. Empfehlung: keine Lootboxen.
@@ -89,7 +95,7 @@ keine realistischen Waffen, kein Chat, keine Käufe mit Zufall, kein Glücksspie
   Chat), ist Chimora selbst ein Hosting-Dienst im Sinne des DSA. Dann zusätzlich: Kontaktstelle für Nutzer
   und Behörden (Art. 11, 12), Moderationsregeln in den AGB (Art. 14), Meldeweg für rechtswidrige Inhalte
   (Art. 16) und Begründung bei Sperren (Art. 17). Seit den Online-Funktionen sehen
-  Freunde Tamer-Namen. Umgesetzt: Meldeweg im Spiel (Freund, Melden; Tabelle `reports`), Blockieren,
+  Freunde Wayfarer-Namen. Umgesetzt: Meldeweg im Spiel (Freund, Melden; Tabelle `reports`), Blockieren,
   Namensfilter, nur feste Grüße, Regeln in den Nutzungsbedingungen (Abschnitt „Freunde und Grüße“).
   Ali: Kontaktstelle ist die E-Mail aus dem Impressum; Meldungen wöchentlich prüfen und bei einer
   Namens-Zurücksetzung kurz begründen (Art. 17 DSA, Vorlage in docs/ONLINE.md).
@@ -101,27 +107,12 @@ der Beschreibung, in Keywords, Screenshots oder Anzeigen; keine Vergleiche („w
 Online-Pflicht offen nennen. Apple lehnt Metadaten mit fremden Marken oder Vergleichen ab (Guideline
 2.3.7); in Deutschland wäre es zusätzlich unlautere Anlehnung (UWG).
 
-**Kurzbeschreibung (DE, max. 80 Zeichen):**
-> Verbünde dich mit Spirlings und versiegle die Risse – ein Retro-Pixel-Abenteuer.
+Die fertigen Texte, Screenshots und die Feature-Grafik liegen in [`store/`](../../store/README.md)
+(Deutsch und Englisch). Ablauf beim Einreichen: [docs/STORE_RELEASE.md](../STORE_RELEASE.md).
 
-**Short description (EN):**
-> Bond with Spirlings and seal the Rifts in a retro pixel monster-taming RPG.
-
-**Beschreibung (DE):**
-> Chimora ist ein rundenbasiertes Monster-Zähmungs-RPG im Retro-Pixel-Stil.
-> Als Tamer erkundest du die Region Veydal, triffst über 15 einzigartige Spirlings und gewinnst ihr
-> Vertrauen in einem Minispiel. Acht Elemente, Energie statt Attackenpunkte und vier
-> Schwierigkeitsgrade bis hin zu „Rift-Born“ sorgen für taktische Tiefe.
-> Mit jeder neuen Region entwickelt sich auch der Grafikstil weiter.
-> • Rundenbasierte Kämpfe mit eigenem Elementsystem
-> • Bonding statt Fangen: baue in einem Minispiel eine Verbindung auf
-> • Rifts und ihre Wardens als Herausforderungen
-> • Spielstand sicher in der Cloud
-> **Hinweis: Chimora benötigt eine Internetverbindung.**
-> [Falls zutreffend: Enthält optionale In-App-Käufe. Keine Werbung.]
-
-**Keywords (Apple, 100 Zeichen):**
-`monster,rpg,pixel,retro,turn based,creature,tamer,adventure,bond,elements,strategy,rift`
+**URLs für die Konsolen** (vom Spielserver ausgeliefert, bis es eine eigene Domain gibt):
+Datenschutz `https://chimora.161-97-102-171.sslip.io/datenschutz` (EN `/privacy`), Konto löschen
+`/konto-loeschen` (EN `/delete-account`), Support `/support`, Impressum `/impressum`.
 
 ## 6. Sonstiges vor dem Launch
 
@@ -132,5 +123,5 @@ Online-Pflicht offen nennen. Apple lehnt Metadaten mit fremden Marken oder Vergl
   Godot-Lizenztext (`scripts/core/LegalInfo.gd`). Die Domain dort ersetzen, sobald die Website steht. Die
   Lizenztexte der in Godot enthaltenen Drittbibliotheken (FreeType, ENet, mbedTLS usw.) auf der Seite
   `/lizenzen` der Website veröffentlichen (Text aus `Engine.get_license_info()` oder Godots `COPYRIGHT.txt`).
-- **Noch zu bauen, sobald das Backend kommt:** Zustimmung zu den Nutzungsbedingungen beim ersten Start,
-  Einstellungen → Konto (Spieler-ID, Übertragungscode, „Konto löschen“) und die Web-Seite zur Kontolöschung.
+- **Konto in der App:** Menü → Konto (Freundescode, Übertragungscode, Online-Regeln, Datenschutz,
+  „Konto löschen“). Web-Seite zur Kontolöschung: `/konto-loeschen` auf dem Spielserver.

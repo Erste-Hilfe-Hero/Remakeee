@@ -1,0 +1,603 @@
+{
+ "name": "Lanternwell",
+ "region": "veydal",
+ "biome": "dungeon",
+ "backdrop": "lake",
+ "field": "deep_murk",
+ "encounters": "lanternwell",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@..........@",
+  "@.......S..@",
+  "@..........@",
+  "@..S.......@",
+  "@:......S.S@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 6,
+   "to": "lighthouse",
+   "tx": 2,
+   "ty": 6,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "lanternwell@1",
+   "tx": 5,
+   "ty": 5,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 6,
+   "to": "lighthouse",
+   "tx": 2,
+   "ty": 6,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "lanternwell@1",
+   "tx": 6,
+   "ty": 5,
+   "facing": "up"
+  }
+ ],
+ "signs": [
+  {
+   "x": 8,
+   "y": 2,
+   "dialogue": "lanternwell/mirror_0_8_2"
+  },
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "lanternwell/mirror_0_3_4"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "lanternwell/crystal"
+  },
+  {
+   "x": 10,
+   "y": 5,
+   "dialogue": "lanternwell/hint_board"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "beam_room_1"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "beam_room_1"
+  }
+ ],
+ "floors": [
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@..S.......@",
+    "@......S...@",
+    "@..........@",
+    "@:.S......S@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 3,
+     "y": 2,
+     "dialogue": "lanternwell/mirror_1_3_2"
+    },
+    {
+     "x": 3,
+     "y": 5,
+     "dialogue": "lanternwell/mirror_1_3_5"
+    },
+    {
+     "x": 7,
+     "y": 3,
+     "dialogue": "lanternwell/mirror_1_7_3"
+    },
+    {
+     "x": 10,
+     "y": 5,
+     "dialogue": "lanternwell/crystal"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "lanternwell",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "lanternwell@2",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "lanternwell",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "lanternwell@2",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "beam": {
+    "x": 0,
+    "y": 2,
+    "dir": "right",
+    "mirrors": [
+     [
+      3,
+      2,
+      "/"
+     ],
+     [
+      3,
+      5,
+      "\\"
+     ],
+     [
+      7,
+      3,
+      "/"
+     ]
+    ],
+    "target": [
+     10,
+     5
+    ],
+    "flag": "beam_room_2"
+   },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "beam_room_2"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "beam_room_2"
+    }
+   ],
+   "name": "Lanternwell, chamber 2"
+  },
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@........S.@",
+    "@...S.S....@",
+    "@..........@",
+    "@...S....S.@",
+    "@:S.......:@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 9,
+     "y": 1,
+     "dialogue": "lanternwell/mirror_2_9_1"
+    },
+    {
+     "x": 9,
+     "y": 4,
+     "dialogue": "lanternwell/mirror_2_9_4"
+    },
+    {
+     "x": 4,
+     "y": 4,
+     "dialogue": "lanternwell/mirror_2_4_4"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "dialogue": "lanternwell/mirror_2_6_2"
+    },
+    {
+     "x": 2,
+     "y": 5,
+     "dialogue": "lanternwell/mirror_2_2_5"
+    },
+    {
+     "x": 4,
+     "y": 2,
+     "dialogue": "lanternwell/crystal"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "lanternwell@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "lanternwell@3",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "lanternwell@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "lanternwell@3",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "beam": {
+    "x": 0,
+    "y": 1,
+    "dir": "right",
+    "mirrors": [
+     [
+      9,
+      1,
+      "/"
+     ],
+     [
+      9,
+      4,
+      "/"
+     ],
+     [
+      4,
+      4,
+      "/"
+     ],
+     [
+      6,
+      2,
+      "/"
+     ],
+     [
+      2,
+      5,
+      "/"
+     ]
+    ],
+    "target": [
+     4,
+     2
+    ],
+    "flag": "beam_room_3"
+   },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "beam_room_3"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "beam_room_3"
+    }
+   ],
+   "name": "Lanternwell, chamber 3"
+  },
+  {
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@.S...S..S.@",
+    "@..........@",
+    "@.....S...S@",
+    "@:S.......:@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 5,
+     "dialogue": "lanternwell/mirror_3_2_5"
+    },
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "lanternwell/mirror_3_2_2"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "dialogue": "lanternwell/mirror_3_6_2"
+    },
+    {
+     "x": 6,
+     "y": 4,
+     "dialogue": "lanternwell/mirror_3_6_4"
+    },
+    {
+     "x": 9,
+     "y": 2,
+     "dialogue": "lanternwell/mirror_3_9_2"
+    },
+    {
+     "x": 10,
+     "y": 4,
+     "dialogue": "lanternwell/crystal"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "lanternwell@2",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "lanternwell@4",
+     "tx": 5,
+     "ty": 5,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "lanternwell@2",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "lanternwell@4",
+     "tx": 6,
+     "ty": 5,
+     "facing": "up"
+    }
+   ],
+   "beam": {
+    "x": 0,
+    "y": 5,
+    "dir": "right",
+    "mirrors": [
+     [
+      2,
+      5,
+      "\\"
+     ],
+     [
+      2,
+      2,
+      "/"
+     ],
+     [
+      6,
+      2,
+      "/"
+     ],
+     [
+      6,
+      4,
+      "\\"
+     ],
+     [
+      9,
+      2,
+      "/"
+     ]
+    ],
+    "target": [
+     10,
+     4
+    ],
+    "flag": "beam_room_4"
+   },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "beam_room_4"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "beam_room_4"
+    }
+   ],
+   "name": "Lanternwell, chamber 4"
+  },
+  {
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@.S......S.@",
+    "@....S.....@",
+    "@.S.......S@",
+    "@....S...S.@",
+    "@S........:@",
+    "@@@@@__@@@@@"
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 3,
+     "dialogue": "lanternwell/mirror_4_2_3"
+    },
+    {
+     "x": 2,
+     "y": 1,
+     "dialogue": "lanternwell/mirror_4_2_1"
+    },
+    {
+     "x": 9,
+     "y": 1,
+     "dialogue": "lanternwell/mirror_4_9_1"
+    },
+    {
+     "x": 9,
+     "y": 4,
+     "dialogue": "lanternwell/mirror_4_9_4"
+    },
+    {
+     "x": 5,
+     "y": 4,
+     "dialogue": "lanternwell/mirror_4_5_4"
+    },
+    {
+     "x": 10,
+     "y": 3,
+     "dialogue": "lanternwell/mirror_4_10_3"
+    },
+    {
+     "x": 1,
+     "y": 5,
+     "dialogue": "lanternwell/mirror_4_1_5"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "lanternwell/crystal"
+    }
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 6,
+     "to": "lanternwell@3",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 6,
+     "to": "lanternwell@3",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "beam": {
+    "x": 0,
+    "y": 3,
+    "dir": "right",
+    "mirrors": [
+     [
+      2,
+      3,
+      "\\"
+     ],
+     [
+      2,
+      1,
+      "/"
+     ],
+     [
+      9,
+      1,
+      "/"
+     ],
+     [
+      9,
+      4,
+      "/"
+     ],
+     [
+      5,
+      4,
+      "/"
+     ],
+     [
+      10,
+      3,
+      "/"
+     ],
+     [
+      1,
+      5,
+      "/"
+     ]
+    ],
+    "target": [
+     5,
+     2
+    ],
+    "flag": "beam_room_5"
+   },
+   "goal": "Goal: turn the mirrors so the light reaches the crystal.",
+   "secrets": [
+    {
+     "x": 1,
+     "y": 1,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_well_top"
+    }
+   ],
+   "name": "Lanternwell, chamber 5"
+  }
+ ],
+ "beam": {
+  "x": 0,
+  "y": 2,
+  "dir": "right",
+  "mirrors": [
+   [
+    8,
+    2,
+    "/"
+   ],
+   [
+    3,
+    4,
+    "/"
+   ]
+  ],
+  "target": [
+   8,
+   5
+  ],
+  "flag": "beam_room_1"
+ },
+ "goal": "Goal: turn the mirrors so the light reaches the crystal."
+}

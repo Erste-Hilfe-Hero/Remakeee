@@ -19,7 +19,8 @@ from px import Canvas
 T = 16
 KINDS = ["GRASS", "TALL_GRASS", "PATH", "WATER", "TREE", "WALL", "ROOF", "DOOR", "FLOOR",
          "FENCE", "SIGN", "FLOWER", "COUNTER", "INNER_WALL", "SPRING", "RIFT",
-         "CLIFF", "STAIRS", "REEDS", "SCREE", "PIER", "TOWER", "LAMP", "ROCK"]
+         "CLIFF", "STAIRS", "REEDS", "SCREE", "PIER", "TOWER", "LAMP", "ROCK",
+         "WADE", "BOULDER", "PLATE", "CRACKED", "VINES", "PLANK"]
 K = {name: i for i, name in enumerate(KINDS)}
 UP, RIGHT, DOWN, LEFT = 1, 2, 4, 8
 
@@ -444,6 +445,72 @@ def rock(c: Canvas, ox: int, oy: int, variant: int) -> None:
                          "................"])
 
 
+# --- Area 3 (world) placeholders: simple shapes in the Era I inks; area 6 owns the final look.
+
+def wade(c: Canvas, ox: int, oy: int, mask: int) -> None:
+    # Shallow water: lighter than the lake, with stepping stones showing through.
+    water(c, ox, oy, mask)
+    c.checker(ox + 2, oy + 2, 12, 12, 2, 1)
+    for (x, y) in [(3, 5), (10, 10)]:
+        c.ascii(ox + x, oy + y, [".00.", "0330", "0220", ".00."])
+
+
+def boulder(c: Canvas, ox: int, oy: int) -> None:
+    floor_like = 2
+    c.rect(ox, oy, T, T, floor_like)
+    c.ascii(ox, oy + 1, ["....00000000....",
+                         "...0333322220...",
+                         "..033332222210..",
+                         ".03332222222110.",
+                         ".03322222221110.",
+                         ".03222222211110.",
+                         ".02222222111110.",
+                         ".02222221111110.",
+                         ".02222111111110.",
+                         ".01111111111110.",
+                         "..011111111110..",
+                         "...0000000000...",
+                         "....11111111....",
+                         "................"])
+
+
+def plate(c: Canvas, ox: int, oy: int) -> None:
+    c.rect(ox, oy, T, T, 2)
+    c.rect(ox + 2, oy + 2, 12, 12, 0)
+    c.rect(ox + 3, oy + 3, 10, 10, 1)
+    c.rect(ox + 5, oy + 5, 6, 6, 3)
+    c.rect(ox + 6, oy + 6, 4, 4, 2)
+
+
+def cracked(c: Canvas, ox: int, oy: int) -> None:
+    c.rect(ox, oy, T, T, 2)
+    for (x, y) in [(2, 3), (3, 4), (4, 4), (5, 5), (6, 6), (6, 7), (7, 8), (8, 8), (9, 9),
+                   (10, 10), (11, 10), (12, 11), (6, 8), (5, 9), (4, 10), (9, 7), (10, 6), (11, 5)]:
+        c.set(ox + x, oy + y, 0)
+    for (x, y) in [(3, 3), (5, 4), (7, 7), (9, 8), (11, 9)]:
+        c.set(ox + x, oy + y, 3)
+
+
+def vines(c: Canvas, ox: int, oy: int, mask: int) -> None:
+    cliff(c, ox, oy, mask)
+    for x in (2, 7, 12):
+        for y in range(0, 16):
+            if (y + x) % 5 != 4:
+                c.set(ox + x + (y // 4) % 2, oy + y, 2)
+        for y in (3, 9, 14):
+            c.ascii(ox + x - 1, oy + y, ["232"])
+
+
+def plank_gap(c: Canvas, ox: int, oy: int) -> None:
+    # A gap in the ground with a chalk mark where a plank fits.
+    c.rect(ox, oy, T, T, 0)
+    c.hline(ox, ox + 15, oy, 2)
+    c.hline(ox, ox + 15, oy + 1, 1)
+    c.hline(ox, ox + 15, oy + 15, 2)
+    for x in range(2, 14, 3):
+        c.set(ox + x, oy + 8, 3)
+
+
 VARIANT_ROWS = 16
 
 
@@ -501,6 +568,18 @@ def build_tiles(path_out: str) -> None:
                 lamp(c, ox, oy)
             elif name == "ROCK":
                 rock(c, ox, oy, v % 4)
+            elif name == "WADE":
+                wade(c, ox, oy, v)
+            elif name == "BOULDER":
+                boulder(c, ox, oy)
+            elif name == "PLATE":
+                plate(c, ox, oy)
+            elif name == "CRACKED":
+                cracked(c, ox, oy)
+            elif name == "VINES":
+                vines(c, ox, oy, 15)
+            elif name == "PLANK":
+                plank_gap(c, ox, oy)
     c.save(path_out)
 
 
@@ -536,6 +615,36 @@ HEADS = {
                   "...0113333330...",
                   "...0113333030...",
                   "....01333330....",
+                  ],
+    },
+    # Same explorer cap, with hair to the shoulders and a short tail (the player, girl).
+    "tamer_f": {
+        "down": ["................",
+                 ".....000000.....",
+                 "....01111110....",
+                 "...0113333110...",
+                 "..000000000000..",
+                 "..023333333320..",
+                 "..023033330320..",
+                 "..020333333020..",
+                 ],
+        "up": ["................",
+               ".....000000.....",
+               "....01111110....",
+               "...0111111110...",
+               "..000000000000..",
+               "..022222222220..",
+               "..022222222220..",
+               "...0222222220...",
+               ],
+        "right": ["................",
+                  "....000000......",
+                  "...01111110.....",
+                  "...011133110....",
+                  "..000000000000..",
+                  "..02223333330...",
+                  ".022223333030...",
+                  ".020.01333330...",
                   ],
     },
     # Short messy hair, no hat.
@@ -716,6 +825,7 @@ ROBE_HEM = {
 
 STYLES = {
     "tamer": ("tamer", "jacket"),
+    "tamer_f": ("tamer_f", "jacket"),
     "villager": ("villager", "jacket"),
     "ranger": ("ranger", "jacket"),
     "elder": ("elder", "robe"),

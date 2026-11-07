@@ -39,8 +39,9 @@ Preset values: target SDK 36, min SDK 24, arm64-v8a only, Gradle build, AAB. The
 installed fresh in CI by `tools/ci_setup_android.sh` (the `android/` folder is gitignored). To build locally,
 use Project → Install Android Build Template in the editor.
 
-`package/unique_name` is `com.chimora.game` as a placeholder. Change it to a reverse domain you own before
-the first upload; it can never change afterwards.
+`package/unique_name` and the iOS bundle ID are `de.chimora.game`. They can never change after the first
+upload. Store texts, screenshots and the submission steps: `store/README.md` and `docs/STORE_RELEASE.md`.
+Run `python3 tools/release_check.py --strict` before tagging a release.
 
 ## iOS setup (one time)
 
@@ -62,4 +63,21 @@ in `export_presets.cfg`, then push a tag such as `v0.1.0`.
 
 ## APK size budget
 
-CI fails the Android debug job when the APK is larger than 80 MB (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
+CI fails the Android debug job when the APK is larger than 92 MB (raised from 88 MB on 7 Nov 2026 for the 12 new languages: their text tables and the CJK pixel fonts add about 2-3 MB) (`tools/apk_budget.sh`). The job summary shows the size and the biggest files in the package. If the budget is hit, first look for large textures or audio that slipped in. Raise the number in `.github/workflows/export.yml` only on purpose, for example when a new era adds art.
+
+Raised from 80 to 88 MB for the layered place music (plan area 6, items 2475 to 2479): every place song ships as four stems. Phones and tablets play the stems, so the Android and iOS presets leave out the eleven full mixes of the place songs; the web build plays the full mixes and leaves out `audio/music/stems/` (web audio plays samples, which AudioStreamSynchronized does not use).
+
+## Official build path and version numbers (plan area 9)
+
+- **Store builds** (signed AAB for Google Play, IPA for TestFlight) run in the lifekit repository, because the
+  signing keys and store accounts live there: workflow `.github/workflows/chimora-store.yml` on branch
+  `claude/chimora-store`, started by a commit `run:chimora-store-android` / `run:chimora-store-ios`. It checks
+  out this repository at the pinned `CHIMORA_REF`. That is the official path to the stores.
+- **This repository** builds the debug APK and the browser test build on every push (`export.yml`) and is the
+  only place where code changes. Before a store build, set `CHIMORA_REF` in lifekit to the commit on `main`
+  (or the release tag) that passed all checks here.
+- **Version numbers:** `python3 tools/bump_version.py --name 1.2.0` sets the version name and the next version
+  code in every export preset and `Online.CLIENT_VERSION` at once; CI runs `--check`. The lifekit build adds
+  its own build number for the store upload. Raise `server_config.min_version` only when the new build is
+  live in both stores.
+- GitHub Actions are pinned to commit SHAs (the tag stays as a comment). Update them in a reviewed PR.

@@ -1,0 +1,30 @@
+{
+ "_comment": "Korean texts for the German table fx. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Ambience": "환경음",
+  "Ambience: %d%%": "환경음: %d%%",
+  "Both ears hear the same sound, for hearing on one side.": "양쪽 귀에 같은 소리가 들립니다. 한쪽으로 듣는 분을 위한 설정입니다.",
+  "Coins: %d": "코인: %d",
+  "Full": "강하게",
+  "How much the screen shakes on big hits.": "큰 타격을 받을 때 화면이 흔들리는 정도입니다.",
+  "How strongly the phone or gamepad vibrates.": "휴대폰이나 게임패드가 진동하는 세기입니다.",
+  "Important sounds also show as a short text at the top.": "중요한 소리를 화면 위쪽에 짧은 글로도 보여 줍니다.",
+  "Mono sound: %s": "모노: %s",
+  "Places": "장소",
+  "Screen shake: %s": "흔들림: %s",
+  "Short blips while a line types out.": "글자가 나올 때 짧은 효과음이 납니다.",
+  "Sound captions: %s": "소리 자막: %s",
+  "Text voice and Spirling cries. Left and right change it in steps of 10.": "글자 음성과 Spirling 울음소리입니다. 좌우로 10씩 조절합니다.",
+  "Text voice: %s": "글자 음성: %s",
+  "Vibration: %s": "진동: %s",
+  "Voice": "음성",
+  "Voices: %d%%": "음성: %d%%",
+  "Waiting for the server": "서버 응답 대기 중",
+  "Weak": "약하게",
+  "Wind, water and other sounds of a place. Left and right change it in steps of 10.": "바람, 물 등 그 장소의 소리입니다. 좌우로 10씩 조절합니다.",
+  "[A deep rumble]": "[낮게 울리는 소리]",
+  "[Footsteps stop short]": "[발소리가 뚝 멈춘다]",
+  "[Item picked up]": "[물건을 주웠다]",
+  "[Rustling in the grass]": "[풀숲이 바스락거린다]"
+ }
+}

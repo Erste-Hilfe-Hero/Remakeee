@@ -1,6 +1,7 @@
 {
  "name": "Fernstair",
  "region": "veydal",
+ "biome": "fern",
  "backdrop": "field",
  "outdoor": true,
  "encounters": "fernstair",
@@ -9,7 +10,7 @@
   "T,,,__,,,..T",
   "T,,,____...T",
   "T^^^^^^^=^^T",
-  "T*..,,,,_..T",
+  "TS..,,,,_..T",
   "T.S.,,,,_.@T",
   "T________..T",
   "T_^^^^^^^^^T",
@@ -17,7 +18,7 @@
   "T_..,,,,,.@T",
   "T_________.T",
   "T^^^^^^^^=^T",
-  "T.,,,,....:T",
+  "_.,,,,....:T",
   "T.,,,,..._:T",
   "T@..______:T",
   "T..._,,,,::T",
@@ -25,7 +26,7 @@
   "T,,,_,,,,..T",
   "T,,,_,,,,..T",
   "T...____...T",
-  "TT.....__..T",
+  "TS.....__..T",
   "T.....,__,.T",
   "T*....,__,,T",
   "T.....S__..T",
@@ -64,6 +65,14 @@
    "tx": 6,
    "ty": 22,
    "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 12,
+   "to": "gloamwood",
+   "tx": 10,
+   "ty": 24,
+   "facing": "left"
   }
  ],
  "npcs": [
@@ -82,6 +91,50 @@
    "facing": "right",
    "dialogue": "fernstair/hiker",
    "sprite": "villager"
+  },
+  {
+   "id": "imme",
+   "x": 8,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "fernstair/imme",
+   "sprite": "villager",
+   "trainer": "Pathkeeper Imme",
+   "intro": "fernstair/imme_intro",
+   "defeat": "fernstair/imme_defeat",
+   "money": 120,
+   "profile": "apprentice",
+   "team": [
+    {
+     "species": "Zippit",
+     "level": 4
+    },
+    {
+     "species": "Mossling",
+     "level": 4
+    }
+   ]
+  },
+  {
+   "id": "joss",
+   "x": 2,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "fernstair/joss",
+   "sprite": "villager",
+   "trainer": "Herder Joss",
+   "intro": "fernstair/joss_intro",
+   "defeat": "fernstair/joss_defeat",
+   "profile": "wall",
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 5,
+     "moves": [
+      "Hunker Down"
+     ]
+    }
+   ]
   }
  ],
  "signs": [
@@ -96,9 +149,20 @@
    "dialogue": "fernstair/sign_top"
   },
   {
-   "x": 10,
-   "y": 5,
-   "dialogue": "fernstair/rock_find"
+   "x": 1,
+   "y": 14,
+   "dialogue": "story/find_2",
+   "hide_flag": "page_2"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "fernstair/marker_stone"
+  },
+  {
+   "x": 1,
+   "y": 20,
+   "dialogue": "fernstair/mound_stone"
   }
  ],
  "gear_spots": [
@@ -127,6 +191,44 @@
     8,
     6
    ]
+  }
+ ],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 5,
+   "item": "kin_charm",
+   "count": 2,
+   "flag": "fern_rock_find",
+   "dialogue": "fernstair/rock_find"
+  },
+  {
+   "x": 0,
+   "y": 13,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_fern_west"
+  },
+  {
+   "x": 11,
+   "y": 22,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_fern_south"
+  },
+  {
+   "x": 2,
+   "y": 24,
+   "item": "cooling_gel",
+   "count": 1,
+   "flag": "find_fern_gate"
+  },
+  {
+   "x": 2,
+   "y": 22,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_mound_3"
   }
  ]
 }

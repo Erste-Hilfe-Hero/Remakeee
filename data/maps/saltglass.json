@@ -1,0 +1,240 @@
+{
+ "name": "Saltglass Flats",
+ "region": "ashmere",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "saltglass",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::..__..::^",
+  "^::..__..::^",
+  "^....__....^",
+  "^.::.__.|..^",
+  "^.::.__.|..^",
+  "^....__....^",
+  "^,,,.__.,,,^",
+  "^,,,.__.,,,^",
+  "^....______.",
+  "^::........_",
+  "^::..__..,,^",
+  "^....__..,,^",
+  "^,,,.__....^",
+  "^,,,.__.::.^",
+  "^....__.::.^",
+  "^::..__....^",
+  "^::..__.,,,^",
+  "^....__.,,,^",
+  "^.S..__....^",
+  "^....__..::^",
+  "^....__..::^",
+  "_______....^",
+  "_______....^",
+  "^.........S^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 22,
+   "to": "ashmere_station",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 0,
+   "y": 23,
+   "to": "ashmere_station",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "glass_rift",
+   "tx": 5,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "glass_rift",
+   "tx": 6,
+   "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "to": "wide_rift_far",
+   "tx": 1,
+   "ty": 11,
+   "facing": "right"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "to": "wide_rift_far",
+   "tx": 1,
+   "ty": 12,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "nils",
+   "x": 2,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "saltglass/nils",
+   "sprite": "villager",
+   "trainer": "Salt Raker Nils",
+   "intro": "saltglass/nils_intro",
+   "defeat": "saltglass/nils_defeat",
+   "money": 1400,
+   "team": [
+    {
+     "species": "Brinelet",
+     "level": 27
+    },
+    {
+     "species": "Talusk",
+     "level": 27
+    }
+   ]
+  },
+  {
+   "id": "ines",
+   "x": 9,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "saltglass/ines",
+   "sprite": "villager",
+   "trainer": "Glassblower Ines",
+   "intro": "saltglass/ines_intro",
+   "defeat": "saltglass/ines_defeat",
+   "money": 1450,
+   "team": [
+    {
+     "species": "Lanternel",
+     "level": 28
+    },
+    {
+     "species": "Zephlet",
+     "level": 28
+    },
+    {
+     "species": "Wickit",
+     "level": 28
+    }
+   ]
+  },
+  {
+   "id": "odila",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "saltglass/odila",
+   "sprite": "villager",
+   "trainer": "Wanderer Odila",
+   "intro": "saltglass/odila_intro",
+   "defeat": "saltglass/odila_defeat",
+   "money": 1500,
+   "team": [
+    {
+     "species": "Saltspire",
+     "level": 29
+    },
+    {
+     "species": "Brinelet",
+     "level": 29
+    },
+    {
+     "species": "Paddlewisp",
+     "level": 29
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 19,
+   "dialogue": "saltglass/sign"
+  },
+  {
+   "x": 10,
+   "y": 24,
+   "dialogue": "saltglass/sign_east"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 9,
+   "open_flag": "veit_plate_done",
+   "closed": "#"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "open_flag": "veit_plate_done",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_saltglass_west"
+  },
+  {
+   "x": 11,
+   "y": 15,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_saltglass_east"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_saltglass_south"
+  },
+  {
+   "x": 11,
+   "y": 3,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_saltglass_tower"
+  },
+  {
+   "x": 9,
+   "y": 13,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "dig_saltglass",
+   "soil": true
+  }
+ ],
+ "spots": {
+  "keeper_lamp": [
+   8,
+   4
+  ],
+  "page_13": [
+   10,
+   1
+  ],
+  "letter_a3": [
+   1,
+   15
+  ]
+ }
+}

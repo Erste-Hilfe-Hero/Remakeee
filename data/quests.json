@@ -1,13 +1,32 @@
 {
-  "_comment": "Main story goals in order. A goal is done when all its 'done' flags are set (or any later goal is done). 'where' names the place to go. Side goals show in the Goals list while their 'show' flag is set and their 'done' flag is not.",
+  "_comment": "Main story goals in order. A goal is done when all its 'done' flags are set (or any later goal is done). 'where' names the place to go. Side goals show in the Goals list while their 'show' flag is set and their 'done' flag is not. 'chapter' titles the story part; a side goal's 'progress' flags show as (k/n). 'act' names the act shown above the chapter. A side goal's 'where' names the place; 'stages' (list of {text, where}) replaces the text with the step stored in story_vars q_<id>_stage.",
   "main": [
-    {"id": "wake", "text": "Talk to Aldo downstairs in the lighthouse.", "where": "Brindlewick Lighthouse", "done": ["aldo_gift"]},
-    {"id": "maps", "text": "Visit Kestra at the Map House in Brindlewick.", "where": "Brindlewick", "done": ["met_kestra"]},
-    {"id": "rifts", "text": "Mend both Rifts: the Cinder Rift past Thornridge and the Tidewater Rift under the Saltmarsh.", "where": "Thornridge / Saltmarsh", "done": ["rift_cinder_sealed", "rift_tide_sealed"]},
-    {"id": "dock", "text": "Kestra is waiting at the Brindlewick dock.", "where": "Brindlewick", "done": ["kestra_dock_talk"]},
-    {"id": "act1_end", "text": "The ferry to Corvane is closed for now. Train your team and fill your Spirlog.", "where": "", "done": []}
+    {"id": "wake", "text": "Talk to Aldo downstairs in the lighthouse.", "where": "Brindlewick Lighthouse", "done": ["aldo_gift"], "chapter": "Prologue: The Storm Night", "act": "Act I: The Hush of Veydal"},
+    {"id": "maps", "text": "Visit Kestra at the Map House in Brindlewick.", "where": "Brindlewick", "done": ["met_kestra"], "chapter": "Chapter 1: The Map House", "act": "Act I: The Hush of Veydal"},
+    {"id": "rifts", "text": "Mend both Rifts: the Cinder Rift past Thornridge and the Tidewater Rift under the Saltmarsh.", "where": "Thornridge / Saltmarsh", "done": ["rift_cinder_sealed", "rift_tide_sealed"], "chapter": "Chapter 2: Two Rifts", "act": "Act I: The Hush of Veydal"},
+    {"id": "dock", "text": "Kestra is waiting at the Brindlewick dock.", "where": "Brindlewick", "done": ["kestra_dock_talk"], "chapter": "Chapter 3: The Dock", "act": "Act I: The Hush of Veydal"},
+    {"id": "home", "chapter": "Chapter 4: The Lamp", "text": "Go home to the lighthouse and tell Aldo what Kestra said.", "where": "Brindlewick Lighthouse", "done": ["aldo_dock_told"], "act": "Act I: The Hush of Veydal"},
+    {"id": "lamp", "act": "Act I: The Hush of Veydal", "chapter": "Chapter 5: Mirela's Map", "text": "Find the six pages of Mirela's map book and take them up to the lamp room.", "where": "Brindlewick Lighthouse", "done": ["mirela_lamp"]},
+    {"id": "crossing", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 6: The Landing", "text": "Aldo is rowing the ferry himself. Cross the lake with him from the Brindlewick pier.", "where": "Brindlewick", "done": ["ferry_crossed"]},
+    {"id": "guild", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 6: The Landing", "text": "Follow the river road to Madderby and find the cartographers' guild house.", "where": "Madderby", "done": ["guild_joined"]},
+    {"id": "rifts2", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 7: Rain and Mirror", "text": "Mend the Rain Rift in the Woadfen and the Mirror Rift past Stillwater.", "where": "Woadfen / Stillwater", "done": ["rift_rain_sealed", "rift_mirror_sealed"]},
+    {"id": "kestra2", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 8: Kestra's Doubt", "text": "Something is wrong with Kestra's Tatter. Find her in Madderby.", "where": "Madderby", "done": ["beat_story_kestra_2"]},
+    {"id": "veit", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 9: Veit", "text": "Cross the Greyreach toward the Wide Rift. Someone is waiting on the ridge.", "where": "Greyreach", "done": ["beat_veit_1"]},
+    {"id": "wide", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 10: The Wide Rift", "text": "Reach the edge of the Wide Rift north of the Greyreach.", "where": "Wide Rift", "done": ["wide_rift_seen"]},
+    {"id": "far_side", "act": "Act II: The Colours of Corvane", "chapter": "Chapter 11: The Far Side", "text": "Tell Ysolde at the guild house what you found at the Wide Rift.", "where": "Madderby guild house", "done": ["act2_end"]},
+    {"id": "ashmere", "act": "Act III: The Plates of Ashmere", "chapter": "Chapter 12: Ash and Ink", "text": "Take the mountain railway from the Greyreach to Ashmere.", "where": "Greyreach", "done": ["ashmere_arrived"]},
+    {"id": "halvard", "act": "Act III: The Plates of Ashmere", "chapter": "Chapter 12: Ash and Ink", "text": "Find master graver Halvard in the gravers' hall in Cinderfold.", "where": "Cinderfold", "done": ["halvard_met"]},
+    {"id": "rifts3", "act": "Act III: The Plates of Ashmere", "chapter": "Chapter 13: Kiln and Glass", "text": "Mend the Kiln Rift up the ridge and the Glass Rift past the Saltglass flats.", "where": "Kiln Rift / Glass Rift", "done": ["rift_kiln_sealed", "rift_glass_sealed"]},
+    {"id": "veit_offer", "act": "Act III: The Plates of Ashmere", "chapter": "Chapter 14: Veit's Offer", "text": "Veit Harrow is in Cinderfold. Hear what he wants, then give him your answer.", "where": "Cinderfold", "done": ["veit_offer_done"]},
+    {"id": "veit_plate", "act": "Act III: The Plates of Ashmere", "chapter": "Chapter 15: Veit's Plate", "text": "Veit is engraving a plate to still the Wide Rift. Stop him in the gravers' hall.", "where": "Gravers' hall", "done": ["veit_plate_done"]},
+    {"id": "far_end", "act": "Act III: The Plates of Ashmere", "chapter": "Chapter 16: The Undrawn", "text": "Go to the far end of the Wide Rift and step into the Undrawn.", "where": "Wide Rift, far end", "done": ["undrawn_reached"]},
+    {"id": "finale", "act": "Finale: Where the Map Ends", "chapter": "Chapter 17: Where the Map Ends", "text": "Walk to the end of the Undrawn. Someone is waiting there.", "where": "The Undrawn", "done": ["story_complete"]},
+    {"id": "epi_guild", "act": "Epilogue: The Open Map", "chapter": "Epilogue: The Open Map", "text": "Bring the news to Ysolde at the guild house in Madderby.", "where": "Madderby guild house", "done": ["epilogue_guild"]},
+    {"id": "epi_home", "act": "Epilogue: The Open Map", "chapter": "Epilogue: The Open Map", "text": "Go home to the lighthouse in Brindlewick.", "where": "Brindlewick lighthouse", "done": ["epilogue_home"]},
+    {"id": "epi_open", "act": "Epilogue: The Open Map", "chapter": "Epilogue: The Open Map", "text": "Open the map book at the lighthouse one more time.", "where": "Brindlewick lighthouse", "done": ["postgame_done"]}
   ],
   "side": [
+    {"id": "pages", "text": "Find the six pages of Mirela's map book. Kestra has one; the storm blew the rest to Fernstair, Crowcrest, Thornridge, the Saltmarsh and Murk Hollow.", "show": "aldo_gift", "done": "pages_all", "progress": ["page_1", "page_2", "page_3", "page_4", "page_5", "page_6"]},
     {"id": "spar", "text": "Kestra wants to test you on the Crowcrest path.", "show": "met_kestra", "done": "kestra_spar"},
     {"id": "fern", "text": "Someone in Fernstair has something for you.", "show": "met_kestra", "done": "fern_gift"},
     {"id": "hollow", "text": "Light up the dark gallery in Murk Hollow, behind the Crowcrest cliff.", "show": "got_lantern", "done": "hollow_find"},
@@ -18,6 +37,11 @@
     {"id": "marsh_tag", "text": "Kestra needs a partner in the Saltmarsh.", "show": "kestra_spar", "done": "kestra_marsh_tag"},
     {"id": "swarm", "text": "A hushed swarm lurks in a dark corner of Murk Hollow.", "show": "got_lantern", "done": "hollow_swarm_cleared"},
     {"id": "cinder_heart", "text": "The Hush still smoulders at the heart of the Cinder Rift.", "show": "rift_cinder_sealed", "done": "cinder_heart_mended"},
-    {"id": "tide_heart", "text": "Something stirs at the bottom of the Tidewater Rift.", "show": "rift_tide_sealed", "done": "tide_heart_mended"}
+    {"id": "tide_heart", "text": "Something stirs at the bottom of the Tidewater Rift.", "show": "rift_tide_sealed", "done": "tide_heart_mended"},
+    {"id": "letters_veydal", "text": "Mirela hid three letters to Aldo in Veydal: in the lighthouse, on Fernstair and by the pond in Thornridge.", "where": "Lighthouse / Fernstair / Thornridge", "show": "aldo_dock_told", "done": "letters_veydal_done", "progress": ["letter_v1", "letter_v2", "letter_v3"]},
+    {"id": "puddlet", "text": "The child in Brindlewick wants their hushed Puddlet to wake up.", "where": "Brindlewick", "show": "q_puddlet_asked", "done": "q_puddlet_done"},
+    {"id": "letters", "text": "Pim the archivist is looking for Mirela's lost letters, three in Corvane and three in Ashmere.", "where": "Corvane", "show": "letters_pim_asked", "done": "letters_all_done", "progress": ["letter_c1", "letter_c2", "letter_c3", "letter_a1", "letter_a2", "letter_a3"]},
+    {"id": "colour_back", "text": "Three dye families in Madderby want to see Spirlings with their colour back.", "where": "Madderby", "show": "rift_rain_sealed", "done": "colour_back_done", "progress": ["q_dyer_1_done", "q_dyer_2_done", "q_dyer_3_done"]},
+    {"id": "veit_workshop", "text": "Veit Harrow once worked at the guild. His old corner still holds clues.", "where": "Madderby guild house", "show": "guild_joined", "done": "veit_workshop_done", "progress": ["veit_hint_1", "veit_hint_2", "veit_hint_3"]}
   ]
 }

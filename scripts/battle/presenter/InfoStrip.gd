@@ -6,9 +6,10 @@ extends Control
 const BAR_HEIGHT: int = 3
 const PIP_SIZE: int = 3
 const PIP_GAP: int = 1
-const HP_HIGH: Color = Color("5aa65a")
-const HP_MID: Color = Color("d9b13b")
-const HP_LOW: Color = Color("c8513a")
+## One steady colour that only turns when HP is truly low (no three-step traffic light).
+const HP_HIGH: Color = Color("2f7f7a")
+const HP_LOW: Color = Color("a2502e")
+const HP_LOW_AT: float = 0.25
 const ENERGY_ON: Color = Color("3b6fd9")
 const TWEEN_TIME: float = 0.4
 const TICK_STEP: int = 8
@@ -29,6 +30,9 @@ var status: String = ""
 var speed_scale: float = 1.0
 ## Stat stages shown as small up/down arrows after the Energy pips.
 var stages: Dictionary[String, int] = {}
+## Turns left on an Energy tax, drawn as a coin with the number at the right end of the pips.
+var tax: int = 0
+const TAX_COIN: Color = Color("b8862b")
 
 func set_spirling(s: Spirling) -> void:
 	spirling_name = s.display_name()
@@ -39,6 +43,11 @@ func set_spirling(s: Spirling) -> void:
 	energy = s.energy
 	status = s.status
 	stages = s.stages.duplicate()
+	tax = s.energy_tax
+	queue_redraw()
+
+func set_tax(turns: int) -> void:
+	tax = maxi(turns, 0)
 	queue_redraw()
 
 func set_stages(value: Dictionary[String, int]) -> void:
@@ -71,9 +80,11 @@ func _set_display_hp(v: float) -> void:
 
 ## What a screen reader says for this strip (item 77): the strip itself is drawn by hand.
 func screen_reader_text() -> String:
-	var t: String = Loc.t("%s Lv%d, HP %d of %d, Energy %d" % [spirling_name, level, int(round(display_hp)), max_hp, energy])
+	var t: String = Loc.t("%s ring %d, Vigor %d of %d, Energy %d" % [spirling_name, level, int(round(display_hp)), max_hp, energy])
 	if not status.is_empty():
 		t += ", " + Loc.t(StatusRules.label(status))
+	if tax > 0:
+		t += ", " + Loc.t("Energy tax %d" % tax)
 	return t
 
 func _draw() -> void:
@@ -86,13 +97,13 @@ func _draw() -> void:
 	draw_string(font, Vector2(0, y_text), spirling_name, HORIZONTAL_ALIGNMENT_LEFT, w * 0.6, fs, UITheme.INK)
 	var name_w: float = minf(font.get_string_size(spirling_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x, w * 0.6)
 	ElementIcons.draw_row(self, elements, Vector2(name_w + 2.0, y_text - ElementIcons.SIZE), UITheme.INK)
-	var right: String = "Lv%d" % level
+	var right: String = "R%d" % level
 	if not status.is_empty():
 		right = StatusRules.label(status).substr(0, 3).to_upper() + " " + right
 	draw_string(font, Vector2(0, y_text), right, HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
 	var bar_y: float = y_text + 3.0
 	var frac: float = clampf(display_hp / float(maxi(max_hp, 1)), 0.0, 1.0)
-	var col: Color = HP_HIGH if frac > 0.5 else (HP_MID if frac > 0.2 else HP_LOW)
+	var col: Color = HP_HIGH if frac > HP_LOW_AT else HP_LOW
 	draw_rect(Rect2(0, bar_y, w, BAR_HEIGHT + 2), UITheme.INK)
 	draw_rect(Rect2(1, bar_y + 1, w - 2, BAR_HEIGHT), UITheme.BG)
 	draw_rect(Rect2(1, bar_y + 1, floorf((w - 2) * frac), BAR_HEIGHT), col)
@@ -100,13 +111,15 @@ func _draw() -> void:
 	for x: int in range(TICK_STEP, int(w) - 1, TICK_STEP):
 		draw_rect(Rect2(x, bar_y + 1, 1, 1), UITheme.INK)
 	var pip_y: float = bar_y + BAR_HEIGHT + 4.0
-	for i: int in Spirling.MAX_ENERGY:
+	for i: int in maxi(Spirling.MAX_ENERGY, energy):
 		var r := Rect2(i * (PIP_SIZE + PIP_GAP), pip_y, PIP_SIZE, PIP_SIZE)
 		if i < energy:
 			draw_rect(r, ENERGY_ON)
 		else:
 			draw_rect(r, UITheme.MID, false, 1.0)
-	_draw_stages(Vector2(Spirling.MAX_ENERGY * (PIP_SIZE + PIP_GAP) + 3, pip_y - 1))
+	_draw_stages(Vector2(maxi(Spirling.MAX_ENERGY, energy) * (PIP_SIZE + PIP_GAP) + 3, pip_y - 1))
+	if tax > 0:
+		_draw_tax(Vector2(w, pip_y - 1))
 	if show_numbers:
 		draw_string(font, Vector2(0, pip_y + PIP_SIZE + fs - 1), "%d/%d" % [int(round(display_hp)), max_hp], HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
 
@@ -129,6 +142,18 @@ func _draw_stages(at: Vector2) -> void:
 			draw_colored_polygon(tri, UITheme.INK)
 			x += 4
 		x += 2
+
+## Energy tax: a small coin and the turns left, right-aligned on the pip row.
+func _draw_tax(right_top: Vector2) -> void:
+	var font: Font = get_theme_default_font()
+	var fs: int = get_theme_default_font_size()
+	var num: String = str(tax)
+	var num_w: float = font.get_string_size(num, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	var x: float = right_top.x - num_w
+	draw_string(font, Vector2(x, right_top.y + PIP_SIZE + 2), num, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
+	var c: Vector2 = Vector2(x - 4.0, right_top.y + 2.5)
+	draw_circle(c, 2.5, UITheme.INK)
+	draw_circle(c, 1.5, TAX_COIN)
 
 func _draw_plate() -> void:
 	var r := Rect2(-PLATE_PAD, size + PLATE_PAD * 2.0)
