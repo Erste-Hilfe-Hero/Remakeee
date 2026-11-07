@@ -5,7 +5,7 @@ extends Control
 const OVERWORLD: String = "res://scenes/overworld/Overworld.tscn"
 const NAME_MAX: int = 10
 const ART_HEIGHT: int = 148
-const IAP_NOTE: String = "Free to play, contains in-app purchases"
+const IAP_NOTE: String = "Free, in-app purchases"
 var _iap_note: Label
 
 var _menu: MenuHost

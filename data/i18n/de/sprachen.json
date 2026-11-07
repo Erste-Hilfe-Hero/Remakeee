@@ -1,0 +1,7 @@
+{
+ "_comment": "German texts from tools/i18n/de_sprachen.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Japanese, Korean and Chinese text uses Chimora CJK Pixel, a subset of Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, with glyphs from Galmuri, Misaki, Boutique Bitmap 7x7 and Miseki Bitmap), licensed under the SIL Open Font License 1.1: https://openfontlicense.org": "Japanische, koreanische und chinesische Texte nutzen Chimora CJK Pixel, einen Ausschnitt aus Fusion Pixel Font 8px (Copyright (c) 2022, TakWolf, mit Zeichen aus Galmuri, Misaki, Boutique Bitmap 7x7 und Miseki Bitmap), lizenziert unter der SIL Open Font License 1.1: https://openfontlicense.org"
+ }
+}

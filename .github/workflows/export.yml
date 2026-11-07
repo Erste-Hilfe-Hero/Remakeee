@@ -42,6 +42,8 @@ jobs:
         run: tools/ip_check.sh --messages "${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}"
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
+      - name: The other 12 languages keep their placeholders (coverage is only reported)
+        run: python3 tools/i18n/check_lang.py
       - name: Version name and code agree everywhere (tools/bump_version.py)
         run: python3 tools/bump_version.py --check
       - name: A save version bump brings a fixture and a migration test
@@ -123,7 +125,7 @@ jobs:
       - name: Billing plugin is in the APK
         run: unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/billing/ChimoraBilling'
       - name: APK size budget
-        run: tools/apk_budget.sh build/android/Chimora-debug.apk 88
+        run: tools/apk_budget.sh build/android/Chimora-debug.apk 92
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-debug-apk

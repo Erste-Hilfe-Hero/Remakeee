@@ -718,7 +718,7 @@ T = {
 "Preview: %s": "Vorschau: %s",
 "Preview:": "Vorschau:",
 "Riftglass has no money value and cannot be changed back into euro or passed on.": "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden.",
-"Free to play, contains in-app purchases": "Kostenlos spielbar, enthält In-App-Käufe",
+"Free, in-app purchases": "Gratis, mit In-App-Käufen",
 "Help with purchases": "Hilfe zu Käufen",
 "Help with purchases: Riftglass, the pass, refunds and spending limits.": "Hilfe zu Käufen: Rissglas, Pass, Erstattung und Ausgabelimits.",
 "Open the page": "Seite öffnen",

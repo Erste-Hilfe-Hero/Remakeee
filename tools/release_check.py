@@ -20,6 +20,11 @@ import sys
 from PIL import Image
 
 LANGS = ["de-DE", "en-US"]
+# Store texts in all 14 game languages (docs/I18N.md): (Google Play folder, App Store folder).
+# Screenshots and graphics exist for LANGS; the other listings use the default language's images.
+TEXT_LANGS = [("de-DE", "de-DE"), ("en-US", "en-US"), ("fr-FR", "fr-FR"), ("es-ES", "es-ES"), ("it-IT", "it"),
+              ("pt-BR", "pt-BR"), ("nl-NL", "nl-NL"), ("pl-PL", "pl"), ("tr-TR", "tr"), ("ru-RU", "ru"),
+              ("ja-JP", "ja"), ("ko-KR", "ko"), ("zh-CN", "zh-Hans"), ("zh-TW", "zh-Hant")]
 LIMITS_ANDROID = {"title.txt": 30, "short_description.txt": 80, "full_description.txt": 4000, "changelogs/default.txt": 500}
 LIMITS_IOS = {"name.txt": 30, "subtitle.txt": 30, "description.txt": 4000, "keywords.txt": 100,
               "promotional_text.txt": 170, "release_notes.txt": 4000, "support_url.txt": 255, "privacy_url.txt": 255}
@@ -46,8 +51,8 @@ def preset_values(key: str) -> list[str]:
 
 
 def check_texts() -> None:
-    for lang in LANGS:
-        for base, limits in (("store/android/" + lang, LIMITS_ANDROID), ("store/ios/metadata/" + lang, LIMITS_IOS)):
+    for play, ios in TEXT_LANGS:
+        for base, limits in (("store/android/" + play, LIMITS_ANDROID), ("store/ios/metadata/" + ios, LIMITS_IOS)):
             for name, limit in limits.items():
                 p = os.path.join(base, name)
                 if not os.path.exists(p):
@@ -56,7 +61,7 @@ def check_texts() -> None:
                 n = len(read(p).strip())
                 if n == 0 or n > limit:
                     errors.append("%s has %d characters (allowed 1-%d)" % (p, n, limit))
-        kw = "store/ios/metadata/%s/keywords.txt" % lang
+        kw = "store/ios/metadata/%s/keywords.txt" % ios
         if os.path.exists(kw) and "offline" in read(kw):
             errors.append(kw + ": the game is online only")
 
