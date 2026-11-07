@@ -66,6 +66,12 @@ static func _badge_share() -> float:
 ## when an update adds goals and the percent drops (plan 3386).
 const REWARD_STEPS: Dictionary = {50: 50, 75: 100, 100: 300}
 
+## Reward steps reached but not yet paid.
+static func unclaimed() -> int:
+	var pct: int = percent()
+	var paid: Array = GameState.records.get("completion_paid", []) if GameState.records.get("completion_paid") is Array else []
+	return REWARD_STEPS.keys().filter(func(s: Variant) -> bool: return pct >= int(s) and not int(s) in paid).size()
+
 ## Pays reached reward steps, keeps the percent for the title screen and returns the lines.
 static func claim() -> Array[String]:
 	var pct: int = percent()
