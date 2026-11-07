@@ -353,6 +353,16 @@
   ]
  },
  {
+  "id": "tide_chart",
+  "name": "Tide Chart",
+  "description": "Wayfarer Gear. A tidewatcher's chart: open it in the satchel to see when the next low and high tide come, by the clock of your device.",
+  "battle": false,
+  "gear": true,
+  "works_on": [
+   "tide"
+  ]
+ },
+ {
   "id": "pry_bar",
   "name": "Pry Bar",
   "description": "Wayfarer Gear. Face a sluice wheel, a mine cart or a grate and press A to turn, shove or lift it.",

@@ -294,12 +294,18 @@ def brackwater_fen(world):
         "sign": lines(("BRACKWATER FEN", "BRACKFENN"), ("Moor, rings 12 to 15.", "Moor, Ring 12 bis 15."),
                       ("Stay on the boardwalks. The pale water is shallow, the dark is not.", "Bleib auf den Stegen. Das helle Wasser ist flach, das dunkle nicht.")),
         "smooth": lines(("A boulder sits in the reeds, smoothed by hands, not water.", "Im Schilf liegt ein Felsbrocken, glatt geschliffen von Händen, nicht von Wasser.")),
+        # Item 1063: the Tide Chart shows the next low and high tide by the device clock.
+        "tidewatcher": {"lines": lines(("Tidewatcher Oda: Sablecove only lets you in when the water's low. I've charted it for forty years.", "Gezeitenwächterin Oda: Die Zobelbucht lässt dich nur bei niedrigem Wasser hinein. Ich zeichne das seit vierzig Jahren auf."),
+                                       ("Tidewatcher Oda: Take a copy of my chart. Look at it in your satchel before you set out.", "Gezeitenwächterin Oda: Nimm eine Abschrift meiner Tafel. Schau in deiner Tasche nach, bevor du losgehst.")),
+                        "action": "give_item tide_chart 1", "flag": "got_tide_chart", "once": True,
+                        "after_flag": {"flag": "got_tide_chart", "lines": lines(("Tidewatcher Oda: Low water twice a day, as sure as breakfast and supper.", "Gezeitenwächterin Oda: Zweimal am Tag Niedrigwasser, so sicher wie Frühstück und Abendbrot."))}},
     })
     m = {"name": tr("Brackwater Fen", "Brackfenn"), "biome": "marsh", "backdrop": "lake", "outdoor": True, "encounters": mid,
          "rows": rows,
          "warps": [warp(0, 18, "saltmarsh", 10, 7, "left"), warp(5, 23, "reedhaven", 5, 1, "down"),
                    warp(6, 23, "reedhaven", 6, 1, "down")],
          "npcs": [
+             npc("tidewatcher", 9, 15, "down", mid + "/tidewatcher", "elder"),
              wayfarer(world, mid, "marit", 4, 4, "right", "Reed Cutter Marit", team(("Kelpup", 13), ("Mossling", 13)),
                       [("Marit: The reeds grow back twice as fast since the storm. Good for my trade.", "Marit: Das Schilf wächst seit dem Sturm doppelt so schnell nach. Gut fürs Geschäft.")],
                       [("Marit: Mind the boardwalk! Now, a duel.", "Marit: Pass auf den Steg auf! Und jetzt ein Duell.")],

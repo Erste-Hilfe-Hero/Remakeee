@@ -60,5 +60,20 @@
  },
  "lake_hint": [
   "You remember a saying: \"In Quillbrook, the stone too smooth to be natural is a door.\""
- ]
+ ],
+ "tidewatcher": {
+  "lines": [
+   "Tidewatcher Oda: Sablecove only lets you in when the water's low. I've charted it for forty years.",
+   "Tidewatcher Oda: Take a copy of my chart. Look at it in your satchel before you set out."
+  ],
+  "action": "give_item tide_chart 1",
+  "flag": "got_tide_chart",
+  "once": true,
+  "after_flag": {
+   "flag": "got_tide_chart",
+   "lines": [
+    "Tidewatcher Oda: Low water twice a day, as sure as breakfast and supper."
+   ]
+  }
+ }
 }

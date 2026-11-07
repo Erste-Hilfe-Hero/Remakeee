@@ -160,5 +160,6 @@ Written by `python3 tools/world_stats.py`.
 | `rope_ladder` | Rope Ladder | `wrenhollow` | veydal | ropemaker (8, 11) | `got_ladder` |
 | `storm_lantern` | Storm Lantern | `murk_hollow` | veydal | tamsin (3, 10) | `got_lantern` |
 | `survey_glass` | Survey Glass | `wrenhollow` | veydal | surveyor (10, 9) | `got_survey_glass` |
+| `tide_chart` | Tide Chart | `brackwater_fen` | veydal | tidewatcher (9, 15) | `got_tide_chart` |
 | `wading_boots` | Wading Boots | `quillbrook` | veydal | fisher (8, 3) | `got_boots` |
 <!-- gear-givers:end -->

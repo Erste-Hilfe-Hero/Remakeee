@@ -711,6 +711,8 @@ func run_bag() -> void:
 			if who >= 0:
 				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
 				await info(msg if not msg.is_empty() else "That would do nothing right now.")
+		elif item_id == TideChart.ITEM:
+			await info("\n".join(TideChart.lines()))
 		elif bool(it.get("gear", false)):
 			await info(gear_page(item_id), gear_picture(item_id))
 		else:
@@ -722,6 +724,7 @@ const GEAR_PLACES: Dictionary[String, String] = {
 	"w": "shallow water (w)", "Y": "gaps with a chalk mark (Y)", "dark": "pitch-dark passages",
 	"wheel": "sluice wheels, mine carts and grates", "shaft": "marked edges above a shaft",
 	"look": "open ground ahead (hidden finds up to 6 steps away)",
+	"tide": "the tides of sea caves",
 }
 
 ## Satchel page for a piece of Wayfarer Gear: name, short text and where it works.
