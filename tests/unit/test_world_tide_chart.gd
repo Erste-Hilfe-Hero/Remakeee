@@ -22,3 +22,16 @@ func test_page_at_high_tide() -> void:
 func test_chart_is_gear_given_in_the_fen() -> void:
 	assert_true(bool(Database.item(TideChart.ITEM).get("gear", false)))
 	assert_true(str(Dialogue.get_entry("brackwater_fen/tidewatcher").get("action", "")).begins_with("give_item tide_chart"))
+
+## Item 985: the Sablecove tide stone at the entrance tells the next low tide.
+func test_tide_stone_in_sablecove() -> void:
+	var m: MapData = MapData.load_map("sablecove")
+	var s: Dictionary = m.sign_at(Vector2i(3, 7))
+	assert_eq(str(s.get("dialogue", "")), "sablecove/tide_stone")
+	assert_eq(str(Dialogue.get_entry("sablecove/tide_stone").get("action", "")), "tide_stone")
+
+func test_tide_stone_lines() -> void:
+	var low: Array[String] = TideChart.stone_lines(13)
+	assert_true(low[0].contains("low tide") and low[0].contains("18:00"), low[0])
+	var high: Array[String] = TideChart.stone_lines(7)
+	assert_true(high[1].contains("Next low tide: 12:00 to 18:00"), high[1])

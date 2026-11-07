@@ -7,5 +7,11 @@
    "A ring of stones with a small fire. Someone keeps it going for travellers."
   ],
   "action": "camp"
+ },
+ "tide_stone": {
+  "lines": [
+   "A tide stone. Lines and hours are scratched into it by many hands."
+  ],
+  "action": "tide_stone"
  }
 }
