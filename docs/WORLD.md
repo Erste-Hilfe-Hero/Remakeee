@@ -145,3 +145,19 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
 | | **45 maps** | | | **92** | **42** | **1067** |
 <!-- world-stats:end -->
+
+## Wayfarer Gear and where it is given (item 1062)
+
+Written by `python3 tools/world_stats.py`.
+
+<!-- gear-givers:start -->
+| Gear | Name | Map | Region | Given by | Flag |
+| --- | --- | --- | --- | --- | --- |
+| `climbing_pick` | Climbing Pick | `crowcrest` | veydal | kestra (7, 17) | `got_pick` |
+| `grapple_line` | Grapple Line | `saltmarsh` | veydal | neve (3, 4) | `got_grapple` |
+| `plank_bundle` | Plank Bundle | `gloamwood` | veydal | forester (2, 22) | `got_planks` |
+| `pry_bar` | Pry Bar | `copperfold` | veydal | smith (1, 5) | `got_pry_bar` |
+| `rope_ladder` | Rope Ladder | `wrenhollow` | veydal | ropemaker (8, 11) | `got_ladder` |
+| `storm_lantern` | Storm Lantern | `murk_hollow` | veydal | tamsin (3, 10) | `got_lantern` |
+| `wading_boots` | Wading Boots | `quillbrook` | veydal | fisher (8, 3) | `got_boots` |
+<!-- gear-givers:end -->
