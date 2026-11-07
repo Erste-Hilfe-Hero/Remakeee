@@ -60,6 +60,12 @@ T.update({
 "Finds by region": "Funde nach Region",
 "Finds: %d/%d": "Funde: %d/%d",
 "Secrets: %d/%d": "Geheimnisse: %d/%d",
+# Fishing bench in Quillbrook (item 935)
+"You sit on the bench and watch the line drift. Time slips by...": "Du setzt dich auf die Bank und schaust der Angelschnur nach. Die Zeit verstreicht...",
+"Dawn breaks over the water.": "Über dem Wasser bricht der Morgen an.",
+"The sun climbs high. It is broad day now.": "Die Sonne steigt hoch. Jetzt ist heller Tag.",
+"The light turns golden. Dusk settles in.": "Das Licht wird golden. Die Dämmerung zieht auf.",
+"Stars come out over the brook. Night has fallen.": "Über dem Bach gehen die Sterne auf. Es ist Nacht geworden.",
 })
 
 # Secret passages (area 3 item 1082)

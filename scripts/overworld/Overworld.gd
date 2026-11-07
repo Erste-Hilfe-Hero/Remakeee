@@ -75,6 +75,7 @@ func _ready() -> void:
 		"storage": _action_storage,
 		"heal": _action_heal,
 		"camp": _action_camp,
+		"bench": _action_bench,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
@@ -906,6 +907,23 @@ func _action_camp(_args: PackedStringArray, _speaker: NPC) -> void:
 	var ok: bool = SaveManager.save_game()
 	await say([("You sit by the fire for a while. Your journey is saved." if ok else "The fire smokes. Saving did not work this time."),
 		"The warmth is welcome, but it does not rest your team."] as Array[String])
+
+## Lines after sitting on a bench (area 3 item 935), one per phase that has just begun.
+const BENCH_LINES: Dictionary[int, String] = {
+	DayCycle.Phase.DAWN: "Dawn breaks over the water.",
+	DayCycle.Phase.DAY: "The sun climbs high. It is broad day now.",
+	DayCycle.Phase.DUSK: "The light turns golden. Dusk settles in.",
+	DayCycle.Phase.NIGHT: "Stars come out over the brook. Night has fallen.",
+}
+
+## A bench by the water: sitting a while moves the clock on to the next time of day (item 935).
+func _action_bench(_args: PackedStringArray, _speaker: NPC) -> void:
+	var p: DayCycle.Phase = DayCycle.skip_to_next()
+	Sound.sfx("confirm")
+	await say(["You sit on the bench and watch the line drift. Time slips by...", BENCH_LINES[p]] as Array[String])
+	refresh_daylight()
+	_spawn_npcs()
+	_world.refresh(player.cell)
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()

@@ -52,7 +52,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 932. [P2] Lass auf Windmere Ridge Windböen den Spieler bei Wetter "Wind" um eine Kachel zur Seite schieben, sichtbar angekündigt, ohne dass er abstürzt.
 933. [x] [P2] Gib jeder neuen Route einen eigenen Namensschild-Text am Eingang mit Ringbereich und Biom, z. B. "Brackwater Fen, Moor, Ring 12 bis 15".
 934. [x] [P2] Plane die neuen Routen so, dass jede in beide Richtungen spielbar ist und keine nur einen Ausgang hat.
-935. [P2] Lege auf Quillbrook einen Fischersteg mit Bank an, auf der man sitzen kann und die Uhr bis zur nächsten Tageszeit vorspult.
+935. [x] [P2] Lege auf Quillbrook einen Fischersteg mit Bank an, auf der man sitzen kann und die Uhr bis zur nächsten Tageszeit vorspult.
 936. [P2] Baue zwischen Hollowmere Shore und Gloamwood einen versteckten Hohlweg, der erst nach dem Fund einer Wegskizze im Spiel auftaucht.
 937. [P3] Baue die Endspiel-Route "Coldmoor" (de: Kaltmoor) im Norden, Ring 18 bis 24, nur mit Weg- und Geländelogik; Story-Anbindung gehört Bereich 4.
 938. [P3] Gib Coldmoor Moorlöcher (Kachel "k"), die nach drei Schritten nachgeben und den Spieler zum letzten Steg zurücksetzen, ohne Schaden.

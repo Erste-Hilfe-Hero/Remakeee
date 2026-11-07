@@ -63,7 +63,27 @@ static func phase_for_hour(hour: int) -> Phase:
 	return Phase.DAWN
 
 static func current() -> Phase:
-	return phase_for_hour(int(Time.get_time_dict_from_system().hour))
+	return phase_for_hour(int(Time.get_time_dict_from_system().hour) + shift())
+
+## Hours the game clock runs ahead of the device clock (0-23). Sitting on a bench moves it on
+## to the next time of day (area 3 item 935); it is kept in the save under records.
+static func shift() -> int:
+	return posmod(int(GameState.records.get("clock_shift", 0)), 24)
+
+## Whole hours from [param hour] until the next phase starts (1-24).
+static func hours_to_next(hour: int) -> int:
+	var now: Phase = phase_for_hour(hour)
+	for d: int in range(1, 25):
+		if phase_for_hour(hour + d) != now:
+			return d
+	return 24
+
+## Moves the game clock on to the start of the next phase and returns that phase.
+## [param device_hour] defaults to the device clock; tests pass it in.
+static func skip_to_next(device_hour: int = -1) -> Phase:
+	var h: int = (device_hour if device_hour >= 0 else int(Time.get_time_dict_from_system().hour)) + shift()
+	GameState.records["clock_shift"] = posmod(shift() + hours_to_next(h), 24)
+	return phase_for_hour(h + hours_to_next(h))
 
 ## The tint for a map: white indoors or when the option is off.
 static func tint(outdoor: bool, phase: Phase, enabled: bool) -> Color:
