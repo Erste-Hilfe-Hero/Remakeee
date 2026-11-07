@@ -7,19 +7,26 @@ extends RefCounted
 ## chest at the end: CHEST_WAYMARKS on the first clear of the week.
 ## The map file holds the entrance hall (floor 0), ROOMS slot floors ({"slot": n}, filled from
 ## this week's templates by MapData) and the end room (floor ROOMS + 1).
-## State: GameState.records["echo_path"] = {"week", "done": [slot numbers], "chest": bool}.
+## State: GameState.records["echo_path"] = {"week", "done": [slot numbers], "chest": bool,
+## "started": unix time of the first room cleared}. The best time of each week stays in this save
+## only, in GameState.records["echo_path_best"] = {week: seconds} (plan 3474), and never goes to
+## a ranking. Healing happens only in the rest room (3467), and giving up keeps everything found
+## so far: cleared rooms stay cleared for the week, only the chest at the end is missed (3468).
 
 const FILE: String = "echo_path"
 const DATA_PATH: String = "res://data/maps/echo_path.json"
 const ROOMS: int = 8
 const KINDS: Array[String] = ["wild", "echo", "treasure", "rest", "riddle"]
 const CHEST_WAYMARKS: int = 40
-## Flag that opens the way in (the Cinder Rift is mended).
-const OPEN_FLAG: String = "rift_cinder_sealed"
+## Flag that opens the way in: the end of Act I, when "Waiting for the Ferry" starts (plan 3472;
+## the same as GameState.ACT1_END_FLAG).
+const OPEN_FLAG: String = "aldo_dock_told"
 ## Wild Spirlings of the week (the Spirlog names them).
 const WEEK_SPECIES: int = 3
-const WILD_RING: int = 40
-const ECHO_RING: int = 44
+## Wild Spirlings are 5 rings under the ring cap, which is open in full after Act I (plan 3469).
+const WILD_RING: int = Spirling.MAX_LEVEL - 5
+## Wanderer echoes stand a little above the wild ones, just under the full cap.
+const ECHO_RING: int = Spirling.MAX_LEVEL - 3
 const ECHO_TEAM: int = 3
 ## Every room is the same size: forward stairs at the top, back stairs at the bottom.
 const WIDTH: int = 10
@@ -157,6 +164,8 @@ static func clear(slot: int) -> bool:
 		return false
 	var st: Dictionary = state()
 	var done: Array = st.done
+	if done.is_empty():
+		st["started"] = Online.unix_now()
 	done.append(slot)
 	st["done"] = done
 	GameState.records["echo_path"] = st
@@ -228,8 +237,37 @@ static func open_chest() -> Array[String]:
 	GameState.records["echo_path"] = st
 	GameState.records["echo_path_clears"] = GameState.as_int(GameState.records.get("echo_path_clears", 0)) + 1
 	lines.append(Loc.t("The chest opens with a soft chime."))
+	lines.append_array(_note_time(st))
 	lines.append_array(Waymarks.reward_lines(Waymarks.earn(CHEST_WAYMARKS, "echo_path")))
 	return lines
+
+## Keeps the best time of this week (plan 3474). Returns the time line.
+static func _note_time(st: Dictionary) -> Array[String]:
+	var lines: Array[String] = []
+	var started: int = GameState.as_int(st.get("started", 0))
+	if started <= 0:
+		return lines
+	var secs: int = maxi(0, Online.unix_now() - started)
+	var best: Dictionary = GameState.as_dict(GameState.records.get("echo_path_best", {}))
+	var w: String = str(st.get("week", week()))
+	if not best.has(w) or secs < GameState.as_int(best[w]):
+		best[w] = secs
+	GameState.records["echo_path_best"] = best
+	lines.append(Loc.t("Your time: %s. Best this week: %s.") % [time_text(secs), time_text(GameState.as_int(best[w]))])
+	return lines
+
+## Best time of [param w] in seconds, or -1.
+static func best_time(w: String = "") -> int:
+	var best: Dictionary = GameState.as_dict(GameState.records.get("echo_path_best", {}))
+	var key: String = w if w != "" else week()
+	return GameState.as_int(best[key]) if best.has(key) else -1
+
+## "1 h 05 min" or "12 min".
+static func time_text(secs: int) -> String:
+	var mins: int = maxi(1, secs / 60)
+	if mins < 60:
+		return Loc.t("%d min") % mins
+	return Loc.t("%d h %02d min") % [mins / 60, mins % 60]
 
 ## Spirlog hint (plan 3354): which kinds roam the Echo Path this week.
 static func spirlog_hint() -> String:

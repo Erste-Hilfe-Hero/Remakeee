@@ -387,14 +387,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3464. [x] [P1] Jedem Raum eine Art geben: Wildkampf, Wanderer-Echo, Schatz, Rastquelle oder Rätsel.
 3465. [x] [P1] Am Ende des Pfads eine Truhe mit 40 Wegmarken beim ersten Abschluss der Woche aufstellen.
 3466. [P2] Rätselräume mit Lampen-Schalterrätseln in 6 Varianten bauen, angelehnt an das Lampenrätsel in Murk Hollow, aber mit eigener Anordnung.
-3467. [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
-3468. [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
-3469. [P2] Wilde Spirlings im Pfad auf Ring-Deckel minus 5 setzen.
+3467. [x] [P2] Im Pfad nur im Rastquellen-Raum heilen lassen.
+3468. [x] [P2] Beim Aufgeben alle gesammelten Dinge behalten lassen, nur die Endtruhe fehlt dann.
+3469. [x] [P2] Wilde Spirlings im Pfad auf Ring-Deckel minus 5 setzen.
 3470. [P2] Eine Pfadkarte im Menü zeigen, die besuchte Räume und ihre Art markiert.
 3471. [P2] Jeder Woche ein Motiv geben (Glut, Gezeiten, Wald, Höhle), das Kacheln und Elemente der wilden Spirlings bestimmt.
-3472. [P2] Den Nachhall-Pfad erst nach dem Kapitel „Waiting for the Ferry“ öffnen.
+3472. [x] [P2] Den Nachhall-Pfad erst nach dem Kapitel „Waiting for the Ferry“ öffnen.
 3473. [P2] Einen GUT-Test schreiben, der 52 Wochen-Seeds erzeugt und prüft, dass jeder Pfad begehbar und lösbar ist.
-3474. [P2] Die beste eigene Zeit pro Woche nur lokal in GameState.records["echo_path_best"] speichern.
+3474. [x] [P2] Die beste eigene Zeit pro Woche nur lokal in GameState.records["echo_path_best"] speichern.
 3475. [P3] Nach dem Sieg über alle Meister-Wanderer einen langen Pfad mit 12 Räumen und 80 Wegmarken freischalten.
 3476. [P3] In einer von zehn Wochen, fest durch den Seed bestimmt, einen geheimen Raum mit einem besonderen Fotorahmen einbauen.
 3477. [P3] Die Raumvorlagen in der Era-Grafik der jeweiligen Region zeichnen und in docs/ASSET_LOG.md eintragen.

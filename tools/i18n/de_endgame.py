@@ -282,6 +282,8 @@ T = {
 "The chest opens with a soft chime.": "Die Truhe öffnet sich mit einem leisen Klang.",
 "Echo Path this week: %s": "Nachhall-Pfad diese Woche: %s",
 "Echo Path: %d of %d rooms this week": "Nachhall-Pfad: %d von %d Räumen diese Woche",
+"Your time: %s. Best this week: %s.": "Deine Zeit: %s. Beste Zeit diese Woche: %s.",
+"%d min": "%d Min.", "%d h %02d min": "%d Std. %02d Min.",
 "Waymark history": "Wegmarken-Verlauf", "Waymarks: %d": "Wegmarken: %d",
 "Season path bonus step %d!": "Bonusstufe %d im Jahreszeitenpfad!",
 "Daily task": "Tagesauftrag", "All daily tasks": "Alle Tagesaufträge", "Weekly echo": "Wochen-Echo",
