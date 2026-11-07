@@ -384,4 +384,7 @@ T = {
 "You have played for %d minutes. Maybe time for a short break?": "Du spielst seit %d Minuten. Zeit für eine kleine Pause?",
 "Break reminder: On": "Pausenhinweis: An", "Break reminder: Off": "Pausenhinweis: Aus", "Break reminder: %s": "Pausenhinweis: %s",
 "A short note after 90 minutes of play.": "Ein kurzer Hinweis nach 90 Minuten Spielzeit.",
+"Collect all": "Alles abholen", "Collect every waiting reward at once.": "Alle wartenden Belohnungen auf einmal abholen.",
+"%d Spirlings are back from their trips. Aldo has them at the lighthouse.": "%d Spirlings sind von ihren Streifzügen zurück. Aldo wartet mit ihnen im Leuchtturm.",
+"Nothing to collect right now.": "Gerade gibt es nichts abzuholen.",
 }

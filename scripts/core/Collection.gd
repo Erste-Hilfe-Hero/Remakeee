@@ -357,6 +357,20 @@ static func next_goal(spirlog: Dictionary, total: int) -> Dictionary:
 			return g
 	return {}
 
+## Goals reached but not yet paid (for the red dot on "Goals", plan 3529).
+static func unclaimed() -> int:
+	var claimed: Dictionary = GameState.records.get("collection", {}) if GameState.records.get("collection") is Dictionary else {}
+	var total: int = SpirlogBook.visible_kinds(GameState.flags).size()
+	var n: int = ready(GameState.spirlog, claimed, total).size()
+	var seen: int = seen_kinds(GameState.spirlog)
+	for g: Dictionary in SEEN_GOALS:
+		if not claimed.has(g.id) and seen >= (total if int(g.seen) < 0 else int(g.seen)):
+			n += 1
+	for g: Dictionary in SET_GOALS:
+		if not claimed.has(g.id) and set_count(str(g.kind)) >= set_need(g):
+			n += 1
+	return n
+
 ## Claims every reached goal: adds the gifts and returns the lines to show.
 static func claim() -> Array[String]:
 	var claimed: Dictionary = (GameState.records.get("collection", {}) as Dictionary).duplicate()
