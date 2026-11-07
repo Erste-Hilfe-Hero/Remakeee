@@ -219,7 +219,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2422. [P2] Die Bildschirm-Steuerung blendet sich nach 4 Sekunden ohne Berührung auf 40 % Deckkraft ab und beim Antippen in 0,1 s wieder auf.
 2423. [x] [P2] Gesperrte Menüpunkte schütteln beim Antippen 2 Pixel waagrecht (Juice.nudge zweimal) und spielen den Abbruch-Klang.
 2424. [P2] Lange Listen (Lager, Lexikon, Gegenstände) laufen beim Wischen mit Schwung nach und bremsen mit Reibung 6 pro Sekunde ab.
-2425. [P2] Am Listenende federt die Liste 4 Pixel über und mit "settle" zurück, statt hart zu stoppen.
+2425. [x] [P2] Am Listenende federt die Liste 4 Pixel über und mit "settle" zurück, statt hart zu stoppen.
 2426. [x] [P2] Ein Bildlauf-Anzeiger (1 Pixel breiter Strich) erscheint am rechten Rand langer Listen beim Scrollen und verschwindet nach 0,8 s.
 2427. [P2] Neue Einträge (neue Geschenke, neue Aufgaben, neue Freundesanfragen) bekommen einen 3×3-Pixel-Punkt, der mit Juice.wobble alle 2 Sekunden wackelt.
 2428. [x] [P2] Die Namens-Tastatur (NameKeyboard.gd) lässt jede gedrückte Taste kurz aufleuchten (Palettenstufe heller für 0,08 s).
