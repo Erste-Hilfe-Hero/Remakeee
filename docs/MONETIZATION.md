@@ -113,7 +113,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-115 Angebote (Katalog v28): 76 Vorteil, 32 Kosmetik, 7 Rissglas.
+121 Angebote (Katalog v29): 79 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -232,5 +232,11 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_card_frame_ripple` | Card Frame: Ripple | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
 | `rg_card_frame_ember` | Card Frame: Ember | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
 | `rg_gift_cards` | Gift Cards: 8 Motifs | 3,99 € | 400 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_damage_preview` | Damage Preview | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_minimap` | Minimap | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
+| `rg_fast_text` | Fast Text | 1,99 € | 200 | Komfort | keine Liga-Wirkung |
+| `rg_retro_filter` | Retro Filter | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_sky_control` | Sky Control | 2,99 € | 300 | Komfort | keine Liga-Wirkung |
+| `rg_bench_lessons` | Bench Lessons | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
 
 <!-- shop-table:end -->
