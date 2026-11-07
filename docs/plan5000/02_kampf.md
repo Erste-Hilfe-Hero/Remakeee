@@ -469,14 +469,14 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 
 ### docs/BALANCE.md und Balance-Ablauf
 873. [x] [P1] docs/BALANCE.md erhält eine Tabelle "Zielbänder" mit allen Messwerten, Zielwerten und dem Test, der sie prüft.
-874. [P2] Abschnitt "Neue Technik hinzufügen": Kurve prüfen, Lernliste prüfen, Simulator im Modus `team` und `ablation`, Basiswert aktualisieren, Name prüfen.
-875. [P2] Abschnitt "Schwierigkeitsstufen" mit der Tabelle Gegner-Ring, Spark, KI, Andenken, Energie-Start und Wächter-Regel-Stärke pro Stufe.
-876. [P2] Abschnitt "KI-Profile" mit allen Gewichten, Kurzsätzen und der Zuordnung zu Wanderern und Wächtern.
-877. [P2] Abschnitt "Wächter-Rätsel schreiben": Datenformat, Ziele, Löser-Test, Hinweis-Regeln, Laternen-Bewertung.
-878. [P2] Abschnitt "Regelvarianten" mit allen Varianten, ihren Zahlen und ausgeschlossenen Paaren.
-879. [P2] Änderungsprotokoll als Tabelle "Was, Vorher, Nachher, Warum" für jede Änderung aus "Bestehende Techniken nachjustieren", mit den Simulator-Werten vor und nach der Änderung.
-880. [P2] Abschnitt "Referenzteams": welche Teams, welcher Ring, warum sie den typischen Spieler abbilden.
-881. [P2] Der vollständige Bericht bei Ring 36 im Dokument wird nach jeder Balance-Änderung mit `tools/balance/run_all.sh` neu erzeugt, nicht von Hand bearbeitet.
+874. [x] [P2] Abschnitt "Neue Technik hinzufügen": Kurve prüfen, Lernliste prüfen, Simulator im Modus `team` und `ablation`, Basiswert aktualisieren, Name prüfen. Erledigt: docs/BALANCE.md "Neue Technik hinzufügen" mit sieben Schritten (Daten und Validator, Kurve, Lernliste, Simulator team/compare/mirror, Basiswert im selben Commit, Name, run_all.sh). Den Modus `ablation` gibt es noch nicht (P3), der Schritt nutzt team und compare.
+875. [x] [P2] Abschnitt "Schwierigkeitsstufen" mit der Tabelle Gegner-Ring, Spark, KI, Andenken, Energie-Start und Wächter-Regel-Stärke pro Stufe. Erledigt: Abschnitt "Schwierigkeitsstufen", erzeugt von BalanceDoc.difficulty_table aus GameState, BattleRules und TrainerData (Ring, Spark, KI Wanderer/Wächter, Andenken, Startenergie, Schaden, Wächter-Regeln, Boss-Aktionen, Rift-Born-Extra).
+876. [x] [P2] Abschnitt "KI-Profile" mit allen Gewichten, Kurzsätzen und der Zuordnung zu Wanderern und Wächtern. Erledigt: Abschnitt "KI-Profile", erzeugt aus data/ai_profiles.json, den Mottos und den `profile`-Schlüsseln der Karten (wer welches Profil nutzt).
+877. [x] [P2] Abschnitt "Wächter-Rätsel schreiben": Datenformat, Ziele, Löser-Test, Hinweis-Regeln, Laternen-Bewertung. Erledigt: Abschnitt "Wächter-Rätsel schreiben": Datenformat, Zieltypen, Löser-Test (lösbar, höchstens 20 % gewinnende Linien, kein fauler Weg, best_turns), Hinweise nach 2 und 4 Fehlversuchen, Laternen 0 bis 3.
+878. [x] [P2] Abschnitt "Regelvarianten" mit allen Varianten, ihren Zahlen und ausgeschlossenen Paaren. Erledigt: Abschnitt "Regelvarianten", erzeugt aus data/rule_variants.json (Zahlen gegen die normalen Werte, ausgeschlossene Paare, Siegel, Text).
+879. [x] [P2] Änderungsprotokoll als Tabelle "Was, Vorher, Nachher, Warum" für jede Änderung aus "Bestehende Techniken nachjustieren", mit den Simulator-Werten vor und nach der Änderung. Erledigt: Abschnitt "Änderungsprotokoll", erzeugt aus BalanceDoc.CHANGES (Was, Vorher, Nachher, Warum) mit K.o. pro Einsatz bei Ring 36 vorher (aus dem Plan) und jetzt (Duell-Lauf von run_all.sh).
+880. [x] [P2] Abschnitt "Referenzteams": welche Teams, welcher Ring, warum sie den typischen Spieler abbilden. Erledigt: Abschnitt "Referenzteams" mit der Begründung (drei Starter-Teams pro Abschnitt aus den Wildarten der Karten davor, Ringe an der Grenze oder knapp darunter) und der erzeugten Tabelle aus tools/balance/ref_teams.json.
+881. [x] [P2] Der vollständige Bericht bei Ring 36 im Dokument wird nach jeder Balance-Änderung mit `tools/balance/run_all.sh` neu erzeugt, nicht von Hand bearbeitet. Erledigt: tools/balance/run_all.sh schreibt alle erzeugten Abschnitte (tools/balance_doc.gd, Marken `<!-- gen:NAME -->`) und den vollständigen Bericht bei Ring 36 neu und zeigt danach die Band-Prüfungen und den Basiswert-Vergleich. test_balance_doc.gd schlägt fehl, wenn die Daten-Abschnitte nicht zu den Daten passen.
 882. [P3] Abschnitt "Bekannte Grenzfälle": Arten, die zwischen Ring 10 und 28 wegen Lernlisten-Sprüngen schwanken, mit Ring und Wert.
 883. [P3] Abschnitt "Seitenfallen und Konter": welche Arten Fallen legen, welche sie entfernen können.
 884. [P3] Abschnitt "Bonusziele" mit allen Zielen pro NPC und der gemessenen Erfüllungsrate.
