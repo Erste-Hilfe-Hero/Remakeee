@@ -693,4 +693,7 @@ T = {
 "Text shows in the plain box again.": "Texte stehen wieder im einfachen Kasten.",
 "Text now shows in %s.": "Texte stehen jetzt im %s.",
 "You take off the hat.": "Du nimmst den Hut ab.",
+"Show to friends": "Freunden zeigen",
+"Friends see your plain name again.": "Freunde sehen wieder deinen einfachen Namen.",
+"Friends now see your name in %s.": "Freunde sehen deinen Namen jetzt im %s.",
 }
