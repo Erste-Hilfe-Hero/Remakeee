@@ -75,6 +75,7 @@ func _ready() -> void:
 		"storage": _action_storage,
 		"heal": _action_heal,
 		"camp": _action_camp,
+		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
@@ -865,6 +866,17 @@ func _wake_cores() -> void:
 	for kid: Spirling in GameState.awaken_cores():
 		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
 		SaveManager.save_game()
+
+## A cartographer's stone (area 3 items 1084, 1085): counted once, a keepsake at 4, 8 and 12.
+func _action_marker_stone(args: PackedStringArray, _speaker: NPC) -> void:
+	var res: Dictionary = MarkerStones.visit(int(args[0]) if args.size() > 0 else 0)
+	if not bool(res.new):
+		return
+	Sound.sfx("confirm")
+	var out: Array[String] = ["You trace the mark with your finger. Cartographer's stones found: %d/%d" % [int(res.found), MarkerStones.TOTAL]]
+	if not str(res.reward).is_empty():
+		out.append("Tucked behind the stone lies a keepsake: %s." % str(Database.item(str(res.reward)).get("name", res.reward)))
+	await say(out)
 
 ## A cave campfire (area 3 item 992): the journey is saved, the team is not healed.
 func _action_camp(_args: PackedStringArray, _speaker: NPC) -> void:

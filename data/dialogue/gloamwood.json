@@ -62,5 +62,11 @@
    "A clear spring in a small clearing. The water is cold and tastes of moss."
   ],
   "action": "heal"
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 10"
  }
 }

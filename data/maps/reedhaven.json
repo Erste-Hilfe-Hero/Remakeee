@@ -15,7 +15,7 @@
   "~HDH+~~+HDH~",
   "~+++++++++o~",
   "~+++L~~++~~~",
-  "~RRR+~~+~~%~",
+  "~RRR+~~+~~S~",
   "~HDH+~~+S%%~",
   "~++++++++%%~",
   "~~~~~~~~~~~~"
@@ -176,6 +176,11 @@
    "x": 8,
    "y": 7,
    "dialogue": "reedhaven/sign"
+  },
+  {
+   "x": 10,
+   "y": 6,
+   "dialogue": "reedhaven/marker_stone"
   }
  ],
  "secrets": [

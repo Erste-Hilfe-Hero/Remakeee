@@ -60,5 +60,11 @@
    "Boatman Osk: Lake Line landing. The brook runs out to the lake from here, and so do I."
   ],
   "action": "transit lake_line"
+ },
+ "marker_stone": {
+  "lines": [
+   "An old cartographer's stone. A compass rose is cut into it, worn almost smooth."
+  ],
+  "action": "marker_stone 9"
  }
 }

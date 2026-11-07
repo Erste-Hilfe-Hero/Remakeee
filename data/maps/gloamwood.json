@@ -35,7 +35,7 @@
   "T*..,,,,_,.T",
   "To.T,,,,_..T",
   "T.S.,,,,____",
-  "T..,,,TT,,,T",
+  "TS.,,,TT,,,T",
   "T,,,,,,,,,,T",
   "TT,,,TT,,,TT",
   "T,,,,,,,,,,T",
@@ -184,6 +184,11 @@
     "wading_boots",
     "plank_bundle"
    ]
+  },
+  {
+   "x": 1,
+   "y": 25,
+   "dialogue": "gloamwood/marker_stone"
   }
  ],
  "blocks": [

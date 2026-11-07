@@ -10,7 +10,7 @@
   "TRRR.__.RRRT",
   "TRRR.__.RRRT",
   "THDH.__.HDHT",
-  "T._.____._.T",
+  "TS_.____._.T",
   "T.__________",
   "T.S.._.....T",
   "T*...__..,,T",
@@ -327,6 +327,11 @@
    "x": 9,
    "y": 18,
    "dialogue": "brindlewick/ferry"
+  },
+  {
+   "x": 1,
+   "y": 5,
+   "dialogue": "brindlewick/marker_stone"
   }
  ],
  "gear_spots": [

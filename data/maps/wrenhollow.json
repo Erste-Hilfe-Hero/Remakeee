@@ -22,7 +22,7 @@
   "T^^=^^^^^^^T",
   "T.._____...T",
   "T.RRR...*..T",
-  "T.HDH.##...T",
+  "T.HDH.##S..T",
   "T..___.##..T",
   "T*.....,,,.T",
   "TTTTTTTTTTTT"
@@ -228,6 +228,11 @@
    "x": 2,
    "y": 9,
    "dialogue": "wrenhollow/sign"
+  },
+  {
+   "x": 8,
+   "y": 13,
+   "dialogue": "wrenhollow/marker_stone"
   }
  ],
  "secrets": [
