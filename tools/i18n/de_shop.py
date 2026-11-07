@@ -711,4 +711,8 @@ T = {
 "Your gifts go out on the plain card again.": "Deine Geschenke gehen wieder mit der einfachen Karte raus.",
 "Your gifts now go out on %s.": "Deine Geschenke gehen jetzt mit %s raus.",
 "(in use)": "(in Gebrauch)",
+"Wardrobe": "Kleiderschrank",
+"Wardrobe...": "Kleiderschrank...",
+"Your wardrobe is empty. Looks you get in the shop show up here.": "Dein Kleiderschrank ist leer. Aussehen-Teile aus dem Shop erscheinen hier.",
+"Put on or take off the looks you got in the shop.": "Aussehen-Teile aus dem Shop an- und ablegen.",
 }

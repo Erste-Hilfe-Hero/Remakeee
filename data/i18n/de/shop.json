@@ -253,6 +253,7 @@
   "Price: %s": "Preis: %s",
   "Price: %s per month, renews automatically.": "Preis: %s pro Monat, verlängert sich automatisch.",
   "Purchases are only possible in the app from the App Store or Google Play.": "Käufe gehen nur in der App aus dem App Store oder von Google Play.",
+  "Put on or take off the looks you got in the shop.": "Aussehen-Teile aus dem Shop an- und ablegen.",
   "Raises one chosen value by 6 Sparks, up to 12.": "Erhöht einen gewählten Wert um 6 Funken, bis 12.",
   "Raising to %s on %s": "Erhöhung auf %s am %s",
   "Relearn an art": "Technik neu lernen",
@@ -378,6 +379,8 @@
   "Warden Lore, 3 Warden Weakeners and 5 Rift Anchors in one pack.": "Wächterkunde, 3 Wächterschwächer und 5 Rissanker in einem Paket.",
   "Warden Lore:": "Wächterkunde:",
   "Warden Weakener": "Wächterschwächer",
+  "Wardrobe": "Kleiderschrank",
+  "Wardrobe...": "Kleiderschrank...",
   "Wayfarer Pack": "Wanderer-Paket",
   "Wayfarer Pass": "Wanderer-Pass",
   "Wayfarer Pass for %d days": "Wanderer-Pass für %d Tage",
@@ -407,6 +410,7 @@
   "Your monthly limit is reached. The shop opens again next month.": "Dein Monatslimit ist erreicht. Der Shop öffnet nächsten Monat wieder.",
   "Your pass runs until %s.": "Dein Pass läuft bis %s.",
   "Your team fights wild Spirlings by itself. Not against Rift Wardens, story battles or in leagues. Permanent.": "Dein Team kämpft selbst gegen wilde Spirlings. Nicht gegen Rift-Wächter, in Story-Kämpfen und in Ligen. Dauerhaft.",
-  "Your team holds 6 Spirlings instead of 5 in battles against the world. Permanent.": "Dein Team hat 6 statt 5 Plätze in Kämpfen gegen die Spielwelt. Dauerhaft."
+  "Your team holds 6 Spirlings instead of 5 in battles against the world. Permanent.": "Dein Team hat 6 statt 5 Plätze in Kämpfen gegen die Spielwelt. Dauerhaft.",
+  "Your wardrobe is empty. Looks you get in the shop show up here.": "Dein Kleiderschrank ist leer. Aussehen-Teile aus dem Shop erscheinen hier."
  }
 }
