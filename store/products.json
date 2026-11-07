@@ -1368,6 +1368,18 @@
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
    "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.unlock.gift_cards",
+   "offer": "rg_gift_cards",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "3.99",
+   "name_en": "Gift Cards: 8 Motifs",
+   "name_de": "Grußkarten: 8 Motive",
+   "desc_en": "Eight motifs for the card on your gifts to friends, as one set. Only looks, the gift stays the same.",
+   "desc_de": "Acht Motive für die Karte an deinen Geschenken für Freunde, als ein Set. Nur Aussehen, das Geschenk bleibt gleich.",
+   "ready": true
   }
  ]
 }

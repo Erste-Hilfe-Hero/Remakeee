@@ -641,6 +641,27 @@ func test_shop_profile_frames_go_on_the_card_only_while_owned() -> void:
 	Billing.state = {}
 	GameState.card_frame = worn
 
+func test_shop_gift_cards_go_on_gifts_only_while_owned() -> void:
+	var worn: String = GameState.gift_card
+	var set_offer: Dictionary = ShopCatalog.offer("rg_gift_cards")
+	assert_eq(int(set_offer.get("rg_price", 0)), 400)
+	assert_eq((set_offer.grants as Array).size(), 8)
+	assert_eq(ShopMenu.GIFT_CARD_NAMES.size(), FriendsMenu.GIFT_CARDS.size())
+	GameState.gift_card = "gift_card_moth"
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.gift_motif(), "")
+	assert_false(Online.card_numbers().has("motif"))
+	Billing.state = {"unlocks": {"gift_card_moth": 1}}
+	assert_eq(Online.card_numbers().get("motif"), "moth")
+	assert_eq(FriendsMenu.GIFT_CARDS.size(), 8)
+	for k: String in FriendsMenu.GIFT_CARDS:
+		assert_true((set_offer.grants as Array).any(func(g: Dictionary) -> bool: return g.id == "gift_card_" + k), "set has %s" % k)
+	assert_eq(FriendsMenu.on_card({"motif": "moth"}, "Hi"), "}{ }{ }{ }{\nHi\n}{ }{ }{ }{")
+	assert_eq(FriendsMenu.on_card({"motif": "nope"}, "Hi"), "Hi")
+	assert_eq(FriendsMenu.on_card({}, "Hi"), "Hi")
+	Billing.state = {}
+	GameState.gift_card = worn
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

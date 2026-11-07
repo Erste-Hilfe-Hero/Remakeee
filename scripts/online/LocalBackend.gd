@@ -348,6 +348,10 @@ func _fn_profile_set(a: Dictionary) -> Dictionary:
 		var fr: Variant = given.get("frame")
 		if fr is String and fr in FriendsMenu.CARD_FRAMES and int(_unlocks(me()).get("card_frame_" + fr, 0)) > 0:
 			card["frame"] = fr
+		# A bought greeting card motif for gifts (20261110000025_shop_gift_cards.sql).
+		var mo: Variant = given.get("motif")
+		if mo is String and FriendsMenu.GIFT_CARDS.has(mo) and int(_unlocks(me()).get("gift_card_" + mo, 0)) > 0:
+			card["motif"] = mo
 	p.name = clean_name(str(a.get("p_name", "")), p.code)
 	p.color = clampi(int(a.get("p_color", 0)), 0, 3)
 	var fav: String = ""
@@ -922,7 +926,9 @@ func _fn_gift_send(a: Dictionary) -> Dictionary:
 		return _fail("not_friends")
 	if _sent_today(t, "gift"):
 		return _fail("already_today")
-	_new_mail(t, "gift")
+	var gift: Dictionary = _new_mail(t, "gift")
+	var card: Variant = profile_of(me()).get("card", {})
+	gift["motif"] = str(card.get("motif", "")) if card is Dictionary else ""
 	_add_points(me(), t, 1)
 	return {"ok": true}
 
@@ -935,7 +941,7 @@ func _fn_mail_list(_a: Dictionary) -> Array:
 	for m: Dictionary in mine.slice(0, 50):
 		var p: Dictionary = profile_of(m.sender)
 		out.append({"id": m.id, "kind": m.kind, "phrase": m.phrase, "item": m.item, "place": m.place, "opened": m.opened,
-			"at": m.at, "code": p.code, "name": p.name})
+			"at": m.at, "code": p.code, "name": p.name, "motif": str(m.get("motif", ""))})
 	return out
 
 func _mail_by_id(id: int) -> Variant:

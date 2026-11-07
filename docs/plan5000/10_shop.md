@@ -305,7 +305,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4282. [x] [P2] Textrahmen für das Dialogfenster als Kosmetik anbieten: 5 Rahmen je 100 Rissglas.
 4283. [x] [P2] Wanderer-Hüte als Kosmetik anbieten: 6 Hüte je 200 Rissglas, sichtbar in der Welt und im Kampfbild.
 4284. [x] [P2] Profilrahmen für die Freundesliste (`FriendsMenu.gd`) anbieten: 6 Rahmen je 100 Rissglas.
-4285. [P2] Echo-Grußkarten-Motive für Geschenke an Freunde anbieten: 8 Motive je 100 Rissglas, die nur das Aussehen der Karte ändern.
+4285. [x] [P2] Echo-Grußkarten-Motive für Geschenke an Freunde anbieten: 8 Motive je 100 Rissglas, die nur das Aussehen der Karte ändern. (Umgesetzt als ein Set aus 8 Motiven für 400 Rissglas, damit Alis 2/3-Regel im Angebot hält.)
 4286. [P2] Fotorahmen und Sticker für den Fotomodus anbieten: 10 Sticker für 200 Rissglas als festes Set.
 4287. [P2] Einen Kosmetik-Schrank im Menü "Team" und unter Einstellungen bauen, in dem gekaufte Teile an- und abgelegt werden.
 4288. [P2] Gekaufte Kosmetik in `entitlements` speichern und beim Laden des Spielstands nur anzeigen, was der Server bestätigt.

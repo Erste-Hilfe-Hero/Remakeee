@@ -153,6 +153,9 @@ static func detail_text(o: Dictionary) -> String:
 
 static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
 	# An owned jacket, backdrop or text frame is worn or taken off here (items 4277, 4281).
+	if str(o.get("slot", "")) == "gift_card" and Billing.unlocked("gift_card_" + FriendsMenu.GIFT_CARDS.keys()[0]) > 0:
+		await _run_gift_cards(menu)
+		return
 	var key: String = look_key(o)
 	if not key.is_empty() and Billing.unlocked(key) > 0:
 		await _run_wear(menu, o, key)
@@ -216,6 +219,28 @@ static func look_key(o: Dictionary) -> String:
 	if str(o.get("tab", "")) == "looks" and g.size() == 1 and g[0] is Dictionary and (str(g[0].get("id", "")).begins_with("backdrop_") or str(g[0].get("id", "")).begins_with("frame_") or str(g[0].get("id", "")).begins_with("hat_") or str(g[0].get("id", "")).begins_with("card_frame_")):
 		return str(g[0].id)
 	return ""
+
+## Names of the greeting card motifs in the set (item 4285), in FriendsMenu.GIFT_CARDS order.
+const GIFT_CARD_NAMES: Array[String] = ["Gift Card: Lantern", "Gift Card: Moth", "Gift Card: Wave", "Gift Card: Pine",
+	"Gift Card: Kite", "Gift Card: Moon", "Gift Card: Shell", "Gift Card: Ember"]
+
+## The owned gift card set: pick the motif that goes on gifts, or the plain card.
+static func _run_gift_cards(menu: MenuHost) -> void:
+	var kinds: Array = FriendsMenu.GIFT_CARDS.keys()
+	var options: Array[String] = []
+	for i: int in kinds.size():
+		var mark: String = "  " + Loc.t("(in use)") if GameState.gift_card == "gift_card_" + str(kinds[i]) else ""
+		options.append(Loc.t(GIFT_CARD_NAMES[i]) + mark)
+	options.append(Loc.t("Plain card"))
+	var idx: int = await menu.pick_strings(Loc.t("Card for your gifts"), options)
+	if idx < 0:
+		return
+	GameState.gift_card = "" if idx >= kinds.size() else "gift_card_" + str(kinds[idx])
+	Online.push_profile()
+	if GameState.gift_card.is_empty():
+		await menu.info("Your gifts go out on the plain card again.")
+	else:
+		await menu.info(Loc.t("Your gifts now go out on %s.") % Loc.t(GIFT_CARD_NAMES[idx]))
 
 static func _run_wear(menu: MenuHost, o: Dictionary, key: String) -> void:
 	if key.begins_with("frame_"):
