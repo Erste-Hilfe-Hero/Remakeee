@@ -335,6 +335,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
+	"play_reminder": "A short note after 90 minutes of play.",
 	"difficulty": "How strong your opponents are. You can change it any time.",
 	"iron_oath": "Spirlings that faint retire for good. Only before your first Rift.",
 	"volume": "All sound. Left and right change it in steps of 10.",
@@ -405,6 +406,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["damage_preview", "Damage preview: %s" % ("On" if GameState.damage_preview else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
+				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
 			]
 			# Difficulty and the Iron Oath only during a journey.
 			if GameState.in_game:
@@ -457,6 +459,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.bonus_goals = not GameState.bonus_goals
 		"tips":
 			GameState.tips_enabled = not GameState.tips_enabled
+		"play_reminder":
+			GameState.play_reminder = not GameState.play_reminder
 		"volume":
 			GameState.volume = step_volume(GameState.volume, dir)
 			GameState.apply_volume()
