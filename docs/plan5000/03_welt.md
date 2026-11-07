@@ -16,7 +16,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 898. [P2] Führe pro Karte ein Feld "biome" (z. B. fern, marsh, scree, forest, cave, town) ein, das Begegnungen, Wetter und Geräusche gemeinsam steuert.
 899. [P2] Führe pro Karte ein optionales Feld "music_day" und "music_night" ein, das auf vorhandene Einträge in data/music.json zeigt.
 900. [P2] Ergänze MapData.gd um "one_way" Kanten (Felsstufen, die man nur abwärts gehen kann), die der PathFinder beachtet.
-901. [P2] Ergänze PathFinder.gd so, dass Tipp-Laufen Druckplatten nicht aus Versehen auslöst, wenn das Ziel nicht die Platte selbst ist.
+901. [x] [P2] Ergänze PathFinder.gd so, dass Tipp-Laufen Druckplatten nicht aus Versehen auslöst, wenn das Ziel nicht die Platte selbst ist.
 902. [P2] Ergänze MapData.gd um "ambient" Punkte (x, y, Geräusch-ID) für Wasserrauschen, Wind oder Glocken in der Nähe.
 903. [x] [P2] Schreibe ein Werkzeug tools/world_stats.py, das pro Karte Größe, Anzahl Funde, Anzahl Wanderer und Begegnungsfelder ausgibt und als Tabelle in docs/WORLD.md einträgt.
 904. [x] [P2] Lege eine Kartenvorlage tools/art/world/template.py mit 12 Kacheln Breite, Rahmen aus Fels und je einem Warp oben und unten an.
