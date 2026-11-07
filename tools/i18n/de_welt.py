@@ -35,6 +35,10 @@ T = {
 "Now: high tide, until %02d:00.": "Jetzt: Flut, bis %02d:00 Uhr.",
 "Next high tide: %02d:00 to %02d:00.": "Nächste Flut: %02d:00 bis %02d:00 Uhr.",
 "Next low tide: %02d:00 to %02d:00.": "Nächste Ebbe: %02d:00 bis %02d:00 Uhr.",
+"Rubbing Charcoal": "Pausstift",
+"Wayfarer Gear. A stick of charcoal and a roll of thin paper: face a weathered stone and press A to take a rubbing and read its worn inscription.": "Wanderer-Ausrüstung. Ein Stück Kohle und eine Rolle dünnes Papier: stell dich vor einen verwitterten Stein und drück A, um ihn durchzupausen und die verblasste Inschrift zu lesen.",
+"The letters are too worn to read. A charcoal rubbing might bring them back.": "Die Buchstaben sind zu verwittert, um sie zu lesen. Eine Kohlepause könnte sie zurückbringen.",
+"You lay paper on the stone and rub the charcoal over it. Letters appear:": "Du legst Papier auf den Stein und reibst die Kohle darüber. Buchstaben erscheinen:",
 "Sea caves open their inner chambers at low tide.": "Meereshöhlen öffnen ihre inneren Kammern bei Ebbe.",
 "The inner chamber is open.": "Die innere Kammer ist offen.",
 # Gear page in the satchel
@@ -50,6 +54,7 @@ T = {
 "marked edges above a shaft": "markierten Kanten über einem Schacht",
 "open ground ahead (hidden finds up to 6 steps away)": "freiem Boden voraus (versteckte Funde bis 6 Schritte entfernt)",
 "the tides of sea caves": "den Gezeiten der Meereshöhlen",
+"weathered stones on old burial mounds": "verwitterten Steinen auf alten Grabhügeln",
 # Puzzle rooms
 "Room": "Raum",
 "Puzzle room": "Rätselraum",

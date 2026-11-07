@@ -28,7 +28,7 @@
   "^.....__.::^",
   "^.::..__.::^",
   "^.::..__...^",
-  "^.....__...^",
+  "S.....__...^",
   "^::...__..:^",
   "^::...__..:^",
   "^.....__...^",
@@ -169,6 +169,11 @@
    "x": 2,
    "y": 6,
    "dialogue": "greyreach/hut"
+  },
+  {
+   "x": 0,
+   "y": 22,
+   "dialogue": "greyreach/mound_stone"
   }
  ],
  "blocks": [
@@ -213,6 +218,13 @@
    "item": "revival_leaf",
    "count": 1,
    "flag": "find_grey_south"
+  },
+  {
+   "x": 3,
+   "y": 24,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_mound_5"
   }
  ],
  "spots": {

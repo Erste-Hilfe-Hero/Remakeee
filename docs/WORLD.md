@@ -104,9 +104,9 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `brindlewick` | town | 12x20 | 4 | 0 | 0 |
 | veydal | `cinder_rift` | rift | 12x13 | 0 | 4 | 20 |
 | veydal | `copperfold` | town | 12x19 | 3 | 0 | 0 |
-| veydal | `crowcrest` | route | 12x24 | 4 | 3 | 42 |
+| veydal | `crowcrest` | route | 12x24 | 5 | 3 | 42 |
 | veydal | `echo_path` | inside | 10x8 + 10x8 | 0 | 0 | 0 |
-| veydal | `fernstair` | route | 12x26 | 4 | 2 | 63 |
+| veydal | `fernstair` | route | 12x26 | 5 | 2 | 63 |
 | veydal | `gloamwood` | route | 12x30 | 5 | 3 | 152 |
 | veydal | `kindle_vents` | cave | 12x10 | 2 | 0 | 12 |
 | veydal | `lantern_steps` | route | 12x19 | 4 | 3 | 9 |
@@ -115,7 +115,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `map_house` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 3 | 0 | 25 |
 | veydal | `murk_hollow` | cave | 12x13 + 12x9 | 4 | 3 | 20 |
-| veydal | `quillbrook` | route | 12x30 | 4 | 3 | 113 |
+| veydal | `quillbrook` | route | 12x30 | 5 | 3 | 113 |
 | veydal | `reedhaven` | town | 12x10 | 3 | 0 | 0 |
 | veydal | `rest_spring` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `sablecove` | cave | 12x9 | 4 | 0 | 10 |
@@ -125,12 +125,12 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
 | veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
 | corvane | `corvane_quay` | town | 12x24 | 3 | 0 | 0 |
-| corvane | `greyreach` | route | 12x29 | 4 | 3 | 44 |
+| corvane | `greyreach` | route | 12x29 | 5 | 3 | 44 |
 | corvane | `madderby` | town | 12x22 | 3 | 0 | 0 |
 | corvane | `madderby_guild` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `mirror_rift` | rift | 12x13 | 0 | 0 | 20 |
 | corvane | `rain_rift` | rift | 12x13 | 0 | 0 | 22 |
-| corvane | `stillwater` | route | 12x26 | 3 | 3 | 53 |
+| corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
 | corvane | `woadfen` | marsh | 12x28 | 4 | 3 | 154 |
 | ashmere | `ashmere_station` | town | 12x22 | 3 | 0 | 0 |
@@ -143,7 +143,7 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **45 maps** | | | **94** | **42** | **1062** |
+| | **45 maps** | | | **99** | **42** | **1062** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
@@ -158,6 +158,7 @@ Written by `python3 tools/world_stats.py`.
 | `plank_bundle` | Plank Bundle | `gloamwood` | veydal | forester (2, 22) | `got_planks` |
 | `pry_bar` | Pry Bar | `copperfold` | veydal | smith (1, 5) | `got_pry_bar` |
 | `rope_ladder` | Rope Ladder | `wrenhollow` | veydal | ropemaker (8, 11) | `got_ladder` |
+| `rubbing_charcoal` | Rubbing Charcoal | `gloamwood` | veydal | charcoaler (8, 1) | `got_rubbing_charcoal` |
 | `storm_lantern` | Storm Lantern | `murk_hollow` | veydal | tamsin (3, 10) | `got_lantern` |
 | `survey_glass` | Survey Glass | `wrenhollow` | veydal | surveyor (10, 9) | `got_survey_glass` |
 | `tide_chart` | Tide Chart | `brackwater_fen` | veydal | tidewatcher (9, 15) | `got_tide_chart` |

@@ -21,7 +21,7 @@
   "TTT,..~~.,,T",
   "T,,,..ww..,T",
   "T,,,,.~~.,TT",
-  "T,,T..~~,,,T",
+  "T,,S..~~,,,T",
   "T^^^^.~~^^^T",
   "T,,,..~~.,,T",
   "T,,..,~~.T,T",
@@ -184,6 +184,11 @@
    "x": 8,
    "y": 9,
    "dialogue": "quillbrook/marker_stone"
+  },
+  {
+   "x": 3,
+   "y": 15,
+   "dialogue": "quillbrook/mound_stone"
   }
  ],
  "blocks": [
@@ -231,6 +236,13 @@
    "item": "max_tonic",
    "count": 1,
    "flag": "find_quill_pocket"
+  },
+  {
+   "x": 1,
+   "y": 15,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_mound_2"
   }
  ],
  "passages": [

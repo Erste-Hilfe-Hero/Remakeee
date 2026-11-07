@@ -733,6 +733,7 @@ const GEAR_PLACES: Dictionary[String, String] = {
 	"wheel": "sluice wheels, mine carts and grates", "shaft": "marked edges above a shaft",
 	"look": "open ground ahead (hidden finds up to 6 steps away)",
 	"tide": "the tides of sea caves",
+	"rubbing": "weathered stones on old burial mounds",
 }
 
 ## Satchel page for a piece of Wayfarer Gear: name, short text and where it works.
