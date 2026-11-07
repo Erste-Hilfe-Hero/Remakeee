@@ -29,6 +29,13 @@ T = {
 "The glass is still misted. %d s.": "Das Glas ist noch beschlagen. %d s.",
 "Through the glass: %d glints ahead.": "Durchs Glas: %d Glitzern voraus.",
 "Through the glass: nothing glints ahead.": "Durchs Glas: voraus glitzert nichts.",
+"Tide Chart": "Gezeitentafel",
+"Wayfarer Gear. A tidewatcher's chart: open it in the satchel to see when the next low and high tide come, by the clock of your device.": "Wanderer-Ausrüstung. Die Tafel einer Gezeitenwächterin: öffne sie in der Tasche, um zu sehen, wann die nächste Ebbe und Flut kommen, nach der Uhr deines Geräts.",
+"Now: low tide, until %02d:00.": "Jetzt: Ebbe, bis %02d:00 Uhr.",
+"Now: high tide, until %02d:00.": "Jetzt: Flut, bis %02d:00 Uhr.",
+"Next high tide: %02d:00 to %02d:00.": "Nächste Flut: %02d:00 bis %02d:00 Uhr.",
+"Next low tide: %02d:00 to %02d:00.": "Nächste Ebbe: %02d:00 bis %02d:00 Uhr.",
+"Sea caves open their inner chambers at low tide.": "Meereshöhlen öffnen ihre inneren Kammern bei Ebbe.",
 # Gear page in the satchel
 "Works on: %s": "Wirkt bei: %s",
 "Always on foot: you walk, wade and climb yourself.": "Immer zu Fuß: du gehst, watest und kletterst selbst.",
@@ -41,6 +48,7 @@ T = {
 "sluice wheels, mine carts and grates": "Schleusenrädern, Loren und Gittern",
 "marked edges above a shaft": "markierten Kanten über einem Schacht",
 "open ground ahead (hidden finds up to 6 steps away)": "freiem Boden voraus (versteckte Funde bis 6 Schritte entfernt)",
+"the tides of sea caves": "den Gezeiten der Meereshöhlen",
 # Puzzle rooms
 "Room": "Raum",
 "Puzzle room": "Rätselraum",

@@ -188,7 +188,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1060. [P2] Lass die passende Ausrüstung automatisch wirken, wenn der Spieler nur eine besitzt, die an dieser Stelle passt.
 1061. [x] [P2] Zeige vor einer noch gesperrten Stelle ein graues Symbol der benötigten Ausrüstung, damit man sich die Stelle merkt.
 1062. [x] [P2] Gib jede neue Ausrüstung an einem festen Ort im Spiel aus, nachvollziehbar in docs/WORLD.md eingetragen (Gebiet, Geber, Flag).
-1063. [P2] Füge die Ausrüstung "Tide Chart" (de: Gezeitentafel) hinzu, die im Menü die nächste Ebbe und Flut nach Gerätezeit anzeigt.
+1063. [x] [P2] Füge die Ausrüstung "Tide Chart" (de: Gezeitentafel) hinzu, die im Menü die nächste Ebbe und Flut nach Gerätezeit anzeigt.
 1064. [P2] Ergänze WorldValidator.gd um eine Prüfung, dass jede Ausrüstung vor der ersten Stelle erreichbar ist, an der sie gebraucht wird.
 1065. [x] [P2] Halte die Gesamtzahl der Ausrüstung in Veydal bei höchstens 10 Stücken, damit das Ausrüstungs-Rad auf eine Bildschirmseite passt.
 1066. [P3] Füge die Ausrüstung "Crampons" (de: Steigeisen) für vereiste Geröllfelder in Coldmoor hinzu, die das Rutschen auf Eis verhindern.
