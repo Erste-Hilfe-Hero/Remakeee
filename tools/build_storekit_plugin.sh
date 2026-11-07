@@ -6,6 +6,8 @@
 # Usage: tools/build_storekit_plugin.sh            (needs python3; installs scons with pip if missing)
 set -euo pipefail
 cd "$(dirname "$0")/.."
+# Same minimum as the app (export_presets.cfg), or App Store Connect refuses the bundle.
+MIN_IOS="${MIN_IOS:-$(sed -n 's/^application\/min_ios_version="\(.*\)"/\1/p' export_presets.cfg | head -1)}"
 MIN_IOS="${MIN_IOS:-16.0}"
 # godot-cpp of the oldest API Chimora needs; GDExtensions built against it load in newer engines.
 CPP_REFS="${GODOT_CPP_REF:-godot-4.5-stable godot-4.4-stable}"
@@ -17,7 +19,7 @@ for ref in $CPP_REFS; do
 	fi
 done
 [ -d "$work/godot-cpp" ] || { echo "no godot-cpp"; exit 1; }
-command -v scons >/dev/null || python3 -m pip install -q scons || pip3 install -q --break-system-packages scons
+command -v scons >/dev/null || python3 -m pip install -q --break-system-packages scons || pip3 install -q scons
 (cd "$work/godot-cpp" && scons -s platform=ios arch=arm64 target=template_release ios_simulator=no \
 	ios_min_version="$MIN_IOS" -j"$(sysctl -n hw.ncpu)")
 lib=$(ls "$work"/godot-cpp/bin/libgodot-cpp.ios.template_release*.a | head -1)
@@ -29,13 +31,35 @@ xcrun -sdk iphoneos clang++ -std=c++17 -arch arm64 -isysroot "$SDK" -miphoneos-v
 	-I "$work/godot-cpp/include" -I "$work/godot-cpp/gen/include" -I "$work/godot-cpp/gdextension" \
 	-c "$src/chimora_storekit.cpp" -o "$work/chimora_storekit.o"
 out=addons/chimora_storekit/bin
-name=libchimora_storekit.ios.template_release.dylib
-mkdir -p "$out"
+# A real framework with its own Info.plist: App Store Connect checks that MinimumOSVersion there matches
+# the binary (error 90208 when Godot wrapped a bare dylib with a lower default).
+fw="$out/ChimoraStoreKit.framework"
+rm -rf "$out" && mkdir -p "$fw"
 xcrun -sdk iphoneos swiftc -target "arm64-apple-ios$MIN_IOS" -sdk "$SDK" -swift-version 5 -O -emit-library \
 	-module-name ChimoraStoreKit "$src/ChimoraStoreKit.swift" "$work/chimora_storekit.o" \
 	-Xlinker "$lib" -lc++ -framework StoreKit \
-	-Xlinker -install_name -Xlinker "@rpath/$name" -o "$out/$name"
-nm -gU "$out/$name" | grep -q chimora_storekit_init || { echo "entry symbol missing"; exit 1; }
+	-Xlinker -install_name -Xlinker "@rpath/ChimoraStoreKit.framework/ChimoraStoreKit" -o "$fw/ChimoraStoreKit"
+nm -gU "$fw/ChimoraStoreKit" | grep -q chimora_storekit_init || { echo "entry symbol missing"; exit 1; }
+cat > "$fw/Info.plist" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key><string>en</string>
+	<key>CFBundleExecutable</key><string>ChimoraStoreKit</string>
+	<key>CFBundleIdentifier</key><string>de.chimora.game.storekit</string>
+	<key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
+	<key>CFBundleName</key><string>ChimoraStoreKit</string>
+	<key>CFBundlePackageType</key><string>FMWK</string>
+	<key>CFBundleShortVersionString</key><string>1.0</string>
+	<key>CFBundleVersion</key><string>1</string>
+	<key>CFBundleSupportedPlatforms</key><array><string>iPhoneOS</string></array>
+	<key>MinimumOSVersion</key><string>$MIN_IOS</string>
+</dict>
+</plist>
+PLIST
+plutil -lint "$fw/Info.plist"
+vtool -show-build "$fw/ChimoraStoreKit" | grep -E "minos|platform" || true
 cat > addons/chimora_storekit/chimora_storekit.gdextension <<GDE
 [configuration]
 
@@ -44,8 +68,8 @@ compatibility_minimum = "4.4"
 
 [libraries]
 
-ios.release = "res://$out/$name"
-ios.debug = "res://$out/$name"
+ios.release = "res://$fw"
+ios.debug = "res://$fw"
 GDE
-ls -la "$out"
+ls -la "$fw"
 echo "StoreKit plugin built (iOS $MIN_IOS)"
