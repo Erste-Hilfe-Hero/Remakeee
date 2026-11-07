@@ -73,6 +73,45 @@ static func collection() -> String:
 static func path() -> String:
 	return "\n".join(SeasonPath.goal_lines())
 
+## Rewards waiting (plan 3529): unpaid collection goals and journey steps, kept vows to settle
+## and roaming trips back home (those are picked up at Aldo's).
+static func pending() -> int:
+	var n: int = Collection.unclaimed() + Completion.unclaimed()
+	if GameState.has_flag(GameState.ACT1_END_FLAG):
+		n += Vows.list().filter(func(v: Dictionary) -> bool: return Vows.is_active(str(v.id))).size()
+	return n + trips_home()
+
+static func trips_home() -> int:
+	return Expeditions.trips().filter(func(t: Dictionary) -> bool: return Expeditions.seconds_left(t) <= 0).size()
+
+## "Collect all" (plan 3530): pays every waiting goal, step and badge at once. Trips stay with
+## Aldo, so the line only points there.
+static func collect_all() -> Array[String]:
+	var lines: Array[String] = Collection.claim()
+	lines.append_array(Vows.settle())
+	lines.append_array(RunChronicle.note())
+	for t: String in Achievements.check():
+		lines.append(Loc.t("Badge: %s") % Loc.t(t))
+	lines.append_array(Completion.claim())
+	if trips_home() > 0:
+		lines.append(Loc.t("%d Spirlings are back from their trips. Aldo has them at the lighthouse.") % trips_home())
+	if lines.is_empty():
+		lines.append(Loc.t("Nothing to collect right now."))
+	return lines
+
+## A small red dot for a menu row with rewards waiting.
+static var _dot: Texture2D
+
+static func dot() -> Texture2D:
+	if _dot == null:
+		var img := Image.create(5, 5, false, Image.FORMAT_RGBA8)
+		for y: int in 5:
+			for x: int in 5:
+				var corner: bool = (x == 0 or x == 4) and (y == 0 or y == 4)
+				img.set_pixel(x, y, Color(0, 0, 0, 0) if corner else Color(0.86, 0.2, 0.18))
+		_dot = ImageTexture.create_from_image(img)
+	return _dot
+
 static func tab_text(tab: String) -> String:
 	match tab:
 		"Story": return story()

@@ -457,8 +457,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 311
 3526. [x] [P1] Den Ziele-Bildschirm in vier Reiter teilen: Story, Heute, Woche, Sammlung.
 3527. [x] [P1] Den Reiter „Heute“ mit Fund des Tages, Tagesaufträgen, Wanderhändler und Weltereignissen füllen.
 3528. [x] [P1] Den Reiter „Woche“ mit Wochen-Echo, Tauschstand-Wochenangebot, Meister-Wanderern und Endlosstrecke füllen.
-3529. [P2] Einen roten Punkt am Menüeintrag „Ziele“ zeigen, wenn eine Belohnung zum Abholen bereitliegt.
-3530. [P2] Eine Sammelabholung „Alles abholen“ für Aufträge, Pfad und Sammelziele bauen.
+3529. [x] [P2] Einen roten Punkt am Menüeintrag „Ziele“ zeigen, wenn eine Belohnung zum Abholen bereitliegt.
+3530. [x] [P2] Eine Sammelabholung „Alles abholen“ für Aufträge, Pfad und Sammelziele bauen.
 3531. [P2] Alle neuen Menüs auf 144x256 mit der bestehenden Schrift und Einhand-Bedienung prüfen und einen Screenshot je Menü in docs/screenshots ablegen.
 3532. [P2] Die Menüs mit dem Gamepad und dem Einhand-Pad bedienbar machen, wie die bestehenden Listen in ListPicker.gd.
 3533. [P2] Neue Symbole (Wegmarke, Festband, Pfadstufe, Abzeichenrahmen) mit tools/art erzeugen und in docs/ASSET_LOG.md eintragen.

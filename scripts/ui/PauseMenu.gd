@@ -55,8 +55,10 @@ func run() -> void:
 		if "Travel" in labels:
 			await tip("travel")
 		var entries: Array[Dictionary] = []
+		var waiting: bool = Goals.pending() > 0
 		for l: String in labels:
-			entries.append({"text": l})
+			# A red dot on "Goals" while a reward waits (plan 3529).
+			entries.append({"text": l, "icon": Goals.dot()} if l == "Goals" and waiting else {"text": l})
 		var idx: int = await pick(menu_title(current_map), entries, true, maxi(0, labels.find(last_label)))
 		if idx < 0:
 			return
@@ -121,6 +123,10 @@ func run_goals() -> void:
 			saving = rows.size()
 			var gl: String = Exchange.goal_line()
 			rows.append({"text": "Savings goal...", "hint": gl if gl != "" else Loc.t("Pick an offer of Marla's stand to save up for.")})
+		var collect: int = -1
+		if Goals.pending() > 0:
+			collect = rows.size()
+			rows.append({"text": "Collect all", "hint": Loc.t("Collect every waiting reward at once."), "icon": Goals.dot()})
 		var guide: int = -1
 		if not Tips.seen().is_empty():
 			guide = rows.size()
@@ -130,6 +136,9 @@ func run_goals() -> void:
 			return
 		if idx == swap:
 			await _swap_daily_task()
+			continue
+		if idx == collect:
+			await info("\n".join(Goals.collect_all()))
 			continue
 		if idx == saving:
 			await _pick_savings_goal()
