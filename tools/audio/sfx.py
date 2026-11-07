@@ -60,6 +60,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(world_sfx())
     out.update(rift_sfx())
     out.update(dodge_sfx())
+    out.update(social_sfx())
     return out
 
 
@@ -199,4 +200,36 @@ def dodge_sfx() -> dict[str, np.ndarray]:
     n = secs(0.12)
     out["dodge"] = (noise(n, 1, rng) * 0.5 + sweep(900, 400, n, "tri") * 0.15) * \
         env(n, attack=0.004, decay=0.05, sustain=0.3, release=0.03) * 0.7
+    return out
+
+
+def social_sfx() -> dict[str, np.ndarray]:
+    """Small notes for menus and friends: a greyed-out row (item 2511), the toast (2512), a
+    sent gift (2514), a new friend (2515), a finished daily task (2516) and the day's rare
+    visitor (2517). Own generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(2511)
+    out: dict[str, np.ndarray] = {}
+
+    def tone(nm: str, d: float, kind: str = "pulse", duty: float = 0.25) -> np.ndarray:
+        k = secs(d)
+        osc = triangle(freq(midi(nm)), k) if kind == "tri" else pulse(freq(midi(nm)), k, duty)
+        return osc * env(k, attack=0.002, sustain=0.6, release=0.015)
+
+    # Dull and short, low triangle with a muffled thud: unlike the falling "cancel" sweep.
+    n = secs(0.07)
+    out["locked"] = (triangle(freq(midi("F#3")), n) * 0.7 + noise(n, 24, rng) * 0.2) * \
+        env(n, attack=0.001, decay=0.03, sustain=0.2, release=0.02) * 0.6
+    out["toast"] = np.concatenate([tone("G5", 0.045, "tri"), tone("D6", 0.06, "tri")]) * 0.35
+    out["gift"] = np.concatenate([tone("G5", 0.07), tone("E5", 0.07), tone("C5", 0.14)]) * 0.42
+    out["friend"] = np.concatenate([tone("C5", 0.09, "pulse", 0.5), tone("G5", 0.16, "pulse", 0.5)]) * 0.4
+    n = secs(0.06)
+    stroke = noise(n, 2, rng) * np.linspace(0.2, 0.6, n) * env(n, attack=0.002, sustain=0.6, release=0.01) * 0.35
+    k = secs(0.35)
+    bell = (triangle(freq(midi("E6")), k) * 0.6 + pulse(freq(midi("B6")), k, 0.125) * 0.15) * \
+        env(k, attack=0.002, decay=0.2, sustain=0.2, release=0.1)
+    out["task_done"] = np.concatenate([stroke, bell * 0.6])
+    parts = []
+    for nm in ["E7", "B6", "G#7", "D#7", "B7"]:
+        parts.append(tone(nm, 0.04, "tri"))
+    out["sparkle"] = np.concatenate(parts) * 0.3
     return out

@@ -140,7 +140,7 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 				var r: Dictionary = await Online.call_fn("gift_send", {"p_code": code})
 				if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 					f["gift_sent"] = true
-					Sound.sfx("confirm")
+					Sound.sfx("gift")
 					await menu.info("Your gift is on its way to %s." % str(f.name))
 				else:
 					await menu.info(error_text(r))
@@ -211,7 +211,7 @@ static func add_friend(menu: MenuHost) -> void:
 	var r: Dictionary = await Online.call_fn("friend_request", {"p_code": code})
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		if str(r.data.get("status", "")) == "accepted":
-			Sound.sfx("confirm")
+			Sound.sfx("friend")
 			await menu.info("You are friends now!")
 		else:
 			await menu.info("Request sent. You are friends once they accept.")
@@ -233,7 +233,7 @@ static func run_requests(menu: MenuHost, incoming: Array, outgoing: Array) -> vo
 		match idx:
 			0:
 				await Online.call_fn("friend_respond", {"p_code": req.code, "p_accept": true})
-				Sound.sfx("confirm")
+				Sound.sfx("friend")
 			1:
 				await Online.call_fn("friend_respond", {"p_code": req.code, "p_accept": false})
 			2:

@@ -580,6 +580,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
+				# The day's rare visitor glitters in with five very high notes (item 2517).
+				Sound.sfx("sparkle")
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
@@ -738,7 +740,7 @@ func announce_achievements() -> void:
 	for t: String in badges:
 		# Unlocked badges show at the top of the screen without stopping the game (plan 3315).
 		var a: Dictionary = Achievements.by_title(t)
-		toast.show_note(Loc.t("Badge: %s") % Loc.t(t) + "  " + Waymarks.gain_text(int(a.get("reward", 0))), Badges.texture(a, true))
+		toast.show_note(Loc.t("Badge: %s") % Loc.t(t) + "  " + Waymarks.gain_text(int(a.get("reward", 0))), Badges.texture(a, true), "")
 		Sound.sfx("level_up")
 	if lines.is_empty():
 		return
@@ -749,7 +751,12 @@ func announce_achievements() -> void:
 ## Shows queued reward notes (daily tasks, Waymarks) as toasts that do not stop the game.
 func show_notices() -> void:
 	for line: String in take_notices():
-		toast.show_note(line)
+		toast.show_note(line, null, notice_sound(line))
+
+## A finished daily task gets a stroke and a bell (item 2516), other notes the toast chime.
+static func notice_sound(line: String) -> String:
+	var done: String = Loc.t("Daily task done: %s").get_slice("%s", 0)
+	return "task_done" if not done.is_empty() and line.begins_with(done) else "toast"
 
 ## Reward notes queued by DailyTasks / Waymarks, emptied.
 func take_notices() -> Array[String]:
