@@ -9,6 +9,14 @@ How to run: `godot --headless --path . -s res://tools/balance_sim.gd -- --level 
   and so are forms a player would already have evolved.
 - **team**: random valid teams of 3 and 5 (no species twice), both sides on AI tier 2, one
   Spirling on the field at a time; the report adds picks per element and the share of rests.
+- **ladder**: the same random teams of 3, AI tier n against n-1 for n = 1 to 3, sides swapping
+  every battle (targets: 1 vs 0 at least 75 %, 2 vs 1 at least 60 %, 3 vs 2 at least 55 %).
+- **mono**: teams of one element (3 species where it has them) against another element, target
+  band 42 to 58 % per element.
+- **goals**: every bonus goal with its reference team from `tools/balance/goal_teams.json` on
+  Tamer, each at least 20 % (also checked by `test_goal_sim.gd`).
+- `--field <id>` and `--variant <id,id>` put every duel, team, ladder and mono battle on one field
+  and under rule variants, so each can be measured on its own.
 
 Both modes run on the real `BattleModel` (all effects, fields and rules), never a separate damage
 path. `--json` writes every number for tests and comparisons.

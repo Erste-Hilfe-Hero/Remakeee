@@ -408,11 +408,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 814. [x] [P1] Messwert "Vorteil des Ersten": Anteil der Siege des schnelleren Spirlings im Duell; Zielwert höchstens 62 %.
 815. [x] [P1] JSON-Ausgabe mit allen Messwerten, damit Tests und Vergleiche sie lesen, ohne Markdown zu parsen.
 816. [P2] Basiswert-Datei tools/balance/baseline_lv36.json und Schalter `--compare`: der Bericht markiert jede Art und Technik, deren Gewinnrate sich um mehr als 8 Punkte verschoben hat.
-817. [P2] Modus `ladder`: gleiche Teams, KI-Stufe n gegen n-1; Zielwerte Stufe 1 gegen 0 mindestens 75 %, 2 gegen 1 mindestens 60 %, 3 gegen 2 mindestens 55 %.
-818. [P2] Modus `mono`: Teams aus nur einem Element (je 3 Arten, wo möglich), Zielband 42 bis 58 % pro Element.
+817. [x] [P2] Modus `ladder`: gleiche Teams, KI-Stufe n gegen n-1; Zielwerte Stufe 1 gegen 0 mindestens 75 %, 2 gegen 1 mindestens 60 %, 3 gegen 2 mindestens 55 %. Erledigt: Modus `ladder` (BalanceSim.run_ladder/ladder_report), gleiche Zufallsteams aus 3, Seiten wechseln jeden Kampf, Unentschieden zählt halb. Messung Ring 36, 200 Kämpfe: 1 gegen 0 81 %, 2 gegen 1 57 % (knapp unter 60 %, wird im Bericht markiert), 3 gegen 2 55 %.
+818. [x] [P2] Modus `mono`: Teams aus nur einem Element (je 3 Arten, wo möglich), Zielband 42 bis 58 % pro Element. Erledigt: Modus `mono` (run_mono/mono_report). Messung Ring 36, 400 Kämpfe: Bloom 53, Ember 50, Lumen 52, Stone 49, Tide 51 % im Band; Gale und Umbra 60 % (zu stark), Volt 24 % (zu schwach, nur 3 Arten auf Ring 36). Der Bericht markiert das; das Nachjustieren gehört zu den Balance-Punkten.
 819. [P2] Modus `puzzle`: löst alle Rätsel aus data/puzzles.json und schreibt Lösungszahl und kleinste Rundenzahl.
-820. [P2] Modus `goals`: prüft jedes Bonusziel mit dem Referenzteam auf Tamer und schreibt die Erfüllungsrate.
-821. [P2] Schalter `--field <id>` und `--variant <id>` für alle Modi, damit Felder und Regelvarianten einzeln messbar sind.
+820. [x] [P2] Modus `goals`: prüft jedes Bonusziel mit dem Referenzteam auf Tamer und schreibt die Erfüllungsrate. Erledigt: Modus `goals` (run_goals/goals_report) nutzt BalanceSim.goal_rate; alle 12 Ziele mindestens 20 %.
+821. [x] [P2] Schalter `--field <id>` und `--variant <id>` für alle Modi, damit Felder und Regelvarianten einzeln messbar sind. Erledigt: Schalter `--field` und `--variant` (kommagetrennt) für duel, team, ladder und mono (BalanceSim.sim_field/sim_variants); unbekannte Felder, Varianten oder unverträgliche Paare werden mit Meldung abgelehnt. Test: test_sim_modes.gd, Doku in docs/BALANCE.md.
 822. [P2] Schalter `--difficulty <stufe>` setzt Gegner-Spark, Ring-Versatz, KI und Andenken wie im Spiel.
 823. [P2] Messwert "Rast-Anteil": Anteil der Aktionen, die Rasten sind; Zielband 10 bis 25 %.
 824. [P3] Messwert "Energie pro Runde": verbrauchte Energie im Schnitt pro Spirling und Runde, getrennt nach Art.
