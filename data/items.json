@@ -641,6 +641,13 @@
   "shop": true
  },
  {
+  "id": "rg_rift_anchor",
+  "name": "Rift Anchor",
+  "description": "Offered after you lose to a Rift Warden: you stay right before it with a rested team instead of going back to the spring. Not in Rift-Born. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
   "id": "rg_spark_forge",
   "name": "Spark Forge",
   "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",

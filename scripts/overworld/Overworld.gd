@@ -2253,7 +2253,9 @@ func challenge(n: NPC, spotted: bool) -> void:
 		ask.queue_free()
 		if weaken and GameState.take_item(ShopEffects.WARDEN_WEAKEN_ITEM):
 			info["warden_weakened"] = true
+	_warden_battle = def.has("warden")
 	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
+	_warden_battle = false
 	if not bool(info.wild) and outcome != BattleModel.Outcome.FLED:
 		Tailwind.note_outcome(GameState.records, lost_key, outcome == BattleModel.Outcome.WIN)
 	if tailwind:
@@ -2408,6 +2410,21 @@ func _play_trial(p: Dictionary, warden: String) -> void:
 
 ## The card before a Warden battle (item 687): rule, team size and elements, then [param question].
 ## "Not yet" leaves the player free to change their team first. Returns true to fight.
+## Rift Anchor (item 4884): after a lost Warden battle the player may stay right before the
+## Warden with a rested team instead of going back to the spring. The screen is black on entry
+## and stays black when the answer is no.
+func _use_rift_anchor() -> bool:
+	await _fade_to(0.0)
+	var ask := MenuHost.new()
+	_ui.add_child(ask)
+	var stay: bool = await ask.confirm(Loc.t("Use a Rift Anchor? You stay right before the Warden and your team is rested (%d left).") % GameState.item_count(ShopEffects.RIFT_ANCHOR_ITEM), "Stay", "Go back")
+	ask.queue_free()
+	if not stay or not GameState.take_item(ShopEffects.RIFT_ANCHOR_ITEM):
+		await _fade_to(1.0)
+		return false
+	await say(["The Rift Anchor holds you in place. Your team is rested again."] as Array[String])
+	return true
+
 ## Lost tries against the Warden of [param def] (records "warden_losses").
 func _warden_losses(def: Dictionary) -> int:
 	return int((GameState.records.get("warden_losses", {}) as Dictionary).get(TrainerData.beaten_flag(def, map.id), 0))
@@ -2555,6 +2572,8 @@ func thank_echo(helper: Dictionary, won: bool) -> void:
 
 ## What the last battle's result was (winner, Vigor left, rounds), for the server's referee.
 var last_claim: Dictionary = {}
+## True while a Rift Warden battle from [method challenge] runs (Rift Anchor, item 4884).
+var _warden_battle: bool = false
 
 ## Echo duel (items 121-124): a friend's team, run by the AI, everyone on the same level.
 ## Nothing is lost and the real team does not change.
@@ -2826,6 +2845,10 @@ func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
 	if outcome == BattleModel.Outcome.LOSS:
 		# No coin penalty: a spring keeper simply brings the player back.
 		GameState.heal_party()
+		if _warden_battle and ShopEffects.can_anchor(GameState.difficulty) and await _use_rift_anchor():
+			if not oath.is_empty():
+				await say(oath)
+			return
 		load_map(GameState.heal_map, GameState.heal_cell, "down")
 		await _fade_to(0.0)
 		await say(["Everything goes quiet... A spring keeper finds you and helps you back.", "Your team is rested again."] as Array[String])

@@ -195,3 +195,10 @@ static func can_weaken_warden(losses: int, difficulty: int) -> bool:
 ## Warden Lore (item 4883): the Warden card also lists the team, techniques and items.
 static func has_warden_lore(losses: int, difficulty: int) -> bool:
 	return warden_help_allowed(losses, difficulty) and Billing.unlocked("warden_lore") > 0
+
+## Rift Anchor (item 4884): offered right after a lost Warden battle (that loss is the try
+## without help), never in Rift-Born.
+const RIFT_ANCHOR_ITEM: String = "rg_rift_anchor"
+
+static func can_anchor(difficulty: int) -> bool:
+	return warden_help_allowed(1, difficulty) and GameState.item_count(RIFT_ANCHOR_ITEM) > 0

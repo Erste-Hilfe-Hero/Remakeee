@@ -911,7 +911,7 @@
    "name_de": "Rissanker",
    "desc_en": "After losing to a Warden, the next try starts right before it with a fully healed team.",
    "desc_de": "Nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor ihm mit geheiltem Team.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.warden_weaken",
@@ -933,9 +933,9 @@
    "eur": "14.99",
    "name_en": "Warden Bundle",
    "name_de": "Wächter-Bündel",
-   "desc_en": "Warden Lore, 3 Warden Weakeners, 5 Rift Anchors. Single price 1900 Riftglass.",
-   "desc_de": "Wächterkunde, 3 Wächterschwächer, 5 Rissanker. Einzeln 1900 Rissglas.",
-   "ready": false
+   "desc_en": "Warden Lore, 3 Warden Weakeners and 5 Rift Anchors in one pack.",
+   "desc_de": "Wächterkunde, 3 Wächterschwächer und 5 Rissanker in einem Paket.",
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.league_power",

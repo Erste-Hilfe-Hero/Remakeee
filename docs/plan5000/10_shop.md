@@ -932,13 +932,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 
 ### Rift- und Wächter-Hilfen
 4883. [x] [P1] (P2W) Eine "Wächterkunde" (`rg_warden_lore`) anlegen, die vor einem Rift-Wächterkampf dessen Team, Techniken und Gaben zeigt, dauerhaft, Preis 600 Rissglas.
-4884. [P1] (P2W) Einen "Rissanker" (`rg_rift_anchor`) anlegen: nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor dem Wächter mit voll geheiltem Team, Preis 100 Rissglas pro Versuch.
+4884. [x] [P1] (P2W) Einen "Rissanker" (`rg_rift_anchor`) anlegen: nach einer Niederlage gegen einen Wächter startet der nächste Versuch direkt vor dem Wächter mit voll geheiltem Team, Preis 100 Rissglas pro Versuch.
 4885. [x] [P1] (P2W) Einen "Wächterschwächer" (`rg_warden_weaken`) anlegen: der Wächter startet mit 15 % weniger Kraft, Preis 300 Rissglas, höchstens 1 pro Wächterkampf.
-4886. [P1] (P2W) Wächter-Hilfen sind nur nutzbar, wenn der Spieler den Wächter mindestens einmal ohne Hilfe versucht hat, damit der erste Versuch fair bleibt.
-4887. [P1] (P2W) Die Ring-Obergrenze nach einem Riss bleibt auch mit Wächter-Hilfen bestehen; Hilfen umgehen nie die Obergrenze in Veteran und Rift-Born.
-4888. [P1] (P2W) Wächter-Hilfen in Rift-Born sperren, damit die schwerste Stufe ihren Ruf behält.
+4886. [x] [P1] (P2W) Wächter-Hilfen sind nur nutzbar, wenn der Spieler den Wächter mindestens einmal ohne Hilfe versucht hat, damit der erste Versuch fair bleibt.
+4887. [x] [P1] (P2W) Die Ring-Obergrenze nach einem Riss bleibt auch mit Wächter-Hilfen bestehen; Hilfen umgehen nie die Obergrenze in Veteran und Rift-Born.
+4888. [x] [P1] (P2W) Wächter-Hilfen in Rift-Born sperren, damit die schwerste Stufe ihren Ruf behält.
 4889. [x] [P1] (P2W) Wächter-Hilfen im Kampfmodell als Zustände am Wächter setzen (`WardenWeakened`) und als Ereignis ausgeben, damit Wiederholungen stimmen.
-4890. [P1] (P2W) Ein "Wächter-Bündel" (Wächterkunde, 3 Wächterschwächer, 5 Rissanker) für 1500 Rissglas statt 1900 anbieten.
+4890. [x] [P1] (P2W) Ein "Wächter-Bündel" (Wächterkunde, 3 Wächterschwächer, 5 Rissanker) für 1500 Rissglas statt 1900 anbieten.
 4891. [P2] (P2W) Einen "Elementblick" anlegen: im Kampf gegen Wächter zeigt jede Technik, ob sie stark, normal oder schwach wirkt, dauerhaft, Preis 400 Rissglas.
 4892. [P2] (P2W) Den Elementblick in Story-Schwierigkeit nicht anbieten, weil dort schon alle Paarungen sichtbar sind.
 4893. [P2] (P2W) Einen "Wächterruf" anlegen, mit dem besiegte Wächter einmal pro Woche erneut gefordert werden können, mit vollem Wachstum, Preis 200 Rissglas.
