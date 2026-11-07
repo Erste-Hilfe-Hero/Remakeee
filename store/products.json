@@ -875,7 +875,7 @@
    "name_de": "Kampf-Überspringer x10",
    "desc_en": "10 skips. A wild battle against a foe at least 10 Rings lower is won at once, with full growth.",
    "desc_de": "10 Stück. Ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger ist sofort gewonnen, mit vollem Wachstum.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.consumable.rematch_key",

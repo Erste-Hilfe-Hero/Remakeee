@@ -147,3 +147,37 @@ static func battle_done() -> void:
 		b.left = int(b.left) - 1
 		if int(b.left) <= 0:
 			GameState.shop_boosts.erase(kind)
+
+## Battle Skip (items 4839/4840): a wild battle against one foe at least [constant SKIP_GAP]
+## Rings below the lead is fought by the player's AI in the background, through the normal
+## battle model, so growth, coins and the replay stay right.
+const SKIP_ITEM: String = "rg_skip_battle"
+const SKIP_GAP: int = 10
+const SKIP_MAX_TURNS: int = 100
+
+## True when a Battle Skip may be used on [param foes].
+static func can_skip(foes: Array[Spirling]) -> bool:
+	if foes.size() != 1 or GameState.item_count(SKIP_ITEM) <= 0:
+		return false
+	var lead: int = GameState.first_healthy_index()
+	return lead >= 0 and GameState.party[lead].level >= foes[0].level + SKIP_GAP
+
+## Plays [param model] (not started yet) to its end with the player's AI and returns the inputs
+## for the replay. No bag items are used. The first skip in the bag is used up.
+static func skip_battle(model: BattleModel) -> Array:
+	GameState.take_item(SKIP_ITEM)
+	var brain := BattleAI.new(2)
+	var inputs: Array = []
+	model.start()
+	var turns: int = 0
+	while not model.is_finished() and turns < SKIP_MAX_TURNS:
+		if model.needs_player_switch():
+			var idx: int = model.swap_candidates(0, model.switch_slot())[0]
+			inputs.append(BattleReplay.switch_to_dict(idx))
+			model.submit_switch(idx)
+			continue
+		var a: BattleAction = brain.choose(model, 0)
+		inputs.append(BattleReplay.action_to_dict(a))
+		model.submit_turn(a)
+		turns += 1
+	return inputs
