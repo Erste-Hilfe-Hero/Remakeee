@@ -69,7 +69,31 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 		if str(o.get("kind", "")) == "currency":
 			if rg != 0:
 				errs.append(where + ": Riftglass is not sold for Riftglass")
+		_check_was_price(o, where, errs)
+		_check_wording(o, where, errs)
 	return errs
+
+## A struck-through old price (item 4037, PAngV § 11) needs the dates of the higher price:
+## was_since and was_until ("YYYY-MM-DD"), at least 30 days apart, and the old price must be higher.
+static func _check_was_price(o: Dictionary, where: String, errs: Array[String]) -> void:
+	if not o.has("was_rg_price"):
+		return
+	var since: int = Time.get_unix_time_from_datetime_string(str(o.get("was_since", "")))
+	var until: int = Time.get_unix_time_from_datetime_string(str(o.get("was_until", "")))
+	if since <= 0 or until <= 0:
+		errs.append(where + ": was_rg_price needs was_since and was_until dates (item 4037)")
+	elif until - since < 30 * 86400:
+		errs.append(where + ": the old price must have been sold for at least 30 days (item 4037)")
+	if int(o.was_rg_price) <= int(o.get("rg_price", 0)):
+		errs.append(where + ": was_rg_price must be higher than rg_price")
+
+## Paid offers never sound free (item 4035): no "free", "as a gift" or "for nothing" in name or text.
+## ("gifts" alone stays allowed: it names Spirling gifts and gifts to friends, both game features.)
+static func _check_wording(o: Dictionary, where: String, errs: Array[String]) -> void:
+	var text: String = (str(o.get("name", "")) + " " + str(o.get("desc", ""))).to_lower()
+	for w: String in ["free", "for nothing", "gratis", "as a gift", "geschenkt"]:
+		if text.contains(w):
+			errs.append(where + ": paid offers never say '%s' (item 4035)" % w)
 
 static func _check_random(v: Variant, where: String, errs: Array[String]) -> void:
 	if v is Dictionary:

@@ -41,11 +41,11 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4032. [x] [P2] Die Datenschutzerklärung `server/site/datenschutz.html` und `privacy.html` um Kaufdaten ergänzen: Transaktionskennung, Produkt, Zeitpunkt, Store, Erstattungsstatus, Rechtsgrundlage Vertragserfüllung, Speicherdauer 10 Jahre nach Handelsrecht. *Umgesetzt mit Abweichung: Verkäufer sind Apple und Google, sie bewahren die Rechnungen 10 Jahre auf; unsere Kaufdaten werden mit dem Konto gelöscht (so arbeitet auch der Server).*
 4033. [x] [P2] Im Impressum und in den Nutzungsbedingungen eine Kontaktadresse für Kauffragen nennen und darauf hinweisen, dass Erstattungen nur Apple oder Google entscheiden.
 4034. [x] [P2] Den Text "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden" im Shop unter jedem Rissglas-Paket in einer Zeile zeigen.
-4035. [P2] Gegenüber Spielern immer "Angebot" oder "Paket" schreiben, nie "Geschenk", wenn etwas Geld kostet, damit nichts als kostenlos erscheint.
+4035. [x] [P2] Gegenüber Spielern immer "Angebot" oder "Paket" schreiben, nie "Geschenk", wenn etwas Geld kostet, damit nichts als kostenlos erscheint.
 4036. [x] [P2] Ein Hinweis "kostenlos spielbar, enthält In-App-Käufe" steht im Titelbildschirm unter dem Logo in kleiner Schrift, damit es vor dem Spielstart klar ist.
-4037. [P2] "Vorher/Nachher-Preise" (durchgestrichene Preise) nur zeigen, wenn das Angebot vorher mindestens 30 Tage zum höheren Preis verkauft wurde (Preisangabenverordnung § 11), und das Datum in `data/shop.json` speichern.
-4038. [P2] In der Shop-Oberfläche steht bei Angeboten mit Vorteil eine kleine Marke "Vorteil im Spiel", damit Eltern und Spieler sehen, was spielerisch wirkt.
-4039. [P2] Die Tageslimits für Käufe und die Altersstufen aus dem Bereich "Ausgabelimits" in den Nutzungsbedingungen beschreiben.
+4037. [x] [P2] "Vorher/Nachher-Preise" (durchgestrichene Preise) nur zeigen, wenn das Angebot vorher mindestens 30 Tage zum höheren Preis verkauft wurde (Preisangabenverordnung § 11), und das Datum in `data/shop.json` speichern.
+4038. [x] [P2] In der Shop-Oberfläche steht bei Angeboten mit Vorteil eine kleine Marke "Vorteil im Spiel", damit Eltern und Spieler sehen, was spielerisch wirkt.
+4039. [x] [P2] Die Tageslimits für Käufe und die Altersstufen aus dem Bereich "Ausgabelimits" in den Nutzungsbedingungen beschreiben.
 4040. [x] [P2] Für den Pass in den Nutzungsbedingungen die Laufzeit, die automatische Verlängerung, die Kündigung im Store und den Kündigungsbutton-Hinweis (§ 312k BGB gilt über den Store) beschreiben.
 4041. [x] [P2] Keine "Mitspieler haben gekauft"-Meldungen und keine Rangliste nach Ausgaben anzeigen, damit kein sozialer Kaufdruck entsteht.
 4042. [x] [P2] Kein Angebot nutzt Verknappung mit Stückzahlen wie "nur noch 3"; Mengengrenzen pro Konto sind erlaubt und werden als "einmal pro Konto" beschrieben.
@@ -77,18 +77,18 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4066. [P1] In App Store Connect und der Play Console Verbrauchsgüter (Rissglas-Pakete, Einzelteile), Nicht-Verbrauchsgüter (Team-Platz, Lager, Kosmetik) und ein Auto-Abo (Wanderer-Pass) anlegen und die Typen in `store/products.json` vermerken.
 4067. [x] [P1] Ein Skript `tools/store/push_products.py` schreiben, das `store/products.json` über die Play Developer API (`monetization.onetimeproducts`, `monetization.subscriptions`) anlegt und aktualisiert.
 4068. [P2] Für Apple die Produkte über die App Store Connect API (`inAppPurchasesV2`, `subscriptionGroups`) mit demselben Skript anlegen, gesteuert durch den Schalter `--apple`.
-4069. [P2] Für jedes Produkt einen deutschen und einen englischen Anzeigenamen und eine Beschreibung in `store/products.json` pflegen, die exakt den Texten im Spiel entsprechen.
+4069. [x] [P2] Für jedes Produkt einen deutschen und einen englischen Anzeigenamen und eine Beschreibung in `store/products.json` pflegen, die exakt den Texten im Spiel entsprechen.
 4070. [P2] Für Apple pro In-App-Kauf einen Prüf-Screenshot (Shop-Ansicht des Produkts, 1320 x 2868) mit `tools/store/make_store_images.py` erzeugen.
 4071. [x] [P2] Die Store-Beschreibungen in `store/android/*/full_description.txt` und `store/ios/metadata/*/description.txt` um einen Absatz "Kostenlos spielbar. Optionale Käufe im Spiel, auch mit Vorteilen. Keine Zufallsinhalte." ergänzen.
 4072. [P2] Die Screenshots im Store um ein Bild der Shop-Ansicht mit sichtbaren Euro-Preisen ergänzen, damit niemand einen Gratis-Eindruck ohne Käufe bekommt.
-4073. [P2] Apple Familienfreigabe für Nicht-Verbrauchsgüter und den Pass aktivieren und das Feld `family_shareable` in `store/products.json` setzen.
-4074. [P2] Die Hinweise für die Apple-Prüfung in `store/ios/review_information/notes.txt` um eine Anleitung ergänzen: Shop öffnen, Testkauf, Wiederherstellen, Ausgabelimit.
-4075. [P2] Den Play-Text `store/android/app_access_de.txt` um den Weg zum Shop und den Hinweis auf Lizenztester ergänzen.
-4076. [P2] Lizenztester in der Play Console und Testkonten für Käufe in App Store Connect in `docs/STORE_RELEASE.md` als Schritt für Ali eintragen.
+4073. [x] [P2] Apple Familienfreigabe für Nicht-Verbrauchsgüter und den Pass aktivieren und das Feld `family_shareable` in `store/products.json` setzen. *Entschieden: Familienfreigabe bleibt vorerst aus (`family_shareable: false`), weil der Server Apple-Käufe an das Käuferkonto bindet; Wiedervorlage mit StoreKit 2.*
+4074. [x] [P2] Die Hinweise für die Apple-Prüfung in `store/ios/review_information/notes.txt` um eine Anleitung ergänzen: Shop öffnen, Testkauf, Wiederherstellen, Ausgabelimit.
+4075. [x] [P2] Den Play-Text `store/android/app_access_de.txt` um den Weg zum Shop und den Hinweis auf Lizenztester ergänzen.
+4076. [x] [P2] Lizenztester in der Play Console und Testkonten für Käufe in App Store Connect in `docs/STORE_RELEASE.md` als Schritt für Ali eintragen.
 4077. [x] [P2] In `tools/release_check.py` prüfen, dass jede Produkt-ID aus `data/shop.json` in `store/products.json` vorkommt und umgekehrt.
 4078. [x] [P2] In `tools/release_check.py` prüfen, dass jedes Produkt einen Preis aus der festen Preisliste (0,99 € bis 99,99 €) hat.
 4079. [x] [P2] Die Neuigkeiten-Texte (`changelogs/default.txt`, `release_notes.txt`) für die erste Version mit Shop um den Satz "Neu: Shop mit Rissglas, alle Preise in Euro" ergänzen.
-4080. [P2] Die Kategorie in den Konsolen auf "Rollenspiel" lassen und die Markierung "enthält In-App-Käufe" in beiden Konsolen prüfen.
+4080. [x] [P2] Die Kategorie in den Konsolen auf "Rollenspiel" lassen und die Markierung "enthält In-App-Käufe" in beiden Konsolen prüfen.
 4081. [P3] In der Play Console die Länderpreise automatisch aus dem Euro-Preis ableiten und für die Eurozone feste Preise mit ",99" setzen.
 4082. [P3] In App Store Connect als Basisland Deutschland wählen, damit die Euro-Preise fest bleiben und andere Länder umgerechnet werden.
 4083. [P3] Für Apple "Promoted In-App Purchases" nicht verwenden, damit keine Käufe außerhalb des Spiels ohne Kontext beworben werden.

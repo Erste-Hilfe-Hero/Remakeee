@@ -91,7 +91,9 @@ Kaufsperre und Kauffreigabe.
 6.8 Chimora ist kostenlos; der Shop ist freiwillig. Rissglas verfällt nicht, solange dein Konto besteht.
 6.9 Der Shop ist **unter 13 Jahren gesperrt**. Für Minderjährige gelten feste Monatslimits (13 bis 15 Jahre:
 15 €, 16 bis 17 Jahre: 30 €); Erwachsene haben ein Limit von 100 €, das sie senken oder nach 7 Tagen Wartezeit
-auf bis zu 300 € erhöhen können.
+auf bis zu 300 € erhöhen können. Die Altersgruppe richtet sich nach dem Alter, das du beim ersten Öffnen des
+Shops angibst. Einzelne Angebote haben zusätzlich eine feste Grenze pro Konto oder pro Woche (zum Beispiel
+„einmal pro Konto“ oder „bis zu 3-mal pro Woche“); sie steht beim Angebot. Tageslimits gibt es nicht.
 6.10 Der **Wanderer-Pass** ist ein Abo über den Store. Die Laufzeit beträgt einen Monat; er verlängert sich
 automatisch um jeweils einen weiteren Monat zum angezeigten Preis, bis du ihn kündigst. Kündigen kannst du
 jederzeit zum Ende der laufenden Laufzeit, und zwar in den Abo-Einstellungen von Apple oder Google; dort

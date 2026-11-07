@@ -33,6 +33,9 @@ static func run(menu: MenuHost) -> void:
 		for t: String in ShopCatalog.TABS:
 			entries.append(ShopCatalog.TAB_NAMES[t])
 		entries.append_array(["My purchases", "Spending limit", "About purchases", "Help with purchases"])
+		# Apple guideline 3.1.1: bought unlocks and the pass can be restored (only with a store).
+		if Billing.available():
+			entries.append("Restore purchases")
 		var idx: int = await menu.pick_strings(title(), entries)
 		if idx < 0:
 			return
@@ -44,6 +47,9 @@ static func run(menu: MenuHost) -> void:
 			await _run_limit(menu)
 		elif entries[idx] == "Help with purchases":
 			await run_help(menu)
+		elif entries[idx] == "Restore purchases":
+			var n: int = await Billing.restore()
+			await menu.info(Loc.t("Restored: %d purchases.") % n if n > 0 else Loc.t("Nothing to restore. Bought unlocks and the pass are already here."))
 		else:
 			await menu.info(ABOUT_TEXT)
 
@@ -97,7 +103,7 @@ static func pass_text(o: Dictionary) -> String:
 	lines.append("- " + Loc.t("+%d%% growth for the whole team, also together with a Growth Crystal") % roundi((ShopEffects.PASS_GROWTH - 1.0) * 100.0))
 	lines.append("- " + Loc.t("%d Riftglass every day (%d in 30 days), missed days paid up to 7 days later") % [rg, rg * 30])
 	lines.append("- " + Loc.t("+%d energy over the maximum in battles against the world (11 of 10)") % ShopEffects.PASS_ENERGY)
-	lines.append("- " + Loc.t("1 free Rift Breath in every Warden battle (only in that battle)"))
+	lines.append("- " + Loc.t("1 extra Rift Breath in every Warden battle (only in that battle)"))
 	lines.append("- " + Loc.t("1 extra bond try per battle: the first failed bond gives no free action"))
 	lines.append("")
 	lines.append(Loc.t("In echo duels only the growth works."))
