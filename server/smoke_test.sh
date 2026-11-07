@@ -54,7 +54,7 @@ for t in "$a" "$b"; do
 done
 
 # The store pages (privacy, account deletion, support) must be reachable.
-for page in datenschutz privacy konto-loeschen delete-account support impressum melden melden.js; do
+for page in datenschutz privacy konto-loeschen delete-account support kaeufe purchases impressum melden melden.js; do
 	code="$(curl -sS $k -o /dev/null -w '%{http_code}' "$url/$page")"
 	[ "$code" = "200" ] || fail "/$page answered $code"
 done

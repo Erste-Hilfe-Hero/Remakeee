@@ -32,7 +32,7 @@ static func run(menu: MenuHost) -> void:
 		var entries: Array[String] = []
 		for t: String in ShopCatalog.TABS:
 			entries.append(ShopCatalog.TAB_NAMES[t])
-		entries.append_array(["My purchases", "Spending limit", "About purchases"])
+		entries.append_array(["My purchases", "Spending limit", "About purchases", "Help with purchases"])
 		var idx: int = await menu.pick_strings(title(), entries)
 		if idx < 0:
 			return
@@ -42,8 +42,17 @@ static func run(menu: MenuHost) -> void:
 			await _run_history(menu)
 		elif entries[idx] == "Spending limit":
 			await _run_limit(menu)
+		elif entries[idx] == "Help with purchases":
+			await run_help(menu)
 		else:
 			await menu.info(ABOUT_TEXT)
+
+## The help page on Riftglass, the pass, refunds and limits (/kaeufe or /purchases, item 4045).
+static func run_help(menu: Node) -> void:
+	var url: String = LegalInfo.purchases_url()
+	var text: String = Loc.t("Help with purchases: Riftglass, the pass, refunds and spending limits.") + "\n" + url
+	if await menu.pick_strings(text, ["Open the page", "Back"] as Array[String]) == 0:
+		OS.shell_open(url)
 
 ## "Shop  Riftglass 500 (≈ 4,95 €)" (item 4183).
 static func title() -> String:
@@ -97,6 +106,10 @@ static func pass_text(o: Dictionary) -> String:
 	lines.append("")
 	lines.append(Loc.t("Price: %s per month, renews automatically.") % ShopCatalog.format_eur(int(o.get("eur_cents", 0))))
 	lines.append(Loc.t("Cancel any time in the App Store or Google Play."))
+	var band: Variant = Billing.state.get("band")
+	if band != null and int(band) < 18:
+		# Item 4046: minors start and renew the pass only with the parents' OK in the store.
+		lines.append(Loc.t("Under 18: ask your parents first. Every renewal needs their OK in the store."))
 	var p: String = Billing.price_text(o)
 	if not p.is_empty():
 		lines.append(Loc.t("Price in the store: %s") % p)
@@ -142,6 +155,9 @@ static func detail_text(o: Dictionary) -> String:
 			lines.append(Loc.t("Only looks. Visible everywhere, no effect."))
 		_:
 			lines.append(Loc.t("Does not work in leagues."))
+	var lim: String = limit_line(o)
+	if not lim.is_empty():
+		lines.append(lim)
 	lines.append("")
 	if str(o.get("tab", "")) == "packs" and ShopCatalog.single_value(o) > 0:
 		lines.append(Loc.t("Worth one by one: %s") % ShopCatalog.rg_text(ShopCatalog.single_value(o)))
@@ -154,6 +170,16 @@ static func detail_text(o: Dictionary) -> String:
 	if not p.is_empty():
 		lines.append(Loc.t("Price in the store: %s") % p)
 	return "\n".join(lines)
+
+## How often an offer can be bought, as a plain rule, never as a countdown like "only 3 left" (item 4042).
+static func limit_line(o: Dictionary) -> String:
+	var lim: Variant = o.get("limit")
+	if not lim is Dictionary:
+		return ""
+	var n: int = int(lim.get("n", 1))
+	if str(lim.get("per", "account")) == "week":
+		return Loc.t("Once a week per account.") if n == 1 else Loc.t("Up to %d times a week per account.") % n
+	return Loc.t("Once per account.") if n == 1 else Loc.t("Up to %d times per account.") % n
 
 static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
 	# An owned jacket, backdrop or text frame is worn or taken off here (items 4277, 4281).

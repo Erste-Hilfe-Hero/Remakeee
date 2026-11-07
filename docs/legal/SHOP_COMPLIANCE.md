@@ -31,6 +31,7 @@
 | Preisangabenverordnung (Endpreise) | Euro-Preise kommen wörtlich aus dem Store (Endpreis mit Umsatzsteuer), nie selbst gerechnet (`Billing.price_text`) |
 | JuSchG § 10b / USK "In-Game-Käufe" | Altersfreigabe mit Zusatz "In-Game-Käufe" (`STORE_COMPLIANCE.md` Abschnitt 3); keine zufälligen Objekte |
 | §§ 104 ff. BGB (Minderjährige) | Limits, Hinweis auf Zustimmung der Eltern in den Nutzungsbedingungen 6.5; Store-Jugendschutz |
+| Pass bei Minderjährigen (Plan 4046) | **Regel:** Unter 18 nur mit Elternfreigabe im Store, auch für jede Verlängerung (Nutzungsbedingungen 6.10). Der Pass zeigt Spielern unter 18 den Hinweis "Jede Verlängerung braucht die Freigabe der Eltern im Store"; die Freigabe selbst geben Apple (Kaufanfrage, Bildschirmzeit) und Google (Family Link, Kaufgenehmigung) |
 
 ### Jugendschutzgesetz und USK
 

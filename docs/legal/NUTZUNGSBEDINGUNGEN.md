@@ -92,10 +92,19 @@ Kaufsperre und Kauffreigabe.
 6.9 Der Shop ist **unter 13 Jahren gesperrt**. Für Minderjährige gelten feste Monatslimits (13 bis 15 Jahre:
 15 €, 16 bis 17 Jahre: 30 €); Erwachsene haben ein Limit von 100 €, das sie senken oder nach 7 Tagen Wartezeit
 auf bis zu 300 € erhöhen können.
-6.10 Der **Wanderer-Pass** ist ein Abo über den Store, das sich monatlich verlängert, bis du es im Store
-kündigst. Seine Vorteile enden mit dem Ende der Laufzeit; schon gutgeschriebenes Rissglas bleibt.
+6.10 Der **Wanderer-Pass** ist ein Abo über den Store. Die Laufzeit beträgt einen Monat; er verlängert sich
+automatisch um jeweils einen weiteren Monat zum angezeigten Preis, bis du ihn kündigst. Kündigen kannst du
+jederzeit zum Ende der laufenden Laufzeit, und zwar in den Abo-Einstellungen von Apple oder Google; dort
+stellt der Store auch die gesetzlich vorgeschriebene Kündigungsschaltfläche bereit (§ 312k BGB). Wir können
+ein Store-Abo technisch nicht selbst kündigen. Die Vorteile des Passes enden mit dem Ende der Laufzeit; schon
+gutgeschriebenes Rissglas bleibt. Spieler unter 18 Jahren brauchen für jede Verlängerung die Freigabe der
+Eltern im Store.
 6.11 Erstattet Apple oder Google einen Kauf, nehmen wir die gekauften Inhalte und das Rissglas zurück, auch wenn
 es schon ausgegeben wurde; bis das Guthaben wieder ausgeglichen ist, bleibt der Shop gesperrt.
+6.12 **Fragen zu Käufen** beantworten wir unter aa.amuri@icloud.com (bitte Freundescode und Bestellnummer
+angeben). Über Erstattungen entscheidet nur Apple oder Google; wir können Zahlungen nicht selbst
+zurückbuchen. Eine einfache Erklärung zu Rissglas, Pass, Erstattung und Limits steht unter
+[Hilfe zu Käufen](KAEUFE.md).
 
 ## 7. Laufzeit und Kündigung
 

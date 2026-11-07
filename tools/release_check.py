@@ -206,6 +206,18 @@ def check_products() -> None:
         cents = int(o.get("eur_cents", 0))
         if cents not in PRICE_CENTS:
             errors.append("product %s costs %d cents, not a price from the fixed list" % (pid, cents))
+    # The purchases help page (docs/legal/KAEUFE.md, item 4044) lists every Riftglass pack with its price.
+    help_page = read("docs/legal/KAEUFE.md")
+    for o in shop["offers"]:
+        if o.get("kind") != "currency":
+            continue
+        n = sum(int(g.get("n", 0)) for g in o.get("grants", []) if g.get("t") == "rg")
+        c = int(o["eur_cents"])
+        de = "| %d Rissglas | %d,%02d € |" % (n, c // 100, c % 100)
+        en = "| %d Riftglass | %d.%02d EUR |" % (n, c // 100, c % 100)
+        for row in (de, en):
+            if row not in help_page:
+                errors.append("docs/legal/KAEUFE.md: row '%s' is missing or has another price" % row)
 
 
 def main() -> None:
