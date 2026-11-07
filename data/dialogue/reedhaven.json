@@ -99,5 +99,17 @@
  },
  "lake_hint": [
   "An old fen-cutter rows past: \"That smooth boulder in Brackwater Fen? Hands put it there, to hide a way.\""
- ]
+ ],
+ "reed_trap_a": {
+  "lines": [
+   "A fish trap hangs from the jetty, half under water."
+  ],
+  "action": "fish_trap reed_trap_a"
+ },
+ "reed_trap_b": {
+  "lines": [
+   "A fish trap hangs from the jetty, half under water."
+  ],
+  "action": "fish_trap reed_trap_b"
+ }
 }
