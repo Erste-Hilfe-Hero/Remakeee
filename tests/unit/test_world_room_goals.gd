@@ -29,3 +29,27 @@ func test_goal_lines_do_not_carry_over_to_plain_floors() -> void:
 func test_goal_flag_is_one_per_room() -> void:
 	assert_ne(Overworld.goal_flag("lanternwell"), Overworld.goal_flag("lanternwell@1"))
 	assert_false(Overworld.goal_flag("lanternwell@1").contains(MapData.FLOOR_SEP))
+
+func test_puzzle_rooms_keep_wild_cells_on_the_landing_only() -> void:
+	var errors := PackedStringArray()
+	WorldValidator.check_room_encounters(errors, MapData.all_ids())
+	assert_eq(errors, PackedStringArray())
+	var any_wild: bool = false
+	for file: String in DUNGEONS:
+		var top: MapData = MapData.load_map(file)
+		for i: int in top.floor_count:
+			var m: MapData = MapData.load_map(MapData.floor_id(file, i))
+			if not m.goal.is_empty():
+				for c: Vector2i in WorldValidator.wild_cells(m):
+					any_wild = true
+					assert_eq(c.y, m.height - 2, "%s %s" % [m.id, c])
+	assert_true(any_wild, "the landings still have wild cells")
+
+func test_validator_catches_wild_cells_inside_a_puzzle() -> void:
+	var m: MapData = MapData.load_map("lanternwell@1")
+	var errors := PackedStringArray()
+	m.rows[2] = m.rows[2].substr(0, 3) + ":" + m.rows[2].substr(4)
+	for c: Vector2i in WorldValidator.wild_cells(m):
+		if c.y != m.height - 2:
+			errors.append(str(c))
+	assert_eq(errors.size(), 1)
