@@ -634,6 +634,13 @@
   "shop": true
  },
  {
+  "id": "rg_warden_weaken",
+  "name": "Warden Weakener",
+  "description": "Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle, not in Rift-Born. Used up.",
+  "battle": false,
+  "shop": true
+ },
+ {
   "id": "rg_spark_forge",
   "name": "Spark Forge",
   "description": "Sets all Spark values of one Spirling to the top (12). Shows the new values first.",

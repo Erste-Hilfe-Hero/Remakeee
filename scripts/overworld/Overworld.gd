@@ -2207,6 +2207,14 @@ func challenge(n: NPC, spotted: bool) -> void:
 		if tailwind:
 			GameState.heal_party()
 			info["foe_energy_cut"] = Tailwind.energy_cut(GameState.difficulty)
+	# Warden Weakener (items 4885-4888): only after one try without help, never in Rift-Born.
+	if def.has("warden") and ShopEffects.can_weaken_warden(int(losses.get(lost_key, 0)), GameState.difficulty):
+		var ask := MenuHost.new()
+		_ui.add_child(ask)
+		var weaken: bool = await ask.confirm(Loc.t("Use a Warden Weakener? The Warden's team starts with 15%% less Vigor (%d left).") % GameState.item_count(ShopEffects.WARDEN_WEAKEN_ITEM), "Use", "Not now")
+		ask.queue_free()
+		if weaken and GameState.take_item(ShopEffects.WARDEN_WEAKEN_ITEM):
+			info["warden_weakened"] = true
 	var outcome: BattleModel.Outcome = await start_battle(team, bool(info.wild), info)
 	if not bool(info.wild) and outcome != BattleModel.Outcome.FLED:
 		Tailwind.note_outcome(GameState.records, lost_key, outcome == BattleModel.Outcome.WIN)
@@ -2701,6 +2709,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0))]
+	model.warden_weakened = bool(trainer.get("warden_weakened", false))
 	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
 	model.bond_grace = ShopEffects.bond_grace() if wild else 0
 	var items: Variant = trainer.get("items", {})

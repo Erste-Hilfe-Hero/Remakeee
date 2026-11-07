@@ -649,4 +649,8 @@ T = {
 "Rematch Key": "Revanche-Schlüssel",
 "Talk to a beaten Wayfarer who already battled you today: one more rematch. Used up.": "Sprich einen besiegten Wanderer an, der heute schon gegen dich gekämpft hat: eine Revanche mehr. Wird verbraucht.",
 "%s already battled you today. Use a Rematch Key (%d left)?": "%s hat heute schon gegen dich gekämpft. Revanche-Schlüssel nutzen (noch %d)?",
+"Warden Weakener": "Wächterschwächer",
+"Offered before a Rift Warden battle you lost once before: the Warden's team starts with 15% less Vigor. One per battle, not in Rift-Born. Used up.": "Wird vor einem Rift-Wächterkampf angeboten, den du schon einmal verloren hast: Das Team des Wächters startet mit 15 % weniger Kraft. Einer pro Kampf, nicht in Rift-Born. Wird verbraucht.",
+"Use a Warden Weakener? The Warden's team starts with 15%% less Vigor (%d left).": "Wächterschwächer nutzen? Das Team des Wächters startet mit 15 %% weniger Kraft (noch %d).",
+"A Warden Weakener dims %s's team: they start with 15%% less Vigor.": "Ein Wächterschwächer dämpft das Team von %s: Es startet mit 15 %% weniger Kraft.",
 }

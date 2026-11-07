@@ -63,6 +63,9 @@ var _partner_slot: int = -1
 var foe_boss: String = ""
 ## Energy each side starts without (Tailwind on Story cuts the foe's, item 737).
 var start_energy_cut: Array[int] = [0, 0]
+## Warden Weakener (shop items 4885, 4889): the foe team starts with this share of its Vigor.
+const WARDEN_WEAKEN_SHARE: float = 0.85
+var warden_weakened: bool = false
 ## Share of damage the foe side deals (difficulty, plan area 2 item 728).
 var foe_damage_mult: float = 1.0
 ## Factor on a boss's "hp_per_ally" (GameState.BOSS_HP_SCALE: Story bosses are 20 % smaller).
@@ -364,6 +367,10 @@ func start() -> Array[BattleEvent]:
 				var share: float = float(s.hp) / float(s.max_hp())
 				s.hp_mult *= hp_scale
 				s.hp = maxi(1 if share > 0.0 else 0, roundi(s.max_hp() * share))
+	if warden_weakened:
+		for s: Spirling in parties[Side.FOE]:
+			if s.hp > 0:
+				s.hp = maxi(1, roundi(s.hp * WARDEN_WEAKEN_SHARE))
 	_fill_initial_slots()
 	base_field = field
 	field_turns = 0
@@ -392,6 +399,8 @@ func start() -> Array[BattleEvent]:
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
 			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
+	if warden_weakened:
+		emit_event(BattleEvent.Type.WARDEN_WEAKENED, {"side": Side.FOE, "trainer": trainer_name})
 	if BattleRules.FIELDS.has(field):
 		emit_event(BattleEvent.Type.FIELD, {"field": field, "text": str(BattleRules.FIELDS[field].intro)})
 	for rule_id: String in BattleRules.split_rules(foe_rule):
