@@ -342,6 +342,17 @@
   ]
  },
  {
+  "id": "survey_glass",
+  "name": "Survey Glass",
+  "description": "Wayfarer Gear. A brass spyglass: face open ground and press A to spot hidden finds up to 6 steps ahead on the minimap. It needs 20 seconds between looks.",
+  "battle": false,
+  "gear": true,
+  "hint": "With a Survey Glass you could look for hidden finds from here.",
+  "works_on": [
+   "look"
+  ]
+ },
+ {
   "id": "pry_bar",
   "name": "Pry Bar",
   "description": "Wayfarer Gear. Face a sluice wheel, a mine cart or a grate and press A to turn, shove or lift it.",

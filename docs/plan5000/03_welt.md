@@ -177,8 +177,8 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1049. [x] [P1] Ändere die Animation des Enterhakens in Overworld.gd so, dass die Figur sich Hand über Hand an einem gespannten Seil entlang zieht, die Füße am Seil, nie frei in der Luft.
 1050. [x] [P1] Gib jeder Ausrüstung im Rucksack eine Seite mit Bild, Kurztext und den Kachelzeichen, an denen sie wirkt.
 1051. [P2] Füge die Ausrüstung "Rubbing Charcoal" (de: Pausstift) hinzu, mit der man verwitterte Steintafeln durchpaust und versteckte Inschriften als Hinweis lesbar macht.
-1052. [P2] Füge die Ausrüstung "Survey Glass" (de: Peilglas) hinzu, die beim Ansehen in eine Richtung bis 6 Kacheln entfernte Funde als Punkt auf der Minikarte zeigt.
-1053. [P2] Gib dem Peilglas eine Abklingzeit von 20 Sekunden, damit es kein Dauer-Radar wird.
+1052. [x] [P2] Füge die Ausrüstung "Survey Glass" (de: Peilglas) hinzu, die beim Ansehen in eine Richtung bis 6 Kacheln entfernte Funde als Punkt auf der Minikarte zeigt.
+1053. [x] [P2] Gib dem Peilglas eine Abklingzeit von 20 Sekunden, damit es kein Dauer-Radar wird.
 1054. [P2] Baue in Copperfold eine Werkstatt, die die Laterne auf Stufe 2 (Radius 3 Kacheln) und Stufe 3 (Radius 4 Kacheln) verbessert.
 1055. [P2] Verbessere den Enterhaken in der Werkstatt auf "Long Line" (de: Langleine), die 5 statt 3 Kacheln überbrückt.
 1056. [P2] Verbessere die Kletterpicke in der Werkstatt auf "Twin Picks" (de: Doppelpicke), die auch hohe Klippen mit zwei Kacheln Höhe erlaubt.

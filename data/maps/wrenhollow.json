@@ -63,6 +63,14 @@
    "sprite": "villager"
   },
   {
+   "id": "surveyor",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "wrenhollow/surveyor",
+   "sprite": "villager"
+  },
+  {
    "id": "elder",
    "x": 9,
    "y": 14,
