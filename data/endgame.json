@@ -131,6 +131,18 @@
    "price": 150,
    "stock": 1,
    "tier": "full"
+  },
+  {
+   "item": "echo_scatter_gale",
+   "price": 200,
+   "stock": 1,
+   "tier": "full"
+  },
+  {
+   "item": "echo_graft",
+   "price": 200,
+   "stock": 1,
+   "tier": "full"
   }
  ],
  "season_path": {
