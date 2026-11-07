@@ -21,6 +21,7 @@
   "lighthouse": {"inside": "brindlewick"},
   "echo_path": {"inside": "cinder_rift"},
   "map_house": {"inside": "brindlewick"},
+  "wren_library": {"inside": "wrenhollow"},
   "rest_spring": {"inside": "brindlewick"},
   "saltmarsh": {"region": "veydal", "pos": [4, 4], "kind": "marsh", "neighbours": ["brindlewick", "tide_rift", "brackwater_fen"]},
   "tide_rift": {"region": "veydal", "pos": [4, 3], "kind": "rift", "neighbours": ["saltmarsh"]},
