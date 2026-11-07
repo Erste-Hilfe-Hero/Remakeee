@@ -112,16 +112,16 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4099. [x] [P1] Den Kaufablauf als Zustandsmaschine in `Billing.gd` bauen: Bereit, Abfrage, Kauf läuft, Prüfung, Gutgeschrieben, Fehler, Abgebrochen.
 4100. [x] [P2] Für ausstehende Käufe (Google `PENDING`, Apple "Ask to Buy") einen Text "Kauf wartet auf Freigabe" zeigen und nichts gutschreiben, bis der Status wechselt.
 4101. [x] [P2] Eine Konto-Kennung als `obfuscatedAccountId` (Google) und `appAccountToken` (Apple, UUID aus der Konto-ID) mitschicken, damit der Server Käufe dem richtigen Konto zuordnet.
-4102. [P2] Den Button "Käufe wiederherstellen" in `scripts/ui/AccountMenu.gd` und im Shop einbauen, der `restore` aufruft und das Ergebnis in einem Satz meldet.
+4102. [x] [P2] Den Button "Käufe wiederherstellen" in `scripts/ui/AccountMenu.gd` und im Shop einbauen, der `restore` aufruft und das Ergebnis in einem Satz meldet. *Umgesetzt im Shop-Menü (nur mit Store); im Konto-Menü nicht, damit es nur einen Ort gibt.*
 4103. [x] [P2] Fehlercodes beider Stores auf 8 eigene Meldungen abbilden (abgebrochen, nicht verfügbar, schon gekauft, Netz fehlt, Zahlung abgelehnt, Store-Fehler, ausstehend, unbekannt).
-4104. [P2] Ohne Serververbindung den Kauf-Button sperren und "Shop braucht eine Verbindung" anzeigen, damit kein Kauf ohne Prüfung startet.
+4104. [x] [P2] Ohne Serververbindung den Kauf-Button sperren und "Shop braucht eine Verbindung" anzeigen, damit kein Kauf ohne Prüfung startet.
 4105. [P2] Produktdaten nach dem Laden 6 Stunden zwischenspeichern und bei Sprach- oder Landwechsel neu laden.
 4106. [x] [P2] Bei doppeltem Tippen auf "Kaufen" nur einen Kauf starten und den Button bis zum Ende des Vorgangs sperren.
 4107. [x] [P2] Den Android-Export auf die Berechtigung `com.android.vending.BILLING` prüfen und in `tools/release_check.py` sicherstellen, dass keine weiteren neuen Berechtigungen dazukommen.
 4108. [P2] Die 16-KB-Seitengrößen-Prüfung in der CI auch für die nativen Teile der Billing-Plugins laufen lassen.
 4109. [P2] Beim iOS-Build die StoreKit-Funktion "In-App Purchase" im Export-Preset setzen und in der CI prüfen.
 4110. [P2] Eine StoreKit-Konfigurationsdatei `ios/Chimora.storekit` mit allen Produkten für lokale Tests in Xcode erstellen.
-4111. [P2] Im Web-Build und in der Browser-Testversion unter `/play` den Shop ausblenden und nur "Shop nur in der App" anzeigen.
+4111. [x] [P2] Im Web-Build und in der Browser-Testversion unter `/play` den Shop ausblenden und nur "Shop nur in der App" anzeigen.
 4112. [P2] Den Pass-Status beim Start vom Server lesen und nicht aus dem Store-Cache, damit gekündigte oder erstattete Pässe sofort enden.
 4113. [P2] Signale `purchase_done`, `purchase_failed`, `wallet_changed` und `entitlements_changed` in `Billing.gd` anbieten, auf die Shop und Menüs hören.
 4114. [P3] Kaufvorgänge in einer lokalen Warteschlange `user://billing_queue.json` speichern, damit ein Absturz während der Prüfung den Kauf nicht vergisst.
@@ -157,13 +157,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4142. [P2] Für den Pass in `subscriptions` Status, Ablaufdatum, Verlängerungsstatus, Store und ursprüngliche Transaktion speichern und Ablauf mit Toleranz von 16 Tagen (Google Kulanzzeit) behandeln.
 4143. [P2] Wiederherstellen auf dem Server: Ein Beleg, der schon einem anderen Konto gehört, wird nicht doppelt vergeben, sondern nur dem ursprünglichen Konto erneut bestätigt.
 4144. [P2] Wird ein Konto per Transfercode auf ein neues Gerät gebracht, bleiben `wallets`, `entitlements` und `subscriptions` am Konto, nicht am Gerät.
-4145. [P2] Bei Kontolöschung offene Pässe nicht kündigen können: vor dem Löschen einen Hinweis zeigen, wie man das Abo im Store kündigt (Apple 5.1.1(v)), und Kaufdaten wegen Aufbewahrungspflicht pseudonymisiert behalten.
-4146. [P2] Die Kontolöschung in `scripts/ui/AccountMenu.gd` um den Hinweis "Restliches Rissglas und gekaufte Inhalte gehen verloren" ergänzen.
+4145. [x] [P2] Bei Kontolöschung offene Pässe nicht kündigen können: vor dem Löschen einen Hinweis zeigen, wie man das Abo im Store kündigt (Apple 5.1.1(v)), und Kaufdaten wegen Aufbewahrungspflicht pseudonymisiert behalten.
+4146. [x] [P2] Die Kontolöschung in `scripts/ui/AccountMenu.gd` um den Hinweis "Restliches Rissglas und gekaufte Inhalte gehen verloren" ergänzen.
 4147. [P2] Alle Store-Zugangsdaten (Apple-Schlüssel `.p8`, Google-Service-Account) nur als Docker-Secrets auf dem Server ablegen und nie ins Repo schreiben.
 4148. [P2] Eine Ratenbegrenzung für `shop_buy` (höchstens 30 Käufe pro Stunde) und für Belegprüfungen (höchstens 20 pro Stunde) über die vorhandene Tabelle `rate_events` setzen.
 4149. [P2] Jede RPC-Antwort des Shops enthält das neue Guthaben und die Berechtigungen, damit der Client nie selbst rechnet.
-4150. [P2] Eine RPC-Funktion `shop_state()` liefert Guthaben, Berechtigungen, Pass-Status, Ausgabelimit und Restbetrag in einem Aufruf.
-4151. [P2] Eine RPC-Funktion `shop_history(limit)` liefert die letzten 50 Käufe mit Datum, Produkt und Euro-Preis für die Kaufliste im Spiel.
+4150. [x] [P2] Eine RPC-Funktion `shop_state()` liefert Guthaben, Berechtigungen, Pass-Status, Ausgabelimit und Restbetrag in einem Aufruf.
+4151. [x] [P2] Eine RPC-Funktion `shop_history(limit)` liefert die letzten 50 Käufe mit Datum, Produkt und Euro-Preis für die Kaufliste im Spiel. *Liefert die letzten 100 Käufe.*
 4152. [P2] Die Serverzeit für Angebotsende und Pass-Ablauf nutzen, nie die Gerätezeit.
 4153. [P2] Den Rissglas-Verbrauch und die Gutschrift so in einer Datenbank-Transaktion bündeln, dass bei Verbindungsabbruch nichts doppelt oder gar nicht passiert (Idempotenzschlüssel pro Kauf).
 4154. [P2] Den Smoke-Test `server/smoke_test.sh` um Belegprüfung mit Test-Belegen, `shop_buy`, Erstattung und `shop_state` erweitern.

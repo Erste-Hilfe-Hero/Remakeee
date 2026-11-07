@@ -118,9 +118,13 @@ static func _toggle_social(menu: MenuHost) -> void:
 	if not await Online.set_social(on):
 		await menu.info(Online.error_text())
 
+const DELETE_PURCHASES_NOTE: String = "Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in the App Store or Google Play (Subscriptions)."
+
 static func _delete(menu: MenuHost) -> bool:
 	if not await menu.confirm_danger("Delete your account? All journeys and friends are removed for good."):
 		return false
+	# Items 4145, 4146: what happens to purchases, and that the store subscription keeps running.
+	await menu.info(DELETE_PURCHASES_NOTE)
 	if not await menu.confirm_danger("Really delete? This cannot be undone.", "Delete", "Keep"):
 		return false
 	var r: Dictionary = await Online.delete_account()
