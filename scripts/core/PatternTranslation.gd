@@ -27,7 +27,10 @@ func load_strings(table: Dictionary) -> void:
 		var out: String = str(table[k])
 		if key.contains("%s") or key.contains("%d"):
 			patterns.append({"re": RegEx.create_from_string(_pattern_regex(key)), "out": out, "weight": _literal_length(key)})
-		exact[key] = out.replace("%%", "%") if key.contains("%%") else out
+			# A format key is looked up before "%" fills it in, so "%%" must stay (item 866).
+			exact[key] = out
+		else:
+			exact[key] = out.replace("%%", "%") if key.contains("%%") else out
 	patterns.sort_custom(func(a: Dictionary, b: Dictionary) -> bool: return int(a.weight) > int(b.weight))
 
 func _get_message(src_message: StringName, _context: StringName) -> StringName:
