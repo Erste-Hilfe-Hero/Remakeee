@@ -225,6 +225,7 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 	var total_turns: int = 0
 	# Lambdas capture ints by value, so the counters live in a Dictionary.
 	var tally: Dictionary = {"rests": 0, "actions": 0}
+	var fx: Dictionary = new_effects()
 	# Arts used per side in the current battle, booked as wins once the winner is known (item 816).
 	var uses: Array[Dictionary] = [{}, {}]
 	for b: int in battles:
@@ -257,6 +258,7 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 			elif e.type == BattleEvent.Type.REST:
 				tally.rests += 1
 				tally.actions += 1)
+		watch_effects(m, fx)
 		var brain := BattleAI.new(ai_level)
 		m.start()
 		var turns: int = 0
@@ -267,6 +269,7 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 			m.submit_turn(brain.choose(m, BattleModel.Side.PLAYER))
 			turns += 1
 		total_turns += turns
+		close_effects(m, fx)
 		var winner: int = -1
 		if m.outcome == BattleModel.Outcome.WIN:
 			winner = 0
@@ -289,7 +292,98 @@ static func run_team(level: int, battles: int, seed_value: int, ai_level: int = 
 					row.losses += 1
 	return {"species": species, "moves": moves, "elements": elements, "battles": battles, "draws": draws,
 		"avg_turns": float(total_turns) / maxf(battles, 1), "level": level, "mode": "team", "ai": ai_level,
-		"rest_share": float(tally.rests) / maxf(int(tally.actions), 1)}
+		"rest_share": float(tally.rests) / maxf(int(tally.actions), 1),
+		"status_hits": fx.hits, "status_turns": fx.lasts, "reactions": fx.reactions}
+
+# --- Status and reaction tallies (plan area 2, items 825, 826) ------------------------------
+
+## Target band of the rest share in team mode (item 823).
+const REST_BAND: Vector2 = Vector2(0.10, 0.25)
+
+## Empty tallies: hits {art: {tries, landed}}, lasts {status: {count, turns}},
+## reactions {"Volt on soak": count}, open {"side:index": [status, turn]} (statuses still on).
+static func new_effects() -> Dictionary:
+	return {"hits": {}, "lasts": {}, "reactions": {}, "open": {}, "last": ["", ""]}
+
+## Counts, for one battle of [param m], the tries and hits of every status art (the status lands
+## on the foe after the art), how many turns each status holds and every reaction.
+static func watch_effects(m: BattleModel, fx: Dictionary) -> void:
+	fx.open = {}
+	fx.last = ["", ""]
+	m.event_emitted.connect(func(e: BattleEvent) -> void: _on_effect(e, m, fx))
+
+static func _on_effect(e: BattleEvent, m: BattleModel, fx: Dictionary) -> void:
+		var side: int = clampi(int(e.data.get("side", 0)), 0, 1)
+		var key: String = "%d:%d" % [side, int(e.data.get("index", -1))]
+		match e.type:
+			BattleEvent.Type.MOVE_USED:
+				var name: String = str(e.data.get("move", ""))
+				var mv: MoveData = Database.move(name)
+				fx.last[side] = ""
+				if mv != null and not mv.status_effect.is_empty() and mv.status_chance > 0.0:
+					fx.last[side] = name
+					var row: Dictionary = fx.hits.get(name, {"tries": 0, "landed": 0})
+					row.tries += 1
+					fx.hits[name] = row
+			BattleEvent.Type.STATUS_APPLIED:
+				var by: String = str(fx.last[BattleModel.other(side)])
+				if not by.is_empty():
+					fx.hits[by].landed += 1
+					fx.last[BattleModel.other(side)] = ""
+				fx.open[key] = [str(e.data.get("status", "")), m.turn]
+			BattleEvent.Type.STATUS_CURED, BattleEvent.Type.FAINTED:
+				_close_status(fx, key, m.turn)
+			BattleEvent.Type.REACTION:
+				var r: String = "%s on %s" % [Elements.element_name(int(e.data.get("element", 0))), str(e.data.get("status", ""))]
+				fx.reactions[r] = int(fx.reactions.get(r, 0)) + 1
+
+## Books every status still on when the battle of [param m] ends.
+static func close_effects(m: BattleModel, fx: Dictionary) -> void:
+	for key: String in (fx.open as Dictionary).keys():
+		_close_status(fx, key, m.turn)
+
+static func _close_status(fx: Dictionary, key: String, turn: int) -> void:
+	if not (fx.open as Dictionary).has(key):
+		return
+	var on: Array = fx.open[key]
+	fx.open.erase(key)
+	var row: Dictionary = fx.lasts.get(str(on[0]), {"count": 0, "turns": 0})
+	row.count += 1
+	row.turns += maxi(1, turn - int(on[1]))
+	fx.lasts[str(on[0])] = row
+
+## The status, reaction and rest sections of a team report (items 823, 825, 826).
+static func effects_report(result: Dictionary) -> PackedStringArray:
+	var lines: PackedStringArray = []
+	var rs: float = float(result.get("rest_share", 0.0))
+	var hits: Dictionary = result.get("status_hits", {})
+	if not hits.is_empty():
+		lines.append_array(["## Status arts", "", "| Art | Tries | Landed | Hit share |", "| --- | --- | --- | --- |"])
+		var names: Array = hits.keys()
+		names.sort()
+		for n: String in names:
+			var row: Dictionary = hits[n]
+			lines.append("| %s | %d | %d | %d%% |" % [n, row.tries, row.landed, roundi(100.0 * float(row.landed) / maxf(float(row.tries), 1.0))])
+		lines.append("")
+	var lasts: Dictionary = result.get("status_turns", {})
+	if not lasts.is_empty():
+		lines.append_array(["## Status length", "", "| Status | Times | Turns on average |", "| --- | --- | --- |"])
+		var sn: Array = lasts.keys()
+		sn.sort()
+		for n: String in sn:
+			lines.append("| %s | %d | %.1f |" % [n, lasts[n].count, float(lasts[n].turns) / maxf(float(lasts[n].count), 1.0)])
+		lines.append("")
+	var reac: Dictionary = result.get("reactions", {})
+	if result.has("reactions"):
+		lines.append_array(["## Reactions", "", "| Reaction | Count | Per 100 battles |", "| --- | --- | --- |"])
+		var rn: Array = reac.keys()
+		rn.sort()
+		for n: String in rn:
+			lines.append("| %s | %d | %.1f |" % [n, reac[n], 100.0 * float(reac[n]) / maxf(float(result.battles), 1.0)])
+		if rn.is_empty():
+			lines.append("| none | 0 | 0.0 |")
+		lines.append("")
+	return lines
 
 static func _pick(pool: Array[String], size: int, rng: RandomNumberGenerator) -> Array[String]:
 	var left: Array[String] = pool.duplicate()
@@ -333,8 +427,11 @@ static func report(result: Dictionary, high: float = 0.65, low: float = 0.35) ->
 		lines.append("First-mover advantage (the faster Spirling wins): %d%%%s." % [roundi(fa * 100.0), "" if fa <= FIRST_ADVANTAGE_MAX else " (above the target %d%%)" % roundi(FIRST_ADVANTAGE_MAX * 100.0)])
 		lines.append("")
 	if result.has("rest_share"):
-		lines.append("Rest share of all actions: %d%%." % roundi(float(result.rest_share) * 100.0))
+		var rs: float = float(result.rest_share)
+		lines.append("Rest share of all actions: %d%%%s." % [roundi(rs * 100.0), "" if rs >= REST_BAND.x and rs <= REST_BAND.y
+			else " (outside the target band %d%% to %d%%)" % [roundi(REST_BAND.x * 100.0), roundi(REST_BAND.y * 100.0)]])
 		lines.append("")
+	lines.append_array(effects_report(result))
 	if result.has("elements"):
 		lines.append_array(["## Elements", "", "| Element | Picks |", "| --- | --- |"])
 		var el: Dictionary = result.elements
