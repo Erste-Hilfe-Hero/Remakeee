@@ -38,9 +38,10 @@ func _ready() -> void:
 	_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	row.add_child(_label)
 
-## Queues a note; [param icon] may be null.
-func show_note(text: String, icon: Texture2D = null) -> void:
-	_queue.append({"text": text, "icon": icon})
+## Queues a note; [param icon] may be null. Each note rings [param sound] as it shows, a quiet
+## two-note chime by default (item 2512); "" for none.
+func show_note(text: String, icon: Texture2D = null, sound: String = "toast") -> void:
+	_queue.append({"text": text, "icon": icon, "sound": sound})
 	if not _busy:
 		_run()
 
@@ -56,6 +57,8 @@ func _run() -> void:
 		_icon.visible = n.icon != null
 		_panel.modulate.a = 1.0
 		_panel.visible = true
+		if not str(n.sound).is_empty():
+			Sound.sfx(str(n.sound))
 		await get_tree().create_timer(SHOW_TIME).timeout
 		if not GameState.reduce_motion:
 			var tw: Tween = create_tween()

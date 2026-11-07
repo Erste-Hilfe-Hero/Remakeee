@@ -311,13 +311,13 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2508. [P2] Treppen-Klang mit 3 schnellen Schritten, die in der Tonhöhe steigen oder fallen, je nach Richtung.
 2509. [P2] Klang für das Öffnen und das Schließen des Pausemenüs, verschieden voneinander (Seite aufschlagen, Seite zuklappen).
 2510. [x] [P2] Cursor-Klang (select) bekommt 3 leicht verschiedene Tonhöhen, die zufällig wechseln, damit langes Scrollen nicht ermüdet.
-2511. [P2] Klang für gesperrte Menüpunkte, ein dumpfer kurzer Ton, der sich klar vom Abbruch-Klang unterscheidet.
-2512. [P2] Klang für den Toast-Hinweis (kurz und leise, 2 Töne).
+2511. [x] [P2] Klang für gesperrte Menüpunkte, ein dumpfer kurzer Ton, der sich klar vom Abbruch-Klang unterscheidet.
+2512. [x] [P2] Klang für den Toast-Hinweis (kurz und leise, 2 Töne).
 2513. [P3] Klang für ein neu erhaltenes Geschenk von einem Freund, ein heller 3-Ton-Akkord.
-2514. [P2] Klang für das Absenden eines Geschenks, ein fallender 3-Ton-Akkord.
-2515. [P2] Klang für eine angenommene Freundesanfrage, 2 Töne im Quintabstand.
-2516. [P2] Klang für erledigte Aufgaben im Aufgabenbuch, kurzer Strich plus Glocke.
-2517. [P2] Klang für den Tagesfund beim Abholen, Glitzern aus 5 sehr hohen Tönen.
+2514. [x] [P2] Klang für das Absenden eines Geschenks, ein fallender 3-Ton-Akkord.
+2515. [x] [P2] Klang für eine angenommene Freundesanfrage, 2 Töne im Quintabstand.
+2516. [x] [P2] Klang für erledigte Aufgaben im Aufgabenbuch, kurzer Strich plus Glocke.
+2517. [x] [P2] Klang für den Tagesfund beim Abholen, Glitzern aus 5 sehr hohen Tönen.
 2518. [P3] Klang für Bestätigung am Rastplatz vor dem Heilen (Wasser-Plätschern aus gefiltertem Rauschen).
 2519. [P2] Klang für das Betreten eines Begegnungsfeldes (leises Rascheln), nur jedes 3. Feld, damit es nicht nervt.
 2520. [x] [P2] Klang für das Laufen gegen eine Wand (bump) bekommt eine Sperre: höchstens einmal pro 0,4 s.

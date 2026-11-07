@@ -476,7 +476,7 @@ func show_why(i: int) -> bool:
 		return false
 	_hint.text = Loc.t(w)
 	_hint.visible = true
-	Sound.sfx("bump")
+	Sound.sfx("locked")
 	return true
 
 ## A calm tap on a greyed-out row (disabled buttons get no press of their own).
@@ -485,8 +485,14 @@ func _why_at(pos: Vector2) -> void:
 		return
 	for i: int in _buttons.size():
 		if _buttons[i].disabled and _buttons[i].get_global_rect().has_point(pos):
-			show_why(i)
+			tap_locked(i)
 			return
+
+## A tap on greyed-out row [param i]: its reason if it has one, and always a dull tap that
+## tells the row is locked (item 2511).
+func tap_locked(i: int) -> void:
+	if not show_why(i):
+		Sound.sfx("locked")
 
 ## The text under the list now (tests).
 func hint_text() -> String:
