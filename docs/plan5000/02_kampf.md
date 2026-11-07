@@ -147,7 +147,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 445
 571. [P3] Neue Reaktion: Umbra trifft ein Ziel mit Daze und richtet ×1,2 Schaden an.
 572. [P3] Neue Reaktion: Ember trifft ein Ziel mit Soak, Soak verdampft (endet), der Treffer richtet nur ×0,8 Schaden an.
 573. [x] [P2] Jede Art erhält höchstens eine Technik mit `cooldown` und höchstens eine Seitenfalle in ihrer Lernliste.
-574. [P2] Scatter Gale, Graft und Ring Pulse werden zusätzlich über Echo-Kristalle für alle Arten lernbar, damit jedes Team eine Antwort auf Seitenfallen und Stufenaufbau hat.
+574. [x] [P2] Scatter Gale, Graft und Ring Pulse werden zusätzlich über Echo-Kristalle für alle Arten lernbar, damit jedes Team eine Antwort auf Seitenfallen und Stufenaufbau hat. Erledigt: Gegenstände `echo_scatter_gale` und `echo_graft` mit `any_element` (GameState.can_learn_echo), zu kaufen beim Kristallhändler in Thornridge und im Endspiel-Laden (nicht tauschbar, damit die Tauschliste des Servers gleich bleibt); Test tests/unit/test_echo_any.gd. Ring Pulse gibt es noch nicht (Punkt 506 ist P3), sein Kristall folgt mit 506.
 575. [x] [P2] Lernlisten-Obergrenze: höchstens 14 Techniken pro Art, geprüft in tests/unit/test_learnsets.gd.
 576. [P2] Alle 92 neuen Techniken bekommen deutsche Namen und Beschreibungen in data/i18n/de.json, in eigener Wortwahl.
 577. [x] [P2] tools/validate_data.gd kennt alle neuen Schlüssel (`vs_status`, `vs_mult`, `cooldown`, `stage_chance`, `self_stages`, `ignore_stages`, Priorität -1) und meldet unbekannte Schlüssel als Fehler. Erledigt: DataValidator.MOVE_KEYS, unbekannte Schlüssel sind Fehler.

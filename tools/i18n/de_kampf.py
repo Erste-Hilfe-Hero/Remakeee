@@ -321,3 +321,7 @@ T.update({
 "Rule variants: %s": "Regelvarianten: %s",
 "Rule variant: %s. %s": "Regelvariante: %s. %s",
 })
+# Plan area 2, item 574: Echo Crystals that teach every Spirling.
+T.update({
+"Teaches %s to any Spirling. Never used up.": "Bringt jedem Spirling %s bei. Verbraucht sich nie.",
+})

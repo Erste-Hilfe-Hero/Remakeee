@@ -1179,11 +1179,13 @@ func relearn(s: Spirling, move_name: String, forget: int = -1) -> bool:
 	return true
 
 ## True if [param s] can learn the move an Echo Crystal holds (same element, not known yet).
+## Crystals with "any_element" teach every Spirling (item 574: Scatter Gale, Graft).
 static func can_learn_echo(s: Spirling, item_id: String) -> bool:
-	var mv: MoveData = Database.move(str(Database.item(item_id).get("teaches", "")))
-	if mv == null:
+	var it: Dictionary = Database.item(item_id)
+	var mv: MoveData = Database.move(str(it.get("teaches", "")))
+	if mv == null or s.moves.has(mv):
 		return false
-	return mv.element in s.elements() and not s.moves.has(mv)
+	return bool(it.get("any_element", false)) or mv.element in s.elements()
 
 ## Moves party member [param index] into storage. Keeps at least one healthy Spirling.
 ## With [param keep_keepsake] its keepsake goes back into the satchel (item 356).

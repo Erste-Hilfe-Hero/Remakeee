@@ -331,6 +331,26 @@
   "tradeable": false
  },
  {
+  "id": "echo_scatter_gale",
+  "name": "Echo Crystal: Scatter Gale",
+  "description": "Teaches Scatter Gale to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Scatter Gale",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_graft",
+  "name": "Echo Crystal: Graft",
+  "description": "Teaches Graft to any Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Graft",
+  "any_element": true,
+  "price": 4000,
+  "tradeable": false
+ },
+ {
   "id": "wading_boots",
   "name": "Wading Boots",
   "description": "Wayfarer Gear. Tall leather boots: walk through shallow water, step by step.",
