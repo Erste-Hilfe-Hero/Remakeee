@@ -178,6 +178,7 @@ func _build() -> void:
 	_foe_strip = InfoStrip.new()
 	_player_strip = InfoStrip.new()
 	_player_strip.show_numbers = true
+	_player_strip.show_xp = true
 	for n: Control in [_foe_sprite, _player_sprite]:
 		_shake_root.add_child(n)
 	_fx = ElementFx.new()
@@ -346,6 +347,7 @@ func _focus(side: int, slot: int) -> void:
 	if s == null:
 		return
 	_foe_strip.show_numbers = side == BattleModel.Side.PLAYER
+	_foe_strip.show_xp = side == BattleModel.Side.PLAYER
 	_foe_strip.set_spirling(s)
 	_foe_strip.visible = true
 
@@ -887,6 +889,7 @@ func _play_event(e: BattleEvent) -> void:
 				var lst: Variant = _strip(BattleModel.Side.PLAYER, lv_slot)
 				if lst is InfoStrip:
 					(lst as InfoStrip).set_level(int(e.data.level))
+					_refresh_xp(lv_slot, int(e.data.get("index", -1)))
 				await lst.animate_hp(int(e.data.hp), int(e.data.max_hp))
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BOND_RESULT:
@@ -932,10 +935,22 @@ func _play_event(e: BattleEvent) -> void:
 			var miss_text: String = e.describe()
 			if not miss_text.is_empty():
 				await _text.show_text(miss_text)
+		BattleEvent.Type.XP_GAINED:
+			var xp_slot: int = model.slot_of(BattleModel.Side.PLAYER, int(e.data.get("index", -1)))
+			if xp_slot >= 0:
+				_refresh_xp(xp_slot, int(e.data.get("index", -1)))
+			await _text.show_text(e.describe())
 		_:
 			var text: String = e.describe()
 			if not text.is_empty():
 				await _text.show_text(text)
+
+## Redraws the EXP bar of the player strip at [param slot] from party member [param index].
+func _refresh_xp(slot: int, index: int) -> void:
+	var st: Variant = _strip(BattleModel.Side.PLAYER, slot)
+	var party: Array = model.parties[BattleModel.Side.PLAYER]
+	if st is InfoStrip and index >= 0 and index < party.size():
+		(st as InfoStrip).set_xp(party[index] as Spirling)
 
 ## Wind-up, charge and travel sounds and the element effect for an art (items 2329 to 2366, 2529, 2530).
 func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:

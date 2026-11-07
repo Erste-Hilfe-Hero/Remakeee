@@ -68,6 +68,23 @@ static func battle_gifts(warden: bool, world: bool = true) -> Dictionary:
 static func bond_grace() -> int:
 	return 1 if pass_active() else 0
 
+## Settings sold in the shop (Ali, 7 Nov): settings key -> unlock id from data/shop.json.
+## Without the unlock the row says "Shop" and the feature stays at its plain state.
+const SETTING_UNLOCKS: Dictionary[String, String] = {
+	"damage_preview": "damage_preview", "minimap": "minimap", "fast_text": "fast_text",
+	"retro": "retro_filter", "day_night": "sky_control", "weather": "sky_control",
+	"bench_lessons": "bench_lessons",
+}
+
+## True when the setting [param key] is free or its shop unlock was bought.
+static func owns_setting(key: String) -> bool:
+	return not SETTING_UNLOCKS.has(key) or Billing.unlocked(SETTING_UNLOCKS[key]) > 0
+
+## Shop offer name for a locked setting, for the "In the shop" note.
+static func setting_offer_name(key: String) -> String:
+	var o: Dictionary = ShopCatalog.offer("rg_" + str(SETTING_UNLOCKS.get(key, "")))
+	return str(o.get("name", ""))
+
 ## Coins from Wayfarer battles with a running Coin Gleam.
 static func coin_mult() -> float:
 	return float(GameState.shop_boosts.get("coins", {}).get("mult", 1.0))

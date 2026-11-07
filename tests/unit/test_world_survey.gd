@@ -74,7 +74,11 @@ func test_minimap_modes() -> void:
 	# Items 1270-1272.
 	var outside: MapData = _field()
 	var inside := MapData.from_dict("room_t", {"rows": ["fff"], "outdoor": false})
+	var keep_billing: Dictionary = Billing.state
+	Billing.state = {"unlocks": {}}
 	GameState.minimap = "on"
+	assert_false(Survey.minimap_shows(inside), "the Minimap is a shop unlock (Ali, 7 Nov)")
+	Billing.state = {"unlocks": {"minimap": 1}}
 	assert_true(Survey.minimap_shows(inside))
 	GameState.minimap = "outdoor"
 	assert_true(Survey.minimap_shows(outside))
@@ -82,6 +86,7 @@ func test_minimap_modes() -> void:
 	GameState.minimap = "off"
 	assert_false(Survey.minimap_shows(outside))
 	GameState.minimap = "on"
+	Billing.state = keep_billing
 	var mm := Minimap.new()
 	add_child_autofree(mm)
 	Survey.reveal(outside, Vector2i(10, 6))

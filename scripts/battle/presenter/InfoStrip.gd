@@ -18,6 +18,15 @@ const PLATE_PAD: Vector2 = Vector2(3, 2)
 
 ## Show the numeric HP (player side only).
 @export var show_numbers: bool = false
+## Show the growth (EXP) bar towards the next ring (player side only).
+@export var show_xp: bool = false
+const XP_ON: Color = Color("c9a227")
+const XP_LABEL: String = "EXP"
+
+## Share of the way from this ring to the next, 0 to 1 (1 at the top ring).
+var xp_frac: float = 0.0
+## Growth still needed for the next ring.
+var xp_left: int = 0
 
 var display_hp: float = 1.0
 var max_hp: int = 1
@@ -44,6 +53,19 @@ func set_spirling(s: Spirling) -> void:
 	status = s.status
 	stages = s.stages.duplicate()
 	tax = s.energy_tax
+	set_xp(s)
+
+## Share of the way [param s] has grown from its ring to the next, 0 to 1.
+static func xp_fraction(s: Spirling) -> float:
+	if s.level >= Spirling.MAX_LEVEL:
+		return 1.0
+	var lo: int = Spirling.xp_for_level(s.level)
+	var hi: int = Spirling.xp_for_level(s.level + 1)
+	return clampf(float(s.xp - lo) / float(maxi(hi - lo, 1)), 0.0, 1.0)
+
+func set_xp(s: Spirling) -> void:
+	xp_frac = xp_fraction(s)
+	xp_left = s.xp_to_next()
 	queue_redraw()
 
 func set_tax(turns: int) -> void:
@@ -85,6 +107,8 @@ func screen_reader_text() -> String:
 		t += ", " + Loc.t(StatusRules.label(status))
 	if tax > 0:
 		t += ", " + Loc.t("Energy tax %d" % tax)
+	if show_xp:
+		t += ", " + Loc.t("Growth to next ring %d" % xp_left)
 	return t
 
 func _draw() -> void:
@@ -120,8 +144,22 @@ func _draw() -> void:
 	_draw_stages(Vector2(maxi(Spirling.MAX_ENERGY, energy) * (PIP_SIZE + PIP_GAP) + 3, pip_y - 1))
 	if tax > 0:
 		_draw_tax(Vector2(w, pip_y - 1))
+	if show_xp:
+		_draw_xp(pip_y + PIP_SIZE + fs - 1, w)
 	if show_numbers:
 		draw_string(font, Vector2(0, pip_y + PIP_SIZE + fs - 1), "%d/%d" % [int(round(display_hp)), max_hp], HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
+
+## "EXP" and a thin gold bar on the bottom line, left half, clear of the HP numbers on the right.
+func _draw_xp(baseline: float, w: float) -> void:
+	var font: Font = get_theme_default_font()
+	var fs: int = get_theme_default_font_size()
+	draw_string(font, Vector2(0, baseline), XP_LABEL, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)
+	var x0: float = font.get_string_size(XP_LABEL, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x + 2.0
+	var bw: float = maxf(w * 0.55 - x0, 8.0)
+	var y: float = baseline - 4.0
+	draw_rect(Rect2(x0, y, bw, 4), UITheme.INK)
+	draw_rect(Rect2(x0 + 1, y + 1, bw - 2, 2), UITheme.BG)
+	draw_rect(Rect2(x0 + 1, y + 1, floorf((bw - 2) * xp_frac), 2), XP_ON)
 
 ## One letter plus an arrow per changed stat ("A" with up triangles for +ATK), left to right.
 func _draw_stages(at: Vector2) -> void:

@@ -1495,6 +1495,84 @@
    "desc_de": "Acht Motive für die Karte an deinen Geschenken für Freunde, als ein Set. Nur Aussehen, das Geschenk bleibt gleich.",
    "family_shareable": false,
    "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.unlock.damage_preview",
+   "offer": "rg_damage_preview",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "4.99",
+   "name_en": "Damage Preview",
+   "name_de": "Schadensvorschau",
+   "desc_en": "Before you pick an art, see how much of the foe's Vigor it takes. Switch it on or off in Settings. Permanent.",
+   "desc_de": "Bevor du eine Kunst wählst, siehst du, wie viel Kraft sie dem Gegner nimmt. In den Einstellungen an- und ausschaltbar. Dauerhaft.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.unlock.minimap",
+   "offer": "rg_minimap",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "2.99",
+   "name_en": "Minimap",
+   "name_de": "Minikarte",
+   "desc_en": "A small map in the top corner shows where you are and what you found. Permanent.",
+   "desc_de": "Eine kleine Karte oben in der Ecke zeigt, wo du bist und was du gefunden hast. Dauerhaft.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.unlock.fast_text",
+   "offer": "rg_fast_text",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "1.99",
+   "name_en": "Fast Text",
+   "name_de": "Schnelltext",
+   "desc_en": "Adds the Fast text speed: talks and battle lines appear at once. Permanent.",
+   "desc_de": "Schaltet das schnelle Texttempo frei: Gespräche und Kampfzeilen erscheinen sofort. Dauerhaft.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.unlock.retro_filter",
+   "offer": "rg_retro_filter",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "1.99",
+   "name_en": "Retro Filter",
+   "name_de": "Retro-Filter",
+   "desc_en": "Pick old-style colours for each era you reached. Only looks, no effect. Permanent.",
+   "desc_de": "Wähle alte Farben für jede erreichte Epoche. Nur Optik, keine Wirkung. Dauerhaft.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.unlock.sky_control",
+   "offer": "rg_sky_control",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "2.99",
+   "name_en": "Sky Control",
+   "name_de": "Himmelskontrolle",
+   "desc_en": "Switch weather and the day and night light on or off as you like. Only looks. Permanent.",
+   "desc_de": "Schalte Wetter und das Tag-und-Nacht-Licht nach Belieben an oder aus. Nur Optik. Dauerhaft.",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.unlock.bench_lessons",
+   "offer": "rg_bench_lessons",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "4.99",
+   "name_en": "Bench Lessons",
+   "name_de": "Bank-Lektionen",
+   "desc_en": "Spirlings on the bench grow along after every won battle. Switch it in Settings. Permanent.",
+   "desc_de": "Spirlings auf der Bank wachsen nach jedem gewonnenen Kampf mit. In den Einstellungen schaltbar. Dauerhaft.",
+   "family_shareable": false,
+   "ready": true
   }
  ]
 }
