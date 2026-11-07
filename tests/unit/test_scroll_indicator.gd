@@ -24,9 +24,12 @@ func test_scrolling_shows_it_for_a_while() -> void:
 		rows.append({"text": "Row %d" % i})
 	var run := func() -> void: await lp.pick("Long", rows)
 	run.call()
+	lp._scroll.get_v_scroll_bar().value_changed.emit(5.0)
+	assert_eq(lp.scroll_shown, 0.0, "the list scrolling itself in place shows nothing")
 	await get_tree().process_frame
 	await get_tree().process_frame
-	lp.scroll_shown = 0.0
+	assert_eq(lp.scroll_shown, 0.0, "opening the list is no scrolling")
+	lp._scroll_quiet = 0
 	lp._scroll.get_v_scroll_bar().value_changed.emit(10.0)
 	assert_eq(lp.scroll_shown, ListPicker.SCROLL_SHOW_TIME)
 	lp._process(0.5)

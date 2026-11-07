@@ -147,7 +147,8 @@ func _ready() -> void:
 	_arrows.draw.connect(_draw_arrows)
 	add_child(_arrows)
 	_scroll.get_v_scroll_bar().value_changed.connect(func(_v: float) -> void:
-		scroll_shown = SCROLL_SHOW_TIME
+		if _scroll_quiet <= 0:
+			scroll_shown = SCROLL_SHOW_TIME
 		_arrows.queue_redraw())
 	_scroll.get_v_scroll_bar().changed.connect(_arrows.queue_redraw)
 
@@ -185,6 +186,8 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	_back.visible = cancellable
 	_foot.visible = one_hand and cancellable
 	last_dir = 0
+	scroll_shown = 0.0
+	_scroll_quiet = SCROLL_QUIET_FRAMES
 	_hints.clear()
 	_whys.clear()
 	_sliders.clear()
@@ -317,6 +320,8 @@ func move_focus(delta: int, wrap: bool = true) -> void:
 func _process(delta: float) -> void:
 	if visible:
 		_bob_pointer(delta)
+	if _scroll_quiet > 0:
+		_scroll_quiet -= 1
 	if scroll_shown > 0.0:
 		scroll_shown = maxf(0.0, scroll_shown - delta)
 		if scroll_shown == 0.0:
@@ -536,6 +541,10 @@ const SCROLL_SHOW_TIME: float = 0.8
 const SCROLL_MIN_PX: float = 3.0
 ## Seconds the scroll indicator still shows.
 var scroll_shown: float = 0.0
+## A list scrolls itself to the focused or remembered row as it opens; that is no scrolling
+## by the player, so the indicator stays hidden for the first frames.
+const SCROLL_QUIET_FRAMES: int = 3
+var _scroll_quiet: int = 0
 
 ## Where the indicator sits in list area [param r] for a scroll bar at [param value] of
 ## [param max_value] showing [param page]; an empty Rect2 when the whole list fits.
