@@ -39,6 +39,8 @@ var text_frame: String = ""
 var hat_look: String = ""
 ## Shop profile frame on the friend list (unlock key such as "card_frame_star", item 4284).
 var card_frame: String = ""
+## Shop greeting card motif put on gifts to friends (unlock key such as "gift_card_moth", item 4285).
+var gift_card: String = ""
 const TAMER_SPRITES: Array[String] = ["tamer", "tamer_f"]
 const DEFAULT_NAMES: Array[String] = ["Corin", "Liora"]
 ## Coat colours on the title screen: teal, rust, ochre, plum (boy = teal, girl = rust by default).
@@ -458,6 +460,7 @@ func reset() -> void:
 	text_frame = ""
 	hat_look = ""
 	card_frame = ""
+	gift_card = ""
 	team_presets.clear()
 	echo_cores.clear()
 	iron_oath = false
@@ -510,6 +513,12 @@ func worn_hat() -> String:
 func profile_frame() -> String:
 	if card_frame.begins_with("card_frame_") and Billing.unlocked(card_frame) > 0:
 		return card_frame.trim_prefix("card_frame_")
+	return ""
+
+## The greeting card motif (FriendsMenu.GIFT_CARDS) while the unlock is owned, else "".
+func gift_motif() -> String:
+	if gift_card.begins_with("gift_card_") and Billing.unlocked(gift_card) > 0:
+		return gift_card.trim_prefix("gift_card_")
 	return ""
 
 ## The dialogue frame kind: the worn shop frame while owned, else "" (the plain box).
@@ -572,7 +581,7 @@ func to_dict() -> Dictionary:
 	for s: Spirling in storage:
 		storage_d.append(s.to_dict())
 	return {
-		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket, "backdrop": backdrop_look, "frame": text_frame, "hat": hat_look, "card_frame": card_frame},
+		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket, "backdrop": backdrop_look, "frame": text_frame, "hat": hat_look, "card_frame": card_frame, "gift_card": gift_card},
 		"starter": starter,
 		"difficulty": difficulty,
 		"region": region,
@@ -622,6 +631,7 @@ func from_dict(d: Dictionary) -> void:
 	text_frame = str(wayfarer.get("frame", "")) if wayfarer.get("frame") is String else ""
 	hat_look = str(wayfarer.get("hat", "")) if wayfarer.get("hat") is String else ""
 	card_frame = str(wayfarer.get("card_frame", "")) if wayfarer.get("card_frame") is String else ""
+	gift_card = str(wayfarer.get("gift_card", "")) if wayfarer.get("gift_card") is String else ""
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))

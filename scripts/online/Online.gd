@@ -532,6 +532,9 @@ static func card_numbers() -> Dictionary:
 	# The worn profile frame (item 4284); the server keeps it only with the unlock.
 	if not GameState.profile_frame().is_empty():
 		out["frame"] = GameState.profile_frame()
+	# The greeting card motif put on gifts (item 4285), checked the same way.
+	if not GameState.gift_motif().is_empty():
+		out["motif"] = GameState.gift_motif()
 	return out
 
 func _process(delta: float) -> void:

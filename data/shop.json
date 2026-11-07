@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 26,
+ "catalog_version": 27,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -2850,6 +2850,57 @@
    "duration": "permanent",
    "slot": "card_frame",
    "plan": 4284,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_gift_cards",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Gift Cards: 8 Motifs",
+   "desc": "Eight motifs for the card on your gifts to friends, as one set. Only looks, the gift stays the same.",
+   "rg_price": 400,
+   "eur_cents": 399,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.gift_cards",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "gift_card_lantern"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_moth"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_wave"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_pine"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_kite"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_moon"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_shell"
+    },
+    {
+     "t": "unlock",
+     "id": "gift_card_ember"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "slot": "gift_card",
+   "plan": 4285,
    "min_band": 13,
    "ready": true
   }

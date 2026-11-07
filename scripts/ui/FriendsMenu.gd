@@ -101,6 +101,25 @@ const CARD_FRAMES: Dictionary[String, Array] = {
 	"star": ["+", "+"], "ripple": ["=", "="], "ember": ["^", "^"],
 }
 
+## Greeting card motifs from the shop (item 4285): the border line drawn above and below a
+## friend's gift when it is opened, and the mark on the mail line. Only looks.
+const GIFT_CARDS: Dictionary[String, String] = {
+	"lantern": "o-o-o-o-o-o", "moth": "}{ }{ }{ }{", "wave": "~~~~~~~~~~~~", "pine": "^ ^ ^ ^ ^ ^",
+	"kite": "<> <> <> <>", "moon": "( ) ( ) ( )", "shell": "@ @ @ @ @ @", "ember": "* . * . * .",
+}
+
+## The gift's card motif from the sender ("" for the plain card).
+static func gift_motif(m: Dictionary) -> String:
+	var k: String = str(m.get("motif", "")) if m.get("motif") is String else ""
+	return k if GIFT_CARDS.has(k) else ""
+
+## [param text] on the sender's greeting card: the motif's border above and below.
+static func on_card(m: Dictionary, text: String) -> String:
+	var k: String = gift_motif(m)
+	if k.is_empty():
+		return text
+	return "%s\n%s\n%s" % [GIFT_CARDS[k], text, GIFT_CARDS[k]]
+
 ## [param name] inside the friend's profile frame (from their card), or plain.
 static func framed_name(f: Dictionary) -> String:
 	var name: String = str(f.get("name", ""))
@@ -319,9 +338,9 @@ static func run_mail(menu: MenuHost, mail: Array) -> void:
 				Sound.sfx("coin")
 				var where: String = str(m.get("place", ""))
 				if where.is_empty():
-					await menu.info("%s sent you %s!" % [str(m.name), item_name(item)])
+					await menu.info(on_card(m, Loc.t("%s sent you %s!") % [str(m.name), item_name(item)]))
 				else:
-					await menu.info("%s sent you %s from %s!" % [str(m.name), item_name(item), where])
+					await menu.info(on_card(m, Loc.t("%s sent you %s from %s!") % [str(m.name), item_name(item), where]))
 			else:
 				await menu.info(error_text(r))
 			continue
