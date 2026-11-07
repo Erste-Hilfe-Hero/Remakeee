@@ -1307,7 +1307,7 @@
    "name_de": "Profilrahmen: Blatt",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.card_frame_shell",
@@ -1319,7 +1319,7 @@
    "name_de": "Profilrahmen: Muschel",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.card_frame_gear",
@@ -1331,7 +1331,7 @@
    "name_de": "Profilrahmen: Zahnrad",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.card_frame_star",
@@ -1343,7 +1343,7 @@
    "name_de": "Profilrahmen: Stern",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.card_frame_ripple",
@@ -1355,7 +1355,7 @@
    "name_de": "Profilrahmen: Kreise",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   },
   {
    "product_id": "de.chimora.game.unlock.card_frame_ember",
@@ -1367,7 +1367,7 @@
    "name_de": "Profilrahmen: Glut",
    "desc_en": "A frame for your card in the friends list. Only looks, no effect.",
    "desc_de": "Ein Rahmen für deine Karte in der Freundesliste. Nur Aussehen, keine Wirkung.",
-   "ready": false
+   "ready": true
   }
  ]
 }

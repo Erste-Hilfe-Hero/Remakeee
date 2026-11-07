@@ -25,3 +25,11 @@ static func lines(hour: int = -1) -> Array[String]:
 		out.append(Loc.t("Next high tide: %02d:00 to %02d:00.") % [after, posmod(after + 6, 24)])
 	out.append(Loc.t("Sea caves open their inner chambers at low tide."))
 	return out
+
+## The Sablecove tide stone (item 985): the current tide and when the next low tide comes.
+static func stone_lines(hour: int = -1) -> Array[String]:
+	var h: int = hour if hour >= 0 else int(Time.get_time_dict_from_system().hour)
+	var change: int = next_change(h)
+	if WorldMechanics.low_tide(h):
+		return [Loc.t("Now: low tide, until %02d:00.") % change, Loc.t("The inner chamber is open.")]
+	return [Loc.t("Now: high tide, until %02d:00.") % change, Loc.t("Next low tide: %02d:00 to %02d:00.") % [change, posmod(change + 6, 24)]]

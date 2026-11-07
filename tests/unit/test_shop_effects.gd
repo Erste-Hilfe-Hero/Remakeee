@@ -591,7 +591,7 @@ func test_shop_backdrops_show_only_while_owned() -> void:
 func test_shop_text_frames_show_only_while_owned() -> void:
 	var worn: String = GameState.text_frame
 	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_frame_vine")), "frame_vine")
-	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_card_frame_leaf")), "")
+	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_card_frame_leaf")), "card_frame_leaf")
 	GameState.text_frame = "frame_vine"
 	Billing.state = {"unlocks": {}}
 	assert_eq(GameState.dialogue_frame(), "")
@@ -622,6 +622,24 @@ func test_shop_hats_show_only_while_owned() -> void:
 	walker.free()
 	Billing.state = {}
 	GameState.hat_look = worn
+
+func test_shop_profile_frames_go_on_the_card_only_while_owned() -> void:
+	var worn: String = GameState.card_frame
+	assert_eq(ShopMenu.look_key(ShopCatalog.offer("rg_card_frame_star")), "card_frame_star")
+	GameState.card_frame = "card_frame_star"
+	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.profile_frame(), "")
+	assert_false(Online.card_numbers().has("frame"))
+	Billing.state = {"unlocks": {"card_frame_star": 1}}
+	assert_eq(GameState.profile_frame(), "star")
+	assert_eq(Online.card_numbers().get("frame"), "star")
+	for k: String in FriendsMenu.CARD_FRAMES:
+		assert_false(ShopCatalog.look_offer("card_frame_" + k).is_empty(), "offer for %s" % k)
+	assert_eq(FriendsMenu.framed_name({"name": "Ilka", "card": {"frame": "star"}}), "+Ilka+")
+	assert_eq(FriendsMenu.framed_name({"name": "Ilka", "card": {"frame": "bogus"}}), "Ilka")
+	assert_eq(FriendsMenu.framed_name({"name": "Ilka"}), "Ilka")
+	Billing.state = {}
+	GameState.card_frame = worn
 
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp

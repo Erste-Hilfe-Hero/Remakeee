@@ -266,6 +266,12 @@ func flag_on(key: String, version: int) -> bool:
 	var f: Variant = db.flags.get(key)
 	return f is Dictionary and bool(f.get("enabled", false)) and version >= int(f.get("min_version", 1))
 
+## The account's shop unlocks (entitlements), key -> count.
+func _unlocks(uid: String) -> Dictionary:
+	var shop: Variant = (db.users.get(uid, {}) as Dictionary).get("shop", {})
+	var u: Variant = shop.get("unlocks", {}) if shop is Dictionary else {}
+	return u if u is Dictionary else {}
+
 ## Like public._party_max: one more with the shop's sixth team slot (plan area 10).
 func party_max_of(uid: String) -> int:
 	var shop: Variant = (db.users.get(uid, {}) as Dictionary).get("shop", {})
@@ -338,6 +344,10 @@ func _fn_profile_set(a: Dictionary) -> Dictionary:
 			var v: Variant = given.get(k)
 			if v is int or v is float:
 				card[k] = clampi(int(v), 0, 99999)
+		# A bought profile frame only with its unlock (20261110000024_shop_card_frames.sql).
+		var fr: Variant = given.get("frame")
+		if fr is String and fr in FriendsMenu.CARD_FRAMES and int(_unlocks(me()).get("card_frame_" + fr, 0)) > 0:
+			card["frame"] = fr
 	p.name = clean_name(str(a.get("p_name", "")), p.code)
 	p.color = clampi(int(a.get("p_color", 0)), 0, 3)
 	var fav: String = ""

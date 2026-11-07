@@ -527,8 +527,12 @@ static func card_numbers() -> Dictionary:
 			bonded += 1 if bool(e.get("bonded", false)) else 0
 		else:
 			seen += 1
-	return {"seals": GameState.rifts_sealed.size(), "seen": seen, "bonded": bonded,
+	var out: Dictionary = {"seals": GameState.rifts_sealed.size(), "seen": seen, "bonded": bonded,
 		"hours": int(GameState.play_time / 3600.0)}
+	# The worn profile frame (item 4284); the server keeps it only with the unlock.
+	if not GameState.profile_frame().is_empty():
+		out["frame"] = GameState.profile_frame()
+	return out
 
 func _process(delta: float) -> void:
 	if state == State.ONLINE:
