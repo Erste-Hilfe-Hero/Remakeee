@@ -21,7 +21,9 @@ Vollständige Angaben im [Impressum](IMPRESSUM.md).
 automatisch ein Spielkonto angelegt; eine E-Mail-Adresse ist nicht nötig.
 2.2 Das Spiel ist **nur online spielbar**. Du brauchst eine Internetverbindung; Kosten dafür trägst du.
 2.3 Pro Person ist ein Konto vorgesehen. Halte deinen Übertragungscode geheim; wer ihn kennt, kann deinen
-Spielstand auf ein anderes Gerät holen. Konten sind nicht übertragbar.
+Spielstand auf ein anderes Gerät holen. Der Übertragungscode ist nur dafür da, dein eigenes Konto auf ein
+neues Gerät mitzunehmen; Käufe, Rissglas und der Pass wandern dabei mit. Konten sind nicht an andere
+übertragbar; Verkauf, Kauf, Tausch und Verleih von Konten oder Übertragungscodes sind untersagt.
 2.4 Minderjährige brauchen für Käufe die Zustimmung ihrer Erziehungsberechtigten.
 
 ## 3. Nutzungsrecht

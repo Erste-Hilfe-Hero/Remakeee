@@ -11,7 +11,9 @@ Last updated: November 2026
    Android) and its online services. The app store's own terms also apply to downloads and purchases.
 2. **Account.** By accepting these terms on first launch you get a game account automatically; no email is
    needed. The game is **online only** and needs an internet connection. Keep your transfer code secret.
-   One account per person; accounts are not transferable. Minors need a parent's consent for purchases.
+   It only moves your own account to a new device; purchases, Riftglass and the pass move with it.
+   One account per person; accounts are not transferable to others, and selling, buying, swapping or
+   lending accounts or transfer codes is not allowed. Minors need a parent's consent for purchases.
 3. **Licence.** We grant you a personal, non-exclusive, non-transferable, revocable right to use the game for
    private, non-commercial purposes. All rights in the game stay with us or our licensors. In-game currency,
    Spirlings and items are not property, have no cash value and cannot be exchanged for real money.

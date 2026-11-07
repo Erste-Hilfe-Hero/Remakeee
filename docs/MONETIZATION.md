@@ -37,6 +37,34 @@ Diese Regeln gelten für jedes Angebot. Tests und `tools/ip_check.sh` prüfen si
    täglich mit dem Wanderer-Pass), nie in der Spielwelt. Händler in der Welt nehmen nur Münzen.
 10. **Guthaben liegt nur auf dem Server** (`wallets`, Buchungen in `ledger`), nie im Spielstand.
 
+## Was nie verkauft wird
+
+Diese Dinge gibt es nie gegen Geld oder Rissglas, auch nicht als Teil eines Pakets:
+
+- Story-Kapitel, Regionen und Karten
+- der Zugang zu Rissen und Wächtern
+- Konto-Funktionen: Spielstand auf dem Server, Übertragungscode, Konto löschen, Datenexport
+- Freunde, Grüße, Duelle und Ligen-Teilnahme
+- Geschenke an Freunde (sie bleiben kostenlos; gekaufte Grußkarten ändern nur das Aussehen)
+- Spirlings und Waymarks (siehe unten)
+
+## Weitere feste Regeln für Änderungen
+
+- **Kein Abschwächen ohne Ersatz.** Wird ein gekauftes Angebot später schwächer (zum Beispiel aus
+  Balance-Gründen), bekommen alle Käufer einen gleichwertigen Ersatz, etwa das Rissglas zurück oder ein
+  Angebot mit gleichem Wert. Das steht vorher in den Neuigkeiten des Spiels.
+- **Preiserhöhung mit Vorlauf.** Wird ein Angebot teurer, steht das mindestens 7 Tage vorher in den
+  Neuigkeiten. Jede Preis- oder Angebotsänderung kommt mit Datum in
+  [`docs/shop/CHANGELOG.md`](shop/CHANGELOG.md).
+- **Kein Zurück zum Bezahlmodell.** Google Play erlaubt nicht, eine kostenlose App später kostenpflichtig
+  zu machen. Der Wechsel auf "kostenlos" ist darum endgültig; ein Bezahlmodell ginge nur als neue App.
+- **Abschaltregel.** Wird der Server eingestellt, bekommen Spieler mindestens 3 Monate vorher Bescheid
+  (im Spiel und auf der Website; so sagen es die Nutzungsbedingungen, länger als die 60 Tage aus Plan 4019). Der Shop schließt als Erstes, am Tag der Ankündigung. Rissglas und
+  Käufe bleiben bis zum Ende nutzbar; für Käufe der letzten 12 Monate gilt die anteilige Erstattung aus
+  den Nutzungsbedingungen.
+- **Jährlicher Prüftermin: 1. November.** An diesem Tag werden Preise, Angebote, die 2/3-Regel und die
+  Rechtslage (`docs/legal/SHOP_COMPLIANCE.md`) neu bewertet. Nächster Termin: 1. 11. 2027.
+
 ## Ohne Kauf erreichbar
 
 Jeder Spielinhalt bleibt ohne Kauf erreichbar: alle Regionen, Risse, Wächter, Spirlings, Ligen und die

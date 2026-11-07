@@ -64,6 +64,45 @@
   wird dabei nicht vom Spiel gekündigt, der Text sagt, dass es im Store gekündigt werden muss.
   Umsetzung: `scripts/ui/AccountMenu.gd` (Konto löschen), Server-Funktion `delete_account`.
 - **Google Payments Policy:** nur Google Play Billing für digitale Inhalte, gleiche Regeln wie oben.
+- **Google-Richtlinien zu Abos und Familien (Plan 4049):**
+  - *Abo-Richtlinie:* vor dem Kauf Preis, Laufzeit, automatische Verlängerung und Kündigungsweg zeigen,
+    keine irreführenden Gratis-Versprechen (`ShopMenu.pass_text`, Validator-Regel gegen "free"/"gratis").
+  - *Familienrichtlinie:* Chimora ist **nicht** im Programm "Für Familien" und richtet sich nicht in erster
+    Linie an Kinder. Die **Zielgruppe in der Play Console bleibt "13 und älter"**. Würde sie jünger, gälten
+    die strengeren Familienregeln (keine Kaufaufforderungen, Elternfreigabe, geprüfte SDKs); dann müsste
+    der Shop neu geprüft werden.
+- **Schweiz und Österreich (Plan 4056):** Die Stores zeigen in jedem Land Endpreise in der Landeswährung
+  mit allen Steuern; die Preise legen die Stores aus dem Euro-Preis fest (Schweiz in Franken). Die Schweizer
+  Preisbekanntgabeverordnung (PBV) verlangt Endpreise in Franken, das erfüllt die Store-Preisanzeige
+  (`Billing.price_text`); der Rissglas-Gegenwert im Spiel steht in Euro und ist als ungefähr ("≈")
+  gekennzeichnet. Österreich: gleiche EU-Regeln wie Deutschland (Preisauszeichnungsgesetz, KSchG). Keine
+  abweichenden Angaben im Code nötig.
+
+## 3a. Digital Services Act (Plan 4050)
+
+- **Händlerangaben:** Ali trägt sich in beiden Stores als Händler ein (DSA Art. 30, `docs/STORE_RELEASE.md` Schritte 3 und 4). Bei
+  jeder Änderung von Name, Adresse, E-Mail oder Telefon im Impressum auch beide Store-Konsolen ändern.
+- **Meldeweg für irreführende Angebote:** Wer ein Angebot für irreführend hält, schreibt an die Adresse auf
+  der Seite [Hilfe zu Käufen](/kaeufe) bzw. im Impressum (aa.amuri@icloud.com). Inhalte von Spielern meldet
+  man über das Formular [/melden](/melden) oder im Spiel.
+
+## 3b. Anfrage einer Verbraucherzentrale oder Behörde (Plan 4060)
+
+1. Ansprechpartner ist **Ali** selbst; Claude bereitet Unterlagen vor (Angebot, Texte, Belege, diese Datei).
+2. Eingang bestätigen und **innerhalb von 14 Tagen** inhaltlich antworten. Fristen aus einer Abmahnung
+   (oft kürzer) gehen vor; dann sofort eine Anwältin oder einen Anwalt einschalten.
+3. Nichts unterschreiben (keine Unterlassungserklärung), bevor eine Anwältin oder ein Anwalt sie geprüft hat.
+4. Ein betroffenes Angebot bis zur Klärung mit `ready: false` aus dem Shop nehmen und das in
+   `docs/shop/CHANGELOG.md` mit Datum festhalten.
+
+## 3c. Jährlicher Rechtscheck (Plan 4051)
+
+Jedes Jahr am **1. November** (zusammen mit dem Prüftermin in `docs/MONETIZATION.md`): diese Datei, die
+Nutzungsbedingungen, die Datenschutzerklärung und die Store-Richtlinien neu lesen und Änderungen eintragen.
+
+| Datum | Ergebnis |
+| --- | --- |
+| 2026-11-07 | Erste Fassung. **Digital Fairness Act** (EU): die Kommission hat einen Vorschlag für 2026 angekündigt, Themen sind virtuelle Währungen, Dark Patterns und Abos. Noch kein Gesetz; beim nächsten Check den Stand nachtragen. Nächster Check: 2027-11-01 |
 
 ## 4. Offen (braucht Alis Hände)
 
