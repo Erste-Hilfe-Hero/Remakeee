@@ -38,21 +38,21 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4029. [x] [P1] Die Leitlinien des EU-Netzwerks der Verbraucherschutzbehörden (CPC) zu virtueller Währung als Prüfliste in `docs/legal/SHOP_COMPLIANCE.md` abbilden und jeden Punkt einer Datei im Code zuordnen.
 4030. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Rechtslage zu bezahlten Zufallsinhalten in Belgien und den Niederlanden festhalten und begründen, warum Chimora keine anbietet.
 4031. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Pflichten aus dem Jugendschutzgesetz (§ 10b, Kostenfallen als Risiko) und die USK-Hinweise "In-Game-Käufe" und "In-Game-Käufe + zufällige Objekte" erklären.
-4032. [P2] Die Datenschutzerklärung `server/site/datenschutz.html` und `privacy.html` um Kaufdaten ergänzen: Transaktionskennung, Produkt, Zeitpunkt, Store, Erstattungsstatus, Rechtsgrundlage Vertragserfüllung, Speicherdauer 10 Jahre nach Handelsrecht.
-4033. [P2] Im Impressum und in den Nutzungsbedingungen eine Kontaktadresse für Kauffragen nennen und darauf hinweisen, dass Erstattungen nur Apple oder Google entscheiden.
+4032. [x] [P2] Die Datenschutzerklärung `server/site/datenschutz.html` und `privacy.html` um Kaufdaten ergänzen: Transaktionskennung, Produkt, Zeitpunkt, Store, Erstattungsstatus, Rechtsgrundlage Vertragserfüllung, Speicherdauer 10 Jahre nach Handelsrecht. *Umgesetzt mit Abweichung: Verkäufer sind Apple und Google, sie bewahren die Rechnungen 10 Jahre auf; unsere Kaufdaten werden mit dem Konto gelöscht (so arbeitet auch der Server).*
+4033. [x] [P2] Im Impressum und in den Nutzungsbedingungen eine Kontaktadresse für Kauffragen nennen und darauf hinweisen, dass Erstattungen nur Apple oder Google entscheiden.
 4034. [x] [P2] Den Text "Rissglas hat keinen Geldwert und kann nicht in Euro zurückgetauscht oder übertragen werden" im Shop unter jedem Rissglas-Paket in einer Zeile zeigen.
 4035. [P2] Gegenüber Spielern immer "Angebot" oder "Paket" schreiben, nie "Geschenk", wenn etwas Geld kostet, damit nichts als kostenlos erscheint.
 4036. [x] [P2] Ein Hinweis "kostenlos spielbar, enthält In-App-Käufe" steht im Titelbildschirm unter dem Logo in kleiner Schrift, damit es vor dem Spielstart klar ist.
 4037. [P2] "Vorher/Nachher-Preise" (durchgestrichene Preise) nur zeigen, wenn das Angebot vorher mindestens 30 Tage zum höheren Preis verkauft wurde (Preisangabenverordnung § 11), und das Datum in `data/shop.json` speichern.
 4038. [P2] In der Shop-Oberfläche steht bei Angeboten mit Vorteil eine kleine Marke "Vorteil im Spiel", damit Eltern und Spieler sehen, was spielerisch wirkt.
 4039. [P2] Die Tageslimits für Käufe und die Altersstufen aus dem Bereich "Ausgabelimits" in den Nutzungsbedingungen beschreiben.
-4040. [P2] Für den Pass in den Nutzungsbedingungen die Laufzeit, die automatische Verlängerung, die Kündigung im Store und den Kündigungsbutton-Hinweis (§ 312k BGB gilt über den Store) beschreiben.
-4041. [P2] Keine "Mitspieler haben gekauft"-Meldungen und keine Rangliste nach Ausgaben anzeigen, damit kein sozialer Kaufdruck entsteht.
-4042. [P2] Kein Angebot nutzt Verknappung mit Stückzahlen wie "nur noch 3"; Mengengrenzen pro Konto sind erlaubt und werden als "einmal pro Konto" beschrieben.
-4043. [P2] Bei jedem Paket die Inhalte vollständig als Liste zeigen, nie nur ein Bild, und den Gegenwert der Einzelteile in Rissglas daneben nennen.
-4044. [P2] Eine Seite `server/site/kaeufe.html` und `purchases.html` bauen, die Rissglas, Preise, Pass, Erstattung und Ausgabelimits einfach erklärt, und in `tools/site/build_site.py` und im `Caddyfile` eintragen.
-4045. [P2] In der Shop-Oberfläche einen Link "Hilfe zu Käufen" auf `/kaeufe` setzen.
-4046. [P2] Für Spieler unter 18 alle Pass-Verlängerungen nur mit Store-Elternfreigabe zulassen und das in `docs/legal/SHOP_COMPLIANCE.md` als Regel festhalten.
+4040. [x] [P2] Für den Pass in den Nutzungsbedingungen die Laufzeit, die automatische Verlängerung, die Kündigung im Store und den Kündigungsbutton-Hinweis (§ 312k BGB gilt über den Store) beschreiben.
+4041. [x] [P2] Keine "Mitspieler haben gekauft"-Meldungen und keine Rangliste nach Ausgaben anzeigen, damit kein sozialer Kaufdruck entsteht.
+4042. [x] [P2] Kein Angebot nutzt Verknappung mit Stückzahlen wie "nur noch 3"; Mengengrenzen pro Konto sind erlaubt und werden als "einmal pro Konto" beschrieben.
+4043. [x] [P2] Bei jedem Paket die Inhalte vollständig als Liste zeigen, nie nur ein Bild, und den Gegenwert der Einzelteile in Rissglas daneben nennen.
+4044. [x] [P2] Eine Seite `server/site/kaeufe.html` und `purchases.html` bauen, die Rissglas, Preise, Pass, Erstattung und Ausgabelimits einfach erklärt, und in `tools/site/build_site.py` und im `Caddyfile` eintragen.
+4045. [x] [P2] In der Shop-Oberfläche einen Link "Hilfe zu Käufen" auf `/kaeufe` setzen.
+4046. [x] [P2] Für Spieler unter 18 alle Pass-Verlängerungen nur mit Store-Elternfreigabe zulassen und das in `docs/legal/SHOP_COMPLIANCE.md` als Regel festhalten.
 4047. [P2] Den Zeitpunkt der Annahme der neuen Nutzungsbedingungen in `profiles` speichern (`terms_version`, `terms_accepted_at`) und vor dem ersten Kauf erneut abfragen, wenn die Version neuer ist.
 4048. [x] [P2] In `docs/legal/SHOP_COMPLIANCE.md` die Apple-Richtlinien 3.1.1 (Käufe), 3.1.2 (Abos) und 5.1.1(v) (Kontolöschung mit Abo) mit Umsetzungsort verlinken.
 4049. [P3] In `docs/legal/SHOP_COMPLIANCE.md` die Google-Richtlinien zu Zahlungen, Abos und Familien zusammenfassen und vermerken, dass die Zielgruppe "13 und älter" bleibt.

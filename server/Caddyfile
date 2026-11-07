@@ -8,7 +8,7 @@
 		X-Frame-Options "DENY"
 		-Server
 	}
-	@pages path /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /lizenzen
+	@pages path /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /kaeufe /purchases /lizenzen
 	header @pages Content-Security-Policy "default-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
 	# The report form (plan item 2899) runs its own script and talks only to this server.
 	header /melden Content-Security-Policy "default-src 'none'; script-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
@@ -71,7 +71,7 @@
 		header Cache-Control "max-age=300"
 		file_server
 	}
-	@site path /melden /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /lizenzen
+	@site path /melden /info /impressum /datenschutz /privacy /nutzungsbedingungen /terms /konto-loeschen /delete-account /support /kaeufe /purchases /lizenzen
 	handle @site {
 		root * /srv/site
 		rewrite * {path}.html

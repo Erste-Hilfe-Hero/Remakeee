@@ -27,7 +27,7 @@ Beim Freund **Melden** antippen. Wir prüfen Meldungen jede Woche, das Ergebnis 
 vom Team. Ohne Spiel geht es über das Formular [Inhalt melden](/melden).
 
 **Kostet das Spiel etwas?**
-Nein, Chimora ist kostenlos. Es gibt keine Werbung und keine Lootboxen. Ein Shop mit optionalen Käufen kann später dazukommen; Kämpfe und Fortschritt lassen sich nie kaufen.
+Nein, Chimora ist kostenlos. Es gibt keine Werbung und keine Lootboxen. Im Shop gibt es optionale Käufe, manche davon mit Vorteilen im Spiel. Alles zu Rissglas, Pass, Erstattung und Ausgabelimits steht unter [Hilfe zu Käufen](/kaeufe).
 
 Weitere Seiten: [Datenschutz](/datenschutz) · [Nutzungsbedingungen](/nutzungsbedingungen) ·
 [Konto löschen](/konto-loeschen) · [Impressum](/impressum) · [Lizenzen](/lizenzen)
@@ -48,8 +48,9 @@ on the new one **Enter a code...**. The code is valid for 7 days. No email neede
 **I found a bug.** Tell us what happened, your device and your friend code (Menu → Account). A screenshot
 helps.
 
-**Does the game cost anything?** No, Chimora is free. No ads and no loot boxes. A shop with optional
-purchases may come later; battles and progress can never be bought.
+**Does the game cost anything?** No, Chimora is free. No ads and no loot boxes. The shop has optional
+purchases, some with advantages in the game. Riftglass, the pass, refunds and spending limits are explained
+under [Help with purchases](/purchases).
 
 More: [Privacy](/privacy) · [Terms](/terms) · [Delete account](/delete-account) · [Imprint](/impressum) ·
 [Licences](/lizenzen)

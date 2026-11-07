@@ -44,9 +44,16 @@ Last updated: November 2026
    the contract, sections 6 and 8 apply.
    **Shop rules.** Chimora is free; the shop is optional. Riftglass does not expire while your account exists.
    The shop is **closed under 13**; minors have fixed monthly limits (13-15: 15 EUR, 16-17: 30 EUR); adults
-   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. The **Wayfarer Pass** renews
-   monthly until cancelled in the store; its benefits end with it. If Apple or Google refunds a purchase, we
+   have a limit of 100 EUR they can lower, or raise to 300 EUR after 7 days. The **Wayfarer Pass** is a store
+   subscription for one month that renews automatically for another month at the shown price until you
+   cancel it. You can cancel at any time to the end of the current month in the subscription settings of
+   Apple or Google, which also provide the legally required cancel button (section 312k German Civil Code);
+   we cannot cancel a store subscription ourselves. Its benefits end with the term; Riftglass already
+   received stays. Players under 18 need a parent's approval in the store for every renewal. If Apple or Google refunds a purchase, we
    take back the content and the Riftglass, even if spent; the shop stays locked until the balance is even.
+   **Questions about purchases:** aa.amuri@icloud.com (please add your friend code and order number). Only
+   Apple or Google decide on refunds; we cannot reverse payments ourselves. A simple explanation of
+   Riftglass, the pass, refunds and limits is under [help with purchases](/purchases).
 8. **Term.** You can end the contract at any time by deleting your account (Settings → Account →
    "Delete account"). We may end it with 4 weeks' notice, or immediately for good cause such as serious
    breaches of section 4; unused paid content is refunded pro rata if we end it with notice.

@@ -95,3 +95,19 @@ func test_products_file_matches_catalog() -> void:
 		if row.apple_type == "AUTO_RENEWABLE_SUBSCRIPTION":
 			sub += 1
 	assert_eq(sub, 1, "one subscription: the Wayfarer Pass")
+
+## Item 4042: limits read as a rule per account, never as scarcity ("only 3 left").
+func test_limits_are_rules_not_scarcity() -> void:
+	assert_eq(ShopMenu.limit_line({"limit": {"per": "account", "n": 1}}), "Once per account.")
+	assert_eq(ShopMenu.limit_line({"limit": {"per": "week", "n": 2}}), "Up to 2 times a week per account.")
+	assert_eq(ShopMenu.limit_line({}), "")
+	var bad: RegEx = RegEx.create_from_string("(?i)only \\d+ left|nur noch \\d+|\\d+ left in stock|players bought|others bought")
+	for o: Dictionary in ShopCatalog.offers():
+		var text: String = str(o.get("name", "")) + " " + str(o.get("desc", ""))
+		assert_null(bad.search(text), "%s uses scarcity or social pressure" % o.id)
+
+## Item 4045: the shop links to the purchases help page in the right language.
+func test_purchases_help_url() -> void:
+	assert_true(LegalInfo.purchases_url() in [LegalInfo.PURCHASES_URL_DE, LegalInfo.PURCHASES_URL_EN])
+	assert_true(LegalInfo.PURCHASES_URL_DE.ends_with("/kaeufe"))
+	assert_true(LegalInfo.PURCHASES_URL_EN.ends_with("/purchases"))
