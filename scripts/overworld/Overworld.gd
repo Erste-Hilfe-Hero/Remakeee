@@ -2931,7 +2931,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.foe_turn1_energy = BattleRules.foe_turn1_energy(d)
 	model.warden_weakened = bool(trainer.get("warden_weakened", false))
 	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
-	model.bond_grace = ShopEffects.bond_grace() if wild else 0
+	model.bond_grace = maxi(ShopEffects.bond_grace(), 1 if GameState.is_newcomer() else 0) if wild else 0
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])

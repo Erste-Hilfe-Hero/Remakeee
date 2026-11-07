@@ -533,6 +533,16 @@ func battle_backdrop() -> String:
 		return backdrop_look.trim_prefix("backdrop_")
 	return ""
 
+## Kin Charms every new game starts with (Ali, 7 Nov: 20 free bond items).
+const START_KIN_CHARMS: int = 20
+## Below this many Spirlings (team and storage) the player counts as new: a failed bond gives
+## the wild Spirling no free hit.
+const NEWCOMER_SPIRLINGS: int = 6
+
+## True while the player has fewer than NEWCOMER_SPIRLINGS Spirlings in team and storage.
+func is_newcomer() -> bool:
+	return party.size() + storage.size() < NEWCOMER_SPIRLINGS
+
 func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter: String, p_look: int = 0) -> void:
 	reset()
 	difficulty = p_difficulty
@@ -540,6 +550,8 @@ func new_game(p_difficulty: Difficulty, p_name: String, p_color: int, p_starter:
 	tamer_name = p_name.strip_edges() if not p_name.strip_edges().is_empty() else DEFAULT_NAMES[tamer_look]
 	tamer_color = clampi(p_color, 0, TAMER_COLORS.size() - 1)
 	money = 500
+	# Easier start (Ali, 7 Nov): 20 free Kin Charms for the first bonds.
+	add_item("kin_charm", START_KIN_CHARMS)
 	in_game = true
 	if not p_starter.is_empty():
 		choose_starter(p_starter)
