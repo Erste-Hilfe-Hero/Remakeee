@@ -234,6 +234,15 @@ func _choose(model: BattleModel, side: int, slot: int = 0) -> BattleAction:
 		return second
 	return best
 
+## Energy every Spirling gains per turn under the variants in play (item 800): 1 normally,
+## 3 under "No Rest" (the +2 the AI reckons with), 0 under "Full Charge".
+static func energy_gain(model: BattleModel) -> int:
+	return maxi(0, int(model.rules.get("energy_per_turn", 1)))
+
+## True under "Stage Still" (item 800): stage changes never land.
+static func stages_locked(model: BattleModel) -> bool:
+	return float(model.rules.get("stages_locked", 0.0)) > 0.0
+
 ## plan_energy (item 617): true when an art it can't pay now, but can after resting this turn,
 ## beats everything affordable by PLAN_MARGIN.
 func _plans_rest(model: BattleModel, side: int, slot: int, best_now: float) -> bool:
@@ -241,7 +250,7 @@ func _plans_rest(model: BattleModel, side: int, slot: int, best_now: float) -> b
 		return false
 	var me: Spirling = model.active_spirling(side, slot)
 	var next: int = mini(me.energy + int(model.rules.get("rest_energy", BattleModel.REST_ENERGY))
-		+ int(model.rules.get("energy_per_turn", 1)), model.max_energy())
+		+ energy_gain(model), model.max_energy())
 	for i: int in me.moves.size():
 		var mv: MoveData = me.moves[i]
 		if not mv.is_damaging() or me.can_afford(mv) or me.cooldown_left(mv) > 1 or me.move_cost(mv) > next:
@@ -303,7 +312,10 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 	var score: float = 0.0
 	for fx: Dictionary in mv.effects:
 		var fx_id: StringName = StringName(fx.get("id", ""))
-		if fx_id == &"stat_change":
+		if fx_id == &"stat_change" and stages_locked(model):
+			# "Stage Still" (item 800): no stage ever moves, so the stage part is worth nothing.
+			continue
+		elif fx_id == &"stat_change":
 			var on_self: bool = bool(fx.get("self", true))
 			var who: Spirling = me if on_self else target
 			var stage: int = who.stage(str(fx.get("stat", "")))
@@ -339,7 +351,8 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 			if not me.status.is_empty() and target.status.is_empty() and not BattleRules.is_immune(target, me.status):
 				spoil += STATUS_BONUS * 2.0 * acc
 		elif fx_id == &"energy_burn" and target.burn_guard <= 0:
-			spoil += BURN_BONUS_PER_ENERGY * float(mini(target.energy, int(fx.get("amount", 1)))) * acc
+			# Burnt Energy comes back faster when everyone gains more per turn ("No Rest", item 800).
+			spoil += BURN_BONUS_PER_ENERGY * float(mini(target.energy, int(fx.get("amount", 1)))) * acc / float(maxi(1, energy_gain(model)))
 		elif fx_id == &"heal_block" and target.heal_block <= 1:
 			spoil += HEAL_BLOCK_BONUS * (1.0 if _can_heal(model, target) else 0.25) * acc
 		elif fx_id == &"stage_steal":
@@ -357,7 +370,7 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 			var lying: int = (model.snares[BattleModel.other(side)] as Array).size()
 			var room: float = maxf(0.0, 1.0 - float(lying) / float(BattleRules.MAX_SNARES))
 			spoil += SNARE_BONUS_PER_BENCH * float(model.swap_candidates(BattleModel.other(side), maxi(target_slot, 0)).size()) * room * room * acc
-		elif fx_id == &"self_stage_after" and expected < float(target.hp):
+		elif fx_id == &"self_stage_after" and expected < float(target.hp) and not stages_locked(model):
 			var st: Dictionary = fx.get("stages", {})
 			for k: String in st:
 				score -= SELF_DROP_COST * float(maxi(0, -int(st[k])))
