@@ -316,7 +316,7 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			var mv: MoveData = me.moves[i]
 			var mult: float = GameState.known_multiplier(mv.element, foe) if foe != null else -1.0
 			b.text = mv.move_name
-			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and mult >= 0.0 else -1
+			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
 			_move_icons[i].texture = ElementIcons.outlined(mv.element)
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]

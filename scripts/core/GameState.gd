@@ -271,7 +271,7 @@ func bench_share() -> float:
 	# The shop's Team Growth Band (plan item 4343): every healthy member gets the fighters' full share.
 	if Billing.unlocked("share_band") > 0:
 		return 1.0
-	return BENCH_XP_SHARE if bench_xp else 0.0
+	return BENCH_XP_SHARE if bench_xp and ShopEffects.owns_setting("bench_lessons") else 0.0
 
 func cycle_battle_speed() -> void:
 	battle_speed = (battle_speed + 1) % BATTLE_SPEEDS.size()

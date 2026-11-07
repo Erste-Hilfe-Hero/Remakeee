@@ -408,8 +408,8 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["text_speed", "Text speed: %s" % String(GameState.TextSpeed.keys()[GameState.text_speed]).capitalize()],
 				["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
 				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
-				["bench_lessons", "Bench lessons: %s" % ("On" if GameState.bench_xp else "Off")],
-				["damage_preview", "Damage preview: %s" % ("On" if GameState.damage_preview else "Off")],
+				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
+				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
 				["play_reminder", "Break reminder: %s" % ("On" if GameState.play_reminder else "Off")],
@@ -453,10 +453,30 @@ func _run_setting_group(title: String, group: String) -> void:
 			return
 		SaveManager.save_settings()
 
+## [param value] for a setting row, or "Shop" while its shop unlock is missing (Ali, 7 Nov).
+static func shop_or(key: String, value: String) -> String:
+	return value if ShopEffects.owns_setting(key) else "Shop"
+
+## Shows where to buy [param key] and returns true when the setting is still locked.
+func locked_setting(key: String) -> bool:
+	if ShopEffects.owns_setting(key):
+		return false
+	toast("In the shop: %s" % ShopEffects.setting_offer_name(key))
+	return true
+
+## Next text speed; Fast only with the shop's Fast Text.
+static func next_text_speed(current: int) -> GameState.TextSpeed:
+	var next: int = (current + 1) % GameState.TextSpeed.size()
+	if next == GameState.TextSpeed.FAST and not ShopEffects.owns_setting("fast_text"):
+		next = GameState.TextSpeed.SLOW
+	return next as GameState.TextSpeed
+
 func _settings_action(key: String, dir: int = 1) -> void:
+	if key in ShopEffects.SETTING_UNLOCKS and locked_setting(key):
+		return
 	match key:
 		"text_speed":
-			GameState.text_speed = ((GameState.text_speed + 1) % GameState.TextSpeed.size()) as GameState.TextSpeed
+			GameState.text_speed = next_text_speed(GameState.text_speed)
 		"battle_speed":
 			GameState.cycle_battle_speed()
 		"auto_battle":
@@ -594,7 +614,10 @@ func run_display() -> void:
 		var idx: int = await pick("Display and access", _rows_to_entries(rows))
 		if idx < 0:
 			return
-		match str(rows[idx][0]):
+		var dkey: String = str(rows[idx][0])
+		if dkey in ShopEffects.SETTING_UNLOCKS and locked_setting(dkey):
+			continue
+		match dkey:
 			"battery":
 				GameState.battery_saver = not GameState.battery_saver
 			"motion":
@@ -639,10 +662,10 @@ static func display_rows() -> Array[Array]:
 		["contrast", "High contrast: %s" % ("On" if GameState.high_contrast else "Off")],
 		["large_text", "Large text: %s" % ("On" if GameState.large_text else "Off")],
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
-		["day_night", "Day and night: %s" % ("On" if GameState.day_night else "Off")],
-		["weather", "Weather: %s" % ("On" if GameState.weather else "Off")],
-		["minimap", "Minimap: %s" % MINIMAP_NAMES[GameState.minimap]],
-		["retro", "Retro filter: %s" % retro],
+		["day_night", "Day and night: %s" % shop_or("day_night", "On" if GameState.day_night else "Off")],
+		["weather", "Weather: %s" % shop_or("weather", "On" if GameState.weather else "Off")],
+		["minimap", "Minimap: %s" % shop_or("minimap", MINIMAP_NAMES[GameState.minimap])],
+		["retro", "Retro filter: %s" % shop_or("retro", retro)],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
 	]
 

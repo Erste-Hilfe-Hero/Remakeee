@@ -1,7 +1,7 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 28,
+ "catalog_version": 29,
  "offers": [
   {
    "id": "rg_glass_100",
@@ -2901,6 +2901,132 @@
    "duration": "permanent",
    "slot": "gift_card",
    "plan": 4285,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_damage_preview",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Damage Preview",
+   "desc": "Before you pick an art, see how much of the foe's Vigor it takes. Switch it on or off in Settings. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.damage_preview",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "damage_preview"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_minimap",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Minimap",
+   "desc": "A small map in the top corner shows where you are and what you found. Permanent.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.minimap",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "minimap"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_fast_text",
+   "kind": "comfort",
+   "tab": "advantages",
+   "name": "Fast Text",
+   "desc": "Adds the Fast text speed: talks and battle lines appear at once. Permanent.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.fast_text",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "fast_text"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_retro_filter",
+   "kind": "cosmetic",
+   "tab": "looks",
+   "name": "Retro Filter",
+   "desc": "Pick old-style colours for each era you reached. Only looks, no effect. Permanent.",
+   "rg_price": 200,
+   "eur_cents": 199,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.retro_filter",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "retro_filter"
+    }
+   ],
+   "league_scope": "look",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_sky_control",
+   "kind": "comfort",
+   "tab": "advantages",
+   "name": "Sky Control",
+   "desc": "Switch weather and the day and night light on or off as you like. Only looks. Permanent.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.sky_control",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "sky_control"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_bench_lessons",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Bench Lessons",
+   "desc": "Spirlings on the bench grow along after every won battle. Switch it in Settings. Permanent.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.bench_lessons",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "bench_lessons"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
    "min_band": 13,
    "ready": true
   }

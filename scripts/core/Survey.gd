@@ -68,6 +68,8 @@ static func visited(map_id: String) -> bool:
 
 ## Whether the minimap shows on [param m] for the current setting.
 static func minimap_shows(m: MapData) -> bool:
+	if not ShopEffects.owns_setting("minimap"):
+		return false
 	match GameState.minimap:
 		"off":
 			return false

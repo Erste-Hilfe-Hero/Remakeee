@@ -705,6 +705,8 @@ func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true
 	Billing.state = {"unlocks": {}}
+	assert_eq(GameState.bench_share(), 0.0, "Bench Lessons is a shop unlock (Ali, 7 Nov)")
+	Billing.state = {"unlocks": {"bench_lessons": 1}}
 	assert_eq(GameState.bench_share(), GameState.BENCH_XP_SHARE)
 	Billing.state = {"unlocks": {"share_band": 1}}
 	assert_eq(GameState.bench_share(), 1.0)
