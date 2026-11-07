@@ -401,6 +401,29 @@ static func variant_conflict(ids: Array[String]) -> String:
 				return "%s and %s don't go together." % [all[ids[i]].label, all[ids[j]].get("label", ids[j])]
 	return ""
 
+## Up to [param count] variants that go together, drawn from [param seed_value] (item 799): the
+## same seed always gives the same list, in the file's sorted order of ids.
+static func draw_variants(seed_value: int, count: int) -> Array[String]:
+	var r := RandomNumberGenerator.new()
+	r.seed = seed_value
+	var pool: Array = variants().keys()
+	pool.sort()
+	var out: Array[String] = []
+	while out.size() < mini(count, MAX_VARIANTS) and not pool.is_empty():
+		var id: String = str(pool.pop_at(r.randi_range(0, pool.size() - 1)))
+		var trial: Array[String] = out.duplicate()
+		trial.append(id)
+		if variant_conflict(trial).is_empty():
+			out = trial
+	return out
+
+## "Glass Blades, Late End" for [param ids], translated.
+static func variant_names(ids: Array[String]) -> String:
+	var names: PackedStringArray = []
+	for id: String in ids:
+		names.append(Loc.t(str(variants().get(id, {}).get("label", id))))
+	return ", ".join(names)
+
 ## The merged keys of [param ids] over the normal values, or {} when they conflict.
 static func variant_values(ids: Array[String]) -> Dictionary:
 	var out: Dictionary = VARIANT_KEYS.duplicate()

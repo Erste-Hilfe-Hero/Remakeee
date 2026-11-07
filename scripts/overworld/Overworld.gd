@@ -1772,9 +1772,9 @@ func _action_rift_tower(args: PackedStringArray, _speaker: NPC) -> void:
 	GameState.heal_party()
 	var cleared: int = 0
 	while cleared < RiftTower.floors(t):
-		await say([RiftTower.floor_label(t, cleared)] as Array[String])
+		await say([run.floor_card(cleared)] as Array[String])
 		var info: Dictionary = {"name": Gauntlet.new(run.seed_value, 1).echo_name(cleared), "ai": RiftTower.ai_for(cleared),
-			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared)}
+			"money": run.prize(cleared), "shade": RiftTower.shade(t, cleared), "variants": run.variants_for(cleared)}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(run.team(cleared), false, info)
 		busy = true
@@ -1857,6 +1857,8 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	while true:
 		var ask: String = Loc.t("This week: %s, rule %s. Five echoes at ring %d. Best this week: %d of %d.") % [
 			Loc.t(str(BattleRules.FIELDS[ch.field].label)), Loc.t(str(BattleRules.RULES[ch.rule].label)), ch.level, int(rec.best), WeeklyChallenge.ROUNDS]
+		if not ch.variant.is_empty():
+			ask += "\n" + ch.variant_line()
 		ask += "\n" + Loc.t("Tries with prizes left: %d of %d.") % [WeeklyChallenge.prize_tries_left(rec), WeeklyChallenge.PRIZE_TRIES]
 		var pick: int = await menu.pick_strings(ask, [Loc.t("Try"), Loc.t("Preview"), Loc.t("Archive")] as Array[String])
 		if pick == 0:
@@ -1883,7 +1885,7 @@ func _action_weekly(_args: PackedStringArray, _speaker: NPC) -> void:
 	var wins: int = 0
 	var turns_total: int = 0
 	while wins < WeeklyChallenge.ROUNDS:
-		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field}
+		var info: Dictionary = {"name": "Weekly Echo %d" % (wins + 1), "ai": 3, "rule": ch.rule, "field": ch.field, "variants": ch.variant_ids()}
 		busy = false
 		var outcome: BattleModel.Outcome = await start_battle(ch.team(wins), false, info)
 		busy = true
@@ -2800,6 +2802,10 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.boss_difficulty = GameState.difficulty
 	model.field = str(trainer.get("field", map.field))
 	model.foe_rule = str(trainer.get("rule", ""))
+	# Rule variants of a tower floor or the weekly challenge (item 799).
+	var vids: Variant = trainer.get("variants", [])
+	if vids is Array:
+		model.variants.assign(vids)
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()

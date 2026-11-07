@@ -315,3 +315,9 @@ T.update({
 "This replay uses a rule variant this version doesn't know: %s.": "Diese Wiederholung nutzt eine Regelvariante, die diese Version nicht kennt: %s.",
 "This replay's rule variants don't go together.": "Die Regelvarianten dieser Wiederholung passen nicht zusammen.",
 })
+
+# Plan area 2, item 799: variants on tower floors and in the weekly challenge.
+T.update({
+"Rule variants: %s": "Regelvarianten: %s",
+"Rule variant: %s. %s": "Regelvariante: %s. %s",
+})
