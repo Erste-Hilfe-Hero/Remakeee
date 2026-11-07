@@ -49,6 +49,16 @@ static func can_rematch(def: Dictionary, map_id: String, flags: Dictionary, reco
 	var last: Dictionary = records.get("rematch", {})
 	return str(last.get(beaten_flag(def, map_id), "")) != today
 
+## Rematch Key (shop item 4841): a beaten Wayfarer that already had today's rematch.
+const REMATCH_KEY: String = "rg_rematch_key"
+
+static func can_rematch_with_key(def: Dictionary, map_id: String, flags: Dictionary, records: Dictionary, today: String) -> bool:
+	if not is_trainer(def) or not is_beaten(def, map_id, flags):
+		return false
+	if bool(def.get("leaves", false)) or bool(def.get("no_rematch", false)):
+		return false
+	return not can_rematch(def, map_id, flags, records, today)
+
 ## The rematch team: the same Spirlings, all raised by the same amount so the strongest one
 ## matches the party's best level (never above the level cap, never below the first fight).
 static func rematch_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, party_top: int, cap: int, difficulty: int = -1) -> Array[Spirling]:

@@ -294,7 +294,7 @@ T = {
 	"10 Stück. Ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger ist sofort gewonnen, mit vollem Wachstum.",
 "Rematch Key":
 	"Rematch-Schlüssel",
-"A beaten Wanderer can be challenged again on the same day.":
+"A beaten Wayfarer can be challenged again on the same day.":
 	"Ein besiegter Wanderer kann am selben Tag erneut gefordert werden.",
 "Warden Lore":
 	"Wächterkunde",
@@ -646,4 +646,7 @@ T = {
 "Use a Battle Skip on %s? Your team wins it at once (%d left).": "Kampf-Überspringer gegen %s nutzen? Dein Team gewinnt sofort (noch %d).",
 "Skip": "Überspringen", "Fight": "Kämpfen",
 "Battle skipped: %s is beaten.": "Kampf übersprungen: %s ist besiegt.",
+"Rematch Key": "Revanche-Schlüssel",
+"Talk to a beaten Wayfarer who already battled you today: one more rematch. Used up.": "Sprich einen besiegten Wanderer an, der heute schon gegen dich gekämpft hat: eine Revanche mehr. Wird verbraucht.",
+"%s already battled you today. Use a Rematch Key (%d left)?": "%s hat heute schon gegen dich gekämpft. Revanche-Schlüssel nutzen (noch %d)?",
 }

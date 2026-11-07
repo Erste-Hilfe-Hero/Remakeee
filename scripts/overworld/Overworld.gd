@@ -2391,7 +2391,12 @@ func offer_second_trial(n: NPC) -> bool:
 ## Offers a beaten Wayfarer's daily rematch. Returns false if there is none or the player declines.
 func offer_rematch(n: NPC) -> bool:
 	var def: Dictionary = n.definition
-	if GameState.first_healthy_index() < 0 or not TrainerData.can_rematch(def, map.id, GameState.flags, GameState.records, _today()):
+	if GameState.first_healthy_index() < 0:
+		return false
+	# Today's rematch is used: a Rematch Key from the shop opens one more (item 4841).
+	var keyed: bool = not TrainerData.can_rematch(def, map.id, GameState.flags, GameState.records, _today())
+	if keyed and (GameState.item_count(TrainerData.REMATCH_KEY) <= 0
+			or not TrainerData.can_rematch_with_key(def, map.id, GameState.flags, GameState.records, _today())):
 		return false
 	busy = true
 	player.frozen = true
@@ -2399,13 +2404,18 @@ func offer_rematch(n: NPC) -> bool:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	var who: String = str(def.get("trainer", def.get("id", "Wayfarer")))
-	var go: bool = await menu.confirm("%s wants a rematch. Battle?" % who)
+	var ask: String = Loc.t("%s wants a rematch. Battle?") % who
+	if keyed:
+		ask = Loc.t("%s already battled you today. Use a Rematch Key (%d left)?") % [who, GameState.item_count(TrainerData.REMATCH_KEY)]
+	var go: bool = await menu.confirm(ask)
 	menu.queue_free()
 	if not go:
 		VirtualPad.set_wanted(true)
 		player.frozen = false
 		busy = false
 		return false
+	if keyed:
+		GameState.take_item(TrainerData.REMATCH_KEY)
 	var top: int = 1
 	for s: Spirling in GameState.party:
 		top = maxi(top, s.level)

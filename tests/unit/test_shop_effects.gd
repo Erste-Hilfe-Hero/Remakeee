@@ -417,6 +417,19 @@ func test_battle_skip_wins_through_the_model_and_replays() -> void:
 	GameState.party = party
 	GameState.inventory = inv
 
+func test_rematch_key_opens_a_second_rematch_the_same_day() -> void:
+	var def: Dictionary = {"id": "bram", "trainer": "Ridgewalker Bram", "team": [{"species": "Puddlet", "level": 7}]}
+	var flag: String = TrainerData.beaten_flag(def, "crowcrest")
+	assert_false(TrainerData.can_rematch_with_key(def, "crowcrest", {}, {}, "2026-11-01"), "not beaten yet")
+	var flags: Dictionary = {flag: true}
+	assert_false(TrainerData.can_rematch_with_key(def, "crowcrest", flags, {}, "2026-11-01"), "the free rematch comes first")
+	var records: Dictionary = {"rematch": {flag: "2026-11-01"}}
+	assert_true(TrainerData.can_rematch_with_key(def, "crowcrest", flags, records, "2026-11-01"))
+	var leaving: Dictionary = def.duplicate()
+	leaving["leaves"] = true
+	assert_false(TrainerData.can_rematch_with_key(leaving, "crowcrest", flags, records, "2026-11-01"))
+	assert_true(bool(Database.item(TrainerData.REMATCH_KEY).get("shop", false)))
+
 func test_team_growth_band_gives_the_bench_a_full_share() -> void:
 	var bench: bool = GameState.bench_xp
 	GameState.bench_xp = true

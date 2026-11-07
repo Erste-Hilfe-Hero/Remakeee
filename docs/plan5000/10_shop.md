@@ -887,7 +887,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4838. [x] [P1] (P2W) Einen "Begegnungsruf" (`rg_encounter_call`) anlegen: 30 Schritte lang doppelt so viele wilde Begegnungen, Preis 100 Rissglas.
 4839. [x] [P1] (P2W) Einen "Kampf-Überspringer" (`rg_skip_battle`) anlegen: ein wilder Kampf gegen einen Gegner mit mindestens 10 Ringen weniger wird sofort gewonnen, mit vollem Wachstum, Preis 100 Rissglas pro 10 Stück.
 4840. [x] [P1] (P2W) Kampf-Überspringer laufen über das normale Kampfmodell mit Spieler-KI im Hintergrund und erzeugen ein Ergebnis-Ereignis, damit Wachstum und Münzen korrekt sind.
-4841. [P1] (P2W) Einen "Rematch-Schlüssel" anlegen: ein besiegter Wanderer kann am selben Tag erneut gefordert werden, Preis 100 Rissglas.
+4841. [x] [P1] (P2W) Einen "Rematch-Schlüssel" anlegen: ein besiegter Wanderer kann am selben Tag erneut gefordert werden, Preis 100 Rissglas.
 4842. [P2] (P2W) Eine "Wiederholungs-Rast" anlegen: das Team heilt sich nach jedem Kampf vollständig, dauerhaft, Preis 1000 Rissglas.
 4843. [P2] (P2W) Einen "Tagesfund-Kompass" anlegen: der Tagesfund (Daily Find) zeigt seinen Ort auf der Karte, dauerhaft, Preis 400 Rissglas.
 4844. [P2] (P2W) Einen "Zweiten Tagesfund" anlegen: jeden Tag ein zusätzlicher Tagesfund mit festem Gegenstand (Tonic), dauerhaft, Preis 600 Rissglas.
