@@ -689,4 +689,7 @@ T = {
 "Stop using it": "Nicht mehr nutzen", "Use in battles": "In Kämpfen nutzen",
 "Battles show the place you are in again.": "Kämpfe zeigen wieder den Ort, an dem du bist.",
 "Battles now show %s.": "Kämpfe zeigen jetzt %s.",
+"Use for text": "Für Texte nutzen",
+"Text shows in the plain box again.": "Texte stehen wieder im einfachen Kasten.",
+"Text now shows in %s.": "Texte stehen jetzt im %s.",
 }

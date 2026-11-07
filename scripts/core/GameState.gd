@@ -33,6 +33,8 @@ var tamer_look: int = 0
 var jacket: String = ""
 ## Shop battle backdrop shown (unlock key such as "backdrop_moon_lake", item 4281); "" for none.
 var backdrop_look: String = ""
+## Shop text frame on the dialogue box (unlock key such as "frame_vine", item 4282); "" for none.
+var text_frame: String = ""
 const TAMER_SPRITES: Array[String] = ["tamer", "tamer_f"]
 const DEFAULT_NAMES: Array[String] = ["Corin", "Liora"]
 ## Coat colours on the title screen: teal, rust, ochre, plum (boy = teal, girl = rust by default).
@@ -449,6 +451,7 @@ func reset() -> void:
 	shop_boosts = {}
 	jacket = ""
 	backdrop_look = ""
+	text_frame = ""
 	team_presets.clear()
 	echo_cores.clear()
 	iron_oath = false
@@ -490,6 +493,12 @@ func body_color() -> Color:
 	if not c.is_empty() and Billing.unlocked(jacket) > 0:
 		return Color(c)
 	return TAMER_COLORS[clampi(tamer_color, 0, TAMER_COLORS.size() - 1)]
+
+## The dialogue frame kind: the worn shop frame while owned, else "" (the plain box).
+func dialogue_frame() -> String:
+	if text_frame.begins_with("frame_") and Billing.unlocked(text_frame) > 0:
+		return text_frame.trim_prefix("frame_")
+	return ""
 
 ## The backdrop kind for normal battles: the worn shop backdrop while owned, else "".
 func battle_backdrop() -> String:
@@ -545,7 +554,7 @@ func to_dict() -> Dictionary:
 	for s: Spirling in storage:
 		storage_d.append(s.to_dict())
 	return {
-		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket, "backdrop": backdrop_look},
+		"tamer": {"name": tamer_name, "color": tamer_color, "look": tamer_look, "jacket": jacket, "backdrop": backdrop_look, "frame": text_frame},
 		"starter": starter,
 		"difficulty": difficulty,
 		"region": region,
@@ -592,6 +601,7 @@ func from_dict(d: Dictionary) -> void:
 	tamer_look = clampi(int(wayfarer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
 	jacket = str(wayfarer.get("jacket", "")) if wayfarer.get("jacket") is String else ""
 	backdrop_look = str(wayfarer.get("backdrop", "")) if wayfarer.get("backdrop") is String else ""
+	text_frame = str(wayfarer.get("frame", "")) if wayfarer.get("frame") is String else ""
 	difficulty = clampi(int(d.get("difficulty", Difficulty.TAMER)), 0, Difficulty.size() - 1) as Difficulty
 	region = str(d.get("region", "veydal"))
 	rifts_sealed.assign(d.get("rifts", []))
