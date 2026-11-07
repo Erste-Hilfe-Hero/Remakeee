@@ -37,6 +37,23 @@ Diese Regeln gelten für jedes Angebot. Tests und `tools/ip_check.sh` prüfen si
    täglich mit dem Wanderer-Pass), nie in der Spielwelt. Händler in der Welt nehmen nur Münzen.
 10. **Guthaben liegt nur auf dem Server** (`wallets`, Buchungen in `ledger`), nie im Spielstand.
 
+## Ohne Kauf erreichbar
+
+Jeder Spielinhalt bleibt ohne Kauf erreichbar: alle Regionen, Risse, Wächter, Spirlings, Ligen und die
+Story. Käufe machen Wege nur kürzer (mehr Erfahrung, Heilung, Fangen, Plätze), sie schalten keine
+Inhalte frei. Planwert für die Story ohne Kauf: **etwa 25 Stunden** (Hauptgeschichte bis zum letzten
+Wächter, ohne Nebenziele). Kosmetik ändert nur das Aussehen.
+
+## Planwerte (nur Rechengrößen, kein Tracking)
+
+| Größe | Planwert |
+| --- | --- |
+| Anteil zahlender Spieler | 3 % |
+| Durchschnittlicher Umsatz je Zahler | 12 € im Monat |
+
+Diese Werte dienen nur zum Rechnen. Das Spiel misst sie nicht: keine Analytics, keine Kaufstatistik je
+Spieler außerhalb der Belege, die für Gutschrift und Erstattung nötig sind.
+
 ## Technik in Kürze
 
 | Teil | Datei |
@@ -61,3 +78,131 @@ Waymarks (the endgame currency) are only earned by playing. They are never sold 
 for the premium currency, never traded and never sent to friends. In code `Waymarks.TRANSFERABLE`
 is false, there is no "shop", "gift" or "trade" source in `Waymarks.SOURCES`, and they are no bag
 item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
+
+## Alle Angebote
+
+<!-- shop-table:start -->
+
+_Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
+
+115 Angebote (Katalog v27): 76 Vorteil, 32 Kosmetik, 7 Rissglas.
+
+| Kennung | Name | Euro | Rissglas | Art | Liga |
+| --- | --- | --- | --- | --- | --- |
+| `rg_glass_100` | 100 Riftglass | 0,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_200` | 200 Riftglass | 1,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_500` | 500 Riftglass | 4,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_1000` | 1000 Riftglass | 9,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_2000` | 2000 Riftglass | 19,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_5000` | 5000 Riftglass | 49,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_glass_10000` | 10000 Riftglass | 99,99 € | - | Rissglas | keine Liga-Wirkung |
+| `rg_ring_tonic` | Ring Tonic | 0,99 € | 100 | Vorteil | nur Offene Liga |
+| `rg_ring_tonic_5` | Great Ring Tonic | 3,99 € | 400 | Vorteil | nur Offene Liga |
+| `rg_ring_elixir` | Ring Elixir | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_growth_x2` | Growth Crystal | 1,99 € | 200 | Vorteil | nur Offene Liga |
+| `rg_growth_x3` | Great Growth Crystal | 3,99 € | 400 | Vorteil | nur Offene Liga |
+| `rg_share_band` | Team Growth Band | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_ring_tonic_x5` | Ring Tonic x5 | 3,99 € | 400 | Vorteil | nur Offene Liga |
+| `rg_riftheart` | Riftheart | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_glass_shield` | Glass Shield | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_clear_shard` | Clear Shard | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_whirl_glass` | Whirl Glass | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_vigor_glass` | Core Glass | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_prism_ember` | Ember Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_prism_tide` | Tide Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_prism_bloom` | Bloom Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_prism_volt` | Volt Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_prism_stone` | Stone Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_prism_gale` | Gale Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_prism_lumen` | Lumen Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_prism_umbra` | Umbra Prism | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_hold_stone` | Hold Stone | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_echo_ring` | Echo Ring | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_script_ember` | Rift Script: Glowglass Slash | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_script_tide` | Rift Script: Floodglass Wave | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_script_bloom` | Rift Script: Vineglass Sting | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_script_volt` | Rift Script: Boltglass Bite | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_script_stone` | Rift Script: Rockglass Ram | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_script_gale` | Rift Script: Stormglass Cut | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_script_lumen` | Rift Script: Lightglass Beam | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_script_umbra` | Rift Script: Duskglass Grip | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_move_memory` | Technique Memory | 5,99 € | 600 | Vorteil | nur Offene Liga |
+| `rg_overcharge` | Overcharge Core | 0,99 € | 100 | Vorteil | nur Offene Liga |
+| `rg_overcharge_x5` | Overcharge Core x5 | 3,99 € | 400 | Vorteil | nur Offene Liga |
+| `rg_rift_breath` | Rift Breath | 1,99 € | 200 | Vorteil | nur Offene Liga |
+| `rg_rift_breath_full` | Great Rift Breath | 3,99 € | 400 | Vorteil | nur Offene Liga |
+| `rg_last_stand` | Will to Win | 2,99 € | 300 | Vorteil | nur Offene Liga |
+| `rg_glass_spark` | Glass Spark | 0,99 € | 100 | Vorteil | nur Offene Liga |
+| `rg_glass_tonic` | Riftglass Tonic | 1,99 € | 200 | Vorteil | nur Offene Liga |
+| `rg_battle_supply` | Battle Supply | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_bond_seal` | Bond Seal | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_echo_scent` | Echo Scent | 0,99 € | 100 | Vorteil | nur Offene Liga |
+| `rg_echo_scent_x10` | Echo Scent x10 | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_team_slot_6` | Sixth Team Place | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_storage_box` | Storage Box +1 | 2,99 € | 300 | Vorteil | nur Offene Liga |
+| `rg_pass` | Wayfarer Pass | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_starter` | Starter Pack | 2,99 € | - | Vorteil | nur Offene Liga |
+| `rg_wayfarer_pack` | Wayfarer Pack | 9,99 € | - | Vorteil | nur Offene Liga |
+| `rg_rift_pack_1` | Rift Pack 1 | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_rift_pack_2` | Rift Pack 2 | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_rift_pack_3` | Rift Pack 3 | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_rift_pack_4` | Rift Pack 4 | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_rift_pack_5` | Rift Pack 5 | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_rift_pack_6` | Rift Pack 6 | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_comeback` | Welcome Back Pack | 4,99 € | - | Vorteil | nur Offene Liga |
+| `rg_spark_forge` | Spark Forge | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_spark_shard` | Spark Shard | 1,99 € | 200 | Vorteil | nur Offene Liga |
+| `rg_temper_shift` | Temper Shift | 3,99 € | 400 | Vorteil | nur Offene Liga |
+| `rg_spark_shard_x5` | Five Spark Shards | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_power_core` | Power Core | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_gleam_prism` | Gleam Prism | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_battle_speed` | Battle Speed x4 | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_auto_battle` | Auto Battle | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_coin_boost` | Coin Gleam | 1,99 € | 200 | Vorteil | keine Liga-Wirkung |
+| `rg_fast_travel` | Signpost | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_encounter_call` | Encounter Call | 0,99 € | 100 | Vorteil | keine Liga-Wirkung |
+| `rg_skip_battle` | Battle Skip x10 | 0,99 € | 100 | Vorteil | keine Liga-Wirkung |
+| `rg_rematch_key` | Rematch Key | 0,99 € | 100 | Vorteil | keine Liga-Wirkung |
+| `rg_warden_lore` | Warden Lore | 5,99 € | 600 | Vorteil | keine Liga-Wirkung |
+| `rg_rift_anchor` | Rift Anchor | 0,99 € | 100 | Vorteil | keine Liga-Wirkung |
+| `rg_warden_weaken` | Warden Weakener | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
+| `rg_warden_bundle` | Warden Bundle | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_league_power` | League Power Pack | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_echo_amp` | Echo Amplifier | 7,99 € | 800 | Vorteil | nur Offene Liga |
+| `rg_coins_5000` | Coin Purse | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
+| `rg_coins_20000` | Great Coin Purse | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_merchant_discount` | Merchant Discount | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_jacket_moss` | Moss Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_jacket_plum` | Plum Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_jacket_slate` | Slate Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_jacket_rust` | Rust Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_jacket_sky` | Sky Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_jacket_sand` | Sand Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_jacket_ink` | Ink Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_jacket_rose` | Rose Jacket | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_backdrop_moon_lake` | Backdrop: Moon Lake | 2,99 € | 300 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_backdrop_copper_wood` | Backdrop: Copper Wood | 2,99 € | 300 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_backdrop_mist_harbour` | Backdrop: Mist Harbour | 2,99 € | 300 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_backdrop_star_meadow` | Backdrop: Star Meadow | 2,99 € | 300 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_backdrop_ash_field` | Backdrop: Ash Field | 2,99 € | 300 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_backdrop_glass_grotto` | Backdrop: Glass Grotto | 2,99 € | 300 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_frame_vine` | Text Frame: Vine | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_frame_brass` | Text Frame: Brass | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_frame_wave` | Text Frame: Wave | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_frame_lantern` | Text Frame: Lantern | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_frame_frost` | Text Frame: Frost | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_hat_wide_brim` | Hat: Wide Brim | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_hat_wool_cap` | Hat: Wool Cap | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_hat_feather_hat` | Hat: Feather Hat | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_hat_lantern_hood` | Hat: Lantern Hood | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_hat_straw_hat` | Hat: Straw Hat | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_hat_tricorn` | Hat: Tricorn | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_card_frame_leaf` | Card Frame: Leaf | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_card_frame_shell` | Card Frame: Shell | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_card_frame_gear` | Card Frame: Gear | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_card_frame_star` | Card Frame: Star | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_card_frame_ripple` | Card Frame: Ripple | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_card_frame_ember` | Card Frame: Ember | 0,99 € | 100 | Kosmetik | überall sichtbar, keine Wirkung |
+| `rg_gift_cards` | Gift Cards: 8 Motifs | 3,99 € | 400 | Kosmetik | überall sichtbar, keine Wirkung |
+
+<!-- shop-table:end -->
