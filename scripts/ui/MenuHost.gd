@@ -341,6 +341,9 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"volume": "All sound. Left and right change it in steps of 10.",
 	"music": "Music only. Left and right change it in steps of 10.",
 	"sfx": "Sound effects only. Left and right change it in steps of 10.",
+	"voice_volume": "Text voice and Spirling cries. Left and right change it in steps of 10.",
+	"ambience": "Wind, water and other sounds of a place. Left and right change it in steps of 10.",
+	"mono": "Both ears hear the same sound, for hearing on one side.",
 	"sound_test": "Listen to every tune, sound and cry you know.",
 	"text_voice": "Short blips while a line types out.",
 	"sound_captions": "Important sounds also show as a short text at the top.",
@@ -418,13 +421,16 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["volume", "Volume: %d%%" % int(round(GameState.volume * 100.0))],
 				["music", "Music: %d%%" % int(round(GameState.music_volume * 100.0))],
 				["sfx", "Sound effects: %d%%" % int(round(GameState.sfx_volume * 100.0))],
+				["voice_volume", "Voices: %d%%" % int(round(GameState.voice_volume * 100.0))],
+				["ambience", "Ambience: %d%%" % int(round(GameState.ambience_volume * 100.0))],
+				["mono", "Mono sound: %s" % ("On" if GameState.mono_audio else "Off")],
 				["text_voice", "Text voice: %s" % ("On" if GameState.text_voice else "Off")],
 				["sound_captions", "Sound captions: %s" % ("On" if GameState.sound_captions else "Off")],
 				["sound_test", "Sound test..."],
 			]
 	return rows
 
-const SLIDER_KEYS: Array[String] = ["volume", "music", "sfx"]
+const SLIDER_KEYS: Array[String] = ["volume", "music", "sfx", "voice_volume", "ambience"]
 
 static func _rows_to_entries(rows: Array) -> Array[Dictionary]:
 	var entries: Array[Dictionary] = []
@@ -470,6 +476,17 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.apply_volume()
 		"sfx":
 			GameState.sfx_volume = step_volume(GameState.sfx_volume, dir)
+			GameState.apply_volume()
+			Sound.sfx("confirm")
+		"voice_volume":
+			GameState.voice_volume = step_volume(GameState.voice_volume, dir)
+			GameState.apply_volume()
+			Sound.text_blip("player", "a")
+		"ambience":
+			GameState.ambience_volume = step_volume(GameState.ambience_volume, dir)
+			GameState.apply_volume()
+		"mono":
+			GameState.mono_audio = not GameState.mono_audio
 			GameState.apply_volume()
 			Sound.sfx("confirm")
 		"text_voice":
