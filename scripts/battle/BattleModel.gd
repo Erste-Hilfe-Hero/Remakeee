@@ -61,6 +61,8 @@ var _turn_drag: Dictionary = {}
 var _partner_slot: int = -1
 ## Rift boss id (BattleRules.BOSSES) for the foe in slot 0, or "".
 var foe_boss: String = ""
+## Extra Energy the foe side gains at the end of the first turn (Rift-Born, item 749).
+var foe_turn1_energy: int = 0
 ## Energy each side starts without (Tailwind on Story cuts the foe's, item 737).
 var start_energy_cut: Array[int] = [0, 0]
 ## Warden Weakener (shop items 4885, 4889): the foe team starts with this share of its Vigor.
@@ -891,6 +893,9 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 				gain += int(rule.get("foe_energy", 0))
 			if rule_turned and rule_turn_full:
 				gain += int(BattleRules.turning(rule_id).get("full_foe_energy", 0))
+		# The turn counter moves on after this, so 0 is the end of the first turn.
+		if turn == 0:
+			gain += foe_turn1_energy
 	change_energy(side, gain, slot)
 
 func _phase_faint_check() -> void:

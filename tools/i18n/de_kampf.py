@@ -78,12 +78,12 @@ T.update({
 T.update({
 "Bonus goal: %s.": "Bonusziel: %s.",
 "win within %d turns": "gewinne in höchstens %d Runden",
-"win without anyone on your side fainting": "gewinne, ohne dass jemand auf deiner Seite umfällt",
+"win with nobody fainting": "gewinne, ohne dass wer umfällt",
 "win without resting": "gewinne, ohne zu rasten",
-"win using only %s arts": "gewinne nur mit %s-Techniken",
-"win sending out at most %d Spirlings": "gewinne mit höchstens %d eingesetzten Spirlings",
-"win with at least %d%% Vigor left in your team": "gewinne mit mindestens %d %% Kraft im Team",
-"win setting off at least %d reactions": "gewinne mit mindestens %d Reaktionen",
+"win with %s arts only": "gewinne nur mit %s-Techniken",
+"win using at most %d Spirlings": "gewinne mit max. %d Spirlings",
+"win with %d percent Vigor left": "gewinne mit %d Prozent Kraft",
+"win with %d+ reactions": "gewinne mit %d+ Reaktionen",
 "Bonus goal met!": "Bonusziel erreicht!",
 "You get %d Echo Crystal shard(s).": "Du erhältst %d Echo-Kristall-Splitter.",
 "%d shards join into an Echo Crystal!": "%d Splitter fügen sich zu einem Echo-Kristall!",
@@ -301,4 +301,10 @@ T.update({
 "yes": "ja",
 "Ring cap: %s": "Ring-Obergrenze: %s",
 "rises with each sealed Rift (R%d to R%d)": "steigt mit jedem versiegelten Riss (R%d bis R%d)",
+})
+
+# Plan area 2, items 766-767: bonus goal results in the lexicon.
+T.update({
+"Bonus goals": "Bonusziele",
+"%s: %d of %d": "%s: %d von %d",
 })
