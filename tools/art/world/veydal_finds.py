@@ -49,6 +49,24 @@ MOUNDS = [
       "\"Drei Schritte von mir zum Morgen hin, zwei zum Ende der Gleise.\"")),
 ]
 
+# Item 959: on market days (device clock Wednesday and Saturday) three extra stalls stand in
+# Brindlewick. (id, x, y, facing, sprite, line, shop items)
+MARKET_DAYS = [3, 6]
+MARKET = [
+    ("stall_fish", 9, 8, "left", "villager",
+     ("Fishwife Marit: Market day! Dried kelp towels and cool gel, straight off the boats.",
+      "Fischhändlerin Marit: Markttag! Getrocknete Tangtücher und kühles Gel, frisch von den Booten."),
+     "dry_towel cooling_gel wake_bell tonic"),
+    ("stall_herbs", 8, 10, "up", "elder",
+     ("Herbwoman Agnes: Brews from the fen, only on market days. Smell that.",
+      "Kräuterfrau Agnes: Gebräu aus dem Fenn, nur an Markttagen. Riech mal."),
+     "power_brew guard_brew focus_brew dash_brew"),
+    ("stall_tinker", 2, 9, "right", "villager",
+     ("Tinker Rasmus: Wednesday and Saturday, rain or shine. Charms and leaves, fair prices.",
+      "Kesselflicker Rasmus: Mittwoch und Samstag, bei Regen und Sonne. Amulette und Blätter, faire Preise."),
+     "kin_charm revival_leaf strong_tonic"),
+]
+
 
 def set_char(m, x, y, ch):
     r = m["rows"][y]
@@ -102,3 +120,9 @@ def build(world):
         "after_flag": {"flag": "got_rubbing_charcoal", "lines": lines(
             ("Charcoal burner Wido: Five mounds I know of, from the forest to the rails. Mind the dead, they don't mind you.",
              "Köhler Wido: Fünf Hügel kenne ich, vom Wald bis zu den Gleisen. Achte die Toten, sie haben nichts gegen dich."))}}})
+    m = world.load_map("brindlewick")
+    ids = [st[0] for st in MARKET]
+    m["npcs"] = [p for p in m["npcs"] if p["id"] not in ids]
+    for sid, x, y, facing, sprite, line, shop in MARKET:
+        m["npcs"].append(npc(sid, x, y, facing, "brindlewick/" + sid, sprite, weekdays=MARKET_DAYS))
+        world.add_text("brindlewick", {sid: {"lines": lines(line), "action": "shop " + shop}})

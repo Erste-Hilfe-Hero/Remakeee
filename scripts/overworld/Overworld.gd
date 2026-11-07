@@ -468,7 +468,7 @@ func _try_gear(target: Vector2i) -> bool:
 	busy = false
 	return true
 
-## NPCs of the map that are there now: flags and "phase_only" (area 3 item 1168).
+## NPCs of the map that are there now: flags, "phase_only" (area 3 item 1168) and "weekdays".
 func _spawn_npcs() -> void:
 	for n: NPC in _npcs:
 		n.queue_free()
@@ -481,6 +481,9 @@ func _spawn_npcs() -> void:
 		if def.has("show_flag") and not GameState.has_flag(str(def.show_flag)):
 			continue
 		if not DayCycle.shows_at(def, phase):
+			continue
+		# Market stalls (item 959) stand only on their weekdays.
+		if not DayCycle.on_weekday(def, DayCycle.weekday()):
 			continue
 		var n := NPC.new()
 		n.setup(def)
