@@ -806,7 +806,7 @@ func _play_event(e: BattleEvent) -> void:
 			_last_element[side] = int(e.data.get("element", -1))
 			_focus(side, slot)
 			_point_pin(side, slot, false)
-			await _text.show_text(e.describe())
+			await _float(side, slot, e.describe())
 			var dir: Vector2 = Vector2(-8, -4) if side == BattleModel.Side.PLAYER else Vector2(8, 4)
 			if _multi:
 				dir = Vector2(0, -6) if side == BattleModel.Side.PLAYER else Vector2(0, 6)
@@ -831,7 +831,7 @@ func _play_event(e: BattleEvent) -> void:
 			_update_pinch()
 			var line: String = _damage_line(e)
 			if not line.is_empty():
-				await _text.show_text(line)
+				await _float(side, slot, line)
 		BattleEvent.Type.HEAL:
 			Sound.sfx("heal")
 			var heal_slot: int = model.slot_of(side, int(e.data.get("index", -1)))
@@ -839,7 +839,7 @@ func _play_event(e: BattleEvent) -> void:
 				await _strip(side, heal_slot).animate_hp(int(e.data.hp), int(e.data.max_hp))
 				_refresh_focus(side, heal_slot)
 			_update_pinch()
-			await _text.show_text(e.describe())
+			await _float(side, maxi(heal_slot, 0), e.describe())
 		BattleEvent.Type.ENERGY_CHANGED:
 			var es: Variant = _strip(side, slot)
 			if side == BattleModel.Side.PLAYER and es is InfoStrip:
@@ -854,12 +854,12 @@ func _play_event(e: BattleEvent) -> void:
 				(ts as InfoStrip).set_tax(int(e.data.get("turns", 0)))
 			var tax_text: String = e.describe()
 			if not tax_text.is_empty():
-				await _text.show_text(tax_text)
+				await _float(side, slot, tax_text)
 		BattleEvent.Type.STATUS_APPLIED:
 			Sound.sfx("status")
 			_strip(side, slot).set_status(str(e.data.status))
 			_refresh_focus(side, slot)
-			await _text.show_text(e.describe())
+			await _float(side, slot, e.describe())
 		BattleEvent.Type.STAT_CHANGED:
 			var who: Spirling = model.active_spirling(side, slot)
 			var st: Variant = _strip(side, slot)
@@ -868,11 +868,11 @@ func _play_event(e: BattleEvent) -> void:
 			_refresh_focus(side, slot)
 			if int(e.data.get("delta", 0)) != 0:
 				Sound.sfx("level_up" if int(e.data.delta) > 0 else "status")
-			await _text.show_text(e.describe())
+			await _float(side, slot, e.describe())
 		BattleEvent.Type.STATUS_CURED:
 			_strip(side, slot).set_status("")
 			_refresh_focus(side, slot)
-			await _text.show_text(e.describe())
+			await _float(side, slot, e.describe())
 		BattleEvent.Type.FAINTED:
 			Sound.sfx("faint")
 			Juice.add_trauma(Juice.TRAUMA_FAINT)
@@ -934,16 +934,39 @@ func _play_event(e: BattleEvent) -> void:
 				target.dodge(dodge_dir(t_side))
 			var miss_text: String = e.describe()
 			if not miss_text.is_empty():
-				await _text.show_text(miss_text)
+				await _float(t_side, t_slot, miss_text)
 		BattleEvent.Type.XP_GAINED:
 			var xp_slot: int = model.slot_of(BattleModel.Side.PLAYER, int(e.data.get("index", -1)))
 			if xp_slot >= 0:
 				_refresh_xp(xp_slot, int(e.data.get("index", -1)))
-			await _text.show_text(e.describe())
+			await _float(BattleModel.Side.PLAYER, maxi(xp_slot, 0), e.describe())
 		_:
 			var text: String = e.describe()
 			if not text.is_empty():
 				await _text.show_text(text)
+
+## Shows a short line floating over the Spirling at [param side]/[param slot] instead of a text
+## box (owner, 9 Nov: fewer text windows, show it in the fight). Lines without a visible
+## Spirling fall back to the text box. The battle log keeps every line.
+func _float(side: int, slot: int, text: String) -> void:
+	if text.is_empty():
+		return
+	var sp: SpirlingSprite = _sprite(side, slot)
+	if sp == null or not sp.visible or not is_inside_tree():
+		await _text.show_text(text)
+		return
+	var stack: int = 0
+	for n: Node in _shake_root.get_children():
+		if n is FloatText and not n.is_queued_for_deletion() and int(n.get_meta("side", -1)) == side:
+			stack += 1
+	var f: FloatText = FloatText.spawn(_shake_root, text, sp.position + Vector2(sp.size.x / 2.0, 0), stack)
+	if f != null:
+		f.set_meta("side", side)
+	floats_shown += 1
+	await get_tree().create_timer(FloatText.GAP / Juice.speed()).timeout
+
+## Battle lines shown as floats so far (tests).
+var floats_shown: int = 0
 
 ## Redraws the EXP bar of the player strip at [param slot] from party member [param index].
 func _refresh_xp(slot: int, index: int) -> void:
