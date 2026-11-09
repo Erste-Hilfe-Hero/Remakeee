@@ -12,15 +12,15 @@ func _game() -> BondMinigame:
 func test_rarer_spirlings_need_more_taps() -> void:
 	var common: Dictionary = {"phases": [[0, 1, 2, 0]], "state": "none"}
 	var rare: Dictionary = {"phases": [[0, 1, 2, 0, 1], [2, 1, 0, 2, 1]], "state": "none"}
-	assert_eq(BondMinigame.mine_taps(common), 10)
-	assert_eq(BondMinigame.mine_taps(rare), 16)
+	assert_eq(BondMinigame.mine_taps(common), 18)
+	assert_eq(BondMinigame.mine_taps(rare), 24)
 	var mended: Dictionary = {"phases": [[0, 1, 2, 0]], "state": "mended"}
-	assert_eq(BondMinigame.mine_taps(mended), 8, "a mended Rift helps")
+	assert_eq(BondMinigame.mine_taps(mended), 16, "a mended Rift helps")
 
-func test_ten_fast_taps_fill_the_bar() -> void:
+func test_eighteen_fast_taps_fill_the_bar() -> void:
 	var g: BondMinigame = _game()
 	g.run_mine({"phases": [[0, 1, 2, 0]], "state": "none"})
-	for i: int in 10:
+	for i: int in 18:
 		g.mine_tap()
 	assert_almost_eq(g.mine_fill, 1.0, 0.001)
 	assert_eq(g._phase, BondMinigame.Phase.RESULT, "a full bar ends the tug at once")
@@ -29,7 +29,7 @@ func test_ten_fast_taps_fill_the_bar() -> void:
 func test_half_the_taps_give_half_a_bar() -> void:
 	var g: BondMinigame = _game()
 	g.run_mine({"phases": [[0, 1, 2, 0]], "state": "none"})
-	for i: int in 5:
+	for i: int in 9:
 		g.mine_tap()
 	g._process(1.0)
 	assert_almost_eq(g.mine_fill, 0.5, 0.001, "nothing pulls the bar back")

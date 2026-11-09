@@ -56,13 +56,13 @@ const MINE_SIZE: float = 44.0
 var mine_fill: float = 0.0
 var _mine_needed: int = 0
 
-## Taps for a full bar: 10 for a common Spirling, more for rarer ones (longer calls), two fewer
-## near a mended Rift, two more near a muted one.
+## Taps for a full bar: 18 for a common Spirling (about 5 a second, as hard as a clean echo),
+## up to 24 for rarer ones (longer calls), two fewer near a mended Rift, two more near a muted one.
 static func mine_taps(plan: Dictionary) -> int:
 	var marks: int = 0
 	for p: Variant in plan.get("phases", []):
 		marks += (p as Array).size()
-	var n: int = clampi(10 + (marks - 4), 10, 16)
+	var n: int = clampi(18 + (marks - 4), 18, 24)
 	match str(plan.get("state", "")):
 		"mended":
 			n -= 2
