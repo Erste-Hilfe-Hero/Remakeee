@@ -1,0 +1,13 @@
+{
+ "_comment": "German texts from tools/i18n/de_bond.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Bonding: %s": "Binden: %s",
+  "Echo": "Echo",
+  "Mine": "Meins",
+  "Mine!": "Meins!",
+  "Mine: tap one button fast. Echo: repeat the call.": "Meins: einen Knopf schnell tippen. Echo: den Ruf nachspielen.",
+  "Reach out to %s... Tap Mine! fast!": "Streck die Hand nach %s aus... Tippe schnell auf Meins!",
+  "Tap Mine! fast!": "Tippe schnell auf Meins!"
+ }
+}

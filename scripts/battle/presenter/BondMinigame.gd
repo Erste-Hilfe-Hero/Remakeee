@@ -8,7 +8,7 @@ extends Control
 
 signal finished(score: float)
 
-enum Phase { IDLE, CALL, ECHO, AFTER_CALL, AFTER_ECHO, RESULT }
+enum Phase { IDLE, CALL, ECHO, AFTER_CALL, AFTER_ECHO, RESULT, MINE }
 
 const MARK_SIZE: float = 26.0
 const FLASH_TIME: float = 0.18
@@ -49,6 +49,60 @@ func _ready() -> void:
 	add_child(_hint)
 	visible = false
 
+## "Mine!" tug (owner, 9 Nov): one big button, every tap fills the bar, the Spirling pulls it
+## back. A full bar inside MINE_TIME bonds best; otherwise the fill reached is the score.
+const MINE_TIME: float = 3.5
+const MINE_TAP: float = 0.1
+const MINE_SIZE: float = 44.0
+var mine_fill: float = 0.0
+var _mine_pull: float = 0.0
+var _mine_jolt: float = 0.0
+
+## How fast a Spirling pulls the bar back (share per second): longer calls (rarer Spirlings)
+## pull harder, a mended Rift nearby softens it, a muted one makes it harder.
+static func mine_pull(plan: Dictionary) -> float:
+	var marks: int = 0
+	for p: Variant in plan.get("phases", []):
+		marks += (p as Array).size()
+	var pull: float = clampf(0.08 + 0.02 * (marks - 4), 0.06, 0.2)
+	match str(plan.get("state", "")):
+		"mended":
+			pull *= 0.7
+		"muted":
+			pull *= 1.2
+	return pull
+
+## Plays the "Mine!" tug for [param plan]; returns a score 0..1 like run().
+func run_mine(plan: Dictionary = {}) -> float:
+	if rng == null:
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+	_plan = plan if not plan.is_empty() else BondEcho.make_plan(rng, null)
+	_mine_pull = mine_pull(_plan)
+	mine_fill = 0.0
+	_time = 0.0
+	_phase = Phase.MINE
+	_hint.text = "Tap Mine! fast!"
+	visible = true
+	var result: float = await finished
+	visible = false
+	return result
+
+## One tap on "Mine!".
+func mine_tap() -> void:
+	if _phase != Phase.MINE:
+		return
+	mine_fill = minf(mine_fill + MINE_TAP, 1.0)
+	_tone(rng.randi_range(0, BondEcho.MARKS - 1))
+	if mine_fill >= 1.0:
+		_mine_end()
+
+func _mine_end() -> void:
+	_score = mine_fill
+	_hint.text = BondEcho.result_words(_score)
+	_phase = Phase.RESULT
+	_time = 0.0
+
 ## Plays [param plan] (BondEcho.make_plan); with none, a plain four-mark call.
 func run(plan: Dictionary = {}) -> float:
 	if rng == null:
@@ -57,6 +111,7 @@ func run(plan: Dictionary = {}) -> float:
 	_plan = plan if not plan.is_empty() else BondEcho.make_plan(rng, null)
 	_all_taps.clear()
 	_afterglow_tap = -1
+	_mine_pull = 0.0
 	_start_phase(0)
 	visible = true
 	var result: float = await finished
@@ -85,6 +140,13 @@ func _process(delta: float) -> void:
 	if (_phase == Phase.CALL or _phase == Phase.AFTER_CALL) and lit >= 0 and lit != _last_lit:
 		_tone(lit)
 	_last_lit = lit
+	if _phase == Phase.MINE:
+		mine_fill = maxf(mine_fill - _mine_pull * delta, 0.0)
+		_mine_jolt = sin(_time * 30.0) * 2.0
+		if _time >= MINE_TIME:
+			_mine_end()
+		queue_redraw()
+		return
 	if _phase == Phase.CALL and _time >= BondEcho.call_duration(_sequence.size()) + BondEcho.GAP_TIME:
 		_phase = Phase.ECHO
 		_time = 0.0
@@ -165,11 +227,20 @@ func _mark_at_point(p: Vector2) -> int:
 	return -1
 
 func _gui_input(event: InputEvent) -> void:
+	if _phase == Phase.MINE and TapInput.is_press(event):
+		# Anywhere counts, so fast tapping never misses the button.
+		mine_tap()
+		accept_event()
+		return
 	if TapInput.is_press(event):
 		_tap(_mark_at_point(TapInput.position(event)))
 		accept_event()
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _phase == Phase.MINE and event.is_action_pressed("ui_accept"):
+		mine_tap()
+		get_viewport().set_input_as_handled()
+		return
 	if _phase != Phase.ECHO and _phase != Phase.AFTER_ECHO:
 		return
 	var mark: int = -1
@@ -200,8 +271,11 @@ func _draw() -> void:
 			draw_rect(Rect2(Vector2(2 + k * 2, 2 + k * 2), size - Vector2(4 + k * 4, 4 + k * 4)), Color(UITheme.ACCENT, pulse * (1.0 - k * 0.3)), false, 1.0)
 	if target != null:
 		var half := Vector2(TARGET_SIZE, TARGET_SIZE) / 2.0
-		var at := Vector2(size.x / 2.0, size.y * 0.3)
+		var at := Vector2(size.x / 2.0 + (_mine_jolt if _phase == Phase.MINE else 0.0), size.y * 0.3)
 		draw_texture_rect(target, Rect2((at - half).round(), half * 2.0), false)
+	if _phase == Phase.MINE or (_phase == Phase.RESULT and _plan.has("phases") and _mine_pull > 0.0):
+		_draw_mine()
+		return
 	var lit: int = _lit_mark()
 	for i: int in BondEcho.MARKS:
 		_draw_mark(i, _mark_center(i).round(), i == lit, state == "muted")
@@ -255,3 +329,20 @@ func _draw_mark(i: int, c: Vector2, lit: bool, muted: bool = false) -> void:
 	var outline := pts.duplicate()
 	outline.append(pts[0])
 	draw_polyline(outline, Color(UITheme.INK, 0.5) if muted else UITheme.INK, 1.0)
+
+## The bar (how close the bond is, a picture not odds) and the big "Mine!" button.
+func _draw_mine() -> void:
+	var w: float = size.x * 0.6
+	var bar := Rect2(Vector2((size.x - w) / 2.0, size.y * 0.47), Vector2(w, 6)).abs()
+	draw_rect(bar, UITheme.DISABLED, true)
+	draw_rect(Rect2(bar.position, Vector2(w * mine_fill, bar.size.y)), UITheme.INK, true)
+	draw_rect(bar, UITheme.INK, false, 1.0)
+	var c := Vector2(size.x / 2.0, size.y * 0.72).round()
+	var r: float = MINE_SIZE / 2.0
+	draw_circle(c, r, UITheme.ACCENT)
+	draw_arc(c, r, 0.0, TAU, 32, UITheme.INK, 1.0)
+	var font: Font = get_theme_default_font()
+	var label: String = Loc.t("Mine!")
+	var fs: int = UITheme.FONT_SIZE
+	var tw: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+	draw_string(font, c + Vector2(-tw / 2.0, fs / 2.0 - 1), label, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, UITheme.INK)

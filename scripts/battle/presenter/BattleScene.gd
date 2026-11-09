@@ -624,7 +624,9 @@ func _bond(slot: int = 0) -> BattleAction:
 	if aim == -2:
 		return null
 	var target_slot: int = maxi(aim, 0)
-	await _text.show_text("Reach out to %s... Listen, then echo its call!" % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
+	var mine: bool = GameState.bond_style == "mine"
+	var reach: String = "Reach out to %s... Tap Mine! fast!" if mine else "Reach out to %s... Listen, then echo its call!"
+	await _text.show_text(reach % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, target_slot)
 	var key: String = foe.uid if not foe.uid.is_empty() else str(foe.get_instance_id())
@@ -633,7 +635,11 @@ func _bond(slot: int = 0) -> BattleAction:
 		rng.randomize()
 		var state: String = BondEcho.rift_state(GameState.current_map, GameState.rifts_sealed)
 		_bond_plans[key] = BondEcho.make_plan(rng, foe.data, state)
-	var score: float = await _bond_game.run(_bond_plans[key])
+	var score: float = 0.0
+	if mine:
+		score = await _bond_game.run_mine(_bond_plans[key])
+	else:
+		score = await _bond_game.run(_bond_plans[key])
 	GameState.note_echo(score)
 	if score >= DailyTasks.MELODY_GOOD:
 		DailyTasks.record("melody", {"map": GameState.current_map})

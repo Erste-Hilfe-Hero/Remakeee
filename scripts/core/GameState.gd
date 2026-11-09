@@ -169,6 +169,8 @@ var left_handed: bool = false
 var tap_to_move: bool = true
 ## Walking is running; holding B walks slowly instead (item 1810).
 var always_run: bool = false
+## How a bond is made: "mine" taps one big button fast (owner, 9 Nov), "echo" repeats the call.
+var bond_style: String = "mine"
 ## A and B change places (item 2111), apart for the touch pad and for gamepads.
 var swap_ab_touch: bool = false
 var swap_ab_pad: bool = false
@@ -743,7 +745,7 @@ func settings_to_dict() -> Dictionary:
 		"music_volume": music_volume, "sfx_volume": sfx_volume,
 		"voice_volume": voice_volume, "ambience_volume": ambience_volume, "mono_audio": mono_audio,
 		"pad_size": pad_size, "pad_opacity": pad_opacity, "pad_opacity_steps": PAD_ALPHAS.size(), "left_handed": left_handed, "tap_to_move": tap_to_move,
-		"always_run": always_run, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
+		"always_run": always_run, "bond_style": bond_style, "swap_ab_touch": swap_ab_touch, "swap_ab_pad": swap_ab_pad, "tap_vibration": tap_vibration,
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
@@ -766,6 +768,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	left_handed = bool(d.get("left_handed", false))
 	tap_to_move = bool(d.get("tap_to_move", true))
 	always_run = bool(d.get("always_run", false))
+	bond_style = "echo" if str(d.get("bond_style", "mine")) == "echo" else "mine"
 	swap_ab_touch = bool(d.get("swap_ab_touch", false))
 	swap_ab_pad = bool(d.get("swap_ab_pad", false))
 	tap_vibration = bool(d.get("tap_vibration", false))
