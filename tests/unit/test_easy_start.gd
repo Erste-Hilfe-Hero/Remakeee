@@ -18,9 +18,9 @@ func test_bond_tutorial_walks_through_every_step() -> void:
 	var all: String = "\n".join(lines)
 	for step: int in [1, 2, 3, 4]:
 		assert_string_contains(all, "Bonding step %d" % step)
-	assert_string_contains(all, "Tap the same marks")
+	assert_string_contains(all, "Tap Mine!")
 	assert_string_contains(all, "20")
-	assert_string_contains("\n".join(Tips.lines_of("bond", false)), "Press the same marks")
+	assert_string_contains("\n".join(Tips.lines_of("bond", false)), "Press A as fast")
 
 func test_newcomer_until_six_spirlings() -> void:
 	assert_true(GameState.is_newcomer())

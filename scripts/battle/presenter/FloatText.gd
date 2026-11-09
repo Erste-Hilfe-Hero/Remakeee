@@ -35,6 +35,6 @@ func _run() -> void:
 	var t: Tween = create_tween().set_parallel(true)
 	var time: float = TIME / Juice.speed()
 	if not Juice.reduced():
-		t.tween_property(self, "position:y", position.y - RISE, time)
-	t.tween_property(self, "modulate:a", 0.0, time * 0.4).set_delay(time * 0.6)
+		Juice.shaped(t.tween_property(self, "position:y", position.y - RISE, time), "fade")
+	Juice.shaped(t.tween_property(self, "modulate:a", 0.0, time * 0.4), "fade").set_delay(time * 0.6)
 	t.chain().tween_callback(queue_free)

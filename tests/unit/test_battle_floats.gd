@@ -19,9 +19,10 @@ func test_empty_line_spawns_nothing() -> void:
 func test_minor_battle_events_do_not_open_the_text_box() -> void:
 	var src: String = FileAccess.get_file_as_string("res://scripts/battle/presenter/BattleScene.gd")
 	for kind: String in ["MOVE_USED", "STAT_CHANGED", "STATUS_APPLIED", "STATUS_CURED", "MISSED", "XP_GAINED", "HEAL"]:
-		var at: int = src.find("BattleEvent.Type." + kind + ":")
+		var at: int = src.find("\n\t\tBattleEvent.Type." + kind + ":")
 		assert_true(at >= 0, kind)
-		var next: int = src.find("BattleEvent.Type.", at + 20)
-		var body: String = src.substr(at, next - at)
+		var arm: RegEx = RegEx.create_from_string("\\n\\t\\t[^\\t]")
+		var next: RegExMatch = arm.search(src, at + 3)
+		var body: String = src.substr(at, (next.get_start() if next else src.length()) - at)
 		assert_true(body.contains("_float("), kind + " floats")
 		assert_false(body.contains("_text.show_text"), kind + " opens no text box")
