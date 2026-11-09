@@ -314,6 +314,20 @@ func _input(event: InputEvent) -> void:
 				_dir_touch = -1
 				_set_dir("")
 
+## Leaving the app (home swipe, notification, call) can swallow the finger's release, which left a
+## direction held and the Wayfarer walking by itself after coming back. Let go of everything.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED:
+		release_all()
+
+## Lets go of the held direction and every pad button.
+func release_all() -> void:
+	_dir_touch = -1
+	_set_dir("")
+	for b: TouchScreenButton in _buttons:
+		if b.action != &"" and Input.is_action_pressed(b.action):
+			Input.action_release(b.action)
+
 ## Presses the direction for a touch at [param pos] (viewport pixels).
 func _touch_dir(pos: Vector2) -> void:
 	var d: String = dir_for(pos - _dpad_origin, _dpad * 3)
@@ -321,7 +335,8 @@ func _touch_dir(pos: Vector2) -> void:
 		_set_dir(d)
 
 func _set_dir(d: String) -> void:
-	if d == _dir:
+	# Same direction: only press again if something else let go of it, so the pad and Input agree.
+	if d == _dir and (d.is_empty() or Input.is_action_pressed(d)):
 		return
 	if not _dir.is_empty():
 		Input.action_release(_dir)

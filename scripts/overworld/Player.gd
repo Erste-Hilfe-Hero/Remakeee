@@ -18,6 +18,8 @@ var _turn_timer: float = 0.0
 ## Cells still to walk (tap-to-move), and the cell to interact with on arrival (or NO_TARGET).
 var path: Array[Vector2i] = []
 var path_target: Vector2i = NO_TARGET
+## Counts steps taken with a held direction; a tap walk planned before one of them is stale.
+var manual_steps: int = 0
 const NO_TARGET := Vector2i(-9999, -9999)
 
 ## Starts walking [param cells]; on arrival, faces and interacts with [param target] if given.
@@ -79,6 +81,7 @@ func _process(delta: float) -> void:
 		return
 	if can_move.call(cell + DIRS[dir]):
 		_bumped = NO_TARGET
+		manual_steps += 1
 		step(dir, Input.is_action_pressed("ui_cancel") != GameState.always_run)
 	else:
 		bump(dir)
