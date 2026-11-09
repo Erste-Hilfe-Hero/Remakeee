@@ -12,7 +12,7 @@ const LINES: Dictionary[String, Array] = {
 	"bond": ["Tip: To bond with a wild Spirling, wear it down first, then pick Bond.",
 		"A worn-out or statused Spirling trusts you more easily.",
 		"Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.",
-		"Bonding step 2: Pick Bond. A big Mine! button appears and the Spirling starts pulling away.",
+		"Bonding step 2: Pick Bond. A big Mine! button appears.",
 		{"touch": "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.",
 			"buttons": "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond."},
 		"Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.",

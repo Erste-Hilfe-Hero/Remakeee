@@ -7,7 +7,7 @@ T = {
 "Mine": "Meins",
 "Echo": "Echo",
 "Mine: tap one button fast. Echo: repeat the call.": "Meins: einen Knopf schnell tippen. Echo: den Ruf nachspielen.",
-"Bonding step 2: Pick Bond. A big Mine! button appears and the Spirling starts pulling away.": "Binden, Schritt 2: Wähle Binden. Ein großer Meins!-Knopf erscheint und der Spirling zieht weg.",
+"Bonding step 2: Pick Bond. A big Mine! button appears.": "Binden, Schritt 2: Wähle Binden. Ein großer Meins!-Knopf erscheint.",
 "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Binden, Schritt 3: Tippe so schnell du kannst auf Meins! Je voller der Balken, desto besser die Bindung.",
 "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Binden, Schritt 3: Drück so schnell du kannst A. Je voller der Balken, desto besser die Bindung.",
 }
