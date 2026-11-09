@@ -1250,6 +1250,7 @@ func tap_cell(cell: Vector2i, marker: bool = true) -> void:
 	if not map.in_bounds(cell) or cell == player.cell:
 		return
 	_tap_goal = cell
+	_tap_steps = player.manual_steps
 	if marker:
 		_tap_retries = 0
 	var gear: Array = GameState.owned_gear()
@@ -1287,6 +1288,8 @@ func tap_cell(cell: Vector2i, marker: bool = true) -> void:
 ## The final cell of the last tap and how often a blocked walk was planned again (item 1822).
 var _tap_goal: Vector2i = Player.NO_TARGET
 var _tap_retries: int = 0
+## Player.manual_steps when the tap walk was planned: walking by hand since then drops the retry.
+var _tap_steps: int = 0
 const TAP_RETRY_DELAY: float = 0.3
 const TAP_RETRY_MAX: int = 5
 const TAP_MARKER_TIME: float = 0.4
@@ -1300,6 +1303,10 @@ func _on_path_blocked(next: Vector2i) -> void:
 	var goal: Vector2i = _tap_goal
 	await get_tree().create_timer(TAP_RETRY_DELAY).timeout
 	if busy or player.moving or not player.path.is_empty() or _tap_goal != goal:
+		return
+	# The player took over with the pad meanwhile: never walk back to the old tap by itself.
+	if player.manual_steps != _tap_steps or not player._held_direction().is_empty():
+		_tap_goal = Player.NO_TARGET
 		return
 	tap_cell(goal, false)
 
