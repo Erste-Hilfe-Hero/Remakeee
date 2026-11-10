@@ -255,8 +255,8 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	# wider than the display (owner, 9 Nov: buttons not shown right). Clip instead of growing.
 	b.clip_text = true
 	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_CHAR
-	# Width follows the word, so "Binden" gets more room than "Item".
-	b.size_flags_stretch_ratio = maxf(5.0, Loc.t(text).length()) + 0.8
+	# Width follows the drawn word, so "Binden" gets more room than "Item".
+	b.size_flags_stretch_ratio = b.get_theme_font("font").get_string_size(Loc.t(text), HORIZONTAL_ALIGNMENT_LEFT, -1, b.get_theme_font_size("font_size")).x + 8.0
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
