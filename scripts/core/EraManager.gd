@@ -99,19 +99,32 @@ func set_retro_filter(e: int) -> void:
 	retro_filter = clampi(e, 0, unlocked_era)
 	_apply()
 
-func battle_sprite_size() -> int:
-	return BATTLE_SPRITE_SIZE[active_era()]
+## Battle sprite size of the active era, or of [param species]' own era when given.
+func battle_sprite_size(species: String = "") -> int:
+	return BATTLE_SPRITE_SIZE[active_era() if species.is_empty() else species_era(species)]
 
-## Sprite for [param species] in the active era, falling back to art/era1/ until newer art exists.
+## The era a species comes from (1 when unknown).
+func species_era(species: String) -> int:
+	var sd: SpirlingData = Database.species(species)
+	if sd == null:
+		sd = Database.species(species.capitalize())
+	return clampi(sd.era, Era.INK, Era.PANORAMA) if sd != null else Era.INK
+
+## Sprite for [param species] in the species' own era (not the world era), falling back to
+## older eras when a file is missing.
 func sprite_path(species: String, facing: String = "front") -> String:
-	return art_path("spirlings/%s_%s.png" % [species.to_lower(), facing])
+	return art_path_from("spirlings/%s_%s.png" % [species.to_lower(), facing], species_era(species))
 
 ## res:// path of [param rel] (relative to art/eraN/) in the active era, walking back to
 ## older eras when the file is missing. Empty when no era has it.
 func art_path(rel: String) -> String:
-	for era: int in range(active_era(), 0, -1):
+	return art_path_from(rel, active_era())
+
+## Like art_path() but starting from era [param start].
+func art_path_from(rel: String, start: int) -> String:
+	for era: int in range(start, 0, -1):
 		var path: String = "res://art/era%d/%s" % [era, rel]
-		if ResourceLoader.exists(path):
+		if ResourceLoader.exists(path) or FileAccess.file_exists(path):
 			return path
 	return ""
 

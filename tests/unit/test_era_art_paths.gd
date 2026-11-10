@@ -63,3 +63,34 @@ func test_saved_higher_era_is_kept() -> void:
 	EraManager.unlock_story_end(true)
 	assert_eq(EraManager.unlocked_era, EraManager.Era.ETCHED)
 	assert_eq(EraManager.retro_filter, 1)
+
+func test_era1_species_keeps_era1_in_era2_world() -> void:
+	_set_era(EraManager.Era.WASH)
+	assert_eq(EraManager.species_era("Wickit"), EraManager.Era.INK)
+	assert_eq(EraManager.sprite_path("Wickit", "back"), "res://art/era1/spirlings/wickit_back.png")
+	assert_eq(EraManager.battle_sprite_size("Wickit"), 56)
+
+func test_era2_species_uses_era2_art_when_present() -> void:
+	var sd: SpirlingData = Database.species("Wickit")
+	var old: int = sd.era
+	sd.era = EraManager.Era.ETCHED
+	assert_eq(EraManager.battle_sprite_size("Wickit"), EraManager.BATTLE_SPRITE_SIZE[EraManager.Era.ETCHED])
+	# No era2/era3 file yet: falls back to era1.
+	assert_eq(EraManager.sprite_path("Wickit"), "res://art/era1/spirlings/wickit_front.png")
+	assert_eq(EraManager.art_path_from("tiles/overworld.png", 2), "res://art/era1/tiles/overworld.png")
+	sd.era = old
+
+func test_era2_species_picks_era2_file() -> void:
+	# An existing era2 file is preferred over era1 for a species from era 2.
+	var sd: SpirlingData = Database.species("Wickit")
+	var old: int = sd.era
+	sd.era = EraManager.Era.WASH
+	var dir: String = "res://art/era2/spirlings"
+	DirAccess.make_dir_recursive_absolute(dir)
+	var img := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	img.save_png(dir + "/wickit_front.png")
+	var p: String = EraManager.sprite_path("Wickit")
+	DirAccess.remove_absolute(dir + "/wickit_front.png")
+	DirAccess.remove_absolute(dir)
+	sd.era = old
+	assert_eq(p, "res://art/era2/spirlings/wickit_front.png")

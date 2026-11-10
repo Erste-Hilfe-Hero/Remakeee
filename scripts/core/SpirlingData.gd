@@ -69,6 +69,8 @@ const UNFOLD_RULES: Array[String] = ["ring", "item", "map_pages", "mended", "tim
 ## Learnset as two parallel arrays (level, move), sorted by level.
 @export var learnset_levels: PackedInt32Array = []
 @export var learnset_moves: Array[MoveData] = []
+## Art era this species comes from; its sprite keeps that era's look in every region.
+@export var era: int = 1
 ## One sprite set per art era (era1..era4)
 @export var sprites: Dictionary = {}
 
