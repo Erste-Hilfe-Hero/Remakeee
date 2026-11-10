@@ -8,7 +8,10 @@ signal era_changed(era: int)
 signal era_unlocked(era: int)
 
 enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4 }
-const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.WASH, "ashmere": Era.ETCHED, "solenne": Era.PANORAMA}
+## The whole story (all four regions) stays Era I. Era II opens after the finale and is the
+## look of the post-game region; later eras arrive with their own new regions.
+const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK}
+const STORY_COMPLETE_FLAG: String = "story_complete"
 const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480)}
 const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96}
 ## Era I: four cartographer's inks on parchment (original values, darkest to lightest). Deliberately
@@ -43,7 +46,7 @@ func active_era() -> int:
 
 ## Lines shown when an era opens up for the first time.
 const ERA_LINES: Dictionary[int, String] = {
-	Era.WASH: "The ink of Veydal runs and spreads. The world fills with colour!",
+	Era.WASH: "The last line of the map is drawn. The ink runs and spreads, and the world fills with colour!",
 	Era.ETCHED: "The air grows sharper. Every leaf and stone shows more detail!",
 	Era.PANORAMA: "The map unrolls wider than ever. The whole horizon opens before you!",
 }
@@ -51,7 +54,15 @@ const TRANSITION_TIME: float = 0.9
 var _wipe: ColorRect
 
 func unlock_region(region: String) -> void:
-	var e: int = REGION_ERA.get(region, Era.INK)
+	unlock_era(REGION_ERA.get(region, Era.INK))
+
+## Era II opens once the story finale is done.
+func unlock_story_end(story_complete: bool) -> void:
+	if story_complete:
+		unlock_era(Era.WASH)
+
+## Raises unlocked_era to [param e]; never lowers it (older saves keep their era).
+func unlock_era(e: int) -> void:
 	if e > unlocked_era:
 		unlocked_era = e
 		if retro_filter == 0 and is_inside_tree():
@@ -88,15 +99,32 @@ func set_retro_filter(e: int) -> void:
 	retro_filter = clampi(e, 0, unlocked_era)
 	_apply()
 
-func battle_sprite_size() -> int:
-	return BATTLE_SPRITE_SIZE[active_era()]
+## Battle sprite size of the active era, or of [param species]' own era when given.
+func battle_sprite_size(species: String = "") -> int:
+	return BATTLE_SPRITE_SIZE[active_era() if species.is_empty() else species_era(species)]
 
-## Sprite for [param species] in the active era, falling back to art/era1/ until newer art exists.
+## The era a species comes from (1 when unknown).
+func species_era(species: String) -> int:
+	var sd: SpirlingData = Database.species(species)
+	if sd == null:
+		sd = Database.species(species.capitalize())
+	return clampi(sd.era, Era.INK, Era.PANORAMA) if sd != null else Era.INK
+
+## Sprite for [param species] in the species' own era (not the world era), falling back to
+## older eras when a file is missing.
 func sprite_path(species: String, facing: String = "front") -> String:
-	var file: String = "%s_%s.png" % [species.to_lower(), facing]
-	for era: int in range(active_era(), 0, -1):
-		var path: String = "res://art/era%d/spirlings/%s" % [era, file]
-		if ResourceLoader.exists(path):
+	return art_path_from("spirlings/%s_%s.png" % [species.to_lower(), facing], species_era(species))
+
+## res:// path of [param rel] (relative to art/eraN/) in the active era, walking back to
+## older eras when the file is missing. Empty when no era has it.
+func art_path(rel: String) -> String:
+	return art_path_from(rel, active_era())
+
+## Like art_path() but starting from era [param start].
+func art_path_from(rel: String, start: int) -> String:
+	for era: int in range(start, 0, -1):
+		var path: String = "res://art/era%d/%s" % [era, rel]
+		if ResourceLoader.exists(path) or FileAccess.file_exists(path):
 			return path
 	return ""
 
@@ -114,4 +142,10 @@ func _apply() -> void:
 		get_window().content_scale_size = RESOLUTION[era]
 	if _filter_rect != null:
 		_filter_rect.visible = era == Era.INK
+	_clear_art_caches()
 	era_changed.emit(era)
+
+func _clear_art_caches() -> void:
+	TilesetFactory.clear_cache()
+	GridWalker.clear_cache()
+	ElementFx.clear_cache()

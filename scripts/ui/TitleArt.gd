@@ -17,10 +17,11 @@ var _atlas: Texture2D
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	for sp: String in STARTERS:
-		var p: String = "res://art/era1/spirlings/%s_front.png" % sp
-		_sprites.append(load(p) if ResourceLoader.exists(p) else null)
-	if ResourceLoader.exists(TilesetFactory.ATLAS_PATH):
-		_atlas = load(TilesetFactory.ATLAS_PATH)
+		var p: String = EraManager.sprite_path(sp)
+		_sprites.append(load(p) if not p.is_empty() else null)
+	var atlas: String = TilesetFactory.atlas_path()
+	if not atlas.is_empty():
+		_atlas = load(atlas)
 
 func _process(delta: float) -> void:
 	_t += delta

@@ -1,7 +1,7 @@
 # Geschäftsmodell (Stand 6. 11. 2026)
 
 **Entscheidung von Ali am 6. 11. 2026:** Chimora ist **kostenlos**. Einnahmen kommen aus einem
-In-App-Shop. Rund **2/3 der Angebote geben einen Vorteil im Spiel** ("Vorteil im Spiel", Kennung
+In-App-Shop. Mindestens **2/3 der Angebote geben einen Vorteil im Spiel** (seit 10. 11. 2026, siehe Pay-to-win unten) ("Vorteil im Spiel", Kennung
 `kind: "advantage"` in `data/shop.json`), 1/3 sind Aussehen, Komfort und Rissglas-Pakete.
 
 > **Ersetzt:** Die Entscheidung vom 1. 11. 2026 (Premium, einmal zahlen, kein Shop, kein Pay-to-win)
@@ -72,6 +72,48 @@ Story. Käufe machen Wege nur kürzer (mehr Erfahrung, Heilung, Fangen, Plätze)
 Inhalte frei. Planwert für die Story ohne Kauf: **etwa 25 Stunden** (Hauptgeschichte bis zum letzten
 Wächter, ohne Nebenziele). Kosmetik ändert nur das Aussehen.
 
+## Pay-to-win, Schritt 1 (Entscheidung von Ali am 10. 11. 2026)
+
+Ali: "200 Punkte Plan, dass es maximal pay2win ist" (Plan freigegeben). Schritt 1 bringt die Bereiche
+"Kampfkraft kaufen" und "Fortschritt beschleunigen". **Ersetzt wird dadurch keine der festen Regeln
+oben**, auch nicht Regel 7 (keine Spirlings) und Regel 8 (Gleichstand-Liga ohne Kaufvorteile); die kommen
+erst in einem späteren Schritt dran. Neu sind nur Angebotsarten. Geändert ist nur der Planwert
+"rund 2/3 Vorteile": jetzt **mindestens** 2/3 (Test `test_at_least_two_thirds_are_advantages`).
+
+| Angebot | Wirkung | Rissglas | Liga |
+| --- | --- | --- | --- |
+| Macht-Siegel I bis VII (`rg_power_seal_1..7`) | +5/10/15/20/25/30/35 % Schaden | 500, 500, 1000, 1500, 2000, 2500, 3000 (Summe 11000) | Offene Liga, Raid-Risse, Geschichte |
+| Schutz-Siegel I bis VII (`rg_guard_seal_1..7`) | 5 bis 35 % weniger Schaden | wie Macht-Siegel | Offene Liga, Raid-Risse, Geschichte |
+| Tempo-Siegel I bis V (`rg_speed_seal_1..5`) | +5 bis +25 % Tempo (Zugreihenfolge) | 500, 500, 1000, 1500, 2000 (Summe 5500) | Offene Liga, Raid-Risse, Geschichte |
+| Wertkristall +1/+5/+10 (`rg_stat_crystal_*`) | Punkte auf einen Wert eines Spirlings, zählen wie Funken, höchstens 24 je Wert (doppelte Funken-Grenze) | 100, 400, 700 | nur Geschichte |
+| Mächtiger Wachstumskristall (`rg_growth_x5`) | x5 Wachstum, 20 Kämpfe | 700 | keine Liga-Wirkung |
+| Wachstums-Siegel (`rg_growth_plus`) | dauerhaft +50 % Wachstum | 1500 | keine Liga-Wirkung |
+| Großer Münzglanz (`rg_coin_boost_x3`) | x3 Münzen, 20 Kämpfe | 400 | keine Liga-Wirkung |
+| Riesiger Ring-Trank (`rg_ring_tonic_10`) | +10 Ringe, nie über die Ring-Grenze | 700 | keine Liga-Wirkung |
+
+Wachstum x2/x3, Münzen x2 und Ring-Tränke +1/+5 gab es schon.
+
+- **Stufen:** Jede Siegel-Stufe ist ein eigenes Angebot, einmal je Konto, mit `"requires": "tier:<unlock>:<n>"`:
+  Stufe n+1 geht nur, wenn genau n Stufen da sind. Ihr Preis ist die Differenz zur Stufe davor. Der Server
+  zählt die Stufen in `entitlements` (`power_seal`, `guard_seal`, `speed_seal`) und prüft die Reihenfolge in
+  `_shop_offer_block` (Migration `20261110000027_shop_seals.sql`).
+- **Werte in Daten:** Prozente, Kristall-Grenze und Wachstums-Plus stehen in `data/shop.json`
+  (`advantage_values`), gelesen von `ShopEffects`. Kampf: `BattleModel.seals` (Schaden in `_do_move`,
+  Tempo in `_sort_key`).
+- **Ligen:** Die Gleichstand-Liga und Echo-Duelle bekommen nie Siegel (`ShopEffects.seals_for`). Für die
+  Offene Liga und Raid-Risse schreibt der Server die Stufen des Spielers in die Erwartung des
+  Schiedsrichters (`_league_expect`, `_raid_expect`), nur für die eigene Seite. Wertkristalle wirken dort
+  nicht, weil Liga- und Raid-Teams aus Art, Ring und Techniken gebaut werden.
+- **Nur Rissglas:** Die neuen Angebote tragen `"rg_only": true` und sind keine Produkte in App Store oder
+  Play Store (`store/products.json` bleibt gleich). Der Euro-Gegenwert steht trotzdem an jedem Angebot
+  (Regel 3). Offener Punkt für Ali: `SHOP_COMPLIANCE.md` Zeile 2 sagt, jedes Vorteils-Angebot sei auch
+  direkt in Euro kaufbar; für diese 26 Angebote gilt das nicht mehr.
+- **Kontostärke:** Die Team-Ansicht zeigt "Macht N" = Summe der Siegel-Prozente + 50 mit Wachstums-Siegel
+  + Wertkristall-Punkte im Team (`ShopEffects.account_power`).
+- Unverändert: keine Zufallsinhalte, Altersabfrage und Monatslimits, keine Kaufaufforderungen, Shop nur
+  aus dem Menü, Guthaben nur auf dem Server, jedes Angebot mit "Vorteil im Spiel" und Liga-Zeile, die
+  Bond-Grundrate (`BondCalc`) bleibt wie sie ist.
+
 ## Planwerte (nur Rechengrößen, kein Tracking)
 
 | Größe | Planwert |
@@ -113,7 +155,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-121 Angebote (Katalog v29): 79 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+147 Angebote (Katalog v30): 105 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -238,5 +280,31 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_retro_filter` | Retro Filter | 1,99 € | 200 | Kosmetik | überall sichtbar, keine Wirkung |
 | `rg_sky_control` | Sky Control | 2,99 € | 300 | Komfort | keine Liga-Wirkung |
 | `rg_bench_lessons` | Bench Lessons | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_power_seal_1` | Power Seal I | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_power_seal_2` | Power Seal II | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_power_seal_3` | Power Seal III | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_power_seal_4` | Power Seal IV | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_power_seal_5` | Power Seal V | 19,99 € | 2000 | Vorteil | nur Offene Liga |
+| `rg_power_seal_6` | Power Seal VI | 24,99 € | 2500 | Vorteil | nur Offene Liga |
+| `rg_power_seal_7` | Power Seal VII | 29,99 € | 3000 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_1` | Guard Seal I | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_2` | Guard Seal II | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_3` | Guard Seal III | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_4` | Guard Seal IV | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_5` | Guard Seal V | 19,99 € | 2000 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_6` | Guard Seal VI | 24,99 € | 2500 | Vorteil | nur Offene Liga |
+| `rg_guard_seal_7` | Guard Seal VII | 29,99 € | 3000 | Vorteil | nur Offene Liga |
+| `rg_speed_seal_1` | Pace Seal I | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_speed_seal_2` | Pace Seal II | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_speed_seal_3` | Pace Seal III | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_speed_seal_4` | Pace Seal IV | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_speed_seal_5` | Pace Seal V | 19,99 € | 2000 | Vorteil | nur Offene Liga |
+| `rg_stat_crystal_1` | Stat Crystal +1 | 0,99 € | 100 | Vorteil | keine Liga-Wirkung |
+| `rg_stat_crystal_5` | Stat Crystal +5 | 3,99 € | 400 | Vorteil | keine Liga-Wirkung |
+| `rg_stat_crystal_10` | Stat Crystal +10 | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
+| `rg_growth_x5` | Mighty Growth Crystal | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
+| `rg_growth_plus` | Growth Seal | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_coin_boost_x3` | Great Coin Gleam | 3,99 € | 400 | Vorteil | keine Liga-Wirkung |
+| `rg_ring_tonic_10` | Grand Ring Tonic | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
 
 <!-- shop-table:end -->

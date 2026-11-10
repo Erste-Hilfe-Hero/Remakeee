@@ -47,7 +47,9 @@ const COLORS: Dictionary[int, Color] = {
 	Kind.CRACKED: Color("a08868"), Kind.VINES: Color("4a7a3a"), Kind.PLANK: Color("2a1e2c"),
 }
 
+## Era I atlas; runtime code uses atlas_path() so newer eras can swap it.
 const ATLAS_PATH: String = "res://art/era1/tiles/overworld.png"
+const ATLAS_REL: String = "tiles/overworld.png"
 const VARIANT_ROWS: int = 16
 ## Kinds whose variant row is a neighbour mask (1 up, 2 right, 4 down, 8 left).
 const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FENCE, Kind.CLIFF, Kind.PIER, Kind.WADE]
@@ -63,6 +65,13 @@ static func kind_for(ch: String) -> int:
 
 static func is_solid(kind: int) -> bool:
 	return kind in SOLID
+
+static func atlas_path() -> String:
+	return EraManager.art_path(ATLAS_REL)
+
+## Drops the cached TileSet so the next get_tileset() rebuilds it for the active era.
+static func clear_cache() -> void:
+	_tileset = null
 
 static func get_tileset() -> TileSet:
 	if _tileset == null:
@@ -110,9 +119,10 @@ static func _build() -> TileSet:
 	var count: int = Kind.size()
 	var tex: Texture2D
 	var rows: int = 1
-	_has_atlas = ResourceLoader.exists(ATLAS_PATH)
+	var atlas: String = atlas_path()
+	_has_atlas = not atlas.is_empty()
 	if _has_atlas:
-		tex = load(ATLAS_PATH)
+		tex = load(atlas)
 		rows = VARIANT_ROWS
 	else:
 		var img := Image.create(TILE * count, TILE, false, Image.FORMAT_RGBA8)

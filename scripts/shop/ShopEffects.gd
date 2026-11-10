@@ -33,7 +33,7 @@ const PASS_GROWTH: float = 1.5
 
 static func growth_mult() -> float:
 	var m: float = float(GameState.shop_boosts.get("growth", {}).get("mult", 1.0))
-	return m * (PASS_GROWTH if pass_active() else 1.0)
+	return m * (PASS_GROWTH if pass_active() else 1.0) * (1.0 + growth_plus())
 
 ## The Wayfarer Pass runs. Only the server knows (shop_state, table subscriptions), so every pass
 ## advantage asks here, and all of them end the moment the server says the pass ended (items
@@ -219,3 +219,91 @@ const RIFT_ANCHOR_ITEM: String = "rg_rift_anchor"
 
 static func can_anchor(difficulty: int) -> bool:
 	return warden_help_allowed(1, difficulty) and GameState.item_count(RIFT_ANCHOR_ITEM) > 0
+
+## --- Pay-to-win step 1 (Ali, 10 Nov 2026): seals, stat crystals, permanent growth. ---
+## Values live in data/shop.json "advantage_values"; the server only counts tiers (entitlements).
+
+## Seal kinds in the order of BattleModel.seals rows: power, guard, speed.
+const SEAL_KINDS: Array[String] = ["power_seal", "guard_seal", "speed_seal"]
+
+static func _values() -> Dictionary:
+	var v: Variant = ShopCatalog.data().get("advantage_values", {})
+	return v if v is Dictionary else {}
+
+## Highest tier of seal [param kind] (7 for power and guard, 5 for speed).
+static func seal_max(kind: String) -> int:
+	var t: Variant = _values().get(kind, [])
+	return (t as Array).size() if t is Array else 0
+
+## Percent of seal [param kind] at [param tier] (0 for tier 0 or an unknown kind).
+static func seal_percent(kind: String, tier: int) -> int:
+	var t: Variant = _values().get(kind, [])
+	if not t is Array or tier <= 0:
+		return 0
+	return int((t as Array)[mini(tier, (t as Array).size()) - 1])
+
+## Tier clamped to what the data knows.
+static func clamp_tier(kind: String, tier: int) -> int:
+	return clampi(tier, 0, seal_max(kind))
+
+## The account's seal tiers [power, guard, speed] from the server's unlocks. Each bought tier
+## adds 1 to the unlock count, so the count is the tier.
+static func seal_tiers() -> Array[int]:
+	var out: Array[int] = []
+	for k: String in SEAL_KINDS:
+		out.append(clamp_tier(k, Billing.unlocked(k)))
+	return out
+
+## Seal tiers for a battle: story, raids and the Open League get them, the Fair League and echo
+## duels never do. [param context] is "story", "raid", "league_open", "league_fair" or "echo".
+static func seals_for(context: String) -> Array[int]:
+	if context in ["story", "raid", "league_open"]:
+		return seal_tiers()
+	return [0, 0, 0] as Array[int]
+
+## Damage factor from the attacker's power tier and the target's guard tier.
+static func seal_damage_mult(power_tier: int, guard_tier: int) -> float:
+	return (1.0 + seal_percent("power_seal", power_tier) / 100.0) * (1.0 - seal_percent("guard_seal", guard_tier) / 100.0)
+
+## Speed factor from a speed tier.
+static func seal_speed_mult(speed_tier: int) -> float:
+	return 1.0 + seal_percent("speed_seal", speed_tier) / 100.0
+
+## Most crystal points one stat of one Spirling can carry: twice the free Spark cap.
+static func crystal_cap() -> int:
+	return int(_values().get("crystal_cap", Spirling.SPARK_MAX * 2))
+
+## Extra growth from the permanent Growth Seal (+50 %).
+static func growth_plus() -> float:
+	return float(_values().get("growth_plus", 0.0)) if Billing.unlocked("growth_plus") > 0 else 0.0
+
+## Account power (shown in the team view): the sum of every active bought advantage in points,
+## seal percents plus the permanent growth percent plus the crystal points in the team.
+static func account_power() -> int:
+	var tiers: Array[int] = seal_tiers()
+	var n: int = 0
+	for i: int in SEAL_KINDS.size():
+		n += seal_percent(SEAL_KINDS[i], tiers[i])
+	n += roundi(growth_plus() * 100.0)
+	for s: Spirling in GameState.party:
+		for k: String in s.crystal:
+			n += int(s.crystal[k])
+	return n
+
+## Adds [param n] crystal points to stat [param key] of [param s], up to crystal_cap().
+## Returns the points really added (0 when the stat is full).
+static func add_crystal(s: Spirling, key: String, n: int) -> int:
+	var cur: int = int(s.crystal.get(key, 0))
+	var add: int = clampi(n, 0, crystal_cap() - cur)
+	if add <= 0:
+		return 0
+	var old_max: int = s.max_hp()
+	s.crystal[key] = cur + add
+	if key == "hp":
+		s.hp = mini(s.max_hp(), s.hp + s.max_hp() - old_max)
+	return add
+
+## Required tier for a tier offer: "tier:<unlock>:<n>" means the account owns exactly n tiers,
+## so tier n+1 is bought by paying only the difference. True when [param owned] fits.
+static func tier_ok(req: String, owned: int) -> bool:
+	return owned == int(req.get_slice(":", 2))

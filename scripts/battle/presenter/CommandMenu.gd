@@ -251,6 +251,19 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.text = text
 	b.custom_minimum_size = Vector2(0, SMALL_BUTTON_HEIGHT)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Four buttons share 144 px; long German words ("Tauschen") pushed the whole battle screen
+	# wider than the display (owner, 9 Nov: buttons not shown right). Clip instead of growing.
+	b.clip_text = true
+	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_CHAR
+	# Width follows the drawn word, so "Binden" gets more room than "Item".
+	b.size_flags_stretch_ratio = b.get_theme_font("font").get_string_size(Loc.t(text), HORIZONTAL_ALIGNMENT_LEFT, -1, b.get_theme_font_size("font_size")).x + 8.0
+	# Thin side margins: four German words need every pixel of the 144.
+	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
+		if UITheme.get_theme().has_stylebox(state, "Button"):
+			var sb: StyleBox = UITheme.get_theme().get_stylebox(state, "Button").duplicate()
+			sb.content_margin_left = 1
+			sb.content_margin_right = 1
+			b.add_theme_stylebox_override(state, sb)
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")

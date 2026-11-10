@@ -125,6 +125,7 @@ static func _load_spirlings() -> void:
 		var sd := SpirlingData.new()
 		sd.dex_id = int(s.dex_id)
 		sd.species_name = s.name
+		sd.era = int(s.get("era", 1))
 		for e: String in s.elements:
 			sd.elements.append(Elements.E[e])
 		var base: Dictionary = s.base

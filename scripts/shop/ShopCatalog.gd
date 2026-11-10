@@ -40,6 +40,11 @@ static func load_all() -> void:
 			_offers.append(o)
 			_by_id[str(o.get("id", ""))] = o
 
+## The whole shop.json (offers plus "advantage_values").
+static func data() -> Dictionary:
+	load_all()
+	return _data
+
 static func offers() -> Array[Dictionary]:
 	load_all()
 	return _offers

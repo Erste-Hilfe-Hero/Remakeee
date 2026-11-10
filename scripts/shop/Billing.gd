@@ -139,6 +139,8 @@ func block_reason(o: Dictionary, with_riftglass: bool) -> String:
 	var req: String = str(o.get("requires", ""))
 	if req.begins_with("rifts:") and int(state.get("rifts", 0)) < int(req.get_slice(":", 1)):
 		return "not_yet"
+	if req.begins_with("tier:") and not ShopEffects.tier_ok(req, unlocked(req.get_slice(":", 1))):
+		return "tier_order"
 	if with_riftglass:
 		if int(o.get("rg_price", 0)) <= 0:
 			return "not_for_riftglass"
