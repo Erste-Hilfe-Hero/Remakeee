@@ -257,13 +257,6 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_CHAR
 	# Width follows the word, so "Binden" gets more room than "Item".
 	b.size_flags_stretch_ratio = maxf(3.0, Loc.t(text).length())
-	for state: String in ["normal", "hover", "pressed", "disabled", "focus"]:
-		var sb: StyleBox = b.get_theme_stylebox(state)
-		if sb != null:
-			sb = sb.duplicate()
-			sb.content_margin_left = 1
-			sb.content_margin_right = 1
-			b.add_theme_stylebox_override(state, sb)
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
