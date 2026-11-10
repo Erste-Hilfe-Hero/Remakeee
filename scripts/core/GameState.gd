@@ -658,10 +658,10 @@ func from_dict(d: Dictionary) -> void:
 	reset()
 	var wayfarer: Dictionary = d.get("tamer", {})
 	tamer_name = str(wayfarer.get("name", "Juno"))
-	tamer_color = int(wayfarer.get("color", 0))
-	tamer_look = clampi(int(wayfarer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
-	skin_tone = clampi(int(wayfarer.get("skin", 0)), 0, SKIN_TONES.size() - 1)
-	hair_color = clampi(int(wayfarer.get("hair", 0)), 0, HAIR_COLORS.size() - 1)
+	tamer_color = as_int(wayfarer.get("color", 0))
+	tamer_look = clampi(as_int(wayfarer.get("look", 0)), 0, TAMER_SPRITES.size() - 1)
+	skin_tone = clampi(as_int(wayfarer.get("skin", 0)), 0, SKIN_TONES.size() - 1)
+	hair_color = clampi(as_int(wayfarer.get("hair", 0)), 0, HAIR_COLORS.size() - 1)
 	jacket = str(wayfarer.get("jacket", "")) if wayfarer.get("jacket") is String else ""
 	backdrop_look = str(wayfarer.get("backdrop", "")) if wayfarer.get("backdrop") is String else ""
 	text_frame = str(wayfarer.get("frame", "")) if wayfarer.get("frame") is String else ""
