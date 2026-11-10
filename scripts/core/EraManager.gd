@@ -8,7 +8,10 @@ signal era_changed(era: int)
 signal era_unlocked(era: int)
 
 enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4 }
-const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.WASH, "ashmere": Era.ETCHED, "solenne": Era.PANORAMA}
+## The whole story (all four regions) stays Era I. Era II opens after the finale and is the
+## look of the post-game region; later eras arrive with their own new regions.
+const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK}
+const STORY_COMPLETE_FLAG: String = "story_complete"
 const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480)}
 const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96}
 ## Era I: four cartographer's inks on parchment (original values, darkest to lightest). Deliberately
@@ -43,7 +46,7 @@ func active_era() -> int:
 
 ## Lines shown when an era opens up for the first time.
 const ERA_LINES: Dictionary[int, String] = {
-	Era.WASH: "The ink of Veydal runs and spreads. The world fills with colour!",
+	Era.WASH: "The last line of the map is drawn. The ink runs and spreads, and the world fills with colour!",
 	Era.ETCHED: "The air grows sharper. Every leaf and stone shows more detail!",
 	Era.PANORAMA: "The map unrolls wider than ever. The whole horizon opens before you!",
 }
@@ -51,7 +54,15 @@ const TRANSITION_TIME: float = 0.9
 var _wipe: ColorRect
 
 func unlock_region(region: String) -> void:
-	var e: int = REGION_ERA.get(region, Era.INK)
+	unlock_era(REGION_ERA.get(region, Era.INK))
+
+## Era II opens once the story finale is done.
+func unlock_story_end(story_complete: bool) -> void:
+	if story_complete:
+		unlock_era(Era.WASH)
+
+## Raises unlocked_era to [param e]; never lowers it (older saves keep their era).
+func unlock_era(e: int) -> void:
 	if e > unlocked_era:
 		unlocked_era = e
 		if retro_filter == 0 and is_inside_tree():

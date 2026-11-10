@@ -43,3 +43,23 @@ func test_era_change_clears_caches() -> void:
 	assert_true(GridWalker._sheets.is_empty())
 	assert_true(ElementFx._tex.is_empty())
 	assert_ne(TilesetFactory.get_tileset(), ts, "tileset rebuilt after era change")
+
+func test_story_regions_stay_ink() -> void:
+	_set_era(EraManager.Era.INK)
+	for region: String in ["veydal", "corvane", "ashmere", "solenne"]:
+		EraManager.unlock_region(region)
+	assert_eq(EraManager.unlocked_era, EraManager.Era.INK)
+
+func test_story_complete_unlocks_wash() -> void:
+	_set_era(EraManager.Era.INK)
+	EraManager.unlock_story_end(false)
+	assert_eq(EraManager.unlocked_era, EraManager.Era.INK)
+	EraManager.unlock_story_end(true)
+	assert_eq(EraManager.unlocked_era, EraManager.Era.WASH)
+
+func test_saved_higher_era_is_kept() -> void:
+	EraManager.from_dict({"unlocked_era": EraManager.Era.ETCHED, "retro_filter": 1})
+	EraManager.unlock_region("veydal")
+	EraManager.unlock_story_end(true)
+	assert_eq(EraManager.unlocked_era, EraManager.Era.ETCHED)
+	assert_eq(EraManager.retro_filter, 1)
