@@ -1,0 +1,100 @@
+{
+ "spring": {
+  "lines": [
+   "A cold spring bubbles up between the stones.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "THE SHADE RIFT",
+  "Inside the silent lighthouse. The lamp has not burned for a year."
+ ],
+ "beacon": [
+  "The old beacon lens, cold and dark. It waits for light."
+ ],
+ "mirror_6_8": {
+  "lines": [
+   "A tall lighthouse mirror on a turning stand."
+  ],
+  "action": "mirror 6 8"
+ },
+ "mirror_6_10": {
+  "lines": [
+   "A tall lighthouse mirror on a turning stand."
+  ],
+  "action": "mirror 6 10"
+ },
+ "mirror_3_10": {
+  "lines": [
+   "A tall lighthouse mirror on a turning stand."
+  ],
+  "action": "mirror 3 10"
+ },
+ "veit": [
+  "Veit: Go on. I'll wait down here for the light."
+ ],
+ "veit_intro": [
+  "Veit: You again. Of course it's you.",
+  "Veit: One last duel. Then I stop standing in your way."
+ ],
+ "veit_defeat": [
+  "Veit: That was the last time. I mean it.",
+  "Veit: Odalys is up there in the dark. She listens better than I did."
+ ],
+ "sabe": [
+  "Sabe: Odalys climbed up and blew the lamp out. Then she stayed."
+ ],
+ "sabe_intro": [
+  "Sabe: Nobody goes up in the dark. Not without a duel."
+ ],
+ "sabe_defeat": [
+  "Sabe: Then take the light up with you."
+ ],
+ "fenna": [
+  "Fenna: I trimmed this lamp for thirty years. Now I trim the dark."
+ ],
+ "fenna_intro": [
+  "Fenna: Let's see if you burn steady."
+ ],
+ "fenna_defeat": [
+  "Fenna: Steady as a beacon. Go on up."
+ ],
+ "oren": [
+  "Oren: Turn the mirrors right and the beacon catches. Wrong, and it stays black."
+ ],
+ "oren_intro": [
+  "Oren: In the dark you can't tell who strikes first. Ready?"
+ ],
+ "oren_defeat": [
+  "Oren: You struck first, it seems. Go."
+ ],
+ "odalys": {
+  "lines": [
+   "Odalys: Leave the lamp dark. Light only shows what's gone."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_shade_sealed",
+    "lines": [
+     "Odalys: The beacon burns. Ships could find this coast again.",
+     "Odalys: Take this. Night Veil, for the dark you still have to cross."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Odalys: I keep the lamp lit now. Every night, for whoever is out there."
+    ]
+   }
+  ]
+ },
+ "odalys_intro": [
+  "Odalys: I put the beacon out myself. The dark hides the empty flats.",
+  "Odalys: You lit it again. Then face what the dark keeps."
+ ],
+ "odalys_defeat": [
+  "Odalys: ...My Silentra is glowing. It never glowed for me before.",
+  "Odalys: All right. Let the light back in. Help me mend this."
+ ]
+}

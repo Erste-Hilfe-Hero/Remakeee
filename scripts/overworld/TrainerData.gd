@@ -16,6 +16,8 @@ extends RefCounted
 ##   team entries may carry "moves": ["Kite Cut", ...] (fixed arts) and "held": "spark_coil"
 ##   "teams_by_difficulty": {"story": [...], "tamer": [...], "veteran": [...], "rift_born": [...]}
 ##       a team per difficulty; a missing key falls back to "team" / "team_by_starter".
+##   "rematch_after": "story_complete"   no daily rematch before this flag is set
+##   "mend_items": ["echo_tailwind"]    a Warden's gift right after the mend
 
 ## Default money per top foe ring when the map gives none (item 659): Wayfarers 40, Wardens 70.
 const MONEY_PER_LEVEL: int = 40
@@ -44,6 +46,9 @@ static func is_beaten(def: Dictionary, map_id: String, flags: Dictionary) -> boo
 static func can_rematch(def: Dictionary, map_id: String, flags: Dictionary, records: Dictionary, today: String) -> bool:
 	if not is_trainer(def) or not is_beaten(def, map_id, flags):
 		return false
+	# "rematch_after": a flag the rematches wait for (the newer Wardens: after the finale).
+	if def.has("rematch_after") and not bool(flags.get(str(def.rematch_after), false)):
+		return false
 	if bool(def.get("leaves", false)) or bool(def.get("no_rematch", false)):
 		return false
 	var last: Dictionary = records.get("rematch", {})
@@ -54,6 +59,9 @@ const REMATCH_KEY: String = "rg_rematch_key"
 
 static func can_rematch_with_key(def: Dictionary, map_id: String, flags: Dictionary, records: Dictionary, today: String) -> bool:
 	if not is_trainer(def) or not is_beaten(def, map_id, flags):
+		return false
+	# "rematch_after": a flag the rematches wait for (the newer Wardens: after the finale).
+	if def.has("rematch_after") and not bool(flags.get(str(def.rematch_after), false)):
 		return false
 	if bool(def.get("leaves", false)) or bool(def.get("no_rematch", false)):
 		return false

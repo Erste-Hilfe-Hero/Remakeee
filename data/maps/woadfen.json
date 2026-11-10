@@ -21,7 +21,7 @@
   "T,,,__,,,,,T",
   "T,,,_,,%%%,T",
   "T~~~_~~%%%,T",
-  "T~~~_~~,,,,T",
+  "T~~~_~~,,,,_",
   "T,,,_,,,,,,T",
   "T,%%____,,,T",
   "T,%%,,,_,,,T",
@@ -66,6 +66,14 @@
    "to": "rain_rift",
    "tx": 6,
    "ty": 11,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 15,
+   "to": "root_rift",
+   "tx": 5,
+   "ty": 20,
    "facing": "up"
   }
  ],
@@ -155,6 +163,14 @@
    "x": 9,
    "y": 9,
    "dialogue": "woadfen/sign_top"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 11,
+   "y": 15,
+   "open_flag": "rift_mirror_sealed",
+   "closed": "#"
   }
  ],
  "secrets": [

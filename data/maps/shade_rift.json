@@ -1,0 +1,305 @@
+{
+ "name": "Shade Rift",
+ "region": "ashmere",
+ "biome": "rift",
+ "backdrop": "voice",
+ "field": "deep_murk",
+ "encounters": "shade_rift",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.::....:^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^.....S..^_^",
+  "^.::.....^_^",
+  "^.:S..S.S^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^.::....:^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^.::....:^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.::....::.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "saltglass",
+   "tx": 8,
+   "ty": 7,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "saltglass",
+   "tx": 8,
+   "ty": 7,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "veit_s",
+   "x": 3,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "shade_rift/veit",
+   "sprite": "ranger",
+   "color": "5a4a3a",
+   "trainer": "Veit Harrow",
+   "team": [
+    {
+     "species": "Shalebat",
+     "level": 35
+    },
+    {
+     "species": "Duskdigger",
+     "level": 35
+    },
+    {
+     "species": "Obsidroth",
+     "level": 36
+    },
+    {
+     "species": "Calderox",
+     "level": 36
+    }
+   ],
+   "intro": "shade_rift/veit_intro",
+   "defeat": "shade_rift/veit_defeat",
+   "beaten_flag": "beat_veit_3",
+   "leaves": true,
+   "hide_flag": "beat_veit_3",
+   "ai": 3,
+   "money": 1700
+  },
+  {
+   "id": "sabe",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "shade_rift/sabe",
+   "sprite": "warden",
+   "trainer": "Rift Acolyte Sabe",
+   "intro": "shade_rift/sabe_intro",
+   "defeat": "shade_rift/sabe_defeat",
+   "money": 1550,
+   "team": [
+    {
+     "species": "Mendlace",
+     "level": 34
+    },
+    {
+     "species": "Silentra",
+     "level": 34
+    }
+   ]
+  },
+  {
+   "id": "fenna",
+   "x": 2,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "shade_rift/fenna",
+   "sprite": "villager",
+   "trainer": "Lamp Tender Fenna",
+   "intro": "shade_rift/fenna_intro",
+   "defeat": "shade_rift/fenna_defeat",
+   "money": 1580,
+   "team": [
+    {
+     "species": "Wickit",
+     "level": 33
+    },
+    {
+     "species": "Lanternel",
+     "level": 34
+    }
+   ]
+  },
+  {
+   "id": "oren",
+   "x": 7,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "shade_rift/oren",
+   "sprite": "villager",
+   "trainer": "Salt Diver Oren",
+   "intro": "shade_rift/oren_intro",
+   "defeat": "shade_rift/oren_defeat",
+   "money": 1600,
+   "team": [
+    {
+     "species": "Brinelet",
+     "level": 34
+    },
+    {
+     "species": "Blotling",
+     "level": 34
+    },
+    {
+     "species": "Hushkin",
+     "level": 35
+    }
+   ]
+  },
+  {
+   "id": "warden_odalys",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "shade_rift/odalys",
+   "sprite": "warden",
+   "trainer": "Warden Odalys",
+   "warden": "shade",
+   "team": [
+    {
+     "species": "Silentra",
+     "level": 35
+    },
+    {
+     "species": "Fenwarden",
+     "level": 36
+    },
+    {
+     "species": "Burinox",
+     "level": 35
+    },
+    {
+     "species": "Mendlace",
+     "level": 35
+    },
+    {
+     "species": "Scrivane",
+     "level": 36
+    }
+   ],
+   "intro": "shade_rift/odalys_intro",
+   "defeat": "shade_rift/odalys_defeat",
+   "ai": 2,
+   "money": 1700,
+   "rule": "night_dark",
+   "mend_items": [
+    "echo_night_veil"
+   ],
+   "rematch_after": "story_complete"
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "shade_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "shade_rift/sign"
+  },
+  {
+   "x": 6,
+   "y": 8,
+   "dialogue": "shade_rift/mirror_6_8"
+  },
+  {
+   "x": 6,
+   "y": 10,
+   "dialogue": "shade_rift/mirror_6_10"
+  },
+  {
+   "x": 3,
+   "y": 10,
+   "dialogue": "shade_rift/mirror_3_10"
+  },
+  {
+   "x": 8,
+   "y": 10,
+   "dialogue": "shade_rift/beacon"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 4,
+   "y": 7,
+   "open_flag": "shade_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 5,
+   "y": 7,
+   "open_flag": "shade_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "open_flag": "shade_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 7,
+   "y": 7,
+   "open_flag": "shade_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_shade_sealed",
+   "closed": "@"
+  },
+  {
+   "x": 4,
+   "y": 18,
+   "open_flag": "beat_veit_3",
+   "closed": "@"
+  },
+  {
+   "x": 5,
+   "y": 18,
+   "open_flag": "beat_veit_3",
+   "closed": "@"
+  }
+ ],
+ "beam": {
+  "x": 0,
+  "y": 8,
+  "dir": "right",
+  "mirrors": [
+   [
+    6,
+    8,
+    "/"
+   ],
+   [
+    6,
+    10,
+    "\\"
+   ],
+   [
+    3,
+    10,
+    "/"
+   ]
+  ],
+  "target": [
+   8,
+   10
+  ],
+  "flag": "shade_rift_open"
+ }
+}

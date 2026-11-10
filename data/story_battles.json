@@ -213,5 +213,51 @@
   "win_flags": [
    "kestra_stillwater_tag"
   ]
+ },
+ "kestra_root_tag": {
+  "trainer": "Hush Wanderers",
+  "team": [
+   {
+    "species": "Hushkin",
+    "level": 23
+   },
+   {
+    "species": "Mirkmole",
+    "level": 23
+   },
+   {
+    "species": "Bogwick",
+    "level": 24
+   },
+   {
+    "species": "Shalebat",
+    "level": 24
+   }
+  ],
+  "front": [
+   1,
+   2
+  ],
+  "ai": 2,
+  "money": 800,
+  "partner": {
+   "name": "Cartographer Kestra",
+   "team": [
+    {
+     "species": "Tempestrel",
+     "level": 24
+    },
+    {
+     "species": "Glimmerax",
+     "level": 23
+    }
+   ],
+   "front": 1
+  },
+  "defeat": "root_rift/kestra_tag_defeat",
+  "lose": "root_rift/kestra_tag_lose",
+  "win_flags": [
+   "kestra_root_tag"
+  ]
  }
 }

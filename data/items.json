@@ -331,6 +331,33 @@
   "tradeable": false
  },
  {
+  "id": "echo_tailwind",
+  "name": "Echo Crystal: Tailwind",
+  "description": "Teaches Tailwind to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tailwind",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_root_grip",
+  "name": "Echo Crystal: Root Grip",
+  "description": "Teaches Root Grip to a Bloom Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Root Grip",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_night_veil",
+  "name": "Echo Crystal: Night Veil",
+  "description": "Teaches Night Veil to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Night Veil",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
   "id": "echo_scatter_gale",
   "name": "Echo Crystal: Scatter Gale",
   "description": "Teaches Scatter Gale to any Spirling. Never used up.",

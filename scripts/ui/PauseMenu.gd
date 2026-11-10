@@ -434,6 +434,9 @@ func run_achievement_lists() -> void:
 static func records_text() -> String:
 	var lines: PackedStringArray = []
 	lines.append_array(Completion.lines())
+	# The badge case: one seal per mended story Rift.
+	var seals: int = GameState.STORY_RIFTS.filter(func(r: String) -> bool: return GameState.has_flag("rift_%s_sealed" % r)).size()
+	lines.append(Loc.t("Rift seals: %d of %d") % [seals, GameState.STORY_RIFTS.size()])
 	lines.append("Lighthouse stair best: floor %d of %d" % [Gauntlet.best(), Gauntlet.FLOORS])
 	if GameState.iron_oath:
 		lines.append(Loc.t("Under the Iron Oath: floor %d of %d") % [int(GameState.records.get("gauntlet_best_oath", 0)), Gauntlet.FLOORS])

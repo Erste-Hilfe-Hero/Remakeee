@@ -1,0 +1,110 @@
+{
+ "spring": {
+  "lines": [
+   "A cold spring bubbles up between the stones.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "THE ROOT RIFT",
+  "Grey roots, thick as arms. Nothing grows on them."
+ ],
+ "root_1": {
+  "lines": [
+   "A grey root knot. Rub it, and it could turn green."
+  ],
+  "action": "bell root_rift_open 3 3 root"
+ },
+ "root_2": {
+  "lines": [
+   "A grey root knot. Rub it, and it could turn red."
+  ],
+  "action": "bell root_rift_open 1 3 root"
+ },
+ "root_3": {
+  "lines": [
+   "A grey root knot. Rub it, and it could turn yellow."
+  ],
+  "action": "bell root_rift_open 2 3 root"
+ },
+ "hint": [
+  "Painted by a dyer: madder red, then weld yellow, then woad green."
+ ],
+ "kestra": {
+  "if": {
+   "not_flag": "kestra_root_tag"
+  },
+  "else": "kestra_after",
+  "lines": [
+   "Kestra: There you are. Tatter wouldn't stop pulling me here.",
+   "Kestra: Hushed Wanderers block the roots. Two of us, two of them?"
+  ],
+  "action": "battle kestra_root_tag"
+ },
+ "kestra_after": [
+  "Kestra: Go on in. I'll keep the mouth clear behind you."
+ ],
+ "kestra_tag_defeat": [
+  "The Wanderers shake the grey dust from their coats.",
+  "Kestra: Side by side again. I could get used to this."
+ ],
+ "kestra_tag_lose": [
+  "Kestra: The roots won this round. Rest, then we try again."
+ ],
+ "wen": [
+  "Wen: Darrow pulls up every sprout. Says it only fades anyway."
+ ],
+ "wen_intro": [
+  "Wen: You want to reach him? Through my roots first."
+ ],
+ "wen_defeat": [
+  "Wen: Maybe you can make him look at a leaf again."
+ ],
+ "corm": [
+  "Corm: I dig peat. Down here the peat digs back."
+ ],
+ "corm_intro": [
+  "Corm: Watch your step. And your Spirlings."
+ ],
+ "corm_defeat": [
+  "Corm: Deep roots, that one. Like you."
+ ],
+ "tilde": [
+  "Tilde: The roots remember their colours. You only have to remind them."
+ ],
+ "tilde_intro": [
+  "Tilde: Let's see what grows in you."
+ ],
+ "tilde_defeat": [
+  "Tilde: A lot, it seems. Go to Darrow."
+ ],
+ "darrow": {
+  "lines": [
+   "Darrow: Nothing grows here. Nothing should. It all fades."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_root_sealed",
+    "lines": [
+     "Darrow: Green, under the grey. I'd forgotten green was a colour.",
+     "Darrow: This crystal holds a root's grip. Hold on to what grows."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Darrow: I planted a garden by the moor. Weeds and all."
+    ]
+   }
+  ]
+ },
+ "darrow_intro": [
+  "Darrow: Every leaf in Corvane went grey. Why grow new ones?",
+  "Darrow: Turn back. Or let my roots hold you here."
+ ],
+ "darrow_defeat": [
+  "Darrow: ...My Thornback is flowering. In the middle of the Fading.",
+  "Darrow: Maybe things should grow after all. Help me close it."
+ ]
+}

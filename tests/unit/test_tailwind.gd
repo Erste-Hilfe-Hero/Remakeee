@@ -28,8 +28,8 @@ func test_no_keepsakes_below_veteran() -> void:
 	assert_eq(TrainerData.build_team(def, "", RandomNumberGenerator.new())[0].held, "spark_coil", "untuned keeps the data")
 
 func test_warden_teams_fit_the_ring_cap() -> void:
-	# Orrin guards the first Rift (no Rift sealed yet), Maelis the second (one sealed).
-	var wardens: Array = [["cinder_rift", "warden_orrin", 0], ["tide_rift", "warden_maelis", 1]]
+	# Orrin guards the first Rift (no Rift sealed yet), Brisa the second, Maelis the third.
+	var wardens: Array = [["cinder_rift", "warden_orrin", 0], ["mist_rift", "warden_brisa", 1], ["tide_rift", "warden_maelis", 2]]
 	for w: Array in wardens:
 		var cap: int = GameState.LEVEL_CAPS[int(w[2])]
 		for d: int in [GameState.Difficulty.VETERAN, GameState.Difficulty.RIFT_BORN]:

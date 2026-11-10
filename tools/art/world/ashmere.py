@@ -7,6 +7,7 @@ Area 4 places the story figures through data/story_npcs.json on the named "spots
 How the way opens:
   greyreach <-> ashmere_station     mountain railway, line "mountain_rail", open_flag act2_end
   saltglass -> wide_rift_far        veit_plate_done (chapter 15)
+  saltglass -> shade_rift           veit_plate_done (the silent lighthouse door, tools/art/world/rifts12.py)
   wide_rift_far -> undrawn_1        undrawn_reached (scene undrawn_enter, guild seal)
 """
 from common import check_rows, lines, npc, secret, team, tr, warp
@@ -189,7 +190,7 @@ def saltglass(world):
             "^....__....^",
             "^.::.__.|..^",
             "^.::.__.|..^",
-            "^....__....^",
+            "^....__.D..^",
             "^,,,.__.,,,^",
             "^,,,.__.,,,^",
             "^....______.",
@@ -218,7 +219,8 @@ def saltglass(world):
          "rows": rows,
          "warps": [warp(0, 22, "ashmere_station", 10, 8, "left"), warp(0, 23, "ashmere_station", 10, 9, "left"),
                    warp(5, 0, "glass_rift", 5, 11, "up"), warp(6, 0, "glass_rift", 6, 11, "up"),
-                   warp(11, 9, "wide_rift_far", 1, 11, "right"), warp(11, 10, "wide_rift_far", 1, 12, "right")],
+                   warp(11, 9, "wide_rift_far", 1, 11, "right"), warp(11, 10, "wide_rift_far", 1, 12, "right"),
+                   warp(8, 6, "shade_rift", 5, 20, "up")],
          "npcs": [
              wayfarer(world, mid, "nils", 2, 12, "right", "Salt Raker Nils", team(("Brinelet", 27), ("Talusk", 27)),
                       [("Nils: Rake the salt and it sings. Not since the lighthouse went dark, though.", "Nils: Wenn man das Salz recht, singt es. Seit der Leuchtturm dunkel ist, aber nicht mehr.")],
@@ -234,7 +236,7 @@ def saltglass(world):
                       [("Odila: Go. Ilse hasn't said a word in a year. Maybe you'll hear her.", "Odila: Geh. Ilse hat seit einem Jahr nicht gesprochen. Vielleicht hörst du sie.")], 1500),
          ],
          "signs": [{"x": 2, "y": 19, "dialogue": mid + "/sign"}, {"x": 10, "y": 24, "dialogue": mid + "/sign_east"}],
-         "blocks": [gate(10, 9, "veit_plate_done"), gate(10, 10, "veit_plate_done")],
+         "blocks": [gate(10, 9, "veit_plate_done"), gate(10, 10, "veit_plate_done"), gate(8, 6, "veit_plate_done")],
          "secrets": [secret(0, 6, "strong_tonic", "find_saltglass_west", 2), secret(11, 15, "remedy", "find_saltglass_east"),
                      secret(0, 18, "max_tonic", "find_saltglass_south"), secret(11, 3, "revival_leaf", "find_saltglass_tower")],
          "spots": {"keeper_lamp": [8, 4], "page_13": [10, 1], "letter_a3": [1, 15]}}

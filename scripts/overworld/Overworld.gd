@@ -1732,24 +1732,36 @@ func _action_switch(args: PackedStringArray, _speaker: NPC) -> void:
 
 ## "bell <puzzle> <n> <total>": Bellstone Ruins (area 3 item 1008). Same rules as switches:
 ## ring the bells in the order drawn on the wall; a wrong bell silences them all.
+## Lines of an ordered switch puzzle per kind ("bell <flag> <n> <total> [kind]"): done, wrong,
+## step, solved. Bells in the Bellstone Ruins, wind vanes in the Mist Rift, roots in the Root Rift.
+const SWITCH_LINES: Dictionary[String, Array] = {
+	"bell": ["The bell hums softly. This room is done.", "Clang! The note jars, and every bell falls silent. Start again.",
+		"Dong. The note hangs in the air.", "The last note joins the others. A door swings open!"],
+	"vane": ["The vanes turn on their own now. The path stays clear.", "The wind swings round and the fog rolls back in. Start again.",
+		"The vane creaks round. A thin wind starts to blow.", "All three vanes catch the wind. The fog tears open!"],
+	"root": ["The roots glow softly. The way stays open.", "The colour drains away again. Start with the first root.",
+		"The root takes the colour and glows.", "The last root glows, and the tangle pulls aside!"],
+}
+
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.size() < 3:
 		return
+	var texts: Array = SWITCH_LINES.get(args[3] if args.size() > 3 else "bell", SWITCH_LINES["bell"])
 	if GameState.has_flag(args[0]):
-		await say(["The bell hums softly. This room is done."] as Array[String])
+		await say([str(texts[0])] as Array[String])
 		return
 	match GameState.press_switch(args[0], int(args[1]), int(args[2])):
 		GameState.SwitchResult.WRONG:
 			Sound.sfx("cancel")
-			await say(["Clang! The note jars, and every bell falls silent. Start again."] as Array[String])
+			await say([str(texts[1])] as Array[String])
 			await _note_room_fail(map.id)
 		GameState.SwitchResult.STEP:
 			Sound.sfx("confirm")
-			await say(["Dong. The note hangs in the air."] as Array[String])
+			await say([str(texts[2])] as Array[String])
 		GameState.SwitchResult.SOLVED:
 			Sound.sfx("warp")
 			_world.refresh(player.cell)
-			await say(["The last note joins the others. A door swings open!"] as Array[String])
+			await say([str(texts[3])] as Array[String])
 
 ## "toggle <flag>": a sluice wheel that can be turned both ways (Brackwater Sluice, item 1009).
 func _action_toggle(args: PackedStringArray, _speaker: NPC) -> void:
@@ -2470,6 +2482,9 @@ func after_tamer_win(n: NPC) -> void:
 		if GameState.level_cap() < Spirling.MAX_LEVEL:
 			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
+		# The Warden's thanks for the mend (the Rifts of 2026-11): an Echo Crystal with its art.
+		for it: Variant in def.get("mend_items", []):
+			await _action_give_item(PackedStringArray([str(it)]), null)
 	# A Warden explains its team's cover in the lexicon after the first win (item 680).
 	if def.has("lexicon") and Lexicon.add(GameState.records, str(def.lexicon)):
 		await say([Loc.t("A new lexicon entry is written down."), "%s: %s" % [Loc.t(Lexicon.title(str(def.lexicon))), Loc.t(Lexicon.text(str(def.lexicon)))]] as Array[String])

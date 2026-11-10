@@ -1326,5 +1326,40 @@
   "stages": -1,
   "self": false,
   "stage_chance": 0.3
+ },
+ {
+  "name": "Tailwind",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "spd": 2
+  },
+  "self": true
+ },
+ {
+  "name": "Root Grip",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "root",
+  "status_chance": 0.3
+ },
+ {
+  "name": "Night Veil",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "foc": 1
+  },
+  "self": true
  }
 ]
