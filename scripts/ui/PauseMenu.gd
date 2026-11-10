@@ -754,9 +754,10 @@ static func gear_picture(id: String) -> Texture2D:
 		"w": TilesetFactory.Kind.WADE, "Y": TilesetFactory.Kind.PLANK, "dark": TilesetFactory.Kind.ROCK,
 		"wheel": TilesetFactory.Kind.ROCK, "shaft": TilesetFactory.Kind.PLANK}
 	var on: Array = Database.item(id).get("works_on", [])
-	if on.is_empty() or not ResourceLoader.exists(TilesetFactory.ATLAS_PATH):
+	var atlas: String = TilesetFactory.atlas_path()
+	if on.is_empty() or atlas.is_empty():
 		return null
-	var img: Image = (load(TilesetFactory.ATLAS_PATH) as Texture2D).get_image()
+	var img: Image = (load(atlas) as Texture2D).get_image()
 	var k: int = int(kinds.get(str(on[0]), TilesetFactory.Kind.GRASS))
 	var tile: Image = img.get_region(Rect2i(k * TilesetFactory.TILE, 0, TilesetFactory.TILE, TilesetFactory.TILE))
 	tile.resize(TilesetFactory.TILE * 2, TilesetFactory.TILE * 2, Image.INTERPOLATE_NEAREST)
