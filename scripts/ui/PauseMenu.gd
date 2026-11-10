@@ -523,6 +523,10 @@ func run_team() -> void:
 			rows.append({"text": Loc.t("Wardrobe...")})
 		# Running shop boosts with the battles left (item 4342).
 		var boosts: Array[String] = ShopEffects.boost_lines()
+		# Account power: the sum of the bought advantages that work right now.
+		var power: int = ShopEffects.account_power()
+		if power > 0:
+			boosts.push_front(Loc.t("Power %d") % power)
 		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
 		var idx: int = await pick(title, rows)
 		if idx >= 0 and idx == wardrobe:
@@ -697,6 +701,8 @@ func run_bag() -> void:
 			await _teach_echo(item_id)
 		elif int(it.get("spark", 0)) > 0:
 			await _use_spark_charm(item_id)
+		elif int(it.get("crystal", 0)) > 0:
+			await _use_stat_crystal(item_id)
 		elif bool(it.get("temper_shift", false)):
 			await _use_temper_shift(item_id)
 		elif bool(it.get("temper_core", false)):
@@ -890,6 +896,31 @@ func _use_spark_charm(id: String) -> void:
 		GameState.inventory.erase(id)
 	Sound.sfx("level_up")
 	await info("%s's %s spark grew brighter!" % [s.display_name(), Spirling.STAT_KEYS[pick].to_upper()])
+
+## Stat Crystal from the shop: adds its points to one stat of one Spirling, up to twice the
+## free Spark cap per stat.
+func _use_stat_crystal(id: String) -> void:
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var who: int = await pick_strings("Use the Stat Crystal on?", names)
+	if who < 0:
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for key: String in Spirling.STAT_KEYS:
+		stats.append("%s: +%d / %d" % [key.to_upper(), int(s.crystal.get(key, 0)), ShopEffects.crystal_cap()])
+	var pick: int = await pick_strings("Which value?", stats)
+	if pick < 0:
+		return
+	var key: String = Spirling.STAT_KEYS[pick]
+	var added: int = ShopEffects.add_crystal(s, key, int(Database.item(id).crystal))
+	if added <= 0:
+		await info("That value already holds all the crystal it can.")
+		return
+	GameState.take_item(id)
+	Sound.sfx("level_up")
+	await info(Loc.t("%s's %s rose by %d.") % [s.display_name(), key.to_upper(), added])
 
 ## Spirlog filters (item 249), kept while the menu is open.
 var _log_search: String = ""

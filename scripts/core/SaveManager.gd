@@ -346,11 +346,12 @@ static func _sanitize_spirling(s: Dictionary) -> Dictionary:
 	for flag: String in ["core", "gleam"]:
 		if s.has(flag) and not s[flag] is bool:
 			s.erase(flag)
-	if s.has("spark"):
-		if s.spark is Dictionary:
-			_keep_numbers(s.spark)
-		else:
-			s.erase("spark")
+	for k: String in ["spark", "crystal"]:
+		if s.has(k):
+			if s[k] is Dictionary:
+				_keep_numbers(s[k])
+			else:
+				s.erase(k)
 	if s.has("moves"):
 		if s.moves is Array:
 			var mv: Array = []

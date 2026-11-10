@@ -94,7 +94,7 @@ static func _run_tab(menu: MenuHost, tab: String) -> void:
 			return
 		var entries: Array[Dictionary] = []
 		for o: Dictionary in list:
-			entries.append({"text": row_text(o), "disabled": Billing.block_reason(o, int(o.rg_price) > 0) in ["offer_limit", "not_yet"]})
+			entries.append({"text": row_text(o), "disabled": Billing.block_reason(o, int(o.rg_price) > 0) in ["offer_limit", "not_yet", "tier_order"]})
 		var idx: int = await menu.pick(Loc.t(ShopCatalog.TAB_NAMES[tab]) + "  " + ShopCatalog.rg_text(Billing.balance()), entries)
 		if idx < 0:
 			return
@@ -390,6 +390,7 @@ static func reason_text(why: String) -> String:
 		"limit", "limit_reached": return "Your monthly limit is reached. The shop opens again next month."
 		"offer_limit": return "You already have this offer as often as it is sold."
 		"not_yet": return "This offer comes later in the journey."
+		"tier_order": return "Each tier follows the one before it: you pay only the difference."
 		"no_store": return "Purchases are only possible in the app from the App Store or Google Play."
 		"age", "age_needed": return LOCKED_TEXT
 		"offline": return "No connection right now. Try again in a moment."

@@ -58,7 +58,8 @@ def build():
            "  select coalesce(jsonb_agg(distinct x order by x), '[]'::jsonb)\n"
            "  from jsonb_array_elements_text(case when jsonb_typeof(public.server_config.value) = 'array' then public.server_config.value else '[]'::jsonb end || excluded.value) x);\n")
     products = []
-    for o in offers:
+    # rg_only offers are sold for Riftglass only and never become store products (Ali, 10 Nov 2026).
+    for o in (o for o in offers if not o.get("rg_only")):
         apple, google = TYPES[o["store_type"]]
         products.append({"product_id": o["product_id"], "offer": o["id"], "apple_type": apple, "google_type": google,
                          "eur": "%d.%02d" % (o["eur_cents"] // 100, o["eur_cents"] % 100),
