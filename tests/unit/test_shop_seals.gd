@@ -15,9 +15,9 @@ func after_each() -> void:
 
 func test_seal_values_come_from_data() -> void:
 	var v: Dictionary = ShopCatalog.data().advantage_values
-	assert_eq(v.power_seal, [5, 10, 15, 20, 25, 30, 35])
-	assert_eq(v.guard_seal, [5, 10, 15, 20, 25, 30, 35])
-	assert_eq(v.speed_seal, [5, 10, 15, 20, 25])
+	assert_eq(v.power_seal, [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0], "JSON numbers are floats")
+	assert_eq(v.guard_seal, [5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0])
+	assert_eq(v.speed_seal, [5.0, 10.0, 15.0, 20.0, 25.0])
 	assert_eq(ShopEffects.seal_max("power_seal"), 7)
 	assert_eq(ShopEffects.seal_max("speed_seal"), 5)
 	assert_eq(ShopEffects.crystal_cap(), Spirling.SPARK_MAX * 2, "twice the free Spark cap")
