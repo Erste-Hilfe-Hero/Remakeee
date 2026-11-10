@@ -33,7 +33,7 @@ func test_conditions() -> void:
 	assert_true(Dialogue.check({"has_item": "tonic"}, GameState.flags))
 	assert_true(Dialogue.check({"chapter_min": 0}, GameState.flags))
 	assert_false(Dialogue.check({"chapter_min": 3}, GameState.flags))
-	assert_true(Dialogue.check({"chapter_min": 3}, {"aldo_gift": true, "met_kestra": true, "rift_cinder_sealed": true, "rift_tide_sealed": true}))
+	assert_true(Dialogue.check({"chapter_min": 3}, {"aldo_gift": true, "met_kestra": true, "rift_cinder_sealed": true, "rift_mist_sealed": true, "rift_tide_sealed": true}))
 	assert_false(Dialogue.check({"nonsense": 1}, GameState.flags), "unknown conditions fail")
 
 func test_story_vars_and_choices() -> void:

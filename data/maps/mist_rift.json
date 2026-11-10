@@ -109,15 +109,15 @@
    "team": [
     {
      "species": "Zephlet",
-     "level": 13
+     "level": 12
     },
     {
-     "species": "Kelpup",
-     "level": 13
+     "species": "Puddlet",
+     "level": 12
     },
     {
      "species": "Zippit",
-     "level": 13
+     "level": 12
     }
    ]
   },
@@ -133,15 +133,15 @@
    "team": [
     {
      "species": "Zephlet",
-     "level": 13
+     "level": 12
     },
     {
      "species": "Millwhit",
-     "level": 13
+     "level": 12
     },
     {
      "species": "Tempestrel",
-     "level": 14
+     "level": 13
     }
    ],
    "intro": "mist_rift/brisa_intro",

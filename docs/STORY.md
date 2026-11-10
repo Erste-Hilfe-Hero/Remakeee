@@ -176,7 +176,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | Ines, Wynn | Brindlewick | echo gauntlet, weekly echoes | | | a new line per act |
 | Ysolde Rennick | Madderby guild house | guild master | | `guild_joined` | did not hold Mirela back 40 years ago and wants to make it right |
 | Pim | Madderby guild house | young archivist, voice for lore questions | | `letters` side quest | |
-| Brisa | Mist Rift | Warden (Act I), lost in her own fog | Zephlet 13, Millwhit 13, Tempestrel 14 | `rift_mist_sealed` | finds the way again; walks the ridge every morning |
+| Brisa | Mist Rift | Warden (Act I), lost in her own fog | Zephlet 12, Millwhit 12, Tempestrel 13 | `rift_mist_sealed` | finds the way again; walks the ridge every morning |
 | Senna | Rain Rift | Warden (Act II), hears only rain | Riptail 20, Tempestrel 21, Kelphound 22 | `rift_rain_sealed` | |
 | Joral | Mirror Rift | Warden (Act II), sees only himself | Lumenewt 22, Glimmerax 23, Verdantusk 23 | `rift_mirror_sealed` | once saw an old woman with a compass in the mirror |
 | Darrow | Root Rift | Warden (Act II), wants nothing to grow | Thornback 25, Frondmere 26, Reedwarden 25, Marshfife 26 | `rift_root_sealed` | plants a garden by the moor |
@@ -209,7 +209,7 @@ only when every story Rift and every Rift heart is mended (`GameState.finale_fla
 | # | Rift | Map id | Warden | Element | Team (Ring) | Puzzle | Battle rule | Gift |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Cinder Rift | `cinder_rift` | Orrin | Ember | 10 to 11 | - | Ember Pulse | Rift heart |
-| 2 | Mist Rift | `mist_rift` | Brisa | Gale | 13 to 14 | turn the wind vanes in order | Fog Bank: every art on both sides is less accurate | Rift heart, Tailwind |
+| 2 | Mist Rift | `mist_rift` | Brisa | Gale | 12 to 13 | turn the wind vanes in order | Fog Bank: every art on both sides is less accurate | Rift heart, Tailwind |
 | 3 | Tidewater Rift | `tide_rift` | Maelis | Tide | 15 to 17 | - | Undertow | Rift heart |
 | 4 | Rain Rift | `rain_rift` | Senna | Tide | 20 to 22 | - | - | - |
 | 5 | Mirror Rift | `mirror_rift` | Joral | Lumen | 22 to 23 | - | - | - |
