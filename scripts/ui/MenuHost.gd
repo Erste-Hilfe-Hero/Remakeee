@@ -919,9 +919,14 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false) -> voi
 	ElementIcons.draw_row(b, els, Vector2(b.size.x - 3 - w, floorf((b.size.y - ElementIcons.SIZE) / 2.0)), ink)
 
 ## Settings -> Legal: imprint/privacy/terms links and the engine licence notice.
+## The community server, opened from Settings > Legal on the title screen and in the pause menu.
+const DISCORD_URL: String = "https://discord.gg/e69SM39rKK"
+## Opens a link outside the game; tests replace it so no browser starts.
+static var open_url: Callable = func(url: String) -> void: OS.shell_open(url)
+
 func run_legal() -> void:
 	while true:
-		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences"] as Array[String])
+		var idx: int = await pick_strings("Legal", ["Imprint & privacy", "Licences", "Join our Discord"] as Array[String])
 		match idx:
 			-1:
 				return
@@ -930,6 +935,9 @@ func run_legal() -> void:
 			1:
 				for page: String in LegalInfo.pages(LegalInfo.licence_text()):
 					await info(page)
+			2:
+				open_url.call(DISCORD_URL)
+				toast(DISCORD_URL)
 
 ## The info scroll bar: the part of the text in view, drawn in MID on the right edge.
 ## Returns the drawn rect (empty when everything fits), for tests.
