@@ -256,7 +256,7 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.clip_text = true
 	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_CHAR
 	# Width follows the word, so "Binden" gets more room than "Item".
-	b.size_flags_stretch_ratio = maxf(3.0, Loc.t(text).length())
+	b.size_flags_stretch_ratio = maxf(3.0, Loc.t(text).length()) + 0.8
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
