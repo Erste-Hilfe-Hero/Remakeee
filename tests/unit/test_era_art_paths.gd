@@ -23,9 +23,12 @@ func test_era1_paths() -> void:
 
 func test_era2_falls_back_to_era1() -> void:
 	_set_era(EraManager.Era.WASH)
-	assert_false(ResourceLoader.exists("res://art/era2/tiles/overworld.png"))
-	assert_eq(EraManager.art_path("tiles/overworld.png"), "res://art/era1/tiles/overworld.png")
-	assert_eq(EraManager.art_path("chars/elder.png"), "res://art/era1/chars/elder.png")
+	# Era2 tiles and characters ship: the active era wins.
+	assert_eq(EraManager.art_path("tiles/overworld.png"), "res://art/era2/tiles/overworld.png")
+	assert_eq(EraManager.art_path("chars/elder.png"), "res://art/era2/chars/elder.png")
+	# No era2 Spirling sprites ship: those fall back to era1.
+	assert_false(ResourceLoader.exists("res://art/era2/spirlings/wickit_front.png"))
+	assert_eq(EraManager.art_path("spirlings/wickit_front.png"), "res://art/era1/spirlings/wickit_front.png")
 	assert_eq(EraManager.sprite_path("Wickit"), "res://art/era1/spirlings/wickit_front.png")
 
 func test_missing_everywhere_is_empty() -> void:
@@ -77,7 +80,8 @@ func test_era2_species_uses_era2_art_when_present() -> void:
 	assert_eq(EraManager.battle_sprite_size("Wickit"), EraManager.BATTLE_SPRITE_SIZE[EraManager.Era.ETCHED])
 	# No era2/era3 file yet: falls back to era1.
 	assert_eq(EraManager.sprite_path("Wickit"), "res://art/era1/spirlings/wickit_front.png")
-	assert_eq(EraManager.art_path_from("tiles/overworld.png", 2), "res://art/era1/tiles/overworld.png")
+	assert_eq(EraManager.art_path_from("tiles/overworld.png", 2), "res://art/era2/tiles/overworld.png")
+	assert_eq(EraManager.art_path_from("spirlings/wickit_back.png", 2), "res://art/era1/spirlings/wickit_back.png")
 	sd.era = old
 
 func test_era2_species_picks_era2_file() -> void:
