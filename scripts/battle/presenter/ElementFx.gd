@@ -15,7 +15,7 @@ const IMPACT_TIME: float = 0.25
 ## Under reduced motion only a short impact plays.
 const REDUCED_IMPACT_TIME: float = 0.12
 const LUMEN_MAX_ALPHA: float = 0.6
-const FX_PATH: String = "res://art/era1/fx/%s_%d.png"
+const FX_REL: String = "fx/%s_%d.png"
 ## Impact size for a very effective hit and for a weak one (item 2376), no extra text.
 const IMPACT_SCALE_STRONG: float = 1.5
 const IMPACT_SCALE_WEAK: float = 0.5
@@ -65,9 +65,12 @@ func _ready() -> void:
 static func shape(name: String, shade: int) -> Texture2D:
 	var key: String = "%s_%d" % [name, shade]
 	if not _tex.has(key):
-		var path: String = FX_PATH % [name, shade]
-		_tex[key] = load(path) if ResourceLoader.exists(path) else null
+		var path: String = EraManager.art_path(FX_REL % [name, shade])
+		_tex[key] = load(path) if not path.is_empty() else null
 	return _tex[key]
+
+static func clear_cache() -> void:
+	_tex.clear()
 
 ## Phases an art of [param kind] plays (physical arts have no travel phase). A miss has no
 ## impact: a ranged art flies on past the target instead. [param p_after] adds the AFTER

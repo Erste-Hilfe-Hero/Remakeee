@@ -25,7 +25,7 @@ static func show_pages(parent: Node, p_kinds: Array[SpirlingData], p_index: int)
 	page.queue_free()
 
 static func sprite_path(sd: SpirlingData) -> String:
-	return "res://art/era1/spirlings/%s_front.png" % sd.species_name.to_lower()
+	return EraManager.sprite_path(sd.species_name)
 
 func _build() -> void:
 	theme = UITheme.get_theme()

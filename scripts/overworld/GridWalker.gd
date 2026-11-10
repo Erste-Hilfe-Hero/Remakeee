@@ -20,7 +20,7 @@ var hat: String = "":
 		hat = v
 		queue_redraw()
 
-const CHAR_DIR: String = "res://art/era1/chars/%s.png"
+const CHAR_REL: String = "chars/%s.png"
 const SHEET_COLUMNS: Dictionary[String, int] = {"down": 0, "up": 1, "left": 2, "right": 3}
 static var _sheets: Dictionary[String, Texture2D] = {}
 var _step_frame: int = 0
@@ -116,9 +116,12 @@ func _process(delta: float) -> void:
 
 static func sheet_for(style: String) -> Texture2D:
 	if not _sheets.has(style):
-		var path: String = CHAR_DIR % style
-		_sheets[style] = load(path) if ResourceLoader.exists(path) else null
+		var path: String = EraManager.art_path(CHAR_REL % style)
+		_sheets[style] = load(path) if not path.is_empty() else null
 	return _sheets[style]
+
+static func clear_cache() -> void:
+	_sheets.clear()
 
 func _draw() -> void:
 	var sheet: Texture2D = sheet_for(sprite_style)

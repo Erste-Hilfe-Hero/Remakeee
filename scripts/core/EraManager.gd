@@ -93,9 +93,13 @@ func battle_sprite_size() -> int:
 
 ## Sprite for [param species] in the active era, falling back to art/era1/ until newer art exists.
 func sprite_path(species: String, facing: String = "front") -> String:
-	var file: String = "%s_%s.png" % [species.to_lower(), facing]
+	return art_path("spirlings/%s_%s.png" % [species.to_lower(), facing])
+
+## res:// path of [param rel] (relative to art/eraN/) in the active era, walking back to
+## older eras when the file is missing. Empty when no era has it.
+func art_path(rel: String) -> String:
 	for era: int in range(active_era(), 0, -1):
-		var path: String = "res://art/era%d/spirlings/%s" % [era, file]
+		var path: String = "res://art/era%d/%s" % [era, rel]
 		if ResourceLoader.exists(path):
 			return path
 	return ""
@@ -114,4 +118,10 @@ func _apply() -> void:
 		get_window().content_scale_size = RESOLUTION[era]
 	if _filter_rect != null:
 		_filter_rect.visible = era == Era.INK
+	_clear_art_caches()
 	era_changed.emit(era)
+
+func _clear_art_caches() -> void:
+	TilesetFactory.clear_cache()
+	GridWalker.clear_cache()
+	ElementFx.clear_cache()
