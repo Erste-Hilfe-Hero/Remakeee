@@ -3,7 +3,11 @@
 
     python3 tools/art/era2_colourise.py            write art/era2/ from art/era1/
     python3 tools/art/era2_colourise.py --check    only verify art/era2/ (exit 1 on a problem)
-    python3 tools/art/era2_colourise.py --sheet P  also write an era1 vs era2 contact sheet to P
+    python3 tools/art/era2_colourise.py --sheet P  also write a contact sheet to P (era1 vs era2 atlas,
+                                                   plus a TEST colouring of the 81 spirlings, not shipped)
+
+The existing 81 Spirlings keep their Era I ink look in every era (owner decision 2026-11-10),
+so art/era2/spirlings/ is not written; their palettes are only used for the test sheet.
 
 Every Era I pixel is one of the four inks (EraManager.INK_PALETTE). Its shade index 0..3 is
 mapped to the 4-tone palette of what it belongs to, from tools/art/era2_palettes.json:
@@ -87,12 +91,12 @@ def save(im: Image.Image, rel: str) -> None:
     im.save(path, optimize=True)
 
 
+def test_spirling(f: str, pals: dict) -> Image.Image:
+    p = pals[os.path.basename(f).rsplit("_", 1)[0]]
+    return recolour(Image.open(f), lambda x, y: p)
+
+
 def build() -> None:
-    pals = spirling_palettes()
-    for f in sorted(glob.glob(os.path.join(SRC, "spirlings", "*.png"))):
-        name = os.path.basename(f).rsplit("_", 1)[0]
-        p = pals[name]
-        save(recolour(Image.open(f), lambda x, y: p), "spirlings/" + os.path.basename(f))
     for f in sorted(glob.glob(os.path.join(SRC, "chars", "*.png"))):
         p = [rgb(c) for c in PAL["chars"][os.path.basename(f)[:-4]]]
         save(recolour(Image.open(f), lambda x, y: p), "chars/" + os.path.basename(f))
@@ -131,6 +135,8 @@ def check() -> int:
     n = 0
     for f in sorted(glob.glob(os.path.join(SRC, "**", "*.png"), recursive=True)):
         rel = os.path.relpath(f, SRC)
+        if rel.startswith("spirlings"):
+            continue
         g = os.path.join(DST, rel)
         if not os.path.exists(g):
             print("missing:", rel); bad += 1; continue
@@ -169,13 +175,18 @@ def sheet(path: str) -> None:
     H = m * 3 + rows * cell + atlas1.height
     bg = (232, 226, 214, 255)
     out = Image.new("RGBA", (W, H), bg)
+    pals = spirling_palettes()
     for side, root in enumerate((SRC, DST)):
         x0 = m + side * (max(gw, atlas1.width) + m)
         for i, f in enumerate(fronts):
-            im = Image.open(os.path.join(root, "spirlings", os.path.basename(f))).convert("RGBA")
+            im = Image.open(f).convert("RGBA") if side == 0 else test_spirling(f, pals)
             out.alpha_composite(im, (x0 + (i % cols) * cell, m + (i // cols) * cell))
         at = Image.open(os.path.join(root, "tiles", "overworld.png")).convert("RGBA")
         out.alpha_composite(at, (x0, m * 2 + rows * cell))
+    from PIL import ImageDraw
+    d = ImageDraw.Draw(out)
+    d.text((m + max(gw, atlas1.width) + m, 2), "TEST ONLY: spirlings stay Era I ink, not shipped", fill=(120, 40, 40, 255))
+    d.text((m, 2), "Era I", fill=(60, 40, 50, 255))
     out = out.resize((W * 2, H * 2), Image.NEAREST)
     out.save(path)
     print("contact sheet:", path, out.size)
