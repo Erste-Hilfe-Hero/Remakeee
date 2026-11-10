@@ -9,11 +9,16 @@ const MAX_FRAMES: int = 300
 var _settings: Dictionary
 var _lang: String
 
+var _open: Callable
+
 func before_each() -> void:
+	_open = MenuHost.open_url
+	MenuHost.open_url = func(_url: String) -> void: pass
 	_settings = GameState.settings_to_dict()
 	_lang = GameState.language
 
 func after_each() -> void:
+	MenuHost.open_url = _open
 	GameState.settings_from_dict(_settings)
 	GameState.language = _lang
 	Loc.set_language(_lang if not _lang.is_empty() else "en")
