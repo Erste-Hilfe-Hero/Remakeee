@@ -9,14 +9,15 @@ func test_catalog_is_valid() -> void:
 	var errs: Array[String] = ShopCatalog.validate()
 	assert_eq(errs, [] as Array[String], "\n".join(errs))
 
-func test_two_thirds_are_advantages() -> void:
+func test_at_least_two_thirds_are_advantages() -> void:
 	var all: int = ShopCatalog.offers().size()
 	var adv: int = 0
 	for o: Dictionary in ShopCatalog.offers():
 		if ShopCatalog.is_advantage(o):
 			adv += 1
 	assert_gt(all, 100)
-	assert_almost_eq(float(adv), all * 2.0 / 3.0, 2.0, "Ali: 2/3 of the shop gives an advantage (%d of %d)" % [adv, all])
+	# Ali, 10 Nov 2026: the shop becomes as pay-to-win as it gets, so at least 2/3 are advantages.
+	assert_gte(float(adv), all * 2.0 / 3.0, "Ali: at least 2/3 of the shop gives an advantage (%d of %d)" % [adv, all])
 
 func test_validator_finds_random_content() -> void:
 	var bad: Dictionary = ShopCatalog.offer("rg_ring_tonic").duplicate(true)
@@ -89,7 +90,11 @@ func test_no_purchase_prompts() -> void:
 func test_products_file_matches_catalog() -> void:
 	var p: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://store/products.json"))
 	assert_true(p is Dictionary)
-	assert_eq((p.products as Array).size(), ShopCatalog.offers().size(), "run tools/shop/build_offers_sql.py")
+	var store_offers: int = 0
+	for o: Dictionary in ShopCatalog.offers():
+		if not bool(o.get("rg_only", false)):
+			store_offers += 1
+	assert_eq((p.products as Array).size(), store_offers, "run tools/shop/build_offers_sql.py (rg_only offers are no store products)")
 	var sub: int = 0
 	for row: Dictionary in p.products:
 		if row.apple_type == "AUTO_RENEWABLE_SUBSCRIPTION":

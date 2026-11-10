@@ -184,7 +184,7 @@ T = {
 "Battle log": "Kampfprotokoll", "Nothing yet.": "Noch nichts.",
 "You received %d coins.": "Du hast %d Münzen erhalten.", "Your team is worn out...": "Dein Team ist erschöpft...",
 
-"Swap": "Tauschen", "Item": "Item", "Bond": "Binden", "Leave": "Gehen",
+"Swap": "Team", "Item": "Item", "Bond": "Binden", "Leave": "Gehen",
 "need %dE": "braucht %dE", "%s %s, power %d": "%s %s, Stärke %d", "Rest (+%d)": "Rasten (+%d)",
 "Master": "Gesamt",
 # Records, achievements, weekly challenge, festivals

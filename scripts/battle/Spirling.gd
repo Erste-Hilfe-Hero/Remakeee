@@ -50,6 +50,9 @@ var nickname: String = ""
 var level: int = 1
 var xp: int = 0
 var spark: Dictionary[String, int] = {}
+## Stat crystal points from the shop (stat key -> points, up to ShopEffects.crystal_cap()).
+## They count like Spark. League and raid rows never carry them.
+var crystal: Dictionary[String, int] = {}
 var hp: int = 1
 var energy: int = START_ENERGY
 var status: String = ""
@@ -144,7 +147,7 @@ func apply_imprint(region: String) -> bool:
 	return false
 
 func _curve(base: int, key: String, offset: float, div: float) -> int:
-	var s: float = float(base) + float(spark.get(key, 0)) * SPARK_WEIGHT
+	var s: float = float(base) + float(spark.get(key, 0) + crystal.get(key, 0)) * SPARK_WEIGHT
 	return int(floor(s * (float(level) + offset) / div))
 
 ## Battle-only max HP multiplier for Rift bosses (BattleRules.BOSSES). Never saved.
@@ -450,6 +453,7 @@ func to_dict() -> Dictionary:
 		"level": level,
 		"xp": xp,
 		"spark": spark.duplicate(),
+		"crystal": crystal.duplicate(),
 		"hp": hp,
 		"moves": move_names,
 		"uid": uid,
@@ -481,6 +485,12 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var sp: Variant = d.get("spark", {})
 	for key: String in STAT_KEYS:
 		s.spark[key] = clampi(_num((sp as Dictionary).get(key) if sp is Dictionary else 0, 0), 0, SPARK_MAX)
+	var cr: Variant = d.get("crystal", {})
+	if cr is Dictionary:
+		for key: String in STAT_KEYS:
+			var n: int = clampi(_num((cr as Dictionary).get(key), 0), 0, ShopEffects.crystal_cap())
+			if n > 0:
+				s.crystal[key] = n
 	var mv: Variant = d.get("moves", [])
 	for move_name: Variant in (mv if mv is Array else []):
 		var md: MoveData = Database.move(str(move_name))

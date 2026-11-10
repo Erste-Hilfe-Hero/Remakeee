@@ -29,6 +29,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"boss": model.foe_boss,
 		"foe_damage": model.foe_damage_mult,
 		"energy_bonus": model.energy_bonus[0],
+		"seals": (model.seals[0] as Array).duplicate(),
 		"foe_energy_cut": model.start_energy_cut[1],
 		"foe_turn1_energy": model.foe_turn1_energy,
 		"warden_weakened": model.warden_weakened,
@@ -93,6 +94,14 @@ static func problem(snap: Dictionary) -> String:
 		return Loc.t("This replay's rule variants don't go together.")
 	return ""
 
+## Seal tiers [power, guard, speed] from a snapshot, clamped to the tiers the data knows.
+static func seal_row(v: Variant) -> Array:
+	var out: Array = [0, 0, 0]
+	if v is Array:
+		for i: int in mini((v as Array).size(), 3):
+			out[i] = ShopEffects.clamp_tier(ShopEffects.SEAL_KINDS[i], int(v[i]))
+	return out
+
 static func build_model(snap: Dictionary) -> BattleModel:
 	if not problem(snap).is_empty():
 		return null
@@ -124,6 +133,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.foe_boss = str(snap.get("boss", ""))
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
 	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
+	m.seals = [seal_row(snap.get("seals", [])), [0, 0, 0]]
 	m.start_energy_cut = [0, clampi(int(snap.get("foe_energy_cut", 0)), 0, Tailwind.energy_cut(0) + BattleRules.foe_start_cut(0))]
 	m.foe_turn1_energy = clampi(int(snap.get("foe_turn1_energy", 0)), 0, 1)
 	m.warden_weakened = bool(snap.get("warden_weakened", false))

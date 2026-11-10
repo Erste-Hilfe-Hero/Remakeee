@@ -200,7 +200,7 @@ def check_products() -> None:
     shop = json.loads(read("data/shop.json"))
     store = json.loads(read("store/products.json"))
     rows = store if isinstance(store, list) else store.get("products", [])
-    game = {str(o["product_id"]): o for o in shop["offers"] if o.get("product_id")}
+    game = {str(o["product_id"]): o for o in shop["offers"] if o.get("product_id") and not o.get("rg_only")}
     listed = {str(p["product_id"]): p for p in rows}
     for pid in sorted(set(game) - set(listed)):
         errors.append("product %s is in data/shop.json but not in store/products.json" % pid)
