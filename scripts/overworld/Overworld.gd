@@ -2768,6 +2768,8 @@ func echo_duel(d: Dictionary) -> void:
 ## rival's echo is run by the AI. The result only counts once the server's referee says ok (2691).
 func league_battle(m: Dictionary) -> void:
 	var snap: Dictionary = BattleReferee.from_expect(m)
+	# Seals work in the Open League, never in the Fair League; the server's expect does the same.
+	snap["seals"] = ShopEffects.seals_for("league_" + str(m.get("league", LeagueRules.FAIR)))
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
 		await say(["The league battle could not start. Try again later."] as Array[String])
@@ -2946,6 +2948,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
+	model.seals = [ShopEffects.seals_for("story" if world else "echo"), [0, 0, 0]]
 	# Story foes start with less Energy, Rift-Born foes gain more in turn 1 (item 749); echo duels stay even.
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]

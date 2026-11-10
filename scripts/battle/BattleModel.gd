@@ -107,6 +107,9 @@ var items_used: Array[Dictionary] = [{}, {}]
 ## Extra energy above the normal maximum per side, set before start() (the shop's Overcharge
 ## Core: the whole team starts with 12 of 12, plan item 4495).
 var energy_bonus: Array[int] = [0, 0]
+## Shop seal tiers per side, [power, guard, speed] (ShopEffects.SEAL_KINDS). Set only for story,
+## raids and the Open League (ShopEffects.seals_for); the Fair League keeps zeros.
+var seals: Array = [[0, 0, 0], [0, 0, 0]]
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
@@ -794,7 +797,7 @@ func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	var prio: int = 0
 	if a.kind == BattleAction.Kind.MOVE and a.actor != null and a.move_index < a.actor.moves.size():
 		prio = a.actor.moves[a.move_index].priority
-	var spd: int = a.actor.effective_spd() if a.actor != null else 0
+	var spd: int = int(a.actor.effective_spd() * ShopEffects.seal_speed_mult(int(seals[a.side][2]))) if a.actor != null else 0
 	return Vector4(-a.order_class(), prio, spd, tie)
 
 func _phase_execute_action() -> void:
@@ -1087,6 +1090,7 @@ func _do_move(a: BattleAction) -> void:
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
 			if side == Side.FOE:
 				mult *= foe_damage_mult
+			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
 			if mv.has_effect(&"delayed_hit"):
 				# Worked out now with today's stats; the delayed_hit effect sends it on its way.

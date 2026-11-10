@@ -158,6 +158,9 @@ func offer_block(uid: String, o: Dictionary, choice: Variant) -> String:
 	if req.begins_with("rifts:"):
 		if rifts_of(uid) < int(req.get_slice(":", 1)):
 			return "not_yet"
+	elif req.begins_with("tier:"):
+		if not ShopEffects.tier_ok(req, int(_shop(uid).unlocks.get(req.get_slice(":", 1), 0))):
+			return "not_yet"
 	elif not req.is_empty():
 		return "not_yet"
 	if o.has("choice") and (choice == null or not str(choice) in o.choice):

@@ -870,5 +870,61 @@
   "shop": true,
   "teaches": "Duskglass Grip",
   "used_up": true
+ },
+ {
+  "id": "rg_stat_crystal_1",
+  "name": "Stat Crystal +1",
+  "description": "Adds 1 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 1
+ },
+ {
+  "id": "rg_stat_crystal_5",
+  "name": "Stat Crystal +5",
+  "description": "Adds 5 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 5
+ },
+ {
+  "id": "rg_stat_crystal_10",
+  "name": "Stat Crystal +10",
+  "description": "Adds 10 to one chosen value of one Spirling, counted like Spark. Up to 24 per value, twice the Spark cap. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "crystal": 10
+ },
+ {
+  "id": "rg_growth_x5",
+  "name": "Mighty Growth Crystal",
+  "description": "Five times the growth for the whole team for the next 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "growth",
+   "mult": 5.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_coin_boost_x3",
+  "name": "Great Coin Gleam",
+  "description": "Triple coins from battles for 20 battles.",
+  "battle": false,
+  "shop": true,
+  "boost": {
+   "kind": "coins",
+   "mult": 3.0,
+   "battles": 20
+  }
+ },
+ {
+  "id": "rg_ring_tonic_10",
+  "name": "Grand Ring Tonic",
+  "description": "A Spirling gains 10 Rings at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings": 10
  }
 ]
