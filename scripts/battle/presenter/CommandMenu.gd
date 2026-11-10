@@ -251,6 +251,10 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.text = text
 	b.custom_minimum_size = Vector2(0, SMALL_BUTTON_HEIGHT)
 	b.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	# Four buttons share 144 px; long German words ("Tauschen") pushed the whole battle screen
+	# wider than the display (owner, 9 Nov: buttons not shown right). Clip instead of growing.
+	b.clip_text = true
+	b.text_overrun_behavior = TextServer.OVERRUN_TRIM_CHAR
 	Juice.press_feedback(b)
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")

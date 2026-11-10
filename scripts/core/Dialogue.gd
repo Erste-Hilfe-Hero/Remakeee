@@ -117,6 +117,8 @@ static func choices_for(entry: Dictionary, flags: Dictionary) -> Array[Dictionar
 
 ## Splits a legacy line "Aldo: text" into ["Aldo", "text"]; lines without a short name
 ## before ": " come back as ["", line].
+const NOT_SPEAKERS: Array[String] = ["Tip", "Tips", "Hint", "Note"]
+
 static func split_speaker(line: String) -> PackedStringArray:
 	var i: int = line.find(": ")
 	if i <= 0 or i > 24:
@@ -125,6 +127,10 @@ static func split_speaker(line: String) -> PackedStringArray:
 	# A name is one or two capitalised words ("Aldo", "Warden Senna"), no sentence punctuation.
 	if not who[0] == who[0].to_upper() or who.contains(".") or who.contains(",") or who.contains("'") or who.count(" ") > 2:
 		return PackedStringArray(["", line])
+	# "Tip: ..." is a hint, not a speaker; as a name tag it covered the Vigor bar in battle (owner, 9 Nov).
+	for word: String in NOT_SPEAKERS:
+		if who == word or who == Loc.t(word):
+			return PackedStringArray(["", line])
 	return PackedStringArray([who, line.substr(i + 2)])
 
 static func _as_list(v: Variant) -> Array:
