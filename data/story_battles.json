@@ -419,5 +419,93 @@
   "win_flags": [
    "veil_factor_beaten"
   ]
+ },
+ "basin_wardens": {
+  "trainer": "Chief Warden's Guard",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 38
+   },
+   {
+    "species": "Burinox",
+    "level": 38
+   },
+   {
+    "species": "Obsidroth",
+    "level": 39
+   }
+  ],
+  "ai": 3,
+  "money": 2000,
+  "lose": "clans/basin_lose"
+ },
+ "throne_guard": {
+  "trainer": "Marrovel Guard",
+  "team": [
+   {
+    "species": "Mendlace",
+    "level": 39
+   },
+   {
+    "species": "Smoldrake",
+    "level": 39
+   },
+   {
+    "species": "Burinox",
+    "level": 40
+   }
+  ],
+  "ai": 3,
+  "money": 2400,
+  "lose": "clans/throne_lose"
+ },
+ "dune_hands": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 38
+   },
+   {
+    "species": "Duskdigger",
+    "level": 38
+   },
+   {
+    "species": "Shalebat",
+    "level": 39
+   }
+  ],
+  "ai": 2,
+  "money": 1800,
+  "lose": "clans/ambush_lose"
+ },
+ "kerr_haldane": {
+  "trainer": "Kerr Haldane",
+  "team": [
+   {
+    "species": "Obsidroth",
+    "level": 39
+   },
+   {
+    "species": "Scrivane",
+    "level": 39
+   },
+   {
+    "species": "Mendlace",
+    "level": 40
+   },
+   {
+    "species": "Calderox",
+    "level": 40
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "clans/kerr_defeat",
+  "lose": "clans/kerr_lose",
+  "win_flags": [
+   "kerr_beaten"
+  ]
  }
 }
