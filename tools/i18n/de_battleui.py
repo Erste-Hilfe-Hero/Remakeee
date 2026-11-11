@@ -2,3 +2,4 @@
 T = {
     "Colour-blind: %s": "Farbschwäche: %s",
 }
+KEEP = ["Stripe"]
