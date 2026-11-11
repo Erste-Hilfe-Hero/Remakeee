@@ -960,6 +960,9 @@ func first_healthy_index() -> int:
 func receive_spirling(s: Spirling) -> bool:
 	if s.origin_map.is_empty():
 		s.origin_map = current_map
+		# Looked up by path: a direct EraManager reference would tie the two autoload scripts together.
+		var era: Node = get_node_or_null("/root/EraManager")
+		s.origin_era = int(era.get("unlocked_era")) if era != null else 1
 		s.met_ring = s.level
 		s.met_day = today()
 	mark_seen(s.data.species_name, true)

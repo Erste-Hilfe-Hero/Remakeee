@@ -46,6 +46,30 @@ def main() -> None:
         if os.path.exists(p):
             with open(p, encoding="utf-8") as f:
                 known += [{"kind": kind, "id": str(x[key])} for x in json.load(f) if isinstance(x, dict) and key in x]
+    # Rift ids for the weekly Rift board (online step 1): every "warden" in the maps and data files.
+    rifts = set()
+
+    def wardens(x):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k == "warden" and isinstance(v, str) and v:
+                    rifts.add(v)
+                else:
+                    wardens(v)
+        elif isinstance(x, list):
+            for v in x:
+                wardens(v)
+    for root, _dirs, files in os.walk(folder):
+        if os.sep + "i18n" in root:
+            continue
+        for name in files:
+            if name.endswith(".json"):
+                with open(os.path.join(root, name), encoding="utf-8") as f:
+                    try:
+                        wardens(json.load(f))
+                    except ValueError:
+                        pass
+    known += [{"kind": "rift", "id": r} for r in sorted(rifts)]
     ids = json.dumps(known).replace("$game$", "")
     print("delete from public.known_ids;")
     print("insert into public.known_ids (kind, id) select x->>'kind', x->>'id' from jsonb_array_elements($game$"

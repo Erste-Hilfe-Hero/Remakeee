@@ -91,6 +91,8 @@ var temper: String = ""
 var variant: String = ""
 ## Where and when it was met: map id, its ring then, and the day number (days since 1970).
 var origin_map: String = ""
+## The era (1-4) of the place it was bonded. It stays the same when the Spirling is traded.
+var origin_era: int = 1
 var met_ring: int = 0
 var met_day: int = 0
 ## Storage box this Spirling rests in (GameState.storage_boxes index) and the favourite mark:
@@ -464,6 +466,7 @@ func to_dict() -> Dictionary:
 		"gleam": gleam,
 		"variant": variant,
 		"origin_map": origin_map,
+		"origin_era": origin_era,
 		"met_ring": met_ring,
 		"met_day": met_day,
 		"lineage": lineage.duplicate(),
@@ -509,6 +512,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.gleam = d.get("gleam") is bool and d.get("gleam")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
+	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, 4)
 	s.met_ring = _num(d.get("met_ring"), 0)
 	s.met_day = _num(d.get("met_day"), 0)
 	var lin: Variant = d.get("lineage", [])

@@ -8,6 +8,8 @@ const TRANSFER_CODE_LENGTH: int = 12
 
 const PRIVACY_NOTE: String = "Chimora is online only. Your journeys are stored on our server in Germany, so they are safe if your phone breaks. We store your Wayfarer name, friend code, saves, friends, Lantern Mail and league standings, nothing else. No ads, no tracking. You can download or delete everything under Settings, Account."
 const ONLINE_RULES: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings stay with the Wayfarer who bonded them. They cannot be traded or gifted.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
+## The same rules once Spirling trading is switched on (online step 1).
+const ONLINE_RULES_TRADE: String = "Online rules:\n- Be kind. Greetings use set phrases, there is no free chat.\n- Never share your real name, address or passwords.\n- Spirlings can only be traded with friends, always inside the game. Nobody can ask you to pay for one.\n- Report names that are not okay. Blocking works at once.\n- Cheating gets the account reset."
 
 static func run(menu: MenuHost) -> void:
 	while true:
@@ -26,7 +28,7 @@ static func run(menu: MenuHost) -> void:
 				if await _claim_transfer(menu):
 					return
 			2:
-				await menu.info(ONLINE_RULES)
+				await menu.info(ONLINE_RULES_TRADE if Online.flag_on("trade_spirling") else ONLINE_RULES)
 			3:
 				await menu.info(PRIVACY_NOTE)
 			4:

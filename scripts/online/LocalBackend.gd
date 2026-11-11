@@ -31,13 +31,20 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "strong_tonic", "count": 5, "w": 3}, {"item": "keen_lens", "count": 1, "w": 1}, {"item": "swift_feather", "count": 1, "w": 1}],
 	"trade_min_level": 3, "trade_min_days": 7, "trade_max_open": 5, "trade_max_kinds": 6, "trade_max_count": 99, "trade_days": 7,
 	"save_server_keys": ["league", "leagues", "raid", "raids", "trades", "bund", "premium", "gems", "shards"],
+	"trade_max_spirlings": 3, "board_rows": 20,
+	"daily_gift_table": [{"item": "tonic", "w": 30}, {"item": "remedy", "w": 20}, {"item": "strong_tonic", "w": 15},
+		{"item": "spark_drop", "w": 10}, {"item": "cooling_gel", "w": 5}, {"item": "dry_towel", "w": 5},
+		{"item": "wake_bell", "w": 5}, {"item": "power_brew", "w": 2}, {"item": "guard_brew", "w": 2},
+		{"item": "focus_brew", "w": 2}, {"item": "dash_brew", "w": 2}, {"item": "revival_leaf", "w": 2}],
 }
-const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel"]
+const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel", "rift"]
 ## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
 const DEFAULT_FLAGS: Dictionary = {
 	"league_fair": {"enabled": true, "min_version": 1}, "league_open": {"enabled": true, "min_version": 1},
 	"live_duel": {"enabled": false, "min_version": 1}, "trade": {"enabled": false, "min_version": 1},
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
+	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
+	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -66,6 +73,7 @@ func _init(p_store_path: String = "") -> void:
 			"bund_create", "bund_info", "bund_invite", "bund_request", "bund_answer", "bund_admit", "bund_kick", "bund_role",
 			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
+			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
@@ -135,7 +143,8 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 	return r
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
-const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect"]
+const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
+	"daily_gift_claim"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -1183,6 +1192,7 @@ func _on_delete_user(uid: String) -> void:
 	for key: String in matches.keys():
 		if matches[key].user == uid:
 			matches.erase(key)
+	db.rift_runs = (_table("rift_runs", []) as Array).filter(func(r: Dictionary) -> bool: return r.u != uid)
 
 # --- Battle referee (20261110000002_referee.sql) --------------------------------------------
 
@@ -1200,6 +1210,19 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 	var inputs: Variant = (replay as Dictionary).get("inputs", [])
 	if not inputs is Array or (inputs as Array).size() > BattleReferee.MAX_INPUTS:
 		return _fail("bad_battle")
+	var rift_rounds: int = 0
+	if kind == "rift":
+		if not flag_on("rift_board", 2147483647):
+			return _fail("feature_off")
+		var ref: String = str(a.get("p_ref", ""))
+		var re := RegEx.create_from_string("^[a-z_]{1,24}$")
+		if re.search(ref) == null or not known_rifts().has(ref):
+			return _fail("no_such_rift")
+		var rounds: Variant = (claim as Dictionary).get("rounds")
+		if str((claim as Dictionary).get("winner", "")) != "player" or not (rounds is int or rounds is float) \
+				or float(rounds) < 1 or float(rounds) > 400:
+			return _fail("bad_battle")
+		rift_rounds = int(rounds)
 	if not _rate_ok("battle", config_int("battle_submit_limit", 60)):
 		return _fail("slow_down")
 	var c: Dictionary = (claim as Dictionary).duplicate(true)
@@ -1234,6 +1257,9 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 	if not ra.is_empty():
 		ra.state = "submitted"
 		ra.battle_id = id
+	if kind == "rift":
+		(_table("rift_runs", []) as Array).append({"battle_id": id, "u": me(), "week": _week(), "rift": str(a.get("p_ref", "")),
+			"v": rift_rounds, "at": now()})
 	if referee_waits:
 		row["queued"] = {"replay": (replay as Dictionary).duplicate(true), "claim": c}
 	else:
@@ -1914,12 +1940,18 @@ func _trade_offer(p: Variant) -> Variant:
 	return out
 
 func _trade_bag(slot: int, rev: int, delta: Dictionary) -> Dictionary:
+	var r: Dictionary = _trade_save(slot, rev, delta, [], [])
+	r.erase("took")
+	return r
+
+## Like public._trade_save: changes the bag by [param delta], takes the Spirlings with the uids
+## [param take] out of team or storage and adds [param give] to storage. Nothing changes on a failure.
+func _trade_save(slot: int, rev: int, delta: Dictionary, take: Array, give: Array) -> Dictionary:
 	var sv: Variant = _saves().get(str(slot))
 	if sv == null:
 		return _fail("no_save")
 	if int(sv.rev) != rev:
 		return _fail("sync_first")
-	keep_history(slot, sv, {"changed": true})
 	var inv: Dictionary = (sv.data.get("inventory", {}) as Dictionary).duplicate() if sv.data.get("inventory") is Dictionary else {}
 	for k: String in delta:
 		var n: int = int(inv.get(k, 0)) + int(delta[k])
@@ -1929,11 +1961,65 @@ func _trade_bag(slot: int, rev: int, delta: Dictionary) -> Dictionary:
 			inv.erase(k)
 		else:
 			inv[k] = n
+	var party: Array = (sv.data.get("party") as Array).duplicate(true) if sv.data.get("party") is Array else []
+	var store: Array = (sv.data.get("storage") as Array).duplicate(true) if sv.data.get("storage") is Array else []
+	var took: Array = []
+	for id: Variant in take:
+		var i: int = _mon_index(party, str(id))
+		if i >= 0:
+			took.append(party.pop_at(i))
+			continue
+		i = _mon_index(store, str(id))
+		if i < 0:
+			return _fail("no_spirling")
+		took.append(store.pop_at(i))
+	if party.is_empty() and not take.is_empty():
+		return _fail("last_one")
+	store.append_array(give.duplicate(true))
+	keep_history(slot, sv, {"changed": true})
 	sv.data["inventory"] = inv
+	if not take.is_empty() or not give.is_empty():
+		sv.data["party"] = party
+		sv.data["storage"] = store
 	sv.rev = int(sv.rev) + 1
 	sv.saved_at = now()
 	sv.erase("request_id")
-	return {"ok": true, "rev": sv.rev}
+	return {"ok": true, "rev": sv.rev, "took": took}
+
+static func _mon_index(list: Array, uid: String) -> int:
+	for i: int in list.size():
+		if list[i] is Dictionary and str(list[i].get("uid", "")) == uid:
+			return i
+	return -1
+
+## Like public._trade_mon_why: why Spirling [param m] cannot be traded, or "".
+static func trade_mon_why(m: Variant) -> String:
+	if not m is Dictionary or str(m.get("uid", "")).is_empty() or str(m.get("species", "")).is_empty():
+		return "no_spirling"
+	if not str(m.get("held", "")).is_empty():
+		return "holds_item"
+	if bool(m.get("gleam", false)) or bool(m.get("core", false)) or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
+		return "shop_boosted"
+	if bool(m.get("favorite", false)):
+		return "favorite"
+	return ""
+
+## Like public._trade_mon_clean: the origin era stays (1 for older saves), no nickname, box or mark.
+static func trade_mon_clean(m: Dictionary) -> Dictionary:
+	var out: Dictionary = m.duplicate(true)
+	for k: String in ["nickname", "box", "favorite"]:
+		out.erase(k)
+	var era: Variant = m.get("origin_era")
+	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= 4 else 1
+	return out
+
+static func mon_uids(list: Variant) -> Array:
+	var out: Array = []
+	for m: Variant in (list if list is Array else []):
+		if m is Dictionary:
+			out.append(str(m.get("uid", "")))
+	out.sort()
+	return out
 
 func _trade_side(id: String, uid: String) -> Variant:
 	return (_table("trade_sides", {}) as Dictionary).get("%s|%s" % [id, uid])
@@ -1956,6 +2042,7 @@ func _trade_tidy() -> void:
 			for k: String in sides:
 				if k.begins_with(id + "|"):
 					sides[k].receive = sides[k].items
+					sides[k].receive_mons = sides[k].get("mons", [])
 		if t.state != "open":
 			var waiting: bool = sides.keys().any(func(k: String) -> bool: return k.begins_with(id + "|") and not bool(sides[k].collected))
 			if not waiting or now() - int(t.created_at) > 90 * 86400:
@@ -1988,7 +2075,8 @@ func _fn_trade_open(a: Dictionary) -> Dictionary:
 	var id: String = str(_next_id("trade"))
 	trades[id] = {"state": "open", "created_at": now(), "closes_at": now() + config_int("trade_days", 7) * 86400}
 	for x: String in [u, t]:
-		(_table("trade_sides", {}) as Dictionary)["%s|%s" % [id, x]] = {"items": {}, "confirmed": false, "receive": null, "collected": false}
+		(_table("trade_sides", {}) as Dictionary)["%s|%s" % [id, x]] = {"items": {}, "mons": [], "confirmed": false, "receive": null,
+			"receive_mons": null, "collected": false}
 	return {"ok": true, "trade": int(id)}
 
 func _fn_trade_list(_a: Dictionary) -> Dictionary:
@@ -2009,9 +2097,11 @@ func _fn_trade_list(_a: Dictionary) -> Dictionary:
 		var p: Dictionary = profile_of(other) if shown else {}
 		out.append({"id": int(id), "state": t.state, "closes_at": t.closes_at, "code": p.get("code"), "name": p.get("name"),
 			"mine": (m.items as Dictionary).duplicate(), "theirs": (o.items as Dictionary).duplicate() if o != null else {},
+			"mine_mons": (m.get("mons", []) as Array).duplicate(true), "theirs_mons": (o.get("mons", []) as Array).duplicate(true) if o != null else [],
 			"my_ok": m.confirmed, "their_ok": o.confirmed if o != null else false,
 			"collect": t.state != "open" and not bool(m.collected)})
-	return {"ok": true, "trades": out, "items": trade_items()}
+	return {"ok": true, "trades": out, "items": trade_items(), "spirlings": flag_on("trade_spirling", 2147483647),
+		"max_spirlings": config_int("trade_max_spirlings", 3)}
 
 func _trade_open_side(id: String, u: String) -> Variant:
 	var t: Variant = (_table("trades", {}) as Dictionary).get(id)
@@ -2069,14 +2159,21 @@ func _fn_trade_confirm(a: Dictionary) -> Dictionary:
 		return _fail("partner_gone")
 	var o: Dictionary = _trade_side(id, other)
 	var seen: Variant = _trade_offer(a.get("p_theirs"))
-	if o.items != (seen if seen != null else {}):
+	var seen_mons: Array = []
+	for x: Variant in (a.get("p_their_mons") if a.get("p_their_mons") is Array else []):
+		seen_mons.append(str(x))
+	seen_mons.sort()
+	if o.items != (seen if seen != null else {}) or mon_uids(o.get("mons", [])) != seen_mons:
 		return _fail("changed")
-	if (m.items as Dictionary).is_empty() and (o.items as Dictionary).is_empty():
+	if (m.items as Dictionary).is_empty() and (o.items as Dictionary).is_empty() \
+			and (m.get("mons", []) as Array).is_empty() and (o.get("mons", []) as Array).is_empty():
 		return _fail("empty")
 	m.confirmed = true
 	if bool(o.confirmed):
 		m.receive = (o.items as Dictionary).duplicate()
 		o.receive = (m.items as Dictionary).duplicate()
+		m.receive_mons = (o.get("mons", []) as Array).duplicate(true)
+		o.receive_mons = (m.get("mons", []) as Array).duplicate(true)
 		db.trades[id].state = "done"
 		return {"ok": true, "done": true}
 	return {"ok": true, "done": false}
@@ -2089,6 +2186,7 @@ func _fn_trade_cancel(a: Dictionary) -> Dictionary:
 	for k: String in _table("trade_sides", {}):
 		if k.begins_with(id + "|"):
 			db.trade_sides[k].receive = (db.trade_sides[k].items as Dictionary).duplicate()
+			db.trade_sides[k].receive_mons = (db.trade_sides[k].get("mons", []) as Array).duplicate(true)
 	db.trades[id].state = "cancelled"
 	return {"ok": true}
 
@@ -2103,12 +2201,164 @@ func _fn_trade_collect(a: Dictionary) -> Dictionary:
 	if bool(m.collected):
 		return _fail("already")
 	var got: Dictionary = (m.receive as Dictionary).duplicate() if m.receive is Dictionary else {}
-	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), got)
+	var mons: Array = (m.get("receive_mons") as Array).duplicate(true) if m.get("receive_mons") is Array else []
+	var r: Dictionary = _trade_save(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), got, [], mons)
 	if not bool(r.ok):
 		return r
 	m.collected = true
 	_trade_tidy()
-	return {"ok": true, "rev": r.rev, "bag": got}
+	return {"ok": true, "rev": r.rev, "bag": got, "mons": mons}
+
+func _fn_trade_put_spirlings(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _trade_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	if not flag_on("trade_spirling", 2147483647):
+		return _fail("feature_off")
+	_trade_tidy()
+	var id: String = str(int(a.get("p_trade", 0)))
+	var m: Variant = _trade_open_side(id, u)
+	if m == null:
+		return _fail("no_such_trade")
+	if not _trade_pair(u, _trade_other(id, u)).is_empty():
+		return _fail("partner_gone")
+	var want: Array = []
+	var raw: Array = a.get("p_uids") if a.get("p_uids") is Array else []
+	for x: Variant in raw:
+		if not str(x).is_empty() and not want.has(str(x)):
+			want.append(str(x))
+	if want.size() != raw.size() or want.size() > config_int("trade_max_spirlings", 3):
+		return _fail("too_many_spirlings")
+	if not _rate_ok("trade_put", 60):
+		return _fail("slow_down")
+	var have: Array = mon_uids(m.get("mons", []))
+	var take: Array = want.filter(func(x: String) -> bool: return not have.has(x))
+	var keep: Array = []
+	var back: Array = []
+	for x: Dictionary in m.get("mons", []):
+		(keep if want.has(str(x.uid)) else back).append(x)
+	var sv: Variant = _saves().get(str(int(a.get("p_slot", 0))))
+	if sv == null:
+		return _fail("no_save")
+	var all: Array = (sv.data.get("party", []) as Array) + (sv.data.get("storage", []) as Array)
+	for x: String in take:
+		var i: int = _mon_index(all, x)
+		var why: String = trade_mon_why(all[i] if i >= 0 else null)
+		if not why.is_empty():
+			return _fail(why)
+	var r: Dictionary = _trade_save(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {}, take, back)
+	if not bool(r.ok):
+		return r
+	for x: Dictionary in r.took:
+		keep.append(trade_mon_clean(x))
+	m["mons"] = keep
+	for k: String in _table("trade_sides", {}):
+		if k.begins_with(id + "|"):
+			db.trade_sides[k].confirmed = false
+	return {"ok": true, "rev": r.rev, "took": take, "back": back}
+
+# --- Weekly boards and the daily gift (20261111000002_online_step1.sql) ---------------------
+
+## Rift ids (every "warden" in data/), like known_ids kind "rift".
+static func known_rifts() -> Array:
+	var out: Array = []
+	var files: Array = []
+	for f: String in DirAccess.get_files_at("res://data/maps"):
+		files.append("res://data/maps/" + f)
+	for f: String in ["story_npcs.json", "endgame.json", "puzzles.json"]:
+		files.append("res://data/" + f)
+	for path: String in files:
+		if path.ends_with(".json"):
+			_walk_wardens(JSON.parse_string(FileAccess.get_file_as_string(path)), out)
+	return out
+
+static func _walk_wardens(v: Variant, out: Array) -> void:
+	if v is Dictionary:
+		for k: Variant in v:
+			if str(k) == "warden" and v[k] is String and not str(v[k]).is_empty():
+				if not out.has(str(v[k])):
+					out.append(str(v[k]))
+			else:
+				_walk_wardens(v[k], out)
+	elif v is Array:
+		for x: Variant in v:
+			_walk_wardens(x, out)
+
+## Like public._board_json: best first, names only for you and your friends.
+func _board(rows: Array, low: bool) -> Array:
+	var u: String = me()
+	rows.sort_custom(func(x: Dictionary, y: Dictionary) -> bool:
+		var vx: int = int(x.v) if low else -int(x.v)
+		var vy: int = int(y.v) if low else -int(y.v)
+		return vx < vy or (vx == vy and int(x.at) < int(y.at)))
+	var out: Array = []
+	var rank: int = 0
+	var last: int = -2147483648
+	for i: int in rows.size():
+		var r: Dictionary = rows[i]
+		if int(r.v) != last:
+			rank = i + 1
+			last = int(r.v)
+		if rank <= config_int("board_rows", 20) or r.u == u:
+			out.append({"rank": rank, "score": int(r.v), "me": r.u == u,
+				"name": profile_of(r.u).name if (r.u == u or is_friend(u, r.u)) else ""})
+	return out
+
+func _fn_rift_board(a: Dictionary) -> Dictionary:
+	if not flag_on("rift_board", 2147483647):
+		return _fail("feature_off")
+	var u: String = me()
+	var rift: String = str(a.get("p_rift", ""))
+	var friends_only: bool = bool(a.get("p_friends", true))
+	var best: Dictionary = {}
+	for r: Dictionary in _table("rift_runs", []):
+		if r.week != _week() or r.rift != rift or not battle_ok(int(r.battle_id)) or not db.users.has(r.u):
+			continue
+		if is_blocked(u, r.u) or (friends_only and r.u != u and not is_friend(u, r.u)):
+			continue
+		var cur: Variant = best.get(r.u)
+		if cur == null or int(r.v) < int(cur.v) or (int(r.v) == int(cur.v) and int(r.at) < int(cur.at)):
+			best[r.u] = r
+	return {"ok": true, "week": _week(), "rift": rift, "rows": _board(best.values(), true)}
+
+func _fn_league_board(a: Dictionary) -> Dictionary:
+	if not flag_on("league_board", 2147483647):
+		return _fail("feature_off")
+	var league: String = str(a.get("p_league", ""))
+	if not league in ["fair", "open"]:
+		return _fail("bad_league")
+	var u: String = me()
+	var friends_only: bool = bool(a.get("p_friends", true))
+	var wins: Dictionary = {}
+	for m: Dictionary in (_table("league_matches", {}) as Dictionary).values():
+		if m.league != league or m.state != "done" or not bool(m.rated) or not (m.get("score") is float and float(m.score) == 1.0):
+			continue
+		if WeeklyChallenge.week_key(int(m.created_at)) != _week() or not db.users.has(m.user) or is_blocked(u, m.user):
+			continue
+		if friends_only and m.user != u and not is_friend(u, m.user):
+			continue
+		var w: Dictionary = wins.get_or_add(m.user, {"u": m.user, "v": 0, "at": 0})
+		w.v = int(w.v) + 1
+		w.at = maxi(int(w.at), int(m.created_at))
+	return {"ok": true, "week": _week(), "league": league, "rows": _board(wins.values(), false)}
+
+func _fn_daily_gift_state(_a: Dictionary) -> Dictionary:
+	if not flag_on("daily_gift", 2147483647):
+		return _fail("feature_off")
+	return {"ok": true, "ready": str(_user().get("daily_gift_day", "")) != _today(), "table": db.config.daily_gift_table}
+
+func _fn_daily_gift_claim(a: Dictionary) -> Dictionary:
+	if not flag_on("daily_gift", 2147483647):
+		return _fail("feature_off")
+	if str(_user().get("daily_gift_day", "")) == _today():
+		return _fail("already_today")
+	var item: String = roll_gift(db.config.daily_gift_table)
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {item: 1})
+	if not bool(r.ok):
+		return r
+	_user()["daily_gift_day"] = _today()
+	return {"ok": true, "rev": r.rev, "item": item, "bag": {item: 1}}
 
 # --- Save history (plan area 7, item 3009), like 20261110000015_save_history.sql -----------------
 
