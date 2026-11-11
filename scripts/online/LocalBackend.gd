@@ -1395,13 +1395,15 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 		return _fail("not_joined")
 	if not _rate_ok("league_find", 240):
 		return _fail("slow_down")
-	var quits: Array = (_table("league_matches", {}) as Dictionary).values().filter(func(m: Dictionary) -> bool:
-		return m.user == me() and m.state == "expired" and now() - int(m.created_at) < 86400
-			and int(m.get("expired_at", 0)) - int(m.created_at) >= int(ranks_cfg().get("quit_grace", 30)))
+	var quits: int = 0
 	var last: int = 0
-	for m: Dictionary in quits:
-		last = maxi(last, int(m.expired_at))
-	var wait: int = LeagueRules.quit_wait(ranks_cfg(), quits.size(), now() - last)
+	var grace: int = int(ranks_cfg().get("quit_grace", 30))
+	for m: Dictionary in (_table("league_matches", {}) as Dictionary).values():
+		if m.user == me() and m.state == "expired" and now() - int(m.created_at) < 86400 \
+				and int(m.get("expired_at", 0)) - int(m.created_at) >= grace:
+			quits += 1
+			last = maxi(last, int(m.expired_at))
+	var wait: int = LeagueRules.quit_wait(ranks_cfg(), quits, now() - last)
 	if wait > 0:
 		var f: Dictionary = _fail("quit_wait")
 		f["wait"] = wait
