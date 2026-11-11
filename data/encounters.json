@@ -1370,7 +1370,7 @@
     "species": "Duneshrew",
     "min": 39,
     "max": 41,
-    "weight": 30,
+    "weight": 28,
     "ground": "scree"
    },
    {
@@ -1391,7 +1391,7 @@
     "species": "Orrlet",
     "min": 40,
     "max": 42,
-    "weight": 8,
+    "weight": 10,
     "ground": "scree"
    },
    {
