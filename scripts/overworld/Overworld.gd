@@ -354,6 +354,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.set_flag("look_seen_" + map.region)
 		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
+	EraManager.mark_finales(GameState.flags)
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era])

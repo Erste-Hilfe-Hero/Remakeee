@@ -2,6 +2,7 @@
 railway, Cinderfold with the gravers' hall, the Kiln Rift, the Saltglass flats with the silent
 lighthouse, the Glass Rift, the far end of the Wide Rift and the three parts of the Undrawn.
 Region "ashmere". Edit here, then run tools/art/build_world.py.
+Act III look: the "*" ember blooms, "T" dead snags and "@" slag heaps in the rows are the Ashmere props (art/era1/tiles/overworld_ashmere.png).
 
 Area 4 places the story figures through data/story_npcs.json on the named "spots".
 How the way opens:
@@ -58,21 +59,21 @@ def conductor_text(world, mid, name_en, name_de):
 def ashmere_station(world):
     mid = "ashmere_station"
     rows = ["^^^^^__^^^^^",
+            "^::.*__..::^",
             "^::..__..::^",
-            "^::..__..::^",
-            "^^^^.__.^^^^",
+            "^^^^.__@^^^^",
             "^....__....^",
-            "^.RRRRRR...^",
+            "^.RRRRRR*..^",
             "^.HHHDHH.S.^",
             "^....__....^",
-            "^...______._",
+            "^T..______._",
             "^..._....___",
             "^..._......^",
             "__.._..::..^",
             "____...::..^",
-            "^....._....^",
+            "^*...._*...^",
             "^.L..._..L.^",
-            "^....._....^",
+            "^....._...*^",
             "^....._....^",
             "^....._....^",
             "^.S..._....^",
@@ -101,18 +102,18 @@ def cinderfold(world):
     mid = "cinderfold"
     rows = ["^^^^^^^^^^^^",
             "^^.o.^^^^^^^",
-            "^.......____",
+            "^.....*T____",
             "^...._______",
             "^.RRRRR_...^",
             "^.HHDHH_.S.^",
             "^......_...^",
-            "^.RRR.._.RR^",
+            "^*RRR*._.RR^",
             "^.HDH.._.HD^",
-            "^....___...^",
+            "^...@___...^",
             "^.:..._..:.^",
             "^.:.._____.^",
             "^...._.L...^",
-            "^L..._.....^",
+            "^L..._*....^",
             "^....___...^",
             "^^^^^^^^^^^^"]
     world.add_text(mid, {
@@ -160,7 +161,7 @@ def kiln_rift(world):
     rows = ["^^^^^^^^^^^^",
             "^^^^.XX.^^^^",
             "^^........^^",
-            "^.::....::.^",
+            "^.::.*..::.^",
             "^.::.@@.::.^",
             "^^^^....^^^^",
             "^.::....::.^",
@@ -168,7 +169,7 @@ def kiln_rift(world):
             "^.........S^",
             "^..^^..^^..^",
             "^.::....::.^",
-            "^..........^",
+            "^.*.......*^",
             "^^^^^..^^^^^"]
     world.add_text(mid, {
         "sign": lines(("THE KILN RIFT", "DER OFENRISS"), ("The stones are warm. Something behind them is still burning.", "Die Steine sind warm. Dahinter brennt noch etwas.")),
@@ -186,20 +187,20 @@ def kiln_rift(world):
 def saltglass(world):
     mid = "saltglass"
     rows = ["^^^^^__^^^^^",
-            "^::..__..::^",
+            "^::*.__..::^",
             "^::..__..::^",
             "^....__....^",
-            "^.::.__.|..^",
+            "^.::.__*|..^",
             "^.::.__.|..^",
             "^....__.D..^",
             "^,,,.__.,,,^",
             "^,,,.__.,,,^",
-            "^....______.",
-            "^::........_",
+            "^T...______.",
+            "^::.....*.._",
             "^::..__..,,^",
             "^....__..,,^",
-            "^,,,.__....^",
-            "^,,,.__.::.^",
+            "^,,,.__*...^",
+            "^,,,*__.::.^",
             "^....__.::.^",
             "^::..__....^",
             "^::..__.,,,^",
@@ -207,7 +208,7 @@ def saltglass(world):
             "^.S..__....^",
             "^....__..::^",
             "^....__..::^",
-            "_______....^",
+            "_______*...^",
             "_______....^",
             "^.........S^",
             "^^^^^__^^^^^"]

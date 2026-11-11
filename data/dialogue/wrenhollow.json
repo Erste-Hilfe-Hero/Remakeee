@@ -31,11 +31,9 @@
    ]
   }
  },
- "elder": {
-  "lines": [
-   "Old Bertil: Orrin guards that well like someone would steal it. Who'd steal a hole?"
-  ]
- },
+ "elder": [
+  "Old Bertil: We heard the Rift from down here. Like a bell cracking."
+ ],
  "kid": [
   "Wren-kid: I counted the ladder rungs. All of them. Two hundred and six!"
  ],
@@ -47,7 +45,7 @@
  },
  "tamsa": {
   "lines": [
-   "Weaver Tamsa: I weave all day so I have something to do with my hands while Lise talks to her goats about me."
+   "Weaver Tamsa: I weave on the top terrace while the light lasts, then I go down to gossip."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -58,27 +56,18 @@
  },
  "orrin": {
   "lines": [
-   "Well-Keeper Orrin: Everyone here mocks me. The well is the only one who listens, and it just echoes."
+   "Well-Keeper Orrin: I check the well rope at noon and sit by the well at dusk. Nothing ever happens."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
    "lines": [
     "Well-Keeper Orrin: The well water tastes of nothing again. That's how it should taste."
    ]
-  },
-  "choices": [
-   {
-    "text": "Tell Orrin what Lise said",
-    "next": "orrin_pays"
-   },
-   {
-    "text": "Leave them be"
-   }
-  ]
+  }
  },
  "lise": {
   "lines": [
-   "Goatherd Lise: My goats are smarter than Orrin. At least they leave the well when nothing happens."
+   "Goatherd Lise: The goats walk the bottom terrace and I walk behind them. Who leads whom?"
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -89,7 +78,7 @@
  },
  "brann": {
   "lines": [
-   "Fiddler Brann: I play loud at night so nobody hears Tamsa gossip. It doesn't work. Nothing drowns her out."
+   "Fiddler Brann: I tune at dusk on the top terrace and play for the lamps at night."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -100,7 +89,7 @@
  },
  "ilse": {
   "lines": [
-   "Basket-Maker Ilse: Brann calls it music. The goats call it a warning."
+   "Basket-Maker Ilse: I weave here by day and sell in Reedhaven at dusk. Reeds for baskets, baskets for reeds."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",

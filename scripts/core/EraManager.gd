@@ -7,13 +7,14 @@ signal era_changed(era: int)
 ## Emitted when a new region unlocks a newer era (item 48); the overworld shows a line for it.
 signal era_unlocked(era: int)
 
-enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4 }
+enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4, LIVING = 5 }
+const NEWEST: int = Era.LIVING
 ## The whole story (all four regions) stays Era I. Era II opens after the finale and is the
 ## look of the post-game region Vellmarch (data/region2.json); later eras arrive with their own new regions.
 const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK, "vellmarch": Era.WASH}
 const STORY_COMPLETE_FLAG: String = "story_complete"
-const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480)}
-const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96}
+const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480), Era.LIVING: Vector2i(270, 480)}
+const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96, Era.LIVING: 96}
 ## Era I: four cartographer's inks on parchment (original values, darkest to lightest). Deliberately
 ## not the green four-shade look of old handheld screens.
 const INK_PALETTE: Array[Color] = [Color("2a1e2c"), Color("6a4256"), Color("c48a5e"), Color("f2e3c2")]
@@ -50,6 +51,7 @@ const ERA_LINES: Dictionary[int, String] = {
 	Era.WASH: "The last line of the map is drawn. The ink runs and spreads, and the world fills with colour!",
 	Era.ETCHED: "The air grows sharper. Every leaf and stone shows more detail!",
 	Era.PANORAMA: "The map unrolls wider than ever. The whole horizon opens before you!",
+	Era.LIVING: BattleAnim.UNLOCK_LINE,
 }
 const TRANSITION_TIME: float = 0.9
 var _wipe: ColorRect
@@ -90,11 +92,25 @@ static func unlock_flags() -> Dictionary:
 	var d: Variant = JSON.parse_string(f.get_as_text())
 	return d.get("unlock_flags", {}) if d is Dictionary else {}
 
+## data/eras.json "finale_flags": era flag -> the content flag whose finale sets it (Era II
+## finale = Vellmarch chapter 5). Sets each era flag once its source flag is set.
+static func mark_finales(flags: Dictionary) -> void:
+	var f: FileAccess = FileAccess.open(ERAS_PATH, FileAccess.READ)
+	if f == null:
+		return
+	var d: Variant = JSON.parse_string(f.get_as_text())
+	if not d is Dictionary:
+		return
+	var m: Dictionary = d.get("finale_flags", {})
+	for era_flag: String in m:
+		if bool(flags.get(str(m[era_flag]), false)):
+			flags[era_flag] = true
+
 ## Unlocks every era whose flag is set. Eras open in order: a later flag does nothing while
 ## an earlier era is still locked.
 func unlock_from_flags(has_flag: Callable) -> void:
 	var flags: Dictionary = unlock_flags()
-	for e: int in range(Era.WASH, Era.PANORAMA + 1):
+	for e: int in range(Era.WASH, NEWEST + 1):
 		var flag: String = str(flags.get(str(e), ""))
 		if flag.is_empty() or not has_flag.call(flag) or unlocked_era < e - 1:
 			return
@@ -147,7 +163,7 @@ func species_era(species: String) -> int:
 	var sd: SpirlingData = Database.species(species)
 	if sd == null:
 		sd = Database.species(species.capitalize())
-	return clampi(sd.era, Era.INK, Era.PANORAMA) if sd != null else Era.INK
+	return clampi(sd.era, Era.INK, NEWEST) if sd != null else Era.INK
 
 ## Sprite for [param species] in the species' own era (not the world era), falling back to
 ## older eras when a file is missing.
@@ -189,7 +205,7 @@ func to_dict() -> Dictionary:
 	return {"unlocked_era": unlocked_era, "retro_filter": retro_filter}
 
 func from_dict(d: Dictionary) -> void:
-	unlocked_era = clampi(int(d.get("unlocked_era", Era.INK)), Era.INK, Era.PANORAMA)
+	unlocked_era = clampi(int(d.get("unlocked_era", Era.INK)), Era.INK, NEWEST)
 	retro_filter = clampi(int(d.get("retro_filter", 0)), 0, unlocked_era)
 	_apply()
 

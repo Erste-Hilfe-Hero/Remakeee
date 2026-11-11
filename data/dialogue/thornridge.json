@@ -87,7 +87,7 @@
  },
  "ula": {
   "lines": [
-   "Shepherd Ula: I count my flock twice. Ivo I don't count at all. He's asleep somewhere."
+   "Shepherd Ula: The flock grazes the scree by day. At dusk I count them twice, at the square."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -98,7 +98,7 @@
  },
  "marek": {
   "lines": [
-   "Stonecutter Marek: Ivo guards the night like a stone guards the road. Lying there, getting walked over."
+   "Stonecutter Marek: Up on the terrace I split stone. At the square in the evening I split hairs."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -109,7 +109,7 @@
  },
  "rue": {
   "lines": [
-   "Herbalist Rue: I have a herb for every pain. For Marek's jokes, nothing helps."
+   "Herbalist Rue: I pick herbs by the old door at sunrise. Dew makes them honest."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
@@ -120,23 +120,14 @@
  },
  "ivo": {
   "lines": [
-   "Night Watch Ivo: I keep watch so the village can sleep. They keep laughing so I can't."
+   "Night Watch Ivo: I start my round at dusk and finish when the birds complain."
   ],
   "after_flag": {
    "flag": "rift_cinder_sealed",
    "lines": [
     "Night Watch Ivo: Quiet nights since the Rift closed. I almost miss the trouble. Almost."
    ]
-  },
-  "choices": [
-   {
-    "text": "Snore loudly next to Ivo",
-    "next": "ivo_pays"
-   },
-   {
-    "text": "Leave them be"
-   }
-  ]
+  }
  },
  "kip": {
   "lines": [

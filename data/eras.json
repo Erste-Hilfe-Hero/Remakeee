@@ -1,8 +1,13 @@
 {
-  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/.",
+  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/. finale_flags: era flag -> the flag the era's post-game finale sets (EraManager.mark_finales).",
   "unlock_flags": {
     "2": "story_complete",
-    "3": "era2_finale_done"
+    "3": "era2_finale_done",
+    "4": "era3_finale_done",
+    "5": "era4_finale_done"
+  },
+  "finale_flags": {
+    "era2_finale_done": "vellmarch_done"
   },
   "era3": {
     "region": "quillmarch",

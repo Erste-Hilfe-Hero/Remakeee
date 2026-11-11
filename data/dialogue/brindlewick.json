@@ -320,7 +320,7 @@
  },
  "brin": {
   "lines": [
-   "Netmender Brin: My nets have more holes than Wim's excuses, and I still catch more than he delivers."
+   "Netmender Brin: Mornings I mend nets by the north road. Evenings I tell lies about fish."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -331,7 +331,7 @@
  },
  "lotte": {
   "lines": [
-   "Baker Lotte: Wim's cart is so slow the bread goes stale on the way. I've started baking it stale. Saves time."
+   "Baker Lotte: First loaves at dawn, last crumbs at dusk. In between, I walk off the flour."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -342,7 +342,7 @@
  },
  "tilda": {
   "lines": [
-   "Rower Tilda: I'd row Wim across the lake for free. Halfway. Then I'd row back."
+   "Rower Tilda: I row the shallows at noon and sit by the lamp at dusk. Simple life."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -353,7 +353,7 @@
  },
  "joss": {
   "lines": [
-   "Lamplighter Joss: I keep the lamp burning all night so Lotte can see how flat her bread is."
+   "Lamplighter Joss: Dawn and dusk I trim the wick. At night I keep it company."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
@@ -364,23 +364,14 @@
  },
  "wim": {
   "lines": [
-   "Carter Wim: Everybody laughs at my cart. Even the cart. It squeaks every time someone says my name."
+   "Carter Wim: Days here, evenings up in Thornridge. My cart knows the way better than I do."
   ],
   "after_flag": {
    "flag": "rift_tide_sealed",
    "lines": [
     "Carter Wim: The road feels lighter since the Rift was sealed. Even the cart squeaks less."
    ]
-  },
-  "choices": [
-   {
-    "text": "Tell Wim a cart joke",
-    "next": "wim_pays"
-   },
-   {
-    "text": "Leave them be"
-   }
-  ]
+  }
  },
  "marker_stone": {
   "lines": [
