@@ -25,7 +25,10 @@
   "elma": {"clan": "strangers", "ally": true, "act": 2, "role": "Kael cook, warns about Brannoc's routes", "trust": 50, "use": 20},
   "leith": {"clan": "strangers", "ally": false, "act": 3, "role": "Sable's runner, turns if trusted", "trust": 20, "use": 50},
   "lejla": {"clan": "strangers", "ally": true, "act": 3, "role": "forger, reads the breeding registers", "trust": 55, "use": 20},
-  "mirza": {"clan": "strangers", "ally": true, "act": 3, "role": "card player, warns about the card hall", "trust": 40, "use": 35}
+  "mirza": {"clan": "strangers", "ally": true, "act": 3, "role": "card player, warns about the card hall", "trust": 40, "use": 35},
+  "liss": {"clan": "marrovel", "role": "Fenrick's daughter from Ashmere, Sable's informer", "trust": 25, "use": 55},
+  "kerr": {"clan": "none", "role": "son of a lost Rift guard, hunts Pip", "trust": 30, "use": 40},
+  "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35}
  },
  "favors": {
   "vash_record": {"npc": "vash", "kind": "lend_coins", "amount": 300,
@@ -59,7 +62,15 @@
    "kept": {"say": "clans/mirza_kept", "coins": 300, "flags": ["c3_mirza_warned"]}},
   "leith_tip": {"npc": "leith", "kind": "believe_tip",
    "betray": {"say": "clans/leith_betray", "battle": "ambush_basalt", "trust": {"leith": 10}},
-   "kept": {"say": "clans/leith_kept"}}
+   "kept": {"say": "clans/leith_kept"}},
+  "tobs_dig": {"npc": "tobs", "kind": "lend_coins", "amount": 500, "reward_chance": 0.4,
+   "betray": {"say": "clans/tobs_betray", "use": {"vash": 10}},
+   "reward": {"say": "clans/tobs_reward", "flags": ["c4_urn_moved"], "coins": 300, "trust": {"tobs": 10}},
+   "kept": {"say": "clans/tobs_kept", "flags": ["c4_urn_moved"]}},
+  "sable_dune": {"npc": "sable", "kind": "believe_tip", "reward_chance": 0.3,
+   "betray": {"say": "clans/sable_dune_betray", "battle": "dune_hands", "use": {"sable": 10}},
+   "reward": {"say": "clans/sable_dune_reward", "item": "revival_leaf", "trust": {"sable": 5}},
+   "kept": {"say": "clans/sable_dune_kept", "trust": {"sable": 5}}}
  },
  "betrayals": {
   "fenrick_trail": {"act": 1, "npc": "fenrick", "rule": "warned", "warned_by": ["c1_read_letter", "c1_aldra_warned"],
@@ -79,7 +90,22 @@
    "struck": {"flags": ["clan_b5"], "ledger": "sale", "say": "clans/sable_struck", "battle": "ambush_hall"}},
   "marlo_fate": {"act": 3, "npc": "marlo", "rule": "trust", "min": 40,
    "caught": {"flags": ["clan_b6"], "ledger": "marlo", "say": "clans/marlo_lives"},
-   "struck": {"flags": ["clan_b6", "marlo_gone"], "ledger": "marlo", "say": "clans/marlo_gone"}}
+   "struck": {"flags": ["clan_b6", "marlo_gone"], "ledger": "marlo", "say": "clans/marlo_gone"}},
+  "liss_spy": {"act": 3, "npc": "liss", "rule": "warned", "warned_by": ["c3_liss_watched", "c3_register"],
+   "caught": {"flags": ["clan_b7"], "ledger": "liss", "trust": {"fenrick": -20, "liss": 20}, "use": {"sable": -10}, "say": "clans/liss_caught"},
+   "struck": {"flags": ["clan_b7"], "ledger": "liss", "use": {"sable": 20}, "say": "clans/liss_struck", "battle": "ambush_basalt"}},
+  "fenrick_seal": {"act": 3, "npc": "marlo", "rule": "trust", "min": 50,
+   "caught": {"flags": ["clan_b8"], "ledger": "seal", "trust": {"marlo": 15, "fenrick": -10}, "say": "clans/seal_caught"},
+   "struck": {"flags": ["clan_b8"], "ledger": "seal", "take_keepsake": true, "say": "clans/seal_struck"}},
+  "basin": {"act": 4, "npc": "vash", "rule": "warned", "warned_by": ["c4_urn_moved"],
+   "caught": {"flags": ["clan_b9"], "ledger": "basin", "trust": {"vash": -10}, "use": {"vash": -20}, "say": "clans/basin_caught"},
+   "struck": {"flags": ["clan_b9"], "ledger": "basin", "use": {"vash": 20}, "say": "clans/basin_struck", "battle": "basin_wardens"}},
+  "ottilie_throne": {"act": 4, "npc": "ottilie", "rule": "warned", "warned_by": ["c4_wax_checked", "c4_heard_fenrick"],
+   "caught": {"flags": ["clan_b10"], "ledger": "throne", "trust": {"ottilie": -20}, "say": "clans/throne_o_caught"},
+   "struck": {"flags": ["clan_b10"], "ledger": "throne", "say": "clans/throne_o_struck", "battle": "throne_guard"}},
+  "fenrick_throne": {"act": 4, "npc": "fenrick", "rule": "warned", "warned_by": ["c4_wax_checked", "c4_heard_ottilie"],
+   "caught": {"flags": ["clan_b11"], "ledger": "throne", "trust": {"fenrick": -20}, "say": "clans/throne_f_caught"},
+   "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}}
  },
  "ledger": [
   {"id": "ash", "act": 1, "ref": "clans/ledger_ash"},
@@ -95,6 +121,12 @@
   {"id": "sale", "act": 3, "ref": "clans/ledger_sale"},
   {"id": "marlo", "act": 3, "ref": "clans/ledger_marlo"},
   {"id": "register", "act": 3, "ref": "clans/ledger_register"},
-  {"id": "breeder", "act": 3, "ref": "clans/ledger_breeder"}
+  {"id": "breeder", "act": 3, "ref": "clans/ledger_breeder"},
+  {"id": "liss", "act": 3, "ref": "clans/ledger_liss"},
+  {"id": "seal", "act": 3, "ref": "clans/ledger_seal"},
+  {"id": "basin", "act": 4, "ref": "clans/ledger_basin"},
+  {"id": "throne", "act": 4, "ref": "clans/ledger_throne"},
+  {"id": "deeds", "act": 4, "ref": "clans/ledger_deeds"},
+  {"id": "crown", "act": 4, "ref": "clans/ledger_crown"}
  ]
 }
