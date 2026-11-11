@@ -243,7 +243,7 @@ const ACT1_END_FLAG: String = "aldo_dock_told"
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
 		return Spirling.MAX_LEVEL
-	return progress_cap()
+	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), Spirling.MAX_LEVEL)
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -1128,9 +1128,10 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
-	elif int(it.get("rings", 0)) > 0:
-		# Ring Tonics from the shop: never above the Ring cap (plan item 4341).
-		var target: int = mini(s.level + int(it.rings), mini(level_cap(), Spirling.MAX_LEVEL))
+	elif int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0:
+		# Ring Tonics and the Ring Crown from the shop: never above the Ring cap (plan item 4341).
+		var goal: int = int(it.rings_to) if int(it.get("rings_to", 0)) > 0 else s.level + int(it.rings)
+		var target: int = mini(goal, mini(level_cap(), Spirling.MAX_LEVEL))
 		if s.level >= target:
 			return ""
 		var from: int = s.level

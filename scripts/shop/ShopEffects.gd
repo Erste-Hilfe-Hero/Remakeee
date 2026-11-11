@@ -277,14 +277,20 @@ static func crystal_cap() -> int:
 static func growth_plus() -> float:
 	return float(_values().get("growth_plus", 0.0)) if Billing.unlocked("growth_plus") > 0 else 0.0
 
+## Extra Rings over the Veteran Ring cap from the Ring Cap Seal (pay-to-win step 3, plan point 47).
+static func ring_cap_bonus() -> int:
+	return int(_values().get("ring_cap_plus", 0)) if Billing.unlocked("ring_cap_plus") > 0 else 0
+
 ## Account power (shown in the team view): the sum of every active bought advantage in points,
-## seal percents plus the permanent growth percent plus the crystal points in the team.
+## seal percents plus the permanent growth percent, 10 per extra Ring of the Ring Cap Seal, plus
+## the crystal points in the team.
 static func account_power() -> int:
 	var tiers: Array[int] = seal_tiers()
 	var n: int = 0
 	for i: int in SEAL_KINDS.size():
 		n += seal_percent(SEAL_KINDS[i], tiers[i])
 	n += roundi(growth_plus() * 100.0)
+	n += ring_cap_bonus() * 10
 	for s: Spirling in GameState.party:
 		for k: String in s.crystal:
 			n += int(s.crystal[k])
