@@ -13,7 +13,7 @@ T = {
 "%s keeps pace, calm as a closed coffin.": "%s hält Schritt, ruhig wie ein geschlossener Sarg.",
 "%s watches the clouds drift and judges none of them.": "%s sieht den Wolken nach und verurteilt keine davon.",
 "%s sniffs a grave marker and looks very interested.": "%s beschnuppert einen Grabstein und wirkt sehr interessiert.",
-"%s pokes a puddle. The puddle pokes back.": "%s stupst eine Pfütze an. Die Pfütze stupst zurück.",
+"%s prods a puddle. The puddle prods back.": "%s stupst eine Pfütze an. Die Pfütze stupst zurück.",
 "%s hides behind your boot from a leaf.": "%s versteckt sich hinter deinem Stiefel vor einem Blatt.",
 "%s steps on your shadow so nobody sees it.": "%s tritt auf deinen Schatten, damit es keiner sieht.",
 "%s struts like it won the last battle alone.": "%s stolziert, als hätte es den letzten Kampf allein gewonnen.",
