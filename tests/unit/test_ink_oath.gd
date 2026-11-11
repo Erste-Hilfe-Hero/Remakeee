@@ -43,13 +43,13 @@ func test_only_against_wayfarers_and_never_offered_to_the_ai() -> void:
 func test_oath_gives_stages_and_energy_once() -> void:
 	var m: BattleModel = _model(false)
 	var me: Spirling = m.active_spirling(Side.PLAYER)
-	var energy: int = me.energy
+	me.energy = 0
 	var events: Array[BattleEvent] = m.submit_turn(BattleAction.make_oath(Side.PLAYER), BattleAction.make_rest(Side.FOE))
 	assert_eq(_count(events, T.OATH), 1)
 	var o: Dictionary = BattleRules.oath()
 	for stat: String in o.stages:
 		assert_eq(me.stage(stat), int(o.stages[stat]), stat)
-	assert_gt(me.energy, energy)
+	assert_true(me.energy >= int(o.energy), "the oath pays its Energy at once")
 	assert_false(m.can_oath(Side.PLAYER), "once per battle")
 
 func test_debt_comes_due_after_the_turns() -> void:
