@@ -280,6 +280,11 @@
    "x": 10,
    "y": 10,
    "dialogue": "murk_hollow/campfire"
+  },
+  {
+   "x": 0,
+   "y": 9,
+   "dialogue": "murk_hollow/burrow"
   }
  ],
  "gear_spots": [
