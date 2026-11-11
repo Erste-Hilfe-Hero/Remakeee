@@ -30,6 +30,8 @@ var era: int = 1
 ## Era V: where the soft trail behind the bar sits (lags display_hp on damage).
 var trail_hp: float = 1.0
 var _time: float = 0.0
+## Colour-blind mode: patterned HP fill in every era.
+var color_blind: bool = false
 var max_hp: int = 1
 var energy: int = 0
 var spirling_name: String = ""
@@ -52,6 +54,7 @@ func set_spirling(s: Spirling) -> void:
 	display_hp = s.hp
 	trail_hp = s.hp
 	era = EraManager.active_era()
+	color_blind = GameState.color_blind
 	energy = s.energy
 	status = s.status
 	stages = s.stages.duplicate()
@@ -139,7 +142,10 @@ func _draw() -> void:
 	_draw_plate()
 	draw_string(font, Vector2(0, y_text), spirling_name, HORIZONTAL_ALIGNMENT_LEFT, w * 0.6, fs, UITheme.INK)
 	var name_w: float = minf(font.get_string_size(spirling_name, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x, w * 0.6)
-	ElementIcons.draw_row(self, elements, Vector2(name_w + 2.0, y_text - ElementIcons.SIZE), UITheme.INK)
+	var bx: float = name_w + 2.0
+	for el: int in elements:
+		ElementIcons.draw_row(self, [el] as Array[int], Vector2(bx, y_text - ElementIcons.SIZE), BattleUiStyle.badge_color(era, el))
+		bx += ElementIcons.SIZE + 1
 	var right: String = "R%d" % level
 	if not status.is_empty():
 		right = StatusRules.label(status).substr(0, 3).to_upper() + " " + right
@@ -179,7 +185,7 @@ func _draw_hp_bar(bar_y: float, w: float, frac: float) -> void:
 		draw_rect(Rect2(1 + fill_w, bar_y + 1, floorf(inner_w * tw_frac) - fill_w, BAR_HEIGHT), Color(String(HpBarStyle.cfg().get("trail_color", "f2e3c2"))))
 	if not HpBarStyle.blink_hidden(era, frac, _time):
 		var col: Color = HpBarStyle.color(era, frac)
-		if bool(st.get("pattern", false)):
+		if BattleUiStyle.hp_pattern(era, color_blind):
 			var state: int = HpBarStyle.state(frac)
 			for y: int in BAR_HEIGHT:
 				for x: int in int(fill_w):

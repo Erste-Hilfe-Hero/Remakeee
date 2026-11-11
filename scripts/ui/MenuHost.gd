@@ -628,6 +628,8 @@ func run_display() -> void:
 				GameState.reduce_motion = not GameState.reduce_motion
 			"contrast":
 				GameState.high_contrast = not GameState.high_contrast
+			"color_blind":
+				GameState.color_blind = not GameState.color_blind
 			"large_text":
 				GameState.large_text = not GameState.large_text
 			"language":
@@ -664,6 +666,7 @@ static func display_rows() -> Array[Array]:
 		["battery", "Battery saver: %s" % ("On" if GameState.battery_saver else "Off")],
 		["motion", "Less motion: %s" % ("On" if GameState.reduce_motion else "Off")],
 		["contrast", "High contrast: %s" % ("On" if GameState.high_contrast else "Off")],
+		["color_blind", "Colour-blind: %s" % ("On" if GameState.color_blind else "Off")],
 		["large_text", "Large text: %s" % ("On" if GameState.large_text else "Off")],
 		["language", "Language: %s" % Loc.LANGUAGE_NAMES[Loc.language()]],
 		["day_night", "Day and night: %s" % shop_or("day_night", "On" if GameState.day_night else "Off")],

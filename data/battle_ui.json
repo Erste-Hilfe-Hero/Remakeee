@@ -12,5 +12,10 @@
  "blink_hz": 2.0,
  "trail_color": "e8a39a",
  "trail_delay": 0.35,
- "trail_time": 0.5
+ "trail_time": 0.5,
+ "colour_from_era": 2,
+ "command_colors": {"move": "c0392b", "swap": "3b6fd9", "item": "d6b02a", "bond": "3e9a4a", "run": "6a4256"},
+ "command_stripe": 2,
+ "matchup_colors": {"strong": "2e7d32", "weak": "a2502e", "none": "6a4256"},
+ "matchup_marks": {"strong": "+", "weak": "-", "none": "0"}
 }
