@@ -117,6 +117,7 @@ func _ready() -> void:
 		"toggle": _action_toggle,
 		"mirror": _action_mirror,
 		"first_voice": _action_first_voice,
+		"legend": _action_legend,
 	}
 	_world = WorldMechanics.new(self)
 	_build()
@@ -911,15 +912,29 @@ func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
 	var sd: SpirlingData = Database.species(args[0])
 	if sd == null:
 		return
-	var voice := Spirling.new(sd, int(args[1]) if args.size() > 1 else 40, GameState.rng)
+	await _fixed_meeting(sd, int(args[1]) if args.size() > 1 else 40, "The light sinks back under the water. It will rise again after you rest.")
+
+## "legend <species> <ring>": a one-time meeting with a legendary Spirling (FirstVoices.LEGENDS),
+## with the same rest-and-return rule as a First Voice.
+func _action_legend(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var ring: int = int(args[1]) if args.size() > 1 else int(FirstVoices.entry(sd.species_name).get("ring", 50))
+	await _fixed_meeting(sd, ring, "It slips away. It will be back here after you rest.")
+
+func _fixed_meeting(sd: SpirlingData, ring: int, gone_line: String) -> void:
+	var wild := Spirling.new(sd, ring, GameState.rng)
 	_text.visible = false
 	SaveManager.save_game()
-	await start_battle([voice] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
 	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
 	if FirstVoices.is_bonded(sd.species_name):
 		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
 	else:
-		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
+		await say([gone_line] as Array[String])
 
 ## Echo Cores that are ready wake into a Hallkind (item 185).
 func _wake_cores() -> void:

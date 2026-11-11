@@ -170,6 +170,16 @@
     "echo_radiant_lance"
    ],
    "rematch_after": "story_complete"
+  },
+  {
+   "id": "lumivane",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "sun_rift/lumivane",
+   "sprite": "first_voice",
+   "show_flag": "rift_sun_sealed",
+   "hide_flag": "first_voice_lumivane_away"
   }
  ],
  "signs": [

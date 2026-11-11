@@ -73,9 +73,11 @@ def chart_problems(chart, species):
             if min(off + dfn) >= 0 and max(off + dfn) > 0:
                 out.append("%s strictly dominates %s" % (a, b))
     used = {e for s in species for e in s["elements"]}
+    # Era II elements may sit on legendary (ancient) kinds only; those stay out of the sim.
+    common = {e for s in species if s.get("rarity") != "ancient" for e in s["elements"]}
     for t, v in types.items():
-        if v.get("era", 1) > 1 and t in used:
-            out.append("Era %d element %s is on a Spirling" % (v["era"], t))
+        if v.get("era", 1) > 1 and t in common:
+            out.append("Era %d element %s is on a non-legendary Spirling" % (v["era"], t))
     for e in used:
         if e not in types:
             out.append("Spirling element %s is not in the chart" % e)
@@ -237,7 +239,7 @@ def report(chart, sp, ty, problems):
     types = chart["types"]
     for t, v in types.items():
         weak = [o for o in types if t in types[o]["strong"] and o not in types[t]["strong"]]
-        wr = "%.1f %%" % (ty[t][0] * 100) if t in ty else "on no Spirling yet"
+        wr = "%.1f %%" % (ty[t][0] * 100) if t in ty else "legendaries only"
         lines.append("| %s | %s | %s | %s | %s |" % (t.capitalize(), "I" if v.get("era", 1) == 1 else "II",
             ", ".join(x.capitalize() for x in v["strong"] if t not in types[x]["strong"]), ", ".join(x.capitalize() for x in weak), wr))
     rates = [r for r, _, _ in sp.values()]

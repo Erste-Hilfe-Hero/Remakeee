@@ -45,11 +45,15 @@ func test_no_strict_dominance() -> void:
 				any_gt = any_gt or off > 0.0 or dfn > 0.0
 			assert_false(all_ge and any_gt, "%s strictly dominates %s" % [a, b])
 
-func test_era_two_elements_sit_on_no_spirling() -> void:
+func test_era_two_elements_sit_only_on_legendaries() -> void:
 	assert_true(_types.has("INK") and _types.has("ECHO"))
 	for t: String in ["INK", "ECHO"]:
 		assert_eq(int(_types[t].era), 2)
-		assert_false(Elements.E.has(t), "%s stays out of the Era I enum" % t)
+		assert_true(Elements.E.has(t), "%s is in the enum so legendaries can use it" % t)
+	for sd: SpirlingData in Database.spirlings.values():
+		for e: int in sd.elements:
+			if int(_types[Elements.E.keys()[e]].era) > 1:
+				assert_eq(sd.rarity, "ancient", "%s: Era II elements only on legendaries" % sd.species_name)
 
 func test_era_one_strong_matches_the_chart() -> void:
 	for e: int in Elements.E.values():

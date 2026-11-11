@@ -49,7 +49,7 @@ var symbol: String = ""
 var second_element: int = -1
 
 ## The 8x8 shape that stands for each element (heal motes, drain motes, field wave).
-const ELEMENT_SHAPES: Array[String] = ["spark", "drop", "leaf", "zag", "rock", "streak", "glint", "shade"]
+const ELEMENT_SHAPES: Array[String] = ["spark", "drop", "leaf", "zag", "rock", "streak", "glint", "shade", "shade", "glint"]
 var _rng := RandomNumberGenerator.new()
 static var _tex: Dictionary[String, Texture2D] = {}
 ## Phases played by the last play() call (tests).
@@ -280,6 +280,9 @@ func _draw_element() -> void:
 		Elements.E.GALE: _draw_gale()
 		Elements.E.LUMEN: _draw_lumen()
 		Elements.E.UMBRA: _draw_umbra()
+		# Era II elements borrow the closest Era I look until they get their own effects.
+		Elements.E.INK: _draw_umbra()
+		Elements.E.ECHO: _draw_lumen()
 
 func _element_shape() -> String:
 	return ELEMENT_SHAPES[clampi(element, 0, ELEMENT_SHAPES.size() - 1)]

@@ -39,7 +39,18 @@
    "facing": "down"
   }
  ],
- "npcs": [],
+ "npcs": [
+  {
+   "id": "zephyrel",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "wide_rift_edge/zephyrel",
+   "sprite": "first_voice",
+   "show_flag": "story_complete",
+   "hide_flag": "first_voice_zephyrel_away"
+  }
+ ],
  "signs": [
   {
    "x": 9,
