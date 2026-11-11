@@ -1153,6 +1153,7 @@ func _action_matchmaker(_args: PackedStringArray, _speaker: NPC) -> void:
 		Sound.sfx("confirm")
 		await say(["Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably."] as Array[String])
 		SaveManager.save_game()
+
 ## "informant": Whisper Moll sells tips on hidden gifts and wakes them (data/hidden_gifts.json).
 func _action_informant(_args: PackedStringArray, _speaker: NPC) -> void:
 	var d: Dictionary = HiddenGifts.data()
