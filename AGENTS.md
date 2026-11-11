@@ -68,7 +68,7 @@ tests/           GUT tests
 
 ## Game rules (implement exactly)
 
-**Elements (8).** Each beats 2 and loses to 2. Attacker strong → ×2; reverse direction → ×0.5; otherwise ×1. Lumen and Umbra beat each other, so that pair is ×1. Dual elements multiply. The chart lives in `scripts/core/Elements.gd`.
+**Elements (8).** Each beats 2 and loses to 2. Attacker strong → ×2; reverse direction → ×0.5; otherwise ×1. Lumen and Umbra beat each other, so that pair is ×1. Dual elements multiply. The chart lives in `data/type_chart.json` and `scripts/core/Elements.gd` reads it. Every element has at least 2 real strengths and 2 real weaknesses and none strictly dominates another (`tools/balance/type_sim.py`, `tests/unit/test_type_chart.gd`). Ink and Echo are prepared for Era II in the chart only and sit on no Spirling yet: Ink beats Ember, Tide, Bloom, Gale and loses to Volt, Stone, Lumen, Umbra; Echo is the reverse.
 
 | Element | Strong vs |
 | --- | --- |
