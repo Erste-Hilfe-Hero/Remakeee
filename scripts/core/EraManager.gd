@@ -7,13 +7,14 @@ signal era_changed(era: int)
 ## Emitted when a new region unlocks a newer era (item 48); the overworld shows a line for it.
 signal era_unlocked(era: int)
 
-enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4 }
+enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4, LIVING = 5 }
+const NEWEST: int = Era.LIVING
 ## The whole story (all four regions) stays Era I. Era II opens after the finale and is the
-## look of the post-game region; later eras arrive with their own new regions.
-const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK}
+## look of the post-game region Vellmarch (data/region2.json); later eras arrive with their own new regions.
+const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK, "vellmarch": Era.WASH}
 const STORY_COMPLETE_FLAG: String = "story_complete"
-const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480)}
-const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96}
+const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480), Era.LIVING: Vector2i(270, 480)}
+const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96, Era.LIVING: 96}
 ## Era I: four cartographer's inks on parchment (original values, darkest to lightest). Deliberately
 ## not the green four-shade look of old handheld screens.
 const INK_PALETTE: Array[Color] = [Color("2a1e2c"), Color("6a4256"), Color("c48a5e"), Color("f2e3c2")]
@@ -21,8 +22,8 @@ const FILTER_LAYER: int = 100
 const PALETTE_SHADER: Shader = preload("res://shaders/palette_filter.gdshader")
 
 var unlocked_era: int = Era.INK
-## The Era I inks on screen now: a region's own four (data/looks) or INK_PALETTE.
-var ink: Array[Color] = INK_PALETTE.duplicate()
+## Region of the map on screen; picks the Era I inks (RegionLook), e.g. Corvane's dye fens.
+var current_region: String = ""
 var retro_filter: int = 0   # 0 = use newest unlocked era
 
 var _filter_layer: CanvasLayer
@@ -38,7 +39,7 @@ func _ready() -> void:
 	var mat := ShaderMaterial.new()
 	mat.shader = PALETTE_SHADER
 	_filter_rect.material = mat
-	_set_ink(ink)
+	_apply_inks()
 	_filter_layer.add_child(_filter_rect)
 	_apply()
 
@@ -50,9 +51,27 @@ const ERA_LINES: Dictionary[int, String] = {
 	Era.WASH: "The last line of the map is drawn. The ink runs and spreads, and the world fills with colour!",
 	Era.ETCHED: "The air grows sharper. Every leaf and stone shows more detail!",
 	Era.PANORAMA: "The map unrolls wider than ever. The whole horizon opens before you!",
+	Era.LIVING: BattleAnim.UNLOCK_LINE,
 }
 const TRANSITION_TIME: float = 0.9
 var _wipe: ColorRect
+
+## The four Era I inks on screen for [param region]: its own look or the base Ink palette.
+func inks_for(region: String) -> Array[Color]:
+	var own: Array[Color] = RegionLook.palette(region)
+	return own if own.size() == INK_PALETTE.size() else INK_PALETTE
+
+## Called when a map of [param region] is shown; swaps the screen inks to that region's look.
+func set_region(region: String) -> void:
+	current_region = region
+	_apply_inks()
+
+func _apply_inks() -> void:
+	if _filter_rect == null:
+		return
+	var inks: Array[Color] = inks_for(current_region)
+	for i: int in inks.size():
+		_filter_rect.material.set_shader_parameter("c%d" % i, inks[i])
 
 func unlock_region(region: String) -> void:
 	unlock_era(REGION_ERA.get(region, Era.INK))
@@ -61,6 +80,41 @@ func unlock_region(region: String) -> void:
 func unlock_story_end(story_complete: bool) -> void:
 	if story_complete:
 		unlock_era(Era.WASH)
+
+const ERAS_PATH: String = "res://data/eras.json"
+
+## Era number -> story flag that opens it (data/eras.json "unlock_flags"): Era II after the
+## story finale, Era III after the Era II post-game finale.
+static func unlock_flags() -> Dictionary:
+	var f: FileAccess = FileAccess.open(ERAS_PATH, FileAccess.READ)
+	if f == null:
+		return {}
+	var d: Variant = JSON.parse_string(f.get_as_text())
+	return d.get("unlock_flags", {}) if d is Dictionary else {}
+
+## data/eras.json "finale_flags": era flag -> the content flag whose finale sets it (Era II
+## finale = Vellmarch chapter 5). Sets each era flag once its source flag is set.
+static func mark_finales(flags: Dictionary) -> void:
+	var f: FileAccess = FileAccess.open(ERAS_PATH, FileAccess.READ)
+	if f == null:
+		return
+	var d: Variant = JSON.parse_string(f.get_as_text())
+	if not d is Dictionary:
+		return
+	var m: Dictionary = d.get("finale_flags", {})
+	for era_flag: String in m:
+		if bool(flags.get(str(m[era_flag]), false)):
+			flags[era_flag] = true
+
+## Unlocks every era whose flag is set. Eras open in order: a later flag does nothing while
+## an earlier era is still locked.
+func unlock_from_flags(has_flag: Callable) -> void:
+	var flags: Dictionary = unlock_flags()
+	for e: int in range(Era.WASH, NEWEST + 1):
+		var flag: String = str(flags.get(str(e), ""))
+		if flag.is_empty() or not has_flag.call(flag) or unlocked_era < e - 1:
+			return
+		unlock_era(e)
 
 ## Raises unlocked_era to [param e]; never lowers it (older saves keep their era).
 func unlock_era(e: int) -> void:
@@ -109,7 +163,7 @@ func species_era(species: String) -> int:
 	var sd: SpirlingData = Database.species(species)
 	if sd == null:
 		sd = Database.species(species.capitalize())
-	return clampi(sd.era, Era.INK, Era.PANORAMA) if sd != null else Era.INK
+	return clampi(sd.era, Era.INK, NEWEST) if sd != null else Era.INK
 
 ## Sprite for [param species] in the species' own era (not the world era), falling back to
 ## older eras when a file is missing.
@@ -129,11 +183,29 @@ func art_path_from(rel: String, start: int) -> String:
 			return path
 	return ""
 
+## Era IV render path (design plan 331-333): from Panorama on, battles stand on the 2.5D stage.
+const STAGE_25D_FROM: int = Era.PANORAMA
+const STAGE_PATH: String = "res://data/era4_stage.json"
+var _stage_cfg: Dictionary = {}
+
+func uses_stage_25d() -> bool:
+	return active_era() >= STAGE_25D_FROM
+
+## data/era4_stage.json, loaded once.
+func stage_config() -> Dictionary:
+	if _stage_cfg.is_empty():
+		var f: FileAccess = FileAccess.open(STAGE_PATH, FileAccess.READ)
+		if f != null:
+			var d: Variant = JSON.parse_string(f.get_as_text())
+			if d is Dictionary:
+				_stage_cfg = d
+	return _stage_cfg
+
 func to_dict() -> Dictionary:
 	return {"unlocked_era": unlocked_era, "retro_filter": retro_filter}
 
 func from_dict(d: Dictionary) -> void:
-	unlocked_era = clampi(int(d.get("unlocked_era", Era.INK)), Era.INK, Era.PANORAMA)
+	unlocked_era = clampi(int(d.get("unlocked_era", Era.INK)), Era.INK, NEWEST)
 	retro_filter = clampi(int(d.get("retro_filter", 0)), 0, unlocked_era)
 	_apply()
 
@@ -145,22 +217,6 @@ func _apply() -> void:
 		_filter_rect.visible = era == Era.INK
 	_clear_art_caches()
 	era_changed.emit(era)
-
-## Switches the Era I filter to [param region]'s own four inks, or back to INK_PALETTE.
-func set_region_ink(region: String) -> void:
-	var out: Array[Color] = INK_PALETTE.duplicate()
-	var raw: Array = TilesetFactory.look(region).get("ink", [])
-	if raw.size() == INK_PALETTE.size():
-		for i: int in raw.size():
-			out[i] = Color(str(raw[i]))
-	_set_ink(out)
-
-func _set_ink(p: Array[Color]) -> void:
-	ink = p
-	if _filter_rect == null:
-		return
-	for i: int in p.size():
-		(_filter_rect.material as ShaderMaterial).set_shader_parameter("c%d" % i, p[i])
 
 func _clear_art_caches() -> void:
 	TilesetFactory.clear_cache()

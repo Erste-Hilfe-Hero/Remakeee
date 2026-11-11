@@ -1,0 +1,50 @@
+{
+  "_comment": "Era I look per region (world area, Act II: Corvane gets its own world). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, which reads this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette.",
+  "regions": {
+    "corvane": {
+      "biome": "dye_fen",
+      "palette": [
+        "151c2e",
+        "3f6280",
+        "8fb09a",
+        "e2ead8"
+      ],
+      "props": [
+        "boardwalk",
+        "fen_water",
+        "dye_willow",
+        "sedge",
+        "woad",
+        "cattails",
+        "dye_silt",
+        "wattle_hurdle",
+        "stake_sign",
+        "dye_vat",
+        "fen_lantern"
+      ],
+      "arrive": "The ink turns blue here. Corvane dyes everything, even the truth."
+    },
+    "ashmere": {
+      "biome": "ashfield",
+      "palette": [
+        "1b1719",
+        "7e3322",
+        "a39886",
+        "e9e3d3"
+      ],
+      "props": [
+        "ash_ground",
+        "char_brush",
+        "dead_snag",
+        "brine_pool",
+        "salt_spikes",
+        "cinder_scree",
+        "slag_heap",
+        "brazier",
+        "basalt_columns",
+        "ember_bloom"
+      ],
+      "arrive": "The ink goes grey here. Ashmere burned once and still smells like it owes you money."
+    }
+  }
+}

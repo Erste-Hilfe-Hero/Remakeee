@@ -14,7 +14,7 @@ func before_all() -> void:
 func after_all() -> void:
 	EraManager.unlocked_era = _era
 	EraManager.set_retro_filter(_retro)
-	EraManager.set_region_ink("")
+	EraManager.set_region("")
 
 func _set_era(e: int) -> void:
 	EraManager.unlocked_era = e
@@ -35,7 +35,7 @@ func test_newer_era_keeps_its_own_shared_atlas() -> void:
 	_set_era(EraManager.Era.INK)
 
 func test_ashmere_inks_are_four_and_ordered_dark_to_light() -> void:
-	var ink: Array = TilesetFactory.look("ashmere").ink
+	var ink: Array = RegionLook.look("ashmere").palette
 	assert_eq(ink.size(), 4)
 	var last: float = -1.0
 	for h: Variant in ink:
@@ -44,11 +44,10 @@ func test_ashmere_inks_are_four_and_ordered_dark_to_light() -> void:
 		last = l
 
 func test_region_ink_switches_and_falls_back() -> void:
-	EraManager.set_region_ink("ashmere")
-	assert_eq(EraManager.ink[1], Color(str(TilesetFactory.look("ashmere").ink[1])))
-	assert_ne(EraManager.ink, EraManager.INK_PALETTE)
-	EraManager.set_region_ink("veydal")
-	assert_eq(EraManager.ink, EraManager.INK_PALETTE)
+	assert_eq(EraManager.inks_for("ashmere")[1], Color(str(RegionLook.look("ashmere").palette[1])))
+	assert_ne(EraManager.inks_for("ashmere"), EraManager.inks_for("corvane"))
+	assert_eq(EraManager.inks_for("solenne"), EraManager.INK_PALETTE)
+	assert_false(RegionLook.arrive_line("ashmere").is_empty())
 
 func test_ashmere_maps_carry_ash_props_and_stay_connected() -> void:
 	for id: String in ASH_MAPS:

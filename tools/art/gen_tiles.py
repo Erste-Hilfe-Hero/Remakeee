@@ -543,6 +543,11 @@ VARIANT_ROWS = 16
 
 
 def build_tiles(path_out: str) -> None:
+    make_tiles().save(path_out)
+
+
+def make_tiles() -> Canvas:
+    """The base Era I atlas as palette indices (other region looks start from it)."""
     c = Canvas(T * len(KINDS), T * VARIANT_ROWS)
     for v in range(VARIANT_ROWS):
         oy = v * T
@@ -608,7 +613,7 @@ def build_tiles(path_out: str) -> None:
                 vines(c, ox, oy, 15)
             elif name == "PLANK":
                 plank_gap(c, ox, oy)
-    c.save(path_out)
+    return c
 
 
 # --- Characters ------------------------------------------------------------------------

@@ -59,9 +59,6 @@ const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, 
 
 ## One TileSet per atlas path, so each act can have its own world look.
 static var _tilesets: Dictionary[String, TileSet] = {}
-## Per-region Era I inks (data/looks/<region>.json); Act III Ashmere has its own four.
-const LOOKS_PATH: String = "res://data/looks/%s.json"
-static var _looks: Dictionary = {}
 static var _has_atlas: bool = false
 
 static func kind_for(ch: String) -> int:
@@ -69,16 +66,6 @@ static func kind_for(ch: String) -> int:
 
 static func is_solid(kind: int) -> bool:
 	return kind in SOLID
-
-## The look of [param region], or {} when it has none.
-static func look(region: String) -> Dictionary:
-	if not _looks.has(region):
-		var d: Variant = null
-		var path: String = LOOKS_PATH % region
-		if not region.is_empty() and FileAccess.file_exists(path):
-			d = JSON.parse_string(FileAccess.get_file_as_string(path))
-		_looks[region] = d if d is Dictionary else {}
-	return _looks[region]
 
 ## Shared atlas, or the act's own "tiles/overworld_<region>.png" when [param region] has one.
 static func atlas_path(region: String = "") -> String:

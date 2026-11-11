@@ -2,7 +2,7 @@
 salt spikes, cinder scree, slag heaps, braziers and basalt cliffs in Ashmere's own four inks.
 Buildings keep the shared Era I shapes. Same layout as gen_tiles.py.
 
-Writes art/era1/tiles/overworld_ashmere.png. Inks come from data/looks/ashmere.json.
+Writes art/era1/tiles/overworld_ashmere.png. Inks come from data/region_looks.json.
 Run: python3 tools/art/gen_tiles_ashmere.py (from the repo root).
 """
 from __future__ import annotations
@@ -166,8 +166,8 @@ def basalt(c: Canvas, ox: int, oy: int, mask: int) -> None:
 
 
 def main() -> None:
-    look = json.load(open(os.path.join(ROOT, "data", "looks", "ashmere.json")))
-    px.PALETTE = [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in look["ink"]]
+    look = json.load(open(os.path.join(ROOT, "data", "region_looks.json")))["regions"]["ashmere"]
+    px.PALETTE = [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in look["palette"]]
     g.grass, g.tall_grass, g.tree, g.water = ash, char_brush, dead_snag, brine
     g.flower, g.reeds, g.scree, g.rock = ember_bloom, salt_spikes, cinder_scree, slag_heap
     g.lamp, g.cliff = brazier, basalt

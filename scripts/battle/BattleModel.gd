@@ -63,6 +63,8 @@ var _partner_slot: int = -1
 var foe_boss: String = ""
 ## Extra Energy the foe side gains at the end of the first turn (Rift-Born, item 749).
 var foe_turn1_energy: int = 0
+## Ink Oath sworn this battle, per side (once per battle each).
+var oath_used: Array[bool] = [false, false]
 ## Energy each side starts without (Tailwind on Story cuts the foe's, item 737).
 var start_energy_cut: Array[int] = [0, 0]
 ## Warden Weakener (shop items 4885, 4889): the foe team starts with this share of its Vigor.
@@ -354,7 +356,16 @@ func is_legal(a: BattleAction) -> bool:
 			return a.item_id.is_empty() or int(inventory.get(a.item_id, 0)) > 0
 		BattleAction.Kind.RUN:
 			return a.side == Side.PLAYER and is_wild and not is_partner_slot(a.side, a.slot)
+		BattleAction.Kind.OATH:
+			return can_oath(a.side, a.slot)
 	return false
+
+## True while the Spirling in [param slot] may swear the Ink Oath: once per battle and side,
+## only against another Wayfarer, never by a partner. Kept out of legal_actions() so the AI and
+## the balance runs play as before; the command menu offers it in the Bond button's place.
+func can_oath(side: int, slot: int = 0) -> bool:
+	return not is_wild and not oath_used[side] and not is_partner_slot(side, slot) \
+		and is_standing(active_spirling(side, slot)) and not BattleRules.oath().is_empty()
 
 # --- Commands ----------------------------------------------------------------
 
@@ -828,6 +839,7 @@ func _phase_execute_action() -> void:
 		BattleAction.Kind.ITEM: _do_item(a)
 		BattleAction.Kind.BOND: _do_bond(a)
 		BattleAction.Kind.RUN: _do_run(a)
+		BattleAction.Kind.OATH: _do_oath(a)
 
 func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
@@ -938,6 +950,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 	for rdiv: int in [regen, held_regen, field_regen]:
 		if rdiv > 0 and s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / rdiv), slot)
+	_oath_tick(side, slot, s)
 	if s.mend_turns > 0:
 		s.mend_turns -= 1
 		if s.hp < s.max_hp():
@@ -1156,6 +1169,31 @@ func _do_move(a: BattleAction) -> void:
 			if effect != null:
 				effect.apply(ctx, fx)
 		self_done = true
+
+func _do_oath(a: BattleAction) -> void:
+	if not can_oath(a.side, a.slot):
+		return
+	var o: Dictionary = BattleRules.oath()
+	oath_used[a.side] = true
+	# +1 because the end of this very turn already counts one down.
+	a.actor.oath_turns = int(o.get("turns", 3)) + 1
+	emit_event(BattleEvent.Type.OATH, _who(a.side, a.slot))
+	for stat: String in o.get("stages", {}):
+		change_stage(a.side, stat, int(o.stages[stat]), a.slot)
+	change_energy(a.side, int(o.get("energy", 0)), a.slot)
+
+func _oath_tick(side: int, slot: int, s: Spirling) -> void:
+	if s.oath_turns <= 0:
+		return
+	s.oath_turns -= 1
+	if s.oath_turns > 0:
+		return
+	var d: Dictionary = _who(side, slot)
+	d["due"] = true
+	emit_event(BattleEvent.Type.OATH, d)
+	var debt: Dictionary = BattleRules.oath().get("debt", {})
+	for stat: String in debt:
+		change_stage(side, stat, int(debt[stat]), slot)
 
 func _do_rest(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.REST, _who(a.side, a.slot))

@@ -1,0 +1,21 @@
+# German texts for daily bounties and the certificate (data/bounties.json, scripts/core/Bounties.gd).
+T = {
+"Velvet Tam": "Samt-Tam",
+"Half-Ear Osk": "Halbohr-Osk",
+"Mother Greel": "Mutter Greel",
+"The Accountant": "Der Buchhalter",
+"Lucky Brannoch": "Glücks-Brannoch",
+"Quiet Wenna": "Stille Wenna",
+"Sold the same alley to three gangs. Twice.": "Hat dieselbe Gasse an drei Banden verkauft. Zweimal.",
+"Borrowed the Fixer's cart. Returned the wheels.": "Hat sich den Karren vom Fixer geliehen. Die Räder kamen zurück.",
+"Runs a soup kitchen. The soup is evidence.": "Führt eine Suppenküche. Die Suppe ist Beweismaterial.",
+"Knows where the money went. All of it.": "Weiß, wo das Geld hin ist. Alles davon.",
+"Nobody is that lucky. Check his sleeves.": "So viel Glück hat keiner. Check mal seine Ärmel.",
+"Said nothing to the wardens. That is the problem.": "Hat den Wächtern nichts gesagt. Genau das ist das Problem.",
+"This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "Dieses Papier sagt, du hast alles gemacht. Rahm es ein. Bis Donnerstag will es einer fälschen.",
+"Signed by the Fixer, witnessed by a man who swears he was never here.": "Unterschrieben vom Fixer, bezeugt von einem Mann, der schwört, nie hier gewesen zu sein.",
+"WANTED: %s, ring %d, %d coins": "GESUCHT: %s, Ring %d, %d Münzen",
+"(tipped off, watch your back)": "(gewarnt, pass auf deinen Rücken auf)",
+"Certificate of Completion": "Abschluss-Urkunde",
+"Issued to %s, who did everything.": "Ausgestellt für %s, die Person, die alles gemacht hat.",
+}

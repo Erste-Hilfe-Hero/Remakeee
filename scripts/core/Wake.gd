@@ -18,7 +18,10 @@ static func data() -> Dictionary:
 	return _data
 
 static func held_today(day: String) -> bool:
-	return str(GameState.records.get(DAY, "")) == day
+	# A day at or before the last show counts as held, so turning the clock back gives no
+	# extra prize (plan 1379).
+	var last: String = str(GameState.records.get(DAY, ""))
+	return last != "" and day <= last
 
 static func wins() -> int:
 	return int(GameState.records.get(WINS, 0))

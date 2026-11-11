@@ -57,7 +57,14 @@ static func check(offers: Array[Dictionary]) -> Array[String]:
 					errs.append(where + ": choice grant without a choice list (chosen before buying, item 4688)")
 				var gid: String = str((g as Dictionary).get("id", "")) if g is Dictionary else ""
 				if gid != "" and Database.species(gid) != null:
-					errs.append(where + ": Spirlings are never sold (rule 7)")
+					errs.append(where + ": a Spirling is sold only as a \"spirling\" grant")
+				elif g is Dictionary and str(g.t) == "spirling":
+					if Database.species(str(g.get("species", ""))) == null:
+						errs.append(where + ": spirling grant names no species in spirlings.json")
+					if int(g.get("level", 0)) < 1 or int(g.get("level", 0)) > Spirling.MAX_LEVEL:
+						errs.append(where + ": spirling grant needs a level from 1 to the Ring cap")
+					if str(o.get("store_type", "")) != "non_consumable" or int((o.get("limit", {}) as Dictionary).get("n", 0)) != 1:
+						errs.append(where + ": a Spirling offer is non_consumable and once per account")
 				elif bool(o.get("ready", false)) and g is Dictionary and str(g.t) == "item" and Database.item(gid).is_empty():
 					errs.append(where + ": ready offer grants %s, which is no item in items.json" % gid)
 		if str(o.get("kind", "")) in ["cosmetic", "comfort"]:

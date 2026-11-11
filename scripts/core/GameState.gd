@@ -1035,10 +1035,14 @@ static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
 
 ## Pays [param coins] from townsfolk [param who] once per day (story var "tip_<who>" holds the
-## last day). Returns the coins paid, 0 when [param who] already paid today.
-func pay_tip(who: String, coins: int, day: int = today()) -> int:
+## last day). Returns the coins paid, 0 when [param who] already paid today. The day comes from
+## the server clock, and a day before the stored one pays nothing (plan 1379: turning the phone
+## clock back and forth gives no extra tips).
+func pay_tip(who: String, coins: int, day: int = -1) -> int:
+	if day < 0:
+		day = int(Online.unix_now() / 86400.0)
 	var key: String = "tip_" + who
-	if coins <= 0 or int(story_vars.get(key, -1)) == day:
+	if coins <= 0 or day <= int(story_vars.get(key, -1)):
 		return 0
 	story_vars[key] = day
 	money += coins
@@ -1381,7 +1385,7 @@ func _load_boxes(d: Dictionary) -> void:
 	for p: Variant in (pr if pr is Array else []):
 		if p is Dictionary and (p as Dictionary).get("uids") is Array and team_presets.size() < TEAM_PRESETS:
 			var uids: Array = ((p as Dictionary).uids as Array).map(func(x: Variant) -> String: return str(x))
-			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY)})
+			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY + 1)})
 	# Old saves had one flat list: spread it over the boxes in order.
 	var fill: Array[int] = []
 	fill.resize(storage_boxes.size())
@@ -1509,7 +1513,7 @@ func _find_uid(u: String) -> Spirling:
 ## Loads preset [param slot] with one tap at a spring: members come out of storage, the rest
 ## rests. Never leaves the team without a healthy member and never overfills storage.
 func load_preset(slot: int) -> bool:
-	var team: Array[Spirling] = preset_team(slot)
+	var team: Array[Spirling] = preset_team(slot).slice(0, party_max())
 	if team.is_empty():
 		return false
 	var healthy: bool = false

@@ -82,3 +82,7 @@ Antworten stehen in `docs/legal/STORE_COMPLIANCE.md`:
       `family_shareable` in `store/products.json` steht darum auf `false`.
 - [ ] Bei Apple **keine „Promoted In-App Purchases“** einschalten (Käufe sollen nur im Spiel mit Erklärung
       erscheinen, Plan 4083).
+- [ ] **Neu seit 11. 11. 2026 (Pay-to-win Schritt 2):** 7 weitere Produkte anlegen, je 19,99 €,
+      Apple Non-Consumable / Google einmaliges Produkt: `de.chimora.game.spirling.velahra`,
+      `.hallowmur`, `.scriptorax`, `.lumivane`, `.zephyrel`, `.monolurk`, `.vorlucent`. Texte EN/DE
+      stehen in `store/products.json`; Liste auch in `docs/MONETIZATION.md` (Schritt 2).

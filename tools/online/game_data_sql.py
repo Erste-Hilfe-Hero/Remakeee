@@ -82,6 +82,15 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('trade_items', $game$"
               + json.dumps(trade).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # League ranks (Online 100, points 12-13, 16-20): data/league_ranks.json as server_config.league_ranks.
+    ranks_path = os.path.join(folder, "league_ranks.json")
+    if os.path.exists(ranks_path):
+        with open(ranks_path, encoding="utf-8") as f:
+            ranks = json.load(f)
+        ranks.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('league_ranks', $game$"
+              + json.dumps(ranks).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     print("commit;")
 
 

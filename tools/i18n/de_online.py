@@ -374,7 +374,7 @@ T = {
 "Open the gift": "Geschenk öffnen",
 "That Spirling is not in your journey any more.": "Dieser Spirling ist nicht mehr auf deiner Reise.",
 "Take its Keepsake off first.": "Nimm ihm zuerst sein Andenken ab.",
-"Spirlings with a Gleam, a Power Core or crystals stay with you.": "Spirlings mit Glanzform, Kraftkern oder Kristallen bleiben bei dir.",
+"Spirlings with a Gleam, a Power Core or crystals, and Spirlings from the shop, stay with you.": "Spirlings mit Glanzform, Kraftkern oder Kristallen und Spirlings aus dem Shop bleiben bei dir.",
 "Favourites stay with you. Remove the mark first.": "Lieblinge bleiben bei dir. Nimm zuerst die Markierung weg.",
 "Your team needs at least one Spirling.": "Dein Team braucht mindestens einen Spirling.",
 "Up to 3 Spirlings per trade.": "Bis zu 3 Spirlings pro Tausch.",
