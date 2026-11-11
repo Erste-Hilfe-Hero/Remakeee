@@ -27,6 +27,7 @@ def read_state():
     names |= set(re.findall(r'^application/short_version="([^"]*)"$', presets, re.M))
     client = re.findall(r"^const CLIENT_VERSION: int = (\d+)$", online, re.M)
     codes |= set(client)
+    names |= set(re.findall(r'^const CLIENT_VERSION_NAME: String = "([^"]*)"$', online, re.M))
     return presets, online, codes, names
 
 
@@ -56,6 +57,7 @@ def main():
     presets = re.sub(r'^version/name="[^"]*"$', 'version/name="%s"' % name, presets, flags=re.M)
     presets = re.sub(r'^application/short_version="[^"]*"$', 'application/short_version="%s"' % name, presets, flags=re.M)
     online = re.sub(r"^const CLIENT_VERSION: int = \d+$", "const CLIENT_VERSION: int = %d" % code, online, flags=re.M)
+    online = re.sub(r'^const CLIENT_VERSION_NAME: String = "[^"]*"$', 'const CLIENT_VERSION_NAME: String = "%s"' % name, online, flags=re.M)
     open(PRESETS, "w", encoding="utf-8").write(presets)
     open(ONLINE, "w", encoding="utf-8").write(online)
     print("version %s (%d) set in export_presets.cfg and Online.gd" % (name, code))
