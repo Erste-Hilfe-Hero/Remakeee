@@ -140,7 +140,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 92 | Sirocat | Gale | uncommon | striker | slick | 400 | Siroclaw (ring 36) |
 | 93 | Siroclaw | Gale | shy | striker | slick | 500 | - |
 | 94 | Scaldasp | Ember | common | kindler | kindling | 317 | Scaldcoil (ring 16) |
-| 95 | Scaldcoil | Ember | uncommon | kindler | kindling | 454 | Scaldrahn (ring 34) |
+| 95 | Scaldcoil | Ember | uncommon | kindler | kindling | 445 | Scaldrahn (ring 34) |
 | 96 | Scaldrahn | Ember | shy | kindler | kindling | 515 | - |
 | 97 | Noonpip | Lumen/Gale | common | vanguard | surge | 312 | Noonwhist (ring 17) |
 | 98 | Noonwhist | Lumen/Gale | uncommon | vanguard | surge | 424 | Noonsoral (ring 36) |
@@ -188,7 +188,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 140 | Chirrik | Gale/Bloom | uncommon | striker | slick | 276 | Chirrikade (ring 27) |
 | 141 | Chirrikade | Gale/Bloom | shy | striker | slick | 426 | - |
 | 142 | Brinewhorl | Tide/Stone | uncommon | weaver | steady | 420 | - |
-| 143 | Gyrevult | Umbra/Gale | uncommon | striker | last_stand | 396 | - |
+| 143 | Gyrevult | Umbra/Gale | uncommon | striker | last_stand | 375 | - |
 | 144 | Heliodrop | Ember | uncommon | kindler | kindling | 437 | - |
 | 145 | Duskmirrah | Umbra/Lumen | uncommon | weaver | deep_roots | 390 | - |
 <!-- /lines:solenne -->

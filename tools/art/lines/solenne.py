@@ -68,7 +68,7 @@ LINES = [
     L(id="brinewhorl", names=["Brinewhorl"], elements=["TIDE", "STONE"], role="weaver",
       art=dict(plan="shell", tones=("light", "mid", "dark"), horn="twin", horn_tone="mid", extras=("shellpat",),
                back="crystals", back_n=4, eye="small")),
-    L(id="gyrevult", names=["Gyrevult"], elements=["UMBRA", "GALE"], role="striker", power=0.93,
+    L(id="gyrevult", names=["Gyrevult"], elements=["UMBRA", "GALE"], role="striker", power=0.88,
       art=dict(plan="bird", tones=("dark", "mid", "light"), tail="plume", extras=("wing",), crest=2, crest_tone="light",
                eye="glow", size=1)),
     L(id="heliodrop", names=["Heliodrop"], elements=["EMBER"], role="kindler", cover="LUMEN",

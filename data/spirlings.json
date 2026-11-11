@@ -5345,11 +5345,11 @@
   "line_id": "scaldasp",
   "era": 1,
   "base": {
-   "hp": 83,
-   "atk": 83,
-   "foc": 115,
-   "spd": 103,
-   "def": 70
+   "hp": 82,
+   "atk": 81,
+   "foc": 112,
+   "spd": 101,
+   "def": 69
   },
   "trait": "kindling",
   "learnset": {
@@ -8290,11 +8290,11 @@
   "line_id": "gyrevult",
   "era": 1,
   "base": {
-   "hp": 65,
-   "atk": 100,
-   "foc": 67,
-   "spd": 106,
-   "def": 58
+   "hp": 62,
+   "atk": 95,
+   "foc": 63,
+   "spd": 100,
+   "def": 55
   },
   "trait": "last_stand",
   "learnset": {
