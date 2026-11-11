@@ -391,5 +391,33 @@
   "ai": 2,
   "money": 1200,
   "lose": "clans/ambush_lose"
+ },
+ "veil_factor": {
+  "trainer": "Brass Veil Factor Lusk",
+  "team": [
+   {
+    "species": "Mendlace",
+    "level": 37
+   },
+   {
+    "species": "Scrivane",
+    "level": 37
+   },
+   {
+    "species": "Obsidroth",
+    "level": 38
+   },
+   {
+    "species": "Burinox",
+    "level": 38
+   }
+  ],
+  "ai": 3,
+  "money": 2200,
+  "defeat": "ochrewell/factor_defeat",
+  "lose": "ochrewell/factor_lose",
+  "win_flags": [
+   "veil_factor_beaten"
+  ]
  }
 }

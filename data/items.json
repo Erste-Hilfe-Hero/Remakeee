@@ -358,6 +358,33 @@
   "tradeable": false
  },
  {
+  "id": "echo_squall",
+  "name": "Echo Crystal: Squall",
+  "description": "Teaches Squall to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Squall",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_dawn_mend",
+  "name": "Echo Crystal: Dawn Mend",
+  "description": "Teaches Dawn Mend to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Dawn Mend",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_radiant_lance",
+  "name": "Echo Crystal: Radiant Lance",
+  "description": "Teaches Radiant Lance to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Radiant Lance",
+  "price": 3000,
+  "tradeable": false
+ },
+ {
   "id": "echo_scatter_gale",
   "name": "Echo Crystal: Scatter Gale",
   "description": "Teaches Scatter Gale to any Spirling. Never used up.",

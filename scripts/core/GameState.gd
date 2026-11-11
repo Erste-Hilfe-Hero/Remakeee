@@ -4,7 +4,7 @@ extends Node
 ## Difficulty, picked at new game. Rift-Born adds the Master AI (tier 3).
 enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
 ## Level cap per Rift sealed (Veteran + Rift-Born only).
-const LEVEL_CAPS: Array[int] = [12, 15, 18, 23, 28, 32, 36, 40, 44, 50]
+const LEVEL_CAPS: Array[int] = [12, 15, 18, 23, 28, 32, 36, 40, 44, 50, 54, 57, 60]
 const AI_LEVELS: Array[int] = [0, 1, 2, 3]
 ## Plan area 2, items 726-728: Wayfarer Spark in every stat, ring shift of a shared team, and the
 ## share of damage foes deal, per difficulty (Story, Tamer, Veteran, Rift-Born).
@@ -218,9 +218,9 @@ var known_matchups: Dictionary = {}
 
 ## Mended Rifts needed before the storage box opens from the menu (end of Act I).
 const RIFTS_FOR_STORAGE: int = 2
-## Every story Rift in story order (owner decision 2026-11-10: twelve Rifts, the three of
-## Solenne follow). The Undrawn opens once all of them and every Rift heart are mended.
-const STORY_RIFTS: Array[String] = ["cinder", "mist", "tide", "rain", "mirror", "root", "kiln", "glass", "shade"]
+## Every story Rift in story order (owner decision 2026-11-10: twelve Rifts, the last three in
+## Solenne, Act IV). The Undrawn opens once all of them and every Rift heart are mended.
+const STORY_RIFTS: Array[String] = ["cinder", "mist", "tide", "rain", "mirror", "root", "kiln", "glass", "shade", "tower", "oasis", "sun"]
 ## The Rifts of Veydal: once all are mended, Kestra waits at the dock (flag VEYDAL_RIFTS_FLAG).
 const VEYDAL_RIFTS: Array[String] = ["cinder", "mist", "tide"]
 const VEYDAL_RIFTS_FLAG: String = "veydal_rifts_mended"

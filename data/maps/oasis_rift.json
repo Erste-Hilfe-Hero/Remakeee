@@ -1,0 +1,244 @@
+{
+ "name": "Oasis Rift",
+ "region": "solenne",
+ "biome": "rift",
+ "backdrop": "field",
+ "field": "high_tide",
+ "encounters": "oasis_rift",
+ "heal_point": [
+  6,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^~~,,....^_^",
+  "^~~...o..^_^",
+  "^,,....S.^_^",
+  "^^^^..^^^^_^",
+  "^~~......^_^",
+  "^~~.,,,..^_^",
+  "^...,,,.S^_^",
+  "^.S......^_^",
+  "^~~......^_^",
+  "^^^^..^^^^_^",
+  "^,,......^_^",
+  "^,,...~~.^_^",
+  "^S....~~.^_^",
+  "^.......S^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.,,....,,.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "ochrewell",
+   "tx": 10,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "ochrewell",
+   "tx": 10,
+   "ty": 9,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "noor",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "oasis_rift/noor",
+   "sprite": "warden",
+   "trainer": "Rift Acolyte Noor",
+   "intro": "oasis_rift/noor_intro",
+   "defeat": "oasis_rift/noor_defeat",
+   "money": 1850,
+   "team": [
+    {
+     "species": "Kelpup",
+     "level": 36
+    },
+    {
+     "species": "Lumenewt",
+     "level": 36
+    },
+    {
+     "species": "Kelphound",
+     "level": 36
+    }
+   ]
+  },
+  {
+   "id": "hollis",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "oasis_rift/hollis",
+   "sprite": "villager",
+   "trainer": "Water Clerk Hollis",
+   "intro": "oasis_rift/hollis_intro",
+   "defeat": "oasis_rift/hollis_defeat",
+   "money": 1880,
+   "team": [
+    {
+     "species": "Brinelet",
+     "level": 36
+    },
+    {
+     "species": "Saltspire",
+     "level": 37
+    },
+    {
+     "species": "Kelphound",
+     "level": 36
+    }
+   ]
+  },
+  {
+   "id": "suni",
+   "x": 7,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "oasis_rift/suni",
+   "sprite": "villager",
+   "trainer": "Date Picker Suni",
+   "intro": "oasis_rift/suni_intro",
+   "defeat": "oasis_rift/suni_defeat",
+   "money": 1900,
+   "team": [
+    {
+     "species": "Kelphound",
+     "level": 37
+    },
+    {
+     "species": "Frondmere",
+     "level": 37
+    },
+    {
+     "species": "Ferrowyn",
+     "level": 37
+    }
+   ]
+  },
+  {
+   "id": "warden_kaia",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "oasis_rift/kaia",
+   "sprite": "warden",
+   "trainer": "Warden Kaia",
+   "warden": "oasis",
+   "team": [
+    {
+     "species": "Saltcrown",
+     "level": 37
+    },
+    {
+     "species": "Leviarch",
+     "level": 38
+    },
+    {
+     "species": "Ferrowyn",
+     "level": 37
+    },
+    {
+     "species": "Glasstarn",
+     "level": 37
+    },
+    {
+     "species": "Saltspire",
+     "level": 38
+    }
+   ],
+   "intro": "oasis_rift/kaia_intro",
+   "defeat": "oasis_rift/kaia_defeat",
+   "ai": 2,
+   "money": 2000,
+   "rule": "dry_well",
+   "mend_items": [
+    "echo_dawn_mend"
+   ],
+   "rematch_after": "story_complete"
+  }
+ ],
+ "signs": [
+  {
+   "x": 6,
+   "y": 4,
+   "dialogue": "oasis_rift/spring"
+  },
+  {
+   "x": 7,
+   "y": 5,
+   "dialogue": "oasis_rift/sign"
+  },
+  {
+   "x": 1,
+   "y": 15,
+   "dialogue": "oasis_rift/oasis_sluice_a"
+  },
+  {
+   "x": 8,
+   "y": 9,
+   "dialogue": "oasis_rift/oasis_sluice_b"
+  },
+  {
+   "x": 8,
+   "y": 16,
+   "dialogue": "oasis_rift/oasis_sluice_c"
+  },
+  {
+   "x": 2,
+   "y": 10,
+   "dialogue": "oasis_rift/hint"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_oasis_sealed",
+   "closed": "@"
+  },
+  {
+   "x": 4,
+   "y": 6,
+   "open_flag": "_water_ge_2",
+   "closed": "~"
+  },
+  {
+   "x": 5,
+   "y": 6,
+   "open_flag": "_water_ge_2",
+   "closed": "~"
+  },
+  {
+   "x": 4,
+   "y": 12,
+   "open_flag": "_water_le_1",
+   "closed": "~"
+  },
+  {
+   "x": 5,
+   "y": 12,
+   "open_flag": "_water_le_1",
+   "closed": "~"
+  }
+ ],
+ "sluices": [
+  "oasis_sluice_a",
+  "oasis_sluice_b",
+  "oasis_sluice_c"
+ ]
+}

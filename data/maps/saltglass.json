@@ -31,7 +31,7 @@
   "_______....^",
   "_______....^",
   "^.........S^",
-  "^^^^^^^^^^^^"
+  "^^^^^__^^^^^"
  ],
  "warps": [
   {
@@ -89,6 +89,22 @@
    "tx": 5,
    "ty": 20,
    "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "ochrewell",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "ochrewell",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
   }
  ],
  "npcs": [
@@ -196,6 +212,18 @@
    "x": 8,
    "y": 6,
    "open_flag": "veit_plate_done",
+   "closed": "#"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "open_flag": "rift_shade_sealed",
+   "closed": "#"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "open_flag": "rift_shade_sealed",
    "closed": "#"
   }
  ],

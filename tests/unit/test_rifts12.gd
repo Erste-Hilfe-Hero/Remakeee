@@ -122,7 +122,7 @@ func test_puzzles_open_their_gate() -> void:
 	assert_true(WorldMechanics.beam_hits(shade, ways), "two mirrors light the beacon")
 
 func test_story_order_and_level_curve() -> void:
-	assert_eq(GameState.STORY_RIFTS, ["cinder", "mist", "tide", "rain", "mirror", "root", "kiln", "glass", "shade"] as Array[String])
+	assert_eq(GameState.STORY_RIFTS, ["cinder", "mist", "tide", "rain", "mirror", "root", "kiln", "glass", "shade", "tower", "oasis", "sun"] as Array[String])
 	var last: int = 0
 	for entry: Array in STORY_ORDER:
 		var team: Array = _team(entry)
