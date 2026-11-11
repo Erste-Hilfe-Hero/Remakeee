@@ -137,6 +137,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | `madderby_guild` | the guild house of cartographers | Ysolde, Pim, the wall map |
 | `woadfen` | Woadfen moor | way to the Rain Rift, hushed walkers |
 | `rain_rift` | the Rain Rift | Warden Senna |
+| `root_rift` | the Root Rift under the Woadfen moor | Warden Darrow, tag battle with Kestra at the mouth (after the Mirror Rift, before the Greyreach) |
 | `stillwater` | Stillwater pond | way to the Mirror Rift, tag battle with Kestra |
 | `mirror_rift` | the Mirror Rift | Warden Joral |
 | `greyreach` | Greyreach, grey uplands | Veit's duel, old cartographer Moss |
@@ -152,6 +153,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | `kiln_rift` | the Kiln Rift | Warden Tovan |
 | `saltglass` | Saltglass flats | the silent lighthouse |
 | `glass_rift` | the Glass Rift | Warden Ilse |
+| `shade_rift` | the Shade Rift inside the silent lighthouse of the Saltglass flats | Warden Odalys, Veit's last duel (after Veit's plate, before the Undrawn) |
 | `wide_rift_far` | the far end of the Wide Rift | Kestra's farewell duel |
 | `undrawn_1` to `undrawn_3` | the Undrawn | three short parts without finished edges; the finale at the end of `undrawn_3` |
 
@@ -174,11 +176,13 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | Ines, Wynn | Brindlewick | echo gauntlet, weekly echoes | | | a new line per act |
 | Ysolde Rennick | Madderby guild house | guild master | | `guild_joined` | did not hold Mirela back 40 years ago and wants to make it right |
 | Pim | Madderby guild house | young archivist, voice for lore questions | | `letters` side quest | |
+| Brisa | Mist Rift | Warden (Act I), lost in her own fog | Zephlet 12, Millwhit 12, Tempestrel 13 | `rift_mist_sealed` | finds the way again; walks the ridge every morning |
 | Senna | Rain Rift | Warden (Act II), hears only rain | Riptail 20, Tempestrel 21, Kelphound 22 | `rift_rain_sealed` | |
 | Joral | Mirror Rift | Warden (Act II), sees only himself | Lumenewt 22, Glimmerax 23, Verdantusk 23 | `rift_mirror_sealed` | once saw an old woman with a compass in the mirror |
+| Darrow | Root Rift | Warden (Act II), wants nothing to grow | Thornback 25, Frondmere 26, Reedwarden 25, Marshfife 26 | `rift_root_sealed` | plants a garden by the moor |
 | Weda | Madderby | keeper of the dye spring (rest spot) | | | sister of the Veydal spring keeper |
 | Moss | Greyreach | old cartographer who knew Mirela | | | thinks she is dead until the finale |
-| Veit Harrow | Madderby, Greyreach, Ashmere | former guild cartographer | Shalebat 24, Duskdigger 25, Obsidroth 27 (Act II) | `veit_respect` | see below |
+| Veit Harrow | Madderby, Greyreach, Ashmere | former guild cartographer | Shalebat 24, Duskdigger 25, Obsidroth 27 (Act II); last duel at the Shade Rift: Shalebat 35, Duskdigger 35, Obsidroth 36, Calderox 36 | `veit_respect`, `beat_veit_3` | see below |
 | Brann | with Veit | Veit's helper | | | leaves Veit; works in the gravers' hall |
 | Juna | everywhere | courier between the regions | | | a new line per act |
 | Halvard | gravers' hall | master graver | | `mirela_plate` | from lasting maps to open maps |
@@ -186,10 +190,38 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | Oswin | Cinderfold | keeper of the warm spring | | | |
 | Tovan | Kiln Rift | Warden (Act III) | Calderox 32, Obsidroth 33, Smoldrake 31, Duskdigger 32 | `rift_kiln_sealed` | his father Harl held the Rift before him |
 | Ilse | Glass Rift | Warden (Act III), fully silent | Leviarch 34, Lumenewt 33, Glimmerax 34, Tempestrel 33 | `rift_glass_sealed` | sings again and teaches a new verse |
+| Odalys | Shade Rift | Warden (Act III), put out her own light | Silentra 35, Fenwarden 36, Burinox 35, Mendlace 35, Scrivane 36 | `rift_shade_sealed` | keeps the lamp lit for whoever is out there |
 | the Echo | the Undrawn | the grieving choir of lost bonds | waves of 2, 3 and 4 hushed Spirlings | `story_complete` | listens at last |
 
 Every Warden has the same shape (item 1605): a line before waking, a line after the duel, a line
 after the mend and a later line after the finale.
+
+### Rifts and Wardens (owner decision 2026-11-10: twelve Rifts)
+
+Nine Rifts stand in the first three regions; the three of Solenne follow. `GameState.STORY_RIFTS`
+holds them in story order. A Rift built after 2026-11 has a fixed shape (`tools/art/world/rifts12.py`):
+a Rift acolyte and two Wayfarers on the way, a puzzle that opens the way up, a spring to rest at,
+the Warden at the tear, and a shortcut down the east side that opens with the mend. Its Warden
+gives an Echo Crystal after the mend and fights rematches only after the finale. The Undrawn opens
+only when every story Rift and every Rift heart is mended (`GameState.finale_flags()`); saves from
+1.0 see the new Rifts as open side goals.
+
+| # | Rift | Map id | Warden | Element | Team (Ring) | Puzzle | Battle rule | Gift |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | Cinder Rift | `cinder_rift` | Orrin | Ember | 10 to 11 | - | Ember Pulse | Rift heart |
+| 2 | Mist Rift | `mist_rift` | Brisa | Gale | 12 to 13 | turn the wind vanes in order | Fog Bank: every art on both sides is less accurate | Rift heart, Tailwind |
+| 3 | Tidewater Rift | `tide_rift` | Maelis | Tide | 15 to 17 | - | Undertow | Rift heart |
+| 4 | Rain Rift | `rain_rift` | Senna | Tide | 20 to 22 | - | - | - |
+| 5 | Mirror Rift | `mirror_rift` | Joral | Lumen | 22 to 23 | - | - | - |
+| 6 | Root Rift | `root_rift` | Darrow | Bloom | 25 to 26 | colour the roots red, yellow, green | Vine Tangle: the vines mend the weakest Spirling each round | Root Grip |
+| 7 | Kiln Rift | `kiln_rift` | Tovan | Ember | 31 to 33 | - | - | - |
+| 8 | Glass Rift | `glass_rift` | Ilse | Lumen | 33 to 34 | - | - | - |
+| 9 | Shade Rift | `shade_rift` | Odalys | Umbra | 35 to 36 | turn the mirrors until the beacon burns | Night Dark: Pace no longer sets the turn order | Night Veil |
+
+The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
+18, 23, ...); after Act I they open fully. The story battles keep a curve that never drops (checked
+by `tests/unit/test_rifts12.gd`): Kestra's tag battle at the Root Rift (Ring 23 to 24) sits between
+Joral and Darrow, Veit's last duel at the Shade Rift (Ring 35 to 36) between his plate and Odalys.
 
 ### Kestra (item 1555)
 

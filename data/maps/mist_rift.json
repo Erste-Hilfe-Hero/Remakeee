@@ -1,0 +1,252 @@
+{
+ "name": "Mist Rift",
+ "region": "veydal",
+ "biome": "rift",
+ "backdrop": "ridge",
+ "encounters": "mist_rift",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.::....:^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^.|......^_^",
+  "^.::..|..^_^",
+  "^.::....|^_^",
+  "^S.......^_^",
+  "^^^^..^^^^_^",
+  "^.::....:^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^.::....:^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.::....::.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "crowcrest",
+   "tx": 10,
+   "ty": 17,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "crowcrest",
+   "tx": 10,
+   "ty": 17,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "rhee",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "mist_rift/rhee",
+   "sprite": "warden",
+   "trainer": "Rift Acolyte Rhee",
+   "intro": "mist_rift/rhee_intro",
+   "defeat": "mist_rift/rhee_defeat",
+   "money": 520,
+   "team": [
+    {
+     "species": "Zephlet",
+     "level": 12
+    },
+    {
+     "species": "Shalebat",
+     "level": 12
+    }
+   ]
+  },
+  {
+   "id": "hask",
+   "x": 2,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "mist_rift/hask",
+   "sprite": "villager",
+   "trainer": "Ridgewalker Hask",
+   "intro": "mist_rift/hask_intro",
+   "defeat": "mist_rift/hask_defeat",
+   "money": 540,
+   "team": [
+    {
+     "species": "Millwhit",
+     "level": 12
+    },
+    {
+     "species": "Puddlet",
+     "level": 13
+    }
+   ]
+  },
+  {
+   "id": "ilda",
+   "x": 7,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "mist_rift/ilda",
+   "sprite": "villager",
+   "trainer": "Fog Walker Ilda",
+   "intro": "mist_rift/ilda_intro",
+   "defeat": "mist_rift/ilda_defeat",
+   "money": 560,
+   "team": [
+    {
+     "species": "Zephlet",
+     "level": 12
+    },
+    {
+     "species": "Puddlet",
+     "level": 12
+    },
+    {
+     "species": "Zippit",
+     "level": 12
+    }
+   ]
+  },
+  {
+   "id": "warden_brisa",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "mist_rift/brisa",
+   "sprite": "warden",
+   "trainer": "Warden Brisa",
+   "warden": "mist",
+   "team": [
+    {
+     "species": "Zephlet",
+     "level": 12
+    },
+    {
+     "species": "Millwhit",
+     "level": 12
+    },
+    {
+     "species": "Tempestrel",
+     "level": 13
+    }
+   ],
+   "intro": "mist_rift/brisa_intro",
+   "defeat": "mist_rift/brisa_defeat",
+   "ai": 2,
+   "money": 950,
+   "rule": "fog_bank",
+   "mend_items": [
+    "echo_tailwind"
+   ],
+   "rematch_after": "story_complete"
+  },
+  {
+   "id": "mist_heart",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "mist_rift/heart",
+   "sprite": "hush",
+   "color": "9aa4ae",
+   "trainer": "Mist Heart",
+   "boss": "mist_heart",
+   "front": [
+    4,
+    1
+   ],
+   "money": 700,
+   "show_flag": "rift_mist_sealed",
+   "hide_flag": "mist_heart_mended",
+   "intro": "mist_rift/heart_intro",
+   "defeat": "mist_rift/heart_defeat",
+   "team": [
+    {
+     "species": "Millwhit",
+     "level": 15
+    }
+   ],
+   "win_flags": [
+    "mist_heart_mended"
+   ],
+   "leaves": true
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "mist_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "mist_rift/sign"
+  },
+  {
+   "x": 2,
+   "y": 8,
+   "dialogue": "mist_rift/vane_1"
+  },
+  {
+   "x": 6,
+   "y": 9,
+   "dialogue": "mist_rift/vane_2"
+  },
+  {
+   "x": 8,
+   "y": 10,
+   "dialogue": "mist_rift/vane_3"
+  },
+  {
+   "x": 1,
+   "y": 11,
+   "dialogue": "mist_rift/hint"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 4,
+   "y": 7,
+   "open_flag": "mist_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 5,
+   "y": 7,
+   "open_flag": "mist_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 7,
+   "open_flag": "mist_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 7,
+   "y": 7,
+   "open_flag": "mist_rift_open",
+   "closed": "@"
+  },
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_mist_sealed",
+   "closed": "@"
+  }
+ ]
+}

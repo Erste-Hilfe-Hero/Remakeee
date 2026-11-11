@@ -9,6 +9,7 @@ The way opens in story order with blocks:
   madderby -> woadfen, stillwater   guild_joined (Ysolde)
   stillwater -> greyreach           beat_story_kestra_2 (Kestra's doubt, chapter 8)
   greyreach -> wide_rift_edge       beat_veit_1 (Veit's duel, chapter 9)
+  woadfen -> root_rift              rift_mirror_sealed (east edge of the moor, tools/art/world/rifts12.py)
 """
 from common import check_rows, lines, npc, secret, team, tr, warp
 
@@ -135,7 +136,7 @@ def woadfen(world):
             "T,,,__,,,,,T",
             "T,,,_,,%%%,T",
             "T~~~_~~%%%,T",
-            "T~~~_~~,,,,T",
+            "T~~~_~~,,,,_",
             "T,,,_,,,,,,T",
             "T,%%____,,,T",
             "T,%%,,,_,,,T",
@@ -157,7 +158,8 @@ def woadfen(world):
     m = {"name": tr("Woadfen", "Waidmoor"), "biome": "marsh", "backdrop": "lake", "outdoor": True, "encounters": mid,
          "rows": rows,
          "warps": [warp(0, 24, "madderby", 8, 10, "left"), warp(0, 25, "madderby", 8, 11, "left"),
-                   warp(5, 0, "rain_rift", 5, 11, "up"), warp(6, 0, "rain_rift", 6, 11, "up")],
+                   warp(5, 0, "rain_rift", 5, 11, "up"), warp(6, 0, "rain_rift", 6, 11, "up"),
+                   warp(11, 15, "root_rift", 5, 20, "up")],
          "npcs": [
              wayfarer(world, mid, "orla", 3, 12, "right", "Peat Cutter Orla", team(("Puddlet", 18), ("Paddlewisp", 19)),
                       [("Orla: The peat is grey all the way down now. It used to be the colour of strong tea.", "Orla: Der Torf ist jetzt durch und durch grau. Früher hatte er die Farbe von starkem Tee.")],
@@ -173,6 +175,7 @@ def woadfen(world):
                       [("Lusa: Go on, then. Senna is waiting, even if she can't hear you.", "Lusa: Dann geh. Senna wartet, auch wenn sie dich nicht hört.")], 1000),
          ],
          "signs": [{"x": 2, "y": 26, "dialogue": mid + "/sign"}, {"x": 9, "y": 9, "dialogue": mid + "/sign_top"}],
+         "blocks": [gate(11, 15, "rift_mirror_sealed")],
          "secrets": [secret(0, 8, "tonic", "find_woad_west", 2), secret(11, 20, "remedy", "find_woad_east"),
                      secret(0, 16, "strong_tonic", "find_woad_pool"), secret(11, 2, "revival_leaf", "find_woad_north")],
          "spots": {"wanderer_a": [4, 4], "wanderer_b": [8, 9], "letter_c3": [1, 22], "page_9": [1, 1]}}

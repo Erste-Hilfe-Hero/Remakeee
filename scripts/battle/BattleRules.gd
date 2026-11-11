@@ -130,7 +130,30 @@ const RULES: Dictionary[String, Dictionary] = {
 		"field_opening": {"field": "ash_storm", "turns": 3, "locked": true}, "difficulty": [2, 3], "warden_only": true},
 	"tide_turn": {"label": "Tide Turn", "text": "The tide comes and goes: High Tide for 2 turns, then 2 turns of calm.",
 		"field_cycle": {"field": "high_tide", "on": 2, "off": 2}, "difficulty": [2, 3], "warden_only": true},
+	# The Rifts added in 2026-11 (Mist, Root, Shade). Both sides feel these rules:
+	# "accuracy_mult" scales every art's accuracy, "vine_heal_div" mends the weakest Spirling in
+	# front by max Vigor / div after each round, "hidden_order" lets the seeded RNG instead of
+	# Pace decide who moves first among arts of the same priority.
+	"fog_bank": {"label": "Fog Bank", "text": "Thick fog: every art on both sides is less accurate.", "accuracy_mult": 0.85,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"vine_tangle": {"label": "Vine Tangle", "text": "Vines creep in: each round they mend the weakest Spirling in front.", "vine_heal_div": 12,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"night_dark": {"label": "Night Dark", "text": "In the dark nobody sees who moves first: Pace no longer sets the order.", "hidden_order": 1,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
 }
+
+## The number a Warden rule key adds up to over every rule in [param rule_string] (0 when none
+## sets it). "accuracy_mult" multiplies instead and starts at 1.
+static func rule_number(rule_string: String, key: String) -> float:
+	var out: float = 1.0 if key == "accuracy_mult" else 0.0
+	for id: String in split_rules(rule_string):
+		if not RULES[id].has(key):
+			continue
+		if key == "accuracy_mult":
+			out *= float(RULES[id][key])
+		else:
+			out += float(RULES[id][key])
+	return out
 ## The Warden turning point (items 678, 679): when the Warden's second-to-last Spirling drops, a
 ## rule with a "turning" block grows for the rest of the battle. Only the Tamer-and-up forms carry
 ## one, so Story never turns. "foe_energy_once" is Energy for the foe's Spirlings on the spot,
@@ -174,6 +197,10 @@ const BOSSES: Dictionary[String, Dictionary] = {
 		"text": "The Rift's water heaves up around a drowned heart. Its guard stands beside it!",
 		"phase": {"at": 0.5, "stage": {"def": 1, "foc": 1}, "field": "high_tide",
 			"text": "The Drowned Heart pulls the tide around itself!"}},
+	"mist_heart": {"label": "Mist Heart", "hp_per_ally": 0.7, "max_actions": 2,
+		"text": "The fog knots itself into one grey heart. It drifts at you from every side!",
+		"phase": {"at": 0.5, "stage": {"spd": 1, "foc": 1}, "field": "static_veil",
+			"text": "The Mist Heart crackles! Lightning flickers in the fog."}},
 }
 
 ## Foe Energy at the start per difficulty (item 749): Story foes start with 2 less (8), Rift-Born

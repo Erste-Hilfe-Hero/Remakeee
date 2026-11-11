@@ -108,7 +108,7 @@
    "facing": "down",
    "dialogue": "brindlewick/kestra_dock",
    "sprite": "ranger",
-   "show_flag": "storage_remote"
+   "show_flag": "veydal_rifts_mended"
   },
   {
    "id": "ines",

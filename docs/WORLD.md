@@ -21,7 +21,9 @@ world that does not follow the classic monster-RPG template. Check new content a
   counter-picks the player's starter. She duels the player once in Act I (Crowcrest) and meets
   them at the ferry dock after both Rifts are mended.
 - There is no villain team. The antagonist is the Hush itself.
-- End of Act I: both Rifts mended, a larger third Rift lies north, the ferry to Corvane (Era II) waits.
+- A third Rift, the **Mist Rift** (Warden Brisa), opens east of Crowcrest. Kestra waits at the
+  ferry dock once all three Rifts of Veydal are mended (flag `veydal_rifts_mended`).
+- End of Act I: the three Rifts mended, a larger Rift lies north, the ferry to Corvane (Era II) waits.
 
 ## The First Voices (plan area 1, items 152-155)
 
@@ -50,7 +52,8 @@ world that does not follow the classic monster-RPG template. Check new content a
 - **Portrait first.** Maps are tall and narrow (about 12 tiles wide) and use terraces: cliffs
   (`^`), stairs (`=`), piers (`+`). No wide rectangles with one road down the middle.
 - **Hub, not a chain.** Brindlewick sits on the lake. Fernstair (north) and Saltmarsh (east)
-  both leave from it, and the two Rifts can be mended in either order.
+  both leave from it, and the Rifts can be mended in any order (the Mist Rift lies off the
+  east end of Crowcrest's lower path).
 - **Wild Spirlings live in several grounds:** ferns (`,`), reeds (`%`) and scree (`:`).
 - **Places have their own shape:** a lighthouse village on piers, a gorge village on two levels,
   Rift hollows as open-air craters with a visible tear (`X`). Healing is at springs and pools.
@@ -79,7 +82,8 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
   neighbours. Houses lie `inside` their town. Every warp between two places must be an edge.
 - **Map builders:** `python3 tools/art/build_world.py [group]` runs the modules in
   `tools/art/world/` (veydal_core, veydal_wilds, veydal_caves, veydal_dungeons, corvane; the
-  corvane group also builds `corvane_act2.py` and the Ashmere maps in `ashmere.py`). Act I maps
+  corvane group also builds `corvane_act2.py` and the Ashmere maps in `ashmere.py`; `rifts12`
+  builds the Mist, Root and Shade Rifts). Act I maps
   are edited in JSON and only patched by `veydal_core`; new maps are generated, so edit their
   Python. New maps start from `tools/art/world/template.py` (12 wide, rock frame, exits top and bottom).
 - **Shapes:** outdoor maps are at most 12 x 40 tiles; routes and marshes need at least two
@@ -113,6 +117,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `lanternwell` | inside | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 1 | 0 | 7 |
 | veydal | `lighthouse` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `map_house` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `mist_rift` | rift | 12x22 | 0 | 5 | 17 |
 | veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 3 | 0 | 25 |
 | veydal | `murk_hollow` | cave | 12x13 + 12x9 | 4 | 3 | 20 |
 | veydal | `quillbrook` | route | 12x30 | 5 | 3 | 113 |
@@ -131,6 +136,7 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `madderby_guild` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `mirror_rift` | rift | 12x13 | 0 | 0 | 20 |
 | corvane | `rain_rift` | rift | 12x13 | 0 | 0 | 22 |
+| corvane | `root_rift` | rift | 12x22 | 0 | 4 | 17 |
 | corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
 | corvane | `woadfen` | marsh | 12x28 | 5 | 3 | 154 |
@@ -140,11 +146,12 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `gravers_hall` | inside | 10x9 | 0 | 0 | 0 |
 | ashmere | `kiln_rift` | rift | 12x13 | 0 | 0 | 20 |
 | ashmere | `saltglass` | route | 12x26 | 5 | 3 | 56 |
+| ashmere | `shade_rift` | rift | 12x22 | 0 | 5 | 16 |
 | ashmere | `undrawn_1` | rift | 12x22 | 0 | 0 | 0 |
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **46 maps** | | | **103** | **42** | **1062** |
+| | **49 maps** | | | **103** | **56** | **1112** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

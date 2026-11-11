@@ -10,8 +10,10 @@ func test_goals_advance_in_order() -> void:
 	assert_eq(QuestLog.current(flags).id, "rifts")
 	flags["rift_tide_sealed"] = true
 	assert_eq(QuestLog.current(flags).id, "rifts")
-	assert_string_contains(QuestLog.goal_text(QuestLog.current(flags), flags), "(1/2)")
+	assert_string_contains(QuestLog.goal_text(QuestLog.current(flags), flags), "(1/3)")
 	flags["rift_cinder_sealed"] = true
+	assert_eq(QuestLog.current(flags).id, "rifts", "the Mist Rift is the third one")
+	flags["rift_mist_sealed"] = true
 	assert_eq(QuestLog.current(flags).id, "dock")
 	flags["kestra_dock_talk"] = true
 	assert_eq(QuestLog.current(flags).id, "home")
@@ -22,8 +24,8 @@ func test_goals_advance_in_order() -> void:
 	assert_eq(str(QuestLog.current(flags).act), "Act II: The Colours of Corvane")
 
 func test_old_save_without_new_flag_lands_on_later_goal() -> void:
-	# Saves from before "met_kestra" existed: both Rifts mended, never set met_kestra.
-	var flags: Dictionary = {"aldo_gift": true, "rift_tide_sealed": true, "rift_cinder_sealed": true}
+	# Saves from before "met_kestra" existed: the Rifts mended, never set met_kestra.
+	var flags: Dictionary = {"aldo_gift": true, "rift_tide_sealed": true, "rift_cinder_sealed": true, "rift_mist_sealed": true}
 	assert_eq(QuestLog.current(flags).id, "dock")
 
 func test_side_goals_show_and_hide() -> void:

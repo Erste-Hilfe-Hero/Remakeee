@@ -4,7 +4,7 @@ extends Node
 ## Difficulty, picked at new game. Rift-Born adds the Master AI (tier 3).
 enum Difficulty { STORY, TAMER, VETERAN, RIFT_BORN }
 ## Level cap per Rift sealed (Veteran + Rift-Born only).
-const LEVEL_CAPS: Array[int] = [12, 18, 23, 28, 32, 36, 40, 44, 50]
+const LEVEL_CAPS: Array[int] = [12, 15, 18, 23, 28, 32, 36, 40, 44, 50]
 const AI_LEVELS: Array[int] = [0, 1, 2, 3]
 ## Plan area 2, items 726-728: Wayfarer Spark in every stat, ring shift of a shared team, and the
 ## share of damage foes deal, per difficulty (Story, Tamer, Veteran, Rift-Born).
@@ -218,6 +218,23 @@ var known_matchups: Dictionary = {}
 
 ## Mended Rifts needed before the storage box opens from the menu (end of Act I).
 const RIFTS_FOR_STORAGE: int = 2
+## Every story Rift in story order (owner decision 2026-11-10: twelve Rifts, the three of
+## Solenne follow). The Undrawn opens once all of them and every Rift heart are mended.
+const STORY_RIFTS: Array[String] = ["cinder", "mist", "tide", "rain", "mirror", "root", "kiln", "glass", "shade"]
+## The Rifts of Veydal: once all are mended, Kestra waits at the dock (flag VEYDAL_RIFTS_FLAG).
+const VEYDAL_RIFTS: Array[String] = ["cinder", "mist", "tide"]
+const VEYDAL_RIFTS_FLAG: String = "veydal_rifts_mended"
+## Rifts with a heart battle after the mend ("<id>_heart_mended").
+const RIFT_HEARTS: Array[String] = ["cinder", "mist", "tide"]
+
+## Flags the way into the Undrawn waits for: every story Rift mended and every Rift heart.
+static func finale_flags() -> Array[String]:
+	var out: Array[String] = []
+	for r: String in STORY_RIFTS:
+		out.append("rift_%s_sealed" % r)
+	for r: String in RIFT_HEARTS:
+		out.append(r + "_heart_mended")
+	return out
 ## Story flag at the end of Act I ("Waiting for the Ferry" starts).
 const ACT1_END_FLAG: String = "aldo_dock_told"
 
@@ -232,6 +249,8 @@ func seal_rift(rift_id: String) -> bool:
 		return false
 	rifts_sealed.append(rift_id)
 	set_flag("rift_%s_sealed" % rift_id)
+	if VEYDAL_RIFTS.all(func(r: String) -> bool: return r in rifts_sealed):
+		set_flag(VEYDAL_RIFTS_FLAG)
 	# Rifts can be mended in any order; the second one opens storage from the menu.
 	if rifts_sealed.size() >= RIFTS_FOR_STORAGE:
 		set_flag("storage_remote")

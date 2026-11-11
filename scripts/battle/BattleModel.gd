@@ -798,6 +798,9 @@ func _sort_key(a: BattleAction, tie: float) -> Vector4:
 	if a.kind == BattleAction.Kind.MOVE and a.actor != null and a.move_index < a.actor.moves.size():
 		prio = a.actor.moves[a.move_index].priority
 	var spd: int = int(a.actor.effective_spd() * ShopEffects.seal_speed_mult(int(seals[a.side][2]))) if a.actor != null else 0
+	# Warden rule Night Dark: Pace stays hidden in the dark, the seeded tiebreak decides.
+	if BattleRules.rule_number(foe_rule, "hidden_order") > 0.0:
+		spd = 0
 	return Vector4(-a.order_class(), prio, spd, tie)
 
 func _phase_execute_action() -> void:
@@ -826,6 +829,7 @@ func _phase_end_of_turn() -> void:
 	for side: int in [Side.PLAYER, Side.FOE]:
 		for slot: int in slot_count(side):
 			_end_of_turn_for(side, slot)
+	_vine_heal()
 	_tick_timers()
 	_tick_field()
 	_tick_field_swirl()
@@ -868,6 +872,26 @@ func _weary_chip() -> void:
 		for slot: int in standing_slots(side):
 			var s: Spirling = active_spirling(side, slot)
 			deal_damage(side, maxi(1, ceili(float(s.max_hp()) / float(WEARY_CHIP_DIV))), {"weary": true}, slot)
+
+## Warden rule Vine Tangle: after each round the vines mend the standing Spirling in front with
+## the lowest share of Vigor, on either side (the first one found wins a tie).
+func _vine_heal() -> void:
+	var div: int = int(BattleRules.rule_number(foe_rule, "vine_heal_div"))
+	if div <= 0:
+		return
+	var best_side: int = -1
+	var best_slot: int = -1
+	var best: float = 1.0
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for slot: int in standing_slots(side):
+			var s: Spirling = active_spirling(side, slot)
+			var share: float = float(s.hp) / float(maxi(1, s.max_hp()))
+			if share < best:
+				best = share
+				best_side = side
+				best_slot = slot
+	if best_side >= 0:
+		heal(best_side, maxi(1, active_spirling(best_side, best_slot).max_hp() / div), best_slot)
 
 func _end_of_turn_for(side: int, slot: int) -> void:
 	var s: Spirling = active_spirling(side, slot)
@@ -1062,7 +1086,7 @@ func _do_move(a: BattleAction) -> void:
 			break
 		if not is_standing(target):
 			continue
-		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status))
+		var acc: float = mv.accuracy * (1.0 if mv.ignore_daze else StatusRules.acc_mult(me.status)) * BattleRules.rule_number(foe_rule, "accuracy_mult")
 		if acc < 1.0 and rng.randf() >= acc:
 			var miss: Dictionary = _who(side, slot)
 			miss["target_slot"] = t_slot

@@ -1115,5 +1115,132 @@
     "ground": "scree"
    }
   ]
+ },
+ "mist_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Puddlet",
+    "min": 12,
+    "max": 14,
+    "weight": 24
+   },
+   {
+    "species": "Zephlet",
+    "min": 12,
+    "max": 14,
+    "weight": 30
+   },
+   {
+    "species": "Zippit",
+    "min": 13,
+    "max": 15,
+    "weight": 25
+   },
+   {
+    "species": "Mossling",
+    "min": 12,
+    "max": 13,
+    "weight": 10
+   },
+   {
+    "species": "Kelpup",
+    "min": 12,
+    "max": 14,
+    "weight": 20
+   },
+   {
+    "species": "Wickit",
+    "min": 12,
+    "max": 14,
+    "weight": 15
+   },
+   {
+    "species": "Seamlet",
+    "min": 12,
+    "max": 14,
+    "weight": 12
+   }
+  ]
+ },
+ "root_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Paddlewisp",
+    "min": 23,
+    "max": 25,
+    "weight": 38,
+    "ground": "fern"
+   },
+   {
+    "species": "Mirkmole",
+    "min": 23,
+    "max": 25,
+    "weight": 30,
+    "ground": "fern"
+   },
+   {
+    "species": "Fluting",
+    "min": 24,
+    "max": 25,
+    "weight": 15,
+    "ground": "reeds"
+   },
+   {
+    "species": "Hushkin",
+    "min": 24,
+    "max": 25,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Riptail",
+    "min": 25,
+    "max": 25,
+    "weight": 5,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "shade_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Zephlet",
+    "min": 32,
+    "max": 34,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Shalebat",
+    "min": 32,
+    "max": 34,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Wickit",
+    "min": 33,
+    "max": 35,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Seamlet",
+    "min": 33,
+    "max": 35,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
+    "species": "Glasstarn",
+    "min": 35,
+    "max": 35,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
  }
 }
