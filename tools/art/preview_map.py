@@ -38,11 +38,44 @@ def load_level(map_id: str) -> dict:
     return d
 
 
-def render(d: dict) -> Image.Image:
+SHADE_FROM = {"WALL", "ROOF", "DOOR"}
+
+
+def door_roles(d: dict) -> dict:
+    """Same rules as MapData.door_roles(): 1 healer, 2 shop, 3 Rift gate, else 0 (house)."""
+    rows = d["rows"]
+    doors = [(x, y) for y, r in enumerate(rows) for x, ch in enumerate(r) if ch == "D"]
+    roles, warped = {}, set()
+    for w in d.get("warps", []):
+        cell = (int(w["x"]), int(w["y"]))
+        if cell not in doors:
+            continue
+        warped.add(cell)
+        to = str(w["to"])
+        if "rift" in to or to.startswith("undrawn"):
+            roles[cell] = 3
+        elif "spring" in to:
+            roles[cell] = 1
+        elif any(s in to for s in ("guild", "shop", "market", "bazaar")):
+            roles[cell] = 2
+    if d.get("outdoor") and d.get("biome") == "town":
+        free = [c for c in doors if c not in roles and c not in warped]
+        hp = d.get("heal_point")
+        if hp and 1 not in roles.values() and free:
+            best = min(free, key=lambda c: (abs(c[0] - hp[0]) + abs(c[1] - hp[1]), c[1], c[0]))
+            roles[best] = 1
+            free.remove(best)
+        if 2 not in roles.values() and free:
+            roles[free[0]] = 2
+    return roles
+
+
+def render(d: dict, atlas_path: str = "") -> Image.Image:
     rows = d["rows"]
     tiles = os.path.join(ROOT, "art", "era1", "tiles")
     regional = os.path.join(tiles, "overworld_%s.png" % d.get("region", "veydal"))
-    atlas = Image.open(regional if os.path.exists(regional) else os.path.join(tiles, "overworld.png"))
+    atlas = Image.open(atlas_path or (regional if os.path.exists(regional) else os.path.join(tiles, "overworld.png")))
+    roles = door_roles(d)
     h, w = len(rows), max(len(r) for r in rows)
     img = Image.new("RGBA", (w * 16, h * 16))
 
@@ -62,6 +95,10 @@ def render(d: dict) -> Image.Image:
                         v |= bit
             elif k in SCATTERED:
                 v = abs(x * 7 + y * 13 + (x * y) % 5) % 4
+                if k == "GRASS" and kind(x - 1, y, k) in SHADE_FROM:
+                    v += 4
+            elif k == "DOOR":
+                v = roles.get((x, y), 0)
             col = K[k]
             img.paste(atlas.crop((col * 16, v * 16, col * 16 + 16, v * 16 + 16)), (x * 16, y * 16))
     for n in d.get("npcs", []):

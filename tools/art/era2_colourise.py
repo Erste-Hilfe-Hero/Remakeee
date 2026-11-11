@@ -24,7 +24,7 @@ PAL = json.load(open(os.path.join(ROOT, "tools", "art", "era2_palettes.json"), e
 TILE = 16
 KINDS = list(PAL["tiles"].keys())  # same order as TilesetFactory.Kind / gen_tiles.KINDS
 # Kinds drawn over a grass tile in gen_tiles.py: their grass pixels keep the grass palette.
-ON_GRASS = {"TREE", "FENCE", "SIGN", "FLOWER", "RIFT", "TOWER", "LAMP", "ROCK"}
+ON_GRASS = {"TREE", "FENCE", "SIGN", "FLOWER", "RIFT", "TOWER", "LAMP", "ROCK", "SPRING"}
 
 
 def rgb(h: str) -> tuple:
@@ -135,8 +135,8 @@ def check() -> int:
     n = 0
     for f in sorted(glob.glob(os.path.join(SRC, "**", "*.png"), recursive=True)):
         rel = os.path.relpath(f, SRC)
-        if rel.startswith("spirlings"):
-            continue
+        if rel.startswith("spirlings") or rel.startswith(os.path.join("tiles", "overworld_")):
+            continue  # the acts' own Era I atlases; Era II uses its shared atlas (TilesetFactory.atlas_path)
         g = os.path.join(DST, rel)
         if not os.path.exists(g):
             print("missing:", rel); bad += 1; continue
