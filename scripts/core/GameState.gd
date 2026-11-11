@@ -1556,7 +1556,9 @@ func _load_echo_cores(raw: Variant) -> void:
 		echo_cores.append({"kind": kind,
 			"parents": (parents as Array).map(func(x: Variant) -> String: return str(x)).slice(0, 2) if parents is Array else [],
 			"rests": maxi(0, int((c as Dictionary).rests)) if (c as Dictionary).get("rests") is int or (c as Dictionary).get("rests") is float else 0,
-			"wins": maxi(0, int((c as Dictionary).wins)) if (c as Dictionary).get("wins") is int or (c as Dictionary).get("wins") is float else 0})
+			"wins": maxi(0, int((c as Dictionary).wins)) if (c as Dictionary).get("wins") is int or (c as Dictionary).get("wins") is float else 0,
+			"heir": (c as Dictionary).get("heir", {}) if (c as Dictionary).get("heir", {}) is Dictionary else {},
+			"contract": bool((c as Dictionary).get("contract", false))})
 
 ## Every heal spring is an Echo spring once the second Rift is mended (item 184).
 func echo_spring_open() -> bool:
@@ -1592,7 +1594,8 @@ func sing_together(a: Spirling, b: Spirling, p_rng: RandomNumberGenerator = null
 	var r: RandomNumberGenerator = p_rng if p_rng != null else rng
 	var from: Spirling = a if r.randi_range(0, 1) == 0 else b
 	var core: Dictionary = {"kind": first_form(from.data).species_name,
-		"parents": [a.data.species_name, b.data.species_name], "rests": 0, "wins": 0}
+		"parents": [a.data.species_name, b.data.species_name], "rests": 0, "wins": 0,
+		"heir": Breeding.snapshot(a, b), "contract": false}
 	echo_cores.append(core)
 	return core
 
@@ -1616,6 +1619,7 @@ func awaken_cores() -> Array[Spirling]:
 		echo_cores.erase(c)
 		var kid := Spirling.new(Database.species(str(c.kind)), 1, rng)
 		kid.lineage.assign(c.parents)
+		kid.set_meta("inheritance", Breeding.inherit(kid, c, rng))
 		receive_spirling(kid)
 		out.append(kid)
 	return out

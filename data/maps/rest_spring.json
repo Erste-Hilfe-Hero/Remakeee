@@ -43,6 +43,14 @@
    "facing": "left",
    "dialogue": "rest_spring/archivist",
    "sprite": "villager"
+  },
+  {
+   "id": "matchmaker",
+   "x": 2,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "rest_spring/matchmaker",
+   "sprite": "villager"
   }
  ],
  "signs": []
