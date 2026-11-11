@@ -102,13 +102,25 @@ static func cells_to_save(cells: Dictionary) -> Dictionary:
 			out[str(k)] = Marshalls.raw_to_base64(cells[k])
 	return out
 
+## True when [param s] is padded base64 (length a multiple of 4, only the base64 alphabet).
+static func is_base64(s: String) -> bool:
+	if s.length() % 4 != 0:
+		return false
+	var body: String = s.trim_suffix("=").trim_suffix("=")
+	for i: int in body.length():
+		var c: int = body.unicode_at(i)
+		if not ((c >= 65 and c <= 90) or (c >= 97 and c <= 122) or (c >= 48 and c <= 57) or c == 43 or c == 47):
+			return false
+	return true
+
 static func cells_from_save(raw: Variant) -> Dictionary:
 	var out: Dictionary = {}
 	if not raw is Dictionary:
 		return out
 	for k: Variant in raw:
 		var v: Variant = (raw as Dictionary)[k]
-		if v is String and (v as String).length() <= 8192:
+		# Damaged saves: only well-formed base64 is decoded (the engine errors on anything else).
+		if v is String and (v as String).length() <= 8192 and is_base64(v):
 			out[str(k)] = Marshalls.base64_to_raw(v)
 	return out
 

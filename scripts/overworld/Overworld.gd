@@ -606,7 +606,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell))
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
+				if wild != null:
+					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
