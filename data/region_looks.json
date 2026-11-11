@@ -23,6 +23,28 @@
         "fen_lantern"
       ],
       "arrive": "The ink turns blue here. Corvane dyes everything, even the truth."
+    },
+    "ashmere": {
+      "biome": "ashfield",
+      "palette": [
+        "1b1719",
+        "7e3322",
+        "a39886",
+        "e9e3d3"
+      ],
+      "props": [
+        "ash_ground",
+        "char_brush",
+        "dead_snag",
+        "brine_pool",
+        "salt_spikes",
+        "cinder_scree",
+        "slag_heap",
+        "brazier",
+        "basalt_columns",
+        "ember_bloom"
+      ],
+      "arrive": "The ink goes grey here. Ashmere burned once and still smells like it owes you money."
     }
   }
 }
