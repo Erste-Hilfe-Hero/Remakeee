@@ -4,7 +4,7 @@ extends RefCounted
 ## before three mourners from data/wake.json; each scores the elements of the art and the
 ## performer (likes add, hates take away), plus the art's power and a few tears. Beat both
 ## rival entrants to win the prize. The Heir takes a bribe for extra points, but sometimes reads
-## it out loud and the whole score drops to zero. Wins are counted in records["wake_wins"].
+## it out loud: then the bribe bonus is lost (the coins too), never more than that. Wins are counted in records["wake_wins"].
 
 const DATA_PATH: String = "res://data/wake.json"
 const DAY: String = "wake_day"
@@ -73,8 +73,9 @@ static func perform(s: Spirling, art: MoveData, bribe: bool, rng: RandomNumberGe
 	if bribe:
 		if rng.randf() < float(d.get("betray_chance", 0.0)):
 			betrayed = true
-			score = 0
-			lines.append(Loc.t("The Heir stands up: \"This Wayfarer paid me. How touching.\" The hall goes silent."))
+			var exposed: Array = d.get("exposed_lines", [])
+			if not exposed.is_empty():
+				lines.append(Loc.t(str(exposed[rng.randi() % exposed.size()])))
 		else:
 			score += int(d.get("bribe_bonus", 0))
 			lines.append(Loc.t("The Heir winks and sniffs loudly. Very moving."))

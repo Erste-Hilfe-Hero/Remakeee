@@ -3,7 +3,8 @@ extends RefCounted
 ## The Burrow: a hollow in the rock of Murk Hollow. The Wayfarer claims it (flag "burrow_claimed")
 ## and hangs earned trophies on a wall of "wall_slots" places (records["burrow_wall"]). A trophy
 ## is earned by a flag or a record from data/burrow.json. After "squatter_days" days away a
-## squatter pawns the last trophy on the wall; it stays earned and can be hung again.
+## squatter has been and gone: it leaves a rude note and "rent_coins" as a welcome-back gift.
+## Trophies are never touched.
 
 const DATA_PATH: String = "res://data/burrow.json"
 const FLAG: String = "burrow_claimed"
@@ -73,16 +74,17 @@ static func take_down(id: String) -> void:
 static func _day(day: String) -> int:
 	return int(Time.get_unix_time_from_datetime_string(day) / 86400)
 
-## Called on each visit on [param day] ("YYYY-MM-DD"). Returns the trophy id the squatter
-## pawned, or "" when the Wayfarer was not away long enough.
-static func visit(day: String) -> String:
+## Called on each visit on [param day] ("YYYY-MM-DD"). Returns {} when the Wayfarer was not
+## away long enough, else {"note": String, "coins": int}: the squatter's note (translated) and the
+## rent it left, already added to GameState.money.
+static func visit(day: String, rng: RandomNumberGenerator) -> Dictionary:
 	var last: String = str(GameState.records.get(VISIT, ""))
 	GameState.records[VISIT] = day
-	if last.is_empty() or _day(day) - _day(last) < int(data().get("squatter_days", 7)):
-		return ""
-	var w: Array[String] = wall()
-	if w.is_empty():
-		return ""
-	var gone: String = w[w.size() - 1]
-	take_down(gone)
-	return gone
+	var d: Dictionary = data()
+	if last.is_empty() or _day(day) - _day(last) < int(d.get("squatter_days", 7)):
+		return {}
+	var notes: Array = d.get("squatter_notes", [])
+	var coins: int = int(d.get("rent_coins", 0))
+	GameState.money += coins
+	var note: String = Loc.t(str(notes[rng.randi() % notes.size()])) if not notes.is_empty() else ""
+	return {"note": note, "coins": coins}

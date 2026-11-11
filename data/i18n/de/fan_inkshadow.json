@@ -4,12 +4,14 @@
   "Inkshadow"
  ],
  "strings": {
+  "%s brings you a dead beetle. It is a gift. Say thank you.": "%s bringt dir einen toten Käfer. Es ist ein Geschenk. Sag danke.",
   "%s counts the fence posts. Twice. One is missing.": "%s zählt die Zaunpfähle. Zweimal. Einer fehlt.",
   "%s digs up a few coins and drops them at your feet. %d coins!": "%s gräbt ein paar Münzen aus und legt sie dir vor die Füße. %d Münzen!",
   "%s eats something off the path. It seems fine. Probably.": "%s frisst etwas vom Weg. Es scheint ihm gut zu gehen. Vermutlich.",
   "%s glares at a bush as if it owes money.": "%s starrt einen Busch an, als schulde er ihm Geld.",
   "%s hides behind your boot from a leaf.": "%s versteckt sich hinter deinem Stiefel vor einem Blatt.",
   "%s hums a cheerful dirge.": "%s summt ein fröhliches Klagelied.",
+  "%s hums your name under its breath, slightly off key.": "%s summt leise deinen Namen, ein bisschen schief.",
   "%s keeps pace, calm as a closed coffin.": "%s hält Schritt, ruhig wie ein geschlossener Sarg.",
   "%s leans against your leg for a moment.": "%s lehnt sich kurz an dein Bein.",
   "%s mutters the names of everyone you let fall. Yours is on the list too.": "%s murmelt die Namen aller, die du fallen gelassen hast. Deiner steht auch auf der Liste.",
@@ -28,6 +30,8 @@
   "%s struts like it won the last battle alone.": "%s stolziert, als hätte es den letzten Kampf allein gewonnen.",
   "%s walks a little too close behind you. Like a knife does.": "%s geht etwas zu dicht hinter dir. So wie ein Messer.",
   "%s walks exactly in your footprints, just in case.": "%s tritt genau in deine Fußspuren, sicher ist sicher.",
-  "%s watches the clouds drift and judges none of them.": "%s sieht den Wolken nach und verurteilt keine davon."
+  "%s walks so close it treads on your shadow. On purpose, and fondly.": "%s geht so dicht, dass es auf deinen Schatten tritt. Mit Absicht, und voller Zuneigung.",
+  "%s watches the clouds drift and judges none of them.": "%s sieht den Wolken nach und verurteilt keine davon.",
+  "%s would follow you into a grave. It has checked which one.": "%s würde dir bis ins Grab folgen. Es hat schon nachgesehen, in welches."
  }
 }

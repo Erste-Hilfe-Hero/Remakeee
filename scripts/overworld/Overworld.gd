@@ -1084,10 +1084,11 @@ func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
 			return
 		Burrow.claim()
 		Sound.sfx("pickup")
-	var pawned: String = Burrow.visit(DailyFind.today_key())
-	if not pawned.is_empty():
+	var squat: Dictionary = Burrow.visit(DailyFind.today_key(), GameState.rng)
+	if not squat.is_empty():
 		menu.visible = false
-		await say([Loc.t(str(Burrow.data().squatter)) % Loc.t(str(Burrow.trophy(pawned).name))] as Array[String])
+		Sound.sfx("pickup")
+		await say([str(squat.note), Loc.t(str(Burrow.data().rent_line)) % int(squat.coins)] as Array[String])
 		menu.visible = true
 	while true:
 		var ids: Array[String] = Burrow.earned_ids()

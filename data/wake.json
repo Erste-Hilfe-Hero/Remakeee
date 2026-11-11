@@ -1,5 +1,5 @@
 {
- "_comment": "The Wake: a funeral show in Gravers' Hall. One Spirling performs one art before three mourners; each likes and hates some elements. Read by scripts/core/Wake.gd. Once a day. The Heir takes bribes and sometimes reads them out loud (betray_chance), and then the whole score is zero.",
+ "_comment": "The Wake: a funeral show in Gravers' Hall. One Spirling performs one art before three mourners; each likes and hates some elements. Read by scripts/core/Wake.gd. Once a day. The Heir takes bribes and sometimes reads them out loud (betray_chance): then the bribe bonus is lost and one of exposed_lines is read, the score is otherwise unchanged (never worse than not bribing). The coins are gone either way.",
  "base": 1,
  "like_bonus": 3,
  "hate_malus": 2,
@@ -9,14 +9,66 @@
  "bribe_bonus": 4,
  "betray_chance": 0.35,
  "prize_coins": 600,
- "deceased": ["Old Moss-Uncle Brem", "Widow Hask's third husband", "A very rich stranger", "The man who sold the bridge twice"],
+ "deceased": [
+  "Old Moss-Uncle Brem",
+  "Widow Hask's third husband",
+  "A very rich stranger",
+  "The man who sold the bridge twice"
+ ],
  "mourners": [
-  {"id": "widow", "name": "The Widow", "likes": ["Umbra", "Tide"], "hates": ["Lumen"], "like_line": "The Widow dabs her eyes. Lovely. Gloomy.", "hate_line": "The Widow: Too cheerful. Nobody is sad enough."},
-  {"id": "undertaker", "name": "The Undertaker", "likes": ["Stone", "Bloom"], "hates": ["Ember"], "like_line": "The Undertaker nods. It suits the soil.", "hate_line": "The Undertaker: No fire near the coffin, please."},
-  {"id": "heir", "name": "The Heir", "likes": ["Lumen", "Volt"], "hates": ["Umbra"], "like_line": "The Heir smiles at the will. Bright future!", "hate_line": "The Heir yawns. Get on with the reading of the will."}
+  {
+   "id": "widow",
+   "name": "The Widow",
+   "likes": [
+    "Umbra",
+    "Tide"
+   ],
+   "hates": [
+    "Lumen"
+   ],
+   "like_line": "The Widow dabs her eyes. Lovely. Gloomy.",
+   "hate_line": "The Widow: Too cheerful. Nobody is sad enough."
+  },
+  {
+   "id": "undertaker",
+   "name": "The Undertaker",
+   "likes": [
+    "Stone",
+    "Bloom"
+   ],
+   "hates": [
+    "Ember"
+   ],
+   "like_line": "The Undertaker nods. It suits the soil.",
+   "hate_line": "The Undertaker: No fire near the coffin, please."
+  },
+  {
+   "id": "heir",
+   "name": "The Heir",
+   "likes": [
+    "Lumen",
+    "Volt"
+   ],
+   "hates": [
+    "Umbra"
+   ],
+   "like_line": "The Heir smiles at the will. Bright future!",
+   "hate_line": "The Heir yawns. Get on with the reading of the will."
+  }
  ],
  "rivals": [
-  {"name": "Cousin Edda", "score": 6},
-  {"name": "A hired mourner", "score": 9}
+  {
+   "name": "Cousin Edda",
+   "score": 6
+  },
+  {
+   "name": "A hired mourner",
+   "score": 9
+  }
+ ],
+ "exposed_lines": [
+  "The Heir stands up: \"This Wayfarer paid me. How touching.\" Your bribe bonus is buried with the deceased.",
+  "The Heir reads your coins out loud like a second will. The mourners pretend not to hear. The bonus is gone.",
+  "The Heir pockets the coins, then betrays you anyway. Family tradition. No bonus for you."
  ]
 }

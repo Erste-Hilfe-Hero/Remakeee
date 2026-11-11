@@ -41,18 +41,21 @@ func test_gloomy_art_scores_more_than_fire() -> void:
 	var fire: int = Wake.perform(s, Database.move("Cinder Nip"), false, _rng(3)).score
 	assert_gt(tide, fire)
 
-func test_bribe_either_helps_or_betrays() -> void:
+func test_bribe_is_never_worse_than_no_bribe() -> void:
 	var s: Spirling = _mon("Puddlet")
 	var art: MoveData = Database.move("Undertow")
+	var bonus: int = int(Wake.data().bribe_bonus)
 	var seen: Dictionary = {}
 	for i: int in 40:
-		var plain: int = Wake.perform(s, art, false, _rng(i)).score
+		var plain: Dictionary = Wake.perform(s, art, false, _rng(i))
 		var r: Dictionary = Wake.perform(s, art, true, _rng(i))
+		assert_gte(int(r.score), int(plain.score))
+		assert_true(bool(r.won) or not bool(plain.won), "a bribe never loses a won wake")
 		if r.betrayed:
-			assert_eq(int(r.score), 0)
-			assert_false(r.won)
+			assert_eq(int(r.score), int(plain.score), "exposed: only the bonus is lost")
 			seen["betrayed"] = true
 		else:
+			assert_eq(int(r.score), int(plain.score) + bonus)
 			seen["helped"] = true
 	assert_eq(seen.size(), 2, "both outcomes happen over 40 wakes")
 
@@ -86,5 +89,6 @@ func test_german_for_every_line() -> void:
 		lines.append_array([m.name, m.like_line, m.hate_line])
 	for r: Dictionary in d.rivals:
 		lines.append(r.name)
+	lines.append_array(d.exposed_lines)
 	for line: Variant in lines:
 		assert_true(de.has(str(line)), "German missing: " + str(line))

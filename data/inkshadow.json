@@ -1,21 +1,54 @@
 {
- "_comment": "Inkshadow: the lead Spirling walks one step behind the Wayfarer and mutters a remark now and then. Read by scripts/core/Inkshadow.gd. A battle the lead ends fainted adds one grudge mark; from grudge_sour marks on, its remarks come from the sour pool. A Spirling with no grudge sometimes finds coins.",
+ "_comment": "Inkshadow: the lead Spirling walks one step behind the Wayfarer and mutters a remark now and then. Read by scripts/core/Inkshadow.gd. A battle a Spirling ends fainted adds one grudge mark; from grudge_sour marks on, its remarks come from the sour pool. The grudge is flavour only, never a penalty. A battle it ends standing adds a bond mark; from bond_warm marks on it says warm lines and finds coins more often (find_chance_warm instead of find_chance).",
  "remark_every": 40,
  "grudge_sour": 3,
  "grudge_max": 9,
  "find_chance": 0.25,
  "find_coins": 30,
+ "bond_warm": 5,
+ "bond_max": 9,
+ "find_chance_warm": 0.4,
  "remarks": {
-  "fierce": ["%s glares at a bush as if it owes money.", "%s practises biting the air. The air loses."],
-  "stalwart": ["%s plants its feet. Nothing is attacking. It plants them anyway.", "%s walks exactly in your footprints, just in case."],
-  "keen": ["%s counts the fence posts. Twice. One is missing.", "%s stares at the map ink until it smudges."],
-  "brisk": ["%s runs ahead, runs back, and pretends it never left.", "%s sighs at your walking pace."],
-  "hearty": ["%s eats something off the path. It seems fine. Probably.", "%s hums a cheerful dirge."],
-  "even": ["%s keeps pace, calm as a closed coffin.", "%s watches the clouds drift and judges none of them."],
-  "curious": ["%s sniffs a grave marker and looks very interested.", "%s prods a puddle. The puddle prods back."],
-  "shy": ["%s hides behind your boot from a leaf.", "%s steps on your shadow so nobody sees it."],
-  "proud": ["%s struts like it won the last battle alone.", "%s nods at strangers as if they owe it a bow."],
-  "gentle": ["%s steers a beetle off the path.", "%s leans against your leg for a moment."]
+  "fierce": [
+   "%s glares at a bush as if it owes money.",
+   "%s practises biting the air. The air loses."
+  ],
+  "stalwart": [
+   "%s plants its feet. Nothing is attacking. It plants them anyway.",
+   "%s walks exactly in your footprints, just in case."
+  ],
+  "keen": [
+   "%s counts the fence posts. Twice. One is missing.",
+   "%s stares at the map ink until it smudges."
+  ],
+  "brisk": [
+   "%s runs ahead, runs back, and pretends it never left.",
+   "%s sighs at your walking pace."
+  ],
+  "hearty": [
+   "%s eats something off the path. It seems fine. Probably.",
+   "%s hums a cheerful dirge."
+  ],
+  "even": [
+   "%s keeps pace, calm as a closed coffin.",
+   "%s watches the clouds drift and judges none of them."
+  ],
+  "curious": [
+   "%s sniffs a grave marker and looks very interested.",
+   "%s prods a puddle. The puddle prods back."
+  ],
+  "shy": [
+   "%s hides behind your boot from a leaf.",
+   "%s steps on your shadow so nobody sees it."
+  ],
+  "proud": [
+   "%s struts like it won the last battle alone.",
+   "%s nods at strangers as if they owe it a bow."
+  ],
+  "gentle": [
+   "%s steers a beetle off the path.",
+   "%s leans against your leg for a moment."
+  ]
  },
  "sour": [
   "%s walks a little too close behind you. Like a knife does.",
@@ -23,5 +56,13 @@
   "%s steps on your heel. Twice. On purpose.",
   "%s practises a farewell speech. It is about you."
  ],
- "finds": ["%s digs up a few coins and drops them at your feet. %d coins!"]
+ "warm": [
+  "%s walks so close it treads on your shadow. On purpose, and fondly.",
+  "%s brings you a dead beetle. It is a gift. Say thank you.",
+  "%s would follow you into a grave. It has checked which one.",
+  "%s hums your name under its breath, slightly off key."
+ ],
+ "finds": [
+  "%s digs up a few coins and drops them at your feet. %d coins!"
+ ]
 }

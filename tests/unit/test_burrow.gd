@@ -34,18 +34,27 @@ func test_hang_rules() -> void:
 	Burrow.take_down("tide_seal")
 	assert_true(Burrow.hang("veydal_map"))
 
-func test_squatter_pawns_last_trophy_after_long_absence() -> void:
+func _rng() -> RandomNumberGenerator:
+	var r := RandomNumberGenerator.new()
+	r.seed = 5
+	return r
+
+func test_squatter_leaves_rent_and_takes_nothing() -> void:
 	GameState.set_flag("rift_cinder_sealed")
 	GameState.set_flag("rift_tide_sealed")
 	Burrow.hang("cinder_seal")
 	Burrow.hang("tide_seal")
-	assert_eq(Burrow.visit("2026-11-01"), "", "first visit")
-	assert_eq(Burrow.visit("2026-11-03"), "", "short absence")
+	assert_true(Burrow.visit("2026-11-01", _rng()).is_empty(), "first visit")
+	assert_true(Burrow.visit("2026-11-03", _rng()).is_empty(), "short absence")
 	var days: int = int(Burrow.data().squatter_days)
 	var later: String = Time.get_date_string_from_unix_time(Time.get_unix_time_from_datetime_string("2026-11-03") + days * 86400)
-	assert_eq(Burrow.visit(later), "tide_seal")
-	assert_eq(Burrow.wall(), ["cinder_seal"] as Array[String])
-	assert_true("tide_seal" in Burrow.earned_ids(), "pawned, but still earned")
+	var money: int = GameState.money
+	var got: Dictionary = Burrow.visit(later, _rng())
+	assert_gt(int(Burrow.data().rent_coins), 0)
+	assert_eq(int(got.coins), int(Burrow.data().rent_coins))
+	assert_eq(GameState.money, money + int(Burrow.data().rent_coins), "rent is a gift")
+	assert_ne(str(got.note), "")
+	assert_eq(Burrow.wall(), ["cinder_seal", "tide_seal"] as Array[String], "trophies are never lost")
 
 func test_hollow_is_on_the_map() -> void:
 	var m: MapData = MapData.load_map("murk_hollow")
@@ -54,7 +63,9 @@ func test_hollow_is_on_the_map() -> void:
 
 func test_german_for_every_trophy() -> void:
 	var de: Dictionary = Loc.load_table("de").strings
-	assert_true(de.has(str(Burrow.data().squatter)))
+	assert_true(de.has(str(Burrow.data().rent_line)))
+	for line: Variant in Burrow.data().squatter_notes:
+		assert_true(de.has(str(line)), "German missing: " + str(line))
 	for t: Dictionary in Burrow.data().trophies:
 		assert_true(de.has(str(t.name)), "German missing: " + str(t.name))
 		assert_true(de.has(str(t.text)), "German missing: " + str(t.text))

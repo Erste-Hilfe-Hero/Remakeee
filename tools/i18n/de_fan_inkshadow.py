@@ -24,6 +24,10 @@ T = {
 "%s mutters the names of everyone you let fall. Yours is on the list too.": "%s murmelt die Namen aller, die du fallen gelassen hast. Deiner steht auch auf der Liste.",
 "%s steps on your heel. Twice. On purpose.": "%s tritt dir auf die Ferse. Zweimal. Mit Absicht.",
 "%s practises a farewell speech. It is about you.": "%s übt eine Abschiedsrede. Sie handelt von dir.",
+"%s walks so close it treads on your shadow. On purpose, and fondly.": "%s geht so dicht, dass es auf deinen Schatten tritt. Mit Absicht, und voller Zuneigung.",
+"%s brings you a dead beetle. It is a gift. Say thank you.": "%s bringt dir einen toten Käfer. Es ist ein Geschenk. Sag danke.",
+"%s would follow you into a grave. It has checked which one.": "%s würde dir bis ins Grab folgen. Es hat schon nachgesehen, in welches.",
+"%s hums your name under its breath, slightly off key.": "%s summt leise deinen Namen, ein bisschen schief.",
 "%s digs up a few coins and drops them at your feet. %d coins!": "%s gräbt ein paar Münzen aus und legt sie dir vor die Füße. %d Münzen!",
 }
 KEEP = ["Inkshadow"]
