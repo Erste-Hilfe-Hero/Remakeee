@@ -4980,11 +4980,11 @@
   "line_id": "rollib",
   "era": 1,
   "base": {
-   "hp": 104,
-   "atk": 94,
-   "foc": 73,
-   "spd": 62,
-   "def": 119
+   "hp": 101,
+   "atk": 93,
+   "foc": 72,
+   "spd": 60,
+   "def": 117
   },
   "trait": "kindling",
   "learnset": {
@@ -6201,8 +6201,7 @@
   "dex_id": 109,
   "name": "Ardlet",
   "elements": [
-   "EMBER",
-   "LUMEN"
+   "EMBER"
   ],
   "rarity": "common",
   "region": "solenne",
@@ -6210,11 +6209,11 @@
   "line_id": "ardlet",
   "era": 1,
   "base": {
-   "hp": 71,
-   "atk": 54,
-   "foc": 73,
-   "spd": 68,
-   "def": 55
+   "hp": 69,
+   "atk": 53,
+   "foc": 72,
+   "spd": 67,
+   "def": 54
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -6263,8 +6262,7 @@
   "dex_id": 110,
   "name": "Ardlume",
   "elements": [
-   "EMBER",
-   "LUMEN"
+   "EMBER"
   ],
   "rarity": "uncommon",
   "region": "solenne",
@@ -6272,11 +6270,11 @@
   "line_id": "ardlet",
   "era": 1,
   "base": {
-   "hp": 93,
-   "atk": 70,
-   "foc": 110,
-   "spd": 105,
-   "def": 75
+   "hp": 88,
+   "atk": 68,
+   "foc": 106,
+   "spd": 101,
+   "def": 72
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -6325,8 +6323,7 @@
   "dex_id": 111,
   "name": "Ardenthal",
   "elements": [
-   "EMBER",
-   "LUMEN"
+   "EMBER"
   ],
   "rarity": "shy",
   "region": "solenne",
@@ -6380,7 +6377,7 @@
    1,
    0
   ],
-  "keepsake_hint": "keen_lens"
+  "keepsake_hint": "spark_coil"
  },
  {
   "dex_id": 112,
@@ -6889,11 +6886,11 @@
   "line_id": "velvit",
   "era": 1,
   "base": {
-   "hp": 88,
-   "atk": 60,
-   "foc": 103,
-   "spd": 76,
-   "def": 76
+   "hp": 90,
+   "atk": 62,
+   "foc": 105,
+   "spd": 77,
+   "def": 78
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -8119,7 +8116,7 @@
    "atk": 63,
    "foc": 48,
    "spd": 77,
-   "def": 38
+   "def": 39
   },
   "trait": "slick",
   "learnset": {
@@ -8293,11 +8290,11 @@
   "line_id": "gyrevult",
   "era": 1,
   "base": {
-   "hp": 69,
-   "atk": 105,
-   "foc": 70,
-   "spd": 112,
-   "def": 61
+   "hp": 65,
+   "atk": 100,
+   "foc": 67,
+   "spd": 106,
+   "def": 58
   },
   "trait": "last_stand",
   "learnset": {
@@ -8351,10 +8348,10 @@
   "era": 1,
   "base": {
    "hp": 95,
-   "atk": 77,
-   "foc": 107,
-   "spd": 96,
-   "def": 71
+   "atk": 75,
+   "foc": 104,
+   "spd": 94,
+   "def": 69
   },
   "trait": "kindling",
   "learnset": {

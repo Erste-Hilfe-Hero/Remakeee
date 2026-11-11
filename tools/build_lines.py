@@ -147,7 +147,7 @@ def build_species(region, line, pools):
             "role": line["role"],
             "line_id": line["id"],
             "era": 1,
-            "base": stats(line["role"], TOTALS[n][i] + (seed % 11) - 5, seed),
+            "base": stats(line["role"], round((TOTALS[n][i] + (seed % 11) - 5) * line.get("power", 1.0)), seed),
             "trait": line["_trait"],
             "learnset": learnset(line, stage, n, pools, name),
             "bond_rate": round(lo + (hi - lo) * ((seed >> 8) % 5) / 4, 2),
@@ -238,7 +238,8 @@ def main():
             kept.append(dict({"dex_id": nxt}, **sp))
             nxt += 1
     if "--no-tune" not in sys.argv:
-        tune(region, kept, [n for line in mod.LINES for n in line["names"]])
+        # Lines with a hand-set "power" were placed by the full Godot sim and keep their totals.
+        tune(region, kept, [n for line in mod.LINES if "power" not in line for n in line["names"]])
     with open(os.path.join(ROOT, "data/spirlings.json"), "w", encoding="utf-8") as f:
         json.dump(kept, f, ensure_ascii=False, indent=1)
         f.write("\n")

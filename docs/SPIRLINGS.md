@@ -134,7 +134,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 88 | Rollib | Lumen/Stone | common | bulwark | kindling | 334 | Rollibex (ring 17) |
-| 89 | Rollibex | Lumen/Stone | uncommon | bulwark | kindling | 452 | Helirollax (ring 35) |
+| 89 | Rollibex | Lumen/Stone | uncommon | bulwark | kindling | 443 | Helirollax (ring 35) |
 | 90 | Helirollax | Lumen/Stone | shy | bulwark | kindling | 499 | - |
 | 91 | Sirocub | Gale | common | striker | slick | 283 | Sirocat (ring 16) |
 | 92 | Sirocat | Gale | uncommon | striker | slick | 400 | Siroclaw (ring 36) |
@@ -154,9 +154,9 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 106 | Ergfin | Gale/Tide | common | striker | slick | 270 | Ergskim (ring 18) |
 | 107 | Ergskim | Gale/Tide | uncommon | striker | slick | 378 | Ergrava (ring 32) |
 | 108 | Ergrava | Gale/Tide | shy | striker | slick | 421 | - |
-| 109 | Ardlet | Ember/Lumen | common | kindler | light_sleeper | 321 | Ardlume (ring 17) |
-| 110 | Ardlume | Ember/Lumen | uncommon | kindler | light_sleeper | 453 | Ardenthal (ring 33) |
-| 111 | Ardenthal | Ember/Lumen | shy | kindler | light_sleeper | 515 | - |
+| 109 | Ardlet | Ember | common | kindler | light_sleeper | 315 | Ardlume (ring 17) |
+| 110 | Ardlume | Ember | uncommon | kindler | light_sleeper | 435 | Ardenthal (ring 33) |
+| 111 | Ardenthal | Ember | shy | kindler | light_sleeper | 515 | - |
 | 112 | Fulgrit | Volt/Stone | common | vanguard | deep_roots | 312 | Fulgorin (ring 16) |
 | 113 | Fulgorin | Volt/Stone | uncommon | vanguard | deep_roots | 415 | Fulgorath (ring 32) |
 | 114 | Fulgorath | Volt/Stone | shy | vanguard | deep_roots | 515 | - |
@@ -165,7 +165,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 117 | Caravault | Stone/Tide | shy | bulwark | thick_hide | 463 | - |
 | 118 | Velvit | Umbra/Gale | common | weaver | light_sleeper | 272 | Velvessa (ring 16) |
 | 119 | Velvessa | Umbra/Gale | uncommon | weaver | light_sleeper | 371 | Velverain (ring 36) |
-| 120 | Velverain | Umbra/Gale | shy | weaver | light_sleeper | 403 | - |
+| 120 | Velverain | Umbra/Gale | shy | weaver | light_sleeper | 412 | - |
 | 121 | Clasplet | Umbra/Stone | common | striker | slick | 302 | Claspirant (ring 17) |
 | 122 | Claspirant | Umbra/Stone | uncommon | striker | slick | 404 | Claspreign (ring 32) |
 | 123 | Claspreign | Umbra/Stone | shy | striker | slick | 506 | - |
@@ -185,11 +185,11 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 137 | Hazejellith | Gale/Lumen | shy | weaver | light_sleeper | 435 | - |
 | 138 | Corocub | Ember/Lumen | uncommon | vanguard | surge | 329 | Coronarch (ring 29) |
 | 139 | Coronarch | Ember/Lumen | shy | vanguard | surge | 468 | - |
-| 140 | Chirrik | Gale/Bloom | uncommon | striker | slick | 275 | Chirrikade (ring 27) |
+| 140 | Chirrik | Gale/Bloom | uncommon | striker | slick | 276 | Chirrikade (ring 27) |
 | 141 | Chirrikade | Gale/Bloom | shy | striker | slick | 426 | - |
 | 142 | Brinewhorl | Tide/Stone | uncommon | weaver | steady | 420 | - |
-| 143 | Gyrevult | Umbra/Gale | uncommon | striker | last_stand | 417 | - |
-| 144 | Heliodrop | Ember | uncommon | kindler | kindling | 446 | - |
+| 143 | Gyrevult | Umbra/Gale | uncommon | striker | last_stand | 396 | - |
+| 144 | Heliodrop | Ember | uncommon | kindler | kindling | 437 | - |
 | 145 | Duskmirrah | Umbra/Lumen | uncommon | weaver | deep_roots | 390 | - |
 <!-- /lines:solenne -->
 
