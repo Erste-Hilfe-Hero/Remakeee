@@ -4,8 +4,31 @@
   "lines": [
    "Wren: Welcome to the Crooked Kettle. Rooms by the night, secrets by the hour.",
    "Wren: Two clans eat in my dining room. Haus Marrovel by the window, the Ruskwebers by the door.",
+   "Wren: Window, so they can be seen. Door, so they can leave fast. Tells you everything, really.",
    "Wren: Marrovel keeps the old Rift pacts. The Ruskwebers keep everyone who works the mines.",
-   "Wren: My advice? Trust nobody who pays on time. That's a joke. Mostly."
+   "Wren: My advice? Trust nobody who pays on time. That's a joke. Mostly.",
+   "Wren: Now. House rules. Everyone signs the guest book. Real name, if you've got one spare."
+  ],
+  "if": {
+   "not_flag": "c1_wren_signed"
+  },
+  "else": "wren_after",
+  "flag": "c1_wren_signed",
+  "choices": [
+   {
+    "text": "Sign my real name",
+    "action": "trust wren 10; betrayal wren_book"
+   },
+   {
+    "text": "Sign a false name",
+    "flag": "c1_false_name",
+    "action": "trust wren -15; betrayal wren_book"
+   }
+  ]
+ },
+ "wren_after": {
+  "lines": [
+   "Wren: Tea's on the house. The house is very clear that it's on you, though."
   ],
   "after_flag": [
    {
@@ -30,12 +53,35 @@
    }
   ]
  },
+ "book_caught": {
+  "lines": [
+   "That night you spot Wren copying a page of her guest book into an envelope. Grey wax. Ruskweber grey.",
+   "The page with the name you made up. Somewhere a clerk is hunting a ghost with your handwriting.",
+   "Wren: Don't look at me like that, sweetheart. The Kettle has a roof. Roofs cost money."
+  ]
+ },
+ "book_struck": {
+  "lines": [
+   "That night you spot Wren copying a page of her guest book into an envelope. Grey wax. Ruskweber grey.",
+   "Your page. Your real name, neat as a gravestone.",
+   "Wren: Don't look at me like that, sweetheart. Mother Grell pays for every new face. Yours was new."
+  ]
+ },
+ "ledger_guest_book": {
+  "lines": [
+   "The Kettle's guest book",
+   "Wren sells a copy of every new page in her guest book to Mother Grell.",
+   "She calls it the rent that keeps the roof on. The roof has never leaked."
+  ]
+ },
  "pip": {
   "lines": [
    "Pip: You're the map kid. Good. Maps don't gossip.",
    "Pip: Last night I fought a Ruskweber Spirling at the Rift edge. Clan duels are banned.",
+   "Pip: Banned like sweets before dinner. Everyone does it, nobody gets caught. Until me.",
    "Pip: It lost. Then it went silent, like the Hush took it, and walked into the Rift.",
-   "Pip: Its breeder ran in after it. Neither came out. Help me keep this quiet?"
+   "Pip: Its breeder ran in after it. Neither came out. Help me keep this quiet?",
+   "Pip: Choose fast, map kid. In this town a secret has the shelf life of milk."
   ],
   "if": {
    "not_flag": "c1_pip_choice"
@@ -57,7 +103,8 @@
  },
  "pip_after": {
   "lines": [
-   "Pip: Someone slipped a note under my door that night. 'Duel at the Rift edge. Win.' No name."
+   "Pip: Someone slipped a note under my door that night. 'Duel at the Rift edge. Win.' No name.",
+   "Pip: The ink smelled of lavender. Nobody in my family wears lavender. Nobody admits it, anyway."
   ],
   "after_flag": [
    {
@@ -107,7 +154,8 @@
  "vash": {
   "lines": [
    "Vash: Warden Ilo Vash, Clan Duels Office. Complaints are taken at noon.",
-   "Vash: The office closes at noon."
+   "Vash: The office closes at noon.",
+   "Vash: Don't make that face. Honest men starve in this valley. I have a very full face."
   ],
   "next": "vash_offer"
  },
@@ -171,6 +219,7 @@
   "lines": [
    "Fenrick: Fenrick Kael, head of Haus Marrovel. You may admire the portrait later.",
    "Fenrick: It shows my Spirling. I'm in the corner. Modesty.",
+   "Fenrick: You helped my grandson. Family pays its debts, child. Usually with other people's coins.",
    "Fenrick: Take this sealed letter to the ferry post. Do not read it. Reading is for clerks."
   ],
   "if": {
@@ -199,7 +248,8 @@
  "fenrick_caught": {
   "lines": [
    "You burn the letter. Somewhere a Ruskweber waits for post that never comes.",
-   "Fenrick: Lost in the mail? Pity. The mail is so unreliable these days."
+   "Fenrick: Lost in the mail? Pity. The mail is so unreliable these days.",
+   "Fenrick: No hard feelings, child. It was business. You were the cheapest thing in the room."
   ]
  },
  "fenrick_struck": {
@@ -226,7 +276,11 @@
    "Aldra: The valley calls us the strangers from the map's edge. We call that rude.",
    "Aldra: The clans hire us because nobody here owes us anything. Yet."
   ],
-  "next": "aldra_warn"
+  "next": "aldra_warn",
+  "if": {
+   "not_flag": "clan_b2"
+  },
+  "else": "aldra_price"
  },
  "aldra_warn": {
   "lines": [
@@ -238,9 +292,56 @@
   },
   "flag": "c1_aldra_warned"
  },
+ "aldra_price": {
+  "lines": [
+   "Aldra: Still breathing? Then my warning worked. Or Fenrick's aim is bad. Either way, you're welcome.",
+   "Aldra: Funny thing, though. Somebody paid me to warn you. Somebody with lavender on her gloves."
+  ],
+  "if": {
+   "not_flag": "c1_aldra_paid"
+  },
+  "else": "aldra_after",
+  "flag": "c1_aldra_paid",
+  "choices": [
+   {
+    "text": "Thanks. I owe you",
+    "action": "trust aldra 10; betrayal aldra_sale"
+   },
+   {
+    "text": "You knew all along?",
+    "action": "trust aldra -20; betrayal aldra_sale"
+   }
+  ]
+ },
+ "aldra_after": {
+  "lines": [
+   "Aldra: Owing is the only honest thing in this valley. Everything else is a rumour with a price tag."
+  ]
+ },
+ "aldra_kept": {
+  "lines": [
+   "Aldra: Fenrick offered me forty coins to tell him you read his letter. I told him to post it himself.",
+   "Aldra: Don't get sentimental. Forty is an insult. Ask me again at a hundred."
+  ]
+ },
+ "aldra_sold": {
+  "lines": [
+   "Aldra: Fenrick offered me forty coins to tell him you read his letter.",
+   "Aldra: You called me a liar, so I took the coins. Fair's fair. Now he knows you know.",
+   "Aldra: Cheer up. Being hunted by a patriarch is basically a promotion around here."
+  ]
+ },
+ "ledger_aldra_sale": {
+  "lines": [
+   "Two warnings, one wage",
+   "Someone with lavender gloves paid Aldra to warn you about Fenrick's letter.",
+   "Fenrick offered her more to report that you read it. Whether she took it depended on you."
+  ]
+ },
  "lipka": {
   "lines": [
    "Lipka: Lipka, from beyond the edge. I sell tips. True ones cost extra.",
+   "Lipka: Lies are free. I'm practically a charity.",
    "Lipka: Free sample: something rare sleeps behind the old mill tonight. Believe me?"
   ],
   "if": {
@@ -281,7 +382,8 @@
  "kenan": {
   "lines": [
    "Kenan: Kenan. Edge-born, Rift runner. The clans pay me to scout the Cinder Rift.",
-   "Kenan: My Spirling is hurt. Lend me your lead one for a single run? Back by dusk."
+   "Kenan: My Spirling is hurt. Lend me your lead one for a single run? Back by dusk.",
+   "Kenan: Word of honour. I've got loads of it. Barely used."
   ],
   "if": {
    "not_flag": "favor_kenan_lend"
@@ -321,7 +423,8 @@
  "nail": {
   "lines": [
    "Nail: Nail. Edge-born. I'm opening a tea stall for the Rift workers.",
-   "Nail: I'm 200 coins short. I pay back with interest. Don't ask around. They'd lie."
+   "Nail: I'm 200 coins short. I pay back with interest. Don't ask around. They'd lie.",
+   "Nail: Everyone lies here, mate. I just do it with a cup and saucer."
   ],
   "if": {
    "not_flag": "favor_nail_loan"
@@ -361,6 +464,7 @@
   "lines": [
    "Mother Grell: Mother Grell. I lead the Ruskwebers, since nobody else would.",
    "Mother Grell: A Marrovel brat sent my best breeder into a Rift. I wear black now. It suits me.",
+   "Mother Grell: Don't flinch, little map. I don't hate children. I just invoice their families.",
    "Mother Grell: Carry a warning to my apprentice in the Woadfen? You have an honest face. For now."
   ],
   "if": {
@@ -407,6 +511,7 @@
  "sable": {
   "lines": [
    "Sable: Sable Ruskweber. Grell's nephew. The family's good side. I have two.",
+   "Sable: Aunt Grell grieves loudly. I grieve profitably. We all cope differently.",
    "Sable: Friends tell each other things. So, friend: the Woadfen road is watched."
   ],
   "next": "sable_tip"
@@ -448,6 +553,7 @@
   "lines": [
    "Farida: Farida. Edge-born. I lodged at Wren's place in Veydal all last year.",
    "Farida: Lovely woman. Never asks where her guests go at night.",
+   "Farida: She just writes it down. Habit. Like breathing, but with ink.",
    "Farida: I'm 400 coins short for the ferry home. Help a fellow traveller?"
   ],
   "if": {
@@ -482,6 +588,7 @@
  "amir": {
   "lines": [
    "Amir: Amir. Edge-born. I know eggs. Smuggled ones, mostly.",
+   "Amir: In Corvane even the eggs have alibis.",
    "Amir: If Mother Grell sends anyone a gift, have it looked at. Eggs travel in odd places."
   ],
   "flag": "c2_gift_warned",
@@ -495,7 +602,7 @@
   "if": {
    "flag": "c2_grell_met"
   },
-  "action": "ledger guest_spy; trust farida -10"
+  "action": "ledger guest_spy; trust farida -10; betrayal wren_keys"
  },
  "ledger_guest_spy": {
   "lines": [
@@ -507,6 +614,7 @@
  "brannoc": {
   "lines": [
    "Brannoc: Brannoc Kael. Former Rift gladiator. Current disappointment.",
+   "Brannoc: Mother says I'm the heir. She says it the way people say 'the rash'.",
    "Brannoc: Father wants the Woadfen routes drawn up. You're the map kid. Draw them for me?"
   ],
   "if": {
@@ -536,7 +644,8 @@
  },
  "brannoc_struck": {
   "lines": [
-   "On the Woadfen road the Ruskwebers know every bend you drew. Brannoc sold your map before the ink dried."
+   "On the Woadfen road the Ruskwebers know every bend you drew. Brannoc sold your map before the ink dried.",
+   "A Ruskweber hand taps your own map. 'Lovely linework. Shame about the artist.'"
   ]
  },
  "ledger_routes": {
@@ -550,7 +659,8 @@
   "lines": [
    "Elma: Elma. Edge-born. I cook for the Kaels. Nobody else will, since the last feast.",
    "Elma: Brannoc dined with a Ruskweber trader. The soup was excellent. Except for the guest.",
-   "Elma: Ottilie seasoned it herself. Brannoc had to watch. He hasn't been family since."
+   "Elma: Ottilie seasoned it herself. Brannoc had to watch. He hasn't been family since.",
+   "Elma: The trader left Corvane that night. Sleepy. Very sleepy. On a cart going nowhere nice."
   ],
   "action": "ledger feast",
   "next": "elma_warn"
@@ -576,6 +686,7 @@
  "heider": {
   "lines": [
    "Heider: Heider. Edge-born. I sell news to both clans. Same price. I'm fair.",
+   "Heider: Fairness is my brand. Betrayal is just my delivery service.",
    "Heider: Fresh one, free: Ottilie means to sacrifice one of her own Wardens. Believe it?"
   ],
   "if": {
@@ -610,13 +721,15 @@
  "morrow": {
   "lines": [
    "Morrow: Warden Captain Dace Morrow. I investigate Haus Marrovel. Thoroughly.",
-   "Morrow: I also take Ottilie's coins. And Fenrick's. I keep two tills."
+   "Morrow: I also take Ottilie's coins. And Fenrick's. I keep two tills.",
+   "Morrow: The law is a scale, kid. I just make sure both sides pay to stand on it."
   ]
  },
  "ottilie": {
   "lines": [
    "Ottilie: Ottilie Kael. The orphans call me Aunt. The Wardens call me Ma'am.",
-   "Ottilie: Fenrick calls me later. I'm always there later."
+   "Ottilie: Fenrick calls me later. I'm always there later.",
+   "Ottilie: Lavender? Thank you, dear. I wear it to funerals. I go to a great many."
   ],
   "if": {
    "not_flag": "clan_b3"
@@ -637,9 +750,10 @@
  "ottilie_after": {
   "lines": [
    "Ottilie: The war? I ordered it, dear. Fenrick needed a war to look small in.",
-   "Ottilie: Write that in your little book. I keep a bigger one."
+   "Ottilie: Write that in your little book. I keep a bigger one.",
+   "Ottilie: Speaking of your little book. Pip brought me something this morning."
   ],
-  "action": "ledger war"
+  "action": "ledger war; betrayal pip_ledger"
  },
  "gift_caught": {
   "lines": [
@@ -681,6 +795,46 @@
    "The ordered war",
    "The clan war was no accident. Ottilie ordered it, to bring down her own husband.",
    "Someone sent Pip to that duel. The ink was hers."
+  ]
+ },
+ "pip_kept": {
+  "lines": [
+   "Ottilie opens her hand. Ash. Fine grey ash, the kind a cold breeding oven makes.",
+   "Ottilie: Pip copied your Ledger for me, then burned the copy on my doorstep. The child has manners after all.",
+   "Ottilie: Loyalty to a stranger. How very expensive of him. I'll send him the bill."
+  ]
+ },
+ "pip_sold": {
+  "lines": [
+   "Ottilie opens a stack of pages. Your Ledger, every entry, copied out in Pip's round handwriting.",
+   "Ottilie: You reported his duel, dear. He reported you. Children learn so fast.",
+   "Ottilie: He wanted a smile from his grandmother. I gave him two. They were free."
+  ]
+ },
+ "ledger_pip_copy": {
+  "lines": [
+   "The copied Ledger",
+   "Pip copied your Ledger for Ottilie. What he did with the copy depended on what you did with his duel."
+  ]
+ },
+ "keys_kept": {
+  "lines": [
+   "Amir: One more thing. Farida's last letter to Grell had a second note folded inside.",
+   "Amir: Wren's hand. 'The kid is mine. Sell anyone else. W.' Grell burned it. I didn't."
+  ]
+ },
+ "keys_struck": {
+  "lines": [
+   "Amir: One more thing. Farida's last letter to Grell had a wax impression folded inside.",
+   "Amir: A room key. Your room at the Crooked Kettle. Wren cut it when Ottilie threatened the roof.",
+   "Amir: Don't take it personally. Landladies have one true love, and it's the building."
+  ]
+ },
+ "ledger_wren_keys": {
+  "lines": [
+   "The spare key",
+   "Ottilie threatened the Crooked Kettle. Wren had to decide whose secrets were worth a roof.",
+   "How far she trusted you decided whether your room key went into Farida's post."
   ]
  },
  "vash_2": {
