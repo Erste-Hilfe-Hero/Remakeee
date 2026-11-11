@@ -361,20 +361,20 @@
    "sprite": "elder"
   },
   {
-   "id": "vs_brennick",
-   "x": 6,
-   "y": 10,
-   "facing": "down",
-   "dialogue": "veydal_side/brennick",
-   "sprite": "villager"
-  },
-  {
    "id": "vs_wicka",
    "x": 5,
    "y": 6,
    "facing": "down",
    "dialogue": "veydal_side/wicka",
    "sprite": "elder"
+  },
+  {
+   "id": "vs_brennick",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "veydal_side/brennick",
+   "sprite": "villager"
   }
  ],
  "signs": [

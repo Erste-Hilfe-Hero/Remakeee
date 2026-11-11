@@ -114,7 +114,8 @@
    "Mother Crowle: Your name's on it. He sold you to us for forty coins. Forty! I'd have paid fifty.",
    "You open the jars. Voices drift up the stairs and out into Thornridge, grumbling."
   ],
-  "action": "give_item max_tonic 2"
+  "action": "give_item max_tonic 2",
+  "flag": "vault_done"
  },
  "sallow": {
   "lines": [
@@ -176,7 +177,8 @@
    "Jinks: Ugh. Deal's a deal.",
    "Jinks: It's Vantry. The pawnbroker. Pays per day you're late. Says you'll owe him one day and he wants you skint.",
    "Jinks: Also I sold him your route. And your favourite snack. Sorry. Slow week."
-  ]
+  ],
+  "flag": "rival_jinks_done"
  },
  "jinks_3_lose": {
   "lines": [
@@ -216,7 +218,8 @@
  "bounty_b4_defeat": {
   "lines": [
    "Fabbro: My brother posted this? Of course. He wants my half of the shop. He wrote the bounty on my good paper."
-  ]
+  ],
+  "flag": "bounty_brindle_done"
  },
  "bounty_b4_lose": {
   "lines": [
@@ -345,7 +348,8 @@
  "bounty_b8_defeat": {
   "lines": [
    "Brannagh: You read the small print. Nobody reads the small print. Yes, it's me. I posted myself to collect my own reward. Twice."
-  ]
+  ],
+  "flag": "bounty_thorn_done"
  },
  "bounty_b8_lose": {
   "lines": [
@@ -496,7 +500,8 @@
  "brennick_beaten": {
   "lines": [
    "Brennick: Fine! Debts cancelled. All of them. I'll start new ones tomorrow."
-  ]
+  ],
+  "flag": "debts_done"
  },
  "brennick_lose": {
   "lines": [
@@ -612,7 +617,8 @@
  "corr_beaten": {
   "lines": [
    "Corr: Paperwork's lost. Tell Nettle she owes me a new fool."
-  ]
+  ],
+  "flag": "parcel_done"
  },
  "corr_lose": {
   "lines": [
@@ -676,7 +682,8 @@
  "gristle_beaten": {
   "lines": [
    "Mrs Gristle: Pebble has been resurrected. A miracle. The fund wants its money back. Miracles are expensive."
-  ]
+  ],
+  "flag": "funeral_done"
  },
  "gristle_lose": {
   "lines": [
