@@ -1019,9 +1019,12 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 		if turn != 0:
 			user.mirrored = turn > 0
 			user.queue_redraw()
+	if target != user:
+		BattleCamera.push(_shake_root, Rect2(user.position, user.size), Rect2(target.position, target.size))
 	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
 		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e),
 		ElementFx.after_for(mv), str(sym.symbol), second)
+	BattleCamera.release(_shake_root)
 	if user.mirrored != was_mirrored:
 		user.mirrored = was_mirrored
 		user.queue_redraw()
