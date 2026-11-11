@@ -31,6 +31,16 @@
    "facing": "down",
    "dialogue": "wren_library/librarian",
    "sprite": "elder"
+  },
+  {
+   "id": "scriptorax",
+   "x": 7,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "wren_library/scriptorax",
+   "sprite": "first_voice",
+   "show_flag": "story_complete",
+   "hide_flag": "first_voice_scriptorax_away"
   }
  ],
  "signs": [

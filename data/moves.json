@@ -1361,5 +1361,55 @@
    "foc": 1
   },
   "self": true
+ },
+ {
+  "name": "Quill Flick",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Blot Wave",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "daze",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Margin Lash",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
+  "name": "Bell Tap",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Resound",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Toll of Ages",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6
  }
 ]

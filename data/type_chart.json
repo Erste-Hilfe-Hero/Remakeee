@@ -1,5 +1,5 @@
 {
- "_doc": "Element chart (docs/BALANCE.md, Type chart). strong = elements this one hits for strong_mult. The reverse direction takes weak_mult; every other pair is neutral. Dual defenders multiply. era = first era the element appears in; Era II elements sit on no Spirling yet. A pair that beats each other (Lumen and Umbra) is neutral both ways and counts as neither strength nor weakness. Checked by tools/balance/type_sim.py and tests/unit/test_type_chart.gd: every element has at least 2 real strengths and 2 real weaknesses and no element strictly dominates another.",
+ "_doc": "Element chart (docs/BALANCE.md, Type chart). strong = elements this one hits for strong_mult. The reverse direction takes weak_mult; every other pair is neutral. Dual defenders multiply. era = first era the element appears in; Era II elements sit only on legendary (ancient) Spirlings so far. A pair that beats each other (Lumen and Umbra) is neutral both ways and counts as neither strength nor weakness. Checked by tools/balance/type_sim.py and tests/unit/test_type_chart.gd: every element has at least 2 real strengths and 2 real weaknesses and no element strictly dominates another.",
  "strong_mult": 2.0,
  "weak_mult": 0.5,
  "types": {

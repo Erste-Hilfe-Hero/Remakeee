@@ -63,6 +63,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(social_sfx())
     out.update(passage_sfx())
     out.update(grass_sfx())
+    out.update(era2_element_sfx())
     return out
 
 
@@ -279,4 +280,23 @@ def grass_sfx() -> dict[str, np.ndarray]:
     n = secs(0.14)
     blades = noise(n, 1, rng) * (rng.random(n) > 0.45)
     out["rustle"] = blades * np.sin(np.linspace(0, np.pi, n)) ** 2 * 0.35
+    return out
+
+
+def era2_element_sfx() -> dict[str, np.ndarray]:
+    """Hit and travel sounds for the Era II elements Ink and Echo (legendary Spirlings). Own
+    generator, so the older effects keep their noise."""
+    rng = np.random.default_rng(1818)
+    out: dict[str, np.ndarray] = {}
+    tt = lambda n: np.arange(n) / RATE
+    n = secs(0.22)  # Ink: a wet blot, low splat with a scratch of the nib
+    out["hit_ink"] = (sweep(200, 70, n, "pulse", 0.25) * 0.5 + noise(n, 3, rng) * 0.3 * np.linspace(1, 0, n)) * \
+        env(n, decay=0.1, sustain=0.3) * 0.85
+    n = secs(0.3)  # Echo: a struck bell with its own echo
+    bell = triangle(freq(midi("A5")), n) * 0.4 + triangle(freq(midi("E6")), n) * 0.2
+    out["hit_echo"] = (bell * np.exp(-tt(n) * 9) + np.roll(bell * np.exp(-tt(n) * 9), secs(0.09)) * 0.35) * 0.8
+    n = secs(0.25)
+    fade = np.linspace(1, 0, n)
+    out["travel_ink"] = (noise(n, 2, rng) * (np.sin(tt(n) * 2 * np.pi * 14) > 0.2) * 0.4 + sweep(140, 110, n, "tri") * 0.3) * fade * 0.5
+    out["travel_echo"] = (triangle(freq(midi("E5")), n) * 0.3 * (0.5 + 0.5 * np.sin(tt(n) * 2 * np.pi * 7))) * fade * 0.5
     return out

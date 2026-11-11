@@ -30,5 +30,6 @@ func test_element_chart_matches_spec() -> void:
 	assert_eq(Elements.single(E.LUMEN, E.UMBRA), 1.0, "Lumen/Umbra mirror is neutral")
 	assert_eq(Elements.single(E.UMBRA, E.LUMEN), 1.0, "Lumen/Umbra mirror is neutral")
 	assert_eq(Elements.multiplier(E.TIDE, [E.EMBER, E.STONE]), 4.0, "dual elements multiply")
+	var types: Dictionary = Elements.chart().get("types", {})
 	for atk: int in E.values():
-		assert_eq((Elements.STRONG[atk] as Array).size(), 2, "each element beats exactly 2")
+		assert_eq((Elements.STRONG[atk] as Array).size(), (types[E.keys()[atk]].strong as Array).size(), "STRONG follows the chart")

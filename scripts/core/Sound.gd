@@ -333,7 +333,7 @@ func app_resumed() -> void:
 		GameState.master_fade = v
 		GameState.apply_volume(), GameState.master_fade, 1.0, RESUME_FADE)
 
-## Eight scales, one per element (Elements.E order): the three Echo call marks play these
+## One scale per element (Elements.E order): the three Echo call marks play these
 ## notes, so every element sounds different (plan area 1, item 279).
 const ELEMENT_SCALES: Array = [
 	[60, 64, 67],  # EMBER: bright major
@@ -344,6 +344,8 @@ const ELEMENT_SCALES: Array = [
 	[67, 72, 74],  # GALE: open
 	[72, 76, 79],  # LUMEN: high and clear
 	[57, 60, 63],  # UMBRA: dark
+	[53, 56, 60],  # INK: low and blotted
+	[69, 74, 81],  # ECHO: bell fifths
 ]
 
 ## MIDI note for mark [param mark] in the scale of [param element].
@@ -372,9 +374,9 @@ static func hit_volume_db(share_lost: float) -> float:
 		return -3.0
 	return 0.0
 
-## Picking an art rings the confirm sound one step higher per element, eight steps of a major
-## scale in Elements.E order (item 2539).
-const ART_PICK_STEPS: Array[int] = [0, 2, 4, 5, 7, 9, 11, 12]
+## Picking an art rings the confirm sound one step higher per element, climbing one octave
+## in Elements.E order (item 2539).
+const ART_PICK_STEPS: Array[int] = [0, 1, 2, 4, 5, 7, 8, 9, 11, 12]
 
 static func art_pick_pitch(element: int) -> float:
 	if element < 0 or element >= ART_PICK_STEPS.size():

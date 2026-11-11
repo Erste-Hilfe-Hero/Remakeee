@@ -1,13 +1,13 @@
 class_name Elements
-## The 8 Era I elements. The chart lives in data/type_chart.json (docs/BALANCE.md, Type chart):
-## every element has at least 2 real strengths and 2 real weaknesses (Lumen and Umbra beat each
-## other, which is neutral both ways).
-## Era II elements (Ink, Echo) are in the chart only; they sit on no Spirling yet.
-enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA }
+## The 8 Era I elements plus the Era II elements Ink and Echo, appended so saved element ids keep
+## their meaning. The chart lives in data/type_chart.json (docs/BALANCE.md, Type chart): every
+## element has at least 2 real strengths and 2 real weaknesses (Lumen and Umbra beat each other,
+## which is neutral both ways). Ink and Echo sit only on legendary (ancient) Spirlings so far.
+enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA, INK, ECHO }
 
 const CHART_PATH: String = "res://data/type_chart.json"
 
-## Element -> the Era I elements it beats, read from the chart.
+## Element -> the elements it beats, read from the chart.
 static var STRONG: Dictionary = _load_strong()
 
 ## The whole chart as written in data/type_chart.json (all eras, names as keys).
@@ -36,6 +36,8 @@ const COLORS := {
 	E.GALE:  Color("9fd8e8"),
 	E.LUMEN: Color("fff4c2"),
 	E.UMBRA: Color("4b3a66"),
+	E.INK:   Color("2b2f4a"),
+	E.ECHO:  Color("c9b8e0"),
 }
 
 static func element_name(e: int) -> String:

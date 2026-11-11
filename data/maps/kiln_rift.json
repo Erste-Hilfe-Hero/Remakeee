@@ -38,7 +38,18 @@
    "facing": "down"
   }
  ],
- "npcs": [],
+ "npcs": [
+  {
+   "id": "monolurk",
+   "x": 7,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "kiln_rift/monolurk",
+   "sprite": "first_voice",
+   "show_flag": "rift_kiln_sealed",
+   "hide_flag": "first_voice_monolurk_away"
+  }
+ ],
  "signs": [
   {
    "x": 10,

@@ -10,6 +10,20 @@ extends RefCounted
 const VOICES: Dictionary[String, Dictionary] = {
 	"Velahra": {"region": "veydal", "map": "brindlewick", "ring": 40, "after": "mirela_lamp"},
 }
+## Legendary Spirlings (not First Voices) met once at a fixed place, late in the story or after
+## it. Same rules as the Voices: a missed meeting comes back after the next rest.
+const LEGENDS: Dictionary[String, Dictionary] = {
+	"Hallowmur": {"region": "veydal", "map": "bellstone_ruins", "ring": 55, "after": "story_complete"},
+	"Scriptorax": {"region": "veydal", "map": "wren_library", "ring": 55, "after": "story_complete"},
+	"Zephyrel": {"region": "corvane", "map": "wide_rift_edge", "ring": 55, "after": "story_complete"},
+	"Monolurk": {"region": "ashmere", "map": "kiln_rift", "ring": 45, "after": "rift_kiln_sealed"},
+	"Vorlucent": {"region": "ashmere", "map": "shade_rift", "ring": 48, "after": "rift_shade_sealed"},
+	"Lumivane": {"region": "solenne", "map": "sun_rift", "ring": 50, "after": "rift_sun_sealed"},
+}
+
+## Voice or legend entry for [param species], or {}.
+static func entry(species: String) -> Dictionary:
+	return VOICES.get(species, LEGENDS.get(species, {}))
 
 static func away_flag(species: String) -> String:
 	return "first_voice_%s_away" % species.to_lower()
@@ -26,13 +40,13 @@ static func is_bonded(species: String) -> bool:
 
 ## After a rest, every Voice that is not bonded waits at its place again.
 static func after_rest() -> void:
-	for v: String in VOICES:
+	for v: String in VOICES.keys() + LEGENDS.keys():
 		if not GameState.has_flag(bonded_flag(v)):
 			GameState.set_flag(away_flag(v), false)
 
 ## True while the Voice can be met right now (after its story step, not away, not bonded).
 static func waiting(species: String) -> bool:
-	var v: Dictionary = VOICES.get(species, {})
+	var v: Dictionary = entry(species)
 	if v.is_empty():
 		return false
 	return GameState.has_flag(str(v.after)) and not GameState.has_flag(away_flag(species)) \

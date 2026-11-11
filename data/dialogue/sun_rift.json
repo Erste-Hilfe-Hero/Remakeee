@@ -67,5 +67,13 @@
  "emrys_defeat": [
   "Emrys: ...There. The dial moved. One minute past noon. I'd forgotten how good that feels.",
   "Emrys: I kept the Veil's contract, you know. The clause about heroes ends their claim. Now it has a hero. Let's mend this."
- ]
+ ],
+ "lumivane": {
+  "lines": [
+   "With the Sun Rift sealed, a soft light walks out of the glare.",
+   "A deer with a halo of horn steps closer. A lantern glows inside its chest.",
+   "It is Lumivane. Its light wants to know if you are lost."
+  ],
+  "action": "legend Lumivane 50"
+ }
 }

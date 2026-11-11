@@ -37,11 +37,11 @@ func test_arts_used_steps() -> void:
 	assert_eq(GameState.waymarks, paid, "a goal pays once")
 
 func test_elements_and_temperaments() -> void:
-	assert_eq(Collection.set_total("elements"), 8)
+	assert_eq(Collection.set_total("elements"), Elements.E.size())
 	assert_eq(Collection.set_total("temperaments"), Spirling.TEMPERAMENTS.size())
 	for sd: SpirlingData in Database.spirlings.values():
 		GameState.spirlog[sd.species_name] = {"seen": true, "bonded": true}
-	assert_eq(Collection.set_count("elements"), 8)
+	assert_eq(Collection.set_count("elements"), Elements.E.size())
 	assert_eq(Collection.set_count("lines"), Collection.set_total("lines"))
 	Collection.claim()
 	assert_true(_claimed().has("elements"))

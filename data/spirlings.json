@@ -4624,5 +4624,285 @@
    2
   ],
   "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 82,
+  "name": "Hallowmur",
+  "era": 1,
+  "elements": [
+   "ECHO"
+  ],
+  "rarity": "ancient",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "hallowmur",
+  "base": {
+   "hp": 120,
+   "atk": 80,
+   "foc": 130,
+   "spd": 100,
+   "def": 130
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Bell Tap",
+    "Candle Ward"
+   ],
+   "40": [
+    "Resound"
+   ],
+   "46": [
+    "Omen Bell"
+   ],
+   "52": [
+    "Toll of Ages"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "2.1 m",
+  "habitat": "The broken belfry of the Bellstone Ruins",
+  "lore": "A bell that learned to listen. When the last ringer of the Bellstone left, the bell kept tolling by itself until it woke as Hallowmur.",
+  "origin": "Woke from the last toll of the Bellstone bell.",
+  "met": "hallowmur_bellstone",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "rg_echo_ring"
+ },
+ {
+  "dex_id": 83,
+  "name": "Scriptorax",
+  "era": 1,
+  "elements": [
+   "INK"
+  ],
+  "rarity": "ancient",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "scriptorax",
+  "base": {
+   "hp": 100,
+   "atk": 120,
+   "foc": 125,
+   "spd": 120,
+   "def": 95
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Quill Flick",
+    "Draft Needle"
+   ],
+   "40": [
+    "Blot Wave"
+   ],
+   "46": [
+    "Gale Scythe"
+   ],
+   "52": [
+    "Margin Lash"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "3.4 m",
+  "habitat": "Between the shelves of the Wren Library, after closing",
+  "lore": "Its wings are quills and its blood is ink. It writes down every route a Wayfarer walks, and crosses out the ones that were lies.",
+  "origin": "Grew from the ink of the first map of Veydal.",
+  "met": "scriptorax_library",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 84,
+  "name": "Lumivane",
+  "era": 1,
+  "elements": [
+   "LUMEN"
+  ],
+  "rarity": "ancient",
+  "region": "solenne",
+  "role": "weaver",
+  "line_id": "lumivane",
+  "base": {
+   "hp": 110,
+   "atk": 85,
+   "foc": 135,
+   "spd": 130,
+   "def": 100
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Glint",
+    "Dawn Call",
+    "Breeze Slice"
+   ],
+   "40": [
+    "Prism Ray"
+   ],
+   "46": [
+    "Dawn Mend"
+   ],
+   "52": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "2.6 m",
+  "habitat": "The sunlit crown of the Sun Rift, once it is sealed",
+  "lore": "A deer with a halo of horn and a lantern where its heart should be. Travellers lost in the dunes follow its glow home.",
+  "origin": "Its heart was a lantern left at the Sun Rift by the first Wayfarer of Solenne.",
+  "met": "lumivane_sun_rift",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "rg_prism_lumen"
+ },
+ {
+  "dex_id": 85,
+  "name": "Zephyrel",
+  "era": 1,
+  "elements": [
+   "GALE"
+  ],
+  "rarity": "ancient",
+  "region": "corvane",
+  "role": "striker",
+  "line_id": "zephyrel",
+  "base": {
+   "hp": 95,
+   "atk": 125,
+   "foc": 110,
+   "spd": 140,
+   "def": 90
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Kite Cut",
+    "Tailwind",
+    "Static Tag"
+   ],
+   "40": [
+    "Gale Scythe"
+   ],
+   "46": [
+    "Squall Line"
+   ],
+   "52": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "1.9 m",
+  "habitat": "The wind above the Wide Rift's edge",
+  "lore": "Four wings, no rest. It rides the updraft of the Wide Rift like a kite on a string nobody holds, and it has never touched the ground.",
+  "origin": "A kite string snapped over the Wide Rift, and the wind kept the kite.",
+  "met": "zephyrel_wide_rift",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 86,
+  "name": "Monolurk",
+  "era": 1,
+  "elements": [
+   "STONE"
+  ],
+  "rarity": "ancient",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "monolurk",
+  "base": {
+   "hp": 130,
+   "atk": 130,
+   "foc": 80,
+   "spd": 80,
+   "def": 140
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down",
+    "Kiln Strike"
+   ],
+   "40": [
+    "Cairn Crash"
+   ],
+   "46": [
+    "Quarry Wall"
+   ],
+   "52": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "3.8 m",
+  "habitat": "The cooled heart of the Kiln Rift",
+  "lore": "A standing stone carved with runes nobody can read. When the Kiln Rift was sealed, the stone stood up and looked around.",
+  "origin": "A rune stone from before the Rifts, baked hard in the Kiln Rift's heat.",
+  "met": "monolurk_kiln_rift",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 87,
+  "name": "Vorlucent",
+  "era": 1,
+  "elements": [
+   "UMBRA"
+  ],
+  "rarity": "ancient",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "vorlucent",
+  "base": {
+   "hp": 105,
+   "atk": 90,
+   "foc": 135,
+   "spd": 130,
+   "def": 100
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Murk Veil",
+    "Glint"
+   ],
+   "40": [
+    "Gloom Ripple"
+   ],
+   "46": [
+    "Night Siphon"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.04,
+  "height": "2.4 m",
+  "habitat": "The dark beam of the Shade Rift, once it is sealed",
+  "lore": "Its wings carry two eclipses. Where it lands, noon turns to dusk for a moment, and every lamp nearby flickers to greet it.",
+  "origin": "Born in the shadow the Shade Rift cast at noon.",
+  "met": "vorlucent_shade_rift",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "rg_prism_umbra"
  }
 ]

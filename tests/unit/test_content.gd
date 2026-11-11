@@ -40,7 +40,7 @@ func test_every_species_is_reachable() -> void:
 		if Database.spirlings[name].region != "veydal":
 			continue
 		# First Voices are met once at a fixed place (FirstVoices.VOICES), never in the wild.
-		if FirstVoices.VOICES.has(name):
+		if FirstVoices.VOICES.has(name) or FirstVoices.LEGENDS.has(name):
 			continue
 		assert_true(reach.has(name), "%s can't be met anywhere" % name)
 
@@ -165,7 +165,11 @@ func test_every_element_has_four_veydal_kinds() -> void:
 			continue
 		for e: int in sd.elements:
 			count[e] = int(count.get(e, 0)) + 1
+	var types: Dictionary = Elements.chart().get("types", {})
 	for e: int in Elements.E.values():
+		# Era II elements (Ink, Echo) sit only on legendaries so far.
+		if int(types[Elements.E.keys()[e]].get("era", 1)) > 1:
+			continue
 		assert_gte(int(count.get(e, 0)), 4, "%s in Veydal" % Elements.element_name(e))
 
 func test_no_trait_on_more_than_six_lines() -> void:

@@ -420,5 +420,17 @@
    "name": "Bellstone Ruins, hall 5"
   }
  ],
- "goal": "Goal: ring the bells in the order scratched into the wall."
+ "goal": "Goal: ring the bells in the order scratched into the wall.",
+ "npcs": [
+  {
+   "id": "hallowmur",
+   "x": 6,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "bellstone_ruins/hallowmur",
+   "sprite": "first_voice",
+   "show_flag": "story_complete",
+   "hide_flag": "first_voice_hallowmur_away"
+  }
+ ]
 }
