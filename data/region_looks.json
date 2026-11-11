@@ -1,7 +1,47 @@
 {
- "_comment": "Per-region Era I look (welt akt4): its own four screen inks and biome (the atlas is art/eraN/tiles/overworld_<region>.png, see TilesetFactory.atlas_path), darkest to lightest. Each ink stays in the same luminance quarter as the shared Era I inks so the palette filter keeps four clean tones. Regions not listed use EraManager.INK_PALETTE. Atlas made by tools/art/gen_tiles_solenne.py.",
- "solenne": {
-  "ink": ["3b1f14", "a0492a", "e09a3c", "fbeaa8"],
-  "biome": "desert"
- }
+  "_comment": "Era I look per region (world area: Act II Corvane, Act IV Solenne). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, Solenne's from tools/art/gen_tiles_solenne.py; both read this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette.",
+  "regions": {
+    "corvane": {
+      "biome": "dye_fen",
+      "palette": [
+        "151c2e",
+        "3f6280",
+        "8fb09a",
+        "e2ead8"
+      ],
+      "props": [
+        "boardwalk",
+        "fen_water",
+        "dye_willow",
+        "sedge",
+        "woad",
+        "cattails",
+        "dye_silt",
+        "wattle_hurdle",
+        "stake_sign",
+        "dye_vat",
+        "fen_lantern"
+      ],
+      "arrive": "The ink turns blue here. Corvane dyes everything, even the truth."
+    },
+    "solenne": {
+      "biome": "desert",
+      "palette": [
+        "3b1f14",
+        "a0492a",
+        "e09a3c",
+        "fbeaa8"
+      ],
+      "props": [
+        "sand",
+        "thorn_scrub",
+        "column_cactus",
+        "date_palm",
+        "succulent_bloom",
+        "dune_ridge",
+        "banded_sandstone"
+      ],
+      "arrive": "The ink bleaches here. Solenne burns everything, even the lies. Especially the lies."
+    }
+  }
 }

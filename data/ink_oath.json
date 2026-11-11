@@ -1,0 +1,9 @@
+{
+ "_comment": "The Ink Oath: once per battle, and only against another Wayfarer, a Spirling swears an oath in ink to its family. For 'turns' turns it gets the 'stages' and 'energy' at once; when the oath comes due the family collects ('debt' stages). Read by BattleRules.oath() and BattleModel._do_oath(). Nothing outlasts the battle.",
+ "turns": 3,
+ "energy": 3,
+ "stages": {"atk": 1, "foc": 1, "spd": 1},
+ "debt": {"def": -1},
+ "sworn_text": "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!",
+ "due_text": "The Ink Oath comes due. The family collects from %s."
+}

@@ -61,23 +61,6 @@ const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, 
 static var _tilesets: Dictionary[String, TileSet] = {}
 static var _has_atlas: bool = false
 
-## Per-region Era I inks and biome (data/region_looks.json, welt akt4). The atlas itself follows
-## the "tiles/overworld_<region>.png" convention in atlas_path().
-const LOOKS_PATH: String = "res://data/region_looks.json"
-static var _looks: Dictionary = {}
-
-static func looks() -> Dictionary:
-	if _looks.is_empty():
-		var f := FileAccess.open(LOOKS_PATH, FileAccess.READ)
-		var d: Variant = JSON.parse_string(f.get_as_text()) if f != null else null
-		_looks = d if d is Dictionary else {"_none": {}}
-	return _looks
-
-## The look of [param region] ({} when it uses the shared one).
-static func look(region: String) -> Dictionary:
-	var l: Variant = looks().get(region, {})
-	return l if l is Dictionary else {}
-
 static func kind_for(ch: String) -> int:
 	return LEGEND.get(ch, Kind.GRASS)
 

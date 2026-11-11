@@ -162,8 +162,8 @@ OVERRIDES = {"grass": sand, "tall_grass": scrub, "tree": cactus, "flower": bloom
 
 
 def inks() -> list[tuple[int, int, int]]:
-    look = json.load(open(os.path.join(ROOT, "data", "region_looks.json")))["solenne"]
-    return [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in look["ink"]]
+    look = json.load(open(os.path.join(ROOT, "data", "region_looks.json")))["regions"]["solenne"]
+    return [tuple(int(h[i:i + 2], 16) for i in (0, 2, 4)) for h in look["palette"]]
 
 
 def main() -> None:

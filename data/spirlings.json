@@ -2445,16 +2445,16 @@
     "Drift Step"
    ],
    "9": [
-    "Breeze Slice"
+    "Crosswind"
    ],
    "13": [
     "Updraft"
    ],
    "17": [
-    "Updraft"
+    "Lull Breaker"
    ],
    "21": [
-    "Breeze Slice"
+    "Squall Line"
    ]
   },
   "bond_rate": 0.45,
@@ -2497,22 +2497,22 @@
    "1": [
     "Breeze Slice",
     "Drift Step",
-    "Breeze Slice"
+    "Draft Needle"
    ],
    "24": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "26": [
     "Crackle Bite"
    ],
    "28": [
-    "Breeze Slice"
-   ],
-   "32": [
     "Gale Scythe"
    ],
-   "38": [
+   "32": [
     "Squall"
+   ],
+   "38": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.1,
@@ -2553,16 +2553,16 @@
     "Drench"
    ],
    "9": [
-    "Fizz Pop"
+    "Salt Snap"
    ],
    "13": [
     "Chill Mist"
    ],
    "17": [
-    "Chill Mist"
+    "Rip Current"
    ],
    "21": [
-    "Salt Snap"
+    "Spindrift Shot"
    ]
   },
   "bond_rate": 0.45,
@@ -2605,7 +2605,7 @@
    "1": [
     "Fizz Pop",
     "Drench",
-    "Fizz Pop"
+    "Spout Jab"
    ],
    "24": [
     "Salt Snap"
@@ -2614,7 +2614,7 @@
     "Mirk Nip"
    ],
    "28": [
-    "Salt Snap"
+    "Bore Wave"
    ],
    "32": [
     "Spindrift Shot"
@@ -2763,7 +2763,7 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
@@ -2875,16 +2875,16 @@
     "Drench"
    ],
    "9": [
-    "Fizz Pop"
+    "Salt Snap"
    ],
    "13": [
     "Chill Mist"
    ],
    "17": [
-    "Chill Mist"
+    "Rip Current"
    ],
    "21": [
-    "Salt Snap"
+    "Spindrift Shot"
    ]
   },
   "bond_rate": 0.45,
@@ -2927,7 +2927,7 @@
    "1": [
     "Fizz Pop",
     "Drench",
-    "Fizz Pop"
+    "Spout Jab"
    ],
    "24": [
     "Salt Snap"
@@ -2936,7 +2936,7 @@
     "Mirk Nip"
    ],
    "28": [
-    "Salt Snap"
+    "Bore Wave"
    ],
    "32": [
     "Spindrift Shot"
@@ -3043,7 +3043,7 @@
     "Dawn Mend"
    ],
    "28": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "32": [
     "Prism Ray"
@@ -3084,13 +3084,13 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
    ],
    "9": [
-    "Pebble Toss"
+    "Pumice Pelt"
    ],
    "11": [
     "Cinder Nip"
@@ -3099,10 +3099,10 @@
     "Bowl Over"
    ],
    "17": [
-    "Bowl Over"
+    "Tunnel Strike"
    ],
    "21": [
-    "Tunnel Strike"
+    "Fault Line"
    ]
   },
   "bond_rate": 0.45,
@@ -3145,7 +3145,7 @@
    "1": [
     "Pebble Toss",
     "Hunker Down",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "24": [
     "Tunnel Strike"
@@ -3154,10 +3154,10 @@
     "Cinder Nip"
    ],
    "28": [
-    "Tunnel Strike"
+    "Tremor Thud"
    ],
    "32": [
-    "Tremor Thud"
+    "Slow Quake"
    ],
    "38": [
     "Cairn Crash"
@@ -3211,7 +3211,7 @@
     "Glint"
    ],
    "21": [
-    "Breeze Slice"
+    "Prism Ray"
    ]
   },
   "bond_rate": 0.3,
@@ -3258,7 +3258,7 @@
     "Wick Flicker"
    ],
    "24": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "28": [
     "Dawn Mend"
@@ -3308,16 +3308,16 @@
     "Heat Haze"
    ],
    "9": [
-    "Cinder Nip"
+    "Glow Knuckle"
    ],
    "13": [
     "Kindle Up"
    ],
    "17": [
-    "Kindle Up"
+    "Cinder Breath"
    ],
    "21": [
-    "Cinder Breath"
+    "Brazier Pulse"
    ]
   },
   "bond_rate": 0.45,
@@ -3360,7 +3360,7 @@
    "1": [
     "Cinder Nip",
     "Heat Haze",
-    "Cinder Nip"
+    "Cinder Dash"
    ],
    "24": [
     "Cinder Breath"
@@ -3369,13 +3369,13 @@
     "Grit Jab"
    ],
    "28": [
-    "Cinder Breath"
-   ],
-   "32": [
     "Kiln Strike"
    ],
-   "38": [
+   "32": [
     "Furnace Spiral"
+   ],
+   "38": [
+    "Bellows Blast"
    ]
   },
   "bond_rate": 0.1,
@@ -3423,7 +3423,7 @@
     "Dusk Rake"
    ],
    "17": [
-    "Bowl Over"
+    "Murmur Bite"
    ],
    "21": [
     "Night Siphon"
@@ -3533,7 +3533,7 @@
     "Kindle Up"
    ],
    "21": [
-    "Breeze Slice"
+    "Brazier Pulse"
    ]
   },
   "bond_rate": 0.3,
@@ -3580,7 +3580,7 @@
     "Cinder Nip"
    ],
    "24": [
-    "Breeze Slice"
+    "Kiln Strike"
    ],
    "28": [
     "Cinder Breath"
@@ -3732,7 +3732,7 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
@@ -3851,10 +3851,10 @@
     "Kindle Up"
    ],
    "17": [
-    "Bowl Over"
+    "Cinder Breath"
    ],
    "21": [
-    "Cinder Breath"
+    "Brazier Pulse"
    ]
   },
   "bond_rate": 0.3,
@@ -3951,13 +3951,13 @@
     "Candle Ward"
    ],
    "9": [
-    "Wick Flicker"
+    "Glint"
    ],
    "13": [
-    "Glint"
+    "Starlit Lash"
    ],
    "17": [
-    "Glint"
+    "Prism Ray"
    ],
    "21": [
     "Dawn Mend"
@@ -4003,7 +4003,7 @@
    "1": [
     "Wick Flicker",
     "Candle Ward",
-    "Wick Flicker"
+    "Beacon Ping"
    ],
    "24": [
     "Dawn Mend"
@@ -4012,13 +4012,13 @@
     "Breeze Slice"
    ],
    "28": [
-    "Dawn Mend"
+    "Radiant Lance"
    ],
    "32": [
     "Prism Ray"
    ],
    "38": [
-    "Radiant Lance"
+    "Omen Bell"
    ]
   },
   "bond_rate": 0.1,
@@ -4226,7 +4226,7 @@
     "Dawn Mend"
    ],
    "28": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "32": [
     "Prism Ray"
@@ -4267,13 +4267,13 @@
   "learnset": {
    "1": [
     "Pebble Toss",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "5": [
     "Hunker Down"
    ],
    "9": [
-    "Pebble Toss"
+    "Pumice Pelt"
    ],
    "11": [
     "Cinder Nip"
@@ -4282,10 +4282,10 @@
     "Bowl Over"
    ],
    "17": [
-    "Bowl Over"
+    "Tunnel Strike"
    ],
    "21": [
-    "Tunnel Strike"
+    "Fault Line"
    ]
   },
   "bond_rate": 0.45,
@@ -4328,7 +4328,7 @@
    "1": [
     "Pebble Toss",
     "Hunker Down",
-    "Pebble Toss"
+    "All-In Crash"
    ],
    "24": [
     "Tunnel Strike"
@@ -4337,10 +4337,10 @@
     "Cinder Nip"
    ],
    "28": [
-    "Tunnel Strike"
+    "Tremor Thud"
    ],
    "32": [
-    "Tremor Thud"
+    "Slow Quake"
    ],
    "38": [
     "Cairn Crash"
@@ -4384,16 +4384,16 @@
     "Drift Step"
    ],
    "9": [
-    "Breeze Slice"
+    "Crosswind"
    ],
    "13": [
     "Updraft"
    ],
    "17": [
-    "Updraft"
+    "Lull Breaker"
    ],
    "21": [
-    "Breeze Slice"
+    "Squall Line"
    ]
   },
   "bond_rate": 0.45,
@@ -4436,22 +4436,22 @@
    "1": [
     "Breeze Slice",
     "Drift Step",
-    "Breeze Slice"
+    "Draft Needle"
    ],
    "24": [
-    "Breeze Slice"
+    "Squall Line"
    ],
    "26": [
     "Crackle Bite"
    ],
    "28": [
-    "Breeze Slice"
-   ],
-   "32": [
     "Gale Scythe"
    ],
-   "38": [
+   "32": [
     "Squall"
+   ],
+   "38": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.1,
@@ -4499,10 +4499,10 @@
     "Updraft"
    ],
    "17": [
-    "Bowl Over"
+    "Tunnel Strike"
    ],
    "21": [
-    "Breeze Slice"
+    "Fault Line"
    ]
   },
   "bond_rate": 0.3,
@@ -4549,7 +4549,7 @@
     "Pebble Toss"
    ],
    "24": [
-    "Breeze Slice"
+    "Landslip"
    ],
    "28": [
     "Tunnel Strike"

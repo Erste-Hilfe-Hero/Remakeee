@@ -41,7 +41,7 @@ def load_level(map_id: str) -> dict:
 def region_look(region) -> dict:
     """The region's own inks from data/region_looks.json ({} = shared inks)."""
     looks = json.load(open(os.path.join(ROOT, "data", "region_looks.json")))
-    look = looks.get(region or "", {})
+    look = looks.get("regions", {}).get(region or "", {})
     return look if isinstance(look, dict) else {}
 
 
@@ -87,8 +87,8 @@ def render(d: dict) -> Image.Image:
         if not os.path.exists(sheet_path):
             sheet_path = os.path.join(ROOT, "art", "era1", "chars", "villager.png")
         sheet = Image.open(sheet_path)
-        if "ink" in look:
-            sheet = ink_swap(sheet, look["ink"])
+        if "palette" in look:
+            sheet = ink_swap(sheet, look["palette"])
         col = ["down", "up", "left", "right"].index(n.get("facing", "down"))
         fr = sheet.crop((col * 16, 0, col * 16 + 16, 16))
         img.paste(fr, (int(n["x"]) * 16, int(n["y"]) * 16), fr)

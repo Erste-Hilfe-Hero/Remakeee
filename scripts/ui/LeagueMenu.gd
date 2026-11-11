@@ -18,6 +18,7 @@ const ERRORS: Dictionary = {
 	"not_in_team": "Save your journey first, then try again.",
 	"not_joined": "Join the league first.",
 	"bad_team": "A league team has at most 5 Spirlings.",
+	"no_reward": "No season reward is waiting.",
 }
 
 static func run(menu: PauseMenu) -> void:
@@ -52,12 +53,16 @@ static func run_league(menu: PauseMenu, league: String) -> bool:
 			return false
 		var info: Dictionary = r.data
 		var entries: Array[String] = ["Find a battle", "Join with my team"] if bool(info.joined) else ["Join with my team"]
+		if bool(info.get("reward_ready", false)):
+			entries.push_front("Season reward")
 		var idx: int = await menu.pick_strings(status_text(league, info), entries)
 		if idx < 0:
 			return false
 		match entries[idx]:
 			"Join with my team":
 				await join(menu, league)
+			"Season reward":
+				await claim_reward(menu, league)
 			"Find a battle":
 				var found: Dictionary = await search(menu, league)
 				if not found.is_empty():
@@ -73,6 +78,7 @@ static func status_text(league: String, info: Dictionary) -> String:
 		if league == LeagueRules.FAIR else "Your real team and Ring.")
 	if bool(info.get("joined", false)) and info.get("tier") != null:
 		lines.append("Tier: %s" % LeagueRules.tier_name(int(info.tier)))
+		lines.append(rank_text(info))
 		lines.append("Battles: %d   Wins: %d" % [int(info.get("games", 0)), int(info.get("wins", 0))])
 	else:
 		lines.append("Not joined this season yet.")
@@ -81,8 +87,30 @@ static func status_text(league: String, info: Dictionary) -> String:
 		"paused": lines.append("The season is paused.")
 	return "\n".join(lines)
 
+## Rank, placement battles left and the demotion shield (Online 100, points 12, 16, 17).
+static func rank_text(info: Dictionary) -> String:
+	var r: int = int(info.get("rank", -1))
+	if r < 0:
+		return Loc.t("Placement battles left: %d") % int(info.get("placement_left", 0))
+	var line: String = Loc.t("Rank: %s") % Loc.t(LeagueRules.rank_name(LeagueRules.ranks_config(), r))
+	if int(info.get("shield", 0)) > 0:
+		line += "\n" + Loc.t("Shield: %d battles without losing the rank") % int(info.shield)
+	return line
+
+## The reward for the last season's rank (points 13, 19).
+static func claim_reward(menu: PauseMenu, league: String) -> void:
+	var r: Dictionary = await TradeMenu.bag_call("league_reward", {"p_league": league})
+	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		Sound.sfx("coin")
+		await menu.info(Loc.t("Season reward: %d x %s") % [int(r.data.count), FriendsMenu.item_name(str(r.data.item))] + "\n"
+			+ Loc.t("New title: %s") % Loc.t(LeagueRules.rank_name(LeagueRules.ranks_config(), int(r.data.rank))))
+	else:
+		await menu.info(error_text(r))
+
 static func error_text(r: Dictionary) -> String:
 	var code: String = str(r.data.get("error", "")) if r.get("data") is Dictionary else str(r.get("error", ""))
+	if code == "quit_wait":
+		return Loc.t("You left too many battles. Search again in %d seconds.") % int(r.data.get("wait", 0))
 	return ERRORS.get(code, Online.error_text(code))
 
 ## The species to send: the current team, at most five, each kind once.

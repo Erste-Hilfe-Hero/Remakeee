@@ -56,7 +56,8 @@ func test_solenne_atlas_uses_only_the_four_solenne_inks() -> void:
 func test_ochrewell_is_desert_with_cacti() -> void:
 	var m: MapData = MapData.load_map("ochrewell")
 	assert_eq(m.biome, "desert")
-	assert_eq(str(TilesetFactory.look("solenne").get("biome", "")), "desert")
+	assert_eq(RegionLook.biome("solenne"), "desert")
+	assert_false(RegionLook.arrive_line("solenne").is_empty())
 	assert_true(WeatherCycle.shares("desert").has("wind"))
 	var cacti: int = 0
 	for r: String in m.rows:

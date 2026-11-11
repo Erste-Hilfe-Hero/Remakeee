@@ -349,6 +349,10 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	var era_before: int = EraManager.unlocked_era
 	EraManager.unlock_region(map.region)
 	EraManager.set_region(map.region)
+	var look_line: String = RegionLook.arrive_line(map.region)
+	if not look_line.is_empty() and not GameState.has_flag("look_seen_" + map.region):
+		GameState.set_flag("look_seen_" + map.region)
+		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
@@ -663,7 +667,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		elif not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
+		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
@@ -2768,7 +2772,7 @@ static func oath_lines(retired: Array[String]) -> Array[String]:
 	return lines
 
 static func _today() -> String:
-	return Time.get_date_string_from_system()
+	return DailyFind.today_key()
 
 func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()
@@ -2872,6 +2876,46 @@ func warden_card(def: Dictionary, team: Array[Spirling], question: String) -> bo
 	var go: bool = await menu.confirm(question, "Fight", "Not yet")
 	menu.queue_free()
 	return go
+
+## A Warden's rematch after the finale (data/warden_rematch.json): own team, lines and reward, once.
+## Returns false if there is none or the player declines.
+func offer_warden_rematch(n: NPC) -> bool:
+	var base: Dictionary = n.definition
+	if GameState.first_healthy_index() < 0 or not WardenRematch.can_challenge(base, map.id, GameState.flags):
+		return false
+	var entry: Dictionary = WardenRematch.entry_for(map.id, str(base.get("id", "")))
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	await say(WardenRematch.lines(entry, "intro"))
+	var def: Dictionary = WardenRematch.rematch_def(base, entry)
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
+	var who: String = str(base.get("trainer", base.get("id", "")))
+	var go: bool = await warden_card(def, team, Loc.t("%s wants the rematch. Battle?") % who)
+	if not go:
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return true
+	SaveManager.save_game()
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
+	busy = true
+	player.frozen = true
+	if outcome == BattleModel.Outcome.WIN:
+		GameState.set_flag(WardenRematch.won_flag(entry))
+		var reward: Dictionary = entry.get("reward", {})
+		if reward.has("item"):
+			GameState.add_item(str(reward.item), int(reward.get("count", 1)))
+		await say(WardenRematch.lines(entry, "win"))
+		await announce_achievements()
+		SaveManager.save_game()
+	else:
+		await say(WardenRematch.lines(entry, "lose"))
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
+	return true
 
 ## A Warden's Second Trial (items 682-684): offered once both Rifts are mended, until it is won.
 ## Returns false if there is none or the player declines.

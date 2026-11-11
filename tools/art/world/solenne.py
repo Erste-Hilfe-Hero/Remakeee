@@ -102,7 +102,7 @@ def ochrewell(world):
         "factor_lose": lines(("Factor Lusk: Come back when you can afford to lose properly.", "Faktor Lusk: Komm wieder, wenn du es dir leisten kannst, ordentlich zu verlieren.")),
         "hadi": {"lines": lines(("Potter Hadi: I make domes by day and urns by night. Business is steady in both.", "Töpfer Hadi: Tagsüber mache ich Kuppeln, nachts Urnen. Beides läuft stetig."))},
         "ranya": {"lines": lines(("Spice Seller Ranya: At dusk we all meet at the well and pretend we don't owe the Veil money.", "Gewürzhändlerin Ranya: In der Dämmerung treffen sich alle am Brunnen und tun so, als schuldeten sie dem Schleier kein Geld."))},
-        "tobs": {"lines": lines(("Gravedigger Tobs: Sand's easy to dig. Harder to keep shut. The wind tells on everybody.", "Totengräber Tobs: Sand gräbt sich leicht. Zu bleibt er schwer. Der Wind verpetzt jeden."))},
+        "tobs": {"lines": lines(("Gravedigger Tobs: Sand's easy to dig. Harder to keep shut. The wind tells on everybody.", "Totengräber Tobs: Sand gräbt sich leicht. Zu bleibt er schwer. Der Wind verpetzt jeden.")), "next": "clans/tobs_4"},
     })
     folk = [("hadi", "villager", 2, 6, "right", [at("dusk", 5, 9, "right"), away("night")]),
             ("ranya", "villager", 9, 11, "left", [at("dusk", 7, 9, "left"), away("night")]),
@@ -320,5 +320,13 @@ def sun_rift(world):
                 ("Emrys: Take Radiant Lance. Twelve Rifts, twelve seals. The far end of the Wide Rift will open for you now.", "Emrys: Nimm Radiant Lance. Zwölf Risse, zwölf Siegel. Das ferne Ende des Weiten Risses wird sich dir jetzt öffnen.")],
                [("Emrys: I've started a sundial for the Undrawn. Nobody knows what time it is there. Ideal working conditions.", "Emrys: Ich habe eine Sonnenuhr für das Ungezeichnete angefangen. Dort weiß niemand, wie spät es ist. Ideale Arbeitsbedingungen.")]),
     ]
+    # Lumivane, the Lumen First Voice, waits by the gate once the Sun Rift is sealed (FirstVoices.gd).
+    world.add_text(mid, {"lumivane": {"lines": lines(
+        ("With the Sun Rift sealed, a soft light walks out of the glare.", "Der Sonnenriss ist versiegelt, und ein sanftes Licht tritt aus dem grellen Schein."),
+        ("A deer with a halo of horn steps closer. A lantern glows inside its chest.", "Ein Hirsch mit einem Heiligenschein aus Horn kommt näher. In seiner Brust leuchtet eine Laterne."),
+        ("It is Lumivane. Its light wants to know if you are lost.", "Es ist Lumivane. Sein Licht will wissen, ob du dich verirrt hast.")),
+        "action": "legend Lumivane 50"}})
+    m["npcs"].append(npc("lumivane", 8, 2, "down", mid + "/lumivane", "first_voice",
+                         show_flag="rift_sun_sealed", hide_flag="first_voice_lumivane_away"))
     m["signs"] = signs
     finish(world, mid, m)

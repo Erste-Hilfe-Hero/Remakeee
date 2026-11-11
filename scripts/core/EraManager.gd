@@ -9,8 +9,8 @@ signal era_unlocked(era: int)
 
 enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4 }
 ## The whole story (all four regions) stays Era I. Era II opens after the finale and is the
-## look of the post-game region; later eras arrive with their own new regions.
-const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK}
+## look of the post-game region Vellmarch (data/region2.json); later eras arrive with their own new regions.
+const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK, "vellmarch": Era.WASH}
 const STORY_COMPLETE_FLAG: String = "story_complete"
 const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480)}
 const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96}
@@ -21,6 +21,8 @@ const FILTER_LAYER: int = 100
 const PALETTE_SHADER: Shader = preload("res://shaders/palette_filter.gdshader")
 
 var unlocked_era: int = Era.INK
+## Region of the map on screen; picks the Era I inks (RegionLook), e.g. Corvane's dye fens.
+var current_region: String = ""
 var retro_filter: int = 0   # 0 = use newest unlocked era
 
 var _filter_layer: CanvasLayer
@@ -35,31 +37,10 @@ func _ready() -> void:
 	_filter_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var mat := ShaderMaterial.new()
 	mat.shader = PALETTE_SHADER
-	for i: int in INK_PALETTE.size():
-		mat.set_shader_parameter("c%d" % i, INK_PALETTE[i])
 	_filter_rect.material = mat
+	_apply_inks()
 	_filter_layer.add_child(_filter_rect)
 	_apply()
-
-## The four Era I screen inks for [param region]: its own from data/region_looks.json (welt akt4),
-## else INK_PALETTE.
-func inks_for(region: String) -> Array[Color]:
-	var ink: Variant = TilesetFactory.look(region).get("ink", [])
-	if not ink is Array or (ink as Array).size() != INK_PALETTE.size():
-		return INK_PALETTE.duplicate()
-	var out: Array[Color] = []
-	for h: Variant in ink:
-		out.append(Color(str(h)))
-	return out
-
-## Points the Era I filter at the inks of [param region]; called on every map load.
-func set_region(region: String) -> void:
-	if _filter_rect == null:
-		return
-	var inks: Array[Color] = inks_for(region)
-	var mat := _filter_rect.material as ShaderMaterial
-	for i: int in inks.size():
-		mat.set_shader_parameter("c%d" % i, inks[i])
 
 func active_era() -> int:
 	return retro_filter if retro_filter > 0 else unlocked_era
@@ -72,6 +53,23 @@ const ERA_LINES: Dictionary[int, String] = {
 }
 const TRANSITION_TIME: float = 0.9
 var _wipe: ColorRect
+
+## The four Era I inks on screen for [param region]: its own look or the base Ink palette.
+func inks_for(region: String) -> Array[Color]:
+	var own: Array[Color] = RegionLook.palette(region)
+	return own if own.size() == INK_PALETTE.size() else INK_PALETTE
+
+## Called when a map of [param region] is shown; swaps the screen inks to that region's look.
+func set_region(region: String) -> void:
+	current_region = region
+	_apply_inks()
+
+func _apply_inks() -> void:
+	if _filter_rect == null:
+		return
+	var inks: Array[Color] = inks_for(current_region)
+	for i: int in inks.size():
+		_filter_rect.material.set_shader_parameter("c%d" % i, inks[i])
 
 func unlock_region(region: String) -> void:
 	unlock_era(REGION_ERA.get(region, Era.INK))

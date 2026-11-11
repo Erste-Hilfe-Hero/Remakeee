@@ -123,6 +123,23 @@ minute; `Overworld.league_battle` builds the battle from the server's seed and t
 Builds without a server address use `LocalBackend`, a test server that lives on the phone. The account menu
 then says "test server on this phone". The debug APK from CI works like this until the secrets below exist.
 
+### League ranks, placement, shield, quit wait, season reward (Online 100, points 12-13, 16-20)
+
+Values in `data/league_ranks.json`; `tools/online/game_data_sql.py` writes them to `server_config.league_ranks`
+(migration `20261111000030_league_ranks.sql`, rules mirrored in `LeagueRules.gd` and `LocalBackend`).
+- **Ranks (12):** seven ranks by rating floor, Apprentice to Map Master. The tiers stay as before.
+- **Placement (16):** the first `placement_games` (5) rated battles show no rank.
+- **Shield (17):** a promotion gives `shield_games` (3) battles in which the rating cannot fall below the new
+  rank's floor (`entries.shield`).
+- **Echo fallback (18):** after `echo_after` (45) seconds of searching any rating is fine; with nobody at all
+  the player's own league team is the echo opponent and the battle is not rated (`echo: true`).
+- **Quit wait (20):** a found match that is given up for a new search at least `quit_grace` (30) seconds later
+  counts as left. From `quit_free` (2) left matches in a day, `league_find` answers `quit_wait` with `wait`
+  seconds: 60, doubling, at most 900.
+- **Season reward and title (13, 19):** `league_reward(league, slot, rev)` once per finished season and league:
+  the item of the final rank into the stored bag, the rank as title and the frame id `season_<n>_<rank>`
+  (table `league_awards`, listed as `titles` in `league_info`). Menu > Leagues shows "Season reward".
+
 ## Where it runs now
 
 On Ali's existing Contabo server (161.97.102.171), next to Nyrathen and Dranbleib, at

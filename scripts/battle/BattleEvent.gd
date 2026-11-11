@@ -13,6 +13,7 @@ enum Type {
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
 	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
+	OATH,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -136,6 +137,8 @@ func describe() -> String:
 			return "%s's gift, %s: %s" % [who, data.get("label", ""), data.get("text", "")]
 		Type.REACTION:
 			return str(data.get("text", "")) % who
+		Type.OATH:
+			return Loc.t(str(BattleRules.oath().get("due_text" if bool(data.get("due", false)) else "sworn_text", ""))) % who
 		Type.WEARY:
 			return "The long fight wears everyone out. Nobody can heal any more!"
 		Type.HEAL_BLOCKED:

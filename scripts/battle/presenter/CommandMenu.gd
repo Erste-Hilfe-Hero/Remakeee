@@ -344,7 +344,9 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 		kinds.append(a.kind)
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds
 	_item.disabled = not BattleAction.Kind.ITEM in kinds
-	_bond.disabled = not BattleAction.Kind.BOND in kinds
+	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).
+	_bond.text = "Bond" if model.is_wild else "Oath"
+	_bond.disabled = not (BattleAction.Kind.BOND in kinds or model.can_oath(BattleModel.Side.PLAYER, slot))
 	_run.disabled = not BattleAction.Kind.RUN in kinds
 	# A Trial can be restarted at any time (item 708).
 	_run.text = "Restart" if model.has_meta("puzzle_max") else "Leave"

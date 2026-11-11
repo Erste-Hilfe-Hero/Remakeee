@@ -25,7 +25,7 @@ const ERRORS: Dictionary = {
 	"under_review": "Your account is being checked. Trading opens again after the check.",
 	"no_spirling": "That Spirling is not in your journey any more.",
 	"holds_item": "Take its Keepsake off first.",
-	"shop_boosted": "Spirlings with a Gleam, a Power Core or crystals stay with you.",
+	"shop_boosted": "Spirlings with a Gleam, a Power Core or crystals, and Spirlings from the shop, stay with you.",
 	"favorite": "Favourites stay with you. Remove the mark first.",
 	"last_one": "Your team needs at least one Spirling.",
 	"too_many_spirlings": "Up to 3 Spirlings per trade.",
@@ -325,7 +325,7 @@ static func pick_spirlings(menu: PauseMenu, current: Array[String]) -> Variant:
 static func mon_why(sp: Spirling) -> String:
 	if not sp.held.is_empty():
 		return "holds_item"
-	if sp.gleam_boost or sp.temper_core or not sp.crystal.is_empty():
+	if sp.gleam_boost or sp.temper_core or sp.shop_bought or not sp.crystal.is_empty():
 		return "shop_boosted"
 	if sp.favorite:
 		return "favorite"
