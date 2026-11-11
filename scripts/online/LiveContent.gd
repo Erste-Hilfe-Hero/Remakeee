@@ -35,6 +35,11 @@ static var events: Events = Events.new()
 static var data: Dictionary = {}
 static var _loaded: bool = false
 
+## Parsed JSON or null, without engine errors for bad input (it comes from outside).
+static func _json(text: String) -> Variant:
+	var j := JSON.new()
+	return j.data if j.parse(text) == OK else null
+
 # --- Checking ------------------------------------------------------------------------------
 
 ## True when [param signature_b64] is a valid RSA-SHA256 signature of [param body].
@@ -51,7 +56,7 @@ static func verify(body: String, signature_b64: String, public_pem: String = PUB
 
 ## The patch in [param body] if it is well-formed data, otherwise {}.
 static func parse(body: String) -> Dictionary:
-	var v: Variant = JSON.parse_string(body)
+	var v: Variant = _json(body)
 	if not v is Dictionary:
 		return {}
 	var d: Dictionary = v
@@ -140,7 +145,7 @@ static func update_state(content: Dictionary, plat: String, client: String, stor
 
 ## The version from an iTunes lookup answer, "" if there is none.
 static func itunes_version(json_text: String) -> String:
-	var v: Variant = JSON.parse_string(json_text)
+	var v: Variant = _json(json_text)
 	if not v is Dictionary or not (v as Dictionary).get("results") is Array:
 		return ""
 	var results: Array = v.results
@@ -169,7 +174,7 @@ static func load_bundled(path: String = BUNDLED_PATH) -> Dictionary:
 static func load_cache(path: String, client_version: String, public_pem: String = PUBLIC_KEY) -> Dictionary:
 	if not FileAccess.file_exists(path):
 		return {}
-	var v: Variant = JSON.parse_string(FileAccess.get_file_as_string(path))
+	var v: Variant = _json(FileAccess.get_file_as_string(path))
 	if not v is Dictionary:
 		return {}
 	return accept(str(v.get("body", "")), str(v.get("signature", "")), client_version, public_pem)
