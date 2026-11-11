@@ -80,6 +80,7 @@ func _ready() -> void:
 		"tide_stone": _action_tide_stone,
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
+		"wake": _action_wake,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"tip": _action_tip,
@@ -1027,6 +1028,50 @@ func _action_fish_trap(args: PackedStringArray, _speaker: NPC) -> void:
 		GameState.money += int(got.money)
 		Sound.sfx("pickup")
 		await say([Loc.plural(int(got.money), "You found %d coin!", "You found %d coins!")] as Array[String])
+
+## "wake": the daily funeral show in Gravers' Hall (data/wake.json, scripts/core/Wake.gd).
+func _action_wake(_args: PackedStringArray, _speaker: NPC) -> void:
+	var day: String = DailyFind.today_key()
+	if Wake.held_today(day):
+		await say(["The Undertaker: One funeral a day. The dead are patient. Come back tomorrow."] as Array[String])
+		return
+	await say([Loc.t("The Undertaker: Today we mourn %s. Who will perform?") % Wake.deceased(day)] as Array[String])
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for p: Spirling in GameState.party:
+		names.append(p.display_name())
+	var who: int = await menu.pick_strings(Loc.t("Who performs?"), names)
+	if who < 0:
+		menu.queue_free()
+		return
+	var s: Spirling = GameState.party[who]
+	var arts: Array[String] = []
+	for m: MoveData in s.moves:
+		arts.append(m.move_name)
+	var pick: int = await menu.pick_strings(Loc.t("Which art?"), arts)
+	if pick < 0:
+		menu.queue_free()
+		return
+	var cost: int = int(Wake.data().get("bribe_cost", 0))
+	var bribe: bool = false
+	if GameState.money >= cost:
+		bribe = await menu.confirm(Loc.t("Slip the Heir %d coins?") % cost, "Pay", "No")
+	menu.queue_free()
+	if bribe:
+		GameState.money -= cost
+	var result: Dictionary = Wake.perform(s, s.moves[pick], bribe, GameState.rng)
+	var lines: Array[String] = [Loc.t("%s performs %s by the coffin.") % [s.display_name(), s.moves[pick].move_name]]
+	lines.append_array(result.lines)
+	lines.append(Loc.t("The mourners give %d points.") % int(result.score))
+	for r: Dictionary in Wake.data().get("rivals", []):
+		lines.append(Loc.t("%s scores %d.") % [Loc.t(str(r.name)), int(r.score)])
+	if bool(result.won):
+		lines.append(Loc.t("The hall weeps for you. You win %d coins.") % int(result.prize))
+	else:
+		lines.append("The Undertaker: Not today. The dead were not impressed.")
+	Wake.finish(result, day)
+	await say(lines)
 
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0

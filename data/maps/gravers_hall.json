@@ -24,7 +24,16 @@
    "facing": "down"
   }
  ],
- "npcs": [],
+ "npcs": [
+  {
+   "id": "undertaker",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "gravers_hall/undertaker",
+   "sprite": "elder"
+  }
+ ],
  "signs": [],
  "spots": {
   "halvard": [
