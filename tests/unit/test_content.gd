@@ -173,11 +173,13 @@ func test_every_element_has_four_veydal_kinds() -> void:
 		assert_gte(int(count.get(e, 0)), 4, "%s in Veydal" % Elements.element_name(e))
 
 func test_no_trait_on_more_than_six_lines() -> void:
+	# Per region: with 70 kinds per act (owner rule) the eight traits are spread over each act.
 	var lines: Dictionary = {}
 	for sd: SpirlingData in Database.spirlings.values():
-		var set: Dictionary = lines.get(sd.trait_id, {})
+		var key: String = "%s in %s" % [sd.trait_id, sd.region]
+		var set: Dictionary = lines.get(key, {})
 		set[sd.line_id] = true
-		lines[sd.trait_id] = set
+		lines[key] = set
 	for t: String in lines:
 		assert_lte((lines[t] as Dictionary).size(), 6, "trait %s" % t)
 
