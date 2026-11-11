@@ -90,7 +90,11 @@ func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 	Database.load_all()
 	assert_eq(_lines_in("corvane").size(), 8)
 	assert_eq(_lines_in("ashmere").size(), 6)
-	assert_eq(_lines_in("solenne").size(), 6)
+	assert_eq(_lines_in("solenne").size(), 30, "6 first lines and 24 of the Act IV lines (tools/art/lines/solenne.py)")
+	var solenne: int = 0
+	for sd: SpirlingData in Database.spirlings.values():
+		solenne += 1 if sd.region == "solenne" else 0
+	assert_eq(solenne, 70, "every story act has 70 own Spirlings")
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != "veydal":
 			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_front.png" % sd.species_name.to_lower()), "%s has a placeholder sprite" % sd.species_name)
@@ -100,11 +104,31 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 	var kinds: Array[SpirlingData] = SpirlogBook.visible_kinds({})
 	for sd: SpirlingData in kinds:
 		assert_eq(sd.region, "veydal")
+	# A wild table holds kinds of its own region or of an earlier act, never of a later one.
 	var enc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/encounters.json"))
+	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/world_layout.json"))
 	for area: String in enc:
+		var region: String = str((layout.maps.get(area, {}) as Dictionary).get("region", "veydal"))
 		for s: Dictionary in enc[area].spawns:
-			assert_eq(Database.species(str(s.species)).region, "veydal", "%s in %s" % [s.species, area])
+			var own: String = Database.species(str(s.species)).region
+			assert_lte(SpirlingData.REGIONS.find(own), SpirlingData.REGIONS.find(region), "%s in %s" % [s.species, area])
 	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 16)
+	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
+	assert_false(SpirlogBook.region_open("solenne", {}))
+
+func test_act_tables_use_mostly_their_own_kinds() -> void:
+	# Owner rule: an act's wild tables carry at most about 20 % kinds of earlier acts (by weight).
+	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/world_layout.json"))
+	for id: String in EncounterTable.table_ids():
+		var region: String = str((layout.maps.get(id, {}) as Dictionary).get("region", "veydal"))
+		if region != "solenne":
+			continue
+		var own: int = 0
+		var all: int = 0
+		for s: Dictionary in EncounterTable.table(id).spawns:
+			all += int(s.weight)
+			own += int(s.weight) if Database.species(str(s.species)).region == region else 0
+		assert_gte(float(own) / all, 0.8, id)
 
 func test_regional_imprint_changes_element_but_keeps_the_spirlog_number() -> void:
 	var sd: SpirlingData = Database.species("Zephlet")
