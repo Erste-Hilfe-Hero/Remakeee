@@ -65,6 +65,14 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 					settable[act[1]] = true
 				if act[0] == "choose_starter":
 					settable["got_starter"] = true
+				# "set_flag <f> ...", "bell <flag> ..." (switch rows) and "betrayal <id>" (betrayal_<id>).
+				if act.size() > 1 and act[0] == "set_flag":
+					for fl: String in act.slice(1):
+						settable[fl] = true
+				if act.size() > 1 and act[0] == "bell":
+					settable[act[1]] = true
+				if act.size() > 1 and act[0] == "betrayal":
+					settable["betrayal_" + act[1]] = true
 	# Cut-scenes set flags with "flag" steps (data/scenes).
 	for f: String in DirAccess.get_files_at("res://data/scenes"):
 		var sc: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/scenes/" + f))
@@ -91,5 +99,7 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 	for id: Variant in StoryBattles.data():
 		if StoryBattles.has(str(id)):
 			settable[StoryBattles.beaten_flag(str(id))] = true
+			for wf: Variant in StoryBattles.get_def(str(id)).get("win_flags", []):
+				settable[str(wf)] = true
 	for f: String in QuestLog.all_flags():
 		assert_true(settable.has(f), "quest flag '%s' is never set by dialogue or maps" % f)
