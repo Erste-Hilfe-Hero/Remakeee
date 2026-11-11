@@ -313,9 +313,19 @@ static func pick_spirlings(menu: PauseMenu, current: Array[String]) -> Variant:
 		elif picked.size() >= 3:
 			await menu.info("Up to 3 Spirlings per trade.")
 		else:
-			var why: String = LocalBackend.trade_mon_why(sp.to_dict())
+			var why: String = mon_why(sp)
 			if not why.is_empty() and not offered.has(sp.uid):
 				await menu.info(str(ERRORS.get(why, ERRORS.no_spirling)))
 			else:
 				picked.append(sp.uid)
 	return null
+
+## Same rule as public._trade_mon_why, checked here first so the player gets the reason at once.
+static func mon_why(sp: Spirling) -> String:
+	if not sp.held.is_empty():
+		return "holds_item"
+	if sp.gleam or sp.temper_core or not sp.crystal.is_empty():
+		return "shop_boosted"
+	if sp.favorite:
+		return "favorite"
+	return ""

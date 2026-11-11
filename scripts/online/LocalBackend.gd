@@ -2256,32 +2256,30 @@ func _fn_trade_put_spirlings(a: Dictionary) -> Dictionary:
 
 # --- Weekly boards and the daily gift (20261111000001_online_step1.sql) ---------------------
 
-static var _rifts: Array = []
-
 ## Rift ids (every "warden" in data/), like known_ids kind "rift".
 static func known_rifts() -> Array:
-	if _rifts.is_empty():
-		_collect_wardens(DirAccess.get_files_at("res://data/maps"), "res://data/maps/")
-		for f: String in ["story_npcs.json", "endgame.json", "puzzles.json"]:
-			_collect_wardens(PackedStringArray([f]), "res://data/")
-	return _rifts
+	var out: Array = []
+	var files: Array = []
+	for f: String in DirAccess.get_files_at("res://data/maps"):
+		files.append("res://data/maps/" + f)
+	for f: String in ["story_npcs.json", "endgame.json", "puzzles.json"]:
+		files.append("res://data/" + f)
+	for path: String in files:
+		if path.ends_with(".json"):
+			_walk_wardens(JSON.parse_string(FileAccess.get_file_as_string(path)), out)
+	return out
 
-static func _collect_wardens(files: PackedStringArray, dir: String) -> void:
-	for f: String in files:
-		if f.ends_with(".json"):
-			_walk_wardens(JSON.parse_string(FileAccess.get_file_as_string(dir + f)))
-
-static func _walk_wardens(v: Variant) -> void:
+static func _walk_wardens(v: Variant, out: Array) -> void:
 	if v is Dictionary:
 		for k: Variant in v:
 			if str(k) == "warden" and v[k] is String and not str(v[k]).is_empty():
-				if not _rifts.has(str(v[k])):
-					_rifts.append(str(v[k]))
+				if not out.has(str(v[k])):
+					out.append(str(v[k]))
 			else:
-				_walk_wardens(v[k])
+				_walk_wardens(v[k], out)
 	elif v is Array:
 		for x: Variant in v:
-			_walk_wardens(x)
+			_walk_wardens(x, out)
 
 ## Like public._board_json: best first, names only for you and your friends.
 func _board(rows: Array, low: bool) -> Array:
