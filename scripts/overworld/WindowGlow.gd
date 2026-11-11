@@ -31,7 +31,9 @@ static func lit(outdoor: bool, phase: int, enabled: bool) -> bool:
 	return outdoor and enabled and (phase == DayCycle.Phase.DUSK or phase == DayCycle.Phase.NIGHT)
 
 func show_for(m: MapData, on: bool) -> void:
-	_cells = window_cells(m) if on else []
+	_cells.clear()
+	if on:
+		_cells = window_cells(m)
 	_panes = PANES.get(m.region, PANES["veydal"])
 	visible = not _cells.is_empty()
 	queue_redraw()
