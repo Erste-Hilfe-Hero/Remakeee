@@ -78,6 +78,8 @@ func _init(p_store_path: String = "") -> void:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
+	# Planned maintenance (Online 100 point 95, 20261111000040_maintenance.sql).
+	_fns["maintenance_info"] = func(_a: Dictionary) -> Dictionary: return {"at": int(db.config.get("maintenance_at", 0))}
 
 func is_local() -> bool:
 	return true

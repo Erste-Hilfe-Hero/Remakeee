@@ -1243,6 +1243,7 @@ func open_menu() -> void:
 	var target: String = menu.travel_to
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
+	var watch_snap: Dictionary = menu.watch_snap
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
 	var raid: Dictionary = menu.raid_attempt
@@ -1261,7 +1262,7 @@ func open_menu() -> void:
 	if photo:
 		await photo_mode()
 	if watch:
-		await watch_replay(GameState.records.get("last_battle", {}))
+		await watch_replay(watch_snap if not watch_snap.is_empty() else GameState.records.get("last_battle", {}))
 	var c: Array = GameState.travel_cell(target) if not target.is_empty() else []
 	if c.size() == 2:
 		Sound.sfx("warp")

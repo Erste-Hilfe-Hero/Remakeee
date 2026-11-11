@@ -1,0 +1,25 @@
+{
+ "_comment": "German texts from tools/i18n/de_online_replays.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s: %d%% gewonnen (%d von %d)",
+  "%s: met %d times": "%s: %d-mal getroffen",
+  "Copy share code": "Teilen-Code kopieren",
+  "Echo duel": "Echo-Duell",
+  "Lost": "Verloren",
+  "Met most often": "Am häufigsten getroffen",
+  "No online battles yet.": "Noch keine Online-Kämpfe.",
+  "Online battle": "Online-Kampf",
+  "Online replays": "Online-Wiederholungen",
+  "Online replays (%d)": "Online-Wiederholungen (%d)",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "Geplante Wartung in %d Std. Das Spiel ist dann kurz offline.",
+  "Raid": "Raid",
+  "Rift board": "Riss-Rangliste",
+  "The clipboard holds no replay code.": "In der Zwischenablage ist kein Wiederholungs-Code.",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "Der Code ist in der Zwischenablage. Ein Freund kann ihn unter Rekorde, Online-Wiederholungen ansehen.",
+  "Watch": "Ansehen",
+  "Watch a code from the clipboard": "Code aus der Zwischenablage ansehen",
+  "Win rate per Spirling": "Siegquote pro Spirling",
+  "Won": "Gewonnen"
+ }
+}

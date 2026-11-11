@@ -188,6 +188,9 @@ func _show_status() -> void:
 	var lines: Array[String] = []
 	if not Online.motd.is_empty():
 		lines.append(Online.motd)
+	var maint: String = ReplayLibrary.maintenance_text(Online.unix_now(), Online.maintenance_at)
+	if not maint.is_empty():
+		lines.append(maint)
 	if Online.online_now > 1:
 		lines.append("%d Wayfarers are in Veydal" % Online.online_now)
 	_status.text = "\n".join(lines)

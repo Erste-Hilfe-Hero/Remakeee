@@ -44,6 +44,8 @@ var last_error: String = ""
 ## Our public profile as the server returned it ({"code", "name", ...}).
 var profile: Dictionary = {}
 var motd: String = ""
+## Unix time of the next planned maintenance from server_config maintenance_at, 0 = none (point 95).
+var maintenance_at: int = 0
 ## The newest version the App Store lists (iOS only, "" until known).
 var store_version: String = ""
 var online_now: int = 0
@@ -175,6 +177,8 @@ func connect_now() -> State:
 	_take_hello(r.data)
 	_save_session()
 	if state == State.ONLINE:
+		var m: Dictionary = await backend.call_fn("maintenance_info", {})
+		maintenance_at = int(m.data.get("at", 0)) if m.ok and m.data is Dictionary else 0
 		await refresh_live_content()
 		if update_state() == "required":
 			_set_state(State.UPDATE_REQUIRED)
@@ -268,6 +272,9 @@ func _on_resumed() -> void:
 ## Calls a server function. A dropped connection switches to OFFLINE (the reconnect screen
 ## takes over while playing).
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
+	# Every online battle is kept as a replay (Online 100 plan point 71).
+	if name == "battle_submit" and args.get("p_replay") is Dictionary and args.get("p_claim") is Dictionary:
+		ReplayLibrary.add(GameState.records, str(args.get("p_kind", "")), args.p_replay, args.p_claim)
 	if state != State.ONLINE:
 		return OnlineBackend.fail("offline", true)
 	if wait_dots != null:
