@@ -1,0 +1,26 @@
+{
+ "_comment": "Own ideas 200 from the master plan, batch 2. Read by scripts/core/FineTraining.gd (1114), ChallengeRules.gd (1112), NewGamePlus.gd (1111) and TowerWeek.gd (1103).",
+ "fine_training": {
+  "base_cost": 200,
+  "cost_step": 100,
+  "scam_chance": 0.15,
+  "scam_line": "Coach Varro pockets the coins and says the gains are 'internal'. Nothing changed.",
+  "done_line": "Coach Varro: Feel that? That's %s getting meaner. Pleasure doing business."
+ },
+ "challenges": [
+  {"id": "one_element", "name": "One Colour", "text": "Only Spirlings that share your starter's element may join the party."},
+  {"id": "no_items", "name": "Empty Pockets", "text": "No items in battle. Not even the cheap ones."},
+  {"id": "no_shop", "name": "Off the Books", "text": "No shopping. Whatever you have, you found or stole."},
+  {"id": "trust_no_one", "name": "Trust No One", "text": "After every Warden, one random party member walks off with a better offer."}
+ ],
+ "ng_plus": {
+  "ring_bonus": 8,
+  "max_cycles": 5,
+  "keep": ["spirlog", "waymarks", "records"],
+  "start_line": "Same streets, new faces. Everybody remembers you. Nobody admits it."
+ },
+ "tower_week": {
+  "rules": ["ember_pulse", "undertow", "ash_rain", "tide_turn", "fog_bank", "vine_tangle", "night_dark", "sandstorm", "dry_well", "high_noon"],
+  "lines": ["The tower's landlord changed the rules again. Read the small print."]
+ }
+}
