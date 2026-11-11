@@ -29,8 +29,8 @@ static func push(node: Control, a: Rect2, b: Rect2) -> void:
 	var f: Dictionary = focus(node.size, a, b)
 	node.pivot_offset = f.pivot
 	var t: float = float(cam_cfg().get("in_time", 0.18)) / Juice.speed()
-	var tw: Tween = node.create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
-	tw.tween_property(node, "scale", f.scale, t)
+	var tw: Tween = node.create_tween()
+	Juice.shaped(tw.tween_property(node, "scale", f.scale, t), "move")
 	await tw.finished
 
 ## Eases [param node] back to rest framing after a short hold. Awaitable.
@@ -38,7 +38,7 @@ static func release(node: Control) -> void:
 	if node == null or node.scale == Vector2.ONE:
 		return
 	var c: Dictionary = cam_cfg()
-	var tw: Tween = node.create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	var tw: Tween = node.create_tween()
 	tw.tween_interval(float(c.get("hold_time", 0.12)) / Juice.speed())
-	tw.tween_property(node, "scale", Vector2.ONE, float(c.get("out_time", 0.22)) / Juice.speed())
+	Juice.shaped(tw.tween_property(node, "scale", Vector2.ONE, float(c.get("out_time", 0.22)) / Juice.speed()), "move")
 	await tw.finished

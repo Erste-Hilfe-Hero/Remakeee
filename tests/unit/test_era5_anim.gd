@@ -59,4 +59,4 @@ func test_camera_zooms_in_and_keeps_pivot_inside() -> void:
 
 func test_unlock_line_has_german() -> void:
 	var d: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/i18n/de/era5.json"))
-	assert_true((d as Dictionary).has(BattleAnim.UNLOCK_LINE))
+	assert_true(((d as Dictionary).get("strings", {}) as Dictionary).has(BattleAnim.UNLOCK_LINE))
