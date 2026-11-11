@@ -41,6 +41,9 @@ var draw_offset: Vector2 = Vector2.ZERO
 var anim_kind: String = "idle"
 var _anim_time: float = 0.0
 var _strips: Dictionary = {}
+## Era IV: the "_b" breath frame (tools/art/gen_era4.py), swapped in for the second half of each
+## bob instead of the 1 px lift; null when the sprite has none.
+var _breath: Texture2D
 
 func setup(s: Spirling, p_facing: String) -> void:
 	spirling = s
@@ -53,6 +56,10 @@ func setup(s: Spirling, p_facing: String) -> void:
 	# Looked up per setup, so an unfurled Gleam takes its new species' palette.
 	material = GleamRules.material(s.data.species_name) if s.gleam and _texture != null else null
 	_strips.clear()
+	_breath = null
+	var bp: String = breath_path(path)
+	if _texture != null and ResourceLoader.exists(bp):
+		_breath = load(bp)
 	if _texture != null and BattleAnim.enabled():
 		for k: String in BattleAnim.KINDS:
 			var st: Texture2D = BattleAnim.strip_texture(path, k)
@@ -62,6 +69,14 @@ func setup(s: Spirling, p_facing: String) -> void:
 	_anim_time = 0.0
 	modulate.a = 1.0
 	queue_redraw()
+
+## Breath frame path next to an era sprite path ("x_front.png" -> "x_front_b.png").
+static func breath_path(path: String) -> String:
+	return path.get_basename() + "_b.png" if path.begins_with("res://art/era4/") else ""
+
+## True while the breath frame is shown: the lifted half of the idle bob.
+func breathing() -> bool:
+	return _breath != null and draw_offset.y < (LOW_SAG_PX if is_weak(spirling) else 0.0)
 
 ## The era sprite in use, or null while the placeholder rectangle is drawn.
 func texture() -> Texture2D:
@@ -290,9 +305,13 @@ func _draw() -> void:
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 	if _texture != null:
+		var tex: Texture2D = _breath if breathing() else _texture
+		# With a breath frame the frame swap replaces the lift; only the low-strength sag stays.
+		var off: Vector2 = Vector2(0, LOW_SAG_PX if is_weak(spirling) else 0.0) if _breath != null else draw_offset
+		draw_set_transform(off)
 		if mirrored:
-			draw_set_transform(Vector2(size.x, 0) + draw_offset, 0.0, Vector2(-1, 1))
-		draw_texture_rect(_texture, r, false, PRISM_TINT if spirling.prism and material == null else Color.WHITE)
+			draw_set_transform(Vector2(size.x, 0) + off, 0.0, Vector2(-1, 1))
+		draw_texture_rect(tex, r, false, PRISM_TINT if spirling.prism and material == null else Color.WHITE)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 	var els: Array[int] = spirling.elements()
