@@ -499,6 +499,8 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 		BattleAction.Kind.ITEM:
 			return await _pick_item(slot)
 		BattleAction.Kind.BOND:
+			if not model.is_wild:
+				return BattleAction.make_oath(BattleModel.Side.PLAYER, slot)
 			return await _bond(slot)
 		BattleAction.Kind.RUN:
 			return BattleAction.make_run(BattleModel.Side.PLAYER, slot)
