@@ -658,11 +658,11 @@
   "role": "striker",
   "line_id": "zippit",
   "base": {
-   "hp": 82,
-   "atk": 88,
-   "foc": 108,
-   "spd": 120,
-   "def": 72
+   "hp": 85,
+   "atk": 92,
+   "foc": 112,
+   "spd": 125,
+   "def": 75
   },
   "trait": "surge",
   "learnset": {
