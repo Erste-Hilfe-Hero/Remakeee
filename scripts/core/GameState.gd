@@ -1385,7 +1385,7 @@ func _load_boxes(d: Dictionary) -> void:
 	for p: Variant in (pr if pr is Array else []):
 		if p is Dictionary and (p as Dictionary).get("uids") is Array and team_presets.size() < TEAM_PRESETS:
 			var uids: Array = ((p as Dictionary).uids as Array).map(func(x: Variant) -> String: return str(x))
-			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY)})
+			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY + 1)})
 	# Old saves had one flat list: spread it over the boxes in order.
 	var fill: Array[int] = []
 	fill.resize(storage_boxes.size())
@@ -1513,7 +1513,7 @@ func _find_uid(u: String) -> Spirling:
 ## Loads preset [param slot] with one tap at a spring: members come out of storage, the rest
 ## rests. Never leaves the team without a healthy member and never overfills storage.
 func load_preset(slot: int) -> bool:
-	var team: Array[Spirling] = preset_team(slot)
+	var team: Array[Spirling] = preset_team(slot).slice(0, party_max())
 	if team.is_empty():
 		return false
 	var healthy: bool = false
