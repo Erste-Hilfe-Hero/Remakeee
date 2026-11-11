@@ -6,7 +6,7 @@ extends GutTest
 const RIFTS: Dictionary = {
 	"tower_rift": {"warden": "warden_aurelio", "id": "tower", "rule": "sandstorm", "gift": "echo_squall", "size": 5, "open": ""},
 	"oasis_rift": {"warden": "warden_kaia", "id": "oasis", "rule": "dry_well", "gift": "echo_dawn_mend", "size": 5, "open": "rift_tower_sealed"},
-	"sun_rift": {"warden": "warden_emrys", "id": "sun", "rule": "high_noon", "gift": "echo_radiant_lance", "size": 6, "open": "rift_oasis_sealed"},
+	"sun_rift": {"warden": "warden_emrys", "id": "sun", "rule": "high_noon", "gift": "echo_radiant_lance", "size": 5, "open": "rift_oasis_sealed"},
 }
 
 func before_all() -> void:

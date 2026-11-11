@@ -120,7 +120,8 @@ def ochrewell(world):
          "signs": [{"x": 9, "y": 5, "dialogue": mid + "/sign"}],
          "blocks": [gate(11, 8, "rift_tower_sealed", "#"), gate(11, 9, "rift_tower_sealed", "#"),
                     gate(5, 19, "rift_oasis_sealed", "#"), gate(6, 19, "rift_oasis_sealed", "#")],
-         "secrets": [secret(0, 13, "max_tonic", "find_ochrewell_west"), secret(11, 16, "revival_leaf", "find_ochrewell_bazaar")],
+         "secrets": [secret(0, 13, "max_tonic", "find_ochrewell_west"), secret(11, 16, "revival_leaf", "find_ochrewell_bazaar"),
+                     secret(11, 4, "strong_tonic", "find_ochrewell_domes", 2)],
          "square": [6, 8]}
     finish(world, mid, m)
 
@@ -235,7 +236,7 @@ def oasis_rift(world):
     m["blocks"] += [gate(4, 6, "_water_ge_2", "~"), gate(5, 6, "_water_ge_2", "~"),
                     gate(4, 12, "_water_le_1", "~"), gate(5, 12, "_water_le_1", "~")]
     m["npcs"] = [
-        wayfarer(world, mid, "noor", 7, 17, "left", tr("Rift Acolyte Noor", "Riss-Akolythin Noor"), team(("Kelpup", 36), ("Lumenewt", 36), ("Paddlewisp", 36)),
+        wayfarer(world, mid, "noor", 7, 17, "left", tr("Rift Acolyte Noor", "Riss-Akolythin Noor"), team(("Kelpup", 36), ("Lumenewt", 36), ("Kelphound", 36)),
                  [("Noor: Kaia says the water left on its own. Water doesn't sign receipts, though.", "Noor: Kaia sagt, das Wasser sei von selbst gegangen. Wasser unterschreibt allerdings keine Quittungen.")],
                  [("Noor: You want Kaia? She's busy being adored. Duel first.", "Noor: Du willst zu Kaia? Sie ist damit beschäftigt, angebetet zu werden. Erst ein Duell.")],
                  [("Noor: Fine. Ask her where the water went. Watch her smile.", "Noor: Schön. Frag sie, wohin das Wasser ist. Achte auf ihr Lächeln.")], 1850, sprite="warden"),
@@ -309,7 +310,7 @@ def sun_rift(world):
                  [("Abel: I sat on one of the marks once. For a week. The door stayed open and so did my position, until it didn't.", "Abel: Ich habe mal auf einer der Marken gesessen. Eine Woche lang. Das Tor blieb offen und meine Stelle auch, bis sie es nicht mehr war.")],
                  [("Abel: The palace thanks you for your visit. Now leave or lose.", "Abel: Der Palast dankt für Ihren Besuch. Nun gehen Sie oder verlieren Sie.")],
                  [("Abel: The palace regrets any inconvenience. Mostly its own.", "Abel: Der Palast bedauert etwaige Unannehmlichkeiten. Vor allem seine eigenen.")], 2000),
-        warden(world, mid, "sun", "Emrys", team(("Solmantle", 37), ("Orrerine", 38), ("Glimmerax", 37), ("Cairnhold", 38), ("Zenithare", 38), ("Saltcrown", 38)), "high_noon", "echo_radiant_lance", 2100,
+        warden(world, mid, "sun", "Emrys", team(("Solmantle", 37), ("Orrerine", 38), ("Glimmerax", 37), ("Cairnhold", 38), ("Zenithare", 38)), "high_noon", "echo_radiant_lance", 2100,
                [("Emrys: The sun stopped. I've waited eighty years for it to need me. Now it does, and I'm too tired to stand up.", "Emrys: Die Sonne ist stehen geblieben. Achtzig Jahre habe ich darauf gewartet, dass sie mich braucht. Jetzt tut sie es, und ich bin zu müde zum Aufstehen.")],
                [("Emrys: So Kaia is unmasked. Yes, I signed as her witness. Someone had to read the small print. Nobody else ever does.", "Emrys: Kaia ist also enttarnt. Ja, ich habe als ihr Zeuge unterschrieben. Irgendwer musste das Kleingedruckte lesen. Sonst tut es ja nie jemand."),
                 ("Emrys: Everyone in Solenne works for someone. I work for the sun. It doesn't pay either. Shall we?", "Emrys: In Solenne arbeitet jeder für jemanden. Ich arbeite für die Sonne. Die zahlt auch nicht. Wollen wir?")],
