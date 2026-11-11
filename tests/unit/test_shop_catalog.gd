@@ -29,13 +29,17 @@ func test_validator_finds_random_content() -> void:
 	errs = ShopValidator.check([bad] as Array[Dictionary])
 	assert_true(errs.any(func(e: String) -> bool: return "value fields" in e), "cosmetics have no values: %s" % str(errs))
 
-func test_validator_bans_spirlings() -> void:
+func test_validator_sells_spirlings_only_as_spirling_grants() -> void:
 	Database.load_all()
 	var some: String = str(Database.spirlings.keys()[0])
 	var bad: Dictionary = ShopCatalog.offer("rg_ring_tonic").duplicate(true)
 	bad["grants"] = [{"t": "item", "id": some, "n": 1}]
 	var errs: Array[String] = ShopValidator.check([bad] as Array[Dictionary])
-	assert_true(errs.any(func(e: String) -> bool: return "never sold" in e), str(errs))
+	assert_true(errs.any(func(e: String) -> bool: return "only as" in e), str(errs))
+	bad["grants"] = [{"t": "spirling", "species": "Nobody", "level": 40}]
+	errs = ShopValidator.check([bad] as Array[Dictionary])
+	assert_true(errs.any(func(e: String) -> bool: return "no species" in e), str(errs))
+	assert_true(errs.any(func(e: String) -> bool: return "once per account" in e), "a consumable Spirling offer: %s" % str(errs))
 
 func test_validator_finds_bad_prices() -> void:
 	var bad: Dictionary = ShopCatalog.offer("rg_ring_tonic").duplicate(true)

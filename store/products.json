@@ -1573,6 +1573,97 @@
    "desc_de": "Spirlings auf der Bank wachsen nach jedem gewonnenen Kampf mit. In den Einstellungen schaltbar. Dauerhaft.",
    "family_shareable": false,
    "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.spirling.velahra",
+   "offer": "rg_spirling_velahra",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "19.99",
+   "name_en": "Velahra at Ring 40",
+   "name_de": "Velahra auf Ring 40",
+   "desc_en": "Velahra, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent.",
+   "desc_de": "Velahra, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht o",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.spirling.hallowmur",
+   "offer": "rg_spirling_hallowmur",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "19.99",
+   "name_en": "Hallowmur at Ring 40",
+   "name_de": "Hallowmur auf Ring 40",
+   "desc_en": "Hallowmur, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or len",
+   "desc_de": "Hallowmur, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.spirling.scriptorax",
+   "offer": "rg_spirling_scriptorax",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "19.99",
+   "name_en": "Scriptorax at Ring 40",
+   "name_de": "Scriptorax auf Ring 40",
+   "desc_en": "Scriptorax, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or le",
+   "desc_de": "Scriptorax, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getausch",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.spirling.lumivane",
+   "offer": "rg_spirling_lumivane",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "19.99",
+   "name_en": "Lumivane at Ring 40",
+   "name_de": "Lumivane auf Ring 40",
+   "desc_en": "Lumivane, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent",
+   "desc_de": "Lumivane, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht ",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.spirling.zephyrel",
+   "offer": "rg_spirling_zephyrel",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "19.99",
+   "name_en": "Zephyrel at Ring 40",
+   "name_de": "Zephyrel auf Ring 40",
+   "desc_en": "Zephyrel, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent",
+   "desc_de": "Zephyrel, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht ",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.spirling.monolurk",
+   "offer": "rg_spirling_monolurk",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "19.99",
+   "name_en": "Monolurk at Ring 40",
+   "name_de": "Monolurk auf Ring 40",
+   "desc_en": "Monolurk, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or lent",
+   "desc_de": "Monolurk, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht ",
+   "family_shareable": false,
+   "ready": true
+  },
+  {
+   "product_id": "de.chimora.game.spirling.vorlucent",
+   "offer": "rg_spirling_vorlucent",
+   "apple_type": "NON_CONSUMABLE",
+   "google_type": "onetime",
+   "eur": "19.99",
+   "name_en": "Vorlucent at Ring 40",
+   "name_de": "Vorlucent auf Ring 40",
+   "desc_en": "Vorlucent, the ancient Spirling, joins your team at Ring 40 with the highest Spark in every value. Fixed values, no chance. A second one beside the one you can bond on the journey. Never traded or len",
+   "desc_de": "Vorlucent, der uralte Spirling, kommt auf Ring 40 mit dem höchsten Funken in jedem Wert in dein Team. Feste Werte, kein Zufall. Ein zweiter neben dem, den du auf der Reise binden kannst. Nie getauscht",
+   "family_shareable": false,
+   "ready": true
   }
  ]
 }
