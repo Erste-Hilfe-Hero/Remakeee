@@ -881,7 +881,7 @@ func _use_gleam_prism(id: String) -> void:
 	if who < 0:
 		return
 	var s: Spirling = GameState.party[who]
-	if s.gleam:
+	if s.gleam_boost:
 		await info(Loc.t("%s already gleams.") % s.display_name())
 		return
 	if not await confirm(Loc.t("Turn %s into its Gleam form? +10%% on all values, for good.") % s.display_name(), "Gleam", "Not now"):

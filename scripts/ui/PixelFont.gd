@@ -258,6 +258,8 @@ const GLYPHS: Dictionary[String, Array] = {
 	"\ue004": [".....", ".###.", "#...#", "#####", "#.#.#", "#####", "#####", ".....", "....."],
 	# Knot (U+E005): a run in the chronicle with kept vows.
 	"\ue005": [".....", ".##..", "#..#.", ".##..", ".#.#.", "#...#", ".....", ".....", "....."],
+	# Gleam star (U+E006): a four-point sparkle beside a Gleam Spirling (GleamRules.STAR).
+	"\ue006": [".....", "..#..", "..#..", "##.##", "..#..", "..#..", ".....", ".....", "....."],
 	# Chain (U+E003): a save slot under the Iron Oath.
 	"\ue003": [".....", "##...", "#.#..", ".###.", "..#.#", "...##", ".....", ".....", "....."],
 }

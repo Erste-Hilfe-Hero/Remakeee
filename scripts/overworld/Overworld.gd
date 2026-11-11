@@ -80,6 +80,8 @@ func _ready() -> void:
 		"tide_stone": _action_tide_stone,
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
+		"wake": _action_wake,
+		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"tip": _action_tip,
@@ -117,6 +119,7 @@ func _ready() -> void:
 		"toggle": _action_toggle,
 		"mirror": _action_mirror,
 		"first_voice": _action_first_voice,
+		"legend": _action_legend,
 	}
 	_world = WorldMechanics.new(self)
 	_build()
@@ -169,6 +172,11 @@ func _build() -> void:
 	player.interact.connect(_on_interact)
 	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
+	_inkshadow = Sprite2D.new()
+	_inkshadow.name = "Inkshadow"
+	_inkshadow.centered = false
+	_inkshadow.modulate = Color(UITheme.INK, 0.85)
+	_entities.add_child(_inkshadow)
 	var hint := InteractHint.new()
 	hint.ow = self
 	add_child(hint)
@@ -325,6 +333,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	refresh_shade()
 	_spawn_npcs()
 	player.place(cell, face)
+	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
 	# Boat and coach stops open once the player has walked there (area 3 item 1190).
 	if not _on_trip and Transit.is_stop(map_id):
@@ -574,6 +583,7 @@ func _warp_out(edge: bool) -> void:
 
 func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
+	_place_inkshadow(GameState.player_cell, cell)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	survey_step(cell)
@@ -581,6 +591,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		return
 	_grass_rustle(map.kind_at(cell))
 	DailyTasks.record("step", {"map": map.id})
+	_inkshadow_remark()
 	show_notices()
 	if await _world.stepped(cell):
 		return
@@ -606,7 +617,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
-				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell))
+				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
+				if wild != null:
+					GameState.gleam_chain = GleamRules.next_chain(GameState.gleam_chain, wild)
 			if wild != null:
 				await start_battle([wild] as Array[Spirling], true)
 
@@ -911,15 +924,29 @@ func _action_first_voice(args: PackedStringArray, _speaker: NPC) -> void:
 	var sd: SpirlingData = Database.species(args[0])
 	if sd == null:
 		return
-	var voice := Spirling.new(sd, int(args[1]) if args.size() > 1 else 40, GameState.rng)
+	await _fixed_meeting(sd, int(args[1]) if args.size() > 1 else 40, "The light sinks back under the water. It will rise again after you rest.")
+
+## "legend <species> <ring>": a one-time meeting with a legendary Spirling (FirstVoices.LEGENDS),
+## with the same rest-and-return rule as a First Voice.
+func _action_legend(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.first_healthy_index() < 0:
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var ring: int = int(args[1]) if args.size() > 1 else int(FirstVoices.entry(sd.species_name).get("ring", 50))
+	await _fixed_meeting(sd, ring, "It slips away. It will be back here after you rest.")
+
+func _fixed_meeting(sd: SpirlingData, ring: int, gone_line: String) -> void:
+	var wild := Spirling.new(sd, ring, GameState.rng)
 	_text.visible = false
 	SaveManager.save_game()
-	await start_battle([voice] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
 	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
 	if FirstVoices.is_bonded(sd.species_name):
 		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
 	else:
-		await say(["The light sinks back under the water. It will rise again after you rest."] as Array[String])
+		await say([gone_line] as Array[String])
 
 ## Echo Cores that are ready wake into a Hallkind (item 185).
 func _wake_cores() -> void:
@@ -1003,6 +1030,90 @@ func _action_fish_trap(args: PackedStringArray, _speaker: NPC) -> void:
 		Sound.sfx("pickup")
 		await say([Loc.plural(int(got.money), "You found %d coin!", "You found %d coins!")] as Array[String])
 
+## "wake": the daily funeral show in Gravers' Hall (data/wake.json, scripts/core/Wake.gd).
+func _action_wake(_args: PackedStringArray, _speaker: NPC) -> void:
+	var day: String = DailyFind.today_key()
+	if Wake.held_today(day):
+		await say(["The Undertaker: One funeral a day. The dead are patient. Come back tomorrow."] as Array[String])
+		return
+	await say([Loc.t("The Undertaker: Today we mourn %s. Who will perform?") % Wake.deceased(day)] as Array[String])
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for p: Spirling in GameState.party:
+		names.append(p.display_name())
+	var who: int = await menu.pick_strings(Loc.t("Who performs?"), names)
+	if who < 0:
+		menu.queue_free()
+		return
+	var s: Spirling = GameState.party[who]
+	var arts: Array[String] = []
+	for m: MoveData in s.moves:
+		arts.append(m.move_name)
+	var pick: int = await menu.pick_strings(Loc.t("Which art?"), arts)
+	if pick < 0:
+		menu.queue_free()
+		return
+	var cost: int = int(Wake.data().get("bribe_cost", 0))
+	var bribe: bool = false
+	if GameState.money >= cost:
+		bribe = await menu.confirm(Loc.t("Slip the Heir %d coins?") % cost, "Pay", "No")
+	menu.queue_free()
+	if bribe:
+		GameState.money -= cost
+	var result: Dictionary = Wake.perform(s, s.moves[pick], bribe, GameState.rng)
+	var lines: Array[String] = [Loc.t("%s performs %s by the coffin.") % [s.display_name(), s.moves[pick].move_name]]
+	lines.append_array(result.lines)
+	lines.append(Loc.t("The mourners give %d points.") % int(result.score))
+	for r: Dictionary in Wake.data().get("rivals", []):
+		lines.append(Loc.t("%s scores %d.") % [Loc.t(str(r.name)), int(r.score)])
+	if bool(result.won):
+		lines.append(Loc.t("The hall weeps for you. You win %d coins.") % int(result.prize))
+	else:
+		lines.append("The Undertaker: Not today. The dead were not impressed.")
+	Wake.finish(result, day)
+	await say(lines)
+
+## "burrow": the claimable hollow in Murk Hollow with a wall of trophies (scripts/core/Burrow.gd).
+func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	if not Burrow.claimed():
+		if not await menu.confirm(Loc.t("A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?"), "Claim", "Leave"):
+			menu.queue_free()
+			return
+		Burrow.claim()
+		Sound.sfx("pickup")
+	var pawned: String = Burrow.visit(DailyFind.today_key())
+	if not pawned.is_empty():
+		menu.visible = false
+		await say([Loc.t(str(Burrow.data().squatter)) % Loc.t(str(Burrow.trophy(pawned).name))] as Array[String])
+		menu.visible = true
+	while true:
+		var ids: Array[String] = Burrow.earned_ids()
+		if ids.is_empty():
+			menu.queue_free()
+			await say(["Your Burrow. The walls are bare. Earn something worth hanging."] as Array[String])
+			return
+		var rows: Array[String] = []
+		for id: String in ids:
+			var shown: String = Loc.t(str(Burrow.trophy(id).name))
+			rows.append(("* " + shown) if id in Burrow.wall() else shown)
+		var pick: int = await menu.pick_strings(Loc.t("Your Burrow (%d/%d on the wall)") % [Burrow.wall().size(), int(Burrow.data().wall_slots)], rows)
+		if pick < 0:
+			break
+		var id: String = ids[pick]
+		menu.visible = false
+		if id in Burrow.wall():
+			Burrow.take_down(id)
+			await say([Loc.t(str(Burrow.trophy(id).text)), "You take it down."] as Array[String])
+		elif Burrow.hang(id):
+			await say([Loc.t(str(Burrow.trophy(id).text)), "You hang it on the wall."] as Array[String])
+		else:
+			await say(["The wall is full. Take something down first."] as Array[String])
+		menu.visible = true
+	menu.queue_free()
+
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0
 
@@ -1020,6 +1131,8 @@ func _action_lake_bench(args: PackedStringArray, _speaker: NPC) -> void:
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()
+	for s: Spirling in GameState.party:
+		Inkshadow.soothe(s)
 	GameState.heal_party()
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
@@ -1137,6 +1250,29 @@ func _close_menu(menu: PauseMenu) -> void:
 	menu.picker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	Juice.tween(menu, "modulate:a", 0.0, "close")
 	await Juice.tween(menu, "position", Vector2(MENU_SLIDE, 0), "close").finished
+
+# --- Inkshadow (the lead Spirling one step behind) ------------------------------------
+
+var _inkshadow: Sprite2D
+
+func _place_inkshadow(prev_cell: Vector2i, cell: Vector2i) -> void:
+	if _inkshadow == null:
+		return
+	var lead: Spirling = Inkshadow.lead()
+	_inkshadow.visible = lead != null and map != null and map.outdoor
+	if not _inkshadow.visible:
+		return
+	_inkshadow.texture = MiniSprite.of(lead.data.species_name, GridWalker.TILE)
+	_inkshadow.position = GridWalker.cell_to_pos(Inkshadow.trail_cell(prev_cell, cell, player.facing))
+
+func _inkshadow_remark() -> void:
+	if not map.outdoor:
+		return
+	var said: Dictionary = Inkshadow.step(GameState.rng)
+	if said.is_empty():
+		return
+	GameState.money += int(said.get("money", 0))
+	toast.show_note(str(said.text))
 
 ## Dust behind the feet on every second running step (items 2304, 2395).
 func _on_player_step_started(dir: String, run: bool) -> void:
@@ -2964,6 +3100,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
 	GameState.note_battle_end()
+	Inkshadow.note_battle(GameState.party)
 	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()

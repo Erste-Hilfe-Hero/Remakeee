@@ -121,6 +121,7 @@ T = {
 "Wayfarer": "Wanderer", "A Wayfarer": "Ein Wanderer",
 # Battle events
 " It shimmers with odd colours!": " Es schimmert in seltsamen Farben!",
+" It gleams in colours of its own!": " Es glänzt in ganz eigenen Farben!",
 "It shimmers with odd colours!": "Es schimmert in seltsamen Farben!",
 "A hushed %s blocks your way.": "Ein verstummter %s versperrt dir den Weg.",
 "A hushed %s blocks your way.%s": "Ein verstummter %s versperrt dir den Weg.%s",

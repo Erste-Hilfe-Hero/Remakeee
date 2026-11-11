@@ -393,7 +393,7 @@ func start() -> Array[BattleEvent]:
 		_boss_actions = BattleRules.boss_actions_for(foe_boss, fielded, boss_difficulty)
 	var foe: Spirling = active_spirling(Side.FOE)
 	emit_event(BattleEvent.Type.BATTLE_START, {"wild": is_wild, "trainer": trainer_name, "foe_name": foe.display_name(),
-		"prism": foe.prism, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
+		"prism": foe.prism, "gleam": foe.gleam, "count": slot_count(Side.FOE), "multi": is_multi(), "boss": BattleRules.BOSSES.has(foe_boss)})
 	if not is_wild:
 		_battle_line("motto")
 		for slot: int in slot_count(Side.FOE):

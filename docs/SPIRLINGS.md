@@ -133,64 +133,64 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 
 | No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 82 | Rollib | Lumen/Stone | common | bulwark | deep_roots | 304 | Rollibex (ring 17) |
-| 83 | Rollibex | Lumen/Stone | uncommon | bulwark | thick_hide | 409 | Helirollax (ring 35) |
-| 84 | Helirollax | Lumen/Stone | shy | bulwark | steady | 499 | - |
-| 85 | Sirocub | Gale | common | striker | surge | 308 | Sirocat (ring 16) |
-| 86 | Sirocat | Gale | uncommon | striker | surge | 400 | Siroclaw (ring 36) |
-| 87 | Siroclaw | Gale | shy | striker | last_stand | 500 | - |
-| 88 | Scaldasp | Ember/Stone | common | striker | last_stand | 306 | Scaldcoil (ring 16) |
-| 89 | Scaldcoil | Ember/Stone | uncommon | striker | slick | 403 | Scaldrahn (ring 34) |
-| 90 | Scaldrahn | Ember/Stone | shy | striker | last_stand | 504 | - |
-| 91 | Noonpip | Lumen/Gale | common | vanguard | steady | 307 | Noonwhist (ring 17) |
-| 92 | Noonwhist | Lumen/Gale | uncommon | vanguard | steady | 408 | Noonsoral (ring 36) |
-| 93 | Noonsoral | Lumen/Gale | shy | vanguard | steady | 502 | - |
-| 94 | Spinnub | Bloom/Stone | common | bulwark | deep_roots | 310 | Spinnarow (ring 20) |
-| 95 | Spinnarow | Bloom/Stone | uncommon | bulwark | thick_hide | 402 | Spinnacle (ring 36) |
-| 96 | Spinnacle | Bloom/Stone | shy | bulwark | deep_roots | 503 | - |
-| 97 | Wadlet | Tide/Stone | common | bulwark | thick_hide | 309 | Wadishell (ring 18) |
-| 98 | Wadishell | Tide/Stone | uncommon | bulwark | deep_roots | 403 | Wadibastion (ring 33) |
-| 99 | Wadibastion | Tide/Stone | shy | bulwark | deep_roots | 495 | - |
-| 100 | Ergfin | Gale/Tide | common | striker | slick | 301 | Ergskim (ring 18) |
-| 101 | Ergskim | Gale/Tide | uncommon | striker | last_stand | 410 | Ergrava (ring 32) |
-| 102 | Ergrava | Gale/Tide | shy | striker | surge | 505 | - |
-| 103 | Ardlet | Ember/Lumen | common | kindler | light_sleeper | 310 | Ardlume (ring 17) |
-| 104 | Ardlume | Ember/Lumen | uncommon | kindler | surge | 402 | Ardenthal (ring 33) |
-| 105 | Ardenthal | Ember/Lumen | shy | kindler | light_sleeper | 496 | - |
-| 106 | Fulgrit | Volt/Stone | common | vanguard | steady | 307 | Fulgorin (ring 16) |
-| 107 | Fulgorin | Volt/Stone | uncommon | vanguard | steady | 407 | Fulgorath (ring 32) |
-| 108 | Fulgorath | Volt/Stone | shy | vanguard | last_stand | 503 | - |
-| 109 | Carabun | Stone/Tide | common | bulwark | deep_roots | 310 | Caravant (ring 17) |
-| 110 | Caravant | Stone/Tide | uncommon | bulwark | deep_roots | 408 | Caravault (ring 36) |
-| 111 | Caravault | Stone/Tide | shy | bulwark | deep_roots | 502 | - |
-| 112 | Velvit | Umbra/Gale | common | weaver | steady | 303 | Velvessa (ring 16) |
-| 113 | Velvessa | Umbra/Gale | uncommon | weaver | light_sleeper | 403 | Velverain (ring 36) |
-| 114 | Velverain | Umbra/Gale | shy | weaver | steady | 504 | - |
-| 115 | Clasplet | Umbra/Stone | common | striker | surge | 303 | Claspirant (ring 17) |
-| 116 | Claspirant | Umbra/Stone | uncommon | striker | slick | 404 | Claspreign (ring 32) |
-| 117 | Claspreign | Umbra/Stone | shy | striker | last_stand | 496 | - |
-| 118 | Obelit | Stone/Lumen | common | bulwark | thick_hide | 306 | Obelith (ring 19) |
-| 119 | Obelith | Stone/Lumen | uncommon | bulwark | thick_hide | 403 | Obelordan (ring 34) |
-| 120 | Obelordan | Stone/Lumen | shy | bulwark | deep_roots | 495 | - |
-| 121 | Haboblet | Gale/Stone | common | vanguard | steady | 310 | Haboborn (ring 19) |
-| 122 | Haboborn | Gale/Stone | uncommon | vanguard | last_stand | 400 | Habobrax (ring 35) |
-| 123 | Habobrax | Gale/Stone | shy | vanguard | last_stand | 498 | - |
-| 124 | Stiltwade | Tide | common | weaver | slick | 326 | Stiltregent (ring 27) |
-| 125 | Stiltregent | Tide | shy | weaver | slick | 486 | - |
-| 126 | Palmop | Bloom/Lumen | uncommon | kindler | surge | 335 | Palmonarch (ring 28) |
-| 127 | Palmonarch | Bloom/Lumen | shy | kindler | light_sleeper | 486 | - |
-| 128 | Bakedil | Stone/Ember | uncommon | bulwark | thick_hide | 331 | Bakedillon (ring 29) |
-| 129 | Bakedillon | Stone/Ember | shy | bulwark | deep_roots | 489 | - |
-| 130 | Hazejel | Gale/Lumen | uncommon | weaver | slick | 335 | Hazejellith (ring 27) |
-| 131 | Hazejellith | Gale/Lumen | shy | weaver | light_sleeper | 490 | - |
-| 132 | Corocub | Ember/Lumen | uncommon | vanguard | surge | 333 | Coronarch (ring 29) |
-| 133 | Coronarch | Ember/Lumen | shy | vanguard | surge | 487 | - |
-| 134 | Chirrik | Gale/Bloom | uncommon | striker | surge | 334 | Chirrikade (ring 27) |
-| 135 | Chirrikade | Gale/Bloom | shy | striker | slick | 481 | - |
-| 136 | Brinewhorl | Tide/Stone | uncommon | weaver | slick | 450 | - |
-| 137 | Gyrevult | Umbra/Gale | uncommon | striker | surge | 456 | - |
-| 138 | Heliodrop | Ember | uncommon | kindler | light_sleeper | 450 | - |
-| 139 | Duskmirrah | Umbra/Lumen | uncommon | weaver | slick | 452 | - |
+| 88 | Rollib | Lumen/Stone | common | bulwark | kindling | 334 | Rollibex (ring 17) |
+| 89 | Rollibex | Lumen/Stone | uncommon | bulwark | kindling | 452 | Helirollax (ring 35) |
+| 90 | Helirollax | Lumen/Stone | shy | bulwark | kindling | 499 | - |
+| 91 | Sirocub | Gale | common | striker | slick | 283 | Sirocat (ring 16) |
+| 92 | Sirocat | Gale | uncommon | striker | slick | 400 | Siroclaw (ring 36) |
+| 93 | Siroclaw | Gale | shy | striker | slick | 500 | - |
+| 94 | Scaldasp | Ember | common | kindler | kindling | 317 | Scaldcoil (ring 16) |
+| 95 | Scaldcoil | Ember | uncommon | kindler | kindling | 454 | Scaldrahn (ring 34) |
+| 96 | Scaldrahn | Ember | shy | kindler | kindling | 515 | - |
+| 97 | Noonpip | Lumen/Gale | common | vanguard | surge | 312 | Noonwhist (ring 17) |
+| 98 | Noonwhist | Lumen/Gale | uncommon | vanguard | surge | 424 | Noonsoral (ring 36) |
+| 99 | Noonsoral | Lumen/Gale | shy | vanguard | surge | 502 | - |
+| 100 | Spinnub | Bloom/Stone | common | bulwark | thick_hide | 315 | Spinnarow (ring 20) |
+| 101 | Spinnarow | Bloom/Stone | uncommon | bulwark | thick_hide | 402 | Spinnacle (ring 36) |
+| 102 | Spinnacle | Bloom/Stone | shy | bulwark | thick_hide | 464 | - |
+| 103 | Wadlet | Tide/Stone | common | bulwark | steady | 314 | Wadishell (ring 18) |
+| 104 | Wadishell | Tide/Stone | uncommon | bulwark | steady | 403 | Wadibastion (ring 33) |
+| 105 | Wadibastion | Tide/Stone | shy | bulwark | steady | 457 | - |
+| 106 | Ergfin | Gale/Tide | common | striker | slick | 270 | Ergskim (ring 18) |
+| 107 | Ergskim | Gale/Tide | uncommon | striker | slick | 378 | Ergrava (ring 32) |
+| 108 | Ergrava | Gale/Tide | shy | striker | slick | 421 | - |
+| 109 | Ardlet | Ember/Lumen | common | kindler | light_sleeper | 321 | Ardlume (ring 17) |
+| 110 | Ardlume | Ember/Lumen | uncommon | kindler | light_sleeper | 453 | Ardenthal (ring 33) |
+| 111 | Ardenthal | Ember/Lumen | shy | kindler | light_sleeper | 515 | - |
+| 112 | Fulgrit | Volt/Stone | common | vanguard | deep_roots | 312 | Fulgorin (ring 16) |
+| 113 | Fulgorin | Volt/Stone | uncommon | vanguard | deep_roots | 415 | Fulgorath (ring 32) |
+| 114 | Fulgorath | Volt/Stone | shy | vanguard | deep_roots | 515 | - |
+| 115 | Carabun | Stone/Tide | common | bulwark | thick_hide | 315 | Caravant (ring 17) |
+| 116 | Caravant | Stone/Tide | uncommon | bulwark | thick_hide | 408 | Caravault (ring 36) |
+| 117 | Caravault | Stone/Tide | shy | bulwark | thick_hide | 463 | - |
+| 118 | Velvit | Umbra/Gale | common | weaver | light_sleeper | 272 | Velvessa (ring 16) |
+| 119 | Velvessa | Umbra/Gale | uncommon | weaver | light_sleeper | 371 | Velverain (ring 36) |
+| 120 | Velverain | Umbra/Gale | shy | weaver | light_sleeper | 403 | - |
+| 121 | Clasplet | Umbra/Stone | common | striker | slick | 302 | Claspirant (ring 17) |
+| 122 | Claspirant | Umbra/Stone | uncommon | striker | slick | 404 | Claspreign (ring 32) |
+| 123 | Claspreign | Umbra/Stone | shy | striker | slick | 506 | - |
+| 124 | Obelit | Stone/Lumen | common | bulwark | steady | 343 | Obelith (ring 19) |
+| 125 | Obelith | Stone/Lumen | uncommon | bulwark | steady | 463 | Obelordan (ring 34) |
+| 126 | Obelordan | Stone/Lumen | shy | bulwark | steady | 515 | - |
+| 127 | Haboblet | Gale/Stone | common | vanguard | surge | 303 | Haboborn (ring 19) |
+| 128 | Haboborn | Gale/Stone | uncommon | vanguard | surge | 400 | Habobrax (ring 35) |
+| 129 | Habobrax | Gale/Stone | shy | vanguard | surge | 468 | - |
+| 130 | Stiltwade | Tide | common | weaver | deep_roots | 270 | Stiltregent (ring 27) |
+| 131 | Stiltregent | Tide | shy | weaver | deep_roots | 374 | - |
+| 132 | Palmop | Bloom/Lumen | uncommon | kindler | kindling | 325 | Palmonarch (ring 28) |
+| 133 | Palmonarch | Bloom/Lumen | shy | kindler | kindling | 431 | - |
+| 134 | Bakedil | Stone/Ember | uncommon | bulwark | last_stand | 341 | Bakedillon (ring 29) |
+| 135 | Bakedillon | Stone/Ember | shy | bulwark | last_stand | 470 | - |
+| 136 | Hazejel | Gale/Lumen | uncommon | weaver | light_sleeper | 312 | Hazejellith (ring 27) |
+| 137 | Hazejellith | Gale/Lumen | shy | weaver | light_sleeper | 435 | - |
+| 138 | Corocub | Ember/Lumen | uncommon | vanguard | surge | 329 | Coronarch (ring 29) |
+| 139 | Coronarch | Ember/Lumen | shy | vanguard | surge | 468 | - |
+| 140 | Chirrik | Gale/Bloom | uncommon | striker | slick | 275 | Chirrikade (ring 27) |
+| 141 | Chirrikade | Gale/Bloom | shy | striker | slick | 426 | - |
+| 142 | Brinewhorl | Tide/Stone | uncommon | weaver | steady | 420 | - |
+| 143 | Gyrevult | Umbra/Gale | uncommon | striker | last_stand | 417 | - |
+| 144 | Heliodrop | Ember | uncommon | kindler | kindling | 446 | - |
+| 145 | Duskmirrah | Umbra/Lumen | uncommon | weaver | deep_roots | 390 | - |
 <!-- /lines:solenne -->
 
 ## Regional imprints (Ortsprägung, items 218-219)

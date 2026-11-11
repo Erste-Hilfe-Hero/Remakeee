@@ -49,5 +49,13 @@
     "A tick in the margin: you have found this place."
    ]
   }
+ },
+ "scriptorax": {
+  "lines": [
+   "After closing, the pages on the shelves begin to rustle on their own.",
+   "Ink runs up the spines and gathers into wings made of quills.",
+   "It is Scriptorax, the ink drake. It wants to see what you will write next."
+  ],
+  "action": "legend Scriptorax 55"
  }
 }

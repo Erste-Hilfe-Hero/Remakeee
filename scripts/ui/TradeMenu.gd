@@ -92,6 +92,7 @@ static func apply_mons(took: Variant, add: Variant) -> void:
 			if sp != null:
 				GameState.storage.append(sp)
 				GameState.mark_seen(sp.data.species_name, true)
+				GameState.note_gleam_bonded(sp)
 
 static func trade_line(t: Dictionary) -> String:
 	var who: String = str(t.name) if t.get("name") != null else Loc.t("a former friend")
@@ -324,7 +325,7 @@ static func pick_spirlings(menu: PauseMenu, current: Array[String]) -> Variant:
 static func mon_why(sp: Spirling) -> String:
 	if not sp.held.is_empty():
 		return "holds_item"
-	if sp.gleam or sp.temper_core or not sp.crystal.is_empty():
+	if sp.gleam_boost or sp.temper_core or not sp.crystal.is_empty():
 		return "shop_boosted"
 	if sp.favorite:
 		return "favorite"

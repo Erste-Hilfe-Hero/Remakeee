@@ -10,7 +10,7 @@ LINES = [
     L(id="sirocub", names=["Sirocub", "Sirocat", "Siroclaw"], elements=["GALE"], role="striker", cover="STONE",
       art=dict(plan="quad", tones=("light", "light", "mid"), ears="big", ear_tone="mid", tail="fluff", eye="big",
                mouth="smile", snout="short", size=-1, marks="stripes", marks_n=0)),
-    L(id="scaldasp", names=["Scaldasp", "Scaldcoil", "Scaldrahn"], elements=["EMBER", "STONE"], role="striker",
+    L(id="scaldasp", names=["Scaldasp", "Scaldcoil", "Scaldrahn"], elements=["EMBER"], role="kindler", cover="STONE",
       art=dict(plan="serpent", tones=("mid", "mid", "light"), horn="twin", horn_tone="light", tail="whip", eye="slit",
                mouth="fang", marks="rings", back="spikes", back_n=2)),
     L(id="noonpip", names=["Noonpip", "Noonwhist", "Noonsoral"], elements=["LUMEN", "GALE"], role="vanguard",

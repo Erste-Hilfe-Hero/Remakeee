@@ -1,0 +1,28 @@
+{
+ "_comment": "German texts from tools/i18n/de_fan_burrow.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Ein Spalt im Fels öffnet sich zu einer trockenen Höhle.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Eine trockene Höhle im Fels. Hier scheint niemand zu wohnen. Als deinen Bau beanspruchen?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Ein Glas voller Namen. Deine Spirlings haben sie geschrieben. Manche sind deiner.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Eine Karte von Veydal, jeder Riss mit roter Tinte durchgestrichen.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Ein versengtes Siegel aus dem Glutriss. Noch warm. Noch wütend.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Ein Siegel aus dem Nebelriss. Die Hälfte fehlt, oder sie versteckt sich.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Ein Siegel aus dem Gezeitenriss. Es tropft auf den Teppich.",
+  "Black Veil": "Schwarzer Schleier",
+  "Cinder Seal": "Glutsiegel",
+  "Claim": "Beanspruchen",
+  "Grudge Jar": "Grollglas",
+  "Leave": "Gehen",
+  "Mended Veydal": "Geflicktes Veydal",
+  "Mist Seal": "Nebelsiegel",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Hier hat jemand geschlafen. %s fehlt an der Wand; an seiner Stelle hängt ein Pfandschein.",
+  "The wall is full. Take something down first.": "Die Wand ist voll. Nimm erst etwas ab.",
+  "Tide Seal": "Flutsiegel",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Bei einer Totenwache gewonnen. Niemand hat lauter geweint als dein Spirling.",
+  "You hang it on the wall.": "Du hängst es an die Wand.",
+  "You take it down.": "Du nimmst es ab.",
+  "Your Burrow (%d/%d on the wall)": "Dein Bau (%d/%d an der Wand)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "Dein Bau. Die Wände sind kahl. Verdien dir etwas, das sich aufzuhängen lohnt."
+ }
+}

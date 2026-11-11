@@ -1,0 +1,14 @@
+{
+ "_comment": "The Burrow: a hollow in the rock of Murk Hollow the Wayfarer can claim and hang trophies in. Read by scripts/core/Burrow.gd. A trophy is earned when its flag is set or its record reaches min. Stay away squatter_days days or more and a squatter pawns the last trophy on the wall (it can be hung again).",
+ "wall_slots": 3,
+ "squatter_days": 7,
+ "trophies": [
+  {"id": "cinder_seal", "name": "Cinder Seal", "text": "A scorched seal from the Cinder Rift. Still warm. Still angry.", "flag": "rift_cinder_sealed"},
+  {"id": "tide_seal", "name": "Tide Seal", "text": "A seal from the Tidewater Rift. It drips on the carpet.", "flag": "rift_tide_sealed"},
+  {"id": "mist_seal", "name": "Mist Seal", "text": "A seal from the Mist Rift. Half of it is missing, or hiding.", "flag": "rift_mist_sealed"},
+  {"id": "veydal_map", "name": "Mended Veydal", "text": "A map of Veydal with every Rift crossed out in red ink.", "flag": "veydal_rifts_mended"},
+  {"id": "black_veil", "name": "Black Veil", "text": "Won at a Wake. Nobody cried harder than your Spirling.", "record": "wake_wins", "min": 1},
+  {"id": "grudge_jar", "name": "Grudge Jar", "text": "A jar of names. Your Spirlings wrote them. Some are yours.", "record": "inkshadow_grudge", "min": 1}
+ ],
+ "squatter": "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place."
+}

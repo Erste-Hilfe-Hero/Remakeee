@@ -464,9 +464,11 @@ def extras_front(g, sp, A, d, tones):
     ex = sp.get("extras", ())
     if "claws" in ex:
         r = 4 + d
-        cx, cy = hx - hr - 2, hy + 4
-        g.e(cx, cy, r + 1, r, sp.get("claw_tone", "light"))
-        g.p([(cx - r - 1, cy - 1), (cx - 1, cy - 1), (cx - 1, cy + 1), (cx - r - 1, cy + 1)], "ink", outline=False, shade=False)
+        cx, cy = hx - hr - 1, hy + 4
+        t = sp.get("claw_tone", "light")
+        g.e(cx + 2, cy, 3 + d * 0.5, 3 + d * 0.5, t)
+        g.p([(cx + 1, cy - 2), (cx - r - 1, cy - r - 1), (cx - r - 2, cy - 1)], t)
+        g.p([(cx + 1, cy + 2), (cx - r - 1, cy + r), (cx - r - 2, cy + 1)], t)
     if "arms" in ex:
         g.e(bx - brx, by + 5, 3, 4, "dark")
         g.e(bx + brx, by + 5, 3, 4, "dark")
@@ -487,6 +489,10 @@ def extras_front(g, sp, A, d, tones):
     if "shellpat" in ex:
         for i, (x, y) in enumerate(arc(bx, by, brx * 0.55, bry * 0.5, -165, -15, 3 + d)):
             g.e(x, y, 2.5, 2, "light" if body != "light" else "mid", outline=False, shade=False)
+    if "cap" in ex:
+        g.e(bx, by - bry + 2, brx + 5 + d, 6 + d, accent)
+        for i, (x, y) in enumerate(arc(bx, by - bry + 2, brx + 1 + d, 3 + d, -160, -20, 3 + d)):
+            g.st(x, y, ["33", "33"], face=False)
     if "eyes4" in ex:
         g.st(hx - 2, hy - hr + 3, ["0.0"])
     marks(g, sp, A, d)

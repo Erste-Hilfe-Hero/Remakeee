@@ -1998,11 +1998,16 @@ static func trade_mon_why(m: Variant) -> String:
 		return "no_spirling"
 	if not str(m.get("held", "")).is_empty():
 		return "holds_item"
-	if bool(m.get("gleam", false)) or bool(m.get("core", false)) or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
+	if gleam_boosted(m) or bool(m.get("core", false)) or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
 		return "shop_boosted"
 	if bool(m.get("favorite", false)):
 		return "favorite"
 	return ""
+
+## Like public._gleam_boosted: the shop's +10 % Gleam. A wild Gleam (gleam_boost false) trades;
+## saves from before wild Gleams have only "gleam", which then always came from the shop.
+static func gleam_boosted(m: Dictionary) -> bool:
+	return bool(m.get("gleam_boost", false)) if m.has("gleam_boost") else bool(m.get("gleam", false))
 
 ## Like public._trade_mon_clean: the origin era stays (1 for older saves), no nickname, box or mark.
 static func trade_mon_clean(m: Dictionary) -> Dictionary:

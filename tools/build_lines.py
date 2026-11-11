@@ -28,7 +28,7 @@ ROLE_WEIGHTS = {
     "kindler": {"hp": 1.0, "atk": 0.85, "foc": 1.2, "spd": 1.1, "def": 0.85},
 }
 # Stat totals per stage, by line length (rarity bands in SpirlingData.STAT_TOTAL_BANDS).
-TOTALS = {1: [455], 2: [330, 485], 3: [305, 405, 500]}
+TOTALS = {1: [425], 2: [320, 430], 3: [310, 405, 500]}
 RARITY = {1: ["uncommon"], 2: ["common", "shy"], 3: ["common", "uncommon", "shy"]}
 BOND = {"common": (0.45, 0.55), "uncommon": (0.25, 0.35), "shy": (0.08, 0.15)}
 TRAITS = {
@@ -41,6 +41,8 @@ KEEPSAKE = {"EMBER": "spark_coil", "VOLT": "spark_coil", "STONE": "iron_burr", "
             "INK": "keen_lens", "ECHO": "swift_feather"}
 HEIGHT = {"quad": 0.5, "biped": 0.6, "bird": 0.4, "serpent": 0.9, "fish": 0.5, "bug": 0.3, "shell": 0.4,
           "spirit": 0.4, "plant": 0.5}
+# Unfold rings per act: (3-stage first, 3-stage second, 2-stage), near the act's wild rings.
+RINGS = {"veydal": (14, 30, 22), "corvane": (18, 34, 26), "ashmere": (20, 36, 28), "solenne": (18, 34, 28)}
 GROWTH = {1: [1.6], 2: [1.0, 2.2], 3: [1.0, 1.9, 3.2]}
 
 
@@ -76,25 +78,34 @@ def learnset(line, stage, n_stages, pools, salt):
     e1 = els[0]
     e2 = els[1] if len(els) > 1 else line.get("cover", "STONE")
     p1, p2 = pools[e1], pools[e2]
-    dmg = lambda p: [m for m in p if m["kind"] != "STATUS" and not m.get("cooldown") and "snare" not in m]
-    stat = lambda p: [m for m in p if m["kind"] == "STATUS" and "snare" not in m and not m.get("cooldown")]
+    kind = "PHYSICAL" if line["role"] in ("vanguard", "striker", "bulwark") else "FOCUS"
+
+    def win(p, lo, hi, energy=99):
+        # Damage arts in a power window, the role's kind (Might or Focus) first, then any kind.
+        out = [m for m in p if m["kind"] != "STATUS" and not m.get("cooldown") and "snare" not in m
+               and lo <= m["power"] <= hi and m["energy"] <= energy]
+        own = [m for m in out if m["kind"] == kind]
+        return own if own else out
+
+    def stat(p):
+        return [m for m in p if m["kind"] == "STATUS" and "snare" not in m and not m.get("cooldown")]
+
     seed = h(line["id"], salt)
-    first = pick([m for m in dmg(p1) if m["energy"] <= 2 and m["power"] <= 45], seed)
     plan = [
-        (1, first),
+        (1, pick(win(p1, 1, 45, 2), seed)),
         (1, pick(stat(p1), seed >> 3)),
-        (6, pick([m for m in dmg(p2) if m["energy"] <= 3 and m["power"] <= 55], seed >> 5)),
-        (10, pick([m for m in dmg(p1) if 50 <= m["power"] <= 65], seed >> 7)),
+        (6, pick(win(p2, 1, 55, 3), seed >> 5)),
+        (10, pick(win(p1, 50, 65), seed >> 7)),
         (15, pick(stat(p2) or stat(p1), seed >> 9)),
-        (20, pick([m for m in dmg(p1) if 65 <= m["power"] <= 80], seed >> 11)),
-        (26, pick([m for m in dmg(p2) if 60 <= m["power"] <= 85], seed >> 13)),
-        (32, pick([m for m in dmg(p1) if 80 <= m["power"] <= 105], seed >> 15)),
+        (20, pick(win(p1, 65, 80), seed >> 11)),
+        (26, pick(win(p2, 60, 85), seed >> 13)),
+        (32, pick(win(p1, 80, 105), seed >> 15)),
     ]
     last = stage == n_stages
     if n_stages > 1 and stage >= 2 or n_stages == 1:
-        plan.append((38, pick([m for m in dmg(p2) if m["power"] >= 85], seed >> 17)))
+        plan.append((38, pick(win(p2, 85, 200), seed >> 17)))
     if last and n_stages > 1:
-        plan.append((44, pick([m for m in p1 if m.get("cooldown")] or [m for m in dmg(p1) if m["power"] >= 95], seed >> 19)))
+        plan.append((44, pick([m for m in p1 if m.get("cooldown")] or win(p1, 95, 200), seed >> 19)))
     out = {}
     seen = set()
     for lvl, name in plan:
@@ -137,7 +148,7 @@ def build_species(region, line, pools):
             "line_id": line["id"],
             "era": 1,
             "base": stats(line["role"], TOTALS[n][i] + (seed % 11) - 5, seed),
-            "trait": TRAITS[line["role"]][seed % 3],
+            "trait": line["_trait"],
             "learnset": learnset(line, stage, n, pools, name),
             "bond_rate": round(lo + (hi - lo) * ((seed >> 8) % 5) / 4, 2),
             "height": "%.1f m" % (HEIGHT[line["art"]["plan"]] * GROWTH[n][i]),
@@ -148,10 +159,58 @@ def build_species(region, line, pools):
             "keepsake_hint": KEEPSAKE[line["elements"][(seed >> 6) % len(line["elements"])]],
         }
         if stage < n:
-            ring = (18 if stage == 1 else 34) if n == 3 else 28
+            r1, r2, r_two = RINGS[region]
+            ring = (r1 if stage == 1 else r2) if n == 3 else r_two
             sp["unfold"] = [{"to": names[i + 1], "rule": "ring", "value": ring + (seed % 5) - 2}]
         out.append(sp)
     return out
+
+
+def pick_traits(region, lines, species):
+    """One trait per line; the least used trait in the region first (test_content: at most 6 lines
+    of a region share a trait), the role's own traits breaking ties."""
+    count = {}
+    for t in ["kindling", "thick_hide", "deep_roots", "light_sleeper", "slick", "steady", "surge", "last_stand"]:
+        count[t] = set()
+    for s in species:
+        if s.get("region") == region:
+            count.setdefault(s["trait"], set()).add(s.get("line_id", s["name"]))
+    for line in lines:
+        pref = TRAITS[line["role"]]
+        best = min(count, key=lambda t: (len(count[t]), 0 if t in pref else 1, (pref.index(t) if t in pref else 9), t))
+        line["_trait"] = best
+        count[best].add(line["id"])
+
+
+def tune(region, kept, new_names, rounds=14):
+    """Nudges the stat totals of the new kinds until the type simulation (tools/balance/type_sim.py,
+    a Python mirror of the battle core) puts each between 40 and 60 % against its own stage."""
+    sys.path.insert(0, os.path.join(ROOT, "tools", "balance"))
+    ts = importlib.import_module("type_sim")
+    chart = load("data/type_chart.json")
+    moves = {m["name"]: m for m in load("data/moves.json")}
+    by = {s["name"]: s for s in kept}
+    bands = {"common": (270, 465), "uncommon": (270, 515), "shy": (270, 515)}
+    for r in range(rounds):
+        _, mult = ts.chart_problems(chart, kept)
+        sp, _ = ts.simulate(kept, moves, mult)
+        moved = 0
+        for n in new_names:
+            rate = sp.get(n, (0.5,))[0]
+            if 0.45 <= rate <= 0.55:
+                continue
+            s = by[n]
+            total = sum(s["base"].values())
+            step = 0.04 if abs(rate - 0.5) > 0.15 else 0.02
+            want = round(total * (1 - step if rate > 0.5 else 1 + step))
+            lo, hi = bands[s["rarity"]]
+            want = max(lo, min(hi, want))
+            if want != total:
+                s["base"] = stats(s["role"], want, h(n))
+                moved += 1
+        print("tune round %d: %d kinds moved" % (r + 1, moved))
+        if not moved:
+            break
 
 
 def main():
@@ -170,6 +229,7 @@ def main():
     for i, s in enumerate(kept):
         s["dex_id"] = i + 1
     pools = move_pools(kept, moves)
+    pick_traits(region, mod.LINES, kept)
     nxt = len(kept) + 1
     for line in mod.LINES:
         line["_texts"] = mod.TEXTS
@@ -177,6 +237,8 @@ def main():
         for sp in build_species(region, line, pools):
             kept.append(dict({"dex_id": nxt}, **sp))
             nxt += 1
+    if "--no-tune" not in sys.argv:
+        tune(region, kept, [n for line in mod.LINES for n in line["names"]])
     with open(os.path.join(ROOT, "data/spirlings.json"), "w", encoding="utf-8") as f:
         json.dump(kept, f, ensure_ascii=False, indent=1)
         f.write("\n")
@@ -184,20 +246,28 @@ def main():
     rarity = {s["name"]: s["rarity"] for s in kept}
     enc = load("data/encounters.json")
     weights = {"common": [40, 34, 30, 26], "uncommon": [22, 18, 14, 12, 10], "shy": [6, 5, 4, 3]}
-    for table, rows in mod.ENCOUNTERS.items():
+    def spawn(name, ground, k, lo, hi, used):
+        r = rarity[name]
+        w = weights[r][used[r] % len(weights[r])]
+        used[r] += 1
+        mn = lo + (k % 2) if r != "shy" else hi - 1
+        row = {"species": name, "min": min(mn, hi), "max": hi if r == "shy" else max(min(mn + 1, hi), lo), "weight": w}
+        if ground:
+            row["ground"] = ground
+        return row
+
+    for table, rows in getattr(mod, "ENCOUNTERS", {}).items():
         old = enc[table]["spawns"]
         lo = min(int(s["min"]) for s in old)
         hi = max(int(s["max"]) for s in old)
         used = {"common": 0, "uncommon": 0, "shy": 0}
-        spawns = []
-        for k, (name, ground) in enumerate(rows):
-            r = rarity[name]
-            w = weights[r][used[r] % len(weights[r])]
-            used[r] += 1
-            mn = lo + (k % 2) if r != "shy" else hi - 1
-            spawns.append({"species": name, "min": min(mn, hi), "max": hi if r == "shy" else max(min(mn + 1, hi), lo),
-                           "weight": w, "ground": ground})
-        enc[table]["spawns"] = spawns
+        enc[table]["spawns"] = [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
+    for table, rows in getattr(mod, "ENCOUNTERS_ADD", {}).items():
+        old = [s for s in enc[table]["spawns"] if s["species"] not in names]
+        lo = min(int(s["min"]) for s in old)
+        hi = max(int(s["max"]) for s in old)
+        used = {"common": 1, "uncommon": 1, "shy": 1}
+        enc[table]["spawns"] = old + [spawn(n, g, k, lo, hi, used) for k, (n, g) in enumerate(rows)]
     with open(os.path.join(ROOT, "data/encounters.json"), "w", encoding="utf-8") as f:
         json.dump(enc, f, ensure_ascii=False, indent=1)
         f.write("\n")

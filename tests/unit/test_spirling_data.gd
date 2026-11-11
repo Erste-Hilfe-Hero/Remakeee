@@ -88,13 +88,15 @@ func _lines_in(region: String) -> Dictionary:
 
 func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 	Database.load_all()
-	assert_eq(_lines_in("corvane").size(), 8)
-	assert_eq(_lines_in("ashmere").size(), 6)
-	assert_eq(_lines_in("solenne").size(), 30, "6 first lines and 24 of the Act IV lines (tools/art/lines/solenne.py)")
+	# Includes the legendaries Zephyrel (Corvane), Monolurk and Vorlucent (Ashmere), Lumivane (Solenne).
+	assert_eq(_lines_in("corvane").size(), 9)
+	assert_eq(_lines_in("ashmere").size(), 8)
+	assert_eq(_lines_in("solenne").size(), 31, "7 lines before and 24 Act IV lines (tools/art/lines/solenne.py)")
 	var solenne: int = 0
 	for sd: SpirlingData in Database.spirlings.values():
-		solenne += 1 if sd.region == "solenne" else 0
-	assert_eq(solenne, 70, "every story act has 70 own Spirlings")
+		solenne += 1 if sd.region == "solenne" and sd.rarity != "ancient" else 0
+	assert_eq(solenne, 70, "every story act has 70 own Spirlings (legendaries not counted)")
+
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != "veydal":
 			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_front.png" % sd.species_name.to_lower()), "%s has a placeholder sprite" % sd.species_name)
@@ -112,7 +114,7 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 		for s: Dictionary in enc[area].spawns:
 			var own: String = Database.species(str(s.species)).region
 			assert_lte(SpirlingData.REGIONS.find(own), SpirlingData.REGIONS.find(region), "%s in %s" % [s.species, area])
-	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 16)
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 17)
 	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
 	assert_false(SpirlogBook.region_open("solenne", {}))
 

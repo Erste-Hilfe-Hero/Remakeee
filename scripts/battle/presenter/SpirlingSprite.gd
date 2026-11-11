@@ -14,7 +14,8 @@ const MOTIONS: Array[String] = ["hop", "creep", "sway", "stomp", "slide"]
 static var _motion: Dictionary = {}
 ## Prism variants are drawn with a warm tint over the era palette.
 const PRISM_TINT: Color = Color(1.0, 0.78, 0.5)
-## Gleam form (shop item 4792): a cool Riftglass sheen.
+## Gleam form: drawn through GleamRules.material() (the species' own palette). This tint is only
+## for the placeholder rectangle when no sprite exists.
 const GLEAM_TINT: Color = Color(0.72, 0.92, 1.0)
 ## Idle bob: 1 px up for half of each period (item 2335).
 const BOB_PERIOD: float = 1.0
@@ -45,6 +46,8 @@ func setup(s: Spirling, p_facing: String) -> void:
 	var path: String = EraManager.sprite_path(s.data.species_name, facing)
 	if not path.is_empty():
 		_texture = load(path)
+	# Looked up per setup, so an unfurled Gleam takes its new species' palette.
+	material = GleamRules.material(s.data.species_name) if s.gleam and _texture != null else null
 	modulate.a = 1.0
 	queue_redraw()
 
@@ -206,6 +209,32 @@ func hit_flash() -> void:
 		visible = true
 		await get_tree().create_timer(0.05 / Juice.speed()).timeout
 
+## Gleam entrance: glints burst from the sprite and fade (count and time in data/gleam.json).
+func gleam_sparkle() -> void:
+	var cfg: Dictionary = GleamRules.config()
+	var n: int = int(cfg.get("sparkles", 6))
+	var t: float = float(cfg.get("sparkle_time", 0.6))
+	var tex: Texture2D = ElementFx.shape("glint", 0)
+	if tex == null or n <= 0:
+		return
+	var last: Tween = null
+	for i: int in n:
+		var g := TextureRect.new()
+		g.texture = tex
+		g.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		g.use_parent_material = false
+		var c: Vector2 = size / 2.0 - tex.get_size() / 2.0
+		g.position = c
+		add_child(g)
+		var a: float = TAU * i / n
+		last = Juice.tween(g, "position", c + Vector2(cos(a), sin(a)) * size.x * 0.45, "move", t)
+		Juice.tween(g, "modulate:a", 0.0, "move", t)
+	if last != null:
+		await last.finished
+	for ch: Node in get_children():
+		if ch is TextureRect:
+			ch.queue_free()
+
 func faint() -> void:
 	Juice.tween(self, "modulate:a", 0.0, "move", 0.4)
 	await Juice.tween(self, "position", _home + Vector2(0, 12), "move", 0.4).finished
@@ -220,7 +249,7 @@ func _draw() -> void:
 	if _texture != null:
 		if mirrored:
 			draw_set_transform(Vector2(size.x, 0) + draw_offset, 0.0, Vector2(-1, 1))
-		draw_texture_rect(_texture, r, false, GLEAM_TINT if spirling.gleam else (PRISM_TINT if spirling.prism else Color.WHITE))
+		draw_texture_rect(_texture, r, false, PRISM_TINT if spirling.prism and material == null else Color.WHITE)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 	var els: Array[int] = spirling.elements()

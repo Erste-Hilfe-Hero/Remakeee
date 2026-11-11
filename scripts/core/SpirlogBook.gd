@@ -116,7 +116,10 @@ static func list_line(sd: SpirlingData, spirlog: Dictionary) -> String:
 		mark = Collection.STAR if Collection.starred(sd.species_name) else "*"
 	elif seen:
 		mark = "+"
-	return "%02d %s %s" % [sd.dex_id, mark, sd.species_name if seen else "???"]
+	# Gleam star once a Gleam of this kind was bonded, "~" once one was only seen.
+	var e: Dictionary = entry(spirlog, sd.species_name)
+	var gleam: String = " " + GleamRules.STAR if bool(e.get("gleam_bonded", false)) else (" ~" if bool(e.get("gleam_seen", false)) else "")
+	return "%02d %s %s%s" % [sd.dex_id, mark, sd.species_name if seen else "???", gleam]
 
 ## The lore sentences that are open: the first when seen, the second when bonded, the rest
 ## after LORE_BATTLES battles with one of this kind in the team (item 250).

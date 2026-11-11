@@ -197,6 +197,16 @@
     "echo_night_veil"
    ],
    "rematch_after": "story_complete"
+  },
+  {
+   "id": "vorlucent",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "shade_rift/vorlucent",
+   "sprite": "first_voice",
+   "show_flag": "rift_shade_sealed",
+   "hide_flag": "first_voice_vorlucent_away"
   }
  ],
  "signs": [

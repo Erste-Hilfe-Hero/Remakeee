@@ -96,5 +96,13 @@
  "odalys_defeat": [
   "Odalys: ...My Silentra is glowing. It never glowed for me before.",
   "Odalys: All right. Let the light back in. Help me mend this."
- ]
+ ],
+ "vorlucent": {
+  "lines": [
+   "The sealed Shade Rift is quiet, but a shadow still moves across the floor.",
+   "Two dark rings open on a pair of wide wings, like a sun hidden twice.",
+   "It is Vorlucent, the eclipse moth. Every lamp around you flickers."
+  ],
+  "action": "legend Vorlucent 48"
+ }
 }

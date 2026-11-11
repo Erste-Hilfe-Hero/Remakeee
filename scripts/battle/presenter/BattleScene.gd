@@ -755,6 +755,12 @@ func _toggle_log() -> void:
 	_log_label.text = variant_list(model) + "Battle log\n\n" + ("\n".join(log_lines) if not log_lines.is_empty() else "Nothing yet.") + "\n\n(tap to close)"
 	_log_panel.visible = not _log_panel.visible
 
+## A Gleam steps out: the sound cue and the sparkle (data/gleam.json).
+func _gleam_entrance(sprite: SpirlingSprite) -> void:
+	var cfg: Dictionary = GleamRules.config()
+	Sound.sfx(str(cfg.get("sfx", "sparkle")), 0.0, float(cfg.get("sfx_pitch", 1.0)))
+	await sprite.gleam_sparkle()
+
 func _play_event(e: BattleEvent) -> void:
 	var side: int = int(e.data.get("side", 0))
 	var slot: int = int(e.data.get("slot", 0))
@@ -773,6 +779,8 @@ func _play_event(e: BattleEvent) -> void:
 						_strip(BattleModel.Side.FOE, fs).visible = true
 						Sound.cry(model.active_spirling(BattleModel.Side.FOE, fs).data)
 						await _sprite(BattleModel.Side.FOE, fs).step_out(false)
+						if model.active_spirling(BattleModel.Side.FOE, fs).gleam:
+							await _gleam_entrance(_sprite(BattleModel.Side.FOE, fs))
 				await _text.show_text(e.describe())
 				return
 			_foe_sprite.setup(foe, "front")
@@ -785,6 +793,8 @@ func _play_event(e: BattleEvent) -> void:
 				_foe_strip.visible = true
 				Sound.cry(foe.data)
 				await _foe_sprite.step_out(true)
+				if foe.gleam:
+					await _gleam_entrance(_foe_sprite)
 			await _text.show_text(e.describe())
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]

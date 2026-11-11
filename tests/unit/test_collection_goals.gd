@@ -29,7 +29,7 @@ func test_veydal_has_its_own_goals() -> void:
 		if str(g.get("region", "")) == "veydal":
 			steps.append(int(g.bonded))
 	assert_eq(steps, [10, 20, 30, -1] as Array[int])
-	assert_eq(Collection.region_total("veydal"), 41, "40 kinds and the First Voice Velahra")
+	assert_eq(Collection.region_total("veydal"), 43, "40 kinds, the First Voice Velahra, Hallowmur and Scriptorax")
 
 func test_rewards_are_only_game_items_coins_or_titles() -> void:
 	for g: Dictionary in Collection.GOALS:
