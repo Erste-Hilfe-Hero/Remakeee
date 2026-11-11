@@ -1,0 +1,435 @@
+{
+ "sign": [
+  "SOOT VAULTS. Wages paid below. Questions are not.",
+  "Someone has scratched under it: 'Nobody who collects comes back up.'"
+ ],
+ "pike_intro": [
+  "Pike: Payday's downstairs, sunshine. Your name's not on the list."
+ ],
+ "pike_defeat": [
+  "Pike: Fine. Go on. Tell 'em Pike says he's sick."
+ ],
+ "pike": [
+  "Pike: Fine. Go on. Tell 'em Pike says he's sick."
+ ],
+ "smudge_intro": [
+  "Smudge: I write down who goes in. I've never had to write who comes out."
+ ],
+ "smudge_defeat": [
+  "Smudge: I'll put you down as 'probably'."
+ ],
+ "smudge": [
+  "Smudge: I'll put you down as 'probably'."
+ ],
+ "nettle_intro": [
+  "Nettle: Every coin down here has a name on it. Usually a dead one's."
+ ],
+ "nettle_defeat": [
+  "Nettle: Your account is closed. Congratulations, I suppose."
+ ],
+ "nettle": [
+  "Nettle: Your account is closed. Congratulations, I suppose."
+ ],
+ "brask_intro": [
+  "Brask: You owe. Everyone owes. Babies owe for the noise."
+ ],
+ "brask_defeat": [
+  "Brask: Put it on my tab. No, wait, that's the problem."
+ ],
+ "brask": [
+  "Brask: Put it on my tab. No, wait, that's the problem."
+ ],
+ "coll_intro": [
+  "Coll: Drains go where the clan don't look. Neither should you."
+ ],
+ "coll_defeat": [
+  "Coll: Alright, alright. Mind the grey water. It bites."
+ ],
+ "coll": [
+  "Coll: Alright, alright. Mind the grey water. It bites."
+ ],
+ "wynn_intro": [
+  "Wynn: I keep the kilns hot so the books stay dry. Sweet little job."
+ ],
+ "wynn_defeat": [
+  "Wynn: If anyone asks, the fire went out on its own."
+ ],
+ "wynn": [
+  "Wynn: If anyone asks, the fire went out on its own."
+ ],
+ "ottery_intro": [
+  "Ottery: Every cage has a price tag. Yours just went up."
+ ],
+ "ottery_defeat": [
+  "Ottery: Keys are on the hook. I never saw you. I never see anyone."
+ ],
+ "ottery": [
+  "Ottery: Keys are on the hook. I never saw you. I never see anyone."
+ ],
+ "lume_intro": [
+  "Lume: The Paymaster pays me to be a wall. I'm a very good wall."
+ ],
+ "lume_defeat": [
+  "Lume: Walls crack. Nobody tells you that in wall school."
+ ],
+ "lume": [
+  "Lume: Walls crack. Nobody tells you that in wall school."
+ ],
+ "dilly_intro": [
+  "Dilly: I sweep up after the Paymaster. You would not believe what people leave behind."
+ ],
+ "dilly_defeat": [
+  "Dilly: Including their dignity, apparently. Mine."
+ ],
+ "dilly": [
+  "Dilly: Including their dignity, apparently. Mine."
+ ],
+ "mabry_intro": [
+  "Mabry: I forge signatures for a living. Want to see mine? It's yours."
+ ],
+ "mabry_defeat": [
+  "Mabry: Good fight. I'll sign for it. In your name."
+ ],
+ "mabry": [
+  "Mabry: Good fight. I'll sign for it. In your name."
+ ],
+ "teo_intro": [
+  "Teo: I dive the ash pits for lost coins. Found a whole uncle once."
+ ],
+ "teo_defeat": [
+  "Teo: He was fine. Grumpy, but fine."
+ ],
+ "teo": [
+  "Teo: He was fine. Grumpy, but fine."
+ ],
+ "quill_intro": [
+  "Quill: Everything down here is pawned. The cages, the guards, the Paymaster's smile."
+ ],
+ "quill_defeat": [
+  "Quill: Here's a ticket for your pride. Redeem it never."
+ ],
+ "quill": [
+  "Quill: Here's a ticket for your pride. Redeem it never."
+ ],
+ "crake_intro": [
+  "Crake: Wages are fear, paid weekly. You came to collect? Everyone does, once.",
+  "Crake: Your rival sold me your route an hour ago. She drives a hard bargain. You don't."
+ ],
+ "crake_defeat": [
+  "Crake: The books don't balance. They never did. I just kept a heavier pen.",
+  "Crake: Take the cage keys. The clan will want a new Paymaster by morning. They always do."
+ ],
+ "crake": [
+  "Crake: I'm counting the days until they replace me. It's a short count."
+ ],
+ "fitch": {
+  "if": {
+   "not_flag": "favor_fitch_toll"
+  },
+  "lines": [
+   "Fitch: First time in the Vaults? Pay my toll, a hundred and fifty, and the guards look the other way.",
+   "Fitch: Trust me. Everyone down here does. Eventually."
+  ],
+  "choices": [
+   {
+    "text": "Pay 150 coins",
+    "action": "favor fitch_toll"
+   },
+   {
+    "text": "Walk on",
+    "next": "fitch_no"
+   }
+  ]
+ },
+ "fitch_no": [
+  "Fitch: Suit yourself. The Vaults remember stingy faces."
+ ],
+ "fitch_betray": [
+  "Fitch: Pleasure doing business. Now the second part of the toll: these lads.",
+  "Fitch: Nothing personal. Tibb's family vouches for people. Yours didn't."
+ ],
+ "fitch_kept": [
+  "Fitch: Tibb says you brought his Mirkmole back. Family's family. Here, and the guards are yours to argue with."
+ ],
+ "fitch_ambush_defeat": [
+  "Fitch: Alright! Alright. Keep the coins. Keep my dignity too, I'm not using it."
+ ],
+ "ledger_fitch": [
+  "Fitch's toll",
+  "Paid a guide in the Soot Vaults to keep the guards off. He brought the guards himself."
+ ],
+ "juno_3_intro": [
+  "Juno: Last plate's mine, rookie. I didn't come all this way to come second."
+ ],
+ "juno_3_defeat": {
+  "lines": [
+   "Juno: Fine. You win the plates. I already won the Paymaster's money for your route.",
+   "Juno: Don't look at me like that. In Ashmere, a rival is just a friend who invoices."
+  ]
+ },
+ "juno_3": [
+  "Juno: See you in the next act. Bring coins. I'll bring a buyer."
+ ],
+ "ledger_juno": [
+  "Juno's sale",
+  "Raced Juno Sallow for the wage plates. She lost the race and sold my route to the Paymaster anyway."
+ ],
+ "auditor_intro": [
+  "Vey: I'm the new Paymaster. They hired me this morning, before the old one even lost.",
+  "Vey: Ashmere plans ahead. Mostly funerals."
+ ],
+ "auditor_defeat": [
+  "Vey: Noted. Filed. Forgotten by Thursday. That's the system, sweetheart."
+ ],
+ "auditor": [
+  "Vey: Noted. Filed. Forgotten by Thursday. That's the system, sweetheart."
+ ],
+ "scribe_intro": [
+  "Orla: I copy the debts at night so nobody sees them grow."
+ ],
+ "scribe_defeat": [
+  "Orla: Your name's in here twice now. Once as a debt, once as a warning."
+ ],
+ "scribe": [
+  "Orla: Your name's in here twice now. Once as a debt, once as a warning."
+ ],
+ "tallyman_intro": [
+  "Burke: I count. One, two, you're in trouble."
+ ],
+ "tallyman_defeat": [
+  "Burke: Three. I always lose count at three."
+ ],
+ "tallyman": [
+  "Burke: Three. I always lose count at three."
+ ],
+ "archive_shelf": [
+  "Shelves of ledgers. Half of Ashmere owes the other half, and the clan owns both halves."
+ ],
+ "iou_1": {
+  "lines": [
+   "An IOU: 'Owed to Marn: one roof. Signed, the Baker.'",
+   "A tonic was pinned to it as interest."
+  ],
+  "action": "give_item tonic 1",
+  "flag": "iou_1",
+  "once": true,
+  "after_flag": {
+   "flag": "iou_1",
+   "lines": [
+    "Only a nail where the IOU hung."
+   ]
+  }
+ },
+ "iou_2": {
+  "lines": [
+   "An IOU: 'Owed to Marn: two kilns and a goat.'",
+   "A tonic was pinned to it as interest."
+  ],
+  "action": "give_item tonic 1",
+  "flag": "iou_2",
+  "once": true,
+  "after_flag": {
+   "flag": "iou_2",
+   "lines": [
+    "Only a nail where the IOU hung."
+   ]
+  }
+ },
+ "iou_3": {
+  "lines": [
+   "An IOU: 'Owed to Marn: my good boots. And the bad ones.'",
+   "A tonic was pinned to it as interest."
+  ],
+  "action": "give_item tonic 1",
+  "flag": "iou_3",
+  "once": true,
+  "after_flag": {
+   "flag": "iou_3",
+   "lines": [
+    "Only a nail where the IOU hung."
+   ]
+  }
+ },
+ "iou_4": {
+  "lines": [
+   "An IOU: 'Owed to Marn: every Tuesday until I die.'",
+   "A tonic was pinned to it as interest."
+  ],
+  "action": "give_item tonic 1",
+  "flag": "iou_4",
+  "once": true,
+  "after_flag": {
+   "flag": "iou_4",
+   "lines": [
+    "Only a nail where the IOU hung."
+   ]
+  }
+ },
+ "iou_5": {
+  "lines": [
+   "An IOU: 'Owed to Marn: the Paymaster's own pen.' Even Crake owed her.",
+   "A tonic was pinned to it as interest."
+  ],
+  "action": "give_item tonic 1",
+  "flag": "iou_5",
+  "once": true,
+  "after_flag": {
+   "flag": "iou_5",
+   "lines": [
+    "Only a nail where the IOU hung."
+   ]
+  }
+ },
+ "plate_4": {
+  "lines": [
+   "A wage plate: 'Week 1. Paid in coin.'",
+   "You take a rubbing of the plate."
+  ],
+  "flag": "plate_4"
+ },
+ "plate_5": {
+  "lines": [
+   "A wage plate: 'Week 9. Paid in coin, minus breathing.'",
+   "You take a rubbing of the plate."
+  ],
+  "flag": "plate_5"
+ },
+ "plate_6": {
+  "lines": [
+   "A wage plate: 'Week 30. Paid in promises.'",
+   "You take a rubbing of the plate."
+  ],
+  "flag": "plate_6"
+ },
+ "plate_7": {
+  "lines": [
+   "A wage plate: 'Week 51. Paid in fear. Fear is accepted everywhere.'",
+   "You take a rubbing of the plate."
+  ],
+  "flag": "plate_7"
+ },
+ "plate_8": {
+  "lines": [
+   "A wage plate: 'Final week. Paymaster paid himself.'",
+   "You take a rubbing of the plate."
+  ],
+  "flag": "plate_8"
+ },
+ "ash_1": {
+  "if": {
+   "flag": "q_ash_asked"
+  },
+  "lines": [
+   "A drift of fine grey ash. You scoop a pinch into a twist of paper."
+  ],
+  "flag": "ash_1",
+  "else": "ash_plain"
+ },
+ "ash_2": {
+  "if": {
+   "flag": "q_ash_asked"
+  },
+  "lines": [
+   "A drift of fine grey ash. You scoop a pinch into a twist of paper."
+  ],
+  "flag": "ash_2",
+  "else": "ash_plain"
+ },
+ "ash_3": {
+  "if": {
+   "flag": "q_ash_asked"
+  },
+  "lines": [
+   "A drift of fine grey ash. You scoop a pinch into a twist of paper."
+  ],
+  "flag": "ash_3",
+  "else": "ash_plain"
+ },
+ "ash_plain": [
+  "Fine grey ash. Somebody might want this. Nobody you know yet."
+ ],
+ "harl_coal_1": {
+  "if": {
+   "flag": "q_harl_asked"
+  },
+  "lines": [
+   "A sack of kiln coal with the clan mark burned off. You take it."
+  ],
+  "flag": "harl_1",
+  "else": "coal_plain"
+ },
+ "harl_coal_2": {
+  "if": {
+   "flag": "q_harl_asked"
+  },
+  "lines": [
+   "A sack of kiln coal with the clan mark burned off. You take it."
+  ],
+  "flag": "harl_2",
+  "else": "coal_plain"
+ },
+ "harl_coal_3": {
+  "if": {
+   "flag": "q_harl_asked"
+  },
+  "lines": [
+   "A sack of kiln coal with the clan mark burned off. You take it."
+  ],
+  "flag": "harl_3",
+  "else": "coal_plain"
+ },
+ "coal_plain": [
+  "A sack of coal. Heavy, warm and somebody else's."
+ ],
+ "press_part_2": {
+  "if": {
+   "flag": "q_press_asked"
+  },
+  "lines": [
+   "A brass roller wrapped in a pawn ticket: 'Gorse, one press roller, cash.'"
+  ],
+  "flag": "press_part_2",
+  "else": "part_plain"
+ },
+ "press_part_3": {
+  "if": {
+   "flag": "q_press_asked"
+  },
+  "lines": [
+   "A press screw in a strongbox, tagged 'Gorse. Do not tell Halvard.'"
+  ],
+  "flag": "press_part_3",
+  "else": "part_plain"
+ },
+ "part_plain": [
+  "Old printing parts in a pawn crate. Someone sold these cheap."
+ ],
+ "mole": {
+  "if": {
+   "flag": "q_tibb_asked"
+  },
+  "lines": [
+   "A Mirkmole is asleep in a wage chest, snoring on a pile of coins that aren't yours.",
+   "It climbs into your bag like it's done this before."
+  ],
+  "flag": "tibb_mole_found",
+  "else": "mole_plain"
+ },
+ "mole_plain": [
+  "An empty wage chest. Something has been sleeping in it."
+ ],
+ "bats": {
+  "if": {
+   "flag": "q_bram_asked"
+  },
+  "lines": [
+   "Three Shalebats in a cage, tagged 'Rook. Sold.' They know Bram's whistle.",
+   "You pop the lock. They follow you like a bad debt."
+  ],
+  "flag": "bram_bats_found",
+  "else": "bats_plain"
+ },
+ "bats_plain": [
+  "Empty cages with price tags still on them."
+ ]
+}

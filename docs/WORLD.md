@@ -141,18 +141,23 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
 | corvane | `woadfen` | marsh | 12x28 | 5 | 3 | 154 |
-| ashmere | `ashmere_station` | town | 12x22 | 3 | 0 | 0 |
-| ashmere | `cinderfold` | town | 12x16 | 3 | 0 | 0 |
+| ashmere | `ashmere_station` | town | 12x22 | 5 | 1 | 0 |
+| ashmere | `cinderfold` | town | 12x16 | 4 | 0 | 0 |
 | ashmere | `glass_rift` | rift | 12x13 | 0 | 0 | 20 |
 | ashmere | `gravers_hall` | inside | 10x9 | 0 | 0 | 0 |
 | ashmere | `kiln_rift` | rift | 12x13 | 0 | 0 | 20 |
-| ashmere | `saltglass` | route | 12x26 | 5 | 3 | 56 |
+| ashmere | `saltglass` | route | 12x26 | 5 | 4 | 56 |
 | ashmere | `shade_rift` | rift | 12x22 | 0 | 5 | 16 |
+| ashmere | `soot_vaults` | dungeon | 12x20 + 12x20 + 12x20 + 12x20 + 12x20 + 12x20 | 21 | 17 | 174 |
 | ashmere | `undrawn_1` | rift | 12x22 | 0 | 0 | 0 |
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
-| | **49 maps** | | | **103** | **56** | **1112** |
+| solenne | `oasis_rift` | rift | 12x22 | 0 | 4 | 18 |
+| solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
+| solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
+| solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
+| | **54 maps** | | | **130** | **87** | **1338** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
