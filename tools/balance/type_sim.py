@@ -1,0 +1,281 @@
+#!/usr/bin/env python3
+"""Type chart checks and a seeded team-battle simulation (docs/BALANCE.md, "Type balance").
+
+A Python mirror of the battle core so thousands of battles run in seconds without Godot:
+stat curve (Spirling.gd), damage curve, STAB, crit and roll (DamageCalc.gd), the element
+chart (data/type_chart.json, read by Elements.gd), Energy (start 10, +1 a turn, rest +2),
+accuracy, priority and speed order. Status arts, traits, items and fields are left out on
+purpose: this run measures the chart and base stats only. The full model stays in
+tools/balance_sim.gd.
+
+Teams of 3 distinct species of the same unfold stage fight at the same ring; every battle is
+played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules or any element
+or species ends outside the band.
+
+  python3 tools/balance/type_sim.py                  check, print the table
+  python3 tools/balance/type_sim.py --md out.md      also write the report as Markdown
+"""
+import argparse
+import json
+import os
+import random
+import sys
+
+ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+LEVEL = 36
+BATTLES = 20000
+SEED = 20261111
+TEAM = 3
+BAND = (0.40, 0.60)
+MAX_TURNS = 100
+
+STAB = 1.25
+CRIT_MULT = 1.4
+CRIT_CHANCE = 1.0 / 12.0
+ROLL_MIN, ROLL_MAX = 0.90, 1.00
+START_ENERGY, MAX_ENERGY, ENERGY_PER_TURN, REST_ENERGY = 10, 10, 1, 2
+
+
+def load(name):
+    with open(os.path.join(ROOT, "data", name), encoding="utf-8") as f:
+        return json.load(f)
+
+
+def chart_problems(chart, species):
+    types = chart["types"]
+    strong = {t: set(v["strong"]) for t, v in types.items()}
+    out = []
+    for t, s in strong.items():
+        for o in s:
+            if o not in types:
+                out.append("%s beats unknown %s" % (t, o))
+            elif t in strong[o]:
+                out.append("%s and %s beat each other" % (t, o))
+        weak = [o for o in types if t in strong[o]]
+        if len(s) < 2:
+            out.append("%s has %d strengths" % (t, len(s)))
+        if len(weak) < 2:
+            out.append("%s has %d weaknesses" % (t, len(weak)))
+
+    def mult(a, d):
+        if d in strong[a]:
+            return chart["strong_mult"]
+        if a in strong[d]:
+            return chart["weak_mult"]
+        return 1.0
+
+    for a in types:
+        for b in types:
+            if a == b:
+                continue
+            # a dominates b: hits every element at least as hard and takes at most as much, once strictly better.
+            off = [mult(a, x) - mult(b, x) for x in types]
+            dfn = [mult(x, b) - mult(x, a) for x in types]
+            if min(off + dfn) >= 0 and max(off + dfn) > 0:
+                out.append("%s strictly dominates %s" % (a, b))
+    used = {e for s in species for e in s["elements"]}
+    for t, v in types.items():
+        if v.get("era", 1) > 1 and t in used:
+            out.append("Era %d element %s is on a Spirling" % (v["era"], t))
+    for e in used:
+        if e not in types:
+            out.append("Spirling element %s is not in the chart" % e)
+    return out, mult
+
+
+def stages(species):
+    by_name = {s["name"]: s for s in species}
+    parent = {}
+    for s in species:
+        for u in s.get("unfold", []):
+            parent.setdefault(u["to"], s["name"])
+    out = {}
+    for s in species:
+        n, d = s["name"], 0
+        while n in parent:
+            n, d = parent[n], d + 1
+        # A kind that never unfolds and comes from nothing is fully grown: it meets the second stage.
+        if d == 0 and not s.get("unfold"):
+            d = 1
+        out[s["name"]] = d
+    return out, by_name
+
+
+def default_moves(s, moves, level):
+    known = []
+    for lvl in sorted(s["learnset"], key=int):
+        if int(lvl) > level:
+            continue
+        lst = s["learnset"][lvl]
+        for m in (lst if isinstance(lst, list) else [lst]):
+            if m not in known:
+                known.append(m)
+    kept = known[-4:]
+    hits = [m for m in kept if moves[m]["power"] > 0]
+    for m in reversed(known[:-4]):
+        if len(hits) >= 2:
+            break
+        if moves[m]["power"] > 0:
+            for i, k in enumerate(kept):
+                if moves[k]["power"] <= 0:
+                    kept[i] = m
+                    hits.append(m)
+                    break
+    return [moves[m] for m in kept if moves[m]["power"] > 0 and moves[m]["kind"] != "STATUS"]
+
+
+class Mon:
+    def __init__(self, s, moves, level):
+        b = s["base"]
+        self.name = s["name"]
+        self.elements = s["elements"]
+        self.level = level
+        self.hp = self.max_hp = max(1, (b["hp"] * (level + 18)) // 20)
+        st = {k: (b[k] * (level + 12)) // 28 + 4 for k in ("atk", "def", "foc", "spd")}
+        self.atk, self.df, self.foc, self.spd = st["atk"], st["def"], st["foc"], st["spd"]
+        self.moves = default_moves(s, moves, level)
+        self.energy = START_ENERGY
+
+
+def raw(u, t, mv, mult, roll, crit):
+    a, d = (u.atk, t.df) if mv["kind"] == "PHYSICAL" else (u.foc, t.foc)
+    base = mv["power"] * (a / max(d, 1)) ** 0.8 * (u.level / 5.0 + 3.0) / 12.0 + 1.0
+    eff = 1.0
+    for e in t.elements:
+        eff *= mult(mv["element"], e)
+    return base * (STAB if mv["element"] in u.elements else 1.0) * eff * (CRIT_MULT if crit else 1.0) * roll
+
+
+def choose(u, t, mult):
+    best, score = None, 0.0
+    for mv in u.moves:
+        if mv["energy"] > u.energy:
+            continue
+        sc = raw(u, t, mv, mult, 0.95, False) * mv["accuracy"]
+        if sc > score:
+            best, score = mv, sc
+    return best
+
+
+def battle(a_team, b_team, mult, rng):
+    teams = [a_team, b_team]
+    size = len(a_team)
+    idx = [0, 0]
+    for _ in range(MAX_TURNS):
+        act = [teams[i][idx[i]] for i in (0, 1)]
+        picks = [choose(act[i], act[1 - i], mult) for i in (0, 1)]
+        order = sorted((0, 1), key=lambda i: (-(picks[i] or {}).get("priority", 0), -act[i].spd, rng.random()))
+        for i in order:
+            u, t = teams[i][idx[i]], teams[1 - i][idx[1 - i]]
+            if u is not act[i] or u.hp <= 0:
+                continue
+            mv = picks[i]
+            if mv is None:
+                u.energy = min(MAX_ENERGY, u.energy + REST_ENERGY)
+                continue
+            u.energy -= mv["energy"]
+            if rng.random() >= mv["accuracy"]:
+                continue
+            crit = rng.random() < CRIT_CHANCE
+            t.hp -= max(1, int(raw(u, t, mv, mult, rng.uniform(ROLL_MIN, ROLL_MAX), crit)))
+            if t.hp <= 0:
+                idx[1 - i] += 1
+                if idx[1 - i] >= size:
+                    return i
+        for i in (0, 1):
+            m = teams[i][idx[i]]
+            m.energy = min(MAX_ENERGY, m.energy + ENERGY_PER_TURN)
+    return -1
+
+
+def simulate(species, moves, mult, level=LEVEL, battles=BATTLES, seed=SEED):
+    stage_of, by_name = stages(species)
+    pools = {}
+    for s in species:
+        if s["rarity"] != "ancient":
+            pools.setdefault(stage_of[s["name"]], []).append(s["name"])
+    rng = random.Random(seed)
+    wins, games = {}, {}
+    type_w, type_g = {}, {}
+    for stage in sorted(pools):
+        pool = pools[stage]
+        size = min(TEAM, len(pool) // 2)
+        if size < 1:
+            continue
+        for _ in range(battles):
+            names = rng.sample(pool, size * 2)
+            sides = [names[:size], names[size:]]
+            seed_b = rng.random()
+            score = [0.0, 0.0]
+            for flip in (0, 1):
+                br = random.Random(seed_b)
+                a, b = sides[flip], sides[1 - flip]
+                w = battle([Mon(by_name[n], moves, level) for n in a], [Mon(by_name[n], moves, level) for n in b], mult, br)
+                if w == -1:
+                    score[0] += 0.5
+                    score[1] += 0.5
+                else:
+                    score[flip if w == 0 else 1 - flip] += 1.0
+            for side in (0, 1):
+                els = set()
+                for n in sides[side]:
+                    wins[n] = wins.get(n, 0.0) + score[side]
+                    games[n] = games.get(n, 0) + 2
+                    els.update(by_name[n]["elements"])
+                for e in els:
+                    type_w[e] = type_w.get(e, 0.0) + score[side]
+                    type_g[e] = type_g.get(e, 0) + 2
+    sp = {n: (wins[n] / games[n], games[n], stage_of[n]) for n in games}
+    ty = {e: (type_w[e] / type_g[e], type_g[e]) for e in type_g}
+    return sp, ty
+
+
+def report(chart, sp, ty, problems):
+    lo, hi = BAND
+    lines = ["Ring %d, %d team battles per stage (teams of %d, 2 in a stage of fewer than 6, sides swapped), seed %d, band %d to %d %%." % (
+        LEVEL, BATTLES, TEAM, SEED, lo * 100, hi * 100), "", "| Element | Era | Strong vs | Weak vs | Win rate |",
+        "| --- | --- | --- | --- | --- |"]
+    types = chart["types"]
+    for t, v in types.items():
+        weak = [o for o in types if t in types[o]["strong"]]
+        wr = "%.1f %%" % (ty[t][0] * 100) if t in ty else "on no Spirling yet"
+        lines.append("| %s | %s | %s | %s | %s |" % (t.capitalize(), "I" if v.get("era", 1) == 1 else "II",
+            ", ".join(x.capitalize() for x in v["strong"]), ", ".join(x.capitalize() for x in weak), wr))
+    rates = [r for r, _, _ in sp.values()]
+    lines += ["", "Species: %d measured, lowest %.1f %%, highest %.1f %%." % (len(sp), min(rates) * 100, max(rates) * 100), "",
+        "| Species | Stage | Win rate | Games |", "| --- | --- | --- | --- |"]
+    for n, (r, g, st) in sorted(sp.items(), key=lambda kv: (kv[1][2], -kv[1][0])):
+        lines.append("| %s | %d | %.1f %% | %d |" % (n, st + 1, r * 100, g))
+    lines += ["", "Chart problems: %s" % ("none" if not problems else "; ".join(problems))]
+    return "\n".join(lines)
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--md")
+    args = ap.parse_args()
+    chart, species = load("type_chart.json"), load("spirlings.json")
+    moves = {m["name"]: m for m in load("moves.json")}
+    problems, mult = chart_problems(chart, species)
+    sp, ty = simulate(species, moves, mult)
+    lo, hi = BAND
+    for n, (r, _, _) in sp.items():
+        if not lo <= r <= hi:
+            problems.append("species %s at %.1f %%" % (n, r * 100))
+    for e, (r, _) in ty.items():
+        if not lo <= r <= hi:
+            problems.append("element %s at %.1f %%" % (e, r * 100))
+    text = report(chart, sp, ty, problems)
+    print(text)
+    if args.md:
+        with open(args.md, "w", encoding="utf-8") as f:
+            f.write(text + "\n")
+    if problems:
+        print("FAIL: %d problem(s)" % len(problems), file=sys.stderr)
+        return 1
+    print("OK")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

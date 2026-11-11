@@ -1,17 +1,29 @@
 class_name Elements
-## 8 original elements. Each beats exactly 2 and is beaten by exactly 2.
+## The 8 Era I elements. The chart lives in data/type_chart.json (docs/BALANCE.md, Type chart):
+## every element has at least 2 strengths and 2 weaknesses and no pair beats each other.
+## Era II elements (Ink, Echo) are in the chart only; they sit on no Spirling yet.
 enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA }
 
-const STRONG := {
-	E.EMBER: [E.BLOOM, E.UMBRA],
-	E.TIDE:  [E.EMBER, E.STONE],
-	E.BLOOM: [E.TIDE, E.STONE],
-	E.VOLT:  [E.TIDE, E.GALE],
-	E.STONE: [E.EMBER, E.VOLT],
-	E.GALE:  [E.BLOOM, E.LUMEN],
-	E.LUMEN: [E.UMBRA, E.VOLT],
-	E.UMBRA: [E.LUMEN, E.GALE],
-}
+const CHART_PATH: String = "res://data/type_chart.json"
+
+## Element -> the Era I elements it beats, read from the chart.
+static var STRONG: Dictionary = _load_strong()
+
+## The whole chart as written in data/type_chart.json (all eras, names as keys).
+static func chart() -> Dictionary:
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(CHART_PATH))
+	return raw if raw is Dictionary else {}
+
+static func _load_strong() -> Dictionary:
+	var types: Dictionary = chart().get("types", {})
+	var out: Dictionary = {}
+	for e: int in E.values():
+		var list: Array = []
+		for t: Variant in (types.get(E.keys()[e], {}) as Dictionary).get("strong", []):
+			if E.has(str(t)):
+				list.append(E[str(t)])
+		out[e] = list
+	return out
 
 ## Placeholder colours per element (Era I maps them to its four inks by brightness).
 const COLORS := {
@@ -36,7 +48,7 @@ static func single(atk: int, def: int) -> float:
 	var atk_strong: bool = def in STRONG[atk]
 	var def_strong: bool = atk in STRONG[def]
 	if atk_strong and def_strong:
-		return 1.0  # Lumen <-> Umbra mirror
+		return 1.0  # the chart allows no mutual pair; kept as a guard
 	if atk_strong:
 		return 2.0
 	if def_strong:

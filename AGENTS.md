@@ -68,18 +68,20 @@ tests/           GUT tests
 
 ## Game rules (implement exactly)
 
-**Elements (8).** Each beats 2 and loses to 2. Attacker strong → ×2; reverse direction → ×0.5; otherwise ×1. Lumen and Umbra beat each other, so that pair is ×1. Dual elements multiply. The chart lives in `scripts/core/Elements.gd`.
+**Elements (8 in Era I, 2 more prepared for Era II).** The chart lives in `data/type_chart.json` and `scripts/core/Elements.gd` reads it. Attacker strong → ×2; reverse direction → ×0.5; otherwise ×1. Dual elements multiply. Every element has at least 2 strengths and 2 weaknesses, no pair beats each other and no element strictly dominates another (`tools/balance/type_sim.py`, `tests/unit/test_type_chart.gd`). Ink and Echo (Era II) are in the chart only and sit on no Spirling yet.
 
-| Element | Strong vs |
-| --- | --- |
-| Ember | Bloom, Umbra |
-| Tide | Ember, Stone |
-| Bloom | Tide, Stone |
-| Volt | Tide, Gale |
-| Stone | Ember, Volt |
-| Gale | Bloom, Lumen |
-| Lumen | Umbra, Volt |
-| Umbra | Lumen, Gale |
+| Element | Strong vs (Era I) | Strong vs (Era II) |
+| --- | --- | --- |
+| Ember | Bloom, Umbra | Echo |
+| Tide | Ember, Stone | Echo |
+| Bloom | Tide, Lumen | Echo |
+| Volt | Tide, Gale | Ink |
+| Stone | Ember, Volt | Ink |
+| Gale | Bloom, Lumen | Echo |
+| Lumen | Umbra, Volt | Ink |
+| Umbra | Gale, Stone | Ink |
+| Ink | Ember, Tide, Bloom, Gale | |
+| Echo | Volt, Stone, Lumen, Umbra | |
 
 **Stats:** HP, ATK, DEF, FOC (element/special), SPD. Each Spirling has hidden **Spark** values (0–12 per stat). Team of **5**, level cap **60**, up to 4 moves shown as a one-column list (never a 2x2 grid).
 

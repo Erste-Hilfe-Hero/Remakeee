@@ -1,0 +1,17 @@
+{
+ "_doc": "Element chart (docs/BALANCE.md, Type chart). strong = elements this one hits for strong_mult. The reverse direction takes weak_mult; every other pair is neutral. Dual defenders multiply. era = first era the element appears in; Era II elements sit on no Spirling yet. Checked by tools/balance/type_sim.py and tests/unit/test_type_chart.gd: every element has at least 2 strengths and 2 weaknesses, no pair beats each other, no element strictly dominates another.",
+ "strong_mult": 2.0,
+ "weak_mult": 0.5,
+ "types": {
+  "EMBER": {"era": 1, "strong": ["BLOOM", "UMBRA", "ECHO"]},
+  "TIDE": {"era": 1, "strong": ["EMBER", "STONE", "ECHO"]},
+  "BLOOM": {"era": 1, "strong": ["TIDE", "LUMEN", "ECHO"]},
+  "VOLT": {"era": 1, "strong": ["TIDE", "GALE", "INK"]},
+  "STONE": {"era": 1, "strong": ["EMBER", "VOLT", "INK"]},
+  "GALE": {"era": 1, "strong": ["BLOOM", "LUMEN", "ECHO"]},
+  "LUMEN": {"era": 1, "strong": ["UMBRA", "VOLT", "INK"]},
+  "UMBRA": {"era": 1, "strong": ["GALE", "STONE", "INK"]},
+  "INK": {"era": 2, "strong": ["EMBER", "TIDE", "BLOOM", "GALE"]},
+  "ECHO": {"era": 2, "strong": ["VOLT", "STONE", "LUMEN", "UMBRA"]}
+ }
+}

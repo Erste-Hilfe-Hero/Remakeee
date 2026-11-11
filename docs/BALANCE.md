@@ -71,6 +71,137 @@ Glimmerax sits lowest in duels (26%, it loses to 7 of 8 same-stage species on ba
 Long fights: from turn `BattleRules.WEARY_TURN` (40) nobody heals any more, so two Spirlings that
 mend faster than they hurt each other can't stall forever.
 
+## Type balance (Nov 2026)
+
+`python3 tools/balance/type_sim.py` (runs in CI, job ip-check, about 10 seconds) checks the
+element chart in `data/type_chart.json` and plays 20000 seeded team battles per unfold stage at
+ring 36: teams of 3 distinct kinds of the same stage (2 in the final stage, which has 4 kinds),
+every battle played twice with the sides swapped. Kinds that never unfold and come from nothing
+(Glasstarn, Lanternel) count as second stage; Velahra (ancient) is left out. It fails if the chart
+breaks a rule or any element or kind ends outside 40 to 60 %. `--md <path>` writes the report.
+
+It is a Python mirror of the battle core: stat curve, damage curve, STAB, keen hits, roll,
+accuracy, Energy (start 10, +1 a turn, rest +2), priority and Pace order, greedy art choice.
+Status arts, traits, Keepsakes and fields are left out on purpose, so it measures the chart and
+base stats only; the full model stays in `tools/balance_sim.gd`. Seeds 1 to 4 all land between
+42.9 and 56.9 %.
+
+Chart rules: every element has at least 2 strengths and 2 weaknesses, no pair beats each other
+(the old Lumen/Umbra mirror left both with one real strength), and no element strictly dominates
+another. Chart changes: Bloom beats Lumen instead of Stone, Umbra beats Stone instead of Lumen.
+Ink and Echo are prepared for Era II: in the chart only, on no Spirling yet. Each Era I element
+beats one of them and loses to the other, so Era I keeps its 2-against-2 shape.
+
+Tuning (data only, `bond_rate` and `BondCalc` untouched): base stats of 54 kinds scaled by at most
+about 18 %, each total kept in its rarity band; Calderox learns Root Grip at ring 36 (Bloom answer
+to Leviarch, which hits Ember/Stone four times; Leviarch won 82 % of final-stage fights, Calderox
+20 %). Biggest moves: Duskdigger +18 %, Solkit +16 %, Smoldrake +15 %, Zephlet -15 %,
+Blotling -11 %, Paddlewisp -10 %.
+
+<!-- type_sim report, rewrite with: python3 tools/balance/type_sim.py --md <path> -->
+Ring 36, 20000 team battles per stage (teams of 3, 2 in a stage of fewer than 6, sides swapped), seed 20261111, band 40 to 60 %.
+
+| Element | Era | Strong vs | Weak vs | Win rate |
+| --- | --- | --- | --- | --- |
+| Ember | I | Bloom, Umbra, Echo | Tide, Stone, Ink | 49.4 % |
+| Tide | I | Ember, Stone, Echo | Bloom, Volt, Ink | 50.2 % |
+| Bloom | I | Tide, Lumen, Echo | Ember, Gale, Ink | 51.8 % |
+| Volt | I | Tide, Gale, Ink | Stone, Lumen, Echo | 50.1 % |
+| Stone | I | Ember, Volt, Ink | Tide, Umbra, Echo | 48.9 % |
+| Gale | I | Bloom, Lumen, Echo | Volt, Umbra, Ink | 52.0 % |
+| Lumen | I | Umbra, Volt, Ink | Bloom, Gale, Echo | 49.5 % |
+| Umbra | I | Gale, Stone, Ink | Ember, Lumen, Echo | 52.3 % |
+| Ink | II | Ember, Tide, Bloom, Gale | Volt, Stone, Lumen, Umbra | on no Spirling yet |
+| Echo | II | Volt, Stone, Lumen, Umbra | Ember, Tide, Bloom, Gale | on no Spirling yet |
+
+Species: 80 measured, lowest 45.1 %, highest 54.9 %.
+
+| Species | Stage | Win rate | Games |
+| --- | --- | --- | --- |
+| Reedquill | 1 | 54.8 % | 6468 |
+| Mirkmole | 1 | 54.6 % | 6522 |
+| Blotling | 1 | 54.1 % | 6448 |
+| Puddlet | 1 | 53.8 % | 6354 |
+| Paddlewisp | 1 | 53.8 % | 6460 |
+| Seamlet | 1 | 53.5 % | 6518 |
+| Bogwick | 1 | 53.4 % | 6446 |
+| Glimmoth | 1 | 53.0 % | 6658 |
+| Fluting | 1 | 52.5 % | 6396 |
+| Ashwren | 1 | 52.4 % | 6408 |
+| Orrlet | 1 | 52.3 % | 6530 |
+| Kindlop | 1 | 52.0 % | 6508 |
+| Flourie | 1 | 52.0 % | 6592 |
+| Shimmerlet | 1 | 51.8 % | 6486 |
+| Zephlet | 1 | 51.7 % | 6406 |
+| Drizzlet | 1 | 51.7 % | 6604 |
+| Brinelet | 1 | 51.6 % | 6488 |
+| Millwhit | 1 | 51.3 % | 6498 |
+| Saltsprig | 1 | 50.8 % | 6560 |
+| Highhare | 1 | 50.2 % | 6398 |
+| Zippit | 1 | 50.1 % | 6314 |
+| Hushkin | 1 | 49.3 % | 6594 |
+| Etchling | 1 | 49.1 % | 6206 |
+| Puddock | 1 | 48.0 % | 6718 |
+| Duneshrew | 1 | 47.5 % | 6364 |
+| Smeltpup | 1 | 47.4 % | 6626 |
+| Croziel | 1 | 47.2 % | 6616 |
+| Kelpup | 1 | 47.1 % | 6344 |
+| Shalebat | 1 | 47.1 % | 6526 |
+| Cullet | 1 | 46.8 % | 6532 |
+| Cindle | 1 | 46.1 % | 6512 |
+| Wickit | 1 | 45.9 % | 6396 |
+| Silthop | 1 | 45.8 % | 6640 |
+| Talusk | 1 | 45.6 % | 6454 |
+| Cogmite | 1 | 45.4 % | 6350 |
+| Solkit | 1 | 45.2 % | 6544 |
+| Mossling | 1 | 45.1 % | 6516 |
+| Rainmantle | 2 | 54.4 % | 6284 |
+| Ashcrest | 2 | 54.3 % | 6122 |
+| Floursprite | 2 | 54.2 % | 6138 |
+| Scrivane | 2 | 54.2 % | 6062 |
+| Ferrowyn | 2 | 53.8 % | 6218 |
+| Saltcrown | 2 | 53.7 % | 6066 |
+| Lanternel | 2 | 53.3 % | 6122 |
+| Delthorn | 2 | 53.3 % | 6206 |
+| Glimmerax | 2 | 53.2 % | 6218 |
+| Glasstarn | 2 | 53.1 % | 6292 |
+| Orrerine | 2 | 52.8 % | 6178 |
+| Tempestrel | 2 | 52.7 % | 6242 |
+| Reedwarden | 2 | 52.6 % | 6310 |
+| Mendlace | 2 | 52.5 % | 6258 |
+| Mirassil | 2 | 52.3 % | 6064 |
+| Wickmoth | 2 | 52.2 % | 6162 |
+| Burinox | 2 | 52.0 % | 6272 |
+| Solmantle | 2 | 52.0 % | 6274 |
+| Millvane | 2 | 52.0 % | 6214 |
+| Zenithare | 2 | 51.9 % | 6164 |
+| Fenwarden | 2 | 51.1 % | 6160 |
+| Kelphound | 2 | 50.3 % | 6130 |
+| Marshfife | 2 | 50.1 % | 6120 |
+| Lumenewt | 2 | 48.3 % | 6170 |
+| Obsidroth | 2 | 47.1 % | 6080 |
+| Glassfell | 2 | 46.9 % | 6256 |
+| Silentra | 2 | 46.8 % | 6098 |
+| Thornback | 2 | 46.4 % | 6088 |
+| Dunebastion | 2 | 46.0 % | 6106 |
+| Riptail | 2 | 45.9 % | 6014 |
+| Talusgard | 2 | 45.8 % | 6078 |
+| Siltgrove | 2 | 45.8 % | 6108 |
+| Duskdigger | 2 | 45.7 % | 6024 |
+| Frondmere | 2 | 45.7 % | 6074 |
+| Smoldrake | 2 | 45.5 % | 6076 |
+| Cullhorn | 2 | 45.5 % | 6014 |
+| Smeltmaw | 2 | 45.4 % | 6064 |
+| Cogwright | 2 | 45.2 % | 6174 |
+| Saltspire | 2 | 45.1 % | 6300 |
+| Verdantusk | 3 | 54.9 % | 40000 |
+| Calderox | 3 | 52.4 % | 40000 |
+| Leviarch | 3 | 46.9 % | 40000 |
+| Cairnhold | 3 | 45.7 % | 40000 |
+
+Chart problems: none
+<!-- /type_sim report -->
+
 ## Known gaps
 
 Bands that `tests/slow/test_slow_sim_bands.gd` measures but the game misses today (plan area 2,
