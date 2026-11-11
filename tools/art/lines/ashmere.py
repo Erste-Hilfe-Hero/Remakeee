@@ -4,7 +4,7 @@ halls and the dark fens. Read by tools/art/gen_lines.py (art) and tools/build_li
 L = dict
 
 LINES = [
-    L(id="sootpaw", names=["Sootpaw", "Sootlurk", "Sootharrow"], elements=["EMBER", "UMBRA"], role="striker",
+    L(id="sootpaw", names=["Sootpaw", "Sootlurk", "Sootharrow"], elements=["EMBER", "UMBRA"], role="kindler",
       art=dict(plan="quad", tones=("dark", "dark", "light"), ears="pointed", ear_tone="dark", tail="flame", eye="glow",
                snout="long", mouth="fang", size=-1, marks="spots", marks_n=0)),
     L(id="vitrill", names=["Vitrill", "Vitrillon", "Vitrillaxe"], elements=["LUMEN", "STONE"], role="bulwark",
