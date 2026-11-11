@@ -167,36 +167,6 @@ def puddlet():
     ]
 
 
-def riptail():
-    # Sleek river otter-eel; the tail ends in a curling ripple.
-    return [
-        P([(38, 36), (48, 30), (54, 18), (50, 14), (46, 20), (50, 22), (44, 32), (36, 32)], "dark"),  # tail curl
-        E(30, 38, 16, 8, "mid"),                                                # body
-        P([(26, 30), (32, 22), (36, 30)], "dark"),                              # dorsal fin
-        E(22, 46, 4, 3, "dark"), E(36, 46, 4, 3, "dark"),                       # flippers
-        E(13, 34, 9, 7, "light"),                                               # head
-        P([(10, 28), (14, 22), (18, 28)], "light"),                             # ear fin
-        eye(8, 31, big=False),
-        Stamp(4, 38, ["000"]),
-        Stamp(2, 35, ["0", "0"]),                                               # whisker
-    ]
-
-
-def leviarch():
-    # Wide arching ray of the deep lake with a floating ring of light above it.
-    return [
-        P([(42, 36), (55, 44), (54, 46), (40, 40)], "dark"),                    # tail
-        P([(4, 34), (20, 20), (36, 20), (52, 34), (36, 42), (20, 42)], "mid"),  # wings
-        P([(12, 33), (20, 26), (24, 33)], "light", outline=False),              # wing marks
-        P([(32, 33), (36, 26), (44, 33)], "light", outline=False),
-        E(16, 36, 8, 6, "light"),                                               # head
-        E(28, 10, 12, 4, "light"),                                              # halo
-        E(28, 10, 8, 2, "ink", shade=False, outline=False),
-        eye(11, 34),
-        Stamp(8, 39, ["000"]),
-    ]
-
-
 def mossling():
     # Round moss cub that sits upright: two round leaf ears, a twig tail and a pebble nose.
     # (Nothing grows on its back.)
@@ -269,20 +239,6 @@ def zippit():
     ]
 
 
-def glimmerax():
-    # Night beetle-moth: pale dusted wings and a glowing axe-blade horn.
-    return [
-        E(38, 26, 12, 14, "light"),                                             # far wing
-        E(30, 40, 12, 10, "dark"),                                              # body
-        E(26, 28, 11, 13, "light"),                                             # near wing
-        E(24, 26, 4, 5, "mid", outline=False),                                  # wing eye-spot
-        E(24, 51, 3, 2, "dark"), E(34, 51, 3, 2, "dark"),
-        E(16, 42, 7, 6, "mid"),                                                 # head
-        P([(14, 36), (12, 24), (4, 20), (6, 30), (10, 36)], "light"),           # axe horn
-        eye(11, 40),
-    ]
-
-
 def shalebat():
     # A bat of stacked slate plates; jagged wings, ears like broken shards.
     return [
@@ -296,22 +252,6 @@ def shalebat():
         E(26, 46, 6, 3, "dark"),                                                # feet
         glow_eye(20, 30), glow_eye(28, 30),
         Stamp(23, 37, ["0.0.0", ".0.0."]),                                      # fangs
-    ]
-
-
-def obsidroth():
-    # Slow, hunched glass-stone giant with long arms and shards on its back.
-    return [
-        P([(36, 10), (40, 2), (42, 12)], "light"),                              # shards
-        P([(42, 14), (50, 8), (48, 18)], "light"),
-        P([(28, 12), (30, 4), (34, 12)], "light"),
-        E(34, 34, 17, 18, "dark"),                                              # body
-        E(42, 52, 6, 3, "dark"),
-        P([(16, 28), (10, 40), (8, 52), (14, 52), (18, 42), (24, 32)], "dark"),  # arm
-        Stamp(6, 51, ["0.0.0", "0.0.0"]),                                       # claws
-        E(20, 24, 8, 7, "mid"),                                                 # head
-        glow_eye(14, 22), glow_eye(21, 22),
-        P([(28, 32), (40, 30), (44, 44), (32, 46)], "mid", outline=False),      # glassy belly
     ]
 
 
@@ -463,22 +403,6 @@ def blotling():
     ]
 
 
-def scrivane():
-    # A tall ink heron-shape: a long quill neck, a wing that trails ink lines like map roads.
-    return [
-        P([(30, 30), (54, 22), (50, 34), (54, 42), (34, 44)], "dark"),          # trailing wing
-        P([(36, 32), (50, 28), (48, 32)], "light", outline=False),              # map lines
-        P([(36, 38), (50, 38), (48, 40)], "light", outline=False),
-        E(30, 40, 11, 9, "dark"),                                               # body
-        E(26, 51, 2, 4, "dark"), E(34, 51, 2, 4, "dark"),                       # legs
-        P([(22, 34), (16, 14), (20, 12), (28, 32)], "mid"),                     # quill neck
-        E(16, 12, 6, 5, "mid"),                                                 # head
-        P([(4, 14), (11, 10), (11, 15)], "dark"),                               # nib beak
-        P([(18, 8), (26, 2), (24, 9)], "light"),                                # feather tuft
-        eye(13, 10),
-    ]
-
-
 def hushkin():
     # A round, mouthless shadow cub with a glowing sign on its forehead and soft long ears.
     return [
@@ -489,20 +413,6 @@ def hushkin():
         P([(20, 24), (28, 10), (32, 12), (26, 26)], "dark"),                    # near ear
         Stamp(16, 25, [".3.", "3.3", ".3."]),                                   # glowing sign
         Stamp(12, 32, ["000"]), Stamp(20, 32, ["000"]),                         # closed eyes, no mouth
-    ]
-
-
-def silentra():
-    # A tall, veiled shadow figure; light signs float around its hood like quiet words.
-    return [
-        P([(20, 16), (36, 12), (46, 30), (48, 54), (14, 54), (16, 30)], "dark"),  # veil
-        P([(22, 34), (32, 30), (40, 54), (24, 54)], "mid", outline=False),      # inner fold
-        E(26, 20, 9, 9, "mid"),                                                 # hood face
-        E(24, 22, 6, 6, "ink", shade=False, outline=False),
-        glow_eye(20, 20), glow_eye(26, 20),
-        Stamp(6, 10, [".3.", "333", ".3."], face=False),                        # signs
-        Stamp(40, 6, ["3.3", ".3.", "3.3"], face=False),
-        Stamp(4, 32, ["33", "33"], face=False),
     ]
 
 
@@ -517,22 +427,6 @@ def paddlewisp():
         E(20, 50, 4, 2, "dark"),
         eye(16, 34, big=True),
         Stamp(14, 42, ["0.0"]),
-    ]
-
-
-def ferrowyn():
-    # A sleek river spirit like a long otter of spray, with fin-sails that catch the storm.
-    return [
-        P([(30, 24), (44, 8), (48, 12), (40, 28)], "light"),                    # far sail
-        P([(38, 40), (50, 34), (55, 46), (44, 50)], "mid"),                     # tail
-        E(30, 40, 16, 8, "mid"),                                                # body
-        E(30, 44, 12, 4, "light", outline=False),
-        P([(22, 30), (32, 12), (36, 14), (32, 32)], "light"),                   # near sail
-        E(20, 49, 4, 3, "dark"), E(38, 49, 4, 3, "dark"),
-        E(12, 36, 9, 7, "light"),                                               # head
-        P([(6, 30), (8, 24), (12, 30)], "mid"),                                 # ear fin
-        eye(8, 34),
-        Stamp(2, 40, ["000"]),
     ]
 
 
@@ -589,23 +483,6 @@ def fluting():
     ]
 
 
-def marshfife():
-    # A heron of reeds: long reed legs, a body of bound stems, a fife-like beak and wind ribbons.
-    return [
-        P([(36, 16), (54, 10), (52, 14), (40, 22)], "light"),                   # wind ribbon
-        P([(38, 26), (55, 24), (52, 28), (40, 30)], "light"),
-        E(32, 30, 12, 9, "mid"),                                                # body
-        P([(24, 28), (40, 26), (38, 32), (26, 34)], "dark", outline=False),     # binding
-        P([(26, 38), (28, 38), (26, 55), (24, 55)], "dark"),                    # legs
-        P([(36, 38), (38, 38), (38, 55), (36, 55)], "dark"),
-        P([(22, 26), (16, 12), (20, 10), (26, 24)], "mid"),                     # neck
-        E(16, 10, 6, 5, "light"),                                               # head
-        P([(0, 12), (11, 9), (11, 13)], "dark"),                                # fife beak
-        Stamp(4, 11, ["0.0"], face=False),
-        eye(14, 8),
-    ]
-
-
 def glasstarn():
     # A still disc of mountain lake that mirrors the sky; a faint face shows under the surface.
     return [
@@ -645,21 +522,6 @@ def seamlet():
     ]
 
 
-def mendlace():
-    # A lanky shadow tailor with long needle fingers and loops of light thread around it.
-    return [
-        E(30, 30, 22, 20, "light", shade=False),                                # thread loop
-        E(30, 30, 20, 18, "ink", shade=False, outline=False),
-        E(30, 34, 10, 14, "dark"),                                              # body
-        E(26, 54, 3, 2, "dark"), E(34, 54, 3, 2, "dark"),
-        P([(22, 30), (8, 40), (6, 46), (12, 42), (24, 36)], "mid"),             # needle arm
-        P([(4, 47), (8, 44), (2, 52)], "light"),                                # needle tip
-        E(24, 18, 8, 7, "mid"),                                                 # head
-        P([(28, 12), (36, 4), (34, 14)], "light"),                              # spark crest
-        glow_eye(19, 16),
-    ]
-
-
 def croziel():
     # A rolled fern frond (a fiddlehead) standing on two root feet, its head still curled.
     return [
@@ -674,22 +536,6 @@ def croziel():
     ]
 
 
-def frondmere():
-    # The unrolled fern: a tall deer-like body whose antlers are open fern fronds.
-    return [
-        P([(18, 18), (24, 2), (28, 6), (26, 10), (32, 4), (32, 12), (22, 20)], "light"),  # far frond antler
-        E(36, 50, 3, 5, "dark"), E(44, 49, 3, 5, "dark"),
-        E(34, 38, 15, 9, "mid"),                                                # body
-        P([(24, 34), (44, 32), (42, 36), (26, 38)], "light", outline=False),    # leaf pattern
-        E(24, 50, 3, 5, "dark"), E(32, 51, 3, 4, "dark"),
-        P([(16, 34), (18, 22), (24, 22), (26, 34)], "mid"),                     # neck
-        E(14, 22, 8, 6, "mid"),                                                 # head
-        P([(14, 16), (12, 2), (16, 4), (18, 8), (22, 2), (22, 10), (18, 18)], "light"),  # near frond antler
-        P([(2, 24), (8, 20), (8, 26)], "mid"),                                  # muzzle
-        eye(11, 20),
-    ]
-
-
 def brinelet():
     # A salt crystal cluster on stubby legs, with one big facet as a face.
     return [
@@ -700,20 +546,6 @@ def brinelet():
         E(20, 51, 4, 3, "dark"), E(36, 51, 4, 3, "dark"),
         eye(17, 34), eye(23, 34),
         Stamp(19, 40, ["000"]),
-    ]
-
-
-def saltspire():
-    # A tall column of salt that walks: a pillar body, crystal shoulders and a small crowned head.
-    return [
-        P([(22, 14), (40, 14), (42, 50), (20, 50)], "mid"),                     # pillar
-        P([(26, 18), (32, 18), (30, 46), (26, 46)], "light", outline=False),    # facet stripe
-        P([(14, 22), (22, 16), (24, 30)], "light"),                             # shoulder crystals
-        P([(40, 16), (50, 20), (42, 30)], "light"),
-        E(22, 53, 5, 2, "dark"), E(40, 53, 5, 2, "dark"),
-        E(30, 10, 7, 6, "light"),                                               # head
-        P([(24, 6), (26, 0), (30, 4), (34, 0), (36, 6)], "light"),              # crown
-        eye(25, 9), eye(31, 9),
     ]
 
 
@@ -735,6 +567,99 @@ def velahra():
         Stamp(10, 26, ["00", ".0"]),                                                # mouth
         Stamp(34, 40, ["3.3.3"]), Stamp(24, 46, ["3...3...3"]),                     # light marks
     ]
+
+
+
+# --- Grown stages ----------------------------------------------------------------------------
+# A later stage is the earlier stage scaled up around a ground anchor, so it keeps the same core
+# shape, palette and signature features, plus added traits drawn behind (before) or on top (after).
+
+def grown(fn, sx, sy, ax=28, ay=53, before=(), after=()):
+    out = list(before)
+    for part in fn():
+        if isinstance(part, Stamp):
+            out.append(Stamp(round(ax + (part.x - ax) * sx), round(ay + (part.y - ay) * sy), part.rows, part.face))
+        else:
+            m = part.mask
+            out.append(Part((lambda x, y, m=m: m(ax + (x - ax) / sx, ay + (y - ay) / sy)),
+                            part.tone, part.outline, part.face, part.shade))
+    return out + list(after)
+
+
+def riptail():
+    # Grown Puddlet: longer droplet body, a dorsal fin ridge and a split tail fin.
+    return grown(puddlet, 1.15, 1.15, ax=34, before=[
+        P([(26, 22), (34, 10), (36, 22), (42, 16), (40, 30)], "mid"),
+        P([(44, 44), (56, 50), (50, 54)], "mid")])
+
+
+def leviarch():
+    # Fully grown Puddlet: the same droplet and big eyes, a fin crown and a ring of bubbles above.
+    return grown(puddlet, 1.3, 1.3, ax=36, before=[
+        P([(16, 16), (20, 2), (26, 12), (32, 0), (34, 14), (42, 6), (40, 22)], "mid"),
+        P([(40, 44), (56, 52), (48, 55)], "mid")],
+        after=[Stamp(4, 6, [".3.", "3.3", ".3."], face=False)])
+
+
+def glimmerax():
+    # Grown Zippit: bigger striped shell, a spark horn on its head and a second stripe.
+    return grown(zippit, 1.2, 1.25, ax=26, after=[
+        P([(12, 36), (4, 28), (8, 26), (16, 34)], "light"),
+        P([(30, 32), (38, 36), (36, 38), (46, 42)], "light", outline=False)])
+
+
+def obsidroth():
+    # Grown Shalebat: the same slate wings and shard ears, taller, with a polished chest plate and horns.
+    return grown(shalebat, 1.0, 1.25, before=[
+        P([(18, 12), (14, 0), (24, 10)], "dark"), P([(32, 10), (40, 0), (38, 12)], "dark")],
+        after=[P([(22, 34), (32, 34), (30, 44), (24, 44)], "light", outline=False)])
+
+
+def scrivane():
+    # Grown Blotling: a larger ink blot with a tall quill crest and a pen-nib tail.
+    return grown(blotling, 1.2, 1.3, ax=30, before=[
+        P([(30, 16), (40, 0), (44, 2), (36, 18)], "mid"),
+        P([(42, 36), (56, 30), (50, 42)], "dark")])
+
+
+def silentra():
+    # Grown Hushkin: the same mouthless cub and long ears, taller, with a shadow mantle and three signs.
+    return grown(hushkin, 1.15, 1.2, ax=30, before=[
+        P([(30, 30), (54, 34), (52, 54), (26, 54)], "dark")],
+        after=[Stamp(10, 20, ["3"]), Stamp(26, 18, ["3"])])
+
+
+def ferrowyn():
+    # Grown Paddlewisp: a larger whirl, a second top curl and a fin on the paddle tail.
+    return grown(paddlewisp, 1.15, 1.3, ax=40, before=[
+        P([(32, 22), (42, 8), (46, 12), (38, 24)], "light"),
+        P([(44, 36), (54, 24), (54, 36)], "mid")])
+
+
+def marshfife():
+    # Grown Fluting: a thicker reed with the same holes and tuft, a second leaf arm and reed spikes.
+    return grown(fluting, 1.5, 1.04, before=[
+        P([(16, 30), (4, 20), (8, 32)], "mid"),
+        P([(38, 40), (52, 34), (48, 42)], "mid")])
+
+
+def mendlace():
+    # Grown Seamlet: a bigger spark with more spikes and a longer thread of light.
+    return grown(seamlet, 1.25, 1.35, ax=40, before=[
+        P([(30, 18), (34, 6), (38, 20)], "light"), P([(10, 34), (2, 30), (10, 40)], "light")])
+
+
+def frondmere():
+    # Grown Croziel: the same curled head and root feet, taller, with fronds unfurled to both sides.
+    return grown(croziel, 1.25, 1.25, before=[
+        P([(30, 34), (8, 28), (14, 36), (30, 40)], "light"),
+        P([(34, 30), (52, 18), (50, 30), (36, 38)], "light")])
+
+
+def saltspire():
+    # Grown Brinelet: the same facet face and stubby legs, with a tall spire of salt crystals.
+    return grown(brinelet, 1.25, 1.3, ax=30, before=[
+        P([(26, 16), (32, 0), (38, 14)], "light"), P([(40, 22), (54, 10), (52, 26)], "light")])
 
 
 DESIGNS = {
@@ -770,9 +695,10 @@ PLACEHOLDERS = [
 ]
 
 
-def placeholder(name: str, big: bool):
+def placeholder(name: str, big: bool, line: str = ""):
+    # The hash comes from the line's first stage so both stages share shape, tones and features.
     import hashlib
-    h = hashlib.sha1(name.encode()).digest()
+    h = hashlib.sha1((line or name).encode()).digest()
     r = 13 if big else 10
     bx, by = 30, 40 - (2 if big else 0)
     tones = ["light", "mid", "dark"]
@@ -791,14 +717,16 @@ def placeholder(name: str, big: bool):
     parts += [E(bx, by, r + 2, r, body)]
     parts += [E(bx - 6, by + r - 1, 4, 3, "dark"), E(bx + 6, by + r - 1, 4, 3, "dark")]
     parts += [E(26, 26 - (2 if big else 0), 9 if big else 8, 8 if big else 7, head)]
-    if h[4] % 2:
+    if big:  # grown traits: two head spikes
+        parts = [P([(19, 20), (16, 8), (23, 17)], "light"), P([(29, 18), (33, 7), (34, 19)], "light")] + parts
+    if h[4] % 2 or big:
         parts += [P([(bx + r, by - 2), (bx + r + 8, by - 8 - h[5] % 5), (bx + r + 4, by + 4)], body)]
     parts += [eye(20, 23 - (2 if big else 0), big=big), Stamp(17, 30 - (2 if big else 0), ["0.0", ".0."])]
     return parts
 
 
 for _i, _n in enumerate(PLACEHOLDERS):
-    DESIGNS[_n] = (lambda n=_n, b=(_i % 2 == 1): placeholder(n, b))
+    DESIGNS[_n] = (lambda n=_n, b=(_i % 2 == 1), _i=_i: placeholder(n, b, PLACEHOLDERS[_i - _i % 2]))
 
 
 def main() -> None:
