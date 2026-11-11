@@ -66,9 +66,12 @@ var held: String = ""
 var prism: bool = false
 ## Power Core used on this Spirling (saved as "core" only when true).
 var temper_core: bool = false
-## Gleam form from the shop's Gleam Prism (items 4791-4794): +10 % on all five values and a
-## Riftglass tint. Saved as "gleam" only when true. The Fair League never carries it.
+## Gleam form: the species' own alternate palette (GleamRules). Wild ones roll it at
+## data/gleam.json "wild_one_in"; the shop's Gleam Prism gives it too. Kept on unfurling and trades.
 var gleam: bool = false
+## +10 % on all five values from the shop's Gleam Prism (items 4791-4794). Saves from before wild
+## Gleams have only "gleam", which then meant this boost. The Fair League never carries it.
+var gleam_boost: bool = false
 const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
@@ -164,7 +167,7 @@ func _stat(key: String) -> int:
 
 ## Factor from shop purchases on this Spirling (Gleam form, item 4794).
 func shop_mult() -> float:
-	return GLEAM_MULT if gleam else 1.0
+	return GLEAM_MULT if gleam_boost else 1.0
 
 ## The temperament id saves before version 4 had, read from the uid ("even" without a uid).
 static func legacy_temper(p_uid: String) -> String:
@@ -464,6 +467,7 @@ func to_dict() -> Dictionary:
 		"temper": temperament().id,
 		"core": temper_core,
 		"gleam": gleam,
+		"gleam_boost": gleam_boost,
 		"variant": variant,
 		"origin_map": origin_map,
 		"origin_era": origin_era,
@@ -510,6 +514,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 		s.temper = legacy_temper(s.uid)
 	s.temper_core = d.get("core") is bool and d.get("core")
 	s.gleam = d.get("gleam") is bool and d.get("gleam")
+	s.gleam_boost = d.get("gleam_boost") is bool and d.get("gleam_boost") if d.has("gleam_boost") else s.gleam
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
 	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, 4)

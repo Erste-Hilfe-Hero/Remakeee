@@ -73,6 +73,8 @@ var storage_box_bonus: int = 0
 var shop_boosts: Dictionary = {}
 ## Saved teams [{"name", "uids": [uid...]}], at most TEAM_PRESETS (item 378).
 var team_presets: Array[Dictionary] = []
+## Gleam chain (GleamRules.next_chain): the kind met last in the wild and how often in a row.
+var gleam_chain: Dictionary = {"species": "", "count": 0}
 ## Echo Cores from singing together (Nachhall, plan area 1, items 183-185):
 ## [{"kind", "parents": [species, species], "rests", "wins"}].
 var echo_cores: Array[Dictionary] = []
@@ -335,9 +337,11 @@ func shift_temper(s: Spirling, temper_id: String, item_id: String = "rg_temper_s
 
 ## Gleam Prism (shop item 4791): the chosen Spirling takes its Gleam form for good.
 func use_gleam_prism(s: Spirling, item_id: String = "rg_gleam_prism") -> bool:
-	if item_count(item_id) <= 0 or s.gleam:
+	if item_count(item_id) <= 0 or s.gleam_boost:
 		return false
 	s.gleam = true
+	s.gleam_boost = true
+	note_gleam_bonded(s)
 	return take_item(item_id)
 
 ## Power Core (shop item 4750): doubles the lean of a temperament that leans toward a stat.
@@ -492,6 +496,7 @@ func reset() -> void:
 	card_frame = ""
 	gift_card = ""
 	team_presets.clear()
+	gleam_chain = {"species": "", "count": 0}
 	echo_cores.clear()
 	iron_oath = false
 	sanctuary.clear()
@@ -645,6 +650,7 @@ func to_dict() -> Dictionary:
 		"storage_box_bonus": storage_box_bonus,
 		"shop_boosts": shop_boosts.duplicate(true),
 		"team_presets": team_presets.duplicate(true),
+		"gleam_chain": gleam_chain.duplicate(),
 		"echo_cores": echo_cores.duplicate(true),
 		"spirlog": spirlog.duplicate(true),
 		"inventory": inventory.duplicate(),
@@ -707,6 +713,8 @@ func from_dict(d: Dictionary) -> void:
 			if str(k) in ["growth", "coins"] and b is Dictionary and int(b.get("left", 0)) > 0:
 				shop_boosts[str(k)] = {"mult": clampf(float(b.get("mult", 1.0)), 1.0, 3.0), "left": mini(int(b.left), 200)}
 	_load_echo_cores(d.get("echo_cores", []))
+	var gc: Dictionary = _as_dict(d.get("gleam_chain", {}))
+	gleam_chain = {"species": str(gc.get("species", "")), "count": clampi(as_int(gc.get("count", 0)), 0, GleamRules.chain_max())}
 	for k: Variant in _as_dict(d.get("spirlog", {})):
 		spirlog[str(k)] = upgrade_spirlog_entry((d.spirlog[k] as Variant))
 	for k: Variant in _as_dict(d.get("inventory", {})):
@@ -967,6 +975,7 @@ func receive_spirling(s: Spirling) -> bool:
 		s.met_day = today()
 	mark_seen(s.data.species_name, true)
 	note_spirlog(s)
+	note_gleam_bonded(s)
 	s.restore()
 	if party.size() < party_max():
 		party.append(s)
@@ -978,7 +987,7 @@ func receive_spirling(s: Spirling) -> bool:
 ## regional imprints, Prism colours and temperaments met so far (plan area 1, item 7).
 static func new_spirlog_entry() -> Dictionary:
 	return {"seen": false, "bonded": false, "first_map": "", "first_day": 0,
-		"variants": [], "prism_seen": false, "tempers": [], "maps": [], "battles": 0}
+		"variants": [], "prism_seen": false, "gleam_seen": false, "gleam_bonded": false, "tempers": [], "maps": [], "battles": 0}
 
 ## Fills missing fields of an older Spirlog entry ({"seen", "bonded"} only) with defaults.
 static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
@@ -993,6 +1002,8 @@ static func upgrade_spirlog_entry(e: Variant) -> Dictionary:
 	out["battles"] = int(out.battles) if out.battles is int or out.battles is float else 0
 	out["first_map"] = out.first_map if out.first_map is String else ""
 	out["prism_seen"] = out.prism_seen is bool and out.prism_seen
+	out["gleam_bonded"] = out.gleam_bonded is bool and out.gleam_bonded
+	out["gleam_seen"] = out.gleam_seen is bool and out.gleam_seen or out.gleam_bonded
 	for k: String in ["variants", "tempers", "maps"]:
 		if not out[k] is Array:
 			out[k] = []
@@ -1068,11 +1079,22 @@ func note_echo(score: float) -> void:
 	for s: Spirling in party:
 		s.echo_streak = s.echo_streak + 1 if score >= 1.0 else 0
 
+## A Gleam joined (bond, trade, gift): its kind's Spirlog entry counts a Gleam bonded.
+func note_gleam_bonded(s: Spirling) -> void:
+	if not s.gleam:
+		return
+	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(s.data.species_name, {}))
+	e["gleam_seen"] = true
+	e["gleam_bonded"] = true
+	spirlog[s.data.species_name] = e
+
 ## Records what [param s] shows the Spirlog: its Prism colour, imprint and temperament.
 func note_spirlog(s: Spirling, show_temper: bool = true) -> void:
 	var e: Dictionary = upgrade_spirlog_entry(spirlog.get(s.data.species_name, {}))
 	if s.prism:
 		e["prism_seen"] = true
+	if s.gleam:
+		e["gleam_seen"] = true
 	if not s.variant.is_empty() and not (e.variants as Array).has(s.variant):
 		(e.variants as Array).append(s.variant)
 	var t: String = str(s.temperament().id)
