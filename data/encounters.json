@@ -1370,35 +1370,35 @@
     "species": "Duneshrew",
     "min": 39,
     "max": 41,
-    "weight": 34,
+    "weight": 30,
     "ground": "scree"
    },
    {
     "species": "Saltsprig",
     "min": 39,
     "max": 41,
-    "weight": 26,
+    "weight": 10,
     "ground": "scree"
    },
    {
     "species": "Shimmerlet",
     "min": 40,
     "max": 42,
-    "weight": 20,
+    "weight": 26,
     "ground": "scree"
    },
    {
     "species": "Orrlet",
     "min": 40,
     "max": 42,
-    "weight": 14,
+    "weight": 8,
     "ground": "scree"
    },
    {
     "species": "Solkit",
     "min": 42,
     "max": 42,
-    "weight": 6,
+    "weight": 26,
     "ground": "scree"
    }
   ]
