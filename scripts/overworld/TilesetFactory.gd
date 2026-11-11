@@ -57,7 +57,8 @@ const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FE
 const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOWER, Kind.REEDS, Kind.SCREE, Kind.ROCK]
 const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 
-static var _tileset: TileSet
+## One TileSet per atlas path, so each act can have its own world look.
+static var _tilesets: Dictionary[String, TileSet] = {}
 static var _has_atlas: bool = false
 
 static func kind_for(ch: String) -> int:
@@ -66,17 +67,26 @@ static func kind_for(ch: String) -> int:
 static func is_solid(kind: int) -> bool:
 	return kind in SOLID
 
-static func atlas_path() -> String:
-	return EraManager.art_path(ATLAS_REL)
+## Shared atlas, or the act's own "tiles/overworld_<region>.png" when [param region] has one.
+static func atlas_path(region: String = "") -> String:
+	var shared: String = EraManager.art_path(ATLAS_REL)
+	if not region.is_empty():
+		var own: String = EraManager.art_path("tiles/overworld_%s.png" % region)
+		# Only when it belongs to the same era folder: a newer era's shared atlas wins.
+		if not own.is_empty() and own.get_base_dir() == shared.get_base_dir():
+			return own
+	return shared
 
-## Drops the cached TileSet so the next get_tileset() rebuilds it for the active era.
+## Drops the cached TileSets so the next get_tileset() rebuilds them for the active era.
 static func clear_cache() -> void:
-	_tileset = null
+	_tilesets.clear()
 
-static func get_tileset() -> TileSet:
-	if _tileset == null:
-		_tileset = _build()
-	return _tileset
+static func get_tileset(region: String = "") -> TileSet:
+	var atlas: String = atlas_path(region)
+	if not _tilesets.has(atlas):
+		_tilesets[atlas] = _build(atlas)
+	_has_atlas = not atlas.is_empty()
+	return _tilesets[atlas]
 
 ## Neighbours that count as "the same" when picking a masked variant.
 static func joins(kind: int, other: int) -> bool:
@@ -115,11 +125,10 @@ static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable) -> Vector
 		return Vector2i(kind, h % 4)
 	return Vector2i(kind, 0)
 
-static func _build() -> TileSet:
+static func _build(atlas: String) -> TileSet:
 	var count: int = Kind.size()
 	var tex: Texture2D
 	var rows: int = 1
-	var atlas: String = atlas_path()
 	_has_atlas = not atlas.is_empty()
 	if _has_atlas:
 		tex = load(atlas)

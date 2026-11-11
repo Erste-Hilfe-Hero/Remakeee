@@ -40,7 +40,9 @@ def load_level(map_id: str) -> dict:
 
 def render(d: dict) -> Image.Image:
     rows = d["rows"]
-    atlas = Image.open(os.path.join(ROOT, "art", "era1", "tiles", "overworld.png"))
+    tiles = os.path.join(ROOT, "art", "era1", "tiles")
+    regional = os.path.join(tiles, "overworld_%s.png" % d.get("region", "veydal"))
+    atlas = Image.open(regional if os.path.exists(regional) else os.path.join(tiles, "overworld.png"))
     h, w = len(rows), max(len(r) for r in rows)
     img = Image.new("RGBA", (w * 16, h * 16))
 
