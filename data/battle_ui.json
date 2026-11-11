@@ -10,7 +10,7 @@
   "5": {"pattern": false, "colors": ["3e9a4a", "d6b02a", "c0392b"], "blink_low": true,  "frame": true,  "gradient": true,  "slant": 2, "trail": true}
  },
  "blink_hz": 2.0,
- "trail_color": "f2e3c2",
+ "trail_color": "e8a39a",
  "trail_delay": 0.35,
  "trail_time": 0.5
 }
