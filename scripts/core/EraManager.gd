@@ -128,6 +128,24 @@ func art_path_from(rel: String, start: int) -> String:
 			return path
 	return ""
 
+## Era IV render path (design plan 331-333): from Panorama on, battles stand on the 2.5D stage.
+const STAGE_25D_FROM: int = Era.PANORAMA
+const STAGE_PATH: String = "res://data/era4_stage.json"
+var _stage_cfg: Dictionary = {}
+
+func uses_stage_25d() -> bool:
+	return active_era() >= STAGE_25D_FROM
+
+## data/era4_stage.json, loaded once.
+func stage_config() -> Dictionary:
+	if _stage_cfg.is_empty():
+		var f: FileAccess = FileAccess.open(STAGE_PATH, FileAccess.READ)
+		if f != null:
+			var d: Variant = JSON.parse_string(f.get_as_text())
+			if d is Dictionary:
+				_stage_cfg = d
+	return _stage_cfg
+
 func to_dict() -> Dictionary:
 	return {"unlocked_era": unlocked_era, "retro_filter": retro_filter}
 
