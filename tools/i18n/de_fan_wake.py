@@ -25,6 +25,9 @@ T = {
 "The Undertaker: No fire near the coffin, please.": "Der Bestatter: Bitte kein Feuer in der Nähe des Sargs.",
 "The Heir smiles at the will. Bright future!": "Der Erbe lächelt das Testament an. Strahlende Zukunft!",
 "The Heir yawns. Get on with the reading of the will.": "Der Erbe gähnt. Weiter mit der Testamentsverlesung.",
+"The Widow": "Die Witwe",
+"The Undertaker": "Der Bestatter",
+"The Heir": "Der Erbe",
 "Cousin Edda": "Cousine Edda",
 "A hired mourner": "Ein bezahlter Trauergast",
 }
