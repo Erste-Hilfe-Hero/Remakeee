@@ -259,5 +259,137 @@
   "win_flags": [
    "kestra_root_tag"
   ]
+ },
+ "ambush_ferry": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 11
+   },
+   {
+    "species": "Mirkmole",
+    "level": 12
+   }
+  ],
+  "ai": 1,
+  "money": 400,
+  "lose": "clans/ambush_lose"
+ },
+ "ambush_mill": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Zephlet",
+    "level": 10
+   },
+   {
+    "species": "Puddlet",
+    "level": 11
+   }
+  ],
+  "ai": 1,
+  "money": 300,
+  "lose": "clans/ambush_lose"
+ },
+ "ambush_woadfen": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Duskdigger",
+    "level": 20
+   },
+   {
+    "species": "Shalebat",
+    "level": 20
+   },
+   {
+    "species": "Riptail",
+    "level": 21
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "clans/ambush_lose"
+ },
+ "ambush_reeds": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Kelpup",
+    "level": 19
+   },
+   {
+    "species": "Zephlet",
+    "level": 20
+   }
+  ],
+  "ai": 2,
+  "money": 700,
+  "lose": "clans/ambush_lose"
+ },
+ "ambush_heider": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Glimmerax",
+    "level": 20
+   },
+   {
+    "species": "Shalebat",
+    "level": 21
+   }
+  ],
+  "ai": 2,
+  "money": 700,
+  "lose": "clans/ambush_lose"
+ },
+ "ambush_gift": {
+  "trainer": "Fevered Show Spirling",
+  "team": [
+   {
+    "species": "Tempestrel",
+    "level": 22
+   }
+  ],
+  "ai": 2,
+  "money": 0,
+  "lose": "clans/ambush_lose"
+ },
+ "ambush_hall": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Obsidroth",
+    "level": 31
+   },
+   {
+    "species": "Smoldrake",
+    "level": 30
+   },
+   {
+    "species": "Duskdigger",
+    "level": 31
+   }
+  ],
+  "ai": 2,
+  "money": 1500,
+  "lose": "clans/ambush_lose"
+ },
+ "ambush_basalt": {
+  "trainer": "Ruskweber Hand",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 30
+   },
+   {
+    "species": "Shalebat",
+    "level": 30
+   }
+  ],
+  "ai": 2,
+  "money": 1200,
+  "lose": "clans/ambush_lose"
  }
 }

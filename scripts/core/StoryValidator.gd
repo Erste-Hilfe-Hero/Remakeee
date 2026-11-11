@@ -32,6 +32,7 @@ static func validate() -> PackedStringArray:
 			if f.ends_with(".json"):
 				_check_scene(f.get_basename(), errors)
 	_check_placements(errors)
+	errors.append_array(Trust.validate())
 	for id: Variant in StoryBattles.data():
 		if str(id).begins_with("_"):
 			continue

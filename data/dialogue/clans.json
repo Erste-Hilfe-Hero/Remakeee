@@ -1,0 +1,943 @@
+{
+ "_comment": "Clan intrigue (docs/STORY.md 'Clans and trust'): Haus Marrovel, the Ruskwebers and the strangers from the map's edge. Favors and betrayals live in data/clans.json; ledger_* entries are the Ledger pages (first line = title).",
+ "wren": {
+  "lines": [
+   "Wren: Welcome to the Crooked Kettle. Rooms by the night, secrets by the hour.",
+   "Wren: Two clans eat in my dining room. Haus Marrovel by the window, the Ruskwebers by the door.",
+   "Wren: Marrovel keeps the old Rift pacts. The Ruskwebers keep everyone who works the mines.",
+   "Wren: My advice? Trust nobody who pays on time. That's a joke. Mostly."
+  ],
+  "after_flag": [
+   {
+    "flag": "clan_b1",
+    "lines": [
+     "Wren: Ilo Vash sold your blank battle record to the Ruskwebers.",
+     "Wren: Then he sold them a second copy. He calls it customer care."
+    ]
+   },
+   {
+    "flag": "clan_b2",
+    "lines": [
+     "Wren: A Ruskweber came asking for you by name. With a letter in Fenrick's hand.",
+     "Wren: I told him you'd died. He tipped me. Lovely man."
+    ]
+   },
+   {
+    "flag": "corvane_arrived",
+    "lines": [
+     "Wren: Corvane, is it? Write to me. And never sign your letters."
+    ]
+   }
+  ]
+ },
+ "pip": {
+  "lines": [
+   "Pip: You're the map kid. Good. Maps don't gossip.",
+   "Pip: Last night I fought a Ruskweber Spirling at the Rift edge. Clan duels are banned.",
+   "Pip: It lost. Then it went silent, like the Hush took it, and walked into the Rift.",
+   "Pip: Its breeder ran in after it. Neither came out. Help me keep this quiet?"
+  ],
+  "if": {
+   "not_flag": "c1_pip_choice"
+  },
+  "else": "pip_after",
+  "flag": "c1_pip_choice",
+  "choices": [
+   {
+    "text": "I'll cover it up",
+    "flag": "c1_coverup",
+    "action": "ledger ash; trust pip 15; trust vash 0 10; trust lipka 0 10"
+   },
+   {
+    "text": "Tell the Wardens",
+    "flag": "c1_reported",
+    "action": "trust pip -20 10; trust fenrick -10; trust elma -15"
+   }
+  ]
+ },
+ "pip_after": {
+  "lines": [
+   "Pip: Someone slipped a note under my door that night. 'Duel at the Rift edge. Win.' No name."
+  ],
+  "after_flag": [
+   {
+    "flag": "clan_b2",
+    "lines": [
+     "Pip: Grandfather smiles at me more lately. I don't like it."
+    ]
+   }
+  ]
+ },
+ "ledger_ash": {
+  "lines": [
+   "Ash in the brooding oven",
+   "You burned the silent Spirling's things in a cold breeding oven, to hide Pip's duel.",
+   "The oven belongs to Ilo Vash's brother-in-law. Somebody swept up the ash and weighed it."
+  ]
+ },
+ "marlo": {
+  "lines": [
+   "Marlo: Marlo, Spirling doctor. I mend legs, wings and the odd broken heart.",
+   "Marlo: What can I do for you?"
+  ],
+  "choices": [
+   {
+    "text": "A check-up",
+    "action": "heal"
+   },
+   {
+    "text": "Be my alibi?",
+    "if": {
+     "flag": "c1_coverup"
+    },
+    "next": "marlo_alibi"
+   },
+   {
+    "text": "Nothing"
+   }
+  ]
+ },
+ "marlo_alibi": {
+  "lines": [
+   "Marlo: Again? Fine. You were here all night, holding a Puddlet's flipper.",
+   "Marlo: Every lie I tell for you costs something. I just don't know what yet."
+  ],
+  "action": "trust marlo -15"
+ },
+ "vash": {
+  "lines": [
+   "Vash: Warden Ilo Vash, Clan Duels Office. Complaints are taken at noon.",
+   "Vash: The office closes at noon."
+  ],
+  "next": "vash_offer"
+ },
+ "vash_offer": {
+  "lines": [
+   "Vash: A blank battle record for Pip Kael's little evening? 300 coins.",
+   "Vash: Paperwork is a craft. Crafts cost money."
+  ],
+  "if": {
+   "flag": "c1_coverup",
+   "not_flag": "favor_vash_record"
+  },
+  "else": "vash_reported",
+  "choices": [
+   {
+    "text": "Pay 300 coins",
+    "action": "favor vash_record"
+   },
+   {
+    "text": "Not today"
+   }
+  ]
+ },
+ "vash_reported": {
+  "lines": [
+   "Vash: You reported a clan duel. To me. How refreshing.",
+   "Vash: I'll file it under 'sold'. Both clans pay well for honesty."
+  ],
+  "if": {
+   "flag": "c1_reported",
+   "not_flag": "clan_b1"
+  },
+  "else": "vash_after",
+  "action": "set_flag clan_b1; ledger vash_record"
+ },
+ "vash_after": {
+  "lines": [
+   "Vash: Your files are safe with me. Well. Your files are with me."
+  ]
+ },
+ "vash_paid": {
+  "lines": [
+   "Vash: Pleasure. The record is blank. Spotless. Like my conscience.",
+   "Vash: The firewood for the oven is billed separately."
+  ]
+ },
+ "vash_kept": {
+  "lines": [
+   "Vash: Pleasure. I sold a copy anyway, of course. But I left it blank.",
+   "Vash: Professional courtesy. Don't get used to it."
+  ]
+ },
+ "ledger_vash_record": {
+  "lines": [
+   "The blank battle record",
+   "Ilo Vash wrote nothing about Pip's duel, for money.",
+   "Then he sold the nothing to the Ruskwebers. Twice."
+  ]
+ },
+ "fenrick": {
+  "lines": [
+   "Fenrick: Fenrick Kael, head of Haus Marrovel. You may admire the portrait later.",
+   "Fenrick: It shows my Spirling. I'm in the corner. Modesty.",
+   "Fenrick: Take this sealed letter to the ferry post. Do not read it. Reading is for clerks."
+  ],
+  "if": {
+   "flag": "clan_b1",
+   "not_flag": "clan_b2"
+  },
+  "else": "fenrick_idle",
+  "choices": [
+   {
+    "text": "Deliver it",
+    "action": "betrayal fenrick_trail"
+   },
+   {
+    "text": "Read it first",
+    "next": "fenrick_read"
+   }
+  ]
+ },
+ "fenrick_read": {
+  "lines": [
+   "You break the seal. Fenrick's hand: 'The one who hid the duel is the map kid.'",
+   "He meant to hand you to the Ruskwebers. Postage paid."
+  ],
+  "action": "set_flag c1_read_letter; betrayal fenrick_trail"
+ },
+ "fenrick_caught": {
+  "lines": [
+   "You burn the letter. Somewhere a Ruskweber waits for post that never comes.",
+   "Fenrick: Lost in the mail? Pity. The mail is so unreliable these days."
+  ]
+ },
+ "fenrick_struck": {
+  "lines": [
+   "At the ferry post two Ruskweber hands are waiting. They know your face.",
+   "One of them grins. 'Fenrick says hello. He also says goodbye.'"
+  ]
+ },
+ "fenrick_idle": {
+  "lines": [
+   "Fenrick: Haus Marrovel never forgets a favour. We write them down. In ink."
+  ]
+ },
+ "ledger_fenrick_letter": {
+  "lines": [
+   "Fenrick's sealed letter",
+   "Fenrick named you as the one who hid Pip's duel, and posted it to the Ruskwebers.",
+   "A scapegoat is cheaper than a son."
+  ]
+ },
+ "aldra": {
+  "lines": [
+   "Aldra: You're staring. Yes, I came through the Wide Rift. Eleven of us did.",
+   "Aldra: The valley calls us the strangers from the map's edge. We call that rude.",
+   "Aldra: The clans hire us because nobody here owes us anything. Yet."
+  ],
+  "next": "aldra_warn"
+ },
+ "aldra_warn": {
+  "lines": [
+   "Aldra: Fenrick wants you to carry a letter? Read it first. Clans seal the true ones."
+  ],
+  "if": {
+   "flag": "clan_b1",
+   "not_flag": "clan_b2"
+  },
+  "flag": "c1_aldra_warned"
+ },
+ "lipka": {
+  "lines": [
+   "Lipka: Lipka, from beyond the edge. I sell tips. True ones cost extra.",
+   "Lipka: Free sample: something rare sleeps behind the old mill tonight. Believe me?"
+  ],
+  "if": {
+   "not_flag": "favor_lipka_tip"
+  },
+  "else": "lipka_after",
+  "choices": [
+   {
+    "text": "I believe you",
+    "action": "favor lipka_tip"
+   },
+   {
+    "text": "No thanks"
+   }
+  ]
+ },
+ "lipka_after": {
+  "lines": [
+   "Lipka: Tips are like weather. Mine are like weather in the mountains."
+  ]
+ },
+ "lipka_betray": {
+  "lines": [
+   "Behind the old mill nothing rare is sleeping. Two Ruskweber hands are wide awake.",
+   "One of them waves a paper. 'Lipka sends her regards. And her invoice.'"
+  ]
+ },
+ "lipka_kept": {
+  "lines": [
+   "Behind the old mill: nothing. A tip can be honest and still be wrong."
+  ]
+ },
+ "lipka_reward": {
+  "lines": [
+   "Behind the old mill a small crate is waiting, with your name chalked on it."
+  ]
+ },
+ "kenan": {
+  "lines": [
+   "Kenan: Kenan. Edge-born, Rift runner. The clans pay me to scout the Cinder Rift.",
+   "Kenan: My Spirling is hurt. Lend me your lead one for a single run? Back by dusk."
+  ],
+  "if": {
+   "not_flag": "favor_kenan_lend"
+  },
+  "else": "kenan_after",
+  "choices": [
+   {
+    "text": "Lend my lead",
+    "action": "favor kenan_lend"
+   },
+   {
+    "text": "No"
+   }
+  ]
+ },
+ "kenan_after": {
+  "lines": [
+   "Kenan: Rift runs are hard on keepsakes. Ask anyone."
+  ]
+ },
+ "kenan_betray": {
+  "lines": [
+   "Kenan comes back at dusk. Your Spirling looks fine. Lighter, somehow.",
+   "Kenan: The Rift was rough. Things fell off. Small things. Shiny things."
+  ]
+ },
+ "kenan_kept": {
+  "lines": [
+   "Kenan brings your Spirling back at dusk, tired and proud. Nothing is missing."
+  ]
+ },
+ "kenan_reward": {
+  "lines": [
+   "Kenan brings your Spirling back with a little gift from the Rift edge."
+  ]
+ },
+ "nail": {
+  "lines": [
+   "Nail: Nail. Edge-born. I'm opening a tea stall for the Rift workers.",
+   "Nail: I'm 200 coins short. I pay back with interest. Don't ask around. They'd lie."
+  ],
+  "if": {
+   "not_flag": "favor_nail_loan"
+  },
+  "else": "nail_after",
+  "choices": [
+   {
+    "text": "Lend 200 coins",
+    "action": "favor nail_loan"
+   },
+   {
+    "text": "No"
+   }
+  ]
+ },
+ "nail_after": {
+  "lines": [
+   "Nail: The tea is terrible. The Rift workers love it. Nobody understands business."
+  ]
+ },
+ "nail_reward": {
+  "lines": [
+   "Nail: Your coins, plus interest. Don't look so shocked. Some of us are honest."
+  ]
+ },
+ "nail_kept": {
+  "lines": [
+   "Nail: Your coins back. The interest went into the tea. You can taste it."
+  ]
+ },
+ "nail_betray": {
+  "lines": [
+   "The tea stall is gone. So is Nail. A sign says 'Closed for honesty'."
+  ]
+ },
+ "grell": {
+  "lines": [
+   "Mother Grell: Mother Grell. I lead the Ruskwebers, since nobody else would.",
+   "Mother Grell: A Marrovel brat sent my best breeder into a Rift. I wear black now. It suits me.",
+   "Mother Grell: Carry a warning to my apprentice in the Woadfen? You have an honest face. For now."
+  ],
+  "if": {
+   "not_flag": "c2_grell_met"
+  },
+  "else": "grell_after",
+  "flag": "c2_grell_met",
+  "choices": [
+   {
+    "text": "I'll carry it",
+    "flag": "c2_post",
+    "action": "ledger mercy_post; trust grell 0 10"
+   },
+   {
+    "text": "Not my business",
+    "action": "trust grell -10"
+   }
+  ]
+ },
+ "grell_after": {
+  "lines": [
+   "Mother Grell: Grief is a full-time job. I hire help."
+  ],
+  "after_flag": [
+   {
+    "flag": "clan_b3",
+    "if": {
+     "flag": "c2_post"
+    },
+    "lines": [
+     "Mother Grell: My apprentice left his hiding place after your warning. Marrovel blades were waiting.",
+     "Mother Grell: Strange how that works. I'll remember who carried it."
+    ]
+   }
+  ]
+ },
+ "ledger_mercy_post": {
+  "lines": [
+   "The mercy post",
+   "You carried Mother Grell's warning to her apprentice in the Woadfen.",
+   "The warning sent him out of hiding. Whoever waited there knew he would come."
+  ]
+ },
+ "sable": {
+  "lines": [
+   "Sable: Sable Ruskweber. Grell's nephew. The family's good side. I have two.",
+   "Sable: Friends tell each other things. So, friend: the Woadfen road is watched."
+  ],
+  "next": "sable_tip"
+ },
+ "sable_tip": {
+  "lines": [
+   "Sable: Take the reed path instead. Trust me?"
+  ],
+  "if": {
+   "not_flag": "favor_sable_tip"
+  },
+  "choices": [
+   {
+    "text": "I trust you",
+    "action": "favor sable_tip"
+   },
+   {
+    "text": "Not yet"
+   }
+  ]
+ },
+ "sable_reward": {
+  "lines": [
+   "The reed path is quiet. Under a stone you find a pouch tied with Ruskweber thread.",
+   "Sable was right. That should worry you more than it does."
+  ]
+ },
+ "sable_kept": {
+  "lines": [
+   "The reed path is quiet. Sable was right. That should worry you."
+  ]
+ },
+ "sable_betray": {
+  "lines": [
+   "The reed path is very quiet. Then it is full of Ruskweber hands."
+  ]
+ },
+ "farida": {
+  "lines": [
+   "Farida: Farida. Edge-born. I lodged at Wren's place in Veydal all last year.",
+   "Farida: Lovely woman. Never asks where her guests go at night.",
+   "Farida: I'm 400 coins short for the ferry home. Help a fellow traveller?"
+  ],
+  "if": {
+   "not_flag": "favor_farida_loan"
+  },
+  "else": "farida_after",
+  "choices": [
+   {
+    "text": "Lend 400 coins",
+    "action": "favor farida_loan"
+   },
+   {
+    "text": "No"
+   }
+  ]
+ },
+ "farida_after": {
+  "lines": [
+   "Farida: Home is wherever the letters get paid for."
+  ]
+ },
+ "farida_betray": {
+  "lines": [
+   "The ferry leaves without Farida. She was never going home. Your coins went to Mother Grell's post."
+  ]
+ },
+ "farida_kept": {
+  "lines": [
+   "Farida pays you back the next morning, to the coin. She leaves no address."
+  ]
+ },
+ "amir": {
+  "lines": [
+   "Amir: Amir. Edge-born. I know eggs. Smuggled ones, mostly.",
+   "Amir: If Mother Grell sends anyone a gift, have it looked at. Eggs travel in odd places."
+  ],
+  "flag": "c2_gift_warned",
+  "next": "amir_spy"
+ },
+ "amir_spy": {
+  "lines": [
+   "Amir: And Farida, by the crates? She writes to Mother Grell every night.",
+   "Amir: She paid Wren on time for a whole year. That should have been the clue."
+  ],
+  "if": {
+   "flag": "c2_grell_met"
+  },
+  "action": "ledger guest_spy; trust farida -10"
+ },
+ "ledger_guest_spy": {
+  "lines": [
+   "The spy in the guest book",
+   "Farida lived at Wren's guest house for a year and reported every guest to Mother Grell.",
+   "She always paid on time."
+  ]
+ },
+ "brannoc": {
+  "lines": [
+   "Brannoc: Brannoc Kael. Former Rift gladiator. Current disappointment.",
+   "Brannoc: Father wants the Woadfen routes drawn up. You're the map kid. Draw them for me?"
+  ],
+  "if": {
+   "not_flag": "clan_b3"
+  },
+  "else": "brannoc_after",
+  "choices": [
+   {
+    "text": "Draw the routes",
+    "action": "betrayal brannoc_routes"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "brannoc_after": {
+  "lines": [
+   "Brannoc: I wanted out. Routes are a way out. Nobody said whose."
+  ]
+ },
+ "brannoc_caught": {
+  "lines": [
+   "You draw the routes one bend wrong, as Elma said. The Ruskwebers who bought them end up in a bog.",
+   "Brannoc: The bog? That's... a very precise mistake."
+  ]
+ },
+ "brannoc_struck": {
+  "lines": [
+   "On the Woadfen road the Ruskwebers know every bend you drew. Brannoc sold your map before the ink dried."
+  ]
+ },
+ "ledger_routes": {
+  "lines": [
+   "The Woadfen routes",
+   "You drew the Woadfen routes for Brannoc Kael. He passed them to the Ruskwebers.",
+   "He wanted money of his own, and a way out of the family."
+  ]
+ },
+ "elma": {
+  "lines": [
+   "Elma: Elma. Edge-born. I cook for the Kaels. Nobody else will, since the last feast.",
+   "Elma: Brannoc dined with a Ruskweber trader. The soup was excellent. Except for the guest.",
+   "Elma: Ottilie seasoned it herself. Brannoc had to watch. He hasn't been family since."
+  ],
+  "action": "ledger feast",
+  "next": "elma_warn"
+ },
+ "elma_warn": {
+  "lines": [
+   "Elma: If Brannoc asks you for routes, draw them one bend wrong. He sells them on."
+  ],
+  "if": {
+   "trust_min": {
+    "elma": 40
+   }
+  },
+  "flag": "c2_elma_warned"
+ },
+ "ledger_feast": {
+  "lines": [
+   "The last feast",
+   "Brannoc bought Rift eggs behind the clan's back. Ottilie knew from the first egg.",
+   "The trader was the main course of the lesson, if not of the meal."
+  ]
+ },
+ "heider": {
+  "lines": [
+   "Heider: Heider. Edge-born. I sell news to both clans. Same price. I'm fair.",
+   "Heider: Fresh one, free: Ottilie means to sacrifice one of her own Wardens. Believe it?"
+  ],
+  "if": {
+   "not_flag": "favor_heider_tip"
+  },
+  "else": "heider_after",
+  "choices": [
+   {
+    "text": "I believe it",
+    "action": "favor heider_tip"
+   },
+   {
+    "text": "Sounds made up"
+   }
+  ]
+ },
+ "heider_after": {
+  "lines": [
+   "Heider: News goes stale fast. People don't. They just go missing."
+  ]
+ },
+ "heider_betray": {
+  "lines": [
+   "The tip was true. Heider also sold the Ruskwebers the news that you believed it."
+  ]
+ },
+ "heider_kept": {
+  "lines": [
+   "The tip was true. For once, Heider sold it to only one side."
+  ]
+ },
+ "morrow": {
+  "lines": [
+   "Morrow: Warden Captain Dace Morrow. I investigate Haus Marrovel. Thoroughly.",
+   "Morrow: I also take Ottilie's coins. And Fenrick's. I keep two tills."
+  ]
+ },
+ "ottilie": {
+  "lines": [
+   "Ottilie: Ottilie Kael. The orphans call me Aunt. The Wardens call me Ma'am.",
+   "Ottilie: Fenrick calls me later. I'm always there later."
+  ],
+  "if": {
+   "not_flag": "clan_b3"
+  },
+  "else": "ottilie_gift"
+ },
+ "ottilie_gift": {
+  "lines": [
+   "Ottilie: Mother Grell sent us a show Spirling as a peace gift. Lovely plumage.",
+   "Ottilie: And Captain Morrow rides out to the Root Rift on patrol tonight. Alone. Fenrick insisted."
+  ],
+  "if": {
+   "not_flag": "clan_b4"
+  },
+  "else": "ottilie_after",
+  "action": "betrayal grell_gift; betrayal ottilie_morrow"
+ },
+ "ottilie_after": {
+  "lines": [
+   "Ottilie: The war? I ordered it, dear. Fenrick needed a war to look small in.",
+   "Ottilie: Write that in your little book. I keep a bigger one."
+  ],
+  "action": "ledger war"
+ },
+ "gift_caught": {
+  "lines": [
+   "Amir checks the show Spirling's feathers and finds a brood capsule full of spore fever.",
+   "Amir: Never look a gift Spirling in the beak? Always look. Twice."
+  ]
+ },
+ "gift_struck": {
+  "lines": [
+   "That night the Marrovel stables burn with fever. A sick show Spirling breaks loose, wild with it."
+  ]
+ },
+ "ledger_gift": {
+  "lines": [
+   "The gift of honour",
+   "Mother Grell's peace gift carried a brood capsule of spore fever into the Marrovel stables."
+  ]
+ },
+ "morrow_caught": {
+  "lines": [
+   "You catch Morrow at the gate and tell him what Heider sold you. He leaves Corvane that night, with both tills.",
+   "Ottilie: Someone talked. How tiresome. I'll find out who. I always do."
+  ]
+ },
+ "morrow_struck": {
+  "lines": [
+   "News from the Woadfen: Captain Morrow had an accident in the Root Rift. He was a thorough man.",
+   "Ottilie: Fenrick's best Warden, gone. Fenrick will feel so very alone."
+  ]
+ },
+ "ledger_morrow": {
+  "lines": [
+   "The Warden with two tills",
+   "Ottilie sent Captain Morrow, Fenrick's man, alone to the Root Rift to weaken her husband."
+  ]
+ },
+ "ledger_war": {
+  "lines": [
+   "The ordered war",
+   "The clan war was no accident. Ottilie ordered it, to bring down her own husband.",
+   "Someone sent Pip to that duel. The ink was hers."
+  ]
+ },
+ "vash_2": {
+  "lines": [
+   "Vash: Chief Warden Vash now. Both clans backed me. Each thinks I'm theirs.",
+   "Vash: New rule: Rift duels need a permit. Permits cost money. I love rules."
+  ]
+ },
+ "sable_3": {
+  "lines": [
+   "Sable: Old friend! There's a card hall under the basalt. Come play. Friends only.",
+   "Sable: Bring your strongest Spirling. Card halls get rowdy."
+  ],
+  "if": {
+   "not_flag": "clan_b5"
+  },
+  "else": "sable_after",
+  "choices": [
+   {
+    "text": "I'll come",
+    "action": "betrayal sable_sale"
+   },
+   {
+    "text": "Later"
+   }
+  ]
+ },
+ "sable_after": {
+  "lines": [
+   "Sable: Nothing personal. It was a business decision. You were the business."
+  ]
+ },
+ "sable_struck": {
+  "lines": [
+   "Under the basalt there are no cards. Only Marrovel's enemies, and a price on your head.",
+   "Sable: I said friends only. They're my friends."
+  ]
+ },
+ "sable_caught": {
+  "lines": [
+   "You come in through the coal chute, behind the ambush. The hands turn to Sable.",
+   "Sable: Ah. You read the room. I hate it when people read."
+  ]
+ },
+ "ledger_sale": {
+  "lines": [
+   "The card hall",
+   "Sable Ruskweber invited you to a card hall as a friend and sold you to the highest bidder."
+  ]
+ },
+ "mirza": {
+  "lines": [
+   "Mirza: Mirza. Edge-born. I play cards with Sable. I lose on purpose. It pays.",
+   "Mirza: Stake me 300 coins tonight? I win, you win."
+  ],
+  "if": {
+   "not_flag": "favor_mirza_stake"
+  },
+  "else": "mirza_after",
+  "choices": [
+   {
+    "text": "Stake 300 coins",
+    "action": "favor mirza_stake"
+   },
+   {
+    "text": "No"
+   }
+  ]
+ },
+ "mirza_after": {
+  "lines": [
+   "Mirza: Cards are honest. It's the players you have to watch."
+  ]
+ },
+ "mirza_reward": {
+  "lines": [
+   "Mirza: We won. Your share, plus mine, minus nothing. Don't tell anyone I'm generous.",
+   "Mirza: And if Sable invites you to his card hall: there are no cards. Use the coal chute."
+  ]
+ },
+ "mirza_kept": {
+  "lines": [
+   "Mirza: We broke even. Your stake, back. Now a free tip.",
+   "Mirza: If Sable invites you to his card hall: there are no cards. Use the coal chute."
+  ]
+ },
+ "mirza_betray": {
+  "lines": [
+   "Mirza lost your stake. On purpose, he says. It paid. Just not you."
+  ]
+ },
+ "leith": {
+  "lines": [
+   "Leith: Leith. Edge-born. I run errands for Sable.",
+   "Leith: Tip for free: the basalt shortcut to the Kiln Rift is safe now. Believe me?"
+  ],
+  "if": {
+   "not_flag": "favor_leith_tip"
+  },
+  "else": "leith_after",
+  "choices": [
+   {
+    "text": "I believe you",
+    "action": "favor leith_tip"
+   },
+   {
+    "text": "Who sent you?",
+    "next": "leith_press"
+   }
+  ]
+ },
+ "leith_press": {
+  "lines": [
+   "Leith: ...Sable did. He's selling you at his card hall. I never said that."
+  ],
+  "if": {
+   "trust_min": {
+    "leith": 30
+   }
+  },
+  "else": "leith_shrug",
+  "flag": "c3_leith_turned"
+ },
+ "leith_shrug": {
+  "lines": [
+   "Leith: Nobody sent me. I just like you. Everybody likes you."
+  ]
+ },
+ "leith_after": {
+  "lines": [
+   "Leith: Errands, errands. Somebody has to carry the bad news."
+  ]
+ },
+ "leith_betray": {
+  "lines": [
+   "The basalt shortcut is not safe. It is full of people Sable owes favours."
+  ]
+ },
+ "leith_kept": {
+  "lines": [
+   "The basalt shortcut really is safe. Leith looks almost as surprised as you."
+  ]
+ },
+ "marlo_3": {
+  "lines": [
+   "Marlo: Ashmere air is terrible for wings. Business is booming."
+  ],
+  "if": {
+   "not_flag": "marlo_gone"
+  },
+  "next": "marlo_fate"
+ },
+ "marlo_fate": {
+  "lines": [
+   "Marlo: Clan people asked me where you were the night of Pip's duel.",
+   "Marlo: I said: with me. They didn't like that answer. I may need to lie low."
+  ],
+  "if": {
+   "flag": "clan_b5",
+   "not_flag": "clan_b6"
+  },
+  "action": "betrayal marlo_fate"
+ },
+ "marlo_lives": {
+  "lines": [
+   "That night masked hands come for Marlo. He is busy setting a Shalebat's wing.",
+   "Marlo: Rude of them to wait. I made them hold the bandage. They left with clean hands."
+  ]
+ },
+ "marlo_gone": {
+  "lines": [
+   "In the morning Marlo's clinic stands open. His bag sits by the spring, still packed.",
+   "Someone paid for the lies he told for you. The Ledger doesn't say who."
+  ]
+ },
+ "ledger_marlo": {
+  "lines": [
+   "The alibi",
+   "Marlo swore you were with him the night of Pip's duel. Every time you asked.",
+   "An alibi is a debt that the alibi pays."
+  ]
+ },
+ "lejla": {
+  "lines": [
+   "Lejla: Lejla. Edge-born. I copy documents. Sometimes the copies are better.",
+   "Lejla: Pip asked me to read the old Kael breeding registers. Look at the bond seals.",
+   "Lejla: Pip's seal matches Fenrick's line. Not Brannoc's. Fenrick is her father.",
+   "Lejla: And Leith? He talks to people he trusts. I told him you're dull. He trusts dull."
+  ],
+  "flag": "c3_register",
+  "once": true,
+  "action": "ledger register; trust leith 15"
+ },
+ "ledger_register": {
+  "lines": [
+   "The seal in the breeding register",
+   "Pip's bond seal matches Fenrick's line, not Brannoc's. Fenrick is her father."
+  ]
+ },
+ "pip_3": {
+  "lines": [
+   "Pip: Lejla is reading the old registers for me. Don't tell anyone. Especially family."
+  ],
+  "after_flag": [
+   {
+    "flag": "c3_register",
+    "lines": [
+     "Pip: I thought I had his eyes. They were someone else's.",
+     "Pip: And the note that sent me to that duel? Same ink as Grandmother's letters."
+    ]
+   }
+  ]
+ },
+ "brannoc_3": {
+  "lines": [
+   "Brannoc: Ashmere. Nobody here knows my name. I could get used to that."
+  ],
+  "after_flag": [
+   {
+    "flag": "c3_register",
+    "lines": [
+     "Brannoc: So Pip is Father's. And I was the cover story. I'm done with Marrovel."
+    ]
+   }
+  ]
+ },
+ "grell_3": {
+  "lines": [
+   "Mother Grell: You again. Alive. Sable must be losing his touch."
+  ],
+  "next": "grell_breeder"
+ },
+ "grell_breeder": {
+  "lines": [
+   "Mother Grell: My breeder? He's fine. Under the station, counting eggs.",
+   "Mother Grell: Grief was cheaper than a war. And it paid much better."
+  ],
+  "if": {
+   "flag": "clan_b5"
+  },
+  "action": "ledger breeder"
+ },
+ "ledger_breeder": {
+  "lines": [
+   "The breeder who lived",
+   "Mother Grell's breeder never died in the Rift. She hid him and staged her grief."
+  ]
+ },
+ "fenrick_3": {
+  "lines": [
+   "Fenrick: My bond seal is fading. Some nights my Spirling forgets whose side it is on.",
+   "Fenrick: Some nights so do I. Ottilie says it's my age. Ottilie says many things."
+  ]
+ },
+ "ambush_lose": {
+  "lines": [
+   "The hands take what they came for and leave you by the road. Nothing personal."
+  ]
+ }
+}
