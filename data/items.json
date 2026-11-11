@@ -980,5 +980,13 @@
   "battle": false,
   "shop": true,
   "rings": 10
+ },
+ {
+  "id": "rg_ring_crown",
+  "name": "Ring Crown",
+  "description": "A Spirling jumps to Ring 50 at once. Never above the Ring cap.",
+  "battle": false,
+  "shop": true,
+  "rings_to": 50
  }
 ]
