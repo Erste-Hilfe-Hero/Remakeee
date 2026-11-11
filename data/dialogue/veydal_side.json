@@ -1,0 +1,807 @@
+{
+ "vantry": {
+  "if": {
+   "not_flag": "vault_done"
+  },
+  "lines": [
+   "Vantry: Psst. Wayfarer. You look honest. Shame, but I'll work with it.",
+   "Vantry: The Quiet Hands broke into my cellar and nicked my stock. Hush jars. Voices in bottles. Very legal. Mostly.",
+   "Vantry: Clear them out and we split the take. Sixty-forty. Me sixty. It's my cellar, sweetheart."
+  ],
+  "flag": "vault_asked",
+  "action": "quest_stage vault 0",
+  "else": "vantry_gone",
+  "after_flag": [
+   {
+    "flag": "vault_asked",
+    "lines": [
+     "Vantry: Still here? The door's right there. Mind the stairs, they bite."
+    ]
+   }
+  ]
+ },
+ "vantry_gone": {
+  "lines": [
+   "The pawnshop is boarded up. A note: 'Gone fishing. Forever. Don't look for me. - V.'"
+  ]
+ },
+ "goon_a_intro": {
+  "lines": [
+   "Snib: Oi! Shop's shut. Permanently. Like your mouth's about to be."
+  ]
+ },
+ "goon_a_defeat": {
+  "lines": [
+   "Snib: Ow. Fine. The boss is downstairs. She bites harder than the stairs."
+  ]
+ },
+ "goon_a": {
+  "lines": [
+   "Snib: I'm on my break. Being beaten counts as a break."
+  ]
+ },
+ "goon_b_intro": {
+  "lines": [
+   "Tull: Vantry sent you? Course he did. He sends someone every week."
+  ]
+ },
+ "goon_b_defeat": {
+  "lines": [
+   "Tull: You're better than last week's. Last week's cried."
+  ]
+ },
+ "goon_b": {
+  "lines": [
+   "Tull: Ask yourself why a pawnbroker has a key to his own robbers' den."
+  ]
+ },
+ "goon_c_intro": {
+  "lines": [
+   "Mopsy: This is the counting room. You're not on the count."
+  ]
+ },
+ "goon_c_defeat": {
+  "lines": [
+   "Mopsy: Recount! Recount!"
+  ],
+  "action": "quest_stage vault 1"
+ },
+ "goon_c": {
+  "lines": [
+   "Mopsy: Every jar down here has a voice in it. Some of them still swear."
+  ]
+ },
+ "goon_d_intro": {
+  "lines": [
+   "Ledge: One more step and I tell Mother. She hates being told things."
+  ]
+ },
+ "goon_d_defeat": {
+  "lines": [
+   "Ledge: Mother's going to hate this."
+  ]
+ },
+ "goon_d": {
+  "lines": [
+   "Ledge: Go on, then. She's through there. I'll be over here, not helping."
+  ]
+ },
+ "goon_e_intro": {
+  "lines": [
+   "Skiv: Last guard before the office. I'm paid double for this door."
+  ]
+ },
+ "goon_e_defeat": {
+  "lines": [
+   "Skiv: Double of nothing. I should read contracts."
+  ]
+ },
+ "goon_e": {
+  "lines": [
+   "Skiv: She knew you were coming. Someone told her. Guess who."
+  ]
+ },
+ "sallow_intro": {
+  "lines": [
+   "Mother Crowle: Vantry's little errand runner. Sit. No? Fine, stand and lose.",
+   "Mother Crowle: This is his cellar, sweetheart. These are his jars. We're his staff.",
+   "Mother Crowle: He sent you down because you're cheaper than a locksmith and easier to blame."
+  ]
+ },
+ "sallow_defeat": {
+  "lines": [
+   "Mother Crowle: Fine. Take the ledger. Read page three.",
+   "Mother Crowle: Your name's on it. He sold you to us for forty coins. Forty! I'd have paid fifty.",
+   "You open the jars. Voices drift up the stairs and out into Thornridge, grumbling."
+  ],
+  "action": "give_item max_tonic 2"
+ },
+ "sallow": {
+  "lines": [
+   "Mother Crowle: Vantry's gone, isn't he? Course he is. Trust no one, sweetheart. Especially me."
+  ]
+ },
+ "jinks_1": {
+  "if": {
+   "not_flag": "beat_story_rival_jinks_1"
+  },
+  "lines": [
+   "Jinks: Oi, lighthouse kid! Jinks Calloway. Remember it, I'll be famous by Tuesday.",
+   "Jinks: Kestra's new pet, yeah? Let's see if you bite."
+  ],
+  "action": "battle rival_jinks_1",
+  "flag": "q_jinks_met"
+ },
+ "jinks_1_defeat": {
+  "lines": [
+   "Jinks: Lucky. Proper lucky. I'll be ahead of you on the next path, watch."
+  ]
+ },
+ "jinks_1_lose": {
+  "lines": [
+   "Jinks: Ha! Go home, the lamp needs dusting."
+  ]
+ },
+ "jinks_2": {
+  "if": {
+   "not_flag": "beat_story_rival_jinks_2"
+  },
+  "lines": [
+   "Jinks: Took your time. I've been up here an hour freezing my mouth off.",
+   "Jinks: Funny thing. Someone pays me to slow you down. Good money. Nothing personal."
+  ],
+  "action": "battle rival_jinks_2"
+ },
+ "jinks_2_defeat": {
+  "lines": [
+   "Jinks: Right. Fine. That's two. Don't tell anyone, I've got a rep."
+  ]
+ },
+ "jinks_2_lose": {
+  "lines": [
+   "Jinks: Told you. Ahead of you. Always."
+  ]
+ },
+ "jinks_3": {
+  "if": {
+   "not_flag": "beat_story_rival_jinks_3"
+  },
+  "lines": [
+   "Jinks: Last round, lighthouse. Win and I tell you who's paying me. Or I lie. Depends how hard you hit."
+  ],
+  "action": "battle rival_jinks_3"
+ },
+ "jinks_3_defeat": {
+  "lines": [
+   "Jinks: Ugh. Deal's a deal.",
+   "Jinks: It's Vantry. The pawnbroker. Pays per day you're late. Says you'll owe him one day and he wants you skint.",
+   "Jinks: Also I sold him your route. And your favourite snack. Sorry. Slow week."
+  ]
+ },
+ "jinks_3_lose": {
+  "lines": [
+   "Jinks: Not today, lighthouse. Today I'm rich."
+  ]
+ },
+ "bounty_b1_defeat": {
+  "lines": [
+   "Gnasher thrashes off into the lake, line and all."
+  ]
+ },
+ "bounty_b1_lose": {
+  "lines": [
+   "The water goes still. Your coins go with it."
+  ]
+ },
+ "bounty_b2_defeat": {
+  "lines": [
+   "Tobin: Take a coat. Take two. Just don't take me to Gisk."
+  ]
+ },
+ "bounty_b2_lose": {
+  "lines": [
+   "Tobin: Nice coat. Mine now."
+  ]
+ },
+ "bounty_b3_defeat": {
+  "lines": [
+   "Granny Reed: It IS tonic. Tonic for frogs."
+  ]
+ },
+ "bounty_b3_lose": {
+  "lines": [
+   "Granny Reed: Have a sip, love. On the house."
+  ]
+ },
+ "bounty_b4_defeat": {
+  "lines": [
+   "Fabbro: My brother posted this? Of course. He wants my half of the shop. He wrote the bounty on my good paper."
+  ]
+ },
+ "bounty_b4_lose": {
+  "lines": [
+   "Fabbro: Tell my brother the shop's still half mine. The worse half."
+  ]
+ },
+ "gisk_p1": {
+  "lines": [
+   "The cheap end of the board. Small fry, small pay."
+  ],
+  "choices": [
+   {
+    "text": "Wanted: Gnasher, a hushed Riptail biting fishing lines",
+    "id": "b1",
+    "if": {
+     "not_flag": "beat_story_bounty_b1"
+    },
+    "action": "battle bounty_b1"
+   },
+   {
+    "text": "Wanted: Two-Coat Tobin, a coat thief",
+    "id": "b2",
+    "if": {
+     "not_flag": "beat_story_bounty_b2"
+    },
+    "action": "battle bounty_b2"
+   },
+   {
+    "text": "Back away from the board.",
+    "id": "no"
+   }
+  ]
+ },
+ "gisk_p2": {
+  "lines": [
+   "The dear end of the board. Big names, bigger teeth."
+  ],
+  "choices": [
+   {
+    "text": "Wanted: Granny Reed, who sells marsh water as tonic",
+    "id": "b3",
+    "if": {
+     "not_flag": "beat_story_bounty_b3"
+    },
+    "action": "battle bounty_b3"
+   },
+   {
+    "text": "Wanted: Fabbro Gisk, the notary's business partner",
+    "id": "b4",
+    "if": {
+     "not_flag": "beat_story_bounty_b4",
+     "flag": [
+      "beat_story_bounty_b1",
+      "beat_story_bounty_b2",
+      "beat_story_bounty_b3"
+     ]
+    },
+    "action": "battle bounty_b4"
+   },
+   {
+    "text": "Back away from the board.",
+    "id": "no"
+   }
+  ]
+ },
+ "gisk": {
+  "lines": [
+   "Gisk: Bounties! Fresh bounties! Every one a villain, every one paid in coin. Terms and conditions apply."
+  ],
+  "flag": "q_board_brindlewick",
+  "choices": [
+   {
+    "text": "Read the cheap notices.",
+    "id": "p1",
+    "next": "gisk_p1"
+   },
+   {
+    "text": "Read the dear notices.",
+    "id": "p2",
+    "next": "gisk_p2"
+   },
+   {
+    "text": "Not today.",
+    "id": "no"
+   }
+  ],
+  "after_flag": [
+   {
+    "flag": "bounty_brindle_done",
+    "lines": [
+     "The board is empty. Someone has drawn a little crown on it."
+    ]
+   }
+  ]
+ },
+ "bounty_b5_defeat": {
+  "lines": [
+   "Soot Mag: I only took the warm bits!"
+  ]
+ },
+ "bounty_b5_lose": {
+  "lines": [
+   "Soot Mag: Now you're the one covered in soot."
+  ]
+ },
+ "bounty_b6_defeat": {
+  "lines": [
+   "The Hush Hound lets out one tiny bark and slinks away."
+  ]
+ },
+ "bounty_b6_lose": {
+  "lines": [
+   "The Hush Hound does not even bark. That's worse."
+  ]
+ },
+ "bounty_b7_defeat": {
+  "lines": [
+   "Rattle Jim: I foresaw this. I foresee everything. Wrongly."
+  ]
+ },
+ "bounty_b7_lose": {
+  "lines": [
+   "Rattle Jim: I foresaw you losing. First time I've been right!"
+  ]
+ },
+ "bounty_b8_defeat": {
+  "lines": [
+   "Brannagh: You read the small print. Nobody reads the small print. Yes, it's me. I posted myself to collect my own reward. Twice."
+  ]
+ },
+ "bounty_b8_lose": {
+  "lines": [
+   "Brannagh: Not a word. I'll pay you from my own reward. Which is your reward. It's complicated."
+  ]
+ },
+ "brannagh_p1": {
+  "lines": [
+   "The cheap end of the board. Small fry, small pay."
+  ],
+  "choices": [
+   {
+    "text": "Wanted: Soot Mag, who steals from the kilns",
+    "id": "b5",
+    "if": {
+     "not_flag": "beat_story_bounty_b5"
+    },
+    "action": "battle bounty_b5"
+   },
+   {
+    "text": "Wanted: The Hush Hound, a silent Kelphound on the ridge",
+    "id": "b6",
+    "if": {
+     "not_flag": "beat_story_bounty_b6"
+    },
+    "action": "battle bounty_b6"
+   },
+   {
+    "text": "Back away from the board.",
+    "id": "no"
+   }
+  ]
+ },
+ "brannagh_p2": {
+  "lines": [
+   "The dear end of the board. Big names, bigger teeth."
+  ],
+  "choices": [
+   {
+    "text": "Wanted: Rattle Jim, a fortune teller who is always wrong",
+    "id": "b7",
+    "if": {
+     "not_flag": "beat_story_bounty_b7"
+    },
+    "action": "battle bounty_b7"
+   },
+   {
+    "text": "Wanted: The last notice, name torn off",
+    "id": "b8",
+    "if": {
+     "not_flag": "beat_story_bounty_b8",
+     "flag": [
+      "beat_story_bounty_b5",
+      "beat_story_bounty_b6",
+      "beat_story_bounty_b7"
+     ]
+    },
+    "action": "battle bounty_b8"
+   },
+   {
+    "text": "Back away from the board.",
+    "id": "no"
+   }
+  ]
+ },
+ "brannagh": {
+  "lines": [
+   "Brannagh: Thornridge bounty board. Read it, fight it, get paid. Nobody ever reads the small print."
+  ],
+  "flag": "q_board_thornridge",
+  "choices": [
+   {
+    "text": "Read the cheap notices.",
+    "id": "p1",
+    "next": "brannagh_p1"
+   },
+   {
+    "text": "Read the dear notices.",
+    "id": "p2",
+    "next": "brannagh_p2"
+   },
+   {
+    "text": "Not today.",
+    "id": "no"
+   }
+  ],
+  "after_flag": [
+   {
+    "flag": "bounty_thorn_done",
+    "lines": [
+     "The board is empty. Someone has drawn a little crown on it."
+    ]
+   }
+  ]
+ },
+ "brennick": {
+  "if": {
+   "not_flag": "debts_done"
+  },
+  "lines": [
+   "Brennick: Three folk owe me. Hobb in Fernstair, Marl in Crowcrest, Nettie in Quillbrook.",
+   "Brennick: Collect, and you keep a tenth. Generous, I know. I cried writing it."
+  ],
+  "flag": "q_debts_asked",
+  "else": "brennick_after",
+  "next": "brennick_back",
+  "after_flag": [
+   {
+    "flag": "q_debts_asked",
+    "lines": [
+     "Brennick: Hobb, Marl, Nettie. Three names, three receipts. Chop chop."
+    ]
+   }
+  ]
+ },
+ "brennick_back": {
+  "if": {
+   "flag": [
+    "debt_hobb",
+    "debt_marl",
+    "debt_nettie"
+   ]
+  },
+  "lines": [
+   "Brennick: Well? Where's my money?"
+  ],
+  "choices": [
+   {
+    "text": "Show him the three receipts.",
+    "id": "receipts",
+    "next": "brennick_fight"
+   },
+   {
+    "text": "Say nothing and take your tenth.",
+    "id": "quiet",
+    "next": "brennick_quiet"
+   }
+  ],
+  "choice_id": "debts_side"
+ },
+ "brennick_fight": {
+  "lines": [
+   "Brennick: Receipts? Oh, these. Funny how paper burns.",
+   "Brennick: Nobody calls me a cheat in my own village. Not without a fight."
+  ],
+  "action": "battle debts_brennick"
+ },
+ "brennick_beaten": {
+  "lines": [
+   "Brennick: Fine! Debts cancelled. All of them. I'll start new ones tomorrow."
+  ]
+ },
+ "brennick_lose": {
+  "lines": [
+   "Brennick: That'll be ten coins for the lesson. Plus interest."
+  ]
+ },
+ "brennick_quiet": {
+  "lines": [
+   "Brennick: Your tenth. In tonics. Coin's tight.",
+   "Brennick: And between us, I sold your name to a collector in Corvane. Business is business, pet."
+  ],
+  "action": "give_item tonic 3",
+  "flag": "debts_done"
+ },
+ "brennick_after": {
+  "lines": [
+   "Brennick: Need a loan? Low rates. Lower than yesterday. Higher than tomorrow."
+  ]
+ },
+ "hobb": {
+  "if": {
+   "flag": "q_debts_asked",
+   "not_flag": "debt_hobb"
+  },
+  "lines": [
+   "Hobb: Owe him? I paid Brennick twice. He loses the receipts on purpose.",
+   "Hobb: Here, have a copy of mine. A copy, mind. He eats originals."
+  ],
+  "flag": "debt_hobb",
+  "else": "hobb_idle"
+ },
+ "marl": {
+  "if": {
+   "flag": "q_debts_asked",
+   "not_flag": "debt_marl"
+  },
+  "lines": [
+   "Marl: I borrowed ten coins in spring. Now I owe four hundred. The interest has interest. It's breeding.",
+   "Marl: Take the receipt. Burn it, frame it, I don't care."
+  ],
+  "flag": "debt_marl",
+  "else": "marl_idle"
+ },
+ "nettie": {
+  "if": {
+   "flag": "q_debts_asked",
+   "not_flag": "debt_nettie"
+  },
+  "lines": [
+   "Nettie: Brennick sent you? You're the third collector this month. The other two work for me now.",
+   "Nettie: Here's my receipt. Show him. Watch his face. Better than theatre."
+  ],
+  "flag": "debt_nettie",
+  "else": "nettie_idle"
+ },
+ "hobb_idle": {
+  "lines": [
+   "Hobb: Brennick? Don't say that name near my ferns. They wilt."
+  ]
+ },
+ "marl_idle": {
+  "lines": [
+   "Marl: If anyone asks, I'm not here. I'm a rock. Rocks don't owe money."
+  ]
+ },
+ "nettie_idle": {
+  "lines": [
+   "Nettie: Quillbrook runs on gossip and ducks. Mostly gossip."
+  ]
+ },
+ "nettle": {
+  "if": {
+   "not_flag": "parcel_done"
+  },
+  "lines": [
+   "Nettle: Run a parcel to Watchman Corr in Crowcrest. Don't open it. Don't shake it. Don't let it hear you talk about the Hush.",
+   "Nettle: Easy money, love. Easiest you'll ever make."
+  ],
+  "flag": "q_parcel_asked",
+  "else": "nettle_after",
+  "after_flag": [
+   {
+    "flag": "q_parcel_asked",
+    "lines": [
+     "Nettle: Parcel's not going to deliver itself, love. Well. It might. Don't let it."
+    ]
+   }
+  ]
+ },
+ "nettle_after": {
+  "lines": [
+   "Nettle: You're walking around free? Huh. Corr's slipping. No hard feelings, love. Business."
+  ]
+ },
+ "corr": {
+  "if": {
+   "flag": "q_parcel_asked",
+   "not_flag": "parcel_done"
+  },
+  "lines": [
+   "Corr: A parcel from Nettle? For me? How thoughtful.",
+   "Corr: It's a jar of stolen voices. With your fingerprints all over it. Nettle sends me a fresh fool every month. You're this month's.",
+   "Corr: Off the record: beat my Spirlings and the paperwork gets lost."
+  ],
+  "action": "battle parcel_corr",
+  "else": "corr_idle"
+ },
+ "corr_idle": {
+  "lines": [
+   "Corr: Move along. Nothing to see. Especially not in my pockets."
+  ]
+ },
+ "corr_beaten": {
+  "lines": [
+   "Corr: Paperwork's lost. Tell Nettle she owes me a new fool."
+  ]
+ },
+ "corr_lose": {
+  "lines": [
+   "Corr: I'll file this under 'pending'. Come back when you're less guilty."
+  ]
+ },
+ "gristle": {
+  "if": {
+   "not_flag": "funeral_done"
+  },
+  "lines": [
+   "Mrs Gristle: My poor Shalebat Pebble has passed on. Tragic. Sudden. Very well insured.",
+   "Mrs Gristle: The Wardens' fund pays for lost Spirlings. I just need a witness. Sign here? Little scribble?"
+  ],
+  "flag": "q_funeral_asked",
+  "else": "gristle_after",
+  "next": "gristle_back",
+  "after_flag": [
+   {
+    "flag": "q_funeral_asked",
+    "lines": [
+     "Mrs Gristle: Still grieving. Very loudly. In case the fund is listening."
+    ]
+   }
+  ]
+ },
+ "gristle_back": {
+  "if": {
+   "flag": "funeral_found"
+  },
+  "lines": [
+   "Mrs Gristle: You went to Murk Hollow? Why would anyone go to Murk Hollow?"
+  ],
+  "choices": [
+   {
+    "text": "Keep her secret and take a cut.",
+    "id": "cut",
+    "next": "gristle_cut"
+   },
+   {
+    "text": "Tell her the fund will hear of it.",
+    "id": "tell",
+    "next": "gristle_fight"
+   }
+  ],
+  "choice_id": "funeral_side"
+ },
+ "gristle_cut": {
+  "lines": [
+   "Mrs Gristle: Smart child. Here's your share. If anyone asks, Pebble's a ghost now."
+  ],
+  "action": "give_item max_tonic 1",
+  "flag": "funeral_done"
+ },
+ "gristle_fight": {
+  "lines": [
+   "Mrs Gristle: Then I'll have to bury two of us. Figuratively. Mostly."
+  ],
+  "action": "battle funeral_gristle"
+ },
+ "gristle_beaten": {
+  "lines": [
+   "Mrs Gristle: Pebble has been resurrected. A miracle. The fund wants its money back. Miracles are expensive."
+  ]
+ },
+ "gristle_lose": {
+  "lines": [
+   "Mrs Gristle: Two funerals in one week. I'll get a discount."
+  ]
+ },
+ "gristle_after": {
+  "lines": [
+   "Mrs Gristle: Pebble sends his love. From beyond. Beyond the hill, specifically."
+  ]
+ },
+ "pebble": {
+  "if": {
+   "flag": "q_funeral_asked"
+  },
+  "lines": [
+   "A plump Shalebat hangs here, very much alive, chewing a sandwich wrapped in Mrs Gristle's best napkin."
+  ],
+  "flag": "funeral_found",
+  "else": "pebble_idle"
+ },
+ "pebble_idle": {
+  "lines": [
+   "A plump Shalebat hangs here, chewing. It glares at you like you owe it rent."
+  ]
+ },
+ "coin_1": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_1"
+ },
+ "coin_2": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_2"
+ },
+ "coin_3": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_3"
+ },
+ "coin_4": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_4"
+ },
+ "coin_5": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_5"
+ },
+ "coin_6": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_6"
+ },
+ "coin_7": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_7"
+ },
+ "coin_8": {
+  "lines": [
+   "A Hush coin, stamped with a closed mouth. It feels a bit too light."
+  ],
+  "action": "give_item spark_drop 1",
+  "flag": "hush_coin_8"
+ },
+ "wicka": {
+  "if": {
+   "not_flag": "coins_done"
+  },
+  "lines": [
+   "Wicka: Hush coins, dearie. Stamped with a closed mouth. Eight of them lie about Veydal.",
+   "Wicka: Bring me all eight and I pay proper. No questions. I hate questions."
+  ],
+  "flag": "q_coins_asked",
+  "else": "wicka_after",
+  "next": "wicka_paid",
+  "after_flag": [
+   {
+    "flag": "q_coins_asked",
+    "lines": [
+     "Wicka: Eight coins, dearie. Not seven. Seven is a sad number."
+    ]
+   }
+  ]
+ },
+ "wicka_paid": {
+  "if": {
+   "flag": [
+    "hush_coin_1",
+    "hush_coin_2",
+    "hush_coin_3",
+    "hush_coin_4",
+    "hush_coin_5",
+    "hush_coin_6",
+    "hush_coin_7",
+    "hush_coin_8"
+   ]
+  },
+  "lines": [
+   "Wicka: All eight! Lovely. Here's your pay.",
+   "Wicka: Between us, I minted them myself and hid them. Best treasure hunt I ever sold. Forty Wayfarers did it this year."
+  ],
+  "action": "give_item max_tonic 3",
+  "flag": "coins_done"
+ },
+ "wicka_after": {
+  "lines": [
+   "Wicka: Hide them again tomorrow, I will. Don't tell the next one."
+  ]
+ }
+}

@@ -18,7 +18,7 @@
   "^.._____...^",
   "^^^^^^=^^^^^",
   "^RRR..__RRR^",
-  "^HHH..__HHH^",
+  "^HDH..__HHH^",
   "^._.._____.^",
   "^.______...^",
   "^.S..__..*.^",
@@ -62,6 +62,14 @@
    "to": "lantern_steps",
    "tx": 5,
    "ty": 17,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 8,
+   "to": "pawn_vault",
+   "tx": 5,
+   "ty": 7,
    "facing": "up"
   }
  ],
@@ -245,6 +253,31 @@
    "facing": "left",
    "dialogue": "thornridge/coach",
    "sprite": "villager"
+  },
+  {
+   "id": "vs_vantry",
+   "x": 6,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "veydal_side/vantry",
+   "sprite": "villager",
+   "show_flag": "rift_cinder_sealed"
+  },
+  {
+   "id": "vs_brannagh",
+   "x": 6,
+   "y": 8,
+   "facing": "down",
+   "dialogue": "veydal_side/brannagh",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_gristle",
+   "x": 7,
+   "y": 15,
+   "facing": "down",
+   "dialogue": "veydal_side/gristle",
+   "sprite": "elder"
   }
  ],
  "signs": [
@@ -294,6 +327,14 @@
    "item": "remedy",
    "count": 1,
    "flag": "find_thorn_fence"
+  },
+  {
+   "x": 10,
+   "y": 16,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "hush_coin_1",
+   "dialogue": "veydal_side/coin_1"
   }
  ],
  "square": [

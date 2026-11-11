@@ -135,6 +135,24 @@
      ]
     }
    ]
+  },
+  {
+   "id": "vs_jinks_1",
+   "x": 6,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "veydal_side/jinks_1",
+   "sprite": "ranger",
+   "show_flag": "met_kestra",
+   "hide_flag": "beat_story_rival_jinks_1"
+  },
+  {
+   "id": "vs_hobb",
+   "x": 6,
+   "y": 9,
+   "facing": "down",
+   "dialogue": "veydal_side/hobb",
+   "sprite": "villager"
   }
  ],
  "signs": [
