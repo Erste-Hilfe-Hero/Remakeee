@@ -111,4 +111,4 @@ func test_page_opens_turns_and_closes() -> void:
 	page.queue_free()
 
 func test_collection_total_counts_open_regions_only() -> void:
-	assert_eq(SpirlogBook.visible_kinds(GameState.flags).size(), 41, "40 kinds and Velahra")
+	assert_eq(SpirlogBook.visible_kinds(GameState.flags).size(), 43, "40 kinds, Velahra, Hallowmur and Scriptorax")
