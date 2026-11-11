@@ -170,6 +170,11 @@ func _build() -> void:
 	player.interact.connect(_on_interact)
 	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
+	_inkshadow = Sprite2D.new()
+	_inkshadow.name = "Inkshadow"
+	_inkshadow.centered = false
+	_inkshadow.modulate = Color(UITheme.INK, 0.85)
+	_entities.add_child(_inkshadow)
 	var hint := InteractHint.new()
 	hint.ow = self
 	add_child(hint)
@@ -326,6 +331,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	refresh_shade()
 	_spawn_npcs()
 	player.place(cell, face)
+	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
 	# Boat and coach stops open once the player has walked there (area 3 item 1190).
 	if not _on_trip and Transit.is_stop(map_id):
@@ -575,6 +581,7 @@ func _warp_out(edge: bool) -> void:
 
 func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
+	_place_inkshadow(GameState.player_cell, cell)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	survey_step(cell)
@@ -582,6 +589,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		return
 	_grass_rustle(map.kind_at(cell))
 	DailyTasks.record("step", {"map": map.id})
+	_inkshadow_remark()
 	show_notices()
 	if await _world.stepped(cell):
 		return
@@ -1037,6 +1045,8 @@ func _action_lake_bench(args: PackedStringArray, _speaker: NPC) -> void:
 
 func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	FirstVoices.after_rest()
+	for s: Spirling in GameState.party:
+		Inkshadow.soothe(s)
 	GameState.heal_party()
 	Sound.sfx("heal")
 	if map.heal_point.x >= 0:
@@ -1154,6 +1164,29 @@ func _close_menu(menu: PauseMenu) -> void:
 	menu.picker.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	Juice.tween(menu, "modulate:a", 0.0, "close")
 	await Juice.tween(menu, "position", Vector2(MENU_SLIDE, 0), "close").finished
+
+# --- Inkshadow (the lead Spirling one step behind) ------------------------------------
+
+var _inkshadow: Sprite2D
+
+func _place_inkshadow(prev_cell: Vector2i, cell: Vector2i) -> void:
+	if _inkshadow == null:
+		return
+	var lead: Spirling = Inkshadow.lead()
+	_inkshadow.visible = lead != null and map != null and map.outdoor
+	if not _inkshadow.visible:
+		return
+	_inkshadow.texture = MiniSprite.of(lead.data.species_name, GridWalker.TILE)
+	_inkshadow.position = GridWalker.cell_to_pos(Inkshadow.trail_cell(prev_cell, cell, player.facing))
+
+func _inkshadow_remark() -> void:
+	if not map.outdoor:
+		return
+	var said: Dictionary = Inkshadow.step(GameState.rng)
+	if said.is_empty():
+		return
+	GameState.money += int(said.get("money", 0))
+	toast.show_note(str(said.text))
 
 ## Dust behind the feet on every second running step (items 2304, 2395).
 func _on_player_step_started(dir: String, run: bool) -> void:
@@ -2981,6 +3014,7 @@ func start_battle(foes: Array[Spirling], wild: bool, trainer: Dictionary = {}) -
 	replay["inputs"] = scene.inputs
 	GameState.records["last_battle"] = replay
 	GameState.note_battle_end()
+	Inkshadow.note_battle(GameState.party)
 	last_claim = BattleReferee.claim_of(model)
 	await _fade_to(1.0)
 	scene.queue_free()
