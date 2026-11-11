@@ -81,6 +81,7 @@ func _ready() -> void:
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
 		"wake": _action_wake,
+		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
 		"tip": _action_tip,
@@ -1072,6 +1073,46 @@ func _action_wake(_args: PackedStringArray, _speaker: NPC) -> void:
 		lines.append("The Undertaker: Not today. The dead were not impressed.")
 	Wake.finish(result, day)
 	await say(lines)
+
+## "burrow": the claimable hollow in Murk Hollow with a wall of trophies (scripts/core/Burrow.gd).
+func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	if not Burrow.claimed():
+		if not await menu.confirm(Loc.t("A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?"), "Claim", "Leave"):
+			menu.queue_free()
+			return
+		Burrow.claim()
+		Sound.sfx("pickup")
+	var pawned: String = Burrow.visit(DailyFind.today_key())
+	if not pawned.is_empty():
+		menu.visible = false
+		await say([Loc.t(str(Burrow.data().squatter)) % Loc.t(str(Burrow.trophy(pawned).name))] as Array[String])
+		menu.visible = true
+	while true:
+		var ids: Array[String] = Burrow.earned_ids()
+		if ids.is_empty():
+			menu.queue_free()
+			await say(["Your Burrow. The walls are bare. Earn something worth hanging."] as Array[String])
+			return
+		var rows: Array[String] = []
+		for id: String in ids:
+			var shown: String = Loc.t(str(Burrow.trophy(id).name))
+			rows.append(("* " + shown) if id in Burrow.wall() else shown)
+		var pick: int = await menu.pick_strings(Loc.t("Your Burrow (%d/%d on the wall)") % [Burrow.wall().size(), int(Burrow.data().wall_slots)], rows)
+		if pick < 0:
+			break
+		var id: String = ids[pick]
+		menu.visible = false
+		if id in Burrow.wall():
+			Burrow.take_down(id)
+			await say([Loc.t(str(Burrow.trophy(id).text)), "You take it down."] as Array[String])
+		elif Burrow.hang(id):
+			await say([Loc.t(str(Burrow.trophy(id).text)), "You hang it on the wall."] as Array[String])
+		else:
+			await say(["The wall is full. Take something down first."] as Array[String])
+		menu.visible = true
+	menu.queue_free()
 
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0
