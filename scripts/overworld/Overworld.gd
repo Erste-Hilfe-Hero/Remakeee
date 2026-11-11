@@ -348,6 +348,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	var era_before: int = EraManager.unlocked_era
 	EraManager.unlock_region(map.region)
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
+	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era])
 	_camera.limit_left = 0
