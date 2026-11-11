@@ -84,6 +84,8 @@ var energy_surge: int = 0
 var cooldowns: Dictionary[String, int] = {}
 ## Battle-only: turns left on a heal block (heal_block effect), same counting.
 var heal_block: int = 0
+## Battle-only: turns left on a sworn Ink Oath (BattleRules.oath()); the debt is collected at 0.
+var oath_turns: int = 0
 ## Battle-only: turns of mending left from Root Mend (1/16 max Vigor at each turn end).
 var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
@@ -261,6 +263,7 @@ func end_battle() -> void:
 	heal_block = 0
 	mend_turns = 0
 	burn_guard = 0
+	oath_turns = 0
 	cooldowns.clear()
 	status = ""
 	status_turns = 0
