@@ -1,0 +1,19 @@
+{
+ "_comment": "League ranks, placement, demotion shield, echo fallback and quit penalty (Online 100, points 12-13 and 16-20). The server reads the same object as server_config.league_ranks (tools/online/game_data_sql.py).",
+ "placement_games": 5,
+ "shield_games": 3,
+ "echo_after": 45,
+ "quit_free": 2,
+ "quit_grace": 30,
+ "quit_wait": 60,
+ "quit_wait_max": 900,
+ "ranks": [
+  {"id": "apprentice", "floor": 0, "reward": {"item": "tonic", "count": 3}},
+  {"id": "runner", "floor": 1400, "reward": {"item": "strong_tonic", "count": 3}},
+  {"id": "fixer", "floor": 1500, "reward": {"item": "strong_tonic", "count": 5}},
+  {"id": "broker", "floor": 1600, "reward": {"item": "max_tonic", "count": 3}},
+  {"id": "captain", "floor": 1700, "reward": {"item": "revival_leaf", "count": 3}},
+  {"id": "boss", "floor": 1800, "reward": {"item": "spark_charm", "count": 1}},
+  {"id": "mapmaster", "floor": 1950, "reward": {"item": "keen_lens", "count": 1}}
+ ]
+}

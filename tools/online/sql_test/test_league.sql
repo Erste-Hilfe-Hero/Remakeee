@@ -204,7 +204,7 @@ select public.block((select v from lg where k = 'b'));
 select pg_temp.as_user('50000000-0000-0000-0000-00000000000b');
 select public.league_join('fair', '["Kindlop"]');
 do $$ begin
-  assert not (public.league_find('fair', 99)->>'found')::boolean, 'blocked: no match';
+  assert not (public.league_find('fair', 30)->>'found')::boolean, 'blocked: no match';
 end $$;
 reset role;
 update public.feature_flags set enabled = false where key = 'league_open';
