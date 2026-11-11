@@ -4643,7 +4643,7 @@
    "spd": 100,
    "def": 130
   },
-  "trait": "steady",
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Bell Tap",
@@ -4739,7 +4739,8 @@
   "learnset": {
    "1": [
     "Glint",
-    "Dawn Call"
+    "Dawn Call",
+    "Breeze Slice"
    ],
    "40": [
     "Prism Ray"
@@ -4781,11 +4782,12 @@
    "spd": 140,
    "def": 90
   },
-  "trait": "light_sleeper",
+  "trait": "kindling",
   "learnset": {
    "1": [
     "Kite Cut",
-    "Tailwind"
+    "Tailwind",
+    "Static Tag"
    ],
    "40": [
     "Gale Scythe"
@@ -4831,7 +4833,8 @@
   "learnset": {
    "1": [
     "Grit Jab",
-    "Hunker Down"
+    "Hunker Down",
+    "Kiln Strike"
    ],
    "40": [
     "Cairn Crash"
@@ -4877,7 +4880,8 @@
   "learnset": {
    "1": [
     "Mirk Nip",
-    "Murk Veil"
+    "Murk Veil",
+    "Glint"
    ],
    "40": [
     "Gloom Ripple"

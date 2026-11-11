@@ -62,7 +62,7 @@ func test_chapters_only_for_open_regions() -> void:
 	GameState.mark_seen("Talusk", true)
 	GameState.mark_seen("Croziel")
 	var p: Dictionary = SpirlogBook.chapter_progress("veydal", GameState.spirlog)
-	assert_eq(int(p.total), 41, "40 kinds and Velahra")
+	assert_eq(int(p.total), 43, "40 kinds, Velahra, Hallowmur and Scriptorax")
 	assert_eq(int(p.bonded), 2, "Kindlop and Talusk")
 	assert_eq(int(p.seen), 3)
 	assert_eq(SpirlogBook.chapter_line("veydal", GameState.spirlog), "Veydal: 3 seen, 2 bonded")
@@ -78,7 +78,7 @@ func test_search_and_filters() -> void:
 	assert_eq(SpirlogBook.filtered(log, f, "", -1, "bulwark").size(), 2)
 	assert_eq(SpirlogBook.filtered(log, f, "", -1, "", SpirlogBook.STATUS_BONDED).size(), 2, "Kindlop and Talusk")
 	assert_eq(SpirlogBook.filtered(log, f, "", -1, "", SpirlogBook.STATUS_SEEN_ONLY).size(), 1)
-	assert_eq(SpirlogBook.filtered(log, f, "", -1, "", SpirlogBook.STATUS_MISSING).size(), 38)
+	assert_eq(SpirlogBook.filtered(log, f, "", -1, "", SpirlogBook.STATUS_MISSING).size(), 40)
 
 func test_unfold_line_and_page_text() -> void:
 	var line: Array[SpirlingData] = SpirlogBook.line_of(Database.species("Talusgard"))

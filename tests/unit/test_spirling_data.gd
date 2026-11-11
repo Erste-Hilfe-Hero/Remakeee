@@ -88,9 +88,10 @@ func _lines_in(region: String) -> Dictionary:
 
 func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 	Database.load_all()
-	assert_eq(_lines_in("corvane").size(), 8)
-	assert_eq(_lines_in("ashmere").size(), 6)
-	assert_eq(_lines_in("solenne").size(), 6)
+	# Includes the legendaries Zephyrel (Corvane), Monolurk and Vorlucent (Ashmere), Lumivane (Solenne).
+	assert_eq(_lines_in("corvane").size(), 9)
+	assert_eq(_lines_in("ashmere").size(), 8)
+	assert_eq(_lines_in("solenne").size(), 7)
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != "veydal":
 			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_front.png" % sd.species_name.to_lower()), "%s has a placeholder sprite" % sd.species_name)
@@ -104,7 +105,7 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 	for area: String in enc:
 		for s: Dictionary in enc[area].spawns:
 			assert_eq(Database.species(str(s.species)).region, "veydal", "%s in %s" % [s.species, area])
-	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 16)
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 17)
 
 func test_regional_imprint_changes_element_but_keeps_the_spirlog_number() -> void:
 	var sd: SpirlingData = Database.species("Zephlet")

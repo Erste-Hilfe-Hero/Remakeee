@@ -374,9 +374,9 @@ static func hit_volume_db(share_lost: float) -> float:
 		return -3.0
 	return 0.0
 
-## Picking an art rings the confirm sound one step higher per element, eight steps of a major
-## scale in Elements.E order (item 2539).
-const ART_PICK_STEPS: Array[int] = [0, 2, 4, 5, 7, 9, 11, 12, 14, 16]
+## Picking an art rings the confirm sound one step higher per element, climbing one octave
+## in Elements.E order (item 2539).
+const ART_PICK_STEPS: Array[int] = [0, 1, 2, 4, 5, 7, 8, 9, 11, 12]
 
 static func art_pick_pitch(element: int) -> float:
 	if element < 0 or element >= ART_PICK_STEPS.size():
