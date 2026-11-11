@@ -61,5 +61,11 @@
  },
  "mound_words": [
   "\"Three steps from me toward morning, two toward the rails' end.\""
- ]
+ ],
+ "reserve_gate": {
+  "lines": [
+   "A woman in a velvet coat leans on a fence that is not on any map."
+  ],
+  "action": "reserve"
+ }
 }
