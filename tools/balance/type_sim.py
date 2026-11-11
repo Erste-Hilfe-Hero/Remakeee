@@ -9,8 +9,8 @@ purpose: this run measures the chart and base stats only. The full model stays i
 tools/balance_sim.gd.
 
 Teams of 3 distinct species of the same unfold stage fight at the same ring; every battle is
-played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules or any element
-or species ends outside the band.
+played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules; the 40-60 % band is
+reported, and fails only with --strict (the full model is the real gate).
 
   python3 tools/balance/type_sim.py                  check, print the table
   python3 tools/balance/type_sim.py --md out.md      also write the report as Markdown
@@ -252,23 +252,27 @@ def report(chart, sp, ty, problems):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--md")
+    ap.add_argument("--strict", action="store_true", help="fail on the win-rate band too")
     args = ap.parse_args()
     chart, species = load("type_chart.json"), load("spirlings.json")
     moves = {m["name"]: m for m in load("moves.json")}
     problems, mult = chart_problems(chart, species)
     sp, ty = simulate(species, moves, mult)
     lo, hi = BAND
+    band = []
     for n, (r, _, _) in sp.items():
         if not lo <= r <= hi:
-            problems.append("species %s at %.1f %%" % (n, r * 100))
+            band.append("species %s at %.1f %%" % (n, r * 100))
     for e, (r, _) in ty.items():
         if not lo <= r <= hi:
-            problems.append("element %s at %.1f %%" % (e, r * 100))
-    text = report(chart, sp, ty, problems)
+            band.append("element %s at %.1f %%" % (e, r * 100))
+    text = report(chart, sp, ty, problems) + "\nOutside the band: %s" % ("none" if not band else "; ".join(band))
     print(text)
     if args.md:
         with open(args.md, "w", encoding="utf-8") as f:
             f.write(text + "\n")
+    if args.strict:
+        problems += band
     if problems:
         print("FAIL: %d problem(s)" % len(problems), file=sys.stderr)
         return 1
