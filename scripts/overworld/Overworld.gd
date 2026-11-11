@@ -103,6 +103,10 @@ func _ready() -> void:
 		"set_var": _action_set_var,
 		"add_var": _action_add_var,
 		"battle": _action_battle,
+		"favor": _action_favor,
+		"betrayal": _action_betrayal,
+		"trust": _action_trust,
+		"ledger": _action_ledger,
 		"scene": _action_scene,
 		"warp": _action_warp,
 		"transit": _action_transit,
@@ -1451,6 +1455,77 @@ func _action_set_var(args: PackedStringArray, _speaker: NPC) -> void:
 func _action_add_var(args: PackedStringArray, _speaker: NPC) -> void:
 	if args.size() >= 1:
 		GameState.add_story_var(args[0], int(args[1]) if args.size() > 1 else 1)
+
+## "favor <id>": the player lends a Spirling, lends coins or believes a tip (data/clans.json).
+## The hidden trust and use values decide whether the figure betrays, rewards or simply keeps
+## its word (Trust.resolve); the effects are applied in order. Each favor runs once.
+func _action_favor(args: PackedStringArray, speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var def: Dictionary = Trust.favor(args[0])
+	if def.is_empty() or GameState.has_flag("favor_" + args[0]):
+		return
+	var amount: int = int(def.get("amount", 0))
+	if str(def.kind) == "lend_coins":
+		if GameState.money < amount:
+			await say(["You don't have that many coins."] as Array[String])
+			return
+		GameState.money -= amount
+	GameState.set_flag("favor_" + args[0])
+	var npc: String = str(def.npc)
+	var result: String = Trust.resolve(def, Trust.trust(npc), Trust.use(npc), GameState.rng.randf())
+	await _apply_clan_effects(Trust.effects(def, result), speaker)
+
+## "betrayal <id>": a scripted betrayal from data/clans.json. It always happens; a warning
+## the player picked up (or enough trust) turns it from "struck" into "caught". Runs once.
+func _action_betrayal(args: PackedStringArray, speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var def: Dictionary = Trust.betrayal(args[0])
+	if def.is_empty() or GameState.has_flag("betrayal_" + args[0]):
+		return
+	GameState.set_flag("betrayal_" + args[0])
+	var result: String = Trust.betrayal_result(def, GameState.flags, GameState.story_vars)
+	await _apply_clan_effects(Trust.effects(def, result), speaker)
+
+## "trust <figure> <change> [use change]": moves the hidden values (nothing is shown).
+func _action_trust(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.size() < 2:
+		return
+	var eff: Dictionary = {"trust": {args[0]: int(args[1])}}
+	if args.size() > 2:
+		eff["use"] = {args[0]: int(args[2])}
+	Trust.apply_values(eff, GameState.story_vars)
+
+## "ledger <id>": a new entry in the Ledger (pause menu).
+func _action_ledger(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty() or GameState.has_flag(Trust.ledger_flag(args[0])):
+		return
+	GameState.set_flag(Trust.ledger_flag(args[0]))
+	Sound.sfx("confirm")
+	await say(["A new entry in your Ledger."] as Array[String])
+
+func _apply_clan_effects(eff: Dictionary, speaker: NPC) -> void:
+	Trust.apply_values(eff, GameState.story_vars)
+	for f: Variant in eff.get("flags", []):
+		GameState.set_flag(str(f))
+	if eff.has("say"):
+		await play_entry(str(eff.say), speaker)
+	var coins: int = int(eff.get("coins", 0))
+	if coins > 0:
+		GameState.money += coins
+		Sound.sfx("pickup")
+		await say(["You got %d coins!" % coins] as Array[String])
+	if bool(eff.get("take_keepsake", false)) and not GameState.party.is_empty() and not GameState.party[0].held.is_empty():
+		var lost: String = str(Database.item(GameState.party[0].held).get("name", GameState.party[0].held))
+		GameState.party[0].held = ""
+		await say(["%s came back without its keepsake (%s)." % [GameState.party[0].display_name(), lost]] as Array[String])
+	if eff.has("item"):
+		await _action_give_item(PackedStringArray([str(eff.item)]), speaker)
+	if eff.has("ledger"):
+		await _action_ledger(PackedStringArray([str(eff.ledger)]), speaker)
+	if eff.has("battle"):
+		await _action_battle(PackedStringArray([str(eff.battle)]), speaker)
 
 ## "battle <id>": a story duel from data/story_battles.json, straight out of a talk or scene
 ## (plan item 1340). Wins set the beaten flag "beat_story_<id>" and the entry's win_flags.

@@ -32,25 +32,44 @@ var room_action: String = ""
 
 ## Fixed order, the most used first (item 1869). Travel, Storage and Room only show when
 ## they can be used; they keep their place. Leagues shows only while leagues are on,
-## the Map book once Aldo gave it.
-const MENU_ORDER: Array[String] = ["Goals", "Map book", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
+## the Map book once Aldo gave it, the Ledger once it has an entry (clan intrigue, Trust.gd).
+const MENU_ORDER: Array[String] = ["Goals", "Map book", "Ledger", "Map", "Room", "Team", "Satchel", "Spirlog", "Travel", "Friends",
 	"Leagues", "Records", "Storage", "Save", "Save and to title", "Photo", "Settings"]
 
 static func menu_labels(storage: bool, travel: bool, room: bool, leagues: bool = false,
-		map_book: bool = false) -> Array[String]:
+		map_book: bool = false, ledger: bool = false) -> Array[String]:
 	var out: Array[String] = []
 	for l: String in MENU_ORDER:
 		if (l == "Storage" and not storage) or (l == "Travel" and not travel) or (l == "Room" and not room) \
-				or (l == "Leagues" and not leagues) or (l == "Map book" and not map_book):
+				or (l == "Leagues" and not leagues) or (l == "Map book" and not map_book) \
+				or (l == "Ledger" and not ledger):
 			continue
 		out.append(l)
 	return out
+
+## The Ledger (Schuldbuch): every secret the player shares with someone. Each entry is
+## leverage and a risk at once. Trust values themselves stay hidden.
+func run_ledger() -> void:
+	while true:
+		var rows: Array[Dictionary] = Trust.ledger_rows(GameState.flags)
+		var entries: Array[Dictionary] = []
+		for r: Dictionary in rows:
+			var lines: Array[String] = Trust.ledger_text(str(r.ref))
+			entries.append({"text": lines[0] if not lines.is_empty() else str(r.id)})
+		var idx: int = await pick("Ledger (%d)" % rows.size(), entries)
+		if idx < 0:
+			return
+		var body: Array[String] = Trust.ledger_text(str(rows[idx].ref))
+		var shown: PackedStringArray = []
+		for l: String in body:
+			shown.append(Loc.t(l))
+		await info("\n".join(shown))
 
 func run() -> void:
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
-			GameState.has_flag("aldo_gift"))
+			GameState.has_flag("aldo_gift"), not Trust.ledger_rows(GameState.flags).is_empty())
 		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
 		if "Travel" in labels:
 			await tip("travel")
@@ -66,6 +85,7 @@ func run() -> void:
 		match labels[idx]:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
+			"Ledger": await run_ledger()
 			"Map": await WorldMapMenu.run(self, current_map)
 			"Team": await run_team()
 			"Friends":

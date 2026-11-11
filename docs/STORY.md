@@ -264,6 +264,49 @@ that would wipe out the Wide Rift and everything behind it, Mirela included. He 
 meets the echo of Ash in the Undrawn. Depending on the player's choices he makes peace
 (veit_respect high) or leaves (low). He is never a villain, only someone grieving.
 
+## Clans and trust (owner study 2026-11-10, part 3)
+
+Two clans fight over the valley behind the Rift story. Data: `data/clans.json`, text:
+`data/dialogue/clans.json`, logic: `scripts/core/Trust.gd`, German: `tools/i18n/de_clans.py`.
+The theme is "trust no one": dry humour, polite threats, violence off screen and sudden.
+
+- **Haus Marrovel** (seat Veydal, Corvane): old nobility, keeps the Rift pacts, rules by etiquette
+  and debt. Ottilie Kael (clan mother, hidden power), Fenrick Kael (loud patriarch), Brannoc Kael
+  (broken heir, former Rift gladiator), Pip Kael (the spark).
+- **The Ruskwebers** (seat Ashmere, Solenne): smugglers and miners, rule by fear and wages.
+  Mother Grell (vengeful rival), Sable Ruskweber (charming opportunist).
+- **Between them:** Warden Ilo Vash (sells results to both sides, Chief Warden from Act II),
+  Warden Captain Dace Morrow (two tills), Marlo (Spirling doctor, the conscience), Wren (runs the
+  Crooked Kettle guest house in Brindlewick; leverage for both clans).
+- **The strangers from the map's edge** came through the Wide Rift. The clans hire them because
+  nobody owes them anything. Allies: Aldra, Lipka, Nail (Act I), Amir, Elma (Act II), Lejla, Mirza
+  (Act III). Traitors: Kenan (Act I), Farida, Heider (Act II), Leith (Act III). Lipka and Leith can
+  turn either way with the hidden values.
+
+### Hidden trust
+
+Every figure has a hidden **trust** and **use** value (0-100, start values in the data, changes
+in `story_vars` as `trust_<id>` / `use_<id>`). A figure betrays when use is higher than trust. The
+player never sees the numbers. Dialogue can test them with `"trust_min"` / `"trust_max"`.
+Actions: `trust <id> <change> [use change]`, `favor <id>`, `betrayal <id>`, `ledger <id>`.
+
+- **Favors**: lend your lead Spirling (betrayal: its keepsake is stolen), lend coins (betrayal:
+  the coins are gone), believe a tip (betrayal: an ambush battle). A loyal figure keeps its word
+  and sometimes pays back more (`reward_chance`).
+- **Scripted betrayals** always happen. A warning picked up earlier (flags in `warned_by`) turns
+  them from "struck" (ambush, loss) into "caught". Marlo's fate uses his trust instead: every time
+  he is used as an alibi his trust drops by 15; under 40 he is gone in Act III.
+- **The Ledger** (Schuldbuch, pause menu, shown once it has an entry) lists every secret the
+  player shares. Each entry is leverage and a risk.
+
+| Act | Betrayal 1 | Betrayal 2 | Twists used |
+| --- | --- | --- | --- |
+| I Veydal (`rift_cinder_sealed`) | Vash sells the blank battle record (`clan_b1`) | Fenrick's sealed letter names the player (`clan_b2`) | ash in the brooding oven |
+| II Corvane (`corvane_arrived`) | Brannoc sells the Woadfen routes (`clan_b3`) | Ottilie sacrifices Morrow; the war was ordered (`clan_b4`) | the last feast, the mercy post, the spy in the guest book, the gift of honour, the rising referee |
+| III Ashmere (`act2_end`) | Sable sells the player at the card hall (`clan_b5`) | Marlo lives or is gone by his trust (`clan_b6`) | the seal in the breeding register, the breeder who lived, the fading seal |
+
+Act IV (Solenne) and the twists set there come later.
+
 ## Spoiler flags (for store texts and screenshots)
 
 Store material must not show anything behind these flags: `act2_end`, `mirela_plate`,
