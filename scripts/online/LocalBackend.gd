@@ -74,7 +74,7 @@ func _init(p_store_path: String = "") -> void:
 			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
 			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim",
-			"save_history_list", "save_restore", "session_claim", "action_once"]:
+			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
@@ -326,6 +326,10 @@ func _fn_hello(a: Dictionary) -> Dictionary:
 		"update_required": int(a.get("p_version", 0)) < int(db.config.get("min_version", 1)),
 		"motd": str(db.config.get("motd", "")), "online_now": online_now(),
 		"flags": active_flags(int(a.get("p_version", 0)))}
+
+## Like public.live_content_get: the local stand-in has no patches, the bundled one is used.
+func _fn_live_content_get(_a: Dictionary) -> Dictionary:
+	return {"version": 0}
 
 ## Like hello's "flags": the feature keys that are on for [param version], sorted (item 2675).
 func active_flags(version: int) -> Array:
@@ -2254,7 +2258,7 @@ func _fn_trade_put_spirlings(a: Dictionary) -> Dictionary:
 			db.trade_sides[k].confirmed = false
 	return {"ok": true, "rev": r.rev, "took": take, "back": back}
 
-# --- Weekly boards and the daily gift (20261111000001_online_step1.sql) ---------------------
+# --- Weekly boards and the daily gift (20261111000002_online_step1.sql) ---------------------
 
 ## Rift ids (every "warden" in data/), like known_ids kind "rift".
 static func known_rifts() -> Array:

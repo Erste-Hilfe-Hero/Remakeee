@@ -12,6 +12,11 @@ enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 ## Must match version/code in export_presets.cfg (tests check it). The server sends builds
 ## older than its "min_version" to the store.
 const CLIENT_VERSION: int = 1
+## Must match version/name in export_presets.cfg. Live content compares it with its per-platform
+## "min_client" and "latest" (docs/LIVE_CONTENT.md).
+const CLIENT_VERSION_NAME: String = "1.1.0"
+const APP_STORE_ID: String = "6831632885"
+const ITUNES_LOOKUP: String = "https://itunes.apple.com/lookup?id=6831632885"
 ## Format number of the online save (plan item 2673). The server refuses saves without it or
 ## newer than its server_config.save_schema_max. Raise both together.
 const SAVE_SCHEMA: int = 1
@@ -39,6 +44,8 @@ var last_error: String = ""
 ## Our public profile as the server returned it ({"code", "name", ...}).
 var profile: Dictionary = {}
 var motd: String = ""
+## The newest version the App Store lists (iOS only, "" until known).
+var store_version: String = ""
 var online_now: int = 0
 ## Server clock minus phone clock, in seconds.
 var clock_offset: int = 0
@@ -167,6 +174,10 @@ func connect_now() -> State:
 		return state
 	_take_hello(r.data)
 	_save_session()
+	if state == State.ONLINE:
+		await refresh_live_content()
+		if update_state() == "required":
+			_set_state(State.UPDATE_REQUIRED)
 	if state == State.ONLINE and str(profile.get("platform", "")) != platform_name():
 		# The browser test build's accounts are deleted after 30 days unused (plan item 3765).
 		var p: Dictionary = await backend.call_fn("platform_set", {"p_platform": platform_name()})
@@ -212,6 +223,48 @@ func _take_hello(d: Variant) -> void:
 	_take_server_time(d.get("server_time"))
 	_set_state(State.UPDATE_REQUIRED if bool(d.get("update_required", false)) else State.ONLINE)
 
+# --- Live content and updates (docs/LIVE_CONTENT.md) ------------------------------------
+
+## Fetches the newest signed data patch; the cached or bundled one stays when that fails.
+func refresh_live_content() -> void:
+	LiveContent.ensure_loaded(CLIENT_VERSION_NAME)
+	var r: Dictionary = await backend.call_fn("live_content_get", {"p_have": LiveContent.version()})
+	if r.ok:
+		LiveContent.take(r.data, CLIENT_VERSION_NAME)
+
+## "required" (below this platform's min_client), "optional" (a newer build is out) or "none".
+func update_state() -> String:
+	LiveContent.ensure_loaded(CLIENT_VERSION_NAME)
+	return LiveContent.update_state(LiveContent.data, LiveContent.platform(), CLIENT_VERSION_NAME, store_version)
+
+## Asks the App Store for its current version (iOS). Android has no such lookup without the
+## Play Core library; there the patch's "latest.android" decides.
+func check_store() -> void:
+	if LiveContent.platform() != "ios" or not is_inside_tree():
+		return
+	var req := HTTPRequest.new()
+	req.timeout = 5.0
+	add_child(req)
+	if req.request(ITUNES_LOOKUP) == OK:
+		var res: Array = await req.request_completed
+		if int(res[0]) == HTTPRequest.RESULT_SUCCESS and int(res[1]) == 200:
+			store_version = LiveContent.itunes_version((res[3] as PackedByteArray).get_string_from_utf8())
+	req.queue_free()
+
+## Back from the background: new content, and a required update sends the player to the title.
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_RESUMED and state == State.ONLINE:
+		_on_resumed()
+
+func _on_resumed() -> void:
+	await refresh_live_content()
+	if update_state() == "required" and state == State.ONLINE:
+		if GameState.in_game:
+			await push_dirty()
+		_set_state(State.UPDATE_REQUIRED)
+		if GameState.in_game:
+			_to_title()
+
 ## Calls a server function. A dropped connection switches to OFFLINE (the reconnect screen
 ## takes over while playing).
 func call_fn(name: String, args: Dictionary = {}) -> Dictionary:
@@ -245,7 +298,7 @@ func store_url() -> String:
 	if not _store_url.is_empty():
 		return _store_url
 	if OS.get_name() == "iOS":
-		return "itms-apps://apps.apple.com"
+		return "itms-apps://apps.apple.com/app/id" + APP_STORE_ID
 	return "https://play.google.com/store/apps/details?id=de.chimora.game"
 
 ## Waits up to [param max_seconds] for an upload of [param slot] on its way; true when the

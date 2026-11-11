@@ -184,7 +184,7 @@ func test_daily_gift_table_has_no_shop_items_and_matches_the_server() -> void:
 			assert_false(ids.has(str(g.get("id", ""))), "shop item %s is never a daily gift" % g.get("id"))
 	for id: String in ids:
 		assert_false(Database.item(id).is_empty(), "%s is a game item" % id)
-	var sql: String = FileAccess.get_file_as_string("res://supabase/migrations/20261111000001_online_step1.sql")
+	var sql: String = FileAccess.get_file_as_string("res://supabase/migrations/20261111000002_online_step1.sql")
 	var at: int = sql.find("('daily_gift_table', '")
 	var listed: Variant = JSON.parse_string(sql.substr(at + 22, sql.find("')", at) - at - 22))
 	assert_true(listed is Array and (listed as Array).size() == table.size(), "the migration seeds the same table")

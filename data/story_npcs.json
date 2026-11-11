@@ -38,6 +38,51 @@
     "show_flag": "aldo_dock_told",
     "hide_flag": "letter_v2"
    }
+  ],
+  "npcs": [
+   {
+    "id": "clan_vash",
+    "x": 9,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "clans/vash",
+    "sprite": "warden",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "corvane_arrived"
+   },
+   {
+    "id": "clan_fenrick",
+    "x": 3,
+    "y": 19,
+    "facing": "down",
+    "dialogue": "clans/fenrick",
+    "sprite": "elder",
+    "color": "7a2a2a",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "corvane_arrived"
+   },
+   {
+    "id": "clan_kenan",
+    "x": 4,
+    "y": 21,
+    "facing": "down",
+    "dialogue": "clans/kenan",
+    "sprite": "ranger",
+    "color": "5a6e7a",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "corvane_arrived"
+   },
+   {
+    "id": "clan_nail",
+    "x": 9,
+    "y": 19,
+    "facing": "down",
+    "dialogue": "clans/nail",
+    "sprite": "villager",
+    "color": "b07a3a",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "corvane_arrived"
+   }
   ]
  },
  "thornridge": {
@@ -85,6 +130,60 @@
     "facing": "down",
     "dialogue": "corvane/juna",
     "sprite": "ranger"
+   },
+   {
+    "id": "clan_grell",
+    "x": 3,
+    "y": 5,
+    "facing": "down",
+    "dialogue": "clans/grell",
+    "sprite": "elder",
+    "color": "2a2a2a",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_sable",
+    "x": 9,
+    "y": 5,
+    "facing": "down",
+    "dialogue": "clans/sable",
+    "sprite": "ranger",
+    "color": "3a5a3a",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_farida",
+    "x": 2,
+    "y": 16,
+    "facing": "down",
+    "dialogue": "clans/farida",
+    "sprite": "villager",
+    "color": "9e5a8a",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_amir",
+    "x": 7,
+    "y": 17,
+    "facing": "down",
+    "dialogue": "clans/amir",
+    "sprite": "villager",
+    "color": "3a7a9e",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_vash_2",
+    "x": 6,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "clans/vash_2",
+    "sprite": "warden",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
    }
   ],
   "signs": [
@@ -137,6 +236,60 @@
     "facing": "down",
     "dialogue": "corvane/weda",
     "sprite": "elder"
+   },
+   {
+    "id": "clan_ottilie",
+    "x": 7,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "clans/ottilie",
+    "sprite": "elder",
+    "color": "5a2a4a",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_brannoc",
+    "x": 2,
+    "y": 17,
+    "facing": "down",
+    "dialogue": "clans/brannoc",
+    "sprite": "ranger",
+    "color": "7a2a2a",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_heider",
+    "x": 8,
+    "y": 19,
+    "facing": "down",
+    "dialogue": "clans/heider",
+    "sprite": "villager",
+    "color": "6a6a6a",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_elma",
+    "x": 3,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "clans/elma",
+    "sprite": "villager",
+    "color": "c98a5a",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_morrow",
+    "x": 8,
+    "y": 11,
+    "facing": "down",
+    "dialogue": "clans/morrow",
+    "sprite": "warden",
+    "show_flag": "corvane_arrived",
+    "hide_flag": "morrow_gone"
    }
   ],
   "signs": [
@@ -382,6 +535,56 @@
     "facing": "down",
     "dialogue": "ashmere/tamsin",
     "sprite": "villager"
+   },
+   {
+    "id": "clan_lejla",
+    "x": 2,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "clans/lejla",
+    "sprite": "villager",
+    "color": "a05a5a",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "clan_pip_3",
+    "x": 3,
+    "y": 16,
+    "facing": "down",
+    "dialogue": "clans/pip_3",
+    "sprite": "ranger",
+    "color": "b04a4a",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "clan_brannoc_3",
+    "x": 7,
+    "y": 16,
+    "facing": "down",
+    "dialogue": "clans/brannoc_3",
+    "sprite": "ranger",
+    "color": "7a2a2a",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "clan_grell_3",
+    "x": 7,
+    "y": 9,
+    "facing": "down",
+    "dialogue": "clans/grell_3",
+    "sprite": "elder",
+    "color": "2a2a2a",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "clan_fenrick_3",
+    "x": 4,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "clans/fenrick_3",
+    "sprite": "elder",
+    "color": "7a2a2a",
+    "show_flag": "act2_end"
    }
   ],
   "signs": [
@@ -516,6 +719,47 @@
     "dialogue": "ashmere/kestra_cinder",
     "sprite": "ranger",
     "hide_flag": "beat_story_kestra_3"
+   },
+   {
+    "id": "clan_sable_3",
+    "x": 9,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "clans/sable_3",
+    "sprite": "ranger",
+    "color": "3a5a3a",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "clan_leith",
+    "x": 3,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "clans/leith",
+    "sprite": "villager",
+    "color": "5a5a8a",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "clan_mirza",
+    "x": 7,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "clans/mirza",
+    "sprite": "villager",
+    "color": "8a6a2a",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "clan_marlo_3",
+    "x": 5,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "clans/marlo_3",
+    "sprite": "villager",
+    "color": "4c8f4c",
+    "show_flag": "act2_end",
+    "hide_flag": "marlo_gone"
    }
   ],
   "signs": [
@@ -654,6 +898,64 @@
     "facing": "up",
     "dialogue": "crowcrest/wanderer",
     "sprite": "villager"
+   }
+  ]
+ },
+ "brindlewick": {
+  "npcs": [
+   {
+    "id": "clan_wren",
+    "x": 4,
+    "y": 11,
+    "facing": "down",
+    "dialogue": "clans/wren",
+    "sprite": "villager",
+    "color": "8a5a9e",
+    "show_flag": "rift_cinder_sealed"
+   },
+   {
+    "id": "clan_pip",
+    "x": 7,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "clans/pip",
+    "sprite": "ranger",
+    "color": "b04a4a",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "corvane_arrived"
+   },
+   {
+    "id": "clan_marlo",
+    "x": 4,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "clans/marlo",
+    "sprite": "villager",
+    "color": "4c8f4c",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "act2_end"
+   },
+   {
+    "id": "clan_aldra",
+    "x": 7,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "clans/aldra",
+    "sprite": "villager",
+    "color": "c9a227",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "corvane_arrived"
+   },
+   {
+    "id": "clan_lipka",
+    "x": 7,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "clans/lipka",
+    "sprite": "villager",
+    "color": "6a8fb0",
+    "show_flag": "rift_cinder_sealed",
+    "hide_flag": "corvane_arrived"
    }
   ]
  }

@@ -17,7 +17,7 @@ extends RefCounted
 const DIR: String = "res://data/dialogue/"
 ## Conditions understood in "if" (DataValidator rejects anything else).
 const CONDITIONS: Array[String] = ["flag", "not_flag", "has_item", "has_species", "has_element",
-	"party_size_min", "chapter_min", "var_min", "var_max", "choice"]
+	"party_size_min", "chapter_min", "var_min", "var_max", "choice", "trust_min", "trust_max"]
 ## Upper bound for "next" hops in one conversation (stops loops in broken data).
 const MAX_HOPS: int = 32
 
@@ -179,6 +179,12 @@ static func check(cond: Variant, flags: Dictionary) -> bool:
 			"var_max":
 				for name: Variant in (v as Dictionary if v is Dictionary else {}):
 					if GameState.story_var(str(name)) > int(v[name]):
+						return false
+			"trust_min", "trust_max":
+				# Hidden clan trust (Trust.gd): {"marlo": 40}.
+				for id: Variant in (v as Dictionary if v is Dictionary else {}):
+					var t: int = Trust.trust(str(id))
+					if (t < int(v[id])) if str(k) == "trust_min" else (t > int(v[id])):
 						return false
 			"choice":
 				for name: Variant in (v as Dictionary if v is Dictionary else {}):

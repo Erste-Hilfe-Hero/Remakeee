@@ -939,6 +939,28 @@ func run_legal() -> void:
 				open_url.call(DISCORD_URL)
 				toast(DISCORD_URL)
 
+## "What's new" (docs/LIVE_CONTENT.md): patch notes and news from the live content, newest
+## first, and the Discord invite. An entry with a link offers to open it after its text.
+func run_news() -> void:
+	while true:
+		var entries: Array[Dictionary] = LiveContent.news()
+		var rows: Array[String] = []
+		for e: Dictionary in entries:
+			rows.append(str(e.title))
+		rows.append("Join our Discord")
+		var idx: int = await pick_strings("What's new", rows)
+		if idx < 0:
+			return
+		if idx == entries.size():
+			open_url.call(DISCORD_URL)
+			toast(DISCORD_URL)
+			continue
+		var e: Dictionary = entries[idx]
+		var head: String = str(e.title) if str(e.date).is_empty() else "%s  %s" % [e.title, e.date]
+		await info(head + "\n\n" + str(e.body))
+		if not str(e.url).is_empty() and await confirm("Open the link?"):
+			open_url.call(str(e.url))
+
 ## The info scroll bar: the part of the text in view, drawn in MID on the right edge.
 ## Returns the drawn rect (empty when everything fits), for tests.
 func info_bar_rect() -> Rect2:
