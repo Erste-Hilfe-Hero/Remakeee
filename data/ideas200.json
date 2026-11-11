@@ -20,7 +20,7 @@
   "start_line": "Same streets, new faces. Everybody remembers you. Nobody admits it."
  },
  "tower_week": {
-  "rules": ["ember_pulse", "undertow", "ash_rain", "tide_turn", "fog_bank", "vine_tangle", "night_dark", "sandstorm", "dry_well", "high_noon"],
+  "rules": ["ember_pulse", "undertow", "ember_pulse_soft", "undertow_soft"],
   "lines": ["The tower's landlord changed the rules again. Read the small print."]
  }
 }

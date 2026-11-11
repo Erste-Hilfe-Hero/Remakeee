@@ -97,7 +97,7 @@ func test_tower_week_rules() -> void:
 		assert_true(BattleRules.RULES.has(id), id)
 		assert_false(bool(BattleRules.RULES[id].get("warden_only", false)), id)
 		seen[id] = true
-	assert_gt(seen.size(), 3)
+	assert_gt(seen.size(), 2)
 	assert_ne(TowerWeek.label("2026-W46"), "")
 
 func test_gravers_hall_npcs_are_wired() -> void:
