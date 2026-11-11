@@ -670,6 +670,10 @@ func heal(side: int, amount: int, slot: int = 0) -> int:
 		if s.hp < s.max_hp():
 			emit_event(BattleEvent.Type.HEAL_BLOCKED, _who(side, slot))
 		return 0
+	# Warden rule Dry Well: every heal from arts, gifts and the field shrinks.
+	var heal_mult: float = BattleRules.rule_number(foe_rule, "heal_mult")
+	if heal_mult != 1.0:
+		amount = maxi(1, int(amount * heal_mult))
 	return _heal_spirling(side, index, amount)
 
 ## Blocks healing for the Spirling in [param slot] for the next [param turns] turns. Emits HEAL_BLOCKED.
@@ -830,6 +834,7 @@ func _phase_end_of_turn() -> void:
 		for slot: int in slot_count(side):
 			_end_of_turn_for(side, slot)
 	_vine_heal()
+	_sand_chip()
 	_tick_timers()
 	_tick_field()
 	_tick_field_swirl()
@@ -892,6 +897,19 @@ func _vine_heal() -> void:
 				best_slot = slot
 	if best_side >= 0:
 		heal(best_side, maxi(1, active_spirling(best_side, best_slot).max_hp() / div), best_slot)
+
+## Warden rule Sandstorm: after each round every standing Spirling in front that is not Stone
+## loses max Vigor / div.
+func _sand_chip() -> void:
+	var div: int = int(BattleRules.rule_number(foe_rule, "sand_chip_div"))
+	if div <= 0:
+		return
+	for side: int in [Side.PLAYER, Side.FOE]:
+		for slot: int in standing_slots(side):
+			var s: Spirling = active_spirling(side, slot)
+			if Elements.E.STONE in s.elements():
+				continue
+			deal_damage(side, maxi(1, s.max_hp() / div), {"sand": true}, slot)
 
 func _end_of_turn_for(side: int, slot: int) -> void:
 	var s: Spirling = active_spirling(side, slot)
@@ -1114,6 +1132,9 @@ func _do_move(a: BattleAction) -> void:
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
 			if side == Side.FOE:
 				mult *= foe_damage_mult
+			# Warden rule High Noon: Lumen arts on both sides hit harder.
+			if mv.element == Elements.E.LUMEN:
+				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
 			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
 			if mv.has_effect(&"delayed_hit"):

@@ -198,7 +198,7 @@ after the mend and a later line after the finale.
 
 ### Rifts and Wardens (owner decision 2026-11-10: twelve Rifts)
 
-Nine Rifts stand in the first three regions; the three of Solenne follow. `GameState.STORY_RIFTS`
+Nine Rifts stand in the first three regions, the last three in Solenne (Act IV, `tools/art/world/solenne.py`). `GameState.STORY_RIFTS`
 holds them in story order. A Rift built after 2026-11 has a fixed shape (`tools/art/world/rifts12.py`):
 a Rift acolyte and two Wayfarers on the way, a puzzle that opens the way up, a spring to rest at,
 the Warden at the tear, and a shortcut down the east side that opens with the mend. Its Warden
@@ -217,9 +217,19 @@ only when every story Rift and every Rift heart is mended (`GameState.finale_fla
 | 7 | Kiln Rift | `kiln_rift` | Tovan | Ember | 31 to 33 | - | - | - |
 | 8 | Glass Rift | `glass_rift` | Ilse | Lumen | 33 to 34 | - | - | - |
 | 9 | Shade Rift | `shade_rift` | Odalys | Umbra | 35 to 36 | turn the mirrors until the beacon burns | Night Dark: Pace no longer sets the turn order | Night Veil |
+| 10 | Tower Rift | `tower_rift` | Aurelio | Gale | 36 to 37 | open four wind shutters in the chalked order | Sandstorm: every Spirling in front that is not Stone loses 1/16 Vigor each round | Squall |
+| 11 | Oasis Rift | `oasis_rift` | Kaia | Tide | 37 to 38 | three sluice wheels: one below, then one above | Dry Well: every heal on both sides is halved | Dawn Mend |
+| 12 | Sun Rift | `sun_rift` | Emrys | Lumen | 37 to 38 | push two sun-weights onto the dial plates | High Noon: Lumen arts on both sides hit 30% harder | Radiant Lance |
+
+**Solenne (Act IV).** The sand road south from the Saltglass flats opens once the Shade Rift is
+mended and leads to Ochrewell (well, bazaar, clay domes). The Tower Rift is open at once, the
+Oasis Rift after the Tower, the Sun Rift after the Oasis. Kaia has worked for the Brass Veil, a
+rival clan of water merchants, for six years and sold them the oasis; she admits it only after
+her duel. Then Factor Lusk of the Veil waits in Ochrewell (story battle `veil_factor`) and tells
+you that Emrys signed the contract as witness, which Emrys confirms before his own duel.
 
 The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
-18, 23, ...); after Act I they open fully. The story battles keep a curve that never drops (checked
+18, 23, ... 50, then 54, 57 and 60 for Solenne); after Act I they open fully. The story battles keep a curve that never drops (checked
 by `tests/unit/test_rifts12.gd`): Kestra's tag battle at the Root Rift (Ring 23 to 24) sits between
 Joral and Darrow, Veit's last duel at the Shade Rift (Ring 35 to 36) between his plate and Odalys.
 

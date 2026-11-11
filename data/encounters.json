@@ -1242,5 +1242,125 @@
     "ground": "scree"
    }
   ]
+ },
+ "tower_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Zephlet",
+    "min": 34,
+    "max": 35,
+    "weight": 38,
+    "ground": "scree"
+   },
+   {
+    "species": "Shalebat",
+    "min": 34,
+    "max": 35,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Talusk",
+    "min": 34,
+    "max": 36,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Lanternel",
+    "min": 35,
+    "max": 36,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Tempestrel",
+    "min": 36,
+    "max": 36,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
+ },
+ "oasis_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Paddlewisp",
+    "min": 35,
+    "max": 36,
+    "weight": 38,
+    "ground": "fern"
+   },
+   {
+    "species": "Kelpup",
+    "min": 35,
+    "max": 36,
+    "weight": 30,
+    "ground": "fern"
+   },
+   {
+    "species": "Brinelet",
+    "min": 35,
+    "max": 37,
+    "weight": 15,
+    "ground": "fern"
+   },
+   {
+    "species": "Lumenewt",
+    "min": 36,
+    "max": 37,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Ferrowyn",
+    "min": 37,
+    "max": 37,
+    "weight": 5,
+    "ground": "fern"
+   }
+  ]
+ },
+ "sun_rift": {
+  "rate": 0.15,
+  "spawns": [
+   {
+    "species": "Wickit",
+    "min": 35,
+    "max": 36,
+    "weight": 38,
+    "ground": "scree"
+   },
+   {
+    "species": "Kindlop",
+    "min": 35,
+    "max": 36,
+    "weight": 30,
+    "ground": "scree"
+   },
+   {
+    "species": "Talusk",
+    "min": 36,
+    "max": 37,
+    "weight": 15,
+    "ground": "scree"
+   },
+   {
+    "species": "Lanternel",
+    "min": 36,
+    "max": 37,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Glimmerax",
+    "min": 37,
+    "max": 37,
+    "weight": 5,
+    "ground": "scree"
+   }
+  ]
  }
 }

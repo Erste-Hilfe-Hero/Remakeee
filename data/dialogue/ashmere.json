@@ -418,6 +418,9 @@
     "rift_kiln_sealed",
     "rift_glass_sealed",
     "rift_shade_sealed",
+    "rift_tower_sealed",
+    "rift_oasis_sealed",
+    "rift_sun_sealed",
     "cinder_heart_mended",
     "mist_heart_mended",
     "tide_heart_mended"

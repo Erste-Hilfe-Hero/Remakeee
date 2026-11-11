@@ -35,7 +35,7 @@ world that does not follow the classic monster-RPG template. Check new content a
 - Each region has its Voice. **Velahra** (Lumen/Tide) is the Voice of Veydal. It sleeps as a
   light under the lake in front of the Brindlewick lighthouse and was the last one to see
   **Mirela**, the cartographer whose map book the player follows. The Voices of Corvane, Ashmere
-  and Solenne wait in their regions; two more are not named in the map book at all.
+  and Solenne (Act IV, town Ochrewell) wait in their regions; two more are not named in the map book at all.
 - A First Voice is met once, at a fixed place, never in the wild tables (DataValidator checks
   that ancient kinds only appear in a fixed meeting). Bonding is the same Echo call as always,
   with a longer call and a second phase, and no throw, aim or chance display (LEGAL.md).

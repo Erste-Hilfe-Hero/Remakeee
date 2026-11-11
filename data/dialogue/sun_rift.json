@@ -1,0 +1,71 @@
+{
+ "spring": {
+  "lines": [
+   "Warm water seeps up through the sand. It tastes of copper and old promises.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "THE SUN RIFT",
+  "Under the sun palace. The sundial has stopped. Nobody dares tell the sun."
+ ],
+ "hint": [
+  "Palace notice: The great dial door opens while both sun-weights rest on both marks. Do not sit on the marks. This means you, Steward."
+ ],
+ "corwen": [
+  "Corwen: Emrys has served four rulers. He buried two and advised the other two. Hard to say which was worse."
+ ],
+ "corwen_intro": [
+  "Corwen: The palace is closed to visitors. Also to residents. Duel?"
+ ],
+ "corwen_defeat": [
+  "Corwen: Go on. Emrys likes people who win. He outlives them anyway."
+ ],
+ "ettie": [
+  "Ettie: The dial says it's noon. It's said that for nine days. I've stopped eating lunch on principle."
+ ],
+ "ettie_intro": [
+  "Ettie: Let's settle this before the sun moves. So, never."
+ ],
+ "ettie_defeat": [
+  "Ettie: Time well wasted."
+ ],
+ "abel": [
+  "Abel: I sat on one of the marks once. For a week. The door stayed open and so did my position, until it didn't."
+ ],
+ "abel_intro": [
+  "Abel: The palace thanks you for your visit. Now leave or lose."
+ ],
+ "abel_defeat": [
+  "Abel: The palace regrets any inconvenience. Mostly its own."
+ ],
+ "emrys": {
+  "lines": [
+   "Emrys: The sun stopped. I've waited eighty years for it to need me. Now it does, and I'm too tired to stand up."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_sun_sealed",
+    "lines": [
+     "Emrys: The sun moves again. So does the Veil, I expect. Let them. The sun outlived every clan in this desert.",
+     "Emrys: Take Radiant Lance. Twelve Rifts, twelve seals. The far end of the Wide Rift will open for you now."
+    ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Emrys: I've started a sundial for the Undrawn. Nobody knows what time it is there. Ideal working conditions."
+    ]
+   }
+  ]
+ },
+ "emrys_intro": [
+  "Emrys: So Kaia is unmasked. Yes, I signed as her witness. Someone had to read the small print. Nobody else ever does.",
+  "Emrys: Everyone in Solenne works for someone. I work for the sun. It doesn't pay either. Shall we?"
+ ],
+ "emrys_defeat": [
+  "Emrys: ...There. The dial moved. One minute past noon. I'd forgotten how good that feels.",
+  "Emrys: I kept the Veil's contract, you know. The clause about heroes ends their claim. Now it has a hero. Let's mend this."
+ ]
+}

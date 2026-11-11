@@ -140,16 +140,26 @@ const RULES: Dictionary[String, Dictionary] = {
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
 	"night_dark": {"label": "Night Dark", "text": "In the dark nobody sees who moves first: Pace no longer sets the order.", "hidden_order": 1,
 		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	# The Rifts of Solenne (Act IV). "sand_chip_div": after each round every standing Spirling in
+	# front that is not Stone loses max Vigor / div; "heal_mult" scales every heal from arts,
+	# gifts and the field; "lumen_mult" scales the damage of Lumen arts. Both sides feel them.
+	"sandstorm": {"label": "Sandstorm", "text": "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.", "sand_chip_div": 16,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"dry_well": {"label": "Dry Well", "text": "The oasis has been sold dry: every heal on both sides is halved.", "heal_mult": 0.5,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
+	"high_noon": {"label": "High Noon", "text": "The sun stands straight overhead: Lumen arts on both sides hit harder.", "lumen_mult": 1.3,
+		"difficulty": [0, 1, 2, 3], "warden_only": true},
 }
 
 ## The number a Warden rule key adds up to over every rule in [param rule_string] (0 when none
-## sets it). "accuracy_mult" multiplies instead and starts at 1.
+## sets it). Keys ending in "_mult" multiply instead and start at 1.
 static func rule_number(rule_string: String, key: String) -> float:
-	var out: float = 1.0 if key == "accuracy_mult" else 0.0
+	var mult: bool = key.ends_with("_mult")
+	var out: float = 1.0 if mult else 0.0
 	for id: String in split_rules(rule_string):
 		if not RULES[id].has(key):
 			continue
-		if key == "accuracy_mult":
+		if mult:
 			out *= float(RULES[id][key])
 		else:
 			out += float(RULES[id][key])
