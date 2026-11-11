@@ -83,121 +83,122 @@ breaks a rule or any element or kind ends outside 40 to 60 %. `--md <path>` writ
 It is a Python mirror of the battle core: stat curve, damage curve, STAB, keen hits, roll,
 accuracy, Energy (start 10, +1 a turn, rest +2), priority and Pace order, greedy art choice.
 Status arts, traits, Keepsakes and fields are left out on purpose, so it measures the chart and
-base stats only; the full model stays in `tools/balance_sim.gd`. Seeds 1 to 4 all land between
-42.9 and 56.9 %.
+base stats only; the full model stays in `tools/balance_sim.gd`. Seeds 1 to 3 all land between
+41.8 and 58.7 %.
 
-Chart rules: every element has at least 2 strengths and 2 weaknesses, no pair beats each other
-(the old Lumen/Umbra mirror left both with one real strength), and no element strictly dominates
-another. Chart changes: Bloom beats Lumen instead of Stone, Umbra beats Stone instead of Lumen.
-Ink and Echo are prepared for Era II: in the chart only, on no Spirling yet. Each Era I element
-beats one of them and loses to the other, so Era I keeps its 2-against-2 shape.
+Chart rules: every element has at least 2 real strengths and 2 real weaknesses (Lumen and Umbra
+beat each other, which stays neutral both ways and counts as neither), and no element strictly
+dominates another. The Era I chart is unchanged. Ink and Echo are prepared for Era II: in the
+chart only, on no Spirling yet. Each Era I element beats one of them and loses to the other, which
+also gives Lumen and Umbra their second real strength and weakness.
 
-Tuning (data only, `bond_rate` and `BondCalc` untouched): base stats of 54 kinds scaled by at most
-about 18 %, each total kept in its rarity band; Calderox learns Root Grip at ring 36 (Bloom answer
-to Leviarch, which hits Ember/Stone four times; Leviarch won 82 % of final-stage fights, Calderox
-20 %). Biggest moves: Duskdigger +18 %, Solkit +16 %, Smoldrake +15 %, Zephlet -15 %,
-Blotling -11 %, Paddlewisp -10 %.
+Tuning (data only, `bond_rate` and `BondCalc` untouched): base stats of 37 kinds scaled, each
+total kept in its rarity band. The final stage was the worst: Leviarch (Tide/Lumen) hits both
+Ember/Stone finals four times and won 82 %, Calderox 20 %. Calderox (now HP 100, ATK 118, FOC 96,
+SPD 104, DEF 100) learns Root Grip at ring 36 and Cairnhold at ring 1, a Bloom answer to Tide;
+Leviarch -10 %, Verdantusk +5 %. Biggest other moves: Blotling -15 %, Smoldrake, Cindle and
+Solkit +12 %, Scrivane -11 %, Cullet and Cullhorn +11 %.
 
 <!-- type_sim report, rewrite with: python3 tools/balance/type_sim.py --md <path> -->
 Ring 36, 20000 team battles per stage (teams of 3, 2 in a stage of fewer than 6, sides swapped), seed 20261111, band 40 to 60 %.
 
 | Element | Era | Strong vs | Weak vs | Win rate |
 | --- | --- | --- | --- | --- |
-| Ember | I | Bloom, Umbra, Echo | Tide, Stone, Ink | 49.4 % |
-| Tide | I | Ember, Stone, Echo | Bloom, Volt, Ink | 50.2 % |
-| Bloom | I | Tide, Lumen, Echo | Ember, Gale, Ink | 51.8 % |
-| Volt | I | Tide, Gale, Ink | Stone, Lumen, Echo | 50.1 % |
-| Stone | I | Ember, Volt, Ink | Tide, Umbra, Echo | 48.9 % |
-| Gale | I | Bloom, Lumen, Echo | Volt, Umbra, Ink | 52.0 % |
-| Lumen | I | Umbra, Volt, Ink | Bloom, Gale, Echo | 49.5 % |
-| Umbra | I | Gale, Stone, Ink | Ember, Lumen, Echo | 52.3 % |
+| Ember | I | Bloom, Umbra, Echo | Tide, Stone, Ink | 49.2 % |
+| Tide | I | Ember, Stone, Echo | Bloom, Volt, Ink | 52.3 % |
+| Bloom | I | Tide, Stone, Echo | Ember, Gale, Ink | 49.0 % |
+| Volt | I | Tide, Gale, Ink | Stone, Lumen, Echo | 49.8 % |
+| Stone | I | Ember, Volt, Ink | Tide, Bloom, Echo | 49.0 % |
+| Gale | I | Bloom, Lumen, Echo | Volt, Umbra, Ink | 52.3 % |
+| Lumen | I | Volt, Ink | Gale, Echo | 51.0 % |
+| Umbra | I | Gale, Ink | Ember, Echo | 50.1 % |
 | Ink | II | Ember, Tide, Bloom, Gale | Volt, Stone, Lumen, Umbra | on no Spirling yet |
 | Echo | II | Volt, Stone, Lumen, Umbra | Ember, Tide, Bloom, Gale | on no Spirling yet |
 
-Species: 80 measured, lowest 45.1 %, highest 54.9 %.
+Species: 80 measured, lowest 43.2 %, highest 56.7 %.
 
 | Species | Stage | Win rate | Games |
 | --- | --- | --- | --- |
-| Reedquill | 1 | 54.8 % | 6468 |
-| Mirkmole | 1 | 54.6 % | 6522 |
-| Blotling | 1 | 54.1 % | 6448 |
-| Puddlet | 1 | 53.8 % | 6354 |
-| Paddlewisp | 1 | 53.8 % | 6460 |
-| Seamlet | 1 | 53.5 % | 6518 |
-| Bogwick | 1 | 53.4 % | 6446 |
-| Glimmoth | 1 | 53.0 % | 6658 |
-| Fluting | 1 | 52.5 % | 6396 |
-| Ashwren | 1 | 52.4 % | 6408 |
-| Orrlet | 1 | 52.3 % | 6530 |
-| Kindlop | 1 | 52.0 % | 6508 |
-| Flourie | 1 | 52.0 % | 6592 |
-| Shimmerlet | 1 | 51.8 % | 6486 |
-| Zephlet | 1 | 51.7 % | 6406 |
-| Drizzlet | 1 | 51.7 % | 6604 |
-| Brinelet | 1 | 51.6 % | 6488 |
-| Millwhit | 1 | 51.3 % | 6498 |
-| Saltsprig | 1 | 50.8 % | 6560 |
-| Highhare | 1 | 50.2 % | 6398 |
-| Zippit | 1 | 50.1 % | 6314 |
-| Hushkin | 1 | 49.3 % | 6594 |
-| Etchling | 1 | 49.1 % | 6206 |
-| Puddock | 1 | 48.0 % | 6718 |
-| Duneshrew | 1 | 47.5 % | 6364 |
-| Smeltpup | 1 | 47.4 % | 6626 |
-| Croziel | 1 | 47.2 % | 6616 |
-| Kelpup | 1 | 47.1 % | 6344 |
-| Shalebat | 1 | 47.1 % | 6526 |
-| Cullet | 1 | 46.8 % | 6532 |
-| Cindle | 1 | 46.1 % | 6512 |
-| Wickit | 1 | 45.9 % | 6396 |
-| Silthop | 1 | 45.8 % | 6640 |
-| Talusk | 1 | 45.6 % | 6454 |
-| Cogmite | 1 | 45.4 % | 6350 |
-| Solkit | 1 | 45.2 % | 6544 |
-| Mossling | 1 | 45.1 % | 6516 |
+| Bogwick | 1 | 56.6 % | 6446 |
+| Paddlewisp | 1 | 56.4 % | 6460 |
+| Fluting | 1 | 55.8 % | 6396 |
+| Zephlet | 1 | 55.4 % | 6406 |
+| Ashwren | 1 | 55.2 % | 6408 |
+| Orrlet | 1 | 54.7 % | 6530 |
+| Blotling | 1 | 54.4 % | 6448 |
+| Puddlet | 1 | 54.1 % | 6354 |
+| Mirkmole | 1 | 53.7 % | 6522 |
+| Seamlet | 1 | 53.6 % | 6518 |
+| Highhare | 1 | 52.7 % | 6398 |
+| Hushkin | 1 | 52.4 % | 6594 |
+| Glimmoth | 1 | 52.4 % | 6658 |
+| Brinelet | 1 | 52.3 % | 6488 |
+| Etchling | 1 | 51.8 % | 6206 |
+| Reedquill | 1 | 51.3 % | 6468 |
+| Shimmerlet | 1 | 51.1 % | 6486 |
+| Drizzlet | 1 | 51.1 % | 6604 |
+| Kindlop | 1 | 50.9 % | 6508 |
+| Millwhit | 1 | 49.9 % | 6498 |
+| Zippit | 1 | 49.9 % | 6314 |
+| Saltsprig | 1 | 49.8 % | 6560 |
+| Silthop | 1 | 48.4 % | 6640 |
+| Puddock | 1 | 48.1 % | 6718 |
+| Croziel | 1 | 46.8 % | 6616 |
+| Cindle | 1 | 46.7 % | 6512 |
+| Shalebat | 1 | 46.5 % | 6526 |
+| Kelpup | 1 | 46.4 % | 6344 |
+| Mossling | 1 | 45.9 % | 6516 |
+| Solkit | 1 | 45.3 % | 6544 |
+| Smeltpup | 1 | 44.9 % | 6626 |
+| Cogmite | 1 | 44.8 % | 6350 |
+| Wickit | 1 | 44.4 % | 6396 |
+| Flourie | 1 | 44.3 % | 6592 |
+| Duneshrew | 1 | 44.3 % | 6364 |
+| Talusk | 1 | 44.1 % | 6454 |
+| Cullet | 1 | 44.0 % | 6532 |
+| Millvane | 2 | 56.7 % | 6214 |
+| Glasstarn | 2 | 56.7 % | 6292 |
+| Ashcrest | 2 | 56.5 % | 6122 |
+| Burinox | 2 | 56.2 % | 6272 |
+| Saltcrown | 2 | 55.8 % | 6066 |
+| Delthorn | 2 | 55.7 % | 6206 |
+| Ferrowyn | 2 | 55.2 % | 6218 |
+| Mirassil | 2 | 54.8 % | 6064 |
 | Rainmantle | 2 | 54.4 % | 6284 |
-| Ashcrest | 2 | 54.3 % | 6122 |
-| Floursprite | 2 | 54.2 % | 6138 |
-| Scrivane | 2 | 54.2 % | 6062 |
-| Ferrowyn | 2 | 53.8 % | 6218 |
-| Saltcrown | 2 | 53.7 % | 6066 |
-| Lanternel | 2 | 53.3 % | 6122 |
-| Delthorn | 2 | 53.3 % | 6206 |
-| Glimmerax | 2 | 53.2 % | 6218 |
-| Glasstarn | 2 | 53.1 % | 6292 |
-| Orrerine | 2 | 52.8 % | 6178 |
-| Tempestrel | 2 | 52.7 % | 6242 |
-| Reedwarden | 2 | 52.6 % | 6310 |
-| Mendlace | 2 | 52.5 % | 6258 |
-| Mirassil | 2 | 52.3 % | 6064 |
-| Wickmoth | 2 | 52.2 % | 6162 |
-| Burinox | 2 | 52.0 % | 6272 |
-| Solmantle | 2 | 52.0 % | 6274 |
-| Millvane | 2 | 52.0 % | 6214 |
-| Zenithare | 2 | 51.9 % | 6164 |
-| Fenwarden | 2 | 51.1 % | 6160 |
-| Kelphound | 2 | 50.3 % | 6130 |
-| Marshfife | 2 | 50.1 % | 6120 |
-| Lumenewt | 2 | 48.3 % | 6170 |
-| Obsidroth | 2 | 47.1 % | 6080 |
-| Glassfell | 2 | 46.9 % | 6256 |
-| Silentra | 2 | 46.8 % | 6098 |
-| Thornback | 2 | 46.4 % | 6088 |
-| Dunebastion | 2 | 46.0 % | 6106 |
-| Riptail | 2 | 45.9 % | 6014 |
-| Talusgard | 2 | 45.8 % | 6078 |
-| Siltgrove | 2 | 45.8 % | 6108 |
-| Duskdigger | 2 | 45.7 % | 6024 |
-| Frondmere | 2 | 45.7 % | 6074 |
-| Smoldrake | 2 | 45.5 % | 6076 |
-| Cullhorn | 2 | 45.5 % | 6014 |
-| Smeltmaw | 2 | 45.4 % | 6064 |
-| Cogwright | 2 | 45.2 % | 6174 |
-| Saltspire | 2 | 45.1 % | 6300 |
-| Verdantusk | 3 | 54.9 % | 40000 |
-| Calderox | 3 | 52.4 % | 40000 |
-| Leviarch | 3 | 46.9 % | 40000 |
-| Cairnhold | 3 | 45.7 % | 40000 |
+| Tempestrel | 2 | 54.2 % | 6242 |
+| Marshfife | 2 | 54.0 % | 6120 |
+| Glimmerax | 2 | 53.8 % | 6218 |
+| Obsidroth | 2 | 53.4 % | 6080 |
+| Scrivane | 2 | 52.8 % | 6062 |
+| Zenithare | 2 | 52.6 % | 6164 |
+| Mendlace | 2 | 52.0 % | 6258 |
+| Silentra | 2 | 52.0 % | 6098 |
+| Solmantle | 2 | 50.9 % | 6274 |
+| Reedwarden | 2 | 50.6 % | 6310 |
+| Lanternel | 2 | 50.2 % | 6122 |
+| Floursprite | 2 | 48.9 % | 6138 |
+| Fenwarden | 2 | 48.9 % | 6160 |
+| Kelphound | 2 | 48.9 % | 6130 |
+| Orrerine | 2 | 48.0 % | 6178 |
+| Wickmoth | 2 | 47.3 % | 6162 |
+| Saltspire | 2 | 47.2 % | 6300 |
+| Lumenewt | 2 | 47.1 % | 6170 |
+| Thornback | 2 | 46.2 % | 6088 |
+| Talusgard | 2 | 46.0 % | 6078 |
+| Cullhorn | 2 | 45.6 % | 6014 |
+| Dunebastion | 2 | 45.2 % | 6106 |
+| Riptail | 2 | 44.5 % | 6014 |
+| Frondmere | 2 | 44.5 % | 6074 |
+| Glassfell | 2 | 44.2 % | 6256 |
+| Siltgrove | 2 | 44.2 % | 6108 |
+| Duskdigger | 2 | 43.7 % | 6024 |
+| Smoldrake | 2 | 43.4 % | 6076 |
+| Cogwright | 2 | 43.3 % | 6174 |
+| Smeltmaw | 2 | 43.2 % | 6064 |
+| Leviarch | 3 | 54.2 % | 40000 |
+| Cairnhold | 3 | 50.8 % | 40000 |
+| Calderox | 3 | 47.7 % | 40000 |
+| Verdantusk | 3 | 47.2 % | 40000 |
 
 Chart problems: none
 <!-- /type_sim report -->

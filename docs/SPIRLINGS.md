@@ -18,45 +18,45 @@ Region, rarity, role and origin come from the data; edit the JSON, then update t
 | No. | Name | Elements | Region | Rarity | Role | Trait | Stat total | Origin |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Kindlop | Ember | veydal | uncommon | kindler | kindling | 324 | Born in a lamp left burning through a long winter. |
-| 2 | Smoldrake | Ember | veydal | shy | kindler | kindling | 481 | A Kindlop that kept the lighthouse fire for a whole season. |
-| 3 | Calderox | Ember/Stone | veydal | shy | kindler | kindling | 517 | Said to sleep inside the old kilns of the Thornridge. |
-| 4 | Puddlet | Tide | veydal | uncommon | vanguard | slick | 295 | A drop of the lighthouse lake that never wanted to sink. |
-| 5 | Riptail | Tide | veydal | shy | vanguard | slick | 415 | Grows in the strong currents below the Saltmarsh dikes. |
-| 6 | Leviarch | Tide/Lumen | veydal | shy | vanguard | slick | 472 | Old tales say it carries the lake's light down to the deep. |
-| 7 | Mossling | Bloom | veydal | uncommon | bulwark | deep_roots | 305 | Sprouts where a Wayfarer once rested under a fern. |
-| 8 | Thornback | Bloom | veydal | shy | bulwark | deep_roots | 423 | Its thorns grew to guard the young ferns of the Fernstair. |
-| 9 | Verdantusk | Bloom/Umbra | veydal | shy | bulwark | deep_roots | 453 | Walks the shaded edge of the forest where moss turns dark. |
+| 2 | Smoldrake | Ember | veydal | shy | kindler | kindling | 468 | A Kindlop that kept the lighthouse fire for a whole season. |
+| 3 | Calderox | Ember/Stone | veydal | shy | kindler | kindling | 518 | Said to sleep inside the old kilns of the Thornridge. |
+| 4 | Puddlet | Tide | veydal | uncommon | vanguard | slick | 300 | A drop of the lighthouse lake that never wanted to sink. |
+| 5 | Riptail | Tide | veydal | shy | vanguard | slick | 410 | Grows in the strong currents below the Saltmarsh dikes. |
+| 6 | Leviarch | Tide/Lumen | veydal | shy | vanguard | slick | 450 | Old tales say it carries the lake's light down to the deep. |
+| 7 | Mossling | Bloom | veydal | uncommon | bulwark | deep_roots | 300 | Sprouts where a Wayfarer once rested under a fern. |
+| 8 | Thornback | Bloom | veydal | shy | bulwark | deep_roots | 400 | Its thorns grew to guard the young ferns of the Fernstair. |
+| 9 | Verdantusk | Bloom/Umbra | veydal | shy | bulwark | deep_roots | 470 | Walks the shaded edge of the forest where moss turns dark. |
 | 10 | Zippit | Volt | veydal | common | striker | surge | 320 | A spark that jumped off the first storm over Brindlewick. |
-| 11 | Glimmerax | Volt/Lumen | veydal | shy | striker | surge | 459 | A Zippit that caught the lighthouse beam and kept it. |
-| 12 | Shalebat | Stone/Umbra | veydal | common | bulwark | thick_hide | 334 | Chipped off the Crowcrest cliffs on a cold night. |
+| 11 | Glimmerax | Volt/Lumen | veydal | shy | striker | surge | 470 | A Zippit that caught the lighthouse beam and kept it. |
+| 12 | Shalebat | Stone/Umbra | veydal | common | bulwark | thick_hide | 320 | Chipped off the Crowcrest cliffs on a cold night. |
 | 13 | Obsidroth | Stone/Umbra | veydal | shy | bulwark | thick_hide | 450 | Its stone hardened deep in the cliff, far from any light. |
-| 14 | Zephlet | Gale | veydal | common | striker | last_stand | 273 | A gust that got lost between the hills and stayed. |
-| 15 | Tempestrel | Gale | veydal | shy | striker | last_stand | 416 | Rides out every storm on the coast and returns unhurt. |
-| 16 | Wickit | Lumen | veydal | uncommon | weaver | light_sleeper | 317 | The last flicker of a candle that a child would not blow out. |
-| 17 | Lumenewt | Lumen/Tide | veydal | shy | weaver | light_sleeper | 414 | Found where lamp light falls on still water. |
-| 18 | Mirkmole | Umbra | veydal | common | vanguard | steady | 322 | Dug its way up from the dark under Murk Hollow. |
-| 19 | Duskdigger | Umbra/Stone | veydal | shy | vanguard | steady | 504 | Only a Mirkmole that saw Murk Hollow's dark grows like this. |
+| 14 | Zephlet | Gale | veydal | common | striker | last_stand | 295 | A gust that got lost between the hills and stayed. |
+| 15 | Tempestrel | Gale | veydal | shy | striker | last_stand | 411 | Rides out every storm on the coast and returns unhurt. |
+| 16 | Wickit | Lumen | veydal | uncommon | weaver | light_sleeper | 304 | The last flicker of a candle that a child would not blow out. |
+| 17 | Lumenewt | Lumen/Tide | veydal | shy | weaver | light_sleeper | 406 | Found where lamp light falls on still water. |
+| 18 | Mirkmole | Umbra | veydal | common | vanguard | steady | 313 | Dug its way up from the dark under Murk Hollow. |
+| 19 | Duskdigger | Umbra/Stone | veydal | shy | vanguard | steady | 441 | Only a Mirkmole that saw Murk Hollow's dark grows like this. |
 | 20 | Kelpup | Tide/Bloom | veydal | uncommon | weaver | deep_roots | 312 | Washed up in a knot of kelp after a high tide. |
 | 21 | Kelphound | Tide/Bloom | veydal | shy | weaver | deep_roots | 420 | A Kelpup that found a pearl and grew around its glow. |
-| 22 | Blotling | Tide/Umbra | veydal | uncommon | weaver | slick | 275 | Crawled out of Mirela's old inkwells in the lighthouse. |
-| 23 | Scrivane | Tide/Umbra | veydal | shy | weaver | slick | 410 | A Blotling that read every page of Mirela's map book. |
+| 22 | Blotling | Tide/Umbra | veydal | uncommon | weaver | slick | 263 | Crawled out of Mirela's old inkwells in the lighthouse. |
+| 23 | Scrivane | Tide/Umbra | veydal | shy | weaver | slick | 373 | A Blotling that read every page of Mirela's map book. |
 | 24 | Hushkin | Umbra | veydal | uncommon | bulwark | steady | 316 | Born from the Hush itself, the silence that fell over Veydal. |
 | 25 | Silentra | Umbra/Lumen | veydal | shy | bulwark | steady | 412 | A Hushkin that heard ten perfect echoes and answered in light. |
-| 26 | Paddlewisp | Tide/Gale | veydal | common | striker | last_stand | 280 | Lives under Aldo's ferry and was born in its wake. |
-| 27 | Ferrowyn | Tide/Gale | veydal | shy | striker | last_stand | 389 | A Paddlewisp that guided a ferry through a whole storm season. |
-| 28 | Talusk | Stone | veydal | common | bulwark | thick_hide | 333 | A heap of Crowcrest scree that woke up with one grey eye. |
-| 29 | Talusgard | Stone | veydal | shy | bulwark | thick_hide | 468 | A Talusk that carried its first waymark up the Crowcrest. |
-| 30 | Cairnhold | Stone/Ember | veydal | shy | bulwark | thick_hide | 469 | The oldest waymark of the Crowcrest, still walking. |
-| 31 | Fluting | Gale/Bloom | veydal | uncommon | kindler | light_sleeper | 297 | A hollow reed of the Saltmarsh that learned the wind's songs. |
+| 26 | Paddlewisp | Tide/Gale | veydal | common | striker | last_stand | 286 | Lives under Aldo's ferry and was born in its wake. |
+| 27 | Ferrowyn | Tide/Gale | veydal | shy | striker | last_stand | 386 | A Paddlewisp that guided a ferry through a whole storm season. |
+| 28 | Talusk | Stone | veydal | common | bulwark | thick_hide | 326 | A heap of Crowcrest scree that woke up with one grey eye. |
+| 29 | Talusgard | Stone | veydal | shy | bulwark | thick_hide | 462 | A Talusk that carried its first waymark up the Crowcrest. |
+| 30 | Cairnhold | Stone/Ember | veydal | shy | bulwark | thick_hide | 500 | The oldest waymark of the Crowcrest, still walking. |
+| 31 | Fluting | Gale/Bloom | veydal | uncommon | kindler | light_sleeper | 289 | A hollow reed of the Saltmarsh that learned the wind's songs. |
 | 32 | Marshfife | Gale/Bloom | veydal | shy | kindler | light_sleeper | 432 | A Fluting that played through one long Saltmarsh dusk. |
-| 33 | Glasstarn | Tide/Lumen | veydal | shy | weaver | slick | 411 | A piece of a Crowcrest mountain lake that mirrors the sky. |
-| 34 | Lanternel | Lumen/Gale | veydal | uncommon | striker | light_sleeper | 405 | Followed the lighthouse lights to Brindlewick on the first storm night. |
-| 35 | Seamlet | Volt/Umbra | veydal | uncommon | weaver | surge | 287 | A spark that jumped from the edge of a Rift. |
+| 33 | Glasstarn | Tide/Lumen | veydal | shy | weaver | slick | 407 | A piece of a Crowcrest mountain lake that mirrors the sky. |
+| 34 | Lanternel | Lumen/Gale | veydal | uncommon | striker | light_sleeper | 424 | Followed the lighthouse lights to Brindlewick on the first storm night. |
+| 35 | Seamlet | Volt/Umbra | veydal | uncommon | weaver | surge | 306 | A spark that jumped from the edge of a Rift. |
 | 36 | Mendlace | Volt/Umbra | veydal | shy | weaver | surge | 426 | A Seamlet that saw its own Rift mended at last. |
-| 37 | Croziel | Bloom | veydal | common | kindler | deep_roots | 311 | A young fern frond of the Fernstair that never stopped curling. |
-| 38 | Frondmere | Bloom | veydal | shy | kindler | deep_roots | 420 | A Croziel that finally unrolled, frond by frond. |
+| 37 | Croziel | Bloom | veydal | common | kindler | deep_roots | 300 | A young fern frond of the Fernstair that never stopped curling. |
+| 38 | Frondmere | Bloom | veydal | shy | kindler | deep_roots | 394 | A Croziel that finally unrolled, frond by frond. |
 | 39 | Brinelet | Tide/Stone | veydal | uncommon | vanguard | slick | 318 | A salt crystal from the pans of the Saltmarsh. |
-| 40 | Saltspire | Tide/Stone | veydal | shy | vanguard | slick | 456 | A Brinelet that grew through three dry summers. |
+| 40 | Saltspire | Tide/Stone | veydal | shy | vanguard | slick | 436 | A Brinelet that grew through three dry summers. |
 
 ## Why each new line has its trait (item 334)
 

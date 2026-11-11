@@ -45,24 +45,23 @@ def chart_problems(chart, species):
     types = chart["types"]
     strong = {t: set(v["strong"]) for t, v in types.items()}
     out = []
+
+    def mult(a, d):
+        if d in strong[a] and a not in strong[d]:
+            return chart["strong_mult"]
+        if a in strong[d] and d not in strong[a]:
+            return chart["weak_mult"]
+        return 1.0
+
     for t, s in strong.items():
         for o in s:
             if o not in types:
                 out.append("%s beats unknown %s" % (t, o))
-            elif t in strong[o]:
-                out.append("%s and %s beat each other" % (t, o))
-        weak = [o for o in types if t in strong[o]]
-        if len(s) < 2:
-            out.append("%s has %d strengths" % (t, len(s)))
-        if len(weak) < 2:
-            out.append("%s has %d weaknesses" % (t, len(weak)))
-
-    def mult(a, d):
-        if d in strong[a]:
-            return chart["strong_mult"]
-        if a in strong[d]:
-            return chart["weak_mult"]
-        return 1.0
+        # A mutual pair is neutral both ways, so only real strengths and weaknesses count.
+        if sum(mult(t, o) > 1 for o in types) < 2:
+            out.append("%s has fewer than 2 real strengths" % t)
+        if sum(mult(o, t) > 1 for o in types) < 2:
+            out.append("%s has fewer than 2 real weaknesses" % t)
 
     for a in types:
         for b in types:
@@ -237,10 +236,10 @@ def report(chart, sp, ty, problems):
         "| --- | --- | --- | --- | --- |"]
     types = chart["types"]
     for t, v in types.items():
-        weak = [o for o in types if t in types[o]["strong"]]
+        weak = [o for o in types if t in types[o]["strong"] and o not in types[t]["strong"]]
         wr = "%.1f %%" % (ty[t][0] * 100) if t in ty else "on no Spirling yet"
         lines.append("| %s | %s | %s | %s | %s |" % (t.capitalize(), "I" if v.get("era", 1) == 1 else "II",
-            ", ".join(x.capitalize() for x in v["strong"]), ", ".join(x.capitalize() for x in weak), wr))
+            ", ".join(x.capitalize() for x in v["strong"] if t not in types[x]["strong"]), ", ".join(x.capitalize() for x in weak), wr))
     rates = [r for r, _, _ in sp.values()]
     lines += ["", "Species: %d measured, lowest %.1f %%, highest %.1f %%." % (len(sp), min(rates) * 100, max(rates) * 100), "",
         "| Species | Stage | Win rate | Games |", "| --- | --- | --- | --- |"]

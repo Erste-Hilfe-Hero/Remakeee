@@ -27,8 +27,8 @@ func test_element_chart_matches_spec() -> void:
 	var E := Elements.E
 	assert_eq(Elements.single(E.EMBER, E.BLOOM), 2.0)
 	assert_eq(Elements.single(E.BLOOM, E.EMBER), 0.5)
-	assert_eq(Elements.single(E.LUMEN, E.UMBRA), 2.0, "Lumen beats Umbra (data/type_chart.json)")
-	assert_eq(Elements.single(E.UMBRA, E.LUMEN), 0.5, "no mutual pair left in the chart")
+	assert_eq(Elements.single(E.LUMEN, E.UMBRA), 1.0, "Lumen/Umbra mirror is neutral")
+	assert_eq(Elements.single(E.UMBRA, E.LUMEN), 1.0, "Lumen/Umbra mirror is neutral")
 	assert_eq(Elements.multiplier(E.TIDE, [E.EMBER, E.STONE]), 4.0, "dual elements multiply")
 	for atk: int in E.values():
 		assert_eq((Elements.STRONG[atk] as Array).size(), 2, "each element beats exactly 2")

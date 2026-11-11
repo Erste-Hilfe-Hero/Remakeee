@@ -1,6 +1,7 @@
 class_name Elements
 ## The 8 Era I elements. The chart lives in data/type_chart.json (docs/BALANCE.md, Type chart):
-## every element has at least 2 strengths and 2 weaknesses and no pair beats each other.
+## every element has at least 2 real strengths and 2 real weaknesses (Lumen and Umbra beat each
+## other, which is neutral both ways).
 ## Era II elements (Ink, Echo) are in the chart only; they sit on no Spirling yet.
 enum E { EMBER, TIDE, BLOOM, VOLT, STONE, GALE, LUMEN, UMBRA }
 
@@ -48,7 +49,7 @@ static func single(atk: int, def: int) -> float:
 	var atk_strong: bool = def in STRONG[atk]
 	var def_strong: bool = atk in STRONG[def]
 	if atk_strong and def_strong:
-		return 1.0  # the chart allows no mutual pair; kept as a guard
+		return 1.0  # Lumen <-> Umbra mirror
 	if atk_strong:
 		return 2.0
 	if def_strong:
