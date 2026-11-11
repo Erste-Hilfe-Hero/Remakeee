@@ -32,6 +32,22 @@
    "facing": "down",
    "dialogue": "gravers_hall/undertaker",
    "sprite": "elder"
+  },
+  {
+   "id": "brisk",
+   "x": 6,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "ashmere_side/brisk",
+   "sprite": "villager"
+  },
+  {
+   "id": "pell",
+   "x": 2,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "ashmere_side/pell",
+   "sprite": "villager"
   }
  ],
  "signs": [],

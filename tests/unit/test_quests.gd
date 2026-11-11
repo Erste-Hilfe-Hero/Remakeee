@@ -74,7 +74,11 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 					settable[str(fl)] = true
 	for f: String in DirAccess.get_files_at("res://data/maps"):
 		var m: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/maps/" + f))
-		for n: Variant in m.get("npcs", []):
+		# Wayfarers on the rooms of a dungeon count too (the Soot Vaults guards).
+		var npcs: Array = m.get("npcs", []).duplicate()
+		for fl: Variant in m.get("floors", []):
+			npcs.append_array((fl as Dictionary).get("npcs", []))
+		for n: Variant in npcs:
 			if n.has("beaten_flag"):
 				settable[str(n.beaten_flag)] = true
 			if n.has("warden"):

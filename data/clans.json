@@ -14,6 +14,7 @@
   "vash": {"clan": "none", "role": "corrupt referee", "trust": 20, "use": 60},
   "morrow": {"clan": "none", "role": "Warden captain with two tills", "trust": 30, "use": 40},
   "marlo": {"clan": "none", "role": "conscience, Spirling doctor", "trust": 60, "use": 10},
+  "fitch": {"clan": "ruskweber", "role": "toll man of the Soot Vaults", "trust": 20, "use": 50},
   "wren": {"clan": "none", "role": "home as leverage, guest house", "trust": 70, "use": 20},
   "aldra": {"clan": "strangers", "ally": true, "act": 1, "role": "warns about Fenrick's letter", "trust": 60, "use": 20},
   "lipka": {"clan": "strangers", "ally": true, "act": 1, "role": "tip seller; loyal until the player's secrets make them worth selling", "trust": 40, "use": 35},
@@ -31,6 +32,7 @@
   "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35}
  },
  "favors": {
+  "fitch_toll": {"npc": "fitch", "kind": "lend_coins", "amount": 150, "reward_chance": 0.0, "betray": {"say": "soot_vaults/fitch_betray", "battle": "fitch_ambush", "ledger": "fitch_toll"}, "kept": {"say": "soot_vaults/fitch_kept", "item": "max_tonic"}},
   "vash_record": {"npc": "vash", "kind": "lend_coins", "amount": 300,
    "betray": {"flags": ["clan_b1"], "ledger": "vash_record", "say": "clans/vash_paid"},
    "kept": {"flags": ["clan_b1"], "ledger": "vash_record", "say": "clans/vash_kept"}},
@@ -143,6 +145,8 @@
   {"id": "basin", "act": 4, "ref": "clans/ledger_basin"},
   {"id": "throne", "act": 4, "ref": "clans/ledger_throne"},
   {"id": "deeds", "act": 4, "ref": "clans/ledger_deeds"},
-  {"id": "crown", "act": 4, "ref": "clans/ledger_crown"}
+  {"id": "crown", "act": 4, "ref": "clans/ledger_crown"},
+  {"id": "fitch_toll", "act": 3, "ref": "soot_vaults/ledger_fitch"},
+  {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"}
  ]
 }
