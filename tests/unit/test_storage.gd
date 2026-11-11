@@ -77,7 +77,7 @@ func test_damaged_box_data_loads_safely() -> void:
 	assert_eq(GameState.storage_boxes[0].color, "ink", "unknown colour falls back")
 	assert_eq(GameState.storage_box_bonus, 0)
 	assert_eq(GameState.team_presets.size(), 1)
-	assert_eq((GameState.team_presets[0].uids as Array).size(), GameState.MAX_PARTY)
+	assert_eq((GameState.team_presets[0].uids as Array).size(), GameState.MAX_PARTY + 1, "room for the sixth team slot")
 
 func test_multi_move_takes_at_most_ten_and_skips_favourites() -> void:
 	_fill_storage(14)
@@ -206,3 +206,20 @@ func test_storage_card_shows_ring_temperament_keepsake_origin_and_sparks() -> vo
 func test_team_summary_shows_the_temperament_sentence() -> void:
 	var s: Spirling = _mk()
 	assert_string_contains(MenuHost.summary(s), s.temperament().text)
+
+## Bug plan (Lager, item 1338): a six-member preset saved with the sixth team slot lost its
+## sixth member on the next load, and without the slot a preset must not overfill the team.
+func test_six_member_preset_survives_a_save_and_respects_the_slot() -> void:
+	var billing_before: Dictionary = Billing.state
+	Billing.state = {"unlocks": {"team_slot_6": 1}}
+	for i: int in 6:
+		GameState.party.append(_mk())
+	assert_true(GameState.save_preset(0, "Six"))
+	GameState.from_dict(GameState.to_dict())
+	assert_eq((GameState.team_presets[0].uids as Array).size(), 6)
+	assert_true(GameState.load_preset(0))
+	assert_eq(GameState.party.size(), 6)
+	Billing.state = {}
+	assert_true(GameState.load_preset(0))
+	assert_eq(GameState.party.size(), GameState.MAX_PARTY, "without the slot the sixth stays out")
+	Billing.state = billing_before
