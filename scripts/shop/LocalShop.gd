@@ -161,6 +161,10 @@ func offer_block(uid: String, o: Dictionary, choice: Variant) -> String:
 	elif req.begins_with("tier:"):
 		if not ShopEffects.tier_ok(req, int(_shop(uid).unlocks.get(req.get_slice(":", 1), 0))):
 			return "not_yet"
+	elif req.begins_with("none:"):
+		var un: Dictionary = _shop(uid).unlocks
+		if not ShopEffects.none_ok(req, func(k: String) -> int: return int(un.get(k, 0))):
+			return "not_yet"
 	elif not req.is_empty():
 		return "not_yet"
 	if o.has("choice") and (choice == null or not str(choice) in o.choice):
@@ -176,7 +180,7 @@ func _grant(uid: String, purchase_id: int, o: Dictionary, choice: Variant) -> vo
 				_ledger_add(uid, int(g.n), "store", "purchase:%d" % purchase_id)
 			"unlock":
 				s.unlocks[str(g.id)] = int(s.unlocks.get(str(g.id), 0)) + 1
-			"item", "coins":
+			"item", "coins", "spirling":
 				bag.append(g.duplicate())
 			"choice":
 				bag.append({"t": "item", "id": str(choice), "n": int(g.get("n", 1))})

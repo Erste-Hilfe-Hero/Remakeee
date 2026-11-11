@@ -313,3 +313,26 @@ static func add_crystal(s: Spirling, key: String, n: int) -> int:
 ## so tier n+1 is bought by paying only the difference. True when [param owned] fits.
 static func tier_ok(req: String, owned: int) -> bool:
 	return owned == int(req.get_slice(":", 2))
+
+## --- Pay-to-win step 2 (Ali, 11 Nov 2026): Spirlings for sale, bond lures, seal set. ---
+
+## The Spirling a "spirling" grant hands over: the named species at the named Ring, the highest
+## Spark in every value, marked as bought (never traded or lent). Null for an unknown species.
+static func bought_spirling(g: Dictionary) -> Spirling:
+	var d: SpirlingData = Database.species(str(g.get("species", "")))
+	if d == null:
+		return null
+	var s: Spirling = Spirling.new(d, clampi(int(g.get("level", 1)), 1, Spirling.MAX_LEVEL))
+	for key: String in Spirling.STAT_KEYS:
+		s.spark[key] = Spirling.SPARK_MAX
+	s.shop_bought = true
+	s.hp = s.max_hp()
+	return s
+
+## "none:<unlock>,<unlock>" means the account owns none of these unlocks (the Seal Set).
+## [param count] gives the owned count of one unlock.
+static func none_ok(req: String, count: Callable) -> bool:
+	for k: String in req.get_slice(":", 1).split(",", false):
+		if int(count.call(k)) > 0:
+			return false
+	return true

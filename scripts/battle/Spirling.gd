@@ -72,6 +72,9 @@ var gleam: bool = false
 ## +10 % on all five values from the shop's Gleam Prism (items 4791-4794). Saves from before wild
 ## Gleams have only "gleam", which then meant this boost. The Fair League never carries it.
 var gleam_boost: bool = false
+## Bought in the shop as a Spirling offer (pay-to-win plan, points 61-80): never traded or lent.
+## Saved as "shop".
+var shop_bought: bool = false
 const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
@@ -468,6 +471,7 @@ func to_dict() -> Dictionary:
 		"core": temper_core,
 		"gleam": gleam,
 		"gleam_boost": gleam_boost,
+		"shop": shop_bought,
 		"variant": variant,
 		"origin_map": origin_map,
 		"origin_era": origin_era,
@@ -515,6 +519,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.temper_core = d.get("core") is bool and d.get("core")
 	s.gleam = d.get("gleam") is bool and d.get("gleam")
 	s.gleam_boost = d.get("gleam_boost") is bool and d.get("gleam_boost") if d.has("gleam_boost") else s.gleam
+	s.shop_bought = d.get("shop") is bool and d.get("shop")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
 	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, 4)
