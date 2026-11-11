@@ -42,7 +42,7 @@ func test_era3_art_paths_and_fallback() -> void:
 
 func test_starting_set_sprites_exist() -> void:
 	var d: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/eras.json"))
-	var names: Array = d["era3"]["starting_set"]
+	var starting: Array = d["era3"]["starting_set"]
 	assert_eq(starting.size(), 9)
 	for sp: Dictionary in starting:
 		for facing: String in ["front", "back"]:
