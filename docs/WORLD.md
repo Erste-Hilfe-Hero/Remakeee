@@ -138,6 +138,7 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `madderby_guild` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `mirror_rift` | rift | 12x13 | 0 | 0 | 20 |
 | corvane | `rain_rift` | rift | 12x13 | 0 | 0 | 22 |
+| corvane | `rook_vault` | inside | 12x9 + 12x9 + 12x9 + 12x9 | 5 | 3 | 16 |
 | corvane | `root_rift` | rift | 12x22 | 0 | 4 | 17 |
 | corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
@@ -158,7 +159,7 @@ Written by `python3 tools/world_stats.py`.
 | solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
-| | **54 maps** | | | **130** | **87** | **1338** |
+| | **55 maps** | | | **135** | **90** | **1354** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

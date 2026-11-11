@@ -1994,6 +1994,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The root takes the colour and glows.", "The last root glows, and the tangle pulls aside!"],
 	"shutter": ["The shutters hum in the wind. The stair stays open.", "The shutter bangs, and the wind drops dead. Every shutter swings shut again.",
 		"The shutter swings open. Sand hisses through the slats.", "The last shutter opens, the tower breathes, and the stair is clear!"],
+	"feather": ["The feathers lie still. This room is done.", "A feather twitches the wrong way, and every feather drops flat. Start again.",
+		"The feather lifts and points at the ceiling.", "The last feather rises. Stone scrapes, and the stair opens!"],
 }
 
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
