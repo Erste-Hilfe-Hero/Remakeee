@@ -89,6 +89,8 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
 - **Shapes:** outdoor maps are at most 12 x 40 tiles; routes and marshes need at least two
   ways out (by foot or by line). `WorldValidator.check_shapes` checks both.
 - **Statistics:** `python3 tools/world_stats.py` writes the table below (`--check` tells if it is stale).
+- **Act I look:** Veydal maps use their own atlas `art/era1/tiles/overworld_veydal.png` (heath, bracken, firs, peat tarns, slate cliffs, dry-stone walls, waystones, cairns), made by `tools/art/gen_tiles_veydal.py`. TilesetFactory picks `tiles/overworld_<region>.png` when the map region has one; buildings and the lighthouse keep the shared tiles.
+- **Act III look:** Ashmere maps use `art/era1/tiles/overworld_ashmere.png` (ash ground, charred brush, dead snags, brine pools, salt spikes, cinder scree, slag heaps, braziers, basalt cliffs), made by `tools/art/gen_tiles_ashmere.py`, and switch the Era I filter to their own four inks from `data/looks/ashmere.json` (EraManager.set_region_ink).
 - **Overview:** `python3 tools/art/preview_map.py --region veydal` draws every map of a region
   on one sheet (`build/previews/veydal.png`).
 - **Checks:** `tools/validate_data.gd` and `tests/unit/test_world_data.gd` check tiles,

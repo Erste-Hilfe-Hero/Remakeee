@@ -57,10 +57,10 @@ const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FE
 const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOWER, Kind.REEDS, Kind.SCREE, Kind.ROCK]
 const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 
-## Per-region looks (data/looks/<region>.json): own atlas and own Era I inks (Act III Ashmere).
+## One TileSet per atlas path, so each act can have its own world look.
+static var _tilesets: Dictionary[String, TileSet] = {}
+## Per-region Era I inks (data/looks/<region>.json); Act III Ashmere has its own four.
 const LOOKS_PATH: String = "res://data/looks/%s.json"
-
-static var _tilesets: Dictionary = {}
 static var _looks: Dictionary = {}
 static var _has_atlas: bool = false
 
@@ -80,17 +80,15 @@ static func look(region: String) -> Dictionary:
 		_looks[region] = d if d is Dictionary else {}
 	return _looks[region]
 
-## Atlas for [param region]. A region atlas is used only in the era it was drawn for; a newer
-## era keeps the shared atlas until it draws its own.
+## Shared atlas, or the act's own "tiles/overworld_<region>.png" when [param region] has one.
 static func atlas_path(region: String = "") -> String:
-	var base: String = EraManager.art_path(ATLAS_REL)
-	var rel: String = str(look(region).get("atlas", ""))
-	if base.is_empty() or rel.is_empty():
-		return base
-	var own: String = EraManager.art_path(rel)
-	if own.is_empty() or own.get_slice("/", 3) != base.get_slice("/", 3):
-		return base
-	return own
+	var shared: String = EraManager.art_path(ATLAS_REL)
+	if not region.is_empty():
+		var own: String = EraManager.art_path("tiles/overworld_%s.png" % region)
+		# Only when it belongs to the same era folder: a newer era's shared atlas wins.
+		if not own.is_empty() and own.get_base_dir() == shared.get_base_dir():
+			return own
+	return shared
 
 ## Drops the cached TileSets so the next get_tileset() rebuilds them for the active era.
 static func clear_cache() -> void:
@@ -100,6 +98,7 @@ static func get_tileset(region: String = "") -> TileSet:
 	var atlas: String = atlas_path(region)
 	if not _tilesets.has(atlas):
 		_tilesets[atlas] = _build(atlas)
+	_has_atlas = not atlas.is_empty()
 	return _tilesets[atlas]
 
 ## Neighbours that count as "the same" when picking a masked variant.

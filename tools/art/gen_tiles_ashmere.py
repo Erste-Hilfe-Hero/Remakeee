@@ -2,7 +2,7 @@
 salt spikes, cinder scree, slag heaps, braziers and basalt cliffs in Ashmere's own four inks.
 Buildings keep the shared Era I shapes. Same layout as gen_tiles.py.
 
-Writes art/era1/tiles/ashmere/overworld.png. Inks come from data/looks/ashmere.json.
+Writes art/era1/tiles/overworld_ashmere.png. Inks come from data/looks/ashmere.json.
 Run: python3 tools/art/gen_tiles_ashmere.py (from the repo root).
 """
 from __future__ import annotations
@@ -171,7 +171,7 @@ def main() -> None:
     g.grass, g.tall_grass, g.tree, g.water = ash, char_brush, dead_snag, brine
     g.flower, g.reeds, g.scree, g.rock = ember_bloom, salt_spikes, cinder_scree, slag_heap
     g.lamp, g.cliff = brazier, basalt
-    out = os.path.join(ROOT, "art", "era1", look["atlas"])
+    out = os.path.join(ROOT, "art", "era1", "tiles", "overworld_ashmere.png")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     g.build_tiles(out)
 

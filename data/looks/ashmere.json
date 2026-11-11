@@ -1,7 +1,6 @@
 {
   "region": "ashmere",
   "name": "Ashmere ashfields",
-  "atlas": "tiles/ashmere/overworld.png",
   "ink": ["1b1719", "7e3322", "a39886", "e9e3d3"],
   "props": {
     "*": "ember_bloom",

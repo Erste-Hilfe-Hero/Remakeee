@@ -81,6 +81,7 @@ func _ready() -> void:
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
 		"wake": _action_wake,
+		"matchmaker": _action_matchmaker,
 		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
@@ -952,7 +953,15 @@ func _fixed_meeting(sd: SpirlingData, ring: int, gone_line: String) -> void:
 ## Echo Cores that are ready wake into a Hallkind (item 185).
 func _wake_cores() -> void:
 	for kid: Spirling in GameState.awaken_cores():
-		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
+		var lines: Array[String] = ["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]]
+		var inh: Dictionary = kid.get_meta("inheritance", {})
+		if not str(inh.get("line", "")).is_empty():
+			lines.append(str(inh.line))
+		for art: Variant in inh.get("arts", []):
+			lines.append(Loc.t("It already knows %s, an heirloom art of the family.") % str(art))
+		if not (inh.get("stats", []) as Array).is_empty():
+			lines.append(Loc.t("It carries the family's best Spark in %d values.") % (inh.stats as Array).size())
+		await say(lines)
 		SaveManager.save_game()
 
 ## A cartographer's stone (area 3 items 1084, 1085): counted once, a keepsake at 4, 8 and 12.
@@ -1114,6 +1123,29 @@ func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
 			await say(["The wall is full. Take something down first."] as Array[String])
 		menu.visible = true
 	menu.queue_free()
+
+## "matchmaker": Auntie Grisela seals a match contract on a carried Echo Core (data/breeding.json).
+func _action_matchmaker(_args: PackedStringArray, _speaker: NPC) -> void:
+	var core: Dictionary = Breeding.open_core()
+	if core.is_empty():
+		await say(["Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business."] as Array[String])
+		return
+	var fee: int = int(Breeding.data().get("contract_fee", 0))
+	var lines: Array[String] = []
+	for l: Variant in Breeding.data().get("contract_lines", []):
+		lines.append(str(l))
+	await say(lines)
+	if GameState.money < fee:
+		await say([Loc.t("Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.") % fee] as Array[String])
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var yes: bool = await menu.confirm(Loc.t("Seal a match contract for the core of %s for %d coins?") % [" and ".join(core.get("parents", [])), fee], "Seal", "No")
+	menu.queue_free()
+	if yes and Breeding.seal_contract(core):
+		Sound.sfx("confirm")
+		await say(["Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably."] as Array[String])
+		SaveManager.save_game()
 
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0

@@ -69,3 +69,26 @@ func test_masked_tiles_pick_edges_from_neighbours() -> void:
 	var w: int = TilesetFactory.Kind.WATER
 	assert_eq(TilesetFactory.atlas_coords(w, Vector2i.ZERO, all_water), Vector2i(w, 15), "open water")
 	assert_eq(TilesetFactory.atlas_coords(w, Vector2i.ZERO, all_grass), Vector2i(w, 0), "pond with shore all round")
+
+func test_veydal_has_own_atlas() -> void:
+	var keep: int = EraManager.retro_filter
+	EraManager.set_retro_filter(EraManager.Era.INK)
+	TilesetFactory.clear_cache()
+	assert_eq(TilesetFactory.atlas_path("veydal"), "res://art/era1/tiles/overworld_veydal.png")
+	assert_eq(TilesetFactory.atlas_path("corvane"), "res://art/era1/tiles/overworld.png")
+	assert_ne(TilesetFactory.get_tileset("veydal"), TilesetFactory.get_tileset("corvane"), "own tileset per act")
+	EraManager.set_retro_filter(keep)
+	TilesetFactory.clear_cache()
+
+func test_veydal_atlas_is_four_tone() -> void:
+	var img: Image = Image.load_from_file(ProjectSettings.globalize_path("res://art/era1/tiles/overworld_veydal.png"))
+	var inks: Array[String] = []
+	for c: Color in EraManager.INK_PALETTE:
+		inks.append(c.to_html(false))
+	for y: int in range(0, img.get_height(), 3):
+		for x: int in range(0, img.get_width(), 3):
+			var p: Color = img.get_pixel(x, y)
+			if p.a > 0.5:
+				assert_true(p.to_html(false) in inks, "pixel %d,%d is an Era I ink" % [x, y])
+				if not p.to_html(false) in inks:
+					return

@@ -1,9 +1,9 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 30,
+ "catalog_version": 31,
  "advantage_values": {
-  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal.",
+  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal.",
   "power_seal": [
    5,
    10,
@@ -30,7 +30,8 @@
    25
   ],
   "crystal_cap": 24,
-  "growth_plus": 0.5
+  "growth_plus": 0.5,
+  "ring_cap_plus": 5
  },
  "offers": [
   {
@@ -3729,6 +3730,77 @@
      "t": "item",
      "id": "rg_ring_tonic_10",
      "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_ring_crown",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ring Crown",
+   "desc": "A Spirling jumps to Ring 50 at once. Never above the Ring cap.",
+   "rg_price": 2000,
+   "eur_cents": 1999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.ring_crown",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_ring_crown",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_ring_cap_plus",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Ring Cap Seal",
+   "desc": "Your Ring cap is 5 Rings higher on Veteran and above. Does not work in leagues. Permanent.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.ring_cap_plus",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "ring_cap_plus"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_coins_100000",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Vault of Coins",
+   "desc": "Exactly 100000 coins for world merchants.",
+   "rg_price": 3000,
+   "eur_cents": 2999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.coins_100000",
+   "grants": [
+    {
+     "t": "coins",
+     "n": 100000
     }
    ],
    "league_scope": "none",

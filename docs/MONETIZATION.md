@@ -114,6 +114,20 @@ Wachstum x2/x3, Münzen x2 und Ring-Tränke +1/+5 gab es schon.
   aus dem Menü, Guthaben nur auf dem Server, jedes Angebot mit "Vorteil im Spiel" und Liga-Zeile, die
   Bond-Grundrate (`BondCalc`) bleibt wie sie ist.
 
+## Pay-to-win, Schritt 3 (Fortschritt beschleunigen, 11. 11. 2026)
+
+Aus Abschnitt 3 des Plans fehlten noch "Sofort Stufe 50", "Münz-Pakete" (große Menge) und "Stufen-Obergrenze
+je Riss für Käufer um 5 höher". Stufen-Bonbons +1/+5/+10 sind die Ring-Tränke, die es schon gibt.
+
+| Angebot | Wirkung | Rissglas | Liga |
+| --- | --- | --- | --- |
+| Ring-Krone (`rg_ring_crown`) | ein Spirling springt auf Ring 50, nie über die Ring-Grenze (`rings_to` in `data/items.json`) | 2000 | keine Liga-Wirkung |
+| Ring-Grenzen-Siegel (`rg_ring_cap_plus`) | Ring-Grenze ab Veteran +5 (`advantage_values.ring_cap_plus`, `ShopEffects.ring_cap_bonus`), höchstens Ring 60, einmal je Konto | 1500 | keine Liga-Wirkung |
+| Münz-Tresor (`rg_coins_100000`) | genau 100000 Münzen | 3000 | keine Liga-Wirkung |
+
+Die Kontostärke zählt 10 je zusätzlichem Ring. Unverändert: nur Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert
+an jedem Angebot, Altersstufe ab 13 (`min_band`), keine Kaufaufforderungen.
+
 ## Planwerte (nur Rechengrößen, kein Tracking)
 
 | Größe | Planwert |
@@ -155,7 +169,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-147 Angebote (Katalog v30): 105 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+150 Angebote (Katalog v31): 108 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -306,5 +320,8 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_growth_plus` | Growth Seal | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
 | `rg_coin_boost_x3` | Great Coin Gleam | 3,99 € | 400 | Vorteil | keine Liga-Wirkung |
 | `rg_ring_tonic_10` | Grand Ring Tonic | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
+| `rg_ring_crown` | Ring Crown | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_ring_cap_plus` | Ring Cap Seal | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_coins_100000` | Vault of Coins | 29,99 € | 3000 | Vorteil | keine Liga-Wirkung |
 
 <!-- shop-table:end -->

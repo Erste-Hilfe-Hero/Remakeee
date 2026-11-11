@@ -396,36 +396,64 @@ def pier(c: Canvas, ox: int, oy: int, mask: int) -> None:
         c.hline(ox + x0, ox + x1, oy, 0)
 
 
+def _tower_row(c: Canvas, ox: int, oy: int, y: int) -> None:
+    # One row of the lighthouse shaft: tapers from 10 px at the top to 12 px at y 7, spiral
+    # bands rise to the right, the left column catches the light and the right two are shaded.
+    xl = 3 if y < 7 else 2
+    xr = 15 - xl
+    c.set(ox + xl, oy + y, 0)
+    c.set(ox + xr, oy + y, 0)
+    for x in range(xl + 1, xr):
+        band = ((y + 40 - x // 3) // 4) % 2
+        if x == xl + 1:
+            v = 2 if band else 3
+        elif x >= xr - 2:
+            v = 0 if band else 2
+        else:
+            v = 1 if band else 3
+        c.set(ox + x, oy + y, v)
+
+
 def tower(c: Canvas, ox: int, oy: int) -> None:
+    # Lighthouse shaft (and the rift pillars): striped tapered tower on a stone plinth.
     grass(c, ox, oy, 0)
-    c.rect(ox + 2, oy, 12, T, 3)
-    for y in range(0, T):
-        for x in range(2, 14):
-            if (y - x // 3) % 8 < 3:
-                c.set(ox + x, oy + y, 1)
-    c.vline(ox + 2, oy, oy + 15, 0)
-    c.vline(ox + 13, oy, oy + 15, 0)
-    c.vline(ox + 3, oy, oy + 15, 2)
+    for y in range(13):
+        _tower_row(c, ox, oy, y)
+    c.rect(ox + 7, oy + 5, 2, 2, 0)
+    c.hline(ox + 1, ox + 14, oy + 13, 0)
+    c.rect(ox + 2, oy + 14, 12, 2, 2)
+    c.vline(ox + 1, oy + 14, oy + 15, 0)
+    c.vline(ox + 14, oy + 14, oy + 15, 0)
+    c.hline(ox + 2, ox + 4, oy + 14, 3)
+    for x in (5, 10):
+        c.set(ox + x, oy + 14, 1)
+    for x in (3, 8, 12):
+        c.set(ox + x, oy + 15, 1)
+    c.set(ox + 13, oy + 14, 1)
+    c.set(ox + 13, oy + 15, 1)
 
 
 def lamp(c: Canvas, ox: int, oy: int) -> None:
+    # Lighthouse lantern room (also the camp and square lamps): domed cap, glowing lens
+    # behind mullions with short rays, a railed gallery, and the top of the striped shaft.
     grass(c, ox, oy, 1)
-    c.ascii(ox, oy, ["......0000......",
-                     ".....011110.....",
-                     "....01111110....",
+    c.ascii(ox, oy, [".......00.......",
+                     "......0130......",
+                     ".....013110.....",
+                     "....01311110....",
+                     "...0131111100...",
                      "..000000000000..",
-                     "...0333333330...",
-                     "...0303333030...",
-                     "...0333223330...",
-                     "...0332112330...",
-                     "...0332112330...",
-                     "...0333223330...",
-                     "...0303333030...",
-                     "..000000000000..",
-                     "..022222222220..",
-                     "...0333113330...",
-                     "...0331113330...",
-                     "...0333113330..."])
+                     "...0122332210...",
+                     "..302233332203..",
+                     ".33023333332033.",
+                     "..302233332203..",
+                     "...0122332210...",
+                     ".00000000000000.",
+                     ".01010110101010.",
+                     ".00000000000000.",
+                     "..011111111110..",
+                     "................"])
+    _tower_row(c, ox, oy + 16, -1)
 
 
 def rock(c: Canvas, ox: int, oy: int, variant: int) -> None:
