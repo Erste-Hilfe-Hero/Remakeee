@@ -1,6 +1,8 @@
 {
  "_comment": "German texts from tools/i18n/de_online_replays.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
- "keep": [],
+ "keep": [
+  "CHR1-"
+ ],
  "strings": {
   "%s: %d%% won (%d of %d)": "%s: %d%% gewonnen (%d von %d)",
   "%s: met %d times": "%s: %d-mal getroffen",
@@ -12,6 +14,7 @@
   "Online battle": "Online-Kampf",
   "Online replays": "Online-Wiederholungen",
   "Online replays (%d)": "Online-Wiederholungen (%d)",
+  "Open league": "Offene Liga",
   "Planned maintenance in %d h. The game is offline for a short while then.": "Geplante Wartung in %d Std. Das Spiel ist dann kurz offline.",
   "Raid": "Raid",
   "Rift board": "Riss-Rangliste",

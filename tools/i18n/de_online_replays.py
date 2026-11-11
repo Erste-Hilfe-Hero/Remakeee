@@ -16,7 +16,9 @@ T = {
 "Echo duel": "Echo-Duell",
 "Rift board": "Riss-Rangliste",
 "Online battle": "Online-Kampf",
+"Open league": "Offene Liga",
 "%s: %d%% won (%d of %d)": "%s: %d%% gewonnen (%d von %d)",
 "%s: met %d times": "%s: %d-mal getroffen",
 "Planned maintenance in %d h. The game is offline for a short while then.": "Geplante Wartung in %d Std. Das Spiel ist dann kurz offline.",
 }
+KEEP = ["CHR1-"]
