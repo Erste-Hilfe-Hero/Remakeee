@@ -25,7 +25,8 @@ ideas list behind this is the "Chimora online: 200 ideas" artifact in the projec
 
 ## Playing together
 
-All under Menu, Friends. Spirlings are never traded or gifted, and there is no free text anywhere.
+All under Menu, Friends. Spirlings are never gifted; they can be traded between friends once the flag
+`trade_spirling` is on (see Trading). There is no free text anywhere.
 
 - **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Wanderer card,
   friendship level 1-5 (points from gifts, echo help and duels). 100 friends at most. 20 requests per hour.
@@ -213,7 +214,8 @@ Table `banned_words`: words a Wanderer name may not contain.
 
 Table `feature_flags` (key, `enabled`, `min_version`): switches the new online parts on one by one,
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
-`league_open`, `live_duel`, `trade`, `bund`, `raid`. All start switched off.
+`league_open`, `live_duel`, `trade`, `bund`, `raid`, `trade_spirling`, `rift_board`, `league_board`,
+`daily_gift`. All start switched off.
 
 ## Bunds
 
@@ -246,7 +248,7 @@ Trading (plan area 7) waits behind the flag `trade`. Friends from friendship lev
 `trade_min_level` (3) whose friendship was accepted at least `trade_min_days` (7) ago can open a
 trade (`trade_open`, one open trade per pair, at most `trade_max_open` per player, never with
 blocked players). Only items in `trade_items` can be traded; `tools/online/game_data_sql.py` fills
-it from `"tradeable": true` in `data/items.json` at every deploy. Shop items and Spirlings are never
+it from `"tradeable": true` in `data/items.json` at every deploy. Shop items are never
 tradeable (a test checks that no item from `data/shop.json` is on the list). The server is the
 trustee: `trade_put` moves the offer out of the bag of the stored save at once, `trade_confirm` must
 name the other side's current offer, and once both confirmed each side takes the other's items
@@ -255,6 +257,34 @@ without finishing) gives everyone their own items back. Every change of a save h
 of its own device, which sends the revision it knows (`sync_first` otherwise), so the game changes
 its bag the same way and saves on top of the new revision. Tables: `trades` (no account ids),
 `trade_sides`; menu `scripts/ui/TradeMenu.gd` (Friends, Trades).
+
+**Spirlings** (online step 1, flag `trade_spirling`): `trade_put_spirlings(trade, slot, rev, uids)` puts
+up to `trade_max_spirlings` (3) Spirlings from team or storage into the trade; they leave the stored save
+at once (`took`), dropped ones come back to storage (`back`). Never tradeable: a Spirling holding a
+Keepsake, one with a shop boost (Gleam, Power Core, crystals), a favourite, and the team's last
+Spirling. `trade_confirm(trade, theirs, their_mons)` must name the other side's Spirlings by uid
+(the old two-argument call only works while the other side offers none). On the way the server keeps
+every value and the **origin era** (`origin_era` 1-4, set when bonded, 1 for older saves) and drops
+the nickname (no free text between players), the storage box and the favourite mark. Collected
+Spirlings go into storage.
+
+## Weekly boards (online step 1)
+
+Under Friends, Weekly board. The weekly challenge board is as before. With the flag `rift_board`
+the game uploads every won Warden battle (`battle_submit`, kind `rift`, ref = the Rift id, which must
+be in `known_ids` kind `rift`, filled from every `"warden"` in `data/` by `game_data_sql.py`). Table
+`rift_runs` keeps the claimed rounds; `rift_board(rift, friends)` shows each player's fewest rounds
+this week, counting only battles the referee replayed as `ok`. With the flag `league_board`,
+`league_board(league, friends)` counts this week's rated league wins (only referee-confirmed ones
+are rated). Both show names only for you and your friends, never blocked players, top `board_rows`
+(20) plus your own row. Rift runs are deleted after 35 days.
+
+## Daily gift (online step 1)
+
+With the flag `daily_gift`, Friends, Daily gift shows the open table `daily_gift_table` with its
+chances; `daily_gift_claim(slot, rev)` rolls one item on the server once per server day and puts it
+into the stored save's bag (like a trade, so the device sends the revision it knows). Nothing is sold
+there and no shop link is shown. Table `daily_gifts`, kept 7 days.
 
 ## Earlier saves
 

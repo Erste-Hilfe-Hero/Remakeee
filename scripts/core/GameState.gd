@@ -960,6 +960,7 @@ func first_healthy_index() -> int:
 func receive_spirling(s: Spirling) -> bool:
 	if s.origin_map.is_empty():
 		s.origin_map = current_map
+		s.origin_era = EraManager.unlocked_era
 		s.met_ring = s.level
 		s.met_day = today()
 	mark_seen(s.data.species_name, true)

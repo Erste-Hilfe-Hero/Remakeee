@@ -52,6 +52,8 @@ static func run(menu: PauseMenu) -> void:
 			labels.append("Raid Rifts")
 		if Online.flag_on("trade"):
 			labels.append("Trades")
+		if Online.flag_on("daily_gift"):
+			labels.append("Daily gift")
 		var title: String = "Friends %d   Your code %s" % [friends.size(), Online.pretty_code(Online.friend_code())]
 		var idx: int = await menu.pick_strings(title, labels)
 		if idx < 0:
@@ -66,11 +68,12 @@ static func run(menu: PauseMenu) -> void:
 			2: await add_friend(menu)
 			3: copy_code(menu)
 			4: await run_goal(menu)
-			5: await run_board(menu)
+			5: await run_boards(menu)
 			6: await run_blocked(menu, data.get("blocked", []))
 		match labels[idx]:
 			"Bund": await BundMenu.run(menu)
 			"Trades": await TradeMenu.run(menu)
+			"Daily gift": await run_daily_gift(menu)
 			"Raid Rifts":
 				await RaidMenu.run(menu)
 				if not menu.raid_attempt.is_empty():
@@ -434,6 +437,99 @@ static func run_board(menu: MenuHost) -> void:
 		if idx < 0:
 			return
 		friends_only = not friends_only
+
+## The weekly boards: the weekly challenge, and (when switched on) Rift times and league wins.
+static func run_boards(menu: MenuHost) -> void:
+	var rift_on: bool = Online.flag_on("rift_board")
+	var league_on: bool = Online.flag_on("league_board")
+	if not rift_on and not league_on:
+		await run_board(menu)
+		return
+	while true:
+		var opts: Array[String] = ["Weekly challenge"]
+		if rift_on:
+			opts.append("Rift times")
+		if league_on:
+			opts.append_array(["Fair League wins", "Open League wins"] as Array[String])
+		var idx: int = await menu.pick_strings("Weekly boards", opts)
+		if idx < 0:
+			return
+		match opts[idx]:
+			"Weekly challenge": await run_board(menu)
+			"Rift times": await run_rift_board(menu)
+			"Fair League wins": await run_week_board(menu, "league_board", {"p_league": "fair"}, "Fair League wins this week", "%d wins")
+			"Open League wins": await run_week_board(menu, "league_board", {"p_league": "open"}, "Open League wins this week", "%d wins")
+
+static func rift_name(id: String) -> String:
+	return Loc.t("%s Rift") % Loc.t(id.capitalize())
+
+static func run_rift_board(menu: MenuHost) -> void:
+	var rifts: Array[String] = GameState.rifts_sealed.duplicate()
+	if rifts.is_empty():
+		await menu.info("Mend a Rift first. Your fastest win against its Warden then shows here.")
+		return
+	var labels: Array[String] = []
+	for r: String in rifts:
+		labels.append(rift_name(r))
+	var idx: int = await menu.pick_strings("Rift times", labels)
+	if idx < 0:
+		return
+	await run_week_board(menu, "rift_board", {"p_rift": rifts[idx]}, Loc.t("%s, fewest rounds this week") % rift_name(rifts[idx]), "%d rounds")
+
+## One weekly board: friends first, "Show everyone" switches. [param unit] formats the value.
+static func run_week_board(menu: MenuHost, fn: String, args: Dictionary, title: String, unit: String) -> void:
+	var friends_only: bool = true
+	while true:
+		var full: Dictionary = args.duplicate()
+		full["p_friends"] = friends_only
+		var r: Dictionary = await Online.call_fn(fn, full)
+		if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+			await menu.info(error_text(r))
+			return
+		var lines: Array[String] = []
+		for row: Dictionary in r.data.get("rows", []):
+			var n: String = str(row.get("name", ""))
+			var you: String = "  " + Loc.t("(you)") if bool(row.get("me", false)) else ""
+			lines.append("%d. %s  %s%s" % [int(row.rank), n if not n.is_empty() else "Wanderer", Loc.t(unit) % int(row.score), you])
+		if lines.is_empty():
+			lines.append(Loc.t("Nobody on this board yet this week."))
+		var head: String = Loc.t(title) + "\n" + (Loc.t("Friends") if friends_only else Loc.t("Everyone"))
+		var idx: int = await menu.pick_strings(head + "\n" + "\n".join(lines), ["Show everyone" if friends_only else "Show friends"] as Array[String])
+		if idx < 0:
+			return
+		friends_only = not friends_only
+
+## "Tonic 30 %, Remedy 20 %, ..." from the open table the server rolls from.
+static func daily_table_text(table: Variant) -> String:
+	var total: int = 0
+	for e: Variant in (table if table is Array else []):
+		total += int((e as Dictionary).get("w", 0)) if e is Dictionary else 0
+	var parts: Array[String] = []
+	for e: Variant in (table if table is Array else []):
+		if e is Dictionary and total > 0:
+			parts.append("%s %d %%" % [item_name(str(e.item)), roundi(100.0 * int(e.w) / total)])
+	return ", ".join(parts)
+
+## Daily online gift: one free item a day, rolled by the server and put into the saved bag.
+## Nothing to buy, no other offer on this screen.
+static func run_daily_gift(menu: MenuHost) -> void:
+	var st: Dictionary = await Online.call_fn("daily_gift_state")
+	if not st.ok or not st.data is Dictionary or not bool(st.data.get("ok", false)):
+		await menu.info(error_text(st))
+		return
+	var chances: String = Loc.t("What it can be: %s") % daily_table_text(st.data.get("table", []))
+	if not bool(st.data.get("ready", false)):
+		await menu.info(Loc.t("You already opened today's gift. A new one waits tomorrow.") + "\n" + chances)
+		return
+	var idx: int = await menu.pick_strings(Loc.t("A gift is waiting for you today.") + "\n" + chances, ["Open the gift"] as Array[String])
+	if idx < 0:
+		return
+	var r: Dictionary = await TradeMenu.bag_call("daily_gift_claim", {})
+	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
+		Sound.sfx("coin")
+		await menu.info(Loc.t("You got: %s") % item_name(str(r.data.item)))
+	else:
+		await menu.info(TradeMenu.error_text(r))
 
 static func error_text(r: Dictionary) -> String:
 	var e: String = r.error

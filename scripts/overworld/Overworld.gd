@@ -2474,6 +2474,11 @@ func after_tamer_win(n: NPC) -> void:
 	VirtualPad.set_wanted(false)
 	GameState.set_flag(TrainerData.beaten_flag(def, map.id))
 	_mark_rematch(def)
+	# Weekly Rift board (online step 1): the won Warden battle goes to the referee; its rounds
+	# count once the referee replayed it.
+	if def.has("warden") and Online.flag_on("rift_board"):
+		Online.call_fn("battle_submit", {"p_kind": "rift", "p_ref": str(def.warden),
+			"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	if def.has("defeat"):
 		await say(Dialogue.lines_for(Dialogue.get_entry(str(def.defeat)), GameState.flags))
 	if def.has("warden") and GameState.seal_rift(str(def.warden)):

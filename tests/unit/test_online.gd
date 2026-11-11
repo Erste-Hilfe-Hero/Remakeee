@@ -280,6 +280,10 @@ func test_spirlings_and_echo_cores_never_change_hands() -> void:
 		# Item trading between friends (plan area 7, item 2792) moves only bag items, checked below.
 		if fn.begins_with("trade_"):
 			banned.erase("trade")
+		# Online step 1: Spirlings move only through this trustee trade between friends
+		# (tests/unit/test_online_step1.gd checks its rules).
+		if fn == "trade_put_spirlings":
+			continue
 		for bad: String in banned:
 			assert_false(fn.contains(bad), "server function %s must not move Spirlings" % fn)
 	# Mail carries only phrases, waves and thanks; gifts are rolled by the server.
