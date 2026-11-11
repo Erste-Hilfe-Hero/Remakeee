@@ -9,8 +9,8 @@ signal era_unlocked(era: int)
 
 enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4 }
 ## The whole story (all four regions) stays Era I. Era II opens after the finale and is the
-## look of the post-game region; later eras arrive with their own new regions.
-const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK}
+## look of the post-game region Vellmarch (data/region2.json); later eras arrive with their own new regions.
+const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK, "vellmarch": Era.WASH}
 const STORY_COMPLETE_FLAG: String = "story_complete"
 const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480)}
 const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96}

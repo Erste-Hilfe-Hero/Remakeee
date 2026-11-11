@@ -1,17 +1,19 @@
 {
- "_doc": "Element chart (docs/BALANCE.md, Type chart). strong = elements this one hits for strong_mult. The reverse direction takes weak_mult; every other pair is neutral. Dual defenders multiply. era = first era the element appears in; Era II elements sit only on legendary (ancient) Spirlings so far. A pair that beats each other (Lumen and Umbra) is neutral both ways and counts as neither strength nor weakness. Checked by tools/balance/type_sim.py and tests/unit/test_type_chart.gd: every element has at least 2 real strengths and 2 real weaknesses and no element strictly dominates another.",
+ "_doc": "Element chart (docs/BALANCE.md, Type chart). strong = elements this one hits for strong_mult. The reverse direction takes weak_mult; every other pair is neutral. Dual defenders multiply. era = first era the element appears in; Era II elements sit only on legendary (ancient) Spirlings so far. Rust and Mask belong to the post-game region Vellmarch (data/region2.json); they enter the Elements enum with that region's own Spirlings. A pair that beats each other (Lumen and Umbra) is neutral both ways and counts as neither strength nor weakness. Checked by tools/balance/type_sim.py and tests/unit/test_type_chart.gd: every element has at least 2 real strengths and 2 real weaknesses and no element strictly dominates another.",
  "strong_mult": 2.0,
  "weak_mult": 0.5,
  "types": {
-  "EMBER": {"era": 1, "strong": ["BLOOM", "UMBRA", "ECHO"]},
-  "TIDE": {"era": 1, "strong": ["EMBER", "STONE", "ECHO"]},
+  "EMBER": {"era": 1, "strong": ["BLOOM", "UMBRA", "ECHO", "RUST"]},
+  "TIDE": {"era": 1, "strong": ["EMBER", "STONE", "ECHO", "RUST"]},
   "BLOOM": {"era": 1, "strong": ["TIDE", "STONE", "ECHO"]},
   "VOLT": {"era": 1, "strong": ["TIDE", "GALE", "INK"]},
   "STONE": {"era": 1, "strong": ["EMBER", "VOLT", "INK"]},
-  "GALE": {"era": 1, "strong": ["BLOOM", "LUMEN", "ECHO"]},
+  "GALE": {"era": 1, "strong": ["BLOOM", "LUMEN", "ECHO", "MASK"]},
   "LUMEN": {"era": 1, "strong": ["UMBRA", "VOLT", "INK"]},
-  "UMBRA": {"era": 1, "strong": ["LUMEN", "GALE", "INK"]},
+  "UMBRA": {"era": 1, "strong": ["LUMEN", "GALE", "INK", "MASK"]},
   "INK": {"era": 2, "strong": ["EMBER", "TIDE", "BLOOM", "GALE"]},
-  "ECHO": {"era": 2, "strong": ["VOLT", "STONE", "LUMEN", "UMBRA"]}
+  "ECHO": {"era": 2, "strong": ["VOLT", "STONE", "LUMEN", "UMBRA"]},
+  "RUST": {"era": 2, "strong": ["STONE", "VOLT", "MASK"]},
+  "MASK": {"era": 2, "strong": ["LUMEN", "ECHO", "INK"]}
  }
 }
