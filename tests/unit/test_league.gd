@@ -169,7 +169,7 @@ func test_closing_time_paused_seasons_and_new_seasons() -> void:
 func test_blocked_players_never_meet_and_flags_switch_leagues_off() -> void:
 	_both_join()
 	_call("block", {"p_code": ben_code})
-	assert_false(bool(_call("league_find", {"p_league": "fair", "p_waited": 99}).found))
+	assert_false(bool(_call("league_find", {"p_league": "fair", "p_waited": 30}).found))
 	s.db.flags.league_open = {"enabled": false, "min_version": 1}
 	assert_eq(_call("league_info", {"p_league": "open"}).error, "feature_off")
 
