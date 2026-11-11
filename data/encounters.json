@@ -1264,7 +1264,7 @@
     "species": "Talusk",
     "min": 34,
     "max": 36,
-    "weight": 15,
+    "weight": 25,
     "ground": "scree"
    },
    {
@@ -1297,7 +1297,7 @@
     "species": "Kelpup",
     "min": 35,
     "max": 36,
-    "weight": 30,
+    "weight": 20,
     "ground": "fern"
    },
    {
@@ -1311,7 +1311,7 @@
     "species": "Lumenewt",
     "min": 36,
     "max": 37,
-    "weight": 12,
+    "weight": 8,
     "ground": "fern"
    },
    {
@@ -1330,21 +1330,21 @@
     "species": "Wickit",
     "min": 35,
     "max": 36,
-    "weight": 38,
+    "weight": 24,
     "ground": "scree"
    },
    {
     "species": "Kindlop",
     "min": 35,
     "max": 36,
-    "weight": 30,
+    "weight": 20,
     "ground": "scree"
    },
    {
     "species": "Talusk",
     "min": 36,
     "max": 37,
-    "weight": 15,
+    "weight": 30,
     "ground": "scree"
    },
    {
