@@ -127,6 +127,7 @@ func _go_online() -> void:
 				Online.mark_privacy_seen()
 			if await Online.sync_down():
 				await _resolve_conflicts()
+				await _offer_update()
 				_show_status()
 				return
 			continue
@@ -134,15 +135,29 @@ func _go_online() -> void:
 			_status.text = ""
 			# A button opens the store page directly (item 2148).
 			var u: int = await _menu.pick_strings("A new version of Chimora is out. Please update it in the store to keep playing.",
-				["Open the store", "Try again"] as Array[String], false)
+				["Update", "Try again"] as Array[String], false)
 			if u == 0:
-				OS.shell_open(Online.store_url())
+				MenuHost.open_url.call(Online.store_url())
 			continue
 		_status.text = "No connection"
 		var idx: int = await _menu.pick_strings(Online.error_text() + "\n" + Loc.t("Your journeys are safe on the server."),
 			["Try again", "Settings"] as Array[String], false)
 		if idx == 1:
 			await _menu.run_settings()
+
+## Once per app start: a newer build is in the store (App Store lookup or the live content's
+## "latest" for this platform), so offer it. Below "min_client" connect_now already stopped.
+static var _update_offered: bool = false
+
+func _offer_update() -> void:
+	if _update_offered:
+		return
+	_update_offered = true
+	await Online.check_store()
+	if Online.update_state() != "optional":
+		return
+	if await _menu.pick_strings("A new version of Chimora is out.", ["Update", "Later"] as Array[String], false) == 0:
+		MenuHost.open_url.call(Online.store_url())
 
 ## "Connecting..." with moving dots, a note after 5 s and another after 15 s (item 2127).
 static func connecting_text(seconds: float) -> String:
@@ -207,6 +222,7 @@ func _run() -> void:
 		items.append("New Game")
 		if _used_slots() > 1:
 			items.append("Load...")
+		items.append("What's new")
 		items.append("Settings")
 		_at_root = true
 		StartupLog.mark("title menu ready")
@@ -248,6 +264,8 @@ func _run() -> void:
 					SaveManager.save_settings()
 					_enter_game()
 					return
+			"What's new":
+				await _menu.run_news()
 			"Settings":
 				await _menu.run_settings()
 
