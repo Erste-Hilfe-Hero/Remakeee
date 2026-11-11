@@ -56,6 +56,11 @@ const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FE
 ## Kinds with cosmetic variants 0..3 picked from the cell position.
 const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOWER, Kind.REEDS, Kind.SCREE, Kind.ROCK]
 const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
+## DOOR variant rows: what the building is (MapData.door_roles(), buildings plan items 14, 15, 20).
+enum DoorRole { HOUSE, HEAL, SHOP, RIFT_GATE }
+## GRASS rows 4..7: the variants 0..3 with the cast shadow of a building to the left (item 6).
+const SHADOW_ROW: int = 4
+const SHADE_FROM: Array[int] = [Kind.WALL, Kind.ROOF, Kind.DOOR]
 
 ## One TileSet per atlas path, so each act can have its own world look.
 static var _tilesets: Dictionary[String, TileSet] = {}
@@ -111,7 +116,8 @@ static func joins(kind: int, other: int) -> bool:
 
 ## Atlas coordinates for [param kind] at [param cell]; [param kind_at] returns the kind of
 ## any cell (out-of-bounds cells should return the same kind so map edges stay seamless).
-static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable) -> Vector2i:
+## [param door_role] picks the DOOR row (DoorRole).
+static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable, door_role: int = DoorRole.HOUSE) -> Vector2i:
 	if not _has_atlas:
 		return Vector2i(kind, 0)
 	if kind in MASKED:
@@ -121,8 +127,12 @@ static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable) -> Vector
 				mask |= 1 << i
 		return Vector2i(kind, mask)
 	if kind in SCATTERED:
-		var h: int = absi(cell.x * 7 + cell.y * 13 + (cell.x * cell.y) % 5)
-		return Vector2i(kind, h % 4)
+		var h: int = absi(cell.x * 7 + cell.y * 13 + (cell.x * cell.y) % 5) % 4
+		if kind == Kind.GRASS and int(kind_at.call(cell + Vector2i.LEFT)) in SHADE_FROM:
+			h += SHADOW_ROW
+		return Vector2i(kind, h)
+	if kind == Kind.DOOR:
+		return Vector2i(kind, door_role)
 	return Vector2i(kind, 0)
 
 static func _build(atlas: String) -> TileSet:
