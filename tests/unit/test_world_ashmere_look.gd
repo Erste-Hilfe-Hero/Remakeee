@@ -23,7 +23,7 @@ func _set_era(e: int) -> void:
 func test_ashmere_has_its_own_atlas_in_era_one() -> void:
 	_set_era(EraManager.Era.INK)
 	assert_eq(TilesetFactory.atlas_path("ashmere"), "res://art/era1/tiles/overworld_ashmere.png")
-	assert_eq(TilesetFactory.atlas_path("veydal"), TilesetFactory.ATLAS_PATH)
+	assert_eq(TilesetFactory.atlas_path("veydal"), "res://art/era1/tiles/overworld_veydal.png")
 	assert_ne(TilesetFactory.get_tileset("ashmere"), TilesetFactory.get_tileset("veydal"))
 	var tex: Texture2D = load(TilesetFactory.atlas_path("ashmere"))
 	var base: Texture2D = load(TilesetFactory.ATLAS_PATH)
