@@ -2766,7 +2766,7 @@ static func oath_lines(retired: Array[String]) -> Array[String]:
 	return lines
 
 static func _today() -> String:
-	return Time.get_date_string_from_system()
+	return DailyFind.today_key()
 
 func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()

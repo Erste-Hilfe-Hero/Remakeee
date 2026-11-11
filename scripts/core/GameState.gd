@@ -1035,10 +1035,14 @@ static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
 
 ## Pays [param coins] from townsfolk [param who] once per day (story var "tip_<who>" holds the
-## last day). Returns the coins paid, 0 when [param who] already paid today.
-func pay_tip(who: String, coins: int, day: int = today()) -> int:
+## last day). Returns the coins paid, 0 when [param who] already paid today. The day comes from
+## the server clock, and a day before the stored one pays nothing (plan 1379: turning the phone
+## clock back and forth gives no extra tips).
+func pay_tip(who: String, coins: int, day: int = -1) -> int:
+	if day < 0:
+		day = int(Online.unix_now() / 86400.0)
 	var key: String = "tip_" + who
-	if coins <= 0 or int(story_vars.get(key, -1)) == day:
+	if coins <= 0 or day <= int(story_vars.get(key, -1)):
 		return 0
 	story_vars[key] = day
 	money += coins
