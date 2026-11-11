@@ -206,9 +206,9 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 149 | Vitrill | Lumen/Stone | common | bulwark | steady | 333 | Vitrillon (ring 21) |
 | 150 | Vitrillon | Lumen/Stone | uncommon | bulwark | steady | 453 | Vitrillaxe (ring 36) |
 | 151 | Vitrillaxe | Lumen/Stone | shy | bulwark | steady | 501 | - |
-| 152 | Sablet | Umbra/Gale | common | weaver | light_sleeper | 297 | Sablowl (ring 18) |
-| 153 | Sablowl | Umbra/Gale | uncommon | weaver | light_sleeper | 402 | Sablarch (ring 34) |
-| 154 | Sablarch | Umbra/Gale | shy | weaver | light_sleeper | 469 | - |
+| 152 | Sablet | Umbra/Gale | common | weaver | light_sleeper | 284 | Sablowl (ring 18) |
+| 153 | Sablowl | Umbra/Gale | uncommon | weaver | light_sleeper | 362 | Sablarch (ring 34) |
+| 154 | Sablarch | Umbra/Gale | shy | weaver | light_sleeper | 449 | - |
 | 155 | Quenchet | Ember/Tide | common | kindler | kindling | 295 | Quenchcoil (ring 21) |
 | 156 | Quenchcoil | Ember/Tide | uncommon | kindler | kindling | 403 | Quenchwyrm (ring 38) |
 | 157 | Quenchwyrm | Ember/Tide | shy | kindler | kindling | 422 | - |
@@ -221,8 +221,8 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 164 | Peatlet | Bloom/Tide | common | weaver | slick | 303 | Peatbloom (ring 20) |
 | 165 | Peatbloom | Bloom/Tide | uncommon | weaver | slick | 391 | Peatmonarch (ring 34) |
 | 166 | Peatmonarch | Bloom/Tide | shy | weaver | slick | 461 | - |
-| 167 | Gloomgill | Tide/Umbra | common | striker | surge | 272 | Gloomgillar (ring 18) |
-| 168 | Gloomgillar | Tide/Umbra | uncommon | striker | surge | 405 | Gloomgillith (ring 36) |
+| 167 | Gloomgill | Tide/Umbra | common | striker | surge | 278 | Gloomgillar (ring 18) |
+| 168 | Gloomgillar | Tide/Umbra | uncommon | striker | surge | 397 | Gloomgillith (ring 36) |
 | 169 | Gloomgillith | Tide/Umbra | shy | striker | surge | 452 | - |
 | 170 | Fumelet | Gale/Umbra | common | weaver | light_sleeper | 308 | Fumewraith (ring 22) |
 | 171 | Fumewraith | Gale/Umbra | uncommon | weaver | light_sleeper | 406 | Fumeregent (ring 35) |
@@ -242,14 +242,14 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 185 | Glazel | Lumen/Ember | common | kindler | deep_roots | 330 | Glazelisk (ring 18) |
 | 186 | Glazelisk | Lumen/Ember | uncommon | kindler | deep_roots | 448 | Glazeldrake (ring 37) |
 | 187 | Glazeldrake | Lumen/Ember | shy | kindler | deep_roots | 502 | - |
-| 188 | Puffbellow | Volt/Gale | uncommon | vanguard | steady | 309 | Bellowroc (ring 27) |
+| 188 | Puffbellow | Volt/Gale | uncommon | vanguard | steady | 315 | Bellowroc (ring 27) |
 | 189 | Bellowroc | Volt/Gale | shy | vanguard | steady | 416 | - |
 | 190 | Lampick | Lumen/Stone | uncommon | weaver | thick_hide | 315 | Lampickard (ring 26) |
 | 191 | Lampickard | Lumen/Stone | shy | weaver | thick_hide | 430 | - |
 | 192 | Charsprout | Bloom/Ember | uncommon | kindler | kindling | 323 | Charsylvan (ring 28) |
 | 193 | Charsylvan | Bloom/Ember | shy | kindler | kindling | 424 | - |
 | 194 | Ingotlet | Ember/Stone | uncommon | bulwark | thick_hide | 325 | Ingotusk (ring 26) |
-| 195 | Ingotusk | Ember/Stone | shy | bulwark | thick_hide | 473 | - |
+| 195 | Ingotusk | Ember/Stone | shy | bulwark | thick_hide | 464 | - |
 | 196 | Mortarant | Stone/Gale | uncommon | striker | slick | 321 | Mortarmarch (ring 28) |
 | 197 | Mortarmarch | Stone/Gale | shy | striker | slick | 432 | - |
 | 198 | Vaporel | Tide/Ember | uncommon | weaver | light_sleeper | 287 | Vaporelle (ring 28) |

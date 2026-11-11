@@ -8836,11 +8836,11 @@
   "line_id": "sablet",
   "era": 1,
   "base": {
-   "hp": 63,
-   "atk": 38,
-   "foc": 76,
-   "spd": 59,
-   "def": 61
+   "hp": 60,
+   "atk": 36,
+   "foc": 73,
+   "spd": 57,
+   "def": 58
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -8898,11 +8898,11 @@
   "line_id": "sablet",
   "era": 1,
   "base": {
-   "hp": 82,
-   "atk": 56,
-   "foc": 105,
-   "spd": 75,
-   "def": 84
+   "hp": 74,
+   "atk": 51,
+   "foc": 94,
+   "spd": 68,
+   "def": 75
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -8963,11 +8963,11 @@
   "line_id": "sablet",
   "era": 1,
   "base": {
-   "hp": 89,
-   "atk": 62,
-   "foc": 141,
-   "spd": 86,
-   "def": 91
+   "hp": 84,
+   "atk": 60,
+   "foc": 135,
+   "spd": 83,
+   "def": 87
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -9761,11 +9761,11 @@
   "line_id": "gloomgill",
   "era": 1,
   "base": {
-   "hp": 45,
-   "atk": 65,
-   "foc": 45,
-   "spd": 76,
-   "def": 41
+   "hp": 46,
+   "atk": 66,
+   "foc": 46,
+   "spd": 78,
+   "def": 42
   },
   "trait": "surge",
   "learnset": {
@@ -9823,11 +9823,11 @@
   "line_id": "gloomgill",
   "era": 1,
   "base": {
-   "hp": 69,
-   "atk": 105,
-   "foc": 65,
-   "spd": 103,
-   "def": 63
+   "hp": 67,
+   "atk": 103,
+   "foc": 64,
+   "spd": 101,
+   "def": 62
   },
   "trait": "surge",
   "learnset": {
@@ -11068,11 +11068,11 @@
   "line_id": "puffbellow",
   "era": 1,
   "base": {
-   "hp": 63,
-   "atk": 80,
-   "foc": 50,
-   "spd": 67,
-   "def": 49
+   "hp": 64,
+   "atk": 82,
+   "foc": 51,
+   "spd": 68,
+   "def": 50
   },
   "trait": "steady",
   "learnset": {
@@ -11487,11 +11487,11 @@
   "line_id": "ingotlet",
   "era": 1,
   "base": {
-   "hp": 107,
-   "atk": 96,
-   "foc": 69,
-   "spd": 64,
-   "def": 137
+   "hp": 104,
+   "atk": 95,
+   "foc": 68,
+   "spd": 63,
+   "def": 134
   },
   "trait": "thick_hide",
   "learnset": {
