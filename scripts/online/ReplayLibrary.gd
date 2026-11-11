@@ -58,7 +58,11 @@ static func from_code(code: String) -> Dictionary:
 	var prefix: String = str(cfg().code_prefix)
 	if not c.begins_with(prefix):
 		return {}
-	var packed: PackedByteArray = Marshalls.base64_to_raw(c.substr(prefix.length()))
+	var body: String = c.substr(prefix.length())
+	var re := RegEx.create_from_string("^[A-Za-z0-9+/]+={0,2}$")
+	if body.length() % 4 != 0 or re.search(body) == null:
+		return {}
+	var packed: PackedByteArray = Marshalls.base64_to_raw(body)
 	if packed.is_empty():
 		return {}
 	var raw: PackedByteArray = packed.decompress_dynamic(1 << 22, FileAccess.COMPRESSION_GZIP)
