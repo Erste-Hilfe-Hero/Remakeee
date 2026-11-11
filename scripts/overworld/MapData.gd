@@ -331,7 +331,7 @@ func apply_blocks(flags: Dictionary) -> bool:
 
 ## Fills [param layer] with this map's tiles.
 func paint(layer: TileMapLayer) -> void:
-	layer.tile_set = TilesetFactory.get_tileset()
+	layer.tile_set = TilesetFactory.get_tileset(region)
 	layer.clear()
 	for y: int in height:
 		for x: int in rows[y].length():

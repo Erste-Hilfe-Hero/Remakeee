@@ -64,16 +64,16 @@ def spring_and_sign(world, mid, spring, sign, title, motto):
 def ochrewell(world):
     mid = "ochrewell"
     rows = ["^^^^^__^^^^^",
-            "^::..__..::^",
+            "^:T..__..T:^",
             "^.RRR__RRR.^",
             "^.HHH__HHH.^",
-            "^....__....^",
+            "^*...__...*^",
             "^.L..__..S.^",
             "^....__....^",
             "^...____...^",
             "_____.o.____",
             "_____...____",
-            "^...____...^",
+            "^T..____..T^",
             "^....__....^",
             "^.RR.__.RR.^",
             "^.HH.__.HH.^",
@@ -81,7 +81,7 @@ def ochrewell(world):
             "^.##.__.##.^",
             "^....__....^",
             "^::..__..L.^",
-            "^....__....^",
+            "^....__...T^",
             "^^^^^__^^^^^"]
     world.add_text(mid, {
         "sign": lines(("OCHREWELL", "OCHREWELL"), ("Ochrewell, 140 folk. 141 if you stay. Most do, one way or another.", "Ochrewell, 140 Leute. 141, wenn du bleibst. Die meisten bleiben, so oder so."),
@@ -107,7 +107,7 @@ def ochrewell(world):
     folk = [("hadi", "villager", 2, 6, "right", [at("dusk", 5, 9, "right"), away("night")]),
             ("ranya", "villager", 9, 11, "left", [at("dusk", 7, 9, "left"), away("night")]),
             ("tobs", "elder", 2, 18, "right", [at("dusk", 4, 7, "right"), away("night")])]
-    m = {"name": tr("Ochrewell", "Ochrewell"), "biome": "town", "backdrop": "ember", "outdoor": True,
+    m = {"name": tr("Ochrewell", "Ochrewell"), "biome": "desert", "backdrop": "ember", "outdoor": True,
          "heal_point": [6, 9], "rows": rows,
          "warps": [warp(5, 0, "saltglass", 5, 24, "up"), warp(6, 0, "saltglass", 6, 24, "up"),
                    warp(0, 8, "tower_rift", 5, 20, "up"), warp(0, 9, "tower_rift", 6, 20, "up"),
@@ -156,7 +156,7 @@ def tower_rift(world):
             "^.::...::^_^",
             "^........^_^",
             "^^^^..^^^^.^",
-            "^..........^",
+            "^T.........^",
             "^.::....::.^",
             "^^^^^..^^^^^"]
     signs = spring_and_sign(world, mid, (2, 4), (7, 5), ("THE TOWER RIFT", "DER TURMRISS"),
@@ -219,7 +219,7 @@ def oasis_rift(world):
             "^.......S^_^",
             "^........^_^",
             "^^^^..^^^^.^",
-            "^..........^",
+            "^T.........^",
             "^.,,....,,.^",
             "^^^^^..^^^^^"]
     signs = spring_and_sign(world, mid, (6, 4), (7, 5), ("THE OASIS RIFT", "DER OASENRISS"),
@@ -286,7 +286,7 @@ def sun_rift(world):
             "^.::...::^_^",
             "^........^_^",
             "^^^^..^^^^.^",
-            "^..........^",
+            "^T.........^",
             "^.::....::.^",
             "^^^^^..^^^^^"]
     signs = spring_and_sign(world, mid, (7, 4), (2, 5), ("THE SUN RIFT", "DER SONNENRISS"),

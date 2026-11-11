@@ -41,6 +41,26 @@ func _ready() -> void:
 	_filter_layer.add_child(_filter_rect)
 	_apply()
 
+## The four Era I screen inks for [param region]: its own from data/region_looks.json (welt akt4),
+## else INK_PALETTE.
+func inks_for(region: String) -> Array[Color]:
+	var ink: Variant = TilesetFactory.look(region).get("ink", [])
+	if not ink is Array or (ink as Array).size() != INK_PALETTE.size():
+		return INK_PALETTE.duplicate()
+	var out: Array[Color] = []
+	for h: Variant in ink:
+		out.append(Color(str(h)))
+	return out
+
+## Points the Era I filter at the inks of [param region]; called on every map load.
+func set_region(region: String) -> void:
+	if _filter_rect == null:
+		return
+	var inks: Array[Color] = inks_for(region)
+	var mat := _filter_rect.material as ShaderMaterial
+	for i: int in inks.size():
+		mat.set_shader_parameter("c%d" % i, inks[i])
+
 func active_era() -> int:
 	return retro_filter if retro_filter > 0 else unlocked_era
 

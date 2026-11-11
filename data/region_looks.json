@@ -1,0 +1,8 @@
+{
+ "_comment": "Per-region Era I look (welt akt4): its own overworld atlas (relative to art/eraN/) and its own four screen inks, darkest to lightest. Each ink stays in the same luminance quarter as the shared Era I inks so the palette filter keeps four clean tones. Regions not listed use the shared atlas and EraManager.INK_PALETTE. Atlas made by tools/art/gen_tiles_solenne.py.",
+ "solenne": {
+  "atlas": "tiles/overworld_solenne.png",
+  "ink": ["3b1f14", "a0492a", "e09a3c", "fbeaa8"],
+  "biome": "desert"
+ }
+}

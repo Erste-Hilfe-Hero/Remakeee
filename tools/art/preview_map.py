@@ -38,9 +38,26 @@ def load_level(map_id: str) -> dict:
     return d
 
 
+def region_look(region) -> dict:
+    """The region's own atlas and inks from data/region_looks.json ({} = shared look)."""
+    looks = json.load(open(os.path.join(ROOT, "data", "region_looks.json")))
+    look = looks.get(region or "", {})
+    return look if isinstance(look, dict) else {}
+
+
+def ink_swap(img: Image.Image, inks) -> Image.Image:
+    """Recolours an Era I image from the shared inks to `inks`, as the screen filter does."""
+    from px import PALETTE
+    table = {PALETTE[i]: tuple(int(h[j:j + 2], 16) for j in (0, 2, 4)) for i, h in enumerate(inks)}
+    out = img.convert("RGBA")
+    out.putdata([table.get(p[:3], p[:3]) + (p[3],) for p in out.getdata()])
+    return out
+
+
 def render(d: dict) -> Image.Image:
     rows = d["rows"]
-    atlas = Image.open(os.path.join(ROOT, "art", "era1", "tiles", "overworld.png"))
+    look = region_look(d.get("region"))
+    atlas = Image.open(os.path.join(ROOT, "art", "era1", look.get("atlas", "tiles/overworld.png")))
     h, w = len(rows), max(len(r) for r in rows)
     img = Image.new("RGBA", (w * 16, h * 16))
 
@@ -68,6 +85,8 @@ def render(d: dict) -> Image.Image:
         if not os.path.exists(sheet_path):
             sheet_path = os.path.join(ROOT, "art", "era1", "chars", "villager.png")
         sheet = Image.open(sheet_path)
+        if "ink" in look:
+            sheet = ink_swap(sheet, look["ink"])
         col = ["down", "up", "left", "right"].index(n.get("facing", "down"))
         fr = sheet.crop((col * 16, 0, col * 16 + 16, 16))
         img.paste(fr, (int(n["x"]) * 16, int(n["y"]) * 16), fr)
