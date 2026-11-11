@@ -107,7 +107,7 @@ def ochrewell(world):
     folk = [("hadi", "villager", 2, 6, "right", [at("dusk", 5, 9, "right"), away("night")]),
             ("ranya", "villager", 9, 11, "left", [at("dusk", 7, 9, "left"), away("night")]),
             ("tobs", "elder", 2, 18, "right", [at("dusk", 4, 7, "right"), away("night")])]
-    m = {"name": tr("Ochrewell", "Ochrewell"), "biome": "desert", "backdrop": "ember", "outdoor": True,
+    m = {"name": tr("Ochrewell", "Ochrewell"), "biome": "town", "backdrop": "ember", "outdoor": True,
          "heal_point": [6, 9], "rows": rows,
          "warps": [warp(5, 0, "saltglass", 5, 24, "up"), warp(6, 0, "saltglass", 6, 24, "up"),
                    warp(0, 8, "tower_rift", 5, 20, "up"), warp(0, 9, "tower_rift", 6, 20, "up"),

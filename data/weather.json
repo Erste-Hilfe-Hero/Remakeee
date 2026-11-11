@@ -7,7 +7,6 @@
   "marsh": {"clear": 40, "rain": 30, "fog": 25, "wind": 0, "storm": 5},
   "scree": {"clear": 50, "rain": 10, "fog": 10, "wind": 25, "storm": 5},
   "town": {"clear": 60, "rain": 22, "fog": 8, "wind": 8, "storm": 2},
-  "desert": {"clear": 70, "rain": 2, "fog": 3, "wind": 20, "storm": 5},
   "rift": {"clear": 30, "rain": 15, "fog": 25, "wind": 15, "storm": 15}
  }
 }
