@@ -1,0 +1,449 @@
+{
+ "name": "Veil Cistern",
+ "region": "solenne",
+ "biome": "dungeon",
+ "backdrop": "ember",
+ "encounters": "veil_cistern",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@.........:@",
+  "@.S..S..S.:@",
+  "@........S:@",
+  "@::......::@",
+  "@::........@",
+  "@S.........@",
+  "@.........S@",
+  "@.........S@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "ochrewell",
+   "tx": 9,
+   "ty": 14,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 9,
+   "to": "ochrewell",
+   "tx": 9,
+   "ty": 14,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "veil_cistern@1",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "veil_cistern@1",
+   "tx": 6,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "clerk_ivo",
+   "x": 8,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "veil_cistern/clerk_ivo",
+   "sprite": "villager",
+   "trainer": "Veil Clerk Ivo",
+   "intro": "veil_cistern/clerk_ivo_intro",
+   "defeat": "veil_cistern/clerk_ivo_defeat",
+   "money": 2100,
+   "team": [
+    {
+     "species": "Scrivane",
+     "level": 40
+    },
+    {
+     "species": "Saltspire",
+     "level": 40
+    },
+    {
+     "species": "Duneshrew",
+     "level": 41
+    }
+   ]
+  },
+  {
+   "id": "guard_pell",
+   "x": 3,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "veil_cistern/guard_pell",
+   "sprite": "villager",
+   "trainer": "Veil Guard Orla",
+   "intro": "veil_cistern/guard_pell_intro",
+   "defeat": "veil_cistern/guard_pell_defeat",
+   "money": 2150,
+   "team": [
+    {
+     "species": "Obsidroth",
+     "level": 41
+    },
+    {
+     "species": "Burinox",
+     "level": 41
+    }
+   ]
+  },
+  {
+   "id": "clerk_mott",
+   "x": 7,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "veil_cistern/clerk_mott",
+   "sprite": "villager",
+   "trainer": "Debt Runner Mott",
+   "intro": "veil_cistern/clerk_mott_intro",
+   "defeat": "veil_cistern/clerk_mott_defeat",
+   "money": 2200,
+   "team": [
+    {
+     "species": "Shimmerlet",
+     "level": 41
+    },
+    {
+     "species": "Highhare",
+     "level": 41
+    },
+    {
+     "species": "Lanternel",
+     "level": 42
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 2,
+   "dialogue": "veil_cistern/valve_1_1"
+  },
+  {
+   "x": 5,
+   "y": 2,
+   "dialogue": "veil_cistern/valve_1_2"
+  },
+  {
+   "x": 8,
+   "y": 2,
+   "dialogue": "veil_cistern/valve_1_3"
+  },
+  {
+   "x": 1,
+   "y": 6,
+   "dialogue": "veil_cistern/hint_1"
+  },
+  {
+   "x": 10,
+   "y": 7,
+   "dialogue": "veil_cistern/seal_4"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "dialogue": "veil_cistern/iou_3"
+  },
+  {
+   "x": 10,
+   "y": 8,
+   "dialogue": "veil_cistern/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "cistern_valve_1",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "cistern_valve_1",
+   "closed": "@"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 1,
+   "y": 1,
+   "item": "max_tonic",
+   "count": 2,
+   "flag": "find_cistern_corner"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Veil Cistern, dry vault",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@.S......S.@",
+    "@..::..::..@",
+    "@.S..@@..S.@",
+    "@....@@....@",
+    "@::......::@",
+    "@S........S@",
+    "@..........@",
+    "@..S....S..@",
+    "@@@@@==@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 9,
+     "to": "veil_cistern",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 9,
+     "to": "veil_cistern",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "veil_cistern@2",
+     "tx": 5,
+     "ty": 6,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "veil_cistern@2",
+     "tx": 6,
+     "ty": 6,
+     "facing": "up"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "auditor_nell",
+     "x": 3,
+     "y": 5,
+     "facing": "right",
+     "dialogue": "veil_cistern/auditor_nell",
+     "sprite": "villager",
+     "trainer": "Veil Auditor Nell",
+     "intro": "veil_cistern/auditor_nell_intro",
+     "defeat": "veil_cistern/auditor_nell_defeat",
+     "money": 2300,
+     "team": [
+      {
+       "species": "Mendlace",
+       "level": 43
+      },
+      {
+       "species": "Glasstarn",
+       "level": 43
+      },
+      {
+       "species": "Orrlet",
+       "level": 42
+      }
+     ]
+    },
+    {
+     "id": "guard_brack",
+     "x": 8,
+     "y": 4,
+     "facing": "left",
+     "dialogue": "veil_cistern/guard_brack",
+     "sprite": "villager",
+     "trainer": "Veil Guard Brack",
+     "intro": "veil_cistern/guard_brack_intro",
+     "defeat": "veil_cistern/guard_brack_defeat",
+     "money": 2350,
+     "team": [
+      {
+       "species": "Dunebastion",
+       "level": 43
+      },
+      {
+       "species": "Talusgard",
+       "level": 43
+      },
+      {
+       "species": "Calderox",
+       "level": 43
+      }
+     ]
+    },
+    {
+     "id": "corin_2",
+     "x": 6,
+     "y": 6,
+     "facing": "down",
+     "dialogue": "solenne_side/corin_2",
+     "sprite": "ranger",
+     "color": "b08a3a",
+     "show_flag": "veil_corin_1_beaten",
+     "hide_flag": "veil_corin_2_beaten"
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 1,
+     "dialogue": "veil_cistern/valve_2_1"
+    },
+    {
+     "x": 9,
+     "y": 1,
+     "dialogue": "veil_cistern/valve_2_2"
+    },
+    {
+     "x": 2,
+     "y": 3,
+     "dialogue": "veil_cistern/valve_2_3"
+    },
+    {
+     "x": 9,
+     "y": 3,
+     "dialogue": "veil_cistern/valve_2_4"
+    },
+    {
+     "x": 1,
+     "y": 6,
+     "dialogue": "veil_cistern/hint_2"
+    },
+    {
+     "x": 10,
+     "y": 6,
+     "dialogue": "veil_cistern/seal_5"
+    },
+    {
+     "x": 8,
+     "y": 8,
+     "dialogue": "veil_cistern/seal_6"
+    },
+    {
+     "x": 3,
+     "y": 8,
+     "dialogue": "veil_cistern/iou_4"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "cistern_valve_2",
+     "closed": "@"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "cistern_valve_2",
+     "closed": "@"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 8,
+     "item": "power_brew",
+     "count": 1,
+     "flag": "find_cistern_vault"
+    }
+   ]
+  },
+  {
+   "name": "Veil Cistern, strongroom",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@S.......S:@",
+    "@:...CC...:@",
+    "@..........@",
+    "@S........S@",
+    "@::......::@",
+    "@..........@",
+    "@@@@@==@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 7,
+     "to": "veil_cistern@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 7,
+     "to": "veil_cistern@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "lusk",
+     "x": 5,
+     "y": 3,
+     "facing": "down",
+     "dialogue": "veil_cistern/lusk",
+     "sprite": "villager",
+     "color": "b08a3a",
+     "show_flag": "rift_sun_sealed"
+    }
+   ],
+   "signs": [
+    {
+     "x": 9,
+     "y": 1,
+     "dialogue": "veil_cistern/seal_7"
+    },
+    {
+     "x": 10,
+     "y": 4,
+     "dialogue": "veil_cistern/seal_8"
+    },
+    {
+     "x": 1,
+     "y": 1,
+     "dialogue": "veil_cistern/iou_5"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "veil_cistern/orders"
+    },
+    {
+     "x": 6,
+     "y": 2,
+     "dialogue": "veil_cistern/note"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 1,
+     "y": 6,
+     "item": "revival_leaf",
+     "count": 2,
+     "flag": "find_cistern_strongroom"
+    }
+   ]
+  }
+ ]
+}
