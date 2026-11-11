@@ -21,6 +21,8 @@ const FILTER_LAYER: int = 100
 const PALETTE_SHADER: Shader = preload("res://shaders/palette_filter.gdshader")
 
 var unlocked_era: int = Era.INK
+## Region of the map on screen; picks the Era I inks (RegionLook), e.g. Corvane's dye fens.
+var current_region: String = ""
 var retro_filter: int = 0   # 0 = use newest unlocked era
 
 var _filter_layer: CanvasLayer
@@ -35,9 +37,8 @@ func _ready() -> void:
 	_filter_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var mat := ShaderMaterial.new()
 	mat.shader = PALETTE_SHADER
-	for i: int in INK_PALETTE.size():
-		mat.set_shader_parameter("c%d" % i, INK_PALETTE[i])
 	_filter_rect.material = mat
+	_apply_inks()
 	_filter_layer.add_child(_filter_rect)
 	_apply()
 
@@ -52,6 +53,23 @@ const ERA_LINES: Dictionary[int, String] = {
 }
 const TRANSITION_TIME: float = 0.9
 var _wipe: ColorRect
+
+## The four Era I inks on screen for [param region]: its own look or the base Ink palette.
+func inks_for(region: String) -> Array[Color]:
+	var own: Array[Color] = RegionLook.palette(region)
+	return own if own.size() == INK_PALETTE.size() else INK_PALETTE
+
+## Called when a map of [param region] is shown; swaps the screen inks to that region's look.
+func set_region(region: String) -> void:
+	current_region = region
+	_apply_inks()
+
+func _apply_inks() -> void:
+	if _filter_rect == null:
+		return
+	var inks: Array[Color] = inks_for(current_region)
+	for i: int in inks.size():
+		_filter_rect.material.set_shader_parameter("c%d" % i, inks[i])
 
 func unlock_region(region: String) -> void:
 	unlock_era(REGION_ERA.get(region, Era.INK))

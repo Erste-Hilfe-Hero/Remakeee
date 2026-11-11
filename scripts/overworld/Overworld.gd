@@ -348,6 +348,11 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
 	EraManager.unlock_region(map.region)
+	EraManager.set_region(map.region)
+	var look_line: String = RegionLook.arrive_line(map.region)
+	if not look_line.is_empty() and not GameState.has_flag("look_seen_" + map.region):
+		GameState.set_flag("look_seen_" + map.region)
+		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
