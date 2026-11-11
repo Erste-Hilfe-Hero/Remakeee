@@ -13,7 +13,7 @@ func _lum(c: Color) -> float:
 
 func test_solenne_has_its_own_atlas_with_the_shared_layout() -> void:
 	var own: String = TilesetFactory.atlas_path("solenne")
-	var shared: String = TilesetFactory.atlas_path("veydal")
+	var shared: String = TilesetFactory.atlas_path("corvane")
 	assert_true(own.ends_with("overworld_solenne.png"), own)
 	assert_true(shared.ends_with("tiles/overworld.png"), shared)
 	var a: Image = (load(own) as Texture2D).get_image()
@@ -24,8 +24,8 @@ func test_solenne_has_its_own_atlas_with_the_shared_layout() -> void:
 func test_tilesets_are_cached_per_region() -> void:
 	var s: TileSet = TilesetFactory.get_tileset("solenne")
 	assert_same(TilesetFactory.get_tileset("solenne"), s)
-	assert_ne(TilesetFactory.get_tileset("veydal"), s)
-	assert_same(TilesetFactory.get_tileset(""), TilesetFactory.get_tileset("veydal"))
+	assert_ne(TilesetFactory.get_tileset("corvane"), s)
+	assert_same(TilesetFactory.get_tileset(""), TilesetFactory.get_tileset("corvane"))
 
 func test_solenne_inks_are_four_tones_in_the_filter_quarters() -> void:
 	var inks: Array[Color] = EraManager.inks_for("solenne")

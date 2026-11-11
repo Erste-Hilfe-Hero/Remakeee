@@ -51,6 +51,8 @@ var _shake_root: Control
 ## Element effects for arts, drawn above the sprites inside the shake root.
 var _fx: ElementFx
 var _backdrop: BattleBackdrop
+## Era IV 2.5D stage; null before Panorama.
+var _stage: Era4Stage
 var _foe_sprite: SpirlingSprite
 var _player_sprite: SpirlingSprite
 var _foe_strip: InfoStrip
@@ -172,6 +174,11 @@ func _build() -> void:
 	_backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_backdrop.hat = GameState.worn_hat()
 	_shake_root.add_child(_backdrop)
+	if EraManager.uses_stage_25d():
+		_stage = Era4Stage.new()
+		_stage.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		_shake_root.add_child(_stage)
+		_backdrop.visible = false
 
 	_foe_sprite = SpirlingSprite.new()
 	_player_sprite = SpirlingSprite.new()
@@ -281,6 +288,13 @@ func _layout_field() -> void:
 	_player_sprite.position = Vector2(w - sprite - MARGIN * 2, h - sprite - MARGIN * 2)
 	_player_sprite.size = Vector2(sprite, sprite)
 	_player_sprite.mirrored = true
+	if _stage != null:
+		var fr: Rect2 = Era4Stage.sprite_rect(_stage.cfg, "foe", Vector2(w, h), sprite)
+		var pr: Rect2 = Era4Stage.sprite_rect(_stage.cfg, "player", Vector2(w, h), sprite)
+		_foe_sprite.position = fr.position
+		_foe_sprite.size = fr.size
+		_player_sprite.position = pr.position
+		_player_sprite.size = pr.size
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade)
 
@@ -1019,9 +1033,12 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 		if turn != 0:
 			user.mirrored = turn > 0
 			user.queue_redraw()
+	if target != user:
+		BattleCamera.push(_shake_root, Rect2(user.position, user.size), Rect2(target.position, target.size))
 	await _fx.play(element, kind, Rect2(user.position, user.size), Rect2(target.position, target.size),
 		bool(outcome.get("miss", false)), ElementFx.impact_scale(float(outcome.get("eff", 1.0))), _art_amount(e),
 		ElementFx.after_for(mv), str(sym.symbol), second)
+	BattleCamera.release(_shake_root)
 	if user.mirrored != was_mirrored:
 		user.mirrored = was_mirrored
 		user.queue_redraw()

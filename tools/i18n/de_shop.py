@@ -806,4 +806,10 @@ T = {
 "That value already holds all the crystal it can.": "Dieser Wert trägt schon so viel Kristall, wie er kann.",
 "%s's %s rose by %d.": "%s: %s steigt um %d.",
 "Each tier follows the one before it: you pay only the difference.": "Jede Stufe folgt auf die davor: du zahlst nur die Differenz.",
+"Ring Crown": "Ring-Krone",
+"A Spirling jumps to Ring 50 at once. Never above the Ring cap.": "Ein Spirling springt sofort auf Ring 50. Nie über die Ring-Grenze.",
+"Ring Cap Seal": "Ring-Grenzen-Siegel",
+"Your Ring cap is 5 Rings higher on Veteran and above. Does not work in leagues. Permanent.": "Deine Ring-Grenze liegt ab Veteran 5 Ringe höher. Wirkt nicht in Ligen. Dauerhaft.",
+"Vault of Coins": "Münz-Tresor",
+"Exactly 100000 coins for world merchants.": "Genau 100000 Münzen für die Händler der Welt.",
 }

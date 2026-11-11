@@ -57,18 +57,14 @@ const MASKED: Array[int] = [Kind.PATH, Kind.WATER, Kind.ROOF, Kind.WALL, Kind.FE
 const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOWER, Kind.REEDS, Kind.SCREE, Kind.ROCK]
 const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 
-## Per-region looks (data/region_looks.json): own atlas, inks and biome (welt akt4).
-const LOOKS_PATH: String = "res://data/region_looks.json"
-
+## One TileSet per atlas path, so each act can have its own world look.
 static var _tilesets: Dictionary[String, TileSet] = {}
 static var _has_atlas: bool = false
+
+## Per-region Era I inks and biome (data/region_looks.json, welt akt4). The atlas itself follows
+## the "tiles/overworld_<region>.png" convention in atlas_path().
+const LOOKS_PATH: String = "res://data/region_looks.json"
 static var _looks: Dictionary = {}
-
-static func kind_for(ch: String) -> int:
-	return LEGEND.get(ch, Kind.GRASS)
-
-static func is_solid(kind: int) -> bool:
-	return kind in SOLID
 
 static func looks() -> Dictionary:
 	if _looks.is_empty():
@@ -82,25 +78,32 @@ static func look(region: String) -> Dictionary:
 	var l: Variant = looks().get(region, {})
 	return l if l is Dictionary else {}
 
-## Atlas for [param region] in the active era; falls back to the shared atlas when the region
-## has none in this era or older ones.
+static func kind_for(ch: String) -> int:
+	return LEGEND.get(ch, Kind.GRASS)
+
+static func is_solid(kind: int) -> bool:
+	return kind in SOLID
+
+## Shared atlas, or the act's own "tiles/overworld_<region>.png" when [param region] has one.
 static func atlas_path(region: String = "") -> String:
-	var rel: String = str(look(region).get("atlas", ""))
-	if not rel.is_empty():
-		var own: String = EraManager.art_path(rel)
-		if not own.is_empty():
+	var shared: String = EraManager.art_path(ATLAS_REL)
+	if not region.is_empty():
+		var own: String = EraManager.art_path("tiles/overworld_%s.png" % region)
+		# Only when it belongs to the same era folder: a newer era's shared atlas wins.
+		if not own.is_empty() and own.get_base_dir() == shared.get_base_dir():
 			return own
-	return EraManager.art_path(ATLAS_REL)
+	return shared
 
 ## Drops the cached TileSets so the next get_tileset() rebuilds them for the active era.
 static func clear_cache() -> void:
 	_tilesets.clear()
 
 static func get_tileset(region: String = "") -> TileSet:
-	var key: String = atlas_path(region)
-	if not _tilesets.has(key):
-		_tilesets[key] = _build(key)
-	return _tilesets[key]
+	var atlas: String = atlas_path(region)
+	if not _tilesets.has(atlas):
+		_tilesets[atlas] = _build(atlas)
+	_has_atlas = not atlas.is_empty()
+	return _tilesets[atlas]
 
 ## Neighbours that count as "the same" when picking a masked variant.
 static func joins(kind: int, other: int) -> bool:

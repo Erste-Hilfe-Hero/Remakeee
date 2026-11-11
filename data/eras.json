@@ -1,0 +1,126 @@
+{
+  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/.",
+  "unlock_flags": {
+    "2": "story_complete",
+    "3": "era2_finale_done"
+  },
+  "era3": {
+    "region": "quillmarch",
+    "sprite_size": 64,
+    "max_tones": 15,
+    "light_dir": [
+      -0.55,
+      -0.65,
+      0.52
+    ],
+    "materials": {
+      "gale_fur": [
+        "1c2a3a",
+        "35566a",
+        "5c8c96",
+        "93c2bc",
+        "e4f4ec"
+      ],
+      "gale_belly": [
+        "3a3040",
+        "7a6c78",
+        "b6a8a4",
+        "e0d6c8",
+        "fffaf0"
+      ],
+      "tide_scale": [
+        "10243e",
+        "1e4a74",
+        "2f7aa8",
+        "62b4d4",
+        "c8eef4"
+      ],
+      "tide_fin": [
+        "2a1a3e",
+        "52366e",
+        "8a5ea4",
+        "c49ad0",
+        "f0dcf4"
+      ],
+      "ember_feath": [
+        "3a1214",
+        "7a2a1c",
+        "c4532a",
+        "ee9a4a",
+        "fde0a0"
+      ],
+      "ember_crest": [
+        "2e2410",
+        "6e5418",
+        "b88e24",
+        "e8c850",
+        "fff4b8"
+      ]
+    },
+    "starting_set": [
+      {
+        "id": "vesk",
+        "line": "vesk",
+        "stage": 1,
+        "element": "GALE",
+        "texture": "fur"
+      },
+      {
+        "id": "veskara",
+        "line": "vesk",
+        "stage": 2,
+        "element": "GALE",
+        "texture": "fur"
+      },
+      {
+        "id": "veskarion",
+        "line": "vesk",
+        "stage": 3,
+        "element": "GALE",
+        "texture": "fur"
+      },
+      {
+        "id": "siltby",
+        "line": "silt",
+        "stage": 1,
+        "element": "TIDE",
+        "texture": "scale"
+      },
+      {
+        "id": "siltarra",
+        "line": "silt",
+        "stage": 2,
+        "element": "TIDE",
+        "texture": "scale"
+      },
+      {
+        "id": "siltaroth",
+        "line": "silt",
+        "stage": 3,
+        "element": "TIDE",
+        "texture": "scale"
+      },
+      {
+        "id": "cindrik",
+        "line": "cindr",
+        "stage": 1,
+        "element": "EMBER",
+        "texture": "feather"
+      },
+      {
+        "id": "cindrel",
+        "line": "cindr",
+        "stage": 2,
+        "element": "EMBER",
+        "texture": "feather"
+      },
+      {
+        "id": "cindravax",
+        "line": "cindr",
+        "stage": 3,
+        "element": "EMBER",
+        "texture": "feather"
+      }
+    ]
+  }
+}

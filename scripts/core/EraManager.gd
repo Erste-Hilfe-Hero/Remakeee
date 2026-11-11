@@ -81,6 +81,27 @@ func unlock_story_end(story_complete: bool) -> void:
 	if story_complete:
 		unlock_era(Era.WASH)
 
+const ERAS_PATH: String = "res://data/eras.json"
+
+## Era number -> story flag that opens it (data/eras.json "unlock_flags"): Era II after the
+## story finale, Era III after the Era II post-game finale.
+static func unlock_flags() -> Dictionary:
+	var f: FileAccess = FileAccess.open(ERAS_PATH, FileAccess.READ)
+	if f == null:
+		return {}
+	var d: Variant = JSON.parse_string(f.get_as_text())
+	return d.get("unlock_flags", {}) if d is Dictionary else {}
+
+## Unlocks every era whose flag is set. Eras open in order: a later flag does nothing while
+## an earlier era is still locked.
+func unlock_from_flags(has_flag: Callable) -> void:
+	var flags: Dictionary = unlock_flags()
+	for e: int in range(Era.WASH, Era.PANORAMA + 1):
+		var flag: String = str(flags.get(str(e), ""))
+		if flag.is_empty() or not has_flag.call(flag) or unlocked_era < e - 1:
+			return
+		unlock_era(e)
+
 ## Raises unlocked_era to [param e]; never lowers it (older saves keep their era).
 func unlock_era(e: int) -> void:
 	if e > unlocked_era:
@@ -147,6 +168,24 @@ func art_path_from(rel: String, start: int) -> String:
 		if ResourceLoader.exists(path) or FileAccess.file_exists(path):
 			return path
 	return ""
+
+## Era IV render path (design plan 331-333): from Panorama on, battles stand on the 2.5D stage.
+const STAGE_25D_FROM: int = Era.PANORAMA
+const STAGE_PATH: String = "res://data/era4_stage.json"
+var _stage_cfg: Dictionary = {}
+
+func uses_stage_25d() -> bool:
+	return active_era() >= STAGE_25D_FROM
+
+## data/era4_stage.json, loaded once.
+func stage_config() -> Dictionary:
+	if _stage_cfg.is_empty():
+		var f: FileAccess = FileAccess.open(STAGE_PATH, FileAccess.READ)
+		if f != null:
+			var d: Variant = JSON.parse_string(f.get_as_text())
+			if d is Dictionary:
+				_stage_cfg = d
+	return _stage_cfg
 
 func to_dict() -> Dictionary:
 	return {"unlocked_era": unlocked_era, "retro_filter": retro_filter}

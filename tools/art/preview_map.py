@@ -39,7 +39,7 @@ def load_level(map_id: str) -> dict:
 
 
 def region_look(region) -> dict:
-    """The region's own atlas and inks from data/region_looks.json ({} = shared look)."""
+    """The region's own inks from data/region_looks.json ({} = shared inks)."""
     looks = json.load(open(os.path.join(ROOT, "data", "region_looks.json")))
     look = looks.get(region or "", {})
     return look if isinstance(look, dict) else {}
@@ -57,7 +57,9 @@ def ink_swap(img: Image.Image, inks) -> Image.Image:
 def render(d: dict) -> Image.Image:
     rows = d["rows"]
     look = region_look(d.get("region"))
-    atlas = Image.open(os.path.join(ROOT, "art", "era1", look.get("atlas", "tiles/overworld.png")))
+    tiles = os.path.join(ROOT, "art", "era1", "tiles")
+    regional = os.path.join(tiles, "overworld_%s.png" % d.get("region", "veydal"))
+    atlas = Image.open(regional if os.path.exists(regional) else os.path.join(tiles, "overworld.png"))
     h, w = len(rows), max(len(r) for r in rows)
     img = Image.new("RGBA", (w * 16, h * 16))
 

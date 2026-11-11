@@ -23,6 +23,7 @@ SOURCES = [
     ("art/era1/fx/*.png", "tools/art/gen_fx.py", "original 8x8 effect shape for battle arts, Era I ink"),
     ("art/era2/chars/*.png", "tools/art/era2_colourise.py", "own Era I character sheet recoloured with an original per-figure palette, Era II Aquarell"),
     ("art/era2/fx/*.png", "tools/art/era2_colourise.py", "own Era I effect shape recoloured with an original per-element palette, Era II Aquarell"),
+    ("art/era4/spirlings/*.png", "tools/art/gen_era4.py", "own Era I Spirling repainted at 96x96 with soft shading and a breath frame, Era IV Panorama"),
     ("art/era2/tiles/*.png", "tools/art/era2_colourise.py", "own Era I tile atlas recoloured with an original per-tile-kind palette, Era II Aquarell"),
 ]
 
