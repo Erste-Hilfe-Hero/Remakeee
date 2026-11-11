@@ -21,6 +21,8 @@ const FILTER_LAYER: int = 100
 const PALETTE_SHADER: Shader = preload("res://shaders/palette_filter.gdshader")
 
 var unlocked_era: int = Era.INK
+## The Era I inks on screen now: a region's own four (data/looks) or INK_PALETTE.
+var ink: Array[Color] = INK_PALETTE.duplicate()
 var retro_filter: int = 0   # 0 = use newest unlocked era
 
 var _filter_layer: CanvasLayer
@@ -35,9 +37,8 @@ func _ready() -> void:
 	_filter_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var mat := ShaderMaterial.new()
 	mat.shader = PALETTE_SHADER
-	for i: int in INK_PALETTE.size():
-		mat.set_shader_parameter("c%d" % i, INK_PALETTE[i])
 	_filter_rect.material = mat
+	_set_ink(ink)
 	_filter_layer.add_child(_filter_rect)
 	_apply()
 
@@ -144,6 +145,22 @@ func _apply() -> void:
 		_filter_rect.visible = era == Era.INK
 	_clear_art_caches()
 	era_changed.emit(era)
+
+## Switches the Era I filter to [param region]'s own four inks, or back to INK_PALETTE.
+func set_region_ink(region: String) -> void:
+	var out: Array[Color] = INK_PALETTE.duplicate()
+	var raw: Array = TilesetFactory.look(region).get("ink", [])
+	if raw.size() == INK_PALETTE.size():
+		for i: int in raw.size():
+			out[i] = Color(str(raw[i]))
+	_set_ink(out)
+
+func _set_ink(p: Array[Color]) -> void:
+	ink = p
+	if _filter_rect == null:
+		return
+	for i: int in p.size():
+		(_filter_rect.material as ShaderMaterial).set_shader_parameter("c%d" % i, p[i])
 
 func _clear_art_caches() -> void:
 	TilesetFactory.clear_cache()
