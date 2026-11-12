@@ -42,6 +42,15 @@
    ],
    "20": [
     "Kiln Strike"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.3,
@@ -109,6 +118,15 @@
    ],
    "32": [
     "Bellows Blast"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.15,
@@ -150,6 +168,7 @@
   "trait": "kindling",
   "learnset": {
    "1": [
+    "Banked Coals",
     "Cinder Nip",
     "Cinder Breath",
     "Pebble Toss"
@@ -171,10 +190,14 @@
     "Ash Call"
    ],
    "46": [
-    "Furnace Heart"
+    "Furnace Heart",
+    "Smoulder"
    ],
    "48": [
     "Cairn Crash"
+   ],
+   "52": [
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.08,
@@ -229,6 +252,15 @@
    ],
    "20": [
     "Undertow"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.3,
@@ -296,6 +328,15 @@
    ],
    "30": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.15,
@@ -337,6 +378,7 @@
   "trait": "slick",
   "learnset": {
    "1": [
+    "Brine Pellet",
     "Fizz Pop",
     "Spindrift Shot",
     "Glint"
@@ -359,11 +401,17 @@
    "44": [
     "Bore Wave"
    ],
+   "46": [
+    "Fog Bank"
+   ],
    "48": [
     "Radiant Lance"
    ],
    "50": [
     "Daybreak Strike"
+   ],
+   "52": [
+    "Drowned Bell"
    ]
   },
   "bond_rate": 0.08,
@@ -417,6 +465,15 @@
    ],
    "20": [
     "Thorn Volley"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Eclipse Crush"
    ]
   },
   "bond_rate": 0.3,
@@ -496,6 +553,12 @@
    ],
    "34": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "58": [
+    "Eclipse Crush"
    ]
   },
   "bond_rate": 0.15,
@@ -537,6 +600,7 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
+    "Backstab",
     "Lichen Lash",
     "Sap Draw",
     "Pebble Toss"
@@ -557,10 +621,17 @@
     "Bloom Call"
    ],
    "46": [
-    "Thornwake"
+    "Thornwake",
+    "Overgrowth"
    ],
    "48": [
     "Dusk Gnaw"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Eclipse Crush"
    ]
   },
   "bond_rate": 0.08,
@@ -626,6 +697,12 @@
    ],
    "20": [
     "Spark Call"
+   ],
+   "46": [
+    "Fuse Box"
+   ],
+   "52": [
+    "Thunderhead"
    ]
   },
   "bond_rate": 0.5,
@@ -667,6 +744,7 @@
   "trait": "surge",
   "learnset": {
    "1": [
+    "Ball Lightning",
     "Crackle Bite",
     "Arc Bolt",
     "Glint"
@@ -697,6 +775,9 @@
    ],
    "44": [
     "Capacitor Crash"
+   ],
+   "46": [
+    "Fuse Box"
    ]
   },
   "bond_rate": 0.12,
@@ -754,6 +835,15 @@
    ],
    "21": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.5,
@@ -795,6 +885,7 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
+    "Bedrock",
     "Dusk Rake",
     "Pebble Toss",
     "Hush"
@@ -821,6 +912,9 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Shard Bed"
    ]
   },
   "bond_rate": 0.12,
@@ -879,6 +973,15 @@
    ],
    "22": [
     "Glint"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.55,
@@ -931,6 +1034,7 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
+    "Calm Eye",
     "Breeze Slice",
     "Updraft",
     "Crackle Bite"
@@ -954,8 +1058,14 @@
    "44": [
     "Prism Ray"
    ],
+   "46": [
+    "Chaff Feint"
+   ],
    "48": [
     "Downburst"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.12,
@@ -1027,6 +1137,15 @@
    ],
    "18": [
     "Prism Ray"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.35,
@@ -1080,6 +1199,7 @@
   "trait": "light_sleeper",
   "learnset": {
    "1": [
+    "Clear Glass",
     "Wick Flicker",
     "Glint",
     "Fizz Pop"
@@ -1187,6 +1307,15 @@
    ],
    "22": [
     "Murk Veil"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.5,
@@ -1229,6 +1358,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
+    "Boulder Roll",
     "Mirk Nip",
     "Dusk Rake",
     "Tunnel Strike"
@@ -1256,7 +1386,8 @@
     "Cairn Crash"
    ],
    "46": [
-    "Eclipse Crush"
+    "Eclipse Crush",
+    "Dusk Snare"
    ]
   },
   "bond_rate": 0.15,
@@ -1317,6 +1448,15 @@
    ],
    "22": [
     "Thorn Volley"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.35,
@@ -1358,6 +1498,7 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
+    "Bramble Bed",
     "Salt Snap",
     "Kelp Lash",
     "Lichen Lash"
@@ -1376,6 +1517,15 @@
    ],
    "44": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.15,
@@ -1427,6 +1577,18 @@
    ],
    "21": [
     "Murk Call"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "55": [
+    "Shadow Whisper"
+   ],
+   "58": [
+    "Nightfall"
    ]
   },
   "bond_rate": 0.3,
@@ -1468,6 +1630,7 @@
   "trait": "slick",
   "learnset": {
    "1": [
+    "Dread Note",
     "Fizz Pop",
     "Mirk Nip",
     "Murk Veil"
@@ -1486,6 +1649,15 @@
    ],
    "41": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Nightfall"
    ]
   },
   "bond_rate": 0.12,
@@ -1539,6 +1711,15 @@
    ],
    "21": [
     "Night Siphon"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.28,
@@ -1580,6 +1761,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
+    "Dusk Snare",
     "Hush",
     "Dusk Rake",
     "Murk Veil"
@@ -1598,6 +1780,15 @@
    ],
    "43": [
     "Still Thought"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.1,
@@ -1649,6 +1840,15 @@
    ],
    "21": [
     "Undertow"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.5,
@@ -1690,6 +1890,7 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
+    "Chaff Feint",
     "Breeze Slice",
     "Salt Snap",
     "Drift Step"
@@ -1705,6 +1906,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.12,
@@ -1755,6 +1965,15 @@
    ],
    "17": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.5,
@@ -1825,6 +2044,15 @@
    ],
    "34": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.12,
@@ -1879,6 +2107,18 @@
    ],
    "45": [
     "Ash Call"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "55": [
+    "Soot Smudge"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.08,
@@ -1930,6 +2170,18 @@
    ],
    "21": [
     "Bloom Call"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "55": [
+    "Spore Dart"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.3,
@@ -1972,6 +2224,7 @@
   "trait": "light_sleeper",
   "learnset": {
    "1": [
+    "Gale Mantle",
     "Updraft",
     "Sap Draw",
     "Puffcap Haze"
@@ -1984,6 +2237,18 @@
    ],
    "33": [
     "Bloom Call"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "55": [
+    "Thistle Puff"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.1,
@@ -2038,6 +2303,15 @@
    ],
    "39": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.1,
@@ -2092,6 +2366,15 @@
    ],
    "33": [
     "Squall"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.28,
@@ -2143,6 +2426,18 @@
    ],
    "21": [
     "Night Siphon"
+   ],
+   "46": [
+    "Overdraw"
+   ],
+   "52": [
+    "Thunderhead"
+   ],
+   "55": [
+    "Spark Prod"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.3,
@@ -2184,6 +2479,7 @@
   "trait": "surge",
   "learnset": {
    "1": [
+    "Crackle Jab",
     "Siphon Spark",
     "Arc Bolt",
     "Murk Veil"
@@ -2199,6 +2495,15 @@
    ],
    "38": [
     "Overcharge"
+   ],
+   "46": [
+    "Overdraw"
+   ],
+   "52": [
+    "Thunderhead"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.1,
@@ -2246,6 +2551,18 @@
    ],
    "17": [
     "Bloom Call"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "55": [
+    "Seed Spit"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.5,
@@ -2286,6 +2603,7 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
+    "Nettle Rub",
     "Lichen Lash",
     "Bowl Over",
     "Puffcap Haze"
@@ -2301,6 +2619,15 @@
    ],
    "40": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.12,
@@ -2352,6 +2679,15 @@
    ],
    "23": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "55": [
+    "Wave Shoulder"
    ]
   },
   "bond_rate": 0.3,
@@ -2393,6 +2729,7 @@
   "trait": "slick",
   "learnset": {
    "1": [
+    "Cave Echo",
     "Salt Snap",
     "Tunnel Strike",
     "Hunker Down"
@@ -2405,6 +2742,12 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.1,
@@ -2455,6 +2798,15 @@
    ],
    "21": [
     "Squall Line"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.45,
@@ -2495,6 +2847,7 @@
   "trait": "light_sleeper",
   "learnset": {
    "1": [
+    "Gust Ladder",
     "Breeze Slice",
     "Drift Step",
     "Draft Needle"
@@ -2513,6 +2866,15 @@
    ],
    "38": [
     "Cloudbreak"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.1,
@@ -2563,6 +2925,15 @@
    ],
    "21": [
     "Spindrift Shot"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.45,
@@ -2603,6 +2974,7 @@
   "trait": "slick",
   "learnset": {
    "1": [
+    "Fog Bank",
     "Fizz Pop",
     "Drench",
     "Spout Jab"
@@ -2621,6 +2993,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.1,
@@ -2672,6 +3053,15 @@
    ],
    "21": [
     "Kelp Lash"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.3,
@@ -2713,6 +3103,7 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
+    "Harbour Swell",
     "Lichen Lash",
     "Puffcap Haze",
     "Fizz Pop"
@@ -2728,6 +3119,15 @@
    ],
    "38": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.1,
@@ -2779,6 +3179,15 @@
    ],
    "21": [
     "Tunnel Strike"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.3,
@@ -2820,6 +3229,7 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
+    "Dynamo Hum",
     "Pebble Toss",
     "Hunker Down",
     "Crackle Bite"
@@ -2835,6 +3245,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.1,
@@ -2885,6 +3304,15 @@
    ],
    "21": [
     "Spindrift Shot"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.45,
@@ -2925,6 +3353,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
+    "Low Water",
     "Fizz Pop",
     "Drench",
     "Spout Jab"
@@ -2943,6 +3372,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.1,
@@ -2994,6 +3432,15 @@
    ],
    "21": [
     "Dawn Mend"
+   ],
+   "46": [
+    "Vigil Light"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.3,
@@ -3035,6 +3482,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
+    "Glow Trap",
     "Wick Flicker",
     "Candle Ward",
     "Breeze Slice"
@@ -3050,6 +3498,15 @@
    ],
    "38": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Vigil Light"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.1,
@@ -3103,6 +3560,15 @@
    ],
    "21": [
     "Fault Line"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Strata Burst"
    ]
   },
   "bond_rate": 0.45,
@@ -3143,6 +3609,7 @@
   "trait": "surge",
   "learnset": {
    "1": [
+    "Gravel Hum",
     "Pebble Toss",
     "Hunker Down",
     "All-In Crash"
@@ -3161,6 +3628,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Strata Burst"
    ]
   },
   "bond_rate": 0.1,
@@ -3212,6 +3688,15 @@
    ],
    "21": [
     "Prism Ray"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.3,
@@ -3253,6 +3738,7 @@
   "trait": "kindling",
   "learnset": {
    "1": [
+    "Halo Kick",
     "Breeze Slice",
     "Drift Step",
     "Wick Flicker"
@@ -3268,6 +3754,15 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.1,
@@ -3318,6 +3813,18 @@
    ],
    "21": [
     "Brazier Pulse"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "55": [
+    "Tinder Flick"
+   ],
+   "58": [
+    "Hearth Collapse"
    ]
   },
   "bond_rate": 0.45,
@@ -3358,6 +3865,7 @@
   "trait": "kindling",
   "learnset": {
    "1": [
+    "Coal Seed",
     "Cinder Nip",
     "Heat Haze",
     "Cinder Dash"
@@ -3376,6 +3884,15 @@
    ],
    "38": [
     "Bellows Blast"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Hearth Collapse"
    ]
   },
   "bond_rate": 0.1,
@@ -3427,6 +3944,15 @@
    ],
    "21": [
     "Night Siphon"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Ore Pulse"
    ]
   },
   "bond_rate": 0.3,
@@ -3468,6 +3994,7 @@
   "trait": "slick",
   "learnset": {
    "1": [
+    "Grit Spray",
     "Mirk Nip",
     "Murk Veil",
     "Pebble Toss"
@@ -3483,6 +4010,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Ore Pulse"
    ]
   },
   "bond_rate": 0.1,
@@ -3534,6 +4070,15 @@
    ],
    "21": [
     "Brazier Pulse"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.3,
@@ -3575,6 +4120,7 @@
   "trait": "light_sleeper",
   "learnset": {
    "1": [
+    "Ember Lash",
     "Breeze Slice",
     "Drift Step",
     "Cinder Nip"
@@ -3590,6 +4136,15 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.1,
@@ -3641,6 +4196,15 @@
    ],
    "21": [
     "Kelp Lash"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.3,
@@ -3682,6 +4246,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
+    "Night Toll",
     "Lichen Lash",
     "Mirk Nip",
     "Murk Veil"
@@ -3697,6 +4262,15 @@
    ],
    "38": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.1,
@@ -3748,6 +4322,15 @@
    ],
    "21": [
     "Tunnel Strike"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Halo Kick"
    ]
   },
   "bond_rate": 0.3,
@@ -3789,6 +4372,7 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
+    "Lamp Oil",
     "Pebble Toss",
     "Hunker Down",
     "Wick Flicker"
@@ -3804,6 +4388,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Halo Kick"
    ]
   },
   "bond_rate": 0.1,
@@ -3855,6 +4448,15 @@
    ],
    "21": [
     "Brazier Pulse"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.3,
@@ -3896,6 +4498,7 @@
   "trait": "surge",
   "learnset": {
    "1": [
+    "Kiln Rush",
     "Cinder Nip",
     "Heat Haze",
     "Pebble Toss"
@@ -3911,6 +4514,15 @@
    ],
    "38": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.1,
@@ -3961,6 +4573,15 @@
    ],
    "21": [
     "Dawn Mend"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.45,
@@ -4001,6 +4622,7 @@
   "trait": "light_sleeper",
   "learnset": {
    "1": [
+    "Lantern Swing",
     "Wick Flicker",
     "Candle Ward",
     "Beacon Ping"
@@ -4019,6 +4641,15 @@
    ],
    "38": [
     "Omen Bell"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.1,
@@ -4070,6 +4701,15 @@
    ],
    "21": [
     "Salt Snap"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.3,
@@ -4111,6 +4751,7 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
+    "Puddle Jump",
     "Fizz Pop",
     "Drench",
     "Wick Flicker"
@@ -4126,6 +4767,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.1,
@@ -4177,6 +4827,15 @@
    ],
    "21": [
     "Dawn Mend"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.3,
@@ -4218,6 +4877,7 @@
   "trait": "steady",
   "learnset": {
    "1": [
+    "Pinwheel",
     "Wick Flicker",
     "Candle Ward",
     "Breeze Slice"
@@ -4233,6 +4893,15 @@
    ],
    "38": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.1,
@@ -4286,6 +4955,15 @@
    ],
    "21": [
     "Fault Line"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Strata Burst"
    ]
   },
   "bond_rate": 0.45,
@@ -4326,6 +5004,7 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
+    "Ore Pulse",
     "Pebble Toss",
     "Hunker Down",
     "All-In Crash"
@@ -4344,6 +5023,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Strata Burst"
    ]
   },
   "bond_rate": 0.1,
@@ -4394,6 +5082,15 @@
    ],
    "21": [
     "Squall Line"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.45,
@@ -4434,6 +5131,7 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
+    "Puff of Air",
     "Breeze Slice",
     "Drift Step",
     "Draft Needle"
@@ -4452,6 +5150,15 @@
    ],
    "38": [
     "Cloudbreak"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.1,
@@ -4503,6 +5210,15 @@
    ],
    "21": [
     "Fault Line"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.3,
@@ -4544,6 +5260,7 @@
   "trait": "surge",
   "learnset": {
    "1": [
+    "Second Wind",
     "Breeze Slice",
     "Drift Step",
     "Pebble Toss"
@@ -4559,6 +5276,15 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.1,
@@ -4593,6 +5319,7 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
+    "Rainwash",
     "Glint",
     "Fizz Pop",
     "Candle Ward"
@@ -4610,7 +5337,15 @@
     "Radiant Lance"
    ],
    "46": [
-    "Breaker Plunge"
+    "Breaker Plunge",
+    "Vigil Light"
+   ],
+   "52": [
+    "Omen Bell"
+   ],
+   "58": [
+    "Harbour Swell",
+    "Tide of Dawn"
    ]
   },
   "bond_rate": 0.04,
@@ -4646,6 +5381,8 @@
   "trait": "deep_roots",
   "learnset": {
    "1": [
+    "Clapper",
+    "Bell Snare",
     "Bell Tap",
     "Candle Ward"
    ],
@@ -4653,10 +5390,19 @@
     "Resound"
    ],
    "46": [
-    "Omen Bell"
+    "Omen Bell",
+    "Echo Chamber"
    ],
    "52": [
-    "Toll of Ages"
+    "Toll of Ages",
+    "Choir Loft"
+   ],
+   "55": [
+    "Silence Please"
+   ],
+   "58": [
+    "Belfry Drop",
+    "Hallow Peal"
    ]
   },
   "bond_rate": 0.04,
@@ -4692,6 +5438,8 @@
   "trait": "surge",
   "learnset": {
    "1": [
+    "Censor",
+    "Blotted Page",
     "Quill Flick",
     "Draft Needle"
    ],
@@ -4699,10 +5447,19 @@
     "Blot Wave"
    ],
    "46": [
-    "Gale Scythe"
+    "Gale Scythe",
+    "Footnote"
    ],
    "52": [
-    "Margin Lash"
+    "Margin Lash",
+    "Ink Rain"
+   ],
+   "55": [
+    "Quill Sharpen"
+   ],
+   "58": [
+    "Fine Print",
+    "Last Word"
    ]
   },
   "bond_rate": 0.04,
@@ -4738,6 +5495,7 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
+    "Vigil Light",
     "Glint",
     "Dawn Call",
     "Breeze Slice"
@@ -4746,10 +5504,16 @@
     "Prism Ray"
    ],
    "46": [
-    "Dawn Mend"
+    "Dawn Mend",
+    "Clear Glass"
    ],
    "52": [
-    "Radiant Lance"
+    "Radiant Lance",
+    "Omen Bell"
+   ],
+   "58": [
+    "Lantern Swing",
+    "Vane of Morning"
    ]
   },
   "bond_rate": 0.04,
@@ -4785,6 +5549,7 @@
   "trait": "kindling",
   "learnset": {
    "1": [
+    "Weathervane",
     "Kite Cut",
     "Tailwind",
     "Static Tag"
@@ -4793,10 +5558,15 @@
     "Gale Scythe"
    ],
    "46": [
-    "Squall Line"
+    "Squall Line",
+    "Second Wind"
    ],
    "52": [
     "Downburst"
+   ],
+   "58": [
+    "Cyclone Wheel",
+    "Zephyr Verdict"
    ]
   },
   "bond_rate": 0.04,
@@ -4832,6 +5602,7 @@
   "trait": "thick_hide",
   "learnset": {
    "1": [
+    "Sediment",
     "Grit Jab",
     "Hunker Down",
     "Kiln Strike"
@@ -4840,10 +5611,16 @@
     "Cairn Crash"
    ],
    "46": [
-    "Quarry Wall"
+    "Quarry Wall",
+    "Bedrock"
    ],
    "52": [
-    "Monolith Drop"
+    "Monolith Drop",
+    "Slow Quake"
+   ],
+   "58": [
+    "Ore Pulse",
+    "Lurking Mass"
    ]
   },
   "bond_rate": 0.04,
@@ -4879,6 +5656,7 @@
   "trait": "last_stand",
   "learnset": {
    "1": [
+    "Night Veil",
     "Mirk Nip",
     "Murk Veil",
     "Glint"
@@ -4887,10 +5665,16 @@
     "Gloom Ripple"
    ],
    "46": [
-    "Night Siphon"
+    "Night Siphon",
+    "Dusk Snare"
    ],
    "52": [
-    "Eclipse Crush"
+    "Eclipse Crush",
+    "Nightfall"
+   ],
+   "58": [
+    "Backstab",
+    "Lucent Void"
    ]
   },
   "bond_rate": 0.04,
@@ -4947,6 +5731,15 @@
    ],
    "32": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.48,
@@ -5012,6 +5805,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.25,
@@ -5080,6 +5882,12 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.11,
@@ -5134,6 +5942,15 @@
    ],
    "32": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.53,
@@ -5198,6 +6015,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.3,
@@ -5262,6 +6088,12 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.15,
@@ -5313,6 +6145,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.45,
@@ -5377,6 +6218,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.3,
@@ -5441,6 +6291,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.13,
@@ -5496,6 +6355,15 @@
    ],
    "32": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Vigil Light"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.5,
@@ -5561,6 +6429,15 @@
    ],
    "38": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Vigil Light"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.32,
@@ -5629,6 +6506,12 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Vigil Light"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.11,
@@ -5684,6 +6567,15 @@
    ],
    "32": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.55,
@@ -5749,6 +6641,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.25,
@@ -5817,6 +6718,12 @@
    ],
    "44": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.11,
@@ -5872,6 +6779,12 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.53,
@@ -5937,6 +6850,12 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.35,
@@ -6002,6 +6921,12 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.11,
@@ -6054,6 +6979,15 @@
    ],
    "26": [
     "Rip Current"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "55": [
+    "Whistle Wind"
    ]
   },
   "bond_rate": 0.55,
@@ -6119,6 +7053,12 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Downburst"
    ]
   },
   "bond_rate": 0.3,
@@ -6184,6 +7124,9 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Calm Eye"
    ]
   },
   "bond_rate": 0.1,
@@ -6238,6 +7181,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.55,
@@ -6299,6 +7251,15 @@
    ],
    "38": [
     "Prism Burst"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.25,
@@ -6366,6 +7327,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.11,
@@ -6418,6 +7388,15 @@
    ],
    "26": [
     "Landslip"
+   ],
+   "46": [
+    "Static Kiss"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.5,
@@ -6480,6 +7459,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Static Kiss"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.35,
@@ -6545,6 +7533,15 @@
    ],
    "44": [
     "Capacitor Crash"
+   ],
+   "46": [
+    "Static Kiss"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.1,
@@ -6600,6 +7597,15 @@
    ],
    "32": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.45,
@@ -6665,6 +7671,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.35,
@@ -6733,6 +7748,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.11,
@@ -6788,6 +7812,15 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.55,
@@ -6853,6 +7886,15 @@
    ],
    "38": [
     "Cloudbreak"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.32,
@@ -6921,6 +7963,15 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.13,
@@ -6976,6 +8027,15 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.48,
@@ -7041,6 +8101,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.35,
@@ -7106,6 +8175,12 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.13,
@@ -7158,6 +8233,15 @@
    ],
    "26": [
     "Starlit Lash"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Lantern Swing"
    ]
   },
   "bond_rate": 0.55,
@@ -7223,6 +8307,15 @@
    ],
    "38": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Lantern Swing"
    ]
   },
   "bond_rate": 0.32,
@@ -7291,6 +8384,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Lantern Swing"
    ]
   },
   "bond_rate": 0.13,
@@ -7346,6 +8448,15 @@
    ],
    "32": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.5,
@@ -7411,6 +8522,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.25,
@@ -7479,6 +8599,12 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "58": [
+    "Slow Quake"
    ]
   },
   "bond_rate": 0.08,
@@ -7533,6 +8659,15 @@
    ],
    "32": [
     "Bore Wave"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.53,
@@ -7600,6 +8735,15 @@
    ],
    "44": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.1,
@@ -7652,6 +8796,15 @@
    ],
    "26": [
     "Prism Ray"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.28,
@@ -7717,6 +8870,15 @@
    ],
    "44": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.11,
@@ -7772,6 +8934,15 @@
    ],
    "32": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.32,
@@ -7840,6 +9011,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.11,
@@ -7895,6 +9075,15 @@
    ],
    "32": [
     "Cloudbreak"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.3,
@@ -7963,6 +9152,15 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.13,
@@ -8018,6 +9216,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Halo Kick"
    ]
   },
   "bond_rate": 0.25,
@@ -8086,6 +9293,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Halo Kick"
    ]
   },
   "bond_rate": 0.1,
@@ -8141,6 +9357,15 @@
    ],
    "32": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.25,
@@ -8206,6 +9431,12 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.13,
@@ -8264,6 +9495,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Ore Pulse"
    ]
   },
   "bond_rate": 0.35,
@@ -8322,6 +9562,15 @@
    ],
    "38": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.32,
@@ -8379,6 +9628,15 @@
    ],
    "38": [
     "Omen Bell"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bellows Blast"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.35,
@@ -8437,6 +9695,15 @@
    ],
    "38": [
     "Omen Bell"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.28,
@@ -8489,6 +9756,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Bellows Blast"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.53,
@@ -8554,6 +9830,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Bellows Blast"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.25,
@@ -8622,6 +9907,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Bellows Blast"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.13,
@@ -8677,6 +9971,15 @@
    ],
    "32": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.5,
@@ -8742,6 +10045,15 @@
    ],
    "38": [
     "Slow Quake"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "52": [
+    "Daybreak Strike"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.32,
@@ -8810,6 +10122,12 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.15,
@@ -8865,6 +10183,15 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.53,
@@ -8930,6 +10257,15 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.3,
@@ -8998,6 +10334,15 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.1,
@@ -9053,6 +10398,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.55,
@@ -9118,6 +10472,15 @@
    ],
    "38": [
     "Bore Wave"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.25,
@@ -9186,6 +10549,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.15,
@@ -9238,6 +10610,15 @@
    ],
    "32": [
     "Slow Quake"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.55,
@@ -9303,6 +10684,15 @@
    ],
    "38": [
     "Bellows Blast"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.35,
@@ -9371,6 +10761,12 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "58": [
+    "Bonfire Body"
    ]
   },
   "bond_rate": 0.08,
@@ -9426,6 +10822,15 @@
    ],
    "32": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.45,
@@ -9491,6 +10896,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.25,
@@ -9559,6 +10973,12 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.13,
@@ -9611,6 +11031,15 @@
    ],
    "26": [
     "Bore Wave"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.53,
@@ -9673,6 +11102,15 @@
    ],
    "38": [
     "Bore Wave"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.3,
@@ -9735,6 +11173,15 @@
    ],
    "44": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.1,
@@ -9790,6 +11237,15 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.53,
@@ -9855,6 +11311,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.25,
@@ -9920,6 +11385,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.08,
@@ -9975,6 +11449,15 @@
    ],
    "32": [
     "Squall"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.48,
@@ -10040,6 +11523,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.35,
@@ -10108,6 +11600,15 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Cyclone Wheel"
+   ],
+   "58": [
+    "Pall"
    ]
   },
   "bond_rate": 0.15,
@@ -10163,6 +11664,15 @@
    ],
    "32": [
     "Slow Quake"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Cairn Crash"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.48,
@@ -10225,6 +11735,15 @@
    ],
    "38": [
     "Short Circuit"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Cairn Crash"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.25,
@@ -10293,6 +11812,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Cairn Crash"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.11,
@@ -10348,6 +11876,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bellows Blast"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.5,
@@ -10413,6 +11950,15 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bellows Blast"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.35,
@@ -10481,6 +12027,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bellows Blast"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.15,
@@ -10536,6 +12091,15 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Pylon Fall"
    ]
   },
   "bond_rate": 0.55,
@@ -10601,6 +12165,15 @@
    ],
    "38": [
     "Short Circuit"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Pylon Fall"
    ]
   },
   "bond_rate": 0.32,
@@ -10666,6 +12239,12 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "58": [
+    "Pylon Fall"
    ]
   },
   "bond_rate": 0.08,
@@ -10721,6 +12300,15 @@
    ],
    "32": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.5,
@@ -10786,6 +12374,15 @@
    ],
    "38": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.32,
@@ -10854,6 +12451,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Shard Bed"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Kiln Rush"
    ]
   },
   "bond_rate": 0.08,
@@ -10909,6 +12515,12 @@
    ],
    "32": [
     "Prism Burst"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.48,
@@ -10974,6 +12586,12 @@
    ],
    "38": [
     "Bellows Blast"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.28,
@@ -11042,6 +12660,15 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Glow Trap"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.13,
@@ -11094,6 +12721,15 @@
    ],
    "26": [
     "Squall Line"
+   ],
+   "46": [
+    "Wire Trap"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.3,
@@ -11156,6 +12792,15 @@
    ],
    "44": [
     "Capacitor Crash"
+   ],
+   "46": [
+    "Wire Trap"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.15,
@@ -11211,6 +12856,15 @@
    ],
    "32": [
     "Omen Bell"
+   ],
+   "46": [
+    "Vigil Light"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Strata Burst"
    ]
   },
   "bond_rate": 0.28,
@@ -11279,6 +12933,15 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Vigil Light"
+   ],
+   "52": [
+    "Prism Burst"
+   ],
+   "58": [
+    "Strata Burst"
    ]
   },
   "bond_rate": 0.11,
@@ -11334,6 +12997,15 @@
    ],
    "32": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.3,
@@ -11399,6 +13071,15 @@
    ],
    "38": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.11,
@@ -11454,6 +13135,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.32,
@@ -11522,6 +13212,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.13,
@@ -11577,6 +13276,15 @@
    ],
    "32": [
     "Slow Quake"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Cairn Crash"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.3,
@@ -11645,6 +13353,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Cairn Crash"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.1,
@@ -11700,6 +13417,15 @@
    ],
    "32": [
     "Bore Wave"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.3,
@@ -11768,6 +13494,15 @@
    ],
    "44": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.15,
@@ -11826,6 +13561,12 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "52": [
+    "Eclipse Crush"
    ]
   },
   "bond_rate": 0.32,
@@ -11884,6 +13625,12 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Furnace Heart"
    ]
   },
   "bond_rate": 0.3,
@@ -11942,6 +13689,15 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "52": [
+    "Omen Bell"
+   ],
+   "58": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.35,
@@ -11997,6 +13753,15 @@
    ],
    "38": [
     "Bellows Blast"
+   ],
+   "46": [
+    "Dynamo Hum"
+   ],
+   "52": [
+    "Thunderhead"
+   ],
+   "58": [
+    "Pyre Waltz"
    ]
   },
   "bond_rate": 0.3,
@@ -12047,6 +13812,20 @@
    ],
    "32": [
     "Margin Lash"
+   ],
+   "46": [
+    "Ink Trap"
+   ],
+   "52": [
+    "Redaction"
+   ],
+   "55": [
+    "Errata",
+    "Inkwell Flood",
+    "Rewrite"
+   ],
+   "58": [
+    "Seal and Sign"
    ]
   },
   "bond_rate": 0.48,
@@ -12107,6 +13886,19 @@
    ],
    "38": [
     "Bore Wave"
+   ],
+   "46": [
+    "Ink Trap"
+   ],
+   "52": [
+    "Redaction"
+   ],
+   "55": [
+    "Ledger Slap",
+    "Smudge"
+   ],
+   "58": [
+    "Seal and Sign"
    ]
   },
   "bond_rate": 0.25,
@@ -12164,6 +13956,19 @@
    ],
    "32": [
     "Margin Lash"
+   ],
+   "46": [
+    "Ink Trap"
+   ],
+   "52": [
+    "Redaction"
+   ],
+   "55": [
+    "Ink Spatter",
+    "Nib Prick"
+   ],
+   "58": [
+    "Seal and Sign"
    ]
   },
   "bond_rate": 0.15,
@@ -12218,6 +14023,15 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.48,
@@ -12282,6 +14096,15 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.3,
@@ -12346,6 +14169,15 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.15,
@@ -12398,6 +14230,15 @@
    ],
    "26": [
     "Undertow"
+   ],
+   "46": [
+    "Dynamo Hum"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.48,
@@ -12460,6 +14301,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Dynamo Hum"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.28,
@@ -12525,6 +14375,12 @@
    ],
    "44": [
     "Capacitor Crash"
+   ],
+   "46": [
+    "Dynamo Hum"
+   ],
+   "52": [
+    "Pylon Fall"
    ]
   },
   "bond_rate": 0.1,
@@ -12580,6 +14436,15 @@
    ],
    "32": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.5,
@@ -12645,6 +14510,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.28,
@@ -12713,6 +14587,12 @@
    ],
    "44": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.1,
@@ -12768,6 +14648,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.48,
@@ -12833,6 +14722,15 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.3,
@@ -12901,6 +14799,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Smoulder"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.11,
@@ -12956,6 +14863,15 @@
    ],
    "32": [
     "Squall"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Cloudbreak"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.53,
@@ -13018,6 +14934,15 @@
    ],
    "32": [
     "Squall"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Cloudbreak"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.3,
@@ -13086,6 +15011,15 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "52": [
+    "Cloudbreak"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.08,
@@ -13141,6 +15075,15 @@
    ],
    "32": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.48,
@@ -13203,6 +15146,15 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "52": [
+    "Monolith Drop"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.28,
@@ -13271,6 +15223,12 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Sediment"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.08,
@@ -13323,6 +15281,15 @@
    ],
    "26": [
     "Pylon Snap"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.5,
@@ -13385,6 +15352,15 @@
    ],
    "38": [
     "Short Circuit"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.28,
@@ -13453,6 +15429,12 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.1,
@@ -13503,6 +15485,20 @@
    ],
    "32": [
     "Toll of Ages"
+   ],
+   "46": [
+    "Funeral March"
+   ],
+   "52": [
+    "Hollow Tone"
+   ],
+   "55": [
+    "Feedback",
+    "Hum Back",
+    "Tuning Fork"
+   ],
+   "58": [
+    "Great Bell"
    ]
   },
   "bond_rate": 0.45,
@@ -13563,6 +15559,18 @@
    ],
    "38": [
     "Omen Bell"
+   ],
+   "46": [
+    "Funeral March"
+   ],
+   "52": [
+    "Hollow Tone"
+   ],
+   "55": [
+    "Knell"
+   ],
+   "58": [
+    "Great Bell"
    ]
   },
   "bond_rate": 0.28,
@@ -13623,6 +15631,18 @@
    ],
    "38": [
     "Omen Bell"
+   ],
+   "46": [
+    "Funeral March"
+   ],
+   "52": [
+    "Hollow Tone"
+   ],
+   "55": [
+    "Rebound Peal"
+   ],
+   "58": [
+    "Great Bell"
    ]
   },
   "bond_rate": 0.1,
@@ -13678,6 +15698,15 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.48,
@@ -13743,6 +15772,15 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.32,
@@ -13808,6 +15846,12 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Night Veil"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.15,
@@ -13860,6 +15904,15 @@
    ],
    "32": [
     "Short Circuit"
+   ],
+   "46": [
+    "Fuse Box"
+   ],
+   "52": [
+    "Thunderhead"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.55,
@@ -13919,6 +15972,15 @@
    ],
    "32": [
     "Short Circuit"
+   ],
+   "46": [
+    "Fuse Box"
+   ],
+   "52": [
+    "Thunderhead"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.32,
@@ -13984,6 +16046,15 @@
    ],
    "44": [
     "Capacitor Crash"
+   ],
+   "46": [
+    "Fuse Box"
+   ],
+   "52": [
+    "Thunderhead"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.15,
@@ -14039,6 +16110,15 @@
    ],
    "32": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.53,
@@ -14104,6 +16184,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.35,
@@ -14169,6 +16258,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Bedrock"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.15,
@@ -14221,6 +16319,15 @@
    ],
    "26": [
     "Prism Ray"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.53,
@@ -14286,6 +16393,15 @@
    ],
    "38": [
     "Omen Bell"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.25,
@@ -14351,6 +16467,15 @@
    ],
    "38": [
     "Omen Bell"
+   ],
+   "46": [
+    "Overgrowth"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.1,
@@ -14406,6 +16531,15 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.35,
@@ -14474,6 +16608,12 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Dusk Snare"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.13,
@@ -14529,6 +16669,15 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.25,
@@ -14594,6 +16743,15 @@
    ],
    "38": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.08,
@@ -14649,6 +16807,15 @@
    ],
    "32": [
     "Bore Wave"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.3,
@@ -14717,6 +16884,15 @@
    ],
    "44": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Searchlight"
    ]
   },
   "bond_rate": 0.15,
@@ -14772,6 +16948,12 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.35,
@@ -14837,6 +17019,12 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.08,
@@ -14892,6 +17080,15 @@
    ],
    "32": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.25,
@@ -14957,6 +17154,15 @@
    ],
    "38": [
     "Bore Wave"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Canopy Crash"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.15,
@@ -15012,6 +17218,15 @@
    ],
    "32": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.28,
@@ -15080,6 +17295,15 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Gravel Hum"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.15,
@@ -15133,6 +17357,18 @@
    ],
    "38": [
     "Cloudbreak"
+   ],
+   "46": [
+    "Margin Note"
+   ],
+   "52": [
+    "Ink Rain"
+   ],
+   "55": [
+    "Palimpsest"
+   ],
+   "58": [
+    "Spine Crack"
    ]
   },
   "bond_rate": 0.25,
@@ -15187,6 +17423,18 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Hymn of Rest"
+   ],
+   "52": [
+    "Toll Debt"
+   ],
+   "55": [
+    "Reverb"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.32,
@@ -15242,6 +17490,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Night Toll"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Undertow"
    ]
   },
   "bond_rate": 0.35,
@@ -15297,6 +17554,15 @@
    ],
    "32": [
     "Thornwake"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.48,
@@ -15362,6 +17628,15 @@
    ],
    "38": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.25,
@@ -15427,6 +17702,12 @@
    ],
    "44": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Bramble Bed"
+   ],
+   "58": [
+    "Gust Ladder"
    ]
   },
   "bond_rate": 0.13,
@@ -15482,6 +17763,15 @@
    ],
    "32": [
     "Prism Burst"
+   ],
+   "46": [
+    "Sunwell Sip"
+   ],
+   "52": [
+    "Omen Bell"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.45,
@@ -15547,6 +17837,12 @@
    ],
    "38": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Sunwell Sip"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.32,
@@ -15615,6 +17911,12 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Sunwell Sip"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.15,
@@ -15670,6 +17972,15 @@
    ],
    "32": [
     "Gale Scythe"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.5,
@@ -15732,6 +18043,15 @@
    ],
    "38": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.25,
@@ -15800,6 +18120,12 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Gale Mantle"
+   ],
+   "58": [
+    "Rip Current"
    ]
   },
   "bond_rate": 0.1,
@@ -15855,6 +18181,12 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.53,
@@ -15920,6 +18252,12 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.3,
@@ -15985,6 +18323,12 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Rainwash"
+   ],
+   "52": [
+    "Fathom Crush"
    ]
   },
   "bond_rate": 0.15,
@@ -16040,6 +18384,15 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.5,
@@ -16105,6 +18458,15 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.28,
@@ -16173,6 +18535,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Coal Seed"
+   ],
+   "52": [
+    "Bonfire Body"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.11,
@@ -16228,6 +18599,15 @@
    ],
    "32": [
     "Bore Wave"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.25,
@@ -16296,6 +18676,15 @@
    ],
    "44": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "52": [
+    "Drowned Bell"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.08,
@@ -16351,6 +18740,15 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.28,
@@ -16416,6 +18814,15 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Fog Bank"
+   ],
+   "52": [
+    "Fathom Crush"
+   ],
+   "58": [
+    "Backstab"
    ]
   },
   "bond_rate": 0.15,
@@ -16468,6 +18875,15 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Gloam Pact"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.35,
@@ -16536,6 +18952,12 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Gloam Pact"
+   ],
+   "58": [
+    "Root Grip"
    ]
   },
   "bond_rate": 0.1,
@@ -16591,6 +19013,12 @@
    ],
    "32": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "52": [
+    "Daybreak Strike"
    ]
   },
   "bond_rate": 0.28,
@@ -16659,6 +19087,12 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Clear Glass"
+   ],
+   "58": [
+    "Undertow"
    ]
   },
   "bond_rate": 0.13,
@@ -16714,6 +19148,15 @@
    ],
    "32": [
     "Thornwake"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "52": [
+    "Wildgrowth Crash"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.35,
@@ -16782,6 +19225,12 @@
    ],
    "44": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Pollen Choir"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.15,
@@ -16834,6 +19283,15 @@
    ],
    "26": [
     "Tunnel Strike"
+   ],
+   "46": [
+    "Overdraw"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.35,
@@ -16899,6 +19357,15 @@
    ],
    "44": [
     "Capacitor Crash"
+   ],
+   "46": [
+    "Overdraw"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.15,
@@ -16953,6 +19420,18 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Lullaby Echo"
+   ],
+   "52": [
+    "Toll Debt"
+   ],
+   "55": [
+    "Ringing Ears"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.35,
@@ -17011,6 +19490,15 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Second Wind"
+   ],
+   "52": [
+    "Downburst"
+   ],
+   "58": [
+    "Bark Burst"
    ]
   },
   "bond_rate": 0.3,
@@ -17069,6 +19557,15 @@
    ],
    "38": [
     "Short Circuit"
+   ],
+   "46": [
+    "Banked Coals"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Ball Lightning"
    ]
   },
   "bond_rate": 0.35,
@@ -17120,6 +19617,18 @@
    ],
    "26": [
     "Storm Gnash"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "49": [
+    "Borrowed Face"
+   ],
+   "52": [
+    "Shear Wind"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.55,
@@ -17181,6 +19690,18 @@
    ],
    "38": [
     "Short Circuit"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "49": [
+    "Borrowed Face"
+   ],
+   "52": [
+    "Shear Wind"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.3,
@@ -17248,6 +19769,18 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Calm Eye"
+   ],
+   "49": [
+    "Borrowed Face"
+   ],
+   "52": [
+    "Shear Wind"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.13,
@@ -17303,6 +19836,19 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "49": [
+    "Charade",
+    "Anchor Chain"
+   ],
+   "52": [
+    "Wreck Diver"
+   ],
+   "58": [
+    "Shear Wind"
    ]
   },
   "bond_rate": 0.53,
@@ -17365,6 +19911,19 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "49": [
+    "Charade",
+    "Anchor Chain"
+   ],
+   "52": [
+    "Wreck Diver"
+   ],
+   "58": [
+    "Shear Wind"
    ]
   },
   "bond_rate": 0.3,
@@ -17427,6 +19986,19 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Low Water"
+   ],
+   "49": [
+    "Charade",
+    "Anchor Chain"
+   ],
+   "52": [
+    "Wreck Diver"
+   ],
+   "58": [
+    "Shear Wind"
    ]
   },
   "bond_rate": 0.11,
@@ -17479,6 +20051,22 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Crocodile Tears",
+    "Corrosion Cloud"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "55": [
+    "Compost Pact"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.48,
@@ -17544,6 +20132,19 @@
    ],
    "38": [
     "Bloom Burst"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Crocodile Tears",
+    "Corrosion Cloud"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.32,
@@ -17612,6 +20213,18 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Crocodile Tears"
+   ],
+   "52": [
+    "Hearth Collapse"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.11,
@@ -17667,6 +20280,18 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "False Face"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Old Oak"
    ]
   },
   "bond_rate": 0.53,
@@ -17732,6 +20357,18 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "False Face"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Old Oak"
    ]
   },
   "bond_rate": 0.28,
@@ -17800,6 +20437,15 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "False Face"
+   ],
+   "58": [
+    "Old Oak"
    ]
   },
   "bond_rate": 0.08,
@@ -17855,6 +20501,18 @@
    ],
    "32": [
     "Prism Burst"
+   ],
+   "46": [
+    "Mirror Shine"
+   ],
+   "49": [
+    "Grand Farce"
+   ],
+   "52": [
+    "Omen Bell"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.53,
@@ -17920,6 +20578,18 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Mirror Shine"
+   ],
+   "49": [
+    "Grand Farce"
+   ],
+   "52": [
+    "Omen Bell"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.32,
@@ -17988,6 +20658,18 @@
    ],
    "44": [
     "Daybreak Strike"
+   ],
+   "46": [
+    "Mirror Shine"
+   ],
+   "49": [
+    "Grand Farce"
+   ],
+   "52": [
+    "Omen Bell"
+   ],
+   "58": [
+    "Cyclone Wheel"
    ]
   },
   "bond_rate": 0.1,
@@ -18043,6 +20725,22 @@
    ],
    "32": [
     "Vitriol Flood"
+   ],
+   "46": [
+    "Acid Bath"
+   ],
+   "49": [
+    "Flake Rasp"
+   ],
+   "52": [
+    "Etching"
+   ],
+   "55": [
+    "Fizzle Bite",
+    "Pickled Punch"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.53,
@@ -18108,6 +20806,21 @@
    ],
    "38": [
     "Bore Wave"
+   ],
+   "46": [
+    "Acid Bath"
+   ],
+   "49": [
+    "Flake Rasp"
+   ],
+   "52": [
+    "Etching"
+   ],
+   "55": [
+    "Sulphur Sigh"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.28,
@@ -18173,6 +20886,18 @@
    ],
    "44": [
     "Acid Deluge"
+   ],
+   "46": [
+    "Acid Bath"
+   ],
+   "49": [
+    "Flake Rasp"
+   ],
+   "52": [
+    "Etching"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.1,
@@ -18227,6 +20952,21 @@
    ],
    "32": [
     "Rime Shard"
+   ],
+   "46": [
+    "Cold Shoulder"
+   ],
+   "49": [
+    "Hinge Snap"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "55": [
+    "Black Ice"
+   ],
+   "58": [
+    "Glacier Calve"
    ]
   },
   "bond_rate": 0.5,
@@ -18288,6 +21028,21 @@
    ],
    "32": [
     "Rime Shard"
+   ],
+   "46": [
+    "Cold Shoulder"
+   ],
+   "49": [
+    "Hinge Snap"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "55": [
+    "Frostbite"
+   ],
+   "58": [
+    "Glacier Calve"
    ]
   },
   "bond_rate": 0.25,
@@ -18352,6 +21107,18 @@
    ],
    "44": [
     "Deep Freeze"
+   ],
+   "46": [
+    "Cold Shoulder"
+   ],
+   "49": [
+    "Hinge Snap"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "58": [
+    "Glacier Calve"
    ]
   },
   "bond_rate": 0.08,
@@ -18407,6 +21174,21 @@
    ],
    "32": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Oil Can"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "55": [
+    "Dust Devil"
+   ],
+   "58": [
+    "Brine Pickle"
    ]
   },
   "bond_rate": 0.53,
@@ -18472,6 +21254,18 @@
    ],
    "38": [
     "Plate Biter"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Oil Can"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Brine Pickle"
    ]
   },
   "bond_rate": 0.32,
@@ -18540,6 +21334,18 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Oil Can"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Brine Pickle"
    ]
   },
   "bond_rate": 0.15,
@@ -18595,6 +21401,19 @@
    ],
    "32": [
     "Rime Shard"
+   ],
+   "46": [
+    "Hibernate"
+   ],
+   "49": [
+    "Hidden Knife",
+    "Old Machine"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "58": [
+    "Old Oak"
    ]
   },
   "bond_rate": 0.53,
@@ -18660,6 +21479,19 @@
    ],
    "38": [
     "Wildgrowth Crash"
+   ],
+   "46": [
+    "Hibernate"
+   ],
+   "49": [
+    "Hidden Knife",
+    "Old Machine"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "58": [
+    "Old Oak"
    ]
   },
   "bond_rate": 0.28,
@@ -18728,6 +21560,18 @@
    ],
    "44": [
     "Deep Freeze"
+   ],
+   "46": [
+    "Hibernate"
+   ],
+   "49": [
+    "Hidden Knife"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "58": [
+    "Old Oak"
    ]
   },
   "bond_rate": 0.08,
@@ -18780,6 +21624,21 @@
    ],
    "26": [
     "Tunnel Strike"
+   ],
+   "46": [
+    "Brownout"
+   ],
+   "49": [
+    "Oxide Haze"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "55": [
+    "Arc Weld"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.48,
@@ -18842,6 +21701,18 @@
    ],
    "38": [
     "Slow Quake"
+   ],
+   "46": [
+    "Brownout"
+   ],
+   "49": [
+    "Oxide Haze"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.28,
@@ -18907,6 +21778,18 @@
    ],
    "44": [
     "Capacitor Crash"
+   ],
+   "46": [
+    "Brownout"
+   ],
+   "49": [
+    "Oxide Haze"
+   ],
+   "52": [
+    "Pylon Fall"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.1,
@@ -18962,6 +21845,19 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Jester Fall",
+    "Red Flake"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.53,
@@ -19027,6 +21923,19 @@
    ],
    "38": [
     "Bore Wave"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Jester Fall",
+    "Red Flake"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.32,
@@ -19095,6 +22004,18 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Jester Fall"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Riptide Coil"
    ]
   },
   "bond_rate": 0.08,
@@ -19150,6 +22071,21 @@
    ],
    "32": [
     "Plate Biter"
+   ],
+   "46": [
+    "Dissolve"
+   ],
+   "49": [
+    "Riveted"
+   ],
+   "52": [
+    "Etched Fang"
+   ],
+   "55": [
+    "Lye Splash"
+   ],
+   "58": [
+    "Pitch Torch"
    ]
   },
   "bond_rate": 0.53,
@@ -19215,6 +22151,18 @@
    ],
    "38": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Dissolve"
+   ],
+   "49": [
+    "Riveted"
+   ],
+   "52": [
+    "Etched Fang"
+   ],
+   "58": [
+    "Pitch Torch"
    ]
   },
   "bond_rate": 0.25,
@@ -19283,6 +22231,18 @@
    ],
    "44": [
     "Acid Deluge"
+   ],
+   "46": [
+    "Dissolve"
+   ],
+   "49": [
+    "Riveted"
+   ],
+   "52": [
+    "Etched Fang"
+   ],
+   "58": [
+    "Pitch Torch"
    ]
   },
   "bond_rate": 0.11,
@@ -19338,6 +22298,21 @@
    ],
    "32": [
     "Moor Blizzard"
+   ],
+   "46": [
+    "Ice Floor"
+   ],
+   "49": [
+    "Rust Bloom"
+   ],
+   "52": [
+    "Whiteout"
+   ],
+   "55": [
+    "Hailstone"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.48,
@@ -19403,6 +22378,18 @@
    ],
    "38": [
     "Bore Wave"
+   ],
+   "46": [
+    "Ice Floor"
+   ],
+   "49": [
+    "Rust Bloom"
+   ],
+   "52": [
+    "Whiteout"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.32,
@@ -19468,6 +22455,18 @@
    ],
    "44": [
     "Deep Freeze"
+   ],
+   "46": [
+    "Ice Floor"
+   ],
+   "49": [
+    "Rust Bloom"
+   ],
+   "52": [
+    "Whiteout"
+   ],
+   "58": [
+    "Harbour Swell"
    ]
   },
   "bond_rate": 0.11,
@@ -19523,6 +22522,19 @@
    ],
    "32": [
     "Tremor Thud"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Masquerade",
+    "Scrap Storm"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.45,
@@ -19585,6 +22597,19 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Masquerade",
+    "Scrap Storm"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.25,
@@ -19653,6 +22678,18 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Masquerade"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.11,
@@ -19708,6 +22745,18 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Pass the Blame"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.53,
@@ -19773,6 +22822,18 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Pass the Blame"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.28,
@@ -19841,6 +22902,18 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Pass the Blame"
+   ],
+   "52": [
+    "Nightfall"
+   ],
+   "58": [
+    "Weathervane"
    ]
   },
   "bond_rate": 0.08,
@@ -19896,6 +22969,19 @@
    ],
    "32": [
     "Plate Biter"
+   ],
+   "46": [
+    "Ferment"
+   ],
+   "49": [
+    "Sleight",
+    "Scrapyard"
+   ],
+   "52": [
+    "Etched Fang"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.45,
@@ -19958,6 +23044,19 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Ferment"
+   ],
+   "49": [
+    "Sleight",
+    "Scrapyard"
+   ],
+   "52": [
+    "Etched Fang"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.3,
@@ -20023,6 +23122,19 @@
    ],
    "44": [
     "Acid Deluge"
+   ],
+   "46": [
+    "Ferment"
+   ],
+   "49": [
+    "Sleight",
+    "Scrapyard"
+   ],
+   "52": [
+    "Etched Fang"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.1,
@@ -20075,6 +23187,22 @@
    ],
    "26": [
     "Updraft"
+   ],
+   "46": [
+    "Rime Armour"
+   ],
+   "49": [
+    "Smile Wide",
+    "Seized Gear"
+   ],
+   "52": [
+    "Glacier Calve"
+   ],
+   "55": [
+    "Icicle Lunge"
+   ],
+   "58": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.45,
@@ -20140,6 +23268,19 @@
    ],
    "38": [
     "Squall"
+   ],
+   "46": [
+    "Rime Armour"
+   ],
+   "49": [
+    "Smile Wide",
+    "Seized Gear"
+   ],
+   "52": [
+    "Glacier Calve"
+   ],
+   "58": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.25,
@@ -20208,6 +23349,18 @@
    ],
    "44": [
     "Deep Freeze"
+   ],
+   "46": [
+    "Rime Armour"
+   ],
+   "49": [
+    "Smile Wide"
+   ],
+   "52": [
+    "Glacier Calve"
+   ],
+   "58": [
+    "Cloudbreak"
    ]
   },
   "bond_rate": 0.1,
@@ -20263,6 +23416,18 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Tetanus Nick"
+   ],
+   "52": [
+    "Pitch Torch"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.45,
@@ -20328,6 +23493,18 @@
    ],
    "38": [
     "Slow Quake"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Tetanus Nick"
+   ],
+   "52": [
+    "Pitch Torch"
+   ],
+   "58": [
+    "Monolith Drop"
    ]
   },
   "bond_rate": 0.3,
@@ -20396,6 +23573,15 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Tetanus Nick"
+   ],
+   "52": [
+    "Pitch Torch"
    ]
   },
   "bond_rate": 0.08,
@@ -20448,6 +23634,18 @@
    ],
    "32": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Stage Fright"
+   ],
+   "52": [
+    "Eclipse Crush"
+   ],
+   "58": [
+    "Gleam Edge"
    ]
   },
   "bond_rate": 0.28,
@@ -20513,6 +23711,15 @@
    ],
    "44": [
     "Eclipse Crush"
+   ],
+   "46": [
+    "Grave Dust"
+   ],
+   "49": [
+    "Stage Fright"
+   ],
+   "58": [
+    "Gleam Edge"
    ]
   },
   "bond_rate": 0.13,
@@ -20565,6 +23772,19 @@
    ],
    "26": [
     "Landslip"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "49": [
+    "Two Faces",
+    "Corrosion Cloud"
+   ],
+   "52": [
+    "Shear Wind"
+   ],
+   "58": [
+    "Tremor Thud"
    ]
   },
   "bond_rate": 0.25,
@@ -20630,6 +23850,19 @@
    ],
    "44": [
     "Downburst"
+   ],
+   "46": [
+    "Chaff Feint"
+   ],
+   "49": [
+    "Two Faces",
+    "Corrosion Cloud"
+   ],
+   "52": [
+    "Shear Wind"
+   ],
+   "58": [
+    "Tremor Thud"
    ]
   },
   "bond_rate": 0.11,
@@ -20685,6 +23918,19 @@
    ],
    "32": [
     "Vitriol Flood"
+   ],
+   "46": [
+    "Sour Turn"
+   ],
+   "49": [
+    "Veil Tap",
+    "Old Machine"
+   ],
+   "52": [
+    "Tannery Pit"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.25,
@@ -20753,6 +23999,18 @@
    ],
    "44": [
     "Acid Deluge"
+   ],
+   "46": [
+    "Sour Turn"
+   ],
+   "49": [
+    "Veil Tap"
+   ],
+   "52": [
+    "Tannery Pit"
+   ],
+   "58": [
+    "Canopy Crash"
    ]
   },
   "bond_rate": 0.08,
@@ -20808,6 +24066,21 @@
    ],
    "32": [
     "Rime Shard"
+   ],
+   "46": [
+    "Thaw Song"
+   ],
+   "49": [
+    "Red Flake"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "55": [
+    "Snow Dust"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.25,
@@ -20876,6 +24149,18 @@
    ],
    "44": [
     "Deep Freeze"
+   ],
+   "46": [
+    "Thaw Song"
+   ],
+   "49": [
+    "Red Flake"
+   ],
+   "52": [
+    "Avalanche Run"
+   ],
+   "58": [
+    "Landslip"
    ]
   },
   "bond_rate": 0.15,
@@ -20931,6 +24216,18 @@
    ],
    "32": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Scrap Storm"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.32,
@@ -20996,6 +24293,18 @@
    ],
    "44": [
     "Monolith Drop"
+   ],
+   "46": [
+    "Quarry Hymn"
+   ],
+   "49": [
+    "Scrap Storm"
+   ],
+   "52": [
+    "Slow Quake"
+   ],
+   "58": [
+    "Live Wire"
    ]
   },
   "bond_rate": 0.15,
@@ -21051,6 +24360,18 @@
    ],
    "32": [
     "Breaker Plunge"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "49": [
+    "Curtain Call"
+   ],
+   "52": [
+    "Wreck Diver"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.25,
@@ -21116,6 +24437,18 @@
    ],
    "38": [
     "Dusk Gnaw"
+   ],
+   "46": [
+    "Shoal Trap"
+   ],
+   "49": [
+    "Curtain Call"
+   ],
+   "52": [
+    "Wreck Diver"
+   ],
+   "58": [
+    "Debt Collector"
    ]
   },
   "bond_rate": 0.11,
@@ -21171,6 +24504,19 @@
    ],
    "32": [
     "Furnace Spiral"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Stage Fright",
+    "Seized Gear"
+   ],
+   "52": [
+    "Pitch Torch"
+   ],
+   "58": [
+    "Shear Wind"
    ]
   },
   "bond_rate": 0.28,
@@ -21236,6 +24582,19 @@
    ],
    "44": [
     "Furnace Heart"
+   ],
+   "46": [
+    "Charcoal Grin"
+   ],
+   "49": [
+    "Stage Fright",
+    "Seized Gear"
+   ],
+   "52": [
+    "Pitch Torch"
+   ],
+   "58": [
+    "Shear Wind"
    ]
   },
   "bond_rate": 0.13,
@@ -21293,6 +24652,18 @@
    ],
    "38": [
     "Cairn Crash"
+   ],
+   "46": [
+    "Vinegar Trap"
+   ],
+   "49": [
+    "Wrecking Hulk"
+   ],
+   "52": [
+    "Tannery Pit"
+   ],
+   "58": [
+    "Brine Pickle"
    ]
   },
   "bond_rate": 0.25,
@@ -21351,6 +24722,15 @@
    ],
    "38": [
     "Radiant Lance"
+   ],
+   "46": [
+    "Thaw Song"
+   ],
+   "52": [
+    "Deep Freeze"
+   ],
+   "58": [
+    "Gleam Edge"
    ]
   },
   "bond_rate": 0.28,

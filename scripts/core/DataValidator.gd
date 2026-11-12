@@ -11,7 +11,7 @@ const MOVE_KEYS: Array[String] = ["name", "element", "kind", "power", "accuracy"
 	"target", "status", "status_chance", "stat", "stages", "self", "stats", "stat_chance", "stage_chance",
 	"stages_full_hp", "self_stages", "effect", "effect_amount", "field", "field_element", "field_power",
 	"overcharge", "cooldown", "vs_status", "vs_mult", "cure_self", "cure_target", "snare", "clear_snares",
-	"delay", "ignore_daze", "ignore_stages", "mend"]
+	"delay", "ignore_daze", "ignore_stages", "mend", "era", "desc"]
 
 ## Returns a list of human-readable problems. Empty means the data is valid.
 static func validate(spirlings_path: String = "res://data/spirlings.json", moves_path: String = "res://data/moves.json", encounters_path: String = "res://data/encounters.json") -> PackedStringArray:
@@ -65,6 +65,8 @@ static func validate(spirlings_path: String = "res://data/spirlings.json", moves
 						errors.append("move '%s': unknown stat '%s' in stats" % [name, st])
 		if m.has("cooldown") and int(m.cooldown) < 0:
 			errors.append("move '%s': negative cooldown" % name)
+		if m.has("era") and (int(m.era) < 1 or int(m.era) > 5):
+			errors.append("move '%s': era must be 1 to 5" % name)
 		if m.has("self_stages"):
 			if not m.self_stages is Dictionary:
 				errors.append("move '%s': self_stages must be an object (stat -> amount)" % name)

@@ -95,7 +95,7 @@
   "lines": [
    "Chandler Brisk: Rope, tonics, alibis. Two of those are on the shelf."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts rust_charm mask_charm"
  },
  "foundry_rift_acolyte": [
   "Gert: Brannoc says the Syndicate rusted the furnace. The Syndicate says Brannoc did. The furnace says nothing."
@@ -183,7 +183,7 @@
   "lines": [
    "Glove Merchant Ysette: Our tonics are imported. So is our conscience. Neither has arrived."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts"
  },
  "lastlamp_bell_house_ringer": [
   "Rope Boy Ned: I count the bell rings in a ledger. The ledger is getting heavy."
@@ -1562,7 +1562,7 @@
   "lines": [
    "Rumour Broker Fenn: Tonics on the left, gossip on the right. The gossip costs more and works better."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts"
  },
  "tallowmarket_vigil_house_widow": [
   "Vigil Keeper Dorn: One candle for each foundry worker. We ran out of shelves last winter."
