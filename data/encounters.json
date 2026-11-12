@@ -1699,14 +1699,14 @@
     "species": "Hushkin",
     "min": 30,
     "max": 32,
-    "weight": 3,
+    "weight": 10,
     "ground": "scree"
    },
    {
     "species": "Blotling",
     "min": 31,
     "max": 33,
-    "weight": 3,
+    "weight": 10,
     "ground": "scree"
    },
    {
