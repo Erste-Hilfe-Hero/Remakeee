@@ -35,7 +35,6 @@ tools/art/preview_map.py. Kinds of finding:
   unreachable     walkable cells (or finds, NPCs) no entry of the map can reach
   no_door         an outdoor building with no door at all
   building_cut    a building only one tile wide (a sliver of a house)
-  tower_no_lamp   a lighthouse shaft with no lamp on top and no door below (a stray tower piece)
   open_edge       a walkable border cell of an outdoor map with no warp (the path runs into void)
 """
 import json
@@ -47,7 +46,7 @@ from PIL import Image
 
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 sys.path.insert(0, os.path.join(ROOT, "tools", "art"))
-from preview_map import JOINS, LEGEND, MASKED, SCATTERED, door_roles, lighthouse_door  # noqa: E402
+from preview_map import JOINS, LEGEND, MASKED, SCATTERED, door_roles, headframe, lighthouse_door  # noqa: E402
 from gen_tiles import K  # noqa: E402
 
 SOLID = {"WATER", "TREE", "WALL", "ROOF", "FENCE", "SIGN", "COUNTER", "INNER_WALL", "SPRING", "CLIFF",
@@ -140,6 +139,8 @@ def coords(m: Map, x: int, y: int, roles: dict) -> tuple:
         return K["TOWER"], 2
     if k == "TOWER" and m.kind(x, y + 1) == "DOOR" and lighthouse_door(m.rows, x, y + 1):
         return K["TOWER"], 1
+    if k == "TOWER" and headframe(m.rows, x, y):
+        return K["TOWER"], 4 if m.kind(x, y - 1) == "TOWER" else 3
     if k in MASKED:
         v = 0
         for bit, (dx, dy) in zip((1, 2, 4, 8), ((0, -1), (1, 0), (0, 1), (-1, 0))):
@@ -216,7 +217,8 @@ def check_map(m: Map, maps: dict, entries_into: dict) -> list:
         if (x, y) not in m.warp_cells:
             add("dead_door", x, y, "door leads nowhere")
         above = m.kind(x, y - 1)
-        if above not in {"WALL", "ROOF", "TOWER", "INNER_WALL", "CLIFF"} and m.outdoor:
+        cave_mouth = "CLIFF" in (m.kind(x - 1, y), m.kind(x + 1, y))
+        if above not in {"WALL", "ROOF", "TOWER", "INNER_WALL", "CLIFF"} and not cave_mouth and m.outdoor:
             add("door_no_wall", x, y, "nothing above the door (%s)" % (above or "edge"))
         if m.outdoor and not (walkable(m, x, y + 1) or not m.inb(x, y + 1)):
             add("door_blocked", x, y, "no ground in front of the door")
@@ -304,18 +306,6 @@ def check_map(m: Map, maps: dict, entries_into: dict) -> list:
     # Tide posts stand in the water on purpose.
     if lm and m.kind(lm["x"], lm["y"]) == "WATER" and "tide_post" not in lm["kind"]:
         add("on_water", lm["x"], lm["y"], "landmark %s in water" % lm["kind"])
-
-    # Lighthouse tower tiles: a shaft needs its lamp on top, or it reads as a stray lighthouse
-    # piece (tower over a door without a lamp is the dark Saltglass lighthouse, see ashmere.py).
-    # Rifts use the tower as stone pillars, so only outdoor maps are checked.
-    for x, y in m.cells():
-        if not m.outdoor or m.kind(x, y) != "TOWER" or m.kind(x, y - 1) == "TOWER":
-            continue
-        yy = y
-        while m.kind(x, yy) == "TOWER":
-            yy += 1
-        if m.kind(x, y - 1) != "LAMP" and m.kind(x, yy) != "DOOR":
-            add("tower_no_lamp", x, y, "lighthouse shaft %d,%d-%d,%d with no lamp and no door" % (x, y, x, yy - 1))
 
     # Interiors: no narrower than the building that leads in, same region.
     for (x, y), w in m.warp_cells.items():

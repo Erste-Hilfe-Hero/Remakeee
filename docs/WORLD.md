@@ -144,7 +144,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 4 | 0 | 25 |
 | veydal | `murk_hollow` | cave | 12x13 + 12x9 | 5 | 3 | 20 |
 | veydal | `pawn_vault` | inside | 12x9 + 12x9 + 12x9 | 5 | 6 | 0 |
-| veydal | `quillbrook` | route | 12x30 | 5 | 3 | 113 |
+| veydal | `quillbrook` | route | 12x30 | 5 | 3 | 111 |
 | veydal | `reedhaven` | town | 12x10 | 3 | 0 | 0 |
 | veydal | `rest_spring` | inside | 10x8 | 1 | 0 | 0 |
 | veydal | `sablecove` | cave | 12x9 | 5 | 0 | 10 |
@@ -182,7 +182,7 @@ Written by `python3 tools/world_stats.py`.
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
 | solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
-| | **57 maps** | | | **151** | **101** | **1378** |
+| | **57 maps** | | | **151** | **101** | **1376** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
