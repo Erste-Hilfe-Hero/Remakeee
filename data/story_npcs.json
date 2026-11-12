@@ -959,86 +959,201 @@
    }
   ]
  },
- "ochrewell": [
-  {
-   "id": "clan_ottilie_4",
-   "x": 1,
-   "y": 4,
-   "facing": "down",
-   "dialogue": "clans/ottilie_4",
-   "sprite": "villager",
-   "color": "6a3a5a",
-   "show_flag": "rift_shade_sealed"
-  },
-  {
-   "id": "clan_fenrick_4",
-   "x": 10,
-   "y": 4,
-   "facing": "down",
-   "dialogue": "clans/fenrick_4",
-   "sprite": "villager",
-   "color": "7a2a2a",
-   "show_flag": "rift_shade_sealed"
-  },
-  {
-   "id": "clan_vash_4",
-   "x": 4,
-   "y": 4,
-   "facing": "down",
-   "dialogue": "clans/vash_4",
-   "sprite": "villager",
-   "color": "4a4a6a",
-   "show_flag": "rift_shade_sealed"
-  },
-  {
-   "id": "clan_pip_4",
-   "x": 7,
-   "y": 4,
-   "facing": "down",
-   "dialogue": "clans/pip_4",
-   "sprite": "ranger",
-   "color": "b04a4a",
-   "show_flag": "rift_shade_sealed"
-  },
-  {
-   "id": "clan_wren_4",
-   "x": 1,
-   "y": 6,
-   "facing": "down",
-   "dialogue": "clans/wren_4",
-   "sprite": "villager",
-   "color": "c08a5a",
-   "show_flag": "rift_shade_sealed"
-  },
-  {
-   "id": "clan_kerr",
-   "x": 10,
-   "y": 6,
-   "facing": "down",
-   "dialogue": "clans/kerr",
-   "sprite": "ranger",
-   "color": "5a6a7a",
-   "show_flag": "rift_shade_sealed"
-  },
-  {
-   "id": "clan_grell_4",
-   "x": 1,
-   "y": 14,
-   "facing": "down",
-   "dialogue": "clans/grell_4",
-   "sprite": "villager",
-   "color": "3a3a3a",
-   "show_flag": "rift_shade_sealed"
-  },
-  {
-   "id": "clan_sable_4",
-   "x": 10,
-   "y": 14,
-   "facing": "down",
-   "dialogue": "clans/sable_4",
-   "sprite": "ranger",
-   "color": "3a5a3a",
-   "show_flag": "rift_shade_sealed"
-  }
- ]
+ "ochrewell": {
+  "npcs": [
+   {
+    "id": "clan_ottilie_4",
+    "x": 1,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "clans/ottilie_4",
+    "sprite": "villager",
+    "color": "6a3a5a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "clan_fenrick_4",
+    "x": 9,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "clans/fenrick_4",
+    "sprite": "villager",
+    "color": "7a2a2a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "clan_vash_4",
+    "x": 4,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "clans/vash_4",
+    "sprite": "villager",
+    "color": "4a4a6a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "clan_pip_4",
+    "x": 7,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "clans/pip_4",
+    "sprite": "ranger",
+    "color": "b04a4a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "clan_wren_4",
+    "x": 1,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "clans/wren_4",
+    "sprite": "villager",
+    "color": "c08a5a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "clan_kerr",
+    "x": 10,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "clans/kerr",
+    "sprite": "ranger",
+    "color": "5a6a7a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "clan_grell_4",
+    "x": 1,
+    "y": 14,
+    "facing": "down",
+    "dialogue": "clans/grell_4",
+    "sprite": "villager",
+    "color": "3a3a3a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "clan_sable_4",
+    "x": 10,
+    "y": 14,
+    "facing": "down",
+    "dialogue": "clans/sable_4",
+    "sprite": "ranger",
+    "color": "3a5a3a",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "mags",
+    "x": 3,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "solenne_side/mags",
+    "sprite": "elder",
+    "color": "7a5a3a",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "id": "qadir",
+    "x": 1,
+    "y": 10,
+    "facing": "right",
+    "dialogue": "solenne_side/qadir",
+    "sprite": "ranger",
+    "color": "3a6a8a",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "id": "saffi",
+    "x": 9,
+    "y": 14,
+    "facing": "left",
+    "dialogue": "solenne_side/saffi",
+    "sprite": "villager",
+    "color": "b08a3a",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "id": "dunya",
+    "x": 9,
+    "y": 6,
+    "facing": "left",
+    "dialogue": "solenne_side/dunya",
+    "sprite": "villager",
+    "color": "6a4a6a",
+    "show_flag": "rift_oasis_sealed"
+   },
+   {
+    "id": "bex",
+    "x": 1,
+    "y": 16,
+    "facing": "right",
+    "dialogue": "solenne_side/bex",
+    "sprite": "elder",
+    "color": "3a3a3a",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "id": "kaia_town",
+    "x": 8,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "solenne_side/kaia_town",
+    "sprite": "warden",
+    "color": "2a7a8a",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "id": "corin_1",
+    "x": 4,
+    "y": 16,
+    "facing": "right",
+    "dialogue": "solenne_side/corin_1",
+    "sprite": "ranger",
+    "color": "b08a3a",
+    "show_flag": "veil_factor_beaten",
+    "hide_flag": "veil_corin_2_beaten"
+   },
+   {
+    "id": "corin_3",
+    "x": 4,
+    "y": 16,
+    "facing": "right",
+    "dialogue": "solenne_side/corin_bet",
+    "sprite": "ranger",
+    "color": "b08a3a",
+    "show_flag": "veil_corin_2_beaten"
+   }
+  ],
+  "signs": [
+   {
+    "x": 3,
+    "y": 1,
+    "dialogue": "solenne_side/seal_1",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "x": 1,
+    "y": 18,
+    "dialogue": "solenne_side/seal_2",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "x": 10,
+    "y": 10,
+    "dialogue": "solenne_side/seal_3",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "x": 3,
+    "y": 6,
+    "dialogue": "solenne_side/iou_1",
+    "show_flag": "veil_factor_beaten"
+   },
+   {
+    "x": 10,
+    "y": 18,
+    "dialogue": "solenne_side/iou_2",
+    "show_flag": "veil_factor_beaten"
+   }
+  ]
+ }
 }
