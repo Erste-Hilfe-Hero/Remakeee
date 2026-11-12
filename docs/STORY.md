@@ -268,7 +268,7 @@ caravans into the kiln), `s4_twin` (a twin who never was), `s4_census` and `s4_p
 kinds for Ilse, who sells her guide to a poacher), `s4_mirrors` (Oren's heliographs signal raids),
 `s4_kiln` and `s4_varro`. Act IV betrayals: Sabine's purse (`sabine_purse`, caught when Old Pell
 warned you), Tamsin's twin (`tamsin_twin`, Ott) and Venn's chains (`venn_chains`, Hesper's
-ledger); favor `varro_shortcut`. `tools/act_hours.py 4` puts Act IV at 23.4 h.
+ledger); favor `varro_shortcut`. `tools/act_hours.py 4` puts Act IV at 24.2 h.
 
 The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
 18, 23, ... 50, then 54, 57 and 60 for Solenne); after Act I they open fully. The story battles keep a curve that never drops (checked
