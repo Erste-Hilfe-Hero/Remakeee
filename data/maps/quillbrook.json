@@ -159,6 +159,14 @@
    ]
   },
   {
+   "id": "vs_nettie",
+   "x": 4,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "veydal_side/nettie",
+   "sprite": "villager"
+  },
+  {
    "id": "lq_quell",
    "x": 4,
    "y": 6,

@@ -1,0 +1,7 @@
+{
+ "_comment": "it translation of the region_looks table, keyed by the English text.",
+ "strings": {
+  "The ink goes grey here. Ashmere burned once and still smells like it owes you money.": "Qui l'inchiostro diventa grigio. Ashmere è bruciata una volta e ha ancora l'odore di chi ti deve dei soldi.",
+  "The ink turns blue here. Corvane dyes everything, even the truth.": "Qui l'inchiostro diventa blu. Corvane tinge tutto, perfino la verità."
+ }
+}

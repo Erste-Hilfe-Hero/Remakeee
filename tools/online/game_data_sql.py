@@ -127,7 +127,49 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('trade_gifts', $game$"
               + json.dumps(tg).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # Online events (Online 100, area 7): data/online_events.json as server_config.online_events,
+    # each fixed event as a row of public.online_events (its shared total stays). Rules become the
+    # list of species that fit them (like OnlineEvents.allowed in the game).
+    events_path = os.path.join(folder, "online_events.json")
+    if os.path.exists(events_path):
+        with open(events_path, encoding="utf-8") as f:
+            ev = json.load(f)
+        ev.pop("_comment", None)
+        fixed = ev.pop("events", [])
+        for t in ev.get("weekly", []) + fixed:
+            if isinstance(t.get("rules"), dict):
+                t["allowed"] = allowed_species(raw, earlier, t["rules"])
+        print("insert into public.server_config (key, value) values ('online_events', $game$"
+              + json.dumps(ev).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
+        for x in fixed:
+            body = {k: v for k, v in x.items() if k not in ("id", "kind", "starts", "ends")}
+            print("insert into public.online_events (id, kind, starts_at, ends_at, data) values ("
+                  + ", ".join("$game$" + str(v).replace("$game$", "") + "$game$" for v in (x["id"], x["kind"], x["starts"], x["ends"]))
+                  + ", $game$" + json.dumps(body).replace("$game$", "") + "$game$::jsonb)"
+                  " on conflict (id) do update set kind = excluded.kind, starts_at = excluded.starts_at,"
+                  " ends_at = excluded.ends_at, data = excluded.data;")
     print("commit;")
+
+
+def allowed_species(raw, earlier, rules):
+    """Species names that fit event rules: any of "elements" (when given) and at most "max_stage"
+    (1 = a first form) steps along its unfold line."""
+    def stage(name):
+        n = 1
+        while earlier.get(name) and n < 10:
+            name = earlier[name]
+            n += 1
+        return n
+    out = []
+    for s in raw:
+        els = rules.get("elements")
+        if els and not any(e in els for e in s.get("elements", [])):
+            continue
+        if rules.get("max_stage") and stage(s["name"]) > int(rules["max_stage"]):
+            continue
+        out.append(s["name"])
+    return out
 
 
 if __name__ == "__main__":

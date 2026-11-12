@@ -200,8 +200,8 @@
   },
   {
    "id": "lq_sevrin",
-   "x": 8,
-   "y": 4,
+   "x": 10,
+   "y": 15,
    "facing": "down",
    "dialogue": "legend_quests/lumivane_guide",
    "sprite": "elder",

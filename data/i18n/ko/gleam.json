@@ -1,0 +1,7 @@
+{
+ "_comment": "Korean texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "광채형: %d 목격, %d 유대",
+  "No Gleam has joined you yet.": "아직 광채형이 합류하지 않았다."
+ }
+}

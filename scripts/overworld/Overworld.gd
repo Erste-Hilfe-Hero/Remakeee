@@ -35,6 +35,8 @@ var _daylight: CanvasModulate
 ## Lit windows at night, on a layer the night tint does not reach (buildings plan item 8).
 var _glow_layer: CanvasLayer
 var _glow: WindowGlow
+## The place's landmark sprite (Landmarks, map design item 509), y-sorted with the people.
+var _landmark: Sprite2D
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
@@ -84,12 +86,16 @@ func _ready() -> void:
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
 		"wake": _action_wake,
+		"bounty": _action_bounty,
+		"fine_training": _action_fine_training,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
 		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
+		"take_item": _action_take_item,
+		"gift_spirling": _action_gift_spirling,
 		"tip": _action_tip,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
@@ -339,6 +345,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	map.paint(_ground)
 	refresh_shade()
 	_spawn_npcs()
+	_place_landmark()
 	player.place(cell, face)
 	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
@@ -510,6 +517,25 @@ func _try_gear(target: Vector2i) -> bool:
 	return true
 
 ## NPCs of the map that are there now: flags, "phase_only" (area 3 item 1168) and "weekdays".
+## Puts the map's landmark on its cell: the 16x32 sprite stands on the cell and covers the one above.
+func _place_landmark() -> void:
+	if _landmark != null:
+		_landmark.queue_free()
+		_landmark = null
+	var lm: Dictionary = Landmarks.for_map(map.id)
+	if lm.is_empty():
+		return
+	var path: String = Landmarks.art_path(str(lm.kind))
+	if path.is_empty():
+		return
+	_landmark = Sprite2D.new()
+	_landmark.name = "landmark"
+	_landmark.texture = load(path)
+	_landmark.centered = false
+	_landmark.offset = Vector2(0, -TilesetFactory.TILE)
+	_landmark.position = GridWalker.cell_to_pos(Landmarks.cell(lm))
+	_entities.add_child(_landmark)
+
 func _spawn_npcs() -> void:
 	for n: NPC in _npcs:
 		n.queue_free()
@@ -693,6 +719,10 @@ func _on_interact(cell: Vector2i) -> void:
 		await run_dialogue(str(s.dialogue))
 		if icons != null:
 			icons.queue_free()
+		return
+	var landmark: Array[String] = Landmarks.lines_at(map.id, cell)
+	if not landmark.is_empty():
+		await _locked_say(landmark)
 		return
 	# Talk across counters.
 	if map.kind_at(cell) == TilesetFactory.Kind.COUNTER:
@@ -1107,6 +1137,69 @@ func _action_wake(_args: PackedStringArray, _speaker: NPC) -> void:
 	Wake.finish(result, day)
 	await say(lines)
 
+## "bounty": the Fixer's daily bounty board and the 100 percent certificate (scripts/core/Bounties.gd).
+func _action_bounty(_args: PackedStringArray, _speaker: NPC) -> void:
+	var cert: Array[String] = Bounties.certificate(Completion.percent(), GameState.tamer_name)
+	if not cert.is_empty():
+		await say(cert)
+	var day: String = DailyFind.today_key()
+	var cap: int = GameState.progress_cap()
+	var open: Array[Dictionary] = []
+	for m: Dictionary in Bounties.board(day, cap):
+		if not str(m.id) in Bounties.claimed(day):
+			open.append(m)
+	if open.is_empty():
+		await say(["The Fixer: Board's clean. Come back tomorrow, somebody always owes somebody."] as Array[String])
+		return
+	var names: Array[String] = []
+	for m: Dictionary in open:
+		names.append(Bounties.line(m))
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var pick: int = await menu.pick_strings(Loc.t("Which mark?"), names)
+	menu.queue_free()
+	if pick < 0:
+		return
+	var m: Dictionary = open[pick]
+	await say([Loc.t(str(m.crime))] as Array[String])
+	var foes: Array[Spirling] = []
+	for sp: Variant in m.team:
+		if Database.spirlings.has(str(sp)):
+			foes.append(Spirling.new(Database.spirlings[str(sp)], int(m.ring), GameState.rng))
+	SaveManager.save_game()
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": Loc.t(str(m.name)), "money": 0, "ai": GameState.ai_level()})
+	busy = true
+	player.frozen = true
+	if outcome == BattleModel.Outcome.WIN:
+		var paid: int = Bounties.claim(day, cap, str(m.id))
+		await say([Loc.t("The Fixer counts out %d coins. The rest is his cut. Always is.") % paid] as Array[String])
+
+## "fine_training": Coach Varro raises one spark for coins, sometimes he just keeps them (FineTraining.gd).
+func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for p: Spirling in GameState.party:
+		names.append(p.display_name())
+	var who: int = await menu.pick_strings(Loc.t("Who trains?"), names)
+	if who < 0:
+		menu.queue_free()
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for k: String in Spirling.STAT_KEYS:
+		stats.append(Loc.t("%s: %d coins") % [k.to_upper(), FineTraining.cost(s, k)])
+	var pick: int = await menu.pick_strings(Loc.t("Which value?"), stats)
+	menu.queue_free()
+	if pick < 0:
+		return
+	var stat: String = Spirling.STAT_KEYS[pick]
+	if not FineTraining.can_train(s, stat):
+		await say(["Coach Varro: Either you're broke or it's maxed. Either way, no."] as Array[String])
+		return
+	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
+	await say([str(r.line)] as Array[String])
+
 ## "burrow": the claimable hollow in Murk Hollow with a wall of trophies (scripts/core/Burrow.gd).
 func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
@@ -1313,6 +1406,8 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
 	await say(Tips.take("rest_spot"))
+	if FirstSteps.tick(FirstSteps.REST):
+		show_notices()
 	GameState.note_core_rest()
 	await _wake_cores()
 	# Every spring can swap the team with storage, even before storage opens from the menu,
@@ -1350,7 +1445,7 @@ func open_menu() -> void:
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
-	GameState.set_flag(VirtualPad.MENU_SEEN_FLAG)
+	FirstSteps.tick(VirtualPad.MENU_SEEN_FLAG)
 	var menu := PauseMenu.new()
 	menu.encounter_table = map.encounter_table
 	menu.current_map = map.id
@@ -1407,6 +1502,7 @@ func open_menu() -> void:
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
+	show_notices()
 
 ## Plays a recorded battle (item 14). The replay uses copies, so nothing in the save changes.
 const MENU_SLIDE: float = 40.0
@@ -1664,6 +1760,33 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 		if not tip.is_empty():
 			await say(tip)
 
+## "take_item <id> [count]": the player hands items over in a talk (Lipka's moss, Mirza's charm).
+func _action_take_item(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var count: int = 0
+	for i: int in (int(args[1]) if args.size() > 1 else 1):
+		if GameState.take_item(args[0]):
+			count += 1
+	if count > 0:
+		var item_name: String = str(Database.item(args[0]).get("name", args[0]))
+		await say(["You handed over %s x%d." % [item_name, count]] as Array[String])
+
+## "gift_spirling <Species> [ring]": a Spirling handed over in a talk (the strangers' gift from
+## the other map, plan 2 item 173). It joins the team, or storage when the team is full.
+func _action_gift_spirling(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var s := Spirling.new(sd, int(args[1]) if args.size() > 1 else 5, GameState.rng)
+	var joined: bool = GameState.receive_spirling(s)
+	Sound.sfx("pickup")
+	await say(["You received %s!" % sd.species_name] as Array[String])
+	if not joined:
+		await say(["%s was sent to storage." % sd.species_name] as Array[String])
+
 # --- Story: prologue and Mirela's map book ---------------------------------------------------
 
 ## The opening of a new journey (Ali, 2026-11-04): a short narration over black, then the
@@ -1692,6 +1815,22 @@ func prologue() -> void:
 	await _locked_say(Tips.take("save"))
 	show_walk_hint()
 
+## One line per starter under the partner list, so the choice is not made blind (onboarding).
+const STARTER_HINTS: Dictionary[String, String] = {
+	"Kindlop": "Warm and loyal. Sets things on fire when nervous. Mostly your things.",
+	"Zippit": "Quick and twitchy. Every hug comes with a small shock. You get used to it.",
+	"Wickit": "Its light never goes out. Handy when someone cuts the lamps on purpose.",
+}
+const STARTER_TITLE: String = "Pick your partner"
+
+## The partner list: name and element per row, a short description as the row's hint.
+static func starter_rows() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for sp: String in Database.STARTERS:
+		out.append({"text": "%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])],
+			"hint": Loc.t(str(STARTER_HINTS.get(sp, "")))})
+	return out
+
 ## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
 func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	if GameState.has_flag("got_starter"):
@@ -1699,10 +1838,7 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	while true:
-		var entries: Array[String] = []
-		for sp: String in Database.STARTERS:
-			entries.append("%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])])
-		var pick: int = await menu.pick_strings("Which one do you kneel down to?", entries, false)
+		var pick: int = await menu.pick(STARTER_TITLE, starter_rows(), false)
 		var sd: SpirlingData = Database.species(Database.STARTERS[pick])
 		if await menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
 			GameState.choose_starter(sd.species_name)
@@ -2125,6 +2261,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The root takes the colour and glows.", "The last root glows, and the tangle pulls aside!"],
 	"shutter": ["The shutters hum in the wind. The stair stays open.", "The shutter bangs, and the wind drops dead. Every shutter swings shut again.",
 		"The shutter swings open. Sand hisses through the slats.", "The last shutter opens, the tower breathes, and the stair is clear!"],
+	"feather": ["The feathers lie still. This room is done.", "A feather twitches the wrong way, and every feather drops flat. Start again.",
+		"The feather lifts and points at the ceiling.", "The last feather rises. Stone scrapes, and the stair opens!"],
 	"valve": ["The pipes gurgle along happily. The stair stays dry.", "The valve screams, and every pipe slams shut again. Start over.",
 		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
 }
@@ -3416,6 +3554,7 @@ func league_battle(m: Dictionary) -> void:
 	var snap: Dictionary = BattleReferee.from_expect(m)
 	# Seals work in the Open League, never in the Fair League; the server's expect does the same.
 	snap["seals"] = ShopEffects.seals_for("league_" + str(m.get("league", LeagueRules.FAIR)))
+	snap["amulets"] = ShopEffects.amulets_for("league_" + str(m.get("league", LeagueRules.FAIR)))
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
 		await say(["The league battle could not start. Try again later."] as Array[String])
@@ -3596,6 +3735,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
 	model.seals = [ShopEffects.seals_for("story" if world else "echo"), [0, 0, 0]]
+	model.amulets = [ShopEffects.amulets_for("story" if world else "echo"), [0, 0, 0]]
 	# Story foes start with less Energy, Rift-Born foes gain more in turn 1 (item 749); echo duels stay even.
 	var d: int = GameState.difficulty if world else -1
 	model.start_energy_cut = [0, int(trainer.get("foe_energy_cut", 0)) + BattleRules.foe_start_cut(d)]

@@ -1,0 +1,20 @@
+{
+ "_comment": "ja translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "見習い",
+  "Boss": "ボス",
+  "Broker": "ブローカー",
+  "Captain": "キャプテン",
+  "Fixer": "仲介屋",
+  "Map Master": "地図の達人",
+  "No season reward is waiting.": "受け取れるシーズン報酬はない。",
+  "Placement": "昇格戦",
+  "Placement battles left: %d": "残りの昇格戦：%d",
+  "Rank: %s": "ランク：%s",
+  "Runner": "使い走り",
+  "Season reward": "シーズン報酬",
+  "Season reward: %d x %s": "シーズン報酬：%d x %s",
+  "Shield: %d battles without losing the rank": "シールド：ランクを落とさずに%d戦",
+  "You left too many battles. Search again in %d seconds.": "抜けたバトルが多すぎる。%d秒後にもう一度探そう。"
+ }
+}

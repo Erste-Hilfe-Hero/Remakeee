@@ -13,7 +13,7 @@ enum Type {
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
 	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
-	OATH,
+	OATH, SHOP_EDGE,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -76,6 +76,8 @@ func describe() -> String:
 				return "The %s keeps %s safe." % [data.get("field_label", ""), who]
 			if bool(data.get("clause", false)):
 				return "Calm rule: %s stays awake while an ally drowses." % who
+			if bool(data.get("ward", false)):
+				return "%s's Status Ward keeps it safe." % who
 			return "It had no effect on %s." % who
 		Type.STATUS_TICK:
 			return "%s suffers from %s." % [who, StatusRules.label(str(data.get("status", "")))]
@@ -153,6 +155,8 @@ func describe() -> String:
 			return "%s springs the snare!" % who
 		Type.BATTLE_LINE:
 			return "%s: %s" % [data.get("name", ""), data.get("text", "")]
+		Type.SHOP_EDGE:
+			return str(data.get("text", ""))
 		Type.FIELD_EXTENDED:
 			if bool(data.get("locked", false)):
 				return "The %s won't give way yet." % data.get("label", "")
