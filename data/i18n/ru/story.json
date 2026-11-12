@@ -571,6 +571,22 @@
   "Ysolde: You have Mirela's compass rose on your map case. Where did you get that?": "Ysolde: На твоём футляре для карт роза ветров Mirela. Откуда она у тебя?",
   "Ysolde: You've seen the Wide Rift. Sit down, apprentice. There is something in the guild files.": "Ysolde: Значит, Широкий Разлом тебе уже знаком. Садись, подмастерье. В записях гильдии кое-что есть.",
   "Zippits spark brightest when a Rift is near. Wardens used them as early warnings.": "Zippits искрят ярче всего, когда рядом Разлом. Стражи использовали их как раннее предупреждение.",
-  "{name}! Wake up!": "{name}! Проснись!"
+  "{name}! Wake up!": "{name}! Проснись!",
+  "Auburn": "Каштановый",
+  "Black": "Чёрный",
+  "Blond": "Светлый",
+  "Brown": "Коричневый",
+  "Coat colour": "Цвет шерсти",
+  "Deep": "Глубокий",
+  "Fair": "Светлая",
+  "Hair colour": "Цвет волос",
+  "Light": "Бледный",
+  "Ochre": "Охра",
+  "Plum": "Сливовый",
+  "Rust": "Ржавый",
+  "Silver": "Серебристый",
+  "Skin tone": "Тон кожи",
+  "Tan": "Смуглый",
+  "Teal": "Бирюзовый"
  }
 }

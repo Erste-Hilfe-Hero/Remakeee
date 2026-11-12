@@ -571,6 +571,22 @@
   "Ysolde: You have Mirela's compass rose on your map case. Where did you get that?": "Ysolde: あなたの地図ケースにMirelaの方位図があるわね。どこで手に入れたの？",
   "Ysolde: You've seen the Wide Rift. Sit down, apprentice. There is something in the guild files.": "Ysolde: Wide Riftを見たのね。座りなさい、見習いさん。ギルドの記録に書かれていることがあるの。",
   "Zippits spark brightest when a Rift is near. Wardens used them as early warnings.": "Zippitは裂け目が近いほど明るく火花を散らす。守り人たちは早めの知らせとして使っていた。",
-  "{name}! Wake up!": "{name}！起きて！"
+  "{name}! Wake up!": "{name}！起きて！",
+  "Auburn": "赤茶",
+  "Black": "黒",
+  "Blond": "金",
+  "Brown": "茶",
+  "Coat colour": "毛の色",
+  "Deep": "濃い",
+  "Fair": "白い",
+  "Hair colour": "髪の色",
+  "Light": "明るい",
+  "Ochre": "黄土",
+  "Plum": "すもも",
+  "Rust": "さび",
+  "Silver": "銀",
+  "Skin tone": "肌の色",
+  "Tan": "小麦",
+  "Teal": "青緑"
  }
 }

@@ -91,6 +91,15 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('league_ranks', $game$"
               + json.dumps(ranks).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # Raid extras (Online 100, area 3): data/raid_rules.json as server_config.raid_rules.
+    rr_path = os.path.join(folder, "raid_rules.json")
+    if os.path.exists(rr_path):
+        with open(rr_path, encoding="utf-8") as f:
+            rr = json.load(f)
+        rr.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('raid_rules', $game$"
+              + json.dumps(rr).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     # Live duels (Online 100, area 1): data/live_duel.json as server_config.live_duel.
     live_path = os.path.join(folder, "live_duel.json")
     if os.path.exists(live_path):
