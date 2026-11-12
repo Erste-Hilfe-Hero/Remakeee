@@ -178,6 +178,14 @@
    "sprite": "villager"
   },
   {
+   "id": "vm_gorrie",
+   "x": 10,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "veydal_more/gorrie",
+   "sprite": "villager"
+  },
+  {
    "id": "brin",
    "x": 3,
    "y": 1,

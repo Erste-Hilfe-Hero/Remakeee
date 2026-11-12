@@ -99,7 +99,7 @@ static func _run_tab(menu: MenuHost, tab: String) -> void:
 			return
 		var entries: Array[Dictionary] = []
 		for o: Dictionary in list:
-			entries.append({"text": row_text(o), "disabled": Billing.block_reason(o, int(o.rg_price) > 0) in ["offer_limit", "not_yet", "tier_order"]})
+			entries.append({"text": row_text(o), "hint": ShopCatalog.row_hint(o), "disabled": Billing.block_reason(o, int(o.rg_price) > 0) in ["offer_limit", "not_yet", "tier_order"]})
 		var idx: int = await menu.pick(Loc.t(ShopCatalog.TAB_NAMES[tab]) + "  " + ShopCatalog.rg_text(Billing.balance()), entries)
 		if idx < 0:
 			return
@@ -109,7 +109,7 @@ static func _run_tab(menu: MenuHost, tab: String) -> void:
 ## month, that it renews by itself and how to cancel, and whether it runs now.
 static func pass_text(o: Dictionary) -> String:
 	var rg: int = PASS_DAILY_RG
-	var lines: Array[String] = [Loc.t(str(o.name)), Loc.t("Advantage in the game"), "", pass_status_text(), "", Loc.t("What the pass gives:")]
+	var lines: Array[String] = [Loc.t(str(o.name)), Loc.t("Advantage in the game"), "", pass_status_text(), "", Loc.t("Contents:"), "- " + ShopCatalog.contents_line(o), "", Loc.t("What the pass gives:")]
 	lines.append("- " + Loc.t("+%d%% growth for the whole team, also together with a Growth Crystal") % roundi((ShopEffects.PASS_GROWTH - 1.0) * 100.0))
 	lines.append("- " + Loc.t("%d Riftglass every day (%d in 30 days), missed days paid up to 7 days later") % [rg, rg * 30])
 	lines.append("- " + Loc.t("+%d energy over the maximum in battles against the world (11 of 10)") % ShopEffects.PASS_ENERGY)
@@ -150,20 +150,26 @@ static func detail_text(o: Dictionary) -> String:
 	var lines: Array[String] = [Loc.t(str(o.name))]
 	if ShopCatalog.is_advantage(o):
 		lines.append(Loc.t("Advantage in the game"))
-	lines.append(Loc.t(str(o.desc)))
 	lines.append("")
+	# Contents come from the grants, never from hand-written text, so they cannot go out of date.
 	lines.append(Loc.t("Contents:"))
-	for g: String in ShopCatalog.grant_lines(o):
-		lines.append("- " + g)
-	match str(o.get("duration", "once")):
-		"permanent":
-			lines.append(Loc.t("Lasts: for good"))
-		"monthly":
-			lines.append(Loc.t("Lasts: while the pass runs"))
-		"once":
-			lines.append(Loc.t("Lasts: used up when used"))
-		var d:
-			lines.append(Loc.t("Lasts: %s") % Loc.t(d))
+	var parts: Array[Dictionary] = ShopCatalog.contents(o)
+	var dur: String = ShopCatalog.duration_line(o)
+	for e: Dictionary in parts:
+		lines.append("- " + ShopCatalog.entry_line(e))
+		# A bundle says what each part does and, when they differ, how long each lasts.
+		if parts.size() > 1:
+			var eff: String = ShopCatalog.entry_effect(e, o)
+			if not eff.is_empty():
+				lines.append("  " + eff)
+			if dur.is_empty():
+				lines.append("  " + Loc.t("Duration: %s") % ShopCatalog.entry_duration(e, o))
+	lines.append("")
+	lines.append(Loc.t("What it does:"))
+	lines.append(Loc.t(str(o.desc)))
+	if not dur.is_empty():
+		lines.append(dur)
+	lines.append(ShopCatalog.repeat_line(o))
 	match str(o.get("league_scope", "none")):
 		"open":
 			lines.append(Loc.t("Works in the Open League, not in the Fair League."))
@@ -171,9 +177,6 @@ static func detail_text(o: Dictionary) -> String:
 			lines.append(Loc.t("Only looks. Visible everywhere, no effect."))
 		_:
 			lines.append(Loc.t("Does not work in leagues."))
-	var lim: String = limit_line(o)
-	if not lim.is_empty():
-		lines.append(lim)
 	lines.append("")
 	if str(o.get("tab", "")) == "packs" and ShopCatalog.single_value(o) > 0:
 		lines.append(Loc.t("Worth one by one: %s") % ShopCatalog.rg_text(ShopCatalog.single_value(o)))
@@ -189,13 +192,7 @@ static func detail_text(o: Dictionary) -> String:
 
 ## How often an offer can be bought, as a plain rule, never as a countdown like "only 3 left" (item 4042).
 static func limit_line(o: Dictionary) -> String:
-	var lim: Variant = o.get("limit")
-	if not lim is Dictionary:
-		return ""
-	var n: int = int(lim.get("n", 1))
-	if str(lim.get("per", "account")) == "week":
-		return Loc.t("Once a week per account.") if n == 1 else Loc.t("Up to %d times a week per account.") % n
-	return Loc.t("Once per account.") if n == 1 else Loc.t("Up to %d times per account.") % n
+	return ShopCatalog.repeat_line(o) if o.get("limit") is Dictionary else ""
 
 static func _run_offer(menu: MenuHost, o: Dictionary) -> void:
 	# An owned jacket, backdrop or text frame is worn or taken off here (items 4277, 4281).

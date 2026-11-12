@@ -41,3 +41,23 @@ static func tier_ok(cfg: Dictionary, tier: Variant) -> bool:
 ## Reward count: the member with the most damage gets top_bonus more (point 28).
 static func reward_count(cfg: Dictionary, base: int, top: bool) -> int:
 	return base + (int(cfg.get("top_bonus", 1)) if top else 0)
+
+# --- Random groups, Echo teams and role signs (points 25, 26, 27; 20261113000020_raid_bund_more.sql) ---
+
+const ROLE_NAMES: Dictionary = {"": "No sign", "attack": "Attack", "guard": "Guard", "help": "Help"}
+
+static func role_ok(cfg: Dictionary, role: Variant) -> bool:
+	return role is String and (str(role).is_empty() or (cfg.get("roles", ["attack", "guard", "help"]) as Array).has(role))
+
+## Whether a random group forms with [param others] waiting players after [param waited] seconds:
+## -1 = keep waiting, else the number of Echo teams that fill the free places (point 26).
+static func group_echoes(cfg: Dictionary, others: int, waited: int) -> int:
+	if waited >= int(cfg.get("echo_wait", 60)):
+		return 3 - mini(others, 3)
+	if others >= 3 or (others >= 1 and waited >= int(cfg.get("group_wait", 30))):
+		return 0
+	return -1
+
+## Damage of one Echo team: echo_share percent of the strength, dealt at once.
+static func echo_damage(cfg: Dictionary, hp_total: int) -> int:
+	return hp_total * int(cfg.get("echo_share", 15)) / 100

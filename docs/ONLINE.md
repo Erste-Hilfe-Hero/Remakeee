@@ -149,8 +149,19 @@ answers with `live_answer`; both see up to 6 of the other's team and `live_pick`
 `live_move(id, round, input)`; the round closes when both are in, and the server keeps the inputs, the seed and
 the `turn_seconds` (30) clock. A side away longer than the clock plus `reconnect_seconds` (60) loses
 (`_live_tick`). `live_forfeit` gives up, `live_emote` stores only the number of a set phrase, `live_finish`
-takes each side's winner (different answers void the duel), `live_rematch` invites again. Not done yet: the
-battle scene does not play the rounds from `live_state` yet, and the referee does not check live duels.
+takes each side's winner (different answers void the duel), `live_rematch` invites again.
+
+**Playing the rounds (points 1-3, 10):** `scripts/online/LiveDuelSim.gd` builds the battle from the server's seed,
+the two picked teams and every finished round's two choices (kind, move, swap only), so both phones reach the same
+state; side 0 is the inviter. Friends > Live duels > the duel > "Choose your move" lists the legal moves, swaps and
+Rest and sends `live_move`; the screen shows the last round's lines and both Spirlings on the field, and at the
+end the damage per Spirling. An illegal choice counts as Rest. A Spirling that drops is followed by the next one
+standing. `live_state` never shows the other side's choice of the round that is still open
+(migration `20261113000030_tourney_watch.sql`). It is a text screen, not the animated battle scene.
+
+**Watching (point 73):** `live_watch_list()` lists running duels of friends, `live_watch(id)` gives the duel one
+finished round behind while it runs (all of it once it is over); never the own duel, never when a player blocked
+the watcher, and off with the parent switch for live duels. Live duels > "Watch a friend's duel...".
 
 ## Where it runs now
 
@@ -263,8 +274,19 @@ cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`
 bund renown (`xp_per_item` each) and week goal progress; the bund rank is 1 + renown / `xp_per_level`, at most 20.
 At `goal_target` items in a week every member takes `goal_reward` once (`bund_goal_claim`). `bund_board()` lists
 bunds by renown. The leader sets language and "open" (`bund_settings`); `bund_search(lang)` lists bunds that are
-not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request. Bund rank perks
-are not built yet.
+not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request.
+
+**Online 100, points 34, 35, 37** (migration `20261113000020_raid_bund_more.sql`, `LocalRaidBund.gd`, same file):
+- **Rank perks (34):** `perks` in `bund_rules` add up by rank: more house places (rank 3, 15), `donate_more`
+  (rank 5: +10 donations a day), `goal_more` (rank 10 and 20: +1 item from the week goal). `bund_stats` lists them.
+- **Bund house (35):** `bund_house()` shows every member the hall: rank, placed decorations, members in the house now
+  and wars won. Leader and helpers place up to `house_slots` (3) plus perks decorations from `decor` that the rank
+  opened (`bund_house_set(list)`, no repeats).
+- **Bund against bund (37):** on `war_days` (Saturday, Sunday, UTC) up to `war_size` (5) members sign up with their
+  fair-league team (`bund_war_join(pick)`). When two bunds have five, the one of nearest renown is paired
+  (`bund_wars`). Each fighter fights the team on the same place of the other bund once (`bund_war_fight()`, battle
+  kind `bund_war`, checked by the referee). When all ten are done or the weekend ends, the bund with more wins gets
+  `war_win_xp` (300) renown and a war win, the other `war_xp` (100). `bund_war_info()` shows places and score.
 
 ### Online events (Online 100, area 7, points 61, 63-66, 68-70)
 
@@ -302,7 +324,25 @@ insert into public.online_events (id, kind, starts_at, ends_at, data) values ('f
   ten, best tenth, took part) and its item from `title_items`, once (`event_awards`).
 - **Recap (70):** `event_recap(event)`: own score, place of how many, best score, tiers reached, award.
 Tables `online_events`, `event_scores`, `event_awards`; events are deleted 90 days after their end.
-Not done yet: weekend tournament (62) and phone notices at an event start (67, needs a push service).
+Not done yet: phone notices at an event start (67, needs a push service).
+
+### Weekend tournament (Online 100, points 62, 74, 80)
+
+Behind the flag `events` (Friends > Weekend tournament, `scripts/ui/TourneyMenu.gd`). Values in `data/tourney.json`,
+written to `server_config.tourney`; migration `20261113000030_tourney_watch.sql`, same rules in
+`scripts/online/LocalTourney.gd`, helpers in `scripts/online/TourneyRules.gd`.
+- **Sign-up:** on `days` (Saturday, Sunday, UTC) `tourney_join(pick)` takes the fair-league team (Ring 50, base
+  stats). The `size`th (8th) player starts the knockout; the next player opens a new tournament. One per player
+  and weekend, never together with a blocked player.
+- **Rounds:** players still in are paired by place (1-2, 3-4, ...). Each fights the rival's team once
+  (`tourney_fight()`, battle kind `tourney`, the rival is played by the AI, the referee checks it). The better
+  result of a pair goes on: a win, then more damage, then fewer rounds, then the earlier place. A round closes
+  when all its battles are decided or after `round_hours` (6); a battle not played counts as lost.
+- **Rewards:** `tourney_reward(slot, rev)` once: `rewards` by winner, final, semi-final, took part.
+- **Battles of the week, final for everyone (74, 80):** the server keeps its own setup and the checked inputs of
+  every battle; `tourney_finals()` lists the finals of the last 14 days for every player (names only of friends),
+  `tourney_replay(fight)` hands one out and the game plays it in the battle scene.
+Tables `tourneys`, `tourney_players`, `tourney_fights`; deleted after `keep_days` (35).
 
 ## Raid Rifts
 
@@ -323,6 +363,15 @@ Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they 
 is the week's one (`week % pool`), and with `legendary_chance` (5) percent a legendary from `legendaries` at
 `legendary_hp` (150) percent. In `raid_claim` the member with the most damage gets `top_bonus` (1) more.
 `raid_board()` lists the fastest won Rifts without names (Raid Rifts > Fastest Rifts).
+
+**Online 100, points 25, 26, 27** (migration `20261113000020_raid_bund_more.sql`, `LocalRaidBund.gd`):
+`raid_find(tier, role)` puts the player in a queue per tier (Raid Rifts > Find a random group; the game asks again
+every 5 seconds). A group forms with 4 players at once, with 2 or 3 after `group_wait` (30) seconds, and after
+`echo_wait` (60) seconds Echo teams take the free places: the Rift has the strength of 4 and each Echo team deals
+`echo_share` (15) percent at once (shown as "Echo team" in the member list, no reward, no top bonus). Blocked players
+never land in one group. The others learn their Rift on their next `raid_find`; `raid_find_cancel()` leaves the queue.
+Role signs (27): attack, guard or help, chosen for the search or later with `raid_role(raid, role)`; `raid_list`
+shows them per member. They are signs only and change no numbers.
 
 ## Trading
 
@@ -573,5 +622,24 @@ standings of seasons that ended more than a season ago are removed. The record o
 - Records > Online replays (`scripts/ui/OnlineReplaysMenu.gd`): watch one, copy its share code to the
   clipboard, watch a code from the clipboard, own win rate per Spirling, opponents met most often. A code is
   `CHR1-` plus the gzip-packed replay in base64; it holds no account data. Replays play in the current look.
+- Team of the best player (77): Leagues > a league > "Best team of the season" (`league_top_team(league)`: the
+  highest rated entry of the season after the placement battles; species, Ring and moves, no name).
+- Watching a friend's live duel (73) and the tournament finals (74, 80): see Live duels and Weekend tournament.
 - Planned maintenance: `update server_config set value = '<unix seconds>' where key = 'maintenance_at';`
   `maintenance_info()` hands it to the game, and the title screen warns from 24 hours before.
+
+## Online 100 plan: what is still open
+
+Checked point by point on 2026-11-12. Everything else in the plan is built and has tests.
+
+| Point | What is missing | Why |
+|---|---|---|
+| 3 | The referee does not replay live duels; both phones play the rounds and must agree (`live_finish`), else the duel does not count. | Needs the referee to read `live_duels` on the server. |
+| 1, 73 | Live duels and watching use a text screen, not the animated battle scene. | The battle scene takes one player's input and an AI rival. |
+| 15 | No board by country. | The game stores no country; needs a privacy decision first. |
+| 45 | A borrowed Spirling cannot be picked in the raid or live duel screens yet (`lend_use` has no caller). | The team for both comes from the stored team on the server. |
+| 67 | No phone notice at an event start. | Needs a push service (FCM, APNs) and consent texts. |
+| 76 | No picture or short video saved from a replay. | Video capture is not possible in the web and phone builds as they are. |
+| 91-94 | No own realtime server (the game asks every few seconds), no test with 500 battles at once, no latency measurement, no load test before updates. | Server work, see `server/`. |
+| 96 | No monitoring with an alarm. | Server work. |
+| 99, 100 | Rollout in 4 updates and one build for iOS and Android are release steps, not code. | Release work. |

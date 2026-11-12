@@ -20,7 +20,12 @@ var _fade: float = 0.0
 var _skippable: bool = false
 var _skipped: bool = false
 var _sprite: Control
-static var _silhouettes: Dictionary[int, Texture2D] = {}
+static var _silhouettes: Dictionary[String, Texture2D] = {}
+## Era look of the moment (data/era_battle_feel.json "unfurl"): "ink" on parchment (I), a flat
+## colour wash (II), banded light (III), turning light rays (IV), rays with rising motes (V).
+## From Era II the silhouettes glow white instead of ink, and the sprite grows with the era.
+var style: String = "ink"
+var _time: float = 0.0
 
 ## Durations between swaps: 0.4 s shrinking by 15 % each time to 0.05 s, filling 2.4 s.
 static func intervals() -> Array[float]:
@@ -40,13 +45,25 @@ static func intervals() -> Array[float]:
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	var era: int = EraManager.active_era()
+	style = EraBattleFeel.text(era, "unfurl", "ink")
 	_sprite = Control.new()
 	_sprite.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	_sprite.size = Vector2(SPRITE_SIZE, SPRITE_SIZE)
+	var px: int = sprite_size(era)
+	_sprite.size = Vector2(px, px)
 	_sprite.draw.connect(_draw_sprite)
 	add_child(_sprite)
 	_center()
 	resized.connect(_center)
+
+## Sprite size of the moment in [param era]: the era's battle sprite size, at least 56 px.
+static func sprite_size(era: int) -> int:
+	return maxi(SPRITE_SIZE, int(EraManager.BATTLE_SPRITE_SIZE.get(clampi(era, 1, EraManager.NEWEST), SPRITE_SIZE)))
+
+func _process(delta: float) -> void:
+	if style in ["rays", "rays_motes"] and not Juice.reduced():
+		_time += delta
+		queue_redraw()
 
 func _center() -> void:
 	if _sprite != null:
@@ -84,6 +101,8 @@ func play(old_form: SpirlingData, new_form: SpirlingData) -> void:
 	_silhouette = false
 	_sprite.queue_redraw()
 	Sound.sfx("evolve")
+	if style != "ink" and style != "wash":
+		LevelRing.spawn(self, _sprite.position + _sprite.size / 2.0)
 	await Juice.pop(_sprite)
 
 func _gui_input(event: InputEvent) -> void:
@@ -93,6 +112,31 @@ func _gui_input(event: InputEvent) -> void:
 
 func _draw() -> void:
 	draw_rect(Rect2(Vector2.ZERO, size), UITheme.BG)
+	if style == "ink":
+		return
+	var c: Dictionary = EraBattleFeel.backdrop_colours(3 if style != "wash" else 2, "field")
+	var sky := Color(str(c.get("sky", "a8d0e8")))
+	var low := Color(str(c.get("sky_low", c.get("bg", "f6f0d8"))))
+	if style == "wash":
+		draw_rect(Rect2(Vector2.ZERO, size), sky)
+		return
+	var mid: Vector2 = (size / 2.0).round()
+	var far: float = mid.length()
+	for i: int in range(6, 0, -1):
+		var r: float = far * i / 6.0
+		draw_rect(Rect2(mid - Vector2(r, r), Vector2(r, r) * 2.0), sky.lerp(low, 1.0 - i / 6.0))
+	if style == "bands":
+		return
+	for i: int in 12:
+		var a: float = _time * 0.4 + i * TAU / 12.0
+		var tip: Vector2 = mid + Vector2(cos(a), sin(a)) * far
+		var tip2: Vector2 = mid + Vector2(cos(a + 0.12), sin(a + 0.12)) * far
+		draw_colored_polygon(PackedVector2Array([mid, tip, tip2]), Color(1, 1, 0.92, 0.18))
+	if style == "rays_motes":
+		for i: int in 14:
+			var x: float = fmod(i * 37.0, size.x)
+			var y: float = size.y - fmod(_time * (18.0 + i % 4 * 6.0) + i * 29.0, size.y)
+			draw_rect(Rect2(Vector2(x, y).round(), Vector2(1, 1) * (1 + i % 2)), Color(1, 1, 0.92, 0.7))
 
 func _draw_sprite() -> void:
 	var r := Rect2(Vector2.ZERO, _sprite.size)
@@ -102,20 +146,20 @@ func _draw_sprite() -> void:
 		return
 	var tex: Texture2D = _new if _show_new else _old
 	if _silhouette:
-		tex = silhouette_of(tex)
+		tex = silhouette_of(tex, UITheme.INK if style == "ink" else Color(1, 1, 0.94))
 	_draw_form(tex, r, Color.WHITE)
 
 func _draw_form(tex: Texture2D, r: Rect2, tint: Color) -> void:
 	if tex == null:
-		_sprite.draw_rect(r.grow(-8), UITheme.INK if _silhouette else UITheme.MID)
+		_sprite.draw_rect(r.grow(-8), (UITheme.INK if style == "ink" else Color.WHITE) if _silhouette else UITheme.MID)
 		return
 	_sprite.draw_texture_rect(tex, r, false, tint)
 
-## The sprite as a flat ink shape (every visible pixel in ink).
-static func silhouette_of(tex: Texture2D) -> Texture2D:
+## The sprite as a flat shape (every visible pixel in [param col], ink by default).
+static func silhouette_of(tex: Texture2D, col: Color = UITheme.INK) -> Texture2D:
 	if tex == null:
 		return null
-	var key: int = tex.get_rid().get_id()
+	var key: String = "%d|%s" % [tex.get_rid().get_id(), col.to_html()]
 	if _silhouettes.has(key):
 		return _silhouettes[key]
 	var img: Image = tex.get_image()
@@ -127,7 +171,7 @@ static func silhouette_of(tex: Texture2D) -> Texture2D:
 	for y: int in img.get_height():
 		for x: int in img.get_width():
 			if img.get_pixel(x, y).a > 0.5:
-				img.set_pixel(x, y, UITheme.INK)
+				img.set_pixel(x, y, col)
 			else:
 				img.set_pixel(x, y, Color(0, 0, 0, 0))
 	var out := ImageTexture.create_from_image(img)
