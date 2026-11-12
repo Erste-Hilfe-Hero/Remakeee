@@ -515,7 +515,7 @@ static func menu_title(map_id: String = "") -> String:
 		t += "\n" + Loc.t(MapData.load_map(map_id).display_name)
 	if not Festival.active().is_empty():
 		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
-	if GameState.level_cap() < GameState.ring_ceiling():
+	if GameState.has_ring_limit():
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 

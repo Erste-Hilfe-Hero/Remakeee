@@ -73,7 +73,7 @@ func _shot_v110(db: Object) -> void:
 func _warden_model(def: Dictionary, m: MapData) -> BattleModel:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = 11
-	var foes: Array[Spirling] = TrainerData.build_team(def, "", rng, 0, Spirling.MAX_LEVEL)
+	var foes: Array[Spirling] = TrainerData.build_team(def, "", rng, 0, Spirling.STORY_RING)
 	var top: int = 1
 	for f: Spirling in foes:
 		top = maxi(top, f.level)

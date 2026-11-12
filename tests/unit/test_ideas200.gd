@@ -82,7 +82,7 @@ func test_new_game_plus() -> void:
 	assert_true(NewGamePlus.can_start(true))
 	NewGamePlus.advance()
 	assert_eq(NewGamePlus.foe_ring(20), 20 + int(NewGamePlus.data().ring_bonus))
-	assert_eq(NewGamePlus.foe_ring(59), Spirling.MAX_LEVEL)
+	assert_eq(NewGamePlus.foe_ring(59), Spirling.STORY_RING)
 	for i: int in 10:
 		if NewGamePlus.can_start(true):
 			NewGamePlus.advance()
