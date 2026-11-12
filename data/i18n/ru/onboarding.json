@@ -1,0 +1,31 @@
+{
+ "_comment": "ru translation of the onboarding table, keyed by the English text.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.": "Связь, шаг 2: выбери Связь. Spirling с недугом поддаётся легче. Никто не говорил, что это благородно.",
+  "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.": "Связь, шаг 3: подними Амулет рода, когда спросят. На старте у тебя их 20. Дружба оптом дешевле.",
+  "Bonding step 4: Listen to its call, then repeat it in the same order.": "Связь, шаг 4: послушай его зов и повтори его в том же порядке.",
+  "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.": "Связь, шаг 4: жми A как можно быстрее. Чем полнее шкала, тем крепче связь.",
+  "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Связь, шаг 4: жми Мой! как можно быстрее. Чем полнее шкала, тем крепче связь.",
+  "Bonding: Echo call": "Связь: зов-эхо",
+  "Bonding: Mine!": "Связь: Мой!",
+  "First steps": "Первые шаги",
+  "First steps %d/%d": "Первые шаги %d/%d",
+  "First steps done. The valley stops holding your hand now.": "Первые шаги пройдены. Дальше долина не держит тебя за руку.",
+  "Its light never goes out. Handy when someone cuts the lamps on purpose.": "Его свет никогда не гаснет. Удобно, когда кто-то нарочно гасит лампы.",
+  "Large text, one-hand layout and more are under Settings.": "Крупный текст, управление одной рукой и другое - в Настройках.",
+  "Look at your team": "Посмотреть команду",
+  "Open the Spirlog": "Открыть Spirlog",
+  "Open the menu": "Открыть меню",
+  "Pick your partner": "Выбери напарника",
+  "Quick and twitchy. Every hug comes with a small shock. You get used to it.": "Быстрый и дёрганый. Каждое объятие с лёгким разрядом. Привыкаешь.",
+  "Rest at a rest spot": "Отдохнуть на привале",
+  "Save your journey": "Сохранить путешествие",
+  "Show every tip once more, as if you were new?": "Показать все подсказки ещё раз, как будто впервые?",
+  "Show tips again": "Показать подсказки снова",
+  "Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.": "Подсказка: дикий Spirling может вступить в команду, если доверяет тебе. Уставший доверяет легче.",
+  "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.": "Подсказка: заблудиться легко. Нажми Start и выбери Цели. Больше никто в этой долине не скажет тебе правду.",
+  "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.": "Подсказка: заблудиться легко. Нажми = и выбери Цели. Больше никто в этой долине не скажет тебе правду.",
+  "Tips are back. Pretend it's your first day.": "Подсказки вернулись. Представь, что сегодня первый день.",
+  "Warm and loyal. Sets things on fire when nervous. Mostly your things.": "Тёплый и верный. Когда нервничает, всё поджигает. Обычно твоё."
+ }
+}

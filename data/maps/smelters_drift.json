@@ -10,7 +10,7 @@
   "T...._..:::T",
   "T::.._...::T",
   "T::..__....T",
-  "T.....__...T",
+  "T=....__...T",
   "T..,,..__..T",
   "T..,,...__.T",
   "T........_.T",
@@ -65,6 +65,14 @@
    "tx": 6,
    "ty": 18,
    "facing": "up"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "to": "slag_tunnels",
+   "tx": 5,
+   "ty": 15,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -89,6 +97,77 @@
      "level": 58
     }
    ]
+  },
+  {
+   "id": "strike_breaker",
+   "x": 7,
+   "y": 11,
+   "facing": "down",
+   "dialogue": "vellmarch/smelters_drift_strike_breaker",
+   "sprite": "warden",
+   "trainer": "Strike Breaker Kuno",
+   "intro": "vellmarch/smelters_drift_strike_breaker_intro",
+   "defeat": "vellmarch/smelters_drift_strike_breaker_defeat",
+   "money": 2320,
+   "team": [
+    {
+     "species": "Smeltmaw",
+     "level": 56
+    },
+    {
+     "species": "Glassfell",
+     "level": 58
+    }
+   ]
+  },
+  {
+   "id": "q2_ghost_wages_bero",
+   "x": 4,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_ghost_wages_bero",
+   "sprite": "villager",
+   "show_flag": "q2_ghost_wages_asked"
+  },
+  {
+   "id": "q2_bought_boos_claque",
+   "x": 4,
+   "y": 16,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_bought_boos_claque",
+   "sprite": "villager",
+   "show_flag": "q2_bought_boos_s1"
+  },
+  {
+   "id": "q2_bought_boos_fitz",
+   "x": 5,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_bought_boos_fitz",
+   "sprite": "villager",
+   "trainer": "Understudy Fitz",
+   "show_flag": "q2_bought_boos_reveal",
+   "intro": "vellmarch/q2_bought_boos_fitz_intro",
+   "defeat": "vellmarch/q2_bought_boos_fitz_defeat",
+   "money": 2950,
+   "team": [
+    {
+     "species": "Flueling",
+     "level": 57
+    },
+    {
+     "species": "Smeltmaw",
+     "level": 58
+    },
+    {
+     "species": "Glassfell",
+     "level": 59
+    }
+   ],
+   "win_flags": [
+    "q2_bought_boos_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],
