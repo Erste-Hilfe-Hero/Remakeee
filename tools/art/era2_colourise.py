@@ -3,6 +3,8 @@
 
     python3 tools/art/era2_colourise.py            write art/era2/ from art/era1/
     python3 tools/art/era2_colourise.py --check    only verify art/era2/ (exit 1 on a problem)
+    python3 tools/art/era2_colourise.py --lines REGION [--sheet P]
+        draw a region's own Era II lines (tools/art/lines/REGION.py) into art/era2/spirlings/
     python3 tools/art/era2_colourise.py --sheet P  also write a contact sheet to P (era1 vs era2 atlas,
                                                    plus a TEST colouring of the 81 spirlings, not shipped)
 
@@ -230,7 +232,63 @@ def sheet(path: str) -> None:
     print("contact sheet:", path, out.size)
 
 
+def lines_main(region: str, sheet_path) -> None:
+    """Era II region kinds: drawn from their line specs (gen_lines body plans), one 4-tone line palette."""
+    import importlib
+    here = os.path.dirname(os.path.abspath(__file__))
+    sys.path[:0] = [here, os.path.join(here, "lines")]
+    from gen_lines import _import_sidecar, stages
+    from gen_spirlings import BACK_DROP, render, shift_down
+    mod = importlib.import_module(region)
+    rules = PAL["spirling_rules"]
+    seen: dict = {}
+    dst = os.path.join(DST, "spirlings")
+    os.makedirs(dst, exist_ok=True)
+    drawn = []
+    for line in mod.LINES:
+        els = line["elements"]
+        n = seen.get(tuple(els), 0)
+        seen[tuple(els)] = n + 1
+        step = ((n + 1) // 2) * (1 if n % 2 else -1) * rules["line_hue_step"]
+        base = [rgb(c) for c in PAL["elements"][els[0]]]
+        if len(els) > 1:
+            base[rules["accent_tone"]] = rgb(PAL["elements"][els[1]][rules["accent_tone"]])
+        pal = [shift_hue(c, step) for c in base]
+        row = []
+        for name, parts in stages(line):
+            front = recolour(render(parts).image(), lambda x, y: pal)
+            back = recolour(shift_down(render(parts, back=True).mirrored(), BACK_DROP).image(), lambda x, y: pal)
+            for im, facing in ((front, "front"), (back, "back")):
+                path = os.path.join(dst, "%s_%s.png" % (name.lower(), facing))
+                im.save(path)
+                _import_sidecar(path)
+            row.append((name, front, back))
+        drawn.append((line, row))
+    if sheet_path:
+        from PIL import ImageDraw
+        z, cell = 2, 112
+        w = 8 + 3 * (2 * cell + 8) + 8
+        out = Image.new("RGBA", (w, 34 + len(drawn) * (cell + 16)), (236, 232, 222, 255))
+        d = ImageDraw.Draw(out)
+        d.text((8, 8), "%s - %d new Spirlings (Era II, limited colour)" % (
+            region.capitalize(), sum(len(l["names"]) for l in mod.LINES)), fill=(40, 30, 44, 255))
+        for r, (line, row) in enumerate(drawn):
+            y = 30 + r * (cell + 16)
+            for i, (name, front, back) in enumerate(row):
+                x = 8 + i * (2 * cell + 8)
+                d.rectangle([x, y, x + 2 * cell - 1, y + cell - 1], fill=(214, 208, 196, 255))
+                out.alpha_composite(front.resize((cell, cell), Image.NEAREST), (x, y))
+                out.alpha_composite(back.resize((cell, cell), Image.NEAREST), (x + cell, y))
+                d.text((x + 2, y + cell + 2), "%s  %s" % (name, "/".join(e[:3] for e in line["elements"])),
+                       fill=(40, 30, 44, 255))
+        out.save(sheet_path)
+
+
 if __name__ == "__main__":
+    if "--lines" in sys.argv:
+        lines_main(sys.argv[sys.argv.index("--lines") + 1],
+                   sys.argv[sys.argv.index("--sheet") + 1] if "--sheet" in sys.argv else None)
+        sys.exit(0)
     if "--check" not in sys.argv:
         build()
     rc = check()
