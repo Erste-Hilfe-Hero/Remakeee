@@ -122,3 +122,32 @@ func test_art_rows_show_element_power_energy() -> void:
 	assert_eq(rows[0].text, s.moves[0].move_name)
 	assert_string_contains(str(rows[0].hint), "Energy %d" % s.moves[0].energy_cost)
 	assert_string_contains(str(rows[0].hint), Elements.element_name(s.moves[0].element))
+
+## Items 1900, 1925: keepsakes show their effect while focused, gear says where it works.
+func test_gear_hint_names_the_places() -> void:
+	var hint: String = PauseMenu.gear_hint("wading_boots")
+	assert_string_contains(hint, "Works on its own at:")
+	assert_string_contains(hint, "shallow water")
+
+func test_keepsake_rows_show_the_effect() -> void:
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var held: String = "bark_wrap"
+	assert_true(BattleRules.is_holdable(held))
+	GameState.add_item(held, 1)
+	var menu := _menu()
+	await wait_process_frames(1)
+	var state: Dictionary = {"done": false}
+	var runner := func() -> void:
+		await menu._held_item(GameState.party[0])
+		state.done = true
+	runner.call()
+	var frames: int = 0
+	var hint: String = ""
+	while not state.done and frames < MAX_FRAMES:
+		await wait_process_frames(1)
+		frames += 1
+		if menu.picker.visible and menu.picks > 0 and hint.is_empty():
+			hint = menu.picker.hint_text()
+			menu.picker.picked.emit(-1)
+	assert_true(state.done)
+	assert_false(hint.is_empty(), "the focused keepsake shows its effect")

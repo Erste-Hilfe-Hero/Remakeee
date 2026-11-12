@@ -196,6 +196,7 @@ T = {
 "Only in battle.": "Nur im Kampf.",
 "Already knows this art.": "Kennt diese Technik schon.",
 "Wrong element.": "Falsches Element.",
+"Works on its own at: %s": "Wirkt von selbst bei: %s",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

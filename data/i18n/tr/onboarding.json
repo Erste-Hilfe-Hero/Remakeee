@@ -1,0 +1,31 @@
+{
+ "_comment": "tr translation of the onboarding table, keyed by the English text.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.": "Bağ kurma, adım 2: Bağ kur'u seç. Durum etkisindeki bir Spirling daha kolay pes eder. Kimse bunun asil olduğunu söylemedi.",
+  "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.": "Bağ kurma, adım 3: Sorulduğunda bir Soy Tılsımı uzat. 20 tane ile başlarsın. Dostluk toptan daha ucuz.",
+  "Bonding step 4: Listen to its call, then repeat it in the same order.": "Bağ kurma, adım 4: Çağrısını dinle, sonra aynı sırayla tekrarla.",
+  "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.": "Bağ kurma, adım 4: A'ya olabildiğince hızlı bas. Çubuk ne kadar doluysa bağ o kadar iyi.",
+  "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Bağ kurma, adım 4: Benim!'e olabildiğince hızlı dokun. Çubuk ne kadar doluysa bağ o kadar iyi.",
+  "Bonding: Echo call": "Bağ kurma: Yankı çağrısı",
+  "Bonding: Mine!": "Bağ kurma: Benim!",
+  "First steps": "İlk adımlar",
+  "First steps %d/%d": "İlk adımlar %d/%d",
+  "First steps done. The valley stops holding your hand now.": "İlk adımlar tamam. Vadi artık elini tutmayacak.",
+  "Its light never goes out. Handy when someone cuts the lamps on purpose.": "Işığı hiç sönmez. Biri lambaları bilerek söndürdüğünde işe yarar.",
+  "Large text, one-hand layout and more are under Settings.": "Büyük yazı, tek el düzeni ve fazlası Ayarlar'da.",
+  "Look at your team": "Takımına bak",
+  "Open the Spirlog": "Spirlog'u aç",
+  "Open the menu": "Menüyü aç",
+  "Pick your partner": "Ortağını seç",
+  "Quick and twitchy. Every hug comes with a small shock. You get used to it.": "Çevik ve kıpır kıpır. Her sarılma küçük bir elektrik çarpmasıyla gelir. Alışırsın.",
+  "Rest at a rest spot": "Bir mola yerinde dinlen",
+  "Save your journey": "Yolculuğunu kaydet",
+  "Show every tip once more, as if you were new?": "Her ipucu, yeniymişsin gibi bir kez daha gösterilsin mi?",
+  "Show tips again": "İpuçlarını yeniden göster",
+  "Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.": "İpucu: Vahşi bir Spirling sana güvenirse takımına katılabilir. Yorgunken daha kolay güvenir.",
+  "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.": "İpucu: Kayboldun mu? Start'a bas ve Hedefler'i seç. Bu vadide sana başka kimse gerçeği söylemez.",
+  "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.": "İpucu: Kayboldun mu? ='e dokun ve Hedefler'i seç. Bu vadide sana başka kimse gerçeği söylemez.",
+  "Tips are back. Pretend it's your first day.": "İpuçları geri döndü. İlk günün gibi davran.",
+  "Warm and loyal. Sets things on fire when nervous. Mostly your things.": "Sıcak ve sadık. Gerildiğinde bir şeyleri ateşe verir. Çoğunlukla senin eşyalarını."
+ }
+}
