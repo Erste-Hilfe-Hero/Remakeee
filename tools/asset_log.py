@@ -27,6 +27,8 @@ SOURCES = [
     ("art/era1/chars/stranger*.png", "tools/art/gen_strangers.py", "original 16 px overworld sheet of a stranger from the map's edge, Era I ink"),
     ("art/era2/chars/*.png", "tools/art/era2_colourise.py", "own Era I character sheet recoloured with an original per-figure palette, Era II Aquarell"),
     ("art/era2/fx/*.png", "tools/art/era2_colourise.py", "own Era I effect shape recoloured with an original per-element palette, Era II Aquarell"),
+    ("art/era3/fx/*.png", "tools/art/gen_fx_era34.py", "own Era I effect shape with outline, body tone and light edge in its element's colour, Era III"),
+    ("art/era4/fx/*.png", "tools/art/gen_fx_era34.py", "own Era I effect shape doubled with rounded corners, top-down shading and a soft glow, Era IV"),
     ("art/era4/spirlings/*.png", "tools/art/gen_era4.py", "own Era I Spirling repainted at 96x96 with soft shading and a breath frame, Era IV Panorama"),
     ("art/era2/tiles/*.png", "tools/art/era2_colourise.py", "own Era I tile atlas recoloured with an original per-tile-kind palette, Era II Aquarell"),
 ]
