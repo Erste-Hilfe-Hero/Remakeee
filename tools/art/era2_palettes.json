@@ -64,5 +64,10 @@
   "fx": {
     "spark": "EMBER", "drop": "TIDE", "leaf": "BLOOM", "zag": "VOLT",
     "rock": "STONE", "streak": "GALE", "glint": "LUMEN", "shade": "UMBRA"
+  },
+  "landmarks": {
+    "veydal_standing_stone": "ROCK", "veydal_cairn": "BOULDER", "veydal_beacon": "LAMP", "veydal_tide_post": "PIER",
+    "corvane_heron_post": "FENCE", "corvane_drying_rack": "SPRING", "corvane_sluice_wheel": "PIER", "corvane_dye_mill": "WATER",
+    "ashmere_smelter_stack": "ROOF", "ashmere_bell_frame": "FENCE", "ashmere_salt_obelisk": "CLIFF"
   }
 }

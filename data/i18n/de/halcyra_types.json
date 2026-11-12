@@ -1,0 +1,8 @@
+{
+ "_comment": "German texts from tools/i18n/de_halcyra_types.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Gilt": "Gold",
+  "Zenith": "Zenit"
+ }
+}
