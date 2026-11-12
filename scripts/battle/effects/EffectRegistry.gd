@@ -27,6 +27,10 @@ const SCRIPTS: Dictionary[StringName, Script] = {
 	&"delayed_hit": preload("res://scripts/battle/effects/DelayedHitEffect.gd"),
 	&"mend": preload("res://scripts/battle/effects/MendEffect.gd"),
 	&"field_extend": preload("res://scripts/battle/effects/FieldExtendEffect.gd"),
+	&"energy_gain": preload("res://scripts/battle/effects/EnergyGainEffect.gd"),
+	&"stage_reset": preload("res://scripts/battle/effects/StageResetEffect.gd"),
+	&"cure_team": preload("res://scripts/battle/effects/CureTeamEffect.gd"),
+	&"self_cost": preload("res://scripts/battle/effects/SelfCostEffect.gd"),
 }
 
 static var _cache: Dictionary[StringName, MoveEffect] = {}

@@ -112,8 +112,10 @@ static func places_line(species: String) -> String:
 		return ""
 	var seen: Array[String] = places_seen(species)
 	var parts: PackedStringArray = []
+	# The shop's Spirlog Atlas (pay-to-win step 6, plan point 35) names the places not searched yet.
+	var atlas: bool = ShopEffects.spirlog_atlas()
 	for id: String in all:
-		parts.append(Spirling.place_name(id) + " +" if id in seen else "???")
+		parts.append(Spirling.place_name(id) + " +" if id in seen else (Spirling.place_name(id) if atlas else "???"))
 	return Loc.t("Places: %s (%d of %d)") % [", ".join(parts), seen.size(), all.size()]
 
 ## The art book (plan 3358): every learnable art, a "+" before each one used in battle.

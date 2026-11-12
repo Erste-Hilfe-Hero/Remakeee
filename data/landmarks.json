@@ -1,5 +1,5 @@
 {
- "_comment": "Era I landmarks (map design plan item 509): every outdoor place of Acts I-III has one thing you know it by, drawn in its act's own set (tools/art/gen_landmarks.py, art/era1/landmarks/<kind>.png). x, y = the solid map cell it stands on; the 16x32 sprite also covers the cell above. Talking to it shows name and line. Checked by WorldValidator.check_landmarks. Solenne (Act IV) gets its own set with its look.",
+ "_comment": "Era I landmarks (map design plan item 509): every outdoor place of Acts I-III has one thing you know it by, drawn in its act's own set (tools/art/gen_landmarks.py, art/era1/landmarks/<kind>.png). x, y = the solid map cell it stands on; the 16x32 sprite also covers the cell above. Talking to it shows name and line. Checked by WorldValidator.check_landmarks. Solenne (Act IV) gets its own set with its look. Vellmarch (Era II) has one landmark per town from its own set, so no two of its towns look alike (tools/maps/audit_maps.py town_twin).",
  "maps": {
   "brindlewick": {
    "kind": "veydal_beacon",
@@ -140,6 +140,41 @@
    "y": 21,
    "name": "Salt Needle",
    "line": "A sign says: lick it for luck. A second sign says: never trust the first sign."
+  },
+  "cindergate_quay": {
+   "kind": "vellmarch_customs_crane",
+   "x": 5,
+   "y": 5,
+   "name": "Customs Crane",
+   "line": "It lifts cargo off the barges and onto the House's ledger. Twice it has lifted a clerk. Nobody wrote that down."
+  },
+  "tallowmarket": {
+   "kind": "vellmarch_great_candle",
+   "x": 6,
+   "y": 8,
+   "name": "The Great Candle",
+   "line": "Lit the day the foundry opened. It was meant to last a hundred years. The foundry workers were not."
+  },
+  "hookwick": {
+   "kind": "vellmarch_lock_wheel",
+   "x": 7,
+   "y": 10,
+   "name": "Hookwick Lock Wheel",
+   "line": "One turn opens the lock. Odile charges per turn and counts in halves."
+  },
+  "larkspur_heights": {
+   "kind": "vellmarch_masked_statue",
+   "x": 5,
+   "y": 13,
+   "name": "The Masked Founder",
+   "line": "Nobody remembers the face under the mask. The family paid extra for that."
+  },
+  "lastlamp": {
+   "kind": "vellmarch_last_lamp",
+   "x": 9,
+   "y": 13,
+   "name": "The Last Lamp",
+   "line": "Past this light the marsh keeps what it finds. The lamp is refilled every day. So is the marsh."
   }
  }
 }

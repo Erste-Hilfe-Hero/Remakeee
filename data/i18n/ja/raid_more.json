@@ -1,0 +1,12 @@
+{
+ "_comment": "ja translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s（%s、旅人%d人）%d分",
+  "A legendary guardian waits in this Rift: %s": "この裂け目には伝説の守り手が待っている：%s",
+  "Easy": "やさしい",
+  "Fastest Rifts": "最速の裂け目",
+  "Hard": "むずかしい",
+  "How hard?": "どのくらいむずかしい？",
+  "No Rift was won yet.": "まだどの裂け目も攻略されていない。"
+ }
+}

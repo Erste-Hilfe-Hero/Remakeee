@@ -1,0 +1,18 @@
+{
+ "_comment": "nl translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "Gevecht voorbij",
+  "Bunds": "Verbonden",
+  "For parents...": "Voor ouders...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Voor ouders: zet uit wat je kind niet mag gebruiken. Vrienden en opgeslagen spellen blijven.",
+  "Open league": "Open Competitie",
+  "Report the rival...": "De rivaal melden...",
+  "Suggestions from league battles": "Suggesties uit competitiegevechten",
+  "These switches are for parents. Continue?": "Deze schakelaars zijn voor ouders. Doorgaan?",
+  "This battle was against your own echo, so there is nobody to report.": "Dit gevecht was tegen je eigen echo, dus er is niemand om te melden.",
+  "This is switched off under Settings, Account, For parents.": "Dit staat uit onder Instellingen, Account, Voor ouders.",
+  "Under 16: open league, bunds and suggestions start switched off.": "Onder de 16: Open Competitie, Verbonden en suggesties staan bij het begin uit.",
+  "Why do you report the rival?": "Waarom meld je de rivaal?",
+  "You met this rival 3 times today, so this battle does not count.": "Je hebt deze rivaal vandaag 3 keer ontmoet, dus dit gevecht telt niet."
+ }
+}

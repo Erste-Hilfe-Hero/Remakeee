@@ -26,6 +26,11 @@ enum Kind { PHYSICAL, FOCUS, STATUS }
 @export var ignore_daze: bool = false
 ## The target's raised Guard and Focus stages do not count against this move ("ignore_stages").
 @export var ignore_stages: bool = false
+## The era that brings the art into the game (moves.json "era", 1 to 5). Later-era arts sit on
+## later-era Spirlings and teachers (docs/CONTENT_GAPS.md).
+@export var era: int = 1
+## One line of flavour for the art (moves.json "desc", English key for Loc).
+@export var description: String = ""
 
 const TARGETS: Array[String] = ["single", "foes"]
 

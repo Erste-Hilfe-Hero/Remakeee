@@ -285,6 +285,11 @@ def town(mid):
         if side not in gates:
             for x, y in cells:
                 rows[y] = rows[y][:x] + "T" + rows[y][x + 1:]
+            if side == "top":
+                # No road runs into the trees: the arm goes, a lane joins the two house doors instead.
+                for y in (1, 2, 3):
+                    rows[y] = rows[y][:5] + ".." + rows[y][7:]
+                rows[4] = rows[4][:3] + "______" + rows[4][9:]
     tt = TOWN_TEXT[mid]
     sign = text(mid + "_sign", lines((t["name"], t["name"]), tt["motto"]))
     npcs = [npc("keeper", 6, 7, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]
@@ -536,7 +541,7 @@ RIFT_ROWS = ["TTTTTTTTTTTT",
              "T....~~..T_T",
              "TTTT..TTTT_T",
              "T........T_T",
-             "T..~~....T_T",
+             "T.....~~.T_T",
              "TTT..TTTTT_T",
              "T........T_T",
              "T........T_T",
@@ -589,9 +594,11 @@ def rift(mid):
                  warden=key, team=crew, intro="%s/warden_%s_intro" % (DIA, w["id"]), defeat="%s/warden_%s_defeat" % (DIA, w["id"]),
                  ai=3, money=w["money"], rule=RULES[mid], win_flags=flags)
     acolyte_crew = check_team(mid, [dict(crew[0], level=w["ring"] - 1), dict(crew[1], level=w["ring"] - 1)])
+    # Wheel battles (era function wheel_battles, Era V): the acolytes turn a wheel of three.
+    acolyte_crew = check_team(mid, acolyte_crew + [dict(crew[2], level=w["ring"] - 1)])
     acolyte = npc("acolyte", 7, 17, "left", text(mid + "_acolyte", lines(talk)), "warden", trainer=tr(*aname),
                   intro=text(mid + "_acolyte_intro", lines(intro)), defeat=text(mid + "_acolyte_defeat", lines(defeat)),
-                  money=(w["ring"] - 1) * 45, team=acolyte_crew)
+                  money=(w["ring"] - 1) * 45, team=acolyte_crew, wheel=True)
     back, facing = town_arrival(town_id, mid)
     m = {"name": rf["name"], "biome": "rift", "backdrop": "lake", "heal_point": [3, 5], "rows": rows,
          "warps": [warp(5, RIFT_H - 1, town_id, back[0][0], back[0][1], facing), warp(6, RIFT_H - 1, town_id, back[1][0], back[1][1], facing)],

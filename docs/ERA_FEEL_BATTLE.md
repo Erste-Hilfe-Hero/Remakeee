@@ -81,11 +81,25 @@ colour-blind HP patterns are unchanged.
 - Era V: every Spirling moves, whatever its origin era (tested on one Spirling from each era that
   has art).
 
+## Slice 3 (follow-up PR)
+
+- Weather in battle (era function `sky_battles`, #465): when the region's sky lays the field, rain,
+  fog or a storm shows over the field (`BattleWeather.gd`). Era I has a few ink dots, and each era
+  after that adds more, longer, slanted coloured streaks. From Era IV there are splashes at the
+  ground and a rare distant flash in a storm (22 % at most, once every 4 s). Fog is drifting
+  bands. Under reduced motion the drops stand still and nothing flashes. Rift fields show nothing
+  extra.
+- Own effect art for Era III (10 px: outline, body tone, light edge) and Era IV (18 px: doubled,
+  rounded, shaded, soft glow) from `tools/art/gen_fx_era34.py`. Era V uses the Era IV set. Shapes
+  are centred by their size.
+- Formation battles per era (`BattleScene.formation_slots`): Era I/II use 28 px sprites in a flat
+  rank, Era III 32 px, Era IV 40 px and Era V 44 px. From Era IV every second Spirling stands a
+  step back, so an Era V triple bows its middle back. On the stage the slabs widen to hold the
+  whole rank.
+
 ## Still missing (follow-ups)
 
 - Battle text box frame per era: shared with menus, so it belongs to the erafeel-ui slice.
-- Weather visuals in battle: wait for erafeel-func's weather rules.
-- Era III/IV fx art sheets (Era III+ load the Era II 8x8 shapes).
 - Hand-drawn Era IV/V art for the Spirlings that have none yet (they show the placeholder, so they
   get no Era V strip).
-- Formation (multi) battles use the same sprite feel but no per-era layout change.
+- Wind shows nothing in battle, because it lays no field (#465 rule).

@@ -272,3 +272,25 @@ func test_long_question_shows_first_then_short_title() -> void:
 	assert_eq(host.picker._title.text, "Fight now?")
 	host.picker.picked.emit(-1)
 	assert_eq(host.title_lines("Save?"), 1)
+
+## Bug sweep 12 Nov 2026: a list freed while its scroll position was being put back logged
+## "Resumed function '_restore_scroll()' after await, but class instance is gone".
+func test_restoring_the_scroll_keeps_no_await_open() -> void:
+	var host: MenuHost = await _host()
+	var p: ListPicker = host.picker
+	p.pick("Gone", _rows(30), true, 20)
+	await wait_process_frames(3)
+	p.picked.emit(20)
+	await wait_process_frames(1)
+	p.pick("Gone", _rows(30))
+	# Looked at from a deferred call, queued after the list's own one: a one-shot is already
+	# taken off the signal while process_frame is being sent.
+	var seen: Array[bool] = [false]
+	var look := func() -> void:
+		for c: Dictionary in get_tree().process_frame.get_connections():
+			seen[0] = seen[0] or (c.callable as Callable).get_object() == p
+	look.call_deferred()
+	await wait_process_frames(4)
+	assert_true(seen[0], "the restore waits on a connection that goes with the list")
+	assert_gt(p._scroll.scroll_vertical, 0, "and the list is back where it was")
+	p.picked.emit(-1)

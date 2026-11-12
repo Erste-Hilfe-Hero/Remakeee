@@ -1,0 +1,41 @@
+{
+ "name": "Brine Bath House",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "heal_point": [
+  4,
+  5
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "paleshore",
+   "tx": 3,
+   "ty": 7,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "jost",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "paleshore/jost",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}
