@@ -17,7 +17,7 @@
    "y": 5,
    "to": "tallowmarket",
    "tx": 3,
-   "ty": 4,
+   "ty": 3,
    "facing": "down"
   }
  ],
@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/tallowmarket_wax_hall_chandler",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_wax_names_bette",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_wax_names_bette",
+   "sprite": "villager",
+   "show_flag": "q2_wax_names_asked"
   }
  ],
  "signs": []

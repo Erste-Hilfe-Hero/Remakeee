@@ -191,6 +191,11 @@
   "leads the team": "lidera a equipe",
   "leads the team, worn out": "lidera a equipe, esgotado",
   "unavailable": "indisponível",
-  "worn out": "esgotado"
+  "worn out": "esgotado",
+  "Only in battle.": "Só na batalha.",
+  "Vigor %d/%d to %d/%d": "Vigor %d/%d para %d/%d",
+  "Already knows this art.": "Já conhece esta arte.",
+  "Wrong element.": "Elemento errado.",
+  "Works on its own at: %s": "Funciona sozinho em: %s"
  }
 }

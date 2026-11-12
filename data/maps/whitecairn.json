@@ -5,29 +5,29 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
+  4,
   9
  ],
  "rows": [
   "^^^^^__^^^^^",
-  "^@@..__..@@^",
-  "^.@@.__.@@.^",
-  "^.@..__..@.^",
+  "^@.@.__.RR.^",
+  "^....__.HD.^",
+  "^.@.._____.^",
+  "^...@__....^",
+  "^@...__RRR.^",
+  "^..@.__HDH.^",
+  "^....____..^",
+  "^@..o_______",
+  "^..@._______",
   "^....__....^",
-  "^.L..__..S.^",
-  "^....__....^",
-  "^...____...^",
-  "^..._.o.____",
-  "^..._...____",
-  "^...____...^",
-  "^....__....^",
-  "^.@@.__.@@.^",
-  "^....__....^",
-  "^....__....^",
-  "^@.@.__.@.@^",
-  "^....__....^",
-  "^@@..__..L.^",
-  "^....__....^",
+  "^@.@.__.L..^",
+  "^....__.RR.^",
+  "^.@..__.HD.^",
+  "^...._____.^",
+  "^.RR.__....^",
+  "^.DH.__.@.@^",
+  "^._..__....^",
+  "^._____..S.^",
   "^^^^^__^^^^^"
  ],
  "warps": [
@@ -78,13 +78,45 @@
    "tx": 6,
    "ty": 22,
    "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 2,
+   "to": "whitecairn_home_1",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 6,
+   "to": "whitecairn_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 13,
+   "to": "whitecairn_shop",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 16,
+   "to": "whitecairn_home_2",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
-   "y": 7,
+   "x": 3,
+   "y": 8,
    "facing": "down",
    "dialogue": "whitecairn/keeper",
    "sprite": "elder"
@@ -92,16 +124,16 @@
   {
    "id": "mathis",
    "x": 2,
-   "y": 6,
+   "y": 5,
    "facing": "right",
    "dialogue": "whitecairn/mathis",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 5,
-     "y": 9,
-     "facing": "right"
+     "x": 4,
+     "y": 7,
+     "facing": "down"
     },
     {
      "phase": [
@@ -113,15 +145,15 @@
   },
   {
    "id": "ilse",
-   "x": 9,
-   "y": 11,
+   "x": 10,
+   "y": 10,
    "facing": "left",
    "dialogue": "whitecairn/ilse",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 7,
+     "x": 5,
      "y": 9,
      "facing": "left"
     },
@@ -135,17 +167,17 @@
   },
   {
    "id": "barnaby",
-   "x": 2,
-   "y": 18,
-   "facing": "right",
+   "x": 9,
+   "y": 17,
+   "facing": "left",
    "dialogue": "whitecairn/barnaby",
    "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 4,
+     "x": 5,
      "y": 7,
-     "facing": "right"
+     "facing": "left"
     },
     {
      "phase": [
@@ -159,7 +191,7 @@
  "signs": [
   {
    "x": 9,
-   "y": 5,
+   "y": 18,
    "dialogue": "whitecairn/sign"
   }
  ],
@@ -180,7 +212,7 @@
  "secrets": [
   {
    "x": 0,
-   "y": 5,
+   "y": 4,
    "item": "max_tonic",
    "count": 1,
    "flag": "find_whitecairn_1"
@@ -201,7 +233,7 @@
   }
  ],
  "square": [
-  6,
+  4,
   8
  ]
 }

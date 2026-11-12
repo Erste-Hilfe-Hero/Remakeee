@@ -363,6 +363,20 @@ func score_move(model: BattleModel, side: int, move_index: int, slot: int = 0, t
 					break
 		elif fx_id == &"cure_self" and not me.status.is_empty():
 			score += STATUS_BONUS * acc
+		elif fx_id == &"energy_gain" and me.energy < model.max_energy_of(side):
+			score += BURN_BONUS_PER_ENERGY * float(mini(model.max_energy_of(side) - me.energy, int(fx.get("amount", 1)))) * acc
+		elif fx_id == &"stage_reset":
+			# Worth it when the foe's raised stages outweigh our own.
+			var net: int = 0
+			for st_name: String in BattleRules.STAGE_STATS:
+				net += maxi(0, target.stage(st_name)) - maxi(0, me.stage(st_name))
+			spoil += STAGE_BONUS * float(maxi(0, net)) * acc
+		elif fx_id == &"cure_team":
+			for mate: Spirling in model.party(side):
+				if mate != null and not mate.is_fainted() and not mate.status.is_empty():
+					score += STATUS_BONUS * acc
+		elif fx_id == &"self_cost":
+			score -= SELF_DROP_COST * float(fx.get("amount", 0.25)) * 4.0
 		elif fx_id == &"clear_snares":
 			score += SNARE_BONUS_PER_BENCH * float((model.snares[side] as Array).size())
 		elif fx_id == &"side_snare":

@@ -128,6 +128,11 @@ var xp_mult: float = 1.0
 ## Ring-scaled Growth (era function "ring_scaled_growth", Era V): each earner's share is scaled
 ## by growth_scale() of the foe's ring against its own.
 var ring_scaled_growth: bool = false
+## Wheel battle (era function "wheel_battles", Era V): with one Spirling at the front, at the end
+## of every turn each side's front steps aside for the next standing one of its first
+## wheel_size Spirlings, in team order.
+var wheel: bool = false
+var wheel_size: int = 3
 ## Opening line for the field instead of the Rift line (weather in battle, WeatherCycle).
 var field_intro: String = ""
 var flee_attempts: int = 0
@@ -784,7 +789,7 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
-	if status == "scorch" and BattleRules.trait_info(s.gift_id()).has("scorch_atk"):
+	if status == "scorch" and ShopEffects.gift_table(s).has("scorch_atk"):
 		reveal_trait(side, slot)
 	eat_pith(side, slot)
 	return true
@@ -910,11 +915,41 @@ func _phase_end_of_turn() -> void:
 	_tick_field_swirl()
 	_tick_field_cycle()
 	_tick_delayed_hits()
+	_turn_wheel()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	_weary_chip()
 	turn += 1
 	phase = Phase.FAINT_CHECK
+
+## The next wheel member after the front of [param side], or -1 (none standing, or no wheel).
+func wheel_next(side: int) -> int:
+	if not wheel or is_multi() or slot_count(side) != 1:
+		return -1
+	var cur: int = active_index(side)
+	var team: Array = parties[side]
+	var size: int = mini(wheel_size, team.size())
+	if cur < 0 or cur >= size or (team[cur] as Spirling).is_fainted():
+		return -1
+	for step: int in range(1, size):
+		var i: int = (cur + step) % size
+		if not (team[i] as Spirling).is_fainted():
+			return i
+	return -1
+
+func _turn_wheel() -> void:
+	if not wheel or is_finished():
+		return
+	var moved: bool = false
+	for side: int in [Side.PLAYER, Side.FOE]:
+		var nxt: int = wheel_next(side)
+		if nxt < 0:
+			continue
+		if not moved:
+			emit_event(BattleEvent.Type.WHEEL_TURN, {})
+			moved = true
+		emit_event(BattleEvent.Type.SWAP_OUT, _who(side, 0))
+		_swap_in(side, nxt, 0)
 
 ## True when the variants in play take [param mv] off the menu (stage-only arts under "stages_locked").
 func move_locked(mv: MoveData) -> bool:
@@ -997,7 +1032,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		s.status_turns -= 1
 		if s.status_turns == 0:
 			_cure(side, slot)
-	var regen: int = int(BattleRules.trait_info(s.gift_id()).get("regen_div", 0))
+	var regen: int = int(ShopEffects.gift_table(s).get("regen_div", 0))
 	var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
 	var fdata: Dictionary = BattleRules.FIELDS.get(field, {})
 	var field_regen: int = 0
@@ -1013,7 +1048,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		s.mend_turns -= 1
 		if s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / BattleRules.MEND_DIV), slot)
-	if int(BattleRules.trait_info(s.gift_id()).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
+	if int(ShopEffects.gift_table(s).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
 		reveal_trait(side, slot)
 	var gain: int = int(rules.get("energy_per_turn", ENERGY_PER_TURN)) + int(BattleRules.add_key(s, "energy_per_turn"))
 	if s.energy_surge > 0:
@@ -1124,7 +1159,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
 static func _is_self_effect(fx: Dictionary) -> bool:
 	var id: StringName = StringName(fx.get("id", ""))
-	return id == &"heal_self" or id == &"self_stage_after" or (id == &"stat_change" and bool(fx.get("self", true)))
+	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team"] or (id == &"stat_change" and bool(fx.get("self", true)))
 
 func _do_move(a: BattleAction) -> void:
 	var side: int = a.side
@@ -1196,9 +1231,9 @@ func _do_move(a: BattleAction) -> void:
 			rd.merge({"text": str(react.text), "element": mv.element, "status": str(react.status)})
 			emit_event(BattleEvent.Type.REACTION, rd)
 		if mv.is_damaging():
-			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.gift_id()).has("phys_taken"):
+			if mv.kind == MoveData.Kind.PHYSICAL and ShopEffects.gift_table(target).has("phys_taken"):
 				reveal_trait(target_side, t_slot)
-			if BattleRules.trait_info(me.gift_id()).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
+			if ShopEffects.gift_table(me).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
 			if side == Side.FOE:
@@ -1321,6 +1356,7 @@ func _do_bond(a: BattleAction) -> void:
 	var bonus: float = 0.0
 	var sure: bool = false
 	var retry: bool = false
+	var wish: bool = false
 	if not a.item_id.is_empty() and int(inventory.get(a.item_id, 0)) > 0:
 		inventory[a.item_id] = int(inventory[a.item_id]) - 1
 		bonus = float(Database.item(a.item_id).get("bond_bonus", 0.0))
@@ -1328,6 +1364,8 @@ func _do_bond(a: BattleAction) -> void:
 		sure = bool(Database.item(a.item_id).get("bond_sure", false))
 		# The shop's Second Try Charm: a failed bond is tried once more at once.
 		retry = bool(Database.item(a.item_id).get("bond_retry", false))
+		# The shop's Wish Charm (pay-to-win step 6, plan point 30): the top Spark on a bond that works.
+		wish = bool(Database.item(a.item_id).get("bond_wish", false))
 	var who: Dictionary = _who(Side.FOE, t_slot)
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
@@ -1344,6 +1382,9 @@ func _do_bond(a: BattleAction) -> void:
 	emit_event(BattleEvent.Type.BOND_RESULT, res)
 	if success:
 		bonded = target
+		if wish:
+			for key: String in Spirling.STAT_KEYS:
+				target.spark[key] = Spirling.SPARK_MAX
 		# In a horde the rest of the swarm fights on; the battle ends once none is left.
 		if not is_multi() or alive_count(Side.FOE) == 0:
 			outcome = Outcome.BONDED

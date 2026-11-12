@@ -149,19 +149,45 @@ answers with `live_answer`; both see up to 6 of the other's team and `live_pick`
 `live_move(id, round, input)`; the round closes when both are in, and the server keeps the inputs, the seed and
 the `turn_seconds` (30) clock. A side away longer than the clock plus `reconnect_seconds` (60) loses
 (`_live_tick`). `live_forfeit` gives up, `live_emote` stores only the number of a set phrase, `live_finish`
-takes each side's winner (different answers void the duel), `live_rematch` invites again.
+asks the referee for the result (below), `live_rematch` invites again.
+
+**The referee decides (point 3):** migration `20261113000040_live_referee.sql`. `live_finish(id, winner)` does not
+take the winner from the phone (it is only kept as a note in `report`). It opens a battle of kind `live_judge`
+with the duel's seed, both picked teams and every finished round's two choices, and the referee service
+(`server/referee`, `BattleReferee.check` -> `LiveDuelSim.judge`) plays them again. `_live_judged` takes the
+answer: over -> `done`, reason `played`, the referee's winner; not over -> the duel goes on with a fresh clock
+(one check per finished round, `judged_round`); cannot be played -> `done`, reason `disputed`, no winner. While
+a check is open `live_state` says `judging: true`, the round clock rests, and a referee that is silent for 10
+minutes ends the duel without a winner. `battle_submit` does not accept `live_judge`. A phone that reports a
+different winner, or none, changes nothing. `LocalLiveMore.gd` does the same at once.
+`server/referee/referee.gd` now only starts `referee_runner.gd` as a node: a `-s` script is compiled before the
+autoloads exist, and since `ShopEffects` names `Billing` the old runner could not rebuild any Spirling (every
+battle came back as `error`). `tools/online/test_referee.sh` checks the three sample battles and two live duels;
+it is not part of CI yet, and its last step (fair rows) currently reports Wickit and Kelpup as different between
+game and database.
 
 **Playing the rounds (points 1-3, 10):** `scripts/online/LiveDuelSim.gd` builds the battle from the server's seed,
-the two picked teams and every finished round's two choices (kind, move, swap only), so both phones reach the same
-state; side 0 is the inviter. Friends > Live duels > the duel > "Choose your move" lists the legal moves, swaps and
-Rest and sends `live_move`; the screen shows the last round's lines and both Spirlings on the field, and at the
-end the damage per Spirling. An illegal choice counts as Rest. A Spirling that drops is followed by the next one
-standing. `live_state` never shows the other side's choice of the round that is still open
-(migration `20261113000030_tourney_watch.sql`). It is a text screen, not the animated battle scene.
+the two picked teams and every finished round's two choices (kind, move, swap only), so both phones, every
+watcher and the referee reach the same state; side 0 is the inviter. An illegal choice counts as Rest. A Spirling
+that drops is followed by the next one standing. `live_state` never shows the other side's choice of the round
+that is still open (migration `20261113000030_tourney_watch.sql`).
+
+**In the battle screen (points 1, 73):** a running duel opens `scripts/online/LiveDuelStage.gd` after the menu
+closes (`PauseMenu.live_stage`, `Overworld.live_duel`). It uses the normal battle screen (`Battle.tscn`) as it is,
+through `setup`, `replay_inputs` and `battle_finished` only, so the era looks, intros and animations are the
+same as in every battle. `LiveBattleModel` (a `BattleModel`) hands the screen one round at a time as the server
+gives them out and keeps the screen waiting in between. The stage asks `live_state` every 1.5 s, shows the
+choices (arts, swaps, Rest) over the lower part of the screen, the round, the clock, the last emote, and "Menu"
+(emote, give up with a second question, leave). Lines go on by themselves because the clock runs. Someone who
+comes in late starts at the round played last. At the end: the result, the damage per Spirling and "Save a
+result picture". Side 0 is the lower side for everyone, also for the friend who was invited (the line
+"Top: ... Bottom: ..." says who is where): the battle is not the same when the sides are swapped, and all must
+see the battle the referee plays. "Your last duel" in the list opens the result again (rematch, report).
 
 **Watching (point 73):** `live_watch_list()` lists running duels of friends, `live_watch(id)` gives the duel one
 finished round behind while it runs (all of it once it is over); never the own duel, never when a player blocked
-the watcher, and off with the parent switch for live duels. Live duels > "Watch a friend's duel...".
+the watcher, and off with the parent switch for live duels. Live duels > "Watch a friend's duel..." opens the
+same battle screen (`LiveDuelStage` with `watch`), without choices.
 
 ## Where it runs now
 
@@ -425,8 +451,12 @@ tests `tests/unit/test_trade_gifts.gd` and `tools/online/sql_test/test_trade_gif
   Keepsake, never a shop-boosted one; the original stays. At most `lends_per_day` (3) per lender and
   `borrow_max` (1) open loan per borrower; a loan ends after `lend_hours` (48). `lend_use(loan, kind)`
   (kind `raid` or `live_duel`) hands the borrower the copy once; `lend_end` ends an unused loan;
-  `lend_list` shows both sides. Table `spirling_loans`. Not done yet: the raid and live duel screens
-  do not offer the borrowed Spirling, so `lend_use` has no caller in the game yet.
+  `lend_list` shows both sides. Table `spirling_loans`. In the game (migration
+  `20261113000040_live_referee.sql`): while both pick in a live duel, "Take a borrowed Spirling along" calls
+  `live_borrow(duel, loan)`; the copy joins the shown Spirlings (marked `loan`, the rival sees it), can be
+  picked like the others, one per duel. Before a raid attempt the game asks; `raid_start_loan(raid, pick, loan)`
+  puts it last in the team with the fair row (Ring 50, base values), next to at most 4 own Spirlings and never
+  the same species twice. Both use up the loan; a start that fails keeps it.
 - **Spirlings stay untradeable (44)** as long as the flag `trade_spirling` stays off.
 
 ### Friends and the shared world (Online 100, area 6, points 53, 55-57, 59, 60)
@@ -622,6 +652,11 @@ standings of seasons that ended more than a season ago are removed. The record o
 - Records > Online replays (`scripts/ui/OnlineReplaysMenu.gd`): watch one, copy its share code to the
   clipboard, watch a code from the clipboard, own win rate per Spirling, opponents met most often. A code is
   `CHR1-` plus the gzip-packed replay in base64; it holds no account data. Replays play in the current look.
+- Result picture (76): a replay > "Save a result picture", and the same after a live duel
+  (`scripts/online/ResultCard.gd`). The battle is played again from the replay, and the game draws a card with
+  both names, the winner, the rounds and both teams with its own Spirling art (dropped ones dark). It is saved
+  with the photos (`user://photos/`, 4x), in the web build as a download. No account data on it besides the
+  names the player already sees.
 - Team of the best player (77): Leagues > a league > "Best team of the season" (`league_top_team(league)`: the
   highest rated entry of the season after the placement battles; species, Ring and moves, no name).
 - Watching a friend's live duel (73) and the tournament finals (74, 80): see Live duels and Weekend tournament.
@@ -634,12 +669,10 @@ Checked point by point on 2026-11-12. Everything else in the plan is built and h
 
 | Point | What is missing | Why |
 |---|---|---|
-| 3 | The referee does not replay live duels; both phones play the rounds and must agree (`live_finish`), else the duel does not count. | Needs the referee to read `live_duels` on the server. |
-| 1, 73 | Live duels and watching use a text screen, not the animated battle scene. | The battle scene takes one player's input and an AI rival. |
+| 1, 73 | In a live duel the invited friend sees the own Spirlings on the upper side. | Everyone must see the battle the referee plays; swapping the sides would change it. |
 | 15 | No board by country. | The game stores no country; needs a privacy decision first. |
-| 45 | A borrowed Spirling cannot be picked in the raid or live duel screens yet (`lend_use` has no caller). | The team for both comes from the stored team on the server. |
 | 67 | No phone notice at an event start. | Needs a push service (FCM, APNs) and consent texts. |
-| 76 | No picture or short video saved from a replay. | Video capture is not possible in the web and phone builds as they are. |
+| 76 | No short video from a replay (the result picture is there). | Video capture is not possible in the web and phone builds as they are. |
 | 91-94 | No own realtime server (the game asks every few seconds), no test with 500 battles at once, no latency measurement, no load test before updates. | Server work, see `server/`. |
 | 96 | No monitoring with an alarm. | Server work. |
 | 99, 100 | Rollout in 4 updates and one build for iOS and Android are release steps, not code. | Release work. |

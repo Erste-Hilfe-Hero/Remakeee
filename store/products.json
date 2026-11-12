@@ -620,8 +620,8 @@
    "eur": "0.99",
    "name_en": "Echo Scent",
    "name_de": "Echo-Duft",
-   "desc_en": "Bonding gets clearly easier for one try.",
-   "desc_de": "Bonden gelingt für einen Versuch deutlich leichter.",
+   "desc_en": "Bonding gets 25% easier for one try. 1 piece, used up.",
+   "desc_de": "Bindung wird für einen Versuch 25 % leichter. 1 Stück, wird verbraucht.",
    "family_shareable": false,
    "ready": true
   },
@@ -633,8 +633,8 @@
    "eur": "7.99",
    "name_en": "Echo Scent x10",
    "name_de": "Echo-Duft x10",
-   "desc_en": "10 Echo Scents. Single price 1000 Riftglass.",
-   "desc_de": "10 Echo-Düfte. Einzeln 1000 Rissglas.",
+   "desc_en": "10 Echo Scents: each makes one bond 25% easier. Single price 1000 Riftglass.",
+   "desc_de": "10 Echo-Düfte: jeder macht eine Bindung 25 % leichter. Einzelpreis 1000 Rissglas.",
    "family_shareable": false,
    "ready": true
   },

@@ -210,6 +210,14 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "showcase_host",
+   "x": 8,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "quillmarch/ledgerholm_showcase_host",
+   "sprite": "villager"
   }
  ],
  "signs": [

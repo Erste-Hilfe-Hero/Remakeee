@@ -20,7 +20,7 @@
   "lines": [
    "Trader Lorna: Brews and bandages. The colour may be gone, but bruises are still blue."
   ],
-  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
  },
  "nell": {
   "lines": [

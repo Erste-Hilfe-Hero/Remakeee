@@ -51,8 +51,9 @@ func test_fair_rows_use_ring_50_and_learnable_moves_only() -> void:
 	assert_true(LeagueRules.learnable(Database.species("Smoldrake"), 9).has("Dusk Rake"), "earlier form moves count")
 	assert_eq(LeagueRules.fair_row("Kindlop", ["Kiln Strike", "Fly Away", "Bowl Over", "Kiln Strike"]),
 		{"species": "Kindlop", "level": 50, "moves": ["Kiln Strike", "Bowl Over"]})
-	# Without a pick the row takes the default kit at ring 50 (plan area 2 added Glow Knuckle to it).
-	assert_eq(LeagueRules.fair_row("Kindlop", []).moves, ["Dusk Rake", "Glow Knuckle", "Cinder Breath", "Kiln Strike"])
+	# Without a pick the row takes the default kit at ring 50 (plan area 2 added Glow Knuckle to it,
+	# the art set of docs/CONTENT_GAPS.md Smoulder at ring 46).
+	assert_eq(LeagueRules.fair_row("Kindlop", []).moves, ["Glow Knuckle", "Cinder Breath", "Kiln Strike", "Smoulder"])
 
 func test_joining_errors_and_same_fair_values_for_everyone() -> void:
 	assert_eq(_call("league_join", {"p_league": "gold", "p_pick": []}).error, "bad_league")
