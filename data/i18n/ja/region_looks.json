@@ -2,6 +2,10 @@
  "_comment": "ja translation of the region_looks table, keyed by the English text.",
  "strings": {
   "The ink goes grey here. Ashmere burned once and still smells like it owes you money.": "ここではインクが灰色になる。Ashmereは一度燃えて、いまだに金を借りているようなにおいがする。",
-  "The ink turns blue here. Corvane dyes everything, even the truth.": "ここではインクが青くなる。Corvaneは何でも染める、真実さえも。"
+  "The ink turns blue here. Corvane dyes everything, even the truth.": "ここではインクが青くなる。Corvaneは何でも染める、真実さえも。",
+  "The ground breathes under your boots. In Quivermoor every Spirling moves, every path wanders and every friend has a price.": "靴の下で地面が息をしている。QuivermoorではどのSpirlingも動き、どの道もさまよい、どの友にも値段がある。",
+  "The ink bleaches here. Solenne burns everything, even the lies. Especially the lies.": "ここではインクが色あせる。Solenneはすべてを焼く。うそさえも。とくに、うそを。",
+  "The lines grow sharp here. Quillmarch engraves everything, especially what you owe.": "ここでは線がするどくなる。Quillmarchはすべてを刻む。とくに、あなたの借りを。",
+  "The map unrolls past its own edge. Up here the light is gold, the stone is white and every smile is paid for.": "地図は自分のふちをこえて広がる。この上では光は金、石は白、そしてどの笑顔にも代金が払われている。"
  }
 }

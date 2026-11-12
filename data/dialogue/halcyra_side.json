@@ -1,0 +1,1460 @@
+{
+ "fallen_sign": [
+  "THE FALLEN PLANET",
+  "A brass planet the size of a house lies dented in its own crater. Three families have put up three 'PRIVATE' signs on it."
+ ],
+ "fallen_notice": [
+  "A notice: PLANET RETRIEVAL - CONTACT THE GILT HOUSE. Below, in another hand: OR ME. CHEAPER. - L."
+ ],
+ "brine_sign": [
+  "THE BRINE CATACOMBS",
+  "Under the Mirror Flats the old lake keeps its dead in salt. Halloran keeps his barrels beside them. Both are counted daily."
+ ],
+ "brine_stencil": [
+  "A barrel stencil: PROPERTY OF HALLORAN SALT. A second stencil underneath: AND SO ARE YOU."
+ ],
+ "brine_niche": [
+  "A saint's niche, empty but for a price list. 'Pinch: 5. Bag: 50. Miracle: ask.'"
+ ],
+ "chapel_pews": [
+  "The drowned chapel. Salt has crusted the pews white. Someone has scratched SING LOUDER into the back row."
+ ],
+ "chapel_hymns": [
+  "A hymn board. The same hymn number, every week, for twelve years."
+ ],
+ "cellar_sign": [
+  "THE GILT CELLARS",
+  "The Gilt House keeps its wine, its gold and its relatives down here. Not always in that order."
+ ],
+ "cellar_rack": [
+  "A cask rack. Each cask is chalked with a year and a name. Cask forty-one says only: KNOCK."
+ ],
+ "strong_wills": [
+  "The strongroom. Five drawers, one per Gilt child, each with a will inside. Each will leaves everything to the drawer's owner."
+ ],
+ "strong_debts": [
+  "A ledger titled DEBTS OWED TO THE HOUSE. It is very thick. A thinner one beside it, titled DEBTS THE HOUSE OWES, is blank."
+ ],
+ "antidote_wait": [
+  "Benno: The herbalist on the White Stair mixes antidotes. And the cellar clerk under the Sunfall Terraces signs for every bottle."
+ ],
+ "antidote_reveal": {
+  "if": {
+   "flag": "q4_antidote_s2"
+  },
+  "else": "antidote_wait",
+  "lines": [
+   "Benno: The order is in my name? Well. I did say nobody keeps me alive for free. I pay myself.",
+   "Benno: I taste, I live, I add the seasoning afterwards. Lady Seraphine pays per guest. Lord Aurek is the main course.",
+   "Benno: And now you know the recipe. Recipes are family secrets. You are not family."
+  ],
+  "action": "set_flag q4_antidote_reveal; quest_stage q4_antidote 3"
+ },
+ "antidote": {
+  "if": {
+   "not_flag": "q4_antidote_asked"
+  },
+  "else": "antidote_reveal",
+  "lines": [
+   "Food Taster Benno: I taste for Lord Aurek. Three thousand meals, eleven poisons, not one funeral. Mine, I mean.",
+   "Food Taster Benno: Someone keeps slipping antidote into my soup. Nobody in this family keeps anyone alive for free. Find out who."
+  ],
+  "action": "set_flag q4_antidote_asked"
+ },
+ "antidote_wenna_after": [
+  "Herbalist Wenna: I sell poison too. Same shelf. I just turn the labels round."
+ ],
+ "antidote_wenna": {
+  "if": {
+   "not_flag": "q4_antidote_s1"
+  },
+  "else": "antidote_wenna_after",
+  "lines": [
+   "Herbalist Wenna: Antidote, a flask a week, for the Gilt kitchen. Paid in advance, which is how you know it's for someone important.",
+   "Herbalist Wenna: The bottles go down to the Gilt Cellars. Ask the clerk whose name is on the order."
+  ],
+  "action": "set_flag q4_antidote_s1; quest_stage q4_antidote 1"
+ },
+ "antidote_tobin_after": [
+  "Cellar Clerk Tobin: I count bottles. Bottles never lie. People empty them and then lie."
+ ],
+ "antidote_tobin": {
+  "if": {
+   "not_flag": "q4_antidote_s2"
+  },
+  "else": "antidote_tobin_after",
+  "lines": [
+   "Cellar Clerk Tobin: The antidote? Ordered by the taster himself. Weekly. He drinks it before every meal he tests.",
+   "Cellar Clerk Tobin: Odd habit for a man paid to fall over. Nine guests have died after he said 'delicious'."
+  ],
+  "action": "set_flag q4_antidote_s2; quest_stage q4_antidote 2"
+ },
+ "antidote_benno_fork_after": [
+  "Benno: I've retired. Now I only taste my own cooking. It's the only meal I trust."
+ ],
+ "antidote_benno_fork_loot": {
+  "if": {
+   "not_flag": "q4_antidote_paid"
+  },
+  "else": "antidote_benno_fork_after",
+  "lines": [
+   "You take Benno's tasting kit: three tonics and a little spoon engraved 'NOT MINE'."
+  ],
+  "action": "set_flag q4_antidote_paid; give_item max_tonic 3; quest_stage q4_antidote 4"
+ },
+ "antidote_benno_fork_intro": [
+  "Benno: Say 'delicious'. Everyone says it before they fall over."
+ ],
+ "antidote_benno_fork_defeat": [
+  "Benno: Bitter. Very bitter. I'd send it back.",
+  "Benno: Fine. Tell Aurek. He'll hire a taster for his taster."
+ ],
+ "brass_planet_wait": [
+  "Lio: It lies past Orrery Ridge, in a crater. Nan picks scrap there. And Notary Fenwick on the White Stair keeps the deeds."
+ ],
+ "brass_planet_reveal": {
+  "if": {
+   "flag": "q4_brass_planet_s2"
+  },
+  "else": "brass_planet_wait",
+  "lines": [
+   "Lio: Three deeds? Ah. Yes. A planet is very big. It seemed a shame to sell it only once.",
+   "Lio: Collector Ambrose of the Gilt House is in the crater now, to take it. Beat him, and the other two families get nothing. Then we split."
+  ],
+  "action": "set_flag q4_brass_planet_reveal; quest_stage q4_brass_planet 3"
+ },
+ "brass_planet_go": {
+  "if": {
+   "flag": "q4_brass_planet_reveal"
+  },
+  "else": "brass_planet_reveal",
+  "lines": [
+   "Lio: The crater, past Orrery Ridge. Go on. I'll keep your half warm."
+  ]
+ },
+ "brass_planet_reward": {
+  "if": {
+   "flag": "q4_brass_planet_done"
+  },
+  "else": "brass_planet_go",
+  "lines": [
+   "Lio: You beat Ambrose? Wonderful. Here is your half. Half of the advance. Half of the advance minus expenses."
+  ],
+  "action": "set_flag q4_brass_planet_paid; give_item revival_leaf 2; quest_stage q4_brass_planet 4; betrayal hs_brass_planet"
+ },
+ "brass_planet_after": {
+  "if": {
+   "flag": "q4_brass_planet_paid"
+  },
+  "else": "brass_planet_reward",
+  "lines": [
+   "Lio: I'm selling the crater next. It has a lovely view of the planet."
+  ]
+ },
+ "brass_planet": {
+  "if": {
+   "not_flag": "q4_brass_planet_asked"
+  },
+  "else": "brass_planet_after",
+  "lines": [
+   "Apprentice Lio: The missing planet of the Great Orrery! It fell off the ridge in a storm. I'm the only one who knows where.",
+   "Apprentice Lio: Fetch proof that it's still lying there, and I'll sell it back to the Gilt House. Fifty-fifty. I'm told I have an honest face."
+  ],
+  "action": "set_flag q4_brass_planet_asked"
+ },
+ "brass_planet_nan_after": [
+  "Nan: I sell the dents separately. Very popular with the Gilt cousins."
+ ],
+ "brass_planet_nan": {
+  "if": {
+   "not_flag": "q4_brass_planet_s1"
+  },
+  "else": "brass_planet_nan_after",
+  "lines": [
+   "Scrap Picker Nan: The planet? Big brass ball, dented, smells of money. It's in the crater. Three families have already come to look at it.",
+   "Scrap Picker Nan: Each one had a deed for it. Ask the notary how a ball gets three owners."
+  ],
+  "action": "set_flag q4_brass_planet_s1; quest_stage q4_brass_planet 1"
+ },
+ "brass_planet_fenwick_after": [
+  "Fenwick: Every deed on this stair is legal. Some are even true."
+ ],
+ "brass_planet_fenwick": {
+  "if": {
+   "not_flag": "q4_brass_planet_s2"
+  },
+  "else": "brass_planet_fenwick_after",
+  "lines": [
+   "Notary Fenwick: Three deeds for one planet, all sold by the same seller. Lovely handwriting. Very honest face.",
+   "Notary Fenwick: The seller signed as 'Lio, apprentice'. I stamped all three. I am paid by the stamp, not by the truth."
+  ],
+  "action": "set_flag q4_brass_planet_s2; quest_stage q4_brass_planet 2"
+ },
+ "brass_planet_ambrose_after": [
+  "Ambrose: I collect. You are on a list now. It's a short list. It gets shorter."
+ ],
+ "brass_planet_ambrose_defeat": [
+  "Ambrose: Keep it, then. Lio sold it to me with your name as the courier. The other two families have your name as well.",
+  "Ambrose: In this family, the one who carries the parcel pays for it."
+ ],
+ "brass_planet_ambrose_lose": [
+  "Ambrose: The crater keeps what falls into it. Come back when you've grown a little."
+ ],
+ "brass_planet_ambrose": {
+  "if": {
+   "not_flag": "q4_brass_planet_done"
+  },
+  "else": "brass_planet_ambrose_after",
+  "lines": [
+   "Ambrose: This planet belongs to the Gilt House. So does the crater. And, as of now, your afternoon."
+  ],
+  "action": "battle hs_brass_planet"
+ },
+ "brass_planet_dita_after": [
+  "Dita: Dust is honest. It settles on everyone."
+ ],
+ "brass_planet_dita": {
+  "if": {
+   "not_flag": "q4_brass_planet_clue"
+  },
+  "else": "brass_planet_dita_after",
+  "lines": [
+   "Sweeper Dita: I sweep under the brass arms. Last week I swept up three deed copies with Lio's name. And yours, as courier. Each time.",
+   "Sweeper Dita: Keep the copies. I only keep the dust."
+  ],
+  "action": "set_flag q4_brass_planet_clue"
+ },
+ "ledger_brass_planet": [
+  "The planet sold three times",
+  "Apprentice Lio sold the Great Orrery's missing planet to three families, each time with your name as the courier."
+ ],
+ "brass_planet_caught": [
+  "You show Lio the sweeper's copies: three deeds, three families, your name as courier on each.",
+  "Lio: ...You read the small print. Nobody reads the small print. Fine. Here is the real half. Don't tell the other half of me."
+ ],
+ "brass_planet_struck": [
+  "Lio: Oh, and the other two families are outside. I told them you have the planet. You do, technically. You beat the man holding it."
+ ],
+ "planet_buyers_defeat": [
+  "Planet Buyer: Keep your planet. We'll buy the next one. There is always a next one."
+ ],
+ "planet_buyers_lose": [
+  "The buyers take your coins as a deposit on the planet you don't own."
+ ],
+ "salt_skim_wait": [
+  "Imre: Jost rolls barrels in the Brine Catacombs, east of the flats. And Hanne dives in the drowned chapel below."
+ ],
+ "salt_skim_reveal": {
+  "if": {
+   "flag": "q4_salt_skim_s2"
+  },
+  "else": "salt_skim_wait",
+  "lines": [
+   "Imre: A neat hand? Well. Mine is the neatest on the flats. It's my one vanity.",
+   "Imre: Halloran pays me in salt and docks me in coin. So I water his salt and blame the boy. Everyone wins except Jost.",
+   "Imre: You were supposed to find Jost guilty. Now I have to write you off. I'm very good at writing things off."
+  ],
+  "action": "set_flag q4_salt_skim_reveal; quest_stage q4_salt_skim 3"
+ },
+ "salt_skim": {
+  "if": {
+   "not_flag": "q4_salt_skim_asked"
+  },
+  "else": "salt_skim_reveal",
+  "lines": [
+   "Bookkeeper Imre: I keep Halloran's salt books. The barrels leave full and arrive light. Somebody skims.",
+   "Imre: I suspect my apprentice, Jost. Find proof. Halloran deducts the losses from my wages, and my wages are mostly losses already."
+  ],
+  "action": "set_flag q4_salt_skim_asked"
+ },
+ "salt_skim_jost_after": [
+  "Jost: Roll, roll, roll. The salt doesn't care who owns it."
+ ],
+ "salt_skim_jost_favor": {
+  "if": {
+   "not_flag": "favor_hs_salt_skim"
+  },
+  "else": "salt_skim_jost_after",
+  "lines": [
+   "Jost: A tip, for the road: behind the third cask down here, Halloran keeps a dry stash. Nobody guards it at night. Probably."
+  ],
+  "choices": [
+   {
+    "text": "Believe him",
+    "action": "favor hs_salt_skim"
+   },
+   {
+    "text": "Not tonight"
+   }
+  ]
+ },
+ "salt_skim_betray": [
+  "Behind the third cask wait two of Halloran's salt guards, and Jost, collecting a finder's fee. For you."
+ ],
+ "jost_guards_defeat": [
+  "Salt Guard: The boy said you'd be easy. The boy lies. We'll take it out of his barrels."
+ ],
+ "jost_guards_lose": [
+  "The guards fine you for trespass on company salt."
+ ],
+ "ledger_salt_skim": [
+  "The third cask",
+  "Barrel Boy Jost sold you a tip about Halloran's stash, then sold you to the guards who were waiting there."
+ ],
+ "salt_skim_rewarded": [
+  "Behind the third cask: a dry stash, unguarded, as promised. Jost tips his cap. A revival leaf was going spare."
+ ],
+ "salt_skim_kept": [
+  "Behind the third cask: salt. Only salt. Jost shrugs. 'I said probably.'"
+ ],
+ "salt_skim_jost": {
+  "if": {
+   "not_flag": "q4_salt_skim_s1"
+  },
+  "else": "salt_skim_jost_favor",
+  "lines": [
+   "Barrel Boy Jost: Skimming? Me? I can't even count to a barrel. I roll them, I don't open them.",
+   "Jost: The light barrels go down to the chapel before they're weighed. Ask Hanne. And don't tell Imre I talked."
+  ],
+  "action": "set_flag q4_salt_skim_s1; quest_stage q4_salt_skim 1",
+  "choices": [
+   {
+    "text": "Not a word.",
+    "action": "trust hs_jost 15"
+   },
+   {
+    "text": "Depends who pays.",
+    "action": "trust hs_jost -5 10"
+   }
+  ]
+ },
+ "salt_skim_hanne_after": [
+  "Hanne: I dive for what the lake forgot. It forgot a lot. It had help."
+ ],
+ "salt_skim_hanne": {
+  "if": {
+   "not_flag": "q4_salt_skim_s2"
+  },
+  "else": "salt_skim_hanne_after",
+  "lines": [
+   "Salt Diver Hanne: The light barrels? They come down here half full and go back up with water from the chapel font. Salt water weighs like salt.",
+   "Hanne: The man who brings them signs the book with a very neat hand. Bookkeepers have very neat hands."
+  ],
+  "action": "set_flag q4_salt_skim_s2; quest_stage q4_salt_skim 2"
+ },
+ "salt_skim_imre_ink_after": [
+  "Imre: Jost has my job now. He can't count. Halloran says it's an improvement."
+ ],
+ "salt_skim_imre_ink_loot": {
+  "if": {
+   "not_flag": "q4_salt_skim_paid"
+  },
+  "else": "salt_skim_imre_ink_after",
+  "lines": [
+   "You take Imre's cash box. Inside: three tonics and a second set of books, much more honest than the first."
+  ],
+  "action": "set_flag q4_salt_skim_paid; give_item strong_tonic 3; quest_stage q4_salt_skim 4"
+ },
+ "salt_skim_imre_ink_intro": [
+  "Imre: Debit: one testimony. Credit: nothing. The books will balance."
+ ],
+ "salt_skim_imre_ink_defeat": [
+  "Imre: Overdrawn. Me. I've never been overdrawn.",
+  "Imre: Take the books to Halloran. He'll fire me, then hire me back cheaper. That's how he hired me the first time."
+ ],
+ "two_lanterns_wait": [
+  "Sabeth: Ledger girl Pia keeps Veronne's book on the Lantern Span. My sister Rosamund guides at the Great Orrery. She hears every rumour first."
+ ],
+ "two_lanterns_reveal": {
+  "if": {
+   "flag": "q4_two_lanterns_s2"
+  },
+  "else": "two_lanterns_wait",
+  "lines": [
+   "Sabeth: Konrad. Of course. He always said he'd never let me go. I thought it was romantic.",
+   "Sabeth: He waits on the Span tonight. Beat him before he walks me to the railing."
+  ],
+  "action": "set_flag q4_two_lanterns_reveal; quest_stage q4_two_lanterns 3"
+ },
+ "two_lanterns_go": {
+  "if": {
+   "flag": "q4_two_lanterns_reveal"
+  },
+  "else": "two_lanterns_reveal",
+  "lines": [
+   "Sabeth: The Lantern Span, the island in the middle. Mind the railing. It's mostly decorative."
+  ]
+ },
+ "two_lanterns_reward": {
+  "if": {
+   "flag": "q4_two_lanterns_done"
+  },
+  "else": "two_lanterns_go",
+  "lines": [
+   "Sabeth: He's beaten? Then my plate can wait. Take these, for your trouble. And for your discretion."
+  ],
+  "action": "set_flag q4_two_lanterns_paid; give_item guard_brew 3; quest_stage q4_two_lanterns 4; betrayal hs_two_lanterns"
+ },
+ "two_lanterns_after": {
+  "if": {
+   "flag": "q4_two_lanterns_paid"
+  },
+  "else": "two_lanterns_reward",
+  "lines": [
+   "Sabeth: I've engraved a plate for Konrad anyway. Just in case. I'm an optimist."
+  ]
+ },
+ "two_lanterns": {
+  "if": {
+   "not_flag": "q4_two_lanterns_asked"
+  },
+  "else": "two_lanterns_after",
+  "lines": [
+   "Engraver Sabeth: I engrave the plates under the lanterns. Today an order came in for a new plate. The name on it is mine.",
+   "Sabeth: Prepaid. Somebody has booked my fall. Find out who. I'd like to cancel."
+  ],
+  "action": "set_flag q4_two_lanterns_asked"
+ },
+ "two_lanterns_pia_after": [
+  "Pia: Black ink for the living, red for the rest. I go through a lot of red."
+ ],
+ "two_lanterns_pia": {
+  "if": {
+   "not_flag": "q4_two_lanterns_s1"
+  },
+  "else": "two_lanterns_pia_after",
+  "lines": [
+   "Ledger Girl Pia: Sabeth's plate? Red column, prepaid, signed by 'a loving husband'. Loving husbands are our best customers.",
+   "Pia: Ask her sister. Sisters always know whose husband is loving whom."
+  ],
+  "action": "set_flag q4_two_lanterns_s1; quest_stage q4_two_lanterns 1"
+ },
+ "two_lanterns_rosamund_after": [
+  "Rosamund: The stars don't fall. People do. That's why I work indoors."
+ ],
+ "two_lanterns_rosamund": {
+  "if": {
+   "not_flag": "q4_two_lanterns_s2"
+  },
+  "else": "two_lanterns_rosamund_after",
+  "lines": [
+   "Star Guide Rosamund: Konrad? Sabeth's husband? He's been asking which lanterns burn longest. For sentimental reasons, he said.",
+   "Rosamund: He waits on the Lantern Span every evening, counting the drop. Tell my sister. Gently. Or not. She never was gentle with me."
+  ],
+  "action": "set_flag q4_two_lanterns_s2; quest_stage q4_two_lanterns 2"
+ },
+ "two_lanterns_konrad_after": [
+  "Konrad: I'm moving out. Downstairs. Well away from any stairs."
+ ],
+ "two_lanterns_konrad_intro": [
+  "Konrad: You've come from Sabeth. Then you're the other name."
+ ],
+ "two_lanterns_konrad_defeat": [
+  "Konrad: The other name, I said. The order had two plates. Mine and the courier's. Sabeth wrote it. I only paid.",
+  "Konrad: She wanted me over the railing and you as the one who pushed. One lantern each. Very tidy, my wife."
+ ],
+ "two_lanterns_yorick_after": [
+  "Yorick: Shiny plates, short lives. Business is steady."
+ ],
+ "two_lanterns_yorick": {
+  "if": {
+   "not_flag": "q4_two_lanterns_clue"
+  },
+  "else": "two_lanterns_yorick_after",
+  "lines": [
+   "Plate Polisher Yorick: Two blank plates came in last week, paid together. One for a husband. One for 'the courier'. The order slip is in the engraver's own hand.",
+   "Yorick: I polish. I don't read. Except slips. Slips are short."
+  ],
+  "action": "set_flag q4_two_lanterns_clue"
+ },
+ "ledger_two_lanterns": [
+  "Two plates",
+  "Engraver Sabeth ordered two lantern plates: one for her husband, one for the courier she sent to stop him."
+ ],
+ "two_lanterns_caught": [
+  "You lay Yorick's slip on Sabeth's bench: two plates, one for Konrad, one for 'the courier', in her hand.",
+  "Sabeth: ...Polishers. They read everything. Fine. Here is the courier's fee. It was meant for your lantern. Spend it on something cheerful."
+ ],
+ "two_lanterns_struck": [
+  "Sabeth: One more thing. The pushers I hired for Konrad are still paid up. Waste not."
+ ],
+ "plate_pushers_defeat": [
+  "Pusher: Paid for one fall, got none. Sabeth wants a refund. We want a new line of work."
+ ],
+ "plate_pushers_lose": [
+  "The pushers walk you to the railing and stop. They charge extra for the last step."
+ ],
+ "forged_will_wait": [
+  "Philippa: The archivist sits in the strongroom of the Gilt Cellars. If he dawdles, the ink seller on Cloudshadow Meadow can vouch for the paper."
+ ],
+ "forged_will_reveal": {
+  "if": {
+   "flag": "q4_forged_will_s2"
+  },
+  "else": "forged_will_wait",
+  "lines": [
+   "Philippa: Practice makes perfect. Father always said so. He'll be proud. When he reads it. If.",
+   "Philippa: You're the witness on page three, by the way. Witnesses to Gilt wills have a short shelf life.",
+   "Philippa: Meet me in the strongroom. We'll settle the estate."
+  ],
+  "action": "set_flag q4_forged_will_reveal; quest_stage q4_forged_will 3"
+ },
+ "forged_will": {
+  "if": {
+   "not_flag": "q4_forged_will_asked"
+  },
+  "else": "forged_will_reveal",
+  "lines": [
+   "Gilt Heir Philippa: I'm the fourth child. Fourth children inherit the cutlery and the blame. But Father wrote a new will. In my favour.",
+   "Philippa: Have it sealed by the archivist in the Gilt Cellars before my siblings eat it. One of them ate the last one. With mustard."
+  ],
+  "action": "set_flag q4_forged_will_asked"
+ },
+ "forged_will_hollis_after": [
+  "Hollis: I have five wills here from five children. Each leaves everything to the author. Literature."
+ ],
+ "forged_will_hollis": {
+  "if": {
+   "not_flag": "q4_forged_will_s1"
+  },
+  "else": "forged_will_hollis_after",
+  "lines": [
+   "Archivist Hollis: A new will from Lord Aurek? Hm. The wax is still warm. Lord Aurek has not left his room in a week. His wax is cold.",
+   "Hollis: And the ink is meadow violet. Ask the ink seller on Cloudshadow Meadow who bought it."
+  ],
+  "action": "set_flag q4_forged_will_s1; quest_stage q4_forged_will 1"
+ },
+ "forged_will_marla_after": [
+  "Marla: Ink is cheap. Signatures are expensive. I sell the cheap part."
+ ],
+ "forged_will_marla": {
+  "if": {
+   "not_flag": "q4_forged_will_s2"
+  },
+  "else": "forged_will_marla_after",
+  "lines": [
+   "Ink Seller Marla: Meadow violet? One bottle, last week, to a young lady with a Gilt brooch and a very steady hand.",
+   "Marla: She also bought a practice pad. Lord Aurek's signature, forty times. The last ten were perfect."
+  ],
+  "action": "set_flag q4_forged_will_s2; quest_stage q4_forged_will 2"
+ },
+ "forged_will_philippa_will_after": [
+  "Philippa: Father read my will. He laughed so hard he added me to his. Under 'cutlery'."
+ ],
+ "forged_will_philippa_will_loot": {
+  "if": {
+   "not_flag": "q4_forged_will_paid"
+  },
+  "else": "forged_will_philippa_will_after",
+  "lines": [
+   "You take the forged will and Philippa's travel case: three brews and a fork with somebody else's crest."
+  ],
+  "action": "set_flag q4_forged_will_paid; give_item focus_brew 3; quest_stage q4_forged_will 4"
+ },
+ "forged_will_philippa_will_defeat": [
+  "Philippa: Contested. My will. By a witness. The cheek.",
+  "Philippa: Take it. Burn it. I'll write another. I've got thirty perfect signatures left."
+ ],
+ "forged_will_philippa_will_lose": [
+  "Philippa: Witnessed and signed. Go and rest. You look predeceased."
+ ],
+ "forged_will_philippa_will": {
+  "if": {
+   "not_flag": "q4_forged_will_done"
+  },
+  "else": "forged_will_philippa_will_loot",
+  "lines": [
+   "Philippa: Page three, line two: 'The witness predeceased the testator.' Let's make it true."
+  ],
+  "action": "battle hs_forged_will"
+ },
+ "cask_41_wait": [
+  "Gerti: The cooper in the Gilt Cellars knows every cask. And the old taster on Orrery Ridge knows every vintage."
+ ],
+ "cask_41_reveal": {
+  "if": {
+   "flag": "q4_cask_41_s2"
+  },
+  "else": "cask_41_wait",
+  "lines": [
+   "Gerti: Uncle Bertrand? In a cask? For eleven years? The family said he'd gone abroad.",
+   "Gerti: Let him out. He's owed his share of the house. Quietly. The strongroom key opens cask forty-one."
+  ],
+  "action": "set_flag q4_cask_41_reveal; quest_stage q4_cask_41 3"
+ },
+ "cask_41_go": {
+  "if": {
+   "flag": "q4_cask_41_reveal"
+  },
+  "else": "cask_41_reveal",
+  "lines": [
+   "Gerti: The strongroom of the Gilt Cellars. Bring a corkscrew. A big one."
+  ]
+ },
+ "cask_41_reward": {
+  "if": {
+   "flag": "q4_cask_41_done"
+  },
+  "else": "cask_41_go",
+  "lines": [
+   "Gerti: Bertrand went back into his cask? Fine. Saves the family a room. Here, for the corkscrew."
+  ],
+  "action": "set_flag q4_cask_41_paid; give_item dash_brew 3; quest_stage q4_cask_41 4; betrayal hs_cask_41"
+ },
+ "cask_41_after": {
+  "if": {
+   "flag": "q4_cask_41_paid"
+  },
+  "else": "cask_41_reward",
+  "lines": [
+   "Gerti: The Gilt wine tastes nuttier this year. Nobody complains."
+  ]
+ },
+ "cask_41": {
+  "if": {
+   "not_flag": "q4_cask_41_asked"
+  },
+  "else": "cask_41_after",
+  "lines": [
+   "Vineyard Hand Gerti: The Gilt wine has a secret ingredient. It talked too much, they say. Well. One cask in the cellar knocks back.",
+   "Gerti: Find out who's in it. Quietly. Wine doesn't like noise, and neither does the family."
+  ],
+  "action": "set_flag q4_cask_41_asked"
+ },
+ "cask_41_mattheus_after": [
+  "Mattheus: I feed it through the bunghole. Soup, mostly. It complains about the soup."
+ ],
+ "cask_41_mattheus": {
+  "if": {
+   "not_flag": "q4_cask_41_s1"
+  },
+  "else": "cask_41_mattheus_after",
+  "lines": [
+   "Cooper Mattheus: Cask forty-one? It knocks twice for yes and once for 'more bread'. It's been knocking for eleven years.",
+   "Mattheus: Eleven years ago, the vintage of the Great Quarrel. Ask the old taster on Orrery Ridge who went missing that year."
+  ],
+  "action": "set_flag q4_cask_41_s1; quest_stage q4_cask_41 1"
+ },
+ "cask_41_albrecht_after": [
+  "Albrecht: I spit, I never swallow. In wine and in family matters."
+ ],
+ "cask_41_albrecht": {
+  "if": {
+   "not_flag": "q4_cask_41_s2"
+  },
+  "else": "cask_41_albrecht_after",
+  "lines": [
+   "Old Taster Albrecht: The Great Quarrel vintage? That was the year Uncle Bertrand, Aurek's brother, vanished owing money to every family on the plateau.",
+   "Albrecht: The wine from that year had a nutty finish. And a faint aftertaste of uncle."
+  ],
+  "action": "set_flag q4_cask_41_s2; quest_stage q4_cask_41 2"
+ },
+ "cask_41_bertrand_after": [
+  "Bertrand: Knock twice for yes. Once for more bread."
+ ],
+ "cask_41_bertrand_defeat": [
+  "Bertrand: Corked. I'm corked.",
+  "Bertrand: I went into that cask myself, you know. Cheaper than paying. I'll go back in. The soup was free."
+ ],
+ "cask_41_bertrand_lose": [
+  "Bertrand: There. Breathe. Every vintage needs to breathe."
+ ],
+ "cask_41_bertrand": {
+  "if": {
+   "not_flag": "q4_cask_41_done"
+  },
+  "else": "cask_41_bertrand_after",
+  "lines": [
+   "Bertrand: Free! Eleven years in oak. I'm wonderfully aged. Now, about my creditors: you'll do as a first payment."
+  ],
+  "action": "battle hs_cask_41"
+ },
+ "cask_41_fenna_after": [
+  "Fenna: I pick the grapes. I don't pick sides."
+ ],
+ "cask_41_fenna": {
+  "if": {
+   "not_flag": "q4_cask_41_clue"
+  },
+  "else": "cask_41_fenna_after",
+  "lines": [
+   "Vine Girl Fenna: Gerti? She's Bertrand's daughter. She told the cousins someone was coming to open his cask. They want to catch whoever does.",
+   "Fenna: The cousins pay for intruders by the head. Gerti needs the money. Her father owes everyone."
+  ],
+  "action": "set_flag q4_cask_41_clue"
+ },
+ "ledger_cask_41": [
+  "Cask forty-one",
+  "Vineyard Hand Gerti sent you to open her father's cask and then sold you to the cousins, by the head."
+ ],
+ "cask_41_caught": [
+  "You tell Gerti what the vine girl said. Gerti counts the cousins coming up the terraces and changes her mind.",
+  "Gerti: Fine. I'll tell them you were never here. Take this. It's the only bottle in the cellar with nobody in it."
+ ],
+ "cask_41_struck": [
+  "Gerti: Oh, cousins! Here's the one who opened Uncle's cask. Per head, wasn't it?"
+ ],
+ "cask_cousins_defeat": [
+  "Gilt Cousin: Per head, she said. We'll pay her nothing. Families are complicated."
+ ],
+ "cask_cousins_lose": [
+  "The cousins fine you for disturbing a vintage."
+ ],
+ "true_stars_wait": [
+  "Ennis: Arno watches the meadow through his telescope on Orrery Ridge. And the goat girl here sees everyone who crosses."
+ ],
+ "true_stars_reveal": {
+  "if": {
+   "flag": "q4_true_stars_s2"
+  },
+  "else": "true_stars_wait",
+  "lines": [
+   "Ennis: My wife? Wanda? Making my horoscopes come true? Oh, Wanda.",
+   "Ennis: She's on the meadow, delivering 'a sudden change of fortune'. Stop her before she ruins my reputation for accuracy. I mean, before she hurts someone."
+  ],
+  "action": "set_flag q4_true_stars_reveal; quest_stage q4_true_stars 3"
+ },
+ "true_stars_go": {
+  "if": {
+   "flag": "q4_true_stars_reveal"
+  },
+  "else": "true_stars_reveal",
+  "lines": [
+   "Ennis: The west side of the meadow, by the trees. Her stars are always in the west."
+  ]
+ },
+ "true_stars_reward": {
+  "if": {
+   "flag": "q4_true_stars_done"
+  },
+  "else": "true_stars_go",
+  "lines": [
+   "Ennis: Wanda is stopped? A tragedy. My accuracy will suffer. Here, take these. Your horoscope: long life. For now."
+  ],
+  "action": "set_flag q4_true_stars_paid; give_item wake_bell 3; quest_stage q4_true_stars 4"
+ },
+ "true_stars_after": {
+  "if": {
+   "flag": "q4_true_stars_paid"
+  },
+  "else": "true_stars_reward",
+  "lines": [
+   "Ennis: I've hired a new assistant. Young. Ambitious. Her stars are very precise."
+  ]
+ },
+ "true_stars": {
+  "if": {
+   "not_flag": "q4_true_stars_asked"
+  },
+  "else": "true_stars_after",
+  "lines": [
+   "Horoscope Seller Ennis: My horoscopes come true. All of them. 'Beware of heights': fell off a terrace. 'A stranger brings news': poisoned by a courier.",
+   "Ennis: Business has never been better, and I am terrified. Find out who makes my stars come true."
+  ],
+  "action": "set_flag q4_true_stars_asked"
+ },
+ "true_stars_arno_after": [
+  "Arno: I see everything from up here. Nobody ever looks back up."
+ ],
+ "true_stars_arno_favor": {
+  "if": {
+   "not_flag": "favor_hs_true_stars"
+  },
+  "else": "true_stars_arno_after",
+  "lines": [
+   "Arno: With a better lens I could see her face. Lend me 800 coins? I'll pay you back. Probably with interest."
+  ],
+  "choices": [
+   {
+    "text": "Lend him 800",
+    "action": "favor hs_true_stars"
+   },
+   {
+    "text": "Not now"
+   }
+  ]
+ },
+ "true_stars_betray": [
+  "Arno spends your coins on a lens and sells the first thing he sees through it: your face, to the woman in the shawl. Her friends come calling."
+ ],
+ "arno_watchers_defeat": [
+  "Watcher: Your horoscope said 'a quiet week'. Ennis will have to print a correction."
+ ],
+ "arno_watchers_lose": [
+  "The watchers take your coins. The horoscope said you'd lose some money."
+ ],
+ "ledger_true_stars": [
+  "The better lens",
+  "Telescope Boy Arno borrowed your coins for a better lens and sold your face with the first look through it."
+ ],
+ "true_stars_rewarded": [
+  "Arno pays you back with interest and a sketch of the woman's face. It looks a lot like Ennis's wedding portrait."
+ ],
+ "true_stars_kept": [
+  "Arno pays you back, to the coin. 'Interest is for people who own banks,' he says."
+ ],
+ "true_stars_arno": {
+  "if": {
+   "not_flag": "q4_true_stars_s1"
+  },
+  "else": "true_stars_arno_favor",
+  "lines": [
+   "Telescope Boy Arno: I saw it. A woman in a star-pattern shawl follows every customer of Ennis. Then the customer has a very bad day.",
+   "Arno: Will you pay me for what I saw? Information on this plateau is never free."
+  ],
+  "action": "set_flag q4_true_stars_s1; quest_stage q4_true_stars 1",
+  "choices": [
+   {
+    "text": "Here, a coin for your trouble.",
+    "action": "trust hs_arno 15"
+   },
+   {
+    "text": "Information should be free.",
+    "action": "trust hs_arno -5 10"
+   }
+  ]
+ },
+ "true_stars_liv_after": [
+  "Liv: My goats eat horoscopes. They've lived very long lives."
+ ],
+ "true_stars_liv": {
+  "if": {
+   "not_flag": "q4_true_stars_s2"
+  },
+  "else": "true_stars_liv_after",
+  "lines": [
+   "Goat Girl Liv: The lady in the star shawl? She walks with Ennis's customers and takes a little bag from each. Then she goes home.",
+   "Liv: Home is Ennis's house. She kisses him at the door. Goats notice things."
+  ],
+  "action": "set_flag q4_true_stars_s2; quest_stage q4_true_stars 2"
+ },
+ "true_stars_wanda_after": [
+  "Wanda: Your stars say: go home. Mine say: so should I."
+ ],
+ "true_stars_wanda_intro": [
+  "Wanda: Your horoscope today: 'an unexpected fight'. I deliver."
+ ],
+ "true_stars_wanda_defeat": [
+  "Wanda: Ennis sent you? Ennis writes them. I only deliver. He picks the customers who owe him money.",
+  "Wanda: He wanted you to stop me so he could hire a younger star. Marriage."
+ ],
+ "own_cairn_wait": [
+  "Ewald: The quarryman at the Fallen Planet cut the stones. And Courier Netta on the Mirror Flats carried the order."
+ ],
+ "own_cairn_reveal": {
+  "if": {
+   "flag": "q4_own_cairn_s2"
+  },
+  "else": "own_cairn_wait",
+  "lines": [
+   "Ewald: Netta talks too much. Yes, I order them. A cairn with no one under it is just a heap.",
+   "Ewald: The House pays per finished cairn. You said no to the House the day you came up the funicular. You just didn't notice.",
+   "Ewald: Come up the ridge. I've a top stone to lay."
+  ],
+  "action": "set_flag q4_own_cairn_reveal; quest_stage q4_own_cairn 3"
+ },
+ "own_cairn": {
+  "if": {
+   "not_flag": "q4_own_cairn_asked"
+  },
+  "else": "own_cairn_reveal",
+  "lines": [
+   "Cairn Builder Ewald: In Whitecairn every cairn is a person who said no to the Gilt House. I build them. Somebody ordered one with your name.",
+   "Ewald: Prepaid, with a nice view. I'd like to know who before I lay the top stone. It's a matter of craft."
+  ],
+  "action": "set_flag q4_own_cairn_asked"
+ },
+ "own_cairn_rolf_after": [
+  "Rolf: I cut stones for the living. It's steadier work than for the dead. The dead don't order twice."
+ ],
+ "own_cairn_rolf": {
+  "if": {
+   "not_flag": "q4_own_cairn_s1"
+  },
+  "else": "own_cairn_rolf_after",
+  "lines": [
+   "Quarryman Rolf: Your cairn stones? Cut last week. Good white stone, very flattering. The order came with tea stains.",
+   "Rolf: Netta brought it. She carries everything on the plateau. Ask her who gave it to her."
+  ],
+  "action": "set_flag q4_own_cairn_s1; quest_stage q4_own_cairn 1"
+ },
+ "own_cairn_netta_after": [
+  "Netta: I carry, I don't read. Reading is how couriers end up under cairns."
+ ],
+ "own_cairn_netta": {
+  "if": {
+   "not_flag": "q4_own_cairn_s2"
+  },
+  "else": "own_cairn_netta_after",
+  "lines": [
+   "Courier Netta: The cairn order? I carried it from Whitecairn to the quarry. From Ewald's own workshop. He orders his cairns himself.",
+   "Netta: Then the Gilt House pays him per cairn finished. Finished means the name is true. He makes them true."
+  ],
+  "action": "set_flag q4_own_cairn_s2; quest_stage q4_own_cairn 2"
+ },
+ "own_cairn_ewald_stone_after": [
+  "Ewald: I build garden walls now. Nobody has to be under them. Usually."
+ ],
+ "own_cairn_ewald_stone_loot": {
+  "if": {
+   "not_flag": "q4_own_cairn_paid"
+  },
+  "else": "own_cairn_ewald_stone_after",
+  "lines": [
+   "You take Ewald's order book. Your page is torn out. Tucked in the spine: a spark drop he was saving for his own cairn."
+  ],
+  "action": "set_flag q4_own_cairn_paid; give_item spark_drop 1; quest_stage q4_own_cairn 4"
+ },
+ "own_cairn_ewald_stone_intro": [
+  "Ewald: Hold still. A cairn is only as straight as the person under it."
+ ],
+ "own_cairn_ewald_stone_defeat": [
+  "Ewald: Toppled. My own heap. That's a first.",
+  "Ewald: Keep the stones. Build something cheerful. A wall, maybe. Walls are cheerful."
+ ],
+ "red_column_wait": [
+  "Wido: Father works the Sunfall Terraces under another name. And the debt clerk in the Gilt Cellars keeps the red pages."
+ ],
+ "red_column_reveal": {
+  "if": {
+   "flag": "q4_red_column_s2"
+  },
+  "else": "red_column_wait",
+  "lines": [
+   "Wido: Father sold his name and left me the bill? ...That's very like him.",
+   "Wido: The collector waits at the top of the Span. Beat him and the line stays empty. Please. I'm too young to be red."
+  ],
+  "action": "set_flag q4_red_column_reveal; quest_stage q4_red_column 3"
+ },
+ "red_column_go": {
+  "if": {
+   "flag": "q4_red_column_reveal"
+  },
+  "else": "red_column_reveal",
+  "lines": [
+   "Wido: The north end of the Lantern Span. He's the one counting the lanterns."
+  ]
+ },
+ "red_column_reward": {
+  "if": {
+   "flag": "q4_red_column_done"
+  },
+  "else": "red_column_go",
+  "lines": [
+   "Wido: He's gone? Thank you! Here, it's all I have. Well. All I have that's not owed."
+  ],
+  "action": "set_flag q4_red_column_paid; give_item remedy 4; quest_stage q4_red_column 4; betrayal hs_red_column"
+ },
+ "red_column_after": {
+  "if": {
+   "flag": "q4_red_column_paid"
+  },
+  "else": "red_column_reward",
+  "lines": [
+   "Wido: I'm learning to keep books. Mostly to see who to blame."
+  ]
+ },
+ "red_column": {
+  "if": {
+   "not_flag": "q4_red_column_asked"
+  },
+  "else": "red_column_after",
+  "lines": [
+   "Clerk's Boy Wido: Veronne's toll ledger has a red column for people who fell. My father is in it. He didn't fall. He waves at me from the vineyards.",
+   "Wido: Find out why he's in the red. The red column pays out to the family. We never got a coin."
+  ],
+  "action": "set_flag q4_red_column_asked"
+ },
+ "red_column_hal_after": [
+  "Hal: I'm dead on paper. It's restful. You should try it."
+ ],
+ "red_column_hal": {
+  "if": {
+   "not_flag": "q4_red_column_s1"
+  },
+  "else": "red_column_hal_after",
+  "lines": [
+   "Vine Guard Hal: Wido sent you? My boy. Yes, I'm in the red column. I sold my name to Veronne to get out of my debts. A dead man owes nothing.",
+   "Hal: The debts had to go somewhere. Ask Margit in the Gilt Cellars where."
+  ],
+  "action": "set_flag q4_red_column_s1; quest_stage q4_red_column 1"
+ },
+ "red_column_margit_after": [
+  "Margit: Red ink, black ink. In the end it's all ink."
+ ],
+ "red_column_margit": {
+  "if": {
+   "not_flag": "q4_red_column_s2"
+  },
+  "else": "red_column_margit_after",
+  "lines": [
+   "Debt Clerk Margit: Hal's debts? Passed to his next of kin, as is proper. The next red line is already written. Wido, son of Hal.",
+   "Margit: The Span collector comes for him tonight. He collects the debt or the debtor. He isn't fussy."
+  ],
+  "action": "set_flag q4_red_column_s2; quest_stage q4_red_column 2"
+ },
+ "red_column_ruprecht_after": [
+  "Ruprecht: I count lanterns. One day I'll count yours."
+ ],
+ "red_column_ruprecht_defeat": [
+  "Ruprecht: Uncollectable. I hate that word.",
+  "Ruprecht: The line stays empty tonight. Lines don't stay empty long on this bridge."
+ ],
+ "red_column_ruprecht_lose": [
+  "Ruprecht: Paid in part. Go and rest. Interest accrues."
+ ],
+ "red_column_ruprecht": {
+  "if": {
+   "not_flag": "q4_red_column_done"
+  },
+  "else": "red_column_ruprecht_after",
+  "lines": [
+   "Ruprecht: Wido, son of Hal? No. You're not on my page. Yet. Let's start a new page."
+  ],
+  "action": "battle hs_red_column"
+ },
+ "red_column_fey_after": [
+  "Fey: I light them, I don't read them."
+ ],
+ "red_column_fey": {
+  "if": {
+   "not_flag": "q4_red_column_clue"
+  },
+  "else": "red_column_fey_after",
+  "lines": [
+   "Lantern Girl Fey: Wido paid Margit last night. To move his line. The next red line will carry the name of whoever helped him.",
+   "Fey: Kids learn fast up here. Mostly from their fathers."
+  ],
+  "action": "set_flag q4_red_column_clue"
+ },
+ "ledger_red_column": [
+  "The red line",
+  "Wido moved his red line in Veronne's toll ledger onto the name of the one who saved him: yours."
+ ],
+ "red_column_caught": [
+  "You tell Wido you know about the line he moved. He goes pale, then red, then counts out coins.",
+  "Wido: I'll move it again. To an empty name. There are plenty under the lanterns. Here. Don't tell Father. He'd be proud."
+ ],
+ "red_column_struck": [
+  "Wido: By the way, the next red line is yours now. I moved mine. The collectors work in pairs."
+ ],
+ "redline_collectors_defeat": [
+  "Span Collector: Uncollectable again. Margit will have to use a rubber."
+ ],
+ "redline_collectors_lose": [
+  "The collectors take a down payment on your red line."
+ ],
+ "brake_file_wait": [
+  "Ulf: The White Stair counters see everyone on the steps at dawn. And Gaspard on the Gilt Span sells files."
+ ],
+ "brake_file_reveal": {
+  "if": {
+   "flag": "q4_brake_file_s2"
+  },
+  "else": "brake_file_wait",
+  "lines": [
+   "Ulf: Gaspard said that? Well. A brake that never breaks pays nothing. A brake that breaks every night pays every morning.",
+   "Ulf: Nobody has died. Yet. That's craftsmanship. And now you're going to tell the family, and I'm going to have to put the brakes on you."
+  ],
+  "action": "set_flag q4_brake_file_reveal; quest_stage q4_brake_file 3"
+ },
+ "brake_file": {
+  "if": {
+   "not_flag": "q4_brake_file_asked"
+  },
+  "else": "brake_file_reveal",
+  "lines": [
+   "Brake Mechanic Ulf: Every night someone files the brakes of the Gilt Funicular. Every morning I fix them. Every morning the family pays me.",
+   "Ulf: It can't go on. Someone will get hurt. Probably a passenger. Find the filer for me."
+  ],
+  "action": "set_flag q4_brake_file_asked"
+ },
+ "brake_file_kuno_after": [
+  "Kuno: Eight hundred and thirteen. Fourteen. Don't make me lose count."
+ ],
+ "brake_file_kuno": {
+  "if": {
+   "not_flag": "q4_brake_file_s1"
+  },
+  "else": "brake_file_kuno_after",
+  "lines": [
+   "Step Counter Kuno: At dawn? One man, every day, coming down from the funicular with metal dust on his sleeves. Step eight hundred and twelve, always.",
+   "Kuno: Gaspard on the Gilt Span sells him a new file every week. Ask Gaspard who."
+  ],
+  "action": "set_flag q4_brake_file_s1; quest_stage q4_brake_file 1"
+ },
+ "brake_file_gaspard_after": [
+  "Gaspard: Files, rasps, nail clippers. Everything for the man who wants things thinner."
+ ],
+ "brake_file_gaspard": {
+  "if": {
+   "not_flag": "q4_brake_file_s2"
+  },
+  "else": "brake_file_gaspard_after",
+  "lines": [
+   "File Seller Gaspard: A file a week, for six years, to the same man. He says he uses them to fix brakes.",
+   "Gaspard: Ulf. Brake mechanic. Lovely man. Never once bought a spanner."
+  ],
+  "action": "set_flag q4_brake_file_s2; quest_stage q4_brake_file 2"
+ },
+ "brake_file_ulf_file_after": [
+  "Ulf: I fix bicycles now. Nobody on the plateau owns a bicycle. It's very peaceful."
+ ],
+ "brake_file_ulf_file_loot": {
+  "if": {
+   "not_flag": "q4_brake_file_paid"
+  },
+  "else": "brake_file_ulf_file_after",
+  "lines": [
+   "You take Ulf's tool roll: three brews and forty-one files, each slightly used."
+  ],
+  "action": "set_flag q4_brake_file_paid; give_item power_brew 3; quest_stage q4_brake_file 4"
+ },
+ "brake_file_ulf_file_defeat": [
+  "Ulf: Brakes failed. Mine, this time.",
+  "Ulf: Tell them, then. They'll hire someone who files twice as fast. Progress."
+ ],
+ "brake_file_ulf_file_lose": [
+  "Ulf: There. You'll stop now. Everyone stops eventually."
+ ],
+ "brake_file_ulf_file": {
+  "if": {
+   "not_flag": "q4_brake_file_done"
+  },
+  "else": "brake_file_ulf_file_loot",
+  "lines": [
+   "Ulf: Hold on to something. This is going to be a steep descent."
+  ],
+  "action": "battle hs_brake_file"
+ },
+ "wedding_blades_wait": [
+  "Leonore: Posy does the flowers, on Cloudshadow Meadow. And the priest rehearses on the White Stair. Both hear everything."
+ ],
+ "wedding_blades_reveal": {
+  "if": {
+   "flag": "q4_wedding_blades_s2"
+  },
+  "else": "wedding_blades_wait",
+  "lines": [
+   "Leonore: The groom hired Dorian for me? Florian! And I thought he wasn't the romantic type.",
+   "Leonore: Yes, I hired myself for him. A bride should be prepared. Now beat Dorian on the Mirror Flats, and Sunday is just a wedding again. Mostly."
+  ],
+  "action": "set_flag q4_wedding_blades_reveal; quest_stage q4_wedding_blades 3"
+ },
+ "wedding_blades_go": {
+  "if": {
+   "flag": "q4_wedding_blades_reveal"
+  },
+  "else": "wedding_blades_reveal",
+  "lines": [
+   "Leonore: The north end of the Mirror Flats. He practises his toast there. And his aim."
+  ]
+ },
+ "wedding_blades_reward": {
+  "if": {
+   "flag": "q4_wedding_blades_done"
+  },
+  "else": "wedding_blades_go",
+  "lines": [
+   "Leonore: Dorian is beaten? Then Florian lives to say 'I do'. Here, a wedding favour. Don't eat the almonds."
+  ],
+  "action": "set_flag q4_wedding_blades_paid; give_item max_tonic 2; quest_stage q4_wedding_blades 4"
+ },
+ "wedding_blades_after": {
+  "if": {
+   "flag": "q4_wedding_blades_paid"
+  },
+  "else": "wedding_blades_reward",
+  "lines": [
+   "Leonore: We're very happy. We sleep in shifts."
+  ]
+ },
+ "wedding_blades": {
+  "if": {
+   "not_flag": "q4_wedding_blades_asked"
+  },
+  "else": "wedding_blades_after",
+  "lines": [
+   "Bride Leonore: I marry Cousin Florian of the Gilt House on Sunday. Gilt weddings have a tradition: somebody always tries to kill the groom.",
+   "Leonore: Find out who's been hired this time. I want him alive at least until the vows. After that, the paperwork is simpler."
+  ],
+  "action": "set_flag q4_wedding_blades_asked"
+ },
+ "wedding_blades_posy_after": [
+  "Posy: Lilies last a week. Gilt marriages, about the same."
+ ],
+ "wedding_blades_posy_favor": {
+  "if": {
+   "not_flag": "favor_hs_wedding_blades"
+  },
+  "else": "wedding_blades_posy_after",
+  "lines": [
+   "Posy: Between us: the groom's cake is poisoned. Carry the bride's cake to his table instead and swap them. Trust me."
+  ],
+  "choices": [
+   {
+    "text": "Swap the cakes",
+    "action": "favor hs_wedding_blades"
+   },
+   {
+    "text": "Leave the cakes"
+   }
+  ]
+ },
+ "wedding_blades_betray": [
+  "The bride's cake was the poisoned one. As you set it down, the bride's guards seize you for trying to poison the groom. Posy waves from the door."
+ ],
+ "posy_guards_defeat": [
+  "Bridal Guard: Fine, you didn't do it. Someone did. Someone always does."
+ ],
+ "posy_guards_lose": [
+  "The guards fine you for cake-related conduct."
+ ],
+ "ledger_wedding_blades": [
+  "The cake swap",
+  "Florist Posy talked you into swapping the wedding cakes, so that you would carry the poison to the groom's table."
+ ],
+ "wedding_blades_rewarded": [
+  "You swap the cakes. The groom's cake really was poisoned; the cousin who baked it eats his own slice by mistake and spends the wedding indisposed. Posy slips you a tip from the bouquet budget."
+ ],
+ "wedding_blades_kept": [
+  "You swap the cakes. Neither was poisoned. Posy shrugs. 'Rumours are cheaper than arsenic.'"
+ ],
+ "wedding_blades_posy": {
+  "if": {
+   "not_flag": "q4_wedding_blades_s1"
+  },
+  "else": "wedding_blades_posy_favor",
+  "lines": [
+   "Florist Posy: The Gilt wedding? Lilies for the bride, lilies for the groom, lilies for the funeral after. I order in bulk.",
+   "Posy: The priest knows who paid for what. Ask him. And tell me: are you with the bride or the groom?"
+  ],
+  "action": "set_flag q4_wedding_blades_s1; quest_stage q4_wedding_blades 1",
+  "choices": [
+   {
+    "text": "With the flowers.",
+    "action": "trust hs_posy 15"
+   },
+   {
+    "text": "With whoever pays.",
+    "action": "trust hs_posy -5 10"
+   }
+  ]
+ },
+ "wedding_blades_aldous_after": [
+  "Aldous: Till death do them part. In this family, it's a schedule."
+ ],
+ "wedding_blades_aldous": {
+  "if": {
+   "not_flag": "q4_wedding_blades_s2"
+  },
+  "else": "wedding_blades_aldous_after",
+  "lines": [
+   "Priest Aldous: Two payments for Sunday. One from the groom's side, for 'the removal of the bride after the vows'. One from the bride's side, for the groom, same terms.",
+   "Aldous: The bride's man is herself. The groom's man is his best man, Dorian, practising on the Mirror Flats. I marry them anyway. It's a living."
+  ],
+  "action": "set_flag q4_wedding_blades_s2; quest_stage q4_wedding_blades 2"
+ },
+ "wedding_blades_dorian_after": [
+  "Dorian: To the happy couple. May they both survive the honeymoon."
+ ],
+ "wedding_blades_dorian_intro": [
+  "Dorian: You're from the bride's side. I can tell. You have the look of a guest who isn't staying for dessert."
+ ],
+ "wedding_blades_dorian_defeat": [
+  "Dorian: Fine. I'll give a toast instead. It was going to be short anyway.",
+  "Dorian: Tell Leonore that Florian paid me with her own dowry. They really are made for each other."
+ ],
+ "salt_saint_wait": [
+  "Kaspar: A pilgrim resting at the Fallen Planet heard the Saint sing. And the tomb is somewhere in the drowned chapel below."
+ ],
+ "salt_saint_reveal": {
+  "if": {
+   "flag": "q4_salt_saint_s2"
+  },
+  "else": "salt_saint_wait",
+  "lines": [
+   "Kaspar: She wants fifty-fifty? She's dead. The dead take what they're given.",
+   "Kaspar: A living saint is just a girl who sings off key. A dead one is a business. You've seen too much of the business.",
+   "Kaspar: Come down the east passage. I'll sell you a pinch for the road."
+  ],
+  "action": "set_flag q4_salt_saint_reveal; quest_stage q4_salt_saint 3"
+ },
+ "salt_saint": {
+  "if": {
+   "not_flag": "q4_salt_saint_asked"
+  },
+  "else": "salt_saint_reveal",
+  "lines": [
+   "Relic Seller Kaspar: Relics of the Salt Saint! She wept salt for the lake, and the lake took her. A pinch heals anything. A bag heals more.",
+   "Kaspar: My stock is running low. Find the Saint's tomb down here and bring me more of her. Sorry, more of her salt."
+  ],
+  "action": "set_flag q4_salt_saint_asked"
+ },
+ "salt_saint_ortrud_after": [
+  "Ortrud: I walked here from Paleshore on my bad knee. The knee says it was not worth it."
+ ],
+ "salt_saint_ortrud": {
+  "if": {
+   "not_flag": "q4_salt_saint_s1"
+  },
+  "else": "salt_saint_ortrud_after",
+  "lines": [
+   "Pilgrim Ortrud: The Salt Saint? I bought a pinch of her for my knee. The knee is the same. The pinch tasted of kitchen.",
+   "Ortrud: But I heard singing under the flats. Someone very alive, very bored, in the drowned chapel."
+  ],
+  "action": "set_flag q4_salt_saint_s1; quest_stage q4_salt_saint 1"
+ },
+ "salt_saint_elsbeth_after": [
+  "Elsbeth: La la laaa. Twelve years of the same hymn. I hate this hymn."
+ ],
+ "salt_saint_elsbeth": {
+  "if": {
+   "not_flag": "q4_salt_saint_s2"
+  },
+  "else": "salt_saint_elsbeth_after",
+  "lines": [
+   "Saint Elsbeth: The Salt Saint? That's me. Alive. Kaspar is my brother. He sells kitchen salt in little bags and I sing down here so pilgrims hear it.",
+   "Elsbeth: We split it sixty-forty. I asked for fifty-fifty. He said saints don't need money. Tell him I'm done being dead."
+  ],
+  "action": "set_flag q4_salt_saint_s2; quest_stage q4_salt_saint 2"
+ },
+ "salt_saint_kaspar_salt_after": [
+  "Kaspar: Elsbeth sings above ground now. Fifty-fifty. Business has never been worse."
+ ],
+ "salt_saint_kaspar_salt_loot": {
+  "if": {
+   "not_flag": "q4_salt_saint_paid"
+  },
+  "else": "salt_saint_kaspar_salt_after",
+  "lines": [
+   "You take Kaspar's relic box: three revival leaves under a false bottom and a receipt for forty sacks of kitchen salt."
+  ],
+  "action": "set_flag q4_salt_saint_paid; give_item revival_leaf 3; quest_stage q4_salt_saint 4"
+ },
+ "salt_saint_kaspar_salt_defeat": [
+  "Kaspar: Fine. Fifty-fifty. Tell her. No, wait, don't tell her I said fine.",
+  "Kaspar: Take my last bags. They're real salt, at least. Kitchen-blessed."
+ ],
+ "salt_saint_kaspar_salt_lose": [
+  "Kaspar: Rest, pilgrim. Salt heals all wounds. It also stings."
+ ],
+ "salt_saint_kaspar_salt": {
+  "if": {
+   "not_flag": "q4_salt_saint_done"
+  },
+  "else": "salt_saint_kaspar_salt_loot",
+  "lines": [
+   "Kaspar: Every saint needs a martyr. You'll do. I'll sell your boots as relics."
+  ],
+  "action": "battle hs_salt_saint"
+ },
+ "agnes": [
+  "Agnes: I sweep the Long Stair top to bottom. The Gilt House sweeps people the same way."
+ ],
+ "agnes_intro": [
+  "Agnes: You're standing in my dust. Fight or shift."
+ ],
+ "agnes_defeat": [
+  "Agnes: Swept. Fair enough."
+ ],
+ "lenz": [
+  "Lenz: I paint the cloud shadows before they move. The Gilt House buys the paintings to prove they own the weather."
+ ],
+ "lenz_intro": [
+  "Lenz: Hold still, you're in the composition. And now you're in a fight."
+ ],
+ "lenz_defeat": [
+  "Lenz: Smudged. I'll call it modern."
+ ],
+ "sigrun": [
+  "Sigrun: I walk the salt where it's thinnest, for practice. Practice for what, nobody asks."
+ ],
+ "sigrun_intro": [
+  "Sigrun: You've got heavy feet. Let's test the salt with you."
+ ],
+ "sigrun_defeat": [
+  "Sigrun: Still standing. Both of us. Disappointing."
+ ],
+ "oswin": [
+  "Oswin: Every brass screw that falls off the Orrery is worth a meal. I've eaten very well this year."
+ ],
+ "oswin_intro": [
+  "Oswin: You're after my screws. Everyone is."
+ ],
+ "oswin_defeat": [
+  "Oswin: Take a screw. Just one. A loose one."
+ ],
+ "bruna": [
+  "Bruna: I tread the Gilt grapes barefoot. The family says it adds character. The doctor says it adds fungus."
+ ],
+ "bruna_intro": [
+  "Bruna: You walked on my vines. Now I walk on you."
+ ],
+ "bruna_defeat": [
+  "Bruna: Pressed flat. That's my job, not yours."
+ ],
+ "hedda": [
+  "Hedda: I inspect the Span ropes. I pass them all. Veronne pays me per pass, the families pay me per fail."
+ ],
+ "hedda_intro": [
+  "Hedda: Let's see how much strain you take."
+ ],
+ "hedda_defeat": [
+  "Hedda: Passed. Don't let it go to your head."
+ ],
+ "thea": [
+  "Thea: The planet fell, the crater stayed. I sell crater by the bucket. Very fashionable in Gildcrest gardens."
+ ],
+ "thea_intro": [
+  "Thea: This hole is mine. Dig your own."
+ ],
+ "thea_defeat": [
+  "Thea: Fine. Have a bucket. Bring it back."
+ ],
+ "moritz": [
+  "Moritz: Isaura says stars come loose under the Orrery. I'm here with a net. So far: two moths and a hat."
+ ],
+ "moritz_intro": [
+  "Moritz: You scared off my star. Fight me."
+ ],
+ "moritz_defeat": [
+  "Moritz: Caught out. Not a star in sight."
+ ],
+ "bendix": [
+  "Bendix: I took a vow of silence. Then a vow of salt. The silence was easier."
+ ],
+ "bendix_intro": [
+  "Bendix: ...!"
+ ],
+ "bendix_defeat": [
+  "Bendix: Ow. There. I said a word. Happy?"
+ ],
+ "wiebke": [
+  "Wiebke: I keep the chapel font full. Halloran's barrels keep it empty. We have an arrangement. It involves shouting."
+ ],
+ "wiebke_intro": [
+  "Wiebke: Are you with the barrels? You look like you're with the barrels."
+ ],
+ "wiebke_defeat": [
+  "Wiebke: Not with the barrels, then. Sorry. Here, holy water. Mostly."
+ ],
+ "tilman": [
+  "Tilman: I guard the Gilt Cellars. Mostly from the family. They drink the good years and refill them with the bad ones."
+ ],
+ "tilman_intro": [
+  "Tilman: Nobody comes down here without a reason. Let's hear yours. In battle."
+ ],
+ "tilman_defeat": [
+  "Tilman: Fair. Mind cask forty-one. It knocks."
+ ],
+ "edeltraud": [
+  "Edeltraud: The strongroom holds the Gilt gold, the Gilt wills and the Gilt grudges. The grudges take the most space."
+ ],
+ "edeltraud_intro": [
+  "Edeltraud: Visitors sign in. In battle."
+ ],
+ "edeltraud_defeat": [
+  "Edeltraud: Signed. Don't touch anything. Especially the wills. They bite."
+ ]
+}

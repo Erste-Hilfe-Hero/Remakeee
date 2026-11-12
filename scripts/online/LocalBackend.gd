@@ -76,7 +76,7 @@ func _init(p_store_path: String = "") -> void:
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
 			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim", "league_reward",
 			"live_invite", "live_list", "live_answer", "live_pick", "live_move", "live_state", "live_emote", "live_forfeit",
-			"live_finish", "live_rematch", "raid_board",
+			"live_rematch", "raid_board",
 			"bund_stats", "bund_settings", "bund_search", "bund_join", "bund_donate", "bund_goal_claim", "bund_board",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
@@ -96,6 +96,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalRaidBund.install(self)
 	# Weekend tournament, watching live duels, top league team (20261113000030_tourney_watch.sql).
 	LocalTourney.install(self)
+	# The referee for live duels, borrowed Spirlings in duels and raids (20261113000040_live_referee.sql).
+	LocalLiveMore.install(self)
 
 func is_local() -> bool:
 	return true
@@ -304,7 +306,10 @@ func _unlocks(uid: String) -> Dictionary:
 func party_max_of(uid: String) -> int:
 	var shop: Variant = (db.users.get(uid, {}) as Dictionary).get("shop", {})
 	var unlocks: Variant = shop.get("unlocks", {}) if shop is Dictionary else {}
-	return config_int("party_max", 5) + (1 if unlocks is Dictionary and int(unlocks.get("team_slot_6", 0)) > 0 else 0)
+	var extra: int = 0
+	for k: String in ["team_slot_6", "team_slot_7"]:
+		extra += 1 if unlocks is Dictionary and int(unlocks.get(k, 0)) > 0 else 0
+	return config_int("party_max", 5) + extra
 
 ## Like public._save_ok: real game limits (team of party_max, Ring 1..save_level_max). Spirlings
 ## have no top ring, so save_level_max is only a sanity bound (Spirling.LEVEL_SANITY, 9999)
@@ -2226,7 +2231,8 @@ static func trade_mon_why(m: Variant) -> String:
 		return "no_spirling"
 	if not str(m.get("held", "")).is_empty():
 		return "holds_item"
-	if gleam_boosted(m) or bool(m.get("core", false)) or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
+	if gleam_boosted(m) or bool(m.get("core", false)) or bool(m.get("shop", false)) or bool(m.get("gift_slot", false)) \
+			or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
 		return "shop_boosted"
 	if bool(m.get("favorite", false)):
 		return "favorite"
@@ -2686,7 +2692,7 @@ func _live_out(d: Dictionary) -> Dictionary:
 	return {"ok": true, "id": int(d.id), "side": side, "state": d.state, "show": (d.show as Array).duplicate(true),
 		"picked": [d.pick[0] != null, d.pick[1] != null], "teams": teams, "seed": d.seed, "round": d.round,
 		"moves": moves, "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
-		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true)}
+		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true), "judging": false}
 
 func _live_new(other: String) -> Dictionary:
 	if parent_off(me(), "live_duel") or parent_off(other, "live_duel"):
@@ -2818,20 +2824,6 @@ func _fn_live_forfeit(a: Dictionary) -> Dictionary:
 	d.state = "done"
 	d.reason = "forfeit"
 	d.winner = 1 - _live_side(d)
-	return _live_out(d)
-
-func _fn_live_finish(a: Dictionary) -> Dictionary:
-	var d: Variant = _live_mine(a)
-	if d == null:
-		return _fail("no_such_duel")
-	var w: int = int(a.get("p_winner", -2))
-	if d.state != "running" or w < -1 or w > 1:
-		return _fail("duel_closed")
-	d.report[_live_side(d)] = w
-	if d.report[0] != null and d.report[1] != null:
-		d.state = "done"
-		d.reason = "played" if int(d.report[0]) == int(d.report[1]) else "disputed"
-		d.winner = int(d.report[0]) if d.reason == "played" else -1
 	return _live_out(d)
 
 func _fn_live_rematch(a: Dictionary) -> Dictionary:

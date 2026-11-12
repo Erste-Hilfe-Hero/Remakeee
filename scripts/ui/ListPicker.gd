@@ -360,11 +360,20 @@ func _link_wrap() -> void:
 	first.focus_neighbor_top = first.get_path_to(last)
 	last.focus_neighbor_bottom = last.get_path_to(first)
 
-## Puts the list back where it was once the rows are laid out, keeping the focused row in view.
+## Puts the list back where it was once the rows are laid out (two frames later), keeping the
+## focused row in view. One-shot connections, not awaits: an await still open when the list is
+## freed logs "Resumed function after await, but class instance is gone".
 func _restore_scroll(key: String, target: Button) -> void:
-	await get_tree().process_frame
-	await get_tree().process_frame
-	if not visible or _title_key != key or not is_instance_valid(target):
+	if is_inside_tree():
+		get_tree().process_frame.connect(_restore_scroll_step.bind(key, target.get_instance_id(), 1), CONNECT_ONE_SHOT)
+
+func _restore_scroll_step(key: String, target_id: int, frames_left: int) -> void:
+	if frames_left > 0:
+		if is_inside_tree():
+			get_tree().process_frame.connect(_restore_scroll_step.bind(key, target_id, frames_left - 1), CONNECT_ONE_SHOT)
+		return
+	var target: Button = instance_from_id(target_id) as Button
+	if not visible or _title_key != key or target == null or not is_instance_valid(target):
 		return
 	_scroll.scroll_vertical = _remembered_scroll[key]
 	_scroll.ensure_control_visible(target)

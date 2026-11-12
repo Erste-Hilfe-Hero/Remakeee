@@ -22,7 +22,7 @@
   "T....~~..T_T",
   "TTTT..TTTT_T",
   "T........T_T",
-  "T..~~....T_T",
+  "T.....~~.T_T",
   "TTT..TTTTT_T",
   "T........T_T",
   "T........T_T",
@@ -69,8 +69,13 @@
     {
      "species": "Fumeregent",
      "level": 95
+    },
+    {
+     "species": "Rookwarden",
+     "level": 95
     }
-   ]
+   ],
+   "wheel": true
   },
   {
    "id": "warden_sabeline",

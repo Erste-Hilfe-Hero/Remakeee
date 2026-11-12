@@ -459,8 +459,8 @@ zero is a bill, never below an empty purse) or the lead Spirling's keepsake; a c
 
 The mandatory Act IV duels add two more: Kaia sold the oasis, and Emrys signed as her witness.
 Trusting answers raise a hidden value and are punished; the chained ones reward a secret kept
-earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises her use enough that
-her later tip (`sable_tip`) turns into an ambush.
+earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises his use enough that
+his later tip (`sable_tip`) turns into an ambush.
 
 **Act IV main goals** (`data/quests.json`, text in `data/dialogue/solenne_main.json`, German in
 `tools/i18n/de_solenne_main.py`). Eight goals run from the Shade Rift to the Wide Rift: `sol_road`

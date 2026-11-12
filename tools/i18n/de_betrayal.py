@@ -46,7 +46,7 @@ T = {
 "The ticking lantern": "Die tickende Laterne",
 "Fenrick Kael gave you a lantern for the crossing. A Ruskweber moth lived inside and wrote down your route.": "Fenrick Kael hat dir eine Laterne für die Überfahrt geschenkt. Darin lebte eine Ruskweber-Motte, die deine Route aufschrieb.",
 "Only someone who had read Fenrick's letter, or listened to Aldra, would have looked.": "Nur wer Fenricks Brief gelesen oder Aldra zugehört hatte, hätte nachgesehen.",
-"Sable Ruskweber leans on a crate as if she owns the quay. She probably owns the crate.": "Sable Ruskweber lehnt an einer Kiste, als gehöre ihr der Kai. Die Kiste gehört ihr vermutlich.",
+"Sable Ruskweber leans on a crate as if he owns the quay. He probably owns the crate.": "Sable Ruskweber lehnt an einer Kiste, als gehöre ihm der Kai. Die Kiste gehört ihm vermutlich.",
 "Sable: Madderby is uphill, darling. My porters carry bags for free.": "Sable: Madderby liegt bergauf, Schätzchen. Meine Träger tragen Taschen umsonst.",
 "Sable: The first trip is always free. It's the second trip that builds character.": "Sable: Der erste Gang ist immer umsonst. Erst der zweite bildet den Charakter.",
 "Take the porters": "Träger nehmen",

@@ -1,0 +1,253 @@
+{
+ "name": "The Brine Catacombs",
+ "region": "halcyra",
+ "biome": "dungeon",
+ "backdrop": "lake",
+ "encounters": "brine_catacombs",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@%%......%%@",
+  "@%%.~~~~.%%@",
+  "@:..~~~~..:@",
+  "@:.S......:@",
+  "@@@.@@@@.@@@",
+  "@::......::@",
+  "_....%%....@",
+  "@::..%%..::@",
+  "@@.@@..@@.@@",
+  "@%%......%%@",
+  "@%%.:::..%%@",
+  "@S...:::..S@",
+  "@@@@@@@@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 0,
+   "y": 7,
+   "to": "mirror_flats",
+   "tx": 10,
+   "ty": 12,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "brine_catacombs@1",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "brine_catacombs@1",
+   "tx": 6,
+   "ty": 8,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "q4_salt_skim_jost",
+   "x": 3,
+   "y": 10,
+   "facing": "right",
+   "dialogue": "halcyra_side/salt_skim_jost",
+   "sprite": "villager",
+   "show_flag": "q4_salt_skim_asked"
+  },
+  {
+   "id": "q4_salt_saint_kaspar",
+   "x": 8,
+   "y": 6,
+   "facing": "left",
+   "dialogue": "halcyra_side/salt_saint",
+   "sprite": "elder",
+   "hide_flag": "q4_salt_saint_reveal"
+  },
+  {
+   "id": "q4_salt_saint_kaspar_salt",
+   "x": 8,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "halcyra_side/salt_saint_kaspar_salt",
+   "sprite": "elder",
+   "show_flag": "q4_salt_saint_reveal"
+  },
+  {
+   "id": "hs_bendix",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "halcyra_side/bendix",
+   "sprite": "villager",
+   "trainer": "Salt Monk Bendix",
+   "intro": "halcyra_side/bendix_intro",
+   "defeat": "halcyra_side/bendix_defeat",
+   "money": 3480,
+   "team": [
+    {
+     "species": "Stiltregent",
+     "level": 85
+    },
+    {
+     "species": "Wadibastion",
+     "level": 86
+    },
+    {
+     "species": "Ergrava",
+     "level": 87
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "halcyra_side/brine_sign"
+  },
+  {
+   "x": 1,
+   "y": 12,
+   "dialogue": "halcyra_side/brine_stencil"
+  },
+  {
+   "x": 10,
+   "y": 12,
+   "dialogue": "halcyra_side/brine_niche"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 3,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_brine_catacombs_1"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "item": "remedy",
+   "count": 2,
+   "flag": "find_brine_catacombs_2"
+  },
+  {
+   "x": 6,
+   "y": 13,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_brine_catacombs_3"
+  }
+ ],
+ "floors": [
+  {
+   "name": "The Brine Catacombs, drowned chapel",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@S.:::::..S@",
+    "@:........:@",
+    "@:.~~..~~.:@",
+    "@..~~..~~..@",
+    "@::......::@",
+    "@...CCCC...@",
+    "@%%......%%@",
+    "@%%......%%@",
+    "@@@@@==@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 9,
+     "to": "brine_catacombs",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 9,
+     "to": "brine_catacombs",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "q4_salt_skim_hanne",
+     "x": 3,
+     "y": 5,
+     "facing": "right",
+     "dialogue": "halcyra_side/salt_skim_hanne",
+     "sprite": "ranger",
+     "show_flag": "q4_salt_skim_s1"
+    },
+    {
+     "id": "q4_salt_saint_elsbeth",
+     "x": 8,
+     "y": 2,
+     "facing": "down",
+     "dialogue": "halcyra_side/salt_saint_elsbeth",
+     "sprite": "tamer_f",
+     "show_flag": "q4_salt_saint_s1"
+    },
+    {
+     "id": "hs_wiebke",
+     "x": 2,
+     "y": 4,
+     "facing": "right",
+     "dialogue": "halcyra_side/wiebke",
+     "sprite": "villager",
+     "trainer": "Font Keeper Wiebke",
+     "intro": "halcyra_side/wiebke_intro",
+     "defeat": "halcyra_side/wiebke_defeat",
+     "money": 3480,
+     "team": [
+      {
+       "species": "Wadibastion",
+       "level": 85
+      },
+      {
+       "species": "Ergrava",
+       "level": 86
+      },
+      {
+       "species": "Caravault",
+       "level": 87
+      }
+     ]
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 1,
+     "dialogue": "halcyra_side/chapel_pews"
+    },
+    {
+     "x": 10,
+     "y": 1,
+     "dialogue": "halcyra_side/chapel_hymns"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 11,
+     "y": 4,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_brine_catacombs_4"
+    },
+    {
+     "x": 0,
+     "y": 7,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_brine_catacombs_5"
+    }
+   ]
+  }
+ ]
+}

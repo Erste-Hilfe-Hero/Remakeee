@@ -334,6 +334,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"battle_speed": "Plays battle animations faster.",
 	"auto_battle": "Wild battles pick moves by themselves.",
 	"bench_lessons": "Spirlings on the bench grow too.",
+	"wild_ward": "No wild Spirlings step out while it is on.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
@@ -410,6 +411,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
 				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
 				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
+				["wild_ward", "Wild Ward: %s" % shop_or("wild_ward", "On" if GameState.wild_ward else "Off")],
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
@@ -487,6 +489,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.auto_battle = not GameState.auto_battle
 		"bench_lessons":
 			GameState.bench_xp = not GameState.bench_xp
+		"wild_ward":
+			GameState.wild_ward = not GameState.wild_ward
 		"damage_preview":
 			GameState.damage_preview = not GameState.damage_preview
 		"bonus_goals":
@@ -827,6 +831,8 @@ static func storage_card(s: Spirling) -> String:
 	if not tr.is_empty():
 		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	lines.append("Keepsake: %s" % (str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else "none"))
+	if EraFeatures.is_unlocked(Kinship.FEATURE):
+		lines.append(Kinship.label(s))
 	var hint: String = keepsake_suggestion(s)
 	if not hint.is_empty():
 		lines.append(hint)

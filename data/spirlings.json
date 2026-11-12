@@ -1600,6 +1600,11 @@
     "to": "Scrivane",
     "rule": "map_pages",
     "value": 6
+   },
+   {
+    "to": "Scrivane",
+    "rule": "kinship",
+    "value": 60
    }
   ],
   "origin": "Crawled out of Mirela's old inkwells in the lighthouse.",
@@ -1731,6 +1736,11 @@
     "to": "Silentra",
     "rule": "echo_streak",
     "value": 10
+   },
+   {
+    "to": "Silentra",
+    "rule": "kinship",
+    "value": 60
    }
   ],
   "origin": "Born from the Hush itself, the silence that fell over Veydal.",
@@ -2449,6 +2459,11 @@
     "to": "Mendlace",
     "rule": "mended",
     "value": "origin"
+   },
+   {
+    "to": "Mendlace",
+    "rule": "kinship",
+    "value": 60
    }
   ],
   "origin": "A spark that jumped from the edge of a Rift.",

@@ -1,0 +1,29 @@
+{
+ "_comment": "nl translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Rang %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Rang %d  %d/30, %d actief%s",
+  "Any language": "Elke taal",
+  "Anyone, at once": "Iedereen, meteen",
+  "Bund board": "Verbondsranglijst",
+  "Bund rank %d (%d renown)": "Verbondsrang %d (%d aanzien)",
+  "Bund rank and week goal": "Verbondsrang en weekdoel",
+  "Donate items...": "Voorwerpen schenken...",
+  "Donated today: %d / %d": "Vandaag geschonken: %d / %d",
+  "Find a bund...": "Zoek een Verbond...",
+  "How many?": "Hoeveel?",
+  "Language and joining...": "Taal en toetreden...",
+  "Language of the bund": "Taal van het Verbond",
+  "No bund found. Found your own!": "Geen Verbond gevonden. Richt er zelf een op!",
+  "No bunds yet.": "Nog geen Verbonden.",
+  "Only after a request": "Alleen na een verzoek",
+  "Take the week reward": "Weekbeloning ophalen",
+  "Thank you! The bund has %d renown now.": "Dank je wel! Het Verbond heeft nu %d aanzien.",
+  "The week goal is not reached yet.": "Het weekdoel is nog niet gehaald.",
+  "Week goal: %d / %d items donated": "Weekdoel: %d / %d voorwerpen geschonken",
+  "Who may join?": "Wie mag erbij?",
+  "You already took this week's reward.": "Je hebt de beloning van deze week al opgehaald.",
+  "You donated all you can today. More tomorrow.": "Je hebt vandaag alles geschonken wat kan. Morgen meer.",
+  "open": "open"
+ }
+}

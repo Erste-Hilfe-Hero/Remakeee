@@ -20,7 +20,7 @@
   "^..^^^^^^^^^",
   "^.........:^",
   "^,,..^....:^",
-  "^,,.......:^",
+  "__,.......:^",
   "^^^^^^^^..^^",
   "^::......::^",
   "^::.S....::^",
@@ -63,6 +63,14 @@
    "tx": 10,
    "ty": 9,
    "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 14,
+   "to": "fallen_planet",
+   "tx": 10,
+   "ty": 10,
+   "facing": "left"
   }
  ],
  "npcs": [
@@ -89,6 +97,90 @@
     {
      "species": "Highhare",
      "level": 87
+    }
+   ]
+  },
+  {
+   "id": "q4_cask_41_albrecht",
+   "x": 4,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "halcyra_side/cask_41_albrecht",
+   "sprite": "elder",
+   "show_flag": "q4_cask_41_s1"
+  },
+  {
+   "id": "q4_true_stars_arno",
+   "x": 8,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "halcyra_side/true_stars_arno",
+   "sprite": "villager",
+   "show_flag": "q4_true_stars_asked"
+  },
+  {
+   "id": "q4_own_cairn_ewald",
+   "x": 2,
+   "y": 20,
+   "facing": "right",
+   "dialogue": "halcyra_side/own_cairn",
+   "sprite": "elder",
+   "hide_flag": "q4_own_cairn_reveal"
+  },
+  {
+   "id": "q4_own_cairn_ewald_stone",
+   "x": 7,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "halcyra_side/own_cairn_ewald_stone_loot",
+   "sprite": "elder",
+   "trainer": "Cairn Builder Ewald",
+   "show_flag": "q4_own_cairn_reveal",
+   "intro": "halcyra_side/own_cairn_ewald_stone_intro",
+   "defeat": "halcyra_side/own_cairn_ewald_stone_defeat",
+   "money": 4450,
+   "team": [
+    {
+     "species": "Obelith",
+     "level": 87
+    },
+    {
+     "species": "Fulgorin",
+     "level": 88
+    },
+    {
+     "species": "Duneshrew",
+     "level": 89
+    }
+   ],
+   "win_flags": [
+    "q4_own_cairn_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "hs_oswin",
+   "x": 4,
+   "y": 16,
+   "facing": "right",
+   "dialogue": "halcyra_side/oswin",
+   "sprite": "villager",
+   "trainer": "Brass Hunter Oswin",
+   "intro": "halcyra_side/oswin_intro",
+   "defeat": "halcyra_side/oswin_defeat",
+   "money": 3520,
+   "team": [
+    {
+     "species": "Obelith",
+     "level": 86
+    },
+    {
+     "species": "Fulgorin",
+     "level": 87
+    },
+    {
+     "species": "Duneshrew",
+     "level": 88
     }
    ]
   }
