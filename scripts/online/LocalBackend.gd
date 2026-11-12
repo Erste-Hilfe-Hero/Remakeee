@@ -80,6 +80,8 @@ func _init(p_store_path: String = "") -> void:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
+	# Bund life and online events (20261112000060_bund_events.sql) live in their own file too.
+	LocalBundEvents.install(self)
 
 func is_local() -> bool:
 	return true
@@ -146,7 +148,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward"]
+	"daily_gift_claim", "league_reward", "bund_goal_claim", "bund_donate", "event_claim", "event_reward"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -1083,6 +1085,9 @@ func _fn_community_add(a: Dictionary) -> Dictionary:
 		var n: int = mini(mini(amount, 5), maxi(int(db.config.get("goal_user_cap", 500)) - int(c.amount), 0))
 		c.amount = int(c.amount) + n
 		g.total = int(g.total) + n
+	# Like the SQL community_add: the step also counts for the bund goal and running festivals.
+	if has_meta("bund_events"):
+		(get_meta("bund_events") as LocalBundEvents).on_contribute(me(), str(a.get("p_kind", "")), amount)
 	return _goal_json(g)
 
 func _fn_community_claim(a: Dictionary) -> Dictionary:

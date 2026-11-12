@@ -56,7 +56,7 @@ static func _run_none(menu: MenuHost, invites: Array) -> bool:
 	var labels: Array[String] = []
 	for i: Dictionary in invites:
 		labels.append(Loc.t("Invitation: %s (%d) from %s") % [BundWords.name_of(int(i.name[0]), int(i.name[1])), int(i.size), str(i.by)])
-	labels.append_array(["Found a bund...", "Ask to join a bund..."] as Array[String])
+	labels.append_array(["Found a bund...", "Ask to join a bund...", "Find a bund..."] as Array[String])
 	var idx: int = await menu.pick_strings("You are not in a bund yet.", labels)
 	if idx < 0:
 		return true
@@ -71,6 +71,9 @@ static func _run_none(menu: MenuHost, invites: Array) -> bool:
 		return false
 	if idx == invites.size():
 		await found(menu)
+		return false
+	if idx == invites.size() + 2:
+		await BundLifeMenu.find(menu)
 		return false
 	var code: String = await CodePrompt.ask(menu, "Friend code of someone in the bund", 8)
 	if code.is_empty():
@@ -120,7 +123,7 @@ static func _run_bund(menu: MenuHost, bund: Dictionary) -> bool:
 	var labels: Array[String] = []
 	for m: Dictionary in members:
 		labels.append(member_line(m))
-	var actions: Array[String] = []
+	var actions: Array[String] = ["Goal, level and gifts"]
 	if staff:
 		actions.append("Invite a Wayfarer...")
 		if not pending.is_empty():
@@ -153,6 +156,8 @@ static func _run_bund(menu: MenuHost, bund: Dictionary) -> bool:
 				elif not got.is_empty():
 					await menu.info(Loc.t("With 3 or more Wayfarers you confirm again after 24 hours, from %s.")
 						% Time.get_datetime_string_from_unix_time(int(got.confirm_from), true))
+		"Goal, level and gifts":
+			await BundLifeMenu.run(menu, role)
 		"Keep the bund":
 			await _call(menu, "bund_keep")
 		"Leave the bund...":
