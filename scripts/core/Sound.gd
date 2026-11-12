@@ -426,6 +426,10 @@ static func entry_in(table: Dictionary, map_id: String, region: String) -> Varia
 ## Battle music [param track] ("battle", "warden") in the variant of the active era, so fights
 ## sound like the era's hardware (battle_era2 to battle_era5).
 func battle_music(track: String) -> String:
+	return era_music(track)
+
+## [param track] in the variant of the active era ("<track>_era<N>", else the plain track).
+func era_music(track: String) -> String:
 	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
 
 ## Music bus effects per era from data/music.json "era_fx": chorus from Era II, a room from
@@ -489,6 +493,8 @@ static func list_sounds(dir: String) -> Array[String]:
 func music(track: String, keep_ambience: bool = false) -> void:
 	if track == "title":
 		ambience("")
+		# The title song follows the era like the battle music (title_era2 to title_era5).
+		track = era_music(track)
 	elif not keep_ambience:
 		duck_ambience(true)
 	if track == current_track and _music.playing:
@@ -502,6 +508,8 @@ func stop_music() -> void:
 ## Plays [param track] once (no loop), then goes back to [param then] (or the track before it).
 func jingle(track: String, then: String = "") -> void:
 	var back: String = then if not then.is_empty() else current_track
+	# Jingles follow the era too (victory_era2 to victory_era5).
+	track = era_music(track)
 	_switch(track, false)
 	_resume_track = back
 	if enabled and _music.stream != null:
