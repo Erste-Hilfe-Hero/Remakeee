@@ -182,23 +182,34 @@ static func goal_tab_rows() -> Array[Dictionary]:
 			out.append({"text": GOAL_TAB_ROWS[tab], "detail": Goals.tab_text(tab)})
 	return out
 
-## The Guide (item 1985): every tip already seen, by topic, to read again.
+const RESET_TIPS_ROW: String = "Show tips again"
+const RESET_TIPS_DONE: String = "Tips are back. Pretend it's your first day."
+
+## The Guide (item 1985): every tip already seen, by topic, to read again. The last row
+## lets every tip show once more (item 1998).
 func run_guide() -> void:
 	while true:
 		var ids: Array[String] = Tips.seen()
 		var names: Array[String] = []
 		for id: String in ids:
 			names.append(Tips.TOPICS[id])
+		names.append(RESET_TIPS_ROW)
 		var idx: int = await pick_strings("Guide", names)
 		if idx < 0:
 			return
+		if idx == ids.size():
+			if await confirm("Show every tip once more, as if you were new?"):
+				Tips.reset()
+				toast(RESET_TIPS_DONE)
+				return
+			continue
 		var lines: Array[String] = []
 		for l: String in Tips.lines_of(ids[idx]):
 			lines.append(Loc.t(l))
 		await info("\n".join(lines))
 
-## [param daily] replaces today's visitor line (tests).
-static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Dictionary]:
+## [param daily] replaces today's visitor line, [param newcomer] GameState.is_newcomer() (tests).
+static func goal_rows(flags: Dictionary, daily: Variant = null, newcomer: Variant = null) -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	var g: Dictionary = QuestLog.current(flags)
 	if not g.is_empty():
@@ -212,6 +223,9 @@ static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Diction
 		rows.append({"text": QuestLog.goal_text(g, flags), "icon": goal_mark(),
 			"hint": Loc.t("Where: %s" % where) if not where.is_empty() else "",
 			"detail": "\n".join(lines)})
+	# New players get a self-ticking "First steps" list right under the main goal (item 1995).
+	if FirstSteps.shows(flags, GameState.is_newcomer() if newcomer == null else bool(newcomer)):
+		rows.append(FirstSteps.row(flags))
 	for s: Dictionary in QuestLog.open_side_goals(flags):
 		rows.append({"text": QuestLog.side_text(s, flags), "hint": Loc.t("Side goal"),
 			"detail": QuestLog.side_text(s, flags)})
@@ -238,6 +252,8 @@ static func goal_mark() -> Texture2D:
 ## Saves without blocking the menu (item 2130) and says honestly where the save is: "Saved."
 ## only once the server has it, otherwise that the phone has it and the server follows (1868).
 func save_now() -> void:
+	# Ticked before saving so the tick is in the save itself.
+	FirstSteps.tick(FirstSteps.SAVED)
 	var ok: bool = SaveManager.save_game()
 	Sound.sfx("save" if ok else "cancel")
 	if not ok:
@@ -252,6 +268,7 @@ func save_now() -> void:
 ## Saves and, if that worked, ends the session (item 1879). Returns true when the menu
 ## should close and the game go back to the title.
 func save_and_quit() -> bool:
+	FirstSteps.tick(FirstSteps.SAVED)
 	if not SaveManager.save_game():
 		Sound.sfx("cancel")
 		toast("Saving failed.", 2.5)
@@ -530,6 +547,7 @@ func run_travel() -> bool:
 	return true
 
 func run_team() -> void:
+	FirstSteps.tick(FirstSteps.TEAM)
 	if GameState.party.size() >= 2:
 		await tip("team_order")
 	while true:
@@ -955,6 +973,7 @@ var _log_region: int = -1
 ## Spirlog: chapters per open region with their progress, search and filters, then the kinds.
 ## A seen kind opens its map-book page (SpirlogPage); unseen ones show as "???".
 func run_spirlog() -> void:
+	FirstSteps.tick(FirstSteps.SPIRLOG)
 	while true:
 		var regions: Array[String] = SpirlogBook.open_regions(GameState.flags)
 		var region: String = regions[_log_region] if _log_region >= 0 and _log_region < regions.size() else ""
