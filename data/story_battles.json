@@ -2101,5 +2101,76 @@
   "win_flags": [
    "ledger_done"
   ]
+ },
+ "well_bailiff": {
+  "trainer": "Well Bailiff Brakka",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 37
+   },
+   {
+    "species": "Cairnhold",
+    "level": 37
+   },
+   {
+    "species": "Duskdigger",
+    "level": 38
+   }
+  ],
+  "ai": 2,
+  "money": 1900,
+  "defeat": "solenne_main/bailiff_defeat",
+  "lose": "solenne_main/bailiff_lose"
+ },
+ "veil_pump_guards": {
+  "trainer": "Veil Pump Guards",
+  "team": [
+   {
+    "species": "Obsidroth",
+    "level": 38
+   },
+   {
+    "species": "Saltspire",
+    "level": 38
+   },
+   {
+    "species": "Kelphound",
+    "level": 38
+   },
+   {
+    "species": "Burinox",
+    "level": 39
+   }
+  ],
+  "ai": 2,
+  "money": 2000,
+  "defeat": "solenne_main/guards_defeat",
+  "lose": "solenne_main/guards_lose"
+ },
+ "guild_proctor": {
+  "trainer": "Guild Proctor Isolde",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 40
+   },
+   {
+    "species": "Silentra",
+    "level": 40
+   },
+   {
+    "species": "Mendlace",
+    "level": 40
+   },
+   {
+    "species": "Solmantle",
+    "level": 41
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "solenne_main/proctor_defeat",
+  "lose": "solenne_main/proctor_lose"
  }
 }

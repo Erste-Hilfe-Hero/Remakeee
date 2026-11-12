@@ -1,5 +1,5 @@
 {
- "_comment": "Story figures and signs per map id, in the map format (plan area 4, scripts/core/StoryPlacements.gd). Area 3 builds the maps; entries for maps that do not exist yet wait until they do.",
+ "_comment": "Story figures and signs per map id, in the map format (plan area 4, scripts/core/StoryPlacements.gd). Area 3 builds the maps; entries for maps that do not exist yet wait until they do. A map can list further arrival scenes under 'on_enter_more' (same format as 'on_enter', checked in order after it).",
  "lighthouse": {
   "signs": [
    {
@@ -1551,6 +1551,15 @@
     "show_flag": "edge_amir_asked",
     "hide_flag": "edge_amir_2"
    }
+  ],
+  "on_enter_more": [
+   {
+    "scene": "a4_north",
+    "if": {
+     "flag": "c4_reckoning_done",
+     "not_flag": "undrawn_reached"
+    }
+   }
   ]
  },
  "gravers_hall": {
@@ -2097,6 +2106,29 @@
     "show_flag": "edge_amir_asked",
     "hide_flag": "edge_amir_3"
    }
+  ],
+  "on_enter_more": [
+   {
+    "scene": "a4_wells",
+    "if": {
+     "flag": [
+      "scene_a4_ochrewell_seen",
+      "rift_tower_sealed"
+     ],
+     "not_flag": "rift_oasis_sealed"
+    }
+   },
+   {
+    "scene": "a4_drought",
+    "if": {
+     "flag": [
+      "scene_a4_wells_seen",
+      "scene_a4_oasis_seen",
+      "rift_oasis_sealed"
+     ],
+     "not_flag": "rift_sun_sealed"
+    }
+   }
   ]
  },
  "oasis_rift": {
@@ -2151,5 +2183,14 @@
     "show_flag": "era2_finale_done"
    }
   ]
+ },
+ "tower_rift": {
+  "on_enter": {
+   "scene": "a4_tower_gate",
+   "if": {
+    "flag": "rift_shade_sealed",
+    "not_flag": "rift_tower_sealed"
+   }
+  }
  }
 }
