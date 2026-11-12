@@ -139,7 +139,7 @@ jobs:
           "$(dirname "$(tools/find_zipalign.sh)")/aapt2" dump xmltree --file AndroidManifest.xml build/android/Chimora-debug.apk > "$RUNNER_TEMP/manifest.txt"
           grep -E 'scheme.*"chimora"' "$RUNNER_TEMP/manifest.txt"
       - name: APK size budget
-        run: tools/apk_budget.sh build/android/Chimora-debug.apk 96
+        run: tools/apk_budget.sh build/android/Chimora-debug.apk 60
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-debug-apk
