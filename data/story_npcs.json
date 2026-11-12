@@ -290,6 +290,16 @@
     "y": 17,
     "dialogue": "corvane_side/feather_2",
     "hide_flag": "feather_2"
+   },
+   {
+    "x": 10,
+    "y": 7,
+    "dialogue": "corvane_stones/stone_1"
+   },
+   {
+    "x": 2,
+    "y": 15,
+    "dialogue": "corvane_stones/stone_2"
    }
   ]
  },
@@ -490,6 +500,16 @@
     "y": 16,
     "dialogue": "corvane_side/feather_4",
     "hide_flag": "feather_4"
+   },
+   {
+    "x": 10,
+    "y": 2,
+    "dialogue": "corvane_stones/stone_3"
+   },
+   {
+    "x": 1,
+    "y": 19,
+    "dialogue": "corvane_stones/stone_4"
    }
   ]
  },
@@ -563,6 +583,16 @@
     "x": 1,
     "y": 4,
     "dialogue": "corvane_side/book_drop"
+   },
+   {
+    "x": 1,
+    "y": 13,
+    "dialogue": "corvane_stones/stone_5"
+   },
+   {
+    "x": 10,
+    "y": 13,
+    "dialogue": "corvane_stones/stone_6"
    }
   ],
   "npcs": [
@@ -725,6 +755,16 @@
     "y": 18,
     "dialogue": "corvane_side/feather_8",
     "hide_flag": "feather_8"
+   },
+   {
+    "x": 10,
+    "y": 15,
+    "dialogue": "corvane_stones/stone_7"
+   },
+   {
+    "x": 1,
+    "y": 22,
+    "dialogue": "corvane_stones/stone_8"
    }
   ],
   "npcs": [
@@ -1174,6 +1214,16 @@
     "y": 23,
     "dialogue": "corvane_side/feather_10",
     "hide_flag": "feather_10"
+   },
+   {
+    "x": 10,
+    "y": 20,
+    "dialogue": "corvane_stones/stone_9"
+   },
+   {
+    "x": 1,
+    "y": 5,
+    "dialogue": "corvane_stones/stone_10"
    }
   ]
  },
@@ -1191,6 +1241,11 @@
    {
     "spot": "veit_diary",
     "dialogue": "corvane/veit_diary"
+   },
+   {
+    "x": 10,
+    "y": 4,
+    "dialogue": "corvane_stones/stone_12"
    }
   ]
  },
@@ -1826,6 +1881,15 @@
     "y": 18,
     "dialogue": "solenne_side/iou_2",
     "show_flag": "veil_factor_beaten"
+   }
+  ]
+ },
+ "root_rift": {
+  "signs": [
+   {
+    "x": 1,
+    "y": 19,
+    "dialogue": "corvane_stones/stone_11"
    }
   ]
  }

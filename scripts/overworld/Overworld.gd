@@ -982,9 +982,10 @@ func _wake_cores() -> void:
 		await say(lines)
 		SaveManager.save_game()
 
-## A cartographer's stone (area 3 items 1084, 1085): counted once, a keepsake at 4, 8 and 12.
+## "marker_stone <n> [region]": a cartographer's stone (area 3 items 1084, 1085, 1312): counted
+## once per region, a keepsake at 4, 8 and 12.
 func _action_marker_stone(args: PackedStringArray, _speaker: NPC) -> void:
-	var res: Dictionary = MarkerStones.visit(int(args[0]) if args.size() > 0 else 0)
+	var res: Dictionary = MarkerStones.visit(int(args[0]) if args.size() > 0 else 0, args[1] if args.size() > 1 else "veydal")
 	if not bool(res.new):
 		return
 	Sound.sfx("confirm")
