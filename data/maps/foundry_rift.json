@@ -1,0 +1,141 @@
+{
+ "name": "Foundry Rift",
+ "region": "vellmarch",
+ "biome": "rift",
+ "backdrop": "ember",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.......|^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^.|......^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.|......|.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "tallowmarket",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "tallowmarket",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "vellmarch/foundry_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Furnace Acolyte Gert",
+   "intro": "vellmarch/foundry_rift_acolyte_intro",
+   "defeat": "vellmarch/foundry_rift_acolyte_defeat",
+   "money": 2280,
+   "team": [
+    {
+     "species": "Smeltmaw",
+     "level": 57
+    },
+    {
+     "species": "Cogwright",
+     "level": 57
+    }
+   ]
+  },
+  {
+   "id": "warden_brannoc",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/warden_brannoc",
+   "sprite": "warden",
+   "trainer": "Warden Brannoc",
+   "warden": "foundry",
+   "team": [
+    {
+     "species": "Smeltmaw",
+     "level": 57
+    },
+    {
+     "species": "Cogwright",
+     "level": 57
+    },
+    {
+     "species": "Smoldrake",
+     "level": 58
+    },
+    {
+     "species": "Cairnhold",
+     "level": 58
+    },
+    {
+     "species": "Calderox",
+     "level": 58
+    }
+   ],
+   "intro": "vellmarch/warden_brannoc_intro",
+   "defeat": "vellmarch/warden_brannoc_defeat",
+   "ai": 3,
+   "money": 5000,
+   "rule": "ember_pulse",
+   "mend_items": [
+    "echo_furnace_heart"
+   ],
+   "rematch_after": "vellmarch_done",
+   "win_flags": [
+    "v2_rift_foundry_sealed",
+    "v2_ch3_done"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "vellmarch/foundry_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "vellmarch/foundry_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "v2_rift_foundry_sealed",
+   "closed": "@"
+  }
+ ]
+}

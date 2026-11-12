@@ -1,0 +1,125 @@
+{
+ "name": "Bellrope Marsh",
+ "region": "vellmarch",
+ "biome": "marsh",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "bellrope_marsh",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T...._..%%%T",
+  "T%%.._...%%T",
+  "T%%..__....T",
+  "T.....__...T",
+  "T..,,..__..T",
+  "T..,,...__.T",
+  "T........_.T",
+  "T%%%....__.T",
+  "T%%%...__..T",
+  "T~~...__...T",
+  "T....__..%%T",
+  "T...__...%%T",
+  "T..__.....%T",
+  "T.__..,,...T",
+  "T._...,,...T",
+  "T.__.......T",
+  "T..__..%%%.T",
+  "T...__.%%%.T",
+  "T~~..__..~~T",
+  "T.....__...T",
+  "T%%....__..T",
+  "T%%.....__.T",
+  "T......__..T",
+  "T.....__...T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "lastlamp",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "cindergate_quay",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "lastlamp",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "cindergate_quay",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "bellwalker",
+   "x": 9,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "vellmarch/bellrope_marsh_bellwalker",
+   "sprite": "villager",
+   "trainer": "Bell Walker Edda",
+   "intro": "vellmarch/bellrope_marsh_bellwalker_intro",
+   "defeat": "vellmarch/bellrope_marsh_bellwalker_defeat",
+   "money": 2400,
+   "team": [
+    {
+     "species": "Scrivane",
+     "level": 60
+    },
+    {
+     "species": "Duskdigger",
+     "level": 60
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_bellrope_marsh_1"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_bellrope_marsh_2"
+  },
+  {
+   "x": 0,
+   "y": 17,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_bellrope_marsh_3"
+  },
+  {
+   "x": 11,
+   "y": 21,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_bellrope_marsh_4"
+  }
+ ]
+}
