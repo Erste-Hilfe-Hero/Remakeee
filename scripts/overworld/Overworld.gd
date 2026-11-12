@@ -275,9 +275,8 @@ func _process(delta: float) -> void:
 	if not rest_note.is_empty():
 		toast.show_note(rest_note)
 	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
-	if DeepLink.route == "event" and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
-		DeepLink.take()
-		open_menu("Goals")
+	if DeepLink.route in ["event", "friend"] and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
+		open_menu("Goals" if DeepLink.take() == "event" else "Invite")
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
@@ -660,8 +659,8 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		return
 	# Encounter Call (item 4838): twice the encounter rate for its steps, then a short note.
 	var call_mult: float = ShopEffects.encounter_mult()
-	if ShopEffects.step_done():
-		toast.show_note(Loc.t("The Encounter Call fades."))
+	for ended: String in ShopEffects.step_kinds_done():
+		toast.show_note(Loc.t(str(ShopEffects.STEP_END_NOTES[ended])))
 	var guard_over: bool = EncounterTable.tick_guard()
 	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over:
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult):
@@ -1445,7 +1444,7 @@ func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	menu.queue_free()
 
 ## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings); [param start] opens one entry
-## first ("Goals" for a chimora://event link, DeepLink.gd).
+## first ("Goals" for a chimora://event link, "Invite" for chimora://friend, DeepLink.gd).
 func open_menu(start: String = "") -> void:
 	if busy:
 		return
@@ -3759,6 +3758,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.warden_weakened = bool(trainer.get("warden_weakened", false))
 	model.gift_items = ShopEffects.battle_gifts(bool(trainer.get("warden", false)), world)
 	model.bond_grace = maxi(ShopEffects.bond_grace(), 1 if GameState.is_newcomer() else 0) if wild else 0
+	model.bond_edge = ShopEffects.bond_edge() if wild else 0.0
 	var items: Variant = trainer.get("items", {})
 	model.foe_items = (items as Dictionary).duplicate() if items is Dictionary else {}
 	var front: Array = trainer.get("front", [1, 1])

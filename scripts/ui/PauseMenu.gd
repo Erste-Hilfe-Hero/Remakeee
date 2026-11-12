@@ -71,6 +71,9 @@ func run() -> void:
 	if open_on == "Goals":
 		open_on = ""
 		await run_goals()
+	elif open_on == "Invite":
+		open_on = ""
+		await run_invite_link()
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
@@ -126,6 +129,15 @@ func run() -> void:
 			"Room":
 				if await run_room():
 					return
+
+## A chimora://friend/<code> link (Online 100 point 55): asks before the invite sends a request.
+func run_invite_link() -> void:
+	var code: String = DeepLink.friend_code
+	DeepLink.friend_code = ""
+	if code.is_empty() or not Online.is_online() or not Online.flag_on("invite"):
+		return
+	if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
+		await FriendsMoreMenu.redeem(self, code)
 
 ## Shows a first-time tip in an info window (menus have no text box).
 func tip(id: String) -> void:
@@ -691,7 +703,8 @@ func _usable_items() -> Array[String]:
 	for id: Variant in GameState.inventory:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
-				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))):
+				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
+				or bool(it.get("unfurl_any", false))):
 			out.append(str(id))
 	return out
 

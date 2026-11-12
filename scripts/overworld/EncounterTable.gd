@@ -85,9 +85,12 @@ static func rate(id: String) -> float:
 static func weight_of(spawn: Dictionary, boost: Array[int]) -> int:
 	# Sighting days (online events, Online 100 point 65) multiply the weight of their species.
 	var w: int = int(spawn.get("weight", 1)) * OnlineEvents.sighting_boost(str(spawn.get("species", "")))
+	var sd: SpirlingData = Database.species(str(spawn.get("species", "")))
+	# A running Lure Scent (pay-to-win step 5, plan point 25) multiplies every rarer kind.
+	if sd != null and sd.rarity != "common":
+		w = roundi(w * ShopEffects.rare_mult())
 	if boost.is_empty():
 		return w
-	var sd: SpirlingData = Database.species(str(spawn.get("species", "")))
 	if sd != null and sd.elements.any(func(e: int) -> bool: return e in boost):
 		return w * Season.BOOST_NUM
 	return w * Season.BOOST_DEN
@@ -122,7 +125,7 @@ static func roll(id: String, rng: RandomNumberGenerator, boost: Array[int] = [],
 				return null
 			var wild := Spirling.new(sd, rng.randi_range(int(s.get("min", 2)), int(s.get("max", 4))), rng)
 			wild.prism = rng.randf() < Spirling.PRISM_CHANCE
-			wild.gleam = GleamRules.roll(rng, GleamRules.chain_for(chain, sd.species_name))
+			wild.gleam = GleamRules.roll(rng, GleamRules.chain_for(chain, sd.species_name), ShopEffects.gleam_mult())
 			return wild
 	return null
 
