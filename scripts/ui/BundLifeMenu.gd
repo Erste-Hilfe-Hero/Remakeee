@@ -23,11 +23,11 @@ static func error_text(r: Dictionary) -> String:
 static func _ok(r: Dictionary) -> bool:
 	return r.ok and r.data is Dictionary and bool(r.data.get("ok", false))
 
-## The bund's level line: "Level 3  xp 260/450".
+## The bund's stage line: "Stage 3  renown 260/450".
 static func level_text(life: Dictionary) -> String:
 	if life.get("next") == null:
-		return Loc.t("Level %d  xp %d (highest level)") % [int(life.level), int(life.xp)]
-	return Loc.t("Level %d  xp %d/%d") % [int(life.level), int(life.xp), int(life.next)]
+		return Loc.t("Stage %d  renown %d (highest stage)") % [int(life.level), int(life.xp)]
+	return Loc.t("Stage %d  renown %d/%d") % [int(life.level), int(life.xp), int(life.next)]
 
 static func reward_text(rw: Dictionary) -> String:
 	return "%s x%d" % [FriendsMenu.item_name(str(rw.get("item", ""))), int(rw.get("count", 1))]
@@ -100,7 +100,7 @@ static func donate(menu: MenuHost, d: Dictionary) -> void:
 	GameState.money = maxi(0, GameState.money + int(r.data.get("money", 0)))
 	SaveManager.save_game()
 	Sound.sfx("coin")
-	await menu.info(Loc.t("Thank you! The bund got %d xp.") % int(r.data.xp))
+	await menu.info(Loc.t("Thank you! The bund got %d renown.") % int(r.data.xp))
 
 static func run_board(menu: MenuHost) -> void:
 	var r: Dictionary = await Online.call_fn("bund_board")
@@ -110,10 +110,10 @@ static func run_board(menu: MenuHost) -> void:
 	var lines: Array[String] = []
 	for row: Dictionary in r.data.get("rows", []):
 		var you: String = "  " + Loc.t("(you)") if bool(row.get("me", false)) else ""
-		lines.append(Loc.t("%d. %s  level %d  %d xp") % [int(row.rank), BundWords.name_of(int(row.name[0]), int(row.name[1])),
+		lines.append(Loc.t("%d. %s  stage %d  %d renown") % [int(row.rank), BundWords.name_of(int(row.name[0]), int(row.name[1])),
 			int(row.level), int(row.xp)] + you)
 	if lines.is_empty():
-		lines.append(Loc.t("No bund has xp this week yet."))
+		lines.append(Loc.t("No bund has renown this week yet."))
 	await menu.info(Loc.t("Bund board of the week") + "\n" + "\n".join(lines))
 
 static func settings(menu: MenuHost, life: Dictionary) -> void:

@@ -332,5 +332,5 @@ func test_menu_texts() -> void:
 	assert_eq(EventsMenu.open_tiers(ev, [25, 50, 75, 100, 150]), [1, 2, 3] as Array[int])
 	ev.mine = 0
 	assert_eq(EventsMenu.open_tiers(ev, [25, 50, 75, 100, 150]), [] as Array[int])
-	assert_eq(BundLifeMenu.level_text({"level": 2, "xp": 215, "next": 250}), "Level 2  xp 215/250")
-	assert_eq(BundLifeMenu.level_text({"level": 20, "xp": 30000, "next": null}), "Level 20  xp 30000 (highest level)")
+	assert_eq(BundLifeMenu.level_text({"level": 2, "xp": 215, "next": 250}), "Stage 2  renown 215/250")
+	assert_eq(BundLifeMenu.level_text({"level": 20, "xp": 30000, "next": null}), "Stage 20  renown 30000 (highest stage)")
