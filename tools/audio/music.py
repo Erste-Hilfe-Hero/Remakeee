@@ -599,3 +599,26 @@ for _era, _spec in _BATTLE_ERA.items():
 for _era in range(2, 6):
     for _base in ("warden", "battle_pinch"):
         EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
+
+# Era versions of the title song and the victory jingle, and of the 12 Era I place songs.
+# A place song's era version is an 8-bar loop: its first four bars, then four bars of its
+# leitmotif quote, so every era keeps the place's tune and the game's motif while the files
+# stay small (no stems: from Era II on the place song plays as one file, without layers).
+PLACE_ERA_BARS = 8
+
+
+def place_era_spec(name: str, era: int) -> dict:
+    spec = dict(MAP_SONGS[name])
+    quotes = spec.pop("quotes", None) or {}
+    spec["chords"] = spec["chords"][:PLACE_ERA_BARS]
+    spec["motifs"] = spec["motifs"][:4]
+    spec["quotes"] = dict(zip(range(4, PLACE_ERA_BARS), [quotes[k] for k in sorted(quotes)][:4]))
+    spec["era"] = era
+    return spec
+
+
+for _era in range(2, 6):
+    for _base in ("title", "victory"):
+        EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
+    for _place in MAP_SONGS:
+        EXTRA_SONGS["%s_era%d" % (_place, _era)] = place_era_spec(_place, _era)
