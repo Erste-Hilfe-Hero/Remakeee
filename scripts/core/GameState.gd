@@ -196,6 +196,8 @@ var play_reminder: bool = true
 var battery_saver: bool = false
 var reduce_motion: bool = false
 var high_contrast: bool = false
+## Colour-blind mode (design items 178, 274, 479): battle bars and matchups use shapes, not colour alone.
+var color_blind: bool = false
 ## Large text with the 7x12 glyph set (item 2042).
 var large_text: bool = false
 ## Day and night tint and encounters on outdoor maps (item 43).
@@ -776,7 +778,7 @@ func settings_to_dict() -> Dictionary:
 		"one_hand": one_hand, "vibration": vibration, "screen_shake": screen_shake,
 		"sound_captions": sound_captions, "text_voice": text_voice,
 		"tips": tips_enabled, "play_reminder": play_reminder, "battery_saver": battery_saver, "reduce_motion": reduce_motion,
-		"high_contrast": high_contrast, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
+		"high_contrast": high_contrast, "color_blind": color_blind, "large_text": large_text, "day_night": day_night, "weather": weather, "minimap": minimap, "language": language}
 
 func settings_from_dict(d: Dictionary) -> void:
 	text_speed = clampi(int(d.get("text_speed", TextSpeed.NORMAL)), 0, TextSpeed.size() - 1) as TextSpeed
@@ -812,6 +814,7 @@ func settings_from_dict(d: Dictionary) -> void:
 	battery_saver = bool(d.get("battery_saver", false))
 	reduce_motion = bool(d.get("reduce_motion", false))
 	high_contrast = bool(d.get("high_contrast", false))
+	color_blind = bool(d.get("color_blind", false))
 	large_text = bool(d.get("large_text", false))
 	day_night = bool(d.get("day_night", true))
 	weather = bool(d.get("weather", true))
