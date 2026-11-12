@@ -244,8 +244,24 @@ const ACT1_END_FLAG: String = "aldo_dock_told"
 
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
-		return Spirling.MAX_LEVEL
-	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), Spirling.MAX_LEVEL)
+		return ring_ceiling()
+	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), ring_ceiling())
+
+## Highest ring a Spirling can grow to now: data/eras.json "ring_caps" of the newest era whose
+## unlock flag is set (Spirling.MAX_LEVEL until Era III opens, Spirling.ERA_MAX_LEVEL with Halcyra).
+func ring_ceiling() -> int:
+	return ring_ceiling_for(flags)
+
+static func ring_ceiling_for(f: Dictionary) -> int:
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(EraManager.ERAS_PATH))
+	var caps: Dictionary = (raw as Dictionary).get("ring_caps", {}) if raw is Dictionary else {}
+	var unlock: Dictionary = EraManager.unlock_flags()
+	var out: int = Spirling.MAX_LEVEL
+	for e: int in range(2, Spirling.MAX_ERA + 1):
+		if not bool(f.get(str(unlock.get(str(e), "")), false)):
+			break
+		out = maxi(out, int(caps.get(str(e), out)))
+	return mini(out, Spirling.ERA_MAX_LEVEL)
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -265,11 +281,11 @@ func seal_rift(rift_id: String) -> bool:
 
 ## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
 ## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
-## After Act I (ACT1_END_FLAG) the cap opens to the full Spirling.MAX_LEVEL (plan 3287), so
+## After Act I (ACT1_END_FLAG) the cap opens to the full ring_ceiling() (plan 3287), so
 ## Master Wayfarers and the endgame use the whole ring range.
 func progress_cap() -> int:
 	if has_flag(ACT1_END_FLAG):
-		return Spirling.MAX_LEVEL
+		return ring_ceiling()
 	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:

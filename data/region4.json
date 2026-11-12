@@ -1,12 +1,12 @@
 {
- "_doc": "Halcyra, the post-game Era IV (Panorama) region (scripts/core/Region4.gd, tests/unit/test_region4.gd). A sunlit high plateau of terraces, white stone and golden roofs, cut by cliffs, stairs and bridges. It opens with the flag in unlock_flag, which is the Era III finale flag of data/eras.json: Era III's own region sets it when its last chapter is done (eras.json finale_flags), so Halcyra chains after Era III without code changes. Its last chapter sets finale_flag, which eras.json turns into era4_finale_done (Era V). Drawn in Era IV: 270x480, 96px sprites, the 2.5D battle stage, tiles in art/era4/tiles/overworld_halcyra.png (tools/art/gen_tiles_halcyra.py, colours in data/region_looks.json). Maps: tools/art/world/halcyra.py builds every town, route, Rift and the Great Orrery from this sheet (pos = cell in world_layout.json region halcyra; route slots = data/encounters.json tables, weights in the stand-in's rarity band). The way in is the Gilt Funicular (world_layout.json line halcyra_funicular) from the Greyreach, running once unlock_flag is set; Era III's last town can add itself as a stop. Encounter slots with species null wait for Halcyra's own Spirlings; until then stand_in names an existing Spirling. Landmarks span several screens (design plan 309). Elements: Halcyra's own new types come with its Spirlings (empty until the chart gets them). Rings 43 to 60: Spirling.MAX_LEVEL is 60 and the wild tables climb at most 4 rings past the table before (WorldValidator.MAX_RING_JUMP). Rift flags are rift_<warden key>_sealed (GameState.seal_rift with the npc's warden key v4_<rift>); chapters 2 to 4 end when their Rift is sealed, chapter 5 when the feast host in Gildcrest is heard out.",
+ "_doc": "Halcyra, the post-game Era IV (Panorama) region (scripts/core/Region4.gd, tests/unit/test_region4.gd). A sunlit high plateau of terraces, white stone and golden roofs, cut by cliffs, stairs and bridges. It opens with the flag in unlock_flag, which is the Era III finale flag of data/eras.json: Era III's own region sets it when its last chapter is done (eras.json finale_flags), so Halcyra chains after Era III without code changes. Its last chapter sets finale_flag, which eras.json turns into era4_finale_done (Era V). Drawn in Era IV: 270x480, 96px sprites, the 2.5D battle stage, tiles in art/era4/tiles/overworld_halcyra.png (tools/art/gen_tiles_halcyra.py, colours in data/region_looks.json). Maps: tools/art/world/halcyra.py builds every town, route, Rift and the Great Orrery from this sheet (pos = cell in world_layout.json region halcyra; route slots = data/encounters.json tables, weights in the stand-in's rarity band). The way in is the Gilt Funicular (world_layout.json line halcyra_funicular) from the Greyreach, running once unlock_flag is set; Era III's last town can add itself as a stop. Encounter slots with species null wait for Halcyra's own Spirlings; until then stand_in names an existing Spirling. Landmarks span several screens (design plan 309). Elements: Halcyra's own new types Gilt and Zenith (Era IV in data/type_chart.json); they enter the Elements enum with Halcyra's Spirlings. Rings 78 to 96 (Spirling.ERA_MAX_LEVEL, data/eras.json ring_caps); the wild tables climb at most 4 rings past the table before within an era (WorldValidator.MAX_RING_JUMP). Rift flags are rift_<warden key>_sealed (GameState.seal_rift with the npc's warden key v4_<rift>); chapters 2 to 4 end when their Rift is sealed, chapter 5 when the feast host in Gildcrest is heard out.",
  "id": "halcyra",
  "name": "Halcyra",
  "era": 4,
  "unlock_flag": "era3_finale_done",
  "finale_flag": "halcyra_done",
  "arrival": {"line": "halcyra_funicular", "from": "greyreach", "to": "brightledge", "text": "The funicular climbs for an hour. Halfway up, the brakeman asks if you have written a will. He is not joking. He sells the paper."},
- "elements": [],
+ "elements": ["GILT", "ZENITH"],
  "towns": [
   {"id": "brightledge", "name": "Brightledge", "pos": [0, 4], "heal": true, "shop": true,
    "text": "The top station. The view is free, the bench costs extra and the railing is a rumour."},
@@ -20,32 +20,32 @@
    "text": "The last town before the edge. The cairns are graves of people who said no to the Gilt House."}
  ],
  "routes": [
-  {"id": "long_stair", "name": "The Long Stair", "pos": [1, 3], "links": ["brightledge", "gildcrest"], "ring": [43, 46], "height": "stairs",
+  {"id": "long_stair", "name": "The Long Stair", "pos": [1, 3], "links": ["brightledge", "gildcrest"], "ring": [78, 81], "height": "stairs",
    "slots": [
    {"slot": "stair_a", "ground": "fern", "weight": 22, "species": null, "stand_in": "Highhare"},
    {"slot": "stair_b", "ground": "scree", "weight": 40, "species": null, "stand_in": "Duneshrew"},
    {"slot": "stair_c", "ground": "fern", "weight": 22, "species": null, "stand_in": "Noonwhist"}]},
-  {"id": "cloudshadow_meadow", "name": "Cloudshadow Meadow", "pos": [3, 1], "links": ["gildcrest", "starwell"], "ring": [47, 50], "height": "terraces",
+  {"id": "cloudshadow_meadow", "name": "Cloudshadow Meadow", "pos": [3, 1], "links": ["gildcrest", "starwell"], "ring": [80, 83], "height": "terraces",
    "slots": [
    {"slot": "meadow_a", "ground": "fern", "weight": 22, "species": null, "stand_in": "Chirrik"},
    {"slot": "meadow_b", "ground": "fern", "weight": 22, "species": null, "stand_in": "Palmop"},
    {"slot": "meadow_c", "ground": "fern", "weight": 22, "species": null, "stand_in": "Hazejel"}]},
-  {"id": "mirror_flats", "name": "Mirror Flats", "pos": [3, 4], "links": ["brightledge", "paleshore"], "ring": [51, 54], "height": "flat",
+  {"id": "mirror_flats", "name": "Mirror Flats", "pos": [3, 4], "links": ["brightledge", "paleshore"], "ring": [82, 85], "height": "flat",
    "slots": [
    {"slot": "mirror_a", "ground": "reeds", "weight": 22, "species": null, "stand_in": "Saltsprig"},
    {"slot": "mirror_b", "ground": "reeds", "weight": 40, "species": null, "stand_in": "Stiltwade"},
    {"slot": "mirror_c", "ground": "scree", "weight": 22, "species": null, "stand_in": "Wadishell"}]},
-  {"id": "orrery_ridge", "name": "Orrery Ridge", "pos": [5, 1], "links": ["starwell", "whitecairn"], "ring": [55, 58], "height": "cliffs",
+  {"id": "orrery_ridge", "name": "Orrery Ridge", "pos": [5, 1], "links": ["starwell", "whitecairn"], "ring": [85, 88], "height": "cliffs",
    "slots": [
    {"slot": "ridge_a", "ground": "scree", "weight": 8, "species": null, "stand_in": "Orrerine"},
    {"slot": "ridge_b", "ground": "scree", "weight": 22, "species": null, "stand_in": "Obelith"},
    {"slot": "ridge_c", "ground": "fern", "weight": 22, "species": null, "stand_in": "Fulgorin"}]},
-  {"id": "sunfall_terraces", "name": "Sunfall Terraces", "pos": [4, 3], "links": ["gildcrest", "paleshore"], "ring": [57, 59], "height": "terraces",
+  {"id": "sunfall_terraces", "name": "Sunfall Terraces", "pos": [4, 3], "links": ["gildcrest", "paleshore"], "ring": [87, 90], "height": "terraces",
    "slots": [
    {"slot": "sunfall_a", "ground": "fern", "weight": 22, "species": null, "stand_in": "Corocub"},
    {"slot": "sunfall_b", "ground": "fern", "weight": 22, "species": null, "stand_in": "Spinnarow"},
    {"slot": "sunfall_c", "ground": "scree", "weight": 22, "species": null, "stand_in": "Bakedil"}]},
-  {"id": "lantern_span", "name": "Lantern Span", "pos": [5, 3], "links": ["paleshore", "whitecairn"], "ring": [58, 60], "height": "bridge",
+  {"id": "lantern_span", "name": "Lantern Span", "pos": [5, 3], "links": ["paleshore", "whitecairn"], "ring": [89, 92], "height": "bridge",
    "slots": [
    {"slot": "span_a", "ground": "scree", "weight": 22, "species": null, "stand_in": "Gyrevult"},
    {"slot": "span_b", "ground": "fern", "weight": 22, "species": null, "stand_in": "Velvessa"},
@@ -66,22 +66,22 @@
   {"id": "gilt_rift", "name": "Gilt Rift", "pos": [2, 1], "near": "gildcrest", "element": "STONE", "warden": "aurek", "flag": "rift_v4_gilt_sealed"}
  ],
  "wardens": [
-  {"id": "isaura", "name": "Warden Isaura", "rift": "orrery_rift", "order": 1, "ring": 52, "money": 8200,
+  {"id": "isaura", "name": "Warden Isaura", "rift": "orrery_rift", "order": 1, "ring": 84, "money": 8200,
    "intro": "I read your stars this morning. They said you lose. I charged them for the reading.",
    "defeat": "The stars were wrong. Do not tell my customers. I have refunds to avoid.",
-   "team": [{"species": "Orrerine", "level": 51}, {"species": "Solmantle", "level": 51}, {"species": "Hazejellith", "level": 52}, {"slot": "isaura_ace", "species": null, "stand_in": "Noonsoral", "level": 52}]},
-  {"id": "halloran", "name": "Warden Halloran", "rift": "salt_rift", "order": 2, "ring": 55, "money": 9000,
+   "team": [{"species": "Orrerine", "level": 83}, {"species": "Solmantle", "level": 83}, {"species": "Hazejellith", "level": 84}, {"slot": "isaura_ace", "species": null, "stand_in": "Noonsoral", "level": 84}]},
+  {"id": "halloran", "name": "Warden Halloran", "rift": "salt_rift", "order": 2, "ring": 88, "money": 9000,
    "intro": "Every grain of salt on these flats is mine. You are standing on my money. Wipe your feet.",
    "defeat": "Fine. Take the Rift. The salt stays. So do the people buried under it.",
-   "team": [{"species": "Saltcrown", "level": 54}, {"species": "Stiltregent", "level": 54}, {"species": "Wadibastion", "level": 55}, {"slot": "halloran_ace", "species": null, "stand_in": "Ergrava", "level": 55}]},
-  {"id": "veronne", "name": "Warden Veronne", "rift": "span_rift", "order": 3, "ring": 58, "money": 9800,
+   "team": [{"species": "Saltcrown", "level": 87}, {"species": "Stiltregent", "level": 87}, {"species": "Wadibastion", "level": 88}, {"slot": "halloran_ace", "species": null, "stand_in": "Ergrava", "level": 88}]},
+  {"id": "veronne", "name": "Warden Veronne", "rift": "span_rift", "order": 3, "ring": 92, "money": 9800,
    "intro": "I collect the toll on the Span. Cash, Spirlings or a little push. Your choice.",
    "defeat": "You crossed. Lovely. The toll for coming back is double, and I keep the bridge.",
-   "team": [{"species": "Velverain", "level": 57}, {"species": "Siroclaw", "level": 57}, {"species": "Gyrevult", "level": 58}, {"slot": "veronne_ace", "species": null, "stand_in": "Habobrax", "level": 58}]},
-  {"id": "aurek", "name": "Warden Aurek", "rift": "gilt_rift", "order": 4, "ring": 60, "money": 12000,
+   "team": [{"species": "Velverain", "level": 91}, {"species": "Siroclaw", "level": 91}, {"species": "Gyrevult", "level": 92}, {"slot": "veronne_ace", "species": null, "stand_in": "Habobrax", "level": 92}]},
+  {"id": "aurek", "name": "Warden Aurek", "rift": "gilt_rift", "order": 4, "ring": 96, "money": 12000,
    "intro": "My family built every roof you admired on the way up. Gold on top, bones in the walls. Welcome home.",
    "defeat": "Take the Rift. My children will take the house from me by dinner anyway. They learned from the best.",
-   "team": [{"species": "Obelordan", "level": 59}, {"species": "Coronarch", "level": 59}, {"species": "Caravault", "level": 59}, {"species": "Helirollax", "level": 60}, {"slot": "aurek_ace", "species": null, "stand_in": "Claspreign", "level": 60}]}
+   "team": [{"species": "Obelordan", "level": 95}, {"species": "Coronarch", "level": 95}, {"species": "Caravault", "level": 95}, {"species": "Helirollax", "level": 96}, {"slot": "aurek_ace", "species": null, "stand_in": "Claspreign", "level": 96}]}
  ],
  "story": [
   {"id": "v4_ch1", "title": "Chapter 1: The Long Way Up", "at": "brightledge", "needs": "era3_finale_done", "sets": "v4_ch1_done",

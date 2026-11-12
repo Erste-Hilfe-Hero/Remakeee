@@ -323,6 +323,45 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 257 | Dusktern | Umbra/Tide | uncommon | striker | steady | 398 | - |
 <!-- /lines:corvane -->
 
+<!-- lines:veydal -->
+## Veydal lines (Act I, tools/art/lines/veydal.py)
+
+Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 258 | Fiddlit | Bloom/Gale | common | vanguard | kindling | 312 | Fiddlehorn (ring 14) |
+| 259 | Fiddlehorn | Bloom/Gale | uncommon | vanguard | kindling | 402 | Fiddlestag (ring 32) |
+| 260 | Fiddlestag | Bloom/Gale | shy | vanguard | kindling | 489 | - |
+| 261 | Gleamgrub | Lumen/Bloom | common | weaver | steady | 314 | Gleamworm (ring 16) |
+| 262 | Gleamworm | Lumen/Bloom | uncommon | weaver | steady | 402 | Gleamwyrm (ring 31) |
+| 263 | Gleamwyrm | Lumen/Bloom | shy | weaver | steady | 459 | - |
+| 264 | Skerrit | Gale/Tide | common | striker | kindling | 270 | Skerrigale (ring 16) |
+| 265 | Skerrigale | Gale/Tide | uncommon | striker | kindling | 406 | Skerrimast (ring 32) |
+| 266 | Skerrimast | Gale/Tide | shy | striker | kindling | 448 | - |
+| 267 | Pinchkin | Tide/Stone | common | bulwark | thick_hide | 323 | Pinchward (ring 12) |
+| 268 | Pinchward | Tide/Stone | uncommon | bulwark | thick_hide | 415 | Pinchcastle (ring 30) |
+| 269 | Pinchcastle | Tide/Stone | shy | bulwark | thick_hide | 501 | - |
+| 270 | Flicklet | Ember/Stone | common | striker | surge | 311 | Flickscale (ring 12) |
+| 271 | Flickscale | Ember/Stone | uncommon | striker | surge | 457 | Flickwyrm (ring 29) |
+| 272 | Flickwyrm | Ember/Stone | shy | striker | surge | 515 | - |
+| 273 | Brookhop | Tide/Bloom | uncommon | kindler | kindling | 317 | Brookbaron (ring 23) |
+| 274 | Brookbaron | Tide/Bloom | shy | kindler | kindling | 417 | - |
+| 275 | Covepup | Tide/Umbra | uncommon | bulwark | thick_hide | 306 | Covewarden (ring 24) |
+| 276 | Covewarden | Tide/Umbra | shy | bulwark | thick_hide | 407 | - |
+| 277 | Gloamhog | Umbra/Bloom | uncommon | vanguard | last_stand | 283 | Gloamquill (ring 22) |
+| 278 | Gloamquill | Umbra/Bloom | shy | vanguard | last_stand | 399 | - |
+| 279 | Glimshell | Lumen/Tide | uncommon | bulwark | steady | 325 | Glimbastion (ring 24) |
+| 280 | Glimbastion | Lumen/Tide | shy | bulwark | steady | 420 | - |
+| 281 | Lichub | Bloom/Stone | uncommon | bulwark | light_sleeper | 319 | Lichenbear (ring 23) |
+| 282 | Lichenbear | Bloom/Stone | shy | bulwark | light_sleeper | 427 | - |
+| 283 | Verdigrub | Volt/Stone | uncommon | striker | slick | 310 | Verdigrand (ring 24) |
+| 284 | Verdigrand | Volt/Stone | shy | striker | slick | 435 | - |
+| 285 | Peallith | Echo/Stone | uncommon | bulwark | thick_hide | 465 | - |
+| 286 | Fernwhisk | Gale/Bloom | uncommon | striker | surge | 421 | - |
+| 287 | Hearthmote | Ember/Volt | uncommon | kindler | kindling | 423 | - |
+<!-- /lines:veydal -->
+
 ## Regional imprints (Ortsprägung, items 218-219)
 
 A Veydal kind that lives long in another region shows a regional form there: other elements, a new palette, its own lore line, without a new Spirlog number. The forms are listed in `variants` per kind in data/spirlings.json; `Spirling.apply_imprint(region)` stores the region id in `Spirling.variant`, and `Spirling.elements()` then uses the imprint's elements. What counts as "living long" in a region is decided once those regions are playable.

@@ -12493,11 +12493,11 @@
   "line_id": "diplit",
   "era": 1,
   "base": {
-   "hp": 84,
-   "atk": 118,
-   "foc": 75,
-   "spd": 127,
-   "def": 68
+   "hp": 77,
+   "atk": 109,
+   "foc": 69,
+   "spd": 117,
+   "def": 63
   },
   "trait": "surge",
   "learnset": {
@@ -15254,5 +15254,1832 @@
    2
   ],
   "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 258,
+  "name": "Fiddlit",
+  "elements": [
+   "BLOOM",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "fiddlit",
+  "era": 1,
+  "base": {
+   "hp": 65,
+   "atk": 81,
+   "foc": 45,
+   "spd": 73,
+   "def": 48
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Root Mend"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Thornwake"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.5 m",
+  "habitat": "Fern stairs, young woods",
+  "lore": "Its little antlers curl like young fern fronds. It hops up the fern stairs.",
+  "origin": "Born where the first fern of spring unrolled.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Fiddlehorn",
+    "rule": "ring",
+    "value": 14
+   }
+  ]
+ },
+ {
+  "dex_id": 259,
+  "name": "Fiddlehorn",
+  "elements": [
+   "BLOOM",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "fiddlit",
+  "era": 1,
+  "base": {
+   "hp": 80,
+   "atk": 94,
+   "foc": 66,
+   "spd": 96,
+   "def": 66
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Graft"
+   ],
+   "6": [
+    "Kite Cut"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Thornwake"
+   ],
+   "38": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.9 m",
+  "habitat": "Fern stairs, young woods",
+  "lore": "Its antlers grow a new curl every spring. Wind sings through them.",
+  "origin": "A Fiddlit that climbed every step of the fern stairs.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Fiddlestag",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 260,
+  "name": "Fiddlestag",
+  "elements": [
+   "BLOOM",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "fiddlit",
+  "era": 1,
+  "base": {
+   "hp": 91,
+   "atk": 114,
+   "foc": 86,
+   "spd": 116,
+   "def": 82
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Bloom Call"
+   ],
+   "6": [
+    "Kite Cut"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Gale Scythe"
+   ],
+   "32": [
+    "Thornwake"
+   ],
+   "44": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.6 m",
+  "habitat": "Fern stairs, young woods",
+  "lore": "When it raises its antlers, the ferns of Veydal rise with it.",
+  "origin": "Grown on the highest fern stair, above the clouds.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 261,
+  "name": "Gleamgrub",
+  "elements": [
+   "LUMEN",
+   "BLOOM"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "gleamgrub",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 41,
+   "foc": 81,
+   "spd": 62,
+   "def": 68
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Beacon Ping",
+    "Candle Ward"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Husk Shed"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "32": [
+    "Prism Burst"
+   ]
+  },
+  "bond_rate": 0.45,
+  "height": "0.9 m",
+  "habitat": "Mossy grottoes",
+  "lore": "It glows softly in damp grottoes. Its light shows where the moss is thickest.",
+  "origin": "Hatched in a drop of dew on grotto moss.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Gleamworm",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 262,
+  "name": "Gleamworm",
+  "elements": [
+   "LUMEN",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "gleamgrub",
+  "era": 1,
+  "base": {
+   "hp": 80,
+   "atk": 60,
+   "foc": 101,
+   "spd": 76,
+   "def": 85
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Beacon Ping",
+    "Dawn Mend"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Root Mend"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "32": [
+    "Omen Bell"
+   ],
+   "38": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "1.7 m",
+  "habitat": "Mossy grottoes",
+  "lore": "It hangs from cave roofs and its spots shine like stars.",
+  "origin": "A Gleamgrub that lit a grotto all winter.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Gleamwyrm",
+    "rule": "ring",
+    "value": 31
+   }
+  ]
+ },
+ {
+  "dex_id": 263,
+  "name": "Gleamwyrm",
+  "elements": [
+   "LUMEN",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "weaver",
+  "line_id": "gleamgrub",
+  "era": 1,
+  "base": {
+   "hp": 104,
+   "atk": 65,
+   "foc": 118,
+   "spd": 83,
+   "def": 89
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Still Thought"
+   ],
+   "6": [
+    "Lichen Lash"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Graft"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "32": [
+    "Omen Bell"
+   ],
+   "38": [
+    "Bloom Burst"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "2.9 m",
+  "habitat": "Mossy grottoes",
+  "lore": "The whole of Mossmere grotto glows when it wakes.",
+  "origin": "Grown in the deepest chamber of Mossmere.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 264,
+  "name": "Skerrit",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "skerrit",
+  "era": 1,
+  "base": {
+   "hp": 49,
+   "atk": 61,
+   "foc": 46,
+   "spd": 70,
+   "def": 44
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Drift Step"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Gale Scythe"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.4 m",
+  "habitat": "Skerries around the lighthouse",
+  "lore": "It nests on the rocks by the lighthouse and screams at storms.",
+  "origin": "Hatched on a skerry the lighthouse beam passes every night.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Skerrigale",
+    "rule": "ring",
+    "value": 16
+   }
+  ]
+ },
+ {
+  "dex_id": 265,
+  "name": "Skerrigale",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "skerrit",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 101,
+   "foc": 67,
+   "spd": 102,
+   "def": 62
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Tailwind"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.8 m",
+  "habitat": "Skerries around the lighthouse",
+  "lore": "It glides on sea wind for hours and dives for silver fish.",
+  "origin": "A Skerrit that followed the lighthouse beam out to sea.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Skerrimast",
+    "rule": "ring",
+    "value": 32
+   }
+  ]
+ },
+ {
+  "dex_id": 266,
+  "name": "Skerrimast",
+  "elements": [
+   "GALE",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "skerrit",
+  "era": 1,
+  "base": {
+   "hp": 79,
+   "atk": 100,
+   "foc": 72,
+   "spd": 129,
+   "def": 68
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Drift Step"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.3 m",
+  "habitat": "Skerries around the lighthouse",
+  "lore": "It perches on mastheads and calls ships home before a storm.",
+  "origin": "Grown on the farthest skerry of the lake.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 267,
+  "name": "Pinchkin",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "pinchkin",
+  "era": 1,
+  "base": {
+   "hp": 79,
+   "atk": 57,
+   "foc": 51,
+   "spd": 44,
+   "def": 92
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Drench"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.3 m",
+  "habitat": "Saltmarsh creeks",
+  "lore": "It pinches toes in the marsh creeks, but only gently.",
+  "origin": "Crawled out of a creek when the tide ran out.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Pinchward",
+    "rule": "ring",
+    "value": 12
+   }
+  ]
+ },
+ {
+  "dex_id": 268,
+  "name": "Pinchward",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "pinchkin",
+  "era": 1,
+  "base": {
+   "hp": 104,
+   "atk": 82,
+   "foc": 64,
+   "spd": 61,
+   "def": 104
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Drench"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.6 m",
+  "habitat": "Saltmarsh creeks",
+  "lore": "Its claws can snap reeds in half. It guards the creek mouths.",
+  "origin": "A Pinchkin that held its creek through a spring flood.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Pinchcastle",
+    "rule": "ring",
+    "value": 30
+   }
+  ]
+ },
+ {
+  "dex_id": 269,
+  "name": "Pinchcastle",
+  "elements": [
+   "TIDE",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "pinchkin",
+  "era": 1,
+  "base": {
+   "hp": 124,
+   "atk": 98,
+   "foc": 81,
+   "spd": 72,
+   "def": 126
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Tide Call"
+   ],
+   "6": [
+    "Pebble Toss"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.0 m",
+  "habitat": "Saltmarsh creeks",
+  "lore": "Its shell is wide as a boat. Marsh birds rest on its back.",
+  "origin": "Grown in the oldest creek of the saltmarsh.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 270,
+  "name": "Flicklet",
+  "elements": [
+   "EMBER",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "flicklet",
+  "era": 1,
+  "base": {
+   "hp": 49,
+   "atk": 78,
+   "foc": 56,
+   "spd": 80,
+   "def": 48
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.5 m",
+  "habitat": "Warm vents, hot stones",
+  "lore": "It flicks its flame tail and darts between hot stones.",
+  "origin": "Hatched from an egg left on a warm vent.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Flickscale",
+    "rule": "ring",
+    "value": 12
+   }
+  ]
+ },
+ {
+  "dex_id": 271,
+  "name": "Flickscale",
+  "elements": [
+   "EMBER",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "flicklet",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 114,
+   "foc": 73,
+   "spd": 128,
+   "def": 64
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.9 m",
+  "habitat": "Warm vents, hot stones",
+  "lore": "Its scales shine like embers. It sleeps in the warmest vent.",
+  "origin": "A Flicklet that basked on the Kindle Vents for a whole year.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Flickwyrm",
+    "rule": "ring",
+    "value": 29
+   }
+  ]
+ },
+ {
+  "dex_id": 272,
+  "name": "Flickwyrm",
+  "elements": [
+   "EMBER",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "flicklet",
+  "era": 1,
+  "base": {
+   "hp": 89,
+   "atk": 117,
+   "foc": 90,
+   "spd": 140,
+   "def": 79
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Ash Call"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.6 m",
+  "habitat": "Warm vents, hot stones",
+  "lore": "When it breathes out, the vents flare up all at once.",
+  "origin": "Grown deep under the Kindle Vents, where the stone glows.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 273,
+  "name": "Brookhop",
+  "elements": [
+   "TIDE",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "brookhop",
+  "era": 1,
+  "base": {
+   "hp": 64,
+   "atk": 55,
+   "foc": 76,
+   "spd": 66,
+   "def": 56
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Tide Call"
+   ],
+   "6": [
+    "Pollen Prick"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Graft"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "32": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.6 m",
+  "habitat": "Brooks and mill ponds",
+  "lore": "It sits on stones in the brook and sings when it rains.",
+  "origin": "Hatched in a mill pond on a rainy morning.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Brookbaron",
+    "rule": "ring",
+    "value": 23
+   }
+  ]
+ },
+ {
+  "dex_id": 274,
+  "name": "Brookbaron",
+  "elements": [
+   "TIDE",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "brookhop",
+  "era": 1,
+  "base": {
+   "hp": 81,
+   "atk": 71,
+   "foc": 100,
+   "spd": 93,
+   "def": 72
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Chill Mist"
+   ],
+   "6": [
+    "Pollen Prick"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Bloom Call"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Thornwake"
+   ],
+   "32": [
+    "Bore Wave"
+   ],
+   "38": [
+    "Bloom Burst"
+   ],
+   "44": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.3 m",
+  "habitat": "Brooks and mill ponds",
+  "lore": "Its song is so deep the pond ripples. The brook frogs follow it.",
+  "origin": "A Brookhop that sang through a whole summer of rain.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 275,
+  "name": "Covepup",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "covepup",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 61,
+   "foc": 51,
+   "spd": 44,
+   "def": 76
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Drench"
+   ],
+   "6": [
+    "Dusk Rake"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Gloom Handoff"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.5 m",
+  "habitat": "Sea caves and coves",
+  "lore": "It plays in the waves of the coves and barks at seagulls.",
+  "origin": "Washed into a sea cave on a stormy night.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Covewarden",
+    "rule": "ring",
+    "value": 24
+   }
+  ]
+ },
+ {
+  "dex_id": 276,
+  "name": "Covewarden",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "covepup",
+  "era": 1,
+  "base": {
+   "hp": 100,
+   "atk": 78,
+   "foc": 60,
+   "spd": 56,
+   "def": 113
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Chill Mist"
+   ],
+   "6": [
+    "Shade Pounce"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Cower Shade"
+   ],
+   "20": [
+    "Undertow"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.1 m",
+  "habitat": "Sea caves and coves",
+  "lore": "It sleeps across cave mouths and keeps the cold sea out.",
+  "origin": "A Covepup that guarded a cove through a winter of storms.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 277,
+  "name": "Gloamhog",
+  "elements": [
+   "UMBRA",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "gloamhog",
+  "era": 1,
+  "base": {
+   "hp": 54,
+   "atk": 71,
+   "foc": 46,
+   "spd": 64,
+   "def": 48
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Gloom Handoff"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Murmur Bite"
+   ],
+   "15": [
+    "Graft"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.5 m",
+  "habitat": "Gloamwood undergrowth",
+  "lore": "It snuffles through the undergrowth at dusk and curls up when startled.",
+  "origin": "Found curled up under a fern at dusk.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Gloamquill",
+    "rule": "ring",
+    "value": 22
+   }
+  ]
+ },
+ {
+  "dex_id": 278,
+  "name": "Gloamquill",
+  "elements": [
+   "UMBRA",
+   "BLOOM"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "vanguard",
+  "line_id": "gloamhog",
+  "era": 1,
+  "base": {
+   "hp": 75,
+   "atk": 105,
+   "foc": 64,
+   "spd": 87,
+   "def": 68
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Hush"
+   ],
+   "6": [
+    "Pollen Prick"
+   ],
+   "10": [
+    "Shade Pounce"
+   ],
+   "15": [
+    "Puffcap Haze"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ],
+   "44": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.1 m",
+  "habitat": "Gloamwood undergrowth",
+  "lore": "Its quills turn dark at night. Owls leave it alone.",
+  "origin": "A Gloamhog that wandered Gloamwood for a hundred nights.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 279,
+  "name": "Glimshell",
+  "elements": [
+   "LUMEN",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "glimshell",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 62,
+   "foc": 54,
+   "spd": 46,
+   "def": 86
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Sunwell Sip"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Undertow"
+   ],
+   "32": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.4 m",
+  "habitat": "Lake shallows below the lantern steps",
+  "lore": "A small light glows on its shell. Fishers row toward it in the fog.",
+  "origin": "Hatched under the lantern steps, where the lamps reach the water.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Glimbastion",
+    "rule": "ring",
+    "value": 24
+   }
+  ]
+ },
+ {
+  "dex_id": 280,
+  "name": "Glimbastion",
+  "elements": [
+   "LUMEN",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "glimshell",
+  "era": 1,
+  "base": {
+   "hp": 105,
+   "atk": 74,
+   "foc": 71,
+   "spd": 55,
+   "def": 115
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Candle Ward"
+   ],
+   "6": [
+    "Spout Jab"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Rip Current"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "0.9 m",
+  "habitat": "Lake shallows below the lantern steps",
+  "lore": "Its light reaches across the lake like a second lighthouse.",
+  "origin": "A Glimshell that kept its light on through the Hush.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 281,
+  "name": "Lichub",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "lichub",
+  "era": 1,
+  "base": {
+   "hp": 76,
+   "atk": 62,
+   "foc": 49,
+   "spd": 42,
+   "def": 90
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Husk Shed"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Thornwake"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.5 m",
+  "habitat": "Lichen rocks, cool caves",
+  "lore": "Lichen grows on its fur. It naps on cool rocks all afternoon.",
+  "origin": "Woke from a lichen-covered stone in a cave.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Lichenbear",
+    "rule": "ring",
+    "value": 23
+   }
+  ]
+ },
+ {
+  "dex_id": 282,
+  "name": "Lichenbear",
+  "elements": [
+   "BLOOM",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "lichub",
+  "era": 1,
+  "base": {
+   "hp": 106,
+   "atk": 83,
+   "foc": 65,
+   "spd": 64,
+   "def": 109
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Bloom Call"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Kelp Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Thorn Volley"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Thornwake"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.1 m",
+  "habitat": "Lichen rocks, cool caves",
+  "lore": "Whole lichen gardens grow on its back. It moves so slowly that moss catches up.",
+  "origin": "A Lichub that slept in one cave for seven years.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 283,
+  "name": "Verdigrub",
+  "elements": [
+   "VOLT",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "verdigrub",
+  "era": 1,
+  "base": {
+   "hp": 53,
+   "atk": 73,
+   "foc": 54,
+   "spd": 86,
+   "def": 44
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.3 m",
+  "habitat": "Old copper mines",
+  "lore": "Its shell is green like old copper. It hums near copper veins.",
+  "origin": "Crawled out of a copper pipe in Copperfold.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Verdigrand",
+    "rule": "ring",
+    "value": 24
+   }
+  ]
+ },
+ {
+  "dex_id": 284,
+  "name": "Verdigrand",
+  "elements": [
+   "VOLT",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "verdigrub",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 103,
+   "foc": 80,
+   "spd": 118,
+   "def": 60
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Grid Lock"
+   ],
+   "6": [
+    "Pebble Toss"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "38": [
+    "Cairn Crash"
+   ],
+   "44": [
+    "Capacitor Crash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "0.7 m",
+  "habitat": "Old copper mines",
+  "lore": "Sparks jump between its horns. Miners use it to find copper.",
+  "origin": "A Verdigrub that slept in the old copper mine for a year.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 285,
+  "name": "Peallith",
+  "elements": [
+   "ECHO",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "bulwark",
+  "line_id": "peallith",
+  "era": 1,
+  "base": {
+   "hp": 110,
+   "atk": 91,
+   "foc": 80,
+   "spd": 62,
+   "def": 122
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Bell Tap"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Resound"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Toll of Ages"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "1.0 m",
+  "habitat": "The Bellstone ruins",
+  "lore": "A stone that rings like a bell. Every sound in the ruins comes back from it.",
+  "origin": "Rang out of the last bell of Bellstone when the tower fell.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 286,
+  "name": "Fernwhisk",
+  "elements": [
+   "GALE",
+   "BLOOM"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "striker",
+  "line_id": "fernwhisk",
+  "era": 1,
+  "base": {
+   "hp": 67,
+   "atk": 104,
+   "foc": 71,
+   "spd": 113,
+   "def": 66
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Kelp Lash"
+   ],
+   "10": [
+    "Kite Cut"
+   ],
+   "15": [
+    "Puffcap Haze"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Thorn Volley"
+   ],
+   "32": [
+    "Gale Scythe"
+   ],
+   "38": [
+    "Wildgrowth Crash"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.8 m",
+  "habitat": "Windy fern slopes",
+  "lore": "It races through the ferns so fast that only the swaying fronds show where it went.",
+  "origin": "Born in a gust that ran up the fern slopes.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 287,
+  "name": "Hearthmote",
+  "elements": [
+   "EMBER",
+   "VOLT"
+  ],
+  "rarity": "uncommon",
+  "region": "veydal",
+  "role": "kindler",
+  "line_id": "hearthmote",
+  "era": 1,
+  "base": {
+   "hp": 86,
+   "atk": 69,
+   "foc": 102,
+   "spd": 91,
+   "def": 75
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Heat Haze"
+   ],
+   "6": [
+    "Siphon Spark"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Spark Call"
+   ],
+   "20": [
+    "Brazier Pulse"
+   ],
+   "26": [
+    "Arc Bolt"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Short Circuit"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "Warm vents, old hearths",
+  "lore": "A spark that hums. It drifts to any hearth that has gone cold and lights it again.",
+  "origin": "Jumped out of a vent when lightning struck the hot stones.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
  }
 ]

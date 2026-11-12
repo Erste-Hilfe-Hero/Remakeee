@@ -64,15 +64,15 @@
    "team": [
     {
      "species": "Solmantle",
-     "level": 50
+     "level": 82
     },
     {
      "species": "Orrerine",
-     "level": 50
+     "level": 82
     },
     {
      "species": "Noonwhist",
-     "level": 51
+     "level": 83
     }
    ]
   },
@@ -88,19 +88,19 @@
    "team": [
     {
      "species": "Orrerine",
-     "level": 51
+     "level": 83
     },
     {
      "species": "Solmantle",
-     "level": 51
+     "level": 83
     },
     {
      "species": "Hazejellith",
-     "level": 52
+     "level": 84
     },
     {
      "species": "Noonsoral",
-     "level": 52
+     "level": 84
     }
    ],
    "intro": "orrery_rift/isaura_intro",

@@ -64,15 +64,15 @@
    "team": [
     {
      "species": "Saltcrown",
-     "level": 53
+     "level": 86
     },
     {
      "species": "Stiltregent",
-     "level": 53
+     "level": 86
     },
     {
      "species": "Wadishell",
-     "level": 54
+     "level": 87
     }
    ]
   },
@@ -88,19 +88,19 @@
    "team": [
     {
      "species": "Saltcrown",
-     "level": 54
+     "level": 87
     },
     {
      "species": "Stiltregent",
-     "level": 54
+     "level": 87
     },
     {
      "species": "Wadibastion",
-     "level": 55
+     "level": 88
     },
     {
      "species": "Ergrava",
-     "level": 55
+     "level": 88
     }
    ],
    "intro": "salt_rift/halloran_intro",

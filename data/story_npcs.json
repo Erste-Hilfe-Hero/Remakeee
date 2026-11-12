@@ -290,6 +290,16 @@
     "y": 17,
     "dialogue": "corvane_side/feather_2",
     "hide_flag": "feather_2"
+   },
+   {
+    "x": 10,
+    "y": 7,
+    "dialogue": "corvane_stones/stone_1"
+   },
+   {
+    "x": 2,
+    "y": 15,
+    "dialogue": "corvane_stones/stone_2"
    }
   ]
  },
@@ -490,6 +500,16 @@
     "y": 16,
     "dialogue": "corvane_side/feather_4",
     "hide_flag": "feather_4"
+   },
+   {
+    "x": 10,
+    "y": 2,
+    "dialogue": "corvane_stones/stone_3"
+   },
+   {
+    "x": 1,
+    "y": 19,
+    "dialogue": "corvane_stones/stone_4"
    }
   ]
  },
@@ -570,6 +590,16 @@
     "x": 1,
     "y": 4,
     "dialogue": "corvane_side/book_drop"
+   },
+   {
+    "x": 1,
+    "y": 13,
+    "dialogue": "corvane_stones/stone_5"
+   },
+   {
+    "x": 10,
+    "y": 13,
+    "dialogue": "corvane_stones/stone_6"
    }
   ],
   "npcs": [
@@ -735,6 +765,16 @@
     "y": 18,
     "dialogue": "corvane_side/feather_8",
     "hide_flag": "feather_8"
+   },
+   {
+    "x": 10,
+    "y": 15,
+    "dialogue": "corvane_stones/stone_7"
+   },
+   {
+    "x": 1,
+    "y": 22,
+    "dialogue": "corvane_stones/stone_8"
    }
   ],
   "npcs": [
@@ -981,8 +1021,8 @@
    },
    {
     "id": "corbin",
-    "x": 8,
-    "y": 4,
+    "x": 3,
+    "y": 8,
     "facing": "down",
     "dialogue": "corvane_side/corbin",
     "sprite": "elder",
@@ -1201,6 +1241,16 @@
     "dialogue": "edge_camp/heider_drop",
     "show_flag": "edge_heider_asked",
     "hide_flag": "edge_heider_1"
+   },
+   {
+    "x": 10,
+    "y": 20,
+    "dialogue": "corvane_stones/stone_9"
+   },
+   {
+    "x": 1,
+    "y": 5,
+    "dialogue": "corvane_stones/stone_10"
    }
   ]
  },
@@ -1232,6 +1282,11 @@
     "dialogue": "edge_camp/lejla_stone",
     "show_flag": "edge_lejla_1",
     "hide_flag": "edge_lejla_woke"
+   },
+   {
+    "x": 10,
+    "y": 4,
+    "dialogue": "corvane_stones/stone_12"
    }
   ],
   "on_enter": {
@@ -1915,8 +1970,8 @@
    },
    {
     "id": "mags",
-    "x": 3,
-    "y": 4,
+    "x": 4,
+    "y": 5,
     "facing": "down",
     "dialogue": "solenne_side/mags",
     "sprite": "elder",
@@ -1935,7 +1990,7 @@
    },
    {
     "id": "saffi",
-    "x": 9,
+    "x": 10,
     "y": 14,
     "facing": "left",
     "dialogue": "solenne_side/saffi",
@@ -1965,8 +2020,8 @@
    },
    {
     "id": "kaia_town",
-    "x": 8,
-    "y": 4,
+    "x": 7,
+    "y": 5,
     "facing": "down",
     "dialogue": "solenne_side/kaia_town",
     "sprite": "warden",
@@ -2052,5 +2107,14 @@
     "not_flag": "rift_sun_sealed"
    }
   }
+ },
+ "root_rift": {
+  "signs": [
+   {
+    "x": 1,
+    "y": 19,
+    "dialogue": "corvane_stones/stone_11"
+   }
+  ]
  }
 }

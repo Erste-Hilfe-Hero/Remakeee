@@ -146,6 +146,7 @@ func _ready() -> void:
 	player.sprite_style = GameState.tamer_sprite()
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
 	VirtualPad.set_wanted(true)
+	DeepLink.poll()
 	if not GameState.has_flag("got_starter"):
 		busy = true
 		player.frozen = true
@@ -273,6 +274,10 @@ func _process(delta: float) -> void:
 	var rest_note: String = PlayReminder.tick(delta)
 	if not rest_note.is_empty():
 		toast.show_note(rest_note)
+	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
+	if DeepLink.route == "event" and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
+		DeepLink.take()
+		open_menu("Goals")
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
@@ -1017,9 +1022,10 @@ func _wake_cores() -> void:
 		await say(lines)
 		SaveManager.save_game()
 
-## A cartographer's stone (area 3 items 1084, 1085): counted once, a keepsake at 4, 8 and 12.
+## "marker_stone <n> [region]": a cartographer's stone (area 3 items 1084, 1085, 1312): counted
+## once per region, a keepsake at 4, 8 and 12.
 func _action_marker_stone(args: PackedStringArray, _speaker: NPC) -> void:
-	var res: Dictionary = MarkerStones.visit(int(args[0]) if args.size() > 0 else 0)
+	var res: Dictionary = MarkerStones.visit(int(args[0]) if args.size() > 0 else 0, args[1] if args.size() > 1 else "veydal")
 	if not bool(res.new):
 		return
 	Sound.sfx("confirm")
@@ -1438,8 +1444,9 @@ func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	await menu.run_storage()
 	menu.queue_free()
 
-## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings).
-func open_menu() -> void:
+## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings); [param start] opens one entry
+## first ("Goals" for a chimora://event link, DeepLink.gd).
+func open_menu(start: String = "") -> void:
 	if busy:
 		return
 	busy = true
@@ -1451,6 +1458,7 @@ func open_menu() -> void:
 	menu.current_map = map.id
 	menu.room_puzzle = _world.has_puzzle()
 	menu.can_undo = _world.can_undo()
+	menu.open_on = start
 	_ui.add_child(menu)
 	# A page turned open, and folded shut when it closes (item 2509).
 	Sound.sfx("page_open")
@@ -1611,6 +1619,8 @@ func photo_mode() -> void:
 
 ## Android back: opens the pause menu in the world, works like B everywhere else (item 1787).
 func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_RESUMED:
+		DeepLink.poll()
 	if what != NOTIFICATION_WM_GO_BACK_REQUEST or not is_inside_tree():
 		return
 	if not busy and _photo == null and player != null and not player.moving:
@@ -2269,6 +2279,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The feather lifts and points at the ceiling.", "The last feather rises. Stone scrapes, and the stair opens!"],
 	"valve": ["The pipes gurgle along happily. The stair stays dry.", "The valve screams, and every pipe slams shut again. Start over.",
 		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
+	"lens": ["The lenses send the light up the stair. It stays lit.", "The lens cracks the light into rainbows, and every lens swings back. Start over.",
+		"The lens turns. A spot of sun crawls up the wall.", "The last lens turns, the light hits the stair, and the glass door melts aside!"],
 }
 
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
@@ -3212,7 +3224,7 @@ func after_tamer_win(n: NPC) -> void:
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
 			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
-		if GameState.level_cap() < Spirling.MAX_LEVEL:
+		if GameState.level_cap() < GameState.ring_ceiling():
 			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
 		# The Warden's thanks for the mend (the Rifts of 2026-11): an Echo Crystal with its art.

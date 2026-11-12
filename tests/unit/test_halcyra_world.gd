@@ -135,7 +135,7 @@ func test_each_rift_warden_seals_the_flag_the_story_waits_on() -> void:
 		for i: int in mini(team.size(), (w.team as Array).size()):
 			assert_eq(str(team[i].species), Region4.slot_species(w.team[i]), str(r.warden))
 			assert_eq(int(team[i].level), int(w.team[i].level), str(r.warden))
-			assert_lte(int(team[i].level), Spirling.MAX_LEVEL)
+			assert_lte(int(team[i].level), Spirling.ERA_MAX_LEVEL)
 
 func test_rift_doors_open_chapter_by_chapter() -> void:
 	# Each Rift's road out of its town is shut until the chapter before it is done.

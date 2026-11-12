@@ -36,8 +36,8 @@ out=addons/chimora_storekit/bin
 fw="$out/ChimoraStoreKit.framework"
 rm -rf "$out" && mkdir -p "$fw"
 xcrun -sdk iphoneos swiftc -target "arm64-apple-ios$MIN_IOS" -sdk "$SDK" -swift-version 5 -O -emit-library \
-	-module-name ChimoraStoreKit "$src/ChimoraStoreKit.swift" "$work/chimora_storekit.o" \
-	-Xlinker "$lib" -lc++ -framework StoreKit \
+	-module-name ChimoraStoreKit "$src/ChimoraStoreKit.swift" "$src/ChimoraLinks.swift" "$work/chimora_storekit.o" \
+	-Xlinker "$lib" -lc++ -framework StoreKit -framework UIKit \
 	-Xlinker -install_name -Xlinker "@rpath/ChimoraStoreKit.framework/ChimoraStoreKit" -o "$fw/ChimoraStoreKit"
 nm -gU "$fw/ChimoraStoreKit" | grep -q chimora_storekit_init || { echo "entry symbol missing"; exit 1; }
 cat > "$fw/Info.plist" <<PLIST

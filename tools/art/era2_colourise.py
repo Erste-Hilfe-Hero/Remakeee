@@ -48,8 +48,8 @@ def shades(im: Image.Image) -> list:
     return out
 
 
-def recolour(im: Image.Image, pal_at) -> Image.Image:
-    """pal_at(x, y) -> list of 4 rgb tuples."""
+def recolour(im: Image.Image, pal_at, ink: dict = INK) -> Image.Image:
+    """pal_at(x, y) -> list of 4 rgb tuples. [ink] maps a source colour to its shade 0..3."""
     im = im.convert("RGBA")
     w, h = im.size
     px = im.load()
@@ -61,7 +61,7 @@ def recolour(im: Image.Image, pal_at) -> Image.Image:
             if a == 0:
                 op[x, y] = (0, 0, 0, 0)
                 continue
-            op[x, y] = pal_at(x, y)[INK[(r, g, b)]] + (a,)
+            op[x, y] = pal_at(x, y)[ink[(r, g, b)]] + (a,)
     return out
 
 
@@ -110,6 +110,17 @@ def build() -> None:
         p = [rgb(c) for c in PAL["elements"][PAL["fx"][os.path.basename(f).split("_")[0]]]]
         save(recolour(Image.open(f), lambda x, y: p), "fx/" + os.path.basename(f))
     save(colour_atlas(Image.open(os.path.join(SRC, "tiles", "overworld.png")).convert("RGBA")), "tiles/overworld.png")
+    for f in sorted(glob.glob(os.path.join(SRC, "landmarks", "*.png"))):
+        name = os.path.basename(f)[:-4]
+        p = [rgb(c) for c in PAL["tiles"][PAL["landmarks"][name]]]
+        save(recolour(Image.open(f), lambda x, y: p, act_inks(name.split("_")[0])), "landmarks/" + name + ".png")
+
+
+def act_inks(region: str) -> dict:
+    """Shade index per colour of an act's own Era I inks (gen_landmarks.py draws in them)."""
+    looks = json.load(open(os.path.join(ROOT, "data", "region_looks.json"), encoding="utf-8"))["regions"]
+    inks = looks[region]["palette"] if region in looks else PAL["ink"]
+    return {rgb(h): i for i, h in enumerate(inks)}
 
 
 def colour_atlas(im: Image.Image) -> Image.Image:

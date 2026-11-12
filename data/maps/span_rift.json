@@ -64,15 +64,15 @@
    "team": [
     {
      "species": "Velverain",
-     "level": 56
+     "level": 90
     },
     {
      "species": "Siroclaw",
-     "level": 56
+     "level": 90
     },
     {
      "species": "Gyrevult",
-     "level": 57
+     "level": 91
     }
    ]
   },
@@ -88,19 +88,19 @@
    "team": [
     {
      "species": "Velverain",
-     "level": 57
+     "level": 91
     },
     {
      "species": "Siroclaw",
-     "level": 57
+     "level": 91
     },
     {
      "species": "Gyrevult",
-     "level": 58
+     "level": 92
     },
     {
      "species": "Habobrax",
-     "level": 58
+     "level": 92
     }
    ],
    "intro": "span_rift/veronne_intro",

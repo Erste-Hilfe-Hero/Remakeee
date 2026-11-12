@@ -83,7 +83,7 @@ func test_slots_feed_the_route_tables() -> void:
 	for r: Dictionary in _d.routes:
 		assert_gte(int(r.ring[0]), last, "%s ring climbs" % r.id)
 		last = int(r.ring[0])
-		assert_lte(int(r.ring[1]), Spirling.MAX_LEVEL, "%s ring" % r.id)
+		assert_lte(int(r.ring[1]), Spirling.ERA_MAX_LEVEL, "%s ring" % r.id)
 		var spawns: Array = EncounterTable.table(str(r.id)).get("spawns", [])
 		assert_eq(spawns.size(), (r.slots as Array).size(), "%s table has one spawn per slot" % r.id)
 		for i: int in mini(spawns.size(), (r.slots as Array).size()):

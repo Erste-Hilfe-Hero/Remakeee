@@ -189,16 +189,20 @@ const MIN_TABLE_WEIGHT: int = 50
 
 ## Encounter balance (items 1109, 1110, 1114): grounds are known names, weights add up to at
 ## least 50, the base rate fits the kind of place, and sorted by their lowest ring no table
-## jumps more than 4 rings past the one before it.
+## jumps more than 4 rings past the one before it. Each era's regions climb on their own:
+## a post-game region (Halcyra, rings 78 to 96) starts where its era starts, not 4 rings past
+## the story's last table.
 static func check_table_balance(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
 	var places: Dictionary = load_layout().get("maps", {})
 	var kind_of: Dictionary = {}
+	var era_of: Dictionary = {}
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null or m.encounter_table.is_empty():
 			continue
 		var place: String = layout_place(places, id)
 		kind_of[m.encounter_table] = str((places.get(place, {}) as Dictionary).get("kind", ""))
+		era_of[m.encounter_table] = EraManager.region_era(m.region)
 	var mins: Array = []
 	for t: String in EncounterTable.table_ids():
 		if t.begins_with("_"):
@@ -219,9 +223,12 @@ static func check_table_balance(errors: PackedStringArray, map_ids: PackedString
 		if low < 999:
 			mins.append([low, t])
 	mins.sort()
-	for i: int in range(1, mins.size()):
-		if int(mins[i][0]) - int(mins[i - 1][0]) > MAX_RING_JUMP:
-			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][1], mins[i][0], MAX_RING_JUMP, mins[i - 1][1], mins[i - 1][0]])
+	var last: Dictionary = {}
+	for e: Array in mins:
+		var era: int = int(era_of.get(e[1], EraManager.Era.INK))
+		if last.has(era) and int(e[0]) - int(last[era][0]) > MAX_RING_JUMP:
+			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [e[1], e[0], MAX_RING_JUMP, last[era][1], last[era][0]])
+		last[era] = e
 
 ## Hidden finds (area 3 items 1080, 1083): each one is reachable, gives a real item from
 ## data/items.json and has a flag no other find uses.
