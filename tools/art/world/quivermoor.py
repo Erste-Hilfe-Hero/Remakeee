@@ -146,7 +146,7 @@ WINCH = (3, 9)            # the winch man on the Mossgate pier
 ROPE_MOSSGATE = (2, 9)    # where the basket sets you down
 ROPE_GREYREACH = (7, 7)   # until Halcyra's Whitecairn exists
 ROPE_WHITECAIRN = (6, 12)
-SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
 FINDS = ["max_tonic", "revival_leaf", "strong_tonic", "remedy", "wake_bell"]
 
 TOWN_TEXT = {
@@ -445,6 +445,18 @@ def species_table():
 SPECIES = species_table()
 
 
+def third_kind(names, pool):
+    """First kind of [pool] not yet in [names] that keeps the team within three elements, else a
+    second of the first kind (one ring lower, so the team never repeats a Spirling)."""
+    els = set()
+    for sp in names:
+        els.update(SPECIES[sp]["elements"])
+    for sp in pool:
+        if sp not in names and len(els | set(SPECIES[sp]["elements"])) <= 3:
+            return sp
+    return names[0]
+
+
 def check_team(who, crew):
     els = set()
     for e in crew:
@@ -486,10 +498,16 @@ def route(mid):
         names = []
         for kind, idx in zip(picks[::2], picks[1::2]):
             names.append(slot_species(r["slots"][idx]) if kind == "s" else fills[idx])
-        crew = check_team(mid + " " + key, [{"species": s, "level": hi - (1 if n == 0 and i == 0 else 0)} for i, s in enumerate(names)])
+        extra = {}
+        if n == 1:
+            # Triple battles (era function triple_battles, Era V, docs/ERA_FUNCTIONS.md): the second
+            # Wayfarer of each road sends three at once, the third a kind of the road it lacks.
+            names.append(third_kind(names, [slot_species(sl) for sl in r["slots"]] + fills))
+            extra["front"] = [3, 3]
+        crew = check_team(mid + " " + key, [{"species": s, "level": hi - (1 if (n == 0 and i == 0) or s in names[:i] else 0)} for i, s in enumerate(names)])
         npcs.append(npc(key, x, y, facing, text("%s_%s" % (mid, key), lines(talk)), "villager" if n else "ranger",
                         trainer=tr(*title), intro=text("%s_%s_intro" % (mid, key), lines(intro)),
-                        defeat=text("%s_%s_defeat" % (mid, key), lines(defeat)), money=hi * 45, team=crew))
+                        defeat=text("%s_%s_defeat" % (mid, key), lines(defeat)), money=hi * 45, team=crew, **extra))
     m = {"name": r["name"], "biome": "marsh" if mid in MARSH else "route", "backdrop": "lake", "outdoor": True,
          "encounters": mid, "rows": rows, "warps": warps, "npcs": npcs, "signs": [],
          "secrets": [secret(0, 9, FINDS[3], "find_%s_1" % mid), secret(11, 11, FINDS[4], "find_%s_2" % mid),

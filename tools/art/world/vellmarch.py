@@ -139,7 +139,7 @@ TOWN_ROWS = ["TTTTT__TTTTT",
 QUAY_PIER = {15: "~~~~.__.##.T", 16: "~~~~.__....T", 17: "~+++.__..L.T", 18: "~~~~.__....T"}
 BARGE_QUAY = (3, 17)
 BARGE_BRINDLEWICK = (7, 18)
-SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
 FINDS = ["max_tonic", "revival_leaf", "strong_tonic", "remedy", "wake_bell"]
 
 TOWN_TEXT = {

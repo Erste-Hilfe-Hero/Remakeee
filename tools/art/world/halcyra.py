@@ -236,7 +236,7 @@ TOWN_TEXT = {
         "finds": [((0, 5), "max_tonic"), ((11, 14), "revival_leaf"), ((0, 14), "guard_brew")],
     },
 }
-SHOP_ITEMS = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+SHOP_ITEMS = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
 # Locals: (home x, y, facing) by day, (x, y, facing) at the square at dusk, away at night.
 FOLK_PLACES = [((2, 6, "right"), (5, 9, "right")), ((9, 11, "left"), (7, 9, "left")), ((2, 18, "right"), (4, 7, "right"))]
 

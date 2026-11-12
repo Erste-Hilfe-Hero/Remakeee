@@ -109,7 +109,15 @@
     {
      "species": "Prismist",
      "level": 95
+    },
+    {
+     "species": "Padlet",
+     "level": 95
     }
+   ],
+   "front": [
+    3,
+    3
    ]
   }
  ],

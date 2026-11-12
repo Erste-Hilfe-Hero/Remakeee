@@ -109,7 +109,15 @@
     {
      "species": "Dusktern",
      "level": 96
+    },
+    {
+     "species": "Diplit",
+     "level": 95
     }
+   ],
+   "front": [
+    3,
+    3
    ]
   }
  ],

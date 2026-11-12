@@ -308,11 +308,15 @@ func _tip_after_load(id: String) -> void:
 static func goal_flag(map_id: String) -> String:
 	return "goal_seen_" + map_id.replace(MapData.FLOOR_SEP, "_")
 
-func _era_line_after_load(line: String) -> void:
+func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_era) -> void:
 	while busy:
 		await get_tree().process_frame
 	await get_tree().create_timer(EraManager.TRANSITION_TIME).timeout
-	await _locked_say([line] as Array[String])
+	var lines: Array[String] = [line]
+	# What the new era brings (EraFeatures, data/era_functions.json).
+	for e: int in range(era_before + 1, EraManager.unlocked_era + 1):
+		lines.append_array(EraFeatures.new_in_lines(e))
+	await _locked_say(lines)
 
 ## The first free walk after the prologue (item 1982): a note with an arrow to the D-pad that
 ## goes away after three steps; then the menu tip.
@@ -350,6 +354,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	refresh_shade()
 	_spawn_npcs()
 	_place_landmark()
+	_place_rustle()
 	player.place(cell, face)
 	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
@@ -376,7 +381,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	EraManager.mark_finales(GameState.flags)
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
-		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era])
+		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era], era_before)
 	_camera.limit_left = 0
 	_camera.limit_top = 0
 	_camera.limit_right = map.width * GridWalker.TILE
@@ -395,6 +400,22 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	Sound.enter_map(map_id)
 	if not map.encounter_table.is_empty():
 		_tip_after_load.call_deferred("wild_area")
+
+var _rustle: Node2D
+
+## Shows today's rustling spot of the map (Era V), or hides it once it is used.
+func _place_rustle() -> void:
+	var day: String = DailyFind.today_key()
+	if not RustleSpots.active(map, day, GameState.records):
+		if _rustle != null:
+			_rustle.visible = false
+		return
+	if _rustle == null:
+		_rustle = RustleSpots.Mark.new()
+		_rustle.name = "rustle_spot"
+		_entities.add_child(_rustle)
+	_rustle.position = Vector2(RustleSpots.spot(map, day)) * TilesetFactory.TILE
+	_rustle.visible = true
 
 ## Tints the world for the time of day (UI layers are not affected). Checked once a minute.
 func refresh_daylight() -> void:
@@ -657,6 +678,16 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if spotter != null:
 		await challenge(spotter, true)
 		return
+	# Rustling spot (Era V): today's shaking patch hides the map's rarest kind.
+	if GameState.first_healthy_index() >= 0 and RustleSpots.due(map, cell, DailyFind.today_key(), GameState.records):
+		RustleSpots.mark_done(GameState.records, map.id, DailyFind.today_key())
+		_place_rustle()
+		var rare: Spirling = RustleSpots.make_wild(map.encounter_table, GameState.rng, GameState.gleam_chain)
+		if rare != null:
+			Sound.sfx("sparkle")
+			await _locked_say([RustleSpots.LINE] as Array[String])
+			await start_battle([rare] as Array[Spirling], true)
+			return
 	# Encounter Call (item 4838): twice the encounter rate for its steps, then a short note.
 	var call_mult: float = ShopEffects.encounter_mult()
 	for ended: String in ShopEffects.step_kinds_done():
@@ -3747,6 +3778,13 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
+	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
+	# Weather in battle (Era III on): the sky of an outdoor map lays its field when nothing else does.
+	if model.field.is_empty() and not (own is Array and not (own as Array).is_empty()) and EraFeatures.is_unlocked("sky_battles"):
+		var sky: Dictionary = WeatherCycle.battle_field(WeatherCycle.current(map))
+		if not sky.is_empty():
+			model.field = str(sky.field)
+			model.field_intro = str(sky.intro)
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]

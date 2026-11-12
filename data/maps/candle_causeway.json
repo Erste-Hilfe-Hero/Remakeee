@@ -109,7 +109,15 @@
     {
      "species": "Glowflitter",
      "level": 94
+    },
+    {
+     "species": "Puddock",
+     "level": 93
     }
+   ],
+   "front": [
+    3,
+    3
    ]
   }
  ],

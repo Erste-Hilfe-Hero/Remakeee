@@ -109,7 +109,15 @@
     {
      "species": "Bogwick",
      "level": 92
+    },
+    {
+     "species": "Peatlet",
+     "level": 92
     }
+   ],
+   "front": [
+    3,
+    3
    ]
   }
  ],

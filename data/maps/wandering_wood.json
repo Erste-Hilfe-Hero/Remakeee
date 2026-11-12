@@ -109,7 +109,15 @@
     {
      "species": "Woadwhorl",
      "level": 93
+    },
+    {
+     "species": "Morelit",
+     "level": 93
     }
+   ],
+   "front": [
+    3,
+    3
    ]
   }
  ],
