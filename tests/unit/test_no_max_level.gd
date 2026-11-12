@@ -112,8 +112,14 @@ func test_no_ring_limit_except_veteran_act_one() -> void:
 	assert_false(GameState.has_ring_limit())
 	assert_eq(GameState.level_cap(), Spirling.LEVEL_SANITY)
 
-func test_battles_have_no_ring_limit_by_default() -> void:
-	assert_eq(BattleModel.new().level_cap, Spirling.LEVEL_SANITY)
+func test_battle_xp_grows_a_ring_500_spirling() -> void:
+	var s: Spirling = BattleFixtures.make("Mossling", 500)
+	var foe: Spirling = BattleFixtures.make("Mossling", 500)
+	var m := BattleModel.new([s] as Array[Spirling], [foe] as Array[Spirling], false, 7, 0)
+	assert_eq(m.level_cap, Spirling.LEVEL_SANITY, "no ring limit by default")
+	m._give_xp(s, Spirling.xp_for_level(502) - s.xp)
+	assert_eq(s.level, 502)
+	assert_eq(s.xp, Spirling.xp_for_level(502))
 
 func test_halcyra_foes_keep_rings_past_sixty() -> void:
 	var src: String = FileAccess.get_file_as_string("res://data/region4.json")
