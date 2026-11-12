@@ -21,6 +21,8 @@ func after_each() -> void:
 	EraManager.unlocked_era = _unlocked
 	EraManager.retro_filter = _retro
 	Loc.set_language("en")
+	# The change scene swaps the music bus effects; leave the active era's set behind.
+	Sound.apply_era_fx(EraManager.active_era())
 
 # --- data ----------------------------------------------------------------------------
 

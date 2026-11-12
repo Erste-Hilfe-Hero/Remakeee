@@ -31,7 +31,10 @@ static func play(parent: Node, e: int) -> void:
 	await c.finished
 
 ## The Era V finale has no era change after it: shows its card once when it is owed.
-static func play_if_owed(host: Node) -> void:
+## [param host] is untyped: the call is deferred and the map may be gone by then.
+static func play_if_owed(host: Variant) -> void:
+	if not is_instance_valid(host) or not (host as Node).is_inside_tree():
+		return
 	var e: int = EraManager.NEWEST
 	if not EraMoments.card_owed(e, GameState.has_flag):
 		return
