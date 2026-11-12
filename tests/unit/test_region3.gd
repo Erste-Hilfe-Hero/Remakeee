@@ -69,15 +69,15 @@ func test_slots_use_own_spirlings_and_rings_climb_past_vellmarch() -> void:
 		assert_gte(int(r.ring[0]), last, "%s ring" % r.id)
 		assert_gte(int(r.ring[0]), vell_top, "after Vellmarch")
 		last = int(r.ring[0])
-		var total: int = 0
 		for s: Dictionary in r.slots:
-			total += int(s.weight)
 			var sp: String = Region3.slot_species(s)
 			assert_true(Database.spirlings.has(sp), str(s.slot))
 			if s.get("species") != null:
 				own += 1
 				assert_eq(Database.species(sp).region, "quillmarch", "%s is a Quillmarch kind" % sp)
-		assert_eq(total, 100, r.id)
+			if Database.spirlings.has(sp):
+				var band: Vector2i = SpirlingData.WEIGHT_BANDS[Database.species(sp).rarity]
+				assert_between(int(s.weight), band.x, band.y, "%s weight in the %s band" % [s.slot, Database.species(sp).rarity])
 	assert_gte(own, 12, "most slots already hold Quillmarch's own Spirlings")
 	assert_eq(Region3.open_slots().size(), 0, "the Acid and Frost kinds fill every slot")
 
@@ -102,7 +102,7 @@ func test_next_warden_follows_sealed_rifts() -> void:
 	assert_true(Region3.next_warden(f).is_empty(), "shut before the Era II finale")
 	f[str(_d.unlock_flag)] = true
 	assert_eq(str(Region3.next_warden(f).id), "mavet")
-	f["v3_rift_bath_sealed"] = true
+	f["rift_v3_bath_sealed"] = true
 	assert_eq(str(Region3.next_warden(f).id), "quenby")
 	for r: Dictionary in _d.rifts:
 		f[r.flag] = true

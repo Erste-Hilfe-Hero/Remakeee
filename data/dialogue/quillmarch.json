@@ -1,0 +1,522 @@
+{
+ "bath_rift_acolyte": [
+  "Hjalmar: Mavet pays me in cure. I've been cured eleven times this week."
+ ],
+ "bath_rift_acolyte_defeat": [
+  "Hjalmar: Mavet's at the bottom. She's bottling the view."
+ ],
+ "bath_rift_acolyte_intro": [
+  "Hjalmar: Breathe in. The first lungful is free."
+ ],
+ "bath_rift_sign": [
+  "Bath Rift",
+  "The acid has eaten the floor down to an older floor, and that one down to bone."
+ ],
+ "bath_rift_spring": {
+  "lines": [
+   "Clear water drips from an etched spout. It tastes faintly of copper.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "boatman": {
+  "lines": [
+   "The mail boat to Quillmarch carries letters, crates and you. Only you are not on the manifest."
+  ],
+  "action": "transit quillmarch_mail_boat"
+ },
+ "boatman_top": {
+  "lines": [
+   "Mail Boatman: Quillmarch? Letters, crates and passengers. Passengers go under the crates."
+  ],
+  "action": "transit quillmarch_mail_boat"
+ },
+ "burin_landing_customs_customs": [
+  "Customs Clerk Britt: Declare your goods. Declare your name. We'll decide which one is real."
+ ],
+ "burin_landing_folk_1": [
+  "Plank Reader Ebbe: I read the pier backwards every morning. Yesterday I found my father's name. He swore he never confessed."
+ ],
+ "burin_landing_folk_2": [
+  "Crate Girl Mina: I unload the mail boat. Half the letters are love letters. The other half are the replies, forged."
+ ],
+ "burin_landing_folk_3": [
+  "Old Harbourmaster Fenn: Wren Marlow came through here with a new face. Tipped me with the old one's money."
+ ],
+ "burin_landing_keeper": {
+  "lines": [
+   "Dock Nurse Agathe: Lie down. The planks are old plates, so don't read them. Some of the confessions are catching."
+  ],
+  "action": "heal"
+ },
+ "burin_landing_net_loft_netter": [
+  "Net Mender Joa: I fish the old plates out of the harbour. They make good planks and bad evidence."
+ ],
+ "burin_landing_post_office_postmaster": [
+  "Postmaster Arvo: Your letter? Opened, read, resealed. Standard service."
+ ],
+ "burin_landing_sign": [
+  "Burin Landing",
+  "Burin Landing. All arrivals are recorded. Some are corrected."
+ ],
+ "burin_landing_tavern_innkeeper": [
+  "Innkeeper Rune: Sailors drink here and sign their names on the wall. Wren signed it three times, three names."
+ ],
+ "burin_landing_trader": {
+  "lines": [
+   "Pier Clerk Hollis: Tonics, ink and stamps. The stamps are real. The ink is mostly real."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "drypoint_lane_courier": [
+  "Liv: I carry the Guild's letters. I read them first. It's in my contract, the part they didn't read."
+ ],
+ "drypoint_lane_courier_defeat": [
+  "Liv: Fine. It says you're late. You are."
+ ],
+ "drypoint_lane_courier_intro": [
+  "Liv: One of the letters is about you. Want to fight for it?"
+ ],
+ "drypoint_lane_scratcher": [
+  "Arne: I scratch plates by hand, no acid. Slower, cleaner, and nobody can prove which hand."
+ ],
+ "drypoint_lane_scratcher_defeat": [
+  "Arne: Clean lines. Annoying."
+ ],
+ "drypoint_lane_scratcher_intro": [
+  "Arne: Your face would make a good plate. Let me rough it up first."
+ ],
+ "gravers_causeway_canalman": [
+  "Bo: I dredge the canal for lost plates. I find more lost people. They pay worse."
+ ],
+ "gravers_causeway_canalman_defeat": [
+  "Bo: Floats. Huh."
+ ],
+ "gravers_causeway_canalman_intro": [
+  "Bo: You'd sink nicely. Let's test it."
+ ],
+ "gravers_causeway_graver": [
+  "Osk: The Guild sends me to check who walks the causeway. Then it sends someone else to check me."
+ ],
+ "gravers_causeway_graver_defeat": [
+  "Osk: You're on it now. Top line."
+ ],
+ "gravers_causeway_graver_intro": [
+  "Osk: You're not on my list. Let's fix that."
+ ],
+ "hoarfrost_moor_hoarwatch": [
+  "Eskil: The frost writes on the stones out here too. Mostly it writes: turn back."
+ ],
+ "hoarfrost_moor_hoarwatch_defeat": [
+  "Eskil: Go on, then. The stones will remember you."
+ ],
+ "hoarfrost_moor_hoarwatch_intro": [
+  "Eskil: You didn't turn back. Now you get me."
+ ],
+ "hoarfrost_moor_sledger": [
+  "Runa: I haul the frozen out of the moor every spring. Some of them owe the Guild money. They still do."
+ ],
+ "hoarfrost_moor_sledger_defeat": [
+  "Runa: Not today. The sledge is disappointed."
+ ],
+ "hoarfrost_moor_sledger_intro": [
+  "Runa: My sledge has room for one more."
+ ],
+ "ledger_rift_acolyte": [
+  "Bertram: I keep Ottoline's third ledger. The one for the other two."
+ ],
+ "ledger_rift_acolyte_defeat": [
+  "Bertram: Balanced. I'll unbalance it later."
+ ],
+ "ledger_rift_acolyte_intro": [
+  "Bertram: Let's settle your account."
+ ],
+ "ledger_rift_sign": [
+  "Ledger Rift",
+  "Pages drift in the dark like snow. Each one is a debt, and each debt has two totals."
+ ],
+ "ledger_rift_spring": {
+  "lines": [
+   "Clear water drips from an etched spout. It tastes faintly of copper.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "ledgerholm_archive_elder": [
+  "Archivist Solveig: Every book in here has a twin. Nobody knows which twin is the liar."
+ ],
+ "ledgerholm_bank_banker": [
+  "Banker Leopold: We keep the true ledger. The other bank keeps the other true ledger."
+ ],
+ "ledgerholm_choir_loft_singer": [
+  "Choirmaster Edvin: Bankers and forgers sing together on Sundays. The harmony is suspicious."
+ ],
+ "ledgerholm_folk_1": [
+  "Forger Ulla: I copy banknotes on weekdays and sing in the choir on Sundays. The bankers sing bass."
+ ],
+ "ledgerholm_folk_2": [
+  "Junior Banker Kaspar: My job is to tell the two ledgers apart. I was hired because I can't."
+ ],
+ "ledgerholm_folk_3": [
+  "Old Auditor Hedvig: I audited Ottoline once. She audited me back. Now I live here, on a pension I didn't earn."
+ ],
+ "ledgerholm_forgery_forger": [
+  "Forger Agnete: I don't forge. I restore documents to what they should have said."
+ ],
+ "ledgerholm_keeper": {
+  "lines": [
+   "Bank Nurse Rasmine: Rest, then sign here. And here. The second one says you rested."
+  ],
+  "action": "heal"
+ },
+ "ledgerholm_sign": [
+  "Ledgerholm",
+  "Ledgerholm. Two banks, one street, no witnesses."
+ ],
+ "ledgerholm_trader": {
+  "lines": [
+   "Counting Clerk Mads: Tonics at today's rate. Tomorrow's rate is better, but you might not be here."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "mordant_row_apothecary_elder": [
+  "Apothecary Gerold: Mavet's cure, three coins a bottle. The bottle is worth two of them."
+ ],
+ "mordant_row_bath_house_attendant": [
+  "Bath Attendant Wilma: Towel? It's acid-proof. You aren't."
+ ],
+ "mordant_row_folk_1": [
+  "Vat Stirrer Klaas: Lost my eyebrows the first day, my sense of smell the second. Lost my wife on the third, but that was the cards."
+ ],
+ "mordant_row_folk_2": [
+  "Cure Seller Ottla: Mavet's cure works wonders. You only need it because of Mavet. Don't say that loudly."
+ ],
+ "mordant_row_folk_3": [
+  "Widow Grete: My husband fell in the big bath. They etched his name on the rim. Took four seconds."
+ ],
+ "mordant_row_keeper": {
+  "lines": [
+   "Bath Nurse Doro: Rest here. The fumes don't reach this bench. Mostly."
+  ],
+  "action": "heal"
+ },
+ "mordant_row_sign": [
+  "Mordant Row",
+  "Mordant Row. Breathe through cloth. Bring your own cloth."
+ ],
+ "mordant_row_vat_store_stirrer": [
+  "Vat Keeper Ronja: Empty vats in the back, full vats in front. The middle ones are complicated."
+ ],
+ "mordant_row_well_house_keeper": [
+  "Well Keeper Tamm: Don't drink from the well. Don't ask why. Definitely don't ask Mavet why."
+ ],
+ "mordant_steps_fumer": [
+  "Tilla: I bottle the fumes for Mavet's cure. Then I take the cure. It's a closed loop."
+ ],
+ "mordant_steps_fumer_defeat": [
+  "Tilla: You held your breath. Cheat."
+ ],
+ "mordant_steps_fumer_intro": [
+  "Tilla: Take a deep breath. Go on."
+ ],
+ "mordant_steps_stepcounter": [
+  "Gisli: Every step is etched with the name of someone who slipped. I'm running out of steps."
+ ],
+ "mordant_steps_stepcounter_defeat": [
+  "Gisli: Still blank. Pity."
+ ],
+ "mordant_steps_stepcounter_intro": [
+  "Gisli: There's a blank step just here. Shall we fill it?"
+ ],
+ "platewick_folk_1": [
+  "Apprentice Tovi: I engraved my master's portrait. The Guild printed it on a wanted poster. Now I'm the master."
+ ],
+ "platewick_folk_2": [
+  "Model Sanne: I sit for portraits. I've been hanged in effigy six times. Pays better than modelling."
+ ],
+ "platewick_folk_3": [
+  "Old Engraver Brom: Every face I ever cut is still in a drawer upstairs. Some of them still owe me."
+ ],
+ "platewick_guild_hall_elder": [
+  "Guild Warden Henrike: The Guild protects its members. From each other, mostly."
+ ],
+ "platewick_keeper": {
+  "lines": [
+   "Engraver's Nurse Ilka: Sit still. I patch people the way I patch plates: nobody notices the scratch until it prints."
+  ],
+  "action": "heal"
+ },
+ "platewick_plate_store_keeper": [
+  "Plate Keeper Ove: Ten thousand copper faces. One of them is yours already. Don't ask who ordered it."
+ ],
+ "platewick_print_shop_printer": [
+  "Printer Lasse: We print news in the morning and corrections at night. The corrections sell better."
+ ],
+ "platewick_sign": [
+  "Platewick",
+  "Platewick. Portraits while you wait. Wanted posters while you run."
+ ],
+ "platewick_studio_artist": [
+  "Portraitist Lisbet: Hold still. Smile. Don't smile, the Guild prefers the wanted posters grim."
+ ],
+ "platewick_trader": {
+  "lines": [
+   "Burin Seller Pell: Tonics and tools. A sharp burin opens many doors. Some of them are locked for good reason."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "press_rift_acolyte": [
+  "Ylva: Grisel prints the Rifts and then sends people to seal them. Steady work for everyone."
+ ],
+ "press_rift_acolyte_defeat": [
+  "Ylva: Clean print. Grisel will hate it."
+ ],
+ "press_rift_acolyte_intro": [
+  "Ylva: You're the last job on the run. Let's see if you print clean."
+ ],
+ "press_rift_sign": [
+  "Press Rift",
+  "A press the size of a church prints the map of Quillmarch, one Rift at a time."
+ ],
+ "press_rift_spring": {
+  "lines": [
+   "Clear water drips from an etched spout. It tastes faintly of copper.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "proofgate_folk_1": [
+  "Stamp Boy Egil: I stamp everything that leaves. Letters, crates, coffins. The coffins get two stamps."
+ ],
+ "proofgate_folk_2": [
+  "Proofreader Malin: I read every map before it prints. Grisel moves the Rifts after I sign off."
+ ],
+ "proofgate_folk_3": [
+  "Old Pressman Torvald: The edge of the map is just past the last press. I went to look once. They printed me coming back."
+ ],
+ "proofgate_keeper": {
+  "lines": [
+   "Press Nurse Valda: Rest. If you wake up stamped, that's routine. If you wake up printed, complain."
+  ],
+  "action": "heal"
+ },
+ "proofgate_last_inn_innkeeper": [
+  "Innkeeper Dagny: Last bed before the edge of the map. Pay in advance. Nobody pays on the way back."
+ ],
+ "proofgate_map_vault_keeper": [
+  "Map Keeper Halvard: Every map of Quillmarch, printed here. Every Rift on them, put there by hand."
+ ],
+ "proofgate_proof_room_reader": [
+  "Proof Reader Elin: I mark the errors in red. Grisel prints them anyway and calls them features."
+ ],
+ "proofgate_sign": [
+  "Proofgate",
+  "Proofgate. Nothing leaves unstamped. Nothing."
+ ],
+ "proofgate_stamp_hall_stamper": [
+  "Chief Stamper Birger: Approved, denied, deceased. Three stamps. I use the third one most."
+ ],
+ "rime_rift_acolyte": [
+  "Solrun: Quenby reads the frost for the Guild. I read it for Quenby. Nobody reads it for me."
+ ],
+ "rime_rift_acolyte_defeat": [
+  "Solrun: The warning was wrong. That never happens."
+ ],
+ "rime_rift_acolyte_intro": [
+  "Solrun: Your warning says: stop here. I'm the stop."
+ ],
+ "rime_rift_sign": [
+  "Rime Rift",
+  "Frost covers every wall with warnings. Every one of them has your name in it."
+ ],
+ "rime_rift_spring": {
+  "lines": [
+   "Clear water drips from an etched spout. It tastes faintly of copper.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "rimeglass_pass_collector": [
+  "Holm: I collect for the Guild up here. Frozen people can't run, which is the whole business plan."
+ ],
+ "rimeglass_pass_collector_defeat": [
+  "Holm: Paid in full. I'll invent something else."
+ ],
+ "rimeglass_pass_collector_intro": [
+  "Holm: You owe the Guild for the air you breathe up here."
+ ],
+ "rimeglass_pass_iceguide": [
+  "Tyra: The pass is glass. I charge by the slip."
+ ],
+ "rimeglass_pass_iceguide_defeat": [
+  "Tyra: Steady feet. Bad for business."
+ ],
+ "rimeglass_pass_iceguide_intro": [
+  "Tyra: You haven't slipped yet. Let me help."
+ ],
+ "rimeholt_debt_office_clerk": [
+  "Debt Clerk Gunnar: Every house in town is in this drawer. Yours too, if you stay the night."
+ ],
+ "rimeholt_folk_1": [
+  "Window Scraper Lene: I scrape the warnings off the windows before anyone reads them. The Guild pays per window."
+ ],
+ "rimeholt_folk_2": [
+  "Debtor Aksel: My house is frozen and my loan is not. Funny how cold works."
+ ],
+ "rimeholt_folk_3": [
+  "Grandmother Ingrid: The frost wrote my name on my window last winter. I'm still here. The frost is patient."
+ ],
+ "rimeholt_glass_room_glazier": [
+  "Glazier Ivar: I sell new windows. The frost writes on them anyway. Faster, if you ask me."
+ ],
+ "rimeholt_hearth_hall_elder": [
+  "Hearth Keeper Asta: One fire for the whole town. The Guild decides who sits nearest."
+ ],
+ "rimeholt_keeper": {
+  "lines": [
+   "Hearth Nurse Signy: Warm your hands. The Guild owns the firewood, so don't warm them too long."
+  ],
+  "action": "heal"
+ },
+ "rimeholt_sign": [
+  "Rimeholt",
+  "Rimeholt. The frost writes on every window. Read at your own risk."
+ ],
+ "rimeholt_trader": {
+  "lines": [
+   "Fur Trader Joris: Tonics, mittens, debts. The mittens are cheap. The debts come free with them."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "rimeholt_woodshed_woodcutter": [
+  "Woodcutter Siv: The Guild owns the trees, the axes and the cold. I own the blisters."
+ ],
+ "smudge_marsh_blotter": [
+  "Sigrun: The presses dump their spoiled ink here. The marsh drinks it and remembers every word."
+ ],
+ "smudge_marsh_blotter_defeat": [
+  "Sigrun: It whispers louder now."
+ ],
+ "smudge_marsh_blotter_intro": [
+  "Sigrun: The marsh just whispered your name. Let's find out why."
+ ],
+ "smudge_marsh_smuggler": [
+  "Kettil: I take unstamped goods round Proofgate through the marsh. Unstamped people too, at a premium."
+ ],
+ "smudge_marsh_smuggler_defeat": [
+  "Kettil: Keep quiet and I'll keep you off the map."
+ ],
+ "smudge_marsh_smuggler_intro": [
+  "Kettil: You saw my route. Now you pay the toll."
+ ],
+ "stamp_road_pressrunner": [
+  "Ole: I run fresh prints to Proofgate before the ink dries. Grisel likes them smudged where it matters."
+ ],
+ "stamp_road_pressrunner_defeat": [
+  "Ole: I'll run a correction."
+ ],
+ "stamp_road_pressrunner_intro": [
+  "Ole: You're in today's print. Wrong side of the page."
+ ],
+ "stamp_road_stamper": [
+  "Vigdis: Everyone on this road gets a stamp. Arrival, departure, or disappearance."
+ ],
+ "stamp_road_stamper_defeat": [
+  "Vigdis: Departure, then. For now."
+ ],
+ "stamp_road_stamper_intro": [
+  "Vigdis: Hold out your hand. Which stamp do you want?"
+ ],
+ "warden_grisel": {
+  "lines": [
+   "Under Proofgate the great press still runs, printing a new map of the world with every Rift drawn in as property. Grisel stamps the last page."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v3_press_sealed",
+    "lines": [
+     "Grisel paid for your boat, your fame and Wren's new face. Every Rift you sealed raised the price of the ones he owns."
+    ]
+   }
+  ]
+ },
+ "warden_grisel_defeat": [
+  "Keep the press. The map is already printed, and every Rift on it has my name in the margin."
+ ],
+ "warden_grisel_intro": [
+  "I printed your ferry ticket, your fame and your fixer's new face. Let's see if I can print your loss."
+ ],
+ "warden_mavet": {
+  "lines": [
+   "The acid baths eat through their vats and into the street. Warden Mavet keeps the Bath Rift and bottles the fumes as medicine."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v3_bath_sealed",
+    "lines": [
+     "Mavet poured the acid into the town well herself, then sold the town the cure, then sold you the town."
+    ]
+   }
+  ]
+ },
+ "warden_mavet_defeat": [
+  "Fine, the Rift is yours. The cure for the fumes is still mine, and the price just went up."
+ ],
+ "warden_mavet_intro": [
+  "Breathe deep, it clears the sinuses. And the lungs. And eventually the estate."
+ ],
+ "warden_ottoline": {
+  "lines": [
+   "Ledgerholm keeps two ledgers: one for the bank and one for the truth. Ottoline wants you to burn one of them. She will not say which."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v3_ledger_sealed",
+    "lines": [
+     "Ottoline swapped the books. The one you burned was the only record that you are not the forger."
+    ]
+   }
+  ]
+ },
+ "warden_ottoline_defeat": [
+  "You win. I would congratulate you, but the ledger says you were never here."
+ ],
+ "warden_ottoline_intro": [
+  "Two ledgers, one truth, zero witnesses. Pick a book, darling. Any book."
+ ],
+ "warden_quenby": {
+  "lines": [
+   "Frost etches warnings onto every window in Rimeholt. The Gravers' Guild hires you to thaw the Rime Rift before the town freezes over."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v3_rime_sealed",
+    "lines": [
+     "The Guild holds the debts of every house in Rimeholt. Frozen houses sell cheap, and you were hired to be slow."
+    ]
+   }
+  ]
+ },
+ "warden_quenby_defeat": [
+  "Your warning was on my window all week. Nobody paid, so I let you walk in."
+ ],
+ "warden_quenby_intro": [
+  "The frost writes a warning on every window. I only read out the ones somebody paid for."
+ ],
+ "wren": {
+  "if": {
+   "not_flag": "v3_ch1_done"
+  },
+  "else": "wren_after",
+  "lines": [
+   "Wren Marlow waits on the pier with a new face and the same old grin. The print houses want the Rifts etched shut, and they pay in fresh money. Very fresh. Still wet.",
+   "Wren Marlow: First job: the Bath Rift above Mordant Row. North through Platewick, up the Mordant Steps.",
+   "Wren Marlow: Same deal as Vellmarch. You work, I talk, we split it. Unevenly."
+  ],
+  "action": "set_flag v3_ch1_done"
+ },
+ "wren_after": [
+  "The money is forged, the job is real, and Wren sold your arrival time to the Gravers' Guild before your boat had docked.",
+  "Wren: Don't sulk. The Guild would have known anyway. I just made sure they paid me for it."
+ ]
+}

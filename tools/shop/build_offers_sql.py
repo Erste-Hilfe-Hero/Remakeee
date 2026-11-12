@@ -30,6 +30,33 @@ PRODUCTS = os.path.join(ROOT, "store/products.json")
 TYPES = {"consumable": ("CONSUMABLE", "onetime"), "non_consumable": ("NON_CONSUMABLE", "onetime"),
          "subscription": ("AUTO_RENEWABLE_SUBSCRIPTION", "subscription")}
 
+def cut(text, limit=200):
+    """Store description up to [limit] characters, ended at a full sentence so a listing never
+    stops mid-word (falls back to the last whole word)."""
+    if len(text) <= limit:
+        return text
+    head = text[:limit]
+    end = head.rfind(". ")
+    if end > 0:
+        return head[:end + 1]
+    return head[:head.rfind(" ")].rstrip(",;:")
+
+def amount_problems(offers, de):
+    """Listing text that does not match the grants (shop clarity, Ali 12 Nov 2026): every amount a
+    bundle or multi-piece offer grants must be in its English and German description, also after
+    the store cut, so the store page says the same as the in-game contents built from the grants."""
+    out = []
+    for o in offers:
+        grants = o["grants"]
+        for g in grants:
+            n = g.get("days") if g["t"] == "pass" else g.get("n")
+            if g["t"] == "unlock" or n is None or (n <= 1 and len(grants) <= 1):
+                continue
+            for lang, text in (("en", o["desc"]), ("de", de.get(o["desc"], o["desc"]))):
+                if str(n) not in cut(text):
+                    out.append("%s: %s description does not name the amount %d of %s" % (o["id"], lang, n, g.get("id", g["t"])))
+    return out
+
 def lit(s):
     return "'" + s.replace("'", "''") + "'"
 
@@ -64,7 +91,7 @@ def build():
         products.append({"product_id": o["product_id"], "offer": o["id"], "apple_type": apple, "google_type": google,
                          "eur": "%d.%02d" % (o["eur_cents"] // 100, o["eur_cents"] % 100),
                          "name_en": o["name"], "name_de": de.get(o["name"], o["name"]),
-                         "desc_en": o["desc"][:200], "desc_de": de.get(o["desc"], o["desc"])[:200],
+                         "desc_en": cut(o["desc"]), "desc_de": cut(de.get(o["desc"], o["desc"])),
                          # Apple Family Sharing stays off (item 4073): the server binds every Apple
                          # purchase to the buyer's account (appAccountToken), so a family member's copy
                          # would be refused. Revisit with StoreKit 2 at the end (docs/shop/ALI_TODO.md).
@@ -73,10 +100,12 @@ def build():
     prod = json.dumps({"_comment": "Store products for App Store Connect and the Play Console, built from data/shop.json by "
                        "tools/shop/build_offers_sql.py. Apple subscription group: Pass. Google subscription base plan: monthly.",
                        "products": products}, ensure_ascii=False, indent=1) + "\n"
-    return version, sql, prod
+    return version, sql, prod, amount_problems(offers, de)
 
 def main():
-    version, sql, prod = build()
+    version, sql, prod, bad_amounts = build()
+    if bad_amounts:
+        sys.exit("Store descriptions do not match the grants:\n" + "\n".join(bad_amounts))
     SQL = sql_path(version)
     old = committed(SQL)
     if old is not None and old != sql:

@@ -119,6 +119,46 @@
     3,
     3
    ]
+  },
+  {
+   "id": "q5_choir_bell_bo",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_choir_bell_bo",
+   "sprite": "villager",
+   "show_flag": "q5_choir_bell_asked"
+  },
+  {
+   "id": "q5_choir_bell_liesl_solo",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_choir_bell_liesl_solo",
+   "sprite": "villager",
+   "trainer": "Cantor Liesl",
+   "show_flag": "q5_choir_bell_reveal",
+   "intro": "quivermoor/q5_choir_bell_liesl_solo_intro",
+   "defeat": "quivermoor/q5_choir_bell_liesl_solo_defeat",
+   "money": 4800,
+   "team": [
+    {
+     "species": "Woadlet",
+     "level": 94
+    },
+    {
+     "species": "Drizzlet",
+     "level": 95
+    },
+    {
+     "species": "Padlet",
+     "level": 96
+    }
+   ],
+   "win_flags": [
+    "q5_choir_bell_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],

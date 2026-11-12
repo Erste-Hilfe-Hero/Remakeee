@@ -119,6 +119,46 @@
     3,
     3
    ]
+  },
+  {
+   "id": "q5_short_candle_pell",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_short_candle_pell",
+   "sprite": "villager",
+   "show_flag": "q5_short_candle_asked"
+  },
+  {
+   "id": "q5_nell_letters_warden_buyer",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_nell_letters_warden_buyer",
+   "sprite": "warden",
+   "trainer": "Warden Buyer Selk",
+   "show_flag": "q5_nell_letters_reveal",
+   "intro": "quivermoor/q5_nell_letters_warden_buyer_intro",
+   "defeat": "quivermoor/q5_nell_letters_warden_buyer_defeat",
+   "money": 4750,
+   "team": [
+    {
+     "species": "Sootlurk",
+     "level": 93
+    },
+    {
+     "species": "Glowflitter",
+     "level": 94
+    },
+    {
+     "species": "Velvit",
+     "level": 95
+    }
+   ],
+   "win_flags": [
+    "q5_nell_letters_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],

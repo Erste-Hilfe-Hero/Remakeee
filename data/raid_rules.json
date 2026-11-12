@@ -1,5 +1,5 @@
 {
- "_comment": "Raid Rifts extras (Online 100, points 23, 24, 28, 29, 30). The server reads the same object as server_config.raid_rules (tools/online/game_data_sql.py).",
+ "_comment": "Raid Rifts extras (Online 100, points 23-30). The server reads the same object as server_config.raid_rules (tools/online/game_data_sql.py).",
  "tiers": [
   {"id": "easy", "hp": 70, "level": 50},
   {"id": "normal", "hp": 100, "level": 60},
@@ -9,5 +9,10 @@
  "legendary_chance": 5,
  "legendary_hp": 150,
  "top_bonus": 1,
- "board_rows": 10
+ "board_rows": 10,
+ "roles": ["attack", "guard", "help"],
+ "queue_minutes": 10,
+ "group_wait": 30,
+ "echo_wait": 60,
+ "echo_share": 15
 }

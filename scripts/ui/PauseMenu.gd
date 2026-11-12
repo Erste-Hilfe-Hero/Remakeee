@@ -764,6 +764,9 @@ static func bag_tab(it: Dictionary) -> int:
 func run_bag() -> void:
 	await tip("satchel")
 	var tab: int = -1
+	# The item used last keeps the focus when the list comes back (item 1927).
+	var last_id: String = ""
+	var last_idx: int = -1
 	while true:
 		var by_tab: Array[Array] = [[], [], [], [], []]
 		for id: Variant in GameState.inventory:
@@ -784,15 +787,24 @@ func run_bag() -> void:
 		for id: String in ids:
 			var it0: Dictionary = Database.item(id)
 			# The description stands in the line under the list (item 1915).
-			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)],
-				"hint": str(it0.get("description", ""))})
-		var idx: int = await pick("Satchel", entries, true, -1, ListPicker.TAP_GUARD_MS, tabs, tab)
+			var hint: String = Loc.t(str(it0.get("description", "")))
+			if battle_only(it0):
+				hint = Loc.t(BATTLE_ONLY) + " " + hint
+			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint})
+		# If it was used up, the row that took its place gets the focus.
+		var focus: int = ids.find(last_id)
+		if focus < 0 and last_idx >= 0:
+			focus = mini(last_idx, ids.size() - 1)
+		var idx: int = await pick("Satchel", entries, true, focus, ListPicker.TAP_GUARD_MS, tabs, tab)
 		if ListPicker.tab_of(idx) >= 0:
 			tab = ListPicker.tab_of(idx)
+			last_idx = -1
 			continue
 		if idx < 0:
 			return
 		var item_id: String = ids[idx]
+		last_id = item_id
+		last_idx = idx
 		var it: Dictionary = Database.item(item_id)
 		if it.has("teaches"):
 			await _teach_echo(item_id)
@@ -810,24 +822,55 @@ func run_bag() -> void:
 			if await confirm("%s\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", "")))], "Use", "Not now"):
 				await info(ShopEffects.start_boost(item_id))
 		elif item_id in _usable_items():
-			var names: Array[String] = []
-			for s: Spirling in GameState.party:
-				names.append(MenuHost.party_line(s))
-			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
-			if who >= 0 and bool(it.get("spark_all", false)):
-				# The Spark Forge shows the values it will set before it is used.
-				var s: Spirling = GameState.party[who]
-				if not await confirm("%s\n%s" % [GameState.spark_reading(s), Loc.t("Afterwards every spark is at the top (12).")], "Use", "Not now"):
-					who = -1
-			if who >= 0:
-				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
-				await info(msg if not msg.is_empty() else "That would do nothing right now.")
+			await _use_on_party(item_id)
 		elif item_id == TideChart.ITEM:
 			await info("\n".join(TideChart.lines()))
 		elif bool(it.get("gear", false)):
 			await info(gear_page(item_id), gear_picture(item_id))
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
+
+## Picks who gets [param item_id]. Healing items ask again for the same Spirling after
+## each use, until Back or the last one is gone (item 1919).
+func _use_on_party(item_id: String) -> void:
+	var it: Dictionary = Database.item(item_id)
+	var again: bool = int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0
+	var focus: int = -1
+	while GameState.item_count(item_id) > 0:
+		var rows: Array[Dictionary] = []
+		for s: Spirling in GameState.party:
+			var row: Dictionary = {"text": MenuHost.party_line(s)}
+			var after: String = vigor_preview(it, s)
+			if not after.is_empty():
+				row["hint"] = after
+			rows.append(row)
+		var title: String = "Use %s on?" % it.get("name", "")
+		if again:
+			title += "  x%d" % GameState.item_count(item_id)
+		var who: int = await pick(title, rows, true, focus)
+		if who < 0:
+			return
+		focus = who
+		if bool(it.get("spark_all", false)):
+			# The Spark Forge shows the values it will set before it is used.
+			var sp: Spirling = GameState.party[who]
+			if not await confirm("%s\n%s" % [GameState.spark_reading(sp), Loc.t("Afterwards every spark is at the top (12).")], "Use", "Not now"):
+				return
+		var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
+		await info(msg if not msg.is_empty() else "That would do nothing right now.")
+		if not again:
+			return
+
+const BATTLE_ONLY: String = "Only in battle."
+
+## Items that only work in a battle (item 1924): marked in the Satchel.
+static func battle_only(it: Dictionary) -> bool:
+	if not bool(it.get("battle", false)):
+		return false
+	for k: String in ["heal", "revive", "evolves", "rings", "spark_all", "boost", "teaches", "gear"]:
+		if it.has(k) and it[k]:
+			return false
+	return true
 
 ## What each "works_on" entry of a gear item means (area 3 item 1050).
 const GEAR_PLACES: Dictionary[String, String] = {

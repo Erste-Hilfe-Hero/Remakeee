@@ -251,6 +251,32 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "vm_haskett",
+   "x": 2,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "veydal_more/haskett",
+   "sprite": "elder"
+  },
+  {
+   "id": "vm_sprocket",
+   "x": 10,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "veydal_more/sprocket",
+   "sprite": "villager"
+  },
+  {
+   "id": "vm_jinks_5",
+   "x": 10,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "veydal_more/jinks_5",
+   "sprite": "ranger",
+   "show_flag": "beat_story_rival_jinks_4",
+   "hide_flag": "jinks_bet_done"
   }
  ],
  "signs": [

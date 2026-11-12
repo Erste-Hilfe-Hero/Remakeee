@@ -179,6 +179,11 @@ def town_rows(mid):
             r = "^" + r[1:]
         if "right" not in sides:
             r = r[:-1] + "^"
+        # A closed side keeps no road arm running into the cliff (tools/maps/audit_maps.py look pass).
+        if "left" not in sides:
+            r = r[:1] + "..." + r[4:]
+        if "right" not in sides:
+            r = r[:8] + "..." + r[11:]
         rows[y] = r
     return rows
 
@@ -297,6 +302,9 @@ def brightledge_extra(world, m):
                   npc("brakeman", 8, 17, "down", mid + "/brakeman", "villager")]
     m["signs"].append({"x": 2, "y": 1, "dialogue": mid + "/white_stair"})
     m["rows"][1] = "^.S..__..::^"
+    # The road bends onto the funicular platform instead of running into the cliff.
+    m["rows"][17] = "^::..._++L.^"
+    m["rows"][18] = "^......+++.^"
 
 
 def gildcrest_extra(world, m):
@@ -349,7 +357,7 @@ ROUTE_ROWS = {
                    "^,,..==....^",
                    "^^^^.==.^^^^",
                    "^..^.==.^::^",
-                   "_.....==.::^",
+                   "_____==..::^",
                    "^,,^.==.^..^",
                    "^,,..==....^",
                    "^^^^.==.^^^^",
@@ -478,7 +486,7 @@ ROUTE_ROWS = {
                      "~~~~|++|~~~~",
                      "~~~~L++L~~~~",
                      "^:::.++.%%%^",
-                     "^:::....%%._",
+                     "^:::._______",
                      "^,,..S...%%^",
                      "^,,......%%^",
                      "~~~~L++L~~~~",
@@ -679,8 +687,8 @@ def white_stair(world):
             "^.**....**.^",
             "^..........^",
             "^.S......*.^",
-            "_....==....^",
-            "^....==....^",
+            "_____......^",
+            "^..........^",
             "^T........T^",
             "^^^^^^^^^^^^"]
     world.add_text(mid, {
@@ -712,7 +720,7 @@ def gilt_span(world):
             "^..........^",
             "^..........^",
             "^.L......L.^",
-            "_..........^",
+            "____.......^",
             "^^^^^^^^^^^^"]
     world.add_text(mid, {
         "plaque": plaque,

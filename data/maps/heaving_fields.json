@@ -119,6 +119,15 @@
     3,
     3
    ]
+  },
+  {
+   "id": "q5_lost_pole_sten",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_lost_pole_sten",
+   "sprite": "elder",
+   "show_flag": "q5_lost_pole_asked"
   }
  ],
  "signs": [],
