@@ -24,6 +24,8 @@ var echo_duel: Dictionary = {}
 var league_match: Dictionary = {}
 ## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
 var raid_attempt: Dictionary = {}
+## An entry to open before the list ("Goals" for a chimora://event link, DeepLink.gd).
+var open_on: String = ""
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -66,6 +68,9 @@ func run_ledger() -> void:
 		await info("\n".join(shown))
 
 func run() -> void:
+	if open_on == "Goals":
+		open_on = ""
+		await run_goals()
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
