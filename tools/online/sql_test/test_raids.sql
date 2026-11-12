@@ -1,3 +1,5 @@
+-- No legendary guardians here, so strength and guardian never depend on the roll (see test_raid_more.sql).
+update public.server_config set value = jsonb_set(value, '{legendary_chance}', '0') where key = 'raid_rules';
 -- Plan area 7, items 2847-2851, 2871, 2691: Raid Rifts with shared strength, attempts, rewards.
 insert into auth.users (id) values
   ('20000000-0000-0000-0000-0000000000c1'), ('20000000-0000-0000-0000-0000000000c2'),
