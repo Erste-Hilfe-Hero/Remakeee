@@ -57,7 +57,7 @@
    "facing": "left",
    "dialogue": "quillmarch/rime_rift_acolyte",
    "sprite": "warden",
-   "trainer": "Rime Acolyte Sólrun",
+   "trainer": "Rime Acolyte Solrun",
    "intro": "quillmarch/rime_rift_acolyte_intro",
    "defeat": "quillmarch/rime_rift_acolyte_defeat",
    "money": 3160,
