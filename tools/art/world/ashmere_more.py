@@ -318,7 +318,7 @@ def heath(world):
               [("Clem: Juror number one. I was picked because I own a chair. Most of the heath doesn't.", "Clem: Geschworener Nummer eins. Ich wurde gewählt, weil ich einen Stuhl besitze. Der Großteil der Heide hat keinen.")],
               [("Clem: My vote's for sale. The price is one duel. Inflation, you know.", "Clem: Meine Stimme ist käuflich. Der Preis ist ein Duell. Inflation, du weißt schon.")],
               [("Clem: Sold. Tell Greaves I said guilty. Of whatever. He'll know.", "Clem: Verkauft. Sag Greaves, ich hab schuldig gesagt. Von was auch immer. Er weiß Bescheid.")], 1700),
-        juror(2, "mattie", 2, 9, "right", tr("Juror Mattie", "Geschworene Mattie"), team(("Peatbloom", 33), ("Vaporel", 33), ("Bogwick", 34)),
+        juror(2, "mattie", 2, 9, "right", tr("Juror Mattie", "Geschworene Mattie"), team(("Peatbloom", 33), ("Vaporel", 33), ("Peatlet", 34)),
               [("Mattie: I've sat on forty juries. The verdict was always the same. I find that comforting.", "Mattie: Ich saß in vierzig Geschworenenbänken. Das Urteil war immer dasselbe. Ich finde das beruhigend.")],
               [("Mattie: Win my vote and I'll vote. It won't count, but I'll do it beautifully.", "Mattie: Gewinn meine Stimme, und ich stimme ab. Sie zählt nicht, aber ich mach's wunderschön.")],
               [("Mattie: My vote is yours. Keep the receipt.", "Mattie: Meine Stimme gehört dir. Heb die Quittung auf.")], 1750),
@@ -326,7 +326,7 @@ def heath(world):
               [("Dunstan: I'm on the jury because the clan owes me money. They pay me in verdicts.", "Dunstan: Ich bin Geschworener, weil der Clan mir Geld schuldet. Sie zahlen mich in Urteilen.")],
               [("Dunstan: Three votes down, two to go. Or three to go, if you lose to me. Do the maths.", "Dunstan: Drei Stimmen weg, zwei übrig. Oder drei übrig, wenn du gegen mich verlierst. Rechne nach.")],
               [("Dunstan: Fine. Vote cast. Into a very deep well, probably.", "Dunstan: Schön. Stimme abgegeben. In einen sehr tiefen Brunnen, vermutlich.")], 1800),
-        juror(4, "wick", 2, 20, "right", tr("Juror Wick", "Geschworene Wick"), team(("Puffbellow", 34), ("Charsprout", 34), ("Sablowl", 35)),
+        juror(4, "wick", 2, 20, "right", tr("Juror Wick", "Geschworene Wick"), team(("Puffbellow", 34), ("Fumelet", 34), ("Sablowl", 35)),
               [("Wick: I fell asleep during my last trial. I voted in my sleep. The defendant was hanged in effigy. The effigy was furious.", "Wick: Bei meinem letzten Prozess bin ich eingeschlafen. Ich hab im Schlaf abgestimmt. Der Angeklagte wurde in Abwesenheit gehängt. Als Strohpuppe. Die Puppe war außer sich.")],
               [("Wick: Wake me up, then. If you can.", "Wick: Dann weck mich. Wenn du kannst.")],
               [("Wick: I'm up. I'm up. My vote's yours. What were we voting on?", "Wick: Ich bin wach. Ich bin wach. Meine Stimme gehört dir. Worüber stimmen wir ab?")], 1850),
@@ -485,7 +485,7 @@ def deep(world):
                  [("Tolliver: Lighter than you looked. Like everyone's wages.", "Tolliver: Leichter, als du aussahst. Wie jeder Lohn.")], 2100),
     ]
     crew1 = [
-        wayfarer(world, DEEP, "crabbe", 3, 3, "right", tr("Foreman Crabbe", "Vorarbeiter Crabbe"), team(("Fumewraith", 36), ("Stylox", 36), ("Clinkshell", 37)),
+        wayfarer(world, DEEP, "crabbe", 3, 3, "right", tr("Foreman Crabbe", "Vorarbeiter Crabbe"), team(("Fumewraith", 36), ("Stylox", 36), ("Sablowl", 37)),
                  [("Crabbe: I'm the foreman of a shift that doesn't exist, in a mine that's closed, for a clan that denies me. Very relaxing job.", "Crabbe: Ich bin Vorarbeiter einer Schicht, die es nicht gibt, in einer Grube, die zu ist, für einen Clan, der mich verleugnet. Sehr entspannter Job.")],
                  [("Crabbe: Nobody gets to the bottom gallery. Slagg's orders. Slagg doesn't exist either.", "Crabbe: Keiner kommt in die unterste Strecke. Slaggs Befehl. Slagg gibt es auch nicht.")],
                  [("Crabbe: Go on down, then. Tell nobody I let you. Nobody will believe you anyway.", "Crabbe: Dann geh halt runter. Sag keinem, dass ich dich gelassen hab. Glaubt dir sowieso keiner.")], 2200),
