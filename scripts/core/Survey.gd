@@ -47,19 +47,20 @@ static func reveal(m: MapData, center: Vector2i, radius: int = RADIUS) -> int:
 	GameState.map_cells[m.id] = b
 	return added
 
-## Survey share of [param m] in percent (0-100): walkable cells seen.
-static func percent(m: MapData) -> int:
-	var total: int = 0
-	var seen: int = 0
+## Seen and all walkable cells of [param m] (item 1300: summed per region).
+static func cells(m: MapData) -> Vector2i:
+	var out := Vector2i.ZERO
 	for y: int in m.height:
 		for x: int in m.width:
 			var c := Vector2i(x, y)
-			if not m.is_walkable(c):
-				continue
-			total += 1
-			if is_seen(m, c):
-				seen += 1
-	return 100 if total == 0 else seen * 100 / total
+			if m.is_walkable(c):
+				out += Vector2i(1 if is_seen(m, c) else 0, 1)
+	return out
+
+## Survey share of [param m] in percent (0-100): walkable cells seen.
+static func percent(m: MapData) -> int:
+	var c: Vector2i = cells(m)
+	return 100 if c.y == 0 else c.x * 100 / c.y
 
 ## True if any cell of [param map_id] was seen (the map was visited).
 static func visited(map_id: String) -> bool:

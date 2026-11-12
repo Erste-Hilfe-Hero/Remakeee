@@ -170,12 +170,15 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
+| solenne | `caravanserai` | inside | 12x10 | 1 | 2 | 0 |
+| solenne | `glasswind_flats` | route | 12x34 | 5 | 6 | 86 |
+| solenne | `mirage_kiln` | dungeon | 12x10 + 12x10 + 12x8 | 5 | 7 | 25 |
 | solenne | `oasis_rift` | rift | 12x22 | 0 | 4 | 18 |
 | solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
 | solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
-| | **57 maps** | | | **151** | **101** | **1378** |
+| | **60 maps** | | | **162** | **116** | **1489** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

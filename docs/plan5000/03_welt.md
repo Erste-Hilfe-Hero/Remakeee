@@ -443,7 +443,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1297. [P2] Plane in Corvane die Ausrüstung "River Pole" (de: Staken), mit der man zu Fuß über Stelzstege balanciert, nie schwimmt oder fliegt.
 1298. [P2] Lege für Corvane eigene Wetter-Anteile in data/weather.json an (mehr Regen und Nebel, Herbst als Grundton).
 1299. [P2] Ergänze die Weltkarte so, dass ein Regionswechsel als Umblättern im Kartenbuch erscheint (Funktion hier, Stil in Bereich 6).
-1300. [P2] Trenne die Kartierquote, Funde und Kartografensteine pro Region, damit Corvane eigene Zähler hat.
+1300. [x] [P2] Trenne die Kartierquote, Funde und Kartografensteine pro Region, damit Corvane eigene Zähler hat.
 1301. [P2] Lege in docs/WORLD.md einen Abschnitt "Corvane, Kartenregeln" an: keine nummerierten Wege, Flusslauf als Leitlinie, Orte an Brücken.
 1302. [P2] Ergänze tests/unit um test_corvane_prep.gd, das prüft, dass Corvane-Karten ohne Flag nicht betretbar sind.
 1303. [P2] Bereite den Kai so vor, dass man jederzeit mit der Fähre nach Veydal zurückkommt, ohne Fortschrittsverlust.
@@ -455,7 +455,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1309. [P3] Lege eine Liste "Corvane-Platzhalter" in docs/WORLD.md an, die jede Platzhalter-ID mit der späteren Art-Planung verknüpft.
 1310. [P3] Plane Corvane-NPC-Tagespläne mit Marktzeiten (Markt 6 bis 14 Uhr).
 1311. [P3] Plane einen Corvane-Aussichtsturm, von dem aus man ganz Corvane auf der Weltkarte sichtet.
-1312. [P3] Plane für Corvane 15 versteckte Funde und 12 Kartografensteine nach dem Veydal-Muster.
+1312. [x] [P3] Plane für Corvane 15 versteckte Funde und 12 Kartografensteine nach dem Veydal-Muster.
 1313. [P3] Plane eine Kutschlinie in Corvane zwischen Markt und Saltmill.
 1314. [P3] Plane den Fährweg nach Corvane mit einer Zwischenstation auf einer Insel, die man beim zweiten Besuch betreten kann.
 1315. [P3] Bereite in WorldValidator.gd eine Prüfung vor, dass keine Corvane-Karte auf Veydal-Tabellen zeigt.

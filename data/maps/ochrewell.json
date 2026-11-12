@@ -20,7 +20,7 @@
   "_____.o.____",
   "_____...____",
   "^...____...^",
-  "^....__....^",
+  "_....__....^",
   "^.RR.__.RR.^",
   "^.HH.__.HD.^",
   "^....__....^",
@@ -102,6 +102,14 @@
    "tx": 5,
    "ty": 8,
    "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "to": "glasswind_flats",
+   "tx": 10,
+   "ty": 2,
+   "facing": "left"
   }
  ],
  "npcs": [
@@ -197,6 +205,16 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "lq_sevrin",
+   "x": 10,
+   "y": 15,
+   "facing": "down",
+   "dialogue": "legend_quests/lumivane_guide",
+   "sprite": "elder",
+   "show_flag": "rift_sun_sealed",
+   "hide_flag": "lq_lumivane_ready"
   }
  ],
  "signs": [
@@ -236,6 +254,12 @@
    "y": 13,
    "open_flag": "veil_factor_beaten",
    "closed": "H"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "open_flag": "rift_tower_sealed",
+   "closed": "^"
   }
  ],
  "secrets": [
