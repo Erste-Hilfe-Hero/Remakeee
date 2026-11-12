@@ -658,11 +658,11 @@
   "role": "striker",
   "line_id": "zippit",
   "base": {
-   "hp": 85,
-   "atk": 92,
-   "foc": 112,
-   "spd": 125,
-   "def": 75
+   "hp": 75,
+   "atk": 119,
+   "foc": 83,
+   "spd": 132,
+   "def": 69
   },
   "trait": "surge",
   "learnset": {
@@ -3567,10 +3567,10 @@
   "line_id": "ashwren",
   "base": {
    "hp": 84,
-   "atk": 97,
-   "foc": 68,
-   "spd": 113,
-   "def": 76
+   "atk": 104,
+   "foc": 67,
+   "spd": 98,
+   "def": 77
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -14319,11 +14319,11 @@
   "line_id": "morelit",
   "era": 1,
   "base": {
-   "hp": 99,
-   "atk": 80,
-   "foc": 115,
-   "spd": 103,
-   "def": 90
+   "hp": 94,
+   "atk": 74,
+   "foc": 107,
+   "spd": 96,
+   "def": 84
   },
   "trait": "deep_roots",
   "learnset": {
@@ -21991,11 +21991,11 @@
   "line_id": "orrebit",
   "era": 4,
   "base": {
-   "hp": 72,
-   "atk": 58,
-   "foc": 105,
-   "spd": 80,
-   "def": 85
+   "hp": 74,
+   "atk": 59,
+   "foc": 107,
+   "spd": 81,
+   "def": 87
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -22675,11 +22675,11 @@
   "line_id": "lumoth",
   "era": 4,
   "base": {
-   "hp": 64,
-   "atk": 47,
-   "foc": 91,
-   "spd": 58,
-   "def": 61
+   "hp": 63,
+   "atk": 46,
+   "foc": 89,
+   "spd": 57,
+   "def": 60
   },
   "trait": "last_stand",
   "learnset": {
@@ -22737,11 +22737,11 @@
   "line_id": "lumoth",
   "era": 4,
   "base": {
-   "hp": 89,
-   "atk": 59,
-   "foc": 114,
-   "spd": 75,
-   "def": 77
+   "hp": 90,
+   "atk": 60,
+   "foc": 116,
+   "spd": 77,
+   "def": 79
   },
   "trait": "last_stand",
   "learnset": {
@@ -23360,11 +23360,11 @@
   "line_id": "brasshop",
   "era": 4,
   "base": {
-   "hp": 99,
-   "atk": 111,
-   "foc": 75,
-   "spd": 119,
-   "def": 78
+   "hp": 96,
+   "atk": 108,
+   "foc": 74,
+   "spd": 117,
+   "def": 77
   },
   "trait": "last_stand",
   "learnset": {
@@ -23596,17 +23596,17 @@
   ],
   "rarity": "common",
   "region": "halcyra",
-  "role": "striker",
+  "role": "vanguard",
   "line_id": "kitelet",
   "era": 4,
   "base": {
-   "hp": 56,
-   "atk": 74,
-   "foc": 54,
-   "spd": 85,
-   "def": 47
+   "hp": 65,
+   "atk": 77,
+   "foc": 50,
+   "spd": 72,
+   "def": 52
   },
-  "trait": "deep_roots",
+  "trait": "steady",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -23658,17 +23658,17 @@
   ],
   "rarity": "uncommon",
   "region": "halcyra",
-  "role": "striker",
+  "role": "vanguard",
   "line_id": "kitelet",
   "era": 4,
   "base": {
-   "hp": 75,
-   "atk": 100,
-   "foc": 64,
-   "spd": 113,
-   "def": 64
+   "hp": 88,
+   "atk": 103,
+   "foc": 59,
+   "spd": 95,
+   "def": 71
   },
-  "trait": "deep_roots",
+  "trait": "steady",
   "learnset": {
    "1": [
     "Breeze Slice",
@@ -23723,17 +23723,17 @@
   ],
   "rarity": "shy",
   "region": "halcyra",
-  "role": "striker",
+  "role": "vanguard",
   "line_id": "kitelet",
   "era": 4,
   "base": {
-   "hp": 84,
-   "atk": 126,
-   "foc": 81,
-   "spd": 145,
-   "def": 74
+   "hp": 99,
+   "atk": 130,
+   "foc": 75,
+   "spd": 122,
+   "def": 84
   },
-  "trait": "deep_roots",
+  "trait": "steady",
   "learnset": {
    "1": [
     "Draft Needle",
@@ -24161,7 +24161,7 @@
    "spd": 75,
    "def": 56
   },
-  "trait": "steady",
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Bowl Over",
@@ -24220,7 +24220,7 @@
    "spd": 92,
    "def": 63
   },
-  "trait": "steady",
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Grit Jab",
@@ -24285,7 +24285,7 @@
    "spd": 121,
    "def": 81
   },
-  "trait": "steady",
+  "trait": "deep_roots",
   "learnset": {
    "1": [
     "Grit Jab",
@@ -24402,11 +24402,11 @@
   "line_id": "spumlet",
   "era": 4,
   "base": {
-   "hp": 68,
-   "atk": 95,
-   "foc": 62,
-   "spd": 105,
-   "def": 62
+   "hp": 66,
+   "atk": 93,
+   "foc": 61,
+   "spd": 103,
+   "def": 61
   },
   "trait": "slick",
   "learnset": {
@@ -24639,11 +24639,11 @@
   "line_id": "wellet",
   "era": 4,
   "base": {
-   "hp": 79,
-   "atk": 50,
-   "foc": 92,
-   "spd": 73,
-   "def": 67
+   "hp": 80,
+   "atk": 51,
+   "foc": 94,
+   "spd": 75,
+   "def": 68
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -24700,11 +24700,11 @@
   "line_id": "glintwader",
   "era": 4,
   "base": {
-   "hp": 44,
-   "atk": 71,
-   "foc": 47,
-   "spd": 81,
-   "def": 39
+   "hp": 47,
+   "atk": 75,
+   "foc": 50,
+   "spd": 85,
+   "def": 41
   },
   "trait": "last_stand",
   "learnset": {
@@ -24762,11 +24762,11 @@
   "line_id": "glintwader",
   "era": 4,
   "base": {
-   "hp": 72,
-   "atk": 92,
-   "foc": 67,
-   "spd": 112,
-   "def": 61
+   "hp": 70,
+   "atk": 90,
+   "foc": 65,
+   "spd": 110,
+   "def": 60
   },
   "trait": "last_stand",
   "learnset": {
@@ -25003,11 +25003,11 @@
   "line_id": "brazlet",
   "era": 4,
   "base": {
-   "hp": 83,
-   "atk": 112,
-   "foc": 71,
-   "spd": 96,
-   "def": 75
+   "hp": 82,
+   "atk": 110,
+   "foc": 69,
+   "spd": 94,
+   "def": 73
   },
   "trait": "steady",
   "learnset": {
@@ -25531,11 +25531,11 @@
   "line_id": "gnomonk",
   "era": 4,
   "base": {
-   "hp": 82,
-   "atk": 56,
-   "foc": 108,
-   "spd": 81,
-   "def": 90
+   "hp": 84,
+   "atk": 57,
+   "foc": 110,
+   "spd": 83,
+   "def": 92
   },
   "trait": "light_sleeper",
   "learnset": {
