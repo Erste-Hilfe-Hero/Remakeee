@@ -29,6 +29,12 @@
      "Orrin: The tear is stitched. Mark it on your map, cartographer.",
      "Orrin: Forty years ago I was a boy in this hollow. A woman with a compass sat here and drew the tear. She said it would close one day. Her name was Mirela."
     ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Orrin: Mirela's tear stayed shut. I sit here anyway. Old men need somewhere to be wrong."
+    ]
    }
   ]
  },
