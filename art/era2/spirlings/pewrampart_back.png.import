@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://fpsh5rnp4i5vu"
-path="res://.godot/imported/pewterlord_front.png-2f0b9fb2c5fe60d0eafb1532bc740f53.ctex"
+uid="uid://odmm27wrys8q7"
+path="res://.godot/imported/pewrampart_back.png-f4249ae739cfae12be496b05e5440ce0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/era2/spirlings/pewterlord_front.png"
-dest_files=["res://.godot/imported/pewterlord_front.png-2f0b9fb2c5fe60d0eafb1532bc740f53.ctex"]
+source_file="res://art/era2/spirlings/pewrampart_back.png"
+dest_files=["res://.godot/imported/pewrampart_back.png-f4249ae739cfae12be496b05e5440ce0.ctex"]
 
 [params]
 

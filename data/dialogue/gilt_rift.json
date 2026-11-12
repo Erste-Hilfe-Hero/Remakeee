@@ -1,0 +1,42 @@
+{
+ "spring": {
+  "lines": [
+   "Clear water wells up through white stone. It tastes of nothing at all, which up here is a luxury.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "sign": [
+  "GILT RIFT",
+  "Under the Gilt House the gold runs like water. The Rift drinks it. So does the family."
+ ],
+ "heir": [
+  "Leopold: Father says the Rift is family business. Everything is family business. Even you."
+ ],
+ "heir_intro": [
+  "Leopold: I'm the third heir. I need a win. Any win."
+ ],
+ "heir_defeat": [
+  "Leopold: Don't tell Father. Actually, do. He'll be pleased someone beat me."
+ ],
+ "aurek": {
+  "lines": [
+   "My family built every roof you admired on the way up. Gold on top, bones in the walls. Welcome home."
+  ],
+  "after_flag": [
+   {
+    "flag": "rift_v4_gilt_sealed",
+    "lines": [
+     "Aurek: Mended. Good. Come to the feast tonight. Sit next to me. Taste everything first.",
+     "Aurek: My children send their love. And a food taster's bill."
+    ]
+   }
+  ]
+ },
+ "aurek_intro": [
+  "My family built every roof you admired on the way up. Gold on top, bones in the walls. Welcome home."
+ ],
+ "aurek_defeat": [
+  "Take the Rift. My children will take the house from me by dinner anyway. They learned from the best."
+ ]
+}

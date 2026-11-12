@@ -1,5 +1,5 @@
 {
-  "_comment": "Era I look per region (world area, Act II: Corvane gets its own world). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, which reads this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette. Post-game regions add their era: Halcyra (era 4, data/region4.json) keeps four inks for the Era I Retro filter, and its Era IV colours are swatches (4 tones each, darkest to lightest) with tiles = TilesetFactory.Kind -> swatch for tools/art/gen_tiles_halcyra.py, which paints art/era4/tiles/overworld_halcyra.png with 8 tones per swatch; stage = colours over data/era4_stage.json for battles in the region (EraManager.stage_colors). Quillmarch (era 3, data/region3.json) has no screen filter: its palette is the 16-colour atlas palette for tools/art/gen_tiles_quillmarch.py (art/era3/tiles/overworld_quillmarch.png); EraManager.inks_for() only takes a four-ink palette.",
+  "_comment": "Era I look per region (world area, Act II: Corvane gets its own world). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, which reads this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette. Post-game regions add their era: Halcyra (era 4, data/region4.json) keeps four inks for the Era I Retro filter, and its Era IV colours are swatches (4 tones each, darkest to lightest) with tiles = TilesetFactory.Kind -> swatch for tools/art/gen_tiles_halcyra.py, which paints art/era4/tiles/overworld_halcyra.png with 8 tones per swatch; stage = colours over data/era4_stage.json for battles in the region (EraManager.stage_colors). Quillmarch (era 3, data/region3.json) has no screen filter: its palette is the 16-colour atlas palette for tools/art/gen_tiles_quillmarch.py (art/era3/tiles/overworld_quillmarch.png); EraManager.inks_for() only takes a four-ink palette. Quivermoor (era 5, data/region5.json) works like Halcyra with tools/art/gen_tiles_quivermoor.py (art/era5/tiles/overworld_quivermoor.png, 12 tones per swatch) and adds camera: values over data/era5_anim.json camera for battles in the region (BattleCamera.cam_cfg), so the moor sways a little more.",
   "regions": {
     "corvane": {
       "biome": "dye_fen",
@@ -219,6 +219,146 @@
         "hatched_cliff"
       ],
       "arrive": "The lines grow sharp here. Quillmarch engraves everything, especially what you owe."
+    },
+    "quivermoor": {
+      "era": 5,
+      "biome": "breathing_moor",
+      "palette": [
+        "141a16",
+        "4a6038",
+        "a2aa6c",
+        "e8e2c6"
+      ],
+      "props": [
+        "bog_water",
+        "peat_bank",
+        "moss_hummock",
+        "walking_oak",
+        "reed_bed",
+        "candle_post",
+        "raft_deck",
+        "root_arch",
+        "wax_vat",
+        "bloom_bed"
+      ],
+      "swatches": {
+        "grass": [
+          "1e2c1a",
+          "4a6a32",
+          "8aa456",
+          "d2dc9a"
+        ],
+        "foliage": [
+          "142218",
+          "2e4a2a",
+          "5e7a42",
+          "a8b878"
+        ],
+        "stone": [
+          "2e3030",
+          "5e625a",
+          "9a9c8c",
+          "dcdccc"
+        ],
+        "peat": [
+          "2a1e16",
+          "5a4230",
+          "8e7454",
+          "cdb894"
+        ],
+        "water": [
+          "101e22",
+          "24464a",
+          "4e7a72",
+          "a4c4b0"
+        ],
+        "wood": [
+          "2a1c12",
+          "5a3e24",
+          "8e6a40",
+          "d0b07c"
+        ],
+        "thatch": [
+          "4a2c22",
+          "8a5238",
+          "c08a64",
+          "f0d8b8"
+        ],
+        "rift": [
+          "1c1028",
+          "4a2a5a",
+          "8a5a9a",
+          "dcc4e4"
+        ],
+        "lamp": [
+          "3a2414",
+          "9a5a1c",
+          "f0a640",
+          "fff0c0"
+        ],
+        "flower": [
+          "3a1e2c",
+          "8a4a6a",
+          "c88aa0",
+          "f4dce4"
+        ],
+        "reed": [
+          "22281a",
+          "4e5a30",
+          "8a9256",
+          "ccd09a"
+        ]
+      },
+      "tiles": {
+        "GRASS": "grass",
+        "TALL_GRASS": "foliage",
+        "PATH": "peat",
+        "WATER": "water",
+        "TREE": "foliage",
+        "WALL": "stone",
+        "ROOF": "thatch",
+        "DOOR": "wood",
+        "FLOOR": "peat",
+        "FENCE": "wood",
+        "SIGN": "wood",
+        "FLOWER": "flower",
+        "COUNTER": "wood",
+        "INNER_WALL": "stone",
+        "SPRING": "water",
+        "RIFT": "rift",
+        "CLIFF": "stone",
+        "STAIRS": "stone",
+        "REEDS": "reed",
+        "SCREE": "stone",
+        "PIER": "wood",
+        "TOWER": "stone",
+        "LAMP": "lamp",
+        "ROCK": "stone",
+        "WADE": "water",
+        "BOULDER": "stone",
+        "PLATE": "stone",
+        "CRACKED": "peat",
+        "VINES": "foliage",
+        "PLANK": "wood"
+      },
+      "stage": {
+        "sky_top": "2c3a3c",
+        "sky_low": "c8a868",
+        "far": "4a5a58",
+        "mid": "3e5236",
+        "near": "2e4228",
+        "floor_near": "5e6a3a",
+        "floor_far": "8e9058",
+        "grid": "4a5630",
+        "slab_top": "b8a878",
+        "slab_side": "5a4230",
+        "shadow": "0e1410"
+      },
+      "camera": {
+        "zoom": 1.24,
+        "pan_share": 0.45
+      },
+      "arrive": "The ground breathes under your boots. In Quivermoor every Spirling moves, every path wanders and every friend has a price."
     }
   }
 }

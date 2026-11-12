@@ -1,0 +1,126 @@
+{
+ "name": "Sunfall Terraces",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "sunfall_terraces",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^,,..__..,,^",
+  "^,,..==..,,^",
+  "^^^^^==^^^^^",
+  "^T,,,..,,,T^",
+  "^.,,,..,,,.^",
+  "^.........*^",
+  "^^==^^^^^^^^",
+  "^.::......T^",
+  "^.::,,,,,..^",
+  "^...,,,,,..^",
+  "^^^^^^^^==^^",
+  "^T.......,,^",
+  "^.:::....,,^",
+  "^.:::.S....^",
+  "^^^==^^^^^^^",
+  "^,,,.....,,^",
+  "^,,,..T..,,^",
+  "^..........^",
+  "^^^^^^^==^^^",
+  "^*...::....^",
+  "^....::__..^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "paleshore",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "paleshore",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "gildcrest",
+   "tx": 1,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "gildcrest",
+   "tx": 1,
+   "ty": 9,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "vintner",
+   "x": 6,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "sunfall_terraces/vintner",
+   "sprite": "villager",
+   "trainer": "Vintner Ottavio",
+   "intro": "sunfall_terraces/vintner_intro",
+   "defeat": "sunfall_terraces/vintner_defeat",
+   "money": 3800,
+   "team": [
+    {
+     "species": "Corocub",
+     "level": 88
+    },
+    {
+     "species": "Obelith",
+     "level": 89
+    },
+    {
+     "species": "Bakedil",
+     "level": 89
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 6,
+   "y": 14,
+   "dialogue": "sunfall_terraces/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 6,
+   "item": "power_brew",
+   "count": 1,
+   "flag": "find_sunfall_terraces_1"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_sunfall_terraces_2"
+  },
+  {
+   "x": 11,
+   "y": 18,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_sunfall_terraces_3"
+  }
+ ]
+}

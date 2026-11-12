@@ -78,18 +78,25 @@ func test_towns_and_routes_link_up() -> void:
 				reached[b] = true
 	assert_eq(reached.size(), towns.size(), "every town reachable from the top station")
 
-func test_slots_have_stand_ins_and_rings_climb_past_vellmarch() -> void:
+func test_slots_feed_the_route_tables() -> void:
 	var last: int = 0
-	for w: Dictionary in Region2.wardens():
-		last = maxi(last, int(w.ring))
 	for r: Dictionary in _d.routes:
-		assert_gte(int(r.ring[0]), last, "%s ring" % r.id)
+		assert_gte(int(r.ring[0]), last, "%s ring climbs" % r.id)
 		last = int(r.ring[0])
-		var total: int = 0
-		for s: Dictionary in r.slots:
-			total += int(s.weight)
-			assert_true(Database.spirlings.has(Region4.slot_species(s)), str(s.slot))
-		assert_eq(total, 100, r.id)
+		var spawns: Array = EncounterTable.table(str(r.id)).get("spawns", [])
+		assert_eq(spawns.size(), (r.slots as Array).size(), "%s table has one spawn per slot" % r.id)
+		for i: int in mini(spawns.size(), (r.slots as Array).size()):
+			var s: Dictionary = r.slots[i]
+			var sp: Dictionary = spawns[i]
+			var sd: SpirlingData = Database.species(Region4.slot_species(s))
+			assert_not_null(sd, str(s.slot))
+			assert_eq(str(sp.species), Region4.slot_species(s), str(s.slot))
+			assert_eq(int(sp.weight), int(s.weight), str(s.slot))
+			assert_eq(str(sp.ground), str(s.ground), str(s.slot))
+			assert_eq([int(sp.min), int(sp.max)], [int(r.ring[0]), int(r.ring[1])], str(s.slot))
+			if sd != null:
+				var band: Vector2i = SpirlingData.WEIGHT_BANDS[sd.rarity]
+				assert_between(int(s.weight), band.x, band.y, "%s weight in the %s band" % [s.slot, sd.rarity])
 	assert_gt(Region4.open_slots().size(), 0, "slots wait for Halcyra's own Spirlings")
 	assert_false(Region4.route("mirror_flats").is_empty())
 
@@ -112,7 +119,7 @@ func test_next_warden_follows_sealed_rifts() -> void:
 	assert_true(Region4.next_warden(f).is_empty(), "shut before the Era III finale")
 	f["era3_finale_done"] = true
 	assert_eq(str(Region4.next_warden(f).id), "isaura")
-	f["v4_rift_orrery_sealed"] = true
+	f["rift_v4_orrery_sealed"] = true
 	assert_eq(str(Region4.next_warden(f).id), "halloran")
 	for r: Dictionary in _d.rifts:
 		f[r.flag] = true

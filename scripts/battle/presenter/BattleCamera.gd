@@ -5,8 +5,12 @@ extends RefCounted
 ## scale and pivot_offset only, so the screen shake (which owns position) keeps working.
 ## Off below Era V and under reduced motion.
 
-static func cam_cfg() -> Dictionary:
-	return BattleAnim.config().get("camera", {})
+## data/era5_anim.json "camera" with the region's own "camera" from data/region_looks.json on top
+## (Quivermoor sways a little more). [param region] defaults to the region on screen.
+static func cam_cfg(region: String = "") -> Dictionary:
+	var out: Dictionary = (BattleAnim.config().get("camera", {}) as Dictionary).duplicate()
+	out.merge(RegionLook.look(region if not region.is_empty() else EraManager.current_region).get("camera", {}), true)
+	return out
 
 ## Zoom factor and pivot for a field of [param field_size] framing [param a] against [param b].
 ## The pivot stays inside the field, so zooming (factor >= 1) never shows an edge.
