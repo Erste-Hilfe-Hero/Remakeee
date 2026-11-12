@@ -9,11 +9,7 @@
     "STONE": ["3a3230", "7a6a5c", "b4a48c", "e8e0cc"],
     "GALE":  ["2c4040", "5e9a94", "a6d2c4", "eef4ea"],
     "LUMEN": ["54402a", "c4a05a", "ecd69a", "fbf6e4"],
-    "UMBRA": ["2a2038", "5c4878", "9c88b0", "e2d8e8"],
-    "INK": ["1a1a2a", "3a3a5a", "7a7aa0", "d8d8e8"],
-    "ECHO": ["3a2a4a", "7a5a9a", "b8a0d4", "f0e8f8"],
-    "RUST": ["3a1e14", "8a4224", "c87a48", "f0d0b0"],
-    "MASK": ["2a1a2a", "6a3a5a", "b07898", "f0dce8"]
+    "UMBRA": ["2a2038", "5c4878", "9c88b0", "e2d8e8"]
   },
   "spirling_rules": {
     "_doc": "Palette of a line = its first member's elements: tones 0,1,3 from the first element, tone 2 from the second element (accent). Lines sharing the same element pair are spread by line_hue_step degrees each so they stay distinct.",
