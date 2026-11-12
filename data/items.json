@@ -649,7 +649,7 @@
  {
   "id": "rg_bond_seal",
   "name": "Bond Seal",
-  "description": "The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.",
+  "description": "The next bond with a wild Spirling succeeds for sure, also with ancient and one-of-a-kind ones. Rift Wardens and other Wayfarers' Spirlings can never be bonded.",
   "battle": false,
   "shop": true,
   "bond_sure": true
@@ -843,6 +843,13 @@
    "mult": 1.0,
    "battles": 1
   }
+ },
+ {
+  "id": "rg_overcharge_plus",
+  "name": "Overcharge Core Plus",
+  "description": "Use it before an Open League battle: the whole team starts with 12 instead of 10 energy. Only works in the Open League.",
+  "battle": false,
+  "shop": true
  },
  {
   "id": "rg_last_stand",

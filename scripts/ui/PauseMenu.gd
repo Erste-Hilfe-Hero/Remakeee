@@ -902,10 +902,12 @@ static func gear_picture(id: String) -> Texture2D:
 func _teach_echo(id: String) -> void:
 	var it: Dictionary = Database.item(id)
 	var mv: MoveData = Database.move(str(it.teaches))
-	var names: Array[String] = []
+	# Who can't learn it stands grey with the reason (item 1921).
+	var rows: Array[Dictionary] = []
 	for s: Spirling in GameState.party:
-		names.append("%s%s" % [MenuHost.party_line(s), "" if GameState.can_learn_echo(s, id) else "  (can't)"])
-	var who: int = await pick_strings("Teach %s to?" % mv.move_name, names)
+		var why: String = echo_reason(s, id)
+		rows.append({"text": MenuHost.party_line(s), "disabled": not why.is_empty(), "why": why})
+	var who: int = await pick("Teach %s to?" % mv.move_name, rows)
 	if who < 0:
 		return
 	var s: Spirling = GameState.party[who]
@@ -914,16 +916,31 @@ func _teach_echo(id: String) -> void:
 		return
 	var forget: int = -1
 	if s.moves.size() >= Spirling.MAX_MOVES:
-		var known: Array[String] = []
-		for m: MoveData in s.moves:
-			known.append(m.move_name)
-		forget = await pick_strings("Forget which art for %s?" % mv.move_name, known)
+		forget = await pick("Forget which art for %s?" % mv.move_name, art_rows(s.moves))
 		if forget < 0:
 			return
 	if not GameState.learn_from_item(s, id, forget):
 		return
 	Sound.sfx("level_up")
 	await info("%s learned %s!" % [s.display_name(), mv.move_name])
+
+## Why [param s] can't learn the art of Echo Crystal [param item_id]; empty if it can.
+static func echo_reason(s: Spirling, item_id: String) -> String:
+	if GameState.can_learn_echo(s, item_id):
+		return ""
+	var mv: MoveData = Database.move(str(Database.item(item_id).get("teaches", "")))
+	if mv != null and s.moves.has(mv):
+		return "Already knows this art."
+	return "Wrong element."
+
+## Known arts as rows: the name, and element, power and energy in the line below (item 1923).
+static func art_rows(moves: Array[MoveData]) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for m: MoveData in moves:
+		var power: String = "-" if m.power <= 0 else str(m.power)
+		out.append({"text": m.move_name, "hint": "%s  %s  %s" % [Loc.t(Elements.element_name(m.element)),
+			Loc.t("Power %s" % power), Loc.t("Energy %d" % m.energy_cost)]})
+	return out
 
 ## Move Memory (item 4457): any art the Spirling could know at its Ring, at any time.
 func _relearn(s: Spirling) -> void:
@@ -939,10 +956,7 @@ func _relearn(s: Spirling) -> void:
 		return
 	var forget: int = -1
 	if s.moves.size() >= Spirling.MAX_MOVES:
-		var known: Array[String] = []
-		for m: MoveData in s.moves:
-			known.append(Loc.t(m.move_name))
-		forget = await pick_strings(Loc.t("Forget which art for %s?") % shown[pick], known)
+		forget = await pick(Loc.t("Forget which art for %s?") % shown[pick], art_rows(s.moves))
 		if forget < 0:
 			return
 	if GameState.relearn(s, names[pick], forget):

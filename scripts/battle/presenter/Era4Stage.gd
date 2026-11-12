@@ -13,6 +13,11 @@ func _init() -> void:
 	cfg = EraManager.stage_config().duplicate()
 	cfg["colors"] = EraManager.stage_colors(EraManager.current_region)
 
+## Tints the stage for the place the battle started (lake, ridge, ember, voice).
+func set_terrain(terrain: String) -> void:
+	cfg["colors"] = EraManager.stage_colors(EraManager.current_region, terrain)
+	queue_redraw()
+
 func _process(delta: float) -> void:
 	if Juice.reduced():
 		return
