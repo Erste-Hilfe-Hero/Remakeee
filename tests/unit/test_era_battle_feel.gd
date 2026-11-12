@@ -355,6 +355,8 @@ func test_weather_comes_from_the_sky_field_only() -> void:
 	var m := BattleModel.new([Spirling.new(Database.species("Kindlop"), 5)] as Array[Spirling], [Spirling.new(Database.species("Zippit"), 5)] as Array[Spirling], true, 1)
 	assert_eq(BattleWeather.weather_of(m), "", "no field, no weather")
 	for k: String in BattleWeather.KINDS:
+		if k == "wind":
+			continue  # lays no field (tests/unit/test_era_battle_feel4.gd)
 		var f: Dictionary = WeatherCycle.battle_field(k)
 		assert_false(f.is_empty(), k)
 		m.field = str(f.field)
@@ -393,8 +395,8 @@ func test_weather_draws_and_stills_under_reduced_motion() -> void:
 		GameState.reduce_motion = false
 	var off := BattleWeather.new()
 	add_child_autofree(off)
-	off.setup("wind", 5)
-	assert_false(off.visible, "wind lays no field and shows nothing")
+	off.setup("hail", 5)
+	assert_false(off.visible, "an unknown sky shows nothing")
 
 func test_era_three_and_four_effect_art() -> void:
 	for e: int in [3, 4]:
