@@ -857,7 +857,31 @@
      ],
      "show_flag": "beat_juno_2",
      "ai": 3,
-     "money": 2000
+     "money": 2000,
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Millvane",
+        "level": 47
+       },
+       {
+        "species": "Smeltmaw",
+        "level": 47
+       },
+       {
+        "species": "Glassfell",
+        "level": 48
+       },
+       {
+        "species": "Tempestrel",
+        "level": 48
+       },
+       {
+        "species": "Millvane",
+        "level": 48
+       }
+      ]
+     }
     }
    ],
    "signs": [
@@ -983,7 +1007,31 @@
      "defeat": "soot_vaults/auditor_defeat",
      "money": 2800,
      "ai": 3,
-     "beaten_flag": "beat_auditor"
+     "beaten_flag": "beat_auditor",
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Duskdigger",
+        "level": 47
+       },
+       {
+        "species": "Burinox",
+        "level": 47
+       },
+       {
+        "species": "Calderox",
+        "level": 48
+       },
+       {
+        "species": "Obsidroth",
+        "level": 48
+       },
+       {
+        "species": "Duskdigger",
+        "level": 48
+       }
+      ]
+     }
     },
     {
      "id": "scribe",

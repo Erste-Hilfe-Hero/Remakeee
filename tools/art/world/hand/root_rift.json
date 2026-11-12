@@ -1,0 +1,63 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_darrow",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "root_rift/darrow",
+    "sprite": "warden",
+    "trainer": "Warden Darrow",
+    "warden": "root",
+    "team": [
+     {
+      "species": "Thornback",
+      "level": 25
+     },
+     {
+      "species": "Frondmere",
+      "level": 26
+     },
+     {
+      "species": "Reedwarden",
+      "level": 25
+     },
+     {
+      "species": "Marshfife",
+      "level": 26
+     }
+    ],
+    "intro": "root_rift/darrow_intro",
+    "defeat": "root_rift/darrow_defeat",
+    "ai": 2,
+    "money": 1400,
+    "rule": "vine_tangle",
+    "mend_items": [
+     "echo_root_grip"
+    ],
+    "rematch_after": "story_complete",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Thornback",
+       "level": 33
+      },
+      {
+       "species": "Frondmere",
+       "level": 34
+      },
+      {
+       "species": "Reedwarden",
+       "level": 33
+      },
+      {
+       "species": "Marshfife",
+       "level": 34
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

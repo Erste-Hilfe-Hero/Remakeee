@@ -30,7 +30,31 @@
     "leaves": true,
     "hide_flag": "beat_juno_2",
     "ai": 3,
-    "money": 1700
+    "money": 1700,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Ashcrest",
+       "level": 40
+      },
+      {
+       "species": "Glassfell",
+       "level": 40
+      },
+      {
+       "species": "Smeltmaw",
+       "level": 41
+      },
+      {
+       "species": "Tempestrel",
+       "level": 41
+      },
+      {
+       "species": "Millvane",
+       "level": 41
+      }
+     ]
+    }
    },
    {
     "id": "wenna",

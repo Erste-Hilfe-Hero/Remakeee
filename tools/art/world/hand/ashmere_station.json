@@ -54,7 +54,31 @@
     "leaves": true,
     "hide_flag": "beat_juno_1",
     "ai": 2,
-    "money": 1400
+    "money": 1400,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Ashcrest",
+       "level": 39
+      },
+      {
+       "species": "Glassfell",
+       "level": 39
+      },
+      {
+       "species": "Smeltmaw",
+       "level": 40
+      },
+      {
+       "species": "Tempestrel",
+       "level": 40
+      },
+      {
+       "species": "Millvane",
+       "level": 40
+      }
+     ]
+    }
    },
    {
     "id": "lq_corla",

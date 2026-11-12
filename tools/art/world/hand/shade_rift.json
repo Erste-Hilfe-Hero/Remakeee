@@ -12,5 +12,133 @@
     "hide_flag": "first_voice_vorlucent_away"
    }
   ]
+ },
+ "replace": {
+  "npcs": [
+   {
+    "id": "veit_s",
+    "x": 3,
+    "y": 19,
+    "facing": "right",
+    "dialogue": "shade_rift/veit",
+    "sprite": "ranger",
+    "color": "5a4a3a",
+    "trainer": "Veit Harrow",
+    "team": [
+     {
+      "species": "Shalebat",
+      "level": 35
+     },
+     {
+      "species": "Duskdigger",
+      "level": 35
+     },
+     {
+      "species": "Obsidroth",
+      "level": 36
+     },
+     {
+      "species": "Calderox",
+      "level": 36
+     }
+    ],
+    "intro": "shade_rift/veit_intro",
+    "defeat": "shade_rift/veit_defeat",
+    "beaten_flag": "beat_veit_3",
+    "leaves": true,
+    "hide_flag": "beat_veit_3",
+    "ai": 3,
+    "money": 1700,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Clinkshell",
+       "level": 56
+      },
+      {
+       "species": "Duskdigger",
+       "level": 56
+      },
+      {
+       "species": "Obsidroth",
+       "level": 57
+      },
+      {
+       "species": "Calderox",
+       "level": 57
+      },
+      {
+       "species": "Clinkshell",
+       "level": 57
+      }
+     ]
+    }
+   },
+   {
+    "id": "warden_odalys",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "shade_rift/odalys",
+    "sprite": "warden",
+    "trainer": "Warden Odalys",
+    "warden": "shade",
+    "team": [
+     {
+      "species": "Silentra",
+      "level": 35
+     },
+     {
+      "species": "Fenwarden",
+      "level": 36
+     },
+     {
+      "species": "Burinox",
+      "level": 35
+     },
+     {
+      "species": "Mendlace",
+      "level": 35
+     },
+     {
+      "species": "Scrivane",
+      "level": 36
+     }
+    ],
+    "intro": "shade_rift/odalys_intro",
+    "defeat": "shade_rift/odalys_defeat",
+    "ai": 2,
+    "money": 1700,
+    "rule": "night_dark",
+    "mend_items": [
+     "echo_night_veil"
+    ],
+    "rematch_after": "story_complete",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Silentra",
+       "level": 49
+      },
+      {
+       "species": "Fenwarden",
+       "level": 50
+      },
+      {
+       "species": "Burinox",
+       "level": 49
+      },
+      {
+       "species": "Mendlace",
+       "level": 49
+      },
+      {
+       "species": "Scrivane",
+       "level": 50
+      }
+     ]
+    }
+   }
+  ]
  }
 }

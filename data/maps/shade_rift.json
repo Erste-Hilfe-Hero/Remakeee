@@ -85,7 +85,31 @@
    "leaves": true,
    "hide_flag": "beat_veit_3",
    "ai": 3,
-   "money": 1700
+   "money": 1700,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Clinkshell",
+      "level": 56
+     },
+     {
+      "species": "Duskdigger",
+      "level": 56
+     },
+     {
+      "species": "Obsidroth",
+      "level": 57
+     },
+     {
+      "species": "Calderox",
+      "level": 57
+     },
+     {
+      "species": "Clinkshell",
+      "level": 57
+     }
+    ]
+   }
   },
   {
    "id": "sabe",
@@ -196,7 +220,31 @@
    "mend_items": [
     "echo_night_veil"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Silentra",
+      "level": 49
+     },
+     {
+      "species": "Fenwarden",
+      "level": 50
+     },
+     {
+      "species": "Burinox",
+      "level": 49
+     },
+     {
+      "species": "Mendlace",
+      "level": 49
+     },
+     {
+      "species": "Scrivane",
+      "level": 50
+     }
+    ]
+   }
   },
   {
    "id": "vorlucent",

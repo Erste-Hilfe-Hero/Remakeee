@@ -427,7 +427,31 @@
        "species": "Rainmantle",
        "level": 28
       }
-     ]
+     ],
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Wickmoth",
+        "level": 32
+       },
+       {
+        "species": "Millvane",
+        "level": 33
+       },
+       {
+        "species": "Wickmoth",
+        "level": 32
+       },
+       {
+        "species": "Rainmantle",
+        "level": 34
+       },
+       {
+        "species": "Ferrowyn",
+        "level": 34
+       }
+      ]
+     }
     },
     {
      "id": "nib_5",

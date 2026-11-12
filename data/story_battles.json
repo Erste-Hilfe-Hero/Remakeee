@@ -26,7 +26,31 @@
   "lose": "corvane/kestra_2_lose",
   "win_flags": [
    "kestra_duel_2"
-  ]
+  ],
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Tempestrel",
+     "level": 27
+    },
+    {
+     "species": "Glimmerax",
+     "level": 26
+    },
+    {
+     "species": "Shalebat",
+     "level": 26
+    },
+    {
+     "species": "Gloamquill",
+     "level": 25
+    },
+    {
+     "species": "Gloamquill",
+     "level": 27
+    }
+   ]
+  }
  },
  "veit_2": {
   "trainer": "Veit Harrow",
@@ -51,7 +75,31 @@
   "ai": 3,
   "money": 1800,
   "defeat": "ashmere/veit_2_defeat",
-  "lose": "ashmere/veit_plate_wait"
+  "lose": "ashmere/veit_plate_wait",
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Brookbaron",
+     "level": 41
+    },
+    {
+     "species": "Duskdigger",
+     "level": 42
+    },
+    {
+     "species": "Obsidroth",
+     "level": 43
+    },
+    {
+     "species": "Calderox",
+     "level": 42
+    },
+    {
+     "species": "Brookbaron",
+     "level": 43
+    }
+   ]
+  }
  },
  "kestra_3": {
   "trainer": "Cartographer Kestra",
@@ -623,7 +671,31 @@
   "ai": 2,
   "money": 400,
   "defeat": "veydal_side/jinks_2_defeat",
-  "lose": "veydal_side/jinks_2_lose"
+  "lose": "veydal_side/jinks_2_lose",
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Zippit",
+     "level": 11
+    },
+    {
+     "species": "Smoldrake",
+     "level": 12
+    },
+    {
+     "species": "Shalebat",
+     "level": 11
+    },
+    {
+     "species": "Gloamhog",
+     "level": 12
+    },
+    {
+     "species": "Glasstarn",
+     "level": 12
+    }
+   ]
+  }
  },
  "rival_jinks_3": {
   "trainer": "Rival Jinks",
@@ -651,7 +723,31 @@
   "lose": "veydal_side/jinks_3_lose",
   "win_flags": [
    "rival_jinks_done"
-  ]
+  ],
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Fluting",
+     "level": 21
+    },
+    {
+     "species": "Smoldrake",
+     "level": 22
+    },
+    {
+     "species": "Shalebat",
+     "level": 21
+    },
+    {
+     "species": "Kelpup",
+     "level": 21
+    },
+    {
+     "species": "Gloamhog",
+     "level": 22
+    }
+   ]
+  }
  },
  "bounty_b1": {
   "trainer": "Gnasher",

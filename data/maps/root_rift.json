@@ -165,7 +165,27 @@
    "mend_items": [
     "echo_root_grip"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Thornback",
+      "level": 33
+     },
+     {
+      "species": "Frondmere",
+      "level": 34
+     },
+     {
+      "species": "Reedwarden",
+      "level": 33
+     },
+     {
+      "species": "Marshfife",
+      "level": 34
+     }
+    ]
+   }
   }
  ],
  "signs": [

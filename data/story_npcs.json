@@ -743,7 +743,23 @@
     "money": 1250,
     "mend_items": [
      "echo_volt"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Riptail",
+       "level": 32
+      },
+      {
+       "species": "Tempestrel",
+       "level": 33
+      },
+      {
+       "species": "Kelphound",
+       "level": 34
+      }
+     ]
+    }
    }
   ]
  },
@@ -948,7 +964,23 @@
     "money": 1300,
     "mend_items": [
      "echo_lumen"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Lumenewt",
+       "level": 33
+      },
+      {
+       "species": "Glimmerax",
+       "level": 34
+      },
+      {
+       "species": "Verdantusk",
+       "level": 34
+      }
+     ]
+    }
    }
   ]
  },
@@ -982,7 +1014,31 @@
     "leaves": true,
     "ai": 2,
     "money": 1300,
-    "hide_flag": "beat_veit_1"
+    "hide_flag": "beat_veit_1",
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Obsidroth",
+       "level": 32
+      },
+      {
+       "species": "Duskdigger",
+       "level": 33
+      },
+      {
+       "species": "Obsidroth",
+       "level": 35
+      },
+      {
+       "species": "Gloamquill",
+       "level": 35
+      },
+      {
+       "species": "Woadwhorl",
+       "level": 35
+      }
+     ]
+    }
    },
    {
     "id": "moss",
@@ -1510,7 +1566,31 @@
     "money": 1500,
     "mend_items": [
      "echo_stone"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Calderox",
+       "level": 39
+      },
+      {
+       "species": "Obsidroth",
+       "level": 40
+      },
+      {
+       "species": "Gloamquill",
+       "level": 38
+      },
+      {
+       "species": "Duskdigger",
+       "level": 39
+      },
+      {
+       "species": "Gloamquill",
+       "level": 40
+      }
+     ]
+    }
    }
   ],
   "signs": [
@@ -1707,7 +1787,27 @@
     "money": 1600,
     "mend_items": [
      "echo_gale"
-    ]
+    ],
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Leviarch",
+       "level": 43
+      },
+      {
+       "species": "Lumenewt",
+       "level": 42
+      },
+      {
+       "species": "Glimmerax",
+       "level": 43
+      },
+      {
+       "species": "Tempestrel",
+       "level": 42
+      }
+     ]
+    }
    }
   ]
  },

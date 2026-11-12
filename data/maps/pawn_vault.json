@@ -269,7 +269,23 @@
      "win_flags": [
       "vault_done"
      ],
-     "ai": 2
+     "ai": 2,
+     "teams_by_difficulty": {
+      "tamer": [
+       {
+        "species": "Silentra",
+        "level": 26
+       },
+       {
+        "species": "Obsidroth",
+        "level": 27
+       },
+       {
+        "species": "Hushkin",
+        "level": 26
+       }
+      ]
+     }
     }
    ],
    "signs": [],
