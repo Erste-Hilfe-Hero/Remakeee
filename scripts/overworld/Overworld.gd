@@ -32,6 +32,9 @@ var _photo: PhotoMode
 ## The last battle's model (the weekly challenge reads its turn count).
 var last_model: BattleModel
 var _daylight: CanvasModulate
+## Lit windows at night, on a layer the night tint does not reach (buildings plan item 8).
+var _glow_layer: CanvasLayer
+var _glow: WindowGlow
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
@@ -389,6 +392,14 @@ func refresh_daylight() -> void:
 		add_child(t)
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
+	if _glow == null:
+		_glow_layer = CanvasLayer.new()
+		_glow_layer.layer = 1
+		_glow_layer.follow_viewport_enabled = true
+		add_child(_glow_layer)
+		_glow = WindowGlow.new()
+		_glow_layer.add_child(_glow)
+	_glow.show_for(map, WindowGlow.lit(map.outdoor, DayCycle.current(), GameState.day_night))
 	if weather_layer != null:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
