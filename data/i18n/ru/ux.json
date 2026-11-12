@@ -191,6 +191,11 @@
   "leads the team": "во главе команды",
   "leads the team, worn out": "во главе, измотан",
   "unavailable": "недоступно",
-  "worn out": "измотан"
+  "worn out": "измотан",
+  "Only in battle.": "Только в бою.",
+  "Vigor %d/%d to %d/%d": "Бодрость %d/%d до %d/%d",
+  "Already knows this art.": "Уже знает этот приём.",
+  "Wrong element.": "Не та стихия.",
+  "Works on its own at: %s": "Срабатывает само: %s"
  }
 }

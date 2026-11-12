@@ -1,0 +1,12 @@
+{
+ "_comment": "es translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, %d Caminantes) %d min",
+  "A legendary guardian waits in this Rift: %s": "En esta Grieta espera un guardián legendario: %s",
+  "Easy": "Fácil",
+  "Fastest Rifts": "Grietas más rápidas",
+  "Hard": "Difícil",
+  "How hard?": "¿Qué dificultad?",
+  "No Rift was won yet.": "Aún no se ha ganado ninguna Grieta."
+ }
+}

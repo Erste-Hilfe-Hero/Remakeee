@@ -191,6 +191,11 @@
   "leads the team": "prowadzi drużynę",
   "leads the team, worn out": "prowadzi drużynę, wyczerpany",
   "unavailable": "niedostępne",
-  "worn out": "wyczerpany"
+  "worn out": "wyczerpany",
+  "Only in battle.": "Tylko w walce.",
+  "Vigor %d/%d to %d/%d": "Wigor %d/%d na %d/%d",
+  "Already knows this art.": "Zna już tę technikę.",
+  "Wrong element.": "Zły żywioł.",
+  "Works on its own at: %s": "Działa samoczynnie przy: %s"
  }
 }

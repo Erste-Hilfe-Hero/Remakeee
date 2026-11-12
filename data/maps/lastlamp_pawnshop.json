@@ -17,7 +17,7 @@
    "y": 5,
    "to": "lastlamp",
    "tx": 9,
-   "ty": 4,
+   "ty": 6,
    "facing": "down"
   }
  ],
@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/lastlamp_pawnshop_pawnbroker",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_pawned_medal_kord",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_pawned_medal_kord",
+   "sprite": "villager",
+   "show_flag": "q2_pawned_medal_asked"
   }
  ],
  "signs": []

@@ -16,7 +16,7 @@
    "x": 3,
    "y": 5,
    "to": "larkspur_heights",
-   "tx": 9,
+   "tx": 8,
    "ty": 4,
    "facing": "down"
   }
@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/larkspur_heights_counting_house_banker",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_pawned_medal_sidonie",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_pawned_medal_sidonie",
+   "sprite": "villager",
+   "show_flag": "q2_pawned_medal_s1"
   }
  ],
  "signs": []

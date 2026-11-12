@@ -46,7 +46,7 @@ Era II is Vellmarch, Era III Quillmarch, Era IV Halcyra, Era V Quivermoor.
 | Two new elements | Rust, Mask (`data/region2.json` elements) | - | new in Era II |
 | Phone rematches | `WardenRematch`, region rematches | phone itself | new in Era II; Lantern Mail covers messages |
 | Berries | - | one-use held fruit | built: `pith_fruit`, new in Era II |
-| Friendship | - | affection value and friendship evolution | later: needs new unfurl data for many lines |
+| Friendship | Kinship (`Kinship`, `Spirling.kinship`) | - | built: `kinship`, new in Era II |
 | Custom capture balls | - | - | not fitting: Bonding has no balls |
 
 ## Step 3 (shown as Era III)
@@ -61,7 +61,7 @@ Era II is Vellmarch, Era III Quillmarch, Era IV Halcyra, Era V Quivermoor.
 | Effort training | Fine training (`FineTraining`), Spark | - | base |
 | Secret bases | The Burrow (`Burrow`) | - | base |
 | Two new elements | Acid, Frost (`data/region3.json`) | - | new in Era III |
-| Contests | - | beauty or show contests | later: a side activity, not core to battles |
+| Contests | The Showcase in Ledgerholm (`Showcase`) | - | built: `showcase`, new in Era III |
 | Berry blending | - | - | not fitting without berries planted in soil |
 
 ## Step 4 (shown as Era IV)
@@ -75,8 +75,8 @@ Era II is Vellmarch, Era III Quillmarch, Era IV Halcyra, Era V Quivermoor.
 | Partner battles | `BattleModel.set_partner` | - | base |
 | Two new elements | Gilt, Zenith (`data/region4.json`) | - | new in Era IV |
 | Wider battle stage | 2.5D stage (`EraManager.uses_stage_25d`) | - | upgrade in Era IV |
-| Underground and minigames | - | digging minigame | later |
-| New evolutions of old kinds | - | extra unfurl stages for old lines | later, art heavy |
+| Underground and minigames | The Dig site under Paleshore (`DigSite`) | - | built: `dig_site`, new in Era IV |
+| New evolutions of old kinds | - | extra unfurl stages for old lines | later: needs new kinds drawn as grown-up forms of old lines; not in this slice |
 
 ## Step 5 (shown as Era V)
 
@@ -89,7 +89,7 @@ Era II is Vellmarch, Era III Quillmarch, Era IV Halcyra, Era V Quivermoor.
 | EXP scaling by level difference | - | growth by ring difference | built: `ring_scaled_growth`, new in Era V |
 | Shaking grass, rare spots | daily rare visitor (`DailyFind`) | visible daily spot | built: `rustling_spots`, new in Era V |
 | Triple battles | `BattleModel` supports up to 4 per side, one Era I fight (Tide Rift mystic) | regular use | built: `triple_battles`, upgrade in Era V |
-| Rotation battles | - | rotating front | later |
+| Rotation battles | Wheel battles (`BattleModel.wheel`) | - | built: `wheel_battles`, new in Era V |
 | Dream or side world | - | - | not fitting now: Echo duels and Rifts already fill that role |
 
 ## Built functions
@@ -114,9 +114,25 @@ Era II is Vellmarch, Era III Quillmarch, Era IV Halcyra, Era V Quivermoor.
   Spirlings at once (`front` [3, 3], `tools/art/world/quivermoor.py`). Era I has one triple
   fight already; Era V makes them a regular part of the roads.
 
+- `kinship` (Era II): `Spirling.kinship` 0 to 100. +2 for each won battle a Spirling fought in,
+  +1 for the team every 128 steps, -5 when knocked out (`Kinship`, `data/era_activities.json`).
+  Nothing moves before Era II. Hushkin, Blotling and Seamlet got a second unfurl path
+  `{"rule": "kinship", "value": 60}` to the same next form, next to their own rule. Shown on the
+  storage card.
+- `showcase` (Era III): Stagewright Pell in Ledgerholm. The day picks a theme (Grace, Might,
+  Poise, Wit = Pace, Might, Guard, Focus). Three rounds, one art each; appeal = theme stat / 4,
+  +6 own element, +4 status art, + kinship / 10, the same art twice in a row counts half. Three
+  rivals score 70, 85 and 97 % of the best possible show; prizes 1500, 700, 300 coins
+  (`Showcase`).
+- `dig_site` (Era IV): Old Digger Hesper in Paleshore. Once a day a 6 x 4 field with 4 buried
+  finds and 4 rocks, 9 swings, a rock costs 2 (`DigSite`). Same field for everyone on a day.
+- `wheel_battles` (Era V): the Quivermoor Rift acolytes fight wheel battles: at the end of each
+  turn the front of both sides steps aside for the next standing one of its first three
+  (`BattleModel.wheel`, `WHEEL_TURN` event, kept in replays).
+
 ## Numbers
 
-35 functions in the table: 30 existed already (24 base, 6 era content), 5 built or extended here
-(`sky_battles`, `ring_scaled_growth`, `pith_fruit`, `rustling_spots`, `triple_battles`).
-Still missing and decided "later": friendship, contests, underground minigame, new stages for
-old lines, rotation battles. Not fitting: custom capture balls, berry blending, dream world.
+39 functions in the table: 30 existed already (24 base, 6 era content), 9 built or extended
+(`sky_battles`, `ring_scaled_growth`, `pith_fruit`, `rustling_spots`, `triple_battles`,
+`kinship`, `showcase`, `dig_site`, `wheel_battles`). Still missing: new unfurl stages for old
+lines (needs new art). Not fitting: custom capture balls, berry blending, dream world.

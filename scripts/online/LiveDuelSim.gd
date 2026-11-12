@@ -19,7 +19,7 @@ static func of(d: Dictionary) -> LiveDuelSim:
 	if not teams is Array or (teams as Array).size() != 2:
 		return null
 	var s := LiveDuelSim.new()
-	s.model = BattleReplay.build_model(BattleReferee.from_expect({"seed": int(d.get("seed", 0)), "teams": teams, "ai": 2}))
+	s.model = BattleReplay.build_model(snap_of(d))
 	if s.model == null:
 		return null
 	s.model.start()
@@ -35,11 +35,39 @@ static func of(d: Dictionary) -> LiveDuelSim:
 		r += 1
 	return s
 
+## The battle snapshot of duel state [param d]: the server's seed and both picked teams.
+static func snap_of(d: Dictionary) -> Dictionary:
+	return BattleReferee.from_expect({"seed": int(d.get("seed", 0)), "teams": d.get("teams", []), "ai": 2})
+
+## The referee's answer for a live duel (point 3): the rounds the server kept, played again.
+## [param expect] is {seed, teams, moves}. "finished" false means the duel is not over yet.
+static func judge(expect: Dictionary) -> Dictionary:
+	var moves: Variant = expect.get("moves", {})
+	if not moves is Dictionary or (moves as Dictionary).size() > BattleReferee.MAX_INPUTS:
+		return {"verdict": BattleReferee.ERROR, "detail": {"reason": "inputs"}}
+	var teams: Variant = expect.get("teams", [])
+	if not teams is Array or (teams as Array).size() != 2:
+		return {"verdict": BattleReferee.ERROR, "detail": {"reason": "teams"}}
+	for t: Variant in teams:
+		if not t is Array or (t as Array).is_empty() or (t as Array).size() > BattleReferee.MAX_TEAM:
+			return {"verdict": BattleReferee.ERROR, "detail": {"reason": "teams"}}
+		for row: Variant in t:
+			if not row is Dictionary:
+				return {"verdict": BattleReferee.ERROR, "detail": {"reason": "teams"}}
+	var s: LiveDuelSim = of(expect)
+	if s == null:
+		return {"verdict": BattleReferee.ERROR, "detail": {"reason": "rebuild"}}
+	return {"verdict": BattleReferee.OK, "detail": {"finished": s.finished(), "winner": s.winner(), "rounds": s.played}}
+
 ## A choice as the server keeps it: kind, move and swap index only.
 static func input_of(a: BattleAction) -> Dictionary:
 	return {"k": int(a.kind), "m": a.move_index, "s": a.swap_index}
 
 func _action(side: int, input: Dictionary) -> BattleAction:
+	return action_of(model, side, input)
+
+## The action of [param side] for [param input]; anything the battle cannot take now is a Rest.
+static func action_of(model: BattleModel, side: int, input: Dictionary) -> BattleAction:
 	var a: BattleAction = BattleReplay.action_from_dict({"k": int(input.get("k", BattleAction.Kind.REST)),
 		"m": int(input.get("m", -1)), "s": int(input.get("s", -1))})
 	a.side = side
@@ -80,13 +108,16 @@ func winner() -> int:
 
 ## The choices of [param side] this round: [{label, input}].
 func choices(side: int) -> Array:
+	return choices_of(model, side)
+
+static func choices_of(m: BattleModel, side: int) -> Array:
 	var out: Array = []
-	var me: Spirling = model.active_spirling(side)
-	for a: BattleAction in model.legal_actions(side):
+	var me: Spirling = m.active_spirling(side)
+	for a: BattleAction in m.legal_actions(side):
 		var label: String
 		match a.kind:
 			BattleAction.Kind.MOVE: label = Loc.t(me.moves[a.move_index].move_name)
-			BattleAction.Kind.SWAP: label = Loc.t("Swap to %s") % (model.parties[side][a.swap_index] as Spirling).display_name()
+			BattleAction.Kind.SWAP: label = Loc.t("Swap to %s") % (m.parties[side][a.swap_index] as Spirling).display_name()
 			BattleAction.Kind.REST: label = Loc.t("Rest")
 			_: continue
 		out.append({"label": label, "input": input_of(a)})

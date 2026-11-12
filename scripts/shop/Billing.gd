@@ -143,6 +143,8 @@ func block_reason(o: Dictionary, with_riftglass: bool) -> String:
 		return "tier_order"
 	if req.begins_with("none:") and not ShopEffects.none_ok(req, func(k: String) -> int: return unlocked(k)):
 		return "not_yet"
+	if req.begins_with("max:") and not ShopEffects.max_ok(req, unlocked(req.get_slice(":", 1))):
+		return "offer_limit"
 	if with_riftglass:
 		if int(o.get("rg_price", 0)) <= 0:
 			return "not_for_riftglass"

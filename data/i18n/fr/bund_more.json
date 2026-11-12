@@ -1,0 +1,29 @@
+{
+ "_comment": "fr translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  Rang %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  Rang %d  %d/30, %d actifs%s",
+  "Any language": "Toutes les langues",
+  "Anyone, at once": "Tout le monde, tout de suite",
+  "Bund board": "Classement des clans",
+  "Bund rank %d (%d renown)": "Rang de clan %d (%d de renom)",
+  "Bund rank and week goal": "Rang de clan et objectif de la semaine",
+  "Donate items...": "Donner des objets...",
+  "Donated today: %d / %d": "Donné aujourd'hui: %d / %d",
+  "Find a bund...": "Trouver un clan...",
+  "How many?": "Combien?",
+  "Language and joining...": "Langue et adhésion...",
+  "Language of the bund": "Langue du clan",
+  "No bund found. Found your own!": "Aucun clan trouvé. Fonde le tien!",
+  "No bunds yet.": "Pas encore de clans.",
+  "Only after a request": "Seulement sur demande",
+  "Take the week reward": "Prendre la récompense de la semaine",
+  "Thank you! The bund has %d renown now.": "Merci! Le clan a maintenant %d de renom.",
+  "The week goal is not reached yet.": "L'objectif de la semaine n'est pas encore atteint.",
+  "Week goal: %d / %d items donated": "Objectif de la semaine: %d / %d objets donnés",
+  "Who may join?": "Qui peut rejoindre?",
+  "You already took this week's reward.": "Tu as déjà pris la récompense de cette semaine.",
+  "You donated all you can today. More tomorrow.": "Tu as donné tout ce que tu peux aujourd'hui. La suite demain.",
+  "open": "ouvert"
+ }
+}

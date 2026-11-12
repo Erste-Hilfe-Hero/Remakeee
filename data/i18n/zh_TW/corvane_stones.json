@@ -1,0 +1,18 @@
+{
+ "_comment": "zh_TW translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "廣闊裂隙邊緣的一塊製圖師之石。羅盤花有第五個尖，指向黑暗。",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "水邊的一塊製圖師之石。池中倒影裡的羅盤花轉向另一邊。",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "半陷在木板裡的一塊製圖師之石。羅盤花指著港務所。當然了。",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "花壇裡的一塊製圖師之石。羅盤花被塗成了灰色，後來又被刮乾淨了。",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "懸崖上的一塊製圖師之石。禿鼻烏鴉拿它當了多年的餐桌。",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "正在陷進沼地的一塊製圖師之石。羅盤花仍然指著北方。其餘的事，石頭已經放棄了。",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "蘆葦下的一塊製圖師之石。有人在羅盤花下面刻了「不是這邊」。",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "一塊製圖師之石，底下壓著一張賭票。那張票輸了。",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "被樹根纏住的一塊製圖師之石。你一碰，羅盤花就微微發光。",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "一塊製圖師之石，從中間裂開。兩半仍然都指著北方。真倔。",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "一塊製圖師之石，被一百年的染料染成了紅、金、綠三色。",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "碼頭牆邊的一塊舊製圖師之石。有人用粉筆在上面標了價。",
+  "Cartographer's stones: %d/%d": "製圖師之石：%d/%d"
+ }
+}
