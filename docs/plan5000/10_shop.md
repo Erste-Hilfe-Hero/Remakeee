@@ -798,9 +798,9 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 400
 4753. [P2] (P2W) Den Funkenrücksetzer ohne Zufall umsetzen: der Spieler verteilt die Punkte selbst auf die 5 Werte.
 4754. [P2] (P2W) Funken-Käufe auf das Spirling-Objekt und nicht auf die Art wirken lassen, damit `Database` unverändert bleibt.
 4755. [P2] (P2W) Einen "Gabenwechsel" anlegen, der einem Spirling eine andere Gabe seiner Art gibt, falls die Art mehrere Gaben hat, Preis 500 Rissglas.
-4756. [P2] (P2W) Eine "Verborgene Gabe" für jede Art anlegen, die nur über den Shop-Kauf "Gabenschlüssel" für 1000 Rissglas freigeschaltet wird, mit Werten in `docs/BALANCE.md`.
-4757. [P2] (P2W) Die verborgenen Gaben in `data/spirlings.json` als Feld `shop_trait_id` führen und in der Gleichstand-Liga durch die normale Gabe ersetzen.
-4758. [P2] (P2W) Die 21 verborgenen Gaben mit eigenen Namen und Wirkungen in `BattleRules.trait_info` anlegen und mit `tools/ip_check.sh` prüfen.
+4756. [P2] (P2W) Eine "Verborgene Gabe" für jede Art anlegen, die nur über den Shop-Kauf "Gabenschlüssel" für 1000 Rissglas freigeschaltet wird, mit Werten in `docs/BALANCE.md`. Stand 2026-11-11: Die verborgenen Gaben gibt es jetzt pro Linie in `data/hidden_gifts.json` (`scripts/core/HiddenGifts.gd`); im Spiel deckt sie die Informantin Flüster-Moll am Corvane-Kai gegen Münzen auf. Ein Shop-Gabenschlüssel ruft nur `HiddenGifts.reveal(line_id)` auf und wäre damit ein Abkürzungsweg, kein exklusiver Zugang.
+4757. [P2] (P2W) Die verborgenen Gaben in `data/spirlings.json` als Feld `shop_trait_id` führen und in der Gleichstand-Liga durch die normale Gabe ersetzen. Umgesetzt anders: eigene Datei `data/hidden_gifts.json` (Linie -> Gabe, sonst nach erstem Element) statt eines Felds in `spirlings.json`; die Gleichstand-Liga baut frische Spirlings und nutzt nie eine verborgene Gabe.
+4758. [x] [P2] (P2W) Die 21 verborgenen Gaben mit eigenen Namen und Wirkungen in `BattleRules.trait_info` anlegen und mit `tools/ip_check.sh` prüfen. Erledigt mit 9 Gaben (eine je Element plus Linien-Ausnahmen), `BattleRules.trait_info` liest sie aus `HiddenGifts`.
 4759. [P2] (P2W) Unit-Tests in `tests/test_shop_spark.gd` für Funkenschmiede, Splitter, Wesenswandel, Rücksetzer und Speicherprüfung schreiben.
 4760. [P2] (P2W) Funken-Käufe nach dem Entfalten erhalten lassen.
 4761. [P2] (P2W) Funken-Käufe in Echo-Teams für Freunde mitnehmen.
