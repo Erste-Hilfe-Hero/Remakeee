@@ -3586,13 +3586,21 @@ func league_battle(m: Dictionary) -> void:
 	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind, "p_ref": str(m.get("match_id", "")),
 		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	var lines: Array[String] = ["You won the league battle!" if outcome == BattleModel.Outcome.WIN else "The rival won this league battle."]
-	if not bool(m.get("rated", true)):
+	if bool(m.get("pair_limit", false)):
+		lines.append("You met this rival 3 times today, so this battle does not count.")
+	elif not bool(m.get("rated", true)):
 		lines.append("The season ends soon, so this battle does not count.")
 	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		lines.append("Your result is being checked. It counts once the check is done.")
 	else:
 		lines.append("The result could not be sent, so it does not count.")
 	await say(lines)
+	# Online 100 point 83: report the rival right after the battle.
+	if int(m.get("match_id", 0)) > 0:
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		await SafetyMenu.after_battle(menu, "league", int(m.match_id))
+		menu.queue_free()
 	busy = false
 	player.frozen = false
 
