@@ -1,0 +1,29 @@
+{
+ "_comment": "Polish texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "Akt IV: Słońce Solenne",
+  "Brass Veil Factor Lusk": "Faktor Lusk z Mosiężnej Zasłony",
+  "Dry Well": "Sucha studnia",
+  "Echo Crystal: Dawn Mend": "Kryształ Echa: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "Kryształ Echa: Radiant Lance",
+  "Echo Crystal: Squall": "Kryształ Echa: Squall",
+  "High Noon": "Pełne południe",
+  "Interlude: Ochrewell": "Interludium: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "Piasek wyje w wieżach wiatrowych: każdy Spirling z przodu, który nie jest Kamieniem, traci co rundę trochę Wigoru.",
+  "Sandstorm": "Burza piaskowa",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Idź piaszczystą drogą na południe od równin Saltglass do Ochrewell i napraw trzy Szczeliny Solenne.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Uczy Dawn Mend Spirlinga Lumen. Nigdy się nie zużywa.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Uczy Radiant Lance Spirlinga Lumen. Nigdy się nie zużywa.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Uczy Squall Spirlinga Gale. Nigdy się nie zużywa.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "Ostatnia okiennica się otwiera, wieża oddycha, a schody są wolne!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "Oaza na wschód od Ochrewell wyschła: Oasis Rift. Strażniczka Kaia mówi, że nikt nie jest winny.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "Oazę sprzedano do sucha: każde leczenie po obu stronach jest o połowę słabsze.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "Okiennica trzaska, a wiatr zamiera. Wszystkie okiennice znów się zamykają.",
+  "The shutter swings open. Sand hisses through the slats.": "Okiennica się otwiera. Piasek syczy przez szpary.",
+  "The shutters hum in the wind. The stair stays open.": "Okiennice buczą na wietrze. Schody zostają otwarte.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "Słońce stoi prosto nad głową: techniki Lumen po obu stronach biją mocniej.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "Zegar słoneczny pod pałacem słońca stanął: Sun Rift. Strażnik Emrys czeka, powoli.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Wieże wiatrowe Ochrewell przestały oddychać: Tower Rift. Strażnik Aurelio przeżywa żałobę ze stylem."
+ }
+}
