@@ -287,7 +287,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 221 | Nimbarch | Gale/Tide | shy | weaver | light_sleeper | 439 | - |
 | 222 | Sluicekit | Stone/Bloom | common | bulwark | deep_roots | 305 | Sluicer (ring 17) |
 | 223 | Sluicer | Stone/Bloom | uncommon | bulwark | deep_roots | 403 | Sluicewarden (ring 33) |
-| 224 | Sluicewarden | Stone/Bloom | shy | bulwark | deep_roots | 455 | - |
+| 224 | Sluicewarden | Stone/Bloom | shy | bulwark | deep_roots | 432 | - |
 | 225 | Vanepip | Gale/Volt | common | vanguard | surge | 300 | Vanecrow (ring 16) |
 | 226 | Vanecrow | Gale/Volt | uncommon | vanguard | surge | 404 | Vanecrest (ring 33) |
 | 227 | Vanecrest | Gale/Volt | shy | vanguard | surge | 497 | - |
@@ -361,6 +361,30 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 286 | Fernwhisk | Gale/Bloom | uncommon | striker | surge | 421 | - |
 | 287 | Hearthmote | Ember/Volt | uncommon | kindler | kindling | 423 | - |
 <!-- /lines:veydal -->
+
+<!-- lines:quillmarch -->
+## Quillmarch lines (Era III post-game, tools/art/lines/quillmarch.py)
+
+Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 288 | Vesk | Gale | common | striker | slick | 288 | Veskara (ring 22) |
+| 289 | Veskara | Gale | uncommon | striker | slick | 400 | Veskarion (ring 41) |
+| 290 | Veskarion | Gale | shy | striker | slick | 501 | - |
+| 291 | Siltby | Tide/Gale | common | bulwark | thick_hide | 302 | Siltarra (ring 24) |
+| 292 | Siltarra | Tide/Gale | uncommon | bulwark | thick_hide | 405 | Siltaroth (ring 41) |
+| 293 | Siltaroth | Tide/Gale | shy | bulwark | thick_hide | 428 | - |
+| 294 | Cindrik | Ember/Bloom | common | kindler | kindling | 307 | Cindrel (ring 24) |
+| 295 | Cindrel | Ember/Bloom | uncommon | kindler | kindling | 410 | Cindravax (ring 42) |
+| 296 | Cindravax | Ember/Bloom | shy | kindler | kindling | 467 | - |
+| 297 | Nibbet | Umbra/Bloom | common | vanguard | surge | 288 | Nibquill (ring 26) |
+| 298 | Nibquill | Umbra/Bloom | uncommon | vanguard | surge | 405 | Nibravure (ring 38) |
+| 299 | Nibravure | Umbra/Bloom | shy | vanguard | surge | 486 | - |
+| 300 | Filigrin | Lumen/Gale | common | weaver | light_sleeper | 306 | Filigrace (ring 24) |
+| 301 | Filigrace | Lumen/Gale | uncommon | weaver | light_sleeper | 398 | Filigravure (ring 41) |
+| 302 | Filigravure | Lumen/Gale | shy | weaver | light_sleeper | 448 | - |
+<!-- /lines:quillmarch -->
 
 ## Regional imprints (Ortsprägung, items 218-219)
 

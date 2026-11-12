@@ -42,6 +42,8 @@ notes = []
 KNOWN = {
     # Era III's region (not merged yet) adds eras.json finale_flags["era3_finale_done"].
     "flag 'era3_finale_done' is checked": "set by the Era III region once it lands (eras.json _doc)",
+    # Quillmarch (data/region3.json) has its sheet but no maps yet; its last chapter sets the flag.
+    "flag 'quillmarch_done' is checked": "set by Quillmarch's last chapter once its maps land",
 }
 
 
@@ -95,10 +97,11 @@ def gd_const(path, name):
 
 
 MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "MAX_LEVEL")
-# Post-game regions past Era III grow past 60 (data/eras.json ring_caps); Halcyra's maps, tables
-# and sheet are checked against the hard clamp Spirling.ERA_MAX_LEVEL instead.
+# Post-game regions from Era III on grow past 60 (data/eras.json ring_caps); their maps, tables
+# and sheets are checked against the hard clamp Spirling.ERA_MAX_LEVEL instead.
 ERA_MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "ERA_MAX_LEVEL")
-ERA_REGIONS = {"halcyra"}
+ERA_REGIONS = {"quillmarch", "halcyra"}
+ERA_SHEETS = {"data/region3.json", "data/region4.json"}
 
 json_files = []
 for dp, _, fs in os.walk(DATA):
@@ -479,7 +482,7 @@ def level_ok(where, lv, era=False):
 
 def era_file(p):
     d = J.get(p)
-    return p == "data/region4.json" or (p.startswith("data/maps/") and isinstance(d, dict) and d.get("region") in ERA_REGIONS)
+    return p in ERA_SHEETS or (p.startswith("data/maps/") and isinstance(d, dict) and d.get("region") in ERA_REGIONS)
 
 
 def species_ok(where, sp):
