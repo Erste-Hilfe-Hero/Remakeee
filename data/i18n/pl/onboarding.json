@@ -1,0 +1,31 @@
+{
+ "_comment": "pl translation of the onboarding table, keyed by the English text.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.": "Więź, krok 2: wybierz Więź. Spirling z jakimś stanem łatwiej ustępuje. Nikt nie mówił, że to szlachetne.",
+  "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.": "Więź, krok 3: unieś Amulet rodu, gdy padnie pytanie. Na start masz 20. Przyjaźń w hurcie jest tańsza.",
+  "Bonding step 4: Listen to its call, then repeat it in the same order.": "Więź, krok 4: posłuchaj jego zawołania, a potem powtórz je w tej samej kolejności.",
+  "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.": "Więź, krok 4: wciskaj A najszybciej, jak umiesz. Im pełniejszy pasek, tym lepsza Więź.",
+  "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Więź, krok 4: stukaj Mój! najszybciej, jak umiesz. Im pełniejszy pasek, tym lepsza Więź.",
+  "Bonding: Echo call": "Więź: zawołanie echa",
+  "Bonding: Mine!": "Więź: Mój!",
+  "First steps": "Pierwsze kroki",
+  "First steps %d/%d": "Pierwsze kroki %d/%d",
+  "First steps done. The valley stops holding your hand now.": "Pierwsze kroki za tobą. Od teraz dolina nie trzyma cię już za rękę.",
+  "Its light never goes out. Handy when someone cuts the lamps on purpose.": "Jego światło nigdy nie gaśnie. Przydatne, gdy ktoś celowo gasi lampy.",
+  "Large text, one-hand layout and more are under Settings.": "Duży tekst, sterowanie jedną ręką i więcej znajdziesz w Ustawieniach.",
+  "Look at your team": "Obejrzyj drużynę",
+  "Open the Spirlog": "Otwórz Spirlog",
+  "Open the menu": "Otwórz menu",
+  "Pick your partner": "Wybierz partnera",
+  "Quick and twitchy. Every hug comes with a small shock. You get used to it.": "Szybki i nerwowy. Każdy uścisk to mały wstrząs. Można się przyzwyczaić.",
+  "Rest at a rest spot": "Odpocznij w Przystani",
+  "Save your journey": "Zapisz podróż",
+  "Show every tip once more, as if you were new?": "Pokazać każdą wskazówkę jeszcze raz, jak na początku?",
+  "Show tips again": "Pokaż wskazówki ponownie",
+  "Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.": "Wskazówka: dziki Spirling może dołączyć do drużyny, jeśli ci zaufa. Zmęczony ufa łatwiej.",
+  "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.": "Wskazówka: zgubiony trop? Wciśnij Start i wybierz Cele. Nikt inny w tej dolinie nie powie ci prawdy.",
+  "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.": "Wskazówka: zgubiony trop? Stuknij = i wybierz Cele. Nikt inny w tej dolinie nie powie ci prawdy.",
+  "Tips are back. Pretend it's your first day.": "Wskazówki wróciły. Udawaj, że to twój pierwszy dzień.",
+  "Warm and loyal. Sets things on fire when nervous. Mostly your things.": "Ciepły i wierny. Podpala rzeczy, gdy się denerwuje. Zwykle twoje."
+ }
+}

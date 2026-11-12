@@ -1,0 +1,31 @@
+{
+ "_comment": "ko translation of the onboarding table, keyed by the English text.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.": "유대 맺기 2단계: 유대를 고른다. 상태 이상인 Spirling은 더 쉽게 굴복한다. 고상한 방법이라고 한 사람은 없다.",
+  "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.": "유대 맺기 3단계: 물어보면 혈연 부적을 내민다. 처음엔 20개로 시작한다. 우정은 대량으로 사면 싸다.",
+  "Bonding step 4: Listen to its call, then repeat it in the same order.": "유대 맺기 4단계: 울음소리를 듣고 같은 순서로 따라 한다.",
+  "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.": "유대 맺기 4단계: A를 최대한 빨리 누른다. 게이지가 찰수록 유대가 깊어진다.",
+  "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "유대 맺기 4단계: 내 거야!를 최대한 빨리 연타한다. 게이지가 찰수록 유대가 깊어진다.",
+  "Bonding: Echo call": "유대 맺기: 메아리 울음",
+  "Bonding: Mine!": "유대 맺기: 내 거야!",
+  "First steps": "첫걸음",
+  "First steps %d/%d": "첫걸음 %d/%d",
+  "First steps done. The valley stops holding your hand now.": "첫걸음 완료. 이제 골짜기는 손을 잡아 주지 않는다.",
+  "Its light never goes out. Handy when someone cuts the lamps on purpose.": "빛이 절대 꺼지지 않는다. 누가 일부러 등불을 끌 때 쓸모 있다.",
+  "Large text, one-hand layout and more are under Settings.": "큰 글씨, 한 손 조작 등은 설정에 있다.",
+  "Look at your team": "팀 보기",
+  "Open the Spirlog": "Spirlog 열기",
+  "Open the menu": "메뉴 열기",
+  "Pick your partner": "파트너를 고르자",
+  "Quick and twitchy. Every hug comes with a small shock. You get used to it.": "재빠르고 안절부절못한다. 안아 줄 때마다 찌릿한 충격이 온다. 익숙해진다.",
+  "Rest at a rest spot": "쉼터에서 쉬기",
+  "Save your journey": "여정 저장하기",
+  "Show every tip once more, as if you were new?": "처음인 것처럼 모든 팁을 다시 볼까?",
+  "Show tips again": "팁 다시 보기",
+  "Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.": "팁: 야생 Spirling도 너를 믿으면 팀에 들어올 수 있다. 지쳤을 때 더 쉽게 믿는다.",
+  "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.": "팁: 길을 잃었어? Start를 누르고 목표를 고르자. 이 골짜기에서 진실을 말해 줄 사람은 그것뿐이다.",
+  "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.": "팁: 길을 잃었어? =를 탭하고 목표를 고르자. 이 골짜기에서 진실을 말해 줄 사람은 그것뿐이다.",
+  "Tips are back. Pretend it's your first day.": "팁이 돌아왔다. 오늘이 첫날인 척하자.",
+  "Warm and loyal. Sets things on fire when nervous. Mostly your things.": "따뜻하고 충직하다. 긴장하면 물건에 불을 지른다. 대개 네 물건에."
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "_comment": "nl translation of the onboarding table, keyed by the English text.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble.": "Binden, stap 2: kies Binden. Een Spirling met een status geeft sneller toe. Niemand zei dat dit nobel was.",
+  "Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.": "Binden, stap 3: houd een Verwantamulet omhoog als het gevraagd wordt. Je begint met 20. Vriendschap is goedkoper in bulk.",
+  "Bonding step 4: Listen to its call, then repeat it in the same order.": "Binden, stap 4: luister naar zijn roep en herhaal hem in dezelfde volgorde.",
+  "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond.": "Binden, stap 4: druk zo snel als je kunt op A. Hoe voller de balk, hoe beter de band.",
+  "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Binden, stap 4: tik zo snel als je kunt op Van mij!. Hoe voller de balk, hoe beter de band.",
+  "Bonding: Echo call": "Binden: echoroep",
+  "Bonding: Mine!": "Binden: Van mij!",
+  "First steps": "Eerste stappen",
+  "First steps %d/%d": "Eerste stappen %d/%d",
+  "First steps done. The valley stops holding your hand now.": "Eerste stappen gedaan. Het dal houdt vanaf nu je hand niet meer vast.",
+  "Its light never goes out. Handy when someone cuts the lamps on purpose.": "Zijn licht gaat nooit uit. Handig als iemand expres de lampen uitdoet.",
+  "Large text, one-hand layout and more are under Settings.": "Grote tekst, eenhandige bediening en meer vind je onder Instellingen.",
+  "Look at your team": "Bekijk je team",
+  "Open the Spirlog": "Open de Spirlog",
+  "Open the menu": "Open het menu",
+  "Pick your partner": "Kies je partner",
+  "Quick and twitchy. Every hug comes with a small shock. You get used to it.": "Snel en zenuwachtig. Elke knuffel komt met een kleine schok. Je went eraan.",
+  "Rest at a rest spot": "Rust uit op een rustplek",
+  "Save your journey": "Sla je reis op",
+  "Show every tip once more, as if you were new?": "Elke tip nog een keer tonen, alsof je nieuw bent?",
+  "Show tips again": "Tips opnieuw tonen",
+  "Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.": "Tip: een wilde Spirling kan zich bij je team aansluiten als hij je vertrouwt. Moe vertrouwt hij je sneller.",
+  "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth.": "Tip: verdwaald? Druk op Start en kies Doelen. Niemand anders in dit dal vertelt je de waarheid.",
+  "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.": "Tip: verdwaald? Tik op = en kies Doelen. Niemand anders in dit dal vertelt je de waarheid.",
+  "Tips are back. Pretend it's your first day.": "De tips zijn terug. Doe alsof het je eerste dag is.",
+  "Warm and loyal. Sets things on fire when nervous. Mostly your things.": "Warm en trouw. Steekt dingen in brand als hij zenuwachtig is. Meestal jouw dingen."
+ }
+}
