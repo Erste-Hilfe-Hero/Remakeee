@@ -1,0 +1,7 @@
+{
+ "_comment": "ja translation of the halcyra_types table, keyed by the English text.",
+ "strings": {
+  "Gilt": "金",
+  "Zenith": "天頂"
+ }
+}

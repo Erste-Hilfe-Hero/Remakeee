@@ -191,6 +191,8 @@
   "leads the team": "帶領隊伍",
   "leads the team, worn out": "帶領隊伍，力竭",
   "unavailable": "無法使用",
-  "worn out": "力竭"
+  "worn out": "力竭",
+  "Only in battle.": "僅限戰鬥中。",
+  "Vigor %d/%d to %d/%d": "元氣 %d/%d 變為 %d/%d"
  }
 }

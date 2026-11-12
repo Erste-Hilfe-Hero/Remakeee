@@ -191,6 +191,8 @@
   "leads the team": "takımı yönetir",
   "leads the team, worn out": "takımı yönetir, yorgun",
   "unavailable": "kullanılamaz",
-  "worn out": "yorgun"
+  "worn out": "yorgun",
+  "Only in battle.": "Sadece savaşta.",
+  "Vigor %d/%d to %d/%d": "Dinçlik %d/%d iken %d/%d olur"
  }
 }

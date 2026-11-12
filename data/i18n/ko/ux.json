@@ -191,6 +191,8 @@
   "leads the team": "팀 선두",
   "leads the team, worn out": "팀 선두, 지침",
   "unavailable": "사용 불가",
-  "worn out": "지침"
+  "worn out": "지침",
+  "Only in battle.": "배틀 중에만.",
+  "Vigor %d/%d to %d/%d": "기력 %d/%d에서 %d/%d로"
  }
 }

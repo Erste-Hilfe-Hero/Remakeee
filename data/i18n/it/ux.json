@@ -191,6 +191,8 @@
   "leads the team": "guida la squadra",
   "leads the team, worn out": "guida la squadra, stremato",
   "unavailable": "non disponibile",
-  "worn out": "stremato"
+  "worn out": "stremato",
+  "Only in battle.": "Solo in scontro.",
+  "Vigor %d/%d to %d/%d": "Vigore %d/%d a %d/%d"
  }
 }

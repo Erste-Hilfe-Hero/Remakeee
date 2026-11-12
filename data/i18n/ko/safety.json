@@ -1,0 +1,18 @@
+{
+ "_comment": "ko translation of the safety table, keyed by the English text.",
+ "strings": {
+  "Battle over": "배틀 종료",
+  "Bunds": "모임",
+  "For parents...": "보호자용...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "보호자용: 자녀가 쓰면 안 되는 기능을 끄세요. 친구와 저장 데이터는 유지됩니다.",
+  "Open league": "오픈 리그",
+  "Report the rival...": "상대 신고...",
+  "Suggestions from league battles": "리그 배틀 추천",
+  "These switches are for parents. Continue?": "이 스위치는 보호자용입니다. 계속할까요?",
+  "This battle was against your own echo, so there is nobody to report.": "이 배틀의 상대는 자신의 메아리였으므로 신고할 상대가 없습니다.",
+  "This is switched off under Settings, Account, For parents.": "설정, 계정, 보호자용에서 꺼져 있습니다.",
+  "Under 16: open league, bunds and suggestions start switched off.": "16세 미만: 오픈 리그, 모임, 추천은 꺼진 상태로 시작합니다.",
+  "Why do you report the rival?": "왜 상대를 신고하나요?",
+  "You met this rival 3 times today, so this battle does not count.": "오늘 이 상대를 3번 만났으므로 이 배틀은 반영되지 않습니다."
+ }
+}

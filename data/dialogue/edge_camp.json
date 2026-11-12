@@ -578,7 +578,7 @@
    "not_flag": "edge_leith_asked"
   },
   "lines": [
-   "Leith: Sable's done with me. Funny. So was everyone before her.",
+   "Leith: Sable's done with me. Funny. So was everyone before him.",
    "Leith: I know a hidden way to an old Warden stash at the far end of the Wide Rift. Chalk arrow, can't miss it.",
    "Leith: It's real this time. Probably. Depends how much you trusted me back then."
   ],
@@ -830,7 +830,7 @@
    }
   },
   "lines": [
-   "Mirza: Done. A charm that brightens a Spark. Don't tell Sable. She thinks I only cheat at cards."
+   "Mirza: Done. A charm that brightens a Spark. Don't tell Sable. He thinks I only cheat at cards."
   ],
   "action": "give_item spark_charm 1",
   "flag": "edge_mirza_done",

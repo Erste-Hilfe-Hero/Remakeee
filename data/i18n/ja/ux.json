@@ -191,6 +191,8 @@
   "leads the team": "チームの先頭",
   "leads the team, worn out": "チームの先頭、へとへと",
   "unavailable": "使えない",
-  "worn out": "へとへと"
+  "worn out": "へとへと",
+  "Only in battle.": "戦闘中のみ。",
+  "Vigor %d/%d to %d/%d": "活力 %d/%d から %d/%d へ"
  }
 }

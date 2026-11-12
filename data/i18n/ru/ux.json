@@ -191,6 +191,8 @@
   "leads the team": "во главе команды",
   "leads the team, worn out": "во главе, измотан",
   "unavailable": "недоступно",
-  "worn out": "измотан"
+  "worn out": "измотан",
+  "Only in battle.": "Только в бою.",
+  "Vigor %d/%d to %d/%d": "Бодрость %d/%d до %d/%d"
  }
 }

@@ -191,6 +191,8 @@
   "leads the team": "va en cabeza",
   "leads the team, worn out": "va en cabeza, agotado",
   "unavailable": "no disponible",
-  "worn out": "agotado"
+  "worn out": "agotado",
+  "Only in battle.": "Solo en combate.",
+  "Vigor %d/%d to %d/%d": "Vigor %d/%d a %d/%d"
  }
 }

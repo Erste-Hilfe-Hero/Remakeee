@@ -191,6 +191,8 @@
   "leads the team": "mène l'équipe",
   "leads the team, worn out": "mène l'équipe, épuisé",
   "unavailable": "indisponible",
-  "worn out": "épuisé"
+  "worn out": "épuisé",
+  "Only in battle.": "Seulement en combat.",
+  "Vigor %d/%d to %d/%d": "Vigueur %d/%d vers %d/%d"
  }
 }

@@ -437,8 +437,8 @@ zero is a bill, never below an empty purse) or the lead Spirling's keepsake; a c
 
 The mandatory Act IV duels add two more: Kaia sold the oasis, and Emrys signed as her witness.
 Trusting answers raise a hidden value and are punished; the chained ones reward a secret kept
-earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises her use enough that
-her later tip (`sable_tip`) turns into an ambush.
+earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises his use enough that
+his later tip (`sable_tip`) turns into an ambush.
 
 **The reckoning** (`data/scenes/solenne_reckoning.json`, started by Ottilie once the Sun Rift is
 mended): both throne betrayals are cashed in, Grell arrives with Brannoc (and Kerr if turned), Marlo
