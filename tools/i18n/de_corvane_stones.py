@@ -12,4 +12,6 @@ T = {
 "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "Ein Kartografenstein, mitten durchgebrochen. Beide Hälften zeigen noch nach Norden. Stur.",
 "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "Ein Kartografenstein, von Wurzeln umschlungen. Die Rose glimmt leicht, wenn du sie berührst.",
 "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Ein Kartografenstein am Rand des Weiten Risses. Die Rose hat eine fünfte Spitze, hin zum Dunkel.",
+# Records per region (plan item 1300)
+"Cartographer's stones: %d/%d": "Kartografensteine: %d/%d",
 }
