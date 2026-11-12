@@ -1208,15 +1208,6 @@
     "facing": "down",
     "dialogue": "corvane_side/post_4",
     "sprite": "villager"
-   },
-   {
-    "id": "rope_winchman",
-    "x": 8,
-    "y": 7,
-    "facing": "left",
-    "dialogue": "quivermoor/winchman_top",
-    "sprite": "elder",
-    "show_flag": "era4_finale_done"
    }
   ],
   "signs": [
@@ -2132,6 +2123,19 @@
     "x": 1,
     "y": 19,
     "dialogue": "corvane_stones/stone_11"
+   }
+  ]
+ },
+ "whitecairn": {
+  "npcs": [
+   {
+    "id": "rope_winchman",
+    "x": 7,
+    "y": 12,
+    "facing": "left",
+    "dialogue": "quivermoor/winchman_top",
+    "sprite": "elder",
+    "show_flag": "era4_finale_done"
    }
   ]
  }

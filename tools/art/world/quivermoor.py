@@ -699,6 +699,10 @@ def main():
         f.write("\n")
     patch_encounters(stale)
     patch_layout()
+    # Loc.lookup reads only "strings": names kept as they are still need an entry.
+    for m in MAPS.values():
+        if m["name"] in SHEET_DE["KEEP"] and m["name"] not in SHEET_DE["T"]:
+            GERMAN[m["name"]] = m["name"]
     with open(os.path.join(ROOT, "tools", "i18n", "de_quivermoor.py"), "w", encoding="utf-8") as f:
         f.write("# German texts for Quivermoor's maps. Written by tools/art/world/quivermoor.py:\n")
         f.write("# edit the tr()/lines() pairs there, not this file.\n")

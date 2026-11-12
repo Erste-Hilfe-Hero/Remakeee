@@ -130,6 +130,7 @@ T.update({
 "Lake Line": "Seelinie",
 "Valley Coach": "Talkutsche",
 "Ferry to Corvane": "Fähre nach Corvane",
+"Gilt Funicular": "Gilt-Standseilbahn",
 "The coach rattles along the valley road to %s.": "Die Kutsche rumpelt die Talstraße entlang nach %s.",
 "The mountain railway climbs through the clouds to %s.": "Die Bergbahn klettert durch die Wolken nach %s.",
 "Conductor: No trains until the line is cleared. The guild will send word.": "Schaffnerin: Keine Züge, bis die Strecke frei ist. Die Gilde gibt Bescheid.",

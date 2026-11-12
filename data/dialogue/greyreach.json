@@ -53,6 +53,12 @@
   ],
   "action": "transit mountain_rail"
  },
+ "porter": {
+  "lines": [
+   "Porter Joska: The gilt funicular climbs to Halcyra. Up there they polish the rails and lie about the view."
+  ],
+  "action": "transit halcyra_funicular"
+ },
  "mound_stone": {
   "lines": [
    "An old burial mound. A weathered stone stands on it, its letters worn almost away."
