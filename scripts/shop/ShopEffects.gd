@@ -325,8 +325,8 @@ static func bought_spirling(g: Dictionary) -> Spirling:
 	var s: Spirling = Spirling.new(d, clampi(int(g.get("level", 1)), 1, Spirling.MAX_LEVEL))
 	for key: String in Spirling.STAT_KEYS:
 		s.spark[key] = Spirling.SPARK_MAX
-	# The temperament came from the random uid, so two purchases differed in one stat.
-	s.temper = str(g.get("temper", "even"))
+	# The temperament came from a random uid, so two buys could differ in HP (336 vs 352).
+	s.temper = str(g.get("temper", Spirling.TEMPERAMENTS[0].id))
 	s.shop_bought = true
 	s.hp = s.max_hp()
 	return s
