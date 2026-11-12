@@ -55,6 +55,7 @@ static func run_league(menu: PauseMenu, league: String) -> bool:
 		var entries: Array[String] = ["Find a battle", "Join with my team"] if bool(info.joined) else ["Join with my team"]
 		if bool(info.get("reward_ready", false)):
 			entries.push_front("Season reward")
+		entries.append("Best team of the season")
 		var idx: int = await menu.pick_strings(status_text(league, info), entries)
 		if idx < 0:
 			return false
@@ -63,6 +64,9 @@ static func run_league(menu: PauseMenu, league: String) -> bool:
 				await join(menu, league)
 			"Season reward":
 				await claim_reward(menu, league)
+			"Best team of the season":
+				var top: Dictionary = await Online.call_fn("league_top_team", {"p_league": league})
+				await menu.info(top_team_text(top.data) if top.ok and top.data is Dictionary and not top.data.has("error") else error_text(top))
 			"Find a battle":
 				var found: Dictionary = await search(menu, league)
 				if not found.is_empty():
@@ -165,3 +169,13 @@ static func search(menu: PauseMenu, league: String) -> Dictionary:
 	elif found.is_empty() and not cancelled[0]:
 		await menu.info("No opponent right now. Try again in a little while.")
 	return found
+
+## The team of the season's best player (Online 100 point 77), without a name.
+static func top_team_text(d: Dictionary) -> String:
+	if not d.get("team") is Array:
+		return Loc.t("Nobody finished the placement battles yet.")
+	var lines: Array[String] = [Loc.t("The best team of this season (%d battles):") % int(d.get("games", 0))]
+	for m: Dictionary in d.team:
+		var moves: Array = m.get("moves", [])
+		lines.append("%s  %s" % [str(m.species), ", ".join(moves.map(func(x: Variant) -> String: return Loc.t(str(x))))])
+	return "\n".join(lines)
