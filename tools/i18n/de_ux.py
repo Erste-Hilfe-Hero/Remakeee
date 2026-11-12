@@ -207,6 +207,9 @@ T = {
 "Nickname for %s": "Spitzname für %s",
 "That name can't be used. Letters and up to 3 digits, at most 10 characters.": "Dieser Name geht nicht. Buchstaben und bis zu 3 Ziffern, höchstens 10 Zeichen.",
 "Ready to unfurl": "Kann sich entfalten",
+"New": "Neu",
+"Kind": "Art",
+"seen": "gesehen",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

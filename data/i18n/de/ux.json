@@ -82,6 +82,7 @@
   "Keepsakes": "Andenken",
   "Keyboard\nArrow keys or W A S D: move\nEnter or Space: talk, confirm\nEscape or Backspace: back\nHold Backspace: run\nM: menu\nF: battle speed\nR: auto wild battles": "Tastatur\nPfeiltasten oder W A S D: laufen\nEnter oder Leertaste: sprechen, bestätigen\nEscape oder Rücktaste: zurück\nRücktaste halten: rennen\nM: Menü\nF: Kampftempo\nR: wilde Kämpfe automatisch",
   "Keyboard keys...": "Tastatur-Tasten...",
+  "Kind": "Art",
   "Language / Sprache": "Language / Sprache",
   "Large text: %s": "Große Schrift: %s",
   "Leads the team": "Führt das Team an",
@@ -93,6 +94,7 @@
   "Merchant": "Händler",
   "Might %d": "Wucht %d",
   "Music only. Left and right change it in steps of 10.": "Nur Musik. Links und rechts ändern in 10er-Schritten.",
+  "New": "Neu",
   "New Spirlings you bond with fill this slot.": "Neue Spirlings, mit denen du dich verbindest, kommen auf diesen Platz.",
   "Nickname": "Spitzname",
   "Nickname for %s": "Spitzname für %s",
@@ -216,6 +218,7 @@
   "free": "frei",
   "leads the team": "führt das Team an",
   "leads the team, worn out": "führt das Team an, erschöpft",
+  "seen": "gesehen",
   "unavailable": "nicht verfügbar",
   "worn out": "erschöpft"
  }
