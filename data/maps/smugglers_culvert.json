@@ -1,0 +1,202 @@
+{
+ "name": "Smugglers' Culvert",
+ "region": "vellmarch",
+ "biome": "dungeon",
+ "backdrop": "lake",
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^....^^....^",
+  "^.|..^^..|.^",
+  "^..........^",
+  "^^^^..^^^^.^",
+  "^~~^..^~~^.^",
+  "^~~^..^~~^.^",
+  "^..........^",
+  "^.^^^^^^^^.^",
+  "^..........^",
+  "^.|......|.^",
+  "^^^^..^^^^^^",
+  "^..........^",
+  "^..~~~~~~..^",
+  "^..........^",
+  "^^^^^..^^^^^",
+  "^....=...S.^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 16,
+   "to": "weeping_locks",
+   "tx": 2,
+   "ty": 4,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "bilge_boy",
+   "x": 2,
+   "y": 3,
+   "facing": "right",
+   "dialogue": "vellmarch/smugglers_culvert_bilge_boy",
+   "sprite": "villager",
+   "trainer": "Bilge Boy Arne",
+   "intro": "vellmarch/smugglers_culvert_bilge_boy_intro",
+   "defeat": "vellmarch/smugglers_culvert_bilge_boy_defeat",
+   "money": 2280,
+   "team": [
+    {
+     "species": "Rainmantle",
+     "level": 56
+    },
+    {
+     "species": "Reedwarden",
+     "level": 57
+    },
+    {
+     "species": "Saltspire",
+     "level": 57
+    }
+   ]
+  },
+  {
+   "id": "crate_runner",
+   "x": 9,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "vellmarch/smugglers_culvert_crate_runner",
+   "sprite": "ranger",
+   "trainer": "Crate Runner Isolde",
+   "intro": "vellmarch/smugglers_culvert_crate_runner_intro",
+   "defeat": "vellmarch/smugglers_culvert_crate_runner_defeat",
+   "money": 2280,
+   "team": [
+    {
+     "species": "Reedwarden",
+     "level": 56
+    },
+    {
+     "species": "Saltspire",
+     "level": 57
+    },
+    {
+     "species": "Sluicer",
+     "level": 57
+    }
+   ]
+  },
+  {
+   "id": "tide_clerk",
+   "x": 2,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "vellmarch/smugglers_culvert_tide_clerk",
+   "sprite": "elder",
+   "trainer": "Tide Clerk Bodo",
+   "intro": "vellmarch/smugglers_culvert_tide_clerk_intro",
+   "defeat": "vellmarch/smugglers_culvert_tide_clerk_defeat",
+   "money": 2280,
+   "team": [
+    {
+     "species": "Saltspire",
+     "level": 56
+    },
+    {
+     "species": "Diparrow",
+     "level": 57
+    },
+    {
+     "species": "Rainmantle",
+     "level": 57
+    }
+   ]
+  },
+  {
+   "id": "q2_two_owners_rats",
+   "x": 5,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_two_owners_rats",
+   "sprite": "ranger",
+   "show_flag": "q2_two_owners_s1"
+  },
+  {
+   "id": "q2_seven_keys_hask",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_seven_keys_hask",
+   "sprite": "elder",
+   "show_flag": "q2_seven_keys_s1"
+  },
+  {
+   "id": "q2_seven_keys_runner",
+   "x": 10,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_seven_keys_runner",
+   "sprite": "ranger",
+   "trainer": "Syndicate Runner Veit",
+   "show_flag": "q2_seven_keys_reveal",
+   "intro": "vellmarch/q2_seven_keys_runner_intro",
+   "defeat": "vellmarch/q2_seven_keys_runner_defeat",
+   "money": 2900,
+   "team": [
+    {
+     "species": "Rainmantle",
+     "level": 56
+    },
+    {
+     "species": "Reedwarden",
+     "level": 57
+    },
+    {
+     "species": "Saltspire",
+     "level": 58
+    }
+   ],
+   "win_flags": [
+    "q2_seven_keys_done"
+   ],
+   "no_rematch": true
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 16,
+   "dialogue": "vellmarch/smugglers_culvert_sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 2,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_smugglers_culvert_1"
+  },
+  {
+   "x": 11,
+   "y": 7,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_smugglers_culvert_2"
+  },
+  {
+   "x": 0,
+   "y": 10,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_smugglers_culvert_3"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_smugglers_culvert_4"
+  }
+ ]
+}
