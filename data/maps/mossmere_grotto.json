@@ -44,6 +44,18 @@
    "facing": "down"
   }
  ],
+ "npcs": [
+  {
+   "id": "lq_brennet",
+   "x": 2,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "legend_quests/hallowmur_witness",
+   "sprite": "elder",
+   "show_flag": "lq_hallowmur_met",
+   "hide_flag": "lq_hallowmur_ready"
+  }
+ ],
  "signs": [
   {
    "x": 10,
@@ -134,17 +146,5 @@
  "camp": [
   10,
   9
- ],
- "npcs": [
-  {
-   "id": "lq_brennet",
-   "x": 2,
-   "y": 6,
-   "facing": "down",
-   "dialogue": "legend_quests/hallowmur_witness",
-   "sprite": "elder",
-   "show_flag": "lq_hallowmur_met",
-   "hide_flag": "lq_hallowmur_ready"
-  }
  ]
 }
