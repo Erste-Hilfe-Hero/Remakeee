@@ -23,7 +23,7 @@ func test_halcyra_lists_its_two_era_four_elements() -> void:
 	assert_eq(region.elements, NEW)
 	for t: String in NEW:
 		assert_eq(int(_types[t].era), 4, t)
-		assert_false(Elements.E.has(t), "%s enters the enum with Halcyra's Spirlings" % t)
+		assert_true(Elements.E.has(t), "%s is in the enum (appended after Acid and Frost)" % t)
 
 func test_each_has_two_strengths_and_two_weaknesses() -> void:
 	for t: String in NEW:

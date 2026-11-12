@@ -283,6 +283,13 @@ func _draw_element() -> void:
 		# Era II elements borrow the closest Era I look until they get their own effects.
 		Elements.E.INK: _draw_umbra()
 		Elements.E.ECHO: _draw_lumen()
+		# Later eras likewise, by nearest look.
+		Elements.E.RUST: _draw_stone()
+		Elements.E.MASK: _draw_umbra()
+		Elements.E.ACID: _draw_bloom()
+		Elements.E.FROST: _draw_tide()
+		Elements.E.GILT: _draw_lumen()
+		Elements.E.ZENITH: _draw_gale()
 
 func _element_shape() -> String:
 	return ELEMENT_SHAPES[clampi(element, 0, ELEMENT_SHAPES.size() - 1)]

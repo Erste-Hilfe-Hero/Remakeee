@@ -1,5 +1,5 @@
 {
- "_doc": "Quillmarch, the post-game Era III region (scripts/core/Region3.gd, tests/unit/test_region3.gd). Opens with the flag in unlock_flag after the Era II finale (Vellmarch chapter 5, data/eras.json finale_flags) and is drawn in Era III (rich palette, 64 px sprites, art/era3). Its colours are data/region_looks.json 'quillmarch', its tiles art/era3/tiles/overworld_quillmarch.png (tools/art/gen_tiles_quillmarch.py). Towns and routes carry grid cells for a later world_layout.json entry; maps are built from this sheet. Encounter slots name Quillmarch's own Era III Spirlings (tools/art/lines/quillmarch.py); slots with species null wait for its Acid and Frost kinds, which enter the Elements enum with them, and show stand_in until then. Wardens hold the four Rifts; every chapter of the arc has at least one betrayal. Acid and Frost are the region's elements (data/type_chart.json). Rings 70 to 88.",
+ "_doc": "Quillmarch, the post-game Era III region (scripts/core/Region3.gd, tests/unit/test_region3.gd). Opens with the flag in unlock_flag after the Era II finale (Vellmarch chapter 5, data/eras.json finale_flags) and is drawn in Era III (rich palette, 64 px sprites, art/era3). Its colours are data/region_looks.json 'quillmarch', its tiles art/era3/tiles/overworld_quillmarch.png (tools/art/gen_tiles_quillmarch.py). Towns and routes carry grid cells for a later world_layout.json entry; maps are built from this sheet. Encounter slots name Quillmarch's own Era III Spirlings (tools/art/lines/quillmarch.py); every slot now holds an own kind (the Acid and Frost kinds came with the second batch); stand_in is kept for reference only. Wardens hold the four Rifts; every chapter of the arc has at least one betrayal. Acid and Frost are the region's elements (data/type_chart.json). Rings 70 to 88.",
  "id": "quillmarch",
  "name": "Quillmarch",
  "era": 3,
@@ -23,10 +23,10 @@
   {"id": "mordant_steps", "name": "Mordant Steps", "pos": [2, 1], "links": ["platewick", "mordant_row"], "ring": [72, 75], "slots": [
    {"slot": "mordant_a", "ground": "scree", "weight": 40, "species": "Cindrik"},
    {"slot": "mordant_b", "ground": "scree", "weight": 35, "species": "Nibbet"},
-   {"slot": "mordant_c", "ground": "scree", "weight": 25, "species": null, "stand_in": "Ashcrest"}]},
+   {"slot": "mordant_c", "ground": "scree", "weight": 25, "species": "Mordling", "stand_in": "Ashcrest"}]},
   {"id": "hoarfrost_moor", "name": "Hoarfrost Moor", "pos": [3, 0], "links": ["mordant_row", "rimeholt"], "ring": [74, 77], "slots": [
    {"slot": "hoarfrost_a", "ground": "fern", "weight": 40, "species": "Vesk"},
-   {"slot": "hoarfrost_b", "ground": "scree", "weight": 35, "species": null, "stand_in": "Glassfell"},
+   {"slot": "hoarfrost_b", "ground": "scree", "weight": 35, "species": "Rimekit", "stand_in": "Glassfell"},
    {"slot": "hoarfrost_c", "ground": "fern", "weight": 25, "species": "Filigrin"}]},
   {"id": "gravers_causeway", "name": "Gravers' Causeway", "pos": [3, 2], "links": ["platewick", "ledgerholm"], "ring": [76, 80], "slots": [
    {"slot": "gravers_a", "ground": "reed", "weight": 40, "species": "Siltby"},
@@ -34,12 +34,12 @@
    {"slot": "gravers_c", "ground": "fern", "weight": 25, "species": "Cindrel"}]},
   {"id": "rimeglass_pass", "name": "Rimeglass Pass", "pos": [4, 2], "links": ["rimeholt", "ledgerholm"], "ring": [79, 83], "slots": [
    {"slot": "rimeglass_a", "ground": "fern", "weight": 40, "species": "Veskara"},
-   {"slot": "rimeglass_b", "ground": "scree", "weight": 35, "species": null, "stand_in": "Saltspire"},
+   {"slot": "rimeglass_b", "ground": "scree", "weight": 35, "species": "Glacilet", "stand_in": "Saltspire"},
    {"slot": "rimeglass_c", "ground": "fern", "weight": 25, "species": "Filigrace"}]},
   {"id": "stamp_road", "name": "Stamp Road", "pos": [3, 4], "links": ["ledgerholm", "proofgate"], "ring": [82, 86], "slots": [
    {"slot": "stamp_a", "ground": "reed", "weight": 40, "species": "Siltarra"},
    {"slot": "stamp_b", "ground": "scree", "weight": 35, "species": "Nibquill"},
-   {"slot": "stamp_c", "ground": "scree", "weight": 25, "species": null, "stand_in": "Smeltmaw"}]},
+   {"slot": "stamp_c", "ground": "scree", "weight": 25, "species": "Vatrat", "stand_in": "Smeltmaw"}]},
   {"id": "smudge_marsh", "name": "Smudge Marsh", "pos": [1, 3], "links": ["proofgate", "burin_landing"], "ring": [85, 88], "slots": [
    {"slot": "smudge_a", "ground": "reed", "weight": 40, "species": "Siltby"},
    {"slot": "smudge_b", "ground": "reed", "weight": 35, "species": "Filigrace"},
@@ -55,11 +55,11 @@
   {"id": "mavet", "name": "Warden Mavet", "rift": "bath_rift", "order": 1, "ring": 76, "money": 7600,
    "intro": "Breathe deep, it clears the sinuses. And the lungs. And eventually the estate.",
    "defeat": "Fine, the Rift is yours. The cure for the fumes is still mine, and the price just went up.",
-   "team": [{"species": "Cindrel", "level": 75}, {"species": "Nibquill", "level": 75}, {"species": "Smeltmaw", "level": 76}, {"slot": "mavet_ace", "species": null, "stand_in": "Ashcrest", "level": 76}]},
+   "team": [{"species": "Cindrel", "level": 75}, {"species": "Nibquill", "level": 75}, {"species": "Smeltmaw", "level": 76}, {"slot": "mavet_ace", "species": "Mordantyrant", "stand_in": "Ashcrest", "level": 76}]},
   {"id": "quenby", "name": "Warden Quenby", "rift": "rime_rift", "order": 2, "ring": 80, "money": 8400,
    "intro": "The frost writes a warning on every window. I only read out the ones somebody paid for.",
    "defeat": "Your warning was on my window all week. Nobody paid, so I let you walk in.",
-   "team": [{"species": "Siltarra", "level": 79}, {"species": "Veskara", "level": 79}, {"species": "Glassfell", "level": 80}, {"slot": "quenby_ace", "species": null, "stand_in": "Saltspire", "level": 80}]},
+   "team": [{"species": "Siltarra", "level": 79}, {"species": "Veskara", "level": 79}, {"species": "Glassfell", "level": 80}, {"slot": "quenby_ace", "species": "Rimesovereign", "stand_in": "Saltspire", "level": 80}]},
   {"id": "ottoline", "name": "Warden Ottoline", "rift": "ledger_rift", "order": 3, "ring": 84, "money": 9200,
    "intro": "Two ledgers, one truth, zero witnesses. Pick a book, darling. Any book.",
    "defeat": "You win. I would congratulate you, but the ledger says you were never here.",
@@ -67,7 +67,7 @@
   {"id": "grisel", "name": "Warden Grisel", "rift": "press_rift", "order": 4, "ring": 88, "money": 11000,
    "intro": "I printed your ferry ticket, your fame and your fixer's new face. Let's see if I can print your loss.",
    "defeat": "Keep the press. The map is already printed, and every Rift on it has my name in the margin.",
-   "team": [{"species": "Nibravure", "level": 87}, {"species": "Cindravax", "level": 87}, {"species": "Siltaroth", "level": 87}, {"species": "Veskarion", "level": 88}, {"slot": "grisel_ace", "species": null, "stand_in": "Obsidroth", "level": 88}]}
+   "team": [{"species": "Nibravure", "level": 87}, {"species": "Cindravax", "level": 87}, {"species": "Siltaroth", "level": 87}, {"species": "Veskarion", "level": 88}, {"slot": "grisel_ace", "species": "Corrodrake", "stand_in": "Obsidroth", "level": 88}]}
  ],
  "story": [
   {"id": "v3_ch1", "title": "Chapter 1: The Fine Print", "at": "burin_landing", "needs": "era2_finale_done", "sets": "v3_ch1_done",

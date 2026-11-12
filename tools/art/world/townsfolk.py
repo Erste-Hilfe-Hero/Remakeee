@@ -128,7 +128,7 @@ PEOPLE.update({
     "madderby": [
         ("nell", "villager", 2, 6, "right", [], [at("dusk", 6, 6, "right"), away("night")],
          ("Dyer Nell: By day my hands are blue to the elbow. By the spring at dusk they're almost clean.", "Färberin Nell: Tagsüber sind meine Hände bis zum Ellbogen blau. Abends am Brunnen werden sie fast sauber."), None),
-        ("oskar", "elder", 8, 14, "left", [], [at("dusk", 6, 5, "down"), away("night")],
+        ("oskar", "elder", 9, 14, "left", [], [at("dusk", 6, 5, "down"), away("night")],
          ("Old Oskar: Every evening the same faces at the spring. I wouldn't trade a single one.", "Der alte Oskar: Jeden Abend dieselben Gesichter am Brunnen. Ich würde kein einziges hergeben."), None),
         ("fenna", "villager", 3, 18, "up", [], [at("dusk", 7, 7, "up"), away("night")],
          ("Weaver Fenna: The guild bell rings, and half of Madderby comes to the spring to talk about the other half.", "Weberin Fenna: Die Gildenglocke läutet, und halb Madderby kommt zum Brunnen, um über die andere Hälfte zu reden."), None),

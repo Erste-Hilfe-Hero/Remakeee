@@ -90,10 +90,10 @@ def main() -> None:
             c = to_canvas(Image.open(os.path.join(TILES, "overworld.png")).convert("RGBA"), list(PALETTE))
         kinds = sorted(buildings.STYLED - own_props(style))
         build(style, c, kinds)
-        # Lighthouse rows 1 (shaft over the door) and 2 (foot with door) from the shared atlas,
-        # in the act's inks and on the act's own ground.
+        # Lighthouse rows 1 (shaft over the door) and 2 (foot with door) and the winding tower
+        # rows 3 and 4 from the shared atlas, in the act's inks and on the act's own ground.
         tx, gx = g.K["TOWER"] * T, g.K["GRASS"] * T
-        for y in range(T, 3 * T):
+        for y in range(T, 5 * T):
             for x in range(T):
                 v = shared.px[y][tx + x]
                 c.px[y][tx + x] = c.px[y % T][gx + x] if v == shared.px[y % T][gx + x] else v
