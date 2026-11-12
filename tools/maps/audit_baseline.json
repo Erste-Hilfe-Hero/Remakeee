@@ -1,7 +1,6 @@
 {
  "_doc": "Known map audit findings (tools/maps/audit_maps.py). Key: map kind x,y. Value: the finding, or why it stays on purpose. Remove a line by fixing the map.",
  "open": {
-  "ashmere_station dead_door 5,6": "door leads nowhere",
   "brackwater_fen building_edge 0,13": "building 0,13-0,13 touches the map edge",
   "brackwater_fen building_edge 11,16": "building 11,16-11,16 touches the map edge",
   "brackwater_fen door_blocked 0,13": "no ground in front of the door",
@@ -10,8 +9,6 @@
   "brackwater_fen door_no_wall 11,16": "nothing above the door (WATER)",
   "brindlewick npc_on_warp 3,12": "npc velahra blocks a door",
   "brindlewick unreachable 9,15": "3 cells 9,15-10,16 cannot be reached",
-  "cinderfold dead_door 10,8": "door leads nowhere",
-  "cinderfold npc_on_warp 4,6": "npc tovan blocks a door",
   "copperfold dead_door 3,12": "door leads nowhere",
   "copperfold dead_door 3,4": "door leads nowhere",
   "copperfold dead_door 9,4": "door leads nowhere",
@@ -30,9 +27,6 @@
   "madderby dead_door 8,13": "door leads nowhere",
   "madderby no_door 10,8": "building 10,8-10,9 has no door",
   "madderby npc_on_warp 8,14": "npc oskar blocks a door",
-  "ochrewell no_door 2,12": "building 2,12-3,13 has no door",
-  "ochrewell no_door 2,2": "building 2,2-4,3 has no door",
-  "ochrewell no_door 7,2": "building 7,2-9,3 has no door",
   "quillbrook door_no_wall 9,24": "nothing above the door (GRASS)",
   "reedhaven dead_door 2,3": "door leads nowhere",
   "reedhaven dead_door 2,7": "door leads nowhere",
