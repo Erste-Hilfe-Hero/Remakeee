@@ -66,9 +66,9 @@
   },
   {
    "id": "acolyte_a",
-   "x": 1,
+   "x": 2,
    "y": 8,
-   "facing": "right",
+   "facing": "left",
    "dialogue": "cinder_rift/acolyte_a",
    "trainer": "Rift Acolyte Pell",
    "intro": "cinder_rift/acolyte_a_intro",

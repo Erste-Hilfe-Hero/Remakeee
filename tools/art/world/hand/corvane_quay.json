@@ -9,6 +9,32 @@
     "dialogue": "corvane_quay/informant",
     "sprite": "villager"
    }
+  ],
+  "warps": [
+   {
+    "x": 2,
+    "y": 4,
+    "to": "corvane_quay_spring",
+    "tx": 4,
+    "ty": 7,
+    "facing": "up"
+   },
+   {
+    "x": 9,
+    "y": 4,
+    "to": "corvane_quay_shop",
+    "tx": 4,
+    "ty": 7,
+    "facing": "up"
+   },
+   {
+    "x": 2,
+    "y": 12,
+    "to": "corvane_quay_house",
+    "tx": 4,
+    "ty": 7,
+    "facing": "up"
+   }
   ]
  }
 }

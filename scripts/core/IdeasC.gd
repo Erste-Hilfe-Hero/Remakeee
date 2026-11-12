@@ -16,5 +16,5 @@ static func team(names: Array, ring: int, rng: RandomNumberGenerator) -> Array[S
 	var out: Array[Spirling] = []
 	for n: Variant in names:
 		if Database.spirlings.has(str(n)):
-			out.append(Spirling.new(Database.spirlings[str(n)], clampi(ring, 1, Spirling.MAX_LEVEL), rng))
+			out.append(Spirling.new(Database.spirlings[str(n)], clampi(ring, 1, Spirling.STORY_RING), rng))
 	return out
