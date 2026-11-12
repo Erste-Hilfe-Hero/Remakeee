@@ -15,7 +15,7 @@ band is reported, and fails only with --strict (the full model is the real gate)
 Chart sim (always a gate): one equal-stat Spirling per element with a single art of its own element,
 so only the chart decides. Every element meets every element 1 on 1, and every team of 3 distinct
 elements meets every team it shares no element with, in several lead orders, sides swapped. Run for
-the Era I elements alone and for all eras (Rust and Mask included, which sit on no Spirling yet).
+the Era I elements alone and for all eras (Rust, Mask, Gilt and Zenith included, which sit on no Spirling yet).
 Fails if an element leaves 40-60 % (1 on 1 or in teams) or a team of 3 leaves 30-70 %.
 
   python3 tools/balance/type_sim.py                  check, print the table
@@ -40,6 +40,7 @@ CHART_DUELS = 40
 CHART_ORDERS = 4
 CHART_SEED = 352
 TEAM_BAND = (0.30, 0.70)
+ROMAN = {1: "I", 2: "II", 3: "III", 4: "IV", 5: "V"}
 
 STAB = 1.25
 CRIT_MULT = 1.4
@@ -74,8 +75,8 @@ def chart_problems(chart, species):
             out.append("%s has fewer than 2 real strengths" % t)
         if sum(mult(o, t) > 1 for o in types) < 2:
             out.append("%s has fewer than 2 real weaknesses" % t)
-        # Even count, so no element is ahead on the chart alone; checked for Era I by itself too.
-        for era_max in (1, max(v.get("era", 1) for v in types.values())):
+        # Even count, so no element is ahead on the chart alone; checked up to every era that adds elements.
+        for era_max in sorted({v.get("era", 1) for v in types.values()}):
             if types[t].get("era", 1) > era_max:
                 continue
             pool = [o for o in types if types[o].get("era", 1) <= era_max]
@@ -340,7 +341,7 @@ def report(chart, sp, ty, problems):
     for t, v in types.items():
         weak = [o for o in types if t in types[o]["strong"] and o not in types[t]["strong"]]
         wr = "%.1f %%" % (ty[t][0] * 100) if t in ty else "legendaries only"
-        lines.append("| %s | %s | %s | %s | %s |" % (t.capitalize(), "I" if v.get("era", 1) == 1 else "II",
+        lines.append("| %s | %s | %s | %s | %s |" % (t.capitalize(), ROMAN[v.get("era", 1)],
             ", ".join(x.capitalize() for x in v["strong"] if t not in types[x]["strong"]), ", ".join(x.capitalize() for x in weak), wr))
     rates = [r for r, _, _ in sp.values()]
     lines += ["", "Species: %d measured, lowest %.1f %%, highest %.1f %%." % (len(sp), min(rates) * 100, max(rates) * 100), "",
