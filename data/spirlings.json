@@ -8963,11 +8963,11 @@
   "line_id": "sablet",
   "era": 1,
   "base": {
-   "hp": 84,
-   "atk": 60,
-   "foc": 135,
-   "spd": 83,
-   "def": 87
+   "hp": 77,
+   "atk": 55,
+   "foc": 124,
+   "spd": 76,
+   "def": 80
   },
   "trait": "light_sleeper",
   "learnset": {

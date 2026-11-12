@@ -1694,6 +1694,48 @@
     "max": 34,
     "weight": 6,
     "ground": "scree"
+   },
+   {
+    "species": "Hushkin",
+    "min": 30,
+    "max": 32,
+    "weight": 3,
+    "ground": "scree"
+   },
+   {
+    "species": "Blotling",
+    "min": 31,
+    "max": 33,
+    "weight": 3,
+    "ground": "scree"
+   },
+   {
+    "species": "Duskdigger",
+    "min": 32,
+    "max": 34,
+    "weight": 3,
+    "ground": "scree"
+   },
+   {
+    "species": "Calderox",
+    "min": 32,
+    "max": 34,
+    "weight": 3,
+    "ground": "scree"
+   },
+   {
+    "species": "Cairnhold",
+    "min": 32,
+    "max": 34,
+    "weight": 3,
+    "ground": "scree"
+   },
+   {
+    "species": "Talusgard",
+    "min": 33,
+    "max": 34,
+    "weight": 3,
+    "ground": "scree"
    }
   ]
  }

@@ -342,9 +342,7 @@ TEXTS = {
 }
 
 ENCOUNTERS = {
-    "soot_vaults": [("Sootlurk", "scree"), ("Clinkshell", "scree"), ("Sablowl", "scree"), ("Fumewraith", "scree"),
-                    ("Shadeback", "scree"), ("Stylox", "scree"), ("Etchling", "scree"), ("Clinklet", "scree"),
-                    ("Sootharrow", "scree")],
+    # soot_vaults is set by hand in data/encounters.json: the census needs its six Veydal natives.
     "kiln_rift": [("Brickit", "scree"), ("Coalkid", "scree"), ("Sootpaw", "scree"), ("Cindle", "scree"),
                   ("Ingotlet", "scree"), ("Flueling", "scree"), ("Smeltpup", "scree"), ("Kilnstork", "scree"),
                   ("Shalebat", "scree")],
