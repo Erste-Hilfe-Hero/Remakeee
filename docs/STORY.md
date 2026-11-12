@@ -453,11 +453,27 @@ zero is a bill, never below an empty purse) or the lead Spirling's keepsake; a c
 | IV | Kaia's sealed letter: deliver or open (`a4_letter`, `a4_ochrewell`) | you become the Veil's courier of record, liable for the drought (`kaia_witness`, `a4_oasis`) | `clan_b23` |
 | IV | Lusk's free tunnel pass (`a4_tunnel`, `a4_oasis`) | the tunnel bill (`lusk_tunnel`, `a4_sun`) | `clan_b24` |
 | IV | - (Juna's trust since the Act I report) | Juna sells your lodging to the Veil (`juna_letter`, `a4_sun`) | `clan_b25` |
+| IV | Leith minds your water at the Tower (`a4_water`, `a4_tower_gate`) | Sable sells the skins back at drought price (`leith_water`, `a4_wells`) | - |
+| IV | Ottilie's clerk carries Aurelio's vote (`a4_vote`, `a4_wells`) | the wells are leased on your signature (`ottilie_vote`, `a4_drought`) | - |
+| IV | Emrys asks for sworn silence (`a4_oath`, `a4_drought`) | he confesses your oath with his own (`emrys_oath`, `a4_north`) | - |
 
 The mandatory Act IV duels add two more: Kaia sold the oasis, and Emrys signed as her witness.
 Trusting answers raise a hidden value and are punished; the chained ones reward a secret kept
 earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises her use enough that
 her later tip (`sable_tip`) turns into an ambush.
+
+**Act IV main goals** (`data/quests.json`, text in `data/dialogue/solenne_main.json`, German in
+`tools/i18n/de_solenne_main.py`). Eight goals run from the Shade Rift to the Wide Rift: `sol_road`
+(arrive, `a4_arrived`), `sol_tower` (Aurelio), `sol_council` (the well council, `a4_council_done`),
+`sol_oasis` (Kaia), `sol_factor` (the leased wells and Lusk, `a4_drought_done` + `veil_factor_beaten`),
+`sol_sun` (Emrys), `sol_reckoning` (`c4_reckoning_done`) and `sol_north` (the border stone,
+`a4_north_done`). Four scenes carry the new beats: `a4_tower_gate` (entering the Tower Rift),
+`a4_wells` and `a4_drought` (entering Ochrewell after the Tower and after the Oasis) and `a4_north`
+(entering the Saltglass flats after the reckoning: the guild proctor, the three Wardens, all eleven
+strangers walking north). A map's further arrival scenes sit under `on_enter_more` in
+`data/story_npcs.json`. None of the new flags gates a Rift or the Undrawn: a goal also counts as
+done when a later one is, so older saves land on the right goal. Story duels: `well_bailiff`,
+`veil_pump_guards`, `guild_proctor`. Tests: `tests/unit/test_solenne_main.gd`.
 
 **The reckoning** (`data/scenes/solenne_reckoning.json`, started by Ottilie once the Sun Rift is
 mended): both throne betrayals are cashed in, Grell arrives with Brannoc (and Kerr if turned), Marlo
