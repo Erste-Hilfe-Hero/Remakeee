@@ -1,0 +1,7 @@
+{
+ "_comment": "it translation of the halcyra_types table, keyed by the English text.",
+ "strings": {
+  "Gilt": "Doratura",
+  "Zenith": "Zenit"
+ }
+}

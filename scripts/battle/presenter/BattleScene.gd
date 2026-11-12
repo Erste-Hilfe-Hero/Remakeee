@@ -50,6 +50,8 @@ var _field: Control
 var _shake_root: Control
 ## Element effects for arts, drawn above the sprites inside the shake root.
 var _fx: ElementFx
+## Rain, fog or a storm over the field when the region's sky laid the field (Era III on).
+var _weather: BattleWeather
 var _backdrop: BattleBackdrop
 ## Era IV 2.5D stage; null before Panorama.
 var _stage: Era4Stage
@@ -192,6 +194,10 @@ func _build() -> void:
 	_fx = ElementFx.new()
 	_fx.name = "element_fx"
 	_shake_root.add_child(_fx)
+	_weather = BattleWeather.new()
+	_weather.name = "battle_weather"
+	_weather.visible = false
+	_shake_root.add_child(_weather)
 	for n: Control in [_foe_strip, _player_strip]:
 		_field.add_child(n)
 	_foe_sprite.visible = false
@@ -340,19 +346,45 @@ func _layout_formation() -> void:
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
 	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
 		var n: int = _slot_sprites[side].size()
-		var total: float = n * SLOT_SPRITE + (n - 1) * SLOT_GAP
-		var x0: float = w - MARGIN - total if side == BattleModel.Side.FOE else MARGIN + 4
 		var tag_h: float = (_slot_strips[side][0] as MiniStrip).needed_height() if n > 0 else 0.0
-		var y: float = MARGIN + 44 if side == BattleModel.Side.FOE else h - MARGIN - tag_h - 2 - SLOT_SPRITE
+		var slots: Array[Rect2] = formation_slots(EraManager.active_era(), side, n, Vector2(w, h), tag_h)
 		for slot: int in n:
 			var sp: SpirlingSprite = _slot_sprites[side][slot]
-			sp.position = Vector2(x0 + slot * (SLOT_SPRITE + SLOT_GAP), y)
-			sp.size = Vector2(SLOT_SPRITE, SLOT_SPRITE)
+			sp.position = slots[slot].position
+			sp.size = slots[slot].size
 			var tag: MiniStrip = _slot_strips[side][slot]
-			tag.position = sp.position + Vector2(-1, SLOT_SPRITE + 2)
+			tag.position = sp.position + Vector2(-1, sp.size.y + 2)
 			tag.size = Vector2(MiniStrip.WIDTH, tag_h)
-		rects[side] = Rect2(x0, y, total, SLOT_SPRITE)
+		var r: Rect2 = Rect2()
+		for q: Rect2 in slots:
+			r = q if r.size == Vector2.ZERO else r.merge(q)
+		rects[side] = r
 	_backdrop.set_scene(backdrop, rects[BattleModel.Side.FOE], rects[BattleModel.Side.PLAYER])
+	if _stage != null:
+		_stage.fit_formation(rects[BattleModel.Side.FOE], rects[BattleModel.Side.PLAYER])
+
+## Formation slots for [param n] Spirlings of [param side] in [param era] (data/era_battle_feel.json
+## "formation_*"): Era I/II keep 28 px sprites in a flat rank, Era III 32 px, Era IV/V bigger
+## sprites with every second one a step further back so the rank has depth (Era V triple battles
+## stand in a shallow arc). Sprites shrink when the rank would not fit the field.
+static func formation_slots(era: int, side: int, n: int, field: Vector2, tag_h: float) -> Array[Rect2]:
+	var out: Array[Rect2] = []
+	if n <= 0:
+		return out
+	var gap: float = EraBattleFeel.num(era, "formation_gap", SLOT_GAP)
+	var px: float = EraBattleFeel.num(era, "formation_slot", SLOT_SPRITE)
+	px = floorf(minf(px, (field.x - MARGIN * 2 - 4 - (n - 1) * gap) / n))
+	var stagger: float = EraBattleFeel.num(era, "formation_stagger", 0.0)
+	var total: float = n * px + (n - 1) * gap
+	var x0: float = field.x - MARGIN - total if side == BattleModel.Side.FOE else MARGIN + 4
+	var y: float = MARGIN + 44 if side == BattleModel.Side.FOE else field.y - MARGIN - tag_h - 2 - px
+	for slot: int in n:
+		var back: float = 0.0
+		if stagger > 0.0:
+			# Odd slots step back; a rank of three bows its middle back (Era V triples).
+			back = stagger if (slot % 2 == 1) else 0.0
+		out.append(Rect2(Vector2(x0 + slot * (px + gap), y - back).round(), Vector2(px, px)))
+	return out
 
 ## Shows [param side]/[param slot]'s details in the ledger strip (formation layout).
 func _focus(side: int, slot: int) -> void:
@@ -397,6 +429,7 @@ func _run() -> void:
 	_foe_strip.visible = false
 	_player_strip.visible = false
 	_auto_button.visible = model.is_wild
+	_weather.setup(BattleWeather.weather_of(model), EraManager.active_era())
 	_apply_speed()
 	Sound.music(Sound.battle_music(music_track))
 	# A Trial comes started (its Energy is set after the start); a restart skips its lines.
@@ -824,7 +857,8 @@ func _play_event(e: BattleEvent) -> void:
 			_strip(side, slot).set_spirling(s)
 			_strip(side, slot).visible = true
 			_focus(side, slot)
-			Sound.cry(s.data)
+			# The player's own Spirling keeps the cry of the era it was met in.
+			Sound.cry(s.data, Sound.cry_era_for(s.origin_era, side == BattleModel.Side.PLAYER, EraManager.active_era()))
 			await _sprite(side, slot).step_out(side != BattleModel.Side.PLAYER)
 			_update_pinch()
 			await _text.show_text(e.describe())
@@ -934,6 +968,7 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BOND_RESULT:
 			if bool(e.data.get("success", false)):
+				Sound.sfx("bond")
 				var bonded: SpirlingSprite = _sprite(BattleModel.Side.FOE, slot)
 				var bond_era: int = EraManager.active_era()
 				if EraBattleFeel.text(bond_era, "bond", "hop") == "blink_out":
@@ -1142,6 +1177,13 @@ func _update_pinch() -> void:
 	var track: String = Sound.battle_music(pinch_track(lowest, music_track))
 	if Sound.current_track != track:
 		Sound.music(track)
+	var foe_low: float = 1.0
+	for fs: int in model.slot_count(BattleModel.Side.FOE):
+		var f: Spirling = model.active_spirling(BattleModel.Side.FOE, fs)
+		if f != null and not f.is_fainted():
+			foe_low = minf(foe_low, f.hp_fraction())
+	# Low-health alarm and the Era V battle layers (docs/ERA_FEEL_AUDIO.md).
+	Sound.battle_state(lowest.hp_fraction() if lowest != null and not lowest.is_fainted() else 1.0, foe_low)
 
 ## "battle_pinch" when [param s] is at or below PINCH_RATIO of its HP (and still standing), else [param normal].
 static func pinch_track(s: Spirling, normal: String) -> String:

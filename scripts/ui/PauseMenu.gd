@@ -683,19 +683,23 @@ func _unfurl(s: Spirling, forward: bool) -> void:
 ## Give, swap or take off a keepsake.
 func _held_item(s: Spirling) -> void:
 	var ids: Array[String] = []
-	var entries: Array[String] = []
+	# Each keepsake shows what it does while focused, before it is put on (item 1900).
+	var entries: Array[Dictionary] = []
 	if not s.held.is_empty():
 		ids.append("")
-		entries.append("Take off %s" % Database.item(s.held).get("name", s.held))
+		entries.append({"text": "Take off %s" % Database.item(s.held).get("name", s.held),
+			"hint": Loc.t(str(Database.item(s.held).get("description", "")))})
 	for id: Variant in GameState.inventory:
 		if GameState.item_count(str(id)) > 0 and BattleRules.is_holdable(str(id)):
 			ids.append(str(id))
-			entries.append("%s x%d" % [Database.item(str(id)).get("name", id), GameState.item_count(str(id))])
+			var it: Dictionary = Database.item(str(id))
+			entries.append({"text": "%s x%d" % [it.get("name", id), GameState.item_count(str(id))],
+				"hint": Loc.t(str(it.get("description", "")))})
 	if ids.is_empty():
 		await info("You have nothing a Spirling can hold.\nKeepsakes are sold in Thornridge.")
 		return
 	var now: String = "Holding: %s" % (Database.item(s.held).get("name", s.held) if not s.held.is_empty() else "nothing")
-	var idx: int = await pick_strings(now, entries)
+	var idx: int = await pick(now, entries)
 	if idx < 0:
 		return
 	GameState.set_held(s, ids[idx])
@@ -790,6 +794,8 @@ func run_bag() -> void:
 			var hint: String = Loc.t(str(it0.get("description", "")))
 			if battle_only(it0):
 				hint = Loc.t(BATTLE_ONLY) + " " + hint
+			elif bool(it0.get("gear", false)):
+				hint = gear_hint(id)
 			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint})
 		# If it was used up, the row that took its place gets the focus.
 		var focus: int = ids.find(last_id)
@@ -893,6 +899,15 @@ static func gear_page(id: String) -> String:
 		lines.append(Loc.t("Works on: %s") % ", ".join(places))
 	lines.append(Loc.t("Always on foot: you walk, wade and climb yourself."))
 	return "\n".join(lines)
+
+## One sentence on where and how a gear item is used, for the Satchel row (item 1925).
+static func gear_hint(id: String) -> String:
+	var places: PackedStringArray = []
+	for w: Variant in Database.item(id).get("works_on", []):
+		places.append(Loc.t(GEAR_PLACES.get(str(w), str(w))))
+	if places.is_empty():
+		return Loc.t(str(Database.item(id).get("description", "")))
+	return Loc.t("Works on its own at: %s") % ", ".join(places)
 
 ## The tile a gear item works on, drawn at twice its size, or null.
 static func gear_picture(id: String) -> Texture2D:
@@ -1095,6 +1110,10 @@ func run_spirlog() -> void:
 			_log_search, _log_element, role, _log_status, region)
 		var entries: Array[Dictionary] = []
 		var actions: Array[String] = []
+		# Two progress bars on top (item 1940).
+		for row: Dictionary in spirlog_progress_rows():
+			entries.append(row)
+			actions.append("progress")
 		for r: String in regions:
 			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
 			actions.append("chapter")
@@ -1157,9 +1176,57 @@ func run_spirlog() -> void:
 			"kind":
 				var sd: SpirlingData = kinds[idx - first_kind]
 				if not SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
-					await info("#%02d  Not seen yet." % sd.dex_id)
+					var look: String = unseen_hint(sd.species_name)
+					await info(Loc.t("#%02d  Not seen yet." % sd.dex_id) + ("\n" + look if not look.is_empty() else ""))
 					continue
 				await SpirlogPage.show_pages(self, kinds, idx - first_kind)
+
+## "Seen 12/21" and "Bonded 8/21" as rows with a bar each (item 1940).
+static func spirlog_progress_rows() -> Array[Dictionary]:
+	var kinds: Array[SpirlingData] = SpirlogBook.visible_kinds(GameState.flags)
+	var seen: int = 0
+	var bonded: int = 0
+	for sd: SpirlingData in kinds:
+		if SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
+			seen += 1
+		if SpirlogBook.is_bonded(GameState.spirlog, sd.species_name):
+			bonded += 1
+	var total: int = kinds.size()
+	var out: Array[Dictionary] = []
+	for pair: Array in [["Seen %d/%d", seen], ["Bonded %d/%d", bonded]]:
+		var n: int = int(pair[1])
+		var ratio: float = float(n) / maxf(1.0, float(total))
+		out.append({"text": Loc.t(str(pair[0]) % [n, total]),
+			"decorate": func(b: Button) -> void: _draw_progress(b, ratio)})
+	return out
+
+const PROGRESS_W: int = 48
+
+static func _draw_progress(b: Button, ratio: float) -> void:
+	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
+	var x0: float = b.size.x - PROGRESS_W - 6
+	var y: float = b.size.y - 4
+	b.draw_rect(Rect2(x0, y, PROGRESS_W, 2), UITheme.DISABLED)
+	if ratio > 0.0:
+		b.draw_rect(Rect2(x0, y, maxf(1.0, roundf(PROGRESS_W * ratio)), 2), ink)
+
+## Where to look for a kind not seen yet: maps it lives on that the player has entered
+## (item 1948). Empty while none of them was entered.
+static func unseen_hint(species: String) -> String:
+	var where: PackedStringArray = []
+	for table: String in EncounterTable.table_ids():
+		if not species in EncounterTable.species_on(table):
+			continue
+		for map_id: String in _maps_with_table(table):
+			if not GameState.visited_maps.has(map_id):
+				continue
+			var m: MapData = MapData.load_map(map_id)
+			var name: String = m.display_name if m != null and not m.display_name.is_empty() else map_id
+			if not name in where:
+				where.append(name)
+	if where.is_empty():
+		return ""
+	return Loc.t("Look in: %s") % ", ".join(where)
 
 ## Real map names where a kind lives (item 1935), not reshaped table ids.
 static func found_on(species: String) -> PackedStringArray:

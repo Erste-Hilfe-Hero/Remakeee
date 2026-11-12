@@ -210,6 +210,62 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q2_wax_names_sanne",
+   "x": 9,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_wax_names",
+   "sprite": "villager",
+   "hide_flag": "q2_wax_names_reveal"
+  },
+  {
+   "id": "q2_wax_names_sanne_list",
+   "x": 4,
+   "y": 17,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_wax_names_sanne_list",
+   "sprite": "villager",
+   "trainer": "List Writer Sanne",
+   "show_flag": "q2_wax_names_reveal",
+   "intro": "vellmarch/q2_wax_names_sanne_list_intro",
+   "defeat": "vellmarch/q2_wax_names_sanne_list_defeat",
+   "money": 2850,
+   "team": [
+    {
+     "species": "Wickmoth",
+     "level": 55
+    },
+    {
+     "species": "Rookit",
+     "level": 56
+    },
+    {
+     "species": "Millvane",
+     "level": 57
+    }
+   ],
+   "win_flags": [
+    "q2_wax_names_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q2_ghost_wages_hette",
+   "x": 7,
+   "y": 16,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_ghost_wages",
+   "sprite": "elder"
+  },
+  {
+   "id": "q2_heavy_rumour_joss",
+   "x": 3,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_heavy_rumour",
+   "sprite": "villager"
   }
  ],
  "signs": [

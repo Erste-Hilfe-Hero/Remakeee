@@ -220,6 +220,14 @@ static func move_info(mv: MoveData, model: BattleModel = null) -> String:
 				line = Loc.t("Ends the foe's %s.") % Loc.t(StatusRules.label(ct)) if not ct.is_empty() else Loc.t("Ends the foe's status.")
 			&"stage_steal":
 				line = Loc.t("Steals one raised stage from the foe.")
+			&"energy_gain":
+				line = Loc.t("Gains %d Energy.") % int(fx.get("amount", 1))
+			&"stage_reset":
+				line = Loc.t("Sets every stage on both sides back to 0.")
+			&"cure_team":
+				line = Loc.t("Cures the status of its whole team.")
+			&"self_cost":
+				line = Loc.t("Costs %d%% of its own Vigor, never the last point.") % roundi(float(fx.get("amount", 0.25)) * 100.0)
 			&"cure_self":
 				line = Loc.t("Cures its own status.")
 			&"status_shift":

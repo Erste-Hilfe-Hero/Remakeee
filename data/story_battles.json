@@ -2205,6 +2205,146 @@
   "money": 900,
   "lose": "dyeworks/wenna_ambush_lose"
  },
+ "well_bailiff": {
+  "trainer": "Well Bailiff Brakka",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 37
+   },
+   {
+    "species": "Cairnhold",
+    "level": 37
+   },
+   {
+    "species": "Duskdigger",
+    "level": 38
+   }
+  ],
+  "ai": 2,
+  "money": 1900,
+  "defeat": "solenne_main/bailiff_defeat",
+  "lose": "solenne_main/bailiff_lose"
+ },
+ "veil_pump_guards": {
+  "trainer": "Veil Pump Guards",
+  "team": [
+   {
+    "species": "Obsidroth",
+    "level": 38
+   },
+   {
+    "species": "Saltspire",
+    "level": 38
+   },
+   {
+    "species": "Kelphound",
+    "level": 38
+   },
+   {
+    "species": "Burinox",
+    "level": 39
+   }
+  ],
+  "ai": 2,
+  "money": 2000,
+  "defeat": "solenne_main/guards_defeat",
+  "lose": "solenne_main/guards_lose"
+ },
+ "guild_proctor": {
+  "trainer": "Guild Proctor Isolde",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 40
+   },
+   {
+    "species": "Silentra",
+    "level": 40
+   },
+   {
+    "species": "Mendlace",
+    "level": 40
+   },
+   {
+    "species": "Solmantle",
+    "level": 41
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "solenne_main/proctor_defeat",
+  "lose": "solenne_main/proctor_lose"
+ },
+ "q2_two_owners_rats": {
+  "trainer": "Culvert Rats",
+  "team": [
+   {
+    "species": "Diparrow",
+    "level": 56
+   },
+   {
+    "species": "Rainmantle",
+    "level": 56
+   },
+   {
+    "species": "Reedwarden",
+    "level": 57
+   }
+  ],
+  "ai": 2,
+  "money": 2565,
+  "defeat": "vellmarch/q2_two_owners_rats_won",
+  "win_flags": [
+   "q2_two_owners_s2"
+  ]
+ },
+ "q2_ghost_wages_bruisers": {
+  "trainer": "Tunnel Bruisers",
+  "team": [
+   {
+    "species": "Glassfell",
+    "level": 57
+   },
+   {
+    "species": "Ashcrest",
+    "level": 57
+   },
+   {
+    "species": "Smeltpup",
+    "level": 58
+   }
+  ],
+  "ai": 2,
+  "money": 2610,
+  "defeat": "vellmarch/q2_ghost_wages_bruisers_won",
+  "win_flags": [
+   "q2_ghost_wages_s2"
+  ]
+ },
+ "q2_bought_boos_claque": {
+  "trainer": "The Claque",
+  "team": [
+   {
+    "species": "Smeltmaw",
+    "level": 57
+   },
+   {
+    "species": "Glassfell",
+    "level": 57
+   },
+   {
+    "species": "Ashcrest",
+    "level": 58
+   }
+  ],
+  "ai": 2,
+  "money": 2610,
+  "defeat": "vellmarch/q2_bought_boos_claque_won",
+  "win_flags": [
+   "q2_bought_boos_s2"
+  ]
+ },
  "hs_brass_planet": {
   "trainer": "Gilt Collector Ambrose",
   "team": [
