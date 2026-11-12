@@ -58,7 +58,7 @@ T = {
 "Battles of the week: watch a final": "Kämpfe der Woche: ein Finale ansehen",
 "Tournament: the team of %s waits. Win with as much damage and as few rounds as you can.": "Turnier: Das Team von %s wartet. Gewinne mit so viel Schaden und so wenig Runden wie möglich.",
 "Waiting for your friend's result.": "Warte auf das Ergebnis deines Freundes.",
-"Round %d: what will %s do?": "Runde %d: Was macht %s?",
+"Round %d: choose for %s": "Runde %d: Wähle für %s",
 "None of your friends is in a live duel right now.": "Gerade ist keiner deiner Freunde in einem Live-Duell.",
 "%s against %s, round %d": "%s gegen %s, Runde %d",
 }

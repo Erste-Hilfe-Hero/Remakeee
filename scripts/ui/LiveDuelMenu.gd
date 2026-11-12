@@ -98,7 +98,7 @@ static func run_duel(menu: PauseMenu, id: int) -> void:
 				var labels: Array[String] = []
 				for o: Dictionary in options:
 					labels.append(str(o.label))
-				var c: int = await menu.pick_strings(Loc.t("Round %d: what will %s do?") % [int(d.round), sim.active_line(side)], labels)
+				var c: int = await menu.pick_strings(Loc.t("Round %d: choose for %s") % [int(d.round), sim.active_line(side)], labels)
 				r = await Online.call_fn("live_move", {"p_id": id, "p_round": int(d.round), "p_input": options[c].input}) if c >= 0 else {}
 			"Accept":
 				r = await Online.call_fn("live_answer", {"p_id": id, "p_accept": true})
