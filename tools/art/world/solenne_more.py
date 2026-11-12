@@ -199,7 +199,7 @@ def side_texts(world):
                   "lines": lines(("Guide Varro: Varro. Best guide on the Glasswind. Ask anyone. Well, ask anyone who came back.", "Führer Varro: Varro. Bester Führer im Glaswind. Frag jeden. Na ja, jeden, der zurückgekommen ist."),
                                  ("Guide Varro: I know a shortcut through the mirage, straight to the kiln. Half the walk. Trust me?", "Führer Varro: Ich kenne eine Abkürzung durch die Luftspiegelung, direkt zur Brennerei. Halber Weg. Vertraust du mir?")),
                   "action": "set_flag varro_met",
-                  "choices": [{"text": tr("Show me the way", "Zeig mir den Weg"), "action": "favor varro_shortcut; set_flag varro_done"},
+                  "choices": [{"text": tr("Show me the way", "Zeig mir den Weg"), "action": "favor varro_shortcut", "flag": "varro_done"},
                               {"text": tr("I'll walk, thanks", "Ich laufe, danke")}]}
     t["varro_after"] = lines(("Guide Varro: No hard feelings. The desert does what it wants. I just help it along.", "Führer Varro: Nichts für ungut. Die Wüste macht, was sie will. Ich helfe ihr nur ein bisschen."))
     t["varro_betray"] = lines(("Varro's shortcut ends in a dune bowl. Three Sand Bandits wait at the bottom with a picnic and a price list.", "Varros Abkürzung endet in einer Dünenmulde. Unten warten drei Sandbanditen mit Picknick und Preisliste."),
@@ -360,7 +360,7 @@ def flats(world):
          "npcs": crew + people, "signs": signs,
          "secrets": [secret(0, 9, "max_tonic", "find_glasswind_west", 2), secret(11, 14, "revival_leaf", "find_glasswind_east"),
                      secret(2, 8, "power_brew", "find_glasswind_rock"), secret(0, 22, "strong_tonic", "find_glasswind_scree", 3),
-                     secret(9, 26, "spark_drop", "find_glasswind_boulder"), secret(4, 31, "guard_brew", "find_glasswind_kiln")]}
+                     secret(9, 26, "spark_drop", "find_glasswind_boulder")]}
     world.add_map(FLATS, m)
 
 

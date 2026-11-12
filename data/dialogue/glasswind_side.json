@@ -425,7 +425,8 @@
   "choices": [
    {
     "text": "Show me the way",
-    "action": "favor varro_shortcut; set_flag varro_done"
+    "action": "favor varro_shortcut",
+    "flag": "varro_done"
    },
    {
     "text": "I'll walk, thanks"

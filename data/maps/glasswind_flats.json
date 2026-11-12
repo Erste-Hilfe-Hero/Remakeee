@@ -334,13 +334,6 @@
    "item": "spark_drop",
    "count": 1,
    "flag": "find_glasswind_boulder"
-  },
-  {
-   "x": 4,
-   "y": 31,
-   "item": "guard_brew",
-   "count": 1,
-   "flag": "find_glasswind_kiln"
   }
  ]
 }
