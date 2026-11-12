@@ -364,7 +364,7 @@ GOALS = [
                   [("Pia: Fine. Have yourself back.", "Pia: Schön. Hier hast du dich zurück."),
                    ("Pia: Keep my old papers too. Being dead is restful. No one writes.", "Pia: Behalt meine alten Papiere auch. Tot sein ist erholsam. Keiner schreibt.")],
                   [("You take your papers back from Pia, and her satchel. Inside: two revival leaves, of all things.", "Du nimmst Pia deine Papiere wieder ab, und ihre Tasche. Darin: ausgerechnet zwei Lebensblätter.")],
-                  ("Pia: I'm deceased again. They gave me a job in the Stamp Hall. Experience counts.", "Pia: Ich bin wieder verstorben. Sie haben mir eine Stelle in der Stempelhalle gegeben. Erfahrung zählt.")),
+                  ("Pia: I'm deceased again. They gave me a job in the Stamp Hall. I know the form from both sides.", "Pia: Ich bin wieder verstorben. Sie haben mir eine Stelle in der Stempelhalle gegeben. Ich kenne das Formular von beiden Seiten.")),
      "stages": [(("Pia's papers are stamped 'deceased' by mistake. Get the stamp corrected in Proofgate.", "Pias Papiere tragen aus Versehen den Stempel 'verstorben'. Lass den Stempel in Proofgate berichtigen."), "Proofgate"),
                 (("Papers can be swapped. Ask in the Dead Letter Office on Drypoint Lane.", "Papiere kann man tauschen. Frag im Amt für tote Briefe an der Drypoint Lane."), "Dead Letter Office"),
                 (("Pia swapped her papers for yours. On paper you are dead. Find her on Stamp Road.", "Pia hat ihre Papiere gegen deine getauscht. Auf dem Papier bist du tot. Such sie auf der Stempelstraße."), "Stamp Road"),
@@ -404,8 +404,8 @@ EXTRA = {
                      ("Disa: You've seen my eels. That makes you a witness or a customer.", "Disa: Du hast meine Aale gesehen. Damit bist du Zeugin oder Kundin."),
                      ("Disa: Customer, then. The first eel is free. It bites.", "Disa: Dann eben Kundin. Der erste Aal ist gratis. Er beißt.")),
 }
-# More hidden finds: two per road and per Rift (cells in the frame, next to open ground).
-ROAD_FINDS = [(0, 3, "dash_brew"), (11, 6, "guard_brew")]
+# More hidden finds: one per road (an outdoor map hides five at most) and two per Rift (cells in the frame, next to open ground).
+ROAD_FINDS = [(0, 3, "dash_brew")]
 RIFT_FINDS = [(0, 10, "max_tonic"), (11, 14, "revival_leaf")]
 HALL_FINDS = [(11, 5), (0, 7)]
 WALK = "._:,%f+"

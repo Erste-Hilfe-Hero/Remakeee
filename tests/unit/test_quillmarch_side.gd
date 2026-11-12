@@ -189,7 +189,7 @@ func test_one_more_wayfarer_on_every_road() -> void:
 			assert_between(int(e.level), int(r.ring[0]), int(r.ring[1]), "%s is within the road's ring" % extra[0].id)
 			assert_has(species, str(e.species), str(extra[0].id))
 		assert_lte(_elements(extra[0].team), 3, str(extra[0].id))
-		assert_gte(m.secrets.size(), 6, "%s has six finds" % r.id)
+		assert_eq(m.secrets.size(), 5, "%s has five finds" % r.id)
 
 func test_towns_differ_and_have_houses_to_enter() -> void:
 	var looks: Dictionary = {}
