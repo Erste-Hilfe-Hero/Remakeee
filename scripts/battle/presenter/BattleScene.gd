@@ -857,7 +857,8 @@ func _play_event(e: BattleEvent) -> void:
 			_strip(side, slot).set_spirling(s)
 			_strip(side, slot).visible = true
 			_focus(side, slot)
-			Sound.cry(s.data)
+			# The player's own Spirling keeps the cry of the era it was met in.
+			Sound.cry(s.data, Sound.cry_era_for(s.origin_era, side == BattleModel.Side.PLAYER, EraManager.active_era()))
 			await _sprite(side, slot).step_out(side != BattleModel.Side.PLAYER)
 			_update_pinch()
 			await _text.show_text(e.describe())
@@ -967,6 +968,7 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BOND_RESULT:
 			if bool(e.data.get("success", false)):
+				Sound.sfx("bond")
 				var bonded: SpirlingSprite = _sprite(BattleModel.Side.FOE, slot)
 				var bond_era: int = EraManager.active_era()
 				if EraBattleFeel.text(bond_era, "bond", "hop") == "blink_out":
@@ -1175,6 +1177,13 @@ func _update_pinch() -> void:
 	var track: String = Sound.battle_music(pinch_track(lowest, music_track))
 	if Sound.current_track != track:
 		Sound.music(track)
+	var foe_low: float = 1.0
+	for fs: int in model.slot_count(BattleModel.Side.FOE):
+		var f: Spirling = model.active_spirling(BattleModel.Side.FOE, fs)
+		if f != null and not f.is_fainted():
+			foe_low = minf(foe_low, f.hp_fraction())
+	# Low-health alarm and the Era V battle layers (docs/ERA_FEEL_AUDIO.md).
+	Sound.battle_state(lowest.hp_fraction() if lowest != null and not lowest.is_fainted() else 1.0, foe_low)
 
 ## "battle_pinch" when [param s] is at or below PINCH_RATIO of its HP (and still standing), else [param normal].
 static func pinch_track(s: Spirling, normal: String) -> String:

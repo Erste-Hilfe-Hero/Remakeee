@@ -1,0 +1,29 @@
+{
+ "_note": "Act IV, Ochrewell after the Oasis Rift: the wells are leased (betrayal ottilie_vote), Kaia at the trough, the pump guards, Emrys's oath (trust choice a4_oath).",
+ "steps": [
+  {
+   "dialogue": "solenne_main/drought_open"
+  },
+  {
+   "action": "betrayal ottilie_vote"
+  },
+  {
+   "dialogue": "solenne_main/drought_kaia"
+  },
+  {
+   "dialogue": "solenne_main/drought_nail"
+  },
+  {
+   "dialogue": "solenne_main/drought_guards"
+  },
+  {
+   "battle": "veil_pump_guards"
+  },
+  {
+   "dialogue": "solenne_main/a4_oath"
+  },
+  {
+   "flag": "a4_drought_done"
+  }
+ ]
+}
