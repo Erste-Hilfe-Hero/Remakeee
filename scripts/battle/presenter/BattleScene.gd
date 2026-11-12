@@ -344,10 +344,18 @@ func _layout_formation() -> void:
 	_back_button.position = Vector2(MARGIN, MARGIN + STRIP_HEIGHT + 10)
 	_back_button.size = Vector2(26, 12)
 	var rects: Array[Rect2] = [Rect2(), Rect2()]
+	var tag_hs: Array[float] = [0.0, 0.0]
+	for side: int in 2:
+		if not _slot_strips[side].is_empty():
+			tag_hs[side] = (_slot_strips[side][0] as MiniStrip).needed_height()
 	for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
 		var n: int = _slot_sprites[side].size()
-		var tag_h: float = (_slot_strips[side][0] as MiniStrip).needed_height() if n > 0 else 0.0
-		var slots: Array[Rect2] = formation_slots(EraManager.active_era(), side, n, Vector2(w, h), tag_h)
+		var other: int = BattleModel.other(side)
+		var tag_h: float = tag_hs[side]
+		var slots: Array[Rect2] = formation_slots(EraManager.active_era(), side, n, Vector2(w, h), tag_h, _slot_sprites[other].size(), tag_hs[other])
+		if _stage != null and side == BattleModel.Side.FOE and n > 0:
+			var feet: float = Era4Stage.sprite_rect(EraManager.stage_config(), "foe", Vector2(w, h), slots[0].size.x).end.y
+			slots = drop_to_floor(slots, feet, rects[BattleModel.Side.PLAYER].position.y - tag_h - 6)
 		for slot: int in n:
 			var sp: SpirlingSprite = _slot_sprites[side][slot]
 			sp.position = slots[slot].position
@@ -366,24 +374,89 @@ func _layout_formation() -> void:
 ## Formation slots for [param n] Spirlings of [param side] in [param era] (data/era_battle_feel.json
 ## "formation_*"): Era I/II keep 28 px sprites in a flat rank, Era III 32 px, Era IV/V bigger
 ## sprites with every second one a step further back so the rank has depth (Era V triple battles
-## stand in a shallow arc). Sprites shrink when the rank would not fit the field.
-static func formation_slots(era: int, side: int, n: int, field: Vector2, tag_h: float) -> Array[Rect2]:
+## stand in a shallow arc). Sprites shrink when the rank would not fit the field. With
+## [param other_n] Spirlings on the other side (tags [param other_tag_h] high) the two ranks also
+## never run into each other on a short field (formation_fit).
+static func formation_slots(era: int, side: int, n: int, field: Vector2, tag_h: float, other_n: int = 0, other_tag_h: float = 0.0) -> Array[Rect2]:
 	var out: Array[Rect2] = []
 	if n <= 0:
 		return out
+	var foe: bool = side == BattleModel.Side.FOE
 	var gap: float = EraBattleFeel.num(era, "formation_gap", SLOT_GAP)
-	var px: float = EraBattleFeel.num(era, "formation_slot", SLOT_SPRITE)
-	px = floorf(minf(px, (field.x - MARGIN * 2 - 4 - (n - 1) * gap) / n))
 	var stagger: float = EraBattleFeel.num(era, "formation_stagger", 0.0)
-	var total: float = n * px + (n - 1) * gap
-	var x0: float = field.x - MARGIN - total if side == BattleModel.Side.FOE else MARGIN + 4
-	var y: float = MARGIN + 44 if side == BattleModel.Side.FOE else field.y - MARGIN - tag_h - 2 - px
+	var fit: Dictionary = formation_fit(era, n if foe else other_n, other_n if foe else n, field, tag_h if foe else other_tag_h, other_tag_h if foe else tag_h)
+	var px: float = float(fit.px) if other_n > 0 else floorf(minf(EraBattleFeel.num(era, "formation_slot", SLOT_SPRITE), (field.x - MARGIN * 2 - 4 - (n - 1) * gap) / n))
+	var top: float = float(fit.foe_top) if other_n > 0 else float(MARGIN + FOE_RANK_TOP)
+	var step: float = formation_step(px, gap)
+	# A shrunken rank ends with its last tag, which is wider than its sprite.
+	var total: float = formation_width(n, px, gap)
+	var x0: float = field.x - MARGIN - total if foe else MARGIN + 4
+	var y: float = top if foe else field.y - MARGIN - tag_h - 2 - px
 	for slot: int in n:
 		var back: float = 0.0
 		if stagger > 0.0:
 			# Odd slots step back; a rank of three bows its middle back (Era V triples).
 			back = stagger if (slot % 2 == 1) else 0.0
-		out.append(Rect2(Vector2(x0 + slot * (px + gap), y - back).round(), Vector2(px, px)))
+		out.append(Rect2(Vector2(x0 + slot * step, y - back).round(), Vector2(px, px)))
+	return out
+
+## Width of a rank of [param n] with its tags: a shrunken sprite is narrower than its tag.
+static func formation_width(n: int, px: float, gap: float) -> float:
+	return (n - 1) * formation_step(px, gap) + (maxf(px, MiniStrip.WIDTH) if px < SLOT_SPRITE else px)
+
+## Foe rank top under the ledger strip: the usual one leaves a line for the Back button, the
+## tight one sits right under the strip.
+const FOE_RANK_TOP: int = 44
+const FOE_RANK_TOP_TIGHT: int = 36
+## Smallest formation sprite; below this the ranks would be unreadable.
+const SLOT_MIN: int = 12
+
+## Distance from one slot to the next: sprite plus gap, but never less than a tag is wide, so
+## the tags of shrunken sprites do not run into each other.
+static func formation_step(px: float, gap: float) -> float:
+	return maxf(px + gap, MiniStrip.WIDTH + 1.0) if px < SLOT_SPRITE else px + gap
+
+## Sprite size and foe rank top that keep [param n_foe] foes and [param n_player] own Spirlings
+## apart on [param field]: {"px", "foe_top"}. The era's size stays when both ranks fit under
+## each other or stand clear side by side. On a short field (the command menu is open on the
+## small Era I/II screen) the foe rank moves up under the strip and both ranks shrink just
+## enough: to stand under each other, or beside each other, whichever keeps them bigger.
+static func formation_fit(era: int, n_foe: int, n_player: int, field: Vector2, foe_tag_h: float, player_tag_h: float) -> Dictionary:
+	var gap: float = EraBattleFeel.num(era, "formation_gap", SLOT_GAP)
+	var stagger: float = EraBattleFeel.num(era, "formation_stagger", 0.0)
+	var room: float = field.x - MARGIN * 2 - 4
+	var px: float = EraBattleFeel.num(era, "formation_slot", SLOT_SPRITE)
+	for n: int in [n_foe, n_player]:
+		if n > 0:
+			px = floorf(minf(px, (room - (n - 1) * gap) / n))
+	var top: float = MARGIN + FOE_RANK_TOP
+	if n_foe <= 0 or n_player <= 0:
+		return {"px": px, "foe_top": top}
+	# Height both ranks need besides the two sprites: tags, the 2 px above each tag, a 2 px
+	# lane between the ranks, the bottom margin and the step back of the staggered eras.
+	var extra: float = foe_tag_h + player_tag_h + 2 + 2 + 2 + MARGIN + stagger
+	var beside: float = px
+	while beside > SLOT_MIN and formation_width(n_foe, beside, gap) + gap + formation_width(n_player, beside, gap) > room:
+		beside -= 1.0
+	if top + px * 2.0 + extra <= field.y or px <= beside:
+		return {"px": px, "foe_top": top}
+	var tight: float = MARGIN + FOE_RANK_TOP_TIGHT + stagger
+	var under: float = floorf((field.y - tight - extra) / 2.0)
+	if under >= beside:
+		return {"px": maxf(minf(px, under), SLOT_MIN), "foe_top": tight}
+	return {"px": maxf(minf(px, beside), SLOT_MIN), "foe_top": top}
+
+## Era IV/V stage: the foe rank stands on the floor, not in the sky. Moves [param foes] down so
+## the lowest feet reach [param feet_y] (the foe slab), but never into [param limit_y] (the top
+## of the player's rank, less the room the foe tags need).
+static func drop_to_floor(foes: Array[Rect2], feet_y: float, limit_y: float) -> Array[Rect2]:
+	var low: float = 0.0
+	for r: Rect2 in foes:
+		low = maxf(low, r.end.y)
+	var by: float = roundf(maxf(minf(feet_y, limit_y) - low, 0.0))
+	var out: Array[Rect2] = []
+	for r: Rect2 in foes:
+		out.append(Rect2(r.position + Vector2(0, by), r.size))
 	return out
 
 ## Shows [param side]/[param slot]'s details in the ledger strip (formation layout).
@@ -860,6 +933,7 @@ func _play_event(e: BattleEvent) -> void:
 			_focus(side, slot)
 			# The player's own Spirling keeps the cry of the era it was met in.
 			Sound.cry(s.data, Sound.cry_era_for(s.origin_era, side == BattleModel.Side.PLAYER, EraManager.active_era()))
+			_era_fx("sendout", side, slot)
 			await _sprite(side, slot).step_out(side != BattleModel.Side.PLAYER)
 			_update_pinch()
 			await _text.show_text(e.describe())
@@ -941,6 +1015,7 @@ func _play_event(e: BattleEvent) -> void:
 			_refresh_focus(side, slot)
 			if int(e.data.get("delta", 0)) != 0:
 				Sound.sfx("level_up" if int(e.data.delta) > 0 else "status")
+				_era_fx("stat_up" if int(e.data.delta) > 0 else "stat_down", side, slot)
 			await _float(side, slot, e.describe())
 		BattleEvent.Type.STATUS_CURED:
 			_strip(side, slot).set_status("")
@@ -949,6 +1024,7 @@ func _play_event(e: BattleEvent) -> void:
 		BattleEvent.Type.FAINTED:
 			Sound.sfx("faint")
 			Juice.add_trauma(era_trauma(Juice.TRAUMA_FAINT))
+			_era_fx("faint_motes", side, slot)
 			await _sprite(side, slot).faint()
 			await _text.show_text(e.describe())
 			_strip(side, slot).visible = false
@@ -1153,8 +1229,16 @@ func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
 		"normal":
 			await Juice.hitstop(float(e.data.get("amount", 0)) / max_hp)
 	var sp: SpirlingSprite = _sprite(side, slot)
+	_era_fx("hitmark", side, slot)
 	sp.knockback(knockback_dir(side, _multi))
 	await sp.hit_flash()
+
+## The era's small effect of [param kind] over the Spirling at [param side]/[param slot]
+## (EraMoveFx: send-out burst, hit mark, stat arrows, faint motes). Never waited for.
+func _era_fx(kind: String, side: int, slot: int) -> void:
+	var sp: SpirlingSprite = _sprite(side, slot)
+	if sp != null:
+		EraMoveFx.spawn(_shake_root, kind, EraManager.active_era(), Rect2(sp.position, sp.size))
 
 ## A dodging Spirling steps toward the outer screen edge: the foe right, the player left.
 static func dodge_dir(target_side: int) -> float:

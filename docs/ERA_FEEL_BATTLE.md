@@ -97,9 +97,36 @@ colour-blind HP patterns are unchanged.
   step back, so an Era V triple bows its middle back. On the stage the slabs widen to hold the
   whole rank.
 
+## Slice 4 (follow-up PR)
+
+- Formation shots fixed: `tools/era_battle_shots.gd` now waits until the command menu is open, so
+  every Spirling has stepped out, and renders 1v1, 2v2 and 3v3 in all five eras
+  (`-- out_dir formation`). Looking at them showed two faults, both fixed and tested
+  (`tests/unit/test_era_battle_feel4.gd`): on the short Era I/II field with the menu open the foe
+  and player ranks of a triple ran into each other (`BattleScene.formation_fit` now shrinks both
+  ranks just enough and lifts the foe rank under the strip), and on the Era IV/V stage the foe rank
+  hung in the sky above the horizon (`BattleScene.drop_to_floor` stands it on the foe slab). Tags
+  of shrunken sprites no longer overlap (`formation_step`).
+- Wind in battle: a windy sky still lays no field and changes no rule (#465), but the overworld
+  marks the battle (`BattleWeather.SKY_META`) and `BattleWeather` draws drifting wind lines: 5
+  short ink dashes moving in 2 px steps in Era I, leaves from Era II, wavy lines from Era III,
+  bigger leaves and rolling dust from Era IV and gusts in Era V ("wind_*" keys). Under reduced
+  motion the wind stands still but stays visible.
+- Move polish per era (`EraMoveFx.gd`, "move_fx" and per-era keys in `data/era_battle_feel.json`):
+
+| Feature | I Ink | II Wash | III Etched | IV Panorama | V Living |
+|---|---|---|---|---|---|
+| Send-out | ink puff, 3 steps | colour puff, 4 steps | light burst | burst + sparks | burst + sparks + ring |
+| Hit mark | ink cross | star | star + ring | star + ring + sparks | star + ring + shards |
+| Lunge | there and back in 2 hard steps | 2 hard steps | eased | stretch 10 % | stretch 14 % |
+| Stat change | text only | 2 arrows | 3 arrows | 4 arrows | 6 arrows |
+| Faint motes | none | none | 3 | 5 | 8 |
+
+  Under reduced motion send-out, hit marks and motes are off; stat arrows stay but stand still
+  (they carry information). Era I/II effects play in hard steps, later eras move smoothly.
+
 ## Still missing (follow-ups)
 
 - Battle text box frame per era: shared with menus, so it belongs to the erafeel-ui slice.
 - Hand-drawn Era IV/V art for the Spirlings that have none yet (they show the placeholder, so they
   get no Era V strip).
-- Wind shows nothing in battle, because it lays no field (#465 rule).
