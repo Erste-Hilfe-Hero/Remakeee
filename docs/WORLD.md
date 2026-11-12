@@ -111,6 +111,14 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
   encounter tables (no map without a table, no unused table), hidden finds (reachable, unique
   flag, real item) and the layout.
 
+- **Map audit:** `python3 tools/maps/render_all.py <dir> [prefix] [--era2] [--marks]` draws every
+  map and floor (one PNG each plus a sheet per region; `--marks` outlines flagged cells in red).
+  `python3 tools/maps/audit_maps.py` lists what makes a map look unclean (doors that lead
+  nowhere, cut-off or doorless buildings, stray lighthouse pieces, people in front of doors,
+  unreachable pockets, blank atlas cells, bad warps and more; the kinds are in its header).
+  CI runs `--check`: a finding that is not in `tools/maps/audit_baseline.json` fails, and so does a
+  baseline line that is already fixed. After a fix run `--write-baseline`.
+
 ## World statistics (item 903)
 
 Written by `python3 tools/world_stats.py`.
