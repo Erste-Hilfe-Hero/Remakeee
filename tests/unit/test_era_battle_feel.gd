@@ -348,3 +348,98 @@ func test_era_five_animates_spirlings_of_every_origin_era() -> void:
 		sp.setup(Spirling.new(by_era[e], 10), "front")
 		assert_eq(sp._strips.size(), BattleAnim.KINDS.size(), "origin era %d moves in Era V" % int(e))
 		assert_eq(sp.anim_kind, "idle")
+
+# --- Slice 3: weather in battle, Era III/IV effect art, formation layout per era --------------
+
+func test_weather_comes_from_the_sky_field_only() -> void:
+	var m := BattleModel.new([Spirling.new(Database.species("Kindlop"), 5)] as Array[Spirling], [Spirling.new(Database.species("Zippit"), 5)] as Array[Spirling], true, 1)
+	assert_eq(BattleWeather.weather_of(m), "", "no field, no weather")
+	for k: String in BattleWeather.KINDS:
+		var f: Dictionary = WeatherCycle.battle_field(k)
+		assert_false(f.is_empty(), k)
+		m.field = str(f.field)
+		m.field_intro = str(f.intro)
+		assert_eq(BattleWeather.weather_of(m), k)
+	m.field_intro = ""
+	assert_eq(BattleWeather.weather_of(m), "", "a Rift field is not weather")
+
+func test_weather_grows_with_the_era() -> void:
+	for e: int in range(2, 6):
+		assert_gte(BattleWeather.drop_count("rain", e), BattleWeather.drop_count("rain", e - 1))
+		assert_gte(EraBattleFeel.num(e, "weather_len"), EraBattleFeel.num(e - 1, "weather_len"))
+		assert_gte(EraBattleFeel.num(e, "weather_fog_bands"), EraBattleFeel.num(e - 1, "weather_fog_bands"))
+		assert_true(EraBattleFeel.flag(e, "weather_splash") or not EraBattleFeel.flag(e - 1, "weather_splash"))
+	assert_gt(BattleWeather.drop_count("storm", 3), BattleWeather.drop_count("rain", 3))
+	assert_eq(BattleWeather.drop_count("fog", 5), 0)
+	assert_eq(BattleWeather.flash_every("storm", 3), 0.0, "no flash before Era IV")
+	assert_gte(BattleWeather.flash_every("storm", 5), 1.0 / 3.0, "flashes stay rare")
+	assert_lte(float(EraBattleFeel.cfg().weather_flash_alpha), 0.25)
+
+func test_weather_draws_and_stills_under_reduced_motion() -> void:
+	GameState.battle_speed = 0
+	for k: String in BattleWeather.KINDS:
+		var host := Control.new()
+		host.size = Vector2(270, 200)
+		add_child_autofree(host)
+		var wx := BattleWeather.new()
+		host.add_child(wx)
+		wx.setup(k, 5)
+		assert_true(wx.visible, k)
+		wx._process(4.0)
+		GameState.reduce_motion = true
+		var t: float = wx._time
+		wx._process(1.0)
+		assert_eq(wx._time, t, "still under reduced motion")
+		GameState.reduce_motion = false
+	var off := BattleWeather.new()
+	add_child_autofree(off)
+	off.setup("wind", 5)
+	assert_false(off.visible, "wind lays no field and shows nothing")
+
+func test_era_three_and_four_effect_art() -> void:
+	for e: int in [3, 4]:
+		for s: String in ElementFx.ELEMENT_SHAPES:
+			for k: int in 4:
+				var path: String = "res://art/era%d/fx/%s_%d.png" % [e, s, k]
+				assert_true(ResourceLoader.exists(path), path)
+	_era(3)
+	ElementFx.clear_cache()
+	assert_eq(ElementFx.shape("spark", 2).get_width(), 10, "Era III loads its own outlined shapes")
+	_era(5)
+	ElementFx.clear_cache()
+	assert_eq(ElementFx.shape("spark", 2).get_width(), 18, "Era V uses the Era IV glow shapes")
+	_era(2)
+	ElementFx.clear_cache()
+	assert_eq(ElementFx.shape("spark", 2).get_width(), 8)
+	ElementFx.clear_cache()
+
+func test_formation_slots_per_era() -> void:
+	for e: int in range(1, 6):
+		var field: Vector2 = Vector2(EraManager.RESOLUTION[e]) * Vector2(1.0, 0.6)
+		for n: int in [2, 3, 4]:
+			for side: int in [BattleModel.Side.PLAYER, BattleModel.Side.FOE]:
+				var r: Array[Rect2] = BattleScene.formation_slots(e, side, n, field, 14.0)
+				assert_eq(r.size(), n)
+				for q: Rect2 in r:
+					assert_gte(q.position.x, 0.0, "era %d n %d inside" % [e, n])
+					assert_lte(q.end.x, field.x, "era %d n %d inside" % [e, n])
+				for i: int in range(1, n):
+					assert_gte(r[i].position.x, r[i - 1].end.x, "no overlap era %d" % e)
+	var flat: Array[Rect2] = BattleScene.formation_slots(1, BattleModel.Side.FOE, 3, Vector2(144, 150), 14.0)
+	assert_eq(flat[0].position.y, flat[1].position.y, "Era I ranks are flat")
+	assert_eq(flat[0].size.x, float(BattleScene.SLOT_SPRITE))
+	var triple: Array[Rect2] = BattleScene.formation_slots(5, BattleModel.Side.FOE, 3, Vector2(270, 290), 14.0)
+	assert_lt(triple[1].position.y, triple[0].position.y, "Era V triple bows its middle back")
+	assert_eq(triple[0].position.y, triple[2].position.y)
+	assert_gt(triple[0].size.x, flat[0].size.x, "Era V Spirlings stand bigger")
+	for e: int in range(2, 6):
+		assert_gte(EraBattleFeel.num(e, "formation_slot"), EraBattleFeel.num(e - 1, "formation_slot"))
+
+func test_stage_slabs_fit_the_formation() -> void:
+	var st := Era4Stage.new()
+	st.size = Vector2(270, 290)
+	add_child_autofree(st)
+	st.fit_formation(Rect2(60, 60, 200, 44), Rect2(10, 200, 150, 44))
+	var q: PackedVector2Array = Era4Stage.slab_quad(st.cfg, "foe", st.size)
+	assert_lte(q[3].x, 62.0, "the foe slab reaches the left end of the rank")
+	assert_gte(q[2].x, 258.0, "and the right end")

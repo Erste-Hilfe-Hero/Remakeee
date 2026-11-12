@@ -3,7 +3,8 @@ extends Control
 ## Element effects for battle arts (items 2357 to 2366). One drawing routine per element and
 ## phase: charge at the user, travel to the target (skipped for physical arts) and impact.
 ##   await fx.play(Elements.E.EMBER, MoveData.Kind.FOCUS, user_rect, target_rect)
-## Shapes are the 8x8 Era I images from tools/art/gen_fx.py; everything snaps to whole pixels.
+## Shapes are the 8x8 Era I images from tools/art/gen_fx.py (Era II recoloured, Era III outlined
+## and Era IV/V doubled with a glow from tools/art/gen_fx_era34.py); everything snaps to whole pixels.
 ## No screen flashes: the brightest effect (Lumen) stays at 60 % and fades in 0.2 s.
 
 enum Phase { NONE, CHARGE, TRAVEL, IMPACT, AFTER }
@@ -228,7 +229,8 @@ func _px(p: Vector2, k: int, a: float = 1.0, s: int = 1) -> void:
 func _shape(name: String, at: Vector2, k: int, a: float = 1.0) -> void:
 	var tex: Texture2D = shape(name, k)
 	if tex != null:
-		draw_texture(tex, (at - Vector2(4, 4)).round(), Color(1, 1, 1, a))
+		# Centred by size: Era I/II shapes are 8 px, Era III 10 px, Era IV/V 18 px.
+		draw_texture(tex, (at - tex.get_size() / 2.0).round(), Color(1, 1, 1, a))
 	else:
 		_px(at, k, a, 2)
 
