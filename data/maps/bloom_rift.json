@@ -1,0 +1,137 @@
+{
+ "name": "Bloom Rift",
+ "region": "quivermoor",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT~~.XX.~~TT",
+  "T~~.......~T",
+  "T~......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T~~~....TT_T",
+  "T~~~....~T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....~~..T_T",
+  "T....~~..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T..~~....T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "lastbloom",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "lastbloom",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quivermoor/bloom_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Bloom Acolyte Signe",
+   "intro": "quivermoor/bloom_rift_acolyte_intro",
+   "defeat": "quivermoor/bloom_rift_acolyte_defeat",
+   "money": 4275,
+   "team": [
+    {
+     "species": "Sablarch",
+     "level": 95
+    },
+    {
+     "species": "Fumeregent",
+     "level": 95
+    }
+   ]
+  },
+  {
+   "id": "warden_sabeline",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/warden_sabeline",
+   "sprite": "warden",
+   "trainer": "Warden Sabeline",
+   "warden": "v5_bloom",
+   "team": [
+    {
+     "species": "Sablarch",
+     "level": 95
+    },
+    {
+     "species": "Fumeregent",
+     "level": 95
+    },
+    {
+     "species": "Rookwarden",
+     "level": 95
+    },
+    {
+     "species": "Woadcastle",
+     "level": 96
+    },
+    {
+     "species": "Velverain",
+     "level": 96
+    }
+   ],
+   "intro": "quivermoor/warden_sabeline_intro",
+   "defeat": "quivermoor/warden_sabeline_defeat",
+   "ai": 3,
+   "money": 12500,
+   "rule": "night_dark",
+   "win_flags": [
+    "rift_v5_bloom_sealed",
+    "quivermoor_done"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quivermoor/bloom_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quivermoor/bloom_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v5_bloom_sealed",
+   "closed": "@"
+  }
+ ]
+}

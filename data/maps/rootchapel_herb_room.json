@@ -1,0 +1,35 @@
+{
+ "name": "Herb Room",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "rootchapel",
+   "tx": 8,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "herbalist",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/rootchapel_herb_room_herbalist",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

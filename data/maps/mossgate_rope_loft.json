@@ -1,0 +1,35 @@
+{
+ "name": "Rope Loft",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "mossgate",
+   "tx": 3,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "roper",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/mossgate_rope_loft_roper",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}
