@@ -151,6 +151,16 @@
      "level": 20
     }
    ]
+  },
+  {
+   "id": "lq_tibbet",
+   "x": 8,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/zephyrel_witness",
+   "sprite": "villager",
+   "show_flag": "lq_zephyrel_met",
+   "hide_flag": "lq_zephyrel_ready"
   }
  ],
  "signs": [

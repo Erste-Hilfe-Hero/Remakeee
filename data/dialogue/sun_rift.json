@@ -72,7 +72,8 @@
   "lines": [
    "With the Sun Rift sealed, a soft light walks out of the glare.",
    "A deer with a halo of horn steps closer. A lantern glows inside its chest.",
-   "It is Lumivane. Its light wants to know if you are lost."
+   "It is Lumivane. Its light wants to know if you are lost.",
+   "Old songs say a legend only listens to someone who has tested it hard."
   ],
   "action": "legend Lumivane 50"
  }

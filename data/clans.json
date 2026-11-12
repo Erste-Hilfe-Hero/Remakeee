@@ -29,7 +29,13 @@
   "mirza": {"clan": "strangers", "ally": true, "act": 3, "role": "card player, warns about the card hall", "trust": 40, "use": 35},
   "liss": {"clan": "marrovel", "role": "Fenrick's daughter from Ashmere, Sable's informer", "trust": 25, "use": 55},
   "kerr": {"clan": "none", "role": "son of a lost Rift guard, hunts Pip", "trust": 30, "use": 40},
-  "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35}
+  "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35},
+  "ambrel": {"clan": "none", "role": "sexton who sells bronze by the pound", "trust": 20, "use": 70},
+  "quell": {"clan": "none", "role": "archivist who forges routes", "trust": 20, "use": 65},
+  "dessa": {"clan": "none", "role": "kitewright who hooks Spirlings out of the sky", "trust": 25, "use": 65},
+  "dorran": {"clan": "none", "role": "stonecutter who sells headstones", "trust": 20, "use": 60},
+  "corla": {"clan": "none", "role": "lamplighter who sells sleeping dust to the clans", "trust": 25, "use": 60},
+  "sevrin": {"clan": "none", "role": "pilgrim guide who sells the way out", "trust": 25, "use": 60}
  },
  "favors": {
   "fitch_toll": {"npc": "fitch", "kind": "lend_coins", "amount": 150, "reward_chance": 0.0, "betray": {"say": "soot_vaults/fitch_betray", "battle": "fitch_ambush", "ledger": "fitch_toll"}, "kept": {"say": "soot_vaults/fitch_kept", "item": "max_tonic"}},
@@ -119,7 +125,13 @@
    "struck": {"flags": ["clan_b10"], "ledger": "throne", "say": "clans/throne_o_struck", "battle": "throne_guard"}},
   "fenrick_throne": {"act": 4, "npc": "fenrick", "rule": "warned", "warned_by": ["c4_wax_checked", "c4_heard_ottilie"],
    "caught": {"flags": ["clan_b11"], "ledger": "throne", "trust": {"fenrick": -20}, "say": "clans/throne_f_caught"},
-   "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}}
+   "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}},
+  "lq_hallowmur": {"act": 5, "npc": "ambrel", "rule": "warned", "warned_by": ["lq_hallowmur_kept"], "caught": {"flags": ["lq_hallowmur_caught"], "ledger": "lq_hallowmur", "trust": {"ambrel": -30}, "say": "legend_quests/hallowmur_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_hallowmur_struck"], "ledger": "lq_hallowmur", "say": "legend_quests/hallowmur_struck", "battle": "lq_ambrel"}},
+  "lq_scriptorax": {"act": 5, "npc": "quell", "rule": "warned", "warned_by": ["lq_scriptorax_kept"], "caught": {"flags": ["lq_scriptorax_caught"], "ledger": "lq_scriptorax", "trust": {"quell": -30}, "say": "legend_quests/scriptorax_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_scriptorax_struck"], "ledger": "lq_scriptorax", "say": "legend_quests/scriptorax_struck", "battle": "lq_quell"}},
+  "lq_zephyrel": {"act": 5, "npc": "dessa", "rule": "warned", "warned_by": ["lq_zephyrel_kept"], "caught": {"flags": ["lq_zephyrel_caught"], "ledger": "lq_zephyrel", "trust": {"dessa": -30}, "say": "legend_quests/zephyrel_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_zephyrel_struck"], "ledger": "lq_zephyrel", "say": "legend_quests/zephyrel_struck", "battle": "lq_dessa"}},
+  "lq_monolurk": {"act": 3, "npc": "dorran", "rule": "warned", "warned_by": ["lq_monolurk_kept"], "caught": {"flags": ["lq_monolurk_caught"], "ledger": "lq_monolurk", "trust": {"dorran": -30}, "say": "legend_quests/monolurk_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_monolurk_struck"], "ledger": "lq_monolurk", "say": "legend_quests/monolurk_struck", "battle": "lq_dorran"}},
+  "lq_vorlucent": {"act": 3, "npc": "corla", "rule": "warned", "warned_by": ["lq_vorlucent_kept"], "caught": {"flags": ["lq_vorlucent_caught"], "ledger": "lq_vorlucent", "trust": {"corla": -30}, "say": "legend_quests/vorlucent_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_vorlucent_struck"], "ledger": "lq_vorlucent", "say": "legend_quests/vorlucent_struck", "battle": "lq_corla"}},
+  "lq_lumivane": {"act": 4, "npc": "sevrin", "rule": "warned", "warned_by": ["lq_lumivane_kept"], "caught": {"flags": ["lq_lumivane_caught"], "ledger": "lq_lumivane", "trust": {"sevrin": -30}, "say": "legend_quests/lumivane_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_lumivane_struck"], "ledger": "lq_lumivane", "say": "legend_quests/lumivane_struck", "battle": "lq_sevrin"}}
  },
  "ledger": [
   {"id": "ash", "act": 1, "ref": "clans/ledger_ash"},
@@ -147,6 +159,12 @@
   {"id": "deeds", "act": 4, "ref": "clans/ledger_deeds"},
   {"id": "crown", "act": 4, "ref": "clans/ledger_crown"},
   {"id": "fitch_toll", "act": 3, "ref": "soot_vaults/ledger_fitch"},
-  {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"}
+  {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"},
+  {"id": "lq_hallowmur", "act": 5, "ref": "legend_quests/hallowmur_ledger"},
+  {"id": "lq_scriptorax", "act": 5, "ref": "legend_quests/scriptorax_ledger"},
+  {"id": "lq_zephyrel", "act": 5, "ref": "legend_quests/zephyrel_ledger"},
+  {"id": "lq_monolurk", "act": 3, "ref": "legend_quests/monolurk_ledger"},
+  {"id": "lq_vorlucent", "act": 3, "ref": "legend_quests/vorlucent_ledger"},
+  {"id": "lq_lumivane", "act": 4, "ref": "legend_quests/lumivane_ledger"}
  ]
 }

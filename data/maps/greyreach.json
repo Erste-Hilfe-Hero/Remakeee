@@ -152,6 +152,16 @@
      "level": 25
     }
    ]
+  },
+  {
+   "id": "lq_dessa",
+   "x": 9,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/zephyrel_guide",
+   "sprite": "villager",
+   "show_flag": "story_complete",
+   "hide_flag": "lq_zephyrel_ready"
   }
  ],
  "signs": [

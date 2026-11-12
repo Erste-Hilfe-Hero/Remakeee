@@ -48,6 +48,16 @@
    "facing": "right",
    "dialogue": "ashmere_side/pell",
    "sprite": "villager"
+  },
+  {
+   "id": "lq_moll",
+   "x": 7,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/monolurk_witness",
+   "sprite": "elder",
+   "show_flag": "lq_monolurk_met",
+   "hide_flag": "lq_monolurk_ready"
   }
  ],
  "signs": [],

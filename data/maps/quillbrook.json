@@ -157,6 +157,16 @@
      "level": 9
     }
    ]
+  },
+  {
+   "id": "lq_quell",
+   "x": 4,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "legend_quests/scriptorax_guide",
+   "sprite": "elder",
+   "show_flag": "story_complete",
+   "hide_flag": "lq_scriptorax_ready"
   }
  ],
  "signs": [
