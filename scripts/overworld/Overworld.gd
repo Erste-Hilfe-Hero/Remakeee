@@ -58,6 +58,8 @@ const DOOR_WIPE_TIME: float = 0.14
 ## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
 const EDGE_SLIDE: int = 16
 var _particles: PixelParticles
+## Era extras on the map (water shimmer, footprints, reflection, tilt, camera lead; EraFeelLayer).
+var _era_feel: EraFeelLayer
 var _walk_steps: int = 0
 var _run_steps: int = 0
 var _battle_layer: CanvasLayer
@@ -168,6 +170,8 @@ func _build() -> void:
 	_particles = PixelParticles.new()
 	_particles.name = "particles"
 	add_child(_particles)
+	_era_feel = EraFeelLayer.new()
+	add_child(_era_feel)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
@@ -186,6 +190,7 @@ func _build() -> void:
 	player.interact.connect(_on_interact)
 	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
+	_era_feel.player = player
 	_inkshadow = Sprite2D.new()
 	_inkshadow.name = "Inkshadow"
 	_inkshadow.centered = false
@@ -268,6 +273,7 @@ func _process(delta: float) -> void:
 	_camera.global_position = (player.global_position + Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0)).round()
 	if _photo != null:
 		_camera.global_position += _photo.pan
+	_camera.global_position += _era_feel.camera_offset()
 	# Music layers follow walking, running and open text boxes (items 2477, 2478).
 	MusicDirector.update_world(player.moving, player.running, delta)
 	MusicDirector.dialogue = _text.visible
@@ -311,7 +317,7 @@ static func goal_flag(map_id: String) -> String:
 func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_era) -> void:
 	while busy:
 		await get_tree().process_frame
-	await get_tree().create_timer(EraManager.TRANSITION_TIME).timeout
+	await get_tree().create_timer(EraManager.transition_wait()).timeout
 	var lines: Array[String] = [line]
 	# What the new era brings (EraFeatures, data/era_functions.json).
 	for e: int in range(era_before + 1, EraManager.unlocked_era + 1):
@@ -382,6 +388,11 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era], era_before)
+	else:
+		# An era opened before the era-change sequence existed plays it on the first visit.
+		EraManager.upgrade_for_region(map.region)
+	_era_feel.map = map
+	_era_feel.footprints.clear()
 	_camera.limit_left = 0
 	_camera.limit_top = 0
 	_camera.limit_right = map.width * GridWalker.TILE
@@ -429,6 +440,9 @@ func refresh_daylight() -> void:
 		add_child(t)
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
+	# Era V shows the season on outdoor maps (data/era_feel.json "season_tint").
+	if map.outdoor and bool(EraManager.feel("season_tint")):
+		_daylight.color *= EraFeel.season_tint(int(Online.date_now().month))
 	if _glow == null:
 		_glow_layer = CanvasLayer.new()
 		_glow_layer.layer = 1
@@ -614,8 +628,13 @@ func _show_banner(text: String) -> void:
 	_banner.text = "    %s " % text
 	_phase_icon.phase = DayCycle.current()
 	_phase_icon.queue_redraw()
+	# The banner takes the era's place-name style (TownPopup, data/era_feel.json "town_popup").
+	var style: String = str(EraManager.feel("town_popup"))
+	TownPopup.dress(_banner, style)
 	_banner.visible = true
+	await TownPopup.slide(_banner, style, true)
 	await get_tree().create_timer(BANNER_TIME).timeout
+	await TownPopup.slide(_banner, style, false)
 	_banner.visible = false
 
 ## Darkens with the "close" curve and brightens without overshoot ("fade" curve).
@@ -639,6 +658,11 @@ func _warp_out(edge: bool) -> void:
 		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var door: Vector2 = (player.get_global_transform_with_canvas().origin + Vector2(8, 8)).round()
+	# Eras IV and V close an iris on the Wayfarer instead of the door rectangle.
+	if str(EraManager.feel("warp")) == "iris":
+		await EraFeelLayer.iris_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME * 1.5)
+		_fade.color.a = 1.0
+		return
 	var start := Rect2(door - Vector2(8, 8), Vector2(16, 16))
 	var full := Rect2(Vector2.ZERO, vp)
 	_door_wipe.visible = true
@@ -659,6 +683,7 @@ func _warp_out(edge: bool) -> void:
 func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
 	_place_inkshadow(GameState.player_cell, cell)
+	_era_feel.stepped(cell, GameState.player_cell)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	survey_step(cell)
