@@ -231,6 +231,9 @@
   "proofgate_stamp_hall": {"inside": "proofgate", "region": "quillmarch"},
   "proofgate_proof_room": {"inside": "proofgate", "region": "quillmarch"},
   "proofgate_map_vault": {"inside": "proofgate", "region": "quillmarch"},
-  "proofgate_last_inn": {"inside": "proofgate", "region": "quillmarch"}
+  "proofgate_last_inn": {"inside": "proofgate", "region": "quillmarch"},
+  "dead_letter_office": {"inside": "drypoint_lane", "region": "quillmarch"},
+  "errata_chapel": {"inside": "gravers_causeway", "region": "quillmarch"},
+  "debtors_icehouse": {"inside": "rimeglass_pass", "region": "quillmarch"}
  }
 }

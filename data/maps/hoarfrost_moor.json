@@ -115,6 +115,41 @@
      "level": 77
     }
    ]
+  },
+  {
+   "id": "q3_reader",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_hoarfrost_moor_reader",
+   "sprite": "villager",
+   "trainer": "Frost Reader Yrsa",
+   "intro": "quillmarch/q3_hoarfrost_moor_reader_intro",
+   "defeat": "quillmarch/q3_hoarfrost_moor_reader_defeat",
+   "money": 3080,
+   "team": [
+    {
+     "species": "Hoarstag",
+     "level": 75
+    },
+    {
+     "species": "Rimesovereign",
+     "level": 76
+    },
+    {
+     "species": "Hoarmonarch",
+     "level": 77
+    }
+   ]
+  },
+  {
+   "id": "q3_frozen_deed_odd",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_frozen_deed_odd",
+   "sprite": "villager",
+   "show_flag": "q3_frozen_deed_asked"
   }
  ],
  "signs": [],
@@ -146,6 +181,20 @@
    "item": "strong_tonic",
    "count": 1,
    "flag": "find_hoarfrost_moor_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_hoarfrost_moor_q3_0_3"
+  },
+  {
+   "x": 11,
+   "y": 6,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_hoarfrost_moor_q3_11_6"
   }
  ]
 }

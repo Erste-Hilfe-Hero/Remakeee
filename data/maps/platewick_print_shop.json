@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quillmarch/platewick_print_shop_printer",
    "sprite": "villager"
+  },
+  {
+   "id": "q3_early_epitaph_hanne",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_early_epitaph_hanne",
+   "sprite": "villager",
+   "show_flag": "q3_early_epitaph_s1"
   }
  ],
  "signs": []

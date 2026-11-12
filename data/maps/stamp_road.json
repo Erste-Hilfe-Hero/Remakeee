@@ -115,6 +115,81 @@
      "level": 86
     }
    ]
+  },
+  {
+   "id": "q3_inspector",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_stamp_road_inspector",
+   "sprite": "ranger",
+   "trainer": "Stamp Inspector Gorm",
+   "intro": "quillmarch/q3_stamp_road_inspector_intro",
+   "defeat": "quillmarch/q3_stamp_road_inspector_defeat",
+   "money": 3440,
+   "team": [
+    {
+     "species": "Blotkin",
+     "level": 83
+    },
+    {
+     "species": "Quilmothra",
+     "level": 84
+    },
+    {
+     "species": "Blotgrimm",
+     "level": 86
+    }
+   ]
+  },
+  {
+   "id": "q3_short_till_brynja",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_short_till_brynja",
+   "sprite": "ranger",
+   "show_flag": "q3_short_till_s1"
+  },
+  {
+   "id": "q3_dead_stamp_pia",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_dead_stamp",
+   "sprite": "villager",
+   "hide_flag": "q3_dead_stamp_reveal"
+  },
+  {
+   "id": "q3_dead_stamp_pia_you",
+   "x": 7,
+   "y": 21,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_dead_stamp_pia_you",
+   "sprite": "villager",
+   "trainer": "Pia, On Paper You",
+   "show_flag": "q3_dead_stamp_reveal",
+   "intro": "quillmarch/q3_dead_stamp_pia_you_intro",
+   "defeat": "quillmarch/q3_dead_stamp_pia_you_defeat",
+   "money": 4350,
+   "team": [
+    {
+     "species": "Platewing",
+     "level": 85
+    },
+    {
+     "species": "Stampcolossus",
+     "level": 86
+    },
+    {
+     "species": "Pressbeetle",
+     "level": 87
+    }
+   ],
+   "win_flags": [
+    "q3_dead_stamp_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],
@@ -146,6 +221,20 @@
    "item": "strong_tonic",
    "count": 1,
    "flag": "find_stamp_road_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_stamp_road_q3_0_3"
+  },
+  {
+   "x": 11,
+   "y": 6,
+   "item": "guard_brew",
+   "count": 1,
+   "flag": "find_stamp_road_q3_11_6"
   }
  ]
 }

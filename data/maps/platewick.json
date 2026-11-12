@@ -10,24 +10,24 @@
  ],
  "rows": [
   "TTTTT__TTTTT",
-  "T::..__..::T",
+  "T@@..__..@@T",
   "T.RRR__RRR.T",
   "T.HDH__HDH.T",
   "T....__....T",
   "T##..__.L##T",
   "T....____..T",
-  "T.:......:.T",
+  "T.L......:.T",
   "_____o._____",
   "_____.._____",
-  "T.:......:.T",
+  "T.:......L.T",
   "T##......##T",
-  "T:.RR..RR.:T",
-  "T..DH..HD..T",
+  "T:RRR..RR.:T",
+  "T.HDH..HD..T",
   "T..........T",
   "T.:.S....:.T",
   "T..........T",
-  "T*:.....L:.T",
-  "T:........:T",
+  "T.:.....L:.T",
+  "T@........@T",
   "TTTTTTTTTTTT"
  ],
  "warps": [
@@ -194,6 +194,32 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q3_wanted_face_gry",
+   "x": 4,
+   "y": 16,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_wanted_face_gry",
+   "sprite": "villager",
+   "show_flag": "q3_wanted_face_trusted"
+  },
+  {
+   "id": "q3_wanted_face_gry_bread",
+   "x": 4,
+   "y": 16,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_wanted_face_gry_bread",
+   "sprite": "villager",
+   "show_flag": "q3_wanted_face_kept"
+  },
+  {
+   "id": "q3_wanted_face_jorund",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_wanted_face",
+   "sprite": "villager"
   }
  ],
  "signs": [
