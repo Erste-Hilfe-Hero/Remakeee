@@ -257,6 +257,14 @@ A leader dissolves a bund of 3 or more only by confirming again after 24 hours. 
 cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`; menu
 `scripts/ui/BundMenu.gd` (Friends, Bund).
 
+**Online 100, area 4** (`data/bund_rules.json`, migration `20261111000060_bund_more.sql`, `BundRules.gd`):
+`bund_donate(slot, rev, item, count)` takes items from the stored bag (at most `donate_daily` a day) and gives the
+bund renown (`xp_per_item` each) and week goal progress; the bund rank is 1 + renown / `xp_per_level`, at most 20.
+At `goal_target` items in a week every member takes `goal_reward` once (`bund_goal_claim`). `bund_board()` lists
+bunds by renown. The leader sets language and "open" (`bund_settings`); `bund_search(lang)` lists bunds that are
+not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request. Bund rank perks
+are not built yet.
+
 ## Raid Rifts
 
 Raid Rifts (plan area 7) wait behind the flag `raid`. A player opens a Rift with 1 to 3 friends or
