@@ -995,9 +995,10 @@ func _fixed_meeting(sd: SpirlingData, ring: int, gone_line: String) -> void:
 	var wild := Spirling.new(sd, ring, GameState.rng)
 	_text.visible = false
 	SaveManager.save_game()
-	await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	var outcome: BattleModel.Outcome = await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
 	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
-	if FirstVoices.is_bonded(sd.species_name):
+	# Only a bond in this meeting counts; a shop copy in storage is not the one met here.
+	if outcome == BattleModel.Outcome.BONDED:
 		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
 	else:
 		await say([gone_line] as Array[String])
@@ -1958,6 +1959,10 @@ func _apply_clan_effects(eff: Dictionary, speaker: NPC) -> void:
 		GameState.money += coins
 		Sound.sfx("pickup")
 		await say(["You got %d coins!" % coins] as Array[String])
+	elif coins < 0 and GameState.money > 0:
+		var lost: int = GameState.money - Trust.money_after(GameState.money, coins)
+		GameState.money -= lost
+		await say(["You lost %d coins." % lost] as Array[String])
 	if bool(eff.get("take_keepsake", false)) and not GameState.party.is_empty() and not GameState.party[0].held.is_empty():
 		var lost: String = str(Database.item(GameState.party[0].held).get("name", GameState.party[0].held))
 		GameState.party[0].held = ""

@@ -1,0 +1,396 @@
+{
+ "_comment": "Main-story betrayals of Acts I to IV (docs/STORY.md 'Main-story betrayals'): trust choices on the critical path and the betrayals that cash them in. Data: data/clans.json betrayals with 'main' and 'trust_choices'. ledger_* entries are Ledger pages (first line = title).",
+ "a1_report": {
+  "if": {
+   "not_flag": [
+    "a1_report_done",
+    "scene_ferry_crossing_seen"
+   ]
+  },
+  "flag": "a1_report_done",
+  "lines": [
+   "Aldo: Juna the courier came by. She'll take your Rift report to the guild in Madderby.",
+   "Aldo: Thirty years she's carried my post. Only lost two letters. Both to Mirela, funnily enough.",
+   "Aldo: How will you write it?"
+  ],
+  "choices": [
+   {
+    "text": "In Mirela's code",
+    "flag": "a1_cipher",
+    "next": "a1_report_code"
+   },
+   {
+    "text": "Plainly, for Juna",
+    "action": "trust juna 10",
+    "next": "a1_report_plain"
+   }
+  ]
+ },
+ "a1_report_code": [
+  "You copy the report into the little arrows and dots from Mirela's margins.",
+  "Aldo: Ha. Nobody has read that code in forty years. Including me, and I married it."
+ ],
+ "a1_report_plain": [
+  "Aldo: Good. Trust keeps a village warm.",
+  "Aldo: So does burning letters, mind you. Never mind. Old man's joke."
+ ],
+ "a1_hour": {
+  "lines": [
+   "Vash: Warden business. When the ferry runs again, the Warden log needs the hour of the crossing.",
+   "Vash: Purely for your safety. I adore safety. It's so billable."
+  ],
+  "choices": [
+   {
+    "text": "Tell the true hour",
+    "action": "trust vash 5",
+    "next": "a1_hour_true"
+   },
+   {
+    "text": "Give a false hour",
+    "flag": "a1_false_hour",
+    "next": "a1_hour_false"
+   }
+  ]
+ },
+ "a1_hour_true": [
+  "Vash: Dawn. Lovely. I'll write it in pencil, so it's easier to sell. To file. Easier to file."
+ ],
+ "a1_hour_false": [
+  "Vash: Noon. Splendid. Noon is a very honest hour. Nobody lies at noon.",
+  "You will be on the water at dawn."
+ ],
+ "juna_struck": [
+  "Juna: Your report? Delivered! To the guild. And to Mother Grell. And a copy to Haus Marrovel.",
+  "Juna: Don't look at me like that. I never charge you. I charge everyone else.",
+  "Juna: The guild sends the stamp bill, though. Postage due: 100 coins. Heavy report."
+ ],
+ "juna_caught": [
+  "Juna: I sold your report to three clans. They all paid in advance.",
+  "Juna: Then they opened it. Arrows and dots. Mother Grell's clerk is still crying.",
+  "Juna: Here, your cut. A courier has a code too. Mine is 'half'."
+ ],
+ "ledger_juna_post": [
+  "The courier's copies",
+  "Juna carries every letter in the valley. She also reads them, copies them and sells the copies.",
+  "Whether the clans could read yours depended on the code you wrote it in."
+ ],
+ "hour_struck": [
+  "Two Marrovel 'customs men' wait on the pier at exactly the hour you gave Vash.",
+  "Customs man: Routine search. Very routine. We do it to everyone who is you.",
+  "They pat down your lead Spirling with great care, and great interest in what it carries."
+ ],
+ "hour_caught": [
+  "Down the shore, two Marrovel 'customs men' are searching an empty pier. At noon. Thoroughly.",
+  "One of them left his lunch tin on a post. Inside: a Strong Tonic and a note.",
+  "'Search the map kid at noon. Signed, V.' Vash signs his work. Pride, probably."
+ ],
+ "ledger_vash_hour": [
+  "The crossing hour",
+  "Ilo Vash asked for the hour of the ferry crossing 'for the Warden log'.",
+  "The Warden log, it turns out, is read aloud in Fenrick Kael's study."
+ ],
+ "lantern_struck": [
+  "Halfway down the pier, Fenrick's brass lantern starts to tick.",
+  "A Ruskweber moth crawls out of the vent. It has been eating the wick and noting where you go.",
+  "It also ate through your purse on the way out. 80 coins gone. Thorough moth.",
+  "It flutters off towards Ashmere with your route. Somebody up there will be pleased."
+ ],
+ "lantern_caught": [
+  "You know how Fenrick gives presents. Aldra told you, or his own letter did.",
+  "You drop the brass lantern into the lake. Something inside squeaks and swims off, deeply offended.",
+  "Before it sank you took Fenrick's Waking Moss out of its base. It's not his any more."
+ ],
+ "ledger_fenrick_lantern": [
+  "The ticking lantern",
+  "Fenrick Kael gave you a lantern for the crossing. A Ruskweber moth lived inside and wrote down your route.",
+  "Only someone who had read Fenrick's letter, or listened to Aldra, would have looked."
+ ],
+ "a2_porter": {
+  "lines": [
+   "Sable Ruskweber leans on a crate as if she owns the quay. She probably owns the crate.",
+   "Sable: Madderby is uphill, darling. My porters carry bags for free.",
+   "Sable: The first trip is always free. It's the second trip that builds character."
+  ],
+  "choices": [
+   {
+    "text": "Take the porters",
+    "action": "trust sable 5 20",
+    "next": "a2_porter_yes"
+   },
+   {
+    "text": "Carry it myself",
+    "flag": "a2_own_bag",
+    "next": "a2_porter_no"
+   }
+  ]
+ },
+ "a2_porter_yes": [
+  "Two porters lift your satchel like a newborn. A newborn they plan to sell.",
+  "Sable: See you uphill. Your bag certainly will."
+ ],
+ "a2_porter_no": [
+  "Sable: Independent. How expensive of you. My porters will be heartbroken.",
+  "Sable: They'll follow you anyway. Heartbreak needs exercise."
+ ],
+ "satchel_struck": [
+  "Your satchel came back from Sable's porters lighter. Lighter by 200 coins and one map of the Woadfen.",
+  "A note inside: 'Porterage, insurance, and a small fee for the fee. With love, S.'"
+ ],
+ "satchel_caught": [
+  "A Ruskweber porter has followed you all week, staring at your satchel like a lost love.",
+  "He gave up at last and pinned Sable's bill to your door: 'Porterage: 0. Disappointment: priceless.'",
+  "He also left his lunch behind. A Power Brew. Finders keepers."
+ ],
+ "ledger_sable_satchel": [
+  "Free porters",
+  "Sable Ruskweber offered to carry your satchel up to Madderby for free.",
+  "Nothing the Ruskwebers carry arrives with the same weight it left with."
+ ],
+ "a2_chalk": {
+  "lines": [
+   "Brann, Veit's helper, kneels by the rock, copying Mirela's burned words into a notebook.",
+   "Brann: It's for the guild. Honest. Veit just likes to read over my shoulder. From very far away."
+  ],
+  "choices": [
+   {
+    "text": "Let him copy",
+    "action": "trust brann 10",
+    "next": "a2_chalk_yes"
+   },
+   {
+    "text": "Take his chalk",
+    "flag": "a2_brann_chalk",
+    "next": "a2_chalk_no"
+   }
+  ]
+ },
+ "a2_chalk_yes": [
+  "Brann: Thanks. You're kinder than Veit. That's a low bar, but you cleared it."
+ ],
+ "a2_chalk_no": [
+  "You take Brann's chalk and his notebook. He doesn't fight. He looks almost relieved.",
+  "Brann: Veit will be furious. He's always furious. This time I'll know why."
+ ],
+ "brann_struck": [
+  "Ysolde: Veit Harrow was here an hour before you, with Brann's notebook. Mirela's words, copied neatly.",
+  "Ysolde: He knows she holds the Wide Rift from the inside. He left smiling. Veit never smiles.",
+  "Ysolde: He broke our lock on the way out. The guild takes the new one out of your pay. 150 coins."
+ ],
+ "brann_caught": [
+  "Ysolde: Brann came by without his notebook. Veit sent him away for coming back with nothing.",
+  "Ysolde: He took the train north to find honest work in Ashmere. He said 'honest' like a rumour.",
+  "Ysolde: He left this for you. Veit's Spring Flask. Veit doesn't know yet."
+ ],
+ "ledger_brann_copy": [
+  "The helper's notebook",
+  "Brann copied Mirela's burned words at the Wide Rift 'for the guild'.",
+  "Veit Harrow reads everything Brann writes. Brann has never once been allowed to keep a diary."
+ ],
+ "a2_charter": [
+  "Ysolde closes the file, then opens a second one. Older. Thinner.",
+  "Ysolde: Forty years ago Haus Marrovel paid for this guild's charter. The price was Mirela's route into the Rift.",
+  "Ysolde: I sold it. She went in anyway. I've been sorry in very neat handwriting ever since.",
+  "Ysolde: Now Ottilie Kael wants your route too. She asked politely. That's the worrying part."
+ ],
+ "charter_caught": [
+  "A paper bird lands on the table. Pip's round handwriting: 'Grandmother bought your clerk. Burn the copy. P.'",
+  "Ysolde burns the copy. The guild clerk, it turns out, has already left town. On a very fast cart.",
+  "Ysolde: He left his last wage behind in the hurry. 120 coins. Call it the guild's apology."
+ ],
+ "charter_struck": [
+  "That night the guild clerk sells a copy of your route to Ottilie Kael and leaves town.",
+  "Ysolde: He left a note. 'Sorry.' Very neat handwriting. I taught him that.",
+  "Ysolde: He took the petty cash too. The guild takes it out of your pay. 120 coins."
+ ],
+ "ledger_charter": [
+  "The guild charter",
+  "Forty years ago Ysolde sold Mirela's route to Haus Marrovel for the guild's charter. This year the guild clerk sold yours.",
+  "Pip warned you only if you had kept his secret in Brindlewick."
+ ],
+ "a3_seal": {
+  "lines": [
+   "Nella, Halvard's apprentice, waves from the platform with both arms and a wax pot.",
+   "Nella: You've got the guild seal? Give it here. The hall needs a wax copy for the plate records.",
+   "Nella: Back by supper. Probably. Supper is a flexible idea in Ashmere."
+  ],
+  "choices": [
+   {
+    "text": "Hand it over",
+    "action": "trust nella 10",
+    "next": "a3_seal_yes"
+   },
+   {
+    "text": "Keep it on me",
+    "flag": "a3_kept_seal",
+    "next": "a3_seal_no"
+   }
+  ]
+ },
+ "a3_seal_yes": [
+  "Nella: Lovely. I'll only make one copy. One is a very small number."
+ ],
+ "a3_seal_no": [
+  "Nella: Suit yourself. I'll copy something else. I always copy something."
+ ],
+ "nella_struck": [
+  "Sable's runners wave at you across the square. Each wears a wax copy of your guild seal on a string.",
+  "Nella: I made one copy! For the records! The records must have made the others.",
+  "With your seal on their papers, the runners drew 300 coins from the guild in your name."
+ ],
+ "nella_caught": [
+  "Nella: Sable's runner offered me 300 coins for a wax copy of your seal. I had nothing to copy.",
+  "Nella: So I sold him a wax copy of my thumb. He paid. Twice. Here's your half."
+ ],
+ "ledger_nella_wax": [
+  "The wax copy",
+  "Nella asked for your guild seal 'for the plate records'.",
+  "In Ashmere a wax copy of a seal is worth exactly what the original can draw from the guild."
+ ],
+ "a3_copper": {
+  "lines": [
+   "Halvard: Mirela's plate needs copper. A Ruskweber cart sells it at half price. Half!",
+   "Halvard: Mother Grell says it's a gift between grieving families. Shall I buy it?"
+  ],
+  "choices": [
+   {
+    "text": "Buy it cheap",
+    "action": "trust grell 5",
+    "next": "a3_copper_cheap"
+   },
+   {
+    "text": "Pay the honest price",
+    "flag": "a3_honest_copper",
+    "next": "a3_copper_honest"
+   }
+  ]
+ },
+ "a3_copper_cheap": [
+  "Halvard: Half price! Grief is good for business. Someone's business, anyway."
+ ],
+ "a3_copper_honest": [
+  "Halvard: The honest price. My purse weeps. My plate thanks you."
+ ],
+ "copper_struck": [
+  "Mother Grell waves from the back of a Ruskweber cart.",
+  "Mother Grell: Lovely copper, wasn't it? Mined from under the Stilling. It goes quiet in a fortnight.",
+  "Mother Grell: Halvard bought a second batch on your account. 250 coins. Grief is a long business, little map."
+ ],
+ "copper_caught": [
+  "Mother Grell: You paid the honest price. How dull. I had a whole speech prepared.",
+  "Mother Grell: Keep this, then. A Waking Moss, for the next person you trust. You'll need it."
+ ],
+ "ledger_grell_copper": [
+  "Half-price copper",
+  "Mother Grell sold Halvard copper for Mirela's plate at half price, as 'a gift between grieving families'.",
+  "Copper from under the Stilling goes quiet in a fortnight. So do most of Grell's gifts."
+ ],
+ "route_struck": [
+  "Ottilie: Your route, dear. The guild clerk was so helpful. My people have walked it twice.",
+  "Ottilie: They even carried your bag for a while. Such manners.",
+  "Her footman hands the bag back. Your lead Spirling's keepsake is no longer in it."
+ ],
+ "route_caught": [
+  "Ottilie: I bought your route from the guild clerk. Pip burned it. The child has started having opinions.",
+  "Ottilie: Never mind. Opinions are expensive. He'll grow out of them.",
+  "She leaves a basket on the step. A Spring Flask and a card: 'Get well soon. Or don't.'"
+ ],
+ "ledger_ottilie_route": [
+  "The sold route",
+  "The route the guild clerk sold in Corvane reached Ottilie Kael. She had it walked to the silent lighthouse.",
+  "Only Pip's warning, bought with the secret you kept for him, made the copy worthless."
+ ],
+ "a4_letter": {
+  "lines": [
+   "A boy in a brass badge runs up with a sealed letter.",
+   "Boy: For Warden Kaia at the oasis! You're going that way. Everyone is. There's no other water.",
+   "Boy: Mustn't open it. It's a contract. Contracts bite."
+  ],
+  "choices": [
+   {
+    "text": "Deliver it sealed",
+    "action": "trust kaia 10",
+    "next": "a4_letter_sealed"
+   },
+   {
+    "text": "Open it first",
+    "flag": "a4_read_letter",
+    "next": "a4_letter_open"
+   }
+  ]
+ },
+ "a4_letter_sealed": [
+  "You tuck the letter away unopened. It feels heavier than paper should."
+ ],
+ "a4_letter_open": [
+  "You steam the seal open. A Veil water lease. Whoever delivers it signs as 'courier of record', liable for the drought.",
+  "You fold it back up, very carefully, and decide to be nobody's courier of record."
+ ],
+ "kaia_struck": [
+  "Kaia meets you at the oasis gate and takes the letter with a sunny smile.",
+  "Kaia: Delivered unopened! Lovely. You're now the Veil's courier of record for the new water lease.",
+  "Kaia: That makes you liable for the drought. Only a 300-coin fine. Payable at once. To me."
+ ],
+ "kaia_caught": [
+  "Kaia meets you at the oasis gate. She looks at the resealed letter, then at you.",
+  "Kaia: You opened it. Rude. Correct, but rude.",
+  "Kaia: Fine. Here's 200 coins to forget the clause. Forgetting is the best-paid job in Solenne."
+ ],
+ "ledger_kaia_witness": [
+  "The courier of record",
+  "Kaia sent a Veil water lease through you. Whoever handed it over unopened became liable for the drought.",
+  "In Solenne nobody reads the small print. That is what the small print is for."
+ ],
+ "a4_tunnel": {
+  "lines": [
+   "A Veil clerk at the oasis gate rattles a ring of keys.",
+   "Clerk: The Brass Veil's pump tunnels run straight to the Sun Rift. A pass is free. Safe as a contract.",
+   "Clerk: Factor Lusk insists. He so rarely insists on anything that isn't money."
+  ],
+  "choices": [
+   {
+    "text": "Take the pass",
+    "action": "trust lusk 10",
+    "next": "a4_tunnel_yes"
+   },
+   {
+    "text": "Walk the dunes",
+    "flag": "a4_long_way",
+    "next": "a4_tunnel_no"
+   }
+  ]
+ },
+ "a4_tunnel_yes": [
+  "Clerk: Excellent. Every step is stamped and recorded. For your safety. And for the bill."
+ ],
+ "a4_tunnel_no": [
+  "Clerk: The dunes? On foot? How very free of charge. Factor Lusk won't like that."
+ ],
+ "tunnel_struck": [
+  "At the end of the Veil's tunnel a clerk hands you a bill. 'Tunnel toll, lamp rent, air.' 250 coins.",
+  "Clerk: Factor Lusk thanks you for the record of your route. He'll sell it back to you later. At a discount."
+ ],
+ "tunnel_caught": [
+  "Behind you the Veil's tunnel fills with sand, along with three Veil clerks who waited inside it with nets.",
+  "One of the nets blows up against your boots. Caught in it: a Power Brew. Waste not."
+ ],
+ "ledger_lusk_tunnel": [
+  "The free tunnel",
+  "Factor Lusk offered a free pass through the Veil's pump tunnels to the Sun Rift.",
+  "Free, in Brass Veil terms, means the bill comes at the other end."
+ ],
+ "juna_l_struck": [
+  "Juna: Letter from Aldo! Well, I wrote it. He'd have said the same, only slower.",
+  "Juna: Also, the Veil paid me to say where you sleep. I said. While you were busy, they emptied your room.",
+  "Juna: 200 coins gone. Don't be cross. I sold you before. It gets easier for both of us."
+ ],
+ "juna_l_caught": [
+  "Juna: The Veil paid me to say where you sleep. I said the lighthouse in Brindlewick. They'll love the stairs.",
+  "Juna: You kept your report from me once. I respect that. Couriers respect nothing else.",
+  "Juna: Here. Aldo's real letter. Unread. Mostly. And a Spring Flask he sent along."
+ ],
+ "ledger_juna_letter": [
+  "The courier's last letter",
+  "Juna followed you to Solenne with a letter from Aldo, and sold your lodging to the Brass Veil on the way.",
+  "Whether she sent the Veil to your room or to Brindlewick depended on what she had thought of you since your first report."
+ ]
+}

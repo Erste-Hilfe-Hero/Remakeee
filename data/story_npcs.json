@@ -1522,6 +1522,13 @@
   ]
  },
  "saltglass": {
+  "on_enter": {
+   "scene": "a3_saltglass",
+   "if": {
+    "flag": "veit_plate_done",
+    "not_flag": "rift_sun_sealed"
+   }
+  },
   "signs": [
    {
     "spot": "keeper_lamp",
@@ -1575,6 +1582,13 @@
   ]
  },
  "cinderfold": {
+  "on_enter": {
+   "scene": "a3_cinderfold",
+   "if": {
+    "flag": "rift_glass_sealed",
+    "not_flag": "rift_shade_sealed"
+   }
+  },
   "npcs": [
    {
     "id": "veit_c",
@@ -1801,6 +1815,13 @@
   ]
  },
  "brindlewick": {
+  "on_enter": {
+   "scene": "a1_square",
+   "if": {
+    "flag": "aldo_dock_told",
+    "not_flag": "ferry_crossed"
+   }
+  },
   "npcs": [
    {
     "id": "clan_wren",
@@ -1859,6 +1880,13 @@
   ]
  },
  "ochrewell": {
+  "on_enter": {
+   "scene": "a4_ochrewell",
+   "if": {
+    "flag": "rift_shade_sealed",
+    "not_flag": "rift_oasis_sealed"
+   }
+  },
   "npcs": [
    {
     "id": "clan_ottilie_4",
@@ -2061,6 +2089,24 @@
     "hide_flag": "edge_amir_3"
    }
   ]
+ },
+ "oasis_rift": {
+  "on_enter": {
+   "scene": "a4_oasis",
+   "if": {
+    "flag": "rift_tower_sealed",
+    "not_flag": "rift_oasis_sealed"
+   }
+  }
+ },
+ "sun_rift": {
+  "on_enter": {
+   "scene": "a4_sun",
+   "if": {
+    "flag": "rift_oasis_sealed",
+    "not_flag": "rift_sun_sealed"
+   }
+  }
  },
  "root_rift": {
   "signs": [

@@ -101,7 +101,8 @@
   "lines": [
    "The sealed Shade Rift is quiet, but a shadow still moves across the floor.",
    "Two dark rings open on a pair of wide wings, like a sun hidden twice.",
-   "It is Vorlucent, the eclipse moth. Every lamp around you flickers."
+   "It is Vorlucent, the eclipse moth. Every lamp around you flickers.",
+   "Old songs say a legend only listens to someone who has tested it hard."
   ],
   "action": "legend Vorlucent 48"
  }

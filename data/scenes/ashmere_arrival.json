@@ -5,6 +5,7 @@
   {"say": ["The railway car groans to a stop. Grey flakes drift past the window. Not snow. Ash."]},
   {"say": ["On the platform a Kindlop stands mid-step, one paw raised. It doesn't move.", "Here the Hush has another name. The Stilling. It freezes Spirlings where they stand."]},
   {"say": ["Find master graver Halvard in Cinderfold. Ysolde said he'd know what to do."]},
+  {"dialogue": "betrayal/a3_seal"},
   {"flag": "ashmere_arrived"}
  ]
 }

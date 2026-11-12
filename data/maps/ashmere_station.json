@@ -207,6 +207,16 @@
    "hide_flag": "beat_juno_1",
    "ai": 2,
    "money": 1400
+  },
+  {
+   "id": "lq_corla",
+   "x": 9,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/vorlucent_guide",
+   "sprite": "villager",
+   "show_flag": "rift_shade_sealed",
+   "hide_flag": "lq_vorlucent_ready"
   }
  ],
  "signs": [
