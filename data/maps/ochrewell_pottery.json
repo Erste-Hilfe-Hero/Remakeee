@@ -1,36 +1,35 @@
 {
- "name": "Station Store",
- "region": "ashmere",
+ "name": "Hadi's Pottery",
+ "region": "solenne",
  "biome": "town",
  "backdrop": "ember",
  "rows": [
   "WWWWWWWWWW",
-  "WCCCffCCCW",
+  "WCCffffCCW",
   "WffffffffW",
-  "WffCCCCffW",
+  "WfCffffCfW",
   "WffffffffW",
   "WffffffffW",
-  "WCffffffCW",
   "WffffffffW",
   "WWWWDWWWWW"
  ],
  "warps": [
   {
    "x": 4,
-   "y": 8,
-   "to": "ashmere_station",
-   "tx": 5,
-   "ty": 7,
+   "y": 7,
+   "to": "ochrewell",
+   "tx": 3,
+   "ty": 4,
    "facing": "down"
   }
  ],
  "npcs": [
   {
-   "id": "ruprecht",
+   "id": "wenna",
    "x": 4,
    "y": 2,
    "facing": "down",
-   "dialogue": "rooms/ashmere_station_shop_ruprecht",
+   "dialogue": "ochrewell_pottery/wenna",
    "sprite": "villager"
   }
  ],

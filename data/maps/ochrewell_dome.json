@@ -1,40 +1,35 @@
 {
- "name": "Cinderfold Spring House",
- "region": "ashmere",
+ "name": "Ama's Dome",
+ "region": "solenne",
  "biome": "town",
  "backdrop": "ember",
- "heal_point": [
-  4,
-  6
- ],
  "rows": [
   "WWWWWWWWWW",
-  "WfffoofffW",
+  "WCffffffCW",
   "WffffffffW",
   "WffCCCCffW",
   "WffffffffW",
   "WffffffffW",
-  "WCffffffCW",
   "WffffffffW",
   "WWWWDWWWWW"
  ],
  "warps": [
   {
    "x": 4,
-   "y": 8,
-   "to": "cinderfold",
-   "tx": 10,
-   "ty": 9,
+   "y": 7,
+   "to": "ochrewell",
+   "tx": 8,
+   "ty": 4,
    "facing": "down"
   }
  ],
  "npcs": [
   {
-   "id": "ebba",
+   "id": "ama",
    "x": 4,
    "y": 2,
    "facing": "down",
-   "dialogue": "rooms/cinderfold_spring_ebba",
+   "dialogue": "ochrewell_dome/ama",
    "sprite": "elder"
   }
  ],

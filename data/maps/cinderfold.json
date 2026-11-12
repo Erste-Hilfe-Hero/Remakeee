@@ -16,9 +16,9 @@
   "^.RRRRR_...^",
   "^.HHDHH_.S.^",
   "^......_...^",
-  "^*RRR*._.RR^",
-  "^.HDH.._.HD^",
-  "^...@___...^",
+  "^*RRR*._..@^",
+  "^.HDH.._.::^",
+  "^.@..___...^",
   "^.:..._..:.^",
   "^.:.._____.^",
   "^...._.L...^",
@@ -57,14 +57,6 @@
    "to": "soot_vaults",
    "tx": 5,
    "ty": 18,
-   "facing": "up"
-  },
-  {
-   "x": 10,
-   "y": 8,
-   "to": "cinderfold_spring",
-   "tx": 4,
-   "ty": 7,
    "facing": "up"
   }
  ],
@@ -161,9 +153,9 @@
   },
   {
    "id": "tovan",
-   "x": 3,
+   "x": 5,
    "y": 6,
-   "facing": "right",
+   "facing": "down",
    "dialogue": "ashmere_side/tovan",
    "sprite": "elder"
   },

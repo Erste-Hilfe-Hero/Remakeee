@@ -43,7 +43,7 @@ func test_encounter_tables_are_sane() -> void:
 func test_every_species_has_front_and_back_art() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		for facing: String in ["front", "back"]:
-			assert_ne(EraManager.art_path_from("spirlings/%s_%s.png" % [sd.species_name.to_lower(), facing], 1), "",
+			assert_ne(EraManager.art_path_from("spirlings/%s_%s.png" % [sd.species_name.to_lower(), facing], sd.era), "",
 				"%s %s" % [sd.species_name, facing])
 
 ## 1311: a tap-to-move walk stops when the app goes to the background.

@@ -232,7 +232,8 @@ In the database (see "Looking into the database"), table `server_config`, for ex
 | `min_version` | `1004` | builds with a lower version code must update |
 | `motd` | `"Maintenance today 3-4 am"` | notice on the title screen (`""` = none) |
 | `party_max` | `5` | most Spirlings in a saved team and an echo team |
-| `level_max` | `60` | highest Ring in saves and echo teams |
+| `level_max` | `60` | highest Ring in echo teams, the open league and duels |
+| `save_level_max` | `96` | highest Ring in saves (Spirling.ERA_MAX_LEVEL, Halcyra) |
 | `duel_ring` | `50` | Ring everyone fights at in an echo duel |
 | `save_schema_max` | `1` | newest online save format the server takes (`Online.SAVE_SCHEMA`) |
 

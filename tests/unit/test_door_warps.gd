@@ -56,6 +56,8 @@ func test_every_door_warp_pairs_with_a_door_back() -> void:
 				continue
 			var arrive := Vector2i(int(w.tx), int(w.ty))
 			assert_true(_free(dest, arrive), "%s door %s lands on free floor in %s, not %s" % [id, c, w.to, arrive])
+			if str(w.to) == id:
+				continue  # a hall door through to the other side of the same map (Ashmere Station)
 			var back: Dictionary = {}
 			for r: Dictionary in dest.warps:
 				if str(r.to) == id and _next_to(Vector2i(int(r.x), int(r.y)), arrive):
@@ -102,4 +104,4 @@ func test_rooms_keep_their_door_emblems() -> void:
 			assert_eq(role, TilesetFactory.DoorRole.HOUSE, "%s door is a plain house door" % id)
 		assert_true(m.width >= 8 and m.height >= 6, "%s is big enough for its house" % id)
 		checked += 1
-	assert_eq(checked, 17, "every room behind a former dead door")
+	assert_eq(checked, 15, "every room behind a former dead door")

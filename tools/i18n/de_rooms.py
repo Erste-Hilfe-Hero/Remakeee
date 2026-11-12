@@ -1,11 +1,9 @@
 # German texts for the town rooms. Written by tools/art/gen_rooms.py: edit the pairs there.
 T = {
-"Cinderfold Spring House": "Quellhaus Cinderfold",
 "Clerk Anselm: Everything off the ferry, priced for people who have no way back.": "Verkäufer Anselm: Alles von der Fähre, bepreist für Leute ohne Rückweg.",
 "Clerk Benno: Wilma sells outside, I sell inside. Same prices, but I have a roof.": "Verkäufer Benno: Wilma verkauft draußen, ich drinnen. Gleiche Preise, aber ich hab ein Dach.",
 "Clerk Dirk: Towels, tonics, tide tables. The tables are free. They are also wrong.": "Verkäufer Dirk: Handtücher, Tonika, Gezeitentafeln. Die Tafeln sind gratis. Sie stimmen auch nicht.",
 "Clerk Maren: Ebbe keeps the cold stock outside. In here it is the same stock, only warmer.": "Verkäuferin Maren: Ebbe hat die kalte Ware draußen. Hier drin ist es dieselbe Ware, nur wärmer.",
-"Clerk Ruprecht: Station prices. Everything costs more when the next train might be the last.": "Verkäufer Ruprecht: Bahnhofspreise. Alles kostet mehr, wenn der nächste Zug der letzte sein könnte.",
 "Copperfold Spring House": "Quellhaus Kupferfalt",
 "Copperfold Store": "Laden Kupferfalt",
 "Dyer Konrad: Fair trade, says the guild.": "Färber Konrad: Ein fairer Tausch, sagt die Gilde.",
@@ -33,9 +31,6 @@ T = {
 "Shepherd Olm: The fog takes a sheep a week. I stopped naming them.": "Schäfer Olm: Der Nebel holt jede Woche ein Schaf. Ich habe aufgehört, ihnen Namen zu geben.",
 "Shepherd Olm: Then I stopped counting them. Now I sleep fine.": "Schäfer Olm: Dann habe ich aufgehört, sie zu zählen. Jetzt schlafe ich gut.",
 "Shepherd's Hut": "Schäferhütte",
-"Spring Nurse Ebba: Water from under the basalt, warm as a kettle.": "Quellschwester Ebba: Wasser unter dem Basalt hervor, warm wie ein Kessel.",
-"Spring Nurse Ebba: Your Spirlings will sleep like the buried. Only they wake up.": "Quellschwester Ebba: Deine Spirlinge schlafen wie die Begrabenen. Nur wachen sie auf.",
-"Station Store": "Bahnhofsladen",
 "Tender Bea: Fen water, boiled twice. Once for the mud, once for the leeches.": "Pflegerin Bea: Moorwasser, zweimal gekocht. Einmal für den Schlamm, einmal für die Egel.",
 "Tender Bea: Sit. Your team can drink their fill.": "Pflegerin Bea: Setz dich. Dein Team kann trinken, so viel es will.",
 "Watcher's Hut": "Hütte der Wächterin",

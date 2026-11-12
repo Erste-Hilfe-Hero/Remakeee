@@ -32,7 +32,6 @@ SHOP_COPPER = "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell sp
 SHOP_REED = "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm"
 SHOP_WREN = "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf"
 SHOP_CORVANE = "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
-SHOP_ASHMERE = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
 
 # room id: town, door cell, kind, (English name, German name), person (id, sprite, lines as
 # (English, German) pairs, action or "").
@@ -98,14 +97,6 @@ ROOMS = {
                             "Risswächterin Ida: Ich bewache den Rand, damit du es nicht musst. Niemand bezahlt mich."),
                            ("Rift Watcher Ida: Nobody needs to. The edge is very convincing.",
                             "Risswächterin Ida: Muss auch keiner. Der Rand ist sehr überzeugend.")], "")),
-    "ashmere_station_shop": ("ashmere_station", (5, 6), "shop", ("Station Store", "Bahnhofsladen"),
-        ("ruprecht", "villager", [("Clerk Ruprecht: Station prices. Everything costs more when the next train might be the last.",
-                                   "Verkäufer Ruprecht: Bahnhofspreise. Alles kostet mehr, wenn der nächste Zug der letzte sein könnte.")], SHOP_ASHMERE)),
-    "cinderfold_spring": ("cinderfold", (10, 8), "spring", ("Cinderfold Spring House", "Quellhaus Cinderfold"),
-        ("ebba", "elder", [("Spring Nurse Ebba: Water from under the basalt, warm as a kettle.",
-                            "Quellschwester Ebba: Wasser unter dem Basalt hervor, warm wie ein Kessel."),
-                           ("Spring Nurse Ebba: Your Spirlings will sleep like the buried. Only they wake up.",
-                            "Quellschwester Ebba: Deine Spirlinge schlafen wie die Begrabenen. Nur wachen sie auf.")], "heal")),
 }
 
 

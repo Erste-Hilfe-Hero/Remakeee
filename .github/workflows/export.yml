@@ -44,6 +44,8 @@ jobs:
         run: python3 tools/balance/type_sim.py
       - name: Every player-facing text has a German translation
         run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
+      - name: Cross-file data integrity (warps, reach, flags, dialogue keys and German, species, levels, items, ids)
+        run: python3 tools/data_integrity.py
       - name: Every species has a Gleam palette (tools/art/gen_gleam_palettes.py)
         run: python3 tools/art/gen_gleam_palettes.py --check
       - name: The other 12 languages keep their placeholders (missing keys are counted, advisory)
@@ -66,6 +68,8 @@ jobs:
         run: python3 tools/art/era2_colourise.py --check
       - name: Halcyra Era IV atlas matches the shared Era I atlas (tools/art/gen_tiles_halcyra.py)
         run: python3 tools/art/gen_tiles_halcyra.py --check
+      - name: Map audit finds nothing new (tools/maps/audit_maps.py, baseline tools/maps/audit_baseline.json)
+        run: python3 tools/maps/audit_maps.py --check
 
   # Server functions (supabase/migrations) on a throwaway Postgres, with their tests.
   sql:
