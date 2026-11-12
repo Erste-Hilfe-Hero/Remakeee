@@ -13236,11 +13236,11 @@
   "line_id": "sluicekit",
   "era": 1,
   "base": {
-   "hp": 102,
-   "atk": 92,
-   "foc": 77,
-   "spd": 59,
-   "def": 125
+   "hp": 97,
+   "atk": 87,
+   "foc": 73,
+   "spd": 56,
+   "def": 119
   },
   "trait": "deep_roots",
   "learnset": {

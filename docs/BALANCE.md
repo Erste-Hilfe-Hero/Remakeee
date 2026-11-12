@@ -117,6 +117,13 @@ Ink and Rust. Each element that gains one of them as a strength also gains the o
 so every count stays even (Acid and Frost 4 and 4). Chart sim with all 14: Acid 51.2 %, Frost
 49.8 %, every team of 3 between 33.3 and 65.0 %.
 
+With the 15 Quillmarch kinds in the ring-36 pool, Sluicewarden (Corvane, Stone/Bloom) won 81 of
+115 team battles (70.4 %, test_balance team mode, seed 7). Scaling the five Quillmarch kinds of
+that ring by 0.85 to 1.15 moved it by at most two battles, so the cause is Sluicewarden itself:
+its stats are scaled by 0.95 by hand in `data/spirlings.json` (total 455 to 432), measured on the
+full model at 74 of 115 (64.3 %), every other kind at or under 67.6 % (Fulgorath). A rebuild of
+the Corvane lines re-tunes it and has to measure this again.
+
 Stats are not tuned yet. The full battle model (`tools/balance_sim.gd`, GUT and nightly tests) is
 the real gate, so in CI this tool only reports the 40 to 60 % band; chart rule breaks still fail.
 `--strict` fails on the band too. Tuning the stats below on this sim alone broke the full-model

@@ -287,7 +287,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 221 | Nimbarch | Gale/Tide | shy | weaver | light_sleeper | 439 | - |
 | 222 | Sluicekit | Stone/Bloom | common | bulwark | deep_roots | 305 | Sluicer (ring 17) |
 | 223 | Sluicer | Stone/Bloom | uncommon | bulwark | deep_roots | 403 | Sluicewarden (ring 33) |
-| 224 | Sluicewarden | Stone/Bloom | shy | bulwark | deep_roots | 455 | - |
+| 224 | Sluicewarden | Stone/Bloom | shy | bulwark | deep_roots | 432 | - |
 | 225 | Vanepip | Gale/Volt | common | vanguard | surge | 300 | Vanecrow (ring 16) |
 | 226 | Vanecrow | Gale/Volt | uncommon | vanguard | surge | 404 | Vanecrest (ring 33) |
 | 227 | Vanecrest | Gale/Volt | shy | vanguard | surge | 497 | - |
