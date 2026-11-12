@@ -1155,6 +1155,16 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		s.evolve()
 		mark_seen(s.data.species_name, true)
 		msg = "%s unfurls into %s!" % [old_name, s.data.species_name]
+	elif bool(it.get("unfurl_any", false)):
+		# The shop's Unfurl Spark (pay-to-win step 5, plan point 32): the next form without its
+		# Ring or other conditions, never a form that needs an item (furling back would hand one out).
+		var to: SpirlingData = ShopEffects.unfurl_spark_target(s)
+		if to == null:
+			return ""
+		var old_name: String = s.display_name()
+		s.evolve(to)
+		mark_seen(s.data.species_name, true)
+		msg = "%s unfurls into %s!" % [old_name, s.data.species_name]
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""

@@ -1,0 +1,147 @@
+{
+ "name": "Candle Causeway",
+ "region": "quivermoor",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "candle_causeway",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T~~..__.%%%T",
+  "T~~...__%%%T",
+  "T.....__...T",
+  "T,,~~~~+~~.T",
+  "T,,~~~~+~~.T",
+  "T....++++..T",
+  "T~~~.+..%%%T",
+  "T~~~.+..%%%T",
+  "T....+.....T",
+  "T%%..+~~~~~T",
+  "T%%..++++..T",
+  "T~~~....+..T",
+  "T~~~.,,.+..T",
+  "T....,,.++.T",
+  "T%%%.....+.T",
+  "T%%%~~~~.+.T",
+  "T...~~~~.+.T",
+  "T..++++++..T",
+  "T..+..%%%..T",
+  "T~~+..%%%~~T",
+  "T~~+.....~~T",
+  "T..++__....T",
+  "T....__.,,.T",
+  "T.....__,,.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "tallowmere",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "driftwick",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "tallowmere",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "driftwick",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "candlebearer",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quivermoor/candle_causeway_candlebearer",
+   "sprite": "ranger",
+   "trainer": "Candle Bearer Ylva",
+   "intro": "quivermoor/candle_causeway_candlebearer_intro",
+   "defeat": "quivermoor/candle_causeway_candlebearer_defeat",
+   "money": 4230,
+   "team": [
+    {
+     "species": "Velvit",
+     "level": 93
+    },
+    {
+     "species": "Sootlurk",
+     "level": 94
+    }
+   ]
+  },
+  {
+   "id": "tollwick",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quivermoor/candle_causeway_tollwick",
+   "sprite": "villager",
+   "trainer": "Wick Toll Keeper Oda",
+   "intro": "quivermoor/candle_causeway_tollwick_intro",
+   "defeat": "quivermoor/candle_causeway_tollwick_defeat",
+   "money": 4230,
+   "team": [
+    {
+     "species": "Puddock",
+     "level": 94
+    },
+    {
+     "species": "Glowflitter",
+     "level": 94
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_candle_causeway_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_candle_causeway_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_candle_causeway_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_candle_causeway_4"
+  }
+ ]
+}

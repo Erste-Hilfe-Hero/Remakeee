@@ -577,6 +577,10 @@ EXTRA_SONGS = {
     "halcyra": dict(bpm=104, era=4, chords=["E", "C#m", "A", "B", "E", "G#m", "A", "B", "C#m", "A", "E", "B", "A", "B", "E", "E"],
                     motifs=["B4:4 E5:4 G#5:4 B5:4", "A5:6 G#5:2 E5:8", "C#5:4 E5:4 A5:6 G#5:2", "F#5:12 -:4"],
                     quotes=dict(zip(range(8, 12), leitmotif(2))), arp_style="climb", bass_style="root-fifth", drums="walk", seed=281),
+    # Quivermoor (Era V): the breathing moor, F minor, slow and swaying like the bog.
+    "quivermoor": dict(bpm=88, era=5, chords=["Fm", "Db", "Ab", "C7", "Fm", "Bbm", "C7", "Fm", "Db", "Eb", "Ab", "Fm", "Bbm", "C7", "Fm", "C7"],
+                       motifs=["C5:6 Ab4:2 F4:8", "Db5:4 C5:4 Bb4:4 Ab4:4", "F5:6 Eb5:2 C5:4 Ab4:4", "G4:12 -:4"],
+                       quotes=dict(zip(range(8, 12), leitmotif(-7, minor=True))), arp_style="rolling", bass_style="drone", drums="soft", seed=283),
 }
 
 # One battle theme per era (EraManager.active_era picks "battle_era<N>", Sound.era_track).

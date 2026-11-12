@@ -6,7 +6,8 @@
   "ashmere": {"name": "Ashmere", "origin": [13, 0], "size": [4, 7]},
   "solenne": {"name": "Solenne", "origin": [18, 0], "size": [3, 7]},
   "vellmarch": {"name": "Vellmarch", "origin": [22, 0], "size": [6, 7]},
-  "halcyra": {"name": "Halcyra", "origin": [29, 0], "size": [7, 5]}
+  "halcyra": {"name": "Halcyra", "origin": [29, 0], "size": [7, 5]},
+  "quivermoor": {"name": "Quivermoor", "origin": [37, 0], "size": [7, 6]}
  },
  "lines": {
   "lake_line": {"name": "Lake Line", "kind": "boat", "stops": {"brindlewick": [8, 12, "down"], "reedhaven": [3, 8, "left"], "quillbrook": [5, 26, "down"]}},
@@ -14,7 +15,8 @@
   "mountain_rail": {"name": "Mountain Railway", "kind": "rail", "open_flag": "act2_end", "stops": {"greyreach": [10, 7, "down"], "ashmere_station": [6, 20, "up"]}},
   "ferry_corvane": {"name": "Ferry to Corvane", "kind": "ferry", "story": true, "stops": {"brindlewick": [8, 18, "right"], "corvane_quay": [6, 22, "up"]}},
   "vellmarch_night_barge": {"name": "Night Barge", "kind": "ferry", "open_flag": "story_complete", "stops": {"brindlewick": [7, 18, "down"], "cindergate_quay": [3, 17, "right"]}},
-  "halcyra_funicular": {"name": "Gilt Funicular", "kind": "rail", "open_flag": "era3_finale_done", "stops": {"greyreach": [7, 7, "down"], "brightledge": [8, 18, "up"]}}
+  "halcyra_funicular": {"name": "Gilt Funicular", "kind": "rail", "open_flag": "era3_finale_done", "stops": {"greyreach": [7, 7, "down"], "brightledge": [8, 18, "up"]}},
+  "quivermoor_rope": {"name": "Rope Basket", "kind": "ferry", "open_flag": "era4_finale_done", "stops": {"whitecairn": [6, 12, "right"], "mossgate": [2, 9, "right"]}}
  },
  "maps": {
   "cinder_rift": {"region": "veydal", "pos": [3, 0], "kind": "rift", "neighbours": ["thornridge", "kindle_vents"]},
@@ -150,6 +152,41 @@
   "gilt_rift": {"region": "halcyra", "pos": [2, 1], "kind": "rift", "neighbours": ["gildcrest"]},
   "great_orrery": {"inside": "starwell"},
   "gilt_span": {"inside": "lantern_span"},
-  "white_stair": {"inside": "long_stair"}
+  "white_stair": {"inside": "long_stair"},
+  "mossgate": {"region": "quivermoor", "pos": [0, 2], "kind": "town", "neighbours": ["breathing_bog", "wandering_wood"]},
+  "tallowmere": {"region": "quivermoor", "pos": [2, 0], "kind": "town", "neighbours": ["breathing_bog", "candle_causeway", "wick_rift"]},
+  "rootchapel": {"region": "quivermoor", "pos": [2, 4], "kind": "town", "neighbours": ["wandering_wood", "hymnmarsh", "gloamwater", "taproot_rift"]},
+  "driftwick": {"region": "quivermoor", "pos": [4, 2], "kind": "town", "neighbours": ["candle_causeway", "hymnmarsh", "heaving_fields", "raft_rift"]},
+  "lastbloom": {"region": "quivermoor", "pos": [6, 2], "kind": "town", "neighbours": ["heaving_fields", "gloamwater", "bloom_rift"]},
+  "breathing_bog": {"region": "quivermoor", "pos": [1, 1], "kind": "route", "neighbours": ["mossgate", "tallowmere"]},
+  "wandering_wood": {"region": "quivermoor", "pos": [1, 3], "kind": "route", "neighbours": ["mossgate", "rootchapel"]},
+  "candle_causeway": {"region": "quivermoor", "pos": [3, 1], "kind": "route", "neighbours": ["tallowmere", "driftwick"]},
+  "hymnmarsh": {"region": "quivermoor", "pos": [3, 3], "kind": "marsh", "neighbours": ["rootchapel", "driftwick"]},
+  "heaving_fields": {"region": "quivermoor", "pos": [5, 1], "kind": "route", "neighbours": ["driftwick", "lastbloom"]},
+  "gloamwater": {"region": "quivermoor", "pos": [5, 3], "kind": "marsh", "neighbours": ["rootchapel", "lastbloom"]},
+  "wick_rift": {"region": "quivermoor", "pos": [2, 1], "kind": "rift", "neighbours": ["tallowmere"]},
+  "taproot_rift": {"region": "quivermoor", "pos": [2, 5], "kind": "rift", "neighbours": ["rootchapel"]},
+  "raft_rift": {"region": "quivermoor", "pos": [4, 3], "kind": "rift", "neighbours": ["driftwick"]},
+  "bloom_rift": {"region": "quivermoor", "pos": [6, 1], "kind": "rift", "neighbours": ["lastbloom"]},
+  "mossgate_reeve_hall": {"inside": "mossgate", "region": "quivermoor"},
+  "mossgate_peat_shed": {"inside": "mossgate", "region": "quivermoor"},
+  "mossgate_rope_loft": {"inside": "mossgate", "region": "quivermoor"},
+  "mossgate_moss_inn": {"inside": "mossgate", "region": "quivermoor"},
+  "tallowmere_chandlery": {"inside": "tallowmere", "region": "quivermoor"},
+  "tallowmere_name_hall": {"inside": "tallowmere", "region": "quivermoor"},
+  "tallowmere_tallow_kitchen": {"inside": "tallowmere", "region": "quivermoor"},
+  "tallowmere_choir_dorm": {"inside": "tallowmere", "region": "quivermoor"},
+  "rootchapel_vestry": {"inside": "rootchapel", "region": "quivermoor"},
+  "rootchapel_bell_cellar": {"inside": "rootchapel", "region": "quivermoor"},
+  "rootchapel_almshouse": {"inside": "rootchapel", "region": "quivermoor"},
+  "rootchapel_herb_room": {"inside": "rootchapel", "region": "quivermoor"},
+  "driftwick_pole_house": {"inside": "driftwick", "region": "quivermoor"},
+  "driftwick_net_shed": {"inside": "driftwick", "region": "quivermoor"},
+  "driftwick_chart_room": {"inside": "driftwick", "region": "quivermoor"},
+  "driftwick_bunk_raft": {"inside": "driftwick", "region": "quivermoor"},
+  "lastbloom_flower_house": {"inside": "lastbloom", "region": "quivermoor"},
+  "lastbloom_seed_store": {"inside": "lastbloom", "region": "quivermoor"},
+  "lastbloom_lamp_room": {"inside": "lastbloom", "region": "quivermoor"},
+  "lastbloom_press_room": {"inside": "lastbloom", "region": "quivermoor"}
  }
 }

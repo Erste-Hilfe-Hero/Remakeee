@@ -1,0 +1,147 @@
+{
+ "name": "Wandering Wood",
+ "region": "quivermoor",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "wandering_wood",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T~~..__.,,,T",
+  "T~~...__,,,T",
+  "T.....__...T",
+  "T,,~~~~+~~.T",
+  "T,,~~~~+~~.T",
+  "T....++++..T",
+  "T~~~.+..,,,T",
+  "T~~~.+..,,,T",
+  "T....+.....T",
+  "T,,..+~~~~~T",
+  "T,,..++++..T",
+  "T~~~....+..T",
+  "T~~~.,,.+..T",
+  "T....,,.++.T",
+  "T,,,.....+.T",
+  "T,,,~~~~.+.T",
+  "T...~~~~.+.T",
+  "T..++++++..T",
+  "T..+..,,,..T",
+  "T~~+..,,,~~T",
+  "T~~+.....~~T",
+  "T..++__....T",
+  "T....__.,,.T",
+  "T.....__,,.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "mossgate",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "rootchapel",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "mossgate",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "rootchapel",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "oakwatcher",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quivermoor/wandering_wood_oakwatcher",
+   "sprite": "ranger",
+   "trainer": "Oak Watcher Tilde",
+   "intro": "quivermoor/wandering_wood_oakwatcher_intro",
+   "defeat": "quivermoor/wandering_wood_oakwatcher_defeat",
+   "money": 4185,
+   "team": [
+    {
+     "species": "Morelit",
+     "level": 92
+    },
+    {
+     "species": "Morelamp",
+     "level": 93
+    }
+   ]
+  },
+  {
+   "id": "mapseller",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quivermoor/wandering_wood_mapseller",
+   "sprite": "villager",
+   "trainer": "Map Seller Bodo",
+   "intro": "quivermoor/wandering_wood_mapseller_intro",
+   "defeat": "quivermoor/wandering_wood_mapseller_defeat",
+   "money": 4185,
+   "team": [
+    {
+     "species": "Rushkit",
+     "level": 93
+    },
+    {
+     "species": "Woadwhorl",
+     "level": 93
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_wandering_wood_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_wandering_wood_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_wandering_wood_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_wandering_wood_4"
+  }
+ ]
+}

@@ -1,1 +1,42 @@
-Eerste versie: Veydal met de proloog bij de vuurtoren, Mirela's kaartenboek, twee Kloven en hun Hoeders, vrienden en het wereldoel online. Nieuw: winkel met Kloofglas, alle prijzen in euro.
+Chimora 1.2.0
+
+AKTE IV: SOLENNE
+- Een door de zon gebleekte nieuwe akte: Ochrewell, de Glasswindvlakte, de karavanserai-ladder en de Spiegeloven.
+- Drie nieuwe Kloven en hun Hoeders. Nu staan alle twaalf zegels tussen jou en de finale.
+
+NA DE FINALE
+- Vellmarch: een hele regio voor daarna in de stijl van Tijdperk II. 5 steden, 6 wegen, 4 Kloven en een verhaal met een verraad in elk hoofdstuk.
+- Revanches tegen alle 12 Hoeders. Ze hebben tijd gehad om over hun nederlaag na te denken.
+- De Echotoren met 100 verdiepingen, Meesterkloven, de Willekeurige Kloof, een reus van de week, een eindexamen en Nieuw spel+.
+- Spirlings groeien door na ring 60. Ga maar door.
+
+VERHAAL EN VERTROUWEN
+- Twee clans, elf vreemden en een Grootboek in het pauzemenu dat onthoudt wie je vertrouwde. Een gunst kan lonen. Of je laten beroven.
+- Legendequesten voor zes nieuwe legendarische Spirlings, elk met een gids die misschien niet is wat hij lijkt.
+- Zijverhalen in elke akte en een kamp van vreemden aan de rand van de Wijde Kloof.
+
+SPIRLINGS
+- Meer dan 200 nieuwe Spirlings: nu 70 eigen soorten in elke akte.
+- Glansvormen in het wild, met kettingbonus en teller in de Spirlog.
+- Latere stadia lijken nu op hun eerdere vorm, maar dan volwassen.
+- Je voorste Spirling loopt achter je aan. Hij onthoudt hoe je hem behandelt.
+- De Inkteed, verborgen gaven van een zwarthandelaar en nakomelingen die het familiebedrijf erven.
+
+NIEUWE PLEKKEN
+- Het Hol: een holte die je kunt opeisen. De kraker is het daar niet mee eens.
+- De Wake: een dagelijkse rouwshow in de Graveurshal.
+- Hollowgate-reservaat: een wildpark gerund door smokkelaars.
+- Cartografenstenen, bezienswaardigheden en kaartvoortgang per regio.
+
+ONLINE (internetverbinding nodig)
+- Live duels met vrienden, competities met seizoenen, raids met een wekelijkse bewaker.
+- Verbonden met donaties en weekdoelen, ruilen, verlanglijstjes, cadeaus en tijdelijke evenementen.
+
+STIJL, GELUID EN GEMAK
+- Elke akte heeft een eigen stijl, 's nachts gaan de ramen aan en de vuurtoren lijkt eindelijk op een vuurtoren.
+- Tijdperkmuziek voor regio's, kerkers, gevechten en Hoeders.
+- Gevechtsscherm: HP-balken per tijdperk, gekleurde typebadges, hints over effectiviteit en een kleurenblindmodus.
+- Rustiger eerste 15 minuten. Nieuws staat nu onder "Wat is er nieuw" op het titelscherm.
+- Nieuwe optionele aanbiedingen in de winkel.
+- Veel meer teksten vertaald in alle 14 talen.
+- Een hoop fixes: opslaan, instellingen, aankopen herstellen. De klok van je telefoon terugzetten betaalt de dagbeloning niet meer dubbel uit. Leuk geprobeerd.

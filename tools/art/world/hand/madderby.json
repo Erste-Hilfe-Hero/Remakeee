@@ -19,32 +19,6 @@
    }
   ]
  },
- "replace": {
-  "npcs": [
-   {
-    "id": "oskar",
-    "x": 9,
-    "y": 14,
-    "facing": "left",
-    "dialogue": "madderby/oskar",
-    "sprite": "elder",
-    "schedule": [
-     {
-      "phase": "dusk",
-      "x": 6,
-      "y": 5,
-      "facing": "down"
-     },
-     {
-      "phase": [
-       "night"
-      ],
-      "away": true
-     }
-    ]
-   }
-  ]
- },
  "set": {
   "spots": {
    "kestra": [

@@ -39,7 +39,8 @@ TRAITS = {
 }
 KEEPSAKE = {"EMBER": "spark_coil", "VOLT": "spark_coil", "STONE": "iron_burr", "GALE": "swift_feather",
             "BLOOM": "bark_wrap", "TIDE": "keen_lens", "LUMEN": "keen_lens", "UMBRA": "keen_lens",
-            "INK": "keen_lens", "ECHO": "swift_feather"}
+            "INK": "keen_lens", "ECHO": "swift_feather", "RUST": "iron_burr", "MASK": "keen_lens",
+            "ACID": "iron_burr", "FROST": "swift_feather", "GILT": "keen_lens", "ZENITH": "swift_feather"}
 HEIGHT = {"quad": 0.5, "biped": 0.6, "bird": 0.4, "serpent": 0.9, "fish": 0.5, "bug": 0.3, "shell": 0.4,
           "spirit": 0.4, "plant": 0.5}
 # Unfold rings per act: (3-stage first, 3-stage second, 2-stage), near the act's wild rings.
@@ -66,6 +67,11 @@ def move_pools(species, moves):
         if m["name"] not in used or "glass" in m["name"].lower():
             continue
         pools.setdefault(m["element"], []).append(m)
+    # A new era's element has no kind using its arts yet: all of its arts form the pool.
+    fresh = {m["element"] for m in moves} - {m["element"] for m in moves if m["name"] in used}
+    for m in moves:
+        if m["element"] in fresh:
+            pools.setdefault(m["element"], []).append(m)
     return pools
 
 
