@@ -5,6 +5,7 @@ extends Node
 ##   Sound.music("town")         loops audio/music/<name>.ogg (crossfades; same track keeps playing)
 ##   Sound.jingle("victory")     plays a music file once, then resumes the previous track
 ##   Sound.cry(species_data)     the Spirling's own call (synthesized by Cry.gd)
+##   Sound.battle_state(p, f)    battle HP shares: low-health alarm, Era V music intensity
 ##   Sound.element_hit(element)  hit sound for a move of that element
 ##   Sound.enter_map(map_id)     the map's song and ambience loop (data/music.json)
 ##   Sound.footstep(kind, wet)   quiet step sound for the ground under the Wayfarer
@@ -12,6 +13,9 @@ extends Node
 ## Buses (item 2547): menu sounds on "UI", cries and text voice on "Voice", ambience loops on
 ## "Ambience"; all three feed "SFX".
 ## Missing files are ignored, so code can name sounds before they exist.
+## Era sound sets (docs/ERA_FEEL_AUDIO.md): data/era_audio.json maps each sound to the file of
+## the active era, so menus, doors, jingles, cries and the low-health alarm follow the hardware
+## step of the era like the art does.
 
 const SFX_DIR: String = "res://audio/sfx/%s.wav"
 const MUSIC_DIR: String = "res://audio/music/%s.ogg"
@@ -57,10 +61,14 @@ const SFX_VOICES: int = 10
 const PRIO_UI: int = 1
 const PRIO_WORLD: int = 2
 const PRIO_BATTLE: int = 3
-const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run"]
+const BATTLE_SOUNDS: Array[String] = ["miss", "dodge", "faint", "status", "heal", "level_up", "energy_tick", "run", "low_hp", "bond"]
 const BATTLE_PREFIXES: Array[String] = ["hit", "charge_", "travel_"]
 ## Same effect within this many seconds is skipped (menus scroll fast).
 const SFX_MIN_GAP: float = 0.03
+
+const ERA_AUDIO: String = "res://data/era_audio.json"
+## HP share at or below which the low-health alarm sounds (the same line as the pinch music).
+const LOW_HP_RATIO: float = 0.25
 
 var current_track: String = ""
 var _music: AudioStreamPlayer
@@ -78,8 +86,15 @@ var _ambience: AudioStreamPlayer
 var _ambience_out: AudioStreamPlayer
 var _step_take: int = 0
 var _blip_count: int = 0
-## The effect asked for last, even when silent (tests).
+## The effect asked for last, even when silent (tests), and the era file it resolved to.
 var last_sfx: String = ""
+var last_sfx_file: String = ""
+## True while the low-health alarm runs.
+var alarm_on: bool = false
+var _alarm: Timer
+var _alarm_left: int = 0
+var _alarm_db: float = 0.0
+var _sfx_names: Dictionary[String, String] = {}
 ## Captions shown so far (tests).
 var captions: Array[String] = []
 ## Headless runs (CI, tests) have no audio output; the dummy driver never releases playbacks,
@@ -97,6 +112,9 @@ func _ready() -> void:
 	for i: int in SFX_VOICES:
 		_voices.append(_player(GameState.BUS_SFX))
 		_voice_prio.append(0)
+	_alarm = Timer.new()
+	_alarm.timeout.connect(_alarm_beep)
+	add_child(_alarm)
 	if enabled:
 		preload_sfx()
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(MAP_MUSIC)) if FileAccess.file_exists(MAP_MUSIC) else null
@@ -148,10 +166,11 @@ func varied_pitch(sound_name: String, pitch: float) -> float:
 
 func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void:
 	last_sfx = sound_name
+	last_sfx_file = sfx_file(sound_name)
 	caption(sound_name)
 	if not enabled:
 		return
-	var stream: AudioStream = _load(SFX_DIR % sound_name)
+	var stream: AudioStream = _load(SFX_DIR % last_sfx_file)
 	if stream == null:
 		return
 	var now: float = Time.get_ticks_msec() / 1000.0
@@ -221,10 +240,101 @@ func _play_voice(stream: AudioStream, bus: StringName = GameState.BUS_SFX, volum
 	p.pitch_scale = pitch
 	p.play()
 
-## Plays the cry of [param sd] (item 70).
-func cry(sd: SpirlingData) -> void:
+## Plays the cry of [param sd] (item 70) as it sounds in [param era] (0 = the active era).
+## A bonded Spirling passes its origin era, so it keeps the call of the era it was met in.
+func cry(sd: SpirlingData, era: int = 0) -> void:
+	var e: int = era if era > 0 else EraManager.active_era()
 	if enabled and sd != null:
-		_play_voice(Cry.stream_for(sd), GameState.BUS_VOICE, 0.0, 1.0, PRIO_BATTLE)
+		_play_voice(Cry.stream_for(sd, e, cry_spec(e)), GameState.BUS_VOICE, 0.0, 1.0, PRIO_BATTLE)
+
+## Era a Spirling's cry is played in: its origin era when it is the player's own, else the
+## era on screen (wild Spirlings and rivals' teams sound like the place).
+static func cry_era_for(origin_era: int, owned: bool, active: int) -> int:
+	return clampi(origin_era, 1, EraManager.NEWEST) if owned else active
+
+## data/era_audio.json, read once ({} when the file is missing, so every lookup falls back).
+static var _era_audio: Dictionary = {}
+static var _era_audio_read: bool = false
+
+static func era_audio() -> Dictionary:
+	if not _era_audio_read:
+		_era_audio_read = true
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(ERA_AUDIO)) if FileAccess.file_exists(ERA_AUDIO) else null
+		_era_audio = raw if raw is Dictionary else {}
+	return _era_audio
+
+## The era_audio.json entry of [param era] ({} when missing).
+static func era_spec(era: int) -> Dictionary:
+	var eras: Variant = era_audio().get("eras", {})
+	var spec: Variant = (eras as Dictionary).get(str(era), {}) if eras is Dictionary else {}
+	return spec if spec is Dictionary else {}
+
+## How Cry.gd processes a cry in [param era] ({} = the plain Era I chip cry).
+static func cry_spec(era: int) -> Dictionary:
+	var c: Variant = era_spec(era).get("cry", {})
+	return c if c is Dictionary else {}
+
+## File for sound [param key] in [param era]: the newest era up to [param era] that names a file
+## for it which [param exists], else [param key] itself.
+static func era_sfx_name(key: String, era: int, exists: Callable) -> String:
+	for e: int in range(era, 0, -1):
+		var table: Variant = era_spec(e).get("sfx", {})
+		var f: String = str((table as Dictionary).get(key, "")) if table is Dictionary else ""
+		if not f.is_empty() and exists.call(f):
+			return f
+	return key
+
+## File of sound [param key] in the active era (cached per era).
+func sfx_file(key: String) -> String:
+	var era: int = EraManager.active_era()
+	var ck: String = "%d:%s" % [era, key]
+	if not _sfx_names.has(ck):
+		_sfx_names[ck] = era_sfx_name(key, era, func(f: String) -> bool: return ResourceLoader.exists(SFX_DIR % f))
+	return _sfx_names[ck]
+
+## Battle feed from BattleScene: [param player] is the lowest HP share among the player's active
+## Spirlings, [param foe] the lowest on the other side. Runs the low-health alarm and, in eras
+## with "battle_layers", the music intensity.
+func battle_state(player: float, foe: float) -> void:
+	var layered: bool = bool(era_spec(EraManager.active_era()).get("battle_layers", false))
+	MusicDirector.set_intensity(battle_intensity(player, foe) if layered else MusicDirector.FULL_INTENSITY)
+	low_hp_alarm(player > 0.0 and player <= LOW_HP_RATIO)
+
+## Music intensity for the HP shares: 0 before the first blow, 2 once either side is at half or
+## below, else 1.
+static func battle_intensity(player: float, foe: float) -> int:
+	if player >= 0.999 and foe >= 0.999:
+		return 0
+	if minf(player, foe) <= 0.5:
+		return 2
+	return 1
+
+## Starts or stops the low-health alarm. Its beat comes from the era's "low_hp" entry: Era I to
+## IV beep on a loop (at most "max" times), Era V sounds one heartbeat and leaves the rest to
+## the pinch music.
+func low_hp_alarm(on: bool) -> void:
+	if on == alarm_on:
+		return
+	alarm_on = on
+	_alarm.stop()
+	if not on:
+		_alarm_left = 0
+		return
+	var spec: Variant = era_spec(EraManager.active_era()).get("low_hp", {})
+	var lh: Dictionary = spec if spec is Dictionary else {}
+	_alarm_left = int(lh.get("max", 1))
+	_alarm_db = float(lh.get("db", -8.0))
+	_alarm_beep()
+	var every: float = float(lh.get("repeat", 0.0))
+	if every > 0.0 and _alarm_left > 0:
+		_alarm.start(every)
+
+func _alarm_beep() -> void:
+	if _alarm_left <= 0:
+		_alarm.stop()
+		return
+	_alarm_left -= 1
+	sfx("low_hp", _alarm_db)
 
 ## Shows the caption for [param sound_name] when sound captions are on (item 2653).
 func caption(sound_name: String) -> void:
@@ -270,10 +380,40 @@ func enter_map(map_id: String) -> void:
 	music(track_for_map(map_id), true)
 	ambience(amb)
 
-## Ambience loop name of [param map_id], "" for none (indoor maps, rifts).
+## Ambience loop name of [param map_id], "" for none (indoor maps, rifts): its own loop from
+## data/music.json, else the biome loop of the active era (Era IV and V, data/era_audio.json).
 func ambience_for_map(map_id: String) -> String:
 	var entry: Variant = map_entry(map_id)
-	return str((entry as Dictionary).get("ambience", "")) if entry is Dictionary else ""
+	var own: String = str((entry as Dictionary).get("ambience", "")) if entry is Dictionary else ""
+	if not own.is_empty():
+		return own
+	var place: Dictionary = map_place(map_id)
+	return biome_ambience(str(place.biome), bool(place.outdoor), EraManager.active_era(),
+		func(a: String) -> bool: return ResourceLoader.exists(AMBIENCE_DIR % a))
+
+## Biome loop for an outdoor map of [param biome] in [param era]: the newest era up to [param era]
+## with a loop for it that [param exists], "" indoors or without one.
+static func biome_ambience(biome: String, outdoor: bool, era: int, exists: Callable) -> String:
+	if not outdoor or biome.is_empty():
+		return ""
+	for e: int in range(era, 0, -1):
+		var table: Variant = era_spec(e).get("ambience", {})
+		var a: String = str((table as Dictionary).get(biome, "")) if table is Dictionary else ""
+		if not a.is_empty() and exists.call(a):
+			return a
+	return ""
+
+static var _places: Dictionary[String, Dictionary] = {}
+
+## {"biome", "outdoor"} of [param map_id] from its file in data/maps (floors share the file's).
+static func map_place(map_id: String) -> Dictionary:
+	var file: String = map_id.get_slice("@", 0)
+	if not _places.has(file):
+		var path: String = "res://data/maps/%s.json" % file
+		var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(path)) if FileAccess.file_exists(path) else null
+		var d: Dictionary = raw if raw is Dictionary else {}
+		_places[file] = {"biome": str(d.get("biome", "")), "outdoor": bool(d.get("outdoor", false))}
+	return _places[file]
 
 var ambience_ducked: bool = false
 
@@ -526,6 +666,8 @@ func jingle(track: String, then: String = "") -> void:
 
 func _switch(track: String, loop: bool) -> void:
 	current_track = track
+	if not MusicDirector.is_battle_track(track):
+		low_hp_alarm(false)
 	if not enabled:
 		return
 	if _music.playing:
@@ -538,7 +680,7 @@ func _switch(track: String, loop: bool) -> void:
 		tw.tween_callback(_music_out.stop)
 	# Place songs with stems play through the MusicDirector's layers (item 2479).
 	var stream: AudioStream = MusicDirector.stream_for(track) if loop else null
-	MusicDirector.set_active(stream)
+	MusicDirector.set_active(stream, track)
 	if stream == null and not track.is_empty():
 		stream = _load(MUSIC_DIR % track)
 	if stream == null:

@@ -170,9 +170,9 @@ static func _check_placements(errors: PackedStringArray) -> void:
 			for sp: String in StoryPlacements.spots_needed(str(map_id)):
 				if not (spots is Dictionary and (spots as Dictionary).has(sp)):
 					errors.append("story_npcs/%s: the map has no spot '%s' (add it under \"spots\")" % [map_id, sp])
-		var on: Variant = extra.get("on_enter")
-		if on is Dictionary and not ScenePlayer.exists(str(on.get("scene", ""))):
-			errors.append("story_npcs/%s: on_enter scene '%s' does not exist" % [map_id, on.get("scene", "")])
+		for on: Dictionary in StoryPlacements.enter_entries(str(map_id)):
+			if not ScenePlayer.exists(str(on.get("scene", ""))):
+				errors.append("story_npcs/%s: on_enter scene '%s' does not exist" % [map_id, on.get("scene", "")])
 		for kind: String in ["npcs", "signs"]:
 			for e: Variant in extra.get(kind, []):
 				var d: Dictionary = e

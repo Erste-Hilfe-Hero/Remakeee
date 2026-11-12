@@ -98,7 +98,8 @@ func test_two_trust_choices_per_act_on_the_critical_path() -> void:
 		"betrayal/a1_report": "lighthouse/aldo_dock", "betrayal/a1_hour": "a1_square",
 		"betrayal/a2_porter": "corvane_arrival", "betrayal/a2_chalk": "wide_rift_reveal",
 		"betrayal/a3_seal": "ashmere_arrival", "betrayal/a3_copper": "a3_cinderfold",
-		"betrayal/a4_letter": "a4_ochrewell", "betrayal/a4_tunnel": "a4_oasis"}
+		"betrayal/a4_letter": "a4_ochrewell", "betrayal/a4_tunnel": "a4_oasis",
+		"solenne_main/a4_water": "a4_tower_gate", "solenne_main/a4_vote": "a4_wells", "solenne_main/a4_oath": "a4_drought"}
 	var per_act: Dictionary = {}
 	for id: Variant in Trust.data().trust_choices:
 		var tc: Dictionary = Trust.data().trust_choices[id]

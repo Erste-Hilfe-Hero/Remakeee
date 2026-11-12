@@ -1,0 +1,267 @@
+{
+ "tower_storm": {
+  "lines": [
+   "The Tower Rift stands in its own sandstorm. The wind takes your hat, considers it, and gives it back. It has standards.",
+   "A thin man with a hand cart is waiting in the lee of the wall. Leith, from the camp at the map's edge. Sable's runner, on his day off. He says."
+  ]
+ },
+ "a4_water": {
+  "lines": [
+   "Leith: Warden Aurelio's wind slits water skins like a tax man slits purses. Nobody gets up there with a full one.",
+   "Leith: Leave yours on my cart. In the shade. Free of charge. We strangers look after each other, don't we?",
+   "Leith: I've sworn it. I swear a lot of things. This one I mean."
+  ],
+  "choices": [
+   {
+    "text": "Leave the water with Leith",
+    "action": "trust leith 10",
+    "next": "a4_water_yes"
+   },
+   {
+    "text": "Carry it up yourself",
+    "flag": "a4_kept_water",
+    "next": "a4_water_no"
+   }
+  ]
+ },
+ "a4_water_yes": [
+  "Leith stacks your skins on the cart with great tenderness. He counts them twice. Out loud."
+ ],
+ "a4_water_no": [
+  "Leith: Suit yourself. Heavy things, skins. Heavier than trust. Trust weighs nothing, that's why people drop it."
+ ],
+ "leith_struck": [
+  "Leith's cart is at the bazaar, empty. Your water skins hang at Sable's stall, with price tags. Bazaar price. Drought price.",
+  "Sable: Finders, sellers. Leith found them on his own cart, the dear. 250 coins and they're yours again. Sentimental value included.",
+  "You pay. Leith waves from behind the stall. He looks sorry. He looks sorry very well."
+ ],
+ "leith_caught": [
+  "Leith is at the bazaar with an empty cart and a full sales pitch.",
+  "Leith: Fresh skins! Barely used! Oh. You've still got yours. On your back. Like a suspicious person.",
+  "Sable had already paid him for them. She pays you a Power Brew not to mention that at the council. Everyone here pays for silence. It's the local crop."
+ ],
+ "ledger_leith_water": [
+  "Water on a stranger's cart",
+  "At the foot of the Tower Rift, Leith offered to mind your water skins for free.",
+  "In a drought, free is the most expensive word in Solenne."
+ ],
+ "wells_open": {
+  "lines": [
+   "Ochrewell's square is full. The well council sits once a drought, and the drought has been sitting for six years.",
+   "Three chairs at the table. Ottilie Marrovel in one, fanning herself. Fenrick in the next, fanning himself louder. The third is brass, and empty, and billed by the hour.",
+   "Mirza, the card player from the edge camp, leans on the well. 'Three players, four hands,' he says. 'Count the hands.'"
+  ]
+ },
+ "wells_aurelio": {
+  "lines": [
+   "Aurelio: You. Rift-mender. I've just lost a duel and a storm in one afternoon. Humour me.",
+   "Aurelio: The Tower holds one vote on the wells. This clay token. I've held it forty years and never once liked what it bought.",
+   "Aurelio: My knees won't cross that square. Carry it to the table. Whoever holds it when the bell rings, votes. That is the whole law. We are a simple people."
+  ]
+ },
+ "a4_vote": {
+  "lines": [
+   "A clerk in Marrovel plum slides out of the crowd, hands already open.",
+   "Clerk: Madam Ottilie saw you struggling. Such a crush! Let me carry the Warden's token to the table for you. It's what I'm for.",
+   "Clerk: You'd only have to sign for it. Here. And here. And initial the drought."
+  ],
+  "choices": [
+   {
+    "text": "Hand the token to the clerk",
+    "action": "trust ottilie 10",
+    "next": "a4_vote_yes"
+   },
+   {
+    "text": "Keep it and walk to the table",
+    "flag": "a4_vote_kept",
+    "next": "a4_vote_no"
+   }
+  ]
+ },
+ "a4_vote_yes": [
+  "The clerk bows, pockets the token, and is across the square before the bow is finished. Ottilie's fan stops for exactly one beat."
+ ],
+ "a4_vote_no": [
+  "The clerk's smile stays where it is. The rest of his face leaves. You close your fist around the token and start walking."
+ ],
+ "wells_bailiff": {
+  "lines": [
+   "Halfway across, a broad man in Fenrick's colours plants himself in your path.",
+   "Brakka: Well Bailiff Brakka. Master Fenrick objects to foreigners near the table. He objects through me. I'm his objection.",
+   "Brakka: In Solenne a vote is fought first and counted after. Saves on arithmetic."
+  ]
+ },
+ "bailiff_defeat": [
+  "Brakka: Objection withdrawn. Master Fenrick will be furious. He'll shout at me till supper. Then he'll want supper."
+ ],
+ "bailiff_lose": [
+  "Brakka: Objection sustained. Mind the well on your way down."
+ ],
+ "wells_bell": {
+  "lines": [
+   "The council bell rings. Three hands go up at a table with three chairs. Then a fourth, in a brass glove, from behind the empty one.",
+   "Nobody announces a result. In Ochrewell results are not announced. They are invoiced.",
+   "Lejla is in the scribes' row, selling the official minutes. They are dated tomorrow. 'Advance copies,' she says. 'Very accurate. I wrote the ending myself.'",
+   "Aurelio: Done? Good. Go and see to the oasis. Whatever that token bought, you'll find the receipt there."
+  ]
+ },
+ "drought_open": {
+  "lines": [
+   "The Oasis Rift is mended. The water is back. It is back behind a brass grille with a coin slot.",
+   "A notice on the well: 'By vote of the council, the wells of Ochrewell are leased for ninety-nine years. Thirst is now a subscription.'"
+  ]
+ },
+ "vote_struck": [
+  "Below the notice, the deciding vote: the Tower's token, 'cast by proxy and witnessed by the Rift-mender'. Your signature. Both of them. And your initials on the drought.",
+  "The wells went to the Marrovels by one vote. Yours. The water sellers' guild fines the witness 300 coins. The queue behind you is long, thirsty, and can read.",
+  "Ottilie, from her litter: 'So public-spirited, dear. The clan won't forget it. The town won't either, sadly.'"
+ ],
+ "vote_caught": [
+  "Below the notice, the count: Marrovel one, Marrovel one, Brass Veil one, and the Tower's token 'withheld by its bearer'. You never put it on the table.",
+  "Without the fourth vote the lease is only good until the Sun Rift is mended. Ottilie's clerk finds you by the trough and presses 250 coins into your hand 'to reconsider'.",
+  "You reconsider. You keep the coins and the token. He writes that down too. They write everything down. It is how they remember who to be nice to."
+ ],
+ "ledger_ottilie_vote": [
+  "The Tower's vote",
+  "Warden Aurelio gave you the Tower's vote on the wells of Ochrewell. Ottilie's clerk offered to carry it.",
+  "Whoever holds the token when the bell rings, votes. Whoever signed for it, pays."
+ ],
+ "drought_kaia": {
+  "lines": [
+   "Kaia sits on the rim of the dry trough, badge gone, boots off, counting something on her fingers.",
+   "Kaia: Don't look at me like that. I sold one oasis. They've just sold all the wells and called it a council. I was an amateur.",
+   "Kaia: The fourth hand at that table was Lusk's. The Veil holds the pumps, the Marrovels hold the lease, and Fenrick holds a grudge. That's the whole government.",
+   "Kaia: Lusk is in town to collect. Beat him and ask who witnessed my contract. I'd tell you myself, but I'm selling that answer to him first."
+  ]
+ },
+ "drought_nail": {
+  "lines": [
+   "Nail from the edge camp has set up his tea stall beside the locked well. The queue for it is longer than the queue for the well.",
+   "Nail: First cup's free. Second cup's also free. I am a terrible businessman. It's why nobody's bothered to rob me.",
+   "Farida is pouring. Amir is carrying water from somewhere nobody asks about. Two men in brass badges are walking over to ask about it."
+  ]
+ },
+ "drought_guards": {
+  "lines": [
+   "Pump Guard: Unlicensed tea. Unlicensed water. Unlicensed kindness, that's the one that really costs. Stall's closed.",
+   "Nail looks at you over the kettle. He doesn't ask. He just puts a third cup out."
+  ]
+ },
+ "guards_defeat": [
+  "Pump Guard: We'll report this. To the Factor. He'll bill someone. He always finds someone."
+ ],
+ "guards_lose": [
+  "Pump Guard: Stall's closed. So are you. Move along."
+ ],
+ "a4_oath": {
+  "lines": [
+   "A grey acolyte from the Sun Palace is waiting at the edge of the square with a heavy book and a light voice.",
+   "Acolyte: Warden Emrys asks one small thing before you climb to him. The Factor will tell you something about a signature.",
+   "Acolyte: Swear on the guild's book that it stays between Wardens. The Warden will explain everything himself. He is a great explainer."
+  ],
+  "choices": [
+   {
+    "text": "Swear on the book",
+    "action": "trust emrys 10",
+    "next": "a4_oath_yes"
+   },
+   {
+    "text": "Swear nothing",
+    "flag": "a4_no_oath",
+    "next": "a4_oath_no"
+   }
+  ]
+ },
+ "a4_oath_yes": [
+  "You put your hand on the book. The acolyte writes your name, the hour, and the weather. 'For completeness,' he says. The book is very complete."
+ ],
+ "a4_oath_no": [
+  "Acolyte: As you wish. I'll note that you declined. No, I must note it. The book notes everything. It's a dreadful gossip."
+ ],
+ "north_open": {
+  "lines": [
+   "The border stone on the sand road, at dawn. North of it the sky over the Wide Rift has a tear in it you can see from here. It was not that long yesterday.",
+   "Three Wardens are waiting at the stone. None of them is standing next to another. A woman in guild grey stands in the road with a book you have met before."
+  ]
+ },
+ "oath_struck": [
+  "Proctor Isolde: Warden Emrys has confessed to witnessing the sale of an oasis. Fully. He confessed your oath as well. He is thorough.",
+  "Proctor Isolde: Sworn silence about a false witness makes you an accessory. The book says so. In your handwriting. 350 coins.",
+  "Emrys: I did say I would explain everything. I never said to whom."
+ ],
+ "oath_caught": [
+  "Proctor Isolde: Warden Emrys has confessed to witnessing the sale of an oasis. He tried to confess an oath of yours as well. There isn't one. The book is firm on that.",
+  "Proctor Isolde: The guild pays a witness fee to whoever refuses to be one. 300 coins. Don't spend it in Ochrewell. They'll only sell it back to you.",
+  "Emrys: Hm. I had rather counted on company."
+ ],
+ "ledger_emrys_oath": [
+  "Between Wardens",
+  "Warden Emrys asked for your sworn silence about his signature on Kaia's contract.",
+  "Then he confessed, and handed the guild your oath along with his own."
+ ],
+ "north_proctor": {
+  "lines": [
+   "Proctor Isolde: One more entry. Nobody walks into the Undrawn on the guild's seals without the guild seeing what they're made of.",
+   "Proctor Isolde: Twelve Rifts mended, four clans annoyed. Either you are very good or very lucky. The book wants to know which."
+  ]
+ },
+ "proctor_defeat": [
+  "Proctor Isolde: 'Very good.' I'll write that. In ink. I almost never use the ink."
+ ],
+ "proctor_lose": [
+  "Proctor Isolde: 'Lucky.' In pencil, for now. Come back when you'd like it corrected."
+ ],
+ "north_wardens": {
+  "lines": [
+   "Aurelio: Forty years I kept the wind in a tower. This morning it's blowing north. All of it. Into that tear. Wind doesn't do that unless something is breathing in.",
+   "Kaia: I sold an oasis. Whoever is at the end of that map is selling everything, all at once, to nobody. That's not even business. Go and stop them. Professional pride.",
+   "Emrys: The light bends toward it now. At noon my sundial pointed north and stayed there. I have signed a great many things. I would like not to have witnessed this one.",
+   "The three of them look at each other for the first time. Then, carefully, at you. It is the nearest thing to agreement Solenne has managed in six years."
+  ]
+ },
+ "north_clans": {
+  "lines": [
+   "Behind you, in Ochrewell, the clans are still counting what the reckoning cost them. You can hear the abacus from here."
+  ],
+  "after_flag": [
+   {
+    "flag": "c4_end_burn",
+    "lines": [
+     "Behind you, in Ochrewell, smoke is still rising from the Sun Palace. Two clans are standing in it, working out who owes whom now that nothing is written down."
+    ]
+   },
+   {
+    "flag": "c4_end_guild",
+    "lines": [
+     "Proctor Isolde pats her satchel. The pact deeds are in it. 'Forty years of crimes,' she says. 'Alphabetical. They were very organised criminals.'"
+    ]
+   },
+   {
+    "flag": "c4_end_keep",
+    "lines": [
+     "The pact deeds are heavy in your satchel. Every Warden at the stone has noticed where your hand keeps going. Nobody says a word. That is how you know they've noticed."
+    ]
+   }
+  ]
+ },
+ "north_caravan_1": {
+  "lines": [
+   "A line of hand carts comes up the sand road from the south. The strangers from the map's edge, all eleven, with the camp on their backs.",
+   "Elma: Our map ended first. We know what the last week looks like. This is the last week.",
+   "Aldra: I drew the road for you. A true copy. I've stopped selling those. Mostly.",
+   "Kenan: I'd run it for you, but the Rift's not paying. First time I've turned down a job for free.",
+   "Lipka: Tip, no charge: whoever waits at the end knows your name. I didn't sell it. This once, I really didn't."
+  ]
+ },
+ "north_caravan_2": {
+  "lines": [
+   "Heider keeps to the back of the line and says nothing. Amir walks beside him anyway. It is the longest conversation they have had in years.",
+   "Farida: I've lent to everyone on this road. If the map ends, nobody pays me back. I'm taking it personally.",
+   "Lejla: I forged us all papers for the other side. Then I remembered there's no other side. Lovely stamps, though.",
+   "Mirza: Three players, four hands. I never did tell you whose the fourth was. It was never at that table. It's up there.",
+   "Leith does not meet your eye. He hands you a full water skin without being asked, and without a price.",
+   "Nail: Tea's on at the edge camp. Come by before you go in. You shouldn't end a map on an empty stomach.",
+   "Elma: The far end of the Wide Rift. Don't trust anyone you meet past it. Not even the ones you love. Them least of all."
+  ]
+ }
+}
