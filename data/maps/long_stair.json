@@ -95,6 +95,86 @@
      "level": 80
     }
    ]
+  },
+  {
+   "id": "q4_antidote_benno",
+   "x": 9,
+   "y": 10,
+   "facing": "left",
+   "dialogue": "halcyra_side/antidote",
+   "sprite": "villager",
+   "hide_flag": "q4_antidote_reveal"
+  },
+  {
+   "id": "q4_antidote_benno_fork",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "halcyra_side/antidote_benno_fork_loot",
+   "sprite": "villager",
+   "trainer": "Food Taster Benno",
+   "show_flag": "q4_antidote_reveal",
+   "intro": "halcyra_side/antidote_benno_fork_intro",
+   "defeat": "halcyra_side/antidote_benno_fork_defeat",
+   "money": 4100,
+   "team": [
+    {
+     "species": "Highhare",
+     "level": 80
+    },
+    {
+     "species": "Duneshrew",
+     "level": 81
+    },
+    {
+     "species": "Noonwhist",
+     "level": 82
+    }
+   ],
+   "win_flags": [
+    "q4_antidote_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q4_brake_file_ulf",
+   "x": 9,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "halcyra_side/brake_file",
+   "sprite": "villager",
+   "hide_flag": "q4_brake_file_reveal"
+  },
+  {
+   "id": "q4_brake_file_ulf_file",
+   "x": 9,
+   "y": 20,
+   "facing": "left",
+   "dialogue": "halcyra_side/brake_file_ulf_file",
+   "sprite": "villager",
+   "show_flag": "q4_brake_file_reveal"
+  },
+  {
+   "id": "hs_agnes",
+   "x": 1,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "halcyra_side/agnes",
+   "sprite": "villager",
+   "trainer": "Stair Sweeper Agnes",
+   "intro": "halcyra_side/agnes_intro",
+   "defeat": "halcyra_side/agnes_defeat",
+   "money": 3240,
+   "team": [
+    {
+     "species": "Duneshrew",
+     "level": 80
+    },
+    {
+     "species": "Noonwhist",
+     "level": 81
+    }
+   ]
   }
  ],
  "signs": [
