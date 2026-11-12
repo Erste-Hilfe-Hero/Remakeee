@@ -2266,7 +2266,7 @@
     "level": 88
    },
    {
-    "species": "Stiltregent",
+    "species": "Stiltwade",
     "level": 89
    }
   ],
@@ -2496,19 +2496,19 @@
   "trainer": "Relic Seller Kaspar",
   "team": [
    {
-    "species": "Velverain",
+    "species": "Ergrava",
     "level": 86
    },
    {
-    "species": "Claspreign",
+    "species": "Velverain",
     "level": 87
    },
    {
-    "species": "Highhare",
+    "species": "Stiltwade",
     "level": 88
    },
    {
-    "species": "Duneshrew",
+    "species": "Stiltregent",
     "level": 89
    }
   ],

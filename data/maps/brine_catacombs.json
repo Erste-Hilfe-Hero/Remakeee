@@ -87,15 +87,15 @@
    "money": 3480,
    "team": [
     {
-     "species": "Wadibastion",
+     "species": "Stiltregent",
      "level": 85
     },
     {
-     "species": "Ergrava",
+     "species": "Wadibastion",
      "level": 86
     },
     {
-     "species": "Caravault",
+     "species": "Ergrava",
      "level": 87
     }
    ]
@@ -206,15 +206,15 @@
      "money": 3480,
      "team": [
       {
-       "species": "Ergrava",
+       "species": "Wadibastion",
        "level": 85
       },
       {
-       "species": "Velverain",
+       "species": "Ergrava",
        "level": 86
       },
       {
-       "species": "Stiltregent",
+       "species": "Caravault",
        "level": 87
       }
      ]
