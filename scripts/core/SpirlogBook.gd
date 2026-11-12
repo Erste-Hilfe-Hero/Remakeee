@@ -21,9 +21,18 @@ const GROUND_WORDS: Dictionary[String, String] = {
 	"fern": "Fern", "scree": "Scree", "reed": "Reed", "cave": "Cave", "rift": "Rift", "": "Path",
 }
 
-## Veydal is always open; the others once GameState has the flag "region_open_<id>".
+## Story flag that opens a region's chapter once the act reaches it: the ferry to Corvane, the
+## mountain railway to Ashmere, the sand road to Solenne (its wild tables use its own kinds).
+const REGION_STORY_FLAGS: Dictionary[String, String] = {
+	"corvane": "ferry_crossed", "ashmere": "act2_end", "solenne": "rift_shade_sealed",
+}
+
+## Veydal is always open; the others once GameState has the flag "region_open_<id>" or the
+## act's story flag (REGION_STORY_FLAGS).
 static func region_open(region: String, flags: Dictionary) -> bool:
-	return region == "veydal" or bool(flags.get("region_open_%s" % region, false))
+	if region == "veydal" or bool(flags.get("region_open_%s" % region, false)):
+		return true
+	return REGION_STORY_FLAGS.has(region) and bool(flags.get(REGION_STORY_FLAGS[region], false))
 
 ## Regions whose chapter is shown, in SpirlingData.REGIONS order.
 static func open_regions(flags: Dictionary) -> Array[String]:
