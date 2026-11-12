@@ -226,7 +226,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 169 | Gloomgillith | Tide/Umbra | shy | striker | surge | 452 | - |
 | 170 | Fumelet | Gale/Umbra | common | weaver | light_sleeper | 308 | Fumewraith (ring 22) |
 | 171 | Fumewraith | Gale/Umbra | uncommon | weaver | light_sleeper | 406 | Fumeregent (ring 35) |
-| 172 | Fumeregent | Gale/Umbra | shy | weaver | light_sleeper | 494 | - |
+| 172 | Fumeregent | Gale/Umbra | shy | weaver | light_sleeper | 464 | - |
 | 173 | Lodekit | Stone/Volt | common | vanguard | surge | 309 | Lodebrock (ring 19) |
 | 174 | Lodebrock | Stone/Volt | uncommon | vanguard | surge | 410 | Lodemarshal (ring 34) |
 | 175 | Lodemarshal | Stone/Volt | shy | vanguard | surge | 498 | - |
@@ -305,7 +305,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 239 | Grindmonolith | Stone/Tide | shy | bulwark | thick_hide | 502 | - |
 | 240 | Morelit | Bloom/Lumen | common | kindler | deep_roots | 313 | Morelamp (ring 17) |
 | 241 | Morelamp | Bloom/Lumen | uncommon | kindler | deep_roots | 425 | Morelord (ring 32) |
-| 242 | Morelord | Bloom/Lumen | shy | kindler | deep_roots | 502 | - |
+| 242 | Morelord | Bloom/Lumen | shy | kindler | deep_roots | 487 | - |
 | 243 | Rookit | Umbra/Gale | uncommon | vanguard | last_stand | 287 | Rookwarden (ring 27) |
 | 244 | Rookwarden | Umbra/Gale | shy | vanguard | last_stand | 430 | - |
 | 245 | Skimmit | Tide/Gale | uncommon | striker | steady | 270 | Skimmarch (ring 25) |
@@ -484,9 +484,9 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era4.py
 | 391 | Plinthlet | Stone/Tide | common | bulwark | thick_hide | 306 | Plinthshell (ring 82) |
 | 392 | Plinthshell | Stone/Tide | uncommon | bulwark | thick_hide | 409 | Plinthcastle (ring 88) |
 | 393 | Plinthcastle | Stone/Tide | shy | bulwark | thick_hide | 504 | - |
-| 394 | Kitelet | Gale/Volt | common | striker | deep_roots | 286 | Kitewhip (ring 80) |
-| 395 | Kitewhip | Gale/Volt | uncommon | striker | deep_roots | 408 | Kitemonarch (ring 88) |
-| 396 | Kitemonarch | Gale/Volt | shy | striker | deep_roots | 500 | - |
+| 394 | Kitelet | Gale/Volt | common | striker | deep_roots | 316 | Kitewhip (ring 80) |
+| 395 | Kitewhip | Gale/Volt | uncommon | striker | deep_roots | 416 | Kitemonarch (ring 88) |
+| 396 | Kitemonarch | Gale/Volt | shy | striker | deep_roots | 510 | - |
 | 397 | Coffrel | Umbra/Gilt | common | weaver | light_sleeper | 294 | Coffrake (ring 82) |
 | 398 | Coffrake | Umbra/Gilt | uncommon | weaver | light_sleeper | 409 | Coffrendrake (ring 88) |
 | 399 | Coffrendrake | Umbra/Gilt | shy | weaver | light_sleeper | 481 | - |
@@ -514,7 +514,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era4.py
 | 421 | Arcfinnar | Volt/Tide | shy | striker | deep_roots | 431 | - |
 | 422 | Eavekit | Umbra/Gale | uncommon | striker | slick | 282 | Eaveprowl (ring 85) |
 | 423 | Eaveprowl | Umbra/Gale | shy | striker | slick | 430 | - |
-| 424 | Gildrelic | Gilt/Lumen | uncommon | bulwark | thick_hide | 436 | - |
+| 424 | Gildrelic | Gilt/Lumen | uncommon | bulwark | thick_hide | 427 | - |
 | 425 | Zenwhirl | Zenith/Gale | uncommon | striker | surge | 415 | - |
 | 426 | Gnomonk | Stone/Zenith | uncommon | weaver | light_sleeper | 417 | - |
 | 427 | Gildbloom | Bloom/Gilt | uncommon | kindler | kindling | 426 | - |

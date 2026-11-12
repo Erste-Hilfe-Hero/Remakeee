@@ -10073,11 +10073,11 @@
   "line_id": "fumelet",
   "era": 1,
   "base": {
-   "hp": 100,
-   "atk": 65,
-   "foc": 130,
-   "spd": 95,
-   "def": 104
+   "hp": 94,
+   "atk": 61,
+   "foc": 122,
+   "spd": 89,
+   "def": 98
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -14319,11 +14319,11 @@
   "line_id": "morelit",
   "era": 1,
   "base": {
-   "hp": 103,
-   "atk": 82,
-   "foc": 118,
-   "spd": 106,
-   "def": 93
+   "hp": 99,
+   "atk": 80,
+   "foc": 115,
+   "spd": 103,
+   "def": 90
   },
   "trait": "deep_roots",
   "learnset": {
@@ -23600,11 +23600,11 @@
   "line_id": "kitelet",
   "era": 4,
   "base": {
-   "hp": 51,
-   "atk": 67,
-   "foc": 49,
-   "spd": 77,
-   "def": 42
+   "hp": 56,
+   "atk": 74,
+   "foc": 54,
+   "spd": 85,
+   "def": 47
   },
   "trait": "deep_roots",
   "learnset": {
@@ -23662,11 +23662,11 @@
   "line_id": "kitelet",
   "era": 4,
   "base": {
-   "hp": 73,
-   "atk": 98,
-   "foc": 63,
-   "spd": 111,
-   "def": 63
+   "hp": 75,
+   "atk": 100,
+   "foc": 64,
+   "spd": 113,
+   "def": 64
   },
   "trait": "deep_roots",
   "learnset": {
@@ -23727,11 +23727,11 @@
   "line_id": "kitelet",
   "era": 4,
   "base": {
-   "hp": 82,
-   "atk": 124,
-   "foc": 79,
-   "spd": 142,
-   "def": 73
+   "hp": 84,
+   "atk": 126,
+   "foc": 81,
+   "spd": 145,
+   "def": 74
   },
   "trait": "deep_roots",
   "learnset": {
@@ -25418,11 +25418,11 @@
   "line_id": "gildrelic",
   "era": 4,
   "base": {
-   "hp": 110,
-   "atk": 76,
-   "foc": 73,
-   "spd": 59,
-   "def": 118
+   "hp": 109,
+   "atk": 75,
+   "foc": 71,
+   "spd": 57,
+   "def": 115
   },
   "trait": "thick_hide",
   "learnset": {
