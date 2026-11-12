@@ -87,7 +87,13 @@ func animate_hp(hp: int, new_max: int = -1) -> void:
 	if new_max > 0:
 		max_hp = new_max
 	var tw: Tween = create_tween()
-	tw.tween_method(_set_display_hp, display_hp, float(hp), TWEEN_TIME / speed_scale)
+	# Era I/II count down at a fixed pace across the bar (a big hit takes longer); later eras
+	# ease in a fixed time (EraBattleFeel.hp_drain_time).
+	var span: float = float(maxi(max_hp, 1))
+	var time: float = EraBattleFeel.hp_drain_time(era, display_hp / span, float(hp) / span, TWEEN_TIME)
+	var step: Tweener = tw.tween_method(_set_display_hp, display_hp, float(hp), time / speed_scale)
+	if not EraBattleFeel.hp_steps(era):
+		(step as MethodTweener).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	if bool(HpBarStyle.for_era(era).get("trail", false)) and float(hp) < trail_hp:
 		var c: Dictionary = HpBarStyle.cfg()
 		var tt: Tween = create_tween()

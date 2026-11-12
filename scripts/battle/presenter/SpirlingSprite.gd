@@ -44,6 +44,20 @@ var _strips: Dictionary = {}
 ## Era IV: the "_b" breath frame (tools/art/gen_era4.py), swapped in for the second half of each
 ## bob instead of the 1 px lift; null when the sprite has none.
 var _breath: Texture2D
+## Era feel (data/era_battle_feel.json): drawn scale around the feet (pop-in growth, landing
+## squash, Era IV breathing, collapse) and the white silhouette share drawn over the sprite
+## (Era III/IV hit flash, Era III entrance). Neither moves the node.
+var draw_scale: Vector2 = Vector2.ONE
+var flash_amount: float = 0.0
+## Dust puffs at the feet (Era IV/V landings and faints): 0 = none, rises to 1 and clears.
+var dust: float = -1.0
+var _silhouette: Texture2D
+static var _sil_cache: Dictionary = {}
+const DUST_TIME: float = 0.3
+## Squash on landing (Era IV/V) and the pop-in steps (Era I).
+const LAND_SQUASH: float = 0.86
+const POP_STEPS: Array[float] = [0.34, 0.67, 1.0]
+const POP_STEP_TIME: float = 0.07
 
 func setup(s: Spirling, p_facing: String) -> void:
 	spirling = s
@@ -68,7 +82,39 @@ func setup(s: Spirling, p_facing: String) -> void:
 	anim_kind = "idle"
 	_anim_time = 0.0
 	modulate.a = 1.0
+	draw_scale = Vector2.ONE
+	flash_amount = 0.0
+	dust = -1.0
+	_silhouette = silhouette_texture(path) if _texture != null else null
 	queue_redraw()
+
+## The era whose battle feel applies (the battle's own era, not the species' art era).
+static func feel_era() -> int:
+	return EraManager.active_era()
+
+## White silhouette of the sprite at [param path] (cached), for hit flashes.
+static func silhouette_texture(path: String) -> Texture2D:
+	if path.is_empty():
+		return null
+	if _sil_cache.has(path):
+		return _sil_cache[path]
+	var tex: Texture2D = load(path)
+	var img: Image = tex.get_image() if tex != null else null
+	var out: Texture2D = null
+	if img != null:
+		img = img.duplicate()
+		if img.is_compressed():
+			img.decompress()
+		img.convert(Image.FORMAT_RGBA8)
+		var col: Color = Color(str(BattleAnim.config().get("flash_color", "f8f4ec")))
+		for y: int in img.get_height():
+			for x: int in img.get_width():
+				var a: float = img.get_pixel(x, y).a
+				if a > 0.0:
+					img.set_pixel(x, y, Color(col, a))
+		out = ImageTexture.create_from_image(img)
+	_sil_cache[path] = out
+	return out
 
 ## Breath frame path next to an era sprite path ("x_front.png" -> "x_front_b.png").
 static func breath_path(path: String) -> String:
@@ -95,10 +141,25 @@ func _process(delta: float) -> void:
 		if BattleAnim.frame_at(anim_kind, _anim_time) != before:
 			queue_redraw()
 		return
-	var o: Vector2 = idle_offset(spirling, _bob_time, Juice.reduced())
+	# Era I-III Spirlings stand still between moves (only the low-strength sag shows); the bob
+	# and breath start with Era IV, the constant loop is Era V's strip above.
+	var era: int = feel_era()
+	var o: Vector2 = idle_offset(spirling, _bob_time, Juice.reduced() or not EraBattleFeel.idles(era))
 	if o != draw_offset:
 		draw_offset = o
 		queue_redraw()
+	if _breath == null and EraBattleFeel.idles(era) and not Juice.reduced() and dust < 0.0 and flash_amount <= 0.0:
+		var b: Vector2 = breath_scale(_bob_time, EraBattleFeel.num(era, "breath_period", 1.6), EraBattleFeel.num(era, "breath_squash", 0.0))
+		if b != draw_scale:
+			draw_scale = b
+			queue_redraw()
+
+## Era IV breathing without a breath frame: the sprite widens a little and settles, in two
+## whole steps per period, so pixels stay crisp.
+static func breath_scale(t: float, period: float, squash: float) -> Vector2:
+	if squash <= 0.0 or period <= 0.0:
+		return Vector2.ONE
+	return Vector2(1.0 + squash, 1.0 - squash) if fmod(t, period) >= period * 0.5 else Vector2.ONE
 
 ## True under a quarter of the Spirling's strength (but not fainted).
 static func is_weak(s: Spirling) -> bool:
@@ -142,6 +203,65 @@ func dodge(dir: float) -> void:
 ## Durations come from Juice curves, so the 2x / 4x battle speed applies on its own.
 ## The way the Spirling moves follows its motion profile (item 2330).
 func step_out(from_left: bool) -> void:
+	var style: String = EraBattleFeel.text(feel_era(), "entrance", "bounce")
+	if style == "pop" and not Juice.reduced():
+		await _pop_in()
+		return
+	await _slide_in(from_left)
+	if Juice.reduced():
+		return
+	match style:
+		"bounce":
+			await greet_hop()
+		"burst":
+			await _fade_flash(0.25)
+		"land", "live":
+			await land()
+
+## Era I: appears where it stands in three growing steps, no slide.
+func _pop_in() -> void:
+	_home = position
+	modulate.a = 1.0
+	visible = true
+	for k: float in POP_STEPS:
+		draw_scale = Vector2(k, k)
+		queue_redraw()
+		await get_tree().create_timer(POP_STEP_TIME / Juice.speed()).timeout
+	draw_scale = Vector2.ONE
+	queue_redraw()
+
+## Era III: the sprite shows as a white silhouette that fades into its colours.
+func _fade_flash(time: float) -> void:
+	flash_amount = 1.0
+	queue_redraw()
+	var tw: Tween = create_tween()
+	tw.tween_method(func(v: float) -> void:
+		flash_amount = v
+		queue_redraw(), 1.0, 0.0, time / Juice.speed())
+	await tw.finished
+	flash_amount = 0.0
+
+## Era IV/V: squashes on landing and kicks up a puff of dust.
+func land() -> void:
+	if Juice.reduced():
+		return
+	draw_scale = Vector2(2.0 - LAND_SQUASH, LAND_SQUASH)
+	queue_redraw()
+	_puff()
+	await get_tree().create_timer(0.08 / Juice.speed()).timeout
+	draw_scale = Vector2.ONE
+	queue_redraw()
+
+func _puff() -> void:
+	var tw: Tween = create_tween()
+	tw.tween_method(func(v: float) -> void:
+		dust = v
+		queue_redraw(), 0.0, 1.0, DUST_TIME / Juice.speed())
+	tw.tween_callback(func() -> void:
+		dust = -1.0
+		queue_redraw())
+
+func _slide_in(from_left: bool) -> void:
 	_home = position
 	position = _home + Vector2(-STEP_OUT_DISTANCE if from_left else STEP_OUT_DISTANCE, 0)
 	modulate.a = 0.0
@@ -252,9 +372,17 @@ func hit_flash() -> void:
 		await get_tree().create_timer(0.12 / Juice.speed()).timeout
 		modulate.a = 1.0
 		return
+	# Era III/IV: a white silhouette pulses instead of the old blink.
+	var sil: bool = EraBattleFeel.silhouette_hit(feel_era())
 	for i: int in HIT_FLASHES:
-		visible = false
+		if sil:
+			flash_amount = 1.0
+			queue_redraw()
+		else:
+			visible = false
 		await get_tree().create_timer(0.05 / Juice.speed()).timeout
+		flash_amount = 0.0
+		queue_redraw()
 		visible = true
 		await get_tree().create_timer(0.05 / Juice.speed()).timeout
 
@@ -284,36 +412,126 @@ func gleam_sparkle() -> void:
 		if ch is TextureRect:
 			ch.queue_free()
 
+## Faints in the era's way: Era I/II drop out of sight in four hard steps, Era III sinks and
+## fades, Era IV adds a puff of dust, Era V folds flat as it fades.
 func faint() -> void:
-	Juice.tween(self, "modulate:a", 0.0, "move", 0.4)
-	await Juice.tween(self, "position", _home + Vector2(0, 12), "move", 0.4).finished
+	var style: String = EraBattleFeel.text(feel_era(), "faint", "sink")
+	if Juice.reduced():
+		style = "sink"
+	match style:
+		"drop":
+			for i: int in range(1, 5):
+				position = _home + Vector2(0, roundf(size.y * 0.15 * i))
+				modulate.a = 1.0 - i * 0.25
+				await get_tree().create_timer(0.07 / Juice.speed()).timeout
+		"collapse":
+			_puff()
+			var tw: Tween = create_tween().set_parallel(true)
+			tw.tween_method(func(v: float) -> void:
+				draw_scale = Vector2(1.0 + (1.0 - v) * 0.2, v)
+				queue_redraw(), 1.0, 0.15, 0.4 / Juice.speed())
+			tw.tween_property(self, "modulate:a", 0.0, 0.4 / Juice.speed())
+			await tw.finished
+		_:
+			if style == "sink_dust":
+				_puff()
+			Juice.tween(self, "modulate:a", 0.0, "move", 0.4)
+			await Juice.tween(self, "position", _home + Vector2(0, 12), "move", 0.4).finished
 	visible = false
 	position = _home
+	draw_scale = Vector2.ONE
+	dust = -1.0
+
+## Era I: a bonded Spirling blinks three times and is gone.
+func blink_out() -> void:
+	if Juice.reduced():
+		return
+	for i: int in 3:
+		visible = false
+		await get_tree().create_timer(0.08 / Juice.speed()).timeout
+		visible = true
+		await get_tree().create_timer(0.08 / Juice.speed()).timeout
+
+## Glints burst from the sprite and fade ([param n] of them), for level-ups and bonds from Era III.
+func glints(n: int, t: float = 0.5) -> void:
+	var tex: Texture2D = ElementFx.shape("glint", 0)
+	if tex == null or n <= 0 or Juice.reduced():
+		return
+	var last: Tween = null
+	var made: Array[TextureRect] = []
+	for i: int in n:
+		var g := TextureRect.new()
+		g.texture = tex
+		g.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		g.use_parent_material = false
+		var c: Vector2 = size / 2.0 - tex.get_size() / 2.0
+		g.position = c
+		add_child(g)
+		made.append(g)
+		var a: float = TAU * i / n + 0.4
+		last = Juice.tween(g, "position", c + Vector2(cos(a), sin(a)) * size.x * 0.55, "move", t)
+		Juice.tween(g, "modulate:a", 0.0, "move", t)
+	if last != null:
+		await last.finished
+	for g: TextureRect in made:
+		if is_instance_valid(g):
+			g.queue_free()
+
+## Drawing transform: [param off] lift, [member draw_scale] around the feet, then the mirror.
+func _xform(off: Vector2, mirror: bool = true) -> Transform2D:
+	var foot := Vector2(size.x / 2.0, size.y)
+	var xf := Transform2D(0.0, off + foot) * Transform2D(0.0, draw_scale, 0.0, Vector2.ZERO) * Transform2D(0.0, -foot)
+	if mirror and mirrored:
+		xf = xf * Transform2D(0.0, Vector2(-1, 1), 0.0, Vector2(size.x, 0))
+	return xf
+
+## Era III+: a flat shadow under the feet, dithered so it stays in the pixel style.
+func _draw_shadow() -> void:
+	if not EraBattleFeel.flag(feel_era(), "shadow") or _texture == null or modulate.a < 0.5:
+		return
+	var w: int = int(size.x * 0.6 * draw_scale.x)
+	var x0: int = int((size.x - w) / 2.0)
+	var y0: int = int(size.y) - 2
+	var c := Color(UITheme.INK, 0.35)
+	for row: int in 3:
+		var inset: int = [w / 6, 0, w / 6][row]
+		draw_rect(Rect2(x0 + inset, y0 + row - 1, w - inset * 2, 1), c)
+
+func _draw_dust() -> void:
+	if dust < 0.0:
+		return
+	var c := Color(UITheme.ACCENT, 1.0 - dust)
+	for side: int in [-1, 1]:
+		for i: int in 3:
+			var p := Vector2(size.x / 2.0 + side * (size.x * 0.3 + dust * 8.0 + i * 3.0), size.y - 2.0 - dust * (3.0 + i * 2.0))
+			draw_rect(Rect2(p.round(), Vector2(2, 2)), c)
 
 func _draw() -> void:
 	if spirling == null:
 		return
 	var r := Rect2(Vector2.ZERO, size)
-	draw_set_transform(draw_offset)
+	_draw_shadow()
+	_draw_dust()
+	var tint: Color = PRISM_TINT if spirling.prism and material == null else Color.WHITE
 	if _strips.has(anim_kind):
 		var st: Texture2D = _strips[anim_kind]
 		var fw: float = st.get_width() / float(BattleAnim.frame_count(anim_kind))
 		var src := Rect2(fw * BattleAnim.frame_at(anim_kind, _anim_time), 0, fw, st.get_height())
-		if mirrored:
-			draw_set_transform(Vector2(size.x, 0), 0.0, Vector2(-1, 1))
-		draw_texture_rect_region(st, r, src, PRISM_TINT if spirling.prism and material == null else Color.WHITE)
+		draw_set_transform_matrix(_xform(Vector2.ZERO))
+		draw_texture_rect_region(st, r, src, tint)
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
 	if _texture != null:
 		var tex: Texture2D = _breath if breathing() else _texture
 		# With a breath frame the frame swap replaces the lift; only the low-strength sag stays.
 		var off: Vector2 = Vector2(0, LOW_SAG_PX if is_weak(spirling) else 0.0) if _breath != null else draw_offset
-		draw_set_transform(off)
-		if mirrored:
-			draw_set_transform(Vector2(size.x, 0) + off, 0.0, Vector2(-1, 1))
-		draw_texture_rect(tex, r, false, PRISM_TINT if spirling.prism and material == null else Color.WHITE)
+		draw_set_transform_matrix(_xform(off))
+		draw_texture_rect(tex, r, false, tint)
+		if flash_amount > 0.0 and _silhouette != null:
+			draw_texture_rect(_silhouette, r, false, Color(1, 1, 1, flash_amount))
 		draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 		return
+	draw_set_transform_matrix(_xform(draw_offset, false))
 	var els: Array[int] = spirling.elements()
 	draw_rect(r, Elements.color(els[0]))
 	if els.size() > 1:
