@@ -100,15 +100,6 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('live_duel', $game$"
               + json.dumps(live).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
-    # Bund life (Online 100, area 4): data/bund_life.json as server_config.bund_life.
-    bund_path = os.path.join(folder, "bund_life.json")
-    if os.path.exists(bund_path):
-        with open(bund_path, encoding="utf-8") as f:
-            bund = json.load(f)
-        bund.pop("_comment", None)
-        print("insert into public.server_config (key, value) values ('bund_life', $game$"
-              + json.dumps(bund).replace("$game$", "") + "$game$::jsonb)"
-              " on conflict (key) do update set value = excluded.value;")
     # Online events (Online 100, area 7): data/online_events.json as server_config.online_events,
     # each fixed event as a row of public.online_events (its shared total stays). Rules become the
     # list of species that fit them (like OnlineEvents.allowed in the game).

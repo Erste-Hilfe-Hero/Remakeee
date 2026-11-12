@@ -1,11 +1,10 @@
-class_name LocalBundEvents
+class_name LocalOnlineEvents
 extends RefCounted
-## Bund life and online events (Online 100, areas 4 and 7) in the local stand-in server: the same
-## rules as supabase/migrations/20261112000060_bund_events.sql. Used by tests and by builds without a
-## server address. tests/unit/test_bund_events.gd checks the rules.
+## Online events (Online 100, area 7) in the local stand-in server: the same rules as
+## supabase/migrations/20261112000070_online_events.sql. Used by tests and by builds without a server
+## address. tests/unit/test_online_events.gd checks the rules.
 
-const FNS: Array[String] = ["bund_life", "bund_goal_claim", "bund_donate", "bund_settings", "bund_search", "bund_join",
-	"bund_board", "event_list", "event_claim", "event_enter", "event_board", "event_reward", "event_recap"]
+const FNS: Array[String] = ["event_list", "event_claim", "event_enter", "event_board", "event_reward", "event_recap"]
 
 ## The backend this belongs to (weak, so the two do not keep each other alive).
 var b: LocalBackend:
@@ -13,25 +12,18 @@ var b: LocalBackend:
 		return _bref.get_ref() if _bref != null else null
 var _bref: WeakRef
 
-static func install(backend: LocalBackend) -> LocalBundEvents:
-	var s := LocalBundEvents.new()
+static func install(backend: LocalBackend) -> LocalOnlineEvents:
+	var s := LocalOnlineEvents.new()
 	s._bref = weakref(backend)
 	for fn: String in FNS:
 		backend._fns[fn] = Callable(s, "_fn_" + fn)
 	if not backend.db.flags.has("events"):
 		backend.db.flags["events"] = {"enabled": false, "min_version": 1}
-	backend.set_meta("bund_events", s)
+	backend.set_meta("online_events", s)
 	return s
 
-static func of(backend: LocalBackend) -> LocalBundEvents:
-	return backend.get_meta("bund_events") if backend.has_meta("bund_events") else null
-
-func bl() -> Dictionary:
-	var v: Variant = b.db.config.get("bund_life")
-	if not v is Dictionary:
-		v = BundLife.config()
-		b.db.config["bund_life"] = v
-	return v
+static func of(backend: LocalBackend) -> LocalOnlineEvents:
+	return backend.get_meta("online_events") if backend.has_meta("online_events") else null
 
 func ev_cfg() -> Dictionary:
 	var v: Variant = b.db.config.get("online_events")
@@ -44,288 +36,11 @@ func _int(cfg: Dictionary, key: String, fallback: int) -> int:
 	var v: Variant = cfg.get(key, fallback)
 	return int(v) if (v is int or v is float) else fallback
 
-# --- Bund life ---------------------------------------------------------------------------
-
-func _bund(id: String) -> Dictionary:
-	return (b._table("bunds", {}) as Dictionary).get(id, {})
-
-func level_of(id: String) -> int:
-	return BundLife.level_for(int(_bund(id).get("xp", 0)), bl().levels)
-
-func _add_xp(id: String, n: int) -> void:
-	var row: Dictionary = _bund(id)
-	if row.is_empty():
-		return
-	row["xp"] = int(row.get("xp", 0)) + maxi(n, 0)
-	var weeks: Dictionary = b._table("bund_weeks", {})
-	var key: String = "%s|%s" % [id, b._week()]
-	weeks[key] = int(weeks.get(key, 0)) + maxi(n, 0)
-
-func _goal(id: String) -> Dictionary:
-	var goals: Dictionary = b._table("bund_goals", {})
-	var key: String = "%s|%s" % [id, b._week()]
-	if not goals.has(key):
-		var g: Dictionary = BundLife.goal_for(OnlineEvents.week_number(b._week()), b._bund_list(id).size(), bl())
-		g["week"] = b._week()
-		g["total"] = 0
-		goals[key] = g
-	return goals[key]
-
-func _contrib(id: String, uid: String) -> Dictionary:
-	var c: Dictionary = b._table("bund_goal_contrib", {})
-	return c.get_or_add("%s|%s|%s" % [id, b._week(), uid], {"amount": 0, "claimed": false})
-
-func _claimed_this_week(uid: String) -> bool:
-	var c: Dictionary = b._table("bund_goal_contrib", {})
-	for k: String in c:
-		var parts: PackedStringArray = k.split("|")
-		if parts.size() == 3 and parts[1] == b._week() and parts[2] == uid and bool(c[k].claimed):
-			return true
-	return false
-
-func _donated(uid: String) -> Dictionary:
-	var d: Dictionary = b._table("bund_donations", {})
-	return d.get_or_add("%s|%s" % [uid, b._today()], {"coins": 0, "items": 0})
-
-## Like public._bund_goal_add, called from LocalBackend._fn_community_add.
-func on_contribute(uid: String, kind: String, amount: int) -> void:
-	_bund_goal_add(uid, kind, amount)
-	_event_goal_add(uid, kind, amount)
-
-func _bund_goal_add(uid: String, kind: String, amount: int) -> void:
-	var id: String = b._bund_of(uid)
-	if id.is_empty() or amount <= 0 or not b.flag_on("bund", 2147483647):
-		return
-	var g: Dictionary = _goal(id)
-	if str(g.kind) != kind:
-		return
-	var c: Dictionary = _contrib(id, uid)
-	var n: int = mini(mini(amount, _int(bl(), "goal_add_max", 5)), maxi(_int(bl(), "goal_member_cap", 100) - int(c.amount), 0))
-	if n <= 0:
-		return
-	c.amount = int(c.amount) + n
-	g.total = int(g.total) + n
-	if int(g.total) >= int(g.target) and int(g.total) - n < int(g.target):
-		_add_xp(id, _int(bl(), "goal_xp", 200))
-
-func _fn_bund_life(_a: Dictionary) -> Dictionary:
-	var u: String = b.me()
-	var e: String = b._bund_check(u)
-	if not e.is_empty():
-		return LocalBackend._fail(e)
-	var id: String = b._bund_of(u)
-	if id.is_empty():
-		return LocalBackend._fail("no_bund")
-	var row: Dictionary = _bund(id)
-	var g: Dictionary = _goal(id)
-	var lv: int = level_of(id)
-	var c: Dictionary = _contrib(id, u)
-	var d: Dictionary = _donated(u)
-	var next: int = BundLife.next_xp(lv, bl().levels)
-	return {"ok": true, "level": lv, "xp": int(row.get("xp", 0)), "next": next if next >= 0 else null,
-		"lang": str(row.get("lang", "any")), "open": bool(row.get("open", false)), "langs": bl().langs,
-		"week_xp": int((b._table("bund_weeks", {}) as Dictionary).get("%s|%s" % [id, b._week()], 0)),
-		"goal": {"week": g.week, "kind": g.kind, "target": int(g.target), "total": int(g.total), "mine": int(c.amount),
-			"claimed": bool(c.claimed), "done": int(g.total) >= int(g.target)},
-		"reward": BundLife.reward_for(lv, bl().goal_rewards), "rewards": bl().goal_rewards,
-		"donate": {"coin_step": _int(bl(), "donate_coin_step", 100),
-			"coins_left": maxi(_int(bl(), "donate_coins_day", 5000) - int(d.coins), 0),
-			"items_left": maxi(_int(bl(), "donate_items_day", 20) - int(d.items), 0),
-			"coin_xp": _int(bl(), "donate_coin_xp", 1), "item_xp": _int(bl(), "donate_item_xp", 5)}}
-
-func _fn_bund_goal_claim(a: Dictionary) -> Dictionary:
-	var u: String = b.me()
-	var e: String = b._bund_check(u)
-	if not e.is_empty():
-		return LocalBackend._fail(e)
-	var id: String = b._bund_of(u)
-	if id.is_empty():
-		return LocalBackend._fail("no_bund")
-	var g: Dictionary = _goal(id)
-	var c: Dictionary = _contrib(id, u)
-	if int(c.amount) <= 0:
-		return LocalBackend._fail("not_helped")
-	if int(g.total) < int(g.target):
-		return LocalBackend._fail("not_reached")
-	if _claimed_this_week(u):
-		return LocalBackend._fail("claimed")
-	var rw: Dictionary = BundLife.reward_for(level_of(id), bl().goal_rewards)
-	var r: Dictionary = b._trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {str(rw.item): int(rw.count)})
-	if not bool(r.ok):
-		return r
-	c.claimed = true
-	return {"ok": true, "rev": r.rev, "item": str(rw.item), "count": int(rw.count), "bag": {str(rw.item): int(rw.count)}}
-
-func _whole(v: Variant) -> bool:
-	return (v is int or v is float) and float(v) == floorf(float(v))
-
-func _fn_bund_donate(a: Dictionary) -> Dictionary:
-	var u: String = b.me()
-	var e: String = b._bund_check(u)
-	if not e.is_empty():
-		return LocalBackend._fail(e)
-	var id: String = b._bund_of(u)
-	if id.is_empty():
-		return LocalBackend._fail("no_bund")
-	var step: int = maxi(_int(bl(), "donate_coin_step", 100), 1)
-	var coins_v: Variant = a.get("p_coins", 0)
-	var items: Variant = a.get("p_items", {})
-	if not _whole(coins_v) or int(coins_v) < 0 or int(coins_v) % step != 0 or not items is Dictionary:
-		return LocalBackend._fail("bad_amount")
-	var coins: int = int(coins_v)
-	var ok_items: Array = b.trade_items()
-	var cnt: int = 0
-	var back: Dictionary = {}
-	for k: Variant in items:
-		var v: Variant = items[k]
-		if not _whole(v) or int(v) < 1 or int(v) > 99:
-			return LocalBackend._fail("bad_amount")
-		if not ok_items.has(str(k)):
-			return LocalBackend._fail("not_donatable")
-		cnt += int(v)
-		back[str(k)] = -int(v)
-	if coins == 0 and cnt == 0:
-		return LocalBackend._fail("bad_amount")
-	var d: Dictionary = _donated(u)
-	if int(d.coins) + coins > _int(bl(), "donate_coins_day", 5000) or int(d.items) + cnt > _int(bl(), "donate_items_day", 20):
-		return LocalBackend._fail("limit_today")
-	var slot: int = int(a.get("p_slot", 0))
-	var sv: Variant = b._saves().get(str(slot))
-	if sv == null:
-		return LocalBackend._fail("no_save")
-	if int(sv.rev) != int(a.get("p_rev", -1)):
-		return LocalBackend._fail("sync_first")
-	var money: int = int(sv.data.get("money", 0))
-	if money < coins:
-		return LocalBackend._fail("not_enough")
-	var inv: Dictionary = (sv.data.get("inventory", {}) as Dictionary).duplicate() if sv.data.get("inventory") is Dictionary else {}
-	for k: String in back:
-		var n: int = int(inv.get(k, 0)) + int(back[k])
-		if n < 0:
-			return LocalBackend._fail("not_enough")
-		if n == 0:
-			inv.erase(k)
-		else:
-			inv[k] = n
-	b.keep_history(slot, sv, {"changed": true})
-	sv.data["inventory"] = inv
-	sv.data["money"] = money - coins
-	sv.rev = int(sv.rev) + 1
-	sv.saved_at = b.now()
-	sv.erase("request_id")
-	d.coins = int(d.coins) + coins
-	d.items = int(d.items) + cnt
-	var gain: int = BundLife.donate_xp(coins, cnt, bl())
-	_add_xp(id, gain)
-	return {"ok": true, "rev": sv.rev, "money": -coins, "bag": back, "xp": gain, "level": level_of(id)}
-
-func _fn_bund_settings(a: Dictionary) -> Dictionary:
-	var u: String = b.me()
-	var e: String = b._bund_check(u)
-	if not e.is_empty():
-		return LocalBackend._fail(e)
-	if b._bund_role(u) != "leader":
-		return LocalBackend._fail("not_allowed")
-	var lang: String = str(a.get("p_lang", "")) if a.get("p_lang") != null else ""
-	if not (bl().langs as Array).has(lang):
-		return LocalBackend._fail("bad_lang")
-	var row: Dictionary = _bund(b._bund_of(u))
-	row["lang"] = lang
-	row["open"] = bool(a.get("p_open", false))
-	return {"ok": true, "lang": lang, "open": row.open}
-
-func _has_blocked(id: String, uid: String) -> bool:
-	return b._bund_list(id).any(func(x: String) -> bool: return b.is_blocked(uid, x))
-
-func _fn_bund_search(a: Dictionary) -> Dictionary:
-	var u: String = b.me()
-	var e: String = b._bund_check(u)
-	if not e.is_empty():
-		return LocalBackend._fail(e)
-	if not b._rate_ok("bund_search", 60):
-		return LocalBackend._fail("slow_down")
-	var lang: String = str(a.get("p_lang", "")) if a.get("p_lang") != null else ""
-	lang = "any" if lang.is_empty() else lang
-	var mine: String = b._bund_of(u)
-	var rows: Array = []
-	for id: String in (b._table("bunds", {}) as Dictionary):
-		var row: Dictionary = _bund(id)
-		var members: Array = b._bund_list(id)
-		if id == mine or int(row.get("dissolve_at", 0)) > 0 or members.size() >= b.config_int("bund_max", 30):
-			continue
-		if lang != "any" and not str(row.get("lang", "any")) in [lang, "any"]:
-			continue
-		if _has_blocked(id, u):
-			continue
-		var active: int = 0
-		for x: String in members:
-			if b.now() - int(b.profile_of(x).last_seen) < _int(bl(), "active_days", 7) * 86400:
-				active += 1
-		rows.append({"id": int(id), "name": row.name, "lang": str(row.get("lang", "any")), "open": bool(row.get("open", false)),
-			"size": members.size(), "active": active, "level": level_of(id), "_xp": int(row.get("xp", 0))})
-	rows.sort_custom(func(x: Dictionary, y: Dictionary) -> bool:
-		if int(x.active) != int(y.active):
-			return int(x.active) > int(y.active)
-		if int(x._xp) != int(y._xp):
-			return int(x._xp) > int(y._xp)
-		return int(x.id) < int(y.id))
-	var out: Array = []
-	for r: Dictionary in rows.slice(0, _int(bl(), "search_rows", 20)):
-		r.erase("_xp")
-		out.append(r)
-	return {"ok": true, "bunds": out}
-
-func _fn_bund_join(a: Dictionary) -> Dictionary:
-	var u: String = b.me()
-	var e: String = b._bund_check(u)
-	if not e.is_empty():
-		return LocalBackend._fail(e)
-	if not b._bund_of(u).is_empty():
-		return LocalBackend._fail("in_bund")
-	var id: String = str(int(a.get("p_bund", 0)))
-	var row: Dictionary = _bund(id)
-	if row.is_empty() or int(row.get("dissolve_at", 0)) > 0 or _has_blocked(id, u):
-		return LocalBackend._fail("no_such_bund")
-	if not b._rate_ok("bund_join", _int(bl(), "join_per_hour", 10)):
-		return LocalBackend._fail("slow_down")
-	var invites: Array = b._table("bund_invites", [])
-	var invited: bool = invites.any(func(i: Dictionary) -> bool: return str(i.bund) == id and i.user == u and i.kind == "invite")
-	if bool(row.get("open", false)) or invited:
-		e = b._bund_join(id, u, "member")
-		if not e.is_empty():
-			return LocalBackend._fail(e)
-		return {"ok": true, "joined": true}
-	if not invites.any(func(i: Dictionary) -> bool: return str(i.bund) == id and i.user == u):
-		invites.append({"bund": id, "user": u, "kind": "request", "by": u, "at": b.now()})
-	return {"ok": true, "joined": false}
-
-func _fn_bund_board(_a: Dictionary) -> Dictionary:
-	var u: String = b.me()
-	var e: String = b._bund_check(u)
-	if not e.is_empty():
-		return LocalBackend._fail(e)
-	var mine: String = b._bund_of(u)
-	var rows: Array = []
-	var weeks: Dictionary = b._table("bund_weeks", {})
-	for k: String in weeks:
-		var parts: PackedStringArray = k.split("|")
-		if parts[1] == b._week() and int(weeks[k]) > 0 and not _bund(parts[0]).is_empty():
-			rows.append({"id": parts[0], "xp": int(weeks[k])})
-	rows.sort_custom(func(x: Dictionary, y: Dictionary) -> bool:
-		return int(x.xp) > int(y.xp) or (int(x.xp) == int(y.xp) and int(x.id) < int(y.id)))
-	var out: Array = []
-	var rank: int = 0
-	var last: int = -1
-	for i: int in rows.size():
-		if int(rows[i].xp) != last:
-			rank = i + 1
-			last = int(rows[i].xp)
-		if rank <= _int(bl(), "board_rows", 20) or rows[i].id == mine:
-			out.append({"rank": rank, "name": _bund(rows[i].id).name, "xp": int(rows[i].xp), "level": level_of(rows[i].id),
-				"me": rows[i].id == mine})
-	return {"ok": true, "week": b._week(), "rows": out}
-
 # --- Online events -------------------------------------------------------------------------
+
+## Like the SQL community_add, called from LocalBackend._fn_community_add.
+func on_contribute(uid: String, kind: String, amount: int) -> void:
+	_event_goal_add(uid, kind, amount)
 
 func _events() -> Dictionary:
 	return b._table("online_events", {})

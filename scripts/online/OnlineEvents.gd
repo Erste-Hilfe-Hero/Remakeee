@@ -1,7 +1,7 @@
 class_name OnlineEvents
 extends RefCounted
 ## Timed online events (Online 100, area 7): rules shared by the game and LocalBackend. The server
-## does the same in 20261112000060_bund_events.sql from server_config.online_events.
+## does the same in 20261112000070_online_events.sql from server_config.online_events.
 ## Kinds: festival (shared goal fed by world-goal steps, tiers in percent of the target), board
 ## (confirmed Rift wins after entering a team that fits the rules) and sighting (some Spirlings
 ## appear more often).
