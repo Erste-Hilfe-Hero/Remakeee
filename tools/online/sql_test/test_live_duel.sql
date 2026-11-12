@@ -71,14 +71,26 @@ begin
   r := public.live_move(id, 1, '{"kind": "move", "slot": 2}');
   assert (r->>'round')::int = 2 and r->'moves'->'1'->1->>'slot' = '2', r::text;
   assert (r->'emotes'->0->>'emote')::int = 2;
+  -- The winner comes from the referee (20261113000040_live_referee.sql), not from a phone.
   r := public.live_finish(id, 1);
-  assert r->>'state' = 'running';
+  assert r->>'state' = 'running' and (r->>'judging')::boolean, r::text;
 end $$;
 select pg_temp.as_user('a');
 do $$
 declare r jsonb; id bigint := (select v::bigint from lv where k = 'd');
 begin
-  r := public.live_finish(id, 1);
+  r := public.live_finish(id, 0);
+  assert r->>'state' = 'running' and (r->>'judging')::boolean, r::text;
+end $$;
+reset role;
+insert into public.battle_results (battle_id, verdict, detail)
+select judge_id, 'ok', '{"finished": true, "winner": 1, "rounds": 1}' from public.live_duels where id = (select v::bigint from lv where k = 'd');
+set role authenticated;
+select pg_temp.as_user('a');
+do $$
+declare r jsonb; id bigint := (select v::bigint from lv where k = 'd');
+begin
+  r := public.live_state(id);
   assert r->>'state' = 'done' and r->>'reason' = 'played' and (r->>'winner')::int = 1, r::text;
   r := public.live_rematch(id);
   assert (r->>'ok')::boolean, r::text;

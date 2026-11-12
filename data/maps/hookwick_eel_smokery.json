@@ -17,7 +17,7 @@
    "y": 5,
    "to": "hookwick",
    "tx": 9,
-   "ty": 4,
+   "ty": 3,
    "facing": "down"
   }
  ],
@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/hookwick_eel_smokery_smoker",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_eel_rent_lueder",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_eel_rent_lueder",
+   "sprite": "villager",
+   "show_flag": "q2_eel_rent_asked"
   }
  ],
  "signs": []

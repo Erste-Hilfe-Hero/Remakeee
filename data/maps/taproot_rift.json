@@ -22,7 +22,7 @@
   "T....~~..T_T",
   "TTTT..TTTT_T",
   "T........T_T",
-  "T..~~....T_T",
+  "T.....~~.T_T",
   "TTT..TTTTT_T",
   "T........T_T",
   "T........T_T",
@@ -69,8 +69,13 @@
     {
      "species": "Fenwarden",
      "level": 93
+    },
+    {
+     "species": "Woadcastle",
+     "level": 93
     }
-   ]
+   ],
+   "wheel": true
   },
   {
    "id": "warden_ossian",

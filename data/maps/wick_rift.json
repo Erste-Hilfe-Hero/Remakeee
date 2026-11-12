@@ -22,7 +22,7 @@
   "T....~~..T_T",
   "TTTT..TTTT_T",
   "T........T_T",
-  "T..~~....T_T",
+  "T.....~~.T_T",
   "TTT..TTTTT_T",
   "T........T_T",
   "T........T_T",
@@ -69,8 +69,13 @@
     {
      "species": "Glazeldrake",
      "level": 92
+    },
+    {
+     "species": "Ardenthal",
+     "level": 92
     }
-   ]
+   ],
+   "wheel": true
   },
   {
    "id": "warden_maudrey",

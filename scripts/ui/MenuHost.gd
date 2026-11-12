@@ -334,6 +334,7 @@ const SETTING_HINTS: Dictionary[String, String] = {
 	"battle_speed": "Plays battle animations faster.",
 	"auto_battle": "Wild battles pick moves by themselves.",
 	"bench_lessons": "Spirlings on the bench grow too.",
+	"wild_ward": "No wild Spirlings step out while it is on.",
 	"damage_preview": "Shows how hard a move would hit before you choose it.",
 	"bonus_goals": "Optional extra goals in Wayfarer and Warden battles.",
 	"tips": "Short hints the first time something new comes up.",
@@ -410,6 +411,7 @@ static func settings_rows(group: String = "game") -> Array[Array]:
 				["battle_speed", "Battle speed: %dx" % int(GameState.battle_speed_scale())],
 				["auto_battle", "Auto wild battles: %s" % ("On" if GameState.auto_battle else "Off")],
 				["bench_lessons", "Bench lessons: %s" % shop_or("bench_lessons", "On" if GameState.bench_xp else "Off")],
+				["wild_ward", "Wild Ward: %s" % shop_or("wild_ward", "On" if GameState.wild_ward else "Off")],
 				["damage_preview", "Damage preview: %s" % shop_or("damage_preview", "On" if GameState.damage_preview else "Off")],
 				["bonus_goals", "Bonus goals: %s" % ("On" if GameState.bonus_goals else "Off")],
 				["tips", "Tips: %s" % ("On" if GameState.tips_enabled else "Off")],
@@ -487,6 +489,8 @@ func _settings_action(key: String, dir: int = 1) -> void:
 			GameState.auto_battle = not GameState.auto_battle
 		"bench_lessons":
 			GameState.bench_xp = not GameState.bench_xp
+		"wild_ward":
+			GameState.wild_ward = not GameState.wild_ward
 		"damage_preview":
 			GameState.damage_preview = not GameState.damage_preview
 		"bonus_goals":
@@ -651,6 +655,8 @@ func run_display() -> void:
 				# Only unlocked eras are offered (Era I only for now).
 				var next: int = EraManager.retro_filter + 1
 				EraManager.set_retro_filter(0 if next > EraManager.unlocked_era else next)
+			"era_replay":
+				EraManager.replay_upgrade()
 			"screen_shake":
 				GameState.screen_shake = (GameState.screen_shake + 1) % Juice.LEVEL_NAMES.size()
 		GameState.apply_display()
@@ -662,7 +668,7 @@ const MINIMAP_NAMES: Dictionary = {"on": "On", "off": "Off", "outdoor": "Outside
 
 static func display_rows() -> Array[Array]:
 	var retro: String = "Newest" if EraManager.retro_filter == 0 else "Era %d" % EraManager.retro_filter
-	return [
+	var rows: Array[Array] = [
 		["battery", "Battery saver: %s" % ("On" if GameState.battery_saver else "Off")],
 		["motion", "Less motion: %s" % ("On" if GameState.reduce_motion else "Off")],
 		["contrast", "High contrast: %s" % ("On" if GameState.high_contrast else "Off")],
@@ -675,6 +681,14 @@ static func display_rows() -> Array[Array]:
 		["retro", "Retro filter: %s" % shop_or("retro", retro)],
 		["screen_shake", "Screen shake: %s" % Juice.LEVEL_NAMES[GameState.screen_shake]],
 	]
+	rows.append_array(era_replay_rows())
+	return rows
+
+## "Replay era change" (docs/ERA_FEEL_UI.md): only once an era past Era I is on screen.
+static func era_replay_rows() -> Array[Array]:
+	if EraManager.active_era() < EraManager.Era.WASH:
+		return []
+	return [["era_replay", "Replay era change"]]
 
 ## Hand-made texts follow a language change at once (item 2187).
 func _on_language_changed(_code: String) -> void:
@@ -817,6 +831,8 @@ static func storage_card(s: Spirling) -> String:
 	if not tr.is_empty():
 		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	lines.append("Keepsake: %s" % (str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else "none"))
+	if EraFeatures.is_unlocked(Kinship.FEATURE):
+		lines.append(Kinship.label(s))
 	var hint: String = keepsake_suggestion(s)
 	if not hint.is_empty():
 		lines.append(hint)
@@ -908,11 +924,10 @@ static func _draw_party_row(b: Button, s: Spirling, leader: bool = false) -> voi
 		_draw_leader_flag(b, ink)
 	var x0: float = ListPicker.POINTER_SPACE + 16
 	var y: float = b.size.y - 3
-	b.draw_rect(Rect2(x0, y, BAR_WIDTH, 2), UITheme.DISABLED)
 	var ratio: float = clampf(float(s.hp) / maxf(1.0, float(s.max_hp())), 0.0, 1.0)
-	if ratio > 0.0:
-		b.draw_rect(Rect2(x0, y, maxf(1.0, roundf(BAR_WIDTH * ratio)), 2), ink)
-	else:
+	# The bar takes the era's look (data/era_feel.json "bar"): ink line, then colour, shading, bevel, gloss.
+	EraFeel.draw_bar(b, Rect2(x0, y, BAR_WIDTH, 2), ratio, ink, str(EraManager.feel("bar")))
+	if ratio <= 0.0:
 		# Worn out: a small cross at the end of the empty bar.
 		var cx: float = x0 + BAR_WIDTH + 3
 		b.draw_line(Vector2(cx - 2, y - 2), Vector2(cx + 2, y + 2), ink)

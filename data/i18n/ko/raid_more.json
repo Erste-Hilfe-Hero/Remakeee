@@ -1,0 +1,12 @@
+{
+ "_comment": "ko translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, 나그네 %d명) %d분",
+  "A legendary guardian waits in this Rift: %s": "이 균열에는 전설의 파수꾼이 기다린다: %s",
+  "Easy": "쉬움",
+  "Fastest Rifts": "가장 빠른 균열",
+  "Hard": "어려움",
+  "How hard?": "얼마나 어렵게?",
+  "No Rift was won yet.": "아직 이긴 균열이 없습니다."
+ }
+}

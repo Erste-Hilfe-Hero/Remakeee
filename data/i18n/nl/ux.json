@@ -191,6 +191,11 @@
   "leads the team": "leidt het team",
   "leads the team, worn out": "leidt het team, uitgeput",
   "unavailable": "niet beschikbaar",
-  "worn out": "uitgeput"
+  "worn out": "uitgeput",
+  "Only in battle.": "Alleen in gevechten.",
+  "Vigor %d/%d to %d/%d": "Kracht %d/%d naar %d/%d",
+  "Already knows this art.": "Kent deze techniek al.",
+  "Wrong element.": "Verkeerd element.",
+  "Works on its own at: %s": "Werkt vanzelf bij: %s"
  }
 }
