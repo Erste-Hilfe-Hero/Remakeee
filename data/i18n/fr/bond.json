@@ -1,0 +1,19 @@
+{
+ "_comment": "French texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "Lien, étape 2: choisis Lien. Un gros bouton C'est à moi! apparaît.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Lien, étape 3: appuie sur A aussi vite que possible. Plus la barre est pleine, meilleur est le lien.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Lien, étape 3: tape sur C'est à moi! aussi vite que possible. Plus la barre est pleine, meilleur est le lien.",
+  "Bonding: %s": "Lien: %s",
+  "Echo": "Écho",
+  "Hint": "Indice",
+  "Mine": "À moi",
+  "Mine!": "C'est à moi!",
+  "Mine: tap one button fast. Echo: repeat the call.": "À moi: tape vite sur un bouton. Écho: répète l'appel.",
+  "Note": "Note",
+  "Reach out to %s... Tap Mine! fast!": "Tends la main vers %s... Tape vite sur C'est à moi!",
+  "Tap Mine! fast!": "Tape vite sur C'est à moi!",
+  "Tip": "Astuce",
+  "Tips": "Astuces"
+ }
+}

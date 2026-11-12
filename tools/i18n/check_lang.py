@@ -13,7 +13,8 @@ Checked (errors):
 Reported (no error, because other threads add German texts every day): keys that still lack a
 translation, and keys whose English text is gone.
 
-Usage: python3 tools/i18n/check_lang.py [code ...] [--missing] [--json]
+Usage: python3 tools/i18n/check_lang.py [code ...] [--missing] [--json] [--strict]
+  --strict   missing keys are errors too (CI uses this)
   --missing  lists the missing keys per table (with the German text as a hint)
   --json     prints the missing keys as {table: {english: german}} for a translator
 """
@@ -97,6 +98,9 @@ def main():
     for code in codes:
         errors, missing, stale, have, total = check(code, de)
         failed |= bool(errors)
+        if "--strict" in sys.argv and total - have:
+            failed = True
+            print("ERROR %s: %d keys missing (run with --missing to list them)" % (code, total - have))
         for e in errors:
             print("ERROR " + e)
         report[code] = missing

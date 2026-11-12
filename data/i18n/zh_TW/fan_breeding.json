@@ -1,0 +1,23 @@
+{
+ "_comment": "Traditional Chinese texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Auntie Grisela": "Grisela姑媽",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Grisela姑媽的契約成立了。這個小傢伙繼承了兩家的精華。",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Grisela姑媽：一份契約%d金幣。愛情免費，文書不免費。",
+  "Auntie Grisela: A good match is a merger with feathers.": "Grisela姑媽：好姻緣就是帶羽毛的合併。",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Grisela姑媽：帶個回聲核心來，我就把嫁妝寫進契約。",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Grisela姑媽：嫁妝我寫好了。沒人讀，但寫下來了。",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Grisela姑媽：沒有回聲核心，就沒有婚禮。先去泉邊唱一首，再談生意。",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Grisela姑媽：簽了，封了，不會再有別人知道。大概。",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Grisela姑媽：兩個好家庭，一首甜歌。剩下的我來安排。",
+  "It already knows %s, an heirloom art of the family.": "它已經會%s了，這是家族的傳家技藝。",
+  "It carries the family's best Spark in %d values.": "它在%d項數值上繼承了家族最好的火花。",
+  "Seal": "封印",
+  "Seal a match contract for the core of %s for %d coins?": "為%s的核心簽訂姻緣契約，費用%d金幣？",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "原來Grisela姑媽把同一樁姻緣也賣給了%s。契約作廢了，但歌聲仍會喚醒它。",
+  "a family she calls 'the other one'": "一個她稱作“另一家”的家族",
+  "the Moldwick family": "Moldwick家",
+  "the Pellgraves": "Pellgrave家",
+  "the Second Cousins": "遠房表親們"
+ }
+}

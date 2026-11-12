@@ -46,7 +46,7 @@ jobs:
         run: python3 tools/i18n/build.py --check && python3 tools/i18n_extract.py de --check
       - name: Every species has a Gleam palette (tools/art/gen_gleam_palettes.py)
         run: python3 tools/art/gen_gleam_palettes.py --check
-      - name: The other 12 languages keep their placeholders (coverage is only reported)
+      - name: The other 12 languages keep their placeholders (missing keys are counted, advisory)
         run: python3 tools/i18n/check_lang.py
       - name: Live content is data only (tools/live/publish.py, docs/LIVE_CONTENT.md)
         run: python3 tools/live/publish.py check live/content.json data/live_content.json
