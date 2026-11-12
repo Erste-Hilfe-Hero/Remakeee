@@ -1,0 +1,41 @@
+{
+ "name": "Stargazers' Rest",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "heal_point": [
+  4,
+  5
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "starwell",
+   "tx": 7,
+   "ty": 7,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "wilhelmina",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "starwell/wilhelmina",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

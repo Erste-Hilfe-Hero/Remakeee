@@ -1,0 +1,24 @@
+{
+ "_comment": "it translation of the online_replays table, keyed by the English text.",
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s: %d%% di vittorie (%d su %d)",
+  "%s: met %d times": "%s: incontrato %d volte",
+  "Copy share code": "Copia il codice di condivisione",
+  "Lost": "Sconfitta",
+  "Met most often": "Incontrati più spesso",
+  "No online battles yet.": "Ancora nessuno scontro online.",
+  "Online battle": "Scontro online",
+  "Online replays": "Replay online",
+  "Online replays (%d)": "Replay online (%d)",
+  "Open league": "Lega Aperta",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "Manutenzione programmata tra %d h. Il gioco resterà offline per un po'.",
+  "Raid": "Assalto",
+  "Rift board": "Classifica degli Squarci",
+  "The clipboard holds no replay code.": "Negli appunti non c'è nessun codice replay.",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "Il codice è negli appunti. Un amico può guardarlo in Record, Replay online.",
+  "Watch": "Guarda",
+  "Watch a code from the clipboard": "Guarda un codice dagli appunti",
+  "Win rate per Spirling": "Percentuale di vittorie per Spirling",
+  "Won": "Vittoria"
+ }
+}
