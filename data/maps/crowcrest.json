@@ -326,6 +326,12 @@
   },
   {
    "x": 10,
+   "y": 21,
+   "dialogue": "veydal_more/poster_2",
+   "hide_flag": "poster_2"
+  },
+  {
+   "x": 10,
    "y": 15,
    "dialogue": "crowcrest/murk_hollow_sign",
    "gear": [
@@ -400,14 +406,6 @@
    "item": "wake_bell",
    "count": 1,
    "flag": "find_crow_door"
-  },
-  {
-   "x": 10,
-   "y": 21,
-   "item": "remedy",
-   "count": 1,
-   "flag": "poster_2",
-   "dialogue": "veydal_more/poster_2"
   },
   {
    "x": 10,

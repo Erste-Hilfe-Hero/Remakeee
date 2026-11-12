@@ -151,11 +151,15 @@ func test_copperfold_board_opens_its_last_bounty_last() -> void:
 	ids = Dialogue.choices_for(page, flags).map(func(c: Dictionary) -> String: return str(c.id))
 	assert_eq(ids, ["b12", "no"])
 
-func test_every_wanted_poster_is_a_hidden_find_in_veydal() -> void:
+func test_every_wanted_poster_hangs_in_veydal_until_torn_down() -> void:
 	var found: Dictionary = {}
 	for id: String in MapData.all_ids():
-		for s: Dictionary in MapData.load_map(id).secrets:
-			found[str(s.flag)] = MapData.load_map(id).region
+		var m: MapData = MapData.load_map(id)
+		for s: Dictionary in m.signs:
+			if str(s.get("dialogue", "")).begins_with(FILE + "/poster_"):
+				assert_eq(m.region, "veydal", id)
+				assert_eq(str(Dialogue.get_entry(str(s.dialogue)).get("flag", "")), str(s.get("hide_flag", "")), id)
+				found[str(s.hide_flag)] = id
 	var items: Array = boards.collections.wanted_posters.items
 	assert_eq(items.size(), 8)
 	var all: Dictionary = {}

@@ -301,6 +301,12 @@
    "hide_flag": "page_4"
   },
   {
+   "x": 1,
+   "y": 10,
+   "dialogue": "veydal_more/poster_8",
+   "hide_flag": "poster_8"
+  },
+  {
    "x": 10,
    "y": 2,
    "dialogue": "thornridge/marker_stone"
@@ -343,14 +349,6 @@
    "count": 1,
    "flag": "hush_coin_1",
    "dialogue": "veydal_side/coin_1"
-  },
-  {
-   "x": 1,
-   "y": 10,
-   "item": "spark_drop",
-   "count": 1,
-   "flag": "poster_8",
-   "dialogue": "veydal_more/poster_8"
   }
  ],
  "square": [

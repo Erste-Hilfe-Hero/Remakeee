@@ -12,14 +12,12 @@
     "hide_flag": "lq_hallowmur_ready"
    }
   ],
-  "secrets": [
+  "signs": [
    {
     "x": 10,
     "y": 26,
-    "item": "tonic",
-    "count": 1,
-    "flag": "poster_3",
-    "dialogue": "veydal_more/poster_3"
+    "dialogue": "veydal_more/poster_3",
+    "hide_flag": "poster_3"
    }
   ]
  },

@@ -173,6 +173,12 @@
    "hide_flag": "page_2"
   },
   {
+   "x": 10,
+   "y": 8,
+   "dialogue": "veydal_more/poster_1",
+   "hide_flag": "poster_1"
+  },
+  {
    "x": 1,
    "y": 4,
    "dialogue": "fernstair/marker_stone"
@@ -240,14 +246,6 @@
    "item": "cooling_gel",
    "count": 1,
    "flag": "find_fern_gate"
-  },
-  {
-   "x": 10,
-   "y": 8,
-   "item": "tonic",
-   "count": 1,
-   "flag": "poster_1",
-   "dialogue": "veydal_more/poster_1"
   },
   {
    "x": 2,

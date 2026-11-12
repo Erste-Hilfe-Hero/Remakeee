@@ -215,6 +215,12 @@
    "x": 3,
    "y": 15,
    "dialogue": "quillbrook/mound_stone"
+  },
+  {
+   "x": 1,
+   "y": 19,
+   "dialogue": "veydal_more/poster_5",
+   "hide_flag": "poster_5"
   }
  ],
  "blocks": [
@@ -269,14 +275,6 @@
    "item": "remedy",
    "count": 1,
    "flag": "find_mound_2"
-  },
-  {
-   "x": 1,
-   "y": 19,
-   "item": "tonic",
-   "count": 1,
-   "flag": "poster_5",
-   "dialogue": "veydal_more/poster_5"
   }
  ],
  "passages": [

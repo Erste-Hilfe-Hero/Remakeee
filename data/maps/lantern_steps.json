@@ -157,6 +157,12 @@
    "x": 1,
    "y": 2,
    "dialogue": "lantern_steps/marker_stone"
+  },
+  {
+   "x": 10,
+   "y": 7,
+   "dialogue": "veydal_more/poster_7",
+   "hide_flag": "poster_7"
   }
  ],
  "blocks": [
@@ -202,14 +208,6 @@
    "count": 1,
    "flag": "dig_lantern_steps",
    "soil": true
-  },
-  {
-   "x": 10,
-   "y": 7,
-   "item": "strong_tonic",
-   "count": 1,
-   "flag": "poster_7",
-   "dialogue": "veydal_more/poster_7"
   }
  ],
  "passages": [

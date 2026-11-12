@@ -28,14 +28,12 @@
     "sprite": "villager"
    }
   ],
-  "secrets": [
+  "signs": [
    {
     "x": 1,
     "y": 19,
-    "item": "tonic",
-    "count": 1,
-    "flag": "poster_5",
-    "dialogue": "veydal_more/poster_5"
+    "dialogue": "veydal_more/poster_5",
+    "hide_flag": "poster_5"
    }
   ]
  },
