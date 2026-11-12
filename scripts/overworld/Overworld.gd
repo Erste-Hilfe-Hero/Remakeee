@@ -3224,7 +3224,7 @@ func after_tamer_win(n: NPC) -> void:
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
 			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
-		if GameState.level_cap() < Spirling.MAX_LEVEL:
+		if GameState.level_cap() < GameState.ring_ceiling():
 			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
 		# The Warden's thanks for the mend (the Rifts of 2026-11): an Echo Crystal with its art.
