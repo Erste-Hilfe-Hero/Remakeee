@@ -204,6 +204,15 @@ func _build() -> void:
 	_inkshadow.centered = false
 	_inkshadow.modulate = Color(UITheme.INK, 0.85)
 	_entities.add_child(_inkshadow)
+	# Era look of the figures: poses, bubbles, head turns, the Spirling behind (EraActors).
+	var actors := EraActors.new()
+	actors.name = "era_actors"
+	actors.entities = _entities
+	actors.player = player
+	actors.follower = _inkshadow
+	actors.is_night = func() -> bool: return map != null and map.outdoor and DayCycle.current() == DayCycle.Phase.NIGHT
+	actors.is_rain = func() -> bool: return map != null and map.outdoor and WeatherCycle.current(map) in ["rain", "storm"]
+	add_child(actors)
 	var hint := InteractHint.new()
 	hint.ow = self
 	add_child(hint)
@@ -553,6 +562,9 @@ func _try_gear(target: Vector2i) -> bool:
 		var half := Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0 + 2.0)
 		rope.points = PackedVector2Array([from_pos + half, to_pos + half])
 		_entities.add_child(rope)
+	# From Era III the Wayfarer wades across on foot, knee-deep, without the hop (data/era_actor_look.json).
+	if EraActorLook.wades(gear):
+		player.era_anim["wade"] = true
 	var tw: Tween = create_tween()
 	if rope != null:
 		for i: int in GRAPPLE_PULLS:
@@ -561,11 +573,12 @@ func _try_gear(target: Vector2i) -> bool:
 			tw.tween_property(player, "position", b, GEAR_MOVE_TIME / GRAPPLE_PULLS).from(a).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	else:
 		tw.tween_method(func(k: float) -> void:
-			var arc: float = -10.0 * sin(k * PI)
+			var arc: float = (0.0 if player.era_anim.has("wade") else -10.0) * sin(k * PI)
 			player.position = from_pos.lerp(to_pos, k).round() + Vector2(0, round(arc)), 0.0, 1.0, GEAR_MOVE_TIME)
 	await tw.finished
 	if rope != null:
 		rope.queue_free()
+	player.era_anim.erase("wade")
 	player.place(dest, player.facing)
 	GameState.player_cell = dest
 	player.frozen = false
