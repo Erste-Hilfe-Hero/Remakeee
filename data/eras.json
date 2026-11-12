@@ -1,8 +1,8 @@
 {
-  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/. finale_flags: era flag -> the flag the era's post-game finale sets (EraManager.mark_finales). Era III's region adds its own entry for era3_finale_done when it lands; Halcyra (data/region4.json) waits on that flag. regions: post-game region -> its era (EraManager.region_era), for regions after the story. ring_caps: era number -> highest ring a Spirling can grow to once that era is open (GameState.ring_ceiling; Era I and II stay at Spirling.MAX_LEVEL 60, Era III opens 78 for its rings 60 to 78, Era IV Halcyra 96 for its rings 78 to 96; the last value equals Spirling.ERA_MAX_LEVEL). XP keeps the same power curve (Spirling.xp_for_level), so every ring past 60 costs more than the one before.",
+  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/. finale_flags: era flag -> the flag the era's post-game finale sets (EraManager.mark_finales). Era III's region adds its own entry for era3_finale_done when it lands; Halcyra (data/region4.json) waits on that flag. regions: post-game region -> its era (EraManager.region_era), for regions after the story. ring_caps: era number -> highest ring a Spirling can grow to once that era is open (GameState.ring_ceiling; Era I and II stay at Spirling.MAX_LEVEL 60; Era III also stays at 60 until its region sets its own rings (raise its value then); Era IV Halcyra opens 96 for its rings 78 to 96; the last value equals Spirling.ERA_MAX_LEVEL). XP keeps the same power curve (Spirling.xp_for_level), so every ring past 60 costs more than the one before.",
   "ring_caps": {
   "2": 60,
-  "3": 78,
+  "3": 60,
   "4": 96
  },
  "unlock_flags": {
