@@ -30,6 +30,7 @@ const LONG_PRESS: float = 0.45
 var _move_buttons: Array[Button] = []
 ## Element symbol at the left of each move row.
 var _move_icons: Array[TextureRect] = []
+var _move_stripes: Array[ColorRect] = []
 ## Energy cost and matchup, right-aligned in each move row.
 var _move_costs: Array[Label] = []
 var _swap: Button
@@ -82,6 +83,7 @@ func _ready() -> void:
 		icon.position = Vector2(2, (MOVE_BUTTON_HEIGHT - ElementIcons.SIZE) / 2)
 		b.add_child(icon)
 		_move_icons.append(icon)
+		_move_stripes.append(_stripe(b))
 		var cost := Label.new()
 		cost.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		cost.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -111,6 +113,17 @@ func _ready() -> void:
 		if TapInput.is_release(ev):
 			close_info())
 	add_child(_info_panel)
+
+## Thin colour stripe on the button's left edge (era colour code); transparent in Era I.
+func _stripe(b: Button) -> ColorRect:
+	var r := ColorRect.new()
+	r.name = "Stripe"
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	r.color = Color.TRANSPARENT
+	r.set_anchors_and_offsets_preset(Control.PRESET_LEFT_WIDE)
+	r.offset_right = float(HpBarStyle.cfg().get("command_stripe", 2))
+	b.add_child(r)
+	return r
 
 func _on_hold() -> void:
 	if _held_index < 0 or _held_index >= _shown_moves.size():
@@ -268,6 +281,7 @@ func _small(parent: Control, text: String, kind: BattleAction.Kind) -> Button:
 	b.pressed.connect(func() -> void:
 		Sound.sfx("confirm")
 		chosen.emit(kind, -1))
+	_stripe(b)
 	parent.add_child(b)
 	return b
 
@@ -331,17 +345,28 @@ func refresh(model: BattleModel, slot: int = 0) -> void:
 			b.text = mv.move_name
 			var pct: int = damage_pct(model, me, foe, mv) if GameState.damage_preview and ShopEffects.owns_setting("damage_preview") and mult >= 0.0 else -1
 			_move_costs[i].text = move_line(mv, me.energy, mult, multi, pct, me.move_cost(mv), me.cooldown_left(mv))
-			_move_icons[i].texture = ElementIcons.outlined(mv.element)
+			var era: int = EraManager.active_era()
+			_move_icons[i].texture = ElementIcons.outlined(mv.element, BattleUiStyle.badge_color(era, mv.element))
+			_move_stripes[i].color = BattleUiStyle.badge_color(era, mv.element) if BattleUiStyle.colour_on(era) else Color.TRANSPARENT
+			var shown_mult: float = mult if mv.power > 0 else -1.0
+			_move_costs[i].text = BattleUiStyle.matchup_mark(shown_mult, GameState.color_blind) + _move_costs[i].text
+			_move_costs[i].add_theme_color_override("font_color", BattleUiStyle.matchup_color(era, shown_mult))
 			b.tooltip_text = "%s %s, power %d" % [Elements.element_name(mv.element), MoveData.Kind.keys()[mv.kind].capitalize(), mv.power]
 			b.disabled = not me.can_afford(mv) or model.move_locked(mv)
 		else:
 			b.text = "-"
 			_move_costs[i].text = ""
 			_move_icons[i].texture = null
+			_move_stripes[i].color = Color.TRANSPARENT
 			b.disabled = true
 	var kinds: Array[int] = []
 	for a: BattleAction in model.legal_actions(BattleModel.Side.PLAYER, slot):
 		kinds.append(a.kind)
+	var e: int = EraManager.active_era()
+	for pair: Array in [[_swap, "swap"], [_item, "item"], [_bond, "bond"], [_run, "run"]]:
+		var sb: ColorRect = (pair[0] as Button).get_node_or_null("Stripe")
+		if sb != null:
+			sb.color = BattleUiStyle.command_color(e, pair[1])
 	_swap.disabled = not BattleAction.Kind.SWAP in kinds
 	_item.disabled = not BattleAction.Kind.ITEM in kinds
 	# Against another Wayfarer the Bond button offers the Ink Oath instead (once per battle).

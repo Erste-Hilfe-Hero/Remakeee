@@ -2121,6 +2121,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The root takes the colour and glows.", "The last root glows, and the tangle pulls aside!"],
 	"shutter": ["The shutters hum in the wind. The stair stays open.", "The shutter bangs, and the wind drops dead. Every shutter swings shut again.",
 		"The shutter swings open. Sand hisses through the slats.", "The last shutter opens, the tower breathes, and the stair is clear!"],
+	"valve": ["The pipes gurgle along happily. The stair stays dry.", "The valve screams, and every pipe slams shut again. Start over.",
+		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
 }
 
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
