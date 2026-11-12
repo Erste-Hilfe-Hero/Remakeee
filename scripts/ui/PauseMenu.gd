@@ -132,6 +132,8 @@ func run() -> void:
 					return
 			"Settings": await run_settings()
 			"Photo":
+				# The first time, a line on how photo mode works (item 1880).
+				await tip("photo")
 				photo = true
 				return
 			"Travel":
@@ -920,7 +922,7 @@ static func gear_hint(id: String) -> String:
 		places.append(Loc.t(GEAR_PLACES.get(str(w), str(w))))
 	if places.is_empty():
 		return Loc.t(str(Database.item(id).get("description", "")))
-	return Loc.t("Works on its own at: %s") % ", ".join(places)
+	return Loc.t("Use it at %s: face the spot and tap it.") % ", ".join(places)
 
 ## The tile a gear item works on, drawn at twice its size, or null.
 static func gear_picture(id: String) -> Texture2D:

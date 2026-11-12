@@ -1,0 +1,168 @@
+{
+ "name": "The Fallen Planet",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "fallen_planet",
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^,,::@@::,,^",
+  "^,,:.|..|:,^",
+  "^::..S...::^",
+  "^,,......,,^",
+  "^,,.@@@@.,,^",
+  "^::.@..@.::^",
+  "^::.@..@.::^",
+  "^,,........^",
+  "^,,..,,,...^",
+  "^::.......__",
+  "^::..,,,...^",
+  "^,,,,,,,,..^",
+  "^,,,::::,,.^",
+  "^.....L....^",
+  "^::,,,,,::.^",
+  "^::,,,,,::.^",
+  "^,,......,,^",
+  "^,,,.S..,,,^",
+  "^^^^^^^^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 11,
+   "y": 10,
+   "to": "orrery_ridge",
+   "tx": 1,
+   "ty": 14,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "q4_brass_planet_nan",
+   "x": 3,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "halcyra_side/brass_planet_nan",
+   "sprite": "elder",
+   "show_flag": "q4_brass_planet_asked"
+  },
+  {
+   "id": "q4_brass_planet_ambrose",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "halcyra_side/brass_planet_ambrose",
+   "sprite": "warden",
+   "show_flag": "q4_brass_planet_reveal"
+  },
+  {
+   "id": "q4_own_cairn_rolf",
+   "x": 9,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "halcyra_side/own_cairn_rolf",
+   "sprite": "villager",
+   "show_flag": "q4_own_cairn_asked"
+  },
+  {
+   "id": "q4_salt_saint_ortrud",
+   "x": 2,
+   "y": 12,
+   "facing": "right",
+   "dialogue": "halcyra_side/salt_saint_ortrud",
+   "sprite": "elder",
+   "show_flag": "q4_salt_saint_asked"
+  },
+  {
+   "id": "hs_thea",
+   "x": 6,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "halcyra_side/thea",
+   "sprite": "villager",
+   "trainer": "Crater Prospector Thea",
+   "intro": "halcyra_side/thea_intro",
+   "defeat": "halcyra_side/thea_defeat",
+   "money": 3560,
+   "team": [
+    {
+     "species": "Helirollax",
+     "level": 87
+    },
+    {
+     "species": "Rollibex",
+     "level": 88
+    },
+    {
+     "species": "Solmantle",
+     "level": 89
+    }
+   ]
+  },
+  {
+   "id": "hs_moritz",
+   "x": 3,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "halcyra_side/moritz",
+   "sprite": "villager",
+   "trainer": "Star Catcher Moritz",
+   "intro": "halcyra_side/moritz_intro",
+   "defeat": "halcyra_side/moritz_defeat",
+   "money": 3560,
+   "team": [
+    {
+     "species": "Rollibex",
+     "level": 88
+    },
+    {
+     "species": "Solmantle",
+     "level": 89
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 3,
+   "dialogue": "halcyra_side/fallen_sign"
+  },
+  {
+   "x": 5,
+   "y": 18,
+   "dialogue": "halcyra_side/fallen_notice"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 4,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_fallen_planet_1"
+  },
+  {
+   "x": 11,
+   "y": 13,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_fallen_planet_2"
+  },
+  {
+   "x": 6,
+   "y": 19,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_fallen_planet_3"
+  },
+  {
+   "x": 8,
+   "y": 0,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_fallen_planet_4"
+  }
+ ]
+}

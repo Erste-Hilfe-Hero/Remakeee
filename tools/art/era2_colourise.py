@@ -182,8 +182,8 @@ def check() -> int:
     n = 0
     for f in sorted(glob.glob(os.path.join(SRC, "**", "*.png"), recursive=True)):
         rel = os.path.relpath(f, SRC)
-        if rel.startswith("spirlings") or rel.startswith(os.path.join("tiles", "overworld_")):
-            continue  # the acts' own Era I atlases; Era II uses its shared atlas (TilesetFactory.atlas_path)
+        if rel.startswith("spirling") or rel.startswith(os.path.join("tiles", "overworld_")):
+            continue  # Spirling art and its tier files (gen_tiers.py) keep their origin look; the acts' own Era I atlases; Era II uses its shared atlas (TilesetFactory.atlas_path)
         g = os.path.join(DST, rel)
         if not os.path.exists(g):
             print("missing:", rel); bad += 1; continue
