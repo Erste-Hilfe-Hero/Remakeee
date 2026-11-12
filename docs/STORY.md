@@ -147,7 +147,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 ### Act II side content (Corvane)
 
 Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German:
-`tools/i18n/de_corvane_side.py`. Rough play time per act: `python3 tools/act_hours.py`.
+`tools/i18n/de_corvane_side.py`. Rough play time per act and per post-game era region (Vellmarch, Quillmarch, Halcyra; `regions` in `data/playtime.json`): `python3 tools/act_hours.py [act or region]`.
 
 - **Rival Nib Wexley**, a quay rat: five story duels (`nib_1`..`nib_5`) on the quay, in Madderby,
   the Woadfen, at Stillwater and at the bottom of the Rook Vault. After the last one he admits he
