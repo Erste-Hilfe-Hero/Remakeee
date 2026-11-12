@@ -575,6 +575,9 @@ def rift(mid):
                                           ("Your Spirlings drink and rest.", "Deine Spirlings trinken und ruhen sich aus.")), "action": "heal"})
     text(mid + "_sign", [sheet(rf["name"]), tr(*motto)])
     crew = [{"species": slot_species(t), "level": t["level"]} for t in w["team"]]
+    # Pith Fruit (era function pith_fruit, Era II on): the ace eats a Mending Pith in a pinch
+    # (keepsakes count from Veteran on, TrainerData.keeps_keepsakes).
+    crew[-1]["held"] = "pith_mend"
     ch = CHAPTER[mid]
     text("warden_" + w["id"], {"lines": [sheet(ch["text"])],
                                "after_flag": [{"flag": rf["flag"], "lines": [sheet(ch["betrayal"]["text"])]}]})

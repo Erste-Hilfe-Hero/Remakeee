@@ -104,7 +104,8 @@ Era II is Vellmarch, Era III Quillmarch, Era IV Halcyra, Era V Quivermoor.
 - `pith_fruit` (Era II): Mending Pith (eaten at half Vigor or less, heals a quarter) and
   Clearing Pith (eaten when a condition lands, washes it off), `items.json` "held" keys
   `pith_heal` and `pith_cure`, `BattleModel.eat_pith`. Gone for good once eaten. Sold by the
-  traders of Vellmarch, Halcyra and Quivermoor, not in Era I shops.
+  traders of Vellmarch, Halcyra and Quivermoor, not in Era I shops. The ace of every Vellmarch
+  and Quivermoor Warden holds a Mending Pith (keepsakes count from Veteran on).
 - `rustling_spots` (Era V): `RustleSpots`, one shaking patch of encounter ground per outdoor map
   and day (same for everyone), drawn as swaying blades. Stepping in fights the rarest kind of
   the map, 3 rings above its top ring, Gleam four times as likely. Used up per map and day

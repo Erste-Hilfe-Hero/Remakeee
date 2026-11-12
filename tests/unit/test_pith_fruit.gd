@@ -56,3 +56,12 @@ func test_sold_in_later_era_shops_only() -> void:
 		assert_string_contains(FileAccess.get_file_as_string("res://data/dialogue/%s.json" % f), "pith_mend pith_clear")
 	for f: String in ["brindlewick", "copperfold", "madderby"]:
 		assert_false(FileAccess.get_file_as_string("res://data/dialogue/%s.json" % f).contains("pith_"), "%s is Era I" % f)
+
+func test_era_wardens_ace_holds_a_pith() -> void:
+	for f: String in ["lock_rift", "foundry_rift", "masque_rift", "vault_rift", "wick_rift", "taproot_rift", "raft_rift", "bloom_rift"]:
+		var m: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/maps/%s.json" % f))
+		var aces: Array[String] = []
+		for n: Dictionary in m.npcs:
+			if n.has("warden"):
+				aces.append(str((n.team as Array).back().get("held", "")))
+		assert_eq(aces, ["pith_mend"] as Array[String], f)

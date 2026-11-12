@@ -100,7 +100,8 @@
     },
     {
      "species": "Velverain",
-     "level": 96
+     "level": 96,
+     "held": "pith_mend"
     }
    ],
    "intro": "quivermoor/warden_sabeline_intro",
