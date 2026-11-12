@@ -511,7 +511,6 @@ T = {
 "Rift Acolyte Wen": "Riss-Akolyth Wen",
 "Road to the far end of the Wide Rift.": "Weg zum fernen Ende des Weiten Risses.",
 "Rock stair, rings 10 to 13.": "Felsstiege, Ring 10 bis 13.",
-"Root Rift": "Wurzelriss",
 "Ropemaker Nell: Every knot I tie has a name. That one was 'Patience'.": "Seilerin Nell: Jeder Knoten, den ich binde, hat einen Namen. Der hieß 'Geduld'.",
 "Ropemaker Nell: The old wells hereabouts go deep. You'll want a ladder you can leave behind.": "Seilerin Nell: Die alten Brunnen hier gehen tief. Du brauchst eine Leiter, die du dalassen kannst.",
 "Ropemaker Nell: Tie it where you see a chalk mark. It holds.": "Seilerin Nell: Knote sie dort fest, wo du ein Kreidezeichen siehst. Sie hält.",

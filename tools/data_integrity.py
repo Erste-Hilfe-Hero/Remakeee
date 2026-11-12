@@ -687,7 +687,7 @@ for g in q.get("main", []):
 for g in q.get("side", []):
     C([g.get("show"), g.get("done")] + list(g.get("progress", []) or []), "quest side " + str(g.get("id")))
 
-for p in ("data/region2.json", "data/region3.json", "data/region4.json"):
+for p in sorted(k for k in J if re.fullmatch(r"data/region\d+\.json", k)):  # every era region sheet
     r = J.get(p)
     if not isinstance(r, dict):
         continue
