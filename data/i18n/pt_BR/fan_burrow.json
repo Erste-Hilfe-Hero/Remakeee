@@ -1,0 +1,26 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "Uma fenda na rocha se abre num buraco seco.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "Um buraco seco na rocha. Parece que ninguém mora aqui. Reivindicar como sua Toca?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "Um pote de nomes. Seus Spirlings escreveram. Alguns são seus.",
+  "A map of Veydal with every Rift crossed out in red ink.": "Um mapa de Veydal com cada Fenda riscada a tinta vermelha.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Um selo chamuscado da Fenda da Brasa. Ainda quente. Ainda bravo.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Um selo da Fenda da Névoa. Metade sumiu, ou tá se escondendo.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Um selo da Fenda da Maré. Pinga no tapete.",
+  "Black Veil": "Véu Negro",
+  "Cinder Seal": "Selo da Brasa",
+  "Claim": "Reivindicar",
+  "Grudge Jar": "Pote de rancores",
+  "Mended Veydal": "Veydal remendada",
+  "Mist Seal": "Selo da Névoa",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "Alguém dormiu aqui. %s sumiu da parede; um recibo de penhor está pendurado no lugar.",
+  "The wall is full. Take something down first.": "A parede está cheia. Tire alguma coisa primeiro.",
+  "Tide Seal": "Selo da Maré",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "Ganho num Velório. Ninguém chorou mais alto que seu Spirling.",
+  "You hang it on the wall.": "Você pendura na parede.",
+  "You take it down.": "Você tira da parede.",
+  "Your Burrow (%d/%d on the wall)": "Sua Toca (%d/%d na parede)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "Sua Toca. As paredes estão nuas. Conquiste algo que valha pendurar."
+ }
+}

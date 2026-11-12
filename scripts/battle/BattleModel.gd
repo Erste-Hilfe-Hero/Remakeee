@@ -602,12 +602,12 @@ func reveal_trait(side: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.has_meta("trait_shown"):
 		return
-	var t: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var t: Dictionary = BattleRules.trait_info(s.gift_id())
 	if t.is_empty():
 		return
 	s.set_meta("trait_shown", true)
 	var d: Dictionary = _who(side, slot)
-	d.merge({"trait": s.data.trait_id, "label": str(t.label), "text": str(t.text)})
+	d.merge({"trait": s.gift_id(), "label": str(t.label), "text": str(t.text)})
 	emit_event(BattleEvent.Type.TRAIT, d)
 
 ## Lays the Rift field [param id] for [param turns] turns (0 = for good). Emits FIELD.
@@ -744,7 +744,7 @@ func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1)
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
-	if status == "scorch" and BattleRules.trait_info(s.data.trait_id).has("scorch_atk"):
+	if status == "scorch" and BattleRules.trait_info(s.gift_id()).has("scorch_atk"):
 		reveal_trait(side, slot)
 	return true
 
@@ -956,7 +956,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		s.status_turns -= 1
 		if s.status_turns == 0:
 			_cure(side, slot)
-	var regen: int = int(BattleRules.trait_info(s.data.trait_id).get("regen_div", 0))
+	var regen: int = int(BattleRules.trait_info(s.gift_id()).get("regen_div", 0))
 	var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
 	var fdata: Dictionary = BattleRules.FIELDS.get(field, {})
 	var field_regen: int = 0
@@ -972,7 +972,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		s.mend_turns -= 1
 		if s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / BattleRules.MEND_DIV), slot)
-	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
+	if int(BattleRules.trait_info(s.gift_id()).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
 		reveal_trait(side, slot)
 	var gain: int = int(rules.get("energy_per_turn", ENERGY_PER_TURN)) + int(BattleRules.add_key(s, "energy_per_turn"))
 	if s.energy_surge > 0:
@@ -1155,9 +1155,9 @@ func _do_move(a: BattleAction) -> void:
 			rd.merge({"text": str(react.text), "element": mv.element, "status": str(react.status)})
 			emit_event(BattleEvent.Type.REACTION, rd)
 		if mv.is_damaging():
-			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.data.trait_id).has("phys_taken"):
+			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.gift_id()).has("phys_taken"):
 				reveal_trait(target_side, t_slot)
-			if BattleRules.trait_info(me.data.trait_id).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
+			if BattleRules.trait_info(me.gift_id()).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
 			if side == Side.FOE:

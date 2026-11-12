@@ -58,7 +58,7 @@ func _draw() -> void:
 	var w: float = size.x
 	draw_rect(Rect2(-1, -1, w + 2, needed_height() + 2), UITheme.BG)
 	var frac: float = clampf(display_hp / float(maxi(max_hp, 1)), 0.0, 1.0)
-	var col: Color = InfoStrip.HP_HIGH if frac > InfoStrip.HP_LOW_AT else InfoStrip.HP_LOW
+	var col: Color = HpBarStyle.color(EraManager.active_era(), frac)
 	# A dashed frame instead of a solid one tells a status apart without colour.
 	draw_rect(Rect2(0, 0, w, BAR_HEIGHT + 2), UITheme.INK, false, 1.0)
 	if not status.is_empty():

@@ -14,6 +14,10 @@ const ERRORS: Dictionary = {
 	"no_such_request": "That request is gone.",
 	"no_such_member": "That Wayfarer is no longer in the bund.",
 	"bad_name": "Pick two words for the name.",
+	"limit_today": "You donated all you can today. More tomorrow.",
+	"goal_open": "The week goal is not reached yet.",
+	"claimed": "You already took this week's reward.",
+	"not_enough": "You do not have that many.",
 }
 
 static func role_text(role: String) -> String:
@@ -56,7 +60,7 @@ static func _run_none(menu: MenuHost, invites: Array) -> bool:
 	var labels: Array[String] = []
 	for i: Dictionary in invites:
 		labels.append(Loc.t("Invitation: %s (%d) from %s") % [BundWords.name_of(int(i.name[0]), int(i.name[1])), int(i.size), str(i.by)])
-	labels.append_array(["Found a bund...", "Ask to join a bund..."] as Array[String])
+	labels.append_array(["Found a bund...", "Ask to join a bund...", "Find a bund..."] as Array[String])
 	var idx: int = await menu.pick_strings("You are not in a bund yet.", labels)
 	if idx < 0:
 		return true
@@ -71,6 +75,9 @@ static func _run_none(menu: MenuHost, invites: Array) -> bool:
 		return false
 	if idx == invites.size():
 		await found(menu)
+		return false
+	if idx == invites.size() + 2:
+		await search(menu)
 		return false
 	var code: String = await CodePrompt.ask(menu, "Friend code of someone in the bund", 8)
 	if code.is_empty():
@@ -120,7 +127,9 @@ static func _run_bund(menu: MenuHost, bund: Dictionary) -> bool:
 	var labels: Array[String] = []
 	for m: Dictionary in members:
 		labels.append(member_line(m))
-	var actions: Array[String] = []
+	var actions: Array[String] = ["Bund rank and week goal", "Donate items...", "Bund board"]
+	if role == "leader":
+		actions.append("Language and joining...")
 	if staff:
 		actions.append("Invite a Wayfarer...")
 		if not pending.is_empty():
@@ -155,6 +164,16 @@ static func _run_bund(menu: MenuHost, bund: Dictionary) -> bool:
 						% Time.get_datetime_string_from_unix_time(int(got.confirm_from), true))
 		"Keep the bund":
 			await _call(menu, "bund_keep")
+		"Bund rank and week goal":
+			await stats(menu)
+		"Donate items...":
+			await donate(menu)
+		"Bund board":
+			var got: Dictionary = await _call(menu, "bund_board")
+			if not got.is_empty():
+				await menu.info(board_text(got.rows))
+		"Language and joining...":
+			await settings(menu)
 		"Leave the bund...":
 			if await menu.confirm("Leave the bund? You can join a bund again at any time."):
 				await _call(menu, "bund_leave")
@@ -200,3 +219,92 @@ static func _run_requests(menu: MenuHost, pending: Array) -> void:
 	var yes: int = await menu.pick_strings(labels[idx], ["Let them in", "Say no"] as Array[String])
 	if yes >= 0:
 		await _call(menu, "bund_admit", {"p_code": str(pending[idx].code), "p_accept": yes == 0})
+
+# --- Online 100, area 4: level, week goal, donations, board, search, open join -------------------
+
+static func stats_text(st: Dictionary) -> String:
+	var lines: Array[String] = [Loc.t("Bund rank %d (%d renown)") % [int(st.level), int(st.xp)],
+		Loc.t("Week goal: %d / %d items donated") % [mini(int(st.goal), int(st.goal_target)), int(st.goal_target)],
+		Loc.t("Donated today: %d / %d") % [int(st.donated_today), int(st.donate_daily)]]
+	return "\n".join(lines)
+
+static func stats(menu: MenuHost) -> void:
+	var st: Dictionary = await _call(menu, "bund_stats")
+	if st.is_empty():
+		return
+	var opts: Array[String] = []
+	if int(st.goal) >= int(st.goal_target) and not bool(st.goal_claimed):
+		opts.append("Take the week reward")
+	var idx: int = await menu.pick_strings(stats_text(st), opts)
+	if idx == 0:
+		var r: Dictionary = await TradeMenu.bag_call("bund_goal_claim", {})
+		await menu.info(Loc.t("You got: %s") % FriendsMenu.item_name(str(r.data.item)) if _ok(r) else error_text(r))
+
+static func _ok(r: Dictionary) -> bool:
+	return r.ok and r.data is Dictionary and bool(r.data.get("ok", false))
+
+static func donate(menu: MenuHost) -> void:
+	var ids: Array[String] = []
+	var labels: Array[String] = []
+	for id: String in GameState.inventory:
+		if int(GameState.inventory[id]) > 0:
+			ids.append(id)
+			labels.append("%s x%d" % [FriendsMenu.item_name(id), int(GameState.inventory[id])])
+	var idx: int = await menu.pick_strings("Donate items...", labels)
+	if idx < 0:
+		return
+	var counts: Array[String] = ["1", "5", "10"]
+	var c: int = await menu.pick_strings("How many?", counts)
+	if c < 0:
+		return
+	var r: Dictionary = await TradeMenu.bag_call("bund_donate", {"p_item": ids[idx], "p_count": int(counts[c])})
+	await menu.info(Loc.t("Thank you! The bund has %d renown now.") % int(r.data.xp) if _ok(r) else error_text(r))
+
+static func board_text(rows: Array) -> String:
+	var lines: Array[String] = []
+	for i: int in rows.size():
+		var x: Dictionary = rows[i]
+		lines.append(Loc.t("%d. %s  Rank %d%s") % [i + 1, BundWords.name_of(int(x.name[0]), int(x.name[1])), int(x.level),
+			"  " + Loc.t("(you)") if bool(x.get("mine", false)) else ""])
+	return "\n".join(lines) if not lines.is_empty() else Loc.t("No bunds yet.")
+
+static func _pick_lang(menu: MenuHost, title: String) -> Variant:
+	var langs: Array = [""]
+	langs.append_array(BundRules.config().get("langs", []))
+	var labels: Array[String] = []
+	for l: Variant in langs:
+		labels.append(Loc.t("Any language") if str(l).is_empty() else str(BundRules.LANG_NAMES.get(l, l)))
+	var idx: int = await menu.pick_strings(title, labels)
+	return str(langs[idx]) if idx >= 0 else null
+
+static func settings(menu: MenuHost) -> void:
+	var lang: Variant = await _pick_lang(menu, "Language of the bund")
+	if lang == null:
+		return
+	var open_idx: int = await menu.pick_strings("Who may join?", ["Anyone, at once", "Only after a request"] as Array[String])
+	if open_idx < 0:
+		return
+	if not (await _call(menu, "bund_settings", {"p_lang": lang, "p_open": open_idx == 0})).is_empty():
+		await menu.info("Saved.")
+
+static func search(menu: MenuHost) -> void:
+	var lang: Variant = await _pick_lang(menu, "Find a bund...")
+	if lang == null:
+		return
+	var got: Dictionary = await _call(menu, "bund_search", {"p_lang": lang})
+	if got.is_empty():
+		return
+	var rows: Array = got.bunds
+	var labels: Array[String] = []
+	for x: Dictionary in rows:
+		labels.append(Loc.t("%s  Rank %d  %d/30, %d active%s") % [BundWords.name_of(int(x.name[0]), int(x.name[1])), int(x.level),
+			int(x.size), int(x.active), "  " + Loc.t("open") if bool(x.open) else ""])
+	if labels.is_empty():
+		await menu.info("No bund found. Found your own!")
+		return
+	var idx: int = await menu.pick_strings("Find a bund...", labels)
+	if idx < 0:
+		return
+	var r: Dictionary = await _call(menu, "bund_join", {"p_bund": int(rows[idx].bund)})
+	if not r.is_empty():
+		await menu.info("You joined the bund." if bool(r.get("joined", false)) else "Request sent. A leader or helper decides.")

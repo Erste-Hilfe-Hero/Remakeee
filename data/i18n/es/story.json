@@ -571,6 +571,22 @@
   "Ysolde: You have Mirela's compass rose on your map case. Where did you get that?": "Ysolde: Llevas la rosa de los vientos de Mirela en tu portamapas. ¿De dónde la has sacado?",
   "Ysolde: You've seen the Wide Rift. Sit down, apprentice. There is something in the guild files.": "Ysolde: Has visto la Grieta Ancha. Siéntate, aprendiz. Hay algo en los archivos del gremio.",
   "Zippits spark brightest when a Rift is near. Wardens used them as early warnings.": "Los Zippits chisporrotean más fuerte cuando hay una Grieta cerca. Los Custodios los usaban como alarma.",
-  "{name}! Wake up!": "¡{name}! ¡Despierta!"
+  "{name}! Wake up!": "¡{name}! ¡Despierta!",
+  "Auburn": "Caoba",
+  "Black": "Negro",
+  "Blond": "Rubio",
+  "Brown": "Castaño",
+  "Coat colour": "Color del pelaje",
+  "Deep": "Oscuro",
+  "Fair": "Claro",
+  "Hair colour": "Color de pelo",
+  "Light": "Pálido",
+  "Ochre": "Ocre",
+  "Plum": "Ciruela",
+  "Rust": "Óxido",
+  "Silver": "Plata",
+  "Skin tone": "Tono de piel",
+  "Tan": "Bronceado",
+  "Teal": "Verde azulado"
  }
 }

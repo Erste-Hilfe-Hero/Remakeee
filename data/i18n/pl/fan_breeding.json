@@ -1,0 +1,23 @@
+{
+ "_comment": "Polish texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Auntie Grisela": "Ciotka Grisela",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Kontrakt Ciotki Griseli działa. Młode nosi to, co najlepsze z obu domów.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Ciotka Grisela: Kontrakt kosztuje %d monet. Miłość jest za darmo, papiery nie.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Ciotka Grisela: Dobre swaty to fuzja z piórami.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Ciotka Grisela: Przynieś mi Rdzeń Echa, a spiszę posag.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Ciotka Grisela: Spisuję posag. Nikt go nie czyta, ale jest spisany.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Ciotka Grisela: Bez Rdzenia Echa nie ma wesela. Najpierw zaśpiewaj przy źródle, potem pogadamy o interesach.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Ciotka Grisela: Podpisane, zapieczętowane i nikt inny się nie dowie. Prawdopodobnie.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Ciotka Grisela: Dwie dobre rodziny, jedna słodka pieśń. Resztę załatwię.",
+  "It already knows %s, an heirloom art of the family.": "Już zna technikę %s, rodzinną pamiątkę.",
+  "It carries the family's best Spark in %d values.": "Nosi najlepszą Iskrę rodziny w tylu wartościach: %d.",
+  "Seal": "Pieczętuj",
+  "Seal a match contract for the core of %s for %d coins?": "Zapieczętować kontrakt swatów dla rdzenia: %s za %d monet?",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "Wychodzi na to, że Ciotka Grisela sprzedała te same swaty komuś jeszcze: %s. Kontrakt jest nieważny, ale pieśń i tak budzi.",
+  "a family she calls 'the other one'": "rodzina, którą nazywa 'tą drugą'",
+  "the Moldwick family": "rodzina Moldwicków",
+  "the Pellgraves": "Pellgrave'owie",
+  "the Second Cousins": "Kuzyni w drugiej linii"
+ }
+}

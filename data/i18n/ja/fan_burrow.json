@@ -1,0 +1,26 @@
+{
+ "_comment": "Japanese texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "岩の割れ目が、かわいたくぼみに通じている。",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "岩のかわいたくぼみ。誰も住んでいないようだ。自分の巣穴にする？",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "名前のつまったびん。Spirlingたちが書いた。いくつかは君の名前。",
+  "A map of Veydal with every Rift crossed out in red ink.": "どの裂け目も赤インクでバツをつけたVeydalの地図。",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Cinder Riftのこげた封印。まだ温かい。まだ怒ってる。",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Mist Riftの封印。半分ない、か、かくれている。",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Tidewater Riftの封印。じゅうたんにしずくが落ちる。",
+  "Black Veil": "黒いベール",
+  "Cinder Seal": "燃えさしの封印",
+  "Claim": "自分のものにする",
+  "Grudge Jar": "恨みのびん",
+  "Mended Veydal": "つぎはぎのVeydal",
+  "Mist Seal": "霧の封印",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "誰かがここで寝た。壁から%sが消え、かわりに質札がかかっている。",
+  "The wall is full. Take something down first.": "壁がいっぱい。先に何か外して。",
+  "Tide Seal": "潮の封印",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "通夜で勝ち取った。君のSpirlingほど大声で泣いた者はいない。",
+  "You hang it on the wall.": "壁にかけた。",
+  "You take it down.": "外した。",
+  "Your Burrow (%d/%d on the wall)": "巣穴（壁に%d/%d）",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "君の巣穴。壁はがらんとしている。かける価値のあるものを手に入れよう。"
+ }
+}

@@ -27,6 +27,15 @@ static func apply_unlocks() -> void:
 	# A refunded sixth team slot: the last Spirling goes to storage, so saves stay valid.
 	while GameState.party.size() > GameState.party_max():
 		GameState._store(GameState.party.pop_back(), true)
+	# A refunded setting goes back to its plain state, it does not keep working (bug plan 1360).
+	if not owns_setting("retro") and EraManager.retro_filter != 0:
+		EraManager.set_retro_filter(0)
+	if not owns_setting("day_night"):
+		GameState.day_night = true
+	if not owns_setting("weather"):
+		GameState.weather = true
+	if not owns_setting("fast_text") and GameState.text_speed == GameState.TextSpeed.FAST:
+		GameState.text_speed = GameState.TextSpeed.NORMAL
 
 ## Growth with the pass (+50 %, item 4625) times a running Growth Crystal (items 4345, 4346).
 const PASS_GROWTH: float = 1.5
@@ -328,6 +337,8 @@ static func bought_spirling(g: Dictionary) -> Spirling:
 	var s: Spirling = Spirling.new(d, clampi(int(g.get("level", 1)), 1, Spirling.MAX_LEVEL))
 	for key: String in Spirling.STAT_KEYS:
 		s.spark[key] = Spirling.SPARK_MAX
+	# The temperament came from a random uid, so two buys could differ in HP (336 vs 352).
+	s.temper = str(g.get("temper", Spirling.TEMPERAMENTS[0].id))
 	s.shop_bought = true
 	s.hp = s.max_hp()
 	return s

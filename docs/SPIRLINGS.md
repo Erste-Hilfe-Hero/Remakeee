@@ -193,6 +193,73 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 145 | Duskmirrah | Umbra/Lumen | uncommon | weaver | deep_roots | 390 | - |
 <!-- /lines:solenne -->
 
+<!-- lines:ashmere -->
+## Ashmere lines (Act III, tools/art/lines/ashmere.py)
+
+Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 146 | Sootpaw | Ember/Umbra | common | kindler | deep_roots | 312 | Sootlurk (ring 22) |
+| 147 | Sootlurk | Ember/Umbra | uncommon | kindler | deep_roots | 435 | Sootharrow (ring 34) |
+| 148 | Sootharrow | Ember/Umbra | shy | kindler | deep_roots | 505 | - |
+| 149 | Vitrill | Lumen/Stone | common | bulwark | steady | 333 | Vitrillon (ring 21) |
+| 150 | Vitrillon | Lumen/Stone | uncommon | bulwark | steady | 453 | Vitrillaxe (ring 36) |
+| 151 | Vitrillaxe | Lumen/Stone | shy | bulwark | steady | 501 | - |
+| 152 | Sablet | Umbra/Gale | common | weaver | light_sleeper | 284 | Sablowl (ring 18) |
+| 153 | Sablowl | Umbra/Gale | uncommon | weaver | light_sleeper | 362 | Sablarch (ring 34) |
+| 154 | Sablarch | Umbra/Gale | shy | weaver | light_sleeper | 449 | - |
+| 155 | Quenchet | Ember/Tide | common | kindler | kindling | 295 | Quenchcoil (ring 21) |
+| 156 | Quenchcoil | Ember/Tide | uncommon | kindler | kindling | 403 | Quenchwyrm (ring 38) |
+| 157 | Quenchwyrm | Ember/Tide | shy | kindler | kindling | 422 | - |
+| 158 | Brickit | Stone/Ember | common | bulwark | deep_roots | 310 | Brickwarden (ring 21) |
+| 159 | Brickwarden | Stone/Ember | uncommon | bulwark | deep_roots | 441 | Brickolossus (ring 34) |
+| 160 | Brickolossus | Stone/Ember | shy | bulwark | deep_roots | 515 | - |
+| 161 | Clinklet | Stone/Umbra | common | bulwark | last_stand | 309 | Clinkshell (ring 18) |
+| 162 | Clinkshell | Stone/Umbra | uncommon | bulwark | last_stand | 395 | Clinkerdome (ring 37) |
+| 163 | Clinkerdome | Stone/Umbra | shy | bulwark | last_stand | 503 | - |
+| 164 | Peatlet | Bloom/Tide | common | weaver | slick | 303 | Peatbloom (ring 20) |
+| 165 | Peatbloom | Bloom/Tide | uncommon | weaver | slick | 391 | Peatmonarch (ring 34) |
+| 166 | Peatmonarch | Bloom/Tide | shy | weaver | slick | 461 | - |
+| 167 | Gloomgill | Tide/Umbra | common | striker | surge | 278 | Gloomgillar (ring 18) |
+| 168 | Gloomgillar | Tide/Umbra | uncommon | striker | surge | 397 | Gloomgillith (ring 36) |
+| 169 | Gloomgillith | Tide/Umbra | shy | striker | surge | 452 | - |
+| 170 | Fumelet | Gale/Umbra | common | weaver | light_sleeper | 308 | Fumewraith (ring 22) |
+| 171 | Fumewraith | Gale/Umbra | uncommon | weaver | light_sleeper | 406 | Fumeregent (ring 35) |
+| 172 | Fumeregent | Gale/Umbra | shy | weaver | light_sleeper | 494 | - |
+| 173 | Lodekit | Stone/Volt | common | vanguard | surge | 309 | Lodebrock (ring 19) |
+| 174 | Lodebrock | Stone/Volt | uncommon | vanguard | surge | 410 | Lodemarshal (ring 34) |
+| 175 | Lodemarshal | Stone/Volt | shy | vanguard | surge | 498 | - |
+| 176 | Glowflit | Ember/Gale | common | kindler | kindling | 305 | Glowflitter (ring 22) |
+| 177 | Glowflitter | Ember/Gale | uncommon | kindler | kindling | 403 | Glowflare (ring 37) |
+| 178 | Glowflare | Ember/Gale | shy | kindler | kindling | 499 | - |
+| 179 | Stylet | Umbra/Volt | common | striker | slick | 309 | Stylox (ring 21) |
+| 180 | Stylox | Umbra/Volt | uncommon | striker | slick | 435 | Stylaxon (ring 38) |
+| 181 | Stylaxon | Umbra/Volt | shy | striker | slick | 515 | - |
+| 182 | Coalkid | Stone/Ember | common | vanguard | last_stand | 315 | Coalbuck (ring 20) |
+| 183 | Coalbuck | Stone/Ember | uncommon | vanguard | last_stand | 461 | Coalpatriarch (ring 38) |
+| 184 | Coalpatriarch | Stone/Ember | shy | vanguard | last_stand | 515 | - |
+| 185 | Glazel | Lumen/Ember | common | kindler | deep_roots | 330 | Glazelisk (ring 18) |
+| 186 | Glazelisk | Lumen/Ember | uncommon | kindler | deep_roots | 448 | Glazeldrake (ring 37) |
+| 187 | Glazeldrake | Lumen/Ember | shy | kindler | deep_roots | 502 | - |
+| 188 | Puffbellow | Volt/Gale | uncommon | vanguard | steady | 315 | Bellowroc (ring 27) |
+| 189 | Bellowroc | Volt/Gale | shy | vanguard | steady | 416 | - |
+| 190 | Lampick | Lumen/Stone | uncommon | weaver | thick_hide | 315 | Lampickard (ring 26) |
+| 191 | Lampickard | Lumen/Stone | shy | weaver | thick_hide | 430 | - |
+| 192 | Charsprout | Bloom/Ember | uncommon | kindler | kindling | 323 | Charsylvan (ring 28) |
+| 193 | Charsylvan | Bloom/Ember | shy | kindler | kindling | 424 | - |
+| 194 | Ingotlet | Ember/Stone | uncommon | bulwark | thick_hide | 325 | Ingotusk (ring 26) |
+| 195 | Ingotusk | Ember/Stone | shy | bulwark | thick_hide | 464 | - |
+| 196 | Mortarant | Stone/Gale | uncommon | striker | slick | 321 | Mortarmarch (ring 28) |
+| 197 | Mortarmarch | Stone/Gale | shy | striker | slick | 432 | - |
+| 198 | Vaporel | Tide/Ember | uncommon | weaver | light_sleeper | 287 | Vaporelle (ring 28) |
+| 199 | Vaporelle | Tide/Ember | shy | weaver | light_sleeper | 376 | - |
+| 200 | Shadeback | Umbra/Stone | uncommon | bulwark | steady | 427 | - |
+| 201 | Kilnstork | Ember/Tide | uncommon | striker | surge | 421 | - |
+| 202 | Puffglass | Lumen/Gale | uncommon | weaver | deep_roots | 415 | - |
+| 203 | Flueling | Volt/Ember | uncommon | kindler | last_stand | 437 | - |
+<!-- /lines:ashmere -->
+
 ## Regional imprints (Ortsprägung, items 218-219)
 
 A Veydal kind that lives long in another region shows a regional form there: other elements, a new palette, its own lore line, without a new Spirlog number. The forms are listed in `variants` per kind in data/spirlings.json; `Spirling.apply_imprint(region)` stores the region id in `Spirling.variant`, and `Spirling.elements()` then uses the imprint's elements. What counts as "living long" in a region is decided once those regions are playable.
