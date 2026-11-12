@@ -349,7 +349,7 @@ def greyreach(world):
                    warp(5, 0, "wide_rift_edge", 5, 14, "up"), warp(6, 0, "wide_rift_edge", 6, 14, "up")],
          "npcs": [
              npc("conductor", 10, 8, "left", mid + "/conductor", "villager"),
-             npc("porter", 7, 8, "up", mid + "/porter", "villager", show_flag="era3_finale_done"),
+             npc("porter", 4, 7, "down", mid + "/porter", "villager", show_flag="era3_finale_done"),
              wayfarer(world, mid, "brann", 2, 22, "right", "Ridgewalker Brann", team(("Mirkmole", 22), ("Talusk", 23)),
                       [("Brann: The scree up here slides if you look at it wrong.", "Brann: Das Geröll hier oben rutscht, wenn man es falsch ansieht.")],
                       [("Brann: Steady feet? Prove it.", "Brann: Sicher auf den Beinen? Beweis es.")],

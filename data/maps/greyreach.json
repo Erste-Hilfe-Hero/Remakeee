@@ -89,9 +89,9 @@
   },
   {
    "id": "porter",
-   "x": 7,
-   "y": 8,
-   "facing": "up",
+   "x": 4,
+   "y": 7,
+   "facing": "down",
    "dialogue": "greyreach/porter",
    "sprite": "villager",
    "show_flag": "era3_finale_done"
