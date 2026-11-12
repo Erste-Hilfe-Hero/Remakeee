@@ -790,7 +790,7 @@ static func summary(s: Spirling) -> String:
 	]
 	var tm: Dictionary = s.temperament()
 	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
-	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var tr: Dictionary = BattleRules.trait_info(s.gift_id())
 	if not tr.is_empty():
 		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	if not s.held.is_empty():
@@ -810,7 +810,7 @@ static func storage_card(s: Spirling) -> String:
 	]
 	var tm: Dictionary = s.temperament()
 	lines.append("Temperament: %s. %s" % [tm.label, tm.text])
-	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var tr: Dictionary = BattleRules.trait_info(s.gift_id())
 	if not tr.is_empty():
 		lines.append("Gift: %s. %s" % [tr.label, tr.text])
 	lines.append("Keepsake: %s" % (str(Database.item(s.held).get("name", s.held)) if not s.held.is_empty() else "none"))
@@ -860,7 +860,7 @@ static func summary_pages(s: Spirling) -> Array[String]:
 		arts.append("%s\n  %s  %s  %s" % [mv.move_name, Elements.element_name(mv.element),
 			Loc.t("Power %s" % power), Loc.t("Energy %d" % mv.energy_cost)])
 	var gift: PackedStringArray = []
-	var tr: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var tr: Dictionary = BattleRules.trait_info(s.gift_id())
 	gift.append(Loc.t("Gift: %s" % tr.label) + "\n" + Loc.t(str(tr.text)) if not tr.is_empty() else Loc.t("No gift."))
 	gift.append("")
 	if not s.held.is_empty():

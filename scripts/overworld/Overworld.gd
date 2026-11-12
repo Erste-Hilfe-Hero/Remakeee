@@ -85,6 +85,7 @@ func _ready() -> void:
 		"fish_trap": _action_fish_trap,
 		"wake": _action_wake,
 		"matchmaker": _action_matchmaker,
+		"informant": _action_informant,
 		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
@@ -1167,6 +1168,56 @@ func _action_matchmaker(_args: PackedStringArray, _speaker: NPC) -> void:
 		await say(["Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably."] as Array[String])
 		SaveManager.save_game()
 
+## "informant": Whisper Moll sells tips on hidden gifts and wakes them (data/hidden_gifts.json).
+func _action_informant(_args: PackedStringArray, _speaker: NPC) -> void:
+	var d: Dictionary = HiddenGifts.data()
+	var intro: Array[String] = []
+	for l: Variant in d.get("tip_lines", []):
+		intro.append(str(l))
+	await say(intro)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var choice: int = await menu.pick_strings(Loc.t("Whisper Moll"), [Loc.t("Buy a tip (%d coins)") % int(d.get("tip_cost", 0)), Loc.t("Wake a hidden gift"), Loc.t("Leave")] as Array[String])
+	if choice == 0:
+		var names: Array[String] = []
+		for p: Spirling in GameState.party:
+			names.append(p.display_name())
+		var who: int = await menu.pick_strings(Loc.t("Whose line?"), names)
+		menu.queue_free()
+		if who < 0:
+			return
+		var s: Spirling = GameState.party[who]
+		if HiddenGifts.revealed(s.data.line_id):
+			await say(["Whisper Moll: You already know that one. I don't sell the same secret twice. Not to you."] as Array[String])
+			return
+		var res: Dictionary = HiddenGifts.buy_tip(s.data, GameState.rng)
+		if not bool(res.ok):
+			await say(["Whisper Moll: No coins, no whispers."] as Array[String])
+			return
+		await say([str(res.line)] as Array[String])
+		SaveManager.save_game()
+	elif choice == 1:
+		var names: Array[String] = []
+		var picks: Array[Spirling] = []
+		for p: Spirling in GameState.party:
+			if p.hidden_gift or HiddenGifts.can_wake(p):
+				names.append(Loc.t("%s (awake)") % p.display_name() if p.hidden_gift else p.display_name())
+				picks.append(p)
+		if picks.is_empty():
+			menu.queue_free()
+			await say([Loc.t("Whisper Moll: Nobody here is ready. Learn the secret first, and come back at Ring %d.") % int(d.get("unlock_ring", 20))] as Array[String])
+			return
+		var who: int = await menu.pick_strings(Loc.t("Whose gift?"), names)
+		menu.queue_free()
+		if who < 0:
+			return
+		var awake: bool = HiddenGifts.toggle(picks[who])
+		var label: String = Loc.t(str(HiddenGifts.gift(HiddenGifts.gift_id(picks[who].data)).get("label", "")))
+		await say([(Loc.t("%s wakes its hidden gift: %s.") if awake else Loc.t("%s lets %s sleep again. It can wake any time.")) % [picks[who].display_name(), label]] as Array[String])
+		SaveManager.save_game()
+	else:
+		menu.queue_free()
+
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0
 
@@ -2008,6 +2059,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The root takes the colour and glows.", "The last root glows, and the tangle pulls aside!"],
 	"shutter": ["The shutters hum in the wind. The stair stays open.", "The shutter bangs, and the wind drops dead. Every shutter swings shut again.",
 		"The shutter swings open. Sand hisses through the slats.", "The last shutter opens, the tower breathes, and the stair is clear!"],
+	"valve": ["The pipes gurgle along happily. The stair stays dry.", "The valve screams, and every pipe slams shut again. Start over.",
+		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
 }
 
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
