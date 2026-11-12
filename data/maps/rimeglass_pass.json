@@ -1,0 +1,151 @@
+{
+ "name": "Rimeglass Pass",
+ "region": "quillmarch",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "rimeglass_pass",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T@@..__.,,,T",
+  "T@@...__,,,T",
+  "T.....__...T",
+  "T::@@@@_@@.T",
+  "T::@@@@_@@.T",
+  "T....____..T",
+  "T@@@._..,,,T",
+  "T@@@._..,,,T",
+  "T...._.....T",
+  "T,,.._@@@@@T",
+  "T,,..____..T",
+  "T@@@...._..T",
+  "T@@@.::._..T",
+  "T....::.__.T",
+  "T,,,....._.T",
+  "T,,,@@@@._.T",
+  "T...@@@@._.T",
+  "T..______..T",
+  "T.._..,,,..T",
+  "T@@_..,,,@@T",
+  "T@@_.....@@T",
+  "T..__......T",
+  "T....__.::.T",
+  "T.....__::.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "rimeholt",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "ledgerholm",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "rimeholt",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "ledgerholm",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "iceguide",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quillmarch/rimeglass_pass_iceguide",
+   "sprite": "ranger",
+   "trainer": "Ice Guide Tyra",
+   "intro": "quillmarch/rimeglass_pass_iceguide_intro",
+   "defeat": "quillmarch/rimeglass_pass_iceguide_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Veskara",
+     "level": 82
+    },
+    {
+     "species": "Sleetowl",
+     "level": 83
+    }
+   ]
+  },
+  {
+   "id": "collector",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quillmarch/rimeglass_pass_collector",
+   "sprite": "villager",
+   "trainer": "Debt Collector Holm",
+   "intro": "quillmarch/rimeglass_pass_collector_intro",
+   "defeat": "quillmarch/rimeglass_pass_collector_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Glacilet",
+     "level": 82
+    },
+    {
+     "species": "Gelidfin",
+     "level": 83
+    },
+    {
+     "species": "Gelidray",
+     "level": 83
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_rimeglass_pass_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_rimeglass_pass_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_rimeglass_pass_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_rimeglass_pass_4"
+  }
+ ]
+}

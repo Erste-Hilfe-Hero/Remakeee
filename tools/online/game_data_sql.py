@@ -158,6 +158,15 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('friends_more', $game$"
               + json.dumps(fm).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # Safety and fairness (Online 100, area 9): data/safety.json as server_config.safety.
+    sf_path = os.path.join(folder, "safety.json")
+    if os.path.exists(sf_path):
+        with open(sf_path, encoding="utf-8") as f:
+            sf = json.load(f)
+        sf.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('safety', $game$"
+              + json.dumps(sf).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     print("commit;")
 
 

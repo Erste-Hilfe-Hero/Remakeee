@@ -202,6 +202,23 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q5_root_tithe_wilm",
+   "x": 7,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_root_tithe",
+   "sprite": "elder"
+  },
+  {
+   "id": "q5_choir_bell_gunne",
+   "x": 4,
+   "y": 11,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_choir_bell_gunne",
+   "sprite": "villager",
+   "show_flag": "q5_choir_bell_s1"
   }
  ],
  "signs": [

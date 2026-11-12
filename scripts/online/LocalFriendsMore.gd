@@ -181,6 +181,8 @@ func _suggest_target(id: String) -> String:
 		return ""
 	if b._friendship(b.me(), t) != null or b.is_blocked(b.me(), t) or not b._social(t):
 		return ""
+	if b.parent_off(b.me(), "suggest") or b.parent_off(t, "suggest"):
+		return ""
 	return t
 
 func _fn_friend_suggestions(_a: Dictionary) -> Dictionary:

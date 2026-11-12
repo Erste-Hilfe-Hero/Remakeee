@@ -5,7 +5,8 @@ roads over the breathing bog and the four Rifts with their Wardens. Region "quiv
 Run on its own: python3 tools/art/world/quivermoor.py
 It writes data/maps/<id>.json for the 15 places and their 20 house rooms, data/dialogue/quivermoor.json,
 the German table tools/i18n/de_quivermoor.py, and patches (idempotent) data/encounters.json,
-data/world_layout.json and data/story_npcs.json (the winch man who lowers you in). Names, rings,
+data/world_layout.json and data/story_npcs.json (the winch man who lowers you in); the side goals
+(tools/art/world/quivermoor_side.py) go into data/quests.json. Names, rings,
 encounter slots and Warden teams come from the sheet, so edit region5.json and run this again.
 
 Its own look, unlike every other region: boardwalks ("+") over black bog water, reed beds and moss
@@ -682,6 +683,8 @@ def main():
         route(mid)
     for mid in RIFTS:
         rift(mid)
+    import quivermoor_side  # noqa: E402  the eight side goals (data/quests.json q5_*)
+    quivermoor_side.build(sys.modules[__name__])
     patch_story_npcs()
     tr("Rope Basket", "Seilkorb")
     stale = []
