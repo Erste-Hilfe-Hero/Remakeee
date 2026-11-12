@@ -1,0 +1,14 @@
+{
+ "add": {
+  "secrets": [
+   {
+    "x": 9,
+    "y": 8,
+    "item": "spark_drop",
+    "count": 1,
+    "flag": "hush_coin_5",
+    "dialogue": "veydal_side/coin_5"
+   }
+  ]
+ }
+}

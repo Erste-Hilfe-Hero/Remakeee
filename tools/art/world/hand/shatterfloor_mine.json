@@ -1,0 +1,13 @@
+{
+ "add": {
+  "signs": [
+   {
+    "x": 0,
+    "y": 3,
+    "dialogue": "legend_quests/scriptorax_lore",
+    "show_flag": "lq_scriptorax_met",
+    "hide_flag": "lq_scriptorax_ready"
+   }
+  ]
+ }
+}

@@ -3224,7 +3224,7 @@ func after_tamer_win(n: NPC) -> void:
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
 			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
-		if GameState.level_cap() < GameState.ring_ceiling():
+		if GameState.has_ring_limit():
 			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
 		# The Warden's thanks for the mend (the Rifts of 2026-11): an Echo Crystal with its art.
@@ -3544,7 +3544,7 @@ var _warden_battle: bool = false
 ## Nothing is lost and the real team does not change.
 func echo_duel(d: Dictionary) -> void:
 	var ring: int = EchoTeam.duel_ring({"duel_ring": d.get("ring", EchoTeam.DUEL_LEVEL)})
-	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.MAX_LEVEL, ring)
+	var foes: Array[Spirling] = EchoTeam.build(d.get("team", []), Spirling.STORY_RING, ring)
 	var mine: Array[Spirling] = EchoTeam.duel_copy(GameState.party, ring)
 	if foes.is_empty() or mine.is_empty():
 		await say(["The echo flickers and fades. Try again later."] as Array[String])

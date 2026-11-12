@@ -127,7 +127,7 @@ def cinderfold(world):
     m = {"name": tr("Cinderfold", "Cinderfold"), "biome": "town", "backdrop": "ember", "outdoor": True,
          "heal_point": [3, 2], "rows": rows,
          "warps": [warp(11, 2, "ashmere_station", 1, 11, "right"), warp(11, 3, "ashmere_station", 1, 12, "right"),
-                   warp(4, 5, "gravers_hall", 4, 7, "up")],
+                   warp(4, 5, "gravers_hall", 4, 7, "up"), warp(3, 8, "soot_vaults", 5, 18, "up")],
          "npcs": [npc("keeper", 2, 2, "right", mid + "/keeper", "elder"),
                   npc("trader", 9, 12, "left", mid + "/trader", "villager")],
          "signs": [{"x": 9, "y": 5, "dialogue": mid + "/sign"}],

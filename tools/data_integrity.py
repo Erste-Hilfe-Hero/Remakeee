@@ -14,7 +14,8 @@ the references between files that many parallel content PRs touch at once:
   flags      every flag that is checked somewhere is set somewhere (errors); flags that are
              set but never checked are listed as notes (they are often plain records)
   species    every encounter table, Wayfarer / story / event team and gift names an existing
-             Spirling; every level is 1..Spirling.MAX_LEVEL
+             Spirling; every level is 1..Spirling.LEVEL_SANITY (no top ring, only a guard
+             against garbage values)
   items      every item id referenced in maps, dialogue actions, conditions, scenes and clans
              exists in data/items.json
   ids        no duplicate ids inside clans.json sections, story battles, quests, items; no
@@ -42,8 +43,6 @@ notes = []
 KNOWN = {
     # Era III's region (not merged yet) adds eras.json finale_flags["era3_finale_done"].
     "flag 'era3_finale_done' is checked": "set by the Era III region once it lands (eras.json _doc)",
-    # Quillmarch (data/region3.json) has its sheet but no maps yet; its last chapter sets the flag.
-    "flag 'quillmarch_done' is checked": "set by Quillmarch's last chapter once its maps land",
 }
 
 
@@ -96,12 +95,7 @@ def gd_const(path, name):
     return int(m.group(1))
 
 
-MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "MAX_LEVEL")
-# Post-game regions from Era III on grow past 60 (data/eras.json ring_caps); their maps, tables
-# and sheets are checked against the hard clamp Spirling.ERA_MAX_LEVEL instead.
-ERA_MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "ERA_MAX_LEVEL")
-ERA_REGIONS = {"quillmarch", "halcyra"}
-ERA_SHEETS = {"data/region3.json", "data/region4.json"}
+LEVEL_SANITY = gd_const("scripts/battle/Spirling.gd", "LEVEL_SANITY")
 
 json_files = []
 for dp, _, fs in os.walk(DATA):
@@ -472,17 +466,13 @@ for p in ("data/endgame.json", "data/events.json", "data/warden_rematch.json", "
 
 # ---------------------------------------------------------------- species and levels
 
-def level_ok(where, lv, era=False):
+eras = J.get("data/eras.json", {})
+
+def level_ok(where, lv):
     if isinstance(lv, bool) or not isinstance(lv, (int, float)):
         return
-    top = ERA_MAX_LEVEL if era else MAX_LEVEL
-    if not 1 <= lv <= top:
-        err("species", "%s: level %s outside 1..%d (Spirling.%s)" % (where, lv, top, "ERA_MAX_LEVEL" if era else "MAX_LEVEL"))
-
-
-def era_file(p):
-    d = J.get(p)
-    return p in ERA_SHEETS or (p.startswith("data/maps/") and isinstance(d, dict) and d.get("region") in ERA_REGIONS)
+    if not 1 <= lv <= LEVEL_SANITY:
+        err("species", "%s: level %s outside 1..%d (Spirling.LEVEL_SANITY)" % (where, lv, LEVEL_SANITY))
 
 
 def species_ok(where, sp):
@@ -496,9 +486,8 @@ for tid, t in J["data/encounters.json"].items():
     for s in t.get("spawns", []) or []:
         w = "encounter table '%s' %s" % (tid, s.get("species"))
         species_ok(w, s.get("species"))
-        era = era_file("data/maps/%s.json" % tid)
-        level_ok(w + " min", s.get("min"), era)
-        level_ok(w + " max", s.get("max"), era)
+        level_ok(w + " min", s.get("min"))
+        level_ok(w + " max", s.get("max"))
         if isinstance(s.get("min"), int) and isinstance(s.get("max"), int) and s["min"] > s["max"]:
             err("species", "%s: min %d > max %d" % (w, s["min"], s["max"]))
 
@@ -514,7 +503,7 @@ for p, d in J.items():
         where = "%s %s" % (p[5:], "/".join(str(x) for x in path[-3:]))
         if "species" in dd and isinstance(dd["species"], str):
             species_ok(where, dd["species"])
-            level_ok(where + " '%s'" % dd["species"], dd.get("level"), era_file(p))
+            level_ok(where + " '%s'" % dd["species"], dd.get("level"))
         for k in ("team", "giants"):
             if isinstance(dd.get(k), list):
                 for x in dd[k]:
@@ -698,7 +687,7 @@ for g in q.get("main", []):
 for g in q.get("side", []):
     C([g.get("show"), g.get("done")] + list(g.get("progress", []) or []), "quest side " + str(g.get("id")))
 
-for p in ("data/region2.json", "data/region4.json"):
+for p in ("data/region2.json", "data/region3.json", "data/region4.json"):
     r = J.get(p)
     if not isinstance(r, dict):
         continue
@@ -709,7 +698,6 @@ for p in ("data/region2.json", "data/region4.json"):
         S(c.get("sets"), p)
     for rf in r.get("rifts", []) or []:
         S(rf.get("flag"), p)
-eras = J.get("data/eras.json", {})
 for era, fl in (eras.get("unlock_flags") or {}).items():
     C(fl, "eras unlock " + era)
 for era_flag, content_flag in (eras.get("finale_flags") or {}).items():

@@ -58,6 +58,7 @@ func test_four_wardens_each_hold_a_rift() -> void:
 		assert_eq(str(r.warden), str(w.id))
 		assert_gt(int(w.ring), ring)
 		ring = int(w.ring)
+		assert_lte((w.team as Array).size(), GameState.MAX_PARTY, "%s fits a party (the rematch has six)" % w.id)
 		for t: Dictionary in w.team:
 			assert_true(Database.spirlings.has(Region2.slot_species(t)), str(w.id))
 			assert_lte(int(t.level), int(w.ring))

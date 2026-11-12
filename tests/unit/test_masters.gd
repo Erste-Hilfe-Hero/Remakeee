@@ -75,8 +75,8 @@ func test_cap_opens_after_act_one() -> void:
 	GameState.seal_rift("tide")
 	assert_lt(GameState.level_cap(), Masters.MIN_RING)
 	GameState.set_flag(GameState.ACT1_END_FLAG)
-	assert_eq(GameState.progress_cap(), Spirling.MAX_LEVEL)
-	assert_eq(GameState.level_cap(), Spirling.MAX_LEVEL)
+	assert_eq(GameState.progress_cap(), Spirling.STORY_RING)
+	assert_eq(GameState.level_cap(), Spirling.LEVEL_SANITY, "no top ring after Act I")
 
 func test_postgame_list_after_act_one() -> void:
 	assert_eq(Postgame.lines(), [] as Array[String])

@@ -1,0 +1,125 @@
+{
+ "name": "Weeping Locks",
+ "region": "vellmarch",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "weeping_locks",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T...._..%%%T",
+  "T%%.._...%%T",
+  "T%%..__....T",
+  "T.....__...T",
+  "T..,,..__..T",
+  "T..,,...__.T",
+  "T........_.T",
+  "T%%%....__.T",
+  "T%%%...__..T",
+  "T.....__...T",
+  "T....__..%%T",
+  "T...__...%%T",
+  "T..__.....%T",
+  "T.__..,,...T",
+  "T._...,,...T",
+  "T.__.......T",
+  "T..__..%%%.T",
+  "T...__.%%%.T",
+  "T....__....T",
+  "T.....__...T",
+  "T%%....__..T",
+  "T%%.....__.T",
+  "T......__..T",
+  "T.....__...T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "hookwick",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "larkspur_heights",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "hookwick",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "larkspur_heights",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "sluicer",
+   "x": 9,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "vellmarch/weeping_locks_sluicer",
+   "sprite": "villager",
+   "trainer": "Sluice Hand Morwen",
+   "intro": "vellmarch/weeping_locks_sluicer_intro",
+   "defeat": "vellmarch/weeping_locks_sluicer_defeat",
+   "money": 2280,
+   "team": [
+    {
+     "species": "Rainmantle",
+     "level": 57
+    },
+    {
+     "species": "Reedwarden",
+     "level": 57
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_weeping_locks_1"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_weeping_locks_2"
+  },
+  {
+   "x": 0,
+   "y": 17,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_weeping_locks_3"
+  },
+  {
+   "x": 11,
+   "y": 21,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_weeping_locks_4"
+  }
+ ]
+}
