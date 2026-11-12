@@ -104,6 +104,10 @@ func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 	for sd: SpirlingData in Database.spirlings.values():
 		solenne += 1 if sd.region == "solenne" and sd.rarity != "ancient" else 0
 	assert_eq(solenne, 70, "every story act has 70 own Spirlings (legendaries not counted)")
+	var veydal: int = 0
+	for sd: SpirlingData in Database.spirlings.values():
+		veydal += 1 if sd.region == "veydal" and sd.rarity != "ancient" else 0
+	assert_eq(veydal, 70, "every story act has 70 own Spirlings (legendaries not counted, 14 Act I lines in tools/art/lines/veydal.py)")
 
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != "veydal":
