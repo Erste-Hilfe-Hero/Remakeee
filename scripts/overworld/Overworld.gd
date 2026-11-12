@@ -87,6 +87,7 @@ func _ready() -> void:
 		"bounty": _action_bounty,
 		"fine_training": _action_fine_training,
 		"matchmaker": _action_matchmaker,
+		"reserve": _action_reserve,
 		"informant": _action_informant,
 		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
@@ -1229,6 +1230,70 @@ func _action_matchmaker(_args: PackedStringArray, _speaker: NPC) -> void:
 		Sound.sfx("confirm")
 		await say(["Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably."] as Array[String])
 		SaveManager.save_game()
+
+## "reserve": a run through Hollowgate Reserve (data/reserve.json, scripts/core/Reserve.gd).
+func _action_reserve(_args: PackedStringArray, _speaker: NPC) -> void:
+	var d: Dictionary = Reserve.data()
+	var welcome: Array[String] = []
+	for l: Variant in d.get("welcome", []):
+		welcome.append(str(l))
+	await say(welcome)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var fee: int = int(d.get("entry_fee", 0))
+	var pay: bool = await menu.confirm(Loc.t("Pay %d coins to slip into the reserve?") % fee, "Pay", "No")
+	if not pay:
+		menu.queue_free()
+		return
+	var run: Dictionary = Reserve.enter()
+	if run.is_empty():
+		menu.queue_free()
+		await say(["Velvet Dorran: No coins? Then you were never here."] as Array[String])
+		return
+	var game := BondMinigame.new()
+	game.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	game.visible = false
+	_ui.add_child(game)
+	while not Reserve.over(run):
+		var s: Dictionary = Reserve.sighting(run, GameState.rng)
+		var sname: String = str(s.species)
+		GameState.mark_seen(sname)
+		if bool(s.snitched):
+			await say([Loc.t(str(d.snitch_line)) % sname] as Array[String])
+			continue
+		var done: bool = false
+		while not done:
+			var opts: Array[String] = [Loc.t("Echo call (%d left)") % int(run.calls), Loc.t("Set bait"), Loc.t("Rattle the fence"), Loc.t("Move on")]
+			var c: int = await menu.pick_strings(Loc.t("A wild %s, Ring %d. Sightings left: %d") % [sname, int(s.level), int(run.sightings)], opts, false)
+			if c == 3:
+				break
+			var action: String = ["call", "bait", "rattle"][c]
+			var score: float = 0.0
+			if action == "call":
+				var plan: Dictionary = BondEcho.make_plan(GameState.rng, Database.species(sname))
+				score = await game.run(plan)
+				GameState.note_echo(score)
+			elif action == "bait":
+				await say([Loc.t(str(d.bait_line)) % sname] as Array[String])
+			else:
+				await say([Loc.t(str(d.rattle_line)) % sname] as Array[String])
+			var res: Dictionary = Reserve.act(run, s, action, GameState.rng, score)
+			if bool(res.bonded):
+				Sound.sfx("confirm")
+				GameState.receive_spirling(Reserve.spirling_of(s, GameState.rng))
+				await say([Loc.t(str(d.bonded_line)) % sname] as Array[String])
+				done = true
+			elif bool(res.fled):
+				await say([Loc.t(str(d.fled_line)) % sname] as Array[String])
+				done = true
+			elif action == "call":
+				await say([Loc.t(str(d.missed_line)) % sname] as Array[String])
+			if int(run.calls) <= 0:
+				done = true
+	game.queue_free()
+	menu.queue_free()
+	await say([str(d.done_line)] as Array[String])
+	SaveManager.save_game()
 
 ## "informant": Whisper Moll sells tips on hidden gifts and wakes them (data/hidden_gifts.json).
 func _action_informant(_args: PackedStringArray, _speaker: NPC) -> void:

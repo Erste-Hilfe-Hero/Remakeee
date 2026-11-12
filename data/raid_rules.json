@@ -1,0 +1,13 @@
+{
+ "_comment": "Raid Rifts extras (Online 100, points 23, 24, 28, 29, 30). The server reads the same object as server_config.raid_rules (tools/online/game_data_sql.py).",
+ "tiers": [
+  {"id": "easy", "hp": 70, "level": 50},
+  {"id": "normal", "hp": 100, "level": 60},
+  {"id": "hard", "hp": 150, "level": 60}
+ ],
+ "legendaries": ["Hallowmur", "Lumivane", "Monolurk", "Scriptorax", "Vorlucent"],
+ "legendary_chance": 5,
+ "legendary_hp": 150,
+ "top_bonus": 1,
+ "board_rows": 10
+}

@@ -31,7 +31,7 @@ const ERRORS: Dictionary = {
 	"too_many_spirlings": "Up to 3 Spirlings per trade.",
 }
 
-const ERA_NAMES: Array[String] = ["Era I", "Era II", "Era III", "Era IV"]
+const ERA_NAMES: Array[String] = ["Era I", "Era II", "Era III", "Era IV", "Era V"]
 
 static func error_text(r: Dictionary) -> String:
 	var e: String = str(r.data.get("error", "")) if r.ok and r.data is Dictionary else str(r.get("error", ""))
@@ -58,7 +58,7 @@ static func mons_text(mons: Variant) -> String:
 	var parts: Array[String] = []
 	for m: Variant in (mons if mons is Array else []):
 		if m is Dictionary:
-			var era: int = clampi(int(m.get("origin_era", 1)), 1, 4)
+			var era: int = clampi(int(m.get("origin_era", 1)), 1, ERA_NAMES.size())
 			parts.append(Loc.t("%s R%d %s") % [str(m.get("species", "?")), int(m.get("level", 1)), Loc.t(ERA_NAMES[era - 1])])
 	return ", ".join(parts)
 
@@ -301,7 +301,7 @@ static func pick_spirlings(menu: PauseMenu, current: Array[String]) -> Variant:
 		var labels: Array[String] = []
 		for sp: Spirling in all:
 			var mark: String = "[x] " if picked.has(sp.uid) else "[ ] "
-			labels.append(mark + Loc.t("%s R%d %s") % [sp.display_name(), sp.level, Loc.t(ERA_NAMES[clampi(sp.origin_era, 1, 4) - 1])])
+			labels.append(mark + Loc.t("%s R%d %s") % [sp.display_name(), sp.level, Loc.t(ERA_NAMES[clampi(sp.origin_era, 1, ERA_NAMES.size()) - 1])])
 		labels.append(Loc.t("Done: %d Spirlings") % picked.size())
 		var idx: int = await menu.pick_strings("Which Spirlings do you give? (up to 3)", labels)
 		if idx < 0:

@@ -254,14 +254,23 @@ func resume_pending() -> int:
 	_set_step(Step.READY)
 	return n
 
-## "Restore purchases": unlocks and the pass come back from the store.
+## "Restore purchases": unlocks and the pass come back from the store. Returns how many purchases
+## the server credited now (receipts it already had do not count), or -1 without a connection, so
+## the menu never says "nothing to restore" when it could not ask (bug plan 1354). Bag items and
+## coins of a restored purchase are picked up at once.
 func restore() -> int:
 	if not available():
 		return 0
+	if not Online.is_online():
+		last_error = "offline"
+		return -1
 	var n: int = 0
 	for receipt: Dictionary in await store.restore():
-		if (await _verify(receipt)).get("ok", false):
+		var r: Dictionary = await _verify(receipt)
+		if r.get("ok", false) and not bool(r.get("duplicate", false)):
 			n += 1
+	if n > 0:
+		await claim()
 	await refresh_state()
 	_set_step(Step.READY)
 	return n

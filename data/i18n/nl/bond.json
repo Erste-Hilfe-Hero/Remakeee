@@ -1,0 +1,19 @@
+{
+ "_comment": "Dutch texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "Binden, stap 2: kies Binden. Er verschijnt een grote knop Van mij!.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Binden, stap 3: druk zo snel je kunt op A. Hoe voller de balk, hoe beter de band.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Binden, stap 3: tik zo snel je kunt op Van mij!. Hoe voller de balk, hoe beter de band.",
+  "Bonding: %s": "Binden: %s",
+  "Echo": "Echo",
+  "Hint": "Hint",
+  "Mine": "Van mij",
+  "Mine!": "Van mij!",
+  "Mine: tap one button fast. Echo: repeat the call.": "Van mij: tik snel op één knop. Echo: herhaal de roep.",
+  "Note": "Notitie",
+  "Reach out to %s... Tap Mine! fast!": "Reik naar %s... Tik snel op Van mij!",
+  "Tap Mine! fast!": "Tik snel op Van mij!",
+  "Tip": "Tip",
+  "Tips": "Tips"
+ }
+}
