@@ -1863,5 +1863,205 @@
    "foc": 2
   },
   "self": true
+ },
+ {
+  "name": "Flake Nip",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Grit Gnash",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Scale Shed",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Rivet Bite",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 0.95,
+  "energy": 3
+ },
+ {
+  "name": "Tarnish Wave",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Jammed Cog",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 4
+ },
+ {
+  "name": "Iron Rot",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Wreck Ram",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6
+ },
+ {
+  "name": "Scrapheap Fall",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Flaking Fog",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "def": -1
+  },
+  "self": false
+ },
+ {
+  "name": "Patina Coat",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "atk": 1
+  },
+  "self": true
+ },
+ {
+  "name": "Wink Feint",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Cheek Slap",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "False Smile",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Turncoat Kick",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 0.95,
+  "energy": 3
+ },
+ {
+  "name": "Velvet Lie",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Knife in the Back",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 4
+ },
+ {
+  "name": "Grand Deceit",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Masquerade Rush",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6
+ },
+ {
+  "name": "Final Unmasking",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Whisper Campaign",
+  "element": "MASK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "atk": -1
+  },
+  "self": false
+ },
+ {
+  "name": "Poker Face",
+  "element": "MASK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "foc": 1,
+   "spd": 1
+  },
+  "self": true
  }
 ]

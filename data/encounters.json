@@ -2380,35 +2380,35 @@
   "rate": 0.12,
   "spawns": [
    {
-    "species": "Siltgrove",
+    "species": "Tollpip",
     "min": 52,
     "max": 55,
     "weight": 9,
     "ground": "fern"
    },
    {
-    "species": "Cogwright",
+    "species": "Flakit",
     "min": 52,
     "max": 55,
     "weight": 7,
     "ground": "fern"
    },
    {
-    "species": "Delthorn",
+    "species": "Snaglet",
     "min": 52,
     "max": 55,
     "weight": 5,
     "ground": "reeds"
    },
    {
-    "species": "Cogmite",
+    "species": "Anchorrot",
     "min": 52,
     "max": 54,
     "weight": 16,
-    "ground": "fern"
+    "ground": "reeds"
    },
    {
-    "species": "Canalet",
+    "species": "Groatfin",
     "min": 52,
     "max": 54,
     "weight": 14,
@@ -2420,35 +2420,35 @@
   "rate": 0.12,
   "spawns": [
    {
-    "species": "Millvane",
+    "species": "Sootkin",
     "min": 53,
     "max": 56,
     "weight": 9,
     "ground": "fern"
    },
    {
-    "species": "Wickmoth",
+    "species": "Bargit",
     "min": 53,
     "max": 56,
     "weight": 7,
     "ground": "fern"
    },
    {
-    "species": "Burinox",
+    "species": "Boltnib",
     "min": 53,
     "max": 56,
     "weight": 5,
     "ground": "scree"
    },
    {
-    "species": "Rookit",
+    "species": "Hushbeak",
     "min": 53,
     "max": 55,
     "weight": 16,
     "ground": "fern"
    },
    {
-    "species": "Grindwheel",
+    "species": "Knellgrim",
     "min": 53,
     "max": 55,
     "weight": 14,
@@ -2460,35 +2460,35 @@
   "rate": 0.12,
   "spawns": [
    {
-    "species": "Rainmantle",
+    "species": "Splotchet",
     "min": 54,
     "max": 57,
     "weight": 9,
     "ground": "reeds"
    },
    {
-    "species": "Reedwarden",
+    "species": "Dimlure",
     "min": 54,
     "max": 57,
     "weight": 7,
     "ground": "reeds"
    },
    {
-    "species": "Saltspire",
+    "species": "Tallop",
     "min": 54,
     "max": 57,
     "weight": 5,
     "ground": "fern"
    },
    {
-    "species": "Diparrow",
+    "species": "Snagwhisk",
     "min": 54,
     "max": 56,
     "weight": 16,
     "ground": "reeds"
    },
    {
-    "species": "Sluicer",
+    "species": "Fauxscript",
     "min": 54,
     "max": 56,
     "weight": 14,
@@ -2500,35 +2500,35 @@
   "rate": 0.12,
   "spawns": [
    {
-    "species": "Smeltmaw",
+    "species": "Smogpup",
     "min": 55,
     "max": 58,
     "weight": 9,
     "ground": "scree"
    },
    {
-    "species": "Glassfell",
+    "species": "Sprockle",
     "min": 55,
     "max": 58,
     "weight": 7,
     "ground": "scree"
    },
    {
-    "species": "Ashcrest",
+    "species": "Veilmote",
     "min": 55,
     "max": 58,
     "weight": 5,
     "ground": "fern"
    },
    {
-    "species": "Smeltpup",
+    "species": "Latchet",
     "min": 55,
     "max": 57,
     "weight": 16,
     "ground": "scree"
    },
    {
-    "species": "Flueling",
+    "species": "Waxwhisk",
     "min": 55,
     "max": 57,
     "weight": 14,
@@ -2540,35 +2540,35 @@
   "rate": 0.12,
   "spawns": [
    {
-    "species": "Fenwarden",
+    "species": "Guiskit",
     "min": 56,
     "max": 59,
     "weight": 9,
     "ground": "fern"
    },
    {
-    "species": "Mendlace",
+    "species": "Tithel",
     "min": 56,
     "max": 59,
     "weight": 7,
     "ground": "fern"
    },
    {
-    "species": "Cullhorn",
+    "species": "Snoblet",
     "min": 56,
     "max": 59,
     "weight": 5,
     "ground": "scree"
    },
    {
-    "species": "Woadwhorl",
+    "species": "Shivlet",
     "min": 56,
     "max": 58,
     "weight": 16,
     "ground": "fern"
    },
    {
-    "species": "Lodebrock",
+    "species": "Tithshell",
     "min": 56,
     "max": 58,
     "weight": 14,
@@ -2580,35 +2580,35 @@
   "rate": 0.1,
   "spawns": [
    {
-    "species": "Scrivane",
+    "species": "Fenglim",
     "min": 57,
     "max": 60,
     "weight": 9,
     "ground": "reeds"
    },
    {
-    "species": "Silentra",
+    "species": "Sedgel",
     "min": 57,
     "max": 60,
     "weight": 7,
     "ground": "reeds"
    },
    {
-    "species": "Duskdigger",
+    "species": "Pewnib",
     "min": 57,
     "max": 60,
     "weight": 5,
     "ground": "fern"
    },
    {
-    "species": "Dusktern",
+    "species": "Moldcap",
     "min": 57,
     "max": 59,
     "weight": 16,
-    "ground": "reeds"
+    "ground": "fern"
    },
    {
-    "species": "Bogwick",
+    "species": "Mirefane",
     "min": 57,
     "max": 59,
     "weight": 14,
