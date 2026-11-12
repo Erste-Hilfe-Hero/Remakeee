@@ -474,7 +474,8 @@ static func formation_layout(era: int, w: float, team: int = 7) -> Dictionary:
 		var bx: float = w - MARGIN - 3 * b.x - 4
 		for i: int in 3:
 			buttons.append(Rect2(bx + i * (b.x + 2), MARGIN, b.x, b.y))
-		out["ledger"] = Rect2(MARGIN + pad[0], MARGIN + pad[1], bx - MARGIN * 2 - pad[0] - pad[2], ph)
+		# One pixel higher than the margin: the tall plate and its shadow end on the foes' rank.
+		out["ledger"] = Rect2(MARGIN + pad[0], MARGIN - 1 + pad[1], bx - MARGIN * 2 - pad[0] - pad[2], ph)
 		out["player_team"] = Rect2(bx, MARGIN + b.y + 4, row.x, row.y)
 		out["foe_team"] = Rect2(bx, MARGIN + b.y + 4 + row.y + 3, row.x, row.y)
 		var gx: float = bx + row.x + 4

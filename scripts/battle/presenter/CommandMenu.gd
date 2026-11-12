@@ -225,6 +225,9 @@ func _plain_focus(b: Button) -> void:
 func _tint_row(i: int) -> void:
 	var b: Button = _move_buttons[i]
 	var col: Color = UITheme.BG if mode != "text" and b.is_pressed() and not b.disabled else _row_colors[i]
+	if not b.is_pressed() and EraBattleHud.flag(era, "art_fill") and _row_elements[i] >= 0 and UITheme.contrast(col, EraBattleHud.art_fill(_row_elements[i])) < 4.5:
+		# On an element-coloured row a matchup colour that fades into the fill turns to ink.
+		col = UITheme.INK
 	_move_costs[i].add_theme_color_override("font_color", col)
 	_move_hints[i].add_theme_color_override("font_color", col)
 	b.queue_redraw()
@@ -604,7 +607,8 @@ func _refresh_shortcut(model: BattleModel, items_ok: bool) -> void:
 ## keeps its contrast; focus and press keep the theme's dark box.
 func _fill_row(b: Button, element: int) -> void:
 	var sb: StyleBoxFlat = UITheme.flat_style(EraBattleHud.art_fill(element), UITheme.INK)
-	sb.content_margin_left = _row_left()
+	# Two pixels of paper between the element chip and the art's name.
+	sb.content_margin_left = _row_left() + 2
 	sb.border_width_bottom = 2
 	b.add_theme_stylebox_override("normal", sb)
 

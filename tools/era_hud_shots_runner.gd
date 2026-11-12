@@ -88,6 +88,9 @@ func _state(era: int, tag: String) -> void:
 			foe.stages = {"def": -2} as Dictionary[String, int]
 			foe.gleam = true
 			GameState.spirlog[foe.data.species_name] = {"seen": true, "bonded": true}
+			# A foe met before: Era IV on shows the matchup word on each art.
+			for mv: MoveData in me.moves:
+				GameState.learn_matchup(mv.element, foe.data.species_name, Elements.multiplier(mv.element, foe.elements()))
 			var mine: Array = inst.model.party(BattleModel.Side.PLAYER)
 			(mine[1] as Spirling).hp = 0
 			(mine[2] as Spirling).status = "chill"
