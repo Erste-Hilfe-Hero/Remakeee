@@ -41,6 +41,9 @@ var draw_offset: Vector2 = Vector2.ZERO
 var anim_kind: String = "idle"
 var _anim_time: float = 0.0
 var _strips: Dictionary = {}
+## Sprite tier (SpriteTiers): the era folder of the art when its pose sheet is playing, else 0.
+## The sheet replaces the runtime strips, so an old kind moves in its own era's style.
+var _tier: int = 0
 ## Era IV: the "_b" breath frame (tools/art/gen_era4.py), swapped in for the second half of each
 ## bob instead of the 1 px lift; null when the sprite has none.
 var _breath: Texture2D
@@ -74,11 +77,19 @@ func setup(s: Spirling, p_facing: String) -> void:
 	var bp: String = breath_path(path)
 	if _texture != null and ResourceLoader.exists(bp):
 		_breath = load(bp)
+	elif _texture != null:
+		_breath = SpriteTiers.breath_texture(path, facing)
+	_tier = 0
 	if _texture != null and BattleAnim.enabled():
 		for k: String in BattleAnim.KINDS:
 			var st: Texture2D = BattleAnim.strip_texture(path, k)
 			if st != null:
 				_strips[k] = st
+		var sheet: String = SpriteTiers.sheet_path(path)
+		if not sheet.is_empty() and SpriteTiers.animates(feel_era()):
+			_tier = SpriteTiers.tier_of_path(path)
+			for k: Variant in SpriteTiers.kinds():
+				_strips[k] = load(sheet)
 	anim_kind = "idle"
 	_anim_time = 0.0
 	modulate.a = 1.0
@@ -136,9 +147,9 @@ func _process(delta: float) -> void:
 		return
 	_bob_time += delta
 	if not _strips.is_empty():
-		var before: int = BattleAnim.frame_at(anim_kind, _anim_time)
+		var before: int = _frame()
 		_anim_time += delta * Juice.speed() if not Juice.reduced() else 0.0
-		if BattleAnim.frame_at(anim_kind, _anim_time) != before:
+		if _frame() != before:
 			queue_redraw()
 		return
 	# Era I-III Spirlings stand still between moves (only the low-strength sag shows); the bob
@@ -336,7 +347,8 @@ func play_strip(kind: String) -> void:
 	anim_kind = kind
 	_anim_time = 0.0
 	queue_redraw()
-	await get_tree().create_timer(BattleAnim.frame_count(kind) / BattleAnim.fps(kind) / Juice.speed()).timeout
+	var secs: float = SpriteTiers.duration(_tier, kind) if _tier > 0 else BattleAnim.frame_count(kind) / BattleAnim.fps(kind)
+	await get_tree().create_timer(secs / Juice.speed()).timeout
 	anim_kind = "idle"
 	_anim_time = 0.0
 	queue_redraw()
@@ -506,6 +518,30 @@ func _draw_dust() -> void:
 			var p := Vector2(size.x / 2.0 + side * (size.x * 0.3 + dust * 8.0 + i * 3.0), size.y - 2.0 - dust * (3.0 + i * 2.0))
 			draw_rect(Rect2(p.round(), Vector2(2, 2)), c)
 
+## Frame of the strip playing: the tier's own timeline, or the runtime strip's.
+func _frame() -> int:
+	return SpriteTiers.frame_at(_tier, anim_kind, _anim_time) if _tier > 0 else BattleAnim.frame_at(anim_kind, _anim_time)
+
+## Screen x direction this sprite faces (front art faces left, back art right, then the mirror).
+func facing_sign() -> float:
+	return SpriteTiers.forward(facing) * (-1.0 if mirrored else 1.0)
+
+## Draws the current frame of the tier's pose sheet. Under reduced motion it is the rest pose.
+func _draw_tier(r: Rect2, tint: Color) -> void:
+	var f: int = _frame()
+	var pose: int = 0 if Juice.reduced() else SpriteTiers.cell(_tier, anim_kind, f)
+	if pose == SpriteTiers.HIDDEN:
+		return
+	var off: Vector2 = Vector2.ZERO if Juice.reduced() else SpriteTiers.offset(_tier, anim_kind, f)
+	var px: float = size.x / float(maxi(_texture.get_width(), 1))
+	draw_set_transform_matrix(_xform(Vector2(off.x * facing_sign(), off.y) * px))
+	if pose == SpriteTiers.FLASH and _silhouette != null:
+		draw_texture_rect(_silhouette, r, false)
+	else:
+		var st: Texture2D = _strips[anim_kind]
+		draw_texture_rect_region(st, r, SpriteTiers.cell_rect(_tier, facing, pose, st), tint)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+
 func _draw() -> void:
 	if spirling == null:
 		return
@@ -513,6 +549,9 @@ func _draw() -> void:
 	_draw_shadow()
 	_draw_dust()
 	var tint: Color = PRISM_TINT if spirling.prism and material == null else Color.WHITE
+	if _tier > 0 and _strips.has(anim_kind):
+		_draw_tier(r, tint)
+		return
 	if _strips.has(anim_kind):
 		var st: Texture2D = _strips[anim_kind]
 		var fw: float = st.get_width() / float(BattleAnim.frame_count(anim_kind))
