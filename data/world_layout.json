@@ -56,6 +56,7 @@
   "mirror_rift": {"region": "corvane", "pos": [0, 1], "kind": "rift", "neighbours": ["stillwater"]},
   "greyreach": {"region": "corvane", "pos": [1, 2], "kind": "route", "neighbours": ["stillwater", "wide_rift_edge"]},
   "rook_vault": {"inside": "greyreach"},
+  "dyeworks": {"inside": "stillwater", "region": "corvane"},
   "wide_rift_edge": {"region": "corvane", "pos": [1, 1], "kind": "rift", "neighbours": ["greyreach"]},
   "ashmere_station": {"region": "ashmere", "pos": [1, 4], "kind": "town", "neighbours": ["cinderfold", "kiln_rift", "saltglass"]},
   "cinderfold": {"region": "ashmere", "pos": [1, 5], "kind": "town", "neighbours": ["ashmere_station", "soot_vaults"]},

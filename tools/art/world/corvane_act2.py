@@ -222,7 +222,7 @@ def stillwater(world):
             "T...*__....T",
             "T.~~~~~~~..T",
             "@*~~~~~~~..S",
-            "T.~~~++~~..T",
+            "T.~~~==~~..T",
             "T.~~~++~~..T",
             "@....__..S.@",
             "T,,.._.....T",
@@ -249,7 +249,9 @@ def stillwater(world):
          "rows": rows,
          "warps": [warp(5, 25, "madderby", 5, 2, "down"), warp(6, 25, "madderby", 6, 2, "down"),
                    warp(5, 0, "mirror_rift", 5, 11, "up"), warp(6, 0, "mirror_rift", 6, 11, "up"),
-                   warp(11, 13, "greyreach", 1, 26, "right"), warp(11, 14, "greyreach", 1, 27, "right")],
+                   warp(11, 13, "greyreach", 1, 26, "right"), warp(11, 14, "greyreach", 1, 27, "right"),
+                   # The sluice hatch at the end of the jetty: down into the Drowned Dyeworks.
+                   warp(5, 9, "dyeworks", 5, 7, "up"), warp(6, 9, "dyeworks", 6, 7, "up")],
          "npcs": [
              wayfarer(world, mid, "teo", 2, 12, "right", "Angler Teo", team(("Puddlet", 20), ("Fluting", 21)),
                       [("Teo: Nothing bites since the colour went. I keep coming anyway.", "Teo: Seit die Farbe weg ist, beißt nichts mehr an. Ich komme trotzdem."),],

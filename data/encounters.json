@@ -2771,5 +2771,52 @@
     "ground": "reeds"
    }
   ]
+ },
+ "dyeworks": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Weirrunner",
+    "min": 22,
+    "max": 24,
+    "weight": 22
+   },
+   {
+    "species": "Woadwhorl",
+    "min": 22,
+    "max": 24,
+    "weight": 24
+   },
+   {
+    "species": "Rubricorn",
+    "min": 22,
+    "max": 24,
+    "weight": 24
+   },
+   {
+    "species": "Ripjolter",
+    "min": 22,
+    "max": 25,
+    "weight": 16
+   },
+   {
+    "species": "Delthorn",
+    "min": 23,
+    "max": 25,
+    "weight": 8
+   },
+   {
+    "species": "Reedwarden",
+    "min": 23,
+    "max": 25,
+    "weight": 8
+   },
+   {
+    "species": "Cogwright",
+    "min": 24,
+    "max": 26,
+    "weight": 5
+   }
+  ]
  }
 }
