@@ -19,6 +19,9 @@ var voice: String = "player"
 var _line_voice: String = "player"
 var _blipped: int = 0
 var chars_per_second: float = 60.0
+## Typing speed factor of the era on screen (data/era_feel.json "text_cps_mult"): later eras
+## type a little faster, the way later handhelds did.
+var era_speed: float = 1.0
 ## At most this many lines per window; longer texts go on to the next window (item 2043).
 const MAX_LINES: int = 3
 ## Holding the box (or A) this long runs on to the next question (item 2013).
@@ -126,6 +129,7 @@ func _set_rise(v: int) -> void:
 func show_text(text: String, speaker: String = "") -> void:
 	# A worn shop text frame (item 4282); the plain box otherwise.
 	add_theme_stylebox_override("panel", UITheme.text_frame_style(GameState.dialogue_frame()))
+	era_speed = maxf(0.1, float(EraManager.feel("text_cps_mult")))
 	# Story lines may address the player by name: "{name}" (after translation).
 	var shown: String = Loc.t(text).replace("{name}", GameState.tamer_name)
 	# Old lines carry the speaker as "Aldo: ..."; it moves to the name tag. A name in the
@@ -272,7 +276,7 @@ func _process(delta: float) -> void:
 	_bob_arrow(delta)
 	if not _typing:
 		return
-	_visible_chars += delta * chars_per_second
+	_visible_chars += delta * chars_per_second * era_speed
 	_label.visible_characters = int(_visible_chars)
 	var text: String = _label.text
 	while _blipped < mini(_label.visible_characters, text.length()):

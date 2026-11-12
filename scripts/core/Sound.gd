@@ -164,13 +164,13 @@ func sfx(sound_name: String, volume_db: float = 0.0, pitch: float = 1.0) -> void
 static func bus_for(sound_name: String) -> StringName:
 	if sound_name in UI_SOUNDS:
 		return GameState.BUS_UI
-	if sound_name == "blip":
+	if sound_name.begins_with("blip"):
 		return GameState.BUS_VOICE
 	return GameState.BUS_SFX
 
 ## Priority of effect [param sound_name] (item 2551).
 static func priority_of(sound_name: String) -> int:
-	if sound_name in UI_SOUNDS or sound_name == "blip":
+	if sound_name in UI_SOUNDS or sound_name.begins_with("blip"):
 		return PRIO_UI
 	if sound_name in BATTLE_SOUNDS:
 		return PRIO_BATTLE
@@ -262,7 +262,13 @@ func text_blip(speaker: String, letter: String) -> void:
 		return
 	_blip_count += 1
 	if _blip_count % 2 == 0:
-		sfx("blip", BLIP_DB, float(VOICE_PITCH.get(speaker, 1.0)))
+		sfx(blip_name(EraManager.active_era()), BLIP_DB, float(VOICE_PITCH.get(speaker, 1.0)))
+
+## The text voice of era [param era] (data/era_feel.json "blip"): Era I's square blip, then one
+## step up in sound chip per era. Falls back to "blip" when the era's file is missing.
+static func blip_name(era: int) -> String:
+	var n: String = str(EraFeel.value(era, "blip"))
+	return n if not n.is_empty() and ResourceLoader.exists(SFX_DIR % n) else "blip"
 
 ## The song and ambience loop of [param map_id] (items 2443, 2570).
 func enter_map(map_id: String) -> void:
