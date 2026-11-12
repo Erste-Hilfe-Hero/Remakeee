@@ -77,10 +77,16 @@ static func atlas_path(region: String = "") -> String:
 	var shared: String = EraManager.art_path(ATLAS_REL)
 	if not region.is_empty():
 		var own: String = EraManager.art_path("tiles/overworld_%s.png" % region)
-		# Only when it belongs to the same era folder: a newer era's shared atlas wins.
-		if not own.is_empty() and own.get_base_dir() == shared.get_base_dir():
+		# Only when it is from the shared atlas' era or newer: a newer era's shared atlas wins over an
+		# act's older own atlas, an Era III region's own atlas wins over the Era II shared one.
+		if not own.is_empty() and _era_of(own) >= _era_of(shared):
 			return own
 	return shared
+
+## Era number of an "res://art/eraN/..." path (0 when it is none).
+static func _era_of(path: String) -> int:
+	var i: int = path.find("/era")
+	return path.substr(i + 4, 1).to_int() if i >= 0 else 0
 
 ## Drops the cached TileSets so the next get_tileset() rebuilds them for the active era.
 static func clear_cache() -> void:

@@ -240,7 +240,7 @@ def report(chart, sp, ty, problems):
     for t, v in types.items():
         weak = [o for o in types if t in types[o]["strong"] and o not in types[t]["strong"]]
         wr = "%.1f %%" % (ty[t][0] * 100) if t in ty else "legendaries only"
-        lines.append("| %s | %s | %s | %s | %s |" % (t.capitalize(), "I" if v.get("era", 1) == 1 else "II",
+        lines.append("| %s | %s | %s | %s | %s |" % (t.capitalize(), ["I", "II", "III", "IV", "V"][v.get("era", 1) - 1],
             ", ".join(x.capitalize() for x in v["strong"] if t not in types[x]["strong"]), ", ".join(x.capitalize() for x in weak), wr))
     rates = [r for r, _, _ in sp.values()]
     lines += ["", "Species: %d measured, lowest %.1f %%, highest %.1f %%." % (len(sp), min(rates) * 100, max(rates) * 100), "",

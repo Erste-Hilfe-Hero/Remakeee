@@ -193,6 +193,30 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 145 | Duskmirrah | Umbra/Lumen | uncommon | weaver | deep_roots | 390 | - |
 <!-- /lines:solenne -->
 
+<!-- lines:quillmarch -->
+## Quillmarch lines (Era III post-game, tools/art/lines/quillmarch.py)
+
+Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 146 | Vesk | Gale | common | striker | slick | 294 | Veskara (ring 22) |
+| 147 | Veskara | Gale | uncommon | striker | slick | 400 | Veskarion (ring 41) |
+| 148 | Veskarion | Gale | shy | striker | slick | 501 | - |
+| 149 | Siltby | Tide | common | bulwark | thick_hide | 314 | Siltarra (ring 24) |
+| 150 | Siltarra | Tide | uncommon | bulwark | thick_hide | 405 | Siltaroth (ring 41) |
+| 151 | Siltaroth | Tide | shy | bulwark | thick_hide | 428 | - |
+| 152 | Cindrik | Ember | common | kindler | kindling | 313 | Cindrel (ring 24) |
+| 153 | Cindrel | Ember | uncommon | kindler | kindling | 426 | Cindravax (ring 42) |
+| 154 | Cindravax | Ember | shy | kindler | kindling | 515 | - |
+| 155 | Nibbet | Umbra/Stone | common | vanguard | surge | 312 | Nibquill (ring 26) |
+| 156 | Nibquill | Umbra/Stone | uncommon | vanguard | surge | 405 | Nibravure (ring 38) |
+| 157 | Nibravure | Umbra/Stone | shy | vanguard | surge | 496 | - |
+| 158 | Filigrin | Lumen/Volt | common | weaver | light_sleeper | 306 | Filigrace (ring 24) |
+| 159 | Filigrace | Lumen/Volt | uncommon | weaver | light_sleeper | 406 | Filigravure (ring 41) |
+| 160 | Filigravure | Lumen/Volt | shy | weaver | light_sleeper | 495 | - |
+<!-- /lines:quillmarch -->
+
 ## Regional imprints (Ortsprägung, items 218-219)
 
 A Veydal kind that lives long in another region shows a regional form there: other elements, a new palette, its own lore line, without a new Spirlog number. The forms are listed in `variants` per kind in data/spirlings.json; `Spirling.apply_imprint(region)` stores the region id in `Spirling.variant`, and `Spirling.elements()` then uses the imprint's elements. What counts as "living long" in a region is decided once those regions are playable.

@@ -1,5 +1,5 @@
 {
-  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/. finale_flags: era flag -> the flag the era's post-game finale sets (EraManager.mark_finales).",
+  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/. finale_flags: era flag -> the flag the era's post-game finale sets (EraManager.mark_finales). era3.first_batch: the next Era III lines of Quillmarch (data/region3.json), drawn the same way; species data from tools/art/lines/quillmarch.py.",
   "unlock_flags": {
     "2": "story_complete",
     "3": "era2_finale_done",
@@ -7,7 +7,8 @@
     "5": "era4_finale_done"
   },
   "finale_flags": {
-    "era2_finale_done": "vellmarch_done"
+    "era2_finale_done": "vellmarch_done",
+    "era3_finale_done": "quillmarch_done"
   },
   "era3": {
     "region": "quillmarch",
@@ -60,6 +61,34 @@
         "b88e24",
         "e8c850",
         "fff4b8"
+      ],
+      "nib_quill": [
+        "161a2c",
+        "2c3552",
+        "4e5f80",
+        "8796b0",
+        "d0d8e4"
+      ],
+      "nib_face": [
+        "3e2a22",
+        "7c5a40",
+        "b88c62",
+        "e2c294",
+        "fbf0d6"
+      ],
+      "lace_wing": [
+        "3a2414",
+        "7a4a22",
+        "b87c38",
+        "e2b86a",
+        "fbecc0"
+      ],
+      "lace_body": [
+        "1e1430",
+        "3c2a5a",
+        "64508a",
+        "9c8cbc",
+        "dcd4ec"
       ]
     },
     "starting_set": [
@@ -125,6 +154,50 @@
         "stage": 3,
         "element": "EMBER",
         "texture": "feather"
+      }
+    ],
+    "first_batch": [
+      {
+        "id": "nibbet",
+        "line": "nib",
+        "stage": 1,
+        "element": "UMBRA",
+        "texture": "fur"
+      },
+      {
+        "id": "nibquill",
+        "line": "nib",
+        "stage": 2,
+        "element": "UMBRA",
+        "texture": "fur"
+      },
+      {
+        "id": "nibravure",
+        "line": "nib",
+        "stage": 3,
+        "element": "UMBRA",
+        "texture": "fur"
+      },
+      {
+        "id": "filigrin",
+        "line": "filig",
+        "stage": 1,
+        "element": "LUMEN",
+        "texture": "scale"
+      },
+      {
+        "id": "filigrace",
+        "line": "filig",
+        "stage": 2,
+        "element": "LUMEN",
+        "texture": "scale"
+      },
+      {
+        "id": "filigravure",
+        "line": "filig",
+        "stage": 3,
+        "element": "LUMEN",
+        "texture": "scale"
       }
     ]
   }
