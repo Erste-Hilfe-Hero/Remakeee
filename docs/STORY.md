@@ -293,6 +293,34 @@ The theme is "trust no one": dry humour, polite threats, violence off screen and
   (Act III). Traitors: Kenan (Act I), Farida, Heider (Act II), Leith (Act III). Lipka and Leith can
   turn either way with the hidden values.
 
+### The strangers' camp (plan 2, items 141-180)
+
+The eleven strangers keep a camp at the Edge of the Wide Rift (`data/dialogue/edge_camp.json`,
+placements in `data/story_npcs.json`). Elma leads it. The first visit in Act II plays the scene
+`edge_camp` (`edge_camp_met`): their own map is fading too. The camp grows with each act: the
+five Act I figures arrive with Act II, Amir, Farida and Heider with Act III (`act2_end`), Leith,
+Lejla and Mirza with Act IV (`rift_shade_sealed`). Each figure has an own Era I/II sheet
+(`tools/art/gen_strangers.py`: `stranger`, `stranger_hat`, `stranger_runner`, `stranger_kid`),
+also in their clan towns.
+
+| Figure | Side goal (`edge_<name>`) | Betrayal / twist | Reward |
+| --- | --- | --- | --- |
+| Elma | show an Ember, Tide and Stone Spirling | - | 2 Spring Flasks; the gift (below) |
+| Aldra | lay her map on the Madderby guild table | trust under 55: she already sold the true copy to Fenrick | Whetstone or 2 Strong Tonics |
+| Amir | three cracked-circle marks (Greyreach, Saltglass, Ochrewell) | the marks are Heider's: he sold the family's crossings (trust heider -10) | 2 Spring Flasks |
+| Farida | rest stop (heal); read her guest book | she sells guests to Grell; burn the page (ledger `farida_book`) or feed her lies | trust |
+| Heider | carry a crate to the Greyreach trail post | he sold your route to the buyers (duel `heider_buyers`) | 3 Strong Tonics |
+| Kenan | duels `kenan_duel_1..3`, one per act; `kenan_rematch` after the finale | the keepsake he stole was in Nail's tea tin | Wind Anklet |
+| Leith | chalk arrow at the far end of the Wide Rift | trust under 40: Sable's old ambush (`leith_trap`) | Spark Charm |
+| Lejla | Gale Spirling carries her song, stone guard wakes (`silent_warden`) | - | 3 Kin Charms |
+| Lipka | Waking Moss for a hurt Spirling (`take_item`) | trust under 45: she sells it to Heider | Iron Burr or 2 Strong Tonics |
+| Mirza | hand over a Kin Charm | trust under 40: he gambles it away | Spark Charm or 2 Kin Charms |
+| Nail | beat him (`nail_duel`) so he can lie to Veit Harrow | he leaves Veit's pay | Spring Flask |
+
+Six duels against the strangers: Kenan 1-3, Kenan's rematch, Nail, Leith's trap. With all eleven
+goals done Elma hands over a Scrivane from the other map (`gift_spirling`, side goal `edge_gift`).
+Once the story is complete and a figure's goal is done, that figure has a closing talk.
+
 ### Hidden trust
 
 Every figure has a hidden **trust** and **use** value (0-100, start values in the data, changes

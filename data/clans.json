@@ -147,6 +147,7 @@
   {"id": "deeds", "act": 4, "ref": "clans/ledger_deeds"},
   {"id": "crown", "act": 4, "ref": "clans/ledger_crown"},
   {"id": "fitch_toll", "act": 3, "ref": "soot_vaults/ledger_fitch"},
-  {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"}
+  {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"},
+  {"id": "farida_book", "act": 3, "ref": "edge_camp/ledger_farida_book"}
  ]
 }

@@ -88,6 +88,8 @@ func _ready() -> void:
 		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
+		"take_item": _action_take_item,
+		"gift_spirling": _action_gift_spirling,
 		"tip": _action_tip,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
@@ -1543,6 +1545,33 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 		var tip: Array[String] = Tips.take("gear")
 		if not tip.is_empty():
 			await say(tip)
+
+## "take_item <id> [count]": the player hands items over in a talk (Lipka's moss, Mirza's charm).
+func _action_take_item(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var count: int = 0
+	for i: int in (int(args[1]) if args.size() > 1 else 1):
+		if GameState.take_item(args[0]):
+			count += 1
+	if count > 0:
+		var item_name: String = str(Database.item(args[0]).get("name", args[0]))
+		await say(["You handed over %s x%d." % [item_name, count]] as Array[String])
+
+## "gift_spirling <Species> [ring]": a Spirling handed over in a talk (the strangers' gift from
+## the other map, plan 2 item 173). It joins the team, or storage when the team is full.
+func _action_gift_spirling(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var s := Spirling.new(sd, int(args[1]) if args.size() > 1 else 5, GameState.rng)
+	var joined: bool = GameState.receive_spirling(s)
+	Sound.sfx("pickup")
+	await say(["You received %s!" % sd.species_name] as Array[String])
+	if not joined:
+		await say(["%s was sent to storage." % sd.species_name] as Array[String])
 
 # --- Story: prologue and Mirela's map book ---------------------------------------------------
 

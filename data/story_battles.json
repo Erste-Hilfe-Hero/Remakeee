@@ -586,5 +586,179 @@
   "ai": 2,
   "money": 300,
   "defeat": "soot_vaults/fitch_ambush_defeat"
+ },
+ "kenan_duel_1": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 21
+   },
+   {
+    "species": "Shalebat",
+    "level": 21
+   },
+   {
+    "species": "Glimmerax",
+    "level": 22
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "edge_camp/kenan_d1_defeat"
+ },
+ "kenan_duel_2": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 31
+   },
+   {
+    "species": "Riptail",
+    "level": 31
+   },
+   {
+    "species": "Calderox",
+    "level": 32
+   },
+   {
+    "species": "Duskdigger",
+    "level": 32
+   }
+  ],
+  "ai": 2,
+  "money": 1400,
+  "defeat": "edge_camp/kenan_d2_defeat"
+ },
+ "kenan_duel_3": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 39
+   },
+   {
+    "species": "Duskdigger",
+    "level": 39
+   },
+   {
+    "species": "Calderox",
+    "level": 40
+   },
+   {
+    "species": "Obsidroth",
+    "level": 40
+   }
+  ],
+  "ai": 3,
+  "money": 2200,
+  "defeat": "edge_camp/kenan_d3_defeat"
+ },
+ "kenan_rematch": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 58
+   },
+   {
+    "species": "Duskdigger",
+    "level": 59
+   },
+   {
+    "species": "Smoldrake",
+    "level": 59
+   },
+   {
+    "species": "Calderox",
+    "level": 59
+   },
+   {
+    "species": "Obsidroth",
+    "level": 60
+   }
+  ],
+  "ai": 3,
+  "money": 4000,
+  "defeat": "edge_camp/kenan_rematch_defeat"
+ },
+ "nail_duel": {
+  "trainer": "Tea Seller Nail",
+  "team": [
+   {
+    "species": "Kelpup",
+    "level": 20
+   },
+   {
+    "species": "Glimmerax",
+    "level": 21
+   }
+  ],
+  "ai": 2,
+  "money": 600,
+  "defeat": "edge_camp/nail_duel_defeat",
+  "win_flags": [
+   "edge_nail_1"
+  ]
+ },
+ "leith_trap": {
+  "trainer": "Sable's Hands",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 38
+   },
+   {
+    "species": "Shalebat",
+    "level": 38
+   },
+   {
+    "species": "Duskdigger",
+    "level": 39
+   }
+  ],
+  "ai": 2,
+  "money": 1600,
+  "defeat": "edge_camp/leith_trap_defeat"
+ },
+ "silent_warden": {
+  "trainer": "The Silent Warden",
+  "team": [
+   {
+    "species": "Cairnhold",
+    "level": 40
+   },
+   {
+    "species": "Obsidroth",
+    "level": 40
+   },
+   {
+    "species": "Talusgard",
+    "level": 41
+   }
+  ],
+  "ai": 3,
+  "money": 1000,
+  "defeat": "edge_camp/silent_warden_defeat",
+  "win_flags": [
+   "edge_lejla_woke"
+  ]
+ },
+ "heider_buyers": {
+  "trainer": "Heider's Buyers",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 30
+   },
+   {
+    "species": "Mirkmole",
+    "level": 31
+   }
+  ],
+  "ai": 2,
+  "money": 1200,
+  "defeat": "edge_camp/heider_buyers_defeat"
  }
 }
