@@ -171,7 +171,7 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `glass_rift` | rift | 12x13 | 0 | 0 | 20 |
 | ashmere | `gravers_hall` | inside | 10x9 | 0 | 0 | 0 |
 | ashmere | `kiln_rift` | rift | 12x13 | 0 | 0 | 20 |
-| ashmere | `saltglass` | route | 12x26 | 5 | 4 | 56 |
+| ashmere | `saltglass` | route | 12x26 | 5 | 4 | 55 |
 | ashmere | `shade_rift` | rift | 12x22 | 0 | 5 | 16 |
 | ashmere | `soot_vaults` | dungeon | 12x20 + 12x20 + 12x20 + 12x20 + 12x20 + 12x20 | 21 | 17 | 174 |
 | ashmere | `undrawn_1` | rift | 12x22 | 0 | 0 | 0 |
@@ -183,10 +183,13 @@ Written by `python3 tools/world_stats.py`.
 | solenne | `mirage_kiln` | dungeon | 12x10 + 12x10 + 12x8 | 5 | 7 | 25 |
 | solenne | `oasis_rift` | rift | 12x22 | 0 | 4 | 18 |
 | solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
+| solenne | `ochrewell_dome` | inside | 10x8 | 0 | 0 | 0 |
+| solenne | `ochrewell_pottery` | inside | 10x8 | 0 | 0 | 0 |
+| solenne | `ochrewell_store` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
 | solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
-| | **60 maps** | | | **162** | **116** | **1489** |
+| | **63 maps** | | | **162** | **116** | **1488** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
