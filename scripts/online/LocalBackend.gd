@@ -2113,7 +2113,7 @@ static func trade_mon_clean(m: Dictionary) -> Dictionary:
 	for k: String in ["nickname", "box", "favorite"]:
 		out.erase(k)
 	var era: Variant = m.get("origin_era")
-	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= 4 else 1
+	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= Spirling.MAX_ERA else 1
 	return out
 
 static func mon_uids(list: Variant) -> Array:
