@@ -101,7 +101,7 @@ func run() -> void:
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty() or not raid_attempt.is_empty():
+				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay:
 					return
 			"Leagues":
 				await LeagueMenu.run(self)

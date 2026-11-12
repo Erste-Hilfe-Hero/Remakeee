@@ -3615,7 +3615,8 @@ func league_battle(m: Dictionary) -> void:
 ## round limit; the battle is friendly, so it costs nothing and the team is healed afterwards.
 ## The damage comes off the guardian once the referee checked the battle (2691).
 func raid_battle(at: Dictionary) -> void:
-	var war: bool = str(at.get("kind", "raid")) == "bund_war"
+	var kind: String = str(at.get("kind", "raid"))
+	var war: bool = kind != "raid"
 	var snap: Dictionary = BattleReferee.from_expect(at)
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
@@ -3625,7 +3626,9 @@ func raid_battle(at: Dictionary) -> void:
 	model.trainer_name = foe_name if war else "Rift guardian"
 	var foes: Array[Spirling] = []
 	foes.assign(model.parties[1])
-	if war:
+	if kind == "tourney":
+		await say([Loc.t("Tournament: the team of %s waits. Win with as much damage and as few rounds as you can.") % foe_name] as Array[String])
+	elif war:
 		await say([Loc.t("Bund against bund: %s's team waits. This battle counts for your bund.") % foe_name] as Array[String])
 	else:
 		await say([Loc.t("%s waits in the Raid Rift. You have %d rounds.") % [foe_name, model.round_limit]] as Array[String])
@@ -3636,9 +3639,11 @@ func raid_battle(at: Dictionary) -> void:
 	var dealt: int = 0
 	for s: Spirling in model.parties[1]:
 		dealt += maxi(0, s.max_hp() - s.hp)
-	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": "bund_war" if war else "raid",
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind,
 		"p_ref": str(at.get("attempt_id", "")), "p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
-	var lines: Array[String] = ["The war battle is over." if war else Loc.t("You dealt %d damage to the guardian.") % dealt]
+	var lines: Array[String] = [Loc.t("You dealt %d damage to the guardian.") % dealt]
+	if war:
+		lines = ["The tournament battle is over." if kind == "tourney" else "The war battle is over."]
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		lines.append("It counts once the check is done.")
 	else:

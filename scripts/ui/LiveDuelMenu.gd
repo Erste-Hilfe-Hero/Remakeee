@@ -10,6 +10,9 @@ const ERRORS: Dictionary = {
 	"duel_closed": "This duel is over.",
 	"no_such_duel": "This duel is over.",
 	"bad_pick": "Pick 3 different Spirlings.",
+	"wrong_round": "That round is already over.",
+	"already_moved": "You already chose for this round.",
+	"bad_input": "That choice does not work.",
 }
 
 static func error_text(r: Dictionary) -> String:
@@ -31,13 +34,16 @@ static func run(menu: PauseMenu, friends: Array) -> void:
 		for d: Dictionary in duels:
 			labels.append(duel_line(d))
 		labels.append("Invite a friend...")
+		labels.append("Watch a friend's duel...")
 		var idx: int = await menu.pick_strings("Live duels", labels)
 		if idx < 0:
 			return
 		if idx < duels.size():
 			await run_duel(menu, int(duels[idx].id))
-		else:
+		elif idx == duels.size():
 			await invite(menu, friends)
+		else:
+			await watch(menu)
 
 static func duel_line(d: Dictionary) -> String:
 	if d.state == "invited":
@@ -61,11 +67,39 @@ static func run_duel(menu: PauseMenu, id: int) -> void:
 			await menu.info(error_text(r))
 			return
 		var d: Dictionary = r.data
+		var sim: LiveDuelSim = LiveDuelSim.of(d) if str(d.state) in ["running", "done"] else null
+		var side: int = int(d.side)
+		# Both phones play the same rounds; when the battle is over each tells the server who won.
+		if sim != null and sim.finished() and str(d.state) == "running":
+			r = await Online.call_fn("live_finish", {"p_id": id, "p_winner": sim.winner()})
+			if _ok(r) and str(r.data.state) == "running":
+				await menu.info("\n".join(battle_lines(sim, side) + ([Loc.t("Waiting for your friend's result.")] as Array[String])))
+				return
+			continue
 		var entries: Array[String] = actions(d)
-		var idx: int = await menu.pick_strings(state_text(d, int(Time.get_unix_time_from_system())), entries)
+		var moved: bool = sim != null and str(d.state) == "running" and (d.moves as Dictionary).get(str(int(d.round))) is Array \
+			and d.moves[str(int(d.round))][side] != null
+		if moved:
+			entries.erase("Choose your move")
+			entries.push_front("Look again")
+		var text: String = state_text(d, int(Time.get_unix_time_from_system()))
+		if sim != null:
+			text += "\n" + "\n".join(battle_lines(sim, side))
+			if moved:
+				text += "\n" + Loc.t("You chose. Waiting for your friend.")
+		var idx: int = await menu.pick_strings(text, entries)
 		if idx < 0:
 			return
 		match entries[idx]:
+			"Look again":
+				r = {}
+			"Choose your move":
+				var options: Array = sim.choices(side)
+				var labels: Array[String] = []
+				for o: Dictionary in options:
+					labels.append(str(o.label))
+				var c: int = await menu.pick_strings(Loc.t("Round %d: what will %s do?") % [int(d.round), sim.active_line(side)], labels)
+				r = await Online.call_fn("live_move", {"p_id": id, "p_round": int(d.round), "p_input": options[c].input}) if c >= 0 else {}
 			"Accept":
 				r = await Online.call_fn("live_answer", {"p_id": id, "p_accept": true})
 			"Decline":
@@ -95,7 +129,7 @@ static func actions(d: Dictionary) -> Array[String]:
 	match str(d.state):
 		"invited": return ["Accept", "Decline"] as Array[String] if int(d.side) == 1 else [] as Array[String]
 		"picking": return (["Give up"] as Array[String]) if bool(d.picked[int(d.side)]) else (["Pick 3", "Give up"] as Array[String])
-		"running": return ["Send an emote", "Give up"] as Array[String]
+		"running": return ["Choose your move", "Send an emote", "Give up"] as Array[String]
 		"done": return ["Rematch", "Report the rival..."] as Array[String]
 	return [] as Array[String]
 
@@ -129,3 +163,54 @@ static func pick(menu: PauseMenu, d: Dictionary) -> Dictionary:
 		if not chosen.has(idx):
 			chosen.append(idx)
 	return await Online.call_fn("live_pick", {"p_id": int(d.id), "p_pick": chosen})
+
+# --- Playing the rounds (points 1-3, 10) and watching a friend (73) ---------------------------------
+
+## What happened last round, who stands where, and at the end the damage per Spirling (point 10).
+## [param side] -1 = a watcher.
+static func battle_lines(sim: LiveDuelSim, side: int) -> Array[String]:
+	var lines: Array[String] = []
+	lines.append_array(sim.last_lines.slice(-6))
+	var mine: int = maxi(side, 0)
+	lines.append(Loc.t("%s  against  %s") % [sim.active_line(mine), sim.active_line(1 - mine)])
+	if sim.finished():
+		lines.append_array(sim.summary(mine))
+		lines.append_array(sim.summary(1 - mine))
+	return lines
+
+## Running duels of friends, one finished round behind.
+static func watch(menu: PauseMenu) -> void:
+	var r: Dictionary = await Online.call_fn("live_watch_list")
+	if not _ok(r):
+		await menu.info(error_text(r))
+		return
+	var duels: Array = r.data.get("duels", [])
+	if duels.is_empty():
+		await menu.info("None of your friends is in a live duel right now.")
+		return
+	var labels: Array[String] = []
+	for d: Dictionary in duels:
+		labels.append(Loc.t("%s against %s, round %d") % [str(d.names[0]), str(d.names[1]), int(d.round)])
+	var idx: int = await menu.pick_strings("Watch a friend's duel...", labels)
+	if idx < 0:
+		return
+	while true:
+		var w: Dictionary = await Online.call_fn("live_watch", {"p_id": int(duels[idx].id)})
+		if not _ok(w):
+			await menu.info(error_text(w))
+			return
+		if await menu.pick_strings(watch_text(w.data), ["Look again"] as Array[String]) < 0:
+			return
+
+static func watch_text(d: Dictionary) -> String:
+	var lines: Array[String] = [Loc.t("%s against %s") % [str(d.names[0]), str(d.names[1])]]
+	var sim: LiveDuelSim = LiveDuelSim.of(d)
+	if str(d.state) == "done":
+		lines.append(Loc.t("The duel is over."))
+		if int(d.winner) >= 0:
+			lines.append(Loc.t("%s wins!") % str(d.names[int(d.winner)]))
+	else:
+		lines.append(Loc.t("Round %d (you see it one move later)") % maxi(1, int(d.round) - 1))
+	if sim != null:
+		lines.append_array(battle_lines(sim, -1))
+	return "\n".join(lines)

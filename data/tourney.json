@@ -1,0 +1,14 @@
+{
+ "_comment": "Weekend tournament (Online 100, points 62, 74, 80). The server reads the same object as server_config.tourney (tools/online/game_data_sql.py). days: ISO weekdays in UTC (6 = Saturday, 7 = Sunday). rewards: winner, final, semi-final, took part.",
+ "days": [6, 7],
+ "size": 8,
+ "round_hours": 6,
+ "finals_rows": 10,
+ "keep_days": 35,
+ "rewards": [
+  {"item": "spark_charm", "count": 1},
+  {"item": "max_tonic", "count": 2},
+  {"item": "revival_leaf", "count": 1},
+  {"item": "strong_tonic", "count": 1}
+ ]
+}
