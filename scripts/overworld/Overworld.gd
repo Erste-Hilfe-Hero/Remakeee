@@ -3025,15 +3025,19 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	while true:
-		var labels: Array[String] = []
+		var rows: Array[Dictionary] = []
 		for id: String in args:
 			var it: Dictionary = Database.item(id)
-			labels.append("%s  %d" % [it.get("name", id), ShopEffects.merchant_price(int(it.get("price", 0)))])
-		var idx: int = await menu.pick_strings("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), labels)
+			rows.append({"text": "%s  %d" % [it.get("name", id), ShopEffects.merchant_price(int(it.get("price", 0)))],
+				"hint": "1x %s: %s" % [ShopCatalog.item_name(id), Loc.t(str(it.get("description", "")))]})
+		var idx: int = await menu.pick("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), rows)
 		if idx < 0:
 			break
 		var item: Dictionary = Database.item(args[idx])
 		var price: int = ShopEffects.merchant_price(int(item.get("price", 0)))
+		# What the item is and does before any coin moves (shop clarity, Ali 12 Nov 2026).
+		if not await menu.confirm(ShopCatalog.merchant_card(args[idx], price) + "\n\n" + Loc.t("Buy for %d coins?") % price):
+			continue
 		if GameState.money < price:
 			await menu.info("Not enough coins.")
 			continue
