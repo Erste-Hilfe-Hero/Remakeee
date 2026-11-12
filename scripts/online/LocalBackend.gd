@@ -20,7 +20,7 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "focus_brew", "w": 3}, {"item": "dash_brew", "w": 3}, {"item": "revival_leaf", "w": 1}],
 	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
-	"party_max": 5, "level_max": 60, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
+	"party_max": 5, "level_max": 60, "save_level_max": 9999, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
 	"league_fair_ring": 50, "league_season_days": 42, "league_closing_minutes": 30, "league_search_start": 100,
 	"league_search_step": 50, "league_search_max": 400, "league_match_minutes": 30, "league_ai": 2,
 	"league_fair_blocked_sources": [],
@@ -295,8 +295,10 @@ func party_max_of(uid: String) -> int:
 	var unlocks: Variant = shop.get("unlocks", {}) if shop is Dictionary else {}
 	return config_int("party_max", 5) + (1 if unlocks is Dictionary and int(unlocks.get("team_slot_6", 0)) > 0 else 0)
 
-## Like public._save_ok: real game limits (team of party_max, Ring 1..level_max).
-static func save_ok(d: Variant, party_max: int = 5, level_max: int = 60) -> bool:
+## Like public._save_ok: real game limits (team of party_max, Ring 1..save_level_max). Spirlings
+## have no top ring, so save_level_max is only a sanity bound (Spirling.LEVEL_SANITY, 9999)
+## against garbage; level_max (60) stays the echo team, league and duel ring.
+static func save_ok(d: Variant, party_max: int = 5, level_max: int = Spirling.LEVEL_SANITY) -> bool:
 	if not d is Dictionary:
 		return false
 	if JSON.stringify(d).length() > 400000:
@@ -424,7 +426,7 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "too_big"}
 	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
 		return {"ok": false, "error": "schema"}
-	if not save_ok(a.get("p_data"), party_max_of(me()), config_int("level_max", 60)):
+	if not save_ok(a.get("p_data"), party_max_of(me()), config_int("save_level_max", Spirling.LEVEL_SANITY)):
 		return {"ok": false, "error": "implausible"}
 	var data: Dictionary = (a.p_data as Dictionary).duplicate(true)
 	# Values the server keeps itself are dropped (item 2924).

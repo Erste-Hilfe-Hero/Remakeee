@@ -8,7 +8,14 @@ const SPARK_MAX: int = 12
 const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
-const MAX_LEVEL: int = 60
+## Spirlings have no top ring (owner decision 2026-11-12): XP and stats follow their formulas
+## for any ring. STORY_RING is the top ring of story content (Wardens, echoes, endgame) and the
+## ring online duels and the open league normalise to; it never stops a Spirling growing.
+## Kept apart from the genre's well-known 100 (docs/legal/IP_PATENT_AUDIT.md, item 15).
+const STORY_RING: int = 60
+## Sanity bound against broken or forged save data only (same as server_config save_level_max).
+## Not a game cap: at the XP curve below it takes over 30 billion XP.
+const LEVEL_SANITY: int = 9999
 ## Newest era a Spirling can come from (EraManager.NEWEST, Era V Living). Saves used to cut
 ## Era V Spirlings back to Era IV (bug plan 1373).
 const MAX_ERA: int = 5
@@ -122,7 +129,7 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	if d == null:
 		return
 	data = d
-	level = clampi(lvl, 1, MAX_LEVEL)
+	level = clampi(lvl, 1, LEVEL_SANITY)
 	xp = xp_for_level(level)
 	var r: RandomNumberGenerator = rng
 	if r == null:
@@ -291,7 +298,7 @@ static func xp_for_level(lvl: int) -> int:
 	return int(floor(XP_MULT * pow(float(lvl), XP_EXP)))
 
 func xp_to_next() -> int:
-	if level >= MAX_LEVEL:
+	if level >= LEVEL_SANITY:
 		return 0
 	return xp_for_level(level + 1) - xp
 
@@ -508,7 +515,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var s := Spirling.new()
 	s.data = sd
 	s.nickname = str(d.get("nickname", ""))
-	s.level = clampi(_num(d.get("level"), 1), 1, MAX_LEVEL)
+	s.level = clampi(_num(d.get("level"), 1), 1, LEVEL_SANITY)
 	s.xp = _num(d.get("xp"), xp_for_level(s.level))
 	var sp: Variant = d.get("spark", {})
 	for key: String in STAT_KEYS:

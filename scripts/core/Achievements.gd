@@ -132,7 +132,7 @@ static func stat(name: String) -> int:
 			var seen: Array = GameState.records.get("maps_visited", [])
 			return int(EncounterTable.table_ids().all(func(m: String) -> bool: return m in seen))
 		"team_at_cap":
-			return GameState.party.filter(func(s: Spirling) -> bool: return s.level >= Spirling.MAX_LEVEL).size()
+			return GameState.party.filter(func(s: Spirling) -> bool: return s.level >= Spirling.STORY_RING).size()
 		"gear":
 			return int(GameState.has_gear("grapple_line")) + int(GameState.has_gear("climbing_pick")) + int(GameState.has_gear("storm_lantern"))
 		"keepsakes":

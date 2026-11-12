@@ -94,7 +94,7 @@ var turn: int = 0
 ## ends as FLED: nobody won, the damage dealt so far counts.
 var round_limit: int = 0
 var items_allowed: bool = true
-var level_cap: int = Spirling.MAX_LEVEL
+var level_cap: int = Spirling.LEVEL_SANITY
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
 var inventory: Dictionary = {}
 ## Battle-only player items that are not in the bag, item id -> count. The Wayfarer Pass puts a
@@ -1617,13 +1617,13 @@ func _award_xp(foe: Spirling) -> void:
 ## Adds XP up to the level cap and plays out level-ups and new moves.
 func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 	var index: int = parties[Side.PLAYER].find(s)
-	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.MAX_LEVEL))
+	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.LEVEL_SANITY))
 	var gained: int = clampi(amount, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
 	if bench and gained <= 0:
 		return
 	s.xp += gained
 	emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench})
-	while s.level < mini(level_cap, Spirling.MAX_LEVEL) and s.xp >= Spirling.xp_for_level(s.level + 1):
+	while s.level < mini(level_cap, Spirling.LEVEL_SANITY) and s.xp >= Spirling.xp_for_level(s.level + 1):
 		var learned: Array[MoveData] = s.level_up()
 		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
 		for mv: MoveData in learned:

@@ -147,7 +147,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 ### Act II side content (Corvane)
 
 Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German:
-`tools/i18n/de_corvane_side.py`. Rough play time per act: `python3 tools/act_hours.py`.
+`tools/i18n/de_corvane_side.py`. Rough play time per act and per post-game era region (Vellmarch, Quillmarch, Halcyra, Quivermoor; `regions` in `data/playtime.json`): `python3 tools/act_hours.py [act or region]`.
 
 - **Rival Nib Wexley**, a quay rat: five story duels (`nib_1`..`nib_5`) on the quay, in Madderby,
   the Woadfen, at Stillwater and at the bottom of the Rook Vault. After the last one he admits he
@@ -163,6 +163,8 @@ Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German
   Corvane kinds), **Corbin's twelve grey feathers** (collectibles on six maps).
 - Favors with hidden trust: Pockets Pell (lend a Spirling), Ollie Fairweather (lend coins),
   Dimsy Crake (believe his Rook Vault shortcut).
+- Twelve cartographer's stones of Corvane (item 1312, `data/dialogue/corvane_stones.json`,
+  action `marker_stone <n> corvane`), counted apart from Veydal's, keepsakes at 4, 8 and 12.
 
 ### Act III: Ashmere (item 1480)
 
@@ -257,6 +259,18 @@ crew, Corin's second duel, Lusk in the strongroom after the Sun Rift). Side goal
 `s4_ious` (five IOUs for Qadir) and `s4_graves` (three graves the Veil prepaid, one for you).
 Act IV betrayals: Kaia's well deed (`kaia_deed`, caught when Dunya warned you) and Lusk's
 strongroom truce (`lusk_vault`, caught when Qadir warned you); favors with Qadir, Saffi and Corin.
+
+**Glasswind Flats and the Mirage Kiln (Act IV, `tools/art/world/solenne_more.py`).** After the
+Tower Rift the west gate of Ochrewell opens onto the Glasswind Flats, a desert route with the
+Glasswind Caravanserai on it and the Mirage Kiln at its south end, a three-floor glassworks of the
+Sandglass Crew (fourth clan in `data/clans.json`: Glassmaster Venn, Hesper, Tamsin, Oren) with
+two lens rows. The theme is false roads, not debt. Side goals `s4_ladder` (Sabine's eight-rung
+Wayfarer ladder, Ring 42 to 48), `s4_bells` (nine caravan bells), `s4_bell_line` (the bells lead
+caravans into the kiln), `s4_twin` (a twin who never was), `s4_census` and `s4_poacher` (eight
+kinds for Ilse, who sells her guide to a poacher), `s4_mirrors` (Oren's heliographs signal raids),
+`s4_kiln` and `s4_varro`. Act IV betrayals: Sabine's purse (`sabine_purse`, caught when Old Pell
+warned you), Tamsin's twin (`tamsin_twin`, Ott) and Venn's chains (`venn_chains`, Hesper's
+ledger); favor `varro_shortcut`. `tools/act_hours.py 4` puts Act IV at 24.2 h.
 
 The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
 18, 23, ... 50, then 54, 57 and 60 for Solenne); after Act I they open fully. The story battles keep a curve that never drops (checked

@@ -1,0 +1,16 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "lq_ambrel",
+    "x": 8,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "legend_quests/hallowmur_guide",
+    "sprite": "elder",
+    "show_flag": "story_complete",
+    "hide_flag": "lq_hallowmur_ready"
+   }
+  ]
+ }
+}

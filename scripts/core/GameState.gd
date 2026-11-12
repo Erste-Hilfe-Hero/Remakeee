@@ -242,10 +242,17 @@ static func finale_flags() -> Array[String]:
 ## Story flag at the end of Act I ("Waiting for the Ferry" starts).
 const ACT1_END_FLAG: String = "aldo_dock_told"
 
+## Ring a Spirling can grow to now. No top ring (owner decision 2026-11-12): on Tamer and below,
+## and on every difficulty after Act I, Spirlings grow without limit (Spirling.LEVEL_SANITY is only
+## a guard against broken data). Veteran and Rift-Born keep their Act I Warden caps (LEVEL_CAPS).
 func level_cap() -> int:
-	if difficulty < Difficulty.VETERAN:
-		return Spirling.MAX_LEVEL
-	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), Spirling.MAX_LEVEL)
+	if not has_ring_limit():
+		return Spirling.LEVEL_SANITY
+	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), Spirling.LEVEL_SANITY)
+
+## True while a difficulty ring limit holds (Veteran and up, before the end of Act I).
+func has_ring_limit() -> bool:
+	return difficulty >= Difficulty.VETERAN and not has_flag(ACT1_END_FLAG)
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -265,11 +272,11 @@ func seal_rift(rift_id: String) -> bool:
 
 ## Ring cap by story progress for every difficulty (the Veteran caps). Endgame echoes (weekly
 ## challenge, lighthouse climb) use it, so raising one Spirling high does not change them.
-## After Act I (ACT1_END_FLAG) the cap opens to the full Spirling.MAX_LEVEL (plan 3287), so
-## Master Wayfarers and the endgame use the whole ring range.
+## After Act I (ACT1_END_FLAG) it is Spirling.STORY_RING (plan 3287), so Master Wayfarers and
+## the endgame use the whole story ring range; the player's own Spirlings are not capped by it.
 func progress_cap() -> int:
 	if has_flag(ACT1_END_FLAG):
-		return Spirling.MAX_LEVEL
+		return Spirling.STORY_RING
 	return LEVEL_CAPS[mini(rifts_sealed.size(), LEVEL_CAPS.size() - 1)]
 
 func items_allowed_in_battle() -> bool:
@@ -1152,9 +1159,10 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
 	elif int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0:
-		# Ring Tonics and the Ring Crown from the shop: never above the Ring cap (plan item 4341).
+		# Ring Tonics and the Ring Crown from the shop: never above the Ring cap (plan item 4341)
+		# nor above the story ring, so bought rings stop at 60; past it Spirlings grow by battling.
 		var goal: int = int(it.rings_to) if int(it.get("rings_to", 0)) > 0 else s.level + int(it.rings)
-		var target: int = mini(goal, mini(level_cap(), Spirling.MAX_LEVEL))
+		var target: int = mini(goal, mini(level_cap(), Spirling.STORY_RING))
 		if s.level >= target:
 			return ""
 		var from: int = s.level

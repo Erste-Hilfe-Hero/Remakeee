@@ -145,13 +145,37 @@
   },
   {
    "id": "velahra",
-   "x": 3,
+   "x": 2,
    "y": 12,
-   "facing": "down",
+   "facing": "right",
    "dialogue": "brindlewick/velahra",
    "sprite": "first_voice",
    "show_flag": "mirela_lamp",
    "hide_flag": "first_voice_velahra_away"
+  },
+  {
+   "id": "vs_gisk",
+   "x": 6,
+   "y": 8,
+   "facing": "down",
+   "dialogue": "veydal_side/gisk",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_wicka",
+   "x": 5,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "veydal_side/wicka",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_brennick",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "veydal_side/brennick",
+   "sprite": "villager"
   },
   {
    "id": "brin",
@@ -351,30 +375,6 @@
     3,
     6
    ]
-  },
-  {
-   "id": "vs_gisk",
-   "x": 6,
-   "y": 8,
-   "facing": "down",
-   "dialogue": "veydal_side/gisk",
-   "sprite": "elder"
-  },
-  {
-   "id": "vs_wicka",
-   "x": 5,
-   "y": 6,
-   "facing": "down",
-   "dialogue": "veydal_side/wicka",
-   "sprite": "elder"
-  },
-  {
-   "id": "vs_brennick",
-   "x": 6,
-   "y": 4,
-   "facing": "down",
-   "dialogue": "veydal_side/brennick",
-   "sprite": "villager"
   }
  ],
  "signs": [

@@ -24,9 +24,9 @@ const OPEN_FLAG: String = "aldo_dock_told"
 ## Wild Spirlings of the week (the Spirlog names them).
 const WEEK_SPECIES: int = 3
 ## Wild Spirlings are 5 rings under the ring cap, which is open in full after Act I (plan 3469).
-const WILD_RING: int = Spirling.MAX_LEVEL - 5
+const WILD_RING: int = Spirling.STORY_RING - 5
 ## Wanderer echoes stand a little above the wild ones, just under the full cap.
-const ECHO_RING: int = Spirling.MAX_LEVEL - 3
+const ECHO_RING: int = Spirling.STORY_RING - 3
 const ECHO_TEAM: int = 3
 ## Every room is the same size: forward stairs at the top, back stairs at the bottom.
 const WIDTH: int = 10

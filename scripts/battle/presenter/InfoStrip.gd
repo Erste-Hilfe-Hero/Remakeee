@@ -63,7 +63,7 @@ func set_spirling(s: Spirling) -> void:
 
 ## Share of the way [param s] has grown from its ring to the next, 0 to 1.
 static func xp_fraction(s: Spirling) -> float:
-	if s.level >= Spirling.MAX_LEVEL:
+	if s.level >= Spirling.LEVEL_SANITY:
 		return 1.0
 	var lo: int = Spirling.xp_for_level(s.level)
 	var hi: int = Spirling.xp_for_level(s.level + 1)

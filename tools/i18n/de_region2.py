@@ -1,14 +1,19 @@
 # German texts for Vellmarch, the post-game Era II region (data/region2.json).
-KEEP = ["Vellmarch", "Cindergate Quay", "Tallowmarket", "Hookwick", "Larkspur Heights", "Lastlamp",
-        "Warden Odile", "Warden Brannoc", "Warden Sable", "Warden Corin"]
+KEEP = ["Vellmarch", "Warden Odile", "Warden Brannoc", "Warden Sable", "Warden Corin"]
+# Town names stay English in German; they are table entries so map names and signs look them up.
 T = {
+"Cindergate Quay": "Cindergate Quay",
+"Tallowmarket": "Tallowmarket",
+"Hookwick": "Hookwick",
+"Larkspur Heights": "Larkspur Heights",
+"Lastlamp": "Lastlamp",
 "The night barge takes no fare. The bargeman just says the House already paid.": "Der Nachtkahn nimmt kein Fahrgeld. Der Kahnführer sagt nur, das Haus habe schon bezahlt.",
 "Docks, smoke and a toll booth that charges you for looking at it.": "Docks, Rauch und ein Zollhäuschen, das schon fürs Anschauen kassiert.",
 "Candles by day, rumours by night. Both are sold by weight.": "Tagsüber Kerzen, nachts Gerüchte. Beides wird nach Gewicht verkauft.",
 "A fishing town where every boat has two owners and one of them is lying.": "Ein Fischerort, in dem jedes Boot zwei Besitzer hat, und einer davon lügt.",
 "Clean streets, high walls. The money here never touches the ground.": "Saubere Straßen, hohe Mauern. Das Geld hier berührt nie den Boden.",
 "The last lit street before the marsh. Nobody here asks your name twice.": "Die letzte beleuchtete Straße vor dem Moor. Hier fragt keiner zweimal nach deinem Namen.",
-"Pewter Causeway": "Zinndamm",
+"Tollchain Causeway": "Zollkettendamm",
 "Rookery Cut": "Krähenschneise",
 "Weeping Locks": "Weinende Schleusen",
 "Smelter's Drift": "Schmelzerhalde",
