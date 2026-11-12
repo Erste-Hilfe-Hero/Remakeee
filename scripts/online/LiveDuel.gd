@@ -49,7 +49,7 @@ static func result_text(side: int, winner: int, reason: String) -> String:
 	if reason == "disputed":
 		return Loc.t("The referee could not play this duel again. It does not count.")
 	if winner < 0:
-		return Loc.t("The duel ended without a winner.")
+		return Loc.t("Draw") if reason == "played" else Loc.t("The duel ended without a winner.")
 	var won: bool = winner == side
 	match reason:
 		"forfeit": return Loc.t("Your friend gave up. You win!") if won else Loc.t("You gave up.")

@@ -17,6 +17,8 @@ func test_every_context_uses_known_phrases_and_the_server_has_the_same_lists() -
 
 func test_the_server_checks_the_post_list() -> void:
 	var s := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	var codes: Dictionary = {}
 	for who: String in ["ann", "ben"]:
 		s.switch_user(who)

@@ -152,6 +152,8 @@ func test_seventh_team_place() -> void:
 	assert_eq(GameState.party.size(), 6, "a refunded place sends the seventh to storage")
 	assert_eq(LeagueRules.TEAM_MAX, 5, "leagues and Raid Rifts stay at 5")
 	var b := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	b.rng.seed = 1
 	b.db.users["u7"] = {"shop": {"unlocks": {"team_slot_6": 1, "team_slot_7": 1}}}
 	assert_eq(b.party_max_of("u7"), 7)
 
