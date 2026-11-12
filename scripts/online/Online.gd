@@ -11,10 +11,10 @@ enum State { OFFLINE, CONNECTING, ONLINE, UPDATE_REQUIRED }
 
 ## Must match version/code in export_presets.cfg (tests check it). The server sends builds
 ## older than its "min_version" to the store.
-const CLIENT_VERSION: int = 1
+const CLIENT_VERSION: int = 2
 ## Must match version/name in export_presets.cfg. Live content compares it with its per-platform
 ## "min_client" and "latest" (docs/LIVE_CONTENT.md).
-const CLIENT_VERSION_NAME: String = "1.1.0"
+const CLIENT_VERSION_NAME: String = "1.2.0"
 const APP_STORE_ID: String = "6831632885"
 const ITUNES_LOOKUP: String = "https://itunes.apple.com/lookup?id=6831632885"
 ## Format number of the online save (plan item 2673). The server refuses saves without it or
