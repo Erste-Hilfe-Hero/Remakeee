@@ -918,12 +918,27 @@ static func party_entry(s: Spirling, leader: bool = false) -> Dictionary:
 	# The leader on slot 1 carries a small flag (item 1903).
 	if leader:
 		hint = Loc.t("Leads the team") + "  " + hint
+	# A Spirling that can unfurl now carries an arrow mark (item 1905).
+	var ready: bool = can_unfurl_now(s)
+	if ready:
+		hint += "  " + Loc.t("Ready to unfurl")
 	return {"text": "%s R%d" % [s.display_name(), s.level], "icon": MiniSprite.of(s.data.species_name, 14),
-		"decorate": func(b: Button) -> void: _draw_party_row(b, s, leader),
+		"decorate": func(b: Button) -> void: _draw_party_row(b, s, leader, ready), "unfurl": ready,
 		"hint": hint, "say": (("leads the team, worn out" if s.is_fainted() else "leads the team") if leader else worn), "leader": leader}
 
 const BAR_WIDTH: int = 40
 const FLAG_INSET: int = 8
+
+## True when [param s] could unfurl right now (outside any special place).
+static func can_unfurl_now(s: Spirling) -> bool:
+	return not s.data.unfold.is_empty() and not s.unfurl_targets().is_empty()
+
+## A small up arrow left of the leader flag: this Spirling can unfurl now.
+static func _draw_unfurl_mark(b: Button, ink: Color) -> void:
+	var x: float = b.size.x - FLAG_INSET - 8.0
+	var top: float = 3.0
+	b.draw_colored_polygon(PackedVector2Array([Vector2(x, top), Vector2(x + 3, top + 3), Vector2(x - 3, top + 3)]), ink)
+	b.draw_rect(Rect2(x - 1, top + 3, 2, 4), ink)
 
 ## A small pennant at the right end of the leader's row.
 static func _draw_leader_flag(b: Button, ink: Color) -> void:
@@ -933,10 +948,12 @@ static func _draw_leader_flag(b: Button, ink: Color) -> void:
 	b.draw_line(Vector2(x, top), Vector2(x, bottom), ink)
 	b.draw_colored_polygon(PackedVector2Array([Vector2(x + 1, top), Vector2(x + 6, top + 2.5), Vector2(x + 1, top + 5)]), ink)
 
-static func _draw_party_row(b: Button, s: Spirling, leader: bool = false) -> void:
+static func _draw_party_row(b: Button, s: Spirling, leader: bool = false, ready: bool = false) -> void:
 	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
 	if leader:
 		_draw_leader_flag(b, ink)
+	if ready:
+		_draw_unfurl_mark(b, ink)
 	var x0: float = ListPicker.POINTER_SPACE + 16
 	var y: float = b.size.y - 3
 	var ratio: float = clampf(float(s.hp) / maxf(1.0, float(s.max_hp())), 0.0, 1.0)
