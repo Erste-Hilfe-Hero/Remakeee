@@ -97,6 +97,18 @@ def lighthouse_door(rows: list, x: int, y: int) -> bool:
     return yy < y - 1 and ch(yy) == "L"
 
 
+def headframe(rows: list, x: int, y: int) -> bool:
+    """Same rule as TilesetFactory.is_headframe: a tower with no lamp on top and no door below."""
+    def ch(yy: int) -> str:
+        return rows[yy][x] if 0 <= yy < len(rows) and x < len(rows[yy]) else ""
+    top, foot = y, y
+    while ch(top - 1) == "|":
+        top -= 1
+    while ch(foot + 1) == "|":
+        foot += 1
+    return ch(top - 1) != "L" and ch(foot + 1) != "D"
+
+
 def render(d: dict, atlas_path: str = "") -> Image.Image:
     rows = d["rows"]
     tiles = os.path.join(ROOT, "art", "era1", "tiles")
@@ -133,6 +145,8 @@ def render(d: dict, atlas_path: str = "") -> Image.Image:
                 col, v = K["TOWER"], 2
             elif k == "TOWER" and kind(x, y + 1, k) == "DOOR" and lighthouse_door(rows, x, y + 1):
                 v = 1
+            elif k == "TOWER" and headframe(rows, x, y):
+                v = 4 if kind(x, y - 1, "") == "TOWER" else 3
             img.paste(atlas.crop((col * 16, v * 16, col * 16 + 16, v * 16 + 16)), (x * 16, y * 16))
     lm = json.load(open(os.path.join(ROOT, "data", "landmarks.json")))["maps"].get(d.get("id", ""))
     if lm:
