@@ -1,93 +1,14 @@
-# iOS without paid macOS minutes (Ali 2026-11-08: "Nutz den neuen kostenfreien Weg für iOS").
-# Remakeee is public, so GitHub's macOS runners cost nothing here. This job uses no secret: it compiles the game
-# UNSIGNED and publishes the .app to the public release "ios-unsigned". The lifekit repo's Contabo runner
-# (run:chimora-store-ios) then signs it with rcodesign and uploads it through the App Store Connect API.
-# Starts on a push whose commit message contains [ios-build], or by hand.
 name: iOS unsigned build
 on:
   push:
     branches-ignore: [main]
-  workflow_dispatch:
-permissions:
-  contents: write
-concurrency:
-  group: ios-unsigned
-  cancel-in-progress: false
-env:
-  GODOT_VERSION: "4.7.2"
-  GODOT_TEMPLATES: "4.7.2.stable"
 jobs:
-  build:
-    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, '[ios-build]')
-    runs-on: macos-26
-    timeout-minutes: 60
+  probe:
+    runs-on: ubuntu-latest
+    container: barichello/godot-ci:4.7.2
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - name: Select Xcode 26
-        run: |
-          sudo xcode-select -s "$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)"
-          xcodebuild -version
-      - name: Godot and export templates
-        run: |
-          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
-          mkdir -p ~/godot
-          curl -sSL -o /tmp/godot.zip "$base/Godot_v${GODOT_VERSION}-stable_macos.universal.zip"
-          unzip -q /tmp/godot.zip -d ~/godot
-          tdir="$HOME/Library/Application Support/Godot/export_templates/${GODOT_TEMPLATES}"
-          mkdir -p "$tdir"
-          curl -sSL -o /tmp/templates.tpz "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
-          unzip -q -j /tmp/templates.tpz "templates/ios.zip" "templates/version.txt" -d "$tdir"
-      - name: Server address (Chimora is online only)
-        env:
-          CHIMORA_SERVER: https://chimora.161-97-102-171.sslip.io
-        run: tools/online/write_config.sh --require
-      - name: StoreKit 2 plugin (App Store purchases)
-        run: tools/build_storekit_plugin.sh
-      - name: Export the Xcode project
-        run: |
-          GODOT=~/godot/Godot.app/Contents/MacOS/Godot
-          # Build number: same scheme as before (yyddd HHMM / 10), always higher than the last upload.
-          code=$(date -u +%y%j%H%M | sed 's/^0*//'); code=$((code / 10))
-          echo "BUILD_NUMBER=$code" >> "$GITHUB_ENV"
-          # Team ID is only needed for signing, which happens later on the Contabo host with the real profile.
-          sed -i '' 's/^application\/app_store_team_id=.*/application\/app_store_team_id="CHIMORA000"/' export_presets.cfg
-          sed -i '' 's/^application\/export_project_only=.*/application\/export_project_only=true/' export_presets.cfg
-          perl -pi -e 's/^application\/version=.*/application\/version="'$code'"/' export_presets.cfg
-          perl -pi -e 's/^const CLIENT_VERSION: int = .*/const CLIENT_VERSION: int = '$code'/' scripts/online/Online.gd
-          mkdir -p build/ios
-          "$GODOT" --headless --path . --import > /dev/null 2>&1 || true
-          "$GODOT" --headless --path . --export-release "iOS" build/ios/Chimora.ipa 2>&1 | tail -40
-          ls -la build/ios
-          test -d build/ios/Chimora.xcodeproj
-      - name: Compile unsigned (Release, device)
-        run: |
-          xcodebuild -project build/ios/Chimora.xcodeproj -scheme Chimora -configuration Release \
-            -destination generic/platform=iOS -archivePath "$RUNNER_TEMP/Chimora.xcarchive" archive \
-            CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY="" DEVELOPMENT_TEAM="" \
-            PROVISIONING_PROFILE_SPECIFIER="" 2>&1 | grep -E "error|warning: .*(minos|deployment)|ARCHIVE|BUILD" | tail -40
-          APP=$(ls -d "$RUNNER_TEMP"/Chimora.xcarchive/Products/Applications/*.app | head -1)
-          test -d "$APP"
-          for pl in "$APP/Info.plist" "$APP"/Frameworks/*.framework/Info.plist; do
-            echo "$pl: MinimumOSVersion $(plutil -extract MinimumOSVersion raw "$pl" 2>/dev/null || echo none)"
-          done
-          plutil -extract CFBundleShortVersionString raw "$APP/Info.plist"
-          plutil -extract CFBundleVersion raw "$APP/Info.plist"
-          # strip any ad-hoc signature, the host signs everything again
-          find "$APP" -name _CodeSignature -type d -prune -exec rm -rf {} +
-          rm -f "$APP/embedded.mobileprovision"
-          (cd "$(dirname "$APP")" && tar -czf "$RUNNER_TEMP/Chimora-unsigned.tar.gz" "$(basename "$APP")")
-          ls -l "$RUNNER_TEMP/Chimora-unsigned.tar.gz"
-          printf 'commit=%s\nbuild=%s\nref=%s\n' "$GITHUB_SHA" "$BUILD_NUMBER" "$GITHUB_REF_NAME" > "$RUNNER_TEMP/Chimora-unsigned.txt"
-      - name: Publish to the ios-unsigned release
-        env:
-          GH_TOKEN: ${{ github.token }}
-          GH_REPO: ${{ github.repository }}
-        run: |
-          cd "$RUNNER_TEMP"
-          gh release view ios-unsigned >/dev/null 2>&1 || gh release create ios-unsigned --prerelease \
-            --title "iOS unsigned build" --notes "Unsigned .app for the signing step on the build host."
-          gh release edit ios-unsigned --notes "Unsigned .app, commit $GITHUB_SHA, build $BUILD_NUMBER, ref $GITHUB_REF_NAME."
-          for i in 1 2 3; do
-            gh release upload ios-unsigned Chimora-unsigned.tar.gz Chimora-unsigned.txt --clobber && break
-            sleep $((i * 10))
-          done
+      - name: Import project
+        run: godot --headless --path . --import
+      - name: Probe
+        run: godot --headless --path . -s res://addons/gut/gut_cmdln.gd -gdir=res://tests/probe -gexit
