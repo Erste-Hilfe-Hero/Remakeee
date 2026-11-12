@@ -3952,6 +3952,9 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 		if not sky.is_empty():
 			model.field = str(sky.field)
 			model.field_intro = str(sky.intro)
+	# A windy sky lays no field and changes no rule; the battle only shows the wind.
+	if WeatherCycle.current(map) == "wind":
+		model.set_meta(BattleWeather.SKY_META, "wind")
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]

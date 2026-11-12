@@ -78,7 +78,22 @@
    "weather_splash": false,
    "weather_fog_bands": 2,
    "weather_lightning": false,
-   "weather_colour": false
+   "weather_colour": false,
+   "sendout": "puff",
+   "hit_mark": "cross",
+   "lunge": "step",
+   "lunge_stretch": 0.0,
+   "stat_arrows": 0,
+   "faint_motes": 0,
+   "fx_steps": 3,
+   "wind_lines": 7,
+   "wind_len": 6,
+   "wind_speed": 36,
+   "wind_leaves": 0,
+   "wind_step": 2,
+   "wind_wave": false,
+   "wind_dust": false,
+   "wind_gust": false
   },
   "2": {
    "intro": "spiral",
@@ -115,7 +130,22 @@
    "weather_splash": false,
    "weather_fog_bands": 3,
    "weather_lightning": false,
-   "weather_colour": true
+   "weather_colour": true,
+   "sendout": "puff_colour",
+   "hit_mark": "star",
+   "lunge": "step",
+   "lunge_stretch": 0.0,
+   "stat_arrows": 2,
+   "faint_motes": 0,
+   "fx_steps": 4,
+   "wind_lines": 10,
+   "wind_len": 8,
+   "wind_speed": 50,
+   "wind_leaves": 3,
+   "wind_step": 1,
+   "wind_wave": false,
+   "wind_dust": false,
+   "wind_gust": false
   },
   "3": {
    "intro": "shutter",
@@ -152,7 +182,22 @@
    "weather_splash": false,
    "weather_fog_bands": 4,
    "weather_lightning": false,
-   "weather_colour": true
+   "weather_colour": true,
+   "sendout": "burst",
+   "hit_mark": "star_ring",
+   "lunge": "tween",
+   "lunge_stretch": 0.0,
+   "stat_arrows": 3,
+   "faint_motes": 3,
+   "fx_steps": 0,
+   "wind_lines": 14,
+   "wind_len": 11,
+   "wind_speed": 66,
+   "wind_leaves": 5,
+   "wind_step": 1,
+   "wind_wave": true,
+   "wind_dust": false,
+   "wind_gust": false
   },
   "4": {
    "intro": "iris",
@@ -191,7 +236,22 @@
    "weather_splash": true,
    "weather_fog_bands": 5,
    "weather_lightning": true,
-   "weather_colour": true
+   "weather_colour": true,
+   "sendout": "burst_sparks",
+   "hit_mark": "star_sparks",
+   "lunge": "stretch",
+   "lunge_stretch": 0.1,
+   "stat_arrows": 4,
+   "faint_motes": 5,
+   "fx_steps": 0,
+   "wind_lines": 18,
+   "wind_len": 14,
+   "wind_speed": 84,
+   "wind_leaves": 8,
+   "wind_step": 1,
+   "wind_wave": true,
+   "wind_dust": true,
+   "wind_gust": false
   },
   "5": {
    "intro": "swoop",
@@ -230,7 +290,22 @@
    "weather_splash": true,
    "weather_fog_bands": 6,
    "weather_lightning": true,
-   "weather_colour": true
+   "weather_colour": true,
+   "sendout": "burst_ring",
+   "hit_mark": "star_shards",
+   "lunge": "stretch",
+   "lunge_stretch": 0.14,
+   "stat_arrows": 6,
+   "faint_motes": 8,
+   "fx_steps": 0,
+   "wind_lines": 24,
+   "wind_len": 18,
+   "wind_speed": 104,
+   "wind_leaves": 12,
+   "wind_step": 1,
+   "wind_wave": true,
+   "wind_dust": true,
+   "wind_gust": true
   }
  },
  "cameras": {
@@ -509,5 +584,75 @@
  },
  "status_badge_from_era": 2,
  "weather_storm_every": 4.0,
- "weather_flash_alpha": 0.22
+ "weather_flash_alpha": 0.22,
+ "sendout_styles": [
+  "puff",
+  "puff_colour",
+  "burst",
+  "burst_sparks",
+  "burst_ring"
+ ],
+ "hit_mark_styles": [
+  "cross",
+  "star",
+  "star_ring",
+  "star_sparks",
+  "star_shards"
+ ],
+ "lunge_styles": [
+  "step",
+  "tween",
+  "stretch"
+ ],
+ "move_fx": {
+  "_comment": "Era move effects (EraMoveFx.gd): seconds per effect, moving parts per style, how far past the Spirling's rect an effect may reach (share of its width) and the colours used from Era II on (Era I draws in its inks).",
+  "sendout_time": 0.32,
+  "hitmark_time": 0.2,
+  "stat_time": 0.7,
+  "faint_motes_time": 0.6,
+  "sendout_parts": {
+   "puff": 6,
+   "puff_colour": 8,
+   "burst": 8,
+   "burst_sparks": 8,
+   "burst_ring": 10
+  },
+  "hit_mark_parts": {
+   "cross": 1,
+   "star": 1,
+   "star_ring": 1,
+   "star_sparks": 5,
+   "star_shards": 7
+  },
+  "reach": {
+   "sendout": 0.3,
+   "hitmark": 0.2,
+   "stat": 0.0,
+   "faint_motes": 0.2
+  },
+  "colours": {
+   "light": "fbf6e4",
+   "burst": "f4d880",
+   "hit": "f8b040",
+   "mote": "d8e8f8",
+   "stat_up": "e8742c",
+   "stat_down": "3a7be0",
+   "leaf": "6c9a3c",
+   "leaf_dry": "b07a34",
+   "wind": "ffffff",
+   "dust": "c8b088"
+  }
+ },
+ "wind": {
+  "_comment": "Wind over a battle (BattleWeather.gd): shown when the region's sky is windy. It lays no field and changes no rule. Lines and leaves stand still under reduced motion.",
+  "band": [
+   0.12,
+   0.9
+  ],
+  "leaf_fall": 0.18,
+  "gust_depth": 0.45,
+  "gust_period": 3.5,
+  "line_alpha": 0.85,
+  "shade_alpha": 0.16
+ }
 }
