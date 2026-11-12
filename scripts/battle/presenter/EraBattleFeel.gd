@@ -47,6 +47,16 @@ static func idles(era: int) -> bool:
 static func silhouette_hit(era: int) -> bool:
 	return text(era, "hit") == "flash"
 
+## How a Spirling lunges into a physical art: "step" (I, II: there and back in two hard steps),
+## "tween" (III) or "stretch" (IV, V: it stretches into the lunge).
+static func lunge_style(era: int) -> String:
+	return text(era, "lunge", "tween")
+
+## Drawn scale during the forward half of a lunge: wider and flatter in the stretch eras.
+static func lunge_scale(era: int) -> Vector2:
+	var k: float = num(era, "lunge_stretch", 0.0) if lunge_style(era) == "stretch" else 0.0
+	return Vector2(1.0 + k, 1.0 - k * 0.5)
+
 ## Screen-shake factor for [param era] (I chunky and small, V strongest).
 static func shake(era: int) -> float:
 	return num(era, "shake", 1.0)

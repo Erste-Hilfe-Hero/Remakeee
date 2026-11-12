@@ -347,7 +347,19 @@ func lunge(toward: Vector2) -> void:
 	if _strips.has("attack"):
 		await play_strip("attack")
 		return
+	# Era I/II jump there and back in two hard steps; Era IV/V stretch into the lunge.
+	var era: int = feel_era()
+	if EraBattleFeel.lunge_style(era) == "step":
+		position = _home + toward.round()
+		await get_tree().create_timer(0.09 / Juice.speed()).timeout
+		position = _home
+		await get_tree().create_timer(0.06 / Juice.speed()).timeout
+		return
+	draw_scale = EraBattleFeel.lunge_scale(era)
+	queue_redraw()
 	await Juice.tween(self, "position", _home + toward, "impact", 0.08).finished
+	draw_scale = Vector2.ONE
+	queue_redraw()
 	await Juice.tween(self, "position", _home, "move", 0.12).finished
 
 ## Pushed 3 px away from the attacker, springs back in 0.15 s (item 2332). Under reduced
