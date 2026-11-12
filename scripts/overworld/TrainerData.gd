@@ -158,7 +158,7 @@ static func has_block(def: Dictionary, difficulty: int) -> bool:
 ## With a [param difficulty] (items 726-727) every foe gets GameState.FOE_SPARK in all stats, and a
 ## shared team (no block of its own for that difficulty) moves by GameState.FOE_LEVEL_SHIFT rings,
 ## never above [param ring_cap] + GameState.FOE_OVER_CAP.
-static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, difficulty: int = -1, ring_cap: int = Spirling.MAX_LEVEL) -> Array[Spirling]:
+static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenerator, difficulty: int = -1, ring_cap: int = Spirling.STORY_RING) -> Array[Spirling]:
 	var out: Array[Spirling] = []
 	var tuned: bool = difficulty >= 0 and difficulty < DIFFICULTY_KEYS.size()
 	var shift: int = 0
@@ -174,7 +174,7 @@ static func build_team(def: Dictionary, starter: String, rng: RandomNumberGenera
 			continue
 		var lvl: int = int(entry.get("level", 5))
 		if shift != 0:
-			lvl = clampi(lvl + shift, 1, maxi(lvl, mini(Spirling.MAX_LEVEL, ring_cap + GameState.FOE_OVER_CAP)))
+			lvl = clampi(lvl + shift, 1, maxi(lvl, mini(Spirling.STORY_RING, ring_cap + GameState.FOE_OVER_CAP)))
 		var s := Spirling.new(sd, lvl, rng)
 		if tuned:
 			for key: String in Spirling.STAT_KEYS:

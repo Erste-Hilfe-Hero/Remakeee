@@ -61,7 +61,7 @@ begin
   r := public.save_put(1, '{"schema": 1, "party": [], "money": 1}', 'old device', 1, true);
   assert (r->>'rev')::int = 3, 'forced write';
   -- Implausible saves are refused.
-  assert public.save_put(2, '{"schema": 1, "party": [{"level": 200}]}', '', 0)->>'error' = 'implausible';
+  assert public.save_put(2, '{"schema": 1, "party": [{"level": 10000}]}', '', 0)->>'error' = 'implausible';
   assert public.save_put(2, '{"schema": 1, "party": [{},{},{},{},{},{},{}]}', '', 0)->>'error' = 'implausible';
   assert public.save_put(2, '{"schema": 1, "money": -5}', '', 0)->>'error' = 'implausible';
   assert public.save_put(2, '{"schema": 1, "money": "lots"}', '', 0)->>'error' = 'implausible';

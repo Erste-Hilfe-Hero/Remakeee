@@ -53,7 +53,7 @@ func _init(week_key: String, cap_level: int) -> void:
 	var rules: Array = BattleRules.RULES.keys().filter(func(r: String) -> bool: return not bool(BattleRules.RULES[r].get("warden_only", false)))
 	rules.sort()
 	rule = str(rules[rng.randi_range(0, rules.size() - 1)])
-	level = clampi(cap_level, 8, Spirling.MAX_LEVEL)
+	level = clampi(cap_level, 8, Spirling.STORY_RING)
 	var picked: Array[String] = BattleRules.draw_variants(hash("chimora-weekly-variant-" + week_key), 1)
 	variant = picked[0] if not picked.is_empty() else ""
 	if is_loan_week(week_key):
