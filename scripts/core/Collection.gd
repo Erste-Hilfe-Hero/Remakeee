@@ -219,7 +219,12 @@ static func set_total(kind: String) -> int:
 		"arts":
 			return learnable_arts().size()
 		"elements":
-			return Elements.E.size()
+			# Only elements some kind carries; an element added before its kinds is not a goal yet.
+			var els: Dictionary = {}
+			for sd: SpirlingData in Database.spirlings.values():
+				for e: int in sd.elements:
+					els[e] = true
+			return els.size()
 		"pages":
 			return Overworld.PAGE_COUNT
 		"keepsakes":

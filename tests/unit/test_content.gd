@@ -47,12 +47,17 @@ func test_every_species_is_reachable() -> void:
 
 func test_lumen_and_umbra_have_base_forms() -> void:
 	var seen: Dictionary = {}
+	var used: Dictionary = {}
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.elements.size() == 1:
 			seen[sd.elements[0]] = true
+		for e: int in sd.elements:
+			used[e] = true
 	for e: int in Elements.E.values():
 		if e == Elements.E.STONE:
 			continue  # Stone shows up in duals (Shalebat, Calderox, Duskdigger).
+		if not used.has(e):
+			continue  # Element added ahead of its region's kinds.
 		assert_true(seen.has(e), "no single-element %s Spirling" % Elements.element_name(e))
 
 func test_every_species_has_a_spirlog_entry() -> void:

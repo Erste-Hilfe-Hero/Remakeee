@@ -1413,6 +1413,58 @@
   "energy": 6
  },
  {
+  "name": "Flake Rasp",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Oxide Haze",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "daze",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Seized Gear",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
+  "name": "Veil Tap",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "False Face",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "daze",
+  "status_chance": 0.2
+ },
+ {
+  "name": "Masquerade",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 90,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
   "name": "Etch Spit",
   "element": "ACID",
   "kind": "FOCUS",
@@ -1561,7 +1613,7 @@
   "energy": 4
  },
  {
-  "name": "Rimeglass Shard",
+  "name": "Rime Shard",
   "element": "FROST",
   "kind": "PHYSICAL",
   "power": 95,

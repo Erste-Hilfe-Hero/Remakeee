@@ -163,7 +163,7 @@ LINES += [
       art=dict(plan="bug", tones=("mid", "light", "dark"), extras=("wings",), ears="antenna", ear_tone="dark",
                eye="big", tail="sting")),
     # Singles
-    L(id="vitriolus", names=["Vitriolus"], elements=["ACID", "VOLT"], role="weaver",
+    L(id="vitriolus", names=["Vitriolus"], elements=["ACID"], role="weaver",
       art=dict(plan="spirit", tones=("mid", "light", "dark"), extras=("arms",), ears="antenna", ear_tone="dark",
                eye="glow", mouth="fang", marks="spots", crest=3, crest_tone="dark")),
     L(id="frostfoil", names=["Frostfoil"], elements=["FROST", "LUMEN"], role="bulwark",

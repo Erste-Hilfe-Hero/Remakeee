@@ -18076,11 +18076,11 @@
   "line_id": "mordling",
   "era": 3,
   "base": {
-   "hp": 82,
-   "atk": 58,
-   "foc": 124,
-   "spd": 92,
-   "def": 92
+   "hp": 81,
+   "atk": 57,
+   "foc": 121,
+   "spd": 90,
+   "def": 90
   },
   "trait": "steady",
   "learnset": {
@@ -18226,7 +18226,7 @@
     "Squall Line"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ]
   },
   "bond_rate": 0.5,
@@ -18287,7 +18287,7 @@
     "Gale Scythe"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ]
   },
   "bond_rate": 0.25,
@@ -18348,7 +18348,7 @@
     "Gale Scythe"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ],
    "44": [
     "Deep Freeze"
@@ -18594,7 +18594,7 @@
     "Thorn Volley"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ]
   },
   "bond_rate": 0.53,
@@ -18656,7 +18656,7 @@
     "Thorn Volley"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ],
    "38": [
     "Wildgrowth Crash"
@@ -18721,7 +18721,7 @@
     "Thorn Volley"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ],
    "38": [
     "Wildgrowth Crash"
@@ -19741,11 +19741,11 @@
   "line_id": "quilmoth",
   "era": 3,
   "base": {
-   "hp": 82,
-   "atk": 61,
-   "foc": 110,
-   "spd": 71,
-   "def": 78
+   "hp": 80,
+   "atk": 59,
+   "foc": 108,
+   "spd": 70,
+   "def": 77
   },
   "trait": "deep_roots",
   "learnset": {
@@ -20807,7 +20807,7 @@
     "Tremor Thud"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ]
   },
   "bond_rate": 0.25,
@@ -20869,7 +20869,7 @@
     "Tremor Thud"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ],
    "38": [
     "Slow Quake"
@@ -21253,8 +21253,7 @@
   "dex_id": 356,
   "name": "Vitriolus",
   "elements": [
-   "ACID",
-   "VOLT"
+   "ACID"
   ],
   "rarity": "uncommon",
   "region": "quillmarch",
@@ -21262,11 +21261,11 @@
   "line_id": "vitriolus",
   "era": 3,
   "base": {
-   "hp": 85,
-   "atk": 59,
-   "foc": 103,
-   "spd": 74,
-   "def": 80
+   "hp": 98,
+   "atk": 68,
+   "foc": 119,
+   "spd": 85,
+   "def": 92
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -21275,25 +21274,25 @@
     "Pickle Hide"
    ],
    "6": [
-    "Overcharge"
+    "Pumice Pelt"
    ],
    "10": [
     "Sour Spray"
    ],
    "15": [
-    "Spark Call"
+    "Hunker Down"
    ],
    "20": [
     "Vat Surge"
    ],
    "26": [
-    "Arc Bolt"
+    "Fault Line"
    ],
    "32": [
     "Vitriol Flood"
    ],
    "38": [
-    "Short Circuit"
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.25,
@@ -21305,7 +21304,7 @@
    2,
    0
   ],
-  "keepsake_hint": "spark_coil"
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 357,
@@ -21348,7 +21347,7 @@
     "Starlit Lash"
    ],
    "32": [
-    "Rimeglass Shard"
+    "Rime Shard"
    ],
    "38": [
     "Radiant Lance"
