@@ -61,6 +61,7 @@ static func run(menu: PauseMenu) -> void:
 			labels.append("Lent Spirlings")
 		if Online.flag_on("events"):
 			labels.append("Events")
+			labels.append("Weekend tournament")
 		labels.append("Suggested Wayfarers")
 		if Online.flag_on("invite"):
 			labels.append("Invite a friend")
@@ -96,6 +97,10 @@ static func run(menu: PauseMenu) -> void:
 			"Raid Rifts":
 				await RaidMenu.run(menu)
 				if not menu.raid_attempt.is_empty():
+					return
+			"Weekend tournament":
+				await TourneyMenu.run(menu)
+				if not menu.raid_attempt.is_empty() or menu.watch_replay:
 					return
 
 ## Friends and Lantern Mail are asked for at the same time, while the menu already shows

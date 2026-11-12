@@ -37,6 +37,10 @@ func test_fainted_does_not_bob() -> void:
 	assert_eq(SpirlingSprite.idle_offset(s, 0.6, false), Vector2.ZERO)
 
 func test_bob_redraws_without_moving_the_node() -> void:
+	# The idle bob belongs to Era IV on (docs/ERA_FEEL_BATTLE.md); Era I-III stand still.
+	var keep: Array[int] = [EraManager.unlocked_era, EraManager.retro_filter]
+	EraManager.unlocked_era = EraManager.Era.PANORAMA
+	EraManager.retro_filter = EraManager.Era.PANORAMA
 	var sp := SpirlingSprite.new()
 	sp.size = Vector2(32, 32)
 	sp.position = Vector2(40, 20)
@@ -45,6 +49,12 @@ func test_bob_redraws_without_moving_the_node() -> void:
 	sp._process(0.6)
 	assert_eq(sp.draw_offset, Vector2(0, -1))
 	assert_eq(sp.position, Vector2(40, 20))
+	EraManager.retro_filter = EraManager.Era.INK
+	sp.draw_offset = Vector2(0, -1)
+	sp._process(1.0)
+	assert_eq(sp.draw_offset, Vector2.ZERO, "Era I Spirlings stand still")
+	EraManager.unlocked_era = keep[0]
+	EraManager.retro_filter = keep[1]
 
 func test_dodge_spot_is_4px_aside() -> void:
 	assert_eq(SpirlingSprite.dodge_spot(Vector2(40, 20), 1.0), Vector2(44, 20))

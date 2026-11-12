@@ -2102,6 +2102,109 @@
    "ledger_done"
   ]
  },
+ "tansy_1": {
+  "trainer": "Tansy Hask",
+  "team": [
+   {
+    "species": "Glimmoth",
+    "level": 21
+   },
+   {
+    "species": "Rubrit",
+    "level": 22
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "dyeworks/tansy_1_defeat",
+  "lose": "dyeworks/tansy_lose"
+ },
+ "tansy_2": {
+  "trainer": "Tansy Hask",
+  "team": [
+   {
+    "species": "Wickmoth",
+    "level": 24
+   },
+   {
+    "species": "Rubricorn",
+    "level": 24
+   },
+   {
+    "species": "Skimmit",
+    "level": 25
+   }
+  ],
+  "ai": 2,
+  "money": 1100,
+  "defeat": "dyeworks/tansy_2_defeat",
+  "lose": "dyeworks/tansy_lose"
+ },
+ "tansy_3": {
+  "trainer": "Tansy Hask",
+  "team": [
+   {
+    "species": "Wickmoth",
+    "level": 27
+   },
+   {
+    "species": "Rubricorn",
+    "level": 27
+   },
+   {
+    "species": "Skimmarch",
+    "level": 27
+   },
+   {
+    "species": "Prismist",
+    "level": 28
+   }
+  ],
+  "ai": 3,
+  "money": 1600,
+  "defeat": "dyeworks/tansy_3_defeat",
+  "lose": "dyeworks/tansy_lose"
+ },
+ "ambush_dyeworks": {
+  "trainer": "Larkin and Fennimore Enforcers",
+  "team": [
+   {
+    "species": "Rubricorn",
+    "level": 25
+   },
+   {
+    "species": "Woadwhorl",
+    "level": 25
+   },
+   {
+    "species": "Grindwheel",
+    "level": 26
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "dyeworks/prim_ambush_lose"
+ },
+ "ambush_wenna": {
+  "trainer": "Wenna's Nephews",
+  "team": [
+   {
+    "species": "Woadwhorl",
+    "level": 25
+   },
+   {
+    "species": "Rushprowl",
+    "level": 25
+   },
+   {
+    "species": "Sluicer",
+    "level": 26
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "dyeworks/wenna_ambush_lose"
+ },
  "well_bailiff": {
   "trainer": "Well Bailiff Brakka",
   "team": [
