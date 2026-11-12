@@ -1411,5 +1411,405 @@
   "power": 95,
   "accuracy": 0.9,
   "energy": 6
+ },
+ {
+  "name": "Etch Spit",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Bite Bath",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Sour Spray",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Mordant Fang",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 0.95,
+  "energy": 3
+ },
+ {
+  "name": "Vat Surge",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Corrode Claw",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 4
+ },
+ {
+  "name": "Vitriol Flood",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Plate Biter",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6
+ },
+ {
+  "name": "Acid Deluge",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Fume Veil",
+  "element": "ACID",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "def": -1
+  },
+  "self": false
+ },
+ {
+  "name": "Pickle Hide",
+  "element": "ACID",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "foc": 1
+  },
+  "self": true
+ },
+ {
+  "name": "Rime Nip",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Chill Puff",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Sleet Dart",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Hoar Breath",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 0.95,
+  "energy": 3
+ },
+ {
+  "name": "Icicle Rake",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Glaze Wave",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 4
+ },
+ {
+  "name": "Rimeglass Shard",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
+  "name": "Moor Blizzard",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.1,
+  "target": "foes"
+ },
+ {
+  "name": "Deep Freeze",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Frost Coat",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 2
+  },
+  "self": true
+ },
+ {
+  "name": "Numbing Mist",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stat": "spd",
+  "stages": -1,
+  "self": false
+ },
+ {
+  "name": "Coin Toss",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Leaf of Gold",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Gilded Jab",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Shine Burst",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 0.95,
+  "energy": 3
+ },
+ {
+  "name": "Bullion Bash",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Gold Glare",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 4
+ },
+ {
+  "name": "Hoard Crush",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
+  "name": "Treasure Flare",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.1
+ },
+ {
+  "name": "Golden Span",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Gild Armour",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "atk": 1
+  },
+  "self": true
+ },
+ {
+  "name": "Dazzle Coin",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "atk": -1,
+   "foc": -1
+  },
+  "self": false
+ },
+ {
+  "name": "Noon Peck",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "High Glint",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2
+ },
+ {
+  "name": "Skyward Kick",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3
+ },
+ {
+  "name": "Apex Ray",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 0.95,
+  "energy": 3
+ },
+ {
+  "name": "Overhead Strike",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4
+ },
+ {
+  "name": "Sunpeak Beam",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 0.9,
+  "energy": 4
+ },
+ {
+  "name": "Summit Drop",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6
+ },
+ {
+  "name": "Meridian Blaze",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.1,
+  "target": "foes"
+ },
+ {
+  "name": "Height of Noon",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1
+ },
+ {
+  "name": "Rise Above",
+  "element": "ZENITH",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stat": "spd",
+  "stages": 1,
+  "self": true,
+  "stages_full_hp": 2
+ },
+ {
+  "name": "Clear Sky",
+  "element": "ZENITH",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "foc": 2
+  },
+  "self": true
  }
 ]

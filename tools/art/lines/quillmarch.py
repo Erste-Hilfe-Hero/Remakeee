@@ -186,7 +186,7 @@ HABITAT.update({
     "sleetowl": ("The Rimeglass Pass", "Der Raureifglaspass"),
     "copperling": ("Copper plate stores", "Kupferplattenlager"),
     "inklet": ("Spilled ink in Ledgerholm", "Verschüttete Tinte in Ledgerholm"),
-    "drypup": ("Drypoint Lane", "Die Kaltnadelgasse"),
+    "drypup": ("Drypoint Lane", "Kaltnadelgasse"),
     "fizzlet": ("Gardens by the acid works", "Gärten bei den Säurewerken"),
     "glacilisk": ("Ice caves above Rimeholt", "Eishöhlen über Rimeholt"),
     "pressbug": ("Under the printing presses", "Unter den Druckerpressen"),
