@@ -67,16 +67,16 @@ def spring_and_sign(world, mid, spring, sign, title, motto):
 def ochrewell(world):
     mid = "ochrewell"
     rows = ["^^^^^__^^^^^",
-            "^:T..__..T:^",
+            "^::..__..::^",
             "^.RRR__RRR.^",
             "^.HDH__HDH.^",
             "^*...__...*^",
             "^.L..__..S.^",
             "^....__....^",
-            "^..._____..^",
+            "^.T._____..^",
             "_____.o.____",
             "_____...____",
-            "^T.._____.T^",
+            "^..T_____T.^",
             "_______....^",
             "^.RR.__.RR.^",
             "^.DH.__.HD.^",
@@ -84,7 +84,7 @@ def ochrewell(world):
             "^.##.__.##.^",
             "^....__....^",
             "^::..__..L.^",
-            "^....__...T^",
+            "^T...__....^",
             "^^^^^__^^^^^"]
     world.add_text(mid, {
         "sign": lines(("OCHREWELL", "OCHREWELL"), ("Ochrewell, 140 folk. 141 if you stay. Most do, one way or another.", "Ochrewell, 140 Leute. 141, wenn du bleibst. Die meisten bleiben, so oder so."),
