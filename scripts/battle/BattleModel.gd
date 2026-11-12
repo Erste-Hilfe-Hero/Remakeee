@@ -112,6 +112,10 @@ var energy_bonus: Array[int] = [0, 0]
 ## Shop seal tiers per side, [power, guard, speed] (ShopEffects.SEAL_KINDS). Set only for story,
 ## raids and the Open League (ShopEffects.seals_for); the Fair League keeps zeros.
 var seals: Array = [[0, 0, 0], [0, 0, 0]]
+## Shop amulet tiers per side, [crit, ward, shield] (ShopEffects.AMULET_KINDS), set like seals.
+var amulets: Array = [[0, 0, 0], [0, 0, 0]]
+## The Spirling per side whose next hit taken is softened by the Opening Shield (null when used).
+var _shield_on: Array = [null, null]
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
@@ -390,6 +394,8 @@ func start() -> Array[BattleEvent]:
 			if s.hp > 0:
 				s.hp = maxi(1, roundi(s.hp * WARDEN_WEAKEN_SHARE))
 	_fill_initial_slots()
+	for side: int in [Side.PLAYER, Side.FOE]:
+		_shield_on[side] = active_spirling(side) if int(amulets[side][2]) > 0 else null
 	base_field = field
 	field_turns = 0
 	field_lock = 0
@@ -417,6 +423,9 @@ func start() -> Array[BattleEvent]:
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
 			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
+	var edge: String = ShopEffects.edge_line(seals[Side.PLAYER], amulets[Side.PLAYER])
+	if not edge.is_empty():
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": edge})
 	if warden_weakened:
 		emit_event(BattleEvent.Type.WARDEN_WEAKENED, {"side": Side.FOE, "trainer": trainer_name})
 	if BattleRules.FIELDS.has(field):
@@ -699,7 +708,8 @@ func apply_heal_block(side: int, turns: int, slot: int = 0) -> void:
 	emit_event(BattleEvent.Type.HEAL_BLOCKED, d)
 
 ## Tries to afflict the Spirling in [param slot] of [param side]. Fails if it already has a status.
-func apply_status(side: int, status: String, slot: int = 0) -> bool:
+## [param from_side] is the side that causes it (-1 = none); a foe's status may meet a Status Ward.
+func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1) -> bool:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
@@ -718,6 +728,13 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 		var c: Dictionary = _who(side, slot)
 		c.merge({"status": status, "clause": true})
 		emit_event(BattleEvent.Type.STATUS_FAILED, c)
+		return false
+	# Status Ward (pay-to-win step 4): only a foe's status, one roll only when the side owns it.
+	var ward: float = ShopEffects.ward_chance(int(amulets[side][1])) if from_side >= 0 and from_side != side else 0.0
+	if ward > 0.0 and rng.randf() < ward:
+		var w: Dictionary = _who(side, slot)
+		w.merge({"status": status, "ward": true})
+		emit_event(BattleEvent.Type.STATUS_FAILED, w)
 		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
@@ -1149,7 +1166,13 @@ func _do_move(a: BattleAction) -> void:
 			if mv.element == Elements.E.LUMEN:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
-			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
+			var shielded: bool = _shield_on[target_side] == target
+			if shielded:
+				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
+			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult,
+				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])))
+			if shielded and int(r.damage) > 0:
+				_shield_on[target_side] = null
 			if mv.has_effect(&"delayed_hit"):
 				# Worked out now with today's stats; the delayed_hit effect sends it on its way.
 				ctx.held_damage = int(r.damage)
@@ -1463,7 +1486,7 @@ func _spring_snare(side: int, slot: int) -> void:
 	if float(snare.get("hp", 0.0)) > 0.0:
 		deal_damage(side, maxi(1, int(s.max_hp() * float(snare.hp))), {"snare": true}, slot)
 	if not str(snare.get("status", "")).is_empty():
-		apply_status(side, str(snare.status), slot)
+		apply_status(side, str(snare.status), slot, 1 - side)
 	var st: Variant = snare.get("stage", {})
 	if st is Dictionary:
 		for stat: String in st:
