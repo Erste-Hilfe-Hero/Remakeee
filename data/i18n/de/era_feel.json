@@ -1,0 +1,17 @@
+{
+ "_comment": "German texts from tools/i18n/de_era_feel.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "A map drawn in four inks.": "Eine Karte in vier Tinten.",
+  "Era I - Ink": "Era I - Tinte",
+  "Era II - Wash": "Era II - Aquarell",
+  "Era III - Etching": "Era III - Radierung",
+  "Era IV - Panorama": "Era IV - Panorama",
+  "Era V - Living": "Era V - Lebendig",
+  "Replay era change": "Era-Wechsel nochmal zeigen",
+  "The air grows clearer. Every leaf shows more detail!": "Die Luft wird klarer. Jedes Blatt zeigt mehr Details!",
+  "The ink runs. The world fills with colour!": "Die Tinte verläuft. Die Welt füllt sich mit Farbe!",
+  "The map breathes. The world is alive!": "Die Karte atmet. Die Welt lebt!",
+  "The map unrolls wider than ever before!": "Die Karte rollt sich weiter aus als je zuvor!"
+ }
+}
