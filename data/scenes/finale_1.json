@@ -6,6 +6,7 @@
   {"say": ["At the very end of the drawn land, an old woman sits on a folding stool, drawing.", "A Wickit sleeps on her shoulder. Its flame is the colour of old paper."]},
   {"say": ["Mirela: Oh. Oh, look at you. You have Aldo's chin. And my terrible handwriting, I bet."]},
   {"say": ["Mirela: Forty years I've drawn this edge. If I stop, the Wide Rift tears open. So I don't stop."]},
+  {"say": ["Mirela: People ask if I get lonely. I tell them the Echo talks back. Then they stop asking. Works every time."]},
   {"flag": "mirela_met"},
   {"action": "scene finale_2"}
  ]

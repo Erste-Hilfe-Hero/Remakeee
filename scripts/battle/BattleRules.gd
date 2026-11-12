@@ -270,6 +270,15 @@ static func stage_mult(stage: int) -> float:
 	var s: int = clampi(stage, STAGE_MIN, STAGE_MAX)
 	return (2.0 + s) / 2.0 if s >= 0 else 2.0 / (2.0 - s)
 
+static var _oath: Dictionary = {}
+
+## The Ink Oath rules (data/ink_oath.json).
+static func oath() -> Dictionary:
+	if _oath.is_empty():
+		var v: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://data/ink_oath.json"))
+		_oath = v if v is Dictionary else {}
+	return _oath
+
 static func trait_info(id: String) -> Dictionary:
 	return TRAITS.get(id, {})
 

@@ -291,10 +291,10 @@ def cistern(world):
                  [("Orla: I guard water. Tried drinking on shift once. They docked a week.", "Orla: Ich bewache Wasser. Einmal im Dienst getrunken. Eine Woche Lohn weg.")],
                  [("Orla: Nobody gets past. Nobody's paid me to let them.", "Orla: Keiner kommt vorbei. Mich hat keiner dafür bezahlt.")],
                  [("Orla: Fine, go. I'll tell them you bribed me. Did you? No? Pity.", "Orla: Schön, geh. Ich sag, du hast mich bestochen. Hast du? Nein? Schade.")], 2150),
-        wayfarer(world, MID, "clerk_mott", 7, 4, "left", tr("Debt Runner Mott", "Schuldenläufer Mott"), team(("Shimmerlet", 41), ("Highhare", 41), ("Lanternel", 42)),
-                 [("Mott: I run debts across town. Fastest legs in Solenne. Need them.", "Mott: Ich trage Schulden durch die Stadt. Schnellste Beine in Solenne. Brauch ich auch.")],
-                 [("Mott: You owe me a duel. Everybody owes me something.", "Mott: Du schuldest mir ein Duell. Jeder schuldet mir was.")],
-                 [("Mott: Ran out of Spirlings. Running out of town next.", "Mott: Keine Spirlings mehr. Als Nächstes keine Stadt mehr.")], 2200),
+        wayfarer(world, MID, "clerk_mott", 7, 4, "left", tr("Debt Runner Quill", "Schuldenläufer Quill"), team(("Shimmerlet", 41), ("Highhare", 41), ("Lanternel", 42)),
+                 [("Quill: I run debts across town. Fastest legs in Solenne. Need them.", "Quill: Ich trage Schulden durch die Stadt. Schnellste Beine in Solenne. Brauch ich auch.")],
+                 [("Quill: You owe me a duel. Everybody owes me something.", "Quill: Du schuldest mir ein Duell. Jeder schuldet mir was.")],
+                 [("Quill: Ran out of Spirlings. Running out of town next.", "Quill: Keine Spirlings mehr. Als Nächstes keine Stadt mehr.")], 2200),
     ]
     crew1 = [
         wayfarer(world, MID, "auditor_nell", 3, 5, "right", tr("Veil Auditor Nell", "Schleierprüferin Nell"), team(("Mendlace", 43), ("Glasstarn", 43), ("Orrlet", 42)),

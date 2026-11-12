@@ -11,7 +11,9 @@ const ITEM := "remedy"
 ## or {} when it was already emptied that day.
 static func catch(id: String, day: String) -> Dictionary:
 	var done: Dictionary = GameState.as_dict(GameState.records.get("fish_traps", {}))
-	if str(done.get(id, "")) == day:
+	# A day at or before the last emptying (phone clock turned back) holds nothing (plan 1379).
+	var last: String = str(done.get(id, ""))
+	if last != "" and day <= last:
 		return {}
 	return {"item": ITEM} if (id + day).hash() % 2 == 0 else {"money": COINS}
 

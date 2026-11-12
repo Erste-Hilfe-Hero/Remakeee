@@ -29,7 +29,9 @@ Diese Regeln gelten für jedes Angebot. Tests und `tools/ip_check.sh` prüfen si
 6. **Altersabfrage und Limits.** Beim ersten Öffnen des Shops Geburtsjahr und -monat (Liste), gespeichert
    wird nur die Altersgruppe. Unter 13 ist der Shop gesperrt. Monatslimits: 13 bis 15 Jahre 15 €,
    16 bis 17 Jahre 30 €, ab 18 Jahren 100 € (senkbar, nach 7 Tagen Wartezeit bis 300 € erhöhbar).
-7. **Spirlings werden nie verkauft oder getauscht.** Shop-Gegenstände sind nicht tauschbar.
+7. **Spirlings werden nicht getauscht, wenn sie aus dem Shop kommen.** Seit Pay-to-win Schritt 2 (11. 11. 2026,
+   Ali) gibt es Spirlings direkt zu kaufen, mit festen Werten und ohne Zufall (siehe unten). Gekaufte
+   Spirlings und Shop-Gegenstände sind nicht tauschbar und nicht ausleihbar.
 8. **Faire Liga.** Die Gleichstand-Liga (Standard, unter 16 voreingestellt) schaltet gekaufte Vorteile ab.
    Jedes Vorteils-Angebot sagt, ob es in der Offenen Liga wirkt.
 9. **Rissglas** (EN "Riftglass") ist die einzige Premium-Währung: 100 Rissglas = 0,99 €, feste Pakete
@@ -46,7 +48,7 @@ Diese Dinge gibt es nie gegen Geld oder Rissglas, auch nicht als Teil eines Pake
 - Konto-Funktionen: Spielstand auf dem Server, Übertragungscode, Konto löschen, Datenexport
 - Freunde, Grüße, Duelle und Ligen-Teilnahme
 - Geschenke an Freunde (sie bleiben kostenlos; gekaufte Grußkarten ändern nur das Aussehen)
-- Spirlings und Waymarks (siehe unten)
+- Waymarks (siehe unten). Spirlings gibt es seit Schritt 2 auch zu kaufen, jede Art bleibt aber erspielbar.
 
 ## Weitere feste Regeln für Änderungen
 
@@ -114,6 +116,54 @@ Wachstum x2/x3, Münzen x2 und Ring-Tränke +1/+5 gab es schon.
   aus dem Menü, Guthaben nur auf dem Server, jedes Angebot mit "Vorteil im Spiel" und Liga-Zeile, die
   Bond-Grundrate (`BondCalc`) bleibt wie sie ist.
 
+## Pay-to-win, Schritt 3 (Fortschritt beschleunigen, 11. 11. 2026)
+
+Aus Abschnitt 3 des Plans fehlten noch "Sofort Stufe 50", "Münz-Pakete" (große Menge) und "Stufen-Obergrenze
+je Riss für Käufer um 5 höher". Stufen-Bonbons +1/+5/+10 sind die Ring-Tränke, die es schon gibt.
+
+| Angebot | Wirkung | Rissglas | Liga |
+| --- | --- | --- | --- |
+| Ring-Krone (`rg_ring_crown`) | ein Spirling springt auf Ring 50, nie über die Ring-Grenze (`rings_to` in `data/items.json`) | 2000 | keine Liga-Wirkung |
+| Ring-Grenzen-Siegel (`rg_ring_cap_plus`) | Ring-Grenze ab Veteran +5 (`advantage_values.ring_cap_plus`, `ShopEffects.ring_cap_bonus`), höchstens Ring 60, einmal je Konto | 1500 | keine Liga-Wirkung |
+| Münz-Tresor (`rg_coins_100000`) | genau 100000 Münzen | 3000 | keine Liga-Wirkung |
+
+Die Kontostärke zählt 10 je zusätzlichem Ring. Unverändert: nur Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert
+an jedem Angebot, Altersstufe ab 13 (`min_band`), keine Kaufaufforderungen.
+## Pay-to-win, Schritt 2 (Ali, 11. 11. 2026)
+
+Nächster Block des 200-Punkte-Plans: Siegel-Satz (Punkt 7), Bindungs-Köder in 4 Stufen (Punkt 22) und
+Spirlings zum Kauf (Punkte 61, 69, 70, 78, 79). **Ersetzt wird Regel 7** ("Spirlings werden nie verkauft").
+Regel 8 (Gleichstand-Liga ohne Kaufvorteile) bleibt.
+
+| Angebot | Wirkung | Preis | Ligen |
+| --- | --- | --- | --- |
+| Bindungs-Köder I bis IV (`rg_bond_lure_1..4`) | +15 / +30 / +45 / +60 % auf eine Bindung (`bond_bonus`, gedeckelt bei 95 % in `BondCalc`) | 100, 200, 300, 500 Rissglas | nur Story |
+| Siegel-Satz (`rg_seal_set`) | Macht VII, Schutz VII, Tempo V auf einmal (19 Stufen); nur ohne jede Siegel-Stufe (`"requires": "none:power_seal,guard_seal,speed_seal"`) | 10000 Rissglas statt 27500 einzeln | Offene Liga, Raids |
+| Uralte Spirlings auf Ring 40 (`rg_spirling_<linie>`, 7 Stück) | die Art auf Ring 40, Funken 12 in jedem Wert, Markierung `"shop": true` (`ShopEffects.bought_spirling`) | 19,99 € oder 2000 Rissglas, einmal pro Konto | Werte nur in der Story |
+
+- **Feste Werte, kein Zufall:** Grant `{"t": "spirling", "species": ..., "level": 40}`. Der Server legt ihn
+  wie Gegenstände in `deliveries` (`_shop_grant`, Migration `20261111120030_shop_p2w_step2.sql`), das Spiel
+  baut den Spirling beim Abholen (`Billing.apply_grant`).
+- **Nicht tauschbar:** `TradeMenu.mon_why` und `_trade_mon_why` lehnen Spirlings mit `"shop": true` ab.
+- **Zweites Exemplar (Punkt 70):** Der gekaufte Spirling kommt zusätzlich zu dem, den man auf der Reise binden kann.
+- Prüfung: `ShopValidator` erlaubt Spirlings nur als `"spirling"`-Grant, `non_consumable`, einmal pro Konto.
+
+### Neue Store-Produkte (in App Store Connect und Play Console anlegen)
+
+Die Bindungs-Köder und der Siegel-Satz sind nur für Rissglas (`rg_only`). Diese 7 Produkte sind neu in
+`store/products.json` und müssen in beiden Stores angelegt werden (Apple: Non-Consumable, Google: einmaliges
+Produkt, je 19,99 €):
+
+| Produkt-ID | Angebot |
+| --- | --- |
+| `de.chimora.game.spirling.velahra` | Velahra auf Ring 40 |
+| `de.chimora.game.spirling.hallowmur` | Hallowmur auf Ring 40 |
+| `de.chimora.game.spirling.scriptorax` | Scriptorax auf Ring 40 |
+| `de.chimora.game.spirling.lumivane` | Lumivane auf Ring 40 |
+| `de.chimora.game.spirling.zephyrel` | Zephyrel auf Ring 40 |
+| `de.chimora.game.spirling.monolurk` | Monolurk auf Ring 40 |
+| `de.chimora.game.spirling.vorlucent` | Vorlucent auf Ring 40 |
+
 ## Planwerte (nur Rechengrößen, kein Tracking)
 
 | Größe | Planwert |
@@ -155,7 +205,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-147 Angebote (Katalog v30): 105 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+162 Angebote (Katalog v32): 120 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -306,5 +356,20 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_growth_plus` | Growth Seal | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
 | `rg_coin_boost_x3` | Great Coin Gleam | 3,99 € | 400 | Vorteil | keine Liga-Wirkung |
 | `rg_ring_tonic_10` | Grand Ring Tonic | 6,99 € | 700 | Vorteil | keine Liga-Wirkung |
+| `rg_ring_crown` | Ring Crown | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_ring_cap_plus` | Ring Cap Seal | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_coins_100000` | Vault of Coins | 29,99 € | 3000 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_lure_1` | Bond Lure I | 0,99 € | 100 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_lure_2` | Bond Lure II | 1,99 € | 200 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_lure_3` | Bond Lure III | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
+| `rg_bond_lure_4` | Bond Lure IV | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_seal_set` | Seal Set | 99,99 € | 10000 | Vorteil | nur Offene Liga |
+| `rg_spirling_velahra` | Velahra at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_spirling_hallowmur` | Hallowmur at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_spirling_scriptorax` | Scriptorax at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_spirling_lumivane` | Lumivane at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_spirling_zephyrel` | Zephyrel at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_spirling_monolurk` | Monolurk at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_spirling_vorlucent` | Vorlucent at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
 
 <!-- shop-table:end -->

@@ -442,7 +442,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 222
 2629. [P3] Ein Werkzeug tools/audio/spectrum.py zeichnet ein Spektrum jedes Klangs als PNG, um zu harte Höhen zu finden.
 2630. [P3] Ein Werkzeug tools/audio/cry_export.py schreibt alle zur Laufzeit erzeugten Schreie (Cry.gd-Logik in Python nachgebaut) als WAV, um sie anzuhören und zu prüfen.
 2631. [P3] gen_audio.py misst die Gesamtgröße aller Audio-Ausgaben und schreibt sie in tools/audio/sizes.json, damit Änderungen sichtbar werden.
-2632. [P3] Ein Werkzeug tools/art/anim_preview.py baut aus Frame-Streifen ein animiertes GIF zur schnellen Ansicht außerhalb von Godot.
+2632. [x] [P3] Ein Werkzeug tools/art/anim_preview.py baut aus Frame-Streifen ein animiertes GIF zur schnellen Ansicht außerhalb von Godot.
 2633. [P3] Generatoren laufen auch ohne Grafikkarte und Tonausgabe, damit sie in der CI (headless) funktionieren.
 2634. [P3] Eine kleine Formbibliothek in tools/art/px.py mit Kreis, Ring, Stern und Zacke in Pixelgenauigkeit, damit Effekte und UI-Bildchen dieselben Grundformen nutzen.
 

@@ -72,6 +72,9 @@ var gleam: bool = false
 ## +10 % on all five values from the shop's Gleam Prism (items 4791-4794). Saves from before wild
 ## Gleams have only "gleam", which then meant this boost. The Fair League never carries it.
 var gleam_boost: bool = false
+## Bought in the shop as a Spirling offer (pay-to-win plan, points 61-80): never traded or lent.
+## Saved as "shop".
+var shop_bought: bool = false
 const GLEAM_MULT: float = 1.1
 ## Battle-only stat stages (BattleRules.STAGE_MIN..STAGE_MAX), cleared by end_battle().
 var stages: Dictionary[String, int] = {}
@@ -84,6 +87,8 @@ var energy_surge: int = 0
 var cooldowns: Dictionary[String, int] = {}
 ## Battle-only: turns left on a heal block (heal_block effect), same counting.
 var heal_block: int = 0
+## Battle-only: turns left on a sworn Ink Oath (BattleRules.oath()); the debt is collected at 0.
+var oath_turns: int = 0
 ## Battle-only: turns of mending left from Root Mend (1/16 max Vigor at each turn end).
 var mend_turns: int = 0
 ## Battle-only: turns left in which an energy_burn can't take Energy again, same counting.
@@ -261,6 +266,7 @@ func end_battle() -> void:
 	heal_block = 0
 	mend_turns = 0
 	burn_guard = 0
+	oath_turns = 0
 	cooldowns.clear()
 	status = ""
 	status_turns = 0
@@ -468,6 +474,7 @@ func to_dict() -> Dictionary:
 		"core": temper_core,
 		"gleam": gleam,
 		"gleam_boost": gleam_boost,
+		"shop": shop_bought,
 		"variant": variant,
 		"origin_map": origin_map,
 		"origin_era": origin_era,
@@ -515,6 +522,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.temper_core = d.get("core") is bool and d.get("core")
 	s.gleam = d.get("gleam") is bool and d.get("gleam")
 	s.gleam_boost = d.get("gleam_boost") is bool and d.get("gleam_boost") if d.has("gleam_boost") else s.gleam
+	s.shop_bought = d.get("shop") is bool and d.get("shop")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
 	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, 4)

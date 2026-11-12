@@ -6,21 +6,21 @@
  "outdoor": true,
  "rows": [
   "^^^^^__^^^^^",
+  "^::.*__..::^",
   "^::..__..::^",
-  "^::..__..::^",
-  "^^^^.__.^^^^",
+  "^^^^.__@^^^^",
   "^....__....^",
-  "^.RRRRRR...^",
+  "^.RRRRRR*..^",
   "^.HHHDHH.S.^",
   "^....__....^",
-  "^...______._",
+  "^T..______._",
   "^..._....___",
   "^..._......^",
   "__.._..::..^",
   "____...::..^",
-  "^....._....^",
+  "^*...._*...^",
   "^.L..._..L.^",
-  "^....._....^",
+  "^....._...*^",
   "^....._....^",
   "^....._....^",
   "^.S..._....^",
@@ -152,6 +152,61 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "tibb",
+   "x": 2,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "ashmere_side/tibb",
+   "sprite": "villager"
+  },
+  {
+   "id": "harl",
+   "x": 3,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "ashmere_side/harl",
+   "sprite": "elder"
+  },
+  {
+   "id": "bram",
+   "x": 8,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "ashmere_side/bram",
+   "sprite": "villager"
+  },
+  {
+   "id": "juno_1",
+   "x": 8,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "ashmere_side/juno_1",
+   "sprite": "ranger",
+   "trainer": "Juno Sallow",
+   "team": [
+    {
+     "species": "Ashwren",
+     "level": 29
+    },
+    {
+     "species": "Cindle",
+     "level": 29
+    },
+    {
+     "species": "Smeltpup",
+     "level": 30
+    }
+   ],
+   "intro": "ashmere_side/juno_1_intro",
+   "defeat": "ashmere_side/juno_1_defeat",
+   "beaten_flag": "beat_juno_1",
+   "show_flag": "ashmere_arrived",
+   "leaves": true,
+   "hide_flag": "beat_juno_1",
+   "ai": 2,
+   "money": 1400
   }
  ],
  "signs": [
@@ -182,6 +237,22 @@
    "item": "revival_leaf",
    "count": 1,
    "flag": "find_station_ridge"
+  },
+  {
+   "x": 0,
+   "y": 7,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "plate_2",
+   "dialogue": "ashmere_side/plate_2"
+  },
+  {
+   "x": 11,
+   "y": 16,
+   "item": "remedy",
+   "count": 1,
+   "flag": "press_part_1",
+   "dialogue": "ashmere_side/press_part_1"
   }
  ],
  "spots": {

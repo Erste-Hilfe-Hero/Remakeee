@@ -277,14 +277,20 @@ static func crystal_cap() -> int:
 static func growth_plus() -> float:
 	return float(_values().get("growth_plus", 0.0)) if Billing.unlocked("growth_plus") > 0 else 0.0
 
+## Extra Rings over the Veteran Ring cap from the Ring Cap Seal (pay-to-win step 3, plan point 47).
+static func ring_cap_bonus() -> int:
+	return int(_values().get("ring_cap_plus", 0)) if Billing.unlocked("ring_cap_plus") > 0 else 0
+
 ## Account power (shown in the team view): the sum of every active bought advantage in points,
-## seal percents plus the permanent growth percent plus the crystal points in the team.
+## seal percents plus the permanent growth percent, 10 per extra Ring of the Ring Cap Seal, plus
+## the crystal points in the team.
 static func account_power() -> int:
 	var tiers: Array[int] = seal_tiers()
 	var n: int = 0
 	for i: int in SEAL_KINDS.size():
 		n += seal_percent(SEAL_KINDS[i], tiers[i])
 	n += roundi(growth_plus() * 100.0)
+	n += ring_cap_bonus() * 10
 	for s: Spirling in GameState.party:
 		for k: String in s.crystal:
 			n += int(s.crystal[k])
@@ -307,3 +313,26 @@ static func add_crystal(s: Spirling, key: String, n: int) -> int:
 ## so tier n+1 is bought by paying only the difference. True when [param owned] fits.
 static func tier_ok(req: String, owned: int) -> bool:
 	return owned == int(req.get_slice(":", 2))
+
+## --- Pay-to-win step 2 (Ali, 11 Nov 2026): Spirlings for sale, bond lures, seal set. ---
+
+## The Spirling a "spirling" grant hands over: the named species at the named Ring, the highest
+## Spark in every value, marked as bought (never traded or lent). Null for an unknown species.
+static func bought_spirling(g: Dictionary) -> Spirling:
+	var d: SpirlingData = Database.species(str(g.get("species", "")))
+	if d == null:
+		return null
+	var s: Spirling = Spirling.new(d, clampi(int(g.get("level", 1)), 1, Spirling.MAX_LEVEL))
+	for key: String in Spirling.STAT_KEYS:
+		s.spark[key] = Spirling.SPARK_MAX
+	s.shop_bought = true
+	s.hp = s.max_hp()
+	return s
+
+## "none:<unlock>,<unlock>" means the account owns none of these unlocks (the Seal Set).
+## [param count] gives the owned count of one unlock.
+static func none_ok(req: String, count: Callable) -> bool:
+	for k: String in req.get_slice(":", 1).split(",", false):
+		if int(count.call(k)) > 0:
+			return false
+	return true

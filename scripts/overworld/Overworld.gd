@@ -32,6 +32,9 @@ var _photo: PhotoMode
 ## The last battle's model (the weekly challenge reads its turn count).
 var last_model: BattleModel
 var _daylight: CanvasModulate
+## Lit windows at night, on a layer the night tint does not reach (buildings plan item 8).
+var _glow_layer: CanvasLayer
+var _glow: WindowGlow
 var _npcs: Array[NPC] = []
 var _ui: CanvasLayer
 var _text: TextBox
@@ -81,6 +84,7 @@ func _ready() -> void:
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
 		"wake": _action_wake,
+		"matchmaker": _action_matchmaker,
 		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
@@ -347,7 +351,14 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
 	EraManager.unlock_region(map.region)
+	EraManager.set_region(map.region)
+	var look_line: String = RegionLook.arrive_line(map.region)
+	if not look_line.is_empty() and not GameState.has_flag("look_seen_" + map.region):
+		GameState.set_flag("look_seen_" + map.region)
+		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
+	EraManager.mark_finales(GameState.flags)
+	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era])
 	_camera.limit_left = 0
@@ -381,6 +392,14 @@ func refresh_daylight() -> void:
 		add_child(t)
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
+	if _glow == null:
+		_glow_layer = CanvasLayer.new()
+		_glow_layer.layer = 1
+		_glow_layer.follow_viewport_enabled = true
+		add_child(_glow_layer)
+		_glow = WindowGlow.new()
+		_glow_layer.add_child(_glow)
+	_glow.show_for(map, WindowGlow.lit(map.outdoor, DayCycle.current(), GameState.day_night))
 	if weather_layer != null:
 		weather_layer.show_kind(w)
 	DayCycle.poll()
@@ -660,7 +679,7 @@ func _on_interact(cell: Vector2i) -> void:
 		await n.turn_toward(player.cell)
 		if _is_active_trainer(n):
 			await challenge(n, false)
-		elif not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
+		elif not await offer_warden_rematch(n) and not await offer_second_trial(n) and not await offer_rematch(n) and not await offer_trials(n):
 			await run_dialogue(n.dialogue_ref, n)
 		return
 	var s: Dictionary = map.sign_at(cell, GameState.flags)
@@ -951,7 +970,15 @@ func _fixed_meeting(sd: SpirlingData, ring: int, gone_line: String) -> void:
 ## Echo Cores that are ready wake into a Hallkind (item 185).
 func _wake_cores() -> void:
 	for kid: Spirling in GameState.awaken_cores():
-		await say(["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]] as Array[String])
+		var lines: Array[String] = ["The song in the Echo Core you carry grows dense and clear.", "A young %s wakes, still humming the song of %s." % [kid.data.species_name, " and ".join(kid.lineage)]]
+		var inh: Dictionary = kid.get_meta("inheritance", {})
+		if not str(inh.get("line", "")).is_empty():
+			lines.append(str(inh.line))
+		for art: Variant in inh.get("arts", []):
+			lines.append(Loc.t("It already knows %s, an heirloom art of the family.") % str(art))
+		if not (inh.get("stats", []) as Array).is_empty():
+			lines.append(Loc.t("It carries the family's best Spark in %d values.") % (inh.stats as Array).size())
+		await say(lines)
 		SaveManager.save_game()
 
 ## A cartographer's stone (area 3 items 1084, 1085): counted once, a keepsake at 4, 8 and 12.
@@ -1113,6 +1140,29 @@ func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
 			await say(["The wall is full. Take something down first."] as Array[String])
 		menu.visible = true
 	menu.queue_free()
+
+## "matchmaker": Auntie Grisela seals a match contract on a carried Echo Core (data/breeding.json).
+func _action_matchmaker(_args: PackedStringArray, _speaker: NPC) -> void:
+	var core: Dictionary = Breeding.open_core()
+	if core.is_empty():
+		await say(["Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business."] as Array[String])
+		return
+	var fee: int = int(Breeding.data().get("contract_fee", 0))
+	var lines: Array[String] = []
+	for l: Variant in Breeding.data().get("contract_lines", []):
+		lines.append(str(l))
+	await say(lines)
+	if GameState.money < fee:
+		await say([Loc.t("Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.") % fee] as Array[String])
+		return
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var yes: bool = await menu.confirm(Loc.t("Seal a match contract for the core of %s for %d coins?") % [" and ".join(core.get("parents", [])), fee], "Seal", "No")
+	menu.queue_free()
+	if yes and Breeding.seal_contract(core):
+		Sound.sfx("confirm")
+		await say(["Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably."] as Array[String])
+		SaveManager.save_game()
 
 ## Seconds of quiet on a lake bench before a Spirling calls (area 3 item 1093); tests shorten it.
 var lake_bench_wait: float = 10.0
@@ -2736,7 +2786,7 @@ static func oath_lines(retired: Array[String]) -> Array[String]:
 	return lines
 
 static func _today() -> String:
-	return Time.get_date_string_from_system()
+	return DailyFind.today_key()
 
 func _mark_rematch(def: Dictionary) -> void:
 	var rec: Dictionary = (GameState.records.get("rematch", {}) as Dictionary).duplicate()
@@ -2840,6 +2890,46 @@ func warden_card(def: Dictionary, team: Array[Spirling], question: String) -> bo
 	var go: bool = await menu.confirm(question, "Fight", "Not yet")
 	menu.queue_free()
 	return go
+
+## A Warden's rematch after the finale (data/warden_rematch.json): own team, lines and reward, once.
+## Returns false if there is none or the player declines.
+func offer_warden_rematch(n: NPC) -> bool:
+	var base: Dictionary = n.definition
+	if GameState.first_healthy_index() < 0 or not WardenRematch.can_challenge(base, map.id, GameState.flags):
+		return false
+	var entry: Dictionary = WardenRematch.entry_for(map.id, str(base.get("id", "")))
+	busy = true
+	player.frozen = true
+	VirtualPad.set_wanted(false)
+	await say(WardenRematch.lines(entry, "intro"))
+	var def: Dictionary = WardenRematch.rematch_def(base, entry)
+	var team: Array[Spirling] = TrainerData.build_team(def, GameState.starter, GameState.rng, GameState.difficulty, GameState.level_cap())
+	var who: String = str(base.get("trainer", base.get("id", "")))
+	var go: bool = await warden_card(def, team, Loc.t("%s wants the rematch. Battle?") % who)
+	if not go:
+		VirtualPad.set_wanted(true)
+		player.frozen = false
+		busy = false
+		return true
+	SaveManager.save_game()
+	var info: Dictionary = TrainerData.battle_info(def, team, GameState.ai_level(), GameState.difficulty)
+	var outcome: BattleModel.Outcome = await start_battle(team, false, info)
+	busy = true
+	player.frozen = true
+	if outcome == BattleModel.Outcome.WIN:
+		GameState.set_flag(WardenRematch.won_flag(entry))
+		var reward: Dictionary = entry.get("reward", {})
+		if reward.has("item"):
+			GameState.add_item(str(reward.item), int(reward.get("count", 1)))
+		await say(WardenRematch.lines(entry, "win"))
+		await announce_achievements()
+		SaveManager.save_game()
+	else:
+		await say(WardenRematch.lines(entry, "lose"))
+	VirtualPad.set_wanted(true)
+	player.frozen = false
+	busy = false
+	return true
 
 ## A Warden's Second Trial (items 682-684): offered once both Rifts are mended, until it is won.
 ## Returns false if there is none or the player declines.

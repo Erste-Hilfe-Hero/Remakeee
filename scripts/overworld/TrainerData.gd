@@ -52,7 +52,9 @@ static func can_rematch(def: Dictionary, map_id: String, flags: Dictionary, reco
 	if bool(def.get("leaves", false)) or bool(def.get("no_rematch", false)):
 		return false
 	var last: Dictionary = records.get("rematch", {})
-	return str(last.get(beaten_flag(def, map_id), "")) != today
+	# Only a later day than the last rematch counts (plan 1379: no extra rematches by turning
+	# the phone clock back).
+	return str(last.get(beaten_flag(def, map_id), "")) < today
 
 ## Rematch Key (shop item 4841): a beaten Wayfarer that already had today's rematch.
 const REMATCH_KEY: String = "rg_rematch_key"

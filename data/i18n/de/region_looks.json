@@ -1,0 +1,8 @@
+{
+ "_comment": "German texts from tools/i18n/de_region_looks.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "The ink goes grey here. Ashmere burned once and still smells like it owes you money.": "Hier wird die Tinte grau. Ashmere hat einmal gebrannt und riecht immer noch, als schulde es dir Geld.",
+  "The ink turns blue here. Corvane dyes everything, even the truth.": "Hier wird die Tinte blau. Corvane färbt alles, sogar die Wahrheit."
+ }
+}

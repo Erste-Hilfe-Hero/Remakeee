@@ -106,7 +106,7 @@
    "facing": "left",
    "dialogue": "veil_cistern/clerk_mott",
    "sprite": "villager",
-   "trainer": "Debt Runner Mott",
+   "trainer": "Debt Runner Quill",
    "intro": "veil_cistern/clerk_mott_intro",
    "defeat": "veil_cistern/clerk_mott_defeat",
    "money": 2200,

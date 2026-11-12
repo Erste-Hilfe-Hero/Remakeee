@@ -87,7 +87,7 @@ func test_two_betrayals_per_act() -> void:
 			for r: String in ["betray", "reward", "kept", "caught", "struck"]:
 				for f: Variant in Trust.effects(d, r).get("flags", []):
 					set_by[str(f)] = true
-	for n: int in range(1, 9):
+	for n: int in range(1, 14):
 		assert_true(set_by.has("clan_b%d" % n), "betrayal %d is set by some outcome" % n)
 
 func test_clan_data_and_dialogue_are_valid() -> void:
@@ -97,3 +97,39 @@ func test_clan_data_and_dialogue_are_valid() -> void:
 		if e.contains("clans") or e.contains("ambush"):
 			story.append(e)
 	assert_eq(story, PackedStringArray())
+
+func test_acts_one_and_two_have_several_betrayals() -> void:
+	var per_act: Dictionary = {}
+	for id: Variant in Trust.data().betrayals:
+		var a: int = int(Trust.betrayal(str(id)).get("act", 0))
+		per_act[a] = int(per_act.get(a, 0)) + 1
+	assert_gte(int(per_act.get(1, 0)), 3, "act 1 scripted betrayals")
+	assert_gte(int(per_act.get(2, 0)), 5, "act 2 scripted betrayals")
+
+func test_guest_book_false_name_is_caught() -> void:
+	var b: Dictionary = Trust.betrayal("wren_book")
+	assert_eq(Trust.betrayal_result(b, {}, {}), "struck")
+	assert_eq(Trust.betrayal_result(b, {"c1_false_name": true}, {}), "caught")
+
+func test_act1_choices_carry_into_act2() -> void:
+	# Covering up Pip's duel keeps Pip loyal; reporting it makes him copy the Ledger for Ottilie.
+	var pip: Dictionary = Trust.betrayal("pip_ledger")
+	assert_eq(Trust.betrayal_result(pip, {}, {"trust_pip": 15}), "caught")
+	assert_eq(Trust.betrayal_result(pip, {}, {"trust_pip": -20}), "struck")
+	# A false name in Wren's book protects you in act 1 but costs Wren's trust in act 2.
+	var keys: Dictionary = Trust.betrayal("wren_keys")
+	assert_eq(Trust.betrayal_result(keys, {}, {"trust_wren": 10}), "caught")
+	assert_eq(Trust.betrayal_result(keys, {}, {"trust_wren": -15}), "struck")
+	# Accusing Aldra makes her sell you to Fenrick.
+	var aldra: Dictionary = Trust.betrayal("aldra_sale")
+	assert_eq(Trust.betrayal_result(aldra, {}, {"trust_aldra": 10}), "caught")
+	assert_eq(Trust.betrayal_result(aldra, {}, {"trust_aldra": -20}), "struck")
+
+func test_new_betrayals_are_triggered_by_dialogue() -> void:
+	for pair: Array in [["clans/wren", "betrayal wren_book"], ["clans/aldra_price", "betrayal aldra_sale"]]:
+		var found: bool = false
+		for c: Variant in Dialogue.get_entry(pair[0]).get("choices", []):
+			found = found or str(c.get("action", "")).contains(pair[1])
+		assert_true(found, pair[0])
+	assert_true(str(Dialogue.get_entry("clans/ottilie_after").get("action", "")).contains("betrayal pip_ledger"))
+	assert_true(str(Dialogue.get_entry("clans/amir_spy").get("action", "")).contains("betrayal wren_keys"))

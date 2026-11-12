@@ -15,7 +15,8 @@ const TAB_NAMES: Dictionary = {"advantages": "Advantages", "packs": "Packs", "pa
 	"riftglass": "Riftglass"}
 const STORE_TYPES: Array[String] = ["consumable", "non_consumable", "subscription"]
 const LEAGUE_SCOPES: Array[String] = ["open", "none", "look"]
-const GRANT_TYPES: Array[String] = ["rg", "item", "unlock", "coins", "pass", "choice"]
+## "spirling" hands over one Spirling with fixed values (pay-to-win plan points 61-80, ShopEffects.bought_spirling).
+const GRANT_TYPES: Array[String] = ["rg", "item", "unlock", "coins", "pass", "choice", "spirling"]
 ## Fields that would mean a random or chance-based content. No offer may have one (item 4021).
 const RANDOM_FIELDS: Array[String] = ["chance", "chances", "odds", "random", "roll", "rolls", "weight", "weights", "draw",
 	"draws", "pool", "gacha", "lootbox", "rarity_table", "w"]
@@ -126,6 +127,8 @@ static func grant_lines(o: Dictionary) -> Array[String]:
 				out.append(Loc.t("Wayfarer Pass for %d days") % int(g.days))
 			"choice":
 				out.append(Loc.t("1 x Element Prism of your choice"))
+			"spirling":
+				out.append(Loc.t("%s at Ring %d with the highest Spark in every value") % [Loc.t(str(g.get("species", ""))), int(g.get("level", 1))])
 	return out
 
 ## What a pack's contents cost one by one in Riftglass (item 4685): Riftglass counts as itself,

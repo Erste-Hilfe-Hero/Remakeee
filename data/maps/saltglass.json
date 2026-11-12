@@ -7,20 +7,20 @@
  "encounters": "saltglass",
  "rows": [
   "^^^^^__^^^^^",
-  "^::..__..::^",
+  "^::*.__..::^",
   "^::..__..::^",
   "^....__....^",
-  "^.::.__.|..^",
+  "^.::.__*|..^",
   "^.::.__.|..^",
   "^....__.D..^",
   "^,,,.__.,,,^",
   "^,,,.__.,,,^",
-  "^....______.",
-  "^::........_",
+  "^T...______.",
+  "^::.....*.._",
   "^::..__..,,^",
   "^....__..,,^",
-  "^,,,.__....^",
-  "^,,,.__.::.^",
+  "^,,,.__*...^",
+  "^,,,*__.::.^",
   "^....__.::.^",
   "^::..__....^",
   "^::..__.,,,^",
@@ -28,7 +28,7 @@
   "^.S..__....^",
   "^....__..::^",
   "^....__..::^",
-  "_______....^",
+  "_______*...^",
   "_______....^",
   "^.........S^",
   "^^^^^__^^^^^"
@@ -181,6 +181,45 @@
      "level": 29
     }
    ]
+  },
+  {
+   "id": "juno_2",
+   "x": 3,
+   "y": 20,
+   "facing": "right",
+   "dialogue": "ashmere_side/juno_2",
+   "sprite": "ranger",
+   "trainer": "Juno Sallow",
+   "team": [
+    {
+     "species": "Ashwren",
+     "level": 30
+    },
+    {
+     "species": "Cindle",
+     "level": 30
+    },
+    {
+     "species": "Smeltpup",
+     "level": 31
+    }
+   ],
+   "intro": "ashmere_side/juno_2_intro",
+   "defeat": "ashmere_side/juno_2_defeat",
+   "beaten_flag": "beat_juno_2",
+   "show_flag": "beat_juno_1",
+   "leaves": true,
+   "hide_flag": "beat_juno_2",
+   "ai": 3,
+   "money": 1700
+  },
+  {
+   "id": "wenna",
+   "x": 3,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "ashmere_side/wenna",
+   "sprite": "villager"
   }
  ],
  "signs": [

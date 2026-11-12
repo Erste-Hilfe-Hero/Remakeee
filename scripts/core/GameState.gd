@@ -243,7 +243,7 @@ const ACT1_END_FLAG: String = "aldo_dock_told"
 func level_cap() -> int:
 	if difficulty < Difficulty.VETERAN:
 		return Spirling.MAX_LEVEL
-	return progress_cap()
+	return mini(progress_cap() + ShopEffects.ring_cap_bonus(), Spirling.MAX_LEVEL)
 
 ## Marks a Rift as sealed (raises the level cap on Veteran and up). Returns false if it already was.
 func seal_rift(rift_id: String) -> bool:
@@ -1035,10 +1035,14 @@ static func as_dict(v: Variant) -> Dictionary:
 	return v if v is Dictionary else {}
 
 ## Pays [param coins] from townsfolk [param who] once per day (story var "tip_<who>" holds the
-## last day). Returns the coins paid, 0 when [param who] already paid today.
-func pay_tip(who: String, coins: int, day: int = today()) -> int:
+## last day). Returns the coins paid, 0 when [param who] already paid today. The day comes from
+## the server clock, and a day before the stored one pays nothing (plan 1379: turning the phone
+## clock back and forth gives no extra tips).
+func pay_tip(who: String, coins: int, day: int = -1) -> int:
+	if day < 0:
+		day = int(Online.unix_now() / 86400.0)
 	var key: String = "tip_" + who
-	if coins <= 0 or int(story_vars.get(key, -1)) == day:
+	if coins <= 0 or day <= int(story_vars.get(key, -1)):
 		return 0
 	story_vars[key] = day
 	money += coins
@@ -1128,9 +1132,10 @@ func use_item_outside_battle(id: String, s: Spirling) -> String:
 	elif it.has("teaches"):
 		# Echo Crystals are never used up; learning is handled by the menu (it may need a slot).
 		return ""
-	elif int(it.get("rings", 0)) > 0:
-		# Ring Tonics from the shop: never above the Ring cap (plan item 4341).
-		var target: int = mini(s.level + int(it.rings), mini(level_cap(), Spirling.MAX_LEVEL))
+	elif int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0:
+		# Ring Tonics and the Ring Crown from the shop: never above the Ring cap (plan item 4341).
+		var goal: int = int(it.rings_to) if int(it.get("rings_to", 0)) > 0 else s.level + int(it.rings)
+		var target: int = mini(goal, mini(level_cap(), Spirling.MAX_LEVEL))
 		if s.level >= target:
 			return ""
 		var from: int = s.level
@@ -1380,7 +1385,7 @@ func _load_boxes(d: Dictionary) -> void:
 	for p: Variant in (pr if pr is Array else []):
 		if p is Dictionary and (p as Dictionary).get("uids") is Array and team_presets.size() < TEAM_PRESETS:
 			var uids: Array = ((p as Dictionary).uids as Array).map(func(x: Variant) -> String: return str(x))
-			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY)})
+			team_presets.append({"name": str((p as Dictionary).get("name", "")), "uids": uids.slice(0, MAX_PARTY + 1)})
 	# Old saves had one flat list: spread it over the boxes in order.
 	var fill: Array[int] = []
 	fill.resize(storage_boxes.size())
@@ -1508,7 +1513,7 @@ func _find_uid(u: String) -> Spirling:
 ## Loads preset [param slot] with one tap at a spring: members come out of storage, the rest
 ## rests. Never leaves the team without a healthy member and never overfills storage.
 func load_preset(slot: int) -> bool:
-	var team: Array[Spirling] = preset_team(slot)
+	var team: Array[Spirling] = preset_team(slot).slice(0, party_max())
 	if team.is_empty():
 		return false
 	var healthy: bool = false
@@ -1555,7 +1560,9 @@ func _load_echo_cores(raw: Variant) -> void:
 		echo_cores.append({"kind": kind,
 			"parents": (parents as Array).map(func(x: Variant) -> String: return str(x)).slice(0, 2) if parents is Array else [],
 			"rests": maxi(0, int((c as Dictionary).rests)) if (c as Dictionary).get("rests") is int or (c as Dictionary).get("rests") is float else 0,
-			"wins": maxi(0, int((c as Dictionary).wins)) if (c as Dictionary).get("wins") is int or (c as Dictionary).get("wins") is float else 0})
+			"wins": maxi(0, int((c as Dictionary).wins)) if (c as Dictionary).get("wins") is int or (c as Dictionary).get("wins") is float else 0,
+			"heir": (c as Dictionary).get("heir", {}) if (c as Dictionary).get("heir", {}) is Dictionary else {},
+			"contract": bool((c as Dictionary).get("contract", false))})
 
 ## Every heal spring is an Echo spring once the second Rift is mended (item 184).
 func echo_spring_open() -> bool:
@@ -1591,7 +1598,8 @@ func sing_together(a: Spirling, b: Spirling, p_rng: RandomNumberGenerator = null
 	var r: RandomNumberGenerator = p_rng if p_rng != null else rng
 	var from: Spirling = a if r.randi_range(0, 1) == 0 else b
 	var core: Dictionary = {"kind": first_form(from.data).species_name,
-		"parents": [a.data.species_name, b.data.species_name], "rests": 0, "wins": 0}
+		"parents": [a.data.species_name, b.data.species_name], "rests": 0, "wins": 0,
+		"heir": Breeding.snapshot(a, b), "contract": false}
 	echo_cores.append(core)
 	return core
 
@@ -1615,6 +1623,7 @@ func awaken_cores() -> Array[Spirling]:
 		echo_cores.erase(c)
 		var kid := Spirling.new(Database.species(str(c.kind)), 1, rng)
 		kid.lineage.assign(c.parents)
+		kid.set_meta("inheritance", Breeding.inherit(kid, c, rng))
 		receive_spirling(kid)
 		out.append(kid)
 	return out
