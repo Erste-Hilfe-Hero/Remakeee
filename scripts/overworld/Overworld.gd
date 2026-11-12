@@ -695,6 +695,11 @@ func _warp_out(edge: bool) -> void:
 		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var door: Vector2 = (player.get_global_transform_with_canvas().origin + Vector2(8, 8)).round()
+	# Era III winds a spiral of ink in around the Wayfarer (data/era_text.json).
+	if EraText.warp(EraManager.active_era(), str(EraManager.feel("warp"))) == "spiral":
+		await EraWarp.spiral_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME)
+		_fade.color.a = 1.0
+		return
 	# Eras IV and V close an iris on the Wayfarer instead of the door rectangle.
 	if str(EraManager.feel("warp")) == "iris":
 		await EraFeelLayer.iris_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME * 1.5)

@@ -16,6 +16,10 @@ LICENCE = "Owned by the project, no third-party input"
 
 # (path pattern, generator, how it was made)
 SOURCES = [
+    ("art/era5/portraits/*.png", "tools/art/gen_portraits.py", "own speaker portrait for the Era V dialogue box: three 32 px busts (resting, blink, speaking) from hand-written shapes and a colour recipe per speaker"),
+    ("art/era4/portraits/*.png", "tools/art/gen_portraits.py", "own 12 px speaker head for the Era IV name plate, from hand-written shapes and a colour recipe per speaker"),
+    ("art/fonts/chimora_etch10.png", "tools/fonts/build_era_fonts.py", "specimen sheet of Chimora Etch, the own 10 px text font of Era III; every glyph hand-drawn in tools/fonts/src/etch10.txt"),
+    ("art/fonts/chimora_pano12.png", "tools/fonts/build_era_fonts.py", "specimen sheet of Chimora Panorama, the own 12 px text font of Eras IV and V; every glyph hand-drawn in tools/fonts/src/pano12.txt"),
     ("audio/sfx/*_era[2-5].wav", "tools/audio/era_sfx.py", "era sound set: own note recipe played on that era's synthesized voice (chip, low-rate tones, room/hall), no samples"),
     ("audio/ambience/*_era[45].ogg", "tools/audio/ambience.py", "original Era IV/V biome ambience loop from filtered noise and tone figures, room reverb, no recordings"),
     ("audio/sfx/*.wav", "tools/audio/gen_audio.py", "synthesized pulse/triangle/noise sound effect, no samples"),
