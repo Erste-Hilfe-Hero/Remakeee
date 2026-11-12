@@ -81,7 +81,10 @@ static func run(menu: PauseMenu) -> void:
 			5: await run_boards(menu)
 			6: await run_blocked(menu, data.get("blocked", []))
 		match labels[idx]:
-			"Bund": await BundMenu.run(menu)
+			"Bund":
+				await BundMenu.run(menu)
+				if not menu.raid_attempt.is_empty():
+					return
 			"Trades": await TradeMenu.run(menu)
 			"Daily gift": await run_daily_gift(menu)
 			"Live duels": await LiveDuelMenu.run(menu, friends)

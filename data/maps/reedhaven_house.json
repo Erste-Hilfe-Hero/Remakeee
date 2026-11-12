@@ -31,6 +31,14 @@
    "facing": "down",
    "dialogue": "rooms/reedhaven_house_grete",
    "sprite": "villager"
+  },
+  {
+   "id": "vm_odette",
+   "x": 7,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "veydal_more/odette",
+   "sprite": "elder"
   }
  ],
  "signs": []
