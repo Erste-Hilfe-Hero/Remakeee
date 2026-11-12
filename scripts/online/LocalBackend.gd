@@ -37,7 +37,7 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "wake_bell", "w": 5}, {"item": "power_brew", "w": 2}, {"item": "guard_brew", "w": 2},
 		{"item": "focus_brew", "w": 2}, {"item": "dash_brew", "w": 2}, {"item": "revival_leaf", "w": 2}],
 }
-const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel", "rift", "bund_war"]
+const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel", "rift", "bund_war", "tourney"]
 ## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
 const DEFAULT_FLAGS: Dictionary = {
 	"league_fair": {"enabled": true, "min_version": 1}, "league_open": {"enabled": true, "min_version": 1},
@@ -94,6 +94,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalSafety.install(self)
 	# Random raid groups, Echo teams, role signs, bund perks, bund house, bund wars (Online 100 areas 3, 4).
 	LocalRaidBund.install(self)
+	# Weekend tournament, watching live duels, top league team (20261113000030_tourney_watch.sql).
+	LocalTourney.install(self)
 
 func is_local() -> bool:
 	return true
@@ -160,7 +162,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward",
+	"tourney_reward", "daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward",
 	"friend_level_claim", "pair_task_claim", "invite_claim"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
@@ -1297,6 +1299,15 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 		if wf.state != "open":
 			return _fail("fought")
 		c["expect"] = (get_meta("raid_bund") as LocalRaidBund).war_expect(wf)
+	var tf: Dictionary = {}
+	if kind == "tourney":
+		var tv: Variant = (_table("tourney_fights", {}) as Dictionary).get(str(a.get("p_ref", "")))
+		if not tv is Dictionary or tv.user != me():
+			return _fail("no_such_fight")
+		tf = tv
+		if tf.state != "open":
+			return _fail("fought")
+		c["expect"] = (get_meta("tourney") as LocalTourney).expect(tf)
 	var battles: Dictionary = _table("battles", {})
 	var id: int = int(db.get("battle_seq", 0)) + 1
 	db["battle_seq"] = id
@@ -1312,6 +1323,12 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 	if not wf.is_empty():
 		wf.state = "submitted"
 		wf.battle_id = id
+	if not tf.is_empty():
+		tf.state = "submitted"
+		tf.battle_id = id
+		tf.created_at = now()
+		tf.replay = (get_meta("tourney") as LocalTourney).expect(tf)
+		tf.replay["inputs"] = (inputs as Array).duplicate(true)
 	if kind == "rift":
 		(_table("rift_runs", []) as Array).append({"battle_id": id, "u": me(), "week": _week(), "rift": str(a.get("p_ref", "")),
 			"v": rift_rounds, "at": now()})
@@ -1353,6 +1370,8 @@ func _decide(id: int, result: Dictionary) -> void:
 		_raid_apply(id, row.status == "ok", result.detail)
 	elif row.kind == "bund_war":
 		(get_meta("raid_bund") as LocalRaidBund).war_apply(id, row.status == "ok", result.detail)
+	elif row.kind == "tourney":
+		(get_meta("tourney") as LocalTourney).apply(id, row.status == "ok", result.detail)
 
 func _fn_battle_status(a: Dictionary) -> Dictionary:
 	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
@@ -2654,9 +2673,19 @@ func _live_out(d: Dictionary) -> Dictionary:
 			for i: Variant in d.pick[side]:
 				rows.append((d.show[side][int(i)] as Dictionary).duplicate(true))
 			teams.append(rows)
-	return {"ok": true, "id": int(d.id), "side": _live_side(d), "state": d.state, "show": (d.show as Array).duplicate(true),
+	# A player never sees the other side's choice of the open round; a watcher is one round behind.
+	var side: int = _live_side(d)
+	var moves: Dictionary = (d.moves as Dictionary).duplicate(true)
+	if d.state == "running":
+		if side < 0:
+			for key: String in moves.keys():
+				if int(key) >= int(d.round) - 1:
+					moves.erase(key)
+		elif moves.has(str(d.round)):
+			moves[str(d.round)][1 - side] = null
+	return {"ok": true, "id": int(d.id), "side": side, "state": d.state, "show": (d.show as Array).duplicate(true),
 		"picked": [d.pick[0] != null, d.pick[1] != null], "teams": teams, "seed": d.seed, "round": d.round,
-		"moves": (d.moves as Dictionary).duplicate(true), "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
+		"moves": moves, "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
 		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true)}
 
 func _live_new(other: String) -> Dictionary:

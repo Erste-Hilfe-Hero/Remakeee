@@ -100,7 +100,8 @@
     },
     {
      "species": "Cullhorn",
-     "level": 60
+     "level": 60,
+     "held": "pith_mend"
     }
    ],
    "intro": "vellmarch/warden_corin_intro",
