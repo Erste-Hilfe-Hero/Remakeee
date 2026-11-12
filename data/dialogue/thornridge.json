@@ -127,7 +127,16 @@
    "lines": [
     "Night Watch Ivo: Quiet nights since the Rift closed. I almost miss the trouble. Almost."
    ]
-  }
+  },
+  "choices": [
+   {
+    "text": "Snore loudly next to Ivo",
+    "next": "ivo_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
  },
  "kip": {
   "lines": [

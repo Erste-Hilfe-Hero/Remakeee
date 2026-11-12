@@ -371,7 +371,16 @@
    "lines": [
     "Carter Wim: The road feels lighter since the Rift was sealed. Even the cart squeaks less."
    ]
-  }
+  },
+  "choices": [
+   {
+    "text": "Tell Wim a cart joke",
+    "next": "wim_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
  },
  "marker_stone": {
   "lines": [

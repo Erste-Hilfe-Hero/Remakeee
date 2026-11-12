@@ -42,7 +42,16 @@
    "lines": [
     "Stilt-Builder Aart: No wobble in weeks. The Rift shook more than the storm ever did."
    ]
-  }
+  },
+  "choices": [
+   {
+    "text": "Wobble at Aart",
+    "next": "aart_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
  },
  "wenna": {
   "lines": [
