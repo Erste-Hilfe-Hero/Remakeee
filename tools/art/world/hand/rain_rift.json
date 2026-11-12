@@ -1,0 +1,13 @@
+{
+ "add": {
+  "signs": [
+   {
+    "x": 0,
+    "y": 7,
+    "dialogue": "legend_quests/zephyrel_lore",
+    "show_flag": "lq_zephyrel_met",
+    "hide_flag": "lq_zephyrel_ready"
+   }
+  ]
+ }
+}
