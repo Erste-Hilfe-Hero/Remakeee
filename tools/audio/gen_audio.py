@@ -38,7 +38,7 @@ STEM_QUALITY = 0
 
 
 def all_songs() -> dict[str, dict]:
-    return {**music.SONGS, **music.MAP_SONGS}
+    return {**music.SONGS, **music.MAP_SONGS, **music.EXTRA_SONGS}
 
 
 def write_loud(path: str, data: np.ndarray, quality: int) -> None:
@@ -56,6 +56,9 @@ def build_song(name: str, spec: dict, stems: bool) -> float:
     song = music.compose(name, **spec)
     parts = song.stems()
     mix = sum(parts.values())
+    if name in music.EXTRA_SONGS:
+        write_loud(os.path.join(MUSIC_DIR, name + ".ogg"), mix, music.EXTRA_QUALITY)
+        return len(mix) / 22050.0
     g = loudness.music_gain(mix)
     write_ogg(os.path.join(MUSIC_DIR, name + ".ogg"), mix * g)
     if stems and name in music.MAP_SONGS:
