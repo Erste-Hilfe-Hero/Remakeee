@@ -1470,6 +1470,7 @@ func release(index: int) -> String:
 		return ""
 	var s: Spirling = storage[index]
 	storage.remove_at(index)
+	Released.remember(s)
 	if not s.held.is_empty():
 		add_item(s.held)
 		s.held = ""

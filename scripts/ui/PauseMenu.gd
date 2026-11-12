@@ -1224,6 +1224,8 @@ func _run_stored(index: int) -> void:
 				elif await confirm_danger("Release %s?" % s.display_name()) \
 						and await confirm_danger("It goes home for good. Really release it?"):
 					await info(GameState.release(i))
+					# A farewell letter follows (plan 1136).
+					await info("\n".join(Released.letter(s)))
 					return
 
 ## Party -> storage, asking whether the keepsake stays in the satchel (item 356).
