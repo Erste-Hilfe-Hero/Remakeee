@@ -45,6 +45,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
+	"lend": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -76,10 +77,13 @@ func _init(p_store_path: String = "") -> void:
 			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim", "league_reward",
 			"live_invite", "live_list", "live_answer", "live_pick", "live_move", "live_state", "live_emote", "live_forfeit",
 			"live_finish", "live_rematch", "raid_board",
+			"bund_stats", "bund_settings", "bund_search", "bund_join", "bund_donate", "bund_goal_claim", "bund_board",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
+	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).
+	LocalTradeGifts.install(self)
 
 func is_local() -> bool:
 	return true
@@ -146,7 +150,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward"]
+	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -2113,7 +2117,7 @@ static func trade_mon_clean(m: Dictionary) -> Dictionary:
 	for k: String in ["nickname", "box", "favorite"]:
 		out.erase(k)
 	var era: Variant = m.get("origin_era")
-	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= 4 else 1
+	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= Spirling.MAX_ERA else 1
 	return out
 
 static func mon_uids(list: Variant) -> Array:
@@ -2702,3 +2706,163 @@ func _fn_live_rematch(a: Dictionary) -> Dictionary:
 	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
 		return _fail("slow_down")
 	return _live_new(other)
+
+# --- Bund extras (Online 100, area 4), like 20261111000060_bund_more.sql ------------------------
+
+## server_config.bund_rules (data/bund_rules.json).
+func bund_cfg() -> Dictionary:
+	var v: Variant = db.config.get("bund_rules")
+	if not v is Dictionary:
+		v = BundRules.config()
+		db.config["bund_rules"] = v
+	return v
+
+func _bund_goal(row: Dictionary) -> int:
+	return int(row.get("goal_progress", 0)) if str(row.get("goal_week", "")) == _week() else 0
+
+func _bund_active(b: String) -> int:
+	var n: int = 0
+	for x: String in _bund_list(b):
+		if int(profile_of(x).get("last_seen", 0)) > now() - 86400 * int(bund_cfg().active_days):
+			n += 1
+	return n
+
+func _fn_bund_stats(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	var row: Dictionary = db.bunds[b]
+	var c: Dictionary = bund_cfg()
+	var claims: Array = row.get("goal_claims", [])
+	return {"ok": true, "xp": int(row.get("xp", 0)), "level": BundRules.level(c, int(row.get("xp", 0))),
+		"lang": str(row.get("lang", "")), "open": bool(row.get("open", false)), "goal": _bund_goal(row),
+		"goal_target": int(c.goal_target), "goal_reward": (c.goal_reward as Dictionary).duplicate(),
+		"goal_claimed": claims.has(_week() + "|" + u),
+		"donated_today": int((_user().get("bund_donated", {}) as Dictionary).get(_today(), 0)), "donate_daily": int(c.donate_daily)}
+
+func _fn_bund_settings(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	var lang: String = str(a.get("p_lang", ""))
+	if not BundRules.lang_ok(bund_cfg(), lang):
+		return _fail("bad_lang")
+	db.bunds[b].lang = lang
+	db.bunds[b].open = bool(a.get("p_open", false))
+	return {"ok": true}
+
+func _fn_bund_search(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	if not _rate_ok("bund_search", 60):
+		return _fail("slow_down")
+	var lang: String = str(a.get("p_lang", ""))
+	var out: Array = []
+	for b: String in _table("bunds", {}):
+		var row: Dictionary = db.bunds[b]
+		var size: int = _bund_list(b).size()
+		if (not lang.is_empty() and str(row.get("lang", "")) != lang) or int(row.dissolve_at) > 0 or size >= config_int("bund_max", 30):
+			continue
+		if _bund_list(b).any(func(x: String) -> bool: return is_blocked(u, x)):
+			continue
+		out.append({"bund": int(b), "name": row.name, "lang": str(row.get("lang", "")), "open": bool(row.get("open", false)),
+			"level": BundRules.level(bund_cfg(), int(row.get("xp", 0))), "size": size, "active": _bund_active(b)})
+	out.sort_custom(func(p: Dictionary, q: Dictionary) -> bool:
+		if int(p.active) != int(q.active):
+			return int(p.active) > int(q.active)
+		if int(p.size) != int(q.size):
+			return int(p.size) > int(q.size)
+		return int(p.bund) < int(q.bund))
+	return {"ok": true, "bunds": out.slice(0, int(bund_cfg().search_rows))}
+
+func _fn_bund_join(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = str(int(a.get("p_bund", -1)))
+	if not _table("bunds", {}).has(b) or _bund_list(b).any(func(x: String) -> bool: return is_blocked(u, x)):
+		return _fail("no_such_bund")
+	if not _bund_of(u).is_empty():
+		return _fail("in_bund")
+	if not _rate_ok("bund_request", 10):
+		return _fail("slow_down")
+	if bool(db.bunds[b].get("open", false)):
+		e = _bund_join(b, u, "member")
+		return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+	if _invite_of(b, u, "") < 0:
+		(_table("bund_invites", []) as Array).append({"bund": b, "user": u, "kind": "request", "by": u, "at": now()})
+	return {"ok": true, "joined": false}
+
+func _fn_bund_donate(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	var item: String = str(a.get("p_item", ""))
+	var count: int = int(a.get("p_count", 0))
+	if item.is_empty() or count < 1 or count > 99:
+		return _fail("bad_count")
+	var done: Dictionary = _user().get_or_add("bund_donated", {})
+	if int(done.get(_today(), 0)) + count > int(bund_cfg().donate_daily):
+		return _fail("limit_today")
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {item: -count})
+	if not bool(r.ok):
+		return r
+	done[_today()] = int(done.get(_today(), 0)) + count
+	var row: Dictionary = db.bunds[b]
+	row["xp"] = int(row.get("xp", 0)) + BundRules.donate_xp(bund_cfg(), count)
+	row["goal_progress"] = _bund_goal(row) + count
+	row["goal_week"] = _week()
+	return {"ok": true, "rev": r.rev, "bag": {item: -count}, "xp": row.xp, "goal": _bund_goal(row)}
+
+func _fn_bund_goal_claim(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	var row: Dictionary = db.bunds[b]
+	if _bund_goal(row) < int(bund_cfg().goal_target):
+		return _fail("goal_open")
+	var claims: Array = row.get_or_add("goal_claims", [])
+	if claims.has(_week() + "|" + u):
+		return _fail("claimed")
+	var rw: Dictionary = bund_cfg().goal_reward
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {str(rw.item): int(rw.count)})
+	if not bool(r.ok):
+		return r
+	claims.append(_week() + "|" + u)
+	return {"ok": true, "rev": r.rev, "item": rw.item, "count": int(rw.count), "bag": {str(rw.item): int(rw.count)}}
+
+func _fn_bund_board(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var rows: Array = []
+	for b: String in _table("bunds", {}):
+		var row: Dictionary = db.bunds[b]
+		if int(row.dissolve_at) == 0:
+			rows.append({"id": int(b), "name": row.name, "xp": int(row.get("xp", 0)),
+				"level": BundRules.level(bund_cfg(), int(row.get("xp", 0))), "mine": _bund_of(u) == b})
+	rows.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.xp) > int(q.xp) or (int(p.xp) == int(q.xp) and int(p.id) < int(q.id)))
+	rows = rows.slice(0, int(bund_cfg().board_rows))
+	for r: Dictionary in rows:
+		r.erase("id")
+	return {"ok": true, "rows": rows}
