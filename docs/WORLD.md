@@ -214,6 +214,7 @@ Written by `python3 tools/world_stats.py`.
 | halcyra | `brightledge_home_2` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `brightledge_shop` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `brightledge_spring` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `brine_catacombs` | inside | 12x14 + 12x10 | 5 | 2 | 59 |
 | quillmarch | `burin_landing` | town | 12x20 | 3 | 1 | 0 |
 | quillmarch | `burin_landing_customs` | inside | 8x6 | 0 | 0 | 0 |
 | quillmarch | `burin_landing_net_loft` | inside | 8x6 | 0 | 0 | 0 |
@@ -226,7 +227,7 @@ Written by `python3 tools/world_stats.py`.
 | vellmarch | `cindergate_quay_customs_store` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_net_loft` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_tollhouse` | inside | 8x6 | 0 | 0 | 0 |
-| halcyra | `cloudshadow_meadow` | route | 12x24 | 3 | 1 | 78 |
+| halcyra | `cloudshadow_meadow` | route | 12x24 | 3 | 3 | 78 |
 | quillmarch | `dead_letter_office` | inside | 12x10 | 2 | 0 | 0 |
 | quillmarch | `debtors_icehouse` | inside | 12x10 | 2 | 0 | 0 |
 | quivermoor | `driftwick` | town | 12x20 | 3 | 1 | 0 |
@@ -236,12 +237,14 @@ Written by `python3 tools/world_stats.py`.
 | quivermoor | `driftwick_pole_house` | inside | 8x6 | 0 | 0 | 0 |
 | quillmarch | `drypoint_lane` | route | 12x26 | 5 | 3 | 40 |
 | quillmarch | `errata_chapel` | inside | 12x10 | 2 | 0 | 0 |
+| halcyra | `fallen_planet` | inside | 12x20 | 4 | 2 | 92 |
 | vellmarch | `foundry_rift` | rift | 12x22 | 0 | 2 | 0 |
 | halcyra | `gildcrest` | town | 12x20 | 3 | 0 | 0 |
 | halcyra | `gildcrest_home_1` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `gildcrest_home_2` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `gildcrest_shop` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `gildcrest_spring` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `gilt_cellars` | inside | 12x12 + 12x10 | 4 | 2 | 0 |
 | halcyra | `gilt_rift` | rift | 12x22 | 0 | 2 | 0 |
 | halcyra | `gilt_span` | inside | 12x12 | 3 | 0 | 0 |
 | solenne | `glasswind_flats` | route | 12x34 | 5 | 6 | 86 |
@@ -256,7 +259,7 @@ Written by `python3 tools/world_stats.py`.
 | vellmarch | `hookwick_lock_office` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `hookwick_tackle_shop` | inside | 8x6 | 0 | 0 | 0 |
 | quivermoor | `hymnmarsh` | marsh | 12x26 | 4 | 3 | 40 |
-| halcyra | `lantern_span` | route | 12x24 | 3 | 1 | 37 |
+| halcyra | `lantern_span` | route | 12x24 | 3 | 3 | 37 |
 | vellmarch | `larkspur_heights` | town | 12x20 | 3 | 1 | 0 |
 | vellmarch | `larkspur_heights_counting_house` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `larkspur_heights_mask_atelier` | inside | 8x6 | 0 | 0 | 0 |
@@ -279,10 +282,10 @@ Written by `python3 tools/world_stats.py`.
 | quillmarch | `ledgerholm_choir_loft` | inside | 8x6 | 0 | 0 | 0 |
 | quillmarch | `ledgerholm_forgery` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `lock_rift` | rift | 12x22 | 0 | 2 | 0 |
-| halcyra | `long_stair` | route | 12x24 | 3 | 1 | 42 |
+| halcyra | `long_stair` | route | 12x24 | 3 | 3 | 42 |
 | vellmarch | `masque_rift` | rift | 12x22 | 0 | 2 | 0 |
 | solenne | `mirage_kiln` | dungeon | 12x10 + 12x10 + 12x8 | 5 | 7 | 25 |
-| halcyra | `mirror_flats` | route | 12x24 | 3 | 1 | 58 |
+| halcyra | `mirror_flats` | route | 12x24 | 3 | 4 | 58 |
 | quillmarch | `mordant_row` | town | 12x20 | 3 | 1 | 0 |
 | quillmarch | `mordant_row_apothecary` | inside | 8x6 | 0 | 0 | 0 |
 | quillmarch | `mordant_row_bath_house` | inside | 8x6 | 0 | 0 | 0 |
@@ -299,7 +302,7 @@ Written by `python3 tools/world_stats.py`.
 | solenne | `ochrewell_dome` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `ochrewell_pottery` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `ochrewell_store` | inside | 10x8 | 0 | 0 | 0 |
-| halcyra | `orrery_ridge` | route | 12x24 | 3 | 1 | 47 |
+| halcyra | `orrery_ridge` | route | 12x24 | 3 | 3 | 46 |
 | halcyra | `orrery_rift` | rift | 12x22 | 0 | 2 | 0 |
 | halcyra | `paleshore` | town | 12x20 | 3 | 0 | 0 |
 | halcyra | `paleshore_home_1` | inside | 10x8 | 0 | 0 | 0 |
@@ -344,7 +347,7 @@ Written by `python3 tools/world_stats.py`.
 | halcyra | `starwell_shop` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `starwell_spring` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
-| halcyra | `sunfall_terraces` | route | 12x24 | 3 | 1 | 58 |
+| halcyra | `sunfall_terraces` | route | 12x24 | 3 | 2 | 57 |
 | vellmarch | `tallowmarket` | town | 12x20 | 3 | 1 | 0 |
 | vellmarch | `tallowmarket_rumour_room` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `tallowmarket_vigil_house` | inside | 8x6 | 0 | 0 | 0 |
@@ -370,7 +373,7 @@ Written by `python3 tools/world_stats.py`.
 | halcyra | `whitecairn_shop` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `whitecairn_spring` | inside | 10x8 | 0 | 0 | 0 |
 | quivermoor | `wick_rift` | rift | 12x22 | 0 | 2 | 0 |
-| | **238 maps** | | | **376** | **256** | **2674** |
+| | **241 maps** | | | **389** | **274** | **2823** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
