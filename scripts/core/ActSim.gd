@@ -262,13 +262,26 @@ static func _restore(snap: Array) -> Array[Spirling]:
 
 ## Plays wild battles on [param table], the weakest of the five in the lead each time, so the
 ## XP spreads as a player rotating the lead spreads it.
-static func grind(owned: Array[Spirling], table: Array, battles: int, rng: RandomNumberGenerator) -> void:
+static func grind(owned: Array[Spirling], table: Array, battles: int, rng: RandomNumberGenerator, foes: Array[Spirling] = []) -> void:
 	for i: int in battles:
-		var party: Array[Spirling] = pick_party(owned)
+		var party: Array[Spirling] = pick_party(owned) if foes.is_empty() else train_party(owned, foes)
 		party.sort_custom(func(a: Spirling, b: Spirling) -> bool: return a.level < b.level)
 		wild_battle(party, table, rng)
 		for s: Spirling in party:
 			grow(s)
+
+## Training party for a fight ahead: the three strongest and the two bonded Spirlings with the
+## best element edge against [param foes], so a player who trains raises the right kinds.
+static func train_party(owned: Array[Spirling], foes: Array[Spirling]) -> Array[Spirling]:
+	var sorted: Array[Spirling] = pick_party(owned, owned.size())
+	var out: Array[Spirling] = sorted.slice(0, GameState.MAX_PARTY - 2)
+	var rest: Array[Spirling] = sorted.slice(GameState.MAX_PARTY - 2)
+	rest.sort_custom(func(a: Spirling, b: Spirling) -> bool:
+		var ma: float = matchup(a, foes)
+		var mb: float = matchup(b, foes)
+		return ma > mb if not is_equal_approx(ma, mb) else power(a) > power(b))
+	out.append_array(rest.slice(0, 2))
+	return out
 
 static func _bond(owned: Array[Spirling], table: Array, count: int, rng: RandomNumberGenerator) -> void:
 	var have: Dictionary = {}
@@ -370,7 +383,7 @@ static func _boss(owned: Array[Spirling], foe: Dictionary, step: Dictionary, tri
 	var snap: Array = _snapshot(owned) if needed == 0 else []
 	var at_moderate: float = smart0
 	while done < grind_max and (needed < 0 or done < moderate):
-		grind(owned, table, step_n, rng)
+		grind(owned, table, step_n, rng, probe)
 		done += step_n
 		var w: float = measure(owned, foe, trials, rng.randi())
 		if done <= moderate:

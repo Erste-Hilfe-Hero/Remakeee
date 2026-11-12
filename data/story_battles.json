@@ -80,23 +80,23 @@
    "tamer": [
     {
      "species": "Brookbaron",
-     "level": 41
+     "level": 37
     },
     {
      "species": "Duskdigger",
-     "level": 42
+     "level": 38
     },
     {
      "species": "Obsidroth",
-     "level": 43
+     "level": 39
     },
     {
      "species": "Calderox",
-     "level": 42
+     "level": 38
     },
     {
      "species": "Brookbaron",
-     "level": 43
+     "level": 39
     }
    ]
   }
@@ -128,7 +128,31 @@
   "ai": 3,
   "money": 1600,
   "defeat": "ashmere/kestra_3_defeat",
-  "lose": "ashmere/kestra_3_wait"
+  "lose": "ashmere/kestra_3_wait",
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Tempestrel",
+     "level": 49
+    },
+    {
+     "species": "Glimmerax",
+     "level": 48
+    },
+    {
+     "species": "Brookbaron",
+     "level": 47
+    },
+    {
+     "species": "Kelphound",
+     "level": 48
+    },
+    {
+     "species": "Lumenewt",
+     "level": 47
+    }
+   ]
+  }
  },
  "echo_1": {
   "trainer": "The Echo",
@@ -466,7 +490,27 @@
   "lose": "ochrewell/factor_lose",
   "win_flags": [
    "veil_factor_beaten"
-  ]
+  ],
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Mendlace",
+     "level": 59
+    },
+    {
+     "species": "Scrivane",
+     "level": 59
+    },
+    {
+     "species": "Obsidroth",
+     "level": 60
+    },
+    {
+     "species": "Burinox",
+     "level": 60
+    }
+   ]
+  }
  },
  "basin_wardens": {
   "trainer": "Chief Warden's Guard",
@@ -728,23 +772,23 @@
    "tamer": [
     {
      "species": "Fluting",
-     "level": 21
+     "level": 16
     },
     {
      "species": "Smoldrake",
-     "level": 22
+     "level": 17
     },
     {
      "species": "Shalebat",
-     "level": 21
+     "level": 16
     },
     {
      "species": "Kelpup",
-     "level": 21
+     "level": 16
     },
     {
      "species": "Gloamhog",
-     "level": 22
+     "level": 17
     }
    ]
   }
@@ -991,7 +1035,31 @@
   "lose": "solenne_side/corin_lose",
   "win_flags": [
    "veil_corin_1_beaten"
-  ]
+  ],
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Zenithare",
+     "level": 50
+    },
+    {
+     "species": "Saltspire",
+     "level": 50
+    },
+    {
+     "species": "Scrivane",
+     "level": 51
+    },
+    {
+     "species": "Rubriclad",
+     "level": 51
+    },
+    {
+     "species": "Charsylvan",
+     "level": 51
+    }
+   ]
+  }
  },
  "veil_corin_2": {
   "trainer": "Veil Heir Corin",
@@ -1019,7 +1087,27 @@
   "lose": "solenne_side/corin_lose",
   "win_flags": [
    "veil_corin_2_beaten"
-  ]
+  ],
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Zenithare",
+     "level": 62
+    },
+    {
+     "species": "Glasstarn",
+     "level": 62
+    },
+    {
+     "species": "Mendlace",
+     "level": 63
+    },
+    {
+     "species": "Saltcrown",
+     "level": 63
+    }
+   ]
+  }
  },
  "veil_corin_3": {
   "trainer": "Veil Heir Corin",

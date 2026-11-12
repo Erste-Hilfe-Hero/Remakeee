@@ -748,15 +748,15 @@
      "tamer": [
       {
        "species": "Riptail",
-       "level": 32
+       "level": 27
       },
       {
        "species": "Tempestrel",
-       "level": 33
+       "level": 28
       },
       {
        "species": "Kelphound",
-       "level": 34
+       "level": 29
       }
      ]
     }
@@ -969,15 +969,15 @@
      "tamer": [
       {
        "species": "Lumenewt",
-       "level": 33
+       "level": 26
       },
       {
        "species": "Glimmerax",
-       "level": 34
+       "level": 27
       },
       {
        "species": "Verdantusk",
-       "level": 34
+       "level": 27
       }
      ]
     }
@@ -1792,19 +1792,19 @@
      "tamer": [
       {
        "species": "Leviarch",
-       "level": 43
+       "level": 39
       },
       {
        "species": "Lumenewt",
-       "level": 42
+       "level": 38
       },
       {
        "species": "Glimmerax",
-       "level": 43
+       "level": 39
       },
       {
        "species": "Tempestrel",
-       "level": 42
+       "level": 38
       }
      ]
     }

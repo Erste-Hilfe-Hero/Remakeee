@@ -169,7 +169,31 @@
    "mend_items": [
     "echo_squall"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Tempestrel",
+      "level": 48
+     },
+     {
+      "species": "Zenithare",
+      "level": 49
+     },
+     {
+      "species": "Mirassil",
+      "level": 48
+     },
+     {
+      "species": "Dunebastion",
+      "level": 49
+     },
+     {
+      "species": "Orrerine",
+      "level": 49
+     }
+    ]
+   }
   },
   {
    "id": "lq_obed",

@@ -169,7 +169,31 @@
    "mend_items": [
     "echo_radiant_lance"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Brookbaron",
+      "level": 46
+     },
+     {
+      "species": "Orrerine",
+      "level": 47
+     },
+     {
+      "species": "Glimmerax",
+      "level": 46
+     },
+     {
+      "species": "Cairnhold",
+      "level": 47
+     },
+     {
+      "species": "Zenithare",
+      "level": 47
+     }
+    ]
+   }
   },
   {
    "id": "lumivane",

@@ -169,7 +169,31 @@
    "mend_items": [
     "echo_dawn_mend"
    ],
-   "rematch_after": "story_complete"
+   "rematch_after": "story_complete",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Saltcrown",
+      "level": 46
+     },
+     {
+      "species": "Leviarch",
+      "level": 47
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 46
+     },
+     {
+      "species": "Glasstarn",
+      "level": 46
+     },
+     {
+      "species": "Saltspire",
+      "level": 47
+     }
+    ]
+   }
   }
  ],
  "signs": [
