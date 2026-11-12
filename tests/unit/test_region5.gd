@@ -78,13 +78,17 @@ func test_towns_routes_and_rifts_link_up() -> void:
 				reached[b] = true
 	assert_eq(reached.size(), towns.size(), "every town reachable from the rope")
 
-func test_slots_fit_the_rarity_bands_and_rings_stay_under_the_cap() -> void:
+func _cap() -> int:
+	return int(_eras().ring_caps["5"])
+
+func test_slots_fit_the_rarity_bands_and_rings_climb_past_halcyra() -> void:
 	var last: int = 0
+	for r: Dictionary in Region4.data().routes:
+		last = maxi(last, int(r.ring[0]))
+	assert_eq(_cap(), Spirling.ERA_MAX_LEVEL, "Era V opens the top ring")
 	for r: Dictionary in _d.routes:
-		assert_lte(int(r.ring[1]), Spirling.MAX_LEVEL, "%s ring" % r.id)
-		assert_gte(int(r.ring[0]), Spirling.MAX_LEVEL - 8, "%s is late game" % r.id)
-		if last > 0:
-			assert_between(int(r.ring[0]) - last, 0, WorldValidator.MAX_RING_JUMP, "%s climbs" % r.id)
+		assert_lte(int(r.ring[1]), _cap(), "%s ring" % r.id)
+		assert_between(int(r.ring[0]) - last, 0, WorldValidator.MAX_RING_JUMP, "%s climbs" % r.id)
 		last = int(r.ring[0])
 		var total: int = 0
 		for s: Dictionary in r.slots:
@@ -108,7 +112,7 @@ func test_four_wardens_each_hold_a_rift() -> void:
 		assert_eq(str(r.warden), str(w.id))
 		assert_eq(str(r.flag), "rift_v5_%s_sealed" % str(r.id).trim_suffix("_rift"), "GameState.seal_rift key")
 		assert_gt(int(w.ring), ring)
-		assert_lte(int(w.ring), Spirling.MAX_LEVEL)
+		assert_lte(int(w.ring), _cap())
 		ring = int(w.ring)
 		var elements: Dictionary = {}
 		for t: Dictionary in w.team:
@@ -146,6 +150,7 @@ func test_story_is_a_chain_full_of_betrayal() -> void:
 		assert_lt(seen, 20)
 	assert_eq(seen, (_d.story as Array).size())
 	assert_true(Region5.is_done(f))
+	assert_eq(GameState.ring_ceiling_for({"story_complete": true, "era2_finale_done": true, "era3_finale_done": true, "era4_finale_done": true}), _cap(), "the moor's rings can be reached")
 	assert_gt(traitors.values().max(), 1, "someone betrays you twice")
 
 func test_landmarks_span_several_screens() -> void:

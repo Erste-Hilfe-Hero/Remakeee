@@ -62,6 +62,12 @@ jobs:
         run: python3 tools/store/push_products.py --check && python3 -m unittest discover -s tools/store/tests
       - name: Store listing material (texts, screenshots, icons, presets)
         run: pip install --quiet pillow && python3 tools/release_check.py
+      - name: Era II art matches its Era I source and palettes (tools/art/era2_colourise.py)
+        run: python3 tools/art/era2_colourise.py --check
+      - name: Halcyra Era IV atlas matches the shared Era I atlas (tools/art/gen_tiles_halcyra.py)
+        run: python3 tools/art/gen_tiles_halcyra.py --check
+      - name: Quivermoor Era V atlas matches the shared Era I atlas (tools/art/gen_tiles_quivermoor.py)
+        run: python3 tools/art/gen_tiles_quivermoor.py --check
 
   # Server functions (supabase/migrations) on a throwaway Postgres, with their tests.
   sql:
