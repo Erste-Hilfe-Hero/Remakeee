@@ -1,5 +1,5 @@
 {
- "_comment": "Story figures and signs per map id, in the map format (plan area 4, scripts/core/StoryPlacements.gd). Area 3 builds the maps; entries for maps that do not exist yet wait until they do.",
+ "_comment": "Story figures and signs per map id, in the map format (plan area 4, scripts/core/StoryPlacements.gd). Area 3 builds the maps; entries for maps that do not exist yet wait until they do. A map can list further arrival scenes under 'on_enter_more' (same format as 'on_enter', checked in order after it).",
  "lighthouse": {
   "signs": [
    {
@@ -271,6 +271,85 @@
     "facing": "down",
     "dialogue": "corvane_side/post_5",
     "sprite": "villager"
+   },
+   {
+    "id": "prim",
+    "x": 6,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "dyeworks/prim",
+    "sprite": "elder",
+    "color": "6a3a5a"
+   },
+   {
+    "id": "lark",
+    "x": 3,
+    "y": 14,
+    "facing": "right",
+    "dialogue": "dyeworks/lark",
+    "sprite": "stranger_hat",
+    "color": "8a7a3a"
+   },
+   {
+    "id": "cousin_1",
+    "x": 8,
+    "y": 9,
+    "facing": "left",
+    "dialogue": "dyeworks/cousin_1",
+    "sprite": "villager",
+    "color": "b04a4a",
+    "trainer": "Ginny Larkin",
+    "team": [
+     {
+      "species": "Rubricorn",
+      "level": 21
+     },
+     {
+      "species": "Puddock",
+      "level": 21
+     }
+    ],
+    "intro": "dyeworks/cousin_1_intro",
+    "defeat": "dyeworks/cousin_1_defeat",
+    "money": 900,
+    "beaten_flag": "beat_cousin_1",
+    "show_flag": "q_lark_asked"
+   },
+   {
+    "id": "cousin_2",
+    "x": 6,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "dyeworks/cousin_2",
+    "sprite": "villager",
+    "color": "3a5a9a",
+    "trainer": "Bertram Fennimore",
+    "team": [
+     {
+      "species": "Woadwhorl",
+      "level": 21
+     },
+     {
+      "species": "Inkspool",
+      "level": 22
+     }
+    ],
+    "intro": "dyeworks/cousin_2_intro",
+    "defeat": "dyeworks/cousin_2_defeat",
+    "money": 900,
+    "beaten_flag": "beat_cousin_2",
+    "show_flag": "q_lark_asked"
+   },
+   {
+    "id": "tansy_3",
+    "x": 10,
+    "y": 1,
+    "facing": "down",
+    "dialogue": "dyeworks/tansy_3",
+    "sprite": "ranger",
+    "color": "8a4a6a",
+    "show_flag": "dye_ledger_done",
+    "hide_flag": "beat_story_tansy_3"
    }
   ],
   "signs": [
@@ -300,6 +379,12 @@
     "x": 2,
     "y": 15,
     "dialogue": "corvane_stones/stone_2"
+   },
+   {
+    "x": 1,
+    "y": 9,
+    "dialogue": "dyeworks/seal_6",
+    "hide_flag": "seal_6"
    }
   ]
  },
@@ -392,7 +477,7 @@
    },
    {
     "id": "clan_morrow",
-    "x": 8,
+    "x": 7,
     "y": 11,
     "facing": "down",
     "dialogue": "clans/morrow",
@@ -481,6 +566,15 @@
     "facing": "down",
     "dialogue": "corvane_side/post_1",
     "sprite": "villager"
+   },
+   {
+    "id": "wenna",
+    "x": 3,
+    "y": 15,
+    "facing": "down",
+    "dialogue": "dyeworks/wenna",
+    "sprite": "elder",
+    "color": "4a4a5a"
    }
   ],
   "signs": [
@@ -510,6 +604,12 @@
     "x": 1,
     "y": 19,
     "dialogue": "corvane_stones/stone_4"
+   },
+   {
+    "x": 1,
+    "y": 15,
+    "dialogue": "dyeworks/seal_7",
+    "hide_flag": "seal_7"
    }
   ]
  },
@@ -600,6 +700,12 @@
     "x": 10,
     "y": 13,
     "dialogue": "corvane_stones/stone_6"
+   },
+   {
+    "x": 2,
+    "y": 10,
+    "dialogue": "dyeworks/seal_10",
+    "hide_flag": "seal_10"
    }
   ],
   "npcs": [
@@ -775,6 +881,12 @@
     "x": 1,
     "y": 22,
     "dialogue": "corvane_stones/stone_8"
+   },
+   {
+    "x": 1,
+    "y": 16,
+    "dialogue": "dyeworks/seal_8",
+    "hide_flag": "seal_8"
    }
   ],
   "npcs": [
@@ -856,7 +968,7 @@
    },
    {
     "id": "fenwick",
-    "x": 10,
+    "x": 9,
     "y": 12,
     "facing": "left",
     "dialogue": "corvane_side/fenwick",
@@ -873,7 +985,7 @@
    },
    {
     "id": "ollie",
-    "x": 1,
+    "x": 2,
     "y": 6,
     "facing": "right",
     "dialogue": "corvane_side/ollie",
@@ -915,6 +1027,79 @@
     "facing": "down",
     "dialogue": "corvane_side/post_3",
     "sprite": "villager"
+   },
+   {
+    "id": "odo",
+    "x": 8,
+    "y": 11,
+    "facing": "left",
+    "dialogue": "dyeworks/odo",
+    "sprite": "elder",
+    "color": "7a4a8a"
+   },
+   {
+    "id": "tansy_1",
+    "x": 9,
+    "y": 10,
+    "facing": "left",
+    "dialogue": "dyeworks/tansy_1",
+    "sprite": "ranger",
+    "color": "8a4a6a",
+    "hide_flag": "beat_story_tansy_1"
+   },
+   {
+    "id": "cousin_3",
+    "x": 8,
+    "y": 20,
+    "facing": "left",
+    "dialogue": "dyeworks/cousin_3",
+    "sprite": "villager",
+    "color": "b04a4a",
+    "trainer": "Perpetua Larkin",
+    "team": [
+     {
+      "species": "Rubricorn",
+      "level": 22
+     },
+     {
+      "species": "Sluicer",
+      "level": 22
+     },
+     {
+      "species": "Rubrit",
+      "level": 22
+     }
+    ],
+    "intro": "dyeworks/cousin_3_intro",
+    "defeat": "dyeworks/cousin_3_defeat",
+    "money": 950,
+    "beaten_flag": "beat_cousin_3",
+    "show_flag": "q_lark_asked"
+   },
+   {
+    "id": "cousin_4",
+    "x": 3,
+    "y": 21,
+    "facing": "right",
+    "dialogue": "dyeworks/cousin_4",
+    "sprite": "villager",
+    "color": "3a5a9a",
+    "trainer": "Osric Fennimore",
+    "team": [
+     {
+      "species": "Woadwhorl",
+      "level": 22
+     },
+     {
+      "species": "Padlet",
+      "level": 23
+     }
+    ],
+    "intro": "dyeworks/cousin_4_intro",
+    "defeat": "dyeworks/cousin_4_defeat",
+    "money": 950,
+    "beaten_flag": "beat_cousin_4",
+    "show_flag": "q_lark_asked"
    }
   ]
  },
@@ -1208,6 +1393,64 @@
     "facing": "down",
     "dialogue": "corvane_side/post_4",
     "sprite": "villager"
+   },
+   {
+    "id": "cousin_5",
+    "x": 10,
+    "y": 17,
+    "facing": "left",
+    "dialogue": "dyeworks/cousin_5",
+    "sprite": "villager",
+    "color": "b04a4a",
+    "trainer": "Mungo Larkin",
+    "team": [
+     {
+      "species": "Rubricorn",
+      "level": 23
+     },
+     {
+      "species": "Sluicer",
+      "level": 23
+     },
+     {
+      "species": "Thrashkin",
+      "level": 24
+     }
+    ],
+    "intro": "dyeworks/cousin_5_intro",
+    "defeat": "dyeworks/cousin_5_defeat",
+    "money": 1000,
+    "beaten_flag": "beat_cousin_5",
+    "show_flag": "q_lark_asked"
+   },
+   {
+    "id": "cousin_6",
+    "x": 3,
+    "y": 12,
+    "facing": "right",
+    "dialogue": "dyeworks/cousin_6",
+    "sprite": "villager",
+    "color": "3a5a9a",
+    "trainer": "Clementine Fennimore",
+    "team": [
+     {
+      "species": "Woadwhorl",
+      "level": 24
+     },
+     {
+      "species": "Padlet",
+      "level": 23
+     },
+     {
+      "species": "Rushprowl",
+      "level": 24
+     }
+    ],
+    "intro": "dyeworks/cousin_6_intro",
+    "defeat": "dyeworks/cousin_6_defeat",
+    "money": 1000,
+    "beaten_flag": "beat_cousin_6",
+    "show_flag": "q_lark_asked"
    }
   ],
   "signs": [
@@ -1251,6 +1494,12 @@
     "x": 1,
     "y": 5,
     "dialogue": "corvane_stones/stone_10"
+   },
+   {
+    "x": 1,
+    "y": 24,
+    "dialogue": "dyeworks/seal_9",
+    "hide_flag": "seal_9"
    }
   ]
  },
@@ -1551,6 +1800,15 @@
     "show_flag": "edge_amir_asked",
     "hide_flag": "edge_amir_2"
    }
+  ],
+  "on_enter_more": [
+   {
+    "scene": "a4_north",
+    "if": {
+     "flag": "c4_reckoning_done",
+     "not_flag": "undrawn_reached"
+    }
+   }
   ]
  },
  "gravers_hall": {
@@ -1633,7 +1891,7 @@
    },
    {
     "id": "clan_leith",
-    "x": 3,
+    "x": 4,
     "y": 13,
     "facing": "down",
     "dialogue": "clans/leith",
@@ -1655,8 +1913,8 @@
    },
    {
     "id": "clan_marlo_3",
-    "x": 5,
-    "y": 6,
+    "x": 10,
+    "y": 11,
     "facing": "down",
     "dialogue": "clans/marlo_3",
     "sprite": "villager",
@@ -1999,7 +2257,7 @@
    },
    {
     "id": "saffi",
-    "x": 10,
+    "x": 7,
     "y": 14,
     "facing": "left",
     "dialogue": "solenne_side/saffi",
@@ -2097,6 +2355,29 @@
     "show_flag": "edge_amir_asked",
     "hide_flag": "edge_amir_3"
    }
+  ],
+  "on_enter_more": [
+   {
+    "scene": "a4_wells",
+    "if": {
+     "flag": [
+      "scene_a4_ochrewell_seen",
+      "rift_tower_sealed"
+     ],
+     "not_flag": "rift_oasis_sealed"
+    }
+   },
+   {
+    "scene": "a4_drought",
+    "if": {
+     "flag": [
+      "scene_a4_wells_seen",
+      "scene_a4_oasis_seen",
+      "rift_oasis_sealed"
+     ],
+     "not_flag": "rift_sun_sealed"
+    }
+   }
   ]
  },
  "oasis_rift": {
@@ -2151,5 +2432,14 @@
     "show_flag": "era2_finale_done"
    }
   ]
+ },
+ "tower_rift": {
+  "on_enter": {
+   "scene": "a4_tower_gate",
+   "if": {
+    "flag": "rift_shade_sealed",
+    "not_flag": "rift_tower_sealed"
+   }
+  }
  }
 }

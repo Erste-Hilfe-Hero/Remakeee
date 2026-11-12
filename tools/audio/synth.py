@@ -76,12 +76,14 @@ def secs(s: float) -> int:
     return int(s * RATE)
 
 
-def write_wav(path: str, data: np.ndarray) -> None:
+def write_wav(path: str, data: np.ndarray, rate: int = RATE) -> None:
+    """Mono, or stereo for an (n, 2) array (Era IV and V effects); Era III effects use half
+    the rate, like the low-rate samples of that hardware."""
     pcm = (np.clip(data, -1.0, 1.0) * 32767).astype("<i2")
     with wave.open(path, "wb") as w:
-        w.setnchannels(1)
+        w.setnchannels(2 if data.ndim == 2 else 1)
         w.setsampwidth(2)
-        w.setframerate(RATE)
+        w.setframerate(rate)
         w.writeframes(pcm.tobytes())
 
 

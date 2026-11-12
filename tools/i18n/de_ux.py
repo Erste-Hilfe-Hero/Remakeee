@@ -194,6 +194,15 @@ T = {
 "Go to the title anyway?": "Trotzdem zum Titel?",
 "Vigor %d/%d to %d/%d": "Kraft %d/%d auf %d/%d",
 "Only in battle.": "Nur im Kampf.",
+"Already knows this art.": "Kennt diese Technik schon.",
+"Wrong element.": "Falsches Element.",
+"Seen %d/%d": "Gesehen %d/%d",
+"Bonded %d/%d": "Gebunden %d/%d",
+"Look in: %s": "Suche hier: %s",
+"Use it at %s: face the spot and tap it.": "Nutze sie bei %s: zur Stelle schauen und antippen.",
+"Photo mode: slide the D-pad to look around, tap the world for a photo, = changes the frame, B leaves.": "Foto-Modus: Mit dem Steuerkreuz schaust du dich um, ein Tipp auf die Welt macht ein Foto, = wechselt den Rahmen, B beendet.",
+"Photo mode: the D-pad looks around, A takes a photo, Start changes the frame, B leaves.": "Foto-Modus: Das Steuerkreuz schaut sich um, A macht ein Foto, Start wechselt den Rahmen, B beendet.",
+"Photo mode": "Foto-Modus",
 }
 KEEP = ["Aldo", "Ines", "Kestra", "Tamsin", "Wynn",
 	# Startup log stages (device log only, item 2128).

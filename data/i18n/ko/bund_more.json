@@ -1,0 +1,29 @@
+{
+ "_comment": "ko translation of the bund_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s  Rank %d%s": "%d. %s  등급 %d%s",
+  "%s  Rank %d  %d/30, %d active%s": "%s  등급 %d  %d/30, 활동 %d명%s",
+  "Any language": "모든 언어",
+  "Anyone, at once": "누구나, 바로",
+  "Bund board": "모임 순위",
+  "Bund rank %d (%d renown)": "모임 등급 %d (명성 %d)",
+  "Bund rank and week goal": "모임 등급과 주간 목표",
+  "Donate items...": "아이템 기부...",
+  "Donated today: %d / %d": "오늘 기부: %d / %d",
+  "Find a bund...": "모임 찾기...",
+  "How many?": "몇 개?",
+  "Language and joining...": "언어와 가입...",
+  "Language of the bund": "모임의 언어",
+  "No bund found. Found your own!": "모임을 찾지 못했습니다. 직접 만들어 보세요!",
+  "No bunds yet.": "아직 모임이 없습니다.",
+  "Only after a request": "신청 후에만",
+  "Take the week reward": "주간 보상 받기",
+  "Thank you! The bund has %d renown now.": "고맙습니다! 이제 모임의 명성은 %d입니다.",
+  "The week goal is not reached yet.": "주간 목표를 아직 달성하지 못했습니다.",
+  "Week goal: %d / %d items donated": "주간 목표: 아이템 기부 %d / %d",
+  "Who may join?": "누가 가입할 수 있나요?",
+  "You already took this week's reward.": "이번 주 보상은 이미 받았습니다.",
+  "You donated all you can today. More tomorrow.": "오늘 기부할 수 있는 만큼 다 했습니다. 내일 다시.",
+  "open": "열림"
+ }
+}

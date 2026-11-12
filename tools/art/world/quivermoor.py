@@ -147,7 +147,7 @@ WINCH = (3, 9)            # the winch man on the Mossgate pier
 ROPE_MOSSGATE = (2, 9)    # where the basket sets you down
 ROPE_GREYREACH = (7, 7)   # until Halcyra's Whitecairn exists
 ROPE_WHITECAIRN = (6, 12)
-SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
 FINDS = ["max_tonic", "revival_leaf", "strong_tonic", "remedy", "wake_bell"]
 
 TOWN_TEXT = {
@@ -285,6 +285,11 @@ def town(mid):
         if side not in gates:
             for x, y in cells:
                 rows[y] = rows[y][:x] + "T" + rows[y][x + 1:]
+            if side == "top":
+                # No road runs into the trees: the arm goes, a lane joins the two house doors instead.
+                for y in (1, 2, 3):
+                    rows[y] = rows[y][:5] + ".." + rows[y][7:]
+                rows[4] = rows[4][:3] + "______" + rows[4][9:]
     tt = TOWN_TEXT[mid]
     sign = text(mid + "_sign", lines((t["name"], t["name"]), tt["motto"]))
     npcs = [npc("keeper", 6, 7, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]
@@ -446,6 +451,18 @@ def species_table():
 SPECIES = species_table()
 
 
+def third_kind(names, pool):
+    """First kind of [pool] not yet in [names] that keeps the team within three elements, else a
+    second of the first kind (one ring lower, so the team never repeats a Spirling)."""
+    els = set()
+    for sp in names:
+        els.update(SPECIES[sp]["elements"])
+    for sp in pool:
+        if sp not in names and len(els | set(SPECIES[sp]["elements"])) <= 3:
+            return sp
+    return names[0]
+
+
 def check_team(who, crew):
     els = set()
     for e in crew:
@@ -487,10 +504,16 @@ def route(mid):
         names = []
         for kind, idx in zip(picks[::2], picks[1::2]):
             names.append(slot_species(r["slots"][idx]) if kind == "s" else fills[idx])
-        crew = check_team(mid + " " + key, [{"species": s, "level": hi - (1 if n == 0 and i == 0 else 0)} for i, s in enumerate(names)])
+        extra = {}
+        if n == 1:
+            # Triple battles (era function triple_battles, Era V, docs/ERA_FUNCTIONS.md): the second
+            # Wayfarer of each road sends three at once, the third a kind of the road it lacks.
+            names.append(third_kind(names, [slot_species(sl) for sl in r["slots"]] + fills))
+            extra["front"] = [3, 3]
+        crew = check_team(mid + " " + key, [{"species": s, "level": hi - (1 if (n == 0 and i == 0) or s in names[:i] else 0)} for i, s in enumerate(names)])
         npcs.append(npc(key, x, y, facing, text("%s_%s" % (mid, key), lines(talk)), "villager" if n else "ranger",
                         trainer=tr(*title), intro=text("%s_%s_intro" % (mid, key), lines(intro)),
-                        defeat=text("%s_%s_defeat" % (mid, key), lines(defeat)), money=hi * 45, team=crew))
+                        defeat=text("%s_%s_defeat" % (mid, key), lines(defeat)), money=hi * 45, team=crew, **extra))
     m = {"name": r["name"], "biome": "marsh" if mid in MARSH else "route", "backdrop": "lake", "outdoor": True,
          "encounters": mid, "rows": rows, "warps": warps, "npcs": npcs, "signs": [],
          "secrets": [secret(0, 9, FINDS[3], "find_%s_1" % mid), secret(11, 11, FINDS[4], "find_%s_2" % mid),
@@ -518,7 +541,7 @@ RIFT_ROWS = ["TTTTTTTTTTTT",
              "T....~~..T_T",
              "TTTT..TTTT_T",
              "T........T_T",
-             "T..~~....T_T",
+             "T.....~~.T_T",
              "TTT..TTTTT_T",
              "T........T_T",
              "T........T_T",
@@ -558,6 +581,9 @@ def rift(mid):
                                           ("Your Spirlings drink and rest.", "Deine Spirlings trinken und ruhen sich aus.")), "action": "heal"})
     text(mid + "_sign", [sheet(rf["name"]), tr(*motto)])
     crew = [{"species": slot_species(t), "level": t["level"]} for t in w["team"]]
+    # Pith Fruit (era function pith_fruit, Era II on): the ace eats a Mending Pith in a pinch
+    # (keepsakes count from Veteran on, TrainerData.keeps_keepsakes).
+    crew[-1]["held"] = "pith_mend"
     ch = CHAPTER[mid]
     text("warden_" + w["id"], {"lines": [sheet(ch["text"])],
                                "after_flag": [{"flag": rf["flag"], "lines": [sheet(ch["betrayal"]["text"])]}]})
@@ -568,9 +594,11 @@ def rift(mid):
                  warden=key, team=crew, intro="%s/warden_%s_intro" % (DIA, w["id"]), defeat="%s/warden_%s_defeat" % (DIA, w["id"]),
                  ai=3, money=w["money"], rule=RULES[mid], win_flags=flags)
     acolyte_crew = check_team(mid, [dict(crew[0], level=w["ring"] - 1), dict(crew[1], level=w["ring"] - 1)])
+    # Wheel battles (era function wheel_battles, Era V): the acolytes turn a wheel of three.
+    acolyte_crew = check_team(mid, acolyte_crew + [dict(crew[2], level=w["ring"] - 1)])
     acolyte = npc("acolyte", 7, 17, "left", text(mid + "_acolyte", lines(talk)), "warden", trainer=tr(*aname),
                   intro=text(mid + "_acolyte_intro", lines(intro)), defeat=text(mid + "_acolyte_defeat", lines(defeat)),
-                  money=(w["ring"] - 1) * 45, team=acolyte_crew)
+                  money=(w["ring"] - 1) * 45, team=acolyte_crew, wheel=True)
     back, facing = town_arrival(town_id, mid)
     m = {"name": rf["name"], "biome": "rift", "backdrop": "lake", "heal_point": [3, 5], "rows": rows,
          "warps": [warp(5, RIFT_H - 1, town_id, back[0][0], back[0][1], facing), warp(6, RIFT_H - 1, town_id, back[1][0], back[1][1], facing)],

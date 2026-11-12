@@ -1,0 +1,11 @@
+{
+ "_note": "Act IV, the foot of the Tower Rift: Leith minds your water (trust choice a4_water).",
+ "steps": [
+  {
+   "dialogue": "solenne_main/tower_storm"
+  },
+  {
+   "dialogue": "solenne_main/a4_water"
+  }
+ ]
+}

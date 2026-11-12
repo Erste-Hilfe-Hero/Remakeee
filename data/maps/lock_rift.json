@@ -100,7 +100,8 @@
     },
     {
      "species": "Delthorn",
-     "level": 57
+     "level": 57,
+     "held": "pith_mend"
     }
    ],
    "intro": "vellmarch/warden_odile_intro",

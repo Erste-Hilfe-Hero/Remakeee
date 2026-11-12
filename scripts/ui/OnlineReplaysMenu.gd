@@ -32,7 +32,10 @@ static func run(menu: PauseMenu) -> bool:
 	return false
 
 static func _one(menu: PauseMenu, e: Dictionary) -> bool:
-	var idx: int = await menu.pick_strings(ReplayLibrary.label(e), ["Watch", "Copy share code"] as Array[String])
+	var idx: int = await menu.pick_strings(ReplayLibrary.label(e), ["Watch", "Copy share code", "Save a result picture"] as Array[String])
+	if idx == 2:
+		# Point 76: a picture of the result, drawn by the game.
+		await menu.info(await ResultCard.save(menu, ResultCard.facts_of_replay(e.get("snap", {}), Loc.t(ReplayLibrary._kind_name(str(e.get("kind", "")))))))
 	if idx == 0:
 		return await _watch(menu, e.get("snap", {}))
 	if idx == 1:

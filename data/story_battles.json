@@ -2101,5 +2101,248 @@
   "win_flags": [
    "ledger_done"
   ]
+ },
+ "tansy_1": {
+  "trainer": "Tansy Hask",
+  "team": [
+   {
+    "species": "Glimmoth",
+    "level": 21
+   },
+   {
+    "species": "Rubrit",
+    "level": 22
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "dyeworks/tansy_1_defeat",
+  "lose": "dyeworks/tansy_lose"
+ },
+ "tansy_2": {
+  "trainer": "Tansy Hask",
+  "team": [
+   {
+    "species": "Wickmoth",
+    "level": 24
+   },
+   {
+    "species": "Rubricorn",
+    "level": 24
+   },
+   {
+    "species": "Skimmit",
+    "level": 25
+   }
+  ],
+  "ai": 2,
+  "money": 1100,
+  "defeat": "dyeworks/tansy_2_defeat",
+  "lose": "dyeworks/tansy_lose"
+ },
+ "tansy_3": {
+  "trainer": "Tansy Hask",
+  "team": [
+   {
+    "species": "Wickmoth",
+    "level": 27
+   },
+   {
+    "species": "Rubricorn",
+    "level": 27
+   },
+   {
+    "species": "Skimmarch",
+    "level": 27
+   },
+   {
+    "species": "Prismist",
+    "level": 28
+   }
+  ],
+  "ai": 3,
+  "money": 1600,
+  "defeat": "dyeworks/tansy_3_defeat",
+  "lose": "dyeworks/tansy_lose"
+ },
+ "ambush_dyeworks": {
+  "trainer": "Larkin and Fennimore Enforcers",
+  "team": [
+   {
+    "species": "Rubricorn",
+    "level": 25
+   },
+   {
+    "species": "Woadwhorl",
+    "level": 25
+   },
+   {
+    "species": "Grindwheel",
+    "level": 26
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "dyeworks/prim_ambush_lose"
+ },
+ "ambush_wenna": {
+  "trainer": "Wenna's Nephews",
+  "team": [
+   {
+    "species": "Woadwhorl",
+    "level": 25
+   },
+   {
+    "species": "Rushprowl",
+    "level": 25
+   },
+   {
+    "species": "Sluicer",
+    "level": 26
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "dyeworks/wenna_ambush_lose"
+ },
+ "well_bailiff": {
+  "trainer": "Well Bailiff Brakka",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 37
+   },
+   {
+    "species": "Cairnhold",
+    "level": 37
+   },
+   {
+    "species": "Duskdigger",
+    "level": 38
+   }
+  ],
+  "ai": 2,
+  "money": 1900,
+  "defeat": "solenne_main/bailiff_defeat",
+  "lose": "solenne_main/bailiff_lose"
+ },
+ "veil_pump_guards": {
+  "trainer": "Veil Pump Guards",
+  "team": [
+   {
+    "species": "Obsidroth",
+    "level": 38
+   },
+   {
+    "species": "Saltspire",
+    "level": 38
+   },
+   {
+    "species": "Kelphound",
+    "level": 38
+   },
+   {
+    "species": "Burinox",
+    "level": 39
+   }
+  ],
+  "ai": 2,
+  "money": 2000,
+  "defeat": "solenne_main/guards_defeat",
+  "lose": "solenne_main/guards_lose"
+ },
+ "guild_proctor": {
+  "trainer": "Guild Proctor Isolde",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 40
+   },
+   {
+    "species": "Silentra",
+    "level": 40
+   },
+   {
+    "species": "Mendlace",
+    "level": 40
+   },
+   {
+    "species": "Solmantle",
+    "level": 41
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "solenne_main/proctor_defeat",
+  "lose": "solenne_main/proctor_lose"
+ },
+ "q2_two_owners_rats": {
+  "trainer": "Culvert Rats",
+  "team": [
+   {
+    "species": "Diparrow",
+    "level": 56
+   },
+   {
+    "species": "Rainmantle",
+    "level": 56
+   },
+   {
+    "species": "Reedwarden",
+    "level": 57
+   }
+  ],
+  "ai": 2,
+  "money": 2565,
+  "defeat": "vellmarch/q2_two_owners_rats_won",
+  "win_flags": [
+   "q2_two_owners_s2"
+  ]
+ },
+ "q2_ghost_wages_bruisers": {
+  "trainer": "Tunnel Bruisers",
+  "team": [
+   {
+    "species": "Glassfell",
+    "level": 57
+   },
+   {
+    "species": "Ashcrest",
+    "level": 57
+   },
+   {
+    "species": "Smeltpup",
+    "level": 58
+   }
+  ],
+  "ai": 2,
+  "money": 2610,
+  "defeat": "vellmarch/q2_ghost_wages_bruisers_won",
+  "win_flags": [
+   "q2_ghost_wages_s2"
+  ]
+ },
+ "q2_bought_boos_claque": {
+  "trainer": "The Claque",
+  "team": [
+   {
+    "species": "Smeltmaw",
+    "level": 57
+   },
+   {
+    "species": "Glassfell",
+    "level": 57
+   },
+   {
+    "species": "Ashcrest",
+    "level": 58
+   }
+  ],
+  "ai": 2,
+  "money": 2610,
+  "defeat": "vellmarch/q2_bought_boos_claque_won",
+  "win_flags": [
+   "q2_bought_boos_s2"
+  ]
  }
 }

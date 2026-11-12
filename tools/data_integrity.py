@@ -40,10 +40,7 @@ errors = []
 notes = []
 
 # Known and accepted for now; printed on every run so they are not forgotten.
-KNOWN = {
-    # Era III's region (not merged yet) adds eras.json finale_flags["era3_finale_done"].
-    "flag 'era3_finale_done' is checked": "set by the Era III region once it lands (eras.json _doc)",
-}
+KNOWN = {}
 
 
 def err(kind, msg):
@@ -652,8 +649,7 @@ for mid, m in maps.items():
         C(m["beam"].get("flag"), w)  # WorldAtlas.banner counts solved rooms
 for mid, pl in story_npcs.items():
     if isinstance(pl, dict):
-        oe = pl.get("on_enter")
-        for e in as_list(oe):
+        for e in as_list(pl.get("on_enter")) + as_list(pl.get("on_enter_more")):
             if isinstance(e, dict):
                 walk(e, conds_fn("story_npcs " + mid))
                 if isinstance(e.get("scene"), str):

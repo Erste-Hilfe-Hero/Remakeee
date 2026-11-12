@@ -10,7 +10,7 @@
   "lines": [
    "Clerk Benno: Wilma sells outside, I sell inside. Same prices, but I have a roof."
   ],
-  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell spark_drop revival_leaf dash_brew guard_brew"
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell spark_drop revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
  },
  "copperfold_house_fenwick": {
   "lines": [
@@ -29,7 +29,7 @@
   "lines": [
    "Clerk Dirk: Towels, tonics, tide tables. The tables are free. They are also wrong."
   ],
-  "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm"
+  "action": "shop tonic strong_tonic max_tonic remedy dry_towel wake_bell revival_leaf kin_charm pruning_shears grounding_rod smelling_salts"
  },
  "reedhaven_house_grete": {
   "lines": [
@@ -47,7 +47,7 @@
   "lines": [
    "Clerk Maren: Ebbe keeps the cold stock outside. In here it is the same stock, only warmer."
   ],
-  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf"
+  "action": "shop tonic strong_tonic remedy dry_towel cooling_gel kin_charm revival_leaf pruning_shears grounding_rod smelling_salts"
  },
  "corvane_quay_spring_liesl": {
   "lines": [
@@ -59,7 +59,7 @@
   "lines": [
    "Clerk Anselm: Everything off the ferry, priced for people who have no way back."
   ],
-  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop tonic strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
  },
  "corvane_quay_house_marit": {
   "lines": [

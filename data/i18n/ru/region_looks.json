@@ -2,6 +2,10 @@
  "_comment": "ru translation of the region_looks table, keyed by the English text.",
  "strings": {
   "The ink goes grey here. Ashmere burned once and still smells like it owes you money.": "Здесь чернила сереют. Ashmere однажды сгорел и до сих пор пахнет так, будто должен тебе денег.",
-  "The ink turns blue here. Corvane dyes everything, even the truth.": "Здесь чернила синеют. Corvane красит всё, даже правду."
+  "The ink turns blue here. Corvane dyes everything, even the truth.": "Здесь чернила синеют. Corvane красит всё, даже правду.",
+  "The ground breathes under your boots. In Quivermoor every Spirling moves, every path wanders and every friend has a price.": "Земля дышит под сапогами. В Quivermoor каждый Spirling в движении, каждая тропа блуждает, а у каждого друга есть цена.",
+  "The ink bleaches here. Solenne burns everything, even the lies. Especially the lies.": "Чернила здесь выцветают. Solenne сжигает всё, даже ложь. Особенно ложь.",
+  "The lines grow sharp here. Quillmarch engraves everything, especially what you owe.": "Линии здесь становятся резкими. Quillmarch гравирует всё, особенно твои долги.",
+  "The map unrolls past its own edge. Up here the light is gold, the stone is white and every smile is paid for.": "Карта разворачивается за собственный край. Здесь наверху свет золотой, камень белый, а каждая улыбка оплачена."
  }
 }

@@ -191,6 +191,11 @@
   "leads the team": "带领队伍",
   "leads the team, worn out": "带领队伍，疲惫",
   "unavailable": "不可用",
-  "worn out": "疲惫"
+  "worn out": "疲惫",
+  "Only in battle.": "仅限战斗中。",
+  "Vigor %d/%d to %d/%d": "元气 %d/%d 变为 %d/%d",
+  "Already knows this art.": "已经会这项技艺了。",
+  "Wrong element.": "属性不符。",
+  "Works on its own at: %s": "会自动生效的地方：%s"
  }
 }

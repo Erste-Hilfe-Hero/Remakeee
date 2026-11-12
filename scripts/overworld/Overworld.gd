@@ -58,6 +58,8 @@ const DOOR_WIPE_TIME: float = 0.14
 ## Edge warps slide the view this far in the walking direction while it darkens (item 2278).
 const EDGE_SLIDE: int = 16
 var _particles: PixelParticles
+## Era extras on the map (water shimmer, footprints, reflection, tilt, camera lead; EraFeelLayer).
+var _era_feel: EraFeelLayer
 var _walk_steps: int = 0
 var _run_steps: int = 0
 var _battle_layer: CanvasLayer
@@ -99,6 +101,8 @@ func _ready() -> void:
 		"tip": _action_tip,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
+		"showcase": _action_showcase,
+		"dig": _action_dig,
 		"exchange": _action_exchange,
 		"festival_shop": _action_festival_shop,
 		"spark_read": _action_spark_read,
@@ -168,6 +172,8 @@ func _build() -> void:
 	_particles = PixelParticles.new()
 	_particles.name = "particles"
 	add_child(_particles)
+	_era_feel = EraFeelLayer.new()
+	add_child(_era_feel)
 	_entities = Node2D.new()
 	_entities.name = "Entities"
 	_entities.y_sort_enabled = true
@@ -186,6 +192,7 @@ func _build() -> void:
 	player.interact.connect(_on_interact)
 	player.path_blocked.connect(_on_path_blocked)
 	_entities.add_child(player)
+	_era_feel.player = player
 	_inkshadow = Sprite2D.new()
 	_inkshadow.name = "Inkshadow"
 	_inkshadow.centered = false
@@ -268,6 +275,7 @@ func _process(delta: float) -> void:
 	_camera.global_position = (player.global_position + Vector2(GridWalker.TILE / 2.0, GridWalker.TILE / 2.0)).round()
 	if _photo != null:
 		_camera.global_position += _photo.pan
+	_camera.global_position += _era_feel.camera_offset()
 	# Music layers follow walking, running and open text boxes (items 2477, 2478).
 	MusicDirector.update_world(player.moving, player.running, delta)
 	MusicDirector.dialogue = _text.visible
@@ -308,11 +316,15 @@ func _tip_after_load(id: String) -> void:
 static func goal_flag(map_id: String) -> String:
 	return "goal_seen_" + map_id.replace(MapData.FLOOR_SEP, "_")
 
-func _era_line_after_load(line: String) -> void:
+func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_era) -> void:
 	while busy:
 		await get_tree().process_frame
-	await get_tree().create_timer(EraManager.TRANSITION_TIME).timeout
-	await _locked_say([line] as Array[String])
+	await get_tree().create_timer(EraManager.transition_wait()).timeout
+	var lines: Array[String] = [line]
+	# What the new era brings (EraFeatures, data/era_functions.json).
+	for e: int in range(era_before + 1, EraManager.unlocked_era + 1):
+		lines.append_array(EraFeatures.new_in_lines(e))
+	await _locked_say(lines)
 
 ## The first free walk after the prologue (item 1982): a note with an arrow to the D-pad that
 ## goes away after three steps; then the menu tip.
@@ -350,6 +362,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	refresh_shade()
 	_spawn_npcs()
 	_place_landmark()
+	_place_rustle()
 	player.place(cell, face)
 	_place_inkshadow(cell, cell)
 	GameState.current_map = map_id
@@ -363,6 +376,10 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	GameState.notices.append_array(WorldEvents.on_visit(map_id))
 	# A released Spirling may show up where it came from (plan 1137).
 	GameState.notices.append_array(Released.sightings(map_id, DailyFind.today_key(), GameState.rng))
+	# Spirling Radar (shop, pay-to-win step 6): the rarer kinds of this place and their ground.
+	var radar: String = ShopEffects.radar_line(map.encounter_table)
+	if not radar.is_empty():
+		GameState.notices.append(radar)
 	GameState.player_cell = cell
 	GameState.facing = face
 	var era_before: int = EraManager.unlocked_era
@@ -376,7 +393,12 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	EraManager.mark_finales(GameState.flags)
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
-		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era])
+		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era], era_before)
+	else:
+		# An era opened before the era-change sequence existed plays it on the first visit.
+		EraManager.upgrade_for_region(map.region)
+	_era_feel.map = map
+	_era_feel.footprints.clear()
 	_camera.limit_left = 0
 	_camera.limit_top = 0
 	_camera.limit_right = map.width * GridWalker.TILE
@@ -396,6 +418,22 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 	if not map.encounter_table.is_empty():
 		_tip_after_load.call_deferred("wild_area")
 
+var _rustle: Node2D
+
+## Shows today's rustling spot of the map (Era V), or hides it once it is used.
+func _place_rustle() -> void:
+	var day: String = DailyFind.today_key()
+	if not RustleSpots.active(map, day, GameState.records):
+		if _rustle != null:
+			_rustle.visible = false
+		return
+	if _rustle == null:
+		_rustle = RustleSpots.Mark.new()
+		_rustle.name = "rustle_spot"
+		_entities.add_child(_rustle)
+	_rustle.position = Vector2(RustleSpots.spot(map, day)) * TilesetFactory.TILE
+	_rustle.visible = true
+
 ## Tints the world for the time of day (UI layers are not affected). Checked once a minute.
 func refresh_daylight() -> void:
 	if _daylight == null:
@@ -408,6 +446,9 @@ func refresh_daylight() -> void:
 		add_child(t)
 	var w: String = WeatherCycle.current(map)
 	_daylight.color = DayCycle.tint(map.outdoor, DayCycle.current(), GameState.day_night) * WeatherCycle.tint(w)
+	# Era V shows the season on outdoor maps (data/era_feel.json "season_tint").
+	if map.outdoor and bool(EraManager.feel("season_tint")):
+		_daylight.color *= EraFeel.season_tint(int(Online.date_now().month))
 	if _glow == null:
 		_glow_layer = CanvasLayer.new()
 		_glow_layer.layer = 1
@@ -593,8 +634,13 @@ func _show_banner(text: String) -> void:
 	_banner.text = "    %s " % text
 	_phase_icon.phase = DayCycle.current()
 	_phase_icon.queue_redraw()
+	# The banner takes the era's place-name style (TownPopup, data/era_feel.json "town_popup").
+	var style: String = str(EraManager.feel("town_popup"))
+	TownPopup.dress(_banner, style)
 	_banner.visible = true
+	await TownPopup.slide(_banner, style, true)
 	await get_tree().create_timer(BANNER_TIME).timeout
+	await TownPopup.slide(_banner, style, false)
 	_banner.visible = false
 
 ## Darkens with the "close" curve and brightens without overshoot ("fade" curve).
@@ -618,6 +664,11 @@ func _warp_out(edge: bool) -> void:
 		return
 	var vp: Vector2 = get_viewport().get_visible_rect().size
 	var door: Vector2 = (player.get_global_transform_with_canvas().origin + Vector2(8, 8)).round()
+	# Eras IV and V close an iris on the Wayfarer instead of the door rectangle.
+	if str(EraManager.feel("warp")) == "iris":
+		await EraFeelLayer.iris_close(_ui, door, UITheme.INK, DOOR_WIPE_TIME * 1.5)
+		_fade.color.a = 1.0
+		return
 	var start := Rect2(door - Vector2(8, 8), Vector2(16, 16))
 	var full := Rect2(Vector2.ZERO, vp)
 	_door_wipe.visible = true
@@ -638,6 +689,7 @@ func _warp_out(edge: bool) -> void:
 func _on_player_stepped(cell: Vector2i) -> void:
 	_hinted_cell = Vector2i(-1, -1)
 	_place_inkshadow(GameState.player_cell, cell)
+	_era_feel.stepped(cell, GameState.player_cell)
 	GameState.player_cell = cell
 	GameState.facing = player.facing
 	survey_step(cell)
@@ -645,6 +697,7 @@ func _on_player_stepped(cell: Vector2i) -> void:
 		return
 	_grass_rustle(map.kind_at(cell))
 	DailyTasks.record("step", {"map": map.id})
+	Kinship.on_step(GameState.party, GameState.records)
 	_inkshadow_remark()
 	show_notices()
 	if await _world.stepped(cell):
@@ -657,12 +710,23 @@ func _on_player_stepped(cell: Vector2i) -> void:
 	if spotter != null:
 		await challenge(spotter, true)
 		return
+	# Rustling spot (Era V): today's shaking patch hides the map's rarest kind.
+	if GameState.first_healthy_index() >= 0 and RustleSpots.due(map, cell, DailyFind.today_key(), GameState.records):
+		RustleSpots.mark_done(GameState.records, map.id, DailyFind.today_key())
+		_place_rustle()
+		var rare: Spirling = RustleSpots.make_wild(map.encounter_table, GameState.rng, GameState.gleam_chain)
+		if rare != null:
+			Sound.sfx("sparkle")
+			await _locked_say([RustleSpots.LINE] as Array[String])
+			await start_battle([rare] as Array[Spirling], true)
+			return
 	# Encounter Call (item 4838): twice the encounter rate for its steps, then a short note.
 	var call_mult: float = ShopEffects.encounter_mult()
 	for ended: String in ShopEffects.step_kinds_done():
 		toast.show_note(Loc.t(str(ShopEffects.STEP_END_NOTES[ended])))
 	var guard_over: bool = EncounterTable.tick_guard()
-	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over:
+	# Wild Ward (shop, pay-to-win step 6): switched on, no wild Spirling steps out.
+	if map.kind_at(cell) in TilesetFactory.ENCOUNTER_KINDS and not map.encounter_table.is_empty() and guard_over and not ShopEffects.wild_ward_on():
 		if GameState.first_healthy_index() >= 0 and GameState.rng.randf() < minf(1.0, EncounterTable.rate(map.encounter_table) * call_mult):
 			var wild: Spirling = DailyFind.maybe_spawn(map.encounter_table, GameState.flags, GameState.rng)
 			if wild != null:
@@ -670,6 +734,9 @@ func _on_player_stepped(cell: Vector2i) -> void:
 				Sound.sfx("sparkle")
 				await _locked_say(["The grass rustles strangely... A rare visitor!"] as Array[String])
 			else:
+				# The pass holder's rare Spirling of the day (pay-to-win step 6, plan point 38).
+				wild = ShopEffects.pass_rare(map.encounter_table, GameState.flags, GameState.rng)
+			if wild == null:
 				var boost: Array[int] = DayCycle.encounter_boost(Season.boosted(Season.current()), map.outdoor, DayCycle.current(), GameState.day_night)
 				wild = EncounterTable.roll(map.encounter_table, GameState.rng, boost, EncounterTable.ground_at(map, cell), GameState.gleam_chain)
 				if wild != null:
@@ -1480,6 +1547,7 @@ func open_menu(start: String = "") -> void:
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
 	var raid: Dictionary = menu.raid_attempt
+	var live: Dictionary = menu.live_stage
 	var quit: bool = menu.to_title
 	menu.queue_free()
 	if quit:
@@ -1492,6 +1560,8 @@ func open_menu(start: String = "") -> void:
 		await league_battle(league)
 	if not raid.is_empty():
 		await raid_battle(raid)
+	if not live.is_empty():
+		await live_duel(live)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -1602,6 +1672,21 @@ func watch_replay(snap: Dictionary) -> void:
 	await scene.battle_finished
 	await _fade_to(1.0)
 	scene.queue_free()
+	Sound.enter_map(map.id)
+	await _fade_to(0.0)
+
+## A live duel, played or watched in the battle screen (Online 100, points 1 and 73).
+func live_duel(info: Dictionary) -> void:
+	await _fade_to(1.0)
+	var stage := LiveDuelStage.new()
+	stage.setup(info)
+	_battle_layer.add_child(stage)
+	_fade.color.a = 0.0
+	await stage.finished
+	if stage.ended and not stage.watch:
+		LiveDuelMenu.last_id = stage.duel_id
+	await _fade_to(1.0)
+	stage.queue_free()
 	Sound.enter_map(map.id)
 	await _fade_to(0.0)
 
@@ -3023,6 +3108,88 @@ func _action_spark_read(_args: PackedStringArray, _speaker: NPC) -> void:
 	await say(lines)
 
 ## Shop: "shop item_a item_b ..." sells those items for their JSON price. The bag has no limit.
+## The Showcase (Era III, Showcase.gd): pick a Spirling, show three arts, get a place.
+func _action_showcase(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not EraFeatures.is_unlocked(Showcase.FEATURE):
+		await say(["The stage is still being built. Come back in a later era."] as Array[String])
+		return
+	var theme: String = Showcase.theme_for(DailyFind.today_key())
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for s: Spirling in GameState.party:
+		names.append(MenuHost.party_line(s))
+	var pick: int = await menu.pick_strings(Loc.t("Today's theme: %s. Who goes on stage?") % Loc.t(Showcase.theme_label(theme)), names)
+	if pick < 0 or GameState.party[pick].moves.is_empty():
+		menu.queue_free()
+		return
+	var star: Spirling = GameState.party[pick]
+	var total: int = 0
+	var last: MoveData = null
+	for r: int in Showcase.rounds():
+		var arts: Array[String] = []
+		for mv: MoveData in star.moves:
+			arts.append(mv.move_name)
+		var a: int = await menu.pick_strings(Loc.t("Round %d of %d: which art?") % [r + 1, Showcase.rounds()], arts, false)
+		var mv: MoveData = star.moves[maxi(a, 0)]
+		var got: int = Showcase.appeal(star, theme, mv, last)
+		total += got
+		await menu.info(Loc.t("%s shows %s. Appeal %d.") % [star.display_name(), mv.move_name, got] + ("\n" + Loc.t("The judges have seen that one already.") if mv == last else ""))
+		last = mv
+	var rivals: Array[int] = Showcase.rivals(star, theme)
+	var place: int = Showcase.place(total, rivals)
+	var prize: int = Showcase.prize(place)
+	var lines: PackedStringArray = [Loc.t("Your total: %d") % total]
+	var rival_names: Array = Showcase.data().get("rival_names", [])
+	for i: int in rivals.size():
+		lines.append("%s: %d" % [str(rival_names[i]) if i < rival_names.size() else "?", rivals[i]])
+	lines.append(Loc.t("Place %d.") % place)
+	if prize > 0:
+		Ticker.coins(GameState.money, GameState.money + prize)
+		GameState.money += prize
+		lines.append(Loc.plural(prize, "%d coin", "%d coins"))
+	Showcase.note(GameState.records, place)
+	await menu.info("\n".join(lines))
+	menu.queue_free()
+
+## The Dig site (Era IV, DigSite.gd): once a day, swing the pick at buried cells.
+func _action_dig(_args: PackedStringArray, _speaker: NPC) -> void:
+	if not EraFeatures.is_unlocked(DigSite.FEATURE):
+		await say(["The ground here is still too hard. Come back in a later era."] as Array[String])
+		return
+	var day: String = DailyFind.today_key()
+	if not DigSite.open_today(GameState.records, day):
+		await say(["You already dug here today. The ground needs a night to settle."] as Array[String])
+		return
+	DigSite.mark_done(GameState.records, day)
+	var dig: Dictionary = DigSite.start(day)
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var found: PackedStringArray = []
+	while int(dig.picks) > 0:
+		var cells: Array[int] = DigSite.open_cells(dig)
+		var names: Array[String] = [Loc.t("Look at the field")]
+		for c: int in cells:
+			names.append(DigSite.cell_name(c))
+		var i: int = await menu.pick_strings(Loc.t("Picks left: %d") % int(dig.picks), names)
+		if i < 0:
+			break
+		if i == 0:
+			await menu.info(DigSite.grid_text(dig) + "\n" + Loc.t("# untouched, . empty, o rock, * find"))
+			continue
+		var r: Dictionary = DigSite.swing(dig, cells[i - 1])
+		if bool(r.rock):
+			Sound.sfx("bump")
+			await menu.info(Loc.t("Clang! Solid rock. That cost two swings."))
+		elif not str(r.item).is_empty():
+			GameState.add_item(str(r.item))
+			Sound.sfx("sparkle")
+			var item_name: String = str(Database.item(str(r.item)).get("name", r.item))
+			found.append(Loc.t(item_name))
+			await menu.info(Loc.t("You dig up %s!") % Loc.t(item_name))
+	await menu.info(Loc.t("The dig is over. Found: %s") % (", ".join(found) if not found.is_empty() else Loc.t("nothing")))
+	menu.queue_free()
+
 func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
@@ -3615,7 +3782,8 @@ func league_battle(m: Dictionary) -> void:
 ## round limit; the battle is friendly, so it costs nothing and the team is healed afterwards.
 ## The damage comes off the guardian once the referee checked the battle (2691).
 func raid_battle(at: Dictionary) -> void:
-	var war: bool = str(at.get("kind", "raid")) == "bund_war"
+	var kind: String = str(at.get("kind", "raid"))
+	var war: bool = kind != "raid"
 	var snap: Dictionary = BattleReferee.from_expect(at)
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
@@ -3625,7 +3793,9 @@ func raid_battle(at: Dictionary) -> void:
 	model.trainer_name = foe_name if war else "Rift guardian"
 	var foes: Array[Spirling] = []
 	foes.assign(model.parties[1])
-	if war:
+	if kind == "tourney":
+		await say([Loc.t("Tournament: the team of %s waits. Win with as much damage and as few rounds as you can.") % foe_name] as Array[String])
+	elif war:
 		await say([Loc.t("Bund against bund: %s's team waits. This battle counts for your bund.") % foe_name] as Array[String])
 	else:
 		await say([Loc.t("%s waits in the Raid Rift. You have %d rounds.") % [foe_name, model.round_limit]] as Array[String])
@@ -3636,9 +3806,11 @@ func raid_battle(at: Dictionary) -> void:
 	var dealt: int = 0
 	for s: Spirling in model.parties[1]:
 		dealt += maxi(0, s.max_hp() - s.hp)
-	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": "bund_war" if war else "raid",
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind,
 		"p_ref": str(at.get("attempt_id", "")), "p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
-	var lines: Array[String] = ["The war battle is over." if war else Loc.t("You dealt %d damage to the guardian.") % dealt]
+	var lines: Array[String] = [Loc.t("You dealt %d damage to the guardian.") % dealt]
+	if war:
+		lines = ["The tournament battle is over." if kind == "tourney" else "The war battle is over."]
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		lines.append("It counts once the check is done.")
 	else:
@@ -3766,6 +3938,15 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	model.rule_turn_full = GameState.difficulty >= GameState.Difficulty.VETERAN
 	model.prize_money = int(int(trainer.get("money", 0)) * ShopEffects.coin_mult())
 	model.xp_mult = ShopEffects.growth_mult()
+	model.ring_scaled_growth = EraFeatures.is_unlocked("ring_scaled_growth")
+	model.wheel = bool(trainer.get("wheel", false)) and EraFeatures.is_unlocked("wheel_battles")
+	model.wheel_size = EraActivities.wheel_size()
+	# Weather in battle (Era III on): the sky of an outdoor map lays its field when nothing else does.
+	if model.field.is_empty() and not (own is Array and not (own as Array).is_empty()) and EraFeatures.is_unlocked("sky_battles"):
+		var sky: Dictionary = WeatherCycle.battle_field(WeatherCycle.current(map))
+		if not sky.is_empty():
+			model.field = str(sky.field)
+			model.field_intro = str(sky.intro)
 	# Echo duels fight a friend's echo, not the world: the pass adds no energy or Rift Breath there.
 	var world: bool = not (own is Array and not (own as Array).is_empty())
 	model.energy_bonus = [ShopEffects.energy_bonus(world), 0]
@@ -3804,6 +3985,7 @@ func _new_model(foes: Array[Spirling], wild: bool, trainer: Dictionary) -> Battl
 	return model
 
 func _after_battle(model: BattleModel, outcome: BattleModel.Outcome) -> void:
+	Kinship.after_battle(GameState.party, model.participants, outcome == BattleModel.Outcome.WIN)
 	var had_growth: bool = ShopEffects.boost_left("growth") > 0
 	ShopEffects.battle_done()
 	# What is left of the shop boosts, right after the battle (item 4342).
