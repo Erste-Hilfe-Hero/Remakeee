@@ -84,8 +84,8 @@ reported only. `--md <path>` writes the report.
 Chart sim (gate, since Nov 2026): one Spirling per element with equal stats and a single art of its
 own element, so only the chart decides. Every element meets every element 1 on 1 (40 seeded duels
 per pair) and every team of 3 distinct elements meets every team it shares no element with (4 lead
-orders, sides swapped), about 75000 battles. It runs for the Era I elements alone and for all
-fourteen, so Rust, Mask, Acid and Frost are measured although they sit on no Spirling yet. An element has to stay
+orders, sides swapped). It runs for the Era I elements alone and for all
+sixteen, so Rust, Mask, Acid, Frost, Gilt and Zenith are measured although they sit on no Spirling yet. An element has to stay
 in 40 to 60 % (1 on 1 and in teams), a team of 3 in 30 to 70 %.
 
 It is a Python mirror of the battle core: stat curve, damage curve, STAB, keen hits, roll,
@@ -123,6 +123,14 @@ that ring by 0.85 to 1.15 moved it by at most two battles, so the cause is Sluic
 its stats are scaled by 0.95 by hand in `data/spirlings.json` (total 455 to 432), measured on the
 full model at 74 of 115 (64.3 %), every other kind at or under 67.6 % (Fulgorath). A rebuild of
 the Corvane lines re-tunes it and has to measure this again.
+
+Gilt and Zenith (Halcyra, Era IV, data/region4.json) are the next pair and wait in the chart for
+Halcyra's Spirlings. They mirror each other and are neutral to each other: Gilt beats Stone and Ink
+and loses to Ember and Tide; Zenith beats Ember and Tide and loses to Stone and Ink. So each of
+those four gains one strength and one weakness and every era stays even (the chart rules are now
+checked up to every era that adds elements: I, II, III and IV). Gilt and Zenith are 2 and 2. Chart sim,
+all sixteen at the time of Halcyra (before Acid and Frost): Gilt 52.1 % 1 on 1 and 49.8 % in teams, Zenith 49.4 % and 49.4 %, every team of 3
+between 37.8 and 64.5 %; Era I is unchanged.
 
 Stats are not tuned yet. The full battle model (`tools/balance_sim.gd`, GUT and nightly tests) is
 the real gate, so in CI this tool only reports the 40 to 60 % band; chart rule breaks still fail.

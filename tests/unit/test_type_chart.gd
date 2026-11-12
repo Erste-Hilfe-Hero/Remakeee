@@ -31,10 +31,15 @@ func test_every_element_has_two_strengths_and_two_weaknesses() -> void:
 		assert_gte(strong, 2, "%s real strengths" % t)
 		assert_gte(weak, 2, "%s weaknesses" % t)
 
-## As many real strengths as weaknesses, for Era I alone and for all eras (tools/balance/type_sim.py
+## As many real strengths as weaknesses, up to every era that adds elements (tools/balance/type_sim.py
 ## chart sim: no element is ahead on the chart alone).
 func test_strengths_equal_weaknesses_per_era() -> void:
-	for era_max: int in [1, 2, 3]:
+	var eras: Array[int] = []
+	for t: String in _types:
+		if not int(_types[t].era) in eras:
+			eras.append(int(_types[t].era))
+	assert_true(4 in eras, "Halcyra's Era IV elements are in the chart")
+	for era_max: int in eras:
 		for t: String in _types:
 			if int(_types[t].era) > era_max:
 				continue

@@ -1,21 +1,23 @@
 {
- "_doc": "Element chart (docs/BALANCE.md, Type chart). strong = elements this one hits for strong_mult. The reverse direction takes weak_mult; every other pair is neutral. Dual defenders multiply. era = first era the element appears in; Era II elements sit only on legendary (ancient) Spirlings so far. Rust and Mask belong to the post-game region Vellmarch (data/region2.json); they enter the Elements enum with that region's own Spirlings. Acid and Frost belong to the Era III post-game region Quillmarch (data/region3.json) and enter the enum the same way. A pair that beats each other (Lumen and Umbra) is neutral both ways and counts as neither strength nor weakness. Checked by tools/balance/type_sim.py and tests/unit/test_type_chart.gd: every element has at least 2 real strengths and 2 real weaknesses, as many strengths as weaknesses (Era I alone and all eras), and no element strictly dominates another; the chart sim keeps every element at 40-60 % and every team of 3 at 30-70 %.",
+ "_doc": "Element chart (docs/BALANCE.md, Type chart). strong = elements this one hits for strong_mult. The reverse direction takes weak_mult; every other pair is neutral. Dual defenders multiply. era = first era the element appears in; Era II elements sit only on legendary (ancient) Spirlings so far. Rust and Mask belong to the post-game region Vellmarch (data/region2.json); they enter the Elements enum with that region's own Spirlings. Acid and Frost belong to the Era III post-game region Quillmarch (data/region3.json) and enter the enum the same way. Gilt and Zenith are Era IV (Halcyra, data/region4.json) and likewise wait in the chart for Halcyra's Spirlings: each existing element they touch gains one strength and one weakness, so every era keeps its own balance. A pair that beats each other (Lumen and Umbra) is neutral both ways and counts as neither strength nor weakness. Checked by tools/balance/type_sim.py and tests/unit/test_type_chart.gd: every element has at least 2 real strengths and 2 real weaknesses, as many strengths as weaknesses (up to every era that adds elements), and no element strictly dominates another; the chart sim keeps every element at 40-60 % and every team of 3 at 30-70 %.",
  "strong_mult": 2.0,
  "weak_mult": 0.5,
  "types": {
-  "EMBER": {"era": 1, "strong": ["BLOOM", "UMBRA", "ECHO", "RUST", "FROST"]},
-  "TIDE": {"era": 1, "strong": ["EMBER", "STONE", "ECHO", "RUST", "ACID"]},
+  "EMBER": {"era": 1, "strong": ["BLOOM", "UMBRA", "ECHO", "RUST", "GILT", "FROST"]},
+  "TIDE": {"era": 1, "strong": ["EMBER", "STONE", "ECHO", "RUST", "GILT", "ACID"]},
   "BLOOM": {"era": 1, "strong": ["TIDE", "STONE", "ECHO", "MASK", "ACID"]},
   "VOLT": {"era": 1, "strong": ["TIDE", "GALE", "INK"]},
-  "STONE": {"era": 1, "strong": ["EMBER", "VOLT", "INK", "MASK", "FROST"]},
+  "STONE": {"era": 1, "strong": ["EMBER", "VOLT", "INK", "MASK", "ZENITH", "FROST"]},
   "GALE": {"era": 1, "strong": ["BLOOM", "LUMEN", "ECHO", "MASK", "ACID"]},
   "LUMEN": {"era": 1, "strong": ["UMBRA", "VOLT", "INK", "RUST"]},
   "UMBRA": {"era": 1, "strong": ["LUMEN", "GALE", "INK", "MASK"]},
-  "INK": {"era": 2, "strong": ["EMBER", "TIDE", "BLOOM", "GALE", "RUST", "FROST"]},
+  "INK": {"era": 2, "strong": ["EMBER", "TIDE", "BLOOM", "GALE", "RUST", "ZENITH", "FROST"]},
   "ECHO": {"era": 2, "strong": ["VOLT", "STONE", "LUMEN", "UMBRA", "RUST"]},
   "RUST": {"era": 2, "strong": ["STONE", "GALE", "UMBRA", "BLOOM", "MASK", "FROST"]},
   "MASK": {"era": 2, "strong": ["LUMEN", "ECHO", "INK", "EMBER", "TIDE"]},
-  "ACID": {"era": 3, "strong": ["STONE", "RUST", "INK", "EMBER"]},
-  "FROST": {"era": 3, "strong": ["BLOOM", "GALE", "TIDE", "ACID"]}
+  "ACID": {"era": 3, "name": "Acid", "strong": ["STONE", "RUST", "INK", "EMBER"]},
+  "FROST": {"era": 3, "name": "Frost", "strong": ["BLOOM", "GALE", "TIDE", "ACID"]},
+  "GILT": {"era": 4, "name": "Gilt", "strong": ["STONE", "INK"]},
+  "ZENITH": {"era": 4, "name": "Zenith", "strong": ["EMBER", "TIDE"]}
  }
 }
