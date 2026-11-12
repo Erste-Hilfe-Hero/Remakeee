@@ -277,6 +277,8 @@ func test_sixth_team_slot() -> void:
 
 func test_local_server_allows_six_only_with_the_slot() -> void:
 	var b := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	b.rng.seed = 1
 	var uid: String = "u-six"
 	b.db.users[uid] = {"shop": {"unlocks": {}}}
 	assert_eq(b.party_max_of(uid), 5)

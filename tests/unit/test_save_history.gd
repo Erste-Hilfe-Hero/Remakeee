@@ -6,6 +6,8 @@ var s: LocalBackend
 
 func before_each() -> void:
 	s = LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	s.rng.seed = 1
 	s.switch_user("ann")
 	s.call_fn("hello", {"p_version": 1})
 	s._saves()["1"] = {"rev": 1, "data": {"play_time": 60, "n": 1}, "summary": "Ashdown  0:01", "saved_at": s.now()}

@@ -46,6 +46,8 @@ func test_values_come_from_data_and_never_reach_the_fair_league() -> void:
 	for ctx: String in ["league_fair", "echo"]:
 		assert_eq(ShopEffects.amulets_for(ctx), [0, 0, 0] as Array[int], ctx)
 	var be := LocalBackend.new()
+	# Fixed seed: the fake server's codes, ids and battle seeds come from its rng.
+	be.rng.seed = 1
 	be.switch_user("ann")
 	LocalShop.of(be)._shop(be.me()).unlocks["crit_seal"] = 2
 	assert_eq(be._league_expect({"seed": 1, "teams": [[], []], "league": LeagueRules.FAIR, "user": be.me()}).amulets, [0, 0, 0])
