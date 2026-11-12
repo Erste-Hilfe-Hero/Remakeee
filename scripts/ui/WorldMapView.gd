@@ -19,6 +19,14 @@ var known: Dictionary = {}
 var _press: Vector2 = Vector2(NAN, NAN)
 var _dragged: bool = false
 var _phase_icon: PhaseIcon
+## Era V: the "you are here" square pulses with a ring (still under reduced motion).
+var pulse: bool = false
+var _pulse_t: float = 0.0
+
+func _process(delta: float) -> void:
+	if pulse and not Juice.reduced():
+		_pulse_t += delta
+		queue_redraw()
 
 func _ready() -> void:
 	name = "world_map"
@@ -130,6 +138,9 @@ func _draw() -> void:
 		var hr: Rect2 = cell_rect(here)
 		var s: float = maxf(3.0, p / 3.0)
 		draw_rect(Rect2(hr.get_center() - Vector2(s, s) / 2.0, Vector2(s, s)), UITheme.INK)
+		if pulse:
+			var grow: float = 1.0 + roundf(2.0 * (0.5 + 0.5 * sin(_pulse_t * 4.0)))
+			draw_rect(Rect2(hr.get_center() - Vector2(s, s) / 2.0, Vector2(s, s)).grow(grow), UITheme.INK, false, 1.0)
 
 ## Small symbols in the corners of a visited place.
 func _draw_symbols(id: String, r: Rect2) -> void:
