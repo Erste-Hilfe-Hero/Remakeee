@@ -69,7 +69,7 @@ func test_master_rifts() -> void:
 	var e: Dictionary = MasterRifts.open_entries()[0]
 	var team: Array[Spirling] = MasterRifts.team(e, _rng(2))
 	assert_eq(team.size(), (e.team as Array).size())
-	assert_eq(team[0].level, mini(int(e.team[0].level) + int(MasterRifts.data().ring_bonus), Spirling.MAX_LEVEL))
+	assert_eq(team[0].level, mini(int(e.team[0].level) + int(MasterRifts.data().ring_bonus), Spirling.STORY_RING))
 	assert_true(MasterRifts.rule(e).begins_with(str(MasterRifts.data().base_rule)))
 	var before: int = GameState.waymarks
 	assert_gt(MasterRifts.win(e).size(), 1)
@@ -149,7 +149,7 @@ func test_final_exam() -> void:
 	assert_true(FinalExam.is_open())
 	var team: Array[Spirling] = FinalExam.team(_rng(4))
 	assert_eq(team.size(), 6)
-	assert_eq(team[0].level, mini(int(FinalExam.data().ring), Spirling.MAX_LEVEL))
+	assert_eq(team[0].level, mini(int(FinalExam.data().ring), Spirling.STORY_RING))
 	assert_eq(FinalExam.lines("intro").size(), 2)
 	var before: int = GameState.waymarks
 	FinalExam.pass_exam()

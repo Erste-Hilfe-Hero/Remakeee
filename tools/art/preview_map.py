@@ -53,7 +53,7 @@ def door_roles(d: dict) -> dict:
             continue
         warped.add(cell)
         to = str(w["to"])
-        if "rift" in to or to.startswith("undrawn"):
+        if d.get("outdoor") and ("rift" in to or to.startswith("undrawn")):
             roles[cell] = 3
         elif "spring" in to:
             roles[cell] = 1

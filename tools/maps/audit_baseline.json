@@ -1,25 +1,9 @@
 {
  "_doc": "Known map audit findings (tools/maps/audit_maps.py). Key: map kind x,y. Value: the finding, or why it stays on purpose. Remove a line by fixing the map.",
  "open": {
-  "brindlewick unreachable 9,15": "kept: reed beds out in the lake, scenery seen from the pier",
-  "copperfold dead_door 3,12": "door leads nowhere (needs a room: building interiors pass)",
-  "copperfold dead_door 3,4": "door leads nowhere (needs a room: building interiors pass)",
-  "copperfold dead_door 9,4": "door leads nowhere (needs a room: building interiors pass)",
-  "copperfold unreachable 1,1": "kept: yard behind the winding tower, scenery",
-  "copperfold unreachable 10,1": "kept: yard behind the winding tower, scenery",
-  "corvane_quay dead_door 2,12": "door leads nowhere (needs a room: building interiors pass)",
-  "corvane_quay dead_door 2,4": "door leads nowhere (needs a room: building interiors pass)",
-  "corvane_quay dead_door 9,4": "door leads nowhere (needs a room: building interiors pass)",
-  "greyreach dead_door 3,6": "door leads nowhere (needs a room: building interiors pass)",
-  "madderby dead_door 2,9": "door leads nowhere (needs a room: building interiors pass)",
-  "madderby dead_door 8,13": "door leads nowhere (needs a room: building interiors pass)",
-  "reedhaven dead_door 2,3": "door leads nowhere (needs a room: building interiors pass)",
-  "reedhaven dead_door 2,7": "door leads nowhere (needs a room: building interiors pass)",
-  "reedhaven dead_door 9,3": "door leads nowhere (needs a room: building interiors pass)",
-  "sablecove unreachable 9,6": "4 cells 9,6-10,7 cannot be reached",
-  "thornridge no_door 8,7": "building 8,7-10,8 has no door (needs a room: building interiors pass)",
-  "wide_rift_edge dead_door 3,6": "door leads nowhere (needs a room: building interiors pass)",
-  "wrenhollow dead_door 2,3": "door leads nowhere (needs a room: building interiors pass)",
-  "wrenhollow dead_door 8,3": "door leads nowhere (needs a room: building interiors pass)"
+  "brindlewick unreachable 9,15": "3 cells 9,15-10,16 cannot be reached",
+  "copperfold unreachable 1,1": "4 cells 1,1-2,2 cannot be reached",
+  "copperfold unreachable 10,1": "2 cells 10,1-10,2 cannot be reached",
+  "thornridge no_door 8,7": "building 8,7-10,8 has no door"
  }
 }

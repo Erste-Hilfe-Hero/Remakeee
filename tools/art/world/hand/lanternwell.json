@@ -1,0 +1,13 @@
+{
+ "add": {
+  "signs": [
+   {
+    "x": 11,
+    "y": 2,
+    "dialogue": "legend_quests/hallowmur_lore",
+    "show_flag": "lq_hallowmur_met",
+    "hide_flag": "lq_hallowmur_ready"
+   }
+  ]
+ }
+}

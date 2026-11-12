@@ -1,0 +1,125 @@
+{
+ "name": "Tollchain Causeway",
+ "region": "vellmarch",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "tollchain_causeway",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T...._..,,,T",
+  "T,,.._...,,T",
+  "T,,..__....T",
+  "T.....__...T",
+  "T..%%..__..T",
+  "T..%%...__.T",
+  "T........_.T",
+  "T,,,....__.T",
+  "T,,,...__..T",
+  "T.....__...T",
+  "T....__..,,T",
+  "T...__...,,T",
+  "T..__.....,T",
+  "T.__..%%...T",
+  "T._...%%...T",
+  "T.__.......T",
+  "T..__..,,,.T",
+  "T...__.,,,.T",
+  "T....__....T",
+  "T.....__...T",
+  "T,,....__..T",
+  "T,,.....__.T",
+  "T......__..T",
+  "T.....__...T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "cindergate_quay",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "tallowmarket",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "cindergate_quay",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "tallowmarket",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "tollkeeper",
+   "x": 9,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "vellmarch/tollchain_causeway_tollkeeper",
+   "sprite": "villager",
+   "trainer": "Causeway Toll Keeper Vos",
+   "intro": "vellmarch/tollchain_causeway_tollkeeper_intro",
+   "defeat": "vellmarch/tollchain_causeway_tollkeeper_defeat",
+   "money": 2200,
+   "team": [
+    {
+     "species": "Siltgrove",
+     "level": 55
+    },
+    {
+     "species": "Delthorn",
+     "level": 55
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_tollchain_causeway_1"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_tollchain_causeway_2"
+  },
+  {
+   "x": 0,
+   "y": 17,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_tollchain_causeway_3"
+  },
+  {
+   "x": 11,
+   "y": 21,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_tollchain_causeway_4"
+  }
+ ]
+}

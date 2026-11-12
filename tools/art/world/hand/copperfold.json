@@ -1,0 +1,30 @@
+{
+ "add": {
+  "warps": [
+   {
+    "x": 3,
+    "y": 4,
+    "to": "copperfold_spring",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   },
+   {
+    "x": 9,
+    "y": 4,
+    "to": "copperfold_shop",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   },
+   {
+    "x": 3,
+    "y": 12,
+    "to": "copperfold_house",
+    "tx": 4,
+    "ty": 6,
+    "facing": "up"
+   }
+  ]
+ }
+}

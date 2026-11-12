@@ -59,6 +59,15 @@
    "places": [
     "Halcyra"
    ]
+  },
+  "quivermoor": {
+   "name": "Quivermoor",
+   "era": 5,
+   "region": "quivermoor",
+   "sheet": "data/region5.json",
+   "places": [
+    "Quivermoor"
+   ]
   }
  },
  "target_hours": 20,

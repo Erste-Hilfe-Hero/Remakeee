@@ -68,6 +68,10 @@ jobs:
         run: python3 tools/art/era2_colourise.py --check
       - name: Halcyra Era IV atlas matches the shared Era I atlas (tools/art/gen_tiles_halcyra.py)
         run: python3 tools/art/gen_tiles_halcyra.py --check
+      - name: Quivermoor Era V atlas matches the shared Era I atlas (tools/art/gen_tiles_quivermoor.py)
+        run: python3 tools/art/gen_tiles_quivermoor.py --check
+      - name: World maps match their generator and hand overlays (tools/art/build_world.py)
+        run: python3 -m unittest tools/art/world/test_hand.py && python3 tools/art/build_world.py --check
       - name: Map audit finds nothing new (tools/maps/audit_maps.py, baseline tools/maps/audit_baseline.json)
         run: python3 tools/maps/audit_maps.py --check
 

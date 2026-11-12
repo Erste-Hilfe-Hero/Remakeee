@@ -14,7 +14,8 @@ the references between files that many parallel content PRs touch at once:
   flags      every flag that is checked somewhere is set somewhere (errors); flags that are
              set but never checked are listed as notes (they are often plain records)
   species    every encounter table, Wayfarer / story / event team and gift names an existing
-             Spirling; every level is 1..Spirling.MAX_LEVEL
+             Spirling; every level is 1..Spirling.LEVEL_SANITY (no top ring, only a guard
+             against garbage values)
   items      every item id referenced in maps, dialogue actions, conditions, scenes and clans
              exists in data/items.json
   ids        no duplicate ids inside clans.json sections, story battles, quests, items; no
@@ -42,9 +43,6 @@ notes = []
 KNOWN = {
     # Era III's region (not merged yet) adds eras.json finale_flags["era3_finale_done"].
     "flag 'era3_finale_done' is checked": "set by the Era III region once it lands (eras.json _doc)",
-    # Halcyra (data/region4.json) is a post-game skeleton with rings 78-96 while
-    # Spirling.MAX_LEVEL is 60; its wardens clamp to 60 until the cap is raised.
-    "region4.json wardens/team": "Halcyra rings 78-96 need a higher Spirling.MAX_LEVEL (design decision)",
 }
 
 
@@ -97,7 +95,7 @@ def gd_const(path, name):
     return int(m.group(1))
 
 
-MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "MAX_LEVEL")
+LEVEL_SANITY = gd_const("scripts/battle/Spirling.gd", "LEVEL_SANITY")
 
 json_files = []
 for dp, _, fs in os.walk(DATA):
@@ -468,11 +466,13 @@ for p in ("data/endgame.json", "data/events.json", "data/warden_rematch.json", "
 
 # ---------------------------------------------------------------- species and levels
 
+eras = J.get("data/eras.json", {})
+
 def level_ok(where, lv):
     if isinstance(lv, bool) or not isinstance(lv, (int, float)):
         return
-    if not 1 <= lv <= MAX_LEVEL:
-        err("species", "%s: level %s outside 1..%d (Spirling.MAX_LEVEL)" % (where, lv, MAX_LEVEL))
+    if not 1 <= lv <= LEVEL_SANITY:
+        err("species", "%s: level %s outside 1..%d (Spirling.LEVEL_SANITY)" % (where, lv, LEVEL_SANITY))
 
 
 def species_ok(where, sp):
@@ -687,7 +687,7 @@ for g in q.get("main", []):
 for g in q.get("side", []):
     C([g.get("show"), g.get("done")] + list(g.get("progress", []) or []), "quest side " + str(g.get("id")))
 
-for p in ("data/region2.json", "data/region4.json"):
+for p in sorted(k for k in J if re.fullmatch(r"data/region\d+\.json", k)):  # every era region sheet
     r = J.get(p)
     if not isinstance(r, dict):
         continue
@@ -698,7 +698,6 @@ for p in ("data/region2.json", "data/region4.json"):
         S(c.get("sets"), p)
     for rf in r.get("rifts", []) or []:
         S(rf.get("flag"), p)
-eras = J.get("data/eras.json", {})
 for era, fl in (eras.get("unlock_flags") or {}).items():
     C(fl, "eras unlock " + era)
 for era_flag, content_flag in (eras.get("finale_flags") or {}).items():

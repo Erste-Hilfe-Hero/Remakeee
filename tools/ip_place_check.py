@@ -3,7 +3,9 @@
 item 1319). Checks map file ids, every map and floor "name", the region and line names of
 data/world_layout.json, the German map names, and every place in the data/*.json sheets: the ids,
 names and keys of entries under a place key (regions, towns, routes, lines, landmarks, ...), the
-top-level id and name of each data/region*.json, and the German region*.json names. The list is base64-encoded so this file does
+top-level id and name of each data/region*.json, and the German region*.json names.
+Spirling names (data/spirlings.json and the names= lists of tools/art/lines/*.py) must not contain
+a block-list name anywhere, not even inside a longer word. The list is base64-encoded so this file does
 not spell the names out. Run by tools/ip_check.sh."""
 import base64
 import glob
@@ -17,6 +19,7 @@ BLOCKED = base64.b64decode(
     "cGFsbGV0fHZpcmlkaWFufHBld3RlcnxjZXJ1bGVhbnx2ZXJtaWxpb258Y2VsYWRvbnxrYW50b3xqb2h0b3xob2VubnxzaW5ub2h8dW5vdmF8a2Fsb3N8YWxvbGF8Z2FsYXJ8cGFsZGVhfGxpdHRsZXJvb3R8dHdpbmxlYWZ8Z29sZGVucm9kfGVjcnV0ZWFrfGxhdmFyaWRnZXxuaW1iYXNhfGx1bWlvc2V8aGF1Lj9vbGl8aHVsYnVyeXxtZXNhZ296YQ=="
 ).decode()
 PATTERN = re.compile(r"(?<![a-z])(%s)(?![a-z])" % BLOCKED, re.I)
+INSIDE = re.compile(r"(%s)" % BLOCKED, re.I)
 
 
 def names():
@@ -82,12 +85,25 @@ def sheet_names():
                 yield path, de
 
 
+def creature_names():
+    for sd in json.load(open(os.path.join(ROOT, "data", "spirlings.json"))):
+        yield "data/spirlings.json", str(sd.get("name", ""))
+    for path in sorted(glob.glob(os.path.join(ROOT, "tools", "art", "lines", "*.py"))):
+        for m in re.finditer(r"names=\[([^\]]*)\]", open(path, encoding="utf-8").read()):
+            for n in re.findall(r"\"([^\"]+)\"", m.group(1)):
+                yield path, n
+
+
 def main():
     bad = [(p, n) for p, n in list(names()) + list(sheet_names()) if PATTERN.search(n.replace("_", " "))]
     for p, n in bad:
         print("%s: place name '%s' is on the block list" % (os.path.relpath(p, ROOT), n))
+    kinds = [(p, n) for p, n in creature_names() if INSIDE.search(n)]
+    for p, n in kinds:
+        print("%s: Spirling name '%s' contains a block-list name" % (os.path.relpath(p, ROOT), n))
+    bad += kinds
     if bad:
-        print("::error::A place or map name matches the inspiration's towns or regions (lines above). Pick our own name.")
+        print("::error::A place, map or Spirling name matches the inspiration's towns or regions (lines above). Pick our own name.")
         return 1
     print("Place names OK")
     return 0
