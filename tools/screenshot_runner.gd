@@ -16,6 +16,8 @@ func _run() -> void:
 	Database.load_all()
 	Loc.set_language(lang)
 	db.language = lang
+	# The review shot shows the title itself, not the boot card in front of it.
+	EraBoot.shown = true
 	await _shot_scene("res://scenes/ui/Title.tscn", "01_title", 40)
 	db.new_game(1, "Rowan", 0, "Kindlop")
 	for entry: Array in [["lighthouse", Vector2i(4, 4)], ["brindlewick", Vector2i(5, 8)], ["fernstair", Vector2i(8, 6)], ["crowcrest", Vector2i(8, 11)], ["saltmarsh", Vector2i(7, 10)], ["thornridge", Vector2i(6, 9)], ["cinder_rift", Vector2i(6, 10)]]:

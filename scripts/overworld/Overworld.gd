@@ -338,6 +338,9 @@ func _era_line_after_load(line: String, era_before: int = EraManager.unlocked_er
 	while busy:
 		await get_tree().process_frame
 	await get_tree().create_timer(EraManager.transition_wait()).timeout
+	# After the EraUpgrade sweep: the finale card of the era that ended, then the staged change
+	# scene (EraChangeScene, docs/ERA_LOOK_TITLE.md).
+	await EraChangeScene.play_after_finale(self, era_before, EraManager.unlocked_era)
 	var lines: Array[String] = [line]
 	# What the new era brings (EraFeatures, data/era_functions.json).
 	for e: int in range(era_before + 1, EraManager.unlocked_era + 1):
@@ -410,6 +413,8 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.notices.append(Loc.t(look_line))
 	EraManager.unlock_story_end(GameState.has_flag(EraManager.STORY_COMPLETE_FLAG))
 	EraManager.mark_finales(GameState.flags)
+	# The last era has no change after its finale; its finale card shows once (EraFinaleCard).
+	EraFinaleCard.play_if_owed.call_deferred(self)
 	EraManager.unlock_from_flags(GameState.has_flag)
 	if EraManager.unlocked_era > era_before and EraManager.ERA_LINES.has(EraManager.unlocked_era):
 		_era_line_after_load.call_deferred(EraManager.ERA_LINES[EraManager.unlocked_era], era_before)
