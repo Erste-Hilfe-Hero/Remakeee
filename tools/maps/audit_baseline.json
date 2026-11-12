@@ -7,7 +7,12 @@
   "copperfold unreachable 1,1": "kept: yard behind the winding tower, scenery",
   "copperfold unreachable 10,1": "kept: yard behind the winding tower, scenery",
   "lastbloom town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "ledgerholm town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "mordant_row town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
   "mossgate town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "platewick town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "proofgate town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
+  "rimeholt town_twin -1,-1": "open: Quillmarch (Era III) towns still share one layout; each needs its own (Quillmarch pass)",
   "rootchapel town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
   "tallowmere town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)"
  }
