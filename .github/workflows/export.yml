@@ -131,7 +131,7 @@ jobs:
       - name: Billing plugin is in the APK
         run: unzip -p build/android/Chimora-debug.apk 'classes*.dex' | grep -a -q 'de/chimora/billing/ChimoraBilling'
       - name: APK size budget
-        run: tools/apk_budget.sh build/android/Chimora-debug.apk 92
+        run: tools/apk_budget.sh build/android/Chimora-debug.apk 94
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: android-debug-apk

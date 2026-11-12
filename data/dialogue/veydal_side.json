@@ -42,17 +42,17 @@
  },
  "goon_b_intro": {
   "lines": [
-   "Tull: Vantry sent you? Course he did. He sends someone every week."
+   "Gubb: Vantry sent you? Course he did. He sends someone every week."
   ]
  },
  "goon_b_defeat": {
   "lines": [
-   "Tull: You're better than last week's. Last week's cried."
+   "Gubb: You're better than last week's. Last week's cried."
   ]
  },
  "goon_b": {
   "lines": [
-   "Tull: Ask yourself why a pawnbroker has a key to his own robbers' den."
+   "Gubb: Ask yourself why a pawnbroker has a key to his own robbers' den."
   ]
  },
  "goon_c_intro": {
@@ -197,12 +197,12 @@
  },
  "bounty_b2_defeat": {
   "lines": [
-   "Tobin: Take a coat. Take two. Just don't take me to Gisk."
+   "Ferris: Take a coat. Take two. Just don't take me to Gisk."
   ]
  },
  "bounty_b2_lose": {
   "lines": [
-   "Tobin: Nice coat. Mine now."
+   "Ferris: Nice coat. Mine now."
   ]
  },
  "bounty_b3_defeat": {
@@ -240,7 +240,7 @@
     "action": "battle bounty_b1"
    },
    {
-    "text": "Wanted: Two-Coat Tobin, a coat thief",
+    "text": "Wanted: Two-Coat Ferris, a coat thief",
     "id": "b2",
     "if": {
      "not_flag": "beat_story_bounty_b2"
@@ -450,7 +450,7 @@
    "not_flag": "debts_done"
   },
   "lines": [
-   "Brennick: Three folk owe me. Hobb in Fernstair, Marl in Crowcrest, Nettie in Quillbrook.",
+   "Brennick: Three folk owe me. Pruitt in Fernstair, Marl in Crowcrest, Nettie in Quillbrook.",
    "Brennick: Collect, and you keep a tenth. Generous, I know. I cried writing it."
   ],
   "flag": "q_debts_asked",
@@ -460,7 +460,7 @@
    {
     "flag": "q_debts_asked",
     "lines": [
-     "Brennick: Hobb, Marl, Nettie. Three names, three receipts. Chop chop."
+     "Brennick: Pruitt, Marl, Nettie. Three names, three receipts. Chop chop."
     ]
    }
   ]
@@ -527,8 +527,8 @@
    "not_flag": "debt_hobb"
   },
   "lines": [
-   "Hobb: Owe him? I paid Brennick twice. He loses the receipts on purpose.",
-   "Hobb: Here, have a copy of mine. A copy, mind. He eats originals."
+   "Pruitt: Owe him? I paid Brennick twice. He loses the receipts on purpose.",
+   "Pruitt: Here, have a copy of mine. A copy, mind. He eats originals."
   ],
   "flag": "debt_hobb",
   "else": "hobb_idle"
@@ -559,7 +559,7 @@
  },
  "hobb_idle": {
   "lines": [
-   "Hobb: Brennick? Don't say that name near my ferns. They wilt."
+   "Pruitt: Brennick? Don't say that name near my ferns. They wilt."
   ]
  },
  "marl_idle": {
@@ -577,8 +577,8 @@
    "not_flag": "parcel_done"
   },
   "lines": [
-   "Nettle: Run a parcel to Watchman Corr in Crowcrest. Don't open it. Don't shake it. Don't let it hear you talk about the Hush.",
-   "Nettle: Easy money, love. Easiest you'll ever make."
+   "Velma: Run a parcel to Watchman Corr in Crowcrest. Don't open it. Don't shake it. Don't let it hear you talk about the Hush.",
+   "Velma: Easy money, love. Easiest you'll ever make."
   ],
   "flag": "q_parcel_asked",
   "else": "nettle_after",
@@ -586,14 +586,14 @@
    {
     "flag": "q_parcel_asked",
     "lines": [
-     "Nettle: Parcel's not going to deliver itself, love. Well. It might. Don't let it."
+     "Velma: Parcel's not going to deliver itself, love. Well. It might. Don't let it."
     ]
    }
   ]
  },
  "nettle_after": {
   "lines": [
-   "Nettle: You're walking around free? Huh. Corr's slipping. No hard feelings, love. Business."
+   "Velma: You're walking around free? Huh. Corr's slipping. No hard feelings, love. Business."
   ]
  },
  "corr": {
@@ -602,8 +602,8 @@
    "not_flag": "parcel_done"
   },
   "lines": [
-   "Corr: A parcel from Nettle? For me? How thoughtful.",
-   "Corr: It's a jar of stolen voices. With your fingerprints all over it. Nettle sends me a fresh fool every month. You're this month's.",
+   "Corr: A parcel from Velma? For me? How thoughtful.",
+   "Corr: It's a jar of stolen voices. With your fingerprints all over it. Velma sends me a fresh fool every month. You're this month's.",
    "Corr: Off the record: beat my Spirlings and the paperwork gets lost."
   ],
   "action": "battle parcel_corr",
@@ -616,7 +616,7 @@
  },
  "corr_beaten": {
   "lines": [
-   "Corr: Paperwork's lost. Tell Nettle she owes me a new fool."
+   "Corr: Paperwork's lost. Tell Velma she owes me a new fool."
   ],
   "flag": "parcel_done"
  },

@@ -40,6 +40,7 @@ static func validate() -> PackedStringArray:
 	check_shapes(errors, map_ids, load_layout())
 	check_squares(errors, map_ids, load_layout())
 	check_room_encounters(errors, map_ids)
+	check_landmarks(errors, map_ids)
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -522,6 +523,72 @@ static func square_folk(m: MapData, phase: int) -> Array[String]:
 		if maxi(absi(c.x - m.square.x), absi(c.y - m.square.y)) <= SQUARE_REACH:
 			out.append(str(d.get("id", "")))
 	return out
+
+## Landmarks (map design item 509): each one stands on a solid cell of an outdoor map in its
+## own act, next to a cell you can walk on, and never on a door, sign, person, find or story spot.
+static func check_landmarks(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var names: Dictionary = {}
+	var all: Dictionary = Landmarks.all()
+	for id: String in all:
+		var lm: Dictionary = all[id]
+		if not id in map_ids:
+			errors.append("landmark on unknown map '%s'" % id)
+			continue
+		var m: MapData = MapData.load_map(id)
+		var kind: String = str(lm.get("kind", ""))
+		if not m.outdoor:
+			errors.append("landmark of '%s': the map is not outdoors" % id)
+		if Landmarks.region_of(kind) != m.region:
+			errors.append("landmark of '%s': kind '%s' is not drawn by region '%s'" % [id, kind, m.region])
+		if Landmarks.art_path(kind).is_empty():
+			errors.append("landmark of '%s': no art for '%s'" % [id, kind])
+		var n: String = str(lm.get("name", ""))
+		if n.is_empty() or str(lm.get("line", "")).is_empty():
+			errors.append("landmark of '%s' needs a name and a line" % id)
+		elif names.has(n):
+			errors.append("landmark name '%s' is used on '%s' and '%s'" % [n, names[n], id])
+		names[n] = id
+		var c: Vector2i = Landmarks.cell(lm)
+		if not m.in_bounds(c) or not m.in_bounds(c + Vector2i.UP):
+			errors.append("landmark of '%s' at %s: it and the cell above must be on the map" % [id, c])
+			continue
+		if m.is_walkable(c):
+			errors.append("landmark of '%s' at %s stands on a cell you can walk on" % [id, c])
+		var problem: String = landmark_cell_problem(m, c)
+		if not problem.is_empty():
+			errors.append("landmark of '%s' at %s: %s" % [id, c, problem])
+		var near: bool = false
+		for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+			if m.in_bounds(c + d) and m.is_walkable(c + d):
+				near = true
+		if not near:
+			errors.append("landmark of '%s' at %s: no walkable cell next to it to read it from" % [id, c])
+
+## Why [param c] cannot hold a landmark ("" when it can): warps, signs, people, finds, gates, gear and story spots keep their cell.
+static func landmark_cell_problem(m: MapData, c: Vector2i) -> String:
+	var lists: Dictionary = {"warp": m.warps, "sign": m.signs, "person": m.npcs, "hidden find": m.secrets,
+		"gate": m.blocks, "gear spot": m.gear_spots}
+	for what: String in lists:
+		for e: Dictionary in lists[what]:
+			if e.has("x") and Vector2i(int(e.x), int(e.y)) == c:
+				return "on a %s" % what
+	for k: String in m.spots:
+		var v: Variant = m.spots[k]
+		if v is Array and (v as Array).size() >= 2 and Vector2i(int(v[0]), int(v[1])) == c:
+			return "on the story spot '%s'" % k
+	return ""
+
+## Longest straight run of path tiles ("_" and piers) down one column of [param m] (map design
+## item 508: no single road straight through the middle).
+static func longest_straight_path(m: MapData) -> int:
+	var best: int = 0
+	for x: int in m.width:
+		var run: int = 0
+		for y: int in m.height:
+			var ch: String = m.rows[y].substr(x, 1)
+			run = run + 1 if ch == "_" or ch == "+" else 0
+			best = maxi(best, run)
+	return best
 
 const MAX_OUTDOOR_W: int = 12
 const MAX_OUTDOOR_H: int = 40

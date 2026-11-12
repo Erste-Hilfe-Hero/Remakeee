@@ -129,6 +129,28 @@ je Riss für Käufer um 5 höher". Stufen-Bonbons +1/+5/+10 sind die Ring-Tränk
 
 Die Kontostärke zählt 10 je zusätzlichem Ring. Unverändert: nur Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert
 an jedem Angebot, Altersstufe ab 13 (`min_band`), keine Kaufaufforderungen.
+## Pay-to-win, Schritt 4 (Kampfkraft kaufen, Rest, 12. 11. 2026)
+
+Aus Abschnitt 1 des Plans fehlten noch Punkt 16 (Krit-Siegel in 3 Stufen), 17 (Status-Schutz-Amulett),
+18 (Start-Schild) und 19 (Anzeige im Kampf, welche Kauf-Vorteile wirken).
+
+| Angebot | Wirkung | Rissglas | Liga |
+| --- | --- | --- | --- |
+| Krit-Siegel I bis III (`rg_crit_seal_1..3`) | +5 / +10 / +15 Prozentpunkte Chance auf kritische Treffer (Grundchance 1/12) | 500, 1000, 1500 (Summe 3000), Stufen in Reihenfolge (`tier:crit_seal:<n>`) | Offene Liga, Raid-Risse, Geschichte |
+| Status-Amulett (`rg_status_ward`) | die Hälfte der Zustände, die der Gegner der eigenen Seite anhängt, scheitert (ein Wurf nur mit Amulett) | 1500, einmal je Konto | Offene Liga, Raid-Risse, Geschichte |
+| Eröffnungs-Schild (`rg_start_shield`) | der zuerst geschickte Spirling nimmt vom ersten Treffer mit Schaden nur 50 % | 1500, einmal je Konto | Offene Liga, Raid-Risse, Geschichte |
+
+- **Werte in Daten:** `advantage_values.crit_seal`, `status_ward`, `start_shield` in `data/shop.json`.
+- **Zweite Stufen-Zeile:** `BattleModel.amulets` = [Krit, Amulett, Schild] je Seite neben `seals`
+  (`ShopEffects.AMULET_KINDS`, `amulets_for`). Replays tragen `amulets`, alte Replays ohne die Zeile laufen
+  mit Nullen. Der Server gibt dem Schiedsrichter `amulets` für Offene Liga und Raid-Risse
+  (`_shop_amulets`, Migration `20261112120040_shop_p2w_step4.sql`), die Gleichstand-Liga bekommt Nullen.
+- **Anzeige im Kampf (Punkt 19):** Zu Kampfbeginn steht eine Zeile "Shop-Vorteile im Einsatz: Macht +35 %, ..."
+  (`ShopEffects.edge_line`, Ereignis `SHOP_EDGE`), nur wenn mindestens ein Vorteil wirkt. Kein Knopf in den Shop.
+- **Kontostärke** zählt die Prozente der neuen Stufen mit.
+- Alle fünf nur für Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert am Angebot, ab Altersstufe 13.
+  **Keine neuen Store-Produkte** (`store/products.json` bleibt gleich).
+
 ## Pay-to-win, Schritt 2 (Ali, 11. 11. 2026)
 
 Nächster Block des 200-Punkte-Plans: Siegel-Satz (Punkt 7), Bindungs-Köder in 4 Stufen (Punkt 22) und
@@ -205,7 +227,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-162 Angebote (Katalog v32): 120 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+167 Angebote (Katalog v33): 125 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -371,5 +393,10 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_spirling_zephyrel` | Zephyrel at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
 | `rg_spirling_monolurk` | Monolurk at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
 | `rg_spirling_vorlucent` | Vorlucent at Ring 40 | 19,99 € | 2000 | Vorteil | keine Liga-Wirkung |
+| `rg_crit_seal_1` | Crit Seal I | 4,99 € | 500 | Vorteil | nur Offene Liga |
+| `rg_crit_seal_2` | Crit Seal II | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_crit_seal_3` | Crit Seal III | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_status_ward` | Status Ward | 14,99 € | 1500 | Vorteil | nur Offene Liga |
+| `rg_start_shield` | Opening Shield | 14,99 € | 1500 | Vorteil | nur Offene Liga |
 
 <!-- shop-table:end -->
