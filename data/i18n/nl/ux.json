@@ -193,6 +193,8 @@
   "unavailable": "niet beschikbaar",
   "worn out": "uitgeput",
   "Only in battle.": "Alleen in gevechten.",
-  "Vigor %d/%d to %d/%d": "Kracht %d/%d naar %d/%d"
+  "Vigor %d/%d to %d/%d": "Kracht %d/%d naar %d/%d",
+  "Already knows this art.": "Kent deze techniek al.",
+  "Wrong element.": "Verkeerd element."
  }
 }

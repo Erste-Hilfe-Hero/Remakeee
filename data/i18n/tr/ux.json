@@ -193,6 +193,8 @@
   "unavailable": "kullanılamaz",
   "worn out": "yorgun",
   "Only in battle.": "Sadece savaşta.",
-  "Vigor %d/%d to %d/%d": "Dinçlik %d/%d iken %d/%d olur"
+  "Vigor %d/%d to %d/%d": "Dinçlik %d/%d iken %d/%d olur",
+  "Already knows this art.": "Bu hüneri zaten biliyor.",
+  "Wrong element.": "Yanlış element."
  }
 }

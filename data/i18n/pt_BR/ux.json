@@ -193,6 +193,8 @@
   "unavailable": "indisponível",
   "worn out": "esgotado",
   "Only in battle.": "Só na batalha.",
-  "Vigor %d/%d to %d/%d": "Vigor %d/%d para %d/%d"
+  "Vigor %d/%d to %d/%d": "Vigor %d/%d para %d/%d",
+  "Already knows this art.": "Já conhece esta arte.",
+  "Wrong element.": "Elemento errado."
  }
 }

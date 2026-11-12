@@ -193,6 +193,8 @@
   "unavailable": "недоступно",
   "worn out": "измотан",
   "Only in battle.": "Только в бою.",
-  "Vigor %d/%d to %d/%d": "Бодрость %d/%d до %d/%d"
+  "Vigor %d/%d to %d/%d": "Бодрость %d/%d до %d/%d",
+  "Already knows this art.": "Уже знает этот приём.",
+  "Wrong element.": "Не та стихия."
  }
 }

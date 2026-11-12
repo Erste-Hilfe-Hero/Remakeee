@@ -193,6 +193,8 @@
   "unavailable": "無法使用",
   "worn out": "力竭",
   "Only in battle.": "僅限戰鬥中。",
-  "Vigor %d/%d to %d/%d": "元氣 %d/%d 變為 %d/%d"
+  "Vigor %d/%d to %d/%d": "元氣 %d/%d 變為 %d/%d",
+  "Already knows this art.": "已經會這項技藝了。",
+  "Wrong element.": "屬性不符。"
  }
 }
