@@ -517,8 +517,8 @@ MAP_SONGS = {
 # Tracks that play once (jingles) instead of looping.
 ONE_SHOT = {"victory"}
 
-# Region, dungeon and era battle themes (era audio plan): single files, no stems, written at a
-# low Vorbis quality and 16 to 24 bars so each stays small. "era" picks the hardware voice set
+# Region, dungeon and era battle themes (era audio plan): single files, no stems, written at
+# 16 kHz / 16 kbit/s and 12 to 16 bars so each stays small (APK size budget). "era" picks the hardware voice set
 # (era_voice); Era I songs keep the plain four channels.
 EXTRA_SONGS = {
     # Corvane (Act II): dye town on the water, B flat major, lazy walking bass.
@@ -543,11 +543,11 @@ EXTRA_SONGS = {
                          quotes=dict(zip(range(8, 12), leitmotif(-5, minor=True))), arp_style="pad", bass_style="drone", drums="soft", seed=233,
                          lead_wave="pulse12", harm_tremolo=2.0),
     # Caves without their own song: low drone, sparse drips.
-    "cave": dict(bpm=72, chords=["Cm", "Ab", "Cm", "Db", "Cm", "Fm", "G7", "Cm"] * 2,
+    "cave": dict(bpm=72, chords=["Cm", "Ab", "Cm", "Db", "Cm", "Fm", "G7", "Cm", "Cm", "Ab", "Cm", "Db"],
                  motifs=["C5:8 -:4 Eb5:4", "-:16"], quotes={8: rift_motif("C5")}, arp_style="pad", bass_style="drone", drums="sparse",
                  seed=239, lead_wave="tri", lead_vol=0.22, rest_prob=0.4, bass_vol=0.7),
     # Dungeons without their own song (Bellstone Ruins, Brackwater Sluice): a creeping walk.
-    "dungeon": dict(bpm=92, chords=["Fm", "Db", "Fm", "C7", "Bbm", "Db", "C7", "Fm"] * 2,
+    "dungeon": dict(bpm=92, chords=["Fm", "Db", "Fm", "C7", "Bbm", "Db", "C7", "Fm", "Fm", "Db", "Fm", "C7"],
                     motifs=["F4:4 Ab4:4 C5:4 B4:4", "C5:8 -:8"], quotes={8: rift_motif("F4")}, arp_style="stab", bass_style="walk",
                     drums="soft", seed=241, lead_vol=0.26),
     # Pawn Vault (Act I side dungeon): a pawnbroker's strongroom, tick-tock C minor with wood knocks.
@@ -555,17 +555,17 @@ EXTRA_SONGS = {
                        motifs=["C5:2 -:2 G4:2 -:2 C5:2 Eb5:2 D5:4", "B4:4 D5:4 G5:8", "C5:2 -:2 G4:2 -:2 Ab4:2 C5:2 Eb5:4", "D5:8 -:8"],
                        quotes={8: rift_motif("Eb5")}, arp_style="stab", bass_style="walk", drums="wood", seed=251, grace=True),
     # Rook Vault (Act II side dungeon): a guild treasury, E flat minor, heavy steps and a bell.
-    "rook_vault": dict(bpm=84, chords=["Ebm", "B", "Ebm", "Bb7", "Abm", "B", "Bb7", "Ebm"] * 2,
+    "rook_vault": dict(bpm=84, chords=["Ebm", "B", "Ebm", "Bb7", "Abm", "B", "Bb7", "Ebm", "Ebm", "B", "Ebm", "Bb7"],
                        motifs=["Eb5:4 Gb5:4 Bb5:8", "Ab5:4 Gb5:4 F5:8", "Gb5:4 Bb5:4 Eb6:6 D6:2", "Bb5:16"],
-                       quotes={**dict(zip(range(8, 12), leitmotif(1, minor=True))), 12: rift_motif("Eb5")}, arp_style="pad",
+                       quotes=dict(zip(range(8, 12), leitmotif(1, minor=True))), arp_style="pad",
                        bass_style="root-fifth", drums="march", seed=257, lead_wave="pulse50", lead_vol=0.24),
     # Veil Cistern (Act IV side dungeon): water under the desert, F sharp minor with a tremolo.
-    "veil_cistern": dict(bpm=76, chords=["F#m", "D", "Bm", "C#7", "F#m", "A", "D", "C#7"] * 2,
+    "veil_cistern": dict(bpm=76, chords=["F#m", "D", "Bm", "C#7", "F#m", "A", "D", "C#7", "F#m", "D", "Bm", "C#7"],
                          motifs=["C#5:6 A4:2 F#4:8", "D5:4 C#5:4 B4:8", "A4:4 C#5:4 F#5:8", "F5:16"],
-                         quotes={**dict(zip(range(8, 12), leitmotif(4, minor=True))), 12: rift_motif("F#5")}, arp_style="musicbox",
+                         quotes=dict(zip(range(8, 12), leitmotif(4, minor=True))), arp_style="musicbox",
                          bass_style="drone", drums="none", seed=263, lead_wave="tri", harm_tremolo=3.5, lead_vol=0.24),
     # Soot Vaults (Act III dungeon): coal cellars, A minor, a grinding pulse.
-    "soot_vaults": dict(bpm=100, chords=["Am", "F", "Am", "E7", "Dm", "F", "E7", "Am"] * 2,
+    "soot_vaults": dict(bpm=100, chords=["Am", "F", "Am", "E7", "Dm", "F", "E7", "Am", "Am", "F", "Am", "E7"],
                         motifs=["A4:2 C5:2 E5:4 D5:4 C5:4", "B4:4 G#4:4 E4:8", "A4:2 C5:2 F5:4 E5:4 D5:4", "E5:16"],
                         quotes={8: rift_motif("A4")}, arp_style="up", bass_style="pulse8", drums="soft", seed=269, crackle=0.03, octave=3),
     # Post-game regions in their own era's voices.
@@ -593,4 +593,3 @@ _BATTLE_ERA = {
 }
 for _era, _spec in _BATTLE_ERA.items():
     EXTRA_SONGS["battle_era%d" % _era] = dict(arp_style="rolling", bass_style="pulse8", drums="battle", era=_era, **_spec)
-EXTRA_QUALITY = 0

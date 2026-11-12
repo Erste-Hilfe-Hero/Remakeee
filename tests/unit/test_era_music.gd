@@ -68,7 +68,7 @@ func test_battle_theme_per_era() -> void:
 func test_era_tracks_stay_small() -> void:
 	for t: String in ["battle_era2", "battle_era3", "battle_era4", "battle_era5", "pawn_vault", "rook_vault", "veil_cistern"]:
 		var size: int = FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % t).size()
-		assert_between(size, 1, 200 * 1024, t)
+		assert_between(size, 1, 100 * 1024, t)
 
 func test_era_fx_grow_with_the_era() -> void:
 	var fx: Dictionary = _table().get("era_fx", {})
