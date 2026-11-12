@@ -67,7 +67,7 @@
     "y": 21,
     "facing": "down",
     "dialogue": "clans/kenan",
-    "sprite": "ranger",
+    "sprite": "stranger_runner",
     "color": "5a6e7a",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -78,7 +78,7 @@
     "y": 19,
     "facing": "down",
     "dialogue": "clans/nail",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "b07a3a",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -159,7 +159,7 @@
     "y": 16,
     "facing": "down",
     "dialogue": "clans/farida",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "9e5a8a",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -170,7 +170,7 @@
     "y": 17,
     "facing": "down",
     "dialogue": "clans/amir",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "3a7a9e",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -364,7 +364,7 @@
     "y": 19,
     "facing": "down",
     "dialogue": "clans/heider",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "6a6a6a",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -375,7 +375,7 @@
     "y": 4,
     "facing": "down",
     "dialogue": "clans/elma",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "c98a5a",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -532,6 +532,13 @@
     "dialogue": "corvane/veit_stove",
     "show_flag": "guild_joined",
     "hide_flag": "veit_hint_3"
+   },
+   {
+    "x": 7,
+    "y": 3,
+    "dialogue": "edge_camp/guild_table",
+    "show_flag": "edge_aldra_asked",
+    "hide_flag": "edge_aldra_1"
    }
   ]
  },
@@ -703,7 +710,10 @@
     "intro": "corvane/senna_intro",
     "defeat": "corvane/senna_defeat",
     "ai": 2,
-    "money": 1100
+    "money": 1250,
+    "mend_items": [
+     "echo_volt"
+    ]
    }
   ]
  },
@@ -895,7 +905,10 @@
     "intro": "corvane/joral_intro",
     "defeat": "corvane/joral_defeat",
     "ai": 2,
-    "money": 1200
+    "money": 1300,
+    "mend_items": [
+     "echo_lumen"
+    ]
    }
   ]
  },
@@ -1174,6 +1187,20 @@
     "y": 23,
     "dialogue": "corvane_side/feather_10",
     "hide_flag": "feather_10"
+   },
+   {
+    "x": 3,
+    "y": 18,
+    "dialogue": "edge_camp/amir_mark_1",
+    "show_flag": "edge_amir_asked",
+    "hide_flag": "edge_amir_1"
+   },
+   {
+    "x": 10,
+    "y": 24,
+    "dialogue": "edge_camp/heider_drop",
+    "show_flag": "edge_heider_asked",
+    "hide_flag": "edge_heider_1"
    }
   ]
  },
@@ -1191,6 +1218,127 @@
    {
     "spot": "veit_diary",
     "dialogue": "corvane/veit_diary"
+   },
+   {
+    "x": 10,
+    "y": 10,
+    "dialogue": "edge_camp/farida_guestbook",
+    "show_flag": "edge_farida_rested",
+    "hide_flag": "edge_farida_1"
+   },
+   {
+    "x": 4,
+    "y": 2,
+    "dialogue": "edge_camp/lejla_stone",
+    "show_flag": "edge_lejla_1",
+    "hide_flag": "edge_lejla_woke"
+   }
+  ],
+  "on_enter": {
+   "scene": "edge_camp",
+   "if": {
+    "flag": "corvane_arrived"
+   }
+  },
+  "npcs": [
+   {
+    "id": "edge_elma",
+    "x": 8,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "edge_camp/elma",
+    "sprite": "stranger",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_aldra",
+    "x": 2,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "edge_camp/aldra",
+    "sprite": "stranger",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_nail",
+    "x": 9,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "edge_camp/nail",
+    "sprite": "stranger_hat",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_lipka",
+    "x": 1,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "edge_camp/lipka",
+    "sprite": "stranger_kid",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_kenan",
+    "x": 10,
+    "y": 5,
+    "facing": "down",
+    "dialogue": "edge_camp/kenan",
+    "sprite": "stranger_runner",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_amir",
+    "x": 3,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "edge_camp/amir",
+    "sprite": "stranger_hat",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "edge_farida",
+    "x": 9,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "edge_camp/farida",
+    "sprite": "stranger",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "edge_heider",
+    "x": 4,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "edge_camp/heider",
+    "sprite": "stranger_hat",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "edge_leith",
+    "x": 9,
+    "y": 3,
+    "facing": "down",
+    "dialogue": "edge_camp/leith",
+    "sprite": "stranger_runner",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "edge_lejla",
+    "x": 2,
+    "y": 7,
+    "facing": "down",
+    "dialogue": "edge_camp/lejla",
+    "sprite": "stranger",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "edge_mirza",
+    "x": 8,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "edge_camp/mirza",
+    "sprite": "stranger_hat",
+    "show_flag": "rift_shade_sealed"
    }
   ]
  },
@@ -1215,9 +1363,10 @@
     "y": 8,
     "facing": "down",
     "dialogue": "clans/lejla",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "a05a5a",
-    "show_flag": "act2_end"
+    "show_flag": "act2_end",
+    "hide_flag": "rift_shade_sealed"
    },
    {
     "id": "clan_pip_3",
@@ -1303,7 +1452,10 @@
     "intro": "ashmere/tovan_intro",
     "defeat": "ashmere/tovan_defeat",
     "ai": 3,
-    "money": 1500
+    "money": 1500,
+    "mend_items": [
+     "echo_stone"
+    ]
    }
   ],
   "signs": [
@@ -1329,6 +1481,13 @@
     "spot": "letter_a3",
     "dialogue": "story/letter_a3",
     "hide_flag": "letter_a3"
+   },
+   {
+    "x": 10,
+    "y": 15,
+    "dialogue": "edge_camp/amir_mark_2",
+    "show_flag": "edge_amir_asked",
+    "hide_flag": "edge_amir_2"
    }
   ]
  },
@@ -1409,9 +1568,10 @@
     "y": 13,
     "facing": "down",
     "dialogue": "clans/leith",
-    "sprite": "villager",
+    "sprite": "stranger_runner",
     "color": "5a5a8a",
-    "show_flag": "act2_end"
+    "show_flag": "act2_end",
+    "hide_flag": "rift_shade_sealed"
    },
    {
     "id": "clan_mirza",
@@ -1419,9 +1579,10 @@
     "y": 13,
     "facing": "down",
     "dialogue": "clans/mirza",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "8a6a2a",
-    "show_flag": "act2_end"
+    "show_flag": "act2_end",
+    "hide_flag": "rift_shade_sealed"
    },
    {
     "id": "clan_marlo_3",
@@ -1474,7 +1635,10 @@
     "intro": "ashmere/ilse_intro",
     "defeat": "ashmere/ilse_defeat",
     "ai": 3,
-    "money": 1600
+    "money": 1600,
+    "mend_items": [
+     "echo_gale"
+    ]
    }
   ]
  },
@@ -1500,6 +1664,13 @@
     "spot": "gate",
     "dialogue": "ashmere/undrawn_gate",
     "show_flag": "beat_story_kestra_3"
+   },
+   {
+    "x": 2,
+    "y": 9,
+    "dialogue": "edge_camp/leith_arrow",
+    "show_flag": "edge_leith_asked",
+    "hide_flag": "edge_leith_1"
    }
   ]
  },
@@ -1614,7 +1785,7 @@
     "y": 2,
     "facing": "down",
     "dialogue": "clans/aldra",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "c9a227",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -1625,7 +1796,7 @@
     "y": 10,
     "facing": "down",
     "dialogue": "clans/lipka",
-    "sprite": "villager",
+    "sprite": "stranger_kid",
     "color": "6a8fb0",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -1826,6 +1997,13 @@
     "y": 18,
     "dialogue": "solenne_side/iou_2",
     "show_flag": "veil_factor_beaten"
+   },
+   {
+    "x": 2,
+    "y": 10,
+    "dialogue": "edge_camp/amir_mark_3",
+    "show_flag": "edge_amir_asked",
+    "hide_flag": "edge_amir_3"
    }
   ]
  }

@@ -15438,7 +15438,8 @@
   "dex_id": 261,
   "name": "Siltby",
   "elements": [
-   "TIDE"
+   "TIDE",
+   "GALE"
   ],
   "rarity": "common",
   "region": "quillmarch",
@@ -15459,19 +15460,19 @@
     "Drench"
    ],
    "6": [
-    "All-In Crash"
+    "Draft Needle"
    ],
    "10": [
     "Salt Snap"
    ],
    "15": [
-    "Hunker Down"
+    "Tailwind"
    ],
    "20": [
     "Rip Current"
    ],
    "26": [
-    "Tunnel Strike"
+    "Squall Line"
    ],
    "32": [
     "Breaker Plunge"
@@ -15499,7 +15500,8 @@
   "dex_id": 262,
   "name": "Siltarra",
   "elements": [
-   "TIDE"
+   "TIDE",
+   "GALE"
   ],
   "rarity": "uncommon",
   "region": "quillmarch",
@@ -15507,11 +15509,11 @@
   "line_id": "silt",
   "era": 3,
   "base": {
-   "hp": 97,
-   "atk": 79,
-   "foc": 61,
-   "spd": 54,
-   "def": 114
+   "hp": 95,
+   "atk": 75,
+   "foc": 58,
+   "spd": 52,
+   "def": 109
   },
   "trait": "thick_hide",
   "learnset": {
@@ -15520,25 +15522,22 @@
     "Deepwell Draught"
    ],
    "6": [
-    "Grit Jab"
+    "Breeze Slice"
    ],
    "10": [
     "Salt Snap"
    ],
    "15": [
-    "Hunker Down"
+    "Drift Step"
    ],
    "20": [
     "Rip Current"
    ],
    "26": [
-    "Tremor Thud"
+    "Gale Scythe"
    ],
    "32": [
     "Breaker Plunge"
-   ],
-   "38": [
-    "Cairn Crash"
    ]
   },
   "bond_rate": 0.3,
@@ -15550,7 +15549,7 @@
    0,
    1
   ],
-  "keepsake_hint": "keen_lens",
+  "keepsake_hint": "swift_feather",
   "unfold": [
    {
     "to": "Siltaroth",
@@ -15563,7 +15562,8 @@
   "dex_id": 263,
   "name": "Siltaroth",
   "elements": [
-   "TIDE"
+   "TIDE",
+   "GALE"
   ],
   "rarity": "shy",
   "region": "quillmarch",
@@ -15571,11 +15571,11 @@
   "line_id": "silt",
   "era": 3,
   "base": {
-   "hp": 124,
-   "atk": 95,
-   "foc": 72,
-   "spd": 65,
-   "def": 127
+   "hp": 113,
+   "atk": 86,
+   "foc": 65,
+   "spd": 58,
+   "def": 115
   },
   "trait": "thick_hide",
   "learnset": {
@@ -15584,25 +15584,22 @@
     "Drench"
    ],
    "6": [
-    "Bowl Over"
+    "Draft Needle"
    ],
    "10": [
     "Salt Snap"
    ],
    "15": [
-    "Hunker Down"
+    "Scatter Gale"
    ],
    "20": [
     "Undertow"
    ],
    "26": [
-    "Tremor Thud"
+    "Gale Scythe"
    ],
    "32": [
     "Breaker Plunge"
-   ],
-   "38": [
-    "Slow Quake"
    ]
   },
   "bond_rate": 0.11,
@@ -15688,11 +15685,11 @@
   "line_id": "cindr",
   "era": 3,
   "base": {
-   "hp": 77,
-   "atk": 76,
-   "foc": 98,
-   "spd": 90,
-   "def": 69
+   "hp": 78,
+   "atk": 78,
+   "foc": 100,
+   "spd": 91,
+   "def": 71
   },
   "trait": "kindling",
   "learnset": {
@@ -15814,11 +15811,11 @@
   "line_id": "nib",
   "era": 3,
   "base": {
-   "hp": 58,
-   "atk": 67,
-   "foc": 49,
-   "spd": 62,
-   "def": 52
+   "hp": 59,
+   "atk": 69,
+   "foc": 50,
+   "spd": 63,
+   "def": 53
   },
   "trait": "surge",
   "learnset": {
@@ -16129,11 +16126,11 @@
   "line_id": "filig",
   "era": 3,
   "base": {
-   "hp": 92,
-   "atk": 62,
-   "foc": 125,
-   "spd": 86,
-   "def": 92
+   "hp": 94,
+   "atk": 63,
+   "foc": 127,
+   "spd": 88,
+   "def": 94
   },
   "trait": "light_sleeper",
   "learnset": {

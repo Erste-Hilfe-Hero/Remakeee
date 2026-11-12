@@ -333,18 +333,18 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py
 | 258 | Vesk | Gale | common | striker | slick | 288 | Veskara (ring 22) |
 | 259 | Veskara | Gale | uncommon | striker | slick | 400 | Veskarion (ring 41) |
 | 260 | Veskarion | Gale | shy | striker | slick | 501 | - |
-| 261 | Siltby | Tide | common | bulwark | thick_hide | 314 | Siltarra (ring 24) |
-| 262 | Siltarra | Tide | uncommon | bulwark | thick_hide | 405 | Siltaroth (ring 41) |
-| 263 | Siltaroth | Tide | shy | bulwark | thick_hide | 483 | - |
+| 261 | Siltby | Tide/Gale | common | bulwark | thick_hide | 314 | Siltarra (ring 24) |
+| 262 | Siltarra | Tide/Gale | uncommon | bulwark | thick_hide | 389 | Siltaroth (ring 41) |
+| 263 | Siltaroth | Tide/Gale | shy | bulwark | thick_hide | 437 | - |
 | 264 | Cindrik | Ember/Bloom | common | kindler | kindling | 307 | Cindrel (ring 24) |
-| 265 | Cindrel | Ember/Bloom | uncommon | kindler | kindling | 410 | Cindravax (ring 42) |
+| 265 | Cindrel | Ember/Bloom | uncommon | kindler | kindling | 418 | Cindravax (ring 42) |
 | 266 | Cindravax | Ember/Bloom | shy | kindler | kindling | 477 | - |
-| 267 | Nibbet | Umbra/Bloom | common | vanguard | surge | 288 | Nibquill (ring 26) |
+| 267 | Nibbet | Umbra/Bloom | common | vanguard | surge | 294 | Nibquill (ring 26) |
 | 268 | Nibquill | Umbra/Bloom | uncommon | vanguard | surge | 389 | Nibravure (ring 38) |
 | 269 | Nibravure | Umbra/Bloom | shy | vanguard | surge | 476 | - |
 | 270 | Filigrin | Lumen/Gale | common | weaver | light_sleeper | 306 | Filigrace (ring 24) |
 | 271 | Filigrace | Lumen/Gale | uncommon | weaver | light_sleeper | 406 | Filigravure (ring 41) |
-| 272 | Filigravure | Lumen/Gale | shy | weaver | light_sleeper | 457 | - |
+| 272 | Filigravure | Lumen/Gale | shy | weaver | light_sleeper | 466 | - |
 <!-- /lines:quillmarch -->
 
 ## Regional imprints (Ortsprägung, items 218-219)

@@ -1,0 +1,7 @@
+{
+ "_comment": "ru translation of the region_looks table, keyed by the English text.",
+ "strings": {
+  "The ink goes grey here. Ashmere burned once and still smells like it owes you money.": "Здесь чернила сереют. Ashmere однажды сгорел и до сих пор пахнет так, будто должен тебе денег.",
+  "The ink turns blue here. Corvane dyes everything, even the truth.": "Здесь чернила синеют. Corvane красит всё, даже правду."
+ }
+}

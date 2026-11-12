@@ -14,7 +14,7 @@ RINGS = (24, 40, 32)
 LINES = [
     L(id="vesk", names=["Vesk", "Veskara", "Veskarion"], elements=["GALE"], role="striker", cover="VOLT",
       art=dict(plan="quad")),
-    L(id="silt", names=["Siltby", "Siltarra", "Siltaroth"], elements=["TIDE"], role="bulwark", cover="STONE",
+    L(id="silt", names=["Siltby", "Siltarra", "Siltaroth"], elements=["TIDE", "GALE"], role="bulwark",
       art=dict(plan="serpent")),
     L(id="cindr", names=["Cindrik", "Cindrel", "Cindravax"], elements=["EMBER", "BLOOM"], role="kindler",
       art=dict(plan="bird")),

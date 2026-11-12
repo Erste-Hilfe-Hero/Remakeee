@@ -1,0 +1,8 @@
+{
+ "_comment": "tr translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s Mürekkep Yemini ediyor. Mürekkep patilerinden imza gibi akıyor: önce aile!",
+  "Oath": "Yemin",
+  "The Ink Oath comes due. The family collects from %s.": "Mürekkep Yemini'nin vadesi geldi. Aile, %s üzerinden tahsilat yapıyor."
+ }
+}

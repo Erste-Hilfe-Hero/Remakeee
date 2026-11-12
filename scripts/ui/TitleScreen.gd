@@ -210,6 +210,8 @@ func _run() -> void:
 	await _go_online()
 	if first_start:
 		await _ask_other_phone()
+		# Item 2000: once, where the comfort settings live, without a tap to dismiss.
+		_menu.toast(FIRST_START_HINT, FIRST_START_HINT_SECONDS)
 	while true:
 		if not Online.is_online():
 			await _go_online()
@@ -280,6 +282,9 @@ func _pick_language() -> void:
 	GameState.language = codes[maxi(idx, 0)]
 	GameState.apply_display()
 	SaveManager.save_settings()
+
+const FIRST_START_HINT: String = "Large text, one-hand layout and more are under Settings."
+const FIRST_START_HINT_SECONDS: float = 4.0
 
 ## First start (item 1964): someone who played on another phone gets there with a code
 ## instead of starting over by mistake.

@@ -94,6 +94,8 @@ func _ready() -> void:
 		"burrow": _action_burrow,
 		"marker_stone": _action_marker_stone,
 		"give_item": _action_give_item,
+		"take_item": _action_take_item,
+		"gift_spirling": _action_gift_spirling,
 		"tip": _action_tip,
 		"set_flag": _action_set_flag,
 		"shop": _action_shop,
@@ -1403,6 +1405,8 @@ func _action_heal(_args: PackedStringArray, _speaker: NPC) -> void:
 	DailyTasks.record("rest", {"map": map.id})
 	await say(["Your team is fully rested."] as Array[String])
 	await say(Tips.take("rest_spot"))
+	if FirstSteps.tick(FirstSteps.REST):
+		show_notices()
 	GameState.note_core_rest()
 	await _wake_cores()
 	# Every spring can swap the team with storage, even before storage opens from the menu,
@@ -1440,7 +1444,7 @@ func open_menu() -> void:
 	busy = true
 	player.frozen = true
 	VirtualPad.set_wanted(false)
-	GameState.set_flag(VirtualPad.MENU_SEEN_FLAG)
+	FirstSteps.tick(VirtualPad.MENU_SEEN_FLAG)
 	var menu := PauseMenu.new()
 	menu.encounter_table = map.encounter_table
 	menu.current_map = map.id
@@ -1497,6 +1501,7 @@ func open_menu() -> void:
 	VirtualPad.set_wanted(true)
 	player.frozen = false
 	busy = false
+	show_notices()
 
 ## Plays a recorded battle (item 14). The replay uses copies, so nothing in the save changes.
 const MENU_SLIDE: float = 40.0
@@ -1754,6 +1759,33 @@ func _action_give_item(args: PackedStringArray, _speaker: NPC) -> void:
 		if not tip.is_empty():
 			await say(tip)
 
+## "take_item <id> [count]": the player hands items over in a talk (Lipka's moss, Mirza's charm).
+func _action_take_item(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var count: int = 0
+	for i: int in (int(args[1]) if args.size() > 1 else 1):
+		if GameState.take_item(args[0]):
+			count += 1
+	if count > 0:
+		var item_name: String = str(Database.item(args[0]).get("name", args[0]))
+		await say(["You handed over %s x%d." % [item_name, count]] as Array[String])
+
+## "gift_spirling <Species> [ring]": a Spirling handed over in a talk (the strangers' gift from
+## the other map, plan 2 item 173). It joins the team, or storage when the team is full.
+func _action_gift_spirling(args: PackedStringArray, _speaker: NPC) -> void:
+	if args.is_empty():
+		return
+	var sd: SpirlingData = Database.species(args[0])
+	if sd == null:
+		return
+	var s := Spirling.new(sd, int(args[1]) if args.size() > 1 else 5, GameState.rng)
+	var joined: bool = GameState.receive_spirling(s)
+	Sound.sfx("pickup")
+	await say(["You received %s!" % sd.species_name] as Array[String])
+	if not joined:
+		await say(["%s was sent to storage." % sd.species_name] as Array[String])
+
 # --- Story: prologue and Mirela's map book ---------------------------------------------------
 
 ## The opening of a new journey (Ali, 2026-11-04): a short narration over black, then the
@@ -1782,6 +1814,22 @@ func prologue() -> void:
 	await _locked_say(Tips.take("save"))
 	show_walk_hint()
 
+## One line per starter under the partner list, so the choice is not made blind (onboarding).
+const STARTER_HINTS: Dictionary[String, String] = {
+	"Kindlop": "Warm and loyal. Sets things on fire when nervous. Mostly your things.",
+	"Zippit": "Quick and twitchy. Every hug comes with a small shock. You get used to it.",
+	"Wickit": "Its light never goes out. Handy when someone cuts the lamps on purpose.",
+}
+const STARTER_TITLE: String = "Pick your partner"
+
+## The partner list: name and element per row, a short description as the row's hint.
+static func starter_rows() -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for sp: String in Database.STARTERS:
+		out.append({"text": "%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])],
+			"hint": Loc.t(str(STARTER_HINTS.get(sp, "")))})
+	return out
+
 ## "choose_starter": the three Spirlings that sheltered from the storm; one stays.
 func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	if GameState.has_flag("got_starter"):
@@ -1789,10 +1837,7 @@ func _action_choose_starter(_args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	while true:
-		var entries: Array[String] = []
-		for sp: String in Database.STARTERS:
-			entries.append("%s (%s)" % [sp, Elements.element_name(Database.species(sp).elements[0])])
-		var pick: int = await menu.pick_strings("Which one do you kneel down to?", entries, false)
+		var pick: int = await menu.pick(STARTER_TITLE, starter_rows(), false)
 		var sd: SpirlingData = Database.species(Database.STARTERS[pick])
 		if await menu.confirm("%s, the %s Spirling, curls up at your feet. Let it stay?" % [sd.species_name, Elements.element_name(sd.elements[0])]):
 			GameState.choose_starter(sd.species_name)
