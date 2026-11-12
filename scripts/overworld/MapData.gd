@@ -333,9 +333,54 @@ func apply_blocks(flags: Dictionary) -> bool:
 func paint(layer: TileMapLayer) -> void:
 	layer.tile_set = TilesetFactory.get_tileset(region)
 	layer.clear()
+	var roles: Dictionary = door_roles()
 	for y: int in height:
 		for x: int in rows[y].length():
 			var c := Vector2i(x, y)
 			var k: int = kind_at(c)
 			var neighbour: Callable = func(n: Vector2i) -> int: return kind_at(n) if in_bounds(n) else k
-			layer.set_cell(c, 0, TilesetFactory.atlas_coords(k, c, neighbour))
+			layer.set_cell(c, 0, TilesetFactory.atlas_coords(k, c, neighbour, int(roles.get(c, TilesetFactory.DoorRole.HOUSE))))
+
+## What each door leads into, for its look (buildings plan items 14, 15, 20): a warp to a Rift
+## map is a Rift gate, to a spring room the healer, to a guild or shop a shop. In a town the free
+## door nearest the heal point is the healer and the first other free door the shop.
+## Same rules as tools/art/preview_map.py door_roles().
+func door_roles() -> Dictionary:
+	var doors: Array[Vector2i] = []
+	for y: int in height:
+		for x: int in rows[y].length():
+			if rows[y][x] == "D":
+				doors.append(Vector2i(x, y))
+	var roles: Dictionary = {}
+	var warped: Dictionary = {}
+	for w: Dictionary in warps:
+		var cell := Vector2i(int(w.x), int(w.y))
+		if not (cell in doors):
+			continue
+		warped[cell] = true
+		var to: String = str(w.to)
+		if to.contains("rift") or to.begins_with("undrawn"):
+			roles[cell] = TilesetFactory.DoorRole.RIFT_GATE
+		elif to.contains("spring"):
+			roles[cell] = TilesetFactory.DoorRole.HEAL
+		elif to.contains("guild") or to.contains("shop") or to.contains("market") or to.contains("bazaar"):
+			roles[cell] = TilesetFactory.DoorRole.SHOP
+	if not (outdoor and biome == "town"):
+		return roles
+	var free: Array[Vector2i] = []
+	for d: Vector2i in doors:
+		if not roles.has(d) and not warped.has(d):
+			free.append(d)
+	if heal_point.x >= 0 and not (TilesetFactory.DoorRole.HEAL in roles.values()) and not free.is_empty():
+		var best: Vector2i = free[0]
+		var best_d: int = 1 << 30
+		for d: Vector2i in free:
+			var dist: int = absi(d.x - heal_point.x) + absi(d.y - heal_point.y)
+			if dist < best_d:
+				best = d
+				best_d = dist
+		roles[best] = TilesetFactory.DoorRole.HEAL
+		free.erase(best)
+	if not (TilesetFactory.DoorRole.SHOP in roles.values()) and not free.is_empty():
+		roles[free[0]] = TilesetFactory.DoorRole.SHOP
+	return roles

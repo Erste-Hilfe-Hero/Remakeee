@@ -18,6 +18,16 @@ static func today_key() -> String:
 static func flag_for(day: String) -> String:
 	return "daily_find_%s" % day
 
+## True when the visitor of [param day] or of any later day was met: turning the phone clock
+## back brings no extra visitor (plan 1379).
+static func met(flags: Dictionary, day: String) -> bool:
+	var own: String = flag_for(day)
+	for k: Variant in flags:
+		var key: String = str(k)
+		if key.begins_with("daily_find_") and key >= own and bool(flags[k]):
+			return true
+	return false
+
 ## Today's pick: {"table": id, "species": name, "level": int}, or {} if no data.
 static func pick(day: String) -> Dictionary:
 	var tables: Array[String] = EncounterTable.table_ids()
@@ -47,7 +57,7 @@ static func maybe_spawn(table: String, flags: Dictionary, rng: RandomNumberGener
 	if day.is_empty():
 		day = today_key()
 	var p: Dictionary = pick(day)
-	if p.is_empty() or str(p.table) != table or bool(flags.get(flag_for(day), false)):
+	if p.is_empty() or str(p.table) != table or met(flags, day):
 		return null
 	if rng.randf() >= CHANCE:
 		return null
@@ -70,6 +80,6 @@ static func hint(flags: Dictionary, day: String = "") -> String:
 	if p.is_empty():
 		return ""
 	var where: String = MapData.load_map(str(p.table)).display_name if MapData.exists(str(p.table)) else str(p.table).capitalize()
-	if bool(flags.get(flag_for(day), false)):
+	if met(flags, day):
 		return "Today's visitor in %s has been met. Another arrives tomorrow." % where
 	return "Today: a rare visitor stirs in %s." % where

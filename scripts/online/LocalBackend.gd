@@ -74,6 +74,8 @@ func _init(p_store_path: String = "") -> void:
 			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
 			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim", "league_reward",
+			"live_invite", "live_list", "live_answer", "live_pick", "live_move", "live_state", "live_emote", "live_forfeit",
+			"live_finish", "live_rematch",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
@@ -2468,3 +2470,202 @@ func _fn_save_restore(a: Dictionary) -> Dictionary:
 	sv.saved_at = now()
 	sv.erase("request_id")
 	return {"ok": true, "rev": sv.rev}
+
+# --- Live duels (Online 100, area 1), like 20261111000040_live_duel.sql ------------------------
+
+## server_config.live_duel (data/live_duel.json).
+func live_cfg() -> Dictionary:
+	var v: Variant = db.config.get("live_duel")
+	if not v is Dictionary:
+		v = LiveDuel.config()
+		db.config["live_duel"] = v
+	return v
+
+func _live(id: Variant) -> Variant:
+	return (_table("live_duels", {}) as Dictionary).get(str(int(id)))
+
+## 0 for the inviter, 1 for the friend, -1 for anyone else.
+func _live_side(d: Dictionary) -> int:
+	return 0 if d.a == me() else (1 if d.b == me() else -1)
+
+## Like public._live_tick: invites run out, and a side that stays away longer than the turn plus
+## reconnect_seconds loses (both away: the duel ends without a winner).
+func _live_tick(d: Dictionary) -> void:
+	var c: Dictionary = live_cfg()
+	if d.state == "invited" and now() > int(d.deadline):
+		d.state = "expired"
+	elif (d.state == "picking" or d.state == "running") and now() > int(d.deadline) + int(c.reconnect_seconds):
+		var have: Array = d.pick if d.state == "picking" else (d.moves as Dictionary).get(str(d.round), [null, null])
+		var away0: bool = have[0] == null
+		var away1: bool = have[1] == null
+		d.state = "done"
+		d.reason = "timeout"
+		d.winner = -1 if away0 == away1 else (1 if away0 else 0)
+
+func _live_out(d: Dictionary) -> Dictionary:
+	var teams: Array = []
+	if d.state != "invited" and d.state != "picking" and d.pick[0] != null and d.pick[1] != null:
+		for side: int in 2:
+			var rows: Array = []
+			for i: Variant in d.pick[side]:
+				rows.append((d.show[side][int(i)] as Dictionary).duplicate(true))
+			teams.append(rows)
+	return {"ok": true, "id": int(d.id), "side": _live_side(d), "state": d.state, "show": (d.show as Array).duplicate(true),
+		"picked": [d.pick[0] != null, d.pick[1] != null], "teams": teams, "seed": d.seed, "round": d.round,
+		"moves": (d.moves as Dictionary).duplicate(true), "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
+		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true)}
+
+func _live_new(other: String) -> Dictionary:
+	var c: Dictionary = live_cfg()
+	var show: Array = []
+	for uid: String in [me(), other]:
+		var team: Array = profile_of(uid).get("team", [])
+		show.append(team.slice(0, int(c.show)))
+	if (show[0] as Array).size() < int(c.pick) or (show[1] as Array).size() < int(c.pick):
+		return _fail("team_too_small")
+	var id: int = _next_id("live_duels")
+	var d: Dictionary = {"id": id, "a": me(), "b": other, "state": "invited", "show": show, "pick": [null, null],
+		"seed": rng.randi() & 0x7fffffff, "round": 0, "moves": {}, "deadline": now() + 60 * int(c.invite_minutes),
+		"winner": -1, "reason": "", "emotes": [], "report": [null, null]}
+	_table("live_duels", {})[str(id)] = d
+	return {"ok": true, "id": id}
+
+func _fn_live_invite(a: Dictionary) -> Dictionary:
+	if not flag_on("live_duel", 2147483647):
+		return _fail("feature_off")
+	var other: String = uid_for_code(str(a.get("p_code", "")))
+	if other.is_empty() or other == me() or is_blocked(me(), other) or not is_friend(me(), other):
+		return _fail("not_friends")
+	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
+		return _fail("slow_down")
+	return _live_new(other)
+
+func _fn_live_list(_a: Dictionary) -> Dictionary:
+	var out: Array = []
+	for d: Dictionary in (_table("live_duels", {}) as Dictionary).values():
+		if _live_side(d) < 0:
+			continue
+		_live_tick(d)
+		if d.state != "done" and d.state != "expired":
+			var other: String = d.b if d.a == me() else d.a
+			out.append({"id": int(d.id), "state": d.state, "side": _live_side(d), "name": str(profile_of(other).name)})
+	return {"ok": true, "duels": out}
+
+func _live_mine(a: Dictionary) -> Variant:
+	var d: Variant = _live(a.get("p_id", -1))
+	if d == null or _live_side(d) < 0:
+		return null
+	_live_tick(d)
+	return d
+
+func _fn_live_answer(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null or _live_side(d) != 1:
+		return _fail("no_such_duel")
+	if d.state != "invited":
+		return _fail("duel_closed")
+	if not bool(a.get("p_accept", false)):
+		d.state = "expired"
+		return {"ok": true, "state": d.state}
+	d.state = "picking"
+	d.deadline = now() + int(live_cfg().pick_seconds)
+	return _live_out(d)
+
+func _fn_live_pick(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var side: int = _live_side(d)
+	if d.state != "picking" or d.pick[side] != null:
+		return _fail("duel_closed")
+	var pick: Variant = LiveDuel.check_pick(a.get("p_pick"), (d.show[side] as Array).size(), int(live_cfg().pick))
+	if pick == null:
+		return _fail("bad_pick")
+	d.pick[side] = pick
+	if d.pick[0] != null and d.pick[1] != null:
+		d.state = "running"
+		d.round = 1
+		d.deadline = now() + int(live_cfg().turn_seconds)
+	return _live_out(d)
+
+func _fn_live_move(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var side: int = _live_side(d)
+	if d.state != "running":
+		return _fail("duel_closed")
+	if int(a.get("p_round", -1)) != int(d.round):
+		return _fail("wrong_round")
+	var mv: Variant = a.get("p_input")
+	if not mv is Dictionary or JSON.stringify(mv).length() > 400:
+		return _fail("bad_input")
+	var row: Array = (d.moves as Dictionary).get_or_add(str(d.round), [null, null])
+	if row[side] != null:
+		return _fail("already_moved")
+	row[side] = mv
+	if row[0] != null and row[1] != null:
+		d.round = int(d.round) + 1
+		d.deadline = now() + int(live_cfg().turn_seconds)
+	return _live_out(d)
+
+func _fn_live_state(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	return _live_out(d)
+
+func _fn_live_emote(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var n: int = int(a.get("p_emote", -1))
+	if n < 0 or n >= int(live_cfg().emotes):
+		return _fail("bad_emote")
+	var side: int = _live_side(d)
+	var used: int = 0
+	for e: Dictionary in d.emotes:
+		if int(e.side) == side:
+			used += 1
+	if used >= int(live_cfg().emote_limit):
+		return _fail("slow_down")
+	(d.emotes as Array).append({"side": side, "emote": n, "at": now()})
+	return {"ok": true}
+
+func _fn_live_forfeit(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	if d.state != "picking" and d.state != "running":
+		return _fail("duel_closed")
+	d.state = "done"
+	d.reason = "forfeit"
+	d.winner = 1 - _live_side(d)
+	return _live_out(d)
+
+func _fn_live_finish(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var w: int = int(a.get("p_winner", -2))
+	if d.state != "running" or w < -1 or w > 1:
+		return _fail("duel_closed")
+	d.report[_live_side(d)] = w
+	if d.report[0] != null and d.report[1] != null:
+		d.state = "done"
+		d.reason = "played" if int(d.report[0]) == int(d.report[1]) else "disputed"
+		d.winner = int(d.report[0]) if d.reason == "played" else -1
+	return _live_out(d)
+
+func _fn_live_rematch(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	if d.state != "done":
+		return _fail("duel_closed")
+	var other: String = d.b if d.a == me() else d.a
+	if is_blocked(me(), other) or not is_friend(me(), other):
+		return _fail("not_friends")
+	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
+		return _fail("slow_down")
+	return _live_new(other)
