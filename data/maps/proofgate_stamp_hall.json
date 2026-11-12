@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quillmarch/proofgate_stamp_hall_stamper",
    "sprite": "villager"
+  },
+  {
+   "id": "q3_dead_stamp_tove",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_dead_stamp_tove",
+   "sprite": "villager",
+   "show_flag": "q3_dead_stamp_asked"
   }
  ],
  "signs": []

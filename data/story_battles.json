@@ -2659,5 +2659,77 @@
   "win_flags": [
    "q4_salt_saint_done"
   ]
+ },
+ "q3_dead_letter_office": {
+  "trainer": "Dead Letter Clerk Osvald",
+  "team": [
+   {
+    "species": "Drypup",
+    "level": 73
+   },
+   {
+    "species": "Veskarion",
+    "level": 73
+   },
+   {
+    "species": "Dryhound",
+    "level": 74
+   }
+  ],
+  "ai": 2,
+  "money": 4380,
+  "defeat": "quillmarch/q3_dead_letter_office_defeat",
+  "lose": "quillmarch/q3_dead_letter_office_lose",
+  "win_flags": [
+   "q3_dead_letter_office_won"
+  ]
+ },
+ "q3_errata_chapel": {
+  "trainer": "Epitaph Cutter Runhild",
+  "team": [
+   {
+    "species": "Siltaroth",
+    "level": 80
+   },
+   {
+    "species": "Siltby",
+    "level": 80
+   },
+   {
+    "species": "Canalurk",
+    "level": 81
+   }
+  ],
+  "ai": 2,
+  "money": 4800,
+  "defeat": "quillmarch/q3_errata_chapel_defeat",
+  "lose": "quillmarch/q3_errata_chapel_lose",
+  "win_flags": [
+   "q3_errata_chapel_won"
+  ]
+ },
+ "q3_debtors_icehouse": {
+  "trainer": "Icehouse Bailiff Stig",
+  "team": [
+   {
+    "species": "Gelidmonarch",
+    "level": 83
+   },
+   {
+    "species": "Veskara",
+    "level": 83
+   },
+   {
+    "species": "Sleetowl",
+    "level": 84
+   }
+  ],
+  "ai": 2,
+  "money": 4980,
+  "defeat": "quillmarch/q3_debtors_icehouse_defeat",
+  "lose": "quillmarch/q3_debtors_icehouse_lose",
+  "win_flags": [
+   "q3_debtors_icehouse_won"
+  ]
  }
 }

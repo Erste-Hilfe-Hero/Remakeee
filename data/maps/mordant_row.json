@@ -10,7 +10,7 @@
  ],
  "rows": [
   "TTTTT__TTTTT",
-  "T::..__..::T",
+  "T....__....T",
   "T.RRR__RRR.T",
   "T.HDH__HDH.T",
   "T....__....T",
@@ -24,9 +24,9 @@
   "T:.RR__RR.:T",
   "T..DH__HD..T",
   "T....__....T",
-  "T.:.S__..:.T",
+  "T~~.S__..:.T",
   "T....__....T",
-  "T*:..__.L:.T",
+  "T~~..__.L~~T",
   "T:...__...:T",
   "TTTTT__TTTTT"
  ],
@@ -186,6 +186,46 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q3_cure_proof_ida",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_cure_proof",
+   "sprite": "villager",
+   "hide_flag": "q3_cure_proof_reveal"
+  },
+  {
+   "id": "q3_cure_proof_ida_cure",
+   "x": 3,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "quillmarch/q3_cure_proof_ida_cure",
+   "sprite": "villager",
+   "trainer": "Bottle Washer Ida",
+   "show_flag": "q3_cure_proof_reveal",
+   "intro": "quillmarch/q3_cure_proof_ida_cure_intro",
+   "defeat": "quillmarch/q3_cure_proof_ida_cure_defeat",
+   "money": 3800,
+   "team": [
+    {
+     "species": "Mordling",
+     "level": 74
+    },
+    {
+     "species": "Corrodent",
+     "level": 75
+    },
+    {
+     "species": "Mordantoad",
+     "level": 76
+    }
+   ],
+   "win_flags": [
+    "q3_cure_proof_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [
