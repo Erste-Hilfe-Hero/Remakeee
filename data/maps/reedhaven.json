@@ -57,9 +57,9 @@
   },
   {
    "id": "boatman",
-   "x": 4,
+   "x": 1,
    "y": 8,
-   "facing": "left",
+   "facing": "right",
    "dialogue": "reedhaven/boatman",
    "sprite": "villager"
   },
