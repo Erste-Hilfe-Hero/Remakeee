@@ -54,7 +54,7 @@ func test_every_quest_flag_is_set_somewhere() -> void:
 				if act.size() > 1 and act[0] == "quest_show":
 					settable["q_%s_asked" % act[1]] = true
 					settable["q_%s_done" % act[1]] = true
-				if act.size() > 1 and act[0] == "switch":
+				if act.size() > 1 and act[0] in ["switch", "bell"]:
 					settable[act[1]] = true
 				# "page <n>" sets page_<n>, and the last page sets pages_all.
 				if act.size() > 1 and act[0] == "page":

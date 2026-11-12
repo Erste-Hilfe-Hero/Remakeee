@@ -153,3 +153,77 @@ func test_prism_still_works_on_a_wild_gleam() -> void:
 	assert_true(GameState.use_gleam_prism(s))
 	assert_true(s.gleam_boost)
 	assert_false(GameState.use_gleam_prism(s))
+
+## Every spirlings.json entry (all regions, legendaries, Era II elements) has a usable Gleam:
+## four valid colours with the outline darkest, not the plain inks, a material, and a sprite whose
+## pixels are all inks, so the shader really recolours every pixel.
+func test_every_spirlings_json_entry_has_a_valid_gleam_variant() -> void:
+	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(Database.SPIRLINGS_PATH))
+	assert_true(raw is Array)
+	var pal_file: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(GleamRules.PALETTE_PATH))
+	var names: Dictionary = {}
+	for sp: Dictionary in raw:
+		var kind: String = str(sp.name)
+		names[kind] = true
+		var hexes: Array = (pal_file.palettes as Dictionary).get(kind, [])
+		assert_eq(hexes.size(), 4, kind + ": four Gleam colours")
+		if hexes.size() != 4:
+			continue
+		for h: Variant in hexes:
+			assert_true(str(h).is_valid_hex_number() and str(h).length() == 6, "%s: %s is a colour" % [kind, h])
+		var pal: Array[Color] = GleamRules.palette(kind)
+		var distinct: Dictionary = {}
+		for c: Color in pal:
+			distinct[c.to_html(false)] = true
+		assert_eq(distinct.size(), 4, kind + ": four distinct tones")
+		for i: int in range(1, 4):
+			assert_lt(pal[0].get_luminance(), pal[i].get_luminance(), kind + ": outline is the darkest")
+		assert_ne(pal.slice(1), EraManager.INK_PALETTE.slice(1), kind + ": differs from the normal inks")
+		assert_not_null(GleamRules.material(kind), kind + ": has a Gleam material")
+		for facing: String in ["front", "back"]:
+			var path: String = EraManager.sprite_path(kind, facing)
+			assert_false(path.is_empty(), "%s %s sprite" % [kind, facing])
+			if path.begins_with("res://art/era1/"):
+				assert_eq(_off_ink_pixels(path), 0, "%s %s: every pixel is an ink" % [kind, facing])
+	assert_eq(names.size(), (raw as Array).size(), "names are unique")
+	assert_eq((pal_file.palettes as Dictionary).size(), names.size(), "no palette for a removed kind")
+
+func _off_ink_pixels(path: String) -> int:
+	var img: Image = Image.load_from_file(ProjectSettings.globalize_path(path))
+	if img == null:
+		return -1
+	var bad: int = 0
+	for y: int in img.get_height():
+		for x: int in img.get_width():
+			var c: Color = img.get_pixel(x, y)
+			if c.a == 0.0:
+				continue
+			var hit: bool = false
+			for ink: Color in EraManager.INK_PALETTE:
+				if Vector3(c.r - ink.r, c.g - ink.g, c.b - ink.b).length() < 0.03:
+					hit = true
+					break
+			bad += 0 if hit else 1
+	return bad
+
+func test_encounter_sparkle_and_sound_cue_exist() -> void:
+	var cfg: Dictionary = GleamRules.config()
+	assert_true(FileAccess.file_exists(Sound.SFX_DIR % str(cfg.sfx)), "Gleam sound cue file")
+	assert_gt(int(cfg.sparkles), 0)
+	assert_gt(float(cfg.sparkle_time), 0.0)
+	assert_not_null(ElementFx.shape("glint", 0), "sparkle texture")
+
+func test_spirlog_gleam_counter() -> void:
+	var book: Dictionary = {
+		"Kindlop": {"seen": true, "bonded": true, "gleam_seen": true, "gleam_bonded": true},
+		"Zippit": {"seen": true, "gleam_seen": true},
+		"Mossling": {"seen": true, "bonded": true},
+	}
+	var c: Dictionary = SpirlogBook.gleam_counts(book)
+	assert_eq(int(c.seen), 2)
+	assert_eq(int(c.bonded), 1)
+	assert_eq(int(c.total), Database.spirlings.size())
+	assert_eq(SpirlogBook.gleam_bonded_kinds(book), PackedStringArray(["Kindlop"]))
+	assert_eq(SpirlogBook.gleam_line(book), GleamRules.STAR + " Gleam: 2 seen, 1 bonded")
+	assert_eq(int(SpirlogBook.chapter_progress("veydal", book).gleam), 1)
+	assert_eq(int(SpirlogBook.gleam_counts({}).seen), 0)

@@ -81,9 +81,10 @@ static func rate(id: String) -> float:
 	return float(table(id).get("rate", 0.0))
 
 ## Weight of a spawn entry; species with an element in [param boost] count half again as much
-## (seasonal festivals, Season.gd).
+## (seasonal festivals, Season.gd), and species of a running sighting day count several times.
 static func weight_of(spawn: Dictionary, boost: Array[int]) -> int:
-	var w: int = int(spawn.get("weight", 1))
+	# Sighting days (online events, Online 100 point 65) multiply the weight of their species.
+	var w: int = int(spawn.get("weight", 1)) * OnlineEvents.sighting_boost(str(spawn.get("species", "")))
 	if boost.is_empty():
 		return w
 	var sd: SpirlingData = Database.species(str(spawn.get("species", "")))
