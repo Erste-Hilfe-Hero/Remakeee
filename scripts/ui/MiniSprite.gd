@@ -12,6 +12,11 @@ static func of(species: String, size: int) -> Texture2D:
 	var path: String = EraManager.sprite_path(species)
 	if path.is_empty():
 		return null
+	# Generated tier icon (tools/art/gen_tiers.py) when this size has one.
+	var icon: Texture2D = SpriteTiers.icon(path, size)
+	if icon != null:
+		_cache[key] = icon
+		return icon
 	var tex: Texture2D = load(path)
 	if tex == null:
 		return null
