@@ -116,12 +116,35 @@ static func _run_raid(menu: PauseMenu, x: Dictionary, list: Dictionary) -> void:
 	if not await menu.confirm(Loc.t("At most %d rounds. Attempts cost nothing and your team is healed afterwards. Fight now?") % int(list.get("rounds", 10))):
 		return
 	await Online.push_team()
-	var s: Dictionary = await Online.call_fn("raid_start", {"p_raid": int(x.id), "p_pick": LeagueMenu.pick_of(GameState.party)})
+	var pick: Array = LeagueMenu.pick_of(GameState.party)
+	# Point 45: a Spirling a friend lent takes the last place of the team for this one attempt.
+	var loan: Dictionary = {}
+	if Online.flag_on("lend"):
+		var rows: Array = await LiveDuelMenu.loans()
+		if not rows.is_empty():
+			var labels: Array[String] = ["Without a borrowed Spirling"]
+			for l: Dictionary in rows:
+				labels.append(LiveDuelMenu.loan_line(l))
+			var li: int = await menu.pick_strings("Take a borrowed Spirling along? It joins this one attempt, then the loan is used up.", labels)
+			if li < 0:
+				return
+			if li > 0:
+				loan = rows[li - 1]
+	var s: Dictionary
+	if loan.is_empty():
+		s = await Online.call_fn("raid_start", {"p_raid": int(x.id), "p_pick": pick})
+	else:
+		s = await Online.call_fn("raid_start_loan", {"p_raid": int(x.id), "p_pick": pick_with_loan(pick, str(loan.mon.get("species", ""))),
+			"p_loan": int(loan.id)})
 	if not s.ok or not s.data is Dictionary or not bool(s.data.get("ok", false)):
 		await menu.info(error_text(s))
 		return
 	s.data["guardian"] = x.guardian
 	menu.raid_attempt = s.data
+
+## The own picks next to a borrowed Spirling: never its species twice, and one place stays free.
+static func pick_with_loan(pick: Array, species: String) -> Array:
+	return pick.filter(func(p: Dictionary) -> bool: return str(p.species) != species).slice(0, LeagueRules.TEAM_MAX - 1)
 
 ## Pick 1 to 3 friends or bund members, then open the Rift.
 static func open(menu: PauseMenu) -> void:

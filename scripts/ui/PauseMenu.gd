@@ -26,6 +26,8 @@ var echo_duel: Dictionary = {}
 var league_match: Dictionary = {}
 ## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
 var raid_attempt: Dictionary = {}
+## A live duel to play or watch in the battle screen (LiveDuelMenu): {"id", "watch", "name" or "names"}.
+var live_stage: Dictionary = {}
 ## An entry to open before the list ("Goals" for a chimora://event link, DeepLink.gd).
 var open_on: String = ""
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
@@ -101,7 +103,7 @@ func run() -> void:
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay:
+				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay or not live_stage.is_empty():
 					return
 			"Leagues":
 				await LeagueMenu.run(self)

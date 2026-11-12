@@ -1480,6 +1480,7 @@ func open_menu(start: String = "") -> void:
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
 	var raid: Dictionary = menu.raid_attempt
+	var live: Dictionary = menu.live_stage
 	var quit: bool = menu.to_title
 	menu.queue_free()
 	if quit:
@@ -1492,6 +1493,8 @@ func open_menu(start: String = "") -> void:
 		await league_battle(league)
 	if not raid.is_empty():
 		await raid_battle(raid)
+	if not live.is_empty():
+		await live_duel(live)
 	if photo:
 		await photo_mode()
 	if watch:
@@ -1602,6 +1605,21 @@ func watch_replay(snap: Dictionary) -> void:
 	await scene.battle_finished
 	await _fade_to(1.0)
 	scene.queue_free()
+	Sound.enter_map(map.id)
+	await _fade_to(0.0)
+
+## A live duel, played or watched in the battle screen (Online 100, points 1 and 73).
+func live_duel(info: Dictionary) -> void:
+	await _fade_to(1.0)
+	var stage := LiveDuelStage.new()
+	stage.setup(info)
+	_battle_layer.add_child(stage)
+	_fade.color.a = 0.0
+	await stage.finished
+	if stage.ended and not stage.watch:
+		LiveDuelMenu.last_id = stage.duel_id
+	await _fade_to(1.0)
+	stage.queue_free()
 	Sound.enter_map(map.id)
 	await _fade_to(0.0)
 
