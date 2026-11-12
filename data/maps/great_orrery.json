@@ -25,7 +25,34 @@
    "facing": "down"
   }
  ],
- "npcs": [],
+ "npcs": [
+  {
+   "id": "q4_brass_planet_lio",
+   "x": 3,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "halcyra_side/brass_planet",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_brass_planet_dita",
+   "x": 8,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "halcyra_side/brass_planet_dita",
+   "sprite": "villager",
+   "show_flag": "q4_brass_planet_asked"
+  },
+  {
+   "id": "q4_two_lanterns_rosamund",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "halcyra_side/two_lanterns_rosamund",
+   "sprite": "tamer_f",
+   "show_flag": "q4_two_lanterns_s1"
+  }
+ ],
  "signs": [
   {
    "x": 5,

@@ -18,7 +18,7 @@
   "^~~.....%%.^",
   "^~~~...~~~~^",
   "^%%~...~~~~^",
-  "^%%....:::.^",
+  "^%%....:::__",
   "^......:::.^",
   "^~~~~..~~~.^",
   "^~~~~..~~~.^",
@@ -63,6 +63,14 @@
    "tx": 10,
    "ty": 9,
    "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 12,
+   "to": "brine_catacombs",
+   "tx": 1,
+   "ty": 7,
+   "facing": "right"
   }
  ],
  "npcs": [
@@ -89,6 +97,112 @@
     {
      "species": "Wadishell",
      "level": 84
+    }
+   ]
+  },
+  {
+   "id": "q4_salt_skim_imre",
+   "x": 4,
+   "y": 16,
+   "facing": "right",
+   "dialogue": "halcyra_side/salt_skim",
+   "sprite": "elder",
+   "hide_flag": "q4_salt_skim_reveal"
+  },
+  {
+   "id": "q4_salt_skim_imre_ink",
+   "x": 3,
+   "y": 21,
+   "facing": "right",
+   "dialogue": "halcyra_side/salt_skim_imre_ink_loot",
+   "sprite": "elder",
+   "trainer": "Bookkeeper Imre",
+   "show_flag": "q4_salt_skim_reveal",
+   "intro": "halcyra_side/salt_skim_imre_ink_intro",
+   "defeat": "halcyra_side/salt_skim_imre_ink_defeat",
+   "money": 4300,
+   "team": [
+    {
+     "species": "Wadishell",
+     "level": 84
+    },
+    {
+     "species": "Saltsprig",
+     "level": 85
+    },
+    {
+     "species": "Stiltwade",
+     "level": 86
+    }
+   ],
+   "win_flags": [
+    "q4_salt_skim_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q4_own_cairn_netta",
+   "x": 5,
+   "y": 6,
+   "facing": "left",
+   "dialogue": "halcyra_side/own_cairn_netta",
+   "sprite": "villager",
+   "show_flag": "q4_own_cairn_s1"
+  },
+  {
+   "id": "q4_wedding_blades_dorian",
+   "x": 4,
+   "y": 2,
+   "facing": "right",
+   "dialogue": "halcyra_side/wedding_blades_dorian_after",
+   "sprite": "villager",
+   "trainer": "Best Man Dorian",
+   "show_flag": "q4_wedding_blades_reveal",
+   "intro": "halcyra_side/wedding_blades_dorian_intro",
+   "defeat": "halcyra_side/wedding_blades_dorian_defeat",
+   "money": 4300,
+   "team": [
+    {
+     "species": "Stiltwade",
+     "level": 84
+    },
+    {
+     "species": "Wadishell",
+     "level": 85
+    },
+    {
+     "species": "Saltsprig",
+     "level": 86
+    }
+   ],
+   "win_flags": [
+    "q4_wedding_blades_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "hs_sigrun",
+   "x": 6,
+   "y": 18,
+   "facing": "left",
+   "dialogue": "halcyra_side/sigrun",
+   "sprite": "villager",
+   "trainer": "Mirror Walker Sigrun",
+   "intro": "halcyra_side/sigrun_intro",
+   "defeat": "halcyra_side/sigrun_defeat",
+   "money": 3400,
+   "team": [
+    {
+     "species": "Saltsprig",
+     "level": 83
+    },
+    {
+     "species": "Stiltwade",
+     "level": 84
+    },
+    {
+     "species": "Wadishell",
+     "level": 85
     }
    ]
   }
