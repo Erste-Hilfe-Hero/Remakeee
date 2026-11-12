@@ -13,7 +13,7 @@ static func cycle() -> int:
 
 ## A foe's ring in the current cycle.
 static func foe_ring(base: int) -> int:
-	return clampi(base + cycle() * int(data().get("ring_bonus", 0)), 1, Spirling.MAX_LEVEL)
+	return clampi(base + cycle() * int(data().get("ring_bonus", 0)), 1, Spirling.STORY_RING)
 
 static func can_start(finale_done: bool) -> bool:
 	return finale_done and cycle() < int(data().get("max_cycles", 1))

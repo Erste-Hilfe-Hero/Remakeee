@@ -51,9 +51,9 @@ func test_ring_cap_seal_raises_the_veteran_cap_by_five() -> void:
 	assert_eq(GameState.level_cap(), base)
 	Billing.state = {"unlocks": {"ring_cap_plus": 1}}
 	assert_eq(ShopEffects.ring_cap_bonus(), 5, "value from advantage_values")
-	assert_eq(GameState.level_cap(), mini(base + 5, Spirling.MAX_LEVEL))
+	assert_eq(GameState.level_cap(), mini(base + 5, Spirling.STORY_RING))
 	GameState.set_flag(GameState.ACT1_END_FLAG)
-	assert_eq(GameState.level_cap(), Spirling.MAX_LEVEL, "never above the top Ring")
+	assert_eq(GameState.level_cap(), Spirling.LEVEL_SANITY, "no ring limit after Act I")
 
 func test_ring_crown_jumps_to_fifty_but_not_over_the_cap() -> void:
 	GameState.difficulty = GameState.Difficulty.TAMER

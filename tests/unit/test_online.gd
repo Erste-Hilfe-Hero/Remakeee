@@ -184,7 +184,7 @@ func test_saves_from_before_the_server_are_uploaded() -> void:
 
 func test_server_refuses_impossible_saves() -> void:
 	await Online.connect_now()
-	var bad: Dictionary = {"schema": 1, "party": [{"level": 250}], "money": 1}
+	var bad: Dictionary = {"schema": 1, "party": [{"level": 10000}], "money": 1}
 	var r: Dictionary = (await _server.call_fn("save_put", {"p_slot": 1, "p_data": bad, "p_summary": "", "p_base_rev": 0})).data
 	assert_eq(r.error, "implausible")
 	assert_false(LocalBackend.save_ok({"money": -1}))

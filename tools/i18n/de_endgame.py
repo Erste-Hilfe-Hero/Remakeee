@@ -327,7 +327,7 @@ T = {
 "Night Owl": "Nachtschwärmer", "Win 50 battles at night.": "Gewinne 50 Kämpfe bei Nacht.",
 "Every Field": "Alle Felder", "Win a battle on every battle field.": "Gewinne auf jedem Kampffeld einen Kampf.",
 "Globetrotter": "Weltenbummler", "Enter every map with wild Spirlings.": "Betritt jede Karte mit wilden Spirlings.",
-"Five at the Cap": "Fünf am Deckel", "Have five Spirlings at ring 60 in your team.": "Hab fünf Spirlings auf Ring 60 in deinem Team.",
+"Five at Sixty": "Fünf bei Sechzig", "Have five Spirlings at ring 60 in your team.": "Hab fünf Spirlings auf Ring 60 in deinem Team.",
 "Host": "Gastgeber", "Meet the rare visitor of the day on 30 different days.": "Triff den seltenen Besucher des Tages an 30 verschiedenen Tagen.",
 "No Missed Beat": "Ohne Fehltakt", "Play the Echo melody without a missed note.": "Spiele die Echo-Melodie ohne verpassten Ton.",
 "Badge book %d/%d (%d%%)": "Abzeichenbuch %d/%d (%d%%)",

@@ -33,7 +33,7 @@ func test_wild_rooms_are_five_under_the_cap() -> void:
 	for slot: int in range(1, EchoPath.ROOMS + 1):
 		var s: Spirling = EchoPath.wild_for(slot)
 		if s != null:
-			assert_eq(s.level, Spirling.MAX_LEVEL - 5)
+			assert_eq(s.level, Spirling.STORY_RING - 5)
 	var team: Array[Spirling] = EchoPath.echo_team(1)
 	assert_eq(team.size(), EchoPath.ECHO_TEAM, "enough kinds for the echoes at the higher ring")
 	assert_gt(team[0].level, EchoPath.WILD_RING)

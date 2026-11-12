@@ -28,6 +28,14 @@
     "tx": 5,
     "ty": 7,
     "facing": "up"
+   },
+   {
+    "x": 3,
+    "y": 6,
+    "to": "greyreach_hut",
+    "tx": 3,
+    "ty": 4,
+    "facing": "up"
    }
   ]
  }

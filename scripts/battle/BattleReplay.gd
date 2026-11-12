@@ -118,7 +118,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	var m := BattleModel.new(mine, foes, bool(snap.get("wild", true)), int(snap.get("seed", 0)), int(snap.get("ai", 0)))
 	m.inventory = (snap.get("inventory", {}) as Dictionary).duplicate()
 	m.items_allowed = bool(snap.get("items_allowed", true))
-	m.level_cap = int(snap.get("level_cap", Spirling.MAX_LEVEL))
+	m.level_cap = int(snap.get("level_cap", Spirling.LEVEL_SANITY))
 	m.trainer_name = str(snap.get("trainer", ""))
 	var tune: Variant = snap.get("profile_tune", {})
 	m.ai.set_profile(str(snap.get("profile", "")), tune if tune is Dictionary else {})
