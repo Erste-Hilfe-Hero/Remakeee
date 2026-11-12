@@ -143,6 +143,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | `greyreach` | Greyreach, grey uplands | Veit's duel, old cartographer Moss |
 | `wide_rift_edge` | the edge of the Wide Rift | scene `wide_rift_reveal` |
 | `rook_vault` | the Rook Vault under Greyreach (item 1305) | feather-switch dungeon, 4 rooms, the Rook Keeper |
+| `dyeworks` | the Drowned Dyeworks under the Stillwater jetty | valve dungeon, 5 rooms, Cardew the loss adjuster, the dye ledger |
 
 ### Act II side content (Corvane)
 
@@ -163,6 +164,24 @@ Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German
   Corvane kinds), **Corbin's twelve grey feathers** (collectibles on six maps).
 - Favors with hidden trust: Pockets Pell (lend a Spirling), Ollie Fairweather (lend coins),
   Dimsy Crake (believe his Rook Vault shortcut).
+- **The Drowned Dyeworks** (`data/dialogue/dyeworks.json`, `data/maps/dyeworks.json`, German:
+  `tools/i18n/de_dyeworks.py`): the dye houses Larkin (madder red) and Fennimore (woad blue) have
+  feuded since the Dyeworks flooded twenty years ago. Four valve rooms (turn the valves in the
+  order on each room's brass plate, flags `dye_room_0`..`3`) lead to Cardew the loss adjuster,
+  who sits on the ledger: both houses opened the sluices together for the insurance and kept the
+  workers' wages.
+- **The ledger** (goal `dye_ledger`, trust choice with consequences): burn it (`ledger_burned`),
+  give it to **Aunt Prim**, the quay fixer (betrayal `prim_ledger`: she sells it to both houses
+  and your name as the thief; caught when Hatch or her niece Tansy warned you: `hatch_warned`,
+  `tansy_slip`), or to **Widow Wenna** in Madderby (favor `wenna_ledger`: honest, unless you
+  beat her nephews for Bookie Lark's coin, which raises her hidden use by 25 and makes her sell
+  you; she says so before you hand it over).
+- **Rival Tansy Hask**, Prim's niece: three story duels (`tansy_1`..`3`) at Stillwater, in the
+  drying lofts and on the quay after the ledger is gone.
+- **Bookie Lark's dye feud** (six cousin duels, `beat_cousin_1`..`6`), **Sealwright Odo's ten
+  house seals** (five in the Dyeworks, five across Corvane), **Hatch's last shift** (three
+  end-of-shift bells; Hatch then warns you about Prim).
+- `tools/act_hours.py 2` puts Act II at 32.8 h (26.3 h before the Dyeworks).
 - Twelve cartographer's stones of Corvane (item 1312, `data/dialogue/corvane_stones.json`,
   action `marker_stone <n> corvane`), counted apart from Veydal's, keepsakes at 4, 8 and 12.
 

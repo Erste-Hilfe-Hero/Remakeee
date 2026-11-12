@@ -153,9 +153,18 @@ func _draw() -> void:
 		ElementIcons.draw_row(self, [el] as Array[int], Vector2(bx, y_text - ElementIcons.SIZE), BattleUiStyle.badge_color(era, el))
 		bx += ElementIcons.SIZE + 1
 	var right: String = "R%d" % level
-	if not status.is_empty():
+	var badge: Color = EraBattleFeel.status_badge(era, status)
+	if not status.is_empty() and badge.a <= 0.0:
 		right = StatusRules.label(status).substr(0, 3).to_upper() + " " + right
 	draw_string(font, Vector2(0, y_text), right, HORIZONTAL_ALIGNMENT_RIGHT, w, fs, UITheme.INK)
+	if badge.a > 0.0:
+		# Era II+: the status as a coloured badge left of the ring number.
+		var tag: String = StatusRules.label(status).substr(0, 3).to_upper()
+		var lw: float = font.get_string_size(right, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		var tw: float = font.get_string_size(tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		var box := Rect2(roundf(w - lw - tw - 6.0), y_text - fs + 1.0, roundf(tw + 3.0), float(fs))
+		draw_rect(box, badge)
+		draw_string(font, Vector2(box.position.x + 1.0, y_text), tag, HORIZONTAL_ALIGNMENT_LEFT, -1, fs, Color("f8f4ec"))
 	var bar_y: float = y_text + 3.0
 	var frac: float = clampf(display_hp / float(maxi(max_hp, 1)), 0.0, 1.0)
 	_draw_hp_bar(bar_y, w, frac)

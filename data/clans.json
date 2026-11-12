@@ -50,6 +50,8 @@
   "gaunt": {"clan": "none", "act": 2, "role": "loan shark, robs her own collectors", "trust": 20, "use": 60},
   "pell": {"clan": "none", "act": 2, "role": "quay fence, borrows Spirlings", "trust": 35, "use": 40},
   "ollie": {"clan": "none", "act": 2, "role": "tonic seller, skips town", "trust": 30, "use": 45},
+  "prim": {"clan": "none", "act": 2, "role": "quay fixer, sells everything twice", "trust": 20, "use": 60},
+  "wenna": {"clan": "none", "act": 2, "role": "dyer's widow, wants the drowned wages", "trust": 50, "use": 35},
   "dimsy": {"clan": "none", "act": 2, "role": "Rook Vault guide, sells marks to robbers", "trust": 25, "use": 50},
   "ambrel": {"clan": "none", "role": "sexton who sells bronze by the pound", "trust": 20, "use": 70},
   "quell": {"clan": "none", "role": "archivist who forges routes", "trust": 20, "use": 65},
@@ -140,6 +142,7 @@
    "kept": {"say": "clans/sable_dune_kept", "trust": {"sable": 5}}},
   "pell_lend": {"npc": "pell", "kind": "lend_spirling", "reward_chance": 0.4, "betray": {"say": "corvane_side/pell_betray", "take_keepsake": true, "use": {"pell": 10}}, "reward": {"say": "corvane_side/pell_reward", "item": "kin_charm", "trust": {"pell": 10}}, "kept": {"say": "corvane_side/pell_kept", "trust": {"pell": 5}}},
   "ollie_stake": {"npc": "ollie", "kind": "lend_coins", "amount": 250, "reward_chance": 0.5, "betray": {"say": "corvane_side/ollie_betray", "ledger": "ollie"}, "reward": {"say": "corvane_side/ollie_reward", "coins": 450, "trust": {"ollie": 10}}, "kept": {"say": "corvane_side/ollie_kept", "coins": 250}},
+  "wenna_ledger": {"npc": "wenna", "kind": "believe_tip", "reward_chance": 0.5, "betray": {"say": "dyeworks/wenna_betray", "ledger": "wenna", "battle": "ambush_wenna"}, "reward": {"say": "dyeworks/wenna_reward", "item": "max_tonic", "coins": 1200, "trust": {"wenna": 10}}, "kept": {"say": "dyeworks/wenna_kept", "item": "strong_tonic"}},
   "dimsy_tip": {"npc": "dimsy", "kind": "believe_tip", "reward_chance": 0.4, "betray": {"say": "corvane_side/dimsy_betray", "battle": "ambush_vault"}, "reward": {"say": "corvane_side/dimsy_reward", "item": "max_tonic", "trust": {"dimsy": 10}}, "kept": {"say": "corvane_side/dimsy_kept"}}
  },
  "betrayals": {
@@ -249,6 +252,7 @@
    "caught": {"flags": ["clan_b11"], "ledger": "throne", "trust": {"fenrick": -20}, "say": "clans/throne_f_caught"},
    "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}},
   "nib_sale": {"act": 2, "npc": "nib", "rule": "warned", "warned_by": ["nib_warned"], "caught": {"ledger": "nib", "trust": {"nib": -20}, "say": "corvane_side/nib_caught", "item": "max_tonic"}, "struck": {"ledger": "nib", "say": "corvane_side/nib_struck", "battle": "ambush_nib"}},
+  "prim_ledger": {"act": 2, "npc": "prim", "rule": "warned", "warned_by": ["hatch_warned", "tansy_slip"], "caught": {"ledger": "prim", "coins": 900, "item": "max_tonic", "trust": {"prim": -20}, "say": "dyeworks/prim_caught"}, "struck": {"ledger": "prim", "coins": -300, "say": "dyeworks/prim_struck", "battle": "ambush_dyeworks"}},
   "gaunt_cut": {"act": 2, "npc": "gaunt", "rule": "warned", "warned_by": ["brask_warned"], "caught": {"ledger": "gaunt", "coins": 600, "say": "corvane_side/gaunt_caught"}, "struck": {"ledger": "gaunt", "coins": 300, "say": "corvane_side/gaunt_struck", "battle": "ambush_gaunt"}},
   "lq_hallowmur": {"act": 5, "npc": "ambrel", "rule": "warned", "warned_by": ["lq_hallowmur_kept"], "caught": {"flags": ["lq_hallowmur_caught"], "ledger": "lq_hallowmur", "trust": {"ambrel": -30}, "say": "legend_quests/hallowmur_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_hallowmur_struck"], "ledger": "lq_hallowmur", "say": "legend_quests/hallowmur_struck", "battle": "lq_ambrel"}},
   "lq_scriptorax": {"act": 5, "npc": "quell", "rule": "warned", "warned_by": ["lq_scriptorax_kept"], "caught": {"flags": ["lq_scriptorax_caught"], "ledger": "lq_scriptorax", "trust": {"quell": -30}, "say": "legend_quests/scriptorax_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_scriptorax_struck"], "ledger": "lq_scriptorax", "say": "legend_quests/scriptorax_struck", "battle": "lq_quell"}},
@@ -322,6 +326,8 @@
   {"id": "farida_book", "act": 3, "ref": "edge_camp/ledger_farida_book"},
   {"id": "nib", "act": 2, "ref": "corvane_side/ledger_nib"},
   {"id": "gaunt", "act": 2, "ref": "corvane_side/ledger_gaunt"},
+  {"id": "prim", "act": 2, "ref": "dyeworks/ledger_prim"},
+  {"id": "wenna", "act": 2, "ref": "dyeworks/ledger_wenna"},
   {"id": "ollie", "act": 2, "ref": "corvane_side/ledger_ollie"},
   {"id": "quay_book", "act": 2, "ref": "corvane_side/ledger_quay_book"},
   {"id": "lq_hallowmur", "act": 5, "ref": "legend_quests/hallowmur_ledger"},

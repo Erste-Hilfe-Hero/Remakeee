@@ -66,13 +66,26 @@ faints sink, glints, dust, field tints and the camera stay off, and a hit is a s
 pulses run at most 3 a second at half strength. The field tint stays at 22 % or less. The
 colour-blind HP patterns are unchanged.
 
+## Slice 2 (follow-up PR)
+
+- The later-era elements have their own drawings now: Ink blot and splat, Echo rings, Rust
+  flakes, Mask face and grin, Acid bubbles and puddle, Frost crystal and spikes, Gilt coins, Zenith
+  light pillar. Before, they borrowed an Era I element.
+- Banks per terrain from Era II: lake stepping stones with water at the foot, ridge cut stone,
+  ember basalt with glowing cracks, voice motes, field grass (thicker from Era III). The Era IV/V
+  stage slabs take terrain colours.
+- Unfurl (evolution) per era: ink on parchment (I), colour wash (II), banded light (III), turning
+  rays (IV), rays with rising motes (V). White glowing silhouettes from Era II, the sprite grows to
+  the era's battle size, and from Era III a ring rises at the reveal.
+- Status tag from Era II: a coloured badge (Era I keeps plain ink letters).
+- Era V: every Spirling moves, whatever its origin era (tested on one Spirling from each era that
+  has art).
+
 ## Still missing (follow-ups)
 
 - Battle text box frame per era: shared with menus, so it belongs to the erafeel-ui slice.
 - Weather visuals in battle: wait for erafeel-func's weather rules.
-- Unfurl (evolution) sequence variants per era (`scripts/ui/UnfurlSequence.gd`).
-- Status icons per era on the info strip (all eras use the same icon set now).
-- Per-move hand-made effects for the Era II-V elements (Ink, Echo, Rust, Mask, Acid, Frost, Gilt,
-  Zenith still borrow the nearest Era I element drawing, now in their own colour).
 - Era III/IV fx art sheets (Era III+ load the Era II 8x8 shapes).
+- Hand-drawn Era IV/V art for the Spirlings that have none yet (they show the placeholder, so they
+  get no Era V strip).
 - Formation (multi) battles use the same sprite feel but no per-era layout change.

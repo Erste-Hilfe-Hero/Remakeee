@@ -251,7 +251,49 @@ func _bank(r: Rect2) -> void:
 	if _hi.a > 0.0:
 		draw_rect(Rect2(rr.position + Vector2(1, 0), Vector2(rr.size.x - 2, 1)), _hi)
 		draw_rect(Rect2(rr.position + Vector2(0, rr.size.y), Vector2(rr.size.x, 1)), Color(_ink, 0.4))
+	if era >= 2:
+		_bank_terrain(rr)
+		return
 	# Grass tufts along the lip.
 	for x: int in range(int(rr.position.x) + 3, int(rr.end.x) - 2, 7):
 		draw_rect(Rect2(x, rr.position.y - 1, 1, 1), _ink)
 		draw_rect(Rect2(x + 2, rr.position.y - 1, 1, 1), _ink)
+
+## Era II/III: each place gets its own bank (owner plan, per-terrain platforms): lake banks are
+## stepping stones with water lapping at the foot, ridge banks cut stone, ember banks basalt with
+## glowing cracks, voice banks glow with motes, field banks keep their grass.
+func _bank_terrain(rr: Rect2) -> void:
+	var x0: int = int(rr.position.x)
+	var x1: int = int(rr.end.x)
+	var top: float = rr.position.y
+	var foot: float = rr.end.y
+	match kind:
+		"lake":
+			for x: int in range(x0 - 4, x1 + 4, 6):
+				draw_rect(Rect2(x, foot + 1, 3, 1), _acc)
+				draw_rect(Rect2(x + 3, foot + 3, 2, 1), _bg)
+			for x: int in range(x0 + 6, x1 - 4, 12):
+				draw_rect(Rect2(x, top + 4, 1, rr.size.y - 5), _ink)
+		"ridge":
+			for row: int in 2:
+				var y: float = top + 3 + row * 3
+				for x: int in range(x0 + (row * 4), x1, 8):
+					draw_rect(Rect2(x, y, 1, 3), _ink)
+			for x: int in range(x0 + 2, x1 - 2, 9):
+				draw_rect(Rect2(x, top - 1, 3, 1), _mid)
+		"ember":
+			for x: int in range(x0 + 4, x1 - 3, 10):
+				draw_rect(Rect2(x, top + 3, 1, 2), _acc)
+				draw_rect(Rect2(x + 1, top + 5, 2, 1), _acc)
+			for x: int in range(x0 + 1, x1 - 1, 5):
+				draw_rect(Rect2(x, top - 1, 1, 1), _ink)
+		"voice":
+			for x: int in range(x0 + 3, x1 - 2, 8):
+				draw_rect(Rect2(x, top - 3 - (x / 8) % 3, 1, 1), _acc)
+			draw_rect(Rect2(rr.position + Vector2(0, 2), Vector2(rr.size.x, 1)), _acc)
+		_:
+			for x: int in range(x0 + 3, x1 - 2, 7):
+				draw_rect(Rect2(x, top - 1, 1, 1), _ink)
+				draw_rect(Rect2(x + 2, top - 1, 1, 1), _ink)
+				if era >= 3:
+					draw_rect(Rect2(x + 1, top - 2, 1, 1), _mid)
