@@ -287,7 +287,7 @@ func warp_out(tile_kind: int, edge: bool, facing: String, fade: ColorRect) -> bo
 			wipe_up = facing == "up"
 			wipe_k = 0.0
 			var tw: Tween = create_tween()
-			tw.tween_property(self, "wipe_k", 1.0, WIPE_TIME)
+			tw.tween_property(self, "wipe_k", 1.0, WIPE_TIME).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 			await tw.finished
 			fade.color.a = 1.0
 			_cover(fade)
@@ -310,7 +310,7 @@ func _open_wipe() -> void:
 		return
 	wipe_k = 1.0
 	var tw: Tween = create_tween()
-	tw.tween_property(self, "wipe_k", 0.0, WIPE_TIME)
+	tw.tween_property(self, "wipe_k", 0.0, WIPE_TIME).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 	tw.tween_callback(func() -> void: wipe_style = "")
 
 ## Era V: the first time a big place is entered the camera starts toward its middle and
