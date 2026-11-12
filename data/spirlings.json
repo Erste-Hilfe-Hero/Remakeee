@@ -1585,7 +1585,7 @@
     "Drowned Bell"
    ],
    "55": [
-    "Duskglass Grip"
+    "Shadow Whisper"
    ],
    "58": [
     "Nightfall"
@@ -1846,9 +1846,6 @@
    ],
    "52": [
     "Fathom Crush"
-   ],
-   "55": [
-    "Wave Shoulder"
    ],
    "58": [
     "Gust Ladder"
@@ -2118,7 +2115,7 @@
     "Slow Quake"
    ],
    "55": [
-    "Glowglass Slash"
+    "Soot Smudge"
    ],
    "58": [
     "Kiln Rush"
@@ -2437,7 +2434,7 @@
     "Thunderhead"
    ],
    "55": [
-    "Boltglass Bite"
+    "Spark Prod"
    ],
    "58": [
     "Pall"
@@ -2562,8 +2559,7 @@
     "Canopy Crash"
    ],
    "55": [
-    "Seed Spit",
-    "Vineglass Sting"
+    "Seed Spit"
    ],
    "58": [
     "Root Grip"
@@ -2691,7 +2687,7 @@
     "Fathom Crush"
    ],
    "55": [
-    "Floodglass Wave"
+    "Wave Shoulder"
    ]
   },
   "bond_rate": 0.3,
@@ -2752,9 +2748,6 @@
    ],
    "52": [
     "Fathom Crush"
-   ],
-   "55": [
-    "Rockglass Ram"
    ]
   },
   "bond_rate": 0.1,
@@ -2811,9 +2804,6 @@
    ],
    "52": [
     "Downburst"
-   ],
-   "55": [
-    "Whistle Wind"
    ],
    "58": [
     "Weathervane"
@@ -3196,9 +3186,6 @@
    "52": [
     "Monolith Drop"
    ],
-   "55": [
-    "Spark Prod"
-   ],
    "58": [
     "Live Wire"
    ]
@@ -3451,9 +3438,6 @@
    ],
    "52": [
     "Prism Burst"
-   ],
-   "55": [
-    "Lightglass Beam"
    ],
    "58": [
     "Cyclone Wheel"
@@ -3837,7 +3821,7 @@
     "Bonfire Body"
    ],
    "55": [
-    "Soot Smudge"
+    "Tinder Flick"
    ],
    "58": [
     "Hearth Collapse"
@@ -3967,9 +3951,6 @@
    "52": [
     "Nightfall"
    ],
-   "55": [
-    "Shadow Whisper"
-   ],
    "58": [
     "Ore Pulse"
    ]
@@ -4095,9 +4076,6 @@
    ],
    "52": [
     "Downburst"
-   ],
-   "55": [
-    "Tinder Flick"
    ],
    "58": [
     "Kiln Rush"
@@ -7009,7 +6987,7 @@
     "Downburst"
    ],
    "55": [
-    "Stormglass Cut"
+    "Whistle Wind"
    ]
   },
   "bond_rate": 0.55,
