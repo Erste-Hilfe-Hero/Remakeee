@@ -23,6 +23,7 @@ SOURCES = [
     ("audio/music/*.ogg", "tools/audio/gen_audio.py", "original chiptune: chord charts and motifs written for Chimora, synthesized pulse/triangle/noise, Vorbis via ffmpeg"),
     ("audio/ambience/*.ogg", "tools/audio/gen_audio.py", "original ambience loop built from filtered noise and tone patterns, no recordings"),
     ("art/era1/fx/*.png", "tools/art/gen_fx.py", "original 8x8 effect shape for battle arts, Era I ink"),
+    ("art/era5/spirlings/*.png", "tools/art/gen_era5.py", "original Spirling line drawn from its line spec with the project's body plans, lit part by part at 96x96, Era V Living"),
     ("art/era1/chars/stranger*.png", "tools/art/gen_strangers.py", "original 16 px overworld sheet of a stranger from the map's edge, Era I ink"),
     ("art/era2/chars/*.png", "tools/art/era2_colourise.py", "own Era I character sheet recoloured with an original per-figure palette, Era II Aquarell"),
     ("art/era2/fx/*.png", "tools/art/era2_colourise.py", "own Era I effect shape recoloured with an original per-element palette, Era II Aquarell"),
