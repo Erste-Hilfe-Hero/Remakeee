@@ -46,6 +46,10 @@ static func set_era_skin(p: Array[Color], frame: String, large_font: bool) -> vo
 
 ## The font every screen uses, small or large.
 static func font() -> FontFile:
+	# Eras III to V write English and German with their own fonts (EraText, EraFont).
+	var own: FontFile = EraText.font(large_text)
+	if own != null:
+		return own
 	return PixelFont.get_large_font() if large_text or era_large_font else PixelFont.get_font()
 
 ## WCAG contrast ratio of two colours (1 to 21).
@@ -77,7 +81,8 @@ static var _frames: Dictionary[Color, ImageTexture] = {}
 static var _era_frames: Dictionary[String, ImageTexture] = {}
 
 static func get_theme() -> Theme:
-	if _theme == null:
+	# The font also follows the language (the era fonts are drawn for English and German).
+	if _theme == null or _theme.default_font != font():
 		_theme = _build()
 	return _theme
 
