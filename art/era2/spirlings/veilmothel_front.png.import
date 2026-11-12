@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6yffvac2x3op5"
-path="res://.godot/imported/wickmothel_back.png-78d3daf5ea9c21ee8a02de34ce9d4202.ctex"
+uid="uid://cik31m8xlikhn"
+path="res://.godot/imported/veilmothel_front.png-74cddf8850407a6587d7b4fa590683dd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/era2/spirlings/wickmothel_back.png"
-dest_files=["res://.godot/imported/wickmothel_back.png-78d3daf5ea9c21ee8a02de34ce9d4202.ctex"]
+source_file="res://art/era2/spirlings/veilmothel_front.png"
+dest_files=["res://.godot/imported/veilmothel_front.png-74cddf8850407a6587d7b4fa590683dd.ctex"]
 
 [params]
 

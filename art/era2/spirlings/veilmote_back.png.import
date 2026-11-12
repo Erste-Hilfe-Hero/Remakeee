@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://yacg678vw11ep"
-path="res://.godot/imported/wickmote_back.png-91f3930981aa0e17a8e1ee16ffb85db8.ctex"
+uid="uid://fql7vsnh9ly36"
+path="res://.godot/imported/veilmote_back.png-2afbc5c790402e6c4da74da2302dbcb7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/era2/spirlings/wickmote_back.png"
-dest_files=["res://.godot/imported/wickmote_back.png-91f3930981aa0e17a8e1ee16ffb85db8.ctex"]
+source_file="res://art/era2/spirlings/veilmote_back.png"
+dest_files=["res://.godot/imported/veilmote_back.png-2afbc5c790402e6c4da74da2302dbcb7.ctex"]
 
 [params]
 
