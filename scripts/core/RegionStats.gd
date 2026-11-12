@@ -45,7 +45,7 @@ static func mapped_percent(entry: Dictionary) -> int:
 ## Lines for the records screen, in the order of data/world_layout.json.
 static func lines(flags: Dictionary) -> Array[String]:
 	var t: Dictionary = totals(flags)
-	var order: Array = ["veydal", "corvane", "ashmere", "solenne"]
+	var order: Array = ["veydal", "corvane", "ashmere", "solenne", "vellmarch"]
 	for r: Variant in t:
 		if not r in order:
 			order.append(r)

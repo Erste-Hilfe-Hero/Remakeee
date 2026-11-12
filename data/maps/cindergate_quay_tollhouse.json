@@ -1,0 +1,35 @@
+{
+ "name": "Cindergate Tollhouse",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "cindergate_quay",
+   "tx": 3,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "clerk",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/cindergate_quay_tollhouse_clerk",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}
