@@ -542,17 +542,20 @@
   "lines": [
    "Jinks takes the coins, grins, and is gone. A minute later a large woman with a ledger blocks the road.",
    "Dunmore: Jinks sold me your whereabouts for a head start. Says you owe Brennick. Everyone owes Brennick."
-  ]
+  ],
+  "flag": "jinks_bet_done"
  },
  "jinks_reward": {
   "lines": [
    "A week later a parcel comes for you: four hundred coins and a note. 'Double, like I said. Don't tell anyone I'm honest. - J.'"
-  ]
+  ],
+  "flag": "jinks_bet_done"
  },
  "jinks_kept": {
   "lines": [
    "Jinks pays you back the same evening, exact to the coin. He looks surprised at himself."
-  ]
+  ],
+  "flag": "jinks_bet_done"
  },
  "jinks_ambush_defeat": {
   "lines": [
