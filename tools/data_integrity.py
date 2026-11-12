@@ -14,7 +14,7 @@ the references between files that many parallel content PRs touch at once:
   flags      every flag that is checked somewhere is set somewhere (errors); flags that are
              set but never checked are listed as notes (they are often plain records)
   species    every encounter table, Wayfarer / story / event team and gift names an existing
-             Spirling; every level is 1..Spirling.MAX_LEVEL
+             Spirling; every level is 1..LEVEL_SANITY_MAX (no level cap by design)
   items      every item id referenced in maps, dialogue actions, conditions, scenes and clans
              exists in data/items.json
   ids        no duplicate ids inside clans.json sections, story battles, quests, items; no
@@ -97,7 +97,7 @@ def gd_const(path, name):
     return int(m.group(1))
 
 
-MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "MAX_LEVEL")
+LEVEL_SANITY_MAX = 9999
 
 json_files = []
 for dp, _, fs in os.walk(DATA):
@@ -471,8 +471,9 @@ for p in ("data/endgame.json", "data/events.json", "data/warden_rematch.json", "
 def level_ok(where, lv):
     if isinstance(lv, bool) or not isinstance(lv, (int, float)):
         return
-    if not 1 <= lv <= MAX_LEVEL:
-        err("species", "%s: level %s outside 1..%d (Spirling.MAX_LEVEL)" % (where, lv, MAX_LEVEL))
+    # No level cap by design (owner 2026-11-12); only reject garbage values.
+    if not 1 <= lv <= LEVEL_SANITY_MAX:
+        err("species", "%s: level %s outside 1..%d" % (where, lv, LEVEL_SANITY_MAX))
 
 
 def species_ok(where, sp):
@@ -687,7 +688,7 @@ for g in q.get("main", []):
 for g in q.get("side", []):
     C([g.get("show"), g.get("done")] + list(g.get("progress", []) or []), "quest side " + str(g.get("id")))
 
-for p in ("data/region2.json", "data/region4.json"):
+for p in ("data/region2.json", "data/region3.json", "data/region4.json"):
     r = J.get(p)
     if not isinstance(r, dict):
         continue
