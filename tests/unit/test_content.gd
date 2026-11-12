@@ -4,10 +4,11 @@ extends GutTest
 func before_all() -> void:
 	Database.load_all()
 
+## Each kind is drawn in its own era (Era III kinds of Quillmarch in art/era3/).
 func test_every_species_has_art() -> void:
 	for name: String in Database.spirlings:
 		for side: String in ["front", "back"]:
-			var path: String = "res://art/era1/spirlings/%s_%s.png" % [name.to_lower(), side]
+			var path: String = "res://art/era%d/spirlings/%s_%s.png" % [Database.spirlings[name].era, name.to_lower(), side]
 			assert_true(ResourceLoader.exists(path), "missing %s" % path)
 
 func test_dex_ids_are_unique_and_dense() -> void:

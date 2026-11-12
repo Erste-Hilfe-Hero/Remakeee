@@ -111,8 +111,8 @@ func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != "veydal":
-			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_front.png" % sd.species_name.to_lower()), "%s has a placeholder sprite" % sd.species_name)
-			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_back.png" % sd.species_name.to_lower()))
+			assert_true(ResourceLoader.exists("res://art/era%d/spirlings/%s_front.png" % [sd.era, sd.species_name.to_lower()]), "%s has a placeholder sprite" % sd.species_name)
+			assert_true(ResourceLoader.exists("res://art/era%d/spirlings/%s_back.png" % [sd.era, sd.species_name.to_lower()]))
 
 func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 	var kinds: Array[SpirlingData] = SpirlogBook.visible_kinds({})
