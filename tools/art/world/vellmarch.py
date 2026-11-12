@@ -427,6 +427,8 @@ def route(mid):
     lo, hi = r["ring"]
     spawns = []
     for slot, w in zip(r["slots"], SLOT_WEIGHTS):
+        if slot["species"]:
+            w = slot["weight"]  # an own common kind rolls at the sheet's share (common band 25-45)
         spawns.append({"species": slot_species(slot), "min": lo, "max": hi, "weight": w, "ground": GROUND[slot["ground"]][1]})
     for (sp, gi), w in zip(FILL[mid], FILL_WEIGHTS):
         if sp not in SPECIES or SPECIES[sp].get("rarity") != "uncommon":

@@ -2383,21 +2383,21 @@
     "species": "Tollpip",
     "min": 52,
     "max": 55,
-    "weight": 9,
+    "weight": 40,
     "ground": "fern"
    },
    {
     "species": "Flakit",
     "min": 52,
     "max": 55,
-    "weight": 7,
+    "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Snaglet",
     "min": 52,
     "max": 55,
-    "weight": 5,
+    "weight": 25,
     "ground": "reeds"
    },
    {
@@ -2423,21 +2423,21 @@
     "species": "Sootkin",
     "min": 53,
     "max": 56,
-    "weight": 9,
+    "weight": 40,
     "ground": "fern"
    },
    {
     "species": "Bargit",
     "min": 53,
     "max": 56,
-    "weight": 7,
+    "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Boltnib",
     "min": 53,
     "max": 56,
-    "weight": 5,
+    "weight": 25,
     "ground": "scree"
    },
    {
@@ -2463,21 +2463,21 @@
     "species": "Splotchet",
     "min": 54,
     "max": 57,
-    "weight": 9,
+    "weight": 40,
     "ground": "reeds"
    },
    {
     "species": "Dimlure",
     "min": 54,
     "max": 57,
-    "weight": 7,
+    "weight": 35,
     "ground": "reeds"
    },
    {
     "species": "Tallop",
     "min": 54,
     "max": 57,
-    "weight": 5,
+    "weight": 25,
     "ground": "fern"
    },
    {
@@ -2503,21 +2503,21 @@
     "species": "Smogpup",
     "min": 55,
     "max": 58,
-    "weight": 9,
+    "weight": 40,
     "ground": "scree"
    },
    {
     "species": "Sprockle",
     "min": 55,
     "max": 58,
-    "weight": 7,
+    "weight": 35,
     "ground": "scree"
    },
    {
     "species": "Veilmote",
     "min": 55,
     "max": 58,
-    "weight": 5,
+    "weight": 25,
     "ground": "fern"
    },
    {
@@ -2543,21 +2543,21 @@
     "species": "Guiskit",
     "min": 56,
     "max": 59,
-    "weight": 9,
+    "weight": 40,
     "ground": "fern"
    },
    {
     "species": "Tithel",
     "min": 56,
     "max": 59,
-    "weight": 7,
+    "weight": 35,
     "ground": "fern"
    },
    {
     "species": "Snoblet",
     "min": 56,
     "max": 59,
-    "weight": 5,
+    "weight": 25,
     "ground": "scree"
    },
    {
@@ -2583,21 +2583,21 @@
     "species": "Fenglim",
     "min": 57,
     "max": 60,
-    "weight": 9,
+    "weight": 40,
     "ground": "reeds"
    },
    {
     "species": "Sedgel",
     "min": 57,
     "max": 60,
-    "weight": 7,
+    "weight": 35,
     "ground": "reeds"
    },
    {
     "species": "Pewnib",
     "min": 57,
     "max": 60,
-    "weight": 5,
+    "weight": 25,
     "ground": "fern"
    },
    {
