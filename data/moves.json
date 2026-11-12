@@ -1863,5 +1863,101 @@
    "foc": 2
   },
   "self": true
+ },
+ {
+  "name": "Crownfire Rend",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crowntide Surge",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownthorn Lash",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownbolt Arc",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownstone Break",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crowngale Rush",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownlight Ray",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownshade Grasp",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownink Scrawl",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownecho Peal",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownacid Etch",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
+ },
+ {
+  "name": "Crownfrost Shatter",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4
  }
 ]

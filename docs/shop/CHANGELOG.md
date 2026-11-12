@@ -14,6 +14,7 @@ Preiserhöhungen stehen mindestens 7 Tage vorher in den Neuigkeiten des Spiels. 
 | 2026-11-11 | 32 | Pay-to-win Schritt 2 (Ali): Bindungs-Köder I bis IV (100 bis 500 Rissglas), Siegel-Satz (10000 Rissglas), 7 uralte Spirlings auf Ring 40 mit vollen Funken (19,99 € oder 2000 Rissglas, neue Store-Produkte `de.chimora.game.spirling.*`) |
 | 2026-11-12 | 33 | Pay-to-win Schritt 4: Krit-Siegel I bis III (500, 1000, 1500 Rissglas), Status-Amulett und Eröffnungs-Schild (je 1500 Rissglas), Anzeige der Kauf-Vorteile zu Kampfbeginn; nur Rissglas, keine neuen Store-Produkte |
 | 2026-11-12 | 34 | Pay-to-win Schritt 5: Lockduft I bis III (200, 400, 700 Rissglas), Schimmerduft (500), Bindungs-Vorsprung I bis III (500, 1000, 1500), Zweitversuch-Talisman (300), Entfaltungsfunke (800), Großer Heiltrank (300); nur Rissglas, keine neuen Store-Produkte |
+| 2026-11-13 | 35 | Pay-to-win Schritt 6: 12 Meistertechniken (je 1000 Rissglas), Zweiter Gabenplatz (1500), Siebter Team-Platz (2500), Tiefer Rissatem (300), Spirling-Radar (800), Wunschtalisman (1000), Lagerflügel I bis V (500, 500, 500, 800, 800), Rissglas-Gezeitenmuschel (300), Spirlog-Atlas (600), Dreifacher Fund des Tages (1000), Wildschutz (800), Flinke Schritte (600), Taschenrast (1000), Rissschriften-Paket (3200), Reisestart-Trio (1500); Lager-Fach +1 nur bis 11 gekaufte Fächer; Echo-Duft-Texte mit Zahl; nur Rissglas, keine neuen Store-Produkte |
 
 Bisher ist nichts im Store verkauft worden. Darum gab es noch keine Preiserhöhung, die angekündigt werden
 musste.

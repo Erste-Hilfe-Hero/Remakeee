@@ -34,6 +34,8 @@ static func apply_unlocks() -> void:
 		GameState.day_night = true
 	if not owns_setting("weather"):
 		GameState.weather = true
+	if not owns_setting("wild_ward"):
+		GameState.wild_ward = false
 	if not owns_setting("fast_text") and GameState.text_speed == GameState.TextSpeed.FAST:
 		GameState.text_speed = GameState.TextSpeed.NORMAL
 
@@ -82,7 +84,7 @@ static func bond_grace() -> int:
 const SETTING_UNLOCKS: Dictionary[String, String] = {
 	"damage_preview": "damage_preview", "minimap": "minimap", "fast_text": "fast_text",
 	"retro": "retro_filter", "day_night": "sky_control", "weather": "sky_control",
-	"bench_lessons": "bench_lessons",
+	"bench_lessons": "bench_lessons", "wild_ward": "wild_ward",
 }
 
 ## True when the setting [param key] is free or its shop unlock was bought.
@@ -446,3 +448,166 @@ static func unfurl_spark_target(s: Spirling) -> SpirlingData:
 		if str(p.get("rule", "")) != "item" and p.get("to") is SpirlingData:
 			return p.to
 	return null
+
+## --- Pay-to-win step 6 (plan points 10-14, 27, 30, 31, 33, 35-38, 40, 50, 51, 57, 58, 60). ---
+
+## Team places from the Sixth and Seventh Team Place (0, 1 or 2) on top of GameState.MAX_PARTY.
+static func extra_team_places() -> int:
+	return (1 if Billing.unlocked("team_slot_6") > 0 else 0) + (1 if Billing.unlocked("team_slot_7") > 0 else 0)
+
+## The gifts in effect on [param s] as one table: its gift, plus the hidden gift of its line when the
+## shop's Second Gift Slot is open on it (plan point 12). The first gift wins where both set a key;
+## "immune" lists are joined.
+static func gift_table(s: Spirling) -> Dictionary:
+	var first: Dictionary = BattleRules.trait_info(s.gift_id())
+	var second_id: String = second_gift_id(s)
+	if second_id.is_empty():
+		return first
+	var second: Dictionary = BattleRules.trait_info(second_id)
+	var out: Dictionary = first.duplicate(true)
+	for k: Variant in second:
+		if str(k) == "immune":
+			var imm: Array = (out.get("immune", []) as Array).duplicate()
+			for x: Variant in second.immune:
+				if not x in imm:
+					imm.append(x)
+			out["immune"] = imm
+		elif not out.has(k):
+			out[k] = second[k]
+	return out
+
+## The id of the second gift working on [param s] ("" without the Second Gift Slot, or when it
+## would be the same gift twice).
+static func second_gift_id(s: Spirling) -> String:
+	if s == null or not s.gift_slot:
+		return ""
+	var h: String = HiddenGifts.gift_id(s.data)
+	return "" if h.is_empty() or h == s.gift_id() else h
+
+## True when the Second Gift Slot can open on [param s]: not open yet, and its line has a hidden
+## gift that differs from the gift it has.
+static func can_open_gift_slot(s: Spirling) -> bool:
+	if s == null or s.gift_slot:
+		return false
+	var h: String = HiddenGifts.gift_id(s.data)
+	return not h.is_empty() and h != s.gift_id()
+
+## Spirling Radar (plan point 27): a note naming the rarer wild kinds of table [param table_id]
+## and the ground they hide in. Empty without the unlock or when the place has none.
+static func radar_line(table_id: String) -> String:
+	if Billing.unlocked("radar") <= 0 or table_id.is_empty():
+		return ""
+	var parts: Array[String] = []
+	for sp: Dictionary in EncounterTable.table(table_id).get("spawns", []):
+		var sd: SpirlingData = Database.species(str(sp.get("species", "")))
+		if sd == null or sd.rarity == "common":
+			continue
+		var grounds: Array[String] = EncounterTable.grounds_of(sp)
+		var where: String = Loc.t("everywhere") if grounds.is_empty() else ", ".join(grounds.map(func(g: String) -> String: return Loc.t(g)))
+		var part: String = "%s (%s, %s)" % [Loc.t(sd.species_name), Loc.t(sd.rarity), where]
+		if not part in parts:
+			parts.append(part)
+	if parts.is_empty():
+		return ""
+	return Loc.t("Radar: %s") % "; ".join(parts)
+
+## Spirlog Atlas (plan point 35): every place of a kind is named on its page.
+static func spirlog_atlas() -> bool:
+	return Billing.unlocked("spirlog_atlas") > 0
+
+## How often the rare visitor of the day can be met (3 with the Triple Find of the Day, point 36).
+static func daily_find_visits() -> int:
+	return 3 if Billing.unlocked("daily_find_x3") > 0 else 1
+
+## Wild Ward (plan point 37): bought and switched on in Settings, no wild Spirling steps out.
+static func wild_ward_on() -> bool:
+	return GameState.wild_ward and owns_setting("wild_ward")
+
+## Walk speed factor on the map: 2 with Swift Steps (plan point 50).
+static func walk_mult() -> float:
+	return 2.0 if Billing.unlocked("swift_steps") > 0 else 1.0
+
+## Pocket Rest (plan point 51): rest from the menu anywhere outside battle.
+static func can_rest_anywhere() -> bool:
+	return Billing.unlocked("rest_anywhere") > 0
+
+## Rests the team through Pocket Rest. It counts for no daily task and moves no rest spot.
+static func pocket_rest() -> bool:
+	if not can_rest_anywhere():
+		return false
+	GameState.heal_party()
+	return true
+
+## Storage boxes owned after Storage Wing step [param step] (1 to 5, plan point 31).
+static func storage_wing_boxes(step: int) -> int:
+	var t: Variant = _values().get("storage_wing", [])
+	if not t is Array or step <= 0:
+		return 0
+	return int((t as Array)[mini(step, (t as Array).size()) - 1])
+
+## "max:<unlock>:<n>": the account owns at most n of the unlock (single Storage Boxes stop at 12).
+static func max_ok(req: String, owned: int) -> bool:
+	return owned <= int(req.get_slice(":", 2))
+
+## Pass of the day (plan point 38): the spawn a pass holder meets first each day on table
+## [param table_id], the rarer kind with the lowest weight (ties by name), {} when there is none.
+static func pass_rare_spawn(table_id: String) -> Dictionary:
+	var best: Dictionary = {}
+	for sp: Dictionary in EncounterTable.table(table_id).get("spawns", []):
+		var sd: SpirlingData = Database.species(str(sp.get("species", "")))
+		if sd == null or sd.rarity == "common":
+			continue
+		if best.is_empty() or int(sp.get("weight", 1)) < int(best.get("weight", 1)) \
+				or (int(sp.get("weight", 1)) == int(best.get("weight", 1)) and str(sp.species) < str(best.species)):
+			best = sp
+	return best
+
+const PASS_RARE_FLAG: String = "pass_rare_%s"
+
+## The pass holder's rare Spirling of the day on [param table_id], or null (no pass, met today,
+## no rarer kind there). Sets the day's flag when it appears.
+static func pass_rare(table_id: String, flags: Dictionary, rng: RandomNumberGenerator, day: String = "") -> Spirling:
+	if not pass_active():
+		return null
+	if day.is_empty():
+		day = DailyFind.today_key()
+	var key: String = PASS_RARE_FLAG % day
+	if bool(flags.get(key, false)):
+		return null
+	var sp: Dictionary = pass_rare_spawn(table_id)
+	if sp.is_empty():
+		return null
+	var sd: SpirlingData = Database.species(str(sp.species))
+	flags[key] = true
+	var wild := Spirling.new(sd, rng.randi_range(int(sp.get("min", 2)), int(sp.get("max", 4))), rng)
+	wild.restore()
+	return wild
+
+## Progress line for the team view (plan point 60, adults only, no button): what the best next
+## tier offer would add to Power right now, e.g. "Shop: Power Seal II adds 5 Power". Empty when
+## nothing is left or the player is under 18.
+static func next_power_line() -> String:
+	var b: Variant = Billing.band()
+	if b == null or int(b) < 18:
+		return ""
+	var best: Dictionary = {}
+	var best_gain: int = 0
+	for o: Dictionary in ShopCatalog.offers():
+		var req: String = str(o.get("requires", ""))
+		if not bool(o.get("ready", false)) or not req.begins_with("tier:"):
+			continue
+		var kind: String = req.get_slice(":", 1)
+		var owned: int = Billing.unlocked(kind)
+		if seal_max(kind) <= 0 or not tier_ok(req, owned):
+			continue
+		var gain: int = seal_percent(kind, owned + 1) - seal_percent(kind, owned)
+		if gain <= 0:
+			continue
+		# Most Power per Riftglass first; the cheaper offer wins a tie.
+		if best.is_empty() or gain * int(best.rg_price) > best_gain * int(o.rg_price) \
+				or (gain * int(best.rg_price) == best_gain * int(o.rg_price) and int(o.rg_price) < int(best.rg_price)):
+			best = o
+			best_gain = gain
+	if best.is_empty():
+		return ""
+	return Loc.t("Shop: %s adds %d Power") % [Loc.t(str(best.name)), best_gain]

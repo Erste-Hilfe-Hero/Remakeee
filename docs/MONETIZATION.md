@@ -174,6 +174,47 @@ Heilung im Kampf ohne Limit).
 - Alle zehn nur für Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert am Angebot, ab Altersstufe 13.
   **Keine neuen Store-Produkte** (`store/products.json` bleibt gleich).
 
+## Pay-to-win, Schritt 6 (Abschnitte 1 bis 3, Rest ohne neue Produkte und neue Grafik, 13. 11. 2026)
+
+Aus Abschnitt 1 kommen die Punkte 10 bis 14, aus Abschnitt 2 die Punkte 27, 30, 31, 33, 35 bis 38 und 40, aus
+Abschnitt 3 die Punkte 50, 51, 57, 58 und 60.
+
+| Angebot | Wirkung | Rissglas | Liga |
+| --- | --- | --- | --- |
+| Meistertechnik (`rg_master_<element>`, 12 Stück, Punkte 10/11) | bringt einem Spirling des Elements eine Technik mit Stärke 115, Genauigkeit 100, 4 Energie, ohne Nachteil bei (Wert 23 auf der Kurve, erspielbar höchstens 18, Rissschriften 21); je Element eine: Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra, Ink, Echo, Acid, Frost | je 1000 | Geschichte und Offene Liga; Gleichstand-Liga und Raid-Risse nehmen nur gelernte Techniken (`LeagueRules.fair_row`) |
+| Zweiter Gabenplatz (`rg_gift_slot`, Punkt 12) | die verborgene Gabe der Linie wirkt neben der eigenen Gabe, immer (`Spirling.gift_slot`, `ShopEffects.gift_table`); so ein Spirling wird nicht getauscht | 1500 | nur Geschichte |
+| Siebter Team-Platz (`rg_team_slot_7`, Punkt 13) | 1 Spirling mehr in Kämpfen gegen die Welt, 7 mit dem sechsten Platz (`GameState.party_max`, Server `_party_max`) | 2500, einmal | nur Geschichte; Ligen und Raid-Risse bleiben bei 5 (`LeagueRules.TEAM_MAX`) |
+| Tiefer Rissatem (`rg_rift_breath_deep`, Punkt 14) | Wiederbelebung mit 50 % im Kampf, ohne Grenze pro Kampf (der Rissatem bleibt bei 1) | 300 | wie der Rissatem |
+| Spirling-Radar (`rg_radar`, Punkt 27) | beim Betreten eines Ortes ein Hinweis mit seinen ungewöhnlichen, scheuen und uralten Arten und ihrem Boden (`ShopEffects.radar_line`) | 800, einmal | nur Geschichte |
+| Wunschtalisman (`rg_wish_charm`, Punkt 30) | klappt die Bindung, hat der neue Spirling in allen 5 Werten Funken 12; die Bindungschance bleibt | 1000 | nur Geschichte |
+| Lagerflügel I bis V (`rg_storage_wing_1..5`, Punkt 31) | in 5 Schritten 2/2/2/3/3 Fächer mehr, bis 12 Fächer = 600 Plätze (`advantage_values.storage_wing`); Schritt n braucht genau so viele gekaufte Fächer wie davor (`tier:storage_box:<n>`) | 500, 500, 500, 800, 800 (Summe 3100 statt 3600 einzeln) | keine Liga-Wirkung |
+| Rissglas-Gezeitenmuschel (`rg_tide_pearl`, Punkt 33) | wirkt wie die Gezeitenmuschel, der einzige Entfaltungs-Gegenstand (bei Händlern 2500 Münzen); eigenes Shop-Item ohne Händlerpreis (`unfurls_as` in `data/items.json`), zurückgefaltet kommt eine normale Gezeitenmuschel zurück | 300 | keine Liga-Wirkung |
+| Spirlog-Atlas (`rg_spirlog_atlas`, Punkt 35) | jede Spirlog-Seite nennt alle Orte der Art, auch nicht abgesuchte (`Collection.places_line`) | 600, einmal | keine Liga-Wirkung |
+| Dreifacher Fund des Tages (`rg_daily_find_x3`, Punkt 36) | der Besucher des Tages bis zu 3-mal am Tag (`DailyFind.EXTRA_FLAG`); nur der erste zählt für Tagesaufgaben | 1000, einmal | nur Geschichte |
+| Wildschutz (`rg_wild_ward`, Punkt 37) | Schalter in den Einstellungen: keine wilden Spirlings beim Gehen (`ShopEffects.wild_ward_on`) | 800, einmal | keine Liga-Wirkung |
+| Flinke Schritte (`rg_swift_steps`, Punkt 50) | Gehen und Rennen doppelt so schnell (`ShopEffects.walk_mult`, `GridWalker.speed_mult`) | 600, einmal | keine Liga-Wirkung |
+| Taschenrast (`rg_rest_anywhere`, Punkt 51) | "Rasten" im Menü heilt das Team überall außerhalb von Kämpfen; zählt für keine Tagesaufgabe, setzt keinen Rastplatz | 1000, einmal | keine Liga-Wirkung |
+| Rissschriften-Paket (`rg_script_pack`, Punkt 57) | alle 8 Rissschriften | 3200 statt 4000 | wie die Rissschriften |
+| Reisestart-Trio (`rg_starter_trio`, Punkt 58) | Zippit, Zephlet und Mirkmole auf Ring 15 mit Funken 12 in jedem Wert, nicht tauschbar | 1500, einmal | Werte nur in der Geschichte |
+
+- **Punkt 38 (Pass):** Mit aktivem Wanderer-Pass ist der erste wilde Spirling jedes Tages an einem Ort mit selteneren Arten
+  dessen seltenste Art (kleinstes Gewicht, `ShopEffects.pass_rare`). Feste Wahl, kein Zufall bei der Art. Der Pass-Text im
+  Store bleibt, bis der Pass verkauft wird (die Store-Beschreibung hat 200 Zeichen und muss Preis und Kündigung behalten).
+- **Punkt 40:** Alle Bindungs-Angebote nennen eine Zahl. Neu: Echo-Duft und Echo-Duft x10 sagen "25 %" statt "deutlich".
+  Das ändert nur die Texte von 2 vorhandenen Store-Produkten, keine Produkt-IDs.
+- **Punkt 60:** Die Team-Ansicht zeigt ab 18 Jahren neben "Macht N" eine Notiz "Shop: Macht-Siegel II bringt 5 Macht" (das
+  Stufen-Angebot mit der meisten Macht je Rissglas, `ShopEffects.next_power_line`). Kein Knopf, kein Kauffenster, unter 18 nichts.
+- **Neue Bedingung `max:<unlock>:<n>`:** Einzelne Lager-Fächer (`rg_storage_box`) gehen nur noch bis 11 gekaufte Fächer, damit
+  Fächer aus beiden Wegen nie über 12 kommen (`ShopEffects.max_ok`, Server `_shop_offer_block`).
+- **Server:** Migration `20261113120060_shop_p2w_step6.sql` (`_party_max` mit `team_slot_7`, `_shop_offer_block` mit `max:`,
+  `_trade_mon_why` lehnt `gift_slot` ab).
+- **Nicht gemacht, mit Grund:** Punkte 39, 54, 55, 56 (Sammel-Meilensteine, Tagesaufgaben, Wochen-Herausforderung, Echo-Turm)
+  zahlen Waymarks aus; Waymarks werden nie gegen Geld oder Rissglas verkauft (Abschnitt unten). Punkt 49 (Schnellreise überall
+  ab Beginn): Reisen zu besuchten Orten verkauft schon der Wegweiser (`rg_fast_travel`); Orte, die man noch nicht erreicht hat,
+  wären verkaufte Regionen, und die werden nie verkauft.
+- Alle 30 neuen Angebote nur für Rissglas (`rg_only`), feste Inhalte, Euro-Gegenwert am Angebot, ab Altersstufe 13.
+  **Keine neuen Store-Produkte** (`store/products.json` hat keine neue ID).
+
 ## Pay-to-win, Schritt 2 (Ali, 11. 11. 2026)
 
 Nächster Block des 200-Punkte-Plans: Siegel-Satz (Punkt 7), Bindungs-Köder in 4 Stufen (Punkt 22) und
@@ -250,7 +291,7 @@ item, so gifts cannot carry them (`tests/unit/test_waymarks.gd`).
 
 _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 
-177 Angebote (Katalog v34): 135 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
+207 Angebote (Katalog v35): 165 Vorteil, 2 Komfort, 33 Kosmetik, 7 Rissglas.
 
 | Kennung | Name | Euro | Rissglas | Art | Liga |
 | --- | --- | --- | --- | --- | --- |
@@ -431,5 +472,35 @@ _Erzeugt von `tools/shop/make_shop_table.py`, nicht von Hand ändern._
 | `rg_bond_retry` | Second Try Charm | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
 | `rg_unfurl_spark` | Unfurl Spark | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
 | `rg_grand_tonic` | Grand Tonic | 2,99 € | 300 | Vorteil | nur Offene Liga |
+| `rg_master_ember` | Master Technique: Crownfire Rend | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_tide` | Master Technique: Crowntide Surge | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_bloom` | Master Technique: Crownthorn Lash | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_volt` | Master Technique: Crownbolt Arc | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_stone` | Master Technique: Crownstone Break | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_gale` | Master Technique: Crowngale Rush | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_lumen` | Master Technique: Crownlight Ray | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_umbra` | Master Technique: Crownshade Grasp | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_ink` | Master Technique: Crownink Scrawl | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_echo` | Master Technique: Crownecho Peal | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_acid` | Master Technique: Crownacid Etch | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_master_frost` | Master Technique: Crownfrost Shatter | 9,99 € | 1000 | Vorteil | nur Offene Liga |
+| `rg_gift_slot` | Second Gift Slot | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
+| `rg_team_slot_7` | Seventh Team Place | 24,99 € | 2500 | Vorteil | keine Liga-Wirkung |
+| `rg_rift_breath_deep` | Deep Rift Breath | 2,99 € | 300 | Vorteil | nur Offene Liga |
+| `rg_radar` | Spirling Radar | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_wish_charm` | Wish Charm | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_storage_wing_1` | Storage Wing I | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_storage_wing_2` | Storage Wing II | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_storage_wing_3` | Storage Wing III | 4,99 € | 500 | Vorteil | keine Liga-Wirkung |
+| `rg_storage_wing_4` | Storage Wing IV | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_storage_wing_5` | Storage Wing V | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_tide_pearl` | Riftglass Tide Shell | 2,99 € | 300 | Vorteil | keine Liga-Wirkung |
+| `rg_spirlog_atlas` | Spirlog Atlas | 5,99 € | 600 | Vorteil | keine Liga-Wirkung |
+| `rg_daily_find_x3` | Triple Find of the Day | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_wild_ward` | Wild Ward | 7,99 € | 800 | Vorteil | keine Liga-Wirkung |
+| `rg_swift_steps` | Swift Steps | 5,99 € | 600 | Vorteil | keine Liga-Wirkung |
+| `rg_rest_anywhere` | Pocket Rest | 9,99 € | 1000 | Vorteil | keine Liga-Wirkung |
+| `rg_script_pack` | Rift Script Pack | 31,99 € | 3200 | Vorteil | nur Offene Liga |
+| `rg_starter_trio` | Journey Start Trio | 14,99 € | 1500 | Vorteil | keine Liga-Wirkung |
 
 <!-- shop-table:end -->
