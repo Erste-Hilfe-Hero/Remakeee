@@ -237,7 +237,7 @@ func _fade_flash(time: float) -> void:
 	var tw: Tween = create_tween()
 	tw.tween_method(func(v: float) -> void:
 		flash_amount = v
-		queue_redraw(), 1.0, 0.0, time / Juice.speed())
+		queue_redraw(), 1.0, 0.0, time / Juice.speed()).set_trans(Tween.TRANS_SINE)
 	await tw.finished
 	flash_amount = 0.0
 
@@ -256,7 +256,7 @@ func _puff() -> void:
 	var tw: Tween = create_tween()
 	tw.tween_method(func(v: float) -> void:
 		dust = v
-		queue_redraw(), 0.0, 1.0, DUST_TIME / Juice.speed())
+		queue_redraw(), 0.0, 1.0, DUST_TIME / Juice.speed()).set_trans(Tween.TRANS_SINE)
 	tw.tween_callback(func() -> void:
 		dust = -1.0
 		queue_redraw())
@@ -429,8 +429,8 @@ func faint() -> void:
 			var tw: Tween = create_tween().set_parallel(true)
 			tw.tween_method(func(v: float) -> void:
 				draw_scale = Vector2(1.0 + (1.0 - v) * 0.2, v)
-				queue_redraw(), 1.0, 0.15, 0.4 / Juice.speed())
-			tw.tween_property(self, "modulate:a", 0.0, 0.4 / Juice.speed())
+				queue_redraw(), 1.0, 0.15, 0.4 / Juice.speed()).set_trans(Tween.TRANS_SINE)
+			tw.tween_property(self, "modulate:a", 0.0, 0.4 / Juice.speed()).set_trans(Tween.TRANS_SINE)
 			await tw.finished
 		_:
 			if style == "sink_dust":

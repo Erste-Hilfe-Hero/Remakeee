@@ -40,7 +40,7 @@ func play(era: int) -> void:
 	queue_redraw()
 	if Juice.reduced():
 		var tw0: Tween = create_tween()
-		tw0.tween_property(self, "modulate:a", 0.0, REDUCED_TIME)
+		tw0.tween_property(self, "modulate:a", 0.0, REDUCED_TIME).set_trans(Tween.TRANS_SINE)
 		await tw0.finished
 		queue_free()
 		return
@@ -54,7 +54,7 @@ func play(era: int) -> void:
 		queue_redraw()
 		await get_tree().create_timer(FLASH_PERIOD / 2.0 / Juice.speed()).timeout
 	var tw: Tween = create_tween()
-	tw.tween_method(_set_progress, 0.0, 1.0, EraBattleFeel.num(era, "intro_time", 0.6) / Juice.speed())
+	tw.tween_method(_set_progress, 0.0, 1.0, EraBattleFeel.num(era, "intro_time", 0.6) / Juice.speed()).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	await tw.finished
 	queue_free()
 
