@@ -5,28 +5,28 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
+  5,
   9
  ],
  "rows": [
   "^^^^^__^^^^^",
-  "^.S..__..::^",
-  "^.TTT__TTT.^",
-  "^.***__***.^",
-  "^....__....^",
-  "^.L..__..S.^",
-  "^....__....^",
-  "^...____...^",
-  "^..._.o.____",
-  "^..._...____",
-  "^...____...^",
-  "^....__....^",
-  "^.TT.__.TT.^",
-  "^.**.__.**.^",
-  "^....__....^",
-  "^.##.__.##.^",
-  "^....__....^",
-  "^::..._++L.^",
+  "^.S..__....^",
+  "^.RRR__.RR.^",
+  "^.HDH__.HD.^",
+  "^.._.__.._.^",
+  "^..____.._.^",
+  "^.L..__S._.^",
+  "^....__.._.^",
+  "^...o_______",
+  "^...._______",
+  "^.*..__..*.^",
+  "^.RRR__.RR.^",
+  "^.HDH__.HD.^",
+  "^.._.__.._.^",
+  "^..____.._.^",
+  "^.##.__.._.^",
+  "^....__.._L^",
+  "^::..._+++.^",
   "^......+++.^",
   "^^^^^^^^^^^^"
  ],
@@ -62,20 +62,52 @@
    "tx": 6,
    "ty": 22,
    "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 3,
+   "to": "brightledge_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "to": "brightledge_home_1",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 12,
+   "to": "brightledge_shop",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 12,
+   "to": "brightledge_home_2",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
-   "y": 7,
+   "x": 3,
+   "y": 8,
    "facing": "down",
    "dialogue": "brightledge/keeper",
    "sprite": "elder"
   },
   {
    "id": "trader",
-   "x": 3,
+   "x": 7,
    "y": 14,
    "facing": "down",
    "dialogue": "brightledge/trader",
@@ -83,7 +115,7 @@
   },
   {
    "id": "anselm",
-   "x": 2,
+   "x": 1,
    "y": 6,
    "facing": "right",
    "dialogue": "brightledge/anselm",
@@ -91,9 +123,9 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 5,
-     "y": 9,
-     "facing": "right"
+     "x": 4,
+     "y": 7,
+     "facing": "down"
     },
     {
      "phase": [
@@ -105,15 +137,15 @@
   },
   {
    "id": "cosima",
-   "x": 9,
-   "y": 11,
+   "x": 10,
+   "y": 10,
    "facing": "left",
    "dialogue": "brightledge/cosima",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 7,
+     "x": 6,
      "y": 9,
      "facing": "left"
     },
@@ -128,15 +160,15 @@
   {
    "id": "hesper",
    "x": 2,
-   "y": 18,
+   "y": 16,
    "facing": "right",
    "dialogue": "brightledge/hesper",
    "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 4,
-     "y": 7,
+     "x": 3,
+     "y": 9,
      "facing": "right"
     },
     {
@@ -166,8 +198,8 @@
  ],
  "signs": [
   {
-   "x": 9,
-   "y": 5,
+   "x": 7,
+   "y": 6,
    "dialogue": "brightledge/sign"
   },
   {
@@ -200,7 +232,7 @@
   }
  ],
  "square": [
-  6,
+  4,
   8
  ]
 }
