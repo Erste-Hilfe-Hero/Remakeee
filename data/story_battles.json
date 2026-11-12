@@ -2101,5 +2101,74 @@
   "win_flags": [
    "ledger_done"
   ]
+ },
+ "q2_two_owners_rats": {
+  "trainer": "Culvert Rats",
+  "team": [
+   {
+    "species": "Diparrow",
+    "level": 56
+   },
+   {
+    "species": "Rainmantle",
+    "level": 56
+   },
+   {
+    "species": "Reedwarden",
+    "level": 57
+   }
+  ],
+  "ai": 2,
+  "money": 2565,
+  "defeat": "vellmarch/q2_two_owners_rats_won",
+  "win_flags": [
+   "q2_two_owners_s2"
+  ]
+ },
+ "q2_ghost_wages_bruisers": {
+  "trainer": "Tunnel Bruisers",
+  "team": [
+   {
+    "species": "Glassfell",
+    "level": 57
+   },
+   {
+    "species": "Ashcrest",
+    "level": 57
+   },
+   {
+    "species": "Smeltpup",
+    "level": 58
+   }
+  ],
+  "ai": 2,
+  "money": 2610,
+  "defeat": "vellmarch/q2_ghost_wages_bruisers_won",
+  "win_flags": [
+   "q2_ghost_wages_s2"
+  ]
+ },
+ "q2_bought_boos_claque": {
+  "trainer": "The Claque",
+  "team": [
+   {
+    "species": "Smeltmaw",
+    "level": 57
+   },
+   {
+    "species": "Glassfell",
+    "level": 57
+   },
+   {
+    "species": "Ashcrest",
+    "level": 58
+   }
+  ],
+  "ai": 2,
+  "money": 2610,
+  "defeat": "vellmarch/q2_bought_boos_claque_won",
+  "win_flags": [
+   "q2_bought_boos_s2"
+  ]
  }
 }
