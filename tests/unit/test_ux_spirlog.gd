@@ -38,3 +38,11 @@ func test_unseen_hint_needs_an_entered_map() -> void:
 	assert_string_contains(hint, "Look in:")
 	var m: MapData = MapData.load_map(map_id)
 	assert_string_contains(hint, m.display_name if not m.display_name.is_empty() else map_id)
+
+## Item 1880: photo mode has a first-time tip with the controls, for touch and buttons.
+func test_photo_tip_names_the_controls() -> void:
+	assert_true(Tips.LINES.has("photo"))
+	assert_true(Tips.TOPICS.has("photo"), "it is in the Guide too")
+	var line: Dictionary = Tips.LINES["photo"][0]
+	assert_string_contains(str(line.touch), "B leaves")
+	assert_string_contains(str(line.buttons), "A takes a photo")

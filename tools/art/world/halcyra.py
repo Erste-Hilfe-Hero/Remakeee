@@ -925,3 +925,4 @@ def gilt_span(world):
          "secrets": [secret(11, 4, "max_tonic", "find_gilt_span_1"), secret(0, 7, "guard_brew", "find_gilt_span_2"),
                      secret(5, 11, "remedy", "find_gilt_span_3")]}
     finish(world, mid, m)
+from halcyra_side import hook; GROUP, build = hook(GROUP, build)  # noqa: E402  side goals, places, wild homes (tools/art/world/halcyra_side.py)
