@@ -2279,6 +2279,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The feather lifts and points at the ceiling.", "The last feather rises. Stone scrapes, and the stair opens!"],
 	"valve": ["The pipes gurgle along happily. The stair stays dry.", "The valve screams, and every pipe slams shut again. Start over.",
 		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
+	"lens": ["The lenses send the light up the stair. It stays lit.", "The lens cracks the light into rainbows, and every lens swings back. Start over.",
+		"The lens turns. A spot of sun crawls up the wall.", "The last lens turns, the light hits the stair, and the glass door melts aside!"],
 }
 
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
@@ -3222,7 +3224,7 @@ func after_tamer_win(n: NPC) -> void:
 		var lines: Array[String] = ["The Warden's bond wakes again.", "Together you mend the Rift. The Hush lifts!"]
 		if GameState.has_flag("storage_remote"):
 			lines.append("Your resting Spirlings can now be called from the menu, wherever you are.")
-		if GameState.level_cap() < Spirling.MAX_LEVEL:
+		if GameState.level_cap() < GameState.ring_ceiling():
 			lines.append("Your Spirlings can now grow to ring %d." % GameState.level_cap())
 		await say(lines)
 		# The Warden's thanks for the mend (the Rifts of 2026-11): an Echo Crystal with its art.

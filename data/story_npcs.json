@@ -1979,8 +1979,8 @@
    },
    {
     "id": "mags",
-    "x": 3,
-    "y": 4,
+    "x": 4,
+    "y": 5,
     "facing": "down",
     "dialogue": "solenne_side/mags",
     "sprite": "elder",
@@ -1999,7 +1999,7 @@
    },
    {
     "id": "saffi",
-    "x": 9,
+    "x": 10,
     "y": 14,
     "facing": "left",
     "dialogue": "solenne_side/saffi",
@@ -2029,8 +2029,8 @@
    },
    {
     "id": "kaia_town",
-    "x": 8,
-    "y": 4,
+    "x": 7,
+    "y": 5,
     "facing": "down",
     "dialogue": "solenne_side/kaia_town",
     "sprite": "warden",

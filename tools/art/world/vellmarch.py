@@ -38,6 +38,7 @@ exec(open(os.path.join(ROOT, "tools", "i18n", "de_region2.py"), encoding="utf-8"
 GERMAN = {}
 TEXT = {}
 MAPS = {}
+INTERIORS = {}
 
 
 def tr(en, de):
@@ -176,6 +177,88 @@ TOWN_TEXT = {
                  ("Pawnbroker Wex: Corin's men pawn their medals here. I sell them back to Corin. Everyone wins but the medals.", "Pfandleiher Wex: Corins Leute versetzen hier ihre Orden. Ich verkaufe sie Corin zurück. Alle gewinnen außer den Orden."),
                  ("Gravekeeper Ivo: The marsh keeps the bodies. I just keep the names. Fewer complaints.", "Totengräber Ivo: Das Moor behält die Leichen. Ich behalte nur die Namen. Weniger Beschwerden.")]},
 }
+# Every town house has a door and a small room (tools/maps/audit_maps.py: no outdoor building
+# without a door). door cell in the town -> (room id suffix, room name, resident, line).
+HOUSE_DOORS = [(3, 3), (9, 3), (2, 13), (8, 13)]
+HOUSE_ROWS = ["WWWWWWWW",
+              "WCCffCCW",
+              "WffffffW",
+              "WffffffW",
+              "WffffffW",
+              "WWWDWWWW"]
+HOUSES = {
+    "cindergate_quay": [
+        ("tollhouse", ("Cindergate Tollhouse", "Zollhaus von Cindergate"), "clerk",
+         ("Toll Clerk Mabry: Entry is a copper. Leaving is two. Staying is a matter for the House.", "Zollschreiber Mabry: Rein kostet einen Kupfer. Raus zwei. Bleiben ist Sache des Hauses.")),
+        ("net_loft", ("Net Loft", "Netzboden"), "mender",
+         ("Net Mender Saffi: I mend the nets the Syndicate cuts. They pay me to mend them, too.", "Netzflickerin Saffi: Ich flicke die Netze, die das Syndikat zerschneidet. Fürs Flicken zahlt es mich auch.")),
+        ("bunkhouse", ("Dockers' Bunkhouse", "Schauerleute-Schlafhaus"), "docker",
+         ("Docker Bram: Six bunks, nine dockers. Nobody asks where the other three sleep.", "Schauermann Bram: Sechs Kojen, neun Schauerleute. Keiner fragt, wo die anderen drei schlafen.")),
+        ("customs_store", ("Customs Store", "Zolllager"), "keeper",
+         ("Storeman Tibb: Seized goods. Some were seized twice. Once by us, once from us.", "Lagerverwalter Tibb: Beschlagnahmte Ware. Manches zweimal. Einmal von uns, einmal bei uns.")),
+    ],
+    "tallowmarket": [
+        ("wax_hall", ("Wax Hall", "Wachshalle"), "chandler",
+         ("Chandler Ruth: Every candle here burns for someone. Pick a short one. They're cheaper.", "Kerzenmacherin Ruth: Jede Kerze hier brennt für jemanden. Nimm eine kurze. Die sind billiger.")),
+        ("weigh_house", ("Weigh House", "Waaghaus"), "weigher",
+         ("Weigher Ansel: The scales are honest. The weights are a family heirloom. Different family.", "Wäger Ansel: Die Waage ist ehrlich. Die Gewichte sind ein Erbstück. Von einer anderen Familie.")),
+        ("rumour_room", ("Rumour Room", "Gerüchtestube"), "broker",
+         ("Whisperer Nell: I heard you were coming. I sold that before you arrived.", "Flüsterin Nell: Ich hab gehört, dass du kommst. Das hab ich verkauft, bevor du da warst.")),
+        ("vigil_house", ("Vigil House", "Wachhaus der Kerzen"), "widow",
+         ("Vigil Keeper Dorn: One candle for each foundry worker. We ran out of shelves last winter.", "Totenwächter Dorn: Eine Kerze für jeden Gießereiarbeiter. Letzten Winter gingen uns die Regale aus.")),
+    ],
+    "hookwick": [
+        ("boatshed", ("Boatshed", "Bootsschuppen"), "boatwright",
+         ("Shipwright Kaja: This hull has two names painted on it. Both owners swear it's theirs.", "Bootsbauerin Kaja: Auf diesem Rumpf stehen zwei Namen. Beide Besitzer schwören, er gehört ihnen.")),
+        ("eel_smokery", ("Eel Smokery", "Aalräucherei"), "smoker",
+         ("Smoker Hennig: The eels don't mind the smoke. They stopped minding anything a while ago.", "Räucherer Hennig: Den Aalen macht der Rauch nichts. Ihnen macht schon länger nichts mehr was aus.")),
+        ("lock_office", ("Lock Office", "Schleusenamt"), "clerk",
+         ("Lock Clerk Pim: Odile is out. She is always out. Leave a bribe after the tone.", "Schleusenschreiber Pim: Odile ist nicht da. Sie ist nie da. Hinterlass nach dem Ton ein Bestechungsgeld.")),
+        ("tackle_shop", ("Tackle Room", "Angelstube"), "angler",
+         ("Old Angler Fritha: I caught a boot today. It still had a foot in it. Not a good foot.", "Alte Anglerin Fritha: Heute hab ich einen Stiefel gefangen. Da war noch ein Fuß drin. Kein guter Fuß.")),
+    ],
+    "larkspur_heights": [
+        ("mask_atelier", ("Mask Atelier", "Maskenatelier"), "maskmaker",
+         ("Maskmaker Orla: Each mask fits one face. I keep a list of whose.", "Maskenmacherin Orla: Jede Maske passt auf ein Gesicht. Ich führe Buch, auf wessen.")),
+        ("counting_house", ("Counting House", "Kontor"), "banker",
+         ("Banker Quillon: Your money is perfectly safe with us. Your name is another matter.", "Bankier Quillon: Dein Geld ist bei uns vollkommen sicher. Dein Name ist eine andere Sache.")),
+        ("servants_hall", ("Servants' Hall", "Gesindestube"), "maid",
+         ("Footman Erich: We hear everything upstairs. We are paid to forget it. We are paid badly.", "Diener Erich: Wir hören alles von oben. Wir werden fürs Vergessen bezahlt. Schlecht bezahlt.")),
+        ("salon", ("Quiet Salon", "Stiller Salon"), "noble",
+         ("Lady Vespera: Duels are so vulgar. I have mine fought for me.", "Dame Vespera: Duelle sind so gewöhnlich. Ich lasse meine für mich ausfechten.")),
+    ],
+    "lastlamp": [
+        ("lamp_store", ("Lamp Store", "Lampenlager"), "lamplighter",
+         ("Wick Keeper Sten: We have oil for one more year. After that, the marsh gets the street.", "Dochtwart Sten: Öl für ein Jahr haben wir noch. Danach holt sich das Moor die Straße.")),
+        ("pawnshop", ("Pawnshop", "Pfandhaus"), "pawnbroker",
+         ("Pawn Clerk Lisbet: Medals, rings, a wooden leg. All pawned, none collected.", "Pfandschreiberin Lisbet: Orden, Ringe, ein Holzbein. Alles versetzt, nichts abgeholt.")),
+        ("bell_house", ("Bell House", "Glockenhaus"), "ringer",
+         ("Rope Boy Ned: I count the bell rings in a ledger. The ledger is getting heavy.", "Seiljunge Ned: Ich zähle die Glockenschläge in einem Buch. Das Buch wird schwer.")),
+        ("name_room", ("Room of Names", "Namensstube"), "keeper",
+         ("Scribe Ulla: Names of the lost, one per line. I leave a blank line at the end. Just in case.", "Schreiberin Ulla: Namen der Verschollenen, einer pro Zeile. Am Ende lasse ich eine Zeile frei. Nur für alle Fälle.")),
+    ],
+}
+SPRITE = {"widow": "elder", "keeper": "elder", "noble": "villager"}
+
+
+def houses(mid, rows):
+    """Puts a door on each town house and writes its room; returns the town's warps to the rooms."""
+    out = []
+    for (dx, dy), (key, name, who, line) in zip(HOUSE_DOORS, HOUSES[mid]):
+        if rows[dy][dx] != "H" or rows[dy + 1][dx] not in "._":
+            raise SystemExit("%s: no house wall above open ground at %d,%d" % (mid, dx, dy))
+        rows[dy] = rows[dy][:dx] + "D" + rows[dy][dx + 1:]
+        rid = "%s_%s" % (mid, key)
+        out.append(warp(dx, dy, rid, 3, 4, "up"))
+        room = {"name": tr(*name), "biome": "town", "backdrop": "field", "rows": list(HOUSE_ROWS),
+                "warps": [warp(3, 5, mid, dx, dy + 1, "down")],
+                "npcs": [npc(who, 4, 2, "down", text(rid + "_" + who, lines(line)), SPRITE.get(who, "villager"))],
+                "signs": []}
+        add(rid, room)
+        INTERIORS[rid] = mid
+    return out
+
+
 FOLK_PLACES = [((2, 6), "right", (5, 9), "right"), ((9, 11), "left", (7, 9), "left"), ((2, 18), "right", (4, 7), "right")]
 
 
@@ -205,7 +288,7 @@ def town(mid):
     for i, (line, ((hx, hy), hf, (dx, dy), df)) in enumerate(zip(tt["folk"], folk)):
         npcs.append(npc("folk_%d" % (i + 1), hx, hy, hf, text("%s_folk_%d" % (mid, i + 1), lines(line)),
                         "elder" if i == 2 else "villager", schedule=[at("dusk", dx, dy, df), away("night")]))
-    warps = []
+    warps = houses(mid, rows)
     blocks = []
     for side, (place, flag) in gates.items():
         cells, _, _ = SIDES[side]
@@ -465,7 +548,7 @@ ENCOUNTERS = {}
 def neighbours(mid):
     out = []
     for w in MAPS[mid]["warps"]:
-        if w["to"] not in out:
+        if w["to"] not in out and w["to"] not in INTERIORS:
             out.append(w["to"])
     return out
 
@@ -479,6 +562,8 @@ def layout_lines():
         kind = "town" if mid in TOWNS else "rift" if mid in RIFTS else "marsh" if mid == "bellrope_marsh" else "route"
         out.append('  "%s": {"region": "%s", "pos": [%d, %d], "kind": "%s", "neighbours": %s}'
                    % (mid, REGION, pos[0], pos[1], kind, json.dumps(neighbours(mid))))
+    for rid, mid in INTERIORS.items():
+        out.append('  "%s": {"inside": "%s", "region": "%s"}' % (rid, mid, REGION))
     return out
 
 

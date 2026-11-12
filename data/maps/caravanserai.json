@@ -1,0 +1,163 @@
+{
+ "name": "Glasswind Caravanserai",
+ "region": "solenne",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWWWW",
+  "WCCCffffCCCW",
+  "WffffffffffW",
+  "WffCCffCCffW",
+  "WfffffffffSW",
+  "WffffffffffW",
+  "WCffffffffCW",
+  "WffffffffffW",
+  "WffffffffffW",
+  "WWWWWDWWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 9,
+   "to": "glasswind_flats",
+   "tx": 5,
+   "ty": 13,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "imre",
+   "x": 3,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "caravanserai/imre",
+   "sprite": "villager",
+   "trainer": "Ladder Second Imre",
+   "intro": "caravanserai/imre_intro",
+   "defeat": "caravanserai/imre_defeat",
+   "money": 2450,
+   "team": [
+    {
+     "species": "Fulgorin",
+     "level": 46
+    },
+    {
+     "species": "Duneshrew",
+     "level": 46
+    },
+    {
+     "species": "Claspirant",
+     "level": 47
+    }
+   ],
+   "beaten_flag": "ladder_rung_7",
+   "show_flag": "ladder_rung_6"
+  },
+  {
+   "id": "dario",
+   "x": 8,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "caravanserai/dario",
+   "sprite": "villager",
+   "trainer": "Ladder Champion Dario",
+   "intro": "caravanserai/dario_intro",
+   "defeat": "caravanserai/dario_defeat",
+   "money": 2600,
+   "team": [
+    {
+     "species": "Zenithare",
+     "level": 47
+    },
+    {
+     "species": "Habobrax",
+     "level": 47
+    },
+    {
+     "species": "Noonsoral",
+     "level": 48
+    }
+   ],
+   "beaten_flag": "ladder_rung_8",
+   "show_flag": "ladder_rung_7"
+  },
+  {
+   "id": "keeper",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "glasswind_side/keeper",
+   "sprite": "elder"
+  },
+  {
+   "id": "trader",
+   "x": 9,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "glasswind_side/trader",
+   "sprite": "villager"
+  },
+  {
+   "id": "sabine",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "glasswind_side/sabine",
+   "sprite": "elder",
+   "color": "9a5a7a"
+  },
+  {
+   "id": "hesper",
+   "x": 1,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "glasswind_side/hesper",
+   "sprite": "elder",
+   "color": "7a8a9a"
+  },
+  {
+   "id": "ott",
+   "x": 10,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "glasswind_side/ott",
+   "sprite": "villager"
+  },
+  {
+   "id": "ilse",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "glasswind_side/ilse",
+   "sprite": "ranger",
+   "color": "5a8a5a"
+  },
+  {
+   "id": "tamsin",
+   "x": 3,
+   "y": 7,
+   "facing": "right",
+   "dialogue": "glasswind_side/tamsin",
+   "sprite": "villager",
+   "color": "c08a5a",
+   "hide_flag": "s4_twin_meet"
+  }
+ ],
+ "signs": [
+  {
+   "x": 10,
+   "y": 4,
+   "dialogue": "glasswind_side/board"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 5,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_caravanserai_cellar"
+  }
+ ]
+}

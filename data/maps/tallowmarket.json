@@ -12,7 +12,7 @@
   "TTTTT__TTTTT",
   "T....__....T",
   "T.RRR__RRR.T",
-  "T.HHH__HHH.T",
+  "T.HDH__HHD.T",
   "T....__....T",
   "T.L..__..S.T",
   "T....__....T",
@@ -22,7 +22,7 @@
   "T...____...T",
   "T....__....T",
   "T.RR.__.RR.T",
-  "T.HH.__.HH.T",
+  "T.DH.__.DH.T",
   "T....__....T",
   "T.##.__.##.T",
   "T....__....T",
@@ -31,6 +31,38 @@
   "TTTTT__TTTTT"
  ],
  "warps": [
+  {
+   "x": 3,
+   "y": 3,
+   "to": "tallowmarket_wax_hall",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "to": "tallowmarket_weigh_house",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "tallowmarket_rumour_room",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 13,
+   "to": "tallowmarket_vigil_house",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
   {
    "x": 0,
    "y": 8,

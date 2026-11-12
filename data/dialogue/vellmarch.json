@@ -20,6 +20,12 @@
  "bellrope_marsh_bellwalker_intro": [
   "Edda: Ring if you need help. I'll pretend I didn't hear."
  ],
+ "cindergate_quay_bunkhouse_docker": [
+  "Docker Bram: Six bunks, nine dockers. Nobody asks where the other three sleep."
+ ],
+ "cindergate_quay_customs_store_keeper": [
+  "Storeman Tibb: Seized goods. Some were seized twice. Once by us, once from us."
+ ],
  "cindergate_quay_folk_1": [
   "Docker Haldis: I load crates for the House by day. At night I unload them for the Syndicate. Same crates."
  ],
@@ -35,9 +41,15 @@
   ],
   "action": "heal"
  },
+ "cindergate_quay_net_loft_mender": [
+  "Net Mender Saffi: I mend the nets the Syndicate cuts. They pay me to mend them, too."
+ ],
  "cindergate_quay_sign": [
   "Cindergate Quay",
   "Cindergate Quay. Tolls payable on arrival, departure and complaint."
+ ],
+ "cindergate_quay_tollhouse_clerk": [
+  "Toll Clerk Mabry: Entry is a copper. Leaving is two. Staying is a matter for the House."
  ],
  "cindergate_quay_trader": {
   "lines": [
@@ -65,6 +77,12 @@
   ],
   "action": "heal"
  },
+ "hookwick_boatshed_boatwright": [
+  "Shipwright Kaja: This hull has two names painted on it. Both owners swear it's theirs."
+ ],
+ "hookwick_eel_smokery_smoker": [
+  "Smoker Hennig: The eels don't mind the smoke. They stopped minding anything a while ago."
+ ],
  "hookwick_folk_1": [
   "Lockkeeper's Boy Wim: Odile pays me to say she's out. She's always out. Even when she's in."
  ],
@@ -80,9 +98,18 @@
   ],
   "action": "heal"
  },
+ "hookwick_lock_office_clerk": [
+  "Lock Clerk Pim: Odile is out. She is always out. Leave a bribe after the tone."
+ ],
  "hookwick_sign": [
   "Hookwick",
   "Hookwick. Every boat has two owners. Ask either; both are lying."
+ ],
+ "hookwick_tackle_shop_angler": [
+  "Old Angler Fritha: I caught a boot today. It still had a foot in it. Not a good foot."
+ ],
+ "larkspur_heights_counting_house_banker": [
+  "Banker Quillon: Your money is perfectly safe with us. Your name is another matter."
  ],
  "larkspur_heights_folk_1": [
   "Opera Usher Lenz: Tonight's opera ends with a duel. Last week's ended with a funeral. Same tenor."
@@ -99,6 +126,15 @@
   ],
   "action": "heal"
  },
+ "larkspur_heights_mask_atelier_maskmaker": [
+  "Maskmaker Orla: Each mask fits one face. I keep a list of whose."
+ ],
+ "larkspur_heights_salon_noble": [
+  "Lady Vespera: Duels are so vulgar. I have mine fought for me."
+ ],
+ "larkspur_heights_servants_hall_maid": [
+  "Footman Erich: We hear everything upstairs. We are paid to forget it. We are paid badly."
+ ],
  "larkspur_heights_sign": [
   "Larkspur Heights",
   "Larkspur Heights. Clean streets. High walls. Short memories."
@@ -109,6 +145,9 @@
   ],
   "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
  },
+ "lastlamp_bell_house_ringer": [
+  "Rope Boy Ned: I count the bell rings in a ledger. The ledger is getting heavy."
+ ],
  "lastlamp_folk_1": [
   "Bell Ringer Ash: I ring the marsh bell when someone goes missing. My arms are very strong."
  ],
@@ -124,6 +163,15 @@
   ],
   "action": "heal"
  },
+ "lastlamp_lamp_store_lamplighter": [
+  "Wick Keeper Sten: We have oil for one more year. After that, the marsh gets the street."
+ ],
+ "lastlamp_name_room_keeper": [
+  "Scribe Ulla: Names of the lost, one per line. I leave a blank line at the end. Just in case."
+ ],
+ "lastlamp_pawnshop_pawnbroker": [
+  "Pawn Clerk Lisbet: Medals, rings, a wooden leg. All pawned, none collected."
+ ],
  "lastlamp_sign": [
   "Lastlamp",
   "Lastlamp. The last lit street before the marsh. Keep to the light."
@@ -201,6 +249,9 @@
   ],
   "action": "heal"
  },
+ "tallowmarket_rumour_room_broker": [
+  "Whisperer Nell: I heard you were coming. I sold that before you arrived."
+ ],
  "tallowmarket_sign": [
   "Tallowmarket",
   "Tallowmarket. Candles by day. Do not ask what is sold by night."
@@ -211,6 +262,15 @@
   ],
   "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
  },
+ "tallowmarket_vigil_house_widow": [
+  "Vigil Keeper Dorn: One candle for each foundry worker. We ran out of shelves last winter."
+ ],
+ "tallowmarket_wax_hall_chandler": [
+  "Chandler Ruth: Every candle here burns for someone. Pick a short one. They're cheaper."
+ ],
+ "tallowmarket_weigh_house_weigher": [
+  "Weigher Ansel: The scales are honest. The weights are a family heirloom. Different family."
+ ],
  "tithe_road_tithecollector": [
   "Prue: The House takes a tenth. The Syndicate takes a tenth. I take what's left, for safekeeping."
  ],

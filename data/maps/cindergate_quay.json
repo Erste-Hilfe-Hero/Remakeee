@@ -12,7 +12,7 @@
   "TTTTTTTTTTTT",
   "T....__....T",
   "T.RRR__RRR.T",
-  "T.HHH__HHH.T",
+  "T.HDH__HHD.T",
   "T....__....T",
   "T.L..__..S.T",
   "T....__....T",
@@ -22,7 +22,7 @@
   "T...____...T",
   "T....__....T",
   "T.RR.__.RR.T",
-  "T.HH.__.HH.T",
+  "T.DH.__.DH.T",
   "T....__....T",
   "~~~~.__.##.T",
   "~~~~.__....T",
@@ -31,6 +31,38 @@
   "TTTTT__TTTTT"
  ],
  "warps": [
+  {
+   "x": 3,
+   "y": 3,
+   "to": "cindergate_quay_tollhouse",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "to": "cindergate_quay_net_loft",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "cindergate_quay_bunkhouse",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 13,
+   "to": "cindergate_quay_customs_store",
+   "tx": 3,
+   "ty": 4,
+   "facing": "up"
+  },
   {
    "x": 11,
    "y": 8,

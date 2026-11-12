@@ -29,9 +29,17 @@ func test_bought_spirling_has_fixed_top_values() -> void:
 	for key: String in Spirling.STAT_KEYS:
 		assert_eq(a.spark[key], Spirling.SPARK_MAX, key)
 		assert_eq(a.spark[key], b.spark[key], "no chance in the values")
+	# The temperament once came from the random uid (179 vs 171 Attack): pin it, so a regression
+	# fails every run instead of one run in a few.
+	assert_eq(a.temper, Spirling.TEMPERAMENTS[0].id, "a fixed temperament")
+	assert_eq(a.temper, b.temper)
 	assert_eq(a.max_hp(), b.max_hp())
 	assert_eq(a.atk(), b.atk())
+	assert_eq(a.def(), b.def())
+	assert_eq(a.foc(), b.foc())
+	assert_eq(a.spd(), b.spd())
 	assert_eq(a.hp, a.max_hp())
+	assert_eq(ShopEffects.bought_spirling(g.merged({"temper": "keen"})).temper, "keen", "an offer may name one")
 	assert_null(ShopEffects.bought_spirling({"t": "spirling", "species": "Nobody", "level": 5}))
 
 func test_bought_spirling_is_saved_and_never_traded() -> void:
