@@ -111,6 +111,46 @@
      "level": 96
     }
    ]
+  },
+  {
+   "id": "q5_pressed_diary_mo",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_pressed_diary_mo",
+   "sprite": "villager",
+   "show_flag": "q5_pressed_diary_asked"
+  },
+  {
+   "id": "q5_pressed_diary_arvid",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_pressed_diary_arvid",
+   "sprite": "villager",
+   "trainer": "Not-Drowned Arvid",
+   "show_flag": "q5_pressed_diary_reveal",
+   "intro": "quivermoor/q5_pressed_diary_arvid_intro",
+   "defeat": "quivermoor/q5_pressed_diary_arvid_defeat",
+   "money": 4850,
+   "team": [
+    {
+     "species": "Fumewraith",
+     "level": 95
+    },
+    {
+     "species": "Sablet",
+     "level": 96
+    },
+    {
+     "species": "Dusktern",
+     "level": 97
+    }
+   ],
+   "win_flags": [
+    "q5_pressed_diary_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],

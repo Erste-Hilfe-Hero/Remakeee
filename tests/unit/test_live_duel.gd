@@ -93,7 +93,7 @@ func test_timeouts_and_forfeit() -> void:
 func test_the_menu_texts() -> void:
 	assert_eq(LiveDuelMenu.actions({"state": "invited", "side": 1}), ["Accept", "Decline"] as Array[String])
 	assert_eq(LiveDuelMenu.actions({"state": "picking", "side": 0, "picked": [false, true]}), ["Pick 3", "Give up"] as Array[String])
-	assert_eq(LiveDuelMenu.actions({"state": "done", "side": 0}), ["Rematch"] as Array[String])
+	assert_eq(LiveDuelMenu.actions({"state": "done", "side": 0}), ["Rematch", "Report the rival..."] as Array[String])
 	var t: String = LiveDuelMenu.state_text({"state": "running", "side": 0, "round": 3, "deadline": 1020, "emotes": [{"side": 1, "emote": 0}]}, 1000)
 	assert_string_contains(t, "20 s")
 	assert_string_contains(t, "Hello!")

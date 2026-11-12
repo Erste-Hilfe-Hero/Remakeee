@@ -9,8 +9,8 @@ purpose: this run measures the chart and base stats only. The full model stays i
 tools/balance_sim.gd.
 
 Teams of 3 distinct species of the same unfold stage fight at the same ring; every battle is
-played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules; the species 40-60 %
-band is reported, and fails only with --strict (the full model is the real gate).
+played twice with the sides swapped. Fails (exit 1) if the chart breaks its rules; the species and element
+40-60 % band is reported, and fails with --strict (the CI gate).
 
 Chart sim (always a gate): one equal-stat Spirling per element with a single art of its own element,
 so only the chart decides. Every element meets every element 1 on 1, and every team of 3 distinct

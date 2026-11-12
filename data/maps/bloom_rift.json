@@ -112,6 +112,46 @@
     "rift_v5_bloom_sealed",
     "quivermoor_done"
    ]
+  },
+  {
+   "id": "q5_named_seed_sol",
+   "x": 2,
+   "y": 13,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_named_seed_sol",
+   "sprite": "elder",
+   "show_flag": "q5_named_seed_s1"
+  },
+  {
+   "id": "q5_named_seed_fenja_bloom",
+   "x": 7,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_named_seed_fenja_bloom",
+   "sprite": "elder",
+   "trainer": "Gardener Fenja",
+   "show_flag": "q5_named_seed_reveal",
+   "intro": "quivermoor/q5_named_seed_fenja_bloom_intro",
+   "defeat": "quivermoor/q5_named_seed_fenja_bloom_defeat",
+   "money": 4850,
+   "team": [
+    {
+     "species": "Rushprowl",
+     "level": 95
+    },
+    {
+     "species": "Thrashkin",
+     "level": 96
+    },
+    {
+     "species": "Silthop",
+     "level": 97
+    }
+   ],
+   "win_flags": [
+    "q5_named_seed_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [

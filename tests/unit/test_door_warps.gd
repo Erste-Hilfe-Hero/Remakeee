@@ -104,4 +104,4 @@ func test_rooms_keep_their_door_emblems() -> void:
 			assert_eq(role, TilesetFactory.DoorRole.HOUSE, "%s door is a plain house door" % id)
 		assert_true(m.width >= 8 and m.height >= 6, "%s is big enough for its house" % id)
 		checked += 1
-	assert_eq(checked, 15, "every room behind a former dead door")
+	assert_eq(checked, 16, "every room behind a former dead door or a doorless house")
