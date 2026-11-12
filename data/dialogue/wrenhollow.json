@@ -63,7 +63,16 @@
    "lines": [
     "Well-Keeper Orrin: The well water tastes of nothing again. That's how it should taste."
    ]
-  }
+  },
+  "choices": [
+   {
+    "text": "Tell Orrin what Lise said",
+    "next": "orrin_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
  },
  "lise": {
   "lines": [
