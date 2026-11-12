@@ -277,15 +277,16 @@ def pier(c: Canvas, ox: int, oy: int, mask: int) -> None:
         c.hline(ox + x0, ox + x1, oy, 0)
 
 
-def _tower_row(c: Canvas, ox: int, oy: int, y: int) -> None:
+def _tower_row(c: Canvas, ox: int, oy: int, y: int, phase: int = 0) -> None:
     # One row of the lighthouse shaft: tapers from 10 px at the top to 12 px at y 7, spiral
     # bands rise to the right, the left column catches the light and the right two are shaded.
-    xl = 3 if y < 7 else 2
+    # [phase] shifts the taper and bands so a tile below the shaft carries them on.
+    xl = 3 if y + phase < 7 else 2
     xr = 15 - xl
     c.set(ox + xl, oy + y, 0)
     c.set(ox + xr, oy + y, 0)
     for x in range(xl + 1, xr):
-        band = ((y + 40 - x // 3) // 4) % 2
+        band = ((y + phase + 40 - x // 3) // 4) % 2
         if x == xl + 1:
             v = 2 if band else 3
         elif x >= xr - 2:
@@ -295,12 +296,19 @@ def _tower_row(c: Canvas, ox: int, oy: int, y: int) -> None:
         c.set(ox + x, oy + y, v)
 
 
-def tower(c: Canvas, ox: int, oy: int) -> None:
+def tower(c: Canvas, ox: int, oy: int, variant: int = 0) -> None:
     # Lighthouse shaft (and the rift pillars): striped tapered tower on a stone plinth.
+    # Row 1: the shaft runs on into the door tile below. Row 2: the lighthouse foot with its door.
+    # TilesetFactory.atlas_coords picks rows 1 and 2 for a lamp-capped tower over a door.
+    if variant == 2:
+        lighthouse_door(c, ox, oy)
+        return
     grass(c, ox, oy, 0)
-    for y in range(13):
+    for y in range(16 if variant == 1 else 13):
         _tower_row(c, ox, oy, y)
     c.rect(ox + 7, oy + 5, 2, 2, 0)
+    if variant == 1:
+        return
     c.hline(ox + 1, ox + 14, oy + 13, 0)
     c.rect(ox + 2, oy + 14, 12, 2, 2)
     c.vline(ox + 1, oy + 14, oy + 15, 0)
@@ -312,6 +320,36 @@ def tower(c: Canvas, ox: int, oy: int) -> None:
         c.set(ox + x, oy + 15, 1)
     c.set(ox + 13, oy + 14, 1)
     c.set(ox + 13, oy + 15, 1)
+
+
+def lighthouse_door(c: Canvas, ox: int, oy: int) -> None:
+    # Foot of the lighthouse: the striped shaft (bands continue from the tile above) flares into
+    # the stone plinth, and an arched plank door is cut through it down to the ground.
+    grass(c, ox, oy, 0)
+    for y in range(12):
+        _tower_row(c, ox, oy, y, 16)
+    c.hline(ox + 1, ox + 14, oy + 12, 0)
+    c.rect(ox + 2, oy + 13, 12, 3, 2)
+    c.vline(ox + 1, oy + 13, oy + 15, 0)
+    c.vline(ox + 14, oy + 13, oy + 15, 0)
+    c.hline(ox + 2, ox + 4, oy + 13, 3)
+    for x in (3, 12):
+        c.set(ox + x, oy + 15, 1)
+    c.set(ox + 13, oy + 14, 1)
+    c.ascii(ox + 4, oy + 3, ["..3333..", ".3....3.", "3......3", "3......3", "3......3",
+                             "3......3", "3......3", "3......3", "3......3"])
+    c.ascii(ox + 5, oy + 4, [".0000.",
+                             "011110",
+                             "012120",
+                             "012120",
+                             "012120",
+                             "012130",
+                             "012120",
+                             "012120",
+                             "012120",
+                             "011110",
+                             "000000"])
+    c.hline(ox + 5, ox + 10, oy + 15, 0)
 
 
 def lamp(c: Canvas, ox: int, oy: int) -> None:
@@ -479,7 +517,7 @@ def make_tiles() -> Canvas:
             elif name == "PIER":
                 pier(c, ox, oy, v)
             elif name == "TOWER":
-                tower(c, ox, oy)
+                tower(c, ox, oy, v if v < 3 else 0)
             elif name == "LAMP":
                 lamp(c, ox, oy)
             elif name == "ROCK":

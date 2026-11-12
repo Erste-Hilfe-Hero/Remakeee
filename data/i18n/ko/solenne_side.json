@@ -1,0 +1,21 @@
+{
+ "_comment": "ko translation of the solenne_side table, keyed by the English text.",
+ "strings": {
+  "Beat Factor Lusk in his strongroom, then go back to Bex.": "금고실에서 대리인 Lusk를 이기고, Bex에게 돌아가라.",
+  "Corin Lusk, heir of the Brass Veil, wants to buy your team. Beat him three times.": "놋쇠 장막의 상속자 Corin Lusk가 네 팀을 사고 싶어 한다. 세 번 이겨라.",
+  "Ochrewell and the Veil Cistern": "Ochrewell과 장막 저수조",
+  "Old Mags wants the eight brass seals the Veil nailed onto Ochrewell. She melts them into spoons.": "Mags 할멈은 장막이 Ochrewell에 박아 둔 놋쇠 인장 여덟 개를 원한다. 녹여서 숟가락을 만든다.",
+  "Qadir wants the five worst IOUs of Ochrewell for a bonfire.": "Qadir는 모닥불용으로 Ochrewell 최악의 차용증 다섯 장을 원한다.",
+  "The Brass Veil keeps a cistern under its counting house in Ochrewell. Find out what it counts.": "놋쇠 장막은 Ochrewell의 회계소 아래 저수조를 두고 있다. 무엇을 세는지 알아내라.",
+  "The Veil keeps its orders in the lowest room of its cistern. Read the order book.": "장막은 명령서를 저수조 맨 아래 방에 보관한다. 명령 장부를 읽어라.",
+  "The Veil prepaid three graves with Undertaker Bex. Find out who they are for.": "장막이 장의사 Bex에게 무덤 세 개 값을 선불로 냈다. 누구 무덤인지 알아내라.",
+  "The last valve turns, the cistern drains, and the stair is clear!": "마지막 밸브가 돌고, 저수조가 비고, 계단이 트인다!",
+  "The pipes gurgle along happily. The stair stays dry.": "파이프가 즐겁게 꾸르륵거린다. 계단은 마른 채로 있다.",
+  "The valve screams, and every pipe slams shut again. Start over.": "밸브가 비명을 지르고, 모든 파이프가 다시 쾅 닫힌다. 처음부터 다시.",
+  "The valve squeals round. Somewhere, water changes owner.": "밸브가 끽끽대며 돈다. 어딘가에서 물의 주인이 바뀐다.",
+  "Three rude headstones, paid in full.": "무례한 묘비 세 개, 전액 지불 완료.",
+  "Veil Cistern, strongroom": "장막 저수조, 금고실",
+  "Veil Guard": "장막 경비병",
+  "You know whose graves they are. Tell Bex.": "누구 무덤인지 알았다. Bex에게 알려라."
+ }
+}

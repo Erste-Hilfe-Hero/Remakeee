@@ -760,39 +760,60 @@
   "rate": 0.1,
   "spawns": [
    {
-    "species": "Paddlewisp",
+    "species": "Woadlet",
     "min": 18,
     "max": 20,
-    "weight": 38,
+    "weight": 40,
     "ground": "fern"
    },
    {
-    "species": "Mirkmole",
-    "min": 18,
+    "species": "Rushkit",
+    "min": 19,
     "max": 21,
+    "weight": 34,
+    "ground": "fern"
+   },
+   {
+    "species": "Rubrit",
+    "min": 18,
+    "max": 20,
     "weight": 30,
     "ground": "fern"
    },
    {
-    "species": "Fluting",
+    "species": "Padlet",
     "min": 19,
     "max": 21,
-    "weight": 15,
+    "weight": 22,
     "ground": "reeds"
    },
    {
-    "species": "Hushkin",
-    "min": 19,
-    "max": 21,
-    "weight": 12,
+    "species": "Morelit",
+    "min": 18,
+    "max": 20,
+    "weight": 26,
     "ground": "fern"
    },
    {
-    "species": "Riptail",
-    "min": 20,
+    "species": "Reedquill",
+    "min": 19,
     "max": 21,
-    "weight": 5,
+    "weight": 18,
     "ground": "reeds"
+   },
+   {
+    "species": "Woadwhorl",
+    "min": 18,
+    "max": 20,
+    "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Paddlewisp",
+    "min": 19,
+    "max": 21,
+    "weight": 40,
+    "ground": "fern"
    }
   ]
  },
@@ -800,38 +821,52 @@
   "rate": 0.15,
   "spawns": [
    {
-    "species": "Paddlewisp",
+    "species": "Nimbub",
     "min": 20,
     "max": 22,
     "weight": 40,
     "ground": "reeds"
    },
    {
-    "species": "Zephlet",
+    "species": "Prismist",
+    "min": 21,
+    "max": 23,
+    "weight": 22,
+    "ground": "reeds"
+   },
+   {
+    "species": "Drizzlet",
     "min": 20,
     "max": 22,
-    "weight": 25,
+    "weight": 34,
     "ground": "reeds"
    },
    {
-    "species": "Puddlet",
+    "species": "Diplit",
     "min": 21,
     "max": 23,
-    "weight": 15,
+    "weight": 30,
     "ground": "reeds"
    },
    {
-    "species": "Seamlet",
+    "species": "Ripjolt",
+    "min": 20,
+    "max": 22,
+    "weight": 26,
+    "ground": "reeds"
+   },
+   {
+    "species": "Nimbuck",
     "min": 21,
     "max": 23,
-    "weight": 15,
+    "weight": 18,
     "ground": "reeds"
    },
    {
     "species": "Ferrowyn",
-    "min": 23,
+    "min": 22,
     "max": 23,
-    "weight": 5,
+    "weight": 6,
     "ground": "reeds"
    }
   ]
@@ -840,39 +875,60 @@
   "rate": 0.12,
   "spawns": [
    {
-    "species": "Croziel",
+    "species": "Chimelet",
     "min": 20,
     "max": 22,
-    "weight": 35,
+    "weight": 40,
     "ground": "fern"
    },
    {
-    "species": "Paddlewisp",
+    "species": "Weirkit",
+    "min": 21,
+    "max": 23,
+    "weight": 34,
+    "ground": "reeds"
+   },
+   {
+    "species": "Inkpip",
     "min": 20,
     "max": 22,
     "weight": 30,
     "ground": "reeds"
    },
    {
-    "species": "Fluting",
+    "species": "Canalet",
     "min": 21,
     "max": 23,
-    "weight": 15,
+    "weight": 22,
     "ground": "reeds"
    },
    {
-    "species": "Lanternel",
+    "species": "Skimmit",
+    "min": 20,
+    "max": 22,
+    "weight": 18,
+    "ground": "reeds"
+   },
+   {
+    "species": "Glimmoth",
     "min": 21,
     "max": 23,
-    "weight": 15,
+    "weight": 14,
     "ground": "fern"
    },
    {
-    "species": "Glasstarn",
-    "min": 23,
+    "species": "Chimewell",
+    "min": 20,
+    "max": 22,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Croziel",
+    "min": 21,
     "max": 23,
-    "weight": 5,
-    "ground": "reeds"
+    "weight": 26,
+    "ground": "fern"
    }
   ]
  },
@@ -880,38 +936,59 @@
   "rate": 0.15,
   "spawns": [
    {
+    "species": "Belfrit",
+    "min": 21,
+    "max": 23,
+    "weight": 22,
+    "ground": "scree"
+   },
+   {
+    "species": "Vanepip",
+    "min": 22,
+    "max": 24,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Grindlet",
+    "min": 21,
+    "max": 23,
+    "weight": 34,
+    "ground": "scree"
+   },
+   {
+    "species": "Flourie",
+    "min": 22,
+    "max": 24,
+    "weight": 18,
+    "ground": "scree"
+   },
+   {
+    "species": "Cartocoil",
+    "min": 21,
+    "max": 23,
+    "weight": 14,
+    "ground": "scree"
+   },
+   {
+    "species": "Vanecrow",
+    "min": 22,
+    "max": 24,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Inkspool",
+    "min": 21,
+    "max": 23,
+    "weight": 10,
+    "ground": "scree"
+   },
+   {
     "species": "Shalebat",
-    "min": 21,
-    "max": 23,
-    "weight": 45,
-    "ground": "scree"
-   },
-   {
-    "species": "Wickit",
-    "min": 21,
-    "max": 23,
-    "weight": 15,
-    "ground": "scree"
-   },
-   {
-    "species": "Lanternel",
     "min": 22,
     "max": 24,
-    "weight": 20,
-    "ground": "scree"
-   },
-   {
-    "species": "Seamlet",
-    "min": 22,
-    "max": 24,
-    "weight": 15,
-    "ground": "scree"
-   },
-   {
-    "species": "Lumenewt",
-    "min": 24,
-    "max": 24,
-    "weight": 5,
+    "weight": 30,
     "ground": "scree"
    }
   ]
@@ -920,38 +997,59 @@
   "rate": 0.12,
   "spawns": [
    {
-    "species": "Talusk",
+    "species": "Sluicekit",
     "min": 22,
     "max": 24,
-    "weight": 38,
+    "weight": 40,
     "ground": "scree"
    },
    {
-    "species": "Shalebat",
+    "species": "Rookit",
+    "min": 23,
+    "max": 25,
+    "weight": 22,
+    "ground": "scree"
+   },
+   {
+    "species": "Cogmite",
+    "min": 22,
+    "max": 24,
+    "weight": 18,
+    "ground": "scree"
+   },
+   {
+    "species": "Silthop",
+    "min": 23,
+    "max": 25,
+    "weight": 34,
+    "ground": "scree"
+   },
+   {
+    "species": "Millwhit",
     "min": 22,
     "max": 24,
     "weight": 30,
     "ground": "scree"
    },
    {
-    "species": "Brinelet",
+    "species": "Grindwheel",
     "min": 23,
     "max": 25,
-    "weight": 15,
+    "weight": 14,
     "ground": "scree"
    },
    {
-    "species": "Kindlop",
-    "min": 23,
-    "max": 25,
+    "species": "Sluicer",
+    "min": 22,
+    "max": 24,
     "weight": 12,
     "ground": "scree"
    },
    {
-    "species": "Obsidroth",
-    "min": 25,
+    "species": "Talusk",
+    "min": 23,
     "max": 25,
-    "weight": 5,
+    "weight": 26,
     "ground": "scree"
    }
   ]
@@ -1272,39 +1370,60 @@
   "rate": 0.15,
   "spawns": [
    {
-    "species": "Paddlewisp",
+    "species": "Rushprowl",
     "min": 23,
     "max": 25,
-    "weight": 38,
+    "weight": 22,
     "ground": "fern"
+   },
+   {
+    "species": "Morelamp",
+    "min": 24,
+    "max": 25,
+    "weight": 18,
+    "ground": "fern"
+   },
+   {
+    "species": "Thrashkin",
+    "min": 23,
+    "max": 25,
+    "weight": 14,
+    "ground": "fern"
+   },
+   {
+    "species": "Puddock",
+    "min": 24,
+    "max": 25,
+    "weight": 40,
+    "ground": "reeds"
+   },
+   {
+    "species": "Skimmit",
+    "min": 23,
+    "max": 25,
+    "weight": 12,
+    "ground": "reeds"
+   },
+   {
+    "species": "Rubricorn",
+    "min": 24,
+    "max": 25,
+    "weight": 10,
+    "ground": "fern"
+   },
+   {
+    "species": "Dusktern",
+    "min": 23,
+    "max": 25,
+    "weight": 22,
+    "ground": "reeds"
    },
    {
     "species": "Mirkmole",
-    "min": 23,
-    "max": 25,
-    "weight": 30,
-    "ground": "fern"
-   },
-   {
-    "species": "Fluting",
     "min": 24,
     "max": 25,
-    "weight": 15,
-    "ground": "reeds"
-   },
-   {
-    "species": "Hushkin",
-    "min": 24,
-    "max": 25,
-    "weight": 12,
+    "weight": 34,
     "ground": "fern"
-   },
-   {
-    "species": "Riptail",
-    "min": 25,
-    "max": 25,
-    "weight": 5,
-    "ground": "reeds"
    }
   ]
  },
@@ -1776,6 +1895,41 @@
     "max": 42,
     "weight": 26,
     "ground": "scree"
+   }
+  ]
+ },
+ "rook_vault": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Shalebat",
+    "min": 22,
+    "max": 25,
+    "weight": 35
+   },
+   {
+    "species": "Mirkmole",
+    "min": 22,
+    "max": 24,
+    "weight": 28
+   },
+   {
+    "species": "Hushkin",
+    "min": 23,
+    "max": 25,
+    "weight": 18
+   },
+   {
+    "species": "Duskdigger",
+    "min": 23,
+    "max": 25,
+    "weight": 6
+   },
+   {
+    "species": "Kelphound",
+    "min": 24,
+    "max": 26,
+    "weight": 5
    }
   ]
  },

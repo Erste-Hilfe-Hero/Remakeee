@@ -67,7 +67,7 @@
     "y": 21,
     "facing": "down",
     "dialogue": "clans/kenan",
-    "sprite": "ranger",
+    "sprite": "stranger_runner",
     "color": "5a6e7a",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -78,7 +78,7 @@
     "y": 19,
     "facing": "down",
     "dialogue": "clans/nail",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "b07a3a",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -159,7 +159,7 @@
     "y": 16,
     "facing": "down",
     "dialogue": "clans/farida",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "9e5a8a",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -170,7 +170,7 @@
     "y": 17,
     "facing": "down",
     "dialogue": "clans/amir",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "3a7a9e",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -184,6 +184,93 @@
     "sprite": "warden",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
+   },
+   {
+    "id": "nib_1",
+    "x": 8,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "corvane_side/nib_1",
+    "sprite": "ranger",
+    "color": "6b5a8e",
+    "show_flag": "ferry_crossed",
+    "hide_flag": "beat_story_nib_1"
+   },
+   {
+    "id": "debt_toft",
+    "x": 2,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "corvane_side/debt_toft",
+    "sprite": "villager",
+    "trainer": "Smiler Toft",
+    "team": [
+     {
+      "species": "Puddock",
+      "level": 19
+     },
+     {
+      "species": "Kelpup",
+      "level": 19
+     }
+    ],
+    "intro": "corvane_side/debt_toft_intro",
+    "defeat": "corvane_side/debt_toft_defeat",
+    "money": 700,
+    "beaten_flag": "beat_debt_toft",
+    "show_flag": "q_gaunt_asked"
+   },
+   {
+    "id": "glum",
+    "x": 3,
+    "y": 18,
+    "facing": "up",
+    "dialogue": "corvane_side/glum",
+    "sprite": "elder",
+    "color": "222222"
+   },
+   {
+    "id": "mourner_3",
+    "x": 9,
+    "y": 15,
+    "facing": "down",
+    "dialogue": "corvane_side/mourner_3",
+    "sprite": "villager"
+   },
+   {
+    "id": "quill",
+    "x": 9,
+    "y": 18,
+    "facing": "left",
+    "dialogue": "corvane_side/quill",
+    "sprite": "villager",
+    "color": "2f4f6f"
+   },
+   {
+    "id": "pell",
+    "x": 10,
+    "y": 10,
+    "facing": "left",
+    "dialogue": "corvane_side/pell",
+    "sprite": "villager",
+    "color": "5a4632"
+   },
+   {
+    "id": "ma_rook",
+    "x": 8,
+    "y": 13,
+    "facing": "left",
+    "dialogue": "corvane_side/ma_rook",
+    "sprite": "elder",
+    "color": "2a2a2a"
+   },
+   {
+    "id": "post_5",
+    "x": 1,
+    "y": 5,
+    "facing": "down",
+    "dialogue": "corvane_side/post_5",
+    "sprite": "villager"
    }
   ],
   "signs": [
@@ -191,6 +278,18 @@
     "spot": "page_7",
     "dialogue": "story/find_7",
     "hide_flag": "page_7"
+   },
+   {
+    "x": 3,
+    "y": 10,
+    "dialogue": "corvane_side/feather_1",
+    "hide_flag": "feather_1"
+   },
+   {
+    "x": 6,
+    "y": 17,
+    "dialogue": "corvane_side/feather_2",
+    "hide_flag": "feather_2"
    }
   ]
  },
@@ -265,7 +364,7 @@
     "y": 19,
     "facing": "down",
     "dialogue": "clans/heider",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "6a6a6a",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -276,7 +375,7 @@
     "y": 4,
     "facing": "down",
     "dialogue": "clans/elma",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "c98a5a",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
@@ -290,6 +389,88 @@
     "sprite": "warden",
     "show_flag": "corvane_arrived",
     "hide_flag": "morrow_gone"
+   },
+   {
+    "id": "nib_2",
+    "x": 9,
+    "y": 18,
+    "facing": "down",
+    "dialogue": "corvane_side/nib_2",
+    "sprite": "ranger",
+    "color": "6b5a8e",
+    "show_flag": "beat_story_nib_1",
+    "hide_flag": "beat_story_nib_2"
+   },
+   {
+    "id": "gaunt",
+    "x": 1,
+    "y": 7,
+    "facing": "right",
+    "dialogue": "corvane_side/gaunt",
+    "sprite": "elder",
+    "color": "3a3a3a"
+   },
+   {
+    "id": "mourner_1",
+    "x": 2,
+    "y": 20,
+    "facing": "down",
+    "dialogue": "corvane_side/mourner_1",
+    "sprite": "villager"
+   },
+   {
+    "id": "bounty_ghost",
+    "x": 8,
+    "y": 16,
+    "facing": "down",
+    "dialogue": "corvane_side/bounty_ghost",
+    "sprite": "villager",
+    "trainer": "The Dyer's Ghost",
+    "team": [
+     {
+      "species": "Hushkin",
+      "level": 21
+     },
+     {
+      "species": "Mirkmole",
+      "level": 22
+     },
+     {
+      "species": "Blotling",
+      "level": 22
+     }
+    ],
+    "intro": "corvane_side/bounty_ghost_intro",
+    "defeat": "corvane_side/bounty_ghost_defeat",
+    "money": 1000,
+    "beaten_flag": "beat_bounty_ghost",
+    "show_flag": "q_quill_asked"
+   },
+   {
+    "id": "vetch",
+    "x": 9,
+    "y": 20,
+    "facing": "up",
+    "dialogue": "corvane_side/vetch",
+    "sprite": "villager",
+    "color": "6f6f6f"
+   },
+   {
+    "id": "sorrel",
+    "x": 10,
+    "y": 7,
+    "facing": "left",
+    "dialogue": "corvane_side/sorrel",
+    "sprite": "elder",
+    "color": "4c8f4c"
+   },
+   {
+    "id": "post_1",
+    "x": 3,
+    "y": 7,
+    "facing": "down",
+    "dialogue": "corvane_side/post_1",
+    "sprite": "villager"
    }
   ],
   "signs": [
@@ -297,6 +478,18 @@
     "spot": "letter_c2",
     "dialogue": "story/letter_c2",
     "hide_flag": "letter_c2"
+   },
+   {
+    "x": 10,
+    "y": 1,
+    "dialogue": "corvane_side/feather_3",
+    "hide_flag": "feather_3"
+   },
+   {
+    "x": 1,
+    "y": 16,
+    "dialogue": "corvane_side/feather_4",
+    "hide_flag": "feather_4"
    }
   ]
  },
@@ -339,6 +532,13 @@
     "dialogue": "corvane/veit_stove",
     "show_flag": "guild_joined",
     "hide_flag": "veit_hint_3"
+   },
+   {
+    "x": 7,
+    "y": 3,
+    "dialogue": "edge_camp/guild_table",
+    "show_flag": "edge_aldra_asked",
+    "hide_flag": "edge_aldra_1"
    }
   ]
  },
@@ -353,6 +553,23 @@
     "spot": "page_9",
     "dialogue": "story/find_9",
     "hide_flag": "page_9"
+   },
+   {
+    "x": 9,
+    "y": 1,
+    "dialogue": "corvane_side/feather_5",
+    "hide_flag": "feather_5"
+   },
+   {
+    "x": 8,
+    "y": 26,
+    "dialogue": "corvane_side/feather_6",
+    "hide_flag": "feather_6"
+   },
+   {
+    "x": 1,
+    "y": 4,
+    "dialogue": "corvane_side/book_drop"
    }
   ],
   "npcs": [
@@ -371,6 +588,98 @@
     "dialogue": "corvane/woad_wanderer_b",
     "sprite": "villager",
     "color": "8a8a8a"
+   },
+   {
+    "id": "nib_3",
+    "x": 9,
+    "y": 18,
+    "facing": "down",
+    "dialogue": "corvane_side/nib_3",
+    "sprite": "ranger",
+    "color": "6b5a8e",
+    "show_flag": "beat_story_nib_2",
+    "hide_flag": "beat_story_nib_3"
+   },
+   {
+    "id": "debt_mossop",
+    "x": 2,
+    "y": 16,
+    "facing": "down",
+    "dialogue": "corvane_side/debt_mossop",
+    "sprite": "villager",
+    "trainer": "Peg Mossop",
+    "team": [
+     {
+      "species": "Bogwick",
+      "level": 21
+     },
+     {
+      "species": "Kelpup",
+      "level": 21
+     },
+     {
+      "species": "Puddock",
+      "level": 21
+     }
+    ],
+    "intro": "corvane_side/debt_mossop_intro",
+    "defeat": "corvane_side/debt_mossop_defeat",
+    "money": 700,
+    "beaten_flag": "beat_debt_mossop",
+    "show_flag": "q_gaunt_asked"
+   },
+   {
+    "id": "mourner_2",
+    "x": 1,
+    "y": 23,
+    "facing": "down",
+    "dialogue": "corvane_side/mourner_2",
+    "sprite": "villager"
+   },
+   {
+    "id": "bounty_rat",
+    "x": 9,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "corvane_side/bounty_rat",
+    "sprite": "villager",
+    "trainer": "The Wet Rat",
+    "team": [
+     {
+      "species": "Puddock",
+      "level": 22
+     },
+     {
+      "species": "Drizzlet",
+      "level": 22
+     },
+     {
+      "species": "Bogwick",
+      "level": 22
+     }
+    ],
+    "intro": "corvane_side/bounty_rat_intro",
+    "defeat": "corvane_side/bounty_rat_defeat",
+    "money": 1000,
+    "beaten_flag": "beat_bounty_rat",
+    "show_flag": "q_quill_asked"
+   },
+   {
+    "id": "jory",
+    "x": 10,
+    "y": 23,
+    "facing": "left",
+    "dialogue": "corvane_side/jory",
+    "sprite": "villager",
+    "color": "4c6f4c"
+   },
+   {
+    "id": "post_2",
+    "x": 3,
+    "y": 20,
+    "facing": "down",
+    "dialogue": "corvane_side/post_2",
+    "sprite": "villager"
    }
   ]
  },
@@ -401,7 +710,10 @@
     "intro": "corvane/senna_intro",
     "defeat": "corvane/senna_defeat",
     "ai": 2,
-    "money": 1100
+    "money": 1250,
+    "mend_items": [
+     "echo_volt"
+    ]
    }
   ]
  },
@@ -411,6 +723,18 @@
     "spot": "page_8",
     "dialogue": "story/find_8",
     "hide_flag": "page_8"
+   },
+   {
+    "x": 10,
+    "y": 1,
+    "dialogue": "corvane_side/feather_7",
+    "hide_flag": "feather_7"
+   },
+   {
+    "x": 10,
+    "y": 18,
+    "dialogue": "corvane_side/feather_8",
+    "hide_flag": "feather_8"
    }
   ],
   "npcs": [
@@ -422,6 +746,135 @@
     "sprite": "ranger",
     "show_flag": "corvane_arrived",
     "hide_flag": "act2_end"
+   },
+   {
+    "id": "nib_4",
+    "x": 9,
+    "y": 24,
+    "facing": "down",
+    "dialogue": "corvane_side/nib_4",
+    "sprite": "ranger",
+    "color": "6b5a8e",
+    "show_flag": "beat_story_nib_3",
+    "hide_flag": "beat_story_nib_4"
+   },
+   {
+    "id": "debt_ambrose",
+    "x": 9,
+    "y": 20,
+    "facing": "down",
+    "dialogue": "corvane_side/debt_ambrose",
+    "sprite": "villager",
+    "trainer": "Twitchy Ambrose",
+    "team": [
+     {
+      "species": "Silthop",
+      "level": 22
+     },
+     {
+      "species": "Millwhit",
+      "level": 22
+     },
+     {
+      "species": "Glimmoth",
+      "level": 23
+     }
+    ],
+    "intro": "corvane_side/debt_ambrose_intro",
+    "defeat": "corvane_side/debt_ambrose_defeat",
+    "money": 700,
+    "beaten_flag": "beat_debt_ambrose",
+    "show_flag": "q_gaunt_asked"
+   },
+   {
+    "id": "bounty_knuckles",
+    "x": 2,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "corvane_side/bounty_knuckles",
+    "sprite": "villager",
+    "trainer": "Knuckles Marrin",
+    "team": [
+     {
+      "species": "Duskdigger",
+      "level": 23
+     },
+     {
+      "species": "Shalebat",
+      "level": 23
+     },
+     {
+      "species": "Siltgrove",
+      "level": 23
+     }
+    ],
+    "intro": "corvane_side/bounty_knuckles_intro",
+    "defeat": "corvane_side/bounty_knuckles_defeat",
+    "money": 1000,
+    "beaten_flag": "beat_bounty_knuckles",
+    "show_flag": "q_quill_asked"
+   },
+   {
+    "id": "fenwick",
+    "x": 10,
+    "y": 12,
+    "facing": "left",
+    "dialogue": "corvane_side/fenwick",
+    "sprite": "villager",
+    "color": "c9a227"
+   },
+   {
+    "id": "morag",
+    "x": 2,
+    "y": 24,
+    "facing": "right",
+    "dialogue": "corvane_side/morag",
+    "sprite": "villager"
+   },
+   {
+    "id": "ollie",
+    "x": 1,
+    "y": 6,
+    "facing": "right",
+    "dialogue": "corvane_side/ollie",
+    "sprite": "villager",
+    "color": "4c8f4c"
+   },
+   {
+    "id": "book_courier",
+    "x": 10,
+    "y": 19,
+    "facing": "down",
+    "dialogue": "corvane_side/courier",
+    "sprite": "villager",
+    "trainer": "Quay Book Courier",
+    "team": [
+     {
+      "species": "Shalebat",
+      "level": 24
+     },
+     {
+      "species": "Drizzlet",
+      "level": 24
+     },
+     {
+      "species": "Puddock",
+      "level": 25
+     }
+    ],
+    "intro": "corvane_side/courier_intro",
+    "defeat": "corvane_side/courier_defeat",
+    "money": 800,
+    "beaten_flag": "beat_book_courier",
+    "show_flag": "nib_done"
+   },
+   {
+    "id": "post_3",
+    "x": 2,
+    "y": 11,
+    "facing": "down",
+    "dialogue": "corvane_side/post_3",
+    "sprite": "villager"
    }
   ]
  },
@@ -452,7 +905,10 @@
     "intro": "corvane/joral_intro",
     "defeat": "corvane/joral_defeat",
     "ai": 2,
-    "money": 1200
+    "money": 1300,
+    "mend_items": [
+     "echo_lumen"
+    ]
    }
   ]
  },
@@ -494,6 +950,224 @@
     "facing": "left",
     "dialogue": "corvane/moss",
     "sprite": "elder"
+   },
+   {
+    "id": "debt_brask",
+    "x": 9,
+    "y": 18,
+    "facing": "down",
+    "dialogue": "corvane_side/debt_brask",
+    "sprite": "villager",
+    "trainer": "Old Brask",
+    "team": [
+     {
+      "species": "Shalebat",
+      "level": 24
+     },
+     {
+      "species": "Duskdigger",
+      "level": 24
+     },
+     {
+      "species": "Millvane",
+      "level": 24
+     }
+    ],
+    "intro": "corvane_side/debt_brask_intro",
+    "defeat": "corvane_side/debt_brask_defeat",
+    "money": 700,
+    "beaten_flag": "beat_debt_brask",
+    "show_flag": "q_gaunt_asked"
+   },
+   {
+    "id": "corbin",
+    "x": 8,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "corvane_side/corbin",
+    "sprite": "elder",
+    "color": "7a7a7a"
+   },
+   {
+    "id": "bounty_smudge",
+    "x": 1,
+    "y": 15,
+    "facing": "down",
+    "dialogue": "corvane_side/bounty_smudge",
+    "sprite": "villager",
+    "trainer": "Sister Smudge",
+    "team": [
+     {
+      "species": "Scrivane",
+      "level": 24
+     },
+     {
+      "species": "Hushkin",
+      "level": 24
+     },
+     {
+      "species": "Blotling",
+      "level": 24
+     }
+    ],
+    "intro": "corvane_side/bounty_smudge_intro",
+    "defeat": "corvane_side/bounty_smudge_defeat",
+    "money": 1000,
+    "beaten_flag": "beat_bounty_smudge",
+    "show_flag": "q_quill_asked"
+   },
+   {
+    "id": "dimsy",
+    "x": 9,
+    "y": 14,
+    "facing": "left",
+    "dialogue": "corvane_side/dimsy",
+    "sprite": "villager",
+    "color": "8e6b3a"
+   },
+   {
+    "id": "hobb",
+    "x": 4,
+    "y": 25,
+    "facing": "up",
+    "dialogue": "corvane_side/hobb",
+    "sprite": "elder"
+   },
+   {
+    "id": "ladder_1",
+    "x": 8,
+    "y": 1,
+    "facing": "down",
+    "dialogue": "corvane_side/ladder_1",
+    "sprite": "ranger",
+    "trainer": "Cliff Hand Wren",
+    "team": [
+     {
+      "species": "Shalebat",
+      "level": 23
+     },
+     {
+      "species": "Millwhit",
+      "level": 23
+     }
+    ],
+    "intro": "corvane_side/ladder_1_intro",
+    "defeat": "corvane_side/ladder_1_defeat",
+    "money": 900,
+    "beaten_flag": "beat_ladder_1",
+    "show_flag": "q_ladder_asked"
+   },
+   {
+    "id": "ladder_2",
+    "x": 9,
+    "y": 7,
+    "facing": "down",
+    "dialogue": "corvane_side/ladder_2",
+    "sprite": "ranger",
+    "trainer": "Cliff Hand Tull",
+    "team": [
+     {
+      "species": "Duskdigger",
+      "level": 23
+     },
+     {
+      "species": "Silthop",
+      "level": 24
+     }
+    ],
+    "intro": "corvane_side/ladder_2_intro",
+    "defeat": "corvane_side/ladder_2_defeat",
+    "money": 1000,
+    "beaten_flag": "beat_ladder_2",
+    "show_flag": "q_ladder_asked"
+   },
+   {
+    "id": "ladder_3",
+    "x": 1,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "corvane_side/ladder_3",
+    "sprite": "ranger",
+    "trainer": "Cliff Hand Mabs",
+    "team": [
+     {
+      "species": "Glimmoth",
+      "level": 24
+     },
+     {
+      "species": "Millwhit",
+      "level": 24
+     },
+     {
+      "species": "Drizzlet",
+      "level": 24
+     }
+    ],
+    "intro": "corvane_side/ladder_3_intro",
+    "defeat": "corvane_side/ladder_3_defeat",
+    "money": 1100,
+    "beaten_flag": "beat_ladder_3",
+    "show_flag": "q_ladder_asked"
+   },
+   {
+    "id": "ladder_4",
+    "x": 3,
+    "y": 19,
+    "facing": "down",
+    "dialogue": "corvane_side/ladder_4",
+    "sprite": "ranger",
+    "trainer": "Cliff Hand Orrin",
+    "team": [
+     {
+      "species": "Kelphound",
+      "level": 25
+     },
+     {
+      "species": "Millvane",
+      "level": 25
+     }
+    ],
+    "intro": "corvane_side/ladder_4_intro",
+    "defeat": "corvane_side/ladder_4_defeat",
+    "money": 1200,
+    "beaten_flag": "beat_ladder_4",
+    "show_flag": "q_ladder_asked"
+   },
+   {
+    "id": "ladder_5",
+    "x": 9,
+    "y": 21,
+    "facing": "down",
+    "dialogue": "corvane_side/ladder_5",
+    "sprite": "ranger",
+    "trainer": "Cliff Hand Dorsey",
+    "team": [
+     {
+      "species": "Rainmantle",
+      "level": 25
+     },
+     {
+      "species": "Wickmoth",
+      "level": 25
+     },
+     {
+      "species": "Lumenewt",
+      "level": 26
+     }
+    ],
+    "intro": "corvane_side/ladder_5_intro",
+    "defeat": "corvane_side/ladder_5_defeat",
+    "money": 1300,
+    "beaten_flag": "beat_ladder_5",
+    "show_flag": "q_ladder_asked"
+   },
+   {
+    "id": "post_4",
+    "x": 8,
+    "y": 21,
+    "facing": "down",
+    "dialogue": "corvane_side/post_4",
+    "sprite": "villager"
    }
   ],
   "signs": [
@@ -501,6 +1175,32 @@
     "spot": "page_10",
     "dialogue": "story/find_10",
     "hide_flag": "page_10"
+   },
+   {
+    "x": 3,
+    "y": 1,
+    "dialogue": "corvane_side/feather_9",
+    "hide_flag": "feather_9"
+   },
+   {
+    "x": 4,
+    "y": 23,
+    "dialogue": "corvane_side/feather_10",
+    "hide_flag": "feather_10"
+   },
+   {
+    "x": 3,
+    "y": 18,
+    "dialogue": "edge_camp/amir_mark_1",
+    "show_flag": "edge_amir_asked",
+    "hide_flag": "edge_amir_1"
+   },
+   {
+    "x": 10,
+    "y": 24,
+    "dialogue": "edge_camp/heider_drop",
+    "show_flag": "edge_heider_asked",
+    "hide_flag": "edge_heider_1"
    }
   ]
  },
@@ -518,6 +1218,127 @@
    {
     "spot": "veit_diary",
     "dialogue": "corvane/veit_diary"
+   },
+   {
+    "x": 10,
+    "y": 10,
+    "dialogue": "edge_camp/farida_guestbook",
+    "show_flag": "edge_farida_rested",
+    "hide_flag": "edge_farida_1"
+   },
+   {
+    "x": 4,
+    "y": 2,
+    "dialogue": "edge_camp/lejla_stone",
+    "show_flag": "edge_lejla_1",
+    "hide_flag": "edge_lejla_woke"
+   }
+  ],
+  "on_enter": {
+   "scene": "edge_camp",
+   "if": {
+    "flag": "corvane_arrived"
+   }
+  },
+  "npcs": [
+   {
+    "id": "edge_elma",
+    "x": 8,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "edge_camp/elma",
+    "sprite": "stranger",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_aldra",
+    "x": 2,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "edge_camp/aldra",
+    "sprite": "stranger",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_nail",
+    "x": 9,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "edge_camp/nail",
+    "sprite": "stranger_hat",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_lipka",
+    "x": 1,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "edge_camp/lipka",
+    "sprite": "stranger_kid",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_kenan",
+    "x": 10,
+    "y": 5,
+    "facing": "down",
+    "dialogue": "edge_camp/kenan",
+    "sprite": "stranger_runner",
+    "show_flag": "edge_camp_met"
+   },
+   {
+    "id": "edge_amir",
+    "x": 3,
+    "y": 8,
+    "facing": "down",
+    "dialogue": "edge_camp/amir",
+    "sprite": "stranger_hat",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "edge_farida",
+    "x": 9,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "edge_camp/farida",
+    "sprite": "stranger",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "edge_heider",
+    "x": 4,
+    "y": 10,
+    "facing": "down",
+    "dialogue": "edge_camp/heider",
+    "sprite": "stranger_hat",
+    "show_flag": "act2_end"
+   },
+   {
+    "id": "edge_leith",
+    "x": 9,
+    "y": 3,
+    "facing": "down",
+    "dialogue": "edge_camp/leith",
+    "sprite": "stranger_runner",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "edge_lejla",
+    "x": 2,
+    "y": 7,
+    "facing": "down",
+    "dialogue": "edge_camp/lejla",
+    "sprite": "stranger",
+    "show_flag": "rift_shade_sealed"
+   },
+   {
+    "id": "edge_mirza",
+    "x": 8,
+    "y": 12,
+    "facing": "down",
+    "dialogue": "edge_camp/mirza",
+    "sprite": "stranger_hat",
+    "show_flag": "rift_shade_sealed"
    }
   ]
  },
@@ -542,9 +1363,10 @@
     "y": 8,
     "facing": "down",
     "dialogue": "clans/lejla",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "a05a5a",
-    "show_flag": "act2_end"
+    "show_flag": "act2_end",
+    "hide_flag": "rift_shade_sealed"
    },
    {
     "id": "clan_pip_3",
@@ -630,7 +1452,10 @@
     "intro": "ashmere/tovan_intro",
     "defeat": "ashmere/tovan_defeat",
     "ai": 3,
-    "money": 1500
+    "money": 1500,
+    "mend_items": [
+     "echo_stone"
+    ]
    }
   ],
   "signs": [
@@ -656,6 +1481,13 @@
     "spot": "letter_a3",
     "dialogue": "story/letter_a3",
     "hide_flag": "letter_a3"
+   },
+   {
+    "x": 10,
+    "y": 15,
+    "dialogue": "edge_camp/amir_mark_2",
+    "show_flag": "edge_amir_asked",
+    "hide_flag": "edge_amir_2"
    }
   ]
  },
@@ -736,9 +1568,10 @@
     "y": 13,
     "facing": "down",
     "dialogue": "clans/leith",
-    "sprite": "villager",
+    "sprite": "stranger_runner",
     "color": "5a5a8a",
-    "show_flag": "act2_end"
+    "show_flag": "act2_end",
+    "hide_flag": "rift_shade_sealed"
    },
    {
     "id": "clan_mirza",
@@ -746,9 +1579,10 @@
     "y": 13,
     "facing": "down",
     "dialogue": "clans/mirza",
-    "sprite": "villager",
+    "sprite": "stranger_hat",
     "color": "8a6a2a",
-    "show_flag": "act2_end"
+    "show_flag": "act2_end",
+    "hide_flag": "rift_shade_sealed"
    },
    {
     "id": "clan_marlo_3",
@@ -801,7 +1635,10 @@
     "intro": "ashmere/ilse_intro",
     "defeat": "ashmere/ilse_defeat",
     "ai": 3,
-    "money": 1600
+    "money": 1600,
+    "mend_items": [
+     "echo_gale"
+    ]
    }
   ]
  },
@@ -827,6 +1664,13 @@
     "spot": "gate",
     "dialogue": "ashmere/undrawn_gate",
     "show_flag": "beat_story_kestra_3"
+   },
+   {
+    "x": 2,
+    "y": 9,
+    "dialogue": "edge_camp/leith_arrow",
+    "show_flag": "edge_leith_asked",
+    "hide_flag": "edge_leith_1"
    }
   ]
  },
@@ -941,7 +1785,7 @@
     "y": 2,
     "facing": "down",
     "dialogue": "clans/aldra",
-    "sprite": "villager",
+    "sprite": "stranger",
     "color": "c9a227",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -952,7 +1796,7 @@
     "y": 10,
     "facing": "down",
     "dialogue": "clans/lipka",
-    "sprite": "villager",
+    "sprite": "stranger_kid",
     "color": "6a8fb0",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
@@ -1153,6 +1997,13 @@
     "y": 18,
     "dialogue": "solenne_side/iou_2",
     "show_flag": "veil_factor_beaten"
+   },
+   {
+    "x": 2,
+    "y": 10,
+    "dialogue": "edge_camp/amir_mark_3",
+    "show_flag": "edge_amir_asked",
+    "hide_flag": "edge_amir_3"
    }
   ]
  }

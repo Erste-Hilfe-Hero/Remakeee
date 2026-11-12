@@ -1,0 +1,20 @@
+{
+ "_comment": "zh_CN translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "学徒",
+  "Boss": "老大",
+  "Broker": "经纪人",
+  "Captain": "队长",
+  "Fixer": "掮客",
+  "Map Master": "地图大师",
+  "No season reward is waiting.": "没有待领的赛季奖励。",
+  "Placement": "定级",
+  "Placement battles left: %d": "剩余定级战：%d",
+  "Rank: %s": "段位：%s",
+  "Runner": "跑腿",
+  "Season reward": "赛季奖励",
+  "Season reward: %d x %s": "赛季奖励：%d x %s",
+  "Shield: %d battles without losing the rank": "护盾：%d场战斗不掉段",
+  "You left too many battles. Search again in %d seconds.": "退出的战斗太多了。%d秒后再搜索。"
+ }
+}

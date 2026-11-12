@@ -1,0 +1,7 @@
+{
+ "_comment": "Brazilian Portuguese texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pt_BR.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "Reluzente: %d vistos, %d vinculados",
+  "No Gleam has joined you yet.": "Nenhum Reluzente se juntou a você ainda."
+ }
+}

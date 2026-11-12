@@ -1,0 +1,23 @@
+{
+ "_comment": "fr translation of the ideas200 table, keyed by the English text.",
+ "strings": {
+  "(tipped off, watch your back)": "(balancé, surveille tes arrières)",
+  "Borrowed the Fixer's cart. Returned the wheels.": "A emprunté la charrette du Fixeur. A rendu les roues.",
+  "Certificate of Completion": "Certificat d'achèvement",
+  "Half-Ear Osk": "Osk Demi-Oreille",
+  "Issued to %s, who did everything.": "Délivré à %s, qui a tout fait.",
+  "Knows where the money went. All of it.": "Sait où est passé l'argent. Tout l'argent.",
+  "Lucky Brannoch": "Brannoch le Veinard",
+  "Mother Greel": "Mère Greel",
+  "Nobody is that lucky. Check his sleeves.": "Personne n'a autant de chance. Vérifie ses manches.",
+  "Quiet Wenna": "Wenna la Discrète",
+  "Runs a soup kitchen. The soup is evidence.": "Tient une soupe populaire. La soupe est une pièce à conviction.",
+  "Said nothing to the wardens. That is the problem.": "N'a rien dit aux gardiens. C'est bien le problème.",
+  "Signed by the Fixer, witnessed by a man who swears he was never here.": "Signé par le Fixeur, en présence d'un homme qui jure n'être jamais venu.",
+  "Sold the same alley to three gangs. Twice.": "A vendu la même ruelle à trois gangs. Deux fois.",
+  "The Accountant": "Le Comptable",
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "Ce papier dit que tu as tout fait. Encadre-le. Quelqu'un essaiera de le falsifier d'ici jeudi.",
+  "Velvet Tam": "Tam la Velours",
+  "WANTED: %s, ring %d, %d coins": "RECHERCHÉ: %s, rang %d, %d pièces"
+ }
+}

@@ -284,6 +284,32 @@
     ]
    },
    "profile": "wall"
+  },
+  {
+   "id": "vs_jinks_2",
+   "x": 7,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "veydal_side/jinks_2",
+   "sprite": "ranger",
+   "show_flag": "beat_story_rival_jinks_1",
+   "hide_flag": "beat_story_rival_jinks_2"
+  },
+  {
+   "id": "vs_marl",
+   "x": 8,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "veydal_side/marl",
+   "sprite": "villager"
+  },
+  {
+   "id": "vs_corr",
+   "x": 5,
+   "y": 12,
+   "facing": "down",
+   "dialogue": "veydal_side/corr",
+   "sprite": "warden"
   }
  ],
  "signs": [
