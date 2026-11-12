@@ -30,5 +30,11 @@
   "lines": [
    "Ferryman Ivo: There's been no water to ferry for twenty years. I still charge. Habit."
   ]
+ },
+ "digger": {
+  "lines": [
+   "Old Digger Hesper: Under the salt there is more salt. Under that, things people dropped while running. One dig a day, love. The ground sulks."
+  ],
+  "action": "dig"
  }
 }

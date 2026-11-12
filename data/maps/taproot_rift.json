@@ -69,8 +69,13 @@
     {
      "species": "Fenwarden",
      "level": 93
+    },
+    {
+     "species": "Woadcastle",
+     "level": 93
     }
-   ]
+   ],
+   "wheel": true
   },
   {
    "id": "warden_ossian",

@@ -200,7 +200,7 @@ static func _check_species_fields(s: Dictionary, sname: String, species_names: D
 		var rule: String = str(p.get("rule", ""))
 		if not rule in SpirlingData.UNFOLD_RULES:
 			errors.append("spirling '%s': unknown unfold rule '%s'" % [sname, rule])
-		elif rule in ["ring", "map_pages", "echo_streak"] and int(p.get("value", 0)) <= 0:
+		elif rule in ["ring", "map_pages", "echo_streak", "kinship"] and int(p.get("value", 0)) <= 0:
 			errors.append("spirling '%s': unfold rule '%s' needs a positive value" % [sname, rule])
 		elif rule in ["item", "mended", "time"] and str(p.get("value", "")).is_empty():
 			errors.append("spirling '%s': unfold rule '%s' needs a value" % [sname, rule])
