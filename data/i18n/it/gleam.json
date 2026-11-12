@@ -1,0 +1,7 @@
+{
+ "_comment": "Italian texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py it.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "Splendore: %d visti, %d legati",
+  "No Gleam has joined you yet.": "Nessuno Splendore si è ancora unito a te."
+ }
+}

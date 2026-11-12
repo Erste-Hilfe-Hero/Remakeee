@@ -89,7 +89,11 @@ func _lines_in(region: String) -> Dictionary:
 func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 	Database.load_all()
 	# Includes the legendaries Zephyrel (Corvane), Monolurk and Vorlucent (Ashmere), Lumivane (Solenne).
-	assert_eq(_lines_in("corvane").size(), 9)
+	assert_eq(_lines_in("corvane").size(), 31, "9 lines before and 22 Act II lines (tools/art/lines/corvane.py)")
+	var corvane: int = 0
+	for sd: SpirlingData in Database.spirlings.values():
+		corvane += 1 if sd.region == "corvane" and sd.rarity != "ancient" else 0
+	assert_eq(corvane, 70, "every story act has 70 own Spirlings (legendaries not counted)")
 	assert_eq(_lines_in("ashmere").size(), 32, "8 lines before and 24 Act III lines (tools/art/lines/ashmere.py)")
 	var ashmere: int = 0
 	for sd: SpirlingData in Database.spirlings.values():
@@ -118,7 +122,7 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 		for s: Dictionary in enc[area].spawns:
 			var own: String = Database.species(str(s.species)).region
 			assert_lte(SpirlingData.REGIONS.find(own), SpirlingData.REGIONS.find(region), "%s in %s" % [s.species, area])
-	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 17)
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 71)
 	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
 	assert_false(SpirlogBook.region_open("solenne", {}))
 
@@ -127,7 +131,7 @@ func test_act_tables_use_mostly_their_own_kinds() -> void:
 	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/world_layout.json"))
 	for id: String in EncounterTable.table_ids():
 		var region: String = str((layout.maps.get(id, {}) as Dictionary).get("region", "veydal"))
-		if region != "solenne" and region != "ashmere":
+		if region != "solenne" and region != "ashmere" and region != "corvane":
 			continue
 		var own: int = 0
 		var all: int = 0

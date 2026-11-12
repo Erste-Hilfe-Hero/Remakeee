@@ -142,6 +142,27 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | `mirror_rift` | the Mirror Rift | Warden Joral |
 | `greyreach` | Greyreach, grey uplands | Veit's duel, old cartographer Moss |
 | `wide_rift_edge` | the edge of the Wide Rift | scene `wide_rift_reveal` |
+| `rook_vault` | the Rook Vault under Greyreach (item 1305) | feather-switch dungeon, 4 rooms, the Rook Keeper |
+
+### Act II side content (Corvane)
+
+Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German:
+`tools/i18n/de_corvane_side.py`. Rough play time per act: `python3 tools/act_hours.py`.
+
+- **Rival Nib Wexley**, a quay rat: five story duels (`nib_1`..`nib_5`) on the quay, in Madderby,
+  the Woadfen, at Stillwater and at the bottom of the Rook Vault. After the last one he admits he
+  sold your route notes (betrayal `nib_sale`, caught when Corbin warned you: `nib_warned`).
+- **The Quay Book**: who bought Nib's notes. Drop in the Woadfen, courier at Stillwater, then
+  Harbourmaster Quill himself (story duel `quill`).
+- **Mother Gaunt's debts**: four debtor duels; she sends her daughters after your cut
+  (betrayal `gaunt_cut`, caught when old Brask warned you: `brask_warned`).
+- **Vetch's dye run**: carry a crate to Moss-eye Jory, find rocks, make Vetch pay (`vetch`).
+- **Lucky Fenwick's fixed race**, **Glum's funeral** (three paid mourners for a Kelpup that is not
+  dead), **Harbourmaster Quill's bounties** (four duels, half the reward goes on fees),
+  **Ma Rook's five letters**, **the Greyreach Ladder** (five duels), **Sorrel's Spirlog** (show six
+  Corvane kinds), **Corbin's twelve grey feathers** (collectibles on six maps).
+- Favors with hidden trust: Pockets Pell (lend a Spirling), Ollie Fairweather (lend coins),
+  Dimsy Crake (believe his Rook Vault shortcut).
 
 ### Act III: Ashmere (item 1480)
 

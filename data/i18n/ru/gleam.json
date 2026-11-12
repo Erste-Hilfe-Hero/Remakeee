@@ -1,0 +1,7 @@
+{
+ "_comment": "Russian texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "Сияние: увидено %d, связано %d",
+  "No Gleam has joined you yet.": "Пока ни один сияющий не присоединился к тебе."
+ }
+}

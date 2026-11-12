@@ -31,6 +31,12 @@ func cancel_path() -> void:
 	path.clear()
 	path_target = NO_TARGET
 
+## Leaving the app drops a tap-to-move walk, so the Wayfarer never walks on by itself
+## after coming back (bug plan item 1311).
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_APPLICATION_PAUSED:
+		cancel_path()
+
 func _ready() -> void:
 	step_finished.connect(func(c: Vector2i) -> void: stepped.emit(c))
 

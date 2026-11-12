@@ -1,0 +1,462 @@
+{
+ "name": "Rook Vault",
+ "region": "corvane",
+ "biome": "dungeon",
+ "backdrop": "ridge",
+ "field": "deep_murk",
+ "encounters": "rook_vault",
+ "goal": "Goal: raise the feathers in the order scratched into the wall.",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@..........@",
+  "@.S..S..S..@",
+  "@..........@",
+  "@S........S@",
+  "@..........@",
+  "@..........@",
+  "@::......::@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 8,
+   "to": "greyreach",
+   "tx": 10,
+   "ty": 13,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 8,
+   "to": "greyreach",
+   "tx": 10,
+   "ty": 13,
+   "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "rook_vault@1",
+   "tx": 5,
+   "ty": 7,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "rook_vault@1",
+   "tx": 6,
+   "ty": 7,
+   "facing": "up"
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 2,
+   "dialogue": "rook_vault/r0_feather_0"
+  },
+  {
+   "x": 5,
+   "y": 2,
+   "dialogue": "rook_vault/r0_feather_1"
+  },
+  {
+   "x": 8,
+   "y": 2,
+   "dialogue": "rook_vault/r0_feather_2"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "rook_vault/r0_wall"
+  },
+  {
+   "x": 10,
+   "y": 4,
+   "dialogue": "rook_vault/hint_board"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "vault_room_0"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "vault_room_0"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 10,
+   "y": 1,
+   "item": "tonic",
+   "count": 2,
+   "flag": "find_vault_gate"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Rook Vault, roost",
+   "goal": "Goal: raise the feathers in the order scratched into the wall.",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@.S..S..S..@",
+    "@..........@",
+    "@S..S.....S@",
+    "@..........@",
+    "@..........@",
+    "@::......::@",
+    "@@@@@__@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "rook_vault",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "rook_vault",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "rook_vault@2",
+     "tx": 5,
+     "ty": 7,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "rook_vault@2",
+     "tx": 6,
+     "ty": 7,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "rook_vault/r1_feather_0"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "rook_vault/r1_feather_1"
+    },
+    {
+     "x": 8,
+     "y": 2,
+     "dialogue": "rook_vault/r1_feather_2"
+    },
+    {
+     "x": 4,
+     "y": 4,
+     "dialogue": "rook_vault/r1_feather_3"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "rook_vault/r1_wall"
+    },
+    {
+     "x": 10,
+     "y": 4,
+     "dialogue": "rook_vault/feather_11",
+     "hide_flag": "feather_11"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "vault_room_1"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "vault_room_1"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "kip",
+     "x": 9,
+     "y": 3,
+     "facing": "left",
+     "dialogue": "rook_vault/robber_kip",
+     "sprite": "villager",
+     "trainer": "Vault Robber Kip",
+     "intro": "rook_vault/robber_kip_intro",
+     "defeat": "rook_vault/robber_kip_defeat",
+     "money": 900,
+     "team": [
+      {
+       "species": "Shalebat",
+       "level": 23
+      },
+      {
+       "species": "Mirkmole",
+       "level": 24
+      }
+     ]
+    }
+   ],
+   "secrets": [
+    {
+     "x": 1,
+     "y": 1,
+     "item": "remedy",
+     "count": 2,
+     "flag": "find_vault_roost"
+    }
+   ]
+  },
+  {
+   "name": "Rook Vault, counting room",
+   "goal": "Goal: raise the feathers in the order scratched into the wall.",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@.S..S..S..@",
+    "@..........@",
+    "@S..S..S...@",
+    "@..........@",
+    "@..........@",
+    "@::......::@",
+    "@@@@@__@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "rook_vault@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "rook_vault@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "rook_vault@3",
+     "tx": 5,
+     "ty": 7,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "rook_vault@3",
+     "tx": 6,
+     "ty": 7,
+     "facing": "up"
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "rook_vault/r2_feather_0"
+    },
+    {
+     "x": 5,
+     "y": 2,
+     "dialogue": "rook_vault/r2_feather_1"
+    },
+    {
+     "x": 8,
+     "y": 2,
+     "dialogue": "rook_vault/r2_feather_2"
+    },
+    {
+     "x": 4,
+     "y": 4,
+     "dialogue": "rook_vault/r2_feather_3"
+    },
+    {
+     "x": 7,
+     "y": 4,
+     "dialogue": "rook_vault/r2_feather_4"
+    },
+    {
+     "x": 1,
+     "y": 4,
+     "dialogue": "rook_vault/r2_wall"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "vault_room_2"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "vault_room_2"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "nance",
+     "x": 9,
+     "y": 6,
+     "facing": "left",
+     "dialogue": "rook_vault/robber_nance",
+     "sprite": "villager",
+     "trainer": "Vault Robber Nance",
+     "intro": "rook_vault/robber_nance_intro",
+     "defeat": "rook_vault/robber_nance_defeat",
+     "money": 1000,
+     "team": [
+      {
+       "species": "Duskdigger",
+       "level": 24
+      },
+      {
+       "species": "Hushkin",
+       "level": 24
+      },
+      {
+       "species": "Mirkmole",
+       "level": 25
+      }
+     ]
+    }
+   ],
+   "secrets": [
+    {
+     "x": 10,
+     "y": 1,
+     "item": "strong_tonic",
+     "count": 2,
+     "flag": "find_vault_count"
+    }
+   ]
+  },
+  {
+   "name": "Rook Vault, hoard",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@..........@",
+    "@..........@",
+    "@..........@",
+    "@.........S@",
+    "@..........@",
+    "@..........@",
+    "@::......::@",
+    "@@@@@__@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "rook_vault@2",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "rook_vault@2",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "signs": [
+    {
+     "x": 10,
+     "y": 4,
+     "dialogue": "rook_vault/feather_12",
+     "hide_flag": "feather_12"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "keeper",
+     "x": 6,
+     "y": 2,
+     "facing": "down",
+     "dialogue": "rook_vault/keeper",
+     "sprite": "elder",
+     "trainer": "The Rook Keeper",
+     "intro": "rook_vault/keeper_intro",
+     "defeat": "rook_vault/keeper_defeat",
+     "money": 2000,
+     "ai": 3,
+     "beaten_flag": "beat_rook_keeper",
+     "team": [
+      {
+       "species": "Wickmoth",
+       "level": 26
+      },
+      {
+       "species": "Millvane",
+       "level": 27
+      },
+      {
+       "species": "Glimmoth",
+       "level": 26
+      },
+      {
+       "species": "Rainmantle",
+       "level": 28
+      }
+     ]
+    },
+    {
+     "id": "nib_5",
+     "x": 3,
+     "y": 5,
+     "facing": "right",
+     "dialogue": "corvane_side/nib_5",
+     "sprite": "ranger",
+     "color": "6b5a8e",
+     "show_flag": "beat_story_nib_4",
+     "hide_flag": "beat_story_nib_5"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 1,
+     "y": 1,
+     "item": "max_tonic",
+     "count": 1,
+     "flag": "find_vault_hoard_1"
+    },
+    {
+     "x": 10,
+     "y": 1,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_vault_hoard_2"
+    }
+   ]
+  }
+ ]
+}
