@@ -1110,6 +1110,10 @@ func run_spirlog() -> void:
 			_log_search, _log_element, role, _log_status, region)
 		var entries: Array[Dictionary] = []
 		var actions: Array[String] = []
+		# Two progress bars on top (item 1940).
+		for row: Dictionary in spirlog_progress_rows():
+			entries.append(row)
+			actions.append("progress")
 		for r: String in regions:
 			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
 			actions.append("chapter")
@@ -1172,9 +1176,57 @@ func run_spirlog() -> void:
 			"kind":
 				var sd: SpirlingData = kinds[idx - first_kind]
 				if not SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
-					await info("#%02d  Not seen yet." % sd.dex_id)
+					var look: String = unseen_hint(sd.species_name)
+					await info(Loc.t("#%02d  Not seen yet." % sd.dex_id) + ("\n" + look if not look.is_empty() else ""))
 					continue
 				await SpirlogPage.show_pages(self, kinds, idx - first_kind)
+
+## "Seen 12/21" and "Bonded 8/21" as rows with a bar each (item 1940).
+static func spirlog_progress_rows() -> Array[Dictionary]:
+	var kinds: Array[SpirlingData] = SpirlogBook.visible_kinds(GameState.flags)
+	var seen: int = 0
+	var bonded: int = 0
+	for sd: SpirlingData in kinds:
+		if SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
+			seen += 1
+		if SpirlogBook.is_bonded(GameState.spirlog, sd.species_name):
+			bonded += 1
+	var total: int = kinds.size()
+	var out: Array[Dictionary] = []
+	for pair: Array in [["Seen %d/%d", seen], ["Bonded %d/%d", bonded]]:
+		var n: int = int(pair[1])
+		var ratio: float = float(n) / maxf(1.0, float(total))
+		out.append({"text": Loc.t(str(pair[0]) % [n, total]),
+			"decorate": func(b: Button) -> void: _draw_progress(b, ratio)})
+	return out
+
+const PROGRESS_W: int = 48
+
+static func _draw_progress(b: Button, ratio: float) -> void:
+	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
+	var x0: float = b.size.x - PROGRESS_W - 6
+	var y: float = b.size.y - 4
+	b.draw_rect(Rect2(x0, y, PROGRESS_W, 2), UITheme.DISABLED)
+	if ratio > 0.0:
+		b.draw_rect(Rect2(x0, y, maxf(1.0, roundf(PROGRESS_W * ratio)), 2), ink)
+
+## Where to look for a kind not seen yet: maps it lives on that the player has entered
+## (item 1948). Empty while none of them was entered.
+static func unseen_hint(species: String) -> String:
+	var where: PackedStringArray = []
+	for table: String in EncounterTable.table_ids():
+		if not species in EncounterTable.species_on(table):
+			continue
+		for map_id: String in _maps_with_table(table):
+			if not GameState.visited_maps.has(map_id):
+				continue
+			var m: MapData = MapData.load_map(map_id)
+			var name: String = m.display_name if m != null and not m.display_name.is_empty() else map_id
+			if not name in where:
+				where.append(name)
+	if where.is_empty():
+		return ""
+	return Loc.t("Look in: %s") % ", ".join(where)
 
 ## Real map names where a kind lives (item 1935), not reshaped table ids.
 static func found_on(species: String) -> PackedStringArray:
