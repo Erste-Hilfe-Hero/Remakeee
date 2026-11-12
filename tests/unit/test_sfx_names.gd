@@ -2,7 +2,7 @@ extends GutTest
 ## Plan area 6, item 2561: every sound named in code (Sound.sfx("...")) has a file in
 ## audio/sfx/, and every file there is used: named as a quoted string somewhere in scripts/,
 ## or one of the families built from a name ("hit_<element>", "travel_<element>",
-## "step_<ground>_<take>").
+## "step_<ground>_<take>"), or a file of an era sound set in data/era_audio.json.
 
 const FAMILIES: Array[String] = ["hit_", "travel_", "step_"]
 
@@ -39,11 +39,20 @@ func test_every_named_sound_has_a_file() -> void:
 	for n: String in named:
 		assert_true(FileAccess.file_exists(Sound.SFX_DIR % n), "audio/sfx/%s.wav" % n)
 
+## Files named by the era sound sets (data/era_audio.json) are used through Sound.sfx_file().
+func _era_files() -> Dictionary:
+	var out: Dictionary = {}
+	for era: String in (Sound.era_audio().get("eras", {}) as Dictionary):
+		for f: Variant in (Sound.era_spec(int(era)).get("sfx", {}) as Dictionary).values():
+			out[str(f)] = true
+	return out
+
 func test_every_file_is_used() -> void:
+	var era_files: Dictionary = _era_files()
 	for n: String in _sfx_files():
 		var family: bool = false
 		for p: String in FAMILIES:
 			family = family or n.begins_with(p)
-		if family:
+		if family or era_files.has(n):
 			continue
 		assert_true(_sources.contains("\"%s\"" % n), "audio/sfx/%s.wav is used" % n)
