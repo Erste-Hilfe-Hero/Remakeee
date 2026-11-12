@@ -1933,46 +1933,6 @@
    }
   ]
  },
- "pewter_causeway": {
-  "rate": 0.12,
-  "spawns": [
-   {
-    "species": "Siltgrove",
-    "min": 52,
-    "max": 55,
-    "weight": 9,
-    "ground": "fern"
-   },
-   {
-    "species": "Cogwright",
-    "min": 52,
-    "max": 55,
-    "weight": 7,
-    "ground": "fern"
-   },
-   {
-    "species": "Delthorn",
-    "min": 52,
-    "max": 55,
-    "weight": 5,
-    "ground": "reeds"
-   },
-   {
-    "species": "Cogmite",
-    "min": 52,
-    "max": 54,
-    "weight": 16,
-    "ground": "fern"
-   },
-   {
-    "species": "Canalet",
-    "min": 52,
-    "max": 54,
-    "weight": 14,
-    "ground": "reeds"
-   }
-  ]
- },
  "rookery_cut": {
   "rate": 0.12,
   "spawns": [
@@ -2170,6 +2130,46 @@
     "max": 59,
     "weight": 14,
     "ground": "fern"
+   }
+  ]
+ },
+ "tollchain_causeway": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Siltgrove",
+    "min": 52,
+    "max": 55,
+    "weight": 9,
+    "ground": "fern"
+   },
+   {
+    "species": "Cogwright",
+    "min": 52,
+    "max": 55,
+    "weight": 7,
+    "ground": "fern"
+   },
+   {
+    "species": "Delthorn",
+    "min": 52,
+    "max": 55,
+    "weight": 5,
+    "ground": "reeds"
+   },
+   {
+    "species": "Cogmite",
+    "min": 52,
+    "max": 54,
+    "weight": 16,
+    "ground": "fern"
+   },
+   {
+    "species": "Canalet",
+    "min": 52,
+    "max": 54,
+    "weight": 14,
+    "ground": "reeds"
    }
   ]
  }

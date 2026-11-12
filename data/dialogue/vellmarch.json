@@ -168,15 +168,6 @@
   ],
   "action": "heal"
  },
- "pewter_causeway_tollkeeper": [
-  "Vos: The causeway is free. Crossing it isn't."
- ],
- "pewter_causeway_tollkeeper_defeat": [
-  "Vos: Fine. Pass. I'll bill the House for my pride."
- ],
- "pewter_causeway_tollkeeper_intro": [
-  "Vos: Pay the toll in coin or in bruises. I take both."
- ],
  "rookery_cut_crowmonger": [
   "Sibbe: My crows carry letters for the Syndicate. They read them first. So do I."
  ],
@@ -228,6 +219,15 @@
  ],
  "tithe_road_tithecollector_intro": [
   "Prue: Your tithe is overdue. I accept payment in battle."
+ ],
+ "tollchain_causeway_tollkeeper": [
+  "Vos: The causeway is free. Crossing it isn't."
+ ],
+ "tollchain_causeway_tollkeeper_defeat": [
+  "Vos: Fine. Pass. I'll bill the House for my pride."
+ ],
+ "tollchain_causeway_tollkeeper_intro": [
+  "Vos: Pay the toll in coin or in bruises. I take both."
  ],
  "vault_rift_acolyte": [
   "Barra: Corin counts every coin twice. The second time he counts you."
