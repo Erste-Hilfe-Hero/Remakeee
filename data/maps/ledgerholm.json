@@ -212,6 +212,14 @@
    ]
   },
   {
+   "id": "showcase_host",
+   "x": 8,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "quillmarch/ledgerholm_showcase_host",
+   "sprite": "villager"
+  },
+  {
    "id": "q3_short_till_nils",
    "x": 9,
    "y": 16,

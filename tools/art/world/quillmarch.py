@@ -342,6 +342,12 @@ def town(mid):
             warps.append(warp(x, y, place, tx, ty, facing))
             if flag:
                 blocks.append(gate_block(x, y, flag))
+    if mid == "ledgerholm":
+        # The Showcase (era function showcase, Era III, docs/ERA_FUNCTIONS.md).
+        npcs.append(npc("showcase_host", 8, 10, "down", text(mid + "_showcase_host", {"lines": lines(
+            ("Stagewright Pell: The Showcase! No blood, no Rifts, just arts and applause. The judges are honest. Mostly. One owes me money.",
+             "Bühnenmeister Pell: Die Schau! Kein Blut, keine Risse, nur Techniken und Applaus. Die Jury ist ehrlich. Meistens. Einer schuldet mir Geld.")),
+            "action": "showcase"}), "villager"))
     if mid == "burin_landing":
         npcs.append(npc("boatman", BOATMAN[0], BOATMAN[1], "left", boat_text(), "elder"))
         npcs.append(npc("wren", 9, 4, "down", wren_text(), "tamer_f"))

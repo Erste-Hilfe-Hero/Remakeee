@@ -187,13 +187,6 @@
    "item": "dash_brew",
    "count": 1,
    "flag": "find_drypoint_lane_q3_0_3"
-  },
-  {
-   "x": 11,
-   "y": 6,
-   "item": "guard_brew",
-   "count": 1,
-   "flag": "find_drypoint_lane_q3_11_6"
   }
  ]
 }

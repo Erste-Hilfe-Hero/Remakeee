@@ -187,6 +187,12 @@
   ],
   "action": "heal"
  },
+ "ledgerholm_showcase_host": {
+  "lines": [
+   "Stagewright Pell: The Showcase! No blood, no Rifts, just arts and applause. The judges are honest. Mostly. One owes me money."
+  ],
+  "action": "showcase"
+ },
  "ledgerholm_sign": [
   "Ledgerholm",
   "Ledgerholm. Two banks, one street, no witnesses."
@@ -492,7 +498,7 @@
   "action": "set_flag q3_dead_stamp_paid; give_item revival_leaf 2; quest_stage q3_dead_stamp 4"
  },
  "q3_dead_stamp_pia_you_after": [
-  "Pia: I'm deceased again. They gave me a job in the Stamp Hall. Experience counts."
+  "Pia: I'm deceased again. They gave me a job in the Stamp Hall. I know the form from both sides."
  ],
  "q3_dead_stamp_pia_you_defeat": [
   "Pia: Fine. Have yourself back.",
