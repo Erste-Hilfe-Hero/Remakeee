@@ -35,7 +35,7 @@ Described in general terms. Chimora copies none of these, only the jump in techn
 | Walk frames | 2 (existed) | 2 | **3: left and right foot** | **4: half and full step per foot** | 4 |
 | Movement | **slides in 2 px jumps** | **2 px jumps** | every pixel | every pixel | every pixel |
 | Running | hold the cancel key (existed), walk frames | same | **own running poses, head forward, arm swing** | same, taller | same |
-| Crossing water (wading boots) | hop (existed) | hop | **on a reed float, no hop** | float | float |
+| Crossing water (wading boots) | hop (existed) | hop | **wading on foot, knee-deep, no hop** | wade | wade |
 | Shadow | none | none | none (reflection: `ERA_FEEL_UI.md`) | **drop shadow** | drop shadow |
 | Bubbles | ink "!" box, ink label in scenes (existed) | **flat colour bubbles: ! ? ... heart note** | **bubble with tail and shade, pops in** | **bubble with drop shadow and gloss** | **two-frame bubbles, plus sleep and rain drop** |
 | What shows a bubble | Tamer sight | **+ talk (note), beaten Tamer (...)** | same | **+ turning to your Spirling (heart)** | **+ a villager notices you: by night, rain or mood** |

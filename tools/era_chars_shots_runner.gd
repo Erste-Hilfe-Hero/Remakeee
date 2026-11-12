@@ -111,13 +111,13 @@ func _cast(era: int) -> void:
 		func(n: NPC, i: int) -> void: _hold_step(n, ["right", "right", "down", "down"][i % 4], i % 2, false, 0.5), row_h)
 	y = _line(holder, ["tamer", "tamer", "tamer_f", "tamer_f", "ranger", "ranger"], per_row, y,
 		func(n: NPC, i: int) -> void: _hold_step(n, ["right", "down"][i % 2], i / 2, true, 0.5 if i % 4 < 2 else 0.1), row_h)
-	# Head turns (Era IV on these are head-only), the float, season outfits.
+	# Head turns (Era IV on these are head-only), the wading pose, season outfits.
 	y = _line(holder, ["villager", "villager", "elder", "elder", "tamer_f", "warden"], per_row, y,
 		func(n: NPC, i: int) -> void: n.look = ["left", "right", "left", "right", "up", "left"][i], row_h)
 	y = _line(holder, ["tamer", "tamer_f", "villager", "villager", "villager", "villager", "elder", "elder"], per_row, y,
 		func(n: NPC, i: int) -> void:
 			if i < 2:
-				n.era_anim["ride"] = true
+				n.era_anim["wade"] = true
 			elif i < 6:
 				n.era_anim["outfit"] = (i - 2) if str(r.outfits) == "season" else 0
 			else:

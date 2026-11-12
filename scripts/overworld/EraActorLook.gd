@@ -1,7 +1,7 @@
 class_name EraActorLook
 extends RefCounted
 ## How overworld figures look and move in each era (data/era_actor_look.json,
-## docs/ERA_FEEL_CHARS.md): sheet size and poses, walk cycle, running poses, the float for
+## docs/ERA_FEEL_CHARS.md): sheet size and poses, walk cycle, running poses, the wading pose for
 ## crossings, drop shadow, emote bubbles, head turns, the Spirling that walks behind, idle
 ## breathing and blinking, season outfits. Eras I and II keep GridWalker's own drawing of the
 ## 64x32 sheets; from Era III on [method draw_actor] draws the figure from art/eraN/actors.
@@ -14,11 +14,11 @@ const SHEET_REL: String = "actors/%s.png"
 const EMOTE_REL: String = "actors/emotes.png"
 ## Every era sets every one of these.
 const KEYS: Array[String] = ["title", "sheet_dir", "frame", "colours", "walk_frames", "rows", "step_seq",
-	"step_px", "walk_time", "run_time", "run_anim", "ride", "shadow", "emotes", "emote_style",
+	"step_px", "walk_time", "run_time", "run_anim", "wade", "shadow", "emotes", "emote_style",
 	"emote_frames", "emote_pop", "emote_on", "head_turn", "head_turn_radius", "follower",
-	"follower_glide", "follower_shadow", "idle", "turn_blend", "outfits"]
+	"follower_walk", "follower_shadow", "idle", "turn_blend", "outfits"]
 ## Switches that stay on in every later era once an era turns them on.
-const SWITCHES: Array[String] = ["run_anim", "ride", "emote_pop", "head_turn", "follower_glide", "follower_shadow", "turn_blend"]
+const SWITCHES: Array[String] = ["run_anim", "wade", "emote_pop", "head_turn", "follower_walk", "follower_shadow", "turn_blend"]
 ## Numbers that never go down from one era to the next.
 const GROWING: Array[String] = ["colours", "walk_frames", "emote_frames", "head_turn_radius"]
 ## Named steps: a later era is never further left in its list.
@@ -92,9 +92,9 @@ static func outfit_block(era: int = -1, month: int = -1) -> int:
 	var m: int = month if month > 0 else int(Online.date_now().month)
 	return maxi(0, (data().get("seasons", []) as Array).find(season(m)))
 
-## True when a crossing with [param gear] is made on the reed float in this era (no hop arc).
-static func rides(gear: String, era: int = -1) -> bool:
-	return bool(row(era).get("ride", false)) and gear in (data().get("ride_gear", []) as Array)
+## True when a crossing with [param gear] is waded on foot in this era (no hop arc).
+static func wades(gear: String, era: int = -1) -> bool:
+	return bool(row(era).get("wade", false)) and gear in (data().get("wade_gear", []) as Array)
 
 ## Figure sheet of [param style] in [param era], or null when that era has none.
 static func sheet(style: String, era: int) -> Texture2D:
@@ -164,11 +164,11 @@ static func player_look() -> Dictionary:
 ## foot), [param look] is the glance direction ("" = none), [param turn_from] the facing before a
 ## fresh quarter turn ("" = none), [param idle_ms] a clock for breathing and blinking.
 static func pose(r: Dictionary, facing: String, moving: bool, running: bool, k: float, parity: int,
-		look: String = "", riding: bool = false, turn_from: String = "", idle_ms: int = 0,
+		look: String = "", wading: bool = false, turn_from: String = "", idle_ms: int = 0,
 		reduced: bool = false) -> Dictionary:
 	var rows: Dictionary = r.get("rows", {})
-	if riding and rows.has("ride"):
-		return {"row": "ride", "col": facing}
+	if wading and rows.has("wade"):
+		return {"row": "wade", "col": facing}
 	# A quarter turn leads with the head: the old body, the head already in the new direction.
 	if not turn_from.is_empty() and bool(r.get("turn_blend", false)) and not reduced and rows.has("head_cw"):
 		if CW[turn_from] == facing:
@@ -203,7 +203,7 @@ static func pose_of(w: GridWalker, r: Dictionary) -> Dictionary:
 	var now: int = Time.get_ticks_msec()
 	var turn_from: String = str(w.era_anim.get("turn_from", "")) if now < int(w.era_anim.get("turn_until", 0)) else ""
 	return pose(r, w.facing, w.moving, w.running, k, w.cell.x + w.cell.y, w.look,
-		bool(w.era_anim.get("ride", false)), turn_from, now + int(w.era_anim.get("seed", 0)), Juice.reduced())
+		bool(w.era_anim.get("wade", false)), turn_from, now + int(w.era_anim.get("seed", 0)), Juice.reduced())
 
 ## Region of the sheet for a pose.
 static func src_rect(r: Dictionary, p: Dictionary, block: int = 0) -> Rect2:
@@ -226,7 +226,7 @@ static func draw_actor(w: GridWalker) -> bool:
 	var frame: Array = r.get("frame", [16, 16])
 	var lift: int = int(frame[1]) - GridWalker.TILE
 	var p: Dictionary = pose_of(w, r)
-	if str(r.get("shadow", "none")) == "drop" and str(p.row) != "ride":
+	if str(r.get("shadow", "none")) == "drop" and str(p.row) != "wade":
 		draw_shadow(w, Vector2.ZERO)
 	var shift: Vector2 = w.jolt
 	if w.bob and w.moving and str(p.row).begins_with("step") and not Juice.reduced():
@@ -267,7 +267,7 @@ static func problems() -> Array[String]:
 				out.append("era %d: unknown step pose %s" % [era, ph])
 			elif str(ph) == "half" and not rows.has("half_l"):
 				out.append("era %d: half steps without a row" % era)
-		for sw: Array in [["run_anim", "run_l"], ["ride", "ride"], ["head_turn", "head_cw"], ["turn_blend", "head_cw"]]:
+		for sw: Array in [["run_anim", "run_l"], ["wade", "wade"], ["head_turn", "head_cw"], ["turn_blend", "head_cw"]]:
 			if bool(r.get(sw[0], false)) and not rows.has(sw[1]):
 				out.append("era %d: %s without the row %s" % [era, sw[0], sw[1]])
 		if str(r.get("idle", "")) == "breathe_blink" and not (rows.has("breathe") and rows.has("blink")):

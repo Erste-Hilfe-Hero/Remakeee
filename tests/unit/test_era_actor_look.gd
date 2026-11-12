@@ -93,11 +93,11 @@ func test_each_era_takes_its_step() -> void:
 	assert_false(EraActorLook.plain_emotes(2))
 	assert_eq(EraActorLook.emote_for("talk", 2), "note")
 	assert_eq(EraActorLook.emote_for("talk", 1), "", "Era I shows nothing on a talk")
-	# III: own sheets with both feet, running poses and the float.
+	# III: own sheets with both feet, running poses and the wading pose.
 	assert_true(EraActorLook.own_sheets(3))
 	assert_false(EraActorLook.own_sheets(2))
 	assert_eq(int(_row(3).walk_frames), 3)
-	assert_true(bool(_row(3).run_anim) and bool(_row(3).ride))
+	assert_true(bool(_row(3).run_anim) and bool(_row(3).wade))
 	assert_eq(int(_row(3).step_px), 1)
 	# IV: taller, shadow, half steps, head turns, the coloured follower.
 	assert_gt(int(_row(4).frame[1]), int(_row(3).frame[1]))
@@ -193,11 +193,11 @@ func test_era_four_steps_in_four_phases() -> void:
 		seen.append(str(EraActorLook.pose(r, "down", true, false, k, 0).row))
 	assert_eq(seen, ["half_l", "step_l", "step_l", "half_l"] as Array[String])
 
-func test_the_float_wins_over_walking() -> void:
-	assert_eq(EraActorLook.pose(_row(3), "up", true, false, 0.5, 0, "", true).row, "ride")
-	assert_true(EraActorLook.rides("wading_boots", 3))
-	assert_false(EraActorLook.rides("wading_boots", 2), "Eras I and II hop across as before")
-	assert_false(EraActorLook.rides("grapple_line", 5))
+func test_wading_wins_over_walking() -> void:
+	assert_eq(EraActorLook.pose(_row(3), "up", true, false, 0.5, 0, "", true).row, "wade")
+	assert_true(EraActorLook.wades("wading_boots", 3))
+	assert_false(EraActorLook.wades("wading_boots", 2), "Eras I and II hop across as before")
+	assert_false(EraActorLook.wades("grapple_line", 5))
 
 func test_head_turns_keep_the_body() -> void:
 	var r: Dictionary = _row(4)
@@ -366,7 +366,7 @@ func test_coarse_steps_in_the_first_eras() -> void:
 	assert_eq(EraActors.snap(Vector2(16, 32), 2), Vector2(16, 32), "cells stay cells")
 	assert_eq(EraActors.snap(Vector2(21, 37), 1), Vector2(21, 37))
 
-func test_follower_is_ink_then_colour_and_glides() -> void:
+func test_follower_is_ink_then_colour_and_walks() -> void:
 	var a: EraActors = _actors()
 	var f := Sprite2D.new()
 	f.centered = false
@@ -390,7 +390,7 @@ func test_follower_is_ink_then_colour_and_glides() -> void:
 	assert_eq(f.position, Vector2(48, 32))
 	f.position = Vector2(160, 160)
 	a._tick_follower(_row(4), 0.016)
-	assert_eq(f.position, Vector2(160, 160), "a warp does not glide")
+	assert_eq(f.position, Vector2(160, 160), "a warp jumps, it is not walked")
 	_era(1)
 	a._tick_follower(_row(1), 0.016)
 	assert_eq(f.modulate, Color(0.1, 0.1, 0.2, 0.85), "the Retro filter brings the ink back")

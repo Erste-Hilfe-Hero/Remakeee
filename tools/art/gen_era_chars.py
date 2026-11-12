@@ -6,7 +6,8 @@ to a zone (hat or hair, band, skin, top, trim, trousers, shoes) by where it sits
 zone gets its own colour from PALETTES below, so a figure carries far more than four colours.
 
   Era III  art/era3/actors/<style>.png  16x16 frames, light from the top left (3 tones per
-           zone), left and right foot, running poses, a pose on the reed float
+           zone), left and right foot, running poses, a wading pose
+           (wading boots, knee-deep in water, on foot)
   Era IV   art/era4/actors/<style>.png  16x24 frames (longer body and legs drawn new), coloured
            outlines, half steps, head-turn rows
   Era V    art/era5/actors/<style>.png  like IV plus rim light, breathing and blinking rows, and
@@ -48,7 +49,7 @@ BELTED = {"tamer", "tamer_f", "villager", "ranger"}
 ORB = {"first_voice"}
 ORB_RAMP = ["2e2440", "6a5a9e", "b4a8d8", "f4f0fa"]
 OUTLINE = (0x22, 0x1c, 0x2a)
-FLOAT = {"W": "c8a45a", "w": "8a6a34", "~": "dcecf4"}
+WATER = {"~": "dcecf4", "v": "6a9ab8"}
 
 # Era IV/V legs, 6 rows. K outline, P trousers (Q = the far leg, darker), O shoes.
 TALL_LEGS = {
@@ -269,7 +270,7 @@ class Figure:
         return g
 
     def pose(self, d: str, pose: str = "stand", foot: str = "l", head: str = "", lean: bool = False,
-             sag: int = 0, blink: bool = False, ride: bool = False, head_flip: bool = False) -> list:
+             sag: int = 0, blink: bool = False, wade: bool = False, head_flip: bool = False) -> list:
         """One frame facing d (down, up or right). head: other direction the head looks in."""
         g = blank(T, self.h)
         stand = self.z[d][0]
@@ -293,9 +294,9 @@ class Figure:
                     body[y] = [("Q" if v == "P" and x < 8 else v) for x, v in enumerate(body[y])]
             if pose == "run":
                 self._pump(body, 10, 9, foot, d)
-            if ride:
+            if wade:
                 paste(g, stand, 8, 12, 10)
-                self._float(g, 13)
+                self._water(g, 13)
                 paste(g, hd, 0, 8, 2)
             else:
                 paste(g, body, 8, T, 8)
@@ -312,10 +313,10 @@ class Figure:
                 body[i] = stand[sy][:]
             if pose == "run":
                 self._pump(body, bmap.index(10), bmap.index(10) - 1, foot, d)
-            if ride:
+            if wade:
                 m = len(body) - 2
                 paste(g, body, 0, m, self.h - 4 - m)
-                self._float(g, self.h - 4)
+                self._water(g, self.h - 3)
                 self._paste_head(g, hd, self.h - 4 - m - 8, 0)
             else:
                 by = top + 8 + (n - len(bmap))
@@ -348,8 +349,9 @@ class Figure:
         if body[up_row][x] not in (None, "K"):
             body[hand_row][x], body[up_row][x] = body[up_row][x], "S"
 
-    def _float(self, g: list, y: int) -> None:
-        stamp(g, [".KKKKKKKKKKKKKK.", "KWWwWWWwWWWwWWWK", ".KKKKKKKKKKKKKK.", "..~~..~~~..~~..."], y)
+    def _water(self, g: list, y: int) -> None:
+        """Shallow water around the shins: the Wayfarer wades on foot (wading boots)."""
+        stamp(g, ["..~~~~~~~~~~~~..", ".v~~v~~~~~v~~v~.", "...v....v....v.."], y)
 
 
 def orb_frames(tall: bool, rows: dict) -> dict:
@@ -391,8 +393,8 @@ def poses(style: str, era: int) -> dict:
                 g = fig.pose(f, name[:-2], name[-1])
             elif name in ("run_l", "run_r"):
                 g = fig.pose(f, "run", name[-1], lean=True)
-            elif name == "ride":
-                g = fig.pose(f, ride=True)
+            elif name == "wade":
+                g = fig.pose(f, wade=True)
             elif name in ("head_cw", "head_ccw"):
                 look = (CW if name == "head_cw" else CCW)[d]
                 # Left-facing frames are mirrored at the end, so only a real "left" look flips.
@@ -480,7 +482,7 @@ def render(g: list, pal: dict, era: int, style: str) -> Image.Image:
     base.setdefault("E", rgb("f6eca0"))
     base["t"] = tone(pal["T"], STEP["t"])
     base["s"] = tone(pal["S"], STEP["s"])
-    for k, v in FLOAT.items():
+    for k, v in WATER.items():
         base[k] = rgb(v)
     for y in range(h):
         for x in range(T):

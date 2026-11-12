@@ -5,7 +5,7 @@ extends Node2D
 ##   - redraws a figure when its pose changes, steps it in the era's pixel jumps
 ##   - draws the emote bubbles over the figures (Era II on; Era I keeps its ink box)
 ##   - turns villagers' heads to the Wayfarer (Era IV on) and lets them react (Era V)
-##   - styles the Spirling that walks behind: ink shadow, or coloured, gliding, with a shadow
+##   - styles the Spirling that walks behind: ink shadow, or coloured, walking each tile, with a shadow
 ## Reduced motion: no pop, no bounce, no hop, no breathing; bubbles and head turns still show.
 
 ## The node of the overworld on screen; null outside it.
@@ -247,7 +247,7 @@ func _tick_follower(r: Dictionary, delta: float) -> void:
 	var colour: bool = str(r.get("follower", "ink")) == "colour"
 	follower.modulate = Color.WHITE if colour else _fol_ink
 	_shadow(bool(r.get("follower_shadow", false)) and follower.visible)
-	if not bool(r.get("follower_glide", false)) or not follower.visible:
+	if not bool(r.get("follower_walk", false)) or not follower.visible:
 		follower.offset = Vector2.ZERO
 		follower.flip_h = false
 		_fol_shown = follower.position

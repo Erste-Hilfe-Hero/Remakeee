@@ -23,7 +23,7 @@ SOURCES = [
     ("audio/music/*.ogg", "tools/audio/gen_audio.py", "original chiptune: chord charts and motifs written for Chimora, synthesized pulse/triangle/noise, Vorbis via ffmpeg"),
     ("audio/ambience/*.ogg", "tools/audio/gen_audio.py", "original ambience loop built from filtered noise and tone patterns, no recordings"),
     ("art/era[2-5]/actors/emotes.png", "tools/art/gen_era_chars.py", "original 16 px emote bubbles (alert, question, dots, heart, note, sleep, drop) for that era's overworld"),
-    ("art/era3/actors/*.png", "tools/art/gen_era_chars.py", "own Era I overworld figure repainted in zone colours with shading, both feet, running and float poses, Era III"),
+    ("art/era3/actors/*.png", "tools/art/gen_era_chars.py", "own Era I overworld figure repainted in zone colours with shading, both feet, running and wading poses, Era III"),
     ("art/era4/actors/*.png", "tools/art/gen_era_chars.py", "own Era I overworld figure redrawn 16x24 with a longer body and legs, coloured outlines, half steps and head-turn frames, Era IV"),
     ("art/era5/actors/*.png", "tools/art/gen_era_chars.py", "own 16x24 overworld figure with rim light, breathing and blinking frames and four season outfits, Era V"),
     ("art/era1/fx/*.png", "tools/art/gen_fx.py", "original 8x8 effect shape for battle arts, Era I ink"),
