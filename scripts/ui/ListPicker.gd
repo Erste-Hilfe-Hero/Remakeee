@@ -696,7 +696,7 @@ func _slide_in() -> void:
 		var tw: Tween = b.create_tween()
 		tw.tween_interval(i * SLIDE_GAP)
 		Juice.shaped(tw.tween_property(b, "position:x", home, 0.12), "move")
-		tw.parallel().tween_property(b, "modulate:a", 1.0, 0.1)
+		Juice.shaped(tw.parallel().tween_property(b, "modulate:a", 1.0, 0.1), "fade")
 
 ## Era V: soft bands drift across the panel behind the rows. They stand still under reduced
 ## motion.

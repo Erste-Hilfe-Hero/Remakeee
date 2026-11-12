@@ -151,7 +151,7 @@ func show_tab(i: int, sound: bool = true) -> void:
 	if str(lay.get("anim", "none")) == "slide" and sound and not Juice.reduced():
 		_body.modulate.a = 0.0
 		var tw: Tween = _body.create_tween()
-		tw.tween_property(_body, "modulate:a", 1.0, 0.12)
+		Juice.shaped(tw.tween_property(_body, "modulate:a", 1.0, 0.12), "fade")
 
 func _add_line(text: String) -> void:
 	var l := Label.new()
