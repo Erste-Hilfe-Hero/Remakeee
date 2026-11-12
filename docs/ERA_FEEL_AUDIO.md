@@ -41,7 +41,7 @@ Era regions: I = story acts 1-4, II = Vellmarch, III = Quillmarch, IV = Halcyra,
 | Feature | Had | Added / now |
 |---|---|---|
 | Music: same chip, vibrato, echo voice, chorus bus | yes (era 2 voices, era_fx chorus) | - |
-| All 15 sfx keys | no (Era I files everywhere) | `<key>_era2.wav`: vibrato, duty change, harmony on jingles, 60 ms echo |
+| All 15 sfx keys | no (Era I files everywhere) | `<key>_era2.wav`: vibrato, duty change, harmony on jingles, 60 ms echo (16 kHz) |
 | Cry | Era I cry | length x1.1, vibrato x1.6, echo 0.3 |
 | Low-HP alarm | no | low_hp_era2, 0.45 s loop |
 
@@ -59,7 +59,7 @@ Era regions: I = story acts 1-4, II = Vellmarch, III = Quillmarch, IV = Halcyra,
 | Feature | Had | Added / now |
 |---|---|---|
 | Music: bell overtones, wider room | yes | - |
-| All 15 sfx keys | no | `<key>_era4.wav`: additive tones plus FM bell overtone, room reverb, stereo |
+| All 15 sfx keys | no | `<key>_era4.wav`: additive tones plus FM bell overtone, room reverb (16 kHz mono; stereo width comes from the Music bus effects) |
 | Cry | Era I cry | "rich" wave (8 harmonics, bell overtone), length x1.4, reverb |
 | Low-HP alarm | no | low_hp_era4, softer, 0.6 s loop, at most 8 |
 | Ambience per biome | no (Halcyra maps had none) | town_era4, route_era4, marsh_era4 for outdoor maps without their own loop |
@@ -71,7 +71,7 @@ Era regions: I = story acts 1-4, II = Vellmarch, III = Quillmarch, IV = Halcyra,
 | Music: octave-doubled lead, hall | yes | - |
 | Dynamic battle music | no (one file; pinch was a track switch) | battle_era5 and warden_era5 now have stems; MusicDirector fades them by intensity: 0 before the first blow (bass + chords), 1 after it (+ melody), 2 once either side is at half or below (+ drums). The pinch switch to battle_pinch_era5 keeps the intensity. |
 | Low-HP variation | no | low_hp_era5 is a soft double heartbeat, played once; the pinch music carries the rest |
-| All 15 sfx keys | no | `<key>_era5.wav`: Era IV voice plus octave layer, air noise, longer hall, wider stereo |
+| All 15 sfx keys | no | `<key>_era5.wav`: Era IV voice plus octave layer, air noise, longer hall (16 kHz mono) |
 | Footsteps by surface | plain Era I steps | step_<ground>_<take>_era5 for grass, path, wood, sand, stone, shore |
 | Ambience per biome | no | town_era5 (chimes, birds), route_era5 (gusts, far calls, crickets), marsh_era5 (insects, reeds) |
 | Cry | Era I cry | "rich" wave, octave-down layer 0.35, breath noise, length x1.6, long reverb |
@@ -90,8 +90,8 @@ Era regions: I = story acts 1-4, II = Vellmarch, III = Quillmarch, IV = Halcyra,
 
 | Part | Files | Bytes |
 |---|---|---|
-| Era sfx sets (Era I new keys + Eras II-V) | 63 wav | about 1.6 MB raw (Godot imports them compressed) |
-| Era V footsteps | 12 wav | about 50 KB |
+| Era sfx sets (Era I new keys + Eras II-V) | 63 wav | about 0.85 MB raw; all of audio/sfx is 1.62 MB of the 2 MB budget (test_sound_voices) |
+| Era V footsteps | 12 wav | about 40 KB |
 | Era IV/V ambience | 6 ogg | about 0.83 MB (all ambience 1.76 MB of the 2.5 MB limit) |
 | Era V battle stems | 8 ogg | about 0.35 MB (all stems 4.9 MB of the 5 MB test limit) |
 

@@ -4,7 +4,7 @@ each era's handheld sound hardware, written for Chimora from note recipes, no sa
   Era I    four chip channels: two pulses, a 4-bit wave, noise; dry and short
   Era II   the same chip, richer arrangement: vibrato, a second pulse in harmony, an echo voice
   Era III  low-rate sample voices (band-limited tones held at about 11 kHz), more voices at once
-  Era IV   clean sample voices with bell overtones, a room reverb and stereo
+  Era IV   clean sample voices with bell overtones and a room reverb
   Era V    Era IV plus layered octaves, air noise, a long hall and longer tails
 
 Era I reuses the older files in audio/sfx (select.wav, ...) and only adds the keys that did not
@@ -200,18 +200,15 @@ def heartbeat(rng: np.random.Generator) -> np.ndarray:
 
 
 def finish(era: int, x: np.ndarray, short: bool = False) -> np.ndarray:
-    """Era IV room and Era V hall, both stereo (left dry-led, right a few ms later). [short]
+    """Era IV room and Era V hall. Mono like the rest of audio/sfx (the effects budget in
+    test_sound_voices is 2 MB); the stereo width of those eras lives on the Music bus. [short]
     sounds (cursor, text blip) repeat fast, so they only get a small room."""
     if era < 4:
         return x
     base, tail, gain = (0.035, 0.12, 0.9) if era == 4 else (0.06, 0.22, 1.2)
     if short:
         base, tail, gain = 0.015, 0.04 if era == 4 else 0.06, 0.4
-    left = _room(x, base, tail, gain)
-    right = _room(x, base * 1.09, tail, gain)
-    d = secs(0.009 if era == 4 else 0.014)
-    right = np.concatenate([np.zeros(d), right])[:len(right)]
-    return np.stack([left, right], axis=1)
+    return _room(x, base, tail, gain)
 
 
 def era_set(era: int) -> dict[str, np.ndarray]:
@@ -280,9 +277,20 @@ def sfx_defs() -> dict[str, np.ndarray]:
 
 
 def rate_of(name: str) -> int:
-    """Sample rate a file is written at: Era III effects at half rate (low-rate samples)."""
-    return RATE // 2 if name.endswith("_era3") else RATE
+    """Sample rate a file is written at: Era III at 11025 Hz (low-rate samples), Era II, IV and
+    V at 16 kHz to keep audio/sfx small, Era I (and its new keys) at the full 22050 Hz."""
+    if name.endswith("_era3"):
+        return RATE // 2
+    if name[-5:-1] == "_era":
+        return 16000
+    return RATE
 
 
 def downsample(name: str, data: np.ndarray) -> np.ndarray:
-    return data[::RATE // rate_of(name)]
+    rate = rate_of(name)
+    if rate == RATE:
+        return data
+    if RATE % rate == 0:
+        return data[::RATE // rate]
+    n = int(len(data) * rate / RATE)
+    return np.interp(np.arange(n) * RATE / rate, np.arange(len(data)), data)
