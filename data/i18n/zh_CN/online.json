@@ -1,6 +1,7 @@
 {
  "_comment": "Simplified Chinese (Mainland China) texts for the German table online. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
  "strings": {
+  "Era V": "第五纪元",
   "%d Wayfarers are in Veydal": "Veydal现有%d位旅人",
   "%d h left": "剩余%d小时",
   "%s   Code %s": "%s   代码%s",

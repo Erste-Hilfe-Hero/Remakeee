@@ -65,17 +65,19 @@ func slot_summary(n: int) -> String:
 	slot_path = old
 	return s
 
-## The slot whose save was written most recently, or 0 if none has a save.
+## The slot whose save was written most recently, or 0 if none has a save. A slot with only a
+## backup left (the app died between moving the old save aside and renaming the new one) counts
+## too, so Continue still finds it (bug plan 1373).
 func latest_slot() -> int:
 	var best: int = 0
 	var best_time: int = -1
 	for n: int in range(1, SLOTS + 1):
-		var p: String = path_for_slot(n)
-		if FileAccess.file_exists(p):
-			var t: int = FileAccess.get_modified_time(p)
-			if t > best_time:
-				best_time = t
-				best = n
+		for p: String in save_paths(path_for_slot(n)):
+			if FileAccess.file_exists(p):
+				var t: int = FileAccess.get_modified_time(p)
+				if t > best_time:
+					best_time = t
+					best = n
 	return best
 var settings_path: String = SETTINGS_PATH
 
@@ -529,20 +531,33 @@ func delete_save() -> void:
 		if FileAccess.file_exists(p):
 			DirAccess.remove_absolute(p)
 
+## A new journey in a used slot: the old journey and its backups go, then the new one is saved,
+## so a damaged new save can never fall back to the old journey's backup (bug plan 1373).
+func start_fresh_slot() -> bool:
+	delete_save()
+	return save_game()
+
 func save_settings() -> void:
 	var d: Dictionary = GameState.settings_to_dict()
 	d["era"] = {"retro_filter": EraManager.retro_filter}
 	d["slot"] = slot
 	write_atomic(settings_path, JSON.stringify(d))
 
+## Loads the settings file, or its newest readable backup when it is damaged (bug plan 1348).
+## Without any readable file the defaults are applied, so volume and language are never left unset.
 func load_settings() -> void:
-	if not FileAccess.file_exists(settings_path):
+	var raw: Variant = null
+	for p: String in save_paths(settings_path):
+		if FileAccess.file_exists(p):
+			var json := JSON.new()
+			if json.parse(FileAccess.get_file_as_string(p)) == OK and json.data is Dictionary:
+				raw = json.data
+				break
+	if not raw is Dictionary:
 		GameState.apply_volume()
 		GameState.apply_display()
 		return
-	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(settings_path))
-	if raw is Dictionary:
-		GameState.settings_from_dict(raw)
-		if slot_path == SLOT_PATH:
-			set_slot(int(raw.get("slot", 1)))
-		VirtualPad.apply_settings()
+	GameState.settings_from_dict(raw)
+	if slot_path == SLOT_PATH:
+		set_slot(GameState.as_int(raw.get("slot", 1), 1))
+	VirtualPad.apply_settings()

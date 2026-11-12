@@ -1,6 +1,7 @@
 {
  "_comment": "French texts for the German table online. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
  "strings": {
+  "Era V": "Ère V",
   "%d Wayfarers are in Veydal": "%d voyageurs sont à Veydal",
   "%d h left": "encore %d h",
   "%s   Code %s": "%s   Code %s",
