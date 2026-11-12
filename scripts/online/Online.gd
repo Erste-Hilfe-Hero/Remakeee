@@ -180,6 +180,9 @@ func connect_now() -> State:
 		var m: Dictionary = await backend.call_fn("maintenance_info", {})
 		maintenance_at = int(m.data.get("at", 0)) if m.ok and m.data is Dictionary else 0
 		await refresh_live_content()
+		# Sighting days (Online 100, point 65) change wild encounters, so the calendar comes along.
+		if flag_on("events"):
+			await OnlineEvents.refresh()
 		if update_state() == "required":
 			_set_state(State.UPDATE_REQUIRED)
 	if state == State.ONLINE and str(profile.get("platform", "")) != platform_name():

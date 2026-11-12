@@ -1,0 +1,141 @@
+{
+ "name": "Lock Rift",
+ "region": "vellmarch",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.......|^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^.|......^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.|......|.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "hookwick",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "hookwick",
+   "tx": 1,
+   "ty": 9,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "vellmarch/lock_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Lock Acolyte Senn",
+   "intro": "vellmarch/lock_rift_acolyte_intro",
+   "defeat": "vellmarch/lock_rift_acolyte_defeat",
+   "money": 2240,
+   "team": [
+    {
+     "species": "Rainmantle",
+     "level": 56
+    },
+    {
+     "species": "Saltspire",
+     "level": 56
+    }
+   ]
+  },
+  {
+   "id": "warden_odile",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/warden_odile",
+   "sprite": "warden",
+   "trainer": "Warden Odile",
+   "warden": "lock",
+   "team": [
+    {
+     "species": "Rainmantle",
+     "level": 56
+    },
+    {
+     "species": "Saltspire",
+     "level": 56
+    },
+    {
+     "species": "Kelphound",
+     "level": 57
+    },
+    {
+     "species": "Ferrowyn",
+     "level": 57
+    },
+    {
+     "species": "Delthorn",
+     "level": 57
+    }
+   ],
+   "intro": "vellmarch/warden_odile_intro",
+   "defeat": "vellmarch/warden_odile_defeat",
+   "ai": 3,
+   "money": 4200,
+   "rule": "undertow",
+   "mend_items": [
+    "echo_fathom_crush"
+   ],
+   "rematch_after": "vellmarch_done",
+   "win_flags": [
+    "v2_rift_lock_sealed",
+    "v2_ch2_done"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "vellmarch/lock_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "vellmarch/lock_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "v2_rift_lock_sealed",
+   "closed": "@"
+  }
+ ]
+}

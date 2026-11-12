@@ -1,0 +1,35 @@
+{
+ "name": "Pawnshop",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "lastlamp",
+   "tx": 9,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "pawnbroker",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/lastlamp_pawnshop_pawnbroker",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

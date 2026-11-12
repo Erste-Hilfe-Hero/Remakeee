@@ -1,0 +1,156 @@
+extends GutTest
+## Era audio: every map has a valid music entry, the new dungeons and regions have their own
+## themes, battle music follows the era (battle_era2 to battle_era5) and the Music bus effects
+## grow with the era like the art does.
+
+const MAPS_DIR: String = "res://data/maps"
+
+func before_all() -> void:
+	Database.load_all()
+
+func _table() -> Dictionary:
+	return Sound._map_music
+
+func _track_of(entry: Variant) -> String:
+	return str((entry as Dictionary).get("track", "")) if entry is Dictionary else str(entry)
+
+func test_every_map_has_a_valid_music_entry() -> void:
+	var listed: Dictionary = {}
+	listed.merge(_table().get("maps", {}))
+	listed.merge(_table().get("themes", {}))
+	var checked: int = 0
+	for f: String in DirAccess.get_files_at(MAPS_DIR):
+		if not f.ends_with(".json"):
+			continue
+		var map_id: String = f.get_basename()
+		var region: String = str((JSON.parse_string(FileAccess.get_file_as_string(MAPS_DIR.path_join(f))) as Dictionary).get("region", ""))
+		assert_true(listed.has(map_id) or (_table().get("regions", {}) as Dictionary).has(region),
+			"%s (region %s) has no entry in data/music.json maps, themes or regions" % [map_id, region])
+		var track: String = _track_of(Sound.entry_in(_table(), map_id, region))
+		assert_ne(track, "", map_id)
+		assert_true(ResourceLoader.exists(Sound.MUSIC_DIR % track), "%s -> %s.ogg missing" % [map_id, track])
+		checked += 1
+	assert_gt(checked, 50)
+
+func test_every_listed_track_and_ambience_exists() -> void:
+	for list: String in ["maps", "themes", "regions"]:
+		var d: Dictionary = _table().get(list, {})
+		for key: String in d.keys():
+			var entry: Variant = d[key]
+			assert_true(ResourceLoader.exists(Sound.MUSIC_DIR % _track_of(entry)), "%s %s -> %s" % [list, key, _track_of(entry)])
+			if entry is Dictionary and (entry as Dictionary).has("ambience"):
+				assert_true(ResourceLoader.exists(Sound.AMBIENCE_DIR % str(entry.ambience)), "%s ambience %s" % [key, entry.ambience])
+
+func test_new_dungeons_have_their_own_theme() -> void:
+	for map_id: String in ["pawn_vault", "rook_vault", "veil_cistern", "soot_vaults"]:
+		assert_eq(_track_of(Sound.entry_in(_table(), map_id, "")), map_id)
+
+func test_regions_have_their_own_theme() -> void:
+	var seen: Dictionary = {}
+	for region: String in ["corvane", "ashmere", "solenne", "vellmarch", "quillmarch", "halcyra"]:
+		var track: String = _track_of(Sound.entry_in(_table(), "unknown_" + region, region))
+		assert_ne(track, _table().get("default", ""), region)
+		assert_false(seen.has(track), "%s shares %s" % [region, track])
+		seen[track] = region
+
+func test_region_fallback_before_default() -> void:
+	var t: Dictionary = {"default": "route", "maps": {"a": "town"}, "themes": {"b": {"track": "cave"}}, "regions": {"r": "rift"}}
+	assert_eq(_track_of(Sound.entry_in(t, "a", "r")), "town")
+	assert_eq(_track_of(Sound.entry_in(t, "b", "r")), "cave")
+	assert_eq(_track_of(Sound.entry_in(t, "a@2", "")), "town", "instanced map ids use the base map")
+	assert_eq(_track_of(Sound.entry_in(t, "c", "r")), "rift")
+	assert_eq(_track_of(Sound.entry_in(t, "c", "x")), "route")
+
+func test_battle_theme_per_era() -> void:
+	var exists: Callable = func(t: String) -> bool: return ResourceLoader.exists(Sound.MUSIC_DIR % t)
+	for base: String in ["battle", "warden", "battle_pinch"]:
+		assert_eq(Sound.era_track(base, 1, exists), base)
+		for era: int in range(2, EraManager.NEWEST + 1):
+			assert_eq(Sound.era_track(base, era, exists), "%s_era%d" % [base, era])
+	assert_eq(Sound.era_track("route", 3, exists), "route", "no era variant: the plain track")
+
+func test_pinch_music_follows_the_era() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 20)
+	s.hp = int(s.max_hp() * 0.2)
+	var saved: int = EraManager.retro_filter
+	var saved_unlocked: int = EraManager.unlocked_era
+	EraManager.unlocked_era = EraManager.NEWEST
+	for era: int in range(1, EraManager.NEWEST + 1):
+		EraManager.retro_filter = era
+		var want: String = "battle_pinch" if era == 1 else "battle_pinch_era%d" % era
+		assert_eq(Sound.battle_music(BattleScene.pinch_track(s, "warden")), want)
+		assert_eq(Sound.battle_music("warden"), "warden" if era == 1 else "warden_era%d" % era)
+	EraManager.retro_filter = saved
+	EraManager.unlocked_era = saved_unlocked
+
+func test_era_tracks_stay_small() -> void:
+	for t: String in ["battle_era2", "battle_era3", "battle_era4", "battle_era5", "pawn_vault", "rook_vault", "veil_cistern"]:
+		var size: int = FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % t).size()
+		assert_between(size, 1, 100 * 1024, t)
+	for era: int in range(2, EraManager.NEWEST + 1):
+		for base: String in ["warden", "battle_pinch"]:
+			var t: String = "%s_era%d" % [base, era]
+			assert_between(FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % t).size(), 1, 60 * 1024, t)
+
+func test_era_fx_grow_with_the_era() -> void:
+	var fx: Dictionary = _table().get("era_fx", {})
+	assert_eq(Sound.era_effects(fx.get("1", {})).size(), 0, "Era I stays dry")
+	var prev: int = 0
+	for era: int in range(1, EraManager.NEWEST + 1):
+		var n: int = Sound.era_effects(fx.get(str(era), {})).size()
+		assert_true(n >= prev, "era %d has fewer effects than the one before" % era)
+		prev = n
+	assert_gt(prev, 0)
+
+func test_apply_era_fx_replaces_its_own_effects() -> void:
+	GameState.ensure_buses()
+	var bus: int = AudioServer.get_bus_index(GameState.BUS_MUSIC)
+	var base: int = AudioServer.get_bus_effect_count(bus) - Sound.apply_era_fx(1)
+	var n: int = Sound.apply_era_fx(5)
+	assert_gt(n, 0)
+	assert_eq(AudioServer.get_bus_effect_count(bus), base + n)
+	Sound.apply_era_fx(5)
+	assert_eq(AudioServer.get_bus_effect_count(bus), base + n, "no doubled effects")
+	Sound.apply_era_fx(EraManager.active_era())
+
+const PLACE_SONGS: Array[String] = ["lighthouse", "brindlewick", "map_house", "rest_spring", "thornridge", "fernstair",
+	"crowcrest", "saltmarsh", "cinder_rift", "tide_rift", "murk_hollow", "echo_path"]
+
+func test_title_victory_and_place_songs_per_era() -> void:
+	var exists: Callable = func(t: String) -> bool: return ResourceLoader.exists(Sound.MUSIC_DIR % t)
+	for base: String in ["title", "victory"] + PLACE_SONGS:
+		assert_eq(Sound.era_track(base, 1, exists), base)
+		for era: int in range(2, EraManager.NEWEST + 1):
+			var t: String = "%s_era%d" % [base, era]
+			assert_eq(Sound.era_track(base, era, exists), t)
+			assert_between(FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % t).size(), 1, 80 * 1024, t)
+
+func test_every_place_song_is_listed_and_small() -> void:
+	var maps: Dictionary = _table().get("maps", {})
+	for map_id: String in maps.keys():
+		var track: String = _track_of(maps[map_id])
+		assert_has(PLACE_SONGS, track, "%s has no era versions" % track)
+		assert_lt(FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % track).size(), 200 * 1024, "%s full mix" % track)
+
+func test_place_song_follows_the_era() -> void:
+	var saved: int = EraManager.retro_filter
+	var saved_unlocked: int = EraManager.unlocked_era
+	EraManager.unlocked_era = EraManager.NEWEST
+	EraManager.retro_filter = 3
+	assert_eq(Sound.track_for_map("lighthouse"), "lighthouse_era3")
+	assert_eq(Sound.era_music("title"), "title_era3")
+	assert_eq(Sound.era_music("victory"), "victory_era3")
+	EraManager.retro_filter = 1
+	assert_eq(Sound.track_for_map("lighthouse"), "lighthouse")
+	assert_eq(Sound.era_music("victory"), "victory")
+	EraManager.retro_filter = saved
+	EraManager.unlocked_era = saved_unlocked
+
+func test_stems_stay_small() -> void:
+	var total: int = 0
+	var dir: String = MusicDirector.STEM_DIR.get_base_dir()
+	for f: String in DirAccess.get_files_at(dir):
+		if f.ends_with(".ogg"):
+			total += FileAccess.get_file_as_bytes(dir.path_join(f)).size()
+	assert_gt(total, 0)
+	assert_lt(total, 5 * 1024 * 1024, "stems are %d bytes; the APK budget has no room for more" % total)

@@ -16,7 +16,7 @@ static func text(def: Dictionary, team: Array[Spirling], difficulty: int, cap: i
 	for r: String in rules:
 		lines.append(Loc.t("Rule, %s: %s") % [Loc.t(str(BattleRules.RULES[r].label)), Loc.t(str(BattleRules.RULES[r].text))])
 	lines.append(Loc.t("Spirlings: %d") % team.size())
-	if cap > 0 and cap < Spirling.MAX_LEVEL and not team.is_empty():
+	if cap > 0 and cap < Spirling.STORY_RING and not team.is_empty():
 		var top: int = 0
 		for sp: Spirling in team:
 			top = maxi(top, sp.level)

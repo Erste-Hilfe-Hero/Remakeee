@@ -91,11 +91,33 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
 - **Statistics:** `python3 tools/world_stats.py` writes the table below (`--check` tells if it is stale).
 - **Act I look:** Veydal maps use their own atlas `art/era1/tiles/overworld_veydal.png` (heath, bracken, firs, peat tarns, slate cliffs, dry-stone walls, waystones, cairns), made by `tools/art/gen_tiles_veydal.py`. TilesetFactory picks `tiles/overworld_<region>.png` when the map region has one; buildings and the lighthouse keep the shared tiles.
 - **Act III look:** Ashmere maps use `art/era1/tiles/overworld_ashmere.png` (ash ground, charred brush, dead snags, brine pools, salt spikes, cinder scree, slag heaps, braziers, basalt cliffs), made by `tools/art/gen_tiles_ashmere.py`, and switch the Era I filter to their own four inks from `data/region_looks.json` (RegionLook, EraManager.set_region).
+- **Era III look (Quillmarch):** the post-game Era III region (`data/region3.json`, Region3.gd) uses `art/era3/tiles/overworld_quillmarch.png`, made by `tools/art/gen_tiles_quillmarch.py` from the 16-colour palette in `data/region_looks.json` ("era": 3): moss grass lit from the top left, ferns in two heights, soft path edges, canal water with a stone bank, etched oaks with ground shadows, frost flowers, copper blooms, cracked mossy scree and hatched cliffs. TilesetFactory takes a region's own atlas when it is from the shared atlas' era or newer, so in Era III it beats the Era II shared atlas. Era III has no screen filter, so `EraManager.inks_for` keeps the base inks for it.
+- **Landmarks (map design item 509):** every outdoor place of Acts I-III has one tall thing you
+  know it by, listed in `data/landmarks.json` (kind, solid cell, name, line; German in
+  `tools/i18n/de_landmarks.py`). Each act draws its own set and no kind is shared: Veydal
+  standing stones, cairns, beacons and tide posts; Corvane heron posts, drying racks, sluice
+  wheels and dye mills; Ashmere smelter stacks, bell frames and salt needles. Art:
+  `tools/art/gen_landmarks.py` (16x32, the top half covers the cell above). Talking to it shows
+  name and line. `WorldValidator.check_landmarks` keeps them off warps, signs, people, finds,
+  gates and story spots.
+- **Winding roads (map design item 508):** Madderby, Corvane Quay, Stillwater and Saltglass no
+  longer run one straight road through the middle; the roads jog around houses, squares and
+  slag (only `_` and `.` swapped, so nothing about where you can walk changed). The generated
+  Corvane and Ashmere maps have been patched by hand since they were built, so edit their JSON,
+  not `corvane_act2.py` / `ashmere.py`, until the builders are brought back in line.
 - **Overview:** `python3 tools/art/preview_map.py --region veydal` draws every map of a region
   on one sheet (`build/previews/veydal.png`).
 - **Checks:** `tools/validate_data.gd` and `tests/unit/test_world_data.gd` check tiles,
   encounter tables (no map without a table, no unused table), hidden finds (reachable, unique
   flag, real item) and the layout.
+
+- **Map audit:** `python3 tools/maps/render_all.py <dir> [prefix] [--era2] [--marks]` draws every
+  map and floor (one PNG each plus a sheet per region; `--marks` outlines flagged cells in red).
+  `python3 tools/maps/audit_maps.py` lists what makes a map look unclean (doors that lead
+  nowhere, cut-off or doorless buildings, stray lighthouse pieces, people in front of doors,
+  unreachable pockets, blank atlas cells, bad warps and more; the kinds are in its header).
+  CI runs `--check`: a finding that is not in `tools/maps/audit_baseline.json` fails, and so does a
+  baseline line that is already fixed. After a fix run `--write-baseline`.
 
 ## World statistics (item 903)
 
@@ -114,23 +136,24 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `echo_path` | inside | 10x8 + 10x8 | 0 | 0 | 0 |
 | veydal | `fernstair` | route | 12x26 | 5 | 2 | 63 |
 | veydal | `gloamwood` | route | 12x30 | 5 | 3 | 152 |
-| veydal | `kindle_vents` | cave | 12x10 | 2 | 0 | 12 |
+| veydal | `kindle_vents` | cave | 12x10 | 3 | 0 | 12 |
 | veydal | `lantern_steps` | route | 12x19 | 5 | 3 | 9 |
 | veydal | `lanternwell` | inside | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 1 | 0 | 7 |
-| veydal | `lighthouse` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `lighthouse` | inside | 10x8 | 1 | 0 | 0 |
 | veydal | `map_house` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `mist_rift` | rift | 12x22 | 0 | 5 | 17 |
-| veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 3 | 0 | 25 |
-| veydal | `murk_hollow` | cave | 12x13 + 12x9 | 4 | 3 | 20 |
+| veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 4 | 0 | 25 |
+| veydal | `murk_hollow` | cave | 12x13 + 12x9 | 5 | 3 | 20 |
+| veydal | `pawn_vault` | inside | 12x9 + 12x9 + 12x9 | 5 | 6 | 0 |
 | veydal | `quillbrook` | route | 12x30 | 5 | 3 | 113 |
 | veydal | `reedhaven` | town | 12x10 | 3 | 0 | 0 |
-| veydal | `rest_spring` | inside | 10x8 | 0 | 0 | 0 |
-| veydal | `sablecove` | cave | 12x9 | 4 | 0 | 10 |
+| veydal | `rest_spring` | inside | 10x8 | 1 | 0 | 0 |
+| veydal | `sablecove` | cave | 12x9 | 5 | 0 | 10 |
 | veydal | `saltmarsh` | marsh | 12x15 | 5 | 3 | 47 |
 | veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
-| veydal | `thornridge` | town | 12x20 | 4 | 0 | 6 |
+| veydal | `thornridge` | town | 12x20 | 5 | 0 | 6 |
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
-| veydal | `wren_library` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `wren_library` | inside | 10x8 | 1 | 0 | 0 |
 | veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
 | corvane | `corvane_quay` | town | 12x24 | 3 | 0 | 0 |
 | corvane | `greyreach` | route | 12x29 | 5 | 3 | 44 |
@@ -138,6 +161,7 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `madderby_guild` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `mirror_rift` | rift | 12x13 | 0 | 0 | 20 |
 | corvane | `rain_rift` | rift | 12x13 | 0 | 0 | 22 |
+| corvane | `rook_vault` | inside | 12x9 + 12x9 + 12x9 + 12x9 | 5 | 3 | 16 |
 | corvane | `root_rift` | rift | 12x22 | 0 | 4 | 17 |
 | corvane | `stillwater` | route | 12x26 | 4 | 3 | 53 |
 | corvane | `wide_rift_edge` | rift | 12x16 | 0 | 0 | 0 |
@@ -154,11 +178,15 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
+| solenne | `caravanserai` | inside | 12x10 | 1 | 2 | 0 |
+| solenne | `glasswind_flats` | route | 12x34 | 5 | 6 | 86 |
+| solenne | `mirage_kiln` | dungeon | 12x10 + 12x10 + 12x8 | 5 | 7 | 25 |
 | solenne | `oasis_rift` | rift | 12x22 | 0 | 4 | 18 |
 | solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
-| | **54 maps** | | | **130** | **87** | **1338** |
+| solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
+| | **60 maps** | | | **162** | **116** | **1489** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

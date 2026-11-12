@@ -247,6 +247,16 @@
      ]
     }
    ]
+  },
+  {
+   "id": "vs_pebble",
+   "x": 8,
+   "y": 9,
+   "facing": "down",
+   "dialogue": "veydal_side/pebble",
+   "sprite": "hush",
+   "color": "5a4a3a",
+   "hide_flag": "funeral_done"
   }
  ],
  "signs": [
@@ -277,14 +287,14 @@
    "hide_flag": "page_6"
   },
   {
-   "x": 10,
-   "y": 10,
-   "dialogue": "murk_hollow/campfire"
-  },
-  {
    "x": 0,
    "y": 9,
    "dialogue": "murk_hollow/burrow"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "dialogue": "murk_hollow/campfire"
   }
  ],
  "gear_spots": [
@@ -322,6 +332,14 @@
    "count": 1,
    "flag": "hollow_nook_find",
    "dialogue": "murk_hollow/nook_find"
+  },
+  {
+   "x": 7,
+   "y": 3,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "hush_coin_2",
+   "dialogue": "veydal_side/coin_2"
   }
  ],
  "floors": [

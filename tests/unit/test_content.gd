@@ -4,10 +4,11 @@ extends GutTest
 func before_all() -> void:
 	Database.load_all()
 
+## Each kind is drawn in its own era (Era III kinds of Quillmarch in art/era3/).
 func test_every_species_has_art() -> void:
 	for name: String in Database.spirlings:
 		for side: String in ["front", "back"]:
-			var path: String = "res://art/era1/spirlings/%s_%s.png" % [name.to_lower(), side]
+			var path: String = "res://art/era%d/spirlings/%s_%s.png" % [Database.spirlings[name].era, name.to_lower(), side]
 			assert_true(ResourceLoader.exists(path), "missing %s" % path)
 
 func test_dex_ids_are_unique_and_dense() -> void:
@@ -173,11 +174,13 @@ func test_every_element_has_four_veydal_kinds() -> void:
 		assert_gte(int(count.get(e, 0)), 4, "%s in Veydal" % Elements.element_name(e))
 
 func test_no_trait_on_more_than_six_lines() -> void:
+	# Per region: with 70 kinds per act (owner rule) the eight traits are spread over each act.
 	var lines: Dictionary = {}
 	for sd: SpirlingData in Database.spirlings.values():
-		var set: Dictionary = lines.get(sd.trait_id, {})
+		var key: String = "%s in %s" % [sd.trait_id, sd.region]
+		var set: Dictionary = lines.get(key, {})
 		set[sd.line_id] = true
-		lines[sd.trait_id] = set
+		lines[key] = set
 	for t: String in lines:
 		assert_lte((lines[t] as Dictionary).size(), 6, "trait %s" % t)
 

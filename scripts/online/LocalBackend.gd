@@ -20,7 +20,7 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "focus_brew", "w": 3}, {"item": "dash_brew", "w": 3}, {"item": "revival_leaf", "w": 1}],
 	"goal_rotation": [{"kind": "battles", "target": 5000}, {"kind": "bonds", "target": 800}, {"kind": "rests", "target": 2000}],
 	"goal_rewards": ["strong_tonic", "spark_drop", "max_tonic", "spark_charm"],
-	"party_max": 5, "level_max": 60, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
+	"party_max": 5, "level_max": 60, "save_level_max": 9999, "duel_ring": 50, "save_schema_max": 1, "battle_submit_limit": 60,
 	"league_fair_ring": 50, "league_season_days": 42, "league_closing_minutes": 30, "league_search_start": 100,
 	"league_search_step": 50, "league_search_max": 400, "league_match_minutes": 30, "league_ai": 2,
 	"league_fair_blocked_sources": [],
@@ -45,6 +45,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
+	"lend": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -74,12 +75,19 @@ func _init(p_store_path: String = "") -> void:
 			"bund_leave", "bund_dissolve", "bund_keep", "raid_open", "raid_list", "raid_start", "raid_claim",
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
 			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim", "league_reward",
+			"live_invite", "live_list", "live_answer", "live_pick", "live_move", "live_state", "live_emote", "live_forfeit",
+			"live_finish", "live_rematch", "raid_board",
+			"bund_stats", "bund_settings", "bund_search", "bund_join", "bund_donate", "bund_goal_claim", "bund_board",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
-	# Planned maintenance (Online 100 point 95, 20261111000040_maintenance.sql).
+	# Planned maintenance (Online 100 point 95, 20261112230010_maintenance.sql).
 	_fns["maintenance_info"] = Callable(self, "_fn_maintenance_info")
+	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).
+	LocalTradeGifts.install(self)
+	# Online events (20261112000070_online_events.sql) live in their own file too.
+	LocalOnlineEvents.install(self)
 
 func is_local() -> bool:
 	return true
@@ -146,7 +154,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward"]
+	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -289,8 +297,10 @@ func party_max_of(uid: String) -> int:
 	var unlocks: Variant = shop.get("unlocks", {}) if shop is Dictionary else {}
 	return config_int("party_max", 5) + (1 if unlocks is Dictionary and int(unlocks.get("team_slot_6", 0)) > 0 else 0)
 
-## Like public._save_ok: real game limits (team of party_max, Ring 1..level_max).
-static func save_ok(d: Variant, party_max: int = 5, level_max: int = 60) -> bool:
+## Like public._save_ok: real game limits (team of party_max, Ring 1..save_level_max). Spirlings
+## have no top ring, so save_level_max is only a sanity bound (Spirling.LEVEL_SANITY, 9999)
+## against garbage; level_max (60) stays the echo team, league and duel ring.
+static func save_ok(d: Variant, party_max: int = 5, level_max: int = Spirling.LEVEL_SANITY) -> bool:
 	if not d is Dictionary:
 		return false
 	if JSON.stringify(d).length() > 400000:
@@ -418,7 +428,7 @@ func _fn_save_put(a: Dictionary) -> Dictionary:
 		return {"ok": false, "error": "too_big"}
 	if not save_schema_ok(a.get("p_data"), config_int("save_schema_max", 1)):
 		return {"ok": false, "error": "schema"}
-	if not save_ok(a.get("p_data"), party_max_of(me()), config_int("level_max", 60)):
+	if not save_ok(a.get("p_data"), party_max_of(me()), config_int("save_level_max", Spirling.LEVEL_SANITY)):
 		return {"ok": false, "error": "implausible"}
 	var data: Dictionary = (a.p_data as Dictionary).duplicate(true)
 	# Values the server keeps itself are dropped (item 2924).
@@ -1083,6 +1093,9 @@ func _fn_community_add(a: Dictionary) -> Dictionary:
 		var n: int = mini(mini(amount, 5), maxi(int(db.config.get("goal_user_cap", 500)) - int(c.amount), 0))
 		c.amount = int(c.amount) + n
 		g.total = int(g.total) + n
+	# Like the SQL community_add: the step also counts for running festivals.
+	if has_meta("online_events"):
+		(get_meta("online_events") as LocalOnlineEvents).on_contribute(me(), str(a.get("p_kind", "")), amount)
 	return _goal_json(g)
 
 func _fn_community_claim(a: Dictionary) -> Dictionary:
@@ -1446,13 +1459,22 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 
 func _league_expect(m: Dictionary) -> Dictionary:
 	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
-		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
+		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0],
+		"amulets": amulets_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
 
 ## Seal tiers [power, guard, speed] of [param uid] from the shop unlocks (like public._shop_seals).
 func seals_of(uid: String) -> Array:
 	var out: Array = []
 	var unlocks: Dictionary = LocalShop.of(self)._shop(uid).unlocks if LocalShop.of(self) != null else {}
 	for k: String in ShopEffects.SEAL_KINDS:
+		out.append(ShopEffects.clamp_tier(k, int(unlocks.get(k, 0))))
+	return out
+
+## Amulet tiers [crit, ward, shield] of [param uid] (like public._shop_amulets).
+func amulets_of(uid: String) -> Array:
+	var out: Array = []
+	var unlocks: Dictionary = LocalShop.of(self)._shop(uid).unlocks if LocalShop.of(self) != null else {}
+	for k: String in ShopEffects.AMULET_KINDS:
 		out.append(ShopEffects.clamp_tier(k, int(unlocks.get(k, 0))))
 	return out
 
@@ -1794,7 +1816,8 @@ func raid_hp(players: int) -> int:
 
 func _raid_expect(at: Dictionary) -> Dictionary:
 	return {"seed": at.seed, "teams": (at.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
-		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10), "seals": seals_of(str(at.user))}
+		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10), "seals": seals_of(str(at.user)),
+		"amulets": amulets_of(str(at.user))}
 
 ## Members of raid [param r] as uid -> row. Rows live under "raid|uid", so deleting an account
 ## removes only that player's row (like the SQL table).
@@ -1835,17 +1858,46 @@ func _fn_raid_open(a: Dictionary) -> Dictionary:
 		who.append(t)
 	if not _rate_ok("raid_open", 6):
 		return _fail("slow_down")
+	var rc: Dictionary = raid_cfg()
+	var tier: Variant = a.get("p_tier", 1)
+	if not RaidRules.tier_ok(rc, tier):
+		return _fail("bad_tier")
 	var pool: Array = (db.config.get("raid_guardians", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
-	if pool.is_empty():
+	var legs: Array = (rc.get("legendaries", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
+	var cfg2: Dictionary = rc.duplicate()
+	cfg2["legendaries"] = legs
+	var g: Dictionary = RaidRules.guardian(cfg2, pool, RaidRules.week_index(now()), rng.randi() % 100)
+	if g.is_empty():
 		return _fail("no_guardian")
 	var id: String = str(_next_id("raid"))
-	var hp: int = raid_hp(who.size())
-	(_table("raids", {}) as Dictionary)[id] = {"guardian": str(pool[rng.randi() % pool.size()]), "level": config_int("raid_level", 60),
-		"players": who.size(), "hp_total": hp, "hp_left": hp, "created_at": now(),
+	var hp: int = RaidRules.hp(rc, raid_hp(who.size()), int(tier), bool(g.legendary))
+	(_table("raids", {}) as Dictionary)[id] = {"guardian": g.guardian, "level": int(rc.tiers[int(tier)].level),
+		"players": who.size(), "hp_total": hp, "hp_left": hp, "created_at": now(), "tier": int(tier), "legendary": g.legendary,
 		"closes_at": now() + 3600 * config_int("raid_hours", 48), "won_at": 0, "reward": null}
 	for x: String in who:
 		(_table("raid_members", {}) as Dictionary)["%s|%s" % [id, x]] = {"damage": 0, "claimed": false}
-	return {"ok": true, "raid": int(id)}
+	return {"ok": true, "raid": int(id), "guardian": g.guardian, "tier": int(tier), "legendary": g.legendary, "hp": hp}
+
+## server_config.raid_rules (data/raid_rules.json).
+func raid_cfg() -> Dictionary:
+	var v: Variant = db.config.get("raid_rules")
+	if not v is Dictionary:
+		v = RaidRules.config()
+		db.config["raid_rules"] = v
+	return v
+
+## Like public.raid_board: the fastest won Rifts (point 29), without names.
+func _fn_raid_board(_a: Dictionary) -> Dictionary:
+	var e: String = _raid_check(me())
+	if not e.is_empty():
+		return _fail(e)
+	var rows: Array = []
+	for r: Dictionary in (_table("raids", {}) as Dictionary).values():
+		if int(r.won_at) > 0:
+			rows.append({"guardian": r.guardian, "tier": int(r.get("tier", 1)), "players": int(r.players),
+				"seconds": int(r.won_at) - int(r.created_at)})
+	rows.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.seconds) < int(q.seconds))
+	return {"ok": true, "rows": rows.slice(0, int(raid_cfg().get("board_rows", 10)))}
 
 func _raid_qualifies(r: Dictionary, damage: int) -> bool:
 	return int(r.won_at) > 0 and damage * 100 >= int(r.hp_total) * config_int("raid_share_min", 5)
@@ -1917,7 +1969,11 @@ func _fn_raid_claim(a: Dictionary) -> Dictionary:
 	if bool(mem[u].claimed):
 		return _fail("claimed")
 	mem[u].claimed = true
-	return {"ok": true, "item": r.reward.item, "count": int(r.reward.get("count", 1))}
+	var best: int = 0
+	for x: String in mem:
+		best = maxi(best, int(mem[x].damage))
+	var top: bool = int(mem[u].damage) == best
+	return {"ok": true, "item": r.reward.item, "count": RaidRules.reward_count(raid_cfg(), int(r.reward.get("count", 1)), top), "top": top}
 
 ## Like public._raid_apply: checked damage comes off the guardian, never below zero.
 func _raid_apply(battle_id: int, ok: bool, detail: Variant) -> void:
@@ -2080,7 +2136,7 @@ static func trade_mon_clean(m: Dictionary) -> Dictionary:
 	for k: String in ["nickname", "box", "favorite"]:
 		out.erase(k)
 	var era: Variant = m.get("origin_era")
-	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= 4 else 1
+	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= Spirling.MAX_ERA else 1
 	return out
 
 static func mon_uids(list: Variant) -> Array:
@@ -2470,6 +2526,365 @@ func _fn_save_restore(a: Dictionary) -> Dictionary:
 	sv.saved_at = now()
 	sv.erase("request_id")
 	return {"ok": true, "rev": sv.rev}
+
+# --- Live duels (Online 100, area 1), like 20261111000040_live_duel.sql ------------------------
+
+## server_config.live_duel (data/live_duel.json).
+func live_cfg() -> Dictionary:
+	var v: Variant = db.config.get("live_duel")
+	if not v is Dictionary:
+		v = LiveDuel.config()
+		db.config["live_duel"] = v
+	return v
+
+func _live(id: Variant) -> Variant:
+	return (_table("live_duels", {}) as Dictionary).get(str(int(id)))
+
+## 0 for the inviter, 1 for the friend, -1 for anyone else.
+func _live_side(d: Dictionary) -> int:
+	return 0 if d.a == me() else (1 if d.b == me() else -1)
+
+## Like public._live_tick: invites run out, and a side that stays away longer than the turn plus
+## reconnect_seconds loses (both away: the duel ends without a winner).
+func _live_tick(d: Dictionary) -> void:
+	var c: Dictionary = live_cfg()
+	if d.state == "invited" and now() > int(d.deadline):
+		d.state = "expired"
+	elif (d.state == "picking" or d.state == "running") and now() > int(d.deadline) + int(c.reconnect_seconds):
+		var have: Array = d.pick if d.state == "picking" else (d.moves as Dictionary).get(str(d.round), [null, null])
+		var away0: bool = have[0] == null
+		var away1: bool = have[1] == null
+		d.state = "done"
+		d.reason = "timeout"
+		d.winner = -1 if away0 == away1 else (1 if away0 else 0)
+
+func _live_out(d: Dictionary) -> Dictionary:
+	var teams: Array = []
+	if d.state != "invited" and d.state != "picking" and d.pick[0] != null and d.pick[1] != null:
+		for side: int in 2:
+			var rows: Array = []
+			for i: Variant in d.pick[side]:
+				rows.append((d.show[side][int(i)] as Dictionary).duplicate(true))
+			teams.append(rows)
+	return {"ok": true, "id": int(d.id), "side": _live_side(d), "state": d.state, "show": (d.show as Array).duplicate(true),
+		"picked": [d.pick[0] != null, d.pick[1] != null], "teams": teams, "seed": d.seed, "round": d.round,
+		"moves": (d.moves as Dictionary).duplicate(true), "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
+		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true)}
+
+func _live_new(other: String) -> Dictionary:
+	var c: Dictionary = live_cfg()
+	var show: Array = []
+	for uid: String in [me(), other]:
+		var team: Array = profile_of(uid).get("team", [])
+		show.append(team.slice(0, int(c.show)))
+	if (show[0] as Array).size() < int(c.pick) or (show[1] as Array).size() < int(c.pick):
+		return _fail("team_too_small")
+	var id: int = _next_id("live_duels")
+	var d: Dictionary = {"id": id, "a": me(), "b": other, "state": "invited", "show": show, "pick": [null, null],
+		"seed": rng.randi() & 0x7fffffff, "round": 0, "moves": {}, "deadline": now() + 60 * int(c.invite_minutes),
+		"winner": -1, "reason": "", "emotes": [], "report": [null, null]}
+	_table("live_duels", {})[str(id)] = d
+	return {"ok": true, "id": id}
+
+func _fn_live_invite(a: Dictionary) -> Dictionary:
+	if not flag_on("live_duel", 2147483647):
+		return _fail("feature_off")
+	var other: String = uid_for_code(str(a.get("p_code", "")))
+	if other.is_empty() or other == me() or is_blocked(me(), other) or not is_friend(me(), other):
+		return _fail("not_friends")
+	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
+		return _fail("slow_down")
+	return _live_new(other)
+
+func _fn_live_list(_a: Dictionary) -> Dictionary:
+	var out: Array = []
+	for d: Dictionary in (_table("live_duels", {}) as Dictionary).values():
+		if _live_side(d) < 0:
+			continue
+		_live_tick(d)
+		if d.state != "done" and d.state != "expired":
+			var other: String = d.b if d.a == me() else d.a
+			out.append({"id": int(d.id), "state": d.state, "side": _live_side(d), "name": str(profile_of(other).name)})
+	return {"ok": true, "duels": out}
+
+func _live_mine(a: Dictionary) -> Variant:
+	var d: Variant = _live(a.get("p_id", -1))
+	if d == null or _live_side(d) < 0:
+		return null
+	_live_tick(d)
+	return d
+
+func _fn_live_answer(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null or _live_side(d) != 1:
+		return _fail("no_such_duel")
+	if d.state != "invited":
+		return _fail("duel_closed")
+	if not bool(a.get("p_accept", false)):
+		d.state = "expired"
+		return {"ok": true, "state": d.state}
+	d.state = "picking"
+	d.deadline = now() + int(live_cfg().pick_seconds)
+	return _live_out(d)
+
+func _fn_live_pick(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var side: int = _live_side(d)
+	if d.state != "picking" or d.pick[side] != null:
+		return _fail("duel_closed")
+	var pick: Variant = LiveDuel.check_pick(a.get("p_pick"), (d.show[side] as Array).size(), int(live_cfg().pick))
+	if pick == null:
+		return _fail("bad_pick")
+	d.pick[side] = pick
+	if d.pick[0] != null and d.pick[1] != null:
+		d.state = "running"
+		d.round = 1
+		d.deadline = now() + int(live_cfg().turn_seconds)
+	return _live_out(d)
+
+func _fn_live_move(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var side: int = _live_side(d)
+	if d.state != "running":
+		return _fail("duel_closed")
+	if int(a.get("p_round", -1)) != int(d.round):
+		return _fail("wrong_round")
+	var mv: Variant = a.get("p_input")
+	if not mv is Dictionary or JSON.stringify(mv).length() > 400:
+		return _fail("bad_input")
+	var row: Array = (d.moves as Dictionary).get_or_add(str(d.round), [null, null])
+	if row[side] != null:
+		return _fail("already_moved")
+	row[side] = mv
+	if row[0] != null and row[1] != null:
+		d.round = int(d.round) + 1
+		d.deadline = now() + int(live_cfg().turn_seconds)
+	return _live_out(d)
+
+func _fn_live_state(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	return _live_out(d)
+
+func _fn_live_emote(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var n: int = int(a.get("p_emote", -1))
+	if n < 0 or n >= int(live_cfg().emotes):
+		return _fail("bad_emote")
+	var side: int = _live_side(d)
+	var used: int = 0
+	for e: Dictionary in d.emotes:
+		if int(e.side) == side:
+			used += 1
+	if used >= int(live_cfg().emote_limit):
+		return _fail("slow_down")
+	(d.emotes as Array).append({"side": side, "emote": n, "at": now()})
+	return {"ok": true}
+
+func _fn_live_forfeit(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	if d.state != "picking" and d.state != "running":
+		return _fail("duel_closed")
+	d.state = "done"
+	d.reason = "forfeit"
+	d.winner = 1 - _live_side(d)
+	return _live_out(d)
+
+func _fn_live_finish(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	var w: int = int(a.get("p_winner", -2))
+	if d.state != "running" or w < -1 or w > 1:
+		return _fail("duel_closed")
+	d.report[_live_side(d)] = w
+	if d.report[0] != null and d.report[1] != null:
+		d.state = "done"
+		d.reason = "played" if int(d.report[0]) == int(d.report[1]) else "disputed"
+		d.winner = int(d.report[0]) if d.reason == "played" else -1
+	return _live_out(d)
+
+func _fn_live_rematch(a: Dictionary) -> Dictionary:
+	var d: Variant = _live_mine(a)
+	if d == null:
+		return _fail("no_such_duel")
+	if d.state != "done":
+		return _fail("duel_closed")
+	var other: String = d.b if d.a == me() else d.a
+	if is_blocked(me(), other) or not is_friend(me(), other):
+		return _fail("not_friends")
+	if not _rate_ok("live_invite", int(live_cfg().invites_per_hour)):
+		return _fail("slow_down")
+	return _live_new(other)
+
+# --- Bund extras (Online 100, area 4), like 20261111000060_bund_more.sql ------------------------
+
+## server_config.bund_rules (data/bund_rules.json).
+func bund_cfg() -> Dictionary:
+	var v: Variant = db.config.get("bund_rules")
+	if not v is Dictionary:
+		v = BundRules.config()
+		db.config["bund_rules"] = v
+	return v
+
+func _bund_goal(row: Dictionary) -> int:
+	return int(row.get("goal_progress", 0)) if str(row.get("goal_week", "")) == _week() else 0
+
+func _bund_active(b: String) -> int:
+	var n: int = 0
+	for x: String in _bund_list(b):
+		if int(profile_of(x).get("last_seen", 0)) > now() - 86400 * int(bund_cfg().active_days):
+			n += 1
+	return n
+
+func _fn_bund_stats(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	var row: Dictionary = db.bunds[b]
+	var c: Dictionary = bund_cfg()
+	var claims: Array = row.get("goal_claims", [])
+	return {"ok": true, "xp": int(row.get("xp", 0)), "level": BundRules.level(c, int(row.get("xp", 0))),
+		"lang": str(row.get("lang", "")), "open": bool(row.get("open", false)), "goal": _bund_goal(row),
+		"goal_target": int(c.goal_target), "goal_reward": (c.goal_reward as Dictionary).duplicate(),
+		"goal_claimed": claims.has(_week() + "|" + u),
+		"donated_today": int((_user().get("bund_donated", {}) as Dictionary).get(_today(), 0)), "donate_daily": int(c.donate_daily)}
+
+func _fn_bund_settings(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty() or _bund_role(u) != "leader":
+		return _fail("not_allowed")
+	var lang: String = str(a.get("p_lang", ""))
+	if not BundRules.lang_ok(bund_cfg(), lang):
+		return _fail("bad_lang")
+	db.bunds[b].lang = lang
+	db.bunds[b].open = bool(a.get("p_open", false))
+	return {"ok": true}
+
+func _fn_bund_search(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	if not _rate_ok("bund_search", 60):
+		return _fail("slow_down")
+	var lang: String = str(a.get("p_lang", ""))
+	var out: Array = []
+	for b: String in _table("bunds", {}):
+		var row: Dictionary = db.bunds[b]
+		var size: int = _bund_list(b).size()
+		if (not lang.is_empty() and str(row.get("lang", "")) != lang) or int(row.dissolve_at) > 0 or size >= config_int("bund_max", 30):
+			continue
+		if _bund_list(b).any(func(x: String) -> bool: return is_blocked(u, x)):
+			continue
+		out.append({"bund": int(b), "name": row.name, "lang": str(row.get("lang", "")), "open": bool(row.get("open", false)),
+			"level": BundRules.level(bund_cfg(), int(row.get("xp", 0))), "size": size, "active": _bund_active(b)})
+	out.sort_custom(func(p: Dictionary, q: Dictionary) -> bool:
+		if int(p.active) != int(q.active):
+			return int(p.active) > int(q.active)
+		if int(p.size) != int(q.size):
+			return int(p.size) > int(q.size)
+		return int(p.bund) < int(q.bund))
+	return {"ok": true, "bunds": out.slice(0, int(bund_cfg().search_rows))}
+
+func _fn_bund_join(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = str(int(a.get("p_bund", -1)))
+	if not _table("bunds", {}).has(b) or _bund_list(b).any(func(x: String) -> bool: return is_blocked(u, x)):
+		return _fail("no_such_bund")
+	if not _bund_of(u).is_empty():
+		return _fail("in_bund")
+	if not _rate_ok("bund_request", 10):
+		return _fail("slow_down")
+	if bool(db.bunds[b].get("open", false)):
+		e = _bund_join(b, u, "member")
+		return _fail(e) if not e.is_empty() else {"ok": true, "joined": true}
+	if _invite_of(b, u, "") < 0:
+		(_table("bund_invites", []) as Array).append({"bund": b, "user": u, "kind": "request", "by": u, "at": now()})
+	return {"ok": true, "joined": false}
+
+func _fn_bund_donate(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	var item: String = str(a.get("p_item", ""))
+	var count: int = int(a.get("p_count", 0))
+	if item.is_empty() or count < 1 or count > 99:
+		return _fail("bad_count")
+	var done: Dictionary = _user().get_or_add("bund_donated", {})
+	if int(done.get(_today(), 0)) + count > int(bund_cfg().donate_daily):
+		return _fail("limit_today")
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {item: -count})
+	if not bool(r.ok):
+		return r
+	done[_today()] = int(done.get(_today(), 0)) + count
+	var row: Dictionary = db.bunds[b]
+	row["xp"] = int(row.get("xp", 0)) + BundRules.donate_xp(bund_cfg(), count)
+	row["goal_progress"] = _bund_goal(row) + count
+	row["goal_week"] = _week()
+	return {"ok": true, "rev": r.rev, "bag": {item: -count}, "xp": row.xp, "goal": _bund_goal(row)}
+
+func _fn_bund_goal_claim(a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var b: String = _bund_of(u)
+	if b.is_empty():
+		return _fail("no_bund")
+	var row: Dictionary = db.bunds[b]
+	if _bund_goal(row) < int(bund_cfg().goal_target):
+		return _fail("goal_open")
+	var claims: Array = row.get_or_add("goal_claims", [])
+	if claims.has(_week() + "|" + u):
+		return _fail("claimed")
+	var rw: Dictionary = bund_cfg().goal_reward
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {str(rw.item): int(rw.count)})
+	if not bool(r.ok):
+		return r
+	claims.append(_week() + "|" + u)
+	return {"ok": true, "rev": r.rev, "item": rw.item, "count": int(rw.count), "bag": {str(rw.item): int(rw.count)}}
+
+func _fn_bund_board(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var e: String = _bund_check(u)
+	if not e.is_empty():
+		return _fail(e)
+	var rows: Array = []
+	for b: String in _table("bunds", {}):
+		var row: Dictionary = db.bunds[b]
+		if int(row.dissolve_at) == 0:
+			rows.append({"id": int(b), "name": row.name, "xp": int(row.get("xp", 0)),
+				"level": BundRules.level(bund_cfg(), int(row.get("xp", 0))), "mine": _bund_of(u) == b})
+	rows.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.xp) > int(q.xp) or (int(p.xp) == int(q.xp) and int(p.id) < int(q.id)))
+	rows = rows.slice(0, int(bund_cfg().board_rows))
+	for r: Dictionary in rows:
+		r.erase("id")
+	return {"ok": true, "rows": rows}
 
 ## Planned maintenance time (Online 100 point 95), 0 = none.
 func _fn_maintenance_info(_a: Dictionary) -> Dictionary:

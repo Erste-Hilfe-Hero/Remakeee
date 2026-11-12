@@ -55,10 +55,19 @@
     "ranger":      ["22362a", "4e7a52", "c89470", "ece4c8"],
     "elder":       ["34283a", "7a6a8e", "d0a88a", "f0ece4"],
     "warden":      ["2a2e3a", "5a5e78", "c4946e", "e8e4dc"],
-    "first_voice": ["2e2440", "6a5a9e", "b4a8d8", "f4f0fa"]
+    "first_voice": ["2e2440", "6a5a9e", "b4a8d8", "f4f0fa"],
+    "stranger":        ["2e2228", "7a3e3a", "c8946a", "efe0c4"],
+    "stranger_hat":    ["262a2e", "4e5a52", "c09068", "eae2cc"],
+    "stranger_runner": ["2a2420", "6e5232", "c88e62", "f0e2c6"],
+    "stranger_kid":    ["2c2a36", "5a5a7e", "d6a07c", "f4e8d4"]
   },
   "fx": {
     "spark": "EMBER", "drop": "TIDE", "leaf": "BLOOM", "zag": "VOLT",
     "rock": "STONE", "streak": "GALE", "glint": "LUMEN", "shade": "UMBRA"
+  },
+  "landmarks": {
+    "veydal_standing_stone": "ROCK", "veydal_cairn": "BOULDER", "veydal_beacon": "LAMP", "veydal_tide_post": "PIER",
+    "corvane_heron_post": "FENCE", "corvane_drying_rack": "SPRING", "corvane_sluice_wheel": "PIER", "corvane_dye_mill": "WATER",
+    "ashmere_smelter_stack": "ROOF", "ashmere_bell_frame": "FENCE", "ashmere_salt_obelisk": "CLIFF"
   }
 }

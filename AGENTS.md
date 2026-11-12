@@ -68,7 +68,7 @@ tests/           GUT tests
 
 ## Game rules (implement exactly)
 
-**Elements (8).** Each beats 2 and loses to 2. Attacker strong → ×2; reverse direction → ×0.5; otherwise ×1. Lumen and Umbra beat each other, so that pair is ×1. Dual elements multiply. The chart lives in `data/type_chart.json` and `scripts/core/Elements.gd` reads it. Every element has at least 2 real strengths and 2 real weaknesses and none strictly dominates another (`tools/balance/type_sim.py`, `tests/unit/test_type_chart.gd`). Ink and Echo are prepared for Era II in the chart only and sit on no Spirling yet: Ink beats Ember, Tide, Bloom, Gale and loses to Volt, Stone, Lumen, Umbra; Echo is the reverse.
+**Elements (8).** Each beats 2 and loses to 2. Attacker strong → ×2; reverse direction → ×0.5; otherwise ×1. Lumen and Umbra beat each other, so that pair is ×1. Dual elements multiply. The chart lives in `data/type_chart.json` and `scripts/core/Elements.gd` reads it. Every element has at least 2 real strengths and 2 real weaknesses, as many strengths as weaknesses (Era I alone and all eras), and none strictly dominates another; a seeded equal-stat chart sim (1 on 1 and every team of 3) must keep each element in 40-60 % and each team in 30-70 % (`tools/balance/type_sim.py`, `tests/unit/test_type_chart.gd`). Ink and Echo (Era II) sit on legendaries only: Ink beats Ember, Tide, Bloom, Gale and loses to Volt, Stone, Lumen, Umbra; Echo is the reverse. Rust and Mask (Vellmarch) are in the chart only: Ember, Tide, Lumen, Ink, Echo beat Rust and lose to Mask; Bloom, Stone, Gale, Umbra beat Mask and lose to Rust; Rust beats Mask.
 
 | Element | Strong vs |
 | --- | --- |

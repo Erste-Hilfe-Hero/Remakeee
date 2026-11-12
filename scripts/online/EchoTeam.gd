@@ -30,7 +30,7 @@ static func build(rows: Array, max_level: int, fixed_level: int = 0) -> Array[Sp
 		if not r is Dictionary:
 			continue
 		var lvl: int = fixed_level if fixed_level > 0 else mini(int(r.get("level", 1)), max_level)
-		var s: Spirling = Spirling.from_dict({"species": str(r.get("species", "")), "level": clampi(lvl, 1, Spirling.MAX_LEVEL),
+		var s: Spirling = Spirling.from_dict({"species": str(r.get("species", "")), "level": clampi(lvl, 1, Spirling.STORY_RING),
 			"moves": r.get("moves", []) if fixed_level <= 0 else []})
 		if s == null:
 			continue
@@ -44,12 +44,12 @@ static func build(rows: Array, max_level: int, fixed_level: int = 0) -> Array[Sp
 
 ## Copies of the player's own team on the duel level, so a duel never changes the real team.
 static func duel_copy(party: Array[Spirling], ring: int = DUEL_LEVEL) -> Array[Spirling]:
-	return build(snapshot(party), Spirling.MAX_LEVEL, ring)
+	return build(snapshot(party), Spirling.STORY_RING, ring)
 
 ## The duel Ring the server sent with a friend's team, kept inside the game's limits.
 static func duel_ring(d: Dictionary) -> int:
 	var v: Variant = d.get("duel_ring", DUEL_LEVEL)
-	return clampi(int(v) if (v is int or v is float) else DUEL_LEVEL, 1, Spirling.MAX_LEVEL)
+	return clampi(int(v) if (v is int or v is float) else DUEL_LEVEL, 1, Spirling.STORY_RING)
 
 ## Rounds won * 100 + team health left in percent: the weekly board score (0-400).
 static func weekly_score(wins: int, party: Array[Spirling]) -> int:

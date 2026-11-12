@@ -1,0 +1,13 @@
+{
+ "add": {
+  "signs": [
+   {
+    "x": 9,
+    "y": 4,
+    "dialogue": "legend_quests/lumivane_lore",
+    "show_flag": "lq_lumivane_met",
+    "hide_flag": "lq_lumivane_ready"
+   }
+  ]
+ }
+}

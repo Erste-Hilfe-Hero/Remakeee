@@ -142,6 +142,29 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | `mirror_rift` | the Mirror Rift | Warden Joral |
 | `greyreach` | Greyreach, grey uplands | Veit's duel, old cartographer Moss |
 | `wide_rift_edge` | the edge of the Wide Rift | scene `wide_rift_reveal` |
+| `rook_vault` | the Rook Vault under Greyreach (item 1305) | feather-switch dungeon, 4 rooms, the Rook Keeper |
+
+### Act II side content (Corvane)
+
+Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German:
+`tools/i18n/de_corvane_side.py`. Rough play time per act and per post-game era region (Vellmarch, Quillmarch, Halcyra, Quivermoor; `regions` in `data/playtime.json`): `python3 tools/act_hours.py [act or region]`.
+
+- **Rival Nib Wexley**, a quay rat: five story duels (`nib_1`..`nib_5`) on the quay, in Madderby,
+  the Woadfen, at Stillwater and at the bottom of the Rook Vault. After the last one he admits he
+  sold your route notes (betrayal `nib_sale`, caught when Corbin warned you: `nib_warned`).
+- **The Quay Book**: who bought Nib's notes. Drop in the Woadfen, courier at Stillwater, then
+  Harbourmaster Quill himself (story duel `quill`).
+- **Mother Gaunt's debts**: four debtor duels; she sends her daughters after your cut
+  (betrayal `gaunt_cut`, caught when old Brask warned you: `brask_warned`).
+- **Vetch's dye run**: carry a crate to Moss-eye Jory, find rocks, make Vetch pay (`vetch`).
+- **Lucky Fenwick's fixed race**, **Glum's funeral** (three paid mourners for a Kelpup that is not
+  dead), **Harbourmaster Quill's bounties** (four duels, half the reward goes on fees),
+  **Ma Rook's five letters**, **the Greyreach Ladder** (five duels), **Sorrel's Spirlog** (show six
+  Corvane kinds), **Corbin's twelve grey feathers** (collectibles on six maps).
+- Favors with hidden trust: Pockets Pell (lend a Spirling), Ollie Fairweather (lend coins),
+  Dimsy Crake (believe his Rook Vault shortcut).
+- Twelve cartographer's stones of Corvane (item 1312, `data/dialogue/corvane_stones.json`,
+  action `marker_stone <n> corvane`), counted apart from Veydal's, keepsakes at 4, 8 and 12.
 
 ### Act III: Ashmere (item 1480)
 
@@ -228,6 +251,27 @@ rival clan of water merchants, for six years and sold them the oasis; she admits
 her duel. Then Factor Lusk of the Veil waits in Ochrewell (story battle `veil_factor`) and tells
 you that Emrys signed the contract as witness, which Emrys confirms before his own duel.
 
+**Solenne side content (Act IV, `tools/art/world/solenne_side.py`).** Once Lusk is beaten in town,
+the Brass Veil (third clan in `data/clans.json`: Kaia, Factor Lusk, his nephew Corin) opens up.
+The Veil Cistern under the counting house is a three-floor dungeon (two valve rows, five Veil
+crew, Corin's second duel, Lusk in the strongroom after the Sun Rift). Side goals `s4_veil`,
+`s4_rival` (Corin three times, Ring 40 to 50), `s4_seals` (eight brass seals for Old Mags),
+`s4_ious` (five IOUs for Qadir) and `s4_graves` (three graves the Veil prepaid, one for you).
+Act IV betrayals: Kaia's well deed (`kaia_deed`, caught when Dunya warned you) and Lusk's
+strongroom truce (`lusk_vault`, caught when Qadir warned you); favors with Qadir, Saffi and Corin.
+
+**Glasswind Flats and the Mirage Kiln (Act IV, `tools/art/world/solenne_more.py`).** After the
+Tower Rift the west gate of Ochrewell opens onto the Glasswind Flats, a desert route with the
+Glasswind Caravanserai on it and the Mirage Kiln at its south end, a three-floor glassworks of the
+Sandglass Crew (fourth clan in `data/clans.json`: Glassmaster Venn, Hesper, Tamsin, Oren) with
+two lens rows. The theme is false roads, not debt. Side goals `s4_ladder` (Sabine's eight-rung
+Wayfarer ladder, Ring 42 to 48), `s4_bells` (nine caravan bells), `s4_bell_line` (the bells lead
+caravans into the kiln), `s4_twin` (a twin who never was), `s4_census` and `s4_poacher` (eight
+kinds for Ilse, who sells her guide to a poacher), `s4_mirrors` (Oren's heliographs signal raids),
+`s4_kiln` and `s4_varro`. Act IV betrayals: Sabine's purse (`sabine_purse`, caught when Old Pell
+warned you), Tamsin's twin (`tamsin_twin`, Ott) and Venn's chains (`venn_chains`, Hesper's
+ledger); favor `varro_shortcut`. `tools/act_hours.py 4` puts Act IV at 24.2 h.
+
 The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
 18, 23, ... 50, then 54, 57 and 60 for Solenne); after Act I they open fully. The story battles keep a curve that never drops (checked
 by `tests/unit/test_rifts12.gd`): Kestra's tag battle at the Root Rift (Ring 23 to 24) sits between
@@ -293,6 +337,34 @@ The theme is "trust no one": dry humour, polite threats, violence off screen and
   (Act III). Traitors: Kenan (Act I), Farida, Heider (Act II), Leith (Act III). Lipka and Leith can
   turn either way with the hidden values.
 
+### The strangers' camp (plan 2, items 141-180)
+
+The eleven strangers keep a camp at the Edge of the Wide Rift (`data/dialogue/edge_camp.json`,
+placements in `data/story_npcs.json`). Elma leads it. The first visit in Act II plays the scene
+`edge_camp` (`edge_camp_met`): their own map is fading too. The camp grows with each act: the
+five Act I figures arrive with Act II, Amir, Farida and Heider with Act III (`act2_end`), Leith,
+Lejla and Mirza with Act IV (`rift_shade_sealed`). Each figure has an own Era I/II sheet
+(`tools/art/gen_strangers.py`: `stranger`, `stranger_hat`, `stranger_runner`, `stranger_kid`),
+also in their clan towns.
+
+| Figure | Side goal (`edge_<name>`) | Betrayal / twist | Reward |
+| --- | --- | --- | --- |
+| Elma | show an Ember, Tide and Stone Spirling | - | 2 Spring Flasks; the gift (below) |
+| Aldra | lay her map on the Madderby guild table | trust under 55: she already sold the true copy to Fenrick | Whetstone or 2 Strong Tonics |
+| Amir | three cracked-circle marks (Greyreach, Saltglass, Ochrewell) | the marks are Heider's: he sold the family's crossings (trust heider -10) | 2 Spring Flasks |
+| Farida | rest stop (heal); read her guest book | she sells guests to Grell; burn the page (ledger `farida_book`) or feed her lies | trust |
+| Heider | carry a crate to the Greyreach trail post | he sold your route to the buyers (duel `heider_buyers`) | 3 Strong Tonics |
+| Kenan | duels `kenan_duel_1..3`, one per act; `kenan_rematch` after the finale | the keepsake he stole was in Nail's tea tin | Wind Anklet |
+| Leith | chalk arrow at the far end of the Wide Rift | trust under 40: Sable's old ambush (`leith_trap`) | Spark Charm |
+| Lejla | Gale Spirling carries her song, stone guard wakes (`silent_warden`) | - | 3 Kin Charms |
+| Lipka | Waking Moss for a hurt Spirling (`take_item`) | trust under 45: she sells it to Heider | Iron Burr or 2 Strong Tonics |
+| Mirza | hand over a Kin Charm | trust under 40: he gambles it away | Spark Charm or 2 Kin Charms |
+| Nail | beat him (`nail_duel`) so he can lie to Veit Harrow | he leaves Veit's pay | Spring Flask |
+
+Six duels against the strangers: Kenan 1-3, Kenan's rematch, Nail, Leith's trap. With all eleven
+goals done Elma hands over a Scrivane from the other map (`gift_spirling`, side goal `edge_gift`).
+Once the story is complete and a figure's goal is done, that figure has a closing talk.
+
 ### Hidden trust
 
 Every figure has a hidden **trust** and **use** value (0-100, start values in the data, changes
@@ -322,6 +394,37 @@ side with the clan (Wren leaves) or with her (Ottilie turns). Kerr Haldane hunts
 fight him (`kerr_haldane`), or, with the breeding register, point him at Ottilie. Tobs moves the
 ash urn for 500 coins and stays loyal only if you asked him nicely first. Sable's dune tip in Act IV
 is a believe-tip favour that usually ends in an ambush.
+
+### Main-story betrayals (Ali 2026-11-10: several per act, "trust no one")
+
+The clan figures above wait for the player to talk to them. These betrayals sit on the critical
+path instead, in scenes every player passes (`data/scenes/`, map arrival scenes in
+`data/story_npcs.json` "on_enter"), so nobody finishes an act without being sold at least three
+times. Text: `data/dialogue/betrayal.json`, German: `tools/i18n/de_betrayal.py`. Data: the
+betrayals with `"main"` (the scene that fires them) and `"trust_choices"` in `data/clans.json`;
+`tests/unit/test_betrayal_main.gd` keeps at least three betrayals and two trust choices per act and
+checks that every choice flips its betrayal. A struck betrayal always costs coins (`"coins"` below
+zero is a bill, never below an empty purse) or the lead Spirling's keepsake; a caught one pays.
+
+| Act | Trust choice (where) | Betrayal (where it is cashed in) | Flag |
+| --- | --- | --- | --- |
+| I | Juna's report: Mirela's code or plain (`a1_report`, after Aldo's dock talk) | Juna sells your report to the clans (`juna_post`, the pier before the ferry) | `clan_b14` |
+| I | Vash asks the crossing hour: true or false (`a1_hour`, `a1_square` on entering Brindlewick) | Marrovel customs men search you at that hour (`vash_hour`, the pier) | `clan_b15` |
+| I | - (read Fenrick's letter or listen to Aldra) | Fenrick's farewell lantern hides a Ruskweber moth (`fenrick_lantern`, the pier) | `clan_b16` |
+| II | Sable's free porters (`a2_porter`, `corvane_arrival`) | your satchel comes back lighter (`sable_satchel`, `kestra_tatter_hush`) | `clan_b17` |
+| II | Brann copies Mirela's words (`a2_chalk`, `wide_rift_reveal`) | Veit reads Brann's notebook (`brann_copy`, `act2_far_side`) | `clan_b18` |
+| II | - (Pip's trust from Act I: covering his duel) | Ysolde sold Mirela's route for the guild charter; the clerk sells yours (`ysolde_charter`, `act2_far_side`) | `clan_b19` |
+| III | Nella wants the guild seal (`a3_seal`, `ashmere_arrival`) | Sable's runners draw on wax copies of it (`nella_wax`, `a3_cinderfold`) | `clan_b20` |
+| III | Grell's half-price copper (`a3_copper`, `a3_cinderfold`) | the copper goes quiet, Halvard buys again on your account (`grell_copper`, `a3_saltglass`) | `clan_b21` |
+| III | - (Pip's warning in Act II) | Ottilie walks the route the clerk sold her (`ottilie_route`, `a3_saltglass`) | `clan_b22` |
+| IV | Kaia's sealed letter: deliver or open (`a4_letter`, `a4_ochrewell`) | you become the Veil's courier of record, liable for the drought (`kaia_witness`, `a4_oasis`) | `clan_b23` |
+| IV | Lusk's free tunnel pass (`a4_tunnel`, `a4_oasis`) | the tunnel bill (`lusk_tunnel`, `a4_sun`) | `clan_b24` |
+| IV | - (Juna's trust since the Act I report) | Juna sells your lodging to the Veil (`juna_letter`, `a4_sun`) | `clan_b25` |
+
+The mandatory Act IV duels add two more: Kaia sold the oasis, and Emrys signed as her witness.
+Trusting answers raise a hidden value and are punished; the chained ones reward a secret kept
+earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises her use enough that
+her later tip (`sable_tip`) turns into an ambush.
 
 **The reckoning** (`data/scenes/solenne_reckoning.json`, started by Ottilie once the Sun Rift is
 mended): both throne betrayals are cashed in, Grell arrives with Brannoc (and Kerr if turned), Marlo

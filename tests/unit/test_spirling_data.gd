@@ -89,23 +89,62 @@ func _lines_in(region: String) -> Dictionary:
 func test_corvane_ashmere_and_solenne_lines_wait_in_the_data() -> void:
 	Database.load_all()
 	# Includes the legendaries Zephyrel (Corvane), Monolurk and Vorlucent (Ashmere), Lumivane (Solenne).
-	assert_eq(_lines_in("corvane").size(), 9)
-	assert_eq(_lines_in("ashmere").size(), 8)
-	assert_eq(_lines_in("solenne").size(), 7)
+	assert_eq(_lines_in("corvane").size(), 31, "9 lines before and 22 Act II lines (tools/art/lines/corvane.py)")
+	var corvane: int = 0
+	for sd: SpirlingData in Database.spirlings.values():
+		corvane += 1 if sd.region == "corvane" and sd.rarity != "ancient" else 0
+	assert_eq(corvane, 70, "every story act has 70 own Spirlings (legendaries not counted)")
+	assert_eq(_lines_in("ashmere").size(), 32, "8 lines before and 24 Act III lines (tools/art/lines/ashmere.py)")
+	var ashmere: int = 0
+	for sd: SpirlingData in Database.spirlings.values():
+		ashmere += 1 if sd.region == "ashmere" and sd.rarity != "ancient" else 0
+	assert_eq(ashmere, 70, "every story act has 70 own Spirlings (legendaries not counted)")
+	assert_eq(_lines_in("solenne").size(), 31, "7 lines before and 24 Act IV lines (tools/art/lines/solenne.py)")
+	var solenne: int = 0
+	for sd: SpirlingData in Database.spirlings.values():
+		solenne += 1 if sd.region == "solenne" and sd.rarity != "ancient" else 0
+	assert_eq(solenne, 70, "every story act has 70 own Spirlings (legendaries not counted)")
+	var veydal: int = 0
+	for sd: SpirlingData in Database.spirlings.values():
+		veydal += 1 if sd.region == "veydal" and sd.rarity != "ancient" else 0
+	assert_eq(veydal, 70, "every story act has 70 own Spirlings (legendaries not counted, 14 Act I lines in tools/art/lines/veydal.py)")
+
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != "veydal":
-			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_front.png" % sd.species_name.to_lower()), "%s has a placeholder sprite" % sd.species_name)
-			assert_true(ResourceLoader.exists("res://art/era1/spirlings/%s_back.png" % sd.species_name.to_lower()))
+			assert_true(ResourceLoader.exists("res://art/era%d/spirlings/%s_front.png" % [sd.era, sd.species_name.to_lower()]), "%s has a placeholder sprite" % sd.species_name)
+			assert_true(ResourceLoader.exists("res://art/era%d/spirlings/%s_back.png" % [sd.era, sd.species_name.to_lower()]))
 
 func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 	var kinds: Array[SpirlingData] = SpirlogBook.visible_kinds({})
 	for sd: SpirlingData in kinds:
 		assert_eq(sd.region, "veydal")
+	# A wild table holds kinds of its own region or of an earlier act, never of a later one.
+	# WorldValidator.REGIONS is the world order (acts, then the post-game regions such as Vellmarch).
 	var enc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/encounters.json"))
+	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/world_layout.json"))
 	for area: String in enc:
+		var region: String = str((layout.maps.get(area, {}) as Dictionary).get("region", "veydal"))
 		for s: Dictionary in enc[area].spawns:
-			assert_eq(Database.species(str(s.species)).region, "veydal", "%s in %s" % [s.species, area])
-	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 17)
+			var own: String = Database.species(str(s.species)).region
+			assert_gte(WorldValidator.REGIONS.find(region), 0, "%s has a known region" % area)
+			assert_lte(WorldValidator.REGIONS.find(own), WorldValidator.REGIONS.find(region), "%s in %s" % [s.species, area])
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 71)
+	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
+	assert_false(SpirlogBook.region_open("solenne", {}))
+
+func test_act_tables_use_mostly_their_own_kinds() -> void:
+	# Owner rule: an act's wild tables carry at most about 20 % kinds of earlier acts (by weight).
+	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/world_layout.json"))
+	for id: String in EncounterTable.table_ids():
+		var region: String = str((layout.maps.get(id, {}) as Dictionary).get("region", "veydal"))
+		if region != "solenne" and region != "ashmere" and region != "corvane":
+			continue
+		var own: int = 0
+		var all: int = 0
+		for s: Dictionary in EncounterTable.table(id).spawns:
+			all += int(s.weight)
+			own += int(s.weight) if Database.species(str(s.species)).region == region else 0
+		assert_gte(float(own) / all, 0.8, id)
 
 func test_regional_imprint_changes_element_but_keeps_the_spirlog_number() -> void:
 	var sd: SpirlingData = Database.species("Zephlet")

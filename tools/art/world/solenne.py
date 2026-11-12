@@ -18,16 +18,19 @@ How the way opens:
   ochrewell -> tower_rift    always
   ochrewell -> oasis_rift    rift_tower_sealed
   ochrewell -> sun_rift      rift_oasis_sealed
+  ochrewell -> veil_cistern  veil_factor_beaten (the Veil counting house door, tools/art/world/solenne_side.py)
+  ochrewell -> glasswind_flats rift_tower_sealed (the west gate, tools/art/world/solenne_more.py)
 """
 from common import check_rows, lines, npc, secret, team, tr, warp
 from rifts12 import gate, put, warden, wayfarer
 from townsfolk import at, away
 
-GROUP = ["ochrewell", "tower_rift", "oasis_rift", "sun_rift"]
+GROUP = ["ochrewell", "tower_rift", "oasis_rift", "sun_rift", "ochrewell_pottery", "ochrewell_dome", "ochrewell_store"]
 
 
 def build(world):
     ochrewell(world)
+    ochrewell_rooms(world)
     tower_rift(world)
     oasis_rift(world)
     sun_rift(world)
@@ -66,17 +69,17 @@ def ochrewell(world):
     rows = ["^^^^^__^^^^^",
             "^::..__..::^",
             "^.RRR__RRR.^",
-            "^.HHH__HHH.^",
+            "^.HDH__HDH.^",
             "^....__....^",
             "^.L..__..S.^",
             "^....__....^",
-            "^...____...^",
+            "^..._____..^",
             "_____.o.____",
             "_____...____",
-            "^...____...^",
-            "^....__....^",
+            "^..._____..^",
+            "_______....^",
             "^.RR.__.RR.^",
-            "^.HH.__.HH.^",
+            "^.DH.__.HD.^",
             "^....__....^",
             "^.##.__.##.^",
             "^....__....^",
@@ -112,18 +115,52 @@ def ochrewell(world):
          "warps": [warp(5, 0, "saltglass", 5, 24, "up"), warp(6, 0, "saltglass", 6, 24, "up"),
                    warp(0, 8, "tower_rift", 5, 20, "up"), warp(0, 9, "tower_rift", 6, 20, "up"),
                    warp(11, 8, "oasis_rift", 5, 20, "up"), warp(11, 9, "oasis_rift", 6, 20, "up"),
-                   warp(5, 19, "sun_rift", 5, 20, "up"), warp(6, 19, "sun_rift", 6, 20, "up")],
+                   warp(5, 19, "sun_rift", 5, 20, "up"), warp(6, 19, "sun_rift", 6, 20, "up"),
+                   warp(9, 13, "veil_cistern", 5, 8, "up"),
+                   warp(0, 11, "glasswind_flats", 10, 2, "left")]
+                  + [warp(dx, dy, rid, 4, 6, "up") for rid, _, (dx, dy), _ in ROOMS],
          "npcs": [npc("keeper", 7, 7, "down", mid + "/keeper", "elder"),
                   npc("trader", 3, 14, "down", mid + "/trader", "villager"),
                   npc("factor", 8, 16, "left", mid + "/factor", "villager", color="b08a3a", show_flag="rift_oasis_sealed", hide_flag="veil_factor_beaten")]
                  + [npc(pid, x, y, f, "%s/%s" % (mid, pid), sp, schedule=plan) for pid, sp, x, y, f, plan in folk],
          "signs": [{"x": 9, "y": 5, "dialogue": mid + "/sign"}],
          "blocks": [gate(11, 8, "rift_tower_sealed", "#"), gate(11, 9, "rift_tower_sealed", "#"),
-                    gate(5, 19, "rift_oasis_sealed", "#"), gate(6, 19, "rift_oasis_sealed", "#")],
+                    gate(5, 19, "rift_oasis_sealed", "#"), gate(6, 19, "rift_oasis_sealed", "#"),
+                    gate(9, 13, "veil_factor_beaten", "H"),
+                    gate(0, 11, "rift_tower_sealed", "^")],
          "secrets": [secret(0, 13, "max_tonic", "find_ochrewell_west"), secret(11, 16, "revival_leaf", "find_ochrewell_bazaar"),
                      secret(11, 4, "strong_tonic", "find_ochrewell_domes", 2)],
          "square": [6, 8]}
     finish(world, mid, m)
+
+
+# --- The three Ochrewell houses (map audit: every town building has a door and a room) --------
+# (map id, name, door in Ochrewell, rows); the room door is (4, 7), the way in lands on (4, 6).
+ROOMS = [("ochrewell_pottery", ("Hadi's Pottery", "Hadis Töpferei"), (3, 3),
+          ["WWWWWWWWWW", "WCCffffCCW", "WffffffffW", "WfCffffCfW", "WffffffffW", "WffffffffW", "WffffffffW", "WWWWDWWWWW"]),
+         ("ochrewell_dome", ("Ama's Dome", "Amas Kuppelhaus"), (8, 3),
+          ["WWWWWWWWWW", "WCffffffCW", "WffffffffW", "WffCCCCffW", "WffffffffW", "WffffffffW", "WffffffffW", "WWWWDWWWWW"]),
+         ("ochrewell_store", ("Oskin's Storeroom", "Oskins Lager"), (2, 13),
+          ["WWWWWWWWWW", "WCCCffCCCW", "WffffffffW", "WCffffffCW", "WffffffffW", "WCffffffCW", "WffffffffW", "WWWWDWWWWW"])]
+
+
+def ochrewell_rooms(world):
+    folk = {"ochrewell_pottery": ("wenna", "villager", lines(
+                ("Apprentice Wenna: Domes by day, urns by night. I glaze both. Only the urns get compliments.", "Lehrling Wenna: Tagsüber Kuppeln, nachts Urnen. Ich glasiere beides. Komplimente kriegen nur die Urnen."),
+                ("Apprentice Wenna: Hadi says every urn is made to measure. I've stopped asking whose.", "Lehrling Wenna: Hadi sagt, jede Urne wird nach Maß gefertigt. Ich frage nicht mehr, nach wessen."))),
+            "ochrewell_dome": ("ama", "elder", lines(
+                ("Widow Ama: My husband signed one little paper for the Brass Veil. Now they own the house, the goats and, on paper, me.", "Witwe Ama: Mein Mann hat ein kleines Papier für den Messingschleier unterschrieben. Jetzt gehören ihnen das Haus, die Ziegen und, auf dem Papier, ich."),
+                ("Widow Ama: The goats took it worst. They read the small print.", "Witwe Ama: Die Ziegen hat es am schlimmsten getroffen. Die haben das Kleingedruckte gelesen."))),
+            "ochrewell_store": ("jem", "villager", lines(
+                ("Stock Boy Jem: I paint GENUINE on every crate. Very genuine paint. Oskin checks.", "Lagerjunge Jem: Ich male ECHT auf jede Kiste. Sehr echte Farbe. Oskin prüft das."),
+                ("Stock Boy Jem: The last stock boy asked where the goods come from. He left with the next caravan. In a crate.", "Lagerjunge Jem: Der letzte Lagerjunge hat gefragt, woher die Ware kommt. Er ist mit der nächsten Karawane weg. In einer Kiste.")))}
+    for rid, name, (dx, dy), rows in ROOMS:
+        pid, sprite, talk = folk[rid]
+        world.add_text(rid, {pid: {"lines": talk}})
+        m = {"name": tr(*name), "biome": "town", "backdrop": "ember", "rows": list(rows),
+             "warps": [warp(4, 7, "ochrewell", dx, dy + 1, "down")],
+             "npcs": [npc(pid, 4, 2, "down", "%s/%s" % (rid, pid), sprite)]}
+        finish(world, rid, m)
 
 
 # --- The Tower Rift: Warden Aurelio in the wind towers, four shutters ------------------------

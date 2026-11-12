@@ -1,0 +1,28 @@
+{
+ "sign": [
+  "STARWELL",
+  "Observatory town. Horoscopes read while you wait. Futures sold separately.",
+  "North: the Orrery Rift. East: Orrery Ridge. South: Cloudshadow Meadow. The Great Orrery: the brass door."
+ ],
+ "keeper": {
+  "lines": [
+   "Star Nurse Pell: Lie back and look up. Healing works better when you're counting stars instead of debts."
+  ],
+  "action": "heal"
+ },
+ "orla": {
+  "lines": [
+   "Lens Grinder Orla: I grind lenses all day. At dusk I look through them and see the same lies, only bigger."
+  ]
+ },
+ "quill": {
+  "lines": [
+   "Chart Boy Quill: I copy star charts for the Gilt House. I add one fake star to each. Nobody's noticed."
+  ]
+ },
+ "serafin": {
+  "lines": [
+   "Retired Astronomer Serafin: I discovered a comet once. The Gilt House renamed it after a cousin. The cousin later fell off a balcony."
+  ]
+ }
+}

@@ -66,9 +66,9 @@
   },
   {
    "id": "acolyte_a",
-   "x": 1,
+   "x": 2,
    "y": 8,
-   "facing": "right",
+   "facing": "left",
    "dialogue": "cinder_rift/acolyte_a",
    "trainer": "Rift Acolyte Pell",
    "intro": "cinder_rift/acolyte_a_intro",
@@ -156,6 +156,9 @@
    "trainer": "Warden Orrin",
    "warden": "cinder",
    "money": 800,
+   "mend_items": [
+    "echo_ember"
+   ],
    "intro": "cinder_rift/orrin_intro",
    "defeat": "cinder_rift/orrin_defeat",
    "items": {

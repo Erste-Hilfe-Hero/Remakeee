@@ -397,7 +397,7 @@ func _run() -> void:
 	_player_strip.visible = false
 	_auto_button.visible = model.is_wild
 	_apply_speed()
-	Sound.music(music_track)
+	Sound.music(Sound.battle_music(music_track))
 	# A Trial comes started (its Energy is set after the start); a restart skips its lines.
 	var intro: Array[BattleEvent] = BattlePuzzle.intro_events(model) if model.has_meta("intro") else model.start()
 	if _multi:
@@ -617,6 +617,9 @@ static func bond_charms(bag: Dictionary) -> Array[String]:
 	return out
 
 func _bond(slot: int = 0) -> BattleAction:
+	# Steps 3 and 4 of the bonding tutorial come when they are needed, not at battle start.
+	for line: String in Tips.take(Tips.bond_how_id()):
+		await _text.show_text(line)
 	var charm: String = ""
 	var charms: Array[String] = bond_charms(model.inventory)
 	if charms.size() == 1 and charms[0] == "kin_charm":
@@ -1105,7 +1108,7 @@ func _update_pinch() -> void:
 		var s: Spirling = model.active_spirling(BattleModel.Side.PLAYER, slot)
 		if lowest == null or lowest.is_fainted() or s.hp_fraction() < lowest.hp_fraction():
 			lowest = s
-	var track: String = pinch_track(lowest, music_track)
+	var track: String = Sound.battle_music(pinch_track(lowest, music_track))
 	if Sound.current_track != track:
 		Sound.music(track)
 

@@ -38,4 +38,6 @@ T = {
 # The way into the Undrawn (data/dialogue/ashmere.json)
 "The far end won't give. Somewhere behind you a Rift is still open.": "Das ferne Ende gibt nicht nach. Irgendwo hinter dir steht noch ein Riss offen.",
 "Mend every Rift and every Rift heart first. Your Goals list shows which.": "Flicke zuerst jeden Riss und jedes Rissherz. Deine Zielliste zeigt, welche.",
+"Orrin: Mirela's tear stayed shut. I sit here anyway. Old men need somewhere to be wrong.": "Orrin: Mirelas Riss ist zu geblieben. Ich sitz trotzdem hier. Alte Männer brauchen einen Ort, um sich zu irren.",
+"Maelis: The water still hums those five notes. I stopped asking who it sings to.": "Maelis: Das Wasser summt immer noch die fünf Töne. Ich frage nicht mehr, für wen es singt.",
 }

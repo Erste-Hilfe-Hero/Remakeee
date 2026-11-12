@@ -463,6 +463,13 @@
   "not seen": "görülmedi",
   "strong": "güçlü",
   "wild %s": "yabani %s",
-  "Join our Discord": "Discord'umuza katıl"
+  "Join our Discord": "Discord'umuza katıl",
+  " It gleams in colours of its own!": " Kendine has renklerle parlıyor!",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "Bağ kurma, adım 1: Dinçlik çubuğu azalana kadar birkaç teknikle vur. Bayıltma.",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "Bağ kurma, adım 2: Bağ kur'u seç. Birkaç işaret çağırır, birbiri ardına. Dikkatle izle.",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "Bağ kurma, adım 3: Aynı işaretlere aynı sırayla bas. Yankın ne kadar iyiyse bağ o kadar iyi.",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "Bağ kurma, adım 3: Aynı işaretlere aynı sırayla dokun. Yankın ne kadar iyiyse bağ o kadar iyi.",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "Bağ kurma, adım 4: İstendiğinde bir Soy Tılsımı uzat. Bağı sabitler. 20 tane ile başlarsın.",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "Yeniyken başarısız bir bağ, vahşi Spirling'e bedava vuruş vermez."
  }
 }

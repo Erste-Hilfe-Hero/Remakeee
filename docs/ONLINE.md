@@ -30,7 +30,7 @@ All under Menu, Friends. Spirlings are never gifted; they can be traded between 
 
 - **Friends:** 8-character friend code, requests, a list with online dot and in-game place, Wanderer card,
   friendship level 1-5 (points from gifts, echo help and duels). 100 friends at most. 20 requests per hour.
-- **Lantern Mail:** one gift per friend per day; the item is rolled on the server when it is opened, from the
+- **Lantern Mail:** one gift per friend per day (two from friendship level 3); the item is rolled on the server when it is opened, from the
   open table in `server_config.gift_table` (the game shows the chances). Ten opens per day. Greetings are
   set phrases (`scripts/online/Phrases.gd`, the server only stores the number), plus waves and thanks.
   Mail is deleted after 30 days.
@@ -140,6 +140,18 @@ Values in `data/league_ranks.json`; `tools/online/game_data_sql.py` writes them 
   the item of the final rank into the stored bag, the rank as title and the frame id `season_<n>_<rank>`
   (table `league_awards`, listed as `titles` in `league_info`). Menu > Leagues shows "Season reward".
 
+### Live duels (Online 100, area 1)
+
+Behind the flag `live_duel` (Friends > Live duels, `scripts/ui/LiveDuelMenu.gd`). Values in `data/live_duel.json`,
+written to `server_config.live_duel`; migration `20261111000040_live_duel.sql`, same rules in `LocalBackend`,
+helpers in `scripts/online/LiveDuel.gd`. `live_invite(code)` (friends only, `invites_per_hour`), the friend
+answers with `live_answer`; both see up to 6 of the other's team and `live_pick` 3. Then each round both send
+`live_move(id, round, input)`; the round closes when both are in, and the server keeps the inputs, the seed and
+the `turn_seconds` (30) clock. A side away longer than the clock plus `reconnect_seconds` (60) loses
+(`_live_tick`). `live_forfeit` gives up, `live_emote` stores only the number of a set phrase, `live_finish`
+takes each side's winner (different answers void the duel), `live_rematch` invites again. Not done yet: the
+battle scene does not play the rounds from `live_state` yet, and the referee does not check live duels.
+
 ## Where it runs now
 
 On Ali's existing Contabo server (161.97.102.171), next to Nyrathen and Dranbleib, at
@@ -220,7 +232,8 @@ In the database (see "Looking into the database"), table `server_config`, for ex
 | `min_version` | `1004` | builds with a lower version code must update |
 | `motd` | `"Maintenance today 3-4 am"` | notice on the title screen (`""` = none) |
 | `party_max` | `5` | most Spirlings in a saved team and an echo team |
-| `level_max` | `60` | highest Ring in saves and echo teams |
+| `level_max` | `60` | highest Ring in echo teams, the open league and duels |
+| `save_level_max` | `96` | highest Ring in saves (Spirling.ERA_MAX_LEVEL, Halcyra) |
 | `duel_ring` | `50` | Ring everyone fights at in an echo duel |
 | `save_schema_max` | `1` | newest online save format the server takes (`Online.SAVE_SCHEMA`) |
 
@@ -231,8 +244,8 @@ Table `banned_words`: words a Wanderer name may not contain.
 
 Table `feature_flags` (key, `enabled`, `min_version`): switches the new online parts on one by one,
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
-`league_open`, `live_duel`, `trade`, `bund`, `raid`, `trade_spirling`, `rift_board`, `league_board`,
-`daily_gift`. All start switched off.
+`league_open`, `live_duel`, `trade`, `bund`, `raid`, `trade_spirling`, `rift_board`, `league_board`, `events`,
+`daily_gift`, `lend`. All start switched off.
 
 ## Bunds
 
@@ -244,6 +257,52 @@ when the leader leaves or deletes the account, the oldest helper (else the oldes
 A leader dissolves a bund of 3 or more only by confirming again after 24 hours. Blocked players
 cannot invite or ask each other. Tables: `bunds`, `bund_members`, `bund_invites`; menu
 `scripts/ui/BundMenu.gd` (Friends, Bund).
+
+**Online 100, area 4** (`data/bund_rules.json`, migration `20261111000060_bund_more.sql`, `BundRules.gd`):
+`bund_donate(slot, rev, item, count)` takes items from the stored bag (at most `donate_daily` a day) and gives the
+bund renown (`xp_per_item` each) and week goal progress; the bund rank is 1 + renown / `xp_per_level`, at most 20.
+At `goal_target` items in a week every member takes `goal_reward` once (`bund_goal_claim`). `bund_board()` lists
+bunds by renown. The leader sets language and "open" (`bund_settings`); `bund_search(lang)` lists bunds that are
+not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request. Bund rank perks
+are not built yet.
+
+### Online events (Online 100, area 7, points 61, 63-66, 68-70)
+
+Behind the flag `events` (Friends, Events; `scripts/ui/EventsMenu.gd`). Values in
+`data/online_events.json`, written to `server_config.online_events`; migration
+`20261112000070_online_events.sql`, same rules in `scripts/online/LocalOnlineEvents.gd`, shared helpers in
+`scripts/online/OnlineEvents.gd`; fixed events in its `events` list
+become rows of `online_events` at every deploy (`tools/online/game_data_sql.py`). An event can also be
+added on the server alone, without a store update (69):
+
+```sql
+insert into public.online_events (id, kind, starts_at, ends_at, data) values ('festival-2027-01', 'festival',
+  '2027-01-01T00:00:00Z', '2027-02-01T00:00:00Z',
+  '{"name": {"en": "Frost month", "de": "Frostmonat"}, "goal_kind": "rests", "target": 30000,
+    "rewards": ["tonic", "strong_tonic", "spark_drop", "max_tonic", "spark_charm"]}');
+```
+
+- **Weekly events:** each week (and the next, for the calendar) gets `week-<year>-w<nn>` from the
+  `weekly` rotation by ISO week number, made on the first call of the week.
+- **Festivals (61, 64):** a shared goal fed by world-goal steps (`community_add`) of `goal_kind` (`add_max` 5 per step,
+  `user_cap` 500 per player). Tiers at `tiers` percent of the target: 25, 50, 75, 100 and the extra tier
+  150; everyone who helped takes each reached tier once (`event_claim(event, tier, slot, rev)`) while
+  it runs and up to `recap_days` (14) after.
+- **Rule weeks (63):** kind `board` with `rules` (`elements`, `max_stage`). `event_enter(event, team)`
+  takes 1-6 different species that fit; the deploy writes the fitting species as `allowed`
+  (`OnlineEvents.allowed` in the game does the same). The board counts referee-confirmed Rift wins
+  after entering (optional `rift` to name one Rift). Not done yet: the server does not tie the Rift
+  battle's team to the entered team.
+- **Sighting days (65):** kind `sighting` with `species` and `boost`; `EncounterTable.weight_of`
+  multiplies those species while one runs (the game fetches the calendar after `hello`).
+- **Calendar (66):** `event_list()` shows running events, those starting within `calendar_days` (35)
+  and those that ended within `recap_days`, with the own score, tiers, entry, award and titles.
+- **Event board and titles (68):** `event_board(event, friends)` like the weekly boards. After the end,
+  `event_reward(event, slot, rev)` gives the first title in `titles` the final rank reaches (first, top
+  ten, best tenth, took part) and its item from `title_items`, once (`event_awards`).
+- **Recap (70):** `event_recap(event)`: own score, place of how many, best score, tiers reached, award.
+Tables `online_events`, `event_scores`, `event_awards`; events are deleted 90 days after their end.
+Not done yet: weekend tournament (62) and phone notices at an event start (67, needs a push service).
 
 ## Raid Rifts
 
@@ -258,6 +317,12 @@ damage takes the same reward (`raid_claim`), rolled by the server from the open 
 Attempts cost nothing; nothing is for sale. Rifts are deleted 7 days after they close. Tables:
 `raids` (no account ids), `raid_members`, `raid_attempts`; menu `scripts/ui/RaidMenu.gd`
 (Friends, Raid Rifts).
+
+**Online 100, area 3** (`data/raid_rules.json`, migration `20261111000050_raid_more.sql`, `RaidRules.gd`):
+`raid_open(codes, tier)` takes a tier (Easy 70 % strength Ring 50, Normal as before, Hard 150 %). The guardian
+is the week's one (`week % pool`), and with `legendary_chance` (5) percent a legendary from `legendaries` at
+`legendary_hp` (150) percent. In `raid_claim` the member with the most damage gets `top_bonus` (1) more.
+`raid_board()` lists the fastest won Rifts without names (Raid Rifts > Fastest Rifts).
 
 ## Trading
 
@@ -284,6 +349,36 @@ Spirling. `trade_confirm(trade, theirs, their_mons)` must name the other side's 
 every value and the **origin era** (`origin_era` 1-4, set when bonded, 1 for older saves) and drops
 the nickname (no free text between players), the storage box and the favourite mark. Collected
 Spirlings go into storage.
+
+### Trading and gifting (Online 100, area 5)
+
+Migration `20261112000050_trade_gifts.sql`, values in `data/trade_gifts.json` (written to
+`server_config.trade_gifts` by `game_data_sql.py`), the same rules in `scripts/online/LocalTradeGifts.gd`,
+tests `tests/unit/test_trade_gifts.gd` and `tools/online/sql_test/test_trade_gifts.sql`.
+
+- **Trades per day (42):** `trade_confirm` refuses the confirm that would finish a trade once either side
+  finished `trades_per_day` (5) trades this server day (`day_limit`, `their_day_limit`).
+- **Trade history (50):** every finished trade writes one row per side into `trade_log` (items, and
+  Spirlings only as species, Ring and era). `trade_history()` lists the last `history_days` (30) days,
+  with the partner's name unless blocked; older rows are deleted. Trades, History in the menu.
+- **Wish list (46):** `wish_set(items)` keeps up to `wish_max` (3) items from the gift table or the
+  tradeable items in `profiles.wishes`; `friends_list` shows each friend's `wishes` (Wayfarer card)
+  and `gifts_left`. Friends, My wish list.
+- **Two gifts a day (47):** `gift_send` allows `gifts_per_day_close` (2) gifts to a friend of
+  friendship level `close_level` (3) or more, else `gifts_per_day` (1).
+- **Greeting cards (48):** `card_send(code, species, phrase)` sends mail kind `card`: a set phrase of
+  the post list and a species that is in the team or storage of one of the sender's stored saves, at
+  most `cards_per_day` (10). Friend, Send a card.
+- **Thanks (49):** `gift_thank(id)` thanks once for an opened gift: the friend gets a thanks note and
+  the pair `thanks_points` (2) friendship points (`mail.thanked`).
+- **Lending (45, flag `lend`):** `lend_offer(code, slot, uid)` lends a copy of a Spirling of the stored
+  save to a friend of friendship level `lend_min_level` (3): no nickname, box, favourite mark or
+  Keepsake, never a shop-boosted one; the original stays. At most `lends_per_day` (3) per lender and
+  `borrow_max` (1) open loan per borrower; a loan ends after `lend_hours` (48). `lend_use(loan, kind)`
+  (kind `raid` or `live_duel`) hands the borrower the copy once; `lend_end` ends an unused loan;
+  `lend_list` shows both sides. Table `spirling_loans`. Not done yet: the raid and live duel screens
+  do not offer the borrowed Spirling, so `lend_use` has no caller in the game yet.
+- **Spirlings stay untradeable (44)** as long as the flag `trade_spirling` stays off.
 
 ## Weekly boards (online step 1)
 

@@ -57,7 +57,7 @@ static func run(menu: PauseMenu) -> void:
 		var labels: Array[String] = []
 		for x: Dictionary in raids:
 			labels.append(raid_line(x, now_s))
-		labels.append_array(["Open a Raid Rift...", "Rewards"] as Array[String])
+		labels.append_array(["Open a Raid Rift...", "Rewards", "Fastest Rifts"] as Array[String])
 		var idx: int = await menu.pick_strings("Raid Rifts", labels)
 		if idx < 0:
 			return
@@ -67,6 +67,9 @@ static func run(menu: PauseMenu) -> void:
 				return
 		elif idx == raids.size():
 			await open(menu)
+		elif idx == raids.size() + 2:
+			var b: Dictionary = await Online.call_fn("raid_board")
+			await menu.info(board_text(b.data.get("rows", [])) if b.ok and b.data is Dictionary else error_text(b))
 		else:
 			await menu.info(rewards_text(r.data.get("rewards", []), int(r.data.get("share_min", 5))))
 
@@ -143,10 +146,26 @@ static func open(menu: PauseMenu) -> void:
 		if chosen.is_empty():
 			await menu.info("Pick 1 to 3 Wayfarers to go with you.")
 			continue
-		var r: Dictionary = await Online.call_fn("raid_open", {"p_codes": chosen})
+		var tier: int = await menu.pick_strings("How hard?", RaidRules.TIER_NAMES)
+		if tier < 0:
+			continue
+		var r: Dictionary = await Online.call_fn("raid_open", {"p_codes": chosen, "p_tier": tier})
+		if r.ok and r.data is Dictionary and bool(r.data.get("legendary", false)):
+			await menu.info(Loc.t("A legendary guardian waits in this Rift: %s") % str(r.data.guardian))
 		if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 			Sound.sfx("confirm")
 			await menu.info("The Raid Rift is open for 48 hours. Everyone has 3 attempts a day.")
 		else:
 			await menu.info(error_text(r))
 		return
+
+## The fastest won Rifts (point 29), without names.
+static func board_text(rows: Array) -> String:
+	if rows.is_empty():
+		return Loc.t("No Rift was won yet.")
+	var lines: Array[String] = []
+	for i: int in rows.size():
+		var x: Dictionary = rows[i]
+		lines.append(Loc.t("%d. %s (%s, %d Wayfarers) %d min") % [i + 1, str(x.guardian),
+			Loc.t(RaidRules.TIER_NAMES[clampi(int(x.tier), 0, 2)]), int(x.players), int(x.seconds) / 60])
+	return "\n".join(lines)

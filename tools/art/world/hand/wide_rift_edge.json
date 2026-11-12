@@ -1,0 +1,26 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "zephyrel",
+    "x": 6,
+    "y": 4,
+    "facing": "down",
+    "dialogue": "wide_rift_edge/zephyrel",
+    "sprite": "first_voice",
+    "show_flag": "lq_zephyrel_ready",
+    "hide_flag": "first_voice_zephyrel_away"
+   }
+  ],
+  "warps": [
+   {
+    "x": 3,
+    "y": 6,
+    "to": "edge_watch_hut",
+    "tx": 3,
+    "ty": 4,
+    "facing": "up"
+   }
+  ]
+ }
+}
