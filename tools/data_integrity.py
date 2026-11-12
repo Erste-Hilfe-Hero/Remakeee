@@ -14,8 +14,8 @@ the references between files that many parallel content PRs touch at once:
   flags      every flag that is checked somewhere is set somewhere (errors); flags that are
              set but never checked are listed as notes (they are often plain records)
   species    every encounter table, Wayfarer / story / event team and gift names an existing
-             Spirling; every level is 1..the ring cap of its era (Spirling.MAX_LEVEL for the
-             acts, data/eras.json ring_caps for post-game regions, at most ERA_MAX_LEVEL)
+             Spirling; every level is 1..Spirling.LEVEL_SANITY (no top ring, only a guard
+             against garbage values)
   items      every item id referenced in maps, dialogue actions, conditions, scenes and clans
              exists in data/items.json
   ids        no duplicate ids inside clans.json sections, story battles, quests, items; no
@@ -95,8 +95,7 @@ def gd_const(path, name):
     return int(m.group(1))
 
 
-MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "MAX_LEVEL")
-ERA_MAX_LEVEL = gd_const("scripts/battle/Spirling.gd", "ERA_MAX_LEVEL")
+LEVEL_SANITY = gd_const("scripts/battle/Spirling.gd", "LEVEL_SANITY")
 
 json_files = []
 for dp, _, fs in os.walk(DATA):
@@ -468,45 +467,12 @@ for p in ("data/endgame.json", "data/events.json", "data/warden_rematch.json", "
 # ---------------------------------------------------------------- species and levels
 
 eras = J.get("data/eras.json", {})
-ring_caps = {int(k): int(v) for k, v in (eras.get("ring_caps") or {}).items()}
-region_era = {str(k): int(v) for k, v in (eras.get("regions") or {}).items()}
-for e, cap in sorted(ring_caps.items()):
-    if not MAX_LEVEL <= cap <= ERA_MAX_LEVEL:
-        err("species", "eras.json ring_caps[%d] = %d outside %d..%d" % (e, cap, MAX_LEVEL, ERA_MAX_LEVEL))
-if ring_caps and ring_caps[max(ring_caps)] != ERA_MAX_LEVEL:
-    err("species", "eras.json: the last ring_caps value must equal Spirling.ERA_MAX_LEVEL %d" % ERA_MAX_LEVEL)
 
-
-def era_cap(era):
-    """Highest level a Spirling of [era] may have: the acts (era 1) stop at Spirling.MAX_LEVEL."""
-    return MAX_LEVEL if era <= 1 else ring_caps.get(era, MAX_LEVEL)
-
-
-def map_era(mid):
-    return region_era.get(str(maps.get(mid, {}).get("region") or map_files.get(mid.split("@")[0], {}).get("region", "")), 1)
-
-
-table_era = {}
-for mid in maps:
-    t = maps[mid].get("encounters") or map_files[mid.split("@")[0]].get("encounters")
-    if isinstance(t, str):
-        table_era[t] = max(table_era.get(t, 1), map_era(mid))
-
-
-def file_era(p, d):
-    if isinstance(d, dict) and isinstance(d.get("era"), int):
-        return d["era"]
-    if p.startswith("data/maps/"):
-        return map_era(p[len("data/maps/"):-5])
-    return 1
-
-
-def level_ok(where, lv, era=1):
+def level_ok(where, lv):
     if isinstance(lv, bool) or not isinstance(lv, (int, float)):
         return
-    cap = era_cap(era)
-    if not 1 <= lv <= cap:
-        err("species", "%s: level %s outside 1..%d (ring cap of era %d)" % (where, lv, cap, era))
+    if not 1 <= lv <= LEVEL_SANITY:
+        err("species", "%s: level %s outside 1..%d (Spirling.LEVEL_SANITY)" % (where, lv, LEVEL_SANITY))
 
 
 def species_ok(where, sp):
@@ -520,8 +486,8 @@ for tid, t in J["data/encounters.json"].items():
     for s in t.get("spawns", []) or []:
         w = "encounter table '%s' %s" % (tid, s.get("species"))
         species_ok(w, s.get("species"))
-        level_ok(w + " min", s.get("min"), table_era.get(tid, 1))
-        level_ok(w + " max", s.get("max"), table_era.get(tid, 1))
+        level_ok(w + " min", s.get("min"))
+        level_ok(w + " max", s.get("max"))
         if isinstance(s.get("min"), int) and isinstance(s.get("max"), int) and s["min"] > s["max"]:
             err("species", "%s: min %d > max %d" % (w, s["min"], s["max"]))
 
@@ -533,11 +499,11 @@ for p, d in J.items():
     if p in SKIP_SPECIES_FILES or p.startswith("data/dialogue/"):
         continue
 
-    def team_fn(dd, path, p=p, era=file_era(p, d)):
+    def team_fn(dd, path, p=p):
         where = "%s %s" % (p[5:], "/".join(str(x) for x in path[-3:]))
         if "species" in dd and isinstance(dd["species"], str):
             species_ok(where, dd["species"])
-            level_ok(where + " '%s'" % dd["species"], dd.get("level"), era)
+            level_ok(where + " '%s'" % dd["species"], dd.get("level"))
         for k in ("team", "giants"):
             if isinstance(dd.get(k), list):
                 for x in dd[k]:
@@ -554,7 +520,7 @@ for f, d in dialogue.items():
             if p[0] in ("gift_spirling", "first_voice", "legend") and len(p) > 1:
                 species_ok("dialogue %s/%s %s" % (f, k, p[0]), p[1])
                 if len(p) > 2 and p[2].isdigit():
-                    level_ok("dialogue %s/%s %s" % (f, k, p[0]), int(p[2]), map_era(f) if f in maps else 1)
+                    level_ok("dialogue %s/%s %s" % (f, k, p[0]), int(p[2]))
             if p[0] == "quest_show" and len(p) > 2:
                 species_ok("dialogue %s/%s quest_show" % (f, k), p[2])
 

@@ -30,7 +30,7 @@ func test_teams_are_stronger_and_valid() -> void:
 		for t: Dictionary in team:
 			assert_not_null(Database.species(str(t.species)), str(t.species))
 			assert_gt(int(t.level), old_top, str(e.warden))
-			assert_true(int(t.level) <= Spirling.MAX_LEVEL, str(e.warden))
+			assert_true(int(t.level) <= Spirling.STORY_RING, str(e.warden))
 
 func test_rewards_and_lines() -> void:
 	var de: Dictionary = Loc.load_table("de").get("strings", {})

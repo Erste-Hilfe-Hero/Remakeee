@@ -103,7 +103,7 @@ static func xp_for(s: Spirling, hours: int) -> int:
 
 ## Adds trip growth up to the story ring cap. Returns the rings gained.
 static func grow(s: Spirling, amount: int) -> int:
-	var cap: int = mini(GameState.progress_cap(), Spirling.MAX_LEVEL)
+	var cap: int = mini(GameState.progress_cap(), Spirling.STORY_RING)
 	if s.level >= cap or amount <= 0:
 		return 0
 	var before: int = s.level
