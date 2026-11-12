@@ -476,12 +476,14 @@
   "choices": [
    {
     "text": "Burn them",
-    "action": "quest_stage ah_deeds 2; set_flag ah_deeds_burned; set_flag ah_deeds_done; give_item kin_charm 1",
+    "action": "quest_stage ah_deeds 2; set_flag ah_deeds_burned; give_item kin_charm 1",
+    "flag": "ah_deeds_done",
     "next": "deeds_burned"
    },
    {
     "text": "Sell them to Greaves",
-    "action": "quest_stage ah_deeds 2; set_flag ah_deeds_sold; set_flag ah_deeds_done; give_item tide_pearl 1; battle deed_hunters",
+    "action": "quest_stage ah_deeds 2; set_flag ah_deeds_sold; give_item tide_pearl 1; battle deed_hunters",
+    "flag": "ah_deeds_done",
     "next": "deeds_sold"
    }
   ]
