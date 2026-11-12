@@ -304,7 +304,10 @@ func _unlocks(uid: String) -> Dictionary:
 func party_max_of(uid: String) -> int:
 	var shop: Variant = (db.users.get(uid, {}) as Dictionary).get("shop", {})
 	var unlocks: Variant = shop.get("unlocks", {}) if shop is Dictionary else {}
-	return config_int("party_max", 5) + (1 if unlocks is Dictionary and int(unlocks.get("team_slot_6", 0)) > 0 else 0)
+	var extra: int = 0
+	for k: String in ["team_slot_6", "team_slot_7"]:
+		extra += 1 if unlocks is Dictionary and int(unlocks.get(k, 0)) > 0 else 0
+	return config_int("party_max", 5) + extra
 
 ## Like public._save_ok: real game limits (team of party_max, Ring 1..save_level_max). Spirlings
 ## have no top ring, so save_level_max is only a sanity bound (Spirling.LEVEL_SANITY, 9999)
@@ -2226,7 +2229,8 @@ static func trade_mon_why(m: Variant) -> String:
 		return "no_spirling"
 	if not str(m.get("held", "")).is_empty():
 		return "holds_item"
-	if gleam_boosted(m) or bool(m.get("core", false)) or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
+	if gleam_boosted(m) or bool(m.get("core", false)) or bool(m.get("shop", false)) or bool(m.get("gift_slot", false)) \
+			or (m.get("crystal") is Dictionary and not (m.crystal as Dictionary).is_empty()):
 		return "shop_boosted"
 	if bool(m.get("favorite", false)):
 		return "favorite"

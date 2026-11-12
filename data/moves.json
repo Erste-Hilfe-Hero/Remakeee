@@ -4833,5 +4833,125 @@
   "effect_amount": 1,
   "era": 1,
   "desc": "Vorlucent's own art: a void that glows, and eats 1 Energy."
+ },
+ {
+  "name": "Crownfire Rend",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crowntide Surge",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownthorn Lash",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownbolt Arc",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownstone Break",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crowngale Rush",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownlight Ray",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownshade Grasp",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownink Scrawl",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownecho Peal",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownacid Etch",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 3,
+  "desc": "A master technique from the shop: power 115, no drawback."
+ },
+ {
+  "name": "Crownfrost Shatter",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 3,
+  "desc": "A master technique from the shop: power 115, no drawback."
  }
 ]
