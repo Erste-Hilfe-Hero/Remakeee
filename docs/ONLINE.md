@@ -243,7 +243,7 @@ Table `banned_words`: words a Wanderer name may not contain.
 
 Table `feature_flags` (key, `enabled`, `min_version`): switches the new online parts on one by one,
 for example `update feature_flags set enabled = true where key = 'trade';`. Keys: `league_fair`,
-`league_open`, `live_duel`, `trade`, `bund`, `raid`, `trade_spirling`, `rift_board`, `league_board`,
+`league_open`, `live_duel`, `trade`, `bund`, `raid`, `trade_spirling`, `rift_board`, `league_board`, `events`,
 `daily_gift`, `lend`. All start switched off.
 
 ## Bunds
@@ -264,6 +264,44 @@ At `goal_target` items in a week every member takes `goal_reward` once (`bund_go
 bunds by renown. The leader sets language and "open" (`bund_settings`); `bund_search(lang)` lists bunds that are
 not full, most active first, and `bund_join(bund)` joins an open bund at once or sends a request. Bund rank perks
 are not built yet.
+
+### Online events (Online 100, area 7, points 61, 63-66, 68-70)
+
+Behind the flag `events` (Friends, Events; `scripts/ui/EventsMenu.gd`). Values in
+`data/online_events.json`, written to `server_config.online_events`; migration
+`20261112000070_online_events.sql`, same rules in `scripts/online/LocalOnlineEvents.gd`, shared helpers in
+`scripts/online/OnlineEvents.gd`; fixed events in its `events` list
+become rows of `online_events` at every deploy (`tools/online/game_data_sql.py`). An event can also be
+added on the server alone, without a store update (69):
+
+```sql
+insert into public.online_events (id, kind, starts_at, ends_at, data) values ('festival-2027-01', 'festival',
+  '2027-01-01T00:00:00Z', '2027-02-01T00:00:00Z',
+  '{"name": {"en": "Frost month", "de": "Frostmonat"}, "goal_kind": "rests", "target": 30000,
+    "rewards": ["tonic", "strong_tonic", "spark_drop", "max_tonic", "spark_charm"]}');
+```
+
+- **Weekly events:** each week (and the next, for the calendar) gets `week-<year>-w<nn>` from the
+  `weekly` rotation by ISO week number, made on the first call of the week.
+- **Festivals (61, 64):** a shared goal fed by world-goal steps (`community_add`) of `goal_kind` (`add_max` 5 per step,
+  `user_cap` 500 per player). Tiers at `tiers` percent of the target: 25, 50, 75, 100 and the extra tier
+  150; everyone who helped takes each reached tier once (`event_claim(event, tier, slot, rev)`) while
+  it runs and up to `recap_days` (14) after.
+- **Rule weeks (63):** kind `board` with `rules` (`elements`, `max_stage`). `event_enter(event, team)`
+  takes 1-6 different species that fit; the deploy writes the fitting species as `allowed`
+  (`OnlineEvents.allowed` in the game does the same). The board counts referee-confirmed Rift wins
+  after entering (optional `rift` to name one Rift). Not done yet: the server does not tie the Rift
+  battle's team to the entered team.
+- **Sighting days (65):** kind `sighting` with `species` and `boost`; `EncounterTable.weight_of`
+  multiplies those species while one runs (the game fetches the calendar after `hello`).
+- **Calendar (66):** `event_list()` shows running events, those starting within `calendar_days` (35)
+  and those that ended within `recap_days`, with the own score, tiers, entry, award and titles.
+- **Event board and titles (68):** `event_board(event, friends)` like the weekly boards. After the end,
+  `event_reward(event, slot, rev)` gives the first title in `titles` the final rank reaches (first, top
+  ten, best tenth, took part) and its item from `title_items`, once (`event_awards`).
+- **Recap (70):** `event_recap(event)`: own score, place of how many, best score, tiers reached, award.
+Tables `online_events`, `event_scores`, `event_awards`; events are deleted 90 days after their end.
+Not done yet: weekend tournament (62) and phone notices at an event start (67, needs a push service).
 
 ## Raid Rifts
 

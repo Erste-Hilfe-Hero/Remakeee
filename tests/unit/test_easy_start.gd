@@ -14,13 +14,14 @@ func test_new_game_starts_with_twenty_kin_charms() -> void:
 	assert_true(Database.item("kin_charm").has("bond_bonus"))
 
 func test_bond_tutorial_walks_through_every_step() -> void:
-	var lines: Array[String] = Tips.lines_of("bond", true)
+	# Steps 1-2 at the start of the first wild battle, 3-4 when Bond is first picked.
+	var lines: Array[String] = Tips.lines_of("bond", true) + Tips.lines_of("bond_mine", true)
 	var all: String = "\n".join(lines)
 	for step: int in [1, 2, 3, 4]:
 		assert_string_contains(all, "Bonding step %d" % step)
 	assert_string_contains(all, "Tap Mine!")
 	assert_string_contains(all, "20")
-	assert_string_contains("\n".join(Tips.lines_of("bond", false)), "Press A as fast")
+	assert_string_contains("\n".join(Tips.lines_of("bond_mine", false)), "Press A as fast")
 
 func test_newcomer_until_six_spirlings() -> void:
 	assert_true(GameState.is_newcomer())

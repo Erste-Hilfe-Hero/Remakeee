@@ -587,6 +587,292 @@
   "money": 300,
   "defeat": "soot_vaults/fitch_ambush_defeat"
  },
+ "rival_jinks_1": {
+  "trainer": "Rival Jinks",
+  "team": [
+   {
+    "species": "Zippit",
+    "level": 6
+   },
+   {
+    "species": "Kindlop",
+    "level": 6
+   }
+  ],
+  "ai": 1,
+  "money": 200,
+  "defeat": "veydal_side/jinks_1_defeat",
+  "lose": "veydal_side/jinks_1_lose"
+ },
+ "rival_jinks_2": {
+  "trainer": "Rival Jinks",
+  "team": [
+   {
+    "species": "Zippit",
+    "level": 11
+   },
+   {
+    "species": "Smoldrake",
+    "level": 12
+   },
+   {
+    "species": "Shalebat",
+    "level": 11
+   }
+  ],
+  "ai": 2,
+  "money": 400,
+  "defeat": "veydal_side/jinks_2_defeat",
+  "lose": "veydal_side/jinks_2_lose"
+ },
+ "rival_jinks_3": {
+  "trainer": "Rival Jinks",
+  "team": [
+   {
+    "species": "Glimmerax",
+    "level": 16
+   },
+   {
+    "species": "Smoldrake",
+    "level": 17
+   },
+   {
+    "species": "Shalebat",
+    "level": 16
+   },
+   {
+    "species": "Kelpup",
+    "level": 16
+   }
+  ],
+  "ai": 2,
+  "money": 600,
+  "defeat": "veydal_side/jinks_3_defeat",
+  "lose": "veydal_side/jinks_3_lose",
+  "win_flags": [
+   "rival_jinks_done"
+  ]
+ },
+ "bounty_b1": {
+  "trainer": "Gnasher",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 9
+   },
+   {
+    "species": "Puddlet",
+    "level": 8
+   }
+  ],
+  "ai": 2,
+  "money": 660,
+  "defeat": "veydal_side/bounty_b1_defeat",
+  "lose": "veydal_side/bounty_b1_lose",
+  "wild": true
+ },
+ "bounty_b2": {
+  "trainer": "Two-Coat Ferris",
+  "team": [
+   {
+    "species": "Zippit",
+    "level": 10
+   },
+   {
+    "species": "Mossling",
+    "level": 11
+   }
+  ],
+  "ai": 2,
+  "money": 780,
+  "defeat": "veydal_side/bounty_b2_defeat",
+  "lose": "veydal_side/bounty_b2_lose"
+ },
+ "bounty_b3": {
+  "trainer": "Granny Reed",
+  "team": [
+   {
+    "species": "Marshfife",
+    "level": 12
+   },
+   {
+    "species": "Fluting",
+    "level": 12
+   },
+   {
+    "species": "Kelpup",
+    "level": 13
+   }
+  ],
+  "ai": 2,
+  "money": 890,
+  "defeat": "veydal_side/bounty_b3_defeat",
+  "lose": "veydal_side/bounty_b3_lose"
+ },
+ "bounty_b4": {
+  "trainer": "Fabbro Gisk",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 14
+   },
+   {
+    "species": "Blotling",
+    "level": 14
+   },
+   {
+    "species": "Hushkin",
+    "level": 15
+   }
+  ],
+  "ai": 2,
+  "money": 1010,
+  "defeat": "veydal_side/bounty_b4_defeat",
+  "lose": "veydal_side/bounty_b4_lose",
+  "win_flags": [
+   "bounty_brindle_done"
+  ]
+ },
+ "bounty_b5": {
+  "trainer": "Soot Mag",
+  "team": [
+   {
+    "species": "Kindlop",
+    "level": 13
+   },
+   {
+    "species": "Smoldrake",
+    "level": 14
+   }
+  ],
+  "ai": 2,
+  "money": 960,
+  "defeat": "veydal_side/bounty_b5_defeat",
+  "lose": "veydal_side/bounty_b5_lose"
+ },
+ "bounty_b6": {
+  "trainer": "Hush Hound",
+  "team": [
+   {
+    "species": "Kelphound",
+    "level": 16
+   }
+  ],
+  "ai": 2,
+  "money": 1110,
+  "defeat": "veydal_side/bounty_b6_defeat",
+  "lose": "veydal_side/bounty_b6_lose",
+  "wild": true
+ },
+ "bounty_b7": {
+  "trainer": "Rattle Jim",
+  "team": [
+   {
+    "species": "Wickit",
+    "level": 15
+   },
+   {
+    "species": "Lumenewt",
+    "level": 15
+   },
+   {
+    "species": "Zephlet",
+    "level": 15
+   }
+  ],
+  "ai": 2,
+  "money": 1050,
+  "defeat": "veydal_side/bounty_b7_defeat",
+  "lose": "veydal_side/bounty_b7_lose"
+ },
+ "bounty_b8": {
+  "trainer": "Clerk Brannagh",
+  "team": [
+   {
+    "species": "Talusk",
+    "level": 16
+   },
+   {
+    "species": "Glimmerax",
+    "level": 17
+   },
+   {
+    "species": "Obsidroth",
+    "level": 18
+   }
+  ],
+  "ai": 2,
+  "money": 1170,
+  "defeat": "veydal_side/bounty_b8_defeat",
+  "lose": "veydal_side/bounty_b8_lose",
+  "win_flags": [
+   "bounty_thorn_done"
+  ]
+ },
+ "debts_brennick": {
+  "trainer": "Lender Brennick",
+  "team": [
+   {
+    "species": "Scrivane",
+    "level": 13
+   },
+   {
+    "species": "Talusk",
+    "level": 14
+   }
+  ],
+  "ai": 2,
+  "money": 700,
+  "defeat": "veydal_side/brennick_beaten",
+  "lose": "veydal_side/brennick_lose",
+  "win_flags": [
+   "debts_done"
+  ]
+ },
+ "parcel_corr": {
+  "trainer": "Watchman Corr",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 12
+   },
+   {
+    "species": "Mirkmole",
+    "level": 13
+   },
+   {
+    "species": "Thornback",
+    "level": 13
+   }
+  ],
+  "ai": 2,
+  "money": 600,
+  "defeat": "veydal_side/corr_beaten",
+  "lose": "veydal_side/corr_lose",
+  "win_flags": [
+   "parcel_done"
+  ]
+ },
+ "funeral_gristle": {
+  "trainer": "Mrs Gristle",
+  "team": [
+   {
+    "species": "Hushkin",
+    "level": 14
+   },
+   {
+    "species": "Duskdigger",
+    "level": 15
+   }
+  ],
+  "ai": 2,
+  "money": 650,
+  "defeat": "veydal_side/gristle_beaten",
+  "lose": "veydal_side/gristle_lose",
+  "win_flags": [
+   "funeral_done"
+  ]
+ },
  "veil_corin_1": {
   "trainer": "Veil Heir Corin",
   "team": [
@@ -738,5 +1024,415 @@
   "ai": 1,
   "money": 900,
   "lose": "clans/ambush_lose"
+ },
+ "nib_1": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 19
+   },
+   {
+    "species": "Shalebat",
+    "level": 18
+   }
+  ],
+  "ai": 2,
+  "money": 700,
+  "defeat": "corvane_side/nib_1_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_2": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 21
+   },
+   {
+    "species": "Shalebat",
+    "level": 20
+   },
+   {
+    "species": "Drizzlet",
+    "level": 20
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "corvane_side/nib_2_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_3": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 22
+   },
+   {
+    "species": "Reedquill",
+    "level": 22
+   },
+   {
+    "species": "Drizzlet",
+    "level": 22
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "corvane_side/nib_3_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_4": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 24
+   },
+   {
+    "species": "Reedquill",
+    "level": 23
+   },
+   {
+    "species": "Glimmoth",
+    "level": 23
+   },
+   {
+    "species": "Shalebat",
+    "level": 23
+   }
+  ],
+  "ai": 2,
+  "money": 1000,
+  "defeat": "corvane_side/nib_4_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "nib_5": {
+  "trainer": "Quay Rat Nib",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 27
+   },
+   {
+    "species": "Reedquill",
+    "level": 26
+   },
+   {
+    "species": "Glimmoth",
+    "level": 26
+   },
+   {
+    "species": "Shalebat",
+    "level": 26
+   },
+   {
+    "species": "Rainmantle",
+    "level": 27
+   }
+  ],
+  "ai": 3,
+  "money": 1500,
+  "defeat": "corvane_side/nib_5_defeat",
+  "lose": "corvane_side/nib_lose"
+ },
+ "fenwick": {
+  "trainer": "Lucky Fenwick",
+  "team": [
+   {
+    "species": "Silthop",
+    "level": 23
+   },
+   {
+    "species": "Millwhit",
+    "level": 23
+   },
+   {
+    "species": "Fluting",
+    "level": 24
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "corvane_side/fenwick_defeat",
+  "lose": "corvane_side/fenwick_lose"
+ },
+ "ambush_nib": {
+  "trainer": "Quay Book Rats",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 25
+   },
+   {
+    "species": "Riptail",
+    "level": 25
+   },
+   {
+    "species": "Drizzlet",
+    "level": 26
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "corvane_side/nib_ambush_lose"
+ },
+ "ambush_gaunt": {
+  "trainer": "Gaunt's Daughters",
+  "team": [
+   {
+    "species": "Kelphound",
+    "level": 23
+   },
+   {
+    "species": "Glimmoth",
+    "level": 23
+   },
+   {
+    "species": "Millvane",
+    "level": 24
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "corvane_side/gaunt_ambush_lose"
+ },
+ "ambush_vault": {
+  "trainer": "Vault Robbers",
+  "team": [
+   {
+    "species": "Duskdigger",
+    "level": 24
+   },
+   {
+    "species": "Wickmoth",
+    "level": 24
+   },
+   {
+    "species": "Shalebat",
+    "level": 25
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "lose": "corvane_side/vault_ambush_lose"
+ },
+ "quill": {
+  "trainer": "Harbourmaster Quill",
+  "team": [
+   {
+    "species": "Kelphound",
+    "level": 26
+   },
+   {
+    "species": "Rainmantle",
+    "level": 26
+   },
+   {
+    "species": "Riptail",
+    "level": 27
+   }
+  ],
+  "ai": 3,
+  "money": 1400,
+  "defeat": "corvane_side/quill_defeat",
+  "lose": "corvane_side/quill_lose"
+ },
+ "vetch": {
+  "trainer": "Dye Runner Vetch",
+  "team": [
+   {
+    "species": "Glimmoth",
+    "level": 23
+   },
+   {
+    "species": "Millwhit",
+    "level": 23
+   },
+   {
+    "species": "Drizzlet",
+    "level": 24
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "corvane_side/vetch_defeat",
+  "lose": "corvane_side/vetch_lose"
+ },
+ "kenan_duel_1": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Riptail",
+    "level": 21
+   },
+   {
+    "species": "Shalebat",
+    "level": 21
+   },
+   {
+    "species": "Glimmerax",
+    "level": 22
+   }
+  ],
+  "ai": 2,
+  "money": 800,
+  "defeat": "edge_camp/kenan_d1_defeat"
+ },
+ "kenan_duel_2": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 31
+   },
+   {
+    "species": "Riptail",
+    "level": 31
+   },
+   {
+    "species": "Calderox",
+    "level": 32
+   },
+   {
+    "species": "Duskdigger",
+    "level": 32
+   }
+  ],
+  "ai": 2,
+  "money": 1400,
+  "defeat": "edge_camp/kenan_d2_defeat"
+ },
+ "kenan_duel_3": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 39
+   },
+   {
+    "species": "Duskdigger",
+    "level": 39
+   },
+   {
+    "species": "Calderox",
+    "level": 40
+   },
+   {
+    "species": "Obsidroth",
+    "level": 40
+   }
+  ],
+  "ai": 3,
+  "money": 2200,
+  "defeat": "edge_camp/kenan_d3_defeat"
+ },
+ "kenan_rematch": {
+  "trainer": "Rift Runner Kenan",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 58
+   },
+   {
+    "species": "Duskdigger",
+    "level": 59
+   },
+   {
+    "species": "Smoldrake",
+    "level": 59
+   },
+   {
+    "species": "Calderox",
+    "level": 59
+   },
+   {
+    "species": "Obsidroth",
+    "level": 60
+   }
+  ],
+  "ai": 3,
+  "money": 4000,
+  "defeat": "edge_camp/kenan_rematch_defeat"
+ },
+ "nail_duel": {
+  "trainer": "Tea Seller Nail",
+  "team": [
+   {
+    "species": "Kelpup",
+    "level": 20
+   },
+   {
+    "species": "Glimmerax",
+    "level": 21
+   }
+  ],
+  "ai": 2,
+  "money": 600,
+  "defeat": "edge_camp/nail_duel_defeat",
+  "win_flags": [
+   "edge_nail_1"
+  ]
+ },
+ "leith_trap": {
+  "trainer": "Sable's Hands",
+  "team": [
+   {
+    "species": "Calderox",
+    "level": 38
+   },
+   {
+    "species": "Shalebat",
+    "level": 38
+   },
+   {
+    "species": "Duskdigger",
+    "level": 39
+   }
+  ],
+  "ai": 2,
+  "money": 1600,
+  "defeat": "edge_camp/leith_trap_defeat"
+ },
+ "silent_warden": {
+  "trainer": "The Silent Warden",
+  "team": [
+   {
+    "species": "Cairnhold",
+    "level": 40
+   },
+   {
+    "species": "Obsidroth",
+    "level": 40
+   },
+   {
+    "species": "Talusgard",
+    "level": 41
+   }
+  ],
+  "ai": 3,
+  "money": 1000,
+  "defeat": "edge_camp/silent_warden_defeat",
+  "win_flags": [
+   "edge_lejla_woke"
+  ]
+ },
+ "heider_buyers": {
+  "trainer": "Heider's Buyers",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 30
+   },
+   {
+    "species": "Mirkmole",
+    "level": 31
+   }
+  ],
+  "ai": 2,
+  "money": 1200,
+  "defeat": "edge_camp/heider_buyers_defeat"
  }
 }

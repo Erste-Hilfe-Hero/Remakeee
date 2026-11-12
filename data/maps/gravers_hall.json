@@ -48,6 +48,22 @@
    "facing": "right",
    "dialogue": "ashmere_side/pell",
    "sprite": "villager"
+  },
+  {
+   "id": "fixer",
+   "x": 1,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "gravers_hall/fixer",
+   "sprite": "villager"
+  },
+  {
+   "id": "coach",
+   "x": 8,
+   "y": 4,
+   "facing": "left",
+   "dialogue": "gravers_hall/coach",
+   "sprite": "villager"
   }
  ],
  "signs": [],

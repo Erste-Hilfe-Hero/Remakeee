@@ -1,0 +1,20 @@
+{
+ "_comment": "ko translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "견습생",
+  "Boss": "보스",
+  "Broker": "중개인",
+  "Captain": "대장",
+  "Fixer": "해결사",
+  "Map Master": "지도의 달인",
+  "No season reward is waiting.": "기다리는 시즌 보상이 없다.",
+  "Placement": "배치",
+  "Placement battles left: %d": "남은 배치 전투: %d",
+  "Rank: %s": "등급: %s",
+  "Runner": "심부름꾼",
+  "Season reward": "시즌 보상",
+  "Season reward: %d x %s": "시즌 보상: %d x %s",
+  "Shield: %d battles without losing the rank": "방패: 등급을 잃지 않는 전투 %d회",
+  "You left too many battles. Search again in %d seconds.": "전투를 너무 많이 나갔다. %d초 후에 다시 찾기."
+ }
+}

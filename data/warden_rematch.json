@@ -259,7 +259,7 @@
    "name": "Warden Darrow",
    "money": 8500,
    "reward": {
-    "item": "echo_root_grip",
+    "item": "echo_graft",
     "count": 1
    },
    "profile": "tactician",
@@ -409,7 +409,7 @@
    "name": "Warden Odalys",
    "money": 10000,
    "reward": {
-    "item": "echo_night_veil",
+    "item": "echo_umbra",
     "count": 1
    },
    "profile": "tactician",

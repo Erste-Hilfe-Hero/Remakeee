@@ -1,0 +1,7 @@
+{
+ "_comment": "ja translation of the region_looks table, keyed by the English text.",
+ "strings": {
+  "The ink goes grey here. Ashmere burned once and still smells like it owes you money.": "ここではインクが灰色になる。Ashmereは一度燃えて、いまだに金を借りているようなにおいがする。",
+  "The ink turns blue here. Corvane dyes everything, even the truth.": "ここではインクが青くなる。Corvaneは何でも染める、真実さえも。"
+ }
+}

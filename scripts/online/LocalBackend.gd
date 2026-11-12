@@ -84,6 +84,8 @@ func _init(p_store_path: String = "") -> void:
 	LocalShop.install(self)
 	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).
 	LocalTradeGifts.install(self)
+	# Online events (20261112000070_online_events.sql) live in their own file too.
+	LocalOnlineEvents.install(self)
 
 func is_local() -> bool:
 	return true
@@ -150,7 +152,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim"]
+	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
 func other_device() -> bool:
@@ -1087,6 +1089,9 @@ func _fn_community_add(a: Dictionary) -> Dictionary:
 		var n: int = mini(mini(amount, 5), maxi(int(db.config.get("goal_user_cap", 500)) - int(c.amount), 0))
 		c.amount = int(c.amount) + n
 		g.total = int(g.total) + n
+	# Like the SQL community_add: the step also counts for running festivals.
+	if has_meta("online_events"):
+		(get_meta("online_events") as LocalOnlineEvents).on_contribute(me(), str(a.get("p_kind", "")), amount)
 	return _goal_json(g)
 
 func _fn_community_claim(a: Dictionary) -> Dictionary:
@@ -1450,13 +1455,22 @@ func _fn_league_find(a: Dictionary) -> Dictionary:
 
 func _league_expect(m: Dictionary) -> Dictionary:
 	return {"seed": m.seed, "teams": (m.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
-		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
+		"front": [1, 1], "items_allowed": false, "seals": seals_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0],
+		"amulets": amulets_of(str(m.user)) if str(m.league) == LeagueRules.OPEN else [0, 0, 0]}
 
 ## Seal tiers [power, guard, speed] of [param uid] from the shop unlocks (like public._shop_seals).
 func seals_of(uid: String) -> Array:
 	var out: Array = []
 	var unlocks: Dictionary = LocalShop.of(self)._shop(uid).unlocks if LocalShop.of(self) != null else {}
 	for k: String in ShopEffects.SEAL_KINDS:
+		out.append(ShopEffects.clamp_tier(k, int(unlocks.get(k, 0))))
+	return out
+
+## Amulet tiers [crit, ward, shield] of [param uid] (like public._shop_amulets).
+func amulets_of(uid: String) -> Array:
+	var out: Array = []
+	var unlocks: Dictionary = LocalShop.of(self)._shop(uid).unlocks if LocalShop.of(self) != null else {}
+	for k: String in ShopEffects.AMULET_KINDS:
 		out.append(ShopEffects.clamp_tier(k, int(unlocks.get(k, 0))))
 	return out
 
@@ -1798,7 +1812,8 @@ func raid_hp(players: int) -> int:
 
 func _raid_expect(at: Dictionary) -> Dictionary:
 	return {"seed": at.seed, "teams": (at.teams as Array).duplicate(true), "ai": config_int("league_ai", 2), "wild": false,
-		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10), "seals": seals_of(str(at.user))}
+		"front": [1, 1], "items_allowed": false, "round_limit": config_int("raid_rounds", 10), "seals": seals_of(str(at.user)),
+		"amulets": amulets_of(str(at.user))}
 
 ## Members of raid [param r] as uid -> row. Rows live under "raid|uid", so deleting an account
 ## removes only that player's row (like the SQL table).
