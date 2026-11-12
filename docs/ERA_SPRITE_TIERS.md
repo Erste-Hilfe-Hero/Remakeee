@@ -65,12 +65,21 @@ of an Era I kind is 112 x 112 and about 0.9 KB.
 
 Before this slice no kind had an icon or a pose sheet (0 / 0).
 
-COVERAGE_TABLE
+After (`python3 tools/art/tier_coverage.py`):
+
+| Era | Tier | Canvas | Poses | Frames idle/attack/hit | In data | Art | Front | Back | Icon | Anim | Used kinds complete |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | Ink | 56 | 2 | 2/3/4 | 287 | 287 | 287 | 287 | 287 | 287 | 261/261 |
+| 2 | Wash | 56 | 2 | 2/4/4 | 0 | 70 | 70 | 70 | 70 | 70 | 0/0 |
+| 3 | Etched | 64 | 3 | 2/5/4 | 70 | 70 | 70 | 70 | 70 | 70 | 70/70 |
+| 4 | Panorama | 96 | 4 | 2/6/5 | 0 | 0 | 0 | 0 | 0 | 0 | 0/0 |
+| 5 | Living | 96 | 8 | 6/7/7 | 0 | 70 | 70 | 70 | 70 | 70 | 0/0 |
+| all | | | | | 357 | 497 | 497 | 497 | 497 | 497 | 331/331 |
 
 ## Left open
 
-- Era IV (Halcyra) and Era V (Quivermoor) kinds are not in `data/spirlings.json` yet. Their
-  icons and sheets are built from the art of their own PRs; run `gen_tiers.py` again when that
-  art changes.
+- Era IV (Halcyra) art comes with its own PR (feat/halcyra-70); after it lands run
+  `gen_tiers.py` and commit the 140 new files. Era II and Era V kinds have art but are not in
+  `data/spirlings.json` yet.
 - Menu icons do not show the Gleam colours and do not bounce.
 - Under the Era I retro filter a hue-turned Gleam of a later tier differs less than an ink Gleam.
