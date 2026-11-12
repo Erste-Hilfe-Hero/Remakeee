@@ -710,7 +710,10 @@
     "intro": "corvane/senna_intro",
     "defeat": "corvane/senna_defeat",
     "ai": 2,
-    "money": 1100
+    "money": 1250,
+    "mend_items": [
+     "echo_volt"
+    ]
    }
   ]
  },
@@ -902,7 +905,10 @@
     "intro": "corvane/joral_intro",
     "defeat": "corvane/joral_defeat",
     "ai": 2,
-    "money": 1200
+    "money": 1300,
+    "mend_items": [
+     "echo_lumen"
+    ]
    }
   ]
  },
@@ -1446,7 +1452,10 @@
     "intro": "ashmere/tovan_intro",
     "defeat": "ashmere/tovan_defeat",
     "ai": 3,
-    "money": 1500
+    "money": 1500,
+    "mend_items": [
+     "echo_stone"
+    ]
    }
   ],
   "signs": [
@@ -1626,7 +1635,10 @@
     "intro": "ashmere/ilse_intro",
     "defeat": "ashmere/ilse_defeat",
     "ai": 3,
-    "money": 1600
+    "money": 1600,
+    "mend_items": [
+     "echo_gale"
+    ]
    }
   ]
  },

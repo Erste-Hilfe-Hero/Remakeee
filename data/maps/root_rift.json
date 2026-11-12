@@ -160,7 +160,7 @@
    "intro": "root_rift/darrow_intro",
    "defeat": "root_rift/darrow_defeat",
    "ai": 2,
-   "money": 1250,
+   "money": 1400,
    "rule": "vine_tangle",
    "mend_items": [
     "echo_root_grip"

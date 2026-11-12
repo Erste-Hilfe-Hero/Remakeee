@@ -156,6 +156,9 @@
    "trainer": "Warden Orrin",
    "warden": "cinder",
    "money": 800,
+   "mend_items": [
+    "echo_ember"
+   ],
    "intro": "cinder_rift/orrin_intro",
    "defeat": "cinder_rift/orrin_defeat",
    "items": {
