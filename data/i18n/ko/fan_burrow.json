@@ -1,0 +1,26 @@
+{
+ "_comment": "Korean texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ko.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "바위 틈이 마른 구멍으로 이어진다.",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "바위 속 마른 구멍. 아무도 안 사는 것 같다. 네 굴로 삼을까?",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "이름이 든 병. Spirling들이 썼다. 몇 개는 네 이름이다.",
+  "A map of Veydal with every Rift crossed out in red ink.": "균열마다 빨간 잉크로 X를 친 Veydal 지도.",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "Cinder 균열의 그을린 봉인. 아직 따뜻하다. 아직 화나 있다.",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "Mist 균열의 봉인. 반쪽이 없다. 아니면 숨었거나.",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "Tidewater 균열의 봉인. 카펫에 물이 뚝뚝.",
+  "Black Veil": "검은 면사포",
+  "Cinder Seal": "잿불 봉인",
+  "Claim": "차지한다",
+  "Grudge Jar": "원한 병",
+  "Mended Veydal": "기운 Veydal",
+  "Mist Seal": "안개 봉인",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "누군가 여기서 잤다. 벽에서 %s이(가) 사라지고 그 자리에 전당표가 걸려 있다.",
+  "The wall is full. Take something down first.": "벽이 꽉 찼다. 먼저 하나 떼어 내.",
+  "Tide Seal": "물결 봉인",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "장례식장에서 따냈다. 네 Spirling보다 크게 운 자는 없었다.",
+  "You hang it on the wall.": "벽에 건다.",
+  "You take it down.": "떼어 낸다.",
+  "Your Burrow (%d/%d on the wall)": "네 굴 (벽에 %d/%d)",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "네 굴. 벽이 휑하다. 걸 만한 걸 손에 넣어 봐."
+ }
+}

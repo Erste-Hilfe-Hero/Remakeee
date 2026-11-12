@@ -1,0 +1,10 @@
+{
+ "_comment": "Dutch texts for the German table live. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "A new version of Chimora is out.": "Er is een nieuwe versie van Chimora uit.",
+  "Later": "Later",
+  "Open the link?": "Link openen?",
+  "Update": "Bijwerken",
+  "What's new": "Wat is er nieuw"
+ }
+}
