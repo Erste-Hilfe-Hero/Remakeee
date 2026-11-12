@@ -184,3 +184,43 @@ func test_item_list_stays_open_after_a_use() -> void:
 	assert_true(state.done)
 	assert_eq(lists, 2, "the list opens again after the tonic")
 	assert_gt(s.hp, 1)
+
+## Item 1874: "=" or Start closes the pause menu from any level.
+func test_menu_button_closes_from_a_deep_level() -> void:
+	PauseMenu.last_label = ""
+	GameState.new_game(GameState.Difficulty.TAMER, "Tess", 0, "Kindlop")
+	var menu := _menu()
+	await wait_process_frames(1)
+	var state: Dictionary = {"done": false}
+	var runner := func() -> void:
+		await menu.run()
+		state.done = true
+	runner.call()
+	var frames: int = 0
+	var seen: int = 0
+	var lists: int = 0
+	var pressed: bool = false
+	while not state.done and frames < MAX_FRAMES:
+		await wait_process_frames(1)
+		frames += 1
+		if menu._info_wait and not pressed:
+			menu._page_turn = -2
+			menu._close_info()
+		elif menu.picks > seen and menu.picker.visible and not pressed:
+			seen = menu.picks
+			lists += 1
+			if lists == 1:
+				menu.picker.picked.emit(menu.last_rows.find("Team"))
+			elif lists == 2:
+				menu.picker.picked.emit(0)
+			else:
+				# Two levels deep (Team -> a Spirling): press the menu button once.
+				var ev := InputEventAction.new()
+				ev.action = GameState.MENU_ACTION
+				ev.pressed = true
+				menu._unhandled_input(ev)
+				pressed = true
+	assert_true(pressed, "reached a deep level")
+	assert_true(state.done, "one press closed every level")
+	assert_eq(menu.picks, seen, "no list opened again after the press")
+	PauseMenu.last_label = ""

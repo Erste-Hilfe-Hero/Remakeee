@@ -72,6 +72,7 @@ func run_ledger() -> void:
 		await info("\n".join(shown))
 
 func run() -> void:
+	close_all = false
 	if open_on == "Goals":
 		open_on = ""
 		await run_goals()
@@ -151,6 +152,24 @@ func run_invite_link() -> void:
 		return
 	if await confirm(Loc.t("Accept the invite of friend code %s? It sends a friend request.") % Online.pretty_code(code)):
 		await FriendsMoreMenu.redeem(self, code)
+
+## A second press of "=" or Start closes the menu from any level (item 1874).
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(GameState.MENU_ACTION) and is_visible_in_tree() and (picker.visible or _info_wait):
+		get_viewport().set_input_as_handled()
+		close_menu()
+		return
+	super(event)
+
+## Closes every open level of the menu.
+func close_menu() -> void:
+	close_all = true
+	_close_steps = 0
+	if _info_wait:
+		_page_turn = -2
+		_close_info()
+	if picker.visible:
+		picker.picked.emit(-1)
 
 ## Shows a first-time tip in an info window (menus have no text box).
 func tip(id: String) -> void:
