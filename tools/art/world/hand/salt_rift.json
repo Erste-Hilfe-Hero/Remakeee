@@ -1,0 +1,62 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_halloran",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "salt_rift/halloran",
+    "sprite": "warden",
+    "trainer": "Warden Halloran",
+    "warden": "v4_salt",
+    "team": [
+     {
+      "species": "Saltcrown",
+      "level": 87
+     },
+     {
+      "species": "Stiltregent",
+      "level": 87
+     },
+     {
+      "species": "Wadibastion",
+      "level": 88
+     },
+     {
+      "species": "Ergrava",
+      "level": 88
+     }
+    ],
+    "intro": "salt_rift/halloran_intro",
+    "defeat": "salt_rift/halloran_defeat",
+    "ai": 2,
+    "money": 9000,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Saltcrown",
+       "level": 103
+      },
+      {
+       "species": "Stiltregent",
+       "level": 103
+      },
+      {
+       "species": "Wadibastion",
+       "level": 104
+      },
+      {
+       "species": "Ergrava",
+       "level": 104
+      },
+      {
+       "species": "Fulgorath",
+       "level": 104
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

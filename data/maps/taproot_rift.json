@@ -112,7 +112,32 @@
    "rule": "vine_tangle",
    "win_flags": [
     "rift_v5_taproot_sealed"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Peatmonarch",
+      "level": 109
+     },
+     {
+      "species": "Fenwarden",
+      "level": 109
+     },
+     {
+      "species": "Woadcastle",
+      "level": 110
+     },
+     {
+      "species": "Rushstalker",
+      "level": 110,
+      "held": "pith_mend"
+     },
+     {
+      "species": "Rookwarden",
+      "level": 110
+     }
+    ]
+   }
   }
  ],
  "signs": [

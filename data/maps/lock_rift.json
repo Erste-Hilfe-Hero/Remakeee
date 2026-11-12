@@ -116,7 +116,32 @@
    "win_flags": [
     "v2_rift_lock_sealed",
     "v2_ch2_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Reedwarden",
+      "level": 59
+     },
+     {
+      "species": "Saltspire",
+      "level": 59
+     },
+     {
+      "species": "Kelphound",
+      "level": 60
+     },
+     {
+      "species": "Ferrowyn",
+      "level": 60
+     },
+     {
+      "species": "Delthorn",
+      "level": 60,
+      "held": "pith_mend"
+     }
+    ]
+   }
   }
  ],
  "signs": [

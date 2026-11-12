@@ -1,0 +1,62 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_veronne",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "span_rift/veronne",
+    "sprite": "warden",
+    "trainer": "Warden Veronne",
+    "warden": "v4_span",
+    "team": [
+     {
+      "species": "Velverain",
+      "level": 91
+     },
+     {
+      "species": "Siroclaw",
+      "level": 91
+     },
+     {
+      "species": "Gyrevult",
+      "level": 92
+     },
+     {
+      "species": "Habobrax",
+      "level": 92
+     }
+    ],
+    "intro": "span_rift/veronne_intro",
+    "defeat": "span_rift/veronne_defeat",
+    "ai": 2,
+    "money": 9800,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Velverain",
+       "level": 91
+      },
+      {
+       "species": "Siroclaw",
+       "level": 91
+      },
+      {
+       "species": "Gyrevult",
+       "level": 92
+      },
+      {
+       "species": "Habobrax",
+       "level": 92
+      },
+      {
+       "species": "Fulgorath",
+       "level": 92
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

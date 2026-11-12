@@ -80,7 +80,31 @@
     }
    ],
    "beaten_flag": "ladder_rung_8",
-   "show_flag": "ladder_rung_7"
+   "show_flag": "ladder_rung_7",
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Zenithare",
+      "level": 52
+     },
+     {
+      "species": "Habobrax",
+      "level": 52
+     },
+     {
+      "species": "Noonsoral",
+      "level": 53
+     },
+     {
+      "species": "Tempestrel",
+      "level": 53
+     },
+     {
+      "species": "Siltgrove",
+      "level": 53
+     }
+    ]
+   }
   },
   {
    "id": "keeper",

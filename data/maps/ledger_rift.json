@@ -107,7 +107,27 @@
    "win_flags": [
     "rift_v3_ledger_sealed",
     "v3_ch4_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Filigrace",
+      "level": 102
+     },
+     {
+      "species": "Nibquill",
+      "level": 102
+     },
+     {
+      "species": "Frostfoil",
+      "level": 103
+     },
+     {
+      "species": "Filigravure",
+      "level": 103
+     }
+    ]
+   }
   }
  ],
  "signs": [

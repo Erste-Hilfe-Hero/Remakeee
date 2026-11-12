@@ -106,7 +106,27 @@
    "intro": "orrery_rift/isaura_intro",
    "defeat": "orrery_rift/isaura_defeat",
    "ai": 2,
-   "money": 8200
+   "money": 8200,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Orrerine",
+      "level": 105
+     },
+     {
+      "species": "Solmantle",
+      "level": 105
+     },
+     {
+      "species": "Hazejellith",
+      "level": 106
+     },
+     {
+      "species": "Noonsoral",
+      "level": 106
+     }
+    ]
+   }
   }
  ],
  "signs": [

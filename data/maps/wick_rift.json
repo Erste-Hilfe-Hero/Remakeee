@@ -112,7 +112,28 @@
    "rule": "ember_pulse",
    "win_flags": [
     "rift_v5_wick_sealed"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Sootharrow",
+      "level": 103
+     },
+     {
+      "species": "Glazeldrake",
+      "level": 103
+     },
+     {
+      "species": "Ardenthal",
+      "level": 104
+     },
+     {
+      "species": "Duskmirrah",
+      "level": 104,
+      "held": "pith_mend"
+     }
+    ]
+   }
   },
   {
    "id": "q5_nell_letters_ivar",

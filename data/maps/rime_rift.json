@@ -107,7 +107,31 @@
    "win_flags": [
     "rift_v3_rime_sealed",
     "v3_ch3_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Siltaroth",
+      "level": 79
+     },
+     {
+      "species": "Veskarion",
+      "level": 79
+     },
+     {
+      "species": "Glacilisk",
+      "level": 80
+     },
+     {
+      "species": "Rimesovereign",
+      "level": 80
+     },
+     {
+      "species": "Cindravax",
+      "level": 80
+     }
+    ]
+   }
   }
  ],
  "signs": [

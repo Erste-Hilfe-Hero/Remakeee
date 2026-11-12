@@ -80,23 +80,23 @@
    "tamer": [
     {
      "species": "Brookbaron",
-     "level": 37
+     "level": 33
     },
     {
      "species": "Duskdigger",
-     "level": 38
+     "level": 34
     },
     {
      "species": "Obsidroth",
-     "level": 39
+     "level": 35
     },
     {
      "species": "Calderox",
-     "level": 38
+     "level": 34
     },
     {
      "species": "Brookbaron",
-     "level": 39
+     "level": 35
     }
    ]
   }
@@ -1040,23 +1040,23 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 50
+     "level": 45
     },
     {
      "species": "Saltspire",
-     "level": 50
+     "level": 45
     },
     {
      "species": "Scrivane",
-     "level": 51
+     "level": 46
     },
     {
      "species": "Rubriclad",
-     "level": 51
+     "level": 46
     },
     {
      "species": "Charsylvan",
-     "level": 51
+     "level": 46
     }
    ]
   }
@@ -1092,19 +1092,19 @@
    "tamer": [
     {
      "species": "Zenithare",
-     "level": 62
+     "level": 60
     },
     {
      "species": "Glasstarn",
-     "level": 62
+     "level": 60
     },
     {
      "species": "Mendlace",
-     "level": 63
+     "level": 61
     },
     {
      "species": "Saltcrown",
-     "level": 63
+     "level": 61
     }
    ]
   }
@@ -1139,7 +1139,31 @@
   "lose": "solenne_side/corin_lose",
   "win_flags": [
    "veil_corin_3_beaten"
-  ]
+  ],
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Zenithare",
+     "level": 53
+    },
+    {
+     "species": "Mirassil",
+     "level": 53
+    },
+    {
+     "species": "Leviarch",
+     "level": 54
+    },
+    {
+     "species": "Saltcrown",
+     "level": 54
+    },
+    {
+     "species": "Obsidroth",
+     "level": 55
+    }
+   ]
+  }
  },
  "veil_vault": {
   "trainer": "Brass Veil Factor Lusk",
@@ -1911,7 +1935,31 @@
   "lose": "glasswind_side/venn_lose",
   "win_flags": [
    "kiln_venn_beaten"
-  ]
+  ],
+  "teams_by_difficulty": {
+   "tamer": [
+    {
+     "species": "Rubriclad",
+     "level": 47
+    },
+    {
+     "species": "Obelordan",
+     "level": 48
+    },
+    {
+     "species": "Coronarch",
+     "level": 48
+    },
+    {
+     "species": "Fulgorath",
+     "level": 48
+    },
+    {
+     "species": "Duskmirrah",
+     "level": 49
+    }
+   ]
+  }
  },
  "assize_bailiffs": {
   "trainer": "Assize Bailiffs",

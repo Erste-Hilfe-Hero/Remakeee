@@ -112,7 +112,32 @@
    "rule": "undertow",
    "win_flags": [
     "rift_v5_raft_sealed"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Rookwarden",
+      "level": 105
+     },
+     {
+      "species": "Dipmonarch",
+      "level": 105
+     },
+     {
+      "species": "Ripjoltane",
+      "level": 106
+     },
+     {
+      "species": "Weirmarshal",
+      "level": 106,
+      "held": "pith_mend"
+     },
+     {
+      "species": "Rookwarden",
+      "level": 106
+     }
+    ]
+   }
   }
  ],
  "signs": [

@@ -1,0 +1,58 @@
+{
+ "replace": {
+  "npcs": [
+   {
+    "id": "warden_isaura",
+    "x": 5,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "orrery_rift/isaura",
+    "sprite": "warden",
+    "trainer": "Warden Isaura",
+    "warden": "v4_orrery",
+    "team": [
+     {
+      "species": "Orrerine",
+      "level": 83
+     },
+     {
+      "species": "Solmantle",
+      "level": 83
+     },
+     {
+      "species": "Hazejellith",
+      "level": 84
+     },
+     {
+      "species": "Noonsoral",
+      "level": 84
+     }
+    ],
+    "intro": "orrery_rift/isaura_intro",
+    "defeat": "orrery_rift/isaura_defeat",
+    "ai": 2,
+    "money": 8200,
+    "teams_by_difficulty": {
+     "tamer": [
+      {
+       "species": "Orrerine",
+       "level": 105
+      },
+      {
+       "species": "Solmantle",
+       "level": 105
+      },
+      {
+       "species": "Hazejellith",
+       "level": 106
+      },
+      {
+       "species": "Noonsoral",
+       "level": 106
+      }
+     ]
+    }
+   }
+  ]
+ }
+}

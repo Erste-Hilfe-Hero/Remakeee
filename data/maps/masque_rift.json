@@ -116,7 +116,32 @@
    "win_flags": [
     "v2_rift_masque_sealed",
     "v2_ch4_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Fenwarden",
+      "level": 58
+     },
+     {
+      "species": "Glasstarn",
+      "level": 58
+     },
+     {
+      "species": "Lanternel",
+      "level": 59
+     },
+     {
+      "species": "Glimmerax",
+      "level": 59
+     },
+     {
+      "species": "Scrivane",
+      "level": 59,
+      "held": "pith_mend"
+     }
+    ]
+   }
   }
  ],
  "signs": [

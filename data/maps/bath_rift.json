@@ -107,7 +107,27 @@
    "win_flags": [
     "rift_v3_bath_sealed",
     "v3_ch2_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Cindravax",
+      "level": 75
+     },
+     {
+      "species": "Nibravure",
+      "level": 75
+     },
+     {
+      "species": "Burringrand",
+      "level": 76
+     },
+     {
+      "species": "Mordantyrant",
+      "level": 76
+     }
+    ]
+   }
   }
  ],
  "signs": [

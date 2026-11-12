@@ -117,7 +117,32 @@
    "win_flags": [
     "rift_v5_bloom_sealed",
     "quivermoor_done"
-   ]
+   ],
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Sablarch",
+      "level": 111
+     },
+     {
+      "species": "Fumeregent",
+      "level": 111
+     },
+     {
+      "species": "Rookwarden",
+      "level": 111
+     },
+     {
+      "species": "Woadcastle",
+      "level": 112
+     },
+     {
+      "species": "Velverain",
+      "level": 112,
+      "held": "pith_mend"
+     }
+    ]
+   }
   },
   {
    "id": "q5_named_seed_sol",

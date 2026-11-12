@@ -41,19 +41,19 @@
      "tamer": [
       {
        "species": "Thornback",
-       "level": 28
+       "level": 27
       },
       {
        "species": "Frondmere",
-       "level": 29
-      },
-      {
-       "species": "Reedwarden",
        "level": 28
       },
       {
+       "species": "Reedwarden",
+       "level": 27
+      },
+      {
        "species": "Marshfife",
-       "level": 29
+       "level": 28
       }
      ]
     }

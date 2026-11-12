@@ -110,7 +110,31 @@
    "intro": "gilt_rift/aurek_intro",
    "defeat": "gilt_rift/aurek_defeat",
    "ai": 2,
-   "money": 12000
+   "money": 12000,
+   "teams_by_difficulty": {
+    "tamer": [
+     {
+      "species": "Gyrevult",
+      "level": 95
+     },
+     {
+      "species": "Coronarch",
+      "level": 95
+     },
+     {
+      "species": "Caravault",
+      "level": 95
+     },
+     {
+      "species": "Helirollax",
+      "level": 96
+     },
+     {
+      "species": "Claspreign",
+      "level": 96
+     }
+    ]
+   }
   }
  ],
  "signs": [
