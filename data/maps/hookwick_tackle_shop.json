@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/hookwick_tackle_shop_angler",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_seven_keys_enno",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_seven_keys_enno",
+   "sprite": "villager",
+   "show_flag": "q2_seven_keys_asked"
   }
  ],
  "signs": []

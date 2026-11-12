@@ -210,6 +210,45 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q2_second_face_petra_lady",
+   "x": 7,
+   "y": 17,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_second_face_petra_lady",
+   "sprite": "villager",
+   "trainer": "Lady Petra",
+   "show_flag": "q2_second_face_reveal",
+   "intro": "vellmarch/q2_second_face_petra_lady_intro",
+   "defeat": "vellmarch/q2_second_face_petra_lady_defeat",
+   "money": 3000,
+   "team": [
+    {
+     "species": "Woadwhorl",
+     "level": 58
+    },
+    {
+     "species": "Fenwarden",
+     "level": 59
+    },
+    {
+     "species": "Mendlace",
+     "level": 60
+    }
+   ],
+   "win_flags": [
+    "q2_second_face_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q2_bought_boos_alban",
+   "x": 7,
+   "y": 13,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_bought_boos",
+   "sprite": "villager"
   }
  ],
  "signs": [

@@ -29,6 +29,14 @@
    "facing": "down",
    "dialogue": "vellmarch/hookwick_lock_office_clerk",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_seven_keys_mina",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_seven_keys",
+   "sprite": "villager"
   }
  ],
  "signs": []

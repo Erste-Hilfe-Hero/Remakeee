@@ -89,6 +89,99 @@
      "level": 55
     }
    ]
+  },
+  {
+   "id": "chain_inspector",
+   "x": 8,
+   "y": 10,
+   "facing": "down",
+   "dialogue": "vellmarch/tollchain_causeway_chain_inspector",
+   "sprite": "ranger",
+   "trainer": "Chain Inspector Lorenz",
+   "intro": "vellmarch/tollchain_causeway_chain_inspector_intro",
+   "defeat": "vellmarch/tollchain_causeway_chain_inspector_defeat",
+   "money": 2200,
+   "team": [
+    {
+     "species": "Delthorn",
+     "level": 53
+    },
+    {
+     "species": "Cogmite",
+     "level": 55
+    }
+   ]
+  },
+  {
+   "id": "q2_toll_twice_ruk",
+   "x": 6,
+   "y": 16,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_toll_twice_ruk",
+   "sprite": "villager",
+   "show_flag": "q2_toll_twice_asked"
+  },
+  {
+   "id": "q2_toll_twice_garrick",
+   "x": 3,
+   "y": 19,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_toll_twice_garrick",
+   "sprite": "elder",
+   "trainer": "Late Tollman Garrick",
+   "show_flag": "q2_toll_twice_reveal",
+   "intro": "vellmarch/q2_toll_twice_garrick_intro",
+   "defeat": "vellmarch/q2_toll_twice_garrick_defeat",
+   "money": 2800,
+   "team": [
+    {
+     "species": "Siltgrove",
+     "level": 54
+    },
+    {
+     "species": "Cogwright",
+     "level": 55
+    },
+    {
+     "species": "Delthorn",
+     "level": 56
+    }
+   ],
+   "win_flags": [
+    "q2_toll_twice_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q2_heavy_rumour_jutta",
+   "x": 3,
+   "y": 23,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_heavy_rumour_jutta",
+   "sprite": "villager",
+   "trainer": "Baker Jutta",
+   "show_flag": "q2_heavy_rumour_reveal",
+   "intro": "vellmarch/q2_heavy_rumour_jutta_intro",
+   "defeat": "vellmarch/q2_heavy_rumour_jutta_defeat",
+   "money": 2800,
+   "team": [
+    {
+     "species": "Delthorn",
+     "level": 54
+    },
+    {
+     "species": "Cogmite",
+     "level": 55
+    },
+    {
+     "species": "Canalet",
+     "level": 56
+    }
+   ],
+   "win_flags": [
+    "q2_heavy_rumour_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],

@@ -762,6 +762,7 @@ def main():
         rift(mid)
     patch_story_npcs()
     tr("Night Barge", "Nachtkahn")
+    __import__("vellmarch_side").build(sys.modules[__name__])  # twelve side goals, three places under the roads
     # Places renamed or dropped on the sheet: their old map files and tables go.
     stale = []
     for path in glob.glob(os.path.join(ROOT, "data", "maps", "*.json")):

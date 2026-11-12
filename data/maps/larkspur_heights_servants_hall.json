@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/larkspur_heights_servants_hall_maid",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_second_face_petra",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_second_face",
+   "sprite": "villager",
+   "hide_flag": "q2_second_face_reveal"
   }
  ],
  "signs": []

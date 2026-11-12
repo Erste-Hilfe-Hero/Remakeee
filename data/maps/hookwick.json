@@ -186,6 +186,54 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q2_two_owners_hald",
+   "x": 7,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_two_owners",
+   "sprite": "villager"
+  },
+  {
+   "id": "q2_eel_rent_odd",
+   "x": 4,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_eel_rent",
+   "sprite": "elder",
+   "hide_flag": "q2_eel_rent_reveal"
+  },
+  {
+   "id": "q2_eel_rent_odd_boat",
+   "x": 8,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_eel_rent_odd_boat",
+   "sprite": "elder",
+   "trainer": "Landlord Odd",
+   "show_flag": "q2_eel_rent_reveal",
+   "intro": "vellmarch/q2_eel_rent_odd_boat_intro",
+   "defeat": "vellmarch/q2_eel_rent_odd_boat_defeat",
+   "money": 2850,
+   "team": [
+    {
+     "species": "Rookit",
+     "level": 55
+    },
+    {
+     "species": "Millvane",
+     "level": 56
+    },
+    {
+     "species": "Wickmoth",
+     "level": 57
+    }
+   ],
+   "win_flags": [
+    "q2_eel_rent_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [
