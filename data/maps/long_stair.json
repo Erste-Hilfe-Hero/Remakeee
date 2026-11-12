@@ -138,9 +138,9 @@
   },
   {
    "id": "q4_brake_file_ulf",
-   "x": 9,
-   "y": 5,
-   "facing": "left",
+   "x": 10,
+   "y": 4,
+   "facing": "down",
    "dialogue": "halcyra_side/brake_file",
    "sprite": "villager",
    "hide_flag": "q4_brake_file_reveal"

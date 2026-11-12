@@ -135,22 +135,27 @@ func test_betrayers_end_their_goal() -> void:
 
 func test_wayfarers_follow_their_road() -> void:
 	var rings: Dictionary = {}
+	var low: int = 999
 	for r: Dictionary in Region4.data().routes:
 		rings[str(r.id)] = r.ring
+		low = mini(low, int(r.ring[0]))
+	var on_roads: int = 0
 	var count: int = 0
 	for id: String in _npcs:
 		if not id.begins_with("hs_"):
 			continue
 		var row: Array = _npcs[id]
 		var n: Dictionary = row[1]
-		if not n.has("trainer") or not rings.has(str(row[0])):
+		if not n.has("trainer"):
 			continue
 		count += 1
-		var ring: Array = rings[str(row[0])]
+		var ring: Array = rings.get(str(row[0]), [low, _top()])
+		on_roads += int(rings.has(str(row[0])))
 		for e: Dictionary in n.team:
 			assert_between(int(e.level), int(ring[0]), int(ring[1]) + 2, "%s on %s" % [id, row[0]])
 		_check_team(n.team, id)
-	assert_gte(count, 8, "Wayfarers on the roads")
+	assert_gte(on_roads, 6, "a Wayfarer on every road")
+	assert_gte(count, 12, "Wayfarers in Halcyra")
 
 func test_trust_holds_favors_and_betrayals() -> void:
 	assert_eq(Trust.validate(), PackedStringArray(), "Trust.validate")

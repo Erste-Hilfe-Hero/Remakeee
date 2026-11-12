@@ -3818,56 +3818,56 @@
     "species": "Solmantle",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Hazejellith",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Noonsoral",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Siroclaw",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Habobrax",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Obelordan",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Coronarch",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "fern"
    },
    {
     "species": "Helirollax",
     "min": 86,
     "max": 89,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    },
    {
@@ -3886,49 +3886,49 @@
     "species": "Saltcrown",
     "min": 84,
     "max": 87,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Stiltregent",
     "min": 84,
     "max": 87,
-    "weight": 14,
+    "weight": 6,
     "ground": "reeds"
    },
    {
     "species": "Wadibastion",
     "min": 84,
     "max": 87,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Ergrava",
     "min": 84,
     "max": 87,
-    "weight": 14,
+    "weight": 6,
     "ground": "reeds"
    },
    {
     "species": "Velverain",
     "min": 84,
     "max": 87,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    },
    {
     "species": "Caravault",
     "min": 84,
     "max": 87,
-    "weight": 14,
+    "weight": 6,
     "ground": "reeds"
    },
    {
     "species": "Claspreign",
     "min": 84,
     "max": 87,
-    "weight": 14,
+    "weight": 6,
     "ground": "scree"
    }
   ]

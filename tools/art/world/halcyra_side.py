@@ -410,7 +410,7 @@ GOALS = [
                 ("The red line stays empty, for now.", "Die rote Zeile bleibt leer, vorerst.", "Lantern Span")]},
 
     {"id": "brake_file", "turns": True, "duel": True, "road": "long_stair", "reward": ("power_brew", 3),
-     "giver": ("long_stair", 9, 5, "left", "villager", "ulf"),
+     "giver": ("long_stair", 10, 4, "down", "villager", "ulf"),
      "intro": [("Brake Mechanic Ulf: Every night someone files the brakes of the Gilt Funicular. Every morning I fix them. Every morning the family pays me.", "Bremsenmechaniker Ulf: Jede Nacht feilt jemand die Bremsen der Gilt-Standseilbahn an. Jeden Morgen repariere ich sie. Jeden Morgen bezahlt mich die Familie."),
                ("Ulf: It can't go on. Someone will get hurt. Probably a passenger. Find the filer for me.", "Ulf: So kann es nicht weitergehen. Jemand wird sich verletzen. Vermutlich ein Fahrgast. Finde den Feiler für mich.")],
      "wait": ("Ulf: The White Stair counters see everyone on the steps at dawn. And Gaspard on the Gilt Span sells files.", "Ulf: Die Zähler auf der Weißen Treppe sehen jeden, der im Morgengrauen auf den Stufen ist. Und Gaspard auf dem Gilt-Bogen verkauft Feilen."),
@@ -931,6 +931,9 @@ def maps(world):
 
 
 # --- Data files (python3 tools/art/world/halcyra_side.py) ---------------------------------------
+WEIGHT = {"common": 30, "uncommon": 14, "shy": 6}   # inside SpirlingData.WEIGHT_BANDS
+
+
 def homes(enc, sp):
     """Encounter tables of the two wild places: every Halcyra kind (data region "halcyra", else
     every kind on a Halcyra Warden, sheet slot or Halcyra map team) with no wild home in Halcyra
@@ -950,7 +953,7 @@ def homes(enc, sp):
     housed = {s["species"] for r in ROUTE for s in enc.get(r, {}).get("spawns", [])}
     need = []
     for s in own:
-        if s in sp and s not in housed and s not in need:
+        if s in sp and s not in housed and s not in need and sp[s].get("rarity") != "ancient":
             need.append(s)
     out = {}
     for mid in WILD:
@@ -958,7 +961,8 @@ def homes(enc, sp):
         wet = mid == "brine_catacombs"
         ks = [s for s in need if wet == bool({"TIDE", "UMBRA"} & set(sp[s]["elements"]))]
         grounds = ["scree", "reeds"] if wet else ["fern", "scree"]
-        out[mid] = {"rate": 0.12, "spawns": [{"species": s, "min": lo, "max": hi, "weight": 14, "ground": grounds[j % 2]}
+        out[mid] = {"rate": 0.12, "spawns": [{"species": s, "min": lo, "max": hi, "weight": WEIGHT.get(sp[s].get("rarity"), 30),
+                                              "ground": grounds[j % 2]}
                                              for j, s in enumerate(ks)]}
     return out
 
