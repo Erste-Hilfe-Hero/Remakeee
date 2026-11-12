@@ -22,6 +22,17 @@
     "bounty_b7",
     "bounty_b8"
    ]
+  },
+  "copperfold": {
+   "act": 1,
+   "npc": "veydal_more/sprocket",
+   "done": "bounty_copper_done",
+   "bounties": [
+    "bounty_b9",
+    "bounty_b10",
+    "bounty_b11",
+    "bounty_b12"
+   ]
   }
  },
  "collections": {
@@ -38,6 +49,21 @@
     "hush_coin_6",
     "hush_coin_7",
     "hush_coin_8"
+   ]
+  },
+  "wanted_posters": {
+   "act": 1,
+   "npc": "veydal_more/gorrie",
+   "done": "posters_done",
+   "items": [
+    "poster_1",
+    "poster_2",
+    "poster_3",
+    "poster_4",
+    "poster_5",
+    "poster_6",
+    "poster_7",
+    "poster_8"
    ]
   }
  }

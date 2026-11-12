@@ -109,7 +109,15 @@
     {
      "species": "Nimbuck",
      "level": 96
+    },
+    {
+     "species": "Silthop",
+     "level": 96
     }
+   ],
+   "front": [
+    3,
+    3
    ]
   },
   {

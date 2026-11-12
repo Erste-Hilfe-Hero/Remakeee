@@ -8,5 +8,11 @@
   "scree": {"clear": 50, "rain": 10, "fog": 10, "wind": 25, "storm": 5},
   "town": {"clear": 60, "rain": 22, "fog": 8, "wind": 8, "storm": 2},
   "rift": {"clear": 30, "rain": 15, "fog": 25, "wind": 15, "storm": 15}
+ },
+ "_battle": "Weather in battle (docs/ERA_FUNCTIONS.md, era function sky_battles, opens in Era III): the sky of an outdoor map lays this Rift field (BattleRules.FIELDS) for the whole battle when the map and the Wayfarer bring none. intro replaces the field's Rift line.",
+ "battle": {
+  "rain": {"field": "high_tide", "intro": "Rain lashes the field. Tide arts surge, Ember arts fizzle, and nothing catches fire."},
+  "fog": {"field": "deep_murk", "intro": "Fog swallows the light. Umbra arts deepen, Lumen arts dim."},
+  "storm": {"field": "static_veil", "intro": "Thunder rolls overhead. Volt arts snap harder, Stone arts crumble."}
  }
 }
