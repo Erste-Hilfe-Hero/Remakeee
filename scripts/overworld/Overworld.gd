@@ -2281,6 +2281,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
 	"lens": ["The lenses send the light up the stair. It stays lit.", "The lens cracks the light into rainbows, and every lens swings back. Start over.",
 		"The lens turns. A spot of sun crawls up the wall.", "The last lens turns, the light hits the stair, and the glass door melts aside!"],
+	"bellows": ["The bellows breathe on their own now. The stair stays clear.", "The bellows wheeze, cough, and every one sags flat again. Start over.",
+		"The bellows heave. Somewhere below, a fire wakes up grumpy.", "The last bellows heaves, the smoke clears off the stair, and the way down is open!"],
 }
 
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
@@ -3025,15 +3027,19 @@ func _action_shop(args: PackedStringArray, _speaker: NPC) -> void:
 	var menu := MenuHost.new()
 	_ui.add_child(menu)
 	while true:
-		var labels: Array[String] = []
+		var rows: Array[Dictionary] = []
 		for id: String in args:
 			var it: Dictionary = Database.item(id)
-			labels.append("%s  %d" % [it.get("name", id), ShopEffects.merchant_price(int(it.get("price", 0)))])
-		var idx: int = await menu.pick_strings("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), labels)
+			rows.append({"text": "%s  %d" % [it.get("name", id), ShopEffects.merchant_price(int(it.get("price", 0)))],
+				"hint": "1x %s: %s" % [ShopCatalog.item_name(id), Loc.t(str(it.get("description", "")))]})
+		var idx: int = await menu.pick("Shop   %s" % Loc.plural(GameState.money, "%d coin", "%d coins"), rows)
 		if idx < 0:
 			break
 		var item: Dictionary = Database.item(args[idx])
 		var price: int = ShopEffects.merchant_price(int(item.get("price", 0)))
+		# What the item is and does before any coin moves (shop clarity, Ali 12 Nov 2026).
+		if not await menu.confirm(ShopCatalog.merchant_card(args[idx], price) + "\n\n" + Loc.t("Buy for %d coins?") % price):
+			continue
 		if GameState.money < price:
 			await menu.info("Not enough coins.")
 			continue
@@ -3587,13 +3593,21 @@ func league_battle(m: Dictionary) -> void:
 	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind, "p_ref": str(m.get("match_id", "")),
 		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	var lines: Array[String] = ["You won the league battle!" if outcome == BattleModel.Outcome.WIN else "The rival won this league battle."]
-	if not bool(m.get("rated", true)):
+	if bool(m.get("pair_limit", false)):
+		lines.append("You met this rival 3 times today, so this battle does not count.")
+	elif not bool(m.get("rated", true)):
 		lines.append("The season ends soon, so this battle does not count.")
 	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		lines.append("Your result is being checked. It counts once the check is done.")
 	else:
 		lines.append("The result could not be sent, so it does not count.")
 	await say(lines)
+	# Online 100 point 83: report the rival right after the battle.
+	if int(m.get("match_id", 0)) > 0:
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		await SafetyMenu.after_battle(menu, "league", int(m.match_id))
+		menu.queue_free()
 	busy = false
 	player.frozen = false
 
@@ -3601,25 +3615,30 @@ func league_battle(m: Dictionary) -> void:
 ## round limit; the battle is friendly, so it costs nothing and the team is healed afterwards.
 ## The damage comes off the guardian once the referee checked the battle (2691).
 func raid_battle(at: Dictionary) -> void:
+	var war: bool = str(at.get("kind", "raid")) == "bund_war"
 	var snap: Dictionary = BattleReferee.from_expect(at)
 	var model: BattleModel = BattleReplay.build_model(snap)
 	if model == null:
 		await say(["The Raid Rift could not open. Try again later."] as Array[String])
 		return
-	model.trainer_name = "Rift guardian"
+	var foe_name: String = str(at.get("guardian", "?"))
+	model.trainer_name = foe_name if war else "Rift guardian"
 	var foes: Array[Spirling] = []
 	foes.assign(model.parties[1])
-	await say([Loc.t("%s waits in the Raid Rift. You have %d rounds.") % [str(at.get("guardian", "?")), model.round_limit]] as Array[String])
+	if war:
+		await say([Loc.t("Bund against bund: %s's team waits. This battle counts for your bund.") % foe_name] as Array[String])
+	else:
+		await say([Loc.t("%s waits in the Raid Rift. You have %d rounds.") % [foe_name, model.round_limit]] as Array[String])
 	busy = false
-	await start_battle(foes, false, {"name": "Rift guardian", "model": model, "friendly": true})
+	await start_battle(foes, false, {"name": model.trainer_name, "model": model, "friendly": true})
 	busy = true
 	player.frozen = true
 	var dealt: int = 0
 	for s: Spirling in model.parties[1]:
 		dealt += maxi(0, s.max_hp() - s.hp)
-	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": "raid", "p_ref": str(at.get("attempt_id", "")),
-		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
-	var lines: Array[String] = [Loc.t("You dealt %d damage to the guardian.") % dealt]
+	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": "bund_war" if war else "raid",
+		"p_ref": str(at.get("attempt_id", "")), "p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
+	var lines: Array[String] = ["The war battle is over." if war else Loc.t("You dealt %d damage to the guardian.") % dealt]
 	if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		lines.append("It counts once the check is done.")
 	else:

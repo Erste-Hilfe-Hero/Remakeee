@@ -186,8 +186,6 @@ T = {
 	"5 Rissatem, 5 Überladekerne, 5 Glasfunken. Einzeln 1500 Rissglas.",
 "Bond Seal":
 	"Bondsiegel",
-"The next bonding succeeds for sure. Not with Rift Wardens or one-of-a-kind Spirlings.":
-	"Das nächste Bonden gelingt sicher. Nicht bei Rift-Wächtern und einmaligen Spirlings.",
 "Echo Scent":
 	"Echo-Duft",
 "Bonding gets clearly easier for one try.":
@@ -887,4 +885,29 @@ T = {
 "If a bond fails while you hold it out, you try once more at once. 1 piece, used up. Story only, not in leagues.": "Scheitert eine Bindung, während du ihn hinhältst, versuchst du es sofort noch einmal. 1 Stück, wird verbraucht. Nur Geschichte, nicht in Ligen.",
 "A Spirling unfurls into its next form at once, without its Ring or other conditions. Not for forms that need an item. 1 piece, used up.": "Ein Spirling entfaltet sich sofort zu seiner nächsten Form, ohne Ring oder andere Bedingungen. Nicht für Formen, die einen Gegenstand brauchen. 1 Stück, wird verbraucht.",
 "In battle: heals 100% Vigor and all states. No limit per battle. 1 piece.": "Im Kampf: heilt 100 % Kraft und alle Zustände. Keine Grenze pro Kampf. 1 Stück.",
+# Shop clarity (Ali, 12 Nov 2026): contents, duration and repeat lines built from the grants.
+"The next bond with a wild Spirling succeeds for sure, also with ancient and one-of-a-kind ones. Rift Wardens and other Wayfarers' Spirlings can never be bonded.": "Das nächste Bonden mit einem wilden Spirling gelingt sicher, auch bei uralten und einmaligen. Rift-Wächter und Spirlings anderer Wanderer lassen sich nie bonden.",
+"Overcharge Core Plus": "Überladekern Plus",
+"Use it before an Open League battle: the whole team starts with 12 instead of 10 energy. Only works in the Open League.": "Vor einem Kampf in der Offenen Liga einsetzen: Das ganze Team startet mit 12 statt 10 Energie. Wirkt nur in der Offenen Liga.",
+"Element Prism of your choice": "Element-Prisma nach Wahl",
+"and %d more": "und %d weitere",
+"Shop currency to pay for offers.": "Shop-Währung, mit der du Angebote bezahlst.",
+"Money for the merchants in the world.": "Geld für die Händler in der Welt.",
+"Choose one: %s": "Wähle eins: %s",
+"yours until you spend it": "deins, bis du es ausgibst",
+"permanent": "dauerhaft",
+"while the pass runs": "solange der Pass läuft",
+"used up when used": "wird beim Einsatz verbraucht",
+"%s from the moment you use it": "%s ab dem Einsatz",
+"Duration: %s": "Dauer: %s",
+"Renews every month until you cancel.": "Verlängert sich jeden Monat, bis du kündigst.",
+"Buy once: it stays unlocked for good.": "Einmal kaufen: Es bleibt für immer freigeschaltet.",
+"With Riftglass you can buy it again; in the App Store or Google Play only once.": "Mit Rissglas kannst du es wieder kaufen, im App Store oder bei Google Play nur einmal.",
+"Can be bought again any time.": "Kann jederzeit wieder gekauft werden.",
+"Price: %d coins (you have %d)": "Preis: %d Münzen (du hast %d)",
+"What it does:": "Was es bewirkt:",
+"Buy for %d coins?": "Für %d Münzen kaufen?",
 }
+
+# Format strings that read the same in every language ("5x Ring Tonic").
+KEEP = ["%dx %s"]

@@ -1,0 +1,24 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "vm_jinks_4",
+    "x": 9,
+    "y": 13,
+    "facing": "left",
+    "dialogue": "veydal_more/jinks_4",
+    "sprite": "ranger",
+    "show_flag": "rival_jinks_done",
+    "hide_flag": "beat_story_rival_jinks_4"
+   }
+  ],
+  "signs": [
+   {
+    "x": 10,
+    "y": 7,
+    "dialogue": "veydal_more/poster_7",
+    "hide_flag": "poster_7"
+   }
+  ]
+ }
+}

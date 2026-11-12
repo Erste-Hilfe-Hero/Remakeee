@@ -207,6 +207,12 @@
    "x": 1,
    "y": 25,
    "dialogue": "gloamwood/marker_stone"
+  },
+  {
+   "x": 10,
+   "y": 26,
+   "dialogue": "veydal_more/poster_3",
+   "hide_flag": "poster_3"
   }
  ],
  "blocks": [

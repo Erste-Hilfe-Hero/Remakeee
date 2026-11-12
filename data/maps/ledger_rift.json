@@ -1,0 +1,133 @@
+{
+ "name": "Ledger Rift",
+ "region": "quillmarch",
+ "biome": "rift",
+ "backdrop": "voice",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT::.XX.::TT",
+  "T::.......:T",
+  "T:......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T@@@....TT_T",
+  "T@@@....:T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....@@..T_T",
+  "T....@@..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T..::....T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "ledgerholm",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "ledgerholm",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quillmarch/ledger_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Ledger Acolyte Bertram",
+   "intro": "quillmarch/ledger_rift_acolyte_intro",
+   "defeat": "quillmarch/ledger_rift_acolyte_defeat",
+   "money": 3320,
+   "team": [
+    {
+     "species": "Filigrace",
+     "level": 83
+    },
+    {
+     "species": "Frostfoil",
+     "level": 83
+    }
+   ]
+  },
+  {
+   "id": "warden_ottoline",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/warden_ottoline",
+   "sprite": "warden",
+   "trainer": "Warden Ottoline",
+   "warden": "v3_ledger",
+   "team": [
+    {
+     "species": "Filigrace",
+     "level": 83
+    },
+    {
+     "species": "Nibquill",
+     "level": 83
+    },
+    {
+     "species": "Frostfoil",
+     "level": 84
+    },
+    {
+     "species": "Filigravure",
+     "level": 84
+    }
+   ],
+   "intro": "quillmarch/warden_ottoline_intro",
+   "defeat": "quillmarch/warden_ottoline_defeat",
+   "ai": 3,
+   "money": 9200,
+   "rule": "night_dark",
+   "win_flags": [
+    "rift_v3_ledger_sealed",
+    "v3_ch4_done"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quillmarch/ledger_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quillmarch/ledger_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v3_ledger_sealed",
+   "closed": "@"
+  }
+ ]
+}
