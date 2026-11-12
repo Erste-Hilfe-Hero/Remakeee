@@ -1,6 +1,7 @@
 {
  "_comment": "Turkish texts for the German table online. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
  "strings": {
+  "Era V": "Çağ V",
   "%d Wayfarers are in Veydal": "Veydal'da %d Gezgin var",
   "%d h left": "%d sa kaldı",
   "%s   Code %s": "%s   Kod %s",

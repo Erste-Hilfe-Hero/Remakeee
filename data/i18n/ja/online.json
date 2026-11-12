@@ -1,6 +1,7 @@
 {
  "_comment": "Japanese texts for the German table online. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ja.",
  "strings": {
+  "Era V": "第V時代",
   "%d Wayfarers are in Veydal": "Veydalに旅人が%d人いる",
   "%d h left": "残り%d時間",
   "%s   Code %s": "%s   コード%s",

@@ -1,6 +1,7 @@
 {
  "_comment": "Russian texts for the German table online. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
  "strings": {
+  "Era V": "Эра V",
   "%d Wayfarers are in Veydal": "Странников в Veydal: %d",
   "%d h left": "осталось %d ч",
   "%s   Code %s": "%s   Код %s",

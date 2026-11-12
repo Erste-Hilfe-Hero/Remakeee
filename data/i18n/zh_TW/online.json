@@ -1,6 +1,7 @@
 {
  "_comment": "Traditional Chinese (Taiwan) texts for the German table online. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
  "strings": {
+  "Era V": "第五紀元",
   "%d Wayfarers are in Veydal": "Veydal有%d位旅人",
   "%d h left": "剩%d小時",
   "%s   Code %s": "%s   代碼 %s",
