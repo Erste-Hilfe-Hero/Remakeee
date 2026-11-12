@@ -140,6 +140,18 @@ Values in `data/league_ranks.json`; `tools/online/game_data_sql.py` writes them 
   the item of the final rank into the stored bag, the rank as title and the frame id `season_<n>_<rank>`
   (table `league_awards`, listed as `titles` in `league_info`). Menu > Leagues shows "Season reward".
 
+### Live duels (Online 100, area 1)
+
+Behind the flag `live_duel` (Friends > Live duels, `scripts/ui/LiveDuelMenu.gd`). Values in `data/live_duel.json`,
+written to `server_config.live_duel`; migration `20261111000040_live_duel.sql`, same rules in `LocalBackend`,
+helpers in `scripts/online/LiveDuel.gd`. `live_invite(code)` (friends only, `invites_per_hour`), the friend
+answers with `live_answer`; both see up to 6 of the other's team and `live_pick` 3. Then each round both send
+`live_move(id, round, input)`; the round closes when both are in, and the server keeps the inputs, the seed and
+the `turn_seconds` (30) clock. A side away longer than the clock plus `reconnect_seconds` (60) loses
+(`_live_tick`). `live_forfeit` gives up, `live_emote` stores only the number of a set phrase, `live_finish`
+takes each side's winner (different answers void the duel), `live_rematch` invites again. Not done yet: the
+battle scene does not play the rounds from `live_state` yet, and the referee does not check live duels.
+
 ## Where it runs now
 
 On Ali's existing Contabo server (161.97.102.171), next to Nyrathen and Dranbleib, at
