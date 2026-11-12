@@ -1,0 +1,10 @@
+{
+ "_comment": "Turkish texts for the German table live. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "A new version of Chimora is out.": "Chimora'nın yeni sürümü çıktı.",
+  "Later": "Sonra",
+  "Open the link?": "Bağlantı açılsın mı?",
+  "Update": "Güncelle",
+  "What's new": "Yenilikler"
+ }
+}
