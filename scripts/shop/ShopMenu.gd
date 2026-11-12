@@ -53,10 +53,15 @@ static func run(menu: MenuHost) -> void:
 		elif entries[idx] == "Help with purchases":
 			await run_help(menu)
 		elif entries[idx] == "Restore purchases":
-			var n: int = await Billing.restore()
-			await menu.info(Loc.t("Restored: %d purchases.") % n if n > 0 else Loc.t("Nothing to restore. Bought unlocks and the pass are already here."))
+			await menu.info(restore_text(await Billing.restore()))
 		else:
 			await menu.info(ABOUT_TEXT)
+
+## The line after "Restore purchases" for [param n] from Billing.restore() (-1 = no connection).
+static func restore_text(n: int) -> String:
+	if n < 0:
+		return Loc.t("Restoring needs a connection. Try again when you are online.")
+	return Loc.t("Restored: %d purchases.") % n if n > 0 else Loc.t("Nothing to restore. Bought unlocks and the pass are already here.")
 
 ## The help page on Riftglass, the pass, refunds and limits (/kaeufe or /purchases, item 4045).
 static func run_help(menu: Node) -> void:

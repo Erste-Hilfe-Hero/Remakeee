@@ -1,0 +1,7 @@
+{
+ "_comment": "French texts for the German table gleam. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "Gleam: %d seen, %d bonded": "Reflet : %d vus, %d liés",
+  "No Gleam has joined you yet.": "Aucun reflet ne t'a encore rejoint."
+ }
+}

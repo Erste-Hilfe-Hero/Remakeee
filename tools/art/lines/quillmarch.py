@@ -16,11 +16,11 @@ LINES = [
       art=dict(plan="quad")),
     L(id="silt", names=["Siltby", "Siltarra", "Siltaroth"], elements=["TIDE"], role="bulwark", cover="STONE",
       art=dict(plan="serpent")),
-    L(id="cindr", names=["Cindrik", "Cindrel", "Cindravax"], elements=["EMBER"], role="kindler", cover="GALE",
+    L(id="cindr", names=["Cindrik", "Cindrel", "Cindravax"], elements=["EMBER", "BLOOM"], role="kindler",
       art=dict(plan="bird")),
     L(id="nib", names=["Nibbet", "Nibquill", "Nibravure"], elements=["UMBRA", "BLOOM"], role="vanguard",
       art=dict(plan="quad")),
-    L(id="filig", names=["Filigrin", "Filigrace", "Filigravure"], elements=["LUMEN", "VOLT"], role="weaver",
+    L(id="filig", names=["Filigrin", "Filigrace", "Filigravure"], elements=["LUMEN", "GALE"], role="weaver",
       art=dict(plan="bug")),
 ]
 

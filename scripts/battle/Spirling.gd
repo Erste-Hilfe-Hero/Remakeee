@@ -9,6 +9,9 @@ const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
 const MAX_LEVEL: int = 60
+## Newest era a Spirling can come from (EraManager.NEWEST, Era V Living). Saves used to cut
+## Era V Spirlings back to Era IV (bug plan 1373).
+const MAX_ERA: int = 5
 ## Chance that a wild Spirling is a rare Prism colour variant (cosmetic only).
 const PRISM_CHANCE: float = 1.0 / 256.0
 
@@ -537,7 +540,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.shop_bought = d.get("shop") is bool and d.get("shop")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
-	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, 4)
+	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, MAX_ERA)
 	s.met_ring = _num(d.get("met_ring"), 0)
 	s.met_day = _num(d.get("met_day"), 0)
 	var lin: Variant = d.get("lineage", [])

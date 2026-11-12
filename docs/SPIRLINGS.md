@@ -260,6 +260,69 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.p
 | 203 | Flueling | Volt/Ember | uncommon | kindler | last_stand | 437 | - |
 <!-- /lines:ashmere -->
 
+<!-- lines:corvane -->
+## Corvane lines (Act II, tools/art/lines/corvane.py)
+
+Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_lines.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 204 | Inkpip | Ink | common | weaver | last_stand | 300 | Inkspool (ring 20) |
+| 205 | Inkspool | Ink | uncommon | weaver | last_stand | 403 | Inkregent (ring 33) |
+| 206 | Inkregent | Ink | shy | weaver | last_stand | 514 | - |
+| 207 | Weirkit | Tide | common | striker | slick | 295 | Weirrunner (ring 18) |
+| 208 | Weirrunner | Tide | uncommon | striker | slick | 405 | Weirmarshal (ring 33) |
+| 209 | Weirmarshal | Tide | shy | striker | slick | 496 | - |
+| 210 | Diplit | Volt/Tide | common | striker | surge | 279 | Diparrow (ring 18) |
+| 211 | Diparrow | Volt/Tide | uncommon | striker | surge | 408 | Dipmonarch (ring 32) |
+| 212 | Dipmonarch | Volt/Tide | shy | striker | surge | 472 | - |
+| 213 | Woadlet | Bloom/Umbra | common | bulwark | thick_hide | 310 | Woadwhorl (ring 19) |
+| 214 | Woadwhorl | Bloom/Umbra | uncommon | bulwark | thick_hide | 391 | Woadcastle (ring 36) |
+| 215 | Woadcastle | Bloom/Umbra | shy | bulwark | thick_hide | 472 | - |
+| 216 | Rubrit | Ember/Bloom | common | vanguard | last_stand | 315 | Rubricorn (ring 20) |
+| 217 | Rubricorn | Ember/Bloom | uncommon | vanguard | last_stand | 403 | Rubriclad (ring 33) |
+| 218 | Rubriclad | Ember/Bloom | shy | vanguard | last_stand | 486 | - |
+| 219 | Nimbub | Gale/Tide | common | weaver | light_sleeper | 310 | Nimbuck (ring 17) |
+| 220 | Nimbuck | Gale/Tide | uncommon | weaver | light_sleeper | 400 | Nimbarch (ring 35) |
+| 221 | Nimbarch | Gale/Tide | shy | weaver | light_sleeper | 439 | - |
+| 222 | Sluicekit | Stone/Bloom | common | bulwark | deep_roots | 305 | Sluicer (ring 17) |
+| 223 | Sluicer | Stone/Bloom | uncommon | bulwark | deep_roots | 403 | Sluicewarden (ring 33) |
+| 224 | Sluicewarden | Stone/Bloom | shy | bulwark | deep_roots | 455 | - |
+| 225 | Vanepip | Gale/Volt | common | vanguard | surge | 300 | Vanecrow (ring 16) |
+| 226 | Vanecrow | Gale/Volt | uncommon | vanguard | surge | 404 | Vanecrest (ring 33) |
+| 227 | Vanecrest | Gale/Volt | shy | vanguard | surge | 497 | - |
+| 228 | Chimelet | Echo | common | weaver | light_sleeper | 332 | Chimewell (ring 17) |
+| 229 | Chimewell | Echo | uncommon | weaver | light_sleeper | 410 | Chimeward (ring 33) |
+| 230 | Chimeward | Echo | shy | weaver | light_sleeper | 497 | - |
+| 231 | Rushkit | Umbra/Bloom | common | striker | slick | 278 | Rushprowl (ring 17) |
+| 232 | Rushprowl | Umbra/Bloom | uncommon | striker | slick | 400 | Rushstalker (ring 32) |
+| 233 | Rushstalker | Umbra/Bloom | shy | striker | slick | 505 | - |
+| 234 | Ripjolt | Volt/Tide | common | kindler | kindling | 305 | Ripjolter (ring 16) |
+| 235 | Ripjolter | Volt/Tide | uncommon | kindler | kindling | 408 | Ripjoltane (ring 34) |
+| 236 | Ripjoltane | Volt/Tide | shy | kindler | kindling | 454 | - |
+| 237 | Grindlet | Stone/Tide | common | bulwark | thick_hide | 315 | Grindwheel (ring 18) |
+| 238 | Grindwheel | Stone/Tide | uncommon | bulwark | thick_hide | 422 | Grindmonolith (ring 36) |
+| 239 | Grindmonolith | Stone/Tide | shy | bulwark | thick_hide | 502 | - |
+| 240 | Morelit | Bloom/Lumen | common | kindler | deep_roots | 313 | Morelamp (ring 17) |
+| 241 | Morelamp | Bloom/Lumen | uncommon | kindler | deep_roots | 425 | Morelord (ring 32) |
+| 242 | Morelord | Bloom/Lumen | shy | kindler | deep_roots | 502 | - |
+| 243 | Rookit | Umbra/Gale | uncommon | vanguard | last_stand | 287 | Rookwarden (ring 27) |
+| 244 | Rookwarden | Umbra/Gale | shy | vanguard | last_stand | 430 | - |
+| 245 | Skimmit | Tide/Gale | uncommon | striker | steady | 270 | Skimmarch (ring 25) |
+| 246 | Skimmarch | Tide/Gale | shy | striker | steady | 412 | - |
+| 247 | Prismist | Tide/Lumen | uncommon | weaver | light_sleeper | 311 | Prismistral (ring 25) |
+| 248 | Prismistral | Tide/Lumen | shy | weaver | light_sleeper | 393 | - |
+| 249 | Canalet | Tide/Stone | uncommon | vanguard | surge | 322 | Canalord (ring 24) |
+| 250 | Canalord | Tide/Stone | shy | vanguard | surge | 414 | - |
+| 251 | Padlet | Bloom/Tide | uncommon | kindler | kindling | 316 | Padlotus (ring 27) |
+| 252 | Padlotus | Bloom/Tide | shy | kindler | kindling | 400 | - |
+| 253 | Thrashkin | Stone/Bloom | uncommon | vanguard | last_stand | 308 | Threshox (ring 24) |
+| 254 | Threshox | Stone/Bloom | shy | vanguard | last_stand | 425 | - |
+| 255 | Cartocoil | Ink | uncommon | kindler | deep_roots | 428 | - |
+| 256 | Belfrit | Echo/Umbra | uncommon | striker | slick | 421 | - |
+| 257 | Dusktern | Umbra/Tide | uncommon | striker | steady | 398 | - |
+<!-- /lines:corvane -->
+
 <!-- lines:quillmarch -->
 ## Quillmarch lines (Era III post-game, tools/art/lines/quillmarch.py)
 
@@ -267,21 +330,21 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py
 
 | No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 204 | Vesk | Gale | common | striker | slick | 294 | Veskara (ring 22) |
-| 205 | Veskara | Gale | uncommon | striker | slick | 400 | Veskarion (ring 41) |
-| 206 | Veskarion | Gale | shy | striker | slick | 501 | - |
-| 207 | Siltby | Tide | common | bulwark | thick_hide | 314 | Siltarra (ring 24) |
-| 208 | Siltarra | Tide | uncommon | bulwark | thick_hide | 405 | Siltaroth (ring 41) |
-| 209 | Siltaroth | Tide | shy | bulwark | thick_hide | 455 | - |
-| 210 | Cindrik | Ember | common | kindler | kindling | 307 | Cindrel (ring 24) |
-| 211 | Cindrel | Ember | uncommon | kindler | kindling | 435 | Cindravax (ring 42) |
-| 212 | Cindravax | Ember | shy | kindler | kindling | 497 | - |
-| 213 | Nibbet | Umbra/Bloom | common | vanguard | surge | 306 | Nibquill (ring 26) |
-| 214 | Nibquill | Umbra/Bloom | uncommon | vanguard | surge | 405 | Nibravure (ring 38) |
-| 215 | Nibravure | Umbra/Bloom | shy | vanguard | surge | 486 | - |
-| 216 | Filigrin | Lumen/Volt | common | weaver | light_sleeper | 306 | Filigrace (ring 24) |
-| 217 | Filigrace | Lumen/Volt | uncommon | weaver | light_sleeper | 406 | Filigravure (ring 41) |
-| 218 | Filigravure | Lumen/Volt | shy | weaver | light_sleeper | 485 | - |
+| 258 | Vesk | Gale | common | striker | slick | 288 | Veskara (ring 22) |
+| 259 | Veskara | Gale | uncommon | striker | slick | 400 | Veskarion (ring 41) |
+| 260 | Veskarion | Gale | shy | striker | slick | 501 | - |
+| 261 | Siltby | Tide | common | bulwark | thick_hide | 314 | Siltarra (ring 24) |
+| 262 | Siltarra | Tide | uncommon | bulwark | thick_hide | 405 | Siltaroth (ring 41) |
+| 263 | Siltaroth | Tide | shy | bulwark | thick_hide | 483 | - |
+| 264 | Cindrik | Ember/Bloom | common | kindler | kindling | 307 | Cindrel (ring 24) |
+| 265 | Cindrel | Ember/Bloom | uncommon | kindler | kindling | 410 | Cindravax (ring 42) |
+| 266 | Cindravax | Ember/Bloom | shy | kindler | kindling | 477 | - |
+| 267 | Nibbet | Umbra/Bloom | common | vanguard | surge | 288 | Nibquill (ring 26) |
+| 268 | Nibquill | Umbra/Bloom | uncommon | vanguard | surge | 389 | Nibravure (ring 38) |
+| 269 | Nibravure | Umbra/Bloom | shy | vanguard | surge | 476 | - |
+| 270 | Filigrin | Lumen/Gale | common | weaver | light_sleeper | 306 | Filigrace (ring 24) |
+| 271 | Filigrace | Lumen/Gale | uncommon | weaver | light_sleeper | 406 | Filigravure (ring 41) |
+| 272 | Filigravure | Lumen/Gale | shy | weaver | light_sleeper | 457 | - |
 <!-- /lines:quillmarch -->
 
 ## Regional imprints (Ortsprägung, items 218-219)
