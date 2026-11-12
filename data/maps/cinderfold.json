@@ -24,7 +24,7 @@
   "^...._.L...^",
   "^L..._*....^",
   "^....___...^",
-  "^^^^^^^^^^^^"
+  "^^^^^__^^^^^"
  ],
  "warps": [
   {
@@ -58,6 +58,22 @@
    "tx": 5,
    "ty": 18,
    "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 15,
+   "to": "clinker_heath",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 15,
+   "to": "clinker_heath",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
   }
  ],
  "npcs": [
@@ -191,6 +207,20 @@
    "x": 9,
    "y": 5,
    "dialogue": "cinderfold/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 15,
+   "open_flag": "halvard_met",
+   "closed": "^"
+  },
+  {
+   "x": 6,
+   "y": 15,
+   "open_flag": "halvard_met",
+   "closed": "^"
   }
  ],
  "secrets": [
