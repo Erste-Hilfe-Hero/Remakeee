@@ -4,6 +4,7 @@ Usage: python3 tools/maps/render_all.py <out_dir> [prefix] [--era2] [--marks]
 --marks outlines every cell tools/maps/audit_maps.py flags in red.
 --era2 renders with the shared Era II atlas (art/era2/tiles/overworld.png) instead of the
 region's Era I atlas, the way TilesetFactory.atlas_path() picks it once Era II is active.
+A region with its own atlas from Era III on (Halcyra) is always drawn with that atlas.
 """
 import json
 import os
@@ -27,6 +28,16 @@ def map_ids() -> list:
         # Floors without rows (echo_path slots) are built at runtime (EchoPath) and are skipped.
         out += ["%s@%d" % (mid, i + 1) for i, fl in enumerate(d.get("floors", [])) if "rows" in fl]
     return out
+
+
+def later_atlas(region: str) -> str:
+    """A region's own atlas from Era III on (Halcyra: art/era4/tiles/overworld_halcyra.png). TilesetFactory
+    draws such a region with it in every era, so the render uses it too."""
+    for n in range(9, 2, -1):
+        p = os.path.join(ROOT, "art", "era%d" % n, "tiles", "overworld_%s.png" % region)
+        if os.path.exists(p):
+            return p
+    return ""
 
 
 def with_blocks(d: dict) -> dict:
@@ -68,7 +79,7 @@ def main() -> None:
     for mid in map_ids():
         d = load_level(mid)
         d["id"] = mid
-        img = render(with_blocks(d), atlas)
+        img = render(with_blocks(d), later_atlas(d.get("region", "")) or atlas)
         dr = ImageDraw.Draw(img)
         for f in marks.get(mid, []):
             x, y = max(int(f["x"]), 0), max(int(f["y"]), 0)

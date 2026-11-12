@@ -147,6 +147,7 @@
   "gilt_rift": {"region": "halcyra", "pos": [2, 1], "kind": "rift", "neighbours": ["gildcrest"]},
   "great_orrery": {"inside": "starwell"},
   "gilt_span": {"inside": "lantern_span"},
-  "white_stair": {"inside": "long_stair"}
+  "white_stair": {"inside": "long_stair"},
+  "thornridge_house": {"inside": "thornridge"}
  }
 }

@@ -158,6 +158,7 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `saltmarsh` | marsh | 12x15 | 5 | 3 | 47 |
 | veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
 | veydal | `thornridge` | town | 12x20 | 5 | 0 | 6 |
+| veydal | `thornridge_house` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
 | veydal | `wren_library` | inside | 10x8 | 1 | 0 | 0 |
 | veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
@@ -194,19 +195,26 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
 | vellmarch | `bellrope_marsh` | marsh | 12x26 | 4 | 1 | 38 |
+| halcyra | `brightledge` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `caravanserai` | inside | 12x10 | 1 | 2 | 0 |
 | vellmarch | `cindergate_quay` | town | 12x20 | 3 | 0 | 0 |
 | vellmarch | `cindergate_quay_bunkhouse` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_customs_store` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_net_loft` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `cindergate_quay_tollhouse` | inside | 8x6 | 0 | 0 | 0 |
+| halcyra | `cloudshadow_meadow` | route | 12x24 | 3 | 1 | 78 |
 | vellmarch | `foundry_rift` | rift | 12x22 | 0 | 2 | 0 |
+| halcyra | `gildcrest` | town | 12x20 | 3 | 0 | 0 |
+| halcyra | `gilt_rift` | rift | 12x22 | 0 | 2 | 0 |
+| halcyra | `gilt_span` | inside | 12x12 | 3 | 0 | 0 |
 | solenne | `glasswind_flats` | route | 12x34 | 5 | 6 | 86 |
+| halcyra | `great_orrery` | inside | 12x10 | 0 | 0 | 0 |
 | vellmarch | `hookwick` | town | 12x20 | 3 | 0 | 0 |
 | vellmarch | `hookwick_boatshed` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `hookwick_eel_smokery` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `hookwick_lock_office` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `hookwick_tackle_shop` | inside | 8x6 | 0 | 0 | 0 |
+| halcyra | `lantern_span` | route | 12x24 | 3 | 1 | 37 |
 | vellmarch | `larkspur_heights` | town | 12x20 | 3 | 0 | 0 |
 | vellmarch | `larkspur_heights_counting_house` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `larkspur_heights_mask_atelier` | inside | 8x6 | 0 | 0 | 0 |
@@ -218,16 +226,25 @@ Written by `python3 tools/world_stats.py`.
 | vellmarch | `lastlamp_name_room` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `lastlamp_pawnshop` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `lock_rift` | rift | 12x22 | 0 | 2 | 0 |
+| halcyra | `long_stair` | route | 12x24 | 3 | 1 | 42 |
 | vellmarch | `masque_rift` | rift | 12x22 | 0 | 2 | 0 |
 | solenne | `mirage_kiln` | dungeon | 12x10 + 12x10 + 12x8 | 5 | 7 | 25 |
+| halcyra | `mirror_flats` | route | 12x24 | 3 | 1 | 58 |
 | solenne | `oasis_rift` | rift | 12x22 | 0 | 4 | 18 |
 | solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `ochrewell_dome` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `ochrewell_pottery` | inside | 10x8 | 0 | 0 | 0 |
 | solenne | `ochrewell_store` | inside | 10x8 | 0 | 0 | 0 |
+| halcyra | `orrery_ridge` | route | 12x24 | 3 | 1 | 47 |
+| halcyra | `orrery_rift` | rift | 12x22 | 0 | 2 | 0 |
+| halcyra | `paleshore` | town | 12x20 | 3 | 0 | 0 |
 | vellmarch | `rookery_cut` | route | 12x26 | 4 | 1 | 38 |
+| halcyra | `salt_rift` | rift | 12x22 | 0 | 2 | 0 |
 | vellmarch | `smelters_drift` | route | 12x26 | 4 | 1 | 38 |
+| halcyra | `span_rift` | rift | 12x22 | 0 | 2 | 0 |
+| halcyra | `starwell` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
+| halcyra | `sunfall_terraces` | route | 12x24 | 3 | 1 | 58 |
 | vellmarch | `tallowmarket` | town | 12x20 | 3 | 0 | 0 |
 | vellmarch | `tallowmarket_rumour_room` | inside | 8x6 | 0 | 0 | 0 |
 | vellmarch | `tallowmarket_vigil_house` | inside | 8x6 | 0 | 0 | 0 |
@@ -239,7 +256,9 @@ Written by `python3 tools/world_stats.py`.
 | vellmarch | `vault_rift` | rift | 12x22 | 0 | 2 | 0 |
 | solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
 | vellmarch | `weeping_locks` | route | 12x26 | 4 | 1 | 38 |
-| | **113 maps** | | | **201** | **130** | **1714** |
+| halcyra | `white_stair` | inside | 12x12 | 3 | 0 | 0 |
+| halcyra | `whitecairn` | town | 12x20 | 3 | 0 | 0 |
+| | **132 maps** | | | **240** | **144** | **2034** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)
