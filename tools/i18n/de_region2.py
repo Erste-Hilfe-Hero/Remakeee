@@ -1,7 +1,12 @@
 # German texts for Vellmarch, the post-game Era II region (data/region2.json).
-KEEP = ["Vellmarch", "Cindergate Quay", "Tallowmarket", "Hookwick", "Larkspur Heights", "Lastlamp",
-        "Warden Odile", "Warden Brannoc", "Warden Sable", "Warden Corin"]
+KEEP = ["Vellmarch", "Warden Odile", "Warden Brannoc", "Warden Sable", "Warden Corin"]
+# Town names stay English in German; they are table entries so map names and signs look them up.
 T = {
+"Cindergate Quay": "Cindergate Quay",
+"Tallowmarket": "Tallowmarket",
+"Hookwick": "Hookwick",
+"Larkspur Heights": "Larkspur Heights",
+"Lastlamp": "Lastlamp",
 "The night barge takes no fare. The bargeman just says the House already paid.": "Der Nachtkahn nimmt kein Fahrgeld. Der Kahnführer sagt nur, das Haus habe schon bezahlt.",
 "Docks, smoke and a toll booth that charges you for looking at it.": "Docks, Rauch und ein Zollhäuschen, das schon fürs Anschauen kassiert.",
 "Candles by day, rumours by night. Both are sold by weight.": "Tagsüber Kerzen, nachts Gerüchte. Beides wird nach Gewicht verkauft.",

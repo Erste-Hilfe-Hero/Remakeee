@@ -119,13 +119,15 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 	for sd: SpirlingData in kinds:
 		assert_eq(sd.region, "veydal")
 	# A wild table holds kinds of its own region or of an earlier act, never of a later one.
+	# WorldValidator.REGIONS is the world order (acts, then the post-game regions such as Vellmarch).
 	var enc: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/encounters.json"))
 	var layout: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://data/world_layout.json"))
 	for area: String in enc:
 		var region: String = str((layout.maps.get(area, {}) as Dictionary).get("region", "veydal"))
 		for s: Dictionary in enc[area].spawns:
 			var own: String = Database.species(str(s.species)).region
-			assert_lte(SpirlingData.REGIONS.find(own), SpirlingData.REGIONS.find(region), "%s in %s" % [s.species, area])
+			assert_gte(WorldValidator.REGIONS.find(region), 0, "%s has a known region" % area)
+			assert_lte(WorldValidator.REGIONS.find(own), WorldValidator.REGIONS.find(region), "%s in %s" % [s.species, area])
 	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 71)
 	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
 	assert_false(SpirlogBook.region_open("solenne", {}))
