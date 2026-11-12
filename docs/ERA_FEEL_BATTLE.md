@@ -125,8 +125,32 @@ colour-blind HP patterns are unchanged.
   Under reduced motion send-out, hit marks and motes are off; stat arrows stay but stand still
   (they carry information). Era I/II effects play in hard steps, later eras move smoothly.
 
+## Slice 5: Era IV and V redone (owner: "Era 4 und 5 gefallen mir nicht")
+
+Before, Era IV and V stood on a pale plain with a perspective grid and beige slabs, the
+Spirlings were small on the wide screen and the two eras looked the same in a still. Now
+(`data/era45_stage.json`, `scripts/battle/presenter/Era45Look.gd`, `Era4Stage.gd`, tests
+`tests/unit/test_era45_look.gd`, shots `tools/era_battle_shots.gd -- out_dir scenes`):
+
+| Feature | IV Panorama | V Living |
+|---|---|---|
+| Backdrop | painted scene in layers: sky in bands, distant and far ranges with a lit rim, a mid row (trees, roofs, pines, rocks, reeds), a textured floor; no grid lines | the same scene at golden hour: every colour washed warm, a glowing horizon, a low sun |
+| Scene | from the map's biome and the battle terrain: meadow, cave, water, town, snow (ridges), ember, voice | same |
+| Slabs | flat-topped turf, rock, stone, paving, snow or basalt blocks with cut corners, a side wall with strata and a ragged foot, tufts hanging over the lip and a soft shadow (never oval, LEGAL.md) | the same with a warm rim on the sun side and a long shadow away from the sun |
+| Spirling size | whole multiples of the art: player aims at 160 px, foe at 104 px, at most 192 (56 px art: 168 / 112, 64 px: 192 / 128, 96 px: 192 / 96); the foe stands back right, the player low left with its slab in front | same |
+| Motion | none (still clouds and grass) | drifting clouds, swaying grass, shimmering water, rising embers, twinkling snow; slow sun rays |
+| Light | daylight from the upper left | warm wash, sun rays and soft edges over the whole field, sprites included |
+| Camera | mild pan on arts (existing) | arts zoom (existing) and a 1.08 lean-in when a Spirling steps out |
+| HUD font | bold large font (doubled strokes, `PixelFont.get_bold_font`) | same |
+
+The player's plate keeps at least 46 % of the field width beside the big back sprite. The HP
+bars stay 5 px (1.7x Era III): a thicker bar would push the formation ledger into the foes' rank.
+Old Spirlings keep their origin-era art, only drawn bigger. Under reduced motion the stage
+stands still, there is no send-out camera, and the light holds still.
+
 ## Still missing (follow-ups)
 
 - Battle text box frame per era: shared with menus, so it belongs to the erafeel-ui slice.
 - Hand-drawn Era IV/V art for the Spirlings that have none yet (they show the placeholder, so they
-  get no Era V strip).
+  get no Era V strip). Era V art for 70 Quivermoor Spirlings exists but has no species data yet.
+- Era IV/V battle menu: the two-line art buttons leave the field about 250 px tall.

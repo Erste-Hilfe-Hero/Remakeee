@@ -27,12 +27,14 @@ const FRAME_PAD: int = 5
 ## Small speed / Auto / Log buttons.
 const SIDE_BUTTON: Vector2 = Vector2(26, 13)
 const SIDE_BUTTON_LARGE: Vector2 = Vector2(38, 16)
+## Stage eras: the player's plate is at least this share of the field wide.
+const MIN_PLAYER_PLATE: float = 0.46
 ## Lines the battle text box holds (TextBox.MAX_LINES).
 const TEXT_LINES: int = 3
 
 static var _cfg: Dictionary = {}
 static var _frames: Dictionary[String, StyleBoxTexture] = {}
-static var _themes: Dictionary[int, Theme] = {}
+static var _themes: Dictionary[String, Theme] = {}
 ## The item the player used last in a battle of this session (item shortcut, Era IV on).
 static var last_item: String = ""
 ## Tests: 1 or 0 forces skin_api(); -1 asks the project.
@@ -115,9 +117,15 @@ static func colours(era: int) -> Dictionary:
 	}
 
 static func large_font(era: int) -> bool:
-	return UITheme.large_text or text(era, "font", "pixel") == "large"
+	return UITheme.large_text or text(era, "font", "pixel") in ["large", "bold"]
+
+## Era IV/V: the bold large font (thicker strokes on the wide screens).
+static func bold_font(era: int) -> bool:
+	return text(era, "font", "pixel") == "bold"
 
 static func font(era: int) -> Font:
+	if bold_font(era):
+		return PixelFont.get_bold_font()
 	return PixelFont.get_large_font() if large_font(era) else PixelFont.get_font()
 
 static func ascent(era: int) -> int:
@@ -131,15 +139,16 @@ static func line_h(era: int) -> int:
 ## era that uses it (270 x 480 screens).
 static func theme(era: int) -> Theme:
 	var base: Theme = UITheme.get_theme()
-	if not large_font(era) or base.default_font == PixelFont.get_large_font():
+	var want: Font = font(era)
+	if not large_font(era) or base.default_font == want:
 		return base
-	var id: int = base.get_instance_id()
-	if not _themes.has(id):
+	var key: String = "%d:%d" % [base.get_instance_id(), want.get_instance_id()]
+	if not _themes.has(key):
 		_themes.clear()
 		var t: Theme = base.duplicate()
-		t.default_font = PixelFont.get_large_font()
-		_themes[id] = t
-	return _themes[id]
+		t.default_font = want
+		_themes[key] = t
+	return _themes[key]
 
 ## Fill of an element-coloured art button: the element's colour washed toward paper until ink
 ## text on it reaches 4.5:1.
@@ -423,7 +432,8 @@ static func single_layout(era: int, field: Vector2, foe_sprite: Rect2, player_sp
 		var fw: float = roundf(w * 0.5)
 		out["foe_plate"] = Rect2(w - MARGIN - fpad[2] - fw, MARGIN + fpad[1], fw, fh)
 		out["foe_team"] = Rect2(w - MARGIN - row.x, MARGIN + fpad[1] + fh + fpad[3] + 3, row.x, row.y)
-		var pw: float = roundf(w - player_sprite.end.x - MARGIN * 2 - fpad[0] - fpad[2])
+		# The big Era IV/V back sprite may reach under the plate; the plate keeps room for its name.
+		var pw: float = maxf(roundf(w - player_sprite.end.x - MARGIN * 2 - fpad[0] - fpad[2]), roundf(w * MIN_PLAYER_PLATE))
 		out["player_slant_left"] = true
 		out["player_plate"] = Rect2(w - MARGIN - fpad[2] - pw, h - MARGIN - fpad[3] - ph, pw, ph)
 		out["player_team"] = Rect2(w - MARGIN - row.x, h - MARGIN - fpad[3] - ph - fpad[1] - 3 - row.y, row.x, row.y)

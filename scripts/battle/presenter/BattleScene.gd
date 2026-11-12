@@ -198,6 +198,8 @@ func _build() -> void:
 	_weather.name = "battle_weather"
 	_weather.visible = false
 	_shake_root.add_child(_weather)
+	if _stage != null and _stage.light_layer() != null:
+		_shake_root.add_child(_stage.light_layer())
 	for n: Control in [_foe_strip, _player_strip]:
 		_field.add_child(n)
 	_foe_sprite.visible = false
@@ -303,8 +305,8 @@ func _layout_field() -> void:
 	_player_sprite.size = Vector2(sprite, sprite)
 	_player_sprite.mirrored = true
 	if _stage != null:
-		var fr: Rect2 = Era4Stage.sprite_rect(_stage.cfg, "foe", Vector2(w, h), sprite)
-		var pr: Rect2 = Era4Stage.sprite_rect(_stage.cfg, "player", Vector2(w, h), sprite)
+		var fr: Rect2 = _stage.fit_sprite("foe", Vector2(w, h), _art_px(_foe_sprite, sprite))
+		var pr: Rect2 = _stage.fit_sprite("player", Vector2(w, h), _art_px(_player_sprite, sprite))
 		_foe_sprite.position = fr.position
 		_foe_sprite.size = fr.size
 		_player_sprite.position = pr.position
@@ -313,6 +315,16 @@ func _layout_field() -> void:
 		_hud.layout_single()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade)
+
+## Width of the art [param sp] draws (Era IV/V size it in whole multiples), [param fallback] before setup.
+static func _art_px(sp: SpirlingSprite, fallback: float) -> float:
+	return float(sp.texture().get_width()) if sp.texture() != null else fallback
+
+## Era IV/V single battles: a Spirling just set up may bring art of another size, so it stands
+## anew on its slab before it steps out.
+func _restage() -> void:
+	if _stage != null and not _multi:
+		_layout_field()
 
 ## Creates the compact sprites and tags for every field slot (formation layout only).
 func _build_formation() -> void:
@@ -927,6 +939,7 @@ func _play_event(e: BattleEvent) -> void:
 				await _text.show_text(e.describe())
 				return
 			_foe_sprite.setup(foe, "front")
+			_restage()
 			_foe_strip.set_spirling(foe)
 			if music_track == "warden":
 				# A Rift Warden shakes the field as it appears (item 2256).
@@ -942,12 +955,14 @@ func _play_event(e: BattleEvent) -> void:
 		BattleEvent.Type.SEND_OUT, BattleEvent.Type.SWAP_IN:
 			var s: Spirling = model.party(side)[int(e.data.get("index", 0))]
 			_sprite(side, slot).setup(s, "back" if side == BattleModel.Side.PLAYER else "front")
+			_restage()
 			_strip(side, slot).set_spirling(s)
 			_strip(side, slot).visible = true
 			_focus(side, slot)
 			# The player's own Spirling keeps the cry of the era it was met in.
 			Sound.cry(s.data, Sound.cry_era_for(s.origin_era, side == BattleModel.Side.PLAYER, EraManager.active_era()))
 			_era_fx("sendout", side, slot)
+			BattleCamera.sendout(_shake_root, Rect2(_sprite(side, slot).position, _sprite(side, slot).size))
 			await _sprite(side, slot).step_out(side != BattleModel.Side.PLAYER)
 			_update_pinch()
 			await _text.show_text(e.describe())
