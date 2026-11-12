@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Rough first-play hours per act and per post-game era region from data (owner rule: at least
-20 h per act and per era region). Coefficients live in data/playtime.json.
+20 h per act and per era region, real content, no padding). Coefficients live in data/playtime.json.
+"content" leaves out walking the maps and wild grass, so it counts only quests, duels, Wayfarers,
+finds, species and talk.
 Usage: python3 tools/act_hours.py [act or region id ...]   (no argument: every act and region)"""
 import glob, json, os, sys
 
@@ -94,4 +96,5 @@ if __name__ == "__main__":
     for act in ids:
         h, parts = act_hours(act)
         label = "Act %s" % act if str(act) in cfg["acts"] else "%s (Era %s)" % (cfg["regions"][act].get("name", act), cfg["regions"][act].get("era", "?"))
-        print("%s: %.1f h  (%s)" % (label, h, ", ".join("%s %.0f min" % (p, v) for p, v in sorted(parts.items()))))
+        content = h - (parts["maps"] + parts["wild"]) / 60.0
+        print("%s: %.1f h, content %.1f h  (%s)" % (label, h, content, ", ".join("%s %.0f min" % (p, v) for p, v in sorted(parts.items()))))

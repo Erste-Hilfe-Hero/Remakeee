@@ -19,6 +19,14 @@
     "dialogue": "veydal_side/nettle",
     "sprite": "villager"
    }
+  ],
+  "signs": [
+   {
+    "x": 7,
+    "y": 3,
+    "dialogue": "veydal_more/poster_6",
+    "hide_flag": "poster_6"
+   }
   ]
  }
 }

@@ -41,6 +41,14 @@
    "sprite": "first_voice",
    "show_flag": "lq_scriptorax_ready",
    "hide_flag": "first_voice_scriptorax_away"
+  },
+  {
+   "id": "vm_crane",
+   "x": 2,
+   "y": 5,
+   "facing": "right",
+   "dialogue": "veydal_more/crane",
+   "sprite": "elder"
   }
  ],
  "signs": [
@@ -73,6 +81,14 @@
    "count": 1,
    "flag": "hush_coin_7",
    "dialogue": "veydal_side/coin_7"
+  },
+  {
+   "x": 8,
+   "y": 6,
+   "item": "tonic",
+   "count": 1,
+   "flag": "ledger_clue_page",
+   "dialogue": "veydal_more/ledger_page"
   }
  ]
 }

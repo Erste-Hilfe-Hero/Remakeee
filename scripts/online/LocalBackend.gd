@@ -37,7 +37,7 @@ const DEFAULT_CONFIG: Dictionary = {
 		{"item": "wake_bell", "w": 5}, {"item": "power_brew", "w": 2}, {"item": "guard_brew", "w": 2},
 		{"item": "focus_brew", "w": 2}, {"item": "dash_brew", "w": 2}, {"item": "revival_leaf", "w": 2}],
 }
-const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel", "rift"]
+const BATTLE_KINDS: Array[String] = ["echo_duel", "league_fair", "league_open", "raid", "live_duel", "rift", "bund_war", "tourney"]
 ## Same rows as public.feature_flags (20261110000001_online_rules.sql): all off at first.
 const DEFAULT_FLAGS: Dictionary = {
 	"league_fair": {"enabled": true, "min_version": 1}, "league_open": {"enabled": true, "min_version": 1},
@@ -92,6 +92,10 @@ func _init(p_store_path: String = "") -> void:
 	LocalFriendsMore.install(self)
 	# Safety and fairness, Online 100 area 9 (20261113000010_safety.sql).
 	LocalSafety.install(self)
+	# Random raid groups, Echo teams, role signs, bund perks, bund house, bund wars (Online 100 areas 3, 4).
+	LocalRaidBund.install(self)
+	# Weekend tournament, watching live duels, top league team (20261113000030_tourney_watch.sql).
+	LocalTourney.install(self)
 
 func is_local() -> bool:
 	return true
@@ -158,7 +162,7 @@ func _fn_action_once(a: Dictionary) -> Dictionary:
 
 ## Functions that change a stored save (the server checks them in a trigger on saves).
 const SAVE_WRITERS: Array[String] = ["save_put", "save_restore", "trade_put", "trade_collect", "trade_put_spirlings",
-	"daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward",
+	"tourney_reward", "daily_gift_claim", "league_reward", "bund_donate", "bund_goal_claim", "event_claim", "event_reward",
 	"friend_level_claim", "pair_task_claim", "invite_claim"]
 
 ## Like public._other_device: this device's token is not the newest one of the account.
@@ -1286,6 +1290,24 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 		if ra.state != "open" or now() - int(ra.created_at) > 1800:
 			return _fail("attempt_closed")
 		c["expect"] = _raid_expect(ra)
+	var wf: Dictionary = {}
+	if kind == "bund_war":
+		var fv: Variant = (_table("bund_war_fights", {}) as Dictionary).get(str(a.get("p_ref", "")))
+		if not fv is Dictionary or fv.user != me():
+			return _fail("no_such_fight")
+		wf = fv
+		if wf.state != "open":
+			return _fail("fought")
+		c["expect"] = (get_meta("raid_bund") as LocalRaidBund).war_expect(wf)
+	var tf: Dictionary = {}
+	if kind == "tourney":
+		var tv: Variant = (_table("tourney_fights", {}) as Dictionary).get(str(a.get("p_ref", "")))
+		if not tv is Dictionary or tv.user != me():
+			return _fail("no_such_fight")
+		tf = tv
+		if tf.state != "open":
+			return _fail("fought")
+		c["expect"] = (get_meta("tourney") as LocalTourney).expect(tf)
 	var battles: Dictionary = _table("battles", {})
 	var id: int = int(db.get("battle_seq", 0)) + 1
 	db["battle_seq"] = id
@@ -1298,6 +1320,15 @@ func _fn_battle_submit(a: Dictionary) -> Dictionary:
 	if not ra.is_empty():
 		ra.state = "submitted"
 		ra.battle_id = id
+	if not wf.is_empty():
+		wf.state = "submitted"
+		wf.battle_id = id
+	if not tf.is_empty():
+		tf.state = "submitted"
+		tf.battle_id = id
+		tf.created_at = now()
+		tf.replay = (get_meta("tourney") as LocalTourney).expect(tf)
+		tf.replay["inputs"] = (inputs as Array).duplicate(true)
 	if kind == "rift":
 		(_table("rift_runs", []) as Array).append({"battle_id": id, "u": me(), "week": _week(), "rift": str(a.get("p_ref", "")),
 			"v": rift_rounds, "at": now()})
@@ -1337,6 +1368,10 @@ func _decide(id: int, result: Dictionary) -> void:
 					m.rated = false
 	elif row.kind == "raid":
 		_raid_apply(id, row.status == "ok", result.detail)
+	elif row.kind == "bund_war":
+		(get_meta("raid_bund") as LocalRaidBund).war_apply(id, row.status == "ok", result.detail)
+	elif row.kind == "tourney":
+		(get_meta("tourney") as LocalTourney).apply(id, row.status == "ok", result.detail)
 
 func _fn_battle_status(a: Dictionary) -> Dictionary:
 	var row: Variant = (_table("battles", {}) as Dictionary).get(str(int(a.get("p_battle_id", -1))))
@@ -1915,21 +1950,35 @@ func _fn_raid_open(a: Dictionary) -> Dictionary:
 	var tier: Variant = a.get("p_tier", 1)
 	if not RaidRules.tier_ok(rc, tier):
 		return _fail("bad_tier")
-	var pool: Array = (db.config.get("raid_guardians", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
-	var legs: Array = (rc.get("legendaries", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
+	var made: Dictionary = raid_new(who, int(tier), 0)
+	if made.is_empty():
+		return _fail("no_guardian")
+	var id: String = str(made.id)
+	var g: Dictionary = made
+	var hp: int = int(made.hp)
+	return {"ok": true, "raid": int(id), "guardian": g.guardian, "tier": int(tier), "legendary": g.legendary, "hp": hp}
+
+## A new Rift for [param who] (like public._raid_new); [param echoes] Echo teams take the free
+## places and deal echo_share percent each at once (Online 100 point 26). {} = no guardian.
+func raid_new(who: Array, tier: int, echoes: int) -> Dictionary:
+	var rc: Dictionary = raid_cfg()
+	var pool: Array = (db.config.get("raid_guardians", []) as Array).filter(func(x: Variant) -> bool: return Database.species(str(x)) != null)
+	var legs: Array = (rc.get("legendaries", []) as Array).filter(func(x: Variant) -> bool: return Database.species(str(x)) != null)
 	var cfg2: Dictionary = rc.duplicate()
 	cfg2["legendaries"] = legs
 	var g: Dictionary = RaidRules.guardian(cfg2, pool, RaidRules.week_index(now()), rng.randi() % 100)
 	if g.is_empty():
-		return _fail("no_guardian")
+		return {}
 	var id: String = str(_next_id("raid"))
-	var hp: int = RaidRules.hp(rc, raid_hp(who.size()), int(tier), bool(g.legendary))
-	(_table("raids", {}) as Dictionary)[id] = {"guardian": g.guardian, "level": int(rc.tiers[int(tier)].level),
-		"players": who.size(), "hp_total": hp, "hp_left": hp, "created_at": now(), "tier": int(tier), "legendary": g.legendary,
+	var hp: int = RaidRules.hp(rc, raid_hp(who.size() + echoes), tier, bool(g.legendary))
+	var ed: int = RaidRules.echo_damage(rc, hp)
+	(_table("raids", {}) as Dictionary)[id] = {"guardian": g.guardian, "level": int(rc.tiers[tier].level),
+		"players": who.size() + echoes, "hp_total": hp, "hp_left": hp - echoes * ed, "created_at": now(), "tier": tier,
+		"legendary": g.legendary, "echoes": echoes, "echo_damage": ed,
 		"closes_at": now() + 3600 * config_int("raid_hours", 48), "won_at": 0, "reward": null}
 	for x: String in who:
-		(_table("raid_members", {}) as Dictionary)["%s|%s" % [id, x]] = {"damage": 0, "claimed": false}
-	return {"ok": true, "raid": int(id), "guardian": g.guardian, "tier": int(tier), "legendary": g.legendary, "hp": hp}
+		(_table("raid_members", {}) as Dictionary)["%s|%s" % [id, x]] = {"damage": 0, "claimed": false, "role": ""}
+	return {"id": int(id), "guardian": g.guardian, "legendary": g.legendary, "hp": hp}
 
 ## server_config.raid_rules (data/raid_rules.json).
 func raid_cfg() -> Dictionary:
@@ -1970,14 +2019,19 @@ func _fn_raid_list(_a: Dictionary) -> Dictionary:
 			continue
 		var members: Array = []
 		for x: String in mem:
-			members.append({"name": profile_of(x).name if db.users.has(x) else "?", "damage": mem[x].damage, "me": x == u})
+			members.append({"name": profile_of(x).name if db.users.has(x) else "?", "damage": mem[x].damage, "me": x == u,
+				"role": str(mem[x].get("role", ""))})
 		members.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.damage) > int(q.damage))
+		for i: int in int(r.get("echoes", 0)):
+			members.append({"name": "", "damage": int(r.echo_damage), "me": false, "role": "", "echo": true})
 		out.push_front({"id": int(id), "guardian": r.guardian, "level": r.level, "players": r.players, "hp_total": r.hp_total,
 			"hp_left": r.hp_left, "closes_at": r.closes_at, "open": int(r.hp_left) > 0 and int(r.closes_at) > now(),
+			"tier": int(r.get("tier", 1)), "echoes": int(r.get("echoes", 0)), "role": str(mem[u].get("role", "")),
 			"won": int(r.won_at) > 0, "tries_left": maxi(0, tries - _raid_tries_used(id, u)),
 			"reward": r.reward if _raid_qualifies(r, int(mem[u].damage)) else null, "claimed": mem[u].claimed, "members": members})
 	return {"ok": true, "rewards": (db.config.get("raid_rewards", []) as Array).duplicate(true), "tries": tries,
-		"share_min": config_int("raid_share_min", 5), "rounds": config_int("raid_rounds", 10), "raids": out}
+		"share_min": config_int("raid_share_min", 5), "rounds": config_int("raid_rounds", 10), "raids": out,
+		"roles": (raid_cfg().get("roles", ["attack", "guard", "help"]) as Array).duplicate()}
 
 func _fn_raid_start(a: Dictionary) -> Dictionary:
 	var u: String = me()
@@ -2619,9 +2673,19 @@ func _live_out(d: Dictionary) -> Dictionary:
 			for i: Variant in d.pick[side]:
 				rows.append((d.show[side][int(i)] as Dictionary).duplicate(true))
 			teams.append(rows)
-	return {"ok": true, "id": int(d.id), "side": _live_side(d), "state": d.state, "show": (d.show as Array).duplicate(true),
+	# A player never sees the other side's choice of the open round; a watcher is one round behind.
+	var side: int = _live_side(d)
+	var moves: Dictionary = (d.moves as Dictionary).duplicate(true)
+	if d.state == "running":
+		if side < 0:
+			for key: String in moves.keys():
+				if int(key) >= int(d.round) - 1:
+					moves.erase(key)
+		elif moves.has(str(d.round)):
+			moves[str(d.round)][1 - side] = null
+	return {"ok": true, "id": int(d.id), "side": side, "state": d.state, "show": (d.show as Array).duplicate(true),
 		"picked": [d.pick[0] != null, d.pick[1] != null], "teams": teams, "seed": d.seed, "round": d.round,
-		"moves": (d.moves as Dictionary).duplicate(true), "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
+		"moves": moves, "deadline": d.deadline, "turn_seconds": int(live_cfg().turn_seconds),
 		"winner": d.winner, "reason": d.reason, "emotes": (d.emotes as Array).duplicate(true)}
 
 func _live_new(other: String) -> Dictionary:
@@ -2814,11 +2878,19 @@ func _fn_bund_stats(_a: Dictionary) -> Dictionary:
 	var row: Dictionary = db.bunds[b]
 	var c: Dictionary = bund_cfg()
 	var claims: Array = row.get("goal_claims", [])
-	return {"ok": true, "xp": int(row.get("xp", 0)), "level": BundRules.level(c, int(row.get("xp", 0))),
+	var lvl: int = BundRules.level(c, int(row.get("xp", 0)))
+	var reward: Dictionary = (c.goal_reward as Dictionary).duplicate()
+	reward["count"] = int(reward.count) + BundRules.perk(c, lvl, "goal_more")
+	return {"ok": true, "xp": int(row.get("xp", 0)), "level": lvl,
 		"lang": str(row.get("lang", "")), "open": bool(row.get("open", false)), "goal": _bund_goal(row),
-		"goal_target": int(c.goal_target), "goal_reward": (c.goal_reward as Dictionary).duplicate(),
+		"goal_target": int(c.goal_target), "goal_reward": reward,
 		"goal_claimed": claims.has(_week() + "|" + u),
-		"donated_today": int((_user().get("bund_donated", {}) as Dictionary).get(_today(), 0)), "donate_daily": int(c.donate_daily)}
+		"donated_today": int((_user().get("bund_donated", {}) as Dictionary).get(_today(), 0)),
+		"donate_daily": int(c.donate_daily) + BundRules.perk(c, lvl, "donate_more"), "perks": (c.get("perks", []) as Array).duplicate(true)}
+
+## Rank of bund [param b] (Online 100 point 34).
+func bund_level(b: String) -> int:
+	return BundRules.level(bund_cfg(), int(db.bunds[b].get("xp", 0)))
 
 func _fn_bund_settings(a: Dictionary) -> Dictionary:
 	var u: String = me()
@@ -2893,7 +2965,7 @@ func _fn_bund_donate(a: Dictionary) -> Dictionary:
 	if item.is_empty() or count < 1 or count > 99:
 		return _fail("bad_count")
 	var done: Dictionary = _user().get_or_add("bund_donated", {})
-	if int(done.get(_today(), 0)) + count > int(bund_cfg().donate_daily):
+	if int(done.get(_today(), 0)) + count > int(bund_cfg().donate_daily) + BundRules.perk(bund_cfg(), bund_level(b), "donate_more"):
 		return _fail("limit_today")
 	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {item: -count})
 	if not bool(r.ok):
@@ -2920,11 +2992,12 @@ func _fn_bund_goal_claim(a: Dictionary) -> Dictionary:
 	if claims.has(_week() + "|" + u):
 		return _fail("claimed")
 	var rw: Dictionary = bund_cfg().goal_reward
-	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {str(rw.item): int(rw.count)})
+	var n: int = int(rw.count) + BundRules.perk(bund_cfg(), bund_level(b), "goal_more")
+	var r: Dictionary = _trade_bag(int(a.get("p_slot", 0)), int(a.get("p_rev", -1)), {str(rw.item): n})
 	if not bool(r.ok):
 		return r
 	claims.append(_week() + "|" + u)
-	return {"ok": true, "rev": r.rev, "item": rw.item, "count": int(rw.count), "bag": {str(rw.item): int(rw.count)}}
+	return {"ok": true, "rev": r.rev, "item": rw.item, "count": n, "bag": {str(rw.item): n}}
 
 func _fn_bund_board(_a: Dictionary) -> Dictionary:
 	var u: String = me()

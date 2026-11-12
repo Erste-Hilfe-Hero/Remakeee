@@ -8,6 +8,10 @@
   "gilt": {"seat": "gildcrest", "rule": "gold and family"}
  },
  "figures": {
+  "haskett": {"clan": "none", "act": 1, "role": "Copperfold mine foreman, pays in scrip", "trust": 20, "use": 60},
+  "dory": {"clan": "none", "act": 1, "role": "Shatterfloor strike leader, keeps the strike fund", "trust": 40, "use": 50},
+  "odette": {"clan": "none", "act": 1, "role": "Reedhaven widow, very unlucky husbands", "trust": 15, "use": 70},
+  "jinks": {"clan": "none", "act": 1, "role": "rival Wayfarer, paid by Brennick, broke", "trust": 35, "use": 45},
   "ottilie": {"clan": "marrovel", "role": "clan mother, hidden power", "trust": 30, "use": 60},
   "fenrick": {"clan": "marrovel", "role": "clan father, loud patriarch", "trust": 35, "use": 55},
   "brannoc": {"clan": "marrovel", "role": "broken heir", "trust": 40, "use": 50},
@@ -47,6 +51,8 @@
   "gaunt": {"clan": "none", "act": 2, "role": "loan shark, robs her own collectors", "trust": 20, "use": 60},
   "pell": {"clan": "none", "act": 2, "role": "quay fence, borrows Spirlings", "trust": 35, "use": 40},
   "ollie": {"clan": "none", "act": 2, "role": "tonic seller, skips town", "trust": 30, "use": 45},
+  "prim": {"clan": "none", "act": 2, "role": "quay fixer, sells everything twice", "trust": 20, "use": 60},
+  "wenna": {"clan": "none", "act": 2, "role": "dyer's widow, wants the drowned wages", "trust": 50, "use": 35},
   "dimsy": {"clan": "none", "act": 2, "role": "Rook Vault guide, sells marks to robbers", "trust": 25, "use": 50},
   "ambrel": {"clan": "none", "role": "sexton who sells bronze by the pound", "trust": 20, "use": 70},
   "quell": {"clan": "none", "role": "archivist who forges routes", "trust": 20, "use": 65},
@@ -80,6 +86,7 @@
   "hs_posy": {"clan": "gilt", "role": "florist of the Gilt weddings who arranges more than flowers", "trust": 40, "use": 50}
  },
  "favors": {
+  "jinks_stake": {"npc": "jinks", "kind": "lend_coins", "amount": 200, "reward_chance": 0.5, "betray": {"say": "veydal_more/jinks_betray", "battle": "jinks_ambush", "ledger": "jinks_stake", "flags": ["jinks_bet_done"], "use": {"jinks": 10}}, "reward": {"say": "veydal_more/jinks_reward", "coins": 400, "flags": ["jinks_bet_done"], "trust": {"jinks": 10}}, "kept": {"say": "veydal_more/jinks_kept", "coins": 200, "flags": ["jinks_bet_done"]}},
   "briony_alibi": {"npc": "briony", "kind": "believe_tip", "reward_chance": 0.3,
    "betray": {"say": "ashmere_more/briony_betray", "battle": "briony_fence", "ledger": "alibi", "use": {"briony": 10}},
    "reward": {"say": "ashmere_more/briony_reward", "item": "max_tonic", "trust": {"briony": 10}},
@@ -143,12 +150,16 @@
    "kept": {"say": "clans/sable_dune_kept", "trust": {"sable": 5}}},
   "pell_lend": {"npc": "pell", "kind": "lend_spirling", "reward_chance": 0.4, "betray": {"say": "corvane_side/pell_betray", "take_keepsake": true, "use": {"pell": 10}}, "reward": {"say": "corvane_side/pell_reward", "item": "kin_charm", "trust": {"pell": 10}}, "kept": {"say": "corvane_side/pell_kept", "trust": {"pell": 5}}},
   "ollie_stake": {"npc": "ollie", "kind": "lend_coins", "amount": 250, "reward_chance": 0.5, "betray": {"say": "corvane_side/ollie_betray", "ledger": "ollie"}, "reward": {"say": "corvane_side/ollie_reward", "coins": 450, "trust": {"ollie": 10}}, "kept": {"say": "corvane_side/ollie_kept", "coins": 250}},
+  "wenna_ledger": {"npc": "wenna", "kind": "believe_tip", "reward_chance": 0.5, "betray": {"say": "dyeworks/wenna_betray", "ledger": "wenna", "battle": "ambush_wenna"}, "reward": {"say": "dyeworks/wenna_reward", "item": "max_tonic", "coins": 1200, "trust": {"wenna": 10}}, "kept": {"say": "dyeworks/wenna_kept", "item": "strong_tonic"}},
   "dimsy_tip": {"npc": "dimsy", "kind": "believe_tip", "reward_chance": 0.4, "betray": {"say": "corvane_side/dimsy_betray", "battle": "ambush_vault"}, "reward": {"say": "corvane_side/dimsy_reward", "item": "max_tonic", "trust": {"dimsy": 10}}, "kept": {"say": "corvane_side/dimsy_kept"}},
   "hs_salt_skim": {"npc": "hs_jost", "kind": "believe_tip", "reward_chance": 0.3, "betray": {"say": "halcyra_side/salt_skim_betray", "battle": "hs_jost_guards", "ledger": "hs_salt_skim", "use": {"hs_jost": 10}}, "reward": {"say": "halcyra_side/salt_skim_rewarded", "trust": {"hs_jost": 10}, "item": "revival_leaf"}, "kept": {"say": "halcyra_side/salt_skim_kept", "trust": {"hs_jost": 5}}},
   "hs_true_stars": {"npc": "hs_arno", "kind": "lend_coins", "reward_chance": 0.3, "amount": 800, "betray": {"say": "halcyra_side/true_stars_betray", "battle": "hs_arno_watchers", "ledger": "hs_true_stars", "use": {"hs_arno": 10}}, "reward": {"say": "halcyra_side/true_stars_rewarded", "trust": {"hs_arno": 10}, "coins": 1200}, "kept": {"say": "halcyra_side/true_stars_kept", "trust": {"hs_arno": 5}, "coins": 800}},
   "hs_wedding_blades": {"npc": "hs_posy", "kind": "believe_tip", "reward_chance": 0.3, "betray": {"say": "halcyra_side/wedding_blades_betray", "battle": "hs_posy_guards", "ledger": "hs_wedding_blades", "use": {"hs_posy": 10}}, "reward": {"say": "halcyra_side/wedding_blades_rewarded", "trust": {"hs_posy": 10}, "item": "wake_bell"}, "kept": {"say": "halcyra_side/wedding_blades_kept", "trust": {"hs_posy": 5}}}
  },
  "betrayals": {
+  "haskett_scrip": {"act": 1, "npc": "haskett", "rule": "warned", "warned_by": ["strike_proof"], "caught": {"ledger": "haskett_scrip", "coins": 300, "trust": {"haskett": -10}, "say": "veydal_more/haskett_caught"}, "struck": {"ledger": "haskett_scrip", "coins": -100, "use": {"haskett": 10}, "say": "veydal_more/haskett_struck"}},
+  "dory_sale": {"act": 1, "npc": "dory", "rule": "trust", "min": 55, "caught": {"ledger": "dory_sale", "trust": {"dory": 5}, "say": "veydal_more/dory_caught"}, "struck": {"ledger": "dory_sale", "flags": ["strike_sold"], "say": "veydal_more/dory_struck"}},
+  "odette_slip": {"act": 1, "npc": "odette", "rule": "warned", "warned_by": ["widow_read_label"], "caught": {"ledger": "odette_slip", "coins": 100, "say": "veydal_more/odette_caught"}, "struck": {"ledger": "odette_slip", "coins": -150, "use": {"odette": 10}, "say": "veydal_more/odette_struck"}},
   "greaves_verdict": {"act": 3, "npc": "greaves", "rule": "warned", "warned_by": ["ah_docket_read"],
    "caught": {"ledger": "verdict", "coins": 2000, "trust": {"tansy": 10, "greaves": -10}, "say": "ashmere_more/verdict_caught"},
    "struck": {"ledger": "verdict", "say": "ashmere_more/verdict_struck", "battle": "assize_bailiffs", "coins": -200}},
@@ -252,6 +263,7 @@
    "caught": {"flags": ["clan_b11"], "ledger": "throne", "trust": {"fenrick": -20}, "say": "clans/throne_f_caught"},
    "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}},
   "nib_sale": {"act": 2, "npc": "nib", "rule": "warned", "warned_by": ["nib_warned"], "caught": {"ledger": "nib", "trust": {"nib": -20}, "say": "corvane_side/nib_caught", "item": "max_tonic"}, "struck": {"ledger": "nib", "say": "corvane_side/nib_struck", "battle": "ambush_nib"}},
+  "prim_ledger": {"act": 2, "npc": "prim", "rule": "warned", "warned_by": ["hatch_warned", "tansy_slip"], "caught": {"ledger": "prim", "coins": 900, "item": "max_tonic", "trust": {"prim": -20}, "say": "dyeworks/prim_caught"}, "struck": {"ledger": "prim", "coins": -300, "say": "dyeworks/prim_struck", "battle": "ambush_dyeworks"}},
   "gaunt_cut": {"act": 2, "npc": "gaunt", "rule": "warned", "warned_by": ["brask_warned"], "caught": {"ledger": "gaunt", "coins": 600, "say": "corvane_side/gaunt_caught"}, "struck": {"ledger": "gaunt", "coins": 300, "say": "corvane_side/gaunt_struck", "battle": "ambush_gaunt"}},
   "lq_hallowmur": {"act": 5, "npc": "ambrel", "rule": "warned", "warned_by": ["lq_hallowmur_kept"], "caught": {"flags": ["lq_hallowmur_caught"], "ledger": "lq_hallowmur", "trust": {"ambrel": -30}, "say": "legend_quests/hallowmur_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_hallowmur_struck"], "ledger": "lq_hallowmur", "say": "legend_quests/hallowmur_struck", "battle": "lq_ambrel"}},
   "lq_scriptorax": {"act": 5, "npc": "quell", "rule": "warned", "warned_by": ["lq_scriptorax_kept"], "caught": {"flags": ["lq_scriptorax_caught"], "ledger": "lq_scriptorax", "trust": {"quell": -30}, "say": "legend_quests/scriptorax_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_scriptorax_struck"], "ledger": "lq_scriptorax", "say": "legend_quests/scriptorax_struck", "battle": "lq_quell"}},
@@ -275,6 +287,10 @@
   "a4_tunnel": {"act": 4, "at": "betrayal/a4_tunnel", "decides": ["lusk_tunnel"]}
  },
  "ledger": [
+  {"id": "haskett_scrip", "act": 1, "ref": "veydal_more/ledger_haskett"},
+  {"id": "dory_sale", "act": 1, "ref": "veydal_more/ledger_dory"},
+  {"id": "odette_slip", "act": 1, "ref": "veydal_more/ledger_odette"},
+  {"id": "jinks_stake", "act": 1, "ref": "veydal_more/ledger_jinks"},
   {"id": "ash", "act": 1, "ref": "clans/ledger_ash"},
   {"id": "vash_record", "act": 1, "ref": "clans/ledger_vash_record"},
   {"id": "fenrick_letter", "act": 1, "ref": "clans/ledger_fenrick_letter"},
@@ -325,6 +341,8 @@
   {"id": "farida_book", "act": 3, "ref": "edge_camp/ledger_farida_book"},
   {"id": "nib", "act": 2, "ref": "corvane_side/ledger_nib"},
   {"id": "gaunt", "act": 2, "ref": "corvane_side/ledger_gaunt"},
+  {"id": "prim", "act": 2, "ref": "dyeworks/ledger_prim"},
+  {"id": "wenna", "act": 2, "ref": "dyeworks/ledger_wenna"},
   {"id": "ollie", "act": 2, "ref": "corvane_side/ledger_ollie"},
   {"id": "quay_book", "act": 2, "ref": "corvane_side/ledger_quay_book"},
   {"id": "lq_hallowmur", "act": 5, "ref": "legend_quests/hallowmur_ledger"},
