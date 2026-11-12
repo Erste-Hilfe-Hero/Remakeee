@@ -617,6 +617,9 @@ static func bond_charms(bag: Dictionary) -> Array[String]:
 	return out
 
 func _bond(slot: int = 0) -> BattleAction:
+	# Steps 3 and 4 of the bonding tutorial come when they are needed, not at battle start.
+	for line: String in Tips.take(Tips.bond_how_id()):
+		await _text.show_text(line)
 	var charm: String = ""
 	var charms: Array[String] = bond_charms(model.inventory)
 	if charms.size() == 1 and charms[0] == "kin_charm":

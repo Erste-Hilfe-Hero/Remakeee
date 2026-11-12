@@ -27,7 +27,8 @@ func _screens() -> Array[Array]:
 	for l: String in PauseMenu.menu_labels(true, true, false, false, true):
 		labels.append({"text": l})
 	out.append(["pause", "Rowan", labels])
-	out.append(["goals", "Goals", PauseMenu.goal_rows({"aldo_gift": true}, "Today: a rare visitor stirs in Fernstair.")])
+	# Shown as a seasoned player: the newcomer-only "First steps" row has its own width test.
+	out.append(["goals", "Goals", PauseMenu.goal_rows({"aldo_gift": true}, "Today: a rare visitor stirs in Fernstair.", false)])
 	# Rows are built; out of a journey the "connection lost" mark stays away (no server here).
 	GameState.in_game = false
 	# Lists fade in over 80 ms; the images show them settled.
