@@ -1,5 +1,5 @@
 {
-  "_comment": "Era I look per region (world area, Act II: Corvane gets its own world). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, which reads this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette. Post-game regions add their era: Halcyra (era 4, data/region4.json) keeps four inks for the Era I Retro filter, and its Era IV colours are swatches (4 tones each, darkest to lightest) with tiles = TilesetFactory.Kind -> swatch for tools/art/gen_tiles_halcyra.py, which paints art/era4/tiles/overworld_halcyra.png with 8 tones per swatch; stage = colours over data/era4_stage.json for battles in the region (EraManager.stage_colors).",
+  "_comment": "Era I look per region (world area, Act II: Corvane gets its own world). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, which reads this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette. Post-game regions add their era: Halcyra (era 4, data/region4.json) keeps four inks for the Era I Retro filter, and its Era IV colours are swatches (4 tones each, darkest to lightest) with tiles = TilesetFactory.Kind -> swatch for tools/art/gen_tiles_halcyra.py, which paints art/era4/tiles/overworld_halcyra.png with 8 tones per swatch; stage = colours over data/era4_stage.json for battles in the region (EraManager.stage_colors). Quillmarch (era 3, data/region3.json) has no screen filter: its palette is the 16-colour atlas palette for tools/art/gen_tiles_quillmarch.py (art/era3/tiles/overworld_quillmarch.png); EraManager.inks_for() only takes a four-ink palette.",
   "regions": {
     "corvane": {
       "biome": "dye_fen",
@@ -181,6 +181,44 @@
         "shadow": "2a2238"
       },
       "arrive": "The map unrolls past its own edge. Up here the light is gold, the stone is white and every smile is paid for."
+    },
+    "quillmarch": {
+      "era": 3,
+      "biome": "engravers_moor",
+      "palette": [
+        "141a24",
+        "2a3346",
+        "3e5a4c",
+        "5c7a52",
+        "8aa064",
+        "c2c88c",
+        "5a3a2a",
+        "8c5a34",
+        "c08048",
+        "e2b070",
+        "3a5a7a",
+        "6a92b0",
+        "a8c8d8",
+        "7a7068",
+        "b4aa98",
+        "f2ecdc"
+      ],
+      "props": [
+        "moss_grass",
+        "ferns_two_heights",
+        "soft_path_edges",
+        "canal_water",
+        "stone_bank",
+        "etched_oak",
+        "ground_shadow",
+        "frost_flowers",
+        "copper_blooms",
+        "canal_reeds",
+        "mossy_scree",
+        "cracked_boulder",
+        "hatched_cliff"
+      ],
+      "arrive": "The lines grow sharp here. Quillmarch engraves everything, especially what you owe."
     }
   }
 }
