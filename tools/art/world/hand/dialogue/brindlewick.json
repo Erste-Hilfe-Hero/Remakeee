@@ -1,0 +1,66 @@
+{
+ "brin": {
+  "lines": [
+   "Netmender Brin: My nets have more holes than Wim's excuses, and I still catch more than he delivers."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Netmender Brin: The lake sings again since the Rift went quiet. The nets feel it too."
+   ]
+  }
+ },
+ "lotte": {
+  "lines": [
+   "Baker Lotte: Wim's cart is so slow the bread goes stale on the way. I've started baking it stale. Saves time."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Baker Lotte: My dough rises properly again. The Rift must have been sitting on it."
+   ]
+  }
+ },
+ "tilda": {
+  "lines": [
+   "Rower Tilda: I'd row Wim across the lake for free. Halfway. Then I'd row back."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Rower Tilda: The water's clear down to the stones again. You did that, didn't you?"
+   ]
+  }
+ },
+ "joss": {
+  "lines": [
+   "Lamplighter Joss: I keep the lamp burning all night so Lotte can see how flat her bread is."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Lamplighter Joss: The lamp burns steady now. No more flicker from the east."
+   ]
+  }
+ },
+ "wim": {
+  "lines": [
+   "Carter Wim: Everybody laughs at my cart. Even the cart. It squeaks every time someone says my name."
+  ],
+  "after_flag": {
+   "flag": "rift_tide_sealed",
+   "lines": [
+    "Carter Wim: The road feels lighter since the Rift was sealed. Even the cart squeaks less."
+   ]
+  },
+  "choices": [
+   {
+    "text": "Tell Wim a cart joke",
+    "next": "wim_pays"
+   },
+   {
+    "text": "Leave them be"
+   }
+  ]
+ }
+}

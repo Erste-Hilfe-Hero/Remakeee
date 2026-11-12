@@ -4,8 +4,9 @@ extends RefCounted
 ## layout (data/world_layout.json) in data/.
 
 const LAYOUT_PATH: String = "res://data/world_layout.json"
-## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287).
-const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne"]
+## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287;
+## Vellmarch is the post-game Era II region, data/region2.json).
+const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne", "vellmarch"]
 
 ## Maps per region, counted apart (item 1287): "Maps: veydal 37, corvane 1".
 static func region_counts(map_ids: PackedStringArray) -> Dictionary:
@@ -189,16 +190,19 @@ const MIN_TABLE_WEIGHT: int = 50
 
 ## Encounter balance (items 1109, 1110, 1114): grounds are known names, weights add up to at
 ## least 50, the base rate fits the kind of place, and sorted by their lowest ring no table
-## jumps more than 4 rings past the one before it.
+## jumps more than 4 rings past the one before it. Each era is its own chain: a post-game region
+## (Vellmarch, Era II) starts high after the finale and is not compared with the story's tables.
 static func check_table_balance(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
 	var places: Dictionary = load_layout().get("maps", {})
 	var kind_of: Dictionary = {}
+	var era_of: Dictionary = {}
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null or m.encounter_table.is_empty():
 			continue
 		var place: String = layout_place(places, id)
 		kind_of[m.encounter_table] = str((places.get(place, {}) as Dictionary).get("kind", ""))
+		era_of[m.encounter_table] = EraManager.region_era(m.region)
 	var mins: Array = []
 	for t: String in EncounterTable.table_ids():
 		if t.begins_with("_"):
@@ -217,11 +221,11 @@ static func check_table_balance(errors: PackedStringArray, map_ids: PackedString
 		if RATES.has(kind) and not is_equal_approx(EncounterTable.rate(t), RATES[kind]):
 			errors.append("encounter table '%s': rate %.2f, a %s uses %.2f" % [t, EncounterTable.rate(t), kind, RATES[kind]])
 		if low < 999:
-			mins.append([low, t])
+			mins.append([int(era_of.get(t, EraManager.Era.INK)), low, t])
 	mins.sort()
 	for i: int in range(1, mins.size()):
-		if int(mins[i][0]) - int(mins[i - 1][0]) > MAX_RING_JUMP:
-			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][1], mins[i][0], MAX_RING_JUMP, mins[i - 1][1], mins[i - 1][0]])
+		if int(mins[i][0]) == int(mins[i - 1][0]) and int(mins[i][1]) - int(mins[i - 1][1]) > MAX_RING_JUMP:
+			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][2], mins[i][1], MAX_RING_JUMP, mins[i - 1][2], mins[i - 1][1]])
 
 ## Hidden finds (area 3 items 1080, 1083): each one is reachable, gives a real item from
 ## data/items.json and has a flag no other find uses.
