@@ -1008,8 +1008,8 @@
    },
    {
     "id": "corbin",
-    "x": 4,
-    "y": 4,
+    "x": 10,
+    "y": 6,
     "facing": "down",
     "dialogue": "corvane_side/corbin",
     "sprite": "elder",
