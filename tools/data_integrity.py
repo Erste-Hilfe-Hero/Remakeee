@@ -40,10 +40,7 @@ errors = []
 notes = []
 
 # Known and accepted for now; printed on every run so they are not forgotten.
-KNOWN = {
-    # Era III's region (not merged yet) adds eras.json finale_flags["era3_finale_done"].
-    "flag 'era3_finale_done' is checked": "set by the Era III region once it lands (eras.json _doc)",
-}
+KNOWN = {}
 
 
 def err(kind, msg):

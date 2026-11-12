@@ -856,7 +856,7 @@
    },
    {
     "id": "fenwick",
-    "x": 10,
+    "x": 9,
     "y": 12,
     "facing": "left",
     "dialogue": "corvane_side/fenwick",
@@ -873,7 +873,7 @@
    },
    {
     "id": "ollie",
-    "x": 1,
+    "x": 2,
     "y": 6,
     "facing": "right",
     "dialogue": "corvane_side/ollie",
@@ -1633,7 +1633,7 @@
    },
    {
     "id": "clan_leith",
-    "x": 3,
+    "x": 4,
     "y": 13,
     "facing": "down",
     "dialogue": "clans/leith",
@@ -1655,8 +1655,8 @@
    },
    {
     "id": "clan_marlo_3",
-    "x": 5,
-    "y": 6,
+    "x": 10,
+    "y": 11,
     "facing": "down",
     "dialogue": "clans/marlo_3",
     "sprite": "villager",
@@ -1999,7 +1999,7 @@
    },
    {
     "id": "saffi",
-    "x": 10,
+    "x": 7,
     "y": 14,
     "facing": "left",
     "dialogue": "solenne_side/saffi",
