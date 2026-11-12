@@ -280,7 +280,7 @@ static func oath() -> Dictionary:
 	return _oath
 
 static func trait_info(id: String) -> Dictionary:
-	return TRAITS.get(id, {})
+	return TRAITS[id] if TRAITS.has(id) else HiddenGifts.gift(id)
 
 ## The "held" block of an item, or {} if it can't be held.
 static func held_info(item_id: String) -> Dictionary:
@@ -294,14 +294,14 @@ static func is_holdable(item_id: String) -> bool:
 
 ## Sum of a numeric key over a Spirling's trait and held item (for additive keys).
 static func add_key(s: Spirling, key: String) -> float:
-	return float(trait_info(s.data.trait_id).get(key, 0.0)) + float(held_info(s.held).get(key, 0.0))
+	return float(trait_info(s.gift_id()).get(key, 0.0)) + float(held_info(s.held).get(key, 0.0))
 
 ## Product of a multiplier key over trait and held item.
 static func mult_key(s: Spirling, key: String) -> float:
-	return float(trait_info(s.data.trait_id).get(key, 1.0)) * float(held_info(s.held).get(key, 1.0))
+	return float(trait_info(s.gift_id()).get(key, 1.0)) * float(held_info(s.held).get(key, 1.0))
 
 static func is_immune(s: Spirling, status: String) -> bool:
-	return status in trait_info(s.data.trait_id).get("immune", [])
+	return status in trait_info(s.gift_id()).get("immune", [])
 
 static func field_mult(field: String, element: int) -> float:
 	var f: Dictionary = FIELDS.get(field, {})
@@ -364,7 +364,7 @@ static func damage_mult(user: Spirling, target: Spirling, move: MoveData, field:
 	var held: Dictionary = held_info(user.held)
 	if held.has("elem") and move.element == Elements.E.get(str(held.elem), -1):
 		m *= float(held.get("elem_mult", 1.0))
-	var boost: float = float(trait_info(user.data.trait_id).get("low_hp_boost", 1.0))
+	var boost: float = float(trait_info(user.gift_id()).get("low_hp_boost", 1.0))
 	if boost != 1.0 and move.element in user.elements() and user.hp * 3 < user.max_hp():
 		m *= boost
 	return m
