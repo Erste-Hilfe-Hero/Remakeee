@@ -275,9 +275,8 @@ func _process(delta: float) -> void:
 	if not rest_note.is_empty():
 		toast.show_note(rest_note)
 	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
-	if DeepLink.route == "event" and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
-		DeepLink.take()
-		open_menu("Goals")
+	if DeepLink.route in ["event", "friend"] and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
+		open_menu("Goals" if DeepLink.take() == "event" else "Invite")
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
@@ -1445,7 +1444,7 @@ func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	menu.queue_free()
 
 ## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings); [param start] opens one entry
-## first ("Goals" for a chimora://event link, DeepLink.gd).
+## first ("Goals" for a chimora://event link, "Invite" for chimora://friend, DeepLink.gd).
 func open_menu(start: String = "") -> void:
 	if busy:
 		return
