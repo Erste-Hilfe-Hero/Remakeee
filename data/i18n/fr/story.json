@@ -571,6 +571,22 @@
   "Ysolde: You have Mirela's compass rose on your map case. Where did you get that?": "Ysolde: Tu as la rose des vents de Mirela sur ton porte-cartes. Où l'as-tu eue?",
   "Ysolde: You've seen the Wide Rift. Sit down, apprentice. There is something in the guild files.": "Ysolde: Tu as vu la Grande Faille. Assieds-toi. Il y a quelque chose dans les dossiers de la guilde.",
   "Zippits spark brightest when a Rift is near. Wardens used them as early warnings.": "Les Zippits crépitent plus fort quand une Faille est proche. Les Gardiens s'en servaient pour donner l'alerte.",
-  "{name}! Wake up!": "{name}! Réveille-toi!"
+  "{name}! Wake up!": "{name}! Réveille-toi!",
+  "Auburn": "Auburn",
+  "Black": "Noir",
+  "Blond": "Blond",
+  "Brown": "Brun",
+  "Coat colour": "Couleur du pelage",
+  "Deep": "Foncé",
+  "Fair": "Clair",
+  "Hair colour": "Couleur des cheveux",
+  "Light": "Pâle",
+  "Ochre": "Ocre",
+  "Plum": "Prune",
+  "Rust": "Rouille",
+  "Silver": "Argent",
+  "Skin tone": "Teint",
+  "Tan": "Hâlé",
+  "Teal": "Sarcelle"
  }
 }

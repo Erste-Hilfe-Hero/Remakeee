@@ -463,6 +463,13 @@
   "not seen": "no visto",
   "strong": "fuerte",
   "wild %s": "%s salvaje",
-  "Join our Discord": "Únete a nuestro Discord"
+  "Join our Discord": "Únete a nuestro Discord",
+  " It gleams in colours of its own!": " ¡Brilla con colores propios!",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "Vincular, paso 1: dale con unas técnicas hasta que su barra de Vigor esté baja. No lo dejes K.O.",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "Vincular, paso 2: elige Vincular. Llama unas marcas, una tras otra. Mira bien.",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "Vincular, paso 3: pulsa las mismas marcas en el mismo orden. Cuanto mejor tu eco, mejor el vínculo.",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "Vincular, paso 3: toca las mismas marcas en el mismo orden. Cuanto mejor tu eco, mejor el vínculo.",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "Vincular, paso 4: ofrece un Amuleto de linaje cuando te lo pida. Estabiliza el vínculo. Empiezas con 20.",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "Mientras eres novato, un vínculo fallido no le da un golpe gratis al Spirling salvaje."
  }
 }

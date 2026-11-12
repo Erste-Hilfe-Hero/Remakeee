@@ -1,0 +1,26 @@
+{
+ "_comment": "Simplified Chinese texts for the German table fan_burrow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_CN.",
+ "strings": {
+  "A crack in the rock opens into a dry hollow.": "岩石上的一道裂缝通向一个干燥的洞穴。",
+  "A dry hollow in the rock. Nobody seems to live here. Claim it as your Burrow?": "岩石里一个干燥的洞穴。好像没人住。把它占作你的窝？",
+  "A jar of names. Your Spirlings wrote them. Some are yours.": "一罐名字。是你的Spirling们写的。有些是你的。",
+  "A map of Veydal with every Rift crossed out in red ink.": "一张Veydal地图，每道裂隙都被红墨水划掉了。",
+  "A scorched seal from the Cinder Rift. Still warm. Still angry.": "一枚来自余烬裂隙的焦黑封印。还热着。还在生气。",
+  "A seal from the Mist Rift. Half of it is missing, or hiding.": "一枚来自迷雾裂隙的封印。缺了一半，或者藏起来了。",
+  "A seal from the Tidewater Rift. It drips on the carpet.": "一枚来自潮汐裂隙的封印。滴水到地毯上。",
+  "Black Veil": "黑纱",
+  "Cinder Seal": "余烬封印",
+  "Claim": "占领",
+  "Grudge Jar": "怨气罐",
+  "Mended Veydal": "修复后的Veydal",
+  "Mist Seal": "迷雾封印",
+  "Someone slept here. %s is gone from the wall; a pawn ticket hangs in its place.": "有人在这里睡过。墙上的%s不见了，原处挂着一张当票。",
+  "The wall is full. Take something down first.": "墙已经挂满了。先取下一样。",
+  "Tide Seal": "潮汐封印",
+  "Won at a Wake. Nobody cried harder than your Spirling.": "在守灵会上赢来的。没人比你的Spirling哭得更凶。",
+  "You hang it on the wall.": "你把它挂到墙上。",
+  "You take it down.": "你把它取下来。",
+  "Your Burrow (%d/%d on the wall)": "你的窝（墙上%d/%d）",
+  "Your Burrow. The walls are bare. Earn something worth hanging.": "你的窝。墙上光秃秃的。去赢点值得挂的东西吧。"
+ }
+}

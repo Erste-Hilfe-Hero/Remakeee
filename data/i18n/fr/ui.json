@@ -463,6 +463,13 @@
   "not seen": "pas vu",
   "strong": "forte",
   "wild %s": "%s sauvage",
-  "Join our Discord": "Rejoins notre Discord"
+  "Join our Discord": "Rejoins notre Discord",
+  " It gleams in colours of its own!": " Il brille de ses propres couleurs!",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "Lien, étape 1: frappe-le avec quelques techniques jusqu'à ce que sa barre de Vigueur soit basse. Ne le mets pas K.O.",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "Lien, étape 2: choisis Lien. Il appelle quelques signes, l'un après l'autre. Regarde bien.",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "Lien, étape 3: appuie sur les mêmes signes dans le même ordre. Meilleur est ton écho, meilleur est le lien.",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "Lien, étape 3: tape les mêmes signes dans le même ordre. Meilleur est ton écho, meilleur est le lien.",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "Lien, étape 4: tends un Charme de lignée quand on te le demande. Il stabilise le lien. Tu commences avec 20.",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "Tant que tu débutes, un lien raté ne donne pas de coup gratuit au Spirling sauvage."
  }
 }
