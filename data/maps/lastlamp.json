@@ -1,0 +1,207 @@
+{
+ "name": "Lastlamp",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "outdoor": true,
+ "heal_point": [
+  6,
+  9
+ ],
+ "rows": [
+  "TTTTT__TTTTT",
+  "T....__....T",
+  "T.RRR__RRR.T",
+  "T.HHH__HHH.T",
+  "T....__....T",
+  "T.L..__..S.T",
+  "T....__....T",
+  "T...____...T",
+  "_____.o.____",
+  "_____...____",
+  "T...____...T",
+  "T....__....T",
+  "T.RR.__.RR.T",
+  "T.HH.__.HH.T",
+  "T....__....T",
+  "T.##.__.##.T",
+  "T....__....T",
+  "T*...__..L.T",
+  "T....__....T",
+  "TTTTTTTTTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "tithe_road",
+   "tx": 5,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "tithe_road",
+   "tx": 6,
+   "ty": 24,
+   "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "to": "bellrope_marsh",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 0,
+   "y": 9,
+   "to": "bellrope_marsh",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "to": "vault_rift",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "to": "vault_rift",
+   "tx": 6,
+   "ty": 20,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "keeper",
+   "x": 7,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "vellmarch/lastlamp_keeper",
+   "sprite": "elder"
+  },
+  {
+   "id": "folk_1",
+   "x": 2,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "vellmarch/lastlamp_folk_1",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 5,
+     "y": 9,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "folk_2",
+   "x": 9,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "vellmarch/lastlamp_folk_2",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 7,
+     "y": 9,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "folk_3",
+   "x": 2,
+   "y": 18,
+   "facing": "right",
+   "dialogue": "vellmarch/lastlamp_folk_3",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 7,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 5,
+   "dialogue": "vellmarch/lastlamp_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 11,
+   "y": 8,
+   "open_flag": "v2_rift_masque_sealed",
+   "closed": "#"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "open_flag": "v2_rift_masque_sealed",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_lastlamp_1"
+  },
+  {
+   "x": 11,
+   "y": 16,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_lastlamp_2"
+  },
+  {
+   "x": 11,
+   "y": 4,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_lastlamp_3"
+  }
+ ],
+ "square": [
+  6,
+  8
+ ]
+}

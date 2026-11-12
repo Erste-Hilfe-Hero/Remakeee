@@ -1800,6 +1800,15 @@
     "color": "6a8fb0",
     "show_flag": "rift_cinder_sealed",
     "hide_flag": "corvane_arrived"
+   },
+   {
+    "id": "night_bargeman",
+    "x": 4,
+    "y": 13,
+    "facing": "down",
+    "dialogue": "vellmarch/bargeman_brindlewick",
+    "sprite": "elder",
+    "show_flag": "story_complete"
    }
   ]
  },

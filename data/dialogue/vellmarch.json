@@ -1,0 +1,351 @@
+{
+ "bargeman": {
+  "lines": [
+   "The night barge takes no fare. The bargeman just says the House already paid."
+  ],
+  "action": "transit vellmarch_night_barge"
+ },
+ "bargeman_brindlewick": {
+  "lines": [
+   "Bargeman: Vellmarch? Night barge. No fare. The House already paid for you."
+  ],
+  "action": "transit vellmarch_night_barge"
+ },
+ "bellrope_marsh_bellwalker": [
+  "Edda: Every bell rope in this marsh leads to someone who rang for help. None of them were answered."
+ ],
+ "bellrope_marsh_bellwalker_defeat": [
+  "Edda: The marsh will have me one day. Not today, it seems."
+ ],
+ "bellrope_marsh_bellwalker_intro": [
+  "Edda: Ring if you need help. I'll pretend I didn't hear."
+ ],
+ "cindergate_quay_folk_1": [
+  "Docker Haldis: I load crates for the House by day. At night I unload them for the Syndicate. Same crates."
+ ],
+ "cindergate_quay_folk_2": [
+  "Tollman Rusk: Looking at the toll booth is a copper. Asking about it is two."
+ ],
+ "cindergate_quay_folk_3": [
+  "Net Widow Oona: My husband fell in the harbour. The House sent flowers. The Syndicate sent the bill for the flowers."
+ ],
+ "cindergate_quay_keeper": {
+  "lines": [
+   "Dock Nurse Ottilie: Sit. Your Spirlings look seasick. I charge the House, not you. For now."
+  ],
+  "action": "heal"
+ },
+ "cindergate_quay_sign": [
+  "Cindergate Quay",
+  "Cindergate Quay. Tolls payable on arrival, departure and complaint."
+ ],
+ "cindergate_quay_trader": {
+  "lines": [
+   "Chandler Brisk: Rope, tonics, alibis. Two of those are on the shelf."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "foundry_rift_acolyte": [
+  "Gert: Brannoc says the Syndicate rusted the furnace. The Syndicate says Brannoc did. The furnace says nothing."
+ ],
+ "foundry_rift_acolyte_defeat": [
+  "Gert: Hot work. Brannoc's hotter. Good luck."
+ ],
+ "foundry_rift_acolyte_intro": [
+  "Gert: You want the foundry? Sweat for it."
+ ],
+ "foundry_rift_sign": [
+  "Foundry Rift",
+  "The cold furnaces of the foundry. Rust grows here like moss, and faster."
+ ],
+ "foundry_rift_spring": {
+  "lines": [
+   "Cold water seeps between the stones. It tastes of iron and old debts.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "hookwick_folk_1": [
+  "Lockkeeper's Boy Wim: Odile pays me to say she's out. She's always out. Even when she's in."
+ ],
+ "hookwick_folk_2": [
+  "Eel Seller Grete: The canal water rose to my door. The eels came in to look at the rent."
+ ],
+ "hookwick_folk_3": [
+  "Boatwright Jory: I build every boat twice. Once for the man who pays, once for the man who steals it."
+ ],
+ "hookwick_keeper": {
+  "lines": [
+   "Harbour Aunt Bel: Sit down before you fall in. Everyone falls in eventually. Some get pushed."
+  ],
+  "action": "heal"
+ },
+ "hookwick_sign": [
+  "Hookwick",
+  "Hookwick. Every boat has two owners. Ask either; both are lying."
+ ],
+ "larkspur_heights_folk_1": [
+  "Opera Usher Lenz: Tonight's opera ends with a duel. Last week's ended with a funeral. Same tenor."
+ ],
+ "larkspur_heights_folk_2": [
+  "Maid Ilka: I polish the masks for the ball. Some of them are still warm."
+ ],
+ "larkspur_heights_folk_3": [
+  "Retired Duelist Corvo: I lost one eye in an honest duel. The other in a dishonest one. Guess which taught me more."
+ ],
+ "larkspur_heights_keeper": {
+  "lines": [
+   "House Physician Aurel: Rest here. Discretion is included in the price. The price is also discreet."
+  ],
+  "action": "heal"
+ },
+ "larkspur_heights_sign": [
+  "Larkspur Heights",
+  "Larkspur Heights. Clean streets. High walls. Short memories."
+ ],
+ "larkspur_heights_trader": {
+  "lines": [
+   "Glove Merchant Ysette: Our tonics are imported. So is our conscience. Neither has arrived."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "lastlamp_folk_1": [
+  "Bell Ringer Ash: I ring the marsh bell when someone goes missing. My arms are very strong."
+ ],
+ "lastlamp_folk_2": [
+  "Pawnbroker Wex: Corin's men pawn their medals here. I sell them back to Corin. Everyone wins but the medals."
+ ],
+ "lastlamp_folk_3": [
+  "Gravekeeper Ivo: The marsh keeps the bodies. I just keep the names. Fewer complaints."
+ ],
+ "lastlamp_keeper": {
+  "lines": [
+   "Lamplighter Nan: Sit under the lamp. Out there, nobody comes back to sit anywhere."
+  ],
+  "action": "heal"
+ },
+ "lastlamp_sign": [
+  "Lastlamp",
+  "Lastlamp. The last lit street before the marsh. Keep to the light."
+ ],
+ "lock_rift_acolyte": [
+  "Senn: Odile sold the lock to the Syndicate. Then sold the Syndicate a second lock. She's very good."
+ ],
+ "lock_rift_acolyte_defeat": [
+  "Senn: Go on. Mind the key. It's already been copied."
+ ],
+ "lock_rift_acolyte_intro": [
+  "Senn: Nobody reaches Odile dry."
+ ],
+ "lock_rift_sign": [
+  "Lock Rift",
+  "Rusted lock gates hold back water that isn't there. Odile keeps the only key."
+ ],
+ "lock_rift_spring": {
+  "lines": [
+   "Cold water seeps between the stones. It tastes of iron and old debts.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "masque_rift_acolyte": [
+  "Liesl: Sable gave me a mask on my first day. I haven't seen my own face since. I don't miss it."
+ ],
+ "masque_rift_acolyte_defeat": [
+  "Liesl: Bravo. Sable will want to meet you. She'll want to be you, too."
+ ],
+ "masque_rift_acolyte_intro": [
+  "Liesl: Masks off. Oh, you don't have one. Then this will hurt more."
+ ],
+ "masque_rift_sign": [
+  "Masque Rift",
+  "Under the opera house the masks are stacked to the ceiling. None of them have eyes."
+ ],
+ "masque_rift_spring": {
+  "lines": [
+   "Cold water seeps between the stones. It tastes of iron and old debts.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "pewter_causeway_tollkeeper": [
+  "Vos: The causeway is free. Crossing it isn't."
+ ],
+ "pewter_causeway_tollkeeper_defeat": [
+  "Vos: Fine. Pass. I'll bill the House for my pride."
+ ],
+ "pewter_causeway_tollkeeper_intro": [
+  "Vos: Pay the toll in coin or in bruises. I take both."
+ ],
+ "rookery_cut_crowmonger": [
+  "Sibbe: My crows carry letters for the Syndicate. They read them first. So do I."
+ ],
+ "rookery_cut_crowmonger_defeat": [
+  "Sibbe: Return to sender. Sender's dead, but still."
+ ],
+ "rookery_cut_crowmonger_intro": [
+  "Sibbe: You've got a letter on you. Let's see who it's addressed to."
+ ],
+ "smelters_drift_slagman": [
+  "Hobb: I cart slag from the foundry. Some of it used to be workers. Don't look in the cart."
+ ],
+ "smelters_drift_slagman_defeat": [
+  "Hobb: Cooled off. Like everyone at the foundry, eventually."
+ ],
+ "smelters_drift_slagman_intro": [
+  "Hobb: Hot day. Hot temper. Hot Spirlings."
+ ],
+ "tallowmarket_folk_1": [
+  "Wick Boy Tam: I sell candles to the vigil for the foundry workers. Same customers every year. Fewer each time."
+ ],
+ "tallowmarket_folk_2": [
+  "Weigher Odo: Rumours are sold by weight. Yours is light. Nobody's lied about you yet."
+ ],
+ "tallowmarket_folk_3": [
+  "Syndicate Runner Pell: I don't work for the Syndicate. Write that down. Then burn it."
+ ],
+ "tallowmarket_keeper": {
+  "lines": [
+   "Chandler Mags: Rest by the wax vats. Warm, quiet, and only slightly flammable."
+  ],
+  "action": "heal"
+ },
+ "tallowmarket_sign": [
+  "Tallowmarket",
+  "Tallowmarket. Candles by day. Do not ask what is sold by night."
+ ],
+ "tallowmarket_trader": {
+  "lines": [
+   "Rumour Broker Fenn: Tonics on the left, gossip on the right. The gossip costs more and works better."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+ },
+ "tithe_road_tithecollector": [
+  "Prue: The House takes a tenth. The Syndicate takes a tenth. I take what's left, for safekeeping."
+ ],
+ "tithe_road_tithecollector_defeat": [
+  "Prue: Paid in full. I'll forge you a receipt."
+ ],
+ "tithe_road_tithecollector_intro": [
+  "Prue: Your tithe is overdue. I accept payment in battle."
+ ],
+ "vault_rift_acolyte": [
+  "Barra: Corin counts every coin twice. The second time he counts you."
+ ],
+ "vault_rift_acolyte_defeat": [
+  "Barra: Fine. He's expecting you. He paid for the barge, remember."
+ ],
+ "vault_rift_acolyte_intro": [
+  "Barra: Your purse or your pride. Corin takes both, I just take the first."
+ ],
+ "vault_rift_sign": [
+  "Vault Rift",
+  "The vault under Lastlamp. The walls are lined with coins that hum like bees."
+ ],
+ "vault_rift_spring": {
+  "lines": [
+   "Cold water seeps between the stones. It tastes of iron and old debts.",
+   "Your Spirlings drink and rest."
+  ],
+  "action": "heal"
+ },
+ "warden_brannoc": {
+  "lines": [
+   "Rust eats the foundry from the inside. Brannoc says the Syndicate did it. The Syndicate says Brannoc did."
+  ],
+  "after_flag": [
+   {
+    "flag": "v2_rift_foundry_sealed",
+    "lines": [
+     "Your fixer Wren tipped off the Syndicate. Her cut was your route, your team and your bedtime."
+    ]
+   }
+  ]
+ },
+ "warden_brannoc_defeat": [
+  "You beat the foundry. Now guess who told the Syndicate you were coming."
+ ],
+ "warden_brannoc_intro": [
+  "My furnace, my rules. The rules say you burn."
+ ],
+ "warden_corin": {
+  "lines": [
+   "The vault under Lastlamp hums with stolen colour. The man who paid for your barge waits inside."
+  ],
+  "after_flag": [
+   {
+    "flag": "v2_rift_vault_sealed",
+    "lines": [
+     "Corin never wanted the Rifts closed. He wanted them owned. Trust no one, least of all your sponsor."
+    ]
+   }
+  ]
+ },
+ "warden_corin_defeat": [
+  "Keep the vault. I keep the town. Nobody wins clean in Vellmarch."
+ ],
+ "warden_corin_intro": [
+  "I funded the barge, the bribes and your little tour. Every coin comes home, kid."
+ ],
+ "warden_odile": {
+  "lines": [
+   "The canal locks bleed water into the street. Odile keeps the Lock Rift and the only key."
+  ],
+  "after_flag": [
+   {
+    "flag": "v2_rift_lock_sealed",
+    "lines": [
+     "Odile copied the key and sold it to the Tallow Syndicate before she even fought you."
+    ]
+   }
+  ]
+ },
+ "warden_odile_defeat": [
+  "Fine. Take the key. Just know I already sold a copy."
+ ],
+ "warden_odile_intro": [
+  "You came all this way for a lock keeper? Sweet. The House pays me to lose slowly."
+ ],
+ "warden_sable": {
+  "lines": [
+   "At the masked opera every guest is someone else. Sable offers a truce, a drink and a lie, in that order."
+  ],
+  "after_flag": [
+   {
+    "flag": "v2_rift_masque_sealed",
+    "lines": [
+     "The Syndicate sells Wren out in turn. She ends up at your door with nothing but a sorry and a spare key."
+    ]
+   }
+  ]
+ },
+ "warden_sable_defeat": [
+  "Bravo. Now take off yours. Oh. You were never wearing one. How dull."
+ ],
+ "warden_sable_intro": [
+  "Everyone in this opera wears a face. Mine is the only honest one, and it is fake."
+ ],
+ "weeping_locks_sluicer": [
+  "Morwen: The locks weep because Odile pays them to. The rest of us weep for free."
+ ],
+ "weeping_locks_sluicer_defeat": [
+  "Morwen: Soaked and beaten. By you. That's new."
+ ],
+ "weeping_locks_sluicer_intro": [
+  "Morwen: Nobody passes the locks dry. Let's get you wet."
+ ],
+ "wren": {
+  "if": {
+   "not_flag": "v2_ch1_done"
+  },
+  "else": "wren_after",
+  "lines": [
+   "Fixer Wren Marlow meets you off the barge with a grin and a map. The House of Corin wants the Rifts closed, and they pay well.",
+   "Wren: First job: the Lock Rift past Hookwick, west gate. Odile has the key. Ask nicely, then don't."
+  ],
+  "action": "set_flag v2_ch1_done"
+ },
+ "wren_after": [
+  "The free barge was a delivery: you. The bargeman gets paid twice, once by each House."
+ ]
+}

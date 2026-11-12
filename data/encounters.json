@@ -1932,5 +1932,245 @@
     "weight": 5
    }
   ]
+ },
+ "pewter_causeway": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Siltgrove",
+    "min": 52,
+    "max": 55,
+    "weight": 9,
+    "ground": "fern"
+   },
+   {
+    "species": "Cogwright",
+    "min": 52,
+    "max": 55,
+    "weight": 7,
+    "ground": "fern"
+   },
+   {
+    "species": "Delthorn",
+    "min": 52,
+    "max": 55,
+    "weight": 5,
+    "ground": "reeds"
+   },
+   {
+    "species": "Cogmite",
+    "min": 52,
+    "max": 54,
+    "weight": 16,
+    "ground": "fern"
+   },
+   {
+    "species": "Canalet",
+    "min": 52,
+    "max": 54,
+    "weight": 14,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "rookery_cut": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Millvane",
+    "min": 53,
+    "max": 56,
+    "weight": 9,
+    "ground": "fern"
+   },
+   {
+    "species": "Wickmoth",
+    "min": 53,
+    "max": 56,
+    "weight": 7,
+    "ground": "fern"
+   },
+   {
+    "species": "Burinox",
+    "min": 53,
+    "max": 56,
+    "weight": 5,
+    "ground": "scree"
+   },
+   {
+    "species": "Rookit",
+    "min": 53,
+    "max": 55,
+    "weight": 16,
+    "ground": "fern"
+   },
+   {
+    "species": "Grindwheel",
+    "min": 53,
+    "max": 55,
+    "weight": 14,
+    "ground": "scree"
+   }
+  ]
+ },
+ "weeping_locks": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Rainmantle",
+    "min": 54,
+    "max": 57,
+    "weight": 9,
+    "ground": "reeds"
+   },
+   {
+    "species": "Reedwarden",
+    "min": 54,
+    "max": 57,
+    "weight": 7,
+    "ground": "reeds"
+   },
+   {
+    "species": "Saltspire",
+    "min": 54,
+    "max": 57,
+    "weight": 5,
+    "ground": "fern"
+   },
+   {
+    "species": "Diparrow",
+    "min": 54,
+    "max": 56,
+    "weight": 16,
+    "ground": "reeds"
+   },
+   {
+    "species": "Sluicer",
+    "min": 54,
+    "max": 56,
+    "weight": 14,
+    "ground": "fern"
+   }
+  ]
+ },
+ "smelters_drift": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Smeltmaw",
+    "min": 55,
+    "max": 58,
+    "weight": 9,
+    "ground": "scree"
+   },
+   {
+    "species": "Glassfell",
+    "min": 55,
+    "max": 58,
+    "weight": 7,
+    "ground": "scree"
+   },
+   {
+    "species": "Ashcrest",
+    "min": 55,
+    "max": 58,
+    "weight": 5,
+    "ground": "fern"
+   },
+   {
+    "species": "Smeltpup",
+    "min": 55,
+    "max": 57,
+    "weight": 16,
+    "ground": "scree"
+   },
+   {
+    "species": "Flueling",
+    "min": 55,
+    "max": 57,
+    "weight": 14,
+    "ground": "fern"
+   }
+  ]
+ },
+ "tithe_road": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Fenwarden",
+    "min": 56,
+    "max": 59,
+    "weight": 9,
+    "ground": "fern"
+   },
+   {
+    "species": "Mendlace",
+    "min": 56,
+    "max": 59,
+    "weight": 7,
+    "ground": "fern"
+   },
+   {
+    "species": "Cullhorn",
+    "min": 56,
+    "max": 59,
+    "weight": 5,
+    "ground": "scree"
+   },
+   {
+    "species": "Woadwhorl",
+    "min": 56,
+    "max": 58,
+    "weight": 16,
+    "ground": "fern"
+   },
+   {
+    "species": "Lodebrock",
+    "min": 56,
+    "max": 58,
+    "weight": 14,
+    "ground": "scree"
+   }
+  ]
+ },
+ "bellrope_marsh": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Scrivane",
+    "min": 57,
+    "max": 60,
+    "weight": 9,
+    "ground": "reeds"
+   },
+   {
+    "species": "Silentra",
+    "min": 57,
+    "max": 60,
+    "weight": 7,
+    "ground": "reeds"
+   },
+   {
+    "species": "Duskdigger",
+    "min": 57,
+    "max": 60,
+    "weight": 5,
+    "ground": "fern"
+   },
+   {
+    "species": "Dusktern",
+    "min": 57,
+    "max": 59,
+    "weight": 16,
+    "ground": "reeds"
+   },
+   {
+    "species": "Bogwick",
+    "min": 57,
+    "max": 59,
+    "weight": 14,
+    "ground": "fern"
+   }
+  ]
  }
 }

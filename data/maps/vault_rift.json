@@ -1,0 +1,145 @@
+{
+ "name": "Vault Rift",
+ "region": "vellmarch",
+ "biome": "rift",
+ "backdrop": "ridge",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^.......|^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^.|......^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^.|......|.^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "lastlamp",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "lastlamp",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "vellmarch/vault_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Vault Acolyte Barra",
+   "intro": "vellmarch/vault_rift_acolyte_intro",
+   "defeat": "vellmarch/vault_rift_acolyte_defeat",
+   "money": 2360,
+   "team": [
+    {
+     "species": "Obsidroth",
+     "level": 59
+    },
+    {
+     "species": "Burinox",
+     "level": 59
+    }
+   ]
+  },
+  {
+   "id": "warden_corin",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/warden_corin",
+   "sprite": "warden",
+   "trainer": "Warden Corin",
+   "warden": "vault",
+   "team": [
+    {
+     "species": "Obsidroth",
+     "level": 59
+    },
+    {
+     "species": "Burinox",
+     "level": 59
+    },
+    {
+     "species": "Duskdigger",
+     "level": 59
+    },
+    {
+     "species": "Zenithare",
+     "level": 60
+    },
+    {
+     "species": "Ashcrest",
+     "level": 60
+    },
+    {
+     "species": "Cullhorn",
+     "level": 60
+    }
+   ],
+   "intro": "vellmarch/warden_corin_intro",
+   "defeat": "vellmarch/warden_corin_defeat",
+   "ai": 3,
+   "money": 7000,
+   "rule": "vine_tangle",
+   "mend_items": [
+    "echo_graft"
+   ],
+   "rematch_after": "vellmarch_done",
+   "win_flags": [
+    "v2_rift_vault_sealed",
+    "vellmarch_done"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "vellmarch/vault_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "vellmarch/vault_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "v2_rift_vault_sealed",
+   "closed": "@"
+  }
+ ]
+}
