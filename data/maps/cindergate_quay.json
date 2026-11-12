@@ -195,6 +195,14 @@
    "dialogue": "vellmarch/wren",
    "sprite": "ranger",
    "color": "8a3a5a"
+  },
+  {
+   "id": "q2_toll_twice_marga",
+   "x": 9,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_toll_twice",
+   "sprite": "elder"
   }
  ],
  "signs": [
