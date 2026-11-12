@@ -1,0 +1,112 @@
+{
+ "_comment": "Lore quest chains of the six legendary Spirlings (scripts/core/LegendQuests.gd). Story flags per legend: lq_<legend>_met, _lore1, _lore2, _handed, _kept, _ready, _caught, _struck. Bond rules for a wild legend: no bond while its HP share is above listen_below_hp; after the chain the chance is multiplied by caught_factor (relic kept, betrayal caught) or struck_factor (relic handed over, the guide struck it). The shop's Bond Seal stays certain.",
+ "bond": {
+  "listen_below_hp": 0.5,
+  "caught_factor": 1.25,
+  "struck_factor": 0.6
+ },
+ "chains": {
+  "Hallowmur": {
+   "guide": {
+    "map": "gloamwood",
+    "npc": "lq_ambrel"
+   },
+   "witness": {
+    "map": "mossmere_grotto",
+    "npc": "lq_brennet"
+   },
+   "lore": {
+    "map": "lanternwell",
+    "x": 11,
+    "y": 2
+   },
+   "battle": "lq_ambrel",
+   "relic": "clapper"
+  },
+  "Scriptorax": {
+   "guide": {
+    "map": "quillbrook",
+    "npc": "lq_quell"
+   },
+   "witness": {
+    "map": "echo_path",
+    "npc": "lq_idra"
+   },
+   "lore": {
+    "map": "shatterfloor_mine",
+    "x": 0,
+    "y": 3
+   },
+   "battle": "lq_quell",
+   "relic": "quill"
+  },
+  "Zephyrel": {
+   "guide": {
+    "map": "greyreach",
+    "npc": "lq_dessa"
+   },
+   "witness": {
+    "map": "woadfen",
+    "npc": "lq_tibbet"
+   },
+   "lore": {
+    "map": "rain_rift",
+    "x": 0,
+    "y": 7
+   },
+   "battle": "lq_dessa",
+   "relic": "spool"
+  },
+  "Monolurk": {
+   "guide": {
+    "map": "saltglass",
+    "npc": "lq_dorran"
+   },
+   "witness": {
+    "map": "gravers_hall",
+    "npc": "lq_moll"
+   },
+   "lore": {
+    "map": "glass_rift",
+    "x": 0,
+    "y": 4
+   },
+   "battle": "lq_dorran",
+   "relic": "chisel"
+  },
+  "Vorlucent": {
+   "guide": {
+    "map": "ashmere_station",
+    "npc": "lq_corla"
+   },
+   "witness": {
+    "map": "cinderfold",
+    "npc": "lq_kesk"
+   },
+   "lore": {
+    "map": "soot_vaults",
+    "x": 11,
+    "y": 3
+   },
+   "battle": "lq_corla",
+   "relic": "dark wick"
+  },
+  "Lumivane": {
+   "guide": {
+    "map": "ochrewell",
+    "npc": "lq_sevrin"
+   },
+   "witness": {
+    "map": "tower_rift",
+    "npc": "lq_obed"
+   },
+   "lore": {
+    "map": "oasis_rift",
+    "x": 9,
+    "y": 4
+   },
+   "battle": "lq_sevrin",
+   "relic": "ember glass"
+  }
+ }
+}

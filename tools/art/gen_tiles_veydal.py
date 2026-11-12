@@ -3,8 +3,8 @@
 Pale moor ground with heather, bracken instead of ferns, dark peat tarns, firs, slate
 strata cliffs, dry-stone walls, carved waystones and cairns. Same Kind columns and variant
 rows as gen_tiles.py, same four Era I inks. Building tiles (WALL, ROOF, DOOR, FLOOR,
-COUNTER, INNER_WALL) and the lighthouse (TOWER, LAMP) are copied unchanged from the shared
-atlas.
+COUNTER, INNER_WALL) are copied unchanged from the shared atlas; the lighthouse (TOWER, LAMP)
+keeps the shared drawing but stands on the heath, so it has no block of other ground around it.
 Writes art/era1/tiles/overworld_veydal.png. Run after gen_tiles.py:
 python3 tools/art/gen_tiles_veydal.py (from the repo root).
 """
@@ -20,7 +20,7 @@ from px import Canvas
 
 T = g.T
 UP, RIGHT, DOWN, LEFT = g.UP, g.RIGHT, g.DOWN, g.LEFT
-KEEP = ["WALL", "ROOF", "DOOR", "FLOOR", "COUNTER", "INNER_WALL", "TOWER", "LAMP"]
+KEEP = ["WALL", "ROOF", "DOOR", "FLOOR", "COUNTER", "INNER_WALL"]
 
 
 def heath(c: Canvas, ox: int, oy: int, variant: int) -> None:

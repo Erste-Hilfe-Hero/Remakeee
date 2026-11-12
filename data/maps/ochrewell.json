@@ -197,6 +197,16 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "lq_sevrin",
+   "x": 10,
+   "y": 15,
+   "facing": "down",
+   "dialogue": "legend_quests/lumivane_guide",
+   "sprite": "elder",
+   "show_flag": "rift_sun_sealed",
+   "hide_flag": "lq_lumivane_ready"
   }
  ],
  "signs": [

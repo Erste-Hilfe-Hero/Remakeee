@@ -143,7 +143,8 @@
   "lines": [
    "The cracked bell in the old belfry rings once, though no one pulls the rope.",
    "The toll does not fade. It turns, and listens back at you.",
-   "It is Hallowmur, the living bell. It has waited a long time for someone to answer."
+   "It is Hallowmur, the living bell. It has waited a long time for someone to answer.",
+   "Old songs say a legend only listens to someone who has tested it hard."
   ],
   "action": "legend Hallowmur 55"
  }
