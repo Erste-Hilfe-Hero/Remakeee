@@ -60,7 +60,9 @@ def build_song(name: str, spec: dict, stems: bool) -> float:
         write_loud(os.path.join(MUSIC_DIR, name + ".ogg"), mix, 0, small=True)
         return len(mix) / 22050.0
     g = loudness.music_gain(mix)
-    write_ogg(os.path.join(MUSIC_DIR, name + ".ogg"), mix * g)
+    # A place song's full mix only plays where its stems cannot (sound test, era fallback), so
+    # it is written small; the stems carry the in-game quality.
+    write_ogg(os.path.join(MUSIC_DIR, name + ".ogg"), mix * g, small=name in music.MAP_SONGS)
     if stems and name in music.MAP_SONGS:
         os.makedirs(STEM_DIR, exist_ok=True)
         for stem, data in parts.items():

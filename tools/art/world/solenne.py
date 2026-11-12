@@ -19,6 +19,7 @@ How the way opens:
   ochrewell -> oasis_rift    rift_tower_sealed
   ochrewell -> sun_rift      rift_oasis_sealed
   ochrewell -> veil_cistern  veil_factor_beaten (the Veil counting house door, tools/art/world/solenne_side.py)
+  ochrewell -> glasswind_flats rift_tower_sealed (the west gate, tools/art/world/solenne_more.py)
 """
 from common import check_rows, lines, npc, secret, team, tr, warp
 from rifts12 import gate, put, warden, wayfarer
@@ -75,7 +76,7 @@ def ochrewell(world):
             "_____.o.____",
             "_____...____",
             "^...____...^",
-            "^....__....^",
+            "_....__....^",
             "^.RR.__.RR.^",
             "^.HH.__.HD.^",
             "^....__....^",
@@ -114,7 +115,8 @@ def ochrewell(world):
                    warp(0, 8, "tower_rift", 5, 20, "up"), warp(0, 9, "tower_rift", 6, 20, "up"),
                    warp(11, 8, "oasis_rift", 5, 20, "up"), warp(11, 9, "oasis_rift", 6, 20, "up"),
                    warp(5, 19, "sun_rift", 5, 20, "up"), warp(6, 19, "sun_rift", 6, 20, "up"),
-                   warp(9, 13, "veil_cistern", 5, 8, "up")],
+                   warp(9, 13, "veil_cistern", 5, 8, "up"),
+                   warp(0, 11, "glasswind_flats", 10, 2, "left")],
          "npcs": [npc("keeper", 7, 7, "down", mid + "/keeper", "elder"),
                   npc("trader", 3, 14, "down", mid + "/trader", "villager"),
                   npc("factor", 8, 16, "left", mid + "/factor", "villager", color="b08a3a", show_flag="rift_oasis_sealed", hide_flag="veil_factor_beaten")]
@@ -122,7 +124,8 @@ def ochrewell(world):
          "signs": [{"x": 9, "y": 5, "dialogue": mid + "/sign"}],
          "blocks": [gate(11, 8, "rift_tower_sealed", "#"), gate(11, 9, "rift_tower_sealed", "#"),
                     gate(5, 19, "rift_oasis_sealed", "#"), gate(6, 19, "rift_oasis_sealed", "#"),
-                    gate(9, 13, "veil_factor_beaten", "H")],
+                    gate(9, 13, "veil_factor_beaten", "H"),
+                    gate(0, 11, "rift_tower_sealed", "^")],
          "secrets": [secret(0, 13, "max_tonic", "find_ochrewell_west"), secret(11, 16, "revival_leaf", "find_ochrewell_bazaar"),
                      secret(11, 4, "strong_tonic", "find_ochrewell_domes", 2)],
          "square": [6, 8]}

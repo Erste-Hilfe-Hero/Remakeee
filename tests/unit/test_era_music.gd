@@ -112,3 +112,36 @@ func test_apply_era_fx_replaces_its_own_effects() -> void:
 	Sound.apply_era_fx(5)
 	assert_eq(AudioServer.get_bus_effect_count(bus), base + n, "no doubled effects")
 	Sound.apply_era_fx(EraManager.active_era())
+
+const PLACE_SONGS: Array[String] = ["lighthouse", "brindlewick", "map_house", "rest_spring", "thornridge", "fernstair",
+	"crowcrest", "saltmarsh", "cinder_rift", "tide_rift", "murk_hollow", "echo_path"]
+
+func test_title_victory_and_place_songs_per_era() -> void:
+	var exists: Callable = func(t: String) -> bool: return ResourceLoader.exists(Sound.MUSIC_DIR % t)
+	for base: String in ["title", "victory"] + PLACE_SONGS:
+		assert_eq(Sound.era_track(base, 1, exists), base)
+		for era: int in range(2, EraManager.NEWEST + 1):
+			var t: String = "%s_era%d" % [base, era]
+			assert_eq(Sound.era_track(base, era, exists), t)
+			assert_between(FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % t).size(), 1, 80 * 1024, t)
+
+func test_every_place_song_is_listed_and_small() -> void:
+	var maps: Dictionary = _table().get("maps", {})
+	for map_id: String in maps.keys():
+		var track: String = _track_of(maps[map_id])
+		assert_has(PLACE_SONGS, track, "%s has no era versions" % track)
+		assert_lt(FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % track).size(), 200 * 1024, "%s full mix" % track)
+
+func test_place_song_follows_the_era() -> void:
+	var saved: int = EraManager.retro_filter
+	var saved_unlocked: int = EraManager.unlocked_era
+	EraManager.unlocked_era = EraManager.NEWEST
+	EraManager.retro_filter = 3
+	assert_eq(Sound.track_for_map("lighthouse"), "lighthouse_era3")
+	assert_eq(Sound.era_music("title"), "title_era3")
+	assert_eq(Sound.era_music("victory"), "victory_era3")
+	EraManager.retro_filter = 1
+	assert_eq(Sound.track_for_map("lighthouse"), "lighthouse")
+	assert_eq(Sound.era_music("victory"), "victory")
+	EraManager.retro_filter = saved
+	EraManager.unlocked_era = saved_unlocked
