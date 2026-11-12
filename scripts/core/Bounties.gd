@@ -32,7 +32,7 @@ static func board(day: String, cap: int) -> Array[Dictionary]:
 		var ring: int = cap + int(offsets[i % offsets.size()]) + (int(d.get("tip_ring_bonus", 0)) if tipped else 0)
 		var price: int = int(m.get("price", 0)) * (int(d.get("tip_price_mult", 1)) if tipped else 1)
 		out.append({"id": str(m.id), "name": str(m.name), "crime": str(m.crime), "team": m.get("team", []),
-			"ring": clampi(ring, 2, Spirling.MAX_LEVEL), "price": price, "tipped": tipped})
+			"ring": clampi(ring, 2, Spirling.STORY_RING), "price": price, "tipped": tipped})
 	return out
 
 static func claimed(day: String) -> Array:

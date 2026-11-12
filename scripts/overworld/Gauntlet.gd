@@ -50,7 +50,7 @@ func _pool(level: int) -> Array[SpirlingData]:
 
 ## Ring of the echoes on floor [param floor_index] (0-based): from cap - 9 up to the cap on floor 30.
 func level_for(floor_index: int) -> int:
-	return clampi(cap_level - 9 + floor_index / 3, 5, Spirling.MAX_LEVEL)
+	return clampi(cap_level - 9 + floor_index / 3, 5, Spirling.STORY_RING)
 
 ## Trainer AI per section: greedy, lookahead, master.
 static func ai_for(floor_index: int) -> int:

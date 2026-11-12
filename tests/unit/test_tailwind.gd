@@ -40,7 +40,7 @@ func test_warden_card_names_the_cap() -> void:
 	var orrin: Dictionary = _npc("cinder_rift", "warden_orrin")
 	var team: Array[Spirling] = TrainerData.build_team(orrin, "", RandomNumberGenerator.new(), GameState.Difficulty.VETERAN, 12)
 	assert_true(WardenCard.text(orrin, team, GameState.Difficulty.VETERAN, 12).contains("R12"))
-	assert_false(WardenCard.text(orrin, team, GameState.Difficulty.TAMER, Spirling.MAX_LEVEL).contains("R12."))
+	assert_false(WardenCard.text(orrin, team, GameState.Difficulty.TAMER, Spirling.STORY_RING).contains("R12."))
 
 func test_tailwind_offer_rules() -> void:
 	var story: int = GameState.Difficulty.STORY

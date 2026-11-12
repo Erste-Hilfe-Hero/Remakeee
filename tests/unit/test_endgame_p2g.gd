@@ -44,7 +44,7 @@ func test_every_field_and_every_wild_map() -> void:
 	assert_eq(Achievements.stat("wild_maps_all"), 1)
 
 func test_team_at_cap_and_host() -> void:
-	GameState.party[0].level = Spirling.MAX_LEVEL
+	GameState.party[0].level = Spirling.STORY_RING
 	assert_eq(Achievements.stat("team_at_cap"), 1)
 	for i: int in 3:
 		DailyTasks.record("daily_find", {"map": "fernstair"})

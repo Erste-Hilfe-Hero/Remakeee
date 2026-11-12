@@ -334,7 +334,7 @@ static func bought_spirling(g: Dictionary) -> Spirling:
 	var d: SpirlingData = Database.species(str(g.get("species", "")))
 	if d == null:
 		return null
-	var s: Spirling = Spirling.new(d, clampi(int(g.get("level", 1)), 1, Spirling.MAX_LEVEL))
+	var s: Spirling = Spirling.new(d, clampi(int(g.get("level", 1)), 1, Spirling.STORY_RING))
 	for key: String in Spirling.STAT_KEYS:
 		s.spark[key] = Spirling.SPARK_MAX
 	# The temperament came from a random uid, so two buys could differ in HP (336 vs 352).
