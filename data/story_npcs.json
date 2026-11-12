@@ -2387,5 +2387,18 @@
     "show_flag": "era4_finale_done"
    }
   ]
+ },
+ "lastlamp": {
+  "npcs": [
+   {
+    "id": "mail_boatman",
+    "x": 9,
+    "y": 16,
+    "facing": "left",
+    "dialogue": "quillmarch/boatman_top",
+    "sprite": "elder",
+    "show_flag": "era2_finale_done"
+   }
+  ]
  }
 }

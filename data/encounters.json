@@ -3190,6 +3190,580 @@
    }
   ]
  },
+ "drypoint_lane": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Vesk",
+    "min": 70,
+    "max": 73,
+    "weight": 40,
+    "ground": "fern"
+   },
+   {
+    "species": "Nibbet",
+    "min": 70,
+    "max": 73,
+    "weight": 35,
+    "ground": "scree"
+   },
+   {
+    "species": "Filigrin",
+    "min": 70,
+    "max": 73,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Platewig",
+    "min": 70,
+    "max": 73,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Burrin",
+    "min": 70,
+    "max": 73,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Drypup",
+    "min": 70,
+    "max": 73,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Veskarion",
+    "min": 70,
+    "max": 73,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Dryhound",
+    "min": 70,
+    "max": 73,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Platemarshal",
+    "min": 70,
+    "max": 73,
+    "weight": 4,
+    "ground": "scree"
+   }
+  ]
+ },
+ "mordant_steps": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Cindrik",
+    "min": 72,
+    "max": 75,
+    "weight": 40,
+    "ground": "scree"
+   },
+   {
+    "species": "Nibbet",
+    "min": 72,
+    "max": 75,
+    "weight": 35,
+    "ground": "scree"
+   },
+   {
+    "species": "Mordling",
+    "min": 72,
+    "max": 75,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Corrodent",
+    "min": 72,
+    "max": 75,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Mordantoad",
+    "min": 72,
+    "max": 75,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Vatreeve",
+    "min": 72,
+    "max": 75,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Fizzlet",
+    "min": 72,
+    "max": 75,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Corrodile",
+    "min": 72,
+    "max": 75,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Vitriolus",
+    "min": 72,
+    "max": 75,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Mordantyrant",
+    "min": 72,
+    "max": 75,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Vatbaron",
+    "min": 72,
+    "max": 75,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Corrodrake",
+    "min": 72,
+    "max": 75,
+    "weight": 4,
+    "ground": "scree"
+   }
+  ]
+ },
+ "hoarfrost_moor": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Vesk",
+    "min": 74,
+    "max": 77,
+    "weight": 40,
+    "ground": "fern"
+   },
+   {
+    "species": "Rimekit",
+    "min": 74,
+    "max": 77,
+    "weight": 35,
+    "ground": "scree"
+   },
+   {
+    "species": "Filigrin",
+    "min": 74,
+    "max": 77,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Hoarling",
+    "min": 74,
+    "max": 77,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Rimelynx",
+    "min": 74,
+    "max": 77,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Hoarstag",
+    "min": 74,
+    "max": 77,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Rimesovereign",
+    "min": 74,
+    "max": 77,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Hoarmonarch",
+    "min": 74,
+    "max": 77,
+    "weight": 4,
+    "ground": "fern"
+   }
+  ]
+ },
+ "gravers_causeway": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Siltby",
+    "min": 76,
+    "max": 80,
+    "weight": 40,
+    "ground": "reeds"
+   },
+   {
+    "species": "Nibquill",
+    "min": 76,
+    "max": 80,
+    "weight": 24,
+    "ground": "scree"
+   },
+   {
+    "species": "Cindrel",
+    "min": 76,
+    "max": 80,
+    "weight": 18,
+    "ground": "fern"
+   },
+   {
+    "species": "Copperling",
+    "min": 76,
+    "max": 80,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Copperclad",
+    "min": 76,
+    "max": 80,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Burrowgraver",
+    "min": 76,
+    "max": 80,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Canalurk",
+    "min": 76,
+    "max": 80,
+    "weight": 12,
+    "ground": "reeds"
+   },
+   {
+    "species": "Siltaroth",
+    "min": 76,
+    "max": 80,
+    "weight": 4,
+    "ground": "reeds"
+   },
+   {
+    "species": "Burringrand",
+    "min": 76,
+    "max": 80,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Copperpatriarch",
+    "min": 76,
+    "max": 80,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Nibravure",
+    "min": 76,
+    "max": 80,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Cindravax",
+    "min": 76,
+    "max": 80,
+    "weight": 4,
+    "ground": "fern"
+   }
+  ]
+ },
+ "rimeglass_pass": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Veskara",
+    "min": 79,
+    "max": 83,
+    "weight": 24,
+    "ground": "fern"
+   },
+   {
+    "species": "Glacilet",
+    "min": 79,
+    "max": 83,
+    "weight": 20,
+    "ground": "scree"
+   },
+   {
+    "species": "Filigrace",
+    "min": 79,
+    "max": 83,
+    "weight": 16,
+    "ground": "fern"
+   },
+   {
+    "species": "Sleetowl",
+    "min": 79,
+    "max": 83,
+    "weight": 25,
+    "ground": "fern"
+   },
+   {
+    "species": "Gelidfin",
+    "min": 79,
+    "max": 83,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Sleetcowl",
+    "min": 79,
+    "max": 83,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Gelidray",
+    "min": 79,
+    "max": 83,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Sleetsage",
+    "min": 79,
+    "max": 83,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Glacilisk",
+    "min": 79,
+    "max": 83,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Gelidmonarch",
+    "min": 79,
+    "max": 83,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Filigravure",
+    "min": 79,
+    "max": 83,
+    "weight": 4,
+    "ground": "fern"
+   }
+  ]
+ },
+ "stamp_road": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Siltarra",
+    "min": 82,
+    "max": 86,
+    "weight": 24,
+    "ground": "reeds"
+   },
+   {
+    "species": "Nibquill",
+    "min": 82,
+    "max": 86,
+    "weight": 18,
+    "ground": "scree"
+   },
+   {
+    "species": "Vatrat",
+    "min": 82,
+    "max": 86,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Stampet",
+    "min": 82,
+    "max": 86,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Quilmoth",
+    "min": 82,
+    "max": 86,
+    "weight": 25,
+    "ground": "scree"
+   },
+   {
+    "species": "Stamphorn",
+    "min": 82,
+    "max": 86,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Pressbug",
+    "min": 82,
+    "max": 86,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Platewing",
+    "min": 82,
+    "max": 86,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Blotkin",
+    "min": 82,
+    "max": 86,
+    "weight": 12,
+    "ground": "reeds"
+   },
+   {
+    "species": "Quilmothra",
+    "min": 82,
+    "max": 86,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Stampcolossus",
+    "min": 82,
+    "max": 86,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Pressbeetle",
+    "min": 82,
+    "max": 86,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Blotgrimm",
+    "min": 82,
+    "max": 86,
+    "weight": 4,
+    "ground": "reeds"
+   },
+   {
+    "species": "Quilmothane",
+    "min": 82,
+    "max": 86,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Fizzgrove",
+    "min": 82,
+    "max": 86,
+    "weight": 4,
+    "ground": "reeds"
+   }
+  ]
+ },
+ "smudge_marsh": {
+  "rate": 0.1,
+  "spawns": [
+   {
+    "species": "Siltby",
+    "min": 85,
+    "max": 88,
+    "weight": 45,
+    "ground": "reeds"
+   },
+   {
+    "species": "Filigrace",
+    "min": 85,
+    "max": 88,
+    "weight": 24,
+    "ground": "reeds"
+   },
+   {
+    "species": "Cindrel",
+    "min": 85,
+    "max": 88,
+    "weight": 18,
+    "ground": "fern"
+   },
+   {
+    "species": "Smudgel",
+    "min": 85,
+    "max": 88,
+    "weight": 25,
+    "ground": "reeds"
+   },
+   {
+    "species": "Smudgeworm",
+    "min": 85,
+    "max": 88,
+    "weight": 12,
+    "ground": "reeds"
+   },
+   {
+    "species": "Forgefly",
+    "min": 85,
+    "max": 88,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Frostfoil",
+    "min": 85,
+    "max": 88,
+    "weight": 12,
+    "ground": "fern"
+   },
+   {
+    "species": "Smudgewyrm",
+    "min": 85,
+    "max": 88,
+    "weight": 4,
+    "ground": "reeds"
+   },
+   {
+    "species": "Canalurker",
+    "min": 85,
+    "max": 88,
+    "weight": 4,
+    "ground": "reeds"
+   },
+   {
+    "species": "Forgeflare",
+    "min": 85,
+    "max": 88,
+    "weight": 4,
+    "ground": "fern"
+   }
+  ]
+ },
  "dyeworks": {
   "rate": 0.12,
   "spawns": [

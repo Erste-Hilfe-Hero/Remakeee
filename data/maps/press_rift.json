@@ -1,0 +1,137 @@
+{
+ "name": "Press Rift",
+ "region": "quillmarch",
+ "biome": "rift",
+ "backdrop": "voice",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "TTTTTTTTTTTT",
+  "TT::.XX.::TT",
+  "T::.......:T",
+  "T:......T_.T",
+  "T..o.....T_T",
+  "T.......ST_T",
+  "T@@@....TT_T",
+  "T@@@....:T_T",
+  "T........T_T",
+  "T.X......T_T",
+  "T....@@..T_T",
+  "T....@@..T_T",
+  "TTTT..TTTT_T",
+  "T........T_T",
+  "T..::....T_T",
+  "TTT..TTTTT_T",
+  "T........T_T",
+  "T........T_T",
+  "TTTT..TTTT.T",
+  "T..........T",
+  "T.X......X.T",
+  "TTTTT..TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "proofgate",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "proofgate",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "acolyte",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "quillmarch/press_rift_acolyte",
+   "sprite": "warden",
+   "trainer": "Press Acolyte Ylva",
+   "intro": "quillmarch/press_rift_acolyte_intro",
+   "defeat": "quillmarch/press_rift_acolyte_defeat",
+   "money": 3480,
+   "team": [
+    {
+     "species": "Nibravure",
+     "level": 87
+    },
+    {
+     "species": "Cindravax",
+     "level": 87
+    }
+   ]
+  },
+  {
+   "id": "warden_grisel",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/warden_grisel",
+   "sprite": "warden",
+   "trainer": "Warden Grisel",
+   "warden": "v3_press",
+   "team": [
+    {
+     "species": "Nibravure",
+     "level": 87
+    },
+    {
+     "species": "Cindravax",
+     "level": 87
+    },
+    {
+     "species": "Siltaroth",
+     "level": 87
+    },
+    {
+     "species": "Veskarion",
+     "level": 88
+    },
+    {
+     "species": "Corrodrake",
+     "level": 88
+    }
+   ],
+   "intro": "quillmarch/warden_grisel_intro",
+   "defeat": "quillmarch/warden_grisel_defeat",
+   "ai": 3,
+   "money": 11000,
+   "rule": "ember_pulse",
+   "win_flags": [
+    "rift_v3_press_sealed",
+    "quillmarch_done"
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "quillmarch/press_rift_spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "quillmarch/press_rift_sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v3_press_sealed",
+   "closed": "@"
+  }
+ ]
+}
