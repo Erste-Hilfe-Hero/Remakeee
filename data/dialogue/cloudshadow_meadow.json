@@ -1,0 +1,15 @@
+{
+ "sign": [
+  "CLOUDSHADOW MEADOW",
+  "The shadows of the clouds graze here. So does everything that hunts in them."
+ ],
+ "goatherd": [
+  "Sabina: My goats eat the shadows of the clouds. Don't ask what they eat when it's sunny."
+ ],
+ "goatherd_intro": [
+  "Sabina: You're standing in my best shadow. Move or fight."
+ ],
+ "goatherd_defeat": [
+  "Sabina: Fine. Graze where you like."
+ ]
+}

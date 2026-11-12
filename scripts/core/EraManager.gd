@@ -10,8 +10,9 @@ signal era_unlocked(era: int)
 enum Era { INK = 1, WASH = 2, ETCHED = 3, PANORAMA = 4, LIVING = 5 }
 const NEWEST: int = Era.LIVING
 ## The whole story (all four regions) stays Era I. Era II opens after the finale and is the
-## look of the post-game region Vellmarch (data/region2.json); later eras arrive with their own new regions.
-const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK, "vellmarch": Era.WASH}
+## look of the post-game region Vellmarch (data/region2.json); Era III opens after Vellmarch's finale
+## with Quillmarch (data/region3.json); later eras arrive with their own new regions.
+const REGION_ERA: Dictionary[String, int] = {"veydal": Era.INK, "corvane": Era.INK, "ashmere": Era.INK, "solenne": Era.INK, "vellmarch": Era.WASH, "quillmarch": Era.ETCHED}
 const STORY_COMPLETE_FLAG: String = "story_complete"
 const RESOLUTION: Dictionary[int, Vector2i] = {Era.INK: Vector2i(144, 256), Era.WASH: Vector2i(144, 256), Era.ETCHED: Vector2i(180, 320), Era.PANORAMA: Vector2i(270, 480), Era.LIVING: Vector2i(270, 480)}
 const BATTLE_SPRITE_SIZE: Dictionary[int, int] = {Era.INK: 56, Era.WASH: 56, Era.ETCHED: 64, Era.PANORAMA: 96, Era.LIVING: 96}
@@ -74,7 +75,20 @@ func _apply_inks() -> void:
 		_filter_rect.material.set_shader_parameter("c%d" % i, inks[i])
 
 func unlock_region(region: String) -> void:
-	unlock_era(REGION_ERA.get(region, Era.INK))
+	unlock_era(region_era(region))
+
+## Era of [param region]: the story regions from REGION_ERA, post-game regions from
+## data/eras.json "regions" (Halcyra, data/region4.json = Era IV), so a new era region needs no
+## code change.
+static func region_era(region: String) -> int:
+	if REGION_ERA.has(region):
+		return REGION_ERA[region]
+	var f: FileAccess = FileAccess.open(ERAS_PATH, FileAccess.READ)
+	if f == null:
+		return Era.INK
+	var d: Variant = JSON.parse_string(f.get_as_text())
+	var regions: Dictionary = d.get("regions", {}) if d is Dictionary else {}
+	return clampi(int(regions.get(region, Era.INK)), Era.INK, NEWEST)
 
 ## Era II opens once the story finale is done.
 func unlock_story_end(story_complete: bool) -> void:
@@ -187,6 +201,13 @@ func art_path_from(rel: String, start: int) -> String:
 const STAGE_25D_FROM: int = Era.PANORAMA
 const STAGE_PATH: String = "res://data/era4_stage.json"
 var _stage_cfg: Dictionary = {}
+
+## Stage colours for [param region]: data/era4_stage.json "colors" with the region's own
+## "stage" colours from data/region_looks.json on top (Halcyra's golden hour).
+func stage_colors(region: String) -> Dictionary:
+	var out: Dictionary = (stage_config().get("colors", {}) as Dictionary).duplicate()
+	out.merge(RegionLook.look(region).get("stage", {}), true)
+	return out
 
 func uses_stage_25d() -> bool:
 	return active_era() >= STAGE_25D_FROM

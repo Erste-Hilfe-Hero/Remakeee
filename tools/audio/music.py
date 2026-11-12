@@ -10,7 +10,7 @@ import random
 
 import numpy as np
 
-from synth import NOTE_INDEX, env, freq, midi, noise, pulse, secs, sweep, triangle
+from synth import NOTE_INDEX, RATE, env, freq, midi, noise, pulse, secs, sweep, triangle
 
 CHORD_SHAPES = {"": [0, 4, 7], "m": [0, 3, 7], "7": [0, 4, 7, 10], "m7": [0, 3, 7, 10], "maj7": [0, 4, 7, 11],
                 "sus4": [0, 5, 7], "sus2": [0, 2, 7], "dim": [0, 3, 6], "add9": [0, 4, 7, 14]}
@@ -107,12 +107,105 @@ def rift_motif(root: str, steps: int = 16) -> str:
 
 # --- Song ---------------------------------------------------------------------------------
 
+# --- Era voices ---------------------------------------------------------------------------
+# The music follows the same hardware jumps as the art (EraManager): Era I is four plain
+# channels (two pulses, a 4-bit wave bass, noise). Era II keeps the channels but adds vibrato,
+# softer duty and an echo. Era III swaps in band-limited sample-like voices (saw lead, detuned
+# string pad, round bass) with a room reverb; Era IV adds bell overtones and a wider room; Era V
+# doubles the lead an octave down and adds a long hall.
+
+ERA_ROOM = {3: (0.045, 0.22), 4: (0.07, 0.28), 5: (0.09, 0.32)}
+
+
+def _saw(f: float, n: int, harmonics: int, detune: float = 0.0) -> np.ndarray:
+    t = np.arange(n) / RATE
+    out = np.zeros(n)
+    for k in range(1, harmonics + 1):
+        if f * k * (1 + detune) > RATE / 2.2:
+            break
+        out += np.sin(2 * np.pi * f * (1 + detune) * k * t) / k
+    return out * 0.6
+
+
+def _vibrato(f: float, n: int, depth: float, delay: float = 0.12, rate: float = 5.5) -> np.ndarray:
+    """Phase of a tone at [f] with a vibrato of [depth] semitones fading in after [delay] s."""
+    t = np.arange(n) / RATE
+    amt = np.clip((t - delay) / 0.2, 0.0, 1.0) * depth
+    fs = f * 2 ** (amt * np.sin(2 * np.pi * rate * t) / 12.0)
+    return np.cumsum(fs / RATE)
+
+
+def era_voice(era: int, ch: str, f: float, n: int, lead_wave: str, harm_duty: float) -> np.ndarray:
+    if era == 2:
+        if ch == "lead":
+            ph = _vibrato(f, n, 0.18) % 1.0
+            duty = 0.5 if lead_wave == "tri" else 0.25
+            return np.where(ph < duty, 1.0, -1.0) * env(n, attack=0.004, decay=0.08, sustain=0.5, release=0.05)
+        if ch == "harm":
+            return pulse(f, n, 0.25) * env(n, attack=0.006, decay=0.06, sustain=0.3, release=0.04) * 0.85
+        return triangle(f, n) * env(n, attack=0.002, decay=0.03, sustain=0.85, release=0.03)
+    if ch == "lead":
+        t = _vibrato(f, n, 0.22 if era >= 4 else 0.15)
+        w = np.zeros(n)
+        for k in range(1, 9):
+            if f * k > RATE / 2.2:
+                break
+            w += np.sin(2 * np.pi * k * t) / k
+        w *= 0.6
+        if era >= 4:
+            # Bell overtone (two-operator FM) on top of the lead.
+            tt = np.arange(n) / RATE
+            w += 0.35 * np.sin(2 * np.pi * f * 2 * tt + 1.8 * np.sin(2 * np.pi * f * 3.5 * tt)) * np.exp(-tt * 6)
+        if era >= 5:
+            w += 0.4 * np.sin(2 * np.pi * (t / 2.0))
+        return w * env(n, attack=0.015, decay=0.1, sustain=0.6, release=0.06) * 1.4
+    if ch == "harm":
+        w = _saw(f, n, 6, -0.004) + _saw(f, n, 6, 0.004)
+        return w * env(n, attack=0.04, decay=0.1, sustain=0.55, release=0.08) * 0.75
+    t = np.arange(n) / RATE
+    w = np.sin(2 * np.pi * f * t) + 0.35 * np.sin(4 * np.pi * f * t)
+    return w * env(n, attack=0.003, decay=0.12, sustain=0.7, release=0.03) * 1.2
+
+
+def era_drum(era: int, kind: str, n: int, rng: np.random.Generator) -> np.ndarray:
+    t = np.arange(n) / RATE
+    if kind == "k":
+        body = sweep(150, 42, n, "tri") if era == 2 else np.sin(2 * np.pi * np.cumsum(np.geomspace(140, 40, n)) / RATE)
+        return body * np.exp(-t * 22) * 1.1
+    if kind == "s":
+        nz = noise(n, 1 if era == 2 else 2, rng)
+        tone = np.sin(2 * np.pi * 190 * t) * 0.6
+        return (nz * 0.8 + tone) * np.exp(-t * 26)
+    if kind == "w":
+        return noise(n, 6, rng) * np.exp(-t * 60) * 0.8
+    return noise(n, 1, rng) * np.exp(-t * (70 if era == 2 else 90)) * 0.5
+
+
+def _comb(x: np.ndarray, d: int, g: float) -> np.ndarray:
+    """y[n] = x[n] + g * y[n - d], computed one delay block at a time."""
+    y = x.copy()
+    for i in range(d, len(y), d):
+        j = min(i + d, len(y))
+        y[i:j] += g * y[i - d:j - d]
+    return y
+
+
+def reverb(x: np.ndarray, size: tuple[float, float]) -> np.ndarray:
+    """Small Schroeder room: four parallel combs ([size][0] s base delay), wet signal only."""
+    base = size[0]
+    out = np.zeros_like(x)
+    for k, g in zip((1.0, 1.13, 1.27, 1.41), (0.72, 0.7, 0.68, 0.66)):
+        out += _comb(x, max(1, int(base * k * RATE)), g)
+    return (out - 4 * x) * 0.25
+
+
 class Song:
     """Four channels on a 16th-note grid: lead, harmony, bass (triangle), drums (noise).
     Each channel has its own buffer so the song can be written as stems."""
 
     def __init__(self, bpm: int, bars: int, steps_per_bar: int = 16, seed: int = 1, lead_wave: str = "pulse25",
-                 harm_duty: float = 0.125, harm_tremolo: float = 0.0, bass_vol: float = 1.0):
+                 harm_duty: float = 0.125, harm_tremolo: float = 0.0, bass_vol: float = 1.0, era: int = 1):
+        self.era = era
         self.bpm = bpm
         self.bars = bars
         self.spb = steps_per_bar
@@ -134,6 +227,12 @@ class Song:
         if n <= 0:
             return
         f = freq(m)
+        if self.era >= 2:
+            w = era_voice(self.era, ch, f, n, self.lead_wave, self.harm_duty)
+            if self.era >= 3 and ch == "bass":
+                w *= self.bass_vol
+            self.ch[ch][s:s + n] += w * vol
+            return
         if ch == "lead":
             if self.lead_wave == "tri":
                 w = triangle(f, n) * env(n, decay=0.06, sustain=0.7, release=0.03) * 1.6
@@ -149,6 +248,10 @@ class Song:
     def drum(self, kind: str, start: int, vol: float) -> None:
         s = self.at(start)
         if s >= self.total:
+            return
+        if self.era >= 2:
+            n = min(secs(0.16 if kind == "s" else 0.12), self.total - s)
+            self.ch["drums"][s:s + n] += era_drum(self.era, kind, n, self.rng) * vol
             return
         if kind == "k":
             n = min(secs(0.09), self.total - s)
@@ -179,6 +282,17 @@ class Song:
         if self.harm_tremolo > 0.0:
             t = np.arange(self.total) / 22050.0
             self.ch["harm"] *= 0.65 + 0.35 * np.sin(2 * np.pi * self.harm_tremolo * t)
+        if self.era >= 2:
+            # Era II borrows a quiet echo of the lead three steps late, like a second pulse
+            # channel; from Era III on, the lead and chords sit in a small room.
+            d = self.at(3)
+            echo = np.zeros(self.total)
+            echo[d:] = self.ch["lead"][:-d] * 0.35
+            self.ch["lead"] += echo
+        if self.era >= 3:
+            size = ERA_ROOM[self.era]
+            for c in ("lead", "harm"):
+                self.ch[c] = self.ch[c] + reverb(self.ch[c], size) * size[1]
 
     def stems(self) -> dict[str, np.ndarray]:
         """The four stems scaled together so they add up to render()."""
@@ -215,12 +329,12 @@ def compose(name: str, bpm: int, chords: list[str], motifs: list[str], bass_styl
             drums: str, seed: int, lead_vol: float = 0.32, octave: int = 4, variation: bool = True,
             steps: int = 16, quotes: dict[int, str] | None = None, lead_wave: str = "pulse25",
             harm_duty: float = 0.125, harm_tremolo: float = 0.0, bass_vol: float = 1.0, rest_prob: float = 0.12,
-            leaps: bool = False, grace: bool = False, crackle: float = 0.0, stems: bool = False) -> Song:
+            leaps: bool = False, grace: bool = False, crackle: float = 0.0, stems: bool = False, era: int = 1) -> Song:
     """Chords: one symbol per bar. Motifs: hand-written lead lines (one bar each) over the first
     bars; [quotes] puts more written bars anywhere (bar -> line); every other bar gets a seeded
     walk over the bar's chord tones."""
     rng = random.Random(seed)
-    song = Song(bpm, len(chords), steps, seed, lead_wave, harm_duty, harm_tremolo, bass_vol)
+    song = Song(bpm, len(chords), steps, seed, lead_wave, harm_duty, harm_tremolo, bass_vol, era)
     spb = steps
     for bar, sym in enumerate(chords):
         root, shape = chord_tones(sym)
@@ -402,3 +516,109 @@ MAP_SONGS = {
 }
 # Tracks that play once (jingles) instead of looping.
 ONE_SHOT = {"victory"}
+
+# Region, dungeon and era battle themes (era audio plan): single files, no stems, written at
+# 16 kHz / 16 kbit/s and 12 to 16 bars so each stays small (APK size budget). "era" picks the hardware voice set
+# (era_voice); Era I songs keep the plain four channels.
+EXTRA_SONGS = {
+    # Corvane (Act II): dye town on the water, B flat major, lazy walking bass.
+    "corvane_town": dict(bpm=100, chords=["Bb", "Gm", "Eb", "F", "Bb", "Dm", "Eb", "F7", "Gm", "Eb", "Bb", "F", "Eb", "F", "Bb", "Bb"],
+                         motifs=["D5:4 F5:2 Bb5:2 A5:4 F5:4", "G5:2 F5:2 D5:4 Bb4:8", "Eb5:4 G5:4 Bb5:6 A5:2", "F5:12 -:4"],
+                         quotes=dict(zip(range(8, 12), leitmotif(-4))), arp_style="rolling", bass_style="walk", drums="walk", seed=211),
+    # Corvane fens and roads, G minor, wide leaps over a pulsing bass.
+    "corvane_field": dict(bpm=126, chords=["Gm", "Eb", "Bb", "F", "Gm", "Cm", "D7", "Gm", "Eb", "F", "Dm", "Gm", "Cm", "D", "Gm", "D"],
+                          motifs=["G4:2 Bb4:2 D5:4 G5:4 F5:4", "Eb5:4 D5:2 Bb4:2 G4:8", "D5:2 F5:2 Bb5:4 A5:2 F5:2 D5:4", "C5:6 D5:2 F5:8"],
+                          quotes=dict(zip(range(8, 12), leitmotif(5, minor=True))), arp_style="up", bass_style="pulse8", drums="drive", seed=223, leaps=True),
+    # Ashmere (Act III): soot town of kilns and railways, D minor, a march.
+    "ashmere_town": dict(bpm=96, chords=["Dm", "Bb", "C", "Dm", "Gm", "A7", "Dm", "A", "Bb", "C", "F", "A7", "Dm", "Gm", "A7", "Dm"],
+                         motifs=["D5:4 A4:4 D5:2 E5:2 F5:4", "D5:6 C5:2 Bb4:8", "C5:4 E5:4 G5:4 E5:4", "D5:12 -:4"],
+                         quotes=dict(zip(range(8, 12), leitmotif(0, minor=True))), arp_style="stab", bass_style="root-fifth", drums="march", seed=227),
+    # Ashmere salt flats, E minor, a dry fast pulse.
+    "ashmere_field": dict(bpm=138, chords=["Em", "D", "C", "B7", "Em", "G", "Am", "B7", "C", "D", "G", "Em", "Am", "B7", "Em", "B7"],
+                          motifs=["E5:2 G5:2 B5:4 A5:2 G5:2 F#5:4", "E5:4 B4:4 E5:8", "C5:2 E5:2 A5:4 G5:4 E5:4", "D#5:8 F#5:8"],
+                          quotes=dict(zip(range(8, 12), leitmotif(2, minor=True))), arp_style="climb", bass_style="pulse8", drums="drive", seed=229),
+    # Solenne (Act IV): desert well town, A phrygian colour (B flat over A), slow sway.
+    "solenne_town": dict(bpm=88, chords=["Am", "Bb", "Am", "G", "F", "Bb", "Am", "E7", "Am", "Bb", "C", "G", "F", "E7", "Am", "Am"],
+                         motifs=["A4:4 Bb4:2 C5:2 E5:4 D5:4", "C5:4 Bb4:4 A4:8", "E5:2 F5:2 G5:4 F5:4 E5:4", "D5:6 C5:2 E5:8"],
+                         quotes=dict(zip(range(8, 12), leitmotif(-5, minor=True))), arp_style="pad", bass_style="drone", drums="soft", seed=233,
+                         lead_wave="pulse12", harm_tremolo=2.0),
+    # Caves without their own song: low drone, sparse drips.
+    "cave": dict(bpm=72, chords=["Cm", "Ab", "Cm", "Db", "Cm", "Fm", "G7", "Cm", "Cm", "Ab", "Cm", "Db"],
+                 motifs=["C5:8 -:4 Eb5:4", "-:16"], quotes={8: rift_motif("C5")}, arp_style="pad", bass_style="drone", drums="sparse",
+                 seed=239, lead_wave="tri", lead_vol=0.22, rest_prob=0.4, bass_vol=0.7),
+    # Dungeons without their own song (Bellstone Ruins, Brackwater Sluice): a creeping walk.
+    "dungeon": dict(bpm=92, chords=["Fm", "Db", "Fm", "C7", "Bbm", "Db", "C7", "Fm", "Fm", "Db", "Fm", "C7"],
+                    motifs=["F4:4 Ab4:4 C5:4 B4:4", "C5:8 -:8"], quotes={8: rift_motif("F4")}, arp_style="stab", bass_style="walk",
+                    drums="soft", seed=241, lead_vol=0.26),
+    # Pawn Vault (Act I side dungeon): a pawnbroker's strongroom, tick-tock C minor with wood knocks.
+    "pawn_vault": dict(bpm=108, chords=["Cm", "G7", "Cm", "Ab", "Fm", "G7", "Cm", "G7", "Ab", "Bb", "Eb", "G7", "Cm", "Fm", "G7", "Cm"],
+                       motifs=["C5:2 -:2 G4:2 -:2 C5:2 Eb5:2 D5:4", "B4:4 D5:4 G5:8", "C5:2 -:2 G4:2 -:2 Ab4:2 C5:2 Eb5:4", "D5:8 -:8"],
+                       quotes={8: rift_motif("Eb5")}, arp_style="stab", bass_style="walk", drums="wood", seed=251, grace=True),
+    # Rook Vault (Act II side dungeon): a guild treasury, E flat minor, heavy steps and a bell.
+    "rook_vault": dict(bpm=84, chords=["Ebm", "B", "Ebm", "Bb7", "Abm", "B", "Bb7", "Ebm", "Ebm", "B", "Ebm", "Bb7"],
+                       motifs=["Eb5:4 Gb5:4 Bb5:8", "Ab5:4 Gb5:4 F5:8", "Gb5:4 Bb5:4 Eb6:6 D6:2", "Bb5:16"],
+                       quotes=dict(zip(range(8, 12), leitmotif(1, minor=True))), arp_style="pad",
+                       bass_style="root-fifth", drums="march", seed=257, lead_wave="pulse50", lead_vol=0.24),
+    # Veil Cistern (Act IV side dungeon): water under the desert, F sharp minor with a tremolo.
+    "veil_cistern": dict(bpm=76, chords=["F#m", "D", "Bm", "C#7", "F#m", "A", "D", "C#7", "F#m", "D", "Bm", "C#7"],
+                         motifs=["C#5:6 A4:2 F#4:8", "D5:4 C#5:4 B4:8", "A4:4 C#5:4 F#5:8", "F5:16"],
+                         quotes=dict(zip(range(8, 12), leitmotif(4, minor=True))), arp_style="musicbox",
+                         bass_style="drone", drums="none", seed=263, lead_wave="tri", harm_tremolo=3.5, lead_vol=0.24),
+    # Soot Vaults (Act III dungeon): coal cellars, A minor, a grinding pulse.
+    "soot_vaults": dict(bpm=100, chords=["Am", "F", "Am", "E7", "Dm", "F", "E7", "Am", "Am", "F", "Am", "E7"],
+                        motifs=["A4:2 C5:2 E5:4 D5:4 C5:4", "B4:4 G#4:4 E4:8", "A4:2 C5:2 F5:4 E5:4 D5:4", "E5:16"],
+                        quotes={8: rift_motif("A4")}, arp_style="up", bass_style="pulse8", drums="soft", seed=269, crackle=0.03, octave=3),
+    # Post-game regions in their own era's voices.
+    "vellmarch": dict(bpm=110, era=2, chords=["Am", "F", "C", "G", "Am", "Dm", "E7", "Am", "F", "G", "C", "Am", "Dm", "E7", "Am", "E7"],
+                      motifs=["E5:4 A5:4 C6:4 B5:4", "A5:6 G5:2 E5:8", "F5:2 A5:2 C6:4 B5:2 A5:2 G5:4", "E5:12 -:4"],
+                      quotes=dict(zip(range(8, 12), leitmotif(-5, minor=True))), arp_style="rolling", bass_style="walk", drums="walk", seed=271),
+    "quillmarch": dict(bpm=100, era=3, chords=["Dmaj7", "Bm", "Gmaj7", "A", "F#m", "Bm", "Em7", "A", "Gmaj7", "A", "F#m", "Bm", "Em7", "A", "D", "D"],
+                       motifs=leitmotif(), quotes=dict(zip(range(8, 12), leitmotif(0))), arp_style="pad", bass_style="walk", drums="soft", seed=277),
+    "halcyra": dict(bpm=104, era=4, chords=["E", "C#m", "A", "B", "E", "G#m", "A", "B", "C#m", "A", "E", "B", "A", "B", "E", "E"],
+                    motifs=["B4:4 E5:4 G#5:4 B5:4", "A5:6 G#5:2 E5:8", "C#5:4 E5:4 A5:6 G#5:2", "F#5:12 -:4"],
+                    quotes=dict(zip(range(8, 12), leitmotif(2))), arp_style="climb", bass_style="root-fifth", drums="walk", seed=281),
+}
+
+# One battle theme per era (EraManager.active_era picks "battle_era<N>", Sound.era_track).
+# Era I is the plain "battle" song above.
+_BATTLE_ERA = {
+    2: dict(bpm=156, chords=["Am", "Am", "F", "G", "Am", "Am", "Dm", "E7", "F", "G", "Em", "Am", "F", "G", "E7", "E7"],
+            motifs=["A5:2 A5:2 C6:2 A5:2 E6:4 D6:4", "C6:2 B5:2 A5:4 E5:8", "F5:2 A5:2 C6:4 F6:4 E6:4", "D6:4 B5:4 G#5:8"], seed=301),
+    3: dict(bpm=150, chords=["Dm", "Bb", "C", "A7", "Dm", "Bb", "Gm", "A7", "Bb", "C", "Am", "Dm", "Gm", "A7", "Dm", "A7"],
+            motifs=["D5:2 F5:2 A5:4 D6:4 C6:4", "Bb5:2 A5:2 F5:4 D5:8", "C5:2 E5:2 G5:4 C6:4 Bb5:4", "A5:4 C#6:4 E6:8"], seed=307),
+    4: dict(bpm=158, chords=["Gm", "Eb", "F", "D7", "Gm", "Eb", "Cm", "D7", "Eb", "F", "Dm", "Gm", "Cm", "D7", "Gm", "D7"],
+            motifs=["G5:2 Bb5:2 D6:4 G6:4 F6:4", "Eb6:2 D6:2 Bb5:4 G5:8", "F5:2 A5:2 C6:4 F6:4 Eb6:4", "D6:4 F#5:4 A5:8"], seed=311),
+    5: dict(bpm=162, chords=["Bm", "G", "A", "F#7", "Bm", "G", "Em", "F#7", "G", "A", "F#m", "Bm", "Em", "F#7", "Bm", "F#7"],
+            motifs=["B5:2 D6:2 F#6:4 B5:4 A5:4", "G5:2 F#5:2 D5:4 B4:8", "A5:2 C#6:2 E6:4 A5:4 G5:4", "F#5:4 A#5:4 C#6:8"], seed=313),
+}
+for _era, _spec in _BATTLE_ERA.items():
+    EXTRA_SONGS["battle_era%d" % _era] = dict(arp_style="rolling", bass_style="pulse8", drums="battle", era=_era, **_spec)
+
+# Era versions of the warden fight and the low-HP music: the same charts and motifs as
+# "warden" and "battle_pinch", played on each era's voice set (Sound.battle_music picks them).
+for _era in range(2, 6):
+    for _base in ("warden", "battle_pinch"):
+        EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
+
+# Era versions of the title song and the victory jingle, and of the 12 Era I place songs.
+# A place song's era version is an 8-bar loop: its first four bars, then four bars of its
+# leitmotif quote, so every era keeps the place's tune and the game's motif while the files
+# stay small (no stems: from Era II on the place song plays as one file, without layers).
+PLACE_ERA_BARS = 8
+
+
+def place_era_spec(name: str, era: int) -> dict:
+    spec = dict(MAP_SONGS[name])
+    quotes = spec.pop("quotes", None) or {}
+    spec["chords"] = spec["chords"][:PLACE_ERA_BARS]
+    spec["motifs"] = spec["motifs"][:4]
+    spec["quotes"] = dict(zip(range(4, PLACE_ERA_BARS), [quotes[k] for k in sorted(quotes)][:4]))
+    spec["era"] = era
+    return spec
+
+
+for _era in range(2, 6):
+    for _base in ("title", "victory"):
+        EXTRA_SONGS["%s_era%d" % (_base, _era)] = dict(SONGS[_base], era=_era)
+    for _place in MAP_SONGS:
+        EXTRA_SONGS["%s_era%d" % (_place, _era)] = place_era_spec(_place, _era)

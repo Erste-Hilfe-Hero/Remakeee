@@ -31,7 +31,7 @@ static func _apply_switches(m: BattleModel, tune_ai: bool = true) -> void:
 static func tune_foes(m: BattleModel, difficulty: int, tune_ai: bool = true) -> void:
 	var d: int = clampi(difficulty, 0, GameState.AI_LEVELS.size() - 1)
 	for s: Spirling in m.parties[BattleModel.Side.FOE]:
-		s.level = clampi(s.level + GameState.FOE_LEVEL_SHIFT[d], 1, Spirling.MAX_LEVEL)
+		s.level = clampi(s.level + GameState.FOE_LEVEL_SHIFT[d], 1, Spirling.STORY_RING)
 		for key: String in Spirling.STAT_KEYS:
 			s.spark[key] = GameState.FOE_SPARK[d]
 		if not TrainerData.keeps_keepsakes(d):
@@ -539,7 +539,7 @@ static func run_warden(rounds: int, seed_value: int, player_ai: int = 2, difficu
 					var row: Dictionary = {"section": sec, "team": team_id, "warden": str(pair[1]),
 						"difficulty": TrainerData.DIFFICULTY_KEYS[d], "wins": 0, "losses": 0, "draws": 0, "turns": 0}
 					for r: int in rounds:
-						var res: Dictionary = warden_fight(entries, def, map.field, d, int(sd.get("cap", Spirling.MAX_LEVEL)), bool(sd.get("rematch", false)), rng.randi(), player_ai)
+						var res: Dictionary = warden_fight(entries, def, map.field, d, int(sd.get("cap", Spirling.STORY_RING)), bool(sd.get("rematch", false)), rng.randi(), player_ai)
 						row.turns += int(res.turns)
 						match int(res.winner):
 							0: row.wins += 1
@@ -560,7 +560,7 @@ static func warden_fight(entries: Array, def: Dictionary, field: String, difficu
 		var s := Spirling.new(Database.species(str(e.species)), int(e.level), rng)
 		mine.append(s)
 		top = maxi(top, s.level)
-	var ring_cap: int = cap if difficulty >= GameState.Difficulty.VETERAN else Spirling.MAX_LEVEL
+	var ring_cap: int = cap if difficulty >= GameState.Difficulty.VETERAN else Spirling.STORY_RING
 	var foes: Array[Spirling] = TrainerData.rematch_team(def, "", rng, top, ring_cap, difficulty) if rematch \
 		else TrainerData.build_team(def, "", rng, difficulty, ring_cap)
 	var info: Dictionary = TrainerData.battle_info(def, foes, GameState.AI_LEVELS[difficulty], difficulty)

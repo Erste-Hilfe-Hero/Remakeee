@@ -12,17 +12,17 @@
   "^^^^^__^^^^^",
   "^:T..__..T:^",
   "^.RRR__RRR.^",
-  "^.HHH__HHH.^",
+  "^.HDH__HDH.^",
   "^*...__...*^",
   "^.L..__..S.^",
   "^....__....^",
-  "^...____...^",
+  "^..._____..^",
   "_____.o.____",
   "_____...____",
-  "^T..____..T^",
-  "^....__....^",
+  "^T.._____.T^",
+  "_______....^",
   "^.RR.__.RR.^",
-  "^.HH.__.HH.^",
+  "^.DH.__.HD.^",
   "^....__....^",
   "^.##.__.##.^",
   "^....__....^",
@@ -93,6 +93,46 @@
    "to": "sun_rift",
    "tx": 6,
    "ty": 20,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 13,
+   "to": "veil_cistern",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "to": "glasswind_flats",
+   "tx": 10,
+   "ty": 2,
+   "facing": "left"
+  },
+  {
+   "x": 3,
+   "y": 3,
+   "to": "ochrewell_pottery",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 3,
+   "to": "ochrewell_dome",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 13,
+   "to": "ochrewell_store",
+   "tx": 4,
+   "ty": 6,
    "facing": "up"
   }
  ],
@@ -189,6 +229,16 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "lq_sevrin",
+   "x": 10,
+   "y": 15,
+   "facing": "down",
+   "dialogue": "legend_quests/lumivane_guide",
+   "sprite": "elder",
+   "show_flag": "rift_sun_sealed",
+   "hide_flag": "lq_lumivane_ready"
   }
  ],
  "signs": [
@@ -222,6 +272,18 @@
    "y": 19,
    "open_flag": "rift_oasis_sealed",
    "closed": "#"
+  },
+  {
+   "x": 9,
+   "y": 13,
+   "open_flag": "veil_factor_beaten",
+   "closed": "H"
+  },
+  {
+   "x": 0,
+   "y": 11,
+   "open_flag": "rift_tower_sealed",
+   "closed": "^"
   }
  ],
  "secrets": [

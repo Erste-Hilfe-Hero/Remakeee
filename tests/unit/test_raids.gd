@@ -21,6 +21,8 @@ func before_each() -> void:
 	s.db.flags["raid"] = {"enabled": true, "min_version": 1}
 	# One guardian the AI team can always hurt, so the damage checks never depend on the seed.
 	s.db.config["raid_guardians"] = ["Cairnhold"]
+	# No legendary guardians here, so the strength never depends on the roll (see test_raid_more.gd).
+	s.raid_cfg()["legendary_chance"] = 0
 
 func _as(who: String, fn: String, args: Dictionary = {}) -> Dictionary:
 	s.switch_user(who)

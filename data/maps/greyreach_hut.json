@@ -1,0 +1,35 @@
+{
+ "name": "Shepherd's Hut",
+ "region": "corvane",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "greyreach",
+   "tx": 3,
+   "ty": 7,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "olm",
+   "x": 2,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/greyreach_hut_olm",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

@@ -24,6 +24,8 @@ var echo_duel: Dictionary = {}
 var league_match: Dictionary = {}
 ## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
 var raid_attempt: Dictionary = {}
+## An entry to open before the list ("Goals" for a chimora://event link, DeepLink.gd).
+var open_on: String = ""
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
 var room_puzzle: bool = false
 var can_undo: bool = false
@@ -66,6 +68,9 @@ func run_ledger() -> void:
 		await info("\n".join(shown))
 
 func run() -> void:
+	if open_on == "Goals":
+		open_on = ""
+		await run_goals()
 	while true:
 		var labels: Array[String] = menu_labels(GameState.has_flag(STORAGE_FLAG),
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
@@ -182,23 +187,34 @@ static func goal_tab_rows() -> Array[Dictionary]:
 			out.append({"text": GOAL_TAB_ROWS[tab], "detail": Goals.tab_text(tab)})
 	return out
 
-## The Guide (item 1985): every tip already seen, by topic, to read again.
+const RESET_TIPS_ROW: String = "Show tips again"
+const RESET_TIPS_DONE: String = "Tips are back. Pretend it's your first day."
+
+## The Guide (item 1985): every tip already seen, by topic, to read again. The last row
+## lets every tip show once more (item 1998).
 func run_guide() -> void:
 	while true:
 		var ids: Array[String] = Tips.seen()
 		var names: Array[String] = []
 		for id: String in ids:
 			names.append(Tips.TOPICS[id])
+		names.append(RESET_TIPS_ROW)
 		var idx: int = await pick_strings("Guide", names)
 		if idx < 0:
 			return
+		if idx == ids.size():
+			if await confirm("Show every tip once more, as if you were new?"):
+				Tips.reset()
+				toast(RESET_TIPS_DONE)
+				return
+			continue
 		var lines: Array[String] = []
 		for l: String in Tips.lines_of(ids[idx]):
 			lines.append(Loc.t(l))
 		await info("\n".join(lines))
 
-## [param daily] replaces today's visitor line (tests).
-static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Dictionary]:
+## [param daily] replaces today's visitor line, [param newcomer] GameState.is_newcomer() (tests).
+static func goal_rows(flags: Dictionary, daily: Variant = null, newcomer: Variant = null) -> Array[Dictionary]:
 	var rows: Array[Dictionary] = []
 	var g: Dictionary = QuestLog.current(flags)
 	if not g.is_empty():
@@ -212,6 +228,9 @@ static func goal_rows(flags: Dictionary, daily: Variant = null) -> Array[Diction
 		rows.append({"text": QuestLog.goal_text(g, flags), "icon": goal_mark(),
 			"hint": Loc.t("Where: %s" % where) if not where.is_empty() else "",
 			"detail": "\n".join(lines)})
+	# New players get a self-ticking "First steps" list right under the main goal (item 1995).
+	if FirstSteps.shows(flags, GameState.is_newcomer() if newcomer == null else bool(newcomer)):
+		rows.append(FirstSteps.row(flags))
 	for s: Dictionary in QuestLog.open_side_goals(flags):
 		rows.append({"text": QuestLog.side_text(s, flags), "hint": Loc.t("Side goal"),
 			"detail": QuestLog.side_text(s, flags)})
@@ -238,6 +257,8 @@ static func goal_mark() -> Texture2D:
 ## Saves without blocking the menu (item 2130) and says honestly where the save is: "Saved."
 ## only once the server has it, otherwise that the phone has it and the server follows (1868).
 func save_now() -> void:
+	# Ticked before saving so the tick is in the save itself.
+	FirstSteps.tick(FirstSteps.SAVED)
 	var ok: bool = SaveManager.save_game()
 	Sound.sfx("save" if ok else "cancel")
 	if not ok:
@@ -252,6 +273,7 @@ func save_now() -> void:
 ## Saves and, if that worked, ends the session (item 1879). Returns true when the menu
 ## should close and the game go back to the title.
 func save_and_quit() -> bool:
+	FirstSteps.tick(FirstSteps.SAVED)
 	if not SaveManager.save_game():
 		Sound.sfx("cancel")
 		toast("Saving failed.", 2.5)
@@ -493,7 +515,7 @@ static func menu_title(map_id: String = "") -> String:
 		t += "\n" + Loc.t(MapData.load_map(map_id).display_name)
 	if not Festival.active().is_empty():
 		t += "   " + Loc.t("Ribbons %d") % Festival.ribbons()
-	if GameState.level_cap() < Spirling.MAX_LEVEL:
+	if GameState.has_ring_limit():
 		t += "   Ring limit %d" % GameState.level_cap()
 	return t
 
@@ -530,6 +552,7 @@ func run_travel() -> bool:
 	return true
 
 func run_team() -> void:
+	FirstSteps.tick(FirstSteps.TEAM)
 	if GameState.party.size() >= 2:
 		await tip("team_order")
 	while true:
@@ -955,6 +978,7 @@ var _log_region: int = -1
 ## Spirlog: chapters per open region with their progress, search and filters, then the kinds.
 ## A seen kind opens its map-book page (SpirlogPage); unseen ones show as "???".
 func run_spirlog() -> void:
+	FirstSteps.tick(FirstSteps.SPIRLOG)
 	while true:
 		var regions: Array[String] = SpirlogBook.open_regions(GameState.flags)
 		var region: String = regions[_log_region] if _log_region >= 0 and _log_region < regions.size() else ""
@@ -966,6 +990,8 @@ func run_spirlog() -> void:
 		for r: String in regions:
 			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
 			actions.append("chapter")
+		entries.append({"text": SpirlogBook.gleam_line(GameState.spirlog)})
+		actions.append("gleam")
 		entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
 		actions.append("region")
 		entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
@@ -1011,6 +1037,9 @@ func run_spirlog() -> void:
 				_log_status = (_log_status + 1) % SpirlogBook.STATUS_NAMES.size()
 			"tracker":
 				await info(_tracker_text())
+			"gleam":
+				var names: PackedStringArray = SpirlogBook.gleam_bonded_kinds(GameState.spirlog)
+				await info(SpirlogBook.gleam_line(GameState.spirlog) + "\n\n" + (", ".join(names) if not names.is_empty() else Loc.t("No Gleam has joined you yet.")))
 			"arts":
 				await info("\n".join(Collection.art_book_lines()))
 			"prism":
@@ -1224,6 +1253,8 @@ func _run_stored(index: int) -> void:
 				elif await confirm_danger("Release %s?" % s.display_name()) \
 						and await confirm_danger("It goes home for good. Really release it?"):
 					await info(GameState.release(i))
+					# A farewell letter follows (plan 1136).
+					await info("\n".join(Released.letter(s)))
 					return
 
 ## Party -> storage, asking whether the keepsake stays in the satchel (item 356).

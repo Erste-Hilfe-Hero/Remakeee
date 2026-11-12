@@ -94,7 +94,7 @@ var turn: int = 0
 ## ends as FLED: nobody won, the damage dealt so far counts.
 var round_limit: int = 0
 var items_allowed: bool = true
-var level_cap: int = Spirling.MAX_LEVEL
+var level_cap: int = Spirling.LEVEL_SANITY
 ## Player bag, item id -> count. Shared by reference with GameState so use is persisted.
 var inventory: Dictionary = {}
 ## Battle-only player items that are not in the bag, item id -> count. The Wayfarer Pass puts a
@@ -112,6 +112,10 @@ var energy_bonus: Array[int] = [0, 0]
 ## Shop seal tiers per side, [power, guard, speed] (ShopEffects.SEAL_KINDS). Set only for story,
 ## raids and the Open League (ShopEffects.seals_for); the Fair League keeps zeros.
 var seals: Array = [[0, 0, 0], [0, 0, 0]]
+## Shop amulet tiers per side, [crit, ward, shield] (ShopEffects.AMULET_KINDS), set like seals.
+var amulets: Array = [[0, 0, 0], [0, 0, 0]]
+## The Spirling per side whose next hit taken is softened by the Opening Shield (null when used).
+var _shield_on: Array = [null, null]
 ## Trainer bag for AI tier 2.
 var foe_items: Dictionary = {}
 var ai: BattleAI
@@ -390,6 +394,8 @@ func start() -> Array[BattleEvent]:
 			if s.hp > 0:
 				s.hp = maxi(1, roundi(s.hp * WARDEN_WEAKEN_SHARE))
 	_fill_initial_slots()
+	for side: int in [Side.PLAYER, Side.FOE]:
+		_shield_on[side] = active_spirling(side) if int(amulets[side][2]) > 0 else null
 	base_field = field
 	field_turns = 0
 	field_lock = 0
@@ -417,6 +423,9 @@ func start() -> Array[BattleEvent]:
 		var b: Dictionary = BattleRules.BOSSES[foe_boss]
 		emit_event(BattleEvent.Type.BOSS, {"side": Side.FOE, "slot": 0, "boss": foe_boss, "label": str(b.label), "text": str(b.text),
 			"actions": _boss_actions, "hp": foe.hp, "max_hp": foe.max_hp()})
+	var edge: String = ShopEffects.edge_line(seals[Side.PLAYER], amulets[Side.PLAYER])
+	if not edge.is_empty():
+		emit_event(BattleEvent.Type.SHOP_EDGE, {"side": Side.PLAYER, "text": edge})
 	if warden_weakened:
 		emit_event(BattleEvent.Type.WARDEN_WEAKENED, {"side": Side.FOE, "trainer": trainer_name})
 	if BattleRules.FIELDS.has(field):
@@ -593,12 +602,12 @@ func reveal_trait(side: int, slot: int = 0) -> void:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.has_meta("trait_shown"):
 		return
-	var t: Dictionary = BattleRules.trait_info(s.data.trait_id)
+	var t: Dictionary = BattleRules.trait_info(s.gift_id())
 	if t.is_empty():
 		return
 	s.set_meta("trait_shown", true)
 	var d: Dictionary = _who(side, slot)
-	d.merge({"trait": s.data.trait_id, "label": str(t.label), "text": str(t.text)})
+	d.merge({"trait": s.gift_id(), "label": str(t.label), "text": str(t.text)})
 	emit_event(BattleEvent.Type.TRAIT, d)
 
 ## Lays the Rift field [param id] for [param turns] turns (0 = for good). Emits FIELD.
@@ -699,7 +708,8 @@ func apply_heal_block(side: int, turns: int, slot: int = 0) -> void:
 	emit_event(BattleEvent.Type.HEAL_BLOCKED, d)
 
 ## Tries to afflict the Spirling in [param slot] of [param side]. Fails if it already has a status.
-func apply_status(side: int, status: String, slot: int = 0) -> bool:
+## [param from_side] is the side that causes it (-1 = none); a foe's status may meet a Status Ward.
+func apply_status(side: int, status: String, slot: int = 0, from_side: int = -1) -> bool:
 	var s: Spirling = active_spirling(side, slot)
 	if s == null or s.is_fainted() or not s.status.is_empty() or not StatusRules.exists(status):
 		return false
@@ -719,6 +729,13 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 		c.merge({"status": status, "clause": true})
 		emit_event(BattleEvent.Type.STATUS_FAILED, c)
 		return false
+	# Status Ward (pay-to-win step 4): only a foe's status, one roll only when the side owns it.
+	var ward: float = ShopEffects.ward_chance(int(amulets[side][1])) if from_side >= 0 and from_side != side else 0.0
+	if ward > 0.0 and rng.randf() < ward:
+		var w: Dictionary = _who(side, slot)
+		w.merge({"status": status, "ward": true})
+		emit_event(BattleEvent.Type.STATUS_FAILED, w)
+		return false
 	s.status = status
 	s.status_turns = StatusRules.roll_turns(status, rng)
 	var cap: int = int(rules.get("status_max_turns", 0))
@@ -727,7 +744,7 @@ func apply_status(side: int, status: String, slot: int = 0) -> bool:
 	var d: Dictionary = _who(side, slot)
 	d["status"] = status
 	emit_event(BattleEvent.Type.STATUS_APPLIED, d)
-	if status == "scorch" and BattleRules.trait_info(s.data.trait_id).has("scorch_atk"):
+	if status == "scorch" and BattleRules.trait_info(s.gift_id()).has("scorch_atk"):
 		reveal_trait(side, slot)
 	return true
 
@@ -939,7 +956,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		s.status_turns -= 1
 		if s.status_turns == 0:
 			_cure(side, slot)
-	var regen: int = int(BattleRules.trait_info(s.data.trait_id).get("regen_div", 0))
+	var regen: int = int(BattleRules.trait_info(s.gift_id()).get("regen_div", 0))
 	var held_regen: int = int(BattleRules.held_info(s.held).get("regen_div", 0))
 	var fdata: Dictionary = BattleRules.FIELDS.get(field, {})
 	var field_regen: int = 0
@@ -955,7 +972,7 @@ func _end_of_turn_for(side: int, slot: int) -> void:
 		s.mend_turns -= 1
 		if s.hp < s.max_hp():
 			heal(side, maxi(1, s.max_hp() / BattleRules.MEND_DIV), slot)
-	if int(BattleRules.trait_info(s.data.trait_id).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
+	if int(BattleRules.trait_info(s.gift_id()).get("energy_per_turn", 0)) > 0 and s.energy < Spirling.MAX_ENERGY:
 		reveal_trait(side, slot)
 	var gain: int = int(rules.get("energy_per_turn", ENERGY_PER_TURN)) + int(BattleRules.add_key(s, "energy_per_turn"))
 	if s.energy_surge > 0:
@@ -1138,9 +1155,9 @@ func _do_move(a: BattleAction) -> void:
 			rd.merge({"text": str(react.text), "element": mv.element, "status": str(react.status)})
 			emit_event(BattleEvent.Type.REACTION, rd)
 		if mv.is_damaging():
-			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.data.trait_id).has("phys_taken"):
+			if mv.kind == MoveData.Kind.PHYSICAL and BattleRules.trait_info(target.gift_id()).has("phys_taken"):
 				reveal_trait(target_side, t_slot)
-			if BattleRules.trait_info(me.data.trait_id).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
+			if BattleRules.trait_info(me.gift_id()).has("low_hp_boost") and mv.element in me.elements() and me.hp * 3 < me.max_hp():
 				reveal_trait(side, slot)
 			var mult: float = power_mult * spread * BattleRules.damage_mult(me, target, mv, field) * _variant_mult(me, target, mv)
 			if side == Side.FOE:
@@ -1149,7 +1166,13 @@ func _do_move(a: BattleAction) -> void:
 			if mv.element == Elements.E.LUMEN:
 				mult *= BattleRules.rule_number(foe_rule, "lumen_mult")
 			mult *= ShopEffects.seal_damage_mult(int(seals[side][0]), int(seals[target_side][1]))
-			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult, BattleRules.mult_key(me, "crit_mult"))
+			var shielded: bool = _shield_on[target_side] == target
+			if shielded:
+				mult *= ShopEffects.shield_mult(int(amulets[target_side][2]))
+			var r: Dictionary = DamageCalc.compute(me, target, mv, rng, mult,
+				ShopEffects.crit_mult(BattleRules.mult_key(me, "crit_mult"), int(amulets[side][0])))
+			if shielded and int(r.damage) > 0:
+				_shield_on[target_side] = null
 			if mv.has_effect(&"delayed_hit"):
 				# Worked out now with today's stats; the delayed_hit effect sends it on its way.
 				ctx.held_damage = int(r.damage)
@@ -1463,7 +1486,7 @@ func _spring_snare(side: int, slot: int) -> void:
 	if float(snare.get("hp", 0.0)) > 0.0:
 		deal_damage(side, maxi(1, int(s.max_hp() * float(snare.hp))), {"snare": true}, slot)
 	if not str(snare.get("status", "")).is_empty():
-		apply_status(side, str(snare.status), slot)
+		apply_status(side, str(snare.status), slot, 1 - side)
 	var st: Variant = snare.get("stage", {})
 	if st is Dictionary:
 		for stat: String in st:
@@ -1594,13 +1617,13 @@ func _award_xp(foe: Spirling) -> void:
 ## Adds XP up to the level cap and plays out level-ups and new moves.
 func _give_xp(s: Spirling, amount: int, bench: bool = false) -> void:
 	var index: int = parties[Side.PLAYER].find(s)
-	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.MAX_LEVEL))
+	var cap_xp: int = Spirling.xp_for_level(mini(level_cap, Spirling.LEVEL_SANITY))
 	var gained: int = clampi(amount, 0, maxi(0, cap_xp - s.xp)) if s.level < level_cap else 0
 	if bench and gained <= 0:
 		return
 	s.xp += gained
 	emit_event(BattleEvent.Type.XP_GAINED, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "amount": gained, "bench": bench})
-	while s.level < mini(level_cap, Spirling.MAX_LEVEL) and s.xp >= Spirling.xp_for_level(s.level + 1):
+	while s.level < mini(level_cap, Spirling.LEVEL_SANITY) and s.xp >= Spirling.xp_for_level(s.level + 1):
 		var learned: Array[MoveData] = s.level_up()
 		emit_event(BattleEvent.Type.LEVEL_UP, {"side": Side.PLAYER, "index": index, "name": s.display_name(), "level": s.level, "hp": s.hp, "max_hp": s.max_hp()})
 		for mv: MoveData in learned:

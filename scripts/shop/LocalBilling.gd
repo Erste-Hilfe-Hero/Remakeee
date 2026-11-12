@@ -47,3 +47,12 @@ func finish(receipt: Dictionary, _consumable: bool) -> void:
 
 func unfinished() -> Array[Dictionary]:
 	return _open.duplicate()
+
+## Like the real stores: every purchase the account still owns. The test store keeps only the
+## open ones, plus any a test puts into [member owned].
+var owned: Array[Dictionary] = []
+
+func restore() -> Array[Dictionary]:
+	var out: Array[Dictionary] = owned.duplicate()
+	out.append_array(_open)
+	return out

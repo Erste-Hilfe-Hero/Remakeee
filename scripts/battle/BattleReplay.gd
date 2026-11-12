@@ -30,6 +30,7 @@ static func snapshot(model: BattleModel, music: String, backdrop: String) -> Dic
 		"foe_damage": model.foe_damage_mult,
 		"energy_bonus": model.energy_bonus[0],
 		"seals": (model.seals[0] as Array).duplicate(),
+		"amulets": (model.amulets[0] as Array).duplicate(),
 		"foe_energy_cut": model.start_energy_cut[1],
 		"foe_turn1_energy": model.foe_turn1_energy,
 		"warden_weakened": model.warden_weakened,
@@ -117,7 +118,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	var m := BattleModel.new(mine, foes, bool(snap.get("wild", true)), int(snap.get("seed", 0)), int(snap.get("ai", 0)))
 	m.inventory = (snap.get("inventory", {}) as Dictionary).duplicate()
 	m.items_allowed = bool(snap.get("items_allowed", true))
-	m.level_cap = int(snap.get("level_cap", Spirling.MAX_LEVEL))
+	m.level_cap = int(snap.get("level_cap", Spirling.LEVEL_SANITY))
 	m.trainer_name = str(snap.get("trainer", ""))
 	var tune: Variant = snap.get("profile_tune", {})
 	m.ai.set_profile(str(snap.get("profile", "")), tune if tune is Dictionary else {})
@@ -134,6 +135,7 @@ static func build_model(snap: Dictionary) -> BattleModel:
 	m.foe_damage_mult = float(snap.get("foe_damage", 1.0))
 	m.energy_bonus = [clampi(int(snap.get("energy_bonus", 0)), 0, ShopEffects.MAX_ENERGY_BONUS), 0]
 	m.seals = [seal_row(snap.get("seals", [])), [0, 0, 0]]
+	m.amulets = [ShopEffects.amulet_row(snap.get("amulets", [])), [0, 0, 0]]
 	m.start_energy_cut = [0, clampi(int(snap.get("foe_energy_cut", 0)), 0, Tailwind.energy_cut(0) + BattleRules.foe_start_cut(0))]
 	m.foe_turn1_energy = clampi(int(snap.get("foe_turn1_energy", 0)), 0, 1)
 	m.warden_weakened = bool(snap.get("warden_weakened", false))

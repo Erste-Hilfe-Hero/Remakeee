@@ -4,8 +4,9 @@ extends RefCounted
 ## layout (data/world_layout.json) in data/.
 
 const LAYOUT_PATH: String = "res://data/world_layout.json"
-## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287).
-const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne"]
+## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287;
+## Vellmarch is the post-game Era II region, data/region2.json).
+const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne", "vellmarch", "halcyra"]
 
 ## Maps per region, counted apart (item 1287): "Maps: veydal 37, corvane 1".
 static func region_counts(map_ids: PackedStringArray) -> Dictionary:
@@ -40,6 +41,7 @@ static func validate() -> PackedStringArray:
 	check_shapes(errors, map_ids, load_layout())
 	check_squares(errors, map_ids, load_layout())
 	check_room_encounters(errors, map_ids)
+	check_landmarks(errors, map_ids)
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null:
@@ -188,16 +190,19 @@ const MIN_TABLE_WEIGHT: int = 50
 
 ## Encounter balance (items 1109, 1110, 1114): grounds are known names, weights add up to at
 ## least 50, the base rate fits the kind of place, and sorted by their lowest ring no table
-## jumps more than 4 rings past the one before it.
+## jumps more than 4 rings past the one before it. Each era is its own chain: a post-game region
+## (Vellmarch, Era II) starts high after the finale and is not compared with the story's tables.
 static func check_table_balance(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
 	var places: Dictionary = load_layout().get("maps", {})
 	var kind_of: Dictionary = {}
+	var era_of: Dictionary = {}
 	for id: String in map_ids:
 		var m: MapData = MapData.load_map(id)
 		if m == null or m.encounter_table.is_empty():
 			continue
 		var place: String = layout_place(places, id)
 		kind_of[m.encounter_table] = str((places.get(place, {}) as Dictionary).get("kind", ""))
+		era_of[m.encounter_table] = EraManager.region_era(m.region)
 	var mins: Array = []
 	for t: String in EncounterTable.table_ids():
 		if t.begins_with("_"):
@@ -216,11 +221,11 @@ static func check_table_balance(errors: PackedStringArray, map_ids: PackedString
 		if RATES.has(kind) and not is_equal_approx(EncounterTable.rate(t), RATES[kind]):
 			errors.append("encounter table '%s': rate %.2f, a %s uses %.2f" % [t, EncounterTable.rate(t), kind, RATES[kind]])
 		if low < 999:
-			mins.append([low, t])
+			mins.append([int(era_of.get(t, EraManager.Era.INK)), low, t])
 	mins.sort()
 	for i: int in range(1, mins.size()):
-		if int(mins[i][0]) - int(mins[i - 1][0]) > MAX_RING_JUMP:
-			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][1], mins[i][0], MAX_RING_JUMP, mins[i - 1][1], mins[i - 1][0]])
+		if int(mins[i][0]) == int(mins[i - 1][0]) and int(mins[i][1]) - int(mins[i - 1][1]) > MAX_RING_JUMP:
+			errors.append("encounter tables: '%s' starts at ring %d, more than %d above '%s' (ring %d)" % [mins[i][2], mins[i][1], MAX_RING_JUMP, mins[i - 1][2], mins[i - 1][1]])
 
 ## Hidden finds (area 3 items 1080, 1083): each one is reachable, gives a real item from
 ## data/items.json and has a flag no other find uses.
@@ -522,6 +527,72 @@ static func square_folk(m: MapData, phase: int) -> Array[String]:
 		if maxi(absi(c.x - m.square.x), absi(c.y - m.square.y)) <= SQUARE_REACH:
 			out.append(str(d.get("id", "")))
 	return out
+
+## Landmarks (map design item 509): each one stands on a solid cell of an outdoor map in its
+## own act, next to a cell you can walk on, and never on a door, sign, person, find or story spot.
+static func check_landmarks(errors: PackedStringArray, map_ids: PackedStringArray) -> void:
+	var names: Dictionary = {}
+	var all: Dictionary = Landmarks.all()
+	for id: String in all:
+		var lm: Dictionary = all[id]
+		if not id in map_ids:
+			errors.append("landmark on unknown map '%s'" % id)
+			continue
+		var m: MapData = MapData.load_map(id)
+		var kind: String = str(lm.get("kind", ""))
+		if not m.outdoor:
+			errors.append("landmark of '%s': the map is not outdoors" % id)
+		if Landmarks.region_of(kind) != m.region:
+			errors.append("landmark of '%s': kind '%s' is not drawn by region '%s'" % [id, kind, m.region])
+		if Landmarks.art_path(kind).is_empty():
+			errors.append("landmark of '%s': no art for '%s'" % [id, kind])
+		var n: String = str(lm.get("name", ""))
+		if n.is_empty() or str(lm.get("line", "")).is_empty():
+			errors.append("landmark of '%s' needs a name and a line" % id)
+		elif names.has(n):
+			errors.append("landmark name '%s' is used on '%s' and '%s'" % [n, names[n], id])
+		names[n] = id
+		var c: Vector2i = Landmarks.cell(lm)
+		if not m.in_bounds(c) or not m.in_bounds(c + Vector2i.UP):
+			errors.append("landmark of '%s' at %s: it and the cell above must be on the map" % [id, c])
+			continue
+		if m.is_walkable(c):
+			errors.append("landmark of '%s' at %s stands on a cell you can walk on" % [id, c])
+		var problem: String = landmark_cell_problem(m, c)
+		if not problem.is_empty():
+			errors.append("landmark of '%s' at %s: %s" % [id, c, problem])
+		var near: bool = false
+		for d: Vector2i in [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]:
+			if m.in_bounds(c + d) and m.is_walkable(c + d):
+				near = true
+		if not near:
+			errors.append("landmark of '%s' at %s: no walkable cell next to it to read it from" % [id, c])
+
+## Why [param c] cannot hold a landmark ("" when it can): warps, signs, people, finds, gates, gear and story spots keep their cell.
+static func landmark_cell_problem(m: MapData, c: Vector2i) -> String:
+	var lists: Dictionary = {"warp": m.warps, "sign": m.signs, "person": m.npcs, "hidden find": m.secrets,
+		"gate": m.blocks, "gear spot": m.gear_spots}
+	for what: String in lists:
+		for e: Dictionary in lists[what]:
+			if e.has("x") and Vector2i(int(e.x), int(e.y)) == c:
+				return "on a %s" % what
+	for k: String in m.spots:
+		var v: Variant = m.spots[k]
+		if v is Array and (v as Array).size() >= 2 and Vector2i(int(v[0]), int(v[1])) == c:
+			return "on the story spot '%s'" % k
+	return ""
+
+## Longest straight run of path tiles ("_" and piers) down one column of [param m] (map design
+## item 508: no single road straight through the middle).
+static func longest_straight_path(m: MapData) -> int:
+	var best: int = 0
+	for x: int in m.width:
+		var run: int = 0
+		for y: int in m.height:
+			var ch: String = m.rows[y].substr(x, 1)
+			run = run + 1 if ch == "_" or ch == "+" else 0
+			best = maxi(best, run)
+	return best
 
 const MAX_OUTDOOR_W: int = 12
 const MAX_OUTDOOR_H: int = 40

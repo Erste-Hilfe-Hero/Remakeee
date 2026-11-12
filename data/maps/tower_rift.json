@@ -170,6 +170,16 @@
     "echo_squall"
    ],
    "rematch_after": "story_complete"
+  },
+  {
+   "id": "lq_obed",
+   "x": 6,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "legend_quests/lumivane_witness",
+   "sprite": "elder",
+   "show_flag": "lq_lumivane_met",
+   "hide_flag": "lq_lumivane_ready"
   }
  ],
  "signs": [

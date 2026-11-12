@@ -58,6 +58,10 @@ const SCATTERED: Array[int] = [Kind.GRASS, Kind.TALL_GRASS, Kind.TREE, Kind.FLOW
 const MASK_DIRS: Array[Vector2i] = [Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN, Vector2i.LEFT]
 ## DOOR variant rows: what the building is (MapData.door_roles(), buildings plan items 14, 15, 20).
 enum DoorRole { HOUSE, HEAL, SHOP, RIFT_GATE }
+## TOWER rows for the lighthouse (a lamp on a tower over a door): the shaft runs on into the
+## door tile, and the door tile is the foot of the tower with its door (tools/art/gen_tiles.py tower()).
+const LIGHTHOUSE_SHAFT_ROW: int = 1
+const LIGHTHOUSE_DOOR_ROW: int = 2
 ## GRASS rows 4..7: the variants 0..3 with the cast shadow of a building to the left (item 6).
 const SHADOW_ROW: int = 4
 const SHADE_FROM: Array[int] = [Kind.WALL, Kind.ROOF, Kind.DOOR]
@@ -77,10 +81,16 @@ static func atlas_path(region: String = "") -> String:
 	var shared: String = EraManager.art_path(ATLAS_REL)
 	if not region.is_empty():
 		var own: String = EraManager.art_path("tiles/overworld_%s.png" % region)
-		# Only when it belongs to the same era folder: a newer era's shared atlas wins.
-		if not own.is_empty() and own.get_base_dir() == shared.get_base_dir():
+		# Only when it is from the same era folder or a newer one: a newer era's shared atlas
+		# wins over an older act atlas, an Era IV region atlas wins over the Era II shared one.
+		if not own.is_empty() and (shared.is_empty() or _era_of(own) >= _era_of(shared)):
 			return own
 	return shared
+
+## Era number of a res://art/eraN/... path (0 when it has none).
+static func _era_of(path: String) -> int:
+	var i: int = path.find("/era")
+	return path.substr(i + 4, path.find("/", i + 1) - i - 4).to_int() if i >= 0 else 0
 
 ## Drops the cached TileSets so the next get_tileset() rebuilds them for the active era.
 static func clear_cache() -> void:
@@ -120,6 +130,10 @@ static func joins(kind: int, other: int) -> bool:
 static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable, door_role: int = DoorRole.HOUSE) -> Vector2i:
 	if not _has_atlas:
 		return Vector2i(kind, 0)
+	if kind == Kind.DOOR and is_lighthouse_door(cell, kind_at):
+		return Vector2i(Kind.TOWER, LIGHTHOUSE_DOOR_ROW)
+	if kind == Kind.TOWER and int(kind_at.call(cell + Vector2i.DOWN)) == Kind.DOOR and is_lighthouse_door(cell + Vector2i.DOWN, kind_at):
+		return Vector2i(Kind.TOWER, LIGHTHOUSE_SHAFT_ROW)
 	if kind in MASKED:
 		var mask: int = 0
 		for i: int in MASK_DIRS.size():
@@ -128,12 +142,23 @@ static func atlas_coords(kind: int, cell: Vector2i, kind_at: Callable, door_role
 		return Vector2i(kind, mask)
 	if kind in SCATTERED:
 		var h: int = absi(cell.x * 7 + cell.y * 13 + (cell.x * cell.y) % 5) % 4
-		if kind == Kind.GRASS and int(kind_at.call(cell + Vector2i.LEFT)) in SHADE_FROM:
+		var left: int = int(kind_at.call(cell + Vector2i.LEFT))
+		# A slim lighthouse casts no house-wide shadow.
+		if kind == Kind.GRASS and left in SHADE_FROM and not (left == Kind.DOOR and is_lighthouse_door(cell + Vector2i.LEFT, kind_at)):
 			h += SHADOW_ROW
 		return Vector2i(kind, h)
 	if kind == Kind.DOOR:
 		return Vector2i(kind, door_role)
 	return Vector2i(kind, 0)
+
+## True when the door at [param cell] sits under a tower shaft topped by a lamp (a lighthouse).
+static func is_lighthouse_door(cell: Vector2i, kind_at: Callable) -> bool:
+	var c: Vector2i = cell + Vector2i.UP
+	var shaft: int = 0
+	while shaft < 8 and int(kind_at.call(c)) == Kind.TOWER:
+		shaft += 1
+		c += Vector2i.UP
+	return shaft > 0 and int(kind_at.call(c)) == Kind.LAMP
 
 static func _build(atlas: String) -> TileSet:
 	var count: int = Kind.size()

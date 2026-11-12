@@ -1,0 +1,23 @@
+{
+ "_comment": "ru translation of the ideas200 table, keyed by the English text.",
+ "strings": {
+  "(tipped off, watch your back)": "(сдан, береги спину)",
+  "Borrowed the Fixer's cart. Returned the wheels.": "Одолжил тележку у Решалы. Вернул колёса.",
+  "Certificate of Completion": "Свидетельство о завершении",
+  "Half-Ear Osk": "Osk Полуухий",
+  "Issued to %s, who did everything.": "Выдано %s за то, что сделано всё.",
+  "Knows where the money went. All of it.": "Знает, куда ушли деньги. Все.",
+  "Lucky Brannoch": "Brannoch Везунчик",
+  "Mother Greel": "Мать Greel",
+  "Nobody is that lucky. Check his sleeves.": "Никому так не везёт. Проверь его рукава.",
+  "Quiet Wenna": "Тихая Wenna",
+  "Runs a soup kitchen. The soup is evidence.": "Держит бесплатную столовую. Суп проходит как улика.",
+  "Said nothing to the wardens. That is the problem.": "Ничего не сказала стражам. В этом и проблема.",
+  "Signed by the Fixer, witnessed by a man who swears he was never here.": "Подписано Решалой, засвидетельствовано человеком, который клянётся, что его тут не было.",
+  "Sold the same alley to three gangs. Twice.": "Продал один и тот же переулок трём бандам. Дважды.",
+  "The Accountant": "Бухгалтер",
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "Эта бумага говорит, что всё сделано тобой. Вставь в рамку. К четвергу кто-нибудь попытается её подделать.",
+  "Velvet Tam": "Бархатный Tam",
+  "WANTED: %s, ring %d, %d coins": "РАЗЫСКИВАЕТСЯ: %s, круг %d, %d монет"
+ }
+}

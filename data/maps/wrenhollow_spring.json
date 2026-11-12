@@ -1,0 +1,41 @@
+{
+ "name": "Wrenhollow Spring House",
+ "region": "veydal",
+ "biome": "town",
+ "backdrop": "field",
+ "heal_point": [
+  4,
+  5
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 7,
+   "to": "wrenhollow",
+   "tx": 2,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ilka",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/wrenhollow_spring_ilka",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

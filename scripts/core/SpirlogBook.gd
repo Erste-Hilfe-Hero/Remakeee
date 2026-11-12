@@ -22,9 +22,11 @@ const GROUND_WORDS: Dictionary[String, String] = {
 }
 
 ## Story flag that opens a region's chapter once the act reaches it: the ferry to Corvane, the
-## mountain railway to Ashmere, the sand road to Solenne (its wild tables use its own kinds).
+## mountain railway to Ashmere, the sand road to Solenne (its wild tables use its own kinds),
+## the Era II finale for the Era III post-game region Quillmarch (data/region3.json).
 const REGION_STORY_FLAGS: Dictionary[String, String] = {
 	"corvane": "ferry_crossed", "ashmere": "act2_end", "solenne": "rift_shade_sealed",
+	"quillmarch": "era2_finale_done",
 }
 
 ## Veydal is always open; the others once GameState has the flag "region_open_<id>" or the
@@ -61,16 +63,41 @@ static func is_seen(spirlog: Dictionary, species: String) -> bool:
 static func is_bonded(spirlog: Dictionary, species: String) -> bool:
 	return bool(entry(spirlog, species).bonded)
 
-## {"region", "total", "seen", "bonded"} for one chapter (item 251).
+## {"region", "total", "seen", "bonded", "gleam"} for one chapter (item 251); "gleam" counts kinds
+## with a Gleam bonded.
 static func chapter_progress(region: String, spirlog: Dictionary) -> Dictionary:
-	var out: Dictionary = {"region": region, "total": 0, "seen": 0, "bonded": 0}
+	var out: Dictionary = {"region": region, "total": 0, "seen": 0, "bonded": 0, "gleam": 0}
 	for sd: SpirlingData in Database.spirlings.values():
 		if sd.region != region:
 			continue
 		out.total = int(out.total) + 1
 		out.seen = int(out.seen) + (1 if is_seen(spirlog, sd.species_name) else 0)
 		out.bonded = int(out.bonded) + (1 if is_bonded(spirlog, sd.species_name) else 0)
+		out.gleam = int(out.gleam) + (1 if bool(entry(spirlog, sd.species_name).gleam_bonded) else 0)
 	return out
+
+## Gleam counter over every kind: {"seen", "bonded", "total"}, kinds whose Gleam was seen or
+## bonded (a bonded Gleam counts as seen too).
+static func gleam_counts(spirlog: Dictionary) -> Dictionary:
+	var out: Dictionary = {"seen": 0, "bonded": 0, "total": Database.spirlings.size()}
+	for sd: SpirlingData in Database.spirlings.values():
+		var e: Dictionary = entry(spirlog, sd.species_name)
+		out.seen = int(out.seen) + (1 if bool(e.gleam_seen) else 0)
+		out.bonded = int(out.bonded) + (1 if bool(e.gleam_bonded) else 0)
+	return out
+
+## Names of the kinds with a Gleam bonded, in dex order.
+static func gleam_bonded_kinds(spirlog: Dictionary) -> PackedStringArray:
+	var out: PackedStringArray = []
+	for sd: SpirlingData in Database.spirlings.values():
+		if bool(entry(spirlog, sd.species_name).gleam_bonded):
+			out.append(sd.species_name)
+	return out
+
+## The Spirlog's Gleam counter line: "<star> Gleam: 3 seen, 1 bonded".
+static func gleam_line(spirlog: Dictionary) -> String:
+	var c: Dictionary = gleam_counts(spirlog)
+	return GleamRules.STAR + " " + Loc.t("Gleam: %d seen, %d bonded") % [int(c.seen), int(c.bonded)]
 
 static func chapter_line(region: String, spirlog: Dictionary) -> String:
 	var p: Dictionary = chapter_progress(region, spirlog)

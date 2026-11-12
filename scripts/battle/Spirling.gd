@@ -8,7 +8,17 @@ const SPARK_MAX: int = 12
 const MAX_MOVES: int = 4
 const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
-const MAX_LEVEL: int = 60
+## Spirlings have no top ring (owner decision 2026-11-12): XP and stats follow their formulas
+## for any ring. STORY_RING is the top ring of story content (Wardens, echoes, endgame) and the
+## ring online duels and the open league normalise to; it never stops a Spirling growing.
+## Kept apart from the genre's well-known 100 (docs/legal/IP_PATENT_AUDIT.md, item 15).
+const STORY_RING: int = 60
+## Sanity bound against broken or forged save data only (same as server_config save_level_max).
+## Not a game cap: at the XP curve below it takes over 30 billion XP.
+const LEVEL_SANITY: int = 9999
+## Newest era a Spirling can come from (EraManager.NEWEST, Era V Living). Saves used to cut
+## Era V Spirlings back to Era IV (bug plan 1373).
+const MAX_ERA: int = 5
 ## Chance that a wild Spirling is a rare Prism colour variant (cosmetic only).
 const PRISM_CHANCE: float = 1.0 / 256.0
 
@@ -107,6 +117,8 @@ var met_day: int = 0
 ## favourites are never released and never moved by a multi-select (plan area 1, items 375-377).
 var box: int = 0
 var favorite: bool = false
+## True while its hidden gift is awake (HiddenGifts); it then replaces the species' gift.
+var hidden_gift: bool = false
 ## Species names of the two Spirlings that sang it into being (Echo offspring), else empty.
 var lineage: Array[String] = []
 ## Fully right Echo calls in a row while it was in the team (unfold rule "echo_streak").
@@ -117,7 +129,7 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	if d == null:
 		return
 	data = d
-	level = clampi(lvl, 1, MAX_LEVEL)
+	level = clampi(lvl, 1, LEVEL_SANITY)
 	xp = xp_for_level(level)
 	var r: RandomNumberGenerator = rng
 	if r == null:
@@ -129,6 +141,14 @@ func _init(d: SpirlingData = null, lvl: int = 1, rng: RandomNumberGenerator = nu
 	temper = str(TEMPERAMENTS[absi(uid.hash()) % TEMPERAMENTS.size()].id)
 	moves = data.default_moves(level, MAX_MOVES)
 	hp = max_hp()
+
+## The gift in effect: the hidden gift while awake, else the species' gift.
+func gift_id() -> String:
+	if hidden_gift:
+		var h: String = HiddenGifts.gift_id(data)
+		if not h.is_empty():
+			return h
+	return data.trait_id
 
 func display_name() -> String:
 	return nickname if not nickname.is_empty() else data.species_name
@@ -207,7 +227,7 @@ func stage(stat: String) -> int:
 func effective_atk() -> int:
 	var m: float = StatusRules.atk_mult(status)
 	if status == "scorch":
-		m = float(BattleRules.trait_info(data.trait_id).get("scorch_atk", m))
+		m = float(BattleRules.trait_info(gift_id()).get("scorch_atk", m))
 	return int(atk() * m * BattleRules.stage_mult(stage("atk")) * BattleRules.mult_key(self, "atk_mult"))
 
 func effective_def() -> int:
@@ -278,7 +298,7 @@ static func xp_for_level(lvl: int) -> int:
 	return int(floor(XP_MULT * pow(float(lvl), XP_EXP)))
 
 func xp_to_next() -> int:
-	if level >= MAX_LEVEL:
+	if level >= LEVEL_SANITY:
 		return 0
 	return xp_for_level(level + 1) - xp
 
@@ -470,6 +490,7 @@ func to_dict() -> Dictionary:
 		"uid": uid,
 		"held": held,
 		"prism": prism,
+		"hidden_gift": hidden_gift,
 		"temper": temperament().id,
 		"core": temper_core,
 		"gleam": gleam,
@@ -494,7 +515,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	var s := Spirling.new()
 	s.data = sd
 	s.nickname = str(d.get("nickname", ""))
-	s.level = clampi(_num(d.get("level"), 1), 1, MAX_LEVEL)
+	s.level = clampi(_num(d.get("level"), 1), 1, LEVEL_SANITY)
 	s.xp = _num(d.get("xp"), xp_for_level(s.level))
 	var sp: Variant = d.get("spark", {})
 	for key: String in STAT_KEYS:
@@ -515,6 +536,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.uid = str(d.get("uid", ""))
 	s.held = str(d.get("held", ""))
 	s.prism = d.get("prism") is bool and d.get("prism")
+	s.hidden_gift = d.get("hidden_gift") is bool and d.get("hidden_gift")
 	# Saves before version 4 have no "temper": keep the one the uid gave them back then.
 	s.temper = str(d.get("temper", legacy_temper(s.uid)))
 	if not temper_info(s.temper).id == s.temper:
@@ -525,7 +547,7 @@ static func from_dict(d: Dictionary) -> Spirling:
 	s.shop_bought = d.get("shop") is bool and d.get("shop")
 	s.variant = str(d.get("variant", ""))
 	s.origin_map = str(d.get("origin_map", ""))
-	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, 4)
+	s.origin_era = clampi(_num(d.get("origin_era"), 1), 1, MAX_ERA)
 	s.met_ring = _num(d.get("met_ring"), 0)
 	s.met_day = _num(d.get("met_day"), 0)
 	var lin: Variant = d.get("lineage", [])
