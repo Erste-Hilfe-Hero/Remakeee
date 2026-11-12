@@ -91,6 +91,7 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
 - **Statistics:** `python3 tools/world_stats.py` writes the table below (`--check` tells if it is stale).
 - **Act I look:** Veydal maps use their own atlas `art/era1/tiles/overworld_veydal.png` (heath, bracken, firs, peat tarns, slate cliffs, dry-stone walls, waystones, cairns), made by `tools/art/gen_tiles_veydal.py`. TilesetFactory picks `tiles/overworld_<region>.png` when the map region has one; buildings and the lighthouse keep the shared tiles.
 - **Act III look:** Ashmere maps use `art/era1/tiles/overworld_ashmere.png` (ash ground, charred brush, dead snags, brine pools, salt spikes, cinder scree, slag heaps, braziers, basalt cliffs), made by `tools/art/gen_tiles_ashmere.py`, and switch the Era I filter to their own four inks from `data/region_looks.json` (RegionLook, EraManager.set_region).
+- **Era III look (Quillmarch):** the post-game Era III region (`data/region3.json`, Region3.gd) uses `art/era3/tiles/overworld_quillmarch.png`, made by `tools/art/gen_tiles_quillmarch.py` from the 16-colour palette in `data/region_looks.json` ("era": 3): moss grass lit from the top left, ferns in two heights, soft path edges, canal water with a stone bank, etched oaks with ground shadows, frost flowers, copper blooms, cracked mossy scree and hatched cliffs. TilesetFactory takes a region's own atlas when it is from the shared atlas' era or newer, so in Era III it beats the Era II shared atlas. Era III has no screen filter, so `EraManager.inks_for` keeps the base inks for it.
 - **Landmarks (map design item 509):** every outdoor place of Acts I-III has one tall thing you
   know it by, listed in `data/landmarks.json` (kind, solid cell, name, line; German in
   `tools/i18n/de_landmarks.py`). Each act draws its own set and no kind is shared: Veydal
@@ -109,6 +110,14 @@ Maps with `"outdoor": true` follow the device clock through `DayCycle`: dawn 5:0
 - **Checks:** `tools/validate_data.gd` and `tests/unit/test_world_data.gd` check tiles,
   encounter tables (no map without a table, no unused table), hidden finds (reachable, unique
   flag, real item) and the layout.
+
+- **Map audit:** `python3 tools/maps/render_all.py <dir> [prefix] [--era2] [--marks]` draws every
+  map and floor (one PNG each plus a sheet per region; `--marks` outlines flagged cells in red).
+  `python3 tools/maps/audit_maps.py` lists what makes a map look unclean (doors that lead
+  nowhere, cut-off or doorless buildings, stray lighthouse pieces, people in front of doors,
+  unreachable pockets, blank atlas cells, bad warps and more; the kinds are in its header).
+  CI runs `--check`: a finding that is not in `tools/maps/audit_baseline.json` fails, and so does a
+  baseline line that is already fixed. After a fix run `--write-baseline`.
 
 ## World statistics (item 903)
 
@@ -169,12 +178,15 @@ Written by `python3 tools/world_stats.py`.
 | ashmere | `undrawn_2` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `undrawn_3` | rift | 12x16 | 0 | 0 | 0 |
 | ashmere | `wide_rift_far` | rift | 12x15 | 0 | 0 | 16 |
+| solenne | `caravanserai` | inside | 12x10 | 1 | 2 | 0 |
+| solenne | `glasswind_flats` | route | 12x34 | 5 | 6 | 86 |
+| solenne | `mirage_kiln` | dungeon | 12x10 + 12x10 + 12x8 | 5 | 7 | 25 |
 | solenne | `oasis_rift` | rift | 12x22 | 0 | 4 | 18 |
 | solenne | `ochrewell` | town | 12x20 | 3 | 0 | 0 |
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
 | solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
-| | **57 maps** | | | **151** | **101** | **1378** |
+| | **60 maps** | | | **162** | **116** | **1489** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

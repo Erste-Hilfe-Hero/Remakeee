@@ -78,7 +78,7 @@ func test_ladder_has_eight_rungs_in_order() -> void:
 	assert_eq(rungs.size(), 8)
 	for i: int in range(2, 9):
 		assert_eq(str((rungs[i] as Dictionary).get("show_flag", "")), "ladder_rung_%d" % (i - 1), "rung %d waits for rung %d" % [i, i - 1])
-	assert_has(_npc("glasswind_flats", "pell").get("win_flags", []), "c4_pell_warned", "Old Pell warns about the purse")
+	assert_has(_npc("glasswind_flats", "old_pell").get("win_flags", []), "c4_pell_warned", "Old Pell warns about the purse")
 	assert_eq((_goal("s4_ladder").progress as Array).size(), 8)
 
 func test_three_betrayals_and_a_shortcut() -> void:
