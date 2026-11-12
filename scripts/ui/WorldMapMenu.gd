@@ -32,18 +32,26 @@ static func _name(id: String) -> String:
 	return Loc.t(MapData.load_map(id).display_name) if MapData.exists(id) else id
 
 static func run(host: MenuHost, here: String) -> void:
+	# The map in the era's layout (EraMenus): the picture over a list in Era I to III, a
+	# picture that takes the upper part of the phone with Zoom, Here and Marks as a button bar
+	# and an info panel for the focused place in Era IV, a pulsing "you are here" in Era V.
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "map")
+	var view_h: float = float(lay.get("view_h", VIEW_H))
+	var bar: bool = str(lay.get("actions", "row")) == "bar"
+	var panel: bool = str(lay.get("panel", "none")) != "none"
 	var view := WorldMapView.new()
 	view.current = here
+	view.pulse = bool(lay.get("pulse", false))
 	view.set_anchors_preset(Control.PRESET_TOP_WIDE)
 	view.offset_left = MenuHost.PANEL_MARGIN
 	view.offset_right = -MenuHost.PANEL_MARGIN
 	view.offset_top = MenuHost.PANEL_MARGIN
-	view.offset_bottom = MenuHost.PANEL_MARGIN + VIEW_H
+	view.offset_bottom = MenuHost.PANEL_MARGIN + view_h
 	host.add_child(view)
 	var picker: Control = host.picker
 	var had_meta: bool = picker.has_meta("top")
 	var old_top: Variant = picker.get_meta("top") if had_meta else picker.offset_top
-	picker.set_meta("top", MenuHost.PANEL_MARGIN * 2 + VIEW_H)
+	picker.set_meta("top", MenuHost.PANEL_MARGIN * 2 + view_h)
 	var rows_now: Array[Dictionary] = []
 	var on_tap: Callable = func(id: String) -> void:
 		for i: int in rows_now.size():
@@ -52,16 +60,33 @@ static func run(host: MenuHost, here: String) -> void:
 				return
 	view.place_tapped.connect(on_tap)
 	await host.get_tree().process_frame
+	# The large picture of the touch eras starts zoomed in, so places are finger sized.
+	if view_h >= 160.0:
+		view.zoom = 2
 	view.center_on_here()
 	while true:
 		view.refresh(here)
-		rows_now = [{"text": Loc.t("Zoom: %dx") % view.zoom}, {"text": "Here"},
-			{"text": Loc.t("Marks (%d/%d)") % [GameState.map_marks.size(), Survey.MAX_MARKS]}]
-		rows_now.append_array(place_rows(view.known))
-		var idx: int = await host.pick("World map", rows_now)
-		if idx < 0:
+		var acts: Array[String] = [Loc.t("Zoom: %dx") % view.zoom, Loc.t("Here"),
+			Loc.t("Marks") if bar else Loc.t("Marks (%d/%d)") % [GameState.map_marks.size(), Survey.MAX_MARKS]]
+		rows_now = []
+		if not bar:
+			for a: String in acts:
+				rows_now.append({"text": a})
+		var first_place: int = rows_now.size()
+		for r: Dictionary in place_rows(view.known):
+			var pic: Texture2D = EraMenuKit.icon_for("dot" if bool(r.get("sighted", false)) else "place", lay)
+			if pic != null:
+				r["icon"] = pic
+			if panel and not bool(r.get("sighted", false)):
+				r["hint"] = WorldAtlas.detail_text(str(r.place)).get_slice("\n", 1)
+			rows_now.append(r)
+		var idx: int = await host.pick_screen("map", "World map", rows_now, {"tabs": acts if bar else ([] as Array[String]), "tab": -1,
+			"tab_icons": [null, null, EraMenuKit.icon_for("Shortcuts", lay)],
+			"panel_text": "Tap a place on the map or in the list."})
+		var act: int = ListPicker.tab_of(idx) if bar else (idx if idx >= 0 and idx < first_place else -1)
+		if idx < 0 and act < 0:
 			break
-		match idx:
+		match act:
 			0:
 				view.toggle_zoom()
 			1:
