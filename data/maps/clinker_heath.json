@@ -1,0 +1,327 @@
+{
+ "name": "Clinker Heath",
+ "region": "ashmere",
+ "biome": "route",
+ "backdrop": "ember",
+ "outdoor": true,
+ "encounters": "clinker_heath",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::..__..S,^",
+  "^::..._..,,^",
+  "^.*..._.*S.^",
+  "^,,,.__....^",
+  "^,,,._..::.^",
+  "^..S._..::.^",
+  "^.@..__....^",
+  "^::...__.,,^",
+  "^::....__,,^",
+  "^..RRRRR_..^",
+  "^..HHDHH_..^",
+  "^.....__...^",
+  "^S,.._...,,^",
+  "^,,.__...,,^",
+  "^...._.....^",
+  "^.T.._..S:.^",
+  "^:..__..::.^",
+  "^:.._.....@^",
+  "^,,._..,,,S^",
+  "^,,.__.,,,.^",
+  "^....__....^",
+  "^.::..__.*.^",
+  "^.::...__..^",
+  "^.ST....__.^",
+  "^,,,....._.^",
+  "^,,,..___..^",
+  "^S..__..:..^",
+  "^.*._..::..^",
+  "^...__.....^",
+  "^....__S@..^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "cinderfold",
+   "tx": 5,
+   "ty": 14,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "cinderfold",
+   "tx": 6,
+   "ty": 14,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 11,
+   "to": "ash_assize",
+   "tx": 5,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 31,
+   "to": "bellows_deep",
+   "tx": 5,
+   "ty": 10,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 31,
+   "to": "bellows_deep",
+   "tx": 6,
+   "ty": 10,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "clem",
+   "x": 8,
+   "y": 5,
+   "facing": "left",
+   "dialogue": "clinker_heath/clem",
+   "sprite": "villager",
+   "trainer": "Juror Clem",
+   "intro": "clinker_heath/clem_intro",
+   "defeat": "clinker_heath/clem_defeat",
+   "money": 1700,
+   "team": [
+    {
+     "species": "Brickwarden",
+     "level": 33
+    },
+    {
+     "species": "Sootlurk",
+     "level": 33
+    }
+   ],
+   "beaten_flag": "ah_juror_1"
+  },
+  {
+   "id": "mattie",
+   "x": 2,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "clinker_heath/mattie",
+   "sprite": "villager",
+   "trainer": "Juror Mattie",
+   "intro": "clinker_heath/mattie_intro",
+   "defeat": "clinker_heath/mattie_defeat",
+   "money": 1750,
+   "team": [
+    {
+     "species": "Peatbloom",
+     "level": 33
+    },
+    {
+     "species": "Vaporel",
+     "level": 33
+    },
+    {
+     "species": "Bogwick",
+     "level": 34
+    }
+   ],
+   "beaten_flag": "ah_juror_2"
+  },
+  {
+   "id": "dunstan",
+   "x": 9,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "clinker_heath/dunstan",
+   "sprite": "villager",
+   "trainer": "Juror Dunstan",
+   "intro": "clinker_heath/dunstan_intro",
+   "defeat": "clinker_heath/dunstan_defeat",
+   "money": 1800,
+   "team": [
+    {
+     "species": "Ingotlet",
+     "level": 34
+    },
+    {
+     "species": "Mortarant",
+     "level": 34
+    },
+    {
+     "species": "Brickwarden",
+     "level": 34
+    }
+   ],
+   "beaten_flag": "ah_juror_3"
+  },
+  {
+   "id": "wick",
+   "x": 2,
+   "y": 20,
+   "facing": "right",
+   "dialogue": "clinker_heath/wick",
+   "sprite": "villager",
+   "trainer": "Juror Wick",
+   "intro": "clinker_heath/wick_intro",
+   "defeat": "clinker_heath/wick_defeat",
+   "money": 1850,
+   "team": [
+    {
+     "species": "Puffbellow",
+     "level": 34
+    },
+    {
+     "species": "Charsprout",
+     "level": 34
+    },
+    {
+     "species": "Sablowl",
+     "level": 35
+    }
+   ],
+   "beaten_flag": "ah_juror_4"
+  },
+  {
+   "id": "ansa",
+   "x": 9,
+   "y": 26,
+   "facing": "left",
+   "dialogue": "clinker_heath/ansa",
+   "sprite": "villager",
+   "trainer": "Foreman of the Jury Ansa",
+   "intro": "clinker_heath/ansa_intro",
+   "defeat": "clinker_heath/ansa_defeat",
+   "money": 1900,
+   "team": [
+    {
+     "species": "Smeltmaw",
+     "level": 35
+    },
+    {
+     "species": "Lampick",
+     "level": 34
+    },
+    {
+     "species": "Brickwarden",
+     "level": 35
+    }
+   ],
+   "beaten_flag": "ah_juror_5"
+  },
+  {
+   "id": "tull",
+   "x": 9,
+   "y": 7,
+   "facing": "left",
+   "dialogue": "ashmere_more/tull",
+   "sprite": "elder"
+  },
+  {
+   "id": "corwin",
+   "x": 3,
+   "y": 15,
+   "facing": "right",
+   "dialogue": "ashmere_more/corwin",
+   "sprite": "villager",
+   "color": "8a5a7a"
+  },
+  {
+   "id": "mercer",
+   "x": 7,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "ashmere_more/mercer",
+   "sprite": "elder",
+   "color": "3a3a4a"
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 3,
+   "dialogue": "clinker_heath/tag_1"
+  },
+  {
+   "x": 1,
+   "y": 13,
+   "dialogue": "clinker_heath/tag_2"
+  },
+  {
+   "x": 10,
+   "y": 19,
+   "dialogue": "clinker_heath/tag_3"
+  },
+  {
+   "x": 1,
+   "y": 27,
+   "dialogue": "clinker_heath/tag_4"
+  },
+  {
+   "x": 3,
+   "y": 6,
+   "dialogue": "clinker_heath/notice_1"
+  },
+  {
+   "x": 8,
+   "y": 16,
+   "dialogue": "clinker_heath/notice_2"
+  },
+  {
+   "x": 2,
+   "y": 24,
+   "dialogue": "clinker_heath/notice_3"
+  },
+  {
+   "x": 9,
+   "y": 1,
+   "dialogue": "clinker_heath/sign"
+  },
+  {
+   "x": 7,
+   "y": 30,
+   "dialogue": "clinker_heath/deep_sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 5,
+   "item": "max_tonic",
+   "count": 2,
+   "flag": "find_clinker_west"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_clinker_east"
+  },
+  {
+   "x": 2,
+   "y": 7,
+   "item": "power_brew",
+   "count": 1,
+   "flag": "find_clinker_slag"
+  },
+  {
+   "x": 0,
+   "y": 22,
+   "item": "strong_tonic",
+   "count": 3,
+   "flag": "find_clinker_scree"
+  },
+  {
+   "x": 11,
+   "y": 28,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_clinker_snag"
+  }
+ ]
+}

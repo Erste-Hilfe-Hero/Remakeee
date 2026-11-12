@@ -1,0 +1,480 @@
+{
+ "name": "Bellows Deep",
+ "region": "ashmere",
+ "biome": "dungeon",
+ "backdrop": "ember",
+ "encounters": "bellows_deep",
+ "rows": [
+  "@@@@@==@@@@@",
+  "@SS.......S@",
+  "@.::....:S.@",
+  "@.::.@@.::.@",
+  "@S...S@....@",
+  "@@.@@..@@.@@",
+  "@:........:@",
+  "@:.@@..@@.:@",
+  "@..........@",
+  "@S..::::...@",
+  "@.........S@",
+  "@@@@@__@@@@@"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 11,
+   "to": "clinker_heath",
+   "tx": 5,
+   "ty": 30,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 11,
+   "to": "clinker_heath",
+   "tx": 6,
+   "ty": 30,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "bellows_deep@1",
+   "tx": 5,
+   "ty": 10,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "bellows_deep@1",
+   "tx": 6,
+   "ty": 10,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "brodie",
+   "x": 3,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "bellows_deep/brodie",
+   "sprite": "villager",
+   "trainer": "Pit Hand Brodie",
+   "intro": "bellows_deep/brodie_intro",
+   "defeat": "bellows_deep/brodie_defeat",
+   "money": 2000,
+   "team": [
+    {
+     "species": "Clinkshell",
+     "level": 35
+    },
+    {
+     "species": "Coalbuck",
+     "level": 35
+    }
+   ]
+  },
+  {
+   "id": "fuse",
+   "x": 8,
+   "y": 8,
+   "facing": "left",
+   "dialogue": "bellows_deep/fuse",
+   "sprite": "villager",
+   "trainer": "Fuse Girl Senna",
+   "intro": "bellows_deep/fuse_intro",
+   "defeat": "bellows_deep/fuse_defeat",
+   "money": 2050,
+   "team": [
+    {
+     "species": "Glowflit",
+     "level": 35
+    },
+    {
+     "species": "Cindle",
+     "level": 35
+    },
+    {
+     "species": "Sootlurk",
+     "level": 36
+    }
+   ]
+  },
+  {
+   "id": "weighman",
+   "x": 2,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "bellows_deep/weighman",
+   "sprite": "villager",
+   "trainer": "Weighman Tolliver",
+   "intro": "bellows_deep/weighman_intro",
+   "defeat": "bellows_deep/weighman_defeat",
+   "money": 2100,
+   "team": [
+    {
+     "species": "Coalbuck",
+     "level": 36
+    },
+    {
+     "species": "Lodebrock",
+     "level": 36
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 2,
+   "y": 1,
+   "dialogue": "bellows_deep/bellows_1_1"
+  },
+  {
+   "x": 5,
+   "y": 4,
+   "dialogue": "bellows_deep/bellows_1_2"
+  },
+  {
+   "x": 9,
+   "y": 2,
+   "dialogue": "bellows_deep/bellows_1_3"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "dialogue": "bellows_deep/hint_1"
+  },
+  {
+   "x": 10,
+   "y": 1,
+   "dialogue": "bellows_deep/tag_5"
+  },
+  {
+   "x": 1,
+   "y": 9,
+   "dialogue": "bellows_deep/tag_6"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "dialogue": "bellows_deep/note"
+  },
+  {
+   "x": 1,
+   "y": 1,
+   "dialogue": "bellows_deep/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "ah_bellows_1",
+   "closed": "@"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "ah_bellows_1",
+   "closed": "@"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 6,
+   "item": "max_tonic",
+   "count": 2,
+   "flag": "find_bellows_prop"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_bellows_tin"
+  }
+ ],
+ "floors": [
+  {
+   "name": "Bellows Deep, haulage gallery",
+   "rows": [
+    "@@@@@==@@@@@",
+    "@..........@",
+    "@.S::..::S.@",
+    "@..........@",
+    "@:.@@..@@.:@",
+    "@S........:@",
+    "@@.@@..@@.@@",
+    "@..........@",
+    "@.S:....:S.@",
+    "@S........S@",
+    "@..........@",
+    "@@@@@==@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 11,
+     "to": "bellows_deep",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 11,
+     "to": "bellows_deep",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 5,
+     "y": 0,
+     "to": "bellows_deep@2",
+     "tx": 5,
+     "ty": 7,
+     "facing": "up"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "to": "bellows_deep@2",
+     "tx": 6,
+     "ty": 7,
+     "facing": "up"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "crabbe",
+     "x": 3,
+     "y": 3,
+     "facing": "right",
+     "dialogue": "bellows_deep/crabbe",
+     "sprite": "villager",
+     "trainer": "Foreman Crabbe",
+     "intro": "bellows_deep/crabbe_intro",
+     "defeat": "bellows_deep/crabbe_defeat",
+     "money": 2200,
+     "team": [
+      {
+       "species": "Fumewraith",
+       "level": 36
+      },
+      {
+       "species": "Stylox",
+       "level": 36
+      },
+      {
+       "species": "Clinkshell",
+       "level": 37
+      }
+     ]
+    },
+    {
+     "id": "dorcas",
+     "x": 8,
+     "y": 7,
+     "facing": "left",
+     "dialogue": "bellows_deep/dorcas",
+     "sprite": "villager",
+     "trainer": "Lamp Keeper Dorcas",
+     "intro": "bellows_deep/dorcas_intro",
+     "defeat": "bellows_deep/dorcas_defeat",
+     "money": 2250,
+     "team": [
+      {
+       "species": "Glazelisk",
+       "level": 36
+      },
+      {
+       "species": "Lampick",
+       "level": 37
+      }
+     ]
+    },
+    {
+     "id": "juno_offer",
+     "x": 6,
+     "y": 7,
+     "facing": "down",
+     "dialogue": "ashmere_more/juno_offer",
+     "sprite": "ranger",
+     "show_flag": "beat_juno_3",
+     "hide_flag": "betrayal_juno_split"
+    },
+    {
+     "id": "juno_4",
+     "x": 6,
+     "y": 7,
+     "facing": "down",
+     "dialogue": "bellows_deep/juno_4",
+     "sprite": "ranger",
+     "trainer": "Juno Sallow",
+     "intro": "bellows_deep/juno_4_intro",
+     "defeat": "bellows_deep/juno_4_defeat",
+     "money": 2600,
+     "team": [
+      {
+       "species": "Ashcrest",
+       "level": 37
+      },
+      {
+       "species": "Smeltmaw",
+       "level": 37
+      },
+      {
+       "species": "Glassfell",
+       "level": 38
+      },
+      {
+       "species": "Tempestrel",
+       "level": 38
+      }
+     ],
+     "show_flag": "betrayal_juno_split",
+     "ai": 3,
+     "beaten_flag": "beat_juno_4"
+    }
+   ],
+   "signs": [
+    {
+     "x": 2,
+     "y": 2,
+     "dialogue": "bellows_deep/bellows_2_1"
+    },
+    {
+     "x": 9,
+     "y": 2,
+     "dialogue": "bellows_deep/bellows_2_2"
+    },
+    {
+     "x": 2,
+     "y": 8,
+     "dialogue": "bellows_deep/bellows_2_3"
+    },
+    {
+     "x": 9,
+     "y": 8,
+     "dialogue": "bellows_deep/bellows_2_4"
+    },
+    {
+     "x": 1,
+     "y": 5,
+     "dialogue": "bellows_deep/hint_2"
+    },
+    {
+     "x": 10,
+     "y": 9,
+     "dialogue": "bellows_deep/tag_7"
+    },
+    {
+     "x": 1,
+     "y": 9,
+     "dialogue": "bellows_deep/auction"
+    }
+   ],
+   "blocks": [
+    {
+     "x": 5,
+     "y": 0,
+     "open_flag": "ah_bellows_2",
+     "closed": "@"
+    },
+    {
+     "x": 6,
+     "y": 0,
+     "open_flag": "ah_bellows_2",
+     "closed": "@"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 0,
+     "y": 7,
+     "item": "power_brew",
+     "count": 1,
+     "flag": "find_bellows_cart"
+    },
+    {
+     "x": 11,
+     "y": 3,
+     "item": "spark_drop",
+     "count": 1,
+     "flag": "find_bellows_seam"
+    }
+   ]
+  },
+  {
+   "name": "Bellows Deep, bottom gallery",
+   "rows": [
+    "@@@@@@@@@@@@",
+    "@S.........@",
+    "@:..CCCC..:@",
+    "@..........@",
+    "@::......::@",
+    "@..........@",
+    "@:...@@...:@",
+    "@..........@",
+    "@@@@@==@@@@@"
+   ],
+   "warps": [
+    {
+     "x": 5,
+     "y": 8,
+     "to": "bellows_deep@1",
+     "tx": 5,
+     "ty": 1,
+     "facing": "down"
+    },
+    {
+     "x": 6,
+     "y": 8,
+     "to": "bellows_deep@1",
+     "tx": 6,
+     "ty": 1,
+     "facing": "down"
+    }
+   ],
+   "npcs": [
+    {
+     "id": "slagg",
+     "x": 6,
+     "y": 3,
+     "facing": "down",
+     "dialogue": "ashmere_more/slagg",
+     "sprite": "elder",
+     "color": "4a4a3a"
+    },
+    {
+     "id": "hamm",
+     "x": 2,
+     "y": 5,
+     "facing": "right",
+     "dialogue": "ashmere_more/hamm",
+     "sprite": "villager",
+     "color": "6a5a4a"
+    }
+   ],
+   "signs": [
+    {
+     "x": 1,
+     "y": 1,
+     "dialogue": "bellows_deep/tag_8"
+    }
+   ],
+   "secrets": [
+    {
+     "x": 11,
+     "y": 5,
+     "item": "max_tonic",
+     "count": 2,
+     "flag": "find_bellows_payroll"
+    }
+   ]
+  }
+ ]
+}
