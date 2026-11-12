@@ -1,0 +1,15 @@
+{
+ "_comment": "Trading and gifting between friends (Online 100, area 5). The server reads the same object as server_config.trade_gifts (tools/online/game_data_sql.py).",
+ "trades_per_day": 5,
+ "history_days": 30,
+ "gifts_per_day": 1,
+ "gifts_per_day_close": 2,
+ "close_level": 3,
+ "wish_max": 3,
+ "cards_per_day": 10,
+ "thanks_points": 2,
+ "lend_min_level": 3,
+ "lend_hours": 48,
+ "lends_per_day": 3,
+ "borrow_max": 1
+}
