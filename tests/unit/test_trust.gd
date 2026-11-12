@@ -87,7 +87,7 @@ func test_two_betrayals_per_act() -> void:
 			for r: String in ["betray", "reward", "kept", "caught", "struck"]:
 				for f: Variant in Trust.effects(d, r).get("flags", []):
 					set_by[str(f)] = true
-	for n: int in range(1, 7):
+	for n: int in range(1, 14):
 		assert_true(set_by.has("clan_b%d" % n), "betrayal %d is set by some outcome" % n)
 
 func test_clan_data_and_dialogue_are_valid() -> void:
