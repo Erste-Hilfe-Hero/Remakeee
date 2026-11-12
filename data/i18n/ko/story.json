@@ -571,6 +571,22 @@
   "Ysolde: You have Mirela's compass rose on your map case. Where did you get that?": "Ysolde: 네 지도 가방에 Mirela의 나침반 장미가 있구나. 그걸 어디서 얻었니?",
   "Ysolde: You've seen the Wide Rift. Sit down, apprentice. There is something in the guild files.": "Ysolde: Wide 균열을 보고 왔구나. 앉거라, 견습생. 길드 기록에 적힌 것이 있다.",
   "Zippits spark brightest when a Rift is near. Wardens used them as early warnings.": "Zippit은 균열이 가까우면 가장 밝게 불꽃을 튀긴다. 수호자들은 이것을 미리 알리는 신호로 썼다.",
-  "{name}! Wake up!": "{name}! 일어나!"
+  "{name}! Wake up!": "{name}! 일어나!",
+  "Auburn": "적갈색",
+  "Black": "검정",
+  "Blond": "금발",
+  "Brown": "갈색",
+  "Coat colour": "털 색",
+  "Deep": "짙은",
+  "Fair": "밝은",
+  "Hair colour": "머리 색",
+  "Light": "연한",
+  "Ochre": "황토",
+  "Plum": "자두색",
+  "Rust": "녹슨 색",
+  "Silver": "은색",
+  "Skin tone": "피부 톤",
+  "Tan": "구릿빛",
+  "Teal": "청록"
  }
 }

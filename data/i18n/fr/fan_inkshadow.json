@@ -1,0 +1,30 @@
+{
+ "_comment": "French texts for the German table fan_inkshadow. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py fr.",
+ "strings": {
+  "%s counts the fence posts. Twice. One is missing.": "%s compte les piquets de clôture. Deux fois. Il en manque un.",
+  "%s digs up a few coins and drops them at your feet. %d coins!": "%s déterre quelques pièces et les lâche à tes pieds. %d pièces!",
+  "%s eats something off the path. It seems fine. Probably.": "%s mange un truc sur le chemin. Ça a l'air d'aller. Sans doute.",
+  "%s glares at a bush as if it owes money.": "%s fusille un buisson du regard comme s'il lui devait de l'argent.",
+  "%s hides behind your boot from a leaf.": "%s se cache derrière ta botte à cause d'une feuille.",
+  "%s hums a cheerful dirge.": "%s fredonne un chant funèbre tout guilleret.",
+  "%s keeps pace, calm as a closed coffin.": "%s garde le rythme, calme comme un cercueil fermé.",
+  "%s leans against your leg for a moment.": "%s s'appuie contre ta jambe un instant.",
+  "%s mutters the names of everyone you let fall. Yours is on the list too.": "%s marmonne les noms de tous ceux que tu as laissés tomber. Le tien est aussi sur la liste.",
+  "%s nods at strangers as if they owe it a bow.": "%s salue les inconnus comme s'ils lui devaient une révérence.",
+  "%s plants its feet. Nothing is attacking. It plants them anyway.": "%s se campe sur ses pattes. Rien n'attaque. Il se campe quand même.",
+  "%s practises a farewell speech. It is about you.": "%s répète un discours d'adieu. Il parle de toi.",
+  "%s practises biting the air. The air loses.": "%s s'entraîne à mordre l'air. L'air perd.",
+  "%s prods a puddle. The puddle prods back.": "%s tâte une flaque. La flaque tâte en retour.",
+  "%s runs ahead, runs back, and pretends it never left.": "%s court devant, revient, et fait comme s'il n'était jamais parti.",
+  "%s sighs at your walking pace.": "%s soupire devant ton rythme de marche.",
+  "%s sniffs a grave marker and looks very interested.": "%s renifle une pierre tombale avec beaucoup d'intérêt.",
+  "%s stares at the map ink until it smudges.": "%s fixe l'encre de la carte jusqu'à ce qu'elle bave.",
+  "%s steers a beetle off the path.": "%s écarte un scarabée du chemin.",
+  "%s steps on your heel. Twice. On purpose.": "%s te marche sur le talon. Deux fois. Exprès.",
+  "%s steps on your shadow so nobody sees it.": "%s marche sur ton ombre pour que personne ne la voie.",
+  "%s struts like it won the last battle alone.": "%s se pavane comme s'il avait gagné le dernier combat tout seul.",
+  "%s walks a little too close behind you. Like a knife does.": "%s marche un peu trop près derrière toi. Comme un couteau.",
+  "%s walks exactly in your footprints, just in case.": "%s marche pile dans tes empreintes, au cas où.",
+  "%s watches the clouds drift and judges none of them.": "%s regarde les nuages passer et n'en juge aucun."
+ }
+}

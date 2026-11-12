@@ -256,7 +256,7 @@ def main():
         w = weights[r][used[r] % len(weights[r])]
         used[r] += 1
         mn = lo + (k % 2) if r != "shy" else hi - 1
-        row = {"species": name, "min": min(mn, hi), "max": hi if r == "shy" else max(min(mn + 1, hi), lo), "weight": w}
+        row = {"species": name, "min": min(mn, hi), "max": hi if r == "shy" else max(min(mn + 2, hi), lo), "weight": w}
         if ground:
             row["ground"] = ground
         return row

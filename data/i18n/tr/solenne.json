@@ -1,0 +1,29 @@
+{
+ "_comment": "Turkish texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py tr.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "IV. Perde: Solenne'in Güneşi",
+  "Brass Veil Factor Lusk": "Pirinç Peçe Kâhyası Lusk",
+  "Dry Well": "Kuru Kuyu",
+  "Echo Crystal: Dawn Mend": "Yankı Kristali: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "Yankı Kristali: Radiant Lance",
+  "Echo Crystal: Squall": "Yankı Kristali: Squall",
+  "High Noon": "Tam Öğle",
+  "Interlude: Ochrewell": "Ara Bölüm: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "Kum rüzgâr kulelerinde uluyor: öndeki Taş olmayan her Spirling her tur biraz Dinçlik kaybeder.",
+  "Sandstorm": "Kum fırtınası",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Saltglass düzlüklerinden güneye, Ochrewell'e giden kum yolunu tut ve Solenne'in üç Yarığını onar.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Bir Lumen Spirling'ine Dawn Mend öğretir. Asla tükenmez.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Bir Lumen Spirling'ine Radiant Lance öğretir. Asla tükenmez.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Bir Gale Spirling'ine Squall öğretir. Asla tükenmez.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "Son kepenk açılıyor, kule nefes alıyor ve merdiven açık!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "Ochrewell'in doğusundaki vaha kurudu: Vaha Yarığı. Muhafız Kaia kimsenin suçu olmadığını söylüyor.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "Vaha kuruyana kadar satıldı: iki taraftaki her iyileştirme yarıya iner.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "Kepenk çarpıyor ve rüzgâr bıçak gibi kesiliyor. Bütün kepenkler yine kapanıyor.",
+  "The shutter swings open. Sand hisses through the slats.": "Kepenk açılıyor. Kum aralıklardan tıslıyor.",
+  "The shutters hum in the wind. The stair stays open.": "Kepenkler rüzgârda uğulduyor. Merdiven açık kalıyor.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "Güneş tam tepede: iki taraftaki Lumen teknikleri daha sert vurur.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "Güneş sarayının altındaki güneş saati durdu: Güneş Yarığı. Muhafız Emrys bekliyor, yavaşça.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Ochrewell'in rüzgâr kuleleri nefes almayı bıraktı: Kule Yarığı. Muhafız Aurelio şıkça yas tutuyor."
+ }
+}

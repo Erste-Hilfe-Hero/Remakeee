@@ -8452,6 +8452,3566 @@
  },
  {
   "dex_id": 146,
+  "name": "Sootpaw",
+  "elements": [
+   "EMBER",
+   "UMBRA"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "sootpaw",
+  "era": 1,
+  "base": {
+   "hp": 60,
+   "atk": 54,
+   "foc": 76,
+   "spd": 71,
+   "def": 51
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Gloam Pact"
+   ],
+   "26": [
+    "Gloom Ripple"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.5 m",
+  "habitat": "Chimney tops, ash heaps",
+  "lore": "It leaves black paw prints on every roof it crosses.",
+  "origin": "Tumbled out of a chimney during the first winter fire.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Sootlurk",
+    "rule": "ring",
+    "value": 22
+   }
+  ]
+ },
+ {
+  "dex_id": 147,
+  "name": "Sootlurk",
+  "elements": [
+   "EMBER",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "sootpaw",
+  "era": 1,
+  "base": {
+   "hp": 82,
+   "atk": 76,
+   "foc": 108,
+   "spd": 91,
+   "def": 78
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Ash Call"
+   ],
+   "6": [
+    "Mirk Nip"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Cower Shade"
+   ],
+   "20": [
+    "Brazier Pulse"
+   ],
+   "26": [
+    "Night Siphon"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.9 m",
+  "habitat": "Chimney tops, ash heaps",
+  "lore": "It hides in ash heaps with only its glowing eyes showing.",
+  "origin": "A Sootpaw that slept a whole winter in a cold chimney.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Sootharrow",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 148,
+  "name": "Sootharrow",
+  "elements": [
+   "EMBER",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "sootpaw",
+  "era": 1,
+  "base": {
+   "hp": 97,
+   "atk": 86,
+   "foc": 128,
+   "spd": 113,
+   "def": 81
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "Mirk Nip"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Gloom Handoff"
+   ],
+   "20": [
+    "Brazier Pulse"
+   ],
+   "26": [
+    "Gloom Ripple"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.6 m",
+  "habitat": "Chimney tops, ash heaps",
+  "lore": "Its tail burns like a torch. Chimney sweeps tip their hats to it.",
+  "origin": "Grown on the tallest chimney of Cinderfold.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 149,
+  "name": "Vitrill",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "vitrill",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 68,
+   "foc": 51,
+   "spd": 45,
+   "def": 91
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Candle Ward"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Radiant Lance"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.3 m",
+  "habitat": "Glassworks yards",
+  "lore": "Its shell is clear glass. You can see its little heart glow inside.",
+  "origin": "Formed from a drop of glass that fell from a blowpipe.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Vitrillon",
+    "rule": "ring",
+    "value": 21
+   }
+  ]
+ },
+ {
+  "dex_id": 150,
+  "name": "Vitrillon",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "vitrill",
+  "era": 1,
+  "base": {
+   "hp": 100,
+   "atk": 83,
+   "foc": 79,
+   "spd": 66,
+   "def": 125
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Dawn Call"
+   ],
+   "6": [
+    "Bowl Over"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "38": [
+    "Slow Quake"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "Glassworks yards",
+  "lore": "Glass crystals grow on its back. It rings like a bell when it bumps into things.",
+  "origin": "A Vitrill that rested in a cooling oven for a night.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Vitrillaxe",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 151,
+  "name": "Vitrillaxe",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "vitrill",
+  "era": 1,
+  "base": {
+   "hp": 116,
+   "atk": 96,
+   "foc": 79,
+   "spd": 66,
+   "def": 144
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Dawn Needle",
+    "Still Thought"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Starlit Lash"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Tunnel Strike"
+   ],
+   "32": [
+    "Radiant Lance"
+   ],
+   "38": [
+    "Slow Quake"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.0 m",
+  "habitat": "Glassworks yards",
+  "lore": "Its glass horn splits light into colours. The glassworks hang its shed shards in their windows.",
+  "origin": "Grown in the oldest furnace of the glassworks.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 152,
+  "name": "Sablet",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "sablet",
+  "era": 1,
+  "base": {
+   "hp": 60,
+   "atk": 36,
+   "foc": 73,
+   "spd": 57,
+   "def": 58
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Murk Call"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Lull Breaker"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.4 m",
+  "habitat": "Dark rafters of the engravers' halls",
+  "lore": "It watches the engravers at work and blinks slowly when they make a mistake.",
+  "origin": "Hatched in the rafters of the engravers' hall.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Sablowl",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 153,
+  "name": "Sablowl",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "sablet",
+  "era": 1,
+  "base": {
+   "hp": 74,
+   "atk": 51,
+   "foc": 94,
+   "spd": 68,
+   "def": 75
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Murk Call"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.8 m",
+  "habitat": "Dark rafters of the engravers' halls",
+  "lore": "Its feathers are soft as soot. It flies without a sound through the dark halls.",
+  "origin": "A Sablet that stayed awake through a hundred night shifts.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Sablarch",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 154,
+  "name": "Sablarch",
+  "elements": [
+   "UMBRA",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "sablet",
+  "era": 1,
+  "base": {
+   "hp": 71,
+   "atk": 51,
+   "foc": 114,
+   "spd": 70,
+   "def": 74
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Gloom Handoff"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Night Siphon"
+   ],
+   "15": [
+    "Drift Step"
+   ],
+   "20": [
+    "Gloom Ripple"
+   ],
+   "26": [
+    "Lull Breaker"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Squall"
+   ],
+   "44": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.3 m",
+  "habitat": "Dark rafters of the engravers' halls",
+  "lore": "Its wide eyes see every line in the dark. Engravers ask it to check their plates.",
+  "origin": "Grown in the darkest corner of the Gravers' Hall.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 155,
+  "name": "Quenchet",
+  "elements": [
+   "EMBER",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "quenchet",
+  "era": 1,
+  "base": {
+   "hp": 54,
+   "atk": 53,
+   "foc": 76,
+   "spd": 62,
+   "def": 50
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Ash Call"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.9 m",
+  "habitat": "Quench tanks, steaming pools",
+  "lore": "It hisses when it slides into water and leaves a trail of steam.",
+  "origin": "Slipped out of a quench tank when hot iron was dipped in.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Quenchcoil",
+    "rule": "ring",
+    "value": 21
+   }
+  ]
+ },
+ {
+  "dex_id": 156,
+  "name": "Quenchcoil",
+  "elements": [
+   "EMBER",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "quenchet",
+  "era": 1,
+  "base": {
+   "hp": 77,
+   "atk": 68,
+   "foc": 98,
+   "spd": 95,
+   "def": 65
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "1.7 m",
+  "habitat": "Quench tanks, steaming pools",
+  "lore": "Its fin sail cools in water and glows again in the air.",
+  "origin": "A Quenchet that swam through every quench tank of the works.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Quenchwyrm",
+    "rule": "ring",
+    "value": 38
+   }
+  ]
+ },
+ {
+  "dex_id": 157,
+  "name": "Quenchwyrm",
+  "elements": [
+   "EMBER",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "quenchet",
+  "era": 1,
+  "base": {
+   "hp": 78,
+   "atk": 70,
+   "foc": 109,
+   "spd": 94,
+   "def": 71
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Ash Call"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Brazier Pulse"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Bore Wave"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "2.9 m",
+  "habitat": "Quench tanks, steaming pools",
+  "lore": "Clouds of steam roll off its back. Smiths use its pools to harden their best blades.",
+  "origin": "Grown in the great steaming pool under the kilns.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 158,
+  "name": "Brickit",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "brickit",
+  "era": 1,
+  "base": {
+   "hp": 67,
+   "atk": 62,
+   "foc": 53,
+   "spd": 42,
+   "def": 86
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Glow Knuckle"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Kindle Up"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Slow Quake"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.6 m",
+  "habitat": "Kiln walls, brick stacks",
+  "lore": "It stacks loose bricks into little towers and sits on top of them.",
+  "origin": "Pressed into shape by mistake in a brick mould.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Brickwarden",
+    "rule": "ring",
+    "value": 21
+   }
+  ]
+ },
+ {
+  "dex_id": 159,
+  "name": "Brickwarden",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "brickit",
+  "era": 1,
+  "base": {
+   "hp": 111,
+   "atk": 81,
+   "foc": 71,
+   "spd": 58,
+   "def": 120
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Cinder Dash"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Heat Haze"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Tremor Thud"
+   ],
+   "38": [
+    "Bellows Blast"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "1.1 m",
+  "habitat": "Kiln walls, brick stacks",
+  "lore": "It patches kiln walls with its own warm clay.",
+  "origin": "A Brickit that guarded a kiln through a whole firing.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Brickolossus",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 160,
+  "name": "Brickolossus",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "brickit",
+  "era": 1,
+  "base": {
+   "hp": 129,
+   "atk": 94,
+   "foc": 84,
+   "spd": 68,
+   "def": 140
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Hunker Down"
+   ],
+   "6": [
+    "Glow Knuckle"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Ash Call"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Bellows Blast"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.9 m",
+  "habitat": "Kiln walls, brick stacks",
+  "lore": "A fire burns on its shoulders like a kiln. Whole streets are built from its old bricks.",
+  "origin": "The brickmakers say it carried the first kiln to Ashmere.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 161,
+  "name": "Clinklet",
+  "elements": [
+   "STONE",
+   "UMBRA"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "clinklet",
+  "era": 1,
+  "base": {
+   "hp": 76,
+   "atk": 55,
+   "foc": 47,
+   "spd": 46,
+   "def": 85
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down"
+   ],
+   "6": [
+    "Mirk Nip"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Murk Call"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.45,
+  "height": "0.4 m",
+  "habitat": "Slag heaps",
+  "lore": "It clinks when it walks. It eats the cool slag nobody wants.",
+  "origin": "Crawled out of a slag heap that had cooled for a year.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Clinkshell",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 162,
+  "name": "Clinkshell",
+  "elements": [
+   "STONE",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "clinklet",
+  "era": 1,
+  "base": {
+   "hp": 92,
+   "atk": 81,
+   "foc": 64,
+   "spd": 54,
+   "def": 104
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down"
+   ],
+   "6": [
+    "Mirk Nip"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Murk Call"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Slow Quake"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.8 m",
+  "habitat": "Slag heaps",
+  "lore": "Sharp slag spikes grow on its shell. Miners leave it alone.",
+  "origin": "A Clinklet that ate its way through a whole slag heap.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Clinkerdome",
+    "rule": "ring",
+    "value": 37
+   }
+  ]
+ },
+ {
+  "dex_id": 163,
+  "name": "Clinkerdome",
+  "elements": [
+   "STONE",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "clinklet",
+  "era": 1,
+  "base": {
+   "hp": 124,
+   "atk": 97,
+   "foc": 77,
+   "spd": 67,
+   "def": 138
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "All-In Crash",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Mirk Nip"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Murk Call"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.3 m",
+  "habitat": "Slag heaps",
+  "lore": "Its shell is a heap of black glass. When it sleeps it looks like a hill.",
+  "origin": "Grown on the largest slag heap of Ashmere.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 164,
+  "name": "Peatlet",
+  "elements": [
+   "BLOOM",
+   "TIDE"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "peatlet",
+  "era": 1,
+  "base": {
+   "hp": 63,
+   "atk": 40,
+   "foc": 79,
+   "spd": 54,
+   "def": 67
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Root Mend"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Deepwell Draught"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.5 m",
+  "habitat": "Peat bogs of the fen",
+  "lore": "It sinks into the bog up to its eyes and waits for rain.",
+  "origin": "Sprouted from a peat brick left out in the rain.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "bark_wrap",
+  "unfold": [
+   {
+    "to": "Peatbloom",
+    "rule": "ring",
+    "value": 20
+   }
+  ]
+ },
+ {
+  "dex_id": 165,
+  "name": "Peatbloom",
+  "elements": [
+   "BLOOM",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "peatlet",
+  "era": 1,
+  "base": {
+   "hp": 83,
+   "atk": 56,
+   "foc": 100,
+   "spd": 70,
+   "def": 82
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Puffcap Haze"
+   ],
+   "6": [
+    "Fizz Pop"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Chill Mist"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Spindrift Shot"
+   ],
+   "38": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.9 m",
+  "habitat": "Peat bogs of the fen",
+  "lore": "A ring of pale petals opens around its head when the fen is quiet.",
+  "origin": "A Peatlet that drank from the black water for a whole season.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Peatmonarch",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 166,
+  "name": "Peatmonarch",
+  "elements": [
+   "BLOOM",
+   "TIDE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "peatlet",
+  "era": 1,
+  "base": {
+   "hp": 90,
+   "atk": 65,
+   "foc": 129,
+   "spd": 80,
+   "def": 97
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Husk Shed"
+   ],
+   "6": [
+    "Salt Spray"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Drench"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Bore Wave"
+   ],
+   "44": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "1.6 m",
+  "habitat": "Peat bogs of the fen",
+  "lore": "Its petals glow over the dark fen. Lost walkers follow the light home.",
+  "origin": "Grown in the oldest bog, where the peat is deepest.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 167,
+  "name": "Gloomgill",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "gloomgill",
+  "era": 1,
+  "base": {
+   "hp": 46,
+   "atk": 66,
+   "foc": 46,
+   "spd": 78,
+   "def": 42
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Deepwell Draught"
+   ],
+   "6": [
+    "Mirk Nip"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Hush"
+   ],
+   "20": [
+    "Undertow"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.53,
+  "height": "0.5 m",
+  "habitat": "Black fen water",
+  "lore": "It swims in black water and lights its way with its feelers.",
+  "origin": "Hatched in fen water too dark for the sun to reach.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Gloomgillar",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 168,
+  "name": "Gloomgillar",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "gloomgill",
+  "era": 1,
+  "base": {
+   "hp": 67,
+   "atk": 103,
+   "foc": 64,
+   "spd": 101,
+   "def": 62
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Chill Mist"
+   ],
+   "6": [
+    "Dusk Rake"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Cower Shade"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.9 m",
+  "habitat": "Black fen water",
+  "lore": "Its spines prick anything that reaches into the water.",
+  "origin": "A Gloomgill that hid in the fen through a long drought.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Gloomgillith",
+    "rule": "ring",
+    "value": 36
+   }
+  ]
+ },
+ {
+  "dex_id": 169,
+  "name": "Gloomgillith",
+  "elements": [
+   "TIDE",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "gloomgill",
+  "era": 1,
+  "base": {
+   "hp": 75,
+   "atk": 100,
+   "foc": 82,
+   "spd": 128,
+   "def": 67
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Spout Jab",
+    "Deepwell Draught"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "10": [
+    "Salt Snap"
+   ],
+   "15": [
+    "Gloom Handoff"
+   ],
+   "20": [
+    "Rip Current"
+   ],
+   "26": [
+    "Murmur Bite"
+   ],
+   "32": [
+    "Breaker Plunge"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.6 m",
+  "habitat": "Black fen water",
+  "lore": "Its lights draw small fish close. Fen folk say not to follow them.",
+  "origin": "Grown in the deepest pool of the dark fen.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 170,
+  "name": "Fumelet",
+  "elements": [
+   "GALE",
+   "UMBRA"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "fumelet",
+  "era": 1,
+  "base": {
+   "hp": 57,
+   "atk": 40,
+   "foc": 84,
+   "spd": 62,
+   "def": 65
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Scatter Gale"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "10": [
+    "Lull Breaker"
+   ],
+   "15": [
+    "Gloom Handoff"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Gloom Ripple"
+   ],
+   "32": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.4 m",
+  "habitat": "Smoke over the chimneys",
+  "lore": "A curl of smoke with sleepy eyes. It drifts wherever the wind pushes it.",
+  "origin": "Rose from a chimney on a windless night.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Fumewraith",
+    "rule": "ring",
+    "value": 22
+   }
+  ]
+ },
+ {
+  "dex_id": 171,
+  "name": "Fumewraith",
+  "elements": [
+   "GALE",
+   "UMBRA"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "fumelet",
+  "era": 1,
+  "base": {
+   "hp": 84,
+   "atk": 54,
+   "foc": 108,
+   "spd": 75,
+   "def": 85
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Breeze Slice",
+    "Tailwind"
+   ],
+   "6": [
+    "Shade Pounce"
+   ],
+   "10": [
+    "Crosswind"
+   ],
+   "15": [
+    "Gloam Pact"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Night Siphon"
+   ],
+   "32": [
+    "Cloudbreak"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.8 m",
+  "habitat": "Smoke over the chimneys",
+  "lore": "It wraps itself around lamps and dims them to sleep in the dark.",
+  "origin": "A Fumelet that drifted through every chimney of the works.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Fumeregent",
+    "rule": "ring",
+    "value": 35
+   }
+  ]
+ },
+ {
+  "dex_id": 172,
+  "name": "Fumeregent",
+  "elements": [
+   "GALE",
+   "UMBRA"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "fumelet",
+  "era": 1,
+  "base": {
+   "hp": 100,
+   "atk": 65,
+   "foc": 130,
+   "spd": 95,
+   "def": 104
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Draft Needle",
+    "Tailwind"
+   ],
+   "6": [
+    "Veil Step"
+   ],
+   "10": [
+    "Crosswind"
+   ],
+   "15": [
+    "Cower Shade"
+   ],
+   "20": [
+    "Squall Line"
+   ],
+   "26": [
+    "Gloom Ripple"
+   ],
+   "32": [
+    "Squall"
+   ],
+   "38": [
+    "Dusk Gnaw"
+   ],
+   "44": [
+    "Downburst"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.3 m",
+  "habitat": "Smoke over the chimneys",
+  "lore": "A crown of smoke rises from its head. Where it rests, the air turns grey and calm.",
+  "origin": "Grown in the smoke cloud over the great kilns.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 173,
+  "name": "Lodekit",
+  "elements": [
+   "STONE",
+   "VOLT"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "lodekit",
+  "era": 1,
+  "base": {
+   "hp": 59,
+   "atk": 73,
+   "foc": 50,
+   "spd": 72,
+   "def": 55
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Pebble Toss",
+    "Hunker Down"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Spark Call"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Pylon Snap"
+   ],
+   "32": [
+    "Slow Quake"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.5 m",
+  "habitat": "Mine shafts, ore veins",
+  "lore": "It sniffs out ore veins and taps on the rock where miners should dig.",
+  "origin": "Found in a mine cart, asleep on a pile of ore.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Lodebrock",
+    "rule": "ring",
+    "value": 19
+   }
+  ]
+ },
+ {
+  "dex_id": 174,
+  "name": "Lodebrock",
+  "elements": [
+   "STONE",
+   "VOLT"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "lodekit",
+  "era": 1,
+  "base": {
+   "hp": 88,
+   "atk": 95,
+   "foc": 65,
+   "spd": 95,
+   "def": 67
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hunker Down"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Grid Lock"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Pylon Snap"
+   ],
+   "38": [
+    "Short Circuit"
+   ]
+  },
+  "bond_rate": 0.25,
+  "height": "0.9 m",
+  "habitat": "Mine shafts, ore veins",
+  "lore": "Sparks crackle along its plates when it finds a rich vein.",
+  "origin": "A Lodekit that found the richest vein in the mine.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Lodemarshal",
+    "rule": "ring",
+    "value": 34
+   }
+  ]
+ },
+ {
+  "dex_id": 175,
+  "name": "Lodemarshal",
+  "elements": [
+   "STONE",
+   "VOLT"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "lodekit",
+  "era": 1,
+  "base": {
+   "hp": 96,
+   "atk": 120,
+   "foc": 81,
+   "spd": 110,
+   "def": 91
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Quarry Wall"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Spark Call"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Pylon Snap"
+   ],
+   "32": [
+    "Slow Quake"
+   ],
+   "38": [
+    "Short Circuit"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.6 m",
+  "habitat": "Mine shafts, ore veins",
+  "lore": "Its tail strikes the rock like a hammer. Whole mines follow its lead.",
+  "origin": "Grown in the deepest shaft of the Shatterfloor mine.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 176,
+  "name": "Glowflit",
+  "elements": [
+   "EMBER",
+   "GALE"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "glowflit",
+  "era": 1,
+  "base": {
+   "hp": 60,
+   "atk": 50,
+   "foc": 73,
+   "spd": 67,
+   "def": 55
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Kindle Up"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Cinder Breath"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Brazier Pulse"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.3 m",
+  "habitat": "Around forge sparks at night",
+  "lore": "It dances around forge sparks and catches them on its wings.",
+  "origin": "Hatched from a spark that did not go out.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Glowflitter",
+    "rule": "ring",
+    "value": 22
+   }
+  ]
+ },
+ {
+  "dex_id": 177,
+  "name": "Glowflitter",
+  "elements": [
+   "EMBER",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "glowflit",
+  "era": 1,
+  "base": {
+   "hp": 76,
+   "atk": 63,
+   "foc": 101,
+   "spd": 96,
+   "def": 67
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Kindle Up"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "0.6 m",
+  "habitat": "Around forge sparks at night",
+  "lore": "Its wings glow orange at night. Smiths leave the forge door open for it.",
+  "origin": "A Glowflit that danced around one forge all winter.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Glowflare",
+    "rule": "ring",
+    "value": 37
+   }
+  ]
+ },
+ {
+  "dex_id": 178,
+  "name": "Glowflare",
+  "elements": [
+   "EMBER",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "glowflit",
+  "era": 1,
+  "base": {
+   "hp": 91,
+   "atk": 87,
+   "foc": 127,
+   "spd": 104,
+   "def": 90
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Ash Call"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Char Mark"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Cinder Breath"
+   ],
+   "26": [
+    "Lull Breaker"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Squall"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.0 m",
+  "habitat": "Around forge sparks at night",
+  "lore": "When it opens its wings, the night sky over the works lights up like dawn.",
+  "origin": "Grown in the shower of sparks from the great hammer.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 179,
+  "name": "Stylet",
+  "elements": [
+   "UMBRA",
+   "VOLT"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "stylet",
+  "era": 1,
+  "base": {
+   "hp": 52,
+   "atk": 68,
+   "foc": 56,
+   "spd": 83,
+   "def": 50
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Cower Shade"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Shade Pounce"
+   ],
+   "15": [
+    "Spark Call"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Storm Gnash"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ]
+  },
+  "bond_rate": 0.55,
+  "height": "0.6 m",
+  "habitat": "Engravers' benches, copper plates",
+  "lore": "Its horn is sharp as an engraving needle. It scratches tiny pictures on stones.",
+  "origin": "Scratched itself out of a spoiled copper plate.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Stylox",
+    "rule": "ring",
+    "value": 21
+   }
+  ]
+ },
+ {
+  "dex_id": 180,
+  "name": "Stylox",
+  "elements": [
+   "UMBRA",
+   "VOLT"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "stylet",
+  "era": 1,
+  "base": {
+   "hp": 79,
+   "atk": 105,
+   "foc": 71,
+   "spd": 111,
+   "def": 69
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Gloam Pact"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Shade Pounce"
+   ],
+   "15": [
+    "Spark Call"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Pylon Snap"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Short Circuit"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "1.1 m",
+  "habitat": "Engravers' benches, copper plates",
+  "lore": "A spark jumps from its tail tip when it is cross.",
+  "origin": "A Stylet that engraved a whole wall in one night.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Stylaxon",
+    "rule": "ring",
+    "value": 38
+   }
+  ]
+ },
+ {
+  "dex_id": 181,
+  "name": "Stylaxon",
+  "elements": [
+   "UMBRA",
+   "VOLT"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "stylet",
+  "era": 1,
+  "base": {
+   "hp": 85,
+   "atk": 122,
+   "foc": 91,
+   "spd": 145,
+   "def": 72
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Veil Step",
+    "Cower Shade"
+   ],
+   "6": [
+    "Crackle Bite"
+   ],
+   "10": [
+    "Murmur Bite"
+   ],
+   "15": [
+    "Grid Lock"
+   ],
+   "26": [
+    "Storm Gnash"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Short Circuit"
+   ],
+   "44": [
+    "Eclipse Crush"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.9 m",
+  "habitat": "Engravers' benches, copper plates",
+  "lore": "It engraves warnings on cave walls. Only the engravers can read them.",
+  "origin": "Grown among the lost plates of the old engravers.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 182,
+  "name": "Coalkid",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "coalkid",
+  "era": 1,
+  "base": {
+   "hp": 56,
+   "atk": 81,
+   "foc": 48,
+   "spd": 75,
+   "def": 55
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hunker Down"
+   ],
+   "6": [
+    "Cinder Dash"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Kindle Up"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Tremor Thud"
+   ]
+  },
+  "bond_rate": 0.5,
+  "height": "0.5 m",
+  "habitat": "Coal ridges, mine roads",
+  "lore": "It nibbles coal and its breath smells of smoke.",
+  "origin": "Born on a coal ridge in a cold spring.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Coalbuck",
+    "rule": "ring",
+    "value": 20
+   }
+  ]
+ },
+ {
+  "dex_id": 183,
+  "name": "Coalbuck",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "coalkid",
+  "era": 1,
+  "base": {
+   "hp": 91,
+   "atk": 123,
+   "foc": 78,
+   "spd": 98,
+   "def": 71
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Bowl Over",
+    "Hunker Down"
+   ],
+   "6": [
+    "Glow Knuckle"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Heat Haze"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.9 m",
+  "habitat": "Coal ridges, mine roads",
+  "lore": "Its horns glow red at the tips when it charges.",
+  "origin": "A Coalkid that climbed every coal ridge of Ashmere.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Coalpatriarch",
+    "rule": "ring",
+    "value": 38
+   }
+  ]
+ },
+ {
+  "dex_id": 184,
+  "name": "Coalpatriarch",
+  "elements": [
+   "STONE",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "coalkid",
+  "era": 1,
+  "base": {
+   "hp": 104,
+   "atk": 132,
+   "foc": 81,
+   "spd": 113,
+   "def": 85
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down"
+   ],
+   "6": [
+    "Cinder Nip"
+   ],
+   "10": [
+    "Tunnel Strike"
+   ],
+   "15": [
+    "Heat Haze"
+   ],
+   "20": [
+    "Landslip"
+   ],
+   "26": [
+    "Kiln Strike"
+   ],
+   "32": [
+    "Cairn Crash"
+   ],
+   "38": [
+    "Furnace Spiral"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.08,
+  "height": "1.6 m",
+  "habitat": "Coal ridges, mine roads",
+  "lore": "Its back holds glowing coal crystals. Herds of Coalkid follow it through the snow.",
+  "origin": "Grown on the highest ridge, where the coal meets the sky.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 185,
+  "name": "Glazel",
+  "elements": [
+   "LUMEN",
+   "EMBER"
+  ],
+  "rarity": "common",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "glazel",
+  "era": 1,
+  "base": {
+   "hp": 61,
+   "atk": 59,
+   "foc": 78,
+   "spd": 76,
+   "def": 56
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Sunwell Sip"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Ash Call"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Cinder Breath"
+   ],
+   "32": [
+    "Prism Burst"
+   ]
+  },
+  "bond_rate": 0.48,
+  "height": "0.9 m",
+  "habitat": "Cooling glass, furnace mouths",
+  "lore": "It slides along cooling glass and leaves it smooth and shiny.",
+  "origin": "Slipped out of a furnace mouth with the first molten glass.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Glazelisk",
+    "rule": "ring",
+    "value": 18
+   }
+  ]
+ },
+ {
+  "dex_id": 186,
+  "name": "Glazelisk",
+  "elements": [
+   "LUMEN",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "glazel",
+  "era": 1,
+  "base": {
+   "hp": 92,
+   "atk": 74,
+   "foc": 104,
+   "spd": 96,
+   "def": 82
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Beacon Ping",
+    "Still Thought"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Ash Call"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Brazier Pulse"
+   ],
+   "32": [
+    "Prism Burst"
+   ],
+   "38": [
+    "Bellows Blast"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "1.7 m",
+  "habitat": "Cooling glass, furnace mouths",
+  "lore": "Glass crystals grow along its spine and catch the furnace light.",
+  "origin": "A Glazel that slept curled around a glass bowl.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Glazeldrake",
+    "rule": "ring",
+    "value": 37
+   }
+  ]
+ },
+ {
+  "dex_id": 187,
+  "name": "Glazeldrake",
+  "elements": [
+   "LUMEN",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "glazel",
+  "era": 1,
+  "base": {
+   "hp": 99,
+   "atk": 80,
+   "foc": 130,
+   "spd": 106,
+   "def": 87
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Beacon Ping",
+    "Dawn Call"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Ash Call"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Cinder Breath"
+   ],
+   "32": [
+    "Omen Bell"
+   ],
+   "38": [
+    "Bellows Blast"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "2.9 m",
+  "habitat": "Cooling glass, furnace mouths",
+  "lore": "Its body glows like glass just out of the fire. It shapes glass with its breath.",
+  "origin": "The glassblowers say it taught them their craft.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 188,
+  "name": "Puffbellow",
+  "elements": [
+   "VOLT",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "puffbellow",
+  "era": 1,
+  "base": {
+   "hp": 64,
+   "atk": 82,
+   "foc": 51,
+   "spd": 68,
+   "def": 50
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Spark Call"
+   ],
+   "6": [
+    "Kite Cut"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Squall Line"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.4 m",
+  "habitat": "Forge yards, windy roofs",
+  "lore": "It puffs up its chest like a bellows and blows the forge fire bright.",
+  "origin": "Hatched beside a forge bellows on a cold morning.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Bellowroc",
+    "rule": "ring",
+    "value": 27
+   }
+  ]
+ },
+ {
+  "dex_id": 189,
+  "name": "Bellowroc",
+  "elements": [
+   "VOLT",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "vanguard",
+  "line_id": "puffbellow",
+  "era": 1,
+  "base": {
+   "hp": 84,
+   "atk": 98,
+   "foc": 65,
+   "spd": 94,
+   "def": 75
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Crackle Bite",
+    "Grid Lock"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Pylon Snap"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Storm Gnash"
+   ],
+   "26": [
+    "Gale Scythe"
+   ],
+   "44": [
+    "Capacitor Crash"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "0.9 m",
+  "habitat": "Forge yards, windy roofs",
+  "lore": "One beat of its wings stokes a whole furnace. Its crest crackles with sparks.",
+  "origin": "A Puffbellow that kept the great forge burning through a storm.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 190,
+  "name": "Lampick",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "lampick",
+  "era": 1,
+  "base": {
+   "hp": 62,
+   "atk": 44,
+   "foc": 83,
+   "spd": 63,
+   "def": 63
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Still Thought"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Quarry Wall"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Omen Bell"
+   ]
+  },
+  "bond_rate": 0.28,
+  "height": "0.4 m",
+  "habitat": "Deep mine tunnels",
+  "lore": "A small light shines above its head. Miners follow it out of the dark.",
+  "origin": "Lit from a miner's lamp that was left in a tunnel.",
+  "cry_motif": [
+   1,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Lampickard",
+    "rule": "ring",
+    "value": 26
+   }
+  ]
+ },
+ {
+  "dex_id": 191,
+  "name": "Lampickard",
+  "elements": [
+   "LUMEN",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "lampick",
+  "era": 1,
+  "base": {
+   "hp": 89,
+   "atk": 60,
+   "foc": 116,
+   "spd": 78,
+   "def": 87
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Dawn Mend"
+   ],
+   "6": [
+    "Pumice Pelt"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Fault Line"
+   ],
+   "32": [
+    "Omen Bell"
+   ],
+   "38": [
+    "Slow Quake"
+   ],
+   "44": [
+    "Daybreak Strike"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "0.9 m",
+  "habitat": "Deep mine tunnels",
+  "lore": "Its lamp is bright as daylight. It knows every tunnel of the mines.",
+  "origin": "A Lampick that led a whole shift out of a collapsed tunnel.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "iron_burr"
+ },
+ {
+  "dex_id": 192,
+  "name": "Charsprout",
+  "elements": [
+   "BLOOM",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "charsprout",
+  "era": 1,
+  "base": {
+   "hp": 65,
+   "atk": 59,
+   "foc": 74,
+   "spd": 67,
+   "def": 58
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Pollen Prick",
+    "Husk Shed"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Kindle Up"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Cinder Breath"
+   ],
+   "32": [
+    "Bloom Burst"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.5 m",
+  "habitat": "Burnt ground after fires",
+  "lore": "It sprouts on burnt ground and is the first green after a fire.",
+  "origin": "Grew from the ashes of a burnt-down barn.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "spark_coil",
+  "unfold": [
+   {
+    "to": "Charsylvan",
+    "rule": "ring",
+    "value": 28
+   }
+  ]
+ },
+ {
+  "dex_id": 193,
+  "name": "Charsylvan",
+  "elements": [
+   "BLOOM",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "charsprout",
+  "era": 1,
+  "base": {
+   "hp": 87,
+   "atk": 67,
+   "foc": 101,
+   "spd": 94,
+   "def": 75
+  },
+  "trait": "kindling",
+  "learnset": {
+   "1": [
+    "Lichen Lash",
+    "Husk Shed"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Sap Draw"
+   ],
+   "15": [
+    "Ash Call"
+   ],
+   "20": [
+    "Thornwake"
+   ],
+   "26": [
+    "Brazier Pulse"
+   ],
+   "32": [
+    "Bloom Burst"
+   ],
+   "38": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.11,
+  "height": "1.1 m",
+  "habitat": "Burnt ground after fires",
+  "lore": "Flames flicker in its leaves but never burn them. Forests regrow around it.",
+  "origin": "A Charsprout that grew through three fires.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "bark_wrap"
+ },
+ {
+  "dex_id": 194,
+  "name": "Ingotlet",
+  "elements": [
+   "EMBER",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "ingotlet",
+  "era": 1,
+  "base": {
+   "hp": 81,
+   "atk": 67,
+   "foc": 52,
+   "spd": 42,
+   "def": 83
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.5 m",
+  "habitat": "Smelter yards",
+  "lore": "It rolls around in warm ingots and comes out shiny.",
+  "origin": "Found asleep in a mould between two ingots.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "iron_burr",
+  "unfold": [
+   {
+    "to": "Ingotusk",
+    "rule": "ring",
+    "value": 26
+   }
+  ]
+ },
+ {
+  "dex_id": 195,
+  "name": "Ingotusk",
+  "elements": [
+   "EMBER",
+   "STONE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "ingotlet",
+  "era": 1,
+  "base": {
+   "hp": 104,
+   "atk": 95,
+   "foc": 68,
+   "spd": 63,
+   "def": 134
+  },
+  "trait": "thick_hide",
+  "learnset": {
+   "1": [
+    "Cinder Dash",
+    "Kindle Up"
+   ],
+   "6": [
+    "All-In Crash"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Tremor Thud"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Slow Quake"
+   ],
+   "44": [
+    "Furnace Heart"
+   ]
+  },
+  "bond_rate": 0.13,
+  "height": "1.1 m",
+  "habitat": "Smelter yards",
+  "lore": "Its tusks are cast metal. It guards the smelter yard at night.",
+  "origin": "An Ingotlet that slept a whole year in the smelter.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 196,
+  "name": "Mortarant",
+  "elements": [
+   "STONE",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "mortarant",
+  "era": 1,
+  "base": {
+   "hp": 54,
+   "atk": 75,
+   "foc": 56,
+   "spd": 85,
+   "def": 51
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down"
+   ],
+   "6": [
+    "Draft Needle"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Tremor Thud"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Slow Quake"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.3 m",
+  "habitat": "Old walls, mortar cracks",
+  "lore": "It fills cracks in old walls with a paste it makes itself.",
+  "origin": "Crawled out of a crack in the oldest wall of Ashmere.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "swift_feather",
+  "unfold": [
+   {
+    "to": "Mortarmarch",
+    "rule": "ring",
+    "value": 28
+   }
+  ]
+ },
+ {
+  "dex_id": 197,
+  "name": "Mortarmarch",
+  "elements": [
+   "STONE",
+   "GALE"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "mortarant",
+  "era": 1,
+  "base": {
+   "hp": 75,
+   "atk": 108,
+   "foc": 66,
+   "spd": 116,
+   "def": 67
+  },
+  "trait": "slick",
+  "learnset": {
+   "1": [
+    "Grit Jab",
+    "Hunker Down"
+   ],
+   "6": [
+    "Breeze Slice"
+   ],
+   "10": [
+    "Pumice Pelt"
+   ],
+   "15": [
+    "Scatter Gale"
+   ],
+   "20": [
+    "Tunnel Strike"
+   ],
+   "26": [
+    "Squall Line"
+   ],
+   "32": [
+    "Tremor Thud"
+   ],
+   "38": [
+    "Gale Scythe"
+   ],
+   "44": [
+    "Monolith Drop"
+   ]
+  },
+  "bond_rate": 0.1,
+  "height": "0.7 m",
+  "habitat": "Old walls, mortar cracks",
+  "lore": "It marches along the walls at night and checks every stone.",
+  "origin": "A Mortarant that mended a whole town wall.",
+  "cry_motif": [
+   0,
+   2
+  ],
+  "keepsake_hint": "swift_feather"
+ },
+ {
+  "dex_id": 198,
+  "name": "Vaporel",
+  "elements": [
+   "TIDE",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "vaporel",
+  "era": 1,
+  "base": {
+   "hp": 66,
+   "atk": 39,
+   "foc": 74,
+   "spd": 52,
+   "def": 56
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Drench"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Heat Haze"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Brazier Pulse"
+   ],
+   "32": [
+    "Bore Wave"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.5 m",
+  "habitat": "Warm springs by the works",
+  "lore": "It floats in warm springs and blows steam bubbles.",
+  "origin": "Bubbled up from a warm spring by the works.",
+  "cry_motif": [
+   2,
+   0
+  ],
+  "keepsake_hint": "keen_lens",
+  "unfold": [
+   {
+    "to": "Vaporelle",
+    "rule": "ring",
+    "value": 28
+   }
+  ]
+ },
+ {
+  "dex_id": 199,
+  "name": "Vaporelle",
+  "elements": [
+   "TIDE",
+   "EMBER"
+  ],
+  "rarity": "shy",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "vaporel",
+  "era": 1,
+  "base": {
+   "hp": 75,
+   "atk": 50,
+   "foc": 108,
+   "spd": 75,
+   "def": 68
+  },
+  "trait": "light_sleeper",
+  "learnset": {
+   "1": [
+    "Fizz Pop",
+    "Drench"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Salt Spray"
+   ],
+   "15": [
+    "Heat Haze"
+   ],
+   "20": [
+    "Spindrift Shot"
+   ],
+   "26": [
+    "Cinder Breath"
+   ],
+   "32": [
+    "Bore Wave"
+   ],
+   "38": [
+    "Furnace Spiral"
+   ],
+   "44": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.15,
+  "height": "1.1 m",
+  "habitat": "Warm springs by the works",
+  "lore": "Its fins fan steam over cold workers. Everyone wants it near in winter.",
+  "origin": "A Vaporel that warmed a frozen spring back to life.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 200,
+  "name": "Shadeback",
+  "elements": [
+   "UMBRA",
+   "STONE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "bulwark",
+  "line_id": "shadeback",
+  "era": 1,
+  "base": {
+   "hp": 107,
+   "atk": 80,
+   "foc": 71,
+   "spd": 57,
+   "def": 112
+  },
+  "trait": "steady",
+  "learnset": {
+   "1": [
+    "Mirk Nip",
+    "Hush"
+   ],
+   "6": [
+    "Grit Jab"
+   ],
+   "10": [
+    "Shade Pounce"
+   ],
+   "15": [
+    "Hunker Down"
+   ],
+   "20": [
+    "Murmur Bite"
+   ],
+   "26": [
+    "Landslip"
+   ],
+   "32": [
+    "Dusk Gnaw"
+   ],
+   "38": [
+    "Cairn Crash"
+   ]
+  },
+  "bond_rate": 0.32,
+  "height": "0.6 m",
+  "habitat": "Under the Shade Rift",
+  "lore": "Its shell holds the dark of the Shade Rift. Light seems to sink into it.",
+  "origin": "Crawled out of the Shade Rift when it first opened.",
+  "cry_motif": [
+   2,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 201,
+  "name": "Kilnstork",
+  "elements": [
+   "EMBER",
+   "TIDE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "striker",
+  "line_id": "kilnstork",
+  "era": 1,
+  "base": {
+   "hp": 70,
+   "atk": 105,
+   "foc": 77,
+   "spd": 107,
+   "def": 62
+  },
+  "trait": "surge",
+  "learnset": {
+   "1": [
+    "Cinder Nip",
+    "Heat Haze"
+   ],
+   "6": [
+    "Salt Snap"
+   ],
+   "10": [
+    "Glow Knuckle"
+   ],
+   "15": [
+    "Tide Call"
+   ],
+   "20": [
+    "Kiln Strike"
+   ],
+   "26": [
+    "Rip Current"
+   ],
+   "32": [
+    "Furnace Spiral"
+   ],
+   "38": [
+    "Breaker Plunge"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.6 m",
+  "habitat": "Quench pools by the kilns",
+  "lore": "It stands in quench pools and strikes at sparks as if they were fish.",
+  "origin": "Landed in a quench pool on the night the kilns were first lit.",
+  "cry_motif": [
+   0,
+   1
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 202,
+  "name": "Puffglass",
+  "elements": [
+   "LUMEN",
+   "GALE"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "weaver",
+  "line_id": "puffglass",
+  "era": 1,
+  "base": {
+   "hp": 86,
+   "atk": 56,
+   "foc": 115,
+   "spd": 73,
+   "def": 85
+  },
+  "trait": "deep_roots",
+  "learnset": {
+   "1": [
+    "Wick Flicker",
+    "Candle Ward"
+   ],
+   "6": [
+    "Crosswind"
+   ],
+   "10": [
+    "Glint"
+   ],
+   "15": [
+    "Tailwind"
+   ],
+   "20": [
+    "Prism Ray"
+   ],
+   "26": [
+    "Updraft"
+   ],
+   "32": [
+    "Prism Burst"
+   ],
+   "38": [
+    "Squall"
+   ]
+  },
+  "bond_rate": 0.35,
+  "height": "1.0 m",
+  "habitat": "Glassblowers' benches",
+  "lore": "It blows glass bubbles from its mouth and laughs when they pop.",
+  "origin": "Breathed into shape by a glassblower on a happy day.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "keen_lens"
+ },
+ {
+  "dex_id": 203,
+  "name": "Flueling",
+  "elements": [
+   "VOLT",
+   "EMBER"
+  ],
+  "rarity": "uncommon",
+  "region": "ashmere",
+  "role": "kindler",
+  "line_id": "flueling",
+  "era": 1,
+  "base": {
+   "hp": 91,
+   "atk": 72,
+   "foc": 100,
+   "spd": 96,
+   "def": 78
+  },
+  "trait": "last_stand",
+  "learnset": {
+   "1": [
+    "Overcharge",
+    "Spark Call"
+   ],
+   "6": [
+    "Char Mark"
+   ],
+   "10": [
+    "Arc Bolt"
+   ],
+   "15": [
+    "Ash Call"
+   ],
+   "26": [
+    "Brazier Pulse"
+   ],
+   "32": [
+    "Short Circuit"
+   ],
+   "38": [
+    "Bellows Blast"
+   ]
+  },
+  "bond_rate": 0.3,
+  "height": "0.6 m",
+  "habitat": "Inside chimney flues",
+  "lore": "It crackles inside chimney flues and pops out covered in sparks.",
+  "origin": "Struck to life when lightning hit a chimney.",
+  "cry_motif": [
+   1,
+   2
+  ],
+  "keepsake_hint": "spark_coil"
+ },
+ {
+  "dex_id": 204,
   "name": "Vesk",
   "elements": [
    "GALE"
@@ -8509,7 +12069,7 @@
   ]
  },
  {
-  "dex_id": 147,
+  "dex_id": 205,
   "name": "Veskara",
   "elements": [
    "GALE"
@@ -8570,7 +12130,7 @@
   ]
  },
  {
-  "dex_id": 148,
+  "dex_id": 206,
   "name": "Veskarion",
   "elements": [
    "GALE"
@@ -8630,7 +12190,7 @@
   "keepsake_hint": "swift_feather"
  },
  {
-  "dex_id": 149,
+  "dex_id": 207,
   "name": "Siltby",
   "elements": [
    "TIDE"
@@ -8691,7 +12251,7 @@
   ]
  },
  {
-  "dex_id": 150,
+  "dex_id": 208,
   "name": "Siltarra",
   "elements": [
    "TIDE"
@@ -8755,7 +12315,7 @@
   ]
  },
  {
-  "dex_id": 151,
+  "dex_id": 209,
   "name": "Siltaroth",
   "elements": [
    "TIDE"
@@ -8766,11 +12326,11 @@
   "line_id": "silt",
   "era": 3,
   "base": {
-   "hp": 110,
-   "atk": 84,
-   "foc": 64,
-   "spd": 57,
-   "def": 113
+   "hp": 114,
+   "atk": 88,
+   "foc": 67,
+   "spd": 60,
+   "def": 117
   },
   "trait": "thick_hide",
   "learnset": {
@@ -8812,7 +12372,7 @@
   "keepsake_hint": "keen_lens"
  },
  {
-  "dex_id": 152,
+  "dex_id": 210,
   "name": "Cindrik",
   "elements": [
    "EMBER"
@@ -8823,11 +12383,11 @@
   "line_id": "cindr",
   "era": 3,
   "base": {
-   "hp": 63,
-   "atk": 55,
-   "foc": 77,
-   "spd": 66,
-   "def": 52
+   "hp": 62,
+   "atk": 54,
+   "foc": 75,
+   "spd": 65,
+   "def": 51
   },
   "trait": "kindling",
   "learnset": {
@@ -8870,7 +12430,7 @@
   ]
  },
  {
-  "dex_id": 153,
+  "dex_id": 211,
   "name": "Cindrel",
   "elements": [
    "EMBER"
@@ -8881,11 +12441,11 @@
   "line_id": "cindr",
   "era": 3,
   "base": {
-   "hp": 80,
-   "atk": 79,
-   "foc": 102,
-   "spd": 93,
-   "def": 72
+   "hp": 83,
+   "atk": 83,
+   "foc": 106,
+   "spd": 97,
+   "def": 75
   },
   "trait": "kindling",
   "learnset": {
@@ -8934,7 +12494,7 @@
   ]
  },
  {
-  "dex_id": 154,
+  "dex_id": 212,
   "name": "Cindravax",
   "elements": [
    "EMBER"
@@ -8945,11 +12505,11 @@
   "line_id": "cindr",
   "era": 3,
   "base": {
-   "hp": 98,
-   "atk": 90,
-   "foc": 128,
-   "spd": 117,
-   "def": 82
+   "hp": 95,
+   "atk": 87,
+   "foc": 123,
+   "spd": 113,
+   "def": 79
   },
   "trait": "kindling",
   "learnset": {
@@ -8994,7 +12554,7 @@
   "keepsake_hint": "spark_coil"
  },
  {
-  "dex_id": 155,
+  "dex_id": 213,
   "name": "Nibbet",
   "elements": [
    "UMBRA",
@@ -9056,7 +12616,7 @@
   ]
  },
  {
-  "dex_id": 156,
+  "dex_id": 214,
   "name": "Nibquill",
   "elements": [
    "UMBRA",
@@ -9068,11 +12628,11 @@
   "line_id": "nib",
   "era": 3,
   "base": {
-   "hp": 76,
-   "atk": 106,
-   "foc": 60,
-   "spd": 96,
-   "def": 67
+   "hp": 77,
+   "atk": 108,
+   "foc": 62,
+   "spd": 98,
+   "def": 68
   },
   "trait": "surge",
   "learnset": {
@@ -9121,7 +12681,7 @@
   ]
  },
  {
-  "dex_id": 157,
+  "dex_id": 215,
   "name": "Nibravure",
   "elements": [
    "UMBRA",
@@ -9133,11 +12693,11 @@
   "line_id": "nib",
   "era": 3,
   "base": {
-   "hp": 100,
-   "atk": 126,
-   "foc": 81,
-   "spd": 111,
-   "def": 78
+   "hp": 97,
+   "atk": 121,
+   "foc": 77,
+   "spd": 107,
+   "def": 74
   },
   "trait": "surge",
   "learnset": {
@@ -9182,7 +12742,7 @@
   "keepsake_hint": "iron_burr"
  },
  {
-  "dex_id": 158,
+  "dex_id": 216,
   "name": "Filigrin",
   "elements": [
    "LUMEN",
@@ -9244,7 +12804,7 @@
   ]
  },
  {
-  "dex_id": 159,
+  "dex_id": 217,
   "name": "Filigrace",
   "elements": [
    "LUMEN",
@@ -9309,7 +12869,7 @@
   ]
  },
  {
-  "dex_id": 160,
+  "dex_id": 218,
   "name": "Filigravure",
   "elements": [
    "LUMEN",
@@ -9321,11 +12881,11 @@
   "line_id": "filig",
   "era": 3,
   "base": {
-   "hp": 100,
-   "atk": 67,
-   "foc": 135,
-   "spd": 93,
-   "def": 100
+   "hp": 98,
+   "atk": 66,
+   "foc": 132,
+   "spd": 91,
+   "def": 98
   },
   "trait": "light_sleeper",
   "learnset": {

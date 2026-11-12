@@ -31,6 +31,31 @@ func test_every_element_has_two_strengths_and_two_weaknesses() -> void:
 		assert_gte(strong, 2, "%s real strengths" % t)
 		assert_gte(weak, 2, "%s weaknesses" % t)
 
+## As many real strengths as weaknesses, for Era I alone and for all eras (tools/balance/type_sim.py
+## chart sim: no element is ahead on the chart alone).
+func test_strengths_equal_weaknesses_per_era() -> void:
+	for era_max: int in [1, 2, 3]:
+		for t: String in _types:
+			if int(_types[t].era) > era_max:
+				continue
+			var strong: int = 0
+			var weak: int = 0
+			for o: String in _types:
+				if int(_types[o].era) > era_max:
+					continue
+				if _mult(t, o) > 1.0:
+					strong += 1
+				if _mult(o, t) > 1.0:
+					weak += 1
+			assert_eq(strong, weak, "%s up to Era %d" % [t, era_max])
+
+## Rust and Mask (Vellmarch, data/region2.json) are Era II and sit in the chart before the enum.
+func test_rust_and_mask_are_era_two_chart_entries() -> void:
+	for t: String in ["RUST", "MASK"]:
+		assert_true(_types.has(t), t)
+		assert_eq(int(_types[t].era), 2, t)
+	assert_eq(_mult("RUST", "MASK"), 2.0)
+
 func test_no_strict_dominance() -> void:
 	for a: String in _types:
 		for b: String in _types:

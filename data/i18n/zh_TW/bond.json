@@ -1,0 +1,19 @@
+{
+ "_comment": "Traditional Chinese texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py zh_TW.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "羈絆第2步：選擇羈絆。會出現一個大大的“歸我！”按鈕。",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "羈絆第3步：儘快連按A。槽越滿，羈絆越好。",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "羈絆第3步：儘快連點“歸我！”。槽越滿，羈絆越好。",
+  "Bonding: %s": "羈絆：%s",
+  "Echo": "回聲",
+  "Hint": "提示",
+  "Mine": "歸我",
+  "Mine!": "歸我！",
+  "Mine: tap one button fast. Echo: repeat the call.": "歸我：快速連點一個按鈕。回聲：重複呼喚。",
+  "Note": "備註",
+  "Reach out to %s... Tap Mine! fast!": "向%s伸出手……快點“歸我！”！",
+  "Tap Mine! fast!": "快點“歸我！”！",
+  "Tip": "小貼士",
+  "Tips": "小貼士"
+ }
+}

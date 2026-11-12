@@ -1,0 +1,29 @@
+{
+ "_comment": "Russian texts for the German table solenne. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Act IV: The Sun of Solenne": "Акт IV: Солнце Solenne",
+  "Brass Veil Factor Lusk": "Фактор Медной Вуали Lusk",
+  "Dry Well": "Сухой колодец",
+  "Echo Crystal: Dawn Mend": "Кристалл Эха: Dawn Mend",
+  "Echo Crystal: Radiant Lance": "Кристалл Эха: Radiant Lance",
+  "Echo Crystal: Squall": "Кристалл Эха: Squall",
+  "High Noon": "Самый полдень",
+  "Interlude: Ochrewell": "Интерлюдия: Ochrewell",
+  "Ochrewell": "Ochrewell",
+  "Sand howls through the wind towers: every Spirling in front that is not Stone loses a little Vigor each round.": "Песок воет в ветряных башнях: каждый Spirling впереди, кроме Камня, теряет немного Бодрости каждый раунд.",
+  "Sandstorm": "Песчаная буря",
+  "Take the sand road south from the Saltglass flats to Ochrewell and mend the three Rifts of Solenne.": "Иди песчаной дорогой на юг от равнин Saltglass до Ochrewell и залатай три Разлома Solenne.",
+  "Teaches Dawn Mend to a Lumen Spirling. Never used up.": "Учит Dawn Mend Spirling Lumen. Не расходуется.",
+  "Teaches Radiant Lance to a Lumen Spirling. Never used up.": "Учит Radiant Lance Spirling Lumen. Не расходуется.",
+  "Teaches Squall to a Gale Spirling. Never used up.": "Учит Squall Spirling Gale. Не расходуется.",
+  "The last shutter opens, the tower breathes, and the stair is clear!": "Последняя ставня открывается, башня дышит, и лестница свободна!",
+  "The oasis east of Ochrewell has run dry: the Oasis Rift. Warden Kaia says nobody is to blame.": "Оазис к востоку от Ochrewell высох: Оазисный Разлом. Стражница Kaia говорит, что никто не виноват.",
+  "The oasis has been sold dry: every heal on both sides is halved.": "Оазис продали досуха: любое лечение с обеих сторон вдвое слабее.",
+  "The shutter bangs, and the wind drops dead. Every shutter swings shut again.": "Ставня хлопает, и ветер замирает намертво. Все ставни снова захлопываются.",
+  "The shutter swings open. Sand hisses through the slats.": "Ставня распахивается. Песок шипит сквозь планки.",
+  "The shutters hum in the wind. The stair stays open.": "Ставни гудят на ветру. Лестница остаётся открытой.",
+  "The sun stands straight overhead: Lumen arts on both sides hit harder.": "Солнце прямо над головой: техники Lumen с обеих сторон бьют сильнее.",
+  "The sundial under the sun palace has stopped: the Sun Rift. Warden Emrys is waiting, slowly.": "Солнечные часы под солнечным дворцом остановились: Солнечный Разлом. Страж Emrys ждёт, неторопливо.",
+  "The wind towers of Ochrewell have stopped breathing: the Tower Rift. Warden Aurelio grieves in style.": "Ветряные башни Ochrewell перестали дышать: Башенный Разлом. Страж Aurelio скорбит со вкусом."
+ }
+}
