@@ -33,7 +33,7 @@
   "Send an emote": "Emote senden",
   "Thanks!": "Danke!",
   "The duel ended without a winner.": "Das Duell endete ohne Sieger.",
-  "The two results did not match. The duel does not count.": "Die beiden Ergebnisse passen nicht zusammen. Das Duell zählt nicht.",
+  "The referee could not play this duel again. It does not count.": "Der Schiedsrichter konnte dieses Duell nicht nachspielen. Es zählt nicht.",
   "Their team: %s": "Ihr Team: %s",
   "This duel is over.": "Dieses Duell ist vorbei.",
   "Time left: %d s": "Zeit übrig: %d s",
