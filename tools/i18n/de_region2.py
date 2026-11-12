@@ -8,7 +8,7 @@ T = {
 "A fishing town where every boat has two owners and one of them is lying.": "Ein Fischerort, in dem jedes Boot zwei Besitzer hat, und einer davon lügt.",
 "Clean streets, high walls. The money here never touches the ground.": "Saubere Straßen, hohe Mauern. Das Geld hier berührt nie den Boden.",
 "The last lit street before the marsh. Nobody here asks your name twice.": "Die letzte beleuchtete Straße vor dem Moor. Hier fragt keiner zweimal nach deinem Namen.",
-"Pewter Causeway": "Zinndamm",
+"Tollchain Causeway": "Zollkettendamm",
 "Rookery Cut": "Krähenschneise",
 "Weeping Locks": "Weinende Schleusen",
 "Smelter's Drift": "Schmelzerhalde",
