@@ -3,7 +3,8 @@ extends RefCounted
 ## Weather (area 3 items 1142 to 1145): one roll per region and 6-hour block of the server date,
 ## so every player in a region sees the same sky. The biome of the map picks the shares from
 ## data/weather.json (a marsh sees more fog than a scree slope). Indoors, in caves and with the
-## "Weather" switch off it is always clear. No weather changes battles.
+## "Weather" switch off it is always clear. From Era III on (EraFeatures "sky_battles") rain, fog
+## and storms lay a Rift field on outdoor battles (battle_field()).
 
 const KINDS: Array[String] = ["clear", "rain", "fog", "wind", "storm"]
 const BLOCK_SECONDS: int = 6 * 3600
@@ -59,3 +60,12 @@ static func current(m: MapData, unix: int = -1, enabled: bool = GameState.weathe
 
 static func tint(kind: String) -> Color:
 	return TINTS.get(kind, Color(1, 1, 1))
+
+## Weather in battle (era function "sky_battles", opens in Era III): {"field", "intro"} that
+## [param kind] lays on a battle (data/weather.json "battle"), or {} for a calm sky.
+static func battle_field(kind: String) -> Dictionary:
+	var b: Dictionary = data().get("battle", {})
+	var f: Variant = b.get(kind, {})
+	if not f is Dictionary or not BattleRules.FIELDS.has(str((f as Dictionary).get("field", ""))):
+		return {}
+	return f

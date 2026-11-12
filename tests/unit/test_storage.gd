@@ -71,13 +71,13 @@ func test_damaged_box_data_loads_safely() -> void:
 	var d: Dictionary = GameState.to_dict()
 	d["storage_boxes"] = [3, {"name": 7, "color": "neon"}, "x"]
 	d["storage_box_bonus"] = "lots"
-	d["team_presets"] = [{"uids": "nope"}, 5, {"name": "A", "uids": [1, 2, 3, 4, 5, 6, 7]}]
+	d["team_presets"] = [{"uids": "nope"}, 5, {"name": "A", "uids": [1, 2, 3, 4, 5, 6, 7, 8]}]
 	GameState.from_dict(d)
 	assert_eq(GameState.storage_boxes.size(), 8)
 	assert_eq(GameState.storage_boxes[0].color, "ink", "unknown colour falls back")
 	assert_eq(GameState.storage_box_bonus, 0)
 	assert_eq(GameState.team_presets.size(), 1)
-	assert_eq((GameState.team_presets[0].uids as Array).size(), GameState.MAX_PARTY + 1, "room for the sixth team slot")
+	assert_eq((GameState.team_presets[0].uids as Array).size(), GameState.MAX_PARTY + 2, "room for the sixth and seventh team slots")
 
 func test_multi_move_takes_at_most_ten_and_skips_favourites() -> void:
 	_fill_storage(14)

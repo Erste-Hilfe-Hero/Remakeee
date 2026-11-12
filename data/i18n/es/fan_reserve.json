@@ -1,0 +1,24 @@
+{
+ "_comment": "es translation of the fan_reserve table, keyed by the English text.",
+ "strings": {
+  "%s answers your call and pads over to you. Dorran pretends not to notice.": "%s responde a tu llamada y se acerca a ti al trote. Dorran finge no darse cuenta.",
+  "%s slips through a hole in the fence. The ring will patch that hole. Someday.": "%s se escurre por un agujero de la valla. La banda arreglará ese agujero. Algún día.",
+  "%s tilts its head at your call, but stays put.": "%s ladea la cabeza ante tu llamada, pero no se mueve.",
+  "A whistle from the lookout tower. A rival crew bursts out of the reeds and %s bolts. Somebody got paid tonight.": "Un silbido desde la torre de vigía. Una banda rival sale de entre los juncos y %s sale disparado. Esta noche alguien ha cobrado.",
+  "A wild %s, Ring %d. Sightings left: %d": "Un %s salvaje, Rango %d. Avistamientos restantes: %d",
+  "A woman in a velvet coat leans on a fence that is not on any map.": "Una mujer con abrigo de terciopelo se apoya en una valla que no sale en ningún mapa.",
+  "Echo call (%d left)": "Llamada de eco (quedan %d)",
+  "Move on": "Seguir adelante",
+  "Pay %d coins to slip into the reserve?": "¿Pagar %d monedas para colarte en la reserva?",
+  "Rattle the fence": "Sacudir la valla",
+  "Set bait": "Poner cebo",
+  "Velvet Dorran": "Dorran la de Terciopelo",
+  "Velvet Dorran: No coins? Then you were never here.": "Dorran la de Terciopelo: ¿No hay monedas? Entonces nunca has pisado este sitio.",
+  "Velvet Dorran: No fighting in my yard. You set bait, you rattle the fence, you call. Then you leave and forget my face.": "Dorran la de Terciopelo: Nada de peleas en mi patio. Pones cebo, sacudes la valla, llamas. Luego te vas y olvidas mi cara.",
+  "Velvet Dorran: Time's up. Out you go, and the gate never saw you.": "Dorran la de Terciopelo: Se acabó el tiempo. Fuera, y la puerta no ha visto a nadie.",
+  "Velvet Dorran: Welcome to Hollowgate Reserve. Totally legal. The fence is to keep the paperwork in.": "Dorran la de Terciopelo: Esto es la Reserva de Hollowgate. Totalmente legal. La valla es para que no se escape el papeleo.",
+  "You rattle the fence. %s's ears shoot up: curious, and very jumpy.": "Sacudes la valla. A %s se le disparan las orejas: curiosidad, y muchos nervios.",
+  "You set down a twist of dried bait. %s sniffs it and calms down.": "Dejas en el suelo un pellizco de cebo seco. %s lo olfatea y se calma.",
+  "the Quiet Hands": "las Manos Quietas"
+ }
+}

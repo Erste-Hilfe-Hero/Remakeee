@@ -10,7 +10,7 @@
   "T...._..%%%T",
   "T%%.._...%%T",
   "T%%..__....T",
-  "T.....__...T",
+  "T=....__...T",
   "T..,,..__..T",
   "T..,,...__.T",
   "T........_.T",
@@ -65,6 +65,14 @@
    "tx": 6,
    "ty": 18,
    "facing": "up"
+  },
+  {
+   "x": 1,
+   "y": 4,
+   "to": "bell_crypt",
+   "tx": 5,
+   "ty": 15,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -89,6 +97,46 @@
      "level": 60
     }
    ]
+  },
+  {
+   "id": "peat_poacher",
+   "x": 9,
+   "y": 21,
+   "facing": "down",
+   "dialogue": "vellmarch/bellrope_marsh_peat_poacher",
+   "sprite": "ranger",
+   "trainer": "Peat Poacher Ragna",
+   "intro": "vellmarch/bellrope_marsh_peat_poacher_intro",
+   "defeat": "vellmarch/bellrope_marsh_peat_poacher_defeat",
+   "money": 2400,
+   "team": [
+    {
+     "species": "Duskdigger",
+     "level": 58
+    },
+    {
+     "species": "Dusktern",
+     "level": 60
+    }
+   ]
+  },
+  {
+   "id": "q2_marsh_bell_keld",
+   "x": 3,
+   "y": 21,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_marsh_bell_keld",
+   "sprite": "villager",
+   "show_flag": "q2_marsh_bell_asked"
+  },
+  {
+   "id": "q2_dark_lamps_alma",
+   "x": 4,
+   "y": 11,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_dark_lamps_alma",
+   "sprite": "elder",
+   "show_flag": "q2_dark_lamps_s1"
   }
  ],
  "signs": [],

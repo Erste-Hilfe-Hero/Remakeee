@@ -68,6 +68,8 @@
   "landmarks": {
     "veydal_standing_stone": "ROCK", "veydal_cairn": "BOULDER", "veydal_beacon": "LAMP", "veydal_tide_post": "PIER",
     "corvane_heron_post": "FENCE", "corvane_drying_rack": "SPRING", "corvane_sluice_wheel": "PIER", "corvane_dye_mill": "WATER",
-    "ashmere_smelter_stack": "ROOF", "ashmere_bell_frame": "FENCE", "ashmere_salt_obelisk": "CLIFF"
+    "ashmere_smelter_stack": "ROOF", "ashmere_bell_frame": "FENCE", "ashmere_salt_obelisk": "CLIFF",
+    "vellmarch_customs_crane": "PIER", "vellmarch_great_candle": "LAMP", "vellmarch_lock_wheel": "FENCE",
+    "vellmarch_masked_statue": "CLIFF", "vellmarch_last_lamp": "LAMP"
   }
 }

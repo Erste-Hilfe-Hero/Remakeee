@@ -641,7 +641,7 @@
  {
   "id": "rg_echo_scent",
   "name": "Echo Scent",
-  "description": "Bonding gets clearly easier for one try.",
+  "description": "Bonding gets 25% easier for one try.",
   "battle": false,
   "shop": true,
   "bond_bonus": 0.25
@@ -1100,5 +1100,1240 @@
   "shop": true,
   "heal_frac": 1.0,
   "cure": true
+ },
+ {
+  "id": "rg_master_ember",
+  "name": "Master Technique: Crownfire Rend",
+  "description": "Teaches Crownfire Rend (power 115, accuracy 100, 4 energy) to one Ember Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownfire Rend",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_tide",
+  "name": "Master Technique: Crowntide Surge",
+  "description": "Teaches Crowntide Surge (power 115, accuracy 100, 4 energy) to one Tide Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crowntide Surge",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_bloom",
+  "name": "Master Technique: Crownthorn Lash",
+  "description": "Teaches Crownthorn Lash (power 115, accuracy 100, 4 energy) to one Bloom Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownthorn Lash",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_volt",
+  "name": "Master Technique: Crownbolt Arc",
+  "description": "Teaches Crownbolt Arc (power 115, accuracy 100, 4 energy) to one Volt Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownbolt Arc",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_stone",
+  "name": "Master Technique: Crownstone Break",
+  "description": "Teaches Crownstone Break (power 115, accuracy 100, 4 energy) to one Stone Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownstone Break",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_gale",
+  "name": "Master Technique: Crowngale Rush",
+  "description": "Teaches Crowngale Rush (power 115, accuracy 100, 4 energy) to one Gale Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crowngale Rush",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_lumen",
+  "name": "Master Technique: Crownlight Ray",
+  "description": "Teaches Crownlight Ray (power 115, accuracy 100, 4 energy) to one Lumen Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownlight Ray",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_umbra",
+  "name": "Master Technique: Crownshade Grasp",
+  "description": "Teaches Crownshade Grasp (power 115, accuracy 100, 4 energy) to one Umbra Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownshade Grasp",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_ink",
+  "name": "Master Technique: Crownink Scrawl",
+  "description": "Teaches Crownink Scrawl (power 115, accuracy 100, 4 energy) to one Ink Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownink Scrawl",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_echo",
+  "name": "Master Technique: Crownecho Peal",
+  "description": "Teaches Crownecho Peal (power 115, accuracy 100, 4 energy) to one Echo Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownecho Peal",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_acid",
+  "name": "Master Technique: Crownacid Etch",
+  "description": "Teaches Crownacid Etch (power 115, accuracy 100, 4 energy) to one Acid Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownacid Etch",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_frost",
+  "name": "Master Technique: Crownfrost Shatter",
+  "description": "Teaches Crownfrost Shatter (power 115, accuracy 100, 4 energy) to one Frost Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownfrost Shatter",
+  "used_up": true
+ },
+ {
+  "id": "rg_gift_slot",
+  "name": "Second Gift Slot",
+  "description": "Opens a second gift slot on one Spirling: the hidden gift of its line works next to its own gift, always. Stays with that Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "gift_slot": true
+ },
+ {
+  "id": "rg_rift_breath_deep",
+  "name": "Deep Rift Breath",
+  "description": "In battle: brings a defeated Spirling back with half its Vigor. No limit per battle.",
+  "battle": true,
+  "shop": true,
+  "battle_revive": 0.5
+ },
+ {
+  "id": "rg_wish_charm",
+  "name": "Wish Charm",
+  "description": "Hold it out on a bond: if the bond works, the new Spirling has the top Spark (12) in all five values. Used up. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_wish": true
+ },
+ {
+  "id": "rg_tide_pearl",
+  "name": "Riftglass Tide Shell",
+  "description": "Works like a Tide Shell: some Spirlings unfurl when they hold it close. Furled back, they return a plain Tide Shell.",
+  "battle": false,
+  "shop": true,
+  "evolves": true,
+  "unfurls_as": "tide_pearl" },
+ {
+  "id": "pith_mend",
+  "name": "Mending Pith",
+  "description": "Keepsake fruit. When the holder drops to half its Vigor or less, it eats the fruit and recovers a quarter of its Vigor. Eaten once.",
+  "battle": false,
+  "held": {
+   "pith_heal": 0.25
+  },
+  "price": 400,
+  "tradeable": false
+ },
+ {
+  "id": "pith_clear",
+  "name": "Clearing Pith",
+  "description": "Keepsake fruit. When the holder gets a condition, it eats the fruit and the condition is gone at once. Eaten once.",
+  "battle": false,
+  "held": {
+   "pith_cure": true
+  },
+  "price": 400,
+  "tradeable": false
+ },
+ {
+  "id": "pruning_shears",
+  "name": "Pruning Shears",
+  "description": "Cures Root.",
+  "battle": true,
+  "cure": "root",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "grounding_rod",
+  "name": "Grounding Rod",
+  "description": "Cures Jolt.",
+  "battle": true,
+  "cure": "jolt",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "smelling_salts",
+  "name": "Smelling Salts",
+  "description": "Cures Daze.",
+  "battle": true,
+  "cure": "daze",
+  "price": 90,
+  "tradeable": false
+ },
+ {
+  "id": "ember_charm",
+  "name": "Ember Charm",
+  "description": "Keepsake. Ember arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "EMBER",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "tide_charm",
+  "name": "Tide Charm",
+  "description": "Keepsake. Tide arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "TIDE",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "bloom_charm",
+  "name": "Bloom Charm",
+  "description": "Keepsake. Bloom arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "BLOOM",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "volt_charm",
+  "name": "Volt Charm",
+  "description": "Keepsake. Volt arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "VOLT",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "stone_charm",
+  "name": "Stone Charm",
+  "description": "Keepsake. Stone arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "STONE",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "gale_charm",
+  "name": "Gale Charm",
+  "description": "Keepsake. Gale arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "GALE",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "lumen_charm",
+  "name": "Lumen Charm",
+  "description": "Keepsake. Lumen arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "LUMEN",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "umbra_charm",
+  "name": "Umbra Charm",
+  "description": "Keepsake. Umbra arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "UMBRA",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "ink_charm",
+  "name": "Ink Charm",
+  "description": "Keepsake. Ink arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "INK",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_charm",
+  "name": "Echo Charm",
+  "description": "Keepsake. Echo arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "ECHO",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "rust_charm",
+  "name": "Rust Charm",
+  "description": "Keepsake. Rust arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "RUST",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "mask_charm",
+  "name": "Mask Charm",
+  "description": "Keepsake. Mask arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "MASK",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "acid_charm",
+  "name": "Acid Charm",
+  "description": "Keepsake. Acid arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "ACID",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "frost_charm",
+  "name": "Frost Charm",
+  "description": "Keepsake. Frost arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "FROST",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "gilt_charm",
+  "name": "Gilt Charm",
+  "description": "Keepsake. Gilt arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "GILT",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "zenith_charm",
+  "name": "Zenith Charm",
+  "description": "Keepsake. Zenith arts of the holder hit 10% harder.",
+  "battle": false,
+  "held": {
+   "elem": "ZENITH",
+   "elem_mult": 1.1
+  },
+  "price": 2500,
+  "tradeable": false
+ },
+ {
+  "id": "echo_coin_toss",
+  "name": "Echo Crystal: Coin Toss",
+  "description": "Teaches Coin Toss to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Coin Toss",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_leaf_of_gold",
+  "name": "Echo Crystal: Leaf of Gold",
+  "description": "Teaches Leaf of Gold to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Leaf of Gold",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gilded_jab",
+  "name": "Echo Crystal: Gilded Jab",
+  "description": "Teaches Gilded Jab to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilded Jab",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_shine_burst",
+  "name": "Echo Crystal: Shine Burst",
+  "description": "Teaches Shine Burst to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Shine Burst",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_bullion_bash",
+  "name": "Echo Crystal: Bullion Bash",
+  "description": "Teaches Bullion Bash to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bullion Bash",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gold_glare",
+  "name": "Echo Crystal: Gold Glare",
+  "description": "Teaches Gold Glare to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gold Glare",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_hoard_crush",
+  "name": "Echo Crystal: Hoard Crush",
+  "description": "Teaches Hoard Crush to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Hoard Crush",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_treasure_flare",
+  "name": "Echo Crystal: Treasure Flare",
+  "description": "Teaches Treasure Flare to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Treasure Flare",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_golden_span",
+  "name": "Echo Crystal: Golden Span",
+  "description": "Teaches Golden Span to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Golden Span",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gild_armour",
+  "name": "Echo Crystal: Gild Armour",
+  "description": "Teaches Gild Armour to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gild Armour",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_dazzle_coin",
+  "name": "Echo Crystal: Dazzle Coin",
+  "description": "Teaches Dazzle Coin to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Dazzle Coin",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_noon_peck",
+  "name": "Echo Crystal: Noon Peck",
+  "description": "Teaches Noon Peck to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Noon Peck",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_high_glint",
+  "name": "Echo Crystal: High Glint",
+  "description": "Teaches High Glint to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "High Glint",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_skyward_kick",
+  "name": "Echo Crystal: Skyward Kick",
+  "description": "Teaches Skyward Kick to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Skyward Kick",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_apex_ray",
+  "name": "Echo Crystal: Apex Ray",
+  "description": "Teaches Apex Ray to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Apex Ray",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_overhead_strike",
+  "name": "Echo Crystal: Overhead Strike",
+  "description": "Teaches Overhead Strike to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Overhead Strike",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_sunpeak_beam",
+  "name": "Echo Crystal: Sunpeak Beam",
+  "description": "Teaches Sunpeak Beam to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sunpeak Beam",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_summit_drop",
+  "name": "Echo Crystal: Summit Drop",
+  "description": "Teaches Summit Drop to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Summit Drop",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_meridian_blaze",
+  "name": "Echo Crystal: Meridian Blaze",
+  "description": "Teaches Meridian Blaze to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Meridian Blaze",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_height_of_noon",
+  "name": "Echo Crystal: Height of Noon",
+  "description": "Teaches Height of Noon to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Height of Noon",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_rise_above",
+  "name": "Echo Crystal: Rise Above",
+  "description": "Teaches Rise Above to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Rise Above",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_clear_sky",
+  "name": "Echo Crystal: Clear Sky",
+  "description": "Teaches Clear Sky to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clear Sky",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_last_ember",
+  "name": "Echo Crystal: Last Ember",
+  "description": "Teaches Last Ember to an Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Last Ember",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_abyss_hymn",
+  "name": "Echo Crystal: Abyss Hymn",
+  "description": "Teaches Abyss Hymn to a Tide Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Abyss Hymn",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_verdant_end",
+  "name": "Echo Crystal: Verdant End",
+  "description": "Teaches Verdant End to a Bloom Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Verdant End",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_grid_collapse",
+  "name": "Echo Crystal: Grid Collapse",
+  "description": "Teaches Grid Collapse to a Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Grid Collapse",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_mountain_fall",
+  "name": "Echo Crystal: Mountain Fall",
+  "description": "Teaches Mountain Fall to a Stone Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Mountain Fall",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_jet_stream",
+  "name": "Echo Crystal: Jet Stream",
+  "description": "Teaches Jet Stream to a Gale Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Jet Stream",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_solar_choir",
+  "name": "Echo Crystal: Solar Choir",
+  "description": "Teaches Solar Choir to a Lumen Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Solar Choir",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_void_pulse",
+  "name": "Echo Crystal: Void Pulse",
+  "description": "Teaches Void Pulse to an Umbra Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Void Pulse",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_final_draft",
+  "name": "Echo Crystal: Final Draft",
+  "description": "Teaches Final Draft to an Ink Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Final Draft",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_bloodied_quill",
+  "name": "Echo Crystal: Bloodied Quill",
+  "description": "Teaches Bloodied Quill to an Ink Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bloodied Quill",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_last_toll",
+  "name": "Echo Crystal: Last Toll",
+  "description": "Teaches Last Toll to an Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Last Toll",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_thousand_bells",
+  "name": "Echo Crystal: Thousand Bells",
+  "description": "Teaches Thousand Bells to an Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Thousand Bells",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_iron_lung",
+  "name": "Echo Crystal: Iron Lung",
+  "description": "Teaches Iron Lung to a Rust, Stone, Volt or Acid Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Iron Lung",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "STONE",
+   "VOLT",
+   "ACID"
+  ]
+ },
+ {
+  "id": "echo_unmasked",
+  "name": "Echo Crystal: Unmasked",
+  "description": "Teaches Unmasked to a Mask, Umbra, Ink or Echo Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Unmasked",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "UMBRA",
+   "INK",
+   "ECHO"
+  ]
+ },
+ {
+  "id": "echo_caustic_rain",
+  "name": "Echo Crystal: Caustic Rain",
+  "description": "Teaches Caustic Rain to an Acid Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Caustic Rain",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_permafrost",
+  "name": "Echo Crystal: Permafrost",
+  "description": "Teaches Permafrost to a Frost Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Permafrost",
+  "price": 6000,
+  "tradeable": false
+ },
+ {
+  "id": "echo_gilt_flick",
+  "name": "Echo Crystal: Gilt Flick",
+  "description": "Teaches Gilt Flick to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilt Flick",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_tithe",
+  "name": "Echo Crystal: Tithe",
+  "description": "Teaches Tithe to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Tithe",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gilt_edge",
+  "name": "Echo Crystal: Gilt Edge",
+  "description": "Teaches Gilt Edge to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilt Edge",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_golden_calf",
+  "name": "Echo Crystal: Golden Calf",
+  "description": "Teaches Golden Calf to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Golden Calf",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_midas_pulse",
+  "name": "Echo Crystal: Midas Pulse",
+  "description": "Teaches Midas Pulse to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Midas Pulse",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_vault_door",
+  "name": "Echo Crystal: Vault Door",
+  "description": "Teaches Vault Door to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Vault Door",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gold_rain",
+  "name": "Echo Crystal: Gold Rain",
+  "description": "Teaches Gold Rain to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gold Rain",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_bribe",
+  "name": "Echo Crystal: Bribe",
+  "description": "Teaches Bribe to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Bribe",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_interest",
+  "name": "Echo Crystal: Interest",
+  "description": "Teaches Interest to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Interest",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_ransom",
+  "name": "Echo Crystal: Ransom",
+  "description": "Teaches Ransom to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Ransom",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gold_plating",
+  "name": "Echo Crystal: Gold Plating",
+  "description": "Teaches Gold Plating to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gold Plating",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_coin_bed",
+  "name": "Echo Crystal: Coin Bed",
+  "description": "Teaches Coin Bed to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Coin Bed",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_crown_fall",
+  "name": "Echo Crystal: Crown Fall",
+  "description": "Teaches Crown Fall to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Crown Fall",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_gilded_cage",
+  "name": "Echo Crystal: Gilded Cage",
+  "description": "Teaches Gilded Cage to a Gilt, Lumen, Stone or Ember Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Gilded Cage",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "LUMEN",
+   "STONE",
+   "EMBER"
+  ]
+ },
+ {
+  "id": "echo_noon_flash",
+  "name": "Echo Crystal: Noon Flash",
+  "description": "Teaches Noon Flash to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Noon Flash",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_sky_hook",
+  "name": "Echo Crystal: Sky Hook",
+  "description": "Teaches Sky Hook to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sky Hook",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_plumb_line",
+  "name": "Echo Crystal: Plumb Line",
+  "description": "Teaches Plumb Line to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Plumb Line",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_crest_dive",
+  "name": "Echo Crystal: Crest Dive",
+  "description": "Teaches Crest Dive to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Crest Dive",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_zenith_beam",
+  "name": "Echo Crystal: Zenith Beam",
+  "description": "Teaches Zenith Beam to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Zenith Beam",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_corona",
+  "name": "Echo Crystal: Corona",
+  "description": "Teaches Corona to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Corona",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_high_noon_duel",
+  "name": "Echo Crystal: High Noon Duel",
+  "description": "Teaches High Noon Duel to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "High Noon Duel",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_thin_air",
+  "name": "Echo Crystal: Thin Air",
+  "description": "Teaches Thin Air to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Thin Air",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_sun_dial",
+  "name": "Echo Crystal: Sun Dial",
+  "description": "Teaches Sun Dial to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Sun Dial",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_clear_horizon",
+  "name": "Echo Crystal: Clear Horizon",
+  "description": "Teaches Clear Horizon to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Clear Horizon",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_summit_air",
+  "name": "Echo Crystal: Summit Air",
+  "description": "Teaches Summit Air to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Summit Air",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_glare_field",
+  "name": "Echo Crystal: Glare Field",
+  "description": "Teaches Glare Field to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Glare Field",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_apex_fall",
+  "name": "Echo Crystal: Apex Fall",
+  "description": "Teaches Apex Fall to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Apex Fall",
+  "price": 6000,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
+ },
+ {
+  "id": "echo_overhead_sun",
+  "name": "Echo Crystal: Overhead Sun",
+  "description": "Teaches Overhead Sun to a Zenith, Gale, Lumen or Volt Spirling. Never used up.",
+  "battle": false,
+  "teaches": "Overhead Sun",
+  "price": 4500,
+  "tradeable": false,
+  "for_elements": [
+   "GALE",
+   "LUMEN",
+   "VOLT"
+  ]
  }
 ]

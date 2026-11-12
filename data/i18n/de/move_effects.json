@@ -1,0 +1,10 @@
+{
+ "_comment": "German texts from tools/i18n/de_move_effects.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Costs %d%% of its own Vigor, never the last point.": "Kostet %d%% der eigenen Kraft, nie den letzten Punkt.",
+  "Cures the status of its whole team.": "Heilt die Zustände des ganzen Teams.",
+  "Gains %d Energy.": "Erhält %d Energie.",
+  "Sets every stage on both sides back to 0.": "Setzt alle Stufen beider Seiten auf 0 zurück."
+ }
+}

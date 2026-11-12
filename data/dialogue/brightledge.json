@@ -14,7 +14,7 @@
   "lines": [
    "Kiosk Keeper Lumen Doss: Water, tonics, postcards of the view. The view itself is not for sale. Yet."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts echo_coin_toss echo_shine_burst echo_hoard_crush echo_gild_armour echo_high_glint echo_overhead_strike echo_meridian_blaze echo_clear_sky echo_gilt_edge echo_vault_door echo_interest echo_coin_bed echo_sky_hook echo_zenith_beam echo_thin_air echo_summit_air"
  },
  "anselm": {
   "lines": [
@@ -77,5 +77,28 @@
  "white_stair": [
   "THE WHITE STAIR",
   "Nine hundred steps of white stone, straight up to Gildcrest. Counted every morning."
- ]
+ ],
+ "elke": {
+  "lines": [
+   "Matron Elke: Lie down. The Gilt House pays for the bed. It also counts the hours you spend in it."
+  ],
+  "action": "heal"
+ },
+ "tilde": {
+  "lines": [
+   "Tilde: Fidel checks the cable every morning. Then he comes home and checks his will.",
+   "Tilde: I am in it twice. Once as his wife, once as a witness."
+  ]
+ },
+ "odalys": {
+  "lines": [
+   "Clerk Odalys: Souvenirs on the left, tonics on the right. The souvenirs outlive most of the buyers."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
+ },
+ "jorin": {
+  "lines": [
+   "Apprentice Jorin: Cosima paints the sunset, the House burns it, and I sweep up the ash. It is the only steady job in the arts."
+  ]
+ }
 }

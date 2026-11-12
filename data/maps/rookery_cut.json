@@ -89,6 +89,46 @@
      "level": 56
     }
    ]
+  },
+  {
+   "id": "letter_thief",
+   "x": 3,
+   "y": 20,
+   "facing": "down",
+   "dialogue": "vellmarch/rookery_cut_letter_thief",
+   "sprite": "villager",
+   "trainer": "Letter Thief Agathe",
+   "intro": "vellmarch/rookery_cut_letter_thief_intro",
+   "defeat": "vellmarch/rookery_cut_letter_thief_defeat",
+   "money": 2240,
+   "team": [
+    {
+     "species": "Rookit",
+     "level": 54
+    },
+    {
+     "species": "Millvane",
+     "level": 56
+    }
+   ]
+  },
+  {
+   "id": "q2_wax_names_wido",
+   "x": 2,
+   "y": 12,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_wax_names_wido",
+   "sprite": "villager",
+   "show_flag": "q2_wax_names_s1"
+  },
+  {
+   "id": "q2_eel_rent_frauke",
+   "x": 6,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_eel_rent_frauke",
+   "sprite": "villager",
+   "show_flag": "q2_eel_rent_s1"
   }
  ],
  "signs": [],

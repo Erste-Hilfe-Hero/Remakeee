@@ -13,6 +13,31 @@ func _init() -> void:
 	cfg = EraManager.stage_config().duplicate()
 	cfg["colors"] = EraManager.stage_colors(EraManager.current_region)
 
+## Formation battles: each slab spreads under the whole rank of [param foe] / [param player]
+## (field rects), so four or three Spirlings all stand on stone.
+func fit_formation(foe: Rect2, player: Rect2) -> void:
+	if size.x <= 0.0 or size.y <= 0.0:
+		return
+	var slabs: Dictionary = (cfg.get("slabs", {}) as Dictionary).duplicate(true)
+	var hy: float = depth_y(cfg, 0.0, size.y)
+	for pair: Array in [["foe", foe], ["player", player]]:
+		var r: Rect2 = pair[1]
+		if r.size.x <= 0.0:
+			continue
+		var s: Dictionary = slabs.get(pair[0], {})
+		var d: float = clampf((r.end.y - hy) / maxf(size.y - hy, 1.0), 0.05, 0.95)
+		s["depth"] = d
+		s["x"] = r.get_center().x / size.x
+		s["width"] = (r.size.x + 16.0) / size.x / depth_scale(cfg, d)
+		slabs[pair[0]] = s
+	cfg["slabs"] = slabs
+	queue_redraw()
+
+## Tints the stage for the place the battle started (lake, ridge, ember, voice).
+func set_terrain(terrain: String) -> void:
+	cfg["colors"] = EraManager.stage_colors(EraManager.current_region, terrain)
+	queue_redraw()
+
 func _process(delta: float) -> void:
 	if Juice.reduced():
 		return

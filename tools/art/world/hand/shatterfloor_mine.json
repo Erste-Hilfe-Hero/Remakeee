@@ -55,7 +55,7 @@
      {
       "id": "vm_striker_dunk",
       "x": 3,
-      "y": 5,
+      "y": 4,
       "facing": "right",
       "dialogue": "veydal_more/striker_dunk",
       "sprite": "villager",
@@ -76,8 +76,8 @@
      },
      {
       "id": "vm_striker_gwen",
-      "x": 6,
-      "y": 3,
+      "x": 7,
+      "y": 2,
       "facing": "down",
       "dialogue": "veydal_more/striker_gwen",
       "sprite": "villager",

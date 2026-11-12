@@ -39,6 +39,9 @@ static func _hp(model: BattleModel, side: int) -> Array:
 ## Checks [param replay] (a BattleReplay snapshot with inputs) against [param claim].
 ## Returns {"verdict": "ok" | "mismatch" | "error", "detail": {...}}.
 static func check(replay: Variant, claim: Variant) -> Dictionary:
+	# Live duels (Online 100, point 3): the server kept both sides' choices; nothing comes from a phone.
+	if claim is Dictionary and (claim as Dictionary).get("expect") is Dictionary and bool(claim.expect.get("live", false)):
+		return LiveDuelSim.judge(claim.expect)
 	# League battles: the server chose seed and teams (claim.expect); only the inputs come
 	# from the game, so a changed team or seed can never count.
 	if replay is Dictionary and claim is Dictionary and (claim as Dictionary).get("expect") is Dictionary:

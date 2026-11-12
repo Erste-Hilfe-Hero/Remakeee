@@ -11,6 +11,37 @@
   ],
   "action": "transit vellmarch_night_barge"
  },
+ "bell_crypt_candle_thief": [
+  "Jost: I take the grave candles back to Tallowmarket. They sell them again. Very thrifty, the dead."
+ ],
+ "bell_crypt_candle_thief_defeat": [
+  "Jost: Caught. Take a candle. It's only slightly used."
+ ],
+ "bell_crypt_candle_thief_intro": [
+  "Jost: You didn't see me. I'll make sure of it."
+ ],
+ "bell_crypt_marsh_guide": [
+  "Runhild: I guide people through the marsh. Half fare in advance. I've never had to collect the second half."
+ ],
+ "bell_crypt_marsh_guide_defeat": [
+  "Runhild: The way out is up the stairs. That advice is free. My first."
+ ],
+ "bell_crypt_marsh_guide_intro": [
+  "Runhild: Lost? Good. Lost people pay best."
+ ],
+ "bell_crypt_rope_warden": [
+  "Hilde: Forty ropes hang down here. I know every one by its pull. Three of them pull back."
+ ],
+ "bell_crypt_rope_warden_defeat": [
+  "Hilde: Rung like a bell. I'll be humming for a week."
+ ],
+ "bell_crypt_rope_warden_intro": [
+  "Hilde: Don't touch the ropes. Touch me instead, see what happens."
+ ],
+ "bell_crypt_sign": [
+  "Bell Crypt",
+  "The marsh took the chapel and kept the cellar. The bell ropes still hang down through the roof."
+ ],
  "bellrope_marsh_bellwalker": [
   "Edda: Every bell rope in this marsh leads to someone who rang for help. None of them were answered."
  ],
@@ -19,6 +50,15 @@
  ],
  "bellrope_marsh_bellwalker_intro": [
   "Edda: Ring if you need help. I'll pretend I didn't hear."
+ ],
+ "bellrope_marsh_peat_poacher": [
+  "Ragna: I dig peat where the House says not to. The things I find there, the House says not to mention."
+ ],
+ "bellrope_marsh_peat_poacher_defeat": [
+  "Ragna: Fine, it's a shame for me. Mind the soft ground. It's occupied."
+ ],
+ "bellrope_marsh_peat_poacher_intro": [
+  "Ragna: You saw my spade. That's a shame for one of us."
  ],
  "cindergate_quay_bunkhouse_docker": [
   "Docker Bram: Six bunks, nine dockers. Nobody asks where the other three sleep."
@@ -55,7 +95,7 @@
   "lines": [
    "Chandler Brisk: Rope, tonics, alibis. Two of those are on the shelf."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts rust_charm mask_charm"
  },
  "foundry_rift_acolyte": [
   "Gert: Brannoc says the Syndicate rusted the furnace. The Syndicate says Brannoc did. The furnace says nothing."
@@ -143,7 +183,7 @@
   "lines": [
    "Glove Merchant Ysette: Our tonics are imported. So is our conscience. Neither has arrived."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts"
  },
  "lastlamp_bell_house_ringer": [
   "Rope Boy Ned: I count the bell rings in a ledger. The ledger is getting heavy."
@@ -216,6 +256,1188 @@
   ],
   "action": "heal"
  },
+ "q2_bought_boos": {
+  "if": {
+   "not_flag": "q2_bought_boos_asked"
+  },
+  "else": "q2_bought_boos_after",
+  "lines": [
+   "Tenor Alban: They boo me. Every night, third act, the same six voices. Somebody is paying for it. Nobody boos that well for free.",
+   "Tenor Alban: Find out who. I am an artist. I have no enemies. Only colleagues."
+  ],
+  "action": "set_flag q2_bought_boos_asked"
+ },
+ "q2_bought_boos_after": {
+  "if": {
+   "flag": "q2_bought_boos_paid"
+  },
+  "else": "q2_bought_boos_reward_doubt",
+  "lines": [
+   "Tenor Alban: Fitz carries my scarf again. I check it for pins."
+  ]
+ },
+ "q2_bought_boos_amalia": {
+  "if": {
+   "not_flag": "q2_bought_boos_s1"
+  },
+  "else": "q2_bought_boos_amalia_after",
+  "lines": [
+   "Lady Amalia: The boos? Bought at the Counting House, dear. Account 'A Friend of Music'. So is the applause. Different account.",
+   "Lady Amalia: The claque itself drinks out on Smelter's Drift. Ask them who the friend is. Bring something to hit them with."
+  ],
+  "action": "set_flag q2_bought_boos_s1; quest_stage q2_bought_boos 1"
+ },
+ "q2_bought_boos_amalia_after": [
+  "Lady Amalia: I never boo. I simply leave, loudly."
+ ],
+ "q2_bought_boos_claque": {
+  "if": {
+   "not_flag": "q2_bought_boos_s2"
+  },
+  "else": "q2_bought_boos_claque_after",
+  "lines": [
+   "Claque Leader Bruno: Who pays for the boos? That's trade knowledge. You want it, you audition."
+  ],
+  "action": "battle q2_bought_boos_claque"
+ },
+ "q2_bought_boos_claque_after": [
+  "Claque Leader Bruno: The understudy pays for boos. The tenor pays for bravos. We do both in one evening. It's honest work, if you hum."
+ ],
+ "q2_bought_boos_claque_won": {
+  "lines": [
+   "Claque Leader Bruno: Bravo. Fine. It's Fitz, the understudy. He pays Tuesdays. And in spring the tenor paid us to boo Fitz. We're very fair."
+  ],
+  "action": "quest_stage q2_bought_boos 2"
+ },
+ "q2_bought_boos_doubt": [
+  "Tenor Alban: That was criticism. Paid criticism is still criticism."
+ ],
+ "q2_bought_boos_fitz": [
+  "Fitz: I carry the scarf. I've had it lengthened. No reason."
+ ],
+ "q2_bought_boos_fitz_defeat": [
+  "Fitz: Off key. Me. On the one night someone was listening.",
+  "Fitz: Tell him the fourth act is his. I'll have the fifth. There's a death in the fifth."
+ ],
+ "q2_bought_boos_fitz_intro": [
+  "Fitz: Alban sent you. He sends everyone. He once sent me for his scarf during my own solo."
+ ],
+ "q2_bought_boos_go": {
+  "if": {
+   "flag": "q2_bought_boos_reveal"
+  },
+  "else": "q2_bought_boos_reveal",
+  "lines": [
+   "Tenor Alban: Fitz is on Smelter's Drift. Don't touch his throat. I want him to hear himself lose."
+  ]
+ },
+ "q2_bought_boos_reveal": {
+  "if": {
+   "flag": "q2_bought_boos_s2"
+  },
+  "else": "q2_bought_boos_wait",
+  "lines": [
+   "Tenor Alban: Fitz. My understudy. Little Fitz, who carries my scarf. He pays six men to boo me so he can sing the fourth act.",
+   "Tenor Alban: He waits on the drift tonight to pay them again. Go. Silence him. Artistically.",
+   "Tenor Alban: I have never paid a claque in my life. You believe that, of course."
+  ],
+  "action": "set_flag q2_bought_boos_reveal; quest_stage q2_bought_boos 3",
+  "choices": [
+   {
+    "text": "Of course, maestro.",
+    "flag": "q2_bought_boos_trust",
+    "next": "q2_bought_boos_trust"
+   },
+   {
+    "text": "Who booed Fitz in spring?",
+    "flag": "q2_bought_boos_doubt",
+    "next": "q2_bought_boos_doubt"
+   }
+  ]
+ },
+ "q2_bought_boos_reward": {
+  "if": {
+   "flag": "q2_bought_boos_done"
+  },
+  "else": "q2_bought_boos_go",
+  "lines": [
+   "Tenor Alban: You beat him? Bravo! Here, from my dressing room. The claque works for me again. They always did, on weekdays."
+  ],
+  "action": "set_flag q2_bought_boos_paid; give_item guard_brew 2; quest_stage q2_bought_boos 4"
+ },
+ "q2_bought_boos_reward_doubt": {
+  "if": {
+   "flag": [
+    "q2_bought_boos_done",
+    "q2_bought_boos_doubt"
+   ]
+  },
+  "else": "q2_bought_boos_reward",
+  "lines": [
+   "Tenor Alban: You beat him. And you know about spring. Here. Twice the brew. An artist pays for silence. It's the only review that counts."
+  ],
+  "action": "set_flag q2_bought_boos_paid; give_item guard_brew 4; quest_stage q2_bought_boos 4"
+ },
+ "q2_bought_boos_trust": [
+  "Tenor Alban: 'Maestro.' Say it again. Slower."
+ ],
+ "q2_bought_boos_wait": [
+  "Tenor Alban: The ladies in the Quiet Salon know who pays for what. And the claque drinks on Smelter's Drift, where nobody hears them practise."
+ ],
+ "q2_dark_lamps": {
+  "if": {
+   "not_flag": "q2_dark_lamps_asked"
+  },
+  "else": "q2_dark_lamps_reveal",
+  "lines": [
+   "Lamp Boy Nils: The lamps on the marsh edge go out, one a night. Somebody steals the oil. Then people stray off the path.",
+   "Lamp Boy Nils: Find the oil thief. I'm only a boy. I just find the purses in the morning. To hand in."
+  ],
+  "action": "set_flag q2_dark_lamps_asked"
+ },
+ "q2_dark_lamps_alma": {
+  "if": {
+   "not_flag": "q2_dark_lamps_s2"
+  },
+  "else": "q2_dark_lamps_alma_after",
+  "lines": [
+   "Reed Woman Alma: The oil thief? A small one, with a can. Pours the oil in the marsh, puts the lamp out, sits down and waits.",
+   "Reed Woman Alma: In the morning he walks the edge with a sack. Whistling. A child's tune."
+  ],
+  "action": "set_flag q2_dark_lamps_s2; quest_stage q2_dark_lamps 2"
+ },
+ "q2_dark_lamps_alma_after": [
+  "Reed Woman Alma: I keep to the dark. Nobody robs you in the dark here. They wait for you to leave it."
+ ],
+ "q2_dark_lamps_gerd": {
+  "if": {
+   "not_flag": "q2_dark_lamps_s1"
+  },
+  "else": "q2_dark_lamps_gerd_after",
+  "lines": [
+   "Oil Boy Gerd: Every can is counted. One goes out each night for 'the night round'. Signed with an N.",
+   "Oil Boy Gerd: There is no night round. Ask the reed folk on the Bellrope Marsh where the can goes."
+  ],
+  "action": "set_flag q2_dark_lamps_s1; quest_stage q2_dark_lamps 1"
+ },
+ "q2_dark_lamps_gerd_after": [
+  "Oil Boy Gerd: Oil for one more year, Sten says. Less, the way it's going."
+ ],
+ "q2_dark_lamps_nils_sack": {
+  "if": {
+   "not_flag": "q2_dark_lamps_paid"
+  },
+  "else": "q2_dark_lamps_nils_sack_after",
+  "lines": [
+   "You take Nils's sack: four tonics, eleven left boots and a lamp key. The lamps on the edge burn again that night."
+  ],
+  "action": "set_flag q2_dark_lamps_paid; give_item max_tonic 4; quest_stage q2_dark_lamps 4"
+ },
+ "q2_dark_lamps_nils_sack_after": [
+  "Nils: I light the lamps now. All of them. Nan watches me do it. Every one."
+ ],
+ "q2_dark_lamps_nils_sack_defeat": [
+  "Nils: Not fair. You're bigger. Everybody's bigger.",
+  "Nils: Take the sack. It's only tonics. The purses I already handed in. To me."
+ ],
+ "q2_dark_lamps_nils_sack_intro": [
+  "Nils: Help! Thief! Oil thief! That's my line, anyway. Nobody's awake to hear it."
+ ],
+ "q2_dark_lamps_reveal": {
+  "if": {
+   "flag": "q2_dark_lamps_s2"
+  },
+  "else": "q2_dark_lamps_wait",
+  "lines": [
+   "Lamp Boy Nils: A small one with a can, pouring it into the marsh? Small. Well. I haven't grown much this year.",
+   "Lamp Boy Nils: No lamp, no path. No path, they stray. They stray, they drop things. I find the things. I'm good at finding.",
+   "Lamp Boy Nils: I asked you so there'd be a thief to blame. You'll do. Strangers always do."
+  ],
+  "action": "set_flag q2_dark_lamps_reveal; quest_stage q2_dark_lamps 3"
+ },
+ "q2_dark_lamps_wait": [
+  "Lamp Boy Nils: The oil is counted in the Lamp Store. And the reed folk on the Bellrope Marsh see who walks the edge at night."
+ ],
+ "q2_eel_rent": {
+  "if": {
+   "not_flag": "q2_eel_rent_asked"
+  },
+  "else": "q2_eel_rent_reveal",
+  "lines": [
+   "Rent Man Odd: My tenants vanish the night before rent day. Six this year. I worry about them. I worry about the rent more, but still.",
+   "Rent Man Odd: Find out where they go. I only want to help them. With the arrears."
+  ],
+  "action": "set_flag q2_eel_rent_asked"
+ },
+ "q2_eel_rent_frauke": {
+  "if": {
+   "not_flag": "q2_eel_rent_s2"
+  },
+  "else": "q2_eel_rent_frauke_after",
+  "lines": [
+   "Runaway Frauke: Odd sold me the passage himself. 'A fresh start, no rent.' The boat turned for the foundry before the first bridge.",
+   "Runaway Frauke: Don't tell him where I am. He'll say he's worried. He always says he's worried."
+  ],
+  "action": "set_flag q2_eel_rent_s2; quest_stage q2_eel_rent 2"
+ },
+ "q2_eel_rent_frauke_after": [
+  "Runaway Frauke: I sleep in the hedge. The hedge has never raised the rent."
+ ],
+ "q2_eel_rent_lueder": {
+  "if": {
+   "not_flag": "q2_eel_rent_s1"
+  },
+  "else": "q2_eel_rent_lueder_after",
+  "lines": [
+   "Smoke Boy Lüder: The tenants? They leave by boat, the night before rent day. Somebody pays their passage. They look so grateful.",
+   "Smoke Boy Lüder: One jumped off at the bend and ran up the Rookery Cut. She wasn't grateful any more."
+  ],
+  "action": "set_flag q2_eel_rent_s1; quest_stage q2_eel_rent 1"
+ },
+ "q2_eel_rent_lueder_after": [
+  "Smoke Boy Lüder: The eels all go the same way too. Nobody asks them either."
+ ],
+ "q2_eel_rent_odd_boat": {
+  "if": {
+   "not_flag": "q2_eel_rent_paid"
+  },
+  "else": "q2_eel_rent_odd_boat_after",
+  "lines": [
+   "You take Odd's cooling gel and his passenger list. Six names are crossed out. The seventh is Frauke. The eighth is yours."
+  ],
+  "action": "set_flag q2_eel_rent_paid; give_item cooling_gel 4; quest_stage q2_eel_rent 4"
+ },
+ "q2_eel_rent_odd_boat_after": [
+  "Odd: I've lowered the rent. Nobody believes me. That's the worst of it."
+ ],
+ "q2_eel_rent_odd_boat_defeat": [
+  "Odd: Evicted. Me. From my own quay.",
+  "Odd: Take the gel. It's for the foundry burns. The tenants won't be needing it. They've stopped coming back."
+ ],
+ "q2_eel_rent_odd_boat_intro": [
+  "Odd: The night boat has one seat free. I'd hate to waste it."
+ ],
+ "q2_eel_rent_reveal": {
+  "if": {
+   "flag": "q2_eel_rent_s2"
+  },
+  "else": "q2_eel_rent_wait",
+  "lines": [
+   "Rent Man Odd: She told you I sell the passage myself. Well. A landlord provides. Shelter, then transport.",
+   "Rent Man Odd: The boat goes to the foundry. Brannoc pays per head. The tenants work off the rent. Some pay in years. Rent is rent.",
+   "Rent Man Odd: I sent you to find the one who got away. You found her. Thank you. You've a strong back yourself, I notice."
+  ],
+  "action": "set_flag q2_eel_rent_reveal; quest_stage q2_eel_rent 3"
+ },
+ "q2_eel_rent_wait": [
+  "Rent Man Odd: The Eel Smokery looks out on the night boats. And runaways go inland by the Rookery Cut."
+ ],
+ "q2_ghost_wages": {
+  "if": {
+   "not_flag": "q2_ghost_wages_asked"
+  },
+  "else": "q2_ghost_wages_after",
+  "lines": [
+   "Widow Hette: My Ludo died at the foundry. His last wages never came. The paymaster says they were paid. To whom?",
+   "Widow Hette: Find Ludo's wages. It's not the money. It is the money. But it's also the principle of the money."
+  ],
+  "action": "set_flag q2_ghost_wages_asked"
+ },
+ "q2_ghost_wages_after": {
+  "if": {
+   "flag": "q2_ghost_wages_paid"
+  },
+  "else": "q2_ghost_wages_reward",
+  "lines": [
+   "Widow Hette: Ludo stays dead on paper. It's the best he's ever looked."
+  ]
+ },
+ "q2_ghost_wages_bero": {
+  "if": {
+   "not_flag": "q2_ghost_wages_s1"
+  },
+  "else": "q2_ghost_wages_bero_after",
+  "lines": [
+   "Slag Carter Bero: The pay cart? Goes down the Slag Tunnels every week, full. Comes up empty. No workers down there. Not live ones.",
+   "Slag Carter Bero: There are stairs off the drift. The bruisers at the bottom don't like questions. Or answers."
+  ],
+  "action": "set_flag q2_ghost_wages_s1; quest_stage q2_ghost_wages 1"
+ },
+ "q2_ghost_wages_bero_after": [
+  "Slag Carter Bero: I cart slag. Slag never asked for a raise."
+ ],
+ "q2_ghost_wages_bruisers": {
+  "if": {
+   "not_flag": "q2_ghost_wages_s2"
+  },
+  "else": "q2_ghost_wages_bruisers_after",
+  "lines": [
+   "Tunnel Bruiser Ortwin: The payroll is private. So is this tunnel. So is your face, in a minute."
+  ],
+  "action": "battle q2_ghost_wages_bruisers"
+ },
+ "q2_ghost_wages_bruisers_after": [
+  "Tunnel Bruiser Ortwin: Forty names, all dead, all paid. Signed with a hook on the L. I don't read. I was told about the hook."
+ ],
+ "q2_ghost_wages_bruisers_won": {
+  "lines": [
+   "Tunnel Bruiser Ortwin: Enough. Take the payroll. Forty dead men on it, and one very lively signature."
+  ],
+  "action": "quest_stage q2_ghost_wages 2"
+ },
+ "q2_ghost_wages_go": {
+  "if": {
+   "flag": "q2_ghost_wages_reveal"
+  },
+  "else": "q2_ghost_wages_reveal",
+  "lines": [
+   "Widow Hette: He counts in the Slag Tunnels. Go and make me a widow properly. In the financial sense."
+  ]
+ },
+ "q2_ghost_wages_ludo": [
+  "Ludo: Forty-one wages. She always was better with money than I was."
+ ],
+ "q2_ghost_wages_ludo_defeat": [
+  "Ludo: Short. The till is short. That has never happened to a dead man before.",
+  "Ludo: Tell her I died well. Tell her I died twice, if it helps."
+ ],
+ "q2_ghost_wages_ludo_intro": [
+  "Ludo: Hette sent you. She always did send other people. Stand there, you're in my light."
+ ],
+ "q2_ghost_wages_reveal": {
+  "if": {
+   "flag": "q2_ghost_wages_s2"
+  },
+  "else": "q2_ghost_wages_wait",
+  "lines": [
+   "Widow Hette: Forty dead men on the payroll, still drawing wages. And the paymaster signs with a little hook on the L. Like Ludo did.",
+   "Widow Hette: He isn't dead. He's the paymaster. He pays himself my widow's wage and I wore black for it."
+  ],
+  "action": "set_flag q2_ghost_wages_reveal; quest_stage q2_ghost_wages 3"
+ },
+ "q2_ghost_wages_reward": {
+  "if": {
+   "flag": "q2_ghost_wages_done"
+  },
+  "else": "q2_ghost_wages_go",
+  "lines": [
+   "Widow Hette: You beat him? Good. He pays me forty-one wages now. His own and the forty. Here. A widow can be generous."
+  ],
+  "action": "set_flag q2_ghost_wages_paid; give_item max_tonic 3; quest_stage q2_ghost_wages 4"
+ },
+ "q2_ghost_wages_wait": [
+  "Widow Hette: The slag carters on Smelter's Drift haul more than slag. And the pay cart goes down into the Slag Tunnels."
+ ],
+ "q2_heavy_rumour": {
+  "if": {
+   "not_flag": "q2_heavy_rumour_asked"
+  },
+  "else": "q2_heavy_rumour_after",
+  "lines": [
+   "Baker Joss: Somebody bought a rumour about my bread. 'Joss bakes with foundry ash.' A heavy one. My shop is empty.",
+   "Baker Joss: Find the buyer. I've never done anything to anyone. Not that anyone could weigh."
+  ],
+  "action": "set_flag q2_heavy_rumour_asked"
+ },
+ "q2_heavy_rumour_after": {
+  "if": {
+   "flag": "q2_heavy_rumour_paid"
+  },
+  "else": "q2_heavy_rumour_reward_doubt",
+  "lines": [
+   "Baker Joss: Jutta and I share a stall now. We split the customers and the rumours. Mine are heavier."
+  ]
+ },
+ "q2_heavy_rumour_doubt": [
+  "Baker Joss: Two pounds. 'Jutta's raisins have legs.' It was a light rumour. A joke, really."
+ ],
+ "q2_heavy_rumour_ebba": {
+  "if": {
+   "not_flag": "q2_heavy_rumour_s1"
+  },
+  "else": "q2_heavy_rumour_ebba_after",
+  "lines": [
+   "Rumour Girl Ebba: The ash bread? Four pounds, paid in flour. We don't get paid in flour often. It gets in the gossip.",
+   "Rumour Girl Ebba: The buyer's mark is in the Weigh House book. Everything heavy is."
+  ],
+  "action": "set_flag q2_heavy_rumour_s1; quest_stage q2_heavy_rumour 1"
+ },
+ "q2_heavy_rumour_ebba_after": [
+  "Rumour Girl Ebba: A good rumour keeps a week. A true one goes off by supper."
+ ],
+ "q2_heavy_rumour_go": {
+  "if": {
+   "flag": "q2_heavy_rumour_reveal"
+  },
+  "else": "q2_heavy_rumour_reveal",
+  "lines": [
+   "Baker Joss: Jutta is on the Tollchain Causeway with her cart. Tell her the truth hurts. Then show her."
+  ]
+ },
+ "q2_heavy_rumour_gundel": {
+  "if": {
+   "not_flag": "q2_heavy_rumour_s2"
+  },
+  "else": "q2_heavy_rumour_gundel_after",
+  "lines": [
+   "Scale Girl Gundel: Four pounds, ash bread. Signed with a pretzel. That's the bakery by the quay. Jutta's.",
+   "Scale Girl Gundel: Line above it: two pounds, 'raisins with legs', signed with a loaf. I'm sure that's nothing."
+  ],
+  "action": "set_flag q2_heavy_rumour_s2; quest_stage q2_heavy_rumour 2"
+ },
+ "q2_heavy_rumour_gundel_after": [
+  "Scale Girl Gundel: I only weigh. If I started judging, there'd be a queue."
+ ],
+ "q2_heavy_rumour_jutta": [
+  "Jutta: We share a stall. I count the till. He counts me counting."
+ ],
+ "q2_heavy_rumour_jutta_defeat": [
+  "Jutta: Flat. Like his sourdough.",
+  "Jutta: Ask him who bought the first rumour. Ask him what he signs with."
+ ],
+ "q2_heavy_rumour_jutta_intro": [
+  "Jutta: Joss sent you? Did he tell you about my raisins? No. He wouldn't."
+ ],
+ "q2_heavy_rumour_reveal": {
+  "if": {
+   "flag": "q2_heavy_rumour_s2"
+  },
+  "else": "q2_heavy_rumour_wait",
+  "lines": [
+   "Baker Joss: My sister. Jutta. With the bakery by the quay. My own sister bought four pounds of lies about me.",
+   "Baker Joss: She comes up the causeway with her cart every evening to take my customers home. Stop her.",
+   "Baker Joss: I never started this. You do believe I never started this?"
+  ],
+  "action": "set_flag q2_heavy_rumour_reveal; quest_stage q2_heavy_rumour 3",
+  "choices": [
+   {
+    "text": "You're the victim here.",
+    "flag": "q2_heavy_rumour_trust",
+    "next": "q2_heavy_rumour_trust"
+   },
+   {
+    "text": "How heavy was your first one?",
+    "flag": "q2_heavy_rumour_doubt",
+    "next": "q2_heavy_rumour_doubt"
+   }
+  ]
+ },
+ "q2_heavy_rumour_reward": {
+  "if": {
+   "flag": "q2_heavy_rumour_done"
+  },
+  "else": "q2_heavy_rumour_go",
+  "lines": [
+   "Baker Joss: You beat her? Bless you. Here, from the shop. Jutta says I bought the first rumour. A rumour, that. I sold it on already."
+  ],
+  "action": "set_flag q2_heavy_rumour_paid; give_item remedy 2; quest_stage q2_heavy_rumour 4"
+ },
+ "q2_heavy_rumour_reward_doubt": {
+  "if": {
+   "flag": [
+    "q2_heavy_rumour_done",
+    "q2_heavy_rumour_doubt"
+   ]
+  },
+  "else": "q2_heavy_rumour_reward",
+  "lines": [
+   "Baker Joss: You beat her, and you know about the raisins. Here. Double. Remedies. For whatever you might be tempted to say."
+  ],
+  "action": "set_flag q2_heavy_rumour_paid; give_item remedy 4; quest_stage q2_heavy_rumour 4"
+ },
+ "q2_heavy_rumour_trust": [
+  "Baker Joss: Thank you. It's a relief to hear it from someone I'm not paying."
+ ],
+ "q2_heavy_rumour_wait": [
+  "Baker Joss: Rumours are sold in the Rumour Room and weighed in the Weigh House. Somebody signed for mine."
+ ],
+ "q2_marsh_bell": {
+  "if": {
+   "not_flag": "q2_marsh_bell_asked"
+  },
+  "else": "q2_marsh_bell_after",
+  "lines": [
+   "Mother Gesa: A bell rings out in the marsh every night. My Tobin went missing a week ago. The ringer says nobody rings it.",
+   "Mother Gesa: Find the bell. The Lamp Guild has been very kind. They've already offered to buy his room."
+  ],
+  "action": "set_flag q2_marsh_bell_asked"
+ },
+ "q2_marsh_bell_after": {
+  "if": {
+   "flag": "q2_marsh_bell_paid"
+  },
+  "else": "q2_marsh_bell_reward_doubt",
+  "lines": [
+   "Mother Gesa: Tobin rents out his own room now. To the Guild. At a criminal price. I'm so proud."
+  ]
+ },
+ "q2_marsh_bell_collector": [
+  "Asmus: I've been moved to accounts. There are no ropes in accounts. Only ledgers. They hang you slower."
+ ],
+ "q2_marsh_bell_collector_defeat": [
+  "Asmus: Lights out. That's our line, usually.",
+  "Asmus: Take the boy. The Guild will find another saving. The street is full of mouths."
+ ],
+ "q2_marsh_bell_collector_intro": [
+  "Asmus: The mother sent you with her answer? I'd hoped for a signature. A fight is so much paperwork."
+ ],
+ "q2_marsh_bell_doubt": [
+  "Mother Gesa: You've met mothers before, I see."
+ ],
+ "q2_marsh_bell_go": {
+  "if": {
+   "flag": "q2_marsh_bell_reveal"
+  },
+  "else": "q2_marsh_bell_reveal",
+  "lines": [
+   "Mother Gesa: The collector waits in the Bell Crypt, by the ropes. Bring my boy up. And the collector's purse."
+  ]
+ },
+ "q2_marsh_bell_keld": {
+  "if": {
+   "not_flag": "q2_marsh_bell_s1"
+  },
+  "else": "q2_marsh_bell_keld_after",
+  "lines": [
+   "Reed Cutter Keld: The night bell? One rope goes down, not up. Into the old chapel cellar. There are stairs in the reeds.",
+   "Reed Cutter Keld: I cut round it. A bell that rings from below is asking for someone else."
+  ],
+  "action": "set_flag q2_marsh_bell_s1; quest_stage q2_marsh_bell 1"
+ },
+ "q2_marsh_bell_keld_after": [
+  "Reed Cutter Keld: The reeds grow back. That's more than you can say for most things here."
+ ],
+ "q2_marsh_bell_reveal": {
+  "if": {
+   "flag": "q2_marsh_bell_s2"
+  },
+  "else": "q2_marsh_bell_wait",
+  "lines": [
+   "Mother Gesa: Alive. In the crypt. Put there by the Guild, so the street has one lamp less to pay for.",
+   "Mother Gesa: And they sell the rooms of the lost. Mine was next, I suppose. Two for one.",
+   "Mother Gesa: The Guild's collector comes tonight for my answer. I could sign. Tobin eats a great deal. What would you do?"
+  ],
+  "action": "set_flag q2_marsh_bell_reveal; quest_stage q2_marsh_bell 3",
+  "choices": [
+   {
+    "text": "You'd never sign. I'll stop him.",
+    "flag": "q2_marsh_bell_trust",
+    "next": "q2_marsh_bell_trust"
+   },
+   {
+    "text": "I'll stop him before you can sign.",
+    "flag": "q2_marsh_bell_doubt",
+    "next": "q2_marsh_bell_doubt"
+   }
+  ]
+ },
+ "q2_marsh_bell_reward": {
+  "if": {
+   "flag": "q2_marsh_bell_done"
+  },
+  "else": "q2_marsh_bell_go",
+  "lines": [
+   "Mother Gesa: Tobin is home. He's eaten everything. Here are his bells, he's not to touch a rope again. I did keep the Guild's offer. To frame."
+  ],
+  "action": "set_flag q2_marsh_bell_paid; give_item wake_bell 2; quest_stage q2_marsh_bell 4"
+ },
+ "q2_marsh_bell_reward_doubt": {
+  "if": {
+   "flag": [
+    "q2_marsh_bell_done",
+    "q2_marsh_bell_doubt"
+   ]
+  },
+  "else": "q2_marsh_bell_reward",
+  "lines": [
+   "Mother Gesa: Tobin is home. You looked at me the whole way as if I'd sign. Here, all the bells in the house. Now stop looking."
+  ],
+  "action": "set_flag q2_marsh_bell_paid; give_item wake_bell 4; quest_stage q2_marsh_bell 4"
+ },
+ "q2_marsh_bell_tobin": {
+  "if": {
+   "not_flag": "q2_marsh_bell_s2"
+  },
+  "else": "q2_marsh_bell_tobin_after",
+  "lines": [
+   "Tobin: You heard me! A week I've been ringing. The Lamp Guild walked me down here. 'Fewer mouths, fewer lamps,' they said.",
+   "Tobin: Tell my mother. And tell her not to sign anything. She likes signing things."
+  ],
+  "action": "set_flag q2_marsh_bell_s2; quest_stage q2_marsh_bell 2"
+ },
+ "q2_marsh_bell_tobin_after": [
+  "Tobin: I'll keep ringing till the collector is gone. It annoys him. It's all I've got."
+ ],
+ "q2_marsh_bell_trust": [
+  "Mother Gesa: Never. Well. Hardly ever. Thank you for thinking so."
+ ],
+ "q2_marsh_bell_wait": [
+  "Mother Gesa: The reed cutters on the Bellrope Marsh follow the ropes. Follow them."
+ ],
+ "q2_pawned_medal": {
+  "if": {
+   "not_flag": "q2_pawned_medal_asked"
+  },
+  "else": "q2_pawned_medal_reveal",
+  "lines": [
+   "Old Varn: My medal. For the stand at the Tithe Bridge. Some thief pawned it while I slept. A hero's medal, in a pawnshop.",
+   "Old Varn: Find out who pawned it. I'd go myself, but my leg. And my other leg."
+  ],
+  "action": "set_flag q2_pawned_medal_asked"
+ },
+ "q2_pawned_medal_kord": {
+  "if": {
+   "not_flag": "q2_pawned_medal_s1"
+  },
+  "else": "q2_pawned_medal_kord_after",
+  "lines": [
+   "Pawn Boy Kord: The bridge medal? Pawned on the first of every month. Same shaky hand. The ticket says 'Varn'.",
+   "Pawn Boy Kord: The name on the medal isn't Varn, though. It says 'Reik'. The Counting House in Larkspur pays a Reik every month."
+  ],
+  "action": "set_flag q2_pawned_medal_s1; quest_stage q2_pawned_medal 1"
+ },
+ "q2_pawned_medal_kord_after": [
+  "Pawn Boy Kord: Everything in here is somebody's proudest day. Marked down."
+ ],
+ "q2_pawned_medal_reveal": {
+  "if": {
+   "flag": "q2_pawned_medal_s2"
+  },
+  "else": "q2_pawned_medal_wait",
+  "lines": [
+   "Old Varn: The ticket is in my name, and the pension is in Captain Reik's. Yes. Both are in my pocket.",
+   "Old Varn: Reik held the bridge. I held Reik's coat. When he fell, I was right behind him. Very close behind.",
+   "Old Varn: I pawn the medal each month and send someone to ask who did it. They bring it back for free. You were meant to stop at the pawnshop."
+  ],
+  "action": "set_flag q2_pawned_medal_reveal; quest_stage q2_pawned_medal 3"
+ },
+ "q2_pawned_medal_sidonie": {
+  "if": {
+   "not_flag": "q2_pawned_medal_s2"
+  },
+  "else": "q2_pawned_medal_sidonie_after",
+  "lines": [
+   "Clerk Sidonie: Captain Reik's pension? Collected every month, in person. Remarkable, for a man who fell off the Tithe Bridge.",
+   "Clerk Sidonie: An old man with two bad legs signs for it. He runs down our stairs afterwards."
+  ],
+  "action": "set_flag q2_pawned_medal_s2; quest_stage q2_pawned_medal 2"
+ },
+ "q2_pawned_medal_sidonie_after": [
+  "Clerk Sidonie: We never ask if a client is alive. It would halve the business."
+ ],
+ "q2_pawned_medal_varn_reik": {
+  "if": {
+   "not_flag": "q2_pawned_medal_paid"
+  },
+  "else": "q2_pawned_medal_varn_reik_after",
+  "lines": [
+   "You take Varn's tonics and the medal. On the back somebody scratched: 'Watch the one holding your coat.'"
+  ],
+  "action": "set_flag q2_pawned_medal_paid; give_item strong_tonic 4; quest_stage q2_pawned_medal 4"
+ },
+ "q2_pawned_medal_varn_reik_after": [
+  "Varn: My legs are much worse now. Honestly, this time."
+ ],
+ "q2_pawned_medal_varn_reik_defeat": [
+  "Varn: Beaten. From the front. Nobody has ever done that to me. I never let them.",
+  "Varn: Take the tonics. They're on Reik. Everything is on Reik."
+ ],
+ "q2_pawned_medal_varn_reik_intro": [
+  "Varn: I pushed a captain off a bridge, child. Guess what I do to errand runners."
+ ],
+ "q2_pawned_medal_wait": [
+  "Old Varn: The Pawnshop keeps every ticket. And the Counting House in Larkspur pays the bridge pensions."
+ ],
+ "q2_second_face": {
+  "if": {
+   "not_flag": "q2_second_face_asked"
+  },
+  "else": "q2_second_face_reveal",
+  "lines": [
+   "Maid Petra: At the ball somebody wore my mistress's mask. Her face, her walk, her signature. My mistress was in bed with a headache.",
+   "Maid Petra: Find the second face. Madam cries so, and I'm the one who has to iron the handkerchiefs."
+  ],
+  "action": "set_flag q2_second_face_asked"
+ },
+ "q2_second_face_henner": {
+  "if": {
+   "not_flag": "q2_second_face_s2"
+  },
+  "else": "q2_second_face_henner_after",
+  "lines": [
+   "Coachman Henner: The lady? I drove her from the ball to the Counting House at midnight. She tipped. That's how I knew it wasn't her.",
+   "Coachman Henner: Signed for the whole account with her left hand. And she smelled of starch."
+  ],
+  "action": "set_flag q2_second_face_s2; quest_stage q2_second_face 2"
+ },
+ "q2_second_face_henner_after": [
+  "Coachman Henner: I drive, I don't look. Looking costs extra and I've never been offered it."
+ ],
+ "q2_second_face_petra_lady": {
+  "if": {
+   "not_flag": "q2_second_face_paid"
+  },
+  "else": "q2_second_face_petra_lady_after",
+  "lines": [
+   "You take the brews from Petra's travelling bag. Under them lie three more masks. One of them is yours."
+  ],
+  "action": "set_flag q2_second_face_paid; give_item guard_brew 3; quest_stage q2_second_face 4"
+ },
+ "q2_second_face_petra_lady_after": [
+  "Petra: Madam irons her own handkerchiefs now. She's dreadful at it."
+ ],
+ "q2_second_face_petra_lady_defeat": [
+  "Petra: Unmasked. In the street. How terribly middle class.",
+  "Petra: Take the brews. They were for the journey. The money stays where it is. In me."
+ ],
+ "q2_second_face_petra_lady_intro": [
+  "Petra: You may address me as Madam. Briefly."
+ ],
+ "q2_second_face_reveal": {
+  "if": {
+   "flag": "q2_second_face_s2"
+  },
+  "else": "q2_second_face_wait",
+  "lines": [
+   "Maid Petra: The lady signed with her left hand? How odd. Madam is right-handed. I'm left-handed. What a coincidence.",
+   "Maid Petra: Fifteen years I've carried her face to the cleaner. I know it better than she does. It fits me better, too.",
+   "Maid Petra: The account is empty and the headache was in the tea. You were meant to find a stranger. Pity. Now I need a third face."
+  ],
+  "action": "set_flag q2_second_face_reveal; quest_stage q2_second_face 3"
+ },
+ "q2_second_face_tilo": {
+  "if": {
+   "not_flag": "q2_second_face_s1"
+  },
+  "else": "q2_second_face_tilo_after",
+  "lines": [
+   "Mask Boy Tilo: Lady Vespera's mask? We made it twice. The second one was ordered through the servants' door, paid in small coin.",
+   "Mask Boy Tilo: Fifteen years of small coin, I'd say. Ask the coachmen on the Tithe Road where the second face went."
+  ],
+  "action": "set_flag q2_second_face_s1; quest_stage q2_second_face 1"
+ },
+ "q2_second_face_tilo_after": [
+  "Mask Boy Tilo: A good mask shows who you are. A very good one shows who you'd rather rob."
+ ],
+ "q2_second_face_wait": [
+  "Maid Petra: Masks are made in the Mask Atelier. And the coachmen on the Tithe Road know who rode where that night."
+ ],
+ "q2_seven_keys": {
+  "if": {
+   "not_flag": "q2_seven_keys_asked"
+  },
+  "else": "q2_seven_keys_after",
+  "lines": [
+   "Mina: My father was lock clerk before Pim. He sits in the cells for copying Odile's key. He can't even copy a signature.",
+   "Mina: Find out who really cut the copies. Please. He's all I have. He and the house, and the house is in his name."
+  ],
+  "action": "set_flag q2_seven_keys_asked"
+ },
+ "q2_seven_keys_after": {
+  "if": {
+   "flag": "q2_seven_keys_paid"
+  },
+  "else": "q2_seven_keys_reward",
+  "lines": [
+   "Mina: I visit Father on Sundays. He's proud of me. He doesn't know why yet."
+  ]
+ },
+ "q2_seven_keys_enno": {
+  "if": {
+   "not_flag": "q2_seven_keys_s1"
+  },
+  "else": "q2_seven_keys_enno_after",
+  "lines": [
+   "Bait Boy Enno: Fritha hooked a lump of wax last week. A key pressed in it. Big key. Lock-gate big.",
+   "Bait Boy Enno: It floated out of the Smugglers' Culvert, under the Weeping Locks. There's a cutter down there called Hask."
+  ],
+  "action": "set_flag q2_seven_keys_s1; quest_stage q2_seven_keys 1"
+ },
+ "q2_seven_keys_enno_after": [
+  "Bait Boy Enno: Worms don't lie. That's why nobody here keeps them long."
+ ],
+ "q2_seven_keys_go": {
+  "if": {
+   "flag": "q2_seven_keys_reveal"
+  },
+  "else": "q2_seven_keys_reveal",
+  "lines": [
+   "Mina: The runner is in the Smugglers' Culvert. Bring me the slip. Only the slip. Don't read it."
+  ]
+ },
+ "q2_seven_keys_hask": {
+  "if": {
+   "not_flag": "q2_seven_keys_s2"
+  },
+  "else": "q2_seven_keys_hask_after",
+  "lines": [
+   "Key Cutter Hask: Odile's key? Seven copies. Best work I ever did. A Syndicate runner brought the wax and the coin.",
+   "Key Cutter Hask: The old clerk? Never saw him. A girl collected the keys. Polite. Counted them twice."
+  ],
+  "action": "set_flag q2_seven_keys_s2; quest_stage q2_seven_keys 2"
+ },
+ "q2_seven_keys_hask_after": [
+  "Key Cutter Hask: I kept an eighth. A man needs a pension."
+ ],
+ "q2_seven_keys_reveal": {
+  "if": {
+   "flag": "q2_seven_keys_s2"
+  },
+  "else": "q2_seven_keys_wait",
+  "lines": [
+   "Mina: Seven copies, ordered by a Syndicate runner. So it wasn't Father. Thank you. Oh, thank you.",
+   "Mina: The runner still has the order slip. With the slip Father walks free. Get it from him. He hides in the culvert."
+  ],
+  "action": "set_flag q2_seven_keys_reveal; quest_stage q2_seven_keys 3"
+ },
+ "q2_seven_keys_reward": {
+  "if": {
+   "flag": "q2_seven_keys_done"
+  },
+  "else": "q2_seven_keys_go",
+  "lines": [
+   "Mina: The slip! Signed by me, yes. I told you not to read it. Father stays where he is. The house needed a clear name on it. Here. For not telling."
+  ],
+  "action": "set_flag q2_seven_keys_paid; give_item revival_leaf 2; quest_stage q2_seven_keys 4"
+ },
+ "q2_seven_keys_runner": [
+  "Veit: I run for whoever pays. Lately it's a girl with a house."
+ ],
+ "q2_seven_keys_runner_defeat": [
+  "Veit: Take the slip. Read the name at the bottom before you hand it over. Just for your education.",
+  "Veit: The father confessed to protect her. She let him. That's what I call a family business."
+ ],
+ "q2_seven_keys_runner_intro": [
+  "Veit: The girl sent you for the slip? She sent me for the wax. She sends well, that one."
+ ],
+ "q2_seven_keys_wait": [
+  "Mina: Old Fritha in the Tackle Room fishes things out of the canal. And key cutters hide in the Smugglers' Culvert."
+ ],
+ "q2_toll_twice": {
+  "if": {
+   "not_flag": "q2_toll_twice_asked"
+  },
+  "else": "q2_toll_twice_after",
+  "lines": [
+   "Fishwife Marga: I pay the toll on the causeway. Then, at the far end, I pay it again. Same stamp, different hand.",
+   "Fishwife Marga: Find out who takes the second toll. I'm a widow. I can't afford to be robbed twice a day."
+  ],
+  "action": "set_flag q2_toll_twice_asked"
+ },
+ "q2_toll_twice_after": {
+  "if": {
+   "flag": "q2_toll_twice_paid"
+  },
+  "else": "q2_toll_twice_reward_doubt",
+  "lines": [
+   "Fishwife Marga: The causeway has three tolls now. Progress."
+  ]
+ },
+ "q2_toll_twice_doubt": [
+  "Fishwife Marga: Careful. Clever people pay a third toll in this town."
+ ],
+ "q2_toll_twice_garrick": [
+  "Garrick: I'm dead. The dead pay no toll. It's the whole point."
+ ],
+ "q2_toll_twice_garrick_defeat": [
+  "Garrick: Beaten. And dead. A man can only take so much in one lifetime.",
+  "Garrick: Ask Marga who sewed the wet coat. Go on. Ask."
+ ],
+ "q2_toll_twice_garrick_intro": [
+  "Garrick: Marga sent you? She sends my lunch, too. Today you're the second course."
+ ],
+ "q2_toll_twice_go": {
+  "if": {
+   "flag": "q2_toll_twice_reveal"
+  },
+  "else": "q2_toll_twice_reveal",
+  "lines": [
+   "Fishwife Marga: He collects on the causeway after dark. Go and collect him."
+  ]
+ },
+ "q2_toll_twice_ines": {
+  "if": {
+   "not_flag": "q2_toll_twice_s2"
+  },
+  "else": "q2_toll_twice_ines_after",
+  "lines": [
+   "Stamp Girl Ines: One stamp is missing. Tollman Garrick's. Lost with him in the harbour two winters ago.",
+   "Stamp Girl Ines: Funny. His widow still brings his lunch to the causeway. Every evening."
+  ],
+  "action": "set_flag q2_toll_twice_s2; quest_stage q2_toll_twice 2"
+ },
+ "q2_toll_twice_ines_after": [
+  "Stamp Girl Ines: I stamp what I'm given. It's the only way to keep all ten fingers."
+ ],
+ "q2_toll_twice_reveal": {
+  "if": {
+   "flag": "q2_toll_twice_s2"
+  },
+  "else": "q2_toll_twice_wait",
+  "lines": [
+   "Fishwife Marga: The lost stamp was my Garrick's? My Garrick drowned. I buried the stamp with him.",
+   "Fishwife Marga: Well. I buried a stamp. And a coffin. It was a light coffin, now that I think of it.",
+   "Fishwife Marga: You do believe I didn't know?"
+  ],
+  "action": "set_flag q2_toll_twice_reveal; quest_stage q2_toll_twice 3",
+  "choices": [
+   {
+    "text": "I believe you.",
+    "flag": "q2_toll_twice_trust",
+    "next": "q2_toll_twice_trust"
+   },
+   {
+    "text": "A widow counts her coffins.",
+    "flag": "q2_toll_twice_doubt",
+    "next": "q2_toll_twice_doubt"
+   }
+  ]
+ },
+ "q2_toll_twice_reward": {
+  "if": {
+   "flag": "q2_toll_twice_done"
+  },
+  "else": "q2_toll_twice_go",
+  "lines": [
+   "Fishwife Marga: You beat him? Good. Here, for a friend. The second booth is mine now. It's what he would have wanted. He isn't asked."
+  ],
+  "action": "set_flag q2_toll_twice_paid; give_item strong_tonic 2; quest_stage q2_toll_twice 4"
+ },
+ "q2_toll_twice_reward_doubt": {
+  "if": {
+   "flag": [
+    "q2_toll_twice_done",
+    "q2_toll_twice_doubt"
+   ]
+  },
+  "else": "q2_toll_twice_reward",
+  "lines": [
+   "Fishwife Marga: You beat him. And you think half the second toll was mine all along. Here. That's a lot of tonic for a quiet person."
+  ],
+  "action": "set_flag q2_toll_twice_paid; give_item max_tonic 3; quest_stage q2_toll_twice 4"
+ },
+ "q2_toll_twice_ruk": {
+  "if": {
+   "not_flag": "q2_toll_twice_s1"
+  },
+  "else": "q2_toll_twice_ruk_after",
+  "lines": [
+   "Chain Boy Ruk: The second booth? It's only there at night. A man in a wet coat. He never comes from the town side.",
+   "Chain Boy Ruk: His receipts have the House stamp. The real one. Ask in the Tollhouse who's missing a stamp."
+  ],
+  "action": "set_flag q2_toll_twice_s1; quest_stage q2_toll_twice 1"
+ },
+ "q2_toll_twice_ruk_after": [
+  "Chain Boy Ruk: I pull the chain up, I let the chain down. The chain earns more than I do."
+ ],
+ "q2_toll_twice_trust": [
+  "Fishwife Marga: Bless you. Nobody has believed me since the wedding."
+ ],
+ "q2_toll_twice_wait": [
+  "Fishwife Marga: The chain boys on the Tollchain Causeway see who comes at night. And the stamps are kept in the Tollhouse."
+ ],
+ "q2_two_owners": {
+  "if": {
+   "not_flag": "q2_two_owners_asked"
+  },
+  "else": "q2_two_owners_after",
+  "lines": [
+   "Skipper Hald: My boat, the Patience. Somebody sold her while I was asleep in her. I woke up a passenger.",
+   "Skipper Hald: Find out who sold my boat. A man has a right to know who robbed him. In detail."
+  ],
+  "action": "set_flag q2_two_owners_asked"
+ },
+ "q2_two_owners_after": {
+  "if": {
+   "flag": "q2_two_owners_paid"
+  },
+  "else": "q2_two_owners_reward_doubt",
+  "lines": [
+   "Skipper Hald: The Patience has four owners now. She's never been so popular."
+  ]
+ },
+ "q2_two_owners_doubt": [
+  "Skipper Hald: Up front? You've been in Hookwick too long already."
+ ],
+ "q2_two_owners_go": {
+  "if": {
+   "flag": "q2_two_owners_reveal"
+  },
+  "else": "q2_two_owners_reveal",
+  "lines": [
+   "Skipper Hald: Dame Rikke waits at the Weeping Locks with a lawyer's face. Go and argue my case."
+  ]
+ },
+ "q2_two_owners_malte": {
+  "if": {
+   "not_flag": "q2_two_owners_s1"
+  },
+  "else": "q2_two_owners_malte_after",
+  "lines": [
+   "Paint Boy Malte: The Patience? I painted 'Prudence' over her on Monday and 'Providence' on Tuesday. Same skipper paid both times.",
+   "Paint Boy Malte: The papers went down the Smugglers' Culvert, under the Weeping Locks. The rats there keep the bills of sale."
+  ],
+  "action": "set_flag q2_two_owners_s1; quest_stage q2_two_owners 1"
+ },
+ "q2_two_owners_malte_after": [
+  "Paint Boy Malte: I only paint names. What the names do afterwards is not my brush."
+ ],
+ "q2_two_owners_rats": {
+  "if": {
+   "not_flag": "q2_two_owners_s2"
+  },
+  "else": "q2_two_owners_rats_after",
+  "lines": [
+   "Culvert Rat Smilla: Bills of sale? We keep them dry and we keep them ours. You want to read one, you get past us."
+  ],
+  "action": "battle q2_two_owners_rats"
+ },
+ "q2_two_owners_rats_after": [
+  "Culvert Rat Smilla: Two sales, one mark, same hand. Hald's. He tips well. That's how we knew something was wrong."
+ ],
+ "q2_two_owners_rats_won": {
+  "lines": [
+   "Culvert Rat Smilla: All right, all right. Here. Two bills of sale for one boat. Both signed by the skipper himself."
+  ],
+  "action": "quest_stage q2_two_owners 2"
+ },
+ "q2_two_owners_reveal": {
+  "if": {
+   "flag": "q2_two_owners_s2"
+  },
+  "else": "q2_two_owners_wait",
+  "lines": [
+   "Skipper Hald: The bill of sale has my mark on it? Twice? Well. I do sign a lot of things.",
+   "Skipper Hald: All right. I sold her. To two buyers. A boat with two owners is the custom here, I only kept the custom.",
+   "Skipper Hald: One of them found out. Get her off my back and I'll cut you in on the third sale. You trust me?"
+  ],
+  "action": "set_flag q2_two_owners_reveal; quest_stage q2_two_owners 3",
+  "choices": [
+   {
+    "text": "A third sale. I'm in.",
+    "flag": "q2_two_owners_trust",
+    "next": "q2_two_owners_trust"
+   },
+   {
+    "text": "I want my share up front.",
+    "flag": "q2_two_owners_doubt",
+    "next": "q2_two_owners_doubt"
+   }
+  ]
+ },
+ "q2_two_owners_reward": {
+  "if": {
+   "flag": "q2_two_owners_done"
+  },
+  "else": "q2_two_owners_go",
+  "lines": [
+   "Skipper Hald: You beat her? Partner! Here's your cut of the third sale. The buyer paid in brew. And in a boat he doesn't have yet."
+  ],
+  "action": "set_flag q2_two_owners_paid; give_item dash_brew 2; quest_stage q2_two_owners 4"
+ },
+ "q2_two_owners_reward_doubt": {
+  "if": {
+   "flag": [
+    "q2_two_owners_done",
+    "q2_two_owners_doubt"
+   ]
+  },
+  "else": "q2_two_owners_reward",
+  "lines": [
+   "Skipper Hald: You beat her, and you counted your share before I could. Here. All of it. I feel robbed. In detail."
+  ],
+  "action": "set_flag q2_two_owners_paid; give_item dash_brew 4; quest_stage q2_two_owners 4"
+ },
+ "q2_two_owners_rikke": [
+  "Dame Rikke: I've bought a horse. Nobody sells a horse twice. It bites."
+ ],
+ "q2_two_owners_rikke_defeat": [
+  "Dame Rikke: Outbid. By a stranger. In my own lawsuit.",
+  "Dame Rikke: Keep an eye on your partner. I was his partner on Monday."
+ ],
+ "q2_two_owners_rikke_intro": [
+  "Dame Rikke: Hald sent you instead of my boat. Then I'll take you instead of my money."
+ ],
+ "q2_two_owners_trust": [
+  "Skipper Hald: Partner! I've never had one of those last a week."
+ ],
+ "q2_two_owners_wait": [
+  "Skipper Hald: The painter's boy in the Boatshed paints over the names. And stolen hulls go through the Smugglers' Culvert under the Weeping Locks."
+ ],
+ "q2_wax_names": {
+  "if": {
+   "not_flag": "q2_wax_names_asked"
+  },
+  "else": "q2_wax_names_reveal",
+  "lines": [
+   "Vigil Girl Sanne: The candles in the Vigil House have names on them. Foundry men. Three of those men walked past me this morning.",
+   "Vigil Girl Sanne: Somebody orders the candles before the accidents. Find out who. I only light them."
+  ],
+  "action": "set_flag q2_wax_names_asked"
+ },
+ "q2_wax_names_bette": {
+  "if": {
+   "not_flag": "q2_wax_names_s1"
+  },
+  "else": "q2_wax_names_bette_after",
+  "lines": [
+   "Wax Girl Bette: Name candles? Paid a week ahead, always. We pour them before the man is even late for supper.",
+   "Wax Girl Bette: The list comes by crow from the Rookery Cut. Ask the crow boy who writes it."
+  ],
+  "action": "set_flag q2_wax_names_s1; quest_stage q2_wax_names 1"
+ },
+ "q2_wax_names_bette_after": [
+  "Wax Girl Bette: We never get an order wrong. That's the frightening part."
+ ],
+ "q2_wax_names_reveal": {
+  "if": {
+   "flag": "q2_wax_names_s2"
+  },
+  "else": "q2_wax_names_wait",
+  "lines": [
+   "Vigil Girl Sanne: A girl's hand, round letters, a little flower on every i? Yes. That's mine.",
+   "Vigil Girl Sanne: The Syndicate says the names. I write them neatly. Neat handwriting is rare here. It pays by the name.",
+   "Vigil Girl Sanne: I asked you because the last three knew my writing. Now you do too. How do you spell your name?"
+  ],
+  "action": "set_flag q2_wax_names_reveal; quest_stage q2_wax_names 3"
+ },
+ "q2_wax_names_sanne_list": {
+  "if": {
+   "not_flag": "q2_wax_names_paid"
+  },
+  "else": "q2_wax_names_sanne_list_after",
+  "lines": [
+   "You take Sanne's list and the revival leaves she kept for after work. Your name is on the list. She spelled it right."
+  ],
+  "action": "set_flag q2_wax_names_paid; give_item revival_leaf 3; quest_stage q2_wax_names 4"
+ },
+ "q2_wax_names_sanne_list_after": [
+  "Sanne: I've taken up drawing. Portraits. Very lifelike, for now."
+ ],
+ "q2_wax_names_sanne_list_defeat": [
+  "Sanne: Smudged. I never smudge. You've ruined a whole page.",
+  "Sanne: Take the list. Three names are still dry. Tell them to stay home from work."
+ ],
+ "q2_wax_names_sanne_list_intro": [
+  "Sanne: Hold still. I want to get the spelling right."
+ ],
+ "q2_wax_names_wait": [
+  "Vigil Girl Sanne: The orders come to the Wax Hall. And the crows on the Rookery Cut carry the lists."
+ ],
+ "q2_wax_names_wido": {
+  "if": {
+   "not_flag": "q2_wax_names_s2"
+  },
+  "else": "q2_wax_names_wido_after",
+  "lines": [
+   "Crow Boy Wido: The candle lists? I can't read. The crows can. They say it's a girl's hand. Round. Flowers on the i.",
+   "Crow Boy Wido: She hands them over herself, at the Vigil House door. Lights a candle after. Nice girl."
+  ],
+  "action": "set_flag q2_wax_names_s2; quest_stage q2_wax_names 2"
+ },
+ "q2_wax_names_wido_after": [
+  "Crow Boy Wido: The crows know everything. They just won't tell me the good parts."
+ ],
  "rookery_cut_crowmonger": [
   "Sibbe: My crows carry letters for the Syndicate. They read them first. So do I."
  ],
@@ -225,6 +1447,46 @@
  "rookery_cut_crowmonger_intro": [
   "Sibbe: You've got a letter on you. Let's see who it's addressed to."
  ],
+ "rookery_cut_letter_thief": [
+  "Agathe: I steal letters from the crows. Then I sell them to whoever they're about. Everyone buys."
+ ],
+ "rookery_cut_letter_thief_defeat": [
+  "Agathe: Here. It says you'd win. I should read them first."
+ ],
+ "rookery_cut_letter_thief_intro": [
+  "Agathe: There's a letter about you. Win and you can read it."
+ ],
+ "slag_tunnels_ash_sifter": [
+  "Malve: I sift the ash for buttons. A button means a man. I have a jar of men."
+ ],
+ "slag_tunnels_ash_sifter_defeat": [
+  "Malve: Keep your buttons. For now. Everyone comes through the sieve."
+ ],
+ "slag_tunnels_ash_sifter_intro": [
+  "Malve: Nice buttons on that coat. Let's see how they sift."
+ ],
+ "slag_tunnels_cart_pusher": [
+  "Grim: I push the cart down full and pull it up empty. Nobody asks what was in it. Good job, that."
+ ],
+ "slag_tunnels_cart_pusher_defeat": [
+  "Grim: Tipped over. Like the last foreman."
+ ],
+ "slag_tunnels_cart_pusher_intro": [
+  "Grim: Mind the cart. It doesn't mind you."
+ ],
+ "slag_tunnels_furnace_guard": [
+  "Detlef: Brannoc pays me to guard the tunnel. The Syndicate pays me to look the other way. I squint."
+ ],
+ "slag_tunnels_furnace_guard_defeat": [
+  "Detlef: I'll report I stopped you. Twice. That's two wages."
+ ],
+ "slag_tunnels_furnace_guard_intro": [
+  "Detlef: Halt. One of my employers wants you stopped. I forget which."
+ ],
+ "slag_tunnels_sign": [
+  "Slag Tunnels",
+  "Cart tunnels under the drift. The foundry sends down what it does not want counted."
+ ],
  "smelters_drift_slagman": [
   "Hobb: I cart slag from the foundry. Some of it used to be workers. Don't look in the cart."
  ],
@@ -233,6 +1495,46 @@
  ],
  "smelters_drift_slagman_intro": [
   "Hobb: Hot day. Hot temper. Hot Spirlings."
+ ],
+ "smelters_drift_strike_breaker": [
+  "Kuno: The foundry men wanted shorter days. I gave three of them very short ones."
+ ],
+ "smelters_drift_strike_breaker_defeat": [
+  "Kuno: Complaint upheld. First time for everything."
+ ],
+ "smelters_drift_strike_breaker_intro": [
+  "Kuno: You look like a complaint. I deal with complaints."
+ ],
+ "smugglers_culvert_bilge_boy": [
+  "Arne: I bail the culvert. It fills again. It's the steadiest job in Vellmarch."
+ ],
+ "smugglers_culvert_bilge_boy_defeat": [
+  "Arne: Soaked again. At least that's honest work."
+ ],
+ "smugglers_culvert_bilge_boy_intro": [
+  "Arne: You're dry. Nobody down here is dry. Suspicious."
+ ],
+ "smugglers_culvert_crate_runner": [
+  "Isolde: These crates are empty. Write that down. The heavy ones are extra empty."
+ ],
+ "smugglers_culvert_crate_runner_defeat": [
+  "Isolde: Fine. You saw nothing. I'll even pay you to have seen it."
+ ],
+ "smugglers_culvert_crate_runner_intro": [
+  "Isolde: You saw the crates. Now you carry one or you carry bruises."
+ ],
+ "smugglers_culvert_sign": [
+  "Smugglers' Culvert",
+  "A brick drain under the locks. Everything the canal loses turns up here, with a price tag."
+ ],
+ "smugglers_culvert_tide_clerk": [
+  "Bodo: I keep the Syndicate's books down here. Damp books. The numbers run."
+ ],
+ "smugglers_culvert_tide_clerk_defeat": [
+  "Bodo: Balanced. I'll enter you under 'losses'."
+ ],
+ "smugglers_culvert_tide_clerk_intro": [
+  "Bodo: An audit? Down here we settle audits by hand."
  ],
  "tallowmarket_folk_1": [
   "Wick Boy Tam: I sell candles to the vigil for the foundry workers. Same customers every year. Fewer each time."
@@ -260,7 +1562,7 @@
   "lines": [
    "Rumour Broker Fenn: Tonics on the left, gossip on the right. The gossip costs more and works better."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear pruning_shears grounding_rod smelling_salts"
  },
  "tallowmarket_vigil_house_widow": [
   "Vigil Keeper Dorn: One candle for each foundry worker. We ran out of shelves last winter."
@@ -271,6 +1573,15 @@
  "tallowmarket_weigh_house_weigher": [
   "Weigher Ansel: The scales are honest. The weights are a family heirloom. Different family."
  ],
+ "tithe_road_alms_seller": [
+  "Trude: I sell alms. You pay me, I feel sorry for you. It's cheaper than the House."
+ ],
+ "tithe_road_alms_seller_defeat": [
+  "Trude: Poor me. Finally the pity goes the right way."
+ ],
+ "tithe_road_alms_seller_intro": [
+  "Trude: No coin? Then I'll take pity out of your team."
+ ],
  "tithe_road_tithecollector": [
   "Prue: The House takes a tenth. The Syndicate takes a tenth. I take what's left, for safekeeping."
  ],
@@ -279,6 +1590,15 @@
  ],
  "tithe_road_tithecollector_intro": [
   "Prue: Your tithe is overdue. I accept payment in battle."
+ ],
+ "tollchain_causeway_chain_inspector": [
+  "Lorenz: I inspect the toll chain. Every link is a family that couldn't pay. It's a long chain."
+ ],
+ "tollchain_causeway_chain_inspector_defeat": [
+  "Lorenz: In order. I'll stamp your forehead. No? Suit yourself."
+ ],
+ "tollchain_causeway_chain_inspector_intro": [
+  "Lorenz: Your papers. No papers? Then your Spirlings will do."
  ],
  "tollchain_causeway_tollkeeper": [
   "Vos: The causeway is free. Crossing it isn't."
@@ -384,6 +1704,15 @@
  ],
  "warden_sable_intro": [
   "Everyone in this opera wears a face. Mine is the only honest one, and it is fake."
+ ],
+ "weeping_locks_lock_gambler": [
+  "Ewald: I bet on which lock floods next. I lost the house. Then I bet on the house."
+ ],
+ "weeping_locks_lock_gambler_defeat": [
+  "Ewald: Nothing it is. I'm used to it."
+ ],
+ "weeping_locks_lock_gambler_intro": [
+  "Ewald: Double or nothing. You're the nothing."
  ],
  "weeping_locks_sluicer": [
   "Morwen: The locks weep because Odile pays them to. The rest of us weep for free."

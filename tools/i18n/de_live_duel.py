@@ -28,7 +28,7 @@ T = {
 "Friend": "Freund",
 "Pick 3 (%d chosen)": "3 wählen (%d gewählt)",
 "%s took %d damage": "%s hat %d Schaden genommen",
-"The two results did not match. The duel does not count.": "Die beiden Ergebnisse passen nicht zusammen. Das Duell zählt nicht.",
+"The referee could not play this duel again. It does not count.": "Der Schiedsrichter konnte dieses Duell nicht nachspielen. Es zählt nicht.",
 "The duel ended without a winner.": "Das Duell endete ohne Sieger.",
 "Your friend gave up. You win!": "Dein Freund hat aufgegeben. Du gewinnst!",
 "You gave up.": "Du hast aufgegeben.",

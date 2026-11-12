@@ -1,0 +1,12 @@
+{
+ "_comment": "pl translation of the raid_more table, keyed by the English text.",
+ "strings": {
+  "%d. %s (%s, %d Wayfarers) %d min": "%d. %s (%s, Wędrowcy: %d) %d min",
+  "A legendary guardian waits in this Rift: %s": "W tej Szczelinie czeka legendarny obrońca: %s",
+  "Easy": "Łatwy",
+  "Fastest Rifts": "Najszybsze Szczeliny",
+  "Hard": "Trudny",
+  "How hard?": "Jak trudno?",
+  "No Rift was won yet.": "Nie wygrano jeszcze żadnej Szczeliny."
+ }
+}

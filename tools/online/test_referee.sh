@@ -47,6 +47,21 @@ echo "states: $got"
 [ "$got" = "ok,mismatch,error" ] || { echo "referee gave the wrong verdicts"; exit 1; }
 left="$(psql_ -c "select count(*) from public.battle_queue")"
 [ "$left" = "0" ] || { echo "queue not empty"; exit 1; }
+# Live duels (Online 100, point 3): the referee plays the rounds the server kept and says who won,
+# or that the duel is not over yet.
+cat > "$dir/live.json" <<'LIVE'
+[{"id": 1, "replay": {"teams": [], "inputs": []}, "claim": {"expect": {"live": true, "seed": 123,
+   "teams": [[{"species": "Kindlop", "level": 40, "moves": []}], [{"species": "Mossling", "level": 3, "moves": []}]],
+   "moves": {"1": [{"k": 0, "m": 0, "s": -1}, {"k": 0, "m": 0, "s": -1}]}}}},
+ {"id": 2, "replay": {"teams": [], "inputs": []}, "claim": {"expect": {"live": true, "seed": 123,
+   "teams": [[{"species": "Kindlop", "level": 40, "moves": []}], [{"species": "Mossling", "level": 3, "moves": []}]],
+   "moves": {}}}}]
+LIVE
+"$godot" --headless --path . -s res://server/referee/referee.gd -- check "$dir/live.json" "$dir/live_out.json" >/dev/null 2>&1
+live="$(python3 -c "import json,sys; r=json.load(open(sys.argv[1])); print(','.join('%s:%s:%s' % (x['verdict'], x['detail'].get('finished'), x['detail'].get('winner')) for x in r))" "$dir/live_out.json")"
+echo "live duels: $live"
+[ "$live" = "ok:True:0,ok:False:-1" ] || { echo "referee gave the wrong live duel verdicts"; exit 1; }
+
 # The fair league rows of the game and of the database are the same for every species (item 2748).
 "$godot" --headless --path . -s res://server/referee/referee.gd -- fair "$dir/fair.json" >/dev/null 2>&1
 [ -s "$dir/fair.json" ] || { echo "fair rows were not written"; exit 1; }
