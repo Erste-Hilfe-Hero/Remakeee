@@ -26,6 +26,8 @@ var echo_duel: Dictionary = {}
 var league_match: Dictionary = {}
 ## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
 var raid_attempt: Dictionary = {}
+## A live duel to play or watch in the battle screen (LiveDuelMenu): {"id", "watch", "name" or "names"}.
+var live_stage: Dictionary = {}
 ## An entry to open before the list ("Goals" for a chimora://event link, DeepLink.gd).
 var open_on: String = ""
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
@@ -81,6 +83,9 @@ func run() -> void:
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
 			GameState.has_flag("aldo_gift"), not Trust.ledger_rows(GameState.flags).is_empty())
 		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
+		# Pocket Rest (shop, pay-to-win step 6, plan point 51): rest anywhere outside battle.
+		if ShopEffects.can_rest_anywhere():
+			labels.insert(labels.find("Team") + 1, "Rest")
 		if "Travel" in labels:
 			await tip("travel")
 		var entries: Array[Dictionary] = []
@@ -98,10 +103,14 @@ func run() -> void:
 			"Ledger": await run_ledger()
 			"Map": await WorldMapMenu.run(self, current_map)
 			"Team": await run_team()
+			"Rest":
+				if ShopEffects.pocket_rest():
+					Sound.sfx("heal")
+					await info("Your team is fully rested.")
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay:
+				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay or not live_stage.is_empty():
 					return
 			"Leagues":
 				await LeagueMenu.run(self)
@@ -602,6 +611,10 @@ func run_team() -> void:
 		var power: int = ShopEffects.account_power()
 		if power > 0:
 			boosts.push_front(Loc.t("Power %d") % power)
+		# What the best next tier would add (plan point 60): adults only, a note, no button.
+		var next_power: String = ShopEffects.next_power_line()
+		if not next_power.is_empty():
+			boosts.append(next_power)
 		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
 		var idx: int = await pick(title, rows)
 		if idx >= 0 and idx == wardrobe:
@@ -746,7 +759,7 @@ func _usable_items() -> Array[String]:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
 				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
-				or bool(it.get("unfurl_any", false))):
+				or bool(it.get("unfurl_any", false)) or bool(it.get("gift_slot", false))):
 			out.append(str(id))
 	return out
 

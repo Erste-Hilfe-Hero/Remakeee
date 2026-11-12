@@ -14,8 +14,9 @@ How the way opens (flags from data/region4.json):
   gildcrest, feast host           shows after rift_v4_gilt_sealed, sets halcyra_done (Era IV finale)
 
 Wardens carry the warden key v4_<rift>, so GameState.seal_rift sets rift_v4_<rift>_sealed, the
-flag the sheet names. Town layout: the crossroads of every town is the same (spring at 6, 8 as
-the square, the keeper beside it, three locals there at dusk); the outside differs per town.
+flag the sheet names. Every town has its own layout (TOWN_LAYOUT) with a spring as the square,
+the keeper beside it and three locals there at dusk, and a shop, a rest house and two homes
+with rooms (ROOMS).
 Exits: top (5, 0), bottom (5, last), left (0, 8), right (11, 8), two cells each.
 """
 import json
@@ -30,7 +31,7 @@ TOWNS = [t["id"] for t in SHEET["towns"]]
 ROUTES = [r["id"] for r in SHEET["routes"]]
 RIFTS = [r["id"] for r in SHEET["rifts"]]
 LANDMARKS = [l["id"] for l in SHEET["landmarks"]]
-GROUP = TOWNS + ROUTES + RIFTS + LANDMARKS
+GROUP = TOWNS + ROUTES + RIFTS + LANDMARKS + ["%s_%s" % (t, k) for t in TOWNS for k in ("shop", "spring", "home_1", "home_2")]
 
 TOWN_H = 20
 ROUTE_H = 24
@@ -135,57 +136,242 @@ def build(world):
 
 
 # --- Towns ---------------------------------------------------------------------------------
-# The shared crossroads (rows 4 to 11); rows 1-3 and 12-18 are each town's own.
-CORE = ["^....__....^",
-        "^.L..__..S.^",
-        "^....__....^",
-        "^...____...^",
-        "_____.o.____",
-        "_____...____",
-        "^...____...^",
-        "^....__....^"]
-
-TOWN_TOP = {
-    "brightledge": ["^::..__..::^", "^.TTT__TTT.^", "^.***__***.^"],
-    "gildcrest": ["^T...__...T^", "^.###__###.^", "^.*T*__*T*.^"],
-    "starwell": ["^.L..__..L.^", "^.|..__..|.^", "^.|..__..|.^"],
-    "paleshore": ["^::..__..%%^", "^.~~.__.~~.^", "^.~~.__.~~.^"],
-    "whitecairn": ["^@@..__..@@^", "^.@@.__.@@.^", "^.@..__..@.^"],
+# Every town has its own layout (tools/maps/audit_maps.py town_twin) and real houses: a shop, a
+# rest house and homes, each with a door and a room (ROOMS below). rows: the map, gates on the
+# fixed exit cells. doors: room key -> door cell. folk: (home x, y, facing), (dusk x, y, facing).
+TOWN_LAYOUT = {
+    # The funicular's top station on a ledge: houses along the west lane, the platform bottom right.
+    "brightledge": {
+        "rows": ["^^^^^__^^^^^",
+                 "^.S..__....^",
+                 "^.RRR__.RR.^",
+                 "^.HDH__.HD.^",
+                 "^.._.__.._.^",
+                 "^..____.._.^",
+                 "^.L..__S._.^",
+                 "^....__.._.^",
+                 "^...o_______",
+                 "^...._______",
+                 "^.*..__..*.^",
+                 "^.RRR__.RR.^",
+                 "^.HDH__.HD.^",
+                 "^.._.__.._.^",
+                 "^..____.._.^",
+                 "^.##.__.._.^",
+                 "^....__.._L^",
+                 "^::..._+++.^",
+                 "^......+++.^",
+                 "^^^^^^^^^^^^"],
+        "doors": {"spring": (3, 3), "home_1": (9, 3), "shop": (3, 12), "home_2": (9, 12)},
+        "keeper": (3, 8), "trader": (7, 14), "sign": (7, 6), "heal": (5, 9), "square": (4, 8),
+        "folk": [((1, 6, "right"), (4, 7, "down")), ((10, 10, "left"), (6, 9, "left")), ((2, 16, "right"), (3, 9, "right"))]},
+    # The seat of the Gilt House: two gold-roofed halls wall to wall, a ring road round the fountain.
+    "gildcrest": {
+        "rows": ["^^^^^__^^^^^",
+                 "^RRRR__RRRR^",
+                 "^RRRR__RRRR^",
+                 "^HDHH__HHDH^",
+                 "^._..__.._.^",
+                 "^.________.^",
+                 "^.L.*__*.S.^",
+                 "^..______..^",
+                 "____.o._____",
+                 "____..._____",
+                 "^..______..^",
+                 "^....__....^",
+                 "^.RRR__RRR.^",
+                 "^.HDH__HDH.^",
+                 "^.._.__._..^",
+                 "^T.______.T^",
+                 "^.##.__.##.^",
+                 "^**..__..L.^",
+                 "^....__....^",
+                 "^^^^^__^^^^^"],
+        "doors": {"shop": (2, 3), "spring": (9, 3), "home_1": (3, 13), "home_2": (8, 13)},
+        "keeper": (4, 8), "trader": (7, 11), "sign": (9, 6), "heal": (5, 9), "square": (5, 8),
+        "folk": [((1, 6, "right"), (4, 9, "right")), ((10, 11, "left"), (6, 9, "left")), ((2, 18, "right"), (6, 8, "left"))]},
+    # The observatory town: the road bends round the hill, the Great Orrery stands against the cliff.
+    "starwell": {
+        "rows": ["^^^^^__^^^^^",
+                 "^.L..__.RR.^",
+                 "^.|..__.HD.^",
+                 "^.|____.._.^",
+                 "^.._______.^",
+                 "^..__.RR...^",
+                 "^..__.HD.L.^",
+                 "^..__.._...^",
+                 "^..__o______",
+                 "^.._________",
+                 "^..__.S....^",
+                 "^RR__...RRR^",
+                 "^HD__...RRR^",
+                 "^..__...HDH^",
+                 "^.._______.^",
+                 "^RR..__....^",
+                 "^HD..__.L..^",
+                 "^._..__.|..^",
+                 "^._____.|..^",
+                 "^^^^^__^^^^^"],
+        "doors": {"home_1": (9, 2), "spring": (7, 6), "home_2": (2, 12), "shop": (2, 16)},
+        "keeper": (5, 7), "trader": (7, 10), "sign": (6, 10), "heal": (5, 9), "square": (5, 8),
+        "folk": [((2, 6, "right"), (6, 8, "left")), ((10, 7, "left"), (6, 9, "left")), ((10, 5, "left"), (4, 9, "right"))]},
+    # The salt town: brine pans in a chequer, the houses on the dry squares between them.
+    "paleshore": {
+        "rows": ["^^^^^__^^^^^",
+                 "^~~~.__.RR.^",
+                 "^~~~.__.HD.^",
+                 "^~~~._____.^",
+                 "^....__....^",
+                 "^.RRR__~~~.^",
+                 "^.HDH__~~~.^",
+                 "^.._.__o.S.^",
+                 "____________",
+                 "____________",
+                 "^...L__....^",
+                 "^~~~.__RRR.^",
+                 "^~~~.__HDH.^",
+                 "^~~~.____..^",
+                 "^....__....^",
+                 "^.RR.__~~~.^",
+                 "^.HD.__~~~.^",
+                 "^.._.__~~~.^",
+                 "^..____...L^",
+                 "^^^^^__^^^^^"],
+        "doors": {"home_1": (9, 2), "spring": (3, 6), "shop": (8, 12), "home_2": (3, 16)},
+        "keeper": (8, 7), "trader": (8, 10), "sign": (9, 7), "heal": (7, 8), "square": (7, 7),
+        "folk": [((4, 4, "right"), (6, 7, "right")), ((10, 14, "left"), (7, 9, "up")), ((2, 14, "right"), (8, 9, "left"))]},
+    # The last town before the edge: a field of cairns to the west, the houses in a row to the east.
+    "whitecairn": {
+        "rows": ["^^^^^__^^^^^",
+                 "^@.@.__.RR.^",
+                 "^....__.HD.^",
+                 "^.@.._____.^",
+                 "^...@__....^",
+                 "^@...__RRR.^",
+                 "^..@.__HDH.^",
+                 "^....____..^",
+                 "^@..o_______",
+                 "^..@._______",
+                 "^....__....^",
+                 "^@.@.__.L..^",
+                 "^....__.RR.^",
+                 "^.@..__.HD.^",
+                 "^...._____.^",
+                 "^.RR.__....^",
+                 "^.DH.__.@.@^",
+                 "^._..__....^",
+                 "^._____..S.^",
+                 "^^^^^__^^^^^"],
+        "doors": {"home_1": (9, 2), "spring": (8, 6), "shop": (9, 13), "home_2": (2, 16)},
+        "keeper": (3, 8), "trader": (7, 10), "sign": (9, 18), "heal": (4, 9), "square": (4, 8),
+        "folk": [((2, 5, "right"), (4, 7, "down")), ((10, 10, "left"), (5, 9, "left")), ((9, 17, "left"), (5, 7, "left"))]},
 }
-TOWN_BOTTOM = {
-    "brightledge": ["^.TT.__.TT.^", "^.**.__.**.^", "^....__....^", "^.##.__.##.^", "^....__....^",
-                    "^::..__++L.^", "^....__+++.^"],
-    "gildcrest": ["^.TT.__.TT.^", "^.**.__.**.^", "^....__....^", "^T##.__.##T^", "^....__....^",
-                  "^**..__..L.^", "^....__....^"],
-    "starwell": ["^.TT.__.RR.^", "^.**.__.HD.^", "^....__....^", "^.##.__.##.^", "^....__....^",
-                 "^::..__..L.^", "^....__....^"],
-    "paleshore": ["^.~~.__.~~.^", "^....__....^", "^....__....^", "^~~~.__.~~~^", "^%%..__..%%^",
-                  "^::..__..L.^", "^....__....^"],
-    "whitecairn": ["^.@@.__.@@.^", "^....__....^", "^....__....^", "^@.@.__.@.@^", "^....__....^",
-                   "^@@..__..L.^", "^....__....^"],
+# Rooms in the Era IV look, one template per kind (the rest house has its own spring).
+ROOM_ROWS = {
+    "spring": ["WWWWWWWWWW", "WfffoofffW", "WffffffffW", "WffCCCCffW", "WffffffffW", "WCffffffCW", "WffffffffW", "WWWWDWWWWW"],
+    "shop": ["WWWWWWWWWW", "WCCCffCCCW", "WffffffffW", "WffCCCCffW", "WffffffffW", "WffffffffW", "WffffffffW", "WWWWDWWWWW"],
+    "home": ["WWWWWWWWWW", "WCCffffCCW", "WffffffffW", "WffffffffW", "WCffffffCW", "WffffffffW", "WffffffffW", "WWWWDWWWWW"],
+}
+# town -> room key -> ((name EN, DE), person id, sprite, (line EN, DE) ...). "spring" heals, "shop" sells.
+ROOMS = {
+    "brightledge": {
+        "shop": (("Station Store", "Stationsladen"), "odalys", "villager",
+                 ("Clerk Odalys: Souvenirs on the left, tonics on the right. The souvenirs outlive most of the buyers.", "Verkäuferin Odalys: Andenken links, Tränke rechts. Die Andenken überleben die meisten Käufer.")),
+        "spring": (("Porters' Rest", "Trägerrast"), "elke", "elder",
+                   ("Matron Elke: Lie down. The Gilt House pays for the bed. It also counts the hours you spend in it.", "Hausmutter Elke: Leg dich hin. Das Haus Gilt bezahlt das Bett. Es zählt auch die Stunden, die du darin verbringst.")),
+        "home_1": (("Brakeman's House", "Haus des Bremsers"), "tilde", "villager",
+                   ("Tilde: Fidel checks the cable every morning. Then he comes home and checks his will.", "Tilde: Fidel prüft jeden Morgen das Seil. Dann kommt er heim und prüft sein Testament."),
+                   ("Tilde: I am in it twice. Once as his wife, once as a witness.", "Tilde: Ich stehe zweimal drin. Einmal als seine Frau, einmal als Zeugin.")),
+        "home_2": (("Painter's Loft", "Malerboden"), "jorin", "villager",
+                   ("Apprentice Jorin: Cosima paints the sunset, the House burns it, and I sweep up the ash. It is the only steady job in the arts.", "Lehrling Jorin: Cosima malt den Sonnenuntergang, das Haus verbrennt ihn, und ich fege die Asche auf. Es ist die einzige feste Stelle in der Kunst.")),
+    },
+    "gildcrest": {
+        "shop": (("Gilt Commissary", "Gilt-Magazin"), "ottmar", "villager",
+                 ("Commissary Clerk Ottmar: Everything here is gilded. The prices too. Scratch them and you find more prices.", "Magazinschreiber Ottmar: Hier ist alles vergoldet. Auch die Preise. Kratz daran, und darunter sind noch mehr Preise.")),
+        "spring": (("House Infirmary", "Hauslazarett"), "calla", "elder",
+                   ("Infirmary Sister Calla: Rest. In this house people recover quickly. The slow ones are replaced.", "Lazarettschwester Calla: Ruh dich aus. In diesem Haus erholt man sich schnell. Die Langsamen werden ersetzt.")),
+        "home_1": (("Servants' Wing", "Gesindeflügel"), "bertrand", "villager",
+                   ("Cook Bertrand: Five children, five tasters. I am on my third set of tasters.", "Koch Bertrand: Fünf Kinder, fünf Vorkoster. Ich bin beim dritten Satz Vorkoster."),
+                   ("Cook Bertrand: The soup is fine. Probably. Tobiah went first.", "Koch Bertrand: Die Suppe ist in Ordnung. Wahrscheinlich. Tobiah hat zuerst probiert.")),
+        "home_2": (("Tutor's Rooms", "Zimmer des Hauslehrers"), "emeric", "elder",
+                   ("Tutor Emeric: I teach the Gilt children arithmetic. They only ever ask about subtraction.", "Hauslehrer Emeric: Ich bringe den Gilt-Kindern Rechnen bei. Sie fragen immer nur nach dem Abziehen.")),
+    },
+    "starwell": {
+        "shop": (("Lens Shop", "Linsenladen"), "ines", "villager",
+                 ("Lens Seller Ines: Tonics, charts and lenses. Buy a lens and you will see your future. Buy a tonic and you will have one.", "Linsenhändlerin Ines: Tränke, Karten und Linsen. Kauf eine Linse, und du siehst deine Zukunft. Kauf einen Trank, und du hast eine.")),
+        "spring": (("Stargazers' Rest", "Sternguckerrast"), "wilhelmina", "elder",
+                   ("Night Nurse Wilhelmina: Sleep. The stars will still be lying when you wake up.", "Nachtschwester Wilhelmina: Schlaf. Die Sterne lügen auch noch, wenn du aufwachst.")),
+        "home_1": (("Horoscope Parlour", "Horoskopstube"), "mirabel", "villager",
+                   ("Seer Mirabel: I read futures for the Gilt House. I leave out the endings. They pay better that way.", "Seherin Mirabel: Ich lese dem Haus Gilt die Zukunft. Das Ende lasse ich weg. So zahlen sie besser."),
+                   ("Seer Mirabel: Yours is short. I mean the reading.", "Seherin Mirabel: Deine ist kurz. Die Lesung, meine ich.")),
+        "home_2": (("Copyists' Room", "Kopistenstube"), "lorenz", "villager",
+                   ("Copyist Lorenz: We copy the sky by hand. When a star goes missing we are told it was never there. We erase it very neatly.", "Kopist Lorenz: Wir schreiben den Himmel von Hand ab. Fehlt ein Stern, heißt es, er war nie da. Wir radieren ihn sehr sauber aus.")),
+    },
+    "paleshore": {
+        "shop": (("Salt Exchange", "Salzbörse"), "runa", "villager",
+                 ("Exchange Clerk Runa: We trade in salt and tonics. Salt keeps things from going bad. It has not worked on Halloran.", "Börsenschreiberin Runa: Wir handeln mit Salz und Tränken. Salz bewahrt vor dem Verderben. Bei Halloran hat es nicht gewirkt.")),
+        "spring": (("Brine Bath House", "Solebadehaus"), "jost", "elder",
+                   ("Bath Attendant Jost: Soak as long as you like. The brine takes the ache out. It took my brother out entirely.", "Bademeister Jost: Bleib drin, so lange du willst. Die Sole zieht den Schmerz heraus. Meinen Bruder hat sie ganz herausgezogen.")),
+        "home_1": (("Raker's Hut", "Rechenhütte"), "solveig", "villager",
+                   ("Solveig: Father says the white line moved again last night. He says it like the line is coming for dinner.", "Solveig: Vater sagt, die weiße Linie ist heute Nacht wieder gewandert. Er sagt es, als käme sie zum Abendessen.")),
+        "home_2": (("Ledger House", "Schuldbuchhaus"), "almut", "elder",
+                   ("Debt Scribe Almut: Every grain of salt is owed to somebody. I keep the book.", "Schuldschreiberin Almut: Jedes Salzkorn ist irgendwem geschuldet. Ich führe das Buch."),
+                   ("Debt Scribe Almut: The book is thicker than the lake was deep.", "Schuldschreiberin Almut: Das Buch ist dicker, als der See tief war.")),
+    },
+    "whitecairn": {
+        "shop": (("Lantern Chandlery", "Laternenlager"), "wenzel", "villager",
+                 ("Chandler Wenzel: Oil, wicks, tonics. Veronne buys the lanterns. The families buy them a second time.", "Krämer Wenzel: Öl, Dochte, Tränke. Veronne kauft die Laternen. Die Familien kaufen sie ein zweites Mal.")),
+        "spring": (("Mourners' Rest", "Trauerrast"), "hanne", "elder",
+                   ("Vigil Keeper Hanne: Rest here. The beds are for the living. We check every morning, to be sure.", "Wachfrau Hanne: Ruh dich hier aus. Die Betten sind für die Lebenden. Wir sehen jeden Morgen nach, zur Sicherheit.")),
+        "home_1": (("Stonecutter's House", "Steinmetzhaus"), "gerwin", "elder",
+                   ("Stonecutter Gerwin: I carve the names before they are needed. The Gilt House sends me a list. It is rarely wrong.", "Steinmetz Gerwin: Ich meißle die Namen, bevor sie gebraucht werden. Das Haus Gilt schickt mir eine Liste. Sie irrt sich selten.")),
+        "home_2": (("Rope Keeper's House", "Haus der Seilwartin"), "thea", "villager",
+                   ("Rope Keeper Thea: The basket goes down to the moor and comes back up. I only count the ropes.", "Seilwartin Thea: Der Korb fährt ins Moor hinunter und kommt wieder herauf. Ich zähle nur die Seile."),
+                   ("Rope Keeper Thea: Counting the people was making me sad.", "Seilwartin Thea: Die Leute zu zählen hat mich traurig gemacht.")),
+    },
 }
 
 
 def town_rows(mid):
-    rows = ["^^^^^__^^^^^"] + TOWN_TOP[mid] + CORE + TOWN_BOTTOM[mid] + ["^^^^^__^^^^^"]
+    rows = list(TOWN_LAYOUT[mid]["rows"])
     sides = {s for (a, s) in LINKS if a == mid}
-    if "top" not in sides:
-        rows[0] = "^" * 12
-    if "bottom" not in sides:
-        rows[-1] = "^" * 12
-    for y in (8, 9):
-        r = rows[y]
-        if "left" not in sides:
-            r = "^" + r[1:]
-        if "right" not in sides:
-            r = r[:-1] + "^"
-        # A closed side keeps no road arm running into the cliff (tools/maps/audit_maps.py look pass).
-        if "left" not in sides:
-            r = r[:1] + "..." + r[4:]
-        if "right" not in sides:
-            r = r[:8] + "..." + r[11:]
-        rows[y] = r
+    for side in ("top", "bottom", "left", "right"):
+        for (x, y), (ix, iy) in zip(exit_cells(mid, side, TOWN_H), TOWN_IN[side]):
+            if (rows[y][x] == "_") != (side in sides):
+                raise SystemExit("%s: side %s does not match its exits" % (mid, side))
+            if side in sides and rows[iy][ix] not in "._":
+                raise SystemExit("%s: no open ground inside the %s exit" % (mid, side))
     return rows
+
+
+def rooms(world, mid, m):
+    """The room behind every house door of town `mid`; adds the door warps to the town map `m`."""
+    lay = TOWN_LAYOUT[mid]
+    text = {}
+    for key, (dx, dy) in lay["doors"].items():
+        (name, who, sprite), talk = ROOMS[mid][key][:3], ROOMS[mid][key][3:]
+        if m["rows"][dy][dx] != "D" or m["rows"][dy - 1][dx] not in "RH" or m["rows"][dy + 1][dx] not in "._":
+            raise SystemExit("%s: no house door above open ground at %d,%d" % (mid, dx, dy))
+        kind = key if key in ROOM_ROWS else "home"
+        rid = "%s_%s" % (mid, key)
+        rows = list(ROOM_ROWS[kind])
+        rx = rows[-1].index("D")
+        entry = {"lines": lines(*talk)}
+        if kind == "spring":
+            entry["action"] = "heal"
+        elif kind == "shop":
+            entry["action"] = SHOP_ITEMS
+        text[who] = entry
+        room = {"name": tr(*name), "biome": "town", "backdrop": "field", "rows": rows,
+                "warps": [warp(rx, len(rows) - 1, mid, dx, dy + 1, "down")],
+                "npcs": [npc(who, 4 if kind != "home" else 2, 2, "down", "%s/%s" % (mid, who), sprite)], "signs": []}
+        if kind == "spring":
+            room["heal_point"] = [rx, len(rows) - 3]
+        finish(world, rid, room)
+        m["warps"].append(warp(dx, dy, rid, rx, len(rows) - 2, "up"))
+    if sum(r.count("D") for r in m["rows"]) != len(lay["doors"]) + (1 if mid == "starwell" else 0):
+        raise SystemExit("%s: a door that is no house door" % mid)
+    world.add_text(mid, text)
 
 
 # Per town: sign lines, keeper line, (shop line or None), three locals, finds, extra people.
@@ -218,7 +404,7 @@ TOWN_TEXT = {
         "folk": [("orla", "villager", ("Lens Grinder Orla: I grind lenses all day. At dusk I look through them and see the same lies, only bigger.", "Linsenschleiferin Orla: Den ganzen Tag schleife ich Linsen. Abends schaue ich hindurch und sehe dieselben Lügen, nur größer.")),
                  ("quill", "villager", ("Chart Boy Quill: I copy star charts for the Gilt House. I add one fake star to each. Nobody's noticed.", "Kartenjunge Quill: Ich kopiere Sternkarten für das Haus Gilt. In jede male ich einen falschen Stern. Keinem ist es aufgefallen.")),
                  ("serafin", "elder", ("Retired Astronomer Serafin: I discovered a comet once. The Gilt House renamed it after a cousin. The cousin later fell off a balcony.", "Astronom im Ruhestand Serafin: Ich habe mal einen Kometen entdeckt. Das Haus Gilt hat ihn nach einem Cousin benannt. Der Cousin fiel später von einem Balkon."))],
-        "finds": [((0, 5), "revival_leaf"), ((11, 14), "max_tonic"), ((0, 16), "focus_brew")],
+        "finds": [((0, 5), "revival_leaf"), ((11, 14), "max_tonic"), ((0, 13), "focus_brew")],
     },
     "paleshore": {
         "sign": [("PALESHORE", "PALESHORE"), ("Salt town on a dried lake. Do not walk past the white line. The line moves.", "Salzstadt an einem ausgetrockneten See. Geh nicht über die weiße Linie. Die Linie wandert."),
@@ -228,7 +414,7 @@ TOWN_TEXT = {
         "folk": [("bertil", "villager", ("Salt Raker Bertil: I rake salt from dawn to dusk. Sometimes the rake finds a boot. Sometimes the boot is still full.", "Salzrechen Bertil: Ich reche Salz von früh bis spät. Manchmal findet der Rechen einen Stiefel. Manchmal ist der Stiefel noch voll.")),
                  ("maren", "villager", ("Widow Maren: My husband walked on the mirror and never came back. Halloran sent a bill for the salt he displaced.", "Witwe Maren: Mein Mann ist auf den Spiegel gelaufen und nie zurückgekommen. Halloran hat eine Rechnung für das verdrängte Salz geschickt.")),
                  ("ivo", "elder", ("Ferryman Ivo: There's been no water to ferry for twenty years. I still charge. Habit.", "Fährmann Ivo: Seit zwanzig Jahren gibt es kein Wasser mehr zum Übersetzen. Ich kassiere trotzdem. Gewohnheit."))],
-        "finds": [((0, 5), "strong_tonic", 2), ((11, 13), "remedy"), ((0, 13), "wake_bell")],
+        "finds": [((0, 4), "strong_tonic", 2), ((11, 13), "remedy"), ((0, 14), "wake_bell")],
     },
     "whitecairn": {
         "sign": [("WHITECAIRN", "WHITECAIRN"), ("The last town before the edge. Each cairn is a person who said no to the Gilt House.", "Die letzte Stadt vor der Kante. Jeder Steinhaufen ist jemand, der Nein zum Haus Gilt gesagt hat."),
@@ -238,25 +424,24 @@ TOWN_TEXT = {
         "folk": [("mathis", "villager", ("Stonestacker Mathis: I build the cairns. Business is steady. Too steady.", "Steinstapler Mathis: Ich baue die Steinhaufen. Das Geschäft läuft stetig. Zu stetig.")),
                  ("ilse", "villager", ("Lantern Girl Ilse: I light the Span every night. Veronne says every lantern is a debt. I say every lantern is a name.", "Laternenmädchen Ilse: Ich zünde jeden Abend den Bogen an. Veronne sagt, jede Laterne ist eine Schuld. Ich sage, jede Laterne ist ein Name.")),
                  ("barnaby", "elder", ("Old Barnaby: I said no to the Gilt House once. They built me a cairn anyway. I'm saving it for later.", "Der alte Barnaby: Ich habe einmal Nein zum Haus Gilt gesagt. Sie haben mir trotzdem einen Steinhaufen gebaut. Ich hebe ihn mir für später auf."))],
-        "finds": [((0, 5), "max_tonic"), ((11, 14), "revival_leaf"), ((0, 14), "guard_brew")],
+        "finds": [((0, 4), "max_tonic"), ((11, 14), "revival_leaf"), ((0, 14), "guard_brew")],
     },
 }
 SHOP_ITEMS = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
-# Locals: (home x, y, facing) by day, (x, y, facing) at the square at dusk, away at night.
-FOLK_PLACES = [((2, 6, "right"), (5, 9, "right")), ((9, 11, "left"), (7, 9, "left")), ((2, 18, "right"), (4, 7, "right"))]
 
 
 def town(world, mid):
     t = TOWN_TEXT[mid]
+    lay = TOWN_LAYOUT[mid]
     sheet = sheet_entry("towns", mid)
     rows = town_rows(mid)
     text = {"sign": lines(*t["sign"]),
             "keeper": {"lines": lines(t["keeper"]), "action": "heal"}}
-    people = [npc("keeper", 7, 7, "down", mid + "/keeper", "elder")]
+    people = [npc("keeper", lay["keeper"][0], lay["keeper"][1], "down", mid + "/keeper", "elder")]
     if t["shop"]:
         text["trader"] = {"lines": lines(t["shop"]), "action": SHOP_ITEMS}
-        people.append(npc("trader", 3, 14, "down", mid + "/trader", "villager"))
-    for (pid, sprite, talk), ((hx, hy, hf), (dx, dy, df)) in zip(t["folk"], FOLK_PLACES):
+        people.append(npc("trader", lay["trader"][0], lay["trader"][1], "down", mid + "/trader", "villager"))
+    for (pid, sprite, talk), ((hx, hy, hf), (dx, dy, df)) in zip(t["folk"], lay["folk"]):
         text[pid] = {"lines": lines(talk)}
         people.append(npc(pid, hx, hy, hf, "%s/%s" % (mid, pid), sprite, schedule=[at("dusk", dx, dy, df), away("night")]))
     world.add_text(mid, text)
@@ -267,13 +452,17 @@ def town(world, mid):
             for x, y in exit_cells(mid, side, TOWN_H):
                 blocks.append(gate(x, y, flag, "#"))
     m = {"name": tr(sheet["name"], sheet["name"]), "biome": "town", "backdrop": "field", "outdoor": True,
-         "heal_point": [6, 9], "rows": rows, "warps": warps, "npcs": people,
-         "signs": [{"x": 9, "y": 5, "dialogue": mid + "/sign"}],
+         "heal_point": list(lay["heal"]), "rows": rows, "warps": warps, "npcs": people,
+         "signs": [{"x": lay["sign"][0], "y": lay["sign"][1], "dialogue": mid + "/sign"}],
          "secrets": [secret(f[0][0], f[0][1], f[1], "find_%s_%d" % (mid, i + 1), f[2] if len(f) > 2 else 1) for i, f in enumerate(t["finds"])],
-         "square": [6, 8]}
+         "square": list(lay["square"])}
     if blocks:
         m["blocks"] = blocks
     EXTRA[mid](world, m)
+    rooms(world, mid, m)
+    for who in m["npcs"]:
+        if rows[who["y"]][who["x"]] not in "._+" or (who["x"], who["y"] - 1) in lay["doors"].values():
+            raise SystemExit("%s: %s stands in a wall or in front of a door" % (mid, who["id"]))
     finish(world, mid, m)
 
 
@@ -301,10 +490,6 @@ def brightledge_extra(world, m):
     m["npcs"] += [npc("oriel", 4, 13, "right", mid + "/oriel", "tamer_f"),
                   npc("brakeman", 8, 17, "down", mid + "/brakeman", "villager")]
     m["signs"].append({"x": 2, "y": 1, "dialogue": mid + "/white_stair"})
-    m["rows"][1] = "^.S..__..::^"
-    # The road bends onto the funicular platform instead of running into the cliff.
-    m["rows"][17] = "^::..._++L.^"
-    m["rows"][18] = "^......+++.^"
 
 
 def gildcrest_extra(world, m):
@@ -316,11 +501,11 @@ def gildcrest_extra(world, m):
                                 (c5["betrayal"]["text"], DE[c5["betrayal"]["text"]])),
                  "action": "set_flag halcyra_done"},
     })
-    m["npcs"].append(npc("host", 8, 14, "left", mid + "/host", "elder", show_flag="rift_v4_gilt_sealed"))
+    m["npcs"].append(npc("host", 7, 17, "left", mid + "/host", "elder", show_flag="rift_v4_gilt_sealed"))
 
 
 def starwell_extra(world, m):
-    # The brass door of the Great Orrery (row 13, x 9) leads inside.
+    # The brass door of the Great Orrery (row 13, x 9, against the east cliff) leads inside.
     m["warps"].append(warp(9, 13, "great_orrery", 5, 8, "up"))
 
 

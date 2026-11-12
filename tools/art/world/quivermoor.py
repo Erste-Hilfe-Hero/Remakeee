@@ -285,6 +285,11 @@ def town(mid):
         if side not in gates:
             for x, y in cells:
                 rows[y] = rows[y][:x] + "T" + rows[y][x + 1:]
+            if side == "top":
+                # No road runs into the trees: the arm goes, a lane joins the two house doors instead.
+                for y in (1, 2, 3):
+                    rows[y] = rows[y][:5] + ".." + rows[y][7:]
+                rows[4] = rows[4][:3] + "______" + rows[4][9:]
     tt = TOWN_TEXT[mid]
     sign = text(mid + "_sign", lines((t["name"], t["name"]), tt["motto"]))
     npcs = [npc("keeper", 6, 7, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]
@@ -536,7 +541,7 @@ RIFT_ROWS = ["TTTTTTTTTTTT",
              "T....~~..T_T",
              "TTTT..TTTT_T",
              "T........T_T",
-             "T..~~....T_T",
+             "T.....~~.T_T",
              "TTT..TTTTT_T",
              "T........T_T",
              "T........T_T",

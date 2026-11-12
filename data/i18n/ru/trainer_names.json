@@ -1,0 +1,27 @@
+{
+ "_comment": "ru translation of the trainer_names table, keyed by the English text.",
+ "strings": {
+  "Angler Brisa": "Рыбачка Brisa",
+  "Angler Teo": "Рыбак Teo",
+  "Bog Walker Hesk": "Болотный ходок Hesk",
+  "Delver Ros": "Копатель Ros",
+  "Diver Neve": "Ныряльщица Neve",
+  "Glassblower Ines": "Стеклодув Ines",
+  "Hushed swarm": "Безмолвный рой",
+  "Lamplighter Tova": "Фонарщица Tova",
+  "Miller's Kid Pim": "Сын мельника Pim",
+  "Miner Garr": "Шахтёр Garr",
+  "Mushroom Picker Olek": "Грибник Olek",
+  "Peat Cutter Orla": "Резчица торфа Orla",
+  "Reed Cutter Fenn": "Резчик камыша Fenn",
+  "Reed Cutter Marit": "Резчица камыша Marit",
+  "Ridgewalker Bram": "Ходок по гребням Bram",
+  "Ridgewalker Brann": "Ходок по гребням Brann",
+  "Rift Acolyte Suri": "Послушница Разлома Suri",
+  "Salt Raker Nils": "Сборщик соли Nils",
+  "Surveyor Kaja": "Землемер Kaja",
+  "Terrace Farmer Runa": "Террасная фермерша Runa",
+  "Warden Maelis": "Стражница Maelis",
+  "Warden Orrin": "Страж Orrin"
+ }
+}
