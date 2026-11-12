@@ -70,6 +70,16 @@ def door_roles(d: dict) -> dict:
     return roles
 
 
+def lighthouse_door(rows: list, x: int, y: int) -> bool:
+    """The door at (x, y) sits under a tower shaft topped by a lamp."""
+    def ch(yy: int) -> str:
+        return rows[yy][x] if 0 <= yy < len(rows) and x < len(rows[yy]) else ""
+    yy = y - 1
+    while ch(yy) == "|":
+        yy -= 1
+    return yy < y - 1 and ch(yy) == "L"
+
+
 def render(d: dict, atlas_path: str = "") -> Image.Image:
     rows = d["rows"]
     tiles = os.path.join(ROOT, "art", "era1", "tiles")
@@ -95,11 +105,17 @@ def render(d: dict, atlas_path: str = "") -> Image.Image:
                         v |= bit
             elif k in SCATTERED:
                 v = abs(x * 7 + y * 13 + (x * y) % 5) % 4
-                if k == "GRASS" and kind(x - 1, y, k) in SHADE_FROM:
+                if k == "GRASS" and kind(x - 1, y, k) in SHADE_FROM and not (
+                        kind(x - 1, y, k) == "DOOR" and lighthouse_door(rows, x - 1, y)):
                     v += 4
             elif k == "DOOR":
                 v = roles.get((x, y), 0)
             col = K[k]
+            # Lighthouse (same rule as TilesetFactory.is_lighthouse_door): TOWER rows 1 and 2.
+            if k == "DOOR" and lighthouse_door(rows, x, y):
+                col, v = K["TOWER"], 2
+            elif k == "TOWER" and kind(x, y + 1, k) == "DOOR" and lighthouse_door(rows, x, y + 1):
+                v = 1
             img.paste(atlas.crop((col * 16, v * 16, col * 16 + 16, v * 16 + 16)), (x * 16, y * 16))
     for n in d.get("npcs", []):
         style = n.get("sprite", "villager")
