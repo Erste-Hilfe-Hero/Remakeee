@@ -820,7 +820,7 @@
    "not_flag": "ledger_done"
   },
   "lines": [
-   "Crane: Well? You've asked around. You've poked my shelves. Who burned it?"
+   "Crane: Well? You've asked around. You've rummaged through my shelves. Who burned it?"
   ],
   "choice_id": "ledger_accuse",
   "choices": [
