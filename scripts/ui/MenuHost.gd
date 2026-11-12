@@ -12,6 +12,10 @@ var _info_label: Label
 var _info_picture: TextureRect
 var _info_scroll: ScrollContainer
 var _info_wait: bool = false
+## Set while the whole menu closes at once (item 1874): every pick answers Back at once.
+var close_all: bool = false
+var _close_steps: int = 0
+const CLOSE_ALL_MAX: int = 40
 var _info_bar: Control
 const INFO_BAR_W: int = 2
 ## Where the finger went down while an info text is open (NAN = no press yet), so a drag
@@ -132,6 +136,14 @@ func apply_hand_layout() -> void:
 ## Shows a list; returns the index or -1 (Back / cancel).
 func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, focus: int = -1,
 		guard_ms: int = ListPicker.TAP_GUARD_MS, tabs: Array[String] = [], tab: int = 0) -> int:
+	if close_all:
+		# Item 1874: every open level answers Back until the menu is closed. One frame per
+		# level, and a cap, so a list that ignores Back cannot spin forever.
+		_close_steps += 1
+		if _close_steps > CLOSE_ALL_MAX:
+			close_all = false
+		await get_tree().process_frame
+		return -1
 	picks += 1
 	last_title = title
 	last_rows.clear()
@@ -205,6 +217,9 @@ func confirm_danger(question: String, yes_text: String = "Yes", no_text: String 
 ## Shows a block of text until the player taps or presses accept/cancel, with an optional
 ## [param picture] above it.
 func info(text: String, picture: Texture2D = null) -> void:
+	if close_all:
+		await get_tree().process_frame
+		return
 	apply_hand_layout()
 	_info_picture.texture = picture
 	_info_picture.visible = picture != null
