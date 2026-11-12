@@ -1,7 +1,8 @@
 class_name DeepLink
 extends RefCounted
 ## Deep links (chimora://): App Store In-App Events and later share links open the game.
-## chimora://event/<id> opens the Goals screen; any other chimora:// link just opens the game.
+## chimora://event/<id> opens the Goals screen, chimora://friend/<code> the invite of that friend code
+## (Online 100 point 55); any other chimora:// link just opens the game.
 ## Android hands the link over as the activity's intent data (intent filter from
 ## addons/chimora_deeplink), iOS through the ChimoraStoreKit extension (take_url, URL type in
 ## export_presets.cfg). The overworld polls on start and on resume and opens the screen once the
@@ -11,10 +12,12 @@ const SCHEME: String = "chimora"
 const ID_MAX: int = 64
 const ID_CHARS: String = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-."
 
-## The screen waiting for the overworld: "" (none) or "event".
+## The screen waiting for the overworld: "" (none), "event" or "friend".
 static var route: String = ""
 ## The event id of the last chimora://event/<id> link.
 static var event_id: String = ""
+## The friend code of the last chimora://friend/<code> link.
+static var friend_code: String = ""
 ## Android: intent hash and data of the link handled last, so a resume does not open it again.
 static var _last_android: String = ""
 
@@ -35,6 +38,10 @@ static func parse(url: String) -> Dictionary:
 		var id: String = parts[1].uri_decode()
 		if valid_id(id):
 			return {"route": "event", "id": id}
+	if parts.size() == 2 and parts[0].to_lower() == "friend":
+		var code: String = parts[1].uri_decode().strip_edges().to_upper().replace("-", "")
+		if code.length() == 8 and valid_id(code):
+			return {"route": "friend", "code": code}
 	return {"route": "open"}
 
 static func valid_id(id: String) -> bool:
@@ -54,6 +61,9 @@ static func handle(url: String) -> bool:
 	if r.route == "event":
 		route = "event"
 		event_id = str(r.id)
+	elif r.route == "friend":
+		route = "friend"
+		friend_code = str(r.code)
 	return true
 
 ## Takes the waiting screen ("" when none).
