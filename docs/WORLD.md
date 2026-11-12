@@ -127,23 +127,24 @@ Written by `python3 tools/world_stats.py`.
 | veydal | `echo_path` | inside | 10x8 + 10x8 | 0 | 0 | 0 |
 | veydal | `fernstair` | route | 12x26 | 5 | 2 | 63 |
 | veydal | `gloamwood` | route | 12x30 | 5 | 3 | 152 |
-| veydal | `kindle_vents` | cave | 12x10 | 2 | 0 | 12 |
+| veydal | `kindle_vents` | cave | 12x10 | 3 | 0 | 12 |
 | veydal | `lantern_steps` | route | 12x19 | 5 | 3 | 9 |
 | veydal | `lanternwell` | inside | 12x7 + 12x7 + 12x7 + 12x7 + 12x7 | 1 | 0 | 7 |
-| veydal | `lighthouse` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `lighthouse` | inside | 10x8 | 1 | 0 | 0 |
 | veydal | `map_house` | inside | 10x8 | 0 | 0 | 0 |
 | veydal | `mist_rift` | rift | 12x22 | 0 | 5 | 17 |
-| veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 3 | 0 | 25 |
-| veydal | `murk_hollow` | cave | 12x13 + 12x9 | 4 | 3 | 20 |
+| veydal | `mossmere_grotto` | cave | 12x11 + 12x8 | 4 | 0 | 25 |
+| veydal | `murk_hollow` | cave | 12x13 + 12x9 | 5 | 3 | 20 |
+| veydal | `pawn_vault` | inside | 12x9 + 12x9 + 12x9 | 5 | 6 | 0 |
 | veydal | `quillbrook` | route | 12x30 | 5 | 3 | 113 |
 | veydal | `reedhaven` | town | 12x10 | 3 | 0 | 0 |
-| veydal | `rest_spring` | inside | 10x8 | 0 | 0 | 0 |
-| veydal | `sablecove` | cave | 12x9 | 4 | 0 | 10 |
+| veydal | `rest_spring` | inside | 10x8 | 1 | 0 | 0 |
+| veydal | `sablecove` | cave | 12x9 | 5 | 0 | 10 |
 | veydal | `saltmarsh` | marsh | 12x15 | 5 | 3 | 47 |
 | veydal | `shatterfloor_mine` | inside | 12x8 + 12x8 | 2 | 0 | 9 |
-| veydal | `thornridge` | town | 12x20 | 4 | 0 | 6 |
+| veydal | `thornridge` | town | 12x20 | 5 | 0 | 6 |
 | veydal | `tide_rift` | rift | 12x13 | 0 | 3 | 16 |
-| veydal | `wren_library` | inside | 10x8 | 0 | 0 | 0 |
+| veydal | `wren_library` | inside | 10x8 | 1 | 0 | 0 |
 | veydal | `wrenhollow` | town | 12x17 | 3 | 0 | 0 |
 | corvane | `corvane_quay` | town | 12x24 | 3 | 0 | 0 |
 | corvane | `greyreach` | route | 12x29 | 5 | 3 | 44 |
@@ -173,7 +174,7 @@ Written by `python3 tools/world_stats.py`.
 | solenne | `sun_rift` | rift | 12x22 | 0 | 4 | 13 |
 | solenne | `tower_rift` | rift | 12x22 | 0 | 4 | 21 |
 | solenne | `veil_cistern` | inside | 12x10 + 12x10 + 12x8 | 3 | 5 | 24 |
-| | **56 maps** | | | **138** | **95** | **1378** |
+| | **57 maps** | | | **151** | **101** | **1378** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

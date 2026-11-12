@@ -163,6 +163,8 @@ Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German
   Corvane kinds), **Corbin's twelve grey feathers** (collectibles on six maps).
 - Favors with hidden trust: Pockets Pell (lend a Spirling), Ollie Fairweather (lend coins),
   Dimsy Crake (believe his Rook Vault shortcut).
+- Twelve cartographer's stones of Corvane (item 1312, `data/dialogue/corvane_stones.json`,
+  action `marker_stone <n> corvane`), counted apart from Veydal's, keepsakes at 4, 8 and 12.
 
 ### Act III: Ashmere (item 1480)
 
