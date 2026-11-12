@@ -228,6 +228,15 @@ rival clan of water merchants, for six years and sold them the oasis; she admits
 her duel. Then Factor Lusk of the Veil waits in Ochrewell (story battle `veil_factor`) and tells
 you that Emrys signed the contract as witness, which Emrys confirms before his own duel.
 
+**Solenne side content (Act IV, `tools/art/world/solenne_side.py`).** Once Lusk is beaten in town,
+the Brass Veil (third clan in `data/clans.json`: Kaia, Factor Lusk, his nephew Corin) opens up.
+The Veil Cistern under the counting house is a three-floor dungeon (two valve rows, five Veil
+crew, Corin's second duel, Lusk in the strongroom after the Sun Rift). Side goals `s4_veil`,
+`s4_rival` (Corin three times, Ring 40 to 50), `s4_seals` (eight brass seals for Old Mags),
+`s4_ious` (five IOUs for Qadir) and `s4_graves` (three graves the Veil prepaid, one for you).
+Act IV betrayals: Kaia's well deed (`kaia_deed`, caught when Dunya warned you) and Lusk's
+strongroom truce (`lusk_vault`, caught when Qadir warned you); favors with Qadir, Saffi and Corin.
+
 The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
 18, 23, ... 50, then 54, 57 and 60 for Solenne); after Act I they open fully. The story battles keep a curve that never drops (checked
 by `tests/unit/test_rifts12.gd`): Kestra's tag battle at the Root Rift (Ring 23 to 24) sits between

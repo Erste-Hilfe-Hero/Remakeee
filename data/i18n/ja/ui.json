@@ -463,6 +463,13 @@
   "not seen": "未発見",
   "strong": "強い",
   "wild %s": "野の%s",
-  "Join our Discord": "Discordに参加"
+  "Join our Discord": "Discordに参加",
+  " It gleams in colours of its own!": " 自分だけの色に輝いている！",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "絆を結ぶ その1：技を何回か当てて、活力バーを少なくする。たおさないように。",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "絆を結ぶ その2：絆を選ぶ。しるしをいくつか、ひとつずつ呼ぶ。よく見て。",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "絆を結ぶ その3：同じしるしを同じ順に押す。エコーがうまいほど絆は強い。",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "絆を結ぶ その3：同じしるしを同じ順にタップ。エコーがうまいほど絆は強い。",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "絆を結ぶ その4：言われたら一族のお守りを差し出す。つながりが安定する。最初は20個持っている。",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "はじめのうちは、絆に失敗しても野生のSpirlingにただで攻撃されない。"
  }
 }
