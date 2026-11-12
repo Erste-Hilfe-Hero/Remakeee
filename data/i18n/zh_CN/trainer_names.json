@@ -1,0 +1,27 @@
+{
+ "_comment": "zh_CN translation of the trainer_names table, keyed by the English text.",
+ "strings": {
+  "Angler Brisa": "钓手Brisa",
+  "Angler Teo": "钓手Teo",
+  "Bog Walker Hesk": "沼泽行者Hesk",
+  "Delver Ros": "掘洞人Ros",
+  "Diver Neve": "潜水员Neve",
+  "Glassblower Ines": "吹玻璃工Ines",
+  "Hushed swarm": "沉寂之群",
+  "Lamplighter Tova": "点灯人Tova",
+  "Miller's Kid Pim": "磨坊家的孩子Pim",
+  "Miner Garr": "矿工Garr",
+  "Mushroom Picker Olek": "采菇人Olek",
+  "Peat Cutter Orla": "割泥炭工Orla",
+  "Reed Cutter Fenn": "割苇人Fenn",
+  "Reed Cutter Marit": "割苇人Marit",
+  "Ridgewalker Bram": "山脊行者Bram",
+  "Ridgewalker Brann": "山脊行者Brann",
+  "Rift Acolyte Suri": "裂隙侍从Suri",
+  "Salt Raker Nils": "耙盐人Nils",
+  "Surveyor Kaja": "测量员Kaja",
+  "Terrace Farmer Runa": "梯田农夫Runa",
+  "Warden Maelis": "守望者Maelis",
+  "Warden Orrin": "守望者Orrin"
+ }
+}

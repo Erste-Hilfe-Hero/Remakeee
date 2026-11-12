@@ -1,0 +1,24 @@
+{
+ "_comment": "zh_CN translation of the online_replays table, keyed by the English text.",
+ "strings": {
+  "%s: %d%% won (%d of %d)": "%s：胜率%d%%（%d / %d）",
+  "%s: met %d times": "%s：相遇%d次",
+  "Copy share code": "复制分享码",
+  "Lost": "败",
+  "Met most often": "最常遇到",
+  "No online battles yet.": "还没有线上对战。",
+  "Online battle": "线上对战",
+  "Online replays": "线上回放",
+  "Online replays (%d)": "线上回放（%d）",
+  "Open league": "开放联赛",
+  "Planned maintenance in %d h. The game is offline for a short while then.": "%d小时后进行计划维护。届时游戏将短暂离线。",
+  "Raid": "突袭",
+  "Rift board": "裂隙排行",
+  "The clipboard holds no replay code.": "剪贴板里没有回放码。",
+  "The code is on the clipboard. A friend can watch it under Records, Online replays.": "分享码已复制到剪贴板。好友可以在纪录、线上回放中观看。",
+  "Watch": "观看",
+  "Watch a code from the clipboard": "观看剪贴板中的回放码",
+  "Win rate per Spirling": "各Spirling胜率",
+  "Won": "胜"
+ }
+}
