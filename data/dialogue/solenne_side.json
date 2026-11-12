@@ -1,0 +1,416 @@
+{
+ "seal_1": {
+  "if": {
+   "not_flag": "veil_seal_1"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal on a dome door: 'This house belongs to the Veil. The family is on loan.'",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_1"
+ },
+ "seal_2": {
+  "if": {
+   "not_flag": "veil_seal_2"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal on a gravestone. Even the dead pay ground rent here.",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_2"
+ },
+ "seal_3": {
+  "if": {
+   "not_flag": "veil_seal_3"
+  },
+  "else": "seal_empty",
+  "lines": [
+   "A brass seal on the well rope. Of course it is.",
+   "You pry the seal off."
+  ],
+  "action": "set_flag veil_seal_3"
+ },
+ "iou_1": {
+  "if": {
+   "not_flag": "veil_iou_1"
+  },
+  "else": "iou_empty",
+  "lines": [
+   "An IOU stuck in a crack: 'Tobs owes for one shovel. The shovel owes Tobs for forty years.'",
+   "You pocket the IOU."
+  ],
+  "action": "set_flag veil_iou_1"
+ },
+ "iou_2": {
+  "if": {
+   "not_flag": "veil_iou_2"
+  },
+  "else": "iou_empty",
+  "lines": [
+   "An IOU tied to a lamp: 'Oskin owes for fakes. Fake fakes. The Veil wants real money.'",
+   "You pocket the IOU."
+  ],
+  "action": "set_flag veil_iou_2"
+ },
+ "seal_empty": [
+  "Just a nail hole now. The seal is in your bag, being property."
+ ],
+ "iou_empty": [
+  "Nothing left here but a smell of ink and regret."
+ ],
+ "mags": {
+  "if": {
+   "not_flag": "s4_seals_done"
+  },
+  "else": "mags_after",
+  "lines": [
+   "Old Mags: Pawnbroker. Fence. Grandmother of nine, landlady of none, thanks to the Veil.",
+   "Old Mags: Every brass seal in this town is a family the Veil owns. Eight of them. Pry them off and bring them to me.",
+   "Old Mags: I melt them down into spoons. Very satisfying. Spoons can't foreclose."
+  ],
+  "action": "set_flag s4_seals_asked",
+  "next": "mags_count"
+ },
+ "mags_count": {
+  "if": {
+   "flag": [
+    "veil_seal_1",
+    "veil_seal_2",
+    "veil_seal_3",
+    "veil_seal_4",
+    "veil_seal_5",
+    "veil_seal_6",
+    "veil_seal_7",
+    "veil_seal_8"
+   ]
+  },
+  "lines": [
+   "Old Mags: All eight! Look at that. Eight families, and not one of them will ever thank you. Typical.",
+   "Old Mags: Here, a Bond Seal of my own. Honest brass. Well. Mostly honest."
+  ],
+  "action": "set_flag s4_seals_done; give_item rg_bond_seal; trust mags 10"
+ },
+ "mags_after": [
+  "Old Mags: Spoon? I have three hundred. Each one a little revenge."
+ ],
+ "qadir": {
+  "if": {
+   "not_flag": "favor_qadir_dig"
+  },
+  "else": "qadir_iou",
+  "lines": [
+   "Qadir: Qadir. I steal water. From the Veil, so it's more of a refund.",
+   "Qadir: I'm digging a free well behind the domes. Lend me a Spirling with strong claws for a night?"
+  ],
+  "choices": [
+   {
+    "text": "Lend a Spirling",
+    "action": "favor qadir_dig"
+   },
+   {
+    "text": "Not tonight"
+   }
+  ]
+ },
+ "qadir_iou": {
+  "if": {
+   "not_flag": "s4_ious_done"
+  },
+  "else": "qadir_after",
+  "lines": [
+   "Qadir: The Veil keeps the town's IOUs in the cistern. Five of them hurt the most.",
+   "Qadir: Bring me those five and we'll have a little bonfire. Bring marshmallows. Kidding. Bring more IOUs."
+  ],
+  "action": "set_flag s4_ious_asked",
+  "next": "qadir_count"
+ },
+ "qadir_count": {
+  "if": {
+   "flag": [
+    "veil_iou_1",
+    "veil_iou_2",
+    "veil_iou_3",
+    "veil_iou_4",
+    "veil_iou_5"
+   ]
+  },
+  "lines": [
+   "Qadir: Five! Watch them curl. Best smell in Solenne, burning debt.",
+   "Qadir: And a word, friend: Lusk's strongroom locks from the outside. Wedge the door before you sign anything."
+  ],
+  "action": "set_flag s4_ious_done; set_flag c4_qadir_warned; give_item max_tonic 3; trust qadir 10"
+ },
+ "qadir_after": [
+  "Qadir: The town's still poor. But now it's poor on its own account. That's progress."
+ ],
+ "qadir_betray": [
+  "Qadir brings your Spirling back at dawn. Its keepsake is gone. 'The well needed a down payment,' he says. 'Sorry. Mostly.'"
+ ],
+ "qadir_reward": [
+  "Qadir: The well runs! Free water, first in six years. The Veil will be livid. Take this, from the whole street."
+ ],
+ "qadir_kept": [
+  "Qadir: Hit rock. Your Spirling's fine, my back isn't. Next time."
+ ],
+ "saffi": {
+  "if": {
+   "not_flag": "favor_saffi_code"
+  },
+  "else": "saffi_after",
+  "lines": [
+   "Saffi: Veil clerk, third grade. I file things. Sometimes I file them in other people's ears.",
+   "Saffi: The cistern's back door is open at the west pipe tonight. Free tip. Believe me?"
+  ],
+  "choices": [
+   {
+    "text": "I believe you",
+    "action": "favor saffi_code"
+   },
+   {
+    "text": "Nice try"
+   }
+  ]
+ },
+ "saffi_after": {
+  "lines": [
+   "Saffi: Don't look at me like that. I have quotas."
+  ],
+  "after_flag": {
+   "flag": "ledger_deed",
+   "lines": [
+    "Saffi: I sold Kaia's deed to Sefa's cousin. And to Sefa. And to Kaia. Business is business."
+   ]
+  }
+ },
+ "saffi_betray": [
+  "At the west pipe the door is open. So are the arms of three Veil guards.",
+  "'Saffi says hi,' says one. 'And bills you for the overtime.'"
+ ],
+ "saffi_reward": [
+  "At the west pipe a crate waits, Veil-stamped and unlocked. Even traitors have off days."
+ ],
+ "saffi_kept": [
+  "At the west pipe: a locked door and a cat. The cat looks unimpressed."
+ ],
+ "dunya": {
+  "lines": [
+   "Dunya: My husband drove carts for the Veil. Now he drives nothing. They kept the cart.",
+   "Dunya: If Kaia gives you a gift for the town, read it first. She wraps knives in ribbon."
+  ],
+  "action": "set_flag c4_dunya_warned"
+ },
+ "kaia_town": {
+  "if": {
+   "not_flag": "betrayal_kaia_deed"
+  },
+  "else": "kaia_town_after",
+  "lines": [
+   "Kaia: Oh, it's you. My favourite ruin. No hard feelings, I bill them separately.",
+   "Kaia: I want to make amends. Take this deed to Sefa at the well. A gift to the town, from me."
+  ],
+  "choices": [
+   {
+    "text": "Read it first",
+    "if": {
+     "flag": "c4_dunya_warned"
+    },
+    "action": "betrayal kaia_deed"
+   },
+   {
+    "text": "Deliver it",
+    "action": "betrayal kaia_deed"
+   }
+  ]
+ },
+ "kaia_town_after": {
+  "lines": [
+   "Kaia: Trust is a currency. I just prefer the other kind."
+  ],
+  "after_flag": {
+   "flag": "veil_vault_beaten",
+   "lines": [
+    "Kaia: Lusk is ruined? Shame. I'll send flowers. Then the invoice for the flowers."
+   ]
+  }
+ },
+ "deed_caught": [
+  "You read the deed. It sells the town well to one K. Oasis-Holder, for one coin, signed by Sefa (forged).",
+  "Sefa burns it in the lamp. 'She wanted the well for herself. Not for the Veil. For herself.'"
+ ],
+ "deed_struck": [
+  "Sefa signs it with a smile, then stops smiling. The well now belongs to one K. Oasis-Holder.",
+  "A turnstile goes up by noon. The first ticket has your name on it, as a thank-you."
+ ],
+ "ledger_deed": [
+  "The well deed",
+  "Kaia handed you a 'gift' for the town: the deed that sold Ochrewell's well to herself."
+ ],
+ "corin_1": {
+  "if": {
+   "not_flag": "veil_corin_1_beaten"
+  },
+  "else": "corin_1_after",
+  "lines": [
+   "Corin: Corin Lusk. Nephew. Heir. Future owner of your shoes, probably.",
+   "Corin: Uncle says you're an asset. I say let's see the books. Duel me."
+  ],
+  "action": "battle veil_corin_1"
+ },
+ "corin_1_defeat": {
+  "lines": [
+   "Corin: Down a whole team. Uncle will dock my allowance. Again.",
+   "Corin: Meet me in the cistern. I'll have better Spirlings. Bought, obviously."
+  ],
+  "action": "trust corin 10"
+ },
+ "corin_2": {
+  "lines": [
+   "Corin: Told you. New team, fresh off the auction block. Smells like money."
+  ],
+  "action": "battle veil_corin_2"
+ },
+ "corin_2_defeat": {
+  "lines": [
+   "Corin: Hm. Money doesn't fight. Noted. In red.",
+   "Corin: Uncle's waiting in the strongroom once the sun moves. Don't sign anything he hands you. Or do. I'd inherit sooner."
+  ],
+  "action": "trust corin 10"
+ },
+ "corin_lose": [
+  "Corin: Put it on your tab. Interest starts yesterday."
+ ],
+ "corin_3": {
+  "if": {
+   "not_flag": "veil_corin_3_beaten"
+  },
+  "else": "corin_after",
+  "lines": [
+   "Corin: The Veil's mine now. Uncle's in the books as a write-off. Thanks for that.",
+   "Corin: One last duel. Winner keeps the town's goodwill. Loser keeps the Veil."
+  ],
+  "action": "battle veil_corin_3"
+ },
+ "corin_3_defeat": {
+  "lines": [
+   "Corin: Fine. I'll sell the Veil to the town for one coin. Kaia taught me that one.",
+   "Corin: Here's Uncle's private ledger. Every name he ever bought. Burn it or blackmail with it, I don't judge."
+  ],
+  "action": "ledger nephew; trust corin 15"
+ },
+ "corin_after": {
+  "lines": [
+   "Corin: I'm in water reform now. Same water, nicer brochures."
+  ],
+  "if": {
+   "trust_min": {
+    "corin": 40
+   }
+  },
+  "else": "corin_after_cold"
+ },
+ "corin_after_cold": [
+  "Corin: Don't. I'm still deciding if you're a friend or a cost."
+ ],
+ "ledger_nephew": [
+  "The nephew's ledger",
+  "Corin Lusk sold his uncle's private ledger to you after losing to you. Family is the oldest market."
+ ],
+ "corin_bet": {
+  "if": {
+   "flag": "veil_vault_beaten"
+  },
+  "else": "corin_wait",
+  "next": "corin_bet_ask",
+  "lines": [
+   "Corin: Well, well. The person who bankrupted my uncle. I should send you a fruit basket."
+  ]
+ },
+ "corin_bet_betray": [
+  "Corin: The water board? Dissolved. Your coins? Dissolved with it. Guaranteed, I said. I never said for whom."
+ ],
+ "corin_bet_reward": [
+  "Corin: The board paid out. Here's your share, and mine. Don't tell Uncle I'm capable of decency."
+ ],
+ "corin_bet_kept": [
+  "Corin: Broke even. Your stake, back. That's the most honest thing a Lusk has ever done."
+ ],
+ "bex": {
+  "lines": [
+   "Undertaker Bex: The Veil prepaid three graves. No names. Lovely tips, though.",
+   "Undertaker Bex: Find out who they're for? I hate digging for strangers. I like to know who to haunt."
+  ],
+  "if": {
+   "var_max": {
+    "q_s4_graves_stage": 0
+   }
+  },
+  "else": "bex_1",
+  "action": "set_flag s4_graves_asked; quest_stage s4_graves 1"
+ },
+ "bex_1": {
+  "if": {
+   "var_max": {
+    "q_s4_graves_stage": 1
+   }
+  },
+  "else": "bex_2",
+  "lines": [
+   "Undertaker Bex: Any names yet? The Veil keeps its orders in the cistern's lowest room."
+  ]
+ },
+ "bex_2": {
+  "if": {
+   "var_max": {
+    "q_s4_graves_stage": 2
+   }
+  },
+  "else": "bex_3",
+  "lines": [
+   "Undertaker Bex: Kaia, Qadir and... you? Ha! I'll put you in the shady one. You're welcome.",
+   "Undertaker Bex: Tell you what. Beat Lusk, and we fill all three with sand and a rude headstone each."
+  ],
+  "action": "quest_stage s4_graves 3"
+ },
+ "bex_3": {
+  "if": {
+   "flag": "veil_vault_beaten"
+  },
+  "else": "bex_wait",
+  "lines": [
+   "Undertaker Bex: Three rude headstones. 'Here lies nobody. Paid in full.' My best work.",
+   "Undertaker Bex: Have the Veil's tip money. It's cursed, but it spends."
+  ],
+  "action": "set_flag s4_graves_done; give_item spark_drop 2; quest_stage s4_graves 4",
+  "once": true
+ },
+ "bex_wait": [
+  "Undertaker Bex: Lusk first. Then headstones. I've got the chisel warming."
+ ],
+ "corin_1_after": [
+  "Corin: Cistern. Bring coins. I'm told losing is cheaper in bulk."
+ ],
+ "corin_wait": [
+  "Corin: Uncle's still solvent. Ruin him first, then we'll talk about my future."
+ ],
+ "corin_bet_ask": {
+  "if": {
+   "not_flag": "favor_corin_bet"
+  },
+  "else": "corin_3",
+  "lines": [
+   "Corin: Before our last duel, a side bet. Stake 500 coins on the town's new water board? Guaranteed returns."
+  ],
+  "choices": [
+   {
+    "text": "Stake 500 coins",
+    "action": "favor corin_bet"
+   },
+   {
+    "text": "Just duel",
+    "next": "corin_3"
+   }
+  ]
+ }
+}
