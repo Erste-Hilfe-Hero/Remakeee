@@ -65,6 +65,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(grass_sfx())
     out.update(era2_element_sfx())
     out.update(later_element_sfx())
+    out.update(era_feel_sfx())
     return out
 
 
@@ -332,4 +333,40 @@ def later_element_sfx() -> dict[str, np.ndarray]:
     out["travel_frost"] = (triangle(freq(midi("E6")), n) * 0.2 + noise(n, 1, rng) * 0.1) * fade * 0.5
     out["travel_gilt"] = (triangle(freq(midi("B5")), n) * 0.25 * (0.6 + 0.4 * np.sin(tt(n) * 2 * np.pi * 9))) * fade * 0.5
     out["travel_zenith"] = sweep(700, 1100, n, "tri") * 0.25 * fade * 0.5
+    return out
+
+
+def era_feel_sfx() -> dict[str, np.ndarray]:
+    """Era feel (docs/ERA_FEEL_UI.md): one text blip per era from Era II on, each a step up in
+    sound chip (II square, III square plus triangle, IV soft triangle, V near-sine with a glide),
+    and the era-change jingle era_up_2 to era_up_5 with the same steps. Own oscillators only."""
+    out: dict[str, np.ndarray] = {}
+    tt = lambda n: np.arange(n) / RATE
+    sine = lambda f, n: np.sin(tt(n) * 2 * np.pi * f)
+    a5 = freq(midi("A5"))
+    n = secs(0.015)
+    out["blip_e2"] = pulse(a5, n, 0.5) * env(n, attack=0.001, decay=0.005, sustain=0.6, release=0.004) * 0.45
+    out["blip_e3"] = (pulse(a5, n, 0.5) * 0.3 + triangle(a5, n) * 0.4) * env(n, attack=0.001, decay=0.005, sustain=0.6, release=0.004)
+    n = secs(0.018)
+    out["blip_e4"] = triangle(a5, n) * env(n, attack=0.002, decay=0.006, sustain=0.6, release=0.006) * 0.6
+    glide = np.linspace(1.0, 1.04, n)
+    ph = np.cumsum(a5 * glide / RATE) % 1.0
+    out["blip_e5"] = np.sin(ph * 2 * np.pi) * env(n, attack=0.002, decay=0.006, sustain=0.6, release=0.006) * 0.55
+    notes = ["C5", "E5", "G5", "C6", "E6", "G6"]
+
+    def jingle(voice, step: float, tail: float) -> np.ndarray:
+        parts = []
+        for i, nm in enumerate(notes):
+            k = secs(step if i < len(notes) - 1 else tail)
+            parts.append(voice(freq(midi(nm)), k) * env(k, attack=0.003, decay=0.05, sustain=0.6, release=0.03))
+        return np.concatenate(parts)
+
+    out["era_up_2"] = jingle(lambda f, k: pulse(f, k, 0.25), 0.07, 0.35) * 0.4
+    out["era_up_3"] = jingle(lambda f, k: pulse(f, k, 0.5) * 0.5 + triangle(f / 2, k) * 0.5, 0.075, 0.45) * 0.45
+    out["era_up_4"] = jingle(lambda f, k: triangle(f, k) * 0.5 + triangle(f * 1.004, k) * 0.4, 0.08, 0.6) * 0.55
+    dry = jingle(lambda f, k: sine(f, k) * 0.6 + sine(f * 2, k) * 0.15, 0.085, 0.7)
+    echo = np.zeros(len(dry) + secs(0.18))
+    echo[:len(dry)] += dry
+    echo[secs(0.18):] += dry * 0.35
+    out["era_up_5"] = echo * 0.5
     return out

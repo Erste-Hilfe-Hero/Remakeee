@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/larkspur_heights_salon_noble",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_bought_boos_amalia",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_bought_boos_amalia",
+   "sprite": "villager",
+   "show_flag": "q2_bought_boos_asked"
   }
  ],
  "signs": []

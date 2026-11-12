@@ -69,8 +69,13 @@
     {
      "species": "Fumeregent",
      "level": 95
+    },
+    {
+     "species": "Rookwarden",
+     "level": 95
     }
-   ]
+   ],
+   "wheel": true
   },
   {
    "id": "warden_sabeline",

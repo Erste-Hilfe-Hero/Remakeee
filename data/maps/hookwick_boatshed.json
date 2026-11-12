@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/hookwick_boatshed_boatwright",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_two_owners_malte",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_two_owners_malte",
+   "sprite": "villager",
+   "show_flag": "q2_two_owners_asked"
   }
  ],
  "signs": []

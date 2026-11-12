@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "vellmarch/lastlamp_lamp_store_lamplighter",
    "sprite": "villager"
+  },
+  {
+   "id": "q2_dark_lamps_gerd",
+   "x": 2,
+   "y": 3,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_dark_lamps_gerd",
+   "sprite": "villager",
+   "show_flag": "q2_dark_lamps_asked"
   }
  ],
  "signs": []

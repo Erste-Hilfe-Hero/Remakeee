@@ -389,7 +389,7 @@
   "lines": [
    "Heider: Wares from the far map. Everything is genuine. Genuinely from somewhere else."
   ],
-  "action": "shop swift_feather iron_burr keen_lens revival_leaf",
+  "action": "shop swift_feather iron_burr keen_lens revival_leaf ember_charm tide_charm bloom_charm volt_charm stone_charm gale_charm lumen_charm umbra_charm",
   "next": "heider_q"
  },
  "heider_q": {

@@ -88,6 +88,10 @@ def strings():
         for k in ("name", "desc", "description"):
             if isinstance(it.get(k), str):
                 found.append(it[k])
+    for mv in json.load(open(os.path.join(ROOT, "data/moves.json"))):
+        for k in ("name", "desc"):
+            if isinstance(mv.get(k), str):
+                found.append(mv[k])
     shop = json.load(open(os.path.join(ROOT, "data/shop.json"), encoding="utf-8"))
     for o in shop.get("offers", []):
         for k in ("name", "desc"):
