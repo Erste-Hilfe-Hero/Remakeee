@@ -65,5 +65,11 @@
  },
  "lake_hint": [
   "A dockhand mutters as he passes: \"Someone dropped a tonic among the trees on the west side. Never found it.\""
- ]
+ ],
+ "informant": {
+  "lines": [
+   "Whisper Moll: Psst. Wayfarer. Every line hides a gift. Every gift has a price."
+  ],
+  "action": "informant"
+ }
 }
