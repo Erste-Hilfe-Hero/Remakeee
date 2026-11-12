@@ -274,3 +274,77 @@ func test_era_manager_helper() -> void:
 	_era(4)
 	assert_eq(str(EraManager.battle_feel("intro")), "iris")
 	assert_eq(EraManager.battle_feel("nope", 7), 7)
+
+# --- Slice 2: later-era elements, unfurl, status badges, Era V idle for every Spirling ----
+
+func test_every_element_has_its_own_drawing_and_ends_clean() -> void:
+	var fx := ElementFx.new()
+	fx.size = Vector2(270, 200)
+	add_child_autofree(fx)
+	GameState.battle_speed = 2
+	Juice.in_battle = true
+	for e: int in Elements.E.size():
+		for tier: int in [1, 5]:
+			fx.feel = EraBattleFeel.move_anim(null, tier)
+			for kind: int in [MoveData.Kind.PHYSICAL, MoveData.Kind.FOCUS]:
+				await fx.play(e, kind, Rect2(180, 120, 60, 60), Rect2(30, 20, 60, 60))
+				assert_eq(fx.phase, ElementFx.Phase.NONE, "%s tier %d" % [Elements.E.keys()[e], tier])
+	Juice.in_battle = false
+	assert_eq(fx.get_child_count(), 0)
+
+func test_later_elements_no_longer_borrow() -> void:
+	var src: String = FileAccess.get_file_as_string("res://scripts/battle/presenter/ElementFx.gd")
+	for n: String in ["ink", "echo", "rust", "mask", "acid", "frost", "gilt", "zenith"]:
+		assert_true(("func _draw_%s()" % n) in src, n)
+		assert_true(("Elements.E.%s: _draw_%s()" % [n.to_upper(), n]) in src, n)
+
+func test_unfurl_style_per_era_grows() -> void:
+	for e: int in range(1, 6):
+		assert_gt(EraBattleFeel.rank("unfurl_styles", EraBattleFeel.text(e, "unfurl")), -1, "era %d" % e)
+		if e > 1:
+			assert_gt(EraBattleFeel.rank("unfurl_styles", EraBattleFeel.text(e, "unfurl")), EraBattleFeel.rank("unfurl_styles", EraBattleFeel.text(e - 1, "unfurl")))
+			assert_gte(UnfurlSequence.sprite_size(e), UnfurlSequence.sprite_size(e - 1))
+	assert_eq(UnfurlSequence.sprite_size(1), UnfurlSequence.SPRITE_SIZE)
+
+func test_unfurl_plays_in_every_era() -> void:
+	Database.load_all()
+	GameState.reduce_motion = true
+	for e: int in range(1, 6):
+		_era(e)
+		var u := UnfurlSequence.new()
+		add_child_autofree(u)
+		assert_eq(u.style, EraBattleFeel.text(e, "unfurl"))
+		await u.play(Database.species("Kindlop"), Database.species("Kindlop"))
+		assert_true(u.showing_new(), "era %d" % e)
+
+func test_glow_silhouette_from_era_two() -> void:
+	var img := Image.create_empty(4, 4, false, Image.FORMAT_RGBA8)
+	img.fill_rect(Rect2i(1, 1, 2, 2), Color("6a4256"))
+	var tex := ImageTexture.create_from_image(img)
+	var white: Image = UnfurlSequence.silhouette_of(tex, Color.WHITE).get_image()
+	var ink: Image = UnfurlSequence.silhouette_of(tex).get_image()
+	assert_true(white.get_pixel(1, 1).is_equal_approx(Color.WHITE))
+	assert_true(ink.get_pixel(1, 1).is_equal_approx(UITheme.INK), "different colours keep separate caches")
+
+func test_status_badge_from_era_two() -> void:
+	assert_eq(EraBattleFeel.status_badge(1, "scorch"), Color.TRANSPARENT, "Era I plain letters")
+	assert_eq(EraBattleFeel.status_badge(2, ""), Color.TRANSPARENT)
+	for st: String in StatusRules.RULES:
+		assert_gt(EraBattleFeel.status_badge(3, st).a, 0.0, st)
+		assert_true((EraBattleFeel.cfg().status_colours as Dictionary).has(st), st)
+
+func test_era_five_animates_spirlings_of_every_origin_era() -> void:
+	Database.load_all()
+	_era(5)
+	var by_era: Dictionary = {}
+	for sd: SpirlingData in Database.spirlings.values():
+		if not by_era.has(sd.era) and not EraManager.sprite_path(sd.species_name).is_empty():
+			by_era[sd.era] = sd
+	assert_gte(by_era.size(), 2)
+	for e: Variant in by_era:
+		var sp := SpirlingSprite.new()
+		sp.size = Vector2(96, 96)
+		add_child_autofree(sp)
+		sp.setup(Spirling.new(by_era[e], 10), "front")
+		assert_eq(sp._strips.size(), BattleAnim.KINDS.size(), "origin era %d moves in Era V" % int(e))
+		assert_eq(sp.anim_kind, "idle")

@@ -24,6 +24,7 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import ambience  # noqa: E402
+import era_sfx  # noqa: E402
 import loudness  # noqa: E402
 import music  # noqa: E402
 import sfx  # noqa: E402
@@ -58,6 +59,11 @@ def build_song(name: str, spec: dict, stems: bool) -> float:
     mix = sum(parts.values())
     if name in music.EXTRA_SONGS:
         write_loud(os.path.join(MUSIC_DIR, name + ".ogg"), mix, 0, small=True)
+        if stems and name in music.LAYERED_SONGS:
+            g = loudness.music_gain(mix)
+            os.makedirs(STEM_DIR, exist_ok=True)
+            for stem, data in parts.items():
+                write_ogg(os.path.join(STEM_DIR, "%s_%s.ogg" % (name, stem)), data * g, STEM_QUALITY, small=True)
         return len(mix) / 22050.0
     g = loudness.music_gain(mix)
     # A place song's full mix only plays where its stems cannot (sound test, era fallback), so
@@ -91,6 +97,12 @@ def main() -> None:
         if not do_sfx or (wanted and name not in wanted):
             continue
         write_wav(os.path.join(SFX_DIR, name + ".wav"), loudness.normalize_sfx(data))
+        print("sfx", name)
+    # Era sound sets (era_sfx.py) have their own seeded noise, so they never shift the above.
+    for name, data in era_sfx.sfx_defs().items():
+        if not do_sfx or (wanted and name not in wanted):
+            continue
+        write_wav(os.path.join(SFX_DIR, name + ".wav"), loudness.normalize_sfx(era_sfx.downsample(name, data)), era_sfx.rate_of(name))
         print("sfx", name)
     for name, spec in all_songs().items():
         if not do_music or (wanted and name not in wanted):

@@ -294,16 +294,15 @@ func _draw_element() -> void:
 		Elements.E.GALE: _draw_gale()
 		Elements.E.LUMEN: _draw_lumen()
 		Elements.E.UMBRA: _draw_umbra()
-		# Era II elements borrow the closest Era I look until they get their own effects.
-		Elements.E.INK: _draw_umbra()
-		Elements.E.ECHO: _draw_lumen()
-		# Later eras likewise, by nearest look.
-		Elements.E.RUST: _draw_stone()
-		Elements.E.MASK: _draw_umbra()
-		Elements.E.ACID: _draw_bloom()
-		Elements.E.FROST: _draw_tide()
-		Elements.E.GILT: _draw_lumen()
-		Elements.E.ZENITH: _draw_gale()
+		# The later eras' elements have their own drawings (docs/ERA_FEEL_BATTLE.md).
+		Elements.E.INK: _draw_ink()
+		Elements.E.ECHO: _draw_echo()
+		Elements.E.RUST: _draw_rust()
+		Elements.E.MASK: _draw_mask()
+		Elements.E.ACID: _draw_acid()
+		Elements.E.FROST: _draw_frost()
+		Elements.E.GILT: _draw_gilt()
+		Elements.E.ZENITH: _draw_zenith()
 
 func _element_shape() -> String:
 	return ELEMENT_SHAPES[clampi(element, 0, ELEMENT_SHAPES.size() - 1)]
@@ -561,3 +560,164 @@ func _draw_style(st: String) -> void:
 			var ray: float = 3.0 + grow * 6.0
 			for d: Vector2 in [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
 				_line(_to, _to + d * ray, 3)
+
+# --- Later-era elements -------------------------------------------------------------
+
+## Ink: a blot spreads under the user; droplets arc over; an uneven splat grows on the target.
+func _draw_ink() -> void:
+	match phase:
+		Phase.CHARGE:
+			var r: float = 2.0 + t * 7.0
+			for i: int in 10:
+				var ang: float = i * TAU / 10.0
+				_px(_ground_from + Vector2(cos(ang) * r, sin(ang) * r * 0.4) * (0.8 + 0.2 * sin(i * 2.3)), 0, 1.0, 2)
+		Phase.TRAVEL:
+			for i: int in 3:
+				_px(_along(clampf(t - i * 0.08, 0.0, 1.0), 14.0), 0, 1.0, 2)
+		Phase.IMPACT:
+			var blobs: int = _n(7)
+			for i: int in blobs:
+				var ang: float = i * TAU / blobs + 0.3
+				var d: float = t * (6.0 + fmod(i * 3.7, 5.0))
+				_px(_to + Vector2(cos(ang), sin(ang)) * d, 0, 1.0 - t * 0.3, 3 if i % 2 == 0 else 2)
+
+## Echo: rings swell round the user; arcs ride the path; three pulses ring the target.
+func _draw_echo() -> void:
+	match phase:
+		Phase.CHARGE:
+			_ring(_from, 3.0 + t * 9.0, 2, 1.0 - t * 0.5)
+		Phase.TRAVEL:
+			var dir: Vector2 = (_to - _from).normalized()
+			for i: int in 3:
+				var c: Vector2 = _along(clampf(t - i * 0.12, 0.0, 1.0))
+				for j: int in 5:
+					var a: float = dir.angle() + (j - 2) * 0.35
+					_px(c + Vector2(cos(a), sin(a)) * (3.0 + i * 2.0), 2)
+		Phase.IMPACT:
+			var pulses: int = _n(3)
+			for i: int in pulses:
+				var k: float = clampf(t * 1.5 - i * 0.2, 0.0, 1.0)
+				if k > 0.0:
+					_ring(_to, 2.0 + k * 14.0, 2, 1.0 - k)
+
+## Rust: flakes drop off the user; a tumbling chunk; flakes scatter and grind on the target.
+func _draw_rust() -> void:
+	match phase:
+		Phase.CHARGE:
+			for i: int in 4:
+				_px(_from + Vector2((i - 1.5) * 5.0, -6.0 + fmod(t * 14.0 + i * 4.0, 14.0)), 1, 1.0, 2)
+		Phase.TRAVEL:
+			var p: Vector2 = _along(t, 8.0)
+			var spin: int = int(t * 8.0) % 2
+			draw_rect(Rect2(p - Vector2(2, 1 + spin), Vector2(4, 2 + spin * 2)), _ink(1))
+		Phase.IMPACT:
+			var flakes: int = _n(6)
+			for i: int in flakes:
+				var x: float = _spread(i, flakes, 4.0)
+				_px(_to + Vector2(x + sin(i + t * 6.0) * 2.0, -2.0 + t * (8.0 + i % 3 * 3.0)), 1 if i % 2 == 0 else 2, 1.0 - t * 0.4, 2)
+			_line(_to + Vector2(-5, -5), _to + Vector2(5, 5), 0, 1.0 - t)
+			_line(_to + Vector2(5, -5), _to + Vector2(-5, 5), 0, 1.0 - t)
+
+## Mask: two eyes open above the user; a pale face floats across; a grin closes on the target.
+func _draw_mask() -> void:
+	match phase:
+		Phase.CHARGE:
+			var open: int = 1 if t > 0.3 else 0
+			for side: int in [-1, 1]:
+				draw_rect(Rect2((_from + Vector2(side * 4.0 - 1, -14.0)).round(), Vector2(2, 1 + open)), _ink(0))
+		Phase.TRAVEL:
+			_mask_face(_along(t, 6.0), 1.0)
+		Phase.IMPACT:
+			_mask_face(_to + Vector2(0, -2), 1.0 - t * 0.5)
+			var w: float = 10.0 * (1.0 - t * 0.5)
+			for i: int in 9:
+				var k: float = i / 8.0
+				_px(_to + Vector2(lerpf(-w, w, k), 5.0 + 3.0 * sin(k * PI)), 0)
+
+func _mask_face(c: Vector2, a: float) -> void:
+	for i: int in 16:
+		var ang: float = i * TAU / 16.0
+		_px(c + Vector2(cos(ang) * 6.0, sin(ang) * 7.0), 3, a)
+	for side: int in [-1, 1]:
+		draw_rect(Rect2((c + Vector2(side * 3.0 - 1, -2)).round(), Vector2(2, 2)), _ink(0, a))
+
+## Acid: bubbles rise at the user; a dripping blob arcs over; drops fall and a puddle spreads.
+func _draw_acid() -> void:
+	match phase:
+		Phase.CHARGE:
+			for i: int in 4:
+				var y: float = fmod(t * 16.0 + i * 5.0, 16.0)
+				_ring(_ground_from + Vector2((i - 1.5) * 5.0, -y), 1.5, 2, 1.0 - y / 16.0)
+		Phase.TRAVEL:
+			var p: Vector2 = _along(t, 16.0)
+			_px(p - Vector2(1, 1), 2, 1.0, 3)
+			_px(p + Vector2(0, 3 + int(t * 6.0) % 3), 2)
+		Phase.IMPACT:
+			var drops: int = _n(5)
+			for i: int in drops:
+				_px(_to + Vector2(_spread(i, drops, 4.0), -6.0 + t * (10.0 + i % 2 * 4.0)), 2, 1.0 - t * 0.3, 2)
+			var w: float = 4.0 + t * 10.0
+			draw_rect(Rect2((_ground_to - Vector2(w, 0)).round(), Vector2(roundf(w * 2.0), 1)), _ink(1, 0.8))
+
+## Frost: a six-point crystal forms over the user; a shard flies straight; spikes ring the target.
+func _draw_frost() -> void:
+	match phase:
+		Phase.CHARGE:
+			var r: float = 1.0 + t * 5.0
+			for i: int in 6:
+				var ang: float = i * TAU / 6.0
+				_line(_from + Vector2(0, -14), _from + Vector2(0, -14) + Vector2(cos(ang), sin(ang)) * r, 3)
+		Phase.TRAVEL:
+			var p: Vector2 = _along(t)
+			var d: Vector2 = (_to - _from).normalized()
+			_line(p - d * 4.0, p + d * 2.0, 3)
+			_px(p - d * 6.0, 2, 0.6)
+		Phase.IMPACT:
+			var spikes: int = _n(6)
+			var spike: float = 3.0 + (1.0 - absf(t * 2.0 - 1.0)) * 8.0
+			for i: int in spikes:
+				var ang: float = i * TAU / spikes + PI / 6.0
+				_line(_to, _to + Vector2(cos(ang), sin(ang)) * spike, 3)
+
+## Gilt: coins circle the user; a coin flips across; coins burst out with a soft glint.
+func _draw_gilt() -> void:
+	match phase:
+		Phase.CHARGE:
+			for i: int in 3:
+				var ang: float = t * TAU + i * TAU / 3.0
+				_coin(_from + Vector2(cos(ang) * 10.0, sin(ang) * 4.0), int(t * 10.0 + i))
+		Phase.TRAVEL:
+			_coin(_along(t, 12.0), int(t * 12.0))
+		Phase.IMPACT:
+			var coins: int = _n(5)
+			for i: int in coins:
+				var ang: float = -PI / 2.0 + _spread(i, coins, 0.5)
+				_coin(_to + Vector2(cos(ang), sin(ang)) * t * 14.0 + Vector2(0, t * t * 10.0), i)
+			_shape("glint", _to, 3, LUMEN_MAX_ALPHA * (1.0 - t))
+
+func _coin(c: Vector2, flip: int) -> void:
+	var w: int = 3 if flip % 2 == 0 else 1
+	draw_rect(Rect2((c - Vector2(w / 2.0, 1.5)).round(), Vector2(w, 3)), _ink(2))
+	_px(c + Vector2(0, -1), 3)
+
+## Zenith: a sun disc rises over the user; light falls from above; a pillar stands on the target
+## (never brighter than 60 %).
+func _draw_zenith() -> void:
+	match phase:
+		Phase.CHARGE:
+			_ring(_from + Vector2(0, -16), 1.0 + t * 4.0, 2, LUMEN_MAX_ALPHA)
+		Phase.TRAVEL:
+			var top := Vector2(_to.x, 0)
+			_line(top, top.lerp(_to, t), 3, LUMEN_MAX_ALPHA)
+		Phase.IMPACT:
+			var a: float = LUMEN_MAX_ALPHA * (1.0 - t)
+			for dx: int in [-2, 0, 2]:
+				_line(Vector2(_to.x + dx, 0), _to + Vector2(dx, 0), 3, a * (1.0 if dx == 0 else 0.5))
+			_ring(_ground_to, 3.0 + t * 8.0, 2, a)
+
+## A ring of single pixels of radius [param r] around [param c].
+func _ring(c: Vector2, r: float, k: int, a: float = 1.0) -> void:
+	var n: int = maxi(8, int(r * 4.0))
+	for i: int in n:
+		var ang: float = i * TAU / n
+		_px(c + Vector2(cos(ang), sin(ang)) * r, k, a)

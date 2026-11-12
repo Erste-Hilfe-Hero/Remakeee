@@ -96,7 +96,8 @@
     },
     {
      "species": "Weirmarshal",
-     "level": 95
+     "level": 95,
+     "held": "pith_mend"
     }
    ],
    "intro": "quivermoor/warden_corran_intro",

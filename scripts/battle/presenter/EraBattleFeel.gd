@@ -132,3 +132,10 @@ static func backdrop_colours(era: int, terrain: String) -> Dictionary:
 ## Era IV/V stage colours for [param terrain] (lake water floor, ember dusk ...).
 static func stage_terrain(terrain: String) -> Dictionary:
 	return (cfg().get("stage_terrain", {}) as Dictionary).get(terrain, {})
+
+## Status tag look in [param era]: Era I plain ink letters, from Era II a coloured badge with
+## light letters. Returns the badge colour, or transparent for plain letters.
+static func status_badge(era: int, status: String) -> Color:
+	if status.is_empty() or era < int(cfg().get("status_badge_from_era", 2)):
+		return Color.TRANSPARENT
+	return Color(str((cfg().get("status_colours", {}) as Dictionary).get(status, "6a4256")))

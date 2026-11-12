@@ -1100,5 +1100,23 @@
   "shop": true,
   "heal_frac": 1.0,
   "cure": true
+ },
+ {
+  "id": "pith_mend",
+  "name": "Mending Pith",
+  "description": "Keepsake fruit. When the holder drops to half its Vigor or less, it eats the fruit and recovers a quarter of its Vigor. Eaten once.",
+  "battle": false,
+  "held": {"pith_heal": 0.25},
+  "price": 400,
+  "tradeable": false
+ },
+ {
+  "id": "pith_clear",
+  "name": "Clearing Pith",
+  "description": "Keepsake fruit. When the holder gets a condition, it eats the fruit and the condition is gone at once. Eaten once.",
+  "battle": false,
+  "held": {"pith_cure": true},
+  "price": 400,
+  "tradeable": false
  }
 ]
