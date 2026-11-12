@@ -100,7 +100,7 @@ func play(old_form: SpirlingData, new_form: SpirlingData) -> void:
 	_show_new = true
 	_silhouette = false
 	_sprite.queue_redraw()
-	Sound.sfx("level_up")
+	Sound.sfx("evolve")
 	if style != "ink" and style != "wash":
 		LevelRing.spawn(self, _sprite.position + _sprite.size / 2.0)
 	await Juice.pop(_sprite)

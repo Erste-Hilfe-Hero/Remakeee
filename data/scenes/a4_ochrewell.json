@@ -8,6 +8,9 @@
   },
   {
    "dialogue": "betrayal/a4_letter"
+  },
+  {
+   "flag": "a4_arrived"
   }
  ]
 }
