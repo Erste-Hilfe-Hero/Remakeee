@@ -443,7 +443,7 @@ Teil des 5000-Punkte-Plans, siehe [../PLAN_5000.md](../PLAN_5000.md). Punkte 890
 1297. [P2] Plane in Corvane die Ausrüstung "River Pole" (de: Staken), mit der man zu Fuß über Stelzstege balanciert, nie schwimmt oder fliegt.
 1298. [P2] Lege für Corvane eigene Wetter-Anteile in data/weather.json an (mehr Regen und Nebel, Herbst als Grundton).
 1299. [P2] Ergänze die Weltkarte so, dass ein Regionswechsel als Umblättern im Kartenbuch erscheint (Funktion hier, Stil in Bereich 6).
-1300. [P2] Trenne die Kartierquote, Funde und Kartografensteine pro Region, damit Corvane eigene Zähler hat.
+1300. [x] [P2] Trenne die Kartierquote, Funde und Kartografensteine pro Region, damit Corvane eigene Zähler hat.
 1301. [P2] Lege in docs/WORLD.md einen Abschnitt "Corvane, Kartenregeln" an: keine nummerierten Wege, Flusslauf als Leitlinie, Orte an Brücken.
 1302. [P2] Ergänze tests/unit um test_corvane_prep.gd, das prüft, dass Corvane-Karten ohne Flag nicht betretbar sind.
 1303. [P2] Bereite den Kai so vor, dass man jederzeit mit der Fähre nach Veydal zurückkommt, ohne Fortschrittsverlust.
