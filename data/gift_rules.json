@@ -1,0 +1,7 @@
+{
+ "_comment": "Gift and trade extras (Online 100, points 46, 47, 49, 50). The server reads the same object as server_config.gift_rules (tools/online/game_data_sql.py).",
+ "two_gifts_level": 3,
+ "thanks_points": 1,
+ "wish_max": 3,
+ "history_days": 30
+}

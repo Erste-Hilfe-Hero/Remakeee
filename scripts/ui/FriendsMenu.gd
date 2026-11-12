@@ -56,6 +56,9 @@ static func run(menu: PauseMenu) -> void:
 			labels.append("Daily gift")
 		if Online.flag_on("live_duel"):
 			labels.append("Live duels")
+		labels.append("My wish list")
+		if Online.flag_on("trade"):
+			labels.append("Trade history")
 		var title: String = "Friends %d   Your code %s" % [friends.size(), Online.pretty_code(Online.friend_code())]
 		var idx: int = await menu.pick_strings(title, labels)
 		if idx < 0:
@@ -77,6 +80,10 @@ static func run(menu: PauseMenu) -> void:
 			"Trades": await TradeMenu.run(menu)
 			"Daily gift": await run_daily_gift(menu)
 			"Live duels": await LiveDuelMenu.run(menu, friends)
+			"My wish list": await run_wishes(menu)
+			"Trade history":
+				var h: Dictionary = await Online.call_fn("trade_history")
+				await menu.info(history_text(h.data.get("trades", [])) if h.ok and h.data is Dictionary else error_text(h))
 			"Raid Rifts":
 				await RaidMenu.run(menu)
 				if not menu.raid_attempt.is_empty():
@@ -167,7 +174,7 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 	var code: String = str(f.code)
 	while true:
 		var gift: String = "Gift sent today" if bool(f.get("gift_sent", false)) else "Send today's gift"
-		var entries: Array[String] = ["Wayfarer card", gift, "Send a greeting...", "Wave", "Echo duel", "Remove friend", "Block", "Report..."]
+		var entries: Array[String] = ["Wayfarer card", gift, "Send a greeting...", "Wave", "Echo duel", "Remove friend", "Block", "Report...", "Wish list"]
 		var idx: int = await menu.pick_strings(str(f.name), entries)
 		match idx:
 			-1:
@@ -175,14 +182,14 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 			0:
 				await menu.info(card_text(f))
 			1:
-				if bool(f.get("gift_sent", false)):
-					await menu.info("You already sent %s a gift today. Tomorrow you can send another." % str(f.name))
-					continue
+				# From friendship 3 two gifts a day (Online 100, point 47): the server decides.
 				var r: Dictionary = await Online.call_fn("gift_send", {"p_code": code})
 				if r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 					f["gift_sent"] = true
 					Sound.sfx("gift")
 					await menu.info("Your gift is on its way to %s." % str(f.name))
+				elif str(r.data.get("error", "") if r.data is Dictionary else "") == "already_today":
+					await menu.info("You already sent %s all gifts for today. Tomorrow you can send more." % str(f.name))
 				else:
 					await menu.info(error_text(r))
 			2:
@@ -214,7 +221,56 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 					return false
 			7:
 				await report(menu, code, str(f.name))
+			8:
+				var w: Dictionary = await Online.call_fn("wish_get", {"p_code": code})
+				await menu.info(wish_text(str(f.name), w.data.get("wishes", [])) if w.ok and w.data is Dictionary and bool(w.data.get("ok", false)) else error_text(w))
 	return false
+
+# --- Online 100, area 5: wish list and trade history -------------------------------------------
+
+static func wish_text(name: String, wishes: Array) -> String:
+	if wishes.is_empty():
+		return Loc.t("%s has no wishes yet.") % name
+	return Loc.t("%s wishes for:") % name + "\n" + "\n".join(wishes.map(func(x: Variant) -> String: return item_name(str(x))))
+
+static func run_wishes(menu: PauseMenu) -> void:
+	# The open gift table (the same items as server_config.gift_table).
+	var table: Array = (LocalBackend.DEFAULT_CONFIG.gift_table as Array).map(func(g: Dictionary) -> String: return str(g.item))
+	var mine: Dictionary = await Online.call_fn("wish_get", {"p_code": Online.friend_code()})
+	var wishes: Array = mine.data.get("wishes", []) if mine.ok and mine.data is Dictionary else []
+	while true:
+		var labels: Array[String] = []
+		for id: String in table:
+			labels.append(item_name(id) + ("  *" if wishes.has(id) else ""))
+		var idx: int = await menu.pick_strings(Loc.t("Your wish list (up to 3). Friends can see it."), labels)
+		if idx < 0:
+			return
+		var id: String = table[idx]
+		if wishes.has(id):
+			wishes.erase(id)
+		elif wishes.size() < 3:
+			wishes.append(id)
+		var r: Dictionary = await Online.call_fn("wish_set", {"p_items": wishes})
+		if not (r.ok and r.data is Dictionary and bool(r.data.get("ok", false))):
+			await menu.info(error_text(r))
+			return
+
+static func history_text(trades: Array) -> String:
+	if trades.is_empty():
+		return Loc.t("No finished trades in the last 30 days.")
+	var lines: Array[String] = []
+	for t: Dictionary in trades:
+		lines.append(Loc.t("%s with %s: gave %s, got %s") % [Time.get_date_string_from_unix_time(int(t.at)), str(t.name),
+			_bag_text(t.gave, int(t.get("gave_mons", 0))), _bag_text(t.got, int(t.get("got_mons", 0)))])
+	return "\n".join(lines)
+
+static func _bag_text(items: Dictionary, mons: int) -> String:
+	var parts: Array[String] = []
+	for k: String in items:
+		parts.append("%d x %s" % [int(items[k]), item_name(k)])
+	if mons > 0:
+		parts.append(Loc.t("%d Spirlings") % mons)
+	return ", ".join(parts) if not parts.is_empty() else Loc.t("nothing")
 
 static func _send(menu: MenuHost, code: String, kind: String, phrase: int) -> void:
 	# A small action: with a weak connection it waits and goes out later (plan item 3011).

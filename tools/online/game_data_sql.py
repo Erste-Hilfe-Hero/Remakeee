@@ -91,6 +91,15 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('league_ranks', $game$"
               + json.dumps(ranks).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # Gift and trade extras (Online 100, area 5): data/gift_rules.json as server_config.gift_rules.
+    gr_path = os.path.join(folder, "gift_rules.json")
+    if os.path.exists(gr_path):
+        with open(gr_path, encoding="utf-8") as f:
+            gr = json.load(f)
+        gr.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('gift_rules', $game$"
+              + json.dumps(gr).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     # Bund extras (Online 100, area 4): data/bund_rules.json as server_config.bund_rules.
     br_path = os.path.join(folder, "bund_rules.json")
     if os.path.exists(br_path):

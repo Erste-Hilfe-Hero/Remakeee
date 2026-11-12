@@ -77,6 +77,7 @@ func _init(p_store_path: String = "") -> void:
 			"live_invite", "live_list", "live_answer", "live_pick", "live_move", "live_state", "live_emote", "live_forfeit",
 			"live_finish", "live_rematch", "raid_board",
 			"bund_stats", "bund_settings", "bund_search", "bund_join", "bund_donate", "bund_goal_claim", "bund_board",
+			"wish_set", "wish_get", "trade_history",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
@@ -691,6 +692,13 @@ func _new_mail(to: String, kind: String, phrase: int = 0) -> Dictionary:
 	(_table("mail", []) as Array).append(m)
 	return m
 
+func _sent_count_today(to: String, kind: String) -> int:
+	var n: int = 0
+	for m: Dictionary in _table("mail", []):
+		if m.sender == me() and m.recipient == to and m.kind == kind and Time.get_date_string_from_unix_time(int(m.at)) == _today():
+			n += 1
+	return n
+
 func _sent_today(to: String, kind: String) -> bool:
 	for m: Dictionary in _table("mail", []):
 		if m.sender == me() and m.recipient == to and m.kind == kind and Time.get_date_string_from_unix_time(int(m.at)) == _today():
@@ -928,8 +936,16 @@ func _fn_mail_send(a: Dictionary) -> Dictionary:
 		return _fail("bad_phrase")
 	if not _rate_ok("mail", 30):
 		return _fail("slow_down")
+	# The first thanks of the day for a gift from them: a friendship point for the pair (point 49).
+	var bonus: bool = false
+	if kind == "thanks" and _sent_count_today(t, "thanks") == 0:
+		for m: Dictionary in _table("mail", []):
+			if m.sender == t and m.recipient == me() and m.kind == "gift" and now() - int(m.at) < 7 * 86400:
+				bonus = true
 	_new_mail(t, kind, phrase)
-	return {"ok": true}
+	if bonus:
+		_add_points(me(), t, gift_rule("thanks_points"))
+	return {"ok": true, "bonus": bonus}
 
 ## Like public._phrase_ok: phrase number [param n] may be used in [param context] (item 2877).
 func phrase_ok(context: String, n: int) -> bool:
@@ -940,7 +956,9 @@ func _fn_gift_send(a: Dictionary) -> Dictionary:
 	var t: String = uid_for_code(str(a.get("p_code", "")))
 	if not _can_reach(t):
 		return _fail("not_friends")
-	if _sent_today(t, "gift"):
+	var f: Variant = _friendship(me(), t)
+	var allowed: int = 2 if level_for(int(f.points)) >= gift_rule("two_gifts_level") else 1
+	if _sent_count_today(t, "gift") >= allowed:
 		return _fail("already_today")
 	var gift: Dictionary = _new_mail(t, "gift")
 	var card: Variant = profile_of(me()).get("card", {})
@@ -2279,6 +2297,7 @@ func _fn_trade_confirm(a: Dictionary) -> Dictionary:
 		m.receive_mons = (o.get("mons", []) as Array).duplicate(true)
 		o.receive_mons = (m.get("mons", []) as Array).duplicate(true)
 		db.trades[id].state = "done"
+		db.trades[id]["done_at"] = now()
 		return {"ok": true, "done": true}
 	return {"ok": true, "done": false}
 
@@ -2863,3 +2882,54 @@ func _fn_bund_board(_a: Dictionary) -> Dictionary:
 	for r: Dictionary in rows:
 		r.erase("id")
 	return {"ok": true, "rows": rows}
+
+# --- Gift and trade extras (Online 100, area 5), like 20261111000070_gift_more.sql ----------------
+
+const GIFT_RULES_PATH: String = "res://data/gift_rules.json"
+
+## server_config.gift_rules (data/gift_rules.json).
+func gift_rule(key: String) -> int:
+	var v: Variant = db.config.get("gift_rules")
+	if not v is Dictionary:
+		var f := FileAccess.open(GIFT_RULES_PATH, FileAccess.READ)
+		v = JSON.parse_string(f.get_as_text()) if f != null else {}
+		db.config["gift_rules"] = v
+	return int((v as Dictionary).get(key, 0))
+
+func _fn_wish_set(a: Dictionary) -> Dictionary:
+	var items: Variant = a.get("p_items")
+	if not items is Array or (items as Array).size() > gift_rule("wish_max"):
+		return _fail("bad_wish")
+	var open: Array = (db.config.get("gift_table", []) as Array).map(func(g: Dictionary) -> String: return str(g.item))
+	var seen: Array = []
+	for x: Variant in items:
+		if not x is String or not open.has(x) or seen.has(x):
+			return _fail("bad_wish")
+		seen.append(x)
+	profile_of(me())["wishes"] = seen
+	return {"ok": true}
+
+func _fn_wish_get(a: Dictionary) -> Dictionary:
+	var t: String = uid_for_code(str(a.get("p_code", "")))
+	if t.is_empty() or (t != me() and (not is_friend(me(), t) or is_blocked(me(), t))):
+		return _fail("not_friends")
+	return {"ok": true, "wishes": (profile_of(t).get("wishes", []) as Array).duplicate()}
+
+func _fn_trade_history(_a: Dictionary) -> Dictionary:
+	var u: String = me()
+	var out: Array = []
+	var sides: Dictionary = _table("trade_sides", {})
+	for id: String in _table("trades", {}):
+		var t: Dictionary = db.trades[id]
+		if t.state != "done" or now() - int(t.get("done_at", 0)) > 86400 * gift_rule("history_days") or not sides.has("%s|%s" % [id, u]):
+			continue
+		for k: String in sides:
+			var parts: PackedStringArray = k.split("|")
+			if parts[0] == id and parts[1] != u:
+				var mine: Dictionary = sides["%s|%s" % [id, u]]
+				var theirs: Dictionary = sides[k]
+				out.append({"at": int(t.done_at), "name": profile_of(parts[1]).name if db.users.has(parts[1]) else "?",
+					"gave": (mine.items as Dictionary).duplicate(), "got": (theirs.items as Dictionary).duplicate(),
+					"gave_mons": (mine.get("mons", []) as Array).size(), "got_mons": (theirs.get("mons", []) as Array).size()})
+	out.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.at) > int(q.at))
+	return {"ok": true, "trades": out}

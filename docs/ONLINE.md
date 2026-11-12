@@ -311,6 +311,13 @@ every value and the **origin era** (`origin_era` 1-4, set when bonded, 1 for old
 the nickname (no free text between players), the storage box and the favourite mark. Collected
 Spirlings go into storage.
 
+**Online 100, area 5** (`data/gift_rules.json`, migration `20261111000070_gift_more.sql`): from friendship
+level `two_gifts_level` (3) a friend may get two gifts a day. The first thanks of the day for a gift of the last
+7 days gives the pair `thanks_points` (1) friendship. `wish_set(items)` keeps up to `wish_max` (3) items of the open
+gift table; friends read them with `wish_get(code)`. `trade_history()` lists finished trades of the last
+`history_days` (30): date, other side, items given and got, number of Spirlings. Lending Spirlings (point 45) is
+not built.
+
 ## Weekly boards (online step 1)
 
 Under Friends, Weekly board. The weekly challenge board is as before. With the flag `rift_board`
