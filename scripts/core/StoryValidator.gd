@@ -108,6 +108,12 @@ static func _check_action(ref: String, action: String, errors: PackedStringArray
 			"give_item":
 				if parts.size() < 2 or Database.item(parts[1]).is_empty():
 					errors.append("%s: give_item '%s' is no item" % [ref, parts[1] if parts.size() > 1 else ""])
+			"take_item":
+				if parts.size() < 2 or Database.item(parts[1]).is_empty():
+					errors.append("%s: take_item '%s' is no item" % [ref, parts[1] if parts.size() > 1 else ""])
+			"gift_spirling":
+				if parts.size() < 2 or Database.species(parts[1]) == null:
+					errors.append("%s: gift_spirling '%s' is no Spirling" % [ref, parts[1] if parts.size() > 1 else ""])
 			"scene":
 				if parts.size() < 2 or not ScenePlayer.exists(parts[1]):
 					errors.append("%s: scene '%s' does not exist" % [ref, parts[1] if parts.size() > 1 else ""])
