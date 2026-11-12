@@ -85,9 +85,11 @@ def write_wav(path: str, data: np.ndarray) -> None:
         w.writeframes(pcm.tobytes())
 
 
-def write_ogg(path: str, data: np.ndarray, quality: int = 3) -> None:
+def write_ogg(path: str, data: np.ndarray, quality: int = 3, small: bool = False) -> None:
+    """[small]: 16 kHz at 16 kbit/s, for the single-file themes (APK size budget)."""
+    rate = ["-ar", "16000", "-b:a", "16k"] if small else ["-q:a", str(quality)]
     with tempfile.TemporaryDirectory() as tmp:
         wav = os.path.join(tmp, "x.wav")
         write_wav(wav, data)
-        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", wav, "-c:a", "libvorbis", "-q:a", str(quality),
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", wav, "-c:a", "libvorbis", *rate,
                         "-fflags", "+bitexact", "-flags:a", "+bitexact", "-map_metadata", "-1", path], check=True)

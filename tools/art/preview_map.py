@@ -35,6 +35,7 @@ def load_level(map_id: str) -> dict:
         for k in ("name", "region"):
             floor.setdefault(k, d.get(k))
         return floor
+    d["id"] = map_id
     return d
 
 
@@ -117,6 +118,10 @@ def render(d: dict, atlas_path: str = "") -> Image.Image:
             elif k == "TOWER" and kind(x, y + 1, k) == "DOOR" and lighthouse_door(rows, x, y + 1):
                 v = 1
             img.paste(atlas.crop((col * 16, v * 16, col * 16 + 16, v * 16 + 16)), (x * 16, y * 16))
+    lm = json.load(open(os.path.join(ROOT, "data", "landmarks.json")))["maps"].get(d.get("id", ""))
+    if lm:
+        spr = Image.open(os.path.join(ROOT, "art", "era1", "landmarks", lm["kind"] + ".png"))
+        img.paste(spr, (lm["x"] * 16, lm["y"] * 16 - 16), spr)
     for n in d.get("npcs", []):
         style = n.get("sprite", "villager")
         sheet_path = os.path.join(ROOT, "art", "era1", "chars", style + ".png")

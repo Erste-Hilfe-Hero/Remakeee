@@ -146,6 +146,9 @@
    "trainer": "Warden Maelis",
    "warden": "tide",
    "money": 1200,
+   "mend_items": [
+    "echo_tide"
+   ],
    "intro": "tide_rift/maelis_intro",
    "defeat": "tide_rift/maelis_defeat",
    "items": {

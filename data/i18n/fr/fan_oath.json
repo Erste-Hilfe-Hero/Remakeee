@@ -1,0 +1,8 @@
+{
+ "_comment": "fr translation of the fan_oath table, keyed by the English text.",
+ "strings": {
+  "%s swears the Ink Oath. Ink runs down its paws like a signature: family first!": "%s prête le Serment d'encre. L'encre coule sur ses pattes comme une signature: la famille d'abord!",
+  "Oath": "Serment",
+  "The Ink Oath comes due. The family collects from %s.": "Le Serment d'encre arrive à échéance. La famille encaisse chez %s."
+ }
+}

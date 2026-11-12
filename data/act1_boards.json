@@ -1,0 +1,44 @@
+{
+ "_comment": "Bounty boards and collecting goals per act. A board is a talk (npc) whose choices start the story duels in 'bounties' (data/story_battles.json); the last one opens once the others are beaten and sets 'done'. A collection lists the flags of its hidden finds. tools/act_hours.py counts both.",
+ "boards": {
+  "brindlewick": {
+   "act": 1,
+   "npc": "veydal_side/gisk",
+   "done": "bounty_brindle_done",
+   "bounties": [
+    "bounty_b1",
+    "bounty_b2",
+    "bounty_b3",
+    "bounty_b4"
+   ]
+  },
+  "thornridge": {
+   "act": 1,
+   "npc": "veydal_side/brannagh",
+   "done": "bounty_thorn_done",
+   "bounties": [
+    "bounty_b5",
+    "bounty_b6",
+    "bounty_b7",
+    "bounty_b8"
+   ]
+  }
+ },
+ "collections": {
+  "hush_coins": {
+   "act": 1,
+   "npc": "veydal_side/wicka",
+   "done": "coins_done",
+   "items": [
+    "hush_coin_1",
+    "hush_coin_2",
+    "hush_coin_3",
+    "hush_coin_4",
+    "hush_coin_5",
+    "hush_coin_6",
+    "hush_coin_7",
+    "hush_coin_8"
+   ]
+  }
+ }
+}

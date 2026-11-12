@@ -9,16 +9,21 @@ extends RefCounted
 const LINES: Dictionary[String, Array] = {
 	"battle": ["Tip: Each art costs Energy (E). Your Spirling starts with 10 and gains 1 every turn.",
 		"If it runs dry, it rests a turn to recover."],
-	"bond": ["Tip: To bond with a wild Spirling, wear it down first, then pick Bond.",
-		"A worn-out or statused Spirling trusts you more easily.",
+	# Paced (onboarding pass): only steps 1 and 2 at the start of the first wild battle, the
+	# rest when Bond is first picked, in the words of the bonding style in use.
+	"bond": ["Tip: A wild Spirling can join your team, if it trusts you. Trust is easier when it is tired.",
 		"Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.",
-		"Bonding step 2: Pick Bond. A big Mine! button appears.",
-		{"touch": "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.",
-			"buttons": "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond."},
-		"Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.",
+		"Bonding step 2: Pick Bond. A statused Spirling gives in more easily. Nobody said this was noble."],
+	"bond_mine": ["Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.",
+		{"touch": "Bonding step 4: Tap Mine! as fast as you can. The fuller the bar, the better the bond.",
+			"buttons": "Bonding step 4: Press A as fast as you can. The fuller the bar, the better the bond."},
+		"While you are new, a failed bond does not give the wild Spirling a free hit."],
+	"bond_echo": ["Bonding step 3: Hold out a Kin Charm when asked. You start with 20. Friendship is cheaper in bulk.",
+		"Bonding step 4: Listen to its call, then repeat it in the same order.",
 		"While you are new, a failed bond does not give the wild Spirling a free hit."],
 	"wild_area": ["Tip: Wild Spirlings hide in ferns, reeds and loose scree. Walk through them to meet one."],
-	"goals": ["Tip: Open the menu (=) and pick Goals to see where to go next."],
+	"goals": [{"touch": "Tip: Lost? Tap = and pick Goals. Nobody else in this valley will tell you the truth.",
+		"buttons": "Tip: Lost? Press Start and pick Goals. Nobody else in this valley will tell you the truth."}],
 	"gear": [{"touch": "Tip: Wayfarer Gear works where you can't walk. Face the spot and tap it.",
 		"buttons": "Tip: Wayfarer Gear works where you can't walk. Face the spot and press A."}],
 	"walk": [{"touch": "Walk: D-pad or tap a tile", "buttons": "Walk: D-pad or left stick"}],
@@ -44,11 +49,20 @@ const LINES: Dictionary[String, Array] = {
 ## Headings for the Guide, in the order shown.
 const TOPICS: Dictionary[String, String] = {
 	"walk": "Walking", "menu": "The menu", "save": "Saving", "goals": "Goals", "wild_area": "Wild Spirlings",
-	"battle": "Energy in battle", "bond": "Bonding", "team_order": "Team order",
+	"battle": "Energy in battle", "bond": "Bonding", "bond_mine": "Bonding: Mine!", "bond_echo": "Bonding: Echo call", "team_order": "Team order",
 	"rest_spot": "Rest spots", "travel": "Travel", "satchel": "The satchel", "keepsake": "Keepsakes",
 	"unfurl": "Unfurling", "gear": "Wayfarer Gear", "friends": "Friends", "storage": "Storage",
 	"map_page": "Map pages",
 }
+
+## Tips that show even with tips switched off, so nobody is left without a goal (item 2009).
+const ALWAYS: Array[String] = ["goals"]
+## Most text boxes one tip may take, so no tip becomes a wall of text.
+const MAX_LINES: int = 3
+
+## The bonding how-to for the style in use (Settings, Controls, Bonding).
+static func bond_how_id(style: String = GameState.bond_style) -> String:
+	return "bond_echo" if style == "echo" else "bond_mine"
 
 ## True when the player uses the touch screen (no gamepad connected).
 static func touch_mode() -> bool:
@@ -72,13 +86,21 @@ static func seen() -> Array[String]:
 			out.append(id)
 	return out
 
+## Forgets every seen tip so each shows once more (item 1998). Returns how many were reset.
+static func reset() -> int:
+	var n: int = 0
+	for id: String in LINES:
+		if GameState.flags.erase(flag(id)):
+			n += 1
+	return n
+
 static func flag(id: String) -> String:
 	return "tip_" + id
 
 ## The lines for [param id] if it should show now (and marks it seen), else [].
 static func take(id: String) -> Array[String]:
 	var out: Array[String] = []
-	if not GameState.tips_enabled or not LINES.has(id) or GameState.has_flag(flag(id)):
+	if (not GameState.tips_enabled and not id in ALWAYS) or not LINES.has(id) or GameState.has_flag(flag(id)):
 		return out
 	GameState.set_flag(flag(id))
 	return lines_of(id)
