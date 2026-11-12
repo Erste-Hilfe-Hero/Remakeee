@@ -37,6 +37,12 @@
      "Maelis: Since the heart was mended I hear a song in the water. Five notes, over and over.",
      "Maelis: Someone taught the Rift that tune long ago. I think it was meant for you."
     ]
+   },
+   {
+    "flag": "story_complete",
+    "lines": [
+     "Maelis: The water still hums those five notes. I stopped asking who it sings to."
+    ]
    }
   ]
  },

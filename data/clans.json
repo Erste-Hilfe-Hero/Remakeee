@@ -187,6 +187,7 @@
   {"id": "crown", "act": 4, "ref": "clans/ledger_crown"},
   {"id": "fitch_toll", "act": 3, "ref": "soot_vaults/ledger_fitch"},
   {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"},
+  {"id": "farida_book", "act": 3, "ref": "edge_camp/ledger_farida_book"},
   {"id": "nib", "act": 2, "ref": "corvane_side/ledger_nib"},
   {"id": "gaunt", "act": 2, "ref": "corvane_side/ledger_gaunt"},
   {"id": "ollie", "act": 2, "ref": "corvane_side/ledger_ollie"},
