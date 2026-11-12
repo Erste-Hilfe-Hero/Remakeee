@@ -21640,7 +21640,7 @@
     "Glint"
    ],
    "15": [
-    "Poker Face"
+    "Blank Look"
    ],
    "20": [
     "Prism Ray"
@@ -21705,7 +21705,7 @@
     "Glint"
    ],
    "15": [
-    "Poker Face"
+    "Blank Look"
    ],
    "20": [
     "Prism Ray"
@@ -22117,10 +22117,10 @@
   "line_id": "tollpip",
   "era": 2,
   "base": {
-   "hp": 54,
-   "atk": 68,
-   "foc": 54,
-   "spd": 77,
+   "hp": 52,
+   "atk": 67,
+   "foc": 53,
+   "spd": 75,
    "def": 45
   },
   "trait": "surge",
@@ -22857,8 +22857,7 @@
   "dex_id": 382,
   "name": "Guiskit",
   "elements": [
-   "MASK",
-   "UMBRA"
+   "MASK"
   ],
   "rarity": "common",
   "region": "vellmarch",
@@ -22866,32 +22865,32 @@
   "line_id": "guiskit",
   "era": 2,
   "base": {
-   "hp": 49,
-   "atk": 72,
-   "foc": 55,
-   "spd": 85,
-   "def": 48
+   "hp": 53,
+   "atk": 80,
+   "foc": 61,
+   "spd": 94,
+   "def": 53
   },
   "trait": "slick",
   "learnset": {
    "1": [
     "Cheek Slap",
-    "Poker Face"
+    "Blank Look"
    ],
    "6": [
-    "Shade Pounce"
+    "Pumice Pelt"
    ],
    "10": [
     "Turncoat Kick"
    ],
    "15": [
-    "Gloam Pact"
+    "Quarry Wall"
    ],
    "20": [
     "False Face"
    ],
    "26": [
-    "Murmur Bite"
+    "Landslip"
    ],
    "32": [
     "Masquerade Rush"
@@ -22919,8 +22918,7 @@
   "dex_id": 383,
   "name": "Guisvix",
   "elements": [
-   "MASK",
-   "UMBRA"
+   "MASK"
   ],
   "rarity": "uncommon",
   "region": "vellmarch",
@@ -22928,11 +22926,11 @@
   "line_id": "guiskit",
   "era": 2,
   "base": {
-   "hp": 71,
-   "atk": 99,
-   "foc": 62,
-   "spd": 109,
-   "def": 63
+   "hp": 77,
+   "atk": 107,
+   "foc": 67,
+   "spd": 118,
+   "def": 68
   },
   "trait": "slick",
   "learnset": {
@@ -22941,25 +22939,25 @@
     "Whisper Campaign"
    ],
    "6": [
-    "Shade Pounce"
+    "Pumice Pelt"
    ],
    "10": [
     "Turncoat Kick"
    ],
    "15": [
-    "Hush"
+    "Quarry Wall"
    ],
    "20": [
     "False Face"
    ],
    "26": [
-    "Murmur Bite"
+    "Landslip"
    ],
    "32": [
     "Knife in the Back"
    ],
    "38": [
-    "Dusk Gnaw"
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.28,
@@ -22984,8 +22982,7 @@
   "dex_id": 384,
   "name": "Guisdame",
   "elements": [
-   "MASK",
-   "UMBRA"
+   "MASK"
   ],
   "rarity": "shy",
   "region": "vellmarch",
@@ -22993,11 +22990,11 @@
   "line_id": "guiskit",
   "era": 2,
   "base": {
-   "hp": 80,
-   "atk": 129,
-   "foc": 88,
-   "spd": 131,
-   "def": 77
+   "hp": 83,
+   "atk": 131,
+   "foc": 89,
+   "spd": 133,
+   "def": 79
   },
   "trait": "slick",
   "learnset": {
@@ -23006,25 +23003,25 @@
     "Whisper Campaign"
    ],
    "6": [
-    "Dusk Rake"
+    "Pumice Pelt"
    ],
    "10": [
     "Turncoat Kick"
    ],
    "15": [
-    "Murk Call"
+    "Hunker Down"
    ],
    "20": [
     "Knife in the Back"
    ],
    "26": [
-    "Murmur Bite"
+    "Tunnel Strike"
    ],
    "32": [
     "Masquerade Rush"
    ],
    "38": [
-    "Dusk Gnaw"
+    "Cairn Crash"
    ],
    "44": [
     "Final Unmasking"
@@ -23054,11 +23051,11 @@
   "line_id": "fenglim",
   "era": 2,
   "base": {
-   "hp": 66,
-   "atk": 46,
-   "foc": 88,
-   "spd": 58,
-   "def": 61
+   "hp": 65,
+   "atk": 45,
+   "foc": 86,
+   "spd": 57,
+   "def": 60
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -23112,11 +23109,11 @@
   "line_id": "fenglim",
   "era": 2,
   "base": {
-   "hp": 92,
-   "atk": 61,
-   "foc": 124,
-   "spd": 92,
-   "def": 97
+   "hp": 90,
+   "atk": 60,
+   "foc": 121,
+   "spd": 91,
+   "def": 95
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -23173,11 +23170,11 @@
   "line_id": "fenglim",
   "era": 2,
   "base": {
-   "hp": 92,
-   "atk": 69,
-   "foc": 132,
-   "spd": 99,
-   "def": 104
+   "hp": 94,
+   "atk": 70,
+   "foc": 135,
+   "spd": 101,
+   "def": 106
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -23227,11 +23224,11 @@
   "line_id": "splotchet",
   "era": 2,
   "base": {
-   "hp": 65,
-   "atk": 53,
-   "foc": 75,
-   "spd": 67,
-   "def": 52
+   "hp": 63,
+   "atk": 52,
+   "foc": 74,
+   "spd": 66,
+   "def": 51
   },
   "trait": "kindling",
   "learnset": {
@@ -23354,11 +23351,11 @@
   "line_id": "splotchet",
   "era": 2,
   "base": {
-   "hp": 98,
-   "atk": 80,
-   "foc": 113,
-   "spd": 102,
-   "def": 80
+   "hp": 99,
+   "atk": 82,
+   "foc": 116,
+   "spd": 104,
+   "def": 82
   },
   "trait": "kindling",
   "learnset": {
@@ -24029,11 +24026,11 @@
   "line_id": "tithel",
   "era": 2,
   "base": {
-   "hp": 101,
-   "atk": 85,
-   "foc": 70,
-   "spd": 56,
-   "def": 107
+   "hp": 99,
+   "atk": 83,
+   "foc": 69,
+   "spd": 55,
+   "def": 105
   },
   "trait": "steady",
   "learnset": {
@@ -24547,7 +24544,7 @@
     "Glow Knuckle"
    ],
    "15": [
-    "Poker Face"
+    "Blank Look"
    ],
    "20": [
     "Kiln Strike"
@@ -24590,11 +24587,11 @@
   "line_id": "smogpup",
   "era": 2,
   "base": {
-   "hp": 79,
-   "atk": 99,
-   "foc": 59,
-   "spd": 92,
-   "def": 71
+   "hp": 81,
+   "atk": 100,
+   "foc": 61,
+   "spd": 94,
+   "def": 72
   },
   "trait": "surge",
   "learnset": {
@@ -24839,11 +24836,11 @@
   "line_id": "moldcap",
   "era": 2,
   "base": {
-   "hp": 55,
-   "atk": 52,
-   "foc": 70,
-   "spd": 68,
-   "def": 54
+   "hp": 53,
+   "atk": 51,
+   "foc": 69,
+   "spd": 67,
+   "def": 53
   },
   "trait": "kindling",
   "learnset": {
@@ -25218,7 +25215,7 @@
     "Pumice Pelt"
    ],
    "15": [
-    "Poker Face"
+    "Blank Look"
    ],
    "20": [
     "Landslip"
@@ -25487,8 +25484,7 @@
   "dex_id": 425,
   "name": "Anchorrot",
   "elements": [
-   "RUST",
-   "TIDE"
+   "RUST"
   ],
   "rarity": "uncommon",
   "region": "vellmarch",
@@ -25509,25 +25505,25 @@
     "Flaking Fog"
    ],
    "6": [
-    "Spout Jab"
+    "Pumice Pelt"
    ],
    "10": [
     "Rivet Bite"
    ],
    "15": [
-    "Chill Mist"
+    "Hunker Down"
    ],
    "20": [
     "Jammed Cog"
    ],
    "26": [
-    "Rip Current"
+    "Landslip"
    ],
    "32": [
     "Seized Gear"
    ],
    "38": [
-    "Breaker Plunge"
+    "Cairn Crash"
    ]
   },
   "bond_rate": 0.32,
@@ -25539,7 +25535,7 @@
    1,
    2
   ],
-  "keepsake_hint": "keen_lens"
+  "keepsake_hint": "iron_burr"
  },
  {
   "dex_id": 426,
@@ -25612,11 +25608,11 @@
   "line_id": "mirefane",
   "era": 2,
   "base": {
-   "hp": 78,
-   "atk": 65,
-   "foc": 91,
-   "spd": 82,
-   "def": 70
+   "hp": 76,
+   "atk": 63,
+   "foc": 90,
+   "spd": 80,
+   "def": 69
   },
   "trait": "kindling",
   "learnset": {

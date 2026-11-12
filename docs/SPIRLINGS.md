@@ -460,7 +460,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era2.py
 | 367 | Dimlure | Tide/Lumen | common | weaver | steady | 315 | Dimlurker (ring 54) |
 | 368 | Dimlurker | Tide/Lumen | uncommon | weaver | steady | 410 | Dimluminor (ring 60) |
 | 369 | Dimluminor | Tide/Lumen | shy | weaver | steady | 438 | - |
-| 370 | Tollpip | Gale/Stone | common | striker | surge | 298 | Tollgull (ring 53) |
+| 370 | Tollpip | Gale/Stone | common | striker | surge | 292 | Tollgull (ring 53) |
 | 371 | Tollgull | Gale/Stone | uncommon | striker | surge | 408 | Tollbaron (ring 62) |
 | 372 | Tollbaron | Gale/Stone | shy | striker | surge | 500 | - |
 | 373 | Sootkin | Umbra/Ember | common | vanguard | last_stand | 315 | Sootrook (ring 54) |
@@ -472,15 +472,15 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era2.py
 | 379 | Sprockle | Rust/Volt | common | vanguard | deep_roots | 296 | Sprocklen (ring 52) |
 | 380 | Sprocklen | Rust/Volt | uncommon | vanguard | deep_roots | 410 | Sprockmaul (ring 60) |
 | 381 | Sprockmaul | Rust/Volt | shy | vanguard | deep_roots | 479 | - |
-| 382 | Guiskit | Mask/Umbra | common | striker | slick | 309 | Guisvix (ring 56) |
-| 383 | Guisvix | Mask/Umbra | uncommon | striker | slick | 404 | Guisdame (ring 62) |
-| 384 | Guisdame | Mask/Umbra | shy | striker | slick | 505 | - |
-| 385 | Fenglim | Echo/Lumen | common | weaver | light_sleeper | 319 | Fenglimmer (ring 55) |
-| 386 | Fenglimmer | Echo/Lumen | uncommon | weaver | light_sleeper | 466 | Fenglowmarsh (ring 64) |
-| 387 | Fenglowmarsh | Echo/Lumen | shy | weaver | light_sleeper | 496 | - |
-| 388 | Splotchet | Tide/Ink | common | kindler | kindling | 312 | Splotchling (ring 56) |
+| 382 | Guiskit | Mask | common | striker | slick | 341 | Guisvix (ring 56) |
+| 383 | Guisvix | Mask | uncommon | striker | slick | 437 | Guisdame (ring 62) |
+| 384 | Guisdame | Mask | shy | striker | slick | 515 | - |
+| 385 | Fenglim | Echo/Lumen | common | weaver | light_sleeper | 313 | Fenglimmer (ring 55) |
+| 386 | Fenglimmer | Echo/Lumen | uncommon | weaver | light_sleeper | 457 | Fenglowmarsh (ring 64) |
+| 387 | Fenglowmarsh | Echo/Lumen | shy | weaver | light_sleeper | 506 | - |
+| 388 | Splotchet | Tide/Ink | common | kindler | kindling | 306 | Splotchling (ring 56) |
 | 389 | Splotchling | Tide/Ink | uncommon | kindler | kindling | 408 | Splotcheroth (ring 60) |
-| 390 | Splotcheroth | Tide/Ink | shy | kindler | kindling | 473 | - |
+| 390 | Splotcheroth | Tide/Ink | shy | kindler | kindling | 483 | - |
 | 391 | Snaglet | Tide | common | striker | surge | 311 | Snagwhisk (ring 55) |
 | 392 | Snagwhisk | Tide | uncommon | striker | surge | 403 | Snaggrave (ring 61) |
 | 393 | Snaggrave | Tide | shy | striker | surge | 504 | - |
@@ -491,7 +491,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era2.py
 | 398 | Snobplume | Gale/Lumen | uncommon | kindler | deep_roots | 419 | Snobsovereign (ring 61) |
 | 399 | Snobsovereign | Gale/Lumen | shy | kindler | deep_roots | 499 | - |
 | 400 | Tithel | Stone/Umbra | common | bulwark | steady | 320 | Tithshell (ring 53) |
-| 401 | Tithshell | Stone/Umbra | uncommon | bulwark | steady | 419 | Tithebastion (ring 60) |
+| 401 | Tithshell | Stone/Umbra | uncommon | bulwark | steady | 411 | Tithebastion (ring 60) |
 | 402 | Tithebastion | Stone/Umbra | shy | bulwark | steady | 496 | - |
 | 403 | Bargit | Umbra/Echo | common | weaver | last_stand | 305 | Bargwing (ring 52) |
 | 404 | Bargwing | Umbra/Echo | uncommon | weaver | last_stand | 406 | Bargemourn (ring 62) |
@@ -500,11 +500,11 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era2.py
 | 407 | Sedgecoil | Bloom/Tide | uncommon | striker | slick | 403 | Sedgemire (ring 62) |
 | 408 | Sedgemire | Bloom/Tide | shy | striker | slick | 500 | - |
 | 409 | Smogpup | Ember/Mask | common | vanguard | surge | 313 | Smoglurcher (ring 56) |
-| 410 | Smoglurcher | Ember/Mask | uncommon | vanguard | surge | 400 | Smogcapo (ring 62) |
+| 410 | Smoglurcher | Ember/Mask | uncommon | vanguard | surge | 408 | Smogcapo (ring 62) |
 | 411 | Smogcapo | Ember/Mask | shy | vanguard | surge | 502 | - |
 | 412 | Hushbeak | Gale/Umbra | uncommon | weaver | light_sleeper | 314 | Hushmonger (ring 60) |
 | 413 | Hushmonger | Gale/Umbra | shy | weaver | light_sleeper | 425 | - |
-| 414 | Moldcap | Bloom/Umbra | uncommon | kindler | kindling | 299 | Moldmagnate (ring 60) |
+| 414 | Moldcap | Bloom/Umbra | uncommon | kindler | kindling | 293 | Moldmagnate (ring 60) |
 | 415 | Moldmagnate | Bloom/Umbra | shy | kindler | kindling | 386 | - |
 | 416 | Groatfin | Tide/Lumen | uncommon | striker | last_stand | 315 | Groatgrand (ring 58) |
 | 417 | Groatgrand | Tide/Lumen | shy | striker | last_stand | 426 | - |
@@ -515,9 +515,9 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era2.py
 | 422 | Waxwhisk | Ember/Umbra | uncommon | kindler | steady | 317 | Waxwidow (ring 59) |
 | 423 | Waxwidow | Ember/Umbra | shy | kindler | steady | 434 | - |
 | 424 | Fauxscript | Ink/Umbra | uncommon | weaver | light_sleeper | 420 | - |
-| 425 | Anchorrot | Rust/Tide | uncommon | bulwark | thick_hide | 389 | - |
+| 425 | Anchorrot | Rust | uncommon | bulwark | thick_hide | 389 | - |
 | 426 | Knellgrim | Stone/Volt | uncommon | vanguard | surge | 423 | - |
-| 427 | Mirefane | Umbra/Bloom | uncommon | kindler | kindling | 386 | - |
+| 427 | Mirefane | Umbra/Bloom | uncommon | kindler | kindling | 378 | - |
 <!-- /lines:vellmarch -->
 
 ## Regional imprints (Ortsprägung, items 218-219)

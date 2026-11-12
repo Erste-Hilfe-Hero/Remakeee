@@ -22,7 +22,7 @@ func test_seventy_era_two_kinds_with_their_own_art() -> void:
 func test_lines_keep_their_elements() -> void:
 	for sd: SpirlingData in _kinds:
 		for u: Dictionary in sd.unfold:
-			var to: SpirlingData = Database.species(str(u.to))
+			var to: SpirlingData = u.to
 			assert_not_null(to, sd.species_name)
 			if to != null:
 				assert_eq(to.line_id, sd.line_id, "%s grows into its own line" % sd.species_name)
@@ -68,8 +68,9 @@ func test_every_kind_can_be_met_in_vellmarch() -> void:
 			if not reach.has(sd.species_name):
 				continue
 			for u: Dictionary in sd.unfold:
-				if not reach.has(str(u.to)):
-					reach[str(u.to)] = true
+				var to: SpirlingData = u.to
+				if not reach.has(to.species_name):
+					reach[to.species_name] = true
 					grew = true
 	for sd: SpirlingData in _kinds:
 		assert_true(reach.has(sd.species_name), "%s wild or unfolded from a wild kind" % sd.species_name)
