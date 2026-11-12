@@ -1101,7 +1101,7 @@
   "battle": false,
   "held": {"pith_heal": 0.25},
   "price": 400,
-  "tradeable": true
+  "tradeable": false
  },
  {
   "id": "pith_clear",
@@ -1110,6 +1110,6 @@
   "battle": false,
   "held": {"pith_cure": true},
   "price": 400,
-  "tradeable": true
+  "tradeable": false
  }
 ]
