@@ -10,24 +10,24 @@
  ],
  "rows": [
   "TTTTT__TTTTT",
-  "T::..__..::T",
-  "T.RRR__RRR.T",
-  "T.HDH__HDH.T",
+  "TTT..__..TTT",
+  "T..RR__RRR.T",
+  "T..DH__HDH.T",
   "T....__....T",
   "T##..__.L##T",
   "T....____..T",
-  "T.:......:.T",
+  "T.:......:TT",
   "T....o._____",
   "T......_____",
-  "T.:......:.T",
+  "TT:......:.T",
   "T##..__..##T",
   "T:.RR__RR.:T",
   "T..DH__HD..T",
   "T....__....T",
   "T.:.S__..:.T",
   "T....__....T",
-  "T*:..__.L:.T",
-  "T:...__...:T",
+  "T....__..:.T",
+  "TT...__...TT",
   "TTTTT__TTTTT"
  ],
  "warps": [
@@ -186,6 +186,14 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q3_erased_village_ansa",
+   "x": 9,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_erased_village",
+   "sprite": "villager"
   }
  ],
  "signs": [

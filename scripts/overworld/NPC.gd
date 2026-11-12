@@ -66,7 +66,8 @@ const ALERT_POP_TIME: float = 0.06
 
 func _draw() -> void:
 	super._draw()
-	if alert:
+	# From Era II the "!" is a bubble drawn by EraActors (data/era_actor_look.json).
+	if alert and EraActorLook.plain_emotes():
 		var g: int = 1 if _alert_pop else 0
 		draw_rect(Rect2(6 - g, -9 - g, 4 + g * 2, 8 + g * 2), UITheme.BG)
 		draw_rect(Rect2(6 - g, -9 - g, 4 + g * 2, 8 + g * 2), UITheme.INK, false, 1.0)
@@ -114,6 +115,7 @@ func glance() -> void:
 ## Waits [constant TURN_PAUSE], then turns toward [param who_cell]. Awaitable.
 func turn_toward(who_cell: Vector2i) -> void:
 	_glance_in = GLANCE_AFTER_TALK
+	EraActors.react_on(self, "talk_beaten" if TrainerData.is_trainer(definition) else "talk")
 	if is_inside_tree():
 		await get_tree().create_timer(TURN_PAUSE).timeout
 	face_toward(who_cell)

@@ -123,15 +123,15 @@
    "money": 4300,
    "team": [
     {
-     "species": "Wadishell",
+     "species": "Spumlet",
      "level": 84
     },
     {
-     "species": "Saltsprig",
+     "species": "Arcfin",
      "level": 85
     },
     {
-     "species": "Stiltwade",
+     "species": "Kitelet",
      "level": 86
     }
    ],
@@ -163,15 +163,15 @@
    "money": 4300,
    "team": [
     {
-     "species": "Stiltwade",
+     "species": "Arcfin",
      "level": 84
     },
     {
-     "species": "Wadishell",
+     "species": "Flatskimmer",
      "level": 85
     },
     {
-     "species": "Saltsprig",
+     "species": "Flatskip",
      "level": 86
     }
    ],
@@ -193,15 +193,15 @@
    "money": 3400,
    "team": [
     {
-     "species": "Saltsprig",
+     "species": "Arcfin",
      "level": 83
     },
     {
-     "species": "Stiltwade",
+     "species": "Flatskimmer",
      "level": 84
     },
     {
-     "species": "Wadishell",
+     "species": "Flatskip",
      "level": 85
     }
    ]

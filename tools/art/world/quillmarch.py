@@ -6,7 +6,8 @@ seven roads through the print country and the four Rifts with their Wardens. Reg
 Run on its own: python3 tools/art/world/quillmarch.py
 It writes data/maps/<id>.json for the 17 places and their 24 house rooms, data/dialogue/quillmarch.json,
 the German table tools/i18n/de_quillmarch.py, and patches (idempotent) data/encounters.json,
-data/world_layout.json and data/story_npcs.json (the mail boatman on the Lastlamp square). Names,
+data/world_layout.json and data/story_npcs.json (the mail boatman on the Lastlamp square); the side
+goals, landmark halls and story duels come from tools/art/world/quillmarch_side.py. Names,
 rings, sheet slots and Warden teams come from the sheet; WILD below adds the rest of Quillmarch's
 70 own kinds to the road tables, so every one of them can be met in the wild.
 
@@ -148,6 +149,22 @@ CLOSED_STUB = {"top": [(x, y) for y in range(1, 6) for x in (5, 6)],
                "bottom": [(x, y) for y in range(11, 19) for x in (5, 6)],
                "left": [(x, y) for y in (8, 9) for x in range(1, 5)],
                "right": [(x, y) for y in (8, 9) for x in range(7, 11)]}
+# What sets each town apart from the shared street plan: (x, y, tiles) written over it. Burin Landing
+# has its harbour and pier, Platewick copper rock and lamps, Mordant Row its open baths, Rimeholt scree
+# and ice rock, Ledgerholm fenced bank yards and flower beds, Proofgate the wood closing in. Houses
+# grow or shrink by a column (the doors stay).
+TOWN_LOOK = {
+    "burin_landing": [(1, 5, "~~"), (1, 6, "~"), (1, 7, "~~"), (1, 8, "++++"), (1, 9, "++++"), (1, 10, "~~"), (1, 11, "~~")],
+    "platewick": [(1, 1, "@@"), (9, 1, "@@"), (1, 18, "@"), (10, 18, "@"), (2, 7, "L"), (9, 10, "L"), (1, 17, ".:"),
+                  (2, 12, "R"), (2, 13, "H")],
+    "mordant_row": [(1, 15, "~~"), (1, 17, "~~"), (9, 17, "~~"), (1, 1, ".."), (9, 1, "..")],
+    "rimeholt": [(1, 4, "::"), (9, 4, "::"), (1, 7, "@"), (10, 10, "@"), (1, 17, ":"), (1, 14, "::"), (9, 14, "::"),
+                 (9, 2, "."), (9, 3, ".")],
+    "ledgerholm": [(1, 7, "##"), (9, 10, "##"), (1, 1, "**"), (9, 1, "**"), (1, 18, "*"), (10, 18, "*"), (3, 10, "L"), (8, 7, "L"),
+                   (9, 12, "R"), (9, 13, "H")],
+    "proofgate": [(1, 1, "TT"), (9, 1, "TT"), (1, 18, "T"), (10, 18, "T"), (1, 10, "T"), (10, 7, "T"), (1, 17, ".."), (8, 17, "."),
+                  (2, 2, "."), (2, 3, ".")],
+}
 BOATMAN = (3, 9)            # the mail boatman on the Burin Landing pier
 BOAT_LANDING = (2, 9)       # where the mail boat sets you down
 BOAT_LASTLAMP = (8, 16)     # the stop on the Lastlamp square (Vellmarch's last town)
@@ -306,6 +323,8 @@ def town(mid):
             # No road runs up to a closed side: its stub becomes a yard.
             for x, y in CLOSED_STUB[side]:
                 rows[y] = rows[y][:x] + "." + rows[y][x + 1:]
+    for x, y, tiles in TOWN_LOOK[mid]:
+        rows[y] = rows[y][:x] + tiles + rows[y][x + len(tiles):]
     tt = TOWN_TEXT[mid]
     sign = text(mid + "_sign", lines((t["name"], t["name"]), tt["motto"]))
     npcs = [npc("keeper", 6, 7, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]
@@ -734,6 +753,8 @@ def main():
         route(mid)
     for mid in RIFTS:
         rift(mid)
+    import quillmarch_side  # noqa: E402  side goals, landmark halls, more Wayfarers and finds (q3_*)
+    quillmarch_side.build(sys.modules[__name__])
     patch_story_npcs()
     tr("Mail Boat", "Postschiff")
     stale = []

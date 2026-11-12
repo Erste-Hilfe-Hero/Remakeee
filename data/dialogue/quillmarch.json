@@ -66,8 +66,20 @@
   "lines": [
    "Pier Clerk Hollis: Tonics, ink and stamps. The stamps are real. The ink is mostly real."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts acid_charm frost_charm"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
  },
+ "dead_letter_office_sign_1": [
+  "Shelf label: 'Returned to sender. Sender returned to sender.'"
+ ],
+ "dead_letter_office_sign_2": [
+  "Pigeonholes up to the ceiling. Every one holds a letter nobody collected. Several are addressed to you."
+ ],
+ "debtors_icehouse_sign_1": [
+  "Notice: 'Pledges are kept at four below. Complaints are kept next to them.'"
+ ],
+ "debtors_icehouse_sign_2": [
+  "Rows of ice blocks, each with a tag. Some of the tags are waving. No. That is the draught."
+ ],
  "drypoint_lane_courier": [
   "Liv: I carry the Guild's letters. I read them first. It's in my contract, the part they didn't read."
  ],
@@ -85,6 +97,12 @@
  ],
  "drypoint_lane_scratcher_intro": [
   "Arne: Your face would make a good plate. Let me rough it up first."
+ ],
+ "errata_chapel_sign_1": [
+  "Plaque: 'Here we correct the dead. The living may queue.'"
+ ],
+ "errata_chapel_sign_2": [
+  "A wall of trial prints. 'Loving husband' is struck out on most of them."
  ],
  "gravers_causeway_canalman": [
   "Bo: I dredge the canal for lost plates. I find more lost people. They pay worse."
@@ -183,7 +201,7 @@
   "lines": [
    "Counting Clerk Mads: Tonics at today's rate. Tomorrow's rate is better, but you might not be here."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
  },
  "mordant_row_apothecary_elder": [
   "Apothecary Gerold: Mavet's cure, three coins a bottle. The bottle is worth two of them."
@@ -269,7 +287,7 @@
   "lines": [
    "Burin Seller Pell: Tonics and tools. A sharp burin opens many doors. Some of them are locked for good reason."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
  },
  "press_rift_acolyte": [
   "Ylva: Grisel prints the Rifts and then sends people to seal them. Steady work for everyone."
@@ -321,6 +339,967 @@
  ],
  "proofgate_stamp_hall_stamper": [
   "Chief Stamper Birger: Approved, denied, deceased. Three stamps. I use the third one most."
+ ],
+ "q3_cure_proof": {
+  "if": {
+   "not_flag": "q3_cure_proof_asked"
+  },
+  "else": "q3_cure_proof_reveal",
+  "lines": [
+   "Bottle Washer Ida: Everyone who takes Mavet's cure comes back for more. Sicker. I wash the bottles. I've started counting.",
+   "Bottle Washer Ida: Find out what goes into the cure. Quietly. I'd ask myself, but I like my eyebrows."
+  ],
+  "action": "set_flag q3_cure_proof_asked"
+ },
+ "q3_cure_proof_aki": {
+  "if": {
+   "not_flag": "q3_cure_proof_s1"
+  },
+  "else": "q3_cure_proof_aki_after",
+  "lines": [
+   "Filler Boy Aki: The cure? Three parts bath water, one part well water, one part label. The label is the expensive part.",
+   "Filler Boy Aki: The well water comes from the Well House. They say don't drink it. So we sell it."
+  ],
+  "action": "set_flag q3_cure_proof_s1; quest_stage q3_cure_proof 1"
+ },
+ "q3_cure_proof_aki_after": [
+  "Filler Boy Aki: I drink beer. Nobody has cured beer yet."
+ ],
+ "q3_cure_proof_ida_cure": {
+  "if": {
+   "not_flag": "q3_cure_proof_paid"
+  },
+  "else": "q3_cure_proof_ida_cure_after",
+  "lines": [
+   "You take Ida's crate. Inside: three real tonics and two hundred labels reading 'Ida's Cure. Now with less Mavet.'"
+  ],
+  "action": "set_flag q3_cure_proof_paid; give_item strong_tonic 3; quest_stage q3_cure_proof 4"
+ },
+ "q3_cure_proof_ida_cure_after": [
+  "Ida: I wash bottles again. Mavet raised my pay. She said she admires initiative, and moved the pipe."
+ ],
+ "q3_cure_proof_ida_cure_defeat": [
+  "Ida: Spilled. Two hundred bottles of it.",
+  "Ida: Take the tonics. They are real ones. I keep them for myself, which tells you everything."
+ ],
+ "q3_cure_proof_ida_cure_intro": [
+  "Ida: Open wide. The first dose is free. So is the last."
+ ],
+ "q3_cure_proof_reveal": {
+  "if": {
+   "flag": "q3_cure_proof_s2"
+  },
+  "else": "q3_cure_proof_wait",
+  "lines": [
+   "Bottle Washer Ida: Pipe forty-one. Bath to well to bottle. That's the whole recipe? That's all of it?",
+   "Bottle Washer Ida: Good. I've rented a cellar and bought two hundred bottles. Ida's Cure, half the price, same pipe.",
+   "Bottle Washer Ida: Only one person knows the recipe besides me and Mavet. And Mavet is a Warden."
+  ],
+  "action": "set_flag q3_cure_proof_reveal; quest_stage q3_cure_proof 3"
+ },
+ "q3_cure_proof_vera": {
+  "if": {
+   "not_flag": "q3_cure_proof_s2"
+  },
+  "else": "q3_cure_proof_vera_after",
+  "lines": [
+   "Pipe Fitter Vera: This pipe runs from the big bath into the town well. I fitted it. Mavet drew the plan and paid in cure.",
+   "Pipe Fitter Vera: The well makes them ill, and the cure is the well. Write the pipe number down if you want proof. Forty-one."
+  ],
+  "action": "set_flag q3_cure_proof_s2; quest_stage q3_cure_proof 2"
+ },
+ "q3_cure_proof_vera_after": [
+  "Pipe Fitter Vera: I bring my own water. From Rimeholt. In a locked flask."
+ ],
+ "q3_cure_proof_wait": [
+  "Bottle Washer Ida: The fillers on the Mordant Steps bottle it. Then ask in the Well House what they bottle."
+ ],
+ "q3_dead_letter_office": {
+  "if": {
+   "not_flag": "q3_dead_letter_office_won"
+  },
+  "else": "q3_dead_letter_office_pay",
+  "lines": [
+   "Osvald: There's a letter here for you. Posted eleven years ago.",
+   "Osvald: Unclaimed mail is released by duel. It's an old rule. I wrote it last week."
+  ],
+  "choices": [
+   {
+    "text": "Duel for the letter",
+    "next": "q3_dead_letter_office_fight"
+   },
+   {
+    "text": "Leave it unread",
+    "next": "q3_dead_letter_office_later"
+   }
+  ]
+ },
+ "q3_dead_letter_office_defeat": [
+  "Osvald: Delivered. Finally. That ruins my record."
+ ],
+ "q3_dead_letter_office_done": [
+  "Osvald: No more mail for you. I checked twice. I was hoping."
+ ],
+ "q3_dead_letter_office_fight": {
+  "lines": [
+   "Osvald: Sign here. In case you lose, it says where to forward you."
+  ],
+  "action": "battle q3_dead_letter_office"
+ },
+ "q3_dead_letter_office_later": [
+  "Osvald: It'll keep. It has kept eleven years. The ink is getting impatient, though."
+ ],
+ "q3_dead_letter_office_lose": [
+  "Osvald: Return to sender."
+ ],
+ "q3_dead_letter_office_pay": {
+  "if": {
+   "not_flag": "q3_dead_letter_office_paid"
+  },
+  "else": "q3_dead_letter_office_done",
+  "lines": [
+   "Osvald: Your letter. It says: 'Do not go to Quillmarch.' Unsigned. There was a parcel with it."
+  ],
+  "action": "set_flag q3_dead_letter_office_paid; give_item max_tonic 2"
+ },
+ "q3_dead_stamp": {
+  "if": {
+   "not_flag": "q3_dead_stamp_asked"
+  },
+  "else": "q3_dead_stamp_reveal",
+  "lines": [
+   "Pia: Look at my papers. 'Deceased.' One wrong stamp, and I can't buy bread, rent a bed or be arrested. I tried.",
+   "Pia: Get it corrected for me. They won't talk to me in the Stamp Hall. Company policy on the dead."
+  ],
+  "action": "set_flag q3_dead_stamp_asked"
+ },
+ "q3_dead_stamp_asmund": {
+  "if": {
+   "not_flag": "q3_dead_stamp_s2"
+  },
+  "else": "q3_dead_stamp_asmund_after",
+  "lines": [
+   "Paper Clerk Asmund: Swap papers for a dead girl? Already done, this morning. She came in herself. Very lively for her condition.",
+   "Paper Clerk Asmund: She signed for a traveller's papers and left her old ones in their place. I'd check your satchel, if I were you. Which, on paper, she now is."
+  ],
+  "action": "set_flag q3_dead_stamp_s2; quest_stage q3_dead_stamp 2"
+ },
+ "q3_dead_stamp_asmund_after": [
+  "Paper Clerk Asmund: Identity is nine tenths paperwork. The other tenth we lose."
+ ],
+ "q3_dead_stamp_pia_you": {
+  "if": {
+   "not_flag": "q3_dead_stamp_paid"
+  },
+  "else": "q3_dead_stamp_pia_you_after",
+  "lines": [
+   "You take your papers back from Pia, and her satchel. Inside: two revival leaves, of all things."
+  ],
+  "action": "set_flag q3_dead_stamp_paid; give_item revival_leaf 2; quest_stage q3_dead_stamp 4"
+ },
+ "q3_dead_stamp_pia_you_after": [
+  "Pia: I'm deceased again. They gave me a job in the Stamp Hall. I know the form from both sides."
+ ],
+ "q3_dead_stamp_pia_you_defeat": [
+  "Pia: Fine. Have yourself back.",
+  "Pia: Keep my old papers too. Being dead is restful. No one writes."
+ ],
+ "q3_dead_stamp_pia_you_intro": [
+  "Pia: Don't make a scene. Dead people don't."
+ ],
+ "q3_dead_stamp_reveal": {
+  "if": {
+   "flag": "q3_dead_stamp_s2"
+  },
+  "else": "q3_dead_stamp_wait",
+  "lines": [
+   "Pia: You checked your satchel. Yes. I stamped myself dead two years ago. Debts die with you. It's the one honest rule in Quillmarch.",
+   "Pia: But the dead can't leave through Proofgate. The living can. So I needed a living set, and someone too busy to notice.",
+   "Pia: You are deceased, I am you, and the gate shuts at dusk. Nothing personal. That is rather the point."
+  ],
+  "action": "set_flag q3_dead_stamp_reveal; quest_stage q3_dead_stamp 3"
+ },
+ "q3_dead_stamp_tove": {
+  "if": {
+   "not_flag": "q3_dead_stamp_s1"
+  },
+  "else": "q3_dead_stamp_tove_after",
+  "lines": [
+   "Stamp Girl Tove: 'Deceased' can't be undone. Policy. But papers can be swapped, if somebody living signs theirs over.",
+   "Stamp Girl Tove: Unclaimed papers of the living end up in the Dead Letter Office on Drypoint Lane. Ask there. Don't say I said."
+  ],
+  "action": "set_flag q3_dead_stamp_s1; quest_stage q3_dead_stamp 1"
+ },
+ "q3_dead_stamp_tove_after": [
+  "Stamp Girl Tove: Approved, denied, deceased. I dream in three colours."
+ ],
+ "q3_dead_stamp_wait": [
+  "Pia: The Stamp Hall is in Proofgate. Ask for the chief stamper's girl. She does the real work."
+ ],
+ "q3_debtors_icehouse": {
+  "if": {
+   "not_flag": "q3_debtors_icehouse_won"
+  },
+  "else": "q3_debtors_icehouse_pay",
+  "lines": [
+   "Stig: Everything in here is pawned. Boots, fathers, a brass band.",
+   "Stig: Beat me and pick one thing from the unclaimed shelf."
+  ],
+  "choices": [
+   {
+    "text": "Duel for the shelf",
+    "next": "q3_debtors_icehouse_fight"
+   },
+   {
+    "text": "Touch nothing",
+    "next": "q3_debtors_icehouse_later"
+   }
+  ]
+ },
+ "q3_debtors_icehouse_defeat": [
+  "Stig: Unclaimed shelf, left side. Not the tuba. The tuba is reserved."
+ ],
+ "q3_debtors_icehouse_done": [
+  "Stig: The tuba plays at night. Nobody is in it. I have looked."
+ ],
+ "q3_debtors_icehouse_fight": {
+  "lines": [
+   "Stig: Mind the floor. That is also somebody."
+  ],
+  "action": "battle q3_debtors_icehouse"
+ },
+ "q3_debtors_icehouse_later": [
+  "Stig: Wise. Half of them in here touched something."
+ ],
+ "q3_debtors_icehouse_lose": [
+  "Stig: Row five has space. Just saying."
+ ],
+ "q3_debtors_icehouse_pay": {
+  "if": {
+   "not_flag": "q3_debtors_icehouse_paid"
+  },
+  "else": "q3_debtors_icehouse_done",
+  "lines": [
+   "Stig: You picked the crate of tonics. Everyone does. One day somebody takes the tuba and I can sleep."
+  ],
+  "action": "set_flag q3_debtors_icehouse_paid; give_item strong_tonic 3"
+ },
+ "q3_drypoint_lane_puller": [
+  "Embla: I pull the first print of every plate. If it's a wanted poster, I get a head start."
+ ],
+ "q3_drypoint_lane_puller_defeat": [
+  "Embla: Smudged. My fault. Write that down, it's rare."
+ ],
+ "q3_drypoint_lane_puller_intro": [
+  "Embla: Let's see how you look in reverse."
+ ],
+ "q3_early_epitaph": {
+  "if": {
+   "not_flag": "q3_early_epitaph_asked"
+  },
+  "else": "q3_early_epitaph_reveal",
+  "lines": [
+   "Corrector Brand: Welcome to the Errata Chapel. We print corrected epitaphs. 'Beloved' becomes 'tolerated'. Families pay well for accuracy.",
+   "Corrector Brand: Trouble is, epitaphs are being corrected before the people die. Someone is ahead of me. Find out who gets the lists."
+  ],
+  "action": "set_flag q3_early_epitaph_asked"
+ },
+ "q3_early_epitaph_brand_stone": {
+  "if": {
+   "not_flag": "q3_early_epitaph_paid"
+  },
+  "else": "q3_early_epitaph_brand_stone_after",
+  "lines": [
+   "You take Brand's cash box. Inside: three revival leaves and a receipt for your plot. Paid in full, with a view of the canal."
+  ],
+  "action": "set_flag q3_early_epitaph_paid; give_item revival_leaf 3; quest_stage q3_early_epitaph 4"
+ },
+ "q3_early_epitaph_brand_stone_after": [
+  "Brand: I corrected your stone. It now reads 'still alive, regrettably'. No charge."
+ ],
+ "q3_early_epitaph_brand_stone_defeat": [
+  "Brand: An erratum. In my own chapel.",
+  "Brand: Take the stone money. And the stone. It is good granite. You'll want it one day."
+ ],
+ "q3_early_epitaph_brand_stone_intro": [
+  "Brand: Here lies a stranger. Asked too many questions. Please lie down, the wording is final."
+ ],
+ "q3_early_epitaph_hanne": {
+  "if": {
+   "not_flag": "q3_early_epitaph_s2"
+  },
+  "else": "q3_early_epitaph_hanne_after",
+  "lines": [
+   "Typesetter Hanne: Advance epitaphs, yes. Forty a month. Ordered and paid by Corrector Brand. He gets a discount for bulk.",
+   "Typesetter Hanne: He sells the plots before the debt falls due. There is one on the bench now. No name yet. Just 'a stranger, asked too many questions'."
+  ],
+  "action": "set_flag q3_early_epitaph_s2; quest_stage q3_early_epitaph 2"
+ },
+ "q3_early_epitaph_hanne_after": [
+  "Typesetter Hanne: I set my own stone once, for practice. Brand sent me a bill."
+ ],
+ "q3_early_epitaph_pim": {
+  "if": {
+   "not_flag": "q3_early_epitaph_s1"
+  },
+  "else": "q3_early_epitaph_pim_after",
+  "lines": [
+   "Archive Runner Pim: The death lists? They aren't death lists. They are loans falling due. Same people, mostly. Same week.",
+   "Archive Runner Pim: A copy goes to the Print Shop in Platewick every month. Somebody there sets the stones in advance."
+  ],
+  "action": "set_flag q3_early_epitaph_s1; quest_stage q3_early_epitaph 1"
+ },
+ "q3_early_epitaph_pim_after": [
+  "Archive Runner Pim: I'm on a list myself. Small loan. Small stone."
+ ],
+ "q3_early_epitaph_reveal": {
+  "if": {
+   "flag": "q3_early_epitaph_s2"
+  },
+  "else": "q3_early_epitaph_wait",
+  "lines": [
+   "Corrector Brand: You went to the Print Shop. So you know who is ahead of me. I am. I'm very punctual.",
+   "Corrector Brand: A plot sold early is a plot sold twice. And a stranger who dies on the Causeway needs no family discount.",
+   "Corrector Brand: Your stone is already cut. It would be a shame to correct it."
+  ],
+  "action": "set_flag q3_early_epitaph_reveal; quest_stage q3_early_epitaph 3"
+ },
+ "q3_early_epitaph_wait": [
+  "Corrector Brand: Names and dates come out of the Ledger Archive in Ledgerholm. Start with the archive runner."
+ ],
+ "q3_erased_village": {
+  "if": {
+   "not_flag": "q3_erased_village_asked"
+  },
+  "else": "q3_erased_village_after_keep",
+  "lines": [
+   "Map Apprentice Ansa: Hollow Em is gone from the new map. A whole village. Forty people who can't get a stamp because they aren't anywhere.",
+   "Map Apprentice Ansa: Find out who scraped it off the plate. And where it really lies. For the map. Only for the map."
+  ],
+  "action": "set_flag q3_erased_village_asked"
+ },
+ "q3_erased_village_after_keep": {
+  "if": {
+   "flag": "q3_erased_village_kept"
+  },
+  "else": "q3_erased_village_after_trust",
+  "lines": [
+   "Map Apprentice Ansa: Six weeks in the marsh and no village. I found three boots and a tax rider. I'm still looking. I count things."
+  ]
+ },
+ "q3_erased_village_after_trust": {
+  "if": {
+   "flag": "q3_erased_village_trusted"
+  },
+  "else": "q3_erased_village_reward",
+  "lines": [
+   "Map Apprentice Ansa: Hollow Em is back on the map. In red. I have a house now. The door sticks."
+  ]
+ },
+ "q3_erased_village_folke": [
+  "Folke: Marsh, mud, eels. I'm putting in for the desk job."
+ ],
+ "q3_erased_village_folke_defeat": [
+  "Folke: All right. I found nothing. I'll put it on the form: 'nothing, with violence'.",
+  "Folke: The apprentice sold me your route for a fifth. She sells everything by the fraction."
+ ],
+ "q3_erased_village_folke_intro": [
+  "Folke: You walk like someone who knows where forty taxpayers are hiding."
+ ],
+ "q3_erased_village_go": {
+  "if": {
+   "flag": "q3_erased_village_reveal"
+  },
+  "else": "q3_erased_village_reveal",
+  "lines": [
+   "Map Apprentice Ansa: The tax rider is on the Smudge Marsh. He follows your boot prints. Yours are the clean ones."
+  ]
+ },
+ "q3_erased_village_gudrun": {
+  "if": {
+   "not_flag": "q3_erased_village_s2"
+  },
+  "else": "q3_erased_village_gudrun_after",
+  "lines": [
+   "Eel Fisher Gudrun: Hush. Yes, I'm from Hollow Em. No map, no tax. We haven't paid in six years. Best six years we ever had.",
+   "Eel Fisher Gudrun: It lies behind the third dead alder, past the sunk cart. Don't tell the girl from Proofgate. She counts things."
+  ],
+  "action": "set_flag q3_erased_village_s2; quest_stage q3_erased_village 2"
+ },
+ "q3_erased_village_gudrun_after": [
+  "Eel Fisher Gudrun: If anyone asks, I'm a rumour."
+ ],
+ "q3_erased_village_hakon": [
+  "Evicted Eeler Hakon: Six years of back tax. They took the boats, the nets and the eels. They left us the map.",
+  "Evicted Eeler Hakon: We're on it in red. Somebody told. I hope they got a good price."
+ ],
+ "q3_erased_village_keep": [
+  "Map Apprentice Ansa: Past the mill, left at the gallows? Odd. Fine. Here, an advance. If it's wrong, I want it back with interest."
+ ],
+ "q3_erased_village_reveal": {
+  "if": {
+   "flag": "q3_erased_village_s2"
+  },
+  "else": "q3_erased_village_wait",
+  "lines": [
+   "Map Apprentice Ansa: You found it? Wonderful. I mean, for the map.",
+   "Map Apprentice Ansa: Fine. I get a tenth of every back tax I find. Six years, forty people. That's a house. With a door.",
+   "Map Apprentice Ansa: A tax rider is out on the marsh following your tracks. He takes a third if he finds it first. Stop him, then tell me where it is."
+  ],
+  "action": "set_flag q3_erased_village_reveal; quest_stage q3_erased_village 3"
+ },
+ "q3_erased_village_reward": {
+  "if": {
+   "flag": "q3_erased_village_done"
+  },
+  "else": "q3_erased_village_go",
+  "lines": [
+   "Map Apprentice Ansa: The rider is gone? Then it's just us. Where is Hollow Em?",
+   "Map Apprentice Ansa: Tell me and you get your share. Or tell me something else, and I'll never know. Probably."
+  ],
+  "choices": [
+   {
+    "text": "Tell her the truth",
+    "flag": "q3_erased_village_trusted",
+    "action": "set_flag q3_erased_village_paid; give_item max_tonic 4; quest_stage q3_erased_village 4",
+    "next": "q3_erased_village_trust"
+   },
+   {
+    "text": "Send her the wrong way",
+    "flag": "q3_erased_village_kept",
+    "action": "set_flag q3_erased_village_paid; give_item strong_tonic 2; quest_stage q3_erased_village 4",
+    "next": "q3_erased_village_keep"
+   }
+  ]
+ },
+ "q3_erased_village_sten": {
+  "if": {
+   "not_flag": "q3_erased_village_s1"
+  },
+  "else": "q3_erased_village_sten_after",
+  "lines": [
+   "Vault Boy Sten: Hollow Em? Scraped off by order. Here's the slip: 'At the request of the village. Paid in eels.'",
+   "Vault Boy Sten: They asked to vanish. One of them still fishes on the Smudge Marsh. Follow the smell."
+  ],
+  "action": "set_flag q3_erased_village_s1; quest_stage q3_erased_village 1"
+ },
+ "q3_erased_village_sten_after": [
+  "Vault Boy Sten: I scraped my school off once. It was still there on Monday."
+ ],
+ "q3_erased_village_trust": [
+  "Map Apprentice Ansa: Third dead alder, sunk cart. Thank you. Here is your share. Don't look at it like that, it's legal."
+ ],
+ "q3_erased_village_ulf": [
+  "Eel Fisher's Boy Ulf: Gran says thank you, and that you were never here. Have an eel."
+ ],
+ "q3_erased_village_wait": [
+  "Map Apprentice Ansa: The old plates lie in the Map Vault. Look at the scrape marks."
+ ],
+ "q3_errata_chapel": {
+  "if": {
+   "not_flag": "q3_errata_chapel_won"
+  },
+  "else": "q3_errata_chapel_pay",
+  "lines": [
+   "Runhild: I cut one line for every visitor. Beat me and you choose the words.",
+   "Runhild: Lose and I choose. I'm in a mood today."
+  ],
+  "choices": [
+   {
+    "text": "Duel for the wording",
+    "next": "q3_errata_chapel_fight"
+   },
+   {
+    "text": "Stay unwritten",
+    "next": "q3_errata_chapel_later"
+   }
+  ]
+ },
+ "q3_errata_chapel_defeat": [
+  "Runhild: Your words, then. Short ones, please. Granite charges by the letter."
+ ],
+ "q3_errata_chapel_done": [
+  "Runhild: 'Not yet.' I had to cut it on a very small stone. Optimism doesn't sell."
+ ],
+ "q3_errata_chapel_fight": {
+  "lines": [
+   "Runhild: The chisel is sharp. Hold your name steady."
+  ],
+  "action": "battle q3_errata_chapel"
+ },
+ "q3_errata_chapel_later": [
+  "Runhild: Everyone gets a line in the end. I can wait. I mostly do."
+ ],
+ "q3_errata_chapel_lose": [
+  "Runhild: 'Tried.' That's the whole line."
+ ],
+ "q3_errata_chapel_pay": {
+  "if": {
+   "not_flag": "q3_errata_chapel_paid"
+  },
+  "else": "q3_errata_chapel_done",
+  "lines": [
+   "Runhild: You chose 'Not yet'. Good line. Here, the chapel gives these to people it can't use yet."
+  ],
+  "action": "set_flag q3_errata_chapel_paid; give_item revival_leaf 2"
+ },
+ "q3_frozen_deed": {
+  "if": {
+   "not_flag": "q3_frozen_deed_asked"
+  },
+  "else": "q3_frozen_deed_after_keep",
+  "lines": [
+   "Debtor's Daughter Kari: The Guild froze our house for a debt my father paid. He went to fetch the receipt and never came back.",
+   "Debtor's Daughter Kari: Find the receipt. With it the house thaws. Without it I sleep in the Hearth Hall, in the far row."
+  ],
+  "action": "set_flag q3_frozen_deed_asked"
+ },
+ "q3_frozen_deed_after_keep": {
+  "if": {
+   "flag": "q3_frozen_deed_kept"
+  },
+  "else": "q3_frozen_deed_after_trust",
+  "lines": [
+   "Debtor's Daughter Kari: Father is home. He keeps the receipt in one hand and the pawn ticket in the other. We don't talk much."
+  ]
+ },
+ "q3_frozen_deed_after_trust": {
+  "if": {
+   "flag": "q3_frozen_deed_trusted"
+  },
+  "else": "q3_frozen_deed_reward",
+  "lines": [
+   "Debtor's Daughter Kari: The house is thawed. Father is still in row four. Spring is late this year. It was late last year too."
+  ]
+ },
+ "q3_frozen_deed_go": {
+  "if": {
+   "flag": "q3_frozen_deed_reveal"
+  },
+  "else": "q3_frozen_deed_reveal",
+  "lines": [
+   "Debtor's Daughter Kari: The bailiff is on Rimeglass Pass. He carries a hammer and a candle. Go."
+  ]
+ },
+ "q3_frozen_deed_halfdan": [
+  "Old Halfdan: Cold? No. I was cold for a year. Now I'm only disappointed.",
+  "Old Halfdan: She pawned me for the house. I'd have done the same to her mother. Still."
+ ],
+ "q3_frozen_deed_keep": [
+  "Debtor's Daughter Kari: You paid the stamp? Oh. Then he'll be home tonight. I had better hide the pawn ticket."
+ ],
+ "q3_frozen_deed_odd": {
+  "if": {
+   "not_flag": "q3_frozen_deed_s1"
+  },
+  "else": "q3_frozen_deed_odd_after",
+  "lines": [
+   "Sledge Boy Odd: The old man with the receipt? I drove him. Not to the Debt Office. To the Debtors' Icehouse, up on Rimeglass Pass.",
+   "Sledge Boy Odd: His daughter paid the fare. One way."
+  ],
+  "action": "set_flag q3_frozen_deed_s1; quest_stage q3_frozen_deed 1"
+ },
+ "q3_frozen_deed_odd_after": [
+  "Sledge Boy Odd: I don't ask where people go. I ask if they need the sledge back."
+ ],
+ "q3_frozen_deed_ragnvald": [
+  "Ragnvald: I only collect. The cold does the rest."
+ ],
+ "q3_frozen_deed_ragnvald_defeat": [
+  "Ragnvald: Keep the block, then. He holds the paper so hard we'd have to break the fingers anyway.",
+  "Ragnvald: The daughter told us you were coming, by the way. She wanted someone to blame if the ice cracked."
+ ],
+ "q3_frozen_deed_ragnvald_intro": [
+  "Ragnvald: Receipts melt. People melt. The debt stays. Step aside."
+ ],
+ "q3_frozen_deed_reveal": {
+  "if": {
+   "flag": "q3_frozen_deed_s2"
+  },
+  "else": "q3_frozen_deed_wait",
+  "lines": [
+   "Debtor's Daughter Kari: You saw him? Then you know. I pawned my father. He was the only thing in the house the Guild would take.",
+   "Debtor's Daughter Kari: The receipt in his hand clears the debt. I need the receipt out and him... I hadn't planned that far.",
+   "Debtor's Daughter Kari: The Guild's bailiff is on his way to break the block and burn the paper. Stop him on the pass. Please."
+  ],
+  "action": "set_flag q3_frozen_deed_reveal; quest_stage q3_frozen_deed 3"
+ },
+ "q3_frozen_deed_reward": {
+  "if": {
+   "flag": "q3_frozen_deed_done"
+  },
+  "else": "q3_frozen_deed_go",
+  "lines": [
+   "Debtor's Daughter Kari: The block is safe? Then there are two ways to do this.",
+   "Debtor's Daughter Kari: Leave him to me. I'll have the receipt cut out neatly and thaw him in spring. Or pay the thaw stamp yourself, now, and he walks home with it."
+  ],
+  "choices": [
+   {
+    "text": "Leave it to Kari",
+    "flag": "q3_frozen_deed_trusted",
+    "action": "set_flag q3_frozen_deed_paid; give_item revival_leaf 3; quest_stage q3_frozen_deed 4",
+    "next": "q3_frozen_deed_trust"
+   },
+   {
+    "text": "Thaw him now",
+    "flag": "q3_frozen_deed_kept",
+    "action": "set_flag q3_frozen_deed_paid; give_item revival_leaf 1; quest_stage q3_frozen_deed 4",
+    "next": "q3_frozen_deed_keep"
+   }
+  ]
+ },
+ "q3_frozen_deed_tagger": [
+  "Tag Writer Inga: Row four, block nine? Renewed for another year this morning. By the daughter. She paid in firewood."
+ ],
+ "q3_frozen_deed_torsten": {
+  "if": {
+   "not_flag": "q3_frozen_deed_s2"
+  },
+  "else": "q3_frozen_deed_torsten_after",
+  "lines": [
+   "Ice Keeper Torsten: Row four, block nine. An old man, standing, holding a receipt. Very good condition.",
+   "Ice Keeper Torsten: Pledged by his daughter against the house debt. The receipt is real. It's just inside the ice, with him."
+  ],
+  "action": "set_flag q3_frozen_deed_s2; quest_stage q3_frozen_deed 2"
+ },
+ "q3_frozen_deed_torsten_after": [
+  "Ice Keeper Torsten: We don't thaw without a stamp. We don't stamp without a fee. It keeps things calm."
+ ],
+ "q3_frozen_deed_trust": [
+  "Debtor's Daughter Kari: Thank you. Spring. I promise. Springs are short here, but I promise."
+ ],
+ "q3_frozen_deed_wait": [
+  "Debtor's Daughter Kari: He took the sledge road over the Hoarfrost Moor. Ask the people who work it."
+ ],
+ "q3_gravers_causeway_toller": [
+  "Sixten: The Causeway toll is one coin or one portrait. I keep the portraits. They are useful later."
+ ],
+ "q3_gravers_causeway_toller_defeat": [
+  "Sixten: Go on through. I'll draw you from memory. Unkindly."
+ ],
+ "q3_gravers_causeway_toller_intro": [
+  "Sixten: Coin, portrait or a beating. I have engraved all three."
+ ],
+ "q3_hoarfrost_moor_reader": [
+  "Yrsa: The frost wrote 'run' on my sledge this morning. I assumed it meant you."
+ ],
+ "q3_hoarfrost_moor_reader_defeat": [
+  "Yrsa: It said 'loser'. It meant me. The frost is rude."
+ ],
+ "q3_hoarfrost_moor_reader_intro": [
+  "Yrsa: Hold still. There is something written on your back."
+ ],
+ "q3_mordant_steps_carrier": [
+  "Bodil: Two buckets up, two buckets down. I have one good shoulder and one very clean one."
+ ],
+ "q3_mordant_steps_carrier_defeat": [
+  "Bodil: Not a drop spilled. Losing is easy when you're careful."
+ ],
+ "q3_mordant_steps_carrier_intro": [
+  "Bodil: Careful. If I spill, we both get shorter."
+ ],
+ "q3_rimeglass_pass_cutter": [
+  "Halla: I cut blocks for the Icehouse. Big ones. They never say what for, and I never measure anyone."
+ ],
+ "q3_rimeglass_pass_cutter_defeat": [
+  "Halla: Too lively to store. Shame."
+ ],
+ "q3_rimeglass_pass_cutter_intro": [
+  "Halla: You're about a block and a half. Let me check."
+ ],
+ "q3_short_till": {
+  "if": {
+   "not_flag": "q3_short_till_asked"
+  },
+  "else": "q3_short_till_reveal",
+  "lines": [
+   "Teller Nils: My till is one coin short every night. One. If the count is wrong a third time, the bank hangs the teller. It's in the rules, under 'staff benefits'.",
+   "Teller Nils: Find the thief. Ask loudly. I want people to see someone asking."
+  ],
+  "action": "set_flag q3_short_till_asked"
+ },
+ "q3_short_till_brynja": {
+  "if": {
+   "not_flag": "q3_short_till_s2"
+  },
+  "else": "q3_short_till_brynja_after",
+  "lines": [
+   "Coin Carter Brynja: One coin a night, yes. Teller Nils brings it himself. I restamp it lighter and send it back as two.",
+   "Coin Carter Brynja: Last week he asked me to remember a stranger instead. Asking questions, near the till. He described you rather well."
+  ],
+  "action": "set_flag q3_short_till_s2; quest_stage q3_short_till 2"
+ },
+ "q3_short_till_brynja_after": [
+  "Coin Carter Brynja: Money doesn't disappear. It just changes whose fault it is."
+ ],
+ "q3_short_till_jens": {
+  "if": {
+   "not_flag": "q3_short_till_s1"
+  },
+  "else": "q3_short_till_jens_after",
+  "lines": [
+   "Choir Boy Jens: I sing treble and watch the tills. Nobody goes near Nils's till. Only Nils. And lately you.",
+   "Choir Boy Jens: The missing coins turn up in the carts on Stamp Road, restamped. Ask the carter."
+  ],
+  "action": "set_flag q3_short_till_s1; quest_stage q3_short_till 1"
+ },
+ "q3_short_till_jens_after": [
+  "Choir Boy Jens: Bankers sing flat. They say the note is correct and the choir is in arrears."
+ ],
+ "q3_short_till_nils_till": {
+  "if": {
+   "not_flag": "q3_short_till_paid"
+  },
+  "else": "q3_short_till_nils_till_after",
+  "lines": [
+   "You take Nils's till bag. Inside: three tonics, forty light coins and a ledger page with your description. The height is flattering."
+  ],
+  "action": "set_flag q3_short_till_paid; give_item max_tonic 3; quest_stage q3_short_till 4"
+ },
+ "q3_short_till_nils_till_after": [
+  "Nils: I was promoted. The bank said a man who can frame a stranger can run the loans desk."
+ ],
+ "q3_short_till_nils_till_defeat": [
+  "Nils: That doesn't add up. I checked it twice.",
+  "Nils: Take the coins. All the light ones. Tell the bank they were always like that."
+ ],
+ "q3_short_till_nils_till_intro": [
+  "Nils: Hold still. I need you found near the till, and you look heavy to drag."
+ ],
+ "q3_short_till_reveal": {
+  "if": {
+   "flag": "q3_short_till_s2"
+  },
+  "else": "q3_short_till_wait",
+  "lines": [
+   "Teller Nils: You asked the choir. You asked the carter. Everyone saw you asking. Excellent.",
+   "Teller Nils: Tonight's ledger reads: 'Shortfall explained. Stranger observed at till on three occasions.' I wrote it this morning.",
+   "Teller Nils: Two ledgers, one thief, and it isn't the one who can do sums. The guards come at six. I'd rather settle before."
+  ],
+  "action": "set_flag q3_short_till_reveal; quest_stage q3_short_till 3"
+ },
+ "q3_short_till_wait": [
+  "Teller Nils: The choir practises above the bank and sees the counter. Ask in the Choir Loft."
+ ],
+ "q3_smudge_marsh_eeler": [
+  "Disa: Eels don't pay tax if nobody counts them. I help them stay uncounted."
+ ],
+ "q3_smudge_marsh_eeler_defeat": [
+  "Disa: Customer, then. The first eel is free. It bites."
+ ],
+ "q3_smudge_marsh_eeler_intro": [
+  "Disa: You've seen my eels. That makes you a witness or a customer."
+ ],
+ "q3_stamp_road_inspector": [
+  "Gorm: Papers. No, don't show me. I prefer to be surprised."
+ ],
+ "q3_stamp_road_inspector_defeat": [
+  "Gorm: Approved. Under protest. Mine."
+ ],
+ "q3_stamp_road_inspector_intro": [
+  "Gorm: Unstamped traveller. That's a fine or a fight, and I've lost the fine book."
+ ],
+ "q3_wanted_face": {
+  "if": {
+   "not_flag": "q3_wanted_face_asked"
+  },
+  "else": "q3_wanted_face_after_keep",
+  "lines": [
+   "Baker Jorund: That's my face on the wanted poster. 'Arson, fraud, loud singing.' I only did the singing.",
+   "Baker Jorund: Somebody engraved me. Find the plate, and whoever cut it. I can't sell a bun without being arrested a little."
+  ],
+  "action": "set_flag q3_wanted_face_asked"
+ },
+ "q3_wanted_face_after_keep": {
+  "if": {
+   "flag": "q3_wanted_face_kept"
+  },
+  "else": "q3_wanted_face_after_trust",
+  "lines": [
+   "Baker Jorund: My wife turned me in anyway. For the singing. I'm out on bail, paid in bread."
+  ]
+ },
+ "q3_wanted_face_after_trust": {
+  "if": {
+   "flag": "q3_wanted_face_trusted"
+  },
+  "else": "q3_wanted_face_reward",
+  "lines": [
+   "Baker Jorund: The plate? Melted. Mostly. The Guild paid well for the half with your face. Buns are on the house, forever."
+  ]
+ },
+ "q3_wanted_face_go": {
+  "if": {
+   "flag": "q3_wanted_face_reveal"
+  },
+  "else": "q3_wanted_face_reveal",
+  "lines": [
+   "Baker Jorund: The cutter works on the Gravers' Causeway. Hurry. He is fast with noses."
+  ]
+ },
+ "q3_wanted_face_gry": [
+  "Poster Reader Gry: New poster this morning. 'Wanted: a stranger. Arson, fraud, loud singing.'",
+  "Poster Reader Gry: The nose is very good. Do I know you from somewhere?"
+ ],
+ "q3_wanted_face_gry_bread": [
+  "Poster Reader Gry: The baker's poster is still up. Somebody drew a moustache on it. It helps."
+ ],
+ "q3_wanted_face_kalle": {
+  "if": {
+   "not_flag": "q3_wanted_face_s1"
+  },
+  "else": "q3_wanted_face_kalle_after",
+  "lines": [
+   "Drawer Boy Kalle: Jorund's plate? Drawer nine hundred and four. It's out on loan, to the cutter on the Gravers' Causeway.",
+   "Drawer Boy Kalle: Funny order. Paid in bread."
+  ],
+  "action": "set_flag q3_wanted_face_s1; quest_stage q3_wanted_face 1"
+ },
+ "q3_wanted_face_kalle_after": [
+  "Drawer Boy Kalle: Your drawer is still empty. I check every morning. It's exciting."
+ ],
+ "q3_wanted_face_keep": [
+  "Baker Jorund: You don't trust me. Clever. Then take these as hush money. Mine or yours, I've lost track."
+ ],
+ "q3_wanted_face_mette": {
+  "if": {
+   "not_flag": "q3_wanted_face_s2"
+  },
+  "else": "q3_wanted_face_mette_after",
+  "lines": [
+   "Plate Runner Mette: The baker's plate? I carried it out myself. The cutter is changing the face. Nose first.",
+   "Plate Runner Mette: Same crimes, new head. I saw the sketch. Nice likeness of you, by the way."
+  ],
+  "action": "set_flag q3_wanted_face_s2; quest_stage q3_wanted_face 2"
+ },
+ "q3_wanted_face_mette_after": [
+  "Plate Runner Mette: I never look at the plates I carry. Except always."
+ ],
+ "q3_wanted_face_reveal": {
+  "if": {
+   "flag": "q3_wanted_face_s2"
+  },
+  "else": "q3_wanted_face_wait",
+  "lines": [
+   "Baker Jorund: My face is coming off the poster? Wonderful! And whose goes... oh. Oh, that's awkward.",
+   "Baker Jorund: Listen. I ordered the poster myself. The reward is big, my wife turns me in, we share it. Then it got out of hand.",
+   "Baker Jorund: Somebody has to be on it. The cutter is still on the Causeway. Stop him before your nose dries."
+  ],
+  "action": "set_flag q3_wanted_face_reveal; quest_stage q3_wanted_face 3"
+ },
+ "q3_wanted_face_reward": {
+  "if": {
+   "flag": "q3_wanted_face_done"
+  },
+  "else": "q3_wanted_face_go",
+  "lines": [
+   "Baker Jorund: You have the plate? Half me, half you. We're practically family.",
+   "Baker Jorund: Give it to me. I'll melt it down, I swear on my oven. Or keep it, if you don't trust a baker."
+  ],
+  "choices": [
+   {
+    "text": "Hand him the plate",
+    "flag": "q3_wanted_face_trusted",
+    "action": "set_flag q3_wanted_face_paid; give_item strong_tonic 2; quest_stage q3_wanted_face 4",
+    "next": "q3_wanted_face_trust"
+   },
+   {
+    "text": "Keep the plate",
+    "flag": "q3_wanted_face_kept",
+    "action": "set_flag q3_wanted_face_paid; give_item max_tonic 3; quest_stage q3_wanted_face 4",
+    "next": "q3_wanted_face_keep"
+   }
+  ]
+ },
+ "q3_wanted_face_sture": [
+  "Sture: No hard feelings. I do hard lines, not feelings."
+ ],
+ "q3_wanted_face_sture_defeat": [
+  "Sture: Fine, take the plate. It's half you, half baker. Hang it up and see who they arrest.",
+  "Sture: The baker paid me twice, you know. Once to cut him. Once to cut you."
+ ],
+ "q3_wanted_face_sture_intro": [
+  "Sture: Hold that expression. Guilty. Perfect."
+ ],
+ "q3_wanted_face_trust": [
+  "Baker Jorund: Thank you! Here, tonics. And a bun. Don't eat the bun."
+ ],
+ "q3_wanted_face_wait": [
+  "Baker Jorund: Every plate in town sleeps in the Plate Store. Ask who ordered mine."
+ ],
+ "q3_widow_post": {
+  "if": {
+   "not_flag": "q3_widow_post_asked"
+  },
+  "else": "q3_widow_post_reveal",
+  "lines": [
+   "Widow Maren: My Jost drowned three winters ago. He still writes every week. The handwriting is getting better.",
+   "Widow Maren: Find out who sends the letters. I'd like to thank them. Or bury them. I haven't decided."
+  ],
+  "action": "set_flag q3_widow_post_asked"
+ },
+ "q3_widow_post_edda": {
+  "if": {
+   "not_flag": "q3_widow_post_s1"
+  },
+  "else": "q3_widow_post_edda_after",
+  "lines": [
+   "Sorter Edda: Letters from the drowned? Those aren't dead letters. Those are a subscription.",
+   "Sorter Edda: One a week, paid a year ahead. The Customs Shed in Burin Landing keeps the order book."
+  ],
+  "action": "set_flag q3_widow_post_s1; quest_stage q3_widow_post 1"
+ },
+ "q3_widow_post_edda_after": [
+  "Sorter Edda: We file love letters under 'fiction'. It saves time."
+ ],
+ "q3_widow_post_maren_ink": {
+  "if": {
+   "not_flag": "q3_widow_post_paid"
+  },
+  "else": "q3_widow_post_maren_ink_after",
+  "lines": [
+   "You take Maren's purse. Inside: three tonics and a finished letter of condolence, with your name already filled in."
+  ],
+  "action": "set_flag q3_widow_post_paid; give_item max_tonic 3; quest_stage q3_widow_post 4"
+ },
+ "q3_widow_post_maren_ink_after": [
+  "Widow Maren: Jost wrote again this morning. He misses me terribly. I was quite moved."
+ ],
+ "q3_widow_post_maren_ink_defeat": [
+  "Widow Maren: Oh, put it in a letter.",
+  "Widow Maren: Take the pension purse. I'll say Jost needed it. He is very generous, for a dead man."
+ ],
+ "q3_widow_post_maren_ink_intro": [
+  "Widow Maren: Dearest stranger. It is with great sorrow that I write of your accident."
+ ],
+ "q3_widow_post_reveal": {
+  "if": {
+   "flag": "q3_widow_post_s2"
+  },
+  "else": "q3_widow_post_wait",
+  "lines": [
+   "Widow Maren: So you read the order book. Yes. I write them myself. A widow with weekly letters gets visitors. And a pension.",
+   "Widow Maren: Jost left on the mail boat with the baker's wife. The Guild pays for drowned husbands. It does not pay for stupid ones.",
+   "Widow Maren: Nobody else knows. I'd like to keep it that way. You may write to me afterwards."
+  ],
+  "action": "set_flag q3_widow_post_reveal; quest_stage q3_widow_post 3"
+ },
+ "q3_widow_post_timo": {
+  "if": {
+   "not_flag": "q3_widow_post_s2"
+  },
+  "else": "q3_widow_post_timo_after",
+  "lines": [
+   "Order Boy Timo: Weekly letter, 'from Jost, with longing'. Ordered by Maren. Paid by Maren. Dictated by Maren.",
+   "Order Boy Timo: Jost isn't on the drowned list either. He's on the passenger list. One way."
+  ],
+  "action": "set_flag q3_widow_post_s2; quest_stage q3_widow_post 2"
+ },
+ "q3_widow_post_timo_after": [
+  "Order Boy Timo: I'm not supposed to read the order book. I'm not supposed to do most of what I do."
+ ],
+ "q3_widow_post_wait": [
+  "Widow Maren: Unclaimed mail goes to the Dead Letter Office on Drypoint Lane. Start there."
  ],
  "rime_rift_acolyte": [
   "Solrun: Quenby reads the frost for the Guild. I read it for Quenby. Nobody reads it for me."
@@ -392,7 +1371,7 @@
   "lines": [
    "Fur Trader Joris: Tonics, mittens, debts. The mittens are cheap. The debts come free with them."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pruning_shears grounding_rod smelling_salts"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
  },
  "rimeholt_woodshed_woodcutter": [
   "Woodcutter Siv: The Guild owns the trees, the axes and the cold. I own the blisters."

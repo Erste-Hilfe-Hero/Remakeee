@@ -23,10 +23,11 @@ const GROUND_WORDS: Dictionary[String, String] = {
 
 ## Story flag that opens a region's chapter once the act reaches it: the ferry to Corvane, the
 ## mountain railway to Ashmere, the sand road to Solenne (its wild tables use its own kinds),
-## the Era II finale for the Era III post-game region Quillmarch (data/region3.json).
+## the Era II finale for the Era III post-game region Quillmarch (data/region3.json), the Era III
+## finale for the Era IV post-game region Halcyra (data/region4.json).
 const REGION_STORY_FLAGS: Dictionary[String, String] = {
 	"corvane": "ferry_crossed", "ashmere": "act2_end", "solenne": "rift_shade_sealed",
-	"quillmarch": "era2_finale_done",
+	"quillmarch": "era2_finale_done", "halcyra": "era3_finale_done",
 }
 
 ## Veydal is always open; the others once GameState has the flag "region_open_<id>" or the

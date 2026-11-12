@@ -129,5 +129,21 @@
    "open_flag": "rift_v3_rime_sealed",
    "closed": "@"
   }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 10,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_rime_rift_q3_0_10"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_rime_rift_q3_11_14"
+  }
  ]
 }

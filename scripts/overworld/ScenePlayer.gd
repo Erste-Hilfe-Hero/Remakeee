@@ -282,6 +282,11 @@ func _move(f: GridWalker, step: Dictionary) -> void:
 func _show_emote(f: GridWalker, icon: String) -> void:
 	if f == null:
 		return
+	# From Era II the bubble is the era's own (EraActors, data/era_actor_look.json).
+	if EraActors.bubble_on(f, icon, EMOTE_TIME):
+		Sound.sfx("select")
+		await _wait(EMOTE_TIME)
+		return
 	if _emote == null:
 		_emote = Label.new()
 		_emote.add_theme_stylebox_override("normal", UITheme.panel_style())

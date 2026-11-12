@@ -115,6 +115,41 @@
      "level": 75
     }
    ]
+  },
+  {
+   "id": "q3_carrier",
+   "x": 10,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_mordant_steps_carrier",
+   "sprite": "ranger",
+   "trainer": "Acid Carrier Bodil",
+   "intro": "quillmarch/q3_mordant_steps_carrier_intro",
+   "defeat": "quillmarch/q3_mordant_steps_carrier_defeat",
+   "money": 3000,
+   "team": [
+    {
+     "species": "Mordantoad",
+     "level": 73
+    },
+    {
+     "species": "Vatreeve",
+     "level": 74
+    },
+    {
+     "species": "Vitriolus",
+     "level": 75
+    }
+   ]
+  },
+  {
+   "id": "q3_cure_proof_aki",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quillmarch/q3_cure_proof_aki",
+   "sprite": "villager",
+   "show_flag": "q3_cure_proof_asked"
   }
  ],
  "signs": [],
@@ -146,6 +181,13 @@
    "item": "strong_tonic",
    "count": 1,
    "flag": "find_mordant_steps_4"
+  },
+  {
+   "x": 0,
+   "y": 3,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_mordant_steps_q3_0_3"
   }
  ]
 }

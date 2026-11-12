@@ -29,6 +29,15 @@
    "facing": "down",
    "dialogue": "quillmarch/mordant_row_well_house_keeper",
    "sprite": "villager"
+  },
+  {
+   "id": "q3_cure_proof_vera",
+   "x": 6,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quillmarch/q3_cure_proof_vera",
+   "sprite": "villager",
+   "show_flag": "q3_cure_proof_s1"
   }
  ],
  "signs": []
