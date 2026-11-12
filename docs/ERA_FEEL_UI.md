@@ -48,7 +48,9 @@ Described generically, from general knowledge of the genre's history; no product
 
 | Feature | Exists | Added | Missing |
 | --- | --- | --- | --- |
-| 180x320, Quillmarch atlas | yes | | 10 px font |
+| 180x320, Quillmarch atlas | yes | | |
+| Font | | own 10 px font "Chimora Etch" for English and German (`docs/ERA_FEEL_TEXT.md`) | |
+| Warp | | spiral of ink winds in around the Wayfarer | |
 | Menu skin | | sepia palette, bevel frame with dotted gold rule, raised buttons | paper texture |
 | Text | | blip "blip_e3", typing x1.15 | |
 | Vigor bar | | shaded colour bar | |
@@ -62,10 +64,10 @@ Described generically, from general knowledge of the genre's history; no product
 | Feature | Exists | Added | Missing |
 | --- | --- | --- | --- |
 | 270x480, Halcyra atlas | yes | | |
-| Menu skin | | cool sky palette, rounded panel, rounded buttons, large font | selectable menu backgrounds |
-| Text | | soft triangle blip "blip_e4", typing x1.3 | |
+| Menu skin | | cool sky palette, rounded panel, rounded buttons, own 12 px font "Chimora Panorama" | selectable menu backgrounds |
+| Text | | soft triangle blip "blip_e4", typing x1.3, the speaker's head on the name plate | |
 | Vigor bar | | bevelled bar | |
-| Warp | | iris closes on the Wayfarer | spiral variant |
+| Warp | | iris closes on the Wayfarer | |
 | Place banner | | full-width ribbon slides in | |
 | Camera | | tilted 2.5D view (shader, off with reduced motion) | real 3D-looking buildings |
 | Era change | white sweep | map unrolls from the middle, jingle, caption | |
@@ -75,8 +77,8 @@ Described generically, from general knowledge of the genre's history; no product
 | Feature | Exists | Added | Missing |
 | --- | --- | --- | --- |
 | Quivermoor atlas | yes | | |
-| Menu skin | | mint palette, glossy rounded frame, large font | animated menu backgrounds |
-| Text | | near-sine blip "blip_e5" with a glide, typing x1.4 | speaker portraits |
+| Menu skin | | mint palette, glossy rounded frame, own 12 px font | animated menu backgrounds |
+| Text | | near-sine blip "blip_e5" with a glide, typing x1.4, speaker portraits that blink and speak | |
 | Vigor bar | | glossy bar | |
 | Place banner | | ribbon with a light sweep | |
 | Overworld | | season tint by month, camera looks ahead while walking, idle breathing of all figures, stronger tilt | server-set season |

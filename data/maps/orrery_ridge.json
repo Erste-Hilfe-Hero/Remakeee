@@ -141,15 +141,15 @@
    "money": 4450,
    "team": [
     {
-     "species": "Obelith",
+     "species": "Zenwhirl",
      "level": 87
     },
     {
-     "species": "Fulgorin",
+     "species": "Orrebit",
      "level": 88
     },
     {
-     "species": "Duneshrew",
+     "species": "Kitewhip",
      "level": 89
     }
    ],
@@ -171,15 +171,15 @@
    "money": 3520,
    "team": [
     {
-     "species": "Obelith",
+     "species": "Zenlynx",
      "level": 86
     },
     {
-     "species": "Fulgorin",
+     "species": "Orrewheel",
      "level": 87
     },
     {
-     "species": "Duneshrew",
+     "species": "Brassjack",
      "level": 88
     }
    ]

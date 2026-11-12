@@ -97,7 +97,7 @@ func test_slots_feed_the_route_tables() -> void:
 			if sd != null:
 				var band: Vector2i = SpirlingData.WEIGHT_BANDS[sd.rarity]
 				assert_between(int(s.weight), band.x, band.y, "%s weight in the %s band" % [s.slot, sd.rarity])
-	assert_gt(Region4.open_slots().size(), 0, "slots wait for Halcyra's own Spirlings")
+	assert_eq(Region4.open_slots().size(), 0, "Halcyra's own kinds fill every slot and Warden ace")
 	assert_false(Region4.route("mirror_flats").is_empty())
 
 func test_four_wardens_each_hold_a_rift() -> void:
@@ -148,6 +148,29 @@ func test_landmarks_span_several_screens() -> void:
 		assert_true(places.has(str(l.at)), str(l.id))
 		assert_gt(int(l.screens[0]) * int(l.screens[1]), 1, "%s spans screens" % l.id)
 	assert_eq(Region4.landmarks_at("starwell").size(), 1)
+
+func test_seventy_own_era_four_spirlings() -> void:
+	var kinds: Array[SpirlingData] = []
+	var own: Dictionary = {}
+	for sd: SpirlingData in Database.spirlings.values():
+		if sd.region == "halcyra":
+			kinds.append(sd)
+			for e: int in sd.elements:
+				own[Elements.E.find_key(e)] = true
+	assert_eq(kinds.size(), 70, "70 own kinds (tools/art/lines/halcyra.py, gen_era4.py --lines)")
+	for sd: SpirlingData in kinds:
+		assert_eq(sd.era, 4, sd.species_name)
+		assert_eq(EraManager.sprite_path(sd.species_name), "res://art/era4/spirlings/%s_front.png" % sd.species_name.to_lower())
+		assert_eq(EraManager.battle_sprite_size(sd.species_name), 96)
+	for e: String in _d.elements:
+		assert_true(own.has(e), "%s is carried by Halcyra's kinds" % e)
+	for r: Dictionary in _d.routes:
+		for s: Dictionary in r.slots:
+			assert_eq(Database.species(Region4.slot_species(s)).region, "halcyra", str(s.slot))
+	for w: Dictionary in _d.wardens:
+		assert_eq(Database.species(Region4.slot_species(w.team[-1])).region, "halcyra", "%s ace" % w.id)
+	assert_false(SpirlogBook.region_open("halcyra", {}), "hidden in the Spirlog before the Era III finale")
+	assert_true(SpirlogBook.region_open("halcyra", {str(_d.unlock_flag): true}))
 
 func test_region_elements_are_in_the_chart() -> void:
 	var types: Dictionary = Elements.chart().get("types", {})

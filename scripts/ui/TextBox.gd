@@ -36,6 +36,8 @@ var _label: Label
 var _arrow: Label
 ## Name tag over the box for the one who speaks (plan item 1343).
 var _tag: Label
+## Head on the name plate (Era IV) or portrait on the box (Era V) of the one who speaks.
+var _portrait: SpeakerPortrait
 ## Right padding reserved for the continue marker.
 const ARROW_SPACE: int = 6
 var _typing: bool = false
@@ -85,6 +87,7 @@ func _ready() -> void:
 	_tag.add_theme_stylebox_override("normal", UITheme.panel_style())
 	_tag.visible = false
 	add_child(_tag)
+	_portrait = SpeakerPortrait.attach(self)
 	visibility_changed.connect(func() -> void:
 		if not visible:
 			fast_forward = false
@@ -221,10 +224,16 @@ func show_prompt(text: String, speaker: String = "") -> void:
 func set_speaker(who: String) -> void:
 	_tag.text = who
 	_tag.visible = not who.is_empty()
+	if _portrait != null:
+		_portrait.show_for(who, _tag)
 	_place_tag()
 
 func speaker() -> String:
 	return _tag.text if _tag.visible else ""
+
+## True while a line is still being typed (the Era V portrait moves its mouth).
+func is_typing() -> bool:
+	return _typing
 
 func _place_tag() -> void:
 	if _tag.visible:

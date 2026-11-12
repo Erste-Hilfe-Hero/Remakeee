@@ -84,15 +84,15 @@
    "money": 3640,
    "team": [
     {
-     "species": "Obelith",
+     "species": "Noonfox",
      "level": 89
     },
     {
-     "species": "Corocub",
+     "species": "Brazlet",
      "level": 90
     },
     {
-     "species": "Bakedil",
+     "species": "Noonvixen",
      "level": 91
     }
    ]
@@ -200,15 +200,15 @@
      "money": 3640,
      "team": [
       {
-       "species": "Corocub",
+       "species": "Brazlet",
        "level": 89
       },
       {
-       "species": "Bakedil",
+       "species": "Vinestair",
        "level": 90
       },
       {
-       "species": "Coronarch",
+       "species": "Brazierbrute",
        "level": 91
       }
      ]

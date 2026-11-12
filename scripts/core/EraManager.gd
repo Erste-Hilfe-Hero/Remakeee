@@ -286,6 +286,7 @@ func _apply() -> void:
 		get_window().content_scale_size = RESOLUTION[era]
 	if _filter_rect != null:
 		_filter_rect.visible = era == Era.INK
+	EraText.set_era(era)
 	UITheme.set_era_skin(EraFeel.palette(era), str(EraFeel.value(era, "frame")), str(EraFeel.value(era, "font")) == "large")
 	GridWalker.walk_frames = int(EraFeel.value(era, "walk_frames"))
 	GridWalker.breathe = bool(EraFeel.value(era, "idle_breathe"))
