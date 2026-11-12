@@ -174,6 +174,7 @@ Written by `python3 tools/world_stats.py`.
 | corvane | `corvane_quay_house` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `corvane_quay_shop` | inside | 10x9 | 0 | 0 | 0 |
 | corvane | `corvane_quay_spring` | inside | 10x9 | 0 | 0 | 0 |
+| corvane | `dyeworks` | inside | 12x9 + 12x9 + 12x9 + 12x9 + 12x9 | 6 | 6 | 28 |
 | corvane | `edge_watch_hut` | inside | 8x6 | 0 | 0 | 0 |
 | corvane | `greyreach` | route | 12x29 | 5 | 3 | 44 |
 | corvane | `greyreach_hut` | inside | 8x6 | 0 | 0 | 0 |
@@ -363,7 +364,7 @@ Written by `python3 tools/world_stats.py`.
 | halcyra | `whitecairn_shop` | inside | 10x8 | 0 | 0 | 0 |
 | halcyra | `whitecairn_spring` | inside | 10x8 | 0 | 0 | 0 |
 | quivermoor | `wick_rift` | rift | 12x22 | 0 | 2 | 0 |
-| | **231 maps** | | | **337** | **208** | **2646** |
+| | **232 maps** | | | **343** | **214** | **2674** |
 <!-- world-stats:end -->
 
 ## Wayfarer Gear and where it is given (item 1062)

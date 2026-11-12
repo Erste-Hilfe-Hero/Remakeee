@@ -40,7 +40,7 @@
   "lines": [
    "Chandler Wenzel: Oil, wicks, tonics. Veronne buys the lanterns. The families buy them a second time."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
  },
  "thea": {
   "lines": [

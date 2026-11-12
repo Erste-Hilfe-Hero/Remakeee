@@ -13,7 +13,7 @@ enum Type {
 	FIELD_END, BOSS_PHASE, REACTION, TRAIT,
 	ENERGY_TAX, SNARE_SET, SNARE_HIT, SNARE_CLEARED, HEAL_BLOCKED, WEARY,
 	DELAYED_SET, DELAYED_HIT, FIELD_NEXT, FIELD_EXTENDED, BATTLE_LINE, WARDEN_WEAKENED, HELD_ENDURE,
-	OATH, SHOP_EDGE,
+	OATH, SHOP_EDGE, HELD_FRUIT,
 }
 
 const STAT_NAMES: Dictionary[String, String] = {"atk": "Might", "def": "Guard", "foc": "Focus", "spd": "Pace"}
@@ -175,6 +175,8 @@ func describe() -> String:
 			return "The snares on your side blow away." if int(data.get("side", 0)) == 0 else "The snares on the foe's side blow away."
 		Type.HELD_ENDURE:
 			return "%s holds on with its Hold Stone!" % who
+		Type.HELD_FRUIT:
+			return "%s eats its %s!" % [who, data.get("item_name", "")]
 		Type.WARDEN_WEAKENED:
 			return "A Warden Weakener dims %s's team: they start with 15%% less Vigor." % data.get("trainer", "")
 		Type.ENERGY_TAX:

@@ -427,7 +427,7 @@ TOWN_TEXT = {
         "finds": [((0, 4), "max_tonic"), ((11, 14), "revival_leaf"), ((0, 14), "guard_brew")],
     },
 }
-SHOP_ITEMS = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+SHOP_ITEMS = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
 
 
 def town(world, mid):

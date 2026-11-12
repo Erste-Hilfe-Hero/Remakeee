@@ -14,7 +14,7 @@
   "lines": [
    "Salt Merchant Imke: Tonics, salt and silence. The silence costs the most."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
  },
  "bertil": {
   "lines": [
@@ -46,7 +46,7 @@
   "lines": [
    "Exchange Clerk Runa: We trade in salt and tonics. Salt keeps things from going bad. It has not worked on Halloran."
   ],
-  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
  },
  "almut": {
   "lines": [

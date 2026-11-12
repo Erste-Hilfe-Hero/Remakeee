@@ -254,7 +254,7 @@ TOWN_LAYOUT = {
 BARGE_QUAY = (3, 6)
 BARGE_BRINDLEWICK = (7, 18)
 WREN = (7, 4)
-SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew"
+SHOP = "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew pith_mend pith_clear"
 FINDS = ["max_tonic", "revival_leaf", "strong_tonic", "remedy", "wake_bell"]
 
 TOWN_TEXT = {
@@ -633,6 +633,9 @@ def rift(mid):
                                           ("Your Spirlings drink and rest.", "Deine Spirlings trinken und ruhen sich aus.")), "action": "heal"})
     text(mid + "_sign", [sheet(rf["name"]), tr(*motto)])
     crew = [{"species": slot_species(t), "level": t["level"]} for t in w["team"]]
+    # Pith Fruit (era function pith_fruit, Era II on): the ace eats a Mending Pith in a pinch
+    # (keepsakes count from Veteran on, TrainerData.keeps_keepsakes).
+    crew[-1]["held"] = "pith_mend"
     ch = CHAPTER[mid]
     text("warden_" + w["id"], {"lines": [sheet(ch["text"])],
                                "after_flag": [{"flag": rf["flag"], "lines": [sheet(ch["betrayal"]["text"])]}]})
