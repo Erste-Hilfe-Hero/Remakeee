@@ -3,7 +3,8 @@
  "clans": {
   "marrovel": {"seat": "veydal", "rule": "etiquette and debt"},
   "ruskweber": {"seat": "ashmere", "rule": "fear and wages"},
-  "brass_veil": {"seat": "ochrewell", "rule": "water and contracts"}
+  "brass_veil": {"seat": "ochrewell", "rule": "water and contracts"},
+  "sandglass": {"seat": "glasswind_flats", "rule": "glass and false roads"}
  },
  "figures": {
   "ottilie": {"clan": "marrovel", "role": "clan mother, hidden power", "trust": 30, "use": 60},
@@ -37,7 +38,16 @@
   "mags": {"clan": "strangers", "ally": true, "act": 4, "role": "pawnbroker, melts the Veil's seals into spoons", "trust": 45, "use": 25},
   "liss": {"clan": "marrovel", "role": "Fenrick's daughter from Ashmere, Sable's informer", "trust": 25, "use": 55},
   "kerr": {"clan": "none", "role": "son of a lost Rift guard, hunts Pip", "trust": 30, "use": 40},
-  "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35}
+  "tobs": {"clan": "none", "role": "Ochrewell gravedigger, moves things for coins", "trust": 30, "use": 35},
+  "venn": {"clan": "sandglass", "role": "Glassmaster, plays the crew's prisoner", "trust": 10, "use": 75},
+  "hesper": {"clan": "sandglass", "role": "bell mender who moves the Bell Line posts", "trust": 20, "use": 60},
+  "tamsin": {"clan": "sandglass", "role": "crew lookout with a twin who never was", "trust": 25, "use": 50},
+  "oren": {"clan": "sandglass", "role": "signalman whose storm warnings call raids", "trust": 20, "use": 55},
+  "sabine": {"clan": "none", "role": "Ladder Master who keeps the purse by rule nine", "trust": 20, "use": 60},
+  "varro": {"clan": "none", "role": "desert guide who sells shortcuts", "trust": 20, "use": 55},
+  "ott": {"clan": "none", "role": "caravan driver, warns about Tamsin", "trust": 55, "use": 15},
+  "pell": {"clan": "none", "role": "old ladder climber, warns about the purse", "trust": 50, "use": 20},
+  "ilse": {"clan": "none", "role": "naturalist who sells her field guide to a poacher", "trust": 35, "use": 45}
  },
  "favors": {
   "fitch_toll": {"npc": "fitch", "kind": "lend_coins", "amount": 150, "reward_chance": 0.0, "betray": {"say": "soot_vaults/fitch_betray", "battle": "fitch_ambush", "ledger": "fitch_toll"}, "kept": {"say": "soot_vaults/fitch_kept", "item": "max_tonic"}},
@@ -49,6 +59,10 @@
    "betray": {"say": "solenne_side/saffi_betray", "battle": "ambush_westpipe"},
    "reward": {"say": "solenne_side/saffi_reward", "item": "power_brew", "trust": {"saffi": 10}},
    "kept": {"say": "solenne_side/saffi_kept", "trust": {"saffi": 5}}},
+  "varro_shortcut": {"npc": "varro", "kind": "believe_tip", "reward_chance": 0.4,
+   "betray": {"say": "glasswind_side/varro_betray", "battle": "varro_ambush", "use": {"varro": 10}},
+   "reward": {"say": "glasswind_side/varro_reward", "item": "power_brew", "trust": {"varro": 10}},
+   "kept": {"say": "glasswind_side/varro_kept", "trust": {"varro": 5}}},
   "corin_bet": {"npc": "corin", "kind": "lend_coins", "amount": 500, "reward_chance": 0.6,
    "betray": {"say": "solenne_side/corin_bet_betray", "use": {"corin": 10}},
    "reward": {"say": "solenne_side/corin_bet_reward", "coins": 1000, "trust": {"corin": 10}},
@@ -95,6 +109,15 @@
    "kept": {"say": "clans/sable_dune_kept", "trust": {"sable": 5}}}
  },
  "betrayals": {
+  "sabine_purse": {"act": 4, "npc": "sabine", "rule": "warned", "warned_by": ["c4_pell_warned"],
+   "caught": {"ledger": "purse", "coins": 3000, "trust": {"pell": 10, "sabine": -10}, "say": "glasswind_side/purse_caught"},
+   "struck": {"ledger": "purse", "say": "glasswind_side/purse_struck", "battle": "ladder_bouncers", "coins": 300}},
+  "tamsin_twin": {"act": 4, "npc": "tamsin", "rule": "warned", "warned_by": ["c4_ott_warned"],
+   "caught": {"ledger": "twin", "trust": {"ott": 10, "tamsin": 10}, "item": "max_tonic", "say": "glasswind_side/twin_caught"},
+   "struck": {"ledger": "twin", "say": "glasswind_side/twin_struck", "battle": "tamsin_crew"}},
+  "venn_chains": {"act": 4, "npc": "venn", "rule": "warned", "warned_by": ["c4_ledger_read"],
+   "caught": {"ledger": "chains", "say": "glasswind_side/chains_caught"},
+   "struck": {"ledger": "chains", "say": "glasswind_side/chains_struck", "battle": "kiln_trap"}},
   "kaia_deed": {"act": 4, "npc": "kaia", "rule": "warned", "warned_by": ["c4_dunya_warned"],
    "caught": {"flags": ["clan_b12"], "ledger": "deed", "trust": {"kaia": -15, "dunya": 10}, "say": "solenne_side/deed_caught"},
    "struck": {"flags": ["clan_b12", "well_sold"], "ledger": "deed", "use": {"kaia": 10}, "say": "solenne_side/deed_struck"}},
@@ -169,6 +192,9 @@
   {"id": "deed", "act": 4, "ref": "solenne_side/ledger_deed"},
   {"id": "vault", "act": 4, "ref": "veil_cistern/ledger_vault"},
   {"id": "nephew", "act": 4, "ref": "solenne_side/ledger_nephew"},
+  {"id": "purse", "act": 4, "ref": "glasswind_side/ledger_purse"},
+  {"id": "twin", "act": 4, "ref": "glasswind_side/ledger_twin"},
+  {"id": "chains", "act": 4, "ref": "glasswind_side/ledger_chains"},
   {"id": "liss", "act": 3, "ref": "clans/ledger_liss"},
   {"id": "seal", "act": 3, "ref": "clans/ledger_seal"},
   {"id": "basin", "act": 4, "ref": "clans/ledger_basin"},

@@ -63,10 +63,13 @@
   "undrawn_1": {"region": "ashmere", "pos": [3, 3], "kind": "rift", "neighbours": ["wide_rift_far", "undrawn_2"]},
   "undrawn_2": {"region": "ashmere", "pos": [3, 2], "kind": "rift", "neighbours": ["undrawn_1", "undrawn_3"]},
   "undrawn_3": {"region": "ashmere", "pos": [3, 1], "kind": "rift", "neighbours": ["undrawn_2"]},
-  "ochrewell": {"region": "solenne", "pos": [1, 4], "kind": "town", "neighbours": ["saltglass", "tower_rift", "oasis_rift", "sun_rift"]},
+  "ochrewell": {"region": "solenne", "pos": [1, 4], "kind": "town", "neighbours": ["saltglass", "tower_rift", "oasis_rift", "sun_rift", "glasswind_flats"]},
   "tower_rift": {"region": "solenne", "pos": [0, 4], "kind": "rift", "neighbours": ["ochrewell"]},
   "oasis_rift": {"region": "solenne", "pos": [2, 4], "kind": "rift", "neighbours": ["ochrewell"]},
   "sun_rift": {"region": "solenne", "pos": [1, 5], "kind": "rift", "neighbours": ["ochrewell"]},
-  "veil_cistern": {"inside": "ochrewell", "region": "solenne"}
+  "veil_cistern": {"inside": "ochrewell", "region": "solenne"},
+  "glasswind_flats": {"region": "solenne", "pos": [0, 5], "kind": "route", "neighbours": ["ochrewell", "mirage_kiln"]},
+  "caravanserai": {"inside": "glasswind_flats", "region": "solenne"},
+  "mirage_kiln": {"region": "solenne", "pos": [0, 6], "kind": "dungeon", "neighbours": ["glasswind_flats"]}
  }
 }

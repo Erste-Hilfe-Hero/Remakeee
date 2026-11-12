@@ -738,5 +738,173 @@
   "ai": 1,
   "money": 900,
   "lose": "clans/ambush_lose"
+ },
+ "ladder_bouncers": {
+  "trainer": "Ladder Bouncers",
+  "team": [
+   {
+    "species": "Bakedil",
+    "level": 46
+   },
+   {
+    "species": "Duneshrew",
+    "level": 46
+   },
+   {
+    "species": "Highhare",
+    "level": 46
+   }
+  ],
+  "ai": 2,
+  "money": 1500,
+  "defeat": "glasswind_side/bouncers_defeat",
+  "lose": "glasswind_side/bouncers_lose"
+ },
+ "varro_ambush": {
+  "trainer": "Sand Bandits",
+  "team": [
+   {
+    "species": "Velvessa",
+    "level": 43
+   },
+   {
+    "species": "Haboborn",
+    "level": 43
+   },
+   {
+    "species": "Sirocat",
+    "level": 44
+   }
+  ],
+  "ai": 2,
+  "money": 1200,
+  "defeat": "glasswind_side/bandits_defeat",
+  "lose": "glasswind_side/bandits_lose"
+ },
+ "hesper_line": {
+  "trainer": "Bell-Mender Hesper",
+  "team": [
+   {
+    "species": "Noonwhist",
+    "level": 47
+   },
+   {
+    "species": "Saltsprig",
+    "level": 47
+   },
+   {
+    "species": "Orrlet",
+    "level": 48
+   },
+   {
+    "species": "Hazejellith",
+    "level": 48
+   }
+  ],
+  "ai": 3,
+  "money": 3200,
+  "defeat": "glasswind_side/hesper_defeat",
+  "lose": "glasswind_side/hesper_lose",
+  "win_flags": [
+   "s4_bell_line_done"
+  ]
+ },
+ "tamsin_crew": {
+  "trainer": "Sandglass Crew",
+  "team": [
+   {
+    "species": "Claspirant",
+    "level": 46
+   },
+   {
+    "species": "Velvessa",
+    "level": 46
+   },
+   {
+    "species": "Gyrevult",
+    "level": 47
+   }
+  ],
+  "ai": 2,
+  "money": 1800,
+  "defeat": "glasswind_side/crew_defeat",
+  "lose": "glasswind_side/crew_lose"
+ },
+ "oren_signal": {
+  "trainer": "Signalman Oren",
+  "team": [
+   {
+    "species": "Obelordan",
+    "level": 48
+   },
+   {
+    "species": "Helirollax",
+    "level": 48
+   },
+   {
+    "species": "Solmantle",
+    "level": 49
+   }
+  ],
+  "ai": 3,
+  "money": 3400,
+  "defeat": "glasswind_side/oren_defeat",
+  "lose": "glasswind_side/oren_lose",
+  "win_flags": [
+   "oren_signal_beaten"
+  ]
+ },
+ "kiln_trap": {
+  "trainer": "Sandglass Crew",
+  "team": [
+   {
+    "species": "Fulgorath",
+    "level": 48
+   },
+   {
+    "species": "Caravault",
+    "level": 48
+   },
+   {
+    "species": "Claspreign",
+    "level": 48
+   }
+  ],
+  "ai": 2,
+  "money": 2000,
+  "defeat": "glasswind_side/trap_defeat",
+  "lose": "glasswind_side/trap_lose"
+ },
+ "kiln_venn": {
+  "trainer": "Glassmaster Venn",
+  "team": [
+   {
+    "species": "Mirassil",
+    "level": 49
+   },
+   {
+    "species": "Obelordan",
+    "level": 50
+   },
+   {
+    "species": "Coronarch",
+    "level": 50
+   },
+   {
+    "species": "Fulgorath",
+    "level": 50
+   },
+   {
+    "species": "Duskmirrah",
+    "level": 51
+   }
+  ],
+  "ai": 3,
+  "money": 4500,
+  "defeat": "glasswind_side/venn_defeat",
+  "lose": "glasswind_side/venn_lose",
+  "win_flags": [
+   "kiln_venn_beaten"
+  ]
  }
 }

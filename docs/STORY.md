@@ -237,6 +237,18 @@ crew, Corin's second duel, Lusk in the strongroom after the Sun Rift). Side goal
 Act IV betrayals: Kaia's well deed (`kaia_deed`, caught when Dunya warned you) and Lusk's
 strongroom truce (`lusk_vault`, caught when Qadir warned you); favors with Qadir, Saffi and Corin.
 
+**Glasswind Flats and the Mirage Kiln (Act IV, `tools/art/world/solenne_more.py`).** After the
+Tower Rift the west gate of Ochrewell opens onto the Glasswind Flats, a desert route with the
+Glasswind Caravanserai on it and the Mirage Kiln at its south end, a three-floor glassworks of the
+Sandglass Crew (fourth clan in `data/clans.json`: Glassmaster Venn, Hesper, Tamsin, Oren) with
+two lens rows. The theme is false roads, not debt. Side goals `s4_ladder` (Sabine's eight-rung
+Wayfarer ladder, Ring 42 to 48), `s4_bells` (nine caravan bells), `s4_bell_line` (the bells lead
+caravans into the kiln), `s4_twin` (a twin who never was), `s4_census` and `s4_poacher` (eight
+kinds for Ilse, who sells her guide to a poacher), `s4_mirrors` (Oren's heliographs signal raids),
+`s4_kiln` and `s4_varro`. Act IV betrayals: Sabine's purse (`sabine_purse`, caught when Old Pell
+warned you), Tamsin's twin (`tamsin_twin`, Ott) and Venn's chains (`venn_chains`, Hesper's
+ledger); favor `varro_shortcut`. `tools/act_hours.py 4` puts Act IV at 23.5 h.
+
 The ring caps on Veteran and Rift-Born rise with every mended Rift (`GameState.LEVEL_CAPS`: 12, 15,
 18, 23, ... 50, then 54, 57 and 60 for Solenne); after Act I they open fully. The story battles keep a curve that never drops (checked
 by `tests/unit/test_rifts12.gd`): Kestra's tag battle at the Root Rift (Ring 23 to 24) sits between
