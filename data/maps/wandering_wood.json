@@ -111,6 +111,15 @@
      "level": 93
     }
    ]
+  },
+  {
+   "id": "q5_root_tithe_ada",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_root_tithe_ada",
+   "sprite": "villager",
+   "show_flag": "q5_root_tithe_asked"
   }
  ],
  "signs": [],

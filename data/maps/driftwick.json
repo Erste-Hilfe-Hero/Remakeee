@@ -210,6 +210,46 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q5_lost_pole_kari",
+   "x": 4,
+   "y": 11,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_lost_pole",
+   "sprite": "villager",
+   "hide_flag": "q5_lost_pole_reveal"
+  },
+  {
+   "id": "q5_lost_pole_kari_pole",
+   "x": 10,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_lost_pole_kari_pole",
+   "sprite": "villager",
+   "trainer": "Pole Heir Kari",
+   "show_flag": "q5_lost_pole_reveal",
+   "intro": "quivermoor/q5_lost_pole_kari_pole_intro",
+   "defeat": "quivermoor/q5_lost_pole_kari_pole_defeat",
+   "money": 4850,
+   "team": [
+    {
+     "species": "Thrashkin",
+     "level": 95
+    },
+    {
+     "species": "Silthop",
+     "level": 96
+    },
+    {
+     "species": "Rushprowl",
+     "level": 97
+    }
+   ],
+   "win_flags": [
+    "q5_lost_pole_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [

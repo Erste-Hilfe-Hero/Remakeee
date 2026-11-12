@@ -194,6 +194,46 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q5_short_candle_aud",
+   "x": 7,
+   "y": 16,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_short_candle",
+   "sprite": "elder",
+   "hide_flag": "q5_short_candle_reveal"
+  },
+  {
+   "id": "q5_short_candle_aud_lit",
+   "x": 4,
+   "y": 11,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_short_candle_aud_lit",
+   "sprite": "elder",
+   "trainer": "Widow Aud",
+   "show_flag": "q5_short_candle_reveal",
+   "intro": "quivermoor/q5_short_candle_aud_lit_intro",
+   "defeat": "quivermoor/q5_short_candle_aud_lit_defeat",
+   "money": 4750,
+   "team": [
+    {
+     "species": "Velvit",
+     "level": 93
+    },
+    {
+     "species": "Sootlurk",
+     "level": 94
+    },
+    {
+     "species": "Glowflitter",
+     "level": 95
+    }
+   ],
+   "win_flags": [
+    "q5_short_candle_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [

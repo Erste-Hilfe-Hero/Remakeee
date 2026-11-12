@@ -111,6 +111,46 @@
      "level": 92
     }
    ]
+  },
+  {
+   "id": "q5_rope_fund_ulla",
+   "x": 2,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "quivermoor/q5_rope_fund_ulla",
+   "sprite": "ranger",
+   "show_flag": "q5_rope_fund_s1"
+  },
+  {
+   "id": "q5_rope_fund_salvager",
+   "x": 10,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "quivermoor/q5_rope_fund_salvager",
+   "sprite": "villager",
+   "trainer": "Salvage Man Grubb",
+   "show_flag": "q5_rope_fund_reveal",
+   "intro": "quivermoor/q5_rope_fund_salvager_intro",
+   "defeat": "quivermoor/q5_rope_fund_salvager_defeat",
+   "money": 4650,
+   "team": [
+    {
+     "species": "Gloomgill",
+     "level": 91
+    },
+    {
+     "species": "Bogwick",
+     "level": 92
+    },
+    {
+     "species": "Peatbloom",
+     "level": 93
+    }
+   ],
+   "win_flags": [
+    "q5_rope_fund_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [],

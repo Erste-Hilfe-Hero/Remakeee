@@ -78,8 +78,10 @@ element chart in `data/type_chart.json` and plays 20000 seeded team battles per 
 ring 36: teams of 3 distinct kinds of the same stage (2 in the final stage, which has 4 kinds),
 every battle played twice with the sides swapped. Kinds that never unfold and come from nothing
 (Glasstarn, Lanternel) count as second stage; legendaries (ancient) are left out. It fails if the
-chart breaks a rule or the chart sim (below) leaves its band; the kinds' 40 to 60 % band is
-reported only. `--md <path>` writes the report.
+chart breaks a rule or the chart sim (below) leaves its band. With `--strict` (the CI gate since
+Nov 2026) it also fails when a kind or an element leaves 40 to 60 %, so no Spirling dominates on its
+base stats; retune outliers by scaling all five stats of the kind together, which keeps its shape
+and its line's shape. `--md <path>` writes the report.
 
 Chart sim (gate, since Nov 2026): one Spirling per element with equal stats and a single art of its
 own element, so only the chart decides. Every element meets every element 1 on 1 (40 seeded duels
@@ -188,315 +190,404 @@ Ring 36, 20000 team battles per stage (teams of 3, 2 in a stage of fewer than 6,
 
 | Element | Era | Strong vs | Weak vs | Win rate |
 | --- | --- | --- | --- | --- |
-| Ember | I | Bloom, Umbra, Echo, Rust, Frost | Tide, Stone, Ink, Mask, Acid | 49.5 % |
-| Tide | I | Ember, Stone, Echo, Rust, Acid | Bloom, Volt, Ink, Mask, Frost | 51.3 % |
-| Bloom | I | Tide, Stone, Echo, Mask, Acid | Ember, Gale, Ink, Rust, Frost | 50.6 % |
-| Volt | I | Tide, Gale, Ink | Stone, Lumen, Echo | 51.8 % |
-| Stone | I | Ember, Volt, Ink, Mask, Frost | Tide, Bloom, Echo, Rust, Acid | 48.9 % |
-| Gale | I | Bloom, Lumen, Echo, Mask, Acid | Volt, Umbra, Ink, Rust, Frost | 51.5 % |
-| Lumen | I | Volt, Ink, Rust | Gale, Echo, Mask | 49.7 % |
-| Umbra | I | Gale, Ink, Mask | Ember, Echo, Rust | 50.8 % |
-| Ink | II | Ember, Tide, Bloom, Gale, Rust, Frost | Volt, Stone, Lumen, Umbra, Mask, Acid | 51.5 % |
-| Echo | II | Volt, Stone, Lumen, Umbra, Rust | Ember, Tide, Bloom, Gale, Mask | 45.8 % |
+| Ember | I | Bloom, Umbra, Echo, Rust, Gilt, Frost | Tide, Stone, Ink, Mask, Acid, Zenith | 49.3 % |
+| Tide | I | Ember, Stone, Echo, Rust, Gilt, Acid | Bloom, Volt, Ink, Mask, Frost, Zenith | 51.0 % |
+| Bloom | I | Tide, Stone, Echo, Mask, Acid | Ember, Gale, Ink, Rust, Frost | 51.1 % |
+| Volt | I | Tide, Gale, Ink | Stone, Lumen, Echo | 50.9 % |
+| Stone | I | Ember, Volt, Ink, Mask, Zenith, Frost | Tide, Bloom, Echo, Rust, Acid, Gilt | 49.3 % |
+| Gale | I | Bloom, Lumen, Echo, Mask, Acid | Volt, Umbra, Ink, Rust, Frost | 51.3 % |
+| Lumen | I | Volt, Ink, Rust | Gale, Echo, Mask | 50.1 % |
+| Umbra | I | Gale, Ink, Mask | Ember, Echo, Rust | 50.7 % |
+| Ink | II | Ember, Tide, Bloom, Gale, Rust, Zenith, Frost | Volt, Stone, Lumen, Umbra, Mask, Acid, Gilt | 51.3 % |
+| Echo | II | Volt, Stone, Lumen, Umbra, Rust | Ember, Tide, Bloom, Gale, Mask | 45.7 % |
 | Rust | II | Stone, Gale, Umbra, Bloom, Mask, Frost | Ember, Tide, Lumen, Ink, Echo, Acid | legendaries only |
 | Mask | II | Lumen, Echo, Ink, Ember, Tide | Bloom, Stone, Gale, Umbra, Rust | legendaries only |
-| Acid | III | Stone, Rust, Ink, Ember | Tide, Bloom, Gale, Frost | legendaries only |
-| Frost | III | Bloom, Gale, Tide, Acid | Ember, Stone, Ink, Rust | legendaries only |
+| Acid | III | Stone, Rust, Ink, Ember | Tide, Bloom, Gale, Frost | 48.6 % |
+| Frost | III | Bloom, Gale, Tide, Acid | Ember, Stone, Ink, Rust | 53.7 % |
+| Gilt | IV | Stone, Ink | Ember, Tide | legendaries only |
+| Zenith | IV | Ember, Tide | Stone, Ink | legendaries only |
 
-Species: 265 measured, lowest 34.6 %, highest 68.1 %.
+Species: 350 measured, lowest 41.2 %, highest 58.4 %.
 
 | Species | Stage | Win rate | Games |
 | --- | --- | --- | --- |
-| Blotling | 1 | 64.5 % | 2362 |
-| Paddlewisp | 1 | 62.7 % | 2372 |
-| Drizzlet | 1 | 57.1 % | 2378 |
-| Zephlet | 1 | 56.8 % | 2306 |
-| Puffbellow | 1 | 56.2 % | 2450 |
-| Diplit | 1 | 55.7 % | 2424 |
-| Rubrit | 1 | 55.7 % | 2310 |
-| Skimmit | 1 | 55.7 % | 2482 |
-| Fulgrit | 1 | 55.3 % | 2448 |
-| Highhare | 1 | 55.2 % | 2400 |
-| Siltby | 1 | 54.9 % | 2464 |
-| Nibbet | 1 | 54.9 % | 2370 |
-| Canalet | 1 | 54.4 % | 2360 |
-| Fluting | 1 | 54.3 % | 2388 |
-| Clasplet | 1 | 54.3 % | 2302 |
-| Gloomgill | 1 | 54.2 % | 2356 |
-| Vanepip | 1 | 54.2 % | 2492 |
-| Vaporel | 1 | 54.2 % | 2348 |
-| Fumelet | 1 | 54.2 % | 2376 |
-| Bogwick | 1 | 54.1 % | 2362 |
-| Ripjolt | 1 | 53.9 % | 2342 |
-| Seamlet | 1 | 53.8 % | 2362 |
-| Sablet | 1 | 53.7 % | 2272 |
-| Rushkit | 1 | 53.7 % | 2378 |
-| Woadlet | 1 | 53.6 % | 2234 |
-| Vesk | 1 | 53.5 % | 2346 |
-| Haboblet | 1 | 53.4 % | 2378 |
-| Palmop | 1 | 53.4 % | 2206 |
-| Mortarant | 1 | 53.4 % | 2270 |
-| Prismist | 1 | 53.2 % | 2354 |
-| Cindrik | 1 | 53.2 % | 2348 |
-| Puddock | 1 | 53.0 % | 2436 |
-| Stylet | 1 | 53.0 % | 2410 |
-| Nimbub | 1 | 52.7 % | 2368 |
-| Weirkit | 1 | 52.6 % | 2462 |
-| Charsprout | 1 | 52.4 % | 2448 |
-| Spinnub | 1 | 52.3 % | 2250 |
-| Brinelet | 1 | 51.9 % | 2408 |
-| Ergfin | 1 | 51.8 % | 2442 |
-| Chirrik | 1 | 51.7 % | 2378 |
-| Quenchet | 1 | 51.7 % | 2336 |
-| Thrashkin | 1 | 51.6 % | 2266 |
-| Sirocub | 1 | 51.5 % | 2442 |
-| Peatlet | 1 | 51.2 % | 2368 |
-| Millwhit | 1 | 51.2 % | 2286 |
-| Mirkmole | 1 | 51.1 % | 2372 |
-| Puddlet | 1 | 50.6 % | 2526 |
-| Rookit | 1 | 50.5 % | 2432 |
-| Scaldasp | 1 | 50.3 % | 2296 |
-| Sootpaw | 1 | 50.2 % | 2360 |
-| Hushkin | 1 | 50.1 % | 2344 |
-| Glazel | 1 | 50.0 % | 2438 |
-| Stiltwade | 1 | 50.0 % | 2324 |
-| Ingotlet | 1 | 49.8 % | 2358 |
-| Filigrin | 1 | 49.7 % | 2264 |
-| Inkpip | 1 | 49.7 % | 2468 |
-| Padlet | 1 | 49.6 % | 2450 |
-| Corocub | 1 | 49.5 % | 2386 |
-| Kindlop | 1 | 49.3 % | 2316 |
-| Hazejel | 1 | 49.2 % | 2306 |
-| Glimmoth | 1 | 49.2 % | 2366 |
-| Reedquill | 1 | 48.9 % | 2302 |
-| Lampick | 1 | 48.7 % | 2190 |
-| Orrlet | 1 | 48.4 % | 2412 |
-| Morelit | 1 | 48.4 % | 2264 |
-| Zippit | 1 | 48.0 % | 2340 |
-| Grindlet | 1 | 48.0 % | 2238 |
-| Glowflit | 1 | 47.8 % | 2316 |
-| Silthop | 1 | 47.8 % | 2408 |
-| Shimmerlet | 1 | 47.8 % | 2438 |
-| Noonpip | 1 | 47.4 % | 2392 |
-| Shalebat | 1 | 47.3 % | 2430 |
-| Wadlet | 1 | 47.1 % | 2564 |
-| Etchling | 1 | 47.1 % | 2354 |
-| Velvit | 1 | 47.1 % | 2486 |
-| Ardlet | 1 | 47.0 % | 2406 |
-| Ashwren | 1 | 46.9 % | 2364 |
-| Bakedil | 1 | 46.8 % | 2382 |
-| Clinklet | 1 | 46.4 % | 2386 |
-| Coalkid | 1 | 46.2 % | 2476 |
-| Solkit | 1 | 46.1 % | 2446 |
-| Chimelet | 1 | 46.0 % | 2370 |
-| Carabun | 1 | 45.9 % | 2350 |
-| Sluicekit | 1 | 45.8 % | 2380 |
-| Obelit | 1 | 45.6 % | 2460 |
-| Lodekit | 1 | 45.4 % | 2386 |
-| Mossling | 1 | 45.3 % | 2360 |
-| Rollib | 1 | 45.1 % | 2416 |
-| Vitrill | 1 | 45.1 % | 2454 |
-| Flourie | 1 | 45.0 % | 2370 |
-| Duneshrew | 1 | 44.4 % | 2354 |
-| Saltsprig | 1 | 44.0 % | 2442 |
-| Croziel | 1 | 43.0 % | 2344 |
-| Kelpup | 1 | 43.0 % | 2320 |
-| Cogmite | 1 | 42.9 % | 2400 |
-| Brickit | 1 | 42.8 % | 2484 |
-| Talusk | 1 | 41.2 % | 2388 |
-| Cindle | 1 | 40.5 % | 2458 |
-| Cullet | 1 | 40.3 % | 2454 |
-| Wickit | 1 | 38.2 % | 2274 |
-| Smeltpup | 1 | 38.0 % | 2396 |
-| Scrivane | 2 | 68.1 % | 2138 |
-| Tempestrel | 2 | 62.1 % | 2132 |
-| Ferrowyn | 2 | 61.4 % | 2150 |
-| Glasstarn | 2 | 60.8 % | 2018 |
-| Zenithare | 2 | 60.6 % | 2096 |
-| Burinox | 2 | 58.8 % | 2088 |
-| Mirassil | 2 | 58.3 % | 2144 |
-| Delthorn | 2 | 58.2 % | 2146 |
-| Bellowroc | 2 | 57.8 % | 2114 |
-| Ashcrest | 2 | 57.5 % | 2040 |
-| Saltcrown | 2 | 57.4 % | 2062 |
-| Millvane | 2 | 56.0 % | 2016 |
-| Fumewraith | 2 | 55.6 % | 1986 |
-| Glimmerax | 2 | 55.3 % | 1988 |
-| Diparrow | 2 | 54.9 % | 2190 |
-| Mortarmarch | 2 | 54.7 % | 2164 |
-| Charsylvan | 2 | 54.5 % | 2090 |
-| Inkspool | 2 | 54.4 % | 2098 |
-| Skimmarch | 2 | 54.3 % | 2092 |
-| Gloomgillar | 2 | 54.3 % | 2126 |
-| Siltarra | 2 | 54.1 % | 2082 |
-| Ergskim | 2 | 53.9 % | 2188 |
-| Nibquill | 2 | 53.7 % | 2108 |
-| Woadwhorl | 2 | 53.6 % | 2150 |
-| Puffglass | 2 | 53.4 % | 2026 |
-| Rainmantle | 2 | 53.2 % | 2222 |
-| Silentra | 2 | 53.1 % | 2180 |
-| Rushprowl | 2 | 53.1 % | 2096 |
-| Orrerine | 2 | 53.0 % | 2104 |
-| Flueling | 2 | 52.9 % | 2130 |
-| Padlotus | 2 | 52.8 % | 2048 |
-| Duskmirrah | 2 | 52.6 % | 2156 |
-| Kilnstork | 2 | 52.5 % | 2120 |
-| Rookwarden | 2 | 52.3 % | 2128 |
-| Quenchcoil | 2 | 52.2 % | 2192 |
-| Velvessa | 2 | 52.1 % | 2078 |
-| Clinkshell | 2 | 51.9 % | 2022 |
-| Dunebastion | 2 | 51.9 % | 2130 |
-| Prismistral | 2 | 51.8 % | 2064 |
-| Filigrace | 2 | 51.8 % | 2026 |
-| Peatbloom | 2 | 51.5 % | 2146 |
-| Threshox | 2 | 51.5 % | 2052 |
-| Brinewhorl | 2 | 51.2 % | 2120 |
-| Vanecrow | 2 | 51.1 % | 2140 |
-| Dusktern | 2 | 51.0 % | 2106 |
-| Haboborn | 2 | 50.9 % | 2106 |
-| Coronarch | 2 | 50.9 % | 2124 |
-| Hazejellith | 2 | 50.9 % | 2144 |
-| Obsidroth | 2 | 50.9 % | 2202 |
-| Lodebrock | 2 | 50.7 % | 2152 |
-| Marshfife | 2 | 50.6 % | 2048 |
-| Weirrunner | 2 | 50.5 % | 2020 |
-| Stylox | 2 | 50.5 % | 2122 |
-| Canalord | 2 | 50.5 % | 2180 |
-| Glazelisk | 2 | 50.5 % | 2240 |
-| Nimbuck | 2 | 50.4 % | 2096 |
-| Vaporelle | 2 | 50.2 % | 2196 |
-| Shadeback | 2 | 50.2 % | 2178 |
-| Wickmoth | 2 | 50.1 % | 2168 |
-| Floursprite | 2 | 50.0 % | 2040 |
-| Scaldcoil | 2 | 49.7 % | 2170 |
-| Spinnarow | 2 | 49.6 % | 2106 |
-| Mendlace | 2 | 49.5 % | 2026 |
-| Lampickard | 2 | 49.5 % | 2118 |
-| Sootlurk | 2 | 49.4 % | 2032 |
-| Solmantle | 2 | 49.2 % | 2100 |
-| Cartocoil | 2 | 49.1 % | 2112 |
-| Saltspire | 2 | 49.0 % | 2162 |
-| Veskara | 2 | 48.9 % | 2006 |
-| Reedwarden | 2 | 48.9 % | 2020 |
-| Lanternel | 2 | 48.9 % | 2016 |
-| Sirocat | 2 | 48.5 % | 2062 |
-| Glowflitter | 2 | 48.1 % | 2128 |
-| Stiltregent | 2 | 48.0 % | 2056 |
-| Kelphound | 2 | 47.9 % | 2128 |
-| Fulgorin | 2 | 47.9 % | 2144 |
-| Ripjolter | 2 | 47.8 % | 2090 |
-| Bakedillon | 2 | 47.7 % | 2118 |
-| Sablowl | 2 | 47.5 % | 2040 |
-| Chirrikade | 2 | 47.4 % | 2076 |
-| Ingotusk | 2 | 47.4 % | 2056 |
-| Obelith | 2 | 47.4 % | 2126 |
-| Palmonarch | 2 | 47.3 % | 2162 |
-| Cindrel | 2 | 47.1 % | 2150 |
-| Ardlume | 2 | 46.8 % | 2150 |
-| Sluicer | 2 | 46.6 % | 2156 |
-| Lumenewt | 2 | 46.4 % | 2038 |
-| Vitrillon | 2 | 46.2 % | 2130 |
-| Noonwhist | 2 | 46.2 % | 2180 |
-| Heliodrop | 2 | 46.0 % | 2098 |
-| Fenwarden | 2 | 45.7 % | 2244 |
-| Coalbuck | 2 | 45.5 % | 2176 |
-| Cogwright | 2 | 45.5 % | 2114 |
-| Caravant | 2 | 45.0 % | 2034 |
-| Chimewell | 2 | 45.0 % | 2186 |
-| Glassfell | 2 | 44.9 % | 2102 |
-| Siltgrove | 2 | 44.8 % | 2044 |
-| Rubricorn | 2 | 44.7 % | 2164 |
-| Morelamp | 2 | 44.7 % | 2094 |
-| Belfrit | 2 | 44.6 % | 2032 |
-| Brickwarden | 2 | 44.4 % | 2056 |
-| Grindwheel | 2 | 44.1 % | 2002 |
-| Thornback | 2 | 43.5 % | 2176 |
-| Wadishell | 2 | 43.4 % | 2070 |
-| Smeltmaw | 2 | 43.2 % | 2036 |
-| Rollibex | 2 | 42.7 % | 2180 |
-| Duskdigger | 2 | 42.6 % | 2088 |
-| Riptail | 2 | 42.3 % | 2062 |
-| Claspirant | 2 | 42.3 % | 2158 |
-| Frondmere | 2 | 42.1 % | 2018 |
-| Gyrevult | 2 | 40.3 % | 2088 |
-| Talusgard | 2 | 40.1 % | 2122 |
-| Cullhorn | 2 | 38.0 % | 2036 |
-| Smoldrake | 2 | 34.6 % | 2054 |
-| Leviarch | 3 | 58.4 % | 4768 |
-| Vanecrest | 3 | 57.7 % | 4726 |
-| Glazeldrake | 3 | 54.9 % | 4820 |
-| Nibravure | 3 | 54.9 % | 4678 |
-| Filigravure | 3 | 54.7 % | 4874 |
-| Fumeregent | 3 | 54.5 % | 4774 |
-| Rubriclad | 3 | 54.3 % | 4878 |
-| Woadcastle | 3 | 54.1 % | 4786 |
-| Siltaroth | 3 | 53.8 % | 4670 |
-| Cindravax | 3 | 53.6 % | 4808 |
-| Dipmonarch | 3 | 53.0 % | 4718 |
-| Grindmonolith | 3 | 52.4 % | 4618 |
-| Veskarion | 3 | 52.3 % | 4608 |
-| Weirmarshal | 3 | 52.3 % | 4922 |
-| Inkregent | 3 | 52.1 % | 4846 |
-| Ripjoltane | 3 | 52.1 % | 4680 |
-| Morelord | 3 | 52.0 % | 4828 |
-| Nimbarch | 3 | 51.8 % | 4790 |
-| Glowflare | 3 | 51.8 % | 4910 |
-| Sootharrow | 3 | 51.4 % | 5016 |
-| Fulgorath | 3 | 51.0 % | 4726 |
-| Rushstalker | 3 | 51.0 % | 4802 |
-| Spinnacle | 3 | 50.7 % | 4716 |
-| Lodemarshal | 3 | 50.7 % | 4740 |
-| Noonsoral | 3 | 50.6 % | 4946 |
-| Ardenthal | 3 | 50.5 % | 4864 |
-| Sluicewarden | 3 | 50.2 % | 4818 |
-| Siroclaw | 3 | 50.0 % | 4850 |
-| Peatmonarch | 3 | 49.7 % | 4910 |
-| Scaldrahn | 3 | 49.6 % | 4822 |
-| Clinkerdome | 3 | 49.1 % | 4742 |
-| Coalpatriarch | 3 | 48.5 % | 4778 |
-| Helirollax | 3 | 48.3 % | 4710 |
-| Stylaxon | 3 | 47.6 % | 4836 |
-| Habobrax | 3 | 47.3 % | 4868 |
-| Velverain | 3 | 47.3 % | 4874 |
-| Obelordan | 3 | 47.2 % | 4806 |
-| Wadibastion | 3 | 46.9 % | 4826 |
-| Gloomgillith | 3 | 46.8 % | 4814 |
-| Quenchwyrm | 3 | 46.4 % | 4888 |
-| Chimeward | 3 | 46.3 % | 4822 |
-| Brickolossus | 3 | 46.3 % | 4738 |
-| Claspreign | 3 | 46.1 % | 4722 |
-| Vitrillaxe | 3 | 46.0 % | 4888 |
-| Caravault | 3 | 45.5 % | 4800 |
-| Cairnhold | 3 | 44.6 % | 4940 |
-| Ergrava | 3 | 44.4 % | 4690 |
-| Calderox | 3 | 44.1 % | 4754 |
-| Verdantusk | 3 | 42.9 % | 4762 |
-| Sablarch | 3 | 42.8 % | 4830 |
+| Paddlewisp | 1 | 58.4 % | 1730 |
+| Fumelet | 1 | 57.7 % | 1780 |
+| Blotling | 1 | 57.6 % | 1832 |
+| Clasplet | 1 | 55.8 % | 1822 |
+| Zephlet | 1 | 55.7 % | 1824 |
+| Highhare | 1 | 55.2 % | 1950 |
+| Puffbellow | 1 | 55.0 % | 1876 |
+| Palmop | 1 | 54.9 % | 1778 |
+| Diplit | 1 | 54.9 % | 1792 |
+| Glacilet | 1 | 54.9 % | 1772 |
+| Drypup | 1 | 54.8 % | 1888 |
+| Nibbet | 1 | 54.7 % | 1784 |
+| Hoarling | 1 | 54.6 % | 1894 |
+| Ripjolt | 1 | 54.6 % | 1854 |
+| Drizzlet | 1 | 54.6 % | 1828 |
+| Cindrik | 1 | 54.6 % | 1752 |
+| Lichub | 1 | 54.4 % | 1796 |
+| Bogwick | 1 | 54.2 % | 1914 |
+| Vesk | 1 | 54.2 % | 1734 |
+| Haboblet | 1 | 54.2 % | 1760 |
+| Charsprout | 1 | 54.2 % | 1822 |
+| Smudgel | 1 | 54.1 % | 1840 |
+| Rubrit | 1 | 54.0 % | 1802 |
+| Skimmit | 1 | 53.9 % | 1850 |
+| Canalurk | 1 | 53.9 % | 1788 |
+| Spinnub | 1 | 53.8 % | 1784 |
+| Fizzlet | 1 | 53.7 % | 1818 |
+| Brookhop | 1 | 53.7 % | 1848 |
+| Blotkin | 1 | 53.6 % | 1864 |
+| Mortarant | 1 | 53.6 % | 1936 |
+| Sleetowl | 1 | 53.5 % | 1876 |
+| Siltby | 1 | 53.4 % | 1904 |
+| Forgefly | 1 | 53.3 % | 1798 |
+| Fulgrit | 1 | 53.3 % | 1748 |
+| Rimekit | 1 | 53.3 % | 1870 |
+| Vaporel | 1 | 53.3 % | 1826 |
+| Gelidfin | 1 | 53.2 % | 1794 |
+| Filigrin | 1 | 53.2 % | 1902 |
+| Platewig | 1 | 53.1 % | 1874 |
+| Canalet | 1 | 53.0 % | 1854 |
+| Glazel | 1 | 53.0 % | 1922 |
+| Woadlet | 1 | 53.0 % | 1872 |
+| Verdigrub | 1 | 53.0 % | 1808 |
+| Corrodent | 1 | 53.0 % | 1826 |
+| Mirkmole | 1 | 52.8 % | 1778 |
+| Fluting | 1 | 52.7 % | 1800 |
+| Fiddlit | 1 | 52.5 % | 1820 |
+| Gloamhog | 1 | 52.4 % | 1846 |
+| Weirkit | 1 | 52.4 % | 1838 |
+| Seamlet | 1 | 52.1 % | 1714 |
+| Quilmoth | 1 | 52.0 % | 1774 |
+| Vanepip | 1 | 51.8 % | 1856 |
+| Inkpip | 1 | 51.7 % | 1858 |
+| Gleamgrub | 1 | 51.6 % | 1804 |
+| Peatlet | 1 | 51.6 % | 1928 |
+| Ardlet | 1 | 51.5 % | 1850 |
+| Flicklet | 1 | 51.4 % | 1826 |
+| Pinchkin | 1 | 51.3 % | 1874 |
+| Skerrit | 1 | 51.1 % | 1876 |
+| Chirrik | 1 | 51.1 % | 1768 |
+| Covepup | 1 | 51.1 % | 1788 |
+| Hushkin | 1 | 50.9 % | 1836 |
+| Rookit | 1 | 50.9 % | 1834 |
+| Sirocub | 1 | 50.7 % | 1828 |
+| Nimbub | 1 | 50.6 % | 1812 |
+| Prismist | 1 | 50.3 % | 1808 |
+| Lampick | 1 | 50.2 % | 1820 |
+| Vatrat | 1 | 50.2 % | 1848 |
+| Stylet | 1 | 50.1 % | 1800 |
+| Gloomgill | 1 | 50.0 % | 1844 |
+| Hazejel | 1 | 50.0 % | 1840 |
+| Brinelet | 1 | 49.6 % | 1872 |
+| Rushkit | 1 | 49.3 % | 1842 |
+| Corocub | 1 | 49.3 % | 1776 |
+| Orrlet | 1 | 49.2 % | 1798 |
+| Ingotlet | 1 | 49.1 % | 1758 |
+| Quenchet | 1 | 49.1 % | 1818 |
+| Puddock | 1 | 48.9 % | 1786 |
+| Scaldasp | 1 | 48.9 % | 1676 |
+| Noonpip | 1 | 48.9 % | 1844 |
+| Wadlet | 1 | 48.6 % | 1818 |
+| Glimmoth | 1 | 48.5 % | 1778 |
+| Morelit | 1 | 48.4 % | 1804 |
+| Millwhit | 1 | 48.1 % | 1764 |
+| Mordling | 1 | 48.1 % | 1758 |
+| Mossling | 1 | 48.0 % | 1882 |
+| Glimshell | 1 | 47.9 % | 1656 |
+| Sablet | 1 | 47.9 % | 1792 |
+| Grindlet | 1 | 47.8 % | 1836 |
+| Ergfin | 1 | 47.7 % | 1770 |
+| Sootpaw | 1 | 47.7 % | 1850 |
+| Shalebat | 1 | 47.7 % | 1796 |
+| Ashwren | 1 | 47.7 % | 1834 |
+| Coalkid | 1 | 47.5 % | 1824 |
+| Reedquill | 1 | 47.4 % | 1824 |
+| Sluicekit | 1 | 47.4 % | 1676 |
+| Thrashkin | 1 | 47.4 % | 1790 |
+| Puddlet | 1 | 47.3 % | 1786 |
+| Solkit | 1 | 47.3 % | 1722 |
+| Padlet | 1 | 47.3 % | 1898 |
+| Pressbug | 1 | 47.1 % | 1804 |
+| Silthop | 1 | 47.1 % | 1874 |
+| Stampet | 1 | 47.0 % | 1832 |
+| Rollib | 1 | 46.7 % | 1726 |
+| Flourie | 1 | 46.7 % | 1800 |
+| Glowflit | 1 | 46.5 % | 1782 |
+| Bakedil | 1 | 46.3 % | 1808 |
+| Copperling | 1 | 46.3 % | 1826 |
+| Velvit | 1 | 46.3 % | 1884 |
+| Carabun | 1 | 46.3 % | 1776 |
+| Shimmerlet | 1 | 46.2 % | 1752 |
+| Saltsprig | 1 | 46.2 % | 1834 |
+| Burrin | 1 | 45.9 % | 1756 |
+| Brickit | 1 | 45.7 % | 1830 |
+| Clinklet | 1 | 45.6 % | 1790 |
+| Chimelet | 1 | 44.8 % | 1936 |
+| Kindlop | 1 | 44.8 % | 1806 |
+| Zippit | 1 | 44.4 % | 1930 |
+| Etchling | 1 | 44.2 % | 1834 |
+| Duneshrew | 1 | 43.7 % | 1756 |
+| Vitrill | 1 | 43.5 % | 1874 |
+| Obelit | 1 | 43.0 % | 1788 |
+| Stiltwade | 1 | 43.0 % | 1868 |
+| Cullet | 1 | 42.8 % | 1786 |
+| Smeltpup | 1 | 42.7 % | 1786 |
+| Cogmite | 1 | 42.5 % | 1748 |
+| Wickit | 1 | 42.3 % | 1734 |
+| Cindle | 1 | 42.1 % | 1806 |
+| Croziel | 1 | 41.9 % | 1950 |
+| Kelpup | 1 | 41.9 % | 1850 |
+| Lodekit | 1 | 41.8 % | 1904 |
+| Talusk | 1 | 41.7 % | 1688 |
+| Glasstarn | 2 | 58.3 % | 1692 |
+| Charsylvan | 2 | 58.2 % | 1642 |
+| Ferrowyn | 2 | 58.1 % | 1588 |
+| Diparrow | 2 | 57.6 % | 1520 |
+| Tempestrel | 2 | 57.6 % | 1602 |
+| Scrivane | 2 | 57.3 % | 1710 |
+| Burinox | 2 | 57.0 % | 1548 |
+| Ashcrest | 2 | 57.0 % | 1538 |
+| Zenithare | 2 | 56.9 % | 1618 |
+| Glimmerax | 2 | 56.8 % | 1592 |
+| Covewarden | 2 | 56.2 % | 1636 |
+| Millvane | 2 | 56.0 % | 1484 |
+| Quenchcoil | 2 | 55.9 % | 1620 |
+| Rainmantle | 2 | 55.7 % | 1750 |
+| Brinewhorl | 2 | 55.0 % | 1590 |
+| Lichenbear | 2 | 55.0 % | 1594 |
+| Duskmirrah | 2 | 54.7 % | 1530 |
+| Bellowroc | 2 | 54.6 % | 1628 |
+| Smudgeworm | 2 | 54.5 % | 1676 |
+| Delthorn | 2 | 54.5 % | 1660 |
+| Saltcrown | 2 | 54.4 % | 1576 |
+| Glacilisk | 2 | 54.4 % | 1684 |
+| Peatbloom | 2 | 54.4 % | 1550 |
+| Quilmothra | 2 | 54.3 % | 1538 |
+| Hoarstag | 2 | 54.1 % | 1640 |
+| Fumewraith | 2 | 54.1 % | 1596 |
+| Puffglass | 2 | 53.9 % | 1588 |
+| Hazejellith | 2 | 53.8 % | 1638 |
+| Nibquill | 2 | 53.8 % | 1544 |
+| Frostfoil | 2 | 53.7 % | 1598 |
+| Dunebastion | 2 | 53.6 % | 1488 |
+| Threshox | 2 | 53.6 % | 1478 |
+| Gelidray | 2 | 53.5 % | 1608 |
+| Mortarmarch | 2 | 53.4 % | 1574 |
+| Silentra | 2 | 53.4 % | 1572 |
+| Filigrace | 2 | 53.4 % | 1522 |
+| Coronarch | 2 | 53.2 % | 1636 |
+| Brookbaron | 2 | 53.2 % | 1680 |
+| Pinchward | 2 | 52.9 % | 1604 |
+| Gleamworm | 2 | 52.7 % | 1608 |
+| Canalurker | 2 | 52.6 % | 1672 |
+| Blotgrimm | 2 | 52.5 % | 1536 |
+| Rimelynx | 2 | 52.5 % | 1510 |
+| Skerrigale | 2 | 52.4 % | 1556 |
+| Nimbuck | 2 | 52.3 % | 1626 |
+| Dryhound | 2 | 52.2 % | 1650 |
+| Siltarra | 2 | 52.1 % | 1678 |
+| Weirrunner | 2 | 51.9 % | 1560 |
+| Sleetcowl | 2 | 51.8 % | 1540 |
+| Dusktern | 2 | 51.7 % | 1664 |
+| Rookwarden | 2 | 51.5 % | 1618 |
+| Pressbeetle | 2 | 51.5 % | 1682 |
+| Woadwhorl | 2 | 51.3 % | 1556 |
+| Glimbastion | 2 | 51.2 % | 1538 |
+| Gloamquill | 2 | 51.2 % | 1632 |
+| Verdigrand | 2 | 51.2 % | 1506 |
+| Solmantle | 2 | 51.1 % | 1658 |
+| Fizzgrove | 2 | 51.1 % | 1584 |
+| Cindrel | 2 | 51.0 % | 1524 |
+| Prismistral | 2 | 51.0 % | 1636 |
+| Stylox | 2 | 51.0 % | 1610 |
+| Obsidroth | 2 | 50.9 % | 1604 |
+| Lampickard | 2 | 50.9 % | 1616 |
+| Reedwarden | 2 | 50.8 % | 1582 |
+| Skimmarch | 2 | 50.7 % | 1642 |
+| Vatreeve | 2 | 50.7 % | 1528 |
+| Clinkshell | 2 | 50.6 % | 1582 |
+| Noonwhist | 2 | 50.6 % | 1610 |
+| Sluicer | 2 | 50.6 % | 1484 |
+| Inkspool | 2 | 50.5 % | 1620 |
+| Chirrikade | 2 | 50.4 % | 1624 |
+| Mirassil | 2 | 50.3 % | 1640 |
+| Morelamp | 2 | 50.1 % | 1546 |
+| Flueling | 2 | 49.9 % | 1666 |
+| Rubricorn | 2 | 49.9 % | 1698 |
+| Cartocoil | 2 | 49.9 % | 1660 |
+| Gloomgillar | 2 | 49.9 % | 1616 |
+| Haboborn | 2 | 49.8 % | 1642 |
+| Kelphound | 2 | 49.8 % | 1492 |
+| Heliodrop | 2 | 49.7 % | 1586 |
+| Rushprowl | 2 | 49.6 % | 1610 |
+| Spinnarow | 2 | 49.6 % | 1508 |
+| Shadeback | 2 | 49.5 % | 1688 |
+| Vaporelle | 2 | 49.5 % | 1680 |
+| Vanecrow | 2 | 49.5 % | 1606 |
+| Sablowl | 2 | 49.5 % | 1688 |
+| Orrerine | 2 | 49.4 % | 1610 |
+| Scaldcoil | 2 | 49.1 % | 1622 |
+| Padlotus | 2 | 49.1 % | 1706 |
+| Kilnstork | 2 | 49.1 % | 1686 |
+| Canalord | 2 | 49.0 % | 1534 |
+| Stiltregent | 2 | 48.9 % | 1630 |
+| Glowflitter | 2 | 48.7 % | 1750 |
+| Sirocat | 2 | 48.6 % | 1600 |
+| Glazelisk | 2 | 48.5 % | 1582 |
+| Marshfife | 2 | 48.5 % | 1632 |
+| Velvessa | 2 | 48.5 % | 1518 |
+| Stamphorn | 2 | 48.4 % | 1534 |
+| Saltspire | 2 | 48.3 % | 1564 |
+| Ardlume | 2 | 48.3 % | 1646 |
+| Wickmoth | 2 | 48.3 % | 1576 |
+| Lanternel | 2 | 48.2 % | 1570 |
+| Lumenewt | 2 | 48.2 % | 1558 |
+| Veskara | 2 | 48.1 % | 1576 |
+| Lodebrock | 2 | 47.7 % | 1666 |
+| Sootlurk | 2 | 47.7 % | 1604 |
+| Ergskim | 2 | 47.7 % | 1684 |
+| Floursprite | 2 | 47.7 % | 1592 |
+| Flickscale | 2 | 47.4 % | 1620 |
+| Coalbuck | 2 | 47.4 % | 1560 |
+| Ripjolter | 2 | 47.3 % | 1522 |
+| Obelith | 2 | 47.3 % | 1506 |
+| Hearthmote | 2 | 47.1 % | 1610 |
+| Grindwheel | 2 | 47.1 % | 1566 |
+| Bakedillon | 2 | 47.0 % | 1566 |
+| Fernwhisk | 2 | 46.9 % | 1502 |
+| Forgeflare | 2 | 46.9 % | 1558 |
+| Fiddlehorn | 2 | 46.8 % | 1590 |
+| Platewing | 2 | 46.5 % | 1706 |
+| Palmonarch | 2 | 46.5 % | 1608 |
+| Burrowgraver | 2 | 46.4 % | 1578 |
+| Corrodile | 2 | 46.3 % | 1622 |
+| Mendlace | 2 | 46.2 % | 1620 |
+| Copperclad | 2 | 45.9 % | 1594 |
+| Vitriolus | 2 | 45.7 % | 1672 |
+| Ingotusk | 2 | 45.5 % | 1646 |
+| Peallith | 2 | 45.5 % | 1640 |
+| Cogwright | 2 | 45.5 % | 1564 |
+| Rollibex | 2 | 45.2 % | 1620 |
+| Mordantoad | 2 | 45.2 % | 1618 |
+| Wadishell | 2 | 45.2 % | 1594 |
+| Fenwarden | 2 | 45.1 % | 1666 |
+| Fulgorin | 2 | 45.1 % | 1566 |
+| Vitrillon | 2 | 44.9 % | 1644 |
+| Brickwarden | 2 | 44.8 % | 1594 |
+| Belfrit | 2 | 44.7 % | 1564 |
+| Claspirant | 2 | 44.6 % | 1612 |
+| Smeltmaw | 2 | 44.5 % | 1522 |
+| Chimewell | 2 | 44.4 % | 1634 |
+| Siltgrove | 2 | 44.0 % | 1590 |
+| Caravant | 2 | 43.9 % | 1638 |
+| Glassfell | 2 | 43.6 % | 1596 |
+| Frondmere | 2 | 43.5 % | 1578 |
+| Cullhorn | 2 | 42.4 % | 1548 |
+| Gyrevult | 2 | 42.3 % | 1634 |
+| Talusgard | 2 | 42.2 % | 1654 |
+| Thornback | 2 | 42.0 % | 1558 |
+| Smoldrake | 2 | 41.8 % | 1494 |
+| Duskdigger | 2 | 41.8 % | 1518 |
+| Riptail | 2 | 41.6 % | 1574 |
+| Leviarch | 3 | 57.8 % | 3476 |
+| Vanecrest | 3 | 57.1 % | 3630 |
+| Ripjoltane | 3 | 55.2 % | 3678 |
+| Rubriclad | 3 | 55.1 % | 3480 |
+| Sleetsage | 3 | 55.1 % | 3640 |
+| Vatbaron | 3 | 54.9 % | 3648 |
+| Siltaroth | 3 | 54.8 % | 3532 |
+| Glazeldrake | 3 | 54.7 % | 3562 |
+| Hoarmonarch | 3 | 54.7 % | 3550 |
+| Filigravure | 3 | 54.6 % | 3462 |
+| Smudgewyrm | 3 | 54.4 % | 3394 |
+| Nibravure | 3 | 54.0 % | 3580 |
+| Pinchcastle | 3 | 53.7 % | 3552 |
+| Cindravax | 3 | 53.7 % | 3446 |
+| Fumeregent | 3 | 53.4 % | 3454 |
+| Rimesovereign | 3 | 53.3 % | 3544 |
+| Quilmothane | 3 | 53.3 % | 3478 |
+| Woadcastle | 3 | 53.1 % | 3658 |
+| Gelidmonarch | 3 | 52.9 % | 3450 |
+| Lodemarshal | 3 | 52.7 % | 3652 |
+| Nimbarch | 3 | 52.7 % | 3584 |
+| Inkregent | 3 | 52.3 % | 3344 |
+| Rushstalker | 3 | 52.3 % | 3598 |
+| Fulgorath | 3 | 52.1 % | 3664 |
+| Veskarion | 3 | 51.8 % | 3614 |
+| Grindmonolith | 3 | 51.4 % | 3520 |
+| Stampcolossus | 3 | 51.3 % | 3502 |
+| Fiddlestag | 3 | 51.3 % | 3586 |
+| Sootharrow | 3 | 51.3 % | 3424 |
+| Glowflare | 3 | 51.2 % | 3718 |
+| Siroclaw | 3 | 51.2 % | 3448 |
+| Dipmonarch | 3 | 50.9 % | 3562 |
+| Weirmarshal | 3 | 50.9 % | 3494 |
+| Gleamwyrm | 3 | 50.2 % | 3532 |
+| Ardenthal | 3 | 50.0 % | 3446 |
+| Morelord | 3 | 49.7 % | 3546 |
+| Noonsoral | 3 | 49.4 % | 3566 |
+| Scaldrahn | 3 | 49.4 % | 3598 |
+| Habobrax | 3 | 49.3 % | 3452 |
+| Corrodrake | 3 | 49.0 % | 3322 |
+| Clinkerdome | 3 | 49.0 % | 3548 |
+| Caravault | 3 | 48.9 % | 3380 |
+| Skerrimast | 3 | 48.9 % | 3518 |
+| Platemarshal | 3 | 48.7 % | 3508 |
+| Wadibastion | 3 | 48.6 % | 3424 |
+| Spinnacle | 3 | 48.4 % | 3378 |
+| Quenchwyrm | 3 | 48.2 % | 3522 |
+| Stylaxon | 3 | 48.1 % | 3522 |
+| Helirollax | 3 | 47.9 % | 3548 |
+| Peatmonarch | 3 | 47.7 % | 3540 |
+| Obelordan | 3 | 47.5 % | 3514 |
+| Chimeward | 3 | 47.4 % | 3466 |
+| Sluicewarden | 3 | 47.4 % | 3512 |
+| Copperpatriarch | 3 | 47.3 % | 3470 |
+| Mordantyrant | 3 | 46.2 % | 3670 |
+| Velverain | 3 | 46.0 % | 3564 |
+| Verdantusk | 3 | 46.0 % | 3660 |
+| Gloomgillith | 3 | 45.9 % | 3620 |
+| Brickolossus | 3 | 45.8 % | 3516 |
+| Claspreign | 3 | 45.2 % | 3486 |
+| Coalpatriarch | 3 | 45.0 % | 3598 |
+| Cairnhold | 3 | 44.3 % | 3504 |
+| Ergrava | 3 | 43.4 % | 3618 |
+| Flickwyrm | 3 | 43.1 % | 3546 |
+| Vitrillaxe | 3 | 43.1 % | 3428 |
+| Calderox | 3 | 42.1 % | 3538 |
+| Sablarch | 3 | 42.1 % | 3538 |
+| Burringrand | 3 | 41.2 % | 3478 |
 
 Chart problems: none
-Outside the band: species Blotling at 64.5 %; species Paddlewisp at 62.7 %; species Smeltpup at 38.0 %; species Wickit at 38.2 %; species Scrivane at 68.1 %; species Ferrowyn at 61.4 %; species Cullhorn at 38.0 %; species Smoldrake at 34.6 %; species Zenithare at 60.6 %; species Tempestrel at 62.1 %; species Glasstarn at 60.8 %
+Outside the band: none
 
 Chart sim (equal stats, one art of the own element, seed 352): 40 duels per pair, every team of 3 against every team it shares no element with, 4 lead orders, sides swapped. Element band 40 to 60 %, team band 30 to 70 %.
 
 | Element | Era I 1 on 1 | Era I teams | All eras 1 on 1 | All eras teams |
 | --- | --- | --- | --- | --- |
-| Ember | 50.2 % | 51.3 % | 50.1 % | 50.0 % |
-| Tide | 47.5 % | 50.5 % | 49.9 % | 50.4 % |
-| Bloom | 49.5 % | 51.3 % | 49.2 % | 50.2 % |
-| Volt | 50.6 % | 50.3 % | 50.4 % | 49.7 % |
-| Stone | 50.0 % | 50.7 % | 50.7 % | 49.9 % |
-| Gale | 49.1 % | 49.1 % | 50.0 % | 49.8 % |
-| Lumen | 50.5 % | 49.9 % | 49.7 % | 49.4 % |
-| Umbra | 52.7 % | 46.9 % | 48.6 % | 49.6 % |
-| Ink | - | - | 49.6 % | 51.0 % |
-| Echo | - | - | 50.2 % | 49.4 % |
-| Rust | - | - | 50.1 % | 49.8 % |
-| Mask | - | - | 50.5 % | 50.3 % |
-| Acid | - | - | 51.2 % | 50.6 % |
-| Frost | - | - | 49.8 % | 49.9 % |
+| Ember | 50.2 % | 51.3 % | 49.5 % | 49.7 % |
+| Tide | 47.5 % | 50.5 % | 51.1 % | 50.4 % |
+| Bloom | 49.5 % | 51.3 % | 49.5 % | 50.4 % |
+| Volt | 50.6 % | 50.3 % | 52.5 % | 49.9 % |
+| Stone | 50.0 % | 50.7 % | 49.4 % | 50.0 % |
+| Gale | 49.1 % | 49.1 % | 49.1 % | 49.7 % |
+| Lumen | 50.5 % | 49.9 % | 50.9 % | 49.5 % |
+| Umbra | 52.7 % | 46.9 % | 49.7 % | 49.8 % |
+| Ink | - | - | 50.1 % | 50.7 % |
+| Echo | - | - | 49.4 % | 49.5 % |
+| Rust | - | - | 50.7 % | 50.3 % |
+| Mask | - | - | 47.8 % | 50.6 % |
+| Acid | - | - | 50.5 % | 50.6 % |
+| Frost | - | - | 50.5 % | 50.0 % |
+| Gilt | - | - | 48.7 % | 49.7 % |
+| Zenith | - | - | 50.7 % | 49.3 % |
 
 Era I: 56 teams, lowest Ember/Volt/Lumen 33.8 %, highest Ember/Volt/Stone 68.8 %.
-All eras: 364 teams, lowest Tide/Bloom/Gale 33.3 %, highest Tide/Bloom/Stone 65.0 %.
+All eras: 560 teams, lowest Bloom/Gale/Frost 37.4 %, highest Ink/Echo/Mask 62.4 %.
 
 Chart sim outside the band: none
 <!-- /type_sim report -->
