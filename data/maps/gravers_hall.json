@@ -64,6 +64,16 @@
    "facing": "left",
    "dialogue": "gravers_hall/coach",
    "sprite": "villager"
+  },
+  {
+   "id": "lq_moll",
+   "x": 6,
+   "y": 6,
+   "facing": "down",
+   "dialogue": "legend_quests/monolurk_witness",
+   "sprite": "elder",
+   "show_flag": "lq_monolurk_met",
+   "hide_flag": "lq_monolurk_ready"
   }
  ],
  "signs": [],

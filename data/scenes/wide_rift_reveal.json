@@ -6,6 +6,7 @@
   {"say": ["The Wide Rift hangs over the plain like a torn sky. No Warden stands here. Nobody holds it from this side."]},
   {"letter": ["'Still drawing.'", "'Still here.'", "'M.'"], "speaker": "Mirela"},
   {"say": ["The letters are fresh. Someone burned them into the rock from the other side of the Rift.", "Mirela isn't lost. She's holding the Wide Rift. From the inside."]},
+  {"dialogue": "betrayal/a2_chalk"},
   {"flag": "wide_rift_seen"},
   {"card": "Chapter 11: The Far Side"}
  ]
