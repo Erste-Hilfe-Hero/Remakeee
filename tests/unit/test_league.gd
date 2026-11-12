@@ -11,6 +11,8 @@ func before_all() -> void:
 
 func before_each() -> void:
 	s = LocalBackend.new()
+	# Fixed seed: the match seed comes from it, and some seeds give a loss without damage, which is sandbagged and not rated.
+	s.rng.seed = 1
 	s.switch_user("ben")
 	ben_code = s.call_fn("hello", {"p_version": 1}).data.profile.code
 	s.call_fn("team_set", {"p_team": [{"species": "Kindlop", "level": 60, "moves": ["Kiln Strike", "Cinder Breath"]},

@@ -14,6 +14,8 @@ func before_all() -> void:
 
 func before_each() -> void:
 	s = LocalBackend.new()
+	# Fixed seed: the duel seed comes from it, and some seeds end the duel in a draw (winner -1).
+	s.rng.seed = 1
 	for who: String in ["ann", "ben", "cid"]:
 		s.switch_user(who)
 		codes[who] = s.call_fn("hello", {"p_version": 1}).data.profile.code
