@@ -931,6 +931,7 @@ def maps(world):
 
 
 # --- Data files (python3 tools/art/world/halcyra_side.py) ---------------------------------------
+HOST = {"fallen_planet": "orrery_ridge", "brine_catacombs": "mirror_flats"}   # tables fill up from here to 50
 WEIGHT = {"common": 30, "uncommon": 14, "shy": 6}   # inside SpirlingData.WEIGHT_BANDS
 
 
@@ -964,6 +965,14 @@ def homes(enc, sp):
         out[mid] = {"rate": 0.12, "spawns": [{"species": s, "min": lo, "max": hi, "weight": WEIGHT.get(sp[s].get("rarity"), 30),
                                               "ground": grounds[j % 2]}
                                              for j, s in enumerate(ks)]}
+        spawns = out[mid]["spawns"]
+        host = HOST[mid]
+        for e in sorted(enc.get(host, {}).get("spawns", []), key=lambda e: -e["weight"]):
+            if sum(x["weight"] for x in spawns) >= 50:
+                break
+            if all(x["species"] != e["species"] for x in spawns):
+                spawns.append({"species": e["species"], "min": lo, "max": hi, "weight": e["weight"],
+                               "ground": grounds[len(spawns) % 2]})
     return out
 
 
