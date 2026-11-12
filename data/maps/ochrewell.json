@@ -22,7 +22,7 @@
   "^...____...^",
   "^....__....^",
   "^.RR.__.RR.^",
-  "^.HH.__.HH.^",
+  "^.HH.__.HD.^",
   "^....__....^",
   "^.##.__.##.^",
   "^....__....^",
@@ -93,6 +93,14 @@
    "to": "sun_rift",
    "tx": 6,
    "ty": 20,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 13,
+   "to": "veil_cistern",
+   "tx": 5,
+   "ty": 8,
    "facing": "up"
   }
  ],
@@ -232,6 +240,12 @@
    "y": 19,
    "open_flag": "rift_oasis_sealed",
    "closed": "#"
+  },
+  {
+   "x": 9,
+   "y": 13,
+   "open_flag": "veil_factor_beaten",
+   "closed": "H"
   }
  ],
  "secrets": [

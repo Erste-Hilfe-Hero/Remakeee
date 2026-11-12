@@ -261,6 +261,7 @@ func _run() -> void:
 					continue
 				SaveManager.set_slot(slot)
 				if await _new_game():
+					SaveManager.start_fresh_slot()
 					SaveManager.save_settings()
 					_enter_game()
 					return

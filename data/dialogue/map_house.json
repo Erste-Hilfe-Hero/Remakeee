@@ -18,5 +18,12 @@
  },
  "maps": [
   "Old maps of Veydal, crossed out and redrawn in three colours of ink."
- ]
+ ],
+ "hollis": {
+  "lines": [
+   "Examiner Hollis: The guild keeps a board for people who finished the story and could not stop.",
+   "Examiner Hollis: Pick something. Lose at it. I take notes."
+  ],
+  "action": "postgame_board"
+ }
 }
