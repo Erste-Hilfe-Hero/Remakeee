@@ -5,6 +5,8 @@ extends Node
 ## fades the layers:
 ##   world:    standing = bass + chords, walking adds the melody, running adds the drums
 ##   dialogue: melody and drums drop to -12 dB while a text box is open
+##   battle:   (Era V battle songs, data/era_audio.json "battle_layers") intensity 0 = bass +
+##             chords, 1 adds the melody, 2 adds the drums (Sound.battle_state)
 ## Every layer change fades over FADE_TIME.
 
 const STEM_DIR: String = "res://audio/music/stems/%s_%s.ogg"
@@ -18,6 +20,10 @@ const IDLE_AFTER: float = 0.4
 enum Motion { IDLE, WALK, RUN, FULL }
 
 var motion: Motion = Motion.FULL
+const FULL_INTENSITY: int = 2
+## True while the active track is a battle song; its layers follow [member intensity].
+var battle: bool = false
+var intensity: int = FULL_INTENSITY
 var dialogue: bool = false
 ## Current linear gain per stem (0..1), eased toward target_gains().
 var gains: PackedFloat32Array = PackedFloat32Array([1, 1, 1, 1])
@@ -48,8 +54,17 @@ func stream_for(track: String) -> AudioStreamSynchronized:
 		_cache[track] = sync
 	return _cache[track]
 
-## Called by Sound when a new track starts (null for a plain track).
-func set_active(stream: AudioStream) -> void:
+## Battle songs: "battle..." and "warden..." in any era.
+static func is_battle_track(track: String) -> bool:
+	return track.begins_with("battle") or track.begins_with("warden")
+
+## Called by Sound when [param track] starts ([param stream] null for a plain track). A new fight
+## opens at intensity 0; the pinch switch inside a fight keeps the intensity.
+func set_active(stream: AudioStream, track: String = "") -> void:
+	var was_battle: bool = battle
+	battle = is_battle_track(track)
+	if battle and not was_battle:
+		intensity = 0
 	_active = stream as AudioStreamSynchronized
 	gains = target_gains()
 	_apply()
@@ -65,9 +80,16 @@ func update_world(moving: bool, running: bool, delta: float) -> void:
 	elif _still >= IDLE_AFTER:
 		motion = Motion.IDLE
 
-## Target gain per stem for the current motion and dialogue state.
+func set_intensity(level: int) -> void:
+	intensity = clampi(level, 0, FULL_INTENSITY)
+
+## Target gain per stem for the current motion and dialogue state (battle: the intensity).
 func target_gains() -> PackedFloat32Array:
 	var g := PackedFloat32Array([1, 1, 1, 1])
+	if battle:
+		g[2] = 1.0 if intensity >= 1 else 0.0
+		g[3] = 1.0 if intensity >= 2 else 0.0
+		return g
 	match motion:
 		Motion.IDLE:
 			g[2] = 0.0

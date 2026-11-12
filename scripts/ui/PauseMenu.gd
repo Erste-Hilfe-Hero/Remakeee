@@ -101,7 +101,7 @@ func run() -> void:
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty() or not raid_attempt.is_empty():
+				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay:
 					return
 			"Leagues":
 				await LeagueMenu.run(self)
@@ -354,6 +354,7 @@ func run_records() -> void:
 		if Vows.can_take() or not (GameState.records.get("vows", {}) as Dictionary).is_empty():
 			lines.append("Vows")
 		lines.append("Run chronicle")
+		lines.append("Era functions")
 		lines.append("Finds by region")
 		if not memorial_lines().is_empty():
 			lines.append("Memorial book")
@@ -380,6 +381,7 @@ func run_records() -> void:
 			"Tower map": await info("\n".join(RiftTower.card_lines()))
 			"Vows": await run_vows()
 			"Run chronicle": await info("\n".join(RunChronicle.lines()))
+			"Era functions": await run_era_functions()
 			"Finds by region": await info("\n".join(RegionStats.lines(GameState.flags)))
 			"Memorial book": await info("\n".join(memorial_lines()))
 			"Sticker wall": await info("\n".join(Album.wall_lines()))
@@ -391,6 +393,15 @@ func run_records() -> void:
 				if await confirm("Watch the replay? %s" % BattleReplay.label(last)):
 					watch_replay = true
 					return
+
+## Era functions (data/era_functions.json): one page per open era with what it brought.
+func run_era_functions() -> void:
+	while true:
+		var titles: Array[String] = EraFeatures.era_titles(EraManager.unlocked_era)
+		var i: int = await pick_strings(Loc.t("Era functions"), titles)
+		if i < 0:
+			return
+		await info("\n".join(EraFeatures.page_lines(i + 1)))
 
 ## The lexicon (plan area 2, item 680): the collected entries, each opened as a page.
 func run_lexicon() -> void:
@@ -753,6 +764,9 @@ static func bag_tab(it: Dictionary) -> int:
 func run_bag() -> void:
 	await tip("satchel")
 	var tab: int = -1
+	# The item used last keeps the focus when the list comes back (item 1927).
+	var last_id: String = ""
+	var last_idx: int = -1
 	while true:
 		var by_tab: Array[Array] = [[], [], [], [], []]
 		for id: Variant in GameState.inventory:
@@ -773,15 +787,24 @@ func run_bag() -> void:
 		for id: String in ids:
 			var it0: Dictionary = Database.item(id)
 			# The description stands in the line under the list (item 1915).
-			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)],
-				"hint": str(it0.get("description", ""))})
-		var idx: int = await pick("Satchel", entries, true, -1, ListPicker.TAP_GUARD_MS, tabs, tab)
+			var hint: String = Loc.t(str(it0.get("description", "")))
+			if battle_only(it0):
+				hint = Loc.t(BATTLE_ONLY) + " " + hint
+			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint})
+		# If it was used up, the row that took its place gets the focus.
+		var focus: int = ids.find(last_id)
+		if focus < 0 and last_idx >= 0:
+			focus = mini(last_idx, ids.size() - 1)
+		var idx: int = await pick("Satchel", entries, true, focus, ListPicker.TAP_GUARD_MS, tabs, tab)
 		if ListPicker.tab_of(idx) >= 0:
 			tab = ListPicker.tab_of(idx)
+			last_idx = -1
 			continue
 		if idx < 0:
 			return
 		var item_id: String = ids[idx]
+		last_id = item_id
+		last_idx = idx
 		var it: Dictionary = Database.item(item_id)
 		if it.has("teaches"):
 			await _teach_echo(item_id)
@@ -799,24 +822,55 @@ func run_bag() -> void:
 			if await confirm("%s\n%s" % [Loc.t(str(it.get("name", ""))), Loc.t(str(it.get("description", "")))], "Use", "Not now"):
 				await info(ShopEffects.start_boost(item_id))
 		elif item_id in _usable_items():
-			var names: Array[String] = []
-			for s: Spirling in GameState.party:
-				names.append(MenuHost.party_line(s))
-			var who: int = await pick_strings("Use %s on?" % it.get("name", ""), names)
-			if who >= 0 and bool(it.get("spark_all", false)):
-				# The Spark Forge shows the values it will set before it is used.
-				var s: Spirling = GameState.party[who]
-				if not await confirm("%s\n%s" % [GameState.spark_reading(s), Loc.t("Afterwards every spark is at the top (12).")], "Use", "Not now"):
-					who = -1
-			if who >= 0:
-				var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
-				await info(msg if not msg.is_empty() else "That would do nothing right now.")
+			await _use_on_party(item_id)
 		elif item_id == TideChart.ITEM:
 			await info("\n".join(TideChart.lines()))
 		elif bool(it.get("gear", false)):
 			await info(gear_page(item_id), gear_picture(item_id))
 		else:
 			await info("%s\n%s" % [it.get("name", ""), it.get("description", "")])
+
+## Picks who gets [param item_id]. Healing items ask again for the same Spirling after
+## each use, until Back or the last one is gone (item 1919).
+func _use_on_party(item_id: String) -> void:
+	var it: Dictionary = Database.item(item_id)
+	var again: bool = int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0
+	var focus: int = -1
+	while GameState.item_count(item_id) > 0:
+		var rows: Array[Dictionary] = []
+		for s: Spirling in GameState.party:
+			var row: Dictionary = {"text": MenuHost.party_line(s)}
+			var after: String = vigor_preview(it, s)
+			if not after.is_empty():
+				row["hint"] = after
+			rows.append(row)
+		var title: String = "Use %s on?" % it.get("name", "")
+		if again:
+			title += "  x%d" % GameState.item_count(item_id)
+		var who: int = await pick(title, rows, true, focus)
+		if who < 0:
+			return
+		focus = who
+		if bool(it.get("spark_all", false)):
+			# The Spark Forge shows the values it will set before it is used.
+			var sp: Spirling = GameState.party[who]
+			if not await confirm("%s\n%s" % [GameState.spark_reading(sp), Loc.t("Afterwards every spark is at the top (12).")], "Use", "Not now"):
+				return
+		var msg: String = GameState.use_item_outside_battle(item_id, GameState.party[who])
+		await info(msg if not msg.is_empty() else "That would do nothing right now.")
+		if not again:
+			return
+
+const BATTLE_ONLY: String = "Only in battle."
+
+## Items that only work in a battle (item 1924): marked in the Satchel.
+static func battle_only(it: Dictionary) -> bool:
+	if not bool(it.get("battle", false)):
+		return false
+	for k: String in ["heal", "revive", "evolves", "rings", "spark_all", "boost", "teaches", "gear"]:
+		if it.has(k) and it[k]:
+			return false
+	return true
 
 ## What each "works_on" entry of a gear item means (area 3 item 1050).
 const GEAR_PLACES: Dictionary[String, String] = {
@@ -859,10 +913,12 @@ static func gear_picture(id: String) -> Texture2D:
 func _teach_echo(id: String) -> void:
 	var it: Dictionary = Database.item(id)
 	var mv: MoveData = Database.move(str(it.teaches))
-	var names: Array[String] = []
+	# Who can't learn it stands grey with the reason (item 1921).
+	var rows: Array[Dictionary] = []
 	for s: Spirling in GameState.party:
-		names.append("%s%s" % [MenuHost.party_line(s), "" if GameState.can_learn_echo(s, id) else "  (can't)"])
-	var who: int = await pick_strings("Teach %s to?" % mv.move_name, names)
+		var why: String = echo_reason(s, id)
+		rows.append({"text": MenuHost.party_line(s), "disabled": not why.is_empty(), "why": why})
+	var who: int = await pick("Teach %s to?" % mv.move_name, rows)
 	if who < 0:
 		return
 	var s: Spirling = GameState.party[who]
@@ -871,16 +927,31 @@ func _teach_echo(id: String) -> void:
 		return
 	var forget: int = -1
 	if s.moves.size() >= Spirling.MAX_MOVES:
-		var known: Array[String] = []
-		for m: MoveData in s.moves:
-			known.append(m.move_name)
-		forget = await pick_strings("Forget which art for %s?" % mv.move_name, known)
+		forget = await pick("Forget which art for %s?" % mv.move_name, art_rows(s.moves))
 		if forget < 0:
 			return
 	if not GameState.learn_from_item(s, id, forget):
 		return
 	Sound.sfx("level_up")
 	await info("%s learned %s!" % [s.display_name(), mv.move_name])
+
+## Why [param s] can't learn the art of Echo Crystal [param item_id]; empty if it can.
+static func echo_reason(s: Spirling, item_id: String) -> String:
+	if GameState.can_learn_echo(s, item_id):
+		return ""
+	var mv: MoveData = Database.move(str(Database.item(item_id).get("teaches", "")))
+	if mv != null and s.moves.has(mv):
+		return "Already knows this art."
+	return "Wrong element."
+
+## Known arts as rows: the name, and element, power and energy in the line below (item 1923).
+static func art_rows(moves: Array[MoveData]) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	for m: MoveData in moves:
+		var power: String = "-" if m.power <= 0 else str(m.power)
+		out.append({"text": m.move_name, "hint": "%s  %s  %s" % [Loc.t(Elements.element_name(m.element)),
+			Loc.t("Power %s" % power), Loc.t("Energy %d" % m.energy_cost)]})
+	return out
 
 ## Move Memory (item 4457): any art the Spirling could know at its Ring, at any time.
 func _relearn(s: Spirling) -> void:
@@ -896,10 +967,7 @@ func _relearn(s: Spirling) -> void:
 		return
 	var forget: int = -1
 	if s.moves.size() >= Spirling.MAX_MOVES:
-		var known: Array[String] = []
-		for m: MoveData in s.moves:
-			known.append(Loc.t(m.move_name))
-		forget = await pick_strings(Loc.t("Forget which art for %s?") % shown[pick], known)
+		forget = await pick(Loc.t("Forget which art for %s?") % shown[pick], art_rows(s.moves))
 		if forget < 0:
 			return
 	if GameState.relearn(s, names[pick], forget):

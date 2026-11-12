@@ -17,6 +17,9 @@ const ERRORS: Dictionary = {
 	"under_review": "Your account is being checked. Raids open again after the check.",
 	"empty_team": "Your team is empty.",
 	"not_in_team": "Save your journey first, then try again.",
+	"bad_role": "Pick attack, guard or help.",
+	"bad_tier": "Pick how hard the Rift should be.",
+	"no_guardian": "No guardian waits right now. Try again later.",
 }
 
 static func error_text(r: Dictionary) -> String:
@@ -57,7 +60,7 @@ static func run(menu: PauseMenu) -> void:
 		var labels: Array[String] = []
 		for x: Dictionary in raids:
 			labels.append(raid_line(x, now_s))
-		labels.append_array(["Open a Raid Rift...", "Rewards", "Fastest Rifts"] as Array[String])
+		labels.append_array(["Open a Raid Rift...", "Rewards", "Fastest Rifts", "Find a random group..."] as Array[String])
 		var idx: int = await menu.pick_strings("Raid Rifts", labels)
 		if idx < 0:
 			return
@@ -67,6 +70,8 @@ static func run(menu: PauseMenu) -> void:
 				return
 		elif idx == raids.size():
 			await open(menu)
+		elif idx == raids.size() + 3:
+			await find_group(menu)
 		elif idx == raids.size() + 2:
 			var b: Dictionary = await Online.call_fn("raid_board")
 			await menu.info(board_text(b.data.get("rows", [])) if b.ok and b.data is Dictionary else error_text(b))
@@ -77,17 +82,26 @@ static func _run_raid(menu: PauseMenu, x: Dictionary, list: Dictionary) -> void:
 	var lines: Array[String] = [Loc.t("Guardian: %s, Ring %d") % [str(x.guardian), int(x.level)],
 		Loc.t("Strength left: %d of %d") % [int(x.hp_left), int(x.hp_total)]]
 	for m: Dictionary in x.get("members", []):
-		lines.append("%s  %d" % [str(m.name), int(m.damage)])
+		lines.append(member_line(m))
 	var opts: Array[String] = []
 	if bool(x.get("open", false)) and int(x.tries_left) > 0:
 		opts.append(Loc.t("Fight (%d attempts left today)") % int(x.tries_left))
 	if x.get("reward") is Dictionary and not bool(x.get("claimed", false)):
 		opts.append("Take the reward")
+	if bool(x.get("open", false)):
+		opts.append("Show my role sign...")
 	if opts.is_empty():
 		await menu.info("\n".join(lines))
 		return
 	var idx: int = await menu.pick_strings("\n".join(lines), opts)
 	if idx < 0:
+		return
+	if opts[idx] == "Show my role sign...":
+		var role: Variant = await pick_role(menu)
+		if role != null:
+			var rr: Dictionary = await Online.call_fn("raid_role", {"p_raid": int(x.id), "p_role": role})
+			if not rr.ok or not rr.data is Dictionary or not bool(rr.data.get("ok", false)):
+				await menu.info(error_text(rr))
 		return
 	if opts[idx] == "Take the reward":
 		var c: Dictionary = await Online.call_fn("raid_claim", {"p_raid": int(x.id)})
@@ -169,3 +183,48 @@ static func board_text(rows: Array) -> String:
 		lines.append(Loc.t("%d. %s (%s, %d Wayfarers) %d min") % [i + 1, str(x.guardian),
 			Loc.t(RaidRules.TIER_NAMES[clampi(int(x.tier), 0, 2)]), int(x.players), int(x.seconds) / 60])
 	return "\n".join(lines)
+
+# --- Random groups, Echo teams, role signs (Online 100 points 25, 26, 27) --------------------------
+
+const ROLE_ORDER: Array[String] = ["attack", "guard", "help", ""]
+
+## "Mira  [Guard]  320" or "Echo team  180" for the member list of a Rift.
+static func member_line(m: Dictionary) -> String:
+	if bool(m.get("echo", false)):
+		return Loc.t("Echo team  %d") % int(m.get("damage", 0))
+	var role: String = str(m.get("role", ""))
+	var sign: String = "  [%s]" % Loc.t(str(RaidRules.ROLE_NAMES.get(role, role))) if not role.is_empty() else ""
+	return "%s%s  %d" % [str(m.get("name", "?")), sign, int(m.get("damage", 0))]
+
+## Attack, guard, help or no sign; null = cancelled.
+static func pick_role(menu: MenuHost) -> Variant:
+	var labels: Array[String] = []
+	for r: String in ROLE_ORDER:
+		labels.append(str(RaidRules.ROLE_NAMES[r]))
+	var idx: int = await menu.pick_strings("Your role sign: what will you do in the Rift?", labels)
+	return ROLE_ORDER[idx] if idx >= 0 else null
+
+## Looks for other Wayfarers for a Rift (point 25). After a minute Echo teams fill the free places (26).
+static func find_group(menu: MenuHost) -> void:
+	var tier: int = await menu.pick_strings("How hard?", RaidRules.TIER_NAMES)
+	if tier < 0:
+		return
+	var role: Variant = await pick_role(menu)
+	if role == null:
+		return
+	if not await menu.confirm("Look for a group for up to a minute? After that, Echo teams take the free places."):
+		return
+	for i: int in 20:
+		var r: Dictionary = await Online.call_fn("raid_find", {"p_tier": tier, "p_role": role})
+		if not r.ok or not r.data is Dictionary or not bool(r.data.get("ok", false)):
+			await menu.info(error_text(r))
+			return
+		if bool(r.data.get("found", false)):
+			Sound.sfx("confirm")
+			var n: int = int(r.data.get("echoes", 0))
+			await menu.info(Loc.t("Group found! %d Echo teams help you.") % n if n > 0 else "Group found! The Raid Rift is open for 48 hours.")
+			return
+		menu.toast(Loc.t("Looking for a group... %d waiting") % int(r.data.get("waiting", 0)), 4.0)
+		await menu.get_tree().create_timer(5.0).timeout
+	await Online.call_fn("raid_find_cancel")
+	await menu.info("Nobody was found. Try again later.")

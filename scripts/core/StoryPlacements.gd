@@ -43,17 +43,30 @@ static func apply(m: MapData, raw: Dictionary = {}) -> void:
 				m.signs.append(d)
 
 ## The scene to play when the player enters [param map_id], or "" (once per scene, and only
-## while its "if" holds). Entry format: "on_enter": {"scene": "id", "if": {...}}.
+## while its "if" holds). Entry format: "on_enter": {"scene": "id", "if": {...}}; a map with
+## several arrival scenes lists the others under "on_enter_more": [...] (checked in order).
 static func enter_scene(map_id: String, flags: Dictionary) -> String:
-	var on: Variant = for_map(map_id).get("on_enter")
-	if not on is Dictionary:
-		return ""
-	var id: String = str((on as Dictionary).get("scene", ""))
-	if id.is_empty() or bool(flags.get(ScenePlayer.seen_flag(id), false)):
-		return ""
-	if (on as Dictionary).has("if") and not Dialogue.check(on.get("if"), flags):
-		return ""
-	return id
+	for on: Dictionary in enter_entries(map_id):
+		var id: String = str(on.get("scene", ""))
+		if id.is_empty() or bool(flags.get(ScenePlayer.seen_flag(id), false)):
+			continue
+		if on.has("if") and not Dialogue.check(on.get("if"), flags):
+			continue
+		return id
+	return ""
+
+## Every arrival-scene entry of [param map_id]: "on_enter" first, then "on_enter_more".
+static func enter_entries(map_id: String) -> Array[Dictionary]:
+	var out: Array[Dictionary] = []
+	var extra: Dictionary = for_map(map_id)
+	if extra.get("on_enter") is Dictionary:
+		out.append(extra.get("on_enter"))
+	var more: Variant = extra.get("on_enter_more")
+	if more is Array:
+		for e: Variant in more:
+			if e is Dictionary:
+				out.append(e)
+	return out
 
 ## Spot names the story needs on [param map_id] (for the validator and area 3).
 static func spots_needed(map_id: String) -> PackedStringArray:

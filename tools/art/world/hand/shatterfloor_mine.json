@@ -9,5 +9,113 @@
     "hide_flag": "lq_scriptorax_ready"
    }
   ]
+ },
+ "set": {
+  "floors": [
+   {
+    "name": "Shatterfloor Mine, lower gallery",
+    "rows": [
+     "@@@@@@@@@@@@",
+     "@::........@",
+     "@..::......@",
+     "@......::..@",
+     "@...::.....@",
+     "@..........@",
+     "@=.........@",
+     "@@@@@@@@@@@@"
+    ],
+    "warps": [
+     {
+      "x": 1,
+      "y": 6,
+      "to": "shatterfloor_mine",
+      "tx": 5,
+      "ty": 6,
+      "facing": "up"
+     }
+    ],
+    "secrets": [
+     {
+      "x": 10,
+      "y": 6,
+      "item": "spark_drop",
+      "count": 1,
+      "flag": "find_shatter_low"
+     }
+    ],
+    "npcs": [
+     {
+      "id": "vm_dory",
+      "x": 9,
+      "y": 1,
+      "facing": "down",
+      "dialogue": "veydal_more/dory",
+      "sprite": "villager"
+     },
+     {
+      "id": "vm_striker_dunk",
+      "x": 3,
+      "y": 5,
+      "facing": "right",
+      "dialogue": "veydal_more/striker_dunk",
+      "sprite": "villager",
+      "trainer": "Striker Dunk",
+      "intro": "veydal_more/striker_dunk_intro",
+      "defeat": "veydal_more/striker_dunk_defeat",
+      "money": 260,
+      "team": [
+       {
+        "species": "Mirkmole",
+        "level": 13
+       },
+       {
+        "species": "Lichub",
+        "level": 13
+       }
+      ]
+     },
+     {
+      "id": "vm_striker_gwen",
+      "x": 6,
+      "y": 3,
+      "facing": "down",
+      "dialogue": "veydal_more/striker_gwen",
+      "sprite": "villager",
+      "trainer": "Striker Gwen",
+      "intro": "veydal_more/striker_gwen_intro",
+      "defeat": "veydal_more/striker_gwen_defeat",
+      "money": 240,
+      "team": [
+       {
+        "species": "Shalebat",
+        "level": 14
+       }
+      ]
+     },
+     {
+      "id": "vm_striker_wendle",
+      "x": 8,
+      "y": 5,
+      "facing": "left",
+      "dialogue": "veydal_more/striker_wendle",
+      "sprite": "villager",
+      "trainer": "Striker Wendle",
+      "intro": "veydal_more/striker_wendle_intro",
+      "defeat": "veydal_more/striker_wendle_defeat",
+      "money": 280,
+      "team": [
+       {
+        "species": "Talusk",
+        "level": 13
+       },
+       {
+        "species": "Glasstarn",
+        "level": 14
+       }
+      ]
+     }
+    ]
+   }
+  ]
  }
 }

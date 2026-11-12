@@ -104,7 +104,7 @@ Last Word, Vane of Morning, Zephyr Verdict, Lurking Mass, Lucent Void).
   pays a share of its Vigor, never the last point). BattleAI scores all four.
 - Items: Pruning Shears (Root), Grounding Rod (Jolt), Smelling Salts (Daze) in every general mart;
   coin element Charms: the 8 Era I ones at Edge Camp, Ink/Echo at the Thornridge crystal stall,
-  Rust/Mask in Vellmarch, Acid/Frost in Brightledge (Quillmarch has no mart yet), Gilt/Zenith in
+  Rust/Mask in Vellmarch, Acid/Frost in Quillmarch (Burin Landing), Gilt/Zenith in
   Gildcrest.
 
 ## Not done (owned elsewhere or needs a decision)
@@ -125,4 +125,4 @@ Last Word, Vane of Morning, Zephyr Verdict, Lurking Mass, Lucent Void).
   Crystals stay as teachers).
 - 14 final forms still know fewer than 4 good arts at Ring 20; they are met above Ring 20.
 - Items: 199 of a 250 target. Open ideas: a team cure item, held items for the status set
-  (a keepsake that blocks one status), Quillmarch marts for the Era III charms.
+  (a keepsake that blocks one status).

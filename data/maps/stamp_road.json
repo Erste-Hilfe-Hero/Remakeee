@@ -1,0 +1,151 @@
+{
+ "name": "Stamp Road",
+ "region": "quillmarch",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "stamp_road",
+ "rows": [
+  "TTTTT__TTTTT",
+  "T@@..__.%%%T",
+  "T@@...__%%%T",
+  "T.....__...T",
+  "T::@@@@_@@.T",
+  "T::@@@@_@@.T",
+  "T....____..T",
+  "T@@@._..:::T",
+  "T@@@._..:::T",
+  "T...._.....T",
+  "T%%.._@@@@@T",
+  "T%%..____..T",
+  "T@@@...._..T",
+  "T@@@.::._..T",
+  "T....::.__.T",
+  "T:::....._.T",
+  "T:::@@@@._.T",
+  "T...@@@@._.T",
+  "T..______..T",
+  "T.._..%%%..T",
+  "T@@_..%%%@@T",
+  "T@@_.....@@T",
+  "T..__......T",
+  "T....__.::.T",
+  "T.....__::.T",
+  "TTTTT__TTTTT"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 0,
+   "to": "ledgerholm",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 5,
+   "y": 25,
+   "to": "proofgate",
+   "tx": 10,
+   "ty": 8,
+   "facing": "left"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "ledgerholm",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 25,
+   "to": "proofgate",
+   "tx": 10,
+   "ty": 9,
+   "facing": "left"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "stamper",
+   "x": 10,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "quillmarch/stamp_road_stamper",
+   "sprite": "ranger",
+   "trainer": "Road Stamper Vigdis",
+   "intro": "quillmarch/stamp_road_stamper_intro",
+   "defeat": "quillmarch/stamp_road_stamper_defeat",
+   "money": 3440,
+   "team": [
+    {
+     "species": "Quilmoth",
+     "level": 85
+    },
+    {
+     "species": "Blotkin",
+     "level": 86
+    }
+   ]
+  },
+  {
+   "id": "pressrunner",
+   "x": 2,
+   "y": 19,
+   "facing": "right",
+   "dialogue": "quillmarch/stamp_road_pressrunner",
+   "sprite": "villager",
+   "trainer": "Press Runner Ole",
+   "intro": "quillmarch/stamp_road_pressrunner_intro",
+   "defeat": "quillmarch/stamp_road_pressrunner_defeat",
+   "money": 3440,
+   "team": [
+    {
+     "species": "Vatrat",
+     "level": 85
+    },
+    {
+     "species": "Stampet",
+     "level": 86
+    },
+    {
+     "species": "Stamphorn",
+     "level": 86
+    }
+   ]
+  }
+ ],
+ "signs": [],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 9,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_stamp_road_1"
+  },
+  {
+   "x": 11,
+   "y": 11,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_stamp_road_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_stamp_road_3"
+  },
+  {
+   "x": 11,
+   "y": 23,
+   "item": "strong_tonic",
+   "count": 1,
+   "flag": "find_stamp_road_4"
+  }
+ ]
+}

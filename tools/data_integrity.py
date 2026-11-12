@@ -652,8 +652,7 @@ for mid, m in maps.items():
         C(m["beam"].get("flag"), w)  # WorldAtlas.banner counts solved rooms
 for mid, pl in story_npcs.items():
     if isinstance(pl, dict):
-        oe = pl.get("on_enter")
-        for e in as_list(oe):
+        for e in as_list(pl.get("on_enter")) + as_list(pl.get("on_enter_more")):
             if isinstance(e, dict):
                 walk(e, conds_fn("story_npcs " + mid))
                 if isinstance(e.get("scene"), str):

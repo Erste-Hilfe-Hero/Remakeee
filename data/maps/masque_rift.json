@@ -100,7 +100,8 @@
     },
     {
      "species": "Scrivane",
-     "level": 59
+     "level": 59,
+     "held": "pith_mend"
     }
    ],
    "intro": "vellmarch/warden_sable_intro",

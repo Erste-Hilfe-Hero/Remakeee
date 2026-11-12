@@ -178,6 +178,7 @@ func _build() -> void:
 		_stage = Era4Stage.new()
 		_stage.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		_shake_root.add_child(_stage)
+		_stage.set_terrain(backdrop)
 		_backdrop.visible = false
 
 	_foe_sprite = SpirlingSprite.new()
@@ -402,6 +403,8 @@ func _run() -> void:
 	var intro: Array[BattleEvent] = BattlePuzzle.intro_events(model) if model.has_meta("intro") else model.start()
 	if _multi:
 		_build_formation()
+	if not model.has_meta("quick") and not model.has_meta("intro"):
+		await _play_intro()
 	await _play(intro)
 	if model.has_meta("bonus_goal") and not model.has_meta("quick"):
 		await _text.show_text(str(model.get_meta("bonus_goal")))
@@ -806,7 +809,7 @@ func _play_event(e: BattleEvent) -> void:
 			_foe_strip.set_spirling(foe)
 			if music_track == "warden":
 				# A Rift Warden shakes the field as it appears (item 2256).
-				Juice.add_trauma(Juice.TRAUMA_WARDEN)
+				Juice.add_trauma(era_trauma(Juice.TRAUMA_WARDEN))
 				Haptics.play("heavy")
 			if model.is_wild:
 				_foe_strip.visible = true
@@ -821,7 +824,8 @@ func _play_event(e: BattleEvent) -> void:
 			_strip(side, slot).set_spirling(s)
 			_strip(side, slot).visible = true
 			_focus(side, slot)
-			Sound.cry(s.data)
+			# The player's own Spirling keeps the cry of the era it was met in.
+			Sound.cry(s.data, Sound.cry_era_for(s.origin_era, side == BattleModel.Side.PLAYER, EraManager.active_era()))
 			await _sprite(side, slot).step_out(side != BattleModel.Side.PLAYER)
 			_update_pinch()
 			await _text.show_text(e.describe())
@@ -910,7 +914,7 @@ func _play_event(e: BattleEvent) -> void:
 			await _float(side, slot, e.describe())
 		BattleEvent.Type.FAINTED:
 			Sound.sfx("faint")
-			Juice.add_trauma(Juice.TRAUMA_FAINT)
+			Juice.add_trauma(era_trauma(Juice.TRAUMA_FAINT))
 			await _sprite(side, slot).faint()
 			await _text.show_text(e.describe())
 			_strip(side, slot).visible = false
@@ -919,8 +923,10 @@ func _play_event(e: BattleEvent) -> void:
 			var lv_slot: int = model.slot_of(BattleModel.Side.PLAYER, int(e.data.get("index", -1)))
 			if lv_slot >= 0:
 				var lv_sprite: SpirlingSprite = _sprite(BattleModel.Side.PLAYER, lv_slot)
-				if lv_sprite != null and lv_sprite.visible:
+				var lv_era: int = EraManager.active_era()
+				if lv_sprite != null and lv_sprite.visible and EraBattleFeel.text(lv_era, "level_up", "ring") != "text":
 					LevelRing.spawn(_shake_root, lv_sprite.position + lv_sprite.size / 2.0)
+					lv_sprite.glints(int(EraBattleFeel.num(lv_era, "level_glints", 0)))
 				var lst: Variant = _strip(BattleModel.Side.PLAYER, lv_slot)
 				if lst is InfoStrip:
 					(lst as InfoStrip).set_level(int(e.data.level))
@@ -929,8 +935,14 @@ func _play_event(e: BattleEvent) -> void:
 			await _text.show_text(e.describe())
 		BattleEvent.Type.BOND_RESULT:
 			if bool(e.data.get("success", false)):
+				Sound.sfx("bond")
 				var bonded: SpirlingSprite = _sprite(BattleModel.Side.FOE, slot)
-				await bonded.greet_hop()
+				var bond_era: int = EraManager.active_era()
+				if EraBattleFeel.text(bond_era, "bond", "hop") == "blink_out":
+					await bonded.blink_out()
+				else:
+					bonded.glints(int(EraBattleFeel.num(bond_era, "bond_glints", 0)))
+					await bonded.greet_hop()
 				await bonded.step_back(false)
 				_strip(BattleModel.Side.FOE, slot).visible = false
 			await _text.show_text(e.describe())
@@ -980,6 +992,24 @@ func _play_event(e: BattleEvent) -> void:
 			if not text.is_empty():
 				await _text.show_text(text)
 
+## The era's battle opening (BattleIntro): the cover clears in the era's pattern; Era V also
+## swoops the field back from the foe.
+func _play_intro() -> void:
+	var era: int = EraManager.active_era()
+	var cover := BattleIntro.new()
+	add_child(cover)
+	if EraBattleFeel.text(era, "intro") == "swoop":
+		BattleCamera.swoop_in(_shake_root, Rect2(_foe_sprite.position, _foe_sprite.size))
+	await cover.play(era)
+	intro_style_played = cover.style
+
+## The intro style the last opening played (tests).
+var intro_style_played: String = ""
+
+## Shake for [param amount] scaled by the era: small in Era I, strongest in Era V.
+static func era_trauma(amount: float) -> float:
+	return amount * EraBattleFeel.shake(EraManager.active_era())
+
 ## Shows a short line floating over the Spirling at [param side]/[param slot] instead of a text
 ## box (owner, 9 Nov: fewer text windows, show it in the fight). Lines without a visible
 ## Spirling fall back to the text box. The battle log keeps every line.
@@ -1028,6 +1058,9 @@ func _play_art(e: BattleEvent, side: int, slot: int, dir: Vector2) -> void:
 	var me: Spirling = model.active_spirling(side, slot) if model != null else null
 	var second: int = ElementFx.second_for(me.elements(), element) if me != null else -1
 	_fx.user_sprite = user
+	_fx.feel = EraBattleFeel.move_anim(mv, EraManager.active_era()) if mv != null else {}
+	if str(_fx.feel.get("style", "")) == "quake" and int(_fx.feel.get("tier", 1)) >= 4 and kind != MoveData.Kind.STATUS:
+		Juice.add_trauma(era_trauma(0.1), element)
 	if kind != MoveData.Kind.PHYSICAL and target != user:
 		_fx_travel_sound.call_deferred(element)
 	var outcome: Dictionary = art_outcome(_playing, _play_index) if _play_index >= 0 else {}
@@ -1077,7 +1110,7 @@ static func travel_sound(element: int) -> String:
 
 ## Shake, vibration, hit-stop, knockback and flash for a landed hit (items 2256 to 2258, 2332, 2591).
 func _hit_feedback(e: BattleEvent, side: int, slot: int, strong: bool) -> void:
-	Juice.add_trauma(Juice.TRAUMA_HIT_STRONG if strong else Juice.TRAUMA_HIT, _last_element[BattleModel.other(side)])
+	Juice.add_trauma(era_trauma(Juice.TRAUMA_HIT_STRONG if strong else Juice.TRAUMA_HIT), _last_element[BattleModel.other(side)])
 	Haptics.play("heavy" if strong else "hit")
 	var max_hp: int = maxi(int(e.data.get("max_hp", 1)), 1)
 	match hitstop_kind(_playing, _play_index) if _play_index >= 0 else "normal":
@@ -1111,6 +1144,13 @@ func _update_pinch() -> void:
 	var track: String = Sound.battle_music(pinch_track(lowest, music_track))
 	if Sound.current_track != track:
 		Sound.music(track)
+	var foe_low: float = 1.0
+	for fs: int in model.slot_count(BattleModel.Side.FOE):
+		var f: Spirling = model.active_spirling(BattleModel.Side.FOE, fs)
+		if f != null and not f.is_fainted():
+			foe_low = minf(foe_low, f.hp_fraction())
+	# Low-health alarm and the Era V battle layers (docs/ERA_FEEL_AUDIO.md).
+	Sound.battle_state(lowest.hp_fraction() if lowest != null and not lowest.is_fainted() else 1.0, foe_low)
 
 ## "battle_pinch" when [param s] is at or below PINCH_RATIO of its HP (and still standing), else [param normal].
 static func pinch_track(s: Spirling, normal: String) -> String:
