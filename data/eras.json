@@ -1,10 +1,10 @@
 {
-  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/. finale_flags: era flag -> the flag the era's post-game finale sets (EraManager.mark_finales). Era III's region adds its own entry for era3_finale_done when it lands; Halcyra (data/region4.json) waits on that flag; Quivermoor (data/region5.json, Era V) waits on era4_finale_done and sets era5_finale_done. regions: post-game region -> its era (EraManager.region_era), for regions after the story. ring_caps: era number -> highest ring a Spirling can grow to once that era is open (GameState.ring_ceiling; Era I and II stay at Spirling.MAX_LEVEL 60; Era III also stays at 60 until its region sets its own rings (raise its value then); Era IV Halcyra opens 96 for its rings 78 to 96; Era V Quivermoor opens 108 for its rings 92 to 108; the last value equals Spirling.ERA_MAX_LEVEL). XP keeps the same power curve (Spirling.xp_for_level), so every ring past 60 costs more than the one before.",
+  "_doc": "Era unlocks and Era III art data. unlock_flags: era number -> the story flag that opens it (EraManager.unlock_from_flags). era3: the post-game region opened after Era II and the designs of its starting set, drawn by tools/art/gen_era3.py into art/era3/spirlings/. finale_flags: era flag -> the flag the era's post-game finale sets (EraManager.mark_finales). Quillmarch (data/region3.json) sets era3_finale_done; Halcyra (data/region4.json) waits on that flag; Quivermoor (data/region5.json, Era V) waits on era4_finale_done and sets era5_finale_done. era3.first_batch: the next Era III lines of Quillmarch, drawn the same way; species data from tools/art/lines/quillmarch.py. regions: post-game region -> its era (EraManager.region_era), for regions after the story. ring_caps: era number -> highest ring a Spirling can grow to once that era is open (GameState.ring_ceiling; Era I and II stay at Spirling.MAX_LEVEL 60; Era III Quillmarch opens 88 for its rings 70 to 88; Era IV Halcyra opens 96 for its rings 78 to 96; Era V Quivermoor keeps 96 for its rings 89 to 96 (raising it needs save_level_max on the server too); the last value equals Spirling.ERA_MAX_LEVEL). XP keeps the same power curve (Spirling.xp_for_level), so every ring past 60 costs more than the one before.",
   "ring_caps": {
   "2": 60,
-  "3": 60,
+  "3": 88,
   "4": 96,
-  "5": 108
+  "5": 96
  },
  "unlock_flags": {
     "2": "story_complete",
@@ -15,6 +15,7 @@
   "finale_flags": {
     "era2_finale_done": "vellmarch_done",
     "era4_finale_done": "halcyra_done",
+    "era3_finale_done": "quillmarch_done",
     "era5_finale_done": "quivermoor_done"
   },
   "regions": {
@@ -72,6 +73,34 @@
         "b88e24",
         "e8c850",
         "fff4b8"
+      ],
+      "nib_quill": [
+        "161a2c",
+        "2c3552",
+        "4e5f80",
+        "8796b0",
+        "d0d8e4"
+      ],
+      "nib_face": [
+        "3e2a22",
+        "7c5a40",
+        "b88c62",
+        "e2c294",
+        "fbf0d6"
+      ],
+      "lace_wing": [
+        "3a2414",
+        "7a4a22",
+        "b87c38",
+        "e2b86a",
+        "fbecc0"
+      ],
+      "lace_body": [
+        "1e1430",
+        "3c2a5a",
+        "64508a",
+        "9c8cbc",
+        "dcd4ec"
       ]
     },
     "starting_set": [
@@ -137,6 +166,50 @@
         "stage": 3,
         "element": "EMBER",
         "texture": "feather"
+      }
+    ],
+    "first_batch": [
+      {
+        "id": "nibbet",
+        "line": "nib",
+        "stage": 1,
+        "element": "UMBRA",
+        "texture": "fur"
+      },
+      {
+        "id": "nibquill",
+        "line": "nib",
+        "stage": 2,
+        "element": "UMBRA",
+        "texture": "fur"
+      },
+      {
+        "id": "nibravure",
+        "line": "nib",
+        "stage": 3,
+        "element": "UMBRA",
+        "texture": "fur"
+      },
+      {
+        "id": "filigrin",
+        "line": "filig",
+        "stage": 1,
+        "element": "LUMEN",
+        "texture": "scale"
+      },
+      {
+        "id": "filigrace",
+        "line": "filig",
+        "stage": 2,
+        "element": "LUMEN",
+        "texture": "scale"
+      },
+      {
+        "id": "filigravure",
+        "line": "filig",
+        "stage": 3,
+        "element": "LUMEN",
+        "texture": "scale"
       }
     ]
   }

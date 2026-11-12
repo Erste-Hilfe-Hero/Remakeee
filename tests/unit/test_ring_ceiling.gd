@@ -1,7 +1,6 @@
 extends GutTest
 ## Ring cap past 60 for the later eras (data/eras.json "ring_caps"): Halcyra (Era IV) has rings
-## 78 to 96 and Quivermoor (Era V) 92 to 108, so Spirling.ERA_MAX_LEVEL is 108 and
-## GameState.ring_ceiling() opens it era by era.
+## 78 to 96, so Spirling.ERA_MAX_LEVEL is 96 and GameState.ring_ceiling() opens it era by era.
 ## Until Era III opens, everything stays at Spirling.MAX_LEVEL (60).
 
 var _flags: Dictionary
@@ -25,9 +24,9 @@ func test_ceiling_opens_era_by_era() -> void:
 	var era3: Dictionary = {"story_complete": true, "era2_finale_done": true}
 	assert_eq(GameState.ring_ceiling_for(era3), int(_caps()["3"]))
 	era3["era3_finale_done"] = true
-	assert_eq(GameState.ring_ceiling_for(era3), int(_caps()["4"]), "Halcyra opens its rings")
+	assert_eq(GameState.ring_ceiling_for(era3), Spirling.ERA_MAX_LEVEL, "Halcyra opens the top ring")
 	era3["era4_finale_done"] = true
-	assert_eq(GameState.ring_ceiling_for(era3), Spirling.ERA_MAX_LEVEL, "Quivermoor opens the top ring")
+	assert_eq(GameState.ring_ceiling_for(era3), int(_caps()["5"]), "Quivermoor (Era V) keeps the top ring")
 	assert_eq(GameState.ring_ceiling_for({"era3_finale_done": true}), Spirling.MAX_LEVEL, "eras open in order")
 
 func test_caps_rise_and_end_at_the_era_max() -> void:
@@ -67,6 +66,4 @@ func test_level_cap_follows_the_ceiling() -> void:
 	GameState.difficulty = GameState.Difficulty.TAMER
 	assert_eq(GameState.level_cap(), Spirling.MAX_LEVEL)
 	GameState.flags = {"story_complete": true, "era2_finale_done": true, "era3_finale_done": true}
-	assert_eq(GameState.level_cap(), int(_caps()["4"]))
-	GameState.flags["era4_finale_done"] = true
 	assert_eq(GameState.level_cap(), Spirling.ERA_MAX_LEVEL)

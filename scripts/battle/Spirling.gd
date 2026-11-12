@@ -10,9 +10,9 @@ const START_ENERGY: int = 10
 const MAX_ENERGY: int = 10
 const MAX_LEVEL: int = 60
 ## Highest ring any Spirling can reach: the ring cap of the last era in data/eras.json
-## "ring_caps" (Quivermoor, Era V, rings 92 to 108; Halcyra, Era IV, 78 to 96). Until a later era opens, GameState.ring_ceiling()
+## "ring_caps" (Halcyra, Era IV, rings 78 to 96). Until a later era opens, GameState.ring_ceiling()
 ## keeps growth at MAX_LEVEL; foes and wild Spirlings of a later era keep their own ring.
-const ERA_MAX_LEVEL: int = 108
+const ERA_MAX_LEVEL: int = 96
 ## Newest era a Spirling can come from (EraManager.NEWEST, Era V Living). Saves used to cut
 ## Era V Spirlings back to Era IV (bug plan 1373).
 const MAX_ERA: int = 5
