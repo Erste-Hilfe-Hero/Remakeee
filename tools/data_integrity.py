@@ -721,7 +721,7 @@ for g in q.get("main", []):
 for g in q.get("side", []):
     C([g.get("show"), g.get("done")] + list(g.get("progress", []) or []), "quest side " + str(g.get("id")))
 
-for p in ("data/region2.json", "data/region4.json"):
+for p in ("data/region2.json", "data/region3.json", "data/region4.json"):
     r = J.get(p)
     if not isinstance(r, dict):
         continue
