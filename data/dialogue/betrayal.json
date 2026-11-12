@@ -194,11 +194,13 @@
  ],
  "charter_caught": [
   "A paper bird lands on the table. Pip's round handwriting: 'Grandmother bought your clerk. Burn the copy. P.'",
-  "Ysolde burns the copy. The guild clerk, it turns out, has already left town. On a very fast cart."
+  "Ysolde burns the copy. The guild clerk, it turns out, has already left town. On a very fast cart.",
+  "Ysolde: He left his last wage behind in the hurry. 120 coins. Call it the guild's apology."
  ],
  "charter_struck": [
   "That night the guild clerk sells a copy of your route to Ottilie Kael and leaves town.",
-  "Ysolde: He left a note. 'Sorry.' Very neat handwriting. I taught him that."
+  "Ysolde: He left a note. 'Sorry.' Very neat handwriting. I taught him that.",
+  "Ysolde: He took the petty cash too. The guild takes it out of your pay. 120 coins."
  ],
  "ledger_charter": [
   "The guild charter",

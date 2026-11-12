@@ -178,5 +178,7 @@ T = {
 "Ochrewell's bazaar sells water by the cup, shade by the hour and gossip at cost.": "Der Basar von Ochrewell verkauft Wasser pro Becher, Schatten pro Stunde und Klatsch zum Selbstkostenpreis.",
 "A sand-crusted figure waves from the Sun Rift steps. Juna the courier, a long way from Brindlewick.": "Eine sandverkrustete Gestalt winkt von den Stufen des Sonnenrisses. Juna, die Kurierin, weit weg von Brindlewick.",
 "The whole village has come to the pier to watch Aldo row again. Some of them came to watch you.": "Das ganze Dorf ist zum Steg gekommen, um Aldo wieder rudern zu sehen. Manche sind gekommen, um dich zu sehen.",
+"Ysolde: He left his last wage behind in the hurry. 120 coins. Call it the guild's apology.": "Ysolde: In der Eile hat er seinen letzten Lohn liegen lassen. 120 Münzen. Nenn es die Entschuldigung der Gilde.",
+"Ysolde: He took the petty cash too. The guild takes it out of your pay. 120 coins.": "Ysolde: Die Portokasse hat er auch mitgenommen. Die Gilde zieht sie dir vom Lohn ab. 120 Münzen.",
 "You lost %d coins.": "Du hast %d Münzen verloren.",
 }
