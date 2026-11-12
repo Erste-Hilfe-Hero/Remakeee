@@ -1,0 +1,7 @@
+{
+ "_comment": "Online 100 plan points 71-72, 76, 78-79 and 95. keep: online battles kept as replays. code_prefix: start of a shared replay code. top_species: lines in the usage list. maintenance_warn_hours: the title screen warns this long before server_config maintenance_at.",
+ "keep": 20,
+ "code_prefix": "CHR1-",
+ "top_species": 5,
+ "maintenance_warn_hours": 24
+}

@@ -1476,6 +1476,7 @@ func open_menu(start: String = "") -> void:
 	var target: String = menu.travel_to
 	var photo: bool = menu.photo
 	var watch: bool = menu.watch_replay
+	var watch_snap: Dictionary = menu.watch_snap
 	var duel: Dictionary = menu.echo_duel
 	var league: Dictionary = menu.league_match
 	var raid: Dictionary = menu.raid_attempt
@@ -1494,7 +1495,7 @@ func open_menu(start: String = "") -> void:
 	if photo:
 		await photo_mode()
 	if watch:
-		await watch_replay(GameState.records.get("last_battle", {}))
+		await watch_replay(watch_snap if not watch_snap.is_empty() else GameState.records.get("last_battle", {}))
 	var c: Array = GameState.travel_cell(target) if not target.is_empty() else []
 	if c.size() == 2:
 		Sound.sfx("warp")
@@ -2280,6 +2281,8 @@ const SWITCH_LINES: Dictionary[String, Array] = {
 		"The valve squeals round. Somewhere, water changes owner.", "The last valve turns, the cistern drains, and the stair is clear!"],
 	"lens": ["The lenses send the light up the stair. It stays lit.", "The lens cracks the light into rainbows, and every lens swings back. Start over.",
 		"The lens turns. A spot of sun crawls up the wall.", "The last lens turns, the light hits the stair, and the glass door melts aside!"],
+	"bellows": ["The bellows breathe on their own now. The stair stays clear.", "The bellows wheeze, cough, and every one sags flat again. Start over.",
+		"The bellows heave. Somewhere below, a fire wakes up grumpy.", "The last bellows heaves, the smoke clears off the stair, and the way down is open!"],
 }
 
 func _action_bell(args: PackedStringArray, _speaker: NPC) -> void:
@@ -3586,13 +3589,21 @@ func league_battle(m: Dictionary) -> void:
 	var r: Dictionary = await Online.call_fn("battle_submit", {"p_kind": kind, "p_ref": str(m.get("match_id", "")),
 		"p_replay": GameState.records.get("last_battle", {}), "p_claim": last_claim})
 	var lines: Array[String] = ["You won the league battle!" if outcome == BattleModel.Outcome.WIN else "The rival won this league battle."]
-	if not bool(m.get("rated", true)):
+	if bool(m.get("pair_limit", false)):
+		lines.append("You met this rival 3 times today, so this battle does not count.")
+	elif not bool(m.get("rated", true)):
 		lines.append("The season ends soon, so this battle does not count.")
 	elif r.ok and r.data is Dictionary and bool(r.data.get("ok", false)):
 		lines.append("Your result is being checked. It counts once the check is done.")
 	else:
 		lines.append("The result could not be sent, so it does not count.")
 	await say(lines)
+	# Online 100 point 83: report the rival right after the battle.
+	if int(m.get("match_id", 0)) > 0:
+		var menu := MenuHost.new()
+		_ui.add_child(menu)
+		await SafetyMenu.after_battle(menu, "league", int(m.match_id))
+		menu.queue_free()
 	busy = false
 	player.frozen = false
 

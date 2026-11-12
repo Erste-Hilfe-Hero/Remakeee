@@ -1,5 +1,6 @@
 # German texts for the town rooms. Written by tools/art/gen_rooms.py: edit the pairs there.
 T = {
+"Brenna's House": "Brennas Haus",
 "Clerk Anselm: Everything off the ferry, priced for people who have no way back.": "Verkäufer Anselm: Alles von der Fähre, bepreist für Leute ohne Rückweg.",
 "Clerk Benno: Wilma sells outside, I sell inside. Same prices, but I have a roof.": "Verkäufer Benno: Wilma verkauft draußen, ich drinnen. Gleiche Preise, aber ich hab ein Dach.",
 "Clerk Dirk: Towels, tonics, tide tables. The tables are free. They are also wrong.": "Verkäufer Dirk: Handtücher, Tonika, Gezeitentafeln. Die Tafeln sind gratis. Sie stimmen auch nicht.",
@@ -34,6 +35,8 @@ T = {
 "Tender Bea: Fen water, boiled twice. Once for the mud, once for the leeches.": "Pflegerin Bea: Moorwasser, zweimal gekocht. Einmal für den Schlamm, einmal für die Egel.",
 "Tender Bea: Sit. Your team can drink their fill.": "Pflegerin Bea: Setz dich. Dein Team kann trinken, so viel es will.",
 "Watcher's Hut": "Hütte der Wächterin",
+"Widow Brenna: I nailed my door shut the night the Cinder Rift opened. Nobody noticed for a month.": "Witwe Brenna: In der Nacht, als der Glutriss aufging, habe ich meine Tür zugenagelt. Einen Monat lang hat es keiner gemerkt.",
+"Widow Brenna: Now it is open again and still nobody visits. At least now it is my choice.": "Witwe Brenna: Jetzt ist sie wieder offen, und trotzdem kommt keiner. Aber jetzt ist es wenigstens meine Entscheidung.",
 "Widow Marit: My husband rowed the ferry for thirty years. One day the ferry came back and he did not.": "Witwe Marit: Mein Mann ruderte dreißig Jahre die Fähre. Eines Tages kam die Fähre zurück und er nicht.",
 "Widow Marit: The company sent flowers. And the bill for the oar.": "Witwe Marit: Die Gesellschaft schickte Blumen. Und die Rechnung für das Ruder.",
 "Wrenhollow Spring House": "Quellhaus Zaunkönigsgrund",

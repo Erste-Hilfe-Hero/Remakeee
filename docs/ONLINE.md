@@ -411,6 +411,30 @@ and `FriendRules.gd`, menu `scripts/ui/FriendsMoreMenu.gd`, tests `tests/unit/te
 Not done in this area: friends as figures in your town (51), visiting a friend's camp (52) and friends
 nearby (54).
 
+### Safety and fairness (Online 100, area 9, points 83, 85, 86, 88)
+
+Migration `20261113000010_safety.sql`, values in `data/safety.json` (written to `server_config.safety` by
+`game_data_sql.py`), the same rules in `scripts/online/LocalSafety.gd`, `SafetyRules.gd` and `LocalBackend`
+(`parent_off`), menu `scripts/ui/SafetyMenu.gd`, tests `tests/unit/test_safety.gd` and
+`tools/online/sql_test/test_safety.sql`.
+
+- **Parent switches (85):** Settings, Account, For parents switches off live duels, Raid Rifts, bunds, the open
+  or fair league and suggestions from league battles (`parent_set(off, version)`, `parent_get()`,
+  `profiles.parent_off`). Switched-off keys leave `hello.flags`, so the menus hide them, and the server answers
+  `parent_off` (`_league_ok`, `_bund_check`, `_raid_check`, `_live_new`, `live_answer`). Nobody can start a live
+  duel with a player whose duels are off, and a player whose suggestions are off is never suggested.
+- **Under 16 (86):** below `young_band` (16, from the shop's age question, `shop_profiles.age_band`) the
+  default is `young_off`: open league, bunds and suggestions off, so only friends and the fair league remain.
+  A parent's own choice replaces the default. Without an answer to the age question nothing is off.
+- **No pushing points (88):** `league_find` does not rate a pair that already played `pair_rated_daily` (3)
+  rated battles in the last day (`pair_limit` in the answer). A rated loss in which the rival took no damage
+  (`foe_damage` 0 from the referee) is not rated (`league_matches.sandbagged`); from `sandbag_limit` (3) such
+  battles in `sandbag_days` (7) days each one adds a `league_sandbag` note to `cheat_flags` (3 notes put the
+  account under review as before).
+- **Report after a battle (83):** after a league battle the game offers "Report the rival...", and a finished
+  live duel has the same entry; `report_battle(kind, ref, reason)` (`league` = match id, `duel` = duel id)
+  finds the rival on the server, so the code stays hidden, and files a normal report.
+
 ## Weekly boards (online step 1)
 
 Under Friends, Weekly board. The weekly challenge board is as before. With the flag `rift_board`
@@ -540,3 +564,14 @@ checks both against the catalog. `hello` runs `_privacy_cleanup()` about once in
 recordings and league matches older than 30 days, refused-save notes older than 6 months and league
 standings of seasons that ended more than a season ago are removed. The record of processing activities is
 `docs/legal/VERARBEITUNGEN.md`; add a row there before switching on a new online feature.
+
+## Online replays and statistics (Online 100 plan, points 71, 72, 75, 78, 79, 95)
+
+- Every `battle_submit` (league, raid, echo duel, Rift board) also keeps the battle in
+  `GameState.records["online_replays"]`, newest first, at most `keep` (20) in `data/replay_library.json`
+  (`scripts/online/ReplayLibrary.gd`).
+- Records > Online replays (`scripts/ui/OnlineReplaysMenu.gd`): watch one, copy its share code to the
+  clipboard, watch a code from the clipboard, own win rate per Spirling, opponents met most often. A code is
+  `CHR1-` plus the gzip-packed replay in base64; it holds no account data. Replays play in the current look.
+- Planned maintenance: `update server_config set value = '<unix seconds>' where key = 'maintenance_at';`
+  `maintenance_info()` hands it to the game, and the title screen warns from 24 hours before.

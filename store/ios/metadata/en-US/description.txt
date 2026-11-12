@@ -1,4 +1,4 @@
-Chimora is a turn-based role-playing game in retro pixel style. As a Wayfarer you set out from a lighthouse on the coast of Veydal, choose your first partner and follow Mirela's map book across the region. Somewhere out there Rifts are tearing open, and only you can seal them again.
+Chimora is a turn-based role-playing game in retro pixel style, and a little darker than it looks. As a Wayfarer you set out from a lighthouse on the coast of Veydal, choose your first partner and follow Mirela's map book through four regions. Rifts are tearing open everywhere, and only you can seal them again. Everyone else just wants something from you.
 
 TRUST, NOT CAPTURE
 Wild Spirlings are never caught. You win their trust with the echo call: the Spirling calls a sequence, you answer it. Listen well and you gain a friend.
@@ -10,13 +10,29 @@ TACTICAL BATTLES
 • Damage preview, battle log, auto battle and double speed
 • Four difficulty modes, from Story to Rift-Born with level caps
 
+A STORY WITH TEETH
+• Four acts: Veydal, Corvane, Ashmere and the sun-bleached Solenne, with twelve Rifts and their Wardens
+• Two clans and eleven strangers, each with a hidden trust value. A Ledger remembers whom you trusted
+• Favours can pay off, or end in theft and ambushes. Betrayal is part of the plot, not a bug
+• Lore quests for six legendaries and side stories in every act, good for dozens of hours
+
 A WORLD THAT CHANGES
-Explore villages, cliffs, marshes and caves, find hidden paths and gear that opens new places. Day and night, festivals and weekly challenges keep Veydal alive.
+• Over 280 Spirlings, 70 of their own in every act, and rare Gleam forms in the wild
+• Your lead Spirling walks behind you and remembers how you treat it
+• Day and night, festivals, hidden paths, Wayfarer Gear that opens new places, and a wildlife park run by smugglers
+• A claimable hollow, a daily funeral show and a black-market informant who sells hidden gifts
+
+AFTER THE FINALE
+• Vellmarch, a whole post-game region drawn in the next era's look, with four more Rifts and a betrayal in every chapter
+• Rematches with all twelve Wardens, an Echo Tower with 100 floors, Master Rifts, a weekly giant and New Game+
+• Spirlings keep growing past ring 60
+• More regions and eras follow as free updates
 
 TOGETHER ONLINE
 • Add friends by code, send greetings and Lantern Mail
-• Echo duels against your friends' teams
-• A shared world goal every week and a weekly board
+• Trade Spirlings, keep wish lists and send gifts
+• Live duels and echo duels against friends, leagues with seasons
+• Raids, Bunds with weekly goals, timed events and a shared world goal every week
 • Your save is kept safe on our server in Germany and moves with you to a new phone
 
 FAIR

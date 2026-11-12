@@ -1,4 +1,4 @@
-Chimora ist ein rundenbasiertes Rollenspiel im Retro-Pixel-Stil. Als Wayfarer brichst du von einem Leuchtturm an der Küste von Veydal auf, wählst deinen ersten Partner und folgst Mirelas Kartenbuch quer durch die Region. Irgendwo dort draußen reißen Risse auf, und nur du kannst sie wieder versiegeln.
+Chimora ist ein rundenbasiertes Rollenspiel im Retro-Pixel-Stil, und ein bisschen finsterer, als es aussieht. Als Wayfarer brichst du von einem Leuchtturm an der Küste von Veydal auf, wählst deinen ersten Partner und folgst Mirelas Kartenbuch durch vier Regionen. Überall reißen Risse auf, und nur du kannst sie wieder versiegeln. Alle anderen wollen nur etwas von dir.
 
 VERTRAUEN STATT FANGEN
 Wilde Spirlings fängt man nicht ein. Du gewinnst ihr Vertrauen mit dem Echo-Ruf: Der Spirling ruft eine Folge, du antwortest. Wer zuhört, gewinnt einen Freund.
@@ -10,13 +10,29 @@ TAKTISCHE KÄMPFE
 • Schadensvorschau, Kampf-Log, Auto-Kampf und doppelte Geschwindigkeit
 • Vier Schwierigkeitsgrade, von „Geschichte“ bis „Rissgeboren“ mit Levelgrenzen
 
+EINE GESCHICHTE MIT BISS
+• Vier Akte: Veydal, Corvane, Ashmere und das sonnengebleichte Solenne, mit zwölf Rissen und ihren Wächtern
+• Zwei Clans und elf Fremde, jeder mit einem verborgenen Vertrauenswert. Ein Schuldbuch merkt sich, wem du vertraut hast
+• Gefallen können sich lohnen oder in Diebstahl und Hinterhalt enden. Verrat gehört zur Handlung, nicht zu den Fehlern
+• Sagen-Quests für sechs Legendäre und Nebengeschichten in jedem Akt, für Dutzende Stunden
+
 EINE WELT, DIE SICH VERÄNDERT
-Erkunde Dörfer, Klippen, Marschen und Höhlen, finde versteckte Wege und Ausrüstung, die dir neue Orte öffnet. Tag und Nacht, Feste und wöchentliche Herausforderungen halten Veydal lebendig.
+• Über 280 Spirlings, 70 eigene in jedem Akt, und seltene Glanzformen in freier Wildbahn
+• Dein erster Spirling läuft hinter dir her und merkt sich, wie du ihn behandelst
+• Tag und Nacht, Feste, versteckte Wege, Wayfarer-Ausrüstung, die neue Orte öffnet, und ein Wildpark in der Hand von Schmugglern
+• Eine Höhle zum Besetzen, eine tägliche Trauershow und ein Schwarzmarkt-Informant, der versteckte Gaben verkauft
+
+NACH DEM FINALE
+• Vellmarch, eine ganze Region für danach im Look der nächsten Ära, mit vier weiteren Rissen und einem Verrat in jedem Kapitel
+• Revanchen gegen alle zwölf Wächter, ein Echoturm mit 100 Etagen, Meister-Risse, ein Riese der Woche und Neues Spiel+
+• Spirlings wachsen über Ring 60 hinaus
+• Weitere Regionen und Ären folgen als kostenlose Updates
 
 GEMEINSAM ONLINE
 • Freunde per Code hinzufügen, Grüße und Leuchtpost schicken
-• Echo-Duelle gegen die Teams deiner Freunde
-• Ein gemeinsames Weltziel jede Woche und eine Wochenwertung
+• Spirlings tauschen, Wunschlisten führen und Geschenke schicken
+• Live-Duelle und Echo-Duelle gegen Freunde, Ligen mit Saisons
+• Raids, Bünde mit Wochenzielen, zeitlich begrenzte Events und jede Woche ein gemeinsames Weltziel
 • Dein Spielstand liegt sicher auf unserem Server in Deutschland und zieht mit dir auf ein neues Handy um
 
 FAIR
