@@ -385,7 +385,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py
 | 301 | Filigrace | Lumen/Gale | uncommon | weaver | light_sleeper | 390 | Filigravure (ring 41) |
 | 302 | Filigravure | Lumen/Gale | shy | weaver | light_sleeper | 475 | - |
 | 303 | Mordling | Acid/Tide | common | weaver | steady | 320 | Mordantoad (ring 23) |
-| 304 | Mordantoad | Acid/Tide | uncommon | weaver | steady | 448 | Mordantyrant (ring 40) |
+| 304 | Mordantoad | Acid/Tide | uncommon | weaver | steady | 439 | Mordantyrant (ring 40) |
 | 305 | Mordantyrant | Acid/Tide | shy | weaver | steady | 513 | - |
 | 306 | Rimekit | Frost | common | striker | last_stand | 291 | Rimelynx (ring 22) |
 | 307 | Rimelynx | Frost | uncommon | striker | last_stand | 407 | Rimesovereign (ring 42) |
@@ -412,7 +412,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py
 | 328 | Stamphorn | Stone/Umbra | uncommon | bulwark | steady | 402 | Stampcolossus (ring 40) |
 | 329 | Stampcolossus | Stone/Umbra | shy | bulwark | steady | 503 | - |
 | 330 | Quilmoth | Umbra/Gale | common | weaver | deep_roots | 300 | Quilmothra (ring 22) |
-| 331 | Quilmothra | Umbra/Gale | uncommon | weaver | deep_roots | 402 | Quilmothane (ring 39) |
+| 331 | Quilmothra | Umbra/Gale | uncommon | weaver | deep_roots | 394 | Quilmothane (ring 39) |
 | 332 | Quilmothane | Umbra/Gale | shy | weaver | deep_roots | 480 | - |
 | 333 | Vatrat | Acid/Umbra | common | vanguard | last_stand | 315 | Vatreeve (ring 25) |
 | 334 | Vatreeve | Acid/Umbra | uncommon | vanguard | last_stand | 404 | Vatbaron (ring 42) |
@@ -437,7 +437,7 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py
 | 353 | Canalurker | Tide/Umbra | shy | vanguard | deep_roots | 416 | - |
 | 354 | Forgefly | Ember/Gale | uncommon | striker | slick | 311 | Forgeflare (ring 31) |
 | 355 | Forgeflare | Ember/Gale | shy | striker | slick | 425 | - |
-| 356 | Vitriolus | Acid/Volt | uncommon | weaver | light_sleeper | 401 | - |
+| 356 | Vitriolus | Acid | uncommon | weaver | light_sleeper | 462 | - |
 | 357 | Frostfoil | Frost/Lumen | uncommon | bulwark | thick_hide | 408 | - |
 <!-- /lines:quillmarch -->
 
