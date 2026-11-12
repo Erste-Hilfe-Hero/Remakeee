@@ -126,7 +126,7 @@ func test_art_rows_show_element_power_energy() -> void:
 ## Items 1900, 1925: keepsakes show their effect while focused, gear says where it works.
 func test_gear_hint_names_the_places() -> void:
 	var hint: String = PauseMenu.gear_hint("wading_boots")
-	assert_string_contains(hint, "Works on its own at:")
+	assert_string_contains(hint, "face the spot and tap it")
 	assert_string_contains(hint, "shallow water")
 
 func test_keepsake_rows_show_the_effect() -> void:
