@@ -47,6 +47,9 @@ const AFTERS: Array[String] = ["heal", "drain", "energy_drain", "recoil", "field
 var symbol: String = ""
 ## The user's second element, or -1: a hit mixes in two of its particles (item 2367).
 var second_element: int = -1
+## The era's take on this art (EraBattleFeel.move_anim): style, tier, colour, tint, trail,
+## dust. Empty = the Era I look. Set by BattleScene before play().
+var feel: Dictionary = {}
 
 ## The 8x8 shape that stands for each element (heal motes, drain motes, field wave).
 const ELEMENT_SHAPES: Array[String] = ["spark", "drop", "leaf", "zag", "rock", "streak", "glint", "shade", "shade", "glint"]
@@ -206,8 +209,18 @@ func _run_phase(time: float) -> void:
 
 func _ink(k: int, a: float = 1.0) -> Color:
 	var c: Color = EraManager.INK_PALETTE[clampi(k, 0, 3)]
+	if bool(feel.get("colour", false)):
+		c = shade(Elements.color(element), k)
 	c.a = a
 	return c
+
+## Shade [param k] (0 darkest .. 3 lightest) of an element colour, for Era II+ effects.
+static func shade(base: Color, k: int) -> Color:
+	match clampi(k, 0, 3):
+		0: return base.darkened(0.55)
+		1: return base.darkened(0.2)
+		2: return base
+	return base.lightened(0.5)
 
 func _px(p: Vector2, k: int, a: float = 1.0, s: int = 1) -> void:
 	draw_rect(Rect2(p.round(), Vector2(s, s)), _ink(k, a))
@@ -241,6 +254,7 @@ func _draw() -> void:
 		# Scale the whole impact around the target's centre.
 		draw_set_transform(_to * (1.0 - impact_size), 0.0, Vector2.ONE * impact_size)
 	_draw_element()
+	_draw_tier()
 	if phase == Phase.IMPACT and second_element >= 0 and second_element != element:
 		# Two particles of the user's second element join the impact.
 		var s2: String = ELEMENT_SHAPES[clampi(second_element, 0, ELEMENT_SHAPES.size() - 1)]
@@ -470,3 +484,80 @@ func _draw_umbra() -> void:
 			for side: int in [-1, 1]:
 				_line(_ground_to + Vector2(side * 9.0, 0), _ground_to + Vector2(side * 9.0, -14.0 * up), 0, 0.8)
 			_shape("shade", _ground_to, 0, 0.8)
+
+# --- Era tiers (data/era_battle_feel.json, docs/ERA_FEEL_BATTLE.md) ----------------
+
+## Extras on top of the element look, richer each era: tier 3 adds the art's own shape at the
+## impact (slash, bite, beam ...), tier 4 a soft field tint and a ground shadow under anything
+## that flies, tier 5 an afterimage trail.
+func _draw_tier() -> void:
+	var tier: int = int(feel.get("tier", 1))
+	if tier >= 5 and bool(feel.get("trail", false)) and phase == Phase.TRAVEL:
+		for i: int in range(1, 4):
+			_shape(_element_shape(), _along(maxf(t - i * 0.08, 0.0)), 2, 0.5 - i * 0.12)
+	if tier >= 4 and bool(feel.get("dust", false)) and phase == Phase.TRAVEL:
+		var g: Vector2 = _ground_from.lerp(_ground_to, t)
+		draw_rect(Rect2((g - Vector2(2, 0)).round(), Vector2(5, 1)), Color(_ink(0), 0.35))
+	if phase != Phase.IMPACT or tier < 3:
+		return
+	_draw_style(str(feel.get("style", "strike")))
+	var tint: float = float(feel.get("tint", 0.0))
+	if tier >= 4 and tint > 0.0 and not Juice.reduced():
+		draw_set_transform(Vector2.ZERO)
+		var c: Color = Elements.color(element)
+		c.a = tint * (1.0 - absf(t * 2.0 - 1.0))
+		draw_rect(Rect2(Vector2.ZERO, size), c)
+
+## The art's own shape at the target, by its style (EraBattleFeel.move_style).
+func _draw_style(st: String) -> void:
+	var grow: float = 1.0 - absf(t * 2.0 - 1.0)
+	match st:
+		"slash":
+			for i: int in 3:
+				var o: Vector2 = Vector2((i - 1) * 5.0, 0)
+				var a: Vector2 = _to + o + Vector2(-8, -8)
+				_line(a, a.lerp(_to + o + Vector2(8, 8), clampf(t * 1.6 - i * 0.15, 0.0, 1.0)), 3)
+		"bite":
+			var gap: float = roundf(8.0 * (1.0 - minf(t * 2.0, 1.0)))
+			for i: int in 4:
+				var x: float = (i - 1.5) * 4.0
+				_px(_to + Vector2(x, -4.0 - gap), 3, 1.0, 2)
+				_px(_to + Vector2(x, 2.0 + gap), 3, 1.0, 2)
+		"beam":
+			for i: int in 3:
+				_line(_to + Vector2(-12, (i - 1) * 3), _to + Vector2(12, (i - 1) * 3), 3, grow)
+		"wave":
+			for i: int in 2:
+				var r: float = 4.0 + t * 14.0 - i * 5.0
+				if r > 0.0:
+					for j: int in 10:
+						var ang: float = PI + j * PI / 9.0
+						_px(_to + Vector2(cos(ang) * r, sin(ang) * r * 0.5 + 6.0), 3, 1.0 - t)
+		"burst":
+			for i: int in 8:
+				var ang: float = i * TAU / 8.0
+				_px(_to + Vector2(cos(ang), sin(ang)) * (4.0 + t * 14.0), 3, 1.0 - t * 0.6, 2)
+		"quake":
+			for i: int in 5:
+				var x: float = (i - 2) * 7.0
+				_line(_ground_to + Vector2(x, 0), _ground_to + Vector2(x + 3, -roundf(4.0 * grow)), 0)
+		"volley":
+			for i: int in 3:
+				var k: float = clampf(t * 1.5 - i * 0.2, 0.0, 1.0)
+				_shape(_element_shape(), _to + Vector2((i - 1) * 8.0, -16.0 + k * 16.0), 2, 1.0 - k * 0.5)
+		"spiral":
+			for i: int in 6:
+				var ang: float = t * TAU * 1.5 + i * TAU / 6.0
+				_px(_to + Vector2(cos(ang), sin(ang)) * (12.0 - t * 8.0), 3)
+		"orb":
+			var r2: float = 3.0 + grow * 7.0
+			for j: int in 14:
+				var ang: float = j * TAU / 14.0
+				_px(_to + Vector2(cos(ang), sin(ang)) * r2, 3, 0.9)
+		"aura":
+			for i: int in 5:
+				_px(_to + Vector2((i - 2) * 4.0, 8.0 - fmod(t * 20.0 + i * 5.0, 20.0)), 3, 1.0 - t * 0.5)
+		_:
+			var ray: float = 3.0 + grow * 6.0
+			for d: Vector2 in [Vector2(1, 1), Vector2(-1, 1), Vector2(1, -1), Vector2(-1, -1)]:
+				_line(_to, _to + d * ray, 3)
