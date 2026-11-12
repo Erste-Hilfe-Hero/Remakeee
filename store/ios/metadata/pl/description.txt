@@ -1,4 +1,4 @@
-Chimora to turowa gra RPG w stylu retro pixel art. Wyruszasz jako Wędrowiec z latarni na wybrzeżu Veydal, wybierasz pierwszego Spirlinga i podążasz za księgą map Mireli przez całą krainę. Gdzieś tam otwierają się Szczeliny, a tylko ty możesz je znów zamknąć.
+Chimora to turowa gra RPG w stylu retro pixel art, trochę mroczniejsza, niż wygląda. Wyruszasz jako Wędrowiec z latarni na wybrzeżu Veydal, wybierasz pierwszego Spirlinga i podążasz za księgą map Mireli przez cztery krainy. Wszędzie otwierają się Szczeliny, a tylko ty możesz je znów zamknąć. Wszyscy inni po prostu czegoś od ciebie chcą.
 
 ZAUFANIE ZAMIAST CHWYTANIA
 Dzikich Spirlingów nikt tu nie łapie. Ich zaufanie zdobywasz zewem Echa: Spirling wywołuje sekwencję, a ty na nią odpowiadasz. Kto dobrze słucha, zyskuje przyjaciela.
@@ -10,13 +10,29 @@ TAKTYCZNE WALKI
 • Podgląd obrażeń, dziennik walki, walka automatyczna i podwójna prędkość
 • Cztery poziomy trudności, od Opowieści po Zrodzonych, z limitami poziomów
 
+HISTORIA Z PAZURAMI
+• Cztery akty: Veydal, Corvane, Ashmere i wypalone słońcem Solenne, z dwunastoma Szczelinami i ich Strażnikami
+• Dwa klany i jedenastu obcych, każdy z ukrytym poziomem zaufania. Księga pamięta, komu zaufałeś
+• Przysługa może się opłacić albo skończyć kradzieżą i zasadzką. Zdrada to część fabuły, nie błąd
+• Zadania dla sześciu legendarnych i poboczne historie w każdym akcie, na dziesiątki godzin
+
 ŚWIAT, KTÓRY SIĘ ZMIENIA
-Odkrywaj wioski, klify, mokradła i jaskinie, znajduj ukryte ścieżki i sprzęt, który otwiera nowe miejsca. Dzień i noc, święta i cotygodniowe wyzwania sprawiają, że Veydal żyje.
+• Ponad 280 Spirlingów, 70 własnych w każdym akcie, i rzadki Połysk na wolności
+• Twój pierwszy Spirling chodzi za tobą i pamięta, jak go traktujesz
+• Dzień i noc, święta, ukryte ścieżki, sprzęt Wędrowca otwierający nowe miejsca i park dzikiej przyrody prowadzony przez przemytników
+• Nora do zajęcia, codzienny pogrzebowy spektakl i informator z czarnego rynku, który sprzedaje ukryte dary
+
+PO FINALE
+• Vellmarch, cała kraina na później w stylu kolejnej ery, z czterema kolejnymi Szczelinami i zdradą w każdym rozdziale
+• Rewanże ze wszystkimi dwunastoma Strażnikami, Wieża Echa ze 100 piętrami, Mistrzowskie Szczeliny, olbrzym tygodnia i Nowa gra+
+• Spirlingi rosną dalej po pierścieniu 60
+• Kolejne krainy i ery pojawią się w darmowych aktualizacjach
 
 RAZEM ONLINE
 • Dodawaj znajomych za pomocą kodu, wysyłaj pozdrowienia i Pocztę Latarni
-• Pojedynki Echa z drużynami znajomych
-• Wspólny cel świata co tydzień i tablica tygodnia
+• Wymieniaj Spirlingi, prowadź listy życzeń i wysyłaj prezenty
+• Pojedynki na żywo i Pojedynki Echa ze znajomymi, ligi z sezonami
+• Rajdy, Sojusze z celami tygodnia, wydarzenia czasowe i wspólny cel świata co tydzień
 • Twój zapis gry jest bezpieczny na naszym serwerze w Niemczech i przenosi się z tobą na nowy telefon
 
 UCZCIWIE

@@ -1,5 +1,5 @@
 {
-  "_comment": "Era I look per region (world area, Act II: Corvane gets its own world). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, which reads this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette. Post-game regions add their era: Halcyra (era 4, data/region4.json) keeps four inks for the Era I Retro filter, and its Era IV colours are swatches (4 tones each, darkest to lightest) with tiles = TilesetFactory.Kind -> swatch for tools/art/gen_tiles_halcyra.py, which paints art/era4/tiles/overworld_halcyra.png with 8 tones per swatch; stage = colours over data/era4_stage.json for battles in the region (EraManager.stage_colors). Quillmarch (era 3, data/region3.json) has no screen filter: its palette is the 16-colour atlas palette for tools/art/gen_tiles_quillmarch.py (art/era3/tiles/overworld_quillmarch.png); EraManager.inks_for() only takes a four-ink palette. Quivermoor (era 5, data/region5.json) works like Halcyra with tools/art/gen_tiles_quivermoor.py (art/era5/tiles/overworld_quivermoor.png, 12 tones per swatch) and adds camera: values over data/era5_anim.json camera for battles in the region (BattleCamera.cam_cfg), so the moor sways a little more.",
+  "_comment": "Era I look per region (world area, Act II: Corvane gets its own world). palette = the 4 inks of the screen filter, darkest to lightest; each must stay in its luminance band (<0.25, <0.5, <0.75, >=0.75) so EraManager's filter maps every sprite the same way. The region's tiles are art/era1/tiles/overworld_<region>.png (TilesetFactory.atlas_path; Corvane's from tools/art/gen_tiles_corvane.py, which reads this palette). biome = the look's name, props = what its atlas draws. Regions not listed use the base Ink palette. Post-game regions add their era: Halcyra (era 4, data/region4.json) keeps four inks for the Era I Retro filter, and its Era IV colours are swatches (4 tones each, darkest to lightest) with tiles = TilesetFactory.Kind -> swatch for tools/art/gen_tiles_halcyra.py, which paints art/era4/tiles/overworld_halcyra.png with 8 tones per swatch; stage = colours over data/era4_stage.json for battles in the region (EraManager.stage_colors). Quillmarch (era 3, data/region3.json) has no screen filter: its palette is the 16-colour atlas palette for tools/art/gen_tiles_quillmarch.py (art/era3/tiles/overworld_quillmarch.png); EraManager.inks_for() only takes a four-ink palette. Quivermoor (era 5, data/region5.json) works like Halcyra with tools/art/gen_tiles_quivermoor.py (art/era5/tiles/overworld_quivermoor.png, 12 tones per swatch) and adds camera: values over data/era5_anim.json camera for battles in the region (BattleCamera.cam_cfg), so the moor sways a little more. Solenne's atlas: tools/art/gen_tiles_solenne.py.",
   "regions": {
     "corvane": {
       "biome": "dye_fen",
@@ -45,6 +45,25 @@
         "ember_bloom"
       ],
       "arrive": "The ink goes grey here. Ashmere burned once and still smells like it owes you money."
+    },
+    "solenne": {
+      "biome": "desert",
+      "palette": [
+        "3b1f14",
+        "a0492a",
+        "e09a3c",
+        "fbeaa8"
+      ],
+      "props": [
+        "sand",
+        "thorn_scrub",
+        "column_cactus",
+        "date_palm",
+        "succulent_bloom",
+        "dune_ridge",
+        "banded_sandstone"
+      ],
+      "arrive": "The ink bleaches here. Solenne burns everything, even the lies. Especially the lies."
     },
     "halcyra": {
       "era": 4,

@@ -122,8 +122,9 @@ static func start_boost(id: String) -> String:
 		return Loc.t("Works for the next %d steps.") % left
 	return "Works for the next battle." if left == 1 else "Works for the next %d battles." % left
 
-## Boosts that count steps instead of battles (Encounter Call, item 4838).
-const STEP_KINDS: Array[String] = ["encounters"]
+## Boosts that count steps instead of battles (Encounter Call, item 4838; Lure and Shimmer Scents,
+## pay-to-win step 5).
+const STEP_KINDS: Array[String] = ["encounters", "rare", "gleam"]
 
 ## How much more often wild Spirlings show up right now (2 while an Encounter Call runs).
 static func encounter_mult() -> float:
@@ -131,7 +132,11 @@ static func encounter_mult() -> float:
 
 ## One step on the map: step boosts count down. True when one just ran out.
 static func step_done() -> bool:
-	var ended: bool = false
+	return not step_kinds_done().is_empty()
+
+## One step on the map: step boosts count down. Returns the kinds that just ran out.
+static func step_kinds_done() -> Array[String]:
+	var ended: Array[String] = []
 	for kind: String in STEP_KINDS:
 		if not GameState.shop_boosts.has(kind):
 			continue
@@ -139,23 +144,29 @@ static func step_done() -> bool:
 		b.left = int(b.left) - 1
 		if int(b.left) <= 0:
 			GameState.shop_boosts.erase(kind)
-			ended = true
+			ended.append(kind)
 	return ended
+
+## Note shown when the step boost [param kind] runs out.
+const STEP_END_NOTES: Dictionary = {"encounters": "The Encounter Call fades.", "rare": "The Lure Scent fades.",
+	"gleam": "The Shimmer Scent fades."}
 
 ## Names of the boosts for the status lines.
 const BOOST_NAMES: Dictionary = {"growth": "Growth", "coins": "Coins", "overcharge": "Overcharge",
-	"encounters": "Encounter Call"}
+	"encounters": "Encounter Call", "rare": "Lure Scent", "gleam": "Shimmer Scent"}
 
 ## One line per running boost ("Growth x2: 14 battles left"), for the team view and after each
 ## battle (item 4342).
 static func boost_lines() -> Array[String]:
 	var out: Array[String] = []
-	for kind: String in ["growth", "coins", "overcharge", "encounters"]:
+	for kind: String in ["growth", "coins", "overcharge", "encounters", "rare", "gleam"]:
 		var left: int = boost_left(kind)
 		if left <= 0:
 			continue
 		var b: Dictionary = GameState.shop_boosts[kind]
 		var head: String = Loc.t(str(BOOST_NAMES[kind]))
+		if kind in ["rare", "gleam"]:
+			head += " x%s" % String.num(float(b.get("mult", 1.0)), 1).trim_suffix(".0")
 		if kind in STEP_KINDS:
 			out.append(head + ": " + (Loc.t("1 step left") if left == 1 else Loc.t("%d steps left") % left))
 			continue
@@ -291,7 +302,7 @@ static func ring_cap_bonus() -> int:
 	return int(_values().get("ring_cap_plus", 0)) if Billing.unlocked("ring_cap_plus") > 0 else 0
 
 ## Account power (shown in the team view): the sum of every active bought advantage in points,
-## seal and amulet percents plus the permanent growth percent, 10 per extra Ring of the Ring Cap Seal, plus
+## seal, amulet and Bond Head Start percents plus the permanent growth percent, 10 per extra Ring of the Ring Cap Seal, plus
 ## the crystal points in the team.
 static func account_power() -> int:
 	var tiers: Array[int] = seal_tiers()
@@ -303,6 +314,7 @@ static func account_power() -> int:
 		n += seal_percent(AMULET_KINDS[i], am[i])
 	n += roundi(growth_plus() * 100.0)
 	n += ring_cap_bonus() * 10
+	n += seal_percent("bond_edge", bond_edge_tier())
 	for s: Spirling in GameState.party:
 		for k: String in s.crystal:
 			n += int(s.crystal[k])
@@ -407,3 +419,30 @@ static func edge_line(seal_tier_row: Array, amulet_tier_row: Array) -> String:
 	if parts.is_empty():
 		return ""
 	return Loc.t("Shop advantages at work: %s") % ", ".join(parts)
+
+## --- Pay-to-win step 5 (plan points 15, 25, 26, 28, 29, 32): bonding and collecting. ---
+
+## How much more often uncommon, shy and ancient wild Spirlings step out while a Lure Scent runs.
+static func rare_mult() -> float:
+	return float(GameState.shop_boosts.get("rare", {}).get("mult", 1.0)) if boost_left("rare") > 0 else 1.0
+
+## Factor on the wild Gleam chance while a Shimmer Scent runs.
+static func gleam_mult() -> float:
+	return float(GameState.shop_boosts.get("gleam", {}).get("mult", 1.0)) if boost_left("gleam") > 0 else 1.0
+
+## The account's Bond Head Start tier (0 to 3).
+static func bond_edge_tier() -> int:
+	return clamp_tier("bond_edge", Billing.unlocked("bond_edge"))
+
+## Added to the bond timing score in wild battles (0.1 per tier, values in advantage_values).
+static func bond_edge() -> float:
+	return seal_percent("bond_edge", bond_edge_tier()) / 100.0
+
+## Form an Unfurl Spark turns [param s] into: the first unfold path that needs no item, null if none.
+static func unfurl_spark_target(s: Spirling) -> SpirlingData:
+	if s == null or s.data == null:
+		return null
+	for p: Dictionary in s.data.unfold:
+		if str(p.get("rule", "")) != "item" and p.get("to") is SpirlingData:
+			return p.to
+	return null

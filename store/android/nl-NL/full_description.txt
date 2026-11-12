@@ -1,4 +1,4 @@
-Chimora is een beurtgebaseerd rollenspel in retro-pixelstijl. Als Reiziger vertrek je vanaf een vuurtoren aan de kust van Veydal, kies je je eerste partner en volg je Mirela's kaartenboek door de hele regio. Ergens daarbuiten scheuren Kloven open, en alleen jij kunt ze weer dichten.
+Chimora is een beurtgebaseerd rollenspel in retro-pixelstijl, en iets duisterder dan het eruitziet. Als Reiziger vertrek je vanaf een vuurtoren aan de kust van Veydal, kies je je eerste partner en volg je Mirela's kaartenboek door vier regio's. Overal scheuren Kloven open, en alleen jij kunt ze weer dichten. Alle anderen willen gewoon iets van je.
 
 VERTROUWEN, NIET VANGEN
 Wilde Spirlings worden nooit gevangen. Je wint hun vertrouwen met de echoroep: de Spirling roept een reeks, jij antwoordt. Wie goed luistert, krijgt er een vriend bij.
@@ -10,13 +10,29 @@ TACTISCHE GEVECHTEN
 - Schadevoorbeeld, gevechtslogboek, automatisch vechten en dubbele snelheid
 - Vier moeilijkheidsgraden, van Verhaal tot Kloofgeboren met ringgrenzen
 
+EEN VERHAAL MET TANDEN
+- Vier aktes: Veydal, Corvane, Ashmere en het door de zon gebleekte Solenne, met twaalf Kloven en hun Hoeders
+- Twee clans en elf vreemden, elk met een verborgen vertrouwenswaarde. Een Grootboek onthoudt wie je vertrouwde
+- Een gunst kan lonen, of eindigen in diefstal en hinderlagen. Verraad hoort bij het verhaal, het is geen bug
+- Legendequesten voor zes legendarische Spirlings en zijverhalen in elke akte, goed voor tientallen uren
+
 EEN WERELD DIE VERANDERT
-Verken dorpen, kliffen, moerassen en grotten, vind verborgen paden en uitrusting die nieuwe plekken opent. Dag en nacht, feesten en wekelijkse uitdagingen houden Veydal levendig.
+- Meer dan 280 Spirlings, 70 eigen soorten in elke akte, en zeldzame Glansvormen in het wild
+- Je voorste Spirling loopt achter je aan en onthoudt hoe je hem behandelt
+- Dag en nacht, feesten, verborgen paden, reizigersuitrusting die nieuwe plekken opent en een wildpark gerund door smokkelaars
+- Een hol om op te eisen, een dagelijkse rouwshow en een zwarthandelaar die verborgen gaven verkoopt
+
+NA DE FINALE
+- Vellmarch, een hele regio voor daarna in de stijl van het volgende tijdperk, met nog vier Kloven en een verraad in elk hoofdstuk
+- Revanches tegen alle twaalf Hoeders, een Echotoren met 100 verdiepingen, Meesterkloven, een reus van de week en Nieuw spel+
+- Spirlings groeien door na ring 60
+- Meer regio's en tijdperken volgen als gratis updates
 
 SAMEN ONLINE
 - Voeg vrienden toe met een code, stuur groeten en Lantaarnpost
-- Echoduels tegen de teams van je vrienden
-- Elke week een gezamenlijk wereldoel en een weekklassement
+- Ruil Spirlings, houd verlanglijstjes bij en stuur cadeaus
+- Live duels en echoduels tegen vrienden, competities met seizoenen
+- Raids, Verbonden met weekdoelen, tijdelijke evenementen en elke week een gezamenlijk wereldoel
 - Je voortgang staat veilig op onze server in Duitsland en verhuist mee naar een nieuwe telefoon
 
 EERLIJK
