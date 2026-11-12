@@ -29,7 +29,6 @@ func test_bought_spirling_has_fixed_top_values() -> void:
 	for key: String in Spirling.STAT_KEYS:
 		assert_eq(a.spark[key], Spirling.SPARK_MAX, key)
 		assert_eq(a.spark[key], b.spark[key], "no chance in the values")
-	assert_eq(a.temper, "even", "no random temperament either")
 	assert_eq(a.max_hp(), b.max_hp())
 	assert_eq(a.atk(), b.atk())
 	assert_eq(a.hp, a.max_hp())

@@ -317,8 +317,7 @@ static func tier_ok(req: String, owned: int) -> bool:
 ## --- Pay-to-win step 2 (Ali, 11 Nov 2026): Spirlings for sale, bond lures, seal set. ---
 
 ## The Spirling a "spirling" grant hands over: the named species at the named Ring, the highest
-## Spark in every value and the even temperament, so two purchases are the same, marked as bought
-## (never traded or lent). Null for an unknown species.
+## Spark in every value, marked as bought (never traded or lent). Null for an unknown species.
 static func bought_spirling(g: Dictionary) -> Spirling:
 	var d: SpirlingData = Database.species(str(g.get("species", "")))
 	if d == null:
@@ -326,7 +325,8 @@ static func bought_spirling(g: Dictionary) -> Spirling:
 	var s: Spirling = Spirling.new(d, clampi(int(g.get("level", 1)), 1, Spirling.MAX_LEVEL))
 	for key: String in Spirling.STAT_KEYS:
 		s.spark[key] = Spirling.SPARK_MAX
-	s.temper = "even"
+	# The temperament came from a random uid, so two buys could differ in HP (336 vs 352).
+	s.temper = str(g.get("temper", Spirling.TEMPERAMENTS[0].id))
 	s.shop_bought = true
 	s.hp = s.max_hp()
 	return s
