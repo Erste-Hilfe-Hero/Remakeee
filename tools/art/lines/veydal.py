@@ -46,6 +46,9 @@ LINES = [
     L(id="fernwhisk", names=["Fernwhisk"], elements=["GALE", "BLOOM"], role="striker",
       art=dict(plan="quad", tones=("light", "light", "mid"), ears="big", ear_tone="mid", tail="plume", eye="big",
                snout="short", legs=1, size=-1)),
+    L(id="hearthmote", names=["Hearthmote"], elements=["EMBER", "VOLT"], role="kindler",
+      art=dict(plan="spirit", tones=("mid", "light", "dark"), tail="flame", extras=("flame", "arms"), ears="antenna",
+               ear_tone="dark", eye="glow", mouth="line", size=-1, marks="stars")),
 ]
 
 HABITAT = {
@@ -62,6 +65,7 @@ HABITAT = {
     "verdigrub": ("Old copper mines", "Alte Kupferminen"),
     "peallith": ("The Bellstone ruins", "Die Ruinen von Bellstone"),
     "fernwhisk": ("Windy fern slopes", "Windige Farnhänge"),
+    "hearthmote": ("Warm vents, old hearths", "Warme Schlote, alte Herdstellen"),
 }
 
 TEXTS = {
@@ -181,6 +185,10 @@ TEXTS = {
                   "Born in a gust that ran up the fern slopes.",
                   "Es rennt so schnell durch die Farne, dass nur die wippenden Wedel zeigen, wo es lief.",
                   "In einer Böe geboren, die die Farnhänge hinauflief."),
+    "Hearthmote": ("A spark that hums. It drifts to any hearth that has gone cold and lights it again.",
+                   "Jumped out of a vent when lightning struck the hot stones.",
+                   "Ein Funke, der summt. Er treibt zu jedem kalten Herd und zündet ihn wieder an.",
+                   "Aus einem Schlot gesprungen, als ein Blitz in die heißen Steine schlug."),
 }
 
 # Veydal keeps its tables; these kinds are added to them.
@@ -191,7 +199,7 @@ ENCOUNTERS_ADD = {
     "crowcrest": [("Skerrit", "scree"), ("Brookhop", "reeds")],
     "quillbrook": [("Brookhop", "water"), ("Covepup", "water")],
     "saltmarsh": [("Pinchkin", "reeds"), ("Skerrit", "reeds")],
-    "kindle_vents": [("Flicklet", "cave")],
+    "kindle_vents": [("Flicklet", "cave"), ("Hearthmote", "cave")],
     "lantern_steps": [("Glimshell", "scree")],
     "sablecove": [("Covepup", "cave"), ("Pinchward", "cave")],
     "bellstone_ruins": [("Peallith", "")],
