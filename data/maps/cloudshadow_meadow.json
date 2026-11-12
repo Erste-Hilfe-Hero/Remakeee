@@ -1,0 +1,126 @@
+{
+ "name": "Cloudshadow Meadow",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "field",
+ "outdoor": true,
+ "encounters": "cloudshadow_meadow",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^,,,.__.,,,^",
+  "^,,,.__.,,,^",
+  "^*...__...*^",
+  "^^^^^==^^^^^",
+  "^,,,,..,,,,^",
+  "^,,,,..,,,,^",
+  "^T.......T.^",
+  "^^^==^^^^^^^",
+  "^...,,,,...^",
+  "^.,,,,,,,,.^",
+  "^.,,T..T,,.^",
+  "^^^^^^^==^^^",
+  "^,,,....,,,^",
+  "^,,,.S..,,,^",
+  "^*........*^",
+  "^^^==^^^^^^^",
+  "^.,,,,,,,..^",
+  "^.,,,,,,,..^",
+  "^....T.....^",
+  "^^^^^^==^^^^",
+  "^,,....__,,^",
+  "^,,...__.,,^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "gildcrest",
+   "tx": 10,
+   "ty": 8,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "gildcrest",
+   "tx": 10,
+   "ty": 9,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "starwell",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "starwell",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "goatherd",
+   "x": 6,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "cloudshadow_meadow/goatherd",
+   "sprite": "villager",
+   "trainer": "Goatherd Sabina",
+   "intro": "cloudshadow_meadow/goatherd_intro",
+   "defeat": "cloudshadow_meadow/goatherd_defeat",
+   "money": 3200,
+   "team": [
+    {
+     "species": "Chirrik",
+     "level": 48
+    },
+    {
+     "species": "Palmop",
+     "level": 48
+    },
+    {
+     "species": "Hazejel",
+     "level": 49
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 14,
+   "dialogue": "cloudshadow_meadow/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 6,
+   "item": "remedy",
+   "count": 1,
+   "flag": "find_cloudshadow_meadow_1"
+  },
+  {
+   "x": 11,
+   "y": 10,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_cloudshadow_meadow_2"
+  },
+  {
+   "x": 0,
+   "y": 18,
+   "item": "dash_brew",
+   "count": 1,
+   "flag": "find_cloudshadow_meadow_3"
+  }
+ ]
+}

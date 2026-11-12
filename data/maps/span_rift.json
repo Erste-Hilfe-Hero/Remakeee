@@ -1,0 +1,132 @@
+{
+ "name": "Span Rift",
+ "region": "halcyra",
+ "biome": "rift",
+ "backdrop": "ridge",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "whitecairn",
+   "tx": 10,
+   "ty": 8,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "whitecairn",
+   "tx": 10,
+   "ty": 9,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "toll_clerk",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "span_rift/toll_clerk",
+   "sprite": "warden",
+   "trainer": "Toll Clerk Emerich",
+   "intro": "span_rift/toll_clerk_intro",
+   "defeat": "span_rift/toll_clerk_defeat",
+   "money": 4900,
+   "team": [
+    {
+     "species": "Velverain",
+     "level": 56
+    },
+    {
+     "species": "Siroclaw",
+     "level": 56
+    },
+    {
+     "species": "Gyrevult",
+     "level": 57
+    }
+   ]
+  },
+  {
+   "id": "warden_veronne",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "span_rift/veronne",
+   "sprite": "warden",
+   "trainer": "Warden Veronne",
+   "warden": "v4_span",
+   "team": [
+    {
+     "species": "Velverain",
+     "level": 57
+    },
+    {
+     "species": "Siroclaw",
+     "level": 57
+    },
+    {
+     "species": "Gyrevult",
+     "level": 58
+    },
+    {
+     "species": "Habobrax",
+     "level": 58
+    }
+   ],
+   "intro": "span_rift/veronne_intro",
+   "defeat": "span_rift/veronne_defeat",
+   "ai": 2,
+   "money": 9800
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "span_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "span_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v4_span_sealed",
+   "closed": "@"
+  }
+ ]
+}

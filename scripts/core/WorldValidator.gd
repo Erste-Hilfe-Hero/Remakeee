@@ -5,7 +5,7 @@ extends RefCounted
 
 const LAYOUT_PATH: String = "res://data/world_layout.json"
 ## Regions a map may belong to (Corvane is the island across the lake, area 3 item 1287).
-const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne"]
+const REGIONS: Array[String] = ["veydal", "corvane", "ashmere", "solenne", "halcyra"]
 
 ## Maps per region, counted apart (item 1287): "Maps: veydal 37, corvane 1".
 static func region_counts(map_ids: PackedStringArray) -> Dictionary:

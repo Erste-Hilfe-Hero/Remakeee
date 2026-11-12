@@ -88,6 +88,15 @@
    "sprite": "villager"
   },
   {
+   "id": "porter",
+   "x": 7,
+   "y": 8,
+   "facing": "up",
+   "dialogue": "greyreach/porter",
+   "sprite": "villager",
+   "show_flag": "era3_finale_done"
+  },
+  {
    "id": "brann",
    "x": 2,
    "y": 22,

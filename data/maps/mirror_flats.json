@@ -1,0 +1,126 @@
+{
+ "name": "Mirror Flats",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "lake",
+ "outdoor": true,
+ "encounters": "mirror_flats",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^::..__..::^",
+  "^::.....%%%^",
+  "^~~~....%%%^",
+  "^~~~~...::.^",
+  "^%%~~...::.^",
+  "^%%.....~~~^",
+  "^:::....~~~^",
+  "^:::.S..%%.^",
+  "^~~.....%%.^",
+  "^~~~...~~~~^",
+  "^%%~...~~~~^",
+  "^%%....:::.^",
+  "^......:::.^",
+  "^~~~~..~~~.^",
+  "^~~~~..~~~.^",
+  "^%%....%%%.^",
+  "^%%..*.%%%.^",
+  "^::.....::.^",
+  "^::~~~..::.^",
+  "^...~~...L.^",
+  "^.....__...^",
+  "^.....__...^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "paleshore",
+   "tx": 1,
+   "ty": 8,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "paleshore",
+   "tx": 1,
+   "ty": 9,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "brightledge",
+   "tx": 10,
+   "ty": 8,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "brightledge",
+   "tx": 10,
+   "ty": 9,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "salt_scout",
+   "x": 6,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "mirror_flats/salt_scout",
+   "sprite": "villager",
+   "trainer": "Salt Scout Hendrik",
+   "intro": "mirror_flats/salt_scout_intro",
+   "defeat": "mirror_flats/salt_scout_defeat",
+   "money": 3400,
+   "team": [
+    {
+     "species": "Saltsprig",
+     "level": 52
+    },
+    {
+     "species": "Stiltwade",
+     "level": 52
+    },
+    {
+     "species": "Wadishell",
+     "level": 53
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 5,
+   "y": 8,
+   "dialogue": "mirror_flats/sign"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 4,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_mirror_flats_1"
+  },
+  {
+   "x": 0,
+   "y": 13,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_mirror_flats_2"
+  },
+  {
+   "x": 11,
+   "y": 18,
+   "item": "wake_bell",
+   "count": 1,
+   "flag": "find_mirror_flats_3"
+  }
+ ]
+}

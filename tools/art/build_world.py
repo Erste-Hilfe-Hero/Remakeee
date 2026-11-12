@@ -4,7 +4,7 @@ people can work on different map groups at once.
 
 Usage: python3 tools/art/build_world.py            (all groups)
        python3 tools/art/build_world.py corvane    (only these groups)
-Groups: veydal_core, veydal_wilds, veydal_caves, veydal_dungeons, corvane, veydal_finds, rifts12, solenne, solenne_side. See tools/art/world/common.py.
+Groups: veydal_core, veydal_wilds, veydal_caves, veydal_dungeons, corvane, veydal_finds, rifts12, solenne, solenne_side, halcyra. See tools/art/world/common.py.
 """
 import importlib
 import os
@@ -13,7 +13,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "world"))
 from common import World  # noqa: E402
 
-GROUPS = ["veydal_core", "veydal_wilds", "veydal_caves", "veydal_dungeons", "corvane", "veydal_finds", "rifts12", "solenne", "solenne_side"]
+GROUPS = ["veydal_core", "veydal_wilds", "veydal_caves", "veydal_dungeons", "corvane", "veydal_finds", "rifts12", "solenne", "solenne_side", "halcyra"]
 
 
 def main(argv):

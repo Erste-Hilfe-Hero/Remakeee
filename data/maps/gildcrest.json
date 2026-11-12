@@ -1,0 +1,240 @@
+{
+ "name": "Gildcrest",
+ "region": "halcyra",
+ "biome": "town",
+ "backdrop": "field",
+ "outdoor": true,
+ "heal_point": [
+  6,
+  9
+ ],
+ "rows": [
+  "^^^^^__^^^^^",
+  "^T...__...T^",
+  "^.RRR__RRR.^",
+  "^.HDH__HHH.^",
+  "^....__....^",
+  "^.L..__..S.^",
+  "^....__....^",
+  "^...____...^",
+  "_____.o.____",
+  "_____...____",
+  "^...____...^",
+  "^....__....^",
+  "^.RR.__.RR.^",
+  "^.HH.__.HH.^",
+  "^....__....^",
+  "^T##.__.##T^",
+  "^....__....^",
+  "^**..__..L.^",
+  "^....__....^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 19,
+   "to": "long_stair",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 19,
+   "to": "long_stair",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "to": "sunfall_terraces",
+   "tx": 5,
+   "ty": 1,
+   "facing": "left"
+  },
+  {
+   "x": 0,
+   "y": 9,
+   "to": "sunfall_terraces",
+   "tx": 6,
+   "ty": 1,
+   "facing": "left"
+  },
+  {
+   "x": 11,
+   "y": 8,
+   "to": "cloudshadow_meadow",
+   "tx": 5,
+   "ty": 22,
+   "facing": "right"
+  },
+  {
+   "x": 11,
+   "y": 9,
+   "to": "cloudshadow_meadow",
+   "tx": 6,
+   "ty": 22,
+   "facing": "right"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "gilt_rift",
+   "tx": 5,
+   "ty": 20,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "gilt_rift",
+   "tx": 6,
+   "ty": 20,
+   "facing": "up"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "keeper",
+   "x": 7,
+   "y": 7,
+   "facing": "down",
+   "dialogue": "gildcrest/keeper",
+   "sprite": "elder"
+  },
+  {
+   "id": "trader",
+   "x": 3,
+   "y": 14,
+   "facing": "down",
+   "dialogue": "gildcrest/trader",
+   "sprite": "villager"
+  },
+  {
+   "id": "lisette",
+   "x": 2,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "gildcrest/lisette",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 5,
+     "y": 9,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "tobiah",
+   "x": 9,
+   "y": 11,
+   "facing": "left",
+   "dialogue": "gildcrest/tobiah",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 7,
+     "y": 9,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "griselda",
+   "x": 2,
+   "y": 18,
+   "facing": "right",
+   "dialogue": "gildcrest/griselda",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 7,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "host",
+   "x": 8,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "gildcrest/host",
+   "sprite": "elder",
+   "show_flag": "rift_v4_gilt_sealed"
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 5,
+   "dialogue": "gildcrest/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 5,
+   "y": 0,
+   "open_flag": "rift_v4_span_sealed",
+   "closed": "#"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "open_flag": "rift_v4_span_sealed",
+   "closed": "#"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 0,
+   "y": 5,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_gildcrest_1"
+  },
+  {
+   "x": 11,
+   "y": 14,
+   "item": "spark_drop",
+   "count": 1,
+   "flag": "find_gildcrest_2"
+  },
+  {
+   "x": 0,
+   "y": 17,
+   "item": "remedy",
+   "count": 2,
+   "flag": "find_gildcrest_3"
+  }
+ ],
+ "square": [
+  6,
+  8
+ ]
+}

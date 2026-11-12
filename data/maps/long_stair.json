@@ -1,0 +1,135 @@
+{
+ "name": "The Long Stair",
+ "region": "halcyra",
+ "biome": "route",
+ "backdrop": "ridge",
+ "outdoor": true,
+ "encounters": "long_stair",
+ "rows": [
+  "^^^^^__^^^^^",
+  "^,,..__..::^",
+  "^,,..==..::^",
+  "^^^|.==.|^^^",
+  "^,,|.==.|..^",
+  "^,,..==....^",
+  "^^^|.==.|^^^",
+  "^..|.==.|::^",
+  "_.....==.::^",
+  "^,,^.==.^..^",
+  "^,,..==....^",
+  "^^^|.==.|^^^",
+  "^::|.==.|,,^",
+  "^::..==..,,^",
+  "^^^|.==.|^^^",
+  "^,,|.==.|..^",
+  "^,,..==..S.^",
+  "^^^|.==.|^^^",
+  "^..|.==.|::^",
+  "^....==..::^",
+  "^,,..==....^",
+  "^,,..__..,,^",
+  "^.S..__....^",
+  "^^^^^__^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 23,
+   "to": "brightledge",
+   "tx": 5,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 23,
+   "to": "brightledge",
+   "tx": 6,
+   "ty": 1,
+   "facing": "down"
+  },
+  {
+   "x": 5,
+   "y": 0,
+   "to": "gildcrest",
+   "tx": 5,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 6,
+   "y": 0,
+   "to": "gildcrest",
+   "tx": 6,
+   "ty": 18,
+   "facing": "up"
+  },
+  {
+   "x": 0,
+   "y": 8,
+   "to": "white_stair",
+   "tx": 1,
+   "ty": 8,
+   "facing": "right"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "step_counter",
+   "x": 6,
+   "y": 15,
+   "facing": "left",
+   "dialogue": "long_stair/step_counter",
+   "sprite": "villager",
+   "trainer": "Step Counter Wendel",
+   "intro": "long_stair/step_counter_intro",
+   "defeat": "long_stair/step_counter_defeat",
+   "money": 3000,
+   "team": [
+    {
+     "species": "Highhare",
+     "level": 44
+    },
+    {
+     "species": "Noonwhist",
+     "level": 45
+    }
+   ]
+  }
+ ],
+ "signs": [
+  {
+   "x": 9,
+   "y": 16,
+   "dialogue": "long_stair/sign"
+  },
+  {
+   "x": 2,
+   "y": 22,
+   "dialogue": "long_stair/sign_2"
+  }
+ ],
+ "secrets": [
+  {
+   "x": 11,
+   "y": 5,
+   "item": "max_tonic",
+   "count": 1,
+   "flag": "find_long_stair_1"
+  },
+  {
+   "x": 0,
+   "y": 13,
+   "item": "revival_leaf",
+   "count": 1,
+   "flag": "find_long_stair_2"
+  },
+  {
+   "x": 11,
+   "y": 19,
+   "item": "strong_tonic",
+   "count": 2,
+   "flag": "find_long_stair_3"
+  }
+ ]
+}

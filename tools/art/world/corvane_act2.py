@@ -339,6 +339,8 @@ def greyreach(world):
                      "after_flag": {"flag": "act2_end", "lines": lines(("MOUNTAIN RAILWAY", "BERGBAHN"), ("Halt Greyreach. Trains to Ashmere again.", "Halt Greyreach. Wieder Züge nach Ashmere."))}},
         "conductor": {"lines": lines(("Conductor Tilde: Mountain railway to Ashmere. Mind the gap, mind the clouds.", "Schaffnerin Tilde: Bergbahn nach Ashmere. Achte auf die Lücke und auf die Wolken.")),
                       "action": "transit mountain_rail"},
+        "porter": {"lines": lines(("Porter Joska: The gilt funicular climbs to Halcyra. Up there they polish the rails and lie about the view.", "Träger Joska: Die vergoldete Standseilbahn fährt hinauf nach Halcyra. Oben polieren sie die Schienen und lügen über die Aussicht.")),
+                   "action": "transit halcyra_funicular"},
         "hut": lines(("A survey hut. Old charts of the uplands hang on the wall, every one of them grey.", "Eine Vermessungshütte. An der Wand hängen alte Karten des Hochlands, jede einzelne grau.")),
     })
     m = {"name": tr("Greyreach", "Greyreach"), "biome": "route", "backdrop": "ridge", "outdoor": True, "encounters": mid,
@@ -347,6 +349,7 @@ def greyreach(world):
                    warp(5, 0, "wide_rift_edge", 5, 14, "up"), warp(6, 0, "wide_rift_edge", 6, 14, "up")],
          "npcs": [
              npc("conductor", 10, 8, "left", mid + "/conductor", "villager"),
+             npc("porter", 7, 8, "up", mid + "/porter", "villager", show_flag="era3_finale_done"),
              wayfarer(world, mid, "brann", 2, 22, "right", "Ridgewalker Brann", team(("Mirkmole", 22), ("Talusk", 23)),
                       [("Brann: The scree up here slides if you look at it wrong.", "Brann: Das Geröll hier oben rutscht, wenn man es falsch ansieht.")],
                       [("Brann: Steady feet? Prove it.", "Brann: Sicher auf den Beinen? Beweis es.")],

@@ -1,0 +1,132 @@
+{
+ "name": "Salt Rift",
+ "region": "halcyra",
+ "biome": "rift",
+ "backdrop": "lake",
+ "heal_point": [
+  3,
+  5
+ ],
+ "rows": [
+  "^^^^^^^^^^^^",
+  "^^^^.XX.^^^^",
+  "^^.........^",
+  "^........^_^",
+  "^..o.....^_^",
+  "^.......S^_^",
+  "^^^^....^^_^",
+  "^^^^....^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^..^^^^^_^",
+  "^........^_^",
+  "^........^_^",
+  "^^^^..^^^^.^",
+  "^..........^",
+  "^..........^",
+  "^^^^^..^^^^^"
+ ],
+ "warps": [
+  {
+   "x": 5,
+   "y": 21,
+   "to": "paleshore",
+   "tx": 5,
+   "ty": 18,
+   "facing": "down"
+  },
+  {
+   "x": 6,
+   "y": 21,
+   "to": "paleshore",
+   "tx": 6,
+   "ty": 18,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "raker",
+   "x": 7,
+   "y": 17,
+   "facing": "left",
+   "dialogue": "salt_rift/raker",
+   "sprite": "warden",
+   "trainer": "Salt Foreman Gunda",
+   "intro": "salt_rift/raker_intro",
+   "defeat": "salt_rift/raker_defeat",
+   "money": 4500,
+   "team": [
+    {
+     "species": "Saltcrown",
+     "level": 53
+    },
+    {
+     "species": "Stiltregent",
+     "level": 53
+    },
+    {
+     "species": "Wadishell",
+     "level": 54
+    }
+   ]
+  },
+  {
+   "id": "warden_halloran",
+   "x": 5,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "salt_rift/halloran",
+   "sprite": "warden",
+   "trainer": "Warden Halloran",
+   "warden": "v4_salt",
+   "team": [
+    {
+     "species": "Saltcrown",
+     "level": 54
+    },
+    {
+     "species": "Stiltregent",
+     "level": 54
+    },
+    {
+     "species": "Wadibastion",
+     "level": 55
+    },
+    {
+     "species": "Ergrava",
+     "level": 55
+    }
+   ],
+   "intro": "salt_rift/halloran_intro",
+   "defeat": "salt_rift/halloran_defeat",
+   "ai": 2,
+   "money": 9000
+  }
+ ],
+ "signs": [
+  {
+   "x": 3,
+   "y": 4,
+   "dialogue": "salt_rift/spring"
+  },
+  {
+   "x": 8,
+   "y": 5,
+   "dialogue": "salt_rift/sign"
+  }
+ ],
+ "blocks": [
+  {
+   "x": 10,
+   "y": 18,
+   "open_flag": "rift_v4_salt_sealed",
+   "closed": "@"
+  }
+ ]
+}

@@ -1,0 +1,34 @@
+{
+ "sign": [
+  "PALESHORE",
+  "Salt town on a dried lake. Do not walk past the white line. The line moves.",
+  "West: Mirror Flats. North: the Sunfall Terraces. East: the Lantern Span. South: the Salt Rift."
+ ],
+ "keeper": {
+  "lines": [
+   "Brine Healer Odo: A salt bath cures everything. Except debt. That needs the other kind of bath."
+  ],
+  "action": "heal"
+ },
+ "trader": {
+  "lines": [
+   "Salt Merchant Imke: Tonics, salt and silence. The silence costs the most."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+ },
+ "bertil": {
+  "lines": [
+   "Salt Raker Bertil: I rake salt from dawn to dusk. Sometimes the rake finds a boot. Sometimes the boot is still full."
+  ]
+ },
+ "maren": {
+  "lines": [
+   "Widow Maren: My husband walked on the mirror and never came back. Halloran sent a bill for the salt he displaced."
+  ]
+ },
+ "ivo": {
+  "lines": [
+   "Ferryman Ivo: There's been no water to ferry for twenty years. I still charge. Habit."
+  ]
+ }
+}
