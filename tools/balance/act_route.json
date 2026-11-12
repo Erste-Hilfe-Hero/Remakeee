@@ -584,27 +584,41 @@
      "battles": 8
     },
     {
+     "fight": "tollchain_causeway:tollkeeper"
+    },
+    {
      "wild": "region2:rookery_cut",
      "battles": 8
     },
     {
-     "boss": "region2:odile",
-     "kind": "warden"
-    },
-    {
-     "boss": "region2:brannoc",
-     "kind": "warden"
+     "fight": "rookery_cut:crowmonger"
     },
     {
      "wild": "region2:weeping_locks",
      "battles": 8
     },
     {
+     "fight": "weeping_locks:sluicer"
+    },
+    {
+     "fight": "lock_rift:acolyte"
+    },
+    {
+     "boss": "lock_rift:warden_odile",
+     "kind": "warden"
+    },
+    {
      "wild": "region2:smelters_drift",
      "battles": 8
     },
     {
-     "boss": "region2:sable",
+     "fight": "smelters_drift:slagman"
+    },
+    {
+     "fight": "foundry_rift:acolyte"
+    },
+    {
+     "boss": "foundry_rift:warden_brannoc",
      "kind": "warden"
     },
     {
@@ -612,11 +626,27 @@
      "battles": 8
     },
     {
+     "fight": "tithe_road:tithecollector"
+    },
+    {
+     "fight": "masque_rift:acolyte"
+    },
+    {
+     "boss": "masque_rift:warden_sable",
+     "kind": "warden"
+    },
+    {
      "wild": "region2:bellrope_marsh",
      "battles": 8
     },
     {
-     "boss": "region2:corin",
+     "fight": "bellrope_marsh:bellwalker"
+    },
+    {
+     "fight": "vault_rift:acolyte"
+    },
+    {
+     "boss": "vault_rift:warden_corin",
      "kind": "warden"
     }
    ]
@@ -631,19 +661,36 @@
      "battles": 8
     },
     {
+     "fight": "drypoint_lane:scratcher"
+    },
+    {
+     "fight": "drypoint_lane:courier"
+    },
+    {
      "wild": "region3:mordant_steps",
      "battles": 8
     },
     {
-     "boss": "region3:mavet",
-     "kind": "warden"
+     "fight": "mordant_steps:fumer"
+    },
+    {
+     "fight": "mordant_steps:stepcounter"
     },
     {
      "wild": "region3:hoarfrost_moor",
      "battles": 8
     },
     {
-     "boss": "region3:quenby",
+     "fight": "hoarfrost_moor:sledger"
+    },
+    {
+     "fight": "hoarfrost_moor:hoarwatch"
+    },
+    {
+     "fight": "bath_rift:acolyte"
+    },
+    {
+     "boss": "bath_rift:warden_mavet",
      "kind": "warden"
     },
     {
@@ -651,23 +698,60 @@
      "battles": 8
     },
     {
+     "fight": "gravers_causeway:graver"
+    },
+    {
+     "fight": "gravers_causeway:canalman"
+    },
+    {
+     "fight": "rime_rift:acolyte"
+    },
+    {
+     "boss": "rime_rift:warden_quenby",
+     "kind": "warden"
+    },
+    {
      "wild": "region3:rimeglass_pass",
      "battles": 8
     },
     {
-     "boss": "region3:ottoline",
-     "kind": "warden"
+     "fight": "rimeglass_pass:iceguide"
+    },
+    {
+     "fight": "rimeglass_pass:collector"
     },
     {
      "wild": "region3:stamp_road",
      "battles": 8
     },
     {
+     "fight": "stamp_road:stamper"
+    },
+    {
+     "fight": "stamp_road:pressrunner"
+    },
+    {
+     "fight": "ledger_rift:acolyte"
+    },
+    {
+     "boss": "ledger_rift:warden_ottoline",
+     "kind": "warden"
+    },
+    {
      "wild": "region3:smudge_marsh",
      "battles": 8
     },
     {
-     "boss": "region3:grisel",
+     "fight": "smudge_marsh:blotter"
+    },
+    {
+     "fight": "smudge_marsh:smuggler"
+    },
+    {
+     "fight": "press_rift:acolyte"
+    },
+    {
+     "boss": "press_rift:warden_grisel",
      "kind": "warden"
     }
    ]
@@ -682,19 +766,27 @@
      "battles": 8
     },
     {
+     "fight": "long_stair:step_counter"
+    },
+    {
      "wild": "region4:cloudshadow_meadow",
      "battles": 8
     },
     {
-     "boss": "region4:isaura",
-     "kind": "warden"
+     "fight": "cloudshadow_meadow:goatherd"
     },
     {
      "wild": "region4:mirror_flats",
      "battles": 8
     },
     {
-     "boss": "region4:halloran",
+     "fight": "mirror_flats:salt_scout"
+    },
+    {
+     "fight": "orrery_rift:star_clerk"
+    },
+    {
+     "boss": "orrery_rift:warden_isaura",
      "kind": "warden"
     },
     {
@@ -702,19 +794,126 @@
      "battles": 8
     },
     {
+     "fight": "orrery_ridge:climber"
+    },
+    {
+     "fight": "salt_rift:raker"
+    },
+    {
+     "boss": "salt_rift:warden_halloran",
+     "kind": "warden"
+    },
+    {
      "wild": "region4:sunfall_terraces",
      "battles": 8
+    },
+    {
+     "fight": "sunfall_terraces:vintner"
     },
     {
      "wild": "region4:lantern_span",
      "battles": 8
     },
     {
-     "boss": "region4:veronne",
+     "fight": "lantern_span:toll_boy"
+    },
+    {
+     "fight": "span_rift:toll_clerk"
+    },
+    {
+     "boss": "span_rift:warden_veronne",
      "kind": "warden"
     },
     {
-     "boss": "region4:aurek",
+     "fight": "gilt_rift:heir"
+    },
+    {
+     "boss": "gilt_rift:warden_aurek",
+     "kind": "warden"
+    }
+   ]
+  },
+  {
+   "id": "era5",
+   "name": "Era V: Quivermoor",
+   "moderate_grind": 130,
+   "steps": [
+    {
+     "wild": "region5:breathing_bog",
+     "battles": 8
+    },
+    {
+     "fight": "breathing_bog:peatcutter"
+    },
+    {
+     "fight": "breathing_bog:bogwalker"
+    },
+    {
+     "wild": "region5:wandering_wood",
+     "battles": 8
+    },
+    {
+     "fight": "wandering_wood:oakwatcher"
+    },
+    {
+     "fight": "wandering_wood:mapseller"
+    },
+    {
+     "fight": "wick_rift:acolyte"
+    },
+    {
+     "boss": "wick_rift:warden_maudrey",
+     "kind": "warden"
+    },
+    {
+     "wild": "region5:candle_causeway",
+     "battles": 8
+    },
+    {
+     "fight": "candle_causeway:candlebearer"
+    },
+    {
+     "fight": "candle_causeway:tollwick"
+    },
+    {
+     "fight": "taproot_rift:acolyte"
+    },
+    {
+     "boss": "taproot_rift:warden_ossian",
+     "kind": "warden"
+    },
+    {
+     "wild": "region5:hymnmarsh",
+     "battles": 8
+    },
+    {
+     "fight": "hymnmarsh:hummer"
+    },
+    {
+     "fight": "hymnmarsh:rootpicker"
+    },
+    {
+     "fight": "raft_rift:acolyte"
+    },
+    {
+     "boss": "raft_rift:warden_corran",
+     "kind": "warden"
+    },
+    {
+     "wild": "region5:heaving_fields",
+     "battles": 8
+    },
+    {
+     "fight": "heaving_fields:heaver"
+    },
+    {
+     "fight": "heaving_fields:betbroker"
+    },
+    {
+     "fight": "bloom_rift:acolyte"
+    },
+    {
+     "boss": "bloom_rift:warden_sabeline",
      "kind": "warden"
     }
    ]

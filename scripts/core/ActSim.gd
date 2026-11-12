@@ -9,7 +9,7 @@ extends RefCounted
 ## by element after every grind step of wild battles until it wins 70 % of the time (grind_max at
 ## most); the act's moderate_grind step is the "win with some training and good type choices" mark. The route goes on with the team that trained
 ## until that win or the act's moderate grind, whichever came first.
-## No level cap is used: a Spirling grows up to Spirling.ERA_MAX_LEVEL, whatever that is.
+## No level cap is used: a Spirling grows without a top ring (Spirling.LEVEL_SANITY guards only).
 
 const ROUTE_PATH: String = "res://tools/balance/act_route.json"
 const MAX_TURNS: int = 120
@@ -29,7 +29,7 @@ static func _read(path: String) -> Dictionary:
 # --- Foe definitions ------------------------------------------------------------------------
 
 ## The Wayfarer definition behind a route reference: "map:npc" (map file, its floors and
-## data/story_npcs.json), "story:id" (data/story_battles.json) or "regionN:warden" (era sheet).
+## data/story_npcs.json) or "story:id" (data/story_battles.json).
 ## Returns {"def": Dictionary, "field": String}; {} if the reference is unknown.
 static func resolve(ref: String) -> Dictionary:
 	var parts: PackedStringArray = ref.split(":")
@@ -38,8 +38,6 @@ static func resolve(ref: String) -> Dictionary:
 	if parts[0] == "story":
 		var d: Dictionary = StoryBattles.get_def(parts[1])
 		return {"def": d, "field": ""} if not d.is_empty() else {}
-	if parts[0].begins_with("region"):
-		return _region_warden(parts[0], parts[1])
 	var raw: Dictionary = _read("res://data/maps/%s.json" % parts[0])
 	var levels: Array = [raw]
 	levels.append_array(raw.get("floors", []))
@@ -53,37 +51,6 @@ static func resolve(ref: String) -> Dictionary:
 			if n is Dictionary and str(n.get("id", "")) == parts[1] and TrainerData.is_trainer(n):
 				return {"def": n, "field": str((lv as Dictionary).get("field", raw.get("field", "")))}
 	return {}
-
-## An era region Warden as a Wayfarer definition. Slots without their own kind fight with the
-## stand-in; tuning keys of the sheet entry (teams_by_difficulty, profile, items, rule, held,
-## moves) pass through unchanged.
-static func _region_warden(sheet: String, id: String) -> Dictionary:
-	var d: Dictionary = _read("res://data/%s.json" % sheet)
-	for w: Variant in d.get("wardens", []):
-		if not w is Dictionary or str(w.get("id", "")) != id:
-			continue
-		var def: Dictionary = {"id": id, "trainer": str(w.get("name", id)), "warden": str(w.get("rift", id)), "team": _slots(w.get("team", []))}
-		for k: String in ["profile", "profile_tune", "profile_from", "items", "rule", "ai"]:
-			if w.has(k):
-				def[k] = w[k]
-		var by: Variant = w.get("teams_by_difficulty", {})
-		if by is Dictionary:
-			var blocks: Dictionary = {}
-			for k: String in by:
-				blocks[k] = _slots(by[k])
-			def["teams_by_difficulty"] = blocks
-		return {"def": def, "field": ""}
-	return {}
-
-## Sheet team entries with every open slot filled by its stand-in.
-static func _slots(team: Variant) -> Array:
-	var out: Array = []
-	for e: Variant in team if team is Array else []:
-		var entry: Dictionary = (e as Dictionary).duplicate(true)
-		var sp: Variant = entry.get("species")
-		entry["species"] = str(sp) if sp != null else str(entry.get("stand_in", ""))
-		out.append(entry)
-	return out
 
 ## Wild table of a route reference: an encounter table id of data/encounters.json, or
 ## "regionN:route" (era sheet route: its ring range and slot kinds). [{species, min, max, weight}].
@@ -207,11 +174,11 @@ static func trainer_battle(mine: Array[Spirling], foe: Dictionary, seed_value: i
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
 	var def: Dictionary = foe.def
-	var foes: Array[Spirling] = TrainerData.build_team(def, "", rng, DIFFICULTY, Spirling.ERA_MAX_LEVEL)
+	var foes: Array[Spirling] = TrainerData.build_team(def, "", rng, DIFFICULTY, Spirling.LEVEL_SANITY)
 	var info: Dictionary = TrainerData.battle_info(def, foes, GameState.AI_LEVELS[DIFFICULTY], DIFFICULTY)
 	var m := BattleModel.new(mine, foes, false, seed_value, int(info.ai))
 	m.items_allowed = false
-	m.level_cap = Spirling.ERA_MAX_LEVEL
+	m.level_cap = Spirling.LEVEL_SANITY
 	m.ai.set_profile(str(info.profile), info.profile_tune)
 	m.ai.set_difficulty(DIFFICULTY)
 	m.foe_damage_mult = GameState.FOE_DAMAGE[DIFFICULTY]
@@ -241,7 +208,7 @@ static func wild_battle(mine: Array[Spirling], table: Array, rng: RandomNumberGe
 	var foe := Spirling.new(sd, rng.randi_range(int(sp.min), int(sp.max)), rng)
 	var m := BattleModel.new(mine, [foe] as Array[Spirling], true, rng.randi(), 0)
 	m.items_allowed = false
-	m.level_cap = Spirling.ERA_MAX_LEVEL
+	m.level_cap = Spirling.LEVEL_SANITY
 	_play(m)
 
 static func _roll(table: Array, rng: RandomNumberGenerator) -> Dictionary:
@@ -263,7 +230,7 @@ static func _roll(table: Array, rng: RandomNumberGenerator) -> Dictionary:
 static func measure(owned: Array[Spirling], foe: Dictionary, trials: int, seed_value: int, smart: bool = true) -> float:
 	var rng := RandomNumberGenerator.new()
 	rng.seed = seed_value
-	var probe: Array[Spirling] = TrainerData.build_team(foe.def, "", rng, DIFFICULTY, Spirling.ERA_MAX_LEVEL)
+	var probe: Array[Spirling] = TrainerData.build_team(foe.def, "", rng, DIFFICULTY, Spirling.LEVEL_SANITY)
 	var none: Array[Spirling] = []
 	var base_seed: int = rng.randi()
 	var plain: float = _rate(pick_party(owned, GameState.MAX_PARTY + 1), none, foe, trials, base_seed)
@@ -380,7 +347,7 @@ static func _boss(owned: Array[Spirling], foe: Dictionary, step: Dictionary, tri
 		table: Array, step_n: int, moderate: int, grind_max: int, target: float) -> Dictionary:
 	var probe_rng := RandomNumberGenerator.new()
 	probe_rng.seed = 1
-	var probe: Array[Spirling] = TrainerData.build_team(foe.def, "", probe_rng, DIFFICULTY, Spirling.ERA_MAX_LEVEL)
+	var probe: Array[Spirling] = TrainerData.build_team(foe.def, "", probe_rng, DIFFICULTY, Spirling.LEVEL_SANITY)
 	var levels: Array[int] = []
 	for f: Spirling in probe:
 		levels.append(f.level)
