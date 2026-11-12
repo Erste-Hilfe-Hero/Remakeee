@@ -128,6 +128,11 @@ var xp_mult: float = 1.0
 ## Ring-scaled Growth (era function "ring_scaled_growth", Era V): each earner's share is scaled
 ## by growth_scale() of the foe's ring against its own.
 var ring_scaled_growth: bool = false
+## Wheel battle (era function "wheel_battles", Era V): with one Spirling at the front, at the end
+## of every turn each side's front steps aside for the next standing one of its first
+## wheel_size Spirlings, in team order.
+var wheel: bool = false
+var wheel_size: int = 3
 ## Opening line for the field instead of the Rift line (weather in battle, WeatherCycle).
 var field_intro: String = ""
 var flee_attempts: int = 0
@@ -910,11 +915,41 @@ func _phase_end_of_turn() -> void:
 	_tick_field_swirl()
 	_tick_field_cycle()
 	_tick_delayed_hits()
+	_turn_wheel()
 	if turn == BattleRules.WEARY_TURN:
 		emit_event(BattleEvent.Type.WEARY, {"turn": turn})
 	_weary_chip()
 	turn += 1
 	phase = Phase.FAINT_CHECK
+
+## The next wheel member after the front of [param side], or -1 (none standing, or no wheel).
+func wheel_next(side: int) -> int:
+	if not wheel or is_multi() or slot_count(side) != 1:
+		return -1
+	var cur: int = active_index(side)
+	var team: Array = parties[side]
+	var size: int = mini(wheel_size, team.size())
+	if cur < 0 or cur >= size or (team[cur] as Spirling).is_fainted():
+		return -1
+	for step: int in range(1, size):
+		var i: int = (cur + step) % size
+		if not (team[i] as Spirling).is_fainted():
+			return i
+	return -1
+
+func _turn_wheel() -> void:
+	if not wheel or is_finished():
+		return
+	var moved: bool = false
+	for side: int in [Side.PLAYER, Side.FOE]:
+		var nxt: int = wheel_next(side)
+		if nxt < 0:
+			continue
+		if not moved:
+			emit_event(BattleEvent.Type.WHEEL_TURN, {})
+			moved = true
+		emit_event(BattleEvent.Type.SWAP_OUT, _who(side, 0))
+		_swap_in(side, nxt, 0)
 
 ## True when the variants in play take [param mv] off the menu (stage-only arts under "stages_locked").
 func move_locked(mv: MoveData) -> bool:
@@ -1124,7 +1159,7 @@ func move_targets(side: int, mv: MoveData, target_slot: int = -1) -> Array[int]:
 ## Effects that act on the user once per move, not once per foe a sweep reaches.
 static func _is_self_effect(fx: Dictionary) -> bool:
 	var id: StringName = StringName(fx.get("id", ""))
-	return id == &"heal_self" or id == &"self_stage_after" or (id == &"stat_change" and bool(fx.get("self", true)))
+	return id in [&"heal_self", &"self_stage_after", &"energy_gain", &"self_cost", &"cure_team"] or (id == &"stat_change" and bool(fx.get("self", true)))
 
 func _do_move(a: BattleAction) -> void:
 	var side: int = a.side

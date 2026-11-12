@@ -1330,7 +1330,13 @@ static func can_learn_echo(s: Spirling, item_id: String) -> bool:
 	var mv: MoveData = Database.move(str(it.get("teaches", "")))
 	if mv == null or s.moves.has(mv):
 		return false
-	return bool(it.get("any_element", false)) or mv.element in s.elements()
+	if bool(it.get("any_element", false)) or mv.element in s.elements():
+		return true
+	# "for_elements": a teacher of a later era also takes Spirlings of these elements.
+	for e: Variant in it.get("for_elements", []):
+		if Elements.E.has(str(e)) and Elements.E[str(e)] in s.elements():
+			return true
+	return false
 
 ## Moves party member [param index] into storage. Keeps at least one healthy Spirling.
 ## With [param keep_keepsake] its keepsake goes back into the satchel (item 356).

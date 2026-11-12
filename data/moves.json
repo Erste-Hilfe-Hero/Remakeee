@@ -5,7 +5,9 @@
   "kind": "PHYSICAL",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "A small bite with a hot edge. Small, but it remembers."
  },
  {
   "name": "Cinder Breath",
@@ -15,7 +17,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "scorch",
-  "status_chance": 0.1
+  "status_chance": 0.1,
+  "era": 1,
+  "desc": "Breathes embers in the foe's face. Rude, and sometimes it catches."
  },
  {
   "name": "Fizz Pop",
@@ -23,7 +27,9 @@
   "kind": "FOCUS",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "A burst of fizzy water. Mostly noise, a little sting."
  },
  {
   "name": "Undertow",
@@ -33,7 +39,9 @@
   "accuracy": 0.9,
   "energy": 4,
   "status": "soak",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "Drags the foe under for a moment. It may come up soaked."
  },
  {
   "name": "Lichen Lash",
@@ -41,7 +49,9 @@
   "kind": "PHYSICAL",
   "power": 35,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "A whip of crusted lichen. Slow to grow, quick to sting."
  },
  {
   "name": "Puffcap Haze",
@@ -51,7 +61,9 @@
   "accuracy": 0.85,
   "energy": 3,
   "status": "root",
-  "status_chance": 1.0
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "A cloud of spores that roots the foe where it stands."
  },
  {
   "name": "Crackle Bite",
@@ -61,7 +73,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "status": "jolt",
-  "status_chance": 0.05
+  "status_chance": 0.05,
+  "era": 1,
+  "desc": "A bite that snaps with static. Rarely leaves a Jolt."
  },
  {
   "name": "Pebble Toss",
@@ -69,7 +83,9 @@
   "kind": "PHYSICAL",
   "power": 45,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "A pebble, aimed well. The oldest argument there is."
  },
  {
   "name": "Breeze Slice",
@@ -78,7 +94,9 @@
   "power": 40,
   "accuracy": 1.0,
   "energy": 2,
-  "priority": 1
+  "priority": 1,
+  "era": 1,
+  "desc": "A thin cut of wind that always goes first."
  },
  {
   "name": "Glint",
@@ -88,7 +106,9 @@
   "accuracy": 1.0,
   "energy": 3,
   "status": "daze",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A flash in the eyes. The foe may be left Dazed."
  },
  {
   "name": "Hush",
@@ -98,7 +118,9 @@
   "accuracy": 0.8,
   "energy": 3,
   "status": "drowse",
-  "status_chance": 1.0
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "A whisper so soft the foe nods off."
  },
  {
   "name": "Bowl Over",
@@ -106,7 +128,9 @@
   "kind": "PHYSICAL",
   "power": 30,
   "accuracy": 1.0,
-  "energy": 1
+  "energy": 1,
+  "era": 1,
+  "desc": "Runs straight into the foe. Cheap and honest."
  },
  {
   "name": "Kiln Strike",
@@ -114,7 +138,9 @@
   "kind": "PHYSICAL",
   "power": 75,
   "accuracy": 0.95,
-  "energy": 5
+  "energy": 5,
+  "era": 1,
+  "desc": "A blow with the heat of a working kiln."
  },
  {
   "name": "Furnace Spiral",
@@ -124,7 +150,9 @@
   "accuracy": 0.9,
   "energy": 6,
   "status": "scorch",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A spiral of furnace fire. Often leaves a Scorch."
  },
  {
   "name": "Heat Haze",
@@ -134,7 +162,9 @@
   "accuracy": 0.9,
   "energy": 3,
   "status": "daze",
-  "status_chance": 1.0
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "Makes the air shimmer until the foe is Dazed."
  },
  {
   "name": "Spindrift Shot",
@@ -142,7 +172,9 @@
   "kind": "FOCUS",
   "power": 70,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A hard shot of sea spray."
  },
  {
   "name": "Breaker Plunge",
@@ -152,7 +184,9 @@
   "accuracy": 0.9,
   "energy": 6,
   "effect": "recoil",
-  "effect_amount": 0.2
+  "effect_amount": 0.2,
+  "era": 1,
+  "desc": "Crashes in like a breaker. The user feels it too."
  },
  {
   "name": "Drench",
@@ -162,7 +196,9 @@
   "accuracy": 0.9,
   "energy": 3,
   "status": "soak",
-  "status_chance": 1.0
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "Soaks the foe to the bone."
  },
  {
   "name": "Thorn Volley",
@@ -171,7 +207,9 @@
   "power": 75,
   "accuracy": 0.95,
   "energy": 5,
-  "target": "foes"
+  "target": "foes",
+  "era": 1,
+  "desc": "A volley of thorns at every foe at once."
  },
  {
   "name": "Sap Draw",
@@ -181,7 +219,9 @@
   "accuracy": 1.0,
   "energy": 4,
   "effect": "drain",
-  "effect_amount": 0.5
+  "effect_amount": 0.5,
+  "era": 1,
+  "desc": "Draws the foe's strength like sap and heals by half."
  },
  {
   "name": "Bloom Burst",
@@ -189,7 +229,9 @@
   "kind": "FOCUS",
   "power": 95,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 1,
+  "desc": "Everything blooms at once, violently."
  },
  {
   "name": "Arc Bolt",
@@ -199,7 +241,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "jolt",
-  "status_chance": 0.3
+  "status_chance": 0.3,
+  "era": 1,
+  "desc": "An arc of lightning. It often leaves a Jolt."
  },
  {
   "name": "Storm Gnash",
@@ -207,7 +251,9 @@
   "kind": "PHYSICAL",
   "power": 80,
   "accuracy": 0.95,
-  "energy": 5
+  "energy": 5,
+  "era": 1,
+  "desc": "Bites down with storm-charged teeth."
  },
  {
   "name": "Charged Mist",
@@ -218,7 +264,9 @@
   "energy": 3,
   "status": "jolt",
   "status_chance": 1.0,
-  "target": "foes"
+  "target": "foes",
+  "era": 1,
+  "desc": "A mist that Jolts every foe it touches."
  },
  {
   "name": "Siphon Spark",
@@ -228,7 +276,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "effect": "energy_drain",
-  "effect_amount": 1
+  "effect_amount": 1,
+  "era": 1,
+  "desc": "A small spark that steals 1 Energy."
  },
  {
   "name": "Tremor Thud",
@@ -237,7 +287,9 @@
   "power": 80,
   "accuracy": 0.9,
   "energy": 5,
-  "target": "foes"
+  "target": "foes",
+  "era": 1,
+  "desc": "Stamps the ground and shakes every foe."
  },
  {
   "name": "Cairn Crash",
@@ -247,7 +299,9 @@
   "accuracy": 0.85,
   "energy": 7,
   "effect": "recoil",
-  "effect_amount": 0.25
+  "effect_amount": 0.25,
+  "era": 1,
+  "desc": "Brings down a whole cairn. Some of it lands on the user."
  },
  {
   "name": "Updraft",
@@ -255,7 +309,9 @@
   "kind": "FOCUS",
   "power": 60,
   "accuracy": 1.0,
-  "energy": 3
+  "energy": 3,
+  "era": 1,
+  "desc": "A lift of air that knocks the foe off its feet."
  },
  {
   "name": "Gale Scythe",
@@ -263,7 +319,9 @@
   "kind": "PHYSICAL",
   "power": 85,
   "accuracy": 0.9,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A scythe of wind, swung low."
  },
  {
   "name": "Squall",
@@ -274,7 +332,9 @@
   "energy": 6,
   "status": "daze",
   "status_chance": 0.1,
-  "target": "foes"
+  "target": "foes",
+  "era": 1,
+  "desc": "A squall over every foe. It may leave them Dazed."
  },
  {
   "name": "Prism Ray",
@@ -282,7 +342,9 @@
   "kind": "FOCUS",
   "power": 70,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "Light split into a cutting ray."
  },
  {
   "name": "Dawn Mend",
@@ -292,7 +354,9 @@
   "accuracy": 1.0,
   "energy": 6,
   "effect": "heal_self",
-  "effect_amount": 0.5
+  "effect_amount": 0.5,
+  "era": 1,
+  "desc": "First light closes half the user's wounds."
  },
  {
   "name": "Radiant Lance",
@@ -300,7 +364,9 @@
   "kind": "PHYSICAL",
   "power": 90,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 1,
+  "desc": "A lance of hard light, driven in."
  },
  {
   "name": "Dusk Rake",
@@ -312,7 +378,9 @@
   "stat": "atk",
   "stages": -1,
   "self": false,
-  "stage_chance": 0.2
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "A rake of claws at dusk. It may sap the foe's Might."
  },
  {
   "name": "Gloom Ripple",
@@ -323,7 +391,9 @@
   "energy": 4,
   "status": "daze",
   "status_chance": 0.2,
-  "target": "foes"
+  "target": "foes",
+  "era": 1,
+  "desc": "A ripple of gloom over every foe. It may Daze."
  },
  {
   "name": "Dusk Gnaw",
@@ -331,7 +401,9 @@
   "kind": "PHYSICAL",
   "power": 90,
   "accuracy": 0.85,
-  "energy": 6
+  "energy": 6,
+  "era": 1,
+  "desc": "Gnaws in the dark where no one can see."
  },
  {
   "name": "Night Siphon",
@@ -341,7 +413,9 @@
   "accuracy": 1.0,
   "energy": 4,
   "effect": "drain",
-  "effect_amount": 0.5
+  "effect_amount": 0.5,
+  "era": 1,
+  "desc": "Drinks the foe's strength by night and heals by half."
  },
  {
   "name": "Wick Flicker",
@@ -349,7 +423,9 @@
   "kind": "FOCUS",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "A flicker from a short wick. Better than the dark."
  },
  {
   "name": "Candle Ward",
@@ -359,7 +435,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "effect": "heal_self",
-  "effect_amount": 0.3
+  "effect_amount": 0.3,
+  "era": 1,
+  "desc": "A small candle heals the user a little. Mind the wax."
  },
  {
   "name": "Mirk Nip",
@@ -367,7 +445,9 @@
   "kind": "PHYSICAL",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "A nip from out of the murk."
  },
  {
   "name": "Murk Veil",
@@ -377,7 +457,9 @@
   "accuracy": 0.9,
   "energy": 3,
   "status": "daze",
-  "status_chance": 1.0
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "A veil of murk that leaves the foe Dazed."
  },
  {
   "name": "Tunnel Strike",
@@ -389,7 +471,9 @@
   "stat": "def",
   "stages": 1,
   "self": true,
-  "stage_chance": 0.2
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "Strikes up from below. May raise the user's Guard."
  },
  {
   "name": "Salt Snap",
@@ -399,7 +483,9 @@
   "accuracy": 0.95,
   "energy": 3,
   "status": "soak",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A snap of briny jaws. May leave a Soak."
  },
  {
   "name": "Kelp Lash",
@@ -409,7 +495,9 @@
   "accuracy": 0.95,
   "energy": 3,
   "status": "root",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A lash of wet kelp. May Root the foe."
  },
  {
   "name": "Kindle Up",
@@ -421,7 +509,9 @@
   "stat": "atk",
   "stages": 1,
   "self": true,
-  "stages_full_hp": 2
+  "stages_full_hp": 2,
+  "era": 1,
+  "desc": "Stokes its own fire: Might up, more at full Vigor."
  },
  {
   "name": "Hunker Down",
@@ -433,7 +523,9 @@
   "stat": "def",
   "stages": 1,
   "self": true,
-  "stages_full_hp": 2
+  "stages_full_hp": 2,
+  "era": 1,
+  "desc": "Hunkers down: Guard up, more at full Vigor."
  },
  {
   "name": "Drift Step",
@@ -445,7 +537,9 @@
   "stat": "spd",
   "stages": 1,
   "self": true,
-  "stages_full_hp": 2
+  "stages_full_hp": 2,
+  "era": 1,
+  "desc": "Drifts on the wind: Pace up, more at full Vigor."
  },
  {
   "name": "Still Thought",
@@ -457,7 +551,9 @@
   "stat": "foc",
   "stages": 1,
   "self": true,
-  "stages_full_hp": 2
+  "stages_full_hp": 2,
+  "era": 1,
+  "desc": "Goes quiet inside: Focus up, more at full Vigor."
  },
  {
   "name": "Cower Shade",
@@ -468,7 +564,9 @@
   "energy": 2,
   "stat": "atk",
   "stages": -1,
-  "self": false
+  "self": false,
+  "era": 1,
+  "desc": "Hides in its own shadow. The foe's Might drops."
  },
  {
   "name": "Chill Mist",
@@ -480,7 +578,9 @@
   "stat": "spd",
   "stages": -1,
   "self": false,
-  "target": "foes"
+  "target": "foes",
+  "era": 1,
+  "desc": "A cold mist that slows every foe."
  },
  {
   "name": "Overcharge",
@@ -489,7 +589,9 @@
   "power": 30,
   "accuracy": 1.0,
   "energy": 2,
-  "overcharge": true
+  "overcharge": true,
+  "era": 1,
+  "desc": "Spends every spare Energy. More power for each point."
  },
  {
   "name": "All-In Crash",
@@ -498,7 +600,9 @@
   "power": 40,
   "accuracy": 0.95,
   "energy": 2,
-  "overcharge": true
+  "overcharge": true,
+  "era": 1,
+  "desc": "Throws in all it has. Every spare Energy adds power."
  },
  {
   "name": "Ash Call",
@@ -507,7 +611,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 3,
-  "field": "ash_storm"
+  "field": "ash_storm",
+  "era": 1,
+  "desc": "Calls down an ash storm over the field."
  },
  {
   "name": "Tide Call",
@@ -516,7 +622,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 3,
-  "field": "high_tide"
+  "field": "high_tide",
+  "era": 1,
+  "desc": "Calls the high tide over the field."
  },
  {
   "name": "Murk Call",
@@ -525,7 +633,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 3,
-  "field": "deep_murk"
+  "field": "deep_murk",
+  "era": 1,
+  "desc": "Calls a deep murk over the field."
  },
  {
   "name": "Spark Call",
@@ -534,7 +644,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 3,
-  "field": "static_veil"
+  "field": "static_veil",
+  "era": 1,
+  "desc": "Calls a static veil over the field."
  },
  {
   "name": "Bloom Call",
@@ -543,7 +655,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 3,
-  "field": "pollen_drift"
+  "field": "pollen_drift",
+  "era": 1,
+  "desc": "Calls a pollen drift over the field."
  },
  {
   "name": "Dawn Call",
@@ -552,7 +666,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 3,
-  "field": "dawn_glow"
+  "field": "dawn_glow",
+  "era": 1,
+  "desc": "Calls the dawn glow over the field."
  },
  {
   "name": "Glow Knuckle",
@@ -564,7 +680,9 @@
   "stat": "atk",
   "stages": 1,
   "self": true,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A glowing punch. May raise the user's Might."
  },
  {
   "name": "Char Mark",
@@ -574,7 +692,9 @@
   "accuracy": 1.0,
   "energy": 3,
   "vs_status": "scorch",
-  "vs_mult": 1.6
+  "vs_mult": 1.6,
+  "era": 1,
+  "desc": "Brands the foe. Hits much harder if it already burns."
  },
  {
   "name": "Spout Jab",
@@ -584,7 +704,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "vs_status": "soak",
-  "vs_mult": 1.5
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "A jab of water. Hits harder on a Soaked foe."
  },
  {
   "name": "Deepwell Draught",
@@ -595,7 +717,9 @@
   "energy": 4,
   "effect": "heal_self",
   "effect_amount": 0.35,
-  "cure_self": true
+  "cure_self": true,
+  "era": 1,
+  "desc": "A drink from a deep well: heals and washes off its status."
  },
  {
   "name": "Pollen Prick",
@@ -605,7 +729,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "vs_status": "root",
-  "vs_mult": 1.5
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "A prick of pollen. Hits harder on a Rooted foe."
  },
  {
   "name": "Static Tag",
@@ -615,7 +741,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "vs_status": "jolt",
-  "vs_mult": 1.5
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "Tags the foe with static. Hits harder on a Jolted foe."
  },
  {
   "name": "Grid Lock",
@@ -625,7 +753,9 @@
   "accuracy": 0.9,
   "energy": 3,
   "effect": "energy_tax",
-  "effect_amount": 2
+  "effect_amount": 2,
+  "era": 1,
+  "desc": "Locks the foe's moves up: they cost more for 2 turns."
  },
  {
   "name": "Grit Jab",
@@ -635,7 +765,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "vs_status": "*",
-  "vs_mult": 1.3
+  "vs_mult": 1.3,
+  "era": 1,
+  "desc": "A gritty jab. Hits harder on a foe with any status."
  },
  {
   "name": "Quarry Wall",
@@ -646,7 +778,9 @@
   "energy": 3,
   "stat": "def",
   "stages": 2,
-  "self": true
+  "self": true,
+  "era": 1,
+  "desc": "Raises a wall of quarry stone: Guard up by 2."
  },
  {
   "name": "Landslip",
@@ -659,7 +793,9 @@
   "stat": "spd",
   "stages": -1,
   "self": false,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A landslip over every foe. May slow them."
  },
  {
   "name": "Shard Bed",
@@ -670,7 +806,9 @@
   "energy": 3,
   "snare": {
    "hp": 0.1
-  }
+  },
+  "era": 1,
+  "desc": "Scatters shards on the foe's side. Newcomers bleed."
  },
  {
   "name": "Monolith Drop",
@@ -679,7 +817,9 @@
   "power": 125,
   "accuracy": 0.8,
   "energy": 8,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 1,
+  "desc": "Drops a monolith. Needs a turn to lift the next one."
  },
  {
   "name": "Pumice Pelt",
@@ -691,7 +831,9 @@
   "stat": "def",
   "stages": 1,
   "self": true,
-  "stage_chance": 0.5
+  "stage_chance": 0.5,
+  "era": 1,
+  "desc": "Pelts with pumice. Often raises the user's Guard."
  },
  {
   "name": "Fault Line",
@@ -700,7 +842,9 @@
   "power": 70,
   "accuracy": 0.95,
   "energy": 4,
-  "ignore_stages": true
+  "ignore_stages": true,
+  "era": 1,
+  "desc": "Splits the ground along a fault. Ignores raised defences."
  },
  {
   "name": "Crosswind",
@@ -709,7 +853,9 @@
   "power": 55,
   "accuracy": 1.0,
   "energy": 3,
-  "field_element": true
+  "field_element": true,
+  "era": 1,
+  "desc": "A crosswind that takes the field's element."
  },
  {
   "name": "Kite Cut",
@@ -721,7 +867,9 @@
   "stat": "spd",
   "stages": 1,
   "self": true,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A cut like a kite string. May raise the user's Pace."
  },
  {
   "name": "Scatter Gale",
@@ -733,7 +881,9 @@
   "stat": "spd",
   "stages": -1,
   "self": false,
-  "clear_snares": true
+  "clear_snares": true,
+  "era": 1,
+  "desc": "Blows snares off its side and slows the foe."
  },
  {
   "name": "Downburst",
@@ -742,7 +892,9 @@
   "power": 110,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 1,
+  "desc": "A crushing downburst. Needs a turn to gather again."
  },
  {
   "name": "Draft Needle",
@@ -751,7 +903,9 @@
   "power": 35,
   "accuracy": 1.0,
   "energy": 1,
-  "priority": 1
+  "priority": 1,
+  "era": 1,
+  "desc": "A needle of draught that always goes first."
  },
  {
   "name": "Squall Line",
@@ -762,7 +916,9 @@
   "energy": 5,
   "stat": "spd",
   "stages": -1,
-  "self": false
+  "self": false,
+  "era": 1,
+  "desc": "A line of squalls that slows the foe."
  },
  {
   "name": "Cloudbreak",
@@ -773,7 +929,9 @@
   "energy": 6,
   "self_stages": {
    "spd": -1
-  }
+  },
+  "era": 1,
+  "desc": "Breaks the clouds open. The user is slower after."
  },
  {
   "name": "Beacon Ping",
@@ -783,7 +941,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "vs_status": "daze",
-  "vs_mult": 1.5
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "A beacon pulse. Hits harder on a Dazed foe."
  },
  {
   "name": "Dawn Needle",
@@ -793,7 +953,9 @@
   "accuracy": 1.0,
   "energy": 1,
   "priority": 1,
-  "ignore_daze": true
+  "ignore_daze": true,
+  "era": 1,
+  "desc": "A needle of first light. Goes first and ignores its own Daze."
  },
  {
   "name": "Shade Pounce",
@@ -803,7 +965,9 @@
   "accuracy": 1.0,
   "energy": 3,
   "vs_status": "stage_down",
-  "vs_mult": 1.5
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "Pounces from shadow. Hits harder on a weakened foe."
  },
  {
   "name": "Gloom Handoff",
@@ -812,7 +976,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 2,
-  "effect": "status_shift"
+  "effect": "status_shift",
+  "era": 1,
+  "desc": "Hands its own status to the foe. Sharing is caring."
  },
  {
   "name": "Capacitor Crash",
@@ -821,7 +987,9 @@
   "power": 120,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 1,
+  "desc": "Dumps a capacitor at once. Needs a turn to recharge."
  },
  {
   "name": "Pylon Snap",
@@ -833,7 +1001,9 @@
   "stat": "spd",
   "stages": 1,
   "self": true,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A snap like a pylon line. May raise the user's Pace."
  },
  {
   "name": "Short Circuit",
@@ -844,7 +1014,9 @@
   "energy": 6,
   "self_stages": {
    "foc": -1
-  }
+  },
+  "era": 1,
+  "desc": "A violent short circuit. The user's Focus drops after."
  },
  {
   "name": "Bellows Blast",
@@ -855,7 +1027,9 @@
   "energy": 7,
   "self_stages": {
    "foc": -1
-  }
+  },
+  "era": 1,
+  "desc": "Works the bellows until the fire roars. Focus drops after."
  },
  {
   "name": "Coal Seed",
@@ -866,7 +1040,9 @@
   "energy": 3,
   "snare": {
    "status": "scorch"
-  }
+  },
+  "era": 1,
+  "desc": "Sows live coals on the foe's side. Newcomers burn."
  },
  {
   "name": "Furnace Heart",
@@ -875,7 +1051,9 @@
   "power": 120,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 1,
+  "desc": "Opens its furnace heart. Needs a turn to cool."
  },
  {
   "name": "Cinder Dash",
@@ -884,7 +1062,9 @@
   "power": 35,
   "accuracy": 1.0,
   "energy": 1,
-  "priority": 1
+  "priority": 1,
+  "era": 1,
+  "desc": "A dash trailing cinders. Always goes first."
  },
  {
   "name": "Brazier Pulse",
@@ -895,7 +1075,9 @@
   "energy": 5,
   "target": "foes",
   "status": "scorch",
-  "status_chance": 0.1
+  "status_chance": 0.1,
+  "era": 1,
+  "desc": "A pulse of brazier heat over every foe. May Scorch."
  },
  {
   "name": "Salt Spray",
@@ -907,7 +1089,9 @@
   "stat": "spd",
   "stages": -1,
   "self": false,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "Stinging salt spray. May slow the foe."
  },
  {
   "name": "Rip Current",
@@ -917,7 +1101,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "effect": "energy_burn",
-  "effect_amount": 1
+  "effect_amount": 1,
+  "era": 1,
+  "desc": "A rip current that drags 1 Energy out of the foe."
  },
  {
   "name": "Fathom Crush",
@@ -926,7 +1112,9 @@
   "power": 115,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 1,
+  "desc": "The weight of the deep at once. Needs a turn after."
  },
  {
   "name": "Bore Wave",
@@ -937,7 +1125,9 @@
   "energy": 6,
   "target": "foes",
   "status": "soak",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A tidal bore over every foe. May Soak them."
  },
  {
   "name": "Shoal Trap",
@@ -948,7 +1138,9 @@
   "energy": 3,
   "snare": {
    "status": "soak"
-  }
+  },
+  "era": 1,
+  "desc": "Hides shoals on the foe's side. Newcomers get Soaked."
  },
  {
   "name": "Bramble Bed",
@@ -959,7 +1151,9 @@
   "energy": 3,
   "snare": {
    "status": "root"
-  }
+  },
+  "era": 1,
+  "desc": "Plants brambles on the foe's side. Newcomers get Rooted."
  },
  {
   "name": "Wildgrowth Crash",
@@ -970,7 +1164,9 @@
   "energy": 6,
   "self_stages": {
    "def": -1
-  }
+  },
+  "era": 1,
+  "desc": "A crash of wild growth. The user's Guard drops after."
  },
  {
   "name": "Husk Shed",
@@ -982,7 +1178,9 @@
   "cure_self": true,
   "stat": "spd",
   "stages": 1,
-  "self": true
+  "self": true,
+  "era": 1,
+  "desc": "Sheds its husk: cures its status and raises Pace."
  },
  {
   "name": "Thornwake",
@@ -993,7 +1191,9 @@
   "energy": 5,
   "target": "foes",
   "status": "root",
-  "status_chance": 0.1
+  "status_chance": 0.1,
+  "era": 1,
+  "desc": "A wake of thorns over every foe. May Root them."
  },
  {
   "name": "Bark Burst",
@@ -1005,7 +1205,9 @@
   "stat": "def",
   "stages": 1,
   "self": true,
-  "stage_chance": 0.2
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "Bark bursts outward. May raise the user's Guard."
  },
  {
   "name": "Seed Spit",
@@ -1014,7 +1216,9 @@
   "power": 30,
   "accuracy": 1.0,
   "energy": 1,
-  "priority": 1
+  "priority": 1,
+  "era": 1,
+  "desc": "Spits a seed first thing. Manners are for later."
  },
  {
   "name": "Graft",
@@ -1023,7 +1227,9 @@
   "power": 0,
   "accuracy": 1.0,
   "energy": 3,
-  "effect": "stage_steal"
+  "effect": "stage_steal",
+  "era": 1,
+  "desc": "Grafts a raised stage off the foe and onto itself."
  },
  {
   "name": "Overdraw",
@@ -1033,7 +1239,9 @@
   "accuracy": 1.0,
   "energy": 2,
   "effect": "energy_burn",
-  "effect_amount": 2
+  "effect_amount": 2,
+  "era": 1,
+  "desc": "Burns 2 of the foe's Energy. Nobody gets it back."
  },
  {
   "name": "Wire Trap",
@@ -1044,7 +1252,9 @@
   "energy": 3,
   "snare": {
    "status": "jolt"
-  }
+  },
+  "era": 1,
+  "desc": "Strings live wire on the foe's side. Newcomers get Jolted."
  },
  {
   "name": "Lull Breaker",
@@ -1055,7 +1265,9 @@
   "energy": 3,
   "vs_status": "drowse",
   "vs_mult": 1.6,
-  "cure_target": "drowse"
+  "cure_target": "drowse",
+  "era": 1,
+  "desc": "Shouts the foe awake, and hits harder doing it."
  },
  {
   "name": "Chaff Feint",
@@ -1068,7 +1280,9 @@
    "atk": -1,
    "foc": -1
   },
-  "self": false
+  "self": false,
+  "era": 1,
+  "desc": "A feint in a cloud of chaff: foe's Might and Focus drop."
  },
  {
   "name": "Gale Mantle",
@@ -1081,7 +1295,9 @@
    "spd": 1,
    "foc": 1
   },
-  "self": true
+  "self": true,
+  "era": 1,
+  "desc": "Wraps itself in wind: Pace and Focus up."
  },
  {
   "name": "Sunwell Sip",
@@ -1094,7 +1310,9 @@
   "effect_amount": 0.3,
   "stat": "foc",
   "stages": 1,
-  "self": true
+  "self": true,
+  "era": 1,
+  "desc": "A sip of sunlight: heals a little and raises Focus."
  },
  {
   "name": "Daybreak Strike",
@@ -1103,7 +1321,9 @@
   "power": 115,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 1,
+  "desc": "Strikes with all of the dawn. Needs a turn after."
  },
  {
   "name": "Prism Burst",
@@ -1114,7 +1334,9 @@
   "energy": 6,
   "self_stages": {
    "foc": -1
-  }
+  },
+  "era": 1,
+  "desc": "A burst of split light. The user's Focus drops after."
  },
  {
   "name": "Omen Bell",
@@ -1123,7 +1345,9 @@
   "power": 100,
   "accuracy": 1.0,
   "energy": 5,
-  "delay": 2
+  "delay": 2,
+  "era": 1,
+  "desc": "Rings a bell. Two turns later, the omen lands."
  },
  {
   "name": "Starlit Lash",
@@ -1135,7 +1359,9 @@
   "stat": "atk",
   "stages": -1,
   "self": false,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A lash of starlight. May sap the foe's Might."
  },
  {
   "name": "Glow Trap",
@@ -1146,7 +1372,9 @@
   "energy": 3,
   "snare": {
    "status": "daze"
-  }
+  },
+  "era": 1,
+  "desc": "Hides glowing lures on the foe's side. Newcomers get Dazed."
  },
  {
   "name": "Night Toll",
@@ -1156,7 +1384,9 @@
   "accuracy": 0.9,
   "energy": 3,
   "effect": "heal_block",
-  "effect_amount": 3
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Tolls for the foe. It can't heal for 3 turns."
  },
  {
   "name": "Eclipse Crush",
@@ -1165,7 +1395,9 @@
   "power": 115,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 1,
+  "desc": "Crushes like an eclipse. Needs a turn after."
  },
  {
   "name": "Murmur Bite",
@@ -1175,7 +1407,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "effect": "energy_burn",
-  "effect_amount": 1
+  "effect_amount": 1,
+  "era": 1,
+  "desc": "A bite with a murmur. Burns 1 of the foe's Energy."
  },
  {
   "name": "Veil Step",
@@ -1184,7 +1418,9 @@
   "power": 30,
   "accuracy": 1.0,
   "energy": 1,
-  "priority": 1
+  "priority": 1,
+  "era": 1,
+  "desc": "Steps out of a veil first. The foe never saw it."
  },
  {
   "name": "Gloam Pact",
@@ -1197,7 +1433,9 @@
    "atk": 2,
    "def": -1
   },
-  "self": true
+  "self": true,
+  "era": 1,
+  "desc": "A pact with the gloam: Might up by 2, Guard down."
  },
  {
   "name": "Dusk Snare",
@@ -1210,7 +1448,9 @@
    "stage": {
     "spd": -1
    }
-  }
+  },
+  "era": 1,
+  "desc": "Lays a snare on the foe's side. Newcomers lose Pace."
  },
  {
   "name": "Gravel Hum",
@@ -1221,7 +1461,9 @@
   "energy": 3,
   "stat": "spd",
   "stages": -2,
-  "self": false
+  "self": false,
+  "era": 1,
+  "desc": "A low hum of gravel. The foe's Pace drops by 2."
  },
  {
   "name": "Slow Quake",
@@ -1230,7 +1472,9 @@
   "power": 90,
   "accuracy": 1.0,
   "energy": 3,
-  "priority": -1
+  "priority": -1,
+  "era": 1,
+  "desc": "A slow, heavy quake. It always goes last."
  },
  {
   "name": "Root Mend",
@@ -1241,7 +1485,9 @@
   "energy": 4,
   "effect": "heal_self",
   "effect_amount": 0.2,
-  "mend": 3
+  "mend": 3,
+  "era": 1,
+  "desc": "Puts down roots: heals now and for 3 turns."
  },
  {
   "name": "Glowglass Slash",
@@ -1251,7 +1497,9 @@
   "accuracy": 1.0,
   "energy": 4,
   "status": "scorch",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A slash of rift glass. May Scorch."
  },
  {
   "name": "Floodglass Wave",
@@ -1261,7 +1509,9 @@
   "accuracy": 1.0,
   "energy": 4,
   "status": "soak",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A wave of rift glass. May Soak."
  },
  {
   "name": "Vineglass Sting",
@@ -1271,7 +1521,9 @@
   "accuracy": 1.0,
   "energy": 4,
   "effect": "drain",
-  "effect_amount": 0.25
+  "effect_amount": 0.25,
+  "era": 1,
+  "desc": "A sting of rift glass that heals a quarter of the damage."
  },
  {
   "name": "Boltglass Bite",
@@ -1283,7 +1535,9 @@
   "stat": "spd",
   "stages": -1,
   "self": false,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A bite of rift glass. May slow the foe."
  },
  {
   "name": "Rockglass Ram",
@@ -1295,7 +1549,9 @@
   "stat": "def",
   "stages": 1,
   "self": true,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A ram of rift glass. May raise the user's Guard."
  },
  {
   "name": "Stormglass Cut",
@@ -1304,7 +1560,9 @@
   "power": 95,
   "accuracy": 1.0,
   "energy": 4,
-  "priority": 1
+  "priority": 1,
+  "era": 1,
+  "desc": "A cut of rift glass that always goes first."
  },
  {
   "name": "Lightglass Beam",
@@ -1313,7 +1571,9 @@
   "power": 95,
   "accuracy": 1.0,
   "energy": 4,
-  "cure_self": true
+  "cure_self": true,
+  "era": 1,
+  "desc": "A beam of rift glass that cures the user's status."
  },
  {
   "name": "Duskglass Grip",
@@ -1325,7 +1585,9 @@
   "stat": "foc",
   "stages": -1,
   "self": false,
-  "stage_chance": 0.3
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A grip of rift glass. May sap the foe's Focus."
  },
  {
   "name": "Tailwind",
@@ -1337,7 +1599,9 @@
   "stats": {
    "spd": 2
   },
-  "self": true
+  "self": true,
+  "era": 1,
+  "desc": "A wind at its back: Pace up by 2."
  },
  {
   "name": "Root Grip",
@@ -1347,7 +1611,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "root",
-  "status_chance": 0.3
+  "status_chance": 0.3,
+  "era": 1,
+  "desc": "Roots grip the foe. Often leaves it Rooted."
  },
  {
   "name": "Night Veil",
@@ -1360,7 +1626,9 @@
    "def": 1,
    "foc": 1
   },
-  "self": true
+  "self": true,
+  "era": 1,
+  "desc": "Wraps itself in night: Guard and Focus up."
  },
  {
   "name": "Quill Flick",
@@ -1368,7 +1636,9 @@
   "kind": "PHYSICAL",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "Flicks a quill. Ink gets everywhere."
  },
  {
   "name": "Blot Wave",
@@ -1378,7 +1648,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "daze",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A wave of ink blots. The foe may be left Dazed."
  },
  {
   "name": "Margin Lash",
@@ -1386,7 +1658,9 @@
   "kind": "PHYSICAL",
   "power": 90,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 1,
+  "desc": "A lash from the margin, where the notes go."
  },
  {
   "name": "Bell Tap",
@@ -1394,7 +1668,9 @@
   "kind": "FOCUS",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 1,
+  "desc": "Taps a bell. Somewhere, someone listens."
  },
  {
   "name": "Resound",
@@ -1402,7 +1678,9 @@
   "kind": "FOCUS",
   "power": 75,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A sound that comes back louder."
  },
  {
   "name": "Toll of Ages",
@@ -1410,7 +1688,9 @@
   "kind": "FOCUS",
   "power": 95,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 1,
+  "desc": "Every bell that ever rang, at once."
  },
  {
   "name": "Flake Rasp",
@@ -1418,7 +1698,9 @@
   "kind": "PHYSICAL",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 2,
+  "desc": "Rasps with a flaking edge. Tetanus not included."
  },
  {
   "name": "Oxide Haze",
@@ -1428,7 +1710,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "daze",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 2,
+  "desc": "A haze of red dust. The foe may be left Dazed."
  },
  {
   "name": "Seized Gear",
@@ -1436,7 +1720,9 @@
   "kind": "PHYSICAL",
   "power": 90,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 2,
+  "desc": "A gear that seized years ago, swung hard."
  },
  {
   "name": "Veil Tap",
@@ -1444,7 +1730,9 @@
   "kind": "FOCUS",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 2,
+  "desc": "A light touch from behind a veil."
  },
  {
   "name": "False Face",
@@ -1454,7 +1742,9 @@
   "accuracy": 0.95,
   "energy": 4,
   "status": "daze",
-  "status_chance": 0.2
+  "status_chance": 0.2,
+  "era": 2,
+  "desc": "Shows a friendly face, then strikes. May Daze."
  },
  {
   "name": "Masquerade",
@@ -1462,7 +1752,9 @@
   "kind": "FOCUS",
   "power": 90,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 2,
+  "desc": "A dance of masks. Nobody knows who hit whom."
  },
  {
   "name": "Etch Spit",
@@ -1470,7 +1762,9 @@
   "kind": "FOCUS",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 3,
+  "desc": "Spits something that etches. Do not ask what."
  },
  {
   "name": "Bite Bath",
@@ -1478,7 +1772,9 @@
   "kind": "PHYSICAL",
   "power": 45,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 3,
+  "desc": "A bite steeped in pickling vat."
  },
  {
   "name": "Sour Spray",
@@ -1486,7 +1782,9 @@
   "kind": "FOCUS",
   "power": 55,
   "accuracy": 1.0,
-  "energy": 3
+  "energy": 3,
+  "era": 3,
+  "desc": "A spray so sour the eyes water."
  },
  {
   "name": "Mordant Fang",
@@ -1494,7 +1792,9 @@
   "kind": "PHYSICAL",
   "power": 60,
   "accuracy": 0.95,
-  "energy": 3
+  "energy": 3,
+  "era": 3,
+  "desc": "A fang wet with mordant."
  },
  {
   "name": "Vat Surge",
@@ -1502,7 +1802,9 @@
   "kind": "FOCUS",
   "power": 75,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "era": 3,
+  "desc": "The whole vat surges at the foe."
  },
  {
   "name": "Corrode Claw",
@@ -1510,7 +1812,9 @@
   "kind": "PHYSICAL",
   "power": 80,
   "accuracy": 0.9,
-  "energy": 4
+  "energy": 4,
+  "era": 3,
+  "desc": "A claw that eats through plate."
  },
  {
   "name": "Vitriol Flood",
@@ -1520,7 +1824,9 @@
   "accuracy": 0.9,
   "energy": 6,
   "status": "daze",
-  "status_chance": 0.1
+  "status_chance": 0.1,
+  "era": 3,
+  "desc": "A flood of vitriol. May leave the foe Dazed."
  },
  {
   "name": "Plate Biter",
@@ -1528,7 +1834,9 @@
   "kind": "PHYSICAL",
   "power": 100,
   "accuracy": 0.85,
-  "energy": 6
+  "energy": 6,
+  "era": 3,
+  "desc": "Bites through armour plate and spits it out."
  },
  {
   "name": "Acid Deluge",
@@ -1537,7 +1845,9 @@
   "power": 115,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 3,
+  "desc": "A deluge of acid. Needs a turn after."
  },
  {
   "name": "Fume Veil",
@@ -1549,7 +1859,9 @@
   "stats": {
    "def": -1
   },
-  "self": false
+  "self": false,
+  "era": 3,
+  "desc": "Fumes that eat at the foe's Guard."
  },
  {
   "name": "Pickle Hide",
@@ -1562,7 +1874,9 @@
    "def": 1,
    "foc": 1
   },
-  "self": true
+  "self": true,
+  "era": 3,
+  "desc": "Pickles its own hide: Guard and Focus up."
  },
  {
   "name": "Rime Nip",
@@ -1570,7 +1884,9 @@
   "kind": "PHYSICAL",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 3,
+  "desc": "A nip with frosted teeth."
  },
  {
   "name": "Chill Puff",
@@ -1578,7 +1894,9 @@
   "kind": "FOCUS",
   "power": 45,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 3,
+  "desc": "A puff of cold breath."
  },
  {
   "name": "Sleet Dart",
@@ -1586,7 +1904,9 @@
   "kind": "PHYSICAL",
   "power": 55,
   "accuracy": 1.0,
-  "energy": 3
+  "energy": 3,
+  "era": 3,
+  "desc": "A dart of sleet."
  },
  {
   "name": "Hoar Breath",
@@ -1594,7 +1914,9 @@
   "kind": "FOCUS",
   "power": 60,
   "accuracy": 0.95,
-  "energy": 3
+  "energy": 3,
+  "era": 3,
+  "desc": "Breath that leaves frost on everything."
  },
  {
   "name": "Icicle Rake",
@@ -1602,7 +1924,9 @@
   "kind": "PHYSICAL",
   "power": 75,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "era": 3,
+  "desc": "Rakes the foe with icicles."
  },
  {
   "name": "Glaze Wave",
@@ -1610,7 +1934,9 @@
   "kind": "FOCUS",
   "power": 80,
   "accuracy": 0.9,
-  "energy": 4
+  "energy": 4,
+  "era": 3,
+  "desc": "A wave that glazes everything in ice."
  },
  {
   "name": "Rime Shard",
@@ -1618,7 +1944,9 @@
   "kind": "PHYSICAL",
   "power": 95,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 3,
+  "desc": "A shard of old rime, sharp as spite."
  },
  {
   "name": "Moor Blizzard",
@@ -1629,7 +1957,9 @@
   "energy": 6,
   "status": "daze",
   "status_chance": 0.1,
-  "target": "foes"
+  "target": "foes",
+  "era": 3,
+  "desc": "A blizzard over the moor and every foe. May Daze."
  },
  {
   "name": "Deep Freeze",
@@ -1638,7 +1968,9 @@
   "power": 115,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 3,
+  "desc": "Freezes the foe through. Needs a turn after."
  },
  {
   "name": "Frost Coat",
@@ -1650,7 +1982,9 @@
   "stats": {
    "def": 2
   },
-  "self": true
+  "self": true,
+  "era": 3,
+  "desc": "A coat of frost: Guard up by 2."
  },
  {
   "name": "Numbing Mist",
@@ -1661,7 +1995,9 @@
   "energy": 2,
   "stat": "spd",
   "stages": -1,
-  "self": false
+  "self": false,
+  "era": 3,
+  "desc": "A numbing mist that slows the foe."
  },
  {
   "name": "Coin Toss",
@@ -1669,7 +2005,9 @@
   "kind": "PHYSICAL",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 4,
+  "desc": "Throws a coin. Heads it hurts, tails it hurts."
  },
  {
   "name": "Leaf of Gold",
@@ -1677,7 +2015,9 @@
   "kind": "FOCUS",
   "power": 45,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 4,
+  "desc": "A leaf of gold, thin and sharp."
  },
  {
   "name": "Gilded Jab",
@@ -1685,7 +2025,9 @@
   "kind": "PHYSICAL",
   "power": 55,
   "accuracy": 1.0,
-  "energy": 3
+  "energy": 3,
+  "era": 4,
+  "desc": "A jab with a gilded knuckle."
  },
  {
   "name": "Shine Burst",
@@ -1693,7 +2035,9 @@
   "kind": "FOCUS",
   "power": 60,
   "accuracy": 0.95,
-  "energy": 3
+  "energy": 3,
+  "era": 4,
+  "desc": "A burst of polished shine."
  },
  {
   "name": "Bullion Bash",
@@ -1701,7 +2045,9 @@
   "kind": "PHYSICAL",
   "power": 75,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "era": 4,
+  "desc": "Hits with a bar of bullion. Money talks."
  },
  {
   "name": "Gold Glare",
@@ -1709,7 +2055,9 @@
   "kind": "FOCUS",
   "power": 80,
   "accuracy": 0.9,
-  "energy": 4
+  "energy": 4,
+  "era": 4,
+  "desc": "A glare of gold that hurts to look at."
  },
  {
   "name": "Hoard Crush",
@@ -1717,7 +2065,9 @@
   "kind": "PHYSICAL",
   "power": 95,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 4,
+  "desc": "Drops a whole hoard on the foe."
  },
  {
   "name": "Treasure Flare",
@@ -1727,7 +2077,9 @@
   "accuracy": 0.85,
   "energy": 6,
   "status": "daze",
-  "status_chance": 0.1
+  "status_chance": 0.1,
+  "era": 4,
+  "desc": "A flare off a buried treasure. May Daze."
  },
  {
   "name": "Golden Span",
@@ -1736,7 +2088,9 @@
   "power": 115,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 4,
+  "desc": "A span of gold, swung like a bridge. Needs a turn after."
  },
  {
   "name": "Gild Armour",
@@ -1749,7 +2103,9 @@
    "def": 1,
    "atk": 1
   },
-  "self": true
+  "self": true,
+  "era": 4,
+  "desc": "Gilds its armour: Guard and Might up."
  },
  {
   "name": "Dazzle Coin",
@@ -1762,7 +2118,9 @@
    "atk": -1,
    "foc": -1
   },
-  "self": false
+  "self": false,
+  "era": 4,
+  "desc": "Flips a dazzling coin: foe's Might and Focus drop."
  },
  {
   "name": "Noon Peck",
@@ -1770,7 +2128,9 @@
   "kind": "PHYSICAL",
   "power": 40,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 4,
+  "desc": "A peck at the hottest hour."
  },
  {
   "name": "High Glint",
@@ -1778,7 +2138,9 @@
   "kind": "FOCUS",
   "power": 45,
   "accuracy": 1.0,
-  "energy": 2
+  "energy": 2,
+  "era": 4,
+  "desc": "A glint from high above."
  },
  {
   "name": "Skyward Kick",
@@ -1786,7 +2148,9 @@
   "kind": "PHYSICAL",
   "power": 55,
   "accuracy": 1.0,
-  "energy": 3
+  "energy": 3,
+  "era": 4,
+  "desc": "A kick that starts at the sky."
  },
  {
   "name": "Apex Ray",
@@ -1794,7 +2158,9 @@
   "kind": "FOCUS",
   "power": 60,
   "accuracy": 0.95,
-  "energy": 3
+  "energy": 3,
+  "era": 4,
+  "desc": "A ray from the top of the sky."
  },
  {
   "name": "Overhead Strike",
@@ -1802,7 +2168,9 @@
   "kind": "PHYSICAL",
   "power": 75,
   "accuracy": 0.95,
-  "energy": 4
+  "energy": 4,
+  "era": 4,
+  "desc": "Strikes straight down from overhead."
  },
  {
   "name": "Sunpeak Beam",
@@ -1810,7 +2178,9 @@
   "kind": "FOCUS",
   "power": 80,
   "accuracy": 0.9,
-  "energy": 4
+  "energy": 4,
+  "era": 4,
+  "desc": "The beam of the sun at its peak."
  },
  {
   "name": "Summit Drop",
@@ -1818,7 +2188,9 @@
   "kind": "PHYSICAL",
   "power": 95,
   "accuracy": 0.9,
-  "energy": 6
+  "energy": 6,
+  "era": 4,
+  "desc": "Drops from the summit, all of it."
  },
  {
   "name": "Meridian Blaze",
@@ -1829,7 +2201,9 @@
   "energy": 6,
   "status": "daze",
   "status_chance": 0.1,
-  "target": "foes"
+  "target": "foes",
+  "era": 4,
+  "desc": "A blaze along the meridian over every foe. May Daze."
  },
  {
   "name": "Height of Noon",
@@ -1838,7 +2212,9 @@
   "power": 115,
   "accuracy": 0.85,
   "energy": 7,
-  "cooldown": 1
+  "cooldown": 1,
+  "era": 4,
+  "desc": "The full weight of noon. Needs a turn after."
  },
  {
   "name": "Rise Above",
@@ -1850,7 +2226,9 @@
   "stat": "spd",
   "stages": 1,
   "self": true,
-  "stages_full_hp": 2
+  "stages_full_hp": 2,
+  "era": 4,
+  "desc": "Rises above it all: Pace up, more at full Vigor."
  },
  {
   "name": "Clear Sky",
@@ -1862,7 +2240,2599 @@
   "stats": {
    "foc": 2
   },
-  "self": true
+  "self": true,
+  "era": 4,
+  "desc": "A clear sky clears the mind: Focus up by 2."
+ },
+ {
+  "name": "Tinder Flick",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "Flicks a bit of tinder at the foe. It was going to burn anyway."
+ },
+ {
+  "name": "Soot Smudge",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "daze",
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "Smears soot in the foe's eyes. Worse if it can't see straight already."
+ },
+ {
+  "name": "Pyre Waltz",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 5,
+  "stat": "foc",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A slow dance around a fire someone else built. May raise Focus."
+ },
+ {
+  "name": "Hearth Collapse",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6,
+  "status": "scorch",
+  "status_chance": 0.3,
+  "era": 1,
+  "desc": "The whole hearth comes down, chimney and all. Often leaves a Scorch."
+ },
+ {
+  "name": "Ember Lash",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "status": "scorch",
+  "status_chance": 0.1,
+  "era": 1,
+  "desc": "A lash of glowing rope. Rarely leaves a Scorch."
+ },
+ {
+  "name": "Bonfire Body",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 85,
+  "accuracy": 0.9,
+  "energy": 4,
+  "effect": "recoil",
+  "effect_amount": 0.2,
+  "era": 1,
+  "desc": "Throws its burning body at the foe. Everyone gets warm."
+ },
+ {
+  "name": "Smoulder",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "scorch",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "Lets the foe catch, slowly. It won't notice until it's too late."
+ },
+ {
+  "name": "Banked Coals",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 0,
+  "effect": "energy_gain",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Banks its coals for later: gains 3 Energy."
+ },
+ {
+  "name": "Charcoal Grin",
+  "element": "EMBER",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "atk": 1,
+   "foc": 1
+  },
+  "self": true,
+  "era": 3,
+  "desc": "Grins with blackened teeth: Might and Focus up."
+ },
+ {
+  "name": "Kiln Rush",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "Rushes in with the heat of a kiln door opening."
+ },
+ {
+  "name": "Last Ember",
+  "element": "EMBER",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "foc": -2
+  },
+  "era": 5,
+  "desc": "Burns the last of its ember in one go. Focus drops hard after."
+ },
+ {
+  "name": "Pitch Torch",
+  "element": "EMBER",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.95,
+  "energy": 6,
+  "status": "scorch",
+  "status_chance": 0.1,
+  "era": 3,
+  "desc": "A torch dipped in pitch. It does not go out politely."
+ },
+ {
+  "name": "Puddle Jump",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "soak",
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "Jumps in a puddle right next to the foe. Worse if it's wet already."
+ },
+ {
+  "name": "Brine Pellet",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "A pellet of hard brine, flicked."
+ },
+ {
+  "name": "Riptide Coil",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 6,
+  "effect": "drain",
+  "effect_amount": 0.25,
+  "era": 1,
+  "desc": "Coils water around the foe and takes back a quarter."
+ },
+ {
+  "name": "Drowned Bell",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.9,
+  "energy": 6,
+  "stat": "foc",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "A bell rings from under the water. Nobody likes that. May lower Focus."
+ },
+ {
+  "name": "Wave Shoulder",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "Shoulders into the foe like a wave on a pier."
+ },
+ {
+  "name": "Wreck Diver",
+  "element": "TIDE",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.9,
+  "energy": 6,
+  "status": "soak",
+  "status_chance": 0.2,
+  "era": 3,
+  "desc": "Dives at the foe from a wreck it calls home. May Soak."
+ },
+ {
+  "name": "Fog Bank",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "spd": 1
+  },
+  "self": true,
+  "era": 1,
+  "desc": "Rolls in like coastal fog: Guard and Pace up."
+ },
+ {
+  "name": "Low Water",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "effect": "energy_burn",
+  "effect_amount": 2,
+  "era": 1,
+  "desc": "The tide goes out on the foe: burns 2 of its Energy."
+ },
+ {
+  "name": "Rainwash",
+  "element": "TIDE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "cure_team",
+  "era": 1,
+  "desc": "A cold rain washes the whole team clean of status."
+ },
+ {
+  "name": "Harbour Swell",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "A swell that lifts every boat in the harbour, and the foe."
+ },
+ {
+  "name": "Abyss Hymn",
+  "element": "TIDE",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 0.9,
+  "energy": 8,
+  "target": "foes",
+  "status": "soak",
+  "status_chance": 0.2,
+  "era": 5,
+  "desc": "The deep sings to every foe. Nobody asked it to. May Soak."
+ },
+ {
+  "name": "Thistle Puff",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "Blows thistle fluff at the foe. It itches for days."
+ },
+ {
+  "name": "Spore Dart",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "root",
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "A dart of spores. Worse on a Rooted foe."
+ },
+ {
+  "name": "Canopy Crash",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.9,
+  "energy": 6,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "The whole canopy falls on the foe. May slow it."
+ },
+ {
+  "name": "Nettle Rub",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 4,
+  "status": "root",
+  "status_chance": 0.1,
+  "era": 1,
+  "desc": "Rubs nettles in where it hurts. Rarely Roots."
+ },
+ {
+  "name": "Overgrowth",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "foc": 1
+  },
+  "self": true,
+  "era": 1,
+  "desc": "Grows over itself: Guard and Focus up."
+ },
+ {
+  "name": "Compost Pact",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "self_cost",
+  "effect_amount": 0.25,
+  "stats": {
+   "atk": 2
+  },
+  "self": true,
+  "era": 3,
+  "desc": "Feeds a quarter of its Vigor to the soil: Might up by 2."
+ },
+ {
+  "name": "Pollen Choir",
+  "element": "BLOOM",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "cure_team",
+  "era": 1,
+  "desc": "A choir of pollen. Everyone sneezes, everyone is cured."
+ },
+ {
+  "name": "Old Oak",
+  "element": "BLOOM",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.95,
+  "energy": 5,
+  "era": 3,
+  "desc": "Swings like an old oak that has stopped caring."
+ },
+ {
+  "name": "Verdant End",
+  "element": "BLOOM",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 8,
+  "effect": "drain",
+  "effect_amount": 0.25,
+  "era": 5,
+  "desc": "Everything is green in the end. Takes back a quarter."
+ },
+ {
+  "name": "Spark Prod",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "jolt",
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "Prods the foe with a spark. Worse if it's Jolted already."
+ },
+ {
+  "name": "Live Wire",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "jolt",
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A live wire, held by the wrong end. May Jolt."
+ },
+ {
+  "name": "Ball Lightning",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 1.0,
+  "energy": 5,
+  "era": 1,
+  "desc": "A ball of lightning that rolls straight at the foe."
+ },
+ {
+  "name": "Thunderhead",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 7,
+  "target": "foes",
+  "status": "jolt",
+  "status_chance": 0.1,
+  "era": 1,
+  "desc": "A thunderhead over every foe. May Jolt."
+ },
+ {
+  "name": "Fuse Box",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "foc": 1,
+   "spd": 1
+  },
+  "self": true,
+  "era": 1,
+  "desc": "Flips its own breakers: Focus and Pace up."
+ },
+ {
+  "name": "Dynamo Hum",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 0,
+  "effect": "energy_gain",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Hums like a dynamo: gains 3 Energy."
+ },
+ {
+  "name": "Brownout",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "atk": -1,
+   "spd": -1
+  },
+  "self": false,
+  "era": 3,
+  "desc": "Drops the foe's power: Might and Pace down."
+ },
+ {
+  "name": "Pylon Fall",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 4,
+  "effect": "recoil",
+  "effect_amount": 0.2,
+  "era": 1,
+  "desc": "Drops a whole pylon on the foe. Takes some recoil."
+ },
+ {
+  "name": "Crackle Jab",
+  "element": "VOLT",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3,
+  "era": 1,
+  "desc": "A quick jab that crackles."
+ },
+ {
+  "name": "Arc Weld",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "def",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 3,
+  "desc": "Welds a seam into the foe. May lower its Guard."
+ },
+ {
+  "name": "Grid Collapse",
+  "element": "VOLT",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "foc": -2
+  },
+  "era": 5,
+  "desc": "Takes the whole grid down with it. Focus drops hard after."
+ },
+ {
+  "name": "Static Kiss",
+  "element": "VOLT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "jolt",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "A small kiss with a big spark. The foe is Jolted."
+ },
+ {
+  "name": "Grit Spray",
+  "element": "STONE",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "Sprays grit at the foe. Gets in the teeth."
+ },
+ {
+  "name": "Cave Echo",
+  "element": "STONE",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "A boom from a deep cave. May slow the foe."
+ },
+ {
+  "name": "Ore Pulse",
+  "element": "STONE",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 4,
+  "era": 1,
+  "desc": "A pulse from the ore deep below."
+ },
+ {
+  "name": "Strata Burst",
+  "element": "STONE",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "Every layer of rock bursts at once. May raise Guard."
+ },
+ {
+  "name": "Dust Devil",
+  "element": "STONE",
+  "kind": "FOCUS",
+  "power": 85,
+  "accuracy": 0.95,
+  "energy": 6,
+  "target": "foes",
+  "era": 3,
+  "desc": "A spinning devil of dust over every foe."
+ },
+ {
+  "name": "Boulder Roll",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "era": 1,
+  "desc": "Rolls a boulder downhill. The foe is downhill."
+ },
+ {
+  "name": "Sediment",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_reset",
+  "era": 1,
+  "desc": "Lets everything settle: all stages on both sides go back to 0."
+ },
+ {
+  "name": "Bedrock",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "atk": 1
+  },
+  "self": true,
+  "era": 1,
+  "desc": "Plants itself like bedrock: Guard and Might up."
+ },
+ {
+  "name": "Mountain Fall",
+  "element": "STONE",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 6,
+  "self_stages": {
+   "foc": -1
+  },
+  "era": 5,
+  "desc": "A mountain falls once in an age. This is the age."
+ },
+ {
+  "name": "Quarry Hymn",
+  "element": "STONE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "cure_team",
+  "era": 3,
+  "desc": "A work song from the quarry. The whole team shakes off its status."
+ },
+ {
+  "name": "Puff of Air",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "A puff of air. Polite, until it isn't."
+ },
+ {
+  "name": "Whistle Wind",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "drowse",
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "A whistle that cuts through sleep. Worse on a Drowsy foe."
+ },
+ {
+  "name": "Gust Ladder",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "spd",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "Climbs a ladder of gusts and kicks down. May raise Pace."
+ },
+ {
+  "name": "Weathervane",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 1.0,
+  "energy": 5,
+  "era": 1,
+  "desc": "Spins like a weathervane and strikes whichever way it points."
+ },
+ {
+  "name": "Cyclone Wheel",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "target": "foes",
+  "era": 1,
+  "desc": "A wheel of wind that rolls over every foe."
+ },
+ {
+  "name": "Shear Wind",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.95,
+  "energy": 6,
+  "ignore_stages": true,
+  "era": 3,
+  "desc": "A shear wind that cuts past raised defences."
+ },
+ {
+  "name": "Calm Eye",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_reset",
+  "era": 1,
+  "desc": "Steps into the calm eye: all stages on both sides go back to 0."
+ },
+ {
+  "name": "Second Wind",
+  "element": "GALE",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 0,
+  "effect": "energy_gain",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Catches its second wind: gains 3 Energy."
+ },
+ {
+  "name": "Jet Stream",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 115,
+  "accuracy": 0.9,
+  "energy": 6,
+  "self_stages": {
+   "spd": -1
+  },
+  "era": 5,
+  "desc": "Rides the jet stream high and comes down hard. Pace drops after."
+ },
+ {
+  "name": "Pinwheel",
+  "element": "GALE",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "priority": 1,
+  "era": 1,
+  "desc": "A small pinwheel spin that always goes first."
+ },
+ {
+  "name": "Lantern Swing",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "Swings a lantern at the foe. The light was only the start."
+ },
+ {
+  "name": "Halo Kick",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 5,
+  "status": "daze",
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A kick with a halo on top. May Daze."
+ },
+ {
+  "name": "Lamp Oil",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "A splash of hot lamp oil. Careful with that."
+ },
+ {
+  "name": "Searchlight",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 1.0,
+  "energy": 5,
+  "ignore_daze": true,
+  "era": 1,
+  "desc": "Finds the foe no matter what. Ignores its own Daze."
+ },
+ {
+  "name": "Vigil Light",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "cure_team",
+  "era": 1,
+  "desc": "Keeps a vigil light burning: the whole team is cured."
+ },
+ {
+  "name": "Mirror Shine",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "atk": -1,
+   "foc": -1
+  },
+  "self": false,
+  "era": 3,
+  "desc": "Shines a mirror in the foe's face: Might and Focus down."
+ },
+ {
+  "name": "Clear Glass",
+  "element": "LUMEN",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_reset",
+  "era": 1,
+  "desc": "Wipes the glass clean: all stages on both sides go back to 0."
+ },
+ {
+  "name": "Solar Choir",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 8,
+  "target": "foes",
+  "status": "daze",
+  "status_chance": 0.1,
+  "era": 5,
+  "desc": "A choir of suns over every foe. May Daze."
+ },
+ {
+  "name": "Gleam Edge",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.95,
+  "energy": 6,
+  "stat": "atk",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 3,
+  "desc": "An edge of pure gleam. May raise Might."
+ },
+ {
+  "name": "Shadow Whisper",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "Whispers something awful. True, though."
+ },
+ {
+  "name": "Dread Note",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "atk",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "Leaves a note that says it knows. May lower Might."
+ },
+ {
+  "name": "Nightfall",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.9,
+  "energy": 6,
+  "status": "drowse",
+  "status_chance": 0.1,
+  "era": 1,
+  "desc": "Night falls early, and only on the foe. Rarely leaves it Drowsy."
+ },
+ {
+  "name": "Void Pulse",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1,
+  "era": 5,
+  "desc": "A pulse from where nothing is. Needs a turn after."
+ },
+ {
+  "name": "Backstab",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 5,
+  "vs_status": "stage_down",
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "Strikes where the foe trusted it. Worse on a weakened foe."
+ },
+ {
+  "name": "Grave Dust",
+  "element": "UMBRA",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "daze",
+  "status_chance": 1.0,
+  "era": 3,
+  "desc": "Blows grave dust in the foe's face. It is Dazed, and offended."
+ },
+ {
+  "name": "Debt Collector",
+  "element": "UMBRA",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 6,
+  "effect": "energy_drain",
+  "effect_amount": 1,
+  "era": 3,
+  "desc": "Comes to collect. Takes 1 Energy as interest."
+ },
+ {
+  "name": "Pall",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 1,
+  "desc": "Drops a pall over the foe."
+ },
+ {
+  "name": "Ink Spatter",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "Spatters ink. Somebody will have to clean that."
+ },
+ {
+  "name": "Nib Prick",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "priority": 1,
+  "era": 1,
+  "desc": "Pricks with a nib before anyone sees it move."
+ },
+ {
+  "name": "Ledger Slap",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "era": 1,
+  "desc": "Slaps the foe with a heavy ledger. Every debt in it is real."
+ },
+ {
+  "name": "Smudge",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "foc",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "Smudges the foe's thoughts. May lower Focus."
+ },
+ {
+  "name": "Seal and Sign",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 5,
+  "stat": "def",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "Stamps a seal on the foe. May lower Guard."
+ },
+ {
+  "name": "Inkwell Flood",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 5,
+  "status": "daze",
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "Tips the inkwell over the foe. May Daze."
+ },
+ {
+  "name": "Redaction",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "ignore_stages": true,
+  "era": 1,
+  "desc": "Blacks out the foe's defences. Ignores raised stages."
+ },
+ {
+  "name": "Fine Print",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 100,
+  "accuracy": 0.9,
+  "energy": 6,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "Hits with the fine print nobody read. May slow the foe."
+ },
+ {
+  "name": "Final Draft",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 6,
+  "self_stages": {
+   "foc": -1
+  },
+  "era": 5,
+  "desc": "Writes the ending. Focus drops after."
+ },
+ {
+  "name": "Blotted Page",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "daze",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "Holds up a blotted page. The foe is Dazed trying to read it."
+ },
+ {
+  "name": "Rewrite",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_reset",
+  "era": 1,
+  "desc": "Rewrites the page: all stages on both sides go back to 0."
+ },
+ {
+  "name": "Footnote",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "heal_block",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Adds a footnote that the foe can't heal for 3 turns."
+ },
+ {
+  "name": "Quill Sharpen",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stat": "atk",
+  "stages": 1,
+  "self": true,
+  "stages_full_hp": 2,
+  "era": 1,
+  "desc": "Sharpens its quill: Might up, more at full Vigor."
+ },
+ {
+  "name": "Margin Note",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "foc": 1,
+   "def": 1
+  },
+  "self": true,
+  "era": 1,
+  "desc": "Writes itself a margin note: Focus and Guard up."
+ },
+ {
+  "name": "Errata",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 5,
+  "vs_status": "*",
+  "vs_mult": 1.3,
+  "era": 1,
+  "desc": "Corrects the foe. Worse if something is already wrong with it."
+ },
+ {
+  "name": "Ink Trap",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "daze"
+  },
+  "era": 1,
+  "desc": "Leaves wet ink on the foe's side. Newcomers slip and get Dazed."
+ },
+ {
+  "name": "Spine Crack",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 85,
+  "accuracy": 0.95,
+  "energy": 5,
+  "era": 1,
+  "desc": "Cracks a book's spine. Or something's."
+ },
+ {
+  "name": "Palimpsest",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 5,
+  "effect": "drain",
+  "effect_amount": 0.25,
+  "era": 1,
+  "desc": "Scrapes the foe clean and writes over it. Heals a quarter."
+ },
+ {
+  "name": "Ink Rain",
+  "element": "INK",
+  "kind": "FOCUS",
+  "power": 85,
+  "accuracy": 0.95,
+  "energy": 6,
+  "target": "foes",
+  "era": 1,
+  "desc": "It rains ink on every foe. Nobody has an umbrella for this."
+ },
+ {
+  "name": "Censor",
+  "element": "INK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 3,
+  "effect": "energy_tax",
+  "effect_amount": 2,
+  "era": 1,
+  "desc": "Censors the foe: its arts cost more for 2 turns."
+ },
+ {
+  "name": "Bloodied Quill",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1,
+  "era": 5,
+  "desc": "A quill that has signed too much. Needs a turn after."
+ },
+ {
+  "name": "Hum Back",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "Hums the foe's own noise back at it."
+ },
+ {
+  "name": "Clapper",
+  "element": "ECHO",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 1,
+  "desc": "Hits like a bell clapper. Ding."
+ },
+ {
+  "name": "Knell",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "atk",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "A slow knell. May lower Might."
+ },
+ {
+  "name": "Rebound Peal",
+  "element": "ECHO",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 1,
+  "desc": "A peal that bounces off the user and into the foe. May raise Guard."
+ },
+ {
+  "name": "Belfry Drop",
+  "element": "ECHO",
+  "kind": "PHYSICAL",
+  "power": 80,
+  "accuracy": 0.95,
+  "energy": 5,
+  "era": 1,
+  "desc": "Drops from the belfry. The bell comes too."
+ },
+ {
+  "name": "Choir Loft",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 85,
+  "accuracy": 0.95,
+  "energy": 6,
+  "target": "foes",
+  "era": 1,
+  "desc": "The whole choir loft sings at every foe."
+ },
+ {
+  "name": "Hollow Tone",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "status": "daze",
+  "status_chance": 0.2,
+  "era": 1,
+  "desc": "A tone so hollow the foe's head rings. May Daze."
+ },
+ {
+  "name": "Great Bell",
+  "element": "ECHO",
+  "kind": "PHYSICAL",
+  "power": 100,
+  "accuracy": 0.9,
+  "energy": 5,
+  "effect": "recoil",
+  "effect_amount": 0.2,
+  "era": 1,
+  "desc": "Swings the great bell. It swings back."
+ },
+ {
+  "name": "Last Toll",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 6,
+  "self_stages": {
+   "foc": -1
+  },
+  "era": 5,
+  "desc": "The last bell anyone will hear. Focus drops after."
+ },
+ {
+  "name": "Ringing Ears",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "daze",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "Leaves the foe's ears ringing. It is Dazed."
+ },
+ {
+  "name": "Lullaby Echo",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.8,
+  "energy": 3,
+  "status": "drowse",
+  "status_chance": 1.0,
+  "era": 1,
+  "desc": "A lullaby that comes back from every wall. The foe dozes off."
+ },
+ {
+  "name": "Tuning Fork",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stat": "foc",
+  "stages": 1,
+  "self": true,
+  "stages_full_hp": 2,
+  "era": 1,
+  "desc": "Strikes a tuning fork: Focus up, more at full Vigor."
+ },
+ {
+  "name": "Silence Please",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_reset",
+  "era": 1,
+  "desc": "Asks for silence: all stages on both sides go back to 0."
+ },
+ {
+  "name": "Funeral March",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "atk": 1
+  },
+  "self": true,
+  "era": 1,
+  "desc": "Marches slowly and surely: Guard and Might up."
+ },
+ {
+  "name": "Hymn of Rest",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "cure_team",
+  "era": 1,
+  "desc": "A hymn for rest. The whole team is cured of status."
+ },
+ {
+  "name": "Reverb",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 1.0,
+  "energy": 3,
+  "delay": 1,
+  "era": 1,
+  "desc": "A sound that lands a turn late, but lands."
+ },
+ {
+  "name": "Feedback",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 5,
+  "effect": "energy_burn",
+  "effect_amount": 1,
+  "era": 1,
+  "desc": "A shriek of feedback that burns 1 Energy."
+ },
+ {
+  "name": "Toll Debt",
+  "element": "ECHO",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.95,
+  "energy": 6,
+  "vs_status": "daze",
+  "vs_mult": 1.5,
+  "era": 1,
+  "desc": "Every toll is owed. Worse on a Dazed foe."
+ },
+ {
+  "name": "Bell Snare",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "hp": 0.1
+  },
+  "era": 1,
+  "desc": "Hangs little bells on the foe's side. Newcomers get cut on them."
+ },
+ {
+  "name": "Echo Chamber",
+  "element": "ECHO",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 0,
+  "effect": "energy_gain",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Hears itself think: gains 3 Energy."
+ },
+ {
+  "name": "Thousand Bells",
+  "element": "ECHO",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1,
+  "era": 5,
+  "desc": "A thousand bells at once. Needs a turn after."
+ },
+ {
+  "name": "Tetanus Nick",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 3,
+  "vs_status": "*",
+  "vs_mult": 1.3,
+  "era": 2,
+  "desc": "A nick with a rusty edge. Worse on a foe already ailing."
+ },
+ {
+  "name": "Red Flake",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 2,
+  "desc": "A flake of red rust, flicked."
+ },
+ {
+  "name": "Hinge Snap",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2,
+  "era": 2,
+  "desc": "A hinge snaps shut on the foe. May slow it."
+ },
+ {
+  "name": "Corrosion Cloud",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 5,
+  "stat": "def",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 2,
+  "desc": "A cloud that eats metal and patience. May lower Guard."
+ },
+ {
+  "name": "Anchor Chain",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "status": "root",
+  "status_chance": 0.2,
+  "era": 2,
+  "desc": "Wraps the foe in an anchor chain. May Root it."
+ },
+ {
+  "name": "Scrap Storm",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6,
+  "target": "foes",
+  "era": 2,
+  "desc": "A storm of scrap over every foe."
+ },
+ {
+  "name": "Wrecking Hulk",
+  "element": "RUST",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1,
+  "era": 2,
+  "desc": "Rams with a rusted hulk. Needs a turn after."
+ },
+ {
+  "name": "Rust Bloom",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 3,
+  "stats": {
+   "def": -2
+  },
+  "self": false,
+  "era": 2,
+  "desc": "Rust blooms on the foe: its Guard drops by 2."
+ },
+ {
+  "name": "Oil Can",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 5,
+  "effect": "heal_self",
+  "effect_amount": 0.4,
+  "era": 2,
+  "desc": "A drop of oil in the joints. Heals 40%."
+ },
+ {
+  "name": "Scrapyard",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "hp": 0.1
+  },
+  "era": 2,
+  "desc": "Scatters scrap on the foe's side. Newcomers cut themselves."
+ },
+ {
+  "name": "Riveted",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 2
+  },
+  "self": true,
+  "era": 2,
+  "desc": "Rivets itself shut: Guard up by 2."
+ },
+ {
+  "name": "Old Machine",
+  "element": "RUST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 0,
+  "effect": "energy_gain",
+  "effect_amount": 3,
+  "era": 2,
+  "desc": "An old machine coughs into life: gains 3 Energy."
+ },
+ {
+  "name": "Iron Lung",
+  "element": "RUST",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 6,
+  "self_stages": {
+   "foc": -2
+  },
+  "era": 5,
+  "desc": "Breathes out a lungful of iron. Focus drops hard after."
+ },
+ {
+  "name": "Smile Wide",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 2,
+  "desc": "Smiles too wide. The foe flinches."
+ },
+ {
+  "name": "Sleight",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 45,
+  "accuracy": 1.0,
+  "energy": 2,
+  "priority": 1,
+  "era": 2,
+  "desc": "A sleight of hand. It hit before you looked."
+ },
+ {
+  "name": "Two Faces",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 5,
+  "vs_status": "stage_down",
+  "vs_mult": 1.5,
+  "era": 2,
+  "desc": "Shows one face, strikes with the other. Worse on a weakened foe."
+ },
+ {
+  "name": "Charade",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 5,
+  "status": "daze",
+  "status_chance": 0.2,
+  "era": 2,
+  "desc": "A charade nobody understands. May Daze."
+ },
+ {
+  "name": "Jester Fall",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.95,
+  "energy": 5,
+  "era": 2,
+  "desc": "A jester's tumble that lands on the foe."
+ },
+ {
+  "name": "Grand Farce",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6,
+  "target": "foes",
+  "era": 2,
+  "desc": "A farce staged for every foe. Nobody laughs."
+ },
+ {
+  "name": "Curtain Call",
+  "element": "MASK",
+  "kind": "PHYSICAL",
+  "power": 115,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1,
+  "era": 2,
+  "desc": "Takes a bow, then the foe. Needs a turn after."
+ },
+ {
+  "name": "Borrowed Face",
+  "element": "MASK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "stage_steal",
+  "era": 2,
+  "desc": "Borrows the foe's best stage, and its face."
+ },
+ {
+  "name": "Crocodile Tears",
+  "element": "MASK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "atk": -2
+  },
+  "self": false,
+  "era": 2,
+  "desc": "Weeps until the foe feels bad: Might down by 2."
+ },
+ {
+  "name": "Hidden Knife",
+  "element": "MASK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "atk": 2,
+   "def": -1
+  },
+  "self": true,
+  "era": 2,
+  "desc": "Hides a knife behind a smile: Might up by 2, Guard down."
+ },
+ {
+  "name": "Pass the Blame",
+  "element": "MASK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "status_shift",
+  "era": 2,
+  "desc": "Hands its own status to the foe. It was never its fault."
+ },
+ {
+  "name": "Stage Fright",
+  "element": "MASK",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 3,
+  "status": "daze",
+  "status_chance": 1.0,
+  "era": 2,
+  "desc": "Gives the foe stage fright. It is Dazed."
+ },
+ {
+  "name": "Unmasked",
+  "element": "MASK",
+  "kind": "FOCUS",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 6,
+  "self_stages": {
+   "def": -1
+  },
+  "era": 5,
+  "desc": "Takes the mask off. Nobody wanted to see that. Guard drops after."
+ },
+ {
+  "name": "Fizzle Bite",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "*",
+  "vs_mult": 1.3,
+  "era": 3,
+  "desc": "A bite that fizzes. Worse on a foe already ailing."
+ },
+ {
+  "name": "Lye Splash",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "def",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2,
+  "era": 3,
+  "desc": "A splash of lye. May lower Guard."
+ },
+ {
+  "name": "Brine Pickle",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 65,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 3,
+  "desc": "Pickles the foe a little. Then a lot."
+ },
+ {
+  "name": "Etched Fang",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.95,
+  "energy": 6,
+  "stat": "def",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 3,
+  "desc": "A fang etched to a fine edge. May lower Guard."
+ },
+ {
+  "name": "Sulphur Sigh",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 5,
+  "status": "daze",
+  "status_chance": 0.1,
+  "era": 3,
+  "desc": "A sigh that smells of eggs and regret. May Daze."
+ },
+ {
+  "name": "Tannery Pit",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 85,
+  "accuracy": 0.95,
+  "energy": 6,
+  "target": "foes",
+  "era": 3,
+  "desc": "Opens a tannery pit under every foe."
+ },
+ {
+  "name": "Dissolve",
+  "element": "ACID",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_reset",
+  "era": 3,
+  "desc": "Dissolves every change: all stages on both sides go back to 0."
+ },
+ {
+  "name": "Acid Bath",
+  "element": "ACID",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.9,
+  "energy": 2,
+  "stats": {
+   "def": -1,
+   "foc": -1
+  },
+  "self": false,
+  "era": 3,
+  "desc": "Runs the foe a bath: Guard and Focus down."
+ },
+ {
+  "name": "Vinegar Trap",
+  "element": "ACID",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "stage": {
+    "def": -1
+   }
+  },
+  "era": 3,
+  "desc": "Spills vinegar on the foe's side. Newcomers lose Guard."
+ },
+ {
+  "name": "Ferment",
+  "element": "ACID",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 4,
+  "effect": "heal_self",
+  "effect_amount": 0.2,
+  "mend": 3,
+  "era": 3,
+  "desc": "Lets itself ferment: heals now and for 3 turns."
+ },
+ {
+  "name": "Sour Turn",
+  "element": "ACID",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "self_cost",
+  "effect_amount": 0.25,
+  "stats": {
+   "foc": 2
+  },
+  "self": true,
+  "era": 3,
+  "desc": "Turns a quarter of its Vigor sour: Focus up by 2."
+ },
+ {
+  "name": "Etching",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "ignore_stages": true,
+  "era": 3,
+  "desc": "Etches straight through raised defences."
+ },
+ {
+  "name": "Caustic Rain",
+  "element": "ACID",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 8,
+  "target": "foes",
+  "stat": "def",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.1,
+  "era": 5,
+  "desc": "A caustic rain over every foe. May lower Guard."
+ },
+ {
+  "name": "Pickled Punch",
+  "element": "ACID",
+  "kind": "PHYSICAL",
+  "power": 55,
+  "accuracy": 1.0,
+  "energy": 3,
+  "era": 3,
+  "desc": "A punch that has been sitting in brine for years."
+ },
+ {
+  "name": "Frostbite",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.2,
+  "era": 3,
+  "desc": "A bite that leaves the toes numb. May slow the foe."
+ },
+ {
+  "name": "Snow Dust",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "era": 3,
+  "desc": "Throws a handful of snow dust. Cold, mostly."
+ },
+ {
+  "name": "Black Ice",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 5,
+  "vs_status": "soak",
+  "vs_mult": 1.5,
+  "era": 3,
+  "desc": "Black ice under the foe. Worse if it's wet."
+ },
+ {
+  "name": "Hailstone",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 0.95,
+  "energy": 4,
+  "status": "daze",
+  "status_chance": 0.1,
+  "era": 3,
+  "desc": "A hailstone the size of a fist. May Daze."
+ },
+ {
+  "name": "Avalanche Run",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 100,
+  "accuracy": 0.85,
+  "energy": 6,
+  "target": "foes",
+  "era": 3,
+  "desc": "Runs down with an avalanche behind it, onto every foe."
+ },
+ {
+  "name": "Whiteout",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 3,
+  "desc": "Everything goes white. May slow the foe."
+ },
+ {
+  "name": "Cold Shoulder",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "atk": -1,
+   "spd": -1
+  },
+  "self": false,
+  "era": 3,
+  "desc": "Gives the foe the cold shoulder: Might and Pace down."
+ },
+ {
+  "name": "Hibernate",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 6,
+  "effect": "heal_self",
+  "effect_amount": 0.5,
+  "era": 3,
+  "desc": "Sleeps off half its wounds. Don't wake it."
+ },
+ {
+  "name": "Ice Floor",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "stage": {
+    "spd": -1
+   }
+  },
+  "era": 3,
+  "desc": "Freezes the foe's side. Newcomers slip and lose Pace."
+ },
+ {
+  "name": "Thaw Song",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "cure_team",
+  "era": 3,
+  "desc": "Sings the thaw: the whole team shakes off its status."
+ },
+ {
+  "name": "Rime Armour",
+  "element": "FROST",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 1,
+   "foc": 1
+  },
+  "self": true,
+  "era": 3,
+  "desc": "Grows a rime armour: Guard and Focus up."
+ },
+ {
+  "name": "Glacier Calve",
+  "element": "FROST",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.85,
+  "energy": 5,
+  "self_stages": {
+   "foc": -1
+  },
+  "era": 3,
+  "desc": "A glacier calves onto the foe. Focus drops after."
+ },
+ {
+  "name": "Permafrost",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 6,
+  "self_stages": {
+   "spd": -2
+  },
+  "era": 5,
+  "desc": "Ground that never thaws, swung at the foe. Pace drops hard after."
+ },
+ {
+  "name": "Icicle Lunge",
+  "element": "FROST",
+  "kind": "PHYSICAL",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "era": 3,
+  "desc": "Lunges with an icicle like a short spear."
+ },
+ {
+  "name": "Gilt Flick",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "vs_status": "daze",
+  "vs_mult": 1.5,
+  "era": 4,
+  "desc": "Flicks a gold fleck. Worse on a Dazed foe."
+ },
+ {
+  "name": "Tithe",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "effect": "energy_drain",
+  "effect_amount": 1,
+  "era": 4,
+  "desc": "Takes its tenth. Steals 1 Energy."
+ },
+ {
+  "name": "Gilt Edge",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 4,
+  "era": 4,
+  "desc": "An edge of gold leaf, sharper than it looks."
+ },
+ {
+  "name": "Golden Calf",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 85,
+  "accuracy": 0.95,
+  "energy": 6,
+  "stat": "atk",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 4,
+  "desc": "Charges like something people once prayed to. May raise Might."
+ },
+ {
+  "name": "Midas Pulse",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 75,
+  "accuracy": 0.95,
+  "energy": 5,
+  "stat": "spd",
+  "stages": -1,
+  "self": false,
+  "stage_chance": 0.3,
+  "era": 4,
+  "desc": "A pulse that turns the foe's legs heavy as gold. May slow it."
+ },
+ {
+  "name": "Vault Door",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.9,
+  "energy": 6,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 4,
+  "desc": "Slams a vault door on the foe. May raise Guard."
+ },
+ {
+  "name": "Gold Rain",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 90,
+  "accuracy": 0.95,
+  "energy": 6,
+  "target": "foes",
+  "era": 4,
+  "desc": "It rains gold on every foe. It still hurts."
+ },
+ {
+  "name": "Bribe",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "stats": {
+   "atk": -1,
+   "spd": -1
+  },
+  "self": false,
+  "era": 4,
+  "desc": "Slips the foe a coin: its Might and Pace drop."
+ },
+ {
+  "name": "Interest",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 0,
+  "effect": "energy_gain",
+  "effect_amount": 3,
+  "era": 4,
+  "desc": "Lets its savings grow: gains 3 Energy."
+ },
+ {
+  "name": "Ransom",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 3,
+  "effect": "energy_tax",
+  "effect_amount": 2,
+  "era": 4,
+  "desc": "Holds the foe to ransom: its arts cost more for 2 turns."
+ },
+ {
+  "name": "Gold Plating",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "def": 2
+  },
+  "self": true,
+  "era": 4,
+  "desc": "Plates itself in gold: Guard up by 2."
+ },
+ {
+  "name": "Coin Bed",
+  "element": "GILT",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "status": "daze"
+  },
+  "era": 4,
+  "desc": "Scatters shiny coins on the foe's side. Newcomers stare and get Dazed."
+ },
+ {
+  "name": "Crown Fall",
+  "element": "GILT",
+  "kind": "PHYSICAL",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 6,
+  "self_stages": {
+   "def": -1
+  },
+  "era": 5,
+  "desc": "A crown falls. So does whoever wore it. Guard drops after."
+ },
+ {
+  "name": "Gilded Cage",
+  "element": "GILT",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 4,
+  "status": "root",
+  "status_chance": 0.2,
+  "era": 4,
+  "desc": "A cage of gold. Pretty, and locked. May Root."
+ },
+ {
+  "name": "Noon Flash",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 40,
+  "accuracy": 1.0,
+  "energy": 2,
+  "priority": 1,
+  "era": 4,
+  "desc": "A flash at noon that strikes first."
+ },
+ {
+  "name": "Sky Hook",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 50,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stat": "spd",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 4,
+  "desc": "A hook from straight above. May raise Pace."
+ },
+ {
+  "name": "Plumb Line",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 5,
+  "ignore_stages": true,
+  "era": 4,
+  "desc": "Drops straight as a plumb line, past any defence."
+ },
+ {
+  "name": "Crest Dive",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 90,
+  "accuracy": 0.95,
+  "energy": 5,
+  "era": 4,
+  "desc": "Dives from the crest of the sky."
+ },
+ {
+  "name": "Zenith Beam",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 70,
+  "accuracy": 1.0,
+  "energy": 5,
+  "stat": "foc",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.2,
+  "era": 4,
+  "desc": "A beam from the top of the sky. May raise Focus."
+ },
+ {
+  "name": "Corona",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 85,
+  "accuracy": 0.95,
+  "energy": 7,
+  "target": "foes",
+  "status": "daze",
+  "status_chance": 0.1,
+  "era": 4,
+  "desc": "A corona over every foe. May Daze."
+ },
+ {
+  "name": "High Noon Duel",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 95,
+  "accuracy": 0.95,
+  "energy": 6,
+  "era": 4,
+  "desc": "Waits for the stroke of noon, then draws."
+ },
+ {
+  "name": "Thin Air",
+  "element": "ZENITH",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 0.95,
+  "energy": 2,
+  "stats": {
+   "foc": -1,
+   "spd": -1
+  },
+  "self": false,
+  "era": 4,
+  "desc": "Takes the foe up where the air is thin: Focus and Pace down."
+ },
+ {
+  "name": "Sun Dial",
+  "element": "ZENITH",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 5,
+  "effect": "heal_self",
+  "effect_amount": 0.4,
+  "era": 4,
+  "desc": "Waits a sundial's hour: heals 40%."
+ },
+ {
+  "name": "Clear Horizon",
+  "element": "ZENITH",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 2,
+  "effect": "stage_reset",
+  "era": 4,
+  "desc": "Clears the horizon: all stages on both sides go back to 0."
+ },
+ {
+  "name": "Summit Air",
+  "element": "ZENITH",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "stats": {
+   "spd": 1,
+   "atk": 1
+  },
+  "self": true,
+  "era": 4,
+  "desc": "Breathes summit air: Pace and Might up."
+ },
+ {
+  "name": "Glare Field",
+  "element": "ZENITH",
+  "kind": "STATUS",
+  "power": 0,
+  "accuracy": 1.0,
+  "energy": 3,
+  "snare": {
+   "stage": {
+    "foc": -1
+   }
+  },
+  "era": 4,
+  "desc": "Leaves a glare on the foe's side. Newcomers lose Focus."
+ },
+ {
+  "name": "Apex Fall",
+  "element": "ZENITH",
+  "kind": "PHYSICAL",
+  "power": 120,
+  "accuracy": 0.85,
+  "energy": 7,
+  "cooldown": 1,
+  "era": 5,
+  "desc": "Falls from the very top. Needs a turn after."
+ },
+ {
+  "name": "Overhead Sun",
+  "element": "ZENITH",
+  "kind": "FOCUS",
+  "power": 60,
+  "accuracy": 1.0,
+  "energy": 3,
+  "era": 4,
+  "desc": "The sun right overhead, where it hurts most."
+ },
+ {
+  "name": "Tide of Dawn",
+  "element": "LUMEN",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 8,
+  "effect": "drain",
+  "effect_amount": 0.25,
+  "era": 1,
+  "desc": "Velahra's own art: the tide comes in gold at dawn and takes a quarter back."
+ },
+ {
+  "name": "Hallow Peal",
+  "element": "ECHO",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 6,
+  "effect": "heal_block",
+  "effect_amount": 3,
+  "era": 1,
+  "desc": "Hallowmur's own art: a peal so holy the foe can't heal for 3 turns."
+ },
+ {
+  "name": "Last Word",
+  "element": "INK",
+  "kind": "PHYSICAL",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 7,
+  "ignore_stages": true,
+  "era": 1,
+  "desc": "Scriptorax's own art: it always has the last word, past any defence."
+ },
+ {
+  "name": "Vane of Morning",
+  "element": "LUMEN",
+  "kind": "PHYSICAL",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 7,
+  "stat": "spd",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "Lumivane's own art: a vane of light that turns to strike. May raise Pace."
+ },
+ {
+  "name": "Zephyr Verdict",
+  "element": "GALE",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 7,
+  "target": "foes",
+  "era": 1,
+  "desc": "Zephyrel's own art: the west wind passes judgement on every foe."
+ },
+ {
+  "name": "Lurking Mass",
+  "element": "STONE",
+  "kind": "PHYSICAL",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 7,
+  "stat": "def",
+  "stages": 1,
+  "self": true,
+  "stage_chance": 0.3,
+  "era": 1,
+  "desc": "Monolurk's own art: a mass of stone that was always there. May raise Guard."
+ },
+ {
+  "name": "Lucent Void",
+  "element": "UMBRA",
+  "kind": "FOCUS",
+  "power": 110,
+  "accuracy": 0.9,
+  "energy": 7,
+  "effect": "energy_burn",
+  "effect_amount": 1,
+  "era": 1,
+  "desc": "Vorlucent's own art: a void that glows, and eats 1 Energy."
  },
  {
   "name": "Crownfire Rend",
@@ -1870,7 +4840,9 @@
   "kind": "PHYSICAL",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crowntide Surge",
@@ -1878,7 +4850,9 @@
   "kind": "FOCUS",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownthorn Lash",
@@ -1886,7 +4860,9 @@
   "kind": "PHYSICAL",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownbolt Arc",
@@ -1894,7 +4870,9 @@
   "kind": "FOCUS",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownstone Break",
@@ -1902,7 +4880,9 @@
   "kind": "PHYSICAL",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crowngale Rush",
@@ -1910,7 +4890,9 @@
   "kind": "PHYSICAL",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownlight Ray",
@@ -1918,7 +4900,9 @@
   "kind": "FOCUS",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownshade Grasp",
@@ -1926,7 +4910,9 @@
   "kind": "PHYSICAL",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownink Scrawl",
@@ -1934,7 +4920,9 @@
   "kind": "FOCUS",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownecho Peal",
@@ -1942,7 +4930,9 @@
   "kind": "FOCUS",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 1,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownacid Etch",
@@ -1950,7 +4940,9 @@
   "kind": "PHYSICAL",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 3,
+  "desc": "A master technique from the shop: power 115, no drawback."
  },
  {
   "name": "Crownfrost Shatter",
@@ -1958,6 +4950,8 @@
   "kind": "FOCUS",
   "power": 115,
   "accuracy": 1.0,
-  "energy": 4
+  "energy": 4,
+  "era": 3,
+  "desc": "A master technique from the shop: power 115, no drawback."
  }
 ]

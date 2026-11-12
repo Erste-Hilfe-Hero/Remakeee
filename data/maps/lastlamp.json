@@ -186,6 +186,94 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "q2_marsh_bell_gesa",
+   "x": 4,
+   "y": 16,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_marsh_bell",
+   "sprite": "elder"
+  },
+  {
+   "id": "q2_pawned_medal_varn",
+   "x": 6,
+   "y": 15,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_pawned_medal",
+   "sprite": "elder",
+   "hide_flag": "q2_pawned_medal_reveal"
+  },
+  {
+   "id": "q2_pawned_medal_varn_reik",
+   "x": 7,
+   "y": 11,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_pawned_medal_varn_reik",
+   "sprite": "elder",
+   "trainer": "Hero Varn",
+   "show_flag": "q2_pawned_medal_reveal",
+   "intro": "vellmarch/q2_pawned_medal_varn_reik_intro",
+   "defeat": "vellmarch/q2_pawned_medal_varn_reik_defeat",
+   "money": 3000,
+   "team": [
+    {
+     "species": "Mendlace",
+     "level": 58
+    },
+    {
+     "species": "Woadwhorl",
+     "level": 59
+    },
+    {
+     "species": "Fenwarden",
+     "level": 60
+    }
+   ],
+   "win_flags": [
+    "q2_pawned_medal_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q2_dark_lamps_nils",
+   "x": 7,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_dark_lamps",
+   "sprite": "villager",
+   "hide_flag": "q2_dark_lamps_reveal"
+  },
+  {
+   "id": "q2_dark_lamps_nils_sack",
+   "x": 4,
+   "y": 5,
+   "facing": "down",
+   "dialogue": "vellmarch/q2_dark_lamps_nils_sack",
+   "sprite": "villager",
+   "trainer": "Lamp Boy Nils",
+   "show_flag": "q2_dark_lamps_reveal",
+   "intro": "vellmarch/q2_dark_lamps_nils_sack_intro",
+   "defeat": "vellmarch/q2_dark_lamps_nils_sack_defeat",
+   "money": 3050,
+   "team": [
+    {
+     "species": "Silentra",
+     "level": 59
+    },
+    {
+     "species": "Dusktern",
+     "level": 60
+    },
+    {
+     "species": "Scrivane",
+     "level": 61
+    }
+   ],
+   "win_flags": [
+    "q2_dark_lamps_done"
+   ],
+   "no_rematch": true
   }
  ],
  "signs": [
