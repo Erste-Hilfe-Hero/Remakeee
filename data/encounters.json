@@ -3011,5 +3011,183 @@
     "ground": "fern"
    }
   ]
+ },
+ "clinker_heath": {
+  "rate": 0.12,
+  "spawns": [
+   {
+    "species": "Brickwarden",
+    "min": 33,
+    "max": 35,
+    "weight": 18,
+    "ground": "scree"
+   },
+   {
+    "species": "Peatbloom",
+    "min": 33,
+    "max": 35,
+    "weight": 16,
+    "ground": "fern"
+   },
+   {
+    "species": "Sootlurk",
+    "min": 33,
+    "max": 34,
+    "weight": 12,
+    "ground": "scree"
+   },
+   {
+    "species": "Bellowroc",
+    "min": 34,
+    "max": 36,
+    "weight": 7,
+    "ground": "fern"
+   },
+   {
+    "species": "Lampickard",
+    "min": 34,
+    "max": 36,
+    "weight": 6,
+    "ground": "scree"
+   },
+   {
+    "species": "Charsylvan",
+    "min": 34,
+    "max": 36,
+    "weight": 7,
+    "ground": "fern"
+   },
+   {
+    "species": "Ingotusk",
+    "min": 34,
+    "max": 36,
+    "weight": 6,
+    "ground": "scree"
+   },
+   {
+    "species": "Mortarmarch",
+    "min": 34,
+    "max": 36,
+    "weight": 6,
+    "ground": "scree"
+   },
+   {
+    "species": "Vaporelle",
+    "min": 34,
+    "max": 36,
+    "weight": 6,
+    "ground": "fern"
+   },
+   {
+    "species": "Sablarch",
+    "min": 35,
+    "max": 36,
+    "weight": 4,
+    "ground": "fern"
+   },
+   {
+    "species": "Peatmonarch",
+    "min": 35,
+    "max": 36,
+    "weight": 3,
+    "ground": "fern"
+   },
+   {
+    "species": "Brickolossus",
+    "min": 35,
+    "max": 36,
+    "weight": 3,
+    "ground": "scree"
+   }
+  ]
+ },
+ "bellows_deep": {
+  "rate": 0.06,
+  "spawns": [
+   {
+    "species": "Clinkshell",
+    "min": 35,
+    "max": 37,
+    "weight": 20,
+    "ground": "scree"
+   },
+   {
+    "species": "Coalbuck",
+    "min": 35,
+    "max": 37,
+    "weight": 16,
+    "ground": "scree"
+   },
+   {
+    "species": "Fumeregent",
+    "min": 36,
+    "max": 38,
+    "weight": 7,
+    "ground": "scree"
+   },
+   {
+    "species": "Lodemarshal",
+    "min": 36,
+    "max": 38,
+    "weight": 7,
+    "ground": "scree"
+   },
+   {
+    "species": "Vitrillaxe",
+    "min": 36,
+    "max": 38,
+    "weight": 6,
+    "ground": "scree"
+   },
+   {
+    "species": "Gloomgillith",
+    "min": 36,
+    "max": 38,
+    "weight": 6,
+    "ground": "scree"
+   },
+   {
+    "species": "Clinkerdome",
+    "min": 37,
+    "max": 38,
+    "weight": 5,
+    "ground": "scree"
+   },
+   {
+    "species": "Glowflare",
+    "min": 37,
+    "max": 38,
+    "weight": 5,
+    "ground": "scree"
+   },
+   {
+    "species": "Glazeldrake",
+    "min": 37,
+    "max": 38,
+    "weight": 5,
+    "ground": "scree"
+   },
+   {
+    "species": "Stylaxon",
+    "min": 38,
+    "max": 39,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Coalpatriarch",
+    "min": 38,
+    "max": 39,
+    "weight": 4,
+    "ground": "scree"
+   },
+   {
+    "species": "Quenchwyrm",
+    "min": 38,
+    "max": 39,
+    "weight": 3,
+    "ground": "scree"
+   }
+  ]
  }
 }
