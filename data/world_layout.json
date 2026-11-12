@@ -12,7 +12,7 @@
   "valley_coach": {"name": "Valley Coach", "kind": "coach", "stops": {"brindlewick": [9, 7, "right"], "thornridge": [9, 10, "right"], "copperfold": [9, 17, "right"], "wrenhollow": [9, 6, "right"]}},
   "mountain_rail": {"name": "Mountain Railway", "kind": "rail", "open_flag": "act2_end", "stops": {"greyreach": [10, 7, "down"], "ashmere_station": [6, 20, "up"]}},
   "ferry_corvane": {"name": "Ferry to Corvane", "kind": "ferry", "story": true, "stops": {"brindlewick": [8, 18, "right"], "corvane_quay": [6, 22, "up"]}},
-  "halcyra_funicular": {"name": "Gilt Funicular", "kind": "rail", "open_flag": "era3_finale_done", "stops": {"greyreach": [8, 7, "down"], "brightledge": [8, 18, "up"]}}
+  "halcyra_funicular": {"name": "Gilt Funicular", "kind": "rail", "open_flag": "era3_finale_done", "stops": {"greyreach": [9, 7, "down"], "brightledge": [8, 18, "up"]}}
  },
  "maps": {
   "cinder_rift": {"region": "veydal", "pos": [3, 0], "kind": "rift", "neighbours": ["thornridge", "kindle_vents"]},
