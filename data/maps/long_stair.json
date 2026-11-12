@@ -119,15 +119,15 @@
    "money": 4100,
    "team": [
     {
-     "species": "Highhare",
+     "species": "Ledgepup",
      "level": 80
     },
     {
-     "species": "Duneshrew",
+     "species": "Vinestep",
      "level": 81
     },
     {
-     "species": "Noonwhist",
+     "species": "Gildmite",
      "level": 82
     }
    ],
@@ -167,11 +167,11 @@
    "money": 3240,
    "team": [
     {
-     "species": "Duneshrew",
+     "species": "Vinestep",
      "level": 80
     },
     {
-     "species": "Noonwhist",
+     "species": "Chalkid",
      "level": 81
     }
    ]
