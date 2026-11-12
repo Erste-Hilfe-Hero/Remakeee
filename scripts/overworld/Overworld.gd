@@ -84,6 +84,8 @@ func _ready() -> void:
 		"rubbing": _action_rubbing,
 		"fish_trap": _action_fish_trap,
 		"wake": _action_wake,
+		"bounty": _action_bounty,
+		"fine_training": _action_fine_training,
 		"matchmaker": _action_matchmaker,
 		"reserve": _action_reserve,
 		"informant": _action_informant,
@@ -1105,6 +1107,69 @@ func _action_wake(_args: PackedStringArray, _speaker: NPC) -> void:
 		lines.append("The Undertaker: Not today. The dead were not impressed.")
 	Wake.finish(result, day)
 	await say(lines)
+
+## "bounty": the Fixer's daily bounty board and the 100 percent certificate (scripts/core/Bounties.gd).
+func _action_bounty(_args: PackedStringArray, _speaker: NPC) -> void:
+	var cert: Array[String] = Bounties.certificate(Completion.percent(), GameState.tamer_name)
+	if not cert.is_empty():
+		await say(cert)
+	var day: String = DailyFind.today_key()
+	var cap: int = GameState.progress_cap()
+	var open: Array[Dictionary] = []
+	for m: Dictionary in Bounties.board(day, cap):
+		if not str(m.id) in Bounties.claimed(day):
+			open.append(m)
+	if open.is_empty():
+		await say(["The Fixer: Board's clean. Come back tomorrow, somebody always owes somebody."] as Array[String])
+		return
+	var names: Array[String] = []
+	for m: Dictionary in open:
+		names.append(Bounties.line(m))
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var pick: int = await menu.pick_strings(Loc.t("Which mark?"), names)
+	menu.queue_free()
+	if pick < 0:
+		return
+	var m: Dictionary = open[pick]
+	await say([Loc.t(str(m.crime))] as Array[String])
+	var foes: Array[Spirling] = []
+	for sp: Variant in m.team:
+		if Database.spirlings.has(str(sp)):
+			foes.append(Spirling.new(Database.spirlings[str(sp)], int(m.ring), GameState.rng))
+	SaveManager.save_game()
+	var outcome: BattleModel.Outcome = await start_battle(foes, false, {"name": Loc.t(str(m.name)), "money": 0, "ai": GameState.ai_level()})
+	busy = true
+	player.frozen = true
+	if outcome == BattleModel.Outcome.WIN:
+		var paid: int = Bounties.claim(day, cap, str(m.id))
+		await say([Loc.t("The Fixer counts out %d coins. The rest is his cut. Always is.") % paid] as Array[String])
+
+## "fine_training": Coach Varro raises one spark for coins, sometimes he just keeps them (FineTraining.gd).
+func _action_fine_training(_args: PackedStringArray, _speaker: NPC) -> void:
+	var menu := MenuHost.new()
+	_ui.add_child(menu)
+	var names: Array[String] = []
+	for p: Spirling in GameState.party:
+		names.append(p.display_name())
+	var who: int = await menu.pick_strings(Loc.t("Who trains?"), names)
+	if who < 0:
+		menu.queue_free()
+		return
+	var s: Spirling = GameState.party[who]
+	var stats: Array[String] = []
+	for k: String in Spirling.STAT_KEYS:
+		stats.append(Loc.t("%s: %d coins") % [k.to_upper(), FineTraining.cost(s, k)])
+	var pick: int = await menu.pick_strings(Loc.t("Which value?"), stats)
+	menu.queue_free()
+	if pick < 0:
+		return
+	var stat: String = Spirling.STAT_KEYS[pick]
+	if not FineTraining.can_train(s, stat):
+		await say(["Coach Varro: Either you're broke or it's maxed. Either way, no."] as Array[String])
+		return
+	var r: Dictionary = FineTraining.train(s, stat, GameState.rng)
+	await say([str(r.line)] as Array[String])
 
 ## "burrow": the claimable hollow in Murk Hollow with a wall of trophies (scripts/core/Burrow.gd).
 func _action_burrow(_args: PackedStringArray, _speaker: NPC) -> void:
