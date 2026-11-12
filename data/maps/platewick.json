@@ -206,7 +206,7 @@
   },
   {
    "id": "q3_wanted_face_gry_bread",
-   "x": 4,
+   "x": 5,
    "y": 16,
    "facing": "right",
    "dialogue": "quillmarch/q3_wanted_face_gry_bread",

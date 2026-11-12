@@ -150,7 +150,7 @@ GOALS = [
                 "witness": [("platewick", 4, 16, "right", "villager", "gry", "trusted",
                              [("Poster Reader Gry: New poster this morning. 'Wanted: a stranger. Arson, fraud, loud singing.'", "Steckbriefleserin Gry: Neuer Steckbrief heute Morgen. 'Gesucht: eine Fremde. Brandstiftung, Betrug, lautes Singen.'"),
                               ("Poster Reader Gry: The nose is very good. Do I know you from somewhere?", "Steckbriefleserin Gry: Die Nase ist sehr gut getroffen. Kenne ich dich irgendwoher?")]),
-                            ("platewick", 4, 16, "right", "villager", "gry_bread", "kept",
+                            ("platewick", 5, 16, "right", "villager", "gry_bread", "kept",
                              [("Poster Reader Gry: The baker's poster is still up. Somebody drew a moustache on it. It helps.", "Steckbriefleserin Gry: Der Steckbrief vom Bäcker hängt noch. Jemand hat ihm einen Schnurrbart gemalt. Es hilft.")])]},
      "after": None,
      "steps": [("platewick_plate_store", 6, 2, "down", "villager", "kalle",
