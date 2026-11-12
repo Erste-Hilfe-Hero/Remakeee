@@ -141,7 +141,7 @@ TOWN_ROWS = ["TTTTT__TTTTT",
              "T%...__...%T",
              "TTTTT__TTTTT"]
 # Driftwick floats: its lower streets are rafts.
-RAFT_ROWS = {15: "T~+.S__.+~~T", 16: "T~+..__..+~T", 17: "T~+++__+++~T", 18: "T~~..__..~~T"}
+RAFT_ROWS = {15: "T~+.S__.+~~T", 16: "T~+..__..++T", 17: "T~+++__+++~T", 18: "T~~..__..~~T"}
 WINCH = (3, 9)            # the winch man on the Mossgate pier
 ROPE_MOSSGATE = (2, 9)    # where the basket sets you down
 ROPE_GREYREACH = (7, 7)   # until Halcyra's Whitecairn exists
