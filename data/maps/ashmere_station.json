@@ -76,6 +76,14 @@
    "tx": 10,
    "ty": 3,
    "facing": "left"
+  },
+  {
+   "x": 5,
+   "y": 6,
+   "to": "ashmere_station_shop",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
   }
  ],
  "npcs": [

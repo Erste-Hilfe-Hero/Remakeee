@@ -58,6 +58,14 @@
    "tx": 5,
    "ty": 18,
    "facing": "up"
+  },
+  {
+   "x": 10,
+   "y": 8,
+   "to": "cinderfold_spring",
+   "tx": 4,
+   "ty": 7,
+   "facing": "up"
   }
  ],
  "npcs": [
@@ -153,9 +161,9 @@
   },
   {
    "id": "tovan",
-   "x": 4,
+   "x": 3,
    "y": 6,
-   "facing": "down",
+   "facing": "right",
    "dialogue": "ashmere_side/tovan",
    "sprite": "elder"
   },

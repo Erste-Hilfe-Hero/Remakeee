@@ -72,6 +72,23 @@
   "veil_cistern": {"inside": "ochrewell", "region": "solenne"},
   "glasswind_flats": {"region": "solenne", "pos": [0, 5], "kind": "route", "neighbours": ["ochrewell", "mirage_kiln"]},
   "caravanserai": {"inside": "glasswind_flats", "region": "solenne"},
-  "mirage_kiln": {"region": "solenne", "pos": [0, 6], "kind": "dungeon", "neighbours": ["glasswind_flats"]}
+  "mirage_kiln": {"region": "solenne", "pos": [0, 6], "kind": "dungeon", "neighbours": ["glasswind_flats"]},
+  "copperfold_spring": {"inside": "copperfold"},
+  "copperfold_shop": {"inside": "copperfold"},
+  "copperfold_house": {"inside": "copperfold"},
+  "reedhaven_spring": {"inside": "reedhaven"},
+  "reedhaven_shop": {"inside": "reedhaven"},
+  "reedhaven_house": {"inside": "reedhaven"},
+  "wrenhollow_spring": {"inside": "wrenhollow"},
+  "wrenhollow_shop": {"inside": "wrenhollow"},
+  "corvane_quay_spring": {"inside": "corvane_quay", "region": "corvane"},
+  "corvane_quay_shop": {"inside": "corvane_quay", "region": "corvane"},
+  "corvane_quay_house": {"inside": "corvane_quay", "region": "corvane"},
+  "madderby_spring": {"inside": "madderby", "region": "corvane"},
+  "madderby_house": {"inside": "madderby", "region": "corvane"},
+  "greyreach_hut": {"inside": "greyreach", "region": "corvane"},
+  "edge_watch_hut": {"inside": "wide_rift_edge", "region": "corvane"},
+  "ashmere_station_shop": {"inside": "ashmere_station", "region": "ashmere"},
+  "cinderfold_spring": {"inside": "cinderfold", "region": "ashmere"}
  }
 }

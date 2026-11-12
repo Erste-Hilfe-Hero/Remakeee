@@ -1,0 +1,42 @@
+{
+ "name": "Cinderfold Spring House",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "heal_point": [
+  4,
+  6
+ ],
+ "rows": [
+  "WWWWWWWWWW",
+  "WfffoofffW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "cinderfold",
+   "tx": 10,
+   "ty": 9,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ebba",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/cinderfold_spring_ebba",
+   "sprite": "elder"
+  }
+ ],
+ "signs": []
+}

@@ -145,9 +145,9 @@
   },
   {
    "id": "velahra",
-   "x": 3,
+   "x": 2,
    "y": 12,
-   "facing": "down",
+   "facing": "right",
    "dialogue": "brindlewick/velahra",
    "sprite": "first_voice",
    "show_flag": "mirela_lamp",

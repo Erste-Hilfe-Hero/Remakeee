@@ -1,0 +1,38 @@
+{
+ "name": "Station Store",
+ "region": "ashmere",
+ "biome": "town",
+ "backdrop": "ember",
+ "rows": [
+  "WWWWWWWWWW",
+  "WCCCffCCCW",
+  "WffffffffW",
+  "WffCCCCffW",
+  "WffffffffW",
+  "WffffffffW",
+  "WCffffffCW",
+  "WffffffffW",
+  "WWWWDWWWWW"
+ ],
+ "warps": [
+  {
+   "x": 4,
+   "y": 8,
+   "to": "ashmere_station",
+   "tx": 5,
+   "ty": 7,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ruprecht",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "rooms/ashmere_station_shop_ruprecht",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}
