@@ -9,6 +9,11 @@ signal stepped(cell: Vector2i)
 ## A tap-to-move path ran into [param next], which became blocked (item 1822).
 signal path_blocked(next: Vector2i)
 
+## Starts a one-cell move, twice as fast with the shop's Swift Steps (plan point 50).
+func step(dir: String, run: bool = false) -> void:
+	speed_mult = ShopEffects.walk_mult()
+	super.step(dir, run)
+
 ## Seconds a direction must be held after turning before walking starts.
 const TURN_GRACE: float = 0.08
 

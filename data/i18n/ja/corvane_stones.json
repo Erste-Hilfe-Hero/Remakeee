@@ -1,0 +1,18 @@
+{
+ "_comment": "ja translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Wide Riftのふちにある地図師の石。方位図には五つ目の先があり、闇のほうを向いている。",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "水ぎわにある地図師の石。池に映る方位図は逆を向いている。",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "板に半分しずんだ地図師の石。方位図は港の事務所を指している。当然だ。",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "花壇の中の地図師の石。方位図は灰色に塗りつぶされ、そのあと削り落とされている。",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "崖の上の地図師の石。ミヤマガラスが何年も食卓にしている。",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "沼にしずんでいく地図師の石。方位図はまだ北を指している。ほかのことは石もあきらめた。",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "アシの下の地図師の石。方位図の下にだれかが「こっちじゃない」と刻んでいる。",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "賭け札がはさまれた地図師の石。その札は外れた。",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "根にからまれた地図師の石。ふれると方位図がかすかに光る。",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "まんなかで割れた地図師の石。どちらの半分もまだ北を指している。がんこだ。",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "百年分の染料で赤、金、緑にそまった地図師の石。",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "岸壁のそばの古い地図師の石。だれかがチョークで値段を書いている。",
+  "Cartographer's stones: %d/%d": "地図師の石：%d/%d"
+ }
+}

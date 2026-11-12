@@ -1,0 +1,18 @@
+{
+ "_comment": "pl translation of the corvane_stones table, keyed by the English text.",
+ "strings": {
+  "A cartographer's stone at the edge of the Wide Rift. The rose has a fifth point, towards the dark.": "Kamień kartografa na skraju Wide Rift. Róża ma piąte ramię, w stronę ciemności.",
+  "A cartographer's stone at the water's edge. In the pond its rose turns the other way.": "Kamień kartografa nad brzegiem wody. W stawie jego róża obraca się w drugą stronę.",
+  "A cartographer's stone half sunk in the boards. The rose points at the harbour office. Of course it does.": "Kamień kartografa do połowy zapadnięty w deski. Róża wskazuje kapitanat portu. Oczywiście.",
+  "A cartographer's stone in a flower bed. Its rose has been painted over grey, then scraped clean.": "Kamień kartografa w kwietniku. Jego różę zamalowano na szaro, a potem zeskrobano farbę do czysta.",
+  "A cartographer's stone on the cliff. Rooks have used it as a table for years.": "Kamień kartografa na klifie. Gawrony od lat używają go jako stołu.",
+  "A cartographer's stone sinking into the moor. The rose still points north. The stone has given up on the rest.": "Kamień kartografa zapadający się w bagno. Róża wciąż wskazuje północ. Z resztą kamień dał sobie spokój.",
+  "A cartographer's stone under the reeds. Somebody scratched 'not this way' under the rose.": "Kamień kartografa pod trzcinami. Ktoś wydrapał pod różą 'nie tędy'.",
+  "A cartographer's stone with a betting slip tucked under it. The slip lost.": "Kamień kartografa z wsuniętym pod spód kuponem zakładów. Kupon przegrał.",
+  "A cartographer's stone wrapped in roots. The rose glows faintly when you touch it.": "Kamień kartografa opleciony korzeniami. Róża lekko świeci, gdy jej dotykasz.",
+  "A cartographer's stone, cracked down the middle. Both halves still point north. Stubborn.": "Kamień kartografa, pęknięty przez środek. Obie połówki wciąż wskazują północ. Uparte.",
+  "A cartographer's stone, stained red, gold and green by a hundred years of dye.": "Kamień kartografa, poplamiony na czerwono, złoto i zielono przez sto lat barwników.",
+  "An old cartographer's stone by the quay wall. Someone has chalked a price on it.": "Stary kamień kartografa przy murze nabrzeża. Ktoś wypisał na nim kredą cenę.",
+  "Cartographer's stones: %d/%d": "Kamienie kartografa: %d/%d"
+ }
+}

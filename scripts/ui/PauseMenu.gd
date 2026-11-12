@@ -26,6 +26,8 @@ var echo_duel: Dictionary = {}
 var league_match: Dictionary = {}
 ## A Raid Rift attempt the server set up (RaidMenu); the overworld plays it after the menu closes.
 var raid_attempt: Dictionary = {}
+## A live duel to play or watch in the battle screen (LiveDuelMenu): {"id", "watch", "name" or "names"}.
+var live_stage: Dictionary = {}
 ## An entry to open before the list ("Goals" for a chimora://event link, DeepLink.gd).
 var open_on: String = ""
 ## Area 3 item 1012/1014: the map has a puzzle room; "Room" offers undo and reset.
@@ -81,6 +83,9 @@ func run() -> void:
 			not GameState.travel_targets(current_map).is_empty(), room_puzzle, Online.league_on(),
 			GameState.has_flag("aldo_gift"), not Trust.ledger_rows(GameState.flags).is_empty())
 		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
+		# Pocket Rest (shop, pay-to-win step 6, plan point 51): rest anywhere outside battle.
+		if ShopEffects.can_rest_anywhere():
+			labels.insert(labels.find("Team") + 1, "Rest")
 		if "Travel" in labels:
 			await tip("travel")
 		# The start menu in the era's layout (EraMenus): a plain list in Era I, symbols and the
@@ -112,10 +117,14 @@ func run() -> void:
 			"Ledger": await run_ledger()
 			"Map": await WorldMapMenu.run(self, current_map)
 			"Team": await run_team()
+			"Rest":
+				if ShopEffects.pocket_rest():
+					Sound.sfx("heal")
+					await info("Your team is fully rested.")
 			"Friends":
 				await tip("friends")
 				await FriendsMenu.run(self)
-				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay:
+				if not echo_duel.is_empty() or not raid_attempt.is_empty() or watch_replay or not live_stage.is_empty():
 					return
 			"Leagues":
 				await LeagueMenu.run(self)
@@ -669,6 +678,10 @@ func run_team() -> void:
 		var power: int = ShopEffects.account_power()
 		if power > 0:
 			boosts.push_front(Loc.t("Power %d") % power)
+		# What the best next tier would add (plan point 60): adults only, a note, no button.
+		var next_power: String = ShopEffects.next_power_line()
+		if not next_power.is_empty():
+			boosts.append(next_power)
 		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
 		var drag: EraPartyDrag = EraPartyDrag.attach(self, GameState.party.size()) if bool(lay.get("drag", false)) else null
 		var idx: int = await pick_screen("party", title, rows, {"panel_text": "Drag a row to change the order. Tap one for more."})
@@ -828,7 +841,7 @@ func _usable_items() -> Array[String]:
 		var it: Dictionary = Database.item(str(id))
 		if GameState.item_count(str(id)) > 0 and (int(it.get("heal", 0)) > 0 or float(it.get("revive", 0.0)) > 0.0 or bool(it.get("evolves", false))
 				or int(it.get("rings", 0)) > 0 or int(it.get("rings_to", 0)) > 0 or bool(it.get("spark_all", false))
-				or bool(it.get("unfurl_any", false))):
+				or bool(it.get("unfurl_any", false)) or bool(it.get("gift_slot", false))):
 			out.append(str(id))
 	return out
 
@@ -1225,6 +1238,10 @@ func run_spirlog() -> void:
 		var region_tabs: bool = bool(lay.get("region_tabs", false))
 		var entries: Array[Dictionary] = []
 		var actions: Array[String] = []
+		# Two progress bars on top (item 1940).
+		for row: Dictionary in spirlog_progress_rows():
+			entries.append(row)
+			actions.append("progress")
 		if bool(lay.get("search_bar", false)):
 			entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-"), "icon": EraMenuKit.icon_for("search", lay),
 				"hint": "Search the Spirlog by name."})
@@ -1325,9 +1342,57 @@ func run_spirlog() -> void:
 			"kind":
 				var sd: SpirlingData = kinds[idx - first_kind]
 				if not SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
-					await info("#%02d  Not seen yet." % sd.dex_id)
+					var look: String = unseen_hint(sd.species_name)
+					await info(Loc.t("#%02d  Not seen yet." % sd.dex_id) + ("\n" + look if not look.is_empty() else ""))
 					continue
 				await SpirlogPage.show_pages(self, kinds, idx - first_kind)
+
+## "Seen 12/21" and "Bonded 8/21" as rows with a bar each (item 1940).
+static func spirlog_progress_rows() -> Array[Dictionary]:
+	var kinds: Array[SpirlingData] = SpirlogBook.visible_kinds(GameState.flags)
+	var seen: int = 0
+	var bonded: int = 0
+	for sd: SpirlingData in kinds:
+		if SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
+			seen += 1
+		if SpirlogBook.is_bonded(GameState.spirlog, sd.species_name):
+			bonded += 1
+	var total: int = kinds.size()
+	var out: Array[Dictionary] = []
+	for pair: Array in [["Seen %d/%d", seen], ["Bonded %d/%d", bonded]]:
+		var n: int = int(pair[1])
+		var ratio: float = float(n) / maxf(1.0, float(total))
+		out.append({"text": Loc.t(str(pair[0]) % [n, total]),
+			"decorate": func(b: Button) -> void: _draw_progress(b, ratio)})
+	return out
+
+const PROGRESS_W: int = 48
+
+static func _draw_progress(b: Button, ratio: float) -> void:
+	var ink: Color = b.get_theme_color("font_focus_color" if b.has_focus() else "font_color", "Button")
+	var x0: float = b.size.x - PROGRESS_W - 6
+	var y: float = b.size.y - 4
+	b.draw_rect(Rect2(x0, y, PROGRESS_W, 2), UITheme.DISABLED)
+	if ratio > 0.0:
+		b.draw_rect(Rect2(x0, y, maxf(1.0, roundf(PROGRESS_W * ratio)), 2), ink)
+
+## Where to look for a kind not seen yet: maps it lives on that the player has entered
+## (item 1948). Empty while none of them was entered.
+static func unseen_hint(species: String) -> String:
+	var where: PackedStringArray = []
+	for table: String in EncounterTable.table_ids():
+		if not species in EncounterTable.species_on(table):
+			continue
+		for map_id: String in _maps_with_table(table):
+			if not GameState.visited_maps.has(map_id):
+				continue
+			var m: MapData = MapData.load_map(map_id)
+			var name: String = m.display_name if m != null and not m.display_name.is_empty() else map_id
+			if not name in where:
+				where.append(name)
+	if where.is_empty():
+		return ""
+	return Loc.t("Look in: %s") % ", ".join(where)
 
 ## Real map names where a kind lives (item 1935), not reshaped table ids.
 static func found_on(species: String) -> PackedStringArray:
