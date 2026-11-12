@@ -11,6 +11,16 @@
     "show_flag": "lq_zephyrel_ready",
     "hide_flag": "first_voice_zephyrel_away"
    }
+  ],
+  "warps": [
+   {
+    "x": 3,
+    "y": 6,
+    "to": "edge_watch_hut",
+    "tx": 3,
+    "ty": 4,
+    "facing": "up"
+   }
   ]
  }
 }

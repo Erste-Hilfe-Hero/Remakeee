@@ -359,7 +359,8 @@ func door_roles() -> Dictionary:
 			continue
 		warped[cell] = true
 		var to: String = str(w.to)
-		if to.contains("rift") or to.begins_with("undrawn"):
+		# Rift gates are outdoor doors; a hut on a Rift map or its way back out is a plain door.
+		if outdoor and (to.contains("rift") or to.begins_with("undrawn")):
 			roles[cell] = TilesetFactory.DoorRole.RIFT_GATE
 		elif to.contains("spring"):
 			roles[cell] = TilesetFactory.DoorRole.HEAL
