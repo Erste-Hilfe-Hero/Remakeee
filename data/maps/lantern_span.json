@@ -99,6 +99,98 @@
      "level": 91
     }
    ]
+  },
+  {
+   "id": "q4_two_lanterns_pia",
+   "x": 7,
+   "y": 14,
+   "facing": "left",
+   "dialogue": "halcyra_side/two_lanterns_pia",
+   "sprite": "villager",
+   "show_flag": "q4_two_lanterns_asked"
+  },
+  {
+   "id": "q4_two_lanterns_konrad",
+   "x": 3,
+   "y": 14,
+   "facing": "right",
+   "dialogue": "halcyra_side/two_lanterns_konrad_after",
+   "sprite": "villager",
+   "trainer": "Husband Konrad",
+   "show_flag": "q4_two_lanterns_reveal",
+   "intro": "halcyra_side/two_lanterns_konrad_intro",
+   "defeat": "halcyra_side/two_lanterns_konrad_defeat",
+   "money": 4650,
+   "team": [
+    {
+     "species": "Gyrevult",
+     "level": 91
+    },
+    {
+     "species": "Velvessa",
+     "level": 92
+    },
+    {
+     "species": "Ergskim",
+     "level": 93
+    }
+   ],
+   "win_flags": [
+    "q4_two_lanterns_done"
+   ],
+   "no_rematch": true
+  },
+  {
+   "id": "q4_red_column_wido",
+   "x": 2,
+   "y": 22,
+   "facing": "right",
+   "dialogue": "halcyra_side/red_column",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_red_column_ruprecht",
+   "x": 8,
+   "y": 1,
+   "facing": "left",
+   "dialogue": "halcyra_side/red_column_ruprecht",
+   "sprite": "warden",
+   "show_flag": "q4_red_column_reveal"
+  },
+  {
+   "id": "q4_red_column_fey",
+   "x": 8,
+   "y": 20,
+   "facing": "left",
+   "dialogue": "halcyra_side/red_column_fey",
+   "sprite": "villager",
+   "show_flag": "q4_red_column_asked"
+  },
+  {
+   "id": "hs_hedda",
+   "x": 7,
+   "y": 3,
+   "facing": "left",
+   "dialogue": "halcyra_side/hedda",
+   "sprite": "villager",
+   "trainer": "Rope Inspector Hedda",
+   "intro": "halcyra_side/hedda_intro",
+   "defeat": "halcyra_side/hedda_defeat",
+   "money": 3680,
+   "team": [
+    {
+     "species": "Gyrevult",
+     "level": 90
+    },
+    {
+     "species": "Velvessa",
+     "level": 91
+    },
+    {
+     "species": "Ergskim",
+     "level": 92
+    }
+   ]
   }
  ],
  "signs": [

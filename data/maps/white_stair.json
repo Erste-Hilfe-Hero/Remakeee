@@ -36,6 +36,42 @@
    "facing": "down",
    "dialogue": "white_stair/counter",
    "sprite": "elder"
+  },
+  {
+   "id": "q4_antidote_wenna",
+   "x": 9,
+   "y": 9,
+   "facing": "left",
+   "dialogue": "halcyra_side/antidote_wenna",
+   "sprite": "villager",
+   "show_flag": "q4_antidote_asked"
+  },
+  {
+   "id": "q4_brass_planet_fenwick",
+   "x": 3,
+   "y": 9,
+   "facing": "right",
+   "dialogue": "halcyra_side/brass_planet_fenwick",
+   "sprite": "elder",
+   "show_flag": "q4_brass_planet_s1"
+  },
+  {
+   "id": "q4_brake_file_kuno",
+   "x": 9,
+   "y": 6,
+   "facing": "left",
+   "dialogue": "halcyra_side/brake_file_kuno",
+   "sprite": "villager",
+   "show_flag": "q4_brake_file_asked"
+  },
+  {
+   "id": "q4_wedding_blades_aldous",
+   "x": 1,
+   "y": 4,
+   "facing": "right",
+   "dialogue": "halcyra_side/wedding_blades_aldous",
+   "sprite": "elder",
+   "show_flag": "q4_wedding_blades_s1"
   }
  ],
  "signs": [

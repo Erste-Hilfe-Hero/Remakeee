@@ -36,6 +36,32 @@
    "facing": "down",
    "dialogue": "gilt_span/lamplighter",
    "sprite": "villager"
+  },
+  {
+   "id": "q4_two_lanterns_sabeth",
+   "x": 4,
+   "y": 8,
+   "facing": "right",
+   "dialogue": "halcyra_side/two_lanterns",
+   "sprite": "villager"
+  },
+  {
+   "id": "q4_two_lanterns_yorick",
+   "x": 8,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "halcyra_side/two_lanterns_yorick",
+   "sprite": "elder",
+   "show_flag": "q4_two_lanterns_asked"
+  },
+  {
+   "id": "q4_brake_file_gaspard",
+   "x": 2,
+   "y": 6,
+   "facing": "right",
+   "dialogue": "halcyra_side/brake_file_gaspard",
+   "sprite": "villager",
+   "show_flag": "q4_brake_file_s1"
   }
  ],
  "signs": [
