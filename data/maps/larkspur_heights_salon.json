@@ -1,0 +1,35 @@
+{
+ "name": "Quiet Salon",
+ "region": "vellmarch",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCCffCCW",
+  "WffffffW",
+  "WffffffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "larkspur_heights",
+   "tx": 8,
+   "ty": 14,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "noble",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "vellmarch/larkspur_heights_salon_noble",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

@@ -1,0 +1,58 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "gorse",
+    "x": 6,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "ashmere_side/gorse",
+    "sprite": "villager"
+   },
+   {
+    "id": "tovan",
+    "x": 5,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "ashmere_side/tovan",
+    "sprite": "elder"
+   },
+   {
+    "id": "mott",
+    "x": 3,
+    "y": 13,
+    "facing": "right",
+    "dialogue": "ashmere_side/mott",
+    "sprite": "villager"
+   },
+   {
+    "id": "marn",
+    "x": 8,
+    "y": 7,
+    "facing": "left",
+    "dialogue": "ashmere_side/marn",
+    "sprite": "elder"
+   },
+   {
+    "id": "lq_kesk",
+    "x": 9,
+    "y": 6,
+    "facing": "down",
+    "dialogue": "legend_quests/vorlucent_witness",
+    "sprite": "villager",
+    "show_flag": "lq_vorlucent_met",
+    "hide_flag": "lq_vorlucent_ready"
+   }
+  ],
+  "secrets": [
+   {
+    "x": 0,
+    "y": 4,
+    "item": "strong_tonic",
+    "count": 1,
+    "flag": "plate_1",
+    "dialogue": "ashmere_side/plate_1"
+   }
+  ]
+ }
+}

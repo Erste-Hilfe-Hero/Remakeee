@@ -115,6 +115,31 @@
    "sprite": "villager"
   },
   {
+   "id": "vs_brannagh",
+   "x": 6,
+   "y": 8,
+   "facing": "down",
+   "dialogue": "veydal_side/brannagh",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_gristle",
+   "x": 7,
+   "y": 15,
+   "facing": "down",
+   "dialogue": "veydal_side/gristle",
+   "sprite": "elder"
+  },
+  {
+   "id": "vs_vantry",
+   "x": 3,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "veydal_side/vantry",
+   "sprite": "villager",
+   "show_flag": "rift_cinder_sealed"
+  },
+  {
    "id": "ula",
    "x": 3,
    "y": 15,
@@ -253,31 +278,6 @@
    "facing": "left",
    "dialogue": "thornridge/coach",
    "sprite": "villager"
-  },
-  {
-   "id": "vs_brannagh",
-   "x": 6,
-   "y": 8,
-   "facing": "down",
-   "dialogue": "veydal_side/brannagh",
-   "sprite": "elder"
-  },
-  {
-   "id": "vs_gristle",
-   "x": 7,
-   "y": 15,
-   "facing": "down",
-   "dialogue": "veydal_side/gristle",
-   "sprite": "elder"
-  },
-  {
-   "id": "vs_vantry",
-   "x": 3,
-   "y": 4,
-   "facing": "down",
-   "dialogue": "veydal_side/vantry",
-   "sprite": "villager",
-   "show_flag": "rift_cinder_sealed"
   }
  ],
  "signs": [

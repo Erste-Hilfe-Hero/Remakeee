@@ -1,0 +1,16 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "vorlucent",
+    "x": 8,
+    "y": 2,
+    "facing": "down",
+    "dialogue": "shade_rift/vorlucent",
+    "sprite": "first_voice",
+    "show_flag": "lq_vorlucent_ready",
+    "hide_flag": "first_voice_vorlucent_away"
+   }
+  ]
+ }
+}
