@@ -647,7 +647,8 @@ static func bond_charms(bag: Dictionary) -> Array[String]:
 	var out: Array[String] = []
 	for id: Variant in bag:
 		var it: Dictionary = Database.item(str(id))
-		if int(bag[id]) > 0 and (float(it.get("bond_bonus", 0.0)) > 0.0 or bool(it.get("bond_sure", false)) or bool(it.get("bond_retry", false))):
+		if int(bag[id]) > 0 and (float(it.get("bond_bonus", 0.0)) > 0.0 or bool(it.get("bond_sure", false)) or bool(it.get("bond_retry", false))
+				or bool(it.get("bond_wish", false))):
 			out.append(str(id))
 	out.sort_custom(func(a: String, b: String) -> bool: return a == "kin_charm" or (b != "kin_charm" and a < b))
 	return out

@@ -10,6 +10,7 @@ const KINDS: Dictionary[String, Array] = {
 	"veydal": ["standing_stone", "cairn", "beacon", "tide_post"],
 	"corvane": ["heron_post", "drying_rack", "sluice_wheel", "dye_mill"],
 	"ashmere": ["smelter_stack", "bell_frame", "salt_obelisk"],
+	"vellmarch": ["customs_crane", "great_candle", "lock_wheel", "masked_statue", "last_lamp"],
 }
 
 static var _maps: Dictionary = {}

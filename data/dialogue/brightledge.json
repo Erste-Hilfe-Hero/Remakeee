@@ -77,5 +77,28 @@
  "white_stair": [
   "THE WHITE STAIR",
   "Nine hundred steps of white stone, straight up to Gildcrest. Counted every morning."
- ]
+ ],
+ "elke": {
+  "lines": [
+   "Matron Elke: Lie down. The Gilt House pays for the bed. It also counts the hours you spend in it."
+  ],
+  "action": "heal"
+ },
+ "tilde": {
+  "lines": [
+   "Tilde: Fidel checks the cable every morning. Then he comes home and checks his will.",
+   "Tilde: I am in it twice. Once as his wife, once as a witness."
+  ]
+ },
+ "odalys": {
+  "lines": [
+   "Clerk Odalys: Souvenirs on the left, tonics on the right. The souvenirs outlive most of the buyers."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
+ },
+ "jorin": {
+  "lines": [
+   "Apprentice Jorin: Cosima paints the sunset, the House burns it, and I sweep up the ash. It is the only steady job in the arts."
+  ]
+ }
 }

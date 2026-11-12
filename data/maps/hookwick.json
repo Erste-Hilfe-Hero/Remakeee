@@ -5,35 +5,35 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
-  9
+  4,
+  8
  ],
  "rows": [
   "TTTTTTTTTTTT",
-  "T..........T",
-  "T.RRR..RRR.T",
-  "T.HDH..HHD.T",
+  "T.RRR...RR.T",
+  "T.HDH...HD.T",
+  "T.._....._.T",
+  "T.._..L.._.T",
   "T.._______.T",
-  "T.L..__..S.T",
-  "T....__....T",
-  "T...____...T",
-  "_____.o.____",
-  "_____...____",
-  "T...____...T",
-  "T....__....T",
+  "T....__..S.T",
+  "T...o__....T",
+  "____________",
+  "____________",
+  "T*...__@._.T",
+  "T~~~~++~~+~T",
+  "T~~~~++~~+~T",
+  "T....__.._.T",
+  "T...._____.T",
   "T.RR.__.RR.T",
   "T.DH.__.DH.T",
-  "T....__....T",
-  "T.##.__.##.T",
-  "T....__....T",
-  "T*...__..L.T",
-  "T....__....T",
+  "T._..__._..T",
+  "T.________.T",
   "TTTTT__TTTTT"
  ],
  "warps": [
   {
    "x": 3,
-   "y": 3,
+   "y": 2,
    "to": "hookwick_boatshed",
    "tx": 3,
    "ty": 4,
@@ -41,7 +41,7 @@
   },
   {
    "x": 9,
-   "y": 3,
+   "y": 2,
    "to": "hookwick_eel_smokery",
    "tx": 3,
    "ty": 4,
@@ -49,7 +49,7 @@
   },
   {
    "x": 2,
-   "y": 13,
+   "y": 16,
    "to": "hookwick_lock_office",
    "tx": 3,
    "ty": 4,
@@ -57,7 +57,7 @@
   },
   {
    "x": 8,
-   "y": 13,
+   "y": 16,
    "to": "hookwick_tackle_shop",
    "tx": 3,
    "ty": 4,
@@ -115,7 +115,7 @@
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
+   "x": 3,
    "y": 7,
    "facing": "down",
    "dialogue": "vellmarch/hookwick_keeper",
@@ -123,17 +123,17 @@
   },
   {
    "id": "folk_1",
-   "x": 2,
-   "y": 6,
+   "x": 1,
+   "y": 4,
    "facing": "right",
    "dialogue": "vellmarch/hookwick_folk_1",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 5,
-     "y": 9,
-     "facing": "right"
+     "x": 4,
+     "y": 6,
+     "facing": "down"
     },
     {
      "phase": [
@@ -145,16 +145,16 @@
   },
   {
    "id": "folk_2",
-   "x": 9,
-   "y": 11,
+   "x": 10,
+   "y": 6,
    "facing": "left",
    "dialogue": "vellmarch/hookwick_folk_2",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 7,
-     "y": 9,
+     "x": 5,
+     "y": 8,
      "facing": "left"
     },
     {
@@ -167,16 +167,16 @@
   },
   {
    "id": "folk_3",
-   "x": 2,
-   "y": 18,
-   "facing": "right",
+   "x": 7,
+   "y": 13,
+   "facing": "left",
    "dialogue": "vellmarch/hookwick_folk_3",
    "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 4,
-     "y": 7,
+     "x": 3,
+     "y": 8,
      "facing": "right"
     },
     {
@@ -189,16 +189,16 @@
   },
   {
    "id": "q2_two_owners_hald",
-   "x": 4,
-   "y": 16,
+   "x": 7,
+   "y": 6,
    "facing": "down",
    "dialogue": "vellmarch/q2_two_owners",
    "sprite": "villager"
   },
   {
    "id": "q2_eel_rent_odd",
-   "x": 7,
-   "y": 17,
+   "x": 4,
+   "y": 4,
    "facing": "down",
    "dialogue": "vellmarch/q2_eel_rent",
    "sprite": "elder",
@@ -206,8 +206,8 @@
   },
   {
    "id": "q2_eel_rent_odd_boat",
-   "x": 3,
-   "y": 10,
+   "x": 8,
+   "y": 4,
    "facing": "down",
    "dialogue": "vellmarch/q2_eel_rent_odd_boat",
    "sprite": "elder",
@@ -239,7 +239,7 @@
  "signs": [
   {
    "x": 9,
-   "y": 5,
+   "y": 6,
    "dialogue": "vellmarch/hookwick_sign"
   }
  ],
@@ -281,7 +281,7 @@
   }
  ],
  "square": [
-  6,
-  8
+  4,
+  7
  ]
 }

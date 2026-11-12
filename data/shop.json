@@ -1,9 +1,9 @@
 {
  "_comment": "Chimora shop offers. The only source for offers (docs/MONETIZATION.md). Prices: rg_price in Riftglass (0 = not for Riftglass), eur_cents = direct store price tier; the shop always shows the price text the store sends. Server copy: tools/shop/build_offers_sql.py.",
  "riftglass_eur_cents_per_100": 99,
- "catalog_version": 35,
+ "catalog_version": 36,
  "advantage_values": {
-  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle. Step 5: bond_edge = percentage points added to the bond timing score per Bond Head Start tier.",
+  "_comment": "Pay-to-win step 1 (Ali, 10 Nov 2026). Seal tiers in percent (ShopEffects.seal_percent), crystal_cap = most crystal points per stat (twice Spirling.SPARK_MAX), growth_plus = extra growth of the Growth Seal. Step 3: ring_cap_plus = extra Rings over the Ring cap with the Ring Cap Seal. Step 4: crit_seal = extra crit chance in percentage points per tier, status_ward = percent chance a foe's status fails on your side, start_shield = percent less damage on the first hit your lead takes in each battle. Step 5: bond_edge = percentage points added to the bond timing score per Bond Head Start tier. Step 6: storage_wing = extra storage boxes owned after each Storage Wing step (each box holds 30).",
   "power_seal": [
    5,
    10,
@@ -47,6 +47,13 @@
    10,
    20,
    30
+  ],
+  "storage_wing": [
+   2,
+   4,
+   6,
+   9,
+   12
   ]
  },
  "offers": [
@@ -1137,7 +1144,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Echo Scent",
-   "desc": "Bonding gets clearly easier for one try.",
+   "desc": "Bonding gets 25% easier for one try. 1 piece, used up.",
    "rg_price": 100,
    "eur_cents": 99,
    "store_type": "consumable",
@@ -1160,7 +1167,7 @@
    "kind": "advantage",
    "tab": "advantages",
    "name": "Echo Scent x10",
-   "desc": "10 Echo Scents. Single price 1000 Riftglass.",
+   "desc": "10 Echo Scents: each makes one bond 25% easier. Single price 1000 Riftglass.",
    "rg_price": 800,
    "eur_cents": 799,
    "store_type": "consumable",
@@ -1228,7 +1235,8 @@
    },
    "plan": 4597,
    "min_band": 13,
-   "ready": true
+   "ready": true,
+   "requires": "max:storage_box:11"
   },
   {
    "id": "rg_pass",
@@ -4569,6 +4577,814 @@
    ],
    "league_scope": "open",
    "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_ember",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownfire Rend",
+   "desc": "Teaches Crownfire Rend (power 115, accuracy 100, 4 energy, no drawback) to one Ember Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_ember",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_ember",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_tide",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crowntide Surge",
+   "desc": "Teaches Crowntide Surge (power 115, accuracy 100, 4 energy, no drawback) to one Tide Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_tide",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_tide",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_bloom",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownthorn Lash",
+   "desc": "Teaches Crownthorn Lash (power 115, accuracy 100, 4 energy, no drawback) to one Bloom Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_bloom",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_bloom",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_volt",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownbolt Arc",
+   "desc": "Teaches Crownbolt Arc (power 115, accuracy 100, 4 energy, no drawback) to one Volt Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_volt",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_volt",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_stone",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownstone Break",
+   "desc": "Teaches Crownstone Break (power 115, accuracy 100, 4 energy, no drawback) to one Stone Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_stone",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_stone",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_gale",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crowngale Rush",
+   "desc": "Teaches Crowngale Rush (power 115, accuracy 100, 4 energy, no drawback) to one Gale Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_gale",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_gale",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_lumen",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownlight Ray",
+   "desc": "Teaches Crownlight Ray (power 115, accuracy 100, 4 energy, no drawback) to one Lumen Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_lumen",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_lumen",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_umbra",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownshade Grasp",
+   "desc": "Teaches Crownshade Grasp (power 115, accuracy 100, 4 energy, no drawback) to one Umbra Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_umbra",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_umbra",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_ink",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownink Scrawl",
+   "desc": "Teaches Crownink Scrawl (power 115, accuracy 100, 4 energy, no drawback) to one Ink Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_ink",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_ink",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_echo",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownecho Peal",
+   "desc": "Teaches Crownecho Peal (power 115, accuracy 100, 4 energy, no drawback) to one Echo Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_echo",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_echo",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_acid",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownacid Etch",
+   "desc": "Teaches Crownacid Etch (power 115, accuracy 100, 4 energy, no drawback) to one Acid Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_acid",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_acid",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_master_frost",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Master Technique: Crownfrost Shatter",
+   "desc": "Teaches Crownfrost Shatter (power 115, accuracy 100, 4 energy, no drawback) to one Frost Spirling: stronger than every technique learned on the journey. Works in the story and in the Open League; the Fair League and Raid Rifts allow only learned techniques. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.master_frost",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_master_frost",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_gift_slot",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Second Gift Slot",
+   "desc": "One Spirling gets a second gift slot: the hidden gift of its line works next to its own gift, always, without a tip or Ring 20. Stays with that Spirling, which can then no longer be traded. Story only: leagues and Raid Rifts build their teams from species, Ring and techniques. 1 piece, used up.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.gift_slot",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_gift_slot",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_team_slot_7",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Seventh Team Place",
+   "desc": "Your team holds 1 more Spirling in battles against the world: 7 together with the Sixth Team Place, 6 without it. Leagues and Raid Rifts stay at 5. Permanent, once per account.",
+   "rg_price": 2500,
+   "eur_cents": 2499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.team_slot_7",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "team_slot_7"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_rift_breath_deep",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Deep Rift Breath",
+   "desc": "In battle: brings a defeated Spirling back with 50% Vigor. No limit per battle, unlike the Rift Breath (1 per battle). 1 piece, used up.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.rift_breath_deep",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_rift_breath_deep",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_radar",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Spirling Radar",
+   "desc": "When you enter a place, a note names its uncommon, shy and ancient wild Spirlings and the ground they hide in. Story only. Permanent, once per account.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.radar",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "radar"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_wish_charm",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Wish Charm",
+   "desc": "Hold it out on a bond: if the bond works, the new Spirling has the top Spark (12) in all 5 values. It does not change the bond chance. Story only, not in leagues. 1 piece, used up.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.wish_charm",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_wish_charm",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_storage_wing_1",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Storage Wing I",
+   "desc": "Step 1 of 5 to 600 storage places: 2 more boxes of 30 (60 places, 300 in all). Needs exactly 0 bought boxes, single Storage Boxes count too. Permanent, once per account.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.storage_wing_1",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    },
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:storage_box:0",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_storage_wing_2",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Storage Wing II",
+   "desc": "Step 2 of 5 to 600 storage places: 2 more boxes of 30 (60 places, 360 in all). Needs exactly 2 bought boxes, single Storage Boxes count too. Permanent, once per account.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.storage_wing_2",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    },
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:storage_box:2",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_storage_wing_3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Storage Wing III",
+   "desc": "Step 3 of 5 to 600 storage places: 2 more boxes of 30 (60 places, 420 in all). Needs exactly 4 bought boxes, single Storage Boxes count too. Permanent, once per account.",
+   "rg_price": 500,
+   "eur_cents": 499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.storage_wing_3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    },
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:storage_box:4",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_storage_wing_4",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Storage Wing IV",
+   "desc": "Step 4 of 5 to 600 storage places: 3 more boxes of 30 (90 places, 510 in all). Needs exactly 6 bought boxes, single Storage Boxes count too. Permanent, once per account.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.storage_wing_4",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    },
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    },
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:storage_box:6",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_storage_wing_5",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Storage Wing V",
+   "desc": "Step 5 of 5 to 600 storage places: 3 more boxes of 30 (90 places, 600 in all). Needs exactly 9 bought boxes, single Storage Boxes count too. Permanent, once per account.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.storage_wing_5",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    },
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    },
+    {
+     "t": "unlock",
+     "id": "storage_box"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "requires": "tier:storage_box:9",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_tide_pearl",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Riftglass Tide Shell",
+   "desc": "1 Riftglass Tide Shell: works like the Tide Shell, the only unfurling item (merchants sell that one for 2500 coins). Furled back, a Spirling returns a plain Tide Shell. 1 piece, used up.",
+   "rg_price": 300,
+   "eur_cents": 299,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.tide_pearl",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_tide_pearl",
+     "n": 1
+    }
+   ],
+   "league_scope": "none",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_spirlog_atlas",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Spirlog Atlas",
+   "desc": "Every Spirlog page names all places where its kind lives, also the ones you have not searched yet. Permanent, once per account.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.spirlog_atlas",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "spirlog_atlas"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_daily_find_x3",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Triple Find of the Day",
+   "desc": "The rare visitor of the day can be met 3 times a day instead of once. Story only. Permanent, once per account.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.daily_find_x3",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "daily_find_x3"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_wild_ward",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Wild Ward",
+   "desc": "Switch it on in Settings and no wild Spirlings step out while you walk; switch it off to meet them again. Permanent, once per account.",
+   "rg_price": 800,
+   "eur_cents": 799,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.wild_ward",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "wild_ward"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_swift_steps",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Swift Steps",
+   "desc": "You walk and run 2 times as fast on the map. Permanent, once per account.",
+   "rg_price": 600,
+   "eur_cents": 599,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.swift_steps",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "swift_steps"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_rest_anywhere",
+   "kind": "advantage",
+   "tab": "advantages",
+   "name": "Pocket Rest",
+   "desc": "Rest from the menu anywhere outside battle: the whole team gets 100% Vigor, energy and no states. You still wake up at your last rest spot after a lost battle. Permanent, once per account.",
+   "rg_price": 1000,
+   "eur_cents": 999,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.unlock.rest_anywhere",
+   "grants": [
+    {
+     "t": "unlock",
+     "id": "rest_anywhere"
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_script_pack",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Rift Script Pack",
+   "desc": "All 8 Rift Scripts, 1 of each element (Ember, Tide, Bloom, Volt, Stone, Gale, Lumen, Umbra). Single price 4000 Riftglass.",
+   "rg_price": 3200,
+   "eur_cents": 3199,
+   "store_type": "consumable",
+   "product_id": "de.chimora.game.consumable.script_pack",
+   "grants": [
+    {
+     "t": "item",
+     "id": "rg_script_ember",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_script_tide",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_script_bloom",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_script_volt",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_script_stone",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_script_gale",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_script_lumen",
+     "n": 1
+    },
+    {
+     "t": "item",
+     "id": "rg_script_umbra",
+     "n": 1
+    }
+   ],
+   "league_scope": "open",
+   "duration": "once",
+   "rg_only": true,
+   "min_band": 13,
+   "ready": true
+  },
+  {
+   "id": "rg_starter_trio",
+   "kind": "advantage",
+   "tab": "packs",
+   "name": "Journey Start Trio",
+   "desc": "Zippit, Zephlet and Mirkmole join you at Ring 15 with the highest Spark in every value. Fixed values, no chance. Never traded or lent. Meant for the start of the journey. Once per account.",
+   "rg_price": 1500,
+   "eur_cents": 1499,
+   "store_type": "non_consumable",
+   "product_id": "de.chimora.game.spirling.starter_trio",
+   "grants": [
+    {
+     "t": "spirling",
+     "species": "Zippit",
+     "level": 15
+    },
+    {
+     "t": "spirling",
+     "species": "Zephlet",
+     "level": 15
+    },
+    {
+     "t": "spirling",
+     "species": "Mirkmole",
+     "level": 15
+    }
+   ],
+   "league_scope": "none",
+   "duration": "permanent",
+   "limit": {
+    "per": "account",
+    "n": 1
+   },
    "rg_only": true,
    "min_band": 13,
    "ready": true

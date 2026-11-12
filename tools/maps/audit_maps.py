@@ -37,6 +37,10 @@ tools/art/preview_map.py. Kinds of finding:
   building_cut    a building only one tile wide (a sliver of a house)
   path_stub       a scrap of road (1 to 3 cells) that joins no road, door, stairs, pier or map edge
   open_edge       a walkable border cell of an outdoor map with no warp (the path runs into void)
+  town_twin       two towns of one region with the same layout (roads, house plots, water and
+                  inner cliffs agree on TWIN_SHARE of the cells either town builds on); owner rule:
+                  no two towns look alike. Reported on the later town of the pair.
+  town_few_doors  a town with fewer than MIN_TOWN_DOORS buildings you can walk into
   road_dead_end   a straight road (1 or 2 wide) that runs into the tree, rock or cliff frame with
                   no exit there (a town side without a way out that kept its road arm)
 """
@@ -438,6 +442,43 @@ def _has_thing(m: Map, c: tuple) -> bool:
     return c in things
 
 
+TWIN_SHARE = 0.6
+MIN_TOWN_DOORS = 3
+STRUCTURE = {"PATH": "road", "PIER": "road", "STAIRS": "road", "WALL": "house", "ROOF": "house", "DOOR": "house",
+             "WATER": "water", "CLIFF": "cliff"}
+
+
+def structure(m: Map) -> dict:
+    """What a town is built from, per inner cell: road, house, water or cliff (the frame is left out)."""
+    return {(x, y): STRUCTURE[m.kind(x, y)] for x, y in m.cells()
+            if 0 < x < m.w - 1 and 0 < y < m.h - 1 and m.kind(x, y) in STRUCTURE}
+
+
+def twin_share(a: Map, b: Map) -> float:
+    """Share of the built cells of two towns that hold the same thing (1.0: the same layout)."""
+    sa, sb = structure(a), structure(b)
+    cells = set(sa) | set(sb)
+    return sum(1 for c in cells if sa.get(c) == sb.get(c)) / len(cells) if cells else 0.0
+
+
+def check_towns(maps: dict) -> list:
+    places = json.load(open(os.path.join(ROOT, "data", "world_layout.json")))["maps"]
+    towns = [maps[mid] for mid in sorted(maps) if places.get(mid, {}).get("kind") == "town"]
+    out = []
+    for i, m in enumerate(towns):
+        for o in towns[:i]:
+            if o.region == m.region and twin_share(o, m) >= TWIN_SHARE:
+                out.append({"map": m.id, "kind": "town_twin", "x": -1, "y": -1,
+                            "msg": "same layout as %s (%d%% of the built cells agree)" % (o.id, round(100 * twin_share(o, m)))})
+                break
+        inside = {str(w["to"]) for (x, y), w in m.warp_cells.items()
+                  if m.kind(x, y) == "DOOR" and str(w["to"]) in maps and not maps[str(w["to"])].outdoor}
+        if len(inside) < MIN_TOWN_DOORS:
+            out.append({"map": m.id, "kind": "town_few_doors", "x": -1, "y": -1,
+                        "msg": "%d buildings to walk into, at least %d" % (len(inside), MIN_TOWN_DOORS)})
+    return out
+
+
 LANDMARKS = json.load(open(os.path.join(ROOT, "data", "landmarks.json")))["maps"]
 
 
@@ -468,7 +509,7 @@ def audit() -> list:
             continue
         done.add(m.id)
         out += check_map(m, maps, entries)
-    return out
+    return out + check_towns(maps)
 
 
 def main() -> None:

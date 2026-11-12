@@ -5,27 +5,27 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
+  5,
   9
  ],
  "rows": [
   "^^^^^__^^^^^",
-  "^T...__...T^",
-  "^.###__###.^",
-  "^.*T*__*T*.^",
+  "^RRRR__RRRR^",
+  "^RRRR__RRRR^",
+  "^HDHH__HHDH^",
+  "^._..__.._.^",
+  "^.________.^",
+  "^.L.*__*.S.^",
+  "^..______..^",
+  "____.o._____",
+  "____..._____",
+  "^..______..^",
   "^....__....^",
-  "^.L..__..S.^",
-  "^....__....^",
-  "^...____...^",
-  "_____.o.____",
-  "_____...____",
-  "^...____...^",
-  "^....__....^",
-  "^.TT.__.TT.^",
-  "^.**.__.**.^",
-  "^....__....^",
-  "^T##.__.##T^",
-  "^....__....^",
+  "^.RRR__RRR.^",
+  "^.HDH__HDH.^",
+  "^.._.__._..^",
+  "^T.______.T^",
+  "^.##.__.##.^",
   "^**..__..L.^",
   "^....__....^",
   "^^^^^__^^^^^"
@@ -94,28 +94,60 @@
    "tx": 6,
    "ty": 20,
    "facing": "up"
+  },
+  {
+   "x": 2,
+   "y": 3,
+   "to": "gildcrest_shop",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 9,
+   "y": 3,
+   "to": "gildcrest_spring",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 3,
+   "y": 13,
+   "to": "gildcrest_home_1",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
+  },
+  {
+   "x": 8,
+   "y": 13,
+   "to": "gildcrest_home_2",
+   "tx": 4,
+   "ty": 6,
+   "facing": "up"
   }
  ],
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
-   "y": 7,
+   "x": 4,
+   "y": 8,
    "facing": "down",
    "dialogue": "gildcrest/keeper",
    "sprite": "elder"
   },
   {
    "id": "trader",
-   "x": 3,
-   "y": 14,
+   "x": 7,
+   "y": 11,
    "facing": "down",
    "dialogue": "gildcrest/trader",
    "sprite": "villager"
   },
   {
    "id": "lisette",
-   "x": 2,
+   "x": 1,
    "y": 6,
    "facing": "right",
    "dialogue": "gildcrest/lisette",
@@ -123,7 +155,7 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 5,
+     "x": 4,
      "y": 9,
      "facing": "right"
     },
@@ -137,7 +169,7 @@
   },
   {
    "id": "tobiah",
-   "x": 9,
+   "x": 10,
    "y": 11,
    "facing": "left",
    "dialogue": "gildcrest/tobiah",
@@ -145,7 +177,7 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 7,
+     "x": 6,
      "y": 9,
      "facing": "left"
     },
@@ -167,9 +199,9 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 4,
-     "y": 7,
-     "facing": "right"
+     "x": 6,
+     "y": 8,
+     "facing": "left"
     },
     {
      "phase": [
@@ -181,8 +213,8 @@
   },
   {
    "id": "host",
-   "x": 8,
-   "y": 14,
+   "x": 7,
+   "y": 17,
    "facing": "left",
    "dialogue": "gildcrest/host",
    "sprite": "elder",
@@ -192,7 +224,7 @@
  "signs": [
   {
    "x": 9,
-   "y": 5,
+   "y": 6,
    "dialogue": "gildcrest/sign"
   }
  ],
@@ -234,7 +266,7 @@
   }
  ],
  "square": [
-  6,
+  5,
   8
  ]
 }

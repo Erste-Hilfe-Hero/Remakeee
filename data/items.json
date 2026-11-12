@@ -641,7 +641,7 @@
  {
   "id": "rg_echo_scent",
   "name": "Echo Scent",
-  "description": "Bonding gets clearly easier for one try.",
+  "description": "Bonding gets 25% easier for one try.",
   "battle": false,
   "shop": true,
   "bond_bonus": 0.25
@@ -1101,6 +1101,146 @@
   "heal_frac": 1.0,
   "cure": true
  },
+ {
+  "id": "rg_master_ember",
+  "name": "Master Technique: Crownfire Rend",
+  "description": "Teaches Crownfire Rend (power 115, accuracy 100, 4 energy) to one Ember Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownfire Rend",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_tide",
+  "name": "Master Technique: Crowntide Surge",
+  "description": "Teaches Crowntide Surge (power 115, accuracy 100, 4 energy) to one Tide Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crowntide Surge",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_bloom",
+  "name": "Master Technique: Crownthorn Lash",
+  "description": "Teaches Crownthorn Lash (power 115, accuracy 100, 4 energy) to one Bloom Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownthorn Lash",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_volt",
+  "name": "Master Technique: Crownbolt Arc",
+  "description": "Teaches Crownbolt Arc (power 115, accuracy 100, 4 energy) to one Volt Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownbolt Arc",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_stone",
+  "name": "Master Technique: Crownstone Break",
+  "description": "Teaches Crownstone Break (power 115, accuracy 100, 4 energy) to one Stone Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownstone Break",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_gale",
+  "name": "Master Technique: Crowngale Rush",
+  "description": "Teaches Crowngale Rush (power 115, accuracy 100, 4 energy) to one Gale Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crowngale Rush",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_lumen",
+  "name": "Master Technique: Crownlight Ray",
+  "description": "Teaches Crownlight Ray (power 115, accuracy 100, 4 energy) to one Lumen Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownlight Ray",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_umbra",
+  "name": "Master Technique: Crownshade Grasp",
+  "description": "Teaches Crownshade Grasp (power 115, accuracy 100, 4 energy) to one Umbra Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownshade Grasp",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_ink",
+  "name": "Master Technique: Crownink Scrawl",
+  "description": "Teaches Crownink Scrawl (power 115, accuracy 100, 4 energy) to one Ink Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownink Scrawl",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_echo",
+  "name": "Master Technique: Crownecho Peal",
+  "description": "Teaches Crownecho Peal (power 115, accuracy 100, 4 energy) to one Echo Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownecho Peal",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_acid",
+  "name": "Master Technique: Crownacid Etch",
+  "description": "Teaches Crownacid Etch (power 115, accuracy 100, 4 energy) to one Acid Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownacid Etch",
+  "used_up": true
+ },
+ {
+  "id": "rg_master_frost",
+  "name": "Master Technique: Crownfrost Shatter",
+  "description": "Teaches Crownfrost Shatter (power 115, accuracy 100, 4 energy) to one Frost Spirling. Stronger than every technique learned on the journey. Used up.",
+  "battle": false,
+  "shop": true,
+  "teaches": "Crownfrost Shatter",
+  "used_up": true
+ },
+ {
+  "id": "rg_gift_slot",
+  "name": "Second Gift Slot",
+  "description": "Opens a second gift slot on one Spirling: the hidden gift of its line works next to its own gift, always. Stays with that Spirling. Used up.",
+  "battle": false,
+  "shop": true,
+  "gift_slot": true
+ },
+ {
+  "id": "rg_rift_breath_deep",
+  "name": "Deep Rift Breath",
+  "description": "In battle: brings a defeated Spirling back with half its Vigor. No limit per battle.",
+  "battle": true,
+  "shop": true,
+  "battle_revive": 0.5
+ },
+ {
+  "id": "rg_wish_charm",
+  "name": "Wish Charm",
+  "description": "Hold it out on a bond: if the bond works, the new Spirling has the top Spark (12) in all five values. Used up. Story only, not in leagues.",
+  "battle": false,
+  "shop": true,
+  "bond_wish": true
+ },
+ {
+  "id": "rg_tide_pearl",
+  "name": "Riftglass Tide Shell",
+  "description": "Works like a Tide Shell: some Spirlings unfurl when they hold it close. Furled back, they return a plain Tide Shell.",
+  "battle": false,
+  "shop": true,
+  "evolves": true,
+  "unfurls_as": "tide_pearl" },
  {
   "id": "pith_mend",
   "name": "Mending Pith",

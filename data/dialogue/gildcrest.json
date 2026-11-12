@@ -38,5 +38,28 @@
    "Aurek's own children poisoned the feast to take the house. You were the alibi. Trust no one, least of all a family that says you are one of them."
   ],
   "action": "set_flag halcyra_done"
+ },
+ "ottmar": {
+  "lines": [
+   "Commissary Clerk Ottmar: Everything here is gilded. The prices too. Scratch them and you find more prices."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew pith_mend pith_clear"
+ },
+ "calla": {
+  "lines": [
+   "Infirmary Sister Calla: Rest. In this house people recover quickly. The slow ones are replaced."
+  ],
+  "action": "heal"
+ },
+ "bertrand": {
+  "lines": [
+   "Cook Bertrand: Five children, five tasters. I am on my third set of tasters.",
+   "Cook Bertrand: The soup is fine. Probably. Tobiah went first."
+  ]
+ },
+ "emeric": {
+  "lines": [
+   "Tutor Emeric: I teach the Gilt children arithmetic. They only ever ask about subtraction."
+  ]
  }
 }
