@@ -24,6 +24,8 @@ var player: Player
 var busy: bool = false
 
 var _ground: TileMapLayer
+## Terrain look of the map's era over the ground tiles (EraTerrainLook, docs/ERA_FEEL_TILES.md).
+var _terrain_look: EraTerrainLook
 ## Shade over dark gear cells (thick without the gear, a faint dusk with it).
 var _shade: Node2D
 var _entities: Node2D
@@ -165,6 +167,8 @@ func _build() -> void:
 	_ground = TileMapLayer.new()
 	_ground.name = "Ground"
 	add_child(_ground)
+	_terrain_look = EraTerrainLook.new()
+	add_child(_terrain_look)
 	_particles = PixelParticles.new()
 	_particles.name = "particles"
 	add_child(_particles)
@@ -351,6 +355,7 @@ func load_map(map_id: String, cell: Vector2i, face: String) -> void:
 		GameState.enter_map(map_id, cell)
 	_world.prepare(map, cell)
 	map.paint(_ground)
+	_terrain_look.show_map(map, _ground, _camera, _entities)
 	refresh_shade()
 	_spawn_npcs()
 	_place_landmark()
