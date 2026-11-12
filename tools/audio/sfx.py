@@ -64,6 +64,7 @@ def sfx_defs() -> dict[str, np.ndarray]:
     out.update(passage_sfx())
     out.update(grass_sfx())
     out.update(era2_element_sfx())
+    out.update(later_element_sfx())
     return out
 
 
@@ -299,4 +300,36 @@ def era2_element_sfx() -> dict[str, np.ndarray]:
     fade = np.linspace(1, 0, n)
     out["travel_ink"] = (noise(n, 2, rng) * (np.sin(tt(n) * 2 * np.pi * 14) > 0.2) * 0.4 + sweep(140, 110, n, "tri") * 0.3) * fade * 0.5
     out["travel_echo"] = (triangle(freq(midi("E5")), n) * 0.3 * (0.5 + 0.5 * np.sin(tt(n) * 2 * np.pi * 7))) * fade * 0.5
+    return out
+
+
+def later_element_sfx() -> dict[str, np.ndarray]:
+    """Hit and travel sounds for the elements of the post-game regions: Rust and Mask (Vellmarch),
+    Acid and Frost (Quillmarch), Gilt and Zenith (Halcyra). Own generator and seed."""
+    rng = np.random.default_rng(4242)
+    out: dict[str, np.ndarray] = {}
+    tt = lambda n: np.arange(n) / RATE
+    n = secs(0.22)  # Rust: a grinding scrape on old iron
+    out["hit_rust"] = (sweep(160, 60, n, "pulse", 0.3) * 0.45 + noise(n, 4, rng) * 0.35) * env(n, decay=0.12, sustain=0.3) * 0.8
+    n = secs(0.2)  # Mask: a muffled knock behind a face
+    out["hit_mask"] = (triangle(freq(midi("D3")), n) * 0.5 + noise(n, 6, rng) * 0.15) * np.exp(-tt(n) * 18) * 0.9
+    n = secs(0.22)  # Acid: a hiss with bubbles
+    bub = (np.sin(tt(n) * 2 * np.pi * 23) > 0.6) * 0.3
+    out["hit_acid"] = (noise(n, 1, rng) * 0.35 + sweep(500, 300, n, "tri") * bub) * env(n, decay=0.1, sustain=0.4) * 0.75
+    n = secs(0.24)  # Frost: brittle ice cracking
+    crack = noise(n, 1, rng) * (rng.random(n) > 0.85)
+    out["hit_frost"] = (crack * 0.6 + triangle(freq(midi("B6")), n) * 0.2 * np.exp(-tt(n) * 14)) * 0.8
+    n = secs(0.3)  # Gilt: a coin ringing on stone
+    coin = triangle(freq(midi("E6")), n) * 0.35 + triangle(freq(midi("G#6")), n) * 0.2
+    out["hit_gilt"] = coin * np.exp(-tt(n) * 11) * 0.85
+    n = secs(0.26)  # Zenith: a bright rising flash
+    out["hit_zenith"] = sweep(500, 1400, n, "tri") * env(n, decay=0.14, sustain=0.3) * 0.6
+    n = secs(0.25)
+    fade = np.linspace(1, 0, n)
+    out["travel_rust"] = (noise(n, 3, rng) * 0.3 + sweep(120, 90, n, "pulse", 0.3) * 0.25) * fade * 0.5
+    out["travel_mask"] = (triangle(freq(midi("A3")), n) * 0.3 * (0.5 + 0.5 * np.sin(tt(n) * 2 * np.pi * 5))) * fade * 0.5
+    out["travel_acid"] = (noise(n, 1, rng) * 0.25 * (np.sin(tt(n) * 2 * np.pi * 11) > 0)) * fade * 0.5
+    out["travel_frost"] = (triangle(freq(midi("E6")), n) * 0.2 + noise(n, 1, rng) * 0.1) * fade * 0.5
+    out["travel_gilt"] = (triangle(freq(midi("B5")), n) * 0.25 * (0.6 + 0.4 * np.sin(tt(n) * 2 * np.pi * 9))) * fade * 0.5
+    out["travel_zenith"] = sweep(700, 1100, n, "tri") * 0.25 * fade * 0.5
     return out

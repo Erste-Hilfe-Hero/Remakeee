@@ -26,17 +26,5 @@
     "facing": "up"
    }
   ]
- },
- "replace": {
-  "npcs": [
-   {
-    "id": "boatman",
-    "x": 1,
-    "y": 8,
-    "facing": "right",
-    "dialogue": "reedhaven/boatman",
-    "sprite": "villager"
-   }
-  ]
  }
 }
