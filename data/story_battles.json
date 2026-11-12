@@ -1729,6 +1729,150 @@
    "kiln_venn_beaten"
   ]
  },
+ "assize_bailiffs": {
+  "trainer": "Assize Bailiffs",
+  "team": [
+   {
+    "species": "Brickwarden",
+    "level": 34
+   },
+   {
+    "species": "Sootlurk",
+    "level": 34
+   },
+   {
+    "species": "Smeltmaw",
+    "level": 35
+   }
+  ],
+  "ai": 2,
+  "money": 200,
+  "defeat": "ashmere_more/bailiffs_defeat",
+  "lose": "ashmere_more/bailiffs_lose"
+ },
+ "briony_fence": {
+  "trainer": "Ruskweber Fences",
+  "team": [
+   {
+    "species": "Shalebat",
+    "level": 34
+   },
+   {
+    "species": "Mirkmole",
+    "level": 34
+   },
+   {
+    "species": "Etchling",
+    "level": 35
+   }
+  ],
+  "ai": 2,
+  "money": 1200,
+  "defeat": "ashmere_more/fence_defeat",
+  "lose": "ashmere_more/fence_lose"
+ },
+ "mercer_wake": {
+  "trainer": "Mourner Mercer",
+  "team": [
+   {
+    "species": "Hushkin",
+    "level": 35
+   },
+   {
+    "species": "Fumewraith",
+    "level": 35
+   },
+   {
+    "species": "Sablarch",
+    "level": 36
+   },
+   {
+    "species": "Gloomgillar",
+    "level": 36
+   }
+  ],
+  "ai": 3,
+  "money": 2800,
+  "defeat": "ashmere_more/mercer_defeat",
+  "lose": "ashmere_more/mercer_lose",
+  "win_flags": [
+   "ah_mourner_done"
+  ]
+ },
+ "deed_hunters": {
+  "trainer": "Catch Tax Collectors",
+  "team": [
+   {
+    "species": "Brickwarden",
+    "level": 35
+   },
+   {
+    "species": "Charsylvan",
+    "level": 35
+   },
+   {
+    "species": "Ingotusk",
+    "level": 36
+   }
+  ],
+  "ai": 2,
+  "money": 600,
+  "defeat": "ashmere_more/hunters_defeat",
+  "lose": "ashmere_more/hunters_lose"
+ },
+ "juno_split_trap": {
+  "trainer": "Slagg's Pit Hands",
+  "team": [
+   {
+    "species": "Clinkshell",
+    "level": 36
+   },
+   {
+    "species": "Coalbuck",
+    "level": 36
+   },
+   {
+    "species": "Lodebrock",
+    "level": 37
+   }
+  ],
+  "ai": 2,
+  "money": 900,
+  "defeat": "ashmere_more/net_defeat",
+  "lose": "ashmere_more/net_lose"
+ },
+ "deep_slagg": {
+  "trainer": "Overman Slagg",
+  "team": [
+   {
+    "species": "Coalpatriarch",
+    "level": 38
+   },
+   {
+    "species": "Brickolossus",
+    "level": 38
+   },
+   {
+    "species": "Lodemarshal",
+    "level": 38
+   },
+   {
+    "species": "Clinkerdome",
+    "level": 39
+   },
+   {
+    "species": "Ingotusk",
+    "level": 39
+   }
+  ],
+  "ai": 3,
+  "money": 4000,
+  "defeat": "ashmere_more/slagg_defeat",
+  "lose": "ashmere_more/slagg_lose",
+  "win_flags": [
+   "ah_slagg_beaten"
+  ]
+ },
  "tansy_1": {
   "trainer": "Tansy Hask",
   "team": [

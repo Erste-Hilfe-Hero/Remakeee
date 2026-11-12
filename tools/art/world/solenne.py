@@ -70,13 +70,13 @@ def ochrewell(world):
             "^::..__..::^",
             "^.RRR__RRR.^",
             "^.HDH__HDH.^",
-            "^....__....^",
+            "^*...__...*^",
             "^.L..__..S.^",
             "^....__....^",
-            "^..._____..^",
+            "^.T._____..^",
             "_____.o.____",
             "_____...____",
-            "^..._____..^",
+            "^..T_____T.^",
             "_______....^",
             "^.RR.__.RR.^",
             "^.DH.__.HD.^",
@@ -84,7 +84,7 @@ def ochrewell(world):
             "^.##.__.##.^",
             "^....__....^",
             "^::..__..L.^",
-            "^....__....^",
+            "^T...__....^",
             "^^^^^__^^^^^"]
     world.add_text(mid, {
         "sign": lines(("OCHREWELL", "OCHREWELL"), ("Ochrewell, 140 folk. 141 if you stay. Most do, one way or another.", "Ochrewell, 140 Leute. 141, wenn du bleibst. Die meisten bleiben, so oder so."),
@@ -193,7 +193,7 @@ def tower_rift(world):
             "^.::...::^_^",
             "^........^_^",
             "^^^^..^^^^.^",
-            "^..........^",
+            "^T.........^",
             "^.::....::.^",
             "^^^^^..^^^^^"]
     signs = spring_and_sign(world, mid, (2, 4), (7, 5), ("THE TOWER RIFT", "DER TURMRISS"),
@@ -256,7 +256,7 @@ def oasis_rift(world):
             "^.......S^_^",
             "^........^_^",
             "^^^^..^^^^.^",
-            "^..........^",
+            "^T.........^",
             "^.,,....,,.^",
             "^^^^^..^^^^^"]
     signs = spring_and_sign(world, mid, (6, 4), (7, 5), ("THE OASIS RIFT", "DER OASENRISS"),
@@ -323,7 +323,7 @@ def sun_rift(world):
             "^.::...::^_^",
             "^........^_^",
             "^^^^..^^^^.^",
-            "^..........^",
+            "^T.........^",
             "^.::....::.^",
             "^^^^^..^^^^^"]
     signs = spring_and_sign(world, mid, (7, 4), (2, 5), ("THE SUN RIFT", "DER SONNENRISS"),

@@ -9,7 +9,7 @@ Usage: python3 tools/art/build_world.py            (all groups)
                                                     writes them to tools/art/world/hand/, then builds)
 Hand-added NPCs, finds, signs and warps live in tools/art/world/hand/ (see common.py), so a
 rebuild never throws them away.
-Groups: veydal_core, veydal_wilds, veydal_caves, veydal_dungeons, corvane, veydal_finds, rifts12, solenne, solenne_side, solenne_more, halcyra. See tools/art/world/common.py.
+Groups: veydal_core, veydal_wilds, veydal_caves, veydal_dungeons, corvane, veydal_finds, rifts12, solenne, solenne_side, solenne_more, ashmere_more, halcyra. See tools/art/world/common.py.
 """
 import importlib
 import json
@@ -19,7 +19,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "world"))
 from common import DIA, MAPS, World  # noqa: E402
 
-GROUPS = ["veydal_core", "veydal_wilds", "veydal_caves", "veydal_dungeons", "corvane", "veydal_finds", "rifts12", "solenne", "solenne_side", "solenne_more", "halcyra"]
+GROUPS = ["veydal_core", "veydal_wilds", "veydal_caves", "veydal_dungeons", "corvane", "veydal_finds", "rifts12", "solenne", "solenne_side", "solenne_more", "ashmere_more", "halcyra"]
 
 
 def snapshot():
