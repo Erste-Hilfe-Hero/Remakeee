@@ -24,6 +24,8 @@ const CHAR_REL: String = "chars/%s.png"
 const SHEET_COLUMNS: Dictionary[String, int] = {"down": 0, "up": 1, "left": 2, "right": 3}
 static var _sheets: Dictionary[String, Texture2D] = {}
 var _step_frame: int = 0
+## Pose state kept by the era look (EraActorLook, EraActors): last pose, quarter turn, float.
+var era_anim: Dictionary = {}
 
 var cell: Vector2i = Vector2i.ZERO
 var facing: String = "down"
@@ -124,6 +126,9 @@ static func clear_cache() -> void:
 	_sheets.clear()
 
 func _draw() -> void:
+	# From Era III the era look draws the figure from its own sheets (data/era_actor_look.json).
+	if EraActorLook.draw_actor(self):
+		return
 	var sheet: Texture2D = sheet_for(sprite_style)
 	var shift: Vector2 = jolt
 	if bob and moving and _step_frame == 1:
