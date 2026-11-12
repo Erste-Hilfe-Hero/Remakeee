@@ -61,6 +61,9 @@ static func run(menu: PauseMenu) -> void:
 			labels.append("Lent Spirlings")
 		if Online.flag_on("events"):
 			labels.append("Events")
+		labels.append("Suggested Wayfarers")
+		if Online.flag_on("invite"):
+			labels.append("Invite a friend")
 		var title: String = "Friends %d   Your code %s" % [friends.size(), Online.pretty_code(Online.friend_code())]
 		var idx: int = await menu.pick_strings(title, labels)
 		if idx < 0:
@@ -85,6 +88,8 @@ static func run(menu: PauseMenu) -> void:
 			"My wish list": await run_wishes(menu)
 			"Lent Spirlings": await run_loans(menu)
 			"Events": await EventsMenu.run(menu)
+			"Suggested Wayfarers": await FriendsMoreMenu.run_suggestions(menu)
+			"Invite a friend": await FriendsMoreMenu.run_invite(menu)
 			"Raid Rifts":
 				await RaidMenu.run(menu)
 				if not menu.raid_attempt.is_empty():
@@ -147,7 +152,9 @@ static func framed_name(f: Dictionary) -> String:
 static func friend_line(f: Dictionary) -> String:
 	var dot: String = "*" if bool(f.get("online", false)) else "-"
 	var where: String = str(f.get("place", "")) if bool(f.get("online", false)) else Loc.t(last_seen_text(int(f.get("last_seen", 0))))
-	return "%s %s  Bond %d  %s" % [dot, framed_name(f), int(f.get("level", 1)), where]
+	# "+" marks a favourite (point 59), "!" a reward waiting (points 56, 57).
+	var mark: String = ("+" if bool(f.get("fav", false)) else "") + ("!" if FriendsMoreMenu.has_ready(f) else "")
+	return "%s %s%s  Bond %d  %s" % [dot, mark, framed_name(f), int(f.get("level", 1)), where]
 
 static func last_seen_text(unix: int) -> String:
 	var ago: int = maxi(0, Online.unix_now() - unix)
@@ -168,7 +175,7 @@ static func card_text(f: Dictionary) -> String:
 		"Play time: %d h" % int(c.get("hours", 0)),
 		"Friendship %d (%d points)" % [int(f.get("level", 1)), int(f.get("points", 0))],
 	]
-	return Loc.t("\n".join(lines)) + "\n" + wish_text(f.get("wishes", []))
+	return Loc.t("\n".join(lines)) + "\n" + FriendsMoreMenu.rank_line(f) + "\n" + wish_text(f.get("wishes", []))
 
 ## "Wishes: Tonic, Remedy" or "Wishes: -" (point 46).
 static func wish_text(wishes: Variant) -> String:
@@ -187,7 +194,14 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 			"Send a card..."]
 		if Online.flag_on("lend"):
 			entries.append("Lend a Spirling...")
+		entries.append_array(FriendsMoreMenu.friend_entries(f))
 		var idx: int = await menu.pick_strings(str(f.name), entries)
+		if idx >= 9:
+			if entries[idx] == "Lend a Spirling...":
+				await lend(menu, code, str(f.name))
+			else:
+				await FriendsMoreMenu.run_entry(menu, f, entries[idx])
+			continue
 		match idx:
 			-1:
 				return false
@@ -236,8 +250,6 @@ static func run_friend(menu: PauseMenu, f: Dictionary) -> bool:
 				await report(menu, code, str(f.name))
 			8:
 				await send_card(menu, code, str(f.name))
-			9:
-				await lend(menu, code, str(f.name))
 	return false
 
 ## A greeting card with a Spirling from your journey on it (point 48).

@@ -1,0 +1,35 @@
+{
+ "name": "Bell Cellar",
+ "region": "quivermoor",
+ "biome": "town",
+ "backdrop": "field",
+ "rows": [
+  "WWWWWWWW",
+  "WCffffCW",
+  "WffffffW",
+  "WffCCffW",
+  "WffffffW",
+  "WWWDWWWW"
+ ],
+ "warps": [
+  {
+   "x": 3,
+   "y": 5,
+   "to": "rootchapel",
+   "tx": 8,
+   "ty": 4,
+   "facing": "down"
+  }
+ ],
+ "npcs": [
+  {
+   "id": "ringer",
+   "x": 4,
+   "y": 2,
+   "facing": "down",
+   "dialogue": "quivermoor/rootchapel_bell_cellar_ringer",
+   "sprite": "villager"
+  }
+ ],
+ "signs": []
+}

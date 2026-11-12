@@ -104,6 +104,8 @@ var gift_items: Dictionary = {}
 ## Failed bonds that do not give the wild Spirling its free action (the pass's extra bond try,
 ## plan item 4634).
 var bond_grace: int = 0
+## Added to every bond's timing score in wild battles (the shop's Bond Head Start, 0.1 per tier).
+var bond_edge: float = 0.0
 ## Items used this battle per side, for the per-battle limits of shop items ("per_battle" in items.json).
 var items_used: Array[Dictionary] = [{}, {}]
 ## Extra energy above the normal maximum per side, set before start() (the shop's Overcharge
@@ -1279,15 +1281,21 @@ func _do_bond(a: BattleAction) -> void:
 	var target: Spirling = active_spirling(Side.FOE, t_slot)
 	var bonus: float = 0.0
 	var sure: bool = false
+	var retry: bool = false
 	if not a.item_id.is_empty() and int(inventory.get(a.item_id, 0)) > 0:
 		inventory[a.item_id] = int(inventory[a.item_id]) - 1
 		bonus = float(Database.item(a.item_id).get("bond_bonus", 0.0))
 		# The shop's Bond Seal (plan area 10) makes this one bond certain.
 		sure = bool(Database.item(a.item_id).get("bond_sure", false))
+		# The shop's Second Try Charm: a failed bond is tried once more at once.
+		retry = bool(Database.item(a.item_id).get("bond_retry", false))
 	var who: Dictionary = _who(Side.FOE, t_slot)
 	who["timing"] = a.timing_score
 	emit_event(BattleEvent.Type.BOND_ATTEMPT, who)
-	var success: bool = rng.randf() < BondCalc.chance(target, a.timing_score, bonus) or sure
+	var timing: float = minf(1.0, a.timing_score + clampf(bond_edge, 0.0, 1.0))
+	var success: bool = rng.randf() < BondCalc.chance(target, timing, bonus) or sure
+	if not success and retry:
+		success = rng.randf() < BondCalc.chance(target, timing, bonus)
 	var res: Dictionary = _who(Side.FOE, t_slot)
 	res["success"] = success
 	var steadied: bool = not success and bond_grace > 0
