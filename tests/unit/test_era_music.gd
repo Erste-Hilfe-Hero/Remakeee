@@ -145,3 +145,12 @@ func test_place_song_follows_the_era() -> void:
 	assert_eq(Sound.era_music("victory"), "victory")
 	EraManager.retro_filter = saved
 	EraManager.unlocked_era = saved_unlocked
+
+func test_stems_stay_small() -> void:
+	var total: int = 0
+	var dir: String = MusicDirector.STEM_DIR.get_base_dir()
+	for f: String in DirAccess.get_files_at(dir):
+		if f.ends_with(".ogg"):
+			total += FileAccess.get_file_as_bytes(dir.path_join(f)).size()
+	assert_gt(total, 0)
+	assert_lt(total, 5 * 1024 * 1024, "stems are %d bytes; the APK budget has no room for more" % total)

@@ -46,6 +46,12 @@ static func element_name(e: int) -> String:
 static func color(e: int) -> Color:
 	return COLORS.get(e, Color.GRAY)
 
+## Display name of a chart element by its key, also for chart elements not in the enum yet
+## (Halcyra's Gilt and Zenith take their "name" from data/type_chart.json).
+static func chart_name(key: String) -> String:
+	var t: Dictionary = (chart().get("types", {}) as Dictionary).get(key, {})
+	return Loc.t(str(t.get("name", key.capitalize())))
+
 ## Multiplier for one attacking element into one defending element.
 static func single(atk: int, def: int) -> float:
 	var atk_strong: bool = def in STRONG[atk]
