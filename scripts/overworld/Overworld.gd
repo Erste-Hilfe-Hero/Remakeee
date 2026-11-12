@@ -1818,6 +1818,10 @@ func _apply_clan_effects(eff: Dictionary, speaker: NPC) -> void:
 		GameState.money += coins
 		Sound.sfx("pickup")
 		await say(["You got %d coins!" % coins] as Array[String])
+	elif coins < 0 and GameState.money > 0:
+		var lost: int = GameState.money - Trust.money_after(GameState.money, coins)
+		GameState.money -= lost
+		await say(["You lost %d coins." % lost] as Array[String])
 	if bool(eff.get("take_keepsake", false)) and not GameState.party.is_empty() and not GameState.party[0].held.is_empty():
 		var lost: String = str(Database.item(GameState.party[0].held).get("name", GameState.party[0].held))
 		GameState.party[0].held = ""

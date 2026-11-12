@@ -93,6 +93,11 @@ static func betrayal_result(def: Dictionary, flags: Dictionary, vars: Dictionary
 					return "caught"
 			return "struck"
 
+## Coins left after a "coins" effect: a negative amount is a loss (a betrayal's bill) and
+## never takes the purse below zero.
+static func money_after(money: int, coins: int) -> int:
+	return maxi(0, money + coins)
+
 ## Applies the value changes of an effect to [param vars] ({"trust": {id: delta}, "use": ...}).
 static func apply_values(eff: Dictionary, vars: Dictionary) -> void:
 	for kind: String in ["trust", "use"]:
