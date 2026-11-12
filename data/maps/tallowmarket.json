@@ -5,51 +5,51 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
+  5,
   9
  ],
  "rows": [
   "TTTTT__TTTTT",
-  "T....__....T",
-  "T.RRR__RRR.T",
-  "T.HDH__HHD.T",
-  "T....__....T",
-  "T.L..__..S.T",
-  "T....__....T",
-  "T...____...T",
-  "_____.o.____",
-  "_____...____",
-  "T...____...T",
-  "T....__....T",
   "T.RR.__.RR.T",
-  "T.DH.__.DH.T",
-  "T....__....T",
-  "T.##.__.##.T",
-  "T....__....T",
-  "T*...__..L.T",
-  "T....__....T",
+  "T.HD.__.DH.T",
+  "T.._.__._..T",
+  "T..______..T",
+  "T.________.T",
+  "T.__#__#__.T",
+  "T.________.T",
+  "_____o@_____",
+  "____________",
+  "T.________.T",
+  "T.__#__#__.T",
+  "T.________.T",
+  "T..______..T",
+  "T.RR.__.RR.T",
+  "T.HD.__.DH.T",
+  "T.._.__._..T",
+  "T..______..T",
+  "T*.S.__...LT",
   "TTTTT__TTTTT"
  ],
  "warps": [
   {
    "x": 3,
-   "y": 3,
+   "y": 2,
    "to": "tallowmarket_wax_hall",
    "tx": 3,
    "ty": 4,
    "facing": "up"
   },
   {
-   "x": 9,
-   "y": 3,
+   "x": 8,
+   "y": 2,
    "to": "tallowmarket_weigh_house",
    "tx": 3,
    "ty": 4,
    "facing": "up"
   },
   {
-   "x": 2,
-   "y": 13,
+   "x": 3,
+   "y": 15,
    "to": "tallowmarket_rumour_room",
    "tx": 3,
    "ty": 4,
@@ -57,7 +57,7 @@
   },
   {
    "x": 8,
-   "y": 13,
+   "y": 15,
    "to": "tallowmarket_vigil_house",
    "tx": 3,
    "ty": 4,
@@ -131,7 +131,7 @@
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
+   "x": 5,
    "y": 7,
    "facing": "down",
    "dialogue": "vellmarch/tallowmarket_keeper",
@@ -139,63 +139,19 @@
   },
   {
    "id": "trader",
-   "x": 3,
-   "y": 14,
+   "x": 7,
+   "y": 7,
    "facing": "down",
    "dialogue": "vellmarch/tallowmarket_trader",
    "sprite": "villager"
   },
   {
    "id": "folk_1",
-   "x": 2,
-   "y": 6,
+   "x": 1,
+   "y": 3,
    "facing": "right",
    "dialogue": "vellmarch/tallowmarket_folk_1",
    "sprite": "villager",
-   "schedule": [
-    {
-     "phase": "dusk",
-     "x": 5,
-     "y": 9,
-     "facing": "right"
-    },
-    {
-     "phase": [
-      "night"
-     ],
-     "away": true
-    }
-   ]
-  },
-  {
-   "id": "folk_2",
-   "x": 9,
-   "y": 11,
-   "facing": "left",
-   "dialogue": "vellmarch/tallowmarket_folk_2",
-   "sprite": "villager",
-   "schedule": [
-    {
-     "phase": "dusk",
-     "x": 7,
-     "y": 9,
-     "facing": "left"
-    },
-    {
-     "phase": [
-      "night"
-     ],
-     "away": true
-    }
-   ]
-  },
-  {
-   "id": "folk_3",
-   "x": 2,
-   "y": 18,
-   "facing": "right",
-   "dialogue": "vellmarch/tallowmarket_folk_3",
-   "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
@@ -210,12 +166,56 @@
      "away": true
     }
    ]
+  },
+  {
+   "id": "folk_2",
+   "x": 10,
+   "y": 13,
+   "facing": "left",
+   "dialogue": "vellmarch/tallowmarket_folk_2",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 9,
+     "facing": "right"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
+   "id": "folk_3",
+   "x": 1,
+   "y": 17,
+   "facing": "right",
+   "dialogue": "vellmarch/tallowmarket_folk_3",
+   "sprite": "elder",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 6,
+     "y": 9,
+     "facing": "left"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
   }
  ],
  "signs": [
   {
-   "x": 9,
-   "y": 5,
+   "x": 3,
+   "y": 18,
    "dialogue": "vellmarch/tallowmarket_sign"
   }
  ],
@@ -257,7 +257,7 @@
   }
  ],
  "square": [
-  6,
+  5,
   8
  ]
 }

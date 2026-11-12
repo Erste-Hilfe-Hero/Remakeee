@@ -5,29 +5,29 @@
  "backdrop": "field",
  "outdoor": true,
  "heal_point": [
-  6,
+  5,
   9
  ],
  "rows": [
   "TTTTT__TTTTT",
-  "T....__....T",
   "T.RRR__RRR.T",
-  "T.HDH__HHD.T",
-  "T....__....T",
+  "T.RRR__RRR.T",
+  "T.HDH__HDH.T",
+  "T*._.__._.*T",
+  "T..______..T",
+  "T^^^^==^^^^T",
   "T.L..__..S.T",
-  "T....__....T",
-  "T...____...T",
-  "_____.o.____",
-  "_____...____",
-  "T...____...T",
-  "T....__....T",
+  "____________",
+  "____________",
+  "T.__.o..__.T",
+  "T^==^^^^==^T",
+  "T.__....__.T",
+  "T.__*@*.__.T",
+  "T.________.T",
   "T.RR.__.RR.T",
-  "T.DH.__.DH.T",
-  "T....__....T",
-  "T.##.__.##.T",
-  "T....__....T",
-  "T*...__..L.T",
-  "T....__....T",
+  "T.DH.__.HD.T",
+  "T._..__.._.T",
+  "T.________.T",
   "TTTTT__TTTTT"
  ],
  "warps": [
@@ -40,7 +40,7 @@
    "facing": "up"
   },
   {
-   "x": 9,
+   "x": 8,
    "y": 3,
    "to": "larkspur_heights_counting_house",
    "tx": 3,
@@ -49,15 +49,15 @@
   },
   {
    "x": 2,
-   "y": 13,
+   "y": 16,
    "to": "larkspur_heights_servants_hall",
    "tx": 3,
    "ty": 4,
    "facing": "up"
   },
   {
-   "x": 8,
-   "y": 13,
+   "x": 9,
+   "y": 16,
    "to": "larkspur_heights_salon",
    "tx": 3,
    "ty": 4,
@@ -131,54 +131,32 @@
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
-   "y": 7,
+   "x": 4,
+   "y": 10,
    "facing": "down",
    "dialogue": "vellmarch/larkspur_heights_keeper",
    "sprite": "elder"
   },
   {
    "id": "trader",
-   "x": 3,
-   "y": 14,
+   "x": 7,
+   "y": 7,
    "facing": "down",
    "dialogue": "vellmarch/larkspur_heights_trader",
    "sprite": "villager"
   },
   {
    "id": "folk_1",
-   "x": 2,
-   "y": 6,
+   "x": 1,
+   "y": 5,
    "facing": "right",
    "dialogue": "vellmarch/larkspur_heights_folk_1",
    "sprite": "villager",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 5,
-     "y": 9,
-     "facing": "right"
-    },
-    {
-     "phase": [
-      "night"
-     ],
-     "away": true
-    }
-   ]
-  },
-  {
-   "id": "folk_2",
-   "x": 9,
-   "y": 11,
-   "facing": "left",
-   "dialogue": "vellmarch/larkspur_heights_folk_2",
-   "sprite": "villager",
-   "schedule": [
-    {
-     "phase": "dusk",
      "x": 7,
-     "y": 9,
+     "y": 10,
      "facing": "left"
     },
     {
@@ -190,18 +168,40 @@
    ]
   },
   {
+   "id": "folk_2",
+   "x": 10,
+   "y": 12,
+   "facing": "left",
+   "dialogue": "vellmarch/larkspur_heights_folk_2",
+   "sprite": "villager",
+   "schedule": [
+    {
+     "phase": "dusk",
+     "x": 4,
+     "y": 9,
+     "facing": "down"
+    },
+    {
+     "phase": [
+      "night"
+     ],
+     "away": true
+    }
+   ]
+  },
+  {
    "id": "folk_3",
-   "x": 2,
-   "y": 18,
+   "x": 4,
+   "y": 17,
    "facing": "right",
    "dialogue": "vellmarch/larkspur_heights_folk_3",
    "sprite": "elder",
    "schedule": [
     {
      "phase": "dusk",
-     "x": 4,
-     "y": 7,
-     "facing": "right"
+     "x": 6,
+     "y": 9,
+     "facing": "down"
     },
     {
      "phase": [
@@ -215,7 +215,7 @@
  "signs": [
   {
    "x": 9,
-   "y": 5,
+   "y": 7,
    "dialogue": "vellmarch/larkspur_heights_sign"
   }
  ],
@@ -257,7 +257,7 @@
   }
  ],
  "square": [
-  6,
-  8
+  5,
+  10
  ]
 }

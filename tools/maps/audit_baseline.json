@@ -1,9 +1,14 @@
 {
  "_doc": "Known map audit findings (tools/maps/audit_maps.py). Key: map kind x,y. Value: the finding, or why it stays on purpose. Remove a line by fixing the map.",
  "open": {
+  "ashmere_station town_few_doors -1,-1": "open: Act III station town has no building to walk into yet (Ashmere pass)",
   "brindlewick unreachable 9,15": "kept: reed beds out in the lake, scenery seen from the pier",
+  "cinderfold town_few_doors -1,-1": "open: Act III town has 2 buildings to walk into, needs a third (Ashmere pass)",
   "copperfold unreachable 1,1": "kept: yard behind the winding tower, scenery",
   "copperfold unreachable 10,1": "kept: yard behind the winding tower, scenery",
-  "tallowmere road_dead_end 5,1": "open: Quivermoor (Era V, other thread): the north road arm runs into the trees"
+  "lastbloom town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "mossgate town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "rootchapel town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)",
+  "tallowmere town_twin -1,-1": "open: Quivermoor (Era V) towns still share one layout; each needs its own (Quivermoor pass)"
  }
 }

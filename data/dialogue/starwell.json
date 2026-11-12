@@ -24,5 +24,28 @@
   "lines": [
    "Retired Astronomer Serafin: I discovered a comet once. The Gilt House renamed it after a cousin. The cousin later fell off a balcony."
   ]
+ },
+ "mirabel": {
+  "lines": [
+   "Seer Mirabel: I read futures for the Gilt House. I leave out the endings. They pay better that way.",
+   "Seer Mirabel: Yours is short. I mean the reading."
+  ]
+ },
+ "wilhelmina": {
+  "lines": [
+   "Night Nurse Wilhelmina: Sleep. The stars will still be lying when you wake up."
+  ],
+  "action": "heal"
+ },
+ "lorenz": {
+  "lines": [
+   "Copyist Lorenz: We copy the sky by hand. When a star goes missing we are told it was never there. We erase it very neatly."
+  ]
+ },
+ "ines": {
+  "lines": [
+   "Lens Seller Ines: Tonics, charts and lenses. Buy a lens and you will see your future. Buy a tonic and you will have one."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
  }
 }

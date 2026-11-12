@@ -10,30 +10,30 @@
  ],
  "rows": [
   "TTTTTTTTTTTT",
-  "T..........T",
-  "T.RRR..RRR.T",
-  "T.HDH..HHD.T",
-  "T.._______.T",
-  "T.L..__..S.T",
+  "T~~~~..RRR.T",
+  "T~~~~..HDH.T",
+  "T~~+++____.T",
+  "T~~~~._....T",
+  "T~~~~@_.RR.T",
+  "T+++++_.HD.T",
+  "T~~~~.__._.T",
+  "T~~~~.o_____",
+  "T~~~~.._____",
+  "T~~~..__...T",
+  "T.RRR._....T",
+  "T.HDH._RRR.T",
+  "T.._.._HDH.T",
+  "T..____._..T",
+  "T.S.._____.T",
   "T....__....T",
-  "T...____...T",
-  "T..._.o.____",
-  "T..._...____",
-  "T...____...T",
-  "T....__....T",
-  "T.RR.__.RR.T",
-  "T.DH.__.DH.T",
-  "T....__....T",
-  "~~~~.__.##.T",
-  "~~~~.__....T",
-  "~+++.__..L.T",
-  "~~~~.__....T",
+  "T.#..__.#*.T",
+  "T....__...LT",
   "TTTTT__TTTTT"
  ],
  "warps": [
   {
-   "x": 3,
-   "y": 3,
+   "x": 8,
+   "y": 2,
    "to": "cindergate_quay_tollhouse",
    "tx": 3,
    "ty": 4,
@@ -41,15 +41,15 @@
   },
   {
    "x": 9,
-   "y": 3,
+   "y": 6,
    "to": "cindergate_quay_net_loft",
    "tx": 3,
    "ty": 4,
    "facing": "up"
   },
   {
-   "x": 2,
-   "y": 13,
+   "x": 3,
+   "y": 12,
    "to": "cindergate_quay_bunkhouse",
    "tx": 3,
    "ty": 4,
@@ -99,15 +99,15 @@
  "npcs": [
   {
    "id": "keeper",
-   "x": 7,
-   "y": 7,
+   "x": 5,
+   "y": 8,
    "facing": "down",
    "dialogue": "vellmarch/cindergate_quay_keeper",
    "sprite": "elder"
   },
   {
    "id": "trader",
-   "x": 3,
+   "x": 2,
    "y": 14,
    "facing": "down",
    "dialogue": "vellmarch/cindergate_quay_trader",
@@ -115,9 +115,9 @@
   },
   {
    "id": "folk_1",
-   "x": 2,
-   "y": 6,
-   "facing": "right",
+   "x": 10,
+   "y": 2,
+   "facing": "left",
    "dialogue": "vellmarch/cindergate_quay_folk_1",
    "sprite": "villager",
    "schedule": [
@@ -137,9 +137,9 @@
   },
   {
    "id": "folk_2",
-   "x": 9,
-   "y": 11,
-   "facing": "left",
+   "x": 2,
+   "y": 16,
+   "facing": "right",
    "dialogue": "vellmarch/cindergate_quay_folk_2",
    "sprite": "villager",
    "schedule": [
@@ -167,9 +167,9 @@
    "schedule": [
     {
      "phase": "dusk",
-     "x": 4,
+     "x": 7,
      "y": 7,
-     "facing": "right"
+     "facing": "left"
     },
     {
      "phase": [
@@ -182,14 +182,14 @@
   {
    "id": "bargeman",
    "x": 1,
-   "y": 17,
+   "y": 6,
    "facing": "right",
    "dialogue": "vellmarch/bargeman",
    "sprite": "elder"
   },
   {
    "id": "wren",
-   "x": 8,
+   "x": 7,
    "y": 4,
    "facing": "down",
    "dialogue": "vellmarch/wren",
@@ -199,8 +199,8 @@
  ],
  "signs": [
   {
-   "x": 9,
-   "y": 5,
+   "x": 2,
+   "y": 15,
    "dialogue": "vellmarch/cindergate_quay_sign"
   }
  ],

@@ -24,5 +24,28 @@
   "lines": [
    "Old Barnaby: I said no to the Gilt House once. They built me a cairn anyway. I'm saving it for later."
   ]
+ },
+ "gerwin": {
+  "lines": [
+   "Stonecutter Gerwin: I carve the names before they are needed. The Gilt House sends me a list. It is rarely wrong."
+  ]
+ },
+ "hanne": {
+  "lines": [
+   "Vigil Keeper Hanne: Rest here. The beds are for the living. We check every morning, to be sure."
+  ],
+  "action": "heal"
+ },
+ "wenzel": {
+  "lines": [
+   "Chandler Wenzel: Oil, wicks, tonics. Veronne buys the lanterns. The families buy them a second time."
+  ],
+  "action": "shop strong_tonic max_tonic remedy cooling_gel wake_bell revival_leaf dash_brew guard_brew focus_brew"
+ },
+ "thea": {
+  "lines": [
+   "Rope Keeper Thea: The basket goes down to the moor and comes back up. I only count the ropes.",
+   "Rope Keeper Thea: Counting the people was making me sad."
+  ]
  }
 }
