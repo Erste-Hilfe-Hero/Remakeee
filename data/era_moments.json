@@ -1,0 +1,420 @@
+{
+ "_doc": "Era moments (scripts/core/EraMoments.gd, docs/ERA_LOOK_TITLE.md): the title screen, the boot card, the era-change scene, the finale card and the save card of each era. eras.<n>: name, region, subtitle under the logo, palette of the title scene (hex), frame kind (ink, wash, bevel, round, gloss), colours on screen, font_scale, finale_flag (the flag of that era's finale), title (kind static/scroll/shine/parallax/living, blink seconds of the 2-frame blink, scroll px per second, shine, flyer, parallax layers, camera, legend species, cast species), boot (kind, seconds, sound), finale (kind, headline, lines). changes.<n>: the staged change INTO era n; five steps palette, detail, frames, music, list, each with its own style and seconds. studio: the line on the boot card. English texts; German in tools/i18n/de_era_moments.py.",
+ "studio": "Drawn by the Chimora team",
+ "skip": "Skip",
+ "continue": "Tap to go on",
+ "the_end": "The End",
+ "to_be_continued": "The map goes on",
+ "eras": {
+  "1": {
+   "name": "Ink",
+   "region": "Veydal",
+   "subtitle": "The Hush of Veydal",
+   "frame": "ink",
+   "colours": 4,
+   "font_scale": 1,
+   "finale_flag": "story_complete",
+   "palette": {
+    "sky_top": "2a1e2c",
+    "sky_low": "6a4256",
+    "sun": "f2e3c2",
+    "far": "6a4256",
+    "mid": "6a4256",
+    "water": "6a4256",
+    "glint": "c48a5e",
+    "shore": "c48a5e",
+    "ink": "2a1e2c",
+    "paper": "f2e3c2",
+    "accent": "c48a5e",
+    "cloud": "6a4256"
+   },
+   "title": {
+    "kind": "static",
+    "blink": 0.6,
+    "scroll": 0.0,
+    "shine": false,
+    "flyer": false,
+    "layers": 1,
+    "camera": false,
+    "legend": "",
+    "cast": [
+     "wickit",
+     "kindlop",
+     "zippit"
+    ]
+   },
+   "boot": {
+    "kind": "ink_drop",
+    "time": 2.4,
+    "sound": "confirm"
+   },
+   "finale": {
+    "kind": "type",
+    "headline": "The map is drawn",
+    "lines": [
+     "Era I: Ink",
+     "Every Rift is sealed.",
+     "Most of the people who helped you lied about why.",
+     "Drawn in four inks by the Chimora team.",
+     "Thank you for walking it."
+    ]
+   }
+  },
+  "2": {
+   "name": "Wash",
+   "region": "Vellmarch",
+   "subtitle": "The Colours of Vellmarch",
+   "frame": "wash",
+   "colours": 16,
+   "font_scale": 1,
+   "finale_flag": "era2_finale_done",
+   "palette": {
+    "sky_top": "4a5a9c",
+    "sky_low": "f0b070",
+    "sun": "ffe8a0",
+    "far": "6a5a8c",
+    "mid": "3f6a5a",
+    "water": "3a6ea8",
+    "glint": "bfe0f0",
+    "shore": "d8b878",
+    "ink": "2a1e2c",
+    "paper": "f4f1e6",
+    "accent": "e86a4a",
+    "cloud": "f8d8c0"
+   },
+   "title": {
+    "kind": "scroll",
+    "blink": 0.0,
+    "scroll": 6.0,
+    "shine": false,
+    "flyer": false,
+    "layers": 2,
+    "camera": false,
+    "legend": "",
+    "cast": [
+     "tallop",
+     "guiskit",
+     "tollpip"
+    ]
+   },
+   "boot": {
+    "kind": "wash_card",
+    "time": 2.0,
+    "sound": "confirm"
+   },
+   "finale": {
+    "kind": "scroll",
+    "headline": "The colours hold",
+    "lines": [
+     "Era II: Wash",
+     "Vellmarch pays its debts in dye.",
+     "You were only cheated by people you liked.",
+     "Coloured in by the Chimora team.",
+     "Thank you for walking it."
+    ]
+   }
+  },
+  "3": {
+   "name": "Etching",
+   "region": "Quillmarch",
+   "subtitle": "The Lines of Quillmarch",
+   "frame": "bevel",
+   "colours": 64,
+   "font_scale": 1,
+   "finale_flag": "era3_finale_done",
+   "palette": {
+    "sky_top": "2f6fb8",
+    "sky_low": "bfe4f0",
+    "sun": "fff6c8",
+    "far": "7a9cc0",
+    "mid": "3f8a52",
+    "water": "2a78b0",
+    "glint": "e0f6ff",
+    "shore": "c8a868",
+    "ink": "1c2a3a",
+    "paper": "f6f0dc",
+    "accent": "d8a030",
+    "cloud": "ffffff"
+   },
+   "title": {
+    "kind": "shine",
+    "blink": 0.0,
+    "scroll": 4.0,
+    "shine": true,
+    "flyer": true,
+    "layers": 2,
+    "camera": false,
+    "legend": "",
+    "cast": [
+     "cindrik",
+     "rimekit",
+     "drypup"
+    ]
+   },
+   "boot": {
+    "kind": "shine_card",
+    "time": 2.0,
+    "sound": "confirm"
+   },
+   "finale": {
+    "kind": "shine",
+    "headline": "Every line is cut",
+    "lines": [
+     "Era III: Etching",
+     "Quillmarch signed, sealed and sold you twice.",
+     "The fine print was the honest part.",
+     "Etched by the Chimora team.",
+     "Thank you for walking it."
+    ]
+   }
+  },
+  "4": {
+   "name": "Panorama",
+   "region": "Halcyra",
+   "subtitle": "The Horizon of Halcyra",
+   "frame": "round",
+   "colours": 256,
+   "font_scale": 2,
+   "finale_flag": "era4_finale_done",
+   "palette": {
+    "sky_top": "5a4a8c",
+    "sky_low": "ffb860",
+    "sun": "fff0b0",
+    "far": "a06a78",
+    "mid": "6a7a3a",
+    "water": "7a5a8c",
+    "glint": "ffd890",
+    "shore": "b88a48",
+    "ink": "241a30",
+    "paper": "fbf3e0",
+    "accent": "ff8a3a",
+    "cloud": "ffd8b0"
+   },
+   "title": {
+    "kind": "parallax",
+    "blink": 0.0,
+    "scroll": 5.0,
+    "shine": true,
+    "flyer": true,
+    "layers": 4,
+    "camera": false,
+    "legend": "",
+    "cast": [
+     "cindrel",
+     "rimelynx"
+    ]
+   },
+   "boot": {
+    "kind": "fold_card",
+    "time": 2.2,
+    "sound": "confirm"
+   },
+   "finale": {
+    "kind": "parallax",
+    "headline": "The horizon is yours",
+    "lines": [
+     "Era IV: Panorama",
+     "Halcyra looked wider from far away.",
+     "Up close, everyone had a price and a nice smile.",
+     "Painted by the Chimora team.",
+     "Thank you for walking it."
+    ]
+   }
+  },
+  "5": {
+   "name": "Living",
+   "region": "Quivermoor",
+   "subtitle": "The Living Quivermoor",
+   "frame": "gloss",
+   "colours": 4096,
+   "font_scale": 2,
+   "finale_flag": "era5_finale_done",
+   "palette": {
+    "sky_top": "141a44",
+    "sky_low": "3a8a9c",
+    "sun": "d8fff0",
+    "far": "2a4a6c",
+    "mid": "1f6a5a",
+    "water": "1a4a7a",
+    "glint": "9af0e0",
+    "shore": "3a8a6a",
+    "ink": "0c1024",
+    "paper": "eefaf4",
+    "accent": "7af0c0",
+    "cloud": "5a7ab0"
+   },
+   "title": {
+    "kind": "living",
+    "blink": 0.0,
+    "scroll": 5.0,
+    "shine": true,
+    "flyer": true,
+    "layers": 4,
+    "camera": true,
+    "legend": "vorlucent",
+    "cast": [
+     "cindravax",
+     "rimesovereign"
+    ]
+   },
+   "boot": {
+    "kind": "living_card",
+    "time": 2.4,
+    "sound": "confirm"
+   },
+   "finale": {
+    "kind": "camera",
+    "headline": "The map breathes",
+    "lines": [
+     "Era V: Living",
+     "Quivermoor moves when you look away.",
+     "So did your friends. You kept walking anyway.",
+     "Brought to life by the Chimora team.",
+     "Thank you for walking all of it."
+    ]
+   }
+  }
+ },
+ "changes": {
+  "2": {
+   "headline": "The ink runs into colour",
+   "steps": [
+    {
+     "id": "palette",
+     "style": "bleed",
+     "time": 2.2,
+     "caption": "Palette: 4 inks become 16 colours"
+    },
+    {
+     "id": "detail",
+     "style": "tiles",
+     "time": 1.8,
+     "caption": "Detail: every tile gets its own colours"
+    },
+    {
+     "id": "frames",
+     "style": "wash",
+     "time": 1.4,
+     "caption": "Frames: redrawn in colour wash"
+    },
+    {
+     "id": "music",
+     "style": "harmony",
+     "time": 1.6,
+     "caption": "Sound: a second voice and an echo join"
+    },
+    {
+     "id": "list",
+     "style": "list",
+     "time": 0.0,
+     "caption": "New in this era"
+    }
+   ]
+  },
+  "3": {
+   "headline": "Every line grows finer",
+   "steps": [
+    {
+     "id": "palette",
+     "style": "scan",
+     "time": 2.2,
+     "caption": "Palette: 16 colours become 64"
+    },
+    {
+     "id": "detail",
+     "style": "sharpen",
+     "time": 1.8,
+     "caption": "Detail: 144 lines become 180"
+    },
+    {
+     "id": "frames",
+     "style": "bevel",
+     "time": 1.4,
+     "caption": "Frames: redrawn as bevelled plates"
+    },
+    {
+     "id": "music",
+     "style": "samples",
+     "time": 1.6,
+     "caption": "Sound: sampled voices and a room"
+    },
+    {
+     "id": "list",
+     "style": "list",
+     "time": 0.0,
+     "caption": "New in this era"
+    }
+   ]
+  },
+  "4": {
+   "headline": "The map unrolls wider",
+   "steps": [
+    {
+     "id": "palette",
+     "style": "unfold",
+     "time": 2.2,
+     "caption": "Palette: 64 colours become 256"
+    },
+    {
+     "id": "detail",
+     "style": "widen",
+     "time": 1.8,
+     "caption": "Detail: 180 lines become 270, figures grow"
+    },
+    {
+     "id": "frames",
+     "style": "round",
+     "time": 1.4,
+     "caption": "Frames: redrawn as rounded panels"
+    },
+    {
+     "id": "music",
+     "style": "hall",
+     "time": 1.6,
+     "caption": "Sound: bell tones in a wide room"
+    },
+    {
+     "id": "list",
+     "style": "list",
+     "time": 0.0,
+     "caption": "New in this era"
+    }
+   ]
+  },
+  "5": {
+   "headline": "The map starts to breathe",
+   "steps": [
+    {
+     "id": "palette",
+     "style": "light",
+     "time": 2.2,
+     "caption": "Palette: light and glow on every colour"
+    },
+    {
+     "id": "detail",
+     "style": "motion",
+     "time": 1.8,
+     "caption": "Detail: figures breathe, the view moves"
+    },
+    {
+     "id": "frames",
+     "style": "gloss",
+     "time": 1.4,
+     "caption": "Frames: redrawn in gloss"
+    },
+    {
+     "id": "music",
+     "style": "layers",
+     "time": 1.6,
+     "caption": "Sound: music in layers that follow you"
+    },
+    {
+     "id": "list",
+     "style": "list",
+     "time": 0.0,
+     "caption": "New in this era"
+    }
+   ]
+  }
+ }
+}
