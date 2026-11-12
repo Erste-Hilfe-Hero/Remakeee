@@ -441,6 +441,85 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py
 | 357 | Frostfoil | Frost/Lumen | uncommon | bulwark | thick_hide | 408 | - |
 <!-- /lines:quillmarch -->
 
+<!-- lines:halcyra -->
+## Halcyra lines (Era IV post-game, tools/art/lines/halcyra.py)
+
+Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era4.py from one base form per line, data by tools/build_lines.py.
+
+| No. | Name | Elements | Rarity | Role | Trait | Stat total | Unfolds into |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 358 | Gildfinch | Gilt/Gale | common | striker | slick | 312 | Gildwing (ring 81) |
+| 359 | Gildwing | Gilt/Gale | uncommon | striker | slick | 416 | Gildaurus (ring 88) |
+| 360 | Gildaurus | Gilt/Gale | shy | striker | slick | 503 | - |
+| 361 | Ledgepup | Stone/Gilt | common | bulwark | thick_hide | 326 | Ledgehound (ring 79) |
+| 362 | Ledgehound | Stone/Gilt | uncommon | bulwark | thick_hide | 406 | Ledgewarden (ring 90) |
+| 363 | Ledgewarden | Stone/Gilt | shy | bulwark | thick_hide | 496 | - |
+| 364 | Zenkit | Zenith | common | striker | surge | 308 | Zenlynx (ring 80) |
+| 365 | Zenlynx | Zenith | uncommon | striker | surge | 406 | Zenithar (ring 86) |
+| 366 | Zenithar | Zenith | shy | striker | surge | 503 | - |
+| 367 | Orrebit | Zenith/Volt | common | weaver | light_sleeper | 312 | Orrewheel (ring 80) |
+| 368 | Orrewheel | Zenith/Volt | uncommon | weaver | light_sleeper | 400 | Orremarch (ring 88) |
+| 369 | Orremarch | Zenith/Volt | shy | weaver | light_sleeper | 496 | - |
+| 370 | Flatskip | Tide/Lumen | common | kindler | kindling | 314 | Flatskimmer (ring 80) |
+| 371 | Flatskimmer | Tide/Lumen | uncommon | kindler | kindling | 421 | Flatsovereign (ring 87) |
+| 372 | Flatsovereign | Tide/Lumen | shy | kindler | kindling | 472 | - |
+| 373 | Cloudmop | Gale/Bloom | common | bulwark | steady | 304 | Cloudram (ring 80) |
+| 374 | Cloudram | Gale/Bloom | uncommon | bulwark | steady | 409 | Cloudbellow (ring 87) |
+| 375 | Cloudbellow | Gale/Bloom | shy | bulwark | steady | 500 | - |
+| 376 | Haloon | Lumen/Zenith | common | kindler | deep_roots | 306 | Halonel (ring 82) |
+| 377 | Halonel | Lumen/Zenith | uncommon | kindler | deep_roots | 404 | Halorch (ring 88) |
+| 378 | Halorch | Lumen/Zenith | shy | kindler | deep_roots | 502 | - |
+| 379 | Lumoth | Lumen/Ember | common | weaver | last_stand | 321 | Lumothra (ring 80) |
+| 380 | Lumothra | Lumen/Ember | uncommon | weaver | last_stand | 414 | Lumothane (ring 90) |
+| 381 | Lumothane | Lumen/Ember | shy | weaver | last_stand | 497 | - |
+| 382 | Vinestep | Bloom/Stone | common | vanguard | surge | 315 | Vinestair (ring 80) |
+| 383 | Vinestair | Bloom/Stone | uncommon | vanguard | surge | 409 | Vinespire (ring 88) |
+| 384 | Vinespire | Bloom/Stone | shy | vanguard | surge | 487 | - |
+| 385 | Noonfox | Ember/Zenith | common | striker | slick | 290 | Noonvixen (ring 78) |
+| 386 | Noonvixen | Ember/Zenith | uncommon | striker | slick | 410 | Noonregent (ring 86) |
+| 387 | Noonregent | Ember/Zenith | shy | striker | slick | 496 | - |
+| 388 | Brasshop | Volt/Gilt | common | vanguard | last_stand | 291 | Brassjack (ring 78) |
+| 389 | Brassjack | Volt/Gilt | uncommon | vanguard | last_stand | 401 | Brassgrand (ring 90) |
+| 390 | Brassgrand | Volt/Gilt | shy | vanguard | last_stand | 482 | - |
+| 391 | Plinthlet | Stone/Tide | common | bulwark | thick_hide | 306 | Plinthshell (ring 82) |
+| 392 | Plinthshell | Stone/Tide | uncommon | bulwark | thick_hide | 409 | Plinthcastle (ring 88) |
+| 393 | Plinthcastle | Stone/Tide | shy | bulwark | thick_hide | 504 | - |
+| 394 | Kitelet | Gale/Volt | common | striker | deep_roots | 286 | Kitewhip (ring 80) |
+| 395 | Kitewhip | Gale/Volt | uncommon | striker | deep_roots | 408 | Kitemonarch (ring 88) |
+| 396 | Kitemonarch | Gale/Volt | shy | striker | deep_roots | 500 | - |
+| 397 | Coffrel | Umbra/Gilt | common | weaver | light_sleeper | 294 | Coffrake (ring 82) |
+| 398 | Coffrake | Umbra/Gilt | uncommon | weaver | light_sleeper | 409 | Coffrendrake (ring 88) |
+| 399 | Coffrendrake | Umbra/Gilt | shy | weaver | light_sleeper | 481 | - |
+| 400 | Rillsnail | Bloom/Tide | common | kindler | kindling | 313 | Rillshell (ring 79) |
+| 401 | Rillshell | Bloom/Tide | uncommon | kindler | kindling | 410 | Rillcastle (ring 86) |
+| 402 | Rillcastle | Bloom/Tide | shy | kindler | kindling | 505 | - |
+| 403 | Spanling | Stone/Umbra | common | vanguard | steady | 314 | Spanbrute (ring 78) |
+| 404 | Spanbrute | Stone/Umbra | uncommon | vanguard | steady | 400 | Spanwarden (ring 89) |
+| 405 | Spanwarden | Stone/Umbra | shy | vanguard | steady | 497 | - |
+| 406 | Spumlet | Tide/Gale | uncommon | striker | slick | 281 | Spumeclaw (ring 82) |
+| 407 | Spumeclaw | Tide/Gale | shy | striker | slick | 392 | - |
+| 408 | Chalkid | Stone/Gale | uncommon | vanguard | surge | 325 | Chalkhorn (ring 85) |
+| 409 | Chalkhorn | Stone/Gale | shy | vanguard | surge | 433 | - |
+| 410 | Wellet | Umbra/Zenith | uncommon | weaver | light_sleeper | 293 | Wellwyrm (ring 85) |
+| 411 | Wellwyrm | Umbra/Zenith | shy | weaver | light_sleeper | 361 | - |
+| 412 | Glintwader | Tide/Zenith | uncommon | striker | last_stand | 282 | Glintheron (ring 86) |
+| 413 | Glintheron | Tide/Zenith | shy | striker | last_stand | 404 | - |
+| 414 | Gildmite | Gilt | common | bulwark | thick_hide | 324 | Gildscarab (ring 82) |
+| 415 | Gildscarab | Gilt | shy | bulwark | thick_hide | 431 | - |
+| 416 | Brazlet | Ember/Stone | uncommon | vanguard | steady | 317 | Brazierbrute (ring 83) |
+| 417 | Brazierbrute | Ember/Stone | shy | vanguard | steady | 437 | - |
+| 418 | Dewfawn | Bloom/Lumen | uncommon | kindler | kindling | 325 | Dewstag (ring 86) |
+| 419 | Dewstag | Bloom/Lumen | shy | kindler | kindling | 428 | - |
+| 420 | Arcfin | Volt/Tide | uncommon | striker | deep_roots | 291 | Arcfinnar (ring 83) |
+| 421 | Arcfinnar | Volt/Tide | shy | striker | deep_roots | 431 | - |
+| 422 | Eavekit | Umbra/Gale | uncommon | striker | slick | 282 | Eaveprowl (ring 85) |
+| 423 | Eaveprowl | Umbra/Gale | shy | striker | slick | 430 | - |
+| 424 | Gildrelic | Gilt/Lumen | uncommon | bulwark | thick_hide | 436 | - |
+| 425 | Zenwhirl | Zenith/Gale | uncommon | striker | surge | 415 | - |
+| 426 | Gnomonk | Stone/Zenith | uncommon | weaver | light_sleeper | 417 | - |
+| 427 | Gildbloom | Bloom/Gilt | uncommon | kindler | kindling | 426 | - |
+<!-- /lines:halcyra -->
+
 ## Regional imprints (Ortsprägung, items 218-219)
 
 A Veydal kind that lives long in another region shows a regional form there: other elements, a new palette, its own lore line, without a new Spirlog number. The forms are listed in `variants` per kind in data/spirlings.json; `Spirling.apply_imprint(region)` stores the region id in `Spirling.variant`, and `Spirling.elements()` then uses the imprint's elements. What counts as "living long" in a region is decided once those regions are playable.
