@@ -45,6 +45,7 @@ const DEFAULT_FLAGS: Dictionary = {
 	"bund": {"enabled": false, "min_version": 1}, "raid": {"enabled": false, "min_version": 1},
 	"trade_spirling": {"enabled": false, "min_version": 1}, "rift_board": {"enabled": false, "min_version": 1},
 	"league_board": {"enabled": false, "min_version": 1}, "daily_gift": {"enabled": false, "min_version": 1},
+	"lend": {"enabled": false, "min_version": 1},
 }
 
 ## Where the fake server keeps its data between runs ("" = memory only, as in tests).
@@ -80,6 +81,8 @@ func _init(p_store_path: String = "") -> void:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
 	LocalShop.install(self)
+	# Trading and gifting, Online 100 area 5 (20261112000050_trade_gifts.sql).
+	LocalTradeGifts.install(self)
 
 func is_local() -> bool:
 	return true
