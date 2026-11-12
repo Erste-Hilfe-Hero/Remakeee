@@ -1,10 +1,7 @@
 {
  "_doc": "Known map audit findings (tools/maps/audit_maps.py). Key: map kind x,y. Value: the finding, or why it stays on purpose. Remove a line by fixing the map.",
  "open": {
-  "ashmere_station dead_door 5,6": "door leads nowhere (needs a room: building interiors pass)",
   "brindlewick unreachable 9,15": "kept: reed beds out in the lake, scenery seen from the pier",
-  "cinderfold dead_door 10,8": "door leads nowhere (needs a room: building interiors pass)",
-  "cinderfold npc_on_warp 4,6": "npc tovan blocks a door",
   "copperfold dead_door 3,12": "door leads nowhere (needs a room: building interiors pass)",
   "copperfold dead_door 3,4": "door leads nowhere (needs a room: building interiors pass)",
   "copperfold dead_door 9,4": "door leads nowhere (needs a room: building interiors pass)",
@@ -16,9 +13,6 @@
   "greyreach dead_door 3,6": "door leads nowhere (needs a room: building interiors pass)",
   "madderby dead_door 2,9": "door leads nowhere (needs a room: building interiors pass)",
   "madderby dead_door 8,13": "door leads nowhere (needs a room: building interiors pass)",
-  "ochrewell no_door 2,12": "building 2,12-3,13 has no door (needs a room: building interiors pass)",
-  "ochrewell no_door 2,2": "building 2,2-4,3 has no door (needs a room: building interiors pass)",
-  "ochrewell no_door 7,2": "building 7,2-9,3 has no door (needs a room: building interiors pass)",
   "reedhaven dead_door 2,3": "door leads nowhere (needs a room: building interiors pass)",
   "reedhaven dead_door 2,7": "door leads nowhere (needs a room: building interiors pass)",
   "reedhaven dead_door 9,3": "door leads nowhere (needs a room: building interiors pass)",
