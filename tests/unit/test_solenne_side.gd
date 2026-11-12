@@ -30,10 +30,8 @@ func test_brass_veil_is_a_clan_with_its_people() -> void:
 	assert_eq(Trust.validate(), PackedStringArray())
 
 func test_two_scripted_betrayals_in_act_four() -> void:
-	var n: int = 0
-	for id: Variant in Trust.data().betrayals:
-		n += 1 if int(Trust.betrayal(str(id)).get("act", 0)) == 4 else 0
-	assert_eq(n, 2)
+	for id: String in ["kaia_deed", "lusk_vault"]:
+		assert_eq(int(Trust.betrayal(id).get("act", 0)), 4, id)
 	# Dunya's warning turns Kaia's deed from struck into caught.
 	var def: Dictionary = Trust.betrayal("kaia_deed")
 	assert_eq(Trust.betrayal_result(def, {}, {}), "struck")

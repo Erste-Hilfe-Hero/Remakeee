@@ -67,6 +67,6 @@
   "tower_rift": {"region": "solenne", "pos": [0, 4], "kind": "rift", "neighbours": ["ochrewell"]},
   "oasis_rift": {"region": "solenne", "pos": [2, 4], "kind": "rift", "neighbours": ["ochrewell"]},
   "sun_rift": {"region": "solenne", "pos": [1, 5], "kind": "rift", "neighbours": ["ochrewell"]},
-  "veil_cistern": {"inside": "ochrewell"}
+  "veil_cistern": {"inside": "ochrewell", "region": "solenne"}
  }
 }
