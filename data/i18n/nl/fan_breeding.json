@@ -1,0 +1,23 @@
+{
+ "_comment": "Dutch texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py nl.",
+ "strings": {
+  "Auntie Grisela": "Tante Grisela",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Het contract van Tante Grisela houdt stand. De jonge draagt het beste van beide huizen.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Tante Grisela: Een contract kost %d munten. Liefde is gratis, papierwerk niet.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Tante Grisela: Een goede match is een fusie met veren.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Tante Grisela: Breng me een Echokern en ik zet de bruidsschat op papier.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Tante Grisela: Ik zet de bruidsschat op papier. Niemand leest het, maar het staat er.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Tante Grisela: Geen Echokern, geen bruiloft. Zing eerst bij een bron, dan praten we zaken.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Tante Grisela: Getekend, verzegeld, en niemand anders hoort ervan. Waarschijnlijk.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Tante Grisela: Twee goede families, één lief lied. De rest regel ik.",
+  "It already knows %s, an heirloom art of the family.": "Hij kent al %s, een erfstuk-techniek van de familie.",
+  "It carries the family's best Spark in %d values.": "Hij draagt de beste Vonk van de familie in %d waarden.",
+  "Seal": "Bezegelen",
+  "Seal a match contract for the core of %s for %d coins?": "Een matchcontract bezegelen voor de kern van %s voor %d munten?",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "Blijkt dat Tante Grisela dezelfde match aan %s verkocht. Het contract is nietig, maar het lied wekt toch.",
+  "a family she calls 'the other one'": "een familie die ze 'die andere' noemt",
+  "the Moldwick family": "de familie Moldwick",
+  "the Pellgraves": "de Pellgraves",
+  "the Second Cousins": "de Achterneven"
+ }
+}

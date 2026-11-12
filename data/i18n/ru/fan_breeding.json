@@ -1,0 +1,23 @@
+{
+ "_comment": "Russian texts for the German table fan_breeding. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Auntie Grisela": "Тётушка Grisela",
+  "Auntie Grisela's contract holds. The young one carries the best of both houses.": "Контракт Тётушки Grisela в силе. Малыш несёт лучшее от обоих домов.",
+  "Auntie Grisela: A contract costs %d coins. Love is free, paperwork is not.": "Тётушка Grisela: Контракт стоит %d монет. Любовь бесплатна, бумаги - нет.",
+  "Auntie Grisela: A good match is a merger with feathers.": "Тётушка Grisela: Хорошая пара - это слияние с перьями.",
+  "Auntie Grisela: Bring me an Echo Core and I put the dowry in writing.": "Тётушка Grisela: Принеси мне Ядро Эха, и я запишу приданое.",
+  "Auntie Grisela: I put the dowry in writing. Nobody reads it, but it is written.": "Тётушка Grisela: Я записываю приданое. Никто не читает, но записано.",
+  "Auntie Grisela: No Echo Core, no wedding. Sing at a spring first, then we talk business.": "Тётушка Grisela: Нет Ядра Эха - нет свадьбы. Сначала спой у источника, потом поговорим о деле.",
+  "Auntie Grisela: Signed, sealed, and nobody else will hear of it. Probably.": "Тётушка Grisela: Подписано, запечатано, и больше никто не узнает. Наверное.",
+  "Auntie Grisela: Two good families, one sweet song. I arrange the rest.": "Тётушка Grisela: Две хорошие семьи, одна нежная песня. Остальное устрою я.",
+  "It already knows %s, an heirloom art of the family.": "Он уже знает %s - семейную технику.",
+  "It carries the family's best Spark in %d values.": "Несёт лучшую Искру семьи в стольких значениях: %d.",
+  "Seal": "Скрепить",
+  "Seal a match contract for the core of %s for %d coins?": "Скрепить брачный контракт для ядра (%s) за %d монет?",
+  "Turns out Auntie Grisela sold the same match to %s. The contract is void, but the song still wakes.": "Оказывается, Тётушка Grisela продала ту же пару ещё и вот кому: %s. Контракт недействителен, но песня всё равно будит.",
+  "a family she calls 'the other one'": "семья, которую она зовёт 'та, другая'",
+  "the Moldwick family": "семья Moldwick",
+  "the Pellgraves": "Pellgraves",
+  "the Second Cousins": "Троюродные"
+ }
+}

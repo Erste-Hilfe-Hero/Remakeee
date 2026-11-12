@@ -4,13 +4,13 @@ halls and the dark fens. Read by tools/art/gen_lines.py (art) and tools/build_li
 L = dict
 
 LINES = [
-    L(id="sootpaw", names=["Sootpaw", "Sootlurk", "Sootharrow"], elements=["EMBER", "UMBRA"], role="striker",
+    L(id="sootpaw", names=["Sootpaw", "Sootlurk", "Sootharrow"], elements=["EMBER", "UMBRA"], role="kindler",
       art=dict(plan="quad", tones=("dark", "dark", "light"), ears="pointed", ear_tone="dark", tail="flame", eye="glow",
                snout="long", mouth="fang", size=-1, marks="spots", marks_n=0)),
     L(id="vitrill", names=["Vitrill", "Vitrillon", "Vitrillaxe"], elements=["LUMEN", "STONE"], role="bulwark",
       art=dict(plan="bug", tones=("mid", "light", "dark"), back="crystals", back_n=2, horn="single", horn_tone="light",
                eye="small", ears="antenna", ear_tone="light")),
-    L(id="sablet", names=["Sablet", "Sablowl", "Sablarch"], elements=["UMBRA", "GALE"], role="weaver",
+    L(id="sablet", names=["Sablet", "Sablowl", "Sablarch"], elements=["UMBRA", "GALE"], role="weaver", power=0.9,
       art=dict(plan="bird", tones=("dark", "dark", "mid"), ears="pointed", ear_tone="dark", tail="fan", extras=("wing",),
                eye="big", size=1)),
     L(id="quenchet", names=["Quenchet", "Quenchcoil", "Quenchwyrm"], elements=["EMBER", "TIDE"], role="kindler",
@@ -342,6 +342,7 @@ TEXTS = {
 }
 
 ENCOUNTERS = {
+    # soot_vaults is set by hand in data/encounters.json: the census needs its six Veydal natives.
     "kiln_rift": [("Brickit", "scree"), ("Coalkid", "scree"), ("Sootpaw", "scree"), ("Cindle", "scree"),
                   ("Ingotlet", "scree"), ("Flueling", "scree"), ("Smeltpup", "scree"), ("Kilnstork", "scree"),
                   ("Shalebat", "scree")],

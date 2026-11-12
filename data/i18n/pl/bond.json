@@ -1,0 +1,19 @@
+{
+ "_comment": "Polish texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py pl.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "Więź, krok 2: wybierz Więź. Pojawi się duży przycisk Mój!.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Więź, krok 3: wciskaj A najszybciej, jak umiesz. Im pełniejszy pasek, tym lepsza więź.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Więź, krok 3: stukaj Mój! najszybciej, jak umiesz. Im pełniejszy pasek, tym lepsza więź.",
+  "Bonding: %s": "Więź: %s",
+  "Echo": "Echo",
+  "Hint": "Wskazówka",
+  "Mine": "Mój",
+  "Mine!": "Mój!",
+  "Mine: tap one button fast. Echo: repeat the call.": "Mój: stukaj szybko jeden przycisk. Echo: powtórz wołanie.",
+  "Note": "Notatka",
+  "Reach out to %s... Tap Mine! fast!": "Wyciągnij rękę: %s... Stukaj szybko Mój!",
+  "Tap Mine! fast!": "Stukaj szybko Mój!",
+  "Tip": "Rada",
+  "Tips": "Rady"
+ }
+}

@@ -463,6 +463,13 @@
   "not seen": "못 봄",
   "strong": "강함",
   "wild %s": "야생 %s",
-  "Join our Discord": "Discord 참여하기"
+  "Join our Discord": "Discord 참여하기",
+  " It gleams in colours of its own!": " 자기만의 빛깔로 반짝인다!",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "유대 1단계: 기예 몇 번으로 기력 막대를 낮춰라. 쓰러뜨리진 마.",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "유대 2단계: 유대를 골라라. 표식이 하나씩 차례로 나온다. 잘 봐.",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "유대 3단계: 같은 표식을 같은 순서로 눌러라. 메아리가 정확할수록 유대가 강해진다.",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "유대 3단계: 같은 표식을 같은 순서로 탭해라. 메아리가 정확할수록 유대가 강해진다.",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "유대 4단계: 요청이 오면 혈연 부적을 내밀어라. 연결이 안정된다. 처음엔 20개를 갖고 시작한다.",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "아직 초보일 동안엔 유대에 실패해도 야생 Spirling이 공짜로 때리지 않는다."
  }
 }

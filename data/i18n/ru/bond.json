@@ -1,0 +1,19 @@
+{
+ "_comment": "Russian texts for the German table bond. Keys are the English text; keys with %s or %d are patterns. Kept by hand; check with python3 tools/i18n/check_lang.py ru.",
+ "strings": {
+  "Bonding step 2: Pick Bond. A big Mine! button appears.": "Связь, шаг 2: выбери Связь. Появится большая кнопка Мой!.",
+  "Bonding step 3: Press A as fast as you can. The fuller the bar, the better the bond.": "Связь, шаг 3: жми A как можно быстрее. Чем полнее шкала, тем крепче связь.",
+  "Bonding step 3: Tap Mine! as fast as you can. The fuller the bar, the better the bond.": "Связь, шаг 3: жми Мой! как можно быстрее. Чем полнее шкала, тем крепче связь.",
+  "Bonding: %s": "Связь: %s",
+  "Echo": "Эхо",
+  "Hint": "Подсказка",
+  "Mine": "Мой",
+  "Mine!": "Мой!",
+  "Mine: tap one button fast. Echo: repeat the call.": "Мой: быстро жми одну кнопку. Эхо: повтори зов.",
+  "Note": "Заметка",
+  "Reach out to %s... Tap Mine! fast!": "Протяни руку: %s... Быстро жми Мой!",
+  "Tap Mine! fast!": "Быстро жми Мой!",
+  "Tip": "Совет",
+  "Tips": "Советы"
+ }
+}
