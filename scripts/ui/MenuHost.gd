@@ -415,17 +415,8 @@ const SETTING_HINTS: Dictionary[String, String] = {
 
 func run_settings() -> void:
 	while true:
-		# Settings in the era's layout (EraMenus): a symbol per group from Era II, big buttons
-		# with what each group holds in the info panel from Era IV.
-		var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "options")
-		var entries: Array[Dictionary] = _rows_to_entries(SETTINGS_GROUPS)
-		for i: int in entries.size():
-			var key: String = str(SETTINGS_GROUPS[i][0])
-			var pic: Texture2D = EraMenuKit.icon_for(key, lay)
-			if pic != null:
-				entries[i]["icon"] = pic
-			if str(entries[i].get("hint", "")).is_empty() and str(lay.get("panel", "none")) != "none":
-				entries[i]["hint"] = EraMenuKit.SETTING_GROUP_HINTS.get(key, "")
+		# Settings in the era's layout (EraMenus): symbols from Era II, info panel from Era IV.
+		var entries: Array[Dictionary] = EraMenuKit.settings_entries(_rows_to_entries(SETTINGS_GROUPS), SETTINGS_GROUPS)
 		var idx: int = await pick_screen("options", SETTINGS_TITLE, entries)
 		if idx < 0:
 			SaveManager.save_settings()

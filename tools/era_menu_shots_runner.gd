@@ -68,6 +68,8 @@ static func setup_state() -> void:
 
 func _run() -> void:
 	DirAccess.make_dir_recursive_absolute(out)
+	# The settings screen saves on Back: keep the player's settings file out of it.
+	SaveManager.settings_path = "user://era_menu_shots_settings.json"
 	var keep_lang: String = GameState.language
 	for lang: String in ["en", "de"]:
 		setup_state()

@@ -98,6 +98,10 @@ const SLIDE_GAP: float = 0.018
 ## How often rows with a moving picture are redrawn, in seconds.
 const ROW_BEAT: float = 0.3
 var _beat_t: float = 0.0
+## Frames until the focused row is checked to be in view (_keep_focus_shown).
+var _focus_check: int = 0
+## Frames until the rows slide in (Era V), once the list has its layout.
+var _slide_wait: int = 0
 
 func _ready() -> void:
 	add_theme_stylebox_override("panel", UITheme.panel_style())
@@ -312,7 +316,8 @@ func pick(title: String, entries: Array[Dictionary], cancellable: bool = true, f
 	if want < 0:
 		want = int(_remembered.get(title, -1))
 	_focus_row.call_deferred(want)
-	_slide_in.call_deferred()
+	_slide_wait = 2
+	_focus_check = 3
 	var index: int = await picked
 	_remembered_scroll[title] = _scroll.scroll_vertical
 	visible = false
@@ -376,6 +381,14 @@ func move_focus(delta: int, wrap: bool = true) -> void:
 func _process(delta: float) -> void:
 	if visible:
 		_bob_pointer(delta)
+		if _slide_wait > 0:
+			_slide_wait -= 1
+			if _slide_wait == 0:
+				_slide_in()
+		if _focus_check > 0:
+			_focus_check -= 1
+			if _focus_check == 0:
+				_keep_focus_shown()
 		if _backdrop.visible and not Juice.reduced():
 			_backdrop_t += delta
 			_backdrop.queue_redraw()
@@ -662,12 +675,16 @@ func _link_grid(columns: int) -> void:
 		b.focus_neighbor_top = b.get_path_to(_buttons[i - columns if i - columns >= 0 else n - 1])
 		b.focus_neighbor_bottom = b.get_path_to(_buttons[i + columns if i + columns < n else (n - 1 if i < n - 1 else 0)])
 
+## A header above the rows or a picture above the list (world map) changes the list's height
+## after the first layout: the focused row is brought back into view once the layout settled.
+func _keep_focus_shown() -> void:
+	var f: Control = get_viewport().gui_get_focus_owner()
+	if f is Button and f in _buttons and not row_fully_shown(f):
+		_scroll.ensure_control_visible(f)
+
 ## Era V: the rows slide in from the right one after another. Still under reduced motion.
 func _slide_in() -> void:
-	if str(layout.get("anim", "none")) != "slide" or Juice.reduced() or not is_inside_tree():
-		return
-	await get_tree().process_frame
-	if not visible:
+	if str(layout.get("anim", "none")) != "slide" or Juice.reduced() or not visible:
 		return
 	for i: int in _buttons.size():
 		var b: Button = _buttons[i]

@@ -17,7 +17,7 @@ const ANIMS: Array[String] = ["none", "slide"]
 const BASE_KEYS: Array[String] = ["style", "columns", "row_h", "cursor", "icons", "icon_size", "panel", "anim", "backdrop", "wrap"]
 ## Summary sections; every era shows all four, grouped into its pages or tabs.
 const SECTIONS: Array[String] = ["info", "stats", "arts", "marks"]
-const SECTION_NAMES: Dictionary[String, String] = {"info": "Info", "stats": "Values", "arts": "Arts", "marks": "Honours"}
+const SECTION_NAMES: Dictionary[String, String] = {"info": "Info", "stats": "Values", "arts": "Arts", "marks": "Merits"}
 ## Smallest row a finger hits safely in the touch eras, in screen pixels of that era.
 const TOUCH_MIN_ROW: int = 24
 ## List result when a team row was dragged to another slot (the move is already done).

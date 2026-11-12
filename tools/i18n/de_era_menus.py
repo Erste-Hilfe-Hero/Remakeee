@@ -31,6 +31,7 @@ T = {
     "Arts": "Künste",
     "Honours (%d)": "Ehren (%d)",
     "Honours": "Ehren",
+    "Merits": "Ehren",
     "All": "Alle",
     "No honours yet. They come with the road.": "Noch keine Ehren. Die bringt der Weg.",
     "Lead mark": "Zeichen der Spitze",
@@ -90,3 +91,14 @@ T = {
     "Your account, cloud save and data.": "Dein Konto, Cloud-Speicher und Daten.",
     "Imprint, privacy, terms and licences.": "Impressum, Datenschutz, Bedingungen und Lizenzen.",
 }
+T.update({
+    "No.%03d\n???": "Nr.%03d\n???",
+    "No.%03d %s\n%s": "Nr.%03d %s\n%s",
+})
+# Diagnostics of tools/era_menu_shots.gd and a label prefix test: never shown to players.
+KEEP = [
+    "the list leaves the screen",
+    "the header takes more than 45 percent of the screen",
+    "fewer than three rows in view",
+    "Shop (",
+]

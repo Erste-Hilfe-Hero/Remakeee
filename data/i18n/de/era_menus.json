@@ -1,6 +1,11 @@
 {
  "_comment": "German texts from tools/i18n/de_era_menus.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
- "keep": [],
+ "keep": [
+  "Shop (",
+  "fewer than three rows in view",
+  "the header takes more than 45 percent of the screen",
+  "the list leaves the screen"
+ ],
  "strings": {
   "%d kinds": "%d Sorten",
   "A rare Gleam. People will pay for that, or worse.": "Ein seltener Glanz. Dafür zahlen Leute, oder Schlimmeres.",
@@ -39,8 +44,11 @@
   "Living menus": "Lebendige Menüs",
   "Long road mark": "Zeichen des langen Wegs",
   "Looks you own for the Wayfarer and the menus.": "Deine Looks für den Wanderer und die Menüs.",
+  "Merits": "Ehren",
   "Monday": "Montag",
   "No honours yet. They come with the road.": "Noch keine Ehren. Die bringt der Weg.",
+  "No.%03d\n???": "Nr.%03d\n???",
+  "No.%03d %s\n%s": "Nr.%03d %s\n%s",
   "Optional purchases. Nothing in it is random.": "Freiwillige Käufe. Nichts darin ist Zufall.",
   "Pin or unpin...": "Anheften oder lösen...",
   "Pin up to four entries to the top of this menu.": "Hefte bis zu vier Einträge oben an dieses Menü.",

@@ -83,6 +83,19 @@ static func pause_entries(labels: Array[String], waiting: bool, lay: Dictionary)
 		out.append(e)
 	return out
 
+## The settings groups in the era's layout: a symbol per group from Era II, in the touch eras
+## what each group holds for the info panel. [param groups] is MenuHost.SETTINGS_GROUPS.
+static func settings_entries(entries: Array[Dictionary], groups: Array) -> Array[Dictionary]:
+	var lay: Dictionary = EraMenus.layout(era(), "options")
+	for i: int in entries.size():
+		var key: String = str(groups[i][0])
+		var pic: Texture2D = icon_for(key, lay)
+		if pic != null:
+			entries[i]["icon"] = pic
+		if str(entries[i].get("hint", "")).is_empty() and str(lay.get("panel", "none")) != "none":
+			entries[i]["hint"] = SETTING_GROUP_HINTS.get(key, "")
+	return entries
+
 ## 0 or -1: the two-frame bob of row [param index]'s sprite at [param ms]. Rows alternate, so
 ## the team does not hop in step. Still under reduced motion.
 static func bob_at(ms: int, index: int, reduced: bool) -> int:
@@ -335,9 +348,22 @@ static func show_card(parent: Node, content: Control, caption: String) -> void:
 ## Empty when the screen is sound. Used by the GUT tests and tools/era_menu_shots.gd.
 static func fit_problems(host: MenuHost, check_text: bool = true) -> Array[String]:
 	var out: Array[String] = []
+	var summary: EraSummary = host.get_node_or_null("era_summary") as EraSummary
+	if summary != null:
+		for t: Node in summary._tab_row.get_children():
+			var tb: Button = t as Button
+			var font: Font = tb.get_theme_font("font", "Button")
+			var fs: int = tb.get_theme_font_size("font_size", "Button")
+			var sb: StyleBox = tb.get_theme_stylebox("normal", "Button")
+			if font.get_string_size(Loc.t(tb.text), HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x > tb.size.x - sb.get_margin(SIDE_LEFT) - sb.get_margin(SIDE_RIGHT) + 0.5:
+				out.append("summary tab cut off: %s" % Loc.t(tb.text))
+		return out
 	var p: ListPicker = host.picker
 	if not p.visible:
 		return out
+	var f: Control = host.get_viewport().gui_get_focus_owner()
+	if f is Button and f in p.buttons() and not p.row_fully_shown(f):
+		out.append("the cursor row is out of view: %s" % (f as Button).text)
 	var vp: Rect2 = host.get_viewport_rect()
 	if not vp.grow(0.5).encloses(p.get_global_rect()):
 		out.append("the list leaves the screen")
