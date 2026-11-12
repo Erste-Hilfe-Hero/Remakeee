@@ -26,6 +26,7 @@ LEVEL = 36
 BATTLES = 20000
 SEED = 20261111
 TEAM = 3
+ERA2_KINDS = 6
 BAND = (0.40, 0.60)
 MAX_TURNS = 100
 
@@ -73,11 +74,11 @@ def chart_problems(chart, species):
             if min(off + dfn) >= 0 and max(off + dfn) > 0:
                 out.append("%s strictly dominates %s" % (a, b))
     used = {e for s in species for e in s["elements"]}
-    # Era II elements may sit on legendary (ancient) kinds only; those stay out of the sim.
-    common = {e for s in species if s.get("rarity") != "ancient" for e in s["elements"]}
+    # Era II elements stay rare: legendaries, plus at most ERA2_KINDS act kinds each (owner: "sparingly").
     for t, v in types.items():
-        if v.get("era", 1) > 1 and t in common:
-            out.append("Era %d element %s is on a non-legendary Spirling" % (v["era"], t))
+        n = sum(1 for s in species if s.get("rarity") != "ancient" and t in s["elements"])
+        if v.get("era", 1) > 1 and n > ERA2_KINDS:
+            out.append("Era %d element %s is on %d non-legendary Spirlings (at most %d)" % (v["era"], t, n, ERA2_KINDS))
     for e in used:
         if e not in types:
             out.append("Spirling element %s is not in the chart" % e)

@@ -122,7 +122,7 @@ func test_closed_regions_stay_out_of_the_spirlog_and_the_wild() -> void:
 		for s: Dictionary in enc[area].spawns:
 			var own: String = Database.species(str(s.species)).region
 			assert_lte(SpirlingData.REGIONS.find(own), SpirlingData.REGIONS.find(region), "%s in %s" % [s.species, area])
-	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 17)
+	assert_eq(SpirlogBook.visible_kinds({"region_open_corvane": true}).size(), kinds.size() + 71)
 	assert_true(SpirlogBook.region_open("solenne", {"rift_shade_sealed": true}), "the sand road opens the chapter")
 	assert_false(SpirlogBook.region_open("solenne", {}))
 
