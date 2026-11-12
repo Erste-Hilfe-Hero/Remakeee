@@ -143,6 +143,11 @@ TOWN_ROWS = ["TTTTT__TTTTT",
              "T*:..__.L:.T",
              "T:...__...:T",
              "TTTTT__TTTTT"]
+# Road cells between the pump square and each side's gate.
+CLOSED_STUB = {"top": [(x, y) for y in range(1, 6) for x in (5, 6)],
+               "bottom": [(x, y) for y in range(11, 19) for x in (5, 6)],
+               "left": [(x, y) for y in (8, 9) for x in range(1, 5)],
+               "right": [(x, y) for y in (8, 9) for x in range(7, 11)]}
 BOATMAN = (3, 9)            # the mail boatman on the Burin Landing pier
 BOAT_LANDING = (2, 9)       # where the mail boat sets you down
 BOAT_LASTLAMP = (8, 16)     # the stop on the Lastlamp square (Vellmarch's last town)
@@ -298,6 +303,9 @@ def town(mid):
         if side not in gates:
             for x, y in cells:
                 rows[y] = rows[y][:x] + "T" + rows[y][x + 1:]
+            # No road runs up to a closed side: its stub becomes a yard.
+            for x, y in CLOSED_STUB[side]:
+                rows[y] = rows[y][:x] + "." + rows[y][x + 1:]
     tt = TOWN_TEXT[mid]
     sign = text(mid + "_sign", lines((t["name"], t["name"]), tt["motto"]))
     npcs = [npc("keeper", 6, 7, "down", text(mid + "_keeper", {"lines": lines(tt["keeper"]), "action": "heal"}), "elder")]

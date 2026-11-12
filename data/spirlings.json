@@ -73,11 +73,11 @@
   "role": "kindler",
   "line_id": "kindlop",
   "base": {
-   "hp": 74,
-   "atk": 88,
-   "foc": 92,
-   "spd": 94,
-   "def": 70
+   "hp": 78,
+   "atk": 92,
+   "foc": 96,
+   "spd": 98,
+   "def": 73
   },
   "trait": "kindling",
   "learnset": {
@@ -260,11 +260,11 @@
   "role": "vanguard",
   "line_id": "puddlet",
   "base": {
-   "hp": 86,
-   "atk": 72,
-   "foc": 84,
-   "spd": 76,
-   "def": 82
+   "hp": 89,
+   "atk": 74,
+   "foc": 86,
+   "spd": 78,
+   "def": 84
   },
   "trait": "slick",
   "learnset": {
@@ -328,11 +328,11 @@
   "role": "vanguard",
   "line_id": "puddlet",
   "base": {
-   "hp": 108,
-   "atk": 90,
-   "foc": 112,
-   "spd": 86,
-   "def": 104
+   "hp": 107,
+   "atk": 89,
+   "foc": 110,
+   "spd": 85,
+   "def": 103
   },
   "trait": "slick",
   "learnset": {
@@ -922,11 +922,11 @@
   "role": "striker",
   "line_id": "zephlet",
   "base": {
-   "hp": 76,
-   "atk": 94,
-   "foc": 92,
-   "spd": 118,
-   "def": 70
+   "hp": 73,
+   "atk": 91,
+   "foc": 89,
+   "spd": 114,
+   "def": 68
   },
   "trait": "last_stand",
   "learnset": {
@@ -992,10 +992,10 @@
   "role": "weaver",
   "line_id": "wickit",
   "base": {
-   "hp": 52,
+   "hp": 53,
    "atk": 50,
-   "foc": 64,
-   "spd": 66,
+   "foc": 65,
+   "spd": 67,
    "def": 52
   },
   "trait": "light_sleeper",
@@ -1220,11 +1220,11 @@
   "role": "vanguard",
   "line_id": "mirkmole",
   "base": {
-   "hp": 90,
-   "atk": 110,
-   "foc": 58,
-   "spd": 74,
-   "def": 96
+   "hp": 92,
+   "atk": 112,
+   "foc": 59,
+   "spd": 75,
+   "def": 98
   },
   "trait": "steady",
   "learnset": {
@@ -1282,10 +1282,10 @@
   "role": "weaver",
   "line_id": "kelpup",
   "base": {
-   "hp": 62,
-   "atk": 66,
+   "hp": 63,
+   "atk": 67,
    "foc": 58,
-   "spd": 70,
+   "spd": 71,
    "def": 56
   },
   "trait": "deep_roots",
@@ -1401,11 +1401,11 @@
   "role": "weaver",
   "line_id": "blotling",
   "base": {
-   "hp": 58,
-   "atk": 44,
-   "foc": 80,
-   "spd": 72,
-   "def": 56
+   "hp": 54,
+   "atk": 41,
+   "foc": 75,
+   "spd": 68,
+   "def": 53
   },
   "trait": "slick",
   "learnset": {
@@ -1459,11 +1459,11 @@
   "role": "weaver",
   "line_id": "blotling",
   "base": {
-   "hp": 74,
-   "atk": 58,
-   "foc": 112,
-   "spd": 104,
-   "def": 72
+   "hp": 68,
+   "atk": 54,
+   "foc": 103,
+   "spd": 96,
+   "def": 66
   },
   "trait": "slick",
   "learnset": {
@@ -1623,11 +1623,11 @@
   "role": "striker",
   "line_id": "paddlewisp",
   "base": {
-   "hp": 52,
-   "atk": 72,
-   "foc": 54,
-   "spd": 88,
-   "def": 46
+   "hp": 49,
+   "atk": 68,
+   "foc": 51,
+   "spd": 83,
+   "def": 43
   },
   "trait": "last_stand",
   "learnset": {
@@ -1681,11 +1681,11 @@
   "role": "striker",
   "line_id": "paddlewisp",
   "base": {
-   "hp": 72,
-   "atk": 100,
-   "foc": 76,
-   "spd": 118,
-   "def": 64
+   "hp": 70,
+   "atk": 97,
+   "foc": 74,
+   "spd": 114,
+   "def": 62
   },
   "trait": "last_stand",
   "learnset": {
@@ -1729,11 +1729,11 @@
   "role": "bulwark",
   "line_id": "talusk",
   "base": {
-   "hp": 60,
-   "atk": 66,
-   "foc": 36,
-   "spd": 60,
-   "def": 82
+   "hp": 62,
+   "atk": 68,
+   "foc": 37,
+   "spd": 62,
+   "def": 85
   },
   "trait": "thick_hide",
   "learnset": {
@@ -1798,11 +1798,11 @@
   "role": "bulwark",
   "line_id": "talusk",
   "base": {
-   "hp": 84,
-   "atk": 90,
-   "foc": 60,
-   "spd": 88,
-   "def": 112
+   "hp": 86,
+   "atk": 93,
+   "foc": 62,
+   "spd": 91,
+   "def": 115
   },
   "trait": "thick_hide",
   "learnset": {
@@ -2009,11 +2009,11 @@
   "role": "weaver",
   "line_id": "glasstarn",
   "base": {
-   "hp": 82,
-   "atk": 52,
-   "foc": 100,
-   "spd": 110,
-   "def": 86
+   "hp": 78,
+   "atk": 49,
+   "foc": 94,
+   "spd": 104,
+   "def": 81
   },
   "trait": "slick",
   "learnset": {
@@ -2223,11 +2223,11 @@
   "role": "kindler",
   "line_id": "croziel",
   "base": {
-   "hp": 56,
+   "hp": 57,
    "atk": 48,
-   "foc": 76,
-   "spd": 62,
-   "def": 58
+   "foc": 77,
+   "spd": 63,
+   "def": 59
   },
   "trait": "deep_roots",
   "learnset": {
@@ -2753,11 +2753,11 @@
   "role": "bulwark",
   "line_id": "cogmite",
   "base": {
-   "hp": 72,
-   "atk": 57,
+   "hp": 73,
+   "atk": 58,
    "foc": 51,
    "spd": 49,
-   "def": 80
+   "def": 81
   },
   "trait": "thick_hide",
   "learnset": {
@@ -3292,11 +3292,11 @@
   "role": "striker",
   "line_id": "cindle",
   "base": {
-   "hp": 58,
-   "atk": 81,
-   "foc": 50,
-   "spd": 69,
-   "def": 52
+   "hp": 60,
+   "atk": 84,
+   "foc": 51,
+   "spd": 71,
+   "def": 54
   },
   "trait": "kindling",
   "learnset": {
@@ -3780,11 +3780,11 @@
   "role": "bulwark",
   "line_id": "cullet",
   "base": {
-   "hp": 105,
-   "atk": 74,
-   "foc": 70,
-   "spd": 65,
-   "def": 112
+   "hp": 109,
+   "atk": 77,
+   "foc": 73,
+   "spd": 68,
+   "def": 117
   },
   "trait": "thick_hide",
   "learnset": {
@@ -3829,11 +3829,11 @@
   "role": "striker",
   "line_id": "smeltpup",
   "base": {
-   "hp": 56,
-   "atk": 87,
-   "foc": 52,
-   "spd": 66,
-   "def": 51
+   "hp": 58,
+   "atk": 91,
+   "foc": 54,
+   "spd": 69,
+   "def": 53
   },
   "trait": "surge",
   "learnset": {
@@ -4535,11 +4535,11 @@
   "role": "vanguard",
   "line_id": "highhare",
   "base": {
-   "hp": 83,
-   "atk": 96,
-   "foc": 66,
-   "spd": 110,
-   "def": 76
+   "hp": 81,
+   "atk": 94,
+   "foc": 64,
+   "spd": 107,
+   "def": 74
   },
   "trait": "surge",
   "learnset": {
@@ -8963,11 +8963,11 @@
   "line_id": "sablet",
   "era": 1,
   "base": {
-   "hp": 71,
-   "atk": 51,
-   "foc": 114,
-   "spd": 70,
-   "def": 74
+   "hp": 76,
+   "atk": 55,
+   "foc": 122,
+   "spd": 75,
+   "def": 80
   },
   "trait": "light_sleeper",
   "learnset": {
@@ -11367,11 +11367,11 @@
   "line_id": "charsprout",
   "era": 1,
   "base": {
-   "hp": 87,
-   "atk": 67,
-   "foc": 101,
-   "spd": 94,
-   "def": 75
+   "hp": 83,
+   "atk": 64,
+   "foc": 96,
+   "spd": 90,
+   "def": 72
   },
   "trait": "kindling",
   "learnset": {
@@ -18505,11 +18505,11 @@
   "line_id": "burrin",
   "era": 3,
   "base": {
-   "hp": 100,
-   "atk": 122,
-   "foc": 81,
-   "spd": 124,
-   "def": 88
+   "hp": 111,
+   "atk": 124,
+   "foc": 82,
+   "spd": 111,
+   "def": 92
   },
   "trait": "deep_roots",
   "learnset": {
