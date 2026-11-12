@@ -358,7 +358,7 @@ def reedhaven(world):
          "warps": [warp(5, 0, "brackwater_fen", 5, 22, "up"), warp(6, 0, "brackwater_fen", 6, 22, "up")],
          "npcs": [npc("tender", 8, 5, "up", mid + "/tender", "elder"),
                   npc("trader", 4, 7, "right", mid + "/trader", "villager"),
-                  npc("boatman", 3, 8, "right", mid + "/boatman", "villager")],
+                  npc("boatman", 4, 8, "left", mid + "/boatman", "villager")],
          "signs": [{"x": 8, "y": 7, "dialogue": mid + "/sign"}],
          "secrets": [secret(11, 8, "tonic", "find_reed_end", 2), secret(10, 7, "remedy", "find_reed_reeds"),
                      secret(0, 4, "kin_charm", "find_reed_west")]}
