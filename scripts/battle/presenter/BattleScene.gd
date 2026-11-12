@@ -106,7 +106,7 @@ func _exit_tree() -> void:
 	Juice.set_shake_root(null)
 
 func _ready() -> void:
-	theme = UITheme.get_theme()
+	theme = EraBattleHud.theme(EraManager.active_era())
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_build()
 	if model == null:
@@ -262,10 +262,17 @@ func _build() -> void:
 	_log_label.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	_log_panel.add_child(_log_label)
 	_apply_speed()
+	_hud = BattleHud.new()
+	_hud.attach(self)
+
+## Era look of the HUD: plates, small buttons, team rows, text frame, ring-rise panel.
+var _hud: BattleHud
 
 func _layout_field() -> void:
 	if _multi and not _slot_sprites[BattleModel.Side.FOE].is_empty():
 		_layout_formation()
+		if _hud != null:
+			_hud.layout_formation()
 		return
 	var w: float = _field.size.x
 	var h: float = _field.size.y
@@ -296,6 +303,8 @@ func _layout_field() -> void:
 		_foe_sprite.size = fr.size
 		_player_sprite.position = pr.position
 		_player_sprite.size = pr.size
+	if _hud != null:
+		_hud.layout_single()
 	_backdrop.set_scene(backdrop, Rect2(_foe_sprite.position, _foe_sprite.size), Rect2(_player_sprite.position, _player_sprite.size))
 	_backdrop.modulate = Color.WHITE.darkened(backdrop_shade)
 
@@ -500,7 +509,7 @@ func _choose_action(slot: int = 0, taken: Array[int] = []) -> BattleAction:
 			var idx: int = await _pick_party("Swap to?", true, slot, taken)
 			return null if idx < 0 else BattleAction.make_swap(BattleModel.Side.PLAYER, idx, slot)
 		BattleAction.Kind.ITEM:
-			return await _pick_item(slot)
+			return await _pick_item(slot, EraBattleHud.last_item if index >= 0 else "")
 		BattleAction.Kind.BOND:
 			if not model.is_wild:
 				return BattleAction.make_oath(BattleModel.Side.PLAYER, slot)
@@ -520,6 +529,8 @@ func _pick_target(title: String) -> int:
 		var sp: SpirlingSprite = _slot_sprites[BattleModel.Side.FOE][slot]
 		var b := Button.new()
 		b.flat = true
+		# The map pin marks the target; the theme's dark focus box would hide the Spirling.
+		b.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
 		b.position = sp.position - Vector2(2, 2)
 		b.size = sp.size + Vector2(4, 14)
 		b.accessibility_name = model.active_spirling(BattleModel.Side.FOE, slot).display_name()
@@ -565,7 +576,8 @@ func _pick_party(title: String, cancellable: bool, slot: int = 0, taken: Array[i
 			return idx
 	return -1
 
-func _pick_item(slot: int = 0) -> BattleAction:
+## [param preset] (the item shortcut, Era IV on) uses that item on the active Spirling at once.
+func _pick_item(slot: int = 0, preset: String = "") -> BattleAction:
 	var ids: Array[String] = []
 	var entries: Array[Dictionary] = []
 	for id: String in model.bag_ids(BattleModel.Side.PLAYER):
@@ -576,7 +588,7 @@ func _pick_item(slot: int = 0) -> BattleAction:
 	if ids.is_empty():
 		await _text.show_text("No usable items.")
 		return null
-	var idx: int = await _picker.pick("Use which item?", entries)
+	var idx: int = ids.find(preset) if not preset.is_empty() else await _picker.pick("Use which item?", entries)
 	if idx < 0:
 		return null
 	if BattleModel.is_revive_item(ids[idx]):
@@ -586,7 +598,7 @@ func _pick_item(slot: int = 0) -> BattleAction:
 		var r := BattleAction.make_item(BattleModel.Side.PLAYER, ids[idx], down, slot)
 		return r if model.is_legal(r) else null
 	var own: int = model.active_index(BattleModel.Side.PLAYER, slot)
-	var target: int = await _pick_party("Use on?", true, slot) if model.party(BattleModel.Side.PLAYER).size() > 1 else own
+	var target: int = await _pick_party("Use on?", true, slot) if model.party(BattleModel.Side.PLAYER).size() > 1 and preset.is_empty() else own
 	if target < 0:
 		# Party picker disables the active Spirling; offer it directly.
 		target = own
@@ -650,6 +662,7 @@ func _bond(slot: int = 0) -> BattleAction:
 	var reach: String = "Reach out to %s... Tap Mine! fast!" if mine else "Reach out to %s... Listen, then echo its call!"
 	await _text.show_text(reach % model.active_spirling(BattleModel.Side.FOE, target_slot).display_name())
 	_bond_game.target = _sprite(BattleModel.Side.FOE, target_slot).texture()
+	_bond_game.target_name = model.active_spirling(BattleModel.Side.FOE, target_slot).display_name()
 	var foe: Spirling = model.active_spirling(BattleModel.Side.FOE, target_slot)
 	var key: String = foe.uid if not foe.uid.is_empty() else str(foe.get_instance_id())
 	if not _bond_plans.has(key):
@@ -787,6 +800,7 @@ func _play_event(e: BattleEvent) -> void:
 	var side: int = int(e.data.get("side", 0))
 	var slot: int = int(e.data.get("slot", 0))
 	record(e)
+	_hud.on_event(e)
 	match e.type:
 		BattleEvent.Type.BATTLE_START:
 			var foe: Spirling = model.active_spirling(BattleModel.Side.FOE)
@@ -932,7 +946,9 @@ func _play_event(e: BattleEvent) -> void:
 					(lst as InfoStrip).set_level(int(e.data.level))
 					_refresh_xp(lv_slot, int(e.data.get("index", -1)))
 				await lst.animate_hp(int(e.data.hp), int(e.data.max_hp))
+			_hud.show_level(e)
 			await _text.show_text(e.describe())
+			_hud.hide_level()
 		BattleEvent.Type.BOND_RESULT:
 			if bool(e.data.get("success", false)):
 				Sound.sfx("bond")
