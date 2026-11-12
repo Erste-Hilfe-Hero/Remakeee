@@ -152,6 +152,14 @@
      "level": 25
     }
    ]
+  },
+  {
+   "id": "reserve_gate",
+   "x": 8,
+   "y": 4,
+   "facing": "down",
+   "dialogue": "greyreach/reserve_gate",
+   "sprite": "villager"
   }
  ],
  "signs": [

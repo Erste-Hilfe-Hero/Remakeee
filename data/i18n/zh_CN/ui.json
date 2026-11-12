@@ -463,6 +463,13 @@
   "not seen": "未见过",
   "strong": "强",
   "wild %s": "野生%s",
-  "Join our Discord": "加入我们的 Discord"
+  "Join our Discord": "加入我们的 Discord",
+  " It gleams in colours of its own!": " 它闪耀着独有的色彩！",
+  "Bonding step 1: Hit it with a few arts until its Vigor bar is low. Don't knock it out.": "结缘第1步：用几个技艺把它的元气条打低。别打倒它。",
+  "Bonding step 2: Pick Bond. It calls a few marks, one after another. Watch closely.": "结缘第2步：选择结缘。它会一个接一个地发出几个记号。看仔细。",
+  "Bonding step 3: Press the same marks in the same order. The better your echo, the better the bond.": "结缘第3步：按同样的顺序按下同样的记号。回声越准，结缘越好。",
+  "Bonding step 3: Tap the same marks in the same order. The better your echo, the better the bond.": "结缘第3步：按同样的顺序点击同样的记号。回声越准，结缘越好。",
+  "Bonding step 4: Hold out a Kin Charm when asked. It steadies the link. You start with 20 of them.": "结缘第4步：需要时递出亲缘护符。它能稳住连结。你一开始有20个。",
+  "While you are new, a failed bond does not give the wild Spirling a free hit.": "新手期间，结缘失败不会让野生Spirling白打你一下。"
  }
 }
