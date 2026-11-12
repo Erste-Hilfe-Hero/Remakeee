@@ -1,0 +1,100 @@
+{
+ "_comment": "Battle presentation per era (docs/ERA_FEEL_BATTLE.md). Each era is the next handheld tech jump: I a four-shade ink screen with static sprites, II limited colour with an entrance bounce, III a rich 16-bit palette with hit flashes and shadows, IV the dual-screen era with bigger sprites, the 2.5D stage and breathing, V constantly animated sprites and a moving camera. Presentation only: nothing here changes a battle rule. Read by EraBattleFeel.gd through EraManager.battle_feel(). Every later era has at least the features of the one before (tests/unit/test_era_battle_feel.gd).",
+ "intro_styles": ["blinds", "spiral", "shutter", "iris", "swoop"],
+ "entrance_styles": ["pop", "bounce", "burst", "land", "live"],
+ "idle_levels": ["none", "entrance", "entrance_flash", "breath", "loop"],
+ "hit_styles": ["blink", "blink", "flash", "flash", "strip"],
+ "faint_styles": ["drop", "drop", "sink", "sink_dust", "collapse"],
+ "hp_drain_styles": ["step", "step", "smooth", "smooth", "smooth"],
+ "eras": {
+  "1": {
+   "intro": "blinds", "intro_time": 0.7, "intro_flashes": 2,
+   "entrance": "pop", "idle": "none", "hit": "blink", "faint": "drop",
+   "backdrop": "ink", "platform": "bank", "shadow": false, "parallax": false,
+   "hp_drain": "step", "hp_step_time": 1.2,
+   "fx_tier": 1, "fx_colour": false, "fx_tint": 0.0, "fx_trail": false, "fx_dust": false,
+   "shake": 0.6, "camera": "fixed",
+   "level_up": "text", "bond": "blink_out", "level_glints": 0, "bond_glints": 0
+  },
+  "2": {
+   "intro": "spiral", "intro_time": 0.7, "intro_flashes": 2,
+   "entrance": "bounce", "idle": "entrance", "hit": "blink", "faint": "drop",
+   "backdrop": "wash", "platform": "bank", "shadow": false, "parallax": false,
+   "hp_drain": "step", "hp_step_time": 1.0,
+   "fx_tier": 2, "fx_colour": true, "fx_tint": 0.0, "fx_trail": false, "fx_dust": false,
+   "shake": 0.75, "camera": "fixed",
+   "level_up": "ring", "bond": "hop", "level_glints": 0, "bond_glints": 0
+  },
+  "3": {
+   "intro": "shutter", "intro_time": 0.65, "intro_flashes": 1,
+   "entrance": "burst", "idle": "entrance_flash", "hit": "flash", "faint": "sink",
+   "backdrop": "etched", "platform": "slab", "shadow": true, "parallax": false,
+   "hp_drain": "smooth", "hp_step_time": 0.8,
+   "fx_tier": 3, "fx_colour": true, "fx_tint": 0.0, "fx_trail": false, "fx_dust": false,
+   "shake": 1.0, "camera": "fixed",
+   "level_up": "ring_glint", "bond": "hop_glint", "level_glints": 4, "bond_glints": 4
+  },
+  "4": {
+   "intro": "iris", "intro_time": 0.6, "intro_flashes": 1,
+   "entrance": "land", "idle": "breath", "hit": "flash", "faint": "sink_dust",
+   "backdrop": "stage", "platform": "stage", "shadow": true, "parallax": true,
+   "hp_drain": "smooth", "hp_step_time": 0.6,
+   "fx_tier": 4, "fx_colour": true, "fx_tint": 0.18, "fx_trail": false, "fx_dust": true,
+   "shake": 1.0, "camera": "pan",
+   "level_up": "ring_glint", "bond": "hop_glint", "level_glints": 6, "bond_glints": 6,
+   "breath_period": 1.6, "breath_squash": 0.04
+  },
+  "5": {
+   "intro": "swoop", "intro_time": 0.6, "intro_flashes": 0,
+   "entrance": "live", "idle": "loop", "hit": "strip", "faint": "collapse",
+   "backdrop": "stage", "platform": "stage", "shadow": true, "parallax": true,
+   "hp_drain": "smooth", "hp_step_time": 0.5,
+   "fx_tier": 5, "fx_colour": true, "fx_tint": 0.22, "fx_trail": true, "fx_dust": true,
+   "shake": 1.2, "camera": "dynamic",
+   "level_up": "ring_glint", "bond": "hop_glint", "level_glints": 8, "bond_glints": 8,
+   "breath_period": 1.4, "breath_squash": 0.04
+  }
+ },
+ "cameras": {
+  "fixed": {},
+  "pan": {"zoom": 1.06, "pan_share": 0.2, "in_time": 0.22, "hold_time": 0.1, "out_time": 0.26},
+  "dynamic": {"from": "era5_anim"}
+ },
+ "move_styles": ["slash", "bite", "beam", "wave", "burst", "quake", "volley", "spiral", "strike", "orb", "aura"],
+ "move_style_words": {
+  "slash": ["slice", "scythe", "cut", "rake", "slash", "claw", "lash", "rasp", "sting"],
+  "bite": ["bite", "nip", "gnash", "gnaw", "fang", "snap", "biter", "peck", "grip"],
+  "beam": ["ray", "beam", "lance", "bolt", "needle", "dart", "shot", "glare", "glint", "ping"],
+  "wave": ["wave", "ripple", "flood", "deluge", "surge", "current", "spray", "breath", "blizzard", "undertow", "plunge", "draught", "toll", "resound", "masquerade"],
+  "burst": ["burst", "pop", "blast", "flare", "blaze", "pulse", "circuit", "overcharge", "bell"],
+  "quake": ["quake", "tremor", "fault", "landslip", "thud", "slip", "monolith", "drop", "crush"],
+  "volley": ["volley", "toss", "pelt", "spit", "seed", "shard", "rime", "flick", "coin"],
+  "spiral": ["spiral", "squall", "updraft", "downburst", "gale", "crosswind", "haze", "mist"]
+ },
+ "move_style_overrides": {},
+ "kind_default_style": {"PHYSICAL": "strike", "FOCUS": "orb", "STATUS": "aura"},
+ "intro_flash_alpha": 0.5,
+ "stage_terrain": {
+  "field": {},
+  "lake":  {"floor_near": "6f9fc0", "floor_far": "a8c8d8", "grid": "5a86a4", "near": "48708a"},
+  "ridge": {"floor_near": "a89a78", "floor_far": "cfc4a2", "grid": "8a7c5c", "far": "8e8aa0", "mid": "7c7468"},
+  "ember": {"sky_top": "6a3a3a", "sky_low": "e0a070", "floor_near": "8a5a40", "floor_far": "b88a62", "grid": "6e4430", "far": "70505a", "mid": "5a3a38", "near": "40282a"},
+  "voice": {"sky_top": "1c1a34", "sky_low": "4a4a7a", "floor_near": "3a4a6a", "floor_far": "5a6a8a", "grid": "8a9ac8", "far": "2a2a4a", "mid": "24243e", "near": "1c1c30"}
+ },
+ "backdrop_colours": {
+  "2": {
+   "field": {"bg": "f6f0d8", "sky": "a8d0e8", "ink": "2a2a3a", "mid": "5a9a4a", "accent": "b8d878"},
+   "lake":  {"bg": "f0f4f0", "sky": "b8d8f0", "ink": "1e2a40", "mid": "4a7aa8", "accent": "88b8e0"},
+   "ridge": {"bg": "f4ece0", "sky": "c0d0e0", "ink": "2e2420", "mid": "8a7058", "accent": "c8b090"},
+   "ember": {"bg": "f8e8d0", "sky": "e8b088", "ink": "301818", "mid": "a84830", "accent": "e08a50"},
+   "voice": {"bg": "e0e0f0", "sky": "303058", "ink": "141428", "mid": "50508a", "accent": "a0a0d8"}
+  },
+  "3": {
+   "field": {"bg": "fbf6e4", "sky": "78b4e0", "sky_low": "d8ecf4", "ink": "28303a", "mid": "4a8c3e", "accent": "a6d27a", "hi": "e4f2b8"},
+   "lake":  {"bg": "f2f6f6", "sky": "6aa0d8", "sky_low": "d0e4f4", "ink": "1a2840", "mid": "3a6ea0", "accent": "7cb0e0", "hi": "d4ecfa"},
+   "ridge": {"bg": "f6eee2", "sky": "90a8c8", "sky_low": "e4e0dc", "ink": "2c221e", "mid": "7e6650", "accent": "bca282", "hi": "ece0c8"},
+   "ember": {"bg": "fbeadc", "sky": "c86848", "sky_low": "f4c890", "ink": "2a1414", "mid": "9c3e2a", "accent": "e48650", "hi": "f8d4a0"},
+   "voice": {"bg": "e6e6f4", "sky": "1e1e44", "sky_low": "5a5a96", "ink": "10102a", "mid": "46468a", "accent": "9898dc", "hi": "d0d0f8"}
+  }
+ }
+}
