@@ -18,7 +18,7 @@ LINES = [
       art=dict(plan="serpent")),
     L(id="cindr", names=["Cindrik", "Cindrel", "Cindravax"], elements=["EMBER"], role="kindler", cover="GALE",
       art=dict(plan="bird")),
-    L(id="nib", names=["Nibbet", "Nibquill", "Nibravure"], elements=["UMBRA", "STONE"], role="vanguard",
+    L(id="nib", names=["Nibbet", "Nibquill", "Nibravure"], elements=["UMBRA", "BLOOM"], role="vanguard",
       art=dict(plan="quad")),
     L(id="filig", names=["Filigrin", "Filigrace", "Filigravure"], elements=["LUMEN", "VOLT"], role="weaver",
       art=dict(plan="bug")),
@@ -28,7 +28,7 @@ HABITAT = {
     "vesk": ("Windy rooftops of the print quarter", "Windige Dächer des Druckerviertels"),
     "silt": ("Silted canals under the engravers' bridges", "Verschlammte Kanäle unter den Stecherbrücken"),
     "cindr": ("Chimneys of the acid works", "Schornsteine der Säurewerke"),
-    "nib": ("Ink cellars, under copper plates", "Tintenkeller, unter Kupferplatten"),
+    "nib": ("Mossy ink cellars, under copper plates", "Moosige Tintenkeller, unter Kupferplatten"),
     "filig": ("Lamp-lit print rooms at night", "Lampenhelle Druckstuben bei Nacht"),
 }
 

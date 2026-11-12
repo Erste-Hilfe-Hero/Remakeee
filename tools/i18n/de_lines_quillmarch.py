@@ -21,7 +21,7 @@ T = {
 "A Cindrik that kept a chimney burning through a strike and was paid by both sides.": "Ein Cindrik, das einen Schornstein durch einen Streik am Brennen hielt und von beiden Seiten bezahlt wurde.",
 "One wingbeat dries a whole print run. Forgers bid for its company like it is a seat in court.": "Ein Flügelschlag trocknet eine ganze Auflage. Fälscher bieten um seine Gesellschaft wie um einen Sitz im Gericht.",
 "The acid works were built around the nest of the first one, and it never forgave them.": "Die Säurewerke wurden um das Nest des ersten gebaut, und es hat ihnen nie verziehen.",
-"Ink cellars, under copper plates": "Tintenkeller, unter Kupferplatten",
+"Mossy ink cellars, under copper plates": "Moosige Tintenkeller, unter Kupferplatten",
 "Every quill on its back is a pen nib. It signs things in its sleep, never its own name.": "Jeder Stachel auf seinem Rücken ist eine Schreibfeder. Es unterschreibt im Schlaf, nie mit eigenem Namen.",
 "Curled up from a box of nibs a forger buried when the watch knocked.": "Aus einer Schachtel Federn gerollt, die ein Fälscher vergrub, als die Wache klopfte.",
 "It scratches perfect copies of any signature into copper. Banks hire it, then lock it up.": "Es ritzt jede Unterschrift perfekt in Kupfer. Banken stellen es ein und sperren es dann ein.",

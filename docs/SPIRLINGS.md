@@ -272,13 +272,13 @@ Owner rule: every story act has 70 own Spirlings. Drawn by tools/art/gen_era3.py
 | 206 | Veskarion | Gale | shy | striker | slick | 501 | - |
 | 207 | Siltby | Tide | common | bulwark | thick_hide | 314 | Siltarra (ring 24) |
 | 208 | Siltarra | Tide | uncommon | bulwark | thick_hide | 405 | Siltaroth (ring 41) |
-| 209 | Siltaroth | Tide | shy | bulwark | thick_hide | 446 | - |
+| 209 | Siltaroth | Tide | shy | bulwark | thick_hide | 455 | - |
 | 210 | Cindrik | Ember | common | kindler | kindling | 307 | Cindrel (ring 24) |
-| 211 | Cindrel | Ember | uncommon | kindler | kindling | 444 | Cindravax (ring 42) |
+| 211 | Cindrel | Ember | uncommon | kindler | kindling | 435 | Cindravax (ring 42) |
 | 212 | Cindravax | Ember | shy | kindler | kindling | 497 | - |
-| 213 | Nibbet | Umbra/Stone | common | vanguard | surge | 312 | Nibquill (ring 26) |
-| 214 | Nibquill | Umbra/Stone | uncommon | vanguard | surge | 413 | Nibravure (ring 38) |
-| 215 | Nibravure | Umbra/Stone | shy | vanguard | surge | 476 | - |
+| 213 | Nibbet | Umbra/Bloom | common | vanguard | surge | 306 | Nibquill (ring 26) |
+| 214 | Nibquill | Umbra/Bloom | uncommon | vanguard | surge | 405 | Nibravure (ring 38) |
+| 215 | Nibravure | Umbra/Bloom | shy | vanguard | surge | 486 | - |
 | 216 | Filigrin | Lumen/Volt | common | weaver | light_sleeper | 306 | Filigrace (ring 24) |
 | 217 | Filigrace | Lumen/Volt | uncommon | weaver | light_sleeper | 406 | Filigravure (ring 41) |
 | 218 | Filigravure | Lumen/Volt | shy | weaver | light_sleeper | 485 | - |

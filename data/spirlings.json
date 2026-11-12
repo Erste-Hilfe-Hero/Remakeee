@@ -12326,11 +12326,11 @@
   "line_id": "silt",
   "era": 3,
   "base": {
-   "hp": 114,
-   "atk": 88,
-   "foc": 67,
-   "spd": 60,
-   "def": 117
+   "hp": 117,
+   "atk": 89,
+   "foc": 68,
+   "spd": 61,
+   "def": 120
   },
   "trait": "thick_hide",
   "learnset": {
@@ -12441,11 +12441,11 @@
   "line_id": "cindr",
   "era": 3,
   "base": {
-   "hp": 83,
-   "atk": 83,
-   "foc": 106,
-   "spd": 97,
-   "def": 75
+   "hp": 81,
+   "atk": 81,
+   "foc": 104,
+   "spd": 95,
+   "def": 74
   },
   "trait": "kindling",
   "learnset": {
@@ -12558,7 +12558,7 @@
   "name": "Nibbet",
   "elements": [
    "UMBRA",
-   "STONE"
+   "BLOOM"
   ],
   "rarity": "common",
   "region": "quillmarch",
@@ -12566,11 +12566,11 @@
   "line_id": "nib",
   "era": 3,
   "base": {
-   "hp": 63,
-   "atk": 73,
-   "foc": 53,
-   "spd": 67,
-   "def": 56
+   "hp": 62,
+   "atk": 71,
+   "foc": 52,
+   "spd": 66,
+   "def": 55
   },
   "trait": "surge",
   "learnset": {
@@ -12579,19 +12579,19 @@
     "Hush"
    ],
    "6": [
-    "Pebble Toss"
+    "Kelp Lash"
    ],
    "10": [
     "Shade Pounce"
    ],
    "15": [
-    "Hunker Down"
+    "Root Mend"
    ],
    "20": [
     "Murmur Bite"
    ],
    "26": [
-    "Landslip"
+    "Thorn Volley"
    ],
    "32": [
     "Dusk Gnaw"
@@ -12599,7 +12599,7 @@
   },
   "bond_rate": 0.53,
   "height": "0.5 m",
-  "habitat": "Ink cellars, under copper plates",
+  "habitat": "Mossy ink cellars, under copper plates",
   "lore": "Every quill on its back is a pen nib. It signs things in its sleep, never its own name.",
   "origin": "Curled up from a box of nibs a forger buried when the watch knocked.",
   "cry_motif": [
@@ -12620,7 +12620,7 @@
   "name": "Nibquill",
   "elements": [
    "UMBRA",
-   "STONE"
+   "BLOOM"
   ],
   "rarity": "uncommon",
   "region": "quillmarch",
@@ -12628,11 +12628,11 @@
   "line_id": "nib",
   "era": 3,
   "base": {
-   "hp": 77,
-   "atk": 108,
-   "foc": 62,
-   "spd": 98,
-   "def": 68
+   "hp": 76,
+   "atk": 106,
+   "foc": 60,
+   "spd": 96,
+   "def": 67
   },
   "trait": "surge",
   "learnset": {
@@ -12641,30 +12641,30 @@
     "Hush"
    ],
    "6": [
-    "Bowl Over"
+    "Kelp Lash"
    ],
    "10": [
     "Dusk Rake"
    ],
    "15": [
-    "Quarry Wall"
+    "Graft"
    ],
    "20": [
     "Murmur Bite"
    ],
    "26": [
-    "Tunnel Strike"
+    "Thorn Volley"
    ],
    "32": [
     "Dusk Gnaw"
    ],
    "38": [
-    "Cairn Crash"
+    "Wildgrowth Crash"
    ]
   },
   "bond_rate": 0.28,
   "height": "0.9 m",
-  "habitat": "Ink cellars, under copper plates",
+  "habitat": "Mossy ink cellars, under copper plates",
   "lore": "It scratches perfect copies of any signature into copper. Banks hire it, then lock it up.",
   "origin": "A Nibbet that copied the mayor's hand so well the mayor asked it for advice.",
   "cry_motif": [
@@ -12685,7 +12685,7 @@
   "name": "Nibravure",
   "elements": [
    "UMBRA",
-   "STONE"
+   "BLOOM"
   ],
   "rarity": "shy",
   "region": "quillmarch",
@@ -12693,11 +12693,11 @@
   "line_id": "nib",
   "era": 3,
   "base": {
-   "hp": 97,
-   "atk": 121,
-   "foc": 77,
-   "spd": 107,
-   "def": 74
+   "hp": 99,
+   "atk": 123,
+   "foc": 79,
+   "spd": 109,
+   "def": 76
   },
   "trait": "surge",
   "learnset": {
@@ -12706,25 +12706,25 @@
     "Hush"
    ],
    "6": [
-    "Grit Jab"
+    "Kelp Lash"
    ],
    "10": [
     "Dusk Rake"
    ],
    "15": [
-    "Quarry Wall"
+    "Root Mend"
    ],
    "20": [
     "Murmur Bite"
    ],
    "26": [
-    "Tremor Thud"
+    "Thorn Volley"
    ],
    "32": [
     "Dusk Gnaw"
    ],
    "38": [
-    "Slow Quake"
+    "Wildgrowth Crash"
    ],
    "44": [
     "Eclipse Crush"
@@ -12732,14 +12732,14 @@
   },
   "bond_rate": 0.08,
   "height": "1.6 m",
-  "habitat": "Ink cellars, under copper plates",
+  "habitat": "Mossy ink cellars, under copper plates",
   "lore": "Its quills hold enough ink to rewrite a city's records overnight. It has done it twice.",
   "origin": "The print houses agree on nothing, except that nobody owns a Nibravure. It owns you.",
   "cry_motif": [
    1,
    2
   ],
-  "keepsake_hint": "iron_burr"
+  "keepsake_hint": "bark_wrap"
  },
  {
   "dex_id": 216,
