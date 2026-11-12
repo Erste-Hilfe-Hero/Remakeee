@@ -100,6 +100,15 @@ def main() -> None:
         print("insert into public.server_config (key, value) values ('bund_rules', $game$"
               + json.dumps(br).replace("$game$", "") + "$game$::jsonb)"
               " on conflict (key) do update set value = excluded.value;")
+    # Weekend tournament (Online 100, point 62): data/tourney.json as server_config.tourney.
+    ty_path = os.path.join(folder, "tourney.json")
+    if os.path.exists(ty_path):
+        with open(ty_path, encoding="utf-8") as f:
+            ty = json.load(f)
+        ty.pop("_comment", None)
+        print("insert into public.server_config (key, value) values ('tourney', $game$"
+              + json.dumps(ty).replace("$game$", "") + "$game$::jsonb)"
+              " on conflict (key) do update set value = excluded.value;")
     # Raid extras (Online 100, area 3): data/raid_rules.json as server_config.raid_rules.
     rr_path = os.path.join(folder, "raid_rules.json")
     if os.path.exists(rr_path):

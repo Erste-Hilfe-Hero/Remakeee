@@ -143,6 +143,7 @@ Area 3 builds the maps; area 4 only places figures, signs and triggers on them (
 | `greyreach` | Greyreach, grey uplands | Veit's duel, old cartographer Moss |
 | `wide_rift_edge` | the edge of the Wide Rift | scene `wide_rift_reveal` |
 | `rook_vault` | the Rook Vault under Greyreach (item 1305) | feather-switch dungeon, 4 rooms, the Rook Keeper |
+| `dyeworks` | the Drowned Dyeworks under the Stillwater jetty | valve dungeon, 5 rooms, Cardew the loss adjuster, the dye ledger |
 
 ### Act II side content (Corvane)
 
@@ -163,6 +164,24 @@ Text: `data/dialogue/corvane_side.json`, `data/dialogue/rook_vault.json`; German
   Corvane kinds), **Corbin's twelve grey feathers** (collectibles on six maps).
 - Favors with hidden trust: Pockets Pell (lend a Spirling), Ollie Fairweather (lend coins),
   Dimsy Crake (believe his Rook Vault shortcut).
+- **The Drowned Dyeworks** (`data/dialogue/dyeworks.json`, `data/maps/dyeworks.json`, German:
+  `tools/i18n/de_dyeworks.py`): the dye houses Larkin (madder red) and Fennimore (woad blue) have
+  feuded since the Dyeworks flooded twenty years ago. Four valve rooms (turn the valves in the
+  order on each room's brass plate, flags `dye_room_0`..`3`) lead to Cardew the loss adjuster,
+  who sits on the ledger: both houses opened the sluices together for the insurance and kept the
+  workers' wages.
+- **The ledger** (goal `dye_ledger`, trust choice with consequences): burn it (`ledger_burned`),
+  give it to **Aunt Prim**, the quay fixer (betrayal `prim_ledger`: she sells it to both houses
+  and your name as the thief; caught when Hatch or her niece Tansy warned you: `hatch_warned`,
+  `tansy_slip`), or to **Widow Wenna** in Madderby (favor `wenna_ledger`: honest, unless you
+  beat her nephews for Bookie Lark's coin, which raises her hidden use by 25 and makes her sell
+  you; she says so before you hand it over).
+- **Rival Tansy Hask**, Prim's niece: three story duels (`tansy_1`..`3`) at Stillwater, in the
+  drying lofts and on the quay after the ledger is gone.
+- **Bookie Lark's dye feud** (six cousin duels, `beat_cousin_1`..`6`), **Sealwright Odo's ten
+  house seals** (five in the Dyeworks, five across Corvane), **Hatch's last shift** (three
+  end-of-shift bells; Hatch then warns you about Prim).
+- `tools/act_hours.py 2` puts Act II at 32.8 h (26.3 h before the Dyeworks).
 - Twelve cartographer's stones of Corvane (item 1312, `data/dialogue/corvane_stones.json`,
   action `marker_stone <n> corvane`), counted apart from Veydal's, keepsakes at 4, 8 and 12.
 
@@ -434,11 +453,27 @@ zero is a bill, never below an empty purse) or the lead Spirling's keepsake; a c
 | IV | Kaia's sealed letter: deliver or open (`a4_letter`, `a4_ochrewell`) | you become the Veil's courier of record, liable for the drought (`kaia_witness`, `a4_oasis`) | `clan_b23` |
 | IV | Lusk's free tunnel pass (`a4_tunnel`, `a4_oasis`) | the tunnel bill (`lusk_tunnel`, `a4_sun`) | `clan_b24` |
 | IV | - (Juna's trust since the Act I report) | Juna sells your lodging to the Veil (`juna_letter`, `a4_sun`) | `clan_b25` |
+| IV | Leith minds your water at the Tower (`a4_water`, `a4_tower_gate`) | Sable sells the skins back at drought price (`leith_water`, `a4_wells`) | - |
+| IV | Ottilie's clerk carries Aurelio's vote (`a4_vote`, `a4_wells`) | the wells are leased on your signature (`ottilie_vote`, `a4_drought`) | - |
+| IV | Emrys asks for sworn silence (`a4_oath`, `a4_drought`) | he confesses your oath with his own (`emrys_oath`, `a4_north`) | - |
 
 The mandatory Act IV duels add two more: Kaia sold the oasis, and Emrys signed as her witness.
 Trusting answers raise a hidden value and are punished; the chained ones reward a secret kept
 earlier (Pip) or a code used once (Juna). Trusting Sable's porters also raises his use enough that
 his later tip (`sable_tip`) turns into an ambush.
+
+**Act IV main goals** (`data/quests.json`, text in `data/dialogue/solenne_main.json`, German in
+`tools/i18n/de_solenne_main.py`). Eight goals run from the Shade Rift to the Wide Rift: `sol_road`
+(arrive, `a4_arrived`), `sol_tower` (Aurelio), `sol_council` (the well council, `a4_council_done`),
+`sol_oasis` (Kaia), `sol_factor` (the leased wells and Lusk, `a4_drought_done` + `veil_factor_beaten`),
+`sol_sun` (Emrys), `sol_reckoning` (`c4_reckoning_done`) and `sol_north` (the border stone,
+`a4_north_done`). Four scenes carry the new beats: `a4_tower_gate` (entering the Tower Rift),
+`a4_wells` and `a4_drought` (entering Ochrewell after the Tower and after the Oasis) and `a4_north`
+(entering the Saltglass flats after the reckoning: the guild proctor, the three Wardens, all eleven
+strangers walking north). A map's further arrival scenes sit under `on_enter_more` in
+`data/story_npcs.json`. None of the new flags gates a Rift or the Undrawn: a goal also counts as
+done when a later one is, so older saves land on the right goal. Story duels: `well_bailiff`,
+`veil_pump_guards`, `guild_proctor`. Tests: `tests/unit/test_solenne_main.gd`.
 
 **The reckoning** (`data/scenes/solenne_reckoning.json`, started by Ottilie once the Sun Rift is
 mended): both throne betrayals are cashed in, Grell arrives with Brannoc (and Kerr if turned), Marlo

@@ -18,6 +18,13 @@ const ERRORS: Dictionary = {
 	"goal_open": "The week goal is not reached yet.",
 	"claimed": "You already took this week's reward.",
 	"not_enough": "You do not have that many.",
+	"bad_decor": "That does not fit in the bund house yet.",
+	"war_closed": "Bund against bund runs on Saturdays and Sundays.",
+	"joined": "You already fight for your bund this weekend.",
+	"war_full": "Your bund already has its five fighters.",
+	"no_war": "Your bund has no rival yet. Five fighters on both sides start the war.",
+	"fought": "You already fought your war battle.",
+	"no_such_fight": "That war battle is gone.",
 }
 
 static func role_text(role: String) -> String:
@@ -127,7 +134,7 @@ static func _run_bund(menu: MenuHost, bund: Dictionary) -> bool:
 	var labels: Array[String] = []
 	for m: Dictionary in members:
 		labels.append(member_line(m))
-	var actions: Array[String] = ["Bund rank and week goal", "Donate items...", "Bund board"]
+	var actions: Array[String] = ["Bund house", "Bund against bund", "Bund rank and week goal", "Donate items...", "Bund board"]
 	if role == "leader":
 		actions.append("Language and joining...")
 	if staff:
@@ -164,6 +171,12 @@ static func _run_bund(menu: MenuHost, bund: Dictionary) -> bool:
 						% Time.get_datetime_string_from_unix_time(int(got.confirm_from), true))
 		"Keep the bund":
 			await _call(menu, "bund_keep")
+		"Bund house":
+			await house(menu)
+		"Bund against bund":
+			await war(menu)
+			if menu is PauseMenu and not (menu as PauseMenu).raid_attempt.is_empty():
+				return true
 		"Bund rank and week goal":
 			await stats(menu)
 		"Donate items...":
@@ -226,6 +239,11 @@ static func stats_text(st: Dictionary) -> String:
 	var lines: Array[String] = [Loc.t("Bund rank %d (%d renown)") % [int(st.level), int(st.xp)],
 		Loc.t("Week goal: %d / %d items donated") % [mini(int(st.goal), int(st.goal_target)), int(st.goal_target)],
 		Loc.t("Donated today: %d / %d") % [int(st.donated_today), int(st.donate_daily)]]
+	var perks: Array = st.get("perks", [])
+	if not perks.is_empty():
+		lines.append(Loc.t("Rank perks:"))
+		for p: Dictionary in perks:
+			lines.append(("* " if int(p.level) <= int(st.level) else "- ") + BundRules.perk_line(p))
 	return "\n".join(lines)
 
 static func stats(menu: MenuHost) -> void:
@@ -308,3 +326,104 @@ static func search(menu: MenuHost) -> void:
 	var r: Dictionary = await _call(menu, "bund_join", {"p_bund": int(rows[idx].bund)})
 	if not r.is_empty():
 		await menu.info("You joined the bund." if bool(r.get("joined", false)) else "Request sent. A leader or helper decides.")
+
+# --- Online 100, area 4: bund house (35) and bund against bund (37) -----------------------------
+
+static func decor_name(id: String) -> String:
+	return Loc.t(str(BundRules.DECOR_NAMES.get(id, id)))
+
+static func house_text(h: Dictionary) -> String:
+	var lines: Array[String] = [Loc.t("The house of %s, rank %d") % [BundWords.name_of(int(h.name[0]), int(h.name[1])), int(h.level)]]
+	var placed: Array[String] = []
+	for d: Variant in h.get("house", []):
+		placed.append(decor_name(str(d)))
+	lines.append(Loc.t("In the hall: %s") % (", ".join(placed) if not placed.is_empty() else Loc.t("nothing yet")))
+	lines.append(Loc.t("Places: %d of %d") % [placed.size(), int(h.slots)])
+	if int(h.get("war_wins", 0)) > 0:
+		lines.append(Loc.t("Wars won: %d") % int(h.war_wins))
+	var here: Array[String] = []
+	for m: Dictionary in h.get("members", []):
+		if bool(m.get("online", false)) or bool(m.get("me", false)):
+			here.append(str(m.name))
+	lines.append(Loc.t("In the house now: %s") % ", ".join(here))
+	return "\n".join(lines)
+
+## The bund house every member sees (point 35); leader and helpers place the decorations.
+static func house(menu: MenuHost) -> void:
+	while true:
+		var h: Dictionary = await _call(menu, "bund_house")
+		if h.is_empty():
+			return
+		var opts: Array[String] = []
+		if bool(h.get("can_edit", false)):
+			opts.append("Place or take away...")
+		var idx: int = await menu.pick_strings(house_text(h), opts)
+		if idx < 0:
+			return
+		var open: Array = h.get("decor", [])
+		var placed: Array = (h.get("house", []) as Array).duplicate()
+		var labels: Array[String] = []
+		for d: Variant in open:
+			labels.append(("[x] " if placed.has(d) else "[ ] ") + decor_name(str(d)))
+		var p: int = await menu.pick_strings(Loc.t("Places: %d of %d") % [placed.size(), int(h.slots)], labels)
+		if p < 0:
+			continue
+		if placed.has(open[p]):
+			placed.erase(open[p])
+		else:
+			placed.append(open[p])
+		await _call(menu, "bund_house_set", {"p_house": placed})
+
+static func _result_word(r: Variant) -> String:
+	match str(r):
+		"won": return Loc.t("won")
+		"lost": return Loc.t("lost")
+		"pending": return Loc.t("being checked")
+	return Loc.t("open")
+
+static func war_text(w: Dictionary) -> String:
+	var lines: Array[String] = [Loc.t("Bund against bund: %d fighters each, Saturday and Sunday.") % int(w.size)]
+	var war: Variant = w.get("war")
+	if not war is Dictionary:
+		var names: Array[String] = []
+		for f: Dictionary in w.get("fighters", []):
+			names.append(str(f.name))
+		lines.append(Loc.t("Fighters: %d of %d  %s") % [names.size(), int(w.size), ", ".join(names)])
+		return "\n".join(lines)
+	var foe: Dictionary = war.foe if war.get("foe") is Dictionary else {"name": [0, 0], "level": 1}
+	lines.append(Loc.t("Rival: %s (rank %d)") % [BundWords.name_of(int(foe.name[0]), int(foe.name[1])), int(foe.level)])
+	lines.append(Loc.t("Score: %d to %d") % [int(war.wins), int(war.foe_wins)])
+	for p: Dictionary in war.get("places", []):
+		lines.append(Loc.t("%d. %s (%s) against %s (%s)") % [int(p.slot), str(p.get("mine", "?")), _result_word(p.get("mine_result")),
+			str(p.get("foe", "?")), _result_word(p.get("foe_result"))])
+	if bool(war.settled):
+		lines.append({"won": Loc.t("Your bund won the war!"), "lost": Loc.t("The rival bund won this time."),
+			"draw": Loc.t("A draw.")}.get(str(war.result), ""))
+	return "\n".join(lines)
+
+## Bund against bund (point 37): sign up as a fighter, then fight the team on the same place.
+static func war(menu: MenuHost) -> void:
+	var w: Dictionary = await _call(menu, "bund_war_info")
+	if w.is_empty():
+		return
+	var opts: Array[String] = []
+	if bool(w.get("day", false)) and not bool(w.get("joined", false)) and w.get("war") == null:
+		opts.append("Fight for the bund")
+	if bool(w.get("day", false)) and bool(w.get("joined", false)) and w.get("war") is Dictionary and not bool(w.war.settled):
+		opts.append("Start my war battle")
+	var idx: int = await menu.pick_strings(war_text(w), opts)
+	if idx < 0:
+		return
+	await Online.push_team()
+	if opts[idx] == "Fight for the bund":
+		var j: Dictionary = await _call(menu, "bund_war_join", {"p_pick": LeagueMenu.pick_of(GameState.party)})
+		if not j.is_empty():
+			await menu.info(war_text(j))
+		return
+	var f: Dictionary = await _call(menu, "bund_war_fight")
+	if f.is_empty() or not menu is PauseMenu:
+		return
+	f["kind"] = "bund_war"
+	f["attempt_id"] = f.fight_id
+	f["guardian"] = f.get("foe", "?")
+	(menu as PauseMenu).raid_attempt = f
