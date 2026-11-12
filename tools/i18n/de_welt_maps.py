@@ -698,5 +698,4 @@ T = {
 "You read the deed. It sells the town well to one K. Oasis-Holder, for one coin, signed by Sefa (forged).": "Du liest die Urkunde. Sie verkauft den Stadtbrunnen an eine gewisse K. Oasenhalterin, für eine Münze, unterschrieben von Sefa (gefälscht).",
 "You remember a saying: \"In Quillbrook, the stone too smooth to be natural is a door.\"": "Dir fällt ein Spruch ein: \"In Federbach ist der Stein, der zu glatt ist, eine Tür.\"",
 "You wedge the door with a ledger before it can shut. Lusk sighs. 'Qadir. Of course. I should have bought him.'": "Du verkeilst die Tür mit einem Buch, bevor sie zufällt. Lusk seufzt. 'Qadir. Natürlich. Ich hätte ihn kaufen sollen.'",
-"Your Spirlings drink and rest.": "Deine Spirlings trinken und ruhen sich aus.",
 }
