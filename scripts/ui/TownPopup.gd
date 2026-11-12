@@ -58,8 +58,8 @@ static func slide(banner: Label, style: String, show_it: bool) -> void:
 			banner.position.x = -w if show_it else 0.0
 			banner.modulate.a = 0.0 if show_it else 1.0
 			tw.tween_property(banner, "position:x", 0.0 if show_it else w, SLIDE_TIME).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT if show_it else Tween.EASE_IN)
-			tw.parallel().tween_property(banner, "modulate:a", 1.0 if show_it else 0.0, SLIDE_TIME)
+			tw.parallel().tween_property(banner, "modulate:a", 1.0 if show_it else 0.0, SLIDE_TIME).set_trans(Tween.TRANS_SINE)
 			if show_it and style == "ribbon_shine":
-				tw.tween_property(banner, "modulate", Color(1.5, 1.5, 1.4, 1.0), 0.12)
-				tw.tween_property(banner, "modulate", Color.WHITE, 0.25)
+				tw.tween_property(banner, "modulate", Color(1.5, 1.5, 1.4, 1.0), 0.12).set_trans(Tween.TRANS_SINE)
+				tw.tween_property(banner, "modulate", Color.WHITE, 0.25).set_trans(Tween.TRANS_SINE)
 	await tw.finished

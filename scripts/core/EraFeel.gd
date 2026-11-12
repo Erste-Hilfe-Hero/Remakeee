@@ -19,6 +19,9 @@ const BARS: Array[String] = ["ink", "colour", "gradient", "bevel", "gloss"]
 const POPUPS: Array[String] = ["plain", "sign", "board", "ribbon", "ribbon_shine"]
 const UPGRADES: Array[String] = ["none", "radial", "sharpen", "unfold", "breathe"]
 const WARPS: Array[String] = ["door", "iris"]
+## Every era sound the table names (text blips and era-change jingles), so each file in
+## audio/sfx/ is named in code.
+const SOUNDS: Array[String] = ["blip", "blip_e2", "blip_e3", "blip_e4", "blip_e5", "era_up_2", "era_up_3", "era_up_4", "era_up_5"]
 ## Story flag set once the era-change sequence into an era was shown.
 const SEEN_FLAG: String = "era_seen_%d"
 
@@ -115,6 +118,10 @@ static func problems() -> Array[String]:
 		for k: String in KEYS:
 			if not row.has(k):
 				out.append("missing:%d:%s" % [e, k])
+		for k: String in ["blip", "jingle"]:
+			var snd: String = str(row.get(k, ""))
+			if not snd.is_empty() and not snd in SOUNDS:
+				out.append("sound:%d:%s" % [e, k])
 		if palette(e).size() != 5:
 			out.append("palette:%d" % e)
 		for pair: Array in [["frame", FRAMES], ["bar", BARS], ["town_popup", POPUPS], ["upgrade", UPGRADES], ["warp", WARPS]]:

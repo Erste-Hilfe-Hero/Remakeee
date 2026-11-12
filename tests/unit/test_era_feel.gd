@@ -71,6 +71,12 @@ func test_era_palettes_reach_contrast() -> void:
 		assert_gte(UITheme.contrast(p[1], p[3]), 4.5, "era %d ink on accent" % e)
 		assert_gte(UITheme.contrast(p[4], p[0]), 3.0, "era %d greyed rows" % e)
 
+func test_sounds_are_named_in_code() -> void:
+	for e: int in range(1, 6):
+		assert_true(str(EraFeel.value(e, "blip")) in EraFeel.SOUNDS)
+		if e >= 2:
+			assert_true(str(EraFeel.value(e, "jingle")) in EraFeel.SOUNDS)
+
 func test_sounds_exist() -> void:
 	for e: int in range(1, 6):
 		assert_true(ResourceLoader.exists(Sound.SFX_DIR % str(EraFeel.value(e, "blip"))), "era %d blip" % e)
@@ -229,3 +235,8 @@ func test_overworld_runs_every_era() -> void:
 	await ow._warp_out(false)
 	assert_eq(ow._fade.color.a, 1.0, "the Era V iris ends black")
 	await wait_seconds(0.5)
+	# The map's music state must not carry over into later tests.
+	remove_child(ow)
+	MusicDirector.update_world(true, false, 0.0)
+	MusicDirector.motion = MusicDirector.Motion.IDLE
+	MusicDirector.dialogue = false

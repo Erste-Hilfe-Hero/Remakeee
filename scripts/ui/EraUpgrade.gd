@@ -87,11 +87,11 @@ func _ready() -> void:
 func _run() -> void:
 	var tw: Tween = create_tween()
 	tw.tween_property(self, "progress", 1.0, SWEEP).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
-	tw.parallel().tween_property(_caption, "modulate:a", 1.0, 0.2).set_delay(CAPTION_IN)
+	tw.parallel().tween_property(_caption, "modulate:a", 1.0, 0.2).set_delay(CAPTION_IN).set_trans(Tween.TRANS_SINE)
 	tw.tween_callback(_redraw_frame)
-	tw.tween_property(_caption, "modulate", Color(1, 1, 1, 1), 0.25).from(Color(1.6, 1.6, 1.6, 1))
+	tw.tween_property(_caption, "modulate", Color(1, 1, 1, 1), 0.25).from(Color(1.6, 1.6, 1.6, 1)).set_trans(Tween.TRANS_SINE)
 	tw.tween_interval(TIME - SWEEP - 0.25 - 0.3)
-	tw.tween_property(_caption, "modulate:a", 0.0, 0.3)
+	tw.tween_property(_caption, "modulate:a", 0.0, 0.3).set_trans(Tween.TRANS_SINE)
 	tw.tween_callback(_done)
 
 ## The caption frame is redrawn in the new era's style once the sweep is through.
