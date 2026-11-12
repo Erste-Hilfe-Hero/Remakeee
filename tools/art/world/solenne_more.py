@@ -252,14 +252,14 @@ def flats(world):
             "^::...______",
             "^,,...._.,,^",
             "^,,.:.._.,,^",
-            "^...__...::^",
+            "^...____.::^",
             "^::._....,:^",
             "^::.__..,,.^",
-            "^.@...__...^",
+            "^.@..___...^",
             "^,,,...__,,^",
             "^,,,....__,^",
             "^..RRRR..__^",
-            "^..HHDH...,^",
+            "^..HHDH.._,^",
             "^...._____.^",
             "^.L.__..,,,^",
             "^,,,_...,,,^",
@@ -278,8 +278,8 @@ def flats(world):
             "^.:::...__.^",
             "^..,,,..._.^",
             "^..,,,..__.^",
-            "^...@.__...^",
-            "^.....__...^",
+            "^...@.___..^",
+            "^....__....^",
             "^^^^^__^^^^^"]
     text = {}
     signs = []
@@ -297,6 +297,7 @@ def flats(world):
                      "lines": lines(line, ("You turn the mirror back toward the sun. It flashes, very pleased with itself.", "Du drehst den Spiegel zurück zur Sonne. Er blitzt, sehr zufrieden mit sich.")),
                      "action": "set_flag " + key}
         text[key + "_plain"] = lines(line)
+        signs.append({"x": x, "y": y, "dialogue": "%s/%s" % (FLATS, key)})
     put(rows, 10, 3, "S")
     text["sign"] = lines(("GLASSWIND FLATS", "GLASWINDEBENE"),
                          ("East: Ochrewell. South: the Mirage Kiln. Everywhere else: sand, and opinions about sand.", "Osten: Ochrewell. Süden: die Spiegelbrennerei. Überall sonst: Sand, und Meinungen über Sand."))
