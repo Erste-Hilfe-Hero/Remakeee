@@ -1,0 +1,14 @@
+{
+ "add": {
+  "npcs": [
+   {
+    "id": "informant",
+    "x": 2,
+    "y": 17,
+    "facing": "right",
+    "dialogue": "corvane_quay/informant",
+    "sprite": "villager"
+   }
+  ]
+ }
+}

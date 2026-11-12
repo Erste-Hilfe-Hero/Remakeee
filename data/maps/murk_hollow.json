@@ -287,14 +287,14 @@
    "hide_flag": "page_6"
   },
   {
-   "x": 10,
-   "y": 10,
-   "dialogue": "murk_hollow/campfire"
-  },
-  {
    "x": 0,
    "y": 9,
    "dialogue": "murk_hollow/burrow"
+  },
+  {
+   "x": 10,
+   "y": 10,
+   "dialogue": "murk_hollow/campfire"
   }
  ],
  "gear_spots": [
