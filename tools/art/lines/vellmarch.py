@@ -318,7 +318,7 @@ TEXTS = {
                      "Sein Panzer hält die Schulden einer ganzen Stadt. Die Stadt hätte sie gern zurück.",
                      "Die Kontore schwören, es war der erste Steuereintreiber und ging nie in Rente."),
     "Bargit": ("It hangs under bridges and clicks. The clicks come back and tell it who is coming.",
-               "Born on the night barge, between two passengers who never spoke.",
+               "Born on the night barge, between two passengers who never said a word.",
                "Es hängt unter Brücken und klickt. Die Klicks kommen zurück und verraten ihm, wer kommt.",
                "Geboren auf dem Nachtkahn, zwischen zwei Fahrgästen, die nie ein Wort sprachen."),
     "Bargwing": ("It hears whispers through walls and repeats them to whoever pays in fruit.",

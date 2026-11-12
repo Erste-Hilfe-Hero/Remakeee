@@ -344,8 +344,10 @@ def flats(world):
              [("Brannt: Rung six. Last one outside. After me, it's Sabine's house, Sabine's rules.", "Brannt: Sprosse sechs. Die letzte draußen. Nach mir ist es Sabines Haus und Sabines Regeln.")],
              [("Brannt: Go on in. Count your fingers after you shake her hand.", "Brannt: Geh rein. Zähl deine Finger, nachdem du ihr die Hand gegeben hast.")], 2400),
     ]
-    # Old Pell's defeat line is the warning about the purse.
+    # Old Pell's defeat line is the warning about the purse. His NPC id is "old_pell" (the clan
+    # figure is "pell"); his dialogue keys stay glasswind_flats/pell*.
     crew[3]["win_flags"] = ["c4_pell_warned"]
+    crew[3]["id"] = "old_pell"
     people = [
         npc("varro", 9, 1, "down", SIDE + "/varro", "ranger", color="8a6a3a"),
         npc("oren", 3, 5, "right", SIDE + "/oren", "elder"),
