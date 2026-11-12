@@ -83,16 +83,30 @@ func run() -> void:
 		labels.insert(labels.find("Satchel") + 1, "Shop (locked)" if Billing.kids_locked() else "Shop")
 		if "Travel" in labels:
 			await tip("travel")
-		var entries: Array[Dictionary] = []
-		var waiting: bool = Goals.pending() > 0
-		for l: String in labels:
-			# A red dot on "Goals" while a reward waits (plan 3529).
-			entries.append({"text": l, "icon": Goals.dot()} if l == "Goals" and waiting else {"text": l})
-		var idx: int = await pick(menu_title(current_map), entries, true, maxi(0, labels.find(last_label)))
-		if idx < 0:
+		# The start menu in the era's layout (EraMenus): a plain list in Era I, symbols and the
+		# clock from Era II, a grid of big buttons with an info panel in Era IV, pinned
+		# shortcuts on top in Era V. "Shortcuts" is there in every era.
+		labels.append(EraMenuKit.SHORTCUTS)
+		var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
+		var quick: Array[String] = []
+		if bool(lay.get("quick_bar", false)):
+			quick = EraMenus.quick_list(GameState.flags, labels)
+		var entries: Array[Dictionary] = EraMenuKit.pause_entries(labels, Goals.pending() > 0, lay)
+		var idx: int = await pick_screen("pause", menu_title(current_map), entries, {"focus": maxi(0, labels.find(last_label)),
+			"tabs": quick, "tab": -1, "tab_icons": quick.map(func(l: String) -> Texture2D: return EraMenuKit.icon_for(l, lay)), "header": EraMenuKit.clock_strip() if str(lay.get("header", "none")) == "clock" else null})
+		var chosen: String = ""
+		if ListPicker.tab_of(idx) >= 0 and ListPicker.tab_of(idx) < quick.size():
+			chosen = quick[ListPicker.tab_of(idx)]
+		elif idx < 0 or idx >= labels.size():
 			return
-		last_label = labels[idx]
-		match labels[idx]:
+		else:
+			chosen = labels[idx]
+			last_label = chosen
+		if chosen == EraMenuKit.SHORTCUTS:
+			chosen = await run_shortcuts(labels)
+			if chosen.is_empty():
+				continue
+		match chosen:
 			"Goals": await run_goals()
 			"Map book": await MapBookMenu.run(self)
 			"Ledger": await run_ledger()
@@ -117,7 +131,8 @@ func run() -> void:
 			"Shop (locked)": await info(ShopMenu.LOCKED_TEXT)
 			"Storage": await run_storage()
 			"Save":
-				save_now()
+				if await run_save():
+					return
 			"Save and to title":
 				if await save_and_quit():
 					return
@@ -131,6 +146,55 @@ func run() -> void:
 			"Room":
 				if await run_room():
 					return
+
+## Shortcuts (docs/ERA_FEEL_MENUS.md): the pinned entries open from here in every era; Era V
+## also shows them as a bar on top of the start menu. Returns the entry to open, or "".
+func run_shortcuts(labels: Array[String]) -> String:
+	var can: Array[String] = []
+	for l: String in labels:
+		if l != EraMenuKit.SHORTCUTS and not l.begins_with("Shop (") and l != "Photo":
+			can.append(l)
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "pause")
+	lay["columns"] = 1
+	while true:
+		var pinned: Array[String] = EraMenus.quick_list(GameState.flags, can)
+		var entries: Array[Dictionary] = EraMenuKit.pause_entries(pinned, false, lay)
+		entries.append({"text": "Pin or unpin...", "hint": EraMenuKit.PAUSE_HINTS[EraMenuKit.SHORTCUTS]})
+		var idx: int = await pick_screen("pause", Loc.t("Shortcuts (%d/%d)") % [pinned.size(), EraMenus.QUICK_MAX], entries, {"columns": 1})
+		if idx < 0:
+			return ""
+		if idx < pinned.size():
+			return pinned[idx]
+		while true:
+			var rows: Array[Dictionary] = []
+			var now: Array[String] = EraMenus.quick_list(GameState.flags, can)
+			for l: String in can:
+				rows.append({"text": ("[x] " if l in now else "[  ] ") + Loc.t(l), "say": "pinned" if l in now else ""})
+			var t: int = await pick(Loc.t("Shortcuts (%d/%d)") % [now.size(), EraMenus.QUICK_MAX], rows)
+			if t < 0:
+				break
+			if not EraMenus.quick_toggle(GameState.flags, can[t], can):
+				toast("Four shortcuts are the limit. Unpin one first.", 2.5)
+	return ""
+
+## The save screen (docs/ERA_FEEL_MENUS.md): the save card (who, where, how long, how many
+## kinds; from Era II the clock and the team) over "Save now" and "Save and to title".
+## Returns true when the menu should close and the game go back to the title.
+func run_save() -> bool:
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "save")
+	var rows: Array[Dictionary] = [
+		{"text": "Save now", "hint": EraMenuKit.PAUSE_HINTS["Save"]},
+		{"text": "Save and to title", "hint": EraMenuKit.PAUSE_HINTS["Save and to title"]}]
+	for i: int in rows.size():
+		var ic: Texture2D = EraMenuKit.icon_for("Save" if i == 0 else "Save and to title", lay)
+		if ic != null:
+			rows[i]["icon"] = ic
+	var idx: int = await pick_screen("save", "Save", rows, {"focus": 0, "header": EraMenuKit.save_card(lay, current_map)})
+	if idx == 0:
+		save_now()
+	elif idx == 1:
+		return await save_and_quit()
+	return false
 
 ## A chimora://friend/<code> link (Online 100 point 55): asks before the invite sends a request.
 func run_invite_link() -> void:
@@ -586,8 +650,11 @@ func run_team() -> void:
 		await tip("team_order")
 	while true:
 		var rows: Array[Dictionary] = []
+		# Team rows in the era's layout (EraMenus): text and the ink bar in Era I, a bobbing
+		# sprite from Era II, coloured badges from Era III, drag-to-reorder cards from Era IV.
+		var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "party")
 		for i: int in GameState.party.size():
-			rows.append(MenuHost.party_entry(GameState.party[i], i == 0))
+			rows.append(EraMenuKit.party_entry(GameState.party[i], i == 0, i, lay))
 		# Free slots up to the limit show how much room is left (item 1898).
 		for i: int in range(GameState.party.size(), GameState.party_max()):
 			rows.append(free_slot_row())
@@ -603,7 +670,12 @@ func run_team() -> void:
 		if power > 0:
 			boosts.push_front(Loc.t("Power %d") % power)
 		var title: String = Loc.t("Team") + ("  " + "  ".join(boosts) if not boosts.is_empty() else "")
-		var idx: int = await pick(title, rows)
+		var drag: EraPartyDrag = EraPartyDrag.attach(self, GameState.party.size()) if bool(lay.get("drag", false)) else null
+		var idx: int = await pick_screen("party", title, rows, {"panel_text": "Drag a row to change the order. Tap one for more."})
+		if drag != null:
+			drag.queue_free()
+		if idx == EraMenus.DRAG_PICKED:
+			continue
 		if idx >= 0 and idx == wardrobe:
 			await ShopMenu.run_wardrobe(self)
 			continue
@@ -628,7 +700,7 @@ func run_team() -> void:
 			await _unfurl(s, opts[opt] == "Unfurl")
 			continue
 		match opt:
-			0: await info_pages(MenuHost.summary_pages(s), MiniSprite.of(s.data.species_name, 32))
+			0: await run_summary(s, idx == 0)
 			1: GameState.swap_party(0, idx)
 			2:
 				var slots: Array[String] = []
@@ -639,6 +711,16 @@ func run_team() -> void:
 					GameState.move_party(idx, to)
 			3: await _use_item_on(s)
 			4: await _held_item(s)
+
+## The summary in the era's layout: two text pages in Era I, three in Era II, the tabbed card
+## from Era III on. Every era shows the same four sections (EraMenus.SECTIONS).
+func run_summary(s: Spirling, leader: bool = false) -> void:
+	var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "summary")
+	screens_shown.append("summary")
+	if bool(lay.get("tabs", false)):
+		await EraSummary.show_for(self, s, leader)
+	else:
+		await info_pages(EraMenus.summary_pages(s, EraManager.active_era(), leader), MiniSprite.of(s.data.species_name, int(lay.get("sprite", 32))))
 
 ## A grey "free" team row; a tap says where new Spirlings go.
 static func free_slot_row() -> Dictionary:
@@ -758,7 +840,8 @@ static func bag_tab(it: Dictionary) -> int:
 		return 3
 	if it.has("teaches"):
 		return 2
-	if bool(it.get("held", false)) or it.has("held"):
+	# "held" is true or a table of what the keepsake does; bool() of a table is an error.
+	if it.has("held"):
 		return 1
 	for k: String in ["heal", "cure", "revive", "energy", "stage", "battle"]:
 		if it.has(k) and it[k]:
@@ -787,6 +870,14 @@ func run_bag() -> void:
 			return
 		tab = clampi(tab, 0, tabs.size() - 1) if tab >= 0 else 0
 		var ids: Array = by_tab[tab_ids[tab]]
+		# The satchel in the era's layout (EraMenus): Era I one list in pocket order, pockets
+		# as tabs with a symbol per thing from Era II, the pocket's picture from Era III.
+		var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "bag")
+		var flat: bool = str(lay.get("pockets", "tabs")) == "flat"
+		if flat:
+			ids = []
+			for t: int in tab_ids:
+				ids.append_array(by_tab[t])
 		var entries: Array[Dictionary] = []
 		for id: String in ids:
 			var it0: Dictionary = Database.item(id)
@@ -796,12 +887,20 @@ func run_bag() -> void:
 				hint = Loc.t(BATTLE_ONLY) + " " + hint
 			elif bool(it0.get("gear", false)):
 				hint = gear_hint(id)
-			entries.append({"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint})
+			var row: Dictionary = {"text": "%s x%d" % [it0.get("name", id), GameState.item_count(id)], "hint": hint}
+			var pic: Texture2D = EraMenuKit.icon_for("pocket%d" % bag_tab(it0), lay)
+			if pic != null:
+				row["icon"] = pic
+			entries.append(row)
 		# If it was used up, the row that took its place gets the focus.
 		var focus: int = ids.find(last_id)
 		if focus < 0 and last_idx >= 0:
 			focus = mini(last_idx, ids.size() - 1)
-		var idx: int = await pick("Satchel", entries, true, focus, ListPicker.TAP_GUARD_MS, tabs, tab)
+		var head: Control = null
+		if not flat:
+			head = EraMenuKit.pocket_header(tab_ids[tab], BAG_TABS[tab_ids[tab]], ids.size(), lay)
+		var idx: int = await pick_screen("bag", "Satchel", entries, {"focus": focus, "tabs": ([] as Array[String]) if flat else tabs, "tab": tab, "header": head,
+			"tab_icons": EraMenuKit.pocket_tab_icons(tab_ids, lay)})
 		if ListPicker.tab_of(idx) >= 0:
 			tab = ListPicker.tab_of(idx)
 			last_idx = -1
@@ -1097,6 +1196,8 @@ var _log_element: int = -1
 var _log_role: int = -1
 var _log_status: int = SpirlogBook.STATUS_ALL
 var _log_region: int = -1
+## Season page of the Spirlog: only kinds of the season's elements.
+var _log_season: bool = false
 
 ## Spirlog: chapters per open region with their progress, search and filters, then the kinds.
 ## A seen kind opens its map-book page (SpirlogPage); unseen ones show as "???".
@@ -1108,17 +1209,39 @@ func run_spirlog() -> void:
 		var role: String = SpirlingData.ROLES[_log_role] if _log_role >= 0 else ""
 		var kinds: Array[SpirlingData] = SpirlogBook.filtered(GameState.spirlog, GameState.flags,
 			_log_search, _log_element, role, _log_status, region)
+		# The Spirlog in the era's layout (EraMenus): a number list with a small sprite in
+		# Era I, the area map from Era II, search on top from Era IV, chapters and the season
+		# page as tabs in Era V. Every filter is there in every era.
+		var lay: Dictionary = EraMenus.layout(EraManager.active_era(), "dex")
+		var month: int = int(Online.date_now().get("month", 1))
+		var season: String = EraMenus.season_name(month)
+		if _log_season:
+			var in_season: Array[int] = EraMenus.season_elements(month, Season.boosted(Season.current()))
+			var seasonal: Array[SpirlingData] = []
+			for k: SpirlingData in kinds:
+				if EraMenus.in_season(k, in_season):
+					seasonal.append(k)
+			kinds = seasonal
+		var region_tabs: bool = bool(lay.get("region_tabs", false))
 		var entries: Array[Dictionary] = []
 		var actions: Array[String] = []
+		if bool(lay.get("search_bar", false)):
+			entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-"), "icon": EraMenuKit.icon_for("search", lay),
+				"hint": "Search the Spirlog by name."})
+			actions.append("search")
 		for r: String in regions:
 			entries.append({"text": SpirlogBook.chapter_line(r, GameState.spirlog)})
 			actions.append("chapter")
 		entries.append({"text": SpirlogBook.gleam_line(GameState.spirlog)})
 		actions.append("gleam")
-		entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
-		actions.append("region")
-		entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
-		actions.append("search")
+		if not region_tabs:
+			entries.append({"text": "Chapter: %s" % (region.capitalize() if not region.is_empty() else "all")})
+			actions.append("region")
+			entries.append({"text": Loc.t("Season: %s") % Loc.t(season if _log_season else "all")})
+			actions.append("season")
+		if not bool(lay.get("search_bar", false)):
+			entries.append({"text": "Search: %s" % (_log_search if not _log_search.is_empty() else "-")})
+			actions.append("search")
 		entries.append({"text": "Element: %s" % ("all" if _log_element < 0 else Elements.element_name(_log_element))})
 		actions.append("element")
 		entries.append({"text": "Role: %s" % ("all" if role.is_empty() else role.capitalize())})
@@ -1142,14 +1265,44 @@ func run_spirlog() -> void:
 			# Own marks beside the line (item 1934): an eye for seen, a band for bonded.
 			var mark: Texture2D = SpirlogMarks.bonded() if SpirlogBook.is_bonded(GameState.spirlog, sd.species_name) \
 				else (SpirlogMarks.seen() if SpirlogBook.is_seen(GameState.spirlog, sd.species_name) else SpirlogMarks.none())
-			entries.append({"text": SpirlogBook.list_line(sd, GameState.spirlog), "icon": mark})
+			var row: Dictionary = {"text": SpirlogBook.list_line(sd, GameState.spirlog)}
+			# Era I is a plain number list: the line's own "+" and "*" say seen and bonded.
+			if bool(lay.get("icons", false)):
+				row["icon"] = mark
+			if str(lay.get("panel", "none")) != "none" and SpirlogBook.is_seen(GameState.spirlog, sd.species_name):
+				row["hint"] = Loc.t("Found on: %s" % SpirlogBook.found_line(sd, GameState.spirlog))
+			entries.append(row)
 			actions.append("kind")
-		var idx: int = await pick("Spirlog (%d)" % kinds.size(), entries, true, first_kind if not kinds.is_empty() else -1)
+		var preview := EraDexViews.Preview.new()
+		preview.px = int(lay.get("preview", 24))
+		preview.with_map = str(lay.get("area", "text")) == "map"
+		var on_focus: Callable = func(i: int) -> void:
+			if is_instance_valid(preview):
+				preview.show_kind(kinds[i - first_kind] if i >= first_kind and i - first_kind < kinds.size() else null)
+		picker.row_focused.connect(on_focus)
+		var tabs: Array[String] = []
+		var tab: int = 0
+		if region_tabs:
+			tabs.append("All")
+			for r: String in regions:
+				tabs.append(r.capitalize())
+			tabs.append(season)
+			tab = regions.size() + 1 if _log_season else _log_region + 1
+		var idx: int = await pick_screen("dex", "Spirlog (%d)" % kinds.size(), entries, {"focus": first_kind if not kinds.is_empty() else -1,
+			"header": preview, "tabs": tabs, "tab": tab, "panel_text": "Tap a kind to open its page."})
+		picker.row_focused.disconnect(on_focus)
+		if ListPicker.tab_of(idx) >= 0:
+			var t: int = ListPicker.tab_of(idx)
+			_log_season = t == regions.size() + 1
+			_log_region = -1 if _log_season or t == 0 else t - 1
+			continue
 		if idx < 0:
 			return
 		match actions[idx]:
 			"chapter", "region":
 				_log_region = _log_region + 1 if _log_region + 1 < regions.size() else -1
+			"season":
+				_log_season = not _log_season
 			"search":
 				_log_search = await TextPrompt.ask(self, "Search by name", false, 16, _log_search)
 			"element":
