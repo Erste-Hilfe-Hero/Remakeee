@@ -146,6 +146,7 @@ func _ready() -> void:
 	player.sprite_style = GameState.tamer_sprite()
 	load_map(GameState.current_map, GameState.player_cell, GameState.facing)
 	VirtualPad.set_wanted(true)
+	DeepLink.poll()
 	if not GameState.has_flag("got_starter"):
 		busy = true
 		player.frozen = true
@@ -273,6 +274,10 @@ func _process(delta: float) -> void:
 	var rest_note: String = PlayReminder.tick(delta)
 	if not rest_note.is_empty():
 		toast.show_note(rest_note)
+	# A chimora://event link opens the Goals screen once the player is free (DeepLink.gd).
+	if DeepLink.route == "event" and GameState.has_flag("got_starter") and not busy and not scene_running and _photo == null and not player.moving:
+		DeepLink.take()
+		open_menu("Goals")
 	_walk_clock += delta
 	if _walk_clock >= WALK_PAUSE:
 		_walk_clock = 0.0
@@ -995,9 +1000,10 @@ func _fixed_meeting(sd: SpirlingData, ring: int, gone_line: String) -> void:
 	var wild := Spirling.new(sd, ring, GameState.rng)
 	_text.visible = false
 	SaveManager.save_game()
-	await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
+	var outcome: BattleModel.Outcome = await start_battle([wild] as Array[Spirling], true, {"backdrop": "voice", "name": sd.species_name})
 	GameState.set_flag(FirstVoices.away_flag(sd.species_name))
-	if FirstVoices.is_bonded(sd.species_name):
+	# Only a bond in this meeting counts; a shop copy in storage is not the one met here.
+	if outcome == BattleModel.Outcome.BONDED:
 		GameState.set_flag(FirstVoices.bonded_flag(sd.species_name))
 	else:
 		await say([gone_line] as Array[String])
@@ -1437,8 +1443,9 @@ func _action_storage(_args: PackedStringArray, _speaker: NPC) -> void:
 	await menu.run_storage()
 	menu.queue_free()
 
-## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings).
-func open_menu() -> void:
+## Opens the pause menu (Team, Spirlog, Satchel, Save, Settings); [param start] opens one entry
+## first ("Goals" for a chimora://event link, DeepLink.gd).
+func open_menu(start: String = "") -> void:
 	if busy:
 		return
 	busy = true
@@ -1450,6 +1457,7 @@ func open_menu() -> void:
 	menu.current_map = map.id
 	menu.room_puzzle = _world.has_puzzle()
 	menu.can_undo = _world.can_undo()
+	menu.open_on = start
 	_ui.add_child(menu)
 	# A page turned open, and folded shut when it closes (item 2509).
 	Sound.sfx("page_open")
@@ -1610,6 +1618,8 @@ func photo_mode() -> void:
 
 ## Android back: opens the pause menu in the world, works like B everywhere else (item 1787).
 func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_RESUMED:
+		DeepLink.poll()
 	if what != NOTIFICATION_WM_GO_BACK_REQUEST or not is_inside_tree():
 		return
 	if not busy and _photo == null and player != null and not player.moving:
@@ -1957,6 +1967,10 @@ func _apply_clan_effects(eff: Dictionary, speaker: NPC) -> void:
 		GameState.money += coins
 		Sound.sfx("pickup")
 		await say(["You got %d coins!" % coins] as Array[String])
+	elif coins < 0 and GameState.money > 0:
+		var lost: int = GameState.money - Trust.money_after(GameState.money, coins)
+		GameState.money -= lost
+		await say(["You lost %d coins." % lost] as Array[String])
 	if bool(eff.get("take_keepsake", false)) and not GameState.party.is_empty() and not GameState.party[0].held.is_empty():
 		var lost: String = str(Database.item(GameState.party[0].held).get("name", GameState.party[0].held))
 		GameState.party[0].held = ""

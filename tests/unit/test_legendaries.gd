@@ -106,6 +106,8 @@ func test_each_legend_is_met_once_at_a_fixed_place() -> void:
 func test_a_missed_legend_returns_after_a_rest() -> void:
 	assert_false(FirstVoices.waiting("Monolurk"), "not before the Kiln Rift is sealed")
 	GameState.set_flag("rift_kiln_sealed")
+	assert_false(FirstVoices.waiting("Monolurk"), "not before its lore quest is over")
+	GameState.set_flag(LegendQuests.flag("Monolurk", "ready"))
 	assert_true(FirstVoices.waiting("Monolurk"))
 	GameState.set_flag(FirstVoices.away_flag("Monolurk"))
 	assert_false(FirstVoices.waiting("Monolurk"))
@@ -113,4 +115,6 @@ func test_a_missed_legend_returns_after_a_rest() -> void:
 	assert_true(FirstVoices.waiting("Monolurk"))
 	assert_false(FirstVoices.waiting("Hallowmur"), "post-game only")
 	GameState.set_flag("story_complete")
+	assert_false(FirstVoices.waiting("Hallowmur"), "the sexton's quest comes first")
+	GameState.set_flag(LegendQuests.flag("Hallowmur", "ready"))
 	assert_true(FirstVoices.waiting("Hallowmur"))

@@ -128,6 +128,13 @@
    "x": 9,
    "y": 18,
    "dialogue": "soot_vaults/sign"
+  },
+  {
+   "x": 11,
+   "y": 3,
+   "dialogue": "legend_quests/vorlucent_lore",
+   "show_flag": "lq_vorlucent_met",
+   "hide_flag": "lq_vorlucent_ready"
   }
  ],
  "secrets": [

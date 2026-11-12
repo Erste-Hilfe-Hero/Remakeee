@@ -1,0 +1,13 @@
+{
+ "_note": "Act IV, first steps into Ochrewell: the sealed letter for Kaia (trust choice a4_letter).",
+ "steps": [
+  {
+   "say": [
+    "Ochrewell's bazaar sells water by the cup, shade by the hour and gossip at cost."
+   ]
+  },
+  {
+   "dialogue": "betrayal/a4_letter"
+  }
+ ]
+}

@@ -8,6 +8,7 @@
 #include <godot_cpp/variant/utility_functions.hpp>
 
 #include <cstdint>
+#include <cstdlib>
 
 extern "C" {
 typedef void (*CKCallback)(const char *);
@@ -18,6 +19,8 @@ void ck_purchase(const char *product_id, const char *account_token, int64_t req)
 void ck_finish(const char *txn, int64_t req);
 void ck_owned(int64_t req);
 void ck_restore(int64_t req);
+void ck_url_install();
+char *ck_take_url();
 }
 
 using namespace godot;
@@ -33,6 +36,7 @@ protected:
 		ClassDB::bind_method(D_METHOD("finish", "txn", "req"), &ChimoraStoreKit::finish);
 		ClassDB::bind_method(D_METHOD("owned", "req"), &ChimoraStoreKit::owned);
 		ClassDB::bind_method(D_METHOD("restore", "req"), &ChimoraStoreKit::restore);
+		ClassDB::bind_method(D_METHOD("take_url"), &ChimoraStoreKit::take_url);
 		ADD_SIGNAL(MethodInfo("billing_event", PropertyInfo(Variant::STRING, "json")));
 	}
 
@@ -54,7 +58,20 @@ public:
 	void finish(const String &txn, int64_t req) { ck_finish(txn.utf8().get_data(), req); }
 	void owned(int64_t req) { ck_owned(req); }
 	void restore(int64_t req) { ck_restore(req); }
+	// The last chimora:// link (ChimoraLinks.swift), "" when none; DeepLink.gd polls it.
+	String take_url() {
+		char *p = ck_take_url();
+		String s = p ? String::utf8(p) : String();
+		std::free(p);
+		return s;
+	}
 };
+
+// Runs when the app loads the framework, before main: the link service must be in place before
+// UIKit connects the scene, long before Godot initializes extensions.
+__attribute__((constructor)) static void chimora_links_boot() {
+	ck_url_install();
+}
 
 ChimoraStoreKit *ChimoraStoreKit::singleton = nullptr;
 

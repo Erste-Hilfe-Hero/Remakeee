@@ -68,6 +68,7 @@
    "Aldo: The ferry will run again one day. Until then, make your team strong. And find her pages."
   ],
   "flag": "aldo_dock_told",
+  "next": "betrayal/a1_report",
   "after_flag": [
    {
     "flag": "aldo_dock_told",

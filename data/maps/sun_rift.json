@@ -178,7 +178,7 @@
    "facing": "down",
    "dialogue": "sun_rift/lumivane",
    "sprite": "first_voice",
-   "show_flag": "rift_sun_sealed",
+   "show_flag": "lq_lumivane_ready",
    "hide_flag": "first_voice_lumivane_away"
   }
  ],

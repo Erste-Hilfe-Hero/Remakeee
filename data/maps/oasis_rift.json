@@ -202,6 +202,13 @@
    "x": 2,
    "y": 10,
    "dialogue": "oasis_rift/hint"
+  },
+  {
+   "x": 9,
+   "y": 4,
+   "dialogue": "legend_quests/lumivane_lore",
+   "show_flag": "lq_lumivane_met",
+   "hide_flag": "lq_lumivane_ready"
   }
  ],
  "blocks": [

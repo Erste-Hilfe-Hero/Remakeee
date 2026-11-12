@@ -5,6 +5,9 @@ extends GutTest
 
 const MAPS_DIR: String = "res://data/maps"
 
+func before_all() -> void:
+	Database.load_all()
+
 func _table() -> Dictionary:
 	return Sound._map_music
 
@@ -60,15 +63,34 @@ func test_region_fallback_before_default() -> void:
 
 func test_battle_theme_per_era() -> void:
 	var exists: Callable = func(t: String) -> bool: return ResourceLoader.exists(Sound.MUSIC_DIR % t)
-	assert_eq(Sound.era_track("battle", 1, exists), "battle")
-	for era: int in range(2, EraManager.NEWEST + 1):
-		assert_eq(Sound.era_track("battle", era, exists), "battle_era%d" % era)
-	assert_eq(Sound.era_track("warden", 3, exists), "warden", "no era variant: the plain track")
+	for base: String in ["battle", "warden", "battle_pinch"]:
+		assert_eq(Sound.era_track(base, 1, exists), base)
+		for era: int in range(2, EraManager.NEWEST + 1):
+			assert_eq(Sound.era_track(base, era, exists), "%s_era%d" % [base, era])
+	assert_eq(Sound.era_track("route", 3, exists), "route", "no era variant: the plain track")
+
+func test_pinch_music_follows_the_era() -> void:
+	var s: Spirling = BattleFixtures.make("Kindlop", 20)
+	s.hp = int(s.max_hp() * 0.2)
+	var saved: int = EraManager.retro_filter
+	var saved_unlocked: int = EraManager.unlocked_era
+	EraManager.unlocked_era = EraManager.NEWEST
+	for era: int in range(1, EraManager.NEWEST + 1):
+		EraManager.retro_filter = era
+		var want: String = "battle_pinch" if era == 1 else "battle_pinch_era%d" % era
+		assert_eq(Sound.battle_music(BattleScene.pinch_track(s, "warden")), want)
+		assert_eq(Sound.battle_music("warden"), "warden" if era == 1 else "warden_era%d" % era)
+	EraManager.retro_filter = saved
+	EraManager.unlocked_era = saved_unlocked
 
 func test_era_tracks_stay_small() -> void:
 	for t: String in ["battle_era2", "battle_era3", "battle_era4", "battle_era5", "pawn_vault", "rook_vault", "veil_cistern"]:
 		var size: int = FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % t).size()
 		assert_between(size, 1, 100 * 1024, t)
+	for era: int in range(2, EraManager.NEWEST + 1):
+		for base: String in ["warden", "battle_pinch"]:
+			var t: String = "%s_era%d" % [base, era]
+			assert_between(FileAccess.get_file_as_bytes(Sound.MUSIC_DIR % t).size(), 1, 60 * 1024, t)
 
 func test_era_fx_grow_with_the_era() -> void:
 	var fx: Dictionary = _table().get("era_fx", {})

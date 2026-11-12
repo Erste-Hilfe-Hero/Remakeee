@@ -1435,6 +1435,132 @@
   "money": 1200,
   "defeat": "edge_camp/heider_buyers_defeat"
  },
+ "lq_ambrel": {
+  "trainer": "Sexton Ambrel",
+  "team": [
+   {
+    "species": "Hushkin",
+    "level": 51
+   },
+   {
+    "species": "Silentra",
+    "level": 51
+   },
+   {
+    "species": "Obsidroth",
+    "level": 52
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "legend_quests/hallowmur_defeat",
+  "lose": "clans/ambush_lose"
+ },
+ "lq_quell": {
+  "trainer": "Archivist Quell",
+  "team": [
+   {
+    "species": "Blotling",
+    "level": 51
+   },
+   {
+    "species": "Seamlet",
+    "level": 51
+   },
+   {
+    "species": "Scrivane",
+    "level": 52
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "legend_quests/scriptorax_defeat",
+  "lose": "clans/ambush_lose"
+ },
+ "lq_dessa": {
+  "trainer": "Kitewright Dessa",
+  "team": [
+   {
+    "species": "Millvane",
+    "level": 51
+   },
+   {
+    "species": "Wickmoth",
+    "level": 51
+   },
+   {
+    "species": "Floursprite",
+    "level": 52
+   }
+  ],
+  "ai": 3,
+  "money": 2600,
+  "defeat": "legend_quests/zephyrel_defeat",
+  "lose": "clans/ambush_lose"
+ },
+ "lq_dorran": {
+  "trainer": "Stonecutter Dorran",
+  "team": [
+   {
+    "species": "Etchling",
+    "level": 41
+   },
+   {
+    "species": "Burinox",
+    "level": 42
+   },
+   {
+    "species": "Smeltmaw",
+    "level": 42
+   }
+  ],
+  "ai": 3,
+  "money": 2000,
+  "defeat": "legend_quests/monolurk_defeat",
+  "lose": "clans/ambush_lose"
+ },
+ "lq_corla": {
+  "trainer": "Lamplighter Corla",
+  "team": [
+   {
+    "species": "Bogwick",
+    "level": 44
+   },
+   {
+    "species": "Fenwarden",
+    "level": 45
+   },
+   {
+    "species": "Burinox",
+    "level": 45
+   }
+  ],
+  "ai": 3,
+  "money": 2200,
+  "defeat": "legend_quests/vorlucent_defeat",
+  "lose": "clans/ambush_lose"
+ },
+ "lq_sevrin": {
+  "trainer": "Pilgrim Sevrin",
+  "team": [
+   {
+    "species": "Solmantle",
+    "level": 46
+   },
+   {
+    "species": "Siroclaw",
+    "level": 46
+   },
+   {
+    "species": "Noonsoral",
+    "level": 47
+   }
+  ],
+  "ai": 3,
+  "money": 2400,
+  "defeat": "legend_quests/lumivane_defeat",
+  "lose": "clans/ambush_lose"
+ },
  "ladder_bouncers": {
   "trainer": "Ladder Bouncers",
   "team": [
