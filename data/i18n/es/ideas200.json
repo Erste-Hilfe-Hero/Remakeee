@@ -1,0 +1,23 @@
+{
+ "_comment": "es translation of the ideas200 table, keyed by the English text.",
+ "strings": {
+  "(tipped off, watch your back)": "(delatado, cuídate la espalda)",
+  "Borrowed the Fixer's cart. Returned the wheels.": "Le pidió prestado el carro al Arreglador. Devolvió las ruedas.",
+  "Certificate of Completion": "Certificado de finalización",
+  "Half-Ear Osk": "Osk Media Oreja",
+  "Issued to %s, who did everything.": "Expedido a %s, que lo hizo todo.",
+  "Knows where the money went. All of it.": "Sabe adónde fue el dinero. Todo.",
+  "Lucky Brannoch": "Brannoch el Suertudo",
+  "Mother Greel": "Madre Greel",
+  "Nobody is that lucky. Check his sleeves.": "Nadie tiene tanta suerte. Revísale las mangas.",
+  "Quiet Wenna": "Wenna la Callada",
+  "Runs a soup kitchen. The soup is evidence.": "Lleva un comedor social. La sopa es una prueba.",
+  "Said nothing to the wardens. That is the problem.": "No dijo nada a los guardianes. Ese es el problema.",
+  "Signed by the Fixer, witnessed by a man who swears he was never here.": "Firmado por el Arreglador, ante un testigo que jura que nunca estuvo aquí.",
+  "Sold the same alley to three gangs. Twice.": "Vendió el mismo callejón a tres bandas. Dos veces.",
+  "The Accountant": "El Contable",
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "Este papel dice que lo hiciste todo. Enmárcalo. Alguien intentará falsificarlo antes del jueves.",
+  "Velvet Tam": "Tam Terciopelo",
+  "WANTED: %s, ring %d, %d coins": "SE BUSCA: %s, rango %d, %d monedas"
+ }
+}

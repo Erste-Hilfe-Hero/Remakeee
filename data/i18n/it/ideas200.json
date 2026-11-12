@@ -1,0 +1,23 @@
+{
+ "_comment": "it translation of the ideas200 table, keyed by the English text.",
+ "strings": {
+  "(tipped off, watch your back)": "(spifferato, guardati le spalle)",
+  "Borrowed the Fixer's cart. Returned the wheels.": "Ha preso in prestito il carretto del Faccendiere. Ha restituito le ruote.",
+  "Certificate of Completion": "Certificato di completamento",
+  "Half-Ear Osk": "Osk Mezzorecchio",
+  "Issued to %s, who did everything.": "Rilasciato a %s, che ha fatto tutto.",
+  "Knows where the money went. All of it.": "Sa dove sono finiti i soldi. Tutti.",
+  "Lucky Brannoch": "Brannoch il Fortunato",
+  "Mother Greel": "Madre Greel",
+  "Nobody is that lucky. Check his sleeves.": "Nessuno è così fortunato. Controllagli le maniche.",
+  "Quiet Wenna": "Wenna la Silenziosa",
+  "Runs a soup kitchen. The soup is evidence.": "Gestisce una mensa per poveri. La zuppa è una prova.",
+  "Said nothing to the wardens. That is the problem.": "Non ha detto niente ai guardiani. Il problema è proprio questo.",
+  "Signed by the Fixer, witnessed by a man who swears he was never here.": "Firmato dal Faccendiere, davanti a un testimone che giura di non esserci mai stato.",
+  "Sold the same alley to three gangs. Twice.": "Ha venduto lo stesso vicolo a tre bande. Due volte.",
+  "The Accountant": "Il Contabile",
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "Questo foglio dice che hai fatto tutto. Incornicialo. Qualcuno proverà a falsificarlo entro giovedì.",
+  "Velvet Tam": "Tam Velluto",
+  "WANTED: %s, ring %d, %d coins": "RICERCATO: %s, rango %d, %d monete"
+ }
+}

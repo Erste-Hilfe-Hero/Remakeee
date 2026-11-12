@@ -1,0 +1,23 @@
+{
+ "_comment": "ja translation of the ideas200 table, keyed by the English text.",
+ "strings": {
+  "(tipped off, watch your back)": "（密告済み、背中に気をつけろ）",
+  "Borrowed the Fixer's cart. Returned the wheels.": "仲介屋の荷車を借りた。車輪だけ返した。",
+  "Certificate of Completion": "完了証明書",
+  "Half-Ear Osk": "半耳のOsk",
+  "Issued to %s, who did everything.": "すべてをやり遂げた%sに授与。",
+  "Knows where the money went. All of it.": "金の行方を知っている。全部の。",
+  "Lucky Brannoch": "ツキのBrannoch",
+  "Mother Greel": "Greel母さん",
+  "Nobody is that lucky. Check his sleeves.": "そこまでツイてるやつはいない。袖を調べろ。",
+  "Quiet Wenna": "無口なWenna",
+  "Runs a soup kitchen. The soup is evidence.": "炊き出しをやっている。スープが証拠品だ。",
+  "Said nothing to the wardens. That is the problem.": "番人には何も言わなかった。それが問題だ。",
+  "Signed by the Fixer, witnessed by a man who swears he was never here.": "仲介屋の署名入り。立会人は、ここには一度も来ていないと誓う男。",
+  "Sold the same alley to three gangs. Twice.": "同じ路地を三つの組に売った。二度も。",
+  "The Accountant": "会計係",
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "この紙はすべてやり遂げたと言っている。額に入れておけ。木曜までに誰かが偽造しようとする。",
+  "Velvet Tam": "ビロードのTam",
+  "WANTED: %s, ring %d, %d coins": "お尋ね者：%s、リング%d、%dコイン"
+ }
+}
