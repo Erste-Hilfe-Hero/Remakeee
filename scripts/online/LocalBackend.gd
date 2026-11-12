@@ -75,7 +75,7 @@ func _init(p_store_path: String = "") -> void:
 			"trade_open", "trade_list", "trade_put", "trade_confirm", "trade_cancel", "trade_collect",
 			"trade_put_spirlings", "rift_board", "league_board", "daily_gift_state", "daily_gift_claim", "league_reward",
 			"live_invite", "live_list", "live_answer", "live_pick", "live_move", "live_state", "live_emote", "live_forfeit",
-			"live_finish", "live_rematch",
+			"live_finish", "live_rematch", "raid_board",
 			"save_history_list", "save_restore", "session_claim", "action_once", "live_content_get"]:
 		_fns[fn] = Callable(self, "_fn_" + fn)
 	# Shop functions (20261110000020_shop.sql) live in their own file.
@@ -1835,17 +1835,46 @@ func _fn_raid_open(a: Dictionary) -> Dictionary:
 		who.append(t)
 	if not _rate_ok("raid_open", 6):
 		return _fail("slow_down")
+	var rc: Dictionary = raid_cfg()
+	var tier: Variant = a.get("p_tier", 1)
+	if not RaidRules.tier_ok(rc, tier):
+		return _fail("bad_tier")
 	var pool: Array = (db.config.get("raid_guardians", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
-	if pool.is_empty():
+	var legs: Array = (rc.get("legendaries", []) as Array).filter(func(g: Variant) -> bool: return Database.species(str(g)) != null)
+	var cfg2: Dictionary = rc.duplicate()
+	cfg2["legendaries"] = legs
+	var g: Dictionary = RaidRules.guardian(cfg2, pool, RaidRules.week_index(now()), rng.randi() % 100)
+	if g.is_empty():
 		return _fail("no_guardian")
 	var id: String = str(_next_id("raid"))
-	var hp: int = raid_hp(who.size())
-	(_table("raids", {}) as Dictionary)[id] = {"guardian": str(pool[rng.randi() % pool.size()]), "level": config_int("raid_level", 60),
-		"players": who.size(), "hp_total": hp, "hp_left": hp, "created_at": now(),
+	var hp: int = RaidRules.hp(rc, raid_hp(who.size()), int(tier), bool(g.legendary))
+	(_table("raids", {}) as Dictionary)[id] = {"guardian": g.guardian, "level": int(rc.tiers[int(tier)].level),
+		"players": who.size(), "hp_total": hp, "hp_left": hp, "created_at": now(), "tier": int(tier), "legendary": g.legendary,
 		"closes_at": now() + 3600 * config_int("raid_hours", 48), "won_at": 0, "reward": null}
 	for x: String in who:
 		(_table("raid_members", {}) as Dictionary)["%s|%s" % [id, x]] = {"damage": 0, "claimed": false}
-	return {"ok": true, "raid": int(id)}
+	return {"ok": true, "raid": int(id), "guardian": g.guardian, "tier": int(tier), "legendary": g.legendary, "hp": hp}
+
+## server_config.raid_rules (data/raid_rules.json).
+func raid_cfg() -> Dictionary:
+	var v: Variant = db.config.get("raid_rules")
+	if not v is Dictionary:
+		v = RaidRules.config()
+		db.config["raid_rules"] = v
+	return v
+
+## Like public.raid_board: the fastest won Rifts (point 29), without names.
+func _fn_raid_board(_a: Dictionary) -> Dictionary:
+	var e: String = _raid_check(me())
+	if not e.is_empty():
+		return _fail(e)
+	var rows: Array = []
+	for r: Dictionary in (_table("raids", {}) as Dictionary).values():
+		if int(r.won_at) > 0:
+			rows.append({"guardian": r.guardian, "tier": int(r.get("tier", 1)), "players": int(r.players),
+				"seconds": int(r.won_at) - int(r.created_at)})
+	rows.sort_custom(func(p: Dictionary, q: Dictionary) -> bool: return int(p.seconds) < int(q.seconds))
+	return {"ok": true, "rows": rows.slice(0, int(raid_cfg().get("board_rows", 10)))}
 
 func _raid_qualifies(r: Dictionary, damage: int) -> bool:
 	return int(r.won_at) > 0 and damage * 100 >= int(r.hp_total) * config_int("raid_share_min", 5)
@@ -1917,7 +1946,11 @@ func _fn_raid_claim(a: Dictionary) -> Dictionary:
 	if bool(mem[u].claimed):
 		return _fail("claimed")
 	mem[u].claimed = true
-	return {"ok": true, "item": r.reward.item, "count": int(r.reward.get("count", 1))}
+	var best: int = 0
+	for x: String in mem:
+		best = maxi(best, int(mem[x].damage))
+	var top: bool = int(mem[u].damage) == best
+	return {"ok": true, "item": r.reward.item, "count": RaidRules.reward_count(raid_cfg(), int(r.reward.get("count", 1)), top), "top": top}
 
 ## Like public._raid_apply: checked damage comes off the guardian, never below zero.
 func _raid_apply(battle_id: int, ok: bool, detail: Variant) -> void:
@@ -2080,7 +2113,7 @@ static func trade_mon_clean(m: Dictionary) -> Dictionary:
 	for k: String in ["nickname", "box", "favorite"]:
 		out.erase(k)
 	var era: Variant = m.get("origin_era")
-	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= 4 else 1
+	out["origin_era"] = int(era) if (era is int or era is float) and int(era) >= 1 and int(era) <= Spirling.MAX_ERA else 1
 	return out
 
 static func mon_uids(list: Variant) -> Array:

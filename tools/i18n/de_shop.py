@@ -729,6 +729,7 @@ T = {
 "Up to %d times per account.": "Bis zu %d-mal pro Konto.",
 "Restore purchases": "Käufe wiederherstellen",
 "Restored: %d purchases.": "Wiederhergestellt: %d Käufe.",
+"Restoring needs a connection. Try again when you are online.": "Zum Wiederherstellen brauchst du eine Verbindung. Versuch es wieder, wenn du online bist.",
 "Nothing to restore. Bought unlocks and the pass are already here.": "Nichts wiederherzustellen. Gekaufte Freischaltungen und der Pass sind schon da.",
 "Remaining Riftglass and everything bought in the shop are lost for good. Deleting does not cancel a Wayfarer Pass: cancel it first in the App Store or Google Play (Subscriptions).": "Restliches Rissglas und alles im Shop Gekaufte gehen endgültig verloren. Das Löschen kündigt keinen Wanderer-Pass: kündige ihn vorher im App Store oder bei Google Play (Abos).",
 "The shop is only in the app for iPhone and Android. The browser test version cannot buy anything.": "Den Shop gibt es nur in der App für iPhone und Android. In der Browser-Testversion kann man nichts kaufen.",
