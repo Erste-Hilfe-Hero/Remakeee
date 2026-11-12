@@ -1,0 +1,22 @@
+{
+ "_comment": "German texts from tools/i18n/de_safety.py. Keys are the English text; keys with %s or %d are patterns. Built by tools/i18n/build.py; Loc.gd merges every file in this folder.",
+ "keep": [],
+ "strings": {
+  "Battle over": "Kampf vorbei",
+  "Bunds": "Bünde",
+  "Fair league": "Gleichstand-Liga",
+  "For parents...": "Für Eltern...",
+  "For parents: switch off what your child should not use. Friends and saves stay.": "Für Eltern: Schalte aus, was dein Kind nicht nutzen soll. Freunde und Spielstände bleiben.",
+  "Live duels": "Live-Duelle",
+  "Open league": "Offene Liga",
+  "Raid Rifts": "Raid-Risse",
+  "Report the rival...": "Gegner melden...",
+  "Suggestions from league battles": "Vorschläge aus Liga-Kämpfen",
+  "These switches are for parents. Continue?": "Diese Schalter sind für Eltern. Weiter?",
+  "This battle was against your own echo, so there is nobody to report.": "Dieser Kampf war gegen dein eigenes Echo, es gibt niemanden zu melden.",
+  "This is switched off under Settings, Account, For parents.": "Das ist unter Einstellungen, Konto, Für Eltern ausgeschaltet.",
+  "Under 16: open league, bunds and suggestions start switched off.": "Unter 16: Offene Liga, Bünde und Vorschläge sind zu Beginn ausgeschaltet.",
+  "Why do you report the rival?": "Warum meldest du den Gegner?",
+  "You met this rival 3 times today, so this battle does not count.": "Du hast diesen Gegner heute schon 3-mal getroffen, darum zählt dieser Kampf nicht."
+ }
+}

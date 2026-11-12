@@ -84,6 +84,9 @@ static func run_duel(menu: PauseMenu, id: int) -> void:
 				if _ok(r):
 					await menu.info("Rematch invite sent.")
 					return
+			"Report the rival...":
+				await SafetyMenu.report(menu, "duel", id)
+				r = {}
 		if not r.is_empty() and not _ok(r):
 			await menu.info(error_text(r))
 
@@ -93,7 +96,7 @@ static func actions(d: Dictionary) -> Array[String]:
 		"invited": return ["Accept", "Decline"] as Array[String] if int(d.side) == 1 else [] as Array[String]
 		"picking": return (["Give up"] as Array[String]) if bool(d.picked[int(d.side)]) else (["Pick 3", "Give up"] as Array[String])
 		"running": return ["Send an emote", "Give up"] as Array[String]
-		"done": return ["Rematch"] as Array[String]
+		"done": return ["Rematch", "Report the rival..."] as Array[String]
 	return [] as Array[String]
 
 static func state_text(d: Dictionary, now: int) -> String:
