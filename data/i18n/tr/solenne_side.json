@@ -1,0 +1,21 @@
+{
+ "_comment": "tr translation of the solenne_side table, keyed by the English text.",
+ "strings": {
+  "Beat Factor Lusk in his strongroom, then go back to Bex.": "Kâhya Lusk'ı kasa odasında yen, sonra Bex'e dön.",
+  "Corin Lusk, heir of the Brass Veil, wants to buy your team. Beat him three times.": "Pirinç Peçe'nin varisi Corin Lusk takımını satın almak istiyor. Onu üç kez yen.",
+  "Ochrewell and the Veil Cistern": "Ochrewell ve Peçe Sarnıcı",
+  "Old Mags wants the eight brass seals the Veil nailed onto Ochrewell. She melts them into spoons.": "Yaşlı Mags, Peçe'nin Ochrewell'e çaktığı sekiz pirinç mührü istiyor. Onları eritip kaşık yapıyor.",
+  "Qadir wants the five worst IOUs of Ochrewell for a bonfire.": "Qadir, şenlik ateşi için Ochrewell'in en kötü beş senedini istiyor.",
+  "The Brass Veil keeps a cistern under its counting house in Ochrewell. Find out what it counts.": "Pirinç Peçe, Ochrewell'deki sayım evinin altında bir sarnıç tutuyor. Neyi saydığını öğren.",
+  "The Veil keeps its orders in the lowest room of its cistern. Read the order book.": "Peçe emirlerini sarnıcının en alt odasında saklıyor. Emir defterini oku.",
+  "The Veil prepaid three graves with Undertaker Bex. Find out who they are for.": "Peçe, Mezarcı Bex'e üç mezarın parasını peşin ödedi. Kimler için olduğunu öğren.",
+  "The last valve turns, the cistern drains, and the stair is clear!": "Son vana dönüyor, sarnıç boşalıyor ve merdiven açılıyor!",
+  "The pipes gurgle along happily. The stair stays dry.": "Borular neşeyle guruldıyor. Merdiven kuru kalıyor.",
+  "The valve screams, and every pipe slams shut again. Start over.": "Vana çığlık atıyor ve bütün borular yeniden kapanıyor. Baştan başla.",
+  "The valve squeals round. Somewhere, water changes owner.": "Vana gıcırdayarak dönüyor. Bir yerlerde su el değiştiriyor.",
+  "Three rude headstones, paid in full.": "Üç kaba mezar taşı, parası tamamen ödenmiş.",
+  "Veil Cistern, strongroom": "Peçe Sarnıcı, kasa odası",
+  "Veil Guard": "Peçe Muhafızı",
+  "You know whose graves they are. Tell Bex.": "Mezarların kime ait olduğunu biliyorsun. Bex'e söyle."
+ }
+}

@@ -1,0 +1,23 @@
+{
+ "_comment": "ko translation of the ideas200 table, keyed by the English text.",
+ "strings": {
+  "(tipped off, watch your back)": "(밀고됨, 뒤를 조심해)",
+  "Borrowed the Fixer's cart. Returned the wheels.": "해결사의 수레를 빌렸다. 바퀴만 돌려줬다.",
+  "Certificate of Completion": "완료 증명서",
+  "Half-Ear Osk": "반쪽 귀 Osk",
+  "Issued to %s, who did everything.": "모든 걸 해낸 %s에게 수여함.",
+  "Knows where the money went. All of it.": "돈이 어디 갔는지 안다. 전부 다.",
+  "Lucky Brannoch": "운 좋은 Brannoch",
+  "Mother Greel": "Greel 어멈",
+  "Nobody is that lucky. Check his sleeves.": "그렇게 운 좋은 사람은 없다. 소매를 뒤져 봐.",
+  "Quiet Wenna": "조용한 Wenna",
+  "Runs a soup kitchen. The soup is evidence.": "무료 급식소를 한다. 수프가 증거물이다.",
+  "Said nothing to the wardens. That is the problem.": "감시자들에게 아무 말도 안 했다. 그게 문제다.",
+  "Signed by the Fixer, witnessed by a man who swears he was never here.": "해결사 서명, 입회인은 여기 온 적 없다고 맹세하는 남자.",
+  "Sold the same alley to three gangs. Twice.": "같은 골목을 세 패거리에 팔았다. 두 번이나.",
+  "The Accountant": "회계사",
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "이 종이는 모든 걸 해냈다고 말한다. 액자에 넣어. 목요일까지 누가 위조하려 들 거야.",
+  "Velvet Tam": "벨벳 Tam",
+  "WANTED: %s, ring %d, %d coins": "수배: %s, 링 %d, %d코인"
+ }
+}
