@@ -80,6 +80,7 @@ def build(style: str, c: Canvas, kinds: list) -> Canvas:
 
 
 def main() -> None:
+    shared = to_canvas(Image.open(os.path.join(TILES, "overworld.png")).convert("RGBA"), list(PALETTE))
     for style in buildings.TOWNS:
         path = os.path.join(TILES, "overworld_%s.png" % style)
         pal = inks(style)
@@ -88,7 +89,15 @@ def main() -> None:
         else:
             c = to_canvas(Image.open(os.path.join(TILES, "overworld.png")).convert("RGBA"), list(PALETTE))
         kinds = sorted(buildings.STYLED - own_props(style))
-        to_image(build(style, c, kinds), pal).save(path)
+        build(style, c, kinds)
+        # Lighthouse rows 1 (shaft over the door) and 2 (foot with door) from the shared atlas,
+        # in the act's inks and on the act's own ground.
+        tx, gx = g.K["TOWER"] * T, g.K["GRASS"] * T
+        for y in range(T, 3 * T):
+            for x in range(T):
+                v = shared.px[y][tx + x]
+                c.px[y][tx + x] = c.px[y % T][gx + x] if v == shared.px[y % T][gx + x] else v
+        to_image(c, pal).save(path)
         print("wrote", path, "(%s)" % ", ".join(kinds))
 
 

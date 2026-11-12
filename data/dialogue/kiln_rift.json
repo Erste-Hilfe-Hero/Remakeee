@@ -7,7 +7,8 @@
   "lines": [
    "With the Kiln Rift sealed, the heat drains out of a tall carved stone.",
    "Its runes glow one after another. The stone stands up.",
-   "It is Monolurk, the rune golem. It blocks the way and waits for your answer."
+   "It is Monolurk, the rune golem. It blocks the way and waits for your answer.",
+   "Old songs say a legend only listens to someone who has tested it hard."
   ],
   "action": "legend Monolurk 45"
  }

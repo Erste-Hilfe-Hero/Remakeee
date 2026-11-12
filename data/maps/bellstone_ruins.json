@@ -429,7 +429,7 @@
    "facing": "down",
    "dialogue": "bellstone_ruins/hallowmur",
    "sprite": "first_voice",
-   "show_flag": "story_complete",
+   "show_flag": "lq_hallowmur_ready",
    "hide_flag": "first_voice_hallowmur_away"
   }
  ]

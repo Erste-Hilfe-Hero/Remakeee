@@ -1,0 +1,20 @@
+{
+ "_comment": "fr translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "Apprenti",
+  "Boss": "Patron",
+  "Broker": "Courtier",
+  "Captain": "Capitaine",
+  "Fixer": "Fixeur",
+  "Map Master": "Maître des cartes",
+  "No season reward is waiting.": "Aucune récompense de saison ne t'attend.",
+  "Placement": "Placement",
+  "Placement battles left: %d": "Combats de placement restants: %d",
+  "Rank: %s": "Rang: %s",
+  "Runner": "Coursier",
+  "Season reward": "Récompense de saison",
+  "Season reward: %d x %s": "Récompense de saison: %d x %s",
+  "Shield: %d battles without losing the rank": "Bouclier: %d combats sans perdre le rang",
+  "You left too many battles. Search again in %d seconds.": "Tu as quitté trop de combats. Cherche à nouveau dans %d secondes."
+ }
+}

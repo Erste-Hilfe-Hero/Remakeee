@@ -1,0 +1,23 @@
+{
+ "_comment": "pl translation of the ideas200 table, keyed by the English text.",
+ "strings": {
+  "(tipped off, watch your back)": "(wsypany, uważaj na plecy)",
+  "Borrowed the Fixer's cart. Returned the wheels.": "Pożyczył wózek od Załatwiacza. Oddał koła.",
+  "Certificate of Completion": "Certyfikat ukończenia",
+  "Half-Ear Osk": "Osk Półucho",
+  "Issued to %s, who did everything.": "Wydano dla %s, kto zrobił wszystko.",
+  "Knows where the money went. All of it.": "Wie, gdzie poszły pieniądze. Wszystkie.",
+  "Lucky Brannoch": "Szczęściarz Brannoch",
+  "Mother Greel": "Matka Greel",
+  "Nobody is that lucky. Check his sleeves.": "Nikt nie ma aż takiego szczęścia. Sprawdź mu rękawy.",
+  "Quiet Wenna": "Cicha Wenna",
+  "Runs a soup kitchen. The soup is evidence.": "Prowadzi jadłodajnię. Zupa jest dowodem.",
+  "Said nothing to the wardens. That is the problem.": "Nic nie powiedziała strażnikom. W tym problem.",
+  "Signed by the Fixer, witnessed by a man who swears he was never here.": "Podpisane przez Załatwiacza, w obecności świadka, który przysięga, że nigdy tu nie był.",
+  "Sold the same alley to three gangs. Twice.": "Sprzedał ten sam zaułek trzem gangom. Dwa razy.",
+  "The Accountant": "Księgowy",
+  "This paper says you did everything. Frame it. Somebody will try to forge it by Thursday.": "Ten papier mówi, że zrobiono wszystko. Oprawić w ramkę. Do czwartku ktoś spróbuje go podrobić.",
+  "Velvet Tam": "Aksamitny Tam",
+  "WANTED: %s, ring %d, %d coins": "POSZUKIWANY: %s, ranga %d, %d monet"
+ }
+}

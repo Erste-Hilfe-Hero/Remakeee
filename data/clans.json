@@ -45,7 +45,13 @@
   "gaunt": {"clan": "none", "act": 2, "role": "loan shark, robs her own collectors", "trust": 20, "use": 60},
   "pell": {"clan": "none", "act": 2, "role": "quay fence, borrows Spirlings", "trust": 35, "use": 40},
   "ollie": {"clan": "none", "act": 2, "role": "tonic seller, skips town", "trust": 30, "use": 45},
-  "dimsy": {"clan": "none", "act": 2, "role": "Rook Vault guide, sells marks to robbers", "trust": 25, "use": 50}
+  "dimsy": {"clan": "none", "act": 2, "role": "Rook Vault guide, sells marks to robbers", "trust": 25, "use": 50},
+  "ambrel": {"clan": "none", "role": "sexton who sells bronze by the pound", "trust": 20, "use": 70},
+  "quell": {"clan": "none", "role": "archivist who forges routes", "trust": 20, "use": 65},
+  "dessa": {"clan": "none", "role": "kitewright who hooks Spirlings out of the sky", "trust": 25, "use": 65},
+  "dorran": {"clan": "none", "role": "stonecutter who sells headstones", "trust": 20, "use": 60},
+  "corla": {"clan": "none", "role": "lamplighter who sells sleeping dust to the clans", "trust": 25, "use": 60},
+  "sevrin": {"clan": "none", "role": "pilgrim guide who sells the way out", "trust": 25, "use": 60}
  },
  "favors": {
   "fitch_toll": {"npc": "fitch", "kind": "lend_coins", "amount": 150, "reward_chance": 0.0, "betray": {"say": "soot_vaults/fitch_betray", "battle": "fitch_ambush", "ledger": "fitch_toll"}, "kept": {"say": "soot_vaults/fitch_kept", "item": "max_tonic"}},
@@ -194,7 +200,23 @@
    "caught": {"flags": ["clan_b11"], "ledger": "throne", "trust": {"fenrick": -20}, "say": "clans/throne_f_caught"},
    "struck": {"flags": ["clan_b11"], "ledger": "throne", "say": "clans/throne_f_struck", "battle": "throne_guard"}},
   "nib_sale": {"act": 2, "npc": "nib", "rule": "warned", "warned_by": ["nib_warned"], "caught": {"ledger": "nib", "trust": {"nib": -20}, "say": "corvane_side/nib_caught", "item": "max_tonic"}, "struck": {"ledger": "nib", "say": "corvane_side/nib_struck", "battle": "ambush_nib"}},
-  "gaunt_cut": {"act": 2, "npc": "gaunt", "rule": "warned", "warned_by": ["brask_warned"], "caught": {"ledger": "gaunt", "coins": 600, "say": "corvane_side/gaunt_caught"}, "struck": {"ledger": "gaunt", "coins": 300, "say": "corvane_side/gaunt_struck", "battle": "ambush_gaunt"}}
+  "gaunt_cut": {"act": 2, "npc": "gaunt", "rule": "warned", "warned_by": ["brask_warned"], "caught": {"ledger": "gaunt", "coins": 600, "say": "corvane_side/gaunt_caught"}, "struck": {"ledger": "gaunt", "coins": 300, "say": "corvane_side/gaunt_struck", "battle": "ambush_gaunt"}},
+  "lq_hallowmur": {"act": 5, "npc": "ambrel", "rule": "warned", "warned_by": ["lq_hallowmur_kept"], "caught": {"flags": ["lq_hallowmur_caught"], "ledger": "lq_hallowmur", "trust": {"ambrel": -30}, "say": "legend_quests/hallowmur_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_hallowmur_struck"], "ledger": "lq_hallowmur", "say": "legend_quests/hallowmur_struck", "battle": "lq_ambrel"}},
+  "lq_scriptorax": {"act": 5, "npc": "quell", "rule": "warned", "warned_by": ["lq_scriptorax_kept"], "caught": {"flags": ["lq_scriptorax_caught"], "ledger": "lq_scriptorax", "trust": {"quell": -30}, "say": "legend_quests/scriptorax_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_scriptorax_struck"], "ledger": "lq_scriptorax", "say": "legend_quests/scriptorax_struck", "battle": "lq_quell"}},
+  "lq_zephyrel": {"act": 5, "npc": "dessa", "rule": "warned", "warned_by": ["lq_zephyrel_kept"], "caught": {"flags": ["lq_zephyrel_caught"], "ledger": "lq_zephyrel", "trust": {"dessa": -30}, "say": "legend_quests/zephyrel_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_zephyrel_struck"], "ledger": "lq_zephyrel", "say": "legend_quests/zephyrel_struck", "battle": "lq_dessa"}},
+  "lq_monolurk": {"act": 3, "npc": "dorran", "rule": "warned", "warned_by": ["lq_monolurk_kept"], "caught": {"flags": ["lq_monolurk_caught"], "ledger": "lq_monolurk", "trust": {"dorran": -30}, "say": "legend_quests/monolurk_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_monolurk_struck"], "ledger": "lq_monolurk", "say": "legend_quests/monolurk_struck", "battle": "lq_dorran"}},
+  "lq_vorlucent": {"act": 3, "npc": "corla", "rule": "warned", "warned_by": ["lq_vorlucent_kept"], "caught": {"flags": ["lq_vorlucent_caught"], "ledger": "lq_vorlucent", "trust": {"corla": -30}, "say": "legend_quests/vorlucent_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_vorlucent_struck"], "ledger": "lq_vorlucent", "say": "legend_quests/vorlucent_struck", "battle": "lq_corla"}},
+  "lq_lumivane": {"act": 4, "npc": "sevrin", "rule": "warned", "warned_by": ["lq_lumivane_kept"], "caught": {"flags": ["lq_lumivane_caught"], "ledger": "lq_lumivane", "trust": {"sevrin": -30}, "say": "legend_quests/lumivane_caught", "item": "kin_charm"}, "struck": {"flags": ["lq_lumivane_struck"], "ledger": "lq_lumivane", "say": "legend_quests/lumivane_struck", "battle": "lq_sevrin"}}
+ },
+ "trust_choices": {
+  "a1_report": {"act": 1, "at": "betrayal/a1_report", "decides": ["juna_post", "juna_letter"]},
+  "a1_hour": {"act": 1, "at": "betrayal/a1_hour", "decides": ["vash_hour"]},
+  "a2_porter": {"act": 2, "at": "betrayal/a2_porter", "decides": ["sable_satchel"]},
+  "a2_chalk": {"act": 2, "at": "betrayal/a2_chalk", "decides": ["brann_copy"]},
+  "a3_seal": {"act": 3, "at": "betrayal/a3_seal", "decides": ["nella_wax"]},
+  "a3_copper": {"act": 3, "at": "betrayal/a3_copper", "decides": ["grell_copper"]},
+  "a4_letter": {"act": 4, "at": "betrayal/a4_letter", "decides": ["kaia_witness"]},
+  "a4_tunnel": {"act": 4, "at": "betrayal/a4_tunnel", "decides": ["lusk_tunnel"]}
  },
  "trust_choices": {
   "a1_report": {"act": 1, "at": "betrayal/a1_report", "decides": ["juna_post", "juna_letter"]},
@@ -248,9 +270,16 @@
   {"id": "crown", "act": 4, "ref": "clans/ledger_crown"},
   {"id": "fitch_toll", "act": 3, "ref": "soot_vaults/ledger_fitch"},
   {"id": "juno_sale", "act": 3, "ref": "soot_vaults/ledger_juno"},
+  {"id": "farida_book", "act": 3, "ref": "edge_camp/ledger_farida_book"},
   {"id": "nib", "act": 2, "ref": "corvane_side/ledger_nib"},
   {"id": "gaunt", "act": 2, "ref": "corvane_side/ledger_gaunt"},
   {"id": "ollie", "act": 2, "ref": "corvane_side/ledger_ollie"},
-  {"id": "quay_book", "act": 2, "ref": "corvane_side/ledger_quay_book"}
+  {"id": "quay_book", "act": 2, "ref": "corvane_side/ledger_quay_book"},
+  {"id": "lq_hallowmur", "act": 5, "ref": "legend_quests/hallowmur_ledger"},
+  {"id": "lq_scriptorax", "act": 5, "ref": "legend_quests/scriptorax_ledger"},
+  {"id": "lq_zephyrel", "act": 5, "ref": "legend_quests/zephyrel_ledger"},
+  {"id": "lq_monolurk", "act": 3, "ref": "legend_quests/monolurk_ledger"},
+  {"id": "lq_vorlucent", "act": 3, "ref": "legend_quests/vorlucent_ledger"},
+  {"id": "lq_lumivane", "act": 4, "ref": "legend_quests/lumivane_ledger"}
  ]
 }

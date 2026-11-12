@@ -101,6 +101,8 @@ func _ready() -> void:
 		preload_sfx()
 	var raw: Variant = JSON.parse_string(FileAccess.get_file_as_string(MAP_MUSIC)) if FileAccess.file_exists(MAP_MUSIC) else null
 	_map_music = raw if raw is Dictionary else {}
+	EraManager.era_changed.connect(func(era: int) -> void: apply_era_fx(era))
+	apply_era_fx.call_deferred(EraManager.active_era())
 
 ## Drops streams on quit so nothing is reported as leaked.
 func _exit_tree() -> void:
@@ -406,10 +408,61 @@ func track_for_map(map_id: String) -> String:
 	var track: String = str((entry as Dictionary).get("track", "")) if entry is Dictionary else str(entry)
 	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
 
-## The data/music.json entry for [param map_id]: a track name or {"track", "ambience"}.
-func map_entry(map_id: String) -> Variant:
-	var maps: Dictionary = _map_music.get("maps", {})
-	return maps.get(map_id, maps.get(map_id.get_slice("@", 0), _map_music.get("default", "")))
+## The data/music.json entry for [param map_id]: a track name or {"track", "ambience"}, from
+## "maps" (own place songs) or "themes" (shared and single-file themes). A map in neither plays
+## its region's song (the region on screen), then "default".
+func map_entry(map_id: String, region: String = "") -> Variant:
+	return entry_in(_map_music, map_id, region if not region.is_empty() else EraManager.current_region)
+
+static func entry_in(table: Dictionary, map_id: String, region: String) -> Variant:
+	for list: String in ["maps", "themes"]:
+		var maps: Dictionary = table.get(list, {})
+		for key: String in [map_id, map_id.get_slice("@", 0)]:
+			if maps.has(key):
+				return maps[key]
+	var regions: Dictionary = table.get("regions", {})
+	return regions.get(region, table.get("default", ""))
+
+## Battle music [param track] ("battle", "warden") in the variant of the active era, so fights
+## sound like the era's hardware (battle_era2 to battle_era5).
+func battle_music(track: String) -> String:
+	return era_track(track, EraManager.active_era(), func(t: String) -> bool: return ResourceLoader.exists(MUSIC_DIR % t))
+
+## Music bus effects per era from data/music.json "era_fx": chorus from Era II, a room from
+## Era III. Replaces only the effects it added before; returns how many it added.
+const ERA_FX_META: StringName = &"era_fx"
+
+func apply_era_fx(era: int) -> int:
+	var bus: int = AudioServer.get_bus_index(GameState.BUS_MUSIC)
+	if bus < 0:
+		return 0
+	for i: int in range(AudioServer.get_bus_effect_count(bus) - 1, -1, -1):
+		if AudioServer.get_bus_effect(bus, i).has_meta(ERA_FX_META):
+			AudioServer.remove_bus_effect(bus, i)
+	var added: int = 0
+	for fx: AudioEffect in era_effects((_map_music.get("era_fx", {}) as Dictionary).get(str(era), {})):
+		fx.set_meta(ERA_FX_META, era)
+		AudioServer.add_bus_effect(bus, fx)
+		added += 1
+	return added
+
+## The effects one "era_fx" entry asks for.
+static func era_effects(spec: Dictionary) -> Array[AudioEffect]:
+	var out: Array[AudioEffect] = []
+	if float(spec.get("chorus_wet", 0.0)) > 0.0:
+		var ch := AudioEffectChorus.new()
+		ch.voice_count = 2
+		ch.wet = float(spec.chorus_wet)
+		ch.dry = 1.0
+		out.append(ch)
+	if float(spec.get("reverb_wet", 0.0)) > 0.0:
+		var rv := AudioEffectReverb.new()
+		rv.room_size = float(spec.get("reverb_room", 0.4))
+		rv.wet = float(spec.reverb_wet)
+		rv.dry = 1.0
+		rv.damping = 0.6
+		out.append(rv)
+	return out
 
 ## Era music (item 66): "<track>_era<N>" for the newest era N that has its own version, so a
 ## region can rearrange a theme for its hardware generation. Falls back to the plain track.

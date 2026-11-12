@@ -1,0 +1,20 @@
+{
+ "_comment": "ru translation of the league_ranks table, keyed by the English text.",
+ "strings": {
+  "Apprentice": "Ученик",
+  "Boss": "Босс",
+  "Broker": "Маклер",
+  "Captain": "Капитан",
+  "Fixer": "Решала",
+  "Map Master": "Мастер карт",
+  "No season reward is waiting.": "Наград сезона не ожидается.",
+  "Placement": "Отбор",
+  "Placement battles left: %d": "Осталось отборочных боёв: %d",
+  "Rank: %s": "Ранг: %s",
+  "Runner": "Посыльный",
+  "Season reward": "Награда сезона",
+  "Season reward: %d x %s": "Награда сезона: %d x %s",
+  "Shield: %d battles without losing the rank": "Щит: %d боёв без потери ранга",
+  "You left too many battles. Search again in %d seconds.": "Слишком много брошенных боёв. Ищи снова через %d секунд."
+ }
+}
